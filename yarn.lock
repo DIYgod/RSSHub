@@ -1491,22 +1491,22 @@
     dotenv "^6.2.0"
     node-fetch "^2.3.0"
 
-"@postlight/parser@2.2.2":
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/@postlight/parser/-/parser-2.2.2.tgz#349ea2b4a1b6207d13e78d4d52748fed93e3aab5"
-  integrity sha512-9eXhp2AWlZYz0gk5GlDk0Be9+9od8GTGeRQVqaN8m6UkUuAuBxsvhRwgkCB3hgYeBN4U76LismA2HHGiEnATGA==
+"@postlight/parser@2.2.3":
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/@postlight/parser/-/parser-2.2.3.tgz#44c2a09b85ebacc4033e634ccae76d0dcf361136"
+  integrity sha512-4/syRvqJARgLN4yH8qtl634WO0+KINjkijU/SmhCJqqh8/aOfv5uQf+SquFpA+JwsAsbGzYQkIxSum29riOreg==
   dependencies:
     "@babel/runtime-corejs2" "^7.2.0"
     "@postlight/ci-failed-test-reporter" "^1.0"
-    browser-request "github:postlight/browser-request#feat-add-headers-to-response"
+    browser-request "*"
     cheerio "^0.22.0"
     difflib "github:postlight/difflib.js"
     ellipsize "0.1.0"
     iconv-lite "0.5.0"
-    jquery "^3.5.0"
+    jquery "*"
     moment "^2.23.0"
     moment-parseformat "3.0.0"
-    moment-timezone "0.5.37"
+    moment-timezone "*"
     postman-request "^2.88.1-postman.31"
     string-direction "^0.1.2"
     turndown "^7.1.1"
@@ -3351,11 +3351,10 @@ brotli@~1.3.2:
   dependencies:
     base64-js "^1.1.2"
 
-"browser-request@github:postlight/browser-request#feat-add-headers-to-response":
-  version "0.3.2"
-  resolved "https://codeload.github.com/postlight/browser-request/tar.gz/38faa5b85741aabfca61aa37d1ef044d68969ddf"
-  dependencies:
-    http-headers "^3.0.1"
+browser-request@*:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/browser-request/-/browser-request-0.3.3.tgz#9ece5b5aca89a29932242e18bf933def9876cc17"
+  integrity sha512-YyNI4qJJ+piQG6MMEuo7J3Bzaqssufx04zpEKYfSrl/1Op59HWali9zMtBpXnkmqMcOuWJPZvudrm9wISmnCbg==
 
 browserify-aes@^1.0.0, browserify-aes@^1.0.4:
   version "1.2.0"
@@ -7175,13 +7174,6 @@ http-errors@~1.6.2:
     setprototypeof "1.1.0"
     statuses ">= 1.4.0 < 2"
 
-http-headers@^3.0.1:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/http-headers/-/http-headers-3.0.2.tgz#5147771292f0b39d6778d930a3a59a76fc7ef44d"
-  integrity sha512-87E1I+2Wg4dxxz4rcxElo3dxO/w1ZtgL1yA0Sb6vH3qU16vRKq1NjWQv9SCY3ly2OQROcoxHZOUpmelS+k6wOw==
-  dependencies:
-    next-line "^1.1.0"
-
 http-incoming@^0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/http-incoming/-/http-incoming-0.12.0.tgz#10783cd2b5deb8ca92ab3ff2ad171315d61b4ff6"
@@ -8465,7 +8457,7 @@ jest@29.2.2:
     import-local "^3.0.2"
     jest-cli "^29.2.2"
 
-jquery@^3.5.0:
+jquery@*:
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.6.1.tgz#fab0408f8b45fc19f956205773b62b292c147a16"
   integrity sha512-opJeO4nCucVnsjiXOE+/PcCgYw9Gwpvs/a6B1LL/lQhwWwpbVEVYDZ1FokFr8PRc7ghYlrFPuyHuiiDNTQxmcw==
@@ -9790,10 +9782,10 @@ moment-parseformat@3.0.0:
   resolved "https://registry.yarnpkg.com/moment-parseformat/-/moment-parseformat-3.0.0.tgz#3a1dc438b4bc073b7e93cc298cfb6c5daac26dba"
   integrity sha512-dVgXe6b6DLnv4CHG7a1zUe5mSXaIZ3c6lSHm/EKeVeQI2/4pwe0VRde8OyoCE1Ro2lKT5P6uT9JElF7KDLV+jw==
 
-moment-timezone@0.5.37:
-  version "0.5.37"
-  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.37.tgz#adf97f719c4e458fdb12e2b4e87b8bec9f4eef1e"
-  integrity sha512-uEDzDNFhfaywRl+vwXxffjjq1q0Vzr+fcQpQ1bU0kbzorfS7zVtZnCnGc8mhWmF39d4g4YriF6kwA75mJKE/Zg==
+moment-timezone@*:
+  version "0.5.38"
+  resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.38.tgz#9674a5397b8be7c13de820fd387d8afa0f725aad"
+  integrity sha512-nMIrzGah4+oYZPflDvLZUgoVUO4fvAqHstvG3xAUnMolWncuAiLDWNnJZj6EwJGMGfb1ZcuTFE6GI3hNOVWI/Q==
   dependencies:
     moment ">= 2.9.0"
 
@@ -9933,11 +9925,6 @@ netmask@^2.0.1:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/netmask/-/netmask-2.0.2.tgz#8b01a07644065d536383835823bc52004ebac5e7"
   integrity sha512-dBpDMdxv9Irdq66304OLfEmQ9tbNRFnFTuZiLo+bD+r332bBmMJ8GBLXklIXXgxd3+v9+KUnZaUR5PJMa75Gsg==
-
-next-line@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/next-line/-/next-line-1.1.0.tgz#fcae57853052b6a9bae8208e40dd7d3c2d304603"
-  integrity sha512-+I10J3wKNoKddNxn0CNpoZ3eTZuqxjNM3b1GImVx22+ePI+Y15P8g/j3WsbP0fhzzrFzrtjOAoq5NCCucswXOQ==
 
 nice-try@^1.0.4:
   version "1.0.5"
