@@ -50,11 +50,6 @@
             { title: '仓库 Contributors', docs: 'https://docs.rsshub.app/programming.html#github', source: ['/:user/:repo/graphs/contributors', '/:user/:repo'], target: '/github/contributors/:user/:repo' },
         ],
     },
-    'smzdm.com': {
-        _name: '什么值得买',
-        www: [{ title: '排行榜', docs: 'https://docs.rsshub.app/shopping.html#shen-me-zhi-de-mai', source: '/top' }],
-        search: [{ title: '关键词', docs: 'https://docs.rsshub.app/shopping.html#shen-me-zhi-de-mai', source: '/', target: (params, url) => `/smzdm/keyword/${new URL(url).searchParams.get('s')}` }],
-    },
     'ximalaya.com': {
         _name: '喜马拉雅',
         '.': [
