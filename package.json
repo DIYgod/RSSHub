@@ -90,7 +90,7 @@
   },
   "dependencies": {
     "@koa/router": "12.0.0",
-    "@postlight/parser": "2.2.2",
+    "@postlight/parser": "2.2.3",
     "@sentry/node": "7.16.0",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
@@ -128,7 +128,7 @@
     "markdown-it": "13.0.1",
     "module-alias": "2.2.2",
     "parse-torrent": "9.1.5",
-    "pidusage": "3.0.1",
+    "pidusage": "3.0.2",
     "plist": "3.0.6",
     "proxy-chain": "2.2.0",
     "puppeteer": "19.0.0",
