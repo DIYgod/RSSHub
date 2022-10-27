@@ -345,9 +345,9 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 好价品类榜
 
-| 全部 | 时尚运动 | 3C 家电 | 食品家居 | 日百母婴 | 出行游玩 | 白菜 | 凑单品 |
-| -- | ---- | ----- | ---- | ---- | ---- | -- | --- |
-| 11 | 12   | 13    | 14   | 15   | 16   | 17 | 22  |
+| 全部 | 食品生鲜 | 电脑数码 | 运动户外 | 家用电器 | 白菜 | 服饰鞋包 | 日用百货 |
+| -- | ---- | ---- | ---- | ---- | -- | ---- | ---- |
+| 11 | 12   | 13   | 14   | 15   | 17 | 74   | 75   |
 
 好价电商榜
 
@@ -373,11 +373,17 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 | ----- | ---- | ---- | ---- |
 | hwall | zc   | nb   | hw   |
 
+-   时间跨度
+
+| 3 小时 | 12 小时 | 24 小时 |
+| ---- | ----- | ----- |
+| 3    | 12    | 24    |
+
 </Route>
 
 ### 好文
 
-<Route author="LogicJake" example="/smzdm/haowen/1" path="/smzdm/haowen/:day" :paramsDesc="['以天为时间跨度，默认为all，其余可以选择1，7，30，365']"/>
+<Route author="LogicJake" example="/smzdm/haowen/1" path="/smzdm/haowen/:day?" :paramsDesc="['以天为时间跨度，默认为 `all`，其余可以选择 `1`，`7`，`30`，`365`']"/>
 
 ### 好文分类
 
