@@ -104,10 +104,6 @@ pageClass: routes
 
 <RouteEn author="FHYunCai" example="/bing" path="/bing" radar="1" rssbud="1"/>
 
-## ComicsKingdom Comic Strips
-
-<RouteEn author="stjohnjohnson" example="/comicskingdom/baby-blues" path="/comicskingdom/:strip" :paramsDesc="['URL path of the strip on comicskingdom.com']" />
-
 ## DailyArt
 
 <RouteEn author="zphw" example="/dailyart/en" path="/dailyart/:language?" :paramsDesc="['Support en, es, fr, de, it, zh, jp, etc. English by default.']" />
