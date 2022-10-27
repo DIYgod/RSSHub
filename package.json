@@ -84,7 +84,7 @@
     "tosource": "2.0.0-alpha.3",
     "unified": "9.2.2",
     "vuepress": "1.9.7",
-    "vuepress-plugin-meilisearch": "0.12.4",
+    "vuepress-plugin-meilisearch": "0.13.0",
     "vuepress-plugin-sitemap": "2.3.1",
     "yorkie": "2.0.0"
   },
