@@ -2521,6 +2521,9 @@
     "/mihoyo/bbs/official/:gids/:type?/:page_size?/:last_id?": [
         "CaoMeiYouRen"
     ],
+    "/mihoyo/ys/:location?/:category?": [
+        "nczitzk"
+    ],
     "/mindmeister/:category?/:language?": [
         "TonyRL"
     ],
@@ -5590,7 +5593,6 @@
     "/npc/:caty": [],
     "/ofweek/news": [],
     "/popyard/:caty?": [],
-    "/yuanshen/:location?/:category?": [],
     "/wto/dispute-settlement/:year?": [],
     "/forum4399/:mtag": [],
     "/nudt/yjszs/:id?": [],
