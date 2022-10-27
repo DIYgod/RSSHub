@@ -3051,6 +3051,20 @@
       }
     ]
   },
+  "comicskingdom.com": {
+    "_name": "Comics Kingdom",
+    ".": [
+      {
+        "title": "Archive",
+        "docs": "https://docs.rsshub.app/anime.html#comics-kingdom",
+        "source": [
+          "/:name/*",
+          "/:name"
+        ],
+        "target": "/comicskingdom/:name"
+      }
+    ]
+  },
   "consumer.org.hk": {
     "_name": "消费者委员会",
     ".": [

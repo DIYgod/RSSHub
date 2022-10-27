@@ -747,6 +747,9 @@
     "/codeforces/contests": [
         "Fatpandac"
     ],
+    "/comicskingdom/:name": [
+        "stjohnjohnson"
+    ],
     "/consumer/:category?/:language?/:keyword?": [
         "nczitzk"
     ],
@@ -5721,7 +5724,6 @@
     "/mofish/:id": [],
     "/mcdonalds/:category": [],
     "/gocomics/:name": [],
-    "/comicskingdom/:name": [],
     "/mediadigest/:range/:category?": [],
     "/ngd/:slug?": [],
     "/simpread/notice": [],
