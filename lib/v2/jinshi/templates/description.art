@@ -1,0 +1,4 @@
+<blockquote>
+<p>{{ content }}</p>
+</blockquote>
+<img src="{{ pic }}">
