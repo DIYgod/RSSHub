@@ -1,0 +1,9 @@
+{{@ description }}
+{{ if type === 'imgs' }}
+{{ each acontent img }}
+<img src={{ img }}>
+{{ /each }}
+{{ else if type === 'bilibili' }}
+<img src={{ acontent.img }}>
+<iframe src="https://player.bilibili.com/player.html?bvid={{ acontent.bvid }}&high_quality=1" width="650" height="477" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+{{ /if }}

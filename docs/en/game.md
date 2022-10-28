@@ -280,3 +280,60 @@ Steam provides some official RSS feeds:
 ### Discussions
 
 <RouteEn author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" :paramsDesc="['category name, default to All']"/>
+
+## TapTap International
+
+::: warning Warning
+
+Due to the regional restrictions, an RSSHub deployment in China Mainland may not work on accessing the TapTap International Website.
+
+:::
+
+### Game Topics
+
+::: tip Tips
+
+Unlike TapTap China Mainland Website, the International Website has no BBS.
+
+:::
+
+### Game's Changelog
+
+<RouteEn author="hoilc ETiV" example="/taptap/intl/changelog/191001/zh_TW" path="/taptap/intl/changelog/:id/:lang?" :paramsDesc="['Game\'s App ID, you may find it from the URL of the Game', 'Language, checkout the table below for possible values, default is `en_US`']">
+
+#### Language Code
+
+| English (US) | 繁體中文 | 한국어 | 日本語 |
+| ----- | ----- | ----- | ----- |
+| en_US | zh_TW | ko_KR | ja_JP |
+
+</RouteEn>
+
+### Ratings & Reviews
+
+<RouteEn author="hoilc TonyRL ETiV" example="/taptap/intl/review/82354/new/zh_TW" path="/taptap/intl/review/:id/:order?/:lang?" :paramsDesc="['Game\'s App ID, you may find it from the URL of the Game', 'Sort Method, you may use `new` as the **Most Recent**, use `default` or leave it empty for the **Most Relevant**', 'Language, checkout the table below for possible values, default is `en_US`']">
+
+#### Sort Method
+
+| Most Relevant  | Most Recent |
+| -------------- | ---- |
+| default        | new  |
+
+#### Language Code
+
+| English (US) | 繁體中文 | 한국어 | 日本語 |
+| ----- | ----- | ----- | ----- |
+| en_US | zh_TW | ko_KR | ja_JP |
+
+</RouteEn>
+
+## War Thunder
+
+### News
+
+<RouteEn author="axojhf" example="/warthunder/news" path="/warthunder/news">
+
+News data from https://warthunder.com/en/news/
+The year, month and day provided under UTC time zone are the same as the official website, so please ignore the specific time!!!
+
+</RouteEn>

@@ -1,0 +1,13 @@
+<video
+    src="{{ videos.url }}"
+    controls
+    playsinline="true"
+    webkit-playsinline="true"
+    x5-playsinline="true"
+    x5-video-player-type="h5"
+    x5-video-orientation="landscape|portrait"
+    x5-video-player-fullscreen="true"
+    x-webkit-airplay="allow"
+    preload="metadata"
+    poster="{{ videos.coverUrl}}"
+></video>

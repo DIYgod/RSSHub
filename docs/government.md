@@ -44,6 +44,18 @@ pageClass: routes
 
 <Route author="Fatpandac" example="/ssm/news" path="/ssm/news"/>
 
+## 北京市保障房中心有限公司
+
+### 北京市共有产权住房租赁服务平台
+
+<Route author="bigfei" example="/gov/beijing/bphc/announcement" path="/gov/beijing/bphc/:caty" :paramsDesc="['类别']">
+
+|     通知公告     |   项目介绍  |
+| :----------: | :-----: |
+| announcement | project |
+
+</Route>
+
 ## 北京市教育委员会
 
 ### 通知公告
@@ -59,6 +71,18 @@ pageClass: routes
 频道参数可在官网获取，如：
 
 `http://kw.beijing.gov.cn/col/col736/index.html` 对应 `/kwbeijing/col736`
+
+</Route>
+
+## 北京市人民政府
+
+### 北京教育考试院
+
+<Route author="gavin-k" example="/gov/beijing/bjeea/bjeeagg" path="/gov/beijing/bjeea/:type" :paramsDesc="['分类名']">
+
+|   通知公告  | 招考政策 | 自考快递 |
+| :-----: | :--: | :--: |
+| bjeeagg | zkzc | zkkd |
 
 </Route>
 
@@ -92,27 +116,15 @@ pageClass: routes
 
 </Route>
 
-## 德阳考试中心
-
-### 考试新闻
-
-<Route author="zytomorrow" example="/dykszx/news" path="/dykszx/news/:type?" :paramsDesc="['考试类型']">
-
-| 新闻中心 | 公务员考试 | 事业单位 | （职）业资格、职称考试 |   其他  |
-| :--: | :---: | :--: | :---------: | :---: |
-|  all |  gwy  | sydw |     zyzc    | other |
-
-</Route>
-
 ## 德阳市人民政府
 
-### 德阳市政府公开信息
+### 政府公开信息
 
 <Route author="zytomorrow" example="/gov/sichuan/deyang/govpulicinfo/绵竹市" path="/gov/sichuan/deyang/govpulicinfo/:countyName" :paramsDesc="['区县名（**其他区县整改中，暂时只支持`绵竹市`**）。德阳市、绵竹市、广汉市、什邡市、中江县、罗江区、旌阳区、高新区']"/>
 
 ## 广东省人民政府
 
-### 广东省教育厅
+### 省教育厅
 
 <Route author="nczitzk" example="/gov/guangdong/edu/tzgg" path="/gov/guangdong/edu/:caty" :paramsDesc="['资讯类别']">
 
@@ -122,7 +134,7 @@ pageClass: routes
 
 </Route>
 
-### 广东省教育考试院
+### 省教育考试院
 
 <Route author="icealtria" example="/gov/guangdong/eea/kszs" path="/gov/guangdong/eea/:caty" :paramsDesc="['资讯类别']">
 
@@ -132,7 +144,7 @@ pageClass: routes
 
 </Route>
 
-### 广东省深圳市人民政府
+### 深圳市人民政府
 
 <Route author="laoxua" example="/gov/shenzhen/xxgk/zfxxgj/tzgg" path="/gov/shenzhen/xxgk/zfxxgj/:caty" :paramsDesc="['信息类别']">
 
@@ -183,6 +195,22 @@ pageClass: routes
 ### 最新文件
 
 <Route author="nczitzk" example="/gov/chinatax/latest" path="/gov/chinatax/latest"/>
+
+## 国家统计局
+
+### 统计数据 > 最新发布
+
+<Route author="bigfei" example="/gov/stats/tjsj/zxfb" path="/gov/stats/:path+" :paramsDesc="['路径，默认为 统计数据 > 最新发布']">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `http://www.stats.gov.cn/` 后的字段。下面是一个例子。
+
+若订阅 [统计数据 > 统计标准](http://www.stats.gov.cn/tjsj/tjbz/) 则将对应页面 URL <http://www.stats.gov.cn/tjsj/tjbz/> 中 `http://www.stats.gov.cn/` 后的字段 `tjsj/tjbz` 作为路径填入。此时路由为 [`/gov/stats/tjsj/tjbz`](https://rsshub.app/gov/stats/tjsj/tjbz)
+
+:::
+
+</Route>
 
 ## 国家新闻出版广电总局（弃用）
 
@@ -242,6 +270,22 @@ pageClass: routes
 路径处填写对应页面 URL 中 `https://www.nifdc.gov.cn/nifdc/` 与 `/index.html` 之间的字段，下面是一个例子。
 
 若订阅 [公告通告](https://www.nifdc.org.cn/nifdc/bshff/ylqxbzhgl/qxggtzh/index.html) 则将对应页面 URL <https://www.nifdc.org.cn/nifdc/bshff/ylqxbzhgl/qxggtzh/index.html> 中 `https://www.nifdc.org.cn/nifdc/` 和 `/index.html` 之间的字段 `bshff/ylqxbzhgl/qxggtzh` 作为路径填入。此时路由为 [`/gov/nifdc/bshff/ylqxbzhgl/qxggtzh`](https://rsshub.app/gov/nifdc/bshff/ylqxbzhgl/qxggtzh)
+
+:::
+
+</Route>
+
+## 国家药品监督管理局医疗器械技术审评中心
+
+### 通用
+
+<Route author="run-ze" example="/cmde/xwdt/zxyw" path="/cmde/:cate*" :paramsDesc="['路径，默认为最新要闻']" radar="1" puppeteer="1">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `https://www.cmde.org.cn/` 与 `/index.html` 之间的字段，下面是一个例子。
+
+若订阅 [最新要闻](https://www.cmde.org.cn/xwdt/zxyw/index.html) 则将对应页面 URL <https://www.cmde.org.cn/xwdt/zxyw/index.html> 中 `https://www.cmde.org.cn/` 和 `/index.html` 之间的字段 `xwdt/zxyw` 作为路径填入。此时路由为 [`/cmde/xwdt/zxyw`](https://rsshub.app//cmde/xwdt/zxyw)
 
 :::
 
@@ -309,6 +353,26 @@ pageClass: routes
 
 <Route author="XYenon" example="/gov/harbin/kjj" path="/gov/harbin/kjj"/>
 
+## 河北省财政厅
+
+<Route author="nczitzk" example="/gov/hebei/czt/xwdt" path="/gov/hebei/czt/xwdt/:category?" :paramsDesc="['分类，见下表，默认为财政动态']">
+
+| 财政动态 | 综合新闻 | 通知公告 |
+| ---- | ---- | ---- |
+| gzdt | zhxw | tzgg |
+
+</Route>
+
+## 河北省退役军人事务厅
+
+<Route author="SunShinenny" example="/gov/veterans/hebei/sxxx" path="/gov/veterans/hebei/:type" :paramsDesc="['分类名']">
+
+| 省内信息 | 厅内信息 | 市县信息 |
+| :--: | :--: | :--: |
+| ywgz | tnxx | sxxx |
+
+</Route>
+
 ## 湖北省软件行业协会
 
 ### 新闻中心
@@ -321,6 +385,42 @@ pageClass: routes
 | 活动通知 | hdtz |
 | 活动报道 | hdbd |
 | 公示公告 | gsgg |
+
+</Route>
+
+## 湖南省政府采购网
+
+### 公告
+
+<Route author="Jeason0228" example="/gov/hunan/notice/all" path="/gov/hunan/notice/:type"  :paramsDesc="['all=全部，cg=采购公告,zb=中标公告,fb=废标公告,ht=合同公告,gz=更正公告,zz=终止公告,qt=其他公告']" />
+
+## 江苏省人民政府
+
+### 动态
+
+<Route author="ocleo1" example="/gov/province/jiangsu/important-news" path="/gov/province/jiangsu/:category" :paramsDesc="['分类名']">
+
+|      省政府常务会议      |      要闻关注      |    部门资讯    |     市县动态    |          政策解读         |
+| :---------------: | :------------: | :--------: | :---------: | :-------------------: |
+| executive-meeting | important-news | department | city-county | policy-interpretation |
+
+|   政府信息公开年度报告  |        政府信息公开制度       |   省政府及办公厅文件   |        规范性文件       |
+| :-----------: | :-------------------: | :-----------: | :----------------: |
+| annual-report | information-publicity | documentation | normative-document |
+
+|             立法意见征集             |        意见征集        |
+| :----------------------------: | :----------------: |
+| legislative-opinion-collection | opinion-collection |
+
+</Route>
+
+### 省教育考试院 - 新闻中心
+
+<Route author="schen1024" example="/jseea/news/zkyw" path="/gov/jiangsu/eea/:type?" :paramsDesc="['分类，默认为 `zkyw`，具体参数见下表']" radar="1" rssbud="1">
+
+| 招考要闻 | 教育动态 | 招考信息 | 政策文件 | 院校动态 |
+| :--: | :--: | :--: | :--: | :--: |
+| zkyw | jydt | zkxx | zcwj | yxdt |
 
 </Route>
 
@@ -384,13 +484,41 @@ pageClass: routes
 
 ### CDRHNew
 
-<Route author="nczitzk" example="/fda/cdrh" path="/fda/cdrh" />
+<Route author="nczitzk" example="/fda/cdrh" path="/fda/cdrh/:titleOnly?" :paramsDesc="['只显示标题，默认为空，即包含全文，其他任意值则只显示标题']"/>
 
 ## 美国中央情报局
 
 ### 年度信息自由法报告
 
 <Route author="nczitzk" example="/cia/foia-annual-report" path="/cia/foia-annual-report"/>
+
+## 南京市人民政府
+
+### 信息公开
+
+<Route author="ocleo1" example="/gov/city/nanjing/news" path="/gov/city/nanjing/:category" :paramsDesc="['分类名']">
+
+| 南京信息 |    部门动态    |   各区动态   |    民生信息    |
+| :--: | :--------: | :------: | :--------: |
+| news | department | district | livelihood |
+
+</Route>
+
+## 全国哲学社会科学工作办公室
+
+### 通用
+
+<Route author="nczitzk" example="/gov/nopss/GB/219469" path="/gov/nopss/:path+" :paramsDesc="['路径，默认为通知公告']">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `http://www.nopss.gov.cn/` 后的字段。下面是一个例子。
+
+若订阅 [年度项目、青年项目和西部项目](http://www.nopss.gov.cn/GB/219469/431027) 则将对应页面 URL <http://www.nopss.gov.cn/GB/219469/431027> 中 `http://www.nopss.gov.cn/` 后的字段 `GB/219469/431027` 作为路径填入。此时路由为 [`/gov/nopss/GB/219469/431027`](https://rsshub.app/gov/nopss/GB/219469/431027)
+
+:::
+
+</Route>
 
 ## 泉州市跨境电子商务协会
 
@@ -410,9 +538,21 @@ pageClass: routes
 
 <Route author="sgqy" example="/go.jp/mofa" path="/go.jp/mofa"/>
 
-## 陕西省人民政府
+## 山西省人民政府
 
-### 陕西省科学技术厅
+### 人社厅
+
+<Route author="wolfyu1991" example="/gov/shanxi/rst/rsks-tzgg" path="/gov/shanxi/rst/:category" :paramsDesc="['分类名']">
+
+|    通知公告   |    公务员考试   |    事业单位考试   |    专业技术人员资格考试   |    其他考试   |
+| :-------: | :--------: | :---------: | :-------------: | :-------: |
+| rsks-tzgg | rsks-gwyks | rsks-sydwks | rsks-zyjsryzgks | rsks-qtks |
+
+</Route>
+
+## 陕西省省人民政府
+
+### 省科学技术厅
 
 <Route author="nczitzk" example="/gov/shaanxi/kjt" path="/gov/shaanxi/kjt/:id?" :paramsDesc="['分类，见下表，默认为通知公告']">
 
@@ -566,6 +706,18 @@ pageClass: routes
 
 <Route author="nczitzk" example="/mohw/clarification" path="/mohw/clarification"/>
 
+## 太原市人民政府
+
+### 太原市人力资源和社会保障局政府公开信息
+
+<Route author="2PoL" example="/gov/taiyuan/rsj/gggs" path="/gov/taiyuan/rsj/:caty/:page?" :paramsDesc="['信息类别', '页码']">
+
+| 工作动态 | 太原新闻 | 通知公告 | 县区动态 | 国内动态 | 图片新闻 |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| gzdt | tyxw | gggs | xqdt | gndt | tpxw |
+
+</Route>
+
 ## 武汉东湖新技术开发区
 
 ### 新闻中心
@@ -690,6 +842,22 @@ pageClass: routes
 
 <Route author="Yoge-Code" example="/gov/cnca/zxtz" path="/gov/cnca/zxtz"/>
 
+## 中国互联网络信息中心
+
+### 新闻中心
+
+<Route author="nczitzk" example="/gov/cnnic/gywm/xwzx/xwzxtzgg/" path="/gov/cnnic/:path+" :paramsDesc="['路径，默认为热点信息']">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `http://www.cnnic.net.cn/` 后的字段。下面是一个例子。
+
+若订阅 [热点信息](http://www.cnnic.net.cn/gywm/xwzx/rdxw) 则将对应页面 URL <http://www.cnnic.net.cn/gywm/xwzx/rdxw> 中 `http://www.cnnic.net.cn/` 后的字段 `gywm/xwzx/rdxw` 作为路径填入。此时路由为 [`/gov/cnnic/gywm/xwzx/rdxw`](https://rsshub.app/gov/cnnic/gywm/xwzx/rdxw)
+
+:::
+
+</Route>
+
 ## 中国农工民主党
 
 ### 新闻中心
@@ -739,6 +907,84 @@ pageClass: routes
 | 监管动态 | 公告通知 | 政策法规 | 政策解读 | 征求意见 | 行政许可 | 行政处罚 | 行政监管措施 | 工作论文 | 金融监管研究 | 统计信息 |
 | :--: | :--: | :--: | :--: | :--: | :--: | :--: | :----: | :--: | :----: | :--: |
 | jgdt | ggtz | zcfg | zcjd | zqyj | xzxk | xzcf | xzjgcs | gzlw | jrjgyj | tjxx |
+
+</Route>
+
+## 中国载人航天
+
+### 综合新闻
+
+<Route author="nczitzk" example="/gov/cmse/xwzx/zhxw" path="/gov/cmse/xwzx/zhxw" />
+
+### 研制进展
+
+<Route author="nczitzk" example="/gov/cmse/xwzx/yzjz" path="/gov/cmse/xwzx/yzjz" />
+
+### 官方公告
+
+<Route author="nczitzk" example="/gov/cmse/gfgg" path="/gov/cmse/gfgg" />
+
+### 飞行任务
+
+<Route author="nczitzk" example="/gov/cmse/fxrw" path="/gov/cmse/fxrw" />
+
+### 任务动态
+
+<Route author="nczitzk" example="/gov/cmse/fxrw/wtfx/rwdt" path="/gov/cmse/fxrw/:id/:category" :paramsDesc="['任务 id，可在对应任务页 URL 中找到', '分类 id，见下表，可在对应任务页 URL 中找到']">
+
+::: tip 提示
+
+下表分类可能并不完整。请查看各飞行任务详情页获得完整分类。
+
+:::
+
+| 任务动态 | 综合新闻 | 视频 | 图片新闻 | 媒体聚焦 |
+| ---- | ---- | -- | ---- | ---- |
+| rwdt | zhxw | sp | tpxw | mtjj |
+
+</Route>
+
+### 空间科学
+
+<Route author="nczitzk" example="/gov/cmse/kjkx/kjkxyjyyy" path="/gov/cmse/kjkx/:id" :paramsDesc="['分类 id，见下表，可在对应分类页 URL 中找到']">
+
+| 空间科学研究与应用 | 航天技术试验 | 航天医学实验 |
+| --------- | ------ | ------ |
+| kjkxyjyyy | htjssy | htyxsy |
+
+</Route>
+
+### 国际合作
+
+<Route author="nczitzk" example="/gov/cmse/gjhz" path="/gov/cmse/gjhz" />
+
+### 环球视野
+
+<Route author="nczitzk" example="/gov/cmse/hqsy/zxdta" path="/gov/cmse/hqsy/:id" :paramsDesc="['分类 id，见下表，可在对应分类页 URL 中找到']">
+
+| 最新动态  | 美国 | 俄罗斯 | 欧洲 | 日本 | 印度 | 领域动态 |
+| ----- | -- | --- | -- | -- | -- | ---- |
+| zxdta | mg | els | oz | rb | yd | lydt |
+
+</Route>
+
+### 专题报道
+
+<Route author="nczitzk" example="/gov/cmse/ztbd/xwfbh" path="/gov/cmse/ztbd/:id" :paramsDesc="['分类 id，见下表，可在对应分类页 URL 中找到']">
+
+| 新闻发布会 | 学术大会 | 标准 | 新闻专题 |
+| ----- | ---- | -- | ---- |
+| xwfdh | xsdh | bz | xwzt |
+
+</Route>
+
+### 科普教育
+
+<Route author="nczitzk" example="/gov/cmse/kpjy/kphd" path="/gov/cmse/kpjy/:id" :paramsDesc="['分类 id，见下表，可在对应分类页 URL 中找到']">
+
+| 科普活动 | 太空课堂 | 航天知识 |
+| ---- | ---- | ---- |
+| kphd | tkkt | ttzs |
 
 </Route>
 
@@ -836,98 +1082,6 @@ pageClass: routes
 将目标栏目的网址拆解为 `http://www.cppcc.gov.cn/` 和后面的字段，去掉 `.shtml` 后，把后面的字段中的 `/` 替换为 `-`，即为该路由的 slug
 
 如：（委员建言）<http://www.cppcc.gov.cn/zxww/newcppcc/wyjy/index.shtml> 的网址在 `http://www.cppcc.gov.cn/` 后的字段是 `zxww/newcppcc/wyjy/index.shtml`，则对应的 slug 为 `zxww-newcppcc-wyjy-index`，对应的路由即为 `/cppcc/zxww-newcppcc-wyjy-index`
-
-</Route>
-
-### 北京市人民政府
-
-#### 北京教育考试院
-
-<Route author="gavin-k" example="/gov/beijing/bjeea/bjeeagg" path="/gov/beijing/bjeea/:type" :paramsDesc="['分类名']">
-
-|   通知公告  | 招考政策 | 自考快递 |
-| :-----: | :--: | :--: |
-| bjeeagg | zkzc | zkkd |
-
-</Route>
-
-### 河北省财政厅
-
-<Route author="nczitzk" example="/gov/hebei/czt/xwdt" path="/gov/hebei/czt/xwdt/:category?" :paramsDesc="['分类，见下表，默认为财政动态']">
-
-| 财政动态 | 综合新闻 | 通知公告 |
-| ---- | ---- | ---- |
-| gzdt | zhxw | tzgg |
-
-</Route>
-
-### 河北省退役军人事务厅
-
-<Route author="SunShinenny" example="/gov/veterans/hebei/sxxx" path="/gov/veterans/hebei/:type" :paramsDesc="['分类名']">
-
-| 省内信息 | 厅内信息 | 市县信息 |
-| :--: | :--: | :--: |
-| ywgz | tnxx | sxxx |
-
-</Route>
-
-### 湖南省政府采购网 - 公告
-
-<Route author="Jeason0228" example="/gov/hunan/notice/all" path="/gov/hunan/notice/:type"  :paramsDesc="['all=全部，cg=采购公告,zb=中标公告,fb=废标公告,ht=合同公告,gz=更正公告,zz=终止公告,qt=其他公告']" />
-
-### 江苏省人民政府
-
-<Route author="ocleo1" example="/gov/province/jiangsu/important-news" path="/gov/province/jiangsu/:category" :paramsDesc="['分类名']">
-
-|      省政府常务会议      |      要闻关注      |    部门资讯    |     市县动态    |          政策解读         |
-| :---------------: | :------------: | :--------: | :---------: | :-------------------: |
-| executive-meeting | important-news | department | city-county | policy-interpretation |
-
-|   政府信息公开年度报告  |        政府信息公开制度       |   省政府及办公厅文件   |        规范性文件       |
-| :-----------: | :-------------------: | :-----------: | :----------------: |
-| annual-report | information-publicity | documentation | normative-document |
-
-|             立法意见征集             |        意见征集        |
-| :----------------------------: | :----------------: |
-| legislative-opinion-collection | opinion-collection |
-
-</Route>
-
-#### 江苏省教育考试院
-
-<Route author="schen1024" example="/gov/jiangsu/eea/zcgd" path="/gov/jiangsu/eea/:type?" :paramsDesc="['分类, 默认为 `wdyw`, 具体参数见下表']">
-
-注意：其他栏目的内容格式不兼容，且不便统一，此处只做了下标的栏目
-
-| 具体栏目 |  参数  |
-| :--: | :--: |
-| 招考要闻 | zkyw |
-| 政策规定 | zcgd |
-| 招考信息 | zkxx |
-| 招考资料 | zkzl |
-| 学习交流 | xxjl |
-
-</Route>
-
-### 山西省人民政府
-
-#### 山西省人社厅
-
-<Route author="wolfyu1991" example="/gov/shanxi/rst/rsks-tzgg" path="/gov/shanxi/rst/:category" :paramsDesc="['分类名']">
-
-|    通知公告   |    公务员考试   |    事业单位考试   |    专业技术人员资格考试   |    其他考试   |
-| :-------: | :--------: | :---------: | :-------------: | :-------: |
-| rsks-tzgg | rsks-gwyks | rsks-sydwks | rsks-zyjsryzgks | rsks-qtks |
-
-</Route>
-
-### 南京市人民政府
-
-<Route author="ocleo1" example="/gov/city/nanjing/news" path="/gov/city/nanjing/:category" :paramsDesc="['分类名']">
-
-| 南京信息 |    部门动态    |   各区动态   |    民生信息    |
-| :--: | :--------: | :------: | :--------: |
-| news | department | district | livelihood |
 
 </Route>
 
@@ -1125,7 +1279,7 @@ pageClass: routes
 
 ### 政务公开
 
-<Route author="LogicJake" example="/mofcom/article/b" path="/mofcom/article/:suffix" :paramsDesc="['支持形如`http://www.mofcom.gov.cn/article/*`的网站，传入 article 之后的后缀']" />
+<Route author="LogicJake" example="/gov/mofcom/article/xwfb" path="/gov/mofcom/article/:suffix+" :paramsDesc="['支持形如 `http://www.mofcom.gov.cn/article/*` 的网站，传入 article 之后的后缀，支持多级']" radar="1" rssbud="1"/>
 
 ## 中华人民共和国生态环境部
 
@@ -1183,6 +1337,16 @@ pageClass: routes
 
 ## 中央纪委国家监委
 
-### 审查调查
+### 要闻
 
-<Route author="LogicJake" example="/ccdi/scdc" path="/ccdi/scdc"/>
+<Route author="bigfei" example="/gov/ccdi/yaowenn" path="/gov/ccdi/:path+" :paramsDesc="['路径，默认为 要闻']">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `http://www.ccdi.gov.cn/` 后的字段。下面是一个例子。
+
+若订阅 [审查调查 > 中管干部 > 执纪审查](https://www.ccdi.gov.cn/scdcn/zggb/zjsc/) 则将对应页面 URL <https://www.ccdi.gov.cn/scdcn/zggb/zjsc/> 中 `http://www.ccdi.gov.cn/` 后的字段 `scdcn/zggb/zjsc` 作为路径填入。此时路由为 [`/gov/ccdi/scdcn/zggb/zjsc`](https://rsshub.app/gov/ccdi/scdcn/zggb/zjsc)
+
+:::
+
+</Route>

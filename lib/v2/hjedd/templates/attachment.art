@@ -1,0 +1,7 @@
+{{ if attachment.category == 'video' }}
+<video poster="{{ attachment.data }}" controls>
+  <source src="{{ attachment.remoteUrl }}" type="application/x-mpegURL">
+</video>
+{{ else }}
+<img src="{{ attachment.data }}">
+{{ /if }}

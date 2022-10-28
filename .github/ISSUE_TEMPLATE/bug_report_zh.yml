@@ -14,7 +14,7 @@ body:
     attributes:
       label: 路由地址
       description: 不包含参数，复制文档路由参数，一行一个，不要重复。如果和路由没有关系，请写`NOROUTE`
-      placeholder: /rsshub/someroute/:type?
+      placeholder: /someroute/:type?
       render: routes
     validations:
       required: true
@@ -24,7 +24,7 @@ body:
     attributes:
       label: 完整路由地址
       description: 包含所有必选与可选参数，一行一个，可以有重复路由不同参数（如果需要）
-      placeholder: /rsshub/routes/1234?some_extension=mode
+      placeholder: /routes/1234?some_extension=mode
       render: fullroutes
     validations:
       required: true
