@@ -14028,10 +14028,10 @@ vuepress-plugin-container@^2.0.2:
     "@vuepress/shared-utils" "^1.2.0"
     markdown-it-container "^2.0.0"
 
-vuepress-plugin-meilisearch@0.12.4:
-  version "0.12.4"
-  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.12.4.tgz#35012abfa637c0182032d329d7abb6eaa4d49212"
-  integrity sha512-plD+xCmjF5I5BChHLTeLu2cCzu1fusrW9Ubak8Iyt0wTThV4l8eKeaxSnt0JEFhTv5cF1nosPtuubczeSJjjaA==
+vuepress-plugin-meilisearch@0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.13.0.tgz#1a5bf413486ec2a03cf2167883507b73826564f5"
+  integrity sha512-qNDjY6rqDwP52v06zO+U+6CdTiMvJBb64Puq+pe0kROUrmuBwxLZ7g3ssYRMe3vil6EhLYnamRmVb/gJ88I/RQ==
   dependencies:
     docs-searchbar.js "^2.4.0"
 
