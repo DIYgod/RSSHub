@@ -18,6 +18,12 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 </RouteEn>
 
+## Comics Kingdom
+
+### Archive
+
+<RouteEn author="stjohnjohnson" example="/comicskingdom/pardon-my-planet" path="/comicskingdom/:name" :paramsDesc="['URL path of the strip on comicskingdom.com']" />
+
 ## Hanime.tv
 
 ### Recently updated
