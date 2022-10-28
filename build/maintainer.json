@@ -3341,6 +3341,9 @@
     "/scmp/:category_id": [
         "proletarius101"
     ],
+    "/sctv/programme/:id?": [
+        "nczitzk"
+    ],
     "/scvtc/xygg": [
         "nczitzk"
     ],
