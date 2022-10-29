@@ -91,7 +91,7 @@
   "dependencies": {
     "@koa/router": "12.0.0",
     "@postlight/parser": "2.2.3",
-    "@sentry/node": "7.17.1",
+    "@sentry/node": "7.17.2",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
@@ -107,7 +107,7 @@
     "etag": "1.8.1",
     "fanfou-sdk": "4.2.0",
     "git-rev-sync": "3.0.2",
-    "googleapis": "108.0.1",
+    "googleapis": "109.0.0",
     "got": "11.8.5",
     "https-proxy-agent": "5.0.1",
     "iconv-lite": "0.6.3",
