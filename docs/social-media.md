@@ -344,6 +344,12 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 </Route>
 
+## Curis.app
+
+### 用户
+
+<Route author="Ovler-Young" example="/curis/yuu-yuu" path="/curis/:name" :paramsDesc="['用户名称，可在url中找到']"/>
+
 ## Dev.to
 
 ### 最高职位
