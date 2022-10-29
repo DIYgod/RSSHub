@@ -1538,39 +1538,39 @@
     domhandler "^4.2.0"
     selderee "^0.6.0"
 
-"@sentry/core@7.16.0":
-  version "7.16.0"
-  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-7.16.0.tgz#60f9b54ef2ec524176b329e1d15be39c36da5953"
-  integrity sha512-vq6H1b/IPTvzDD9coQ3wIudvSjkAYuUlXb1dv69dRlq4v3st9dcKBps1Zf0lQ1i4TVlDLoe1iGMmNFglMF1Q5w==
+"@sentry/core@7.17.2":
+  version "7.17.2"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-7.17.2.tgz#0d3b5f0155f3ecefb7ddb2f050c25bf0fb69e0fb"
+  integrity sha512-mBFjngWJPN3V1A/tz/qa1jkQvmZtU07hhlWg+kmajD0nFulPHUWEvZhsi8NFveGcxMxc/wmaSSLcEOpKq5L29g==
   dependencies:
-    "@sentry/types" "7.16.0"
-    "@sentry/utils" "7.16.0"
+    "@sentry/types" "7.17.2"
+    "@sentry/utils" "7.17.2"
     tslib "^1.9.3"
 
-"@sentry/node@7.16.0":
-  version "7.16.0"
-  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-7.16.0.tgz#f049e243169ec4d6058d5c0fff08104509f5ba9a"
-  integrity sha512-OC0TO6UTetv8IsX3zNhdeui7YVIQCnhkbfi+CMrB6YsHaMP2A9qH5gNyu/hKbaY9+4xci7e4rxyRmI65aKS9ow==
+"@sentry/node@7.17.2":
+  version "7.17.2"
+  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-7.17.2.tgz#b9d9460fea80667611d6b5412404916ea7513646"
+  integrity sha512-dMHff7C3MgKpIlbLkrEEtq1nX8o1Tiax/DWOtj5dLrPMsjQyivMs906GeS3GJkX7YeMMfy93j8gC+qIK54gqFw==
   dependencies:
-    "@sentry/core" "7.16.0"
-    "@sentry/types" "7.16.0"
-    "@sentry/utils" "7.16.0"
+    "@sentry/core" "7.17.2"
+    "@sentry/types" "7.17.2"
+    "@sentry/utils" "7.17.2"
     cookie "^0.4.1"
     https-proxy-agent "^5.0.0"
     lru_map "^0.3.3"
     tslib "^1.9.3"
 
-"@sentry/types@7.16.0":
-  version "7.16.0"
-  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.16.0.tgz#79c06ada153a84feb949fa49b1c9d15f91decd79"
-  integrity sha512-i6D+OK6d0l/k+VQvRp/Pt21WkDEgVBUIZq+sOkEZJczbcfexVdXKeXXoYTD2vYuFq8Yy28fzlsZaKI+NoH94yQ==
+"@sentry/types@7.17.2":
+  version "7.17.2"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.17.2.tgz#49dee17896e3814d0ce6dae1b7efead5f1af8c8c"
+  integrity sha512-zxhNQ8Xt/hfP8bFZEV66ovJZK7aUqok5w1wjsHgkUz/S6/gkiMrDYT3OtRCRuY3mfQu9KmeBniM0xZkaxREJ1w==
 
-"@sentry/utils@7.16.0":
-  version "7.16.0"
-  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.16.0.tgz#b832520c661d4435808969ee04814ff8e20497b1"
-  integrity sha512-3Zh1txg7IRp4kZAdG27YF7K6lD1IZyuAo9KjoPg1Xzqa4DOZyASJuEkbf+rK2a9T4HrtVHHXJUsNbKg8WM3VHg==
+"@sentry/utils@7.17.2":
+  version "7.17.2"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.17.2.tgz#934f900715dacc51699b44e8e61df8c7fbdd0b5f"
+  integrity sha512-l8t6qzyi+UUzD0a/oOYn4i+Eii+Ei29/TVwj/+9ogfJzBk6dSwSLvXievsyCRpcN3tftpWP0cHREcbZN64ZOWw==
   dependencies:
-    "@sentry/types" "7.16.0"
+    "@sentry/types" "7.17.2"
     tslib "^1.9.3"
 
 "@sinclair/typebox@^0.24.1":
@@ -6725,10 +6725,10 @@ googleapis-common@^6.0.0:
     url-template "^2.0.8"
     uuid "^9.0.0"
 
-googleapis@108.0.1:
-  version "108.0.1"
-  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-108.0.1.tgz#cdf563578efff0aa5244ada54ed972704fa5bfe7"
-  integrity sha512-NKYTMfQH1xVl38Efj4UAwYq/9j+vc/iaqULfG3dSBK4vQHhsYKgKN6agMrgzlWo3NA8ivwb/0bToxZxnhxj7Bg==
+googleapis@109.0.0:
+  version "109.0.0"
+  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-109.0.0.tgz#54eb4dee7a5f3509d5a6c2bfd3bd583cb0439c80"
+  integrity sha512-m2+cwWg4R0TQ6Goe8vKydQKLuIH/M0phJzdH1zt5SCGNvoGyIpofq7FOyHKlnrrNdtHSTTI3aGtTazioHD1gPA==
   dependencies:
     google-auth-library "^8.0.2"
     googleapis-common "^6.0.0"
@@ -9417,7 +9417,14 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==
 
-meilisearch@0.28.0, meilisearch@^0.28.0:
+meilisearch@0.29.0:
+  version "0.29.0"
+  resolved "https://registry.yarnpkg.com/meilisearch/-/meilisearch-0.29.0.tgz#1bfe6e7a2598f2abde6cfa818edec103b6eebfb1"
+  integrity sha512-E+n4Xm7CgAQzPU7V3MWfYoyA6PrIY1dq9IC4djb2PvF5rb7EN/VqhAM1vIa3b5aE+rC85biPpe2Bji7ntOT98w==
+  dependencies:
+    cross-fetch "^3.1.5"
+
+meilisearch@^0.28.0:
   version "0.28.0"
   resolved "https://registry.yarnpkg.com/meilisearch/-/meilisearch-0.28.0.tgz#650f08a56ef0a989a41d13233f7a744cfa7f54df"
   integrity sha512-zC50xLyPWBtfAIZiFTSJyYJp/a5bO+dSSigBKUEoShFkuv9+/KC4J3T3ZejNVHXG2DU0ohOMf8TZ3HAHXNd3EA==
@@ -14028,10 +14035,10 @@ vuepress-plugin-container@^2.0.2:
     "@vuepress/shared-utils" "^1.2.0"
     markdown-it-container "^2.0.0"
 
-vuepress-plugin-meilisearch@0.12.4:
-  version "0.12.4"
-  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.12.4.tgz#35012abfa637c0182032d329d7abb6eaa4d49212"
-  integrity sha512-plD+xCmjF5I5BChHLTeLu2cCzu1fusrW9Ubak8Iyt0wTThV4l8eKeaxSnt0JEFhTv5cF1nosPtuubczeSJjjaA==
+vuepress-plugin-meilisearch@0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-meilisearch/-/vuepress-plugin-meilisearch-0.13.0.tgz#1a5bf413486ec2a03cf2167883507b73826564f5"
+  integrity sha512-qNDjY6rqDwP52v06zO+U+6CdTiMvJBb64Puq+pe0kROUrmuBwxLZ7g3ssYRMe3vil6EhLYnamRmVb/gJ88I/RQ==
   dependencies:
     docs-searchbar.js "^2.4.0"
 
