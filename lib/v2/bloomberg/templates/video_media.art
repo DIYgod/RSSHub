@@ -8,7 +8,7 @@
         x5-video-player-fullscreen="true"
         x-webkit-airplay="allow"
         preload="metadata"
-        poster="{{ poster }}">
+        poster="{{ coverUrl }}">
             {{if stream }}
             <source src="{{ stream }}" type="application/x-mpegURL">
             {{/if}}
