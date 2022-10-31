@@ -5434,6 +5434,13 @@
         target:(params, url) => {
                     const cat = url.match(/\?cat=(.*)/);
                     return `/lovelive-anime/topics/${params.abbr}/${null !== cat && cat.length === 2 ? cat[1] : ''}`;
+                } },
+      { title:"Schedule",
+        docs:"https://docs.rsshub.app/anime.html#lovelive-anime-love-live-guan-wang-schedule",
+        source:[ "/schedule/" ],
+        target:(params, url) => {
+                    const cat = url.match(/\?series=(.*)&category=(.*)/);
+                    return `/lovelive-anime/schedules/${null !== cat && cat.length >= 2 ? cat[1] : ''}/${null !== cat && cat.length === 3 ? cat[2] : ''}`;
                 } } ] },
   "luogu.com.cn":{ _name:"洛谷",
     ".":[ { title:"日报",
