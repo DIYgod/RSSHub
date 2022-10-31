@@ -84,14 +84,33 @@ When `posts` is selected as the value of the parameter **source**, the parameter
 
 <RouteEn author="axojhf" example="/lovelive-anime/topics/otonokizaka" path="/lovelive-anime/topics/:abbr/:category?/:option?" :paramsDesc="['The path to the Love Live series of sub-projects on the official website is detailed in the table below', 'The official website lists the Topics category, `category` is `detail` when crawling the full text, other categories see the following table for details', 'Crawl full text when `option` is `detail`.']" radar="1">
 
-| Sub-project name (not full name) | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! |
-| -------------------------------- | ----------- | -------------------- | ------------------------------------------ | --------------------- |
-| `abbr`parameter                  | otonokizaka | uranohoshi           | nijigasaki                                 | yuigaoka              |
+| Sub-project Name (not full name) | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | 幻日のヨハネ | ラブライブ！スクールアイドルミュージカル |
+|----------------------------------|-------------|----------------------|--------------------------------------------|-----------------------|--------|----------------------|
+| `abbr`parameter                  | otonokizaka | uranohoshi           | nijigasaki                                 | yuigaoka              | yohane | musical              |
 
 
-| category name         | 全てのニュース  | 音楽商品 | アニメ映像商品 | キャスト映像商品 | 劇場    | アニメ放送/配信 | キャスト配信/ラジオ | ライブ/イベント | ブック | グッズ | ゲーム | メディア | ご当地情報 | その他 | キャンペーン |
-| -------------- | --------------- | -------- | -------------- | ---------------- | ------- | --------------- | ------------------- | --------------- | ------ | ------ | ------ | -------- | ---------- | ------ | ------------ |
-| `category`parameter | <u>*No parameter*</u> | music    | anime_movie    | cast_movie       | theater | onair           | radio               | event           | books  | goods  | game   | media    | local      | other  | campaign     |
+| Category Name       | 全てのニュース               | 音楽商品  | アニメ映像商品     | キャスト映像商品   | 劇場      | アニメ放送/配信 | キャスト配信/ラジオ | ライブ/イベント | ブック   | グッズ   | ゲーム  | メディア  | ご当地情報 | その他   | キャンペーン   |
+|---------------------|-----------------------|-------|-------------|------------|---------|----------|------------|----------|-------|-------|------|-------|-------|-------|----------|
+| `category`parameter | <u>*No parameter*</u> | music | anime_movie | cast_movie | theater | onair    | radio      | event    | books | goods | game | media | local | other | campaign |
+
+</RouteEn>
+
+### Love Live Official Website Schedule
+
+<RouteEn author="axojhf" example="/lovelive-anime/schedules" path="/schedules/:serie?/:category?" :paramsDesc="['Love Live! Series sub-projects abbreviation, see the following table', 'The official website lists the categories, see the following table for details']" radar="1">
+
+::: tip Please note!
+The schedule and other information obtained by this route is subject to the official website announcement!
+The RSS routing has not been rigorously tested and the information provided cannot be guaranteed accurate!
+:::
+
+| Sub-project Name (not full name) | 全シリーズ                        | Lovelive!  | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | ラブライブ！スクールアイドルミュージカル |
+|----------------------------------|------------------------------|------------|----------------------|--------------------------------------------|-----------------------|----------------------|
+| `serie`parameter                 | <u>*No parameter*</u>or`all` | `lovelive` | `sunshine`           | `nijigasaki`                               | `superstar`           | `musical`            |
+
+| Category Name       | 全て                           | ライブ    | イベント    | 生配信       |
+|---------------------|------------------------------|--------|---------|-----------|
+| `category`parameter | <u>*No parameter*</u>or`all` | `live` | `event` | `haishin` |
 
 </RouteEn>
 

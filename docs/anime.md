@@ -375,13 +375,32 @@ Sources
 
 <Route author="axojhf" example="/lovelive-anime/topics/otonokizaka" path="/lovelive-anime/topics/:abbr/:category?/:option?" :paramsDesc="['Love Live系列子企划在官网的路径，详见下表', '官网列出的Topics分类，`category` 为 `detail` 时抓取全文，其他分类详见下表', '`option` 为 `detail` 时抓取全文']" radar="1">
 
-| 子企划名（非全称） | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! |
-| --------- | ----------- | -------------------- | ------------------------------------------ | --------------------- |
-| `abbr`参数  | otonokizaka | uranohoshi           | nijigasaki                                 | yuigaoka              |
+| 子企划名（非全称） | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | 幻日のヨハネ | ラブライブ！スクールアイドルミュージカル |
+| --------- | ----------- | -------------------- | ------------------------------------------ | --------------------- | ------ | -------------------- |
+| `abbr`参数  | otonokizaka | uranohoshi           | nijigasaki                                 | yuigaoka              | yohane | musical              |
 
 | 分类名          | 全てのニュース      | 音楽商品  | アニメ映像商品     | キャスト映像商品   | 劇場      | アニメ放送 / 配信 | キャスト配信 / ラジオ | ライブ / イベント | ブック   | グッズ   | ゲーム  | メディア  | ご当地情報 | その他   | キャンペーン   |
 | ------------ | ------------ | ----- | ----------- | ---------- | ------- | ---------- | ------------ | ---------- | ----- | ----- | ---- | ----- | ----- | ----- | -------- |
 | `category`参数 | <u>*无参数*</u> | music | anime_movie | cast_movie | theater | onair      | radio        | event      | books | goods | game | media | local | other | campaign |
+
+</Route>
+
+### Love Live 官网 Schedule
+
+<Route author="axojhf" example="/lovelive-anime/schedules" path="/schedules/:serie?/:category?" :paramsDesc="['Love Live系列子企划简称，详见下表', '官网列出的分类，详见下表']" radar="1">
+
+::: tip 请注意！！！
+该路由获取的时间及其他信息以官网公告为准！<br>
+该 RSS 路由没有经过严格的测试，提供的信息不能保证准确性！
+:::
+
+| 子企划名（非全称） | 全シリーズ              | Lovelive!  | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | ラブライブ！スクールアイドルミュージカル |
+| --------- | ------------------ | ---------- | -------------------- | ------------------------------------------ | --------------------- | -------------------- |
+| `serie`参数 | <u>*无参数*</u>或`all` | `lovelive` | `sunshine`           | `nijigasaki`                               | `superstar`           | `musical`            |
+
+| 分类名          | 全て                 | ライブ    | イベント    | 生配信       |
+| ------------ | ------------------ | ------ | ------- | --------- |
+| `category`参数 | <u>*无参数*</u>或`all` | `live` | `event` | `haishin` |
 
 </Route>
 
