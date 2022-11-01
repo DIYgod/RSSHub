@@ -3,11 +3,13 @@ pageClass: routes
 ---
 
 # Finance
+
 ## Bloomberg
 
 ### News
 
 <RouteEn author="bigfei" example="/bloomberg" path="/bloomberg/:site?" :paramsDesc="['Site, see below, News by default']" anticrawler="1">
+
 | Site | Name |
 | ---- | ---- |
 | / | News |
@@ -22,6 +24,7 @@ pageClass: routes
 | equality | Equality |
 | businessweek | Businessweek |
 | citylab | CityLab |
+
 </RouteEn>
 
 ## CFD
