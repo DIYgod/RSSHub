@@ -731,6 +731,12 @@
     "/cncf/:cate?": [
         "Fatpandac"
     ],
+    "/cngal/entry/:id": [
+        "chengyuhui"
+    ],
+    "/cngal/weekly": [
+        "chengyuhui"
+    ],
     "/cnjxol/jxrb/:id?": [
         "nczitzk"
     ],
