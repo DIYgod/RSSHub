@@ -78,6 +78,16 @@ pageClass: routes
 
 ## finviz
 
+### News
+
+<Route author="nczitzk" example="/finviz" path="/finviz/:category?" :paramsDesc="['分类，见下表，默认为 News']">
+
+| News | Blog |
+| ---- | ---- |
+| news | blog |
+
+</Route>
+
 ### 美股股票新闻
 
 <Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['股票代码']"/>
@@ -133,6 +143,12 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 | zh | en |
 
 </Route>
+
+## Unusual Whales
+
+### News Flow
+
+<Route author="TonyRL" example="/unusualwhales/news" path="/unusualwhales/news" radar="1" rssbud="1" />
 
 ## WEEX 华尔街见闻旗下全球投资线上品牌
 
@@ -288,13 +304,32 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="Fatpandac" example="/laohu8/personal/3527667596890271" path="/laohu8/personal/:id" :paramsDesc="['用户 ID，见网址链接']" rssbud="1" radar="1"/>
 
-## 麦肯锡中国
+## 麦肯锡
 
-<Route author="laampui" example="/mckinsey/autos" path="/mckinsey/:category?" :paramsDesc="['默认为全部，见下表']">
+### 洞见
 
-| 汽车    | 金融服务              | 数字化                 | 消费者       | 医药与医疗                      | 麦肯锡全球研究院                  | 全球基础材料 | 创新         | 宏观经济         | 制造业           | 人才与领导力            | 技术，媒体与通信                     | 城市化与可持续发展                   | 资本项目和基础设施                       | 旅游、运输和物流 |
-| ----- | ----------------- | ------------------- | --------- | -------------------------- | ------------------------- | ------ | ---------- | ------------ | ------------- | ----------------- | ---------------------------- | --------------------------- | ------------------------------- | -------- |
-| autos | banking-insurance | business-technology | consumers | healthcare-pharmaceuticals | mckinsey-global-institute | 全球基础材料 | innovation | macroeconomy | manufacturing | talent-leadership | technology-media-and-telecom | urbanization-sustainability | capital-projects-infrastructure | 交通运输与物流  |
+<Route author="laampui" example="/mckinsey/cn" path="/mckinsey/cn/:category?" :paramsDesc="['分类，见下表，默认为全部']" radar="1" rssbud="1">
+
+| 分类 | 分类名       |
+| -- | --------- |
+| 25 | 全部洞见      |
+| 2  | 汽车        |
+| 3  | 金融服务      |
+| 4  | 消费者       |
+| 5  | 医药        |
+| 7  | 数字化       |
+| 8  | 制造业       |
+| 9  | 私募        |
+| 10 | 技术，媒体与通信  |
+| 12 | 城市化与可持续发展 |
+| 13 | 创新        |
+| 16 | 人才与领导力    |
+| 18 | 宏观经济      |
+| 19 | 麦肯锡全球研究院  |
+| 37 | 麦肯锡季刊     |
+| 41 | 资本项目和基础设施 |
+| 42 | 旅游、运输和物流  |
+| 45 | 全球基础材料    |
 
 </Route>
 
@@ -509,6 +544,10 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ## 雪球
 
+### 今日话题
+
+<Route author="nczitzk" example="/xueqiu/today" path="/xueqiu/today"/>
+
 ### 用户动态
 
 <Route author="imlonghao" example="/xueqiu/user/8152922548" path="/xueqiu/user/:id/:type?" :paramsDesc="['用户 id, 可在用户主页 URL 中找到', '动态的类型, 不填则默认全部']">
@@ -608,6 +647,31 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 | 数据 | 机器人新闻 | 独家数据 |
 | -- | ----- | ---- |
 |    | jqrxw | djsj |
+
+</Route>
+
+## 智通财经网
+
+### 推荐
+
+<Route author="nczitzk" example="/zhitongcaijing" path="/zhitongcaijing/:id?/:category?" :paramsDesc="['栏目 id，可在对应栏目页 URL 中找到，默认为 recommend，即推荐', '分类 id，可在对应栏目子分类页 URL 中找到，默认为全部']">
+
+| id           | 栏目  |
+| ------------ | --- |
+| recommend    | 推荐  |
+| hkstock      | 港股  |
+| meigu        | 美股  |
+| agu          | 沪深  |
+| ct           | 创投  |
+| esg          | ESG |
+| aqs          | 券商  |
+| ajj          | 基金  |
+| focus        | 要闻  |
+| announcement | 公告  |
+| research     | 研究  |
+| shares       | 新股  |
+| bazaar       | 市场  |
+| company      | 公司  |
 
 </Route>
 

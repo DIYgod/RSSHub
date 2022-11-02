@@ -77,7 +77,7 @@ pageClass: routes
 
 ### 主刊
 
-<Route author="yech1990" example="/cell/cell/current" path="/journals/cell/cell/:category" supportScihub="1"/>
+<Route author="y9c" example="/cell/cell/current" path="/journals/cell/cell/:category" supportScihub="1"/>
 
 | `:category` |     类型说明    | 路由                                                         |
 | :---------: | :---------: | ---------------------------------------------------------- |
@@ -88,7 +88,7 @@ pageClass: routes
 
 ### 封面故事
 
-<Route author="yech1990" example="/cell/cover" path="/cell/cover" />
+<Route author="y9c" example="/cell/cover" path="/cell/cover" />
 
 订阅 Cell 系列杂志的封面图片，并及时获取刊物更新状态。
 
@@ -164,7 +164,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### 最新成果
 
-<Route author="yech1990 TonyRL" example="/nature/research/ng" path="/nature/research/:journal?" :paramsDesc="['期刊名简写，默认为 `nature`']" supportScihub="1" radar="1" rssbud="1"/>
+<Route author="y9c TonyRL" example="/nature/research/ng" path="/nature/research/:journal?" :paramsDesc="['期刊名简写，默认为 `nature`']" supportScihub="1" radar="1" rssbud="1"/>
 
 |   `:journal`  |             期刊名             | 路由                                                                                 |
 | :-----------: | :-------------------------: | ---------------------------------------------------------------------------------- |
@@ -187,7 +187,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### 新闻及评论
 
-<Route author="yech1990 TonyRL" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['期刊名简写']" supportScihub="1" radar="1" rssbud="1"/>
+<Route author="y9c TonyRL" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['期刊名简写']" supportScihub="1" radar="1" rssbud="1"/>
 
 |   `:journal`  |             期刊名             | 路由                                                                                                 |
 | :-----------: | :-------------------------: | -------------------------------------------------------------------------------------------------- |
@@ -208,7 +208,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### 封面故事
 
-<Route author="yech1990" example="/nature/cover" path="/nature/cover" />
+<Route author="y9c" example="/nature/cover" path="/nature/cover" />
 
 订阅 Nature 系列杂志的封面图片，并及时获取刊物更新状态。
 
@@ -216,11 +216,11 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### 主刊 - 新闻动态
 
-<Route author="yech1990 TonyRL" example="/nature/news" path="/nature/news" supportScihub="1" radar="1" rssbud="1"/>
+<Route author="y9c TonyRL" example="/nature/news" path="/nature/news" supportScihub="1" radar="1" rssbud="1"/>
 
 ### 精彩研究
 
-<Route author="yech1990 TonyRL" example="/nature/highlight" path="/nature/highlight/:journal?" :paramsDesc="['期刊名简写，默认为 `nature`']" supportScihub="1" radar="1" rssbud="1"/>
+<Route author="y9c TonyRL" example="/nature/highlight" path="/nature/highlight/:journal?" :paramsDesc="['期刊名简写，默认为 `nature`']" supportScihub="1" radar="1" rssbud="1"/>
 
 ::: warning 警告
 
@@ -244,7 +244,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### 最新文章（可筛选领域）
 
-<Route author="emdoe yech1990" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" supportScihub="1"/>
+<Route author="emdoe y9c" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" supportScihub="1"/>
 
 -   通过 `/pnas/` + “领域名称” 来获取对应 “领域” 的最新文章（Latest Research）。
     若参数置空（`/pnas`）或为 latest（`/pnas/latest`），则默认获取全部文章。
@@ -255,7 +255,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### Trending articles
 
-<Route author="yech1990 nczitzk" example="/pubmed/trending" path="/pubmed/trending/:filter?" :paramsDesc="['过滤条件，可在 URL 中找到']" supportScihub="1">
+<Route author="y9c nczitzk" example="/pubmed/trending" path="/pubmed/trending/:filter?" :paramsDesc="['过滤条件，可在 URL 中找到']" supportScihub="1">
 
 ::: tip 提示
 
@@ -271,7 +271,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### 本期刊物
 
-<Route author="yech1990 TonyRL" example="/science/current/science" path="/science/current/:journal" :paramsDesc="['期刊名简写']" supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
+<Route author="y9c TonyRL" example="/science/current/science" path="/science/current/:journal" :paramsDesc="['期刊名简写']" supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
 
 |      简写     |               期刊名              | 路由                                                                             |
 | :---------: | :----------------------------: | ------------------------------------------------------------------------------ |
@@ -289,7 +289,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### 封面故事
 
-<Route author="yech1990 TonyRL" example="/science/cover" path="/science/cover" anticrawler="1" radar="1" rssbud="1"/>
+<Route author="y9c TonyRL" example="/science/cover" path="/science/cover" anticrawler="1" radar="1" rssbud="1"/>
 
 订阅 Science 系列杂志的封面图片，并及时获取刊物更新状态。
 
@@ -299,7 +299,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### 在线发表
 
-<Route author="yech1990 TonyRL" example="/science/early" path="/science/early/:journal?" :paramsDesc="['期刊名简写']" supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
+<Route author="y9c TonyRL" example="/science/early" path="/science/early/:journal?" :paramsDesc="['期刊名简写']" supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
 
 *仅 Science, Science Immunology 和 Science Translational Medicine 提供在线发表*
 

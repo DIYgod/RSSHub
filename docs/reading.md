@@ -174,23 +174,23 @@ pageClass: routes
 
 :::
 
-| 网址                        |
-| ------------------------- |
-| <https://www.xbiquwx.la>  |
-| <http://www.biqu5200.net> |
-| <https://www.xbiquge.so>  |
-| <https://www.biqugeu.net> |
-| <http://www.b520.cc>      |
-| <https://www.biquge.biz>  |
-| <https://www.xbiquge.la>  |
-| <https://www.qbiqu.com>   |
-| <https://www.bswtan.com>  |
-| <https://www.biquge.co>   |
-| <https://www.zhhbqg.com>  |
-| <http://www.biqugse.com>  |
-| <https://www.ibiquge.net> |
-| <https://www.shuquge.com> |
-| <https://www.mayiwxw.com> |
+| 网址                         | 名称    |
+| -------------------------- | ----- |
+| <https://www.xbiquwx.la>   | 笔尖中文  |
+| <http://www.biqu5200.net>  | 笔趣阁   |
+| <https://www.xbiquge.so>   | 笔趣阁   |
+| <https://www.biqugeu.net>  | 顶点小说网 |
+| <http://www.b520.cc>       | 笔趣阁   |
+| <https://www.ahfgb.com>    | 笔趣鸽   |
+| <https://www.ibiquge.la>   | 香书小说  |
+| <https://www.biquge.tv>    | 笔趣阁   |
+| <https://www.bswtan.com>   | 笔书网   |
+| <https://www.biquge.co>    | 笔趣阁   |
+| <https://www.bqzhh.com>    | 笔趣阁   |
+| <http://www.biqugse.com>   | 笔趣阁   |
+| <https://www.ibiquge.info> | 爱笔楼   |
+| <https://www.ishuquge.com> | 书趣阁   |
+| <https://www.mayiwxw.com>  | 蚂蚁文学  |
 
 ### 小说
 
@@ -501,16 +501,6 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 | 每周一书   | 使用技巧   | 图书推荐  | 新闻速递 | 精选短文  |
 | ------ | ------ | ----- | ---- | ----- |
 | weekly | skills | books | news | essay |
-
-</Route>
-
-## 书趣阁
-
-### 小说更新
-
-<Route author="ActonGen" example="/novel/shuquge/8659" path="/novel/shuquge/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到, 例如 `8659`']">
-
-举例网址：<http://www.shuquge.com/txt/8659/index.html>
 
 </Route>
 

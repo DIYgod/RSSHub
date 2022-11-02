@@ -237,7 +237,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Trending
 
-<Route author="DIYgod" example="/github/trending/daily/javascript/zh" path="/github/trending/:since/:language/:spoken_language?" :paramsDesc="['时间跨度，可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到，可选 `daily` `weekly` `monthly`', '语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到，`any`表示不设语言限制', '自然语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到']" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/github/trending/daily/javascript/zh" path="/github/trending/:since/:language/:spoken_language?" :paramsDesc="['时间跨度，可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到，可选 `daily` `weekly` `monthly`', '语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到，`any`表示不设语言限制', '自然语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到']" radar="1" rssbud="1" selfhost="1"/>
 
 ### Topics
 
@@ -369,13 +369,15 @@ GitHub 官方也提供了一些 RSS:
 
 ### 分区
 
-<Route author="cf020031308 nczitzk" example="/hackernews" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['内容分区，见下表，默认为 `index`', '链接类型，见下表，默认为 `sources`', '设定用户，只在 `threads` 和 `submitted` 分区有效']">
+<Route author="cf020031308 nczitzk" example="/hackernews" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['内容分区，见下表，默认为 `index`', '链接类型，见下表，默认为 `sources`', '设定用户，只在 `threads` 和 `submitted` 分区有效。斜当选择`over`分区，`User`的含义是帖子点数的阈值']">
 
 内容分区
 
-| homepage                              | new                                           | past                                        | comments                                                | ask                                     | show                                      | jobs                                      | best                                      | threads                                                 | submitted                                                   |
-| ------------------------------------- | --------------------------------------------- | ------------------------------------------- | ------------------------------------------------------- | --------------------------------------- | ----------------------------------------- | ----------------------------------------- | ----------------------------------------- | ------------------------------------------------------- | ----------------------------------------------------------- |
-| [index](https://news.ycombinator.com) | [newest](https://news.ycombinator.com/newest) | [front](https://news.ycombinator.com/front) | [newcomments](https://news.ycombinator.com/newcomments) | [ask](https://news.ycombinator.com/ask) | [show](https://news.ycombinator.com/show) | [jobs](https://news.ycombinator.com/jobs) | [best](https://news.ycombinator.com/best) | [threads](https://news.ycombinator.com/threads?id=dang) | [submitted](https://news.ycombinator.com/submitted?id=dang) |
+| homepage                              | new                                           | past                                        | comments                                                | ask                                     | show                                      | jobs                                      | best                                      | threads                                                 | submitted                                                   | over                                                 |
+| ------------------------------------- | --------------------------------------------- | ------------------------------------------- | ------------------------------------------------------- | --------------------------------------- | ----------------------------------------- | ----------------------------------------- | ----------------------------------------- | ------------------------------------------------------- | ----------------------------------------------------------- | ---------------------------------------------------- |
+| [index](https://news.ycombinator.com) | [newest](https://news.ycombinator.com/newest) | [front](https://news.ycombinator.com/front) | [newcomments](https://news.ycombinator.com/newcomments) | [ask](https://news.ycombinator.com/ask) | [show](https://news.ycombinator.com/show) | [jobs](https://news.ycombinator.com/jobs) | [best](https://news.ycombinator.com/best) | [threads](https://news.ycombinator.com/threads?id=dang) | [submitted](https://news.ycombinator.com/submitted?id=dang) | [over](https://news.ycombinator.com/over?points=100) |
+
+> `Over` 分区只显示过去几天内超过固定阈值的帖子。
 
 条目指向链接类型
 
@@ -395,23 +397,58 @@ GitHub 官方也提供了一些 RSS:
 
 ## HelloGitHub
 
-### 文章列表
+### 热门
 
-<Route author="moke8" example="/hellogithub/article" path="/hellogithub/article"/>
+<Route author="nczitzk" example="/hellogithub/hot" path="/hellogithub/hot/:id?" :paramsDesc="['标签 id，可在对应标签页 URL 中找到，默认为全部标签']">
 
-### 编程语言排行榜
+以下为部分标签：
 
-<Route author="moke8" example="/hellogithub/ranking" path="/hellogithub/ranking/:type?" :paramsDesc="['分类，见下表']">
+| id         | 标签     |
+| ---------- | ------ |
+| Z8PipJsHCX | Python |
+| YQHn0gERoi | C      |
+| WTbsu5GAfC | CLI    |
+| juBLV86qa5 | 机器学习   |
+| D4JBAUo967 | Rust   |
+| dFA60uKLgr | GUI    |
+| 0LByh3tjUO | 教程     |
+| 4lpGK0sUyk | Web 应用 |
+| yrZkGsUC9M | C++    |
+| mbP20HIEYD | Ruby   |
 
-| 编程语言排行 | 数据库排行 | 服务端语言排行   |
-| ------ | ----- | --------- |
-| tiobe  | db    | webserver |
+</Route>
+
+### 最近
+
+<Route author="nczitzk" example="/hellogithub/last" path="/hellogithub/last/:id?" :paramsDesc="['标签 id，可在对应标签页 URL 中找到，默认为全部标签']">
+
+部分标签见上表
+
+</Route>
+
+### 文章
+
+<Route author="moke8 nczitzk" example="/hellogithub/article" path="/hellogithub/article/:sort?/:id?" :paramsDesc="['排序方式，见下表，默认为 `hot`，即热门', '标签 id，可在对应标签页 URL 中找到，默认为全部标签']">
+
+| 热门  | 最近   |
+| --- | ---- |
+| hot | last |
+
+</Route>
+
+### 排行榜
+
+<Route author="moke8 nczitzk" example="/hellogithub/report" path="/hellogithub/report/:type?" :paramsDesc="['分类，见下表，默认为编程语言排行榜']">
+
+| 编程语言  | 服务器      | 数据库        |
+| ----- | -------- | ---------- |
+| tiobe | netcraft | db-engines |
 
 </Route>
 
 ### 月刊
 
-<Route author="moke8" example="/hellogithub/month" path="/hellogithub/month"/>
+<Route author="moke8 nczitzk" example="/hellogithub/volume" path="/hellogithub/volume"/>
 
 ## Hex-Rays
 
@@ -720,7 +757,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 分类订阅
 
-<Route author="qwertyuiop6" example="/anquanke/week" path="/anquanke/:category" :paramsDesc="['分类订阅']" radar="1" rssbud="1">
+<Route author="qwertyuiop6" example="/anquanke/week" path="/anquanke/:category/:fulltext?" :paramsDesc="['分类订阅', '是否获取全文，如需获取全文参数传入 `quanwen` 或 `fulltext`']" radar="1" rssbud="1">
 
 | 360 网络安全周报 | 活动       | 知识        | 资讯   | 招聘  | 工具   |
 | ---------- | -------- | --------- | ---- | --- | ---- |
@@ -917,19 +954,70 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="huhuhang" example="/lanqiao/questions/2" path="/lanqiao/questions/:id" :paramsDesc="['topic_id 主题 `id` 可在社区板块 URL 中找到']" radar="1" rssbud="1"/>
 
+## 连享会
+
+### 精彩资讯
+
+<Route author="nczitzk" example="/lianxh" path="/lianxh/:category?" :paramsDesc="['分类 id，可在对应分类页 URL 中找到，默认为空，即全部']">
+
+| 分类              | id |
+| --------------- | -- |
+| 全部              |    |
+| Stata 入门        | 16 |
+| Stata 教程        | 17 |
+| 计量专题            | 18 |
+| 内生性 - 因果推断      | 19 |
+| 面板数据            | 20 |
+| 交乘项 - 调节 - 中介   | 21 |
+| 结果输出            | 22 |
+| 工具软件            | 23 |
+| Stata 绘图        | 24 |
+| 数据处理            | 25 |
+| Stata 程序        | 26 |
+| Probit-Logit    | 27 |
+| 时间序列            | 28 |
+| 空间计量 - 网络分析     | 29 |
+| Markdown-LaTeX  | 30 |
+| 论文写作            | 31 |
+| 回归分析            | 32 |
+| 其它              | 33 |
+| 数据分享            | 34 |
+| Stata 资源        | 35 |
+| 文本分析 - 爬虫       | 36 |
+| Python-R-Matlab | 37 |
+| IV-GMM          | 38 |
+| 倍分法 DID         | 39 |
+| 断点回归 RDD        | 40 |
+| PSM-Matching    | 41 |
+| 合成控制法           | 42 |
+| Stata 命令        | 43 |
+| 专题课程            | 44 |
+| 风险管理            | 45 |
+| 生存分析            | 46 |
+| 机器学习            | 47 |
+| 分位数回归           | 48 |
+| SFA-DEA - 效率分析  | 49 |
+| 答疑 - 板书         | 50 |
+| 论文重现            | 51 |
+| 最新课程            | 52 |
+| 公开课             | 53 |
+| Stata33 讲       | 54 |
+
+</Route>
+
 ## 洛谷
 
 ### 日报
 
-<Route author="LogicJake prnake nczitzk" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子 id，可在 URL 中找到，不填默认为 2020 年日报']"/>
+<Route author="LogicJake prnake nczitzk" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子 id，可在 URL 中找到，不填默认为 `47327`']" radar="1" rssbud="1"/>
 
-### 近期比赛
+### 比赛列表
 
-<Route author="prnake" example="/luogu/contest" path="/luogu/contest"/>
+<Route author="prnake" example="/luogu/contest" path="/luogu/contest" radar="1" rssbud="1"/>
 
 ### 用户动态
 
-<Route author="solstice23" example="/luogu/user/feed/1" path="/luogu/user/feed/:uid" :paramsDesc="['用户 UID']"/>
+<Route author="solstice23" example="/luogu/user/feed/1" path="/luogu/user/feed/:uid" :paramsDesc="['用户 UID']" radar="1" rssbud="1"/>
 
 ## 码农俱乐部
 
@@ -1139,11 +1227,11 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## 印记中文周刊
+## 印记中文
 
-### 最新一期
+### 周刊 - JavaScript
 
-<Route author="daijinru" example="/docschina/jsweekly" path="/docschina/jsweekly"/>
+<Route author="daijinru" example="/docschina/jsweekly" path="/docschina/jsweekly" radar="1" rssbud="1"/>
 
 ## 政采云前端技术团队
 

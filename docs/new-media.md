@@ -100,13 +100,24 @@ pageClass: routes
 
 ### 分类
 
-<Route author="nczitzk" example="/8world" path="/8world/:category?" :paramsDesc="['分类，见下表，默认为即时']">
+<Route author="nczitzk" example="/8world" path="/8world/:category?" :paramsDesc="['分类 id，见下表，默认为即时 REALTIME']">
 
-| 即时       | 新加坡       | 东南亚            | 中港台           | 国际    | 财经      | 体育     |
-| -------- | --------- | -------------- | ------------- | ----- | ------- | ------ |
-| realtime | singapore | southeast-asia | greater-china | world | finance | sports |
+| 分类                  | id             |
+| ------------------- | -------------- |
+| 即时 REALTIME         | realtime       |
+| 新加坡 SINGAPORE       | singapore      |
+| 东南亚 SOUTH-EAST ASIA | southeast-asia |
+| 中港台 GREATER CHINA   | greater-china  |
+| 国际 WORLD            | world          |
+| 财经 FINANCE          | finance        |
+| 体育 SPORTS           | sports         |
+| 社团 COMMUNITY        | community      |
 
 </Route>
+
+### 标签
+
+<Route author="nczitzk" example="/8world/topic/xianggang-3" path="/8world/topic/:id" :paramsDesc="['标签 id，可在对应标签页中找到']" />
 
 ## 9To5
 
@@ -139,12 +150,6 @@ pageClass: routes
 | culture | philosophy | psychology | society | science |
 
 </Route>
-
-## Aljazeera 半岛网
-
-### 新闻
-
-<Route author="nczitzk" example="/aljazeera/news" path="/aljazeera/news"/>
 
 ## AppleInsider
 
@@ -518,6 +523,12 @@ Country
 ### Blog
 
 <Route author="nczitzk" example="/disinformationindex/blog" path="/disinformationindex/blog"/>
+
+## Good.news
+
+### 今日要闻
+
+<Route author="nczitzk" example="/good" path="/good" />
 
 ## GQ
 
@@ -1348,7 +1359,7 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### The Verge
 
-<Route author="HenryQW" example="/verge" path="/verge">
+<Route author="HenryQW" example="/theverge" path="/theverge">
 
 通过提取文章全文，以提供比官方源更佳的阅读体验.
 
@@ -1807,7 +1818,7 @@ Supported sub-sites:
 
 ### 首页
 
-<Route author="nczitzk" example="/dedao/list/年度日更" path="/dedao/list/:caty?" :paramsDesc="['分类名，默认为年度日更']"/>
+<Route author="nczitzk" example="/dedao/list/年度日更" path="/dedao/list/:category?" :paramsDesc="['分类名，默认为年度日更']"/>
 
 ### 新闻
 
@@ -1823,7 +1834,17 @@ Supported sub-sites:
 
 ### 知识城邦
 
-<Route author="nczitzk" example="/dedao/knowledge" path="/dedao/knowledge/:topic?/:type?" :paramsDesc="['话题 id，可在话题页 URL 中找到', '分享类型，`true` 指精选，`false` 指最新，默认为精选']"/>
+<Route author="nczitzk" example="/dedao/knowledge" path="/dedao/knowledge/:topic?/:type?" :paramsDesc="['话题 id，可在对应话题页 URL 中找到', '分享类型，`true` 指精选，`false` 指最新，默认为精选']"/>
+
+### 用户主页
+
+<Route author="nczitzk" example="/dedao/user/VkA5OqLX4RyGxmZRNBMlwBrDaJQ9og" path="/dedao/user/:id/:type?" :paramsDesc="['用户 id，可在对应用户主页 URL 中找到', '类型，见下表，默认为`0`，即动态']">
+
+| 动态 | 书评 | 视频 |
+| -- | -- | -- |
+| 0  | 7  | 12 |
+
+</Route>
 
 ## 电动邦
 
@@ -2022,6 +2043,50 @@ area 分区选项
 
 <Route author="HenryQW" example="/dongqiudi/player_news/50000339" path="/dongqiudi/player_news/:id" :paramsDesc="['球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中通过其队伍找到']"/>
 
+## 端传媒
+
+通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+::: warning 注意
+
+付费内容全文可能需要登陆获取，详情见部署页面的配置模块。
+
+:::
+
+### 专题・栏目
+
+<Route author="prnake" example="/theinitium/channel/latest/zh-hans" path="/theinitium/channel/:type?/:language?" :paramsDesc="['栏目，缺省为最新', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
+
+Type 栏目：
+
+| 最新     | 深度      | What’s New | 广场                | 科技         | 风物      | 特约      | ... |
+| ------ | ------- | ---------- | ----------------- | ---------- | ------- | ------- | --- |
+| latest | feature | news-brief | notes-and-letters | technology | culture | pick_up | ... |
+
+更多栏目名称可通过 <https://theinitium.com/section/special/> 及 <https://theinitium.com/section/hot_channel/> 获取。
+
+</Route>
+
+### 话题・标签
+
+<Route author="AgFlore" example="/theinitium/tags/2019_10/zh-hans" path="/theinitium/tags/:type/:language?" :paramsDesc="['话题 ID，可从话题页 URL 中获取，如 <https://theinitium.com/tags/2019_10/>', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
+
+### 作者
+
+<Route author="AgFlore" example="/theinitium/author/ninghuilulu/zh-hans" path="/theinitium/author/:type/:language?" :paramsDesc="['作者 ID，可从作者主页 URL 中获取，如<https://theinitium.com/author/ninghuilulu/>','语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
+
+### 个人订阅追踪动态
+
+<Route author="AgFlore" example="/theinitium/follow/articles/zh-hans" path="/theinitium/follow/articles/:language?" :paramsDesc="['语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']">
+
+::: warning 注意
+
+需要自建，详情见部署页面的配置模块。
+
+:::
+
+</Route>
+
 ## 多知网
 
 ### 首页
@@ -2095,6 +2160,20 @@ area 分区选项
 </Route>
 
 ## 凤凰网
+
+### 资讯
+
+<Route author="nczitzk" example="/ifeng/news" path="/ifeng/news/:path?" :paramsDesc="['路径，对应分类资讯页 URL 路径，默认为空']">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `https://news.ifeng.com/` 后的字段。下面是一个例子。
+
+若订阅 [大湾区\_资讯\_凤凰网](https://news.ifeng.com/shanklist/3-305565-) 则将对应页面 URL <https://news.ifeng.com/shanklist/3-305565-> 中 `https://news.ifeng.com/` 后的字段 `shanklist/3-305565-` 作为路径填入。此时路由为 [`/ifeng/news/shanklist/3-305565-`](https://rsshub.app/ifeng/news/shanklist/3-305565-)
+
+:::
+
+</Route>
 
 ### 大风号
 
@@ -2868,6 +2947,18 @@ column 为 third 时可选的 category:
 | 公司新闻 | 漏洞披露 | 技术研究     |
 | ---- | ---- | -------- |
 | news | vul  | research |
+
+</Route>
+
+## 貓奴日常
+
+### 分類
+
+<Route author="TonyRL" example="/thecatcity" path="/thecatcity/:term?" :paramsDesc="['見下表，留空為全部文章']" radar="1" rssbud="1">
+
+| 貓物分享 | 貓咪新聞 | 養貓大全 | 貓奴景點 | 新手養貓教學 |
+| ---- | ---- | ---- | ---- | ------ |
+| 1    | 2    | 3    | 4    | 5      |
 
 </Route>
 

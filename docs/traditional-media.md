@@ -62,6 +62,64 @@ pageClass: routes
 
 </Route>
 
+## Aljazeera 半岛电视台
+
+### 新闻
+
+<Route author="nczitzk" example="/aljazeera/chinese/news" path="/aljazeera/:language?/:category?" :paramsDesc="['语言，见下表，默认为 arbric，即阿拉伯文', '分类，可在对应新闻分类页 URL 中找到，默认为空，即首页']">
+
+语言
+
+| 阿拉伯文   | 中文      | 英文      |
+| ------ | ------- | ------- |
+| arbric | chinese | english |
+
+::: tip 提示
+
+若订阅 [Al Jazeera English - Economy](https://www.aljazeera.com/economy)，其语言为 `english`，路径为 `economy`，可得到其路由为 [`/aljazeera/english/economy`](https://rsshub.app/aljazeera/english/economy)
+
+若订阅 [半岛电视台中文频道 - 政治](https://chinese.aljazeera.net/news/political)，其语言为 `chinese`，路径为 `news/political`，可得到其路由为 [`/aljazeera/chinese/news/political`](https://rsshub.app/aljazeera/chinese/news/political)
+
+:::
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/aljazeera/english/tag/science-and-technology" path="/aljazeera/:language?/tag/:id" :paramsDesc="['语言，见下表，默认为 arbric，即阿拉伯文', '标签 id，可在对应标签页 URL 中找到']">
+
+语言
+
+| 阿拉伯文   | 中文      | 英文      |
+| ------ | ------- | ------- |
+| arbric | chinese | english |
+
+::: tip 提示
+
+若订阅 [Al Jazeera English - Science and Technology](https://www.aljazeera.com/tag/science-and-technology)，其语言为 `english`，标签 id 为 `science-and-technology`，可得到其路由为 [`/aljazeera/english/tag/science-and-technology`](https://rsshub.app/aljazeera/english/tag/science-and-technology)
+
+:::
+
+</Route>
+
+### 官方 RSS
+
+<Route author="nczitzk" example="/aljazeera/english/rss" path="/aljazeera/:language?/rss" :paramsDesc="['语言，见下表，默认为 arbric，即阿拉伯文']">
+
+语言
+
+| 阿拉伯文   | 中文      | 英文      |
+| ------ | ------- | ------- |
+| arbric | chinese | english |
+
+::: tip 提示
+
+半岛电视台中文频道无对应的 RSS，故默认返回首页内容
+
+:::
+
+</Route>
+
 ## AP News
 
 ### 话题
@@ -138,6 +196,18 @@ pageClass: routes
 | 全部  | The China NGO Project |
 | --- | --------------------- |
 | all | ngo                   |
+
+</Route>
+
+## CNBC
+
+### 全文 RSS
+
+<Route author="TonyRL" example="/cnbc/rss" path="/cnbc/rss/:id?" :paramsDesc="['频道 ID，可在官方频道 RSS URL 中找到，留空为 `100003114` (Top News)']">
+
+通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+支持所有频道，频道名称见 [官方频道 RSS](https://www.cnbc.com/rss-feeds/)。
 
 </Route>
 
@@ -431,12 +501,6 @@ Solidot 提供的 feed:
 下载站：<http://www.cgx02.xyz/index.php?dir=/te>
 
 </Route>
-
-## UDN
-
-### 轉角國際
-
-<Route author="emdoe" example="/udn/global/鏡頭背後" path="/udn/global/:tid" :paramsDesc="['標籤名稱，請在轉角國際首頁獲取；如果選擇輸入 `newest` 則輸出最新文章']">
 
 ## Voice of America (VOA)
 
@@ -878,50 +942,6 @@ IT・科学 tech_science
 | 新着・速報 | 社会       | 政治       | 経済      | スポーツ   | 国際    | 科学・ＩＴ   | 選挙・世論調査  | エンタメ・文化 | 囲碁・将棋     | ライフ  | 地域    | 社説        | 皇室        |
 | ----- | -------- | -------- | ------- | ------ | ----- | ------- | -------- | ------- | --------- | ---- | ----- | --------- | --------- |
 | news  | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial | koushitsu |
-
-</Route>
-
-## 端传媒
-
-通过提取文章全文，以提供比官方源更佳的阅读体验。
-
-::: warning 注意
-
-付费内容全文可能需要登陆获取，详情见部署页面的配置模块。
-
-:::
-
-### 专题・栏目
-
-<Route author="prnake" example="/initium/latest/zh-hans" path="/initium/:type?/:language?" :paramsDesc="['栏目，缺省为最新', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
-
-Type 栏目：
-
-| 最新     | 深度      | What’s New | 广场                | 科技         | 风物      | 特约      | ... |
-| ------ | ------- | ---------- | ----------------- | ---------- | ------- | ------- | --- |
-| latest | feature | news-brief | notes-and-letters | technology | culture | pick_up | ... |
-
-更多栏目名称可通过 <https://theinitium.com/section/special/> 及 <https://theinitium.com/section/hot_channel/> 获取。
-
-</Route>
-
-### 话题・标签
-
-<Route author="AgFlore" example="/theinitium/tags/2019_10/zh-hans" path="/theinitium/tags/:type/:language?" :paramsDesc="['话题 ID，可从话题页 URL 中获取，如<https://theinitium.com/tags/2019_10/>', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
-
-### 作者
-
-<Route author="AgFlore" example="/theinitium/author/ninghuilulu/zh-hans" path="theinitium/author/:type/:language?" :paramsDesc="['作者 ID，可从作者主页 URL 中获取，如<https://theinitium.com/author/ninghuilulu/>','语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']"/>
-
-### 个人订阅追踪动态
-
-<Route author="AgFlore" example="/theinitium/follow/articles/zh-hans" path="theinitium/follow/articles/:language?" :paramsDesc="['语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']">
-
-::: warning 注意
-
-需要自建，详情见部署页面的配置模块。
-
-:::
 
 </Route>
 
@@ -1391,6 +1411,25 @@ category 对应的关键词有
 | 0  | 1  | 2  | 3  | 4  | 5  | 6  | 7  | 8  | 9  | 11 | 12 | 13 | 99  |
 | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | --- |
 | 精選 | 要聞 | 社會 | 地方 | 兩岸 | 國際 | 財經 | 運動 | 娛樂 | 生活 | 股市 | 文教 | 數位 | 不分類 |
+
+</Route>
+
+### 轉角國際 - 首頁
+
+<Route author="emdoe nczitzk" example="/udn/global" path="/udn/global/:category?" :paramsDesc="['分类，见下表，默认为首頁']">
+
+| 首頁 | 最新文章 | 熱門文章 |
+| -- | ---- | ---- |
+|    | new  | hot  |
+
+</Route>
+
+### 轉角國際 - 標籤
+
+<Route author="nczitzk" example="/udn/global/tag/過去24小時" path="/udn/global/tag/:tag?" :paramsDesc="['标签，可在对应标签页 URL 中找到']">
+
+| 過去 24 小時 | 鏡頭背後 | 深度專欄 | 重磅廣播 |
+| -------- | ---- | ---- | ---- |
 
 </Route>
 
@@ -1889,6 +1928,68 @@ category 对应的关键词有
 | 厦门日报 | 厦门晚报 | 海西晨报 | 城市捷报 |
 | ---- | ---- | ---- | ---- |
 | xmrb | xmwb | hxcb | csjb |
+
+</Route>
+
+## 四川广播电视台
+
+### 电视回放
+
+<Route author="nczitzk" example="/sctv/programme/1" path="/sctv/programme/:id?" :paramsDesc="['节目 id，可在对应节目页中找到，默认为 `1`，即四川新闻联播']">
+
+::: tip 提示
+
+查看更多电视节目请前往 [电视回放](https://www.sctv.com/column/list)
+
+:::
+
+| 节目          | id      |
+| ----------- | ------- |
+| 四川新闻联播      | 1       |
+| 早安四川        | 2       |
+| 今日视点        | 3       |
+| 龙门阵摆四川      | 10523   |
+| 非常话题        | 1014756 |
+| 新闻现场        | 8385    |
+| 黄金三十分       | 8386    |
+| 全媒直播间       | 8434    |
+| 晚报十点半       | 8435    |
+| 现场快报        | 8436    |
+| 四川乡村新闻      | 3673    |
+| 四川文旅报道      | 8174    |
+| 乡村会客厅       | 3674    |
+| 金字招牌        | 3675    |
+| 问您所 “？”     | 3677    |
+| 蜀你最能        | 3679    |
+| 美丽乡村印象      | 3678    |
+| 美丽乡村        | 3676    |
+| 乡村大篷车       | 3680    |
+| 华西论健        | 3681    |
+| 乡村聚乐部       | 3682    |
+| 医保近距离       | 6403    |
+| 音你而来        | 7263    |
+| 吃八方         | 7343    |
+| 世界那么大       | 7344    |
+| 风云川商        | 7345    |
+| 麻辣烫         | 7346    |
+| 财经快报        | 7473    |
+| 医生来了        | 7873    |
+| 安逸的旅途       | 8383    |
+| 运动 +        | 8433    |
+| 好戏连台        | 9733    |
+| 防癌大讲堂       | 1018673 |
+| 消费新观察       | 1017153 |
+| 天天耍大牌       | 1014753 |
+| 廉洁四川        | 1014754 |
+| 看世界         | 1014755 |
+| 金熊猫说教育（资讯版） | 1014757 |
+| 她说          | 1014759 |
+| 嗨宝贝         | 1014762 |
+| 萌眼看世界       | 1014764 |
+| 乡村大讲堂       | 1014765 |
+| 四川党建        | 1014766 |
+| 健康四川        | 1014767 |
+| 技能四川        | 12023   |
 
 </Route>
 

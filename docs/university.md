@@ -1817,6 +1817,14 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 校医院
+
+<Route author="ret-1" example="/nju/hospital" path="/nju/hospital" />
+
+### ITSC 信息中心
+
+<Route author="ret-1" example="/nju/itsc" path="/nju/itsc" />
+
 ## 南京工程学院
 
 ### 南京工程学院通知公告
@@ -1981,6 +1989,12 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 南京晓庄学院
+
+### 官网通知公告
+
+<Route author="real-jiakai" example="/njxzc/tzgg" path="/njxzc/tzgg" radar="1"/>
+
 ## 南京信息工程大学
 
 ::: tip 提示
@@ -2116,14 +2130,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 设计学院
 
-<Route author="evnydd0sf" example="/nua/dc/346" path="/nua/dc/:type" :paramsDesc="['新闻模块，见下表']" radar="1">
+<Route author="evnydd0sf" example="/nua/dc/news" path="/nua/dc/:type" :paramsDesc="['新闻模块，见下表']" radar="1">
 
-| 新闻模块       | 参数      |
-| ---------- | ------- |
-| 学院新闻 NEWS  | news    |
-| 教学 TEACH   | teach   |
-| 项目 PROJECT | project |
-| 党团 PARTY   | party   |
+| 新闻模块                   | 参数         |
+| ---------------------- | ---------- |
+| 学院新闻 NEWS              | news       |
+| 展览 EXHIBITION          | exhibition |
+| 研创 RESEARCH & CREATION | rc         |
+| 项目 PROJECT             | project    |
+| 党团 PARTY               | party      |
+| 后浪 YOUTH               | youth      |
 
 </Route>
 
@@ -2131,12 +2147,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="evnydd0sf" example="/nua/gra/1959" path="/nua/gra/:type" :paramsDesc="['新闻模块，见下表']" radar="1">
 
-| 新闻模块  | 参数   |
-| ----- | ---- |
-| 招生工作  | 1959 |
-| 培养工作  | 1962 |
-| 学位工作  | 1958 |
-| 思政与管理 | 1960 |
+| 新闻模块 | 参数   |
+| ---- | ---- |
+| 招生工作 | 1959 |
+| 培养工作 | 1962 |
+| 学位工作 | 1958 |
 
 </Route>
 
@@ -2986,6 +3001,26 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 栏目 | 学院新闻 | 学院通知 |
 | -- | ---- | ---- |
 | 代码 | 1122 | 1156 |
+
+</Route>
+
+### 财经学院
+
+<Route author="RiverTwilight" example="/swpu/cjxy/xyxw" path="/swpu/cjxy/:code" :paramsDesc="['栏目代码']">
+
+| 栏目 | 学院新闻 | 学院通知 |
+| -- | ---- | ---- |
+| 代码 | xyxw | xytz |
+
+</Route>
+
+### 信息学院
+
+<Route author="RiverTwilight" example="/swpu/is/xyxw" path="/swpu/is/:code" :paramsDesc="['栏目代码']">
+
+| 栏目 | 学院新闻 | 通知公告 | 教育教学 | 学生工作 | 招生就业 |
+| -- | ---- | ---- | ---- | ---- | ---- |
+| 代码 | xyxw | tzgg | jyjx | xsgz | zsjy |
 
 </Route>
 
