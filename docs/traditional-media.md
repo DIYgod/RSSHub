@@ -566,7 +566,7 @@ Provides all of the articles by the specified Yahoo! author.
 
 ### 光伏
 
-<Route author="Sxuet" example="/bjx/gf/sc" path="/bjx/gf/:type" :paramsDesc="['分类，北极星光伏最后的`type`字段']" radar="1" rssbud="1"/>
+<Route author="Sxuet" example="/bjx/gf/sc" path="/bjx/gf/:type" :paramsDesc="['分类，北极星光伏最后的`type`字段']" radar="1" rssbud="1">
 
 `:type` 类型可选如下
 
@@ -633,6 +633,8 @@ Category 列表：
 | 中国         | 国际         | 军事            | 台海          | 财经           | 科技              | 文化           |
 | ---------- | ---------- | ------------- | ----------- | ------------ | --------------- | ------------ |
 | china_news | world_news | military_news | taiwan_news | finance_news | technology_news | culture_news |
+
+</Route>
 
 ## 朝日新聞中文網（繁體中文版）
 
@@ -798,7 +800,7 @@ IT・科学 tech_science
 
 ### 新闻
 
-<Route author="nczitzk" example="/yicai/news" path="/yicai/news/:id?" :paramsDesc="['分类 id，见下表，可在对应分类页中找到，默认为新闻']" />
+<Route author="nczitzk" example="/yicai/news" path="/yicai/news/:id?" :paramsDesc="['分类 id，见下表，可在对应分类页中找到，默认为新闻']" >
 
 | Id                     | 名称      |
 | ---------------------- | ------- |
@@ -828,6 +830,8 @@ IT・科学 tech_science
 | dtcj                   | DT 财经   |
 | xfsz                   | 消费数知    |
 
+</Route>
+
 ### 关注
 
 <Route author="nczitzk" example="/yicai/feed/669" path="/yicai/feed/:id?" :paramsDesc="['主题 id，可在对应主题页中找到，默认为一财早报']">
@@ -842,7 +846,7 @@ IT・科学 tech_science
 
 ### 视听
 
-<Route author="nczitzk" example="/yicai/video" path="/yicai/video/:id?" :paramsDesc="['分类 id，见下表，可在对应分类页中找到，默认为视听']" />
+<Route author="nczitzk" example="/yicai/video" path="/yicai/video/:id?" :paramsDesc="['分类 id，见下表，可在对应分类页中找到，默认为视听']">
 
 | Id                   | 名称             |
 | -------------------- | -------------- |
@@ -881,6 +885,8 @@ IT・科学 tech_science
 | sanrenxing           | 价值三人行          |
 | yuandongli           | 中国源动力          |
 | pioneerzone          | 直击引领区          |
+
+</Route>
 
 ### 正在
 
@@ -1499,7 +1505,7 @@ category 对应的关键词有
 
 ### 即时新闻
 
-<Route author="TonyRL" example="/mingpao/ins/all" path="/mingpao/ins/:category?" :paramsDesc="['频道，预设为总目录']"/>
+<Route author="TonyRL" example="/mingpao/ins/all" path="/mingpao/ins/:category?" :paramsDesc="['频道，预设为总目录']">
 
 | category | 即时新闻频道 |
 | -------- | ------ |
@@ -1514,9 +1520,11 @@ category 对应的关键词有
 | s00022   | 文摘     |
 | s00024   | 热点     |
 
+</Route>
+
 ### 每日明报
 
-<Route author="TonyRL" example="/mingpao/pns/s00001" path="/mingpao/pns/:category?" :paramsDesc="['频道，预设为要闻']"/>
+<Route author="TonyRL" example="/mingpao/pns/s00001" path="/mingpao/pns/:category?" :paramsDesc="['频道，预设为要闻']">
 
 | category | 每日明报频道 |
 | -------- | ------ |
@@ -1533,6 +1541,8 @@ category 对应的关键词有
 | s00016   | 娱乐     |
 | s00017   | 英文     |
 | s00018   | 作家专栏   |
+
+</Route>
 
 ## 南方周末
 
@@ -1640,7 +1650,7 @@ category 对应的关键词有
 
 ### 畅销书排行榜
 
-<Route author="melvinto" example="/nytimes/book/combined-print-and-e-book-nonfiction" path="/nytimes/book/:category?"/>
+<Route author="melvinto" example="/nytimes/book/combined-print-and-e-book-nonfiction" path="/nytimes/book/:category?">
 
 | Category                             | 中文         |
 | ------------------------------------ | ---------- |
@@ -1655,6 +1665,8 @@ category 对应的关键词有
 | picture-books                        | 儿童 - 绘本    |
 | series-books                         | 儿童 - 系列图书  |
 | young-adult-hardcover                | 青少年        |
+
+</Route>
 
 ## 澎湃新闻
 
