@@ -252,6 +252,16 @@ pageClass: routes
 
 <Route author="TonyRL" example="/creative-comic/book/117" path="/creative-comic/book/:id/:coverOnly?/:quality?" :paramsDesc="['漫畫 ID，可在 URL 中找到', '僅獲取封面，非 `true` 時將獲取**全部**頁面，預設 `true`', '閱讀品質，標準畫質 `1`，高畫質 `2`，預設 `1`']" radar="1" rssbud="1"/>
 
+## CnGal
+
+### 每周速报
+
+<Route author="chengyuhui" example="/cngal/weekly" path="/cngal/weekly" radar="1" rssbud="1"/>
+
+### 制作者 / 游戏新闻
+
+<Route author="chengyuhui" example="/cngal/entry/2693" path="/cngal/entry/:id" :paramsDesc="['词条ID，游戏或制作者页面URL的最后一串数字']" radar="1" rssbud="1"/>
+
 ## DLsite
 
 ### 当前日期发售的新产品
