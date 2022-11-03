@@ -112,42 +112,6 @@ pageClass: routes
 
 </Route>
 
-## A 岛匿名版
-
-### 串
-
-<Route author="zcx1218029121" example="/adnmb/20" path="/adnmb/:pid" :paramsDesc="['板块 id 或者板块名称，例如`/adnmb/20`等价于`/adnmb/欢乐恶搞`，现有板块请参考下表']" >
-
-| 时间线 | 综合版 1 | 围炉  | 欢乐恶搞 | 速报 2 | 推理 | 跑团  | 技术宅 | 料理 | 猫版 | 音乐 | 考试 | 社畜  |
-| --- | ----- | --- | ---- | ---- | -- | --- | --- | -- | -- | -- | -- | --- |
-| -1  | 4     | 120 | 20   | 121  | 11 | 111 | 30  | 32 | 40 | 35 | 56 | 110 |
-
-| 科学 | 文学  | 创意 | 姐妹 1 | 数码 | 女装 | 日记 | 圈内 | 都市怪谈 | 买买买 | 动画 | 漫画 | 美漫 | 国漫 | 小说 |
-| -- | --- | -- | ---- | -- | -- | -- | -- | ---- | --- | -- | -- | -- | -- | -- |
-| 15 | 103 | 17 | 98   | 75 | 97 | 89 | 96 | 81   | 106 | 14 | 12 | 90 | 99 | 19 |
-
-| 轻小说 | GALGAME | 东方 Project | 舰娘 | 虚拟偶像 | VOCALOID | 游戏 | DNF | SE  | 手游 |
-| --- | ------- | ---------- | -- | ---- | -------- | -- | --- | --- | -- |
-| 87  | 64      | 5          | 93 | 101  | 6        | 2  | 72  | 124 | 3  |
-
-| Steam | 索尼 | LOL | DOTA | 口袋妖怪 | 战争雷霆 | WOT | Minecraft | 怪物猎人 | 3A 游戏 |
-| ----- | -- | --- | ---- | ---- | ---- | --- | --------- | ---- | ----- |
-| 107   | 24 | 22  | 70   | 38   | 86   | 51  | 10        | 28   | 108   |
-
-| 彩虹六号 | 暴雪游戏 | 卡牌桌游 | MUG | AC 大逃杀 | 任天堂 | AKB | SNH48 | COSPLAY | 声优 |
-| ---- | ---- | ---- | --- | ------ | --- | --- | ----- | ------- | -- |
-| 119  | 23   | 45   | 34  | 29     | 25  | 16  | 100   | 13      | 55 |
-
-| 模型 | 影视 | 军武 | 体育 | 值班室 | 城墙  | 技术支持 | 询问 3 | 宠物  | 摄影 2 |
-| -- | -- | -- | -- | --- | --- | ---- | ---- | --- | ---- |
-| 39 | 31 | 37 | 33 | 18  | 112 | 117  | 114  | 118 | 115  |
-
-| 主播  | 育儿  | 围炉  | 旅行  | 特摄 |
-| --- | --- | --- | --- | -- |
-| 116 | 113 | 120 | 125 | 9  |
-
-</Route>
-
 ## Chiphell
 
 ### 子版块
@@ -166,13 +130,19 @@ pageClass: routes
 
 ## Dcard
 
+::: warning 注意
+
+僅能透過台灣 IP 抓取。
+
+:::
+
 ### 首頁帖子
 
-<Route author="DIYgod" example="/dcard/posts/popular" path="/dcard/posts/:type?" :paramsDesc="['排序，popular 熱門；latest 最新，默認為 latest']" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/dcard/posts/popular" path="/dcard/posts/:type?" :paramsDesc="['排序，popular 熱門；latest 最新，默認為 latest']" radar="1" rssbud="1" anticrawler="1" puppeteer="1"/>
 
 ### 板塊帖子
 
-<Route author="HenryQW" example="/dcard/funny/popular" path="/dcard/:section/:type?" :paramsDesc="['板塊名稱，URL 中獲得', '排序，popular 熱門；latest 最新，默認為 latest']" radar="1" rssbud="1"/>
+<Route author="HenryQW" example="/dcard/funny/popular" path="/dcard/:section/:type?" :paramsDesc="['板塊名稱，URL 中獲得', '排序，popular 熱門；latest 最新，默認為 latest']" radar="1" rssbud="1" anticrawler="1" puppeteer="1"/>
 
 ## Discuz
 
@@ -249,6 +219,16 @@ pageClass: routes
 ### 帖子
 
 <Route author="cssxsh" example="/mcbbs/post/915861/3038" path="/mcbbs/post/:tid/:authorid?" :paramsDesc="['贴子id，可在帖子 URL 找到', '用户id，此参数不为空时，只看此作者']"/>
+
+## Meteor
+
+### 看板
+
+<Route author="TonyRL" example="/meteor/all" path="/meteor/:board?" :paramsDesc="['看板 ID 或簡稱，可在 URL 或下方路由找到，預設為 `all`']" radar="1" rssbud="1"/>
+
+### 看板列表
+
+<Route author="TonyRL" example="/meteor/boards" path="/meteor/boards" radar="1" rssbud="1"/>
 
 ## Mobilism
 
@@ -384,11 +364,77 @@ pageClass: routes
 
 <Route author="liyefox" example="/v2ex/tab/hot" path="/v2ex/tab/:tabid" :paramsDesc="['tab标签ID,在 URL 可以找到']"/>
 
+## X 岛匿名版
+
+### 串
+
+<Route author="miles170" example="/nmbxd1/1" path="/nmbxd1/:id" :paramsDesc="['板块 id 或者板块名称，现有板块请参考下表']" >
+
+| 综合线 | 非创作线 | 综合版 1 | 欢乐恶搞 | 买买买 (剁手) | 数码 (装机) | 技术 (码农) | 科学 (干货) | 二创 (画师) | 电影 / 电视 | ROLL 点 |
+| --- | ---- | ----- | ---- | -------- | ------- | ------- | ------- | ------- | ------- | ------ |
+| 1   | 3    | 综合版 1 | 欢乐恶搞 | 买买买      | 数码      | 技术宅     | 科学      | 二创      | 影视      | ROLL 点 |
+
+| 动画 | 漫画 | 主播 (UP) | 特摄 | 胶佬 (手办) | 小马 (美漫) | 东方 Project | 舰娘 | VOCALOID |
+| -- | -- | ------- | -- | ------- | ------- | ---------- | -- | -------- |
+| 动画 | 漫画 | 主播      | 特摄 | 胶佬      | 小马      | 东方 Project | 舰娘 | VOCALOID |
+
+| 游戏综合版 | 手游 | 卡牌桌游 | 任天堂 NS | LOL | SE(FF14) | DOTA & 自走棋 | 联机 (服务器发布）       | 怪物猎人 | 鹰角游戏 | 米哈游 | 音乐游戏 |
+| ----- | -- | ---- | ------ | --- | -------- | ---------- | ---------------- | ---- | ---- | --- | ---- |
+| 游戏    | 手游 | 卡牌桌游 | 任天堂    | LOL | SE       | DOTA       | 联机 %28 服务器发布 %29 | 怪物猎人 | 鹰角游戏 | 米哈游 | 音游   |
+
+| 跑团 | 规则怪谈 | 都市怪谈 (灵异) | 脑洞 (推理) | 料理 (美食) | 宠物 | 学业 (校园) | 社畜 | 育儿 | 摄影 (cos)     | 文学 (推书) | 音乐 (推歌) | 技术支持 |
+| -- | ---- | --------- | ------- | ------- | -- | ------- | -- | -- | ------------ | ------- | ------- | ---- |
+| 跑团 | 规则怪谈 | 都市怪谈      | 推理      | 料理      | 宠物 | 考试      | 社畜 | 育儿 | 摄影 %28cos%29 | 文学      | 音乐      | 技术支持 |
+
+</Route>
+
+## ZodGame
+
+### 论坛版块
+
+<Route author="FeCCC" example="/zodgame/forum/13" path="/zodgame/forum/:fid?" :paramsDesc="['版块 id，在 URL 可以找到']" radar="1" rssbud="1" selfhost="1"/>
+
+## Zuvio
+
+### 校園話題
+
+<Route author="TonyRL" example="/zuvio/student5/34" path="/zuvio/student5/:board?" :paramsDesc="['看板 ID，空为全站文章，可在看板 URL 或下方路由找到']" radar="1" rssbud="1"/>
+
+### 看板列表
+
+<Route author="TonyRL" example="/zuvio/student5/boards" path="/zuvio/student5/boards" />
+
 ## 巴哈姆特電玩資訊站
 
 ### 熱門推薦
 
 <Route author="nczitzk" example="/gamer/hot/47157" path="/gamer/hot/:bsn" :paramsDesc="['板块 id，在 URL 可以找到']"/>
+
+## 百度贴吧
+
+### 帖子列表
+
+<Route author="u3u" example="/baidu/tieba/forum/女图" path="/baidu/tieba/forum/:kw" :paramsDesc="['吧名']" radar="1"/>
+
+### 精品帖子
+
+<Route author="u3u" example="/baidu/tieba/forum/good/女图" path="/baidu/tieba/forum/good/:kw/:cid?" :paramsDesc="['吧名', '精品分类, 如果不传 `cid` 则获取全部分类']" radar="1"/>
+
+### 帖子动态
+
+<Route author="u3u" example="/baidu/tieba/post/5853240586" path="/baidu/tieba/post/:id" :paramsDesc="['帖子 ID']" radar="1"/>
+
+### 楼主动态
+
+<Route author="u3u" example="/baidu/tieba/post/lz/5853240586" path="/baidu/tieba/post/lz/:id" :paramsDesc="['帖子 ID']" radar="1"/>
+
+### 用户帖子
+
+<Route author="igxlin nczitzk" example="/baidu/tieba/user/斗鱼游戏君" path="/baidu/tieba/user/:uid" :paramsDesc="['用户 ID']" radar="1">
+
+用户 ID 可以通过打开用户的主页后查看地址栏的 `un` 字段来获取。
+
+</Route>
 
 ## 才符
 
@@ -427,6 +473,22 @@ pageClass: routes
 ### 工作机会
 
 <Route author="sfyumi" example="/eleduck/jobs" path="/eleduck/jobs"/>
+
+## 斗鱼
+
+### 鱼吧帖子
+
+<Route author="nczitzk" example="/douyu/group/1011" path="/douyu/group/:id/:sort?" :paramsDesc="['鱼吧 id，可在鱼吧页 URL 中找到', '排序方式，见下表，默认为发布时间排序']">
+
+| 回复时间排序 | 发布时间排序 |
+| ------ | ------ |
+| 1      | 2      |
+
+</Route>
+
+### 鱼吧跟帖
+
+<Route author="nczitzk" example="/douyu/post/631737151576473201" path="/douyu/post/:id" :paramsDesc="['帖子 id，可在帖子页 URL 中找到']" />
 
 ## 恩山无线论坛
 
@@ -526,11 +588,11 @@ pageClass: routes
 
 ### 社区
 
-<Route author="LogicJake nczitzk" example="/hupu/bbs/34" path="/hupu/bbs/:id?/:order?" :paramsDesc="['编号，可在对应社区 URL 中找到，默认为步行街', '排序方式，可选 `0` 即 最新回复 或 `1` 即 最新发布']">
+<Route author="LogicJake nczitzk" example="/hupu/bbs/topic-daily" path="/hupu/bbs/:id?/:order?" :paramsDesc="['编号，可在对应社区 URL 中找到，默认为#步行街主干道', '排序方式，可选 `0` 即 最新回复 或 `1` 即 最新发布，默认为最新回复']">
 
 ::: tip 提示
 
-更多社区参见 [社区](https://m.hupu.com/bbs)
+更多社区参见 [社区](https://bbs.hupu.com)
 
 :::
 
@@ -656,7 +718,7 @@ pageClass: routes
 
 ### 帖子
 
-<Route author="ma6254 nczitzk" example="/lkong/thread/2356933" path="/lkong/thread/:id?" :paramsDesc="['帖子 id, 可在帖子的URL里找到']"/>
+<Route author="ma6254 nczitzk" example="/lkong/thread/3100275" path="/lkong/thread/:id?" :paramsDesc="['帖子 id, 可在帖子的URL里找到']"/>
 
 ## 龙腾网
 
@@ -787,32 +849,6 @@ pageClass: routes
 ### 用户的回帖
 
 <Route author="a14907" example="/tianya/comments/11488997" path="/tianya/comments/:userid" :paramsDesc="['用户id userid，可在 URL 找到 例如，用户苕木匠的地址是http://www.tianya.cn/11488997/bbs， 苕木匠的userid就是11488997']"/>
-
-## 贴吧
-
-### 帖子列表
-
-<Route author="u3u" example="/tieba/forum/女图" path="/tieba/forum/:kw" :paramsDesc="['吧名']" radar="1"/>
-
-### 精品帖子
-
-<Route author="u3u" example="/tieba/forum/good/女图" path="/tieba/forum/good/:kw/:cid?" :paramsDesc="['吧名', '精品分类, 如果不传 `cid` 则获取全部分类']" radar="1"/>
-
-### 帖子动态
-
-<Route author="u3u" example="/tieba/post/5853240586" path="/tieba/post/:id" :paramsDesc="['帖子 ID']" radar="1"/>
-
-### 楼主动态
-
-<Route author="u3u" example="/tieba/post/lz/5853240586" path="/tieba/post/lz/:id" :paramsDesc="['帖子 ID']" radar="1"/>
-
-### 用户帖子
-
-<Route author="igxlin nczitzk" example="/tieba/user/斗鱼游戏君" path="/tieba/user/:uid" :paramsDesc="['用户 ID']" radar="1">
-
-用户 ID 可以通过打开用户的主页后查看地址栏的 `un` 字段来获取。
-
-</Route>
 
 ## 通信人家园
 
