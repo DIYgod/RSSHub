@@ -104,10 +104,6 @@ pageClass: routes
 
 <RouteEn author="FHYunCai" example="/bing" path="/bing" radar="1" rssbud="1"/>
 
-## ComicsKingdom Comic Strips
-
-<RouteEn author="stjohnjohnson" example="/comicskingdom/baby-blues" path="/comicskingdom/:strip" :paramsDesc="['URL path of the strip on comicskingdom.com']" />
-
 ## DailyArt
 
 <RouteEn author="zphw" example="/dailyart/en" path="/dailyart/:language?" :paramsDesc="['Support en, es, fr, de, it, zh, jp, etc. English by default.']" />
@@ -163,6 +159,68 @@ For RSS content, specify options in the `routeParams` parameter in query string 
 
 <RouteEn author="nczitzk" example="/elitebabes/search/pose" path="/elitebabes/search/:keyword?" :paramsDesc="['Keyword']"/>
 
+## Fantia
+
+### Search
+
+<RouteEn author="nczitzk" example="/fantia/search/posts/all/daily" path="/fantia/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?" :paramsDesc="['Type, see the table below, `posts` by default', 'Category, see the table below, can also be found in search page URL, `すべてのクリエイター` by default', 'Ranking period, see the table below, empty by default' ,'Sorting, see the table below, `更新の新しい順` by default', 'Rating, see the table below, `すべて` by default', 'Keyword, empty by default']">
+
+Type
+
+| クリエイター   | 投稿    | 商品       | コミッション      |
+| -------- | ----- | -------- | ----------- |
+| fanclubs | posts | products | commissions |
+
+Category
+
+| 分类           | 分类名        |
+| ------------ | ---------- |
+| イラスト         | illust     |
+| 漫画           | comic      |
+| コスプレ         | cosplay    |
+| YouTuber・配信者 | youtuber   |
+| Vtuber       | vtuber     |
+| 音声作品・ASMR    | voice      |
+| 声優・歌い手       | voiceactor |
+| アイドル         | idol       |
+| アニメ・映像・写真    | anime      |
+| 3D           | 3d         |
+| ゲーム制作        | game       |
+| 音楽           | music      |
+| 小説           | novel      |
+| ドール          | doll       |
+| アート・デザイン     | art        |
+| プログラム        | program    |
+| 創作・ハンドメイド    | handmade   |
+| 歴史・評論・情報     | history    |
+| 鉄道・旅行・ミリタリー  | railroad   |
+| ショップ         | shop       |
+| その他          | other      |
+
+Ranking period
+
+| デイリー  | ウィークリー | マンスリー   | 全期間 |
+| ----- | ------ | ------- | --- |
+| daily | weekly | monthly | all |
+
+Sorting
+
+| 更新の新しい順 | 更新の古い順     | 投稿の新しい順 | 投稿の古い順     | お気に入り数順 |
+| ------- | ---------- | ------- | ---------- | ------- |
+| updater | update_old | newer   | create_old | popular |
+
+Rating
+
+| すべて | 一般のみ    | R18 のみ |
+| --- | ------- | ------ |
+| all | general | adult  |
+
+</RouteEn>
+
+### User Posts
+
+<RouteEn author="nczitzk" example="/fantia/user/3498" path="/fantia/user/:id" :paramsDesc="['User id, can be found in user profile URL']" />
+
 ## GoComics Comic Strips
 
 <RouteEn author="stjohnjohnson" example="/gocomics/foxtrot" path="/gocomics/:strip" :paramsDesc="['URL path of the strip on gocomics.com']" />
@@ -208,6 +266,12 @@ For example:
 
 <RouteEn author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" :paramsDesc="['Manga slug, can be found in URL, including neither `manga-` nor `.html`']" />
 
+## Meituclub
+
+### Latest
+
+<RouteEn author="ocleo1" example="/meituclub/latest" path="/meituclub/latest" />
+
 ## NASA Astronomy Picture of the Day
 
 ### NASA
@@ -234,17 +298,26 @@ For example:
 
 <RouteEn author="MegrezZhu hoilc" example="/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-%22mosaic+censorship%22" path="/nhentai/search/:keyword/:mode?" :paramsDesc="['Keywords for search. You can copy the content after `q=` after searching on the original website, or you can enter it directly. See the [official website](https://nhentai.net/info/) for details', 'mode, `simple` to only cover，`detail` to all content, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/en/install/#route-specific-configurations), default to `simple`']" anticrawler="1" supportBT="1"/>
 
+## Rare Historical Photos
+
+### Home
+
+<RouteEn author="TonyRL" example="/rarehistoricalphotos" path="/rarehistoricalphotos" radar="1"/>
+
 ## Tits Guru
 
 ### Home
 
 <RouteEn author="MegrezZhu" example="/tits-guru/home" path="/tits-guru/home"/>
+
 ### Daily Best
 
 <RouteEn author="MegrezZhu" example="/tits-guru/daily" path="/tits-guru/daily"/>
+
 ### Models
 
 <RouteEn author="MegrezZhu" example="/tits-guru/model/mila-azul" path="/tits-guru/model/:name" :paramsDesc="['Module name, see [here](https://tits-guru.com/models) for details']"/>
+
 ### Categories
 
 <RouteEn author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" :paramsDesc="['Category, see [here](https://tits-guru.com/categories) for details']"/>

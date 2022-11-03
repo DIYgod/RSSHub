@@ -1,0 +1,65 @@
+<div class="h-threads-item">
+{{@ item }}
+</div>
+<style>
+    .h-threads-item {
+        display: block;
+        background: #ffe;
+        color: #800000;
+    }
+    
+    .h-threads-item .h-threads-img-box {
+        display: inline;
+        position: relative;
+        margin: 3px 0;
+    }
+    
+    .h-threads-item .h-threads-img-box .h-threads-img-a .h-threads-img {
+        padding: 0;
+        margin: 0 20px;
+        max-width: 250px;
+    }
+    
+    .h-threads-item .h-threads-info .h-threads-info-title {
+        font-weight: bold;
+        color: #cc1105;
+    }
+    
+    .h-threads-item .h-threads-info .h-threads-info-email {
+        font-weight: bold;
+        color: #117743;
+    }
+    
+    .h-threads-item .h-threads-info .h-threads-info-email,
+    .h-threads-item .h-threads-info .h-threads-info-createdat,
+    .h-threads-item .h-threads-info .h-threads-info-uid,
+    .h-threads-item .h-threads-info .h-threads-info-id,
+    .h-threads-item .h-threads-info,
+    .h-threads-item .h-threads-info {
+        margin-left: 5px;
+    }
+    
+    .h-threads-item .h-threads-info {
+        font-size: 12px;
+    }
+    
+    .h-threads-item .h-threads-info a {
+        margin: 0 2px;
+    }
+    
+    .h-threads-item .h-threads-content {
+        font-size: 16px;
+        line-height: 22px;
+        margin: 15px 40px;
+    }
+    
+    .h-threads-item .h-threads-item-replies .h-threads-item-reply {
+        display: table;
+        margin-bottom: 3px;
+    }
+    
+    .h-threads-item .h-threads-item-replies .h-threads-item-reply .h-threads-item-reply-main {
+        display: table-cell;
+        background: #f0e0d6;
+    }
+</style>

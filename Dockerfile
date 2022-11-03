@@ -1,17 +1,6 @@
-FROM node:16-bullseye-slim as dep-builder
-
-# bash has already been the default shell
-#RUN ln -sf /bin/bash /bin/sh
-
-# these deps are no longer needed since we use yarn instead of npm to install dependencies
-# the installation of dumb-init has been moved to the app stage to improve concurrency and speed up builds on arm/arm64
-#RUN \
-#    set -ex && \
-#    apt-get update && \
-#    apt-get install -yq --no-install-recommends \
-#        libgconf-2-4 apt-transport-https git dumb-init python3 build-essential \
-#    && \
-#    rm -rf /var/lib/apt/lists/*
+FROM node:16-bullseye as dep-builder
+# Here we use the non-slim image to provide build-time deps (compilers and python), thus no need to install later.
+# This effectively speeds up qemu-based cross-build.
 
 WORKDIR /app
 
@@ -19,10 +8,6 @@ WORKDIR /app
 ARG USE_CHINA_NPM_REGISTRY=0
 RUN \
     set -ex && \
-    apt-get update && \
-    apt-get install -yq --no-install-recommends \
-        build-essential python3 \
-    ; \
     if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
         echo 'use npm mirror' && \
         npm config set registry https://registry.npmmirror.com && \
@@ -113,7 +98,7 @@ RUN \
         yarn add puppeteer@$(cat /app/.puppeteer_version) && \
         yarn cache clean ; \
     else \
-        mkdir -p /app/node_modules/puppeteer ; \
+        mkdir -p /root/.cache/puppeteer ; \
     fi;
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -158,14 +143,14 @@ RUN \
     fi; \
     rm -rf /var/lib/apt/lists/*
 
-COPY --from=chromium-downloader /app/node_modules/puppeteer /app/node_modules/puppeteer
+COPY --from=chromium-downloader /root/.cache/puppeteer /root/.cache/puppeteer
 
 # if grep matches nothing then it will exit with 1, thus, we cannot `set -e` here
 RUN \
     set -x && \
     if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
         echo 'Verifying Chromium installation...' && \
-        ldd $(find /app/node_modules/puppeteer/ -name chrome) | grep "not found" ; \
+        ldd $(find /root/.cache/puppeteer/ -name chrome) | grep "not found" ; \
         if [ "$?" = 0 ]; then \
             echo "!!! Chromium has unmet shared libs !!!" && \
             exit 1 ; \

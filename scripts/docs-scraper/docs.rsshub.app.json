@@ -1,0 +1,57 @@
+{
+    "index_uid": "rsshub",
+    "sitemap_urls": ["https://docs.rsshub.app/sitemap.xml"],
+    "start_urls": ["https://docs.rsshub.app"],
+    "selectors": {
+        "lvl0": {
+            "selector": ".sidebar-heading.open",
+            "global": true,
+            "default_value": "路由"
+        },
+        "lvl1": ".theme-default-content h1",
+        "lvl2": ".theme-default-content h2",
+        "lvl3": ".theme-default-content h3",
+        "lvl4": ".theme-default-content h4",
+        "lvl5": ".theme-default-content h5",
+        "text": ".theme-default-content p, .docs-content li"
+    },
+    "strip_chars": " .,;:#",
+    "scrap_start_urls": true,
+    "min_indexed_level": 1,
+    "custom_settings": {
+        "displayedAttributes": [
+            "hierarchy_radio_lvl1",
+            "hierarchy_radio_lvl2",
+            "hierarchy_radio_lvl3",
+            "hierarchy_radio_lvl4",
+            "hierarchy_radio_lvl5",
+            "hierarchy_lvl0",
+            "hierarchy_lvl1",
+            "hierarchy_lvl2",
+            "hierarchy_lvl3",
+            "hierarchy_lvl4",
+            "hierarchy_lvl5",
+            "hierarchy_lvl6",
+            "anchor",
+            "url",
+            "content"
+        ],
+        "searchableAttributes": [
+            "hierarchy_radio_lvl1",
+            "hierarchy_radio_lvl2",
+            "hierarchy_radio_lvl3",
+            "hierarchy_radio_lvl4",
+            "hierarchy_radio_lvl5",
+            "hierarchy_lvl0",
+            "hierarchy_lvl1",
+            "hierarchy_lvl2",
+            "hierarchy_lvl3",
+            "hierarchy_lvl4",
+            "hierarchy_lvl5",
+            "hierarchy_lvl6",
+            "anchor",
+            "content"
+        ],
+        "sortableAttributes": ["anchor"]
+    }
+}

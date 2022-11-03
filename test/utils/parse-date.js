@@ -100,6 +100,10 @@ describe('parseRelativeDate', () => {
         expect(+new Date(parseRelativeDate('1小时1分钟1秒钟前'))).toBe(+date - 1 * hour - 1 * minute - 1 * second);
     });
 
+    it('Dd Hh mm ss ago', () => {
+        expect(+new Date(parseRelativeDate('1d 1h 1m 1s ago'))).toBe(+date - 1 * day - 1 * hour - 1 * minute - 1 * second);
+    });
+
     it('H小时m分钟s秒钟后', () => {
         expect(+new Date(parseRelativeDate('1小时1分钟1秒钟后'))).toBe(+date + 1 * hour + 1 * minute + 1 * second);
     });

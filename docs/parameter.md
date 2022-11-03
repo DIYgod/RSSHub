@@ -79,6 +79,12 @@ filter 支持正则表达式。由于正则部分特性可被利用于 DoS (ReDO
 
 举例: bilibili 排行榜前 10 <https://rsshub.app/bilibili/ranking/0/3?limit=10>
 
+## 排序结果
+
+通过 `sorted` 参数控制是否对输出的条目按照发布时间进行排序，这对一些会把部分新闻等置顶的源比较有用（如信息发布网）。默认为 `true` 即进行排序。
+
+举例：不重新排序南京大学本科生院教学信息网的公告通知：<https://rsshub.app/nju/jw/ggtz?sorted=false>
+
 ## 全文输出
 
 可以使用 `mode` 参数来开启自动提取全文内容功能
