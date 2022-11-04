@@ -260,6 +260,18 @@ describe('limit', () => {
     });
 });
 
+describe('sorted', () => {
+    it('sorted', async () => {
+        const response = await request.get('/test/sort?sorted=false');
+        expect(response.status).toBe(200);
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items[0].title).toBe('Sort Title 0');
+        expect(parsed.items[1].title).toBe('Sort Title 1');
+        expect(parsed.items[2].title).toBe('Sort Title 2');
+        expect(parsed.items[3].title).toBe('Sort Title 3');
+    });
+});
+
 describe('tgiv', () => {
     it(`tgiv`, async () => {
         const response = await request.get('/test/1?tgiv=test');
@@ -306,8 +318,8 @@ describe('fulltext_mode', () => {
         expect(response.status).toBe(200);
         const parsed = await parser.parseString(response.text);
         expect(parsed.items[0].content).not.toBe(undefined);
-    });
-}, 10000);
+    }, 20000);
+});
 
 describe('complicated_description', () => {
     it(`complicated_description`, async () => {

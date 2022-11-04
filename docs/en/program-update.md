@@ -112,6 +112,12 @@ Language
 
 </RouteEn>
 
+## BlueStacks
+
+### BlueStacks 5 Release Notes
+
+<RouteEn author="TonyRL" example="/bluestacks/release/5" path="/bluestacks/release/5" radar="1" puppeteer="1"/>
+
 ## Brave
 
 ### Release Notes
@@ -236,7 +242,15 @@ Language
 
 ### Script Update
 
-<RouteEn author="imlonghao" path="/greasyfork/:language/:domain?" example="/greasyfork/en/google.com" :paramsDesc="['language, located on the top right corner of Greasy Fork\'s search page, set to `all` for including all languages', 'the script\'s target domain']" />
+<RouteEn author="imlonghao" path="/greasyfork/:language/:domain?" example="/greasyfork/en/google.com" :paramsDesc="['language, located on the top right corner of Greasy Fork\'s search page, set to `all` for including all languages', 'the script\'s target domain']" radar="1" />
+
+### Script Version History
+
+<RouteEn author="miles170" example="/greasyfork/scripts/431691-bypass-all-shortlinks/versions" path="/greasyfork/scripts/:script/versions" :paramsDesc="['Script id, can be found in URL']" radar="1" />
+
+### Script Feedback
+
+<RouteEn author="miles170" example="/greasyfork/scripts/431691-bypass-all-shortlinks/feedback" path="/greasyfork/scripts/:script/feedback" :paramsDesc="['Script id, can be found in URL']" radar="1" />
 
 ## Hugo
 
@@ -272,9 +286,10 @@ Language
 
 ## Logseq
 
-### Changelog
-
-<RouteEn author="nczitzk" example="/logseq/changelog" path="/logseq/changelog"/>
+::: warning
+Logseq dev team has abandoned the [old website](https://logseq.com/blog).
+Please use <https://github.com/logseq/logseq/releases.atom> instead.
+:::
 
 ## MacKed
 
@@ -430,6 +445,12 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 <RouteEn author="nczitzk" example="/qttabbar/change-log" path="/qttabbar/change-log"/>
 
+## RemNote
+
+### Changelog
+
+<RouteEn author="TonyRL" example="/remnote/changelog" path="/remnote/changelog" radar="1" rssbud="1"/>
+
 ## RescueTime
 
 ### Release Notes
@@ -530,6 +551,12 @@ Language
 ### What's New
 
 <RouteEn author="nczitzk" example="/diskanalyzer/whats-new" path="/diskanalyzer/whats-new"/>
+
+## WziFile
+
+### Version History
+
+<RouteEn author="Fatpandac" example="/wizfile/updates" path="/wizfile/updates"/>
 
 ## X410
 

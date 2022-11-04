@@ -153,6 +153,130 @@ Official RSS: <https://eztv.io/ezrss.xml>
 
 <RouteEn author="everyonus" example="/hentaimama/videos" path="/hentaimama/videos" />
 
+## JavBus
+
+::: tip Language
+
+You can change the language of each route to the languages listed below.
+
+| English | 日本语 | 한국의 | 中文 |
+| ------- | ------ | ------ | ---- |
+| en      | ja     | ko     | (leave it empty) |
+
+:::
+
+::: tip Tips
+
+JavBus has multiple backup domains, these routes use default domain <https://javbus.com>. If the domain is unreachable, you can add `?domain=<domain>` to the end of the route to specify the domain to visit. Let say you want to use the backup domain <https://javsee.icu>, you can add `?domain=javsee.icu` to the end of the route, then the route will be [`/javbus/en?domain=javsee.icu`](https://rsshub.app/javbus?domain=javsee.icu)
+
+**Note**: **Western** has different domain than the main site, the backup domains are also different. The default domain is <https://javbus.org> and you can add `?western_domain=<domain>` to the end of the route to specify the domain to visit. Let say you want to use the backup domain <https://javsee.one>, you can add `?western_domain=javsee.one` to the end of the route, then the route will be [`/javbus/western/en?western_domain=javsee.one`](https://rsshub.app/javbus/western?western_domain=javsee.one)
+
+:::
+
+### Censored - Home
+
+<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en" path="/javbus/en"/>
+
+### Censored - Genre
+
+<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/genre/7g" path="/javbus/en/genre/:id" :paramsDesc="['Genre id, can be found in URL']">
+
+For more genre, please visit [Censored - Genre](https://www.javbus.com/en/genre)
+
+</RouteEn>
+
+### Censored - Actresses
+
+<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/star/2jv" path="/javbus/en/star/:id" :paramsDesc="['Actresses id, can be found in URL']">
+
+For more actresses, please visit [Censored JAV Idols](https://www.javbus.com/en/actresses)
+
+</RouteEn>
+
+### Censored - Series
+
+<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/series/44q" path="/javbus/en/series/:id" :paramsDesc="['Series id, can be found in URL']" />
+
+### Censored - Studio
+
+<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/studio/ej" path="/javbus/en/studio/:id" :paramsDesc="['Studio id, can be found in URL']" />
+
+### Censored - Label
+
+<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/label/x8" path="/javbus/en/label/:id" :paramsDesc="['Label id, can be found in URL']" />
+
+### Censored - Director
+
+<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/director/4gv" path="/javbus/en/director/:id" :paramsDesc="['Director id, can be found in URL']" />
+
+### Censored - Search
+
+<RouteEn author="nczitzk" example="/javbus/en/search/REBD" path="/javbus/en/search/:keyword" :paramsDesc="['Keyword, empty by default']" />
+
+### Uncensored - Home
+
+<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/uncensored" path="/javbus/en/uncensored"/>
+
+### Uncensored - Genre
+
+<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/uncensored/genre/1bc" path="/javbus/en/uncensored/genre/:id" :paramsDesc="['Genre id, can be found in URL']">
+
+For more genre, please visit [Uncensored - Genre](https://www.javbus.com/en/uncensored/genre)
+
+</RouteEn>
+
+### Uncensored - Actresses
+
+<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/uncensored/star/b5b" path="/javbus/en/uncensored/star/:id" :paramsDesc="['Actresses id, can be found in URL']">
+
+For more actresses, please visit [Uncensored JAV Idols](https://www.javbus.com/en/uncensored/actresses)
+
+</RouteEn>
+
+### Uncensored - Series
+
+<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/uncensored/series/1ft" path="/javbus/en/uncensored/series/:id" :paramsDesc="['系列 id, can be found in URL']" />
+
+### Uncensored - Studio
+
+<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/uncensored/studio/3n" path="/javbus/en/uncensored/studio/:id" :paramsDesc="[', can be found in URL']" />
+
+### Uncensored - Search
+
+<RouteEn author="nczitzk" example="/javbus/en/uncensored/search/HEYZO" path="/javbus/en/uncensored/search/:keyword" :paramsDesc="['Keyword, empty by default']" />
+
+### Western - Home
+
+<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/western" path="/javbus/en/western"/>
+
+### Western - Genre
+
+<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/western/genre/86" path="/javbus/en/western/genre/:id" :paramsDesc="['Genre id, can be found in URL']">
+
+For more genre, please visit [Genre - Video](https://www.javbus.org/en/genre)
+
+</RouteEn>
+
+### Western - Actresses
+
+<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/western/star/4hv" path="/javbus/en/western/star/:id" :paramsDesc="['Actresses id, can be found in URL']">
+
+For more actresses [Western AV Idols](https://www.javbus.org/en/actresses)
+
+</RouteEn>
+
+### Western - Series
+
+<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/western/series/20" path="/javbus/en/western/series/:id" :paramsDesc="['Series id, can be found in URL']" />
+
+### Western - Studio
+
+<RouteEn author="nczitzk" example="/javbus/en/western/studio/4" path="/javbus/en/western/studio/:id" :paramsDesc="['Studio id, can be found in URLL']" />
+
+### Western - Search
+
+<RouteEn author="nczitzk" example="/javbus/en/western/search/Brazzers" path="/javbus/en/western/search/:keyword" :paramsDesc="['Keyword, empty by default']" />
+
 ## JAVLibrary
 
 ### Recently Discussed Videos

@@ -1,12 +1,15 @@
 name: Yarn Lock Changes
-on: [pull_request]
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/yarn-lock-changes.yml'
+      - 'yarn.lock'
 
 jobs:
   yarn_lock_changes:
     runs-on: ubuntu-latest
     # Permission overwrite is required for Dependabot PRs, see https://github.com/marketplace/actions/yarn-lock-changes#-common-issues.
     permissions:
-      contents: write
       pull-requests: write
     steps:
       - name: Checkout

@@ -7,11 +7,14 @@ on:
     branches:
       - master
     paths:
+      - '.github/workflows/docker-test.yml'
       - 'lib/**'
+      - '!**/maintainer.js'
+      - '!**/radar.js'
+      - '!**/radar-rules.js'
       - 'Dockerfile'
       - 'package.json'
       - 'yarn.lock'
-      - '.github/workflows/docker-test.yml'
   # Please, always create a pull request instead of push to master.
 
 permissions:

@@ -1,0 +1,11 @@
+{{ if description }}
+{{@ description }}
+{{ /if }}
+{{ if more }}
+{{@ more }}
+{{ /if }}
+{{ if images }}
+{{ each images image }}
+<img src="{{ image.uri }}" width="{{ image.width }}" height="{{ image.height }}">
+{{ /each }}
+{{ /if }}

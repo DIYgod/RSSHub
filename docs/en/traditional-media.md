@@ -56,6 +56,64 @@ The following are some of the supported Channel and Topic ids.
 
 </RouteEn>
 
+## Aljazeera
+
+### News
+
+<RouteEn author="nczitzk" example="/aljazeera/english/news" path="/aljazeera/:language?/:category?" :paramsDesc="['Language, see below, arbric by default, as Arbric', 'Category, can be found in URL, homepage by default']">
+
+Language
+
+| Arbric | Chinese | English |
+| ------ | ------- | ------- |
+| arbric | chinese | english |
+
+::: tip Tip
+
+If you subscribe to [Al Jazeera English - Economy](https://www.aljazeera.com/economy), whose language is `english` and whose path is `economy`, you can get the route as [`/aljazeera/english/economy`](https://rsshub.app/aljazeera/english/economy)
+
+If you subscribe to [Al Jazeera Chinese - Political](https://chinese.aljazeera.net/news/political) with language `chinese` and path `news/political`, you can get the route as [`/aljazeera/chinese/news/political`](https://rsshub.app/aljazeera/chinese/news/political)
+
+:::
+
+</RouteEn>
+
+### Tag
+
+<RouteEn author="nczitzk" example="/aljazeera/english/tag/science-and-technology" path="/aljazeera/:language?/tag/:id" :paramsDesc="['Language, see below, arbric by default, as Arbric', 'Tag id, can be found in URL']">
+
+Language
+
+| Arbric | Chinese | English |
+| ------ | ------- | ------- |
+| arbric | chinese | english |
+
+::: tip Tip
+
+If you subscribe to [Al Jazeera English - Science and Technology](https://www.aljazeera.com/tag/science-and-technology), whose language is `english` and whose path is `science-and-technology`, you can get the route as [`/aljazeera/english/tag/science-and-technology`](https://rsshub.app/aljazeera/english/tag/science-and-technology)
+
+:::
+
+</RouteEn>
+
+### Official RSS
+
+<RouteEn author="nczitzk" example="/aljazeera/english/rss" path="/aljazeera/:language?/rss" :paramsDesc="['Language, see below, arbric by default, as Arbric']">
+
+Language
+
+| Arbric | Chinese | English |
+| ------ | ------- | ------- |
+| arbric | chinese | english |
+
+::: tip Tip
+
+There is no RSS source for Al Jazeera Chinese, returning homepage content by default
+
+:::
+
+</RouteEn>
+
 ## AP News
 
 ### Topics
@@ -160,6 +218,30 @@ Generates full-text feeds that the official feed doesn't provide.
 
 </RouteEn>
 
+## CNBC
+
+### Full article RSS
+
+<RouteEn author="TonyRL" example="/cnbc/rss" path="/cnbc/rss/:id?" :paramsDesc="['Channel ID, can be found in Official RSS URL, `100003114` (Top News) by default']">
+
+Provides a better reading experience (full articles) over the official ones.
+
+Support all channels, refer to [CNBC RSS feeds](https://www.cnbc.com/rss-feeds/).
+
+</RouteEn>
+
+## Deutsche Welle
+
+### News
+
+<RouteEn author="nczitzk" example="/dw/en" path="/dw/:lang?/:caty?" :paramsDesc="['Language, can be found in the URL of the corresponding language version page, German by default', 'Category, all by default']">
+
+| All  | German Press | Culture | Economy | Science & Nature |
+| ---- | -------- | -------- | -------- | -------- |
+| all  | press    | cul      | eco      | sci      |
+
+</RouteEn>
+
 ## Financial Times
 
 ### myFT personal RSS
@@ -196,6 +278,30 @@ Generates full-text feeds that the official feed doesn't provide.
 | Society-Life                                                     | `93102e5a735d03979bc58a3a7aefb75a` |
 | External                                                         | `0f98b4623a3ef82aeea78df45c423fd0` |
 | News Commentary                                                  | `12c03a49f7dbe829bceea8ac77088c21` |
+
+</RouteEn>
+
+## La Jornada
+
+### News
+
+<RouteEn author="Thealf154" example="/jornada/2022-10-12/capital" path="/jornada/:date?/:category?" :paramsDesc="['Date string, must be in format of `YYYY-MM-DD`. You can get today\'s news using `today`', 'Category, refer to the table below']" radar="1">
+
+Provides a way to get an specific rss feed by date and category over the official one.
+
+| Category               | `:category`|
+|------------------------|------------|
+| Capital                | capital    |
+| Cartones               | cartones   |
+| Ciencia y Tecnología   | ciencia    |
+| Cultura                | cultura    |
+| Deportes               | deportes   |
+| Economía               | economia   |
+| Estados                | estados    |
+| Mundo                  | mundo      |
+| Opinión                | opinion    |
+| Política               | politica   |
+| Sociedad               | sociedad   |
 
 </RouteEn>
 
@@ -397,7 +503,7 @@ You still can customize `language`, however, it is important to note that not al
 
 </RouteEn>
 
-## SCMP
+## South China Morning Post
 
 ### News
 
@@ -551,6 +657,18 @@ Provides all of the articles by the specified New York Times author.
 <RouteEn author="oppilate" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" :paramsDesc="['Language, `en-us`, `zh-cn`, `zh-tw` are supported', 'Category, only supported in `en-us`. Supports `opinion`, `world_news`, `us_bussiness`, `market_news`, `technology`, `lifestyle`.']">
 
 Provide full article RSS for WSJ topics.
+
+</RouteEn>
+
+## Voice of Mongolia
+
+### News
+
+<RouteEn author="zphw" example="/vom/featured" path="/vom/featured/:lang?" :paramsDesc="['Language, see the table below, `mn` by default']">
+
+| English | 日本語 | Монгол | Русский | 简体中文 |
+| ------- | --- | ------ | ------- | ---- |
+| en      | ja  | mn     | ru      | zh   |
 
 </RouteEn>
 

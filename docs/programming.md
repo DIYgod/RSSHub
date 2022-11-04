@@ -152,6 +152,12 @@ Rated 对象
 
 <Route author="csi0n" example="/dockone/weekly" path="/dockone/weekly"/>
 
+## gihyo.jp
+
+### 記事一覧
+
+<Route author="masakichi" example="/gihyo/list/group/Ubuntu-Weekly-Recipe" path="/gihyo/list/group/:id" :paramsDesc="['連載']"/>
+
 ## GitChat
 
 ### 最新文章
@@ -221,7 +227,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Trending
 
-<Route author="DIYgod" example="/github/trending/daily/javascript/zh" path="/github/trending/:since/:language/:spoken_language?" :paramsDesc="['时间跨度，可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到，可选 `daily` `weekly` `monthly`', '语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到，`any`表示不设语言限制', '自然语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到']" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/github/trending/daily/javascript/zh" path="/github/trending/:since/:language/:spoken_language?" :paramsDesc="['时间跨度，可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到，可选 `daily` `weekly` `monthly`', '语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到，`any`表示不设语言限制', '自然语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到']" radar="1" rssbud="1" selfhost="1"/>
 
 ### Topics
 
@@ -243,7 +249,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 仓库 Pull Requests
 
-<Route author="hashman" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo/:state?" :paramsDesc="['用户名', '仓库名', 'pull request 状态，`open`,`closed`或`all`，默认为`open`']" radar="1" rssbud="1"/>
+<Route author="hashman TonyRL" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo/:state?/:labels?" :paramsDesc="['用户名', '仓库名', 'pull request 状态，`open`,`closed`或`all`，默认为`open`', '标签列表，以逗号分隔']" radar="1" rssbud="1"/>
 
 ### 用户 Followers
 
@@ -335,23 +341,33 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="Weilet" example="/go-weekly" path="/go-weekly"/>
 
+### 招聘
+
+<Route author="CcccFz" example="/studygolang/jobs" path="/studygolang/jobs" radar="1" rssbud="1"/>
+
 ## GoCN
 
 ### 文章
 
-<Route author="AtlanCI" example="/gocn" path="/gocn"/>
+<Route author="AtlanCI CcccFz" example="/gocn" path="/gocn" radar="1" rssbud="1"/>
+
+### 招聘
+
+<Route author="CcccFz" example="/gocn/jobs" path="/gocn/jobs" radar="1" rssbud="1"/>
 
 ## Hacker News
 
 ### 分区
 
-<Route author="cf020031308 nczitzk" example="/hackernews" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['内容分区，见下表，默认为 `index`', '链接类型，见下表，默认为 `sources`', '设定用户，只在 `threads` 和 `submitted` 分区有效']">
+<Route author="cf020031308 nczitzk" example="/hackernews" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['内容分区，见下表，默认为 `index`', '链接类型，见下表，默认为 `sources`', '设定用户，只在 `threads` 和 `submitted` 分区有效。斜当选择`over`分区，`User`的含义是帖子点数的阈值']">
 
 内容分区
 
-| homepage                              | new                                           | past                                        | comments                                                | ask                                     | show                                      | jobs                                      | best                                      | threads                                                 | submitted                                                   |
-| ------------------------------------- | --------------------------------------------- | ------------------------------------------- | ------------------------------------------------------- | --------------------------------------- | ----------------------------------------- | ----------------------------------------- | ----------------------------------------- | ------------------------------------------------------- | ----------------------------------------------------------- |
-| [index](https://news.ycombinator.com) | [newest](https://news.ycombinator.com/newest) | [front](https://news.ycombinator.com/front) | [newcomments](https://news.ycombinator.com/newcomments) | [ask](https://news.ycombinator.com/ask) | [show](https://news.ycombinator.com/show) | [jobs](https://news.ycombinator.com/jobs) | [best](https://news.ycombinator.com/best) | [threads](https://news.ycombinator.com/threads?id=dang) | [submitted](https://news.ycombinator.com/submitted?id=dang) |
+| homepage                              | new                                           | past                                        | comments                                                | ask                                     | show                                      | jobs                                      | best                                      | threads                                                 | submitted                                                   | over                                                 |
+| ------------------------------------- | --------------------------------------------- | ------------------------------------------- | ------------------------------------------------------- | --------------------------------------- | ----------------------------------------- | ----------------------------------------- | ----------------------------------------- | ------------------------------------------------------- | ----------------------------------------------------------- | ---------------------------------------------------- |
+| [index](https://news.ycombinator.com) | [newest](https://news.ycombinator.com/newest) | [front](https://news.ycombinator.com/front) | [newcomments](https://news.ycombinator.com/newcomments) | [ask](https://news.ycombinator.com/ask) | [show](https://news.ycombinator.com/show) | [jobs](https://news.ycombinator.com/jobs) | [best](https://news.ycombinator.com/best) | [threads](https://news.ycombinator.com/threads?id=dang) | [submitted](https://news.ycombinator.com/submitted?id=dang) | [over](https://news.ycombinator.com/over?points=100) |
+
+> `Over` 分区只显示过去几天内超过固定阈值的帖子。
 
 条目指向链接类型
 
@@ -371,23 +387,58 @@ GitHub 官方也提供了一些 RSS:
 
 ## HelloGitHub
 
-### 文章列表
+### 热门
 
-<Route author="moke8" example="/hellogithub/article" path="/hellogithub/article"/>
+<Route author="nczitzk" example="/hellogithub/hot" path="/hellogithub/hot/:id?" :paramsDesc="['标签 id，可在对应标签页 URL 中找到，默认为全部标签']">
 
-### 编程语言排行榜
+以下为部分标签：
 
-<Route author="moke8" example="/hellogithub/ranking" path="/hellogithub/ranking/:type?" :paramsDesc="['分类，见下表']">
+| id         | 标签     |
+| ---------- | ------ |
+| Z8PipJsHCX | Python |
+| YQHn0gERoi | C      |
+| WTbsu5GAfC | CLI    |
+| juBLV86qa5 | 机器学习   |
+| D4JBAUo967 | Rust   |
+| dFA60uKLgr | GUI    |
+| 0LByh3tjUO | 教程     |
+| 4lpGK0sUyk | Web 应用 |
+| yrZkGsUC9M | C++    |
+| mbP20HIEYD | Ruby   |
 
-| 编程语言排行 | 数据库排行 | 服务端语言排行   |
-| ------ | ----- | --------- |
-| tiobe  | db    | webserver |
+</Route>
+
+### 最近
+
+<Route author="nczitzk" example="/hellogithub/last" path="/hellogithub/last/:id?" :paramsDesc="['标签 id，可在对应标签页 URL 中找到，默认为全部标签']">
+
+部分标签见上表
+
+</Route>
+
+### 文章
+
+<Route author="moke8 nczitzk" example="/hellogithub/article" path="/hellogithub/article/:sort?/:id?" :paramsDesc="['排序方式，见下表，默认为 `hot`，即热门', '标签 id，可在对应标签页 URL 中找到，默认为全部标签']">
+
+| 热门  | 最近   |
+| --- | ---- |
+| hot | last |
+
+</Route>
+
+### 排行榜
+
+<Route author="moke8 nczitzk" example="/hellogithub/report" path="/hellogithub/report/:type?" :paramsDesc="['分类，见下表，默认为编程语言排行榜']">
+
+| 编程语言  | 服务器      | 数据库        |
+| ----- | -------- | ---------- |
+| tiobe | netcraft | db-engines |
 
 </Route>
 
 ### 月刊
 
-<Route author="moke8" example="/hellogithub/month" path="/hellogithub/month"/>
+<Route author="moke8 nczitzk" example="/hellogithub/volume" path="/hellogithub/volume"/>
 
 ## Hex-Rays
 
@@ -440,6 +491,10 @@ GitHub 官方也提供了一些 RSS:
 ### 每日一题
 
 <Route author="NavePnow" example="/leetcode/dailyquestion/en" path="/leetcode/dailyquestion/:lang" :paramsDesc="['站点,中文(cn)和英文(en)']"/>
+
+### 每日一题题解
+
+<Route author="woaidouya123" example="/leetcode/dailyquestion/solution/cn" path="/leetcode/dailyquestion/solution/:lang" :paramsDesc="['站点,中文(cn)和英文(en)']"/>
 
 ## LinkedKeeper
 
@@ -604,6 +659,12 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="xixi" example="/react/react-native-weekly" path="/react/react-native-weekly" />
 
+## Rust 语言中文社区
+
+### 招聘
+
+<Route author="CcccFz" example="/rustcc/jobs" path="/rustcc/jobs" radar="1" rssbud="1"/>
+
 ## Scala
 
 ### Scala Blog
@@ -614,11 +675,15 @@ GitHub 官方也提供了一些 RSS:
 
 ### 频道
 
-<Route author="LogicJake Fatpandac" example="/segmentfault/channel/frontend" path="/segmentfault/channel/:name" :paramsDesc="['频道名称，在频道 URL 可以找到']"/>
+<Route author="LogicJake Fatpandac" example="/segmentfault/channel/frontend" path="/segmentfault/channel/:name" :paramsDesc="['频道名称，在频道 URL 可以找到']" radar="1"/>
 
 ### 用户
 
-<Route author="leyuuu Fatpandac" example="/segmentfault/user/minnanitkong" path="/segmentfault/user/:name" :paramsDesc="['用户 Id，用户详情页 URL 可以找到']"/>
+<Route author="leyuuu Fatpandac" example="/segmentfault/user/minnanitkong" path="/segmentfault/user/:name" :paramsDesc="['用户 Id，用户详情页 URL 可以找到']" radar="1"/>
+
+### 博客
+
+<Route author="shiluanzzz" example="/segmentfault/blogs/go" path="/segmentfault/blogs/:tag" :paramsDesc="['标签名称, 在 https://segmentfault.com/tags 中可以找到']" radar="1"/>
 
 ## TesterHome
 
@@ -684,17 +749,13 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-### 最新漏洞列表
-
-<Route author="qwertyuiop6" example="/aqk/vul" path="/aqk/vul"/>
-
 ### 分类订阅
 
-<Route author="qwertyuiop6" example="/aqk/week" path="/aqk/:category" :paramsDesc="['分类订阅']">
+<Route author="qwertyuiop6" example="/anquanke/week" path="/anquanke/:category/:fulltext?" :paramsDesc="['分类订阅', '是否获取全文，如需获取全文参数传入 `quanwen` 或 `fulltext`']" radar="1" rssbud="1">
 
-| 360 网络安全周报 | 活动       | 知识        | 资讯   | 招聘  |
-| ---------- | -------- | --------- | ---- | --- |
-| week       | activity | knowledge | news | job |
+| 360 网络安全周报 | 活动       | 知识        | 资讯   | 招聘  | 工具   |
+| ---------- | -------- | --------- | ---- | --- | ---- |
+| week       | activity | knowledge | news | job | tool |
 
 </Route>
 
@@ -702,11 +763,11 @@ GitHub 官方也提供了一些 RSS:
 
 ### 分类
 
-<Route author="XinRoom" example="/secrss/category/产业趋势" path="/secrss/category/:category"/>
+<Route author="XinRoom" example="/secrss/category/产业趋势" path="/secrss/category/:category?" radar="1" rssbud="1"/>
 
 ### 作者
 
-<Route author="XinRoom" example="/secrss/author/网络安全威胁和漏洞信息共享平台" path="/secrss/author/:author"/>
+<Route author="XinRoom" example="/secrss/author/网络安全威胁和漏洞信息共享平台" path="/secrss/author/:author" radar="1" rssbud="1"/>
 
 ## 安全文摘
 
@@ -829,13 +890,13 @@ GitHub 官方也提供了一些 RSS:
 
 ### 资讯
 
-<Route author="tgly307 zengxs" example="/oschina/news/project" path="/oschina/news/:category?" :paramsDesc="['板块名']">
+<Route author="tgly307 zengxs" example="/oschina/news/project" path="/oschina/news/:category?" :paramsDesc="['板块名']" radar="1" rssbud="1">
 
 | [综合资讯][osc_gen] | [软件更新资讯][osc_proj] | [行业资讯][osc_ind] | [编程语言资讯][osc_pl] |
 | --------------- | ------------------ | --------------- | ---------------- |
 | industry        | project            | industry-news   | programming      |
 
-订阅[全部板块资讯][osc_all]可以使用 <https://rsshub.app/oschina/news>
+订阅 [全部板块资讯][osc_all] 可以使用 <https://rsshub.app/oschina/news>
 
 [osc_all]: https://www.oschina.net/news "开源中国 - 全部资讯"
 
@@ -851,27 +912,15 @@ GitHub 官方也提供了一些 RSS:
 
 ### 用户博客
 
-<Route author="dxmpalb" example="/oschina/user/xxiaobian" path="/oschina/user/:id" :paramsDesc="['用户 id，可通过查看用户博客网址得到，如果博客以 u/数字结尾，使用下一条路由']">
-
-| 小小编辑      |
-| --------- |
-| xxiaobian |
-
-</Route>
+<Route author="dxmpalb" example="/oschina/user/lenve" path="/oschina/user/:id" :paramsDesc="['用户 id，可通过查看用户博客网址得到，如果博客以 u/数字结尾，使用下一条路由']" radar="1" rssbud="1"/>
 
 ### 数字型账号用户博客
 
-<Route author="dxmpalb" example="/oschina/u/3920392" path="/oschina/u/:id" :paramsDesc="['用户 id，可通过查看用户博客网址得到，以 u/数字结尾，数字即为 id']">
-
-| EAWorld 的博客 |
-| ----------- |
-| 3920392     |
-
-</Route>
+<Route author="dxmpalb" example="/oschina/u/3920392" path="/oschina/u/:uid" :paramsDesc="['用户 id，可通过查看用户博客网址得到，以 u/数字结尾，数字即为 id']" radar="1" rssbud="1"/>
 
 ### 问答主题
 
-<Route author="loveely7" example="/oschina/topic/weekly-news" path="/oschina/topic/:topic" :paramsDesc="['主题名，可从[全部主题](https://www.oschina.net/question/topics)进入主题页，在 URL 中找到']"/>
+<Route author="loveely7" example="/oschina/topic/weekly-news" path="/oschina/topic/:topic" :paramsDesc="['主题名，可从 [全部主题](https://www.oschina.net/question/topics) 进入主题页，在 URL 中找到']" radar="1" rssbud="1"/>
 
 ## 拉勾网
 
@@ -899,19 +948,70 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="huhuhang" example="/lanqiao/questions/2" path="/lanqiao/questions/:id" :paramsDesc="['topic_id 主题 `id` 可在社区板块 URL 中找到']" radar="1" rssbud="1"/>
 
+## 连享会
+
+### 精彩资讯
+
+<Route author="nczitzk" example="/lianxh" path="/lianxh/:category?" :paramsDesc="['分类 id，可在对应分类页 URL 中找到，默认为空，即全部']">
+
+| 分类              | id |
+| --------------- | -- |
+| 全部              |    |
+| Stata 入门        | 16 |
+| Stata 教程        | 17 |
+| 计量专题            | 18 |
+| 内生性 - 因果推断      | 19 |
+| 面板数据            | 20 |
+| 交乘项 - 调节 - 中介   | 21 |
+| 结果输出            | 22 |
+| 工具软件            | 23 |
+| Stata 绘图        | 24 |
+| 数据处理            | 25 |
+| Stata 程序        | 26 |
+| Probit-Logit    | 27 |
+| 时间序列            | 28 |
+| 空间计量 - 网络分析     | 29 |
+| Markdown-LaTeX  | 30 |
+| 论文写作            | 31 |
+| 回归分析            | 32 |
+| 其它              | 33 |
+| 数据分享            | 34 |
+| Stata 资源        | 35 |
+| 文本分析 - 爬虫       | 36 |
+| Python-R-Matlab | 37 |
+| IV-GMM          | 38 |
+| 倍分法 DID         | 39 |
+| 断点回归 RDD        | 40 |
+| PSM-Matching    | 41 |
+| 合成控制法           | 42 |
+| Stata 命令        | 43 |
+| 专题课程            | 44 |
+| 风险管理            | 45 |
+| 生存分析            | 46 |
+| 机器学习            | 47 |
+| 分位数回归           | 48 |
+| SFA-DEA - 效率分析  | 49 |
+| 答疑 - 板书         | 50 |
+| 论文重现            | 51 |
+| 最新课程            | 52 |
+| 公开课             | 53 |
+| Stata33 讲       | 54 |
+
+</Route>
+
 ## 洛谷
 
 ### 日报
 
-<Route author="LogicJake prnake nczitzk" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子 id，可在 URL 中找到，不填默认为 2020 年日报']"/>
+<Route author="LogicJake prnake nczitzk" example="/luogu/daily" path="/luogu/daily/:id?" :paramsDesc="['年度日报所在帖子 id，可在 URL 中找到，不填默认为 `47327`']" radar="1" rssbud="1"/>
 
-### 近期比赛
+### 比赛列表
 
-<Route author="prnake" example="/luogu/contest" path="/luogu/contest"/>
+<Route author="prnake" example="/luogu/contest" path="/luogu/contest" radar="1" rssbud="1"/>
 
 ### 用户动态
 
-<Route author="solstice23" example="/luogu/user/feed/1" path="/luogu/user/feed/:uid" :paramsDesc="['用户 UID']"/>
+<Route author="solstice23" example="/luogu/user/feed/1" path="/luogu/user/feed/:uid" :paramsDesc="['用户 UID']" radar="1" rssbud="1"/>
 
 ## 码农俱乐部
 
@@ -1121,11 +1221,11 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## 印记中文周刊
+## 印记中文
 
-### 最新一期
+### 周刊 - JavaScript
 
-<Route author="daijinru" example="/docschina/jsweekly" path="/docschina/jsweekly"/>
+<Route author="daijinru" example="/docschina/jsweekly" path="/docschina/jsweekly" radar="1" rssbud="1"/>
 
 ## 政采云前端技术团队
 

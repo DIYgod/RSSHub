@@ -4,6 +4,29 @@ pageClass: routes
 
 # Finance
 
+## Bloomberg
+
+### News
+
+<RouteEn author="bigfei" example="/bloomberg" path="/bloomberg/:site?" :paramsDesc="['Site, see below, News by default']" anticrawler="1">
+
+| Site | Name |
+| ---- | ---- |
+| / | News |
+| bpol | Politics |
+| bbiz | Business |
+| markets | Markets |
+| technology | Technology |
+| green | Green |
+| wealth | Wealth |
+| pursuits | Pursuits |
+| bview | Opinion |
+| equality | Equality |
+| businessweek | Businessweek |
+| citylab | CityLab |
+
+</RouteEn>
+
 ## CFD
 
 ### Indices Dividend Adjustment (GBP)
@@ -11,6 +34,16 @@ pageClass: routes
 <RouteEn author="HenryQW" example="/cfd/div_gbp" path="/cfd/div_gbp" />
 
 ## finviz
+
+### News
+
+<RouteEn author="nczitzk" example="/finviz" path="/finviz/:category?" :paramsDesc="['Category, see below, News by default']">
+
+| News | Blog |
+| ---- | ---- |
+| news | blog |
+
+</RouteEn>
 
 ### US Stock News
 
@@ -67,6 +100,12 @@ Language:
 | zh      | en      |
 
 </RouteEn>
+
+## Unusual Whales
+
+### News Flow
+
+<RouteEn author="TonyRL" example="/unusualwhales/news" path="/unusualwhales/news" radar="1" rssbud="1" />
 
 ## World Economic Forum
 

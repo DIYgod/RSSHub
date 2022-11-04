@@ -106,6 +106,12 @@
 | ------- | -------- | --------- | ----- | -------------- |
 | android | iphone   | ipad      | win   | android_tv_yst |
 
+## BlueStacks
+
+### BlueStacks 5 版本日誌
+
+<Route author="TonyRL" example="/bluestacks/release/5" path="/bluestacks/release/5" radar="1" puppeteer="1"/>
+
 ## Brave
 
 ### Release Notes
@@ -264,7 +270,15 @@
 
 ### 脚本更新
 
-<Route author="imlonghao" example="/greasyfork/zh-CN/bilibili.com" path="/greasyfork/:language/:domain?" :paramsDesc="['语言, 可在网站右上角找到, `all` 为所有语言', '按脚本生效域名过滤, 可选']"/>
+<Route author="imlonghao" example="/greasyfork/zh-CN/bilibili.com" path="/greasyfork/:language/:domain?" :paramsDesc="['语言, 可在网站右上角找到, `all` 为所有语言', '按脚本生效域名过滤, 可选']" radar="1"/>
+
+### 脚本版本历史
+
+<Route author="miles170" example="/greasyfork/scripts/14178-ac-baidu-重定向优化百度搜狗谷歌必应搜索-favicon-双列/versions" path="/greasyfork/scripts/:script/versions" :paramsDesc="['脚本 id，可在对应脚本页 URL 中找到']" radar="1" />
+
+### 脚本反馈
+
+<Route author="miles170" example="/greasyfork/scripts/14178-ac-baidu-重定向优化百度搜狗谷歌必应搜索-favicon-双列/feedback" path="/greasyfork/scripts/:script/feedback" :paramsDesc="['脚本 id，可在对应脚本页 URL 中找到']" radar="1" />
 
 ## Hugo
 
@@ -300,9 +314,10 @@
 
 ## Logseq
 
-### Changelog
-
-<Route author="nczitzk" example="/logseq/changelog" path="/logseq/changelog"/>
+::: warning
+Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
+请使用 <https://github.com/logseq/logseq/releases.atom> 代替。
+:::
 
 ## MacKed
 
@@ -409,17 +424,17 @@
 
 # <Route author="nczitzk" example="/onenotegem/release" path="/onenotegem/release"/>
 
-## pageClass: routes
-
-# 程序更新
-
-> > > > > > > 47c73b23a2b2469d4d97e5f2b1007d05468fb737
-
 ## OpenWrt
 
 ### Releases
 
 <Route author="DIYgod" example="/openwrt/releases/xiaomi/xiaomi_redmi_router_ac2100" path="/releases/:brand/:model" :paramsDesc="['产品型号，可在 `Table of Hardware` -> `Device Page` 的 URL 中找到', '同上']"/>
+
+## pageClass: routes
+
+# 程序更新
+
+> > > > > > > 47c73b23a2b2469d4d97e5f2b1007d05468fb737
 
 ## PlayStation
 
@@ -486,6 +501,12 @@
 ### 版本更新
 
 <Route author="Cesaryuan nczitzk" example="/quicker/versions" path="/quicker/versions"/>
+
+## RemNote
+
+### 变更日志
+
+<Route author="TonyRL" example="/remnote/changelog" path="/remnote/changelog" radar="1" rssbud="1"/>
 
 ## RescueTime
 
@@ -613,6 +634,12 @@
 ### Download
 
 <Route author="nczitzk" example="/wdc/download/279" path="/wdc/download/:id?" :paramsDesc="['软件 id，可在对应软件页 URL 中找到，默认为 279，即 Western Digital Dashboard']"/>
+
+## WizFile
+
+### 更新日志
+
+<Route author="Fatpandac" example="/wizfile/updates" path="/wizfile/updates"/>
 
 ## WizTree
 

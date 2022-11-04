@@ -10,6 +10,7 @@
 [![docker publish](https://img.shields.io/github/workflow/status/DIYgod/RSSHub/%5Bdocker%5D%20CI%20for%20releases/master?label=docker%20publish&logo=docker&style=flat-square)](https://hub.docker.com/r/diygod/rsshub)
 [![test](https://img.shields.io/github/workflow/status/DIYgod/RSSHub/test/master?label=test&logo=github&style=flat-square)](https://github.com/DIYgod/RSSHub/actions/workflows/test.yml?query=event%3Apush+branch%3Amaster)
 [![Test coverage](https://img.shields.io/codecov/c/github/DIYgod/RSSHub.svg?style=flat-square&logo=codecov)](https://app.codecov.io/gh/DIYgod/RSSHub/branch/master)
+[![Foresight Docs](https://api-public.service.runforesight.com/api/v1/badge/success?repoId=5da20e56-cecf-4b05-9bcd-cab097fb2dca)](https://docs.runforesight.com/)
 
 ## Introduction
 
@@ -33,13 +34,21 @@ RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以�
 
 ### Special Sponsors
 
-<div>
-<a href="https://rss3.io/" target="_blank"><img height="60px" src="https://i.imgur.com/v7TF0jp.jpg"></a>
-</div>
+<p>
+<a href="https://rss3.io/" target="_blank"><img height="60px" src="https://i.imgur.com/vHtI4bz.png"></a>
+</p>
 
-### Sponsors
+<table width="100%">
+<tr>
+<td><img width="1000" height="0"><a href="https://www.runforesight.com/?utm_source=RSSHub&utm_medium=sponsorship"><img src="https://www.thundra.io/hubfs/RunForesight/GitHub%20Sponsorship%20banners/github-actions-observability.png"
+alt="Foresight" width="260" align="right"></a><h3>Foresight: Increase CI/CD Health & Test Performance</h3><p>
+Foresight provides full visibility and deep insights into the health and performance of your tests and CI pipelines. Assess the risk of code changes, deal with flaky tests, see workflow and test trends over time, and improve the contributing experience with Foresight.</p>
 
-[Sayori Studio](https://t.me/SayoriStudio) . [Sion Kazama](https://blog.sion.moe) . [琚致远](https://wineso.me/) . [Rolly RSS 阅读器](https://www.coolapk.com/apk/239500) . [mokeyjay](https://www.mokeyjay.com/) . [萌开源联盟](https://www.moeunion.com) . [hooke007](https://github.com/hooke007/MPV_lazy) . [feeds.pub](https://feeds.pub) . [KINGX@安全引擎](http://cve.today/)
+[Sign up now!](https://runforesight.com/?utm_source=RSSHub&utm_medium=sponsorship)
+
+</td>
+</tr>
+</table>
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/en/support/)
 
