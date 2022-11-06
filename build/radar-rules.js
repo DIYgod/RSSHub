@@ -9019,6 +9019,11 @@
                         return `/u3c3/search/${keyword}`;
                     }
                 } } ] },
+  "uber.com":{ _name:"Uber Blog",
+    www:[ { title:"Engineering",
+        docs:"https://docs.rsshub.app/blog.html#you-bu",
+        source:[ "/blog/pittsburgh/engineering" ],
+        target:"/uber/blog" } ] },
   "udn.com":{ _name:"聯合新聞網",
     ".":[ { title:"即時新聞",
         docs:"https://docs.rsshub.app/new-media.html#lian-he-xin-wen-wang-ji-shi-xin-wen",

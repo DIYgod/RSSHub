@@ -3904,6 +3904,9 @@
     "/u3c3/:type?/:keyword?": [
         "noname1897"
     ],
+    "/uber/blog/:maxPage?": [
+        "hulb"
+    ],
     "/ucas/job/:type?": [
         "Fatpandac"
     ],
