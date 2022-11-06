@@ -94,7 +94,7 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ### Engineering
 
-<RouteEn author="hulb" example="/uber/blog/:maxPage?" path="/uber/blog/:maxPage?" :paramsDesc="['max number of pages to retrieve, default to 1 page at most']" />
+<RouteEn author="hulb" example="/uber/blog" path="/uber/blog/:maxPage?" :paramsDesc="['max number of pages to retrieve, default to 1 page at most']" />
 
 ## WordPress
 
