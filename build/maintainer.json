@@ -3430,6 +3430,9 @@
     "/sicau/zsjy/:category?": [
         "nczitzk"
     ],
+    "/simpleinfo/:category?": [
+        "haukeng"
+    ],
     "/sinchew/category/:category?": [
         "nczitzk"
     ],
