@@ -56,7 +56,7 @@
     "@vuepress/plugin-pwa": "1.9.7",
     "@vuepress/shared-utils": "1.9.7",
     "cross-env": "7.0.3",
-    "eslint": "8.26.0",
+    "eslint": "8.27.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-yml": "1.2.0",
