@@ -332,6 +332,12 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 <Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>
 
+## 优步
+
+### 工程技术
+
+<Route author="hulb" example="/uber/blog" path="/uber/blog/:maxPage?" :paramsDesc="['获取的最多页数，默认最多获取第一页']" />
+
 ## 雨苁博客
 
 ### 首页
