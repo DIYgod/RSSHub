@@ -1,4 +1,4 @@
-<p>{{ briefIntroduction }}</p>
+<p>{{ briefIntroduction.replace("\n", "<br>") }}</p>
 {{ if mainImage }}
     <img src="{{ mainImage }}"/>
 {{ /if }}
