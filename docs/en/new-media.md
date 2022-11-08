@@ -514,7 +514,7 @@ Edition
 
 ### Topics
 
-<RouteEn author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['topic']">
+<RouteEn author="emdoe" example="/nautilus/topic/arts" path="/nautilus/topic/:tid" :paramsDesc="['topic']">
 
 This route provides a flexible plan with full text content to subscribe specific topic(s) on the Nautilus. Please visit [nautil.us](http://nautil.us) and click `Topics` to acquire whole topic list.
 
