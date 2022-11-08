@@ -1,4 +1,4 @@
-<p>{{ briefIntroduction }}</p>
+<p>{{@ briefIntroduction.trim().replace(/\n/g, '<br>') }}</p>
 {{ if mainImage }}
     <img src="{{ mainImage }}"/>
 {{ /if }}
