@@ -1947,9 +1947,11 @@ category 对应的关键词有
 
 ### 电视回放
 
-<Route author="nczitzk" example="/sctv/programme/1" path="/sctv/programme/:id?" :paramsDesc="['节目 id，可在对应节目页中找到，默认为 `1`，即四川新闻联播']">
+<Route author="nczitzk" example="/sctv/programme/1" path="/sctv/programme/:id?/:limit?/:isFull?" :paramsDesc="['节目 id，可在对应节目页中找到，默认为 `1`，即四川新闻联播', '期数，默认为 15，即单次获取最新 15 期', '是否仅获取完整视频，填写 true/yes 表示是、false/no 表示否，默认是']">
 
 ::: tip 提示
+
+参数 **是否仅获取完整视频** 设置为 `true` `yes` `t` `y` 等值后，路由仅返回当期节目的完整视频，而不会返回节目所提供的节选视频。
 
 查看更多电视节目请前往 [电视回放](https://www.sctv.com/column/list)
 
