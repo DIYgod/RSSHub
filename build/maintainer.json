@@ -1742,24 +1742,6 @@
     "/hellogithub/volume": [
         "nczitzk"
     ],
-    "/heu/yjsy/list/:id": [
-        "Derekmini"
-    ],
-    "/heu/job/bigemploy": [
-        "Derekmini"
-    ],
-    "/heu/job/calendar": [
-        "Derekmini"
-    ],
-    "/heu/job/list/:id": [
-        "Derekmini"
-    ],
-    "/heu/gx/:type/:colume/:id?": [
-        "Derekmini"
-    ],
-    "/heu/uae/list/:id": [
-        "Derekmini"
-    ],
     "/hex-rays/news": [
         "hellodword ",
         "TonyRL"
@@ -1872,6 +1854,27 @@
     ],
     "/houxu/": [
         "nczitzk"
+    ],
+    "/hrbeu/job/bigemploy": [
+        "Derekmini"
+    ],
+    "/hrbeu/job/calendar": [
+        "Derekmini"
+    ],
+    "/hrbeu/job/list/:id": [
+        "Derekmini"
+    ],
+    "/hrbeu/gx/:type/:colume/:id?": [
+        "Derekmini"
+    ],
+    "/hrbeu/uae/list/:id": [
+        "Derekmini"
+    ],
+    "/hrbeu/ugs/news/:author?/:category?": [
+        "XYenon"
+    ],
+    "/hrbeu/yjsy/list/:id": [
+        "Derekmini"
     ],
     "/huangz/": [
         "stormbuf"
