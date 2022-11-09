@@ -717,9 +717,9 @@ Sources
 
 <Route author="SunBK201" example="/ymgal/article" path="/ymgal/article/:type?" :paramsDesc="['文章类型']" radar="1">
 
-| 资讯   | 专栏     |
-| ---- | ------ |
-| news | column |
+| All | 资讯   | 专栏     |
+| --- | ---- | ------ |
+|     | news | column |
 
 </Route>
 
