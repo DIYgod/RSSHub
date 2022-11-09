@@ -4317,6 +4317,9 @@
     "/yicai/vip/:id?": [
         "nczitzk"
     ],
+    "/ymgal/article/:type?": [
+        "SunBK201"
+    ],
     "/yoasobi-music/info/:category": [
         "Kiotlin"
     ],
