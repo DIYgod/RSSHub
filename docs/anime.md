@@ -719,7 +719,7 @@ Sources
 
 | All | 资讯   | 专栏     |
 | --- | ---- | ------ |
-|     | news | column |
+| all | news | column |
 
 </Route>
 
