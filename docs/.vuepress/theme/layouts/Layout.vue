@@ -3,6 +3,9 @@
     <template #sidebar-top>
       <CarbonAds />
     </template>
+    <template #page-bottom>
+      <div class="wwads-cn wwads-vertical wwads-sticky" data-id="193" style="max-width:180px"></div>
+    </template>
   </ParentLayout>
 </template>
 
