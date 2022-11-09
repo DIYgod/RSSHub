@@ -711,6 +711,18 @@ Sources
 
 <Route author="DIYgod kotoyuuko" example="/hhgal" path="/hhgal"/>
 
+## 月幕 Galgame
+
+### 文章
+
+<Route author="SunBK201" example="/ymgal/article" path="/ymgal/article/:type?" :paramsDesc="['文章类型']" radar="1">
+
+| All | 资讯   | 专栏     |
+| --- | ---- | ------ |
+| all | news | column |
+
+</Route>
+
 ## 终点分享
 
 ### 最新汉化
