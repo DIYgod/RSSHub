@@ -2705,6 +2705,21 @@
     "/nikkei-cn/:language?/:category?/:type?": [
         "nczitzk"
     ],
+    "/nintendo/direct": [
+        "HFO4"
+    ],
+    "/nintendo/eshop/:region": [
+        "HFO4"
+    ],
+    "/nintendo/news": [
+        "HFO4"
+    ],
+    "/nintendo/news/china": [
+        "NeverBehave"
+    ],
+    "/nintendo/system-update": [
+        "hoilc"
+    ],
     "/nippon/:category?": [
         "laampui"
     ],
@@ -5025,14 +5040,6 @@
     "/ps/ps4updates": [],
     "/ps/:lang?/product/:gridName": [],
     "/quantamagazine/archive": [],
-    "/nintendo/eshop/jp": [],
-    "/nintendo/eshop/hk": [],
-    "/nintendo/eshop/us": [],
-    "/nintendo/eshop/cn": [],
-    "/nintendo/news": [],
-    "/nintendo/news/china": [],
-    "/nintendo/direct": [],
-    "/nintendo/system-update": [],
     "/metred/fuli": [],
     "/mit/graduateadmissions/:type/:name": [],
     "/mit/ocw-top": [],
