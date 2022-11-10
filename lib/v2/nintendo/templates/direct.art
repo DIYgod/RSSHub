@@ -1,0 +1,6 @@
+{{ if publicId }}<img src="https://assets.nintendo.com/image/upload/{{ publicId }}">{{ /if }}
+{{ if content }}
+    {{ each content C }}
+        {{ if C.nodeType === 'paragraph' }}<p>{{ each C.content c }}{{ c.value }}{{ /each }}</p>{{ /if }}
+    {{ /each }}
+{{ /if }}
