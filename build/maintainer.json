@@ -3374,7 +3374,7 @@
     "/scmp/:category_id": [
         "proletarius101"
     ],
-    "/sctv/programme/:id?": [
+    "/sctv/programme/:id?/:limit?/:isFull?": [
         "nczitzk"
     ],
     "/scvtc/xygg": [
