@@ -4,7 +4,9 @@
       <CarbonAds />
     </template>
     <template #page-bottom>
-      <div class="wwads-cn wwads-vertical wwads-sticky" data-id="193" style="max-width:180px"></div>
+      <div>
+        <div class="wwads-cn wwads-vertical wwads-sticky" data-id="193" style="max-width:180px"></div>
+      </div>
     </template>
   </ParentLayout>
 </template>
