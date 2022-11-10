@@ -338,7 +338,7 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 ### Update
 
-见 [#Monster Hunter World](/en/game.html#monster-hunter-world)
+See [#Monster Hunter World](/en/game.html#monster-hunter-world)
 
 ## Neat Download Manager
 
@@ -350,7 +350,7 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 ### Switch System Update（Japan）
 
-见 [#nintendo](/game.html#nintendo)
+See [#nintendo](/game.html#nintendo)
 
 ## NPM
 
