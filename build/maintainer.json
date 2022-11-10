@@ -2807,6 +2807,9 @@
     "/nmbxd1/:id": [
         "miles170"
     ],
+    "/nmtv/column/:id?": [
+        "nczitzk"
+    ],
     "/nodejs/blog/:language?": [
         "nczitzk"
     ],

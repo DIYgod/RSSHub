@@ -12040,6 +12040,18 @@
       }
     ]
   },
+  "nmtv.cn": {
+    "_name": "内蒙古广播电视台",
+    ".": [
+      {
+        "title": "点播",
+        "docs": "https://docs.rsshub.app/traditional-media.html#nei-meng-gu-guang-bo-dian-shi-tai-dian-bo",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
   "nodejs.org": {
     "_name": "Node.js",
     ".": [
