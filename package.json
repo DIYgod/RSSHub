@@ -61,7 +61,7 @@
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-yml": "1.2.0",
     "fs-extra": "10.1.0",
-    "jest": "29.3.0",
+    "jest": "29.3.1",
     "jest-junit": "14.0.1",
     "meilisearch": "0.29.1",
     "mockdate": "3.0.5",
