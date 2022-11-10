@@ -75,7 +75,7 @@ module.exports = {
         ['meta', { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' }],
         ['link', { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' }],
         ['link', { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#ff8549' }],
-        ['script', { type: 'text/javascript', src: 'https://cdn.wwads.cn/js/makemoney.js', async: true }],
+        ['script', { type: 'text/javascript', src: 'https://cdn.wwads.cn/js/makemoney.js' }],
     ],
     theme: 'vuepress-theme-rsshub',
     themeConfig: {
