@@ -1618,6 +1618,20 @@ category 对应的关键词有
 
 </Route>
 
+## 内蒙古广播电视台
+
+### 点播
+
+<Route author="nczitzk" example="/nmtv/column/877" path="/nmtv/column/:id?" :paramsDesc="['栏目 id，可在对应栏目 URL 中找到']">
+
+::: tip 提示
+
+如 [蒙古语卫视新闻联播](http://www.nmtv.cn/folder292/folder663/folder301/folder830/folder877) 的 URL 为 <http://www.nmtv.cn/folder292/folder663/folder301/folder830/folder877>，其栏目 id 为末尾数字编号，即 `877`。可以得到其对应路由为 [`/nmtv/column/877`](https://rsshub.app/nmtv/column/877)
+
+:::
+
+</Route>
+
 ## 纽约时报
 
 ### 新闻
