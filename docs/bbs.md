@@ -330,6 +330,14 @@ pageClass: routes
 
 </Route>
 
+### 论坛摘要
+
+<Route author="shinemoon" example="/saraba1st/digest/forum-75-1" path="/saraba1st/digest/:tid" :paramsDesc="['论坛 id']" radar="1">
+
+版面网址如果为 <https://bbs.saraba1st.com/2b/forum-75-1.html> 那么论坛 id 就是 `forum-75-1`。
+
+</Route>
+
 ## SCBOY 论坛
 
 ### 帖子
