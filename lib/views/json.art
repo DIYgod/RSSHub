@@ -1,0 +1,49 @@
+{
+    "version": "https://jsonfeed.org/version/1.1",
+    "title": "{{ title || 'RSSHub' }}",
+    "home_page_url": "{{ link || 'https://docs.rsshub.app' }}",
+    "feed_url": "{{ atomlink }}",
+    "description": "{{ description || title }} - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)",{{ if image }}
+    "icon": "{{ image }}",{{ /if }}
+    "authors": [{
+        "name": "{{ author && author.name || 'RSSHub' }}",
+        "url": "{{ author && author.link || 'https://github.com/DIYgod/RSSHub' }}",
+        "avatar": "{{ author && author.avatar || 'https://docs.rsshub.app/logo.png' }}"
+    }],
+    "language": "{{ language || 'zh-cn' }}",
+    "items": [{{ each item i }}
+        {
+            "id": "{{ i.guid || i.id || i.link }}",
+            "url": "{{ i.link }}",
+            "title": "{{ i.title }}",
+            "content_html": {{@ i.content && stringify(i.content.html) || stringify(i.description) || stringify(i.title) }},{{ if i.content && i.content.text }}
+            "content_text": "{{ stringify(i.content.text) }}",{{ /if }}{{ if i.image }}
+            "image": "{{ i.image }}",{{ /if }}{{ if i.banner }}
+            "banner_image": "{{ i.banner }}",{{ /if }}
+            "date_published": "{{ i.pubDate }}",{{ if i.updated }}
+            "date_modified": "{{ i.updated }}",{{ /if }}{{ if i.author }}
+            "authors": [{{ if typeof i.author === 'string' }}
+                {
+                    "name": "{{ i.author }}"
+                }
+            {{ else }}{{ each i.author author }}
+                {
+                    "name": "{{ author.name }}",{{ if author.url }}
+                    "url": "{{ author.url }}",{{ /if }}{{ if author.avatar }}
+                    "avatar": "{{ author.avatar }}"{{ /if }}
+                }{{ if $index !== i.author.length - 1 }},{{ /if }}{{ /each }}{{ /if }}
+            ],{{ /if }}{{ if i.category }}
+            "tags": {{ if typeof i.category === 'string' }}["{{ i.category }}"]{{ else }}{{@ stringify(i.category) }}{{ /if }},{{ /if }}{{ if i.language }}
+            "language": "{{ i.language }}",{{ /if }}{{ if i.enclosure_url }}
+            "attachments": [
+                {
+                    "url": "{{ i.enclosure_url }}",
+                    "mime_type": "{{ i.enclosure_type }}"{{ if i.enclosure_title }},
+                    "title": "{{ i.enclosure_title }}"{{ /if }}{{ if i.enclosure_length }},
+                    "size_in_bytes": "{{ i.enclosure_length }}"{{ /if }}{{ if i.itunes_duration }},
+                    "duration_in_seconds": "{{ i.itunes_duration }}"{{ /if }}
+                }
+            ]{{ /if }}
+        }{{ if $index !== item.length - 1 }},{{ /if }}{{ /each }}
+    ]
+}
