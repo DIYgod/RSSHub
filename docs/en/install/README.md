@@ -307,6 +307,12 @@ Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product pla
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
 
+## Deploy to PikaPods
+
+Run RSSHub from just $1/month. Includes automatic updates and $5 free starting credit.
+
+[![Run on PikaPods](https://www.pikapods.com/static/run-button.svg)](https://www.pikapods.com/pods?run=rsshub)
+
 ## Deploy to Google App Engine(GAE)
 
 ### Before You Begin
