@@ -4250,11 +4250,19 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 ### 最新新聞
 
-<Route author="miles170" example="/nextapple/realtime/new" path="/nextapple/realtime/:category?" :paramsDesc="['類別，見下表，默認為最新']">
+<Route author="miles170" example="/nextapple/realtime/today" path="/nextapple/realtime/:category?" :paramsDesc="['類別，見下表，默認為首頁']">
 
-| 最新  | 娛樂            | 生活   | 社會    | 政治       | 國際            | 財經      | 飲食旅遊      | 房市       | 時尚      | 車市   | 健康     | 體育     | 3C     |
-| --- | ------------- | ---- | ----- | -------- | ------------- | ------- | --------- | -------- | ------- | ---- | ------ | ------ | ------ |
-| new | entertainment | life | local | politics | international | finance | lifestyle | property | fashion | auto | health | sports | gadget |
+| 首頁    | 最新     | 焦點        | 熱門  | 娛樂            | 生活   | 女神       | 社會    |
+| ----- | ------ | --------- | --- | ------------- | ---- | -------- | ----- |
+| today | latest | recommend | hit | entertainment | life | gorgeous | local |
+
+| 政治       | 國際            | 財經      | 區塊鏈        | 房市       | 時尚      | 體育     |
+| -------- | ------------- | ------- | ---------- | -------- | ------- | ------ |
+| politics | international | finance | blockchain | property | fashion | sports |
+
+| 旅遊美食      | 3C 車市  | 蘋理    |
+| --------- | ------ | ----- |
+| lifestyle | gadget | forum |
 
 </Route>
 
