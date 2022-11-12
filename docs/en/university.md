@@ -51,7 +51,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 | 公告   | 346 |
 | 南艺要闻 | 332 |
 
-</Route>
+</RouteEn>
 
 ### Shuangxing Information
 
@@ -65,7 +65,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 | 招就指南 | 234 |
 | 南艺院报 | 236 |
 
-</Route>
+</RouteEn>
 
 ### School of Design
 
@@ -80,7 +80,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 | 党团 PARTY               | party      |
 | 后浪 YOUTH               | youth      |
 
-</Route>
+</RouteEn>
 
 ### Graduate Institute
 
@@ -92,7 +92,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 | 培养工作 | 1962 |
 | 学位工作 | 1958 |
 
-</Route>
+</RouteEn>
 
 ### Library
 
@@ -105,7 +105,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 | 资源动态 | zydt |
 | 服务动态 | fwdt |
 
-</Route>
+</RouteEn>
 
 ## Polimi
 
