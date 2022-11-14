@@ -28,7 +28,7 @@
     "default",
     "jest-junit"
   ],
-  "jest-junit" : {
+  "jest-junit": {
     "outputDirectory": "coverage"
   },
   "repository": {
@@ -122,6 +122,7 @@
     "koa-basic-auth": "4.0.0",
     "koa-favicon": "2.1.0",
     "koa-mount": "4.0.0",
+    "loader": "^2.1.1",
     "lru-cache": "7.14.1",
     "lz-string": "1.4.4",
     "mailparser": "3.5.0",
