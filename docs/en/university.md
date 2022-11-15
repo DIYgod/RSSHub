@@ -44,7 +44,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ### Official Information
 
-<Route author="evnydd0sf" example="/nua/index/346" path="/nua/index/:type" :paramsDesc="['News Type']" radar="1">
+<RouteEn author="evnydd0sf" example="/nua/index/346" path="/nua/index/:type" :paramsDesc="['News Type']" radar="1">
 
 | News Type | Parameters  |
 | ---- | --- |
@@ -55,7 +55,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ### Shuangxing Information
 
-<Route author="evnydd0sf" example="/nua/sxw/230" path="/nua/sxw/:type" :paramsDesc="['News Type']" radar="1">
+<RouteEn author="evnydd0sf" example="/nua/sxw/230" path="/nua/sxw/:type" :paramsDesc="['News Type']" radar="1">
 
 | News Type | Parameters  |
 | ---- | --- |
@@ -69,7 +69,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ### School of Design
 
-<Route author="evnydd0sf" example="/nua/dc/news" path="/nua/dc/:type" :paramsDesc="['News Type']" radar="1">
+<RouteEn author="evnydd0sf" example="/nua/dc/news" path="/nua/dc/:type" :paramsDesc="['News Type']" radar="1">
 
 | News Type                   | Parameters         |
 | ---------------------- | ---------- |
@@ -84,7 +84,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ### Graduate Institute
 
-<Route author="evnydd0sf" example="/nua/gra/1959" path="/nua/gra/:type" :paramsDesc="['News Type']" radar="1">
+<RouteEn author="evnydd0sf" example="/nua/gra/1959" path="/nua/gra/:type" :paramsDesc="['News Type']" radar="1">
 
 | News Type | Parameters   |
 | ---- | ---- |
@@ -96,7 +96,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ### Library
 
-<Route author="evnydd0sf" example="/nua/lib/xwdt" path="/nua/lib/:type" :paramsDesc="['News Type']" radar="1">
+<RouteEn author="evnydd0sf" example="/nua/lib/xwdt" path="/nua/lib/:type" :paramsDesc="['News Type']" radar="1">
 
 | News Type | Parameters   |
 | ---- | ---- |
