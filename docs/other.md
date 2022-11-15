@@ -402,6 +402,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
 
+## 成都住建蓉 e 办
+
+### 商品住房购房登记
+
+<Route author="TonyRL" example="/cdzjryb/zw/projectList" path="/cdzjryb/zw/projectList" radar="1"/>
+
 ## 滴答清单
 
 ### 习惯打卡
