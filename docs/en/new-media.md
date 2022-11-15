@@ -764,7 +764,7 @@ Compared to the official one, this feed:
 
 ### The Verge
 
-<RouteEn author="HenryQW" example="/theverge" path="/theverge/:hub? :paramsDesc="['Hub，see below, All Posts by default']">
+<RouteEn author="HenryQW vbali" example="/theverge" path="/theverge/:hub? :paramsDesc="['Hub, see below, All Posts by default']">
 
 | Hub         | Hub name            |
 | ----------- | ------------------- |
