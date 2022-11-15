@@ -40,6 +40,73 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 <RouteEn author="nczitzk" example="/mit/csail/news" path="/mit/csail/news"/>
 
+## Nanjing University of the Arts
+
+### Official Information
+
+<RouteEn author="evnydd0sf" example="/nua/index/346" path="/nua/index/:type" :paramsDesc="['News Type']" radar="1">
+
+| News Type | Parameters  |
+| ---- | --- |
+| 公告   | 346 |
+| 南艺要闻 | 332 |
+
+</RouteEn>
+
+### Shuangxing Information
+
+<RouteEn author="evnydd0sf" example="/nua/sxw/230" path="/nua/sxw/:type" :paramsDesc="['News Type']" radar="1">
+
+| News Type | Parameters  |
+| ---- | --- |
+| 校园电视 | 230 |
+| 院部动态 | 232 |
+| 动感校园 | 233 |
+| 招就指南 | 234 |
+| 南艺院报 | 236 |
+
+</RouteEn>
+
+### School of Design
+
+<RouteEn author="evnydd0sf" example="/nua/dc/news" path="/nua/dc/:type" :paramsDesc="['News Type']" radar="1">
+
+| News Type                   | Parameters         |
+| ---------------------- | ---------- |
+| 学院新闻 NEWS              | news       |
+| 展览 EXHIBITION          | exhibition |
+| 研创 RESEARCH & CREATION | rc         |
+| 项目 PROJECT             | project    |
+| 党团 PARTY               | party      |
+| 后浪 YOUTH               | youth      |
+
+</RouteEn>
+
+### Graduate Institute
+
+<RouteEn author="evnydd0sf" example="/nua/gra/1959" path="/nua/gra/:type" :paramsDesc="['News Type']" radar="1">
+
+| News Type | Parameters   |
+| ---- | ---- |
+| 招生工作 | 1959 |
+| 培养工作 | 1962 |
+| 学位工作 | 1958 |
+
+</RouteEn>
+
+### Library
+
+<RouteEn author="evnydd0sf" example="/nua/lib/xwdt" path="/nua/lib/:type" :paramsDesc="['News Type']" radar="1">
+
+| News Type | Parameters   |
+| ---- | ---- |
+| 新闻动态 | xwdt |
+| 党建动态 | djdt |
+| 资源动态 | zydt |
+| 服务动态 | fwdt |
+
+</RouteEn>
+
 ## Polimi
 
 ### News
