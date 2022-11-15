@@ -15517,10 +15517,10 @@
         "title": "The Verge",
         "docs": "https://docs.rsshub.app/new-media.html#the-verge",
         "source": [
-          "/rss/index.xml",
+          "/:hub",
           "/"
         ],
-        "target": "/theverge"
+        "target": "/theverge/:hub?"
       }
     ]
   },

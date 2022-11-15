@@ -3802,8 +3802,9 @@
         "nczitzk",
         "bigfei"
     ],
-    "/theverge/": [
-        "HenryQW"
+    "/theverge/:hub?": [
+        "HenryQW",
+        "vbali"
     ],
     "/thwiki/calendar/:before?/:after?": [
         "aether17"
