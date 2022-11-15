@@ -1,5 +1,5 @@
 # [Choice] Node.js version (use -bullseye variants on local arm64/Apple Silicon): 18-bullseye, 16-bullseye, 14-bullseye, 18-buster, 16-buster, 14-buster
-ARG VARIANT=16
+ARG VARIANT=16-bullseye
 FROM node:${VARIANT}
 
 # [Option] Install zsh
@@ -13,7 +13,7 @@ ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 ARG NPM_GLOBAL=/usr/local/share/npm-global
 ENV NVM_DIR=/usr/local/share/nvm
-ENV NVM_SYMLINK_CURRENT=true \ 
+ENV NVM_SYMLINK_CURRENT=true \
     PATH=${NPM_GLOBAL}/bin:${NVM_DIR}/current/bin:${PATH}
 COPY library-scripts/*.sh library-scripts/*.env /tmp/library-scripts/
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
