@@ -1359,7 +1359,7 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### The Verge
 
-<RouteEn author="HenryQW vbali" example="/theverge" path="/theverge/:hub? :paramsDesc="['枢纽，见下表，默认为 All Posts']">
+<Route author="HenryQW vbali" example="/theverge" path="/theverge/:hub?" :paramsDesc="['枢纽，见下表，默认为 All Posts']">
 
 | Hub         | Hub name            |
 | ----------- | ------------------- |
