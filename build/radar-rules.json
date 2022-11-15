@@ -12211,6 +12211,16 @@
         ],
         "target": "/nua/gra/:type"
       }
+    ],
+    "lib": [
+      {
+        "title": "图书馆",
+        "docs": "https://docs.rsshub.app/university.html#nan-jing-yi-shu-xue-yuan",
+        "source": [
+          "/:type/list.htm"
+        ],
+        "target": "/nua/lib/:type"
+      }
     ]
   },
   "nuaa.edu.cn": {
