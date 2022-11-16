@@ -18,9 +18,9 @@ tasks:
   - name: app
     command: yarn dev
     openMode: tab-after
-  - name: docs
-    command: yarn docs:dev
-    openMode: tab-after
+  # - name: docs
+  #   command: yarn docs:dev
+  #   openMode: tab-after
 
 vscode:
   extensions:
