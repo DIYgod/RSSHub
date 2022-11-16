@@ -956,7 +956,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 ### 对指定用户进行搜索
 
-<Route author="Lava-Swimmer noname1776" example="/nyaa/user/silver-khaie/search/a" path="/nyaa/user/:username/search/:query" :paramsDesc="['用户名', '搜索关键词']" supportBT="1" radar="1"/>
+<Route author="Lava-Swimmer noname1776" example="/nyaa/user/silver-khaie/search/a" path="/nyaa/user/:username/search/:query?" :paramsDesc="['用户名', '搜索关键词']" supportBT="1" radar="1"/>
 
 ### Sukebei 搜索结果
 

@@ -411,7 +411,7 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 ### Sukebei search Result with specify user
 
-<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/sukebei/user/Tarakara168/search/a" path="/nyaa/sukebei/user/:username/search/:query" :paramsDesc="['Username', 'Search keyword']" supportBT="1" radar="1"/>
+<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/sukebei/user/Tarakara168/search/a" path="/nyaa/sukebei/user/:username/search/:query?" :paramsDesc="['Username', 'Search keyword']" supportBT="1" radar="1"/>
 
 ## PornHub
 
