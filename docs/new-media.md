@@ -1359,7 +1359,22 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### The Verge
 
-<Route author="HenryQW" example="/theverge" path="/theverge">
+<Route author="HenryQW vbali" example="/theverge" path="/theverge/:hub?" :paramsDesc="['枢纽，见下表，默认为 All Posts']">
+
+| Hub         | Hub name            |
+| ----------- | ------------------- |
+|             | All Posts           |
+| android     | Android             |
+| apple       | Apple               |
+| apps        | Apps & Software     |
+| blackberry  | BlackBerry          |
+| culture     | Culture             |
+| gaming      | Gaming              |
+| hd          | HD & Home           |
+| microsoft   | Microsoft           |
+| photography | Photography & Video |
+| policy      | Policy & Law        |
+| web         | Web & Social        |
 
 通过提取文章全文，以提供比官方源更佳的阅读体验.
 
