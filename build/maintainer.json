@@ -752,6 +752,9 @@
     "/cnki/journals/debut/:name": [
         "Fatpandac"
     ],
+    "/cnki/author/:code": [
+        "harveyqiu"
+    ],
     "/cntheory/paper/:id?": [
         "nczitzk"
     ],
@@ -3540,7 +3543,7 @@
         "kt286"
     ],
     "/sse/disclosure/:query?": [
-        "alienmao"
+        "harveyqiu"
     ],
     "/sse/inquire": [
         "Jeason0228"

@@ -3074,6 +3074,16 @@
         ],
         "target": "/cnki/journals/debut/:name"
       }
+    ],
+    "kns": [
+      {
+        "title": "作者期刊文献",
+        "docs": "https://docs.rsshub.app/journal.html#zhong-guo-zhi-wang-zuo-zhe-qi-kan-wen-xian",
+        "source": [
+          "/kcms/detail/knetsearch.aspx",
+          "/"
+        ]
+      }
     ]
   },
   "cntheory.com": {
