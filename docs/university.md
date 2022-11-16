@@ -2155,6 +2155,19 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 图书馆
+
+<Route author="evnydd0sf" example="/nua/lib/xwdt" path="/nua/lib/:type" :paramsDesc="['新闻模块，见下表']" radar="1">
+
+| 新闻模块 | 参数   |
+| ---- | ---- |
+| 新闻动态 | xwdt |
+| 党建动态 | djdt |
+| 资源动态 | zydt |
+| 服务动态 | fwdt |
+
+</Route>
+
 ## 南京邮电大学
 
 ### 教务处通知与新闻
