@@ -149,6 +149,17 @@ pageClass: routes
 
 </Route>
 
+### 长沙市
+
+<Route author="shansing" example="/tingshuitz/changsha" path="/tingshuitz/changsha/:channelId">
+
+| channelId | 分类    |
+| --------- | ----- |
+| 78        | 计划停水 |
+| 157       | 抢修停水 |
+
+</Route>
+
 ## 香港天文台
 
 ### Current Weather Report
