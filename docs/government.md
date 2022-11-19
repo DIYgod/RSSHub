@@ -1350,3 +1350,7 @@ pageClass: routes
 :::
 
 </Route>
+
+## 国务院政策文件库
+
+<Route author="zxx457" example="/gov/zhengceku/bmwj" path="/gov/zhengceku/:department" :paramsDesc="['库名']" />
