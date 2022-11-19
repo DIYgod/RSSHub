@@ -153,6 +153,8 @@ pageClass: routes
 
 <Route author="shansing" example="/tingshuitz/changsha" path="/tingshuitz/changsha/:channelId">
 
+可能仅限于中国大陆服务器访问，以实际情况为准。
+
 | channelId | 分类    |
 | --------- | ----- |
 | 78        | 计划停水 |
