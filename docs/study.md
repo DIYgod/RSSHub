@@ -37,6 +37,20 @@ pageClass: routes
 | bilingual   | 双语新闻 (Bilingual News)                  |
 | address     | 总统演讲 (President Address)               |
 
+## Asian Innovation and Entrepreneurship Association
+
+### Seminar Series
+
+<Route author="zxx-457" example="/aiea/seminars/upcoming" path="/aiea/seminars/:period" :paramsDesc="['时间段']">
+
+| 时间段      |
+| -------- |
+| upcoming |
+| past     |
+| both     |
+
+</Route>
+
 ## CTFHub Calendar
 
 ### 查询国内外 CTF 赛事信息
@@ -727,17 +741,5 @@ path="/ctfhub/upcoming/:limit?"
 | 宁夏回族自治区  | 64 |
 | 新疆维吾尔自治区 | 65 |
 | 台湾       | 71 |
-
-</Route>
-
-## AIEA Seminar Series
-
-<Route author="zxx-457" example="/aiea/seminars/upcoming" path="/aiea/seminars/:period" :paramsDesc="['时间段']">
-
-| 时间段 |
-| ----- |
-| upcoming |
-| past |
-| both|
 
 </Route>
