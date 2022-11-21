@@ -115,7 +115,7 @@
     "ioredis": "5.2.4",
     "ip-regex": "4.3.0",
     "is-localhost-ip": "2.0.0",
-    "jsdom": "20.0.2",
+    "jsdom": "20.0.3",
     "json-bigint": "1.0.0",
     "json5": "2.2.1",
     "koa": "2.13.4",
