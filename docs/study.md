@@ -730,6 +730,8 @@ path="/ctfhub/upcoming/:limit?"
 
 </Route>
 
+## AIEA Seminar Series
+
 <Route author="zxx-457" example="/aiea/seminars/upcoming" path="/aiea/seminars/:period" :paramsDesc="['时间段']">
 
 | 时间段 |
