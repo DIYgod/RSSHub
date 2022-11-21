@@ -188,6 +188,9 @@
     "/aicaijing/recommend": [
         "nczitzk"
     ],
+    "/aiea/seminars/:period": [
+        "zxx-457"
+    ],
     "/airchina/announcement": [
         "LandonLi"
     ],
