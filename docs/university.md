@@ -38,6 +38,18 @@ pageClass: routes
 
 <Route author="Chang4Tech" example="/utdallas/isso" path="/utdallas/isso" />
 
+## UW
+
+### Global Innovation Exchange News
+
+<Route author="dykderrick" example="/uw/gix/news/blog" path="/uw/gix/news/:category" :paramsDesc="['Blog Type']">
+
+| Blog | In The News |
+| ---- | ----------- |
+| blog | inthenews   |
+
+</Route>
+
 ## 安徽工业大学
 
 ### 教务处
