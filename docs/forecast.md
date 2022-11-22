@@ -151,7 +151,7 @@ pageClass: routes
 
 ### 长沙市
 
-<Route author="shansing" example="/tingshuitz/changsha/78" path="/tingshuitz/changsha/:channelId">
+<Route author="shansing" example="/tingshuitz/changsha/78" path="/tingshuitz/changsha/:channelId?">
 
 可能仅限于中国大陆服务器访问，以实际情况为准。
 
