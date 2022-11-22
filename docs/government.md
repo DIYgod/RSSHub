@@ -388,6 +388,16 @@ pageClass: routes
 
 </Route>
 
+## 湖南省人民政府
+
+### 长沙市人民政府
+
+#### 市长信箱
+
+<Route author="shansing" example="/gov/hunan/changsha/major-email" path="/gov/hunan/changsha/major-email" />
+
+可能仅限中国大陆服务器访问，以实际情况为准。
+
 ## 湖南省政府采购网
 
 ### 公告
