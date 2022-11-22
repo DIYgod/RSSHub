@@ -196,16 +196,6 @@ pageClass: routes
 
 <Route author="nczitzk" example="/gov/chinatax/latest" path="/gov/chinatax/latest"/>
 
-## 湖南省人民政府
-
-### 长沙市人民政府
-
-#### 市长信箱
-
-<Route author="shansing" example="/gov/hunan/changsha/major-email" path="/gov/hunan/changsha/major-email" />
-
-可能仅限中国大陆服务器访问，以实际情况为准。
-
 ## 国家统计局
 
 ### 统计数据 > 最新发布
@@ -397,6 +387,16 @@ pageClass: routes
 | 公示公告 | gsgg |
 
 </Route>
+
+## 湖南省人民政府
+
+### 长沙市人民政府
+
+#### 市长信箱
+
+<Route author="shansing" example="/gov/hunan/changsha/major-email" path="/gov/hunan/changsha/major-email" />
+
+可能仅限中国大陆服务器访问，以实际情况为准。
 
 ## 湖南省政府采购网
 
