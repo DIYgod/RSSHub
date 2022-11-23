@@ -2659,6 +2659,9 @@
     "/nature/siteindex": [
         "TonyRL"
     ],
+    "/nautil/topic/:tid": [
+        "emdoe"
+    ],
     "/nbd/daily": [
         "MeXunco"
     ],
@@ -4930,7 +4933,6 @@
     "/coolbuy/newest": [],
     "/miniflux/subscription/:parameters?": [],
     "/miniflux/:feeds/:parameters?": [],
-    "/nautilus/topic/:tid": [],
     "/anigamer/new_anime": [],
     "/anigamer/anime/:sn": [],
     "/apkpure/versions/:region/:pkg": [],
