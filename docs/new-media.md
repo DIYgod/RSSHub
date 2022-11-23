@@ -910,7 +910,7 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### 话题
 
-<Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
+<Route author="emdoe" example="/nautil/topic/arts" path="/nautil/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
 
 ## Netflix
 
