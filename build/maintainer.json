@@ -3850,6 +3850,9 @@
     "/timednews/news/:type?": [
         "linbuxiao"
     ],
+    "/tingshuitz/changsha/:channelId?": [
+        "shansing"
+    ],
     "/tingshuitz/dalian": [
         "DIYgod"
     ],
