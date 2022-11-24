@@ -9897,7 +9897,7 @@ mz@^2.7.0:
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
 
-nan@^2.12.1, nan@^2.16.0:
+nan@^2.12.1, nan@^2.17.0:
   version "2.17.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.17.0.tgz#c0150a2368a182f033e9aa5195ec76ea41a199cb"
   integrity sha512-2ZTgtl0nJsO0KQCjEpxcIr5D+Yv90plTitZt9JBfQvVJDS5seMl3FOvsh3+9CoYWXf/1l5OaZzzF6nDm4cagaQ==
@@ -10003,7 +10003,7 @@ node-gyp-build@^4.2.2:
   resolved "https://registry.yarnpkg.com/node-gyp-build/-/node-gyp-build-4.5.0.tgz#7a64eefa0b21112f89f58379da128ac177f20e40"
   integrity sha512-2iGbaQBV+ITgCz76ZEjmhUKAKVf7xfY1sRl4UiKQspfZMH2h06SyhNsnSVy50cwkFQDGLyif6m/6uFXHkOZ6rg==
 
-node-gyp@^9.0.0:
+node-gyp@^9.3.0:
   version "9.3.0"
   resolved "https://registry.yarnpkg.com/node-gyp/-/node-gyp-9.3.0.tgz#f8eefe77f0ad8edb3b3b898409b53e697642b319"
   integrity sha512-A6rJWfXFz7TQNjpldJ915WFb1LnhO4lIve3ANPbWreuEoLoKlFT3sxIepPBkLhM27crW8YmN+pjlgbasH6cH/Q==
@@ -11637,14 +11637,14 @@ rc@1.2.8, rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-re2@1.17.7:
-  version "1.17.7"
-  resolved "https://registry.yarnpkg.com/re2/-/re2-1.17.7.tgz#e14cab85a177a5534c7215c322d1b043c55aa1e9"
-  integrity sha512-X8GSuiBoVWwcjuppqSjsIkRxNUKDdjhkO9SBekQbZ2ksqWUReCy7DQPWOVpoTnpdtdz5PIpTTxTFzvJv5UMfjA==
+re2@1.17.8:
+  version "1.17.8"
+  resolved "https://registry.yarnpkg.com/re2/-/re2-1.17.8.tgz#c32ade6c78c33722b947d0dcfbddd7bfc259c794"
+  integrity sha512-KM5zYGb1BlPPU8xLq9kkxwMq2wntoluIbjELcPSRS32hxgJqked3ahmtzu6vY1SMqjxHfutStF2b3KuRjcJHHg==
   dependencies:
     install-artifact-from-github "^1.3.1"
-    nan "^2.16.0"
-    node-gyp "^9.0.0"
+    nan "^2.17.0"
+    node-gyp "^9.3.0"
 
 react-is@^18.0.0:
   version "18.2.0"
