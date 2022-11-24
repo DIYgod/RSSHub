@@ -162,6 +162,30 @@ Rated 对象
 
 <Route author="csi0n" example="/dockone/weekly" path="/dockone/weekly"/>
 
+## FreeBuf
+
+### 分类订阅
+
+<Route author="ShuiHuo" example="/freebuf/vuls" path="/freebuf/:category?/:fulltext?" :paramsDesc="['分类订阅，不填写则获取首页精选。输入 `quanwen` 可获取首页精选全文', '是否获取全文，如需获取全文参数传入 `quanwen`']" radar="1" rssbud="1">
+
+|           |                     |            |          |
+| --------- | ------------------- | ---------- | -------- |
+| **漏洞**    | vuls                | **数据安全**   | database |
+| **工具**    | sectool             | **企业安全**   | es       |
+| **观点**    | neopoints           | **Web 安全** | web      |
+| **安全管理**  | security_management | **无线安全**   | wireless |
+| **网络安全**  | network             | **系统安全**   | system   |
+| **工控安全**  | ics_articles        | **终端安全**   | endpoint |
+|           |                     |            |          |
+| **招聘**    | jobs                | **头条**     | topnews  |
+| **报告**    | paper               | **人物**     | people   |
+| **资讯**    | news                | **活动**     | fevents  |
+| **容器安全**  | container           | **视频**     | video    |
+| **区块链安全** | blockchain_articles | **极客**     | geek     |
+| **标准与合规** | compliance          | **公开课**    | open     |
+
+</Route>
+
 ## gihyo.jp
 
 ### 記事一覧
