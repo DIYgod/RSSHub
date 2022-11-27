@@ -10,6 +10,12 @@ pageClass: routes
 
 <RouteEn author="lucasew" path="/curiouscat/user/:name" example="/curiouscat/user/kretyn" :paramsDesc="['name, username that is in the URL']" />
 
+## Curius
+
+### User
+
+<RouteEn author="Ovler-Young" example="/curius/links/yuu-yuu" path="/curius/links/:name" :paramsDesc="['Username, can be found in URL']"/>
+
 ## Dev.to
 
 ### Top Posts

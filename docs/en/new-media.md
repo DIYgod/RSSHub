@@ -514,9 +514,9 @@ Edition
 
 ### Topics
 
-<RouteEn author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['topic']">
+<RouteEn author="emdoe" example="/nautil/topic/arts" path="/nautil/topic/:tid" :paramsDesc="['topic']">
 
-This route provides a flexible plan with full text content to subscribe specific topic(s) on the Nautilus. Please visit [nautil.us](http://nautil.us) and click `Topics` to acquire whole topic list.
+This route provides a flexible plan with full text content to subscribe specific topic(s) on the Nautilus. Please visit [nautil.us](https://nautil.us) and click `Topics` to acquire whole topic list.
 
 </RouteEn>
 
@@ -764,7 +764,22 @@ Compared to the official one, this feed:
 
 ### The Verge
 
-<RouteEn author="HenryQW" example="/theverge" path="/theverge">
+<RouteEn author="HenryQW vbali" example="/theverge" path="/theverge/:hub? :paramsDesc="['Hub, see below, All Posts by default']">
+
+| Hub         | Hub name            |
+| ----------- | ------------------- |
+|             | All Posts           |
+| android     | Android             |
+| apple       | Apple               |
+| apps        | Apps & Software     |
+| blackberry  | BlackBerry          |
+| culture     | Culture             |
+| gaming      | Gaming              |
+| hd          | HD & Home           |
+| microsoft   | Microsoft           |
+| photography | Photography & Video |
+| policy      | Policy & Law        |
+| web         | Web & Social        |
 
 Provides a better reading experience (full text articles) over the official one.
 

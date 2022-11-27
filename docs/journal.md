@@ -383,3 +383,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 ### 网络首发
 
 <Route author="Fatpandac" example="/cnki/journals/debut/LKGP" path="/cnki/journals/debut/:name" :paramsDesc="['期刊缩写，可以在网址中得到']"/>
+
+### 作者期刊文献
+
+<Route author="harveyqiu" example="/cnki/author/000042423923" path="/cnki/author/:code" :paramsDesc="['作者对应code，可以在网址中得到']"/>
