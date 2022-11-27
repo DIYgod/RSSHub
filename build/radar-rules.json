@@ -16878,6 +16878,20 @@
       }
     ]
   },
+  "weibo.cn": {
+    "_name": "微博",
+    "m": [
+      {
+        "title": "博主",
+        "docs": "https://docs.rsshub.app/social-media.html#wei-bo",
+        "source": [
+          "/u/:uid",
+          "/profile/:uid"
+        ],
+        "target": "/weibo/user/:uid"
+      }
+    ]
+  },
   "wenku8.net": {
     "_name": "轻小说文库",
     "www": [
@@ -18312,20 +18326,6 @@
           "/:id",
           "/"
         ]
-      }
-    ]
-  },
-  "weibo.cn": {
-    "_name": "微博",
-    "m": [
-      {
-        "title": "博主",
-        "docs": "https://docs.rsshub.app/social-media.html#wei-bo",
-        "source": [
-          "/u/:uid",
-          "/profile/:uid"
-        ],
-        "target": "/weibo/user/:uid"
       }
     ]
   },
