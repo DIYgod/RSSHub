@@ -4,7 +4,7 @@ const whiteListedUser = ['dependabot[bot]', 'pull[bot]']; // dependabot and down
 module.exports = async ({ github, context, core }, body, number, sender) => {
     core.debug(`sender: ${sender}`);
     core.debug(`body: ${body}`);
-    const m = body.match(/```routes(?:\n|\r\n)((.|\n|\r\n)*)```/);
+    const m = body.match(/```routes\s+([\s\S]*?)```/);
     core.debug(`match: ${m}`);
     let res = null;
 
@@ -39,7 +39,7 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
     }
 
     if (m && m[1]) {
-        res = m[1].trim().split('\r\n');
+        res = m[1].trim().split(/\r?\n/);
         core.info(`routes detected: ${res}`);
 
         if (res.length > 0 && res[0] === 'NOROUTE') {
