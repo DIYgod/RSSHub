@@ -184,7 +184,7 @@ pageClass: routes
 
 ### 新闻
 
-<Route author="drgnchan" example="/gzgov/xw/gzyw" path="/gzgov/xw/:category">
+<Route author="drgnchan" example="/gov/gz/xw/gzyw" path="/gov/gz/xw/:category">
 
 | 广州要闻 | 今日头条 | 通知公告 |
 | ---- | ---- | ---- |
@@ -194,7 +194,7 @@ pageClass: routes
 
 ### 政务公开
 
-<Route author="drgnchan" example="/gzgov/zwgk/zcjd" path="/gzgov/zwgk/:category">
+<Route author="drgnchan" example="/gov/gz/zwgk/zcjd" path="/gov/gz/zwgk/:category">
 
 | 文字解读 |
 | ---- |
