@@ -2380,6 +2380,9 @@
     "/kyodonews/:language?/:keyword?": [
         "Rongronggg9"
     ],
+    "/lang/live/room/:id": [
+        "MittWillson"
+    ],
     "/lanqiao/author/:uid": [
         "huhuhang"
     ],
@@ -4652,8 +4655,6 @@
     "/dribbble/user/:name": [],
     "/dribbble/keyword/:keyword": [],
     "/huya/live/:id": [],
-    "/kingkong/room/:id": [],
-    "/langlive/room/:id": [],
     "/showroom/room/:id": [],
     "/v2ex/topics/:type": [],
     "/v2ex/post/:postid": [],
