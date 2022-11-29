@@ -10582,10 +10582,10 @@ parse-json@^5.0.0, parse-json@^5.2.0:
     json-parse-even-better-errors "^2.3.0"
     lines-and-columns "^1.1.6"
 
-parse-torrent@9.1.5:
-  version "9.1.5"
-  resolved "https://registry.yarnpkg.com/parse-torrent/-/parse-torrent-9.1.5.tgz#fcae5f360d9baf617d9a2de68e74d5de4c8099fd"
-  integrity sha512-K8FXRwTOaZMI0/xuv0dpng1MVHZRtMJ0jRWBJ3qZWVNTrC1MzWUxm9QwaXDz/2qPhV2XC4UIHI92IGHwseAwaA==
+parse-torrent@10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/parse-torrent/-/parse-torrent-10.0.0.tgz#9f5adf29bd99192f5b55b7741b6530cf6fb864fd"
+  integrity sha512-jkMw61MY1E0r36LtNLDB9eOqXtx23M/oJltRCmvDh5yIOEay6rLoZoMOJ3snvx4NYWBYAqCyNacHGN0LtifjnA==
   dependencies:
     bencode "^2.0.2"
     blob-to-buffer "^1.2.9"
