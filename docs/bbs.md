@@ -294,6 +294,10 @@ pageClass: routes
 
 </Route>
 
+## Reddit
+
+<Route author="lyrl" example="/reddit/homelab" path="/reddit/:channel" :paramsDesc="['频道']" />
+
 ## RF 技术社区
 
 ### 文章
