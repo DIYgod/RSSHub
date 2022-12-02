@@ -605,11 +605,13 @@ GitHub 官方也提供了一些 RSS:
 
 ### Feeds
 
+<Route author="lyrl" example="/panda/feeds/5718e53e7a84fb1901e059cc" path="/panda/feeds/:id">
+
 | 频道                   | feeId                    |
 | -------------------- | ------------------------ |
 | HackNews Github 热门推荐 | 5718e53e7a84fb1901e059cc |
 
-<Route author="lyrl" example="/panda/feeds/5718e53e7a84fb1901e059cc" path="/panda/feeds/:id"/>
+</Route>
 
 ## project-zero issues
 
