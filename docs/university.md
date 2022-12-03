@@ -38,7 +38,7 @@ pageClass: routes
 
 <Route author="Chang4Tech" example="/utdallas/isso" path="/utdallas/isso" />
 
-## UW
+## University of Washington
 
 ### Global Innovation Exchange News
 
