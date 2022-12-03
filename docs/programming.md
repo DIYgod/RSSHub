@@ -605,7 +605,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Feeds
 
-<Route author="lyrl" example="/panda/feeds/5718e53e7a84fb1901e059cc" path="/panda/feeds/:id">
+<Route author="lyrl" example="/panda/feeds/5718e53e7a84fb1901e059cc" path="/panda/feeds/:id" :paramsDesc="['频道id/feedId']">
 
 | 频道                   | feeId                    |
 | -------------------- | ------------------------ |
