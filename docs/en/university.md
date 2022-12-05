@@ -18,6 +18,12 @@ pageClass: routes
 
 Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chinese.
 
+## East China Normal University
+
+### ACM Online-Judge contests list
+
+<RouteEn author="a180285" example="/ecnu/acm/contest/public" path="/ecnu/acm/contest/:category?" radar="1" rssbud="1" :paramsDesc="['category is optional, default is all, use `public` for public only contests']" />
+
 ## MIT
 
 ### MIT OCW Most popular courses of the month
