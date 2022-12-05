@@ -32,7 +32,7 @@ pageClass: routes
 
 <Route author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" :paramsDesc="['English language code en']" />
 
-## UTDallas
+## University of Texas at Dallas
 
 ### International Student Services
 
