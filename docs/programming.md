@@ -697,18 +697,6 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="xyqfer" example="/testerhome/newest" path="/testerhome/newest"/>
 
-## UsePanda
-
-### Feeds
-
-<Route author="lyrl" example="/usepanda/feeds/5718e53e7a84fb1901e059cc" path="/usepanda/feeds/:id" :paramsDesc="['频道id/feedId']">
-
-| 频道                   | feeId                    |
-| -------------------- | ------------------------ |
-| HackNews Github 热门推荐 | 5718e53e7a84fb1901e059cc |
-
-</Route>
-
 ## Visual Studio Code Marketplace
 
 ### Visual Studio Code 插件
