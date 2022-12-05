@@ -4106,6 +4106,9 @@
     "/usts/juch/:type?": [
         "Fatpandac"
     ],
+    "/uw/gix/news/:category": [
+        "dykderrick"
+    ],
     "/verfghbw/press/:keyword?": [
         "quinn-dev"
     ],
