@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Comment Dependabot PR
-        uses: thollander/actions-comment-pull-request@v1
+        uses: thollander/actions-comment-pull-request@v2
         with:
           message: '@dependabot ignore this dependency'
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
