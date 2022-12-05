@@ -161,7 +161,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 </RouteEn>
 
-## UMASS Amherst
+## University of Massachusetts Amherst
 
 ### College of Electrical and Computer Engineering
 
@@ -188,3 +188,21 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 #### Featured Stories
 
 <RouteEn author="gammapi" example="/umass/amherst/ipoevents" path="/umass/amherst/ipoevents" radar="1" rssbud="1"/>
+
+## University of Texas at Dallas
+
+### International Student Services
+
+<Route author="Chang4Tech" example="/utdallas/isso" path="/utdallas/isso" />
+
+## University of Washington
+
+### Global Innovation Exchange News
+
+<RouteEn author="dykderrick" example="/uw/gix/news/blog" path="/uw/gix/news/:category" :paramsDesc="['Blog Type']">
+
+| Blog | In The News |
+| ---- | ----------- |
+| blog | inthenews   |
+
+</RouteEn>
