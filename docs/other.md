@@ -524,7 +524,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 考研帮调剂信息
 
-<Route author="sushengmao" example="/kaoyan" path="/kaoyan" />
+<Route author="shengmaosu" example="/kaoyan" path="/kaoyan" />
 
 ## 空气质量
 
