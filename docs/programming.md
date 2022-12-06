@@ -10,12 +10,6 @@ pageClass: routes
 
 <Route author="nczitzk" example="/acm/amturingaward" path="/acm/amturingaward"/>
 
-## ACM-ECNU 比赛
-
-### 华东师范大学 ACM OJ 比赛列表
-
-<Route author="a180285" example="/acm-ecnu/contest/public" path="/acm-ecnu/contest/:category?" radar="1" rssbud="1" :paramsDesc="['分类可选，不写代表全部，`public` 代表仅订阅公开比赛']" />
-
 ## AI 研习社
 
 ### 首页
