@@ -135,7 +135,7 @@
     "puppeteer-extra": "3.3.4",
     "puppeteer-extra-plugin-stealth": "2.11.1",
     "query-string": "7.1.3",
-    "rand-user-agent": "1.0.92",
+    "rand-user-agent": "1.0.93",
     "re2": "1.17.8",
     "require-all": "3.0.0",
     "rss-parser": "3.12.0",
