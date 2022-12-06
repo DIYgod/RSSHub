@@ -318,7 +318,7 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 ### 专题展示-文章
 
-<Route author="a180285" example="/foreverblog-cn/feeds" path="/foreverblog-cn/feeds" radar="1" rssbud="1" />
+<Route author="a180285" example="/foreverblog/feeds" path="/foreverblog/feeds" radar="1" rssbud="1" />
 
 ### 文章
 
