@@ -32,11 +32,23 @@ pageClass: routes
 
 <Route author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" :paramsDesc="['English language code en']" />
 
-## UTDallas
+## University of Texas at Dallas
 
 ### International Student Services
 
 <Route author="Chang4Tech" example="/utdallas/isso" path="/utdallas/isso" />
+
+## University of Washington
+
+### Global Innovation Exchange News
+
+<Route author="dykderrick" example="/uw/gix/news/blog" path="/uw/gix/news/:category" :paramsDesc="['Blog Type']">
+
+| Blog | In The News |
+| ---- | ----------- |
+| blog | inthenews   |
+
+</Route>
 
 ## 安徽工业大学
 
@@ -1069,7 +1081,7 @@ xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
 
 ## 广州大学研招网通知公告
 
-<Route author="sushengmao" example="/gzyjs" path="/gzyjs" />
+<Route author="shengmaosu" example="/gzyjs" path="/gzyjs" />
 
 ## 广州航海学院
 
@@ -1422,7 +1434,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 华东理工大学研究生院通知公告
 
-<Route author="sushengmao" example="/ecustyjs" path="/ecustyjs" />
+<Route author="shengmaosu" example="/ecustyjs" path="/ecustyjs" />
 
 ### 华东理工继续教育学院新闻公告
 
@@ -1430,15 +1442,19 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 华东师范大学
 
-### 华东师范大学研究生院
+### ACM OJ 比赛列表
 
-<Route author="sushengmao" example="/ecnuyjs" path="/ecnuyjs" />
+<Route author="a180285" example="/ecnu/acm/contest/public" path="/ecnu/acm/contest/:category?" radar="1" rssbud="1" :paramsDesc="['分类可选，不写代表全部，`public` 代表仅订阅公开比赛']" />
+
+### 研究生院
+
+<Route author="shengmaosu" example="/ecnuyjs" path="/ecnuyjs" />
 
 ## 华南理工大学
 
 ### 研究生院通知公告
 
-<Route author="sushengmao" example="/scutyjs" path="/scutyjs" />
+<Route author="shengmaosu" example="/scutyjs" path="/scutyjs" />
 
 ### 教务处通知公告
 
@@ -1480,11 +1496,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 软件学院通知公告
 
-<Route author="sushengmao" example="/scnucs" path="/scnucs" />
+<Route author="shengmaosu" example="/scnucs" path="/scnucs" />
 
 ### 研究生院通知公告
 
-<Route author="sushengmao" example="/scnuyjs" path="/scnuyjs" />
+<Route author="shengmaosu" example="/scnuyjs" path="/scnuyjs" />
 
 ### 教务处通知
 
@@ -1502,7 +1518,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 华中科技大学研究生院通知公告
 
-<Route author="sushengmao" example="/hustyjs" path="/hustyjs" />
+<Route author="shengmaosu" example="/hustyjs" path="/hustyjs" />
 
 ### 人工智能和自动化学院通知
 
@@ -1522,15 +1538,15 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 华中师范大学研究生通知公告
 
-<Route author="sushengmao" example="/ccnuyjs" path="/ccnuyjs" />
+<Route author="shengmaosu" example="/ccnuyjs" path="/ccnuyjs" />
 
 ### 华中师范大学计算机学院
 
-<Route author="sushengmao" example="/ccnucs" path="/ccnucs" />
+<Route author="shengmaosu" example="/ccnucs" path="/ccnucs" />
 
 ### 华中师范大学伍论贡学院
 
-<Route author="sushengmao" example="/ccnuwu" path="/ccnuwu" />
+<Route author="shengmaosu" example="/ccnuwu" path="/ccnuwu" />
 
 ### 就业信息
 
@@ -1731,7 +1747,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 南方科技大学研究生网通知公告
 
-<Route author="sushengmao" example="/sustyjs" path="/sustyjs" />
+<Route author="shengmaosu" example="/sustyjs" path="/sustyjs" />
 
 ### 南方科技大学新闻网（中文）
 
@@ -2482,7 +2498,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 深圳大学研究生招生网通知公告
 
-<Route author="sushengmao" example="/szuyjs" path="/szuyjs" />
+<Route author="shengmaosu" example="/szuyjs" path="/szuyjs" />
 
 ### 深圳大学研究生招生网
 
@@ -2630,7 +2646,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 同济大学研究生院通知公告
 
-<Route author="sushengmao" example="/tjuyjs" path="/tjuyjs" />
+<Route author="shengmaosu" example="/tjuyjs" path="/tjuyjs" />
 
 ### 同济大学软件学院通知
 
@@ -3319,11 +3335,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 中国海洋大学研究生院
 
-<Route author="sushengmao" example="/outyjs" path="/outyjs" />
+<Route author="shengmaosu" example="/outyjs" path="/outyjs" />
 
 ### 中国海洋大学信电学院通知公告
 
-<Route author="sushengmao" example="/outele" path="/outele" />
+<Route author="shengmaosu" example="/outele" path="/outele" />
 
 ## 中国科学技术大学
 
@@ -3427,11 +3443,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 中国农业大学研招网通知公告
 
-<Route author="sushengmao" example="/cauyjs" path="/cauyjs" />
+<Route author="shengmaosu" example="/cauyjs" path="/cauyjs" />
 
 #### 中国农业大学信电学院
 
-<Route author="sushengmao" example="/cauele" path="/cauele" />
+<Route author="shengmaosu" example="/cauele" path="/cauele" />
 
 ## 中国人民大学
 
@@ -3453,7 +3469,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 中国石油大学研究生院通知公告
 
-<Route author="sushengmao" example="/upcyjs" path="/upcyjs" />
+<Route author="shengmaosu" example="/upcyjs" path="/upcyjs" />
 
 ### 主页
 
@@ -3491,11 +3507,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 中科院自动化所
 
-<Route author="sushengmao" example="/zkyyjs" path="/zkyyjs" />
+<Route author="shengmaosu" example="/zkyyjs" path="/zkyyjs" />
 
 ### 中科院人工智能所
 
-<Route author="sushengmao" example="/zkyai" path="/zkyai" />
+<Route author="shengmaosu" example="/zkyai" path="/zkyai" />
 
 ## 中南财经政法大学
 
