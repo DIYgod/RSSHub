@@ -180,6 +180,28 @@ pageClass: routes
 
 <Route author="Fatpandac" example="/gov/huizhou/zwgk/jgdt" path="/gov/huizhou/zwgk/:category?" :paramsDesc="['资讯类别，可以从网址中得到，默认为政务要闻']"/>
 
+## 广州市人民政府
+
+### 新闻
+
+<Route author="drgnchan" example="/gov/gz/xw/gzyw" path="/gov/gz/xw/:category" :paramsDesc="['新闻分类']">
+
+| 广州要闻 | 今日头条 | 通知公告 |
+| ---- | ---- | ---- |
+| gzyw | jrtt | tzgg |
+
+</Route>
+
+### 政务公开
+
+<Route author="drgnchan" example="/gov/gz/zwgk/zcjd" path="/gov/gz/zwgk/:category" :paramsDesc="['政务话你知']">
+
+| 文字解读 |
+| ---- |
+| zcjd |
+
+</Route>
+
 ## 国家广播电视总局
 
 ### 分类
