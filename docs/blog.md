@@ -316,9 +316,9 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 ## 十年之约
 
-### 文章
+### 专题展示 - 文章
 
-<Route author="7Wate" example="/blogs/foreverblog" path="/blogs/foreverblog" />
+<Route author="7Wate a180285" example="/foreverblog/feeds" path="/foreverblog/feeds" radar="1" rssbud="1" />
 
 ## 王五四文集
 
