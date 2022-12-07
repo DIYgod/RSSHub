@@ -38,7 +38,7 @@ Create a new js script in the corresponding [/lib/v2/](https://github.com/DIYgod
 
 -   Below is a list of data acquisition methods, ordered by the **「level of recommendation」**
 
-    1. **Acquire data via API using got**
+    1.  **Acquire data via API using got**
 
     Example: [/lib/routes/bilibili/coin.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/bilibili/coin.js)。
 
@@ -102,7 +102,7 @@ Create a new js script in the corresponding [/lib/v2/](https://github.com/DIYgod
     // the route is now done
     ```
 
-    2. **Acquire data via HTML webpage using got**
+    2.  **Acquire data via HTML webpage using got**
 
     Data have to be acquired via HTML webpage if **no API was provided**, for example: [/lib/routes/douban/explore.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/douban/explore.js)
 
@@ -155,7 +155,7 @@ Create a new js script in the corresponding [/lib/v2/](https://github.com/DIYgod
     // the route is now done
     ```
 
-    3. **Acquire data via page rendering using puppeteer**
+    3.  **Acquire data via page rendering using puppeteer**
 
     ::: tip Tips
 
@@ -214,7 +214,7 @@ Create a new js script in the corresponding [/lib/v2/](https://github.com/DIYgod
     // PS: the route acts as a notifier of new articles. It does not provide access to the content behind the paywall. Thus no content was fetched
     ```
 
-    4. **Use general configuration routing**
+    4.  **Use general configuration routing**
 
     A large number of websites can generate RSS through a configuration paradigm.
 
@@ -222,9 +222,9 @@ Create a new js script in the corresponding [/lib/v2/](https://github.com/DIYgod
 
     First, we need a few data:
 
-    1. RSS source link
-    2. Data source link
-    3. RSS title (not item title)
+    1.  RSS source link
+    2.  Data source link
+    3.  RSS title (not item title)
 
     ```js
     const buildData = require('@/utils/common-config');
@@ -421,13 +421,13 @@ ctx.state.data = {
         -   `example`: route example
         -   `path`: route path
         -   `:paramsDesc`: route parameters description, in array, supports markdown
-            1. parameter description must be in the order of its appearance in route path
-            2. missing description will cause errors in `npm run docs:dev`
-            3. `'` `"` must be escaped as `\'` `\"`
-            4. route parameters ending with `?`, `*`, `+`, and a word represent `optional`, `zero or more`, `one or more`, and `mandatory` respectively. They are automatically determined by Vue component and do not need to be explicitly mentioned in the description
+            1.  parameter description must be in the order of its appearance in route path
+            2.  missing description will cause errors in `npm run docs:dev`
+            3.  `'` `"` must be escaped as `\'` `\"`
+            4.  route parameters ending with `?`, `*`, `+`, and a word represent `optional`, `zero or more`, `one or more`, and `mandatory` respectively. They are automatically determined by Vue component and do not need to be explicitly mentioned in the description
     -   Documentation examples:
 
-        1. No parameter:
+        1.  No parameter:
 
         ```vue
         <RouteEn author="HenryQW" example="/sspai/series" path="/sspai/series" />
@@ -435,13 +435,13 @@ ctx.state.data = {
 
         Preview:
 
-        * * *
+        ---
 
         <RouteEn author="HenryQW" example="/sspai/series" path="/sspai/series"/>
 
-        * * *
+        ---
 
-        2. Multiple parameters:
+        2.  Multiple parameters:
 
         ```vue
         <RouteEn author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo" :paramsDesc="['GitHub username', 'GitHub repo name']" />
@@ -455,7 +455,7 @@ ctx.state.data = {
 
         * * *
 
-        3. Use component slot for complicated description:
+        3.  Use component slot for complicated description:
 
         ```vue
         <RouteEn author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
