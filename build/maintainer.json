@@ -1304,6 +1304,9 @@
     "/fosshub/:id": [
         "nczitzk"
     ],
+    "/freewechat/profile/:id": [
+        "TonyRL"
+    ],
     "/ft/myft/:key": [
         "HenryQW"
     ],
