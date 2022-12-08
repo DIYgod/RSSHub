@@ -180,6 +180,28 @@ pageClass: routes
 
 <Route author="Fatpandac" example="/gov/huizhou/zwgk/jgdt" path="/gov/huizhou/zwgk/:category?" :paramsDesc="['资讯类别，可以从网址中得到，默认为政务要闻']"/>
 
+## 广州市人民政府
+
+### 新闻
+
+<Route author="drgnchan" example="/gov/gz/xw/gzyw" path="/gov/gz/xw/:category" :paramsDesc="['新闻分类']">
+
+| 广州要闻 | 今日头条 | 通知公告 |
+| ---- | ---- | ---- |
+| gzyw | jrtt | tzgg |
+
+</Route>
+
+### 政务公开
+
+<Route author="drgnchan" example="/gov/gz/zwgk/zcjd" path="/gov/gz/zwgk/:category" :paramsDesc="['政务话你知']">
+
+| 文字解读 |
+| ---- |
+| zcjd |
+
+</Route>
+
 ## 国家广播电视总局
 
 ### 分类
@@ -387,6 +409,16 @@ pageClass: routes
 | 公示公告 | gsgg |
 
 </Route>
+
+## 湖南省人民政府
+
+### 长沙市人民政府
+
+#### 市长信箱
+
+<Route author="shansing" example="/gov/hunan/changsha/major-email" path="/gov/hunan/changsha/major-email" />
+
+可能仅限中国大陆服务器访问，以实际情况为准。
 
 ## 湖南省政府采购网
 
@@ -1002,7 +1034,7 @@ pageClass: routes
 
 <Route author="hillerliao" example="/csrc/auditstatus/:apply_id" path="/csrc/auditstatus" :paramsDesc="['事项类别id，`https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数']"/>
 
-## 中国政府
+## 中国政府网
 
 ### 数据
 
@@ -1040,7 +1072,7 @@ pageClass: routes
 
 ### 最新文件
 
-<Route author="ciaranchen" example="/gov/zhengce/wenjian" path="/gov/zhengce/wenjian/:pcodeJiguan?" :paramsDesc="['文种分类。国令; 国发; 国函; 国发明电; 国办发; 国办函; 国办发明电; 其他']" />
+<Route author="ciaranchen" example="/gov/zhengce/wenjian" path="/gov/zhengce/wenjian/:pcodeJiguan?" :paramsDesc="['文种分类。国令、国发、国函、国发明电、国办发、国办函、国办发明电、其他']" />
 
 ### 信息稿件
 
@@ -1058,6 +1090,10 @@ pageClass: routes
 |              colid              |                栏目                |    比较复杂，不建议使用   |
 
 </Route>
+
+### 国务院政策文件库
+
+<Route author="zxx-457" example="/gov/zhengce/zhengceku/bmwj" path="/gov/zhengce/zhengceku/:department" :paramsDesc="['库名']" />
 
 ### 政府新闻
 

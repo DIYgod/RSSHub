@@ -910,7 +910,7 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### 话题
 
-<Route author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
+<Route author="emdoe" example="/nautil/topic/arts" path="/nautil/topic/:tid" :paramsDesc="['话题 id, 可在页面上方 TOPICS 栏目处找到']"/>
 
 ## Netflix
 
@@ -2309,6 +2309,12 @@ others = 热点新闻 + 滚动新闻
 ### 个人主页文章
 
 <Route author="Jeason0228" example="/guancha/personalpage/243983" path="/guancha/personalpage/:uid" :paramsDesc="['用户id， 可在URL中找到']" />
+
+## 观海新闻
+
+### 首页
+
+<Route author="TonyRL" example="/guanhai" path="/guanhai" radar="1" rssbud="1"/>
 
 ## 广告门
 

@@ -4,6 +4,20 @@ pageClass: routes
 
 # Study
 
+## Asian Innovation and Entrepreneurship Association
+
+### Seminar Series
+
+<RouteEn author="zxx-457" example="/aiea/seminars/upcoming" path="/aiea/seminars/:period" :paramsDesc="['Time frame']">
+
+| Time frame |
+| ----- |
+| upcoming |
+| past |
+| both|
+
+</RouteEn>
+
 ## gradCafe
 
 ### gradCafe result

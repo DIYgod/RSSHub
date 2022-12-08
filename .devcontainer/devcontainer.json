@@ -1,14 +1,8 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.238.1/containers/javascript-node
+// https://github.com/devcontainers/images/blob/v0.2.24/src/javascript-node/.devcontainer/devcontainer.json
 {
     "name": "Node.js",
-    "build": {
-        "dockerfile": "Dockerfile",
-        // Update 'VARIANT' to pick a Node version: 18, 16, 14.
-        // Append -bullseye or -buster to pin to an OS version.
-        // Use -bullseye variants on local arm64/Apple Silicon.
-        "args": { "VARIANT": "16-bullseye" }
-    },
+    "image": "mcr.microsoft.com/devcontainers/javascript-node:16-bullseye",
 
     // Set *default* container specific settings.json values on container create.
     "settings": {
@@ -52,16 +46,28 @@
         }
     },
 
+    "onCreateCommand": "curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.noarmor.gpg | sudo tee /usr/share/keyrings/tailscale-archive-keyring.gpg >/dev/null && curl -fsSL https://pkgs.tailscale.com/stable/ubuntu/focal.tailscale-keyring.list | sudo tee /etc/apt/sources.list.d/tailscale.list && apt-get update && export DEBIAN_FRONTEND=noninteractive && apt-get -y install --no-install-recommends ca-certificates fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libcairo2 libcups2 libdbus-1-3 libexpat1 libgbm1 libglib2.0-0 libnspr4 libnss3 libpango-1.0-0 libx11-6 libxcb1 libxcomposite1 libxdamage1 libxext6 libxfixes3 libxkbcommon0 libxrandr2 wget xdg-utils redis-server tailscale && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*",
+
+    "updateContentCommand": "yarn",
+
     // Use 'postCreateCommand' to run commands after the container is created.
     "postCreateCommand": "yarn",
 
-    // "postAttachCommand": "yarn dev",
+    // Disable auto start dev env since codespaces sometimes fails to attach to the terminal
+    // "postAttachCommand": {
+    //     "app": "yarn",
+    //     // "docs": "yarn docs:dev"
+    // },
 
     // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
     "remoteUser": "node",
     "features": {
-        "docker-in-docker": "latest",
-        "github-cli": "latest"
+        "ghcr.io/devcontainers/features/docker-in-docker": {
+            "version": "latest"
+        },
+        "ghcr.io/devcontainers/features/github-cli": {
+            "version": "latest"
+        }
     },
 
     // https://github.com/tailscale/codespace

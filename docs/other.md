@@ -242,6 +242,18 @@ pageClass: routes
 
 <Route author="fengkx" example="/one" path="/one"/>
 
+## Panda
+
+### Feeds
+
+<Route author="lyrl" example="/usepanda/feeds/5718e53e7a84fb1901e059cc" path="/usepanda/feeds/:id" :paramsDesc="['频道id/feedId']">
+
+| 频道          | feedId                   |
+| ----------- | ------------------------ |
+| Github 热门推荐 | 5718e53e7a84fb1901e059cc |
+
+</Route>
+
 ## Parcel Tracking
 
 ### Hermes UK
@@ -512,7 +524,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 考研帮调剂信息
 
-<Route author="sushengmao" example="/kaoyan" path="/kaoyan" />
+<Route author="shengmaosu" example="/kaoyan" path="/kaoyan" />
 
 ## 空气质量
 

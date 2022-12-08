@@ -50,11 +50,11 @@ pageClass: routes
 
 <Route author="SettingDust xyqfer" example="/huya/live/edmunddzhang" path="/huya/live/:id" :paramsDesc="['直播间id或主播名(有一些id是名字，如上)']" radar="1" rssbud="1"/>
 
-## 浪 Play (原 kingkong) 直播
+## 浪 Play 直播
 
 ### 直播间开播
 
-<Route author="MittWillson" example="/langlive/room/666666" path="/langlive/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
+<Route author="MittWillson" example="/lang/live/room/1352360" path="/lang/live/room/:id" :paramsDesc="['直播间 id, 可在主播直播间页 URL 中找到']"/>
 
 ## 猎趣 TV
 
