@@ -3500,6 +3500,9 @@
     "/shmtu/jwc/:type": [
         "simonsmh"
     ],
+    "/shmtu/portal/:type": [
+        "imbytecat"
+    ],
     "/shmtu/www/:type": [
         "simonsmh"
     ],
