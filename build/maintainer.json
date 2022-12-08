@@ -3504,12 +3504,14 @@
         "h2ws"
     ],
     "/shmtu/jwc/:type": [
+        "imbytecat",
         "simonsmh"
     ],
     "/shmtu/portal/:type": [
         "imbytecat"
     ],
     "/shmtu/www/:type": [
+        "imbytecat",
         "simonsmh"
     ],
     "/shopback/:store": [
