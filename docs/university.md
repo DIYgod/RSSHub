@@ -2371,7 +2371,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 <Route author="imbytecat" example="/shmtu/portal/bmtzgg" path="/shmtu/portal/:type" :paramsDesc="['类型名称']"/>
 
 | 部门通知公告 |
-| ---- |
+| ------ |
 | bmtzgg |
 
 ## 上海海洋大学
