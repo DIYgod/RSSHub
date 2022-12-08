@@ -1696,6 +1696,12 @@
     "/guangdiu/:query?": [
         "Fatpandac"
     ],
+    "/guanhai": [
+        "TonyRL"
+    ],
+    "/guanhai/": [
+        "TonyRL"
+    ],
     "/guduodata/daily": [
         "Gem1ni"
     ],

@@ -6531,6 +6531,19 @@
       }
     ]
   },
+  "guanhai.com.cn": {
+    "_name": "观海新闻",
+    ".": [
+      {
+        "title": "首页",
+        "docs": "https://docs.rsshub.app/new-media.html#guan-hai-xin-wen",
+        "source": [
+          "/"
+        ],
+        "target": "/guanhai"
+      }
+    ]
+  },
   "guduodata.com": {
     "_name": "骨朵数据",
     "data": [
