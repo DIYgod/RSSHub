@@ -1187,12 +1187,6 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 </Route>
 
-## Research Gate
-
-### Publications
-
-<Route author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" :paramsDesc="['用户名，可在用户页地址栏中找到']"/>
-
 ## RSS3
 
 ### Blog

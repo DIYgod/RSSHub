@@ -108,6 +108,12 @@ pageClass: routes
 
 <RouteEn author="OrangeEd1t" example="/orcid/0000-0002-4731-9700" path="/orcid/:id" :paramsDesc="['Open Researcher and Contributor ID']"/>
 
+## ResearchGate
+
+### Publications
+
+<RouteEn author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" :paramsDesc="['Username, can be found in URL']" puppeteer="1" anticrawler="1"/>
+
 ## X-MOL
 
 ### News
