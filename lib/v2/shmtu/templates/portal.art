@@ -1,0 +1,29 @@
+{{@ body}}
+{{if images}}
+<span style="font-size:19px">
+  图片：
+</span>
+  {{each images image idx}}
+  <p style="text-indent:32px">
+    <span style="font-size:19px">
+      <a href="https://weixin.shmtu.org/dynamic/getFile?fid={{image.fid}}" target="_blank">
+        {{image.alt}}：{{image.filename}}
+      </a>
+    </span>
+  </p>
+  {{/each}}
+{{/if}}
+{{if files}}
+<span style="font-size:19px">
+  附件：
+</span>
+  {{each files file idx}}
+  <p style="text-indent:32px">
+    <span style="font-size:19px">
+      <a href="https://weixin.shmtu.org/dynamic/getFile?fid={{file.fid}}" target="_blank">
+        {{file.filename}}
+      </a>
+    </span>
+  </p>
+  {{/each}}
+{{/if}}
