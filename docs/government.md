@@ -369,6 +369,22 @@ pageClass: routes
 
 </Route>
 
+## 国务院国有资产监督管理委员会
+
+### 通用
+
+<Route author="TonyRL" example="/gov/sasac/n2588030/n16436141" path="/gov/sasac/:path+" :paramsDesc="['路径，可在 URL 找到']" radar="1" rssbud="1" >
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `http://www.sasac.gov.cn/` 与 `/index.html` 之间的字段，下面是一个例子。
+
+若订阅 [其他](http://www.sasac.gov.cn/n2588030/n16436141/index.html) 则将对应页面 URL <http://www.sasac.gov.cn/n2588030/n16436141/index.html> 中 `http://www.sasac.gov.cn/` 和 `/index.html` 之间的字段 `n2588030/n16436141` 作为路径填入。此时路由为 [`/gov/sasac/n2588030/n16436141`](https://rsshub.app/gov/nmpa/n2588030/n16436141)
+
+:::
+
+</Route>
+
 ## 哈尔滨市科技局
 
 ### 政务公开
