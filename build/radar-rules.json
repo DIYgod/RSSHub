@@ -6270,6 +6270,18 @@
       }
     ]
   },
+  "sasac.gov.cn": {
+    "_name": "国务院国有资产监督管理委员会",
+    ".": [
+      {
+        "title": "通用",
+        "docs": "https://docs.rsshub.app/other.html#guo-wu-yuan-guo-you-zi-chan-jian-du-guan-li-wei-yuan-hui",
+        "source": [
+          "/*path"
+        ]
+      }
+    ]
+  },
   "sh.gov.cn": {
     "_name": "上海市人民政府",
     "wsjkw": [
