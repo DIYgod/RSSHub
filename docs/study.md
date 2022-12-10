@@ -234,6 +234,12 @@ path="/ctfhub/upcoming/:limit?"
 
 </Route>
 
+## ResearchGate
+
+### Publications
+
+<Route author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" :paramsDesc="['用户名，可在用户页地址栏中找到']" puppeteer="1" anticrawler="1"/>
+
 ## X-MOL 平台
 
 ### 新闻

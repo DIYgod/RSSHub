@@ -151,6 +151,22 @@ pageClass: routes
 
 </Route>
 
+## AG⓪RA
+
+### 零博客
+
+<Route author="nczitzk" example="/agora0/initium" path="/agora0/:category?" :paramsDesc="['分类，见下表，默认为 initium，即端传媒']" radar="1" rssbud="1">
+
+| muitinⒾ | aidemnⒾ | srettaⓂ | qⓅ | sucoⓋ |
+| ------- | ------- | ------- | -- | ----- |
+| initium | inmedia | matters | pq | vocus |
+
+</Route>
+
+### 共和報
+
+<Route author="TonyRL" example="/agora0/pen0" path="/agora0/pen0" radar="1" rssbud="1"/>
+
 ## AppleInsider
 
 ### 分类
@@ -1170,12 +1186,6 @@ IPFS 网关有可能失效，那时候换成其他网关。
 | topic | news | tech | blockchain | daily |
 
 </Route>
-
-## Research Gate
-
-### Publications
-
-<Route author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" :paramsDesc="['用户名，可在用户页地址栏中找到']"/>
 
 ## RSS3
 
