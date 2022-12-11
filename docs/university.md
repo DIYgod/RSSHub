@@ -2352,7 +2352,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 官网信息
 
-<Route author="simonsmh" example="/shmtu/www/events" path="/shmtu/www/:type" :paramsDesc="['类型名称']"/>
+<Route author="imbytecat simonsmh" example="/shmtu/www/events" path="/shmtu/www/:type" :paramsDesc="['类型名称']"/>
 
 | 学术讲座   | 通知公告  |
 | ------ | ----- |
@@ -2360,11 +2360,19 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 教务信息
 
-<Route author="simonsmh" example="/shmtu/jwc/jwgg" path="/shmtu/jwc/:type" :paramsDesc="['类型名称']"/>
+<Route author="imbytecat simonsmh" example="/shmtu/jwc/jwgg" path="/shmtu/jwc/:type" :paramsDesc="['类型名称']"/>
 
 | 教务公告 | 教务新闻 |
 | ---- | ---- |
 | jwgg | jwxw |
+
+### 数字平台
+
+<Route author="imbytecat" example="/shmtu/portal/bmtzgg" path="/shmtu/portal/:type" :paramsDesc="['类型名称']"/>
+
+| 部门通知公告 | 学术与大型活动公告 | 部门动态 |
+| ------ | --------- | ---- |
+| bmtzgg | xsydxhdgg | bmdt |
 
 ## 上海海洋大学
 

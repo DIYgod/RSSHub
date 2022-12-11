@@ -290,18 +290,6 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 <Route author="a180285" example="/blogs/jingwei.link" path="/blogs/jingwei.link"/>
 
-## 零博客
-
-### 分类
-
-<Route author="nczitzk" example="/agora0/initium" path="/agora0/:category?" :paramsDesc="['分类，见下表，默认为 initium，即端传媒']">
-
-| muitinⒾ | aidemnⒾ | srettaⓂ | qⓅ | sucoⓋ |
-| ------- | ------- | ------- | -- | ----- |
-| initium | inmedia | matters | pq | vocus |
-
-</Route>
-
 ## 每日安全
 
 ### 推送

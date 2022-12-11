@@ -151,6 +151,22 @@ pageClass: routes
 
 </Route>
 
+## AG⓪RA
+
+### 零博客
+
+<Route author="nczitzk" example="/agora0/initium" path="/agora0/:category?" :paramsDesc="['分类，见下表，默认为 initium，即端传媒']" radar="1" rssbud="1">
+
+| muitinⒾ | aidemnⒾ | srettaⓂ | qⓅ | sucoⓋ |
+| ------- | ------- | ------- | -- | ----- |
+| initium | inmedia | matters | pq | vocus |
+
+</Route>
+
+### 共和報
+
+<Route author="TonyRL" example="/agora0/pen0" path="/agora0/pen0" radar="1" rssbud="1"/>
+
 ## AppleInsider
 
 ### 分类
@@ -1170,12 +1186,6 @@ IPFS 网关有可能失效，那时候换成其他网关。
 | topic | news | tech | blockchain | daily |
 
 </Route>
-
-## Research Gate
-
-### Publications
-
-<Route author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" :paramsDesc="['用户名，可在用户页地址栏中找到']"/>
 
 ## RSS3
 
@@ -2309,6 +2319,12 @@ others = 热点新闻 + 滚动新闻
 ### 个人主页文章
 
 <Route author="Jeason0228" example="/guancha/personalpage/243983" path="/guancha/personalpage/:uid" :paramsDesc="['用户id， 可在URL中找到']" />
+
+## 观海新闻
+
+### 首页
+
+<Route author="TonyRL" example="/guanhai" path="/guanhai" radar="1" rssbud="1"/>
 
 ## 广告门
 
@@ -3878,32 +3894,32 @@ column 为 third 时可选的 category:
 
 </Route>
 
-### 公众号 (优读来源)
+### 公众号（优读来源）
 
 <Route author="kt286" example="/wechat/uread/shensing" path="/wechat/uread/:userid" :paramsDesc="['公众号的微信号, 可在 微信-公众号-更多资料 中找到。并不是所有的都支持，能不能用随缘']"/>
 
-### 公众号 (二十次幂来源)
+### 公众号（二十次幂来源）
 
 <Route author="sanmmm" example="/wechat/ershicimi/813oxJOl" path="/wechat/ershicimi/:id" :paramsDesc="['公众号id, 打开公众号页, 在 URL 中找到 id']" anticrawler="1"/>
 
-### 公众号 (微阅读来源)
+### 公众号（微阅读来源）
 
 <Route author="Rongronggg9" example="/wechat/data258/gh_cbbad4c1d33c" path="/data258/:id?" :paramsDesc="['公众号 id 或分类 id，可在公众号页或分类页 URL 中找到；若略去，则抓取首页']" anticrawler="1" radar="1" rssbud="1" selfhost="1">
 
 ::: warning 注意
 
 由于使用了一些针对反爬的缓解措施，本路由响应较慢。默认只抓取前 5 条，可通过 `?limit=` 改变（不推荐，容易被反爬）。\
-该网站使用 IP 甄别访客，且应用严格的每日阅读量限额 (约 15 次)，请自建并确保正确配置缓存；如使用内存缓存而非 Redis 缓存，请增大缓存容量。该限额足够订阅至少 3 个公众号 (假设公众号每日仅更新一次)；首页 / 分类页更新相当频繁，不推荐订阅。
+该网站使用 IP 甄别访客，且应用严格的每日阅读量限额（约 15 次），请自建并确保正确配置缓存；如使用内存缓存而非 Redis 缓存，请增大缓存容量。该限额足够订阅至少 3 个公众号 (假设公众号每日仅更新一次)；首页 / 分类页更新相当频繁，不推荐订阅。
 
 :::
 
 </Route>
 
-### 公众号 (wxnmh.com 来源)
+### 公众号（wxnmh.com 来源）
 
 <Route author="laampui" example="/wechat/wxnmh/51798" path="/wechat/wxnmh/:id" :paramsDesc="['公众号 id, 打开 wxnmh.com, 在 URL 中找到 id']" anticrawler="1"/>
 
-### 公众号 (wechat-feeds 来源)
+### 公众号（wechat-feeds 来源）
 
 ::: warning 注意
 
@@ -3913,13 +3929,17 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 <Route author="tylinux" example="/wechat/feeds/MzIwMzAwMzQxNw==" path="/wechat/feeds/:id" :paramsDesc="['公众号 id, 打开 `https://wechat.privacyhide.com/`, 在选定公众号的订阅 URL 中找到 id, 不包含最后的 .xml']"/>
 
-### 公众号 (feeddd 来源)
+### 公众号（feeddd 来源)）
 
 <Route author="TonyRL Rongronggg9" example="/wechat/feeddd/6131e1441269c358aa0e2141" path="/wechat/feeddd/:id" :paramsDesc="['公众号 id, 打开 `https://feeddd.org/feeds` 或 `https://cdn.jsdelivr.net/gh/feeddd/feeds/feeds_all_rss.txt`, 在 URL 中找到 id; 注意不是公众号页的 id, 而是订阅的 id']"/>
 
-### 公众号 (公众号 360 来源)
+### 公众号（公众号 360 来源）
 
 见 [#公众号 360](#gong-zhong-hao-360)
+
+### 公众号（自由微信来源）
+
+见 [#自由微信](#zi-you-wei-xin)
 
 ### 公众号栏目 (非推送 & 历史消息)
 
@@ -4573,3 +4593,9 @@ QueryString:
 |      | zh-hk | zh-tw |
 
 </Route>
+
+## 自由微信
+
+### 公众号
+
+<Route author="TonyRL" example="/freewechat/profile/MzI5NTUxNzk3OA==" path="/freewechat/profile/:id" :paramsDesc="['公众号 ID，可在URL中找到']" radar="1" rssbud="1" anticrawler="1"/>
