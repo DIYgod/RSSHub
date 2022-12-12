@@ -608,6 +608,9 @@
     "/cahkms/:category?": [
         "nczitzk"
     ],
+    "/caijing/roll": [
+        "TonyRL"
+    ],
     "/cankaoxiaoxi/news/:category": [
         "yuxinliu-alex"
     ],
