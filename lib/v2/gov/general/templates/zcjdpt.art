@@ -1,0 +1,100 @@
+<div class="content">
+    <div class="wrap">
+        <h3 class="policy">{{art_title}}</h3>
+        <p class="department">{{pub_unite}}</p>
+        <div class="p_date">
+            <span class="pub_time">政策发布时间：{{pub_time}}</span>
+            <span class="expiry_date">{{expiry_date}}</span>
+        </div>
+        <div class="smalltext" >
+            <div class="s_title">
+                <span class="sLeft">政策原文</span>
+                <!-- <div class="cIs she_qi">
+                    <i></i>
+                    <span>本政策涉及资金支持</span>
+                </div> -->
+            </div>
+            <div class="p_main">
+                <h3>{{zc_title}}</h3>
+                <p>{{summary}}</p>
+            </div>
+            <a class="toOriginal" href="{{link}}">&gt;&gt;阅读原文</a>
+        </div>
+
+        <!-- <div class="cBar she_qi">
+            <h3 class="c_title"><span>政策种类</span></h3>
+            <div class="pTypeList"></div>
+        </div>
+
+        <div class="cBar she_qi">
+            <h3 class="c_title"><span>政策关键词</span></h3>
+            <div class="keywords"></div>
+        </div>
+
+        <div class="cBar she_qi">
+            <h3 class="c_title"><span>适用群体</span></h3>
+            <div class="group">
+                <dl>
+                    <dt><span>企业类型</span></dt>
+                    <dd>
+                        <i class="gIcon"></i>
+                        <div class="gList cType"></div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt><span>行业</span></dt>
+                    <dd>
+                        <i class="gIcon"></i>
+                        <div class="gList iType"></div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt><span>企业规模</span></dt>
+                    <dd>
+                        <i class="gIcon"></i>
+                        <div class="gList cScale"></div>
+                    </dd>
+                </dl>
+            </div>
+        </div> -->
+
+        <!-- 解读 -->
+        <div class="interpret"></div>
+        {{if jie_du_items.length}}
+        <div class="interpret">
+            {{each jie_du_items}}
+            <div class="iBar">
+                <h3 class="i_title">
+                    <p><em>{{$value.jd_title}}</em></p>
+                </h3>
+                <div class="compare">
+                    <div class="commonText">
+                        <div class="iNShow qaWhite">
+                            <p>{{$value.jd_content}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        {{/if}}
+
+        <!-- 一问一答 -->
+        {{if wen_da_items.length}}
+        <div class="qAnda">
+            <div class="swiper-container qaSwiper">
+                <div class="swiper-wrapper">
+                    {{each wen_da_items}}
+                    <div class="swiper-slide">
+                        <div class="qSlide qaWhite">
+                            <h3>问：{{$value.question}}</h3>
+                            <div>答：{{$value.answer}}</div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</div>
