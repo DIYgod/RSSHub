@@ -180,6 +180,28 @@ pageClass: routes
 
 <Route author="Fatpandac" example="/gov/huizhou/zwgk/jgdt" path="/gov/huizhou/zwgk/:category?" :paramsDesc="['资讯类别，可以从网址中得到，默认为政务要闻']"/>
 
+## 广州市人民政府
+
+### 新闻
+
+<Route author="drgnchan" example="/gov/gz/xw/gzyw" path="/gov/gz/xw/:category" :paramsDesc="['新闻分类']">
+
+| 广州要闻 | 今日头条 | 通知公告 |
+| ---- | ---- | ---- |
+| gzyw | jrtt | tzgg |
+
+</Route>
+
+### 政务公开
+
+<Route author="drgnchan" example="/gov/gz/zwgk/zcjd" path="/gov/gz/zwgk/:category" :paramsDesc="['政务话你知']">
+
+| 文字解读 |
+| ---- |
+| zcjd |
+
+</Route>
+
 ## 国家广播电视总局
 
 ### 分类
@@ -344,6 +366,22 @@ pageClass: routes
 | 基金要闻 | 通知公告 | 资助成果 | 科普快讯 |
 | ---- | ---- | ---- | ---- |
 | jjyw | tzgg | zzcg | kpkx |
+
+</Route>
+
+## 国务院国有资产监督管理委员会
+
+### 通用
+
+<Route author="TonyRL" example="/gov/sasac/n2588030/n16436141" path="/gov/sasac/:path+" :paramsDesc="['路径，可在 URL 找到']" radar="1" rssbud="1" >
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `http://www.sasac.gov.cn/` 与 `/index.html` 之间的字段，下面是一个例子。
+
+若订阅 [其他](http://www.sasac.gov.cn/n2588030/n16436141/index.html) 则将对应页面 URL <http://www.sasac.gov.cn/n2588030/n16436141/index.html> 中 `http://www.sasac.gov.cn/` 和 `/index.html` 之间的字段 `n2588030/n16436141` 作为路径填入。此时路由为 [`/gov/sasac/n2588030/n16436141`](https://rsshub.app/gov/nmpa/n2588030/n16436141)
+
+:::
 
 </Route>
 
