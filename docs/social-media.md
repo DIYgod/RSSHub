@@ -576,9 +576,9 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 <Route author="EYHN" example="/pixiv/ranking/week" path="/pixiv/ranking/:mode/:date?" :paramsDesc="['排行榜类型' ,'日期, 取值形如 `2018-4-25`']" radar="1" rssbud="1">
 
-| pixiv 日排行 | pixiv 周排行 | pixiv 月排行 | pixiv 受男性欢迎排行 | pixiv 受女性欢迎排行 | pixiv 原创作品排行  | pixiv 新人排行  |
-| --------- | --------- | --------- | ------------- | ------------- | ------------- | ----------- |
-| day       | week      | month     | day_male      | day_female    | week_original | week_rookie |
+| pixiv 日排行 | pixiv 周排行 | pixiv 月排行 | pixiv 受男性欢迎排行 | pixiv 受女性欢迎排行 | AI 生成作品排行榜 | pixiv 原创作品排行  | pixiv 新人排行  |
+| --------- | --------- | --------- | ------------- | ------------- | ---------- | ------------- | ----------- |
+| day       | week      | month     | day_male      | day_female    | day_ai     | week_original | week_rookie |
 
 | pixiv R-18 日排行 | pixiv R-18 受男性欢迎排行 | pixiv R-18 受女性欢迎排行 | pixiv R-18 周排行 | pixiv R-18G 排行 |
 | -------------- | ------------------ | ------------------ | -------------- | -------------- |
