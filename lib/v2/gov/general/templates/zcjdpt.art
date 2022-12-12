@@ -3,16 +3,89 @@
         <h3 class="policy">{{art_title}}</h3>
         <p class="department">{{pub_unite}}</p>
         <div class="p_date">
-            <span class="pub_time">政策发布时间：{{pub_time}}</span>
-            <span class="expiry_date">{{expiry_date}}</span>
+            {{if pub_time.length}}<span class="pub_time">政策发布时间：{{pub_time}}</span>{{/if}}
+            {{if expiry_date.length}}<span class="expiry_date">政策有效期：{{expiry_date}}</span>{{/if}}
         </div>
-        <div class="smalltext" >
+        <div class="smalltext">
             <div class="s_title">
                 <span class="sLeft">政策原文</span>
-                <!-- <div class="cIs she_qi">
-                    <i></i>
-                    <span>本政策涉及资金支持</span>
-                </div> -->
+                {{if she_qi_items.id}}
+                    {{if she_qi_items.has_money}}
+                    <div class="cIs she_qi">
+                        <i></i>
+                        <span>本政策涉及资金支持</span>
+                    </div>
+                    {{/if}}
+                    <div class="cBar she_qi">
+                        <h3 class="c_title"><span>政策种类</span></h3>
+                        <div class="pTypeList">
+                            <% var zcType = she_qi_items.zc_type_text.split(','); %>
+                            <% var zcTypeIcon = she_qi_items.zc_type_icon.split(','); %>
+                            <% for(var i = 0; i < zcType.length; i++){ %>
+                                <div class="tIcon">
+                                    <i><%= zcTypeIcon[i] %></i>
+                                    <span><%= zcType[i] %></span>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <div class="cBar she_qi">
+                        <h3 class="c_title"><span>政策关键词</span></h3>
+                        <div class="keywords">
+                            <% var zcKey = she_qi_items.zc_key.split(','); %>
+                            <% for (var i = 0; i < zcKey.length; i++) { %>
+                                <% if (i % 2 == 0) { %>
+                                    <span>{{zcKey[i]}}</span>
+                                <% } else { %>
+                                    <span class="dBlue">{{zcKey[i]}}</span>
+                                <% } %>
+                            <% } %>
+                        </div>
+                    </div>
+
+                    <div class="cBar she_qi">
+                        <h3 class="c_title"><span>适用群体</span></h3>
+                        <div class="group">
+                            <dl>
+                                <dt><span>企业类型</span></dt>
+                                <dd>
+                                    <i class="gIcon"></i>
+                                    <% var cType = she_qi_items.company_type_text.split(','); %>
+                                    <div class="gList cType">
+                                        {{each cType}}
+                                        <span>{{$value}}</span>
+                                        {{/each}}
+                                    </div>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><span>行业</span></dt>
+                                <dd>
+                                    <i class="gIcon"></i>
+                                    <% var iType = she_qi_items.industry_text.split(','); %>
+                                    <div class="gList iType">
+                                        {{each iType}}
+                                        <span>{{$value}}</span>
+                                        {{/each}}
+                                    </div>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt><span>企业规模</span></dt>
+                                <dd>
+                                    <i class="gIcon"></i>
+                                    <% var cScale = she_qi_items.scale_text.split(','); %>
+                                    <div class="gList cScale">
+                                        {{each cScale}}
+                                        <span>{{$value}}</span>
+                                        {{/each}}
+                                    </div>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                {{/if}}
             </div>
             <div class="p_main">
                 <h3>{{zc_title}}</h3>
@@ -21,45 +94,7 @@
             <a class="toOriginal" href="{{link}}">&gt;&gt;阅读原文</a>
         </div>
 
-        <!-- <div class="cBar she_qi">
-            <h3 class="c_title"><span>政策种类</span></h3>
-            <div class="pTypeList"></div>
-        </div>
-
-        <div class="cBar she_qi">
-            <h3 class="c_title"><span>政策关键词</span></h3>
-            <div class="keywords"></div>
-        </div>
-
-        <div class="cBar she_qi">
-            <h3 class="c_title"><span>适用群体</span></h3>
-            <div class="group">
-                <dl>
-                    <dt><span>企业类型</span></dt>
-                    <dd>
-                        <i class="gIcon"></i>
-                        <div class="gList cType"></div>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt><span>行业</span></dt>
-                    <dd>
-                        <i class="gIcon"></i>
-                        <div class="gList iType"></div>
-                    </dd>
-                </dl>
-                <dl>
-                    <dt><span>企业规模</span></dt>
-                    <dd>
-                        <i class="gIcon"></i>
-                        <div class="gList cScale"></div>
-                    </dd>
-                </dl>
-            </div>
-        </div> -->
-
         <!-- 解读 -->
-        <div class="interpret"></div>
         {{if jie_du_items.length}}
         <div class="interpret">
             {{each jie_du_items}}
@@ -74,6 +109,17 @@
                         </div>
                     </div>
                 </div>
+                {{if $value.attach_items.length}}
+                <div class="iSwiper">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            {{each $value.attach_items}}
+                            <div class="swiper-slide swiper-slide-visible"><img src="{{$value.file_url}}"></div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+                {{/if}}
             </div>
             {{/each}}
         </div>
