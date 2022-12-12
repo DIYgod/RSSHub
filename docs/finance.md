@@ -208,6 +208,12 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
+## 财经网
+
+### 滚动新闻
+
+<Route author="TonyRL" example="/caijing/roll" path="/caijing/roll" rardr="1" rssbud="1"/>
+
 ## 财联社
 
 ### 电报
