@@ -717,11 +717,15 @@ Sources
 
 <Route author="SunBK201" example="/ymgal/article" path="/ymgal/article/:type?" :paramsDesc="['文章类型']" radar="1">
 
-| All | 资讯   | 专栏     |
-| --- | ---- | ------ |
-| all | news | column |
+| 全部文章 | 资讯   | 专栏     |
+| ---- | ---- | ------ |
+| all  | news | column |
 
 </Route>
+
+### 本月新作
+
+<Route author="SunBK201" example="/ymgal/game/release" path="/ymgal/game/release" radar="1" />
 
 ## 终点分享
 
