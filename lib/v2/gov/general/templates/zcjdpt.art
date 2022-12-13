@@ -91,7 +91,7 @@
                 <div class="compare">
                     <div class="commonText"style="border: 4px solid #3B87C7;background: #3B87C7;">
                         <div class="iNShow qaWhite" style="padding: 20px;color: #FFFFFF;">
-                            <p style="font-size: 16px;line-height: 32px;text-indent: 2em;">{{$value.jd_content}}</p>
+                            <p style="font-size: 16px;line-height: 32px;text-indent: 2em;">{{@ $value.jd_content}}</p>
                         </div>
                     </div>
                 </div>
