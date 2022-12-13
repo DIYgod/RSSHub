@@ -17,6 +17,8 @@ updates:
         versions: ['>=5.0.0']
       - dependency-name: parse-torrent
         versions: ['>=10.0.0']
+      - dependency-name: query-string
+        versions: ['>=8.0.0']
       - dependency-name: remark
         versions: ['>=14.0.0']
       - dependency-name: remark-frontmatter
