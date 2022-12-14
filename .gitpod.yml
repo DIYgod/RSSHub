@@ -21,6 +21,24 @@ tasks:
   # - name: docs
   #   command: yarn docs:dev
   #   openMode: tab-after
+  - name: Restore Tailscale daemon
+    command: |
+      if [ -n "${TS_STATE_TAILSCALE}" ]; then
+        # restore the tailscale state from gitpod user's env vars
+        sudo mkdir -p /var/lib/tailscale
+        echo "${TS_STATE_TAILSCALE}" | sudo tee /var/lib/tailscale/tailscaled.state > /dev/null
+      fi
+      sudo tailscaled
+  - name: Connect to Tailscale
+    command: |
+      if [ -n "${TS_STATE_TAILSCALE}" ]; then
+        sudo -E tailscale up --authkey $TAILSCALE_AUTHKEY --accept-routes
+      else
+        sudo -E tailscale up --hostname "gitpod-${GITPOD_GIT_USER_NAME// /-}-$(echo ${GITPOD_WORKSPACE_CONTEXT} | jq -r .repository.name)" --authkey $TAILSCALE_AUTHKEY --accept-routes
+        # store the tailscale state into gitpod user
+        gp env TS_STATE_TAILSCALE="$(sudo cat /var/lib/tailscale/tailscaled.state)"
+      fi
+      exit
 
 vscode:
   extensions:
