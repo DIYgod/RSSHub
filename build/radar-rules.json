@@ -1375,7 +1375,7 @@
         "source": [
           "/"
         ],
-        "target": "/gushitong/index"
+        "target": "/baidu/gushitong/index"
       }
     ],
     "tieba": [
@@ -1393,13 +1393,13 @@
         "title": "帖子动态",
         "docs": "https://docs.rsshub.app/bbs.html#bai-du-tie-ba",
         "source": "/p/:id",
-        "target": "/tieba/post/:id"
+        "target": "/baidu/tieba/post/:id"
       },
       {
         "title": "只看楼主",
         "docs": "https://docs.rsshub.app/bbs.html#bai-du-tie-ba",
         "source": "/p/:id",
-        "target": "/tieba/post/lz/:id"
+        "target": "/baidu/tieba/post/lz/:id"
       },
       {
         "title": "用户帖子",
