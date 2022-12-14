@@ -242,9 +242,17 @@ pageClass: routes
 
 <Route author="fengkx" example="/one" path="/one"/>
 
-## pageClass: routes
+## Panda
 
-# 其他
+### Feeds
+
+<Route author="lyrl" example="/usepanda/feeds/5718e53e7a84fb1901e059cc" path="/usepanda/feeds/:id" :paramsDesc="['频道id/feedId']">
+
+| 频道          | feedId                   |
+| ----------- | ------------------------ |
+| Github 热门推荐 | 5718e53e7a84fb1901e059cc |
+
+</Route>
 
 ## Parcel Tracking
 
@@ -406,6 +414,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
 
+## 成都住建蓉 e 办
+
+### 商品住房购房登记
+
+<Route author="TonyRL" example="/cdzjryb/zw/projectList" path="/cdzjryb/zw/projectList" radar="1"/>
+
 ## 滴答清单
 
 ### 习惯打卡
@@ -510,7 +524,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 考研帮调剂信息
 
-<Route author="sushengmao" example="/kaoyan" path="/kaoyan" />
+<Route author="shengmaosu" example="/kaoyan" path="/kaoyan" />
 
 ## 空气质量
 

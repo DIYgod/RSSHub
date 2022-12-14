@@ -93,9 +93,10 @@ jobs:
         run: yarn
       - name: Install Chromium
         if: ${{ matrix.chromium.dependency != '' }}
-        # Chromium from Ubuntu is too old (85), but can still pass the tests
-        # That's not really a problem since Chromium-bundled Docker image is based on Debian bullseye,
-        # which updates Chromium frequently, and only on arm/arm64 the image needs Chromium from Debian.
+        # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
+        # nothing since it calls Snap (disgusting!) to install Chromium, which should be up-to-date.
+        # That's not really a problem since the Chromium-bundled Docker image is based on Debian bullseye,
+        # which provides up-to-date native packages.
         run: |
           set -ex
           curl -s "https://dl.google.com/linux/linux_signing_key.pub" | gpg --dearmor |

@@ -312,6 +312,12 @@ Heroku [不再](https://blog.heroku.com/next-chapter) 提供免费服务。
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
 
+## 部署到 PikaPods
+
+每月只需 1 美元即可运行 RSSHub。包括自动更新和 5 美元的免费起始额度。
+
+[![Run on PikaPods](https://www.pikapods.com/static/run-button.svg)](https://www.pikapods.com/pods?run=rsshub)
+
 ## 部署到 Google App Engine
 
 ### 准备
