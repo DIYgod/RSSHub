@@ -2055,10 +2055,10 @@
   dependencies:
     "@types/node" "*"
 
-"@vercel/nft@0.22.5":
-  version "0.22.5"
-  resolved "https://registry.yarnpkg.com/@vercel/nft/-/nft-0.22.5.tgz#951bd7589ceebdd3e280afcf3a13bdacf83f6b7e"
-  integrity sha512-mug57Wd1BL7GMj9gXMgMeKUjdqO0e4u+0QLPYMFE1rwdJ+55oPy6lp3nIBCS8gOvigT62UI4QKUL2sGqcoW4Hw==
+"@vercel/nft@0.22.6":
+  version "0.22.6"
+  resolved "https://registry.yarnpkg.com/@vercel/nft/-/nft-0.22.6.tgz#edb30d300bb809c0945ea4c7b87e56f634885541"
+  integrity sha512-gTsFnnT4mGxodr4AUlW3/urY+8JKKB452LwF3m477RFUJTAaDmcz2JqFuInzvdybYIeyIv1sSONEJxsxnbQ5JQ==
   dependencies:
     "@mapbox/node-pre-gyp" "^1.0.5"
     "@rollup/pluginutils" "^4.0.0"
