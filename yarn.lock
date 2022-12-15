@@ -2055,10 +2055,10 @@
   dependencies:
     "@types/node" "*"
 
-"@vercel/nft@0.22.5":
-  version "0.22.5"
-  resolved "https://registry.yarnpkg.com/@vercel/nft/-/nft-0.22.5.tgz#951bd7589ceebdd3e280afcf3a13bdacf83f6b7e"
-  integrity sha512-mug57Wd1BL7GMj9gXMgMeKUjdqO0e4u+0QLPYMFE1rwdJ+55oPy6lp3nIBCS8gOvigT62UI4QKUL2sGqcoW4Hw==
+"@vercel/nft@0.22.6":
+  version "0.22.6"
+  resolved "https://registry.yarnpkg.com/@vercel/nft/-/nft-0.22.6.tgz#edb30d300bb809c0945ea4c7b87e56f634885541"
+  integrity sha512-gTsFnnT4mGxodr4AUlW3/urY+8JKKB452LwF3m477RFUJTAaDmcz2JqFuInzvdybYIeyIv1sSONEJxsxnbQ5JQ==
   dependencies:
     "@mapbox/node-pre-gyp" "^1.0.5"
     "@rollup/pluginutils" "^4.0.0"
@@ -13476,10 +13476,10 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
   integrity sha512-KXXFFdAbFXY4geFIwoyNK+f5Z1b7swfXABfL7HXCmoIWMKU3dmS26672A4EeQtDzLKy7SXmfBu51JolvEKwtGA==
 
-twitter-api-v2@1.12.9:
-  version "1.12.9"
-  resolved "https://registry.yarnpkg.com/twitter-api-v2/-/twitter-api-v2-1.12.9.tgz#447fc4efb693bbb7983a6dcec2de5da7e0f27648"
-  integrity sha512-nmKwcUiXgoEfcOtAH/hYojy0oSxbouWvvNsHVphiHSW9x9aus2Jdg9/NRB2Gzyq5G6xl+EkjUlEWwBQjp1FOfg==
+twitter-api-v2@1.12.10:
+  version "1.12.10"
+  resolved "https://registry.yarnpkg.com/twitter-api-v2/-/twitter-api-v2-1.12.10.tgz#355d20d5af97a83b75694ff15396f7099a296d11"
+  integrity sha512-gLo4u3EZM8zt2CRZ5uJaWpGVoH1/xR0veF74E3K7WCQXUONoZVc0pbg6dGfoPBOmEXhS4QHGcgAMj1TRU+OSXA==
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
