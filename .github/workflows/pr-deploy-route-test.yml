@@ -12,9 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      # https://github.community/t/154682
+      # https://github.com/orgs/community/discussions/25220
       - name: Search the PR that triggered this workflow
-        uses: potiuk/get-workflow-origin@v1_3
+        uses: potiuk/get-workflow-origin@v1_5
         id: source-run-info
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
