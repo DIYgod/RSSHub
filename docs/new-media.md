@@ -1431,6 +1431,18 @@ Provides all of the Thrillist articles with the specified tag.
 
 <Route author="nczitzk" example="/uwants/1520" path="/uwants/:fid" :paramsDesc="['fid，可在对应板块页的 URL 中找到']"/>
 
+## VERSE
+
+### 專文
+
+<Route author="miles170" example="/verse/articles" path="/verse/articles/:category?" :paramsDesc="['分类，见下表，默认为全部']" radar="1">
+
+| 新聞         | 人物     | 文化      | 觀念        | 地方    | 飲食     | 專題       |
+| ---------- | ------ | ------- | --------- | ----- | ------ | -------- |
+| verse-news | figure | culture | new-ideas | local | eating | features |
+
+</Route>
+
 ## VOA News
 
 ### Day in Photos
