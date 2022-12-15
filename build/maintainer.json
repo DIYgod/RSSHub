@@ -4155,6 +4155,9 @@
     "/verfghbw/press/:keyword?": [
         "quinn-dev"
     ],
+    "/verse/articles/:category?": [
+        "miles170"
+    ],
     "/vlive/channel/:channel/board/:board": [
         "TonyRL"
     ],
