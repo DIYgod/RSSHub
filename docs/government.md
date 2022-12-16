@@ -232,11 +232,11 @@ pageClass: routes
 
 #### 茂名市电白区人民政府
 
-<Route author="ShuiHuo" example="/gov/dianbai/www/zwgk/zcjd" path="/gov/dianbai/:path+" :paramsDesc="['路径，默认为 政务公开 > 政策解读']">
+<Route author="ShuiHuo" example="/gov/dianbai/www/zwgk/zcjd" path="/gov/dianbai/:path+" :paramsDesc="['路径，只填写 `www` 默认为 政务公开 > 政策解读']">
 
 ::: tip 提示
 
-路径处填写对应页面 URL 中 `http://www.dianbai.gov.cn/` 后的字段。下面是一个例子。
+路径处填写对应页面 URL 中最前面的部分和域名后的字段。下面是一个例子。
 
 若订阅 [政务公开 > 政策解读](http://www.dianbai.gov.cn/zwgk/zcjd/) 则将对应页面 URL <http://www.dianbai.gov.cn/zwgk/zcjd/> 中 `http://www.dianbai.gov.cn/` 的字段`www` 和 `zwgk/zcjd/` 作为路径填入。此时路由为 [`/gov/dianbai/www/zwgk/zcjd/`](https://rsshub.app/gov/dianbai/www/zwgk/zcjd/)
 
@@ -246,11 +246,11 @@ pageClass: routes
 
 #### 信宜市人民政府
 
-<Route author="ShuiHuo" example="/gov/xinyi/www/zwgk/zcjd" path="/gov/xinyi/:path+" :paramsDesc="['路径，默认为 政务公开 > 政策解读']">
+<Route author="ShuiHuo" example="/gov/xinyi/www/zwgk/zcjd" path="/gov/xinyi/:path+" :paramsDesc="['路径，只填写 `www` 默认为 政务公开 > 政策解读']">
 
 ::: tip 提示
 
-路径处填写对应页面 URL 中 `http://www.xinyi.gov.cn/` 后的字段。下面是一个例子。
+路径处填写对应页面 URL 中最前面的部分和域名后的字段。下面是一个例子。
 
 若订阅 [政务公开 > 政策解读](http://www.xinyi.gov.cn/zwgk/zcjd/) 则将对应页面 URL <http://www.xinyi.gov.cn/zwgk/zcjd/> 中 `http://www.xinyi.gov.cn/` 的字段 `www` 和 `zwgk/zcjd/` 作为路径填入。此时路由为 [`/gov/xinyi/www/zwgk/zcjd/`](https://rsshub.app/gov/xinyi/www/zwgk/zcjd/)
 
@@ -260,11 +260,11 @@ pageClass: routes
 
 #### 高州市人民政府
 
-<Route author="ShuiHuo" example="/gov/gaozhou/www/zwgk/zcjd" path="/gov/gaozhou/:path+" :paramsDesc="['路径，默认为 政策解读']">
+<Route author="ShuiHuo" example="/gov/gaozhou/www/zwgk/zcjd" path="/gov/gaozhou/:path+" :paramsDesc="['路径，只填写 `www` 默认为 政策解读']">
 
 ::: tip 提示
 
-路径处填写对应页面 URL 中 `http://www.gaozhou.gov.cn/` 后的字段。下面是一个例子。
+路径处填写对应页面 URL 中最前面的部分和域名后的字段。下面是一个例子。
 
 若订阅 [政策解读](http://www.gaozhou.gov.cn/zcjd/) 则将对应页面 URL <http://www.gaozhou.gov.cn/zcjd/> 中 `http://www.gaozhou.gov.cn/` 的字段 `www` 和 `zcjd/` 作为路径填入。此时路由为 [`/gov/gaozhou/www/zcjd/`](https://rsshub.app/gov/gaozhou/www/zcjd/)
 
@@ -274,11 +274,11 @@ pageClass: routes
 
 #### 化州市人民政府
 
-<Route author="ShuiHuo" example="/gov/huazhou/www/zwgk/zcjd" path="/gov/huazhou/:path+" :paramsDesc="['路径，默认为 政策解读']">
+<Route author="ShuiHuo" example="/gov/huazhou/www/zwgk/zcjd" path="/gov/huazhou/:path+" :paramsDesc="['路径，只填写 `www` 默认为 政策解读']">
 
 ::: tip 提示
 
-路径处填写对应页面 URL 中 `http://www.huazhou.gov.cn/` 后的字段。下面是一个例子。
+路径处填写对应页面 URL 中最前面的部分和域名后的字段。下面是一个例子。
 
 若订阅 [政策解读](http://www.huazhou.gov.cn/syzl/zcjd/) 则将对应页面 URL <http://www.huazhou.gov.cn/syzl/zcjd/> 中 `http://www.huazhou.gov.cn/` 的字段 `www` `syzl/zcjd/` 作为路径填入。此时路由为 [`/gov/huazhou/www/syzl/zcjd/`](https://rsshub.app/gov/huazhou/www/syzl/zcjd/)
 
@@ -288,11 +288,11 @@ pageClass: routes
 
 #### 广东茂名滨海新区政务网
 
-<Route author="ShuiHuo" example="/gov/mgs/www/zwgk/zcjd" path="/gov/mgs/:path+" :paramsDesc="['路径，默认为 政务公开 > 政策解读']">
+<Route author="ShuiHuo" example="/gov/mgs/www/zwgk/zcjd" path="/gov/mgs/:path+" :paramsDesc="['路径，只填写 `www` 默认为 政务公开 > 政策解读']">
 
 ::: tip 提示
 
-路径处填写对应页面 URL 中 `http://www.mgs.gov.cn/` 后的字段。下面是一个例子。
+路径处填写对应页面 URL 中最前面的部分和域名后的字段。下面是一个例子。
 
 若订阅 [政务公开 > 政策解读](http://www.mgs.gov.cn/zwgk/zcjd/) 则将对应页面 URL <http://www.mgs.gov.cn/zwgk/zcjd/> 中 `http://www.mgs.gov.cn/` 的字段 `www` 和 `zwgk/zcjd/` 作为路径填入。此时路由为 [`/gov/mgs/www/zwgk/zcjd/`](https://rsshub.app/gov/mgs/www/zwgk/zcjd/)
 
@@ -302,11 +302,11 @@ pageClass: routes
 
 #### 广东茂名高新技术产业开发区
 
-<Route author="ShuiHuo" example="/gov/mmht/www/xwzx/zcjd" path="/gov/mmht/:path+" :paramsDesc="['路径，默认为 政务公开 > 政策解读']">
+<Route author="ShuiHuo" example="/gov/mmht/www/xwzx/zcjd" path="/gov/mmht/:path+" :paramsDesc="['路径，只填写 `www` 默认为 政务公开 > 政策解读']">
 
 ::: tip 提示
 
-路径处填写对应页面 URL 中 `http://www.mmht.gov.cn/` 后的字段。下面是一个例子。
+路径处填写对应页面 URL 中最前面的部分和域名后的字段。下面是一个例子。
 
 若订阅 [政务公开 > 政策解读](http://www.mmht.gov.cn/xwzx/zcjd/) 则将对应页面 URL <http://www.mmht.gov.cn/xwzx/zcjd/> 中 `http://www.mmht.gov.cn/` 的字段 `www` 和   `xwzx/zcjd/` 作为路径填入。此时路由为 [`/gov/mmht/www/xwzx/zcjd/`](https://rsshub.app/gov/mmht/www/xwzx/zcjd/)
 
@@ -316,11 +316,11 @@ pageClass: routes
 
 #### 广东省茂名水东湾新城建设管理委员会
 
-<Route author="ShuiHuo" example="/gov/sdb/www/zwgk/zcjd" path="/gov/sdb/:path+" :paramsDesc="['路径，默认为 政务公开 > 政策解读']">
+<Route author="ShuiHuo" example="/gov/sdb/www/zwgk/zcjd" path="/gov/sdb/:path+" :paramsDesc="['路径，只填写 `www` 默认为 政务公开 > 政策解读']">
 
 ::: tip 提示
 
-路径处填写对应页面 URL 中 `http://www.sdb.gov.cn/` 后的字段。下面是一个例子。
+路径处填写对应页面 URL 中最前面的部分和域名后的字段。下面是一个例子。
 
 若订阅 [政务公开 > 政策解读](http://www.sdb.gov.cn/zwgk/zcjd/) 则将对应页面 URL <http://www.sdb.gov.cn/zwgk/zcjd/> 中 `http://www.sdb.gov.cn/` 的字段 `www` 和   `zwgk/zcjd/` 作为路径填入。此时路由为 [`/gov/sdb/www/zwgk/zcjd/`](https://rsshub.app/gov/sdb/www/zwgk/zcjd/)
 
