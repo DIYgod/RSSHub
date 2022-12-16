@@ -3119,7 +3119,8 @@
     ],
     "/picuki/profile/:id/:functionalFlag?": [
         "hoilc",
-        "Rongronggg9"
+        "Rongronggg9",
+        "devinmugen"
     ],
     "/pincong/category/:category?/:sort?": [
         "zphw"
