@@ -1498,15 +1498,15 @@
   dependencies:
     "@babel/runtime-corejs2" "^7.2.0"
     "@postlight/ci-failed-test-reporter" "^1.0"
-    browser-request "*"
+    browser-request "github:postlight/browser-request#feat-add-headers-to-response"
     cheerio "^0.22.0"
     difflib "github:postlight/difflib.js"
     ellipsize "0.1.0"
     iconv-lite "0.5.0"
-    jquery "*"
+    jquery "^3.5.0"
     moment "^2.23.0"
     moment-parseformat "3.0.0"
-    moment-timezone "*"
+    moment-timezone "0.5.37"
     postman-request "^2.88.1-postman.31"
     string-direction "^0.1.2"
     turndown "^7.1.1"
@@ -13442,11 +13442,6 @@ tunnel-agent@^0.6.0:
   integrity sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==
   dependencies:
     safe-buffer "^5.0.1"
-
-tunnel@0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/tunnel/-/tunnel-0.0.6.tgz#72f1314b34a5b192db012324df2cc587ca47f92c"
-  integrity sha512-1h/Lnq9yajKY2PEbBadPXj3VxsDDu844OnaAo52UVmIzIvwwtBPIuNvkjuzBlTWpfJyUbG3ez0KSBibQkj4ojg==
 
 turndown@^7.1.1:
   version "7.1.1"
