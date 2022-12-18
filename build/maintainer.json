@@ -1621,10 +1621,16 @@
     "/gov/beijing/kw/:channel": [
         "Fatpandac"
     ],
-    "/gov/guangdong/tqyb/tfxtq": [
-        "Fatpandac"
+    "/gov/dianbai/:path+": [
+        "ShuiHuo"
+    ],
+    "/gov/gaozhou/:path+": [
+        "ShuiHuo"
     ],
     "/gov/guangdong/tqyb/sncsyjxh": [
+        "Fatpandac"
+    ],
+    "/gov/guangdong/tqyb/tfxtq": [
         "Fatpandac"
     ],
     "/gov/gz/xw/:category": [
@@ -1636,11 +1642,29 @@
     "/gov/hebei/czt/xwdt/:category?": [
         "nczitzk"
     ],
+    "/gov/huazhou/:path+": [
+        "ShuiHuo"
+    ],
     "/gov/huizhou/zwgk/:category?": [
         "Fatpandac"
     ],
     "/gov/hunan/changsha/major-email": [
         "shansing"
+    ],
+    "/gov/maoming/:path+": [
+        "ShuiHuo"
+    ],
+    "/gov/maonan/:category": [
+        "ShuiHuo"
+    ],
+    "/gov/mgs/:path+": [
+        "ShuiHuo"
+    ],
+    "/gov/mmht/:path+": [
+        "ShuiHuo"
+    ],
+    "/gov/sdb/:path+": [
+        "ShuiHuo"
     ],
     "/gov/shaanxi/kjt/:id?": [
         "nczitzk"
@@ -1668,6 +1692,9 @@
     ],
     "/gov/taiyuan/rsj/:caty/:page?": [
         "2PoL"
+    ],
+    "/gov/xinyi/:path+": [
+        "ShuiHuo"
     ],
     "/gov/xuzhou/hrss/:category?": [
         "nczitzk"

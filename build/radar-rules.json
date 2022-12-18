@@ -6005,6 +6005,30 @@
       }
     ]
   },
+  "dianbai.gov.cn": {
+    "_name": "茂名市电白区人民政府",
+    "www": [
+      {
+        "title": "茂名市电白区人民政府",
+        "docs": "https://docs.rsshub.app/government.html#mao-ming-shi-ren-min-zheng-fu-mao-ming-shi-dian-bai-qu-ren-min-zheng-fu",
+        "source": [
+          "/*"
+        ]
+      }
+    ]
+  },
+  "gaozhou.gov.cn": {
+    "_name": "高州市人民政府",
+    "www": [
+      {
+        "title": "高州市人民政府",
+        "docs": "https://docs.rsshub.app/government.html#mao-ming-shi-ren-min-zheng-fu-gao-zhou-shi-ren-min-zheng-fu",
+        "source": [
+          "/*"
+        ]
+      }
+    ]
+  },
   "gz.gov.cn": {
     "_name": "广州市人民政府",
     "www": [
@@ -6053,6 +6077,18 @@
       }
     ]
   },
+  "huazhou.gov.cn": {
+    "_name": "化州市人民政府",
+    "www": [
+      {
+        "title": "化州市人民政府",
+        "docs": "https://docs.rsshub.app/government.html#mao-ming-shi-ren-min-zheng-fu-hua-zhou-shi-ren-min-zheng-fu",
+        "source": [
+          "/*"
+        ]
+      }
+    ]
+  },
   "huizhou.gov.cn": {
     "_name": "惠州市人民政府",
     "www": [
@@ -6076,6 +6112,79 @@
         "source": [
           "/zwgk/hzsz/:category"
         ]
+      }
+    ]
+  },
+  "maoming.gov.cn": {
+    "_name": "茂名市人民政府门户网站",
+    ".": [
+      {
+        "title": "茂名市人民政府",
+        "docs": "https://docs.rsshub.app/government.html#mao-ming-shi-ren-min-zheng-fu-mao-ming-shi-ren-min-zheng-fu-men-hu-wang-zhan",
+        "source": [
+          "/*"
+        ]
+      }
+    ]
+  },
+  "maonan.gov.cn": {
+    "_name": "茂名市茂南区人民政府",
+    ".": [
+      {
+        "title": "政务公开",
+        "docs": "https://docs.rsshub.app/government.html#mao-ming-shi-ren-min-zheng-fu-mao-ming-shi-mao-nan-qu-ren-min-zheng-fu",
+        "source": [
+          "/zwgk/*"
+        ],
+        "target": "/gov/maonan/zwgk"
+      },
+      {
+        "title": "政务新闻",
+        "docs": "https://docs.rsshub.app/government.html#mao-ming-shi-ren-min-zheng-fu-mao-ming-shi-mao-nan-qu-ren-min-zheng-fu",
+        "source": [
+          "/zwxw/*"
+        ],
+        "target": "/gov/maonan/zwxw"
+      },
+      {
+        "title": "茂南动态",
+        "docs": "https://docs.rsshub.app/government.html#mao-ming-shi-ren-min-zheng-fu-mao-ming-shi-mao-nan-qu-ren-min-zheng-fu",
+        "source": [
+          "/zwxw/mndt/*"
+        ],
+        "target": "/gov/maonan/mndt"
+      },
+      {
+        "title": "重大会议",
+        "docs": "https://docs.rsshub.app/government.html#mao-ming-shi-ren-min-zheng-fu-mao-ming-shi-mao-nan-qu-ren-min-zheng-fu",
+        "source": [
+          "/zwxw/zdhy/*"
+        ],
+        "target": "/gov/maonan/zdhy"
+      },
+      {
+        "title": "公告公示",
+        "docs": "https://docs.rsshub.app/government.html#mao-ming-shi-ren-min-zheng-fu-mao-ming-shi-mao-nan-qu-ren-min-zheng-fu",
+        "source": [
+          "/zwgk/tzgg/*"
+        ],
+        "target": "/gov/maonan/tzgg"
+      },
+      {
+        "title": "招录信息",
+        "docs": "https://docs.rsshub.app/government.html#mao-ming-shi-ren-min-zheng-fu-mao-ming-shi-mao-nan-qu-ren-min-zheng-fu",
+        "source": [
+          "/zwgk/zlxx/*"
+        ],
+        "target": "/gov/maonan/zlxx"
+      },
+      {
+        "title": "政策解读",
+        "docs": "https://docs.rsshub.app/government.html#mao-ming-shi-ren-min-zheng-fu-mao-ming-shi-mao-nan-qu-ren-min-zheng-fu",
+        "source": [
+          "/zwgk/zcjd/*"
+        ],
+        "target": "/gov/maonan/zcjd"
       }
     ]
   },
@@ -6104,6 +6213,18 @@
       }
     ]
   },
+  "mgs.gov.cn": {
+    "_name": "广东茂名滨海新区政务网",
+    "www": [
+      {
+        "title": "广东茂名滨海新区政务网",
+        "docs": "https://docs.rsshub.app/government.html#mao-ming-shi-ren-min-zheng-fu-guang-dong-mao-ming-bin-hai-xin-qu-zheng-wu-wang",
+        "source": [
+          "/*"
+        ]
+      }
+    ]
+  },
   "miit.gov.cn": {
     "_name": "工业和信息化部",
     ".": [
@@ -6122,6 +6243,18 @@
           "/gzcy/yjzj/index.html"
         ],
         "target": "/miit/yjzj"
+      }
+    ]
+  },
+  "mmht.gov.cn": {
+    "_name": "广东茂名高新技术产业开发区",
+    "www": [
+      {
+        "title": "茂名高新技术产业开发区政务网",
+        "docs": "https://docs.rsshub.app/government.html#mao-ming-shi-ren-min-zheng-fu-guang-dong-mao-ming-gao-xin-ji-shu-chan-ye-kai-fa-qu",
+        "source": [
+          "/*"
+        ]
       }
     ]
   },
@@ -6296,6 +6429,18 @@
       }
     ]
   },
+  "sdb.gov.cn": {
+    "_name": "广东省茂名水东湾新城建设管理委员会",
+    "www": [
+      {
+        "title": "广东省茂名水东湾新城建设管理委员会",
+        "docs": "https://docs.rsshub.app/government.html#mao-ming-shi-ren-min-zheng-fu-guang-dong-sheng-mao-ming-shui-dong-wan-xin-cheng-jian-she-guan-li-wei-yuan-hui",
+        "source": [
+          "/*"
+        ]
+      }
+    ]
+  },
   "sh.gov.cn": {
     "_name": "上海市人民政府",
     "wsjkw": [
@@ -6417,6 +6562,18 @@
           "/gz/weatherAlarm/otherCity/"
         ],
         "target": "/gov/guangdong/tqyb/sncsyjxh"
+      }
+    ]
+  },
+  "xinyi.gov.cn": {
+    "_name": "信宜市人民政府",
+    "www": [
+      {
+        "title": "信宜市人民政府",
+        "docs": "https://docs.rsshub.app/government.html#mao-ming-shi-ren-min-zheng-fu-xin-yi-shi-ren-min-zheng-fu",
+        "source": [
+          "/*"
+        ]
       }
     ]
   },
