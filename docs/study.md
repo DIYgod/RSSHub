@@ -37,12 +37,26 @@ pageClass: routes
 | bilingual   | 双语新闻 (Bilingual News)                  |
 | address     | 总统演讲 (President Address)               |
 
+## Asian Innovation and Entrepreneurship Association
+
+### Seminar Series
+
+<Route author="zxx-457" example="/aiea/seminars/upcoming" path="/aiea/seminars/:period" :paramsDesc="['时间段']">
+
+| 时间段      |
+| -------- |
+| upcoming |
+| past     |
+| both     |
+
+</Route>
+
 ## CTFHub Calendar
 
 ### 查询国内外 CTF 赛事信息
 
-<Route author="frankli0324" example="/ctfhub/search" 
-path="/ctfhub/search/:limit?/:form?/:class?/:title?" 
+<Route author="frankli0324" example="/ctfhub/search"
+path="/ctfhub/search/:limit?/:form?/:class?/:title?"
 :paramsDesc="['一个整数，筛选最新的limit场比赛，默认为10', '比赛形式', '比赛类型', '通过CTF赛事名称过滤']">
 
 | `:class` | 类型                             |
@@ -65,8 +79,8 @@ path="/ctfhub/search/:limit?/:form?/:class?/:title?"
 
 ### 查询近期赛事
 
-<Route author="frankli0324" example="/ctfhub/upcoming" 
-path="/ctfhub/upcoming/:limit?" 
+<Route author="frankli0324" example="/ctfhub/upcoming"
+path="/ctfhub/upcoming/:limit?"
 :paramsDesc="['一个整数，筛选最近的limit场比赛，默认为5']">
 
 </Route>
@@ -220,6 +234,12 @@ path="/ctfhub/upcoming/:limit?"
 
 </Route>
 
+## ResearchGate
+
+### Publications
+
+<Route author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" :paramsDesc="['用户名，可在用户页地址栏中找到']" puppeteer="1" anticrawler="1"/>
+
 ## X-MOL 平台
 
 ### 新闻
@@ -245,6 +265,18 @@ path="/ctfhub/upcoming/:limit?"
 | 热门                               | 学科                               | 学习                               | 语言                               | 工作                               | 提升                               | 生活                               | 互联网                              | 教育                               | 其他                               | 行业                               | 服务发布                             | 医疗                               |
 | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- |
 | 33b67d1bad1d4e37812f71d42764af34 | 9434268e893a46aa9a1a231059849984 | 820156a42e9a490796c7fd56916aa95b | 959c81f606ca495c882c7e461429eb2a | 5af4bca5496e4733a2d582690627e25f | 5300988dff564756b5d462cea8a865b7 | 02fdcc2ab6374bc6b9b9717e70c87723 | 437d434fe9eb410a94dcefb889994e2b | 9747cbf78f96492c973aa6ab23925eee | d4c3a92a9cf64da7b187763211dc6ff6 | 58231ab9cef34af7819c3f6e2160c007 | 73d89972bee0457997c983d7fca19f9f | 853ce8b3a4c24b87a03f66af95c5e06c |
+
+</Route>
+
+## 德阳考试中心
+
+### 考试新闻
+
+<Route author="zytomorrow" example="/dykszx/news" path="/dykszx/news/:type?" :paramsDesc="['考试类型']">
+
+| 新闻中心 | 公务员考试 | 事业单位 | （职）业资格、职称考试 |   其他  |
+| :--: | :---: | :--: | :---------: | :---: |
+|  all |  gwy  | sydw |     zyzc    | other |
 
 </Route>
 
@@ -317,7 +349,7 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 论文
 
-<Route author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['参数，如 subject=生物']"/>
+<Route author="y9c" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['参数，如 subject=生物']" radar="1" rssbud="1">
 
 | `:param` | 举例              | 定义                                |
 | -------- | --------------- | --------------------------------- |
@@ -325,6 +357,8 @@ path="/ctfhub/upcoming/:limit?"
 | subject  | subject = 生物    | 可置空                               |
 | columns  | columns = 健康    | 可置空                               |
 | query    | query = 病毒      | 可置空                               |
+
+</Route>
 
 ## 码农周刊
 
@@ -566,7 +600,7 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 新聞
 
-<Route author="yech1990" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['类别，如 ai']"/>
+<Route author="y9c" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['类别，如 ai']"/>
 
 | `:type`   | 类别名称 |
 | --------- | ---- |
@@ -582,11 +616,11 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 深度
 
-<Route author="yech1990" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
+<Route author="y9c" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
 
 ### 创新
 
-<Route author="yech1990" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['类别，如 company']"/>
+<Route author="y9c" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['类别，如 company']"/>
 
 | `:type`       | 类别名称   |
 | ------------- | ------ |

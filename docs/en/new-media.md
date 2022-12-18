@@ -382,6 +382,12 @@ Provides a better reading experience (full text articles) over the official one.
 
 </RouteEn>
 
+## Indians in Kuwait
+
+### News
+
+<RouteEn author="TonyRL" example="/indiansinkuwait/latest" path="/indiansinkuwait/latest" radar="1" rssbud="1"/>
+
 ## Institute of International Education
 
 ### Blog
@@ -427,6 +433,16 @@ Provides a better reading experience (full text articles) over the official one.
 | k      | a    | c      | e       | f        | g       | i                | j      | r       | s       | v          |
 
 </RouteEn>
+
+## Kuwait Local
+
+### Latest News
+
+<RouteEn author="TonyRL" example="/kuwaitlocal" path="/kuwaitlocal" radar="1" rssbud="1"/>
+
+### Categorised News
+
+<RouteEn author="TonyRL" example="/kuwaitlocal/article" path="/kuwaitlocal/:category?" :paramsDesc="['Category name, can be found in URL, `latest` by default']" radar="1" rssbud="1"/>
 
 ## Letterboxd
 
@@ -498,9 +514,9 @@ Edition
 
 ### Topics
 
-<RouteEn author="emdoe" example="/nautilus/topic/Art" path="/nautilus/topic/:tid" :paramsDesc="['topic']">
+<RouteEn author="emdoe" example="/nautil/topic/arts" path="/nautil/topic/:tid" :paramsDesc="['topic']">
 
-This route provides a flexible plan with full text content to subscribe specific topic(s) on the Nautilus. Please visit [nautil.us](http://nautil.us) and click `Topics` to acquire whole topic list.
+This route provides a flexible plan with full text content to subscribe specific topic(s) on the Nautilus. Please visit [nautil.us](https://nautil.us) and click `Topics` to acquire whole topic list.
 
 </RouteEn>
 
@@ -564,12 +580,6 @@ Compared to the official one, this feed:
 | fr       | en      | es      | zh-hans  | zh-hant  | ar      | pa     | tl      |
 
 </RouteEn>
-
-## Research Gate
-
-### Publications
-
-<RouteEn author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" :paramsDesc="['Username, can be found in URL']"/>
 
 ## RSS3
 
@@ -746,7 +756,24 @@ Compared to the official one, this feed:
 
 ## The Verge
 
-<RouteEn author="HenryQW" example="/verge" path="/verge">
+### The Verge
+
+<RouteEn author="HenryQW vbali" example="/theverge" path="/theverge/:hub? :paramsDesc="['Hub, see below, All Posts by default']">
+
+| Hub         | Hub name            |
+| ----------- | ------------------- |
+|             | All Posts           |
+| android     | Android             |
+| apple       | Apple               |
+| apps        | Apps & Software     |
+| blackberry  | BlackBerry          |
+| culture     | Culture             |
+| gaming      | Gaming              |
+| hd          | HD & Home           |
+| microsoft   | Microsoft           |
+| photography | Photography & Video |
+| policy      | Policy & Law        |
+| web         | Web & Social        |
 
 Provides a better reading experience (full text articles) over the official one.
 

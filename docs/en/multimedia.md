@@ -391,19 +391,27 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 ### Search Result
 
-<RouteEn author="Lava-Swimmer noname1897" example="/nyaa/search/psycho-pass" path="/nyaa/search/:query?" :paramsDesc="['Search keyword']" supportBT="1" radar="1"/>
+<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/search/psycho-pass" path="/nyaa/search/:query?" :paramsDesc="['Search keyword']" supportBT="1" radar="1"/>
 
 ### User
 
-<RouteEn author="Lava-Swimmer noname1897" example="/nyaa/user/silver-khaie" path="/nyaa/user/:username?" :paramsDesc="['Username']" supportBT="1" radar="1"/>
+<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/user/silver-khaie" path="/nyaa/user/:username?" :paramsDesc="['Username']" supportBT="1" radar="1"/>
+
+### Search Result with specify user
+
+<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/user/silver-khaie/search/a" path="/nyaa/user/:username/search/:query?" :paramsDesc="['Username', 'Search keyword']" supportBT="1" radar="1"/>
 
 ### Sukebei Search Result
 
-<RouteEn author="Lava-Swimmer noname1897" example="/nyaa/sukebei/search/hi" path="/nyaa/sukebei/search/:query?" :paramsDesc="['Search keyword']" supportBT="1" radar="1"/>
+<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/sukebei/search/hi" path="/nyaa/sukebei/search/:query?" :paramsDesc="['Search keyword']" supportBT="1" radar="1"/>
 
 ### Sukebei User
 
-<RouteEn author="Lava-Swimmer noname1897" example="/nyaa/sukebei/user/Tarakara168" path="/nyaa/sukebei/user/:username?" :paramsDesc="['Username']" supportBT="1" radar="1"/>
+<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/sukebei/user/Tarakara168" path="/nyaa/sukebei/user/:username?" :paramsDesc="['Username']" supportBT="1" radar="1"/>
+
+### Sukebei search Result with specify user
+
+<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/sukebei/user/Tarakara168/search/a" path="/nyaa/sukebei/user/:username/search/:query?" :paramsDesc="['Username', 'Search keyword']" supportBT="1" radar="1"/>
 
 ## PornHub
 

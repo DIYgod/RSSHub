@@ -290,18 +290,6 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 <Route author="a180285" example="/blogs/jingwei.link" path="/blogs/jingwei.link"/>
 
-## 零博客
-
-### 分类
-
-<Route author="nczitzk" example="/agora0/initium" path="/agora0/:category?" :paramsDesc="['分类，见下表，默认为 initium，即端传媒']">
-
-| muitinⒾ | aidemnⒾ | srettaⓂ | qⓅ | sucoⓋ |
-| ------- | ------- | ------- | -- | ----- |
-| initium | inmedia | matters | pq | vocus |
-
-</Route>
-
 ## 每日安全
 
 ### 推送
@@ -316,9 +304,9 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 ## 十年之约
 
-### 文章
+### 专题展示 - 文章
 
-<Route author="7Wate" example="/blogs/foreverblog" path="/blogs/foreverblog" />
+<Route author="7Wate a180285" example="/foreverblog/feeds" path="/foreverblog/feeds" radar="1" rssbud="1" />
 
 ## 王五四文集
 
@@ -331,6 +319,12 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 ### 文章
 
 <Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>
+
+## 优步
+
+### 工程技术
+
+<Route author="hulb" example="/uber/blog" path="/uber/blog/:maxPage?" :paramsDesc="['获取的最多页数，默认最多获取第一页']" />
 
 ## 雨苁博客
 

@@ -10,6 +10,12 @@ pageClass: routes
 
 <RouteEn author="lucasew" path="/curiouscat/user/:name" example="/curiouscat/user/kretyn" :paramsDesc="['name, username that is in the URL']" />
 
+## Curius
+
+### User
+
+<RouteEn author="Ovler-Young" example="/curius/links/yuu-yuu" path="/curius/links/:name" :paramsDesc="['Username, can be found in URL']"/>
+
 ## Dev.to
 
 ### Top Posts
@@ -222,9 +228,9 @@ Though, every Story expires after 24 hours, so it may be not so serious.
 
 <RouteEn author="EYHN" path="/pixiv/ranking/:mode/:date?" example="/pixiv/ranking/week" :paramsDesc="['rank type', 'format: `2018-4-25`']" radar="1" rssbud="1">
 
-| pixiv daily rank | pixiv weekly rank | pixiv monthly rank | pixiv male rank | pixiv female rank | pixiv original rank | pixiv rookie user rank |
-| ---------------- | ----------------- | ------------------ | --------------- | ----------------- | ------------------- | ---------------------- |
-| day              | week              | month              | day_male        | day_female        | week_original       | week_rookie            |
+| pixiv daily rank | pixiv weekly rank | pixiv monthly rank | pixiv male rank | pixiv female rank | AI-generated work Rankings | pixiv original rank | pixiv rookie user rank |
+| ---------------- | ----------------- | ------------------ | --------------- | ----------------- | ------------------- | ---------------------- | ---------------------- |
+| day              | week              | month              | day_male        | day_female       | day_ai | week_original       | week_rookie            |
 
 | pixiv R-18 daily rank | pixiv R-18 male rank | pixiv R-18 female rank | pixiv R-18 weekly rank | pixiv R-18G rank |
 | --------------------- | -------------------- | ---------------------- | ---------------------- | ---------------- |
@@ -489,6 +495,10 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 :::
 
 <RouteEn author="DIYgod" path="/youtube/channel/:id/:embed?" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" :paramsDesc="['YouTube channel id', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1"/>
+
+### Custom URL
+
+<RouteEn author="TonyRL" path="/youtube/c/:id/:embed?" example="/youtube/c/YouTubeCreators" :paramsDesc="['YouTube custom URL', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1"/>
 
 ### Playlist
 

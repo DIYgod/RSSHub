@@ -4,6 +4,20 @@ pageClass: routes
 
 # Study
 
+## Asian Innovation and Entrepreneurship Association
+
+### Seminar Series
+
+<RouteEn author="zxx-457" example="/aiea/seminars/upcoming" path="/aiea/seminars/:period" :paramsDesc="['Time frame']">
+
+| Time frame |
+| ----- |
+| upcoming |
+| past |
+| both|
+
+</RouteEn>
+
 ## gradCafe
 
 ### gradCafe result
@@ -35,15 +49,15 @@ pageClass: routes
 
 </RouteEn>
 
-## LinkResearch
+## Link Research
 
-### theses
+### Theses
 
-<RouteEn author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['key=value，eg. subject=生物']">
+<RouteEn author="y9c" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['key=value，eg. subject=生物']" radar="1" rssbud="1">
 
 | `:param` | example         | definition                             |
 | -------- | --------------- | -------------------------------------- |
-| category | category=thesis | **one of**，theses/information/careers |
+| category | category=thesis | **one of** theses/information/careers |
 | subject  | subject=生物    | string / undefined                     |
 | columns  | columns=健康    | string / undefined                     |
 | columns  | columns=virus   | string / undefined                     |
@@ -94,6 +108,12 @@ pageClass: routes
 
 <RouteEn author="OrangeEd1t" example="/orcid/0000-0002-4731-9700" path="/orcid/:id" :paramsDesc="['Open Researcher and Contributor ID']"/>
 
+## ResearchGate
+
+### Publications
+
+<RouteEn author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" :paramsDesc="['Username, can be found in URL']" puppeteer="1" anticrawler="1"/>
+
 ## X-MOL
 
 ### News
@@ -116,7 +136,7 @@ pageClass: routes
 
 ### News
 
-<RouteEn author="yech1990" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['type，eg. ai']">
+<RouteEn author="y9c" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['type，eg. ai']">
 
 | `:type`   | type name |
 | --------- | --------- |
@@ -134,11 +154,11 @@ pageClass: routes
 
 ### depth
 
-<RouteEn author="yech1990" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
+<RouteEn author="y9c" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
 
 ### innovation
 
-<RouteEn author="yech1990" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['type，eg. company']">
+<RouteEn author="y9c" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['type，eg. company']">
 
 | `:type`       | type name     |
 | ------------- | ------------- |

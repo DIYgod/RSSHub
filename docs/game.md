@@ -675,6 +675,18 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 </Route>
 
+### 原神
+
+#### 新闻
+
+<Route author="nczitzk" example="/mihoyo/ys" path="/mihoyo/ys/:location?/:category?" :paramsDesc="['区域，可选 `main`（简中）或 `zh-tw`（繁中）', '分类，见下表，默认为最新']">
+
+| 最新     | 新闻   | 公告     | 活动       |
+| ------ | ---- | ------ | -------- |
+| latest | news | notice | activity |
+
+</Route>
+
 ## 明日方舟
 
 ### 游戏公告与新闻
@@ -888,18 +900,6 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 ### 游研社 - 全部文章
 
 <Route author="HaitianLiu" example="/yystv/docs" path="/yystv/docs" />
-
-## 原神
-
-### 新闻
-
-<Route author="nczitzk" example="/yuanshen" path="/yuanshen/:location?/:category?" :paramsDesc="['区域，可选 zh_CN 或 zh_TW', '分类，见下表，默认为最新']">
-
-| 最新     | 新闻   | 公告     | 活动       |
-| ------ | ---- | ------ | -------- |
-| latest | news | notice | activity |
-
-</Route>
 
 ## 掌上英雄联盟
 

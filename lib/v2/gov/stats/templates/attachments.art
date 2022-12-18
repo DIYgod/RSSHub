@@ -1,0 +1,5 @@
+{{ each attachments }}
+    <p>
+        <a href="{{ $value.href }}" >{{ $value.text }}</a>
+    </p>
+{{ /each}}

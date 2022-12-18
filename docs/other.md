@@ -242,6 +242,18 @@ pageClass: routes
 
 <Route author="fengkx" example="/one" path="/one"/>
 
+## Panda
+
+### Feeds
+
+<Route author="lyrl" example="/usepanda/feeds/5718e53e7a84fb1901e059cc" path="/usepanda/feeds/:id" :paramsDesc="['频道id/feedId']">
+
+| 频道          | feedId                   |
+| ----------- | ------------------------ |
+| Github 热门推荐 | 5718e53e7a84fb1901e059cc |
+
+</Route>
+
 ## Parcel Tracking
 
 ### Hermes UK
@@ -268,16 +280,6 @@ pageClass: routes
 ### 最新会议材料
 
 <Route author="sbilly" example="/sans/summit_archive" path="/sans/summit_archive" />
-
-## TransferWise
-
-### 昨日汇率变动
-
-<Route author="HenryQW" example="/transferwise/pair/GBP/USD" path="/transferwise/pair/:source/:target" :paramsDesc="['本币缩写','外币缩写']">
-
-参见支持的[货币列表](https://transferwise.com/tools/exchange-rate-alerts/)。
-
-</Route>
 
 ## TSSstatus（iOS 降级通道）
 
@@ -325,6 +327,16 @@ type 为 all 时，category 参数不支持 cost 和 free
 | 所有  | 推荐  |
 | --- | --- |
 | all | rec |
+
+</Route>
+
+## Wise
+
+### 昨日汇率变动
+
+<Route author="HenryQW" example="/wise/pair/GBP/USD" path="/wise/pair/:source/:target" :paramsDesc="['本币缩写','外币缩写']" radar="1">
+
+参见支持的 [货币列表](https://wise.com/tools/exchange-rate-alerts/)。
 
 </Route>
 
@@ -401,6 +413,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 洞察
 
 <Route author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
+
+## 成都住建蓉 e 办
+
+### 商品住房购房登记
+
+<Route author="TonyRL" example="/cdzjryb/zw/projectList" path="/cdzjryb/zw/projectList" radar="1"/>
 
 ## 滴答清单
 
@@ -506,7 +524,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 考研帮调剂信息
 
-<Route author="sushengmao" example="/kaoyan" path="/kaoyan" />
+<Route author="shengmaosu" example="/kaoyan" path="/kaoyan" />
 
 ## 空气质量
 
@@ -527,64 +545,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 1.  显示单个污染成分，例如「pm25」, <https://rsshub.app/aqicn/beijing/pm25>
 2.  逗号分隔显示多个污染成分，例如「pm25,pm10」，[https://rsshub.app/aqicn/beijing/pm25,pm10](https://rsshub.app/aqicn/beijing/pm25.pm10)
-
-## 酷安
-
-### 图文
-
-<Route author="xizeyoupan" example="/coolapk/tuwen" path="/coolapk/tuwen/:type?" :paramsDesc="['默认为hot']">
-
-| 参数名称 | 编辑精选 | 最新     |
-| ---- | ---- | ------ |
-| type | hot  | latest |
-
-</Route>
-
-### 头条
-
-<Route author="xizeyoupan" example="/coolapk/toutiao" path="/coolapk/toutiao/:type?" :paramsDesc="['默认为history']">
-
-| 参数名称 | 历史头条    | 最新     |
-| ---- | ------- | ------ |
-| type | history | latest |
-
-</Route>
-
-### 看看号
-
-<Route author="xizeyoupan" example="/coolapk/dyh/1524" path="/coolapk/dyh/:dyhId" :paramsDesc="['看看号ID']">
-
-::: tip
-仅限于采集**站内订阅**的看看号的内容。看看号 ID 可在看看号界面右上分享 - 复制链接得到。
-:::
-
-</Route>
-
-### 话题
-
-<Route author="xizeyoupan" example="/coolapk/huati/酷安夜话" path="/coolapk/huati/:tag" :paramsDesc="['话题名称']"/>
-
-### 用户
-
-<Route author="xizeyoupan" example="/coolapk/user/3177668/dynamic" path="/coolapk/user/:uid/dynamic" :paramsDesc="['在个人界面右上分享-复制链接获取']"/>
-
-### 热榜
-
-<Route author="xizeyoupan" example="/coolapk/hot" path="/coolapk/hot/:type?/:period?" :paramsDesc="['默认为`jrrm`','默认为`daily`']">
-
-| 参数名称 | 今日热门 | 点赞榜 | 评论榜 | 收藏榜 | 酷图榜 |
-| ---- | ---- | --- | --- | --- | --- |
-| type | jrrm | dzb | plb | scb | ktb |
-
-| 参数名称   | 日榜    | 周榜     |
-| ------ | ----- | ------ |
-| period | daily | weekly |
-
-::: tip
-今日热门没有周榜，酷图榜日榜的参数会变成周榜，周榜的参数会变成月榜。
-:::
-
-</Route>
 
 ## 快递 100
 

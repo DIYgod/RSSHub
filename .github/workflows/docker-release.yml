@@ -27,7 +27,7 @@ jobs:
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
         if: ${{ env.DOCKER_USERNAME != '' }}
-        run: echo "::set-output name=defined::true"
+        run: echo "defined=true" >> $GITHUB_OUTPUT
   release:
     runs-on: ubuntu-latest
     needs: check-env

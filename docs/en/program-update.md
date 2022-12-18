@@ -286,9 +286,10 @@ Language
 
 ## Logseq
 
-### Changelog
-
-<RouteEn author="nczitzk" example="/logseq/changelog" path="/logseq/changelog"/>
+::: warning
+Logseq dev team has abandoned the [old website](https://logseq.com/blog).
+Please use <https://github.com/logseq/logseq/releases.atom> instead.
+:::
 
 ## MacKed
 
@@ -337,7 +338,7 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 ### Update
 
-见 [#Monster Hunter World](/en/game.html#monster-hunter-world)
+See [#Monster Hunter World](/en/game.html#monster-hunter-world)
 
 ## Neat Download Manager
 
@@ -349,7 +350,7 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 ### Switch System Update（Japan）
 
-见 [#nintendo](/game.html#nintendo)
+See [#nintendo](/game.html#nintendo)
 
 ## NPM
 
