@@ -806,6 +806,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="DIYgod" example="/coronavirus/qq/fact" path="/coronavirus/qq/fact"/>
 
+### 腾讯新闻 - 新型冠状病毒肺炎疫情实时追踪
+
+数据来源：<https://news.qq.com/zt2020/page/feiyan.htm#/>
+
+#### 中国本土数据统计
+
+<Route author="CaoMeiYouRen" example="/tencent/news/coronavirus/total" path="/tencent/news/coronavirus/total"/>
+
+#### 省市疫情数据
+
+<Route author="CaoMeiYouRen" example="/tencent/news/coronavirus/data/湖北/武汉" path="/tencent/news/coronavirus/data/:province?/:city?" :paramsDesc="['省/直辖市名，缺省则返回国内数据','城市名，缺省则返回全省数据。直辖市请使用区/县名。']"/>
+
 ### South China Morning Post - China coronavirus outbreak
 
 <Route author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
