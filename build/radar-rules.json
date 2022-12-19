@@ -13779,6 +13779,16 @@
         "source": "/mp/appmsgalbum"
       }
     ],
+    "news": [
+      {
+        "title": "腾讯新闻 - 新型冠状病毒肺炎疫情实时追踪",
+        "docs": "https://docs.rsshub.app/other.html#xin-guan-fei-yan-yi-qing-xin-wen-dong-tai",
+        "source": [
+          "/zt2020/page/feiyan.htm#/"
+        ],
+        "target": "/tencent/news/coronavirus/total"
+      }
+    ],
     "pvp": [
       {
         "title": "王者荣耀 - 新闻中心",
