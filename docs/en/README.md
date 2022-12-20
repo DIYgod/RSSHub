@@ -12,9 +12,9 @@ sidebarDepth: 0
 > 🍰 Everything is RSSible
 
 [![telegram](https://img.shields.io/badge/chat-telegram-brightgreen.svg?logo=telegram&style=flat-square)](https://t.me/rsshub)
-[![npm publish](https://img.shields.io/github/workflow/status/DIYgod/RSSHub/publish/master?label=npm%20publish&logo=npm&style=flat-square)](https://www.npmjs.com/package/rsshub)
-[![docker publish](https://img.shields.io/github/workflow/status/DIYgod/RSSHub/%5Bdocker%5D%20CI%20for%20releases/master?label=docker%20publish&logo=docker&style=flat-square)](https://hub.docker.com/r/diygod/rsshub)
-[![test](https://img.shields.io/github/workflow/status/DIYgod/RSSHub/test/master?label=test&logo=github&style=flat-square)](https://github.com/DIYgod/RSSHub/actions/workflows/test.yml?query=event%3Apush+branch%3Amaster)
+[![npm publish](https://img.shields.io/github/actions/workflow/status/DIYgod/RSSHub/npm-publish.yml?branch=master&label=npm%20publish&logo=npm&style=flat-square)](https://www.npmjs.com/package/rsshub)
+[![docker publish](https://img.shields.io/github/actions/workflow/status/DIYgod/RSSHub/docker-release.yml?branch=master&label=docker%20publish&logo=docker&style=flat-square)](https://hub.docker.com/r/diygod/rsshub)
+[![test](https://img.shields.io/github/actions/workflow/status/DIYgod/RSSHub/test.yml?branch=master&label=test&logo=github&style=flat-square)](https://github.com/DIYgod/RSSHub/actions/workflows/test.yml?query=event%3Apush+branch%3Amaster)
 [![Test coverage](https://img.shields.io/codecov/c/github/DIYgod/RSSHub.svg?style=flat-square&logo=codecov)](https://app.codecov.io/gh/DIYgod/RSSHub/branch/master)
 [![Foresight Docs](https://api-public.service.runforesight.com/api/v1/badge/success?repoId=5da20e56-cecf-4b05-9bcd-cab097fb2dca)](https://docs.runforesight.com/)
 
