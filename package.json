@@ -28,7 +28,7 @@
     "default",
     "jest-junit"
   ],
-  "jest-junit" : {
+  "jest-junit": {
     "outputDirectory": "coverage"
   },
   "repository": {
@@ -91,7 +91,7 @@
   "dependencies": {
     "@koa/router": "12.0.0",
     "@postlight/parser": "2.2.3",
-    "@sentry/node": "7.27.0",
+    "@sentry/node": "7.28.1",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
@@ -146,7 +146,6 @@
     "tiny-async-pool": "2.1.0",
     "torrent-search-api": "2.1.4",
     "tough-cookie": "4.1.2",
-    "tunnel": "0.0.6",
     "twitter-api-v2": "1.12.10",
     "winston": "3.8.2",
     "xml2js": "0.4.23"
