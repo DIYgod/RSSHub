@@ -245,19 +245,11 @@ pageClass: routes
 
 <Route author="nczitzk" example="/cgtn/pick" path="/cgtn/pick"/>
 
-## cnBeta
+## cnBeta.COM
 
-### 最新
+### 头条资讯
 
-<Route author="kt286 HaitianLiu nczitzk" example="/cnbeta" path="/cnbeta">
-
-::: tip 提示
-
-最新的内容来源于 [官方 RSS](https://www.cnbeta.com/backend.php)
-
-:::
-
-</Route>
+<Route author="kt286 HaitianLiu nczitzk" example="/cnbeta" path="/cnbeta" />
 
 ### 分类
 
@@ -275,7 +267,7 @@ pageClass: routes
 
 ::: tip 提示
 
-完整的主题列表参见 [主题列表](https://www.cnbeta.com/topics.htm)
+完整的主题列表参见 [主题列表](https://www.cnbeta.com.tw/topics.htm)
 
 :::
 
