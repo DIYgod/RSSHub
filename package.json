@@ -146,7 +146,7 @@
     "tiny-async-pool": "2.1.0",
     "torrent-search-api": "2.1.4",
     "tough-cookie": "4.1.2",
-    "twitter-api-v2": "1.12.10",
+    "twitter-api-v2": "1.13.0",
     "winston": "3.8.2",
     "xml2js": "0.4.23"
   },
