@@ -31,7 +31,7 @@
                     "url": "{{ author.url }}",{{ /if }}{{ if author.avatar }}
                     "avatar": "{{ author.avatar }}"{{ /if }}
                 }{{ if $index !== i.author.length - 1 }},{{ /if }}{{ /each }}{{ /if }}
-            ],{{ /if }}{{ if i.category }}
+            ]{{ if i.category || i.language || i.enclosure_url }},{{ /if }}{{ /if }}{{ if i.category }}
             "tags": {{ if typeof i.category === 'string' }}["{{ i.category }}"]{{ else }}{{@ stringify(i.category) }}{{ /if }},{{ /if }}{{ if i.language }}
             "language": "{{ i.language }}",{{ /if }}{{ if i.enclosure_url }}
             "attachments": [
