@@ -2231,7 +2231,7 @@ category 对应的关键词有
 
 ### 今日
 
-<Route author="Dustin-Jiang" example="/xinhua-daily-telegraph/today" path="/xinhua-daily-telegraph/today" />
+<Route author="Dustin-Jiang" example="/mrdx/today" path="/mrdx/today" />
 
 ## 新京报
 
