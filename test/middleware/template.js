@@ -63,9 +63,16 @@ describe('template', () => {
     });
 
     it(`.json`, async () => {
-        const response = await request.get('/test/1.json');
-        const responseXML = await request.get('/test/1.rss');
-        expect(response.text.slice(0, 50)).toEqual(responseXML.text.slice(0, 50));
+        const jsonResponse = await request.get('/test/1.json');
+        const rssResponse = await request.get('/test/1.rss');
+        const jsonParsed = JSON.parse(jsonResponse.text);
+        const rssParsed = await parser.parseString(rssResponse.text);
+        expect(jsonParsed.items[0].title).toEqual(rssParsed.items[0].title);
+        expect(jsonParsed.items[0].url).toEqual(rssParsed.items[0].link);
+        expect(jsonParsed.items[0].id).toEqual(rssParsed.items[0].guid);
+        expect(jsonParsed.items[0].date_published).toEqual(expectPubDate.toISOString());
+        expect(jsonParsed.items[0].content_html).toEqual(rssParsed.items[0].content);
+        expect(jsonParsed.items[0].authors[0].name).toEqual(rssParsed.items[0].author);
     });
 
     it(`long title`, async () => {
