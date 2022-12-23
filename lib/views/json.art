@@ -25,8 +25,7 @@
             "authors": [{{ if typeof i.author === 'string' }}
                 {
                     "name": "{{ i.author }}"
-                }
-            {{ else }}{{ each i.author author }}
+                }{{ else }}{{ each i.author author }}
                 {
                     "name": "{{ author.name }}",{{ if author.url }}
                     "url": "{{ author.url }}",{{ /if }}{{ if author.avatar }}
