@@ -73,6 +73,7 @@ describe('template', () => {
         expect(jsonParsed.items[0].date_published).toEqual(expectPubDate.toISOString());
         expect(jsonParsed.items[0].content_html).toEqual(rssParsed.items[0].content);
         expect(jsonParsed.items[0].authors[0].name).toEqual(rssParsed.items[0].author);
+        expect(jsonParsed.items.every((item) => item.authors.every((author) => author.name.includes(' ')))).toBe(false);
     });
 
     it(`long title`, async () => {
