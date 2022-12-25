@@ -387,3 +387,17 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 ### 作者期刊文献
 
 <Route author="harveyqiu" example="/cnki/author/000042423923" path="/cnki/author/:code" :paramsDesc="['作者对应code，可以在网址中得到']"/>
+
+# 安全会议
+由于会议页面样式变动...维护成本较高
+## CCS
+<Route author="ZeddYu" example="/seccon/ccs" path="/seccon/ccs" />
+抓取的 Papers 从 2020 年开始
+
+## S&P
+<Route author="ZeddYu" example="/seccon/sp" path="/seccon/sp" />
+抓取的 Papers 从 2020 年开始
+
+## USENIX
+<Route author="ZeddYu" example="/seccon/usenix" path="/seccon/usenix" />
+抓取的 Papers 从 2020 年开始
