@@ -425,12 +425,12 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 ### BYTES - Your weekly dose of JS
 
-Staying informed on the JavaScript ecosystem has never been so entertaining. Delivered every Monday and Thursday, for free.
+Staying informed on the JavaScript ecosystem has never been so entertaining. Delivered every Monday and Thursday, for free. https://bytes.dev/
 
-<RouteEn author="meixger" example="/uidev/bytes" path="/uidev/bytes"/>
+<RouteEn author="meixger" example="/bytes" path="/bytes"/>
 
 ### React Newsletter
 
-Stay up to date on the latest React news, tutorials, resources, and more. Delivered every Tuesday, for free.
+Stay up to date on the latest React news, tutorials, resources, and more. Delivered every Tuesday, for free. https://reactnewsletter.com/
 
-<RouteEn author="meixger" example="/uidev/reactnewsletter" path="/uidev/bytes"/>
+<RouteEn author="meixger" example="/reactnewsletter" path="/reactnewsletter"/>
