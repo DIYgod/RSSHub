@@ -96,7 +96,7 @@
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
     "cheerio": "1.0.0-rc.12",
-    "chrono-node": "2.4.2",
+    "chrono-node": "2.5.0",
     "city-timezones": "1.2.1",
     "crypto-js": "4.1.1",
     "currency-symbol-map": "5.1.0",
