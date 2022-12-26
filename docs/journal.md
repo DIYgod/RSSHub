@@ -401,3 +401,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 ## USENIX
 <Route author="ZeddYu" example="/usenix/usenix-security-sympoium" path="/usenix/usenix-security-sympoium" />
 抓取的 Papers 从 2020 年开始
+
+## NDSS
+<Route author="ZeddYu" example="/ndss-symposium/ndss" path="/ndss-symposium/ndss" />
+抓取的 Papers 从 2020 年开始
