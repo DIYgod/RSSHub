@@ -391,13 +391,13 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 # 安全会议
 由于会议页面样式变动...维护成本较高
 ## CCS
-<Route author="ZeddYu" example="/sigsac/ccs" path="/seccon/ccs" />
+<Route author="ZeddYu" example="/sigsac/ccs" path="/sigsac/ccs" />
 抓取的 Papers 从 2020 年开始
 
 ## S&P
-<Route author="ZeddYu" example="/ieee-security/security-privacy" path="/seccon/sp" />
+<Route author="ZeddYu" example="/ieee-security/security-privacy" path="/ieee-security/security-privacy" />
 抓取的 Papers 从 2020 年开始
 
 ## USENIX
-<Route author="ZeddYu" example="/usenix/usenix-security-sympoium" path="/seccon/usenix/usenix-security-sympoium" />
+<Route author="ZeddYu" example="/usenix/usenix-security-sympoium" path="/usenix/usenix-security-sympoium" />
 抓取的 Papers 从 2020 年开始
