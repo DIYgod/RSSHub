@@ -2227,6 +2227,12 @@ category 对应的关键词有
 
 <Route author="nczitzk" example="/hkcd/pdf" path="/hkcd/pdf"/>
 
+## 新华每日电讯
+
+### 今日
+
+<Route author="Dustin-Jiang" example="/mrdx/today" path="/mrdx/today" />
+
 ## 新京报
 
 ### 栏目
