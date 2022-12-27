@@ -414,6 +414,12 @@ Sources
 
 </Route>
 
+## MangaDex
+
+### 漫画更新
+
+<Route author="vzz64" example="/mangadex/58be6aa6-06cb-4ca5-bd20-f1392ce451fb/zh-hk" path="/:id/:lang?" :paramsDesc="['漫画ID', '语言代码']" radar="1" />
+
 ## Mox.moe
 
 ### 首頁

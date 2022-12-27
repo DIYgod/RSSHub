@@ -114,6 +114,12 @@ The RSS routing has not been rigorously tested and the information provided cann
 
 </RouteEn>
 
+## MangaDex
+
+### Manga Update
+
+<RouteEn author="vzz64" example="/mangadex/58be6aa6-06cb-4ca5-bd20-f1392ce451fb/en" path="/:id/:lang?" :paramsDesc="['manga ID', 'language code']" radar="1" />
+
 ## THBWiki
 
 ### Calendar
