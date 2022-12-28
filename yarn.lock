@@ -5632,10 +5632,10 @@ eslint-plugin-prettier@4.2.1:
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
-eslint-plugin-yml@1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-yml/-/eslint-plugin-yml-1.3.0.tgz#43baa8a82f8520a4985f169575c1a3194ea5fbe7"
-  integrity sha512-TEkIaxutVPRZMRc0zOVptP/vmrf1td/9woUAiKII4kRLJLWWUCz1CYM98NsAfeOrVejFBFhHCSwOp+C1TqmtRg==
+eslint-plugin-yml@1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-yml/-/eslint-plugin-yml-1.4.0.tgz#703eda879b10be0555ff25c5b8f1cf73506e30de"
+  integrity sha512-vzggXNfPKa+arIaNUGoC3DPRZCxNty+xD/v9xOcE5D3Bj9SbgIrEobqVB35I8QxHd2YjL/dOS0xIIFmjAalwbw==
   dependencies:
     debug "^4.3.2"
     lodash "^4.17.21"
@@ -11581,10 +11581,10 @@ ramda@^0.26.1:
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
   integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
-rand-user-agent@1.0.95:
-  version "1.0.95"
-  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.95.tgz#1be8623ecdba3d96be0da20e109f1a352b862311"
-  integrity sha512-rLqJP/InWMgnlQz1tFNFr8h0oxzwmaZ51z4G5wGKZ9gRLg+KXTHofQHeGkV6s1ln4Te55YhFhVGZwI/kspvJBQ==
+rand-user-agent@1.0.96:
+  version "1.0.96"
+  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.96.tgz#d572d68a5388954d433ef54c34255d092d052b28"
+  integrity sha512-6FjhHi234PrhDLZ2LWI+dHF+MPH9qu1uVYm5KsKfezur8h96XB1yVSB2diSl9UjwsBd30hBqN3/g6MiHHMcwbA==
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5, randombytes@^2.1.0:
   version "2.1.0"
