@@ -399,6 +399,20 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 <RouteEn author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" :paramsDesc="['part parmater can be found in the url of blog']" >
 </RouteEn>
 
+## ui.dev
+
+### BYTES - Your weekly dose of JS
+
+Staying informed on the JavaScript ecosystem has never been so entertaining. Delivered every Monday and Thursday, for free. https://bytes.dev/
+
+<RouteEn author="meixger" example="/bytes" path="/bytes"/>
+
+### React Newsletter
+
+Stay up to date on the latest React news, tutorials, resources, and more. Delivered every Tuesday, for free. https://reactnewsletter.com/
+
+<RouteEn author="meixger" example="/reactnewsletter" path="/reactnewsletter"/>
+
 ## Visual Studio Code Marketplace
 
 ### Visual Studio Code Plugins Marketplace
