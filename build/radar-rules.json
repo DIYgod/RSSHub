@@ -7774,6 +7774,20 @@
       }
     ]
   },
+  "ieee-security.org": {
+    "_name": "IEEE Computer Society",
+    ".": [
+      {
+        "title": "IEEE Symposium on Security and Privacy",
+        "docs": "https://docs.rsshub.app/journal.html#ieee-computer-society",
+        "source": [
+          "/TC/SP-Index.html",
+          "/"
+        ],
+        "target": "/ieee-security/security-privacy"
+      }
+    ]
+  },
   "neea.cn": {
     "_name": "中国教育考试网",
     "jlpt": [
@@ -11715,6 +11729,19 @@
       }
     ]
   },
+  "ndss-symposium.org": {
+    "_name": "Network and Distributed System Security (NDSS) Symposium",
+    ".": [
+      {
+        "title": "Accepted papers",
+        "docs": "https://docs.rsshub.app/journal.html#network-and-distributed-system-security-ndss-symposium",
+        "source": [
+          "/"
+        ],
+        "target": "/ndss-symposium/ndss"
+      }
+    ]
+  },
   "neatdownloadmanager.com": {
     "_name": "Neat Download Manager",
     ".": [
@@ -14708,6 +14735,20 @@
       }
     ]
   },
+  "sigsac.org": {
+    "_name": "ACM Special Interest Group on Security Audit and Control",
+    ".": [
+      {
+        "title": "ACM Conference on Computer and Communications Security",
+        "docs": "https://docs.rsshub.app/journal.html#acm-special-interest-group-on-security-audit-and-control",
+        "source": [
+          "/ccs.html",
+          "/"
+        ],
+        "target": "/sigsac/ccs"
+      }
+    ]
+  },
   "blog.simpleinfo.cc": {
     "_name": "簡訊設計",
     ".": [
@@ -16803,6 +16844,21 @@
           "/:id"
         ],
         "target": "/uraaka-joshi/:id"
+      }
+    ]
+  },
+  "usenix.org": {
+    "_name": "USENIX",
+    ".": [
+      {
+        "title": "Security Symposia",
+        "docs": "https://docs.rsshub.app/journal.html#usenix",
+        "source": [
+          "/conferences/all",
+          "/conferences",
+          "/"
+        ],
+        "target": "/usenix/usenix-security-sympoium"
       }
     ]
   },

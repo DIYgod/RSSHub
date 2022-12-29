@@ -2028,6 +2028,9 @@
         "Derekmini",
         "auto-bot-ty"
     ],
+    "/ieee-security/security-privacy": [
+        "ZeddYu"
+    ],
     "/ielts/": [
         "zenxds"
     ],
@@ -2747,6 +2750,9 @@
     ],
     "/ncwu/note": [
         "vuhe"
+    ],
+    "/ndss-symposium/ndss": [
+        "ZeddYu"
     ],
     "/neatdownloadmanager/download/:os?": [
         "nczitzk"
@@ -3590,6 +3596,9 @@
     "/sicau/zsjy/:category?": [
         "nczitzk"
     ],
+    "/sigsac/ccs/": [
+        "ZeddYu"
+    ],
     "/simpleinfo/:category?": [
         "haukeng"
     ],
@@ -4109,6 +4118,9 @@
     "/uraaka-joshi/:id": [
         "SettingDust",
         "Halcao"
+    ],
+    "/usenix/usenix-security-sympoium": [
+        "ZeddYu"
     ],
     "/usepanda/feeds/:id": [
         "lyrl"
