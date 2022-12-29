@@ -31,7 +31,7 @@ pageClass: routes
 
 Return results from 2020
 
-</Route>
+</RouteEn>
 
 ## American Chemistry Society
 
@@ -156,7 +156,7 @@ The parameter id in the route is the id in the URL of the user's Google Scholar 
 
 Return results from 2020
 
-</Route>
+</RouteEn>
 
 ## IEEE Xplore
 
@@ -289,7 +289,7 @@ Only some journals are supported.
 
 Return results from 2020
 
-</Route>
+</RouteEn>
 
 ## Oxford University Press
 
@@ -398,7 +398,7 @@ Including 'Science', 'Science Advances', 'Science Immunology', 'Science Robotics
 
 Return results from 2020
 
-</Route>
+</RouteEn>
 
 ## X-MOL Platform
 
