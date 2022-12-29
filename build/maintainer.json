@@ -2604,6 +2604,9 @@
     "/macfilos/blog": [
         "nczitzk"
     ],
+    "/mangadex/:id/:lang?": [
+        "vzz64"
+    ],
     "/manhuagui/comic/:id/:chapterCnt?": [
         "MegrezZhu"
     ],
