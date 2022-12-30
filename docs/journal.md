@@ -23,6 +23,16 @@ pageClass: routes
 
 </Route>
 
+## ACM Special Interest Group on Security Audit and Control
+
+### The ACM Conference on Computer and Communications Security
+
+<Route author="ZeddYu" example="/sigsac/ccs" path="/sigsac/ccs">
+
+抓取的 Papers 从 2020 年开始
+
+</Route>
+
 ## American Chemistry Society
 
 ### Journal
@@ -121,6 +131,16 @@ pageClass: routes
 ### 期刊指定卷
 
 <Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing/192" path="/elsevier/:journal/:issue" :paramsDesc="['期刊名称，URL 中 `/journal/` 后部分','发行号 (如果 Volume 与 Issue 同时存在，采用 `Volume-Issue` 形式, e.g., `/elsevier/aace-clinical-case-reports/7-6`)']" radar="1" rssbud="1"/>
+
+## IEEE Computer Society
+
+### IEEE Symposium on Security and Privacy
+
+<Route author="ZeddYu" example="/ieee-security/security-privacy" path="/ieee-security/security-privacy">
+
+抓取的 Papers 从 2020 年开始
+
+</Route>
 
 ## IEEE Xplore
 
@@ -232,6 +252,16 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 <Route author="TonyRL" example="/nature/siteindex" path="/nature/siteindex"/>
 
+## Network and Distributed System Security (NDSS) Symposium
+
+### Accepted papers
+
+<Route author="ZeddYu" example="/ndss-symposium/ndss" path="/ndss-symposium/ndss">
+
+抓取的 Papers 从 2020 年开始
+
+</Route>
+
 ## Oxford University Press
 
 ### Oxford Academic
@@ -334,6 +364,16 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 <Route author="xraywu" example="/stork/keyword/409159/R4j3Hbn5ia" path="/stork/keyword/:trackID/:displayKey" :paramsDesc="['关键词订阅 URL 上的 trackID 参数','关键词订阅 URL 上的  displayKey 参数']">
 
 在 Stork 上注册并订阅关键词后，在 `我的` -> `关键词` 中可找到对应关键词的订阅 URL。URL 后的两个参数即为路由参数。
+
+</Route>
+
+## USENIX
+
+### Security Symposia
+
+<Route author="ZeddYu" example="/usenix/usenix-security-sympoium" path="/usenix/usenix-security-sympoium">
+
+抓取的 Papers 从 2020 年开始
 
 </Route>
 
