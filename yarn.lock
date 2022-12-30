@@ -7087,13 +7087,14 @@ html-tags@^3.1.0:
   resolved "https://registry.yarnpkg.com/html-tags/-/html-tags-3.2.0.tgz#dbb3518d20b726524e4dd43de397eb0a95726961"
   integrity sha512-vy7ClnArOZwCnqZgvv+ddgHgJiAFXe3Ge9ML5/mBctVJoUoYPCdxVucOywjDARn6CVoh3dRSFdPHy2sX80L0Wg==
 
-html-to-text@9.0.2:
-  version "9.0.2"
-  resolved "https://registry.yarnpkg.com/html-to-text/-/html-to-text-9.0.2.tgz#b0365a586787ca5e415508e6ccd96513d3aba606"
-  integrity sha512-0NEkqSZKldWhefawNp73Yyky3pIUFh+y15EUqBXrQorsg/Pw1EtxpeS7ZQLhhaPxXvs4K2LatlJf63rmKcTbDw==
+html-to-text@9.0.3:
+  version "9.0.3"
+  resolved "https://registry.yarnpkg.com/html-to-text/-/html-to-text-9.0.3.tgz#331368f32fcb270c59dbd3a7fdb32813d2a490bc"
+  integrity sha512-hxDF1kVCF2uw4VUJ3vr2doc91pXf2D5ngKcNviSitNkhP9OMOaJkDrFIFL6RMvko7NisWTEiqGpQ9LAxcVok1w==
   dependencies:
     "@selderee/plugin-htmlparser2" "^0.10.0"
     deepmerge "^4.2.2"
+    dom-serializer "^2.0.0"
     htmlparser2 "^8.0.1"
     selderee "^0.10.0"
 
@@ -9195,20 +9196,20 @@ magnet-uri@^6.2.0:
     bep53-range "^1.1.0"
     thirty-two "^1.0.2"
 
-mailparser@3.6.2:
-  version "3.6.2"
-  resolved "https://registry.yarnpkg.com/mailparser/-/mailparser-3.6.2.tgz#f4da034206a9f3270242298371d8d53ae2dc30f3"
-  integrity sha512-f9YLwzxFgst+bjNOE448PiCBG26SOFTY+6sZ6mzTIDwmh7srSS8NhLMYP8IhivdKu+YzNgxC9oYYk5GY9PDcsA==
+mailparser@3.6.3:
+  version "3.6.3"
+  resolved "https://registry.yarnpkg.com/mailparser/-/mailparser-3.6.3.tgz#7edcfd9af7931e8a724e97880756477a9ea80f88"
+  integrity sha512-Yi6poKSsZsmjEcUexv3H4w4+TIeyN9u3+TCdC43VK7fe4rUOGDJ3wL4kMhNLiTOScCA1Rpzldv1hcf6g1MLtZQ==
   dependencies:
     encoding-japanese "2.0.0"
     he "1.2.0"
-    html-to-text "9.0.2"
+    html-to-text "9.0.3"
     iconv-lite "0.6.3"
     libmime "5.2.0"
     linkify-it "4.0.1"
     mailsplit "5.4.0"
     nodemailer "6.8.0"
-    tlds "1.235.0"
+    tlds "1.236.0"
 
 mailsplit@5.4.0:
   version "5.4.0"
@@ -13256,12 +13257,7 @@ tiny-async-pool@2.1.0:
   resolved "https://registry.yarnpkg.com/tiny-async-pool/-/tiny-async-pool-2.1.0.tgz#3ec126568c18a7916912fb9fbecf812337ec6b84"
   integrity sha512-ltAHPh/9k0STRQqaoUX52NH4ZQYAJz24ZAEwf1Zm+HYg3l9OXTWeqWKyYsHu40wF/F0rxd2N2bk5sLvX2qlSvg==
 
-tlds@1.235.0:
-  version "1.235.0"
-  resolved "https://registry.yarnpkg.com/tlds/-/tlds-1.235.0.tgz#9274011fd6e3da8f6acb7db2362e048fe93a656e"
-  integrity sha512-YOZmbHZzB4xmhd09PQ3xIB9fypeEP+AzTiHHn+1uyo2xNzmnCZySIkrHs4qkUKvB3FOXBnHlUOgUON3DZKPQUA==
-
-tlds@^1.228.0:
+tlds@1.236.0, tlds@^1.228.0:
   version "1.236.0"
   resolved "https://registry.yarnpkg.com/tlds/-/tlds-1.236.0.tgz#a118eebe33261c577e3a3025144faeabb7dd813c"
   integrity sha512-oP2PZ3KeGlgpHgsEfrtva3/K9kzsJUNliQSbCfrJ7JMCWFoCdtG+9YMq/g2AnADQ1v5tVlbtvKJZ4KLpy/P6MA==
