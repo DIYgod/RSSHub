@@ -94,6 +94,10 @@ Category
 
 <RouteEn author="Fatpandac" example="/codeforces/contests" path="/codeforces/contests"/>
 
+### Recent actions
+
+<RouteEn author="ftiasch" example="/codeforces/recent-actions" path="/codeforces/recent-actions/:minrating?" :paramsDesc="['The minimum blog/comment rating required. Default: 1']"/>
+
 ## cve.mitre.org
 
 ### Search Result
