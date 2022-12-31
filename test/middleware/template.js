@@ -67,6 +67,9 @@ describe('template', () => {
         const rssResponse = await request.get('/test/1.rss');
         const jsonParsed = JSON.parse(jsonResponse.text);
         const rssParsed = await parser.parseString(rssResponse.text);
+
+        expect(jsonResponse.headers['content-type']).toBe('application/feed+json; charset=UTF-8');
+
         expect(jsonParsed.items[0].title).toEqual(rssParsed.items[0].title);
         expect(jsonParsed.items[0].url).toEqual(rssParsed.items[0].link);
         expect(jsonParsed.items[0].id).toEqual(rssParsed.items[0].guid);
@@ -74,6 +77,13 @@ describe('template', () => {
         expect(jsonParsed.items[0].content_html).toEqual(rssParsed.items[0].content);
         expect(jsonParsed.items[0].authors[0].name).toEqual(rssParsed.items[0].author);
         expect(jsonParsed.items.every((item) => item.authors.every((author) => author.name.includes(' ')))).toBe(false);
+    });
+
+    it('flatten author object', async () => {
+        const response = await request.get('/test/json');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items[2].author).toBe(['DIYgod1', 'DIYgod2'].map((name) => name).join(', '));
+        expect(parsed.items[3].author).toBe(['DIYgod3', 'DIYgod4', 'DIYgod5'].map((name) => name).join(', '));
     });
 
     it(`long title`, async () => {
