@@ -655,7 +655,7 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 考研动态
 
-<Route author="SunBK201" example="/yzw/kydt" path="/yzw/kydt" radar="1" />
+<Route author="SunBK201" example="/chsi/kydt" path="/yzw/kydt" radar="1" />
 
 ## 中国智库网
 
