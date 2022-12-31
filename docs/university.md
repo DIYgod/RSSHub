@@ -2208,6 +2208,12 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 齐鲁工业大学
+
+### 通知公告
+
+<Route author="SunBK201" example="/qlu/notice" path="/qlu/notice" radar="1" />
+
 ## 清华大学
 
 ### 清华大学校内信息发布平台
