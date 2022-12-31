@@ -1,3 +1,7 @@
 {{ if itemPicUrl }}
 <img src="{{ itemPicUrl }}">
 {{ /if }}
+<br>
+{{each taginfo}}
+    <li>{{$value}}</li>
+{{/each}}
