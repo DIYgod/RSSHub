@@ -94,6 +94,10 @@ Category
 
 <RouteEn author="Fatpandac" example="/codeforces/contests" path="/codeforces/contests"/>
 
+### User comments
+
+<RouteEn author="ftiasch" example="/codeforces/comments/ftiasch" path="/codeforces/comments/:user" :paramsDesc="['CodeForces username']"/>
+
 ## cve.mitre.org
 
 ### Search Result
