@@ -2595,6 +2595,9 @@
     "/luogu/user/feed/:uid": [
         "solstice23"
     ],
+    "/luogu/user/blog/:username": [
+        "ftiasch"
+    ],
     "/lvv2/news/:channel/:sort?": [
         "Fatpandac"
     ],

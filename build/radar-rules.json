@@ -10527,6 +10527,14 @@
           "/user/:uid"
         ],
         "target": "/luogu/user/feed/:uid"
+      },
+      {
+        "title": "用户博客",
+        "docs": "https://docs.rsshub.app/programming.html#luo-gu",
+        "source": [
+          "/blog/:username"
+        ],
+        "target": "/luogu/user/blog/:username"
       }
     ]
   },
