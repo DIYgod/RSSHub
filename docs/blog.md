@@ -320,6 +320,12 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 <Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>
 
+## 新语丝
+
+### 新到资料
+
+<Route author="wenzhenl" example="/xys/new" path="/xys/new" radar="1" />
+
 ## 优步
 
 ### 工程技术
