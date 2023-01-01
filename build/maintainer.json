@@ -746,6 +746,21 @@
     "/cnbeta/topics/:id": [
         "nczitzk"
     ],
+    "/cnblogs/aggsite/topdiggs": [
+        "hujingnb"
+    ],
+    "/cnblogs/aggsite/topviews": [
+        "hujingnb"
+    ],
+    "/cnblogs/aggsite/headline": [
+        "hujingnb"
+    ],
+    "/cnblogs/cate/:type": [
+        "hujingnb"
+    ],
+    "/cnblogs/pick": [
+        "hujingnb"
+    ],
     "/cncf/:cate?": [
         "Fatpandac"
     ],
