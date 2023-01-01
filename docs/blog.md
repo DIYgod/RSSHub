@@ -30,6 +30,32 @@ pageClass: routes
 
 <Route author="nczitzk" example="/google/sites/recentChanges/outlierseconomics" path="/google/sites/recentChanges/:id" :paramsDesc="['Site ID, 可在 URL 中找到']"/>
 
+## 博客园
+
+### 10天推荐排行榜
+
+<Route author="hujingnb" example="cnblogs/aggsite/topdiggs" path="cnblogs/aggsite/topdiggs" radar="1" rssbud="1"/>
+
+### 48小时阅读排行
+
+<Route author="hujingnb" example="cnblogs/aggsite/topviews" path="cnblogs/aggsite/topviews" radar="1" rssbud="1"/>
+
+### 编辑推荐
+
+<Route author="hujingnb" example="cnblogs/aggsite/headline" path="cnblogs/aggsite/headline" radar="1" rssbud="1"/>
+
+### 分类
+
+<Route author="hujingnb" example="cnblogs/cate/go" path="cnblogs/cate/:type" :paramsDesc="['类型']" radar="1" rssbud="1">
+
+在博客园主页的分类出可查看所有类型. 例如, go的分类地址为: `https://www.cnblogs.com/cate/go/`, 则`type=go`
+
+</Route>
+
+### 精华区
+
+<Route author="hujingnb" example="cnblogs/pick" path="cnblogs/pick" radar="1" rssbud="1"/>
+
 ## Gwern Branwen
 
 ### 博客
