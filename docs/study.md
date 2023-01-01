@@ -651,6 +651,12 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="nczitzk" example="/cpta/notice" path="/cpta/notice" />
 
+## 中国研究生招生信息网
+
+### 考研动态
+
+<Route author="SunBK201" example="/chsi/kydt" path="/chsi/kydt" radar="1" />
+
 ## 中国智库网
 
 ### 观点与实践
