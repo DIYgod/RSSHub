@@ -574,6 +574,18 @@ Sources
 
 <Route author="machsix" path="/dongmanmanhua/:category/:name/:id" example="/dongmanmanhua/COMEDY/xin-xinlingdeshengyin/381" :paramsDesc="['类别','名称','ID']"/>
 
+## 动漫之家
+
+### 新闻站
+
+<Route author="vzz64" path="/dmzj/news/:category?" example="/dmzj/news/donghuaqingbao" :paramsDesc="['类别']" radar="1">
+
+| 漫画情报          | 轻小说情报               | 动漫周边           | 声优情报            | 音乐资讯        | 游戏资讯       | 美图欣赏          | 漫展情报           | 大杂烩     |
+| ------------- | ------------------- | -------------- | --------------- | ----------- | ---------- | ------------- | -------------- | ------- |
+| manhuaqingbao | qingxiaoshuoqingbao | manhuazhoubian | shengyouqingbao | yinyuezixun | youxizixun | meituxinshang | manzhanqingbao | dazahui |
+
+</Route>
+
 ## 動畫瘋
 
 ### 最後更新
