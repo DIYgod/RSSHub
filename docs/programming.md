@@ -1013,6 +1013,10 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="solstice23" example="/luogu/user/feed/1" path="/luogu/user/feed/:uid" :paramsDesc="['用户 UID']" radar="1" rssbud="1"/>
 
+### 用户博客
+
+<Route author="ftiasch" example="/luogu/user/blog/ftiasch" path="/luogu/user/blog/:name" :paramsDesc="['博客名称']" radar="1" rssbud="1"/>
+
 ## 码农俱乐部
 
 ### 话题
