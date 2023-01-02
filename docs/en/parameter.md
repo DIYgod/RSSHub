@@ -4,17 +4,17 @@
 
 Parameters here are actually URI query and can be linked together with `&` to generate a complex feed.
 
-Parameters here need to be placed after the route path. Some routes may have <span color=green>**custom route parameters**</span> and <span color=violet>**parameters here**</span> need to be placed after them.
+Parameters here need to be placed after the route path. Some routes may have <span style="color: green">**custom route parameters**</span> and <span style="color: violet">**parameters here**</span> need to be placed after them.
 
 E.g.
 
-<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0?brief=100&limit=5">https://rsshub.app/twitter/user/durov/<span color=green><b>readable=1&includeRts=0</b></span>?<span color=violet><b>brief=100&limit=5</b></span></a>
+<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0?brief=100&limit=5">https://rsshub.app/twitter/user/durov/<span style="green"><b>readable=1&includeRts=0</b></span>?<span style="color: violet"><b>brief=100&limit=5</b></span></a>
 
-If a <span color=magenta>**output format**</span> (`.atom`, `.rss`, `.debug.json`) is set, it needs to be placed between the route path (including <span color=green>**custom route parameters**</span>) and <span color=violet>**other parameters**</span>.
+If a <span style="color: magenta">**output format**</span> (`.atom`, `.rss`, `.json`, `.debug.json`) is set, it needs to be placed between the route path (including <span style="green">**custom route parameters**</span>) and <span style="color: violet">**other parameters**</span>.
 
 E.g.
 
-<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0.atom?brief=100&limit=5">https://rsshub.app/twitter/user/durov/<span color=green><b>readable=1&includeRts=0</b></span><span color=magenta><b>.atom</b></span>?<span color=violet><b>brief=100&limit=5</b></span></a>
+<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0.atom?brief=100&limit=5">https://rsshub.app/twitter/user/durov/<span style="color: green"><b>readable=1&includeRts=0</b></span><span style="color: magenta"><b>.atom</b></span>?<span style="color: violet"><b>brief=100&limit=5</b></span></a>
 
 :::
 
