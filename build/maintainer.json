@@ -956,6 +956,9 @@
     "/distill/": [
         "nczitzk"
     ],
+    "/dmzj/news/:category?": [
+        "vzz64"
+    ],
     "/dockerhub/build/:owner/:image/:tag?": [
         "HenryQW"
     ],
