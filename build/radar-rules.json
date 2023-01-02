@@ -10577,9 +10577,9 @@
         "title": "用户博客",
         "docs": "https://docs.rsshub.app/programming.html#luo-gu",
         "source": [
-          "/blog/:username"
+          "/blog/:name"
         ],
-        "target": "/luogu/user/blog/:username"
+        "target": "/luogu/user/blog/:name"
       }
     ]
   },
