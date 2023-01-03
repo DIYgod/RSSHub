@@ -1729,6 +1729,9 @@
     "/gov/xuzhou/hrss/:category?": [
         "nczitzk"
     ],
+    "/gq/tw/:caty?/:subcaty?": [
+        "nczitzk"
+    ],
     "/greasyfork/:language/:domain?": [
         "imlonghao",
         "miles170"
@@ -5829,7 +5832,6 @@
     "/feixuew/:id?": [],
     "/1x/:category?": [],
     "/jx3/:caty?": [],
-    "/gq/tw/:caty?/:subcaty?": [],
     "/qzcea/:caty?": [],
     "/fulinian/:caty?": [],
     "/cgtn/top": [],
