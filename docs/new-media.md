@@ -540,15 +540,15 @@ Country
 
 ## GQ
 
-### GQ 台湾
+### GQ Taiwan
 
-<Route author="nczitzk" example="/gq/tw/fashion" path="/gq/tw/:caty?/:subcaty?" :paramsDesc="['分类，见下表', '子分类，见下表']">
+<Route author="nczitzk" example="/gq/tw/fashion" path="/gq/tw/:caty?/:subcaty?" :paramsDesc="['分类，见下表', '子分类，见下表']" radar="1">
 
 分类
 
-| Fashion | Entertainment | Life | Gadget | Better Men | Video | Tag |
-| ------- | ------------- | ---- | ------ | ---------- | ----- | --- |
-| fashion | entertainment | life | gadget | bettermen  | video | tag |
+| Fashion | Shopping      | Entertainment | Life | Gadget | Better Men | Video | Tag |
+| ------- | ------------- | ------------- | ---- | ------ | ---------- | ----- | --- |
+| fashion | gq-recommends | entertainment | life | gadget | bettermen  | video | tag |
 
 子分类
 
@@ -560,39 +560,33 @@ Fashion
 
 Entertainment
 
-| 最新推薦 | 電影    | 娛樂         | 名人          | 美女   | 體育     | 特別報導    |
-| ---- | ----- | ---------- | ----------- | ---- | ------ | ------- |
-|      | movie | popculture | celebrities | girl | sports | special |
+| All topics | 電影    | 娛樂         | 名人          | 美女   | 體育     | 特別報導    |
+| ---------- | ----- | ---------- | ----------- | ---- | ------ | ------- |
+|            | movie | popculture | celebrities | girl | sports | special |
 
 Life
 
-| 最新推薦 | 美食   | 微醺   | 戶外生活    | 設計生活   | 風格幕後             | 特別報導    |
-| ---- | ---- | ---- | ------- | ------ | ---------------- | ------- |
-|      | food | wine | outdoor | design | lifestyleinsider | special |
+| All topics | 美食   | 微醺   | 戶外生活    | 設計生活   | 風格幕後             | 特別報導    |
+| ---------- | ---- | ---- | ------- | ------ | ---------------- | ------- |
+|            | food | wine | outdoor | design | lifestyleinsider | special |
 
 Gadget
 
-| 最新推薦 | 3C | 車    | 腕錶    | 特別報導    |
-| ---- | -- | ---- | ----- | ------- |
-|      | 3c | auto | watch | special |
+| All topics | 3C | 車    | 腕錶    | 特別報導    |
+| ---------- | -- | ---- | ----- | ------- |
+|            | 3c | auto | watch | special |
 
 Better Men
 
-| 最新推薦 | 保養健身      | 感情關係         | 性愛  | 特別報導    |
-| ---- | --------- | ------------ | --- | ------- |
-|      | wellbeing | relationship | sex | special |
-
-Video
-
-| 最新推薦 | 名人     | 全球娛樂                | 玩家收藏    | 穿搭    | 生活   |
-| ---- | ------ | ------------------- | ------- | ----- | ---- |
-|      | people | globalentertainment | collect | style | life |
+| All topics | 保養健身      | 感情關係         | 性愛  | 特別報導    |
+| ---------- | --------- | ------------ | --- | ------- |
+|            | wellbeing | relationship | sex | special |
 
 Tag
 
-| 奧斯卡                 |
-| ------------------- |
-| `the-oscars-奧斯卡金像獎` |
+| 奧斯卡                 | MOTY |
+| ------------------- | ---- |
+| `the-oscars-奧斯卡金像獎` | moty |
 
 </Route>
 
