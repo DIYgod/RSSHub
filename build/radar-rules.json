@@ -7632,6 +7632,14 @@
           "/"
         ],
         "target": "/hotukdeals/discussed"
+      },
+      {
+        "title": "hottest",
+        "docs": "https://docs.rsshub.app/shopping.html#hotukdeals",
+        "source": [
+          "/"
+        ],
+        "target": "/hotukdeals/hottest"
       }
     ]
   },

@@ -1962,6 +1962,9 @@
     "/hotukdeals/:type": [
         "DIYgod"
     ],
+    "/hotukdeals/hottest": [
+        "DIYgod"
+    ],
     "/houxu/events": [
         "nczitzk"
     ],
