@@ -273,6 +273,12 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <RouteEn author="cf020031308 nczitzk xie-dongping" example="/hackernews/threads/comments_list/dang" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['Section, see above, `index` by default', 'Link, see above, `sources` by default', 'User, only valid for section `threads` and `submitted`']" />
 
+## HackMD
+
+### Profile
+
+<RouteEn author="Yukaii kaiix" example="/hackmd/profile/hackmd" path="/hackmd/profile/:path" :paramsDesc="['userpath or teampath']" radar="1"/>
+
 ## Hex-Rays
 
 ### Hex-Rays News
