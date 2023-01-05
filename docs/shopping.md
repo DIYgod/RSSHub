@@ -91,6 +91,10 @@ pageClass: routes
 
 <Route author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" :paramsDesc="['should be one of highlights, hot, new, discussed']" ></Route>
 
+### hottest
+
+<Route author="DIYgod" example="/hotukdeals/hottest" path="/hotukdeals/hottest"></Route>
+
 ## lativ
 
 ### 订阅价格

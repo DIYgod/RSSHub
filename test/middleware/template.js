@@ -84,6 +84,7 @@ describe('template', () => {
         const parsed = await parser.parseString(response.text);
         expect(parsed.items[2].author).toBe(['DIYgod1', 'DIYgod2'].map((name) => name).join(', '));
         expect(parsed.items[3].author).toBe(['DIYgod3', 'DIYgod4', 'DIYgod5'].map((name) => name).join(', '));
+        expect(parsed.items[4].author).toBeUndefined();
     });
 
     it(`long title`, async () => {
