@@ -2327,13 +2327,13 @@
     "@vuepress/types" "1.9.8"
     nprogress "^0.2.0"
 
-"@vuepress/plugin-pwa@1.9.7":
-  version "1.9.7"
-  resolved "https://registry.yarnpkg.com/@vuepress/plugin-pwa/-/plugin-pwa-1.9.7.tgz#2f73cac25dcebb526e7fc929865ed557f61f6373"
-  integrity sha512-E8It9+Gbxuorja28Fg/3MtG5JBhdQ4XkuX65uqKl86n2uOjx50Zqndt7MWOzy9bMKzaV7gQw07UbUOMVSgKT0w==
+"@vuepress/plugin-pwa@1.9.8":
+  version "1.9.8"
+  resolved "https://registry.yarnpkg.com/@vuepress/plugin-pwa/-/plugin-pwa-1.9.8.tgz#18823248553479e006799c24d88a2aab387c6421"
+  integrity sha512-XQRLZNTUi9S7Gieo92K9FBxMPCIxJ8gx+i7MFiLnn39todjDtjUC1buuN9vuu3cKbNqUPDhu68g1D9qhDIK+kQ==
   dependencies:
-    "@vuepress/shared-utils" "1.9.7"
-    "@vuepress/types" "1.9.7"
+    "@vuepress/shared-utils" "1.9.8"
+    "@vuepress/types" "1.9.8"
     register-service-worker "^1.7.0"
     workbox-build "^4.3.1"
 
@@ -2352,7 +2352,7 @@
   dependencies:
     "@vuepress/types" "1.9.8"
 
-"@vuepress/shared-utils@1.9.7", "@vuepress/shared-utils@^1.2.0":
+"@vuepress/shared-utils@1.9.7":
   version "1.9.7"
   resolved "https://registry.yarnpkg.com/@vuepress/shared-utils/-/shared-utils-1.9.7.tgz#f1203c7f48e9d546078f5f9b2ec5200b29da481b"
   integrity sha512-lIkO/eSEspXgVHjYHa9vuhN7DuaYvkfX1+TTJDiEYXIwgwqtvkTv55C+IOdgswlt0C/OXDlJaUe1rGgJJ1+FTw==
@@ -2367,7 +2367,7 @@
     toml "^3.0.0"
     upath "^1.1.0"
 
-"@vuepress/shared-utils@1.9.8":
+"@vuepress/shared-utils@1.9.8", "@vuepress/shared-utils@^1.2.0":
   version "1.9.8"
   resolved "https://registry.yarnpkg.com/@vuepress/shared-utils/-/shared-utils-1.9.8.tgz#1ecaf148409001fee9c00c6951dc719c9a279523"
   integrity sha512-34VfkChKRrs0waWEXugDPcBB4Cp6TnKwNQaTpa8GwpLFfQw627/mWi2IiuSwTyFNZdSXxZJV6e5blejmUlGh0g==
