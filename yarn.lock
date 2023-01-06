@@ -12434,10 +12434,10 @@ simple-update-notifier@^1.0.7:
   dependencies:
     semver "~7.0.0"
 
-simplecc-wasm@0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/simplecc-wasm/-/simplecc-wasm-0.1.4.tgz#8da038e858fe8846f9ea0e8b490ced85513ab7ae"
-  integrity sha512-MSEGfvYjilmicNJ4YvDHpqNxHxOnZp1afDpoeLUiqbDROv0i/DJqrz7tMS3m22HDQbHeZaS6j/SHuDSkRoCD5g==
+simplecc-wasm@0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/simplecc-wasm/-/simplecc-wasm-0.1.5.tgz#cb80bcf745dabba0180e1ae80fcd07ad8dafac68"
+  integrity sha512-cf7QTS/ubpNH4Nk4YiSvlRgMSirpg2bj7NLPV6GqZewz5uHljea4XCGB3DriNh1QgmjIjpbA0pt34cN+MDO6BQ==
 
 sisteransi@^1.0.5:
   version "1.0.5"
