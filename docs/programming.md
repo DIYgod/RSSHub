@@ -389,6 +389,12 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="cf020031308 nczitzk xie-dongping" example="/hackernews/threads/comments_list/dang" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['内容分区，见上表，默认为 `index`', '链接类型，见上表，默认为 `sources`', '设定用户，只在 `threads` 和 `submitted` 分区有效']" />
 
+## HackMD
+
+### Profile
+
+<Route author="Yukaii kaiix" example="/hackmd/profile/hackmd" path="/hackmd/profile/:path" :paramsDesc="['個人名稱路徑，或團隊網址']" radar="1"/>
+
 ## HelloGitHub
 
 ### 热门
