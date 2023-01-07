@@ -1804,6 +1804,10 @@
     "/hackertalk/": [
         "hyoban"
     ],
+    "/hackmd/profile/:path": [
+        "Yukaii",
+        "kaiix"
+    ],
     "/hafu/news/:tpye?": [
         "WenPeiTung"
     ],

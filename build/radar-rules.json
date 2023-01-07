@@ -7019,6 +7019,18 @@
       }
     ]
   },
+  "hackmd.io": {
+    "_name": "HackMD",
+    ".": [
+      {
+        "title": "Profile",
+        "docs": "http://docs.rsshub.app/programming.html#hackmd",
+        "source": [
+          "/:profile"
+        ]
+      }
+    ]
+  },
   "hafu.edu.cn": {
     "_name": "河南财政金融学院",
     "www": [
