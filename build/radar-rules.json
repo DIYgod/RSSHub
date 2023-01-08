@@ -1366,6 +1366,36 @@
       }
     ]
   },
+  "baai.ac.cn": {
+    "_name": "北京智源人工智能研究院",
+    "hub": [
+      {
+        "title": "智源社区",
+        "docs": "https://docs.rsshub.app/programming.html#bei-jing-zhi-yuan-ren-gong-zhi-neng-yan-jiu-yuan",
+        "source": [
+          "/"
+        ]
+      },
+      {
+        "title": "活动 - 智源社区",
+        "docs": "https://docs.rsshub.app/programming.html#bei-jing-zhi-yuan-ren-gong-zhi-neng-yan-jiu-yuan",
+        "source": [
+          "/events",
+          "/"
+        ],
+        "target": "/baai/hub/events"
+      },
+      {
+        "title": "评论 - 智源社区",
+        "docs": "https://docs.rsshub.app/programming.html#bei-jing-zhi-yuan-ren-gong-zhi-neng-yan-jiu-yuan",
+        "source": [
+          "/comments",
+          "/"
+        ],
+        "target": "/baai/hub/comments"
+      }
+    ]
+  },
   "baidu.com": {
     "_name": "百度",
     "gushitong": [

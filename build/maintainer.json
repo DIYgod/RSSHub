@@ -309,6 +309,15 @@
     "/audiobar/latest": [
         "zxzhuty"
     ],
+    "/baai/hub/comments": [
+        "TonyRL"
+    ],
+    "/baai/hub/events": [
+        "TonyRL"
+    ],
+    "/baai/hub/:tagId?/:sort?/:range?": [
+        "TonyRL"
+    ],
     "/baidu/gushitong/index": [
         "CaoMeiYouRen"
     ],
