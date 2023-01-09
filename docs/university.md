@@ -3249,7 +3249,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 浙江中医药大学
 
-### 浙中医大教务处
+### 教务处
 
 <Route author="CCraftY" example="/zcmu/jwc/1" path="/zcmu/jwc/:type?" :paramsDesc="['通知模块id']">
 
