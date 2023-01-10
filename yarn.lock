@@ -9970,10 +9970,10 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-nock@13.2.9:
-  version "13.2.9"
-  resolved "https://registry.yarnpkg.com/nock/-/nock-13.2.9.tgz#4faf6c28175d36044da4cfa68e33e5a15086ad4c"
-  integrity sha512-1+XfJNYF1cjGB+TKMWi29eZ0b82QOvQs2YoLNzbpWGqFMtRQHTa57osqdGj4FrFPgkO4D4AZinzUJR9VvW3QUA==
+nock@13.3.0:
+  version "13.3.0"
+  resolved "https://registry.yarnpkg.com/nock/-/nock-13.3.0.tgz#b13069c1a03f1ad63120f994b04bfd2556925768"
+  integrity sha512-HHqYQ6mBeiMc+N038w8LkMpDCRquCHWeNmN3v6645P3NhN2+qXOBqvPqo7Rt1VyCMzKhJ733wZqw5B7cQVFNPg==
   dependencies:
     debug "^4.1.0"
     json-stringify-safe "^5.0.1"
