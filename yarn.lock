@@ -11219,10 +11219,10 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@2.8.1, "prettier@^1.18.2 || ^2.0.0":
-  version "2.8.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.1.tgz#4e1fd11c34e2421bc1da9aea9bd8127cd0a35efc"
-  integrity sha512-lqGoSJBQNJidqCHE80vqZJHWHRFoNYsSpP9AjFhlhi9ODCJA541svILes/+/1GM3VaL/abZi7cpFzOpdR9UPKg==
+prettier@2.8.2, "prettier@^1.18.2 || ^2.0.0":
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.8.2.tgz#c4ea1b5b454d7c4b59966db2e06ed7eec5dfd160"
+  integrity sha512-BtRV9BcncDyI2tsuS19zzhzoxD8Dh8LiCx7j7tHzrkz8GFXAexeWFdi22mjE1d16dftH2qNaytVxqiRTGlMfpw==
 
 pretty-bytes@^5.1.0:
   version "5.6.0"
@@ -11582,10 +11582,10 @@ ramda@^0.26.1:
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
   integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
-rand-user-agent@1.0.99:
-  version "1.0.99"
-  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.99.tgz#7645ffcc752249e005859edc2fa52f2f1eb8556b"
-  integrity sha512-H1VmNVLfCbnVChacWyyjVpf8gDuITu3RBKM0BZIkeqQ+ir5vtYNnSyX0IDmqB1siTsLWnJ+XRB18q44UPwEg5w==
+rand-user-agent@1.0.100:
+  version "1.0.100"
+  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.100.tgz#15c0412f32fe234f6c8df7e5695cb9b5fe188fa7"
+  integrity sha512-abn+lpF7fz+UZFPie8xFDLBTLzomt1C+lr/Banh337ER0bn84m+hPt4cJAM67H2T2I28o5Yev7SkQcmt7EzmMA==
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5, randombytes@^2.1.0:
   version "2.1.0"
