@@ -566,7 +566,7 @@ Provides all of the articles by the specified Yahoo! author.
 
 ### 光伏
 
-<Route author="Sxuet" example="/bjx/gf/sc" path="/bjx/gf/:type" :paramsDesc="['分类，北极星光伏最后的`type`字段']" radar="1" rssbud="1"/>
+<Route author="Sxuet" example="/bjx/gf/sc" path="/bjx/gf/:type" :paramsDesc="['分类，北极星光伏最后的`type`字段']" radar="1" rssbud="1">
 
 `:type` 类型可选如下
 
@@ -633,6 +633,8 @@ Category 列表：
 | 中国         | 国际         | 军事            | 台海          | 财经           | 科技              | 文化           |
 | ---------- | ---------- | ------------- | ----------- | ------------ | --------------- | ------------ |
 | china_news | world_news | military_news | taiwan_news | finance_news | technology_news | culture_news |
+
+</Route>
 
 ## 朝日新聞中文網（繁體中文版）
 
@@ -798,7 +800,7 @@ IT・科学 tech_science
 
 ### 新闻
 
-<Route author="nczitzk" example="/yicai/news" path="/yicai/news/:id?" :paramsDesc="['分类 id，见下表，可在对应分类页中找到，默认为新闻']" />
+<Route author="nczitzk" example="/yicai/news" path="/yicai/news/:id?" :paramsDesc="['分类 id，见下表，可在对应分类页中找到，默认为新闻']" >
 
 | Id                     | 名称      |
 | ---------------------- | ------- |
@@ -828,6 +830,8 @@ IT・科学 tech_science
 | dtcj                   | DT 财经   |
 | xfsz                   | 消费数知    |
 
+</Route>
+
 ### 关注
 
 <Route author="nczitzk" example="/yicai/feed/669" path="/yicai/feed/:id?" :paramsDesc="['主题 id，可在对应主题页中找到，默认为一财早报']">
@@ -842,7 +846,7 @@ IT・科学 tech_science
 
 ### 视听
 
-<Route author="nczitzk" example="/yicai/video" path="/yicai/video/:id?" :paramsDesc="['分类 id，见下表，可在对应分类页中找到，默认为视听']" />
+<Route author="nczitzk" example="/yicai/video" path="/yicai/video/:id?" :paramsDesc="['分类 id，见下表，可在对应分类页中找到，默认为视听']">
 
 | Id                   | 名称             |
 | -------------------- | -------------- |
@@ -881,6 +885,8 @@ IT・科学 tech_science
 | sanrenxing           | 价值三人行          |
 | yuandongli           | 中国源动力          |
 | pioneerzone          | 直击引领区          |
+
+</Route>
 
 ### 正在
 
@@ -1499,7 +1505,7 @@ category 对应的关键词有
 
 ### 即时新闻
 
-<Route author="TonyRL" example="/mingpao/ins/all" path="/mingpao/ins/:category?" :paramsDesc="['频道，预设为总目录']"/>
+<Route author="TonyRL" example="/mingpao/ins/all" path="/mingpao/ins/:category?" :paramsDesc="['频道，预设为总目录']">
 
 | category | 即时新闻频道 |
 | -------- | ------ |
@@ -1514,9 +1520,11 @@ category 对应的关键词有
 | s00022   | 文摘     |
 | s00024   | 热点     |
 
+</Route>
+
 ### 每日明报
 
-<Route author="TonyRL" example="/mingpao/pns/s00001" path="/mingpao/pns/:category?" :paramsDesc="['频道，预设为要闻']"/>
+<Route author="TonyRL" example="/mingpao/pns/s00001" path="/mingpao/pns/:category?" :paramsDesc="['频道，预设为要闻']">
 
 | category | 每日明报频道 |
 | -------- | ------ |
@@ -1533,6 +1541,8 @@ category 对应的关键词有
 | s00016   | 娱乐     |
 | s00017   | 英文     |
 | s00018   | 作家专栏   |
+
+</Route>
 
 ## 南方周末
 
@@ -1608,6 +1618,20 @@ category 对应的关键词有
 
 </Route>
 
+## 内蒙古广播电视台
+
+### 点播
+
+<Route author="nczitzk" example="/nmtv/column/877" path="/nmtv/column/:id?" :paramsDesc="['栏目 id，可在对应栏目 URL 中找到']">
+
+::: tip 提示
+
+如 [蒙古语卫视新闻联播](http://www.nmtv.cn/folder292/folder663/folder301/folder830/folder877) 的 URL 为 <http://www.nmtv.cn/folder292/folder663/folder301/folder830/folder877>，其栏目 id 为末尾数字编号，即 `877`。可以得到其对应路由为 [`/nmtv/column/877`](https://rsshub.app/nmtv/column/877)
+
+:::
+
+</Route>
+
 ## 纽约时报
 
 ### 新闻
@@ -1640,7 +1664,7 @@ category 对应的关键词有
 
 ### 畅销书排行榜
 
-<Route author="melvinto" example="/nytimes/book/combined-print-and-e-book-nonfiction" path="/nytimes/book/:category?"/>
+<Route author="melvinto" example="/nytimes/book/combined-print-and-e-book-nonfiction" path="/nytimes/book/:category?">
 
 | Category                             | 中文         |
 | ------------------------------------ | ---------- |
@@ -1655,6 +1679,8 @@ category 对应的关键词有
 | picture-books                        | 儿童 - 绘本    |
 | series-books                         | 儿童 - 系列图书  |
 | young-adult-hardcover                | 青少年        |
+
+</Route>
 
 ## 澎湃新闻
 
@@ -1931,6 +1957,70 @@ category 对应的关键词有
 
 </Route>
 
+## 四川广播电视台
+
+### 电视回放
+
+<Route author="nczitzk" example="/sctv/programme/1" path="/sctv/programme/:id?/:limit?/:isFull?" :paramsDesc="['节目 id，可在对应节目页中找到，默认为 `1`，即四川新闻联播', '期数，默认为 15，即单次获取最新 15 期', '是否仅获取完整视频，填写 true/yes 表示是、false/no 表示否，默认是']">
+
+::: tip 提示
+
+参数 **是否仅获取完整视频** 设置为 `true` `yes` `t` `y` 等值后，路由仅返回当期节目的完整视频，而不会返回节目所提供的节选视频。
+
+查看更多电视节目请前往 [电视回放](https://www.sctv.com/column/list)
+
+:::
+
+| 节目          | id      |
+| ----------- | ------- |
+| 四川新闻联播      | 1       |
+| 早安四川        | 2       |
+| 今日视点        | 3       |
+| 龙门阵摆四川      | 10523   |
+| 非常话题        | 1014756 |
+| 新闻现场        | 8385    |
+| 黄金三十分       | 8386    |
+| 全媒直播间       | 8434    |
+| 晚报十点半       | 8435    |
+| 现场快报        | 8436    |
+| 四川乡村新闻      | 3673    |
+| 四川文旅报道      | 8174    |
+| 乡村会客厅       | 3674    |
+| 金字招牌        | 3675    |
+| 问您所 “？”     | 3677    |
+| 蜀你最能        | 3679    |
+| 美丽乡村印象      | 3678    |
+| 美丽乡村        | 3676    |
+| 乡村大篷车       | 3680    |
+| 华西论健        | 3681    |
+| 乡村聚乐部       | 3682    |
+| 医保近距离       | 6403    |
+| 音你而来        | 7263    |
+| 吃八方         | 7343    |
+| 世界那么大       | 7344    |
+| 风云川商        | 7345    |
+| 麻辣烫         | 7346    |
+| 财经快报        | 7473    |
+| 医生来了        | 7873    |
+| 安逸的旅途       | 8383    |
+| 运动 +        | 8433    |
+| 好戏连台        | 9733    |
+| 防癌大讲堂       | 1018673 |
+| 消费新观察       | 1017153 |
+| 天天耍大牌       | 1014753 |
+| 廉洁四川        | 1014754 |
+| 看世界         | 1014755 |
+| 金熊猫说教育（资讯版） | 1014757 |
+| 她说          | 1014759 |
+| 嗨宝贝         | 1014762 |
+| 萌眼看世界       | 1014764 |
+| 乡村大讲堂       | 1014765 |
+| 四川党建        | 1014766 |
+| 健康四川        | 1014767 |
+| 技能四川        | 12023   |
+
+</Route>
+
 ## 台湾中央通讯社
 
 ### 分类
@@ -2136,6 +2226,12 @@ category 对应的关键词有
 ### PDF 版
 
 <Route author="nczitzk" example="/hkcd/pdf" path="/hkcd/pdf"/>
+
+## 新华每日电讯
+
+### 今日
+
+<Route author="Dustin-Jiang" example="/mrdx/today" path="/mrdx/today" />
 
 ## 新京报
 

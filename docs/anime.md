@@ -252,6 +252,16 @@ pageClass: routes
 
 <Route author="TonyRL" example="/creative-comic/book/117" path="/creative-comic/book/:id/:coverOnly?/:quality?" :paramsDesc="['漫畫 ID，可在 URL 中找到', '僅獲取封面，非 `true` 時將獲取**全部**頁面，預設 `true`', '閱讀品質，標準畫質 `1`，高畫質 `2`，預設 `1`']" radar="1" rssbud="1"/>
 
+## CnGal
+
+### 每周速报
+
+<Route author="chengyuhui" example="/cngal/weekly" path="/cngal/weekly" radar="1" rssbud="1"/>
+
+### 制作者 / 游戏新闻
+
+<Route author="chengyuhui" example="/cngal/entry/2693" path="/cngal/entry/:id" :paramsDesc="['词条ID，游戏或制作者页面URL的最后一串数字']" radar="1" rssbud="1"/>
+
 ## DLsite
 
 ### 当前日期发售的新产品
@@ -375,15 +385,40 @@ Sources
 
 <Route author="axojhf" example="/lovelive-anime/topics/otonokizaka" path="/lovelive-anime/topics/:abbr/:category?/:option?" :paramsDesc="['Love Live系列子企划在官网的路径，详见下表', '官网列出的Topics分类，`category` 为 `detail` 时抓取全文，其他分类详见下表', '`option` 为 `detail` 时抓取全文']" radar="1">
 
-| 子企划名（非全称） | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! |
-| --------- | ----------- | -------------------- | ------------------------------------------ | --------------------- |
-| `abbr`参数  | otonokizaka | uranohoshi           | nijigasaki                                 | yuigaoka              |
+| 子企划名（非全称） | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | 幻日のヨハネ | ラブライブ！スクールアイドルミュージカル |
+| --------- | ----------- | -------------------- | ------------------------------------------ | --------------------- | ------ | -------------------- |
+| `abbr`参数  | otonokizaka | uranohoshi           | nijigasaki                                 | yuigaoka              | yohane | musical              |
 
 | 分类名          | 全てのニュース      | 音楽商品  | アニメ映像商品     | キャスト映像商品   | 劇場      | アニメ放送 / 配信 | キャスト配信 / ラジオ | ライブ / イベント | ブック   | グッズ   | ゲーム  | メディア  | ご当地情報 | その他   | キャンペーン   |
 | ------------ | ------------ | ----- | ----------- | ---------- | ------- | ---------- | ------------ | ---------- | ----- | ----- | ---- | ----- | ----- | ----- | -------- |
 | `category`参数 | <u>*无参数*</u> | music | anime_movie | cast_movie | theater | onair      | radio        | event      | books | goods | game | media | local | other | campaign |
 
 </Route>
+
+### Love Live 官网 Schedule
+
+<Route author="axojhf" example="/lovelive-anime/schedules" path="/schedules/:serie?/:category?" :paramsDesc="['Love Live系列子企划简称，详见下表', '官网列出的分类，详见下表']" radar="1">
+
+::: tip 请注意！！！
+该路由获取的时间及其他信息以官网公告为准！<br>
+该 RSS 路由没有经过严格的测试，提供的信息不能保证准确性！
+:::
+
+| 子企划名（非全称） | 全シリーズ              | Lovelive!  | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | ラブライブ！スクールアイドルミュージカル |
+| --------- | ------------------ | ---------- | -------------------- | ------------------------------------------ | --------------------- | -------------------- |
+| `serie`参数 | <u>*无参数*</u>或`all` | `lovelive` | `sunshine`           | `nijigasaki`                               | `superstar`           | `musical`            |
+
+| 分类名          | 全て                 | ライブ    | イベント    | 生配信       |
+| ------------ | ------------------ | ------ | ------- | --------- |
+| `category`参数 | <u>*无参数*</u>或`all` | `live` | `event` | `haishin` |
+
+</Route>
+
+## MangaDex
+
+### 漫画更新
+
+<Route author="vzz64" example="/mangadex/58be6aa6-06cb-4ca5-bd20-f1392ce451fb/zh-hk" path="/:id/:lang?" :paramsDesc="['漫画ID', '语言代码']" radar="1" />
 
 ## Mox.moe
 
@@ -539,6 +574,18 @@ Sources
 
 <Route author="machsix" path="/dongmanmanhua/:category/:name/:id" example="/dongmanmanhua/COMEDY/xin-xinlingdeshengyin/381" :paramsDesc="['类别','名称','ID']"/>
 
+## 动漫之家
+
+### 新闻站
+
+<Route author="vzz64" path="/dmzj/news/:category?" example="/dmzj/news/donghuaqingbao" :paramsDesc="['类别']" radar="1">
+
+| 漫画情报          | 轻小说情报               | 动漫周边           | 声优情报            | 音乐资讯        | 游戏资讯       | 美图欣赏          | 漫展情报           | 大杂烩     |
+| ------------- | ------------------- | -------------- | --------------- | ----------- | ---------- | ------------- | -------------- | ------- |
+| manhuaqingbao | qingxiaoshuoqingbao | manhuazhoubian | shengyouqingbao | yinyuezixun | youxizixun | meituxinshang | manzhanqingbao | dazahui |
+
+</Route>
+
 ## 動畫瘋
 
 ### 最後更新
@@ -681,6 +728,22 @@ Sources
 ### 文章
 
 <Route author="DIYgod kotoyuuko" example="/hhgal" path="/hhgal"/>
+
+## 月幕 Galgame
+
+### 文章
+
+<Route author="SunBK201" example="/ymgal/article" path="/ymgal/article/:type?" :paramsDesc="['文章类型']" radar="1">
+
+| 全部文章 | 资讯   | 专栏     |
+| ---- | ---- | ------ |
+| all  | news | column |
+
+</Route>
+
+### 本月新作
+
+<Route author="SunBK201" example="/ymgal/game/release" path="/ymgal/game/release" radar="1" />
 
 ## 终点分享
 

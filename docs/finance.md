@@ -104,6 +104,12 @@ pageClass: routes
 
 </Route>
 
+## Paradigm
+
+### Writing
+
+<Route author="Fatpandac" example="/paradigm/writing" path="/paradigm/writing" />
+
 ## Seeking Alpha
 
 ### Summary
@@ -207,6 +213,12 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 | bgcz_result | bgcz_change | termination_audit | audit_result |
 
 </Route>
+
+## 财经网
+
+### 滚动新闻
+
+<Route author="TonyRL" example="/caijing/roll" path="/caijing/roll" rardr="1" rssbud="1"/>
 
 ## 财联社
 
@@ -387,7 +399,7 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ### 上市公司信息最新公告披露
 
-<Route author="alienmao" example="/sse/disclosure/beginDate=2018-08-18&endDate=2020-08-25&productId=600696" path="/sse/disclosure/:query?"  :paramsDesc="['筛选条件，见示例']" radar="1" rssbud="1"/>
+<Route author="harveyqiu" example="/sse/disclosure/beginDate=2018-08-18&endDate=2020-08-25&productId=600696" path="/sse/disclosure/:query?"  :paramsDesc="['筛选条件，见示例']" radar="1" rssbud="1"/>
 
 ### 可转换公司债券公告
 

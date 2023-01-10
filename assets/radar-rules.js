@@ -13,27 +13,6 @@
     },
     'https://www.icac.org.hk': { _name: '廉政公署', '.': [{ title: '新闻公布', docs: 'https://docs.rsshub.app/government.html#xiang-gang-lian-zheng-gong-shu', source: ['/:lang/press/index.html'], target: '/icac/news/:lang' }] },
     'trow.cc': { _name: 'The Ring of Wonder', '.': [{ title: '首页更新', docs: 'https://docs.rsshub.app/bbs.html#the-ring-of-wonder', source: ['/'], target: '/portal' }] },
-    'weibo.com': {
-        _name: '微博',
-        '.': [
-            {
-                title: '博主',
-                docs: 'https://docs.rsshub.app/social-media.html#wei-bo',
-                source: ['/u/:id', '/:id'],
-                target: (params, url, document) => {
-                    let uid = document?.documentElement.innerHTML.match(/\$CONFIG\['oid']='(\d+)'/)?.[1];
-                    if (!uid && !isNaN(params.id)) {
-                        uid = params.id;
-                    }
-                    return uid ? `/weibo/user/${uid}` : '';
-                },
-            },
-            { title: '关键词', docs: 'https://docs.rsshub.app/social-media.html#wei-bo' },
-            { title: '超话', docs: 'https://docs.rsshub.app/social-media.html#wei-bo', source: '/p/:id/super_index', target: '/weibo/super_index/:id' },
-        ],
-        s: [{ title: '热搜榜', docs: 'https://docs.rsshub.app/social-media.html#wei-bo', source: '/top/summary', target: '/weibo/search/hot' }],
-    },
-    'weibo.cn': { _name: '微博', m: [{ title: '博主', docs: 'https://docs.rsshub.app/social-media.html#wei-bo', source: ['/u/:uid', '/profile/:uid'], target: '/weibo/user/:uid' }] },
     'github.com': {
         _name: 'GitHub',
         '.': [
@@ -49,11 +28,6 @@
             { title: '用户 Starred Repositories', docs: 'https://docs.rsshub.app/programming.html#github', source: '/:user', target: '/github/starred_repos/:user' },
             { title: '仓库 Contributors', docs: 'https://docs.rsshub.app/programming.html#github', source: ['/:user/:repo/graphs/contributors', '/:user/:repo'], target: '/github/contributors/:user/:repo' },
         ],
-    },
-    'smzdm.com': {
-        _name: '什么值得买',
-        www: [{ title: '排行榜', docs: 'https://docs.rsshub.app/shopping.html#shen-me-zhi-de-mai', source: '/top' }],
-        search: [{ title: '关键词', docs: 'https://docs.rsshub.app/shopping.html#shen-me-zhi-de-mai', source: '/', target: (params, url) => `/smzdm/keyword/${new URL(url).searchParams.get('s')}` }],
     },
     'ximalaya.com': {
         _name: '喜马拉雅',

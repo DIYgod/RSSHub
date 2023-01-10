@@ -23,6 +23,16 @@ pageClass: routes
 
 </Route>
 
+## ACM Special Interest Group on Security Audit and Control
+
+### The ACM Conference on Computer and Communications Security
+
+<Route author="ZeddYu" example="/sigsac/ccs" path="/sigsac/ccs">
+
+抓取的 Papers 从 2020 年开始
+
+</Route>
+
 ## American Chemistry Society
 
 ### Journal
@@ -121,6 +131,16 @@ pageClass: routes
 ### 期刊指定卷
 
 <Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing/192" path="/elsevier/:journal/:issue" :paramsDesc="['期刊名称，URL 中 `/journal/` 后部分','发行号 (如果 Volume 与 Issue 同时存在，采用 `Volume-Issue` 形式, e.g., `/elsevier/aace-clinical-case-reports/7-6`)']" radar="1" rssbud="1"/>
+
+## IEEE Computer Society
+
+### IEEE Symposium on Security and Privacy
+
+<Route author="ZeddYu" example="/ieee-security/security-privacy" path="/ieee-security/security-privacy">
+
+抓取的 Papers 从 2020 年开始
+
+</Route>
 
 ## IEEE Xplore
 
@@ -232,6 +252,16 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 <Route author="TonyRL" example="/nature/siteindex" path="/nature/siteindex"/>
 
+## Network and Distributed System Security (NDSS) Symposium
+
+### Accepted papers
+
+<Route author="ZeddYu" example="/ndss-symposium/ndss" path="/ndss-symposium/ndss">
+
+抓取的 Papers 从 2020 年开始
+
+</Route>
+
 ## Oxford University Press
 
 ### Oxford Academic
@@ -337,6 +367,16 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 </Route>
 
+## USENIX
+
+### Security Symposia
+
+<Route author="ZeddYu" example="/usenix/usenix-security-sympoium" path="/usenix/usenix-security-sympoium">
+
+抓取的 Papers 从 2020 年开始
+
+</Route>
+
 ## X-MOL 平台
 
 ### 期刊
@@ -383,3 +423,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 ### 网络首发
 
 <Route author="Fatpandac" example="/cnki/journals/debut/LKGP" path="/cnki/journals/debut/:name" :paramsDesc="['期刊缩写，可以在网址中得到']"/>
+
+### 作者期刊文献
+
+<Route author="harveyqiu" example="/cnki/author/000042423923" path="/cnki/author/:code" :paramsDesc="['作者对应code，可以在网址中得到']"/>

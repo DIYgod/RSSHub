@@ -4,6 +4,20 @@ pageClass: routes
 
 # Study
 
+## Asian Innovation and Entrepreneurship Association
+
+### Seminar Series
+
+<RouteEn author="zxx-457" example="/aiea/seminars/upcoming" path="/aiea/seminars/:period" :paramsDesc="['Time frame']">
+
+| Time frame |
+| ----- |
+| upcoming |
+| past |
+| both|
+
+</RouteEn>
+
 ## gradCafe
 
 ### gradCafe result
@@ -93,6 +107,12 @@ pageClass: routes
 ### Works List
 
 <RouteEn author="OrangeEd1t" example="/orcid/0000-0002-4731-9700" path="/orcid/:id" :paramsDesc="['Open Researcher and Contributor ID']"/>
+
+## ResearchGate
+
+### Publications
+
+<RouteEn author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" :paramsDesc="['Username, can be found in URL']" puppeteer="1" anticrawler="1"/>
 
 ## X-MOL
 

@@ -1,6 +1,5 @@
 let puppeteer;
 const wait = require('../../lib/utils/wait');
-const cheerio = require('cheerio');
 
 let browser = null;
 
@@ -47,49 +46,56 @@ describe('puppeteer', () => {
         puppeteer = require('../../lib/utils/puppeteer');
         browser = await puppeteer({ stealth: false });
         const page = await browser.newPage();
-        await page.goto('https://bot.sannysoft.com');
-
-        const html = await page.evaluate(() => document.body.innerHTML);
-        const $ = cheerio.load(html);
-        browser.close();
-        browser = null;
-
-        const webDriverTest = $('tbody tr').eq(2).find('td').eq(1).text().trim();
-        const chromeTest = $('tbody tr').eq(4).find('td').eq(1).text().trim();
+        await page.goto('https://bot.sannysoft.com', { waitUntil: 'networkidle0' });
+        // page rendering is not instant, wait for expected elements to appear
+        const [webDriverTest, chromeTest] = await Promise.all(['webdriver', 'chrome'].map((t) => page.waitForSelector(`td#${t}-result.result.failed`).then((hd) => hd.evaluate((e) => e.textContent))));
         // the website return empty string from time to time for no reason
         // since we don't really care whether puppeteer without stealth passes the bot test, just let it go
         expect(['present (failed)', '']).toContain(webDriverTest);
         expect(['missing (failed)', '']).toContain(chromeTest);
-    }, 10000);
+    }, 15000);
 
     it('puppeteer with stealth', async () => {
         puppeteer = require('../../lib/utils/puppeteer');
         browser = await puppeteer({ stealth: true });
         const page = await browser.newPage();
-        await page.goto('https://bot.sannysoft.com');
-
-        const html = await page.evaluate(() => document.body.innerHTML);
-        const $ = cheerio.load(html);
-        browser.close();
-        browser = null;
-
-        const webDriverTest = $('tbody tr').eq(2).find('td').eq(1).text().trim();
-        const chromeTest = $('tbody tr').eq(4).find('td').eq(1).text().trim();
+        await page.goto('https://bot.sannysoft.com', { waitUntil: 'networkidle0' });
+        // page rendering is not instant, wait for expected elements to appear
+        const [webDriverTest, chromeTest] = await Promise.all(['webdriver', 'chrome'].map((t) => page.waitForSelector(`td#${t}-result.result.passed`).then((hd) => hd.evaluate((e) => e.textContent))));
         // these are something we really care about
         expect(webDriverTest).toBe('missing (passed)');
         expect(chromeTest).toBe('present (passed)');
-    }, 10000);
+    }, 15000);
 
-    it('puppeteer accept proxy uri', async () => {
+    it('puppeteer accept http proxy uri w/ auth', async () => {
         process.env.PROXY_URI = 'http://user:pass@rsshub.proxy:2333';
 
         puppeteer = require('../../lib/utils/puppeteer');
         browser = await puppeteer();
 
-        expect(browser.process().spawnargs.some((arg) => /^--proxy-server=http:\/\/.*$/.test(arg))).toBe(true);
+        // trailing slash will cause net::ERR_NO_SUPPORTED_PROXIES, prohibit it
+        expect(browser.process().spawnargs.some((arg) => /^--proxy-server=http:\/\/.*[^/]$/.test(arg))).toBe(true);
     });
 
-    it('puppeteer accept proxy', async () => {
+    it('puppeteer reject https proxy uri w/ auth', async () => {
+        process.env.PROXY_URI = 'https://user:pass@rsshub.proxy:2333';
+
+        puppeteer = require('../../lib/utils/puppeteer');
+        browser = await puppeteer();
+
+        expect(browser.process().spawnargs.some((arg) => arg.includes('--proxy-server'))).toBe(false);
+    });
+
+    it('puppeteer reject socks proxy uri w/ auth', async () => {
+        process.env.PROXY_URI = 'socks5://user:pass@rsshub.proxy:2333';
+
+        puppeteer = require('../../lib/utils/puppeteer');
+        browser = await puppeteer();
+
+        expect(browser.process().spawnargs.some((arg) => arg.includes('--proxy-server'))).toBe(false);
+    });
+
+    it('puppeteer accept http proxy', async () => {
         process.env.PROXY_PROTOCOL = 'http';
         process.env.PROXY_HOST = 'rsshub.proxy';
         process.env.PROXY_PORT = '2333';
@@ -97,6 +103,39 @@ describe('puppeteer', () => {
         puppeteer = require('../../lib/utils/puppeteer');
         browser = await puppeteer();
 
-        expect(browser.process().spawnargs.some((arg) => /^--proxy-server=http:\/\/.*$/.test(arg))).toBe(true);
+        expect(browser.process().spawnargs.some((arg) => /^--proxy-server=http:\/\/rsshub.proxy:2333$/.test(arg))).toBe(true);
+    }, 10000);
+
+    it('puppeteer accept https proxy', async () => {
+        process.env.PROXY_PROTOCOL = 'https';
+        process.env.PROXY_HOST = 'rsshub.proxy';
+        process.env.PROXY_PORT = '2333';
+
+        puppeteer = require('../../lib/utils/puppeteer');
+        browser = await puppeteer();
+
+        expect(browser.process().spawnargs.some((arg) => /^--proxy-server=https:\/\/rsshub.proxy:2333$/.test(arg))).toBe(true);
+    }, 10000);
+
+    it('puppeteer accept socks4a proxy', async () => {
+        process.env.PROXY_PROTOCOL = 'socks4a';
+        process.env.PROXY_HOST = 'rsshub.proxy';
+        process.env.PROXY_PORT = '2333';
+
+        puppeteer = require('../../lib/utils/puppeteer');
+        browser = await puppeteer();
+
+        expect(browser.process().spawnargs.some((arg) => /^--proxy-server=socks4:\/\/rsshub.proxy:2333$/.test(arg))).toBe(true);
+    }, 10000);
+
+    it('puppeteer accept socks5h proxy', async () => {
+        process.env.PROXY_PROTOCOL = 'socks5h';
+        process.env.PROXY_HOST = 'rsshub.proxy';
+        process.env.PROXY_PORT = '2333';
+
+        puppeteer = require('../../lib/utils/puppeteer');
+        browser = await puppeteer();
+
+        expect(browser.process().spawnargs.some((arg) => /^--proxy-server=socks5:\/\/rsshub.proxy:2333$/.test(arg))).toBe(true);
     }, 10000);
 });

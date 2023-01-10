@@ -23,6 +23,16 @@ pageClass: routes
 
 </RouteEn>
 
+## ACM Special Interest Group on Security Audit and Control
+
+### The ACM Conference on Computer and Communications Security
+
+<RouteEn author="ZeddYu" example="/sigsac/ccs" path="/sigsac/ccs">
+
+Return results from 2020
+
+</RouteEn>
+
 ## American Chemistry Society
 
 ### Journal
@@ -135,6 +145,16 @@ Google Scholar has strict anti-crawling mechanism implemented, the demo below do
 <RouteEn author="KellyHwong" example="/google/citations/mlmE4JMAAAAJ" path="/google/citations/:id" anticrawler="1">
 
 The parameter id in the route is the id in the URL of the user's Google Scholar reference page, for example `https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ` to `mlmE4JMAAAAJ`
+
+</RouteEn>
+
+## IEEE Computer Society
+
+### IEEE Symposium on Security and Privacy
+
+<RouteEn author="ZeddYu" example="/ieee-security/security-privacy" path="/ieee-security/security-privacy">
+
+Return results from 2020
 
 </RouteEn>
 
@@ -261,6 +281,16 @@ Only some journals are supported.
 
 <RouteEn author="TonyRL" example="/nature/siteindex" path="/nature/siteindex"/>
 
+## Network and Distributed System Security (NDSS) Symposium
+
+### Accepted papers
+
+<RouteEn author="ZeddYu" example="/ndss-symposium/ndss" path="/ndss-symposium/ndss">
+
+Return results from 2020
+
+</RouteEn>
+
 ## Oxford University Press
 
 ### Oxford Academic
@@ -359,6 +389,16 @@ Including 'Science', 'Science Advances', 'Science Immunology', 'Science Robotics
 ### Journal
 
 <RouteEn author="Derekmini TonyRL" example="/springer/journal/10450" path="/springer/journal/:journal" :paramsDesc="['Journal Code, the number in the URL from the journal homepage']" radar="1" rssbud="1"/>
+
+## USENIX
+
+### Security Symposia
+
+<RouteEn author="ZeddYu" example="/usenix/usenix-security-sympoium" path="/usenix/usenix-security-sympoium">
+
+Return results from 2020
+
+</RouteEn>
 
 ## X-MOL Platform
 
