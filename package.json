@@ -10,7 +10,7 @@
     "start": "node lib/index.js",
     "dev": "cross-env NODE_ENV=dev nodemon --inspect lib/index.js",
     "profiling": "NODE_ENV=production node --prof lib/index.js",
-    "docs:dev": "NODE_OPTIONS=--openssl-legacy-provider vuepress dev docs",
+    "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "build:all": "npm run build:radar && npm run build:maintainer",
     "build:radar": "node scripts/workflow/build-radar.js",

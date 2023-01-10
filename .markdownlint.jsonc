@@ -1,5 +1,5 @@
 {
-    "MD007": { "indent": 2 }, // ul-indent - Unordered list indentation
+    "MD007": { "indent": 4 }, // ul-indent - Unordered list indentation
     "MD013": false, // line-length - Line length
     "MD014": false, // commands-show-output - Dollar signs used before commands without showing output
     "MD024": { "siblings_only": true }, // no-duplicate-heading/no-duplicate-header - Multiple headings with the same content

@@ -165,6 +165,10 @@ module.exports = {
                                     title: 'Create your own RSSHub route',
                                     path: 'new-rss/start-code',
                                 },
+                                {
+                                    title: 'Add the documentation',
+                                    path: 'new-rss/add-docs',
+                                },
                             ],
                         },
                         {
@@ -200,7 +204,7 @@ module.exports = {
                                 },
                                 {
                                     title: '📅 Date Handling',
-                                    path: 'pub-date'
+                                    path: 'pub-date',
                                 },
                             ],
                         },

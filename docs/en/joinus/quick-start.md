@@ -19,13 +19,13 @@ If you don't know much about them but would like to learn them, here are some go
 
 ## Submit new RSS rules
 
-Before you start writing an RSS rule, please make sure that the source site does not provide RSS. Some web pages will include a link element with type `application/atom+xml` or `application/rss+xml` in the HTML header to indicate the RSS link.
+Before you start writing an RSS rule, please make sure that the source site does not provide RSS. Some web pages will include a link element with the type `application/atom+xml` or `application/rss+xml` in the HTML head element to indicate the RSS link.
 
 ### Getting started
 
 In the following guide, you will learn things such as how to write a new RSS rule from scratch. This guide will also cover subjects like how to set up a proper development environment, keep your code clean and readable, and how to submit your code to the RSSHub repository.
 
-[Let's start!](/en/joinus/new-rss/prerequisites)
+[Let's start!](/en/joinus/new-rss/prerequisites.html)
 
 ## Submit new RSSHub Radar rules
 

@@ -21,7 +21,7 @@ In order to write code, you need a code editor. If you already have one, you can
 -   [Neovim](https://neovim.io/)
 -   [Sublime Text](https://www.sublimetext.com/)
 
-In order to speed up the development process and make it easier to keep your code clean, you can install some appropriate extensions for your code editor of your choice. In the latter part of this guide, we will use Visual Studio Code as an example, you can install the following extensions:
+In order to speed up the development process and make it easier to keep your code clean, you can install some appropriate extensions for the code editor of your choice. In the latter part of this guide, we will use Visual Studio Code as an example, you can install the following extensions:
 
 -   [Art Template Helper](https://marketplace.visualstudio.com/items?itemName=ZihanLi.at-helper)
 -   [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)
@@ -30,7 +30,7 @@ In order to speed up the development process and make it easier to keep your cod
 
 ### Cloud hosted development environment
 
-If you don't want to install Node.js and a code editor on your computer, you can also use a cloud hosted development environment. You can use [Gitpod](https://www.gitpod.io/), which is free for open source projects. You can simply click the button below to start a new workspace:
+If you don't want to install Node.js and a code editor on your computer, you can also use a cloud-hosted development environment. You can use [Gitpod](https://www.gitpod.io/), which is free for open source projects. You can simply click the button below to start a new workspace:
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/DIYgod/RSSHub)
 
