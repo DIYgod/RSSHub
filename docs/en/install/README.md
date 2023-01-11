@@ -564,13 +564,15 @@ It is also valid to contain route parameters, e.g. `/weibo/user/2612249974`.
 
 ::: tip Experimental features
 
-Configs in this sections are in beta stage, and are turn off by default. Please read corresponded description and turn on if necessary.
+Configs in this sections are in beta stage, and **are turn off by default**. Please read corresponded description and turn on if necessary.
 
 :::
 
 `ALLOW_USER_HOTLINK_TEMPLATE`: [Parameters->Multimedia processing](/en/parameter.html#multimedia-processing)
 
 `FILTER_REGEX_ENGINE`: Define Regex engine used in [Parameters->filtering](/en/parameter.html#filtering). Valid value are `[re2, regexp]`. Default value is `re2`. We suggest public instance should leave this value to default, and this option right now is mainly for backward compatibility.
+
+`ALLOW_USER_SUPPLY_UNSAFE_DOMAIN`: allow users to provide a domain as a parameter to routes that are not in their allow list, respectively. Public instances are suggested to leave this value default, as it may lead to [Server-Side Request Forgery (SSRF)](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)
 
 ### Other Application Configurations
 
