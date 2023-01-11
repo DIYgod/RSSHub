@@ -4679,6 +4679,9 @@
     "/zaobao/:type?/:section?": [
         "shunf4"
     ],
+    "/zcmu/jwc/:type?": [
+        "CCraftY"
+    ],
     "/zcool/discover/:type?": [
         "junbaor",
         "nczitzk"
