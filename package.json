@@ -65,7 +65,7 @@
     "jest-junit": "15.0.0",
     "meilisearch": "0.30.0",
     "mockdate": "3.0.5",
-    "nock": "13.2.9",
+    "nock": "13.3.0",
     "nodemon": "2.0.20",
     "prettier": "2.8.2",
     "prettier-check": "2.0.0",
