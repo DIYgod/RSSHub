@@ -3397,6 +3397,12 @@ column 为 third 时可选的 category:
 
 <Route author="Director-0428" example="/woshipm/latest" path="/woshipm/latest"/>
 
+## 人人都是自媒体
+
+### 发现
+
+<Route author="Joey" example="/iiilab" path="/iiilab" radar="1" />
+
 ## 软餐
 
 ### 首页
