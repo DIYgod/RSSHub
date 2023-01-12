@@ -3247,6 +3247,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 浙江中医药大学
+
+### 教务处
+
+<Route author="CCraftY" example="/zcmu/jwc/1" path="/zcmu/jwc/:type?" :paramsDesc="['通知模块id']">
+
+| 成绩管理 | 学籍管理 | 考试管理 | 选课管理 | 排课管理 |
+| ---- | ---- | ---- | ---- | ---- |
+| 1    | 2    | 3    | 4    | 5    |
+
+</Route>
+
 ## 郑州大学
 
 ### 郑州大学新闻网
