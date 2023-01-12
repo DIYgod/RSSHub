@@ -1300,3 +1300,13 @@ GitHub 官方也提供了一些 RSS:
 ### 热门
 
 <Route author="SirM2z" example="/zcfy/hot" path="/zcfy/hot"/>
+
+## 前端早早聊
+
+### 文章
+
+<Route author="shaomingbo" example="/zaozao/article/quality"  path="/zaozao/article/:type?" :paramsDesc="['文章分类']" radar="1"/>
+
+| 精品推荐  | 技术干货 | 职场成长 | 社区动态  | 组件物料 | 行业动态 |
+| --------- | -------- | -------- | --------- | -------- | -------- |
+| recommend | quality  | growth   | community | material | industry |
