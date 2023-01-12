@@ -4685,6 +4685,9 @@
     "/zcmu/jwc/:type?": [
         "CCraftY"
     ],
+    "/zcmu/yxy/:type?": [
+        "CCraftY"
+    ],
     "/zcool/discover/:type?": [
         "junbaor",
         "nczitzk"
