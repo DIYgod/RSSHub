@@ -3261,7 +3261,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 药学院
 
-<Route author="CCraftY" example="/zcmu/yxy/0" path="/zcmu/yxy/:type?" :paramsDecs="['必选，模块id']">
+<Route author="CCraftY" example="/zcmu/yxy/0" path="/zcmu/yxy/:type?" :paramsDecs="['模块id']">
 
 |通知公告|评优评奖|文明规范|创新创业|校园文化|心理驿站|日常通知|
 |-------|--------|--------|--------|-------|-------|------|
