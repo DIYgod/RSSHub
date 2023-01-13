@@ -11422,10 +11422,10 @@ pupa@^2.0.1:
   dependencies:
     escape-goat "^2.0.0"
 
-puppeteer-core@19.5.0:
-  version "19.5.0"
-  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-19.5.0.tgz#2a1236764ad6f5e42d27c03907506727a90a3037"
-  integrity sha512-s2EE2x/7UfvR4AP+6OokY7yEmIboZoQFc2InuWUu5grWG7uka3W2Nch6+R4ERQepH4NO8kkkEBzNO4PqtwU4lQ==
+puppeteer-core@19.5.2:
+  version "19.5.2"
+  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-19.5.2.tgz#9b454b0ef89d3f07e20158dd4ced6ebd85d4dadb"
+  integrity sha512-Rqk+3kqM+Z2deooTYqcYt8lRtGffJdifWa9td9nbJSjhANWsFouk8kLBNUKycewCCFHM8TZUKS0x28OllavW2A==
   dependencies:
     cross-fetch "3.1.5"
     debug "4.3.4"
@@ -11485,16 +11485,16 @@ puppeteer-extra@3.3.4:
     debug "^4.1.1"
     deepmerge "^4.2.2"
 
-puppeteer@19.5.0:
-  version "19.5.0"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-19.5.0.tgz#7d2bf90c03ae75265caa6aca4953d196f649913f"
-  integrity sha512-601tKJdKu/mlL6l5wklNJiQbIxyEU2N4pwZzFkwhr1VizNYV0Fly1aFMT7qAp7CvzklYLypQGKn7/Zgpy+HheA==
+puppeteer@19.5.2:
+  version "19.5.2"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-19.5.2.tgz#f09ed55d5263cacaac4c5818d0d884b1e1d938b0"
+  integrity sha512-xlqRyrhXhVH114l79Y0XqYXUVG+Yfw4sKlvN55t8Y9DxtA5fzI1uqF8SVXbWK5DUMbD6Jo4lpixTZCTTZGD05g==
   dependencies:
     cosmiconfig "8.0.0"
     https-proxy-agent "5.0.1"
     progress "2.0.3"
     proxy-from-env "1.1.0"
-    puppeteer-core "19.5.0"
+    puppeteer-core "19.5.2"
 
 q@^1.1.2:
   version "1.5.1"
