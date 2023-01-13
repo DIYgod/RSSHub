@@ -2043,11 +2043,11 @@ category 对应的关键词有
 
 ### 最新上線
 
-<Route author="TonyRL" example="/cw/today" path="/cw/today" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/cw/today" path="/cw/today" radar="1" rssbud="1" puppeteer="1"/>
 
 ### 主頻道
 
-<Route author="TonyRL" example="/cw/master/8" path="/cw/master/:channel" :paramsDesc="['主頻道 ID，可在 URL 中找到']" radar="1" rssbud="1">
+<Route author="TonyRL" example="/cw/master/8" path="/cw/master/:channel" :paramsDesc="['主頻道 ID，可在 URL 中找到']" radar="1" rssbud="1" puppeteer="1">
 
 | 主頻道名稱 | 主頻道 ID |
 | ----- | ------ |
@@ -2069,7 +2069,7 @@ category 对应的关键词有
 
 ### 子頻道
 
-<Route author="TonyRL" example="/cw/sub/615" path="/cw/sub/:channel" :paramsDesc="['子頻道 ID，可在 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/cw/sub/615" path="/cw/sub/:channel" :paramsDesc="['子頻道 ID，可在 URL 中找到']" radar="1" rssbud="1" puppeteer="1"/>
 
 ## 卫报 The Guardian
 
