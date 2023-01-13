@@ -876,6 +876,9 @@
     "/curius/links/:name": [
         "Ovler-Young"
     ],
+    "/cw/author/:channel": [
+        "TonyRL"
+    ],
     "/cw/master/:channel": [
         "TonyRL"
     ],

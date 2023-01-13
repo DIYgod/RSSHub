@@ -3534,6 +3534,14 @@
         "source": [
           "/subchannel.action"
         ]
+      },
+      {
+        "title": "作者",
+        "docs": "https://docs.rsshub.app/traditional-media.html#tian-xia-za-zhi",
+        "source": [
+          "/author/:channel"
+        ],
+        "target": "/cw/author/:channel"
       }
     ]
   },
