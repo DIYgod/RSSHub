@@ -27,6 +27,10 @@ pageClass: routes
 
 </RouteEn>
 
+### Authors
+
+<RouteEn author="josh" example="/bloomberg/authors/ARbTQlRLRjE/matthew-s-levine" path="/bloomberg/authors/:id/:slug" :paramsDesc="['Author ID, can be found in URL', 'Author Slug, can be found in URL']" anticrawler="1" radar="1"/>
+
 ## CFD
 
 ### Indices Dividend Adjustment (GBP)
