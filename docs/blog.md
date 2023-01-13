@@ -244,6 +244,12 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 </Route>
 
+## 虎皮椒
+
+### 文章
+
+<Route author="wxluckly" example="/xunhupay/blog" path="/xunhupay/blog" radar="1"/>
+
 ## 華康字型故事
 
 ### 博客
