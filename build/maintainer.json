@@ -4691,6 +4691,9 @@
     "/zaobao/:type?/:section?": [
         "shunf4"
     ],
+    "/zaozao/article/:type?": [
+        "shaomingbo"
+    ],
     "/zcmu/jwc/:type?": [
         "CCraftY"
     ],
