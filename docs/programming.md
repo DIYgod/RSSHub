@@ -1153,6 +1153,18 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## 前端早早聊
+
+### 文章
+
+<Route author="shaomingbo" example="/zaozao/article/quality"  path="/zaozao/article/:type?" :paramsDesc="['文章分类']" radar="1">
+
+| 精品推荐      | 技术干货    | 职场成长   | 社区动态      | 组件物料     | 行业动态     |
+| --------- | ------- | ------ | --------- | -------- | -------- |
+| recommend | quality | growth | community | material | industry |
+
+</Route>
+
 ## 日报 | D2 资源库
 
 ### 日报 | D2 资源库
