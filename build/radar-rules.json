@@ -14071,6 +14071,101 @@
       }
     ]
   },
+  "qoo-app.com": {
+    "_name": "QooApp",
+    "apps": [
+      {
+        "title": "遊戲庫 - 評論",
+        "docs": "https://docs.rsshub.app/anime.html#qooapp",
+        "source": [
+          "/:lang/app-comment/:id",
+          "/app-comment/:id",
+          "/app/:id"
+        ]
+      },
+      {
+        "title": "遊戲庫 - 情報",
+        "docs": "https://docs.rsshub.app/anime.html#qooapp",
+        "source": [
+          "/:lang/app-post/:id",
+          "/app-post/:id",
+          "/app/:id"
+        ]
+      },
+      {
+        "title": "遊戲庫 - 筆記",
+        "docs": "https://docs.rsshub.app/anime.html#qooapp",
+        "source": [
+          "/:lang/app-note/:id",
+          "/app-note/:id",
+          "/app/:id"
+        ]
+      },
+      {
+        "title": "遊戲庫 - 曬卡",
+        "docs": "https://docs.rsshub.app/anime.html#qooapp",
+        "source": [
+          "/:lang/app-card/:id",
+          "/app-card/:id",
+          "/app/:id"
+        ]
+      }
+    ],
+    "news": [
+      {
+        "title": "資訊",
+        "docs": "https://docs.rsshub.app/anime.html#qooapp",
+        "source": [
+          "/:lang",
+          "/"
+        ]
+      }
+    ],
+    "notes": [
+      {
+        "title": "筆記留言",
+        "docs": "https://docs.rsshub.app/anime.html#qooapp",
+        "source": [
+          "/:lang/note/:id",
+          "/note/:id"
+        ]
+      },
+      {
+        "title": "熱門話題",
+        "docs": "https://docs.rsshub.app/anime.html#qooapp",
+        "source": [
+          "/:lang/topic/:topic",
+          "/topic/:topic"
+        ]
+      },
+      {
+        "title": "用户筆記",
+        "docs": "https://docs.rsshub.app/anime.html#qooapp",
+        "source": [
+          "/:lang/user/:uid",
+          "/user/:uid"
+        ]
+      }
+    ],
+    "user": [
+      {
+        "title": "遊戲評論",
+        "docs": "https://docs.rsshub.app/anime.html#qooapp",
+        "source": [
+          "/:lang/:uid",
+          "/:uid"
+        ]
+      },
+      {
+        "title": "用户筆記",
+        "docs": "https://docs.rsshub.app/anime.html#qooapp",
+        "source": [
+          "/:lang/:uid",
+          "/:uid"
+        ]
+      }
+    ]
+  },
   "qq.com": {
     "_name": "腾讯",
     "egame": [
