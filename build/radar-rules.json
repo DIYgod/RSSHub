@@ -17932,6 +17932,34 @@
       }
     ]
   },
+  "wnacg.org": {
+    "_name": "紳士漫畫",
+    ".": [
+      {
+        "title": "最新",
+        "docs": "https://docs.rsshub.app/anime.html#shen-shi-man-hua",
+        "source": [
+          "/albums.html",
+          "/"
+        ],
+        "target": "/wnacg"
+      },
+      {
+        "title": "分类更新",
+        "docs": "https://docs.rsshub.app/anime.html#shen-shi-man-hua",
+        "source": [
+          "/*"
+        ]
+      },
+      {
+        "title": "標籤更新",
+        "docs": "https://docs.rsshub.app/anime.html#shen-shi-man-hua",
+        "source": [
+          "/*"
+        ]
+      }
+    ]
+  },
   "worldjournal.com": {
     "_name": "世界新聞網",
     ".": [

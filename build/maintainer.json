@@ -4478,6 +4478,15 @@
     "/wizfile/updates": [
         "Fatpandac"
     ],
+    "/wnacg/": [
+        "KenMizz"
+    ],
+    "/wnacg/category/:cid": [
+        "Gandum2077"
+    ],
+    "/wnacg/tag/:tag": [
+        "Gandum2077"
+    ],
     "/worldjournal/:path*": [
         "TonyRL"
     ],
@@ -5697,8 +5706,6 @@
     "/ccnucs": [],
     "/ccnuwu": [],
     "/weexcn/news/:typeid": [],
-    "/ssmh": [],
-    "/ssmh/category/:cid": [],
     "/scnuyjs": [],
     "/scnucs": [],
     "/scutyjs": [],
