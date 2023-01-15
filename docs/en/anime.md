@@ -120,6 +120,56 @@ The RSS routing has not been rigorously tested and the information provided cann
 
 <RouteEn author="vzz64" example="/mangadex/58be6aa6-06cb-4ca5-bd20-f1392ce451fb/en" path="/:id/:lang?" :paramsDesc="['manga ID', 'language code']" radar="1" />
 
+## QooApp
+
+### Game Store - Review
+
+<RouteEn author="TonyRL" example="/qoo-app/apps/en/comment/7675" path="/qoo-app/apps/:lang?/comment/:id" :paramsDesc="['Language, see the table below, empty means `中文`', 'Game ID, can be found in URL']"  radar="1">
+
+| 中文 | English | 한국어 | Español | 日本語 | ไทย | Tiếng Việt |
+| -- | ------- | --- | ------- | --- | --- | ---------- |
+|    | en      | ko  | es      | ja  | th  | vi         |
+
+</RouteEn>
+
+### Game Store - Article
+
+<RouteEn author="TonyRL" example="/qoo-app/apps/en/post/7675" path="/qoo-app/apps/:lang?/post/:id" :paramsDesc="['Language, see the table above, empty means `中文`', 'Game ID, can be found in URL']"  radar="1"/>
+
+### Game Store - Notes
+
+<RouteEn author="TonyRL" example="/qoo-app/apps/en/note/7675" path="/qoo-app/apps/:lang?/note/:id" :paramsDesc="['Language, see the table above, empty means `中文`', 'Game ID, can be found in URL']"  radar="1"/>
+
+### Game Store - Cards
+
+<RouteEn author="TonyRL" example="/qoo-app/apps/en/card/7675" path="/qoo-app/apps/:lang?/card/:id" :paramsDesc="['Language, see the table above, empty means `中文`', 'Game ID, can be found in URL']"  radar="1"/>
+
+### News
+
+<RouteEn author="TonyRL" example="/qoo-app/news/en" path="/qoo-app/news/:lang?" :paramsDesc="['Language, see the table below, empty means `中文`']"  radar="1">
+
+| 中文 | English |
+| -- | ------- |
+|    | en      |
+
+</RouteEn>
+
+### Note Comments
+
+<RouteEn author="TonyRL" example="/qoo-app/notes/en/note/2329113" path="/qoo-app/notes/:lang?/note/:id" :paramsDesc="['Language, see the table above, empty means `中文`', 'Note ID, can be found in URL']"  radar="1"/>
+
+### Hot Hashtags
+
+<RouteEn author="TonyRL" example="/qoo-app/notes/en/topic/QooAppGacha" path="/qoo-app/notes/:lang?/topic/:id" :paramsDesc="['Language, see the table above, empty means `中文`', 'Hashtag name without `#`']"  radar="1"/>
+
+### User Game Comments
+
+<RouteEn author="TonyRL" example="/qoo-app/user/en/appComment/35399143" path="/qoo-app/user/:lang?/appComment/:uid" :paramsDesc="['Language, see the table above, empty means `中文`', 'User ID, can be found in URL']"  radar="1"/>
+
+### User Notes
+
+<RouteEn author="TonyRL" example="/qoo-app/notes/en/user/35399143" path="/qoo-app/notes/:lang?/user/:uid" :paramsDesc="['Language, see the table above, empty means `中文`', 'User ID, can be found in URL']"  radar="1"/>
+
 ## THBWiki
 
 ### Calendar
