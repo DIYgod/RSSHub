@@ -155,6 +155,14 @@ pageClass: routes
 
 <Route author="proletarius101" example="/iyouport/osint" path="/iyouport/:category?"/>
 
+## Layoffs.fyi
+
+### 裁员数据跟踪
+
+<Route author="BrandNewLifeJackie26" example="/layoffs" path="/layoffs" radar="1"/>
+
+该网站原始 RSS 数据源无人维护，故重新抓取数据并生成数据源。
+
 ## MiniFlux
 
 因需设置 API Key，故请自行架设 RSSHub。API 密钥则请于 MiniFlux 实例中的 `设置` -> `API密钥` -> `创建一个新的API密钥` 处获取。
