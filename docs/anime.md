@@ -739,11 +739,15 @@ Sources
 
 ### 最新
 
-<Route author="KenMizz" example="/ssmh" path="/ssmh/" />
+<Route author="KenMizz" example="/wnacg" path="/wnacg" radar="1"/>
 
 ### 分类更新
 
-<Route author="Gandum2077" example="/ssmh/category/6" path="/ssmh/category/:cid" :paramsDesc="['分类的id，即对应 URL 中的数字']" />
+<Route author="Gandum2077" example="/wnacg/category/6" path="/wnacg/category/:cid" :paramsDesc="['分类的 id，即对应 URL 中的数字']" radar="1"/>
+
+### 標籤更新
+
+<Route author="Gandum2077" example="/wnacg/tag/漢化" path="/wnacg/tag/:tag" :paramsDesc="['標籤，即 URL 中的 `tag-`後的文字']" radar="1"/>
 
 ## 鼠绘漫画
 
