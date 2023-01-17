@@ -3655,6 +3655,10 @@
     "/sensortower/blog/:language?": [
         "nczitzk"
     ],
+    "/shiep/:type/:id?": [
+        "gumibea",
+        "TeamSUEP"
+    ],
     "/shmeea/": [
         "jialinghui"
     ],
@@ -5883,7 +5887,6 @@
     "/iqshw/latest": [],
     "/3k8/latest": [],
     "/justrun": [],
-    "/shiep/:type": [],
     "/fjnews/:city/:limit": [],
     "/fjnews/jjnews": [],
     "/zsnews/index/:cateid": [],
