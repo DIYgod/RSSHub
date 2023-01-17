@@ -136,6 +136,14 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 </RouteEn>
 
+## Layoffs.fyi
+
+### Layoff Data Tracker
+
+<RouteEn author="BrandNewLifeJackie26" example="/layoffs" path="/layoffs" radar="1"/>
+
+RSS source in the original site is outdated.
+
 ## Lever
 
 ### Recruitment

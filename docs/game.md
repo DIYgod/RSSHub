@@ -855,6 +855,18 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 </Route>
 
+## 游戏日报
+
+### 分类
+
+<Route author="TonyRL" example="/yxrb/info" path="/yxrb/:category?" :paramsDesc="['分类，见下表，预设为 `info`']" radar="1">
+
+| 资讯   | 访谈      | 服务      | 游理游据     |
+| ---- | ------- | ------- | -------- |
+| info | talking | service | comments |
+
+</Route>
+
 ## 游戏时光
 
 ### 游戏时光新闻

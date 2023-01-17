@@ -1694,7 +1694,6 @@ category 对应的关键词有
 
 | 频道 ID  | 频道名 |
 | ------ | --- |
-| 25949  | 要闻  |
 | 26916  | 视频  |
 | 108856 | 战疫  |
 | 25950  | 时事  |
@@ -1705,9 +1704,9 @@ category 对应的关键词有
 | 119489 | 智库  |
 | 25953  | 生活  |
 | 26161  | 问吧  |
+| 122908 | 国际  |
 | -21    | 体育  |
 | -24    | 评论  |
-| -23    | 国际  |
 
 </Route>
 
@@ -2043,11 +2042,11 @@ category 对应的关键词有
 
 ### 最新上線
 
-<Route author="TonyRL" example="/cw/today" path="/cw/today" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/cw/today" path="/cw/today" radar="1" rssbud="1" puppeteer="1"/>
 
 ### 主頻道
 
-<Route author="TonyRL" example="/cw/master/8" path="/cw/master/:channel" :paramsDesc="['主頻道 ID，可在 URL 中找到']" radar="1" rssbud="1">
+<Route author="TonyRL" example="/cw/master/8" path="/cw/master/:channel" :paramsDesc="['主頻道 ID，可在 URL 中找到']" radar="1" rssbud="1" puppeteer="1">
 
 | 主頻道名稱 | 主頻道 ID |
 | ----- | ------ |
@@ -2069,7 +2068,11 @@ category 对应的关键词有
 
 ### 子頻道
 
-<Route author="TonyRL" example="/cw/sub/615" path="/cw/sub/:channel" :paramsDesc="['子頻道 ID，可在 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/cw/sub/615" path="/cw/sub/:channel" :paramsDesc="['子頻道 ID，可在 URL 中找到']" radar="1" rssbud="1" puppeteer="1"/>
+
+### 作者
+
+<Route author="TonyRL" example="/cw/author/57" path="/cw/author/:channel" :paramsDesc="['作者 ID，可在 URL 中找到']" radar="1" rssbud="1" puppeteer="1"/>
 
 ## 卫报 The Guardian
 
@@ -2226,6 +2229,12 @@ category 对应的关键词有
 ### PDF 版
 
 <Route author="nczitzk" example="/hkcd/pdf" path="/hkcd/pdf"/>
+
+## 新华每日电讯
+
+### 今日
+
+<Route author="Dustin-Jiang" example="/mrdx/today" path="/mrdx/today" />
 
 ## 新京报
 

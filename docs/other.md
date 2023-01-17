@@ -155,6 +155,14 @@ pageClass: routes
 
 <Route author="proletarius101" example="/iyouport/osint" path="/iyouport/:category?"/>
 
+## Layoffs.fyi
+
+### 裁员数据跟踪
+
+<Route author="BrandNewLifeJackie26" example="/layoffs" path="/layoffs" radar="1"/>
+
+该网站原始 RSS 数据源无人维护，故重新抓取数据并生成数据源。
+
 ## MiniFlux
 
 因需设置 API Key，故请自行架设 RSSHub。API 密钥则请于 MiniFlux 实例中的 `设置` -> `API密钥` -> `创建一个新的API密钥` 处获取。
@@ -805,6 +813,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 腾讯新闻 - 新型冠状病毒肺炎实时辟谣
 
 <Route author="DIYgod" example="/coronavirus/qq/fact" path="/coronavirus/qq/fact"/>
+
+### 腾讯新闻 - 新型冠状病毒肺炎疫情实时追踪
+
+数据来源：<https://news.qq.com/zt2020/page/feiyan.htm#/>
+
+#### 中国本土数据统计
+
+<Route author="CaoMeiYouRen" example="/tencent/news/coronavirus/total" path="/tencent/news/coronavirus/total"/>
+
+#### 省市疫情数据
+
+<Route author="CaoMeiYouRen" example="/tencent/news/coronavirus/data/湖北/武汉" path="/tencent/news/coronavirus/data/:province?/:city?" :paramsDesc="['省/直辖市名，缺省则返回国内数据','城市名，缺省则返回全省数据。直辖市请使用区/县名。']"/>
 
 ### South China Morning Post - China coronavirus outbreak
 

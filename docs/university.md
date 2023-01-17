@@ -2208,6 +2208,12 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 齐鲁工业大学
+
+### 通知公告
+
+<Route author="SunBK201" example="/qlu/notice" path="/qlu/notice" radar="1" />
+
 ## 清华大学
 
 ### 清华大学校内信息发布平台
@@ -3238,6 +3244,28 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 学院新闻 | 公告通知 | 学术交流 |
 | ---- | ---- | ---- |
 | 16   | 18   | 20   |
+
+</Route>
+
+## 浙江中医药大学
+
+### 教务处
+
+<Route author="CCraftY" example="/zcmu/jwc/1" path="/zcmu/jwc/:type?" :paramsDesc="['通知模块id']">
+
+| 教务管理 | 成绩管理 | 学籍管理 | 考试管理 | 选课管理 | 排课管理 |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 1    | 2    | 3    | 4    | 5    |
+
+</Route>
+
+### 药学院
+
+<Route author="CCraftY" example="/zcmu/yxy/0" path="/zcmu/yxy/:type?" :paramsDecs="['模块id']">
+
+| 通知公告 | 评优评奖 | 文明规范 | 创新创业 | 校园文化 | 心理驿站 | 日常通知 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 0    | 1    | 2    | 3    | 4    | 5    | 6    |
 
 </Route>
 
