@@ -56,7 +56,7 @@
     "@vuepress/plugin-pwa": "1.9.8",
     "@vuepress/shared-utils": "1.9.8",
     "cross-env": "7.0.3",
-    "eslint": "8.31.0",
+    "eslint": "8.32.0",
     "eslint-config-prettier": "8.6.0",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-yml": "1.4.0",
@@ -91,7 +91,7 @@
   "dependencies": {
     "@koa/router": "12.0.0",
     "@postlight/parser": "2.2.3",
-    "@sentry/node": "7.31.0",
+    "@sentry/node": "7.31.1",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
@@ -146,7 +146,7 @@
     "tiny-async-pool": "2.1.0",
     "torrent-search-api": "2.1.4",
     "tough-cookie": "4.1.2",
-    "twitter-api-v2": "1.13.0",
+    "twitter-api-v2": "1.14.0",
     "winston": "3.8.2",
     "xml2js": "0.4.23"
   },
