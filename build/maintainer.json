@@ -572,7 +572,7 @@
     "/blockbeats/:channel?": [
         "Fatpandac"
     ],
-    "/bloomberg/authors/:id/:slug": [
+    "/bloomberg/authors/:id/:slug/:source?": [
         "josh"
     ],
     "/bloomberg/:site?": [
