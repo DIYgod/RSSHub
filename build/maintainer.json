@@ -4830,6 +4830,12 @@
     "/zhitongcaijing/:id?/:category?": [
         "nczitzk"
     ],
+    "/zhiy/letters/:author": [
+        "TonyRL"
+    ],
+    "/zhiy/posts/:author": [
+        "TonyRL"
+    ],
     "/zhubai/:id": [
         "naixy28"
     ],

@@ -10671,6 +10671,15 @@
                     const category = new URL(url).searchParams.get('category_key');
                     return `/zhitongcaijing/${id}${category ? `/${category}` : ''}`;
                 } } ] },
+  "zhiy.cc":{ _name:"知园",
+    ".":[ { title:"Newsletter",
+        docs:"https://docs.rsshub.app/new-media.html#zhi-yuan",
+        source:[ "/:author" ],
+        target:"/zhiy/letters/:author" },
+      { title:"笔记",
+        docs:"https://docs.rsshub.app/new-media.html#zhi-yuan",
+        source:[ "/:author" ],
+        target:"/zhiy/posts/:author" } ] },
   "zhubai.love":{ _name:"竹白",
     ".":[ { title:"文章",
         docs:"https://docs.rsshub.app/blog.html#zhu-bai",
