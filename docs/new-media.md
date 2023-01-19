@@ -4373,6 +4373,16 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 <Route author="x2009again" example="/yunspe/newsflash" path="/yunspe/newsflash" />
 
+## 知园
+
+### Newsletter
+
+<Route author="TonyRL" example="/zhiy/letters/messy" path="/zhiy/letters/:author" :paramsDesc="['作者 ID，可在URL中找到']" radar="1" rssbud="1"/>
+
+### 笔记
+
+<Route author="TonyRL" example="/zhiy/posts/long" path="/zhiy/posts/:author" :paramsDesc="['作者 ID，可在URL中找到']" radar="1" rssbud="1"/>
+
 ## 中国纺织经济信息网
 
 ### 资讯
