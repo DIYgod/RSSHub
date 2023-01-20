@@ -2318,6 +2318,12 @@ others = 热点新闻 + 滚动新闻
 
 <Route author="Jeason0228" example="/guancha/personalpage/243983" path="/guancha/personalpage/:uid" :paramsDesc="['用户id， 可在URL中找到']" />
 
+## 观点网
+
+### 资讯
+
+<Route author="drgnchan" example="/guandian/finance" path="/guandian/:category" :paramsDesc="['资讯分类，可在URL中找到']" radar="1"/>
+
 ## 观海新闻
 
 ### 首页
