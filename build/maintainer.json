@@ -1228,6 +1228,9 @@
     "/economist/gre-vocabulary": [
         "xyqfer"
     ],
+    "/economist/global-business-review/:language?": [
+        "prnake"
+    ],
     "/economist/:endpoint": [
         "ImSingee"
     ],

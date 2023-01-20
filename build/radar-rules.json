@@ -4665,6 +4665,19 @@
       }
     ]
   },
+  "businessreview.global": {
+    "_name": "The Economist",
+    ".": [
+      {
+        "title": "商论",
+        "docs": "https://docs.rsshub.app/traditional-media.html#the-economist",
+        "source": [
+          "/"
+        ],
+        "target": "/economist/global-business-review"
+      }
+    ]
+  },
   "jxjy.ecust.edu.cn": {
     "_name": "华东理工继续教育学院",
     ".": [
