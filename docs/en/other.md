@@ -154,7 +154,7 @@ RSS source in the original site is outdated.
 
 ### Jobs
 
-<RouteEn author="BrandNewLifeJackie26" example="/jobs/C-P/1/software engineer" path="/jobs/:job_types/:exp_levels/:keywords?" :paramsDesc="['job_types: see the following table for details, use \'-\' as delimiter', 'exp_levels: see the following table for details, use \'-\' as delimiter', 'keywords']" radar="1">
+<RouteEn author="BrandNewLifeJackie26" example="/linkedin/jobs/C-P/1/software engineer" path="/linkedin/jobs/:job_types/:exp_levels/:keywords?" :paramsDesc="['See the following table for details, use \'-\' as delimiter', 'See the following table for details, use \'-\' as delimiter', 'keywords']" radar="1">
 
 #### `job_types` list
 
@@ -169,8 +169,8 @@ RSS source in the original site is outdated.
 | 1         | 2           | 3         | 4                | 5        | all |
 
 For example:
-1. If we want to search software engineer jobs of all levels and all job types, use `/jobs/all/all/software engineer`
-2. If we want to search all entry level contractor/part time software engineer jobs, use `/jobs/P-C/2/software engineer`
+1. If we want to search software engineer jobs of all levels and all job types, use `/linkedin/jobs/all/all/software engineer`
+2. If we want to search all entry level contractor/part time software engineer jobs, use `/linkedin/jobs/P-C/2/software engineer`
 
 **To make it easier, the recommended way is to start a search on <a href="https://www.linkedin.com/jobs/search">LinkedIn</a> and use <a href="https://github.com/DIYgod/RSSHub-Radar">RSSHub Radar</a> to load the specific feed.**
 
