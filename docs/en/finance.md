@@ -29,7 +29,7 @@ pageClass: routes
 
 ### Authors
 
-<RouteEn author="josh" example="/bloomberg/authors/ARbTQlRLRjE/matthew-s-levine" path="/bloomberg/authors/:id/:slug" :paramsDesc="['Author ID, can be found in URL', 'Author Slug, can be found in URL']" anticrawler="1" radar="1"/>
+<RouteEn author="josh" example="/bloomberg/authors/ARbTQlRLRjE/matthew-s-levine" path="/bloomberg/authors/:id/:slug/:source?" :paramsDesc="['Author ID, can be found in URL', 'Author Slug, can be found in URL', 'Data source, either `api` or `rss`,`api` by default']" anticrawler="1" radar="1"/>
 
 ## CFD
 
