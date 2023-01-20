@@ -1524,6 +1524,9 @@
     "/google/fonts/:sort?": [
         "Fatpandac"
     ],
+    "/google/news/:category/:locale": [
+        "zoenglinghou"
+    ],
     "/google/scholar/:query": [
         "HenryQW"
     ],
@@ -5675,7 +5678,6 @@
     "/hackerone/hacktivity": [],
     "/hackerone/search/:search": [],
     "/cowlevel/element/:id": [],
-    "/google/news/:category/:locale": [],
     "/p-articles/section/:section": [],
     "/p-articles/contributors/:author": [],
     "/haohaozhu/whole-house/:keyword?": [],
