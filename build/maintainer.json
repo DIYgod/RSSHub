@@ -1777,6 +1777,9 @@
         "occupy5",
         "nczitzk"
     ],
+    "/guandian/:category": [
+        "drgnchan"
+    ],
     "/guangdiu/rank": [
         "fatpandac"
     ],
