@@ -494,6 +494,10 @@ Solidot 提供的 feed:
 
 <Route author="xyqfer" example="/economist/gre-vocabulary" path="/economist/gre-vocabulary" radar="1" rssbud="1"/>
 
+### 商论
+
+<Route author="prnake" example="/economist/global-business-review/cn-en" path="/economist/global-business-review/:language?" :paramsDesc="['语言，支持简体 cn、繁体 tw、英文 en ，可选择多个语言，默认为 cn-en']"  radar="1" rssbud="1"/>
+
 ### 下载
 
 <Route author="nczitzk" example="/economist/download" path="/economist/download" >
