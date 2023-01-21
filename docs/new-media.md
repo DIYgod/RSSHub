@@ -2260,7 +2260,7 @@ Type 栏目：
 
 ### 新闻
 
-<Route author="zoenglinghou" example="/google/news/要闻/hl=zh-CN&gl=CN&ceid=CN:zh-Hans" path="/google/news/:category/:locale" :paramsDesc="['子分类标题', '地区语言设置，在地址栏 `?` 后，包含 `hl`，`gl`，以及 `ceid` 参数']"/>
+<Route author="zoenglinghou" example="/google/news/焦点新闻/hl=zh-CN&gl=CN&ceid=CN:zh-Hans" path="/google/news/:category/:locale" :paramsDesc="['子分类标题', '地区语言设置，在地址栏 `?` 后，包含 `hl`，`gl`，以及 `ceid` 参数']"/>
 
 ## 观察者网
 
@@ -2317,6 +2317,12 @@ others = 热点新闻 + 滚动新闻
 ### 个人主页文章
 
 <Route author="Jeason0228" example="/guancha/personalpage/243983" path="/guancha/personalpage/:uid" :paramsDesc="['用户id， 可在URL中找到']" />
+
+## 观点网
+
+### 资讯
+
+<Route author="drgnchan" example="/guandian/finance" path="/guandian/:category" :paramsDesc="['资讯分类，可在URL中找到']" radar="1"/>
 
 ## 观海新闻
 

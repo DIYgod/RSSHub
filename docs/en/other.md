@@ -150,6 +150,32 @@ RSS source in the original site is outdated.
 
 <RouteEn author="tsarlewey" example="/lever/lever" path="/lever/:domain" :paramsDesc="['Company with Lever Board']"/>
 
+## LinkedIn
+
+### Jobs
+
+<RouteEn author="BrandNewLifeJackie26" example="/linkedin/jobs/C-P/1/software engineer" path="/linkedin/jobs/:job_types/:exp_levels/:keywords?" :paramsDesc="['See the following table for details, use \'-\' as delimiter', 'See the following table for details, use \'-\' as delimiter', 'keywords']" radar="1">
+
+#### `job_types` list
+
+| Full Time | Part Time | Contractor | All |
+| --------- | --------- | ---------- | --- |
+| F         | P         | C          | all |
+
+#### `exp_levels` list
+
+| Intership | Entry Level | Associate | Mid-Senior Level | Director | All |
+| --------- | ----------- | --------- | ---------------- | -------- | --- |
+| 1         | 2           | 3         | 4                | 5        | all |
+
+For example:
+1. If we want to search software engineer jobs of all levels and all job types, use `/linkedin/jobs/all/all/software engineer`
+2. If we want to search all entry level contractor/part time software engineer jobs, use `/linkedin/jobs/P-C/2/software engineer`
+
+**To make it easier, the recommended way is to start a search on <a href="https://www.linkedin.com/jobs/search">LinkedIn</a> and use <a href="https://github.com/DIYgod/RSSHub-Radar">RSSHub Radar</a> to load the specific feed.**
+
+</RouteEn>
+
 ## MITRE
 
 ### All Publications
@@ -168,7 +194,7 @@ RSS source in the original site is outdated.
 
 <RouteEn author="nczitzk" example="/nobelprize" path="/nobelprize/:caty" :paramsDesc="['Category, see below, all by default']">
 
-| Physics | Chemistry | Physiology or Medicine | Literature | Peace | Economic Science |
+| Physics | Chemistry | Physiology or Medicine | Literature | Peace | Economic Science  |
 | ------- | --------- | ---------------------- | ---------- | ----- | ----------------- |
 | physics | chemistry | physiology-or-medicine | literature | peace | economic-sciences |
 
@@ -180,9 +206,9 @@ RSS source in the original site is outdated.
 
 <RouteEn author="lyrl" example="/usepanda/feeds/5718e53e7a84fb1901e059cc" path="/usepanda/feeds/:id" :paramsDesc="['Feed ID']">
 
-| Channel                   | feedId                    |
-| -------------------- | ------------------------ |
-| Github | 5718e53e7a84fb1901e059cc |
+| Channel | feedId                   |
+| ------- | ------------------------ |
+| Github  | 5718e53e7a84fb1901e059cc |
 
 </RouteEn>
 
@@ -231,7 +257,7 @@ RSS source in the original site is outdated.
 
 Track entries containing specific keywords on major social media platforms.
 
-Current listings: *Weibo Search*、*Toutiao Search*、*Zhihu Search*、*Zhihu Videos*、*Zhihu Topics*。
+Current listings: _Weibo Search_、_Toutiao Search_、_Zhihu Search_、_Zhihu Videos_、_Zhihu Topics_。
 
 Data Source: [trending-in-one](https://github.com/huqi-pr/trending-in-one)
 
