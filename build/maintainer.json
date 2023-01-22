@@ -563,6 +563,9 @@
     "/bjfu/news/:type": [
         "markmingjie"
     ],
+    "/bjp/apod": [
+        "HenryQW"
+    ],
     "/bjx/gf/:type": [
         "Sxuet"
     ],
@@ -5310,7 +5313,6 @@
     "/instapaper/person/:name": [],
     "/ui-cn/article": [],
     "/ui-cn/user/:id": [],
-    "/bjp/apod": [],
     "/juesheng": [],
     "/maitta": [],
     "/blogs/jingwei.link": [],
