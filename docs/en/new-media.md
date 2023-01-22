@@ -692,7 +692,7 @@ Compared to the official one, this feed:
 
 ### News
 
-<RouteEn author="nczitzk" example="/skysports/news/ac-milan" path="/skysports/news/:team" :paramsDesc="['Team id, can be found in URL to the team page']" />\
+<RouteEn author="nczitzk" example="/skysports/news/ac-milan" path="/skysports/news/:team" :paramsDesc="['Team id, can be found in URL to the team page']" />
 
 ## Soomal
 
