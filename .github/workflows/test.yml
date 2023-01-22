@@ -49,7 +49,6 @@ jobs:
         run: npm run jest:coverage
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
-          GH_ACTIONS: 1
       - name: Upload coverage to Codecov
         if: ${{ matrix.node-version == '18' }}
         uses: codecov/codecov-action@v3

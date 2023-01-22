@@ -42,7 +42,7 @@ describe('puppeteer', () => {
         browser = null;
     }, 45000);
 
-    if (!process.env.GH_ACTIONS) {
+    if (!process.env.GITHUB_ACTIONS) {
         it('puppeteer without stealth', async () => {
             puppeteer = require('../../lib/utils/puppeteer');
             browser = await puppeteer({ stealth: false });
