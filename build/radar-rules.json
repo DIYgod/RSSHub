@@ -15455,6 +15455,18 @@
       }
     ]
   },
+  "skysports.com": {
+    "_name": "Sky Sports",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/new-media.html#sky-sports-news",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
   "slowmist.com": {
     "_name": "慢雾科技 SLOWMIST",
     ".": [

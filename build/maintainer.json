@@ -3727,6 +3727,9 @@
     "/sis001/forum/:id": [
         "TonyRL"
     ],
+    "/skysports/news/:team": [
+        "nczitzk"
+    ],
     "/smzdm/article/:uid": [
         "xfangbao"
     ],
@@ -6190,7 +6193,6 @@
     "/yuzu-emu/entry": [],
     "/partnershiponai/resources": [],
     "/commonapp/blog": [],
-    "/skysports/news/:team": [],
     "/europapress/:category?": [],
     "/worldhappiness/blog": [],
     "/worldhappiness/archive": [],
