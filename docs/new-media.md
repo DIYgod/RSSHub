@@ -3385,23 +3385,29 @@ column 为 third 时可选的 category:
 
 ### 热门文章
 
-<Route author="WenryXu" example="/woshipm/popular" path="/woshipm/popular"/>
+<Route author="WenryXu" example="/woshipm/popular" path="/woshipm/popular/:range?" :paramsDesc="['时间，见下表，默认为 `daily`']" radar="1">
+
+| 日榜    | 周榜     | 月榜      |
+| ----- | ------ | ------- |
+| daily | weekly | monthly |
+
+</Route>
 
 ### 天天问
 
-<Route author="WenryXu" example="/woshipm/wen" path="/woshipm/wen"/>
+<Route author="WenryXu" example="/woshipm/wen" path="/woshipm/wen" radar="1"/>
 
 ### 用户收藏
 
-<Route author="LogicJake" example="/woshipm/bookmarks/324696" path="/woshipm/bookmarks/:id" :paramsDesc="['用户 id']"/>
+<Route author="LogicJake" example="/woshipm/bookmarks/324696" path="/woshipm/bookmarks/:id" :paramsDesc="['用户 id']" radar="1"/>
 
 ### 用户文章
 
-<Route author="LogicJake" example="/woshipm/user_article/324696" path="/woshipm/user_article/:id" :paramsDesc="['用户 id']"/>
+<Route author="LogicJake" example="/woshipm/user_article/324696" path="/woshipm/user_article/:id" :paramsDesc="['用户 id']" radar="1"/>
 
 ### 最新文章
 
-<Route author="Director-0428" example="/woshipm/latest" path="/woshipm/latest"/>
+<Route author="Director-0428" example="/woshipm/latest" path="/woshipm/latest" radar="1"/>
 
 ## 人人都是自媒体
 
