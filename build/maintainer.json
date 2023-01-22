@@ -849,6 +849,11 @@
     "/coomer/posts": [
         "nczitzk"
     ],
+    "/copymanga/comic/:id/:chapterCnt?": [
+        "btdwv",
+        "marvolo666",
+        "yan12125"
+    ],
     "/cpcey/:type?": [
         "Fatpandac"
     ],
@@ -5222,8 +5227,6 @@
     "/xiachufang/popular/:timeframe?": [],
     "/eeo/:column?/:category?": [],
     "/tencentvideo/playlist/:id": [],
-    "/copymanga/comic/:id/:chapterCnt?": [],
-    "/copymanga/comic/:id": [],
     "/cartoonmad/comic/:id": [],
     "/vol/:mode?": [],
     "/dongmanmanhua/:category/:name/:id": [],

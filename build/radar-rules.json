@@ -3357,6 +3357,61 @@
       }
     ]
   },
+  "copymanga.com": {
+    "_name": "拷贝漫画",
+    ".": [
+      {
+        "title": "漫画更新",
+        "docs": "https://docs.rsshub.app/anime.html#kao-bei-man-hua",
+        "source": "/comic/:id",
+        "target": "/copymanga/comic/:id/5"
+      }
+    ]
+  },
+  "copymanga.info": {
+    "_name": "拷贝漫画",
+    ".": [
+      {
+        "title": "漫画更新",
+        "docs": "https://docs.rsshub.app/anime.html#kao-bei-man-hua",
+        "source": "/comic/:id",
+        "target": "/copymanga/comic/:id/5"
+      }
+    ]
+  },
+  "copymanga.net": {
+    "_name": "拷贝漫画",
+    ".": [
+      {
+        "title": "漫画更新",
+        "docs": "https://docs.rsshub.app/anime.html#kao-bei-man-hua",
+        "source": "/comic/:id",
+        "target": "/copymanga/comic/:id/5"
+      }
+    ]
+  },
+  "copymanga.org": {
+    "_name": "拷贝漫画",
+    ".": [
+      {
+        "title": "漫画更新",
+        "docs": "https://docs.rsshub.app/anime.html#kao-bei-man-hua",
+        "source": "/comic/:id",
+        "target": "/copymanga/comic/:id/5"
+      }
+    ]
+  },
+  "copymanga.site": {
+    "_name": "拷贝漫画",
+    ".": [
+      {
+        "title": "漫画更新",
+        "docs": "https://docs.rsshub.app/anime.html#kao-bei-man-hua",
+        "source": "/comic/:id",
+        "target": "/copymanga/comic/:id/5"
+      }
+    ]
+  },
   "ey.gov.tw": {
     "_name": "行政院消费者保护会",
     "cpc": [

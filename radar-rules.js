@@ -71,7 +71,6 @@
     'ishuhui.com': { _name: '鼠绘漫画', www: [{ title: '鼠绘漫画', docs: 'https://docs.rsshub.app/anime.html#shu-hui-man-hua', source: '/comics/anime/:id', target: '/shuhui/comics/:id' }] },
     'www.chicagotribune.com': { _name: 'Chicago Tribune', www: [{ title: 'Chicago Tribune', docs: 'https://docs.rsshub.app/traditional_media.html#chicago-tribune', source: '/' }] },
     'haimaoba.com': { _name: '海猫吧', www: [{ title: '漫画更新', docs: 'https://docs.rsshub.app/anime.html#hai-mao-ba', source: '/catalog/:id', target: '/haimaoba/:id' }] },
-    'copymanga.com': { _name: '拷贝漫画', www: [{ title: '漫画更新', docs: 'https://docs.rsshub.app/anime.html#kao-bei-man-hua', source: '/comic/:id/', target: '/manhuagui/comic/:id/5' }] },
     'pgyer.com': { _name: '蒲公英应用分发', www: [{ title: 'app更新', docs: 'https://docs.rsshub.app/program-update.html#pu-gong-ying-ying-yong-fen-fa', source: '/:app', target: '/pgyer/:app' }] },
     'wineyun.com': { _name: '酒云网', www: [{ title: '最新商品', docs: 'https://docs.rsshub.app/other.html#jiu-yun-wang', source: ['/:category'], target: '/wineyun/:category' }] },
     'epicgames.com': { _name: 'Epic Games', www: [{ title: '每周免费游戏', docs: 'https://docs.rsshub.app/game.html#epicgames-freegame', source: '/store/zh-CN/free-games', target: '/epicgames/freegames' }] },
