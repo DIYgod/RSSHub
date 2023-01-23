@@ -448,7 +448,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 月刊
 
-<Route author="moke8 nczitzk" example="/hellogithub/volume" path="/hellogithub/volume"/>
+<Route author="moke8 nczitzk CaoMeiYouRen" example="/hellogithub/volume" path="/hellogithub/volume"/>
 
 ## Hex-Rays
 
