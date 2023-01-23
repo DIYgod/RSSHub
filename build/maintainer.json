@@ -4554,6 +4554,9 @@
     "/wzu/news/:type?": [
         "Chandler-Lu"
     ],
+    "/x6d/:id?": [
+        "nczitzk"
+    ],
     "/xaut/index/:category?": [
         "mocusez"
     ],
@@ -5935,7 +5938,6 @@
     "/kongfz/people/:id": [],
     "/kongfz/shop/:id/:cat?": [],
     "/xmind/mindmap/:lang?": [],
-    "/x6d/:id?": [],
     "/edrawsoft/mindmap/:classId?/:order?/:sort?/:lang?/:price?/:search?": [],
     "/tahui/rptlist": [],
     "/guiltfree/onsale": [],
