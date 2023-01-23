@@ -387,6 +387,18 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 </RouteEn>
 
+## Mixcloud
+
+### Radio shows, DJ mix sets and Podcasts
+
+<RouteEn author="Misaka13514" example="/mixcloud/dholbach/uploads" path="/mixcloud/:username/:type?" :paramsDesc="['Username, can be found in URL', 'Type, see below, uploads by default']" radar="1" rssbud="1">
+
+| Shows   | Favorites | History | Stream |
+| ------- | --------- | ------- | ------ |
+| uploads | favorites | listens | stream |
+
+</RouteEn>
+
 ## Nyaa
 
 ### Search Result
