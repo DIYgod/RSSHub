@@ -468,7 +468,7 @@ R18 显示
 
 ### 每日一图
 
-<Route author="HenryQW" example="/bjp/apod" path="/bjp/apod"/>
+<Route author="HenryQW" example="/bjp/apod" path="/bjp/apod" radar="1"/>
 
 ## 不羞涩
 
