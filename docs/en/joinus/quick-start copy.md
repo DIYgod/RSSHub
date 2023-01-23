@@ -45,7 +45,7 @@ Create a new js script in the corresponding [/lib/v2/](https://github.com/DIYgod
     Acquiring data via the official API provided by the data source using got:
 
     ```js
-    // Initiate a HTTP GET request
+    // Initiate an HTTP GET request
     const response = await got({
         method: 'get',
         url: `https://api.bilibili.com/x/space/coin/video?vmid=${uid}&jsonp=jsonp`,
@@ -109,7 +109,7 @@ Create a new js script in the corresponding [/lib/v2/](https://github.com/DIYgod
     Acquiring data by scrapping the HTML using got:
 
     ```js
-    // Initiate a HTTP GET request
+    // Initiate n GET request
     const response = await got({
         method: 'get',
         url: 'https://www.douban.com/explore',

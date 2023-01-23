@@ -3,29 +3,31 @@ sidebarDepth: 2
 ---
 # Create your own RSSHub route
 
-As said before, we will be creating a RSS feed for [GitHub Repo Issues](/en/programming.html#github-repo-issues) as an example. All of the four data acquisition methods mentioned will be shown.
+As mentioned earlier, we will create a RSS feed for [GitHub Repo Issues](/en/programming.html#github-repo-issues) as an example. All of four data collection methods mentioned will be shown.
 
 1. [Using API](#using-api)
-2. [Via HTML webpage using got](#via-html-webpage-using-got)
+2. [Via HTML web page using got](#via-html-web-page-using-got)
+3. [Using the common configured route](#using-the-common-configured-route)
+4. [Using puppeteer](#using-puppeteer)
 
 ## Using API
 
 ### Check the API documentation
 
-Different websites have different APIs. You can refer to the API documentation of the website you want to create a RSS for. In this case, we will be using the [GitHub Issues API](https://docs.github.com/en/rest/issues/issues#list-repository-issues).
+Different sites have different APIs. You can check the API documentation for the site you want to create an RSS for. In this case, we will use the [GitHub Issues API](https://docs.github.com/en/rest/issues/issues#list-repository-issues).
 
-### Creating the main file
+### Create the main file
 
-Open your code editor and create a new file. Since we are going to create a RSS for GitHub issues, it is suggested to save the file as `issue.js` but you can also name it as you like.
+Open your code editor and create a new file. Since we are going to create an RSS for GitHub issues, it is suggested that you save the file as `issue.js`, but you can also name it whatever you like.
 
-Here's the base code to get you started:
+Here's the basic code to get you started:
 
 <code-group>
 <code-block title="issue.js">
 
 ```js
 // Require the necessary modules
-const got = require('@/utils/got'); // a customized got
+const got = require('@/utils/got'); // a customised got
 const { parseDate } = require('@/utils/parse-date');
 
 module.exports = async (ctx) => {
@@ -40,9 +42,9 @@ module.exports = async (ctx) => {
 </code-block>
 </code-group>
 
-### Obtaining user input
+### Retrieving user input
 
-As said before, we want users to enter the GitHub username and repository name and fall back to `RSSHub` if users don't enter the repository name in the request URL.
+As mentioned earlier, we want users to enter a GitHub username and a repository name, and fall back to `RSSHub` if they don't enter the repository name in the request URL.
 
 <code-group>
 <code-block title="Object destructuring" active>
@@ -74,9 +76,9 @@ module.exports = async (ctx) => {
 </code-block>
 </code-group>
 
-### Obtaining data from the API
+### Getting data from the API
 
-Now we have the user input, we can use it to make a request to the API. In most of the cases, you will need to use `got` from `@/utils/got`(a customised [got](https://www.npmjs.com/package/got) wrapper) to make HTTP requests. You can refer to the [got documentation](https://github.com/sindresorhus/got/tree/v11#usage) for more information.
+Now that we have the user input, we can use it to make a request to the API. In most of the cases, you will need to use `got` from `@/utils/got`(a customised [got](https://www.npmjs.com/package/got) wrapper) to make HTTP requests. See [got documentation](https://github.com/sindresorhus/got/tree/v11#usage) for more information.
 
 <code-group>
 <code-block title="Object destructuring" active>
@@ -84,13 +86,13 @@ Now we have the user input, we can use it to make a request to the API. In most 
 ```js{3-16}
 module.exports = async (ctx) => {
     const { user, repo = 'RSSHub' } = ctx.params;
-    // Initiate a HTTP GET request to the API
-    // Note that .data is the data object returned from the request
+    // Initiate an HTTP GET request to the API
+    // Note that .data is the data object returned by the request
     const { data } = await got(`https://api.github.com/repos/${user}/${repo}/issues`, { 
         headers: {
-            // In this example, HTML is picked for simplicity instead
-            // of the recommended 'application/vnd.github+json' which
-            // will return Markdown and requires additional processing
+            // This example uses HTML for simplicity instead of the 
+            // recommended 'application/vnd.github+json', which returns 
+            // Markdown and requires additional processing.
             accept: 'application/vnd.github.html+json',
         },
         searchParams: {
@@ -112,7 +114,7 @@ module.exports = async (ctx) => {
 module.exports = async (ctx) => {
     const user = ctx.params.user;
     const repo = ctx.params.repo ?? 'RSSHub';
-    // Initiate a HTTP GET request to the API
+    // Initiate an HTTP GET request to the API
     const response = await got(`https://api.github.com/repos/${user}/${repo}/issues`, { 
         headers: {
             accept: 'application/vnd.github.html+json',
@@ -121,7 +123,7 @@ module.exports = async (ctx) => {
             per_page: ctx.query.limit ? parseInt(ctx.query.limit, 10) : 30,
         },
     });
-    // response.data is the data object returned from the request above
+    // response.data is the data object returned by the above request
     const data = response.data;
 
     ctx.state.data = {
@@ -135,11 +137,11 @@ module.exports = async (ctx) => {
 
 ### Outputting the RSS
 
-Now we have the data from the API, we need to process it further to generate RSS in accordance with RSS specification. Mainly channel title, channel link as well as item title, item link, item description and item publish date are required.
+Now that we have the data from the API, we need to process it further to generate RSS in accordance with RSS specification. Mainly we need the channel title, channel link as well as item title, item link, item description and item publication date.
 
-Assign them to the `ctx.state.data` object and RSSHub's middleware will handle the rest.
+Assign them to the `ctx.state.data` object and RSSHub's middleware will do the rest.
 
-The final code should look like this:
+Your final code should look like this:
 
 <code-group>
 <code-block title="Final code" active>
@@ -233,18 +235,18 @@ module.exports = async (ctx) => {
 </code-block>
 </code-group>
 
-## Via HTML webpage using got
+## Via HTML web page using got
 
-### Creating the main file
+### Creat the main file
 
-Open your code editor and create a new file. Since we are going to create a RSS for GitHub issues, it is suggested to save the file as `issue.js` but you can also name it as you like.
+Open your code editor and create a new file. Since we are going to create a RSS for GitHub issues, it is suggested that you save the file as `issue.js` but you can also name it whatever you like.
 
-Here's the base code to get you started:
+Here's the basic code to get you started:
 
 ```js
 // Require the necessary modules
-const got = require('@/utils/got'); // a customized got
-const cheerio = require('cheerio'); // a HTML parser with jQuery-like API
+const got = require('@/utils/got'); // a customised got
+const cheerio = require('cheerio'); // an HTML parser with a jQuery-like API
 const { parseDate } = require('@/utils/parse-date');
 
 module.exports = async (ctx) => {
@@ -256,9 +258,9 @@ module.exports = async (ctx) => {
 };
 ```
 
-### Obtaining user input
+### Retrieving user input
 
-As said before, we want users to enter the GitHub username and repository name and fall back to `RSSHub` if users don't enter the repository name in the request URL.
+As mentioned before, we want users to enter a GitHub username and a repository name, and fall back to `RSSHub` if they don't enter the repository name in the request URL.
 
 ```js{2}
 module.exports = async (ctx) => {
@@ -270,28 +272,28 @@ module.exports = async (ctx) => {
 };
 ```
 
-### Obtaining data from the webpage
+### Getting data from the web page
 
-Now we have the user input, we can use it to make a request to the webpage. In most of the cases, you will need to use got from `@/utils/got`(a customised [got](https://www.npmjs.com/package/got) wrapper) to make HTTP requests. You can refer to the [got documentation](https://github.com/sindresorhus/got/tree/v11#usage) for more information.
+Now that we have the user input, we can use it to make a request to the web page. In most of the cases, you will need to use got from `@/utils/got`(a customised [got](https://www.npmjs.com/package/got) wrapper) to make HTTP requests. You can read the [got documentation](https://github.com/sindresorhus/got/tree/v11#usage) for more information.
 
-First, we initiate a HTTP GET request to the API and load the HTML returned into cheerio.
+First, we will make an HTTP GET request to the API and load the returned HTML into cheerio.
 
 ```js{5-6}
     const baseUrl = 'https://github.com';
     const { user, repo = 'RSSHub' } = ctx.params;
 
-    // Note that .data is the entire HTML source of the target page, returned from the request
+    // Note that .data is the full HTML source of the target page, returned by the request
     const { data: response } = await got(`${baseUrl}/${user}/${repo}/issues`);
     const $ = cheerio.load(response);
 ```
 
-Parse the HTML and convert it into an array.
+Parse the HTML and convert it to an array.
 
 ```js{3-21}
-    // Use cheerio selector to select all 'div' elements contain class name 'js-navigation-container'
-    // which contains child elements with class name 'flex-auto'
+    // Use cheerio selector to select all 'div' elements with the class name 'js-navigation-container'
+    // which contain child elements with the class name 'flex-auto'
     const item = $('div.js-navigation-container .flex-auto')
-        // Use toArray() method to transform a cheerio node object array into a node array
+        // Use toArray() method to convert an array of Cheerio node objects into an array of nodes
         .toArray()
         // Use map() to traverse the array and parse out the result of each element
         .map((item) => {
@@ -299,7 +301,7 @@ Parse the HTML and convert it into an array.
             const a = item.find('a').first();
             return {
                 title: a.text(),
-                // a.attr('href') is a relative URL. However, we need an absolute URL for link
+                // a.attr('href') is a relative URL. However, we need an absolute URL for `link`
                 link: `${baseUrl}${a.attr('href')}`,
                 pubDate: parseDate(item.find('relative-time').attr('datetime')),
                 author: item.find('.opened-by a').text(),
@@ -317,11 +319,11 @@ Parse the HTML and convert it into an array.
 
 ### Outputting the RSS
 
-Now we have the data from the webpage, we need to process it further to generate RSS in accordance with RSS specification. Mainly channel title, channel link as well as item title, item link, item description and item publish date are required.
+Now that we have the data from the web page, we need to process it further to generate RSS in accordance with RSS specification. Mainly we need the channel title, channel link as well as item title, item link, item description and item publication date.
 
-Assign them to the `ctx.state.data` object and RSSHub's middleware will handle the rest.
+Assign them to the `ctx.state.data` object and RSSHub's middleware will do the rest.
 
-Your code should look like this:
+Your code should look something like this:
 
 ```js{29-36}
 const got = require('@/utils/got');
@@ -365,7 +367,7 @@ module.exports = async (ctx) => {
 
 ### One more thing
 
-Although the above code looks good to go, it only provides part of the information of a feed item. For those who are seeking for a better reading experience, we can add the full article to each feed item which is the issue body in this case.
+Although the code above looks good to go, it only provides part of the information in a feed item. For those who want a better reading experience, we can add the full article to each feed item, which in this case is the issue body.
 
 ```js{12,29-43,48}
 const got = require('@/utils/got');
@@ -402,11 +404,11 @@ module.exports = async (ctx) => {
                 const { data: response } = await got(item.link);
                 const $ = cheerio.load(response);
 
-                // Select the first element with class name 'comment-body'
+                // Select the first element with the class name 'comment-body'
                 item.description = $('.comment-body').first().html();
 
                 // Every property of a list item defined above is reused here
-                // and we are adding a new property 'description' to it
+                // and we add a new property 'description'
                 return item;
             })
         )
@@ -420,17 +422,17 @@ module.exports = async (ctx) => {
 };
 ```
 
-Now this RSS feed will have a similar reading experience as the original webpage.
+Now this RSS feed will have a similar reading experience to the original website.
 
 ::: tip Note
-Note that we only send `1` HTTP request when using API to get everything we need in previous section. However, in this section, we are sending `1 + n` HTTP requests where `n` is the number of feed items in the list from the first request.
+Note that we only send `1` HTTP request when using API to get everything we need in the previous section. However, in this section, we send `1 + n` HTTP requests where `n` is the number of feed items in the list from the first request.
 
-Some websites may not like this behavior and may return errors like `429 Too Many Requests`.
+Some websites may not like this behaviour and may return errors like `429 Too Many Requests`.
 :::
 
 ## Using the common configured route
 
-### Creating the main file
+### Create the main file
 
 First, we need a few data:
 
@@ -438,9 +440,9 @@ First, we need a few data:
 2.  Data source link
 3.  RSS feed title (not item title)
 
-Open your code editor and create a new file. Since we are going to create a RSS for GitHub issues, it is suggested to save the file as `issue.js` but you can also name it as you like.
+Open your code editor and create a new file. Since we are going to create an RSS for GitHub issues, it is suggested that you save the file as `issue.js`, but you can also name it whatever you like.
 
-Here's the base code to get you started:
+Here's the basic code to get you started:
 
 ```js
 // Require the necessary modules
@@ -460,7 +462,7 @@ module.exports = async (ctx) => {
 };
 ```
 
-Our RSS does not have any content for now. The content are done by setting the `item`. Here is an example:
+Our RSS has nocontent at the moment. The content will be added by setting the `item`. Here is an example:
 
 ```js{15-21}
 const buildData = require('@/utils/common-config');
@@ -472,7 +474,7 @@ module.exports = async (ctx) => {
     ctx.state.data = await buildData({
         link,
         url: link,
-        title: `${user}/${repo} issues`, // you can use $('head title').text() as well
+        title: `${user}/${repo} issues`, // you can also use $('head title').text()
         params: {
             title: `${user}/${repo} issues`,
             baseUrl: 'https://github.com',
@@ -488,11 +490,11 @@ module.exports = async (ctx) => {
 };
 ```
 
-You will find that the code is quite similar with [Obtaining data from the webpage](#via-html-webpage-using-got-obtaining-data-from-the-webpage) in previous section. However, this RSS does not includes the full article of the issue.
+You will notice that the code is quite similar to [Obtaining data from the webpage](#via-html-webpage-using-got-obtaining-data-from-the-webpage) in the previous section. However, this RSS does not contain the full article of the issue.
 
 ### Full article
 
-In order to obtain the full article of each issue, you need to add a few more lines of code:
+To get the full article of each issue, you need to add a few more lines of code:
 
 ```js{2-3,25-34}
 const buildData = require('@/utils/common-config');
@@ -532,4 +534,6 @@ module.exports = async (ctx) => {
 };
 ```
 
-Once again, you will see that the above code is really similar to the [previous section](#via-html-webpage-using-got-one-more-thing). You are suggested to use the above [data method](#via-html-webpage-using-got) when possible as it has more flexibility over `@/utils/common-config`.
+Again, you will see that the above code is very similar to the [previous section](#via-html-web-page-using-got-one-more-thing). It is recommended that you use [the above method](#via-html-web-page-using-got) whenever possible, as it is more flexible than using `@/utils/common-config`.
+
+## Using puppeteer

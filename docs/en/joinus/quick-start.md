@@ -8,7 +8,7 @@ We welcome all kinds of contributions. Suggestions and feedback are also welcome
 
 ## Before you begin
 
-Making a new RSS feed is not difficult, but it requires some basic knowledge of Git, HTML, JavaScript, jQuery, and Node.js. If you are not familiar with these technologies, you can learn them first.
+Creating a new RSS feed is not difficult, but it does require some basic knowledge of Git, HTML, JavaScript, jQuery, and Node.js. If you are not familiar with these technologies, you can learn them first.
 
 If you don't know much about them but would like to learn them, here are some good resources:
 
@@ -19,11 +19,11 @@ If you don't know much about them but would like to learn them, here are some go
 
 ## Submit new RSS rules
 
-Before you start writing an RSS rule, please make sure that the source site does not provide RSS. Some web pages will include a link element with the type `application/atom+xml` or `application/rss+xml` in the HTML head element to indicate the RSS link.
+Before you start writing an RSS rule, please make sure that the source site does not offer RSS. Some web pages will include a link element of the type `application/atom+xml` or `application/rss+xml` in the HTML head element to indicate the RSS link.
 
 ### Getting started
 
-In the following guide, you will learn things such as how to write a new RSS rule from scratch. This guide will also cover subjects like how to set up a proper development environment, keep your code clean and readable, and how to submit your code to the RSSHub repository.
+In the following guide, you will learn things like how to write a new RSS rule from scratch. This guide will also cover topics such as setting up a proper development environment, keeping your code clean and readable, and submitting your code to the RSSHub repository.
 
 [Let's start!](/en/joinus/new-rss/prerequisites.html)
 
@@ -31,9 +31,9 @@ In the following guide, you will learn things such as how to write a new RSS rul
 
 ### Before you start
 
-It's suggested that you should have downloaded and installed RSSHub Radar in your browser before you start.
+It's recommended that you download and install RSSHub Radar in your browser before you start.
 
-Once you have installed RSSHub Radar, open browser's RSSHub Radar extension settings, switch to rules list, scroll down and you will see a text box, copy your new rules into the text box and start debugging.
+Once you have installed RSSHub Radar, open the browser's RSSHub Radar extension settings, switch to the rules list, scroll down and you will see a text box, copy your new rules into the text box and start debugging.
 
 [Let's start!](/en/joinus/new-radar)
 
