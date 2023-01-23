@@ -2124,6 +2124,9 @@
     "/indiansinkuwait/latest": [
         "TonyRL"
     ],
+    "/inewsweek/:channel": [
+        "changren-wcr"
+    ],
     "/infoq/recommend": [
         "brilon"
     ],
