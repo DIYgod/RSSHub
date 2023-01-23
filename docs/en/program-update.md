@@ -532,7 +532,11 @@ Language
 
 ### Changelog
 
-<RouteEn author="cnzgray" example="/typora/changelog" path="/typora/changelog"/>
+<RouteEn author="cnzgray" example="/typora/changelog" path="/typora/changelog" radar="1"/>
+
+### Dev Release Changelog
+
+<RouteEn author="nczitzk" example="/typora/changelog/dev" path="/typora/changelog/dev" radar="1"/>
 
 ## VMware
 

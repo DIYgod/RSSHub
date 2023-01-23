@@ -571,13 +571,15 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 ::: tip 测试特性
 
-这个板块控制的是一些新特性的选项，默认他们都是关闭的。如果有需要请阅读对应说明后按需开启
+这个板块控制的是一些新特性的选项，他们都是**默认关闭**的。如果有需要请阅读对应说明后按需开启
 
 :::
 
 `ALLOW_USER_HOTLINK_TEMPLATE`: [通用参数 -> 多媒体处理](/parameter.html#duo-mei-ti-chu-li)特性控制
 
 `FILTER_REGEX_ENGINE`: 控制 [通用参数 -> 内容过滤](/parameter.html#nei-rong-guo-lu) 使用的正则引擎。可选`[re2, regexp]`，默认`re2`。我们推荐公开实例不要调整这个选项，这个选项目前主要用于向后兼容。
+
+`ALLOW_USER_SUPPLY_UNSAFE_DOMAIN`: 允许用户为路由提供域名作为参数。建议公共实例不要调整此选项，开启后可能会导致 [服务端请求伪造（SSRF）](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)
 
 ### 其他应用配置
 
@@ -721,7 +723,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `PIXIV_BYPASS_CDN`: 绕过 Pixiv 前置的 Cloudflare CDN, 使用`PIXIV_BYPASS_HOSTNAME`指示的 IP 地址访问 Pixiv API, 可以解决因 Cloudflare 机器人验证导致的登录失败问题，默认关闭，设置 true 或 1 开启
     -   `PIXIV_BYPASS_HOSTNAME`: Pixiv 源站的主机名或 IP 地址，主机名会被解析为 IPv4 地址，默认为`public-api.secure.pixiv.net`；仅在`PIXIV_BYPASS_CDN`开启时生效
     -   `PIXIV_BYPASS_DOH`: 用于解析 `PIXIV_BYPASS_HOSTNAME` 的 DoH 端点 URL，需要兼容 Cloudflare 或 Google 的 DoH 服务的 JSON 查询格式，默认为 `https://1.1.1.1/dns-query`
-    -   `PIXIV_IMG_PROXY`: 用于图片地址的代理，因为 pixiv 图片有防盗链，默认为 `https://i.pixiv.cat`
+    -   `PIXIV_IMG_PROXY`: 用于图片地址的代理，因为 pixiv 图片有防盗链，默认为 `https://i.pixiv.re`
 
 -   pixiv fanbox 用于获取付费内容
 

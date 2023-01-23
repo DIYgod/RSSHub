@@ -1,0 +1,20 @@
+Already {{ status }} for {{ duration }}
+<br><br>
+{{ if id }}
+    Monitor ID:
+    {{ if link }}
+        <a href="{{ link }}" target="_blank">{{ id }}</a>
+    {{ else }}
+        {{ id }}
+    {{ /if }}
+    <br><br>
+{{ /if }}
+Uptime: {{ uptime }}
+<br>
+Downtime: {{ downtime }}
+<br>
+Availability: {{ uptime_ratio }}
+{{ if details && details.trim() !== 'Alert Details:' }}
+    <br><br>
+    {{ details }}
+{{ /if }}

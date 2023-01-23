@@ -104,6 +104,12 @@ pageClass: routes
 
 </Route>
 
+## Paradigm
+
+### Writing
+
+<Route author="Fatpandac" example="/paradigm/writing" path="/paradigm/writing" />
+
 ## Seeking Alpha
 
 ### Summary

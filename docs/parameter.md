@@ -4,17 +4,17 @@
 
 通用参数实际上是 URI 中的 query，可以使用 `&` 连接组合使用，效果叠加。
 
-通用参数需要置于路由路径的最后。有些路由在路由路径（route path）的最后引入了<span color=green>**自定义参数**</span>，<span color=violet>**通用参数**</span>也需要置于它们之后。
+通用参数需要置于路由路径的最后。有些路由在路由路径（route path）的最后引入了<span style="color: green">**自定义参数**</span>，<span style="color: violet">**通用参数**</span>也需要置于它们之后。
 
 举例:
 
-<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0?brief=100&limit=5"><https://rsshub.app/twitter/user/durov/><span color=green><b>readable=1\&includeRts=0</b></span>?<span color=violet><b>brief=100\&limit=5</b></span></a>
+<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0?brief=100&limit=5"><https://rsshub.app/twitter/user/durov/><span style="color: green"><b>readable=1\&includeRts=0</b></span>?<span style=violet><b>brief=100\&limit=5</b></span></a>
 
-如果设置了<span color=magenta>**输出格式**</span>（`.atom`, `.rss`, `.debug.json`），则需要置于路由路径（含<span color=green>**自定义参数**</span>）与<span color=violet>**其它通用参数**</span>之间。
+如果设置了<span style="color: magenta">**输出格式**</span>（`.atom`, `.rss`, `.json`, `.debug.json`），则需要置于路由路径（含<span style="color: green">**自定义参数**</span>）与<span style="color: violet">**其它通用参数**</span>之间。
 
 举例:
 
-<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0.atom?brief=100&limit=5"><https://rsshub.app/twitter/user/durov/><span color=green><b>readable=1\&includeRts=0</b></span><span color=magenta><b>.atom</b></span>?<span color=violet><b>brief=100\&limit=5</b></span></a>
+<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0.atom?brief=100&limit=5"><https://rsshub.app/twitter/user/durov/><span style="color: green"><b>readable=1\&includeRts=0</b></span><span style="color: magenta"><b>.atom</b></span>?<span style="color: violet"><b>brief=100\&limit=5</b></span></a>
 
 :::
 
@@ -131,19 +131,20 @@ Telegram 即时预览模式需要在官网制作页面处理模板，请前往[�
 
 -   `image_hotlink_template`: 用于处理描述中图片的 URL，绕过防盗链等限制，留空不生效。用法参考 [#2769](https://github.com/DIYgod/RSSHub/issues/2769)。可以使用 [URL](https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties) 的所有属性（加上后缀 `_ue` 则会对其进行 URL 编码），格式为 JS 变量模板。例子：`${protocol}//${host}${pathname}`, `https://i3.wp.com/${host}${pathname}`, `https://images.weserv.nl?url=${href_ue}`
 -   `multimedia_hotlink_template`: 用法同 `image_hotlink_template`，但应用于音频和视频。注意：该服务必须跟随跳转、允许反代音频和视频，且必须在反代时丢弃 `Referer` 请求头。[这里有一个符合要求的易于自行搭建的项目](https://github.com/Rongronggg9/rsstt-img-relay/blob/main/README_zh-CN.md)，该项目接受直接拼接 URL，即 `https://example.com/${href}`，其中 `example.com` 应替换为自行搭建的服务的域名
--   `wrap_multimedia_in_iframe`: 将音频和视频包裹在 `<iframe>` 中，以阻止阅读器发送 `Referer` 请求头。支持该变通解决方案的阅读器较少，且可能造成显示错误。有些阅读器，如 RSS Guard、Akregator，可能不支持前一种方法，则可尝试此方法。设置为`1`生效
+-   `wrap_multimedia_in_iframe`: 将音频和视频包裹在 `<iframe>` 中，以阻止阅读器发送 `Referer` 请求头。支持该变通解决方案的阅读器较少，且可能造成显示错误。有些阅读器，如 RSS Guard、Akregator，可能不支持前一种方法，则可尝试此方法。设置为 `1` 生效
 
 [FAQ](/faq.html) 中有更多信息。
 
 ## 输出格式
 
-RSSHub 同时支持 RSS 2.0 和 Atom 输出格式，在路由末尾添加 `.rss` 或 `.atom` 即可请求对应输出格式，缺省为 RSS 2.0
+RSSHub 同时支持 RSS 2.0、Atom 和 JSON Feed 输出格式，在路由末尾添加 `.rss`、`.atom` 或 `.json` 即可请求对应输出格式，缺省为 RSS 2.0
 
 举例:
 
 -   缺省 RSS 2.0 - <https://rsshub.app/jianshu/home>
 -   RSS 2.0 - <https://rsshub.app/jianshu/home.rss>
 -   Atom - <https://rsshub.app/jianshu/home.atom>
+-   JSON Feed - <https://rsshub.app/twitter/user/DIYgod.json>
 -   和 filter 或其他 URL query 一起使用 - `https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件`
 
 ### debug

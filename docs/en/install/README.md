@@ -564,13 +564,15 @@ It is also valid to contain route parameters, e.g. `/weibo/user/2612249974`.
 
 ::: tip Experimental features
 
-Configs in this sections are in beta stage, and are turn off by default. Please read corresponded description and turn on if necessary.
+Configs in this sections are in beta stage, and **are turn off by default**. Please read corresponded description and turn on if necessary.
 
 :::
 
 `ALLOW_USER_HOTLINK_TEMPLATE`: [Parameters->Multimedia processing](/en/parameter.html#multimedia-processing)
 
 `FILTER_REGEX_ENGINE`: Define Regex engine used in [Parameters->filtering](/en/parameter.html#filtering). Valid value are `[re2, regexp]`. Default value is `re2`. We suggest public instance should leave this value to default, and this option right now is mainly for backward compatibility.
+
+`ALLOW_USER_SUPPLY_UNSAFE_DOMAIN`: allow users to provide a domain as a parameter to routes that are not in their allow list, respectively. Public instances are suggested to leave this value default, as it may lead to [Server-Side Request Forgery (SSRF)](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)
 
 ### Other Application Configurations
 
@@ -675,7 +677,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `PIXIV_BYPASS_CDN`: bypass Cloudflare bot check by directly accessing Pixiv source server, defaults to disable, set `true` or `1` to enable
     -   `PIXIV_BYPASS_HOSTNAME`: Pixiv source server hostname or IP address, hostname will be resolved to IPv4 address via `PIXIV_BYPASS_DOH`, defaults to `public-api.secure.pixiv.net`
     -   `PIXIV_BYPASS_DOH`: DNS over HTTPS endpoint, it must be compatible with Cloudflare or Google DoH JSON schema, defaults to `https://1.1.1.1/dns-query`
-    -   `PIXIV_IMG_PROXY`: Used as a proxy for image addresses, as pixiv images have anti-theft, default to `https://i.pixiv.cat`
+    -   `PIXIV_IMG_PROXY`: Used as a proxy for image addresses, as pixiv images have anti-theft, default to `https://i.pixiv.re`
 
 -   pixiv fanbox: Get paid content
 

@@ -340,7 +340,7 @@ Country
 
 ### News
 
-<RouteEn author="zoenglinghou" example="/google/news/Headlines/hl=en-US&gl=US&ceid=US:en" path="/google/news/:category/:locale" :paramsDesc="['Category Title', 'locales, could be found behind `?`, including `hl`, `gl`, and `ceid` as parameters']"/>
+<RouteEn author="zoenglinghou" example="/google/news/Top stories/hl=en-US&gl=US&ceid=US:en" path="/google/news/:category/:locale" :paramsDesc="['Category Title', 'locales, could be found behind `?`, including `hl`, `gl`, and `ceid` as parameters']"/>
 
 ## Grub Street
 
@@ -692,7 +692,7 @@ Compared to the official one, this feed:
 
 ### News
 
-<RouteEn author="nczitzk" example="/skysports/news/ac-milan" path="/skysports/news/:team" :paramsDesc="['Team id, can be found in URL to the team page']" />\
+<RouteEn author="nczitzk" example="/skysports/news/ac-milan" path="/skysports/news/:team" :paramsDesc="['Team id, can be found in URL to the team page']" />
 
 ## Soomal
 

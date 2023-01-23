@@ -245,19 +245,11 @@ pageClass: routes
 
 <Route author="nczitzk" example="/cgtn/pick" path="/cgtn/pick"/>
 
-## cnBeta
+## cnBeta.COM
 
-### 最新
+### 头条资讯
 
-<Route author="kt286 HaitianLiu nczitzk" example="/cnbeta" path="/cnbeta">
-
-::: tip 提示
-
-最新的内容来源于 [官方 RSS](https://www.cnbeta.com/backend.php)
-
-:::
-
-</Route>
+<Route author="kt286 HaitianLiu nczitzk" example="/cnbeta" path="/cnbeta" />
 
 ### 分类
 
@@ -275,7 +267,7 @@ pageClass: routes
 
 ::: tip 提示
 
-完整的主题列表参见 [主题列表](https://www.cnbeta.com/topics.htm)
+完整的主题列表参见 [主题列表](https://www.cnbeta.com.tw/topics.htm)
 
 :::
 
@@ -548,15 +540,15 @@ Country
 
 ## GQ
 
-### GQ 台湾
+### GQ Taiwan
 
-<Route author="nczitzk" example="/gq/tw/fashion" path="/gq/tw/:caty?/:subcaty?" :paramsDesc="['分类，见下表', '子分类，见下表']">
+<Route author="nczitzk" example="/gq/tw/fashion" path="/gq/tw/:caty?/:subcaty?" :paramsDesc="['分类，见下表', '子分类，见下表']" radar="1">
 
 分类
 
-| Fashion | Entertainment | Life | Gadget | Better Men | Video | Tag |
-| ------- | ------------- | ---- | ------ | ---------- | ----- | --- |
-| fashion | entertainment | life | gadget | bettermen  | video | tag |
+| Fashion | Shopping      | Entertainment | Life | Gadget | Better Men | Video | Tag |
+| ------- | ------------- | ------------- | ---- | ------ | ---------- | ----- | --- |
+| fashion | gq-recommends | entertainment | life | gadget | bettermen  | video | tag |
 
 子分类
 
@@ -568,39 +560,33 @@ Fashion
 
 Entertainment
 
-| 最新推薦 | 電影    | 娛樂         | 名人          | 美女   | 體育     | 特別報導    |
-| ---- | ----- | ---------- | ----------- | ---- | ------ | ------- |
-|      | movie | popculture | celebrities | girl | sports | special |
+| All topics | 電影    | 娛樂         | 名人          | 美女   | 體育     | 特別報導    |
+| ---------- | ----- | ---------- | ----------- | ---- | ------ | ------- |
+|            | movie | popculture | celebrities | girl | sports | special |
 
 Life
 
-| 最新推薦 | 美食   | 微醺   | 戶外生活    | 設計生活   | 風格幕後             | 特別報導    |
-| ---- | ---- | ---- | ------- | ------ | ---------------- | ------- |
-|      | food | wine | outdoor | design | lifestyleinsider | special |
+| All topics | 美食   | 微醺   | 戶外生活    | 設計生活   | 風格幕後             | 特別報導    |
+| ---------- | ---- | ---- | ------- | ------ | ---------------- | ------- |
+|            | food | wine | outdoor | design | lifestyleinsider | special |
 
 Gadget
 
-| 最新推薦 | 3C | 車    | 腕錶    | 特別報導    |
-| ---- | -- | ---- | ----- | ------- |
-|      | 3c | auto | watch | special |
+| All topics | 3C | 車    | 腕錶    | 特別報導    |
+| ---------- | -- | ---- | ----- | ------- |
+|            | 3c | auto | watch | special |
 
 Better Men
 
-| 最新推薦 | 保養健身      | 感情關係         | 性愛  | 特別報導    |
-| ---- | --------- | ------------ | --- | ------- |
-|      | wellbeing | relationship | sex | special |
-
-Video
-
-| 最新推薦 | 名人     | 全球娛樂                | 玩家收藏    | 穿搭    | 生活   |
-| ---- | ------ | ------------------- | ------- | ----- | ---- |
-|      | people | globalentertainment | collect | style | life |
+| All topics | 保養健身      | 感情關係         | 性愛  | 特別報導    |
+| ---------- | --------- | ------------ | --- | ------- |
+|            | wellbeing | relationship | sex | special |
 
 Tag
 
-| 奧斯卡                 |
-| ------------------- |
-| `the-oscars-奧斯卡金像獎` |
+| 奧斯卡                 | MOTY |
+| ------------------- | ---- |
+| `the-oscars-奧斯卡金像獎` | moty |
 
 </Route>
 
@@ -2274,7 +2260,7 @@ Type 栏目：
 
 ### 新闻
 
-<Route author="zoenglinghou" example="/google/news/要闻/hl=zh-CN&gl=CN&ceid=CN:zh-Hans" path="/google/news/:category/:locale" :paramsDesc="['子分类标题', '地区语言设置，在地址栏 `?` 后，包含 `hl`，`gl`，以及 `ceid` 参数']"/>
+<Route author="zoenglinghou" example="/google/news/焦点新闻/hl=zh-CN&gl=CN&ceid=CN:zh-Hans" path="/google/news/:category/:locale" :paramsDesc="['子分类标题', '地区语言设置，在地址栏 `?` 后，包含 `hl`，`gl`，以及 `ceid` 参数']"/>
 
 ## 观察者网
 
@@ -2331,6 +2317,12 @@ others = 热点新闻 + 滚动新闻
 ### 个人主页文章
 
 <Route author="Jeason0228" example="/guancha/personalpage/243983" path="/guancha/personalpage/:uid" :paramsDesc="['用户id， 可在URL中找到']" />
+
+## 观点网
+
+### 资讯
+
+<Route author="drgnchan" example="/guandian/finance" path="/guandian/:category" :paramsDesc="['资讯分类，可在URL中找到']" radar="1"/>
 
 ## 观海新闻
 
@@ -3393,23 +3385,35 @@ column 为 third 时可选的 category:
 
 ### 热门文章
 
-<Route author="WenryXu" example="/woshipm/popular" path="/woshipm/popular"/>
+<Route author="WenryXu" example="/woshipm/popular" path="/woshipm/popular/:range?" :paramsDesc="['时间，见下表，默认为 `daily`']" radar="1">
+
+| 日榜    | 周榜     | 月榜      |
+| ----- | ------ | ------- |
+| daily | weekly | monthly |
+
+</Route>
 
 ### 天天问
 
-<Route author="WenryXu" example="/woshipm/wen" path="/woshipm/wen"/>
+<Route author="WenryXu" example="/woshipm/wen" path="/woshipm/wen" radar="1"/>
 
 ### 用户收藏
 
-<Route author="LogicJake" example="/woshipm/bookmarks/324696" path="/woshipm/bookmarks/:id" :paramsDesc="['用户 id']"/>
+<Route author="LogicJake" example="/woshipm/bookmarks/324696" path="/woshipm/bookmarks/:id" :paramsDesc="['用户 id']" radar="1"/>
 
 ### 用户文章
 
-<Route author="LogicJake" example="/woshipm/user_article/324696" path="/woshipm/user_article/:id" :paramsDesc="['用户 id']"/>
+<Route author="LogicJake" example="/woshipm/user_article/324696" path="/woshipm/user_article/:id" :paramsDesc="['用户 id']" radar="1"/>
 
 ### 最新文章
 
-<Route author="Director-0428" example="/woshipm/latest" path="/woshipm/latest"/>
+<Route author="Director-0428" example="/woshipm/latest" path="/woshipm/latest" radar="1"/>
+
+## 人人都是自媒体
+
+### 发现
+
+<Route author="Joey" example="/iiilab" path="/iiilab" radar="1" />
 
 ## 软餐
 
@@ -4380,6 +4384,16 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 ### 微语简报
 
 <Route author="x2009again" example="/yunspe/newsflash" path="/yunspe/newsflash" />
+
+## 知园
+
+### Newsletter
+
+<Route author="TonyRL" example="/zhiy/letters/messy" path="/zhiy/letters/:author" :paramsDesc="['作者 ID，可在URL中找到']" radar="1" rssbud="1"/>
+
+### 笔记
+
+<Route author="TonyRL" example="/zhiy/posts/long" path="/zhiy/posts/:author" :paramsDesc="['作者 ID，可在URL中找到']" radar="1" rssbud="1"/>
 
 ## 中国纺织经济信息网
 
