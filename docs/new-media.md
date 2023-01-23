@@ -4189,7 +4189,9 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 ## 小刀娱乐网
 
-<Route author="nczitzk" example="/x6d/34" path="/x6d/:id?" :paramsDesc="['分类 id，可在对应分类页面的 URL 中找到，默认为首页最近更新']">
+### 分类
+
+<Route author="nczitzk" example="/x6d/34" path="/x6d/:id?" :paramsDesc="['分类 id，可在对应分类页面的 URL 中找到，默认为首页最近更新']" radar="1">
 
 | 技巧分享 | QQ 技巧 | 微信技巧 | 其他教程 | 其他分享 |
 | ---- | ----- | ---- | ---- | ---- |
