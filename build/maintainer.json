@@ -2119,6 +2119,12 @@
     "/iiilab/": [
         "Joey"
     ],
+    "/ikea/gb/new": [
+        "HenryQW"
+    ],
+    "/ikea/gb/offer": [
+        "HenryQW"
+    ],
     "/imagemagick/changelog": [
         "nczitzk"
     ],
@@ -5645,8 +5651,6 @@
     "/bahamut/creation_index/:category?/:subcategory?/:type?": [],
     "/centbrowser/history": [],
     "/755/user/:username": [],
-    "/ikea/uk/new": [],
-    "/ikea/uk/offer": [],
     "/mastodon/timeline/:site/:only_media?": [],
     "/mastodon/remote/:site/:only_media?": [],
     "/mastodon/account_id/:site/:account_id/statuses/:only_media?": [],
