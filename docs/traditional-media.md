@@ -2423,6 +2423,20 @@ category 对应的关键词有
 
 <Route author="yuxinliu-alex" example="/chinanews" path="/chinanews" radar="1" rssbud="1" />
 
+## 中国新闻周刊
+
+### 栏目
+
+提取文章全文。
+
+<Route author="changren-wcr" example="/inewsweek/survey" path="/inewsweek/:channel" :paramsDesc="['栏目']">
+
+| 封面    | 时政       | 社会      | 经济      | 国际    | 调查     | 人物     |
+| ----- | -------- | ------- | ------- | ----- | ------ | ------ |
+| cover | politics | society | finance | world | survey | people |
+
+</Route>
+
 ## 中山网
 
 ### 中山网新闻
