@@ -461,19 +461,15 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="DIYgod" example="/mi/crowdfunding" path="/mi/crowdfunding"/>
 
+## 小米有品
+
 ### 小米有品众筹
 
-<Route author="DIYgod" example="/mi/youpin/crowdfunding" path="/mi/youpin/crowdfunding"/>
+<Route author="bigfei" example="/xiaomiyoupin/crowdfunding" path="/xiaomiyoupin/crowdfunding"/>
 
 ### 小米有品每日上新
 
-<Route author="xyqfer DIYgod" example="/mi/youpin/new" path="/mi/youpin/new/:sort?" :paramsDesc="['排序，见下表']">
-
-| 个性化排序 | 按销量从高到低 | 按好评从高到低 | 按上新时间从近到远 |
-| ----- | ------- | ------- | --------- |
-| 0     | 1       | 2       | 3         |
-
-</Route>
+<Route author="xyqfer DIYgod bigfei" example="/xiaomiyoupin/latest" path="/xiaomiyoupin/latest" />
 
 ## 宜家 IKEA
 
