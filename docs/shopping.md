@@ -95,6 +95,16 @@ pageClass: routes
 
 <Route author="DIYgod" example="/hotukdeals/hottest" path="/hotukdeals/hottest"></Route>
 
+## IKEA 宜家
+
+### 英国 - 商品上新
+
+<Route author="HenryQW" example="/ikea/gb/new" path="/ikea/gb/new" radar="1"/>
+
+### 英国 - 促销
+
+<Route author="HenryQW" example="/ikea/gb/offer" path="/ikea/gb/offer" radar="1"/>
+
 ## lativ
 
 ### 订阅价格
@@ -474,16 +484,6 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 | 0     | 1       | 2       | 3         |
 
 </Route>
-
-## 宜家 IKEA
-
-### 宜家 IKEA（英国）- 商品上新
-
-<Route author="HenryQW" example="/ikea/uk/new" path="/ikea/uk/new"/>
-
-### 宜家 IKEA（英国）- 促销
-
-<Route author="HenryQW" example="/ikea/uk/offer" path="/ikea/uk/offer"/>
 
 ## 优衣库
 

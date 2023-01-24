@@ -85,11 +85,11 @@ Parameter `time` only works when `mostwanted` is chosen as the category.
 
 ### UK - New Product Release
 
-<RouteEn author="HenryQW" example="/ikea/uk/new" path="/ikea/uk/new"/>
+<RouteEn author="HenryQW" example="/ikea/gb/new" path="/ikea/gb/new"/>
 
 ### UK - Offers
 
-<RouteEn author="HenryQW" example="/ikea/uk/offer" path="/ikea/uk/offer"/>
+<RouteEn author="HenryQW" example="/ikea/gb/offer" path="/ikea/gb/offer"/>
 
 ## LeBonCoin
 
