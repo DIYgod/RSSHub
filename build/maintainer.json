@@ -4576,6 +4576,14 @@
     "/xiaohongshu/user/:user_id/:category": [
         "lotosbin"
     ],
+    "/xiaomiyoupin/crowdfunding": [
+        "bigfei"
+    ],
+    "/xiaomiyoupin/latest": [
+        "xyqfer",
+        "DIYgod",
+        "bigfei"
+    ],
     "/xiaoyuzhou/": [
         "prnake",
         "Maecenas"
