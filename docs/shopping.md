@@ -469,7 +469,7 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 ### 小米有品每日上新
 
-<Route author="bigfei" example="/xiaomiyoupin/latest" path="/xiaomiyoupin/latest" />
+<Route author="xyqfer DIYgod bigfei" example="/xiaomiyoupin/latest" path="/xiaomiyoupin/latest" />
 
 ## 宜家 IKEA
 
