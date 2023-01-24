@@ -1294,6 +1294,9 @@
     "/ezone/:category?": [
         "nczitzk"
     ],
+    "/famitsu/category/:category?": [
+        "TonyRL"
+    ],
     "/fantia/search/:type?/:caty?/:peroid?/:order?/:rating?/:keyword?": [
         "nczitzk"
     ],

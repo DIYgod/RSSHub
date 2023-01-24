@@ -5197,6 +5197,18 @@
       }
     ]
   },
+  "famitsu.com": {
+    "_name": "ファミ通",
+    ".": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/game.html#ファミ-tong",
+        "source": [
+          "/search"
+        ]
+      }
+    ]
+  },
   "fantia.jp": {
     "_name": "Fantia",
     ".": [
