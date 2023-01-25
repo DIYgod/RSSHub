@@ -1660,7 +1660,644 @@ curl 'https://www.linkedin.cn/karpos/api/graphql' \
   -H 'x-restli-protocol-version: 2.0.0' \
   --data-raw 'operationName=jobViewPage&variables=(jobPostingUrn:urn%3Ali%3Aks_jobPosting%3A3361322665)&queryId=jobsJobPostingsById.3b9573e88687a86607ddb74ff013ef50' \
   --compressed
-{"data":{"jobsJobPostingsById":{"numApplies":13,"companyName":"Teslsa China","jobState":"LISTED","__typename":"jobs_JobPosting","jobSavingInfo":{"saved":false,"__typename":"jobs_JobSavingInfo"},"description":{"textDirection":"USER_LOCALE","attributes":[{"start":0,"length":8,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"BOLD","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":8,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LINE_BREAK","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":8,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"PARAGRAPH","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":384,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LINE_BREAK","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":384,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"PARAGRAPH","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":678,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LINE_BREAK","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":678,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"PARAGRAPH","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":979,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LINE_BREAK","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":979,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"PARAGRAPH","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":980,"length":16,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"BOLD","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":996,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LINE_BREAK","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":996,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"PARAGRAPH","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":997,"length":85,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST_ITEM","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":997,"length":642,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":1082,"length":91,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST_ITEM","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":1173,"length":101,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST_ITEM","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":1274,"length":87,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST_ITEM","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":1361,"length":82,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST_ITEM","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":1443,"length":93,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST_ITEM","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":1536,"length":103,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST_ITEM","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":1639,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LINE_BREAK","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":1639,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"PARAGRAPH","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":1640,"length":12,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"BOLD","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":1652,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LINE_BREAK","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":1652,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"PARAGRAPH","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":1657,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LINE_BREAK","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":1657,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"PARAGRAPH","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":1658,"length":89,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST_ITEM","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":1658,"length":576,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":1747,"length":96,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST_ITEM","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":1843,"length":84,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST_ITEM","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":1927,"length":106,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST_ITEM","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":2033,"length":97,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST_ITEM","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":2130,"length":62,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST_ITEM","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":2192,"length":42,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST_ITEM","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":2234,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LINE_BREAK","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":2234,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"PARAGRAPH","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":2235,"length":9,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"BOLD","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":2244,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LINE_BREAK","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":2244,"length":1,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"PARAGRAPH","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":2245,"length":32,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST_ITEM","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":2245,"length":110,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":2277,"length":50,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST_ITEM","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"},{"start":2327,"length":28,"detailData":{"listItemStyle":null,"hyperlink":null,"style":"LIST_ITEM","listStyle":null,"__typename":null},"__typename":"common_text_TextAttribute"}],"text":"THE ROLE\nData is deeply embedded in the product and engineering culture at Tesla. We rely on data – lots of it – to improve autopilot, to optimize hardware designs, to proactively detect faults, and to optimize load on the electrical grid. We collect data from each of our cars, superchargers, and stationary batteries and use it to make these products better and our customers safer.\nWe're the small but fast-growing team which is building and operating the big data platform for the company. We collect massive amounts of IoT data, provide storage, access, and high-volume processing. Our stack is built on top of open source technologies, including Spark, Kafka, and related.\nWe're looking for a talented engineer to join us as a foundational member of the team to deliver new and improved big data services and infrastructure. Your work will affect many hundreds of Tesla engineers daily, as well as improving the functionality of our cars, chargers, and batteries worldwide.\nResponsibilities\nEmploy and improve industry-leading, scalable, distributed open-source technologies. Build back-end systems from scratch that are capable of handling trillion+ events per day. Facilitate operation of highly-available distributed systems at scale and across multiple locations. Facilitate others in deploying, operating, and extending upon your clean, tested code. Help define a platform that is highly leveraged, multi-tenant, and self-serviced. Work with data engineers and data scientists to drive efficient solutions from the platform. Help define the data story and enable data-driven solutions at Tesla, both technically and culturally. \nRequirements\nMUST\nStrong programming fundamentals, particularly in data structures, concurrency, and Java. Deep understanding of a complex distributed system, such as Kafka, Spark, HBase, ElasticSearch. Have built and optimized highly available, scalable, distributed back-end services. Ability to break down and deeply understand complex problems and communicate complex matters efficiently. Strong problem solving skills, optimizing for the simplest, most robust yet practical solutions. Reliable, dependable, trustworthy, participating team member. Smart but humble, with a bias for action. \nPreferred\nProficiency in Python or Scala. Experience with cloud infrastructure such as AWS. Robust DevOps/SRE abilities.","accessibilityTextAttributes":[],"accessibilityText":null,"__typename":"common_text_TextViewModel"},"jobApplyingInfo":{"applied":false,"__typename":"jobs_JobApplyingInfo"},"applyMethodType":"OFFSITE_APPLY","expireAt":1689458174000,"listedAt":1673906174000,"title":"资深软件工程师，数据平台 Staff Software Engineer, Data Platform","numViews":66,"geo":{"country":{"entityUrn":"urn:li:ks_geo:102890883","localizedName":"China","__typename":"common_Geo"},"localizedName":"Shanghai","entityUrn":"urn:li:ks_geo:107388191","defaultLocalizedName":"Shanghai, Shanghai, China","__typename":"common_Geo"},"entityUrn":"urn:li:ks_jobPosting:3361322665","talkToRecruiterEnabled":false,"jobPostingFlavor":{"reason":{"inNetworkReason":{"totalNumberOfConnections":0,"__typename":"entities_shared_InNetworkReason"},"__typename":null},"__typename":"jobs_shared_JobPostingFlavor"},"compensationDescription":null,"applyMethod":{"instantOffsiteApply":{"companyApplyUrl":"https://app.mokahr.com/apply/tesla/68247#/job/a2f96ad5-3255-4d80-8cd2-4c1c551f3455","__typename":"jobs_InstantOffsiteApply"},"simpleOnsiteApply":null,"complexOnsiteApply":null,"basicOffsiteApply":null,"__typename":null},"company":{"lcpCompany":true,"entityUrn":"urn:li:ks_company:15564","__typename":"organization_Company","name":"Tesla","localizedHeadline":"Motor Vehicle Manufacturing • 10000+ • Public Company • Austin, Texas","logo":{"vectorImage":{"attribution":null,"digitalmediaAsset":null,"artifacts":[{"width":200,"fileIdentifyingUrlPathSegment":"200_200/0/1607665771371?e=1682553600&v=beta&t=UGyvrvzkSfKmG0sI0Pwd5LMK2VAnoHAxVqTfbTlxD0s","expiresAt":1682553600000,"height":200,"__typename":"common_VectorArtifact"},{"width":100,"fileIdentifyingUrlPathSegment":"100_100/0/1607665771371?e=1682553600&v=beta&t=q4Q1Lu2XosUm633zgC9keSUdp25V9adBxB2kon0F5U4","expiresAt":1682553600000,"height":100,"__typename":"common_VectorArtifact"},{"width":400,"fileIdentifyingUrlPathSegment":"400_400/0/1607665771371?e=1682553600&v=beta&t=ZvOYrRFWaCvToTpsLv0W0dpKvB4EL8vlO8QBmqHVkRg","expiresAt":1682553600000,"height":400,"__typename":"common_VectorArtifact"}],"rootUrl":"https://media.licdn.cn/dms/image/C4D0BAQHUcu98SZ2TVw/company-logo_","__typename":"common_VectorImage"},"__typename":null},"localizedDescription":"Our mission is to accelerate the world’s transition to sustainable energy. With global temperatures rising, the faster we free ourselves from fossil fuel reliance and achieve a zero-emission future, the better. \n \nIn pursuit of this mission, we make electric vehicles that are not just great EVs, but the best cars, period. We also produce and install infinitely scalable clean energy generation and storage products that help our customers further decrease their environmental impact. When it comes to achieving our goals, we pride ourselves in accomplishing what others deem impossible.\n \nWe are opening new factories and increasing our output everyday – join us in building a sustainable future.","employeeCount":53685},"jobPoster":null,"linkedInRouting":true,"trackingId":"BmcRrwuUQyKXE4J+C1MeHg=="}}}%
 
+{
+  "data": {
+    "jobsJobPostingsById": {
+      "numApplies": 13,
+      "companyName": "Teslsa China",
+      "jobState": "LISTED",
+      "__typename": "jobs_JobPosting",
+      "jobSavingInfo": {
+        "saved": false,
+        "__typename": "jobs_JobSavingInfo"
+      },
+      "description": {
+        "textDirection": "USER_LOCALE",
+        "attributes": [
+          {
+            "start": 0,
+            "length": 8,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "BOLD",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 8,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LINE_BREAK",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 8,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "PARAGRAPH",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 384,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LINE_BREAK",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 384,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "PARAGRAPH",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 678,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LINE_BREAK",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 678,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "PARAGRAPH",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 979,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LINE_BREAK",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 979,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "PARAGRAPH",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 980,
+            "length": 16,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "BOLD",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 996,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LINE_BREAK",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 996,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "PARAGRAPH",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 997,
+            "length": 85,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST_ITEM",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 997,
+            "length": 642,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 1082,
+            "length": 91,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST_ITEM",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 1173,
+            "length": 101,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST_ITEM",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 1274,
+            "length": 87,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST_ITEM",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 1361,
+            "length": 82,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST_ITEM",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 1443,
+            "length": 93,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST_ITEM",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 1536,
+            "length": 103,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST_ITEM",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 1639,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LINE_BREAK",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 1639,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "PARAGRAPH",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 1640,
+            "length": 12,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "BOLD",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 1652,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LINE_BREAK",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 1652,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "PARAGRAPH",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 1657,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LINE_BREAK",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 1657,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "PARAGRAPH",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 1658,
+            "length": 89,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST_ITEM",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 1658,
+            "length": 576,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 1747,
+            "length": 96,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST_ITEM",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 1843,
+            "length": 84,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST_ITEM",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 1927,
+            "length": 106,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST_ITEM",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 2033,
+            "length": 97,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST_ITEM",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 2130,
+            "length": 62,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST_ITEM",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 2192,
+            "length": 42,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST_ITEM",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 2234,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LINE_BREAK",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 2234,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "PARAGRAPH",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 2235,
+            "length": 9,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "BOLD",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 2244,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LINE_BREAK",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 2244,
+            "length": 1,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "PARAGRAPH",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 2245,
+            "length": 32,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST_ITEM",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 2245,
+            "length": 110,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 2277,
+            "length": 50,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST_ITEM",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          },
+          {
+            "start": 2327,
+            "length": 28,
+            "detailData": {
+              "listItemStyle": null,
+              "hyperlink": null,
+              "style": "LIST_ITEM",
+              "listStyle": null,
+              "__typename": null
+            },
+            "__typename": "common_text_TextAttribute"
+          }
+        ],
+        "text": "THE ROLE\nData is deeply embedded in the product and engineering culture at Tesla. We rely on data – lots of it – to improve autopilot, to optimize hardware designs, to proactively detect faults, and to optimize load on the electrical grid. We collect data from each of our cars, superchargers, and stationary batteries and use it to make these products better and our customers safer.\nWere the small but fast-growing team which is building and operating the big data platform for the company. We collect massive amounts of IoT data, provide storage, access, and high-volume processing. Our stack is built on top of open source technologies, including Spark, Kafka, and related.nWere looking for a talented engineer to join us as a foundational member of the team to deliver new and improved big data services and infrastructure. Your work will affect many hundreds of Tesla engineers daily, as well as improving the functionality of our cars, chargers, and batteries worldwide.\nResponsibilities\nEmploy and improve industry-leading, scalable, distributed open-source technologies. Build back-end systems from scratch that are capable of handling trillion+ events per day. Facilitate operation of highly-available distributed systems at scale and across multiple locations. Facilitate others in deploying, operating, and extending upon your clean, tested code. Help define a platform that is highly leveraged, multi-tenant, and self-serviced. Work with data engineers and data scientists to drive efficient solutions from the platform. Help define the data story and enable data-driven solutions at Tesla, both technically and culturally. \nRequirements\nMUST\nStrong programming fundamentals, particularly in data structures, concurrency, and Java. Deep understanding of a complex distributed system, such as Kafka, Spark, HBase, ElasticSearch. Have built and optimized highly available, scalable, distributed back-end services. Ability to break down and deeply understand complex problems and communicate complex matters efficiently. Strong problem solving skills, optimizing for the simplest, most robust yet practical solutions. Reliable, dependable, trustworthy, participating team member. Smart but humble, with a bias for action. \nPreferred\nProficiency in Python or Scala. Experience with cloud infrastructure such as AWS. Robust DevOps/SRE abilities.",
+        "accessibilityTextAttributes": [],
+        "accessibilityText": null,
+        "__typename": "common_text_TextViewModel"
+      },
+      "jobApplyingInfo": {
+        "applied": false,
+        "__typename": "jobs_JobApplyingInfo"
+      },
+      "applyMethodType": "OFFSITE_APPLY",
+      "expireAt": 1689458174000,
+      "listedAt": 1673906174000,
+      "title": "资深软件工程师，数据平台 Staff Software Engineer, Data Platform",
+      "numViews": 66,
+      "geo": {
+        "country": {
+          "entityUrn": "urn:li:ks_geo:102890883",
+          "localizedName": "China",
+          "__typename": "common_Geo"
+        },
+        "localizedName": "Shanghai",
+        "entityUrn": "urn:li:ks_geo:107388191",
+        "defaultLocalizedName": "Shanghai, Shanghai, China",
+        "__typename": "common_Geo"
+      },
+      "entityUrn": "urn:li:ks_jobPosting:3361322665",
+      "talkToRecruiterEnabled": false,
+      "jobPostingFlavor": {
+        "reason": {
+          "inNetworkReason": {
+            "totalNumberOfConnections": 0,
+            "__typename": "entities_shared_InNetworkReason"
+          },
+          "__typename": null
+        },
+        "__typename": "jobs_shared_JobPostingFlavor"
+      },
+      "compensationDescription": null,
+      "applyMethod": {
+        "instantOffsiteApply": {
+          "companyApplyUrl": "https://app.mokahr.com/apply/tesla/68247#/job/a2f96ad5-3255-4d80-8cd2-4c1c551f3455",
+          "__typename": "jobs_InstantOffsiteApply"
+        },
+        "simpleOnsiteApply": null,
+        "complexOnsiteApply": null,
+        "basicOffsiteApply": null,
+        "__typename": null
+      },
+      "company": {
+        "lcpCompany": true,
+        "entityUrn": "urn:li:ks_company:15564",
+        "__typename": "organization_Company",
+        "name": "Tesla",
+        "localizedHeadline": "Motor Vehicle Manufacturing • 10000+ • Public Company • Austin, Texas",
+        "logo": {
+          "vectorImage": {
+            "attribution": null,
+            "digitalmediaAsset": null,
+            "artifacts": [
+              {
+                "width": 200,
+                "fileIdentifyingUrlPathSegment": "200_200/0/1607665771371?e=1682553600&v=beta&t=UGyvrvzkSfKmG0sI0Pwd5LMK2VAnoHAxVqTfbTlxD0s",
+                "expiresAt": 1682553600000,
+                "height": 200,
+                "__typename": "common_VectorArtifact"
+              },
+              {
+                "width": 100,
+                "fileIdentifyingUrlPathSegment": "100_100/0/1607665771371?e=1682553600&v=beta&t=q4Q1Lu2XosUm633zgC9keSUdp25V9adBxB2kon0F5U4",
+                "expiresAt": 1682553600000,
+                "height": 100,
+                "__typename": "common_VectorArtifact"
+              },
+              {
+                "width": 400,
+                "fileIdentifyingUrlPathSegment": "400_400/0/1607665771371?e=1682553600&v=beta&t=ZvOYrRFWaCvToTpsLv0W0dpKvB4EL8vlO8QBmqHVkRg",
+                "expiresAt": 1682553600000,
+                "height": 400,
+                "__typename": "common_VectorArtifact"
+              }
+            ],
+            "rootUrl": "https://media.licdn.cn/dms/image/C4D0BAQHUcu98SZ2TVw/company-logo_",
+            "__typename": "common_VectorImage"
+          },
+          "__typename": null
+        },
+        "localizedDescription": "Our mission is to accelerate the world’s transition to sustainable energy. With global temperatures rising, the faster we free ourselves from fossil fuel reliance and achieve a zero-emission future, the better. \n \nIn pursuit of this mission, we make electric vehicles that are not just great EVs, but the best cars, period. We also produce and install infinitely scalable clean energy generation and storage products that help our customers further decrease their environmental impact. When it comes to achieving our goals, we pride ourselves in accomplishing what others deem impossible.\n \nWe are opening new factories and increasing our output everyday – join us in building a sustainable future.",
+        "employeeCount": 53685
+      },
+      "jobPoster": null,
+      "linkedInRouting": true,
+      "trackingId": "BmcRrwuUQyKXE4J+C1MeHg=="
+    }
+  }
+}
 
 curl 'https://www.linkedin.cn/karpos/api/graphql'   -H 'Cookie: JSESSIONID="ajax:123214";'  -H 'Referer: https://www.linkedin.cn/incareer/jobs/search'   -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'    -H 'content-type: application/x-www-form-urlencoded'   -H 'csrf-token: ajax:123214'   -H 'x-http-method-override: GET'   -H 'x-restli-protocol-version: 2.0.0'   --data-raw 'operationName=searchSearchHitsByJob&variables=(origin:jserp,isForRemoteJobsPage:false,isChinaMultiNationalCorporation:false,count:100,start:0,geoUrn:urn%3Ali%3Aks_geo%3A102890883)&queryId=searchSearchHitsByJob.be362cd720abd0ebf89b4bbc3253047f'   --compressed
