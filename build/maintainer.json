@@ -743,6 +743,9 @@
     "/clash/premium": [
         "ttttmr"
     ],
+    "/clickme/:site/:grouping/:name": [
+        "hoilc"
+    ],
     "/cmde/:cate*": [
         "run-ze"
     ],
@@ -5632,7 +5635,6 @@
     "/gov/cnca/jgdt": [],
     "/gov/cnca/hydt": [],
     "/gov/cnca/zxtz": [],
-    "/clickme/:site/:grouping/:name": [],
     "/whb/:category": [],
     "/3ycy/home": [],
     "/emi-nitta/:type": [],

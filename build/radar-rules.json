@@ -2998,6 +2998,27 @@
       }
     ]
   },
+  "clickme.net": {
+    "_name": "ClickMe",
+    ".": [
+      {
+        "title": "文章",
+        "docs": "https://docs.rsshub.app/other.html#clickme",
+        "source": [
+          "/:grouping/:name"
+        ]
+      }
+    ],
+    "r18": [
+      {
+        "title": "文章",
+        "docs": "https://docs.rsshub.app/other.html#clickme",
+        "source": [
+          "/:grouping/:name"
+        ]
+      }
+    ]
+  },
   "cmde.org.cn": {
     "_name": "国家药品监督管理局医疗器械技术审评中心",
     "www": [
