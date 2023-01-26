@@ -222,6 +222,7 @@ GitHub 官方也提供了一些 RSS:
 -   仓库 commits: `https://github.com/:owner/:repo/commits.atom`
 -   用户动态: `https://github.com/:user.atom`
 -   专属动态: `https://github.com/:user.private.atom?token=:secret` (登录后在[仪表盘页面](https://github.com)找到 **Subscribe to your news feed** 字样即可)
+-   Wiki 历史: `https://github.com/:owner/:repo/wiki.atom`
 
 :::
 
@@ -307,7 +308,11 @@ GitHub 官方也提供了一些 RSS:
 
 ### Issue / Pull Request 评论
 
-<Route author="TonyRL" example="/github/comments/DIYgod/RSSHub/8116" path="/github/comments/:user/:repo/:number" :paramsDesc="['用户名', '仓库', 'Issue 或 pull 编号']"/>
+<Route author="TonyRL" example="/github/comments/DIYgod/RSSHub/8116" path="/github/comments/:user/:repo/:number" :paramsDesc="['用户名', '仓库名', 'Issue 或 pull 编号']" radar="1" rssbud="1"/>
+
+### Wiki 历史
+
+<Route author="TonyRL" example="/github/wiki/flutter/flutter/Roadmap" path="/github/wiki/:user/:repo/:page?" :paramsDesc="['用户名', '仓库名', '页面 Slug，可在 URL 中找到，留空表示主页']" radar="1" rssbud="1"/>
 
 ## GitLab
 
