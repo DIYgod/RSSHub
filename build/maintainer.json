@@ -1528,6 +1528,9 @@
     "/github/user/followers/:user": [
         "HenryQW"
     ],
+    "/github/wiki/:user/:repo/:page?": [
+        "TonyRL"
+    ],
     "/gitpod/blog": [
         "TonyRL"
     ],
