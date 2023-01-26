@@ -1779,6 +1779,9 @@
     "/gov/taiyuan/rsj/:caty/:page?": [
         "2PoL"
     ],
+    "/gov/wuhan/sy/whyw": [
+        "nczitzk"
+    ],
     "/gov/xinyi/:path+": [
         "ShuiHuo"
     ],
