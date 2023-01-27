@@ -882,7 +882,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 ## Mixcloud
 
-### 广播节目、DJ 混音集和播客
+### 用户
 
 <Route author="Misaka13514" example="/mixcloud/dholbach/uploads" path="/mixcloud/:username/:type?" :paramsDesc="['用户名，可在对应用户页 URL 中找到', '分类，见下表，默认为 uploads']" radar="1" rssbud="1">
 
