@@ -3605,16 +3605,16 @@
     "/rsshub/rsshub/sponsors": [
         "DIYgod"
     ],
-    "/ruancan/ruancan": [
-        "nczitzk"
-    ],
-    "/ruancan/ruancan/sort/:sort?": [
-        "nczitzk"
-    ],
-    "/ruancan/ruancan/tag/:tag": [
+    "/ruancan/ruancan/category/:category?": [
         "nczitzk"
     ],
     "/ruancan/ruancan/search/:keyword?": [
+        "nczitzk"
+    ],
+    "/ruancan/ruancan/user/:id": [
+        "nczitzk"
+    ],
+    "/ruancan/ruancan": [
         "nczitzk"
     ],
     "/ruc/hr/:category?": [
