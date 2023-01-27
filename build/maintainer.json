@@ -2784,6 +2784,9 @@
         "rde9",
         "nczitzk"
     ],
+    "/mixcloud/:username/:type?": [
+        "Misaka13514"
+    ],
     "/mobilism/forums/:category/:type/:fulltext?": [
         "nitezs"
     ],

@@ -11558,6 +11558,27 @@
       }
     ]
   },
+  "mixcloud.com": {
+    "_name": "Mixcloud",
+    "www": [
+      {
+        "title": "User",
+        "docs": "https://docs.rsshub.app/multimedia.html#mixcloud",
+        "source": [
+          "/:username/:type?"
+        ]
+      }
+    ],
+    ".": [
+      {
+        "title": "User",
+        "docs": "https://docs.rsshub.app/multimedia.html#mixcloud",
+        "source": [
+          "/:username/:type?"
+        ]
+      }
+    ]
+  },
   "mobilism.org": {
     "_name": "Mobilism",
     ".": [
