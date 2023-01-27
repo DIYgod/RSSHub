@@ -1000,6 +1000,12 @@
     "/distill/": [
         "nczitzk"
     ],
+    "/dlsite/campaign/:type/:free?": [
+        "cssxsh"
+    ],
+    "/dlsite/new/:type": [
+        "cssxsh"
+    ],
     "/dmzj/news/:category?": [
         "vzz64"
     ],
@@ -5640,8 +5646,6 @@
     "/pnas/:topic?": [],
     "/cell/cell/:category": [],
     "/cell/cover": [],
-    "/dlsite/new/:type": [],
-    "/dlsite/campaign/:type/:free?": [],
     "/mcbbs/forum/:type": [],
     "/mcbbs/post/:tid/:authorid?": [],
     "/pocket/trending": [],
