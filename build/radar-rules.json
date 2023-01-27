@@ -5807,11 +5807,28 @@
         ]
       },
       {
+        "title": "最热文章",
+        "docs": "https://docs.rsshub.app/finance.html#ge-long-hui",
+        "source": [
+          "/"
+        ],
+        "target": "/gelonghui/hot-article"
+      },
+      {
         "title": "搜索关键字",
         "docs": "https://docs.rsshub.app/finance.html#ge-long-hui",
         "source": [
           "/search"
         ]
+      },
+      {
+        "title": "实时快讯",
+        "docs": "https://docs.rsshub.app/finance.html#ge-long-hui",
+        "source": [
+          "/live",
+          "/"
+        ],
+        "target": "/gelonghui/live"
       },
       {
         "title": "主题文章",
