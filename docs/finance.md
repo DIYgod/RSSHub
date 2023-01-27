@@ -284,15 +284,23 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ### 用户文章
 
-<Route author="nczitzk" example="/gelonghui/user/5273" path="/gelonghui/user/:id" :paramsDesc="['用户编号, 可在用户页 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="nczitzk" example="/gelonghui/user/5273" path="/gelonghui/user/:id" :paramsDesc="['用户编号，可在用户页 URL 中找到']" radar="1" rssbud="1"/>
 
 ### 主题文章
 
-<Route author="nczitzk" example="/gelonghui/subject/4" path="/gelonghui/subject/:id"  :paramsDesc="['主题编号, 可在主题页 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="nczitzk" example="/gelonghui/subject/4" path="/gelonghui/subject/:id"  :paramsDesc="['主题编号，可在主题页 URL 中找到']" radar="1" rssbud="1"/>
 
 ### 搜索关键字
 
 <Route author="nczitzk" example="/gelonghui/keyword/早报" path="/gelonghui/keyword/:keyword" :paramsDesc="['搜索关键字']" radar="1" rssbud="1"/>
+
+### 最热文章
+
+<Route author="TonyRL" example="/gelonghui/hot-article" path="/gelonghui/hot-article/:type?" :paramsDesc="['`day` 为日排行，`week` 为周排行，默认为 `day`']" radar="1" rssbud="1"/>
+
+### 实时快讯
+
+<Route author="TonyRL" example="/gelonghui/live" path="/gelonghui/live" radar="1" rssbud="1"/>
 
 ## 国家金融与发展实验室
 
