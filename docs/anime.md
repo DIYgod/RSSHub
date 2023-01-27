@@ -276,8 +276,7 @@ pageClass: routes
 
 ### 产品打折信息
 
-<Route author="cssxsh" example="/dlsite/campaign/home" path="/dlsite/campaign/:type/:free?" :paramsDesc="['类型，同上表', '只看免费，任意值开启，为空关闭']">
-</Route>
+<Route author="cssxsh" example="/dlsite/campaign/home" path="/dlsite/campaign/:type/:free?" :paramsDesc="['类型，同上表', '只看免费，任意值开启，为空关闭']"/>
 
 ## ebb.io
 
