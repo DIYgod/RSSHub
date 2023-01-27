@@ -916,6 +916,12 @@ pageClass: routes
 
 </Route>
 
+## 武汉市人民政府
+
+### 武汉要闻
+
+<Route author="nczitzk" example="/gov/wuhan/sy/whyw" path="/gov/wuhan/sy/whyw"  radar="1" rssbud="1" />
+
 ## 香港廉政公署
 
 ### 新闻公布
