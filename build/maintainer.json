@@ -2773,6 +2773,9 @@
     "/mindmeister/:category?/:language?": [
         "TonyRL"
     ],
+    "/minecraft/version": [
+        "TheresaQWQ"
+    ],
     "/mingpao/:type?/:category?": [
         "TonyRL"
     ],
@@ -5718,7 +5721,6 @@
     "/chinadialogue/:column": [],
     "/ifnews/:cid": [],
     "/scala/blog/:part?": [],
-    "/minecraft/version": [],
     "/weixin/miniprogram/release": [],
     "/weixin/miniprogram/framework": [],
     "/weixin/miniprogram/devtools": [],
