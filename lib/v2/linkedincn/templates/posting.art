@@ -11,11 +11,13 @@
 </p>
 
 <p>已有{{numApplies}}人申请， {{numViews}}人查看此职位</p>
-<p>薪资：{{ compensationDescription }} </p>
+<p>薪资：{{ compensationDescription || 'N/A' }} </p>
 <p>工作地点： {{ geo.defaultLocalizedName }} </p>
+{{ if (company)}}
 <h2>公司介绍</h2>
 <p>{{company.name}}</p>
 <p>员工人数：{{company.employeeCount}}</p>
 <p style="white-space: pre-line">{{company.localizedDescription}}</p>
+{{ /if}}
 <h2>职位介绍</h2>
 <p style="white-space: pre-line">{{description.text}}</p>
