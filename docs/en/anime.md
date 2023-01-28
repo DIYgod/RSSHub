@@ -24,6 +24,22 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 <RouteEn author="stjohnjohnson" example="/comicskingdom/pardon-my-planet" path="/comicskingdom/:name" :paramsDesc="['URL path of the strip on comicskingdom.com']" />
 
+## DLsite
+
+### Current Release
+
+<RouteEn author="cssxsh" example="/dlsite/new/home" path="/dlsite/new/:type" :paramsDesc="['Type, see table below']">
+
+| Doujin   | Comics    | PC Games   | Doujin (R18) | Adult Comics | H Games | Otome    | BL |
+| ---- | ----- | ---- | -------- | -------- | ----- | ----- | -- |
+| home | comic | soft | maniax   | books    | pro   | girls | bl |
+
+</RouteEn>
+
+### Discounted Works
+
+<RouteEn author="cssxsh" example="/dlsite/campaign/home" path="/dlsite/campaign/:type/:free?" :paramsDesc="['Type, see table above', 'Free only, empty means false, other value means true']"/>
+
 ## Hanime.tv
 
 ### Recently updated
