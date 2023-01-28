@@ -1003,3 +1003,9 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### はてな匿名ダイアリー - 人気記事アーカイブ
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
+
+## 贝壳研究院
+
+### 研究成果
+
+<Route author="shaomingbo" example="/ke/researchResults"  path="/ke/researchResults" radar="1"/>
