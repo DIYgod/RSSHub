@@ -1,1 +1,21 @@
-<h1>{{ Title }}</h1>
+<h2>{{ title }}</h2>
+<p>
+    {{ if (applyMethod.basicOffsiteApply)}}
+    <a href='{{applyMethod.basicOffsiteApply.companyApplyUrl}}'>点击申请</a>
+    {{ /if}}
+</p>
+<p>
+    {{ if (applyMethod.instantOffsiteApply)}}
+    <a href='{{applyMethod.instantOffsiteApply.companyApplyUrl}}'>点击申请</a>
+    {{ /if}}
+</p>
+
+<p>已有{{numApplies}}人申请， {{numViews}}人查看此职位</p>
+<p>薪资：{{ compensationDescription }} </p>
+<p>工作地点： {{ geo.defaultLocalizedName }} </p>
+<h2>公司介绍</h2>
+<p>{{company.name}}</p>
+<p>员工人数：{{company.employeeCount}}</p>
+<p style="white-space: pre-line">{{company.localizedDescription}}</p>
+<h2>职位介绍</h2>
+<p style="white-space: pre-line">{{description.text}}</p>
