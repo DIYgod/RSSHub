@@ -163,11 +163,11 @@ pageClass: routes
 
 该网站原始 RSS 数据源无人维护，故重新抓取数据并生成数据源。
 
-## LinkedIn.cn 领英中国
+## LinkedIn 领英中国
 
 ### Jobs
 
-<Route author="bigfei" example="/linkedincn/jobs/Software" path="/linkedincn/jobs/:keywords?" :paramsDesc="['keywords: 搜索关键字']" radar="1">
+<Route author="bigfei" example="/linkedin/cn/jobs/Software" path="/linkedin/cn/jobs/:keywords?" :paramsDesc="['搜索关键字']" radar="1">
 
 另外，可以通过添加额外的以下 query 参数来输出满足特定要求的工作职位：
 
@@ -180,9 +180,9 @@ pageClass: routes
 | `period`   | 发布时间                             | `1/7/30`                                  | 空       |
 
 例如：
-`/linkedincn/jobs/Software?location=shanghai&period=1`: 查找所有在上海的今日发布的所有 Software 工作
+[`/linkedin/cn/jobs/Software?location=shanghai&period=1`](https://rsshub.app/linkedin/cn/jobs/Software?location=shanghai\&period=1): 查找所有在上海的今日发布的所有 Software 工作
 
-**为了方便起见，建议您在  <a href="https://www.linkedin.cn/incareer/jobs/search">LinkedIn.cn</a> 上进行搜索，并使用 <a href="https://github.com/DIYgod/RSSHub-Radar">RSSHub Radar</a> 加载特定的 feed。**
+**为了方便起见，建议您在 [LinkedIn.cn](https://www.linkedin.cn/incareer/jobs/search) 上进行搜索，并使用 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 加载特定的 feed。**
 
 </Route>
 
