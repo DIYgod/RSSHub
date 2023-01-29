@@ -416,6 +416,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 贝壳研究院
+
+### 研究成果
+
+<Route author="shaomingbo" example="/ke/researchResults"  path="/ke/researchResults" radar="1"/>
+
 ## 毕马威
 
 ### 洞察
