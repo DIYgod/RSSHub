@@ -1346,6 +1346,18 @@ category 列表：
 
 </Route>
 
+## 黑龙江中医药大学
+
+### 研究生院
+
+<Route author="nczitzk" example="/hljucm/yjsy" path="/hljucm/yjsy/:category?" :paramsDesc="['分类, 见下表，默认为新闻动态']" radar="1">
+
+| 新闻动态 | 通知公告 |
+| ---- | ---- |
+| xwdt | tzgg |
+
+</Route>
+
 ## 湖北大学
 
 ### 新闻通知
