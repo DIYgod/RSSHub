@@ -301,7 +301,7 @@ Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product pla
 
 ### Automatic deploy upon update
 
-1. [Fork RSSHub](https://github.com/login?return_to=%2FDIYgod%2FRSSHub) to your GitHub account.
+1. [Fork RSSHub](https://github.com/DIYgod/RSSHub/fork) to your GitHub account.
 2. Deploy your fork to Heroku: `https://heroku.com/deploy?template=URL`, where `URL` is your fork address (_e.g._ `https://github.com/USERNAME/RSSHub`).
 3. Configure `automatic deploy` in Heroku app to follow the changes to your fork.
 4. Install [Pull](https://github.com/apps/pull) app to keep your fork synchronized with RSSHub.
@@ -312,7 +312,7 @@ Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product pla
 
 ## Deploy to Fly.io
 
-1. [Fork RSSHub](https://github.com/login?return_to=%2FDIYgod%2FRSSHub) to your GitHub account.
+1. [Fork RSSHub](https://github.com/DIYgod/RSSHub/fork) to your GitHub account.
 2. Clone the source code from your fork.
     ```bash
     $ git clone https://github.com/<your username>/RSSHub.git
