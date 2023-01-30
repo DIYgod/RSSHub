@@ -2017,6 +2017,9 @@
     "/hkjunkcall/": [
         "nczitzk"
     ],
+    "/hljucm/yjsy/:category?": [
+        "nczitzk"
+    ],
     "/hnrb/:id?": [
         "nczitzk"
     ],
