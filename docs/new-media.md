@@ -278,6 +278,7 @@ pageClass: routes
 ### 新闻周刊
 
 <Route author="jameshih" example="/coindesk/consensus-magazine" path="/coindesk/consensus-magazine"/>
+
 ## Common App
 
 ### Blog
