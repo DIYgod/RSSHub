@@ -2635,6 +2635,9 @@
     "/line/today/:edition?/:tab?": [
         "nczitzk"
     ],
+    "/linkedin/cn/jobs/:keywords?": [
+        "bigfei"
+    ],
     "/linkedin/jobs": [
         "BrandNewLifeJackie26"
     ],

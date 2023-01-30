@@ -5767,7 +5767,7 @@
         docs:"https://docs.rsshub.app/new-media.html#line-today",
         source:[ "/" ],
         target:"/line/today/:edition?/:tab?" } ] },
-  "linkedin.com":{ _name:"linkedin",
+  "linkedin.com":{ _name:"LinkedIn",
     ".":[ { title:"Job Listing",
         docs:"https://docs.rsshub.app/en/other.html#linkedin-jobs",
         source:"/jobs/search/",
@@ -5780,6 +5780,14 @@
                         return searchParam.split(',').join('-');
                     };
                     return `/linkedin/jobs/${parseRoute(searchParams.get('f_JT'))}/${parseRoute(searchParams.get('f_E'))}/${searchParams.get('keywords') || ''}`;
+                } } ] },
+  "linkedin.cn":{ _name:"LinkedIn 领英中国",
+    ".":[ { title:"Jobs",
+        docs:"https://docs.rsshub.app/other.html#linkedin-ling-ying-zhong-guo",
+        source:"/incareer/jobs/search",
+        target:(params, url) => {
+                    const searchParams = new URL(url).searchParams;
+                    return `/linkedin/cn/jobs/${searchParams.get('keywords') || ''}`;
                 } } ] },
   linkresearcher:{ _name:"领研",
     ".":[ { title:"论文",

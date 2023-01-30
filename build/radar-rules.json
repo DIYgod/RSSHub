@@ -10785,12 +10785,22 @@
     ]
   },
   "linkedin.com": {
-    "_name": "linkedin",
+    "_name": "LinkedIn",
     ".": [
       {
         "title": "Job Listing",
         "docs": "https://docs.rsshub.app/en/other.html#linkedin-jobs",
         "source": "/jobs/search/"
+      }
+    ]
+  },
+  "linkedin.cn": {
+    "_name": "LinkedIn 领英中国",
+    ".": [
+      {
+        "title": "Jobs",
+        "docs": "https://docs.rsshub.app/other.html#linkedin-ling-ying-zhong-guo",
+        "source": "/incareer/jobs/search"
       }
     ]
   },
