@@ -59,7 +59,7 @@ jobs:
           flavor: latest=false
 
       - name: Build and push Docker image (ordinary version)
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: .
           push: true
@@ -82,7 +82,7 @@ jobs:
           flavor: latest=false
 
       - name: Build and push Docker image (Chromium-bundled version)
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: .
           build-args: PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=0
