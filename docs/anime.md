@@ -10,73 +10,6 @@ pageClass: routes
 
 <Route author="junfengP" example="/005tv/zx/latest" path="/005tv/zx/latest"/>
 
-## 18comic 禁漫天堂
-
-### 成人 A 漫
-
-<Route author="nczitzk" example="/18comic" path="/18comic/:category?/:time?/:order?/:keyword?" :paramsDesc="['分类，见下表，默认为 `all` 即全部', '时间范围，见下表，默认为 `a` 即全部', '排列顺序，见下表，默认为 `mr` 即最新', '关键字，见下表，默认为空']">
-
-分类
-
-| 全部  | 其他漫畫    | 同人     | 韓漫     | 美漫     | 短篇    | 單本     |
-| --- | ------- | ------ | ------ | ------ | ----- | ------ |
-| all | another | doujin | hanman | meiman | short | single |
-
-时间范围
-
-| 全部 | 今天 | 这周 | 本月 |
-| -- | -- | -- | -- |
-| a  | t  | w  | m  |
-
-排列顺序
-
-| 最新 | 最多点阅 | 最多图片 | 最爱 |
-| -- | ---- | ---- | -- |
-| mr | mv   | mp   | tf |
-
-关键字（供参考）
-
-| YAOI | 女性向 | NTR | 非 H | 3D | 獵奇 |
-| ---- | --- | --- | --- | -- | -- |
-
-</Route>
-
-### 搜索
-
-<Route author="nczitzk" example="/18comic/search/photos/all/NTR" path="/18comic/search/:option?/:category?:keyword?/:time?/:order?" :paramsDesc="['选项，可选 `video` 和 `photos`，默认为 `photos`', '分类，同上表，默认为 `all` 即全部', '关键字，同上表，默认为空', '时间范围，同上表，默认为 `a` 即全部', '排列顺序，同上表，默认为 `mr` 即最新']">
-
-::: tip 提示
-
-关键字必须超过两个字，这是来自网站的限制。
-
-:::
-
-</Route>
-
-### 专辑
-
-<Route author="nczitzk" example="/18comic/album/292282" path="/18comic/album/:id" :paramsDesc="['专辑 id，可在专辑页 URL 中找到']">
-
-::: tip 提示
-
-专辑 id 不包括 URL 中标题的部分。
-
-:::
-
-</Route>
-
-### 文庫
-
-<Route author="nczitzk" example="/18comic/blogs" path="/18comic/blogs/:category?" :paramsDesc="['分类，见下表，默认为空即全部']">
-
-分类
-
-| 全部 | 紳夜食堂   | 遊戲文庫    | JG GAMES | 模型山下   |
-| -- | ------ | ------- | -------- | ------ |
-|    | dinner | raiders | jg       | figure |
-
-</Route>
-
 ## 1draw #深夜の真剣お絵描き 60 分一本勝負
 
 ### 投稿一览
@@ -662,6 +595,73 @@ Sources
 ### 漫画更新
 
 <Route author="zytomorrow" path="/haimaoba/:id" example="/haimaoba/4026" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1" rssbud="1"/>
+
+## 禁漫天堂
+
+### 成人 A 漫
+
+<Route author="nczitzk" example="/18comic" path="/18comic/:category?/:time?/:order?/:keyword?" :paramsDesc="['分类，见下表，默认为 `all` 即全部', '时间范围，见下表，默认为 `a` 即全部', '排列顺序，见下表，默认为 `mr` 即最新', '关键字，见下表，默认为空']">
+
+分类
+
+| 全部  | 其他漫畫    | 同人     | 韓漫     | 美漫     | 短篇    | 單本     |
+| --- | ------- | ------ | ------ | ------ | ----- | ------ |
+| all | another | doujin | hanman | meiman | short | single |
+
+时间范围
+
+| 全部 | 今天 | 这周 | 本月 |
+| -- | -- | -- | -- |
+| a  | t  | w  | m  |
+
+排列顺序
+
+| 最新 | 最多点阅 | 最多图片 | 最爱 |
+| -- | ---- | ---- | -- |
+| mr | mv   | mp   | tf |
+
+关键字（供参考）
+
+| YAOI | 女性向 | NTR | 非 H | 3D | 獵奇 |
+| ---- | --- | --- | --- | -- | -- |
+
+</Route>
+
+### 搜索
+
+<Route author="nczitzk" example="/18comic/search/photos/all/NTR" path="/18comic/search/:option?/:category?:keyword?/:time?/:order?" :paramsDesc="['选项，可选 `video` 和 `photos`，默认为 `photos`', '分类，同上表，默认为 `all` 即全部', '关键字，同上表，默认为空', '时间范围，同上表，默认为 `a` 即全部', '排列顺序，同上表，默认为 `mr` 即最新']">
+
+::: tip 提示
+
+关键字必须超过两个字，这是来自网站的限制。
+
+:::
+
+</Route>
+
+### 专辑
+
+<Route author="nczitzk" example="/18comic/album/292282" path="/18comic/album/:id" :paramsDesc="['专辑 id，可在专辑页 URL 中找到']">
+
+::: tip 提示
+
+专辑 id 不包括 URL 中标题的部分。
+
+:::
+
+</Route>
+
+### 文庫
+
+<Route author="nczitzk" example="/18comic/blogs" path="/18comic/blogs/:category?" :paramsDesc="['分类，见下表，默认为空即全部']">
+
+分类
+
+| 全部 | 紳夜食堂   | 遊戲文庫    | JG GAMES | 模型山下   |
+| -- | ------ | ------- | -------- | ------ |
+|    | dinner | raiders | jg       | figure |
+
+</Route>
 
 ## 看漫画
 

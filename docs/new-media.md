@@ -273,6 +273,12 @@ pageClass: routes
 
 </Route>
 
+## CoinDesk Consensus Magazine
+
+### 新闻周刊
+
+<Route author="jameshih" example="/coindesk/consensus-magazine" path="/coindesk/consensus-magazine"/>
+
 ## Common App
 
 ### Blog
