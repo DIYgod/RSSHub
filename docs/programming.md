@@ -1210,6 +1210,12 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="nczitzk" example="/tencent/cloud/column/86410" path="/tencent/cloud/column/:id?/:tag?" :paramsDesc="['专栏 id，可在对应专栏页中找到，默认为 86410（腾讯云数据库专家服务）', '标签 id，可在对应专栏页中找到，默认为空']"/>
 
+## Weekly Vue News
+
+### Issues
+
+<Router author="zcf0508" path="/weeklyvuenews/issues" radar="1"></Router>
+
 ## 微信开放平台
 
 ### 微信开放社区 - 小程序公告
