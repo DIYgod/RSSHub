@@ -4636,7 +4636,7 @@ QueryString:
 
 ### 标签
 
-<Route author="TonyRL" example="/byteclicks/tag/人工智能" path="/byteclicks/tag/:tag" radar="1" />
+<Route author="TonyRL" example="/byteclicks/tag/人工智能" path="/byteclicks/tag/:tag" radar="1" :paramsDesc="['标签，可在URL中找到']"/>
 
 ## 自由微信
 
