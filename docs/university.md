@@ -348,7 +348,7 @@ pageClass: routes
 
 ### 信息门户
 
-<Route author="RicardoMing wzekin" example="/bupt/portal" path="/bupt/portal" />
+<Route author="RicardoMing wzekin" example="/bupt/portal" path="/bupt/portal" selfhost="1"/>
 
 ::: warning 注意
 
@@ -358,7 +358,7 @@ pageClass: routes
 
 ### 校园新闻
 
-<Route author="wzekin" example="/bupt/news" path="/bupt/news" />
+<Route author="wzekin" example="/bupt/news" path="/bupt/news" selfhost="1"/>
 
 ::: warning 注意
 
