@@ -608,6 +608,12 @@
     "/bupt/rczp": [
         "nczitzk"
     ],
+    "/byteclicks/": [
+        "TonyRL"
+    ],
+    "/byteclicks/tag/:tag": [
+        "TonyRL"
+    ],
     "/bytes": [
         "meixger"
     ],
