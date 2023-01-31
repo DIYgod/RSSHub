@@ -5675,10 +5675,10 @@ eslint-visitor-keys@^3.0.0, eslint-visitor-keys@^3.3.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-3.3.0.tgz#f6480fa6b1f30efe2d1968aa8ac745b862469826"
   integrity sha512-mQ+suqKJVyeuwGYHAdjMFqjCyfl8+Ldnxuyp3ldiMBFKkvytrXUZWaiPCEav8qDHKty44bD+qV1IP4T+w+xXRA==
 
-eslint@8.32.0:
-  version "8.32.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-8.32.0.tgz#d9690056bb6f1a302bd991e7090f5b68fbaea861"
-  integrity sha512-nETVXpnthqKPFyuY2FNjz/bEd6nbosRgKbkgS/y1C7LJop96gYHWpiguLecMHQ2XCPxn77DS0P+68WzG6vkZSQ==
+eslint@8.33.0:
+  version "8.33.0"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-8.33.0.tgz#02f110f32998cb598c6461f24f4d306e41ca33d7"
+  integrity sha512-WjOpFQgKK8VrCnAtl8We0SUOy/oVZ5NHykyMiagV1M9r8IFpIJX7DduK6n1mpfhlG7T1NLWm2SuD8QB7KFySaA==
   dependencies:
     "@eslint/eslintrc" "^1.4.1"
     "@humanwhocodes/config-array" "^0.11.8"
@@ -11423,10 +11423,10 @@ pupa@^2.0.1:
   dependencies:
     escape-goat "^2.0.0"
 
-puppeteer-core@19.6.1:
-  version "19.6.1"
-  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-19.6.1.tgz#952726a364f3acff8cd8df8def798555962dbfe0"
-  integrity sha512-TdbqPYGHRgaqO1XPOM5ThE7uSs5NsYraOUU546okJz7jR9He5wnGuFd6LppoeWt8a4eM5RgzmICxeDUD5QwQtA==
+puppeteer-core@19.6.2:
+  version "19.6.2"
+  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-19.6.2.tgz#a873a3eb7a8f843c01c7e48e1ed595a54c751c8f"
+  integrity sha512-il7uK658MNC1FlxPABvcnv1RdpDa9CaBFHzvtEsl+9Y4tbAJKZurkegpcvWeIWcRYGiuBIVo+t+ZSh3G82CCjw==
   dependencies:
     cross-fetch "3.1.5"
     debug "4.3.4"
@@ -11486,16 +11486,16 @@ puppeteer-extra@3.3.4:
     debug "^4.1.1"
     deepmerge "^4.2.2"
 
-puppeteer@19.6.1:
-  version "19.6.1"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-19.6.1.tgz#25d0a188d44b99d8ea3870f89ea1931a48def189"
-  integrity sha512-gcqNilThyBPrUMvo2UZNG4KVoMjhCfCV7/84mTVk3oo0k65iO7hEKrB4waiJ15O0MHQpM79+XBHavRgBbRXUWQ==
+puppeteer@19.6.2:
+  version "19.6.2"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-19.6.2.tgz#a8630207c68d6b6047763d1754d184b8a585325d"
+  integrity sha512-Y5OAXXwXLfJYbl0dEFg8JKIhvCGxn+UYaBW9yra9ErmIhkVroDnYusM6oYxJCt/YIfC2pQWhvhxoZyf/E5fV6w==
   dependencies:
     cosmiconfig "8.0.0"
     https-proxy-agent "5.0.1"
     progress "2.0.3"
     proxy-from-env "1.1.0"
-    puppeteer-core "19.6.1"
+    puppeteer-core "19.6.2"
 
 q@^1.1.2:
   version "1.5.1"
@@ -11583,10 +11583,10 @@ ramda@^0.26.1:
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
   integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
-rand-user-agent@1.0.102:
-  version "1.0.102"
-  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.102.tgz#dd5977a5dd0e74d79173ed8cc15088dd198462b8"
-  integrity sha512-TdIxJnId95YMcfXlXoBvoxmBVuJPmz4YjdSv/vIldPOYmT6l4sxglBjdkMAaGN9txK0lT1TYZTuNfxmnR4FvCA==
+rand-user-agent@1.0.103:
+  version "1.0.103"
+  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.103.tgz#caab50d9a77a7e8fe07be3c4e3c12cbad95676af"
+  integrity sha512-bICq50Z6+gYFrFyExRH+IiHP6rAwZLISyVcTPAvnWjw8bQi7kwXYBoxX0TLTJZPiDOjeEoHiFpeR5bvsLQSrVA==
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5, randombytes@^2.1.0:
   version "2.1.0"
@@ -13478,10 +13478,10 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
   integrity sha512-KXXFFdAbFXY4geFIwoyNK+f5Z1b7swfXABfL7HXCmoIWMKU3dmS26672A4EeQtDzLKy7SXmfBu51JolvEKwtGA==
 
-twitter-api-v2@1.14.0:
-  version "1.14.0"
-  resolved "https://registry.yarnpkg.com/twitter-api-v2/-/twitter-api-v2-1.14.0.tgz#2aa186087aae58083dcbbafef8727b42cb703483"
-  integrity sha512-kBc0X6hTl0qWYTSNH9Gp87S6d9wIM2qOxHg7jlWH054HnMPC8XMcttsrKyPwP8SVha28dt5DPQvlqhPxsWRC+Q==
+twitter-api-v2@1.14.1:
+  version "1.14.1"
+  resolved "https://registry.yarnpkg.com/twitter-api-v2/-/twitter-api-v2-1.14.1.tgz#fe93b430413706ee102b3b1781cd6c45a313b493"
+  integrity sha512-RTegtBS6FIjUW87gOgTAQG9zF9OvzY8ObkyUgW99tA45Scwro3ToJrdNd1Itn1SW4KIds5N5LQuy2JbUZdNbkA==
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
