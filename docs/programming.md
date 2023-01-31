@@ -1214,7 +1214,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Issues
 
-<Router author="zcf0508" path="/weeklyvuenews/issues" radar="1"></Router>
+<Route author="zcf0508" path="/weeklyvuenews/issues" radar="1"></Route>
 
 ## 微信开放平台
 
