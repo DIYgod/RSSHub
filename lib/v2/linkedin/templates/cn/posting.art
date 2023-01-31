@@ -19,7 +19,7 @@
 <h2>公司介绍</h2>
 <p>{{company.name}}</p>
 <p>员工人数：{{company.employeeCount}}</p>
-<p style="white-space: pre-line">{{company.localizedDescription}}</p>
+<p>{{company.localizedDescription}}</p>
 {{ /if }}
 <h2>职位介绍</h2>
-<p style="white-space: pre-line">{{description.text}}</p>
+<article>{{@ desc}}</article>

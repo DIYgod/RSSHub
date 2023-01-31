@@ -1,7 +1,7 @@
 <figure>
-    <img src="{{ pic_url || imgs.img800 }}" alt="{{ alt }}" loading="lazy" style="display:block; margin-left:auto; margin-right:auto;" width:100%;>
-    {{if videos_url }}
-        <video controls
+    <img src="{{ pic_url || img_square || imgs.img800 }}" alt="{{ alt }}" loading="lazy" style="display:block; margin-left:auto; margin-right:auto;" width:100%;>
+    {{ if videos_url }}
+    <video controls
         playsinline="true"
         webkit-playsinline="true"
         x5-playsinline="true"
@@ -11,11 +11,11 @@
         x-webkit-airplay="allow"
         preload="metadata"
         poster="{{ pic_url || imgs.img800 }}">
-            <source src="{{ videos_url[0] }}" type="video/mp4"/>
-        </video>
+        <source src="{{ videos_url[0] }}" type="video/mp4" />
+    </video>
     {{/if}}
 
-    {{if name }}
+    {{ if name }}
     <figcaption>
         <div class="caption">{{@ name }}</div>
         <div class="credit">{{@ summary }}</div>
