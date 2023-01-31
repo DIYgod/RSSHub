@@ -2802,6 +2802,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 西安财经大学
+
+### 教务处
+
+<Route author="shaokeyibb" example="/xaufe/jiaowu/tzgg" path="/xaufe/jiaowu/:category?" :paramsDesc="['分类，默认为通知公告']" radar="1" rssbud="1">
+
+| 通知公告 |
+| :--: |
+| tzgg |
+
+</Route>
+
 ## 西安电子科技大学
 
 ### 教务处
