@@ -2194,6 +2194,12 @@
     "/informs/:category?": [
         "Fatpandac"
     ],
+    "/iqiyi/album/:id": [
+        "TonyRL"
+    ],
+    "/iqiyi/user/video/:uid": [
+        "talengu"
+    ],
     "/iresearch/report": [
         "brilon",
         "Fatpandac"
@@ -5041,8 +5047,6 @@
     "/geektime/column/:cid": [],
     "/geektime/news": [],
     "/qdaily/:type/:id": [],
-    "/iqiyi/dongman/:id": [],
-    "/iqiyi/user/video/:uid": [],
     "/infzm/:id": [],
     "/dribbble/popular/:timeframe?": [],
     "/dribbble/user/:name": [],
