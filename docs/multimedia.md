@@ -1211,11 +1211,17 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 ### 用户视频
 
-<Route author="talengu" example="/iqiyi/user/video/2289191062" path="/iqiyi/user/video/:uid" :paramsDesc="['用户名']" />
+<Route author="talengu" example="/iqiyi/user/video/2289191062" path="/iqiyi/user/video/:uid" :paramsDesc="['用户名']" radar="1"/>
 
-### 动漫
+### 剧集
 
-<Route author="ranpox" example="/iqiyi/dongman/a_19rrh1sifx" path="/iqiyi/dongman/:id" :paramsDesc="['动漫 id, 可在该动漫主页 URL 中找到(不包括`.html`)']"/>
+<Route author="TonyRL" example="/iqiyi/album/神武天尊-2020-1b4lufwxd7h" path="/iqiyi/album/:id" :paramsDesc="['剧集 id, 可在该主页 URL 中找到']" radar="1">
+
+::: tip 提示
+可抓取內容根据服务器所在地区而定
+:::
+
+</Route>
 
 ## 哔嘀影视
 
