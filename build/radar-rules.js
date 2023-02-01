@@ -1006,7 +1006,11 @@
                     if (uid) {
                         return `/baidu/tieba/user/${uid}`;
                     }
-                } } ] },
+                } } ],
+    top:[ { title:"热搜榜单",
+        docs:"https://docs.rsshub.app/other.html#bai-du-re-sou",
+        source:[ "/board" ],
+        target:(_, url) => `/baidu/top/${new URL(url).searchParams.get('tab')}` } ] },
   "baijingapp.com":{ _name:"白鲸出海",
     ".":[ { title:"最新",
         docs:"https://docs.rsshub.app/new-media.html#bai-jing-chu-hai",
