@@ -1183,11 +1183,11 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 ### 出版專題
 
-<Route author="Maecenas" example="/vocus/publication/bass" path="/vocus/publication/:id" :paramsDesc="['出版專題 id，可在出版專題主页的 URL 找到']"/>
+<Route author="Maecenas" example="/vocus/publication/bass" path="/vocus/publication/:id" :paramsDesc="['出版專題 id，可在出版專題主页的 URL 找到']" radar="1"/>
 
 ### 用户个人文章
 
-<Route author="LogicJake" example="/vocus/user/tsetyan" path="/vocus/user/:id" :paramsDesc="['用户 id，可在用户主页的 URL 找到']"/>
+<Route author="LogicJake" example="/vocus/user/tsetyan" path="/vocus/user/:id" :paramsDesc="['用户 id，可在用户主页的 URL 找到']" radar="1"/>
 
 ## 即刻
 
