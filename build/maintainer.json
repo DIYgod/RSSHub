@@ -715,6 +715,12 @@
     "/cebbank/quotation/history/:type": [
         "linbuxiao"
     ],
+    "/chaincatcher/": [
+        "TonyRL"
+    ],
+    "/chaincatcher/news": [
+        "TonyRL"
+    ],
     "/changba/changba/:userid": [
         "xizeyoupan",
         "kt286"
