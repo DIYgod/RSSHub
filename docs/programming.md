@@ -818,7 +818,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 文章
 
-<Route author="running-grass" example="/learnblockchain/posts/DApp/newest" path="/eleduck/posts/:cid/:sort?" :paramsDesc="['分类id,更多分类可以论坛的URL找到', '排序方式，默认精选']" radar="1">
+<Route author="running-grass" example="/learnblockchain/posts/DApp/newest" path="/learnblockchain/posts/:cid/:sort?" :paramsDesc="['分类id,更多分类可以论坛的URL找到', '排序方式，默认精选']" radar="1">
 
 | id       | 分类     |
 | -------- | ------ |
