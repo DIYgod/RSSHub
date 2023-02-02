@@ -10930,6 +10930,21 @@
       }
     ]
   },
+  "learnblockchain.cn": {
+    "_name": "登链社区",
+    ".": [
+      {
+        "title": "分类文章",
+        "docs": "https://docs.rsshub.app/programming.html#deng-lian-she-qu-wen-zhang",
+        "source": "/categories/:cid/:sort?"
+      },
+      {
+        "title": "全部文章",
+        "docs": "https://docs.rsshub.app/programming.html#deng-lian-she-qu-wen-zhang",
+        "source": "*"
+      }
+    ]
+  },
   "learnku.com": {
     "_name": "Learn Ku 社区",
     ".": [
