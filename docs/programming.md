@@ -824,6 +824,35 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="phantomk" example="/eleme/open-be/announce" path="/eleme/open-be/announce"/>
 
+## 登链社区
+
+### 文章
+
+<Route author="running-grass" example="/learnblockchain/posts/DApp/newest" path="/eleduck/posts/:cid/:sort?" :paramsDesc="['分类id,更多分类可以论坛的URL找到', '排序方式，默认精选']" radar="1">
+
+| id       | 分类         |
+|----------|--------------|
+| all      | 全部         |
+| DApp     | 去中心化应用 |
+| chains   | 公链         |
+| 联盟链   | 联盟链       |
+| scaling  | Layer2       |
+| langs    | 编程语言     |
+| security | 安全         |
+| dst      | 存储         |
+| basic    | 理论研究     |
+| other    | 其他             |
+
+
+| id       | 排序方式   |
+|----------|------------|
+| newest   | 最新       |
+| featured | 精选(默认) |
+| featured | 最赞       |
+| hottest  | 最热       |
+
+</Route>
+
 ## 极客时间
 
 ### 专栏文章
