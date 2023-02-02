@@ -1305,6 +1305,12 @@
     "/elasticsearch-cn/:params?": [
         "nczitzk"
     ],
+    "/eleduck/jobs": [
+        "sfyumi"
+    ],
+    "/eleduck/posts/:id?": [
+        "running-grass"
+    ],
     "/elsevier/:journal": [
         "Derekmini",
         "sunwolf-swb"
@@ -5645,7 +5651,6 @@
     "/mail/imap/:email": [],
     "/network360/jobs": [],
     "/zhilian/:city/:keyword": [],
-    "/eleduck/jobs": [],
     "/nciae/news": [],
     "/nciae/tzgg": [],
     "/nciae/xsxx": [],
