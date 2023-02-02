@@ -396,7 +396,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 发现用户
 
-<Route author="sanmmm" example="/afdian/explore/hot/所有" path="/afdian/explore/:type/:category?" :paramsDesc="['分类', '目录类型, 默认为 `所有`']">
+<Route author="sanmmm" example="/afdian/explore/hot/所有" path="/afdian/explore/:type/:category?" :paramsDesc="['分类', '目录类型，默认为 `所有`']">
 分类
 
 | 推荐  | 最热  |
@@ -413,7 +413,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 用户动态
 
-<Route author="sanmmm" example="/afdian/dynamic/@afdian" path="/afdian/dynamic/:uid?" :paramsDesc="['用户id, 用户动态页面url里可找到']"/>
+<Route author="sanmmm" example="/afdian/dynamic/@afdian" path="/afdian/dynamic/:uid?" :paramsDesc="['用户id，用户动态页面url里可找到']"/>
 
 ## 澳門特別行政區政府各公共部門獎助貸學金服務平台
 
@@ -427,15 +427,15 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
-## 百度搜索风云榜
+## 百度热搜
 
 ### 榜单
 
-<Route author="xyqfer" example="/baidu/topwords/1" path="/baidu/topwords/:boardId?" :paramsDesc="['榜单 id, 默认为`1`']">
+<Route author="xyqfer" example="/baidu/top" path="/baidu/top/:board?" :paramsDesc="['榜单，默认为 `realtime`']" radar="1">
 
-| 实时热点 | 今日热点 | 七日热点 | 民生热点 | 娱乐热点 | 体育热点 |
-| ---- | ---- | ---- | ---- | ---- | ---- |
-| 1    | 341  | 42   | 342  | 344  | 11   |
+| 热搜榜      | 小说榜   | 电影榜   | 电视剧榜     | 汽车榜 | 游戏榜  |
+| -------- | ----- | ----- | -------- | --- | ---- |
+| realtime | novel | movie | teleplay | car | game |
 
 </Route>
 
