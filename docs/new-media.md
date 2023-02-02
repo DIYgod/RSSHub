@@ -2863,6 +2863,16 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 链捕手 ChainCatcher
+
+### 首页
+
+<Route author="TonyRL" example="/chaincatcher" path="/chaincatcher"  radar="1" rssbud="1"/>
+
+### 快讯
+
+<Route author="TonyRL" example="/chaincatcher/news" path="/chaincatcher/news"  radar="1" rssbud="1"/>
+
 ## 链新闻 ABMedia
 
 ### 首页最新新闻
