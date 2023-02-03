@@ -5176,7 +5176,10 @@
       {
         "title": "全部文章",
         "docs": "https://docs.rsshub.app/bbs.html#dian-ya-she-qu-fen-lei-wen-zhang",
-        "source": "*"
+        "source": [
+          "/",
+          "*"
+        ]
       }
     ]
   },
