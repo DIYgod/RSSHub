@@ -78,7 +78,7 @@ module.exports = async (ctx) => {
 
 ### Getting data from the API
 
-Now that we have the user input, we can use it to make a request to the API. In most of the cases, you will need to use `got` from `@/utils/got`(a customised [got](https://www.npmjs.com/package/got) wrapper) to make HTTP requests. See [got documentation](https://github.com/sindresorhus/got/tree/v11#usage) for more information.
+Once we have the user input, we can use it to make a request to the API. In most of the cases, you will need to use `got` from `@/utils/got`(a customised [got](https://www.npmjs.com/package/got) wrapper) to make HTTP requests. See [got documentation](https://github.com/sindresorhus/got/tree/v11#usage) for more information.
 
 <code-group>
 <code-block title="Object destructuring" active>
@@ -137,7 +137,7 @@ module.exports = async (ctx) => {
 
 ### Outputting the RSS
 
-Now that we have the data from the API, we need to process it further to generate RSS in accordance with RSS specification. Mainly we need the channel title, channel link as well as item title, item link, item description and item publication date.
+Once we have the data from the API, we need to process it further to generate RSS in accordance with RSS specification. Mainly we need the channel title, channel link as well as item title, item link, item description and item publication date.
 
 Assign them to the `ctx.state.data` object and RSSHub's middleware will do the rest.
 
@@ -274,7 +274,7 @@ module.exports = async (ctx) => {
 
 ### Getting data from the web page
 
-Now that we have the user input, we can use it to make a request to the web page. In most of the cases, you will need to use got from `@/utils/got`(a customised [got](https://www.npmjs.com/package/got) wrapper) to make HTTP requests. You can read the [got documentation](https://github.com/sindresorhus/got/tree/v11#usage) for more information.
+Once we have the user input, we can use it to make a request to the web page. In most of the cases, you will need to use got from `@/utils/got`(a customised [got](https://www.npmjs.com/package/got) wrapper) to make HTTP requests. You can read the [got documentation](https://github.com/sindresorhus/got/tree/v11#usage) for more information.
 
 First, we will make an HTTP GET request to the API and load the returned HTML into cheerio.
 
@@ -319,7 +319,7 @@ Parse the HTML and convert it to an array.
 
 ### Outputting the RSS
 
-Now that we have the data from the web page, we need to process it further to generate RSS in accordance with RSS specification. Mainly we need the channel title, channel link as well as item title, item link, item description and item publication date.
+Once we have the data from the web page, we need to process it further to generate RSS in accordance with RSS specification. Mainly we need the channel title, channel link as well as item title, item link, item description and item publication date.
 
 Assign them to the `ctx.state.data` object and RSSHub's middleware will do the rest.
 
@@ -492,7 +492,7 @@ module.exports = async (ctx) => {
 
 You will notice that the code is quite similar to [Obtaining data from the webpage](#via-html-webpage-using-got-obtaining-data-from-the-webpage) in the previous section. However, this RSS does not contain the full article of the issue.
 
-### Full article
+### Retrieving full articles
 
 To get the full article of each issue, you need to add a few more lines of code:
 
@@ -537,3 +537,210 @@ module.exports = async (ctx) => {
 Again, you will see that the above code is very similar to the [previous section](#via-html-web-page-using-got-one-more-thing). It is recommended that you use [the above method](#via-html-web-page-using-got) whenever possible, as it is more flexible than using `@/utils/common-config`.
 
 ## Using puppeteer
+
+Before using this approach, you should have tried the [above methods](#via-html-web-page-using-got). It is also recommended that you read [via HTML web page using got](#via-html-web-page-using-got) first since this section is an extension of the previous section and will not explain some basic concepts.
+
+### Creat the main file
+
+Open your code editor and create a new file. Since we are going to create a RSS for GitHub issues, it is suggested that you save the file as `issue.js` but you can also name it whatever you like.
+
+Here's the basic code to get you started:
+
+```js
+// Require some useful modules
+const cheerio = require('cheerio'); // an HTML parser with a jQuery-like API
+const { parseDate } = require('@/utils/parse-date');
+const logger = require('@/utils/logger');
+
+module.exports = async (ctx) => {
+    // Your logic here
+
+    ctx.state.data = {
+        // Your RSS output here
+    };
+};
+```
+
+### Replace got with puppeteer
+
+Now, we are going to use puppeteer to get data from the web page instead of using got.
+
+<code-group>
+<code-block title="puppeteer">
+
+```js{9-32,38}
+const cheerio = require('cheerio');
+const { parseDate } = require('@/utils/parse-date');
+const logger = require('@/utils/logger');
+
+module.exports = async (ctx) => {
+    const baseUrl = 'https://github.com';
+    const { user, repo = 'RSSHub' } = ctx.params;
+
+    // require puppeteer utility class, initialise a browser instance
+    const browser = await require('@/utils/puppeteer')();
+    // open a new tab
+    const page = await browser.newPage();
+    // intercept all requests
+    await page.setRequestInterception(true);
+    // only allow certain types of requests to proceed
+    page.on('request', (request) => {
+        request.resourceType() === 'document' ? request.continue() : request.abort();
+    });
+    // access the target link
+    const link = `${baseUrl}/${user}/${repo}/issues`;
+    // got requests will be logged automatically
+    // but puppeteer requests are not
+    // so we need to log them manually
+    logger.debug(`Requesting ${link}`);
+    await page.goto(link, {
+        // specify how long to wait for the page to load
+        waitUntil: 'domcontentloaded',
+    });
+    // retrieve the HTML content of the page
+    const response = await page.content();
+    // close the tab
+    page.close();
+
+    const $ = cheerio.load(response);
+
+    // const item = ...;
+
+    browser.close();
+
+    ctx.state.data = {
+        // Your RSS output here
+    };
+}
+```
+
+</code-block>
+<code-block title="got">
+
+```js{9}
+const got = require('@/utils/got');
+const cheerio = require('cheerio');
+const { parseDate } = require('@/utils/parse-date');
+
+module.exports = async (ctx) => {
+    const baseUrl = 'https://github.com';
+    const { user, repo = 'RSSHub' } = ctx.params;
+
+    const { data: response } = await got(`${baseUrl}/${user}/${repo}/issues`);
+    const $ = cheerio.load(response);
+
+    ctx.state.data = {
+        // Your RSS output here
+    };
+}
+```
+
+</code-block>
+</code-group>
+
+### Retrieving full articles
+
+Retreiving the full article of each issue is also similar to [the previous section](#via-html-web-page-using-got-one-more-thing) but using a new browser page instead of `got`.
+
+```js{46-60,71-73}
+const cheerio = require('cheerio');
+const { parseDate } = require('@/utils/parse-date');
+const logger = require('@/utils/logger');
+
+module.exports = async (ctx) => {
+    const baseUrl = 'https://github.com';
+    const { user, repo = 'RSSHub' } = ctx.params;
+
+    const browser = await require('@/utils/puppeteer')();
+    const page = await browser.newPage();
+    await page.setRequestInterception(true);
+    page.on('request', (request) => {
+        request.resourceType() === 'document' ? request.continue() : request.abort();
+    });
+
+    const link = `${baseUrl}/${user}/${repo}/issues`;
+    logger.debug(`Requesting ${link}`);
+    await page.goto(link, {
+        waitUntil: 'domcontentloaded',
+    });
+    const response = await page.content();
+    page.close();
+
+    const $ = cheerio.load(response);
+
+    const list = $('div.js-navigation-container .flex-auto')
+        .toArray()
+        .map((item) => {
+            item = $(item);
+            const a = item.find('a').first();
+            return {
+                title: a.text(),
+                link: `${baseUrl}${a.attr('href')}`,
+                pubDate: parseDate(item.find('relative-time').attr('datetime')),
+                author: item.find('.opened-by a').text(),
+                category: item
+                    .find('a[id^=label]')
+                    .toArray()
+                    .map((item) => $(item).text()),
+            };
+        });
+
+    const items = await Promise.all(
+        list.map((item) =>
+            ctx.cache.tryGet(item.link, async () => {
+                // reuse the browser instance
+                // and open a new tab
+                const page = await browser.newPage();
+                await page.setRequestInterception(true);
+                page.on('request', (request) => {
+                    request.resourceType() === 'document' ? request.continue() : request.abort();
+                });
+
+                logger.debug(`Requesting ${item.link}`);
+                await page.goto(item.link, {
+                    waitUntil: 'domcontentloaded',
+                });
+                const response = await page.content();
+                // close the tab after retrieving the HTML content
+                page.close();
+
+                const $ = cheerio.load(response);
+
+                item.description = $('.comment-body').first().html();
+
+                return item;
+            })
+        )
+    );
+
+    // remember to shut down the browser instance
+    // after requests are done
+    browser.close();
+
+    ctx.state.data = {
+        title: `${user}/${repo} issues`,
+        link: `https://github.com/${user}/${repo}/issues`,
+        item: items,
+    };
+};
+```
+
+### Extra
+
+-   [puppeteer's good ol' docs](https://github.com/puppeteer/puppeteer/blob/v15.2.0/docs/api.md)
+-   [puppeteer's current docs](https://pptr.dev)
+
+#### Intercepting requests
+
+It is highly recommended that you enable request interception to filter out unwanted requests such as images, fonts, CSS, etc. This will greatly reduce the time it takes for the web page to load in the browser, saving CPU and memory resources. 
+
+```js
+await page.setRequestInterception(true);
+page.on('request', (request) => {
+    request.resourceType() === 'document' ? request.continue() : request.abort();
+});
+// These two statements must be placed before page.goto()
+
+```
+
+Visit the [old puppeteer docs](https://github.com/puppeteer/puppeteer/blob/v15.2.0/docs/api.md#httprequestresourcetype) for more information about `request.resourceType()`.

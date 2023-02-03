@@ -4,7 +4,7 @@ sidebarDepth: 2
 
 # Add the documentation
 
-Now, we have completeed the code, we need to add the documentation for your route. Open the appropriate file in [documentation (/docs/en/)](https://github.com/DIYgod/RSSHub/blob/master/docs/en) directory, which in this example is `docs/en/programming.md`. You can get a live preview of the documentation by running the following command:
+Now, we have completed the code, we need to add the documentation for your route. Open the appropriate file in [documentation (/docs/en/)](https://github.com/DIYgod/RSSHub/blob/master/docs/en) directory, which in this example is `docs/en/programming.md`. You can get a live preview of the documentation by running the following command:
 
 <code-group>
 <code-block title="yarn" active>

@@ -138,7 +138,7 @@ Below is a list of data collection methods, ordered by the **level of recommenda
 
 1.  **Via API**: The most recommended way to retrieve data. The API is usually more stable and faster than extracting data from the HTML web page.
 
-2.  **Via HTML web page using got**: If the API is not available, you can try to retrieve data from the HTML web page. You will use this approach most of the time.
+2.  **Via HTML web page using got**: If the API is not available, you can try to retrieve data from the HTML web page. You will use this approach most of the time. Note that if the HTML contains embedded JSON, you should use that over the rest of the HTML elements.
 
 3.  **Common configured route**: The common configured route is a special route that can easily generate RSS by reading JSON data through cheerio (CSS selectors and jQuery functions).
 
