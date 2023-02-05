@@ -2961,11 +2961,11 @@ column 为 third 时可选的 category:
 
 ### 新闻快讯
 
-<Route author="Fatpandac" example="/blockbeats/flash" path="/blockbeats/:channel?" :paramsDesc="['类型，见下表，默认为快讯']">
+<Route author="Fatpandac jameshih" example="/blockbeats/newsflash" path="/blockbeats/:channel?" :paramsDesc="['类型，见下表，默认为快讯']">
 
-|   快讯  |  新闻  |
-| :---: | :--: |
-| flash | news |
+|     快讯    |    文章   |
+| :-------: | :-----: |
+| newsflash | article |
 
 </Route>
 
