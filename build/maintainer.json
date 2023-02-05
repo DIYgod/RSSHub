@@ -4792,6 +4792,9 @@
     "/xyzrank/new-podcasts": [
         "nczitzk"
     ],
+    "/yahoo/news/:region/:category?": [
+        "KeiLongW"
+    ],
     "/yaohuo/": [
         "nczitzk"
     ],
@@ -5754,7 +5757,6 @@
     "/mlog-club/projects": [],
     "/chrome/webstore/extensions/:id": [],
     "/rthk-news/:lang/:category": [],
-    "/yahoo-news/:region/:category?": [],
     "/yahoo-jp-tv/:query": [],
     "/yahoo-author/:author": [],
     "/ddrk/update/:name/:season?": [],
