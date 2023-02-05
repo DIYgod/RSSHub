@@ -1066,6 +1066,18 @@ pageClass: routes
 
 <Route author="Fatpandac" example="/tingshen" path="/tingshen"/>
 
+## 中国无线电协会业余无线电分会
+
+### 最新资讯
+
+<Route author="Misaka13514" example="/crac/2" path="/crac/:type?" :paramsDesc="['类型，见下表，默认为全部']" radar="1" rssbud="1">
+
+| 新闻动态 | 通知公告 | 政策法规 | 常见问题 | 资料下载 | English | 业余中继台 | 科普专栏 |
+| ---- | ---- | ---- | ---- | ---- | ------- | ----- | ---- |
+| 1    | 2    | 3    | 5    | 6    | 7       | 8     | 9    |
+
+</Route>
+
 ## 中国信息通信研究院
 
 ### 白皮书
