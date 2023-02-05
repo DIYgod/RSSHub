@@ -900,6 +900,9 @@
     "/cqwu/news/:type?": [
         "Fatpandac"
     ],
+    "/crac/:type?": [
+        "Misaka13514"
+    ],
     "/creative-comic/book/:id/:coverOnly?/:quality?": [
         "TonyRL"
     ],
