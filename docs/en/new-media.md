@@ -492,6 +492,10 @@ Edition
 
 <RouteEn author="Cerebrater xosdy" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['Author id, can be found at author\'s homepage url']" radar="1" rssbud="1"/>
 
+## Mclaren Racing
+
+<Route author="Bubbu0129" example="/mclaren/en/all" path="/mclaren/:lang/all" :paramsDesc="['Supports English(en), Simplified Chinese(zh), and Spanish(es).']"/>
+
 ## Mirror
 
 ### User
