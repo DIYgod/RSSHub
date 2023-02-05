@@ -530,7 +530,7 @@ Solidot 提供的 feed:
 
 ### 新聞
 
-<Route author="KeiLongW" example="/yahoo-news/hk/world" path="/yahoo-news/:region/:category?" :paramsDesc="['地区','类别']">
+<Route author="KeiLongW" example="/yahoo/news/hk/world" path="/yahoo/news/:region/:category?" :paramsDesc="['地区','类别']" radar="1">
 
 `地区`
 
