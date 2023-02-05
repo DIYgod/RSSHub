@@ -105,6 +105,18 @@ pageClass: routes
 
 <Route author="HenryQW" example="/ikea/gb/offer" path="/ikea/gb/offer" radar="1"/>
 
+### 中国 - 会员特惠
+
+<Route author="jzhangdev" example="/ikea/cn/family_offers" path="/ikea/cn/family_offers" radar="1"/>
+
+### 中国 - 低价优选
+
+<Route author="jzhangdev" example="/ikea/cn/low_price" path="/ikea/cn/low_price" radar="1"/>
+
+### 中国 - 当季新品推荐
+
+<Route author="jzhangdev" example="/ikea/cn/new" path="/ikea/cn/new" radar="1"/>
+
 ## lativ
 
 ### 订阅价格
