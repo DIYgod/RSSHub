@@ -680,7 +680,7 @@ Provide full article RSS for WSJ topics.
 
 ### News
 
-<RouteEn author="KeiLongW" example="/yahoo-news/hk/world" path="/yahoo-news/:region/:category?" :paramsDesc="['Region','Category']">
+<RouteEn author="KeiLongW" example="/yahoo/news/hk/world" path="/yahoo/news/:region/:category?" :paramsDesc="['Region','Category']">
 
 `Region`
 | Hong Kong | Taiwan | US |
