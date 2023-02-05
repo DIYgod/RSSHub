@@ -170,6 +170,10 @@ module.exports = {
                                     title: 'Add the documentation',
                                     path: 'new-rss/add-docs',
                                 },
+                                {
+                                    title: 'Submit your route',
+                                    path: 'new-rss/submit-route',
+                                },
                             ],
                         },
                         {
