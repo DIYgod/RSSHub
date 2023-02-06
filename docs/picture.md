@@ -159,7 +159,7 @@ pageClass: routes
 
 ### 标签
 
-<Route author="yindaheng98" example="/ehentai/tag/language:chinese/1" path="/ehentai/tag/:tag/:page?/:routeParams?" :paramsDesc="['标签', '翻页参数，对应E站地址中的next参数', '额外参数；请参阅上面的说明和表格']" anticrawler="1" supportBT="1" />
+<Route author="yindaheng98" example="/ehentai/tag/language:chinese" path="/ehentai/tag/:tag/:page?/:routeParams?" :paramsDesc="['标签', '翻页参数，对应E站地址中的next参数', '额外参数；请参阅上面的说明和表格']" anticrawler="1" supportBT="1" />
 
 ### 搜索
 
