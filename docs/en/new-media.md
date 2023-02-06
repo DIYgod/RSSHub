@@ -494,7 +494,13 @@ Edition
 
 ## Mclaren Racing
 
-<Route author="Bubbu0129" example="/mclaren/en/all" path="/mclaren/:lang/:category" :paramsDesc="['Supports English(en), Simplified Chinese(zh), and Spanish(es).', 'Supports exporting all articles (all).']"/>
+### Articles
+
+<RouteEn author="Bubbu0129" example="/mclaren/en/all" path="/mclaren/:lang/:category" :paramsDesc="['Supports English(en), Simplified Chinese(zh), and Spanish(es).', 'Default to exporting all media (all); See the table below for details']" radar="1" rssbud="1"/>
+
+| All Media | Article | Report | Gallery | Video | Blog | Photo Essay  |
+| --------- | ------- | ------ | ------- | ----- | ---- | -----------  |
+| all       | article | report | gallery | video | blog | photo\_essay |
 
 ## Mirror
 
