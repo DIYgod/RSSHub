@@ -494,7 +494,7 @@ Edition
 
 ## Mclaren Racing
 
-<Route author="Bubbu0129" example="/mclaren/en/all" path="/mclaren/:lang/all" :paramsDesc="['Supports English(en), Simplified Chinese(zh), and Spanish(es).']"/>
+<Route author="Bubbu0129" example="/mclaren/en/all" path="/mclaren/:lang/:category" :paramsDesc="['Supports English(en), Simplified Chinese(zh), and Spanish(es).', 'Supports exporting all articles (all).']"/>
 
 ## Mirror
 

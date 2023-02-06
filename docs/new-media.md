@@ -893,7 +893,7 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ## Mclaren Racing
 
-<Route author="Bubbu0129" example="/mclaren/en/all" path="/mclaren/:lang/all" :paramsDesc="['支持英语(en)、简体中文(zh)、与西班牙语(es)。']"/>
+<Route author="Bubbu0129" example="/mclaren/en/all" path="/mclaren/:lang/:category" :paramsDesc="['支持英语(en)、简体中文(zh)、与西班牙语(es)。', '支持输出所有文章(all)。']"/>
 
 ## Mirror
 
