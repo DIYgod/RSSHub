@@ -1066,6 +1066,12 @@ pageClass: routes
 
 </Route>
 
+## 中国科学技术协会
+
+### 通用
+
+<Route author="TonyRL" example="/cast" path="/cast/:column?" :paramsDesc="['栏目 ID，即 URL 中的数字，默认为 `457`']" radar="1"/>
+
 ## 中国农工民主党
 
 ### 新闻中心
