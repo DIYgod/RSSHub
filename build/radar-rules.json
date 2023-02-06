@@ -18788,19 +18788,6 @@
       }
     ]
   },
-  "wemp.app": {
-    "_name": "微信",
-    ".": [
-      {
-        "title": "公众号（wemp.app 来源）",
-        "docs": "https://docs.rsshub.app/new-media.html#wei-xin",
-        "source": [
-          "/accounts/:id"
-        ],
-        "target": "/wechat/wemp/:id"
-      }
-    ]
-  },
   "wxnmh.com": {
     "_name": "微信",
     ".": [
