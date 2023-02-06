@@ -155,15 +155,15 @@ pageClass: routes
 
 ### 收藏
 
-<Route author="yindaheng98" example="/ehentai/favorites/0/posted/1" path="/ehentai/favorites/:favcat?/:order?/:page?/:routeParams?" :paramsDesc="['收藏夹编号','顺序：posted-按画廊发布时间排序，favorited-按添加收藏的时间排序', '爬获取第多少页的数据', '额外参数；请参阅上面的说明和表格']" anticrawler="1" supportBT="1" />
+<Route author="yindaheng98" example="/ehentai/favorites/0/posted" path="/ehentai/favorites/:favcat?/:order?/:page?/:routeParams?" :paramsDesc="['收藏夹编号','顺序：posted-按画廊发布时间排序，favorited-按添加收藏的时间排序', '翻页参数，对应E站地址中的next参数', '额外参数；请参阅上面的说明和表格']" anticrawler="1" supportBT="1" />
 
 ### 标签
 
-<Route author="yindaheng98" example="/ehentai/tag/language:chinese/1" path="/ehentai/tag/:tag/:page?/:routeParams?" :paramsDesc="['标签', '爬获取第多少页的数据', '额外参数；请参阅上面的说明和表格']" anticrawler="1" supportBT="1" />
+<Route author="yindaheng98" example="/ehentai/tag/language:chinese" path="/ehentai/tag/:tag/:page?/:routeParams?" :paramsDesc="['标签', '翻页参数，对应E站地址中的next参数', '额外参数；请参阅上面的说明和表格']" anticrawler="1" supportBT="1" />
 
 ### 搜索
 
-<Route author="yindaheng98" example="/ehentai/search/f_search=artist%3Amana%24/1" path="/ehentai/search/:params?/:page?/:routeParams?" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 `https://e-hentai.org/?` 后面的内容', '爬获取第多少页的数据', '额外参数；请参阅上面的说明和表格']" anticrawler="1" supportBT="1" />
+<Route author="yindaheng98" example="/ehentai/search/f_search=artist%3Amama%24" path="/ehentai/search/:params?/:page?/:routeParams?" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 `https://e-hentai.org/?` 后面的内容', '翻页参数，对应E站地址中的next参数', '额外参数；请参阅上面的说明和表格']" anticrawler="1" supportBT="1" />
 
 ## Elite Babes
 
