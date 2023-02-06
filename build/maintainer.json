@@ -669,6 +669,9 @@
     "/cankaoxiaoxi/news/:category": [
         "yuxinliu-alex"
     ],
+    "/cast/:column?": [
+        "TonyRL"
+    ],
     "/cbirc/:category?": [
         "JkCheung"
     ],
