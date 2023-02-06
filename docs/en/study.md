@@ -114,6 +114,12 @@ pageClass: routes
 
 <RouteEn author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" :paramsDesc="['Username, can be found in URL']" puppeteer="1" anticrawler="1"/>
 
+## The Korea Institute of Marine Law
+
+### Thesis
+
+<RouteEn author="TonyRL" example="/kimlaw/thesis" path="/kimlaw/thesis" radar="1"/>
+
 ## X-MOL
 
 ### News
