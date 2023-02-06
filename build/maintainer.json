@@ -569,6 +569,9 @@
     "/bjp/apod": [
         "HenryQW"
     ],
+    "/bjsk/:path?": [
+        "TonyRL"
+    ],
     "/bjwxdxh/:type?": [
         "Misaka13514"
     ],

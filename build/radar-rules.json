@@ -2380,6 +2380,18 @@
       }
     ]
   },
+  "bjsk.org.cn": {
+    "_name": "北京社科网",
+    ".": [
+      {
+        "title": "通用",
+        "docs": "https://docs.rsshub.app/government.html#bei-jing-she-ke-wang",
+        "source": [
+          "/*"
+        ]
+      }
+    ]
+  },
   "bjwxdxh.org.cn": {
     "_name": "北京无线电协会",
     "www": [
