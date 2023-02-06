@@ -44,6 +44,22 @@ pageClass: routes
 
 <Route author="Fatpandac" example="/ssm/news" path="/ssm/news"/>
 
+## 北京社科网
+
+### 通用
+
+<Route author="TonyRL" example="/bjsk/newslist-1394-1474-0" path="/bjsk/:path?" :paramsDesc="['路径，默认为 `newslist-1486-0-0`']" radar="1">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `https://www.bjsk.org.cn/` 和 `.html` 之间的字段。下面是一个例子。
+
+若订阅 [社科资讯 > 社科要闻](https://www.bjsk.org.cn/newslist-1394-1474-0.html) 则将对应页面 URL <https://www.bjsk.org.cn/newslist-1394-1474-0.html> 中 `https://www.bjsk.org.cn/` 和 `.html` 之间的字段 `newslist-1394-1474-0` 作为路径填入。此时路由为 [`/bjsk/newslist-1394-1474-0`](https://rsshub.app/bjsk/newslist-1394-1474-0)
+
+:::
+
+</Route>
+
 ## 北京市保障房中心有限公司
 
 ### 北京市共有产权住房租赁服务平台
@@ -95,6 +111,18 @@ pageClass: routes
 | 委内新闻 | 基层动态 | 媒体聚焦 |  热点新闻 |
 | :--: | :--: | :--: | :---: |
 | wnxw | jcdt | mtjj | rdxws |
+
+</Route>
+
+## 北京无线电协会
+
+### 最新资讯
+
+<Route author="Misaka13514" example="/bjwxdxh/114" path="/bjwxdxh/:type?" :paramsDesc="['类型，见下表，默认为全部']" radar="1" rssbud="1">
+
+| 协会活动 | 公告通知 | 会议情况 | 简报  | 政策法规 | 学习园地 | 业余无线电服务中心 | 经验交流 | 新技术推介 | 活动通知 | 爱好者园地 | 结果查询 | 资料下载 | 会员之家 | 会员简介 | 会员风采 | 活动报道 |
+| ---- | ---- | ---- | --- | ---- | ---- | --------- | ---- | ----- | ---- | ----- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 86   | 99   | 102  | 103 | 106  | 107  | 108       | 111  | 112   | 114  | 115   | 116  | 118  | 119  | 120  | 121  | 122  |
 
 </Route>
 
@@ -1037,6 +1065,12 @@ pageClass: routes
 :::
 
 </Route>
+
+## 中国科学技术协会
+
+### 通用
+
+<Route author="TonyRL" example="/cast" path="/cast/:column?" :paramsDesc="['栏目 ID，即 URL 中的数字，默认为 `457`']" radar="1"/>
 
 ## 中国农工民主党
 
