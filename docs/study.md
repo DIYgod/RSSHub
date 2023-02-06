@@ -314,6 +314,12 @@ path="/ctfhub/upcoming/:limit?"
 
 </Route>
 
+## 韓國海事法學會
+
+### 学术论文
+
+<Route author="TonyRL" example="/kimlaw/thesis" path="/kimlaw/thesis" radar="1"/>
+
 ## 杭州市国家普通话测试网报信息
 
 ### 考试信息
