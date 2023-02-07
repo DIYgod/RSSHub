@@ -529,7 +529,7 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 <RouteEn author="hoilc" example="/trakt/collection/tomyangsh/movies" path="/trakt/collection/:username/:type?" :paramsDesc="['Username','Collection type, can be `movies`,`shows`,`episodes`,`all`, default to `all`']" radar="1" rssbud="1" />
 
-## u3c3
+## U3C3
 
 ### Keyword Search
 
@@ -538,6 +538,16 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 ### Type
 
 <RouteEn author="noname1897" example="/u3c3/U3C3" path="/u3c3/:type?" :paramsDesc="['type, pay attention to case, it should be exactly same as the choices: `U3C3`/`Video`/`Photo`/`Book`/`Game`/`Software`/`Other`, if no type is provided, show the home index']" supportBT="1" radar="1"/>
+
+## U9A9
+
+### Home
+
+<RouteEn author="TonyRL" example="/u9a9" path="/u3c3/:preview?" :paramsDesc="['Show image preview, off by default, non empty value means on']" supportBT="1" radar="1" />
+
+### Search
+
+<RouteEn author="TonyRL" example="/u9a9/search/新片速递" path="/u3c3/search/:keyword/:preview?" :paramsDesc="['Search keyword', 'Show image preview, off by default, non empty value means on']" supportBT="1" radar="1" />
 
 ## YouTube
 
