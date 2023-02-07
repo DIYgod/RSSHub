@@ -9525,7 +9525,14 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==
 
-meilisearch@0.30.0, meilisearch@^0.30.0:
+meilisearch@0.31.1:
+  version "0.31.1"
+  resolved "https://registry.yarnpkg.com/meilisearch/-/meilisearch-0.31.1.tgz#c526274c3cda844e8ee8d9562cbd3febbe1b9508"
+  integrity sha512-ajMieU0e25lLkT+05J0snX0Ycow1UofxIy5sag03flERUbjXq8ouVwkrJkW27JsKftIeDeffRRRr89LasU9+0w==
+  dependencies:
+    cross-fetch "^3.1.5"
+
+meilisearch@^0.30.0:
   version "0.30.0"
   resolved "https://registry.yarnpkg.com/meilisearch/-/meilisearch-0.30.0.tgz#707f9a6b07440c496b965379616e084f112160ae"
   integrity sha512-3y1hALOwTDpquYar+gDREqRasFPWKxkWAhk6h+RF+nKObPVf9N77wcTNvukGwOKbxRyJnKge0OPgAB1BkB9VVw==
@@ -11660,10 +11667,10 @@ ramda@^0.26.1:
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
   integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
-rand-user-agent@1.0.103:
-  version "1.0.103"
-  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.103.tgz#caab50d9a77a7e8fe07be3c4e3c12cbad95676af"
-  integrity sha512-bICq50Z6+gYFrFyExRH+IiHP6rAwZLISyVcTPAvnWjw8bQi7kwXYBoxX0TLTJZPiDOjeEoHiFpeR5bvsLQSrVA==
+rand-user-agent@1.0.104:
+  version "1.0.104"
+  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.104.tgz#c2fbae69f458637a0e93c127239366aacdc5e3e2"
+  integrity sha512-iYQIzNbTFZxz4/ygG0dBpWt1PyZhqOIMfXIFQ4e8B6Uml1BZ/za1v6GRv1wGcnTHwiCGTx+NvxgFe25qSNBAWQ==
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5, randombytes@^2.1.0:
   version "2.1.0"
