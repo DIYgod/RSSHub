@@ -4329,6 +4329,12 @@
     "/u3c3/:type?/:keyword?": [
         "noname1897"
     ],
+    "/u9a9/:preview?": [
+        "TonyRL"
+    ],
+    "/u9a9/search/:keyword/:preview?": [
+        "TonyRL"
+    ],
     "/uber/blog/:maxPage?": [
         "hulb"
     ],
