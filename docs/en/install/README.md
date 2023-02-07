@@ -320,7 +320,7 @@ Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product pla
     $ cd RSSHub
     ```
 3. [Sign up for Fly.io](https://fly.io/app/sign-up) and install the [`flyctl` CLI](https://fly.io/docs/hands-on/install-flyctl/).
-4. Run `flyctl launch` and choose a unique name.
+4. Run `flyctl launch` and choose a unique name and region to deploy.
 5. Use `flyctl secrets set KEY=VALUE` to [configure specific routes](#configuration-route-specific-configurations).
 6. [Set up automatic deployment via GitHub Actions](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/)
 7. Install the [Pull](https://github.com/apps/pull) GitHub app to keep your fork synchronized with upstream.
