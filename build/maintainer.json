@@ -3976,15 +3976,6 @@
     "/startuplatte/:category?": [
         "nczitzk"
     ],
-    "/stcn/data/:id?": [
-        "nczitzk"
-    ],
-    "/stcn/kuaixun/:id?": [
-        "nczitzk"
-    ],
-    "/stcn/stock/:id?": [
-        "nczitzk"
-    ],
     "/stcn/:id?": [
         "nczitzk"
     ],

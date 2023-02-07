@@ -16775,38 +16775,9 @@
     "_name": "证券时报网",
     ".": [
       {
-        "title": "要闻",
-        "docs": "https://docs.rsshub.app/finance.html#zheng-quan-shi-bao-wang-yao-wen",
+        "title": "栏目",
+        "docs": "https://docs.rsshub.app/finance.html#zheng-quan-shi-bao-wang-lan-mu",
         "source": [
-          "/xw/:id",
-          "/gd",
-          "/"
-        ]
-      },
-      {
-        "title": "快讯",
-        "docs": "https://docs.rsshub.app/finance.html#zheng-quan-shi-bao-wang-kuai-xun",
-        "source": [
-          "/kuaixun/:id",
-          "/kuaixun",
-          "/"
-        ]
-      },
-      {
-        "title": "股市",
-        "docs": "https://docs.rsshub.app/finance.html#zheng-quan-shi-bao-wang-gu-shi",
-        "source": [
-          "/stock/:id",
-          "/stock",
-          "/"
-        ]
-      },
-      {
-        "title": "数据",
-        "docs": "https://docs.rsshub.app/finance.html#zheng-quan-shi-bao-wang-shu-ju",
-        "source": [
-          "/data/:id",
-          "/data",
           "/"
         ]
       }
