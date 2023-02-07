@@ -1141,6 +1141,30 @@
         docs:"https://docs.rsshub.app/programming.html#bbc-news-labs",
         source:"/",
         target:"/bbcnewslabs/news" } ] },
+  "52bdys.com":{ _name:"哔嘀影视",
+    ".":[ { title:"首页",
+        docs:"https://docs.rsshub.app/multimedia.html#bi-di-ying-shi",
+        source:[ "/s/:caty" ],
+        target:(params, url) => {
+                const searchParams = new URL(url).searchParams;
+                return `/bdys/${params.caty}/${searchParams.get('type') || 'all'}/${searchParams.get('area') || 'all'}/${searchParams.get('year') || 'all'}/${searchParams.get('order') || '0'}`;
+            } } ] },
+  "bde4.icu":{ _name:"哔嘀影视",
+    ".":[ { title:"首页",
+        docs:"https://docs.rsshub.app/multimedia.html#bi-di-ying-shi",
+        source:[ "/s/:caty" ],
+        target:(params, url) => {
+                const searchParams = new URL(url).searchParams;
+                return `/bdys/${params.caty}/${searchParams.get('type') || 'all'}/${searchParams.get('area') || 'all'}/${searchParams.get('year') || 'all'}/${searchParams.get('order') || '0'}`;
+            } } ] },
+  "bdys01.com":{ _name:"哔嘀影视",
+    ".":[ { title:"首页",
+        docs:"https://docs.rsshub.app/multimedia.html#bi-di-ying-shi",
+        source:[ "/s/:caty" ],
+        target:(params, url) => {
+                const searchParams = new URL(url).searchParams;
+                return `/bdys/${params.caty}/${searchParams.get('type') || 'all'}/${searchParams.get('area') || 'all'}/${searchParams.get('year') || 'all'}/${searchParams.get('order') || '0'}`;
+            } } ] },
   "behance.net":{ _name:"Behance",
     www:[ { title:"User",
         docs:"https://docs.rsshub.app/design.html#behance-yong-hu-zuo-pin",
@@ -6527,11 +6551,6 @@
         source:[ "/l/:category",
           "/" ],
         target:"/mox/:category?" } ] },
-  "52bdys.com":{ _name:"哔嘀影视",
-    ".":[ { title:"首页",
-        docs:"https://docs.rsshub.app/multimedia.html#bi-di-ying-shi",
-        source:[ "/" ],
-        target:"/mp4er/:type?/:caty?/:area?/:year?/:order?" } ] },
   "mpaypass.com.cn":{ _name:"移动支付网",
     ".":[ { title:"新闻",
         docs:"https://docs.rsshub.app/new-media.html#yi-dong-zhi-fu-wang",

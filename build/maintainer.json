@@ -397,6 +397,9 @@
     "/bbcnewslabs/news": [
         "elxy"
     ],
+    "/bdys/:caty?/:type?/:area?/:year?/:order?": [
+        "nczitzk"
+    ],
     "/behance/:user/:type?": [
         "MisteryMonster"
     ],
@@ -2873,9 +2876,6 @@
         "nczitzk"
     ],
     "/mox/:category?": [
-        "nczitzk"
-    ],
-    "/mp4er/:type?/:caty?/:area?/:year?/:order?": [
         "nczitzk"
     ],
     "/mpaypass/main/:type?": [
