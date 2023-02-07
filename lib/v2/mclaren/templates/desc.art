@@ -1,0 +1,6 @@
+<p>{{ desc }}</p><br>
+<center><img src="{{ imgUrl }}"></center><br>
+{{ if vidId }}
+<center><iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube-nocookie.com/embed/{{ vidId }}" frameborder="0" allowfullscreen></iframe></center><br>
+{{ /if }}
+{{@ content }}

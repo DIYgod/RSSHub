@@ -492,7 +492,7 @@ Edition
 
 <RouteEn author="Cerebrater xosdy" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['Author id, can be found at author\'s homepage url']" radar="1" rssbud="1"/>
 
-## Mclaren Racing
+## McLaren Racing
 
 ### Articles
 
@@ -501,8 +501,6 @@ Edition
 | All Media | Article | Report | Gallery | Video | Blog | Photo Essay  |
 | --------- | ------- | ------ | ------- | ----- | ---- | -----------  |
 | all       | article | report | gallery | video | blog | photo\_essay |
-
-</RouteEn>
 
 </RouteEn>
 

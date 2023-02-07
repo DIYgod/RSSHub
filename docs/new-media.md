@@ -893,7 +893,7 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ## 迈凯伦赛车
 
-### Media
+### 文章
 
 <Route author="Bubbu0129" example="/mclaren/en/all" path="/mclaren/:lang/:category?" :paramsDesc="['支持英语(en)、简体中文(zh)、与西班牙语(es)。', '默认输出所有媒体(all)；见下表：']" radar="1" rssbud="1">
 
