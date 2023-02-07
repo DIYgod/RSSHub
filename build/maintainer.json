@@ -2816,6 +2816,9 @@
     "/mcachicago/exhibitions": [
         "chazeon"
     ],
+    "/mclaren/:lang/:category?": [
+        "Bubbu0129"
+    ],
     "/mdpi/:journal": [
         "Derekmini"
     ],
