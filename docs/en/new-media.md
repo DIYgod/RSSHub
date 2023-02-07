@@ -502,6 +502,8 @@ Edition
 | --------- | ------- | ------ | ------- | ----- | ---- | -----------  |
 | all       | article | report | gallery | video | blog | photo\_essay |
 
+</RouteEn>
+
 ## Mirror
 
 ### User
