@@ -901,6 +901,8 @@ IPFS 网关有可能失效，那时候换成其他网关。
 | -------- | ---- | ---- | ---- | ---- | ---- | ------------------ |
 | all   | article | report | gallery | video | blog | photo\_essay |
 
+</Route>
+
 ## Mirror
 
 ### User
