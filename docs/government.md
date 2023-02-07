@@ -44,6 +44,22 @@ pageClass: routes
 
 <Route author="Fatpandac" example="/ssm/news" path="/ssm/news"/>
 
+## 北京社科网
+
+### 通用
+
+<Route author="TonyRL" example="/bjsk/newslist-1394-1474-0" path="/bjsk/:path?" :paramsDesc="['路径，默认为 `newslist-1486-0-0`']" radar="1">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `https://www.bjsk.org.cn/` 和 `.html` 之间的字段。下面是一个例子。
+
+若订阅 [社科资讯 > 社科要闻](https://www.bjsk.org.cn/newslist-1394-1474-0.html) 则将对应页面 URL <https://www.bjsk.org.cn/newslist-1394-1474-0.html> 中 `https://www.bjsk.org.cn/` 和 `.html` 之间的字段 `newslist-1394-1474-0` 作为路径填入。此时路由为 [`/bjsk/newslist-1394-1474-0`](https://rsshub.app/bjsk/newslist-1394-1474-0)
+
+:::
+
+</Route>
+
 ## 北京市保障房中心有限公司
 
 ### 北京市共有产权住房租赁服务平台
@@ -1049,6 +1065,12 @@ pageClass: routes
 :::
 
 </Route>
+
+## 中国科学技术协会
+
+### 通用
+
+<Route author="TonyRL" example="/cast" path="/cast/:column?" :paramsDesc="['栏目 ID，即 URL 中的数字，默认为 `457`']" radar="1"/>
 
 ## 中国农工民主党
 
