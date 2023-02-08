@@ -433,6 +433,18 @@ More could be found in the URL of the category/topic page.
 
 <RouteEn author="LyleLee" example="/reuters/investigates" path="/reuters/investigates" />
 
+## Rodong Sinmun
+
+### News
+
+<RouteEn author="TonyRL" example="/rodong/news" path="/rodong/news/:language?" :paramsDesc="['Language, see below, `ko` by default']" radar="1">
+
+| 조선어 | English | 中文 |
+| ---- | ------ | --- |
+| ko   | en     | cn  |
+
+</RouteEn>
+
 ## RTHK
 
 ### News

@@ -64,7 +64,7 @@ pageClass: routes
 
 ### 北京市共有产权住房租赁服务平台
 
-<Route author="bigfei" example="/gov/beijing/bphc/announcement" path="/gov/beijing/bphc/:caty" :paramsDesc="['类别']">
+<Route author="bigfei" example="/gov/beijing/bphc/announcement" path="/gov/beijing/bphc/:cat" :paramsDesc="['类别']">
 
 |     通知公告     |   项目介绍  |
 | :----------: | :-----: |
