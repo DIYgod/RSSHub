@@ -3678,6 +3678,9 @@
     "/rfi/news": [
         "nczitzk"
     ],
+    "/rodong/news/:language?": [
+        "TonyRL"
+    ],
     "/rsshub/routes/:lang?": [
         "DIYgod"
     ],
