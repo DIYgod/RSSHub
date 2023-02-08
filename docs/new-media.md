@@ -3015,6 +3015,18 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 迈凯伦赛车
+
+### 文章
+
+<Route author="Bubbu0129" example="/mclaren/en/all" path="/mclaren/:lang/:category?" :paramsDesc="['支持英语(en)、简体中文(zh)、与西班牙语(es)。', '默认输出所有媒体(all)；见下表：']" radar="1" rssbud="1">
+
+| 所有媒体 | 文章      | 报道     | 图库      | 视频    | 博客   | 图文 (Photo Essay) |
+| ---- | ------- | ------ | ------- | ----- | ---- | ---------------- |
+| all  | article | report | gallery | video | blog | photo_essay      |
+
+</Route>
+
 ## 慢雾科技
 
 ### 动态

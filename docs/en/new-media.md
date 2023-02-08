@@ -492,6 +492,18 @@ Edition
 
 <RouteEn author="Cerebrater xosdy" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['Author id, can be found at author\'s homepage url']" radar="1" rssbud="1"/>
 
+## McLaren Racing
+
+### Articles
+
+<RouteEn author="Bubbu0129" example="/mclaren/en/all" path="/mclaren/:lang/:category?" :paramsDesc="['Supports English(en), Simplified Chinese(zh), and Spanish(es).', 'Default to exporting all media (all); See the table below for details']" radar="1" rssbud="1">
+
+| All Media | Article | Report | Gallery | Video | Blog | Photo Essay  |
+| --------- | ------- | ------ | ------- | ----- | ---- | -----------  |
+| all       | article | report | gallery | video | blog | photo\_essay |
+
+</RouteEn>
+
 ## Mirror
 
 ### User

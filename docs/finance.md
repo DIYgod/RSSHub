@@ -630,43 +630,45 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ## 证券时报网
 
-### 要闻
+### 栏目
 
-<Route author="nczitzk" example="/stcn/xw/news" path="/stcn/:id?" :paramsDesc="['分类 id，见下表，默认为要闻']">
+<Route author="nczitzk" example="/stcn/yw" path="/stcn/:id?" :paramsDesc="['栏目 id，见下表，默认为要闻']">
 
-| 要闻      | 滚动 | 深度    | 评论    |
-| ------- | -- | ----- | ----- |
-| xw/news | gd | xw/sd | xw/pl |
+| 快讯 | 要闻 | 股市 | 公司      | 数据   |
+| -- | -- | -- | ------- | ---- |
+| kx | yw | gs | company | data |
 
-</Route>
+| 基金   | 金融      | 评论      | 产经 | 创投 |
+| ---- | ------- | ------- | -- | -- |
+| fund | finance | comment | cj | ct |
 
-### 快讯
+| 科创板 | 新三板 | 投教 | ESG | 滚动 |
+| --- | --- | -- | --- | -- |
+| kcb | xsb | tj | zk  | gd |
 
-<Route author="nczitzk" example="/stcn/kuaixun" path="/stcn/kuaixun/:id?" :paramsDesc="['分类 id，见下表，默认为快讯']">
+| 股市一览 | 独家解读 |
+| ---- | ---- |
+| gsyl | djjd |
 
-| 快讯 | e 公司 | 研报 | 时事 | 财经 | 券中社 |
-| -- | ---- | -- | -- | -- | --- |
-|    | egs  | yb | ss | cj | qzs |
+| 公司新闻 | 公司动态 |
+| ---- | ---- |
+| gsxw | gsdt |
 
-</Route>
+| 独家数据 | 看点数据 | 资金流向 | 科创板    | 行情总貌 |
+| ---- | ---- | ---- | ------ | ---- |
+| djsj | kd   | zj   | sj_kcb | hq   |
 
-### 股市
+| 专栏 | 作者     |
+| -- | ------ |
+| zl | author |
 
-<Route author="nczitzk" example="/stcn/stock" path="/stcn/stock/:id?" :paramsDesc="['分类 id，见下表，默认为股市']">
+| 行业   | 汽车   |
+| ---- | ---- |
+| cjhy | cjqc |
 
-| 股市 | 股市动态 | 独家解读 |
-| -- | ---- | ---- |
-|    | gsdt | djjd |
-
-</Route>
-
-### 数据
-
-<Route author="nczitzk" example="/stcn/data" path="/stcn/data/:id?" :paramsDesc="['分类 id，见下表，默认为数据']">
-
-| 数据 | 机器人新闻 | 独家数据 |
-| -- | ----- | ---- |
-|    | jqrxw | djsj |
+| 投教课堂 | 政策知识 | 投教动态 | 专题活动 |
+| ---- | ---- | ---- | ---- |
+| tjkt | zczs | tjdt | zthd |
 
 </Route>
 
