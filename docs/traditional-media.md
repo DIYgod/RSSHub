@@ -1346,6 +1346,18 @@ category 对应的关键词有
 
 </Route>
 
+## 劳动新闻
+
+### 新闻
+
+<Route author="TonyRL" example="/rodong/news" path="/rodong/news/:language?" :paramsDesc="['语言，见下表，默认 `ko`']" radar="1">
+
+| 조선어 | English | 中文 |
+| --- | ------- | -- |
+| ko  | en      | cn |
+
+</Route>
+
 ## 理论网
 
 ### 学习时报
