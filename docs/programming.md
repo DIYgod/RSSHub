@@ -925,6 +925,10 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="cancergary" example="/juejin/news/739332228916791" path="/juejin/news/:userId" :paramsDesc="['用户 id, 可在用户页 URL 中找到']" radar="1" rssbud="1"/>
 
+### 开发者活动
+
+<Route author="moke8" example="/juejin/events/shanghai" path="/juejin/events/:city" :paramsDesc="['活动地点, 可选, 一般为城市名全拼如shanghai, 支持城市可在掘金活动页查阅']" radar="1" rssbud="1"/>
+
 ## 开源中国
 
 ### 资讯
