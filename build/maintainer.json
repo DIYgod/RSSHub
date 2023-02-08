@@ -149,6 +149,9 @@
     "/acfun/user/video/:uid": [
         "wdssmq"
     ],
+    "/acg17/post/all": [
+        "SunBK201"
+    ],
     "/acs/journal/:id": [
         "nczitzk"
     ],
