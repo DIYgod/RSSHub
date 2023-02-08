@@ -20,6 +20,7 @@ Deploy for public access may require:
 3. [Redis](https://redis.io/download)
 4. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 5. [Google App Engine](https://cloud.google.com/appengine/)
+6. [Fly.io](https://fly.io/)
 
 ## Docker Image
 
@@ -319,10 +320,11 @@ Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product pla
     $ cd RSSHub
     ```
 3. [Sign up for Fly.io](https://fly.io/app/sign-up) and install the [`flyctl` CLI](https://fly.io/docs/hands-on/install-flyctl/).
-4. Run `flyctl launch` and choose a unique name.
+4. Run `flyctl launch` and choose a unique name and region to deploy.
 5. Use `flyctl secrets set KEY=VALUE` to [configure specific routes](#configuration-route-specific-configurations).
 6. [Set up automatic deployment via GitHub Actions](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/)
 7. Install the [Pull](https://github.com/apps/pull) GitHub app to keep your fork synchronized with upstream.
+8. (Optional) Point your own domain to the IPv4 and IPv6 addresses provided by fly.io, then go to Certificate page and add the domain.
 
 ### Configure built-in Upstash Redis as cache
 
