@@ -318,7 +318,7 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ### 市场快讯
 
-<Route author="laampui" example="/jinshi/index" path="/jinshi/index" />
+<Route author="laampui" example="/jin10" path="/jin10/:important?" :paramsDesc="['只看重要，任意值开启，留空关闭']" radar="1"/>
 
 ## 老虎社区
 
