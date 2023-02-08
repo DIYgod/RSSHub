@@ -2541,6 +2541,9 @@
         "DIYgod",
         "prnake"
     ],
+    "/jin10/:important?": [
+        "laampui"
+    ],
     "/jisilu/:category?/:sort?/:day?": [
         "nczitzk"
     ],
@@ -5606,7 +5609,6 @@
     "/aptonic/action/:untested?": [],
     "/im2maker/:channel?": [],
     "/cninfo/announcement/:column/:code/:orgId/:category?/:search?": [],
-    "/jinshi/index": [],
     "/gov/moa/sjzxfb": [],
     "/gov/moa/:suburl(.*)": [],
     "/nosetime/:id/:type/:sort?": [],
