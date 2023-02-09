@@ -12,6 +12,7 @@ jobs:
     name: Automatic Rebase
     if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && github.event.comment.author_association == 'COLLABORATOR'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Checkout the latest code
         uses: actions/checkout@v3
@@ -26,6 +27,7 @@ jobs:
     name: Self Assign
     if: ${{ !github.event.issue.pull_request && startsWith(github.event.comment.body, '/wip') }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       contents: read
       issues: write
@@ -41,6 +43,7 @@ jobs:
     name: Test route on demand
     if: startsWith(github.event.comment.body, '/test')
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       contents: read
       issues: write

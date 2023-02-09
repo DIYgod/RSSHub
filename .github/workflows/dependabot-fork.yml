@@ -7,6 +7,7 @@ jobs:
     if: github.repository_owner != 'DIYgod' && github.actor == 'dependabot[bot]'
     runs-on: ubuntu-latest
     name: Ignore dependabot on forks
+    timeout-minutes: 5
     steps:
       - name: Checkout
         uses: actions/checkout@v3
