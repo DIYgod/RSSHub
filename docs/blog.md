@@ -321,7 +321,7 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 ### 最新文章
 
-<Route author="TonyRL" example="/jiaoliudao" path="/jiaoliudao" radar="1">
+<Route author="TonyRL" example="/jiaoliudao" path="/jiaoliudao" radar="1" />
 
 ## 敬维博客
 
