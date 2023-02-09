@@ -530,7 +530,7 @@ Solidot 提供的 feed:
 
 ### 新聞
 
-<Route author="KeiLongW" example="/yahoo-news/hk/world" path="/yahoo-news/:region/:category?" :paramsDesc="['地区','类别']">
+<Route author="KeiLongW" example="/yahoo/news/hk/world" path="/yahoo/news/:region/:category?" :paramsDesc="['地区','类别']" radar="1">
 
 `地区`
 
@@ -1343,6 +1343,18 @@ category 对应的关键词有
 | 客家焦點  | 政經要聞      | 民生醫療    | 地方風采  | 國際萬象          |
 | ----- | --------- | ------- | ----- | ------------- |
 | hakka | political | medical | local | international |
+
+</Route>
+
+## 劳动新闻
+
+### 新闻
+
+<Route author="TonyRL" example="/rodong/news" path="/rodong/news/:language?" :paramsDesc="['语言，见下表，默认 `ko`']" radar="1">
+
+| 조선어 | English | 中文 |
+| --- | ------- | -- |
+| ko  | en      | cn |
 
 </Route>
 

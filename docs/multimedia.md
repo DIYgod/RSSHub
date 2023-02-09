@@ -1175,7 +1175,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="hoilc" example="/trakt/collection/tomyangsh/movies" path="/trakt/collection/:username/:type?" :paramsDesc="['用户名','收藏类型，可选`movies`,`shows`,`episodes`,`all`，默认为`all`']" radar="1" rssbud="1" />
 
-## u3c3
+## U3C3
 
 ### 关键词搜索
 
@@ -1184,6 +1184,16 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 ### 分类
 
 <Route author="noname1897" example="/u3c3/U3C3" path="/u3c3/:type?" :paramsDesc="['类别名称，注意大小写，需要严格对应！可选的 `type` 有 `U3C3`/`Video`/`Photo`/`Book`/`Game`/`Software`/`Other`，如果不设置 type，则展示首页']" supportBT="1" radar="1" />
+
+## U9A9
+
+### 首页
+
+<Route author="TonyRL" example="/u9a9" path="/u3c3/:preview?" :paramsDesc="['是否显示预览图，预设为关，任意值为开']" supportBT="1" radar="1" />
+
+### 搜索
+
+<Route author="TonyRL" example="/u9a9/search/新片速递" path="/u3c3/search/:keyword/:preview?" :paramsDesc="['搜索关键字', '是否显示预览图，预设为关，任意值为开']" supportBT="1" radar="1" />
 
 ## Yahoo! テレビ
 
@@ -1225,9 +1235,15 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 ## 哔嘀影视
 
+::: tip 提示
+
+哔嘀影视有多个备用域名，路由默认使用域名 <https://bdys01.com>。若该域名无法访问，可以通过在路由最后加上 `?domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://bde4.icu>，则在所有哔嘀影视路由最后加上 `?domain=bde4.icu` 即可，此时路由为 [`/bdys?domain=bde4.icu`](https://rsshub.app/bdys?domain=bde4.icu)
+
+:::
+
 ### 首页
 
-<Route author="nczitzk" example="/mp4er" path="/mp4er/:type?/:caty?/:area?/:year?/:order?" :paramsDesc="['资源分类，见下表，默认为 `all` 即不限', '影视类型，见下表，默认为 `all` 即不限','制片地区，见下表，默认为 `all` 即不限','上映时间，此处填写年份不小于2000，默认为 `all` 即不限','影视排序，见下表，默认为更新时间']">
+<Route author="nczitzk" example="/bdys" path="/bdys/:caty?/:type?/:area?/:year?/:order?" :paramsDesc="['影视类型，见下表，默认为 `all` 即不限','资源分类，见下表，默认为 `all` 即不限', '制片地区，见下表，默认为 `all` 即不限','上映时间，此处填写年份不小于2000，默认为 `all` 即不限','影视排序，见下表，默认为更新时间']" anticrawler="1" radar="1">
 
 #### 资源分类
 

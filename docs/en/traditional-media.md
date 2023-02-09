@@ -433,6 +433,18 @@ More could be found in the URL of the category/topic page.
 
 <RouteEn author="LyleLee" example="/reuters/investigates" path="/reuters/investigates" />
 
+## Rodong Sinmun
+
+### News
+
+<RouteEn author="TonyRL" example="/rodong/news" path="/rodong/news/:language?" :paramsDesc="['Language, see below, `ko` by default']" radar="1">
+
+| 조선어 | English | 中文 |
+| ---- | ------ | --- |
+| ko   | en     | cn  |
+
+</RouteEn>
+
 ## RTHK
 
 ### News
@@ -680,7 +692,7 @@ Provide full article RSS for WSJ topics.
 
 ### News
 
-<RouteEn author="KeiLongW" example="/yahoo-news/hk/world" path="/yahoo-news/:region/:category?" :paramsDesc="['Region','Category']">
+<RouteEn author="KeiLongW" example="/yahoo/news/hk/world" path="/yahoo/news/:region/:category?" :paramsDesc="['Region','Category']">
 
 `Region`
 | Hong Kong | Taiwan | US |

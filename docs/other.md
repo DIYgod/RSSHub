@@ -793,7 +793,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 最新辟谣
 
-<Route author="hoilc" example="/factcheck" path="/factcheck"/>
+<Route author="hoilc" example="/qq/fact" path="/qq/fact" radar="1"/>
 
 ## 天津产权交易中心
 
@@ -992,6 +992,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 产业政策
 
 <Route author="nczitzk" example="/cktest/policy" path="/cktest/policy"/>
+
+## 中国互联网联合辟谣平台
+
+### 今日辟谣
+
+<Route author="Fatpandac" example="/piyao/jrpy" path="/piyao/jrpy"/>
 
 ## 中国银行
 
