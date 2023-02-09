@@ -588,7 +588,7 @@ Sources
 
 ### 漫画更新
 
-<Route author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID']"/>
+<Route author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID']" radar="1"/>
 
 ## 风之动漫
 
