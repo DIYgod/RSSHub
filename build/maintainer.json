@@ -675,6 +675,9 @@
     "/cankaoxiaoxi/news/:category": [
         "yuxinliu-alex"
     ],
+    "/cartoonmad/comic/:id": [
+        "KellyHwong"
+    ],
     "/cast/:column?": [
         "TonyRL"
     ],
@@ -5377,7 +5380,6 @@
     "/xiachufang/popular/:timeframe?": [],
     "/eeo/:column?/:category?": [],
     "/tencentvideo/playlist/:id": [],
-    "/cartoonmad/comic/:id": [],
     "/vol/:mode?": [],
     "/dongmanmanhua/:category/:name/:id": [],
     "/webtoons/:lang/:category/:name/:id": [],
