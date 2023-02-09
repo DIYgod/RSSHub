@@ -7,6 +7,7 @@ jobs:
     name: Lint
     if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -20,6 +21,7 @@ jobs:
     name: reviewdog
     if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -35,6 +37,7 @@ jobs:
     if: ${{ github.event_name == 'pull_request_target' }}
     name: Validate PR title
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: amannn/action-semantic-pull-request@v5
         env:
@@ -49,6 +52,7 @@ jobs:
       contents: read
       pull-requests: write
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
     - uses: actions/labeler@v4
       with:
