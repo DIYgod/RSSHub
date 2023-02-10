@@ -461,6 +461,12 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news"/>
 
+## Issue Hunt
+
+### 项目悬赏
+
+<Route author="running-grass" radar="1" example="/issuehunt/funded/DIYgod/RSSHub" path="/issuehunt/funded/:username/:repo" :paramsDesc="['Github用户/组织','仓库名称']" />
+
 ## ITSlide
 
 ### 最新
