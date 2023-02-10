@@ -290,6 +290,12 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <RouteEn author="hellodword" example="/hex-rays/news" path="/hex-rays/news" />
 
+## Issue Hunt
+
+### Project Funded
+
+<Route author="running-grass" radar="1" example="/issuehunt/funded/DIYgod/RSSHub" path="/funded/:username/:repo" :paramsDesc="['Github user/org','Repository name']" />
+
 ## Kaggle
 
 ### Discussion
