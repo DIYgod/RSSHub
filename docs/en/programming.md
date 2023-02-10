@@ -294,7 +294,7 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 ### Project Funded
 
-<Route author="running-grass" radar="1" example="/issuehunt/funded/DIYgod/RSSHub" path="/funded/:username/:repo" :paramsDesc="['Github user/org','Repository name']" />
+<RouteEn author="running-grass" radar="1" example="/issuehunt/funded/DIYgod/RSSHub" path="/issuehunt/funded/:username/:repo" :paramsDesc="['Github user/org','Repository name']" />
 
 ## Kaggle
 
