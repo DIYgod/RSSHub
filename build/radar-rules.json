@@ -9092,6 +9092,16 @@
       }
     ]
   },
+  "issuehunt.io": {
+    "_name": "Issue Hunt",
+    ".": [
+      {
+        "title": "项目悬赏",
+        "docs": "https://docs.rsshub.app/programming.html#issue-hunt-xiang-mu-xuan-shang",
+        "source": "/r/:username/:repo"
+      }
+    ]
+  },
   "itch.io": {
     "_name": "itch.io",
     ".": [

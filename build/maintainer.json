@@ -2259,6 +2259,9 @@
     "/islander/top30event": [
         "TonyRL"
     ],
+    "/issuehunt/funded/:username/:repo": [
+        "running-grass"
+    ],
     "/itch/devlog/:user/:id": [
         "nczitzk"
     ],
