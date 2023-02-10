@@ -945,7 +945,7 @@ IT・科学 tech_science
 
 ### 產經
 
-<Route author="nczitzk" example="/on/money18/exp" path="/on/money18/:id?" :paramsDesc="['栏目 id，可在对应栏目页 URL 中找到，默认为 exp，即新聞總覽']">
+<Route author="nczitzk" example="/oncc/money18/exp" path="/oncc/money18/:id?" :paramsDesc="['栏目 id，可在对应栏目页 URL 中找到，默认为 exp，即新聞總覽']">
 
 | 新聞總覽 | 全日焦點 | 板塊新聞     | 國際金融 | 大行報告     | A 股新聞    | 地產新聞 | 投資理財      | 新股 IPO | 科技財情 |
 | ---- | ---- | -------- | ---- | -------- | -------- | ---- | --------- | ------ | ---- |
