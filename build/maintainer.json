@@ -678,6 +678,18 @@
     "/cartoonmad/comic/:id": [
         "KellyHwong"
     ],
+    "/cas/cg/:caty?": [
+        "nczitzk"
+    ],
+    "/cas/iee/kydt": [
+        "nczitzk"
+    ],
+    "/cas/mesalab/kb": [
+        "renzhexigua"
+    ],
+    "/cas/sim/kyjz": [
+        "HenryQW"
+    ],
     "/cast/:column?": [
         "TonyRL"
     ],
@@ -5238,10 +5250,6 @@
     "/scnu/jw": [],
     "/scnu/library": [],
     "/scnu/cs/match": [],
-    "/cas/sim/academic": [],
-    "/cas/mesalab/kb": [],
-    "/cas/iee/kydt": [],
-    "/cas/cg/:caty?": [],
     "/utdallas/isso": [],
     "/nchu/jwc/:type?": [],
     "/cqu/jwc/:path*": [],
