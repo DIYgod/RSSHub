@@ -8,6 +8,12 @@ pageClass: routes
 
 <Route author="Yukaii" example="/591/query/order=posttime&orderType=desc" path="/591/query/:query?" :paramsDesc="['Query Parameters']"/>
 
+::: tip Tip
+
+Copy the URL of the 591 filter housing page and remove the front part "https://rent.591.com.tw/?", you will get the query parameters.
+
+:::
+
 ## Apple
 
 ### Exchange and Repair Extension Programs
