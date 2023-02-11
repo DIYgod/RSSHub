@@ -6,7 +6,7 @@ pageClass: routes
 
 ## 591 Rental house
 
-<RouteEn author="Yukaii" example="/591/query/order=posttime&orderType=desc" path="/591/query/:query?" :paramsDesc="['Query Parameters']">
+<RouteEn author="Yukaii" example="/591/tw/rent/order=posttime&orderType=desc" path="/591/:country/rent/:query?" :paramsDesc="['Country code. Only tw is supported now', 'Query Parameters']">
 
 ::: tip Tip
 

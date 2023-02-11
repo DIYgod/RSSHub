@@ -20,7 +20,7 @@ pageClass: routes
 
 ## 591 租屋網
 
-<Route author="Yukaii" example="/591/query/order=posttime&orderType=desc" path="/591/query/:query?" :paramsDesc="['查詢參數']">
+<Route author="Yukaii" example="/591/tw/rent/order=posttime&orderType=desc" path="/591/:country/rent/:query?" :paramsDesc="['網址國碼，目前僅支援 tw', '查詢參數']">
 
 ::: tip 提示
 
