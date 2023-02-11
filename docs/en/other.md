@@ -4,6 +4,10 @@ pageClass: routes
 
 # Uncategorized
 
+## 591 Rental house
+
+<Route author="Yukaii" example="/591/query/order=posttime&orderType=desc" path="/591/query/:query?" :paramsDesc="['Query Parameters']"/>
+
 ## Apple
 
 ### Exchange and Repair Extension Programs

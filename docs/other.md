@@ -18,6 +18,16 @@ pageClass: routes
 
 </Route>
 
+## 591 租屋網
+
+<Route author="Yukaii" example="/591/query/order=posttime&orderType=desc" path="/591/query/:query?" :paramsDesc="['查詢參數']"/>
+
+::: warning 注意
+
+複製 591 篩選房屋頁面的網址，並去掉前段 `https://rent.591.com.tw/?` 部分，即可得到查詢參數。
+
+:::
+
 ## acwifi 路由器交流
 
 ### 新闻
