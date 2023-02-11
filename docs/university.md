@@ -3477,7 +3477,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 成果转化
 
-<Route author="nczitzk" example="/cas/cg/cgzhld" path="/cas/cg/:caty?" :paramsDesc="['分类，见下表，默认为工作动态']">
+<Route author="nczitzk" example="/cas/cg/cgzhld" path="/cas/cg/:caty?" :paramsDesc="['分类，见下表，默认为工作动态']" radar="1">
 
 | 工作动态 | 科技成果转移转化亮点工作 |
 | ---- | ------------ |
@@ -3485,17 +3485,17 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-### 上海微系统与信息技术研究所学术活动
+### 上海微系统与信息技术研究所 科技进展
 
-<Route author="HenryQW" example="/cas/sim/academic" path="/cas/sim/academic"/>
+<Route author="HenryQW" example="/cas/sim/kyjz" path="/cas/sim/kyjz" radar="1"/>
 
-### 中国科学院信息工程研究所 第二研究室 处理架构组 知识库
+### 信息工程研究所 第二研究室 处理架构组 知识库
 
-<Route author="renzhexigua" example="/cas/mesalab/kb" path="/cas/mesalab/kb"/>
+<Route author="renzhexigua" example="/cas/mesalab/kb" path="/cas/mesalab/kb" radar="1"/>
 
-### 中国科学院电工研究所 科研动态
+### 电工研究所 科研动态
 
-<Route author="nczitzk" example="/cas/iee/kydt" path="/cas/iee/kydt"/>
+<Route author="nczitzk" example="/cas/iee/kydt" path="/cas/iee/kydt" radar="1"/>
 
 ## 中国科学院大学
 
