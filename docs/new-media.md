@@ -2815,51 +2815,51 @@ column 为 third 时可选的 category:
 
     -   人工智能
 
-                    | 学术       | 开发者      |
-                    | -------- | -------- |
-                    | academic | yanxishe |
+                        | 学术       | 开发者      |
+                        | -------- | -------- |
+                        | academic | yanxishe |
 
     -   数智化
 
-                    | 零售数智化     | 金融数智化      | 工业数智化      | 医疗数智化     | 城市数智化       |
-                    | --------- | ---------- | ---------- | --------- | ----------- |
-                    | redigital | findigital | mandigital | medigital | citydigital |
+                        | 零售数智化     | 金融数智化      | 工业数智化      | 医疗数智化     | 城市数智化       |
+                        | --------- | ---------- | ---------- | --------- | ----------- |
+                        | redigital | findigital | mandigital | medigital | citydigital |
 
     -   金融科技
 
-                    | 科技巨头    | 银行 AI | 金融云          | 风控与安全        |
-                    | ------- | ----- | ------------ | ------------ |
-                    | BigTech | bank  | FinanceCloud | DataSecurity |
+                        | 科技巨头    | 银行 AI | 金融云          | 风控与安全        |
+                        | ------- | ----- | ------------ | ------------ |
+                        | BigTech | bank  | FinanceCloud | DataSecurity |
 
     -   医疗科技
 
-                    | 医疗 AI    | 投融资   | 医疗器械  | 互联网医疗            | 生物医药         | 健康险          |
-                    | -------- | ----- | ----- | ---------------- | ------------ | ------------ |
-                    | healthai | touzi | qixie | hulianwangyiliao | shengwuyiyao | jiankangxian |
+                        | 医疗 AI    | 投融资   | 医疗器械  | 互联网医疗            | 生物医药         | 健康险          |
+                        | -------- | ----- | ----- | ---------------- | ------------ | ------------ |
+                        | healthai | touzi | qixie | hulianwangyiliao | shengwuyiyao | jiankangxian |
 
     -   芯片
 
-                    | 材料设备      | 芯片设计       | 晶圆代工          | 封装测试      |
-                    | --------- | ---------- | ------------- | --------- |
-                    | materials | chipdesign | manufacturing | packaging |
+                        | 材料设备      | 芯片设计       | 晶圆代工          | 封装测试      |
+                        | --------- | ---------- | ------------- | --------- |
+                        | materials | chipdesign | manufacturing | packaging |
 
     -   智慧城市
 
-                    | 智慧安防          | 智慧教育           | 智慧交通                | 智慧社区           | 智慧零售           | 智慧政务            | 智慧地产     |
-                    | ------------- | -------------- | ------------------- | -------------- | -------------- | --------------- | -------- |
-                    | smartsecurity | smarteducation | smarttransportation | smartcommunity | smartretailing | smartgovernment | proptech |
+                        | 智慧安防          | 智慧教育           | 智慧交通                | 智慧社区           | 智慧零售           | 智慧政务            | 智慧地产     |
+                        | ------------- | -------------- | ------------------- | -------------- | -------------- | --------------- | -------- |
+                        | smartsecurity | smarteducation | smarttransportation | smartcommunity | smartretailing | smartgovernment | proptech |
 
     -   工业互联网
 
-                    | 工业软件       | 工业安全     | 5G 工业互联网 | 工业转型实践    |
-                    | ---------- | -------- | -------- | --------- |
-                    | gysoftware | gysafety | 5ggy     | gypratice |
+                        | 工业软件       | 工业安全     | 5G 工业互联网 | 工业转型实践    |
+                        | ---------- | -------- | -------- | --------- |
+                        | gysoftware | gysafety | 5ggy     | gypratice |
 
     -   AIoT
 
-                    | 物联网 | 智能硬件 | 机器人   | 智能家居      |
-                    | --- | ---- | ----- | --------- |
-                    | 5G  | arvr | robot | smarthome |
+                        | 物联网 | 智能硬件 | 机器人   | 智能家居      |
+                        | --- | ---- | ----- | --------- |
+                        | 5G  | arvr | robot | smarthome |
 
 </Route>
 
@@ -3513,7 +3513,11 @@ column 为 third 时可选的 category:
 
 ### 作者动态
 
-<Route author="umm233" example="/sspai/activity/d0u947vr" path="/sspai/activity/:slug"  :paramsDesc="['作者 slug，可在作者主页URL中找到']" radar="1"/>
+<Route author="umm233" example="/sspai/activity/urfp0d9i" path="/sspai/activity/:slug"  :paramsDesc="['作者 slug，可在作者主页URL中找到']" radar="1"/>
+
+### 用户收藏
+
+<Route author="curly210102" example="/sspai/bookmarks/urfp0d9i" path="/sspai/bookmarks/:slug"  :paramsDesc="['用户 slug，可在个人主页URL中找到']" radar="1"/>
 
 ### 专题
 
