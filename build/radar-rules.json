@@ -16869,6 +16869,14 @@
         "target": "/sspai/author/:id"
       },
       {
+        "title": "用户收藏",
+        "docs": "https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai",
+        "source": [
+          "/u/:slug/bookmark_posts"
+        ],
+        "target": "/sspai/bookmarks/:slug"
+      },
+      {
         "title": "专题",
         "docs": "https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai",
         "source": "/topics",
