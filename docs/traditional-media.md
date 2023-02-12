@@ -943,7 +943,7 @@ IT・科学 tech_science
 
 </Route>
 
-### 產經
+### Money18
 
 <Route author="nczitzk" example="/oncc/money18/exp" path="/oncc/money18/:id?" :paramsDesc="['栏目 id，可在对应栏目页 URL 中找到，默认为 exp，即新聞總覽']">
 
