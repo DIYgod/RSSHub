@@ -50,7 +50,3 @@
         <img src="{{$value}}" style="margin-bottom: 20px;">
     {{/each}}
 </div>
-
-<div id="raw-data" style="display: none;">
-    {{rawHouse}}
-</div>
