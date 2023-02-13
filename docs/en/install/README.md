@@ -20,6 +20,7 @@ Deploy for public access may require:
 3. [Redis](https://redis.io/download)
 4. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 5. [Google App Engine](https://cloud.google.com/appengine/)
+6. [Fly.io](https://fly.io/)
 
 ## Docker Image
 
@@ -205,6 +206,7 @@ $ yarn start
 ```
 
 Or
+
 ```bash
 $ npm start
 ```
@@ -226,13 +228,15 @@ Refer to our [Guide](https://docs.rsshub.app/en/) for usage. Replace `https://rs
 On arm/arm64, this deployment method does not include puppeteer dependencies. To enable puppeteer, install Chromium from your distribution repositories first, then set `CHROMIUM_EXECUTABLE_PATH` to its executable path.
 
 Debian:
+
 ```bash
-$ apt install chroium
+$ apt install chromium
 $ echo >> .env
 $ echo 'CHROMIUM_EXECUTABLE_PATH=chromium' >> .env
 ```
 
 Ubuntu/Raspbian:
+
 ```bash
 $ apt install chromium-browser
 $ echo >> .env
@@ -298,14 +302,47 @@ Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product pla
 
 ### Automatic deploy upon update
 
-1. [Fork RSSHub](https://github.com/login?return_to=%2FDIYgod%2FRSSHub) to your GitHub account.
+1. [Fork RSSHub](https://github.com/DIYgod/RSSHub/fork) to your GitHub account.
 2. Deploy your fork to Heroku: `https://heroku.com/deploy?template=URL`, where `URL` is your fork address (_e.g._ `https://github.com/USERNAME/RSSHub`).
 3. Configure `automatic deploy` in Heroku app to follow the changes to your fork.
 4. Install [Pull](https://github.com/apps/pull) app to keep your fork synchronized with RSSHub.
 
-## Deploy to Vercel(Zeit Now)
+## Deploy to Vercel (ZEIT Now)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
+
+## Deploy to Fly.io
+
+1. [Fork RSSHub](https://github.com/DIYgod/RSSHub/fork) to your GitHub account.
+2. Clone the source code from your fork.
+    ```bash
+    $ git clone https://github.com/<your username>/RSSHub.git
+    $ cd RSSHub
+    ```
+3. [Sign up for Fly.io](https://fly.io/app/sign-up) and install the [`flyctl` CLI](https://fly.io/docs/hands-on/install-flyctl/).
+4. Run `flyctl launch` and choose a unique name and region to deploy.
+5. Use `flyctl secrets set KEY=VALUE` to [configure specific routes](#configuration-route-specific-configurations).
+6. [Set up automatic deployment via GitHub Actions](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/)
+7. Install the [Pull](https://github.com/apps/pull) GitHub app to keep your fork synchronized with upstream.
+8. (Optional) Point your own domain to the IPv4 and IPv6 addresses provided by fly.io, then go to Certificate page and add the domain.
+
+### Configure built-in Upstash Redis as cache
+
+Run
+
+```bash
+$ flyctl redis create
+```
+
+under the `RSSHub` folder in order to create a new Redis database; [eviction](https://redis.io/docs/reference/eviction/) is recommended to be turned on. After creation is successful, a string in the form of `redis://default:<password>@<domain>.upstash.io` will be printed.
+
+Then run
+
+```bash
+$ flyctl secrets set CACHE_TYPE=redis REDIS_URL='<the printed connection string>'
+```
+
+to configure RSSHub to use this Redis database for caching.
 
 ## Deploy to PikaPods
 
@@ -564,13 +601,15 @@ It is also valid to contain route parameters, e.g. `/weibo/user/2612249974`.
 
 ::: tip Experimental features
 
-Configs in this sections are in beta stage, and are turn off by default. Please read corresponded description and turn on if necessary.
+Configs in this sections are in beta stage, and **are turn off by default**. Please read corresponded description and turn on if necessary.
 
 :::
 
 `ALLOW_USER_HOTLINK_TEMPLATE`: [Parameters->Multimedia processing](/en/parameter.html#multimedia-processing)
 
 `FILTER_REGEX_ENGINE`: Define Regex engine used in [Parameters->filtering](/en/parameter.html#filtering). Valid value are `[re2, regexp]`. Default value is `re2`. We suggest public instance should leave this value to default, and this option right now is mainly for backward compatibility.
+
+`ALLOW_USER_SUPPLY_UNSAFE_DOMAIN`: allow users to provide a domain as a parameter to routes that are not in their allow list, respectively. Public instances are suggested to leave this value default, as it may lead to [Server-Side Request Forgery (SSRF)](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)
 
 ### Other Application Configurations
 
@@ -626,8 +665,8 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   Fantia
 
-    - `FANTIA_COOKIE`: The `cookie` after login can be obtained by viewing the request header in the console, If not filled in will cause some posts that require login to read to get exceptions
-    
+    -   `FANTIA_COOKIE`: The `cookie` after login can be obtained by viewing the request header in the console, If not filled in will cause some posts that require login to read to get exceptions
+
 -   GitHub: [Access Token application](https://github.com/settings/tokens)
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
@@ -675,7 +714,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `PIXIV_BYPASS_CDN`: bypass Cloudflare bot check by directly accessing Pixiv source server, defaults to disable, set `true` or `1` to enable
     -   `PIXIV_BYPASS_HOSTNAME`: Pixiv source server hostname or IP address, hostname will be resolved to IPv4 address via `PIXIV_BYPASS_DOH`, defaults to `public-api.secure.pixiv.net`
     -   `PIXIV_BYPASS_DOH`: DNS over HTTPS endpoint, it must be compatible with Cloudflare or Google DoH JSON schema, defaults to `https://1.1.1.1/dns-query`
-    -   `PIXIV_IMG_PROXY`: Used as a proxy for image addresses, as pixiv images have anti-theft, default to `https://i.pixiv.cat`
+    -   `PIXIV_IMG_PROXY`: Used as a proxy for image addresses, as pixiv images have anti-theft, default to `https://i.pixiv.re`
 
 -   pixiv fanbox: Get paid content
 
@@ -700,10 +739,10 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   Twitter: [Application creation](https://apps.twitter.com)
 
-    - `TWITTER_CONSUMER_KEY`: Twitter Developer API key, support multiple keys, split them with `,`
-    - `TWITTER_CONSUMER_SECRET`: Twitter Developer API key secret, support multiple keys, split them with `,`
-    - `TWITTER_WEBAPI_AUTHORIZAION`: Twitter Web API authorization. If either of the above environment variables is not set, the Twitter Web API will be used. However, no need to set this environment var since every single user and guest share the same authorization token which has already been built into RSSHub.
-    - `TWITTER_TOKEN_{handler}`: The token generated by the corresponding Twitter handler, replace `{handler}` with the Twitter handler, the value is a combination of `Twitter API key, Twitter API key secret, Access token, Access token secret` connected by a comma `,`. Eg. `TWITTER_TOKEN_RSSHub=bX1zry5nG4d1RbESQbnADpVIo,2YrD8qo9sXbB8VlYfVmo1Qtw0xsexnOliU5oZofq7aPIGou0Xx,123456789-hlkUHFYmeXrRcf6SEQciP8rP4lzmRgMgwdqIN9aK,pHcPnfa28rCIKhSICUCiaw9ppuSSl7T2f3dnGYpSM0bod`.
+    -   `TWITTER_CONSUMER_KEY`: Twitter Developer API key, support multiple keys, split them with `,`
+    -   `TWITTER_CONSUMER_SECRET`: Twitter Developer API key secret, support multiple keys, split them with `,`
+    -   `TWITTER_WEBAPI_AUTHORIZAION`: Twitter Web API authorization. If either of the above environment variables is not set, the Twitter Web API will be used. However, no need to set this environment var since every single user and guest share the same authorization token which has already been built into RSSHub.
+    -   `TWITTER_TOKEN_{handler}`: The token generated by the corresponding Twitter handler, replace `{handler}` with the Twitter handler, the value is a combination of `Twitter API key, Twitter API key secret, Access token, Access token secret` connected by a comma `,`. Eg. `TWITTER_TOKEN_RSSHub=bX1zry5nG4d1RbESQbnADpVIo,2YrD8qo9sXbB8VlYfVmo1Qtw0xsexnOliU5oZofq7aPIGou0Xx,123456789-hlkUHFYmeXrRcf6SEQciP8rP4lzmRgMgwdqIN9aK,pHcPnfa28rCIKhSICUCiaw9ppuSSl7T2f3dnGYpSM0bod`.
 
 -   Wordpress:
 

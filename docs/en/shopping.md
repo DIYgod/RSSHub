@@ -77,15 +77,19 @@ Parameter `time` only works when `mostwanted` is chosen as the category.
 
 <RouteEn author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" :paramsDesc="['should be one of highlights, hot, new, discussed']"/>
 
+### hottest
+
+<RouteEn author="DIYgod" example="/hotukdeals/hottest" path="/hotukdeals/hottest"></RouteEn>
+
 ## IKEA
 
 ### UK - New Product Release
 
-<RouteEn author="HenryQW" example="/ikea/uk/new" path="/ikea/uk/new"/>
+<RouteEn author="HenryQW" example="/ikea/gb/new" path="/ikea/gb/new"/>
 
 ### UK - Offers
 
-<RouteEn author="HenryQW" example="/ikea/uk/offer" path="/ikea/uk/offer"/>
+<RouteEn author="HenryQW" example="/ikea/gb/offer" path="/ikea/gb/offer"/>
 
 ## LeBonCoin
 

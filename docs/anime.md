@@ -6,73 +6,6 @@
 
 <Route author="junfengP" example="/005tv/zx/latest" path="/005tv/zx/latest"/>
 
-## 18comic 禁漫天堂
-
-### 成人 A 漫
-
-<Route author="nczitzk" example="/18comic" path="/18comic/:category?/:time?/:order?/:keyword?" :paramsDesc="['分类，见下表，默认为 `all` 即全部', '时间范围，见下表，默认为 `a` 即全部', '排列顺序，见下表，默认为 `mr` 即最新', '关键字，见下表，默认为空']">
-
-分类
-
-| 全部  | 其他漫畫    | 同人     | 韓漫     | 美漫     | 短篇    | 單本     |
-| --- | ------- | ------ | ------ | ------ | ----- | ------ |
-| all | another | doujin | hanman | meiman | short | single |
-
-时间范围
-
-| 全部 | 今天 | 这周 | 本月 |
-| -- | -- | -- | -- |
-| a  | t  | w  | m  |
-
-排列顺序
-
-| 最新 | 最多点阅 | 最多图片 | 最爱 |
-| -- | ---- | ---- | -- |
-| mr | mv   | mp   | tf |
-
-关键字（供参考）
-
-| YAOI | 女性向 | NTR | 非 H | 3D | 獵奇 |
-| ---- | --- | --- | --- | -- | -- |
-
-</Route>
-
-### 搜索
-
-<Route author="nczitzk" example="/18comic/search/photos/all/NTR" path="/18comic/search/:option?/:category?:keyword?/:time?/:order?" :paramsDesc="['选项，可选 `video` 和 `photos`，默认为 `photos`', '分类，同上表，默认为 `all` 即全部', '关键字，同上表，默认为空', '时间范围，同上表，默认为 `a` 即全部', '排列顺序，同上表，默认为 `mr` 即最新']">
-
-::: tip 提示
-
-关键字必须超过两个字，这是来自网站的限制。
-
-:::
-
-</Route>
-
-### 专辑
-
-<Route author="nczitzk" example="/18comic/album/292282" path="/18comic/album/:id" :paramsDesc="['专辑 id，可在专辑页 URL 中找到']">
-
-::: tip 提示
-
-专辑 id 不包括 URL 中标题的部分。
-
-:::
-
-</Route>
-
-### 文庫
-
-<Route author="nczitzk" example="/18comic/blogs" path="/18comic/blogs/:category?" :paramsDesc="['分类，见下表，默认为空即全部']">
-
-分类
-
-| 全部 | 紳夜食堂   | 遊戲文庫    | JG GAMES | 模型山下   |
-| -- | ------ | ------- | -------- | ------ |
-|    | dinner | raiders | jg       | figure |
-
-</Route>
-
 ## 1draw #深夜の真剣お絵描き 60 分一本勝負
 
 ### 投稿一览
@@ -157,6 +90,12 @@
 | all  | oneDay | threeDay | oneWeek | oneMonth |
 
 </Route>
+
+## ACG17
+
+### 全部文章
+
+<Route author="SunBK201" example="/acg17/post/all" path="/acg17/post/all" radar="1" />
 
 ## AGE 动漫
 
@@ -272,8 +211,7 @@
 
 ### 产品打折信息
 
-<Route author="cssxsh" example="/dlsite/campaign/home" path="/dlsite/campaign/:type/:free?" :paramsDesc="['类型，同上表', '只看免费，任意值开启，为空关闭']">
-</Route>
+<Route author="cssxsh" example="/dlsite/campaign/home" path="/dlsite/campaign/:type/:free?" :paramsDesc="['类型，同上表', '只看免费，任意值开启，为空关闭']"/>
 
 ## ebb.io
 
@@ -410,6 +348,12 @@ Sources
 
 </Route>
 
+## MangaDex
+
+### 漫画更新
+
+<Route author="vzz64" example="/mangadex/58be6aa6-06cb-4ca5-bd20-f1392ce451fb/zh-hk" path="/:id/:lang?" :paramsDesc="['漫画ID', '语言代码']" radar="1" />
+
 ## Mox.moe
 
 ### 首頁
@@ -426,9 +370,55 @@ Sources
 
 </Route>
 
-## pageClass: routes
+## QooApp
 
-# 二次元
+### 遊戲庫 - 評論
+
+<Route author="TonyRL" example="/qoo-app/apps/comment/7675" path="/qoo-app/apps/:lang?/comment/:id" :paramsDesc="['語言，見下表，留空為中文', '遊戲 ID，可在 URL 找到']"  radar="1">
+
+| 中文 | English | 한국어 | Español | 日本語 | ไทย | Tiếng Việt |
+| -- | ------- | --- | ------- | --- | --- | ---------- |
+|    | en      | ko  | es      | ja  | th  | vi         |
+
+</Route>
+
+### 遊戲庫 - 情報
+
+<Route author="TonyRL" example="/qoo-app/apps/post/7675" path="/qoo-app/apps/:lang?/post/:id" :paramsDesc="['語言，見上表，留空為中文', '遊戲 ID，可在 URL 找到']"  radar="1"/>
+
+### 遊戲庫 - 筆記
+
+<Route author="TonyRL" example="/qoo-app/apps/note/7675" path="/qoo-app/apps/:lang?/note/:id" :paramsDesc="['語言，見上表，留空為中文', '遊戲 ID，可在 URL 找到']"  radar="1"/>
+
+### 遊戲庫 - 曬卡
+
+<Route author="TonyRL" example="/qoo-app/apps/card/7675" path="/qoo-app/apps/:lang?/card/:id" :paramsDesc="['語言，見上表，留空為中文', '遊戲 ID，可在 URL 找到']"  radar="1"/>
+
+### 資訊
+
+<Route author="TonyRL" example="/qoo-app/news" path="/qoo-app/news/:lang?" :paramsDesc="['語言，見下表，留空為中文']"  radar="1">
+
+| 中文 | English |
+| -- | ------- |
+|    | en      |
+
+</Route>
+
+### 筆記留言
+
+<Route author="TonyRL" example="/qoo-app/notes/note/2320205" path="/qoo-app/notes/:lang?/note/:id" :paramsDesc="['語言，見上表，留空為中文', '遊戲 ID，可在 URL 找到']"  radar="1"/>
+
+### 熱門話題
+
+<Route author="TonyRL" example="/qoo-app/notes/topic/QooApp轉蛋" path="/qoo-app/notes/:lang?/topic/:id" :paramsDesc="['語言，見上表，留空為中文', '話題名，不需要 `#`']"  radar="1"/>
+
+### 用户遊戲評論
+
+<Route author="TonyRL" example="/qoo-app/user/appComment/23266114" path="/qoo-app/user/:lang?/appComment/:uid" :paramsDesc="['語言，見上表，留空為中文', '用户 ID，可在 URL 找到']"  radar="1"/>
+
+### 用户筆記
+
+<Route author="TonyRL" example="/qoo-app/notes/user/23266114" path="/qoo-app/notes/:lang?/user/:uid" :paramsDesc="['語言，見上表，留空為中文', '用户 ID，可在 URL 找到']"  radar="1"/>
 
 ## say 花火
 
@@ -568,6 +558,18 @@ Sources
 
 <Route author="machsix" path="/dongmanmanhua/:category/:name/:id" example="/dongmanmanhua/COMEDY/xin-xinlingdeshengyin/381" :paramsDesc="['类别','名称','ID']"/>
 
+## 动漫之家
+
+### 新闻站
+
+<Route author="vzz64" path="/dmzj/news/:category?" example="/dmzj/news/donghuaqingbao" :paramsDesc="['类别']" radar="1">
+
+| 漫画情报          | 轻小说情报               | 动漫周边           | 声优情报            | 音乐资讯        | 游戏资讯       | 美图欣赏          | 漫展情报           | 大杂烩     |
+| ------------- | ------------------- | -------------- | --------------- | ----------- | ---------- | ------------- | -------------- | ------- |
+| manhuaqingbao | qingxiaoshuoqingbao | manhuazhoubian | shengyouqingbao | yinyuezixun | youxizixun | meituxinshang | manzhanqingbao | dazahui |
+
+</Route>
+
 ## 動畫瘋
 
 ### 最後更新
@@ -582,7 +584,7 @@ Sources
 
 ### 漫画更新
 
-<Route author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID']"/>
+<Route author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID']" radar="1"/>
 
 ## 风之动漫
 
@@ -595,6 +597,73 @@ Sources
 ### 漫画更新
 
 <Route author="zytomorrow" path="/haimaoba/:id" example="/haimaoba/4026" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1" rssbud="1"/>
+
+## 禁漫天堂
+
+### 成人 A 漫
+
+<Route author="nczitzk" example="/18comic" path="/18comic/:category?/:time?/:order?/:keyword?" :paramsDesc="['分类，见下表，默认为 `all` 即全部', '时间范围，见下表，默认为 `a` 即全部', '排列顺序，见下表，默认为 `mr` 即最新', '关键字，见下表，默认为空']">
+
+分类
+
+| 全部  | 其他漫畫    | 同人     | 韓漫     | 美漫     | 短篇    | 單本     |
+| --- | ------- | ------ | ------ | ------ | ----- | ------ |
+| all | another | doujin | hanman | meiman | short | single |
+
+时间范围
+
+| 全部 | 今天 | 这周 | 本月 |
+| -- | -- | -- | -- |
+| a  | t  | w  | m  |
+
+排列顺序
+
+| 最新 | 最多点阅 | 最多图片 | 最爱 |
+| -- | ---- | ---- | -- |
+| mr | mv   | mp   | tf |
+
+关键字（供参考）
+
+| YAOI | 女性向 | NTR | 非 H | 3D | 獵奇 |
+| ---- | --- | --- | --- | -- | -- |
+
+</Route>
+
+### 搜索
+
+<Route author="nczitzk" example="/18comic/search/photos/all/NTR" path="/18comic/search/:option?/:category?:keyword?/:time?/:order?" :paramsDesc="['选项，可选 `video` 和 `photos`，默认为 `photos`', '分类，同上表，默认为 `all` 即全部', '关键字，同上表，默认为空', '时间范围，同上表，默认为 `a` 即全部', '排列顺序，同上表，默认为 `mr` 即最新']">
+
+::: tip 提示
+
+关键字必须超过两个字，这是来自网站的限制。
+
+:::
+
+</Route>
+
+### 专辑
+
+<Route author="nczitzk" example="/18comic/album/292282" path="/18comic/album/:id" :paramsDesc="['专辑 id，可在专辑页 URL 中找到']">
+
+::: tip 提示
+
+专辑 id 不包括 URL 中标题的部分。
+
+:::
+
+</Route>
+
+### 文庫
+
+<Route author="nczitzk" example="/18comic/blogs" path="/18comic/blogs/:category?" :paramsDesc="['分类，见下表，默认为空即全部']">
+
+分类
+
+| 全部 | 紳夜食堂   | 遊戲文庫    | JG GAMES | 模型山下   |
+| -- | ------ | ------- | -------- | ------ |
+|    | dinner | raiders | jg       | figure |
+
+</Route>
 
 ## 看漫画
 
@@ -627,7 +696,7 @@ Sources
 
 ### 漫画更新
 
-<Route author="btdwv marvolo666 yan12125" path="/copymanga/comic/:id/:chapterCnt?" example="/copymanga/comic/zaiyishijiemigongkaihougong/5" :paramsDesc="['漫画ID','返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
+<Route author="btdwv marvolo666 yan12125" path="/copymanga/comic/:id/:chapterCnt?" example="/copymanga/comic/dianjuren/5" :paramsDesc="['漫画ID', '返回章节的数量，默认为0，返回所有章节']" radar="1" rssbud="1"/>
 
 ## 漫画 DB
 
@@ -671,11 +740,15 @@ Sources
 
 ### 最新
 
-<Route author="KenMizz" example="/ssmh" path="/ssmh/" />
+<Route author="KenMizz" example="/wnacg" path="/wnacg" radar="1"/>
 
 ### 分类更新
 
-<Route author="Gandum2077" example="/ssmh/category/6" path="/ssmh/category/:cid" :paramsDesc="['分类的id，即对应 URL 中的数字']" />
+<Route author="Gandum2077" example="/wnacg/category/6" path="/wnacg/category/:cid" :paramsDesc="['分类的 id，即对应 URL 中的数字']" radar="1"/>
+
+### 標籤更新
+
+<Route author="Gandum2077" example="/wnacg/tag/漢化" path="/wnacg/tag/:tag" :paramsDesc="['標籤，即 URL 中的 `tag-`後的文字']" radar="1"/>
 
 ## 鼠绘漫画
 

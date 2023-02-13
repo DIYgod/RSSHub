@@ -1,0 +1,12 @@
+{{ postMeta.visit_amount }}阅读 {{ postMeta.note_amount }}条笔记 创建于{{ postDate }}
+<br>
+{{ each posts post }}
+    {{ each post.struct.items item }}
+        {{ if item.type === 'text' }}<span>{{@ item.content.replace(/\n/g, '<br>') }}</span>{{ /if }}
+        {{ if item.type === 'url' }}<a href="{{ item.url }}">{{ item.content }}</a>{{ /if }}
+        {{ if item.type === 'link' }}<span>{{@ item.content.replace(/\n/g, '<br>') }}</span>{{ /if }}
+    {{ /each }}
+<br>
+{{ dayjs(post.publish_time_timestamp, 'X').format('YYYY-MM-DD HH:mm:ss') }}
+<hr>
+{{ /each }}

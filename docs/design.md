@@ -174,9 +174,11 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 </Route>
 
-## pageClass: routes
+## Shopping Design
 
-# 设计
+### 文章列表
+
+<Route author="miles170" example="/shoppingdesign/posts" path="/shoppingdesign/posts"/>
 
 ## UI 中国
 
