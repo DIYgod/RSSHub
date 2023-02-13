@@ -3011,7 +3011,9 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 交通运输与物流学院
 
-<Route author="zoenglinghou" example="/swjtu/tl/news" path="/swjtu/tl/news"/>
+#### 研究生通知
+
+<Route author="zoenglinghou qizidog" example="/swjtu/jtys/yjs" path="/swjtu/jtys/yjs"/>
 
 ## 西南科技大学
 

@@ -4,6 +4,18 @@ pageClass: routes
 
 # Uncategorized
 
+## 591 Rental house
+
+<RouteEn author="Yukaii" example="/591/tw/rent/order=posttime&orderType=desc" path="/591/:country/rent/:query?" :paramsDesc="['Country code. Only tw is supported now', 'Query Parameters']">
+
+::: tip Tip
+
+Copy the URL of the 591 filter housing page and remove the front part "https://rent.591.com.tw/?", you will get the query parameters.
+
+:::
+
+</RouteEn>
+
 ## Apple
 
 ### Exchange and Repair Extension Programs
