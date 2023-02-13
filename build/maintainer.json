@@ -2890,6 +2890,9 @@
         "rde9",
         "nczitzk"
     ],
+    "/misskey/notes/featured/:site": [
+        "Misaka13514"
+    ],
     "/mixcloud/:username/:type?": [
         "Misaka13514"
     ],
