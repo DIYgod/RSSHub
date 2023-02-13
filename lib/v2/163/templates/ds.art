@@ -5,5 +5,3 @@
         <img src="{{$value.url}}">
     {{ /if }}
 {{ /each }}
-
-
