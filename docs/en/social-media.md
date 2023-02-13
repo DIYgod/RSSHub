@@ -179,6 +179,12 @@ These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for us
 
 <RouteEn author="notofoe" example="/mastodon/account_id/mastodon.social/23634/statuses/only_media" path="/mastodon/account/:site/:account_id/statuses/:only_media?" :paramsDesc="['instance address, only domain, no `http://` or `https://` protocol header', 'account id. login your instance, then search for the user profile; the account id is in the url', 'whether only display media content, default to false, any value to true']"/>
 
+## Misskey
+
+### Featured Notes
+
+<RouteEn author="Misaka13514" example="/misskey/notes/featured/misskey.io" path="/misskey/notes/featured/:site" :paramsDesc="['instance address, domain only, without `http://` or `https://` protocol header']" radar="1" rssbud="1"/>
+
 ## piapro
 
 ### User latest works
