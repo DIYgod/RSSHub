@@ -1,4 +1,54 @@
 {
+  "163.com": {
+    "_name": "网易",
+    "music": [
+      {
+        "title": "云音乐 - 用户歌单",
+        "docs": "https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
+        "source": "/"
+      },
+      {
+        "title": "云音乐 - 歌单歌曲",
+        "docs": "https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
+        "source": "/"
+      },
+      {
+        "title": "云音乐 - 歌手专辑",
+        "docs": "https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
+        "source": "/"
+      },
+      {
+        "title": "云音乐 - 电台节目",
+        "docs": "https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
+        "source": "/"
+      }
+    ],
+    "y.music": [
+      {
+        "title": "云音乐 - 用户歌单",
+        "docs": "https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
+        "source": "/m/user"
+      },
+      {
+        "title": "云音乐 - 歌单歌曲",
+        "docs": "https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
+        "source": "/m/playlist"
+      },
+      {
+        "title": "云音乐 - 歌手专辑",
+        "docs": "https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
+        "source": "/m/album"
+      },
+      {
+        "title": "云音乐 - 播单声音",
+        "docs": "https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
+        "source": [
+          "/m/radio",
+          "/m/djradio"
+        ]
+      }
+    ]
+  },
   "591.com.tw": {
     "_name": "591 租屋網",
     "rent": [
@@ -13034,78 +13084,6 @@
           "/"
         ],
         "target": "/neatdownloadmanager/download/:os?"
-      }
-    ]
-  },
-  "163.com": {
-    "_name": "网易",
-    "ds": [
-      {
-        "title": "大神",
-        "docs": "https://docs.rsshub.app/game.html#wang-yi-da-shen",
-        "source": "/user/:id",
-        "target": "/netease/ds/:id"
-      }
-    ],
-    "open": [
-      {
-        "title": "公开课 - 精品课程",
-        "docs": "https://docs.rsshub.app/study.html#wang-yi-gong-kai-ke",
-        "source": "/",
-        "target": "/open163/vip"
-      },
-      {
-        "title": "公开课 - 最新课程",
-        "docs": "https://docs.rsshub.app/study.html#wang-yi-gong-kai-ke",
-        "source": "/",
-        "target": "/open163/latest"
-      }
-    ],
-    "music": [
-      {
-        "title": "云音乐 - 用户歌单",
-        "docs": "https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
-        "source": "/"
-      },
-      {
-        "title": "云音乐 - 歌单歌曲",
-        "docs": "https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
-        "source": "/"
-      },
-      {
-        "title": "云音乐 - 歌手专辑",
-        "docs": "https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
-        "source": "/"
-      },
-      {
-        "title": "云音乐 - 电台节目",
-        "docs": "https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
-        "source": "/"
-      }
-    ],
-    "y.music": [
-      {
-        "title": "云音乐 - 用户歌单",
-        "docs": "https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
-        "source": "/m/user"
-      },
-      {
-        "title": "云音乐 - 歌单歌曲",
-        "docs": "https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
-        "source": "/m/playlist"
-      },
-      {
-        "title": "云音乐 - 歌手专辑",
-        "docs": "https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
-        "source": "/m/album"
-      },
-      {
-        "title": "云音乐 - 播单声音",
-        "docs": "https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
-        "source": [
-          "/m/radio",
-          "/m/djradio"
-        ]
       }
     ]
   },

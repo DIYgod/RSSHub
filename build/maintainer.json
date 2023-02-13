@@ -1,4 +1,31 @@
 {
+    "/163/exclusive/:id?": [
+        "nczitzk"
+    ],
+    "/163/ds/:id": [
+        "luyuhuang"
+    ],
+    "/163/dy/:id": [
+        "HendricksZheng"
+    ],
+    "/163/dy2/:id": [
+        "mjysci"
+    ],
+    "/163/news/rank/:category?/:type?/:time?": [
+        "nczitzk"
+    ],
+    "/163/news/special/:type?": [
+        "nczitzk"
+    ],
+    "/163/open/vip": [
+        "hoilc"
+    ],
+    "/163/renjian/:category?": [
+        "nczitzk"
+    ],
+    "/163/today/:need_content?": [
+        "nczitzk"
+    ],
     "/2047/:category?/:sort?": [
         "nczitzk"
     ],
@@ -2998,18 +3025,6 @@
     ],
     "/neea/:type?": [
         "SunShinenny"
-    ],
-    "/netease/exclusive/:id?": [
-        "nczitzk"
-    ],
-    "/netease/renjian/:category?": [
-        "nczitzk"
-    ],
-    "/netease/today/:need_content?": [
-        "nczitzk"
-    ],
-    "/netease/news/rank/:category?/:type?/:time?": [
-        "nczitzk"
     ],
     "/neu/bmie/:type": [
         "tennousuathena"
@@ -6013,12 +6028,6 @@
     "/gov/chinatax/latest": [],
     "/lizhi/user/:id": [],
     "/futunn/highlights": [],
-    "/netease/news/special/:type?": [],
-    "/netease/dy/:id": [],
-    "/netease/dy2/:id": [],
-    "/netease/ds/:id": [],
-    "/open163/vip": [],
-    "/open163/latest": [],
     "/boston/:tag?": [],
     "/changku": [],
     "/changku/cate/:postid": [],
