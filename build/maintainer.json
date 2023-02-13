@@ -4048,6 +4048,9 @@
     "/swissinfo/:language?/:category?": [
         "nczitzk"
     ],
+    "/swjtu/jtys/yjs": [
+        "qizidog"
+    ],
     "/swpu/bgw/:code": [
         "CYTMWIA"
     ],
@@ -5915,7 +5918,6 @@
     "/hnust/art": [],
     "/hnust/chem": [],
     "/hnust/graduate/:type?": [],
-    "/swjtu/tl/news": [],
     "/checkra1n/releases": [],
     "/sckjt/news/:type?": [],
     "/jdlingyu/:type": [],

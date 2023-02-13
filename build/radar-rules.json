@@ -17070,6 +17070,19 @@
       }
     ]
   },
+  "swjtu.edu.cn": {
+    "_name": "西南交通大学",
+    "ctt": [
+      {
+        "title": "交通运输与物流学院 - 研究生通知",
+        "docs": "https://docs.rsshub.app/university.html#xi-nan-jiao-tong-da-xue",
+        "source": [
+          "/yethan/WebIndexAction",
+          "/"
+        ]
+      }
+    ]
+  },
   "swpu.edu.cn": {
     "_name": "西南石油大学",
     ".": [
