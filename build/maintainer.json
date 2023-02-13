@@ -2035,6 +2035,9 @@
     "/hit/today/:category": [
         "ranpox"
     ],
+    "/hitsz/article/:category?": [
+        "xandery-geek"
+    ],
     "/hitwh/today": [
         "raptazure"
     ],
@@ -5251,7 +5254,6 @@
     "/njtech/jwc": [],
     "/hhu/libNews": [],
     "/hhu/libNewsc": [],
-    "/hitsz/article/:category?": [],
     "/shanghaitech/activity": [],
     "/shanghaitech/sist/activity": [],
     "/sjtu/seiee/academic": [],

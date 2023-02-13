@@ -8128,6 +8128,19 @@
       }
     ]
   },
+  "hitsz.edu.cn": {
+    "_name": "哈尔滨工业大学（深圳）",
+    ".": [
+      {
+        "title": "新闻中心",
+        "docs": "https://docs.rsshub.app/university.html#ha-er-bin-gong-ye-da-xue-shen-zhen",
+        "source": [
+          "/article/:category?",
+          "/subject/:category?"
+        ]
+      }
+    ]
+  },
   "hitwh.edu.cn": {
     "_name": "哈尔滨工业大学（威海）",
     ".": [
