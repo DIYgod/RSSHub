@@ -6796,10 +6796,10 @@ googleapis-common@^6.0.0:
     url-template "^2.0.8"
     uuid "^9.0.0"
 
-googleapis@110.0.0:
-  version "110.0.0"
-  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-110.0.0.tgz#73e59ff0c64658924c71229ef8884da60ac9aeec"
-  integrity sha512-k6de3PGsdFEBULMiFwPYCKOBljDTDvHD3YGe/OFqe8Ot0lYQPL8QV1qjxjrPWiE/Ftf0Ar2v4DNES66jLfSO7w==
+googleapis@111.0.0:
+  version "111.0.0"
+  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-111.0.0.tgz#aa3daac5ab033085d25fe8c52527ff35b2f7f688"
+  integrity sha512-nIIH+J/o/xjIscJcv3H3BCYgsFiI5ziM3Nbh2lHOWglYGqXE0Nqdt2lfCt4hX257QHEyC1y1iODDkmAMPWDYlw==
   dependencies:
     google-auth-library "^8.0.2"
     googleapis-common "^6.0.0"
