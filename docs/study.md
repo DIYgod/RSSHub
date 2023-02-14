@@ -606,7 +606,7 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 知识库
 
-<Route author="aha2mao ltaoo" example="/yuque/ruanyf/weekly" path="/yuque/:name/:book" :paramsDesc="['语雀知识库路径，如 `https://www.yuque.com/ruanyf/weekly`，`ruanyf` 为 `name`，`weekly` 为 `book`']" radar="1">
+<Route author="aha2mao ltaoo" example="/yuque/ruanyf/weekly" path="/yuque/:name/:book" :paramsDesc="['用戶名', '知识库 ID']" radar="1">
 
 | Node.js 专栏                                               | 阮一峰每周分享                                                        | 语雀使用手册                                                   |
 | -------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------- |
