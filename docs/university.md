@@ -1274,13 +1274,13 @@ category 列表：
 
 ## 哈尔滨工业大学（深圳）
 
-### 哈尔滨工业大学（深圳） - 新闻中心
+### 新闻中心
 
-<Route author="xandery-geek" example="/hitsz/article/id-74" path="/hitsz/article/:category?" :paramsDesc="['分类名，默认为通知公告']" >
+<Route author="xandery-geek" example="/hitsz/article/id-74" path="/hitsz/article/:category?" :paramsDesc="['分类名，默认为校园动态']" radar="1">
 
-| 校区要闻   | 媒体报道  | 通知公告  | 综合新闻  | 校园动态  | 讲座论坛  | 热点专题  |
-| ------ | ----- | ----- | ----- | ----- | ----- | ----- |
-| id-116 | id-80 | id-74 | id-75 | id-77 | id-78 | id-79 |
+| 校区要闻   | 媒体报道  | 综合新闻  | 校园动态  | 讲座论坛  | 热点专题  | 招标信息  | 重要关注   |
+| ------ | ----- | ----- | ----- | ----- | ----- | ----- | ------ |
+| id-116 | id-80 | id-75 | id-77 | id-78 | id-79 | id-81 | id-124 |
 
 </Route>
 
