@@ -4937,6 +4937,10 @@
     "/yunspe/newsflash": [
         "x2009again"
     ],
+    "/yuque/:name/:book": [
+        "aha2mao",
+        "ltaoo"
+    ],
     "/yxdown/news/:category?": [
         "nczitzk"
     ],
@@ -5607,7 +5611,6 @@
     "/curseforge/:gameid/:catagoryid/:projectid/files": [],
     "/swufe/seie/:type?": [],
     "/wired/tag/:tag": [],
-    "/yuque/doc/:repo_id": [],
     "/enclavebooks/category/:id?": [],
     "/enclavebooks/user/:uid": [],
     "/enclavebooks/collection/:uid": [],

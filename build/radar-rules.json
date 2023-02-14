@@ -20130,6 +20130,19 @@
       }
     ]
   },
+  "yuque.com": {
+    "_name": "语雀",
+    ".": [
+      {
+        "title": "知识库",
+        "docs": "https://docs.rsshub.app/study.html#yu-que",
+        "source": [
+          ":name/:book"
+        ],
+        "target": "/yuque/:name/:book"
+      }
+    ]
+  },
   "yxdown.com": {
     "_name": "游讯网",
     ".": [
@@ -21594,18 +21607,6 @@
         "docs": "http://docs.rsshub.app/en/university.html#umass-amherst",
         "source": "/ipo/iss/featured-stories",
         "target": "/umass/amherst/ipostories"
-      }
-    ]
-  },
-  "yuque.com": {
-    "_name": "语雀",
-    "www": [
-      {
-        "title": "知识库",
-        "docs": "https://docs.rsshub.app/study.html#yu-que",
-        "source": [
-          "/:space/:book"
-        ]
       }
     ]
   },
