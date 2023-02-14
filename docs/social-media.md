@@ -344,6 +344,24 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 </Route>
 
+## Crossbell
+
+### Notes
+
+<Route author="DIYgod" example="/crossbell/notes" path="/crossbell/notes" radar="1" rssbud="1"/>
+
+### Notes of character
+
+<Route author="DIYgod" example="/crossbell/notes/character/10" path="/crossbell/notes/character/:characterId" radar="1" rssbud="1"/>
+
+### Notes of source
+
+<Route author="DIYgod" example="/crossbell/notes/source/xlog" path="/crossbell/notes/source/:source" radar="1" rssbud="1"/>
+
+### Feeds of following
+
+<Route author="DIYgod" example="/crossbell/feeds/following/10" path="/crossbell/feeds/following/:characterId" radar="1" rssbud="1"/>
+
 ## Curius
 
 ### 用户
