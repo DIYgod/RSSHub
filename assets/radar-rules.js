@@ -166,11 +166,6 @@
     'xiaomi.cn': { _name: '小米社区', www: [{ title: '圈子', docs: 'https://docs.rsshub.app/bbs.html#xiao-mi-she-qu', source: '/board/:boardId', target: '/mi/bbs/board/:boardId' }] },
     '163.com': {
         _name: '网易',
-        ds: [{ title: '大神', docs: 'https://docs.rsshub.app/game.html#wang-yi-da-shen', source: '/user/:id', target: '/netease/ds/:id' }],
-        open: [
-            { title: '公开课 - 精品课程', docs: 'https://docs.rsshub.app/study.html#wang-yi-gong-kai-ke', source: '/', target: '/open163/vip' },
-            { title: '公开课 - 最新课程', docs: 'https://docs.rsshub.app/study.html#wang-yi-gong-kai-ke', source: '/', target: '/open163/latest' },
-        ],
         music: [
             {
                 title: '云音乐 - 用户歌单',
