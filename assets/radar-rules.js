@@ -533,28 +533,6 @@
             { title: 'IPO Featured Stories', docs: 'http://docs.rsshub.app/en/university.html#umass-amherst', source: '/ipo/iss/featured-stories', target: '/umass/amherst/ipostories' },
         ],
     },
-    'yuque.com': {
-        _name: '语雀',
-        www: [
-            {
-                title: '知识库',
-                docs: 'https://docs.rsshub.app/study.html#yu-que',
-                source: ['/:space/:book'],
-                target: (params, url, document) => {
-                    const match = document.documentElement.innerHTML.match(/JSON\.parse\(decodeURIComponent\("(.*)"\)/);
-                    if (match && match[1]) {
-                        const dataStr = match[1];
-                        try {
-                            const appData = JSON.parse(decodeURIComponent(dataStr));
-                            return `/yuque/doc/${appData.book.id}`;
-                        } catch (e) {
-                            // pass
-                        }
-                    }
-                },
-            },
-        ],
-    },
     'bjeea.com': {
         _name: '北京考试院',
         www: [

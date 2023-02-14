@@ -1756,6 +1756,18 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 </Route>
 
+## 直播吧
+
+### 录像
+
+<Route author="TonyRL" example="/zhibo8/luxiang/nba" path="/zhibo8/luxiang/:category" :paramsDesc="['分类，见下表，默认为 `nba`']" radar="1">
+
+| NBA | 足球    |
+| --- | ----- |
+| nba | zuqiu |
+
+</Route>
+
 ## 中国高清网
 
 ### 电影
