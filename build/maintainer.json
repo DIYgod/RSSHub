@@ -963,6 +963,18 @@
     "/creative-comic/book/:id/:coverOnly?/:quality?": [
         "TonyRL"
     ],
+    "/crossbell/notes": [
+        "DIYgod"
+    ],
+    "/crossbell/notes/character/:characterId": [
+        "DIYgod"
+    ],
+    "/crossbell/notes/source/:source": [
+        "DIYgod"
+    ],
+    "/crossbell/feeds/following/:characterId": [
+        "DIYgod"
+    ],
     "/csc/notice/:type?": [
         "Derekmini"
     ],
