@@ -606,11 +606,11 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 知识库
 
-<Route author="aha2mao" example="/yuque/doc/75258" path="/yuque/doc/:repo_id" :paramsDesc="['仓库id，可在对应知识库主页的`/api/books/${repo_id}/docs`请求里找到']">
+<Route author="aha2mao ltaoo" example="/yuque/ruanyf/weekly" path="/yuque/:name/:book" :paramsDesc="['语雀知识库路径，如 `https://www.yuque.com/ruanyf/weekly`，`ruanyf` 为 `name`，`weekly` 为 `book`']" radar="1">
 
-| Node.js 专栏 | 阮一峰每周分享 | 语雀使用手册 |
-| ---------- | ------- | ------ |
-| 75258      | 102804  | 75257  |
+| Node.js 专栏                                               | 阮一峰每周分享                                                        | 语雀使用手册                                                   |
+| -------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------- |
+| [/yuque/egg/nodejs](https://rsshub.app/yuque/egg/nodejs) | [/yuque/ruanyf/weekly](https://rsshub.app/yuque/ruanyf/weekly) | [/yuque/yuque/help](https://rsshub.app/yuque/yuque/help) |
 
 </Route>
 
