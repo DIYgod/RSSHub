@@ -1130,15 +1130,15 @@ pageClass: routes
 
 ### 子论坛
 
-<Route author="LogicJake" example="/zhibo8/forum/8" path="/zhibo8/forum/:id" :paramsDesc="['子论坛 id，可在子论坛 URL 找到']"/>
+<Route author="LogicJake" example="/zhibo8/forum/8" path="/zhibo8/forum/:id" :paramsDesc="['子论坛 id，可在子论坛 URL 找到']" radar="1"/>
 
 ### 回帖
 
-<Route author="LogicJake" example="/zhibo8/post/2601615" path="/zhibo8/post/:id" :paramsDesc="['帖子 id，可在帖子 URL 找到']"/>
+<Route author="LogicJake" example="/zhibo8/post/3022946" path="/zhibo8/post/:id" :paramsDesc="['帖子 id，可在帖子 URL 找到']" radar="1"/>
 
 ### 滚动新闻
 
-<Route author="nczitzk" example="/zhibo8/more/nba" path="/zhibo8/more/:category?" :paramsDesc="['分类，见下表，默认为 NBA']">
+<Route author="nczitzk" example="/zhibo8/more/nba" path="/zhibo8/more/:category?" :paramsDesc="['分类，见下表，默认为 NBA']" radar="1">
 
 | NBA | 足球    | 电竞       | 综合     |
 | --- | ----- | -------- | ------ |
