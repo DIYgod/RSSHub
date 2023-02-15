@@ -594,7 +594,7 @@ Sources
 
 ### 风之动漫
 
-<Route author="geeeeoff zytomorrow" path="/fzdm/manhua/:id/:cdn?" example="/fzdm/manhua/93" :paramsDesc="['漫画ID。默认获取全部，建议使用通用参数limit获取指定数量', 'cdn加速器。默认5，当前可选1-5']" anticrawler="1"/>
+<Route author="geeeeoff zytomorrow" path="/fzdm/manhua/:id/:cdn?" example="/fzdm/manhua/93" :paramsDesc="['漫画ID。默认获取全部，建议使用通用参数limit获取指定数量', 'cdn加速器。默认5，当前可选1-5']"  radar="1" rssbud="1"/>
 
 ## 海猫吧
 
