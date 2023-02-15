@@ -3886,11 +3886,6 @@ chrome-trace-event@^1.0.2:
   resolved "https://registry.yarnpkg.com/chrome-trace-event/-/chrome-trace-event-1.0.3.tgz#1015eced4741e15d06664a957dbbf50d041e26ac"
   integrity sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==
 
-chromium-bidi@0.4.3:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/chromium-bidi/-/chromium-bidi-0.4.3.tgz#40ae4a5409ef3fbeabafb29d5325f3f58cbeea12"
-  integrity sha512-A40H1rdpJqkTdnGhnYDzMhtDdIbkXNFj2wgIfivMXL7LyHFDmBtv1hdyycDhnxtYunbPLDZtTs/n+ZT5j7Vnew==
-
 chrono-node@2.5.0:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/chrono-node/-/chrono-node-2.5.0.tgz#c4d5f4f4db9d72604a5beb79fdc5fd57be4b212f"
@@ -11527,12 +11522,11 @@ pupa@^2.0.1:
   dependencies:
     escape-goat "^2.0.0"
 
-puppeteer-core@19.7.0:
-  version "19.7.0"
-  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-19.7.0.tgz#bd069fa15137e1e13e69b23278fbb508465c1955"
-  integrity sha512-BU05W24N+fWudCCeWxv/+R9fnMGmS6HCNPJbieoy0S4yAloVOoVDpOnHV8ZpFTGMPTHQ2EuPyZPWA+idPKO0pw==
+puppeteer-core@19.7.1:
+  version "19.7.1"
+  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-19.7.1.tgz#6f5326ba0a97a7ba63f8f986c3971e31ef42d871"
+  integrity sha512-4b5Go25IA+0xrUIw0Qtqi4nxc0qwdu/C7VT1+tFPl1W27207YT+7bxfANC3PjXMlS6bcbzinCf5YfGqMl8tfyQ==
   dependencies:
-    chromium-bidi "0.4.3"
     cross-fetch "3.1.5"
     debug "4.3.4"
     devtools-protocol "0.0.1094867"
@@ -11591,16 +11585,16 @@ puppeteer-extra@3.3.4:
     debug "^4.1.1"
     deepmerge "^4.2.2"
 
-puppeteer@19.7.0:
-  version "19.7.0"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-19.7.0.tgz#67fe8ffb11ff1719ba180643b9b2c06116b0d3ef"
-  integrity sha512-ri4XTvTWL09E3L+SNhY9FKRdEOCRhFyyuBppg7D5lk9q4BZKvDWivpjstwmtz5lr8ufxju/jkn9y7uGowISHgw==
+puppeteer@19.7.1:
+  version "19.7.1"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-19.7.1.tgz#53c0234cac96f28934da139b0239237ccef3251a"
+  integrity sha512-Hampj7jHlicySL1sSLHCwoFoRCi6RcEbnZmRE5brtbk0mp6Td33+9kWQD2eFs09772JIt00ybPKr50Gt7Y18Xg==
   dependencies:
     cosmiconfig "8.0.0"
     https-proxy-agent "5.0.1"
     progress "2.0.3"
     proxy-from-env "1.1.0"
-    puppeteer-core "19.7.0"
+    puppeteer-core "19.7.1"
 
 q@^1.1.2:
   version "1.5.1"
