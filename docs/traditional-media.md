@@ -227,13 +227,7 @@ pageClass: routes
 
 ### FT 中文网
 
-<Route author="HenryQW xyqfer" example="/ft/chinese/hotstoryby7day" path="/ft/:language/:channel?" :paramsDesc="['语言，简体`chinese`，繁体`traditional`', '频道，缺省为每日更新']">
-
-::: tip 提示
-
--   不支持付费文章。
-
-:::
+<Route author="HenryQW xyqfer prnake" example="/ft/chinese/hotstoryby7day" path="/ft/:language/:channel?" :paramsDesc="['语言，简体`chinese`，繁体`traditional`', '频道，缺省为首页文章']">
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
@@ -241,6 +235,7 @@ pageClass: routes
 
 -   频道为单一路径，如 `http://www.ftchinese.com/rss/news` 则为 `/ft/chinese/news`.
 -   频道包含多重路径，如 `http://www.ftchinese.com/rss/column/007000002` 则替换 `/` 为 `-` `/ft/chinese/column-007000002`.
+-   支持任意网页，如 `https://www.ftchinese.com/channel/dailyword.html` 则替换 `/` 为 `-` `/ft/chinese/channel-dailyword`.
 
 </Route>
 
