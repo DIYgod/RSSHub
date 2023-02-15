@@ -3944,11 +3944,15 @@ column 为 third 时可选的 category:
 
 ### 公众号（feeddd 来源）
 
-<Route author="TonyRL Rongronggg9" example="/wechat/feeddd/6131e1441269c358aa0e2141" path="/wechat/feeddd/:id" :paramsDesc="['公众号 id, 打开 `https://feeddd.org/feeds` 或 `https://cdn.jsdelivr.net/gh/feeddd/feeds/feeds_all_rss.txt`, 在 URL 中找到 id; 注意不是公众号页的 id, 而是订阅的 id']"/>
+<Route author="TonyRL Rongronggg9" example="/wechat/feeddd/6131e1441269c358aa0e2141" path="/wechat/feeddd/:id" :paramsDesc="['公众号 id，打开 `https://feeddd.org/feeds` 或 `https://cdn.jsdelivr.net/gh/feeddd/feeds/feeds_all_rss.txt`，在 URL 中找到 id；注意不是公众号页的 id，而是订阅的 id']"/>
 
 ### 公众号（自由微信来源）
 
 见 [#自由微信](#zi-you-wei-xin)
+
+### 公众号（Wechat2RSS 来源）
+
+<Route author="TonyRL" example="/wechat/wechat2rss/5b925323244e9737c39285596c53e3a2f4a30774" path="/wechat/wechat2rss/:id" :paramsDesc="['公众号 id，打开 `https://wechat2rss.xlab.app/posts/list/`，在 URL 中找到 id；注意不是公众号页的 id，而是订阅的 id']" radar="1"/>
 
 ### 公众号栏目 (非推送 & 历史消息)
 
