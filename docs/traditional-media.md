@@ -931,6 +931,8 @@ IT・科学 tech_science
 
 ## 东网
 
+### 即時新聞
+
 <Route author="Fatpandac" example="/oncc/zh-hant/news" path="/oncc/:language/:channel?" :paramsDesc="['`zh-hans` 为简体，`zh-hant` 为繁体', '频道，默认为港澳']">
 
 频道参数可以从官网的地址中获取，如：
@@ -938,6 +940,16 @@ IT・科学 tech_science
 `https://hk.on.cc/hk/finance/index_cn.html` 对应 `/oncc/zh-hans/finance`
 
 `https://hk.on.cc/hk/finance/index.html` 对应 `/oncc/zh-hant/finance`
+
+</Route>
+
+### Money18
+
+<Route author="nczitzk" example="/oncc/money18/exp" path="/oncc/money18/:id?" :paramsDesc="['栏目 id，可在对应栏目页 URL 中找到，默认为 exp，即新聞總覽']">
+
+| 新聞總覽 | 全日焦點 | 板塊新聞     | 國際金融 | 大行報告     | A 股新聞    | 地產新聞 | 投資理財      | 新股 IPO | 科技財情 |
+| ---- | ---- | -------- | ---- | -------- | -------- | ---- | --------- | ------ | ---- |
+| exp  | fov  | industry | int  | recagent | ntlgroup | pro  | weainvest | ipo    | tech |
 
 </Route>
 
