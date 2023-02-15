@@ -64,6 +64,16 @@ pageClass: routes
 
 <Route author="nczitzk" example="/35photo/author/mariuszsix"  path="/35photo/author/:id" :paramsDesc="['id，可在对应作者页 URL 中找到']"/>
 
+## 500px 摄影社区
+
+### 部落影集
+
+<Route author="TonyRL" example="/500px/tribe/set/f5de0b8aa6d54ec486f5e79616418001"  path="/500px/tribe/set/:id" :paramsDesc="['部落 ID']" radar="1"/>
+
+### 摄影师作品
+
+<Route author="TonyRL" example="/500px/user/works/hujunli"  path="/500px/user/works/:id" :paramsDesc="['摄影师 ID']" radar="1"/>
+
 ## 8KCosplay
 
 ### 最新
