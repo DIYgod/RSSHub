@@ -48,6 +48,7 @@
   },
   "homepage": "https://github.com/DIYgod/RSSHub#readme",
   "devDependencies": {
+    "@microsoft/eslint-formatter-sarif": "3.0.0",
     "@napi-rs/pinyin": "1.7.1",
     "@types/koa": "2.13.5",
     "@vercel/nft": "0.22.6",
@@ -135,7 +136,7 @@
     "puppeteer-extra": "3.3.4",
     "puppeteer-extra-plugin-stealth": "2.11.1",
     "query-string": "7.1.3",
-    "rand-user-agent": "1.0.106",
+    "rand-user-agent": "1.0.107",
     "re2": "1.18.0",
     "require-all": "3.0.0",
     "rss-parser": "3.12.0",
