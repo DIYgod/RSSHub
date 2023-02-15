@@ -19077,6 +19077,18 @@
       }
     ]
   },
+  "xlab.app": {
+    "_name": "微信",
+    "wechat2rss": [
+      {
+        "title": "公众号（wechat2rss 来源）",
+        "docs": "https://docs.rsshub.app/new-media.html#wei-xin",
+        "source": [
+          "/feed/:id"
+        ]
+      }
+    ]
+  },
   "weibo.cn": {
     "_name": "微博",
     "m": [

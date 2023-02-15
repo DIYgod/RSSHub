@@ -4637,6 +4637,9 @@
     "/wechat/uread/:userid": [
         "kt286"
     ],
+    "/wechat/wechat2rss/:id": [
+        "TonyRL"
+    ],
     "/wechat/wxnmh/:id": [
         "laampui"
     ],
