@@ -101,6 +101,12 @@
     "/423down/:category/:type": [
         "Fatpandac"
     ],
+    "/500px/tribe/set/:id": [
+        "TonyRL"
+    ],
+    "/500px/user/works/:id": [
+        "TonyRL"
+    ],
     "/50forum/": [
         "sddiky"
     ],
