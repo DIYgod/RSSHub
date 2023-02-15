@@ -3335,6 +3335,9 @@
     "/oncc/:language/:channel?": [
         "Fatpandac"
     ],
+    "/oncc/money18/:id?": [
+        "nczitzk"
+    ],
     "/oo-software/changelog/:id": [
         "nczitzk"
     ],
@@ -4633,6 +4636,9 @@
     ],
     "/wechat/uread/:userid": [
         "kt286"
+    ],
+    "/wechat/wechat2rss/:id": [
+        "TonyRL"
     ],
     "/wechat/wxnmh/:id": [
         "laampui"
