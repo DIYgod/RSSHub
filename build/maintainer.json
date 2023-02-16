@@ -11,6 +11,24 @@
     "/163/dy2/:id": [
         "mjysci"
     ],
+    "/163/music/artist/:id": [
+        "metowolf"
+    ],
+    "/163/music/djradio/:id": [
+        "magic-akari"
+    ],
+    "/163/music/playlist/:id": [
+        "DIYgod"
+    ],
+    "/163/music/user/events/:id": [
+        "Master-Hash"
+    ],
+    "/163/music/user/playlist/:uid": [
+        "DIYgod"
+    ],
+    "/163/music/user/playrecords/:uid/:type?": [
+        "alfredcai"
+    ],
     "/163/news/rank/:category?/:type?/:time?": [
         "nczitzk"
     ],
@@ -5161,11 +5179,6 @@
     ],
     "/1draw": [],
     "/benedictevans": [],
-    "/ncm/playlist/:id": [],
-    "/ncm/user/playlist/:uid": [],
-    "/ncm/artist/:id": [],
-    "/ncm/djradio/:id": [],
-    "/ncm/user/playrecords/:uid/:type?": [],
     "/ziroom/room/:city/:iswhole/:room/:keyword": [],
     "/jianshu/home": [],
     "/jianshu/trending/:timeframe": [],

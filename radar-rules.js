@@ -164,53 +164,6 @@
     'steampowered.com': { _name: 'Steam', store: [{ title: 'search', docs: 'https://docs.rsshub.app/game.html#steam', source: '/search/', target: (params, url) => `/steam/search/${new URL(url).searchParams}` }] },
     // 'baijingapp.com': { _name: '白鲸出海', www: [{ title: '文章', docs: 'https://docs.rsshub.app/new-media.html#bai-jing-chu-hai', source: '', target: '/baijing' }] },
     'xiaomi.cn': { _name: '小米社区', www: [{ title: '圈子', docs: 'https://docs.rsshub.app/bbs.html#xiao-mi-she-qu', source: '/board/:boardId', target: '/mi/bbs/board/:boardId' }] },
-    '163.com': {
-        _name: '网易',
-        music: [
-            {
-                title: '云音乐 - 用户歌单',
-                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
-                source: '/',
-                target: (params, url) => {
-                    const id = new URL(url).hash.match(/home\?id=(.*)/)[1];
-                    return id ? `/ncm/user/playlist/${id}` : '';
-                },
-            },
-            {
-                title: '云音乐 - 歌单歌曲',
-                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
-                source: '/',
-                target: (params, url) => {
-                    const id = new URL(url).hash.match(/playlist\?id=(.*)/)[1];
-                    return id ? `/ncm/playlist/${id}` : '';
-                },
-            },
-            {
-                title: '云音乐 - 歌手专辑',
-                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
-                source: '/',
-                target: (params, url) => {
-                    const id = new URL(url).hash.match(/album\?id=(.*)/)[1];
-                    return id ? `/ncm/artist/${id}` : '';
-                },
-            },
-            {
-                title: '云音乐 - 电台节目',
-                docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue',
-                source: '/',
-                target: (params, url) => {
-                    const id = new URL(url).hash.match(/djradio\?id=(.*)/)[1];
-                    return id ? `/ncm/djradio/${id}` : '';
-                },
-            },
-        ],
-        'y.music': [
-            { title: '云音乐 - 用户歌单', docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue', source: '/m/user', target: (params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}` },
-            { title: '云音乐 - 歌单歌曲', docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue', source: '/m/playlist', target: (params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}` },
-            { title: '云音乐 - 歌手专辑', docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue', source: '/m/album', target: (params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}` },
-            { title: '云音乐 - 播单声音', docs: 'https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue', source: ['/m/radio', '/m/djradio'], target: (params, url) => `/ncm/playlist/${new URL(url).searchParams.get('id')}` },
-        ],
-    },
     'suzhou.gov.cn': { _name: '苏州市政府', www: [{ title: '政府新闻', docs: 'https://docs.rsshub.app/government.html#su-zhou-shi-ren-min-zheng-fu', source: '/szsrmzf/:uid/nav_list.shtml', target: '/gov/suzhou/news/:uid' }] },
     'mqube.net': {
         _name: 'MQube',
