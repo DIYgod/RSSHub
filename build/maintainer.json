@@ -3451,6 +3451,9 @@
     "/peopo/topic/:topic?": [
         "TonyRL"
     ],
+    "/phoronix/:page/:queryOrItem?": [
+        "oppliate"
+    ],
     "/pianyuan/index/:media?": [
         "greatcodeeer",
         "jerry1119"
@@ -6227,7 +6230,6 @@
     "/uisdc/zt/:title?": [],
     "/uisdc/topic/:title?/:sort?": [],
     "/chinalaborwatch/reports/:lang?/:industry?": [],
-    "/phoronix/:page/:queryOrItem?": [],
     "/cia/foia-annual-report": [],
     "/everything/changes": [],
     "/clb/commentary/:lang?": [],
