@@ -1850,7 +1850,7 @@ category 对应的关键词有
 
 | 边栏 ID                    | 边栏名  |
 | ------------------------ | ---- |
-| hotNews                  | 澎湃热  |
+| hotNews                  | 澎湃热榜  |
 | financialInformationNews | 澎湃财讯 |
 | morningEveningNews       | 早晚报  |
 
