@@ -287,6 +287,9 @@
     "/android/platform-tools-releases": [
         "nczitzk"
     ],
+    "/annualreviews/:id": [
+        "nczitzk"
+    ],
     "/anquanke/:category/:fulltext?": [
         "qwertyuiop6"
     ],
