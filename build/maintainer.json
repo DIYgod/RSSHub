@@ -4291,11 +4291,14 @@
         "nczitzk",
         "bigfei"
     ],
+    "/thepaper/list/:id": [
+        "nczitzk",
+        "bigfei"
+    ],
     "/thepaper/factpaper/:status?": [
         "nczitzk"
     ],
-    "/thepaper/list/:id": [
-        "nczitzk",
+    "/thepaper/sidebar/:sec?": [
         "bigfei"
     ],
     "/theverge/:hub?": [
