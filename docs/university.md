@@ -1297,8 +1297,8 @@ category 列表：
 <Route author="LenaNouzen" example="/hrbust/jwzx" path="/hrbust/jwzx/:type?/:page?" :paramsDesc="['分类名，默认为教务公告', '文章数，默认为12']" >
 
 | 名师风采 | 热点新闻 | 教务公告 | 教学新闻 |
-| ----  | ---- | ---- | ---- | 
-| 351 | 353 | 354 | 355 | 
+| ---- | ---- | ---- | ---- |
+| 351  | 353  | 354  | 355  |
 
 </Route>
 
