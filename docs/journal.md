@@ -49,7 +49,7 @@ pageClass: routes
 
 ## Annual Reviews
 
-### Journals
+### Journal
 
 <Route author="nczitzk" example="/annualreviews/anchem" path="/annualreviews/:id" :paramsDesc="['期刊 id，可在对应期刊页 URL 中找到']" supportScihub="1">
 

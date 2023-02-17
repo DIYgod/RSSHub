@@ -49,7 +49,7 @@ See [Browse Content](https://pubs.acs.org)
 
 ## Annual Reviews
 
-### Journals
+### Journal
 
 <RouteEn author="nczitzk" example="/annualreviews/anchem" path="/annualreviews/:id" :paramsDesc="['Journal id, can be found in URL']" supportScihub="1">
 
