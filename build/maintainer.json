@@ -1063,6 +1063,18 @@
     "/dcard/:section/:type?": [
         "HenryQW"
     ],
+    "/dcfever/news/:type?": [
+        "TonyRL"
+    ],
+    "/dcfever/reviews/:type?": [
+        "TonyRL"
+    ],
+    "/dcfever/trading/search/:keyword/:mainCat?": [
+        "TonyRL"
+    ],
+    "/dcfever/trading/:id": [
+        "TonyRL"
+    ],
     "/ddosi/": [
         "XinRoom"
     ],
