@@ -47,6 +47,22 @@ See [Browse Content](https://pubs.acs.org)
 
 </RouteEn>
 
+## Annual Reviews
+
+### Journal
+
+<RouteEn author="nczitzk" example="/annualreviews/anchem" path="/annualreviews/:id" :paramsDesc="['Journal id, can be found in URL']" supportScihub="1">
+
+The URL of the journal [Annual Review of Analytical Chemistry](https://www.annualreviews.org/journal/anchem) is `https://www.annualreviews.org/journal/anchem`, where `anchem` is the id of the journal, so the route for this journal is `/annualreviews/anchem`.
+
+::: tip Tip
+
+More jounals can be found in [Browse Journals](https://www.annualreviews.org/action/showPublications).
+
+:::
+
+</RouteEn>
+
 ## arXiv
 
 ### Search Keyword

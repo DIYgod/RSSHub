@@ -562,6 +562,12 @@ This route provides a flexible plan with full text content to subscribe specific
 
 </RouteEn>
 
+## Phoronix
+
+### News & Reviews
+
+<RouteEn author="oppliate" example="/phoronix/news_topic/Intel" path="/phoronix/:page/:queryOrItem?" :paramsDesc="['Page name', 'For `category` it corresponds to `item`, for other pages it\'s `q`. You may find available parameters from their navigator links. E.g. to subscribe to the category page `https://www.phoronix.com/scan.php?page=category&item=Computers`, fill in the path `/phoronix/category/Computers`']" radar="1"/>
+
 ## Polar
 
 ### Blog

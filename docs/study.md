@@ -470,7 +470,7 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 精品课程
 
-<Route author="hoilc" example="/open163/vip" path="/open163/vip" radar="1" rssbud="1"/>
+<Route author="hoilc" example="/163/open/vip" path="/163/open/vip" radar="1" rssbud="1"/>
 
 ## 下厨房
 

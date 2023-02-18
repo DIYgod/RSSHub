@@ -343,12 +343,6 @@ pageClass: routes
 
 <Route author="nczitzk" example="/now/news/rank" path="/now/news/rank"/>
 
-## Phoronix
-
-### 新闻与评测
-
-<Route author="oppliate" example="/phoronix/news_topic/Intel" path="/phoronix/:page/:queryOrItem?" :paramsDesc="['页面', '对 `category` 页面是分类项目 `item`，对其它页面是主题 `q`，可以在网站顶部导航栏各项目链接里找出。如 `https://www.phoronix.com/scan.php?page=category&item=Computers` 对应 `/phoronix/category/Computers`']" />
-
 ## RTHK 傳媒透視
 
 <Route author="tpnonthealps" example="/mediadigest/latest" path="/mediadigest/:range" :paramsDesc="['时间范围']">
@@ -1841,6 +1835,18 @@ category 对应的关键词有
 | 26490  | 汽车圈     |
 | 115327 | IP SH   |
 | 117340 | 酒业      |
+
+</Route>
+
+### 侧边栏
+
+<Route author="bigfei" example="/thepaper/sidebar/hotNews" path="/thepaper/sidebar/sec?" :paramsDesc="['边栏 id，如下， 默认hotNews']">
+
+| 边栏 ID                    | 边栏名  |
+| ------------------------ | ---- |
+| hotNews                  | 澎湃热榜 |
+| financialInformationNews | 澎湃财讯 |
+| morningEveningNews       | 早晚报  |
 
 </Route>
 
