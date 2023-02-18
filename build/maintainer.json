@@ -206,6 +206,9 @@
     "/acs/journal/:id": [
         "nczitzk"
     ],
+    "/aeaweb/:id": [
+        "nczitzk"
+    ],
     "/agefans/detail/:id": [
         "s2marine"
     ],
