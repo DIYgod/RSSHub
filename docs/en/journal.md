@@ -47,6 +47,22 @@ See [Browse Content](https://pubs.acs.org)
 
 </RouteEn>
 
+## American Economic Association
+
+### Journal
+
+<RouteEn author="nczitzk" example="/aeaweb/aer" path="/aeaweb/:id" :paramsDesc="['Journal id, can be found in URL']" supportScihub="1">
+
+The URL of the journal [American Economic Review](https://www.aeaweb.org/journals/aer) is `https://www.aeaweb.org/journals/aer`, where `aer` is the id of the journal, so the route for this journal is `/aeaweb/aer`.
+
+::: tip Tip
+
+More jounals can be found in [AEA Journals](https://www.aeaweb.org/journals).
+
+:::
+
+</RouteEn>
+
 ## Annual Reviews
 
 ### Journal

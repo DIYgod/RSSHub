@@ -47,6 +47,22 @@ pageClass: routes
 
 </Route>
 
+## American Economic Association
+
+### Journal
+
+<Route author="nczitzk" example="/aeaweb/aer" path="/aeaweb/:id" :paramsDesc="['期刊 id，可在对应期刊页 URL 中找到']" supportScihub="1">
+
+期刊 [American Economic Review](https://www.aeaweb.org/journals/aer) 的 URL 是 `https://www.aeaweb.org/journals/aer`，其中 `aer` 即为其期刊 id，故该期刊对应路由为 `/aeaweb/aer`。
+
+::: tip 提示
+
+更多期刊可在 [AEA Journals](https://www.aeaweb.org/journals) 中找到。
+
+:::
+
+</Route>
+
 ## Annual Reviews
 
 ### Journal
