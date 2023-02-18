@@ -291,6 +291,44 @@ pageClass: routes
 
 <Route author="nczitzk" example="/dayone/blog" path="/dayone/blog"/>
 
+## DCFever
+
+### 新聞中心
+
+<Route author="TonyRL" example="/dcfever/news" path="/dcfever/news/:type?" :paramsDesc="['分類，預設為所有新聞']" radar="1">
+
+| 所有新聞 | 攝影器材   | 手機通訊   | 汽車熱話 | 攝影文化        | 影片攝錄        | 測試報告    | 生活科技   | 攝影技巧      |
+| ---- | ------ | ------ | ---- | ----------- | ----------- | ------- | ------ | --------- |
+|      | camera | mobile | auto | photography | videography | reviews | gadget | technique |
+
+</Route>
+
+### 測試報告
+
+<Route author="TonyRL" example="/dcfever/reviews/cameras" path="/dcfever/reviews/:type?" :paramsDesc="['分類，預設為 `cameras`']" radar="1">
+
+| 相機及鏡頭   | 手機平板   | 試車報告 |
+| ------- | ------ | ---- |
+| cameras | phones | cars |
+
+</Route>
+
+### 二手市集
+
+<Route author="TonyRL" example="/dcfever/trading/1" path="/dcfever/trading/:id" :paramsDesc="['分類 ID，見下表']" radar="1">
+
+[所有物品分類](https://www.dcfever.com/trading/index.php#all_cats)
+
+| 攝影產品 | 電腦 | 手機通訊 | 影音產品 | 遊戲機、模型 | 電器傢俱 | 潮流服飾 | 手錶 | 單車及運動 | 其它 |
+| ---- | -- | ---- | ---- | ------ | ---- | ---- | -- | ----- | -- |
+| 1    | 2  | 3    | 44   | 43     | 104  | 45   | 99 | 109   | 4  |
+
+</Route>
+
+### 二手市集 - 物品搜尋
+
+<Route author="TonyRL" example="/dcfever/trading/search/Sony" path="/dcfever/trading/search/:keyword/:mainCat?" :paramsDesc="['關鍵字', '主要分類 ID，見上表']" radar="1" />
+
 ## DeepL
 
 ### Blog

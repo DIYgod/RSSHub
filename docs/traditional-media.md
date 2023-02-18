@@ -1838,6 +1838,18 @@ category 对应的关键词有
 
 </Route>
 
+### 侧边栏
+
+<Route author="bigfei" example="/thepaper/sidebar/hotNews" path="/thepaper/sidebar/sec?" :paramsDesc="['边栏 id，如下， 默认hotNews']">
+
+| 边栏 ID                    | 边栏名  |
+| ------------------------ | ---- |
+| hotNews                  | 澎湃热榜 |
+| financialInformationNews | 澎湃财讯 |
+| morningEveningNews       | 早晚报  |
+
+</Route>
+
 ### 明查
 
 <Route author="nczitzk" example="/thepaper/factpaper" path="/thepaper/factpaper/:status?" :paramsDesc="['状态 id，可选 `1` 即 有定论 或 `0` 即 核查中，默认为 `1`']"/>
