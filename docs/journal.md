@@ -47,6 +47,22 @@ pageClass: routes
 
 </Route>
 
+## Annual Reviews
+
+### Journal
+
+<Route author="nczitzk" example="/annualreviews/anchem" path="/annualreviews/:id" :paramsDesc="['期刊 id，可在对应期刊页 URL 中找到']" supportScihub="1">
+
+期刊 [Annual Review of Analytical Chemistry](https://www.annualreviews.org/journal/anchem) 的 URL 是 `https://www.annualreviews.org/journal/anchem`，其中 `anchem` 即为其期刊 id，故该期刊对应路由为 `/annualreviews/anchem`。
+
+::: tip 提示
+
+更多期刊可在 [Browse Journals](https://www.annualreviews.org/action/showPublications) 中找到。
+
+:::
+
+</Route>
+
 ## arXiv
 
 ### 搜索关键字

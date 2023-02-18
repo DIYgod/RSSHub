@@ -1290,6 +1290,18 @@ category 列表：
 
 <Route author="raptazure" example="/hitwh/today" path="/hitwh/today" radar="1" rssbud="1"/>
 
+## 哈尔滨理工大学
+
+### 教务处
+
+<Route author="LenaNouzen" example="/hrbust/jwzx" path="/hrbust/jwzx/:type?/:page?" :paramsDesc="['分类名，默认为教务公告', '文章数，默认为12']" >
+
+| 名师风采 | 热点新闻 | 教务公告 | 教学新闻 |
+| ---- | ---- | ---- | ---- |
+| 351  | 353  | 354  | 355  |
+
+</Route>
+
 ## 海南大学
 
 ### 硕士研究生招生动态
