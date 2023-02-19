@@ -150,6 +150,16 @@ pageClass: routes
 
 输出 Transcript 从而提供比官方（podcast）更好的使用体验。
 
+## 6v 电影
+
+### 最新电影
+
+<Route author="tc9011" example="/6vdy/latestMovies" path="/6vdy/latestMovies" supportBT="1"/>
+
+### 最新电视剧
+
+<Route author="tc9011" example="/6vdy/latestTVSeries" path="/6vdy/latestTVSeries" supportBT="1"/>
+
 ## 7mmtv
 
 ### 分类
