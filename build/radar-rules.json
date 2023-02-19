@@ -4218,7 +4218,7 @@
         "title": "Notes",
         "docs": "https://docs.rsshub.app/social-media.html#crossbell",
         "source": "/*",
-        "target": "/notes"
+        "target": "/crossbell/notes"
       }
     ]
   },
@@ -4229,7 +4229,7 @@
         "title": "Notes",
         "docs": "https://docs.rsshub.app/social-media.html#crossbell",
         "source": "/*",
-        "target": "/notes/source/xlog"
+        "target": "/crossbell/notes/source/xlog"
       }
     ]
   },
@@ -6114,24 +6114,28 @@
   },
   "fffdm.com": {
     "_name": "风之动漫",
-    "manhua": {
-      "title": "在线漫画",
-      "docs": "https://docs.rsshub.app/anime.html#feng-zhi-dong-man",
-      "source": [
-        "/manhua/:id",
-        "/:id"
-      ],
-      "target": "/fffdm/manhua/:id"
-    },
-    "www": {
-      "title": "在线漫画",
-      "docs": "https://docs.rsshub.app/anime.html#feng-zhi-dong-man",
-      "source": [
-        "/manhua/:id",
-        "/:id"
-      ],
-      "target": "/fffdm/manhua/:id"
-    }
+    "manhua": [
+      {
+        "title": "在线漫画",
+        "docs": "https://docs.rsshub.app/anime.html#feng-zhi-dong-man",
+        "source": [
+          "/manhua/:id",
+          "/:id"
+        ],
+        "target": "/fffdm/manhua/:id"
+      }
+    ],
+    "www": [
+      {
+        "title": "在线漫画",
+        "docs": "https://docs.rsshub.app/anime.html#feng-zhi-dong-man",
+        "source": [
+          "/manhua/:id",
+          "/:id"
+        ],
+        "target": "/fffdm/manhua/:id"
+      }
+    ]
   },
   "filmdeepfocus.com": {
     "_name": "深焦",
