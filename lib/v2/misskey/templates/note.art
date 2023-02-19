@@ -1,4 +1,6 @@
-{{ text.replace(/\n/g, '<br>') }}
+{{ if text }}
+    <p>{{ text.replace(/\n/g, '<br>') }}</p>
+{{ /if }}
 
 {{ each files file }}
     <br>
