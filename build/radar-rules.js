@@ -47,6 +47,13 @@
                     const id = new URL(url).hash.match(/album\?id=(.*)/)[1];
                     return id ? `/163/music/artist/${id}` : '';
                 } },
+      { title:"云音乐 - 歌手歌曲",
+        docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
+        source:"/",
+        target:(_params, url) => {
+                    const id = new URL(url).hash.match(/artist\?id=(.*)/)[1];
+                    return id ? `/163/music/artist/songs/${id}` : '';
+                } },
       { title:"云音乐 - 电台节目",
         docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
         source:"/",
@@ -80,7 +87,7 @@
     "y.music":[ { title:"云音乐 - 用户歌单",
         docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
         source:"/m/user",
-        target:(params, url) => `/163/music/playlist/${new URL(url).searchParams.get('id')}` },
+        target:(params, url) => `/163/music/user/playlist/${new URL(url).searchParams.get('id')}` },
       { title:"云音乐 - 歌单歌曲",
         docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
         source:"/m/playlist",
@@ -88,12 +95,12 @@
       { title:"云音乐 - 歌手专辑",
         docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
         source:"/m/album",
-        target:(params, url) => `/163/music/playlist/${new URL(url).searchParams.get('id')}` },
-      { title:"云音乐 - 播单声音",
+        target:(params, url) => `/163/music/artist/${new URL(url).searchParams.get('id')}` },
+      { title:"云音乐 - 电台节目",
         docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
         source:[ "/m/radio",
           "/m/djradio" ],
-        target:(params, url) => `/163/music/playlist/${new URL(url).searchParams.get('id')}` },
+        target:(params, url) => `/163/music/djradio/${new URL(url).searchParams.get('id')}` },
       { title:"用户动态",
         docs:"https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue-yong-hu-dong-tai" } ] },
   "591.com.tw":{ _name:"591 租屋網",

@@ -74,6 +74,11 @@
         "source": "/"
       },
       {
+        "title": "云音乐 - 歌手歌曲",
+        "docs": "https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
+        "source": "/"
+      },
+      {
         "title": "云音乐 - 电台节目",
         "docs": "https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
         "source": "/"
@@ -141,7 +146,7 @@
         "source": "/m/album"
       },
       {
-        "title": "云音乐 - 播单声音",
+        "title": "云音乐 - 电台节目",
         "docs": "https://docs.rsshub.app/multimedia.html#wang-yi-yun-yin-yue",
         "source": [
           "/m/radio",
