@@ -24,15 +24,17 @@ pageClass: routes
 
 ### HTML Clip
 
-<Route author="BeautyyuYanli" example="/inoreader/html_clip/1006346356/News/3" path="/html_clip/:user/:tag/:num?" :paramsDesc="[
+<Route author="BeautyyuYanli" example="/inoreader/html_clip/1006346356/News?limit=3" path="/html_clip/:user/:tag" :paramsDesc="[
 '用户 id, 即举例网址 URL 中的 user/ 后的数字',
-'标签名, 即举例网址 URL 中的 tag/ 后的内容',
-'文章数量, 默认为 20'
+'标签名, 即举例网址 URL 中的 tag/ 后的内容'
 ]">
+
+可携带 query 参数 `limit=n`, 用于限制获取的文章数量，缺省为 20
 
 举例网址: <https://www.inoreader.com/stream/user/1006346356/tag/News/view/html?n=3>
 
 </Route>
+
 ## kakuyomu
 
 ### 章节更新
