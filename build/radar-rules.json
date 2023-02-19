@@ -4495,7 +4495,7 @@
         "source": [
           "/:type/reviews.php"
         ],
-        "params": "/dcfever/reviews/:type"
+        "target": "/dcfever/reviews/:type"
       },
       {
         "title": "二手市集",
