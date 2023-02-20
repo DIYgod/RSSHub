@@ -20,6 +20,22 @@ Eg:<https://syosetu.org/novel/264928/>
 
 </RouteEn>
 
+## Inoreader
+
+### HTML Clip
+
+<RouteEn author="BeautyyuYanli" example="/inoreader/html_clip/1006346356/News?limit=3" path="/html_clip/:user/:tag" :paramsDesc="[
+'user id, the interger after user/ in the example URL',
+'tag, the string after tag/ in the example URL',
+]">
+
+Use query parameter `limit=n` to limit the number of articles, default to 20
+
+Eg: <https://www.inoreader.com/stream/user/1006346356/tag/News/view/html?n=3>
+
+</RouteEn>
+
+
 ## kakuyomu
 
 ### episode
