@@ -326,6 +326,12 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="ChaosTong" example="/putonghua" path="/putonghua" />
 
+## 湖南人事考试网
+
+### 公告
+
+<Route author="TonyRL" example="/hunanpea/rsks/2f1a6239-b4dc-491b-92af-7d95e0f0543e" path="/hunanpea/rsks/:guid" :paramsDesc="['分类 id，可在 URL 中找到']" radar="1"/>
+
 ## 唧唧堂
 
 ### 论文
