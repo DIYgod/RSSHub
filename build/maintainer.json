@@ -2345,6 +2345,9 @@
     "/informs/:category?": [
         "Fatpandac"
     ],
+    "/inoreader/html_clip/:user/:tag/:num?": [
+        "BeautyyuYanli"
+    ],
     "/iqiyi/album/:id": [
         "TonyRL"
     ],
