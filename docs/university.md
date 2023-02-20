@@ -3605,19 +3605,13 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 中南大学
 
-### 招聘信息
+### 就业信息网招聘信息
 
-<Route author="csuhan" example="/csu/job" path="/csu/job/:type?" :paramsDesc="['招聘类型']">
-
-| 招聘类型 | 本部招聘 | 湘雅招聘 | 铁道招聘 | 在线招聘 | 事业招考 |
-| ---- | ---- | ---- | ---- | ---- | ---- |
-| 参数   | 1    | 2    | 3    | 4    | 5    |
-
-</Route>
+<Route author="TonyRL" example="/csu/career" path="/csu/career" radar="1" />
 
 ### 计算机学院
 
-<Route author="j1g5awi" example="/csu/cse" path="/csu/cse/:type?" :paramsDesc="['类型']">
+<Route author="j1g5awi" example="/csu/cse" path="/csu/cse/:type?" :paramsDesc="['类型']" radar="1">
 
 | 类型 | 学院新闻 | 通知公告 | 学术信息 | 学工动态 | 科研动态 |
 | -- | ---- | ---- | ---- | ---- | ---- |
@@ -3627,7 +3621,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 校长信箱
 
-<Route author="j1g5awi" example="/csu/mail" path="/csu/mail/:type?" :paramsDesc="['类型']">
+<Route author="j1g5awi" example="/csu/mail" path="/csu/mail/:type?" :paramsDesc="['类型']" radar="1">
 
 | 类型 | 校长信箱 | 党委信箱 |
 | -- | ---- | ---- |
