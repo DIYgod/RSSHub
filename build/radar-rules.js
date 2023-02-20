@@ -4643,7 +4643,7 @@
     jwzx:[ { title:"教务处",
         docs:"https://docs.rsshub.app/university.html#ha-er-bin-li-gong-da-xue",
         source:"/homepage/*",
-        target:(params, url) => `/hrbust/jwzx/${url.match(/(?<=columnId=)\d+/)}` } ] },
+        target:(params, url) => `/hrbust/jwzx/${new URL(url).searchParams.get('columnId')}` } ] },
   "huangz.me":{ _name:"黄健宏博客",
     blog:[ { title:"文章",
         docs:"https://docs.rsshub.app/blog.html#huang-jian-hong-bo-ke",
