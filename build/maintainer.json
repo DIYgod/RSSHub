@@ -2234,6 +2234,9 @@
     "/huanqiu/news/:category?": [
         "yuxinliu-alex"
     ],
+    "/hunanpea/rsks/:guid": [
+        "TonyRL"
+    ],
     "/hupu/all/:id?": [
         "nczitzk"
     ],
