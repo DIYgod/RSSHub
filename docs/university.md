@@ -3021,6 +3021,10 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 西南交通大学
 
+### 就业招聘信息
+
+<Route author="qizidog" example="/swjtu/jyzpxx" path="/swjtu/jyzpxx"/>
+
 ### 交通运输与物流学院
 
 #### 研究生通知
