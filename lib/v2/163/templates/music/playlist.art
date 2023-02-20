@@ -1,4 +1,4 @@
 歌手：{{ singer }}<br>
 专辑：{{ album }}<br>
-发行日期：{{ date }}<br>
+{{ if date }}发行日期：{{ date }}<br>{{ /if }}
 <img src="{{ picUrl }}">
