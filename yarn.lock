@@ -9233,10 +9233,10 @@ lowercase-keys@^2.0.0:
   resolved "https://registry.yarnpkg.com/lowercase-keys/-/lowercase-keys-2.0.0.tgz#2603e78b7b4b0006cbca2fbcc8a3202558ac9479"
   integrity sha512-tqNXrS78oMOE73NMxK4EMLQsQowWf8jKooH9g7xPavRT706R6bkQJ6DY2Te7QukaZsulxa30wQ7bk0pm4XiHmA==
 
-lru-cache@7.16.0, lru-cache@^7.7.1:
-  version "7.16.0"
-  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-7.16.0.tgz#b1b946cff368d3f3c569cc3d6a5ba8f90435160f"
-  integrity sha512-VJBdeMa9Bz27NNlx+DI/YXGQtXdjUU+9gdfN1rYfra7vtTjhodl5tVNmR42bo+ORHuDqDT+lGAUAb+lzvY42Bw==
+lru-cache@7.16.1, lru-cache@^7.7.1:
+  version "7.16.1"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-7.16.1.tgz#7acea16fecd9ed11430e78443c2bb81a06d3dea9"
+  integrity sha512-9kkuMZHnLH/8qXARvYSjNvq8S1GYFFzynQTAfKeaJ0sIrR3PUPuu37Z+EiIANiZBvpfTf2B5y8ecDLSMWlLv+w==
 
 lru-cache@^4.0.1, lru-cache@^4.1.2:
   version "4.1.5"
@@ -11681,10 +11681,10 @@ ramda@^0.26.1:
   resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
   integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
-rand-user-agent@1.0.107:
-  version "1.0.107"
-  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.107.tgz#6013080adfa7096aaaacace989d8a348bc23ed84"
-  integrity sha512-7/J3p9LpeCmgm4S4mOCBqkj8o1Pq6U/RfxxQjRbeOMMh/hMGyyd0IpgAvxkEJXK8tRJZdG9vWbK4oB08G/8Hog==
+rand-user-agent@1.0.108:
+  version "1.0.108"
+  resolved "https://registry.yarnpkg.com/rand-user-agent/-/rand-user-agent-1.0.108.tgz#d778104547db117c850db0c7a37be3571452a8b2"
+  integrity sha512-vzpII3ZpsFPuk++pTr895d4ntSWBVyjeKEXthiianMiutuCxYPkUo01FB+uPVzAhpymTyQOmvcnKt0ymEcxuCg==
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5, randombytes@^2.1.0:
   version "2.1.0"
