@@ -252,13 +252,13 @@ Though, every Story expires after 24 hours, so it may be not so serious.
 
 <RouteEn author="EYHN" path="/pixiv/ranking/:mode/:date?" example="/pixiv/ranking/week" :paramsDesc="['rank type', 'format: `2018-4-25`']" radar="1" rssbud="1">
 
-| pixiv daily rank | pixiv weekly rank | pixiv monthly rank | pixiv male rank | pixiv female rank | AI-generated work Rankings | pixiv original rank | pixiv rookie user rank |
-| ---------------- | ----------------- | ------------------ | --------------- | ----------------- | ------------------- | ---------------------- | ---------------------- |
-| day              | week              | month              | day_male        | day_female       | day_ai | week_original       | week_rookie            |
+| daily rank | weekly rank | monthly rank | male rank | female rank | AI-generated work Rankings | original rank | rookie user rank |
+| ---------- | ----------- | ------------ | --------- | ----------- | -------------------------- | ------------- | ---------------- |
+| day        | week        | month        | day_male  | day_female  | day_ai                     | week_original | week_rookie      |
 
-| pixiv R-18 daily rank | pixiv R-18 male rank | pixiv R-18 female rank | pixiv R-18 weekly rank | pixiv R-18G rank |
-| --------------------- | -------------------- | ---------------------- | ---------------------- | ---------------- |
-| day_r18               | day_male_r18         | day_female_r18         | week_r18               | week_r18g        |
+| R-18 daily rank | R-18 AI-generated work | R-18 male rank | R-18 female rank | R-18 weekly rank | R-18G rank |
+| --------------- | ---------------------- | -------------- | ---------------- | ---------------- | ---------- |
+| day_r18         | day_r18_ai             | day_male_r18   | day_female_r18   | week_r18         | week_r18g  |
 
 </RouteEn>
 
