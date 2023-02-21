@@ -1809,6 +1809,9 @@
     "/gov/moe/:type": [
         "Crawler995"
     ],
+    "/gov/moe/s78/:column": [
+        "TonyRL"
+    ],
     "/gov/mofcom/article/:suffix+": [
         "LogicJake"
     ],

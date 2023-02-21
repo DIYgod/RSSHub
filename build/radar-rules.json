@@ -7481,6 +7481,15 @@
           "/"
         ],
         "target": "/gov/moe/newest_file"
+      },
+      {
+        "title": "司局通知",
+        "docs": "https://docs.rsshub.app/government.html#zhong-hua-ren-min-gong-he-guo-jiao-yu-bu",
+        "source": [
+          "/s78/:column/tongzhi",
+          "/s78/:column"
+        ],
+        "target": "/gov/moe/s78/:column"
       }
     ]
   },
