@@ -278,6 +278,16 @@ pageClass: routes
 
 <Route author="markmingjie" example="/bjfu/kjc" path="/bjfu/kjc" />
 
+### 信息学院通知
+
+<Route author="wzc-blog" example="/bjfu/it/xyxw" path="/bjfu/it/:type" :paramsDesc="['通知类别']">
+
+| 学院新闻 | 科研动态 | 本科生培养 | 研究生培养 |
+| ---- | ---- | ----- | ----- |
+| xyxw | kydt | pydt  | pydt2 |
+
+</Route>
+
 ### 教务处通知公告
 
 <Route author="markmingjie" example="/bjfu/jwc/jwkx" path="/bjfu/jwc/:type" :paramsDesc="['通知类别']">
@@ -310,13 +320,27 @@ pageClass: routes
 
 </Route>
 
-### 信息学院通知
+### 图书馆通知
 
-<Route author="wzc-blog" example="/bjfu/it/xyxw" path="/bjfu/it/:type" :paramsDesc="['通知类别']">
+<Route author="TonyRL" example="/bnu/lib/zydt" path="/bjfu/lib/:category?" :paramsDesc="['分类，见下表，默认为 `zydt`']" radar="1">
 
-| 学院新闻 | 科研动态 | 本科生培养 | 研究生培养 |
-| ---- | ---- | ----- | ----- |
-| xyxw | kydt | pydt  | pydt2 |
+| 资源动态 | 新闻动态 | 系列讲座  |
+| ---- | ---- | ----- |
+| zydt | xwdt | xljz1 |
+
+</Route>
+
+### 党委学生工作部辅导员发展中心
+
+<Route author="TonyRL" example="/bnu/fdy/tzgg/dwjs" path="/bnu/fdy/:path*" :paramsDesc="['路径，默认为 `tzgg`']" radar="1">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `https://fdy.bnu.edu.cn/` 和 `/index.htm` 之间的字段。下面是一个例子。
+
+若订阅 [通知公告 > 队伍建设](https://fdy.bnu.edu.cn/tzgg/dwjs/index.htm) 则将对应页面 URL <https://fdy.bnu.edu.cn/tzgg/dwjs/index.htm> 中 `https://fdy.bnu.edu.cn/` 和 `/index.htm` 之间的字段 `tzgg/dwjs` 作为路径填入。此时路由为 [`/bnu/fdy/tzgg/dwjs`](https://rsshub.app/bnu/fdy/tzgg/dwjs)
+
+:::
 
 </Route>
 
@@ -3020,6 +3044,10 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 </Route>
 
 ## 西南交通大学
+
+### 就业招聘信息
+
+<Route author="qizidog" example="/swjtu/jyzpxx" path="/swjtu/jyzpxx"/>
 
 ### 交通运输与物流学院
 
