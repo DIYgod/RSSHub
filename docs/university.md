@@ -330,6 +330,20 @@ pageClass: routes
 
 </Route>
 
+### 党委学生工作部辅导员发展中心
+
+<Route author="TonyRL" example="/bnu/fdy/tzgg/dwjs" path="/bnu/fdy/:path*" :paramsDesc="['路径，默认为 `tzgg`']" radar="1">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `https://fdy.bnu.edu.cn/` 和 `/index.htm` 之间的字段。下面是一个例子。
+
+若订阅 [通知公告 > 队伍建设](https://fdy.bnu.edu.cn/tzgg/dwjs/index.htm) 则将对应页面 URL <https://fdy.bnu.edu.cn/tzgg/dwjs/index.htm> 中 `https://fdy.bnu.edu.cn/` 和 `/index.htm` 之间的字段 `tzgg/dwjs` 作为路径填入。此时路由为 [`/bnu/fdy/tzgg/dwjs`](https://rsshub.app/bnu/fdy/tzgg/dwjs)
+
+:::
+
+</Route>
+
 ## 北京物资学院
 
 ### 通知公告
