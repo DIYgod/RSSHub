@@ -669,6 +669,9 @@
     "/bnu/dwxgb/:category/:type": [
         "Fatpandac"
     ],
+    "/bnu/fdy/:path*": [
+        "TonyRL"
+    ],
     "/bnu/lib/:category?": [
         "TonyRL"
     ],

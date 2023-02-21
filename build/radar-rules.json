@@ -2778,6 +2778,15 @@
         "target": "/bnu/dwxgb/:category/:type"
       }
     ],
+    "fdy": [
+      {
+        "title": "党委学生工作部辅导员发展中心",
+        "docs": "https://docs.rsshub.app/university.html#bei-jing-shi-fan-da-xue",
+        "source": [
+          "/"
+        ]
+      }
+    ],
     "www.lib": [
       {
         "title": "图书馆通知",
