@@ -666,6 +666,12 @@
     "/bnu/bs/:category?": [
         "nczitzk"
     ],
+    "/bnu/dwxgb/:category/:type": [
+        "Fatpandac"
+    ],
+    "/bnu/lib/:category?": [
+        "TonyRL"
+    ],
     "/bookfere/:category": [
         "OdinZhang"
     ],
