@@ -3694,6 +3694,9 @@
         "Fatpandac",
         "nczitzk"
     ],
+    "/qiyoujiage/:path+": [
+        "TonyRL"
+    ],
     "/qlu/notice": [
         "SunBK201"
     ],
@@ -5497,7 +5500,6 @@
     "/chouti/top/:hour?": [],
     "/chouti/:subject?": [],
     "/westore/new": [],
-    "/oilprice/:area": [],
     "/nhentai/search/:keyword/:mode?": [],
     "/nhentai/:key/:keyword/:mode?": [],
     "/ltaaa/:category?": [],
