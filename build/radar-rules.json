@@ -17395,6 +17395,17 @@
           "/"
         ]
       }
+    ],
+    "jiuye": [
+      {
+        "title": "就业招聘信息",
+        "docs": "https://docs.rsshub.app/university.html#xi-nan-jiao-tong-da-xue",
+        "source": [
+          "/career",
+          "/"
+        ],
+        "target": "/swjtu/jyzpxx"
+      }
     ]
   },
   "swpu.edu.cn": {
