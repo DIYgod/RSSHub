@@ -1637,6 +1637,9 @@
     "/getitfree/:category?": [
         "nczitzk"
     ],
+    "/gettr/user/:id": [
+        "TonyRL"
+    ],
     "/gf-cn/news/:category?": [
         "nczitzk"
     ],
