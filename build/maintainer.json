@@ -3514,6 +3514,15 @@
         "Rongronggg9",
         "devinmugen"
     ],
+    "/pikabu/community/:name": [
+        "TonyRL"
+    ],
+    "/pikabu/tag/:name": [
+        "TonyRL"
+    ],
+    "/pikabu/user/:name": [
+        "TonyRL"
+    ],
     "/pincong/category/:category?/:sort?": [
         "zphw"
     ],
