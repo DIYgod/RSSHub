@@ -1474,6 +1474,10 @@ pageClass: routes
 
 </Route>
 
+### 司局通知
+
+<Route author="TonyRL" example="/gov/moe/s78/A13" path="/gov/moe/s78/:column" :paramsDesc="['司局 ID，可在 URL 找到']" radar="1"/>
+
 ## 中华人民共和国农业农村部
 
 ### 新闻
