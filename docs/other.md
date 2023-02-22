@@ -721,7 +721,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 今日油价查询
 
-<Route author="TonyRL" example="/qiyoujiage/shanghai" path="/qiyoujiage/:path*" :paramsDesc="['路径']">
+<Route author="TonyRL" example="/qiyoujiage/shanghai" path="/qiyoujiage/:path+" :paramsDesc="['路径']">
 
 ::: tip 提示
 
