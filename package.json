@@ -123,7 +123,7 @@
     "koa-basic-auth": "4.0.0",
     "koa-favicon": "2.1.0",
     "koa-mount": "4.0.0",
-    "lru-cache": "7.16.1",
+    "lru-cache": "7.16.2",
     "lz-string": "1.4.4",
     "mailparser": "3.6.3",
     "markdown-it": "13.0.1",
