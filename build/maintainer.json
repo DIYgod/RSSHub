@@ -3619,6 +3619,10 @@
     "/pmthinking/": [
         "nczitzk"
     ],
+    "/pnas/:topicPath*": [
+        "emdoe",
+        "y9c"
+    ],
     "/polkadot/blog": [
         "iceqing"
     ],
@@ -5892,7 +5896,6 @@
     "/kaggle/user/:user": [],
     "/elife/:tid": [],
     "/ieee/author/:aid/:sortType/:count?": [],
-    "/pnas/:topic?": [],
     "/cell/cell/:category": [],
     "/cell/cover": [],
     "/mcbbs/forum/:type": [],
