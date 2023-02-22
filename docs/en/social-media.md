@@ -138,6 +138,12 @@ Type
 
 <RouteEn author="zphw" example="/gab/popular/hot" path="/gab/popular/:sort?" :paramsDesc="['Sort by, `hot` to be Hot Posts and `top` to be Top Posts. Default: hot']" />
 
+## GETTR
+
+### User timeline
+
+<RouteEn author="TonyRL" example="/gettr/user/jasonmillerindc" path="/gettr/user/:id" :paramsDesc="['User id']" radar="1" rssbud="1"/>
+
 ## Instagram
 
 ::: warning
