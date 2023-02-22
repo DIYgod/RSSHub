@@ -472,6 +472,12 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="zphw" example="/gab/popular/hot" path="/gab/popular/:sort?" :paramsDesc="['排序方式, `hot` 為 Hot Posts, `top` 為 Top Posts。默認為 hot']" />
 
+## GETTR
+
+### 个人时间线
+
+<Route author="TonyRL" example="/gettr/user/jasonmillerindc" path="/gettr/user/:id" :paramsDesc="['用户 id']" radar="1" rssbud="1"/>
+
 ## iCity
 
 ### 用户动态
