@@ -335,7 +335,7 @@ Return results from 2020
 
 ### Journal
 
-<RouteEn author="emdoe HenryQW y9c" example="/pnas/latest" path="/pnas/:topicPath?" :paramsDesc="['Topic path, support **Featured Topics**, **Articles By Topic** and [**Collected Papers**](https://www.pnas.org/about/collected-papers), `latest` by default']" radar="1" anticrawler="1" puppeteer="1" supportScihub="1">
+<RouteEn author="emdoe HenryQW y9c" example="/pnas/latest" path="/pnas/:topicPath*" :paramsDesc="['Topic path, support **Featured Topics**, **Articles By Topic** and [**Collected Papers**](https://www.pnas.org/about/collected-papers), `latest` by default']" radar="1" anticrawler="1" puppeteer="1" supportScihub="1">
 
 ::: tip Tips
 Some topics require adding `topic/` to `topicPath` like [`/pnas/topic/app-math`](https://rsshub.app/pnas/topic/app-math) and some don't like [`/pnas/biophysics-and-computational-biology`](https://rsshub.app/pnas/biophysics-and-computational-biology)

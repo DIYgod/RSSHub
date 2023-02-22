@@ -306,7 +306,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### 期刊
 
-<Route author="emdoe HenryQW y9c" example="/pnas/latest" path="/pnas/:topicPath?" :paramsDesc="['领域路径，支持 **Featured Topics**、**Articles By Topic** 及 [**Collected Papers**](https://www.pnas.org/about/collected-papers), 预设为 `latest`']" radar="1" anticrawler="1" puppeteer="1" supportScihub="1">
+<Route author="emdoe HenryQW y9c" example="/pnas/latest" path="/pnas/:topicPath*" :paramsDesc="['领域路径，支持 **Featured Topics**、**Articles By Topic** 及 [**Collected Papers**](https://www.pnas.org/about/collected-papers), 预设为 `latest`']" radar="1" anticrawler="1" puppeteer="1" supportScihub="1">
 
 ::: tip Tips
 有些领域需要在 `topicPath` 中添加 `topic/`，如 [`/pnas/topic/app-math`](https://rsshub.app/pnas/topic/app-math)，有些则不需要，如 [`/pnas/biophysics-and-computational-biology`](https://rsshub.app/pnas/biophysics-and-computational-biology)
