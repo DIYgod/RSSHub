@@ -331,20 +331,17 @@ Return results from 2020
 
 <RouteEn author="Fatpandac" example="/oup/journals/adaptation" path="/oup/journals/:name" :paramsDesc="['short name for a journal, can be found in URL']" anticrawler="1"/>
 
-## Proceedings of The National Academy of Sciences (PNAS)
+## Proceedings of The National Academy of Sciences
 
-### Latest Articles - Articles by Topic
+### Journal
 
-### Proceedings of The National Academy of Sciences (PNAS) - Latest Articles
+<RouteEn author="emdoe HenryQW y9c" example="/pnas/latest" path="/pnas/:topicPath*" :paramsDesc="['Topic path, support **Featured Topics**, **Articles By Topic** and [**Collected Papers**](https://www.pnas.org/about/collected-papers), `latest` by default']" radar="1" anticrawler="1" puppeteer="1" supportScihub="1">
 
-<RouteEn author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['topic name', 'obtain it from pnas.org (new research in ...)']" />
-
-- Using router (`/pnas/` + Topic of Interest) to query latest research paper for a certain topic from PNAS journal.
-    If the `:topic` parameter is blank, or equal to 'latest', then all the latest papers will return.
+::: tip Tips
+Some topics require adding `topic/` to `topicPath` like [`/pnas/topic/app-math`](https://rsshub.app/pnas/topic/app-math) and some don't like [`/pnas/biophysics-and-computational-biology`](https://rsshub.app/pnas/biophysics-and-computational-biology)
+:::
 
 </RouteEn>
-
-<RouteEn author="emdoe HenryQW" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['topic name', 'obtain it from pnas.org (new research in ...). `Latest` will include all.']" supportScihub="1"/>
 
 ## PubMed
 
