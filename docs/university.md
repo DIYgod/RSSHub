@@ -3047,7 +3047,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 就业招聘信息
 
-<Route author="qizidog" example="/swjtu/jyzpxx" path="/swjtu/jyzpxx"/>
+<Route author="qizidog" example="/swjtu/jyzpxx/20" path="/swjtu/jyzpxx/:record?" :paramsDesc="['通知抓取数量, 缺省为10, 最大不超过50']" />
 
 ### 交通运输与物流学院
 
