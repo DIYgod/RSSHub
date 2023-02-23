@@ -9240,10 +9240,10 @@ lowercase-keys@^2.0.0:
   resolved "https://registry.yarnpkg.com/lowercase-keys/-/lowercase-keys-2.0.0.tgz#2603e78b7b4b0006cbca2fbcc8a3202558ac9479"
   integrity sha512-tqNXrS78oMOE73NMxK4EMLQsQowWf8jKooH9g7xPavRT706R6bkQJ6DY2Te7QukaZsulxa30wQ7bk0pm4XiHmA==
 
-lru-cache@7.16.2, lru-cache@^7.7.1:
-  version "7.16.2"
-  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-7.16.2.tgz#df096ce4374d0cf9d34f29a35832c80534af54b6"
-  integrity sha512-t6D6OM05Y3f+61zNnXh/+0D69kAgJKVEWLuWL1r38CIHRPTWpNjwpR7S+nmiQlG5GmUB1BDiiMjU1Ihs4YBLlg==
+lru-cache@7.17.0, lru-cache@^7.7.1:
+  version "7.17.0"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-7.17.0.tgz#00c7ba5919e5ea7c69ff94ddabbf32cb09ab805c"
+  integrity sha512-zSxlVVwOabhVyTi6E8gYv2cr6bXK+8ifYz5/uyJb9feXX6NACVDwY4p5Ut3WC3Ivo/QhpARHU3iujx2xGAYHbQ==
 
 lru-cache@^4.0.1, lru-cache@^4.1.2:
   version "4.1.5"
@@ -11442,10 +11442,10 @@ proxy-agent@^4.0.0:
     proxy-from-env "^1.0.0"
     socks-proxy-agent "^5.0.0"
 
-proxy-chain@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/proxy-chain/-/proxy-chain-2.2.0.tgz#c4905b4a46e49203955f6ecfab527d1f11a2718b"
-  integrity sha512-kUzDckuWeZe8TiP2q872BzPKchiylEf2Hgy6knC2yIEKtAT592NkzQjMRLi+CxjDZSWrcXTFTPw/0WbpfdDiCA==
+proxy-chain@2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/proxy-chain/-/proxy-chain-2.2.1.tgz#da598d81bf4f48f8c9808700aa7615539985b32c"
+  integrity sha512-slwZPK9KQW1TEefAfMzhZ+bBbmQA+nT+zg/eA9iWNv6qqq8XxC912B05zPE1uhq5sAdZnEPvfy3z7qIDMwHlMQ==
   dependencies:
     tslib "^2.3.1"
 
