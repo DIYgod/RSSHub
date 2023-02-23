@@ -494,9 +494,19 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 :::
 
-### 用户
+### 用户 / 标签
 
-<Route author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" :paramsDesc="['时间线类别，目前仅支持用户时间线','针对该类别的索引，例如用户时间线里是用户名或用户 ID']" radar="1" anticrawler="1"/>
+<Route author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" :paramsDesc="['类别，见下表', '用户名／标签名']" radar="1" anticrawler="1" radar="1">
+
+| 用户时间线 | 标签   |
+| ----- | ---- |
+| user  | tags |
+
+::: tip Tips
+建议在部署时使用 Redis 缓存。
+:::
+
+</Route>
 
 ## Keep
 
