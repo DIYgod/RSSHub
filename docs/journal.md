@@ -302,14 +302,15 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 <Route author="Fatpandac" example="/oup/journals/adaptation" path="/oup/journals/:name" :paramsDesc="['期刊名称缩写，可以在网址中得到']" anticrawler="1"/>
 
-## PNAS
+## Proceedings of The National Academy of Sciences
 
-### 最新文章（可筛选领域）
+### 期刊
 
-<Route author="emdoe y9c" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" supportScihub="1"/>
+<Route author="emdoe HenryQW y9c" example="/pnas/latest" path="/pnas/:topicPath*" :paramsDesc="['领域路径，支持 **Featured Topics**、**Articles By Topic** 及 [**Collected Papers**](https://www.pnas.org/about/collected-papers), 预设为 `latest`']" radar="1" anticrawler="1" puppeteer="1" supportScihub="1">
 
--   通过 `/pnas/` + “领域名称” 来获取对应 “领域” 的最新文章（Latest Research）。
-    若参数置空（`/pnas`）或为 latest（`/pnas/latest`），则默认获取全部文章。
+::: tip Tips
+有些领域需要在 `topicPath` 中添加 `topic/`，如 [`/pnas/topic/app-math`](https://rsshub.app/pnas/topic/app-math)，有些则不需要，如 [`/pnas/biophysics-and-computational-biology`](https://rsshub.app/pnas/biophysics-and-computational-biology)
+:::
 
 </Route>
 

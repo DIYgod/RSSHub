@@ -11442,10 +11442,10 @@ proxy-agent@^4.0.0:
     proxy-from-env "^1.0.0"
     socks-proxy-agent "^5.0.0"
 
-proxy-chain@2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/proxy-chain/-/proxy-chain-2.2.0.tgz#c4905b4a46e49203955f6ecfab527d1f11a2718b"
-  integrity sha512-kUzDckuWeZe8TiP2q872BzPKchiylEf2Hgy6knC2yIEKtAT592NkzQjMRLi+CxjDZSWrcXTFTPw/0WbpfdDiCA==
+proxy-chain@2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/proxy-chain/-/proxy-chain-2.2.1.tgz#da598d81bf4f48f8c9808700aa7615539985b32c"
+  integrity sha512-slwZPK9KQW1TEefAfMzhZ+bBbmQA+nT+zg/eA9iWNv6qqq8XxC912B05zPE1uhq5sAdZnEPvfy3z7qIDMwHlMQ==
   dependencies:
     tslib "^2.3.1"
 
