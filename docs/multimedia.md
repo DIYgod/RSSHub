@@ -154,11 +154,11 @@ pageClass: routes
 
 ### 最新电影
 
-<Route author="tc9011" example="/6vdy/latestMovies" path="/6vdy/latestMovies" supportBT="1"/>
+<Route author="tc9011" example="/6v123/latestMovies" path="/6v123/latestMovies" supportBT="1"/>
 
 ### 最新电视剧
 
-<Route author="tc9011" example="/6vdy/latestTVSeries" path="/6vdy/latestTVSeries" supportBT="1"/>
+<Route author="tc9011" example="/6v123/latestTVSeries" path="/6v123/latestTVSeries" supportBT="1"/>
 
 ## 7mmtv
 
