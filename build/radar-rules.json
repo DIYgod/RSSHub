@@ -9547,6 +9547,27 @@
       }
     ]
   },
+  "instagram.com": {
+    "_name": "Instagram",
+    "www": [
+      {
+        "title": "用户",
+        "docs": "https://docs.rsshub.app/social-media.html#instagram",
+        "source": [
+          "/:id"
+        ],
+        "target": "/instagram/user/:id"
+      },
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/social-media.html#instagram",
+        "source": [
+          "/explore/tags/:key"
+        ],
+        "target": "/instagram/tags/:key"
+      }
+    ]
+  },
   "iq.com": {
     "_name": "爱奇艺",
     ".": [
@@ -22304,16 +22325,6 @@
         "title": "收藏夹",
         "docs": "https://docs.rsshub.app/new-media.html#matataki",
         "source": "/user/:uid/favlist/:fid"
-      }
-    ]
-  },
-  "instagram.com": {
-    "_name": "Instagram",
-    "www": [
-      {
-        "title": "用户",
-        "docs": "https://docs.rsshub.app/social-media.html#instagram",
-        "source": "/:id"
       }
     ]
   },

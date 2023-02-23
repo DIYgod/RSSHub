@@ -4979,6 +4979,15 @@
                     const limit = origin.searchParams.get('n');
                     return `/inoreader/html_clip/${params.user}/${params.tag}` + (limit ? `?limit=${limit}` : '');
                 } } ] },
+  "instagram.com":{ _name:"Instagram",
+    www:[ { title:"用户",
+        docs:"https://docs.rsshub.app/social-media.html#instagram",
+        source:[ "/:id" ],
+        target:"/instagram/user/:id" },
+      { title:"标签",
+        docs:"https://docs.rsshub.app/social-media.html#instagram",
+        source:[ "/explore/tags/:key" ],
+        target:"/instagram/tags/:key" } ] },
   "iq.com":{ _name:"爱奇艺",
     ".":[ { title:"剧集",
         docs:"https://docs.rsshub.app/multimedia.html#ai-qi-yi",
@@ -12286,15 +12295,6 @@
         docs:"https://docs.rsshub.app/new-media.html#matataki",
         source:"/user/:uid/favlist/:fid",
         target:(params) => `/matataki/users/${params.uid}/favorites/${params.fid}/posts` } ] },
-  "instagram.com":{ _name:"Instagram",
-    www:[ { title:"用户",
-        docs:"https://docs.rsshub.app/social-media.html#instagram",
-        source:"/:id",
-        target:(params) => {
-                    if (params.id !== 'explore' && params.id !== 'developer') {
-                        return '/instagram/user/:id';
-                    }
-                } } ] },
   "huya.com":{ _name:"虎牙直播",
     ".":[ { title:"直播间开播",
         docs:"https://docs.rsshub.app/live.html#hu-ya-zhi-bo-zhi-bo-jian-kai-bo",

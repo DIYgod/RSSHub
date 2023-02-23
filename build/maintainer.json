@@ -2378,6 +2378,10 @@
     "/inoreader/html_clip/:user/:tag/:num?": [
         "BeautyyuYanli"
     ],
+    "/instagram/:category/:key": [
+        "oppilate",
+        "DIYgod"
+    ],
     "/iqiyi/album/:id": [
         "TonyRL"
     ],
@@ -6303,7 +6307,6 @@
     "/us/supremecourt/argument_audio/:year?": [],
     "/mitbbs/:caty?": [],
     "/jiazhen108": [],
-    "/instagram/:category/:key": [],
     "/uisdc/talk/:sort?": [],
     "/uisdc/hangye/:caty?": [],
     "/uisdc/news": [],
