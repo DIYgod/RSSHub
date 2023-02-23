@@ -4528,6 +4528,9 @@
     "/ucas/job/:type?": [
         "Fatpandac"
     ],
+    "/uchicago/journals/current/:journal": [
+        "TonyRL"
+    ],
     "/udn/global/:category?": [
         "nczitzk"
     ],
