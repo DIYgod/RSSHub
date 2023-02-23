@@ -137,6 +137,12 @@
     "/52hrtt/:area?/:type?": [
         "nczitzk"
     ],
+    "/6v123/latestMovies": [
+        "tc9011"
+    ],
+    "/6v123/latestTVSeries": [
+        "tc9011"
+    ],
     "/78dm/eval_list/:path+": [
         "nczitzk"
     ],
