@@ -4891,7 +4891,10 @@
     "/xiaohongshu/board/:board_id": [
         "lotosbin"
     ],
-    "/xiaohongshu/user/:user_id/:category": [
+    "/xiaohongshu/user/:user_id/collect": [
+        "lotosbin"
+    ],
+    "/xiaohongshu/user/:user_id/notes": [
         "lotosbin"
     ],
     "/xiaomiyoupin/crowdfunding": [

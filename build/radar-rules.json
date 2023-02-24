@@ -20014,10 +20014,10 @@
         "target": "/xiaohongshu/user/:user_id/notes"
       },
       {
-        "title": "用户专辑",
+        "title": "用户收藏",
         "docs": "https://docs.rsshub.app/social-media.html#xiao-hong-shu",
         "source": "/user/profile/:user_id",
-        "target": "/xiaohongshu/user/:user_id/album"
+        "target": "/xiaohongshu/user/:user_id/collect"
       },
       {
         "title": "专辑",
