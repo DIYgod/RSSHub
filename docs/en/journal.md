@@ -419,6 +419,12 @@ Including 'Science', 'Science Advances', 'Science Immunology', 'Science Robotics
 
 <RouteEn author="Derekmini TonyRL" example="/springer/journal/10450" path="/springer/journal/:journal" :paramsDesc="['Journal Code, the number in the URL from the journal homepage']" radar="1" rssbud="1"/>
 
+## The University of Chicago Press: Journals
+
+### Current Issue
+
+<RouteEn author="TonyRL" example="/uchicago/journals/current/jpe" path="/uchicago/journals/current/:journal" :paramsDesc="['Journal id, can be found in URL. [Browse journals by title](https://www.journals.uchicago.edu/action/showPublications)']" radar="1"/>
+
 ## USENIX
 
 ### Security Symposia
