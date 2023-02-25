@@ -2382,6 +2382,9 @@
         "oppilate",
         "DIYgod"
     ],
+    "/instagram/2/:category/:key": [
+        "TonyRL"
+    ],
     "/iqiyi/album/:id": [
         "TonyRL"
     ],
