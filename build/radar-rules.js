@@ -2753,18 +2753,6 @@
         source:[ "/p/:id",
           "/" ],
         target:"/douyu/post/:id" } ] },
-  "sehuatang.net":{ _name:"色花堂",
-    ".":[ { title:"分区帖子",
-        docs:"https://docs.rsshub.app/multimedia.html#se-hua-tang-fen-qu-tie-zi",
-        source:[ "/:category",
-          "/" ],
-        target:(params, url) => {
-                    const theUrl = new URL(url);
-                    const matches = String(theUrl).match(/forum-(\d)+-\d+/);
-                    const fid = theUrl.searchParams.get('fid') || (matches ? matches[1] : '');
-                    const tid = theUrl.searchParams.get('typeid');
-                    return `/dsndsht23${fid ? `/${fid}` : ''}${tid ? `/${tid}` : ''}`;
-                } } ] },
   "dtcj.com":{ _name:"DT 财经",
     ".":[ { title:"数据侠专栏",
         docs:"https://docs.rsshub.app/finance.html#dt-cai-jing",
@@ -9119,6 +9107,18 @@
         docs:"https://docs.rsshub.app/programming.html#segmentfault",
         source:[ "/t/:tag/blogs" ],
         target:"/segmentfault/blogs/:tag" } ] },
+  "sehuatang.net":{ _name:"色花堂",
+    ".":[ { title:"分区帖子",
+        docs:"https://docs.rsshub.app/multimedia.html#se-hua-tang-fen-qu-tie-zi",
+        source:[ "/:category",
+          "/" ],
+        target:(params, url) => {
+                    const theUrl = new URL(url);
+                    const matches = theUrl.href.match(/forum-(\d)+-\d+/);
+                    const fid = theUrl.searchParams.get('fid') || (matches ? matches[1] : '');
+                    const tid = theUrl.searchParams.get('typeid');
+                    return `/sehuatang${fid ? `/${fid}` : ''}${tid ? `/${tid}` : ''}`;
+                } } ] },
   "sensortower.com":{ _name:"Sensor Tower",
     ".":[ { title:"Blog",
         docs:"https://docs.rsshub.app/new-media.html#sensor-tower-blog",

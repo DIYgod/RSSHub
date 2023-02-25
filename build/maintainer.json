@@ -1296,31 +1296,6 @@
     "/douyu/room/:id": [
         "DIYgod"
     ],
-    "/dsndsht23/bt/:subforumid?": [
-        "qiwihui",
-        "junfengP",
-        "nczitzk"
-    ],
-    "/dsndsht23/picture/:subforumid": [
-        "qiwihui",
-        "junfengP",
-        "nczitzk"
-    ],
-    "/dsndsht23/:subforumid?/:type?": [
-        "qiwihui",
-        "junfengP",
-        "nczitzk"
-    ],
-    "/dsndsht23/:subforumid?": [
-        "qiwihui",
-        "junfengP",
-        "nczitzk"
-    ],
-    "/dsndsht23/": [
-        "qiwihui",
-        "junfengP",
-        "nczitzk"
-    ],
     "/dtcj/datahero/:category?": [
         "nczitzk"
     ],
@@ -3978,6 +3953,31 @@
     "/segmentfault/user/:name": [
         "leyuuu",
         "Fatpandac"
+    ],
+    "/sehuatang/bt/:subforumid?": [
+        "qiwihui",
+        "junfengP",
+        "nczitzk"
+    ],
+    "/sehuatang/picture/:subforumid": [
+        "qiwihui",
+        "junfengP",
+        "nczitzk"
+    ],
+    "/sehuatang/:subforumid?/:type?": [
+        "qiwihui",
+        "junfengP",
+        "nczitzk"
+    ],
+    "/sehuatang/:subforumid?": [
+        "qiwihui",
+        "junfengP",
+        "nczitzk"
+    ],
+    "/sehuatang/": [
+        "qiwihui",
+        "junfengP",
+        "nczitzk"
     ],
     "/sensortower/blog/:language?": [
         "nczitzk"
