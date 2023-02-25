@@ -148,15 +148,15 @@ Type
 
 ::: warning
 
-Due to Instagram API restrictions, you have to setup your credentials on the server. See deployment guide for more.
+Due to Instagram Private API restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/en/install/) for more.
 
-If you don't want to setup credentials, use Picuki.
+If you don't want to setup credentials, you can use [Picuki](#picuki).
 
 :::
 
-### User Profile / Hashtag
+### User Profile / Hashtag - Private API
 
-<RouteEn author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" :paramsDesc="['Feed category, see table below','Username / Hashtag name']" radar="1" anticrawler="1">
+<RouteEn author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" :paramsDesc="['Feed category, see table below','Username / Hashtag name']" radar="1" anticrawler="1" selfhost="1">
 
 | User timeline | Hashtag |
 | ---------- | ---- |
@@ -167,6 +167,10 @@ It's highly recommended to deploy with Redis cache enabled.
 :::
 
 </RouteEn>
+
+### User Profile / Hashtag - Cookie
+
+<RouteEn author="TonyRL" example="/instagram/2/user/stefaniejoosten" path="/instagram/2/:category/:key" :paramsDesc="['Feed category, see table above','Username / Hashtag name']" radar="1" anticrawler="1" selfhost="1" />
 
 ## Lofter
 
