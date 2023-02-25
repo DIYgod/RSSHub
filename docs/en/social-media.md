@@ -148,9 +148,9 @@ Type
 
 ::: warning
 
-Due to Instagram API restrictions, you have to setup your credentials on the server. See [deployment guide](https://docs.rsshub.app/en/install/) for more.
+Due to Instagram Private API restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/en/install/) for more.
 
-If you don't want to setup credentials, use Picuki.
+If you don't want to setup credentials, you can use [Picuki](#picuki).
 
 :::
 
