@@ -1,10 +1,12 @@
 image: gitpod/workspace-node-lts
 
 ports:
-  - port: 1200
+  - name: app
+    port: 1200
     onOpen: notify
     visibility: public
-  - port: 8080
+  - name: docs
+    port: 8080
     onOpen: notify
     visibility: public
 
@@ -32,9 +34,9 @@ tasks:
   - name: Connect to Tailscale
     command: |
       if [ -n "${TS_STATE_TAILSCALE}" ]; then
-        sudo -E tailscale up --authkey $TAILSCALE_AUTHKEY --accept-routes
+        sudo -E tailscale up --hostname "gitpod-${GITPOD_GIT_USER_NAME}-$(echo ${GITPOD_WORKSPACE_CONTEXT} | jq -r .repository.name)" --authkey $TAILSCALE_AUTHKEY --accept-routes
       else
-        sudo -E tailscale up --hostname "gitpod-${GITPOD_GIT_USER_NAME// /-}-$(echo ${GITPOD_WORKSPACE_CONTEXT} | jq -r .repository.name)" --authkey $TAILSCALE_AUTHKEY --accept-routes
+        sudo -E tailscale up --hostname "gitpod-${GITPOD_GIT_USER_NAME}-$(echo ${GITPOD_WORKSPACE_CONTEXT} | jq -r .repository.name)" --authkey $TAILSCALE_AUTHKEY --accept-routes
         # store the tailscale state into gitpod user
         gp env TS_STATE_TAILSCALE="$(sudo cat /var/lib/tailscale/tailscaled.state)"
       fi
@@ -42,7 +44,7 @@ tasks:
 
 vscode:
   extensions:
-    - cweijan.vscode-database-client2 # you may need to rollback to v5.3.1 or below in **VS Code Desktop**
+    - cweijan.vscode-database-client2@5.3.1 # you may need to rollback to v5.3.1 or below in **VS Code Desktop**
     - DavidAnson.vscode-markdownlint
     - dbaeumer.vscode-eslint
     - eamodio.gitlens
@@ -52,7 +54,7 @@ vscode:
     - foxundermoon.shell-format
     - octref.vetur
     - rangav.vscode-thunder-client
-    - TabNine.tabnine-vscode
+    - sonarsource.sonarlint-vscode
     - vivaxy.vscode-conventional-commits
     - WakaTime.vscode-wakatime
     - yzhang.markdown-all-in-one
@@ -66,3 +68,4 @@ github:
     pullRequestsFromForks: false
     addCheck: false
     addComment: false
+    addBadge: false
