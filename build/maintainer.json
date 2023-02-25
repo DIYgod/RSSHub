@@ -3526,6 +3526,9 @@
     "/pincong/topic/:topic": [
         "zphw"
     ],
+    "/pixabay/search/:q/:order?": [
+        "TonyRL"
+    ],
     "/pixiv/ranking/:mode/:date?": [
         "EYHN"
     ],
