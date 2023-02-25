@@ -709,6 +709,10 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `NHENTAI_USERNAME`: nhentai username or email
     -   `NHENTAI_PASSWORD`: nhentai password
 
+-   Pixabay: [Documentation](https://pixabay.com/api/docs/)
+
+    -   `PIXABAY_KEY`: Pixabay API key
+
 -   pixiv: [Registration](https://accounts.pixiv.net/signup)
 
     -   `PIXIV_REFRESHTOKEN`: Please refer to [this article](https://gist.github.com/ZipFile/c9ebedb224406f4f11845ab700124362) to get a `refresh_token`
