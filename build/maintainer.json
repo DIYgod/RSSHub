@@ -305,6 +305,9 @@
     "/anquanke/:category/:fulltext?": [
         "qwertyuiop6"
     ],
+    "/apkpure/versions/:pkg/:region?": [
+        "maple3142"
+    ],
     "/apnews/topics/:topic?": [
         "zoenglinghou",
         "mjysci",
@@ -5580,7 +5583,6 @@
     "/miniflux/:feeds/:parameters?": [],
     "/anigamer/new_anime": [],
     "/anigamer/anime/:sn": [],
-    "/apkpure/versions/:region/:pkg": [],
     "/cpu/home": [],
     "/cpu/jwc": [],
     "/cpu/yjsy": [],
