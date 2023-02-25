@@ -677,9 +677,10 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   Instagram:
 
-    -   `IG_USERNAME`: Your Instagram username
-    -   `IG_PASSWORD`: Your Instagram password
-    -   `IG_PROXY`: Proxy URL for Instagram
+    -   `IG_USERNAME`: Your Instagram username (Private API only)
+    -   `IG_PASSWORD`: Your Instagram password (Private API only)
+    -   `IG_PROXY`: Proxy URL for Instagram (Private API only, optional)
+    -   `IG_COOKIE`: Your Instagram cookie (Cookie only)
 
     Warning: Two Factor Authentication is **not** supported.
 

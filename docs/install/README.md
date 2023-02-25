@@ -712,9 +712,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   Instagram:
 
-    -   `IG_USERNAME`: Instagram 用户名。
-    -   `IG_PASSWORD`: Instagram 密码。
-    -   `IG_PROXY`: Instagram 代理 URL。
+    -   `IG_USERNAME`: Instagram 用户名（仅 Private API）
+    -   `IG_PASSWORD`: Instagram 密码（仅 Private API）
+    -   `IG_PROXY`: Instagram 代理 URL（仅 Private API，可选）
+    -   `IG_COOKIE`: Instagram 登录后的 Cookie（仅 Cookie）
 
     注意，暂**不支持**两步验证。
 

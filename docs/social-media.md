@@ -488,13 +488,13 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ::: warning 注意
 
-由于 Instagram API 限制，必须在服务器上设置你的用户名和密码。暂不支持两步验证。步骤见部署指南。
+由于 Instagram Private API 限制，必须在服务器上设置你的用户名和密码。暂不支持两步验证。步骤见[部署指南](https://docs.rsshub.app/install/)。
 
-如需无登录的 feed，请用 Picuki。
+如需无登录的 feed，请用 [Picuki](#picuki)。
 
 :::
 
-### 用户 / 标签
+### 用户 / 标签 - Private API
 
 <Route author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" :paramsDesc="['类别，见下表', '用户名／标签名']" radar="1" anticrawler="1" radar="1">
 
@@ -507,6 +507,10 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 :::
 
 </Route>
+
+### 用户 / 标签 - Cookie
+
+<Route author="TonyRL" example="/instagram/2/user/stefaniejoosten" path="/instagram/2/:category/:key" :paramsDesc="['类别，见上表', '用户名／标签名']" radar="1" anticrawler="1" selfhost="1" />
 
 ## Keep
 
