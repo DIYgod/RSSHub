@@ -95,6 +95,28 @@ pageClass: routes
 
 <Route author="DIYgod" example="/hotukdeals/hottest" path="/hotukdeals/hottest"></Route>
 
+## IKEA 宜家
+
+### 英国 - 商品上新
+
+<Route author="HenryQW" example="/ikea/gb/new" path="/ikea/gb/new" radar="1"/>
+
+### 英国 - 促销
+
+<Route author="HenryQW" example="/ikea/gb/offer" path="/ikea/gb/offer" radar="1"/>
+
+### 中国 - 会员特惠
+
+<Route author="jzhangdev" example="/ikea/cn/family_offers" path="/ikea/cn/family_offers" radar="1"/>
+
+### 中国 - 低价优选
+
+<Route author="jzhangdev" example="/ikea/cn/low_price" path="/ikea/cn/low_price" radar="1"/>
+
+### 中国 - 当季新品推荐
+
+<Route author="jzhangdev" example="/ikea/cn/new" path="/ikea/cn/new" radar="1"/>
+
 ## lativ
 
 ### 订阅价格
@@ -461,29 +483,15 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="DIYgod" example="/mi/crowdfunding" path="/mi/crowdfunding"/>
 
+## 小米有品
+
 ### 小米有品众筹
 
-<Route author="DIYgod" example="/mi/youpin/crowdfunding" path="/mi/youpin/crowdfunding"/>
+<Route author="bigfei" example="/xiaomiyoupin/crowdfunding" path="/xiaomiyoupin/crowdfunding"/>
 
 ### 小米有品每日上新
 
-<Route author="xyqfer DIYgod" example="/mi/youpin/new" path="/mi/youpin/new/:sort?" :paramsDesc="['排序，见下表']">
-
-| 个性化排序 | 按销量从高到低 | 按好评从高到低 | 按上新时间从近到远 |
-| ----- | ------- | ------- | --------- |
-| 0     | 1       | 2       | 3         |
-
-</Route>
-
-## 宜家 IKEA
-
-### 宜家 IKEA（英国）- 商品上新
-
-<Route author="HenryQW" example="/ikea/uk/new" path="/ikea/uk/new"/>
-
-### 宜家 IKEA（英国）- 促销
-
-<Route author="HenryQW" example="/ikea/uk/offer" path="/ikea/uk/offer"/>
+<Route author="xyqfer DIYgod bigfei" example="/xiaomiyoupin/latest" path="/xiaomiyoupin/latest" />
 
 ## 优衣库
 

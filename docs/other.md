@@ -18,6 +18,20 @@ pageClass: routes
 
 </Route>
 
+## 591 租屋網
+
+### 租屋
+
+<Route author="Yukaii" example="/591/tw/rent/order=posttime&orderType=desc" path="/591/:country/rent/:query?" :paramsDesc="['網址國碼，目前僅支援 tw', '查詢參數']">
+
+::: tip 提示
+
+複製 591 篩選房屋頁面的網址，並去掉前段 `https://rent.591.com.tw/?` 部分，即可得到查詢參數。
+
+:::
+
+</Route>
+
 ## acwifi 路由器交流
 
 ### 新闻
@@ -95,7 +109,7 @@ pageClass: routes
 
 ### 文章
 
-<Route author="hoilc" example="/clickme/default/category/beauty" path="/clickme/:site/:grouping/:name" :paramsDesc="['站点, `default`为普通站, `r18`为成人站, 其它值默认为普通站','分组方式, `category`为分类, `tag`为标签, 其他值默认为分类','分类名或标签名, 分类名为英文, 可以在分类 URL 中找到']" />
+<Route author="hoilc" example="/clickme/default/category/beauty" path="/clickme/:site/:grouping/:name" :paramsDesc="['站点，`default`为普通站，`r18`为成人站，其它值默认为普通站','分组方式，`category`为分类，`tag`为标签，其他值默认为分类','分类名或标签名，分类名为英文，可以在分类 URL 中找到']" radar="1"/>
 
 ## Darwin Awards
 
@@ -162,6 +176,29 @@ pageClass: routes
 <Route author="BrandNewLifeJackie26" example="/layoffs" path="/layoffs" radar="1"/>
 
 该网站原始 RSS 数据源无人维护，故重新抓取数据并生成数据源。
+
+## LinkedIn 领英中国
+
+### Jobs
+
+<Route author="bigfei" example="/linkedin/cn/jobs/Software" path="/linkedin/cn/jobs/:keywords?" :paramsDesc="['搜索关键字']" radar="1">
+
+另外，可以通过添加额外的以下 query 参数来输出满足特定要求的工作职位：
+
+| 参数         | 描述                               | 举例                                        | 默认值     |
+| ---------- | -------------------------------- | ----------------------------------------- | ------- |
+| `geo`      | geo 编码                           | 102890883（中国）、102772228（上海）、103873152（北京） | 空       |
+| `remote`   | 是否只显示远程工作                        | `true/false`                              | `false` |
+| `location` | 工作地点                             | `china/shanghai/beijing`                  | 空       |
+| `relevant` | 排序方式 (true: 按相关性排序，false： 按日期排序) | `true/false`                              | `false` |
+| `period`   | 发布时间                             | `1/7/30`                                  | 空       |
+
+例如：
+[`/linkedin/cn/jobs/Software?location=shanghai&period=1`](https://rsshub.app/linkedin/cn/jobs/Software?location=shanghai\&period=1): 查找所有在上海的今日发布的所有 Software 工作
+
+**为了方便起见，建议您在 [LinkedIn.cn](https://www.linkedin.cn/incareer/jobs/search) 上进行搜索，并使用 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 加载特定的 feed。**
+
+</Route>
 
 ## MiniFlux
 
@@ -373,7 +410,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 发现用户
 
-<Route author="sanmmm" example="/afdian/explore/hot/所有" path="/afdian/explore/:type/:category?" :paramsDesc="['分类', '目录类型, 默认为 `所有`']">
+<Route author="sanmmm" example="/afdian/explore/hot/所有" path="/afdian/explore/:type/:category?" :paramsDesc="['分类', '目录类型，默认为 `所有`']">
 分类
 
 | 推荐  | 最热  |
@@ -390,7 +427,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 用户动态
 
-<Route author="sanmmm" example="/afdian/dynamic/@afdian" path="/afdian/dynamic/:uid?" :paramsDesc="['用户id, 用户动态页面url里可找到']"/>
+<Route author="sanmmm" example="/afdian/dynamic/@afdian" path="/afdian/dynamic/:uid?" :paramsDesc="['用户id，用户动态页面url里可找到']"/>
 
 ## 澳門特別行政區政府各公共部門獎助貸學金服務平台
 
@@ -404,17 +441,23 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
-## 百度搜索风云榜
+## 百度热搜
 
 ### 榜单
 
-<Route author="xyqfer" example="/baidu/topwords/1" path="/baidu/topwords/:boardId?" :paramsDesc="['榜单 id, 默认为`1`']">
+<Route author="xyqfer" example="/baidu/top" path="/baidu/top/:board?" :paramsDesc="['榜单，默认为 `realtime`']" radar="1">
 
-| 实时热点 | 今日热点 | 七日热点 | 民生热点 | 娱乐热点 | 体育热点 |
-| ---- | ---- | ---- | ---- | ---- | ---- |
-| 1    | 341  | 42   | 342  | 344  | 11   |
+| 热搜榜      | 小说榜   | 电影榜   | 电视剧榜     | 汽车榜 | 游戏榜  |
+| -------- | ----- | ----- | -------- | --- | ---- |
+| realtime | novel | movie | teleplay | car | game |
 
 </Route>
+
+## 贝壳研究院
+
+### 研究成果
+
+<Route author="shaomingbo" example="/ke/researchResults"  path="/ke/researchResults" radar="1"/>
 
 ## 毕马威
 
@@ -674,6 +717,22 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 汽油价格网
+
+### 今日油价查询
+
+<Route author="TonyRL" example="/qiyoujiage/shanghai" path="/qiyoujiage/:path+" :paramsDesc="['路径']">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `http://www.qiyoujiage.com/` 和 `.shtml` 之间的字段。下面是一个例子。
+
+若订阅 [福建漳州龙海今日油价](http://www.qiyoujiage.com/fujian/zhangzhou/longhai.shtml) 则将对应页面 URL <http://www.qiyoujiage.com/fujian/zhangzhou/longhai.shtml> 中 `http://www.qiyoujiage.com/` 和 `.shtml` 之间的字段 `fujian/zhangzhou/longhai` 作为路径填入。此时路由为 [`/qiyoujiage/fujian/zhangzhou/longhai`](https://rsshub.app/qiyoujiage/fujian/zhangzhou/longhai)
+
+:::
+
+</Route>
+
 ## 且听风吟福利
 
 ### 分类
@@ -764,7 +823,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 最新辟谣
 
-<Route author="hoilc" example="/factcheck" path="/factcheck"/>
+<Route author="hoilc" example="/qq/fact" path="/qq/fact" radar="1"/>
 
 ## 天津产权交易中心
 
@@ -882,12 +941,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" selfhost="1"/>
 
-## 油价
-
-### 今日油价
-
-<Route author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
-
 ## 有据
 
 ### 最新文章列表
@@ -963,6 +1016,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 产业政策
 
 <Route author="nczitzk" example="/cktest/policy" path="/cktest/policy"/>
+
+## 中国互联网联合辟谣平台
+
+### 今日辟谣
+
+<Route author="Fatpandac" example="/piyao/jrpy" path="/piyao/jrpy"/>
 
 ## 中国银行
 

@@ -361,12 +361,6 @@ Only `s00017` is in English.
 
 <RouteEn author="rainrdx" example="/nikkei-asia" path="/nikkei-asia"/>
 
-## Phoronix
-
-### News & Reviews
-
-<RouteEn author="oppliate" example="/phoronix/news_topic/Intel" path="/phoronix/:page/:queryOrItem?" :paramsDesc="['Page name', 'For `category` it corresponds to `item`, for other pages it\'s `q`. You may find available parameters from their navigator links. E.g. to subscribe to the category page `https://www.phoronix.com/scan.php?page=category&item=Computers`, fill in the path `/phoronix/category/Computers`']" />
-
 ## Radio Free Asia (RFA)
 
 ### News
@@ -432,6 +426,18 @@ More could be found in the URL of the category/topic page.
 ### Inverstigates
 
 <RouteEn author="LyleLee" example="/reuters/investigates" path="/reuters/investigates" />
+
+## Rodong Sinmun
+
+### News
+
+<RouteEn author="TonyRL" example="/rodong/news" path="/rodong/news/:language?" :paramsDesc="['Language, see below, `ko` by default']" radar="1">
+
+| 조선어 | English | 中文 |
+| ---- | ------ | --- |
+| ko   | en     | cn  |
+
+</RouteEn>
 
 ## RTHK
 
@@ -680,7 +686,7 @@ Provide full article RSS for WSJ topics.
 
 ### News
 
-<RouteEn author="KeiLongW" example="/yahoo-news/hk/world" path="/yahoo-news/:region/:category?" :paramsDesc="['Region','Category']">
+<RouteEn author="KeiLongW" example="/yahoo/news/hk/world" path="/yahoo/news/:region/:category?" :paramsDesc="['Region','Category']">
 
 `Region`
 | Hong Kong | Taiwan | US |

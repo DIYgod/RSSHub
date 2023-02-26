@@ -21,6 +21,7 @@ permissions:
 jobs:
   jest:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     services:
       redis:
         image: redis
@@ -68,6 +69,7 @@ jobs:
 
   puppeteer:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     strategy:
       fail-fast: false
       matrix:
@@ -111,6 +113,7 @@ jobs:
 
   docs:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     strategy:
       fail-fast: false
       matrix:
@@ -134,6 +137,7 @@ jobs:
 
   all:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     strategy:
       fail-fast: false
       matrix:

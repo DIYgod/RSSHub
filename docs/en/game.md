@@ -337,3 +337,15 @@ News data from https://warthunder.com/en/news/
 The year, month and day provided under UTC time zone are the same as the official website, so please ignore the specific time!!!
 
 </RouteEn>
+
+## ファミ通
+
+### Category
+
+<RouteEn author="TonyRL" example="/famitsu/category/new-article" path="/famitsu/category/:category?" :paramsDesc="['Category, see table below, `new-article` by default']" radar="1">
+
+| 新着          | PS5 | Switch | PS4 | ニュース | ゲームニュース   | PR TIMES | 動画     | 特集・企画記事         | インタビュー    | 取材・リポート      | レビュー   | インディーゲーム   |
+| ----------- | --- | ------ | --- | ---- | --------- | -------- | ------ | --------------- | --------- | ------------ | ------ | ---------- |
+| new-article | ps5 | switch | ps4 | news | news-game | prtimes  | videos | special-article | interview | event-report | review | indie-game |
+
+</RouteEn>

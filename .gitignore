@@ -2,6 +2,7 @@ node_modules
 npm-debug.log
 error.log
 combined.log
+.log
 .vscode
 .idea
 .DS_Store
@@ -23,3 +24,4 @@ Session.vim
 
 assets/build/
 package-lock.json
+pnpm-lock.yaml
