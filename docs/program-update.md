@@ -32,11 +32,11 @@ pageClass: routes
 
 <Route author="nczitzk" example="/anytxt/release-notes" path="/anytxt/release-notes"/>
 
-## Apkpure
+## APKPure
 
-### Versions
+### 所有版本
 
-<Route author="maple3142" example="/apkpure/versions/jp/jp.co.craftegg.band" path="/apkpure/versions/:region/:pkg" :paramsDesc="['區域代號', 'package name']"/>
+<Route author="maple3142" example="/apkpure/versions/jp.co.craftegg.band/jp" path="/apkpure/versions/:pkg/:region?" :paramsDesc="['包名稱', '區域代號，預設為 `en`']" radar="1" anticrawler="1" puppeteer="1"/>
 
 ## App Center
 
@@ -114,7 +114,7 @@ pageClass: routes
 
 ### BlueStacks 5 版本日誌
 
-<Route author="TonyRL" example="/bluestacks/release/5" path="/bluestacks/release/5" radar="1" puppeteer="1"/>
+<Route author="TonyRL" example="/bluestacks/release/5" path="/bluestacks/release/5" radar="1" anticrawler="1" puppeteer="1"/>
 
 ## Brave
 
