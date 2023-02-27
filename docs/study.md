@@ -639,6 +639,22 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="xyqfer" example="/icourse163/newest" path="/icourse163/newest" />
 
+## 中国计算机学会
+
+### 新闻
+
+<Route author="nczitzk" example="/ccf/news" path="/ccf/news/:category?" :paramsDesc="['分类，见下表，默认为 CCF 新闻']">
+
+| CCF 新闻     | CCF 聚焦 | ACM 信息   |
+| ---------- | ------ | -------- |
+| Media_list | Focus  | ACM_News |
+
+</Route>
+
+### 大数据专家委员会
+
+<Route author="tudou027" example="/ccf/tfbd/xwdt/tzgg" path="/ccf/tfbd/:caty/:id" :paramsDesc="['主分类，可在 URL 找到', '子分类，可在 URL 找到']" radar="1"/>
+
 ## 中国留学网
 
 ### 通知公告
@@ -649,7 +665,7 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 学会动态
 
-<Route author="tudou027" example="/caai/45" path="/caai/:caty" radar="1"/>
+<Route author="tudou027" example="/caai/45" path="/caai/:caty" :paramsDesc="['分类 ID，可在 URL 找到']" radar="1"/>
 
 ## 中国人事考试网
 
