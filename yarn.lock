@@ -2317,12 +2317,12 @@
     "@vuepress/types" "1.9.8"
     lodash.debounce "^4.0.8"
 
-"@vuepress/plugin-back-to-top@1.9.8":
-  version "1.9.8"
-  resolved "https://registry.yarnpkg.com/@vuepress/plugin-back-to-top/-/plugin-back-to-top-1.9.8.tgz#670f4502cccada08981b7dbcf4ec613897ba1c2f"
-  integrity sha512-Unl8HMVPsqyt4q/1TIcaMH1XkQri43rjVdXKpPbC1nWTKVi1nvJpxbLfscInodX9Jlniju4Xo/uKxmugfFF1Dg==
+"@vuepress/plugin-back-to-top@1.9.9":
+  version "1.9.9"
+  resolved "https://registry.yarnpkg.com/@vuepress/plugin-back-to-top/-/plugin-back-to-top-1.9.9.tgz#eedd5b08e11790cd994636b458188fd40205e967"
+  integrity sha512-8bNsdZ0Dr96OdcoJ67dxCx1ysXpeTHma8w+YSsqBJoWGEOucBr0nW9oaDH85yoOtpiriWBlhUO32/Q0ojJtMfA==
   dependencies:
-    "@vuepress/types" "1.9.8"
+    "@vuepress/types" "1.9.9"
     lodash.debounce "^4.0.8"
 
 "@vuepress/plugin-google-analytics@1.9.8":
@@ -2373,10 +2373,25 @@
   dependencies:
     "@vuepress/types" "1.9.8"
 
-"@vuepress/shared-utils@1.9.8", "@vuepress/shared-utils@^1.2.0":
+"@vuepress/shared-utils@1.9.8":
   version "1.9.8"
   resolved "https://registry.yarnpkg.com/@vuepress/shared-utils/-/shared-utils-1.9.8.tgz#1ecaf148409001fee9c00c6951dc719c9a279523"
   integrity sha512-34VfkChKRrs0waWEXugDPcBB4Cp6TnKwNQaTpa8GwpLFfQw627/mWi2IiuSwTyFNZdSXxZJV6e5blejmUlGh0g==
+  dependencies:
+    chalk "^2.3.2"
+    escape-html "^1.0.3"
+    fs-extra "^7.0.1"
+    globby "^9.2.0"
+    gray-matter "^4.0.1"
+    hash-sum "^1.0.2"
+    semver "^6.0.0"
+    toml "^3.0.0"
+    upath "^1.1.0"
+
+"@vuepress/shared-utils@1.9.9", "@vuepress/shared-utils@^1.2.0":
+  version "1.9.9"
+  resolved "https://registry.yarnpkg.com/@vuepress/shared-utils/-/shared-utils-1.9.9.tgz#f6561ec2264d54e4e459d17678766ffe09f4bfc6"
+  integrity sha512-qhk/7QF5LgMEXhEB1hlqreGFgkz4p2pmaBBNFxnAnYmSwmyO+u/oFOpZLI16QRx9Wg6ekR2ENmByQLxV7y4lJg==
   dependencies:
     chalk "^2.3.2"
     escape-html "^1.0.3"
@@ -2408,6 +2423,15 @@
   version "1.9.8"
   resolved "https://registry.yarnpkg.com/@vuepress/types/-/types-1.9.8.tgz#bf22bae02e265bc1f7b016495a236fa3ba97fa5c"
   integrity sha512-ygRFqILi4SQjExxvpVUFXB/h76dN+k8GrDWYhAgmox1zhWEEzsskbqewXGKWE48RW9EJDYGgh8jy+CWvm7ILXg==
+  dependencies:
+    "@types/markdown-it" "^10.0.0"
+    "@types/webpack-dev-server" "^3"
+    webpack-chain "^6.0.0"
+
+"@vuepress/types@1.9.9":
+  version "1.9.9"
+  resolved "https://registry.yarnpkg.com/@vuepress/types/-/types-1.9.9.tgz#7c21e4c91c13e58e2ff303ded9ad7425805cb07d"
+  integrity sha512-ukGW49ILzLhIc7CltHMr+BeIjWKloJNN1mrvbDz3beycp9b9kgH+DXNdRIK9QCKr4fJsy7x08vNMwZr9Nq/PTQ==
   dependencies:
     "@types/markdown-it" "^10.0.0"
     "@types/webpack-dev-server" "^3"
@@ -13589,10 +13613,10 @@ tweetnacl@^0.14.3, tweetnacl@~0.14.0:
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.14.5.tgz#5ae68177f192d4456269d108afa93ff8743f4f64"
   integrity sha512-KXXFFdAbFXY4geFIwoyNK+f5Z1b7swfXABfL7HXCmoIWMKU3dmS26672A4EeQtDzLKy7SXmfBu51JolvEKwtGA==
 
-twitter-api-v2@1.14.1:
-  version "1.14.1"
-  resolved "https://registry.yarnpkg.com/twitter-api-v2/-/twitter-api-v2-1.14.1.tgz#fe93b430413706ee102b3b1781cd6c45a313b493"
-  integrity sha512-RTegtBS6FIjUW87gOgTAQG9zF9OvzY8ObkyUgW99tA45Scwro3ToJrdNd1Itn1SW4KIds5N5LQuy2JbUZdNbkA==
+twitter-api-v2@1.14.2:
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/twitter-api-v2/-/twitter-api-v2-1.14.2.tgz#d928eeb588f3a195a1db8059f0654b75d4278d3a"
+  integrity sha512-389e/rWaN8zWkmD5z2IpKVb5+ojPxVtrexQoGBI1Xfib1mE/9M7k7zbnZ3Q/WLwthwcWkQIlB25ecT64AL8LvQ==
 
 type-check@^0.4.0, type-check@~0.4.0:
   version "0.4.0"
