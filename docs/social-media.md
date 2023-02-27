@@ -931,7 +931,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 ### 音乐排行榜
 
-<Route author="TonyRL" path="/youtube/charts/:category?/:country?/:embed?" example="/youtube/charts/:category?/:country?/:embed?" :paramsDesc="['排行榜，见下表，默认为 `TopVideos`', '国家代码，见下表，默认为全球', '默认为开启内嵌视频，任意值为关闭']" radar="1" rssbud="1">
+<Route author="TonyRL" path="/youtube/charts/:category?/:country?/:embed?" example="/youtube/charts" :paramsDesc="['排行榜，见下表，默认为 `TopVideos`', '国家代码，见下表，默认为全球', '默认为开启内嵌视频，任意值为关闭']" radar="1" rssbud="1">
 
 ::: details 排行榜
 

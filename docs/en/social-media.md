@@ -554,7 +554,7 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 
 ### Music Charts
 
-<RouteEn author="TonyRL" path="/youtube/charts/:category?/:country?/:embed?" example="/youtube/charts/:category?/:country?/:embed?" :paramsDesc="['Chart, see table below, default to `TopVideos`', 'Country Code, see table below, default to global', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1">
+<RouteEn author="TonyRL" path="/youtube/charts/:category?/:country?/:embed?" example="/youtube/charts" :paramsDesc="['Chart, see table below, default to `TopVideos`', 'Country Code, see table below, default to global', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1">
 
 ::: details Chart
 | Top artists | Top songs | Top music videos | Trending |
