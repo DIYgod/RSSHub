@@ -645,6 +645,12 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="nczitzk" example="/cscse/tzgg" path="/cscse/tzgg"/>
 
+## 中国人工智能学会
+
+### 学会动态
+
+<Route author="tudou027" example="/caai/45" path="/caai/:caty" radar="1"/>
+
 ## 中国人事考试网
 
 ### 通知公告
