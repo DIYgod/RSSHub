@@ -720,6 +720,9 @@
     "/c114/roll": [
         "nczitzk"
     ],
+    "/caai/:caty": [
+        "tudou027"
+    ],
     "/caareviews/book": [
         "Fatpandac"
     ],
@@ -783,8 +786,14 @@
     "/ccac/news/:type/:lang?": [
         "linbuxiao"
     ],
-    "/ccfcv/:channel/:category": [
+    "/ccf/ccfcv/:channel/:category": [
         "elxy"
+    ],
+    "/ccf/news/:category?": [
+        "nczitzk"
+    ],
+    "/ccf/tfbd/:caty/:id": [
+        "tudou027"
     ],
     "/ccreports/article": [
         "EsuRt",
@@ -6379,7 +6388,6 @@
     "/ustr/press-releases/:year?/:month?": [],
     "/vgn/:platform?": [],
     "/iea/:category?": [],
-    "/ccf/news/:category?": [],
     "/thebrain/:category?": [],
     "/treasury/press-releases/:category?/:title?": [],
     "/bandisoft/:id?/:lang?": [],
