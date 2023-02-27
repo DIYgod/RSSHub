@@ -2330,6 +2330,12 @@
         "docs": "https://docs.rsshub.app/social-media.html#bilibili",
         "source": "/video/online.html",
         "target": "/bilibili/online"
+      },
+      {
+        "title": "bilibili热搜",
+        "docs": "https://docs.rsshub.app/social-media.html#bilibili",
+        "source": "/",
+        "target": "/bilibili/hot-search"
       }
     ],
     "space": [

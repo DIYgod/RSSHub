@@ -508,6 +508,9 @@
     "/bilibili/followings/video/:uid/:disableEmbed?": [
         "LogicJake"
     ],
+    "/bilibili/hot-search": [
+        "CaoMeiYouRen"
+    ],
     "/bilibili/link/news/:product": [
         "Qixingchen"
     ],
