@@ -2373,10 +2373,25 @@
   dependencies:
     "@vuepress/types" "1.9.8"
 
-"@vuepress/shared-utils@1.9.8", "@vuepress/shared-utils@^1.2.0":
+"@vuepress/shared-utils@1.9.8":
   version "1.9.8"
   resolved "https://registry.yarnpkg.com/@vuepress/shared-utils/-/shared-utils-1.9.8.tgz#1ecaf148409001fee9c00c6951dc719c9a279523"
   integrity sha512-34VfkChKRrs0waWEXugDPcBB4Cp6TnKwNQaTpa8GwpLFfQw627/mWi2IiuSwTyFNZdSXxZJV6e5blejmUlGh0g==
+  dependencies:
+    chalk "^2.3.2"
+    escape-html "^1.0.3"
+    fs-extra "^7.0.1"
+    globby "^9.2.0"
+    gray-matter "^4.0.1"
+    hash-sum "^1.0.2"
+    semver "^6.0.0"
+    toml "^3.0.0"
+    upath "^1.1.0"
+
+"@vuepress/shared-utils@1.9.9", "@vuepress/shared-utils@^1.2.0":
+  version "1.9.9"
+  resolved "https://registry.yarnpkg.com/@vuepress/shared-utils/-/shared-utils-1.9.9.tgz#f6561ec2264d54e4e459d17678766ffe09f4bfc6"
+  integrity sha512-qhk/7QF5LgMEXhEB1hlqreGFgkz4p2pmaBBNFxnAnYmSwmyO+u/oFOpZLI16QRx9Wg6ekR2ENmByQLxV7y4lJg==
   dependencies:
     chalk "^2.3.2"
     escape-html "^1.0.3"
