@@ -318,18 +318,6 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="xfangbao" example="/jijitang/article/latest" path="/jijitang/article/:id" :paramsDesc="['类别，latest 或者 recommand']"/>
 
-## 计算机视觉专委
-
-### 学术动态 - 分类
-
-<Route author="elxy" example="/ccfcv/xsdt/xsqy" path="/ccfcv/:channel/:category" :paramsDesc="['频道，仅支持 `xsdt`', '分类，见下表，亦可在网站 url 里找到']">
-
-| 学术前沿 | 热点征文 | 学术会议 |
-| ---- | ---- | ---- |
-| xsqy | rdzw | xshy |
-
-</Route>
-
 ## 金山词霸
 
 ### 每日一句
@@ -648,6 +636,16 @@ path="/ctfhub/upcoming/:limit?"
 | CCF 新闻     | CCF 聚焦 | ACM 信息   |
 | ---------- | ------ | -------- |
 | Media_list | Focus  | ACM_News |
+
+</Route>
+
+### 计算机视觉专委会 - 学术动态 - 分类
+
+<Route author="elxy" example="/ccf/ccfcv/xsdt/xsqy" path="/ccf/ccfcv/:channel/:category" :paramsDesc="['频道，仅支持 `xsdt`', '分类，见下表，亦可在网站 url 里找到']">
+
+| 学术前沿 | 热点征文 | 学术会议 |
+| ---- | ---- | ---- |
+| xsqy | rdzw | xshy |
 
 </Route>
 
