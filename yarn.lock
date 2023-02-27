@@ -2325,12 +2325,12 @@
     "@vuepress/types" "1.9.9"
     lodash.debounce "^4.0.8"
 
-"@vuepress/plugin-google-analytics@1.9.8":
-  version "1.9.8"
-  resolved "https://registry.yarnpkg.com/@vuepress/plugin-google-analytics/-/plugin-google-analytics-1.9.8.tgz#e5dbe0e16978f93c7bb92db978b2008dd3db26fd"
-  integrity sha512-bLB7UxmSaSHuD0dEZe4IBGou9pbMUSCPopjkaU41edb4tEQJwejvT32q3lX8Z+29jVLFQZ8XN2RGsu5e21oMiQ==
+"@vuepress/plugin-google-analytics@1.9.9":
+  version "1.9.9"
+  resolved "https://registry.yarnpkg.com/@vuepress/plugin-google-analytics/-/plugin-google-analytics-1.9.9.tgz#78805e7d9a376667adff3ddd0986badfeb2a480f"
+  integrity sha512-GxrM4BopPqTiGAq2ku5HqInha6uQZePxdGpU8etTbM6hhaxZAev4HehrtHISAJm5dVptbFFJl3sNGQBnw2deFQ==
   dependencies:
-    "@vuepress/types" "1.9.8"
+    "@vuepress/types" "1.9.9"
 
 "@vuepress/plugin-last-updated@1.9.9":
   version "1.9.9"
@@ -2373,21 +2373,6 @@
   dependencies:
     "@vuepress/types" "1.9.9"
 
-"@vuepress/shared-utils@1.9.8":
-  version "1.9.8"
-  resolved "https://registry.yarnpkg.com/@vuepress/shared-utils/-/shared-utils-1.9.8.tgz#1ecaf148409001fee9c00c6951dc719c9a279523"
-  integrity sha512-34VfkChKRrs0waWEXugDPcBB4Cp6TnKwNQaTpa8GwpLFfQw627/mWi2IiuSwTyFNZdSXxZJV6e5blejmUlGh0g==
-  dependencies:
-    chalk "^2.3.2"
-    escape-html "^1.0.3"
-    fs-extra "^7.0.1"
-    globby "^9.2.0"
-    gray-matter "^4.0.1"
-    hash-sum "^1.0.2"
-    semver "^6.0.0"
-    toml "^3.0.0"
-    upath "^1.1.0"
-
 "@vuepress/shared-utils@1.9.9", "@vuepress/shared-utils@^1.2.0":
   version "1.9.9"
   resolved "https://registry.yarnpkg.com/@vuepress/shared-utils/-/shared-utils-1.9.9.tgz#f6561ec2264d54e4e459d17678766ffe09f4bfc6"
@@ -2418,15 +2403,6 @@
     stylus-loader "^3.0.2"
     vuepress-plugin-container "^2.0.2"
     vuepress-plugin-smooth-scroll "^0.0.3"
-
-"@vuepress/types@1.9.8":
-  version "1.9.8"
-  resolved "https://registry.yarnpkg.com/@vuepress/types/-/types-1.9.8.tgz#bf22bae02e265bc1f7b016495a236fa3ba97fa5c"
-  integrity sha512-ygRFqILi4SQjExxvpVUFXB/h76dN+k8GrDWYhAgmox1zhWEEzsskbqewXGKWE48RW9EJDYGgh8jy+CWvm7ILXg==
-  dependencies:
-    "@types/markdown-it" "^10.0.0"
-    "@types/webpack-dev-server" "^3"
-    webpack-chain "^6.0.0"
 
 "@vuepress/types@1.9.9":
   version "1.9.9"
