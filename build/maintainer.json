@@ -257,6 +257,15 @@
     "/aiea/seminars/:period": [
         "zxx-457"
     ],
+    "/aijishu/blog/:name": [
+        "bigfei"
+    ],
+    "/aijishu/channel/:name": [
+        "bigfei"
+    ],
+    "/aijishu/user/:name": [
+        "bigfei"
+    ],
     "/airchina/announcement": [
         "LandonLi"
     ],
