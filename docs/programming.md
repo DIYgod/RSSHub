@@ -875,13 +875,15 @@ GitHub 官方也提供了一些 RSS:
 
 ### 频道、专栏、用户
 
-<Route author="bigfei" example="/aijishu/channel/ai" path="/aijishu/:type/:name?" :paramsDesc="['文章类型，可以取值如下', '名字，取自URL']"/>
+<Route author="bigfei" example="/aijishu/channel/ai" path="/aijishu/:type/:name?" :paramsDesc="['文章类型，可以取值如下', '名字，取自URL']" radar="1" rssbud="1">
 
 | type    | 说明 |
 | ------- | -- |
 | channel | 频道 |
 | blog    | 专栏 |
 | u       | 用户 |
+
+</Route>
 
 ## 技术头条
 
