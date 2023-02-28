@@ -20709,6 +20709,17 @@
         "target": "/youtube/c/:id"
       },
       {
+        "title": "社群",
+        "docs": "https://docs.rsshub.app/social-media.html#youtube",
+        "source": [
+          "/channel/:handle/community",
+          "/channel/:handle",
+          "/:handle/community",
+          "/:handle/featured",
+          "/:handle"
+        ]
+      },
+      {
         "title": "播放列表",
         "docs": "https://docs.rsshub.app/social-media.html#youtube",
         "source": "/playlist"
