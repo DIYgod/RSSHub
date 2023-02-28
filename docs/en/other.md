@@ -287,6 +287,12 @@ Board and Build can be found in [here](http://api.ineal.me/tss/status)
 
 </RouteEn>
 
+## Urban Dictionary
+
+### Random words
+
+<RouteEn author="TonyRL" example="/urbandictionary/random" path="/urbandictionary/random" radar="1" rssbud="1"/>
+
 ## wikiHow
 
 ### Home
