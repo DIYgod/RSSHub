@@ -889,7 +889,7 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 ### 分类页面
 
-<Route author="MisteryMonster" example="/vimeo/category/documentary/staffpicks" path="/vimeo/category/:category/:staffpicks?" :paramsDesc="['主分类名可从 url 获得，如 [https://vimeo.com/categories/documentary/videos](https://vimeo.com/categories/documentary/videos) 中的 `documentary`。', '填入 `staffpicks` 则按 staffpicks 排序']" radar="1">
+<Route author="MisteryMonster" example="/vimeo/category/documentary/staffpicks" path="/vimeo/category/:category/:staffpicks?" :paramsDesc="['主分类名可从 url 获得，如 [https://vimeo.com/categories/documentary/videos](https://vimeo.com/categories/documentary/videos) 中的 `documentary`', '填入 `staffpicks` 则按 staffpicks 排序']" radar="1">
 
 </Route>
 
@@ -919,19 +919,71 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 :::
 
-<Route author="DIYgod" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" path="/youtube/channel/:id/:disableEmbed?" :paramsDesc="['频道 id', '默认为开启内嵌视频, 任意值为关闭']" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" path="/youtube/channel/:id/:disableEmbed?" :paramsDesc="['频道 id', '默认为开启内嵌视频，任意值为关闭']" radar="1" rssbud="1"/>
 
 ### 自定义网址
 
-<Route author="TonyRL" path="/youtube/c/:id/:embed?" example="/youtube/c/YouTubeCreators" :paramsDesc="['YouTube 自定义网址', '默认为开启内嵌视频, 任意值为关闭']" radar="1" rssbud="1"/>
+<Route author="TonyRL" path="/youtube/c/:id/:embed?" example="/youtube/c/YouTubeCreators" :paramsDesc="['YouTube 自定义网址', '默认为开启内嵌视频，任意值为关闭']" radar="1" rssbud="1"/>
 
 ### 播放列表
 
-<Route author="HenryQW" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" path="/youtube/playlist/:id/:disableEmbed?" :paramsDesc="['播放列表 id', '默认为开启内嵌视频, 任意值为关闭']" radar="1" rssbud="1"/>
+<Route author="HenryQW" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" path="/youtube/playlist/:id/:disableEmbed?" :paramsDesc="['播放列表 id', '默认为开启内嵌视频，任意值为关闭']" radar="1" rssbud="1"/>
 
 ### 订阅列表
 
-<Route author="TonyRL" path="/youtube/subscriptions/:embed?" example="/youtube/subscriptions" :paramsDesc="['默认为开启内嵌视频, 任意值为关闭']" selfhost="1" radar="1" rssbud="1"/>
+<Route author="TonyRL" path="/youtube/subscriptions/:embed?" example="/youtube/subscriptions" :paramsDesc="['默认为开启内嵌视频，任意值为关闭']" selfhost="1" radar="1" rssbud="1"/>
+
+### 音乐排行榜
+
+<Route author="TonyRL" path="/youtube/charts/:category?/:country?/:embed?" example="/youtube/charts" :paramsDesc="['排行榜，见下表，默认为 `TopVideos`', '国家代码，见下表，默认为全球', '默认为开启内嵌视频，任意值为关闭']" radar="1" rssbud="1">
+
+::: details 排行榜
+
+| 热门音乐人      | 热门歌曲     | 热门音乐视频    | 时下流行           |
+| ---------- | -------- | --------- | -------------- |
+| TopArtists | TopSongs | TopVideos | TrendingVideos |
+| :::        |          |           |                |
+
+::: details 国家代码
+
+| Argentina | Australia | Austria | Belgium | Bolivia | Brazil | Canada |
+| --------- | --------- | ------- | ------- | ------- | ------ | ------ |
+| ar        | au        | at      | be      | bo      | br     | ca     |
+
+| Chile | Colombia | Costa Rica | Czechia | Denmark | Dominican Republic | Ecuador |
+| ----- | -------- | ---------- | ------- | ------- | ------------------ | ------- |
+| cl    | co       | cr         | cz      | dk      | do                 | ec      |
+
+| Egypt | El Salvador | Estonia | Finland | France | Germany | Guatemala |
+| ----- | ----------- | ------- | ------- | ------ | ------- | --------- |
+| eg    | sv          | ee      | fi      | fr     | de      | gt        |
+
+| Honduras | Hungary | Iceland | India | Indonesia | Ireland | Israel | Italy |
+| -------- | ------- | ------- | ----- | --------- | ------- | ------ | ----- |
+| hn       | hu      | is      | in    | id        | ie      | il     | it    |
+
+| Japan | Kenya | Luxembourg | Mexico | Netherlands | New Zealand | Nicaragua |
+| ----- | ----- | ---------- | ------ | ----------- | ----------- | --------- |
+| jp    | ke    | lu         | mx     | nl          | nz          | ni        |
+
+| Nigeria | Norway | Panama | Paraguay | Peru | Poland | Portugal | Romania |
+| ------- | ------ | ------ | -------- | ---- | ------ | -------- | ------- |
+| ng      | no     | pa     | py       | pe   | pl     | pt       | ro      |
+
+| Russia | Saudi Arabia | Serbia | South Africa | South Korea | Spain | Sweden | Switzerland |
+| ------ | ------------ | ------ | ------------ | ----------- | ----- | ------ | ----------- |
+| ru     | sa           | rs     | za           | kr          | es    | se     | ch          |
+
+| Tanzania | Turkey | Uganda | Ukraine | United Arab Emirates | United Kingdom | United States |
+| -------- | ------ | ------ | ------- | -------------------- | -------------- | ------------- |
+| tz       | tr     | ug     | ua      | ae                   | gb             | us            |
+
+| Uruguay | Zimbabwe |
+| ------- | -------- |
+| uy      | zw       |
+| :::     |          |
+
+</Route>
 
 ## 巴哈姆特
 
