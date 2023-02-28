@@ -20678,6 +20678,17 @@
   },
   "youtube.com": {
     "_name": "YouTube",
+    "charts": [
+      {
+        "title": "音乐排行榜",
+        "docs": "https://docs.rsshub.app/social-media.html#youtube",
+        "source": [
+          "/charts/:category/:country/*",
+          "/charts/:category/:country",
+          "/charts/:category"
+        ]
+      }
+    ],
     "www": [
       {
         "title": "用户",

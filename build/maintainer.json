@@ -5087,8 +5087,14 @@
         "xyqfer",
         "Fatpandac"
     ],
+    "/youtube/c/:id/:embed?": [
+        "TonyRL"
+    ],
     "/youtube/channel/:id/:embed?": [
         "DIYgod"
+    ],
+    "/youtube/charts/:category?/:country?/:embed?": [
+        "TonyRL"
     ],
     "/youtube/playlist/:id/:embed?": [
         "HenryQW"
