@@ -263,7 +263,7 @@
     "/aijishu/channel/:name": [
         "bigfei"
     ],
-    "/aijishu/user/:name": [
+    "/aijishu/u/:name": [
         "bigfei"
     ],
     "/airchina/announcement": [
