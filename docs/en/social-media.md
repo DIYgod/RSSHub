@@ -548,6 +548,10 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 
 <RouteEn author="HenryQW" path="/youtube/playlist/:id/:embed?" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" :paramsDesc="['YouTube playlist id', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1"/>
 
+### Community
+
+<RouteEn author="TonyRL" path="/youtube/community/:handle" example="/youtube/community/@JFlaMusic" :paramsDesc="['YouTube handles or channel id']" radar="1" rssbud="1"/>
+
 ### Subscriptions
 
 <RouteEn author="TonyRL" path="/youtube/subscriptions/:embed?" example="/youtube/subscriptions" :paramsDesc="['Default to embed the video, set to any value to disable embedding']" selfhost="1" radar="1" rssbud="1"/>
