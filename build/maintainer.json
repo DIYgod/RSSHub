@@ -3524,6 +3524,9 @@
     "/pianyuan/indexers/pianyuan/results/search/api": [
         "jerry1119"
     ],
+    "/picnob/user/:id": [
+        "TonyRL"
+    ],
     "/picuki/profile/:id/:functionalFlag?": [
         "hoilc",
         "Rongronggg9",
