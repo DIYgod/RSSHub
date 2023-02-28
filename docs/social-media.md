@@ -302,6 +302,10 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="ziminliu" example="/bilibili/popular/all" path="/bilibili/popular/all" />
 
+### bilibili 热搜
+
+<Route author="CaoMeiYouRen" example="/bilibili/hot-search" path="/bilibili/hot-search" />
+
 ### 排行榜
 
 <Route author="DIYgod" example="/bilibili/ranking/0/3/1" path="/bilibili/ranking/:tid/:days?/:arc_type?/:disableEmbed?" :paramsDesc="['排行榜分区 id, 默认 0', '时间跨度, 可为 1 3 7 30', '投稿时间, 可为 0(全部投稿) 1(近期投稿) , 默认 1', '默认为开启内嵌视频, 任意值为关闭']">

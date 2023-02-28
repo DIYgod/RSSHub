@@ -871,6 +871,20 @@ GitHub 官方也提供了一些 RSS:
 > -   极客时间专栏需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 > -   极客新闻不需要付费，可通过 RSS 订阅.
 
+## 极术社区
+
+### 频道、专栏、用户
+
+<Route author="bigfei" example="/aijishu/channel/ai" path="/aijishu/:type/:name?" :paramsDesc="['文章类型，可以取值如下', '名字，取自URL']" radar="1" rssbud="1">
+
+| type    | 说明 |
+| ------- | -- |
+| channel | 频道 |
+| blog    | 专栏 |
+| u       | 用户 |
+
+</Route>
+
 ## 技术头条
 
 ### 最新分享

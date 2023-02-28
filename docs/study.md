@@ -342,18 +342,6 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="xfangbao" example="/jijitang/article/latest" path="/jijitang/article/:id" :paramsDesc="['类别，latest 或者 recommand']"/>
 
-## 计算机视觉专委
-
-### 学术动态 - 分类
-
-<Route author="elxy" example="/ccfcv/xsdt/xsqy" path="/ccfcv/:channel/:category" :paramsDesc="['频道，仅支持 `xsdt`', '分类，见下表，亦可在网站 url 里找到']">
-
-| 学术前沿 | 热点征文 | 学术会议 |
-| ---- | ---- | ---- |
-| xsqy | rdzw | xshy |
-
-</Route>
-
 ## 金山词霸
 
 ### 每日一句
@@ -659,11 +647,43 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="xyqfer" example="/icourse163/newest" path="/icourse163/newest" />
 
+## 中国计算机学会
+
+### 新闻
+
+<Route author="nczitzk" example="/ccf/news" path="/ccf/news/:category?" :paramsDesc="['分类，见下表，默认为 CCF 新闻']">
+
+| CCF 新闻     | CCF 聚焦 | ACM 信息   |
+| ---------- | ------ | -------- |
+| Media_list | Focus  | ACM_News |
+
+</Route>
+
+### 计算机视觉专委会 - 学术动态 - 分类
+
+<Route author="elxy" example="/ccf/ccfcv/xsdt/xsqy" path="/ccf/ccfcv/:channel/:category" :paramsDesc="['频道，仅支持 `xsdt`', '分类，见下表，亦可在网站 url 里找到']">
+
+| 学术前沿 | 热点征文 | 学术会议 |
+| ---- | ---- | ---- |
+| xsqy | rdzw | xshy |
+
+</Route>
+
+### 大数据专家委员会
+
+<Route author="tudou027" example="/ccf/tfbd/xwdt/tzgg" path="/ccf/tfbd/:caty/:id" :paramsDesc="['主分类，可在 URL 找到', '子分类，可在 URL 找到']" radar="1"/>
+
 ## 中国留学网
 
 ### 通知公告
 
 <Route author="nczitzk" example="/cscse/tzgg" path="/cscse/tzgg"/>
+
+## 中国人工智能学会
+
+### 学会动态
+
+<Route author="tudou027" example="/caai/45" path="/caai/:caty" :paramsDesc="['分类 ID，可在 URL 找到']" radar="1"/>
 
 ## 中国人事考试网
 
