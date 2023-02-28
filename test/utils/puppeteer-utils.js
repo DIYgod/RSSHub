@@ -65,28 +65,28 @@ describe('puppeteer-utils', () => {
         });
     });
 
-    it('getCookies httpbin', async () => {
+    it('getCookies httpbingo', async () => {
         puppeteer = require('../../lib/utils/puppeteer');
         browser = await puppeteer();
         const page = await browser.newPage();
-        await page.goto('https://httpbin.org/cookies/set?foo=bar&baz=qux', {
+        await page.goto('https://httpbingo.org/cookies/set?foo=bar&baz=qux', {
             waitUntil: 'domcontentloaded',
         });
-        expect((await getCookies(page, 'httpbin.org')).split('; ').sort()).toEqual(['foo=bar', 'baz=qux'].sort());
-    }, 10000);
+        expect((await getCookies(page, 'httpbingo.org')).split('; ').sort()).toEqual(['foo=bar', 'baz=qux'].sort());
+    }, 15000);
 
-    it('setCookies httpbin', async () => {
+    it('setCookies httpbingo', async () => {
         puppeteer = require('../../lib/utils/puppeteer');
         browser = await puppeteer();
         const page = await browser.newPage();
-        // httpbin.org cannot recognize cookies with empty name properly, so we cannot use cookieStrAll here
-        await setCookies(page, cookieStrExampleCom, 'httpbin.org');
-        await page.goto('https://httpbin.org/cookies', {
+        // httpbingo.org cannot recognize cookies with empty name properly, so we cannot use cookieStrAll here
+        await setCookies(page, cookieStrExampleCom, 'httpbingo.org');
+        await page.goto('https://httpbingo.org/cookies', {
             waitUntil: 'domcontentloaded',
         });
         const data = await page.evaluate(() => JSON.parse(document.body.innerText));
-        expect(data.cookies).toEqual(Object.fromEntries(cookieArrayExampleCom.map(({ name, value }) => [name, value])));
-    }, 10000);
+        expect(data).toEqual(Object.fromEntries(cookieArrayExampleCom.map(({ name, value }) => [name, value])));
+    }, 15000);
 
     it('setCookies & getCookies example.org', async () => {
         puppeteer = require('../../lib/utils/puppeteer');
@@ -98,5 +98,5 @@ describe('puppeteer-utils', () => {
             waitUntil: 'domcontentloaded',
         });
         expect((await getCookies(page, 'example.org')).split('; ').sort()).toEqual(cookieStrAll.split('; ').sort());
-    }, 10000);
+    }, 15000);
 });
