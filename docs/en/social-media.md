@@ -237,7 +237,7 @@ These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for us
 
 ### User Profile
 
-<RouteEn author="TonyRL" example="/picnob/user/stefaniejoosten" path="/picuki/profile/:id" :paramsDesc="['Instagram id']" radar="1" rssbud="1" />
+<RouteEn author="TonyRL" example="/picnob/user/stefaniejoosten" path="/picnob/profile/:id" :paramsDesc="['Instagram id']" radar="1" rssbud="1" />
 
 ## Picuki
 
