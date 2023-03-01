@@ -1172,6 +1172,9 @@
     "/diershoubing/news": [
         "wushijishan"
     ],
+    "/discord/channel/:channelID": [
+        "TonyRL"
+    ],
     "/disinfo/publications": [
         "nczitzk"
     ],
