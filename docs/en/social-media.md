@@ -150,7 +150,7 @@ Type
 
 Due to Instagram Private API restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/en/install/) for more.
 
-If you don't want to setup credentials, you can use [Picuki](#picuki).
+If you don't want to setup credentials, you can use [Picnob](#picnob) or [Picuki](#picuki).
 
 :::
 
@@ -232,6 +232,12 @@ These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for us
 ### Website latest works
 
 <RouteEn author="hoilc" example="/piapro/public/music/miku/2" path="/piapro/public/:type/:tag?/:category?" :paramsDesc="['work type, can be `music`,`illust`,`text`','`tag` parameter in url','category ID, `categoryId` parameter in url']"/>
+
+## Picnob
+
+### User Profile
+
+<RouteEn author="TonyRL" example="/picnob/user/stefaniejoosten" path="/picnob/profile/:id" :paramsDesc="['Instagram id']" radar="1" rssbud="1" />
 
 ## Picuki
 
@@ -547,6 +553,10 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 ### Playlist
 
 <RouteEn author="HenryQW" path="/youtube/playlist/:id/:embed?" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" :paramsDesc="['YouTube playlist id', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1"/>
+
+### Community
+
+<RouteEn author="TonyRL" path="/youtube/community/:handle" example="/youtube/community/@JFlaMusic" :paramsDesc="['YouTube handles or channel id']" radar="1" rssbud="1"/>
 
 ### Subscriptions
 
