@@ -1784,6 +1784,13 @@
     "/gov/cnnic/:path+": [
         "nczitzk"
     ],
+    "/gov/csrc/auditstatus/:apply_id": [
+        "hillerliao"
+    ],
+    "/gov/csrc/news/:suffix*": [
+        "chinobing",
+        "LogicJake"
+    ],
     "/gov/customs/list/:gchannel?": [
         "Jeason0228",
         "TonyRL",
@@ -5819,9 +5826,6 @@
     "/8btc/:authorid": [],
     "/8btc/news/flash": [],
     "/vuevideo/:userid": [],
-    "/csrc/news/:suffix?": [],
-    "/csrc/fashenwei": [],
-    "/csrc/auditstatus/:apply_id": [],
     "/lwn/alerts/:distributor": [],
     "/lol/newsindex/:type": [],
     "/lolapp/recommend": [],
