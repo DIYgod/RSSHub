@@ -1,6 +1,6 @@
 {
+    "framework": null,
     "routes": [
-        { "src": "/api/.*", "dest": "/api/vercel.js" },
         { "src": "/.*", "dest": "/api/vercel.js" }
     ]
 }
