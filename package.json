@@ -92,7 +92,7 @@
   "dependencies": {
     "@koa/router": "12.0.0",
     "@postlight/parser": "2.2.3",
-    "@sentry/node": "7.38.0",
+    "@sentry/node": "7.39.0",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
@@ -136,7 +136,7 @@
     "puppeteer-extra": "3.3.4",
     "puppeteer-extra-plugin-stealth": "2.11.1",
     "query-string": "7.1.3",
-    "rand-user-agent": "1.0.108",
+    "rand-user-agent": "1.0.109",
     "re2": "1.18.0",
     "require-all": "3.0.0",
     "rss-parser": "3.12.0",
