@@ -185,6 +185,6 @@
     "ext": "art,js,mjs,json"
   },
   "engines": {
-    "node": ">=14 <18"
+    "node": ">=14"
   }
 }

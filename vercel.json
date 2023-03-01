@@ -1,7 +1,5 @@
 {
-    "devCommand": "yarn run docs:dev",
-    "buildCommand": "yarn run docs:build",
-    "outputDirectory": "docs/.vuepress/dist",
+    "framework": null,
     "routes": [
         { "src": "/.*", "dest": "/api/vercel.js" }
     ]
