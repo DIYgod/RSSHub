@@ -1,0 +1,6 @@
+{{ if article.abstract }}
+<p>{{ article.abstract }}</p>
+{{ /if}}
+{{ if downloadLink }}
+<a href={{ downloadLink }}>Download PDF</a>
+{{ /if }}

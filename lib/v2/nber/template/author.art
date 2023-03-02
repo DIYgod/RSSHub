@@ -1,5 +1,0 @@
-{{ if authors }}
-{{ each authors author }}
-    <a href={{ author.link }}>{{ author.name }}</a>
-{{ /each }}
-{{ /if }}
