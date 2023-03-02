@@ -286,17 +286,17 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ## National Bureau of Economic Research (NBER) Working Papers
 
-### All Papers
+### 全部论文
 
 <Route author="5upernova-heng" example="/nber/papers/20" path="/nber/papers/:perPage" :paramsDesc=['paper numbers per page']/>
 
--   Page size should be one of 20, 50, 100. By default the number is 50.
+- 页面文章数量必须为以下值之一：20，50，100. 默认为 50
 
-### New Papers
+### 新论文
 
 <Route author="5upernova-heng" example="/nber/news" path="/nber/news"/>
 
-Papers that are labeled by "new" at the website.
+在网站上被标记为 "new" 的论文
 
 ## Network and Distributed System Security (NDSS) Symposium
 
