@@ -69,7 +69,7 @@ jobs:
 
   puppeteer:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
