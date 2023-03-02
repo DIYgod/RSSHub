@@ -4805,6 +4805,12 @@
     "/wechat/wxnmh/:id": [
         "laampui"
     ],
+    "/weekendhk": [
+        "TonyRL"
+    ],
+    "/weekendhk/": [
+        "TonyRL"
+    ],
     "/weibo/keyword/:keyword/:routeParams?": [
         "DIYgod"
     ],
