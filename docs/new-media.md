@@ -3940,6 +3940,12 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/tam/forecast" path="/tam/forecast"/>
 
+## 微小领
+
+### 微信公众号
+
+<Route author="TonyRL" example="/wxkol/show/3590876722" path="/wxkol/show/:id" :paramsDesc="['公众号 id，可在 URL 找到']" radar="1"/>
+
 ## 微信
 
 ::: tip 提示
@@ -3950,15 +3956,15 @@ column 为 third 时可选的 category:
 
 ### 公众号（CareerEngine 来源）
 
-<Route author="HenryQW" example="/wechat/ce/595a5b14d7164e53908f1606" path="/wechat/ce/:id" :paramsDesc="['公众号 id, 在 [CareerEngine](https://search.careerengine.us/) 搜索公众号，通过 URL 中找到对应的公众号 id']" anticrawler="1"/>
+<Route author="HenryQW" example="/wechat/ce/595a5b14d7164e53908f1606" path="/wechat/ce/:id" :paramsDesc="['公众号 id，在 [CareerEngine](https://search.careerengine.us/) 搜索公众号，通过 URL 中找到对应的公众号 id']" anticrawler="1"/>
 
 ### 公众号（二十次幂来源）
 
-<Route author="sanmmm" example="/wechat/ershicimi/813oxJOl" path="/wechat/ershicimi/:id" :paramsDesc="['公众号id, 打开公众号页, 在 URL 中找到 id']" anticrawler="1"/>
+<Route author="sanmmm" example="/wechat/ershicimi/813oxJOl" path="/wechat/ershicimi/:id" :paramsDesc="['公众号id，打开公众号页，在 URL 中找到 id']" anticrawler="1"/>
 
 ### 公众号（Telegram 频道来源）
 
-<Route author="LogicJake Rongronggg9" example="/wechat/tgchannel/lifeweek" path="/wechat/tgchannel/:id/:mpName?/:searchQueryType?" :paramsDesc="['公众号绑定频道 id', '欲筛选的公众号全名（URL-encoded, 精确匹配），在频道订阅了多个公众号时可选用', '搜索查询类型，见下表']">
+<Route author="LogicJake Rongronggg9" example="/wechat/tgchannel/lifeweek" path="/wechat/tgchannel/:id/:mpName?/:searchQueryType?" :paramsDesc="['公众号绑定频道 id', '欲筛选的公众号全名（URL-encoded，精确匹配），在频道订阅了多个公众号时可选用', '搜索查询类型，见下表']">
 
 | 搜索查询类型 | 将使用的搜索关键字 |            适用于           |
 | :----: | :-------: | :----------------------: |
@@ -3991,6 +3997,10 @@ column 为 third 时可选的 category:
 ### 公众号（Wechat2RSS 来源）
 
 <Route author="TonyRL" example="/wechat/wechat2rss/5b925323244e9737c39285596c53e3a2f4a30774" path="/wechat/wechat2rss/:id" :paramsDesc="['公众号 id，打开 `https://wechat2rss.xlab.app/posts/list/`，在 URL 中找到 id；注意不是公众号页的 id，而是订阅的 id']" radar="1"/>
+
+### 公众号（微小领来源）
+
+见 [#微小领](#wei-xiao-ling)
 
 ### 公众号栏目 (非推送 & 历史消息)
 
