@@ -4912,6 +4912,9 @@
     "/wsyu/news/:type?": [
         "Derekmini"
     ],
+    "/wxkol/show/:id": [
+        "TonyRL"
+    ],
     "/wyzxwk/article/:id?": [
         "nczitzk"
     ],
