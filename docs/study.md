@@ -357,6 +357,12 @@ path="/ctfhub/upcoming/:limit?"
 
 </Route>
 
+## 经济 50 人论坛
+
+### 专家文章
+
+<Route author="sddiky" example="/50forum" path="/50forum" radar="1"/>
+
 ## 领研
 
 ### 论文
