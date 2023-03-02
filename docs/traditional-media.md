@@ -2270,6 +2270,12 @@ category 对应的关键词有
 
 <Route author="Dustin-Jiang" example="/mrdx/today" path="/mrdx/today" />
 
+## 新假期周刊
+
+### 最新文章
+
+<Route author="TonyRL" example="/weekendhk" path="/weekendhk" radar="1" rssbud="1" />
+
 ## 新京报
 
 ### 栏目
