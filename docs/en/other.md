@@ -4,6 +4,20 @@ pageClass: routes
 
 # Uncategorized
 
+## 591 Rental house
+
+### Rental house
+
+<RouteEn author="Yukaii" example="/591/tw/rent/order=posttime&orderType=desc" path="/591/:country/rent/:query?" :paramsDesc="['Country code. Only tw is supported now', 'Query Parameters']">
+
+::: tip Tip
+
+Copy the URL of the 591 filter housing page and remove the front part "https://rent.591.com.tw/?", you will get the query parameters.
+
+:::
+
+</RouteEn>
+
 ## Apple
 
 ### Exchange and Repair Extension Programs
@@ -12,7 +26,7 @@ pageClass: routes
 
 ### App Store/Mac App Store
 
-见 [#app-store-mac-app-store](/en/program-update.html#app-store-mac-app-store)
+See [#app-store-mac-app-store](/en/program-update.html#app-store-mac-app-store)
 
 ## AutoTrader
 
@@ -59,9 +73,9 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 ## Darwin Awards
 
-### Articles
+### Award Winners
 
-<RouteEn author="zoenglinghou" example="/darwinawards/all" path="/darwinawards/all" />
+<RouteEn author="zoenglinghou nciztzk" example="/darwinawards" path="/darwinawards" />
 
 ## dcinside
 
@@ -136,6 +150,46 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 </RouteEn>
 
+## Layoffs.fyi
+
+### Layoff Data Tracker
+
+<RouteEn author="BrandNewLifeJackie26" example="/layoffs" path="/layoffs" radar="1"/>
+
+RSS source in the original site is outdated.
+
+## Lever
+
+### Recruitment
+
+<RouteEn author="tsarlewey" example="/lever/lever" path="/lever/:domain" :paramsDesc="['Company with Lever Board']"/>
+
+## LinkedIn
+
+### Jobs
+
+<RouteEn author="BrandNewLifeJackie26" example="/linkedin/jobs/C-P/1/software engineer" path="/linkedin/jobs/:job_types/:exp_levels/:keywords?" :paramsDesc="['See the following table for details, use \'-\' as delimiter', 'See the following table for details, use \'-\' as delimiter', 'keywords']" radar="1">
+
+#### `job_types` list
+
+| Full Time | Part Time | Contractor | All |
+| --------- | --------- | ---------- | --- |
+| F         | P         | C          | all |
+
+#### `exp_levels` list
+
+| Intership | Entry Level | Associate | Mid-Senior Level | Director | All |
+| --------- | ----------- | --------- | ---------------- | -------- | --- |
+| 1         | 2           | 3         | 4                | 5        | all |
+
+For example:
+1. If we want to search software engineer jobs of all levels and all job types, use `/linkedin/jobs/all/all/software engineer`
+2. If we want to search all entry level contractor/part time software engineer jobs, use `/linkedin/jobs/P-C/2/software engineer`
+
+**To make it easier, the recommended way is to start a search on <a href="https://www.linkedin.com/jobs/search">LinkedIn</a> and use <a href="https://github.com/DIYgod/RSSHub-Radar">RSSHub Radar</a> to load the specific feed.**
+
+</RouteEn>
+
 ## MITRE
 
 ### All Publications
@@ -154,9 +208,21 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 <RouteEn author="nczitzk" example="/nobelprize" path="/nobelprize/:caty" :paramsDesc="['Category, see below, all by default']">
 
-| Physics | Chemistry | Physiology or Medicine | Literature | Peace | Economic Science |
+| Physics | Chemistry | Physiology or Medicine | Literature | Peace | Economic Science  |
 | ------- | --------- | ---------------------- | ---------- | ----- | ----------------- |
 | physics | chemistry | physiology-or-medicine | literature | peace | economic-sciences |
+
+</RouteEn>
+
+## Panda
+
+### Feeds
+
+<RouteEn author="lyrl" example="/usepanda/feeds/5718e53e7a84fb1901e059cc" path="/usepanda/feeds/:id" :paramsDesc="['Feed ID']">
+
+| Channel | feedId                   |
+| ------- | ------------------------ |
+| Github  | 5718e53e7a84fb1901e059cc |
 
 </RouteEn>
 
@@ -199,17 +265,19 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 <RouteEn author="sbilly" example="/sans/summit_archive" path="/sans/summit_archive" />
 
-## TransferWise
+## Trending Search Keyword Aggregator
 
-### FX Pair Yesterday
+### Aggregated Keyword Tracker
 
-<RouteEn author="HenryQW" example="/transferwise/pair/GBP/USD" path="/transferwise/pair/:source/:target" :paramsDesc="['Base currency abbreviation','Quote currency abbreviation']">
+Track entries containing specific keywords on major social media platforms.
 
-Refer to [the list of supported currencies](https://transferwise.com/tools/exchange-rate-alerts/).
+Current listings: _Weibo Search_、_Toutiao Search_、_Zhihu Search_、_Zhihu Videos_、_Zhihu Topics_。
 
-</RouteEn>
+Data Source: [trending-in-one](https://github.com/huqi-pr/trending-in-one)
 
-## TSSstatus（iOS downgrade channel）
+<RouteEn author="Jkker" example="/trending/taiwan/3" path="/trending/:keywords/:numberOfDays?" radar="1" :paramsDesc="['List of keywords separated by commas', 'Number of previous days (defaults to 3)']"/>
+
+## TSSstatus (iOS downgrade channel)
 
 ### Status
 
@@ -218,6 +286,12 @@ Refer to [the list of supported currencies](https://transferwise.com/tools/excha
 Board and Build can be found in [here](http://api.ineal.me/tss/status)
 
 </RouteEn>
+
+## Urban Dictionary
+
+### Random words
+
+<RouteEn author="TonyRL" example="/urbandictionary/random" path="/urbandictionary/random" radar="1" rssbud="1"/>
 
 ## wikiHow
 
@@ -238,3 +312,23 @@ Type
 | all | rec       |
 
 </RouteEn>
+
+## Wise
+
+### FX Pair Yesterday
+
+<RouteEn author="HenryQW" example="/wise/pair/GBP/USD" path="/wise/pair/:source/:target" :paramsDesc="['Base currency abbreviation','Quote currency abbreviation']" radar="1">
+
+Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate-alerts/).
+
+</RouteEn>
+
+## 裏垢女子まとめ
+
+### Homepage
+
+<RouteEn author="SettingDust Halcao" example="/uraaka-joshi" path="/uraaka-joshi" radar="1" rssbud="1" puppeteer="1"/>
+
+### User
+
+<RouteEn author="SettingDust Halcao" example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['User ID']" radar="1" rssbud="1" puppeteer="1"/>

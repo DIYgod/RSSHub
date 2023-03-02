@@ -37,12 +37,26 @@ pageClass: routes
 | bilingual   | 双语新闻 (Bilingual News)                  |
 | address     | 总统演讲 (President Address)               |
 
+## Asian Innovation and Entrepreneurship Association
+
+### Seminar Series
+
+<Route author="zxx-457" example="/aiea/seminars/upcoming" path="/aiea/seminars/:period" :paramsDesc="['时间段']">
+
+| 时间段      |
+| -------- |
+| upcoming |
+| past     |
+| both     |
+
+</Route>
+
 ## CTFHub Calendar
 
 ### 查询国内外 CTF 赛事信息
 
-<Route author="frankli0324" example="/ctfhub/search" 
-path="/ctfhub/search/:limit?/:form?/:class?/:title?" 
+<Route author="frankli0324" example="/ctfhub/search"
+path="/ctfhub/search/:limit?/:form?/:class?/:title?"
 :paramsDesc="['一个整数，筛选最新的limit场比赛，默认为10', '比赛形式', '比赛类型', '通过CTF赛事名称过滤']">
 
 | `:class` | 类型                             |
@@ -65,8 +79,8 @@ path="/ctfhub/search/:limit?/:form?/:class?/:title?"
 
 ### 查询近期赛事
 
-<Route author="frankli0324" example="/ctfhub/upcoming" 
-path="/ctfhub/upcoming/:limit?" 
+<Route author="frankli0324" example="/ctfhub/upcoming"
+path="/ctfhub/upcoming/:limit?"
 :paramsDesc="['一个整数，筛选最近的limit场比赛，默认为5']">
 
 </Route>
@@ -80,6 +94,12 @@ path="/ctfhub/upcoming/:limit?"
 ### gradCafe result by key words
 
 <Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
+
+## IELTS 雅思
+
+### 最新消息
+
+<Route author="zenxds" example="/ielts" path="/ielts" puppeteer="1"/>
 
 ## MarginNote
 
@@ -117,6 +137,44 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="nczitzk" example="/mind42/search/online" path="/mind42/search/:keyword" :paramsDesc="['关键字']"/>
 
+## MindMeister
+
+### 公开思维导图
+
+<Route author="TonyRL" example="/mindmeister/mind-map-examples" path="/mindmeister/:category?/:language?" :paramsDesc="['分类，见下表，默认为 `mind-map-examples`', '语言，见下表，默认为 `en`']" radar="1" rssbud="1">
+
+| 分类     | 参数                |
+| ------ | ----------------- |
+| 精选思维导图 | mind-map-examples |
+| 商务     | business          |
+| 设计     | design            |
+| 教育     | education         |
+| 娱乐     | entertainment     |
+| 生活     | life              |
+| 营销     | marketing         |
+| 生产力    | productivity      |
+| 概要     | summaries         |
+| 科技     | technology        |
+| 其他     | other             |
+
+| 语言         | 参数    |
+| ---------- | ----- |
+| English    | en    |
+| Deutsch    | de    |
+| Français   | fr    |
+| Español    | es    |
+| Português  | pt    |
+| Nederlands | nl    |
+| Dansk      | da    |
+| Русский    | ru    |
+| 日本語        | ja    |
+| Italiano   | it    |
+| 简体中文       | zh    |
+| 한국어        | ko    |
+| Other      | other |
+
+</Route>
+
 ## NEEA 中国教育考试网
 
 ### 国家教育考试
@@ -150,6 +208,12 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="nczitzk" example="/neea/jlpt" path="/neea/jlpt"/>
 
+## ORCID
+
+### 作品列表
+
+<Route author="OrangeEd1t" example="/orcid/0000-0002-4731-9700" path="/orcid/:id" :paramsDesc="['学术识别号']"/>
+
 ## ProcessOn
 
 ### 推荐
@@ -169,6 +233,12 @@ path="/ctfhub/upcoming/:limit?"
 |    | likeCount | favouriteCount | viewCount | publishTime |
 
 </Route>
+
+## ResearchGate
+
+### Publications
+
+<Route author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" :paramsDesc="['用户名，可在用户页地址栏中找到']" puppeteer="1" anticrawler="1"/>
 
 ## X-MOL 平台
 
@@ -198,11 +268,69 @@ path="/ctfhub/upcoming/:limit?"
 
 </Route>
 
+## 德阳考试中心
+
+### 考试新闻
+
+<Route author="zytomorrow" example="/dykszx/news" path="/dykszx/news/:type?" :paramsDesc="['考试类型']">
+
+| 新闻中心 | 公务员考试 | 事业单位 | （职）业资格、职称考试 |   其他  |
+| :--: | :---: | :--: | :---------: | :---: |
+|  all |  gwy  | sydw |     zyzc    | other |
+
+</Route>
+
+## 东莞教研网
+
+### 分类
+
+<Route author="nczitzk" example="/dgjyw/tz" path="/dgjyw/:category?" :paramsDesc="['分类，见下表，默认为通知']">
+
+| 通知 | 动态 | 公示 |
+| -- | -- | -- |
+| tz | dt | gs |
+
+::: tip 提示
+
+分类字段处填写的是对应东莞教研网网址中中介于 **<https://www.dgjyw.com/>** 和 **.htm** 中间的一段。
+
+如 [通知](https://www.dgjyw.com/tz.htm) 的网址为 <https://www.dgjyw.com/tz.htm>，其中间字段为 `tz`，所以可得路由为 [`/dgjyw/tz`](https://rsshub.app/dgjyw/tz)；
+
+同理，[教育科研 - 科研文件](https://www.dgjyw.com/jyky/kywj.htm) 的网址为 <https://www.dgjyw.com/jyky/kywj.htm>，其中间字段为 `jyky/kywj`，所以可得路由为 [`/dgjyw/jyky/kywj`](https://rsshub.app/dgjyw/jyky/kywj)。
+
+:::
+
+</Route>
+
+## 福建考试报名网
+
+### 分类
+
+<Route author="nczitzk" example="/fjksbm" path="/fjksbm/:category?" :paramsDesc="['分类，见下表，默认为网络报名进行中']" radar="1">
+
+| 已发布公告 (方案)，即将开始 | 网络报名进行中 | 网络报名结束等待打印准考证 | 正在打印准考证 | 考试结束，等待发布成绩 | 已发布成绩 | 新闻动态 | 政策法规   |
+| --------------- | ------- | ------------- | ------- | ----------- | ----- | ---- | ------ |
+| 0               | 1       | 2             | 3       | 4           | 5     | news | policy |
+
+</Route>
+
+## 韓國海事法學會
+
+### 学术论文
+
+<Route author="TonyRL" example="/kimlaw/thesis" path="/kimlaw/thesis" radar="1"/>
+
 ## 杭州市国家普通话测试网报信息
 
 ### 考试信息
 
 <Route author="ChaosTong" example="/putonghua" path="/putonghua" />
+
+## 湖南人事考试网
+
+### 公告
+
+<Route author="TonyRL" example="/hunanpea/rsks/2f1a6239-b4dc-491b-92af-7d95e0f0543e" path="/hunanpea/rsks/:guid" :paramsDesc="['分类 id，可在 URL 中找到']" radar="1"/>
 
 ## 唧唧堂
 
@@ -233,7 +361,7 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 论文
 
-<Route author="yech1990" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['参数，如 subject=生物']"/>
+<Route author="y9c" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['参数，如 subject=生物']" radar="1" rssbud="1">
 
 | `:param` | 举例              | 定义                                |
 | -------- | --------------- | --------------------------------- |
@@ -241,6 +369,8 @@ path="/ctfhub/upcoming/:limit?"
 | subject  | subject = 生物    | 可置空                               |
 | columns  | columns = 健康    | 可置空                               |
 | query    | query = 病毒      | 可置空                               |
+
+</Route>
 
 ## 码农周刊
 
@@ -271,6 +401,18 @@ path="/ctfhub/upcoming/:limit?"
 | 13   | 22    | 28   | 4    | 19   | 25       | 37     | 49     | 52   |
 
 </Route>
+
+## 上海市教育考试院
+
+### 消息速递
+
+官方网址：<http://www.shmeea.edu.cn>
+
+<Route author="jialinghui" example="/shmeea" path="/shmeea" radar="1" rssbud="1"/>
+
+### 自学考试通知公告
+
+<Route author="h2ws" example="/shmeea/self-study" path="/shmeea/self-study" radar="1" rssbud="1"/>
 
 ## 思维导图社区
 
@@ -322,11 +464,7 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 精品课程
 
-<Route author="hoilc" example="/open163/vip" path="/open163/vip" radar="1" rssbud="1"/>
-
-### 最新课程
-
-<Route author="hoilc" example="/open163/latest" path="/open163/latest" radar="1" rssbud="1"/>
+<Route author="hoilc" example="/163/open/vip" path="/163/open/vip" radar="1" rssbud="1"/>
 
 ## 下厨房
 
@@ -458,11 +596,11 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 知识库
 
-<Route author="aha2mao" example="/yuque/doc/75258" path="/yuque/doc/:repo_id" :paramsDesc="['仓库id，可在对应知识库主页的`/api/books/${repo_id}/docs`请求里找到']">
+<Route author="aha2mao ltaoo" example="/yuque/ruanyf/weekly" path="/yuque/:name/:book" :paramsDesc="['用戶名', '知识库 ID']" radar="1">
 
-| Node.js 专栏 | 阮一峰每周分享 | 语雀使用手册 |
-| ---------- | ------- | ------ |
-| 75258      | 102804  | 75257  |
+| Node.js 专栏                                               | 阮一峰每周分享                                                        | 语雀使用手册                                                   |
+| -------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------- |
+| [/yuque/egg/nodejs](https://rsshub.app/yuque/egg/nodejs) | [/yuque/ruanyf/weekly](https://rsshub.app/yuque/ruanyf/weekly) | [/yuque/yuque/help](https://rsshub.app/yuque/yuque/help) |
 
 </Route>
 
@@ -470,7 +608,7 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 新聞
 
-<Route author="yech1990" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['类别，如 ai']"/>
+<Route author="y9c" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['类别，如 ai']"/>
 
 | `:type`   | 类别名称 |
 | --------- | ---- |
@@ -486,11 +624,11 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 深度
 
-<Route author="yech1990" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
+<Route author="y9c" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
 
 ### 创新
 
-<Route author="yech1990" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['类别，如 company']"/>
+<Route author="y9c" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['类别，如 company']"/>
 
 | `:type`       | 类别名称   |
 | ------------- | ------ |
@@ -509,8 +647,151 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="xyqfer" example="/icourse163/newest" path="/icourse163/newest" />
 
+## 中国计算机学会
+
+### 新闻
+
+<Route author="nczitzk" example="/ccf/news" path="/ccf/news/:category?" :paramsDesc="['分类，见下表，默认为 CCF 新闻']">
+
+| CCF 新闻     | CCF 聚焦 | ACM 信息   |
+| ---------- | ------ | -------- |
+| Media_list | Focus  | ACM_News |
+
+</Route>
+
+### 计算机视觉专委会 - 学术动态 - 分类
+
+<Route author="elxy" example="/ccf/ccfcv/xsdt/xsqy" path="/ccf/ccfcv/:channel/:category" :paramsDesc="['频道，仅支持 `xsdt`', '分类，见下表，亦可在网站 url 里找到']">
+
+| 学术前沿 | 热点征文 | 学术会议 |
+| ---- | ---- | ---- |
+| xsqy | rdzw | xshy |
+
+</Route>
+
+### 大数据专家委员会
+
+<Route author="tudou027" example="/ccf/tfbd/xwdt/tzgg" path="/ccf/tfbd/:caty/:id" :paramsDesc="['主分类，可在 URL 找到', '子分类，可在 URL 找到']" radar="1"/>
+
+## 中国留学网
+
+### 通知公告
+
+<Route author="nczitzk" example="/cscse/tzgg" path="/cscse/tzgg"/>
+
+## 中国人工智能学会
+
+### 学会动态
+
+<Route author="tudou027" example="/caai/45" path="/caai/:caty" :paramsDesc="['分类 ID，可在 URL 找到']" radar="1"/>
+
 ## 中国人事考试网
 
 ### 通知公告
 
 <Route author="nczitzk" example="/cpta/notice" path="/cpta/notice" />
+
+## 中国研究生招生信息网
+
+### 考研动态
+
+<Route author="SunBK201" example="/chsi/kydt" path="/chsi/kydt" radar="1" />
+
+## 中国智库网
+
+### 观点与实践
+
+<Route author="AEliu" example="/chinathinktanks/57" path="/chinathinktanks/:id" radar="1" :paramsDesc="['见下表，亦可在网站 url 里找到']" >
+
+| `:id` | 专题名称 |
+| ----- | ---- |
+| 2     | 党的建设 |
+| 3     | 社会   |
+| 4     | 生态   |
+| 5     | 政治   |
+| 6     | 经济   |
+| 7     | 文化   |
+| 9     | 热点专题 |
+| 10    | 国际关系 |
+| 13    | 国外智库 |
+| 46    | 智库报告 |
+| 57    | 智库要闻 |
+| 126   | 世界经济 |
+| 127   | 宏观经济 |
+| 128   | 区域经济 |
+| 129   | 产业企业 |
+| 130   | 三农问题 |
+| 131   | 财政金融 |
+| 132   | 科技创新 |
+| 133   | 民主   |
+| 134   | 法治   |
+| 135   | 行政   |
+| 136   | 国家治理 |
+| 137   | 社会事业 |
+| 138   | 社会保障 |
+| 139   | 民族宗教 |
+| 140   | 人口就业 |
+| 141   | 社会治理 |
+| 142   | 文化产业 |
+| 143   | 公共文化 |
+| 144   | 文化体制 |
+| 145   | 文化思想 |
+| 146   | 资源   |
+| 147   | 能源   |
+| 148   | 环境   |
+| 149   | 生态文明 |
+| 150   | 思想建设 |
+| 151   | 作风建设 |
+| 152   | 组织建设 |
+| 153   | 制度建设 |
+| 154   | 反腐倡廉 |
+| 155   | 中国外交 |
+| 156   | 全球治理 |
+| 157   | 大国关系 |
+| 158   | 地区政治 |
+| 181   | 执政能力 |
+
+</Route>
+
+## 中华人民共和国学位证书查询
+
+### 各学位授予单位学位证书上网进度
+
+<Route author="TonyRL" example="/chinadegrees/11" path="/chinadegrees/:province?" :paramsDesc="['省市代号，见下表，亦可在 [这里](http://www.chinadegrees.com.cn/help/provinceSwqk.html) 找到，默认为 `11`']" radar="1" rssbud="1" puppeteer="1" >
+
+| 省市       | 代号 |
+| -------- | -- |
+| 北京市      | 11 |
+| 天津市      | 12 |
+| 河北省      | 13 |
+| 山西省      | 14 |
+| 内蒙古自治区   | 15 |
+| 辽宁省      | 21 |
+| 吉林省      | 22 |
+| 黑龙江省     | 23 |
+| 上海市      | 31 |
+| 江苏省      | 32 |
+| 浙江省      | 33 |
+| 安徽省      | 34 |
+| 福建省      | 35 |
+| 江西省      | 36 |
+| 山东省      | 37 |
+| 河南省      | 41 |
+| 湖北省      | 42 |
+| 湖南省      | 43 |
+| 广东省      | 44 |
+| 广西壮族自治区  | 45 |
+| 海南省      | 46 |
+| 重庆市      | 50 |
+| 四川省      | 51 |
+| 贵州省      | 52 |
+| 云南省      | 53 |
+| 西藏自治区    | 54 |
+| 陕西省      | 61 |
+| 甘肃省      | 62 |
+| 青海省      | 63 |
+| 宁夏回族自治区  | 64 |
+| 新疆维吾尔自治区 | 65 |
+| 台湾       | 71 |
+
+</Route>

@@ -1,0 +1,25 @@
+<article>
+  <h2>热榜内容</h2>
+  {{each data channel}}
+  {{if channel.data.length !== 0}}
+  <h3>{{channel.name}}</h3>
+    <ul>
+      {{each channel.data item}}
+      <li>
+        <a href="{{item.url}}" rel="noopener noreferrer" target="_blank">{{item.title}}</a>
+        {{if item.new}}🆕{{/if}}
+      </li>
+      {{/each}}
+    </ul>
+  {{/if}}
+  {{/each}}
+  <h2>搜索关键词</h2>
+  {{each queries q}}
+  <h3>{{q.key}}</h3>
+  <p>
+    {{each q.links l}}
+      {{@l}}&nbsp&nbsp
+    {{/each}}
+  </p>
+  {{/each}}
+</article>

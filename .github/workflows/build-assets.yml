@@ -6,18 +6,20 @@ on:
       - master
     paths:
       - 'lib/**'
+      - 'scripts/workflow/*.js'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    name: Build assets
+    timeout-minutes: 5
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
-      - name: Use Node.js v14
-        uses: actions/setup-node@v2
+        uses: actions/checkout@v3
+      - name: Use Node.js v18
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: 18
           cache: 'yarn'
       - name: Build file
         run: yarn && npm run build:all

@@ -58,6 +58,12 @@ Behance user's profile URL, like <https://www.behance.net/mishapetrick> the user
 
 <RouteEn path="/dribbble/keyword/:keyword" example="/dribbble/keyword/player" :paramsDesc="['desired keyword']" />
 
+## Eagle
+
+### Blog
+
+<RouteEn author="Fatpandac" example="/eagle/blog/en" path="/eagle/blog/:cate?/:language?" :paramsDesc="['Category, get by URL, `all` by default', 'Language, `cn`, `tw`, `en`, `en` by default']" radar="1" rsshub="1"/>
+
 ## Google
 
 ### Google Fonts

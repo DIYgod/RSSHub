@@ -1,0 +1,53 @@
+{{ if image }}
+    <img src="{{ image }}">
+{{ /if }}
+{{ if teasers }}
+    <backquote>
+        {{ each teasers teaser }}
+            <p>{{ teaser }}</p>
+        {{ /each }}
+    </backquote>
+{{ /if }}
+{{ each blocks block }}
+    {{ if block.blockType === 'summary' }}
+        <backquote>
+        {{ set summaries = block.summary }}
+        {{ each summaries summary }}
+            <p>{{ summary }}</p>
+        {{ /each }}
+        </backquote>
+    {{ else if block.blockType === 'text' }}
+        {{ set htmlTokens = block.htmlTokens }}
+        {{ each htmlTokens tokens }}
+            {{ each tokens token }}
+                {{ if token.type === 'text' }}
+                    <p>{{ token.content }}</p>
+                {{ else if token.type === 'link' }}
+                    <a href="{{ token.link }}">{{ token.content }}</a>
+                {{ else if token.type === 'boldText' }}
+                    <b>{{ token.content }}</b>
+                {{ else if token.type === 'boldLink' }}
+                    <a href="{{ token.link }}"><b>{{ token.content }}</b></a>
+                {{ /if }}
+            {{ /each }}
+        {{ /each }}
+    {{ else if block.blockType === 'quote' }}
+        {{ set message = block.message }}
+        {{ set author = block.author }}
+        <q>{{ message }} —— {{ author }}</q>
+    {{ else if block.blockType === 'image' }}
+        {{ set image = block.image }}
+        <figure>
+            <figurecaption>{{ image.caption }}</figurecaption>
+            <img src="{{ image.cdnUrl }}" alt="{{ image.caption }}" height="{{ image.originalHeight }}" width="{{ image.originalWidth }}">
+        </figure>
+    {{ else if block.blockType === 'gallery' }}
+        {{ set images = block.images }}
+        {{ each images image }}
+            <figure>
+                <figurecaption>{{ image.caption }}</figurecaption>
+                <img src="{{ image.cdnUrl }}" alt="{{ image.caption }}" height="{{ image.originalHeight }}" width="{{ image.originalWidth }}">
+            </figure>
+        {{ /each }}
+    {{ /if }}
+{{ /each }} 

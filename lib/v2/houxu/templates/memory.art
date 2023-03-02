@@ -1,0 +1,3 @@
+<h1>{{ live }}</h1>
+<b><a href="{{ url }}">{{ title }}</a>{{ if source }}&nbsp({{ source }}){{ /if }}</b>
+<p>{{ description }}</p>

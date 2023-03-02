@@ -1,10 +1,27 @@
 name: test
 
-on: [push, pull_request]
+on:
+  push:
+    branches-ignore:
+      - 'dependabot/**'
+    paths:
+      - 'test/**'
+      - 'lib/**'
+      - '!**/maintainer.js'
+      - '!**/radar.js'
+      - '!**/radar-rules.js'
+      - 'package.json'
+      - 'yarn.lock'
+      - '.github/workflows/test.yml'
+  pull_request: ~
+
+permissions:
+  contents: read
 
 jobs:
   jest:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     services:
       redis:
         image: redis
@@ -12,36 +29,139 @@ jobs:
           - 6379/tcp
         options: --entrypoint redis-server
     strategy:
+      fail-fast: false
       matrix:
-        node-version: ['14', '16']
-    name: Node ${{ matrix.node-version }}
+        node-version: [ 14, 16, 18 ]
+    name: Jest on Node ${{ matrix.node-version }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: Collect Workflow Telemetry
+        uses: runforesight/foresight-workflow-kit-action@v1
+        if: success() || failure()
+        with:
+          api_key: ${{ secrets.FORESIGHT_KEY }}
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
-      - run: yarn
-      - run: npm run jest
+      - name: Install dependencies (yarn)
+        run: yarn
+      - name: Test all and generate coverage
+        run: npm run jest:coverage
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v2.1.0
+        if: ${{ matrix.node-version == '18' }}
+        uses: codecov/codecov-action@v3
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos as documented, but seems broken
+      - name: Analyze Test and/or Coverage Results
+        uses: runforesight/foresight-test-kit-action@v1
+        if: success() || failure()
+        with:
+          api_key: ${{ secrets.FORESIGHT_KEY }}
+          test_format: JUNIT
+          test_framework: JEST
+          test_path: ./coverage/junit.xml
+          coverage_format: LCOV/TXT
+          coverage_path: ./coverage/lcov.info
+
+
+  puppeteer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [ 14, 16, 18 ]
+        chromium:
+          - name: bundled Chromium
+            dependency: ''
+            environment: '{}'
+          - name: Chromium from Ubuntu
+            dependency: chromium-browser
+            environment: '{ "CHROMIUM_EXECUTABLE_PATH": "chromium-browser" }'
+          - name: Chrome from Google
+            dependency: google-chrome-stable
+            environment: '{ "CHROMIUM_EXECUTABLE_PATH": "google-chrome-stable" }'
+    name: Jest puppeteer on Node ${{ matrix.node-version }} with ${{ matrix.chromium.name }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - name: Install dependencies (yarn)
+        run: yarn
+      - name: Install Chromium
+        if: ${{ matrix.chromium.dependency != '' }}
+        # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
+        # nothing since it calls Snap (disgusting!) to install Chromium, which should be up-to-date.
+        # That's not really a problem since the Chromium-bundled Docker image is based on Debian bullseye,
+        # which provides up-to-date native packages.
+        run: |
+          set -ex
+          curl -s "https://dl.google.com/linux/linux_signing_key.pub" | gpg --dearmor |
+            sudo tee /etc/apt/trusted.gpg.d/google-chrome.gpg > /dev/null
+          echo "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main" |
+            sudo tee /etc/apt/sources.list.d/google-chrome.list > /dev/null
+          sudo apt-get update
+          sudo apt-get install -yq --no-install-recommends ${{ matrix.chromium.dependency }}
+      - name: Test puppeteer
+        run: npm run jest puppeteer
+        env: ${{ fromJSON(matrix.chromium.environment) }}
 
   docs:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     strategy:
+      fail-fast: false
       matrix:
-        node-version: ['14', '16']
-    name: Node ${{ matrix.node-version }}
+        node-version: [ 14, 16, 18 ]
+    name: Build docs on Node ${{ matrix.node-version }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
       - run: yarn
+      - name: Set environment variable for Node v18
+        if: ${{ matrix.node-version == '18' }}
+        run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
       - name: Build docs
         run: npm run docs:build
+      - name: Unset environment variable for Node v18
+        if: ${{ matrix.node-version == '18' }}
+        run: echo "NODE_OPTIONS=''" >> $GITHUB_ENV
+
+  all:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [ 14, 16, 18 ]
+    name: Build radar and maintainer on Node ${{ matrix.node-version }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'yarn'
+      - run: yarn
+      - name: Build radar and maintainer
+        run: npm run build:all
+
+  automerge:
+    if: github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'
+    needs: [ jest, puppeteer, docs, all ]
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+    steps:
+      - uses: fastify/github-action-merge-dependabot@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          target: patch

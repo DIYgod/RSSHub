@@ -1,0 +1,11 @@
+{{ if image }}
+<img src="{{ image }}">
+{{ /if }}
+{{ if video }}
+<video controls>
+<source src="{{ video }}" type="video/mp4">
+</video>
+{{ /if }}
+{{ if digest }}
+<p>{{ digest }}</p>
+{{ /if }}

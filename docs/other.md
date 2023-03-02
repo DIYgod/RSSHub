@@ -18,6 +18,20 @@ pageClass: routes
 
 </Route>
 
+## 591 租屋網
+
+### 租屋
+
+<Route author="Yukaii" example="/591/tw/rent/order=posttime&orderType=desc" path="/591/:country/rent/:query?" :paramsDesc="['網址國碼，目前僅支援 tw', '查詢參數']">
+
+::: tip 提示
+
+複製 591 篩選房屋頁面的網址，並去掉前段 `https://rent.591.com.tw/?` 部分，即可得到查詢參數。
+
+:::
+
+</Route>
+
 ## acwifi 路由器交流
 
 ### 新闻
@@ -53,6 +67,10 @@ pageClass: routes
 ### 更换和维修扩展计划
 
 <Route author="metowolf HenryQW kt286" example="/apple/exchange_repair/zh-cn" path="/apple/exchange_repair/:country?" :paramsDesc="['苹果官网 URL 中的国家代码, 默认美国 ，中国 `zh-cn`']"/>
+
+### 苹果邮件
+
+见 [#中国邮政速递物流](/other.html#zhong-guo-you-zheng-su-di-wu-liu)
 
 ### App Store/Mac App Store
 
@@ -91,13 +109,13 @@ pageClass: routes
 
 ### 文章
 
-<Route author="hoilc" example="/clickme/default/category/beauty" path="/clickme/:site/:grouping/:name" :paramsDesc="['站点, `default`为普通站, `r18`为成人站, 其它值默认为普通站','分组方式, `category`为分类, `tag`为标签, 其他值默认为分类','分类名或标签名, 分类名为英文, 可以在分类 URL 中找到']" />
+<Route author="hoilc" example="/clickme/default/category/beauty" path="/clickme/:site/:grouping/:name" :paramsDesc="['站点，`default`为普通站，`r18`为成人站，其它值默认为普通站','分组方式，`category`为分类，`tag`为标签，其他值默认为分类','分类名或标签名，分类名为英文，可以在分类 URL 中找到']" radar="1"/>
 
 ## Darwin Awards
 
-### 文章
+### Award Winners
 
-<Route author="zoenglinghou" example="/darwinawards/all" path="/darwinawards/all"/>
+<Route author="zoenglinghou nciztzk" example="/darwinawards" path="/darwinawards" />
 
 ## dcinside
 
@@ -150,6 +168,37 @@ pageClass: routes
 支持 iyouport.org 页面 Header 全部分类。例如，`https://www.iyouport.org/category/osint` 对应 `/iyouport/osint`。若不填写 `category`，则输出全部文章，但比旧版首页 feed 有更多元数据。
 
 <Route author="proletarius101" example="/iyouport/osint" path="/iyouport/:category?"/>
+
+## Layoffs.fyi
+
+### 裁员数据跟踪
+
+<Route author="BrandNewLifeJackie26" example="/layoffs" path="/layoffs" radar="1"/>
+
+该网站原始 RSS 数据源无人维护，故重新抓取数据并生成数据源。
+
+## LinkedIn 领英中国
+
+### Jobs
+
+<Route author="bigfei" example="/linkedin/cn/jobs/Software" path="/linkedin/cn/jobs/:keywords?" :paramsDesc="['搜索关键字']" radar="1">
+
+另外，可以通过添加额外的以下 query 参数来输出满足特定要求的工作职位：
+
+| 参数         | 描述                               | 举例                                        | 默认值     |
+| ---------- | -------------------------------- | ----------------------------------------- | ------- |
+| `geo`      | geo 编码                           | 102890883（中国）、102772228（上海）、103873152（北京） | 空       |
+| `remote`   | 是否只显示远程工作                        | `true/false`                              | `false` |
+| `location` | 工作地点                             | `china/shanghai/beijing`                  | 空       |
+| `relevant` | 排序方式 (true: 按相关性排序，false： 按日期排序) | `true/false`                              | `false` |
+| `period`   | 发布时间                             | `1/7/30`                                  | 空       |
+
+例如：
+[`/linkedin/cn/jobs/Software?location=shanghai&period=1`](https://rsshub.app/linkedin/cn/jobs/Software?location=shanghai\&period=1): 查找所有在上海的今日发布的所有 Software 工作
+
+**为了方便起见，建议您在 [LinkedIn.cn](https://www.linkedin.cn/incareer/jobs/search) 上进行搜索，并使用 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 加载特定的 feed。**
+
+</Route>
 
 ## MiniFlux
 
@@ -238,6 +287,18 @@ pageClass: routes
 
 <Route author="fengkx" example="/one" path="/one"/>
 
+## Panda
+
+### Feeds
+
+<Route author="lyrl" example="/usepanda/feeds/5718e53e7a84fb1901e059cc" path="/usepanda/feeds/:id" :paramsDesc="['频道id/feedId']">
+
+| 频道          | feedId                   |
+| ----------- | ------------------------ |
+| Github 热门推荐 | 5718e53e7a84fb1901e059cc |
+
+</Route>
+
 ## Parcel Tracking
 
 ### Hermes UK
@@ -264,16 +325,6 @@ pageClass: routes
 ### 最新会议材料
 
 <Route author="sbilly" example="/sans/summit_archive" path="/sans/summit_archive" />
-
-## TransferWise
-
-### 昨日汇率变动
-
-<Route author="HenryQW" example="/transferwise/pair/GBP/USD" path="/transferwise/pair/:source/:target" :paramsDesc="['本币缩写','外币缩写']">
-
-参见支持的[货币列表](https://transferwise.com/tools/exchange-rate-alerts/)。
-
-</Route>
 
 ## TSSstatus（iOS 降级通道）
 
@@ -324,11 +375,30 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## Wise
+
+### 昨日汇率变动
+
+<Route author="HenryQW" example="/wise/pair/GBP/USD" path="/wise/pair/:source/:target" :paramsDesc="['本币缩写','外币缩写']" radar="1">
+
+参见支持的 [货币列表](https://wise.com/tools/exchange-rate-alerts/)。
+
+</Route>
+
 ## 艾瑞
 
 ### 产业研究报告
 
 <Route author="brilon Fatpandac" example="/iresearch/report" path="/iresearch/report"/>
+
+### 周度市场观察
+
+<Route author="nczitzk" example="/iresearch/weekly" path="/iresearch/weekly:category?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 家电行业 | 服装行业 | 美妆行业 | 食品饮料行业 |
+| ---- | ---- | ---- | ------ |
+
+</Route>
 
 ## 爱 Q 生活网
 
@@ -340,7 +410,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 发现用户
 
-<Route author="sanmmm" example="/afdian/explore/hot/所有" path="/afdian/explore/:type/:category?" :paramsDesc="['分类', '目录类型, 默认为 `所有`']">
+<Route author="sanmmm" example="/afdian/explore/hot/所有" path="/afdian/explore/:type/:category?" :paramsDesc="['分类', '目录类型，默认为 `所有`']">
 分类
 
 | 推荐  | 最热  |
@@ -357,25 +427,49 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 用户动态
 
-<Route author="sanmmm" example="/afdian/dynamic/@afdian" path="/afdian/dynamic/:uid?" :paramsDesc="['用户id, 用户动态页面url里可找到']"/>
+<Route author="sanmmm" example="/afdian/dynamic/@afdian" path="/afdian/dynamic/:uid?" :paramsDesc="['用户id，用户动态页面url里可找到']"/>
 
-## 百度搜索风云榜
+## 澳門特別行政區政府各公共部門獎助貸學金服務平台
+
+官方網址：<https://www.bolsas.gov.mo/>
+
+<Route author="KeiLongW" example="/macau-bolsas" path="/macau-bolsas/:lang?" :paramsDesc="['語言']" >
+
+| 中文 | 葡文 |
+| -- | -- |
+| ch | pt |
+
+</Route>
+
+## 百度热搜
 
 ### 榜单
 
-<Route author="xyqfer" example="/baidu/topwords/1" path="/baidu/topwords/:boardId?" :paramsDesc="['榜单 id, 默认为`1`']">
+<Route author="xyqfer" example="/baidu/top" path="/baidu/top/:board?" :paramsDesc="['榜单，默认为 `realtime`']" radar="1">
 
-| 实时热点 | 今日热点 | 七日热点 | 民生热点 | 娱乐热点 | 体育热点 |
-| ---- | ---- | ---- | ---- | ---- | ---- |
-| 1    | 341  | 42   | 342  | 344  | 11   |
+| 热搜榜      | 小说榜   | 电影榜   | 电视剧榜     | 汽车榜 | 游戏榜  |
+| -------- | ----- | ----- | -------- | --- | ---- |
+| realtime | novel | movie | teleplay | car | game |
 
 </Route>
+
+## 贝壳研究院
+
+### 研究成果
+
+<Route author="shaomingbo" example="/ke/researchResults"  path="/ke/researchResults" radar="1"/>
 
 ## 毕马威
 
 ### 洞察
 
 <Route author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
+
+## 成都住建蓉 e 办
+
+### 商品住房购房登记
+
+<Route author="TonyRL" example="/cdzjryb/zw/projectList" path="/cdzjryb/zw/projectList" radar="1"/>
 
 ## 滴答清单
 
@@ -388,18 +482,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 :::
 
 <Route author="DIYgod" example="/dida365/habit/checkins" path="/dida365/habit/checkins" selfhost="1"/>
-
-## 东莞教研网
-
-### 信息公开
-
-<Route author="nczitzk" example="/dgjyw/news" path="/dgjyw/:type" :paramsDesc="['分类']">
-
-| 动态   | 公示           | 通知     |
-| ---- | ------------ | ------ |
-| news | announcement | notice |
-
-</Route>
 
 ## 福利资源 - met.red
 
@@ -457,18 +539,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
-## 国家自然科学基金委员会
-
-### 新闻通知
-
-<Route author="Derekmini" example="/nsfc/news/jjyw" path="/nsfc/news/:type?" :paramsDesc="['分类, 默认为 `jjyw`']" radar="1" rssbud="1">
-
-| 基金要闻 | 通知公告 | 资助成果 | 科普快讯 |
-| ---- | ---- | ---- | ---- |
-| jjyw | tzgg | zzcg | kpkx |
-
-</Route>
-
 ## 好队友
 
 ### 工作机会
@@ -487,11 +557,25 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="cc798461" example="/moxingfans" path="/moxingfans"/>
 
+## 巨量算数 - 算数指数
+
+### 抖音指数波峰
+
+<Route author="Jkker" example="/oceanengine/index/教材" path="/oceanengine/index/:keyword" :paramsDesc="['热点关键词']" anticrawler="1" puppeteer="1"/>
+
+爬取巨量算数近 6 个月的抖音指数，解密后提取指数波峰当日的热门搜索关键词，生成为 RSS。可用于追踪新闻热点事件。
+
+### 头条指数波峰
+
+<Route author="Jkker" example="/oceanengine/index/教材/toutiao" path="/oceanengine/index/:keyword/toutiao" :paramsDesc="['热点关键词']" anticrawler="1" puppeteer="1"/>
+
+爬取巨量算数近 6 个月的头条指数，解密后提取指数波峰当日的热门搜索关键词，生成为 RSS。可用于追踪新闻热点事件。
+
 ## 考研帮
 
 ### 考研帮调剂信息
 
-<Route author="sushengmao" example="/kaoyan" path="/kaoyan" />
+<Route author="shengmaosu" example="/kaoyan" path="/kaoyan" />
 
 ## 空气质量
 
@@ -512,64 +596,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 1.  显示单个污染成分，例如「pm25」, <https://rsshub.app/aqicn/beijing/pm25>
 2.  逗号分隔显示多个污染成分，例如「pm25,pm10」，[https://rsshub.app/aqicn/beijing/pm25,pm10](https://rsshub.app/aqicn/beijing/pm25.pm10)
-
-## 酷安
-
-### 图文
-
-<Route author="xizeyoupan" example="/coolapk/tuwen" path="/coolapk/tuwen/:type?" :paramsDesc="['默认为hot']">
-
-| 参数名称 | 编辑精选 | 最新     |
-| ---- | ---- | ------ |
-| type | hot  | latest |
-
-</Route>
-
-### 头条
-
-<Route author="xizeyoupan" example="/coolapk/toutiao" path="/coolapk/toutiao/:type?" :paramsDesc="['默认为history']">
-
-| 参数名称 | 历史头条    | 最新     |
-| ---- | ------- | ------ |
-| type | history | latest |
-
-</Route>
-
-### 看看号
-
-<Route author="xizeyoupan" example="/coolapk/dyh/1524" path="/coolapk/dyh/:dyhId" :paramsDesc="['看看号ID']">
-
-::: tip
-仅限于采集**站内订阅**的看看号的内容。看看号 ID 可在看看号界面右上分享 - 复制链接得到。
-:::
-
-</Route>
-
-### 话题
-
-<Route author="xizeyoupan" example="/coolapk/huati/酷安夜话" path="/coolapk/huati/:tag" :paramsDesc="['话题名称']"/>
-
-### 用户
-
-<Route author="xizeyoupan" example="/coolapk/user/3177668/dynamic" path="/coolapk/user/:uid/dynamic" :paramsDesc="['在个人界面右上分享-复制链接获取']"/>
-
-### 热榜
-
-<Route author="xizeyoupan" example="/coolapk/hot" path="/coolapk/hot/:type?/:period?" :paramsDesc="['默认为`jrrm`','默认为`daily`']">
-
-| 参数名称 | 今日热门 | 点赞榜 | 评论榜 | 收藏榜 | 酷图榜 |
-| ---- | ---- | --- | --- | --- | --- |
-| type | jrrm | dzb | plb | scb | ktb |
-
-| 参数名称   | 日榜    | 周榜     |
-| ------ | ----- | ------ |
-| period | daily | weekly |
-
-::: tip
-今日热门没有周榜，酷图榜日榜的参数会变成周榜，周榜的参数会变成月榜。
-:::
-
-</Route>
 
 ## 快递 100
 
@@ -597,11 +623,11 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 主页
 
-<Route author="SettingDust"  example="/uraaka-joshi" path="/uraaka-joshi"/>
+<Route author="SettingDust Halcao" example="/uraaka-joshi" path="/uraaka-joshi" radar="1" rssbud="1" puppeteer="1"/>
 
 ### 用户
 
-<Route author="SettingDust"  example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['用户名']"/>
+<Route author="SettingDust Halcao" example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['用户名']" radar="1" rssbud="1" puppeteer="1"/>
 
 ## 律师事务所文章
 
@@ -691,6 +717,22 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 汽油价格网
+
+### 今日油价查询
+
+<Route author="TonyRL" example="/qiyoujiage/shanghai" path="/qiyoujiage/:path+" :paramsDesc="['路径']">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `http://www.qiyoujiage.com/` 和 `.shtml` 之间的字段。下面是一个例子。
+
+若订阅 [福建漳州龙海今日油价](http://www.qiyoujiage.com/fujian/zhangzhou/longhai.shtml) 则将对应页面 URL <http://www.qiyoujiage.com/fujian/zhangzhou/longhai.shtml> 中 `http://www.qiyoujiage.com/` 和 `.shtml` 之间的字段 `fujian/zhangzhou/longhai` 作为路径填入。此时路由为 [`/qiyoujiage/fujian/zhangzhou/longhai`](https://rsshub.app/qiyoujiage/fujian/zhangzhou/longhai)
+
+:::
+
+</Route>
+
 ## 且听风吟福利
 
 ### 分类
@@ -723,6 +765,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## 热搜聚合
+
+### 关键词聚合追踪
+
+追踪各大热搜榜上包含特定关键词的条目。
+
+当前收录榜单：*微博热搜*、*今日头条热搜*、*知乎热搜*、*知乎热门视频*、*知乎热门话题*。
+
+数据源: [trending-in-one](https://github.com/huqi-pr/trending-in-one)
+
+<Route author="Jkker" example="/trending/唐山,打人/3" path="/trending/:keywords/:numberOfDays?" radar="1" :paramsDesc="['通过逗号区隔的关键词列表', '向前追溯的天数，默认为3天']"/>
+
 ## 日本郵便
 
 ### 郵便追跡サービス
@@ -732,87 +786,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 | 日语 | 英语 |
 | -- | -- |
 | ja | en |
-
-</Route>
-
-## 上海市教育考试院
-
-### 消息速递
-
-官方网址：<http://www.shmeea.edu.cn>
-
-<Route author="jialinghui" example="/shmeea" path="/shmeea" radar="1" rssbud="1"/>
-## 上海证券交易所
-
-### 上市公司信息最新公告披露
-
-<Route author="alienmao" example="/sse/disclosure/beginDate=2018-08-18&endDate=2020-08-25&productId=600696" path="/sse/disclosure/:query?"  :paramsDesc="['筛选条件，见示例']" />
-
-## 上证债券信息网
-
-### 可转换公司债券公告
-
-<Route author="kt286" example="/sse/convert/beginDate=2018-08-18&endDate=2019-08-18&companyCode=603283&title=股份" path="/sse/convert/:query?" :paramsDesc="['筛选条件，见示例']"/>
-
-### 科创板项目动态
-
-<Route author="Jeason0228" example="/sse/renewal" path="/sse/renewal"/>
-
-### 监管问询
-
-<Route author="Jeason0228" example="/sse/inquire" path="/sse/inquire"/>
-
-## 深圳证券交易所
-
-### 上市公告 - 可转换债券
-
-<Route author="Jeason0228" example="/szse/notice" path="/szse/notice"/>
-
-### 问询函件 (全部 / 主板 / 中小企业板 / 创业板)
-
-<Route author="Jeason0228" example="/szse/inquire/navall" path="/szse/inquire/:type"  :paramsDesc="['tab选项,navall为全部,nav1为主板,nav2,为中小企业板,nav3位创业板']"/>
-
-### 最新规则
-
-<Route author="nczitzk" example="/szse/rule" path="/szse/rule"/>
-
-### 创业板项目动态
-
-<Route author="nczitzk" example="/szse/projectdynamic" path="/szse/projectdynamic/:type?/:stage?/:status?" :paramsDesc="['类型，见下表，默认为IPO', '阶段，见下表，默认为全部', '状态，见下表，默认为全部']">
-
-类型
-
-| IPO | 再融资 | 重大资产重组 |
-| --- | --- | ------ |
-| 1   | 2   | 3      |
-
-阶段
-
-| 全部 | 受理 | 问询 | 上市委会议 |
-| -- | -- | -- | ----- |
-| 0  | 10 | 20 | 30    |
-
-| 提交注册 | 注册结果 | 中止 | 终止 |
-| ---- | ---- | -- | -- |
-| 35   | 40   | 50 | 60 |
-
-状态
-
-| 全部 | 新受理 | 已问询 | 通过 | 未通过 |
-| -- | --- | --- | -- | --- |
-| 0  | 20  | 30  | 45 | 44  |
-
-| 暂缓审议 | 复审通过 | 复审不通过 | 提交注册 |
-| ---- | ---- | ----- | ---- |
-| 46   | 56   | 54    | 60   |
-
-| 注册生效 | 不予注册 | 补充审核 | 终止注册 |
-| ---- | ---- | ---- | ---- |
-| 70   | 74   | 78   | 76   |
-
-| 中止 | 审核不通过 | 撤回 |
-| -- | ----- | -- |
-| 80 | 90    | 95 |
 
 </Route>
 
@@ -850,7 +823,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 最新辟谣
 
-<Route author="hoilc" example="/factcheck" path="/factcheck"/>
+<Route author="hoilc" example="/qq/fact" path="/qq/fact" radar="1"/>
 
 ## 天津产权交易中心
 
@@ -899,6 +872,18 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 腾讯新闻 - 新型冠状病毒肺炎实时辟谣
 
 <Route author="DIYgod" example="/coronavirus/qq/fact" path="/coronavirus/qq/fact"/>
+
+### 腾讯新闻 - 新型冠状病毒肺炎疫情实时追踪
+
+数据来源：<https://news.qq.com/zt2020/page/feiyan.htm#/>
+
+#### 中国本土数据统计
+
+<Route author="CaoMeiYouRen" example="/tencent/news/coronavirus/total" path="/tencent/news/coronavirus/total"/>
+
+#### 省市疫情数据
+
+<Route author="CaoMeiYouRen" example="/tencent/news/coronavirus/data/湖北/武汉" path="/tencent/news/coronavirus/data/:province?/:city?" :paramsDesc="['省/直辖市名，缺省则返回国内数据','城市名，缺省则返回全省数据。直辖市请使用区/县名。']"/>
 
 ### South China Morning Post - China coronavirus outbreak
 
@@ -956,11 +941,11 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" selfhost="1"/>
 
-## 油价
+## 有据
 
-### 今日油价
+### 最新文章列表
 
-<Route author="xyqfer" example="/oilprice/shanghai" path="/oilprice/:area" :paramsDesc="['地区拼音，详见[成品油价格网](http://oil.usd-cny.com/)']"/>
+<Route author="kdanfly" example="/chinafactcheck" path="/chinafactcheck" radar="1" rssbud="1"/>
 
 ## 源仓库
 
@@ -1032,6 +1017,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="nczitzk" example="/cktest/policy" path="/cktest/policy"/>
 
+## 中国互联网联合辟谣平台
+
+### 今日辟谣
+
+<Route author="Fatpandac" example="/piyao/jrpy" path="/piyao/jrpy"/>
+
 ## 中国银行
 
 ### 中国银行外汇牌价
@@ -1050,6 +1041,10 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="luyuhuang" example="/ems/news" path="/ems/news" radar="1" rssbud="1"/>
 
+### 苹果邮件
+
+<Route author="Fatpandac" example="/ems/apple/EZ319397281CN" path="/ems/apple/:id" :paramsDesc="['苹果邮件编号']"/>
+
 ## 自如
 
 ### 房源
@@ -1067,15 +1062,3 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### はてな匿名ダイアリー - 人気記事アーカイブ
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
-
-### 澳門特別行政區政府各公共部門獎助貸學金服務平台
-
-官方網址：<https://www.bolsas.gov.mo/>
-
-<Route author="KeiLongW" example="/macau-bolsas" path="/macau-bolsas/:lang?" :paramsDesc="['語言']" >
-
-| 中文 | 葡文 |
-| -- | -- |
-| ch | pt |
-
-</Route>

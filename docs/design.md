@@ -18,9 +18,9 @@ pageClass: routes
 
 ## Behance
 
-### User Works
+### 用户作品
 
-<Route author="MisteryMonster" example="/behance/mishapetrick" path="/behance/:user/:type?" :paramsDesc="['用户名', '类型，可选 `projects` 或 `appreciated`']" radar="1">
+<Route author="MisteryMonster" example="/behance/mishapetrick" path="/behance/:user/:type?" :paramsDesc="['用户名', '类型，可选 `projects` 或 `appreciated`，默认为 `projects`']" radar="1">
 
 Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapetrick> 的用户名为 `mishapetrick`。
 
@@ -58,6 +58,18 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 <Route author="DIYgod" example="/dribbble/keyword/player" path="/dribbble/keyword/:keyword" :paramsDesc="['想要订阅的关键词']"/>
 
+## Eagle
+
+### 博客
+
+<Route author="Fatpandac" example="/eagle/blog" path="/eagle/blog/:cate?/:language?" :paramsDesc="['分类，默认为全部，见下表', '语言，`cn`、`tw`、`en` 默认为 `cn`']" radar="1" rsshub="1">
+
+| 全部  | 设计资源             | 设计技巧         | 最新消息         |
+| --- | ---------------- | ------------ | ------------ |
+| all | design-resources | learn-design | inside-eagle |
+
+</Route>
+
 ## Google
 
 ### Google Fonts
@@ -70,7 +82,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ::: warning 注意
 
-需要设置 API key，所以只能自建，详情见[ 部署页面 ](https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)的配置模块。
+需要设置 API key，所以只能自建，详情见[部署页面](https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)的配置模块。
 
 :::
 
@@ -166,6 +178,12 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 </Route>
 
+## Shopping Design
+
+### 文章列表
+
+<Route author="miles170" example="/shoppingdesign/posts" path="/shoppingdesign/posts"/>
+
 ## UI 中国
 
 ### 推荐文章
@@ -181,6 +199,12 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 ### Films
 
 <Route author="MisteryMonster" example="/unit-image/films/vfx" path="/unit-image/films/:type?" :paramsDesc="['Films 下分类，`vfx`, `game-trailer`, `animation`, `commercials`, `making-of`']"/>
+
+## 爱果果
+
+### 最新 H5
+
+<Route author="yuxinliu-alex" example="/iguoguo/html5" path="/iguoguo/html5" />
 
 ## 优设网
 

@@ -75,11 +75,47 @@ pageClass: routes
 
 <Route author="nczitzk" example="/guiltfree/onsale" path="/guiltfree/onsale"/>
 
+## Gumroad
+
+### 商品
+
+<Route author="Fatpandac" example="/gumroad/afkmaster/Eve10" path="/gumroad/:username/:products" :paramsDesc="['链接中用户名称，可在链接中获取', '商品名称，可在链接中获取']" radar="1" rssbud="1">
+
+如：`https://afkmaster.gumroad.com/l/Eve10` 则为 `/gumroad/afkmaster/Eve10`
+
+</Route>
+
 ## hotukdeals
 
 ### thread
 
 <Route author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" :paramsDesc="['should be one of highlights, hot, new, discussed']" ></Route>
+
+### hottest
+
+<Route author="DIYgod" example="/hotukdeals/hottest" path="/hotukdeals/hottest"></Route>
+
+## IKEA 宜家
+
+### 英国 - 商品上新
+
+<Route author="HenryQW" example="/ikea/gb/new" path="/ikea/gb/new" radar="1"/>
+
+### 英国 - 促销
+
+<Route author="HenryQW" example="/ikea/gb/offer" path="/ikea/gb/offer" radar="1"/>
+
+### 中国 - 会员特惠
+
+<Route author="jzhangdev" example="/ikea/cn/family_offers" path="/ikea/cn/family_offers" radar="1"/>
+
+### 中国 - 低价优选
+
+<Route author="jzhangdev" example="/ikea/cn/low_price" path="/ikea/cn/low_price" radar="1"/>
+
+### 中国 - 当季新品推荐
+
+<Route author="jzhangdev" example="/ikea/cn/new" path="/ikea/cn/new" radar="1"/>
 
 ## lativ
 
@@ -108,6 +144,59 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 所有分类参见 [分类清单](https://www.mercari.com/jp/category/)
 
 所有品牌参见 [品牌清单](https://www.mercari.com/jp/brand/)
+
+</Route>
+
+## MyFigureCollection
+
+### 活動
+
+<Route author="nczitzk" example="/myfigurecollection/activity" path="/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" :paramsDesc="['分类，见下表，默认为全部', '语言，见下表，默认为空，即 `en`', '最新加入，默认为开启，即 `1`，可选不开启，即 `0`', '變動，默认为开启，即 `1`，可选不开启，即 `0`', '通知，默认为开启，即 `1`，可选不开启，即 `0`', '圖片，默认为开启，即 `1`，可选不开启，即 `0`']">
+
+分类
+
+| Figures 一覽 | 物品 | 媒体 |
+| ---------- | -- | -- |
+| 0          | 1  | 2  |
+
+语言
+
+| id | 语言         |
+| -- | ---------- |
+|    | en         |
+| de | Deutsch    |
+| es | Español    |
+| fi | Suomeksi   |
+| fr | Français   |
+| it | Italiano   |
+| ja | 日本語        |
+| nl | Nederlands |
+| no | Norsk      |
+| pl | Polski     |
+| pt | Português  |
+| ru | Русский    |
+| sv | Svenska    |
+| zh | 中文         |
+
+</Route>
+
+### 資料庫
+
+<Route author="nczitzk" example="/myfigurecollection/figure" path="/myfigurecollection/:category?/:language?" :paramsDesc="['分类，默认为 Figures一覽', '语言，见上表，默认为空，即 `en`']">
+
+| Figures 一覽 | 物品    | 媒体    |
+| ---------- | ----- | ----- |
+| figures    | goods | media |
+
+</Route>
+
+### 圖片
+
+<Route author="nczitzk" example="/myfigurecollection/potd" path="/myfigurecollection/:category?/:language?" :paramsDesc="['分类，默认为每日圖片', '语言，见上表，默认为空，即 `en`']">
+
+| 每日圖片 | 每週圖片 | 每月圖片 |
+| ---- | ---- | ---- |
+| potd | potw | potm |
 
 </Route>
 
@@ -143,6 +232,24 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="fengkx" example="/duozhuayu/search/JavaScript" path="/duozhuayu/search/:wd" :paramsDesc="['搜索关键词']"/>
 
+## 逛丢
+
+### 国内折扣
+
+<Route author="Fatpandac" example="/guangdiu/k=daily" path="/guangdiu/:query?" :paramsDesc="['链接参数，对应网址问号后的内容']"/>
+
+### 海外折扣
+
+<Route author="Fatpandac" example="/guangdiu/k=daily&c=us" path="/guangdiu/:query?" :paramsDesc="['链接参数，对应网址问号后的内容']"/>
+
+### 一小时风云榜
+
+<Route author="Fatpandac" example="/guangdiu/rank" path="/guangdiu/rank"/>
+
+### 九块九
+
+<Route author="Fatpandac" example="/guangdiu/cheaps/k=clothes" path="/guangdiu/cheaps/:query?" :paramsDesc="['链接参数，对应网址问号后的内容']"/>
+
 ## 好好住
 
 ### 整屋案例
@@ -152,6 +259,20 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 ### 发现
 
 <Route author="hoilc" example="/haohaozhu/discover/厨房" path="/haohaozhu/discover/:keyword?" :paramsDesc="['分类名或关键字，请使用中文']"/>
+
+## 京东
+
+### 商品价格
+
+<Route author="nczitzk" example="/jd/price/526835" path="/jd/price/:id" :paramsDesc="['商品 id，可在商品详情页 URL 中找到']">
+
+::: tip 提示
+
+如商品 <https://item.jd.com/526835.html> 中的 id 为 `526835`，所以路由为 [`/jd/price/526835`](https://rsshub.app/jd/price/526835)
+
+:::
+
+</Route>
 
 ## 京东众筹
 
@@ -250,9 +371,9 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 好价品类榜
 
-| 全部 | 时尚运动 | 3C 家电 | 食品家居 | 日百母婴 | 出行游玩 | 白菜 | 凑单品 |
-| -- | ---- | ----- | ---- | ---- | ---- | -- | --- |
-| 11 | 12   | 13    | 14   | 15   | 16   | 17 | 22  |
+| 全部 | 食品生鲜 | 电脑数码 | 运动户外 | 家用电器 | 白菜 | 服饰鞋包 | 日用百货 |
+| -- | ---- | ---- | ---- | ---- | -- | ---- | ---- |
+| 11 | 12   | 13   | 14   | 15   | 17 | 74   | 75   |
 
 好价电商榜
 
@@ -278,11 +399,17 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 | ----- | ---- | ---- | ---- |
 | hwall | zc   | nb   | hw   |
 
+-   时间跨度
+
+| 3 小时 | 12 小时 | 24 小时 |
+| ---- | ----- | ----- |
+| 3    | 12    | 24    |
+
 </Route>
 
 ### 好文
 
-<Route author="LogicJake" example="/smzdm/haowen/1" path="/smzdm/haowen/:day" :paramsDesc="['以天为时间跨度，默认为all，其余可以选择1，7，30，365']"/>
+<Route author="LogicJake" example="/smzdm/haowen/1" path="/smzdm/haowen/:day?" :paramsDesc="['以天为时间跨度，默认为 `all`，其余可以选择 `1`，`7`，`30`，`365`']"/>
 
 ### 好文分类
 
@@ -320,6 +447,12 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 </Route>
 
+## 特斯拉中国
+
+### 价格
+
+<Route author="xiaokyo" example="/tesla/price" path="/tesla/price" radar="1"/>
+
 ## 玩物志
 
 ### 最新
@@ -350,29 +483,15 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="DIYgod" example="/mi/crowdfunding" path="/mi/crowdfunding"/>
 
+## 小米有品
+
 ### 小米有品众筹
 
-<Route author="DIYgod" example="/mi/youpin/crowdfunding" path="/mi/youpin/crowdfunding"/>
+<Route author="bigfei" example="/xiaomiyoupin/crowdfunding" path="/xiaomiyoupin/crowdfunding"/>
 
 ### 小米有品每日上新
 
-<Route author="xyqfer DIYgod" example="/mi/youpin/new" path="/mi/youpin/new/:sort?" :paramsDesc="['排序，见下表']">
-
-| 个性化排序 | 按销量从高到低 | 按好评从高到低 | 按上新时间从近到远 |
-| ----- | ------- | ------- | --------- |
-| 0     | 1       | 2       | 3         |
-
-</Route>
-
-## 宜家 IKEA
-
-### 宜家 IKEA（英国）- 商品上新
-
-<Route author="HenryQW" example="/ikea/uk/new" path="/ikea/uk/new"/>
-
-### 宜家 IKEA（英国）- 促销
-
-<Route author="HenryQW" example="/ikea/uk/offer" path="/ikea/uk/offer"/>
+<Route author="xyqfer DIYgod bigfei" example="/xiaomiyoupin/latest" path="/xiaomiyoupin/latest" />
 
 ## 优衣库
 
@@ -389,3 +508,15 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 ### 商品上新
 
 <Route author="LogicJake" example="/youzan/goods/13328377" path="/youzan/goods/:id" :paramsDesc="['商铺id']"/>
+
+## 正版中国
+
+### 分类
+
+<Route author="nczitzk" example="/getitfree" path="/getitfree/:category?" :paramsDesc="['分类，见下表，默认为所有类别']">
+
+| 所有类别 | Android | iOS | Mac | PC | UWP | 公告           | 永久免费 | 限时免费     | 限时折扣     |
+| ---- | ------- | --- | --- | -- | --- | ------------ | ---- | -------- | -------- |
+|      | android | ios | mac | pc | uwp | notification | free | giveaway | discount |
+
+</Route>

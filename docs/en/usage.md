@@ -14,7 +14,7 @@ RSSHub supports additional parameters such as content filtering and full-text ex
 
 ## Contribute a New Route
 
-Our thriving community is the key to RSSHub's success, we invite everyone to join us and [contribute new routes](/en/joinus) for all kinds of interesting sources.
+Our thriving community is the key to RSSHub's success, we invite everyone to join us and [contribute new routes](/en/joinus/quick-start.html) for all kinds of interesting sources.
 
 ## Use as a npm Package
 

@@ -1,4 +1,5 @@
 process.env.NODE_NAME = 'mock';
+process.env.ALLOW_ORIGIN = 'rsshub.mock';
 
 const supertest = require('supertest');
 jest.mock('request-promise-native');
@@ -11,10 +12,15 @@ afterAll(() => {
     server.close();
 });
 
+afterAll(() => {
+    delete process.env.NODE_NAME;
+    delete process.env.ALLOW_ORIGIN;
+});
+
 describe('header', () => {
     it(`header`, async () => {
         const response = await request.get('/test/1');
-        expect(response.headers['access-control-allow-origin']).toBe('127.0.0.1:1200');
+        expect(response.headers['access-control-allow-origin']).toBe('rsshub.mock');
         expect(response.headers['access-control-allow-methods']).toBe('GET');
         expect(response.headers['content-type']).toBe('application/xml; charset=utf-8');
         expect(response.headers['cache-control']).toBe(`public, max-age=${config.cache.routeExpire}`);

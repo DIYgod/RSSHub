@@ -1,0 +1,16 @@
+<table>
+  <tr>
+    <th>受理号</th>
+    <th>药品名称</th>
+    <th>申请人名称</th>
+    <th>适应症</th>
+    <th>注册分类</th>
+  </tr>
+  <tr>
+    <td>{{ item.acceptid }}</td>
+    <td>{{ item.drgnamecn }}</td>
+    <td>{{ item.companys }}</td>
+    <td>{{ item.lcmsxkIndication }}</td>
+    <td>{{ item.lcmsxkRegisterkind }}</td>
+  </tr>
+</table>

@@ -1,0 +1,4 @@
+<table>
+    <tr><th>学位授予单位名称</th><th>最新上网批次</th></tr>
+    <tr><td>{{ title }}</td><td>{{ pubDate }}</td></tr>
+</table>

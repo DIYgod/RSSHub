@@ -1,0 +1,14 @@
+<article>
+  <h2>关键词: </h2>
+  {{queryListText}}
+  &nbsp&nbsp&nbsp&nbsp&nbsp
+  <br>
+  {{each queries q}}
+  <h2>{{q.key}}</h2>
+  <p>
+    {{each q.links l}}
+    {{@l}}&nbsp&nbsp
+    {{/each}}
+  </p>
+  {{/each}}
+</article>

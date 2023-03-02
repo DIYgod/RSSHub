@@ -1,0 +1,11 @@
+{{ if cover }}
+<img src="{{ cover }}"
+{{ /if }}
+{{ if content }}
+<p>{{ content }}</p>
+{{ /if }}
+{{ if pages }}
+<% for (let i = 1; i <= pages; i++){ %>
+<img src="https://pic.iresearch.cn/ireport/{{ id }}/{{ i }}.jpg">
+<% } %>
+{{ /if }}

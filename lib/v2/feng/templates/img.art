@@ -1,0 +1,6 @@
+{{ if images }}
+<br>
+{{ each images }}
+<img src="{{ $value.split('?')[0] }}" alt="">
+{{ /each }}
+{{ /if }}

@@ -1,9 +1,0 @@
-<div>
-    <h3>
-        <a href="{{ link }}">{{ title }}</a>
-    </h3>
-    <p>{{ description }}</p>
-    <small><b>来源</b> {{ author }}</small>
-    <br>
-    <small><b>时间</b> {{ pubDate }}</small>
-</div>
