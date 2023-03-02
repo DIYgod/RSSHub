@@ -284,19 +284,19 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 <Route author="TonyRL" example="/nature/siteindex" path="/nature/siteindex"/>
 
-## National Bureau of Economic Research (NBER) Working Papers
+## National Bureau of Economic Research
 
 ### 全部论文
 
-<Route author="5upernova-heng" example="/nber/papers/20" path="/nber/papers/:perPage" :paramsDesc=['paper numbers per page']/>
-
-- 页面文章数量必须为以下值之一：20，50，100. 默认为 50
+<Route author="5upernova-heng" example="/nber/papers" path="/nber/papers/" radar="1"/>
 
 ### 新论文
 
-<Route author="5upernova-heng" example="/nber/news" path="/nber/news"/>
+<Route author="5upernova-heng" example="/nber/news" path="/nber/news" radar="1">
 
 在网站上被标记为 "new" 的论文
+
+</Route>
 
 ## Network and Distributed System Security (NDSS) Symposium
 

@@ -317,13 +317,15 @@ Only some journals are supported.
 
 ### All Papers
 
-<Route author="5upernova-heng" example="/nber/papers" path="/nber/papers/"/>
+<RouteEn author="5upernova-heng" example="/nber/papers" path="/nber/papers/" radar="1"/>
 
 ### New Papers
 
-<Route author="5upernova-heng" example="/nber/news" path="/nber/news"/>
+<RouteEn author="5upernova-heng" example="/nber/news" path="/nber/news" radar="1">
 
 Papers that are published in this week.
+
+</RouteEn>
 
 ## Network and Distributed System Security (NDSS) Symposium
 
