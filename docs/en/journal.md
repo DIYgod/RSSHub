@@ -317,15 +317,13 @@ Only some journals are supported.
 
 ### All Papers
 
-<Route author="5upernova-heng" example="/nber/papers/20" path="/nber/papers/:perPage" :paramsDesc="['paper numbers per page']"/>
-
--   Page size should be one of 20, 50, 100. By default the number is 50.
+<Route author="5upernova-heng" example="/nber/papers" path="/nber/papers/"/>
 
 ### New Papers
 
 <Route author="5upernova-heng" example="/nber/news" path="/nber/news"/>
 
-Papers that are labeled by "new" at the website.
+Papers that are published in this week.
 
 ## Network and Distributed System Security (NDSS) Symposium
 
