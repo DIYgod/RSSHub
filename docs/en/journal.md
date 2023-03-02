@@ -313,7 +313,7 @@ Only some journals are supported.
 
 <RouteEn author="TonyRL" example="/nature/siteindex" path="/nature/siteindex"/>
 
-## National Bureau of Economic Research (NBER) Working Papers
+## National Bureau of Economic Research
 
 ### All Papers
 
