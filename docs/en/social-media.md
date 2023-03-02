@@ -46,11 +46,17 @@ pageClass: routes
 
 </RouteEn>
 
+## Discord
+
+### Channel Messages
+
+<RouteEn author="TonyRL" path="/discord/channel/:channelId" example="/discord/channel/950465850056536084" :paramsDesc="['Channel ID']" radar="1" selfhost="1"/>
+
 ## Disqus
 
 ### Comment
 
-<RouteEn path="/disqus/posts/:forum" example="/disqus/posts/diygod-me" :paramsDesc="['forum, disqus name of the target website']" />
+<RouteEn author="DIYgod" path="/disqus/posts/:forum" example="/disqus/posts/diygod-me" :paramsDesc="['forum, disqus name of the target website']" />
 
 ## Facebook
 
