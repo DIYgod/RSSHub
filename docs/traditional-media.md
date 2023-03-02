@@ -2437,7 +2437,7 @@ category 对应的关键词有
 
 ### 新闻
 
-<Route author="TimWu007" example="/ycwb/1" path="/ycwb/:node/:page?" :paramsDesc="['栏目 id', '页码，默认为第一页结果']">
+<Route author="TimWu007" example="/ycwb/1" path="/ycwb/:node" :paramsDesc="['栏目 id']">
 
 注：小部分栏目的 URL 会给出 nodeid。如未给出，可打开某条新闻链接后，查看网页源代码，搜索 nodeid 的值。
 
