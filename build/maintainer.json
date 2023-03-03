@@ -3700,6 +3700,12 @@
     "/qbittorrent/news": [
         "TonyRL"
     ],
+    "/qdaily/:type/:id": [
+        "WenhuWee",
+        "emdoe",
+        "SivaGao",
+        "HenryQW"
+    ],
     "/qianzhan/analyst/column/:type?": [
         "moke8"
     ],
@@ -5355,7 +5361,6 @@
     "/disqus/posts/:forum": [],
     "/geektime/column/:cid": [],
     "/geektime/news": [],
-    "/qdaily/:type/:id": [],
     "/infzm/:id": [],
     "/dribbble/popular/:timeframe?": [],
     "/dribbble/user/:name": [],
