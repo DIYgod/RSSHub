@@ -46,11 +46,17 @@ pageClass: routes
 
 </RouteEn>
 
+## Discord
+
+### Channel Messages
+
+<RouteEn author="TonyRL" path="/discord/channel/:channelId" example="/discord/channel/950465850056536084" :paramsDesc="['Channel ID']" radar="1" selfhost="1"/>
+
 ## Disqus
 
 ### Comment
 
-<RouteEn path="/disqus/posts/:forum" example="/disqus/posts/diygod-me" :paramsDesc="['forum, disqus name of the target website']" />
+<RouteEn author="DIYgod" path="/disqus/posts/:forum" example="/disqus/posts/diygod-me" :paramsDesc="['forum, disqus name of the target website']" />
 
 ## Facebook
 
@@ -150,7 +156,7 @@ Type
 
 Due to Instagram Private API restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/en/install/) for more.
 
-If you don't want to setup credentials, you can use [Picuki](#picuki).
+If you don't want to setup credentials, you can use [Picnob](#picnob) or [Picuki](#picuki).
 
 :::
 
@@ -232,6 +238,12 @@ These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for us
 ### Website latest works
 
 <RouteEn author="hoilc" example="/piapro/public/music/miku/2" path="/piapro/public/:type/:tag?/:category?" :paramsDesc="['work type, can be `music`,`illust`,`text`','`tag` parameter in url','category ID, `categoryId` parameter in url']"/>
+
+## Picnob
+
+### User Profile
+
+<RouteEn author="TonyRL" example="/picnob/user/stefaniejoosten" path="/picnob/profile/:id" :paramsDesc="['Instagram id']" radar="1" rssbud="1" />
 
 ## Picuki
 
@@ -548,6 +560,60 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 
 <RouteEn author="HenryQW" path="/youtube/playlist/:id/:embed?" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" :paramsDesc="['YouTube playlist id', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1"/>
 
+### Community
+
+<RouteEn author="TonyRL" path="/youtube/community/:handle" example="/youtube/community/@JFlaMusic" :paramsDesc="['YouTube handles or channel id']" radar="1" rssbud="1"/>
+
 ### Subscriptions
 
 <RouteEn author="TonyRL" path="/youtube/subscriptions/:embed?" example="/youtube/subscriptions" :paramsDesc="['Default to embed the video, set to any value to disable embedding']" selfhost="1" radar="1" rssbud="1"/>
+
+### Music Charts
+
+<RouteEn author="TonyRL" path="/youtube/charts/:category?/:country?/:embed?" example="/youtube/charts" :paramsDesc="['Chart, see table below, default to `TopVideos`', 'Country Code, see table below, default to global', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1">
+
+::: details Chart
+| Top artists | Top songs | Top music videos | Trending |
+| ----------- | --------- | ---------------- | -------- |
+| TopArtists  | TopSongs  | TopVideos        | TrendingVideos |
+:::
+
+::: details Country Code
+| Argentina | Australia | Austria | Belgium | Bolivia | Brazil | Canada |
+| --------- | --------- | ------- | ------- | ------- | ------ | ------ |
+| ar        | au        | at      | be      | bo      | br     | ca     |
+
+| Chile | Colombia | Costa Rica | Czechia | Denmark | Dominican Republic | Ecuador |
+| ----- | -------- | ---------- | ------- | ------- | ------------------ | ------- |
+| cl    | co       | cr         | cz      | dk      | do                 | ec      |
+
+| Egypt | El Salvador | Estonia | Finland | France | Germany | Guatemala |
+| ----- | ----------- | ------- | ------- | ------ | ------- | --------- |
+| eg    | sv          | ee      | fi      | fr     | de      | gt        |
+
+| Honduras | Hungary | Iceland | India | Indonesia | Ireland | Israel | Italy |
+| -------- | ------- | ------- | ----- | --------- | ------- | ------ | ----- |
+| hn       | hu      | is      | in    | id        | ie      | il     | it    |
+
+| Japan | Kenya | Luxembourg | Mexico | Netherlands | New Zealand | Nicaragua |
+| ----- | ----- | ---------- | ------ | ----------- | ----------- | --------- |
+| jp    | ke    | lu         | mx     | nl          | nz          | ni        |
+
+| Nigeria | Norway | Panama | Paraguay | Peru | Poland | Portugal | Romania |
+| ------- | ------ | ------ | -------- | ---- | ------ | -------- | ------- |
+| ng      | no     | pa     | py       | pe   | pl     | pt       | ro      |
+
+| Russia | Saudi Arabia | Serbia | South Africa | South Korea | Spain | Sweden | Switzerland |
+| ----- | ------------- | ------ | ------------ | ----------- | ----- | ------ | ----------- |
+| ru    | sa            | rs     | za           | kr          | es    | se     | ch          |
+
+| Tanzania | Turkey | Uganda | Ukraine | United Arab Emirates | United Kingdom | United States |
+| -------- | ------ | ------ | ------- | -------------------- | -------------- | ------------- |
+| tz       | tr     | ug     | ua      | ae                   | gb             | us            |
+
+| Uruguay | Zimbabwe |
+| ------- | -------- |
+| uy      | zw       |
+:::
+
+</RouteEn>

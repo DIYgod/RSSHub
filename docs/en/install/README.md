@@ -642,6 +642,10 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `BITBUCKET_USERNAME`: Your Bitbucket username
     -   `BITBUCKET_PASSWORD`: Your Bitbucket app password
 
+-   Discord
+
+    -   `DISCORD_AUTHORIZATION`: Discord authorization token, can be found in the header of XHR requests after logging in Discord web client
+
 -   Discuz cookie
 
     -   `DISCUZ_COOKIE_{cid}`: Cookie of a forum powered by Discuz, cid can be anything from 00 to 99. When visiting a Discuz route, use cid to specify this cookie.

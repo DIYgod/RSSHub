@@ -1,9 +1,7 @@
 {
+    "framework": null,
     "github": {
         "silent": true
     },
-    "routes": [
-        { "src": "/api/.*", "dest": "/api/vercel.js" },
-        { "src": "/.*", "dest": "/api/vercel.js" }
-    ]
+    "routes": [{ "src": "/.*", "dest": "/api/vercel.js" }]
 }
