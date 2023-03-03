@@ -2286,6 +2286,14 @@ category 对应的关键词有
 
 <Route author="MisteryMonster" example="/bjnews/epaper/A" path="/bjnews/epaper/:cat" :paramsDesc="['新京报叠名：`A`,`B`,`C`,`D`, 特刊为`special`']"/>
 
+## 新蓝网（浙江广播电视集团）
+
+### 浙江新闻联播
+
+<Route author="yhkang" example="/cztv/zjxwlb" path="/cztv/zjxwlb">
+
+</Route>
+
 ## 新浪科技
 
 ### 科学探索
