@@ -59,6 +59,9 @@
     "/12306/zxdt/:id?": [
         "LogicJake"
     ],
+    "/0818tuan/:listId?": [
+        "TonyRL"
+    ],
     "/18comic/album/:id": [
         "nczitzk"
     ],
