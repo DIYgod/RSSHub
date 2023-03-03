@@ -234,6 +234,20 @@ Return results from 2020
 | smart-cities | /technologyreview/smart-cities|
 | space | /technologyreview/space |
 
+## National Bureau of Economic Research
+
+### All Papers
+
+<RouteEn author="5upernova-heng" example="/nber/papers" path="/nber/papers" radar="1" supportScihub="1"/>
+
+### New Papers
+
+<RouteEn author="5upernova-heng" example="/nber/news" path="/nber/news" radar="1" supportScihub="1">
+
+Papers that are published in this week.
+
+</RouteEn>
+
 ## Nature Journal
 
 ::: tip Tips

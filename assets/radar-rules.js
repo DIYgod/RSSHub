@@ -108,14 +108,6 @@
             { title: '栏目', docs: 'https://docs.rsshub.app/other.html#wegene', source: '/crowdsourcing', target: '/wegene/column/all/all' },
         ],
     },
-    'qdaily.com': {
-        _name: '好奇心日报',
-        www: [
-            { title: '标签', docs: 'https://docs.rsshub.app/new-media.html#hao-qi-xin-ri-bao', source: '/tags/:idd', target: (params) => `/qdaily/tag/${params.idd.replace('.html', '')}` },
-            { title: '栏目', docs: 'https://docs.rsshub.app/new-media.html#hao-qi-xin-ri-bao', source: '/special_columns/:idd', target: (params) => `/qdaily/column/${params.idd.replace('.html', '')}` },
-            { title: '分类', docs: 'https://docs.rsshub.app/new-media.html#hao-qi-xin-ri-bao', source: '/categories/:idd', target: (params) => `/qdaily/category/${params.idd.replace('.html', '')}` },
-        ],
-    },
     '3ycy.com': { _name: '三界异次元', www: [{ title: '最近更新', docs: 'https://docs.rsshub.app/anime.html#san-jie-yi-ci-yuan', source: '/', target: '/3ycy/home' }] },
     'emi-nitta.net': {
         _name: 'Emi Nitta',
