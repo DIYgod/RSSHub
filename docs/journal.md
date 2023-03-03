@@ -210,7 +210,7 @@ pageClass: routes
 
 ### 全部论文
 
-<Route author="5upernova-heng" example="/nber/papers" path="/nber/papers/" radar="1" supportScihub="1"/>
+<Route author="5upernova-heng" example="/nber/papers" path="/nber/papers" radar="1" supportScihub="1"/>
 
 ### 新论文
 

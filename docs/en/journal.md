@@ -238,7 +238,7 @@ Return results from 2020
 
 ### All Papers
 
-<RouteEn author="5upernova-heng" example="/nber/papers" path="/nber/papers/" radar="1" supportScihub="1"/>
+<RouteEn author="5upernova-heng" example="/nber/papers" path="/nber/papers" radar="1" supportScihub="1"/>
 
 ### New Papers
 
