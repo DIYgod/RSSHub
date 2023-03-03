@@ -148,6 +148,12 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 <Route author="chazeon" example="/stratechery" path="/stratechery" />
 
+## v1tx
+
+### 最新文章
+
+<Route author="TonyRL" example="/v1tx" path="/v1tx" radar="1" rssbud="1" />
+
 ## Whoscall
 
 ### 最新文章
