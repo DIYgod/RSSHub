@@ -48,6 +48,12 @@ pageClass: routes
 
 </Route>
 
+## Bellroy
+
+### 新发布
+
+<Route author="NavePnow" example="/bellroy/new-releases" path="/bellroy/new-releases" />
+
 ## booth.pm
 
 ### 店铺
