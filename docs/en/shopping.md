@@ -40,7 +40,7 @@ Parameter `time` only works when `mostwanted` is chosen as the category.
 
 ### New Releases
 
-<Route author="NavePnow" example="/bellroy/new-releases" path="/bellroy/new-releases" />
+<RouteEn author="NavePnow" example="/bellroy/new-releases" path="/bellroy/new-releases" />
 
 ## booth.pm
 
