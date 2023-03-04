@@ -4,6 +4,18 @@ pageClass: routes
 
 # 购物
 
+## 0818 团
+
+### 分类
+
+<Route author="TonyRL" example="/0818tuan" path="/0818tuan/:listId?" :paramsDesc="['活动分类，见下表，默认为 `1`']" radar="1">
+
+| 最新线报 | 实测活动 | 优惠券 |
+| ---- | ---- | --- |
+| 1    | 2    | 3   |
+
+</Route>
+
 ## Alter 中国
 
 ### 新闻
