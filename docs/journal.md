@@ -206,6 +206,20 @@ pageClass: routes
 
 <Route author="Derekmini" example="/mdpi/analytica" path="/mdpi/:journal" :paramsDesc="['期刊名称，从期刊主页 URL 中获得']" radar="1" rssbud="1"/>
 
+## National Bureau of Economic Research
+
+### 全部论文
+
+<Route author="5upernova-heng" example="/nber/papers" path="/nber/papers" radar="1" supportScihub="1"/>
+
+### 新论文
+
+<Route author="5upernova-heng" example="/nber/news" path="/nber/news" radar="1" supportScihub="1">
+
+在网站上被标记为 "new" 的论文
+
+</Route>
+
 ## Nature 系列
 
 ::: tip Tips
