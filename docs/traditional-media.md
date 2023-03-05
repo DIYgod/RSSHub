@@ -1069,7 +1069,7 @@ IT・科学 tech_science
 
 ### 最新报道
 
-<Route author="Rongronggg9" example="/kyodonews" path="/kyodonews/:language?/:keyword?" :paramsDesc="['语言: `china` = 简体中文 (默认), `tchina` = 繁體中文', '关键词']">  
+<Route author="Rongronggg9" example="/kyodonews" path="/kyodonews/:language?/:keyword?" :paramsDesc="['语言: `china` = 简体中文 (默认), `tchina` = 繁體中文', '关键词']">
 
 `keyword` 为关键词，由于共同网有许多关键词并不在主页列出，此处不一一列举，可从关键词页的 URL 的最后一级路径中提取。如 `日中关系` 的关键词页 URL 为 `https://china.kyodonews.net/news/japan-china_relationship`, 则将 `japan-china_relationship` 填入 `keyword`。特别地，当填入 `rss` 时，将从共同网官方 RSS 中抓取文章；略去时，将从首页抓取最新报道 (注意：首页更新可能比官方 RSS 稍慢)。
 
@@ -1938,6 +1938,24 @@ category 对应的关键词有
 
 </Route>
 
+## 日本经济新闻
+
+### 首页
+
+<Route author="zjysdhr" example="/nikkei/index" path="/nikkei/index" radar="1" rssbud="1" />
+
+### 新聞
+
+<Route author="Arracc" example="/nikkei/news" path="/nikkei/:category/:article_type?" :paramsDesc="['版块', '文章类型，`free` 仅无料全文，缺省为无料全文、有料非全文']">
+
+综合页文章标题添加板块标签
+
+| 総合   | オピニオン   | 経済      | 政治       | 金融        | マーケット    | ビジネス | マネーのまなび | テック        | 国際            | スポーツ   | 社会・調査   | 地域    | 文化      | ライフスタイル   |
+| ---- | ------- | ------- | -------- | --------- | -------- | ---- | ------- | ---------- | ------------- | ------ | ------- | ----- | ------- | --------- |
+| news | opinion | economy | politics | financial | business | 不支持  | 不支持     | technology | international | sports | society | local | culture | lifestyle |
+
+</Route>
+
 ## 日本经济新闻中文版
 
 ### 新闻
@@ -1953,28 +1971,6 @@ category 对应的关键词有
 特别地，当 `category` 填入 `rss` 后（即路由为 [`/nikkei-cn/cn/rss`](https://rsshub.app/nikkei-cn/cn/rss)），此时返回的是 [官方 RSS 的内容](https://cn.nikkei.com/rss.html)
 
 :::
-
-</Route>
-
-## 日本経済新聞
-
-### ホームページ
-
-<Route author="zjysdhr" example="/nikkei/index" path="/nikkei/index" radar="1" rssbud="1">
-
-日文版首页
-
-</Route>
-
-### 新聞
-
-<Route author="Arracc" example="/nikkei/news" path="/nikkei/:category/:article_type?" :paramsDesc="['版块','文章类型，free 仅无料全文，缺省为无料全文、有料非全文']">
-
-综合页文章标题添加板块标签
-
-| 総合   | マネーのまなび | 経済・金融   | 政治       | ビジネス     | マネーのまなび | テクノロジー     | 国際            | スポーツ   | 社会・くらし  | オピニオン   | 文化      | FT  | 地域    | 日経ビジネス | ライフ |
-| ---- | ------- | ------- | -------- | -------- | ------- | ---------- | ------------- | ------ | ------- | ------- | ------- | --- | ----- | ------ | --- |
-| news | 未支持     | economy | politics | business | 未支持     | technology | international | sports | society | opinion | culture | 未支持 | local | 未支持    | 未支持 |
 
 </Route>
 

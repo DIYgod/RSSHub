@@ -723,3 +723,19 @@ Free articles only.
 | 　news 　 | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial | koushitsu |
 
 </RouteEn>
+
+## 日本経済新聞
+
+### Home
+
+<RouteEn author="zjysdhr" example="/nikkei/index" path="/nikkei/index" radar="1" rssbud="1" />
+
+### News
+
+<RouteEn author="Arracc" example="/nikkei/news" path="/nikkei/:category/:article_type?" :paramsDesc="['Category, see table below','Only includes free articles, set `free` to enable, disabled by default']">
+
+| 総合  | オピニオン | 経済     |  政治     | 金融      | マーケット | ビジネス | マネーのまなび | テック      | 国際           | スポーツ | 社会・調査 |  地域    | 文化     | ライフスタイル  |
+| ---- | --------- | ------- | -------- | --------- | -------- | ------- | ----------- | ---------- | ------------- | ------- | --------- | ------- | ------- | ------------- |
+| news |  opinion  | economy | politics | financial | business | 不支持   | 不支持       | technology | international | sports  | society   | local   | culture | lifestyle     |
+
+</RouteEn>
