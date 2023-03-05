@@ -354,6 +354,9 @@
     "/appstore/gofans": [
         "HenryQW"
     ],
+    "/arcteryx/new-arrivals/:country/:gender": [
+        "NavePnow"
+    ],
     "/arknights/announce/:platform?/:group?": [
         "swwind"
     ],
