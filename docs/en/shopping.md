@@ -36,6 +36,12 @@ Parameter `time` only works when `mostwanted` is chosen as the category.
 
 </RouteEn>
 
+## Bellroy
+
+### New Releases
+
+<RouteEn author="NavePnow" example="/bellroy/new-releases" path="/bellroy/new-releases" />
+
 ## booth.pm
 
 ### Shop
@@ -129,22 +135,22 @@ Category
 
 Language
 
-| Id | Language   |
-| -- | ---------- |
-|    | en         |
-| de | Deutsch    |
-| es | Español    |
-| fi | Suomeksi   |
-| fr | Français   |
-| it | Italiano   |
-| ja | 日本語        |
-| nl | Nederlands |
-| no | Norsk      |
-| pl | Polski     |
-| pt | Português  |
-| ru | Русский    |
-| sv | Svenska    |
-| zh | 中文         |
+| Id  | Language   |
+| --- | ---------- |
+|     | en         |
+| de  | Deutsch    |
+| es  | Español    |
+| fi  | Suomeksi   |
+| fr  | Français   |
+| it  | Italiano   |
+| ja  | 日本語     |
+| nl  | Nederlands |
+| no  | Norsk      |
+| pl  | Polski     |
+| pt  | Português  |
+| ru  | Русский    |
+| sv  | Svenska    |
+| zh  | 中文       |
 
 </RouteEn>
 
