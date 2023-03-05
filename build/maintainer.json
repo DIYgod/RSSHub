@@ -487,6 +487,9 @@
     "/behance/:user/:type?": [
         "MisteryMonster"
     ],
+    "/bellroy/new-releases": [
+        "NavePnow"
+    ],
     "/bendibao/news/:city": [
         "nczitzk"
     ],

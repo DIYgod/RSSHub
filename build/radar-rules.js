@@ -1385,6 +1385,12 @@
 
                     return `/behance/${uid}${type}`;
                 } } ] },
+  "bellroy.com":{ _name:"Bellroy",
+    ".":[ { title:"新发布",
+        docs:"https://docs.rsshub.app/shopping.html#bellroy",
+        source:[ "/collection/new-releases",
+          "/" ],
+        target:"/bellroy/new-releases" } ] },
   "bendibao.com":{ _name:"本地宝",
     ".":[ { title:"焦点资讯",
         docs:"https://docs.rsshub.app/new-media.html#ben-di-bao-jiao-dian-zi-xun",
