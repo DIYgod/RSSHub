@@ -4,6 +4,12 @@ pageClass: routes
 
 # 程序更新
 
+## Amazon
+
+### Kindle 软件更新
+
+<Route author="NavePnow" example="/amazon/kindle/software-updates" path="/amazon/kindle/software-updates"/>
+
 ## AMD
 
 ### 显卡驱动更新
@@ -315,12 +321,6 @@ pageClass: routes
 ### 苹果固件更新 - IPSWs/OTAs 版本
 
 <Route author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" :paramsDesc="['填写ipsws或otas,得到不同版本的固件','产品名, `http://rsshub.app/ipsw/index/ipsws/iPod`如填写iPad则关注iPad整个系列(ptype选填为ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`如果填写具体的iPhone11,8则关注这个机型的ipsws固件信息']"/>
-
-## Kindle
-
-### 软件更新
-
-<Route author="NavePnow" example="/kindle/software-updates" path="/kindle/software-updates"/>
 
 ## Logseq
 
