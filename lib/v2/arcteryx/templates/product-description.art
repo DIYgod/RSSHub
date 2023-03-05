@@ -1,0 +1,6 @@
+<div>
+    <img src={{item.image}}>
+    <br><br>
+    {{item.short_description}}
+    <br><br>
+</div>
