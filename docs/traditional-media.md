@@ -305,12 +305,6 @@ pageClass: routes
 
 </Route>
 
-## Nikkei Asia
-
-### 最新新闻
-
-<Route author="rainrdx" example="/nikkei-asia" path="/nikkei-asia"/>
-
 ## Now 新聞
 
 ### 新聞
@@ -1971,6 +1965,10 @@ category 对应的关键词有
 :::
 
 </Route>
+
+### Nikkei Asia 最新新闻
+
+<Route author="rainrdx" example="/nikkei/asia" path="/nikkei/asia" radar="1"/>
 
 ## 厦门网
 
