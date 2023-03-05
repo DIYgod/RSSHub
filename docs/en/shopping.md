@@ -36,6 +36,32 @@ Parameter `time` only works when `mostwanted` is chosen as the category.
 
 </RouteEn>
 
+## Arcteryx
+
+### New Arrivals
+
+<RouteEn author="NavePnow" example="/arcteryx/new-arrivals/us/mens" path="/arcteryx/new-arrivals/:country/:gender" :paramsDesc="['country', 'gender']">
+
+Country
+
+| United States | Canada | United Kingdom |
+| ------------- | ------ | -------------- |
+| us            | ca     | gb             |
+
+gender
+
+| male | female |
+| ---- | ------ |
+| mens | womens |
+
+::: tip
+
+Parameter `country` can be found within the url of `Arcteryx` website.
+
+:::
+
+</RouteEn>
+
 ## Bellroy
 
 ### New Releases
