@@ -873,11 +873,11 @@ pageClass: routes
 
 ### 论坛
 
-<Route author="akynazh" example="/sjs/forum/51" path="/sjs/forum/:fid" :paramDesc="['子论坛 id']">
+<Route author="akynazh" example="/xsijishe/forum/51" path="/xsijishe/forum/:fid" :paramDesc="['子论坛 id']">
 
 ::: 关于子论坛 id 的获取方法
 
-`/sjs/forum/51` 对应于论坛 <https://xsijishe.com/forum-51-1.html>，这个论坛的 fid 为 51，也就是 `forum-{fid}-1` 中的 fid。
+`/xsijishe/forum/51` 对应于论坛 <https://xsijishe.com/forum-51-1.html>，这个论坛的 fid 为 51，也就是 `forum-{fid}-1` 中的 fid。
 
 :::
 
