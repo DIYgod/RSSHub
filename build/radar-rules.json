@@ -1537,6 +1537,18 @@
       }
     ]
   },
+  "amazon.com": {
+    "_name": "Amazon",
+    ".": [
+      {
+        "title": "Kindle 软件更新",
+        "docs": "https://docs.rsshub.app/program-update.html#amazon",
+        "source": [
+          "/gp/help/customer/display.html"
+        ]
+      }
+    ]
+  },
   "android.com": {
     "_name": "Android Developers",
     "developer": [
