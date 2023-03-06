@@ -3935,6 +3935,35 @@
       }
     ]
   },
+  "cls.cn": {
+    "_name": "财联社",
+    ".": [
+      {
+        "title": "电报",
+        "docs": "https://docs.rsshub.app/finance.html#cai-lian-she",
+        "sources": [
+          "/telegraph",
+          "/"
+        ],
+        "target": "/cls/telegraph"
+      },
+      {
+        "title": "深度",
+        "docs": "https://docs.rsshub.app/finance.html#cai-lian-she",
+        "sources": [
+          "/depth"
+        ]
+      },
+      {
+        "title": "热门文章排行榜",
+        "docs": "https://docs.rsshub.app/finance.html#cai-lian-she",
+        "sources": [
+          "/"
+        ],
+        "target": "/cls/hot"
+      }
+    ]
+  },
   "cmde.org.cn": {
     "_name": "国家药品监督管理局医疗器械技术审评中心",
     "www": [
