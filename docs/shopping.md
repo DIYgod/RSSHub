@@ -222,7 +222,7 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 ### New Arrivals(USA)
 
-<Route author="NavePnow" example="/snow-peak/new-arrivals" path="/snow-peak/new-arrivals"/>
+<Route author="NavePnow" example="/snowpeak/us/new-arrivals" path="/snowpeak/us/new-arrivals"/>
 
 ## The Independent
 

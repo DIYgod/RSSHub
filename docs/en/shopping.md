@@ -178,7 +178,7 @@ Language
 
 ### New Arrivals(USA)
 
-<RouteEn author="NavePnow" example="/snow-peak/new-arrivals" path="/snow-peak/new-arrivals"/>
+<RouteEn author="NavePnow" example="/snowpeak/us/new-arrivals" path="/snowpeak/us/new-arrivals"/>
 
 ## The Independent
 
