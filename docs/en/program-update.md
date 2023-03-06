@@ -8,7 +8,7 @@ pageClass: routes
 
 ### Kindle Software Updates
 
-<RouteEn author="NavePnow" example="/amazon/kindle/software-updates" path="/amazon/kindle/software-updates"/>
+<RouteEn author="NavePnow" example="/amazon/kindle/software-updates" path="/amazon/kindle/software-updates" radar="1"/>
 
 ## Android
 
