@@ -1,4 +1,11 @@
 <div>
-    <img src={{imgUrl}}>
-    <br><br>
+    Variant:
+    <br>
+    {{each product.variants}}
+    {{$value.name}}
+    <br>
+    {{/each}}
+    {{each product.images}}
+    <img src={{$value}}>
+    {{/each}}
 </div>
