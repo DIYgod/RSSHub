@@ -174,6 +174,12 @@ Language
 
 <RouteEn author="nczitzk" example="/shopback/shopee-mart" path="/shopback/:store" :paramsDesc="['Store, can be found in URL']"/>
 
+## Snow Peak
+
+### New Arrivals(USA)
+
+<RouteEn author="NavePnow" example="/snow-peak/new-arrivals" path="/snow-peak/new-arrivals"/>
+
 ## The Independent
 
 ### PS5 stock UK

@@ -218,6 +218,12 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="nczitzk" example="/shopback/shopee-mart" path="/shopback/:store" :paramsDesc="['店铺名，可在 URL 中找到']"/>
 
+## Snow Peak
+
+### New Arrivals(USA)
+
+<Route author="NavePnow" example="/snow-peak/new-arrivals" path="/snow-peak/new-arrivals"/>
+
 ## The Independent
 
 ### PS5 stock UK
