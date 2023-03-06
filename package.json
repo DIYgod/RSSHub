@@ -124,7 +124,7 @@
     "koa-favicon": "2.1.0",
     "koa-mount": "4.0.0",
     "lru-cache": "7.18.3",
-    "lz-string": "1.4.4",
+    "lz-string": "1.5.0",
     "mailparser": "3.6.4",
     "markdown-it": "13.0.1",
     "module-alias": "2.2.2",
