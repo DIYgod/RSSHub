@@ -350,16 +350,10 @@ Only `s00017` is in English.
 | hi     | id               | ko  | fa    | pt        | ru      | es      |
 
 | Kiswahili | ภาษาไทย | Türkçe | Українська | اردو | Tiếng Việt |
-| --------- | | ------- | ------ | ---------- | ---- | ---------- |
+| --------- | ------- | ------ | ---------- | ---- | ---------- |
 | sw        | th      | tr     | uk         | ur   | vi         |
 
 </RouteEn>
-
-## Nikkei Asia
-
-### Latest News
-
-<RouteEn author="rainrdx" example="/nikkei-asia" path="/nikkei-asia"/>
 
 ## Radio Free Asia (RFA)
 
@@ -659,6 +653,26 @@ Provides all of the articles by the specified New York Times author.
 | picture-books|
 | series-books|
 | young-adult-hardcover|
+
+## The Nikkei 日本経済新聞
+
+### Home
+
+<RouteEn author="zjysdhr" example="/nikkei/index" path="/nikkei/index" radar="1" rssbud="1" />
+
+### News
+
+<RouteEn author="Arracc" example="/nikkei/news" path="/nikkei/:category/:article_type?" :paramsDesc="['Category, see table below','Only includes free articles, set `free` to enable, disabled by default']">
+
+| 総合  | オピニオン | 経済     |  政治     | 金融      | マーケット | ビジネス | マネーのまなび | テック      | 国際           | スポーツ | 社会・調査 |  地域    | 文化     | ライフスタイル  |
+| ---- | --------- | ------- | -------- | --------- | -------- | ------- | ----------- | ---------- | ------------- | ------- | --------- | ------- | ------- | ------------- |
+| news |  opinion  | economy | politics | financial | business | 不支持   | 不支持       | technology | international | sports  | society   | local   | culture | lifestyle     |
+
+</RouteEn>
+
+### Nikkei Asia Latest News
+
+<RouteEn author="rainrdx" example="/nikkei/asia" path="/nikkei/asia" radar="1"/>
 
 ## The Wall Street Journal (WSJ)
 

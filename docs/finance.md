@@ -224,23 +224,27 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ### 电报
 
-<Route author="nczitzk" example="/cls/telegraph" path="/cls/telegraph/:category?" :paramsDesc="['分类，见下表']">
+<Route author="nczitzk" example="/cls/telegraph" path="/cls/telegraph/:category?" :paramsDesc="['分类，见下表，默认为全部']" radar="1">
 
-| 看盘    | 公告           | 解读      | 加红  | 推送    | 提醒     | 基金   |
-| ----- | ------------ | ------- | --- | ----- | ------ | ---- |
-| watch | announcement | explain | red | jpush | remind | fund |
+| 看盘    | 公司           | 解读      | 加红  | 推送    | 提醒     | 基金   | 港股 |
+| ----- | ------------ | ------- | --- | ----- | ------ | ---- | -- |
+| watch | announcement | explain | red | jpush | remind | fund | hk |
 
 </Route>
 
 ### 深度
 
-<Route author="nczitzk" example="/cls/depth/1000" path="/cls/depth/:category?" :paramsDesc="['分类代码，可在首页导航栏的目标网址 URL 中找到']">
+<Route author="nczitzk" example="/cls/depth/1000" path="/cls/depth/:category?" :paramsDesc="['分类代码，可在首页导航栏的目标网址 URL 中找到']" radar="1">
 
-| 要闻   | 股市   | 环球   | 公司   | 地产   | 券商   | 金融   | 汽车   | 科创版  |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 1000 | 1003 | 1007 | 1005 | 1006 | 1118 | 1032 | 1119 | 1111 |
+| 头条   | 股市   | 港股   | 环球   | 公司   | 券商   | 基金   | 地产   | 金融   | 汽车   | 科创版  | 品见   | 期货   | 投教   |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 1000 | 1003 | 1135 | 1007 | 1005 | 1118 | 1110 | 1006 | 1032 | 1119 | 1111 | 1160 | 1124 | 1176 |
 
 </Route>
+
+### 热门文章排行榜
+
+<Route author="5upernova-heng" example="/cls/hot" path="/cls/hot" radar="1"/>
 
 ## 第一财经杂志
 
