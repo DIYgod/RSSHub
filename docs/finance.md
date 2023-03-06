@@ -242,9 +242,7 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-<Route author="5upernova-heng" example="/cls/hot" path="/cls/hot">
-
-</Route>
+<Route author="5upernova-heng" example="/cls/hot" path="/cls/hot" />
 
 ## 第一财经杂志
 
