@@ -4,6 +4,12 @@ pageClass: routes
 
 # 程序更新
 
+## Amazon
+
+### Kindle 软件更新
+
+<Route author="NavePnow" example="/amazon/kindle/software-updates" path="/amazon/kindle/software-updates" radar="1"/>
+
 ## AMD
 
 ### 显卡驱动更新

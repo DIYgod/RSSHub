@@ -4,6 +4,18 @@ pageClass: routes
 
 # 购物
 
+## 0818 团
+
+### 分类
+
+<Route author="TonyRL" example="/0818tuan" path="/0818tuan/:listId?" :paramsDesc="['活动分类，见下表，默认为 `1`']" radar="1">
+
+| 最新线报 | 实测活动 | 优惠券 |
+| ---- | ---- | --- |
+| 1    | 2    | 3   |
+
+</Route>
+
 ## Alter 中国
 
 ### 新闻
@@ -35,6 +47,38 @@ pageClass: routes
 :::
 
 </Route>
+
+## Arcteryx
+
+### 新发布
+
+<Route author="NavePnow" example="/arcteryx/new-arrivals/us/mens" path="/arcteryx/new-arrivals/:country/:gender" :paramsDesc="['国家', '性别']">
+
+国家
+
+| 美国 | 加拿大 | 英国 |
+| -- | --- | -- |
+| us | ca  | gb |
+
+性别
+
+| 男    | 女      |
+| ---- | ------ |
+| mens | womens |
+
+::: tip 提示
+
+参数 `country` 可以在 `Arcteryx` 官网的 URL 中找到。
+
+:::
+
+</Route>
+
+## Bellroy
+
+### 新发布
+
+<Route author="NavePnow" example="/bellroy/new-releases" path="/bellroy/new-releases" />
 
 ## booth.pm
 
