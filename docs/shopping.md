@@ -48,6 +48,38 @@ pageClass: routes
 
 </Route>
 
+## Arcteryx
+
+### 新发布
+
+<Route author="NavePnow" example="/arcteryx/new-arrivals/us/mens" path="/arcteryx/new-arrivals/:country/:gender" :paramsDesc="['国家', '性别']">
+
+国家
+
+| 美国 | 加拿大 | 英国 |
+| -- | --- | -- |
+| us | ca  | gb |
+
+性别
+
+| 男    | 女      |
+| ---- | ------ |
+| mens | womens |
+
+::: tip 提示
+
+参数 `country` 可以在 `Arcteryx` 官网的 URL 中找到。
+
+:::
+
+</Route>
+
+## Bellroy
+
+### 新发布
+
+<Route author="NavePnow" example="/bellroy/new-releases" path="/bellroy/new-releases" />
+
 ## booth.pm
 
 ### 店铺
