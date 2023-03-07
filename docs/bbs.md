@@ -869,6 +869,20 @@ pageClass: routes
 
 <Route author="nczitzk" example="/newsmth/account/fef705ec94819a5a87941759e33c0982" path="/newsmth/account/:id" :paramsDesc="['用户 id，可在用户页的 URL 中找到']"/>
 
+## 司机社
+
+### 论坛
+
+<Route author="akynazh" example="/xsijishe/forum/51" path="/xsijishe/forum/:fid" :paramDesc="['子论坛 id']" radar="1">
+
+::: tip 关于子论坛 id 的获取方法
+
+`/xsijishe/forum/51` 对应于论坛 <https://xsijishe.com/forum-51-1.html>，这个论坛的 fid 为 51，也就是 `forum-{fid}-1` 中的 fid。
+
+:::
+
+</Route>
+
 ## 天涯论坛
 
 ### 子版块
