@@ -1216,17 +1216,21 @@ pageClass: routes
 
 ## 中国证券监督管理委员会
 
-### 发审委公告
+### 通用
 
-<Route author="chinobing" example="/csrc/fashenwei" path="/csrc/fashenwei"/>
+<Route author="chinobing LogicJake" example="/gov/csrc/news/c101975/zfxxgk_zdgk.shtml" path="/gov/csrc/news/:suffix*" :paramsDesc="['路径，预设为 `c100028/common_xq_list.shtml`']" radar="1">
 
-### 证监会消息
+::: tip 提示
+路径处填写对应页面 URL 中 `http://www.csrc.gov.cn/csrc/` 后的字段。下面是一个例子。
 
-<Route author="chinobing LogicJake" example="/csrc/news/zjhxwfb-xwfbh" path="/csrc/news/:suffix?" :paramsDesc="['支持形如 `http://www.csrc.gov.cn/pub/newsite/*/*` 的网站，将 newsite 后面的两段网址后缀以 - 连接']" />
+若订阅 [证监会要闻](http://www.csrc.gov.cn/csrc/c100028/common_xq_list.shtml) 则将对应页面 URL <http://www.csrc.gov.cn/csrc/c100028/common_xq_list.shtml> 中 `http://www.csrc.gov.cn/csrc/` 后的字段 `c100028/common_xq_list.shtml` 作为路径填入。此时路由为 [`/gov/csrc/news/c100028/common_xq_list.shtml`](https://rsshub.app/gov/csrc/news/c100028/common_xq_list.shtml)
+:::
+
+</Route>
 
 ### 申请事项进度
 
-<Route author="hillerliao" example="/csrc/auditstatus/:apply_id" path="/csrc/auditstatus" :paramsDesc="['事项类别id，`https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数']"/>
+<Route author="hillerliao" example="/gov/csrc/auditstatus/9ce91cf2d750ee62de27fbbcb05fa483" path="/gov/csrc/auditstatus/:apply_id" :paramsDesc="['事项类别id，`https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数']" radar="1"/>
 
 ## 中国政府网
 

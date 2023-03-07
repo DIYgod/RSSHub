@@ -1,0 +1,4 @@
+{{ if item.paywall }}
+    {{ if item.image }}{{@ item.image }}<br>{{ /if }}
+{{ /if }}
+{{@ description }}
