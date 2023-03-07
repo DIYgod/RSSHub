@@ -572,6 +572,20 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 <Route author="Jeason0228" example="/sketch/updates" path="/sketch/updates"  />
 
+## Sony
+
+### Software Downloads
+
+<Route author="NavePnow" example="/sony/downloads/product/nw-wm1am2" path="/sony/downloads/:productType/:productId" :paramsDesc="['产品类别', '产品Id']">
+
+::: tip 提示
+
+打开 `https://www.sony.com/electronics/support` 并搜索对应的产品，比如 `Sony A7M4` 对应的网站是 `https://www.sony.com/electronics/support/e-mount-body-ilce-7-series/ilce-7m4/downloads`，`productType` 为 `e-mount-body-ilce-7-series`, `productId` 为 `ilce-7m4`
+
+:::
+
+</Route>
+
 ## Thunderbird
 
 ### 更新日志

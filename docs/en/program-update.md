@@ -489,6 +489,21 @@ See [#nintendo](/game.html#nintendo)
 
 <RouteEn author="Jeason0228" example="/sketch/updates" path="/sketch/updates"  />
 
+## Sony
+
+### Software Downloads
+
+<RouteEn author="NavePnow" example="/sony/downloads/product/nw-wm1am2" path="/sony/downloads/:productType/:productId" :paramsDesc="['product type', 'product id']">
+
+::: tip
+
+Open `https://www.sony.com/electronics/support` and search for the corresponding product, such as `Sony A7M4`, the website corresponding to which is `https://www.sony.com/electronics/support/e-mount-body-ilce-7-series/ilce-7m4/downloads`, where `productType` is `e-mount-body-ilce-7-series` and `productId` is `ilce-7m4`.
+
+:::
+
+</RouteEn>
+
+
 ## Thunderbird
 
 ### Changelog
