@@ -3,7 +3,7 @@ sidebarDepth: 2
 ---
 # Just before you start
 
-In the following sections, we will walk you through the process of creating a new RSS rule. As an example, we will create an RSS feed for [GitHub Repo Issues](/en/programming.html#github-repo-issues).
+In this tutorial, we will walk you through the process of creating an RSS feed for [GitHub Repo Issues](/en/programming.html#github-repo-issues) as an example.
 
 ## Install dependencies
 
@@ -28,7 +28,7 @@ npm install
 
 ## Start debugging
 
-After you have installed the dependencies, you can start debugging RSSHub by running the following command:
+Once you have successfully installed the dependencies, you can start debugging RSSHub by running the following command:
 
 <code-group>
 <code-block title="yarn" active>
@@ -47,25 +47,33 @@ npm run dev
 </code-block>
 </code-group>
 
-Open `http://localhost:1200` in your browser to see the result. Any changes you make to the code will be automatically be reflected in the browser.
+Make sure to keep an eye on the console output for any error messages or other useful information that can help you diagnose and resolve issues. Additionally, don't hesitate to consult the RSSHub documentation or seek help from the community if you encounter any difficulties.
 
-## Follow the standard
+To view the result of your changes, open `http://localhost:1200` in your browser. You'll be able to see the changes you made to the code automatically reflected in the browser.
 
-All new RSS routes should follow the [Script Standard](/en/joinus/script-standard.html). Failure to follow the standard will result in the PR not being processed.
+## Follow the Script Standard
+
+It's important to ensure that all new RSS routes adhere to the [Script Standard](/en/joinus/script-standard.html). Failure to comply with this standard may result in your Pull Request not being merged in a reasonable timeframe.
+
+The [Script Standard](/en/joinus/script-standard.html) provides guidelines for creating high-quality and reliable source code. By following these guidelines, you can ensure that your RSS feed works as intended and is easy for other community maintainers to read.
+
+Before submitting your Pull Request, make sure to carefully review the [Script Standard](/en/joinus/script-standard.html) and ensure that your code meets all of the requirements. This will help to expedite the review process.
 
 ## Create a namespace
 
-The first step is to create a namespace for your RSS rule. The namespace should be the **same** as the domain name of the main website. In this case, we will be creating RSS for <https://github.com/DIYgod/RSSHub/issues>. Since the root domain name is `github.com`, we will create a namespace called `github` in `lib/v2`.
+The first step in creating a new RSS route is to create a namespace. The namespace should be the **same** as the domain name of the main website for which you are creating the RSS feed. For example, if you are creating an RSS feed for <https://github.com/DIYgod/RSSHub/issues>, the domain name is `github`. Therefore, you should create a folder called `github` under `lib/v2` to serve as the namespace for your RSS route.
 
 ::: tip Tips
-If you want to create a new RSS rule for `github.io`, stick with `github` instead of creating new namespaces like `github-io`, `githubio`, `github.io`, `io.github`, etc.
+When creating a namespace, it's important to avoid creating multiple namespaces for variations of the same domain. For example, if you are creating an RSS feed for both `yahoo.co.jp` and `yahoo.com`, you should stick with a single namespace `yahoo`, rather than creating multiple namespaces like `yahoo-jp`, `yahoojp`, `yahoo.jp`, `jp.yahoo`, etc.
 :::
 
-## Know the basics
+## Understand the Basics
 
 ### router.js
 
-After creating the namespace, you need to register your new RSS rule in `router.js` of the namespace you just created. Suppose you want users to enter a GitHub username and a repository name, and fall back to `RSSHub` if they don't enter the repository name. You can register your new RSS rule like this:
+Once you have created the namespace for your RSS route, the next step is to register it in the `router.js`
+
+For example, if you are creating an RSS feed for [GitHub Repo Issues](/en/programming.html#github-repo-issues) and suppose you want users to enter a GitHub username and a repository name, and fall back to `RSSHub` if they don't enter the repository name, you can register your new RSS route in `github/router.js` using the following code:
 
 <code-group>
 <code-block title="Arrow Functions" active>
@@ -88,23 +96,23 @@ module.exports = function (router) {
 </code-block>
 </code-group>
 
-The first parameter of `router.get()` is the route path. The second parameter is the path to the file containing the code for your new RSS rule. In this case, the file is `issue.js` in the `github` namespace. You can omit the `.js` extension.
+When registering your new RSS route in `router.js`, you can define the route path and specify the corresponding function to be executed. In the code above, the `router.get()` method is used to specify the HTTP method and the path of the new RSS route. The first parameter of `router.get()` is the route path using [path-to-regexp](https://github.com/pillarjs/path-to-regexp) syntax. The second parameter is the exported function from your new RSS rule, `issue.js`. Note that you can omit the `.js` extension.
 
-In the first parameter of `router.get()`, `issue` is an exact match, `:user` is a required parameter, and `:repo?` is an optional parameter. The `?` after `:repo` means that the parameter is optional. If the user does not enter `repo`, it will be fall back to whatever is specified in your code (in this case, `RSSHub`).
+In the example above, `issue` is an exact match, `:user` is a required parameter, and `:repo?` is an optional parameter. The `?` after `:repo` means that the parameter is optional. If the user does not enter repo, it will fall back to whatever is specified in your code (in this case, `RSSHub`).
 
-Once you have defined the route path, you can retrieve the value of the parameters from the `ctx.params` object. For example, if the user visits `/github/issue/DIYgod/RSSHub`, you can get the value of `user` and `repo` from `ctx.params.user` and `ctx.params.repo` which will be `DIYgod` and `RSSHub` respectively.
+Once you have defined the route path, you can retrieve the value of the parameters from the `ctx.params` object. For example, if the user visits `/github/issue/DIYgod/RSSHub`, you can get the value of `user` and `repo` from `ctx.params.user` and `ctx.params.repo`, respectively. For example, if an user visits `/github/issue/DIYgod/RSSHub`, `ctx.params.user` and `ctx.params.repo` which will be `DIYgod` and `RSSHub`.
 
-**The type of the value will be either `String` or `undefined`**.
+**Note that the type of the value will be either `String` or `undefined`**.
 
-You can add a `*` to `:variable` to match the rest of the path like `/some/path/:variable*`. The first parameter also works with patterns like `/some/path/:variable(\\d+)?` or even RegExp.
+You can use the `*` or `+` symbols to match the rest of the path, like `/some/path/:variable*`. Note that `*` and `+` mean "zero or more" and "one or more", respectively. You can also use patterns like `/some/path/:variable(\\d+)?` or even RegExp.
 
 ::: tip Tips
-For more advanced usage of `router`, see the [koajs/router API Reference](https://github.com/koajs/router/blob/master/API.md).
+For more advanced usage of `router`, see the [@koa/router API Reference](https://github.com/koajs/router/blob/master/API.md).
 :::
 
 ### maintainer.js
 
-This file is used to store information about the RSS rules maintainer. You can add your GitHub username to the value array. Note that the key here should be exactly the same as the path in `router.js` :
+This file is used to store information about the maintainer of the RSS routes. You can add your GitHub username to the value array. Note that the key here should exactly match the path in `router.js` :
 
 ```js{2}
 module.exports = {
@@ -112,34 +120,34 @@ module.exports = {
 };
 ```
 
+The `maintainer.js` file is useful for keeping track of who is responsible for maintaining an RSS route. When a user encounters an issue with your RSS route, they can reach out to the maintainers listed in this file.
+
 ### `templates` folder
 
-This folder contains the templates for your new RSS feed. You only need this if you are trying to render custom HTML content other than the HTML content from the original website. If you don't need to render any custom HTML content, you can skip this section.
+The `templates` folder contains templates for your new RSS route. You only need this folder if you want to render custom HTML content instead of using the original website's HTML content. If you don't need to render any custom HTML content, you can skip this folder.
 
-The file extension of each template should be `.art`.
+Each template file should have a `.art` file extension.
 
 ### radar.js
 
-This file helps users to subscribe to your new RSS rule when they are using [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar). The content will be covered in a later section.
+The `radar.js` file helps users subscribe to your new RSS route when they use [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) or other software that is compatible with its format. We'll cover more about this in a later section.
 
-### Your new RSS rule `issue.js`
+### Your new RSS route `issue.js`
 
-Now you can [start writing](/en/joinus/new-rss/start-code.html) your new RSS rule.
+Now you can [start writing](/en/joinus/new-rss/start-code.html) your new RSS route.
 
 ## Acquire Data
 
-Typically, data can be acquired through HTTP requests (via API or web page) sent by [got](https://github.com/sindresorhus/got).
+To acquire data for your new RSS route, you will typically make HTTP requests using [got](https://github.com/sindresorhus/got) to an API or webpage. In some cases, you may need to use [puppeteer](https://github.com/puppeteer/puppeteer) to simulate a browser and render a webpage in order to acquire data.
 
-Occasionally [puppeteer](https://github.com/puppeteer/puppeteer) is required for browser stimulation and page rendering in order to acquire the data.
+The data you retrieve will typically be in JSON or HTML format. If you're working with HTML, you can use [cheerio](https://github.com/cheeriojs/cheerio) for further processing.
 
-The retrieved data are most likely in JSON or HTML format. For HTML, [cheerio](https://github.com/cheeriojs/cheerio) can be used for further processing.
+Here's a list of recommended data collection methods, ordered by preference:
 
-Below is a list of data collection methods, ordered by the **level of recommendation**:
+1.  **Via API**: This is the most recommended way to retrieve data, as APIs are usually more stable and faster than extracting data from an HTML webpage.
 
-1.  **Via API**: The most recommended way to retrieve data. The API is usually more stable and faster than extracting data from the HTML web page.
+2.  **Via HTML webpage using got**: If an API is not available, you can try to retrieve data from the HTML webpage. This is the method you'll use most of the time. Note that if the HTML contains embedded JSON, you should use that instead of the rest of the HTML elements.
 
-2.  **Via HTML web page using got**: If the API is not available, you can try to retrieve data from the HTML web page. You will use this approach most of the time. Note that if the HTML contains embedded JSON, you should use that over the rest of the HTML elements.
+3.  **Common Configured Route**: The Common Configured Route is a special route that can easily generate RSS by reading JSON data through cheerio (CSS selectors and jQuery functions).
 
-3.  **Common configured route**: The common configured route is a special route that can easily generate RSS by reading JSON data through cheerio (CSS selectors and jQuery functions).
-
-4.  **Puppeteer**: In some cases, you may need to use puppeteer to retrieve data. For example, if the web page needs to be rendered.
+4.  **Puppeteer**: In some rare cases, you might need to use puppeteer to simulate a browser and retrieve data. This is the least recommended method and should only be used if absolutely necessary, such as when the webpage is blocked behind a browser integrity check or heavily encrypted. If possible, it's best to use other methods such as API requests or retrieving data from the HTML page directly using [got](https://github.com/sindresorhus/got) or [cheerio](https://github.com/cheeriojs/cheerio).

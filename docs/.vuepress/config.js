@@ -167,7 +167,7 @@ module.exports = {
                                     path: 'new-rss/start-code',
                                 },
                                 {
-                                    title: 'Add the documentation',
+                                    title: 'Add documentation',
                                     path: 'new-rss/add-docs',
                                 },
                                 {

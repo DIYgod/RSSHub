@@ -1,6 +1,6 @@
 # Join Us
 
-We welcome all kinds of contributions. Suggestions and feedback are also welcomed [here](https://github.com/DIYgod/RSSHub/discussions).
+If you've found a bug or have a suggestion for improving RSSHub, we'd love to hear from you! You can submit your changes by creating a pull request. Don't worry if you're new to pull requests - we welcome contributions from developers of all experience levels. Don't know how to code? You can also help by [reporting bugs](https://github.com/DIYgod/RSSHub/issues).
 
 ## Join the discussion
 
@@ -8,24 +8,29 @@ We welcome all kinds of contributions. Suggestions and feedback are also welcome
 
 ## Before you begin
 
-Creating a new RSS feed is not difficult, but it does require some basic knowledge of Git, HTML, JavaScript, jQuery, and Node.js. If you are not familiar with these technologies, you can learn them first.
+To create an RSS feed, you'll need to use a combination of Git, HTML, JavaScript, jQuery, and Node.js.
 
 If you don't know much about them but would like to learn them, here are some good resources:
 
--   [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+-   [JavaScript Tutorials on MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript#tutorials)
 -   [W3Schools](https://www.w3schools.com/)
--   [Codecademy](https://www.codecademy.com/learn/learn-git)
--   [Others' Code](https://github.com/DIYgod/RSSHub/tree/master/lib/v2)
+-   [Git course on Codecademy](https://www.codecademy.com/learn/learn-git)
+
+If you'd like to see examples of how other developers use these technologies to create RSS feeds, you can take a look at some of the code in [our repository](https://github.com/DIYgod/RSSHub/tree/master/lib/v2).
 
 ## Submit new RSS rules
 
-Before you start writing an RSS rule, please make sure that the source site does not offer RSS. Some web pages will include a link element of the type `application/atom+xml` or `application/rss+xml` in the HTML head element to indicate the RSS link.
+If you've found a website that doesn't offer an RSS feed, you can create an RSS rule for it using RSSHub. An RSS rule is a short Node.js program code (hereafter referred to as "route") that tells RSSHub how to extract content from a website and generate an RSS feed. By creating a new RSS route, you can help make content from your favourite websites more accessible and easier to follow.
+
+Before you start writing an RSS route, please make sure that the source site does not provide RSS. Some web pages will include a link element with type `application/atom+xml` or `application/rss+xml` in the HTML header to indicate the RSS link.
+
+Here's an example of what an RSS link might look like in the HTML header: `<link rel="alternate" type="application/rss+xml" href="http://example.com/rss.xml" />`. If you see a link like this, it means that the website already has an RSS feed and you don't need to create a new RSS route for it.
 
 ### Getting started
 
-In the following guide, you will learn things like how to write a new RSS rule from scratch. This guide will also cover topics such as setting up a proper development environment, keeping your code clean and readable, and submitting your code to the RSSHub repository.
+In this guide, you'll learn how to create a new RSS route from scratch. We'll cover everything from setting up your development environment to submitting your code to the RSSHub repository. By the end of this guide, you'll be able to create your own RSS feeds for websites that don't offer them.
 
-[Let's start!](/en/joinus/new-rss/prerequisites.html)
+[Ready to get started? Click here to dive into the guide!](/en/joinus/new-rss/prerequisites.html)
 
 ## Submit new RSSHub Radar rules
 
