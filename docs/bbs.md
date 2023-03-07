@@ -873,7 +873,7 @@ pageClass: routes
 
 ### 论坛
 
-<Route author="akynazh" example="/xsijishe/forum/51" path="/xsijishe/forum/:fid" :paramDesc="['子论坛 id']">
+<Route author="akynazh" example="/xsijishe/forum/51" path="/xsijishe/forum/:fid" :paramDesc="['子论坛 id']" radar="1">
 
 ::: 关于子论坛 id 的获取方法
 
