@@ -4157,6 +4157,9 @@
         "hang333",
         "TonyRL"
     ],
+    "/sony/downloads/:productType/:productId": [
+        "NavePnow"
+    ],
     "/soundofhope/:channel/:id": [
         "Fatpandac"
     ],
