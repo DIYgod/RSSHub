@@ -5046,6 +5046,9 @@
     "/xmnn/epaper/:id?": [
         "nczitzk"
     ],
+    "/xsijishe/forum/:fid": [
+        "akynazh"
+    ],
     "/xueqiu/column/:id": [
         "TonyRL"
     ],

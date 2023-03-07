@@ -11192,6 +11192,17 @@
         source:[ "/:id",
           "/" ],
         target:"/xmnn/epaper/:id" } ] },
+  "xsijishe.com":{ _name:"司机社",
+    ".":[ { title:"论坛",
+        docs:"https://docs.rsshub.app/bbs.html#si-ji-she",
+        source:[ "/*" ],
+        target:(_, url) => {
+                    const re = /forum-(\d+)-/;
+                    const res = re.exec(url);
+                    if (res) {
+                        return `/xsijishe/forum/${res[1]}`;
+                    }
+                } } ] },
   "danjuanapp.com":{ _name:"雪球",
     ".":[ { title:"蛋卷基金净值更新",
         docs:"https://docs.rsshub.app/finance.html#xue-qiu",
