@@ -4140,6 +4140,9 @@
     "/smzdm/ranking/:rank_type/:rank_id/:hour": [
         "DIYgod"
     ],
+    "/snowpeak/us/new-arrivals": [
+        "NavePnow"
+    ],
     "/sobooks/tag/:id?": [
         "nczitzk"
     ],
