@@ -222,4 +222,4 @@ Language
 
 ### New Arrivals
 
-<RouteEn author="NavePnow" example="/zagg/new-arrivals/3029,3038,3041/164" path="/zagg/new-arrivals/:categories?/:brands?" :paramsDesc="['categories，can be found within URL', 'brands，can be found within URL']"/>
+<RouteEn author="NavePnow" example="/zagg/new-arrivals/3029,3038,3041/164" path="/zagg/new-arrivals/:categories?/:brands?" :paramsDesc="['categories, can be found within URL', 'brands, can be found within URL']"/>
