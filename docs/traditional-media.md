@@ -2282,9 +2282,11 @@ category 对应的关键词有
 
 ### 浙江新闻联播
 
-<Route author="yhkang" example="/cztv/zjxwlb" path="/cztv/zjxwlb">
+<Route author="yhkang" example="/cztv/zjxwlb" path="/cztv/zjxwlb" />
 
-</Route>
+### 浙江新闻联播 - 每日合集
+
+<Route author="yhkang" example="/cztv/zjxwlb/daily" path="/cztv/zjxwlb/daily" />
 
 ## 新浪科技
 
