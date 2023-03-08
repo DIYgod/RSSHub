@@ -1690,7 +1690,7 @@
     "/github/branches/:user/:repo": [
         "max-arnold"
     ],
-    "/github/comments/:user/:repo/:type/:number": [
+    "/github/comments/:user/:repo/:number": [
         "TonyRL"
     ],
     "/github/contributors/:user/:repo/:order?/:anon?": [
