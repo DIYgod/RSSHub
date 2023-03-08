@@ -62,6 +62,10 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 </RouteEn>
 
+### Regear New Arrivals
+
+<RouteEn author="NavePnow" example="/arcteryx/regear/new-arrivals" path="/arcteryx/regear/new-arrivals" />
+
 ## Bellroy
 
 ### New Releases
@@ -199,6 +203,19 @@ Language
 | potd         | potw         | potm         |
 
 </RouteEn>
+
+## Patagonia
+
+### New Arrivals
+
+<RouteEn author="NavePnow" example="/patagonia/new-arrivals/mens" path="/patagonia/new-arrivals/:category" :paramsDesc="['category, see below']">
+
+| Men's | Women's | Kids' & Baby | Packs & Gear |
+| ----- | ------- | ------------ | ------------ |
+| mens  | womens  | kids         | luggage      |
+
+</RouteEn>
+
 
 ## ShopBack
 
