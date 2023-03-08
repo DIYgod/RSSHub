@@ -62,6 +62,10 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 </RouteEn>
 
+### Regear New Arrivals
+
+<RouteEn author="NavePnow" example="/arcteryx/regear/new-arrivals" path="/arcteryx/regear/new-arrivals" />
+
 ## Bellroy
 
 ### New Releases
