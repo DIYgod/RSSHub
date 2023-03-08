@@ -15102,6 +15102,18 @@
       }
     ]
   },
+  "patagonia.com": {
+    "_name": "Patagonia",
+    ".": [
+      {
+        "title": "New Arrivals",
+        "docs": "https://docs.rsshub.app/shopping.html#patagonia",
+        "source": [
+          "/shop/*new-arrivals"
+        ]
+      }
+    ]
+  },
   "penguinrandomhouse.com": {
     "_name": "Penguin Random House",
     ".": [

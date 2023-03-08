@@ -8220,6 +8220,21 @@
         docs:"https://docs.rsshub.app/finance.html#paradigm",
         source:[ "/writing" ],
         target:"/paradigm/writing" } ] },
+  "patagonia.com":{ _name:"Patagonia",
+    ".":[ { title:"New Arrivals",
+        docs:"https://docs.rsshub.app/shopping.html#patagonia",
+        source:[ "/shop/*new-arrivals" ],
+        target:(_, url) => {
+                    const param = new URL(url).pathname.split('/').pop().replace('-new-arrivals', '');
+                    if (param === 'new-arrivals') {
+                        return '';
+                    }
+                    if (param === 'kids-baby') {
+                        return '/patagonia/new-arrivals/kids';
+                    } else {
+                        return `/patagonia/new-arrivals/${param}`;
+                    }
+                } } ] },
   "penguinrandomhouse.com":{ _name:"Penguin Random House",
     ".":[ { title:"Penguin Random House Book Lists",
         docs:"https://docs.rsshub.app/reading.html#penguin-random-house",
