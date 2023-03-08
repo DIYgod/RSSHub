@@ -360,6 +360,9 @@
     "/arcteryx/new-arrivals/:country/:gender": [
         "NavePnow"
     ],
+    "/arcteryx/regear/new-arrivals": [
+        "NavePnow"
+    ],
     "/arknights/announce/:platform?/:group?": [
         "swwind"
     ],
