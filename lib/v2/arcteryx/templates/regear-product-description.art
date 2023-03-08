@@ -8,7 +8,7 @@
     <br>
     Original Price: {{data.originalPrice}}
     <br>
-    Regear Price: {{data.minPrice}} - {{data.maxPrice}}
+    Regear Price: {{data.regearPrice}}
     <br>
 
     <img src={{data.imgUrl}}>
