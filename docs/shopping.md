@@ -74,6 +74,10 @@ pageClass: routes
 
 </Route>
 
+### Regear 新发布
+
+<Route author="NavePnow" example="/arcteryx/regear/new-arrivals" path="/arcteryx/regear/new-arrivals" />
+
 ## Bellroy
 
 ### 新发布
