@@ -217,3 +217,9 @@ Language
 ### PS5 stock UK
 
 <RouteEn author="DIYgod" example="/independent/ps5-stock-uk" path="/independent/ps5-stock-uk"/>
+
+## Zagg
+
+### New Arrivals
+
+<RouteEn author="NavePnow" example="/zagg/new-arrivals/3029,3038,3041/164" path="/zagg/new-arrivals/:categories?/:brands?" :paramsDesc="['categories，can be found within URL', 'brands，can be found within URL']"/>

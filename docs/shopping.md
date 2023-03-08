@@ -268,6 +268,12 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="xyqfer" example="/westore/new" path="/westore/new"/>
 
+## Zagg
+
+### New Arrivals
+
+<Route author="NavePnow" example="/zagg/new-arrivals/3029,3038,3041/164" path="/zagg/new-arrivals/:categories?/:brands?" :paramsDesc="['分类，可在 URL 中找到', '品牌，可在 URL 中找到']"/>
+
 ## 大麦网
 
 ### 票务更新
