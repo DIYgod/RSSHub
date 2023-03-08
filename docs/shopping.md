@@ -244,6 +244,18 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 </Route>
 
+## Patagonia
+
+### New Arrivals
+
+<Route author="NavePnow" example="/patagonia/new-arrivals/mens" path="/patagonia/new-arrivals/:category" :paramsDesc="['分类, 见下表']">
+
+| Men's | Women's | Kids' & Baby | Packs & Gear |
+| ----- | ------- | ------------ | ------------ |
+| mens  | womens  | kids         | luggage      |
+
+</Route>
+
 ## ShopBack
 
 ### Store

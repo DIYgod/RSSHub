@@ -200,6 +200,19 @@ Language
 
 </RouteEn>
 
+## Patagonia
+
+### New Arrivals
+
+<RouteEn author="NavePnow" example="/patagonia/new-arrivals/mens" path="/patagonia/new-arrivals/:category" :paramsDesc="['category, see below']">
+
+| Men's | Women's | Kids' & Baby | Packs & Gear |
+| ----- | ------- | ------------ | ------------ |
+| mens  | womens  | kids         | luggage      |
+
+</RouteEn>
+
+
 ## ShopBack
 
 ### Store
