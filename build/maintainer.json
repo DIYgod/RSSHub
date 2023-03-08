@@ -5350,6 +5350,9 @@
     "/zjgtjy/:type?": [
         "Fatpandac"
     ],
+    "/zjol/paper/:id?": [
+        "nczitzk"
+    ],
     "/zju/career/:type": [
         "Caicailiushui"
     ],
