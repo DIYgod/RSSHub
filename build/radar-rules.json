@@ -21241,6 +21241,18 @@
       }
     ]
   },
+  "zagg.com": {
+    "_name": "New Arrivals",
+    ".": [
+      {
+        "title": "Zagg - New Arrivals",
+        "docs": "https://docs.rsshub.app/shopping.html#zagg",
+        "source": [
+          "/en_us/new-arrivals"
+        ]
+      }
+    ]
+  },
   "myzaker.com": {
     "_name": "ZAKER",
     ".": [

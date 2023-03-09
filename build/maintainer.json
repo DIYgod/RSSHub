@@ -5233,6 +5233,9 @@
     "/yystv/docs": [
         "HaitianLiu"
     ],
+    "/zagg/new-arrivals/:query?": [
+        "NavePnow"
+    ],
     "/zaker/:type/:id?": [
         "LogicJake",
         "kt286",
