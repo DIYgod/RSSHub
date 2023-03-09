@@ -2451,6 +2451,18 @@ category 对应的关键词有
 
 </Route>
 
+## 浙江在线
+
+### 浙报集团系列报刊
+
+<Route author="nczitzk" example="/zjol/paper/zjrb" path="/zjol/paper/:id?" :paramsDesc="['报纸 id，见下表，默认为 `zjrb`，即浙江日报']">
+
+| 浙江日报 | 钱江晚报 | 美术报 | 浙江老年报 | 浙江法制报 | 江南游报 |
+| ---- | ---- | --- | ----- | ----- | ---- |
+| zjrb | qjwb | msb | zjlnb | zjfzb | jnyb |
+
+</Route>
+
 ## 中国日报
 
 ### 英语点津

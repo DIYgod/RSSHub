@@ -1,0 +1,16 @@
+<div>
+    Available Sizes:&nbsp;
+    {{each data.availableSizes}}
+    {{$value}}&nbsp;
+    {{/each}}
+    <br>
+    Color: {{data.color}}
+    <br>
+    Original Price: {{data.originalPrice}}
+    <br>
+    Regear Price: {{data.regearPrice}}
+    <br>
+
+    <img src={{data.imgUrl}}>
+    <br><br>
+</div>
