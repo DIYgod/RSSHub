@@ -466,6 +466,15 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="nczitzk" example="/souyun/today" path="/souyun/today"/>
 
+## 天津市人才服务中心
+
+### 招考公告
+
+<Route author="ZHYCarge" example="/tjtalents/zhaokao" path="/tjtalents/zhaokao/:page?" :paramsDesc="['查询公告页数（默认5页）']" >
+默认查询五页信息  
+即获取50条招考公告
+</Route>
+
 ## 网易公开课
 
 ### 精品课程
