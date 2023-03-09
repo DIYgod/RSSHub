@@ -74,6 +74,10 @@ pageClass: routes
 
 </Route>
 
+### Regear 新发布
+
+<Route author="NavePnow" example="/arcteryx/regear/new-arrivals" path="/arcteryx/regear/new-arrivals" />
+
 ## Bellroy
 
 ### 新发布
@@ -241,6 +245,18 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 | 每日圖片 | 每週圖片 | 每月圖片 |
 | ---- | ---- | ---- |
 | potd | potw | potm |
+
+</Route>
+
+## Patagonia
+
+### New Arrivals
+
+<Route author="NavePnow" example="/patagonia/new-arrivals/mens" path="/patagonia/new-arrivals/:category" :paramsDesc="['分类, 见下表']">
+
+| Men's | Women's | Kids' & Baby | Packs & Gear |
+| ----- | ------- | ------------ | ------------ |
+| mens  | womens  | kids         | luggage      |
 
 </Route>
 
