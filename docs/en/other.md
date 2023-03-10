@@ -150,6 +150,13 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 </RouteEn>
 
+## Latest Magazine
+
+<RouteEn author="NavePnow" example="/magazinelib/latest-magazine/new+yorker" path="/magazinelib/latest-magazine/:query?" :paramsDesc="['query，search page querystring']"/>
+
+For instance, when doing search at <https://magazinelib.com/> and you get url <https://magazinelib.com/?s=new+yorker>, the query is `new+yorker`
+
+
 ## Layoffs.fyi
 
 ### Layoff Data Tracker
@@ -189,6 +196,8 @@ For example:
 **To make it easier, the recommended way is to start a search on <a href="https://www.linkedin.com/jobs/search">LinkedIn</a> and use <a href="https://github.com/DIYgod/RSSHub-Radar">RSSHub Radar</a> to load the specific feed.**
 
 </RouteEn>
+
+## Magazinelib
 
 ## MITRE
 
