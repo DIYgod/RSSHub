@@ -150,8 +150,6 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 </RouteEn>
 
-
-
 ## Layoffs.fyi
 
 ### Layoff Data Tracker
