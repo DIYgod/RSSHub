@@ -169,12 +169,6 @@ pageClass: routes
 
 <Route author="proletarius101" example="/iyouport/osint" path="/iyouport/:category?"/>
 
-## Latest Magazine
-
-<Route author="NavePnow" example="/magazinelib/latest-magazine/new+yorker" path="/magazinelib/latest-magazine/:query?" :paramsDesc="['query，search page querystring']"/>
-
-For instance, when doing search at <https://magazinelib.com/> and you get url <https://magazinelib.com/?s=new+yorker>, the query is `new+yorker`
-
 ## Layoffs.fyi
 
 ### 裁员数据跟踪
@@ -205,8 +199,6 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 **为了方便起见，建议您在 [LinkedIn.cn](https://www.linkedin.cn/incareer/jobs/search) 上进行搜索，并使用 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 加载特定的 feed。**
 
 </Route>
-
-## Magazinelib
 
 ## MiniFlux
 

@@ -150,11 +150,6 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 </RouteEn>
 
-## Latest Magazine
-
-<RouteEn author="NavePnow" example="/magazinelib/latest-magazine/new+yorker" path="/magazinelib/latest-magazine/:query?" :paramsDesc="['query，search page querystring']"/>
-
-For instance, when doing search at <https://magazinelib.com/> and you get url <https://magazinelib.com/?s=new+yorker>, the query is `new+yorker`
 
 
 ## Layoffs.fyi
@@ -197,7 +192,7 @@ For example:
 
 </RouteEn>
 
-## Magazinelib
+
 
 ## MITRE
 
