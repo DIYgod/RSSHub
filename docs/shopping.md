@@ -74,6 +74,10 @@ pageClass: routes
 
 </Route>
 
+### Regear 新发布
+
+<Route author="NavePnow" example="/arcteryx/regear/new-arrivals" path="/arcteryx/regear/new-arrivals" />
+
 ## Bellroy
 
 ### 新发布
@@ -244,11 +248,29 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 </Route>
 
+## Patagonia
+
+### New Arrivals
+
+<Route author="NavePnow" example="/patagonia/new-arrivals/mens" path="/patagonia/new-arrivals/:category" :paramsDesc="['分类, 见下表']">
+
+| Men's | Women's | Kids' & Baby | Packs & Gear |
+| ----- | ------- | ------------ | ------------ |
+| mens  | womens  | kids         | luggage      |
+
+</Route>
+
 ## ShopBack
 
 ### Store
 
 <Route author="nczitzk" example="/shopback/shopee-mart" path="/shopback/:store" :paramsDesc="['店铺名，可在 URL 中找到']"/>
+
+## Snow Peak
+
+### New Arrivals(USA)
+
+<Route author="NavePnow" example="/snowpeak/us/new-arrivals" path="/snowpeak/us/new-arrivals"/>
 
 ## The Independent
 
@@ -261,6 +283,14 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 ### 新品
 
 <Route author="xyqfer" example="/westore/new" path="/westore/new"/>
+
+## Zagg
+
+### New Arrivals
+
+<Route author="NavePnow" example="/zagg/new-arrivals/brand=164&cat=3038,3041" path="/zagg/new-arrivals/:query?" :paramsDesc="['query，search page querystring']"/>
+
+For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3041>, the query is `brand=164&cat=3038%2C3041`
 
 ## 大麦网
 

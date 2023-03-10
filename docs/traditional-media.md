@@ -1362,19 +1362,9 @@ category 对应的关键词有
 
 ### 学习时报
 
-<Route author="nczitzk" example="/cntheory/paper" path="/cntheory/paper/:id?" :paramsDesc="['编号，见下表，默认为全部']">
+<Route author="nczitzk" example="/cntheory/paper" path="/cntheory/paper/:id?" :paramsDesc="['板块，默认为全部']">
 
-| 版           | 编号 |
-| ----------- | -- |
-| 全部          |    |
-| 第 A1 版：国内大局 | A1 |
-| 第 A2 版：市场经济 | A2 |
-| 第 A3 版：民主法治 | A3 |
-| 第 A4 版：读书治学 | A4 |
-| 第 A5 版：特别策划 | A5 |
-| 第 A6 版：科技前沿 | A6 |
-| 第 A7 版：社会治理 | A7 |
-| 第 A8 版：学员天地 | A8 |
+如订阅 **第 A1 版：国内大局**，路由为 [`/cntheory/paper/国内大局`](https://rsshub.app/cntheory/paper/国内大局)。
 
 </Route>
 
@@ -2278,6 +2268,16 @@ category 对应的关键词有
 
 <Route author="MisteryMonster" example="/bjnews/epaper/A" path="/bjnews/epaper/:cat" :paramsDesc="['新京报叠名：`A`,`B`,`C`,`D`, 特刊为`special`']"/>
 
+## 新蓝网（浙江广播电视集团）
+
+### 浙江新闻联播
+
+<Route author="yhkang" example="/cztv/zjxwlb" path="/cztv/zjxwlb" />
+
+### 浙江新闻联播 - 每日合集
+
+<Route author="yhkang" example="/cztv/zjxwlb/daily" path="/cztv/zjxwlb/daily" />
+
 ## 新浪科技
 
 ### 科学探索
@@ -2448,6 +2448,18 @@ category 对应的关键词有
 | 广州 | 广州 - 广州要闻 | 广州 - 社会百态 | 广州 - 深读广州 | 广州 - 生活服务 | 今日大湾区  | 广东 - 政经热闻 | 广东 - 民生视点 | 广东 - 滚动新闻 |
 | -- | --------- | --------- | --------- | --------- | ------ | --------- | --------- | --------- |
 | 18 | 5261      | 6030      | 13352     | 83422     | 100418 | 13074     | 12252     | 12212     |
+
+</Route>
+
+## 浙江在线
+
+### 浙报集团系列报刊
+
+<Route author="nczitzk" example="/zjol/paper/zjrb" path="/zjol/paper/:id?" :paramsDesc="['报纸 id，见下表，默认为 `zjrb`，即浙江日报']">
+
+| 浙江日报 | 钱江晚报 | 美术报 | 浙江老年报 | 浙江法制报 | 江南游报 |
+| ---- | ---- | --- | ----- | ----- | ---- |
+| zjrb | qjwb | msb | zjlnb | zjfzb | jnyb |
 
 </Route>
 
