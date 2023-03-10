@@ -1,3 +1,5 @@
 <div>
+    <a href={{data.downloadLink}}>Download</a>
+    <br>
     <img src={{data.imgUrl}}>
 </div>
