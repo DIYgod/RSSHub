@@ -15774,6 +15774,18 @@
       }
     ]
   },
+  "qianp.com": {
+    "_name": "千篇网",
+    ".": [
+      {
+        "title": "知识库／资讯",
+        "docs": "https://docs.rsshub.app/new-media.html#qian-pian-wang",
+        "source": [
+          "/*path"
+        ]
+      }
+    ]
+  },
   "qianzhan.com": {
     "_name": "前瞻网",
     ".": [

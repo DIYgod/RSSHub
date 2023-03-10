@@ -3751,6 +3751,9 @@
         "SivaGao",
         "HenryQW"
     ],
+    "/qianp/news/:path*": [
+        "TonyRL"
+    ],
     "/qianzhan/analyst/column/:type?": [
         "moke8"
     ],
