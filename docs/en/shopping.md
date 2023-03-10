@@ -234,3 +234,12 @@ Language
 ### PS5 stock UK
 
 <RouteEn author="DIYgod" example="/independent/ps5-stock-uk" path="/independent/ps5-stock-uk"/>
+
+## Zagg
+
+### New Arrivals
+
+<RouteEn author="NavePnow" example="/zagg/new-arrivals/brand=164&cat=3038,3041" path="/zagg/new-arrivals/:query?" :paramsDesc="['query, search page querystring']"/>
+
+For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3041>, the query is `brand=164&cat=3038%2C3041`
+
