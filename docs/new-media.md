@@ -3331,6 +3331,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 千篇网
+
+### 知识库／资讯
+
+<Route author="TonyRL" example="/qianp/news" path="/qianp/news/:path*" :paramsDesc="['路径，可在URL中找到，默认为 `news/recommend`']" radar="1" rssbud="1"/>
+
 ## 求是网
 
 ### 分类
