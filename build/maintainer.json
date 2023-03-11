@@ -4774,6 +4774,12 @@
     "/v1tx/": [
         "TonyRL"
     ],
+    "/vcb-s/": [
+        "cxfksword"
+    ],
+    "/vcb-s/category/:cate": [
+        "cxfksword"
+    ],
     "/verfghbw/press/:keyword?": [
         "quinn-dev"
     ],
