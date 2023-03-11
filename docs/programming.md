@@ -26,6 +26,10 @@ pageClass: routes
 
 </Route>
 
+## ascoders-weekly 前端精读周刊
+
+<Route author="navyd" example="/ascoders-weekly/releases" path="/ascoders-weekly/releases"/>
+
 ## AtCoder
 
 ### Present Contests
