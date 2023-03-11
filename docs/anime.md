@@ -436,6 +436,22 @@ Sources
 
 <Route author="aether17" path="/thwiki/calendar/:before?/:after?" example="/thwiki/calendar" :paramsDesc="['从多少天前（默认30）', '到多少天后（默认30）']" radar="1" rssbud="1"/>
 
+## VCB-Studio
+
+### 最新文章
+
+<Route author="cxfksword" example="/vcb-s" path="/vcb-s" radar="1"/>
+
+### 分类文章
+
+<Route author="cxfksword" example="/vcb-s/category/works" path="/vcb-s/category/:cate" :paramsDesc="['分类']" radar="1">
+
+| 作品项目  | 科普系列 | 计划与日志   |
+| ----- | ---- | ------- |
+| works | kb   | planlog |
+
+</Route>
+
 ## Vol.moe
 
 ### vol
