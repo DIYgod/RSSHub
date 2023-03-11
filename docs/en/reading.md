@@ -56,7 +56,7 @@ Eg:<https://kakuyomu.jp/works/1177354054883783581>
 
 <RouteEn author="nczitzk" example="/literotica/category/anal-sex-stories" path="/literotica/category/:category?" :paramsDesc="['Category, can be found in URL']"/>
 
-## Magazinelib
+## MagazineLib
 
 ### Latest Magazine
 
