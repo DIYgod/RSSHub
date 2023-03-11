@@ -444,7 +444,7 @@ Sources
 
 ### 分类文章
 
-<Route author="cxfksword" example="/vcb-s/category/works" path="/vcb-s/category/:cat" :paramsDesc="['分类']" radar="1">
+<Route author="cxfksword" example="/vcb-s/category/works" path="/vcb-s/category/:cate" :paramsDesc="['分类']" radar="1">
 
 | 作品项目  | 科普系列 | 计划与日志   |
 | ----- | ---- | ------- |
