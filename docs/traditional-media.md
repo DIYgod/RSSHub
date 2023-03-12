@@ -2570,3 +2570,15 @@ category 对应的关键词有
 `https://www.rfa.org/cantonese/news/htm` 对应 `/rfa/cantonese/news/htm`
 
 </Route>
+
+## 组织人事报
+
+### 电子报
+
+<Route author="5upernove-heng" example="/zuzhirenshi" path="/zuzhirenshi/:id?" :paramsDesc="['报纸版号，默认为全部']" radar="1">
+
+| 第一版 要闻 | 第二版 要闻 | 第三版 人才 | 第四版 人社工作 | 第五版 基层党建 | 第六版 理论评论 | 第七版 史事通鉴 | 第八版 关注 |
+| ------ | ------ | ------ | -------- | -------- | -------- | -------- | ------ |
+| 1      | 2      | 3      | 4        | 5        | 6        | 7        | 8      |
+
+</Route>
