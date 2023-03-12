@@ -1182,7 +1182,19 @@ IT・科学 tech_science
 
 ### 新闻
 
-<Route author="oppilate" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" :paramsDesc="['语言，支持 `en-us`、`zh-cn`、`zh-tw`', '分类，仅 `en-us` 支持分类订阅。支持 `opinion`, `world_news`, `us_bussiness`, `market_news`, `technology`, `lifestyle`。']">
+<Route author="oppilate NavePnow" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" :paramsDesc="['语言，支持 `en-us`、`zh-cn`、`zh-tw`', '分类，见下表']">
+
+en_us
+
+| World | U.S. | Politics | Economy | Business | Tech       | Markets | Opinion | Books & Arts | Real Estate | Life & Work | Sytle               | Sports |
+| ----- | ---- | -------- | ------- | -------- | ---------- | ------- | ------- | ------------ | ----------- | ----------- | ------------------- | ------ |
+| world | us   | politics | economy | business | technology | markets | opinion | books-arts   | realestate  | life-work   | style-entertainment | sports |
+
+zh-cn / zh-tw
+
+| 国际    | 中国    | 金融市场    | 经济      | 商业       | 科技         | 派         | 专栏与观点   |
+| ----- | ----- | ------- | ------- | -------- | ---------- | --------- | ------- |
+| world | china | markets | economy | business | technology | life-arts | opinion |
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
@@ -1362,9 +1374,19 @@ category 对应的关键词有
 
 ### 学习时报
 
-<Route author="nczitzk" example="/cntheory/paper" path="/cntheory/paper/:id?" :paramsDesc="['板块，默认为全部']">
+<Route author="nczitzk" example="/cntheory/paper" path="/cntheory/paper/:id?" :paramsDesc="['编号，见下表，默认为全部']">
 
-如订阅 **第 A1 版：国内大局**，路由为 [`/cntheory/paper/国内大局`](https://rsshub.app/cntheory/paper/国内大局)。
+| 版           | 编号 |
+| ----------- | -- |
+| 全部          |    |
+| 第 A1 版：国内大局 | A1 |
+| 第 A2 版：市场经济 | A2 |
+| 第 A3 版：民主法治 | A3 |
+| 第 A4 版：读书治学 | A4 |
+| 第 A5 版：特别策划 | A5 |
+| 第 A6 版：科技前沿 | A6 |
+| 第 A7 版：社会治理 | A7 |
+| 第 A8 版：学员天地 | A8 |
 
 </Route>
 
@@ -2268,16 +2290,6 @@ category 对应的关键词有
 
 <Route author="MisteryMonster" example="/bjnews/epaper/A" path="/bjnews/epaper/:cat" :paramsDesc="['新京报叠名：`A`,`B`,`C`,`D`, 特刊为`special`']"/>
 
-## 新蓝网（浙江广播电视集团）
-
-### 浙江新闻联播
-
-<Route author="yhkang" example="/cztv/zjxwlb" path="/cztv/zjxwlb" />
-
-### 浙江新闻联播 - 每日合集
-
-<Route author="yhkang" example="/cztv/zjxwlb/daily" path="/cztv/zjxwlb/daily" />
-
 ## 新浪科技
 
 ### 科学探索
@@ -2568,17 +2580,5 @@ category 对应的关键词有
 `https://www.rfa.org/cantonese/news` 对应 `/rfa/cantonese/news`
 
 `https://www.rfa.org/cantonese/news/htm` 对应 `/rfa/cantonese/news/htm`
-
-</Route>
-
-## 组织人事报
-
-### 电子报
-
-<Route author="5upernove-heng" example="/zuzhirenshi" path="/zuzhirenshi/:id?" :paramsDesc="['报纸版号，默认为全部']" radar="1">
-
-| 第一版 要闻 | 第二版 要闻 | 第三版 人才 | 第四版 人社工作 | 第五版 基层党建 | 第六版 理论评论 | 第七版 史事通鉴 | 第八版 关注 |
-| ------ | ------ | ------ | -------- | -------- | -------- | -------- | ------ |
-| 1      | 2      | 3      | 4        | 5        | 6        | 7        | 8      |
 
 </Route>
