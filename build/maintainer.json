@@ -3000,6 +3000,9 @@
     "/macfilos/blog": [
         "nczitzk"
     ],
+    "/magazinelib/latest-magazine/:query?": [
+        "NavePnow"
+    ],
     "/mangadex/:id/:lang?": [
         "vzz64"
     ],

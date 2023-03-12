@@ -12523,6 +12523,18 @@
       }
     ]
   },
+  "magazinelib.com": {
+    "_name": "magazineLib",
+    ".": [
+      {
+        "title": "Latest Magazine",
+        "docs": "https://docs.rsshub.app/reading.html#magazinelib",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
   "mangadex.org": {
     "_name": "MangaDex",
     ".": [
