@@ -759,7 +759,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 用户发帖
 
-<Route author="luyuhuang" example="/netease/ds/63dfbaf4117741daaf73404601165843" path="/netease/ds/:id" :paramsDesc="['用户ID']"/>
+<Route author="luyuhuang" example="/163/ds/63dfbaf4117741daaf73404601165843" path="/163/ds/:id" :paramsDesc="['用户ID']"/>
 
 ## 小黑盒
 

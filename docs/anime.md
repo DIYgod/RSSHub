@@ -436,6 +436,22 @@ Sources
 
 <Route author="aether17" path="/thwiki/calendar/:before?/:after?" example="/thwiki/calendar" :paramsDesc="['从多少天前（默认30）', '到多少天后（默认30）']" radar="1" rssbud="1"/>
 
+## VCB-Studio
+
+### 最新文章
+
+<Route author="cxfksword" example="/vcb-s" path="/vcb-s" radar="1"/>
+
+### 分类文章
+
+<Route author="cxfksword" example="/vcb-s/category/works" path="/vcb-s/category/:cate" :paramsDesc="['分类']" radar="1">
+
+| 作品项目  | 科普系列 | 计划与日志   |
+| ----- | ---- | ------- |
+| works | kb   | planlog |
+
+</Route>
+
 ## Vol.moe
 
 ### vol
@@ -592,9 +608,9 @@ Sources
 
 ## 风之动漫
 
-### 风之动漫
+### 在线漫画
 
-<Route author="geeeeoff zytomorrow" path="/fzdm/manhua/:id" example="/fzdm/manhua/93" :paramsDesc="['漫画ID。默认获取全部，建议使用通用参数limit获取指定数量']" anticrawler="1"/>
+<Route author="geeeeoff zytomorrow" path="/fffdm/manhua/:id/:cdn?" example="/fffdm/manhua/93" :paramsDesc="['漫画ID。默认获取全部，建议使用通用参数limit获取指定数量', 'cdn加速器。默认5，当前可选1-5']"  radar="1" rssbud="1"/>
 
 ## 海猫吧
 

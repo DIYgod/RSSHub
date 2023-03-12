@@ -47,6 +47,38 @@ pageClass: routes
 
 </Route>
 
+## American Economic Association
+
+### Journal
+
+<Route author="nczitzk" example="/aeaweb/aer" path="/aeaweb/:id" :paramsDesc="['期刊 id，可在对应期刊页 URL 中找到']" supportScihub="1">
+
+期刊 [American Economic Review](https://www.aeaweb.org/journals/aer) 的 URL 是 `https://www.aeaweb.org/journals/aer`，其中 `aer` 即为其期刊 id，故该期刊对应路由为 `/aeaweb/aer`。
+
+::: tip 提示
+
+更多期刊可在 [AEA Journals](https://www.aeaweb.org/journals) 中找到。
+
+:::
+
+</Route>
+
+## Annual Reviews
+
+### Journal
+
+<Route author="nczitzk" example="/annualreviews/anchem" path="/annualreviews/:id" :paramsDesc="['期刊 id，可在对应期刊页 URL 中找到']" supportScihub="1">
+
+期刊 [Annual Review of Analytical Chemistry](https://www.annualreviews.org/journal/anchem) 的 URL 是 `https://www.annualreviews.org/journal/anchem`，其中 `anchem` 即为其期刊 id，故该期刊对应路由为 `/annualreviews/anchem`。
+
+::: tip 提示
+
+更多期刊可在 [Browse Journals](https://www.annualreviews.org/action/showPublications) 中找到。
+
+:::
+
+</Route>
+
 ## arXiv
 
 ### 搜索关键字
@@ -174,6 +206,20 @@ pageClass: routes
 
 <Route author="Derekmini" example="/mdpi/analytica" path="/mdpi/:journal" :paramsDesc="['期刊名称，从期刊主页 URL 中获得']" radar="1" rssbud="1"/>
 
+## National Bureau of Economic Research
+
+### 全部论文
+
+<Route author="5upernova-heng" example="/nber/papers" path="/nber/papers" radar="1" supportScihub="1"/>
+
+### 新论文
+
+<Route author="5upernova-heng" example="/nber/news" path="/nber/news" radar="1" supportScihub="1">
+
+在网站上被标记为 "new" 的论文
+
+</Route>
+
 ## Nature 系列
 
 ::: tip Tips
@@ -270,14 +316,15 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 <Route author="Fatpandac" example="/oup/journals/adaptation" path="/oup/journals/:name" :paramsDesc="['期刊名称缩写，可以在网址中得到']" anticrawler="1"/>
 
-## PNAS
+## Proceedings of The National Academy of Sciences
 
-### 最新文章（可筛选领域）
+### 期刊
 
-<Route author="emdoe y9c" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" supportScihub="1"/>
+<Route author="emdoe HenryQW y9c" example="/pnas/latest" path="/pnas/:topicPath*" :paramsDesc="['领域路径，支持 **Featured Topics**、**Articles By Topic** 及 [**Collected Papers**](https://www.pnas.org/about/collected-papers), 预设为 `latest`']" radar="1" anticrawler="1" puppeteer="1" supportScihub="1">
 
--   通过 `/pnas/` + “领域名称” 来获取对应 “领域” 的最新文章（Latest Research）。
-    若参数置空（`/pnas`）或为 latest（`/pnas/latest`），则默认获取全部文章。
+::: tip Tips
+有些领域需要在 `topicPath` 中添加 `topic/`，如 [`/pnas/topic/app-math`](https://rsshub.app/pnas/topic/app-math)，有些则不需要，如 [`/pnas/biophysics-and-computational-biology`](https://rsshub.app/pnas/biophysics-and-computational-biology)
+:::
 
 </Route>
 

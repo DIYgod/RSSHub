@@ -712,9 +712,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   Instagram:
 
-    -   `IG_USERNAME`: Instagram 用户名。
-    -   `IG_PASSWORD`: Instagram 密码。
-    -   `IG_PROXY`: Instagram 代理 URL。
+    -   `IG_USERNAME`: Instagram 用户名（仅 Private API）
+    -   `IG_PASSWORD`: Instagram 密码（仅 Private API）
+    -   `IG_PROXY`: Instagram 代理 URL（仅 Private API，可选）
+    -   `IG_COOKIE`: Instagram 登录后的 Cookie（仅 Cookie）
 
     注意，暂**不支持**两步验证。
 
@@ -870,10 +871,6 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 -   轻小说文库
 
     -   `WENKU8_COOKIE`: 登陆轻小说文库后的 cookie
-
--   语雀 全部路由：[注册地址](https://www.yuque.com/register)
-
-    -   `YUQUE_TOKEN`: 语雀 Token，[获取地址](https://www.yuque.com/settings/tokens)。语雀接口做了访问频率限制，为保证正常访问建议配置 Token，详见 [语雀开发者文档](https://www.yuque.com/yuque/developer/api#5b3a1535)。
 
 -   邮箱 邮件列表路由：
 

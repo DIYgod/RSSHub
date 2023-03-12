@@ -642,6 +642,10 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `BITBUCKET_USERNAME`: Your Bitbucket username
     -   `BITBUCKET_PASSWORD`: Your Bitbucket app password
 
+-   Discord
+
+    -   `DISCORD_AUTHORIZATION`: Discord authorization token, can be found in the header of XHR requests after logging in Discord web client
+
 -   Discuz cookie
 
     -   `DISCUZ_COOKIE_{cid}`: Cookie of a forum powered by Discuz, cid can be anything from 00 to 99. When visiting a Discuz route, use cid to specify this cookie.
@@ -677,9 +681,10 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   Instagram:
 
-    -   `IG_USERNAME`: Your Instagram username
-    -   `IG_PASSWORD`: Your Instagram password
-    -   `IG_PROXY`: Proxy URL for Instagram
+    -   `IG_USERNAME`: Your Instagram username (Private API only)
+    -   `IG_PASSWORD`: Your Instagram password (Private API only)
+    -   `IG_PROXY`: Proxy URL for Instagram (Private API only, optional)
+    -   `IG_COOKIE`: Your Instagram cookie (Cookie only)
 
     Warning: Two Factor Authentication is **not** supported.
 
@@ -707,6 +712,10 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
     -   `NHENTAI_USERNAME`: nhentai username or email
     -   `NHENTAI_PASSWORD`: nhentai password
+
+-   Pixabay: [Documentation](https://pixabay.com/api/docs/)
+
+    -   `PIXABAY_KEY`: Pixabay API key
 
 -   pixiv: [Registration](https://accounts.pixiv.net/signup)
 

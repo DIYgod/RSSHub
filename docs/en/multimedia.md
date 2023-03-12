@@ -14,7 +14,7 @@ Full transcript support for better user experience.
 
 ### Category
 
-<RouteEn author="nczitzk" example="/7mmtv/zh/censored_list/all" path="/7mmtv/:language?/:category?/:type?" :paramsDesc="['Language, see below, `en` as English by default', 'Category, see below, `censored_list` as Censored by default', 'Server, see below, all server by default']">
+<RouteEn author="nczitzk" example="/7mmtv/zh/censored_list/all" path="/7mmtv/:language?/:category?/:type?" :paramsDesc="['Language, see below, `en` as English by default', 'Category, see below, `censored_list` as Censored by default', 'Server, see below, all server by default']" anticrawler="1">
 
 **Language**
 
@@ -42,7 +42,7 @@ Full transcript support for better user experience.
 
 ### Maker
 
-<RouteEn author="nczitzk" example="/7mmtv/zh/amateurjav_makersr/1752" path="/7mmtv/:language?/:category?/:id?" :paramsDesc="['Language, see below, `en` as English by default', 'Category, see below', 'Id, see below']">
+<RouteEn author="nczitzk" example="/7mmtv/zh/amateurjav_makersr/1752" path="/7mmtv/:language?/:category?/:id?" :paramsDesc="['Language, see below, `en` as English by default', 'Category, see below', 'Id, see below']" anticrawler="1">
 
 **Language**
 

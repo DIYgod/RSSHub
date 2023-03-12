@@ -305,12 +305,6 @@ pageClass: routes
 
 </Route>
 
-## Nikkei Asia
-
-### 最新新闻
-
-<Route author="rainrdx" example="/nikkei-asia" path="/nikkei-asia"/>
-
 ## Now 新聞
 
 ### 新聞
@@ -342,12 +336,6 @@ pageClass: routes
 ### 熱門
 
 <Route author="nczitzk" example="/now/news/rank" path="/now/news/rank"/>
-
-## Phoronix
-
-### 新闻与评测
-
-<Route author="oppliate" example="/phoronix/news_topic/Intel" path="/phoronix/:page/:queryOrItem?" :paramsDesc="['页面', '对 `category` 页面是分类项目 `item`，对其它页面是主题 `q`，可以在网站顶部导航栏各项目链接里找出。如 `https://www.phoronix.com/scan.php?page=category&item=Computers` 对应 `/phoronix/category/Computers`']" />
 
 ## RTHK 傳媒透視
 
@@ -931,6 +919,8 @@ IT・科学 tech_science
 
 ## 东网
 
+### 即時新聞
+
 <Route author="Fatpandac" example="/oncc/zh-hant/news" path="/oncc/:language/:channel?" :paramsDesc="['`zh-hans` 为简体，`zh-hant` 为繁体', '频道，默认为港澳']">
 
 频道参数可以从官网的地址中获取，如：
@@ -938,6 +928,16 @@ IT・科学 tech_science
 `https://hk.on.cc/hk/finance/index_cn.html` 对应 `/oncc/zh-hans/finance`
 
 `https://hk.on.cc/hk/finance/index.html` 对应 `/oncc/zh-hant/finance`
+
+</Route>
+
+### Money18
+
+<Route author="nczitzk" example="/oncc/money18/exp" path="/oncc/money18/:id?" :paramsDesc="['栏目 id，可在对应栏目页 URL 中找到，默认为 exp，即新聞總覽']">
+
+| 新聞總覽 | 全日焦點 | 板塊新聞     | 國際金融 | 大行報告     | A 股新聞    | 地產新聞 | 投資理財      | 新股 IPO | 科技財情 |
+| ---- | ---- | -------- | ---- | -------- | -------- | ---- | --------- | ------ | ---- |
+| exp  | fov  | industry | int  | recagent | ntlgroup | pro  | weainvest | ipo    | tech |
 
 </Route>
 
@@ -1063,7 +1063,7 @@ IT・科学 tech_science
 
 ### 最新报道
 
-<Route author="Rongronggg9" example="/kyodonews" path="/kyodonews/:language?/:keyword?" :paramsDesc="['语言: `china` = 简体中文 (默认), `tchina` = 繁體中文', '关键词']">  
+<Route author="Rongronggg9" example="/kyodonews" path="/kyodonews/:language?/:keyword?" :paramsDesc="['语言: `china` = 简体中文 (默认), `tchina` = 繁體中文', '关键词']">
 
 `keyword` 为关键词，由于共同网有许多关键词并不在主页列出，此处不一一列举，可从关键词页的 URL 的最后一级路径中提取。如 `日中关系` 的关键词页 URL 为 `https://china.kyodonews.net/news/japan-china_relationship`, 则将 `japan-china_relationship` 填入 `keyword`。特别地，当填入 `rss` 时，将从共同网官方 RSS 中抓取文章；略去时，将从首页抓取最新报道 (注意：首页更新可能比官方 RSS 稍慢)。
 
@@ -1362,19 +1362,9 @@ category 对应的关键词有
 
 ### 学习时报
 
-<Route author="nczitzk" example="/cntheory/paper" path="/cntheory/paper/:id?" :paramsDesc="['编号，见下表，默认为全部']">
+<Route author="nczitzk" example="/cntheory/paper" path="/cntheory/paper/:id?" :paramsDesc="['板块，默认为全部']">
 
-| 版           | 编号 |
-| ----------- | -- |
-| 全部          |    |
-| 第 A1 版：国内大局 | A1 |
-| 第 A2 版：市场经济 | A2 |
-| 第 A3 版：民主法治 | A3 |
-| 第 A4 版：读书治学 | A4 |
-| 第 A5 版：特别策划 | A5 |
-| 第 A6 版：科技前沿 | A6 |
-| 第 A7 版：社会治理 | A7 |
-| 第 A8 版：学员天地 | A8 |
+如订阅 **第 A1 版：国内大局**，路由为 [`/cntheory/paper/国内大局`](https://rsshub.app/cntheory/paper/国内大局)。
 
 </Route>
 
@@ -1832,6 +1822,18 @@ category 对应的关键词有
 
 </Route>
 
+### 侧边栏
+
+<Route author="bigfei" example="/thepaper/sidebar/hotNews" path="/thepaper/sidebar/sec?" :paramsDesc="['边栏 id，如下， 默认hotNews']">
+
+| 边栏 ID                    | 边栏名  |
+| ------------------------ | ---- |
+| hotNews                  | 澎湃热榜 |
+| financialInformationNews | 澎湃财讯 |
+| morningEveningNews       | 早晚报  |
+
+</Route>
+
 ### 明查
 
 <Route author="nczitzk" example="/thepaper/factpaper" path="/thepaper/factpaper/:status?" :paramsDesc="['状态 id，可选 `1` 即 有定论 或 `0` 即 核查中，默认为 `1`']"/>
@@ -1920,45 +1922,43 @@ category 对应的关键词有
 
 </Route>
 
-## 日本经济新闻中文版
+## 日本经济新闻
 
-### 新闻
+### 首页
 
-<Route author="nczitzk" example="/nikkei-cn" path="/nikkei-cn/:language?/:category?/:type?" :paramsDesc="['语言，可选 `zh` 即 繁体中文，`cn` 即 简体中文', '分类，默认为空，可在对应分类页 URL 中找到', '子分类，默认为空，可在对应分类页 URL 中找到']" radar="1" rssbud="1">
+<Route author="zjysdhr" example="/nikkei/index" path="/nikkei/index" radar="1" rssbud="1" />
+
+### 新聞
+
+<Route author="Arracc" example="/nikkei/news" path="/nikkei/:category/:article_type?" :paramsDesc="['版块', '文章类型，`free` 仅无料全文，缺省为无料全文、有料非全文']">
+
+综合页文章标题添加板块标签
+
+| 総合   | オピニオン   | 経済      | 政治       | 金融        | マーケット    | ビジネス | マネーのまなび | テック        | 国際            | スポーツ   | 社会・調査   | 地域    | 文化      | ライフスタイル   |
+| ---- | ------- | ------- | -------- | --------- | -------- | ---- | ------- | ---------- | ------------- | ------ | ------- | ----- | ------- | --------- |
+| news | opinion | economy | politics | financial | business | 不支持  | 不支持     | technology | international | sports | society | local | culture | lifestyle |
+
+</Route>
+
+### 中文版新闻
+
+<Route author="nczitzk" example="/nikkei/cn" path="/nikkei/cn/:language?/:path?" :paramsDesc="['语言，可选 `zh` 即 繁体中文，`cn` 即 简体中文', '类目路径，默认为空，可在对应类目页 URL 中找到']" radar="1" rssbud="1">
 
 ::: tip 提示
 
-如 [中国 经济 日经中文网](https://cn.nikkei.com/china/ceconomy.html) 的 URL 为 <https://cn.nikkei.com/china/ceconomy.html> 对应路由为 [`/nikkei-cn/cn/china/ceconomy`](https://rsshub.app/nikkei-cn/cn/china/ceconomy)
+如 [中国 经济 日经中文网](https://cn.nikkei.com/china/ceconomy.html) 的 URL 为 <https://cn.nikkei.com/china/ceconomy.html> 对应路由为 [`/nikkei/cn/cn/china/ceconomy`](https://rsshub.app/nikkei/cn/cn/china/ceconomy)
 
-如 [中國 經濟 日經中文網](https://zh.cn.nikkei.com/china/ceconomy.html) 的 URL 为 <https://zh.cn.nikkei.com/china/ceconomy.html> 对应路由为 [`/nikkei-cn/zh/china/ceconomy`](https://rsshub.app/nikkei-cn/zh/china/ceconomy)
+如 [中國 經濟 日經中文網](https://zh.cn.nikkei.com/china/ceconomy.html) 的 URL 为 <https://zh.cn.nikkei.com/china/ceconomy.html> 对应路由为 [`/nikkei/cn/zh/china/ceconomy`](https://rsshub.app/nikkei/cn/zh/china/ceconomy)
 
-特别地，当 `category` 填入 `rss` 后（即路由为 [`/nikkei-cn/cn/rss`](https://rsshub.app/nikkei-cn/cn/rss)），此时返回的是 [官方 RSS 的内容](https://cn.nikkei.com/rss.html)
+特别地，当 `path` 填入 `rss` 后（如路由为 [`/nikkei/cn/cn/rss`](https://rsshub.app/nikkei/cn/cn/rss)），此时返回的是 [官方 RSS 的内容](https://cn.nikkei.com/rss.html)
 
 :::
 
 </Route>
 
-## 日本経済新聞
+### Nikkei Asia 最新新闻
 
-### ホームページ
-
-<Route author="zjysdhr" example="/nikkei/index" path="/nikkei/index" radar="1" rssbud="1">
-
-日文版首页
-
-</Route>
-
-### 新聞
-
-<Route author="Arracc" example="/nikkei/news" path="/nikkei/:category/:article_type?" :paramsDesc="['版块','文章类型，free 仅无料全文，缺省为无料全文、有料非全文']">
-
-综合页文章标题添加板块标签
-
-| 総合   | マネーのまなび | 経済・金融   | 政治       | ビジネス     | マネーのまなび | テクノロジー     | 国際            | スポーツ   | 社会・くらし  | オピニオン   | 文化      | FT  | 地域    | 日経ビジネス | ライフ |
-| ---- | ------- | ------- | -------- | -------- | ------- | ---------- | ------------- | ------ | ------- | ------- | ------- | --- | ----- | ------ | --- |
-| news | 未支持     | economy | politics | business | 未支持     | technology | international | sports | society | opinion | culture | 未支持 | local | 未支持    | 未支持 |
-
-</Route>
+<Route author="rainrdx" example="/nikkei/asia" path="/nikkei/asia" radar="1"/>
 
 ## 厦门网
 
@@ -2252,6 +2252,12 @@ category 对应的关键词有
 
 <Route author="Dustin-Jiang" example="/mrdx/today" path="/mrdx/today" />
 
+## 新假期周刊
+
+### 最新文章
+
+<Route author="TonyRL" example="/weekendhk" path="/weekendhk" radar="1" rssbud="1" />
+
 ## 新京报
 
 ### 栏目
@@ -2261,6 +2267,16 @@ category 对应的关键词有
 ### 电子报
 
 <Route author="MisteryMonster" example="/bjnews/epaper/A" path="/bjnews/epaper/:cat" :paramsDesc="['新京报叠名：`A`,`B`,`C`,`D`, 特刊为`special`']"/>
+
+## 新蓝网（浙江广播电视集团）
+
+### 浙江新闻联播
+
+<Route author="yhkang" example="/cztv/zjxwlb" path="/cztv/zjxwlb" />
+
+### 浙江新闻联播 - 每日合集
+
+<Route author="yhkang" example="/cztv/zjxwlb/daily" path="/cztv/zjxwlb/daily" />
 
 ## 新浪科技
 
@@ -2415,6 +2431,38 @@ category 对应的关键词有
 
 <Route author="nczitzk" example="/cctv/photo/jx" path="/cctv/photo/jx" radar="1" rssbud="1"/>
 
+## 羊城晚报金羊网
+
+### 新闻
+
+<Route author="TimWu007" example="/ycwb/1" path="/ycwb/:node" :paramsDesc="['栏目 id']">
+
+注：小部分栏目的 URL 会给出 nodeid。如未给出，可打开某条新闻链接后，查看网页源代码，搜索 nodeid 的值。
+
+常用栏目节点：
+
+| 首页 | 中国 | 国际 | 体育 | 要闻 | 珠江评论 | 民生观察  | 房产  | 金羊教育 | 金羊财富 | 金羊文化 | 金羊健康  | 金羊汽车 |
+| -- | -- | -- | -- | -- | ---- | ----- | --- | ---- | ---- | ---- | ----- | ---- |
+| 1  | 14 | 15 | 16 | 22 | 1875 | 21773 | 222 | 5725 | 633  | 5281 | 21692 | 223  |
+
+| 广州 | 广州 - 广州要闻 | 广州 - 社会百态 | 广州 - 深读广州 | 广州 - 生活服务 | 今日大湾区  | 广东 - 政经热闻 | 广东 - 民生视点 | 广东 - 滚动新闻 |
+| -- | --------- | --------- | --------- | --------- | ------ | --------- | --------- | --------- |
+| 18 | 5261      | 6030      | 13352     | 83422     | 100418 | 13074     | 12252     | 12212     |
+
+</Route>
+
+## 浙江在线
+
+### 浙报集团系列报刊
+
+<Route author="nczitzk" example="/zjol/paper/zjrb" path="/zjol/paper/:id?" :paramsDesc="['报纸 id，见下表，默认为 `zjrb`，即浙江日报']">
+
+| 浙江日报 | 钱江晚报 | 美术报 | 浙江老年报 | 浙江法制报 | 江南游报 |
+| ---- | ---- | --- | ----- | ----- | ---- |
+| zjrb | qjwb | msb | zjlnb | zjfzb | jnyb |
+
+</Route>
+
 ## 中国日报
 
 ### 英语点津
@@ -2520,5 +2568,17 @@ category 对应的关键词有
 `https://www.rfa.org/cantonese/news` 对应 `/rfa/cantonese/news`
 
 `https://www.rfa.org/cantonese/news/htm` 对应 `/rfa/cantonese/news/htm`
+
+</Route>
+
+## 组织人事报
+
+### 电子报
+
+<Route author="5upernove-heng" example="/zuzhirenshi" path="/zuzhirenshi/:id?" :paramsDesc="['报纸版号，默认为全部']" radar="1">
+
+| 第一版 要闻 | 第二版 要闻 | 第三版 人才 | 第四版 人社工作 | 第五版 基层党建 | 第六版 理论评论 | 第七版 史事通鉴 | 第八版 关注 |
+| ------ | ------ | ------ | -------- | -------- | -------- | -------- | ------ |
+| 1      | 2      | 3      | 4        | 5        | 6        | 7        | 8      |
 
 </Route>

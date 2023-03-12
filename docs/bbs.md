@@ -869,6 +869,20 @@ pageClass: routes
 
 <Route author="nczitzk" example="/newsmth/account/fef705ec94819a5a87941759e33c0982" path="/newsmth/account/:id" :paramsDesc="['用户 id，可在用户页的 URL 中找到']"/>
 
+## 司机社
+
+### 论坛
+
+<Route author="akynazh" example="/xsijishe/forum/51" path="/xsijishe/forum/:fid" :paramDesc="['子论坛 id']" radar="1">
+
+::: tip 关于子论坛 id 的获取方法
+
+`/xsijishe/forum/51` 对应于论坛 <https://xsijishe.com/forum-51-1.html>，这个论坛的 fid 为 51，也就是 `forum-{fid}-1` 中的 fid。
+
+:::
+
+</Route>
+
 ## 天涯论坛
 
 ### 子版块
@@ -1130,15 +1144,15 @@ pageClass: routes
 
 ### 子论坛
 
-<Route author="LogicJake" example="/zhibo8/forum/8" path="/zhibo8/forum/:id" :paramsDesc="['子论坛 id，可在子论坛 URL 找到']"/>
+<Route author="LogicJake" example="/zhibo8/forum/8" path="/zhibo8/forum/:id" :paramsDesc="['子论坛 id，可在子论坛 URL 找到']" radar="1"/>
 
 ### 回帖
 
-<Route author="LogicJake" example="/zhibo8/post/2601615" path="/zhibo8/post/:id" :paramsDesc="['帖子 id，可在帖子 URL 找到']"/>
+<Route author="LogicJake" example="/zhibo8/post/3022946" path="/zhibo8/post/:id" :paramsDesc="['帖子 id，可在帖子 URL 找到']" radar="1"/>
 
 ### 滚动新闻
 
-<Route author="nczitzk" example="/zhibo8/more/nba" path="/zhibo8/more/:category?" :paramsDesc="['分类，见下表，默认为 NBA']">
+<Route author="nczitzk" example="/zhibo8/more/nba" path="/zhibo8/more/:category?" :paramsDesc="['分类，见下表，默认为 NBA']" radar="1">
 
 | NBA | 足球    | 电竞       | 综合     |
 | --- | ----- | -------- | ------ |
