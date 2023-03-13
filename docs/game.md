@@ -109,19 +109,6 @@ pageClass: routes
 
 <Route author="TonyRL" example="/gameapps" path="/gameapps"/>
 
-## 遊戲基地 Gamebase
-
-### 新聞
-
-<Route author="nczitzk" example="/gamebase/news" path="/gamebase/news/:type?/:category?" :paramsDesc="['类型，见下表，默认为 newslist', '分类，可在对应分类页 URL 中找到，默认为 `all` 即全部']">
-
-类型
-
-| newslist | r18list |
-| -------- | ------- |
-
-</Route>
-
 ## Gamer Secret
 
 ### 最新資訊
@@ -925,6 +912,19 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 ### 游研社 - 全部文章
 
 <Route author="HaitianLiu" example="/yystv/docs" path="/yystv/docs" />
+
+## 遊戲基地 Gamebase
+
+### 新聞
+
+<Route author="nczitzk" example="/gamebase/news" path="/gamebase/news/:type?/:category?" :paramsDesc="['类型，见下表，默认为 newslist', '分类，可在对应分类页 URL 中找到，默认为 `all` 即全部']">
+
+类型
+
+| newslist | r18list |
+| -------- | ------- |
+
+</Route>
 
 ## 掌上英雄联盟
 
