@@ -20347,7 +20347,7 @@
       {
         "title": "新闻",
         "docs": "https://docs.rsshub.app/traditional-media.html#hua-er-jie-ri-bao-the-wall-street-journal-wsj",
-        "souce": "/",
+        "source": "/",
         "target": "/wsj/zh-cn"
       }
     ],
@@ -20355,7 +20355,7 @@
       {
         "title": "新闻",
         "docs": "https://docs.rsshub.app/traditional-media.html#hua-er-jie-ri-bao-the-wall-street-journal-wsj",
-        "souce": "/",
+        "source": "/",
         "target": "/wsj/en-us"
       }
     ]
