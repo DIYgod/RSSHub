@@ -56,6 +56,16 @@ Eg:<https://kakuyomu.jp/works/1177354054883783581>
 
 <RouteEn author="nczitzk" example="/literotica/category/anal-sex-stories" path="/literotica/category/:category?" :paramsDesc="['Category, can be found in URL']"/>
 
+## MagazineLib
+
+### Latest Magazine
+
+<RouteEn author="NavePnow" example="/magazinelib/latest-magazine/new+yorker" path="/magazinelib/latest-magazine/:query?" :paramsDesc="['query, search page querystring']"/>
+
+For instance, when doing search at <https://magazinelib.com/> and you get url <https://magazinelib.com/?s=new+yorker>, the query is `new+yorker`
+
+</RouteEn>
+
 ## Mobilism
 
 ### eBook Releases
