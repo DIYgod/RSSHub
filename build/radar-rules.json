@@ -6723,6 +6723,18 @@
       }
     ]
   },
+  "gamebase.com.tw": {
+    "_name": "遊戲基地 Gamebase",
+    "news": [
+      {
+        "title": "新聞",
+        "docs": "https://docs.rsshub.app/game.html#gamebase-xin-wen",
+        "source": [
+          "/news/:type"
+        ]
+      }
+    ]
+  },
   "gamer.com.tw": {
     "_name": "巴哈姆特電玩資訊站",
     "acg": [

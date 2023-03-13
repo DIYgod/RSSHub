@@ -1622,6 +1622,9 @@
     "/gameapps/": [
         "TonyRL"
     ],
+    "/gamebase/news/:type?/:category?": [
+        "nczitzk"
+    ],
     "/gamer/gnn/:category?": [
         "Arracc"
     ],
