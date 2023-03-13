@@ -1182,7 +1182,19 @@ IT・科学 tech_science
 
 ### 新闻
 
-<Route author="oppilate" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" :paramsDesc="['语言，支持 `en-us`、`zh-cn`、`zh-tw`', '分类，仅 `en-us` 支持分类订阅。支持 `opinion`, `world_news`, `us_bussiness`, `market_news`, `technology`, `lifestyle`。']">
+<Route author="oppilate NavePnow" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" :paramsDesc="['语言，支持 `en-us`、`zh-cn`、`zh-tw`', '分类，见下表']">
+
+en_us
+
+| World | U.S. | Politics | Economy | Business | Tech       | Markets | Opinion | Books & Arts | Real Estate | Life & Work | Sytle               | Sports |
+| ----- | ---- | -------- | ------- | -------- | ---------- | ------- | ------- | ------------ | ----------- | ----------- | ------------------- | ------ |
+| world | us   | politics | economy | business | technology | markets | opinion | books-arts   | realestate  | life-work   | style-entertainment | sports |
+
+zh-cn / zh-tw
+
+| 国际    | 中国    | 金融市场    | 经济      | 商业       | 科技         | 派         | 专栏与观点   |
+| ----- | ----- | ------- | ------- | -------- | ---------- | --------- | ------- |
+| world | china | markets | economy | business | technology | life-arts | opinion |
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
