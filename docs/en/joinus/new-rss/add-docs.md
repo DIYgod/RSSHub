@@ -40,7 +40,7 @@ To add documentation to your route, use Vue components. They work like HTML tags
 
 ## Documentation examples
 
-### No parameter
+### Repo Issues (No parameter)
 
 ```vue
 <RouteEn author="HenryQW" example="/sspai/series" path="/sspai/series" />
@@ -52,7 +52,7 @@ To add documentation to your route, use Vue components. They work like HTML tags
 
 ---
 
-### Multiple parameters
+### Repo Issues (Multiple parameters)
 
 ```vue
 <RouteEn author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" :paramsDesc="['GitHub username', 'GitHub repo name, `RSSHub` by default']" />
@@ -64,7 +64,7 @@ To add documentation to your route, use Vue components. They work like HTML tags
 
 ---
 
-### Description with table
+### Repo Issues (Description with table)
 
 ```vue
 <RouteEn author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" :paramsDesc="['keyword', 'rank mode, empty or other for time order, `popular` for popular order, `date` by default', 'filte R18 content, see table below, empty by default']">
@@ -158,7 +158,7 @@ By using these components, you can provide valuable information to users and mak
 -   When documenting a route, use a level 3 heading (`###`). If the route documentation doesn't have a main section heading, add a level 2 heading (`##`).
 -   Leave a blank line between each heading and the following content. This will help ensure that your documentation can be built successfully.
 -   If the documentation contains a large table, it is suggested to put it inside a [details container](/en/joinus/new-rss/add-docs.html#documentation-examples-custom-containers)
--   Components can be written in two ways: as a self-closing tag (`<RouteEn .../>`) or as a pair of tags (`<RouteEn>...</RouteEn>`). Choose the method that works best for you.
+-   Components can be written in two ways: as a self-closing tag (`<RouteEn .../>`) or as a pair of tags (`<RouteEn>...</RouteEn>`).
 -   **Remember to close the tag!**
 -   Don't forget to run the following command to check and format your code before committing and submitting a merge request:
 

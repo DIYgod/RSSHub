@@ -68,7 +68,7 @@
         }
 
         .debug-value {
-            white-space: pre-wrap;
+            white-space: pre-wrap !important;
             overflow-wrap: anywhere;
             display: inline-block;
             vertical-align: top;

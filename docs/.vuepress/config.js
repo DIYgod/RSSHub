@@ -146,13 +146,11 @@ module.exports = {
                             title: '🤝 Join Us',
                             path: '/en/joinus/quick-start.html',
                             collapsable: false,
-                            sidebarDepth: 1,
                         },
                         {
                             title: '📰 New RSS rules',
                             path: '/en/joinus/new-rss/prerequisites.html',
                             collapsable: false,
-                            sidebarDepth: 1,
                             children: [
                                 {
                                     title: 'Prerequisites',
@@ -177,28 +175,19 @@ module.exports = {
                             ],
                         },
                         {
-                            title: '📡 New Radar rules',
+                            title: '📡 New Radar Rules',
                             path: '/en/joinus/new-radar.html',
                             collapsable: false,
-                            sidebarDepth: 1,
-                            children: [
-                                {
-                                    title: '📰 New RSS rules',
-                                },
-                                {
-                                    title: '📡 New RSSHub Radar rules',
-                                },
-                                {
-                                    title: '🦾 Advanced',
-                                },
-                            ],
                         },
                         {
                             title: '🦾 Advanced',
-                            // path: '/en/joinus/quick-start.html',
+                            path: '/en/joinus/rich-media.html',
                             collapsable: false,
-                            sidebarDepth: 1,
                             children: [
+                                {
+                                    title: '🎵 Rich Media RSS',
+                                    path: 'rich-media',
+                                },
                                 {
                                     title: '⚖️ Script Standard',
                                     path: 'script-standard',
