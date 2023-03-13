@@ -109,7 +109,7 @@ pageClass: routes
 
 <Route author="TonyRL" example="/gameapps" path="/gameapps"/>
 
-## Gamebase
+## 遊戲基地 Gamebase
 
 ### 新聞
 
