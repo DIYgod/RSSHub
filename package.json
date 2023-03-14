@@ -132,7 +132,7 @@
     "pidusage": "3.0.2",
     "plist": "3.0.6",
     "proxy-chain": "2.2.1",
-    "puppeteer": "19.7.4",
+    "puppeteer": "19.7.5",
     "puppeteer-extra": "3.3.6",
     "puppeteer-extra-plugin-stealth": "2.11.2",
     "query-string": "7.1.3",
