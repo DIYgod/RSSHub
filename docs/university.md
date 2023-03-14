@@ -3052,13 +3052,15 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 扬华素质网
 
-<Route author="mobyw" example="/swjtu/xg/tzgg" path="/swjtu/xg/:code?" :paramsDesc="['栏目(默认为tzgg)']" />
+<Route author="mobyw" example="/swjtu/xg/tzgg" path="/swjtu/xg/:code?" :paramsDesc="['栏目(默认为tzgg)']">
 
 栏目列表：
 
 | 通知公告 | 扬华新闻 | 多彩学院 | 学工之家 |
 | ---- | ---- | ---- | ---- |
 | tzgg | yhxw | dcxy | xgzj |
+
+</Route>
 
 ### 就业招聘信息
 
