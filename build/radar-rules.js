@@ -898,7 +898,9 @@
                     if (nodeId === 'GKMQC26VQQMM8XSW') {
                         return '/amazon/kindle/software-updates';
                     }
-                } } ] },
+                } } ],
+    aws:[ { title:"AWS blogs",
+        docs:"https://docs.rsshub.app/blogs.html#amazon" } ] },
   "android.com":{ _name:"Android Developers",
     developer:[ { title:"SDK Platform Tools release notes",
         docs:"https://docs.rsshub.app/program-update.html#android-sdk-platform-tools-release-notes",

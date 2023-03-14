@@ -308,6 +308,9 @@
     "/ally/rail/:category?/:topic?": [
         "Rongronggg9"
     ],
+    "/amazon/awsblogs/:locale?": [
+        "HankChow"
+    ],
     "/amazon/kindle/software-updates": [
         "NavePnow"
     ],

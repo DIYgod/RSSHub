@@ -1547,6 +1547,12 @@
           "/gp/help/customer/display.html"
         ]
       }
+    ],
+    "aws": [
+      {
+        "title": "AWS blogs",
+        "docs": "https://docs.rsshub.app/blogs.html#amazon"
+      }
     ]
   },
   "android.com": {
