@@ -3049,7 +3049,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="mobyw" example="/swjtu/jwc" path="/swjtu/jwc"/>
 
-
 ### 扬华素质网
 
 <Route author="mobyw" example="/swjtu/xg/tzgg" path="/swjtu/xg/:code?" :paramsDesc="['栏目(默认为tzgg)']">
