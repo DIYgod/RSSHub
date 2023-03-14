@@ -584,7 +584,7 @@ Language
 | ------------ | ------ | -------- | ---------- | -------- |
 | most-popular | latest | politics | technology | business |
 
-More categories can bu found within the navigation bar at <https://www.theatlantic.com/>
+More categories( except photo) can be found within the navigation bar at <https://www.theatlantic.com/>
 
 </RouteEn>
 
