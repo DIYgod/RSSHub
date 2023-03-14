@@ -5258,6 +5258,14 @@
         "docs": "https://docs.rsshub.app/social-media.html#dou-ban",
         "source": "/group/:groupid",
         "target": "/douban/group/:groupid/elite"
+      },
+      {
+        "title": "榜单与集合",
+        "docs": "https://docs.rsshub.app/social-media.html#douban",
+        "source": [
+          "/subject_collection/:type"
+        ],
+        "target": "/douban/list/:type"
       }
     ],
     "jobs": [
