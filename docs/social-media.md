@@ -1259,7 +1259,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 ### 榜单与集合
 
-<Route author="5upernova-heng" example="/douban/list/subject_real_time_hotest" path="/douban/list/:type" :paramsDesc="['榜单类型，见下表。默认为实时热门书影音']">
+<Route author="5upernova-heng" example="/douban/list/subject_real_time_hotest" path="/douban/list/:type?" :paramsDesc="['榜单类型，见下表。默认为实时热门书影音']">
 
 | 榜单/集合          | 路由（type）               |
 | ------------------ | -------------------------- |
@@ -1282,7 +1282,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 >
 > 如何找到榜单对应的路由参数：
 > 在豆瓣手机 APP 中，对应地榜单页面右上角，点击分享链接。链接路径 `subject_collection` 后的路径就是路由参数 `type`。
-> 如：小说热门榜的分享链接为：`https://m.douban.com/subject_collection/ECDIHUN4A`，其对应本 RSS 路由的 `type` 为 `ECDIHUN4A`，对应的订阅链接路由：`/douban/list/ECDIHUN4A`
+> 如：小说热门榜的分享链接为：`https://m.douban.com/subject_collection/ECDIHUN4A`，其对应本 RSS 路由的 `type` 为 `ECDIHUN4A`，对应的订阅链接路由：[`/douban/list/ECDIHUN4A`](https://rsshub.app/douban/list/ECDIHUN4A)
 
 </Route>
 
