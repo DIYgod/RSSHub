@@ -1,0 +1,17 @@
+<div>
+    {{@ item.caption}}
+    <br>
+    <figure>
+        <img src={{item.imgUrl}} alt={{item.imgAlt}}>
+        <figcaption>{{item.imgCaption}}</figcaption>
+    </figure>
+    {{each item.content}}
+        {{@ $value.innerHtml}}
+        {{if !$value.tagName}}
+        <br>
+        <br>
+        {{/if}}
+    {{/each}}
+
+</div>
+
