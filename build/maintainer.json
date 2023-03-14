@@ -4437,6 +4437,9 @@
         "DIYgod",
         "NeverBehave"
     ],
+    "/theatlantic/:category": [
+        "NavePnow"
+    ],
     "/thecatcity/:term?": [
         "TonyRL"
     ],
