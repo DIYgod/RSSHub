@@ -1,0 +1,25 @@
+{{ if ranking_value }}
+<p>{{ ranking_value }}<p>
+{{ /if }}
+
+<p>{{ title }}</p>
+
+{{ if original_title }}
+<p>{{ original_title }}</p>
+{{ /if }}
+
+{{ if rate }}
+<p>{{ rate }}</p>
+{{ /if }}
+
+{{ if card_subtitle }}
+<p>{{ card_subtitle }}</p>
+{{ /if }}
+
+{{ if description }}
+<p>{{ description }}</p>
+{{ /if }}
+
+{{ if cover }}
+<img src="{{ cover }}" />
+{{ /if }}
