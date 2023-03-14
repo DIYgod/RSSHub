@@ -218,7 +218,7 @@ For example:
 
 ### OpenSource Square
 
-<Route author="tylinux" example="/oshwhub" path="/oshwhub/:sortType?" :paramsDesc="['sortType']" radar="1" rssbud="1"/>
+<RouteEn author="tylinux" example="/oshwhub" path="/oshwhub/:sortType?" :paramsDesc="['sortType']" radar="1" rssbud="1"/>
 
 ## Panda
 
