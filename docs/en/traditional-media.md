@@ -578,7 +578,7 @@ Language
 
 ### News
 
-<RouteEn author="NavePnow" example="/theatlantic/latest" path="/theatlantic/:category" :paramsDesc="['category', 'see below']">
+<RouteEn author="NavePnow" example="/theatlantic/latest" path="/theatlantic/:category" :paramsDesc="['category, see below']">
 
 | Popular      | Latest | Politics | Technology | Business |
 | ------------ | ------ | -------- | ---------- | -------- |

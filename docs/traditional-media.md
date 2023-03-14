@@ -472,7 +472,7 @@ Solidot 提供的 feed:
 
 ### News
 
-<Route author="NavePnow" example="/theatlantic/latest" path="/theatlantic/:category" :paramsDesc="['分类', '见下表']">
+<Route author="NavePnow" example="/theatlantic/latest" path="/theatlantic/:category" :paramsDesc="['分类, 见下表']">
 
 | Popular      | Latest | Politics | Technology | Business |
 | ------------ | ------ | -------- | ---------- | -------- |
