@@ -4312,6 +4312,12 @@
     "/swjtu/jyzpxx": [
         "qizidog"
     ],
+    "/swjtu/jwc": [
+        "mobyw"
+    ],
+    "/swjtu/xg/:code?": [
+        "mobyw"
+    ],
     "/swpu/bgw/:code": [
         "CYTMWIA"
     ],
