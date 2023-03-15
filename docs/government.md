@@ -44,11 +44,27 @@ pageClass: routes
 
 <Route author="Fatpandac" example="/ssm/news" path="/ssm/news"/>
 
+## 北京社科网
+
+### 通用
+
+<Route author="TonyRL" example="/bjsk/newslist-1394-1474-0" path="/bjsk/:path?" :paramsDesc="['路径，默认为 `newslist-1486-0-0`']" radar="1">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `https://www.bjsk.org.cn/` 和 `.html` 之间的字段。下面是一个例子。
+
+若订阅 [社科资讯 > 社科要闻](https://www.bjsk.org.cn/newslist-1394-1474-0.html) 则将对应页面 URL <https://www.bjsk.org.cn/newslist-1394-1474-0.html> 中 `https://www.bjsk.org.cn/` 和 `.html` 之间的字段 `newslist-1394-1474-0` 作为路径填入。此时路由为 [`/bjsk/newslist-1394-1474-0`](https://rsshub.app/bjsk/newslist-1394-1474-0)
+
+:::
+
+</Route>
+
 ## 北京市保障房中心有限公司
 
 ### 北京市共有产权住房租赁服务平台
 
-<Route author="bigfei" example="/gov/beijing/bphc/announcement" path="/gov/beijing/bphc/:caty" :paramsDesc="['类别']">
+<Route author="bigfei" example="/gov/beijing/bphc/announcement" path="/gov/beijing/bphc/:cat" :paramsDesc="['类别']">
 
 |     通知公告     |   项目介绍  |
 | :----------: | :-----: |
@@ -95,6 +111,18 @@ pageClass: routes
 | 委内新闻 | 基层动态 | 媒体聚焦 |  热点新闻 |
 | :--: | :--: | :--: | :---: |
 | wnxw | jcdt | mtjj | rdxws |
+
+</Route>
+
+## 北京无线电协会
+
+### 最新资讯
+
+<Route author="Misaka13514" example="/bjwxdxh/114" path="/bjwxdxh/:type?" :paramsDesc="['类型，见下表，默认为全部']" radar="1" rssbud="1">
+
+| 协会活动 | 公告通知 | 会议情况 | 简报  | 政策法规 | 学习园地 | 业余无线电服务中心 | 经验交流 | 新技术推介 | 活动通知 | 爱好者园地 | 结果查询 | 资料下载 | 会员之家 | 会员简介 | 会员风采 | 活动报道 |
+| ---- | ---- | ---- | --- | ---- | ---- | --------- | ---- | ----- | ---- | ----- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 86   | 99   | 102  | 103 | 106  | 107  | 108       | 111  | 112   | 114  | 115   | 116  | 118  | 119  | 120  | 121  | 122  |
 
 </Route>
 
@@ -916,6 +944,12 @@ pageClass: routes
 
 </Route>
 
+## 武汉市人民政府
+
+### 武汉要闻
+
+<Route author="nczitzk" example="/gov/wuhan/sy/whyw" path="/gov/wuhan/sy/whyw"  radar="1" rssbud="1" />
+
 ## 香港廉政公署
 
 ### 新闻公布
@@ -1032,6 +1066,12 @@ pageClass: routes
 
 </Route>
 
+## 中国科学技术协会
+
+### 通用
+
+<Route author="TonyRL" example="/cast" path="/cast/:column?" :paramsDesc="['栏目 ID，即 URL 中的数字，默认为 `457`']" radar="1"/>
+
 ## 中国农工民主党
 
 ### 新闻中心
@@ -1059,6 +1099,18 @@ pageClass: routes
 ### 开庭信息
 
 <Route author="Fatpandac" example="/tingshen" path="/tingshen"/>
+
+## 中国无线电协会业余无线电分会
+
+### 最新资讯
+
+<Route author="Misaka13514" example="/crac/2" path="/crac/:type?" :paramsDesc="['类型，见下表，默认为全部']" radar="1" rssbud="1">
+
+| 新闻动态 | 通知公告 | 政策法规 | 常见问题 | 资料下载 | English | 业余中继台 | 科普专栏 |
+| ---- | ---- | ---- | ---- | ---- | ------- | ----- | ---- |
+| 1    | 2    | 3    | 5    | 6    | 7       | 8     | 9    |
+
+</Route>
 
 ## 中国信息通信研究院
 
@@ -1164,17 +1216,21 @@ pageClass: routes
 
 ## 中国证券监督管理委员会
 
-### 发审委公告
+### 通用
 
-<Route author="chinobing" example="/csrc/fashenwei" path="/csrc/fashenwei"/>
+<Route author="chinobing LogicJake" example="/gov/csrc/news/c101975/zfxxgk_zdgk.shtml" path="/gov/csrc/news/:suffix*" :paramsDesc="['路径，预设为 `c100028/common_xq_list.shtml`']" radar="1">
 
-### 证监会消息
+::: tip 提示
+路径处填写对应页面 URL 中 `http://www.csrc.gov.cn/csrc/` 后的字段。下面是一个例子。
 
-<Route author="chinobing LogicJake" example="/csrc/news/zjhxwfb-xwfbh" path="/csrc/news/:suffix?" :paramsDesc="['支持形如 `http://www.csrc.gov.cn/pub/newsite/*/*` 的网站，将 newsite 后面的两段网址后缀以 - 连接']" />
+若订阅 [证监会要闻](http://www.csrc.gov.cn/csrc/c100028/common_xq_list.shtml) 则将对应页面 URL <http://www.csrc.gov.cn/csrc/c100028/common_xq_list.shtml> 中 `http://www.csrc.gov.cn/csrc/` 后的字段 `c100028/common_xq_list.shtml` 作为路径填入。此时路由为 [`/gov/csrc/news/c100028/common_xq_list.shtml`](https://rsshub.app/gov/csrc/news/c100028/common_xq_list.shtml)
+:::
+
+</Route>
 
 ### 申请事项进度
 
-<Route author="hillerliao" example="/csrc/auditstatus/:apply_id" path="/csrc/auditstatus" :paramsDesc="['事项类别id，`https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数']"/>
+<Route author="hillerliao" example="/gov/csrc/auditstatus/9ce91cf2d750ee62de27fbbcb05fa483" path="/gov/csrc/auditstatus/:apply_id" :paramsDesc="['事项类别id，`https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数']" radar="1"/>
 
 ## 中国政府网
 
@@ -1421,6 +1477,10 @@ pageClass: routes
 | policy_anal | newest_file | notice | edu_ministry_news | edu_focus_news |
 
 </Route>
+
+### 司局通知
+
+<Route author="TonyRL" example="/gov/moe/s78/A13" path="/gov/moe/s78/:column" :paramsDesc="['司局 ID，可在 URL 找到']" radar="1"/>
 
 ## 中华人民共和国农业农村部
 

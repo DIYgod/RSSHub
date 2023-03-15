@@ -302,11 +302,35 @@ path="/ctfhub/upcoming/:limit?"
 
 </Route>
 
+## 福建考试报名网
+
+### 分类
+
+<Route author="nczitzk" example="/fjksbm" path="/fjksbm/:category?" :paramsDesc="['分类，见下表，默认为网络报名进行中']" radar="1">
+
+| 已发布公告 (方案)，即将开始 | 网络报名进行中 | 网络报名结束等待打印准考证 | 正在打印准考证 | 考试结束，等待发布成绩 | 已发布成绩 | 新闻动态 | 政策法规   |
+| --------------- | ------- | ------------- | ------- | ----------- | ----- | ---- | ------ |
+| 0               | 1       | 2             | 3       | 4           | 5     | news | policy |
+
+</Route>
+
+## 韓國海事法學會
+
+### 学术论文
+
+<Route author="TonyRL" example="/kimlaw/thesis" path="/kimlaw/thesis" radar="1"/>
+
 ## 杭州市国家普通话测试网报信息
 
 ### 考试信息
 
 <Route author="ChaosTong" example="/putonghua" path="/putonghua" />
+
+## 湖南人事考试网
+
+### 公告
+
+<Route author="TonyRL" example="/hunanpea/rsks/2f1a6239-b4dc-491b-92af-7d95e0f0543e" path="/hunanpea/rsks/:guid" :paramsDesc="['分类 id，可在 URL 中找到']" radar="1"/>
 
 ## 唧唧堂
 
@@ -317,18 +341,6 @@ path="/ctfhub/upcoming/:limit?"
 ### 文档
 
 <Route author="xfangbao" example="/jijitang/article/latest" path="/jijitang/article/:id" :paramsDesc="['类别，latest 或者 recommand']"/>
-
-## 计算机视觉专委
-
-### 学术动态 - 分类
-
-<Route author="elxy" example="/ccfcv/xsdt/xsqy" path="/ccfcv/:channel/:category" :paramsDesc="['频道，仅支持 `xsdt`', '分类，见下表，亦可在网站 url 里找到']">
-
-| 学术前沿 | 热点征文 | 学术会议 |
-| ---- | ---- | ---- |
-| xsqy | rdzw | xshy |
-
-</Route>
 
 ## 金山词霸
 
@@ -344,6 +356,12 @@ path="/ctfhub/upcoming/:limit?"
 | poster      | 文艺海报 |
 
 </Route>
+
+## 经济 50 人论坛
+
+### 专家文章
+
+<Route author="sddiky" example="/50forum" path="/50forum" radar="1"/>
 
 ## 领研
 
@@ -452,11 +470,7 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 精品课程
 
-<Route author="hoilc" example="/open163/vip" path="/open163/vip" radar="1" rssbud="1"/>
-
-### 最新课程
-
-<Route author="hoilc" example="/open163/latest" path="/open163/latest" radar="1" rssbud="1"/>
+<Route author="hoilc" example="/163/open/vip" path="/163/open/vip" radar="1" rssbud="1"/>
 
 ## 下厨房
 
@@ -588,11 +602,11 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 知识库
 
-<Route author="aha2mao" example="/yuque/doc/75258" path="/yuque/doc/:repo_id" :paramsDesc="['仓库id，可在对应知识库主页的`/api/books/${repo_id}/docs`请求里找到']">
+<Route author="aha2mao ltaoo" example="/yuque/ruanyf/weekly" path="/yuque/:name/:book" :paramsDesc="['用戶名', '知识库 ID']" radar="1">
 
-| Node.js 专栏 | 阮一峰每周分享 | 语雀使用手册 |
-| ---------- | ------- | ------ |
-| 75258      | 102804  | 75257  |
+| Node.js 专栏                                               | 阮一峰每周分享                                                        | 语雀使用手册                                                   |
+| -------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------- |
+| [/yuque/egg/nodejs](https://rsshub.app/yuque/egg/nodejs) | [/yuque/ruanyf/weekly](https://rsshub.app/yuque/ruanyf/weekly) | [/yuque/yuque/help](https://rsshub.app/yuque/yuque/help) |
 
 </Route>
 
@@ -639,11 +653,43 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="xyqfer" example="/icourse163/newest" path="/icourse163/newest" />
 
+## 中国计算机学会
+
+### 新闻
+
+<Route author="nczitzk" example="/ccf/news" path="/ccf/news/:category?" :paramsDesc="['分类，见下表，默认为 CCF 新闻']">
+
+| CCF 新闻     | CCF 聚焦 | ACM 信息   |
+| ---------- | ------ | -------- |
+| Media_list | Focus  | ACM_News |
+
+</Route>
+
+### 计算机视觉专委会 - 学术动态 - 分类
+
+<Route author="elxy" example="/ccf/ccfcv/xsdt/xsqy" path="/ccf/ccfcv/:channel/:category" :paramsDesc="['频道，仅支持 `xsdt`', '分类，见下表，亦可在网站 url 里找到']">
+
+| 学术前沿 | 热点征文 | 学术会议 |
+| ---- | ---- | ---- |
+| xsqy | rdzw | xshy |
+
+</Route>
+
+### 大数据专家委员会
+
+<Route author="tudou027" example="/ccf/tfbd/xwdt/tzgg" path="/ccf/tfbd/:caty/:id" :paramsDesc="['主分类，可在 URL 找到', '子分类，可在 URL 找到']" radar="1"/>
+
 ## 中国留学网
 
 ### 通知公告
 
 <Route author="nczitzk" example="/cscse/tzgg" path="/cscse/tzgg"/>
+
+## 中国人工智能学会
+
+### 学会动态
+
+<Route author="tudou027" example="/caai/45" path="/caai/:caty" :paramsDesc="['分类 ID，可在 URL 找到']" radar="1"/>
 
 ## 中国人事考试网
 

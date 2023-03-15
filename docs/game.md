@@ -236,9 +236,9 @@ pageClass: routes
 ### 游戏折扣
 
 <Route author="zytomorrow" path="/jump/discount/:platform/:filter?/:countries?" example="/jump/discount/ps5/all" :paramsDesc="['平台:switch,ps4,ps5,xbox,steam,epic', '过滤参数,all-全部，jx-精选，sd-史低，dl-独立，vip-会员', '地区，具体支持较多，可自信查看地区简写']">
-| switch | ps4 | ps5 | xbox | steam | epic |
-| ------ | --- | ---- | ---- | ---- | ---- |
-| 可用   | 可用 | 可用   | 不可用   | 可用   | 不可用 |
+| switch | ps4  | ps5  | xbox   | steam | epic   |
+| ------ | ---- | ---- | ------ | ----- | ------ |
+| 可用   | 可用 | 可用 | 不可用 | 可用  | 不可用 |
 
 | filter | switch | ps4 | ps5 | steam |
 | ------ | ------ | --- | --- | ----- |
@@ -311,8 +311,8 @@ pageClass: routes
 ### Feed The Beast (FTB) 模组包更新
 
 <Route author="gucheen" example="/feed-the-beast/modpack/ftb_presents_direwolf20_1_16" path="/feed-the-beast/modpack/:modpackEntry" :paramsDesc="['模组包的短名.']">
-| 参数 | 说明 |
-| ------| ------------ |
+| 参数         | 说明                                                                                                                                                        |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | modpackEntry | 模组包的短名从模组包的页面链接中找到，例如 `https://www.feed-the-beast.com/modpack/ftb_presents_direwolf20_1_16`，短名就是 `ftb_presents_direwolf20_1_16`。 |
 </Route>
 
@@ -759,7 +759,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 用户发帖
 
-<Route author="luyuhuang" example="/netease/ds/63dfbaf4117741daaf73404601165843" path="/netease/ds/:id" :paramsDesc="['用户ID']"/>
+<Route author="luyuhuang" example="/163/ds/63dfbaf4117741daaf73404601165843" path="/163/ds/:id" :paramsDesc="['用户ID']"/>
 
 ## 小黑盒
 
@@ -913,6 +913,19 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="HaitianLiu" example="/yystv/docs" path="/yystv/docs" />
 
+## 遊戲基地 Gamebase
+
+### 新聞
+
+<Route author="nczitzk" example="/gamebase/news" path="/gamebase/news/:type?/:category?" :paramsDesc="['类型，见下表，默认为 newslist', '分类，可在对应分类页 URL 中找到，默认为 `all` 即全部']">
+
+类型
+
+| newslist | r18list |
+| -------- | ------- |
+
+</Route>
+
 ## 掌上英雄联盟
 
 ### 推荐
@@ -966,6 +979,18 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 ### 公告
 
 <Route author="magic-akari" example="/kirara/news" path="/kirara/news"/>
+
+## ファミ通
+
+### 分类
+
+<Route author="TonyRL" example="/famitsu/category/new-article" path="/famitsu/category/:category?" :paramsDesc="['分类，见下表，预设为 `new-article`']" radar="1">
+
+| 新着          | PS5 | Switch | PS4 | ニュース | ゲームニュース   | PR TIMES | 動画     | 特集・企画記事         | インタビュー    | 取材・リポート      | レビュー   | インディーゲーム   |
+| ----------- | --- | ------ | --- | ---- | --------- | -------- | ------ | --------------- | --------- | ------------ | ------ | ---------- |
+| new-article | ps5 | switch | ps4 | news | news-game | prtimes  | videos | special-article | interview | event-report | review | indie-game |
+
+</Route>
 
 ## マギアレコード（Magia Record, 魔法纪录）
 

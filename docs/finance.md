@@ -224,23 +224,27 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ### 电报
 
-<Route author="nczitzk" example="/cls/telegraph" path="/cls/telegraph/:category?" :paramsDesc="['分类，见下表']">
+<Route author="nczitzk" example="/cls/telegraph" path="/cls/telegraph/:category?" :paramsDesc="['分类，见下表，默认为全部']" radar="1">
 
-| 看盘    | 公告           | 解读      | 加红  | 推送    | 提醒     | 基金   |
-| ----- | ------------ | ------- | --- | ----- | ------ | ---- |
-| watch | announcement | explain | red | jpush | remind | fund |
+| 看盘    | 公司           | 解读      | 加红  | 推送    | 提醒     | 基金   | 港股 |
+| ----- | ------------ | ------- | --- | ----- | ------ | ---- | -- |
+| watch | announcement | explain | red | jpush | remind | fund | hk |
 
 </Route>
 
 ### 深度
 
-<Route author="nczitzk" example="/cls/depth/1000" path="/cls/depth/:category?" :paramsDesc="['分类代码，可在首页导航栏的目标网址 URL 中找到']">
+<Route author="nczitzk" example="/cls/depth/1000" path="/cls/depth/:category?" :paramsDesc="['分类代码，可在首页导航栏的目标网址 URL 中找到']" radar="1">
 
-| 要闻   | 股市   | 环球   | 公司   | 地产   | 券商   | 金融   | 汽车   | 科创版  |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 1000 | 1003 | 1007 | 1005 | 1006 | 1118 | 1032 | 1119 | 1111 |
+| 头条   | 股市   | 港股   | 环球   | 公司   | 券商   | 基金   | 地产   | 金融   | 汽车   | 科创版  | 品见   | 期货   | 投教   |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 1000 | 1003 | 1135 | 1007 | 1005 | 1118 | 1110 | 1006 | 1032 | 1119 | 1111 | 1160 | 1124 | 1176 |
 
 </Route>
+
+### 热门文章排行榜
+
+<Route author="5upernova-heng" example="/cls/hot" path="/cls/hot" radar="1"/>
 
 ## 第一财经杂志
 
@@ -284,15 +288,23 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ### 用户文章
 
-<Route author="nczitzk" example="/gelonghui/user/5273" path="/gelonghui/user/:id" :paramsDesc="['用户编号, 可在用户页 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="nczitzk" example="/gelonghui/user/5273" path="/gelonghui/user/:id" :paramsDesc="['用户编号，可在用户页 URL 中找到']" radar="1" rssbud="1"/>
 
 ### 主题文章
 
-<Route author="nczitzk" example="/gelonghui/subject/4" path="/gelonghui/subject/:id"  :paramsDesc="['主题编号, 可在主题页 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="nczitzk" example="/gelonghui/subject/4" path="/gelonghui/subject/:id"  :paramsDesc="['主题编号，可在主题页 URL 中找到']" radar="1" rssbud="1"/>
 
 ### 搜索关键字
 
 <Route author="nczitzk" example="/gelonghui/keyword/早报" path="/gelonghui/keyword/:keyword" :paramsDesc="['搜索关键字']" radar="1" rssbud="1"/>
+
+### 最热文章
+
+<Route author="TonyRL" example="/gelonghui/hot-article" path="/gelonghui/hot-article/:type?" :paramsDesc="['`day` 为日排行，`week` 为周排行，默认为 `day`']" radar="1" rssbud="1"/>
+
+### 实时快讯
+
+<Route author="TonyRL" example="/gelonghui/live" path="/gelonghui/live" radar="1" rssbud="1"/>
 
 ## 国家金融与发展实验室
 
@@ -308,7 +320,9 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ## 金十数据
 
-<Route author="laampui" example="/jinshi/index" path="/jinshi/index" />
+### 市场快讯
+
+<Route author="laampui" example="/jin10" path="/jin10/:important?" :paramsDesc="['只看重要，任意值开启，留空关闭']" radar="1"/>
 
 ## 老虎社区
 
@@ -622,43 +636,45 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ## 证券时报网
 
-### 要闻
+### 栏目
 
-<Route author="nczitzk" example="/stcn/xw/news" path="/stcn/:id?" :paramsDesc="['分类 id，见下表，默认为要闻']">
+<Route author="nczitzk" example="/stcn/yw" path="/stcn/:id?" :paramsDesc="['栏目 id，见下表，默认为要闻']">
 
-| 要闻      | 滚动 | 深度    | 评论    |
-| ------- | -- | ----- | ----- |
-| xw/news | gd | xw/sd | xw/pl |
+| 快讯 | 要闻 | 股市 | 公司      | 数据   |
+| -- | -- | -- | ------- | ---- |
+| kx | yw | gs | company | data |
 
-</Route>
+| 基金   | 金融      | 评论      | 产经 | 创投 |
+| ---- | ------- | ------- | -- | -- |
+| fund | finance | comment | cj | ct |
 
-### 快讯
+| 科创板 | 新三板 | 投教 | ESG | 滚动 |
+| --- | --- | -- | --- | -- |
+| kcb | xsb | tj | zk  | gd |
 
-<Route author="nczitzk" example="/stcn/kuaixun" path="/stcn/kuaixun/:id?" :paramsDesc="['分类 id，见下表，默认为快讯']">
+| 股市一览 | 独家解读 |
+| ---- | ---- |
+| gsyl | djjd |
 
-| 快讯 | e 公司 | 研报 | 时事 | 财经 | 券中社 |
-| -- | ---- | -- | -- | -- | --- |
-|    | egs  | yb | ss | cj | qzs |
+| 公司新闻 | 公司动态 |
+| ---- | ---- |
+| gsxw | gsdt |
 
-</Route>
+| 独家数据 | 看点数据 | 资金流向 | 科创板    | 行情总貌 |
+| ---- | ---- | ---- | ------ | ---- |
+| djsj | kd   | zj   | sj_kcb | hq   |
 
-### 股市
+| 专栏 | 作者     |
+| -- | ------ |
+| zl | author |
 
-<Route author="nczitzk" example="/stcn/stock" path="/stcn/stock/:id?" :paramsDesc="['分类 id，见下表，默认为股市']">
+| 行业   | 汽车   |
+| ---- | ---- |
+| cjhy | cjqc |
 
-| 股市 | 股市动态 | 独家解读 |
-| -- | ---- | ---- |
-|    | gsdt | djjd |
-
-</Route>
-
-### 数据
-
-<Route author="nczitzk" example="/stcn/data" path="/stcn/data/:id?" :paramsDesc="['分类 id，见下表，默认为数据']">
-
-| 数据 | 机器人新闻 | 独家数据 |
-| -- | ----- | ---- |
-|    | jqrxw | djsj |
+| 投教课堂 | 政策知识 | 投教动态 | 专题活动 |
+| ---- | ---- | ---- | ---- |
+| tjkt | zczs | tjdt | zthd |
 
 </Route>
 

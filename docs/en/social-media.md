@@ -4,6 +4,24 @@ pageClass: routes
 
 # Social Media
 
+## Crossbell
+
+### Notes
+
+<RouteEn author="DIYgod" example="/crossbell/notes" path="/crossbell/notes" radar="1" rssbud="1"/>
+
+### Notes of character
+
+<RouteEn author="DIYgod" example="/crossbell/notes/character/10" path="/crossbell/notes/character/:characterId" radar="1" rssbud="1"/>
+
+### Notes of source
+
+<RouteEn author="DIYgod" example="/crossbell/notes/source/xlog" path="/crossbell/notes/source/:source" radar="1" rssbud="1"/>
+
+### Feeds of following
+
+<RouteEn author="DIYgod" example="/crossbell/feeds/following/10" path="/crossbell/feeds/following/:characterId" radar="1" rssbud="1"/>
+
 ## CuriousCat
 
 ### User
@@ -28,11 +46,17 @@ pageClass: routes
 
 </RouteEn>
 
+## Discord
+
+### Channel Messages
+
+<RouteEn author="TonyRL" path="/discord/channel/:channelId" example="/discord/channel/950465850056536084" :paramsDesc="['Channel ID']" radar="1" selfhost="1"/>
+
 ## Disqus
 
 ### Comment
 
-<RouteEn path="/disqus/posts/:forum" example="/disqus/posts/diygod-me" :paramsDesc="['forum, disqus name of the target website']" />
+<RouteEn author="DIYgod" path="/disqus/posts/:forum" example="/disqus/posts/diygod-me" :paramsDesc="['forum, disqus name of the target website']" />
 
 ## Facebook
 
@@ -120,19 +144,39 @@ Type
 
 <RouteEn author="zphw" example="/gab/popular/hot" path="/gab/popular/:sort?" :paramsDesc="['Sort by, `hot` to be Hot Posts and `top` to be Top Posts. Default: hot']" />
 
+## GETTR
+
+### User timeline
+
+<RouteEn author="TonyRL" example="/gettr/user/jasonmillerindc" path="/gettr/user/:id" :paramsDesc="['User id']" radar="1" rssbud="1"/>
+
 ## Instagram
 
 ::: warning
 
-Due to Instagram API restrictions, you have to setup your credentials on the server. See deployment guide for more.
+Due to Instagram Private API restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/en/install/) for more.
 
-If you don't want to setup credentials, use Picuki.
+If you don't want to setup credentials, you can use [Picnob](#picnob) or [Picuki](#picuki).
 
 :::
 
-### User Profile
+### User Profile / Hashtag - Private API
 
-<RouteEn author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" :paramsDesc="['Feed category. Only user category is supported for now.','Key for such category. E.g. username/ID for user feed']" radar="1" anticrawler="1"/>
+<RouteEn author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" :paramsDesc="['Feed category, see table below','Username / Hashtag name']" radar="1" anticrawler="1" selfhost="1">
+
+| User timeline | Hashtag |
+| ---------- | ---- |
+| user       | tags  |
+
+::: tip Tips
+It's highly recommended to deploy with Redis cache enabled.
+:::
+
+</RouteEn>
+
+### User Profile / Hashtag - Cookie
+
+<RouteEn author="TonyRL" example="/instagram/2/user/stefaniejoosten" path="/instagram/2/:category/:key" :paramsDesc="['Feed category, see table above','Username / Hashtag name']" radar="1" anticrawler="1" selfhost="1" />
 
 ## Lofter
 
@@ -179,6 +223,12 @@ These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for us
 
 <RouteEn author="notofoe" example="/mastodon/account_id/mastodon.social/23634/statuses/only_media" path="/mastodon/account/:site/:account_id/statuses/:only_media?" :paramsDesc="['instance address, only domain, no `http://` or `https://` protocol header', 'account id. login your instance, then search for the user profile; the account id is in the url', 'whether only display media content, default to false, any value to true']"/>
 
+## Misskey
+
+### Featured Notes
+
+<RouteEn author="Misaka13514" example="/misskey/notes/featured/misskey.io" path="/misskey/notes/featured/:site" :paramsDesc="['instance address, domain only, without `http://` or `https://` protocol header']" radar="1" rssbud="1"/>
+
 ## piapro
 
 ### User latest works
@@ -188,6 +238,12 @@ These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for us
 ### Website latest works
 
 <RouteEn author="hoilc" example="/piapro/public/music/miku/2" path="/piapro/public/:type/:tag?/:category?" :paramsDesc="['work type, can be `music`,`illust`,`text`','`tag` parameter in url','category ID, `categoryId` parameter in url']"/>
+
+## Picnob
+
+### User Profile
+
+<RouteEn author="TonyRL" example="/picnob/user/stefaniejoosten" path="/picnob/profile/:id" :paramsDesc="['Instagram id']" radar="1" rssbud="1" />
 
 ## Picuki
 
@@ -228,13 +284,13 @@ Though, every Story expires after 24 hours, so it may be not so serious.
 
 <RouteEn author="EYHN" path="/pixiv/ranking/:mode/:date?" example="/pixiv/ranking/week" :paramsDesc="['rank type', 'format: `2018-4-25`']" radar="1" rssbud="1">
 
-| pixiv daily rank | pixiv weekly rank | pixiv monthly rank | pixiv male rank | pixiv female rank | AI-generated work Rankings | pixiv original rank | pixiv rookie user rank |
-| ---------------- | ----------------- | ------------------ | --------------- | ----------------- | ------------------- | ---------------------- | ---------------------- |
-| day              | week              | month              | day_male        | day_female       | day_ai | week_original       | week_rookie            |
+| daily rank | weekly rank | monthly rank | male rank | female rank | AI-generated work Rankings | original rank | rookie user rank |
+| ---------- | ----------- | ------------ | --------- | ----------- | -------------------------- | ------------- | ---------------- |
+| day        | week        | month        | day_male  | day_female  | day_ai                     | week_original | week_rookie      |
 
-| pixiv R-18 daily rank | pixiv R-18 male rank | pixiv R-18 female rank | pixiv R-18 weekly rank | pixiv R-18G rank |
-| --------------------- | -------------------- | ---------------------- | ---------------------- | ---------------- |
-| day_r18               | day_male_r18         | day_female_r18         | week_r18               | week_r18g        |
+| R-18 daily rank | R-18 AI-generated work | R-18 male rank | R-18 female rank | R-18 weekly rank | R-18G rank |
+| --------------- | ---------------------- | -------------- | ---------------- | ---------------- | ---------- |
+| day_r18         | day_r18_ai             | day_male_r18   | day_female_r18   | week_r18         | week_r18g  |
 
 </RouteEn>
 
@@ -381,7 +437,8 @@ Specify options (in the format of query string) in parameter `routeParams` to co
 | `showAuthorInDesc`             | Show author name in description (RSS body)                                                                                           | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |
 | `showQuotedAuthorAvatarInDesc` | Show avatar of quoted Tweet's author in description (RSS body) (Not recommended if your RSS reader extracts images from description) | `0`/`1`/`true`/`false` | `false`                                   |
 | `showAuthorAvatarInDesc`       | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)                | `0`/`1`/`true`/`false` | `false`                                   |
-| `showEmojiForRetweetAndReply`  | Use "🔁" instead of "Rt", "↩️" & "💬" instead of "Re"                                                                                | `0`/`1`/`true`/`false` | `false`                                   |
+| `showEmojiForRetweetAndReply`  | Use "🔁" instead of "RT", "↩️" & "💬" instead of "Re"                                                                               | `0`/`1`/`true`/`false` | `false`                                   |
+| `showSymbolForRetweetAndReply` | Use " RT " instead of "", " Re " instead of ""                                                                                       | `0`/`1`/`true`/`false` | `true`                                    |
 | `showRetweetTextInTitle`       | Show quote comments in title (if `false`, only the retweeted tweet will be shown in the title)                                       | `0`/`1`/`true`/`false` | `true`                                    |
 | `addLinkForPics`               | Add clickable links for Tweet pictures                                                                                               | `0`/`1`/`true`/`false` | `false`                                   |
 | `showTimestampInDescription`   | Show timestamp in description                                                                                                        | `0`/`1`/`true`/`false` | `false`                                   |
@@ -504,6 +561,60 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 
 <RouteEn author="HenryQW" path="/youtube/playlist/:id/:embed?" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" :paramsDesc="['YouTube playlist id', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1"/>
 
+### Community
+
+<RouteEn author="TonyRL" path="/youtube/community/:handle" example="/youtube/community/@JFlaMusic" :paramsDesc="['YouTube handles or channel id']" radar="1" rssbud="1"/>
+
 ### Subscriptions
 
 <RouteEn author="TonyRL" path="/youtube/subscriptions/:embed?" example="/youtube/subscriptions" :paramsDesc="['Default to embed the video, set to any value to disable embedding']" selfhost="1" radar="1" rssbud="1"/>
+
+### Music Charts
+
+<RouteEn author="TonyRL" path="/youtube/charts/:category?/:country?/:embed?" example="/youtube/charts" :paramsDesc="['Chart, see table below, default to `TopVideos`', 'Country Code, see table below, default to global', 'Default to embed the video, set to any value to disable embedding']" radar="1" rssbud="1">
+
+::: details Chart
+| Top artists | Top songs | Top music videos | Trending |
+| ----------- | --------- | ---------------- | -------- |
+| TopArtists  | TopSongs  | TopVideos        | TrendingVideos |
+:::
+
+::: details Country Code
+| Argentina | Australia | Austria | Belgium | Bolivia | Brazil | Canada |
+| --------- | --------- | ------- | ------- | ------- | ------ | ------ |
+| ar        | au        | at      | be      | bo      | br     | ca     |
+
+| Chile | Colombia | Costa Rica | Czechia | Denmark | Dominican Republic | Ecuador |
+| ----- | -------- | ---------- | ------- | ------- | ------------------ | ------- |
+| cl    | co       | cr         | cz      | dk      | do                 | ec      |
+
+| Egypt | El Salvador | Estonia | Finland | France | Germany | Guatemala |
+| ----- | ----------- | ------- | ------- | ------ | ------- | --------- |
+| eg    | sv          | ee      | fi      | fr     | de      | gt        |
+
+| Honduras | Hungary | Iceland | India | Indonesia | Ireland | Israel | Italy |
+| -------- | ------- | ------- | ----- | --------- | ------- | ------ | ----- |
+| hn       | hu      | is      | in    | id        | ie      | il     | it    |
+
+| Japan | Kenya | Luxembourg | Mexico | Netherlands | New Zealand | Nicaragua |
+| ----- | ----- | ---------- | ------ | ----------- | ----------- | --------- |
+| jp    | ke    | lu         | mx     | nl          | nz          | ni        |
+
+| Nigeria | Norway | Panama | Paraguay | Peru | Poland | Portugal | Romania |
+| ------- | ------ | ------ | -------- | ---- | ------ | -------- | ------- |
+| ng      | no     | pa     | py       | pe   | pl     | pt       | ro      |
+
+| Russia | Saudi Arabia | Serbia | South Africa | South Korea | Spain | Sweden | Switzerland |
+| ----- | ------------- | ------ | ------------ | ----------- | ----- | ------ | ----------- |
+| ru    | sa            | rs     | za           | kr          | es    | se     | ch          |
+
+| Tanzania | Turkey | Uganda | Ukraine | United Arab Emirates | United Kingdom | United States |
+| -------- | ------ | ------ | ------- | -------------------- | -------------- | ------------- |
+| tz       | tr     | ug     | ua      | ae                   | gb             | us            |
+
+| Uruguay | Zimbabwe |
+| ------- | -------- |
+| uy      | zw       |
+:::
+
+</RouteEn>

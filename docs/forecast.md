@@ -14,6 +14,19 @@ pageClass: routes
 
 </Route>
 
+## Uptime Robot
+
+### RSS
+
+<Route author="Rongronggg9" example="/uptimerobot/rss/u358785-e4323652448755805d668f1a66506f2f" path="/uptimerobot/rss/:id/:routeParams?" :paramsDesc="['RSS URL 的最后一部分 (e.g. 对于 `https://rss.uptimerobot.com/u358785-e4323652448755805d668f1a66506f2f`，为 `u358785-e4323652448755805d668f1a66506f2f`)', '额外参数，请参阅下面的表格']">
+<!-- example stolen from https://atlas.eff.org//domains/uptimerobot.com.html -->
+
+| 键      | 含义                                        | 接受的值           | 默认值  |
+| ------ | ----------------------------------------- | -------------- | ---- |
+| showID | 是否包含 monitor ID (关闭此项同时也会使得各个 RSS 条目不附链接) | 0/1/true/false | true |
+
+</Route>
+
 ## 地震速报
 
 ### 中国地震局

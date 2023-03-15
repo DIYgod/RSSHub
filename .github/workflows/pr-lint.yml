@@ -3,10 +3,11 @@ name: Linter
 on: [push, pull_request, pull_request_target]
 
 jobs:
-  linter:
-    name: Lint
+  eslint:
+    name: ESLint
     if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -16,10 +17,15 @@ jobs:
       - run: yarn
       - name: Lint
         run: yarn lint
-  reviewdog:
-    name: reviewdog
-    if: ${{ github.event_name == 'pull_request' }}
+
+  eslint-warning:
+    name: Lint
+    if: ${{ github.event_name == 'push' || github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      security-events: write
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -28,13 +34,21 @@ jobs:
           cache: 'yarn'
       - run: yarn
       - name: Lint
-        uses: reviewdog/action-eslint@v1
+        run: yarn lint
+          --format @microsoft/eslint-formatter-sarif
+          --output-file eslint-results.sarif
+        continue-on-error: true
+      - name: Upload analysis results to GitHub
+        uses: github/codeql-action/upload-sarif@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          sarif_file: eslint-results.sarif
+          wait-for-processing: true
+
   titleLint:
     if: ${{ github.event_name == 'pull_request_target' }}
     name: Validate PR title
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: amannn/action-semantic-pull-request@v5
         env:
@@ -42,6 +56,7 @@ jobs:
           ignoreLabels: |
             dependencies
           wip: true
+
   labeler:
     name: Pull Request Labeler
     if: ${{ github.event_name == 'pull_request_target' }}
@@ -49,7 +64,8 @@ jobs:
       contents: read
       pull-requests: write
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
-    - uses: actions/labeler@v4
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/labeler@v4
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}

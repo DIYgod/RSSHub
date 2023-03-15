@@ -4,6 +4,18 @@ pageClass: routes
 
 # 博客
 
+## Amazon
+
+### AWS 博客
+
+<Route author="HankChow" example="/amazon/awsblogs" path="/awsblogs/:locale?" :paramsDesc="['指定语言的博客文章，仅支持以下选项，默认为 `zh_CN`']">
+
+| zh_CN | en_US | fr_FR | de_DE | ja_JP | ko_KR | pt_BR | es_ES | ru_RU | id_ID | tr_TR |
+| ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+| 汉语    | 英语    | 法语    | 德语    | 日语    | 韩语    | 葡萄牙语  | 西班牙语  | 俄语    | 印尼语   | 土耳其语  |
+
+</Route>
+
 ## archdaily
 
 ### 首页
@@ -49,6 +61,7 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 :::
 
 </Route>
+
 ## Hedwig.pub
 
 ### 博客
@@ -147,6 +160,12 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 <Route author="chazeon" example="/stratechery" path="/stratechery" />
 
+## v1tx
+
+### 最新文章
+
+<Route author="TonyRL" example="/v1tx" path="/v1tx" radar="1" rssbud="1" />
+
 ## Whoscall
 
 ### 最新文章
@@ -244,6 +263,12 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 </Route>
 
+## 虎皮椒
+
+### 文章
+
+<Route author="wxluckly" example="/xunhupay/blog" path="/xunhupay/blog" radar="1"/>
+
 ## 華康字型故事
 
 ### 博客
@@ -309,6 +334,12 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 | drama_deep | drama_rating | drama_column | drama_interactive |
 
 </Route>
+
+## 交流岛资源网
+
+### 最新文章
+
+<Route author="TonyRL" example="/jiaoliudao" path="/jiaoliudao" radar="1" />
 
 ## 敬维博客
 

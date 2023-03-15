@@ -340,7 +340,7 @@ Country
 
 ### News
 
-<RouteEn author="zoenglinghou" example="/google/news/Headlines/hl=en-US&gl=US&ceid=US:en" path="/google/news/:category/:locale" :paramsDesc="['Category Title', 'locales, could be found behind `?`, including `hl`, `gl`, and `ceid` as parameters']"/>
+<RouteEn author="zoenglinghou" example="/google/news/Top stories/hl=en-US&gl=US&ceid=US:en" path="/google/news/:category/:locale" :paramsDesc="['Category Title', 'locales, could be found behind `?`, including `hl`, `gl`, and `ceid` as parameters']"/>
 
 ## Grub Street
 
@@ -492,6 +492,18 @@ Edition
 
 <RouteEn author="Cerebrater xosdy" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['Author id, can be found at author\'s homepage url']" radar="1" rssbud="1"/>
 
+## McLaren Racing
+
+### Articles
+
+<RouteEn author="Bubbu0129" example="/mclaren/en/all" path="/mclaren/:lang/:category?" :paramsDesc="['Supports English(en), Simplified Chinese(zh), and Spanish(es).', 'Default to exporting all media (all); See the table below for details']" radar="1" rssbud="1">
+
+| All Media | Article | Report | Gallery | Video | Blog | Photo Essay  |
+| --------- | ------- | ------ | ------- | ----- | ---- | -----------  |
+| all       | article | report | gallery | video | blog | photo\_essay |
+
+</RouteEn>
+
 ## Mirror
 
 ### User
@@ -549,6 +561,12 @@ This route provides a flexible plan with full text content to subscribe specific
 |     | research | announcements | events | milestones |
 
 </RouteEn>
+
+## Phoronix
+
+### News & Reviews
+
+<RouteEn author="oppliate" example="/phoronix/news_topic/Intel" path="/phoronix/:page/:queryOrItem?" :paramsDesc="['Page name', 'For `category` it corresponds to `item`, for other pages it\'s `q`. You may find available parameters from their navigator links. E.g. to subscribe to the category page `https://www.phoronix.com/scan.php?page=category&item=Computers`, fill in the path `/phoronix/category/Computers`']" radar="1"/>
 
 ## Polar
 
@@ -692,7 +710,7 @@ Compared to the official one, this feed:
 
 ### News
 
-<RouteEn author="nczitzk" example="/skysports/news/ac-milan" path="/skysports/news/:team" :paramsDesc="['Team id, can be found in URL to the team page']" />\
+<RouteEn author="nczitzk" example="/skysports/news/ac-milan" path="/skysports/news/:team" :paramsDesc="['Team id, can be found in URL to the team page']" />
 
 ## Soomal
 

@@ -24,6 +24,7 @@ jobs:
   test:
     name: Docker build & tests
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -39,7 +40,7 @@ jobs:
           flavor: latest=true
 
       - name: Build Docker image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: .
           build-args: PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=0  # also test bundling Chromium

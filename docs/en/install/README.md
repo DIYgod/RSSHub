@@ -20,6 +20,7 @@ Deploy for public access may require:
 3. [Redis](https://redis.io/download)
 4. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 5. [Google App Engine](https://cloud.google.com/appengine/)
+6. [Fly.io](https://fly.io/)
 
 ## Docker Image
 
@@ -205,6 +206,7 @@ $ yarn start
 ```
 
 Or
+
 ```bash
 $ npm start
 ```
@@ -226,13 +228,15 @@ Refer to our [Guide](https://docs.rsshub.app/en/) for usage. Replace `https://rs
 On arm/arm64, this deployment method does not include puppeteer dependencies. To enable puppeteer, install Chromium from your distribution repositories first, then set `CHROMIUM_EXECUTABLE_PATH` to its executable path.
 
 Debian:
+
 ```bash
-$ apt install chroium
+$ apt install chromium
 $ echo >> .env
 $ echo 'CHROMIUM_EXECUTABLE_PATH=chromium' >> .env
 ```
 
 Ubuntu/Raspbian:
+
 ```bash
 $ apt install chromium-browser
 $ echo >> .env
@@ -298,14 +302,47 @@ Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product pla
 
 ### Automatic deploy upon update
 
-1. [Fork RSSHub](https://github.com/login?return_to=%2FDIYgod%2FRSSHub) to your GitHub account.
+1. [Fork RSSHub](https://github.com/DIYgod/RSSHub/fork) to your GitHub account.
 2. Deploy your fork to Heroku: `https://heroku.com/deploy?template=URL`, where `URL` is your fork address (_e.g._ `https://github.com/USERNAME/RSSHub`).
 3. Configure `automatic deploy` in Heroku app to follow the changes to your fork.
 4. Install [Pull](https://github.com/apps/pull) app to keep your fork synchronized with RSSHub.
 
-## Deploy to Vercel(Zeit Now)
+## Deploy to Vercel (ZEIT Now)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
+
+## Deploy to Fly.io
+
+1. [Fork RSSHub](https://github.com/DIYgod/RSSHub/fork) to your GitHub account.
+2. Clone the source code from your fork.
+    ```bash
+    $ git clone https://github.com/<your username>/RSSHub.git
+    $ cd RSSHub
+    ```
+3. [Sign up for Fly.io](https://fly.io/app/sign-up) and install the [`flyctl` CLI](https://fly.io/docs/hands-on/install-flyctl/).
+4. Run `flyctl launch` and choose a unique name and region to deploy.
+5. Use `flyctl secrets set KEY=VALUE` to [configure specific routes](#configuration-route-specific-configurations).
+6. [Set up automatic deployment via GitHub Actions](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/)
+7. Install the [Pull](https://github.com/apps/pull) GitHub app to keep your fork synchronized with upstream.
+8. (Optional) Point your own domain to the IPv4 and IPv6 addresses provided by fly.io, then go to Certificate page and add the domain.
+
+### Configure built-in Upstash Redis as cache
+
+Run
+
+```bash
+$ flyctl redis create
+```
+
+under the `RSSHub` folder in order to create a new Redis database; [eviction](https://redis.io/docs/reference/eviction/) is recommended to be turned on. After creation is successful, a string in the form of `redis://default:<password>@<domain>.upstash.io` will be printed.
+
+Then run
+
+```bash
+$ flyctl secrets set CACHE_TYPE=redis REDIS_URL='<the printed connection string>'
+```
+
+to configure RSSHub to use this Redis database for caching.
 
 ## Deploy to PikaPods
 
@@ -605,6 +642,10 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `BITBUCKET_USERNAME`: Your Bitbucket username
     -   `BITBUCKET_PASSWORD`: Your Bitbucket app password
 
+-   Discord
+
+    -   `DISCORD_AUTHORIZATION`: Discord authorization token, can be found in the header of XHR requests after logging in Discord web client
+
 -   Discuz cookie
 
     -   `DISCUZ_COOKIE_{cid}`: Cookie of a forum powered by Discuz, cid can be anything from 00 to 99. When visiting a Discuz route, use cid to specify this cookie.
@@ -628,8 +669,8 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   Fantia
 
-    - `FANTIA_COOKIE`: The `cookie` after login can be obtained by viewing the request header in the console, If not filled in will cause some posts that require login to read to get exceptions
-    
+    -   `FANTIA_COOKIE`: The `cookie` after login can be obtained by viewing the request header in the console, If not filled in will cause some posts that require login to read to get exceptions
+
 -   GitHub: [Access Token application](https://github.com/settings/tokens)
 
     -   `GITHUB_ACCESS_TOKEN`: GitHub Access Token
@@ -640,9 +681,10 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   Instagram:
 
-    -   `IG_USERNAME`: Your Instagram username
-    -   `IG_PASSWORD`: Your Instagram password
-    -   `IG_PROXY`: Proxy URL for Instagram
+    -   `IG_USERNAME`: Your Instagram username (Private API only)
+    -   `IG_PASSWORD`: Your Instagram password (Private API only)
+    -   `IG_PROXY`: Proxy URL for Instagram (Private API only, optional)
+    -   `IG_COOKIE`: Your Instagram cookie (Cookie only)
 
     Warning: Two Factor Authentication is **not** supported.
 
@@ -670,6 +712,10 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
     -   `NHENTAI_USERNAME`: nhentai username or email
     -   `NHENTAI_PASSWORD`: nhentai password
+
+-   Pixabay: [Documentation](https://pixabay.com/api/docs/)
+
+    -   `PIXABAY_KEY`: Pixabay API key
 
 -   pixiv: [Registration](https://accounts.pixiv.net/signup)
 
@@ -702,10 +748,10 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   Twitter: [Application creation](https://apps.twitter.com)
 
-    - `TWITTER_CONSUMER_KEY`: Twitter Developer API key, support multiple keys, split them with `,`
-    - `TWITTER_CONSUMER_SECRET`: Twitter Developer API key secret, support multiple keys, split them with `,`
-    - `TWITTER_WEBAPI_AUTHORIZAION`: Twitter Web API authorization. If either of the above environment variables is not set, the Twitter Web API will be used. However, no need to set this environment var since every single user and guest share the same authorization token which has already been built into RSSHub.
-    - `TWITTER_TOKEN_{handler}`: The token generated by the corresponding Twitter handler, replace `{handler}` with the Twitter handler, the value is a combination of `Twitter API key, Twitter API key secret, Access token, Access token secret` connected by a comma `,`. Eg. `TWITTER_TOKEN_RSSHub=bX1zry5nG4d1RbESQbnADpVIo,2YrD8qo9sXbB8VlYfVmo1Qtw0xsexnOliU5oZofq7aPIGou0Xx,123456789-hlkUHFYmeXrRcf6SEQciP8rP4lzmRgMgwdqIN9aK,pHcPnfa28rCIKhSICUCiaw9ppuSSl7T2f3dnGYpSM0bod`.
+    -   `TWITTER_CONSUMER_KEY`: Twitter Developer API key, support multiple keys, split them with `,`
+    -   `TWITTER_CONSUMER_SECRET`: Twitter Developer API key secret, support multiple keys, split them with `,`
+    -   `TWITTER_WEBAPI_AUTHORIZAION`: Twitter Web API authorization. If either of the above environment variables is not set, the Twitter Web API will be used. However, no need to set this environment var since every single user and guest share the same authorization token which has already been built into RSSHub.
+    -   `TWITTER_TOKEN_{handler}`: The token generated by the corresponding Twitter handler, replace `{handler}` with the Twitter handler, the value is a combination of `Twitter API key, Twitter API key secret, Access token, Access token secret` connected by a comma `,`. Eg. `TWITTER_TOKEN_RSSHub=bX1zry5nG4d1RbESQbnADpVIo,2YrD8qo9sXbB8VlYfVmo1Qtw0xsexnOliU5oZofq7aPIGou0Xx,123456789-hlkUHFYmeXrRcf6SEQciP8rP4lzmRgMgwdqIN9aK,pHcPnfa28rCIKhSICUCiaw9ppuSSl7T2f3dnGYpSM0bod`.
 
 -   Wordpress:
 

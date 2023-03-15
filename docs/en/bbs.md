@@ -62,6 +62,20 @@ pageClass: routes
 
 </RouteEn>
 
+## Pikabu
+
+### Community
+
+<RouteEn author="TonyRL" example="/pikabu/community/real_true_story" path="/pikabu/community/:name" :paramsDesc="['Community name']" radar="1" rssbud="1"/>
+
+### Tag
+
+<RouteEn author="TonyRL" example="/pikabu/tag/Metallica" path="/pikabu/tag/:name" :paramsDesc="['Tag name']" radar="1" rssbud="1"/>
+
+### User
+
+<RouteEn author="TonyRL" example="/pikabu/user/@Eujenu" path="/pikabu/user/:name" :paramsDesc="['User name']" radar="1" rssbud="1"/>
+
 ## SCBOY forum
 
 ### Thread
@@ -78,4 +92,4 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 ### forum
 
-<RouteEn author="FeCCC" example="/zodgame/forum/13" path="/zodgame/forum/:fid?" :paramsDesc="['forum id，can be found in URL']" radar="1" rssbud="1" selfhost="1"/>
+<RouteEn author="FeCCC" example="/zodgame/forum/13" path="/zodgame/forum/:fid?" :paramsDesc="['forum id, can be found in URL']" radar="1" rssbud="1" selfhost="1"/>

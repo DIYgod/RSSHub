@@ -350,22 +350,10 @@ Only `s00017` is in English.
 | hi     | id               | ko  | fa    | pt        | ru      | es      |
 
 | Kiswahili | ภาษาไทย | Türkçe | Українська | اردو | Tiếng Việt |
-| --------- | | ------- | ------ | ---------- | ---- | ---------- |
+| --------- | ------- | ------ | ---------- | ---- | ---------- |
 | sw        | th      | tr     | uk         | ur   | vi         |
 
 </RouteEn>
-
-## Nikkei Asia
-
-### Latest News
-
-<RouteEn author="rainrdx" example="/nikkei-asia" path="/nikkei-asia"/>
-
-## Phoronix
-
-### News & Reviews
-
-<RouteEn author="oppliate" example="/phoronix/news_topic/Intel" path="/phoronix/:page/:queryOrItem?" :paramsDesc="['Page name', 'For `category` it corresponds to `item`, for other pages it\'s `q`. You may find available parameters from their navigator links. E.g. to subscribe to the category page `https://www.phoronix.com/scan.php?page=category&item=Computers`, fill in the path `/phoronix/category/Computers`']" />
 
 ## Radio Free Asia (RFA)
 
@@ -432,6 +420,18 @@ More could be found in the URL of the category/topic page.
 ### Inverstigates
 
 <RouteEn author="LyleLee" example="/reuters/investigates" path="/reuters/investigates" />
+
+## Rodong Sinmun
+
+### News
+
+<RouteEn author="TonyRL" example="/rodong/news" path="/rodong/news/:language?" :paramsDesc="['Language, see below, `ko` by default']" radar="1">
+
+| 조선어 | English | 中文 |
+| ---- | ------ | --- |
+| ko   | en     | cn  |
+
+</RouteEn>
 
 ## RTHK
 
@@ -574,6 +574,20 @@ Language
 
 <RouteEn author="TonyRL" example="/taiwannews/hot" path="/taiwannews/hot/:lang?" :paramsDesc="['Language, `en` or `zh`, `en` by default']" radar="1" rssbud="1"/>
 
+## The Atlantic
+
+### News
+
+<RouteEn author="NavePnow" example="/theatlantic/latest" path="/theatlantic/:category" :paramsDesc="['category, see below']">
+
+| Popular      | Latest | Politics | Technology | Business |
+| ------------ | ------ | -------- | ---------- | -------- |
+| most-popular | latest | politics | technology | business |
+
+More categories (except photo) can be found within the navigation bar at <https://www.theatlantic.com/>
+
+</RouteEn>
+
 ## The Economist
 
 ### Category
@@ -587,6 +601,10 @@ Language
 ### GRE Vocabulary
 
 <RouteEn author="xyqfer" example="/economist/gre-vocabulary" path="/economist/gre-vocabulary" />
+
+### Global Business Review
+
+<Route author="prnake" example="/economist/global-business-review/cn-en" path="/economist/global-business-review/:language?" :paramsDesc="['Language, `en`, `cn`, `tw` are supported, support multiple options, default to cn-en']"  radar="1" rssbud="1"/>
 
 ### Download
 
@@ -650,11 +668,41 @@ Provides all of the articles by the specified New York Times author.
 | series-books|
 | young-adult-hardcover|
 
+## The Nikkei 日本経済新聞
+
+### Home
+
+<RouteEn author="zjysdhr" example="/nikkei/index" path="/nikkei/index" radar="1" rssbud="1" />
+
+### News
+
+<RouteEn author="Arracc" example="/nikkei/news" path="/nikkei/:category/:article_type?" :paramsDesc="['Category, see table below','Only includes free articles, set `free` to enable, disabled by default']">
+
+| 総合  | オピニオン | 経済     |  政治     | 金融      | マーケット | ビジネス | マネーのまなび | テック      | 国際           | スポーツ | 社会・調査 |  地域    | 文化     | ライフスタイル  |
+| ---- | --------- | ------- | -------- | --------- | -------- | ------- | ----------- | ---------- | ------------- | ------- | --------- | ------- | ------- | ------------- |
+| news |  opinion  | economy | politics | financial | business | 不支持   | 不支持       | technology | international | sports  | society   | local   | culture | lifestyle     |
+
+</RouteEn>
+
+### Nikkei Asia Latest News
+
+<RouteEn author="rainrdx" example="/nikkei/asia" path="/nikkei/asia" radar="1"/>
+
 ## The Wall Street Journal (WSJ)
 
 ### News
 
-<RouteEn author="oppilate" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" :paramsDesc="['Language, `en-us`, `zh-cn`, `zh-tw` are supported', 'Category, only supported in `en-us`. Supports `opinion`, `world_news`, `us_bussiness`, `market_news`, `technology`, `lifestyle`.']">
+<RouteEn author="oppilate NavePnow" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" :paramsDesc="['Language, `en-us`, `zh-cn`, `zh-tw`', 'Category. See below']">
+
+en_us
+| World | U.S. | Politics | Economy | Business | Tech | Markets | Opinion | Books & Arts | Real Estate | Life & Work | Sytle | Sports |
+| ------ | ------- | -------- | -------- | ----- | --------- | --------- | --------- | --------- | --------- |--------- | --------- | --------- |
+| world | us | politics | economy | business | technology | markets | opinion | books-arts | realestate | life-work | style-entertainment | sports |
+
+zh-cn / zh-tw
+| 国际 | 中国 | 金融市场 | 经济 | 商业 | 科技 | 派 | 专栏与观点 |
+| ------ | ------- | -------- | -------- | ----- | --------- | --------- | --------- |
+| world | china | markets | economy | business | technology | life-arts | opinion |
 
 Provide full article RSS for WSJ topics.
 
@@ -676,7 +724,7 @@ Provide full article RSS for WSJ topics.
 
 ### News
 
-<RouteEn author="KeiLongW" example="/yahoo-news/hk/world" path="/yahoo-news/:region/:category?" :paramsDesc="['Region','Category']">
+<RouteEn author="KeiLongW" example="/yahoo/news/hk/world" path="/yahoo/news/:region/:category?" :paramsDesc="['Region','Category']">
 
 `Region`
 | Hong Kong | Taiwan | US |

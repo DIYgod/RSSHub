@@ -222,6 +222,7 @@ GitHub 官方也提供了一些 RSS:
 -   仓库 commits: `https://github.com/:owner/:repo/commits.atom`
 -   用户动态: `https://github.com/:user.atom`
 -   专属动态: `https://github.com/:user.private.atom?token=:secret` (登录后在[仪表盘页面](https://github.com)找到 **Subscribe to your news feed** 字样即可)
+-   Wiki 历史: `https://github.com/:owner/:repo/wiki.atom`
 
 :::
 
@@ -307,7 +308,11 @@ GitHub 官方也提供了一些 RSS:
 
 ### Issue / Pull Request 评论
 
-<Route author="TonyRL" example="/github/comments/DIYgod/RSSHub/8116" path="/github/comments/:user/:repo/:number" :paramsDesc="['用户名', '仓库', 'Issue 或 pull 编号']"/>
+<Route author="TonyRL" example="/github/comments/DIYgod/RSSHub/8116" path="/github/comments/:user/:repo/:number" :paramsDesc="['用户名', '仓库名', 'Issue 或 pull 编号']" radar="1" rssbud="1"/>
+
+### Wiki 历史
+
+<Route author="TonyRL" example="/github/wiki/flutter/flutter/Roadmap" path="/github/wiki/:user/:repo/:page?" :paramsDesc="['用户名', '仓库名', '页面 Slug，可在 URL 中找到，留空表示主页']" radar="1" rssbud="1"/>
 
 ## GitLab
 
@@ -448,13 +453,19 @@ GitHub 官方也提供了一些 RSS:
 
 ### 月刊
 
-<Route author="moke8 nczitzk" example="/hellogithub/volume" path="/hellogithub/volume"/>
+<Route author="moke8 nczitzk CaoMeiYouRen" example="/hellogithub/volume" path="/hellogithub/volume"/>
 
 ## Hex-Rays
 
 ### Hex-Rays News
 
 <Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news"/>
+
+## Issue Hunt
+
+### 项目悬赏
+
+<Route author="running-grass" radar="1" example="/issuehunt/funded/DIYgod/RSSHub" path="/issuehunt/funded/:username/:repo" :paramsDesc="['Github用户/组织','仓库名称']" />
 
 ## ITSlide
 
@@ -809,6 +820,34 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="TonyRL" example="/baai/hub/comments" path="/baai/hub/comments" radar="1"/>
 
+## 登链社区
+
+### 文章
+
+<Route author="running-grass" example="/learnblockchain/posts/DApp/newest" path="/learnblockchain/posts/:cid/:sort?" :paramsDesc="['分类id,更多分类可以论坛的URL找到', '排序方式，默认精选']" radar="1">
+
+| id       | 分类     |
+| -------- | ------ |
+| all      | 全部     |
+| DApp     | 去中心化应用 |
+| chains   | 公链     |
+| 联盟链      | 联盟链    |
+| scaling  | Layer2 |
+| langs    | 编程语言   |
+| security | 安全     |
+| dst      | 存储     |
+| basic    | 理论研究   |
+| other    | 其他     |
+
+| id       | 排序方式    |
+| -------- | ------- |
+| newest   | 最新      |
+| featured | 精选 (默认) |
+| featured | 最赞      |
+| hottest  | 最热      |
+
+</Route>
+
 ## 饿了么开放平台
 
 ### 商家开放平台公告
@@ -831,6 +870,20 @@ GitHub 官方也提供了一些 RSS:
 
 > -   极客时间专栏需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 > -   极客新闻不需要付费，可通过 RSS 订阅.
+
+## 极术社区
+
+### 频道、专栏、用户
+
+<Route author="bigfei" example="/aijishu/channel/ai" path="/aijishu/:type/:name?" :paramsDesc="['文章类型，可以取值如下', '名字，取自URL']" radar="1" rssbud="1">
+
+| type    | 说明 |
+| ------- | -- |
+| channel | 频道 |
+| blog    | 专栏 |
+| u       | 用户 |
+
+</Route>
 
 ## 技术头条
 
@@ -1150,6 +1203,18 @@ GitHub 官方也提供了一些 RSS:
 | 前端艺术家 | 飞冰早报 |
 | ----- | ---- |
 | 0     | 1    |
+
+</Route>
+
+## 前端早早聊
+
+### 文章
+
+<Route author="shaomingbo" example="/zaozao/article/quality"  path="/zaozao/article/:type?" :paramsDesc="['文章分类']" radar="1">
+
+| 精品推荐      | 技术干货    | 职场成长   | 社区动态      | 组件物料     | 行业动态     |
+| --------- | ------- | ------ | --------- | -------- | -------- |
+| recommend | quality | growth | community | material | industry |
 
 </Route>
 

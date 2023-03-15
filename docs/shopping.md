@@ -4,6 +4,18 @@ pageClass: routes
 
 # 购物
 
+## 0818 团
+
+### 分类
+
+<Route author="TonyRL" example="/0818tuan" path="/0818tuan/:listId?" :paramsDesc="['活动分类，见下表，默认为 `1`']" radar="1">
+
+| 最新线报 | 实测活动 | 优惠券 |
+| ---- | ---- | --- |
+| 1    | 2    | 3   |
+
+</Route>
+
 ## Alter 中国
 
 ### 新闻
@@ -35,6 +47,42 @@ pageClass: routes
 :::
 
 </Route>
+
+## Arcteryx
+
+### 新发布
+
+<Route author="NavePnow" example="/arcteryx/new-arrivals/us/mens" path="/arcteryx/new-arrivals/:country/:gender" :paramsDesc="['国家', '性别']">
+
+国家
+
+| 美国 | 加拿大 | 英国 |
+| -- | --- | -- |
+| us | ca  | gb |
+
+性别
+
+| 男    | 女      |
+| ---- | ------ |
+| mens | womens |
+
+::: tip 提示
+
+参数 `country` 可以在 `Arcteryx` 官网的 URL 中找到。
+
+:::
+
+</Route>
+
+### Regear 新发布
+
+<Route author="NavePnow" example="/arcteryx/regear/new-arrivals" path="/arcteryx/regear/new-arrivals" />
+
+## Bellroy
+
+### 新发布
+
+<Route author="NavePnow" example="/bellroy/new-releases" path="/bellroy/new-releases" />
 
 ## booth.pm
 
@@ -94,6 +142,28 @@ pageClass: routes
 ### hottest
 
 <Route author="DIYgod" example="/hotukdeals/hottest" path="/hotukdeals/hottest"></Route>
+
+## IKEA 宜家
+
+### 英国 - 商品上新
+
+<Route author="HenryQW" example="/ikea/gb/new" path="/ikea/gb/new" radar="1"/>
+
+### 英国 - 促销
+
+<Route author="HenryQW" example="/ikea/gb/offer" path="/ikea/gb/offer" radar="1"/>
+
+### 中国 - 会员特惠
+
+<Route author="jzhangdev" example="/ikea/cn/family_offers" path="/ikea/cn/family_offers" radar="1"/>
+
+### 中国 - 低价优选
+
+<Route author="jzhangdev" example="/ikea/cn/low_price" path="/ikea/cn/low_price" radar="1"/>
+
+### 中国 - 当季新品推荐
+
+<Route author="jzhangdev" example="/ikea/cn/new" path="/ikea/cn/new" radar="1"/>
 
 ## lativ
 
@@ -178,11 +248,29 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 </Route>
 
+## Patagonia
+
+### New Arrivals
+
+<Route author="NavePnow" example="/patagonia/new-arrivals/mens" path="/patagonia/new-arrivals/:category" :paramsDesc="['分类, 见下表']">
+
+| Men's | Women's | Kids' & Baby | Packs & Gear |
+| ----- | ------- | ------------ | ------------ |
+| mens  | womens  | kids         | luggage      |
+
+</Route>
+
 ## ShopBack
 
 ### Store
 
 <Route author="nczitzk" example="/shopback/shopee-mart" path="/shopback/:store" :paramsDesc="['店铺名，可在 URL 中找到']"/>
+
+## Snow Peak
+
+### New Arrivals(USA)
+
+<Route author="NavePnow" example="/snowpeak/us/new-arrivals" path="/snowpeak/us/new-arrivals"/>
 
 ## The Independent
 
@@ -195,6 +283,14 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 ### 新品
 
 <Route author="xyqfer" example="/westore/new" path="/westore/new"/>
+
+## Zagg
+
+### New Arrivals
+
+<Route author="NavePnow" example="/zagg/new-arrivals/brand=164&cat=3038,3041" path="/zagg/new-arrivals/:query?" :paramsDesc="['query，search page querystring']"/>
+
+For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3041>, the query is `brand=164&cat=3038%2C3041`
 
 ## 大麦网
 
@@ -461,29 +557,15 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="DIYgod" example="/mi/crowdfunding" path="/mi/crowdfunding"/>
 
+## 小米有品
+
 ### 小米有品众筹
 
-<Route author="DIYgod" example="/mi/youpin/crowdfunding" path="/mi/youpin/crowdfunding"/>
+<Route author="bigfei" example="/xiaomiyoupin/crowdfunding" path="/xiaomiyoupin/crowdfunding"/>
 
 ### 小米有品每日上新
 
-<Route author="xyqfer DIYgod" example="/mi/youpin/new" path="/mi/youpin/new/:sort?" :paramsDesc="['排序，见下表']">
-
-| 个性化排序 | 按销量从高到低 | 按好评从高到低 | 按上新时间从近到远 |
-| ----- | ------- | ------- | --------- |
-| 0     | 1       | 2       | 3         |
-
-</Route>
-
-## 宜家 IKEA
-
-### 宜家 IKEA（英国）- 商品上新
-
-<Route author="HenryQW" example="/ikea/uk/new" path="/ikea/uk/new"/>
-
-### 宜家 IKEA（英国）- 促销
-
-<Route author="HenryQW" example="/ikea/uk/offer" path="/ikea/uk/offer"/>
+<Route author="xyqfer DIYgod bigfei" example="/xiaomiyoupin/latest" path="/xiaomiyoupin/latest" />
 
 ## 优衣库
 

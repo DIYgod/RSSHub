@@ -2,7 +2,7 @@
     "extends": ["eslint:recommended", "plugin:prettier/recommended", "plugin:yml/recommended"],
     "plugins": ["prettier"],
     "parserOptions": {
-        "ecmaVersion": 2020,
+        "ecmaVersion": "latest",
         "sourceType": "module"
     },
     "env": {
@@ -65,6 +65,7 @@
         "no-prototype-builtins": 0,
         "no-new-func": 2,
         "require-await": 2,
+        "no-return-await": 2,
         "prefer-arrow-callback": 2,
         "object-shorthand": 2,
         "yml/quotes": [
