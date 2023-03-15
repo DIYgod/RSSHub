@@ -574,6 +574,20 @@ Language
 
 <RouteEn author="TonyRL" example="/taiwannews/hot" path="/taiwannews/hot/:lang?" :paramsDesc="['Language, `en` or `zh`, `en` by default']" radar="1" rssbud="1"/>
 
+## The Atlantic
+
+### News
+
+<RouteEn author="NavePnow" example="/theatlantic/latest" path="/theatlantic/:category" :paramsDesc="['category, see below']">
+
+| Popular      | Latest | Politics | Technology | Business |
+| ------------ | ------ | -------- | ---------- | -------- |
+| most-popular | latest | politics | technology | business |
+
+More categories (except photo) can be found within the navigation bar at <https://www.theatlantic.com/>
+
+</RouteEn>
+
 ## The Economist
 
 ### Category
