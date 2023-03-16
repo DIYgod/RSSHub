@@ -36,6 +36,66 @@ The first inner object key is `_name`, which is the name of the website. This sh
 
 The rest of the inner object keys are the subdomains of a website. If a website you want to match does not have any subdomains, or you want to match both `www.example.com` and `example.com`, use `'.'` instead. In this case, we will use `'.'` since we want to match `github.com`. Note that each subdomain should return an array of objects.
 
+<code-group>
+<code-block title="github.com and www.github.com">
+
+```js{4}
+module.exports = {
+    'github.com': {
+        _name: 'GitHub',
+        '.': [
+            {
+                title: '...',
+                docs: '...',
+                source: ['/...'],
+                target: '/...',
+            },
+        ],
+    },
+};
+```
+
+</code-block>
+<code-block title="abc.github.com">
+
+```js{4}
+module.exports = {
+    'github.com': {
+        _name: 'GitHub',
+        abc: [
+            {
+                title: '...',
+                docs: '...',
+                source: ['/...'],
+                target: '/...',
+            },
+        ],
+    },
+};
+```
+
+</code-block>
+<code-block title="abc.def.github.com">
+
+```js{4}
+module.exports = {
+    'github.com': {
+        _name: 'GitHub',
+        'abc.def': [
+            {
+                title: '...',
+                docs: '...',
+                source: ['/...'],
+                target: '/...',
+            },
+        ],
+    },
+};
+```
+
+</code-block>
+</code-group>
+
 ### `title`
 
 The title is a **required** field and should be the same as the level 3 heading (`###`) of the route documentation. In this case, it's `Repo Issues`. Do not repeat the website name (`_name`), which is `GitHub`, in `title`.

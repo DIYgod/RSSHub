@@ -180,13 +180,13 @@ module.exports = {
                             collapsable: false,
                         },
                         {
-                            title: '🦾 Advanced',
-                            path: '/en/joinus/rich-media.html',
+                            title: '💪 Advanced',
+                            path: '/en/joinus/advanced-feed.html',
                             collapsable: false,
                             children: [
                                 {
-                                    title: '🎵 Rich Media RSS',
-                                    path: 'rich-media',
+                                    title: '🪄 Create a Rich Media RSS Feed',
+                                    path: 'advanced-feed',
                                 },
                                 {
                                     title: '⚖️ Script Standard',
