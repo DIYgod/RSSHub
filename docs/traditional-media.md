@@ -468,6 +468,20 @@ Solidot 提供的 feed:
 
 </Route>
 
+## The Atlantic
+
+### News
+
+<Route author="NavePnow" example="/theatlantic/latest" path="/theatlantic/:category" :paramsDesc="['分类, 见下表']">
+
+| Popular      | Latest | Politics | Technology | Business |
+| ------------ | ------ | -------- | ---------- | -------- |
+| most-popular | latest | politics | technology | business |
+
+More categories (except photo) can be found within the navigation bar at <https://www.theatlantic.com/>
+
+</Route>
+
 ## The Economist
 
 ### 分类

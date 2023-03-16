@@ -3903,10 +3903,10 @@ chrome-trace-event@^1.0.2:
   resolved "https://registry.yarnpkg.com/chrome-trace-event/-/chrome-trace-event-1.0.3.tgz#1015eced4741e15d06664a957dbbf50d041e26ac"
   integrity sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==
 
-chromium-bidi@0.4.4:
-  version "0.4.4"
-  resolved "https://registry.yarnpkg.com/chromium-bidi/-/chromium-bidi-0.4.4.tgz#44f25d4fa5d2f3debc3fc3948d0657194cac4407"
-  integrity sha512-4BX5cSaponuvVT1+SbLYTOAgDoVtX/Khoc9UsbFJ/AsPVUeFAM3RiIDFI6XFhLYMi9WmVJqh1ZH+dRpNKkKwiQ==
+chromium-bidi@0.4.5:
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/chromium-bidi/-/chromium-bidi-0.4.5.tgz#a352e755536dde609bd2c77e4b1f0906bff8784e"
+  integrity sha512-rkav9YzRfAshSTG3wNXF7P7yNiI29QAo1xBXElPoCoSQR5n20q3cOyVhDv6S7+GlF/CJ/emUxlQiR0xOPurkGg==
   dependencies:
     mitt "3.0.0"
 
@@ -6819,10 +6819,10 @@ googleapis-common@^6.0.0:
     url-template "^2.0.8"
     uuid "^9.0.0"
 
-googleapis@112.0.0:
-  version "112.0.0"
-  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-112.0.0.tgz#e957811a1df3c408f934c0047e091d5d8f14b7ef"
-  integrity sha512-WPfXhYZVrbbJRxB+ZZDksjuelmt49Mcl/1mo7w05kvLS1EbynvTELsNTJwh+hNrjsFKdh4izWLAcjTDo0Boycg==
+googleapis@113.0.0:
+  version "113.0.0"
+  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-113.0.0.tgz#695b7017d61e3bcdbe900b50b8692a33aa6c02e2"
+  integrity sha512-gsknEobaFuS+ACraCL3w22pAqeg1HselNhiSjcF5p2d2t2HB3QchbRDrFCfZ0wc4gKLYUBdmGzulCmRRL5qNXw==
   dependencies:
     google-auth-library "^8.0.2"
     googleapis-common "^6.0.0"
@@ -11569,12 +11569,12 @@ pupa@^2.0.1:
   dependencies:
     escape-goat "^2.0.0"
 
-puppeteer-core@19.7.4:
-  version "19.7.4"
-  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-19.7.4.tgz#00706955bad1d651450c662a9e91662c29200d5f"
-  integrity sha512-E8nVhqGF0ZM7s9pb5849gzKFG7282WYZaeGXo/eYDkpUpcPUgmkj7QrAoa8SpFXXyqHHilHJZPbfVBb4foDazQ==
+puppeteer-core@19.7.5:
+  version "19.7.5"
+  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-19.7.5.tgz#cedc8eb7862fe7a8aa2a25ed167c0f1230de72b2"
+  integrity sha512-EJuNha+SxPfaYFbkoWU80H3Wb1SiQH5fFyb2xdbWda0ziax5mhV63UMlqNfPeTDIWarwtR4OIcq/9VqY8HPOsg==
   dependencies:
-    chromium-bidi "0.4.4"
+    chromium-bidi "0.4.5"
     cross-fetch "3.1.5"
     debug "4.3.4"
     devtools-protocol "0.0.1094867"
@@ -11633,16 +11633,16 @@ puppeteer-extra@3.3.6:
     debug "^4.1.1"
     deepmerge "^4.2.2"
 
-puppeteer@19.7.4:
-  version "19.7.4"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-19.7.4.tgz#2a978778de02e620ca295d561e94e6bab7c921ac"
-  integrity sha512-TdiNEG27BahPab4B/xfUth/L8yWV8ZT4D+/n01DWjK6pPQ2HgCGJGbL3dlSxUvor6dtxFBe16CEQ9JWXh0SCaQ==
+puppeteer@19.7.5:
+  version "19.7.5"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-19.7.5.tgz#d7db0dfcc80ca2cdf8eb0100bae1ce888a841389"
+  integrity sha512-UqD8K+yaZa6/hwzP54AATCiHrEYGGxzQcse9cZzrtsVGd8wT0llCdYhsBp8n+zvnb1ofY0YFgI3TYZ/MiX5uXQ==
   dependencies:
     cosmiconfig "8.1.0"
     https-proxy-agent "5.0.1"
     progress "2.0.3"
     proxy-from-env "1.1.0"
-    puppeteer-core "19.7.4"
+    puppeteer-core "19.7.5"
 
 pure-rand@^6.0.0:
   version "6.0.0"

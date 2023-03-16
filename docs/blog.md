@@ -4,6 +4,18 @@ pageClass: routes
 
 # 博客
 
+## Amazon
+
+### AWS 博客
+
+<Route author="HankChow" example="/amazon/awsblogs" path="/awsblogs/:locale?" :paramsDesc="['指定语言的博客文章，仅支持以下选项，默认为 `zh_CN`']">
+
+| zh_CN | en_US | fr_FR | de_DE | ja_JP | ko_KR | pt_BR | es_ES | ru_RU | id_ID | tr_TR |
+| ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+| 汉语    | 英语    | 法语    | 德语    | 日语    | 韩语    | 葡萄牙语  | 西班牙语  | 俄语    | 印尼语   | 土耳其语  |
+
+</Route>
+
 ## archdaily
 
 ### 首页

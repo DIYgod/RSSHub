@@ -4,6 +4,18 @@ pageClass: routes
 
 # Blog
 
+## Amazon
+
+### AWS Blogs
+
+<RouteEn author="HankChow" example="/amazon/awsblogs" path="/awsblogs/:locale?" :paramsDesc="['Blog postes in a specified language, only the following options are supported. Default `zh_CN`']">
+
+| zh_CN | en_US | fr_FR | de_DE | ja_JP | ko_KR | pt_BR | es_ES | ru_RU | id_ID | tr_TR |
+| ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+| Chinese    | English    | French    | German    | Japanese    | Korean    | Portuguese  | Spainish  | Russian    | Indonesian   | Turkish  |
+
+</RouteEn>
+
 ## archdaily
 
 ### Home
