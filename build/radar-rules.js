@@ -8161,6 +8161,17 @@
         docs:"https://docs.rsshub.app/program-update.html#oo-software-changelog",
         source:[ "/en/changelog" ],
         target:(params, url) => `/oo-software/changelog/${new URL(url).match(/\/en\/(.*?)\/changelog/)[1]}` } ] },
+  "openai.com":{ _name:"OpenAI",
+    ".":[ { title:"Blog",
+        docs:"https://docs.rsshub.app/en/new-media.html#openai",
+        source:"/blog",
+        target:(_, url) => {
+                    const topics = new URL(url).searchParams.get('topics');
+                    if (topics) {
+                        return `/openai/blog/${topics}`;
+                    }
+                    return '/openai/blog';
+                } } ] },
   "openwrt.org":{ _name:"Openwrt",
     ".":[ { title:"Model Releases",
         docs:"https://docs.rsshub.app/program-update.html#openwrt",

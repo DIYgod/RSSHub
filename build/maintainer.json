@@ -3495,6 +3495,10 @@
     "/oo-software/changelog/:id": [
         "nczitzk"
     ],
+    "/openai/blog/:tag?": [
+        "StevenRCE0",
+        "nczitzk"
+    ],
     "/openwrt/releases/:model?": [
         "DIYgod"
     ],
@@ -6490,7 +6494,6 @@
     "/totalcommander/whatsnew": [],
     "/blizzard/news/:language?/:category?": [],
     "/deepl/blog/:lang?": [],
-    "/openai/blog/:tag?": [],
     "/muchong/journal/:type?": [],
     "/muchong/:id/:type?/:sort?": [],
     "/qstheory/:category?": [],

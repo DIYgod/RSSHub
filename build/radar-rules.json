@@ -15002,6 +15002,16 @@
       }
     ]
   },
+  "openai.com": {
+    "_name": "OpenAI",
+    ".": [
+      {
+        "title": "Blog",
+        "docs": "https://docs.rsshub.app/en/new-media.html#openai",
+        "source": "/blog"
+      }
+    ]
+  },
   "openwrt.org": {
     "_name": "Openwrt",
     ".": [
