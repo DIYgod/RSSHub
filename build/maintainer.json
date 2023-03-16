@@ -5224,6 +5224,9 @@
     "/youtube/charts/:category?/:country?/:embed?": [
         "TonyRL"
     ],
+    "/youtube/community/:handle": [
+        "TonyRL"
+    ],
     "/youtube/playlist/:id/:embed?": [
         "HenryQW"
     ],
