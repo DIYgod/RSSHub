@@ -574,6 +574,20 @@ Language
 
 <RouteEn author="TonyRL" example="/taiwannews/hot" path="/taiwannews/hot/:lang?" :paramsDesc="['Language, `en` or `zh`, `en` by default']" radar="1" rssbud="1"/>
 
+## The Atlantic
+
+### News
+
+<RouteEn author="NavePnow" example="/theatlantic/latest" path="/theatlantic/:category" :paramsDesc="['category, see below']">
+
+| Popular      | Latest | Politics | Technology | Business |
+| ------------ | ------ | -------- | ---------- | -------- |
+| most-popular | latest | politics | technology | business |
+
+More categories (except photo) can be found within the navigation bar at <https://www.theatlantic.com/>
+
+</RouteEn>
+
 ## The Economist
 
 ### Category
@@ -678,7 +692,17 @@ Provides all of the articles by the specified New York Times author.
 
 ### News
 
-<RouteEn author="oppilate" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" :paramsDesc="['Language, `en-us`, `zh-cn`, `zh-tw` are supported', 'Category, only supported in `en-us`. Supports `opinion`, `world_news`, `us_bussiness`, `market_news`, `technology`, `lifestyle`.']">
+<RouteEn author="oppilate NavePnow" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" :paramsDesc="['Language, `en-us`, `zh-cn`, `zh-tw`', 'Category. See below']">
+
+en_us
+| World | U.S. | Politics | Economy | Business | Tech | Markets | Opinion | Books & Arts | Real Estate | Life & Work | Sytle | Sports |
+| ------ | ------- | -------- | -------- | ----- | --------- | --------- | --------- | --------- | --------- |--------- | --------- | --------- |
+| world | us | politics | economy | business | technology | markets | opinion | books-arts | realestate | life-work | style-entertainment | sports |
+
+zh-cn / zh-tw
+| 国际 | 中国 | 金融市场 | 经济 | 商业 | 科技 | 派 | 专栏与观点 |
+| ------ | ------- | -------- | -------- | ----- | --------- | --------- | --------- |
+| world | china | markets | economy | business | technology | life-arts | opinion |
 
 Provide full article RSS for WSJ topics.
 

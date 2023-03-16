@@ -67,6 +67,16 @@ pageClass: routes
 
 <Route author="nczitzk" example="/literotica/category/anal-sex-stories" path="/literotica/category/:category?" :paramsDesc="['分类，可在对应分类页地址栏中找到']"/>
 
+## MagazineLib
+
+### Latest Magazine
+
+<Route author="NavePnow" example="/magazinelib/latest-magazine/new+yorker" path="/magazinelib/latest-magazine/:query?" :paramsDesc="['query，search page querystring']"/>
+
+For instance, when doing search at <https://magazinelib.com/> and you get url <https://magazinelib.com/?s=new+yorker>, the query is `new+yorker`
+
+</Route>
+
 ## Mobilism
 
 ### 电子书

@@ -236,9 +236,9 @@ pageClass: routes
 ### 游戏折扣
 
 <Route author="zytomorrow" path="/jump/discount/:platform/:filter?/:countries?" example="/jump/discount/ps5/all" :paramsDesc="['平台:switch,ps4,ps5,xbox,steam,epic', '过滤参数,all-全部，jx-精选，sd-史低，dl-独立，vip-会员', '地区，具体支持较多，可自信查看地区简写']">
-| switch | ps4 | ps5 | xbox | steam | epic |
-| ------ | --- | ---- | ---- | ---- | ---- |
-| 可用   | 可用 | 可用   | 不可用   | 可用   | 不可用 |
+| switch | ps4  | ps5  | xbox   | steam | epic   |
+| ------ | ---- | ---- | ------ | ----- | ------ |
+| 可用   | 可用 | 可用 | 不可用 | 可用  | 不可用 |
 
 | filter | switch | ps4 | ps5 | steam |
 | ------ | ------ | --- | --- | ----- |
@@ -311,8 +311,8 @@ pageClass: routes
 ### Feed The Beast (FTB) 模组包更新
 
 <Route author="gucheen" example="/feed-the-beast/modpack/ftb_presents_direwolf20_1_16" path="/feed-the-beast/modpack/:modpackEntry" :paramsDesc="['模组包的短名.']">
-| 参数 | 说明 |
-| ------| ------------ |
+| 参数         | 说明                                                                                                                                                        |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | modpackEntry | 模组包的短名从模组包的页面链接中找到，例如 `https://www.feed-the-beast.com/modpack/ftb_presents_direwolf20_1_16`，短名就是 `ftb_presents_direwolf20_1_16`。 |
 </Route>
 
@@ -912,6 +912,19 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 ### 游研社 - 全部文章
 
 <Route author="HaitianLiu" example="/yystv/docs" path="/yystv/docs" />
+
+## 遊戲基地 Gamebase
+
+### 新聞
+
+<Route author="nczitzk" example="/gamebase/news" path="/gamebase/news/:type?/:category?" :paramsDesc="['类型，见下表，默认为 newslist', '分类，可在对应分类页 URL 中找到，默认为 `all` 即全部']">
+
+类型
+
+| newslist | r18list |
+| -------- | ------- |
+
+</Route>
 
 ## 掌上英雄联盟
 

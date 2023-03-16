@@ -500,7 +500,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 用户 / 标签 - Private API
 
-<Route author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" :paramsDesc="['类别，见下表', '用户名／标签名']" radar="1" anticrawler="1" radar="1">
+<Route author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" :paramsDesc="['类别，见下表', '用户名／标签名']" radar="1" anticrawler="1" selfhost="1">
 
 | 用户时间线 | 标签   |
 | ----- | ---- |
@@ -798,6 +798,7 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 | `showQuotedAuthorAvatarInDesc` | 是否在正文处显示被转推的推文的作者头像（若阅读器会提取正文图片，不建议开启）                                        | `0`/`1`/`true`/`false` | `false`                                   |
 | `showAuthorAvatarInDesc`       | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启）                                               | `0`/`1`/`true`/`false` | `false`                                   |
 | `showEmojiForRetweetAndReply`  | 显示 “🔁” 取代 “Rt”、“↩️” 取代 “Re”                                                  | `0`/`1`/`true`/`false` | `false`                                   |
+| `showSymbolForRetweetAndReply` | 显示 “RT” 取代 “”、“ Re ” 取代 “”                                                    | `0`/`1`/`true`/`false` | `true`                                    |
 | `showRetweetTextInTitle`       | 在标题处显示转推评论（置为 `false` 则在标题只显示被转推推文）                                           | `0`/`1`/`true`/`false` | `true`                                    |
 | `addLinkForPics`               | 为图片添加可点击的链接                                                                   | `0`/`1`/`true`/`false` | `false`                                   |
 | `showTimestampInDescription`   | 在正文处显示推特的时间戳                                                                  | `0`/`1`/`true`/`false` | `false`                                   |
@@ -946,7 +947,8 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 | 热门音乐人      | 热门歌曲     | 热门音乐视频    | 时下流行           |
 | ---------- | -------- | --------- | -------------- |
 | TopArtists | TopSongs | TopVideos | TrendingVideos |
-| :::        |          |           |                |
+
+:::
 
 ::: details 国家代码
 
@@ -985,7 +987,8 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 | Uruguay | Zimbabwe |
 | ------- | -------- |
 | uy      | zw       |
-| :::     |          |
+
+:::
 
 </Route>
 
@@ -1254,6 +1257,35 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 |  社会招聘  |  校园招聘  |  实习生招聘 |
 | :----: | :----: | :----: |
 | social | campus | intern |
+
+</Route>
+
+### 榜单与集合
+
+<Route author="5upernova-heng" example="/douban/list/subject_real_time_hotest" path="/douban/list/:type?" :paramsDesc="['榜单类型，见下表。默认为实时热门书影音']">
+
+| 榜单 / 集合   | 路由（type）                   |
+| --------- | -------------------------- |
+| 实时热门书影音   | subject_real_time_hotest   |
+| 影院热映      | movie_showing              |
+| 实时热门电影    | movie_real_time_hotest     |
+| 实时热门电视    | tv_real_time_hotest        |
+| 一周口碑电影榜   | movie_weekly_best          |
+| 华语口碑剧集榜   | tv_chinese_best_weekly     |
+| 全球口碑剧集榜   | tv_global_best_weekly      |
+| 国内口碑综艺榜   | show_chinese_best_weekly   |
+| 国外口碑综艺榜   | show_global_best_weekly    |
+| 虚构类小说热门榜  | book_fiction_hot_weekly    |
+| 非虚构类小说热门榜 | book_nonfiction_hot_weekly |
+| 热门单曲榜     | music_single               |
+| 华语新碟榜     | music_chinese              |
+| ...       | ...                        |
+
+> 上面的榜单 / 集合并没有列举完整。
+>
+> 如何找到榜单对应的路由参数：
+> 在豆瓣手机 APP 中，对应地榜单页面右上角，点击分享链接。链接路径 `subject_collection` 后的路径就是路由参数 `type`。
+> 如：小说热门榜的分享链接为：`https://m.douban.com/subject_collection/ECDIHUN4A`，其对应本 RSS 路由的 `type` 为 `ECDIHUN4A`，对应的订阅链接路由：[`/douban/list/ECDIHUN4A`](https://rsshub.app/douban/list/ECDIHUN4A)
 
 </Route>
 
