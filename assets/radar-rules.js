@@ -166,7 +166,6 @@
             { title: '标签最近更新', docs: 'https://docs.rsshub.app/multimedia.html#mqube', source: '/search/tag/:tag', target: '/mqube/tag/:tag' },
         ],
     },
-    'nikkei.com': { _name: '日本経済新聞', www: [{ title: 'ホームページ', docs: 'https://docs.rsshub.app/traditional-media.html#ri-ben-jing-ji-xin-wen', source: '/', target: '/nikkei/index' }] },
     'last.fm': {
         _name: 'Last.fm',
         www: [

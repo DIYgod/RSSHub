@@ -1024,11 +1024,11 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### Blog
 
-<Route author="ncziztk" example="/openai/blog" path="/openai/blog/:tag" :paramsDesc="['标签，见下表，默认为 All']">
+<Route author="ncziztk StevenRCE0" example="/openai/blog" path="/openai/blog/:tag?" :paramsDesc="['标签，见下表，默认为 All']">
 
-| All | Research | Announcements | Events | Milestones |
-| --- | -------- | ------------- | ------ | ---------- |
-|     | research | announcements | events | milestones |
+| All | Announcements | Events | Safety & Alignment | Community | Product | Culture & Careers   | Milestones | Research |
+| --- | ------------- | ------ | ------------------ | --------- | ------- | ------------------- | ---------- | -------- |
+|     | announcements | events | safety-alignment   | community | product | culture-and-careers | milestones | research |
 
 </Route>
 
@@ -3330,6 +3330,12 @@ column 为 third 时可选的 category:
 | article | state |
 
 </Route>
+
+## 千篇网
+
+### 知识库／资讯
+
+<Route author="TonyRL" example="/qianp/news" path="/qianp/news/:path*" :paramsDesc="['路径，可在URL中找到，默认为 `news/recommend`']" radar="1" rssbud="1"/>
 
 ## 求是网
 
