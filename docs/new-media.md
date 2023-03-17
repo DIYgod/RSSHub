@@ -4507,17 +4507,6 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 </Route>
 
-## 中国环球电视网
-
-### 播客
-
-<Route author="5upernova-heng" example="/cgtn/podcast/ezfm/4" path="/cgtn/podcast/:category/:id" :paramsDesc="['类型名','播客 id']" radar=1> 
-
-> 类型名与播客 id 可以在播客对应的 URL 中找到
-> 如 URL `https://radio.cgtn.com/podcast/column/ezfm/More-to-Read/4` ，其 `category` 为 `ezfm` ，`id` 为 `4`，对应的订阅路由为 [`/podcast/ezfm/4`](https://rsshub.app/podcast/ezfm/4)
-
-</route>
-
 ## 中国机械工程学会
 
 ### 学会新闻
