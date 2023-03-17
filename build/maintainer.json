@@ -863,6 +863,9 @@
     "/cebbank/quotation/history/:type": [
         "linbuxiao"
     ],
+    "/cgtn/podcast/:category/:id": [
+        "5upernova-heng"
+    ],
     "/chaincatcher/": [
         "TonyRL"
     ],
