@@ -46,6 +46,12 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 <RouteEn author="EsuRt" example="/hanime/video" path="/hanime/video"/>
 
+## IDOLY PRIDE
+
+### News
+
+<RouteEn author="Mingxia1" example="/idolypride/news" path="/idolypride/news" radar="1" rssbud="1"/>
+
 ## iwara
 
 ### User
@@ -275,9 +281,3 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 ### Origins Search
 
 <RouteEn author="xueli-sherryli" example="/oreno3d/origins/3/latest/1" path="/oreno3d/origins/:originid/:sort/:pagelimit?" :paramsDesc="['Origin id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']" radar="1" rssbud="1"/>
-
-## IDOLY PRIDE
-
-### News
-
-<RouteEn author="Mingxia1" example="/idolypride/news" path="/idolypride/news" radar="1" rssbud="1"/>
