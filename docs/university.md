@@ -862,8 +862,8 @@ pageClass: routes
 <Route author="truobel mobyw" example="/uestc/cqe/tzgg" path="/uestc/cqe/:type?" :paramsDesc="['默认为 `tzgg`']" puppeteer="1">
 
 | 活动预告 | 通知公告 |
-| -------- | -------- |
-| hdyg     | tzgg     |
+| ---- | ---- |
+| hdyg | tzgg |
 
 </Route>
 
@@ -871,9 +871,9 @@ pageClass: routes
 
 <Route author="achjqz mobyw" example="/uestc/jwc/student" path="/uestc/jwc/:type?" :paramsDesc="['默认为 `important`']">
 
-| 重要公告  | 学生事务公告 | 教师事务公告 | 教学新闻 | 办公室 |
-| --------- | ------------ | ------------ | -------- | ------ |
-| important | student      | teacher      | teach    | office |
+| 重要公告      | 学生事务公告  | 教师事务公告  | 教学新闻  | 办公室    |
+| --------- | ------- | ------- | ----- | ------ |
+| important | student | teacher | teach | office |
 
 </Route>
 
@@ -881,7 +881,7 @@ pageClass: routes
 
 <Route author="achjqz mobyw" example="/uestc/news/culture" path="/uestc/news/:type?" :paramsDesc="['默认为 `announcement`']">
 
-| 学术    | 文化    | 公告         | 校内通知     |
+| 学术      | 文化      | 公告           | 校内通知         |
 | ------- | ------- | ------------ | ------------ |
 | academy | culture | announcement | notification |
 
@@ -904,8 +904,8 @@ pageClass: routes
 <Route author="Yadomin" example="/uestc/sise/1`" path="/uestc/sise/:type?" :paramsDesc="['默认为 `1`']" puppeteer="1">
 
 | 最新 | 院办 | 学生科 | 教务科 | 研管科 | 组织 | 人事 | 实践教育中心 | Int'I |
-| ---- | ---- | ------ | ------ | ------ | ---- | ---- | ------------ | ----- |
-| 1    | 2    | 3      | 4      | 5      | 6    | 7    | 8            | 9     |
+| -- | -- | --- | --- | --- | -- | -- | ------ | ----- |
+| 1  | 2  | 3   | 4   | 5   | 6  | 7  | 8      | 9     |
 
 </Route>
 
