@@ -2361,6 +2361,9 @@
     "/icac/news/:lang?": [
         "linbuxiao, TonyRL"
     ],
+    "/idolypride/news": [
+        "Mingxia1"
+    ],
     "/ieee/journal/:journal/:sortType?": [
         "Derekmini",
         "auto-bot-ty"
