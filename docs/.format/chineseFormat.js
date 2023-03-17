@@ -22,9 +22,7 @@ module.exports = {
             })
             .use(prettier)
             .use(gfm, {
-                options: {
-                    stringLength: width,
-                },
+                stringLength: width,
             })
             .process(doc);
         return typeof result === 'string' ? result : typeof result.contents === 'string' ? result.contents : result.result;

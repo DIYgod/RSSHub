@@ -473,9 +473,9 @@ ctx.state.data = {
 
         <Route author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" :paramsDesc="['分类名']">
 
-        | 前端       | Android | iOS | 后端      | 设计     | 产品      | 工具资源    | 阅读      | 人工智能 |
-        | -------- | ------- | --- | ------- | ------ | ------- | ------- | ------- | ---- |
-        | frontend | android | ios | backend | design | product | freebie | article | ai   |
+        | 前端     | Android | iOS | 后端    | 设计   | 产品    | 工具资源 | 阅读    | 人工智能 |
+        | -------- | ------- | --- | ------- | ------ | ------- | -------- | ------- | -------- |
+        | frontend | android | ios | backend | design | product | freebie  | article | ai       |
 
         </Route>
 

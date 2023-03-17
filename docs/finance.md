@@ -22,23 +22,23 @@ pageClass: routes
 
 <Route author="nczitzk" example="/aicaijing/information/14" path="/aicaijing/information/:id?" :paramsDesc="['栏目 id，可在对应栏目页 URL 中找到，默认为 14，即热点最新']">
 
-| 栏目 id | 栏目      |
-| ----- | ------- |
-| 14    | 热点 - 最新 |
-| 5     | 热点 - 科技 |
-| 9     | 热点 - 消费 |
-| 7     | 热点 - 出行 |
-| 13    | 热点 - 文娱 |
-| 10    | 热点 - 教育 |
-| 25    | 热点 - 地产 |
-| 11    | 热点 - 更多 |
-| 28    | 深度 - 出行 |
-| 29    | 深度 - 科技 |
-| 31    | 深度 - 消费 |
-| 33    | 深度 - 教育 |
-| 34    | 深度 - 更多 |
-| 8     | 深度 - 地产 |
-| 6     | 深度 - 文娱 |
+| 栏目 id | 栏目        |
+| ------- | ----------- |
+| 14      | 热点 - 最新 |
+| 5       | 热点 - 科技 |
+| 9       | 热点 - 消费 |
+| 7       | 热点 - 出行 |
+| 13      | 热点 - 文娱 |
+| 10      | 热点 - 教育 |
+| 25      | 热点 - 地产 |
+| 11      | 热点 - 更多 |
+| 28      | 深度 - 出行 |
+| 29      | 深度 - 科技 |
+| 31      | 深度 - 消费 |
+| 33      | 深度 - 教育 |
+| 34      | 深度 - 更多 |
+| 8       | 深度 - 地产 |
+| 6       | 深度 - 文娱 |
 
 </Route>
 
@@ -61,8 +61,8 @@ pageClass: routes
 <Route author="nczitzk" example="/dtcj/datainsight" path="/dtcj/datainsight/:id?" :paramsDesc="['分类，见下表，默认为全部']">
 
 | 城数 | NEXT 情报局 | 专业精选 |
-| -- | -------- | ---- |
-| 3  | 1        | 4    |
+| ---- | ----------- | -------- |
+| 3    | 1           | 4        |
 
 </Route>
 
@@ -71,8 +71,8 @@ pageClass: routes
 <Route author="nczitzk" example="/dtcj/datahero" path="/dtcj/datahero/:category?" :paramsDesc="['分类，见下表，默认为全部']">
 
 | 侠创 | 纽约数据科学学院 | RS 实验所 | 阿里云天池 |
-| -- | -------- | ------ | ----- |
-| 5  | 6        | 9      | 10    |
+| ---- | ---------------- | --------- | ---------- |
+| 5    | 6                | 9         | 10         |
 
 </Route>
 
@@ -145,8 +145,8 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 语言
 
 | 中文 | 英文 |
-| -- | -- |
-| zh | en |
+| ---- | ---- |
+| zh   | en   |
 
 </Route>
 
@@ -163,8 +163,8 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 <Route author="SChen1024" example="/weexcn/news/1" path="/weexcn/news/:typeid" :paramsDesc="['栏目代码, 按照表列出']" />
 
 | 最新文章 | 市场要闻 | 交易策略 | 机构观点 | 投资学堂 | 行业观察 | 基金理财 | 分析师投稿 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ----- |
-| 1    | 2    | 3    | 4    | 5    | 6    | 7    | 8     |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
+| 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8          |
 
 ## 巴伦周刊中文版
 
@@ -192,25 +192,25 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="nczitzk" example="/bse" path="/bse/:category?/:keyword?" :paramsDesc="['分类，见下表，默认为本所要闻', '关键字，默认为空']">
 
-| 本所要闻           | 人才招聘    | 采购信息     | 业务通知      |
-| -------------- | ------- | -------- | --------- |
-| important_news | recruit | purchase | news_list |
+| 本所要闻       | 人才招聘 | 采购信息 | 业务通知  |
+| -------------- | -------- | -------- | --------- |
+| important_news | recruit  | purchase | news_list |
 
-| 法律法规     | 公开征求意见         | 部门规章            | 发行融资      |
+| 法律法规 | 公开征求意见   | 部门规章        | 发行融资  |
 | -------- | -------------- | --------------- | --------- |
 | law_list | public_opinion | regulation_list | fxrz_list |
 
-| 持续监管      | 交易管理      | 市场管理      | 上市委会议公告        |
+| 持续监管  | 交易管理  | 市场管理  | 上市委会议公告 |
 | --------- | --------- | --------- | -------------- |
 | cxjg_list | jygl_list | scgl_list | meeting_notice |
 
-| 上市委会议结果公告      | 上市委会议变更公告      | 并购重组委会议公告   |
-| -------------- | -------------- | ----------- |
-| meeting_result | meeting_change | bgcz_notice |
+| 上市委会议结果公告 | 上市委会议变更公告 | 并购重组委会议公告 |
+| ------------------ | ------------------ | ------------------ |
+| meeting_result     | meeting_change     | bgcz_notice        |
 
-| 并购重组委会议结果公告 | 并购重组委会议变更公告 | 终止审核              | 注册结果         |
-| ----------- | ----------- | ----------------- | ------------ |
-| bgcz_result | bgcz_change | termination_audit | audit_result |
+| 并购重组委会议结果公告 | 并购重组委会议变更公告 | 终止审核          | 注册结果     |
+| ---------------------- | ---------------------- | ----------------- | ------------ |
+| bgcz_result            | bgcz_change            | termination_audit | audit_result |
 
 </Route>
 
@@ -226,9 +226,9 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="nczitzk" example="/cls/telegraph" path="/cls/telegraph/:category?" :paramsDesc="['分类，见下表，默认为全部']" radar="1">
 
-| 看盘    | 公司           | 解读      | 加红  | 推送    | 提醒     | 基金   | 港股 |
-| ----- | ------------ | ------- | --- | ----- | ------ | ---- | -- |
-| watch | announcement | explain | red | jpush | remind | fund | hk |
+| 看盘  | 公司         | 解读    | 加红 | 推送  | 提醒   | 基金 | 港股 |
+| ----- | ------------ | ------- | ---- | ----- | ------ | ---- | ---- |
+| watch | announcement | explain | red  | jpush | remind | fund | hk   |
 
 </Route>
 
@@ -236,9 +236,9 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="nczitzk" example="/cls/depth/1000" path="/cls/depth/:category?" :paramsDesc="['分类代码，可在首页导航栏的目标网址 URL 中找到']" radar="1">
 
-| 头条   | 股市   | 港股   | 环球   | 公司   | 券商   | 基金   | 地产   | 金融   | 汽车   | 科创版  | 品见   | 期货   | 投教   |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| 1000 | 1003 | 1135 | 1007 | 1005 | 1118 | 1110 | 1006 | 1032 | 1119 | 1111 | 1160 | 1124 | 1176 |
+| 头条 | 股市 | 港股 | 环球 | 公司 | 券商 | 基金 | 地产 | 金融 | 汽车 | 科创版 | 品见 | 期货 | 投教 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | ---- |
+| 1000 | 1003 | 1135 | 1007 | 1005 | 1118 | 1110 | 1006 | 1032 | 1119 | 1111   | 1160 | 1124 | 1176 |
 
 </Route>
 
@@ -280,7 +280,7 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="TonyRL" example="/gelonghui/home" path="/gelonghui/home/:tag?" :paramsDesc="['分类标签，见下表，默认为 `web_home_page`']" radar="1" rssbud="1">
 
-| 推荐            | 股票    | 基金   | 新股        | 研报       |
+| 推荐          | 股票  | 基金 | 新股      | 研报     |
 | ------------- | ----- | ---- | --------- | -------- |
 | web_home_page | stock | fund | new_stock | research |
 
@@ -336,26 +336,26 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="laampui" example="/mckinsey/cn" path="/mckinsey/cn/:category?" :paramsDesc="['分类，见下表，默认为全部']" radar="1" rssbud="1">
 
-| 分类 | 分类名       |
-| -- | --------- |
-| 25 | 全部洞见      |
-| 2  | 汽车        |
-| 3  | 金融服务      |
-| 4  | 消费者       |
-| 5  | 医药        |
-| 7  | 数字化       |
-| 8  | 制造业       |
-| 9  | 私募        |
-| 10 | 技术，媒体与通信  |
-| 12 | 城市化与可持续发展 |
-| 13 | 创新        |
-| 16 | 人才与领导力    |
-| 18 | 宏观经济      |
-| 19 | 麦肯锡全球研究院  |
-| 37 | 麦肯锡季刊     |
-| 41 | 资本项目和基础设施 |
-| 42 | 旅游、运输和物流  |
-| 45 | 全球基础材料    |
+| 分类 | 分类名             |
+| ---- | ------------------ |
+| 25   | 全部洞见           |
+| 2    | 汽车               |
+| 3    | 金融服务           |
+| 4    | 消费者             |
+| 5    | 医药               |
+| 7    | 数字化             |
+| 8    | 制造业             |
+| 9    | 私募               |
+| 10   | 技术，媒体与通信   |
+| 12   | 城市化与可持续发展 |
+| 13   | 创新               |
+| 16   | 人才与领导力       |
+| 18   | 宏观经济           |
+| 19   | 麦肯锡全球研究院   |
+| 37   | 麦肯锡季刊         |
+| 41   | 资本项目和基础设施 |
+| 42   | 旅游、运输和物流   |
+| 45   | 全球基础材料       |
 
 </Route>
 
@@ -366,8 +366,8 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 <Route author="nczitzk" example="/nbd" path="/nbd/:id?" :paramsDesc="['分类 id，见下表，默认为要闻']">
 
 | 头条 | 要闻 | 图片新闻 | 推荐 |
-| -- | -- | ---- | -- |
-| 2  | 3  | 4    | 5  |
+| ---- | ---- | -------- | ---- |
+| 2    | 3    | 4        | 5    |
 
 </Route>
 
@@ -381,9 +381,9 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="moke8" example="/qianzhan/analyst/column/all" path="/qianzhan/analyst/column/:type?" :paramsDesc="['分类，见下表']">
 
-| 全部  | 研究员专栏 | 规划师专栏 | 观察家专栏 |
-| --- | ----- | ----- | ----- |
-| all | 220   | 627   | 329   |
+| 全部 | 研究员专栏 | 规划师专栏 | 观察家专栏 |
+| ---- | ---------- | ---------- | ---------- |
+| all  | 220        | 627        | 329        |
 
 </Route>
 
@@ -391,9 +391,9 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="moke8" example="/qianzhan/analyst/rank/week" path="/qianzhan/analyst/rank/:type?" :paramsDesc="['分类，见下表']">
 
-| 周排行  | 月排行   |
-| ---- | ----- |
-| week | month |
+| 周排行 | 月排行 |
+| ------ | ------ |
+| week   | month  |
 
 </Route>
 
@@ -440,13 +440,13 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 类型
 
 | 主板 | 创业板 |
-| -- | --- |
-| 0  | 1   |
+| ---- | ------ |
+| 0    | 1      |
 
 函件类别
 
 | 全部函件类别 | 非许可类重组问询函 | 问询函 | 违法违规线索分析报告 | 许可类重组问询函 | 监管函（会计师事务所模板） | 提请关注函（会计师事务所模板） | 年报问询函 | 向中介机构发函 | 半年报问询函 | 关注函 | 公司部函 | 三季报问询函 |
-| ------ | --------- | --- | ---------- | -------- | ------------- | --------------- | ----- | ------- | ------ | --- | ---- | ------ |
+| ------------ | ------------------ | ------ | -------------------- | ---------------- | -------------------------- | ------------------------------ | ---------- | -------------- | ------------ | ------ | -------- | ------------ |
 
 </Route>
 
@@ -461,36 +461,36 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 类型
 
 | IPO | 再融资 | 重大资产重组 |
-| --- | --- | ------ |
-| 1   | 2   | 3      |
+| --- | ------ | ------------ |
+| 1   | 2      | 3            |
 
 阶段
 
 | 全部 | 受理 | 问询 | 上市委会议 |
-| -- | -- | -- | ----- |
-| 0  | 10 | 20 | 30    |
+| ---- | ---- | ---- | ---------- |
+| 0    | 10   | 20   | 30         |
 
 | 提交注册 | 注册结果 | 中止 | 终止 |
-| ---- | ---- | -- | -- |
-| 35   | 40   | 50 | 60 |
+| -------- | -------- | ---- | ---- |
+| 35       | 40       | 50   | 60   |
 
 状态
 
 | 全部 | 新受理 | 已问询 | 通过 | 未通过 |
-| -- | --- | --- | -- | --- |
-| 0  | 20  | 30  | 45 | 44  |
+| ---- | ------ | ------ | ---- | ------ |
+| 0    | 20     | 30     | 45   | 44     |
 
 | 暂缓审议 | 复审通过 | 复审不通过 | 提交注册 |
-| ---- | ---- | ----- | ---- |
-| 46   | 56   | 54    | 60   |
+| -------- | -------- | ---------- | -------- |
+| 46       | 56       | 54         | 60       |
 
 | 注册生效 | 不予注册 | 补充审核 | 终止注册 |
-| ---- | ---- | ---- | ---- |
-| 70   | 74   | 78   | 76   |
+| -------- | -------- | -------- | -------- |
+| 70       | 74       | 78       | 76       |
 
 | 中止 | 审核不通过 | 撤回 |
-| -- | ----- | -- |
-| 80 | 90    | 95 |
+| ---- | ---------- | ---- |
+| 80   | 90         | 95   |
 
 </Route>
 
@@ -503,8 +503,8 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 语言
 
 | English | Español | Français | 中文 | 日本語 |
-| ------- | ------- | -------- | -- | --- |
-| en      | es      | fr       | cn | jp  |
+| ------- | ------- | -------- | ---- | ------ |
+| en      | es      | fr       | cn   | jp     |
 
 年份 和 平台 这两个参数请参见 [报告页](https://www.weforum.org/reports) 过滤条件处。
 
@@ -521,8 +521,8 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 <Route author="kdanfly" example="/chinacef/17/" path="/chinacef/:experts_id/" :paramsDesc="['专家编号']" radar="1" rssbud="1">
 
 | 李迅雷 | 夏斌 |
-| --- | -- |
-| 17  | 35 |
+| ------ | ---- |
+| 17     | 35   |
 
 </Route>
 
@@ -536,9 +536,9 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="emdoe nczitzk" example="/taoguba" path="/taoguba/:category?" :paramsDesc="['分类，见下表，默认为社区总版']">
 
-| 淘股论坛 | 社区总版    | 精华加油    | 网友点赞    |
-| ---- | ------- | ------- | ------- |
-| bbs  | zongban | jinghua | dianzan |
+| 淘股论坛 | 社区总版 | 精华加油 | 网友点赞 |
+| -------- | -------- | -------- | -------- |
+| bbs      | zongban  | jinghua  | dianzan  |
 
 </Route>
 
@@ -556,9 +556,9 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="Fatpandac" example="/ulapia/reports/stock_research" path="/ulapia/reports/:category?" :paramsDesc="['频道类型，默认为券商晨报（今日晨报）']">
 
-|      个股研报      |        行业研报       |        策略研报       |      宏观研报      |     新股研报     |   券商晨报（今日晨报）   |
-| :------------: | :---------------: | :---------------: | :------------: | :----------: | :------------: |
-| stock_research | industry_research | strategy_research | macro_research | ipo_research | brokerage_news |
+|    个股研报    |      行业研报     |      策略研报     |    宏观研报    |   新股研报   | 券商晨报（今日晨报） |
+| :------------: | :---------------: | :---------------: | :------------: | :----------: | :------------------: |
+| stock_research | industry_research | strategy_research | macro_research | ipo_research |    brokerage_news    |
 
 </Route>
 
@@ -579,8 +579,8 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 <Route author="imlonghao" example="/xueqiu/user/8152922548" path="/xueqiu/user/:id/:type?" :paramsDesc="['用户 id, 可在用户主页 URL 中找到', '动态的类型, 不填则默认全部']">
 
 | 原发布 | 长文 | 问答 | 热门 | 交易 |
-| --- | -- | -- | -- | -- |
-| 0   | 2  | 4  | 9  | 11 |
+| ------ | ---- | ---- | ---- | ---- |
+| 0      | 2    | 4    | 9    | 11   |
 
 </Route>
 
@@ -608,7 +608,7 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="YuYang" example="/xueqiu/stock_info/SZ000002" path="/xueqiu/stock_info/:id/:type?" :paramsDesc="['股票代码（需要带上交易所）', '动态的类型, 不填则为股票公告']">
 
-| 公告           | 新闻   | 研报       |
+| 公告         | 新闻 | 研报     |
 | ------------ | ---- | -------- |
 | announcement | news | research |
 
@@ -628,9 +628,9 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="broven Fatpandac nczitzk" example="/youzhiyouxing/materials" path="/youzhiyouxing/materials/:id?" :paramsDesc="['分类，见下表，默认为全部']">
 
-|  全部 | 知行小酒馆 | 知行黑板报 | 无人知晓 | 孟岩专栏 | 知行读书会 | 你好，同路人 |
-| :-: | :---: | :---: | :--: | :--: | :---: | :----: |
-|  0  |   4   |   2   |  10  |   1  |   3   |   11   |
+| 全部 | 知行小酒馆 | 知行黑板报 | 无人知晓 | 孟岩专栏 | 知行读书会 | 你好，同路人 |
+| :--: | :--------: | :--------: | :------: | :------: | :--------: | :----------: |
+|   0  |      4     |      2     |    10    |     1    |      3     |      11      |
 
 </Route>
 
@@ -640,41 +640,41 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="nczitzk" example="/stcn/yw" path="/stcn/:id?" :paramsDesc="['栏目 id，见下表，默认为要闻']">
 
-| 快讯 | 要闻 | 股市 | 公司      | 数据   |
-| -- | -- | -- | ------- | ---- |
-| kx | yw | gs | company | data |
+| 快讯 | 要闻 | 股市 | 公司    | 数据 |
+| ---- | ---- | ---- | ------- | ---- |
+| kx   | yw   | gs   | company | data |
 
-| 基金   | 金融      | 评论      | 产经 | 创投 |
-| ---- | ------- | ------- | -- | -- |
-| fund | finance | comment | cj | ct |
+| 基金 | 金融    | 评论    | 产经 | 创投 |
+| ---- | ------- | ------- | ---- | ---- |
+| fund | finance | comment | cj   | ct   |
 
 | 科创板 | 新三板 | 投教 | ESG | 滚动 |
-| --- | --- | -- | --- | -- |
-| kcb | xsb | tj | zk  | gd |
+| ------ | ------ | ---- | --- | ---- |
+| kcb    | xsb    | tj   | zk  | gd   |
 
 | 股市一览 | 独家解读 |
-| ---- | ---- |
-| gsyl | djjd |
+| -------- | -------- |
+| gsyl     | djjd     |
 
 | 公司新闻 | 公司动态 |
-| ---- | ---- |
-| gsxw | gsdt |
+| -------- | -------- |
+| gsxw     | gsdt     |
 
-| 独家数据 | 看点数据 | 资金流向 | 科创板    | 行情总貌 |
-| ---- | ---- | ---- | ------ | ---- |
-| djsj | kd   | zj   | sj_kcb | hq   |
+| 独家数据 | 看点数据 | 资金流向 | 科创板 | 行情总貌 |
+| -------- | -------- | -------- | ------ | -------- |
+| djsj     | kd       | zj       | sj_kcb | hq       |
 
-| 专栏 | 作者     |
-| -- | ------ |
-| zl | author |
+| 专栏 | 作者   |
+| ---- | ------ |
+| zl   | author |
 
-| 行业   | 汽车   |
+| 行业 | 汽车 |
 | ---- | ---- |
 | cjhy | cjqc |
 
 | 投教课堂 | 政策知识 | 投教动态 | 专题活动 |
-| ---- | ---- | ---- | ---- |
-| tjkt | zczs | tjdt | zthd |
+| -------- | -------- | -------- | -------- |
+| tjkt     | zczs     | tjdt     | zthd     |
 
 </Route>
 
@@ -684,22 +684,22 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="nczitzk" example="/zhitongcaijing" path="/zhitongcaijing/:id?/:category?" :paramsDesc="['栏目 id，可在对应栏目页 URL 中找到，默认为 recommend，即推荐', '分类 id，可在对应栏目子分类页 URL 中找到，默认为全部']">
 
-| id           | 栏目  |
-| ------------ | --- |
-| recommend    | 推荐  |
-| hkstock      | 港股  |
-| meigu        | 美股  |
-| agu          | 沪深  |
-| ct           | 创投  |
-| esg          | ESG |
-| aqs          | 券商  |
-| ajj          | 基金  |
-| focus        | 要闻  |
-| announcement | 公告  |
-| research     | 研究  |
-| shares       | 新股  |
-| bazaar       | 市场  |
-| company      | 公司  |
+| id           | 栏目 |
+| ------------ | ---- |
+| recommend    | 推荐 |
+| hkstock      | 港股 |
+| meigu        | 美股 |
+| agu          | 沪深 |
+| ct           | 创投 |
+| esg          | ESG  |
+| aqs          | 券商 |
+| ajj          | 基金 |
+| focus        | 要闻 |
+| announcement | 公告 |
+| research     | 研究 |
+| shares       | 新股 |
+| bazaar       | 市场 |
+| company      | 公司 |
 
 </Route>
 
@@ -728,7 +728,7 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 <Route author="nczitzk" example="/cs/news/zzkx" path="/cs/news/:caty" :paramsDesc="['资讯类型']">
 
 | 中证快讯 | 行业资讯 |
-| ---- | ---- |
-| zzkx | hyzx |
+| -------- | -------- |
+| zzkx     | hyzx     |
 
 </Route>

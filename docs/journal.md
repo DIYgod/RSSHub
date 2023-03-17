@@ -10,7 +10,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/aom/journal/amr" path="/aom/journal/:id" :paramsDesc="['期刊 id，见下表']" supportScihub="1">
 
-| Id        | 名称                                         |
+| Id        | 名称                                       |
 | --------- | ------------------------------------------ |
 | annals    | Academy of Management Annals               |
 | amd       | Academy of Management Discoveries          |
@@ -121,10 +121,10 @@ pageClass: routes
 
 <Route author="y9c" example="/cell/cell/current" path="/journals/cell/cell/:category" supportScihub="1"/>
 
-| `:category` |     类型说明    | 路由                                                         |
-| :---------: | :---------: | ---------------------------------------------------------- |
+| `:category` |       类型说明      | 路由                                                       |
+| :---------: | :-----------------: | ---------------------------------------------------------- |
 |   current   | 本期刊物 (默认选项) | [/cell/cell/current](https://rsshub.app/cell/cell/current) |
-|   inpress   |     在线发表    | [/cell/cell/inpress](https://rsshub.app/cell/cell/inpress) |
+|   inpress   |       在线发表      | [/cell/cell/inpress](https://rsshub.app/cell/cell/inpress) |
 
 </Route>
 
@@ -142,7 +142,7 @@ pageClass: routes
 
 <Route author="laampui" example="/deloitte/industries/consumer" path="/deloitte/industries/:category?" :paramsDesc="['默认为 energy-resources-industrials']">
 
-| 消费行业     | 能源、资源及工业行业                   | 金融服务行业             | 政府及公共服务                    | 生命科学与医疗行业                | 科技、传媒及电信行业                          |
+| 消费行业 | 能源、资源及工业行业         | 金融服务行业       | 政府及公共服务             | 生命科学与医疗行业       | 科技、传媒及电信行业                |
 | -------- | ---------------------------- | ------------------ | -------------------------- | ------------------------ | ----------------------------------- |
 | consumer | energy-resources-industrials | financial-services | government-public-services | life-sciences-healthcare | technology-media-telecommunications |
 
@@ -180,7 +180,7 @@ pageClass: routes
 
 <Route author="queensferryme" example="/ieee/author/37283006000/newest/10" path="/ieee/author/:aid/:sortType/:count?" :paramsDesc="['作者 ID，可以在 URL 中找到，例如 [https://ieeexplore.ieee.org/author/37283006000](https://ieeexplore.ieee.org/author/37283006000)', '排序方式，详细见下', '数量限制，默认为 10 篇']">
 
-| 排序方式        | 最新       | 最旧       | 最多论文引用            | 最多专利引用             | 最流行            | 标题升序            | 标题降序             |
+| 排序方式    | 最新     | 最旧     | 最多论文引用      | 最多专利引用       | 最流行         | 标题升序        | 标题降序         |
 | ----------- | -------- | -------- | ----------------- | ------------------ | -------------- | --------------- | ---------------- |
 | `:sortType` | `newest` | `oldest` | `paper-citations` | `patent-citations` | `most-popular` | `pub-title-asc` | `pub-title-desc` |
 
@@ -232,7 +232,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 <Route author="y9c TonyRL" example="/nature/research/ng" path="/nature/research/:journal?" :paramsDesc="['期刊名简写，默认为 `nature`']" supportScihub="1" radar="1" rssbud="1"/>
 
-|   `:journal`  |             期刊名             | 路由                                                                                 |
+|   `:journal`  |            期刊名           | 路由                                                                               |
 | :-----------: | :-------------------------: | ---------------------------------------------------------------------------------- |
 |     nature    |            Nature           | [/nature/research/nature](https://rsshub.app/nature/research/nature)               |
 |      nbt      |     Nature Biotechnology    | [/nature/research/nbt](https://rsshub.app/nature/research/nbt)                     |
@@ -255,7 +255,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 <Route author="y9c TonyRL" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['期刊名简写']" supportScihub="1" radar="1" rssbud="1"/>
 
-|   `:journal`  |             期刊名             | 路由                                                                                                 |
+|   `:journal`  |            期刊名           | 路由                                                                                               |
 | :-----------: | :-------------------------: | -------------------------------------------------------------------------------------------------- |
 |      nbt      |     Nature Biotechnology    | [/nature/news-and-comment/nbt](https://rsshub.app/nature/news-and-comment/nbt)                     |
 |     neuro     |     Nature Neuroscience     | [/nature/news-and-comment/neuro](https://rsshub.app/nature/news-and-comment/neuro)                 |
@@ -350,7 +350,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 <Route author="y9c TonyRL" example="/science/current/science" path="/science/current/:journal" :paramsDesc="['期刊名简写']" supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
 
-|      简写     |               期刊名              | 路由                                                                             |
+|     简写    |             期刊名             | 路由                                                                           |
 | :---------: | :----------------------------: | ------------------------------------------------------------------------------ |
 |   science   |             Science            | [/science/current/science](https://rsshub.app/science/current/science)         |
 |    sciadv   |        Science Advances        | [/science/current/sciadv](https://rsshub.app/science/current/sciadv)           |
@@ -456,8 +456,8 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 <Route author="nczitzk" example="/mvm" path="/mvm/:category?" :paramsDesc="['分类，见下表，默认为本期要目']">
 
 | 本期要目 | 网络首发 | 学术活动 | 通知公告 |
-| ---- | ---- | ---- | ---- |
-| bqym | wlsf | xshd | tzgg |
+| -------- | -------- | -------- | -------- |
+| bqym     | wlsf     | xshd     | tzgg     |
 
 </Route>
 
