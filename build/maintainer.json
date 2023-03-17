@@ -4421,6 +4421,10 @@
     "/tencent/cloud/column/:id?/:tag?": [
         "nczitzk"
     ],
+    "/tencent/news/author/:mid": [
+        "LogicJake",
+        "miles170"
+    ],
     "/tencent/news/coronavirus/data/:province?/:city?": [
         "CaoMeiYouRen"
     ],
@@ -6047,7 +6051,6 @@
     "/nciae/tzgg": [],
     "/nciae/xsxx": [],
     "/cfan/news": [],
-    "/tencent/news/author/:mid": [],
     "/nfmovies/:id?": [],
     "/andyt/:view?": [],
     "/pintu360/:type?": [],
