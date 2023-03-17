@@ -52,8 +52,8 @@ pageClass: routes
 <Route author="nczitzk" example="/amazon/ku/this" path="/amazon/ku/:type?" :paramsDesc="['书单类型，见下表']">
 
 | 本月书单 | 好评返场 | 次月预告 |
-| ---- | ---- | ---- |
-| this | back | next |
+| -------- | -------- | -------- |
+| this     | back     | next     |
 
 </Route>
 
@@ -83,14 +83,14 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 <Route author="nitezs" example="/mobilism/forums/books/romance" path="/mobilism/forums/books/:type/:fulltext?" :paramsDesc="['分类','是否获取全文，如需获取全文参数传入 `y`']">
 
-| 分类名      | 参数         |
-| -------- | ---------- |
-| 浪漫       | romance    |
+| 分类名           | 参数       |
+| ---------------- | ---------- |
+| 浪漫             | romance    |
 | 科幻、幻想、恐怖 | scifi      |
-| 普通小说、经典  | classics   |
-| 杂志、报纸    | magazines  |
-| 有声读物     | audioBooks |
-| 漫画       | comics     |
+| 普通小说、经典   | classics   |
+| 杂志、报纸       | magazines  |
+| 有声读物         | audioBooks |
+| 漫画             | comics     |
 
 </Route>
 
@@ -110,8 +110,8 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 <Route author="nczitzk" example="/sobooks" path="/sobooks/:category?" :paramsDesc="['分类, 见下表']">
 
-| 分类   | 分类名              |
-| ---- | ---------------- |
+| 分类     | 分类名           |
+| -------- | ---------------- |
 | 小说文学 | xiaoshuowenxue   |
 | 历史传记 | lishizhuanji     |
 | 人文社科 | renwensheke      |
@@ -129,13 +129,13 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 热门标签
 
-| 小说 | 文学 | 历史 | 日本 | 科普 | 管理 | 推理 | 社会 | 经济  |
-| -- | -- | -- | -- | -- | -- | -- | -- | --- |
-| 传记 | 美国 | 悬疑 | 哲学 | 心理 | 商业 | 金融 | 思维 | 经典  |
-| 随笔 | 投资 | 文化 | 励志 | 科幻 | 成长 | 中国 | 英国 | 政治  |
+| 小说 | 文学 | 历史 | 日本 | 科普 | 管理 | 推理 | 社会 | 经济   |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ |
+| 传记 | 美国 | 悬疑 | 哲学 | 心理 | 商业 | 金融 | 思维 | 经典   |
+| 随笔 | 投资 | 文化 | 励志 | 科幻 | 成长 | 中国 | 英国 | 政治   |
 | 漫画 | 纪实 | 艺术 | 科学 | 生活 | 职场 | 散文 | 法国 | 互联网 |
-| 营销 | 奇幻 | 二战 | 股票 | 女性 | 德国 | 学习 | 战争 | 创业  |
-| 绘本 | 名著 | 爱情 | 军事 | 理财 | 教育 | 世界 | 人物 | 沟通  |
+| 营销 | 奇幻 | 二战 | 股票 | 女性 | 德国 | 学习 | 战争 | 创业   |
+| 绘本 | 名著 | 爱情 | 军事 | 理财 | 教育 | 世界 | 人物 | 沟通   |
 
 </Route>
 
@@ -170,8 +170,8 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 <Route author="HenryQW" example="/aisixiang/ranking/1/7" path="/aisixiang/ranking/:type?/:range?" :paramsDesc="['排行榜类型', '排行榜范围, 仅适用于点击排行榜, 可选日(1)，周(7)，月(30)']">
 
 | 文章点击排行 | 最近更新文章 | 文章推荐排行 |
-| ------ | ------ | ------ |
-| 1      | 10     | 11     |
+| ------------ | ------------ | ------------ |
+| 1            | 10           | 11           |
 
 </Route>
 
@@ -179,7 +179,7 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 <Route author="hoilc" example="/aisixiang/thinktank/WuQine/lunw" path="/aisixiang/thinktank/:name/:type?" :paramsDesc="['专栏 ID，一般为作者拼音，可在URL中找到', '栏目类型，参考下表，默认为`lunw`']">
 
-| 论文   | 时评   | 随笔    | 演讲   | 访谈    | 著作     | 读书    | 史论     | 译作    | 诗歌    | 书信     | 科学    |
+| 论文 | 时评 | 随笔  | 演讲 | 访谈  | 著作   | 读书  | 史论   | 译作  | 诗歌  | 书信   | 科学  |
 | ---- | ---- | ----- | ---- | ----- | ------ | ----- | ------ | ----- | ----- | ------ | ----- |
 | lunw | ship | shuib | yanj | fangt | zhuanz | dushu | shilun | yizuo | shige | shuxin | kexue |
 
@@ -199,23 +199,23 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 :::
 
-| 网址                         | 名称    |
-| -------------------------- | ----- |
-| <https://www.xbiquwx.la>   | 笔尖中文  |
-| <http://www.biqu5200.net>  | 笔趣阁   |
-| <https://www.xbiquge.so>   | 笔趣阁   |
+| 网址                       | 名称       |
+| -------------------------- | ---------- |
+| <https://www.xbiquwx.la>   | 笔尖中文   |
+| <http://www.biqu5200.net>  | 笔趣阁     |
+| <https://www.xbiquge.so>   | 笔趣阁     |
 | <https://www.biqugeu.net>  | 顶点小说网 |
-| <http://www.b520.cc>       | 笔趣阁   |
-| <https://www.ahfgb.com>    | 笔趣鸽   |
-| <https://www.ibiquge.la>   | 香书小说  |
-| <https://www.biquge.tv>    | 笔趣阁   |
-| <https://www.bswtan.com>   | 笔书网   |
-| <https://www.biquge.co>    | 笔趣阁   |
-| <https://www.bqzhh.com>    | 笔趣阁   |
-| <http://www.biqugse.com>   | 笔趣阁   |
-| <https://www.ibiquge.info> | 爱笔楼   |
-| <https://www.ishuquge.com> | 书趣阁   |
-| <https://www.mayiwxw.com>  | 蚂蚁文学  |
+| <http://www.b520.cc>       | 笔趣阁     |
+| <https://www.ahfgb.com>    | 笔趣鸽     |
+| <https://www.ibiquge.la>   | 香书小说   |
+| <https://www.biquge.tv>    | 笔趣阁     |
+| <https://www.bswtan.com>   | 笔书网     |
+| <https://www.biquge.co>    | 笔趣阁     |
+| <https://www.bqzhh.com>    | 笔趣阁     |
+| <http://www.biqugse.com>   | 笔趣阁     |
+| <https://www.ibiquge.info> | 爱笔楼     |
+| <https://www.ishuquge.com> | 书趣阁     |
+| <https://www.mayiwxw.com>  | 蚂蚁文学   |
 
 ### 小说
 
@@ -309,8 +309,8 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 <Route author="KeNorizon" example="/owspace/read/0" path="/owspace/read/:type?" :paramsDesc="['栏目分类，不填则默认为首页']">
 
 | 首页 | 文字 | 影像 | 声音 | 单向历 | 谈论 |
-| -- | -- | -- | -- | --- | -- |
-| 0  | 1  | 2  | 3  | 4   | 6  |
+| ---- | ---- | ---- | ---- | ------ | ---- |
+| 0    | 1    | 2    | 3    | 4      | 6    |
 
 </Route>
 
@@ -368,7 +368,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 <Route author="nczitzk" example="/cool18/bbs4/type/都市" path="/cool18/bbs4/type/:keyword?" :paramsDesc="['分类，见下表，默认为首页']">
 
 | 都市 | 校园 | 乡野 | 古风 | 异国 | 玄幻 | 红杏 | 伦理 | 浪漫 | 暴虐 | 摄心 | 其他 |
-| -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- | -- |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 
 </Route>
 
@@ -486,9 +486,9 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 :::
 
-|    今日更新    |   完结全本   |   新书一览   | 动画化作品 |   热门轻小说  |    轻小说列表    |
-| :--------: | :------: | :------: | :---: | :------: | :---------: |
-| lastupdate | fullflag | postdate | anime | allvisit | articlelist |
+|  今日更新  | 完结全本 | 新书一览 | 动画化作品 | 热门轻小说 |  轻小说列表 |
+| :--------: | :------: | :------: | :--------: | :--------: | :---------: |
+| lastupdate | fullflag | postdate |    anime   |  allvisit  | articlelist |
 
 </Route>
 
@@ -500,7 +500,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 具体栏目编号，去网站上看标签
 
-| 网址                                               | 对应路由                                |
+| 网址                                             | 对应路由                            |
 | ------------------------------------------------ | ----------------------------------- |
 | <http://science.bio1000.com/ecology-environment> | /biobio/science/ecology-environment |
 | <http://www.bio1000.com/gnjz>                    | /biobio/gnjz                        |
@@ -513,7 +513,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 具体栏目编号，去网站上看标签
 
-| 网址                              | 对应路由               |
+| 网址                            | 对应路由           |
 | ------------------------------- | ------------------ |
 | <http://news.bioon.com/biology> | /shengwugu/biology |
 
@@ -523,9 +523,9 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="OdinZhang" example="/bookfere/skills" path="/bookfere/:category" :paramsDesc="['分类名']">
 
-| 每周一书   | 使用技巧   | 图书推荐  | 新闻速递 | 精选短文  |
-| ------ | ------ | ----- | ---- | ----- |
-| weekly | skills | books | news | essay |
+| 每周一书 | 使用技巧 | 图书推荐 | 新闻速递 | 精选短文 |
+| -------- | -------- | -------- | -------- | -------- |
+| weekly   | skills   | books    | news     | essay    |
 
 </Route>
 
