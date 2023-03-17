@@ -4680,6 +4680,38 @@
     "/udn/news/breakingnews/:id": [
         "miles170"
     ],
+    "/uestc/gr": [
+        "huyyi",
+        "mobyw"
+    ],
+    "/uestc/cqe/:type?": [
+        "truobel",
+        "mobyw"
+    ],
+    "/uestc/jwc/:type?": [
+        "achjqz",
+        "mobyw"
+    ],
+    "/uestc/news/:type?": [
+        "achjqz",
+        "mobyw"
+    ],
+    "/uestc/auto": [
+        "talengu",
+        "mobyw"
+    ],
+    "/uestc/scse": [
+        "talengu",
+        "mobyw"
+    ],
+    "/uestc/sice": [
+        "huyyi",
+        "mobyw"
+    ],
+    "/uestc/sise/:type?": [
+        "Yadomin",
+        "mobyw"
+    ],
     "/uibe/hr/:category?/:type?": [
         "nczitzk"
     ],
@@ -5618,14 +5650,6 @@
     "/sctu/xgxy/:id": [],
     "/sctu/jwc/:type?": [],
     "/sctu/jwc/:type/:id": [],
-    "/uestc/jwc/:type?": [],
-    "/uestc/is/:type?": [],
-    "/uestc/news/:type?": [],
-    "/uestc/auto/:type?": [],
-    "/uestc/cs/:type?": [],
-    "/uestc/cqe/:type?": [],
-    "/uestc/gr": [],
-    "/uestc/sice": [],
     "/nwafu/news": [],
     "/nwafu/jiaowu": [],
     "/nwafu/gs": [],
