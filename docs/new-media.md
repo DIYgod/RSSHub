@@ -3758,7 +3758,7 @@ column 为 third 时可选的 category:
 
 ### 更新
 
-<Route author="LogicJake" example="/tencent/news/author/5933889" path="/tencent/news/author/:mid" :paramsDesc="['企鹅号 ID']"/>
+<Route author="LogicJake" example="/tencent/news/author/5933889" path="/tencent/news/author/:mid" :paramsDesc="['企鹅号 ID']" radar="1"/>
 
 ## 腾讯研究院
 

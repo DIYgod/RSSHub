@@ -853,19 +853,33 @@ pageClass: routes
 
 ## 电子科技大学
 
+### 研究生院
+
+<Route author="huyyi mobyw" example="/uestc/gr" path="/uestc/gr" />
+
+### 文化素质教育中心
+
+<Route author="truobel mobyw" example="/uestc/cqe/tzgg" path="/uestc/cqe/:type?" :paramsDesc="['默认为 `tzgg`']" puppeteer="1">
+
+| 活动预告 | 通知公告 |
+| ---- | ---- |
+| hdyg | tzgg |
+
+</Route>
+
 ### 教务处
 
-<Route author="achjqz" example="/uestc/jwc/student" path="/uestc/jwc/:type?" :paramsDesc="['默认为 `important`']">
+<Route author="achjqz mobyw" example="/uestc/jwc/student" path="/uestc/jwc/:type?" :paramsDesc="['默认为 `important`']">
 
-| 重要公告      | 学生事务公告  | 教师事务公告  |
-| --------- | ------- | ------- |
-| important | student | teacher |
+| 重要公告      | 学生事务公告  | 教师事务公告  | 教学新闻  | 办公室    |
+| --------- | ------- | ------- | ----- | ------ |
+| important | student | teacher | teach | office |
 
 </Route>
 
 ### 新闻中心
 
-<Route author="achjqz" example="/uestc/news/culture" path="/uestc/news/:type?" :paramsDesc="['默认为 `announcement`']">
+<Route author="achjqz mobyw" example="/uestc/news/culture" path="/uestc/news/:type?" :paramsDesc="['默认为 `announcement`']">
 
 | 学术      | 文化      | 公告           | 校内通知         |
 | ------- | ------- | ------------ | ------------ |
@@ -873,67 +887,27 @@ pageClass: routes
 
 </Route>
 
-### 计算机科学与工程学院
-
-<Route author="talengu" example="/uestc/cs/ztlj*xskb" path="/uestc/cs/:type?" :paramsDesc="['默认为 `ztlj*xskb`']">
-
-| 学院新闻      | 学生科      | 教务科      | 研管科      | 学术看板      |
-| --------- | -------- | -------- | -------- | --------- |
-| xwzx*xyxw | tzgg*xsk | tzgg*jwk | tzgg*ygk | ztlj*xskb |
-
-注 1: xwzx\*xyxw 对应 <http://www.scse.uestc.edu.cn/xwzx/xyxw.htm> ;
-tzgg\*xsk 对应 <http://www.scse.uestc.edu.cn/tzgg/xsk.htm>
-
-可自定义设置
-
-注 2; 用 + 号来叠加 学生科 + 教务科 `/uestc/cs/ztlj*xskb+tzgg*jwk`
-
-</Route>
-
 ### 自动化工程学院
 
-<Route author="talengu" example="/uestc/auto/tzgg1" path="/uestc/news/:type?" :paramsDesc="['默认为 `tzgg1`']">
+<Route author="talengu mobyw" example="/uestc/auto" path="/uestc/auto" puppeteer="1" />
 
-| 通知公告  | 学术看板  | 焦点新闻 | 综合新闻  |
-| ----- | ----- | ---- | ----- |
-| tzgg1 | xskb1 | jdxw | zhxw1 |
+### 计算机科学与工程学院
 
-注 1: tzgg1 对应 <http://www.auto.uestc.edu.cn/index/tzgg1.htm> ;
-xskb1 对应 <http://www.auto.uestc.edu.cn/index/xskb1.htm>
-
-可自定义设置
-
-注 2: 用 + 号来叠加，通知公告 + 学术看板 `/uestc/auto/tzgg1+xskb1`
-
-</Route>
-
-### 文化素质教育中心
-
-<Route author="truobel" example="/uestc/cqe/hdyg" path="/uestc/cqe/:type?" :paramsDesc="['默认为 `hdyg`']">
-
-| 活动预告 | 通知 | 课程通知 | 立人班选拔 |
-| ---- | -- | ---- | ----- |
-| hdyg | tz | kctz | lrxb  |
-
-</Route>
-
-### 研究生院
-
-<Route author="huyyi" example="/uestc/gr" path="/uestc/gr" />
+<Route author="talengu mobyw" example="/uestc/scse" path="/uestc/scse" puppeteer="1" />
 
 ### 信息与通信工程学院
 
-<Route author="huyyi" example="/uestc/sice" path="/uestc/sice" puppeteer="1"/>
+<Route author="huyyi mobyw" example="/uestc/sice" path="/uestc/sice" puppeteer="1" />
 
 ### 信息与软件工程学院
 
-<Route author="Yadomin" example="/uestc/is/" path="/uestc/is/:type?" :paramsDesc="['默认为 `latest`']" />
+<Route author="Yadomin" example="/uestc/sise/1`" path="/uestc/sise/:type?" :paramsDesc="['默认为 `1`']" puppeteer="1">
 
-| 最新     | 院办 | 组织 | 学生科 | 教务科 | 研管科 | 实验中心 | 企业技术服务中心 | 新工科中心 | 实习实训办公室 | 招聘 | 实习实训 |
-| ------ | -- | -- | --- | --- | --- | ---- | -------- | ----- | ------- | -- | ---- |
-| latest | yb | zx | xsk | jwk | ygk | syzx | qyjsfwzx | xgkzx | sxsxbgs | zp | sxsx |
+| 最新 | 院办 | 学生科 | 教务科 | 研管科 | 组织 | 人事 | 实践教育中心 | Int'I |
+| -- | -- | --- | --- | --- | -- | -- | ------ | ----- |
+| 1  | 2  | 3   | 4   | 5   | 6  | 7  | 8      | 9     |
 
-注：可以使用 + 号来叠加，如 学生科 + 教务科 `/uestc/is/xsk+jwc`
+</Route>
 
 ## 东北大学
 
