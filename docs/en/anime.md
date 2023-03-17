@@ -280,4 +280,4 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 ### News
 
-<Route author="Mingxia1" example="/idolypride/news" path="/idolypride/news" radar="1" rssbud="1"/>
+<RouteEn author="Mingxia1" example="/idolypride/news" path="/idolypride/news" radar="1" rssbud="1"/>
