@@ -2230,6 +2230,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 莆田学院
+
+### 莆田学院新闻网
+
+<Route author="StarsBySea" example="/ptu/pykx/1" path="/ptu/:type/:pageId?" radar="1" :paramsDesc="['发布部门，默认为 `gztz`', '分类，默认为 `all`']">
+
+type 列表：
+
+| 莆院要闻 | 莆院快讯 | 媒体莆院 |
+| ------- | -------- | ------ |
+| pyyw | pykx | mtpy |
+
 ## 齐鲁工业大学
 
 ### 通知公告
