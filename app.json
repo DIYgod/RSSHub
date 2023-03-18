@@ -14,28 +14,8 @@
             "value": "80",
             "required": false
         },
-        "PIXIV_REFRESHTOKEN": {
-            "required": false
-        },
-        "DISQUS_API_KEY": {
-            "required": false
-        },
-        "SPOTIFY_CLIENT_ID": {
-            "required": false
-        },
-        "SPOTIFY_CLIENT_SECRET": {
-            "required": false
-        },
-        "SPOTIFY_REFRESHTOKEN": {
-            "required": false
-        },
-        "TWITTER_CONSUMER_KEY": {
-            "required": false
-        },
-        "TWITTER_CONSUMER_SECRET": {
-            "required": false
-        },
-        "YOUTUBE_KEY": {
+        "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD": {
+            "value": "1",
             "required": false
         }
     }
