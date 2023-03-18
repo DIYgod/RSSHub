@@ -49,9 +49,9 @@ IATA 国际航空运输协会机场代码，参见[维基百科 国际航空运�
 
 <Route author="sinchang" example="/imuseum/shanghai/all" path="/imuseum/:city/:type?" :paramsDesc="['如 shanghai, beijing', '不填则默认为 `all`']">
 
-| 全部  | 最新     | 热门  | 即将结束     | 即将开始   | 已结束      |
-| --- | ------ | --- | -------- | ------ | -------- |
-| all | latest | hot | end_soon | coming | outdated |
+| 全部 | 最新   | 热门 | 即将结束 | 即将开始 | 已结束   |
+| ---- | ------ | ---- | -------- | -------- | -------- |
+| all  | latest | hot  | end_soon | coming   | outdated |
 
 </Route>
 
@@ -66,23 +66,23 @@ IATA 国际航空运输协会机场代码，参见[维基百科 国际航空运�
 <Route author="nicolaszf" example="/flyert/creditcard/zhongxin" path="/flyert/creditcard/:bank" :paramsDesc="['信用卡板块各银行的拼音简称']">
 
 | 信用卡模块 | bank          |
-| ----- | ------------- |
+| ---------- | ------------- |
 | 国内信用卡 | creditcard    |
-| 浦发银行  | pufa          |
-| 招商银行  | zhaoshang     |
-| 中信银行  | zhongxin      |
-| 交通银行  | jiaotong      |
-| 中国银行  | zhonghang     |
-| 工商银行  | gongshang     |
-| 广发银行  | guangfa       |
-| 农业银行  | nongye        |
-| 建设银行  | jianshe       |
-| 汇丰银行  | huifeng       |
-| 民生银行  | mingsheng     |
-| 兴业银行  | xingye        |
-| 花旗银行  | huaqi         |
-| 无卡支付  | wuka          |
-| 投资理财  | 137           |
+| 浦发银行   | pufa          |
+| 招商银行   | zhaoshang     |
+| 中信银行   | zhongxin      |
+| 交通银行   | jiaotong      |
+| 中国银行   | zhonghang     |
+| 工商银行   | gongshang     |
+| 广发银行   | guangfa       |
+| 农业银行   | nongye        |
+| 建设银行   | jianshe       |
+| 汇丰银行   | huifeng       |
+| 民生银行   | mingsheng     |
+| 兴业银行   | xingye        |
+| 花旗银行   | huaqi         |
+| 无卡支付   | wuka          |
+| 投资理财   | 137           |
 | 网站权益汇 | 145           |
 | 境外信用卡 | intcreditcard |
 
@@ -158,9 +158,9 @@ path="/metmusem/exhibitions/:state?"
 
 <Route author="HenryQW" example="/namoc/announcement" path="/namoc/:type" :paramsDesc="['新闻类型， 可选如下']">
 
-| 通知公告         | 新闻   | 媒体联报  | 展览预告       | 焦点专题     |
-| ------------ | ---- | ----- | ---------- | -------- |
-| announcement | news | media | exhibition | specials |
+| 通知公告     | 新闻 | 媒体联报 | 展览预告   | 焦点专题 |
+| ------------ | ---- | -------- | ---------- | -------- |
+| announcement | news | media    | exhibition | specials |
 
 </Route>
 
@@ -168,8 +168,8 @@ path="/metmusem/exhibitions/:state?"
 
 <Route author="laampui" example="/nippon/Politics" path="/nippon/:category?" :paramsDesc="['默认政治，可选如下']">
 
-| 政治       | 经济      | 社会      | 展览预告    | 焦点专题               | 深度报道     | 话题           | 日本信息库      | 日本一蹩          | 人物访谈   | 编辑部通告         |
-| -------- | ------- | ------- | ------- | ------------------ | -------- | ------------ | ---------- | ------------- | ------ | ------------- |
-| Politics | Economy | Society | Culture | Science,Technology | In-depth | japan-topics | japan-data | japan-glances | People | Announcements |
+| 政治     | 经济    | 社会    | 展览预告 | 焦点专题           | 深度报道 | 话题         | 日本信息库 | 日本一蹩      | 人物访谈 | 编辑部通告    |
+| -------- | ------- | ------- | -------- | ------------------ | -------- | ------------ | ---------- | ------------- | -------- | ------------- |
+| Politics | Economy | Society | Culture  | Science,Technology | In-depth | japan-topics | japan-data | japan-glances | People   | Announcements |
 
 </Route>

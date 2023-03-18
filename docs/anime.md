@@ -81,17 +81,17 @@ pageClass: routes
 
 <Route author="TonyRL" example="/acfun/article/110" path="/acfun/article/:categoryId/:sortType?/:timeRange?" :paramsDesc="['分区 ID，见下表', '排序，见下表，默认为 `createTime`', '时间范围，见下表，仅在排序是 `hotScore` 有效，默认为 `all`']" radar="1" rssbud="1">
 
-| 二次元画师 | 综合  | 生活情感 | 游戏  | 动漫文化 | 漫画文学 |
-| ----- | --- | ---- | --- | ---- | ---- |
-| 184   | 110 | 73   | 164 | 74   | 75   |
+| 二次元画师 | 综合 | 生活情感 | 游戏 | 动漫文化 | 漫画文学 |
+| ---------- | ---- | -------- | ---- | -------- | -------- |
+| 184        | 110  | 73       | 164  | 74       | 75       |
 
-| 最新发表       | 最新动态            | 最热文章     |
+| 最新发表   | 最新动态        | 最热文章 |
 | ---------- | --------------- | -------- |
 | createTime | lastCommentTime | hotScore |
 
-| 时间不限 | 24 小时  | 三天       | 一周      | 一个月      |
-| ---- | ------ | -------- | ------- | -------- |
-| all  | oneDay | threeDay | oneWeek | oneMonth |
+| 时间不限 | 24 小时 | 三天     | 一周    | 一个月   |
+| -------- | ------- | -------- | ------- | -------- |
+| all      | oneDay  | threeDay | oneWeek | oneMonth |
 
 </Route>
 
@@ -132,8 +132,8 @@ pageClass: routes
 <Route author="LogicJake" example="/animen/news/zx" path="/animen/news/:type" :paramsDesc="['板块类型']">
 
 | 最新 | 焦点 | 动画 | 漫画 | 游戏 | 小说 | 真人版 | 活动 | 音乐 | 访谈 | 其他 | 新闻稿 | 懒人包 | 公告 |
-| -- | -- | -- | -- | -- | -- | --- | -- | -- | -- | -- | --- | --- | -- |
-| zx | jd | dh | mh | yx | xs | zrb | hd | yy | ft | qt | xwg | lrb | gg |
+| ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
+| zx   | jd   | dh   | mh   | yx   | xs   | zrb    | hd   | yy   | ft   | qt   | xwg    | lrb    | gg   |
 
 </Route>
 
@@ -207,9 +207,9 @@ pageClass: routes
 
 <Route author="cssxsh" example="/dlsite/new/home" path="/dlsite/new/:type" :paramsDesc="['类型，如下表']">
 
-| 同人   | 漫画    | 软件   | 同人 (R18) | 漫画 (R18) | 美少女游戏 | 乙女    | BL |
-| ---- | ----- | ---- | -------- | -------- | ----- | ----- | -- |
-| home | comic | soft | maniax   | books    | pro   | girls | bl |
+| 同人 | 漫画  | 软件 | 同人 (R18) | 漫画 (R18) | 美少女游戏 | 乙女  | BL |
+| ---- | ----- | ---- | ---------- | ---------- | ---------- | ----- | -- |
+| home | comic | soft | maniax     | books      | pro        | girls | bl |
 
 </Route>
 
@@ -243,9 +243,9 @@ pageClass: routes
 
 分类
 
-| 全部  | 手办    | 模型    |
-| --- | ----- | ----- |
-| all | hobby | model |
+| 全部 | 手办  | 模型  |
+| ---- | ----- | ----- |
+| all  | hobby | model |
 
 </Route>
 
@@ -253,9 +253,9 @@ pageClass: routes
 
 <Route author="howel52 DIYgod" path="/hpoi/:category/:words" example="/hpoi/charactar/1246512" :paramsDesc="['分类, 见下表', '角色/作品 ID']">
 
-| 角色手办      | 作品手办  |
-| --------- | ----- |
-| charactar | works |
+| 角色手办  | 作品手办 |
+| --------- | -------- |
+| charactar | works    |
 
 </Route>
 
@@ -263,9 +263,9 @@ pageClass: routes
 
 <Route author="luyuhuang DIYgod" path="/hpoi/user/:user_id/:caty" example="/hpoi/user/116297/buy" :paramsDesc="['用户ID', '类别, 见下表']">
 
-| 想买   | 预定       | 已入  | 关注   | 有过     |
-| ---- | -------- | --- | ---- | ------ |
-| want | preorder | buy | care | resell |
+| 想买 | 预定     | 已入 | 关注 | 有过   |
+| ---- | -------- | ---- | ---- | ------ |
+| want | preorder | buy  | care | resell |
 
 </Route>
 
@@ -275,9 +275,9 @@ pageClass: routes
 
 <Route author="Fatpandac" example="/iwara/users/kelpie/video" path="/iwara/users/:username/:type?" :paramsDesc="['用户昵称', 'type 默认为 video']" radar="1" rssbud="1">
 
-| type |   视频  |   图片  |
+| type |  视频 |  图片 |
 | :--: | :---: | :---: |
-|  参数  | video | image |
+| 参数 | video | image |
 
 </Route>
 
@@ -324,12 +324,12 @@ Sources
 <Route author="axojhf" example="/lovelive-anime/topics/otonokizaka" path="/lovelive-anime/topics/:abbr/:category?/:option?" :paramsDesc="['Love Live系列子企划在官网的路径，详见下表', '官网列出的Topics分类，`category` 为 `detail` 时抓取全文，其他分类详见下表', '`option` 为 `detail` 时抓取全文']" radar="1">
 
 | 子企划名（非全称） | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | 幻日のヨハネ | ラブライブ！スクールアイドルミュージカル |
-| --------- | ----------- | -------------------- | ------------------------------------------ | --------------------- | ------ | -------------------- |
-| `abbr`参数  | otonokizaka | uranohoshi           | nijigasaki                                 | yuigaoka              | yohane | musical              |
+| ------------------ | ----------- | -------------------- | ------------------------------------------ | --------------------- | ------------ | ---------------------------------------- |
+| `abbr`参数         | otonokizaka | uranohoshi           | nijigasaki                                 | yuigaoka              | yohane       | musical                                  |
 
-| 分类名          | 全てのニュース      | 音楽商品  | アニメ映像商品     | キャスト映像商品   | 劇場      | アニメ放送 / 配信 | キャスト配信 / ラジオ | ライブ / イベント | ブック   | グッズ   | ゲーム  | メディア  | ご当地情報 | その他   | キャンペーン   |
-| ------------ | ------------ | ----- | ----------- | ---------- | ------- | ---------- | ------------ | ---------- | ----- | ----- | ---- | ----- | ----- | ----- | -------- |
-| `category`参数 | <u>*无参数*</u> | music | anime_movie | cast_movie | theater | onair      | radio        | event      | books | goods | game | media | local | other | campaign |
+| 分类名         | 全てのニュース  | 音楽商品 | アニメ映像商品 | キャスト映像商品 | 劇場    | アニメ放送 / 配信 | キャスト配信 / ラジオ | ライブ / イベント | ブック | グッズ | ゲーム | メディア | ご当地情報 | その他 | キャンペーン |
+| -------------- | --------------- | -------- | -------------- | ---------------- | ------- | ----------------- | --------------------- | ----------------- | ------ | ------ | ------ | -------- | ---------- | ------ | ------------ |
+| `category`参数 | <u>*无参数*</u> | music    | anime_movie    | cast_movie       | theater | onair             | radio                 | event             | books  | goods  | game   | media    | local      | other  | campaign     |
 
 </Route>
 
@@ -342,13 +342,13 @@ Sources
 该 RSS 路由没有经过严格的测试，提供的信息不能保证准确性！
 :::
 
-| 子企划名（非全称） | 全シリーズ              | Lovelive!  | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | ラブライブ！スクールアイドルミュージカル |
-| --------- | ------------------ | ---------- | -------------------- | ------------------------------------------ | --------------------- | -------------------- |
-| `serie`参数 | <u>*无参数*</u>或`all` | `lovelive` | `sunshine`           | `nijigasaki`                               | `superstar`           | `musical`            |
+| 子企划名（非全称） | 全シリーズ             | Lovelive!  | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | ラブライブ！スクールアイドルミュージカル |
+| ------------------ | ---------------------- | ---------- | -------------------- | ------------------------------------------ | --------------------- | ---------------------------------------- |
+| `serie`参数        | <u>*无参数*</u>或`all` | `lovelive` | `sunshine`           | `nijigasaki`                               | `superstar`           | `musical`                                |
 
-| 分类名          | 全て                 | ライブ    | イベント    | 生配信       |
-| ------------ | ------------------ | ------ | ------- | --------- |
-| `category`参数 | <u>*无参数*</u>或`all` | `live` | `event` | `haishin` |
+| 分类名         | 全て                   | ライブ | イベント | 生配信    |
+| -------------- | ---------------------- | ------ | -------- | --------- |
+| `category`参数 | <u>*无参数*</u>或`all` | `live` | `event`  | `haishin` |
 
 </Route>
 
@@ -381,8 +381,8 @@ Sources
 <Route author="TonyRL" example="/qoo-app/apps/comment/7675" path="/qoo-app/apps/:lang?/comment/:id" :paramsDesc="['語言，見下表，留空為中文', '遊戲 ID，可在 URL 找到']"  radar="1">
 
 | 中文 | English | 한국어 | Español | 日本語 | ไทย | Tiếng Việt |
-| -- | ------- | --- | ------- | --- | --- | ---------- |
-|    | en      | ko  | es      | ja  | th  | vi         |
+| ---- | ------- | ------ | ------- | ------ | --- | ---------- |
+|      | en      | ko     | es      | ja     | th  | vi         |
 
 </Route>
 
@@ -403,8 +403,8 @@ Sources
 <Route author="TonyRL" example="/qoo-app/news" path="/qoo-app/news/:lang?" :paramsDesc="['語言，見下表，留空為中文']"  radar="1">
 
 | 中文 | English |
-| -- | ------- |
-|    | en      |
+| ---- | ------- |
+|      | en      |
 
 </Route>
 
@@ -446,9 +446,9 @@ Sources
 
 <Route author="cxfksword" example="/vcb-s/category/works" path="/vcb-s/category/:cate" :paramsDesc="['分类']" radar="1">
 
-| 作品项目  | 科普系列 | 计划与日志   |
-| ----- | ---- | ------- |
-| works | kb   | planlog |
+| 作品项目 | 科普系列 | 计划与日志 |
+| -------- | -------- | ---------- |
+| works    | kb       | planlog    |
 
 </Route>
 
@@ -458,7 +458,7 @@ Sources
 
 <Route author="CoderTonyChan" example="/vol/finish" path="/vol/:mode?" :paramsDesc="['模式']">
 
-| 连载     | 完结     |
+| 连载   | 完结   |
 | ------ | ------ |
 | serial | finish |
 
@@ -494,9 +494,9 @@ Sources
 
 <Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest/1" path="/oreno3d/search/:keyword/:sort/:pagelimit?" :paramsDesc="['关键词', '排序方法，见下表', '最大爬取页面数量，默认为 1']" radar="1" rssbud="1">
 
-| 高評価       | 急上昇 | 新着     | 人気         |
-| --------- | --- | ------ | ---------- |
-| favorites | hot | latest | popularity |
+| 高評価    | 急上昇 | 新着   | 人気       |
+| --------- | ------ | ------ | ---------- |
+| favorites | hot    | latest | popularity |
 
 </Route>
 
@@ -555,18 +555,18 @@ Sources
 语言
 
 | 中文 | 日文 | 韩文 |
-| -- | -- | -- |
-| cn | ja | ko |
+| ---- | ---- | ---- |
+| cn   | ja   | ko   |
 
 类型
 
-| 最新情报  | 连载     | 特辑         | 小说     | 漫画     | 新闻   |
-| ----- | ------ | ---------- | ------ | ------ | ---- |
-| index | series | interviews | novels | comics | news |
+| 最新情报 | 连载   | 特辑       | 小说   | 漫画   | 新闻 |
+| -------- | ------ | ---------- | ------ | ------ | ---- |
+| index    | series | interviews | novels | comics | news |
 
-| 音乐点评         | 游戏测评        | 同人作品感想      | 关于本站          |
-| ------------ | ----------- | ----------- | ------------- |
-| music_review | game_review | book_review | where_are_you |
+| 音乐点评     | 游戏测评    | 同人作品感想 | 关于本站      |
+| ------------ | ----------- | ------------ | ------------- |
+| music_review | game_review | book_review  | where_are_you |
 
 **注：** 最新情报包括后面所有类型的文章，内容较多，谨慎使用。
 
@@ -584,7 +584,7 @@ Sources
 
 <Route author="vzz64" path="/dmzj/news/:category?" example="/dmzj/news/donghuaqingbao" :paramsDesc="['类别']" radar="1">
 
-| 漫画情报          | 轻小说情报               | 动漫周边           | 声优情报            | 音乐资讯        | 游戏资讯       | 美图欣赏          | 漫展情报           | 大杂烩     |
+| 漫画情报      | 轻小说情报          | 动漫周边       | 声优情报        | 音乐资讯    | 游戏资讯   | 美图欣赏      | 漫展情报       | 大杂烩  |
 | ------------- | ------------------- | -------------- | --------------- | ----------- | ---------- | ------------- | -------------- | ------- |
 | manhuaqingbao | qingxiaoshuoqingbao | manhuazhoubian | shengyouqingbao | yinyuezixun | youxizixun | meituxinshang | manzhanqingbao | dazahui |
 
@@ -626,32 +626,32 @@ Sources
 
 分类
 
-| 全部  | 其他漫畫    | 同人     | 韓漫     | 美漫     | 短篇    | 單本     |
-| --- | ------- | ------ | ------ | ------ | ----- | ------ |
-| all | another | doujin | hanman | meiman | short | single |
+| 全部 | 其他漫畫 | 同人   | 韓漫   | 美漫   | 短篇  | 單本   |
+| ---- | -------- | ------ | ------ | ------ | ----- | ------ |
+| all  | another  | doujin | hanman | meiman | short | single |
 
 时间范围
 
 | 全部 | 今天 | 这周 | 本月 |
-| -- | -- | -- | -- |
-| a  | t  | w  | m  |
+| ---- | ---- | ---- | ---- |
+| a    | t    | w    | m    |
 
 排列顺序
 
-| 最新 | 最多点阅 | 最多图片 | 最爱 |
-| -- | ---- | ---- | -- |
-| mr | mv   | mp   | tf |
+| 最新 | 最多点阅的 | 最多图片 | 最高评分 | 最多评论 | 最多爱心 |
+| ---- | ---------- | -------- | -------- | -------- | -------- |
+| mr   | mv         | mp       | tr       | md       | tf       |
 
 关键字（供参考）
 
 | YAOI | 女性向 | NTR | 非 H | 3D | 獵奇 |
-| ---- | --- | --- | --- | -- | -- |
+| ---- | ------ | --- | ---- | -- | ---- |
 
 </Route>
 
 ### 搜索
 
-<Route author="nczitzk" example="/18comic/search/photos/all/NTR" path="/18comic/search/:option?/:category?:keyword?/:time?/:order?" :paramsDesc="['选项，可选 `video` 和 `photos`，默认为 `photos`', '分类，同上表，默认为 `all` 即全部', '关键字，同上表，默认为空', '时间范围，同上表，默认为 `a` 即全部', '排列顺序，同上表，默认为 `mr` 即最新']">
+<Route author="nczitzk" example="/18comic/search/photos/all/NTR" path="/18comic/search/:option?/:category?/:keyword?/:time?/:order?" :paramsDesc="['选项，可选 `video` 和 `photos`，默认为 `photos`', '分类，同上表，默认为 `all` 即全部', '关键字，同上表，默认为空', '时间范围，同上表，默认为 `a` 即全部', '排列顺序，同上表，默认为 `mr` 即最新']">
 
 ::: tip 提示
 
@@ -679,9 +679,9 @@ Sources
 
 分类
 
-| 全部 | 紳夜食堂   | 遊戲文庫    | JG GAMES | 模型山下   |
-| -- | ------ | ------- | -------- | ------ |
-|    | dinner | raiders | jg       | figure |
+| 全部 | 紳夜食堂 | 遊戲文庫 | JG GAMES | 模型山下 |
+| ---- | -------- | -------- | -------- | -------- |
+|      | dinner   | raiders  | jg       | figure   |
 
 </Route>
 
@@ -750,6 +750,12 @@ Sources
 
 </Route>
 
+## 偶像荣耀
+
+### 新闻推送
+
+<Route author="Mingxia1" example="/idolypride/news" path="/idolypride/news" radar="1" rssbud="1"/>
+
 ## 三界异次元
 
 ### 三界异次元
@@ -782,9 +788,9 @@ Sources
 
 <Route author="nczitzk" example="/qq/ac/rank" path="/qq/ac/rank/:type?/:time?" :paramsDesc="['分类，见下表，默认为月票榜', '时间，`cur` 为当周、`prev` 为上周']" radar="1" rssbud="1">
 
-| 月票榜 | 飙升榜  | 新作榜 | 畅销榜 | TOP100 | 男生榜  | 女生榜    |
-| --- | ---- | --- | --- | ------ | ---- | ------ |
-| mt  | rise | new | pay | top    | male | female |
+| 月票榜 | 飙升榜 | 新作榜 | 畅销榜 | TOP100 | 男生榜 | 女生榜 |
+| ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+| mt     | rise   | new    | pay    | top    | male   | female |
 
 ::: tip 提示
 
@@ -810,9 +816,9 @@ Sources
 
 <Route author="SunBK201" example="/ymgal/article" path="/ymgal/article/:type?" :paramsDesc="['文章类型']" radar="1">
 
-| 全部文章 | 资讯   | 专栏     |
-| ---- | ---- | ------ |
-| all  | news | column |
+| 全部文章 | 资讯 | 专栏   |
+| -------- | ---- | ------ |
+| all      | news | column |
 
 </Route>
 
