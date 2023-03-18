@@ -626,9 +626,9 @@ Sources
 
 分类
 
-| 全部 | 其他漫畫 | 同人   | 韓漫   | 美漫   | 短篇  | 單本   |
-| ---- | -------- | ------ | ------ | ------ | ----- | ------ |
-| all  | another  | doujin | hanman | meiman | short | single |
+| 全部  | 其他漫畫    | 同人     | 韓漫     | 美漫     | 短篇    | 单本     |
+| --- | ------- | ------ | ------ | ------ | ----- | ------ |
+| all | another | doujin | hanman | meiman | short | single |
 
 时间范围
 
