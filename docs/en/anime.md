@@ -46,6 +46,12 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 <RouteEn author="EsuRt" example="/hanime/video" path="/hanime/video"/>
 
+## IDOLY PRIDE
+
+### News
+
+<RouteEn author="Mingxia1" example="/idolypride/news" path="/idolypride/news" radar="1" rssbud="1"/>
+
 ## iwara
 
 ### User
