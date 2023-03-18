@@ -16,6 +16,8 @@ sidebarDepth: 0
 [![docker publish](https://img.shields.io/github/actions/workflow/status/DIYgod/RSSHub/docker-release.yml?branch=master\&label=docker%20publish\&logo=docker\&style=flat-square)](https://hub.docker.com/r/diygod/rsshub)
 [![test](https://img.shields.io/github/actions/workflow/status/DIYgod/RSSHub/test.yml?branch=master\&label=test\&logo=github\&style=flat-square)](https://github.com/DIYgod/RSSHub/actions/workflows/test.yml?query=event%3Apush+branch%3Amaster)
 [![Test coverage](https://img.shields.io/codecov/c/github/DIYgod/RSSHub.svg?style=flat-square\&logo=codecov)](https://app.codecov.io/gh/DIYgod/RSSHub/branch/master)
+[![CodeFactor](https://www.codefactor.io/repository/github/diygod/rsshub/badge)](https://www.codefactor.io/repository/github/diygod/rsshub)
+[![DeepScan grade](https://deepscan.io/api/teams/6244/projects/8135/branches/92448/badge/grade.svg)](https://deepscan.io/dashboard#view=project\&tid=6244\&pid=8135\&bid=92448)
 
 RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源。RSSHub 借助于开源社区的力量快速发展中，目前已适配数百家网站的上千项内容
 
