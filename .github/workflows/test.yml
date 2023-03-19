@@ -31,7 +31,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 14, 16, 18 ]
+        node-version: [ 16, 18 ]
     name: Jest on Node ${{ matrix.node-version }}
     steps:
       - name: Collect Workflow Telemetry
@@ -73,7 +73,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 14, 16, 18 ]
+        node-version: [ 16, 18 ]
         chromium:
           - name: bundled Chromium
             dependency: ''
@@ -117,7 +117,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 14, 16, 18 ]
+        node-version: [ 16, 18 ]
     name: Build docs on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v3
@@ -141,7 +141,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 14, 16, 18 ]
+        node-version: [ 16, 18 ]
     name: Build radar and maintainer on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v3
