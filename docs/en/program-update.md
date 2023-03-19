@@ -240,9 +240,9 @@ Language
 
 ## fish shell
 
-### release notes
+### Release Notes
 
-<Route author="x2cf" example="/fish" path="/fish" radar="1" />
+<RouteEn author="x2cf" example="/fishshell" path="/fishshell" radar="1" />
 
 ## FossHub
 

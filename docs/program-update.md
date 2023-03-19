@@ -272,9 +272,9 @@ pageClass: routes
 
 ## fish shell
 
-### release notes
+### Release Notes
 
-<Route author="x2cf" example="/fish" path="/fish" radar="1" />
+<Route author="x2cf" example="/fishshell" path="/fishshell" radar="1" />
 
 ## FossHub
 
