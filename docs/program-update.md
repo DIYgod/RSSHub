@@ -270,6 +270,12 @@ pageClass: routes
 
 <Route author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['附加组件 id, 可在应用页 URL 中找到']" />
 
+## fish shell
+
+### release notes
+
+<Route author="x2cf" example="/fish" path="/fish" radar="1" />
+
 ## FossHub
 
 ### Software Update

@@ -238,6 +238,12 @@ Language
 
 <RouteEn author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['Add-ons id, can be found in add-ons url']"/>
 
+## fish shell
+
+### release notes
+
+<Route author="x2cf" example="/fish" path="/fish" radar="1" />
+
 ## FossHub
 
 ### Software Update
