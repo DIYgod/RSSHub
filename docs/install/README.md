@@ -286,6 +286,12 @@ in pkgs.stdenv.mkDerivation {
 }
 ```
 
+## 部署到 Railway
+
+包含自动更新。
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/QxW\_\_f?referralCode=9wT3hc)
+
 ## 部署到 Heroku
 
 ### 注意

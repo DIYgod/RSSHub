@@ -1235,18 +1235,13 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 ### 用户想看
 
-<Route author="exherb" example="/douban/people/exherb/wish/torrentProvider=1337x" path="/douban/people/:userid/wish/:routeParams?" :paramsDesc="['用户id','额外参数；见下']">
+<Route author="exherb" example="/douban/people/exherb/wish" path="/douban/people/:userid/wish/:routeParams?" :paramsDesc="['用户id','额外参数；见下']">
 
 对于豆瓣用户想看的内容，在 `routeParams` 参数中以 query string 格式设置如下选项可以控制输出的样式
 
-| 键               | 含义                                                      | 接受的值                        | 默认值 |
-| ---------------- | --------------------------------------------------------- | ------------------------------- | ------ |
-| pagesCount       | 查询页面数                                                |                                 | 1      |
-| torrentProvider  | 启用 torrent 搜索                                         | all/1337x/Eztv/Rarbg/Yts/HDHome |        |
-| passkey          | HDHome 密钥，当 torrentProvider 为 `all` 或 `HDHome` 必填 |                                 |        |
-| torrentQuery     | 额外关键词，如 `1080p`， 逗号分割                         |                                 |        |
-| torrentMinSeeds  | 最小 seeds 数                                             |                                 | 1      |
-| torrentMinRating | 种子和电影标题最小匹配度                                  |                                 | 0.5    |
+| 键         | 含义       | 接受的值 | 默认值 |
+| ---------- | ---------- | -------- | ------ |
+| pagesCount | 查询页面数 |          | 1      |
 
 </Route>
 
