@@ -123,7 +123,7 @@
     "koa-basic-auth": "4.0.0",
     "koa-favicon": "2.1.0",
     "koa-mount": "4.0.0",
-    "lru-cache": "7.18.3",
+    "lru-cache": "8.0.4",
     "lz-string": "1.5.0",
     "mailparser": "3.6.4",
     "markdown-it": "13.0.1",
@@ -183,6 +183,6 @@
     "ext": "art,js,mjs,json"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   }
 }

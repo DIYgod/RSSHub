@@ -2,7 +2,7 @@
 // https://github.com/devcontainers/images/blob/v0.2.24/src/javascript-node/.devcontainer/devcontainer.json
 {
     "name": "Node.js",
-    "image": "mcr.microsoft.com/devcontainers/javascript-node:16-bullseye",
+    "image": "mcr.microsoft.com/devcontainers/javascript-node:18-bullseye",
 
     // Configure tool-specific properties.
     "customizations": {
