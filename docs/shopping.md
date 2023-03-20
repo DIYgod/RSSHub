@@ -11,8 +11,8 @@ pageClass: routes
 <Route author="TonyRL" example="/0818tuan" path="/0818tuan/:listId?" :paramsDesc="['活动分类，见下表，默认为 `1`']" radar="1">
 
 | 最新线报 | 实测活动 | 优惠券 |
-| ---- | ---- | --- |
-| 1    | 2    | 3   |
+| -------- | -------- | ------ |
+| 1        | 2        | 3      |
 
 </Route>
 
@@ -36,9 +36,9 @@ pageClass: routes
 
 时间
 
-| 最近一天 | 最近一周 | 所有时间    |
-| ---- | ---- | ------- |
-| 24h  | week | alltime |
+| 最近一天 | 最近一周 | 所有时间 |
+| -------- | -------- | -------- |
+| 24h      | week     | alltime  |
 
 ::: tip 提示
 
@@ -57,12 +57,12 @@ pageClass: routes
 国家
 
 | 美国 | 加拿大 | 英国 |
-| -- | --- | -- |
-| us | ca  | gb |
+| ---- | ------ | ---- |
+| us   | ca     | gb   |
 
 性别
 
-| 男    | 女      |
+| 男   | 女     |
 | ---- | ------ |
 | mens | womens |
 
@@ -204,12 +204,12 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 分类
 
 | Figures 一覽 | 物品 | 媒体 |
-| ---------- | -- | -- |
-| 0          | 1  | 2  |
+| ------------ | ---- | ---- |
+| 0            | 1    | 2    |
 
 语言
 
-| id | 语言         |
+| id | 语言       |
 | -- | ---------- |
 |    | en         |
 | de | Deutsch    |
@@ -217,14 +217,14 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 | fi | Suomeksi   |
 | fr | Français   |
 | it | Italiano   |
-| ja | 日本語        |
+| ja | 日本語     |
 | nl | Nederlands |
 | no | Norsk      |
 | pl | Polski     |
 | pt | Português  |
 | ru | Русский    |
 | sv | Svenska    |
-| zh | 中文         |
+| zh | 中文       |
 
 </Route>
 
@@ -232,9 +232,9 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="nczitzk" example="/myfigurecollection/figure" path="/myfigurecollection/:category?/:language?" :paramsDesc="['分类，默认为 Figures一覽', '语言，见上表，默认为空，即 `en`']">
 
-| Figures 一覽 | 物品    | 媒体    |
-| ---------- | ----- | ----- |
-| figures    | goods | media |
+| Figures 一覽 | 物品  | 媒体  |
+| ------------ | ----- | ----- |
+| figures      | goods | media |
 
 </Route>
 
@@ -243,8 +243,8 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 <Route author="nczitzk" example="/myfigurecollection/potd" path="/myfigurecollection/:category?/:language?" :paramsDesc="['分类，默认为每日圖片', '语言，见上表，默认为空，即 `en`']">
 
 | 每日圖片 | 每週圖片 | 每月圖片 |
-| ---- | ---- | ---- |
-| potd | potw | potm |
+| -------- | -------- | -------- |
+| potd     | potw     | potm     |
 
 </Route>
 
@@ -356,21 +356,21 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 类型
 
-| 全部  | 科技 | 美食 | 家电 | 设计 | 娱乐 | 文化 | 公益 | 其他 |
-| --- | -- | -- | -- | -- | -- | -- | -- | -- |
-| all | kj | ms | jd | sj | yl | wh | gy | qt |
+| 全部 | 科技 | 美食 | 家电 | 设计 | 娱乐 | 文化 | 公益 | 其他 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| all  | kj   | ms   | jd   | sj   | yl   | wh   | gy   | qt   |
 
 状态
 
-| 全部  | 预热中 | 众筹中 | 众筹成功 | 项目成功 |
-| --- | --- | --- | ---- | ---- |
-| all | yrz | zcz | zccg | xmcg |
+| 全部 | 预热中 | 众筹中 | 众筹成功 | 项目成功 |
+| ---- | ------ | ------ | -------- | -------- |
+| all  | yrz    | zcz    | zccg     | xmcg     |
 
 排序方式
 
 | 综合推荐 | 最新上线 | 金额最多 | 支持最多 | 即将结束 |
-| ---- | ---- | ---- | ---- | ---- |
-| zhtj | zxsx | jezg | zczd | jjjs |
+| -------- | -------- | -------- | -------- | -------- |
+| zhtj     | zxsx     | jezg     | zczd     | jjjs     |
 
 </Route>
 
@@ -397,9 +397,9 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 <Route author="huyyi" example="/mcdonalds/sales+event" path="/mcdonalds/:category" :paramsDesc="['分类名（可用+连接多个分类）']">
 
-| 全部分类      | 社会责任           | 人员品牌  | 产品故事    | 优惠    | 品牌文化    | 活动速报  |
-| --------- | -------------- | ----- | ------- | ----- | ------- | ----- |
-| news_list | responsibility | brand | product | sales | culture | event |
+| 全部分类  | 社会责任       | 人员品牌 | 产品故事 | 优惠  | 品牌文化 | 活动速报 |
+| --------- | -------------- | -------- | -------- | ----- | -------- | -------- |
+| news_list | responsibility | brand    | product  | sales | culture  | event    |
 
 </Route>
 
@@ -437,47 +437,47 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 -   榜单类型
 
-| 好价品类榜  | 好价电商榜     | 海淘 TOP 榜 | 好文排行榜  | 好物排行榜 |
-| ------ | --------- | -------- | ------ | ----- |
-| pinlei | dianshang | haitao   | haowen | haowu |
+| 好价品类榜 | 好价电商榜 | 海淘 TOP 榜 | 好文排行榜 | 好物排行榜 |
+| ---------- | ---------- | ----------- | ---------- | ---------- |
+| pinlei     | dianshang  | haitao      | haowen     | haowu      |
 
 -   榜单 ID
 
 好价品类榜
 
 | 全部 | 食品生鲜 | 电脑数码 | 运动户外 | 家用电器 | 白菜 | 服饰鞋包 | 日用百货 |
-| -- | ---- | ---- | ---- | ---- | -- | ---- | ---- |
-| 11 | 12   | 13   | 14   | 15   | 17 | 74   | 75   |
+| ---- | -------- | -------- | -------- | -------- | ---- | -------- | -------- |
+| 11   | 12       | 13       | 14       | 15       | 17   | 74       | 75       |
 
 好价电商榜
 
 | 券活动 | 京东 | 天猫 | 亚马逊中国 | 国美在线 | 苏宁易购 | 网易 | 西集网 | 美国亚马逊 | 日本亚马逊 | ebay |
-| --- | -- | -- | ----- | ---- | ---- | -- | --- | ----- | ----- | ---- |
-| 24  | 23 | 25 | 26    | 27   | 28   | 29 | 30  | 31    | 32    | 33   |
+| ------ | ---- | ---- | ---------- | -------- | -------- | ---- | ------ | ---------- | ---------- | ---- |
+| 24     | 23   | 25   | 26         | 27       | 28       | 29   | 30     | 31         | 32         | 33   |
 
 海淘 TOP 榜
 
 | 全部 | 海外直邮 | 美国榜 | 欧洲榜 | 澳新榜 | 亚洲榜 | 晒物榜 |
-| -- | ---- | --- | --- | --- | --- | --- |
-| 39 | 34   | 35  | 36  | 37  | 38  | hsw |
+| ---- | -------- | ------ | ------ | ------ | ------ | ------ |
+| 39   | 34       | 35     | 36     | 37     | 38     | hsw    |
 
 好文排行榜
 
 | 原创 | 资讯 |
-| -- | -- |
-| yc | zx |
+| ---- | ---- |
+| yc   | zx   |
 
 好物排行榜
 
-| 新晋榜   | 消费众测 | 新锐品牌 | 好物榜单 |
-| ----- | ---- | ---- | ---- |
-| hwall | zc   | nb   | hw   |
+| 新晋榜 | 消费众测 | 新锐品牌 | 好物榜单 |
+| ------ | -------- | -------- | -------- |
+| hwall  | zc       | nb       | hw       |
 
 -   时间跨度
 
 | 3 小时 | 12 小时 | 24 小时 |
-| ---- | ----- | ----- |
-| 3    | 12    | 24    |
+| ------ | ------- | ------- |
+| 3      | 12      | 24      |
 
 </Route>
 
@@ -490,8 +490,8 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 <Route author="LogicJake" example="/smzdm/haowen/fenlei/shenghuodianqi" path="/smzdm/haowen/fenlei/:name/:sort?" :paramsDesc="['分类名，可在 URL 中查看','排序方式，默认为最新']">
 
 | 最新 | 周排行 | 月排行 |
-| -- | --- | --- |
-| 0  | 7   | 30  |
+| ---- | ------ | ------ |
+| 0    | 7      | 30     |
 
 </Route>
 
@@ -515,9 +515,9 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 <Route author="xyqfer Fatpandac" example="/taobao/zhongchou/all" path="/taobao/zhongchou/:type?" :paramsDesc="['类型, 默认为 `all` 全部']">
 
-| 全部  | 科技   | 食品          | 动漫  | 设计     | 公益   | 娱乐   | 影音    | 书籍   | 游戏   | 其他    |
-| --- | ---- | ----------- | --- | ------ | ---- | ---- | ----- | ---- | ---- | ----- |
-| all | tech | agriculture | acg | design | love | tele | music | book | game | other |
+| 全部 | 科技 | 食品        | 动漫 | 设计   | 公益 | 娱乐 | 影音  | 书籍 | 游戏 | 其他  |
+| ---- | ---- | ----------- | ---- | ------ | ---- | ---- | ----- | ---- | ---- | ----- |
+| all  | tech | agriculture | acg  | design | love | tele | music | book | game | other |
 
 </Route>
 
@@ -589,8 +589,8 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 <Route author="nczitzk" example="/getitfree" path="/getitfree/:category?" :paramsDesc="['分类，见下表，默认为所有类别']">
 
-| 所有类别 | Android | iOS | Mac | PC | UWP | 公告           | 永久免费 | 限时免费     | 限时折扣     |
-| ---- | ------- | --- | --- | -- | --- | ------------ | ---- | -------- | -------- |
-|      | android | ios | mac | pc | uwp | notification | free | giveaway | discount |
+| 所有类别 | Android | iOS | Mac | PC | UWP | 公告         | 永久免费 | 限时免费 | 限时折扣 |
+| -------- | ------- | --- | --- | -- | --- | ------------ | -------- | -------- | -------- |
+|          | android | ios | mac | pc | uwp | notification | free     | giveaway | discount |
 
 </Route>

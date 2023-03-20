@@ -45,7 +45,7 @@ jobs:
           wait-for-processing: true
 
   titleLint:
-    if: ${{ github.event_name == 'pull_request_target' }}
+    if: ${{ github.event_name == 'pull_request_target' && github.repository == 'DIYgod/RSSHub' }}
     name: Validate PR title
     runs-on: ubuntu-latest
     timeout-minutes: 5
