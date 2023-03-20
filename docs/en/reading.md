@@ -20,6 +20,22 @@ Eg:<https://syosetu.org/novel/264928/>
 
 </RouteEn>
 
+## Inoreader
+
+### HTML Clip
+
+<RouteEn author="BeautyyuYanli" example="/inoreader/html_clip/1006346356/News?limit=3" path="/html_clip/:user/:tag" :paramsDesc="[
+'user id, the interger after user/ in the example URL',
+'tag, the string after tag/ in the example URL',
+]">
+
+Use query parameter `limit=n` to limit the number of articles, default to 20
+
+Eg: <https://www.inoreader.com/stream/user/1006346356/tag/News/view/html?n=3>
+
+</RouteEn>
+
+
 ## kakuyomu
 
 ### episode
@@ -39,6 +55,16 @@ Eg:<https://kakuyomu.jp/works/1177354054883783581>
 ### Category
 
 <RouteEn author="nczitzk" example="/literotica/category/anal-sex-stories" path="/literotica/category/:category?" :paramsDesc="['Category, can be found in URL']"/>
+
+## MagazineLib
+
+### Latest Magazine
+
+<RouteEn author="NavePnow" example="/magazinelib/latest-magazine/new+yorker" path="/magazinelib/latest-magazine/:query?" :paramsDesc="['query, search page querystring']"/>
+
+For instance, when doing search at <https://magazinelib.com/> and you get url <https://magazinelib.com/?s=new+yorker>, the query is `new+yorker`
+
+</RouteEn>
 
 ## Mobilism
 

@@ -1,0 +1,52 @@
+{{set photoList = house.photo_list.slice(1)}}
+
+<img src="{{house.photo_list[0]}}" style="margin-bottom: 20px;">
+
+<table>
+    <tr>
+        <td>類型</td>
+        <td>{{house.kind_name}}</td>
+    </tr>
+    <tr>
+        <td>坪數</td>
+        <td>{{house.area}} 坪</td>
+    </tr>
+    <tr>
+        <td>樓層</td>
+        <td>{{house.floor_str}}</td>
+    </tr>
+    <tr>
+        <td>社區</td>
+        <td>{{house.community}}</td>
+    </tr>
+    <tr>
+        <td>地點</td>
+        <td>{{house.location}}</td>
+    </tr>
+    <tr>
+        <td>更新時間</td>
+        <td>{{house.refresh_time}}</td>
+    </tr>
+    <tr>
+        <td>標籤</td>
+        <td>
+            {{each house.rent_tag}}
+                <code>{{$value.name}}</code>
+            {{/each}}
+        </td>
+    </tr>
+</table>
+
+<p>更多資訊請見 <a href="https://rent.591.com.tw/home/{{house.post_id}}">591 租屋</a></p>
+
+<br />
+
+<h3>更多圖片</h3>
+
+<br />
+
+<div id="more-pictures">
+    {{each photoList}}
+        <img src="{{$value}}" style="margin-bottom: 20px;">
+    {{/each}}
+</div>

@@ -4,6 +4,20 @@ pageClass: routes
 
 # Uncategorized
 
+## 591 Rental house
+
+### Rental house
+
+<RouteEn author="Yukaii" example="/591/tw/rent/order=posttime&orderType=desc" path="/591/:country/rent/:query?" :paramsDesc="['Country code. Only tw is supported now', 'Query Parameters']">
+
+::: tip Tip
+
+Copy the URL of the 591 filter housing page and remove the front part "https://rent.591.com.tw/?", you will get the query parameters.
+
+:::
+
+</RouteEn>
+
 ## Apple
 
 ### Exchange and Repair Extension Programs
@@ -200,6 +214,12 @@ For example:
 
 </RouteEn>
 
+## oshwhub
+
+### OpenSource Square
+
+<RouteEn author="tylinux" example="/oshwhub" path="/oshwhub/:sortType?" :paramsDesc="['sortType']" radar="1" rssbud="1"/>
+
 ## Panda
 
 ### Feeds
@@ -272,6 +292,12 @@ Data Source: [trending-in-one](https://github.com/huqi-pr/trending-in-one)
 Board and Build can be found in [here](http://api.ineal.me/tss/status)
 
 </RouteEn>
+
+## Urban Dictionary
+
+### Random words
+
+<RouteEn author="TonyRL" example="/urbandictionary/random" path="/urbandictionary/random" radar="1" rssbud="1"/>
 
 ## wikiHow
 

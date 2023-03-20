@@ -286,6 +286,12 @@ in pkgs.stdenv.mkDerivation {
 }
 ```
 
+## 部署到 Railway
+
+包含自动更新。
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/QxW\_\_f?referralCode=9wT3hc)
+
 ## 部署到 Heroku
 
 ### 注意
@@ -547,7 +553,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 访问码为 访问密钥 + 路由 共同生成的 md5，例如：
 
-| 访问密钥        | 路由                | 生成过程                                     | 访问码                              |
+| 访问密钥    | 路由              | 生成过程                                 | 访问码                           |
 | ----------- | ----------------- | ---------------------------------------- | -------------------------------- |
 | ILoveRSSHub | /qdaily/column/59 | md5('/qdaily/column/59' + 'ILoveRSSHub') | 0f820530128805ffc10351f22b5fd121 |
 
@@ -557,11 +563,11 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 访问密钥 / 码与黑白名单的访问控制关系如下：
 
-|       | 正确访问密钥 / 码 | 错误访问密钥 / 码 | 无访问密钥 / 码 |
-| ----- | ---------- | ---------- | --------- |
-| 在白名单中 | ✅          | ✅          | ✅         |
-| 在黑名单中 | ✅          | ❌          | ❌         |
-| 无黑白名单 | ✅          | ❌          | ❌         |
+|            | 正确访问密钥 / 码 | 错误访问密钥 / 码 | 无访问密钥 / 码 |
+| ---------- | ----------------- | ----------------- | --------------- |
+| 在白名单中 | ✅                | ✅                | ✅              |
+| 在黑名单中 | ✅                | ❌                | ❌              |
+| 无黑白名单 | ✅                | ❌                | ❌              |
 
 ### 日志配置
 
@@ -712,9 +718,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   Instagram:
 
-    -   `IG_USERNAME`: Instagram 用户名。
-    -   `IG_PASSWORD`: Instagram 密码。
-    -   `IG_PROXY`: Instagram 代理 URL。
+    -   `IG_USERNAME`: Instagram 用户名（仅 Private API）
+    -   `IG_PASSWORD`: Instagram 密码（仅 Private API）
+    -   `IG_PROXY`: Instagram 代理 URL（仅 Private API，可选）
+    -   `IG_COOKIE`: Instagram 登录后的 Cookie（仅 Cookie）
 
     注意，暂**不支持**两步验证。
 
@@ -870,10 +877,6 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 -   轻小说文库
 
     -   `WENKU8_COOKIE`: 登陆轻小说文库后的 cookie
-
--   语雀 全部路由：[注册地址](https://www.yuque.com/register)
-
-    -   `YUQUE_TOKEN`: 语雀 Token，[获取地址](https://www.yuque.com/settings/tokens)。语雀接口做了访问频率限制，为保证正常访问建议配置 Token，详见 [语雀开发者文档](https://www.yuque.com/yuque/developer/api#5b3a1535)。
 
 -   邮箱 邮件列表路由：
 

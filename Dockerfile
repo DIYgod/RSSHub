@@ -1,4 +1,4 @@
-FROM node:16-bullseye as dep-builder
+FROM node:18-bullseye as dep-builder
 # Here we use the non-slim image to provide build-time deps (compilers and python), thus no need to install later.
 # This effectively speeds up qemu-based cross-build.
 
@@ -30,7 +30,7 @@ FROM debian:bullseye-slim as dep-version-parser
 # This stage is necessary to limit the cache miss scope.
 # With this stage, any modification to package.json won't break the build cache of the next two stages as long as the
 # version unchanged.
-# node:16-bullseye-slim is based on debian:bullseye-slim so this stage would not cause any additional download.
+# node:18-bullseye-slim is based on debian:bullseye-slim so this stage would not cause any additional download.
 
 WORKDIR /ver
 COPY ./package.json /app/
@@ -42,7 +42,7 @@ RUN \
 
 # ---------------------------------------------------------------------------------------------------------------------
 
-FROM node:16-bullseye-slim as docker-minifier
+FROM node:18-bullseye-slim as docker-minifier
 # The stage is used to further reduce the image size by removing unused files.
 
 WORKDIR /minifier
@@ -74,18 +74,19 @@ RUN \
 
 # ---------------------------------------------------------------------------------------------------------------------
 
-FROM node:16-bullseye-slim as chromium-downloader
+FROM node:18-bullseye-slim as chromium-downloader
 # This stage is necessary to improve build concurrency and minimize the image size.
 # Yeah, downloading Chromium never needs those dependencies below.
 
 WORKDIR /app
+COPY ./.puppeteerrc.js /app/
 COPY --from=dep-version-parser /ver/.puppeteer_version /app/.puppeteer_version
 
 ARG TARGETPLATFORM
 ARG USE_CHINA_NPM_REGISTRY=0
 ARG PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
 # The official recommended way to use Puppeteer on x86(_64) is to use the bundled Chromium from Puppeteer:
-# https://github.com/puppeteer/puppeteer#q-why-doesnt-puppeteer-vxxx-work-with-chromium-vyyy
+# https://pptr.dev/faq#q-why-doesnt-puppeteer-vxxx-work-with-chromium-vyyy
 RUN \
     set -ex ; \
     if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
@@ -98,12 +99,12 @@ RUN \
         yarn add puppeteer@$(cat /app/.puppeteer_version) && \
         yarn cache clean ; \
     else \
-        mkdir -p /root/.cache/puppeteer ; \
+        mkdir -p /app/node_modules/.cache/puppeteer ; \
     fi;
 
 # ---------------------------------------------------------------------------------------------------------------------
 
-FROM node:16-bullseye-slim as app
+FROM node:18-bullseye-slim as app
 
 LABEL org.opencontainers.image.authors="https://github.com/DIYgod/RSSHub"
 
@@ -115,11 +116,11 @@ WORKDIR /app
 # install deps first to avoid cache miss or disturbing buildkit to build concurrently
 ARG TARGETPLATFORM
 ARG PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
-# https://github.com/puppeteer/puppeteer/blob/main/docs/troubleshooting.md#chrome-headless-doesnt-launch-on-unix
+# https://pptr.dev/troubleshooting#chrome-headless-doesnt-launch-on-unix
 # https://github.com/puppeteer/puppeteer/issues/7822
 # https://www.debian.org/releases/bullseye/amd64/release-notes/ch-information.en.html#noteworthy-obsolete-packages
 # The official recommended way to use Puppeteer on arm/arm64 is to install Chromium from the distribution repositories:
-# https://github.com/puppeteer/puppeteer/blob/94cb08c85955c0688d12b6ed10e61a4581a01280/src/node/BrowserFetcher.ts#L116-L119
+# https://github.com/puppeteer/puppeteer/blob/07391bbf5feaf85c191e1aa8aa78138dce84008d/packages/puppeteer-core/src/node/BrowserFetcher.ts#L128-L131
 RUN \
     set -ex && \
     apt-get update && \
@@ -143,14 +144,14 @@ RUN \
     fi; \
     rm -rf /var/lib/apt/lists/*
 
-COPY --from=chromium-downloader /root/.cache/puppeteer /root/.cache/puppeteer
+COPY --from=chromium-downloader /app/node_modules/.cache/puppeteer /app/node_modules/.cache/puppeteer
 
 # if grep matches nothing then it will exit with 1, thus, we cannot `set -e` here
 RUN \
     set -x && \
     if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
         echo 'Verifying Chromium installation...' && \
-        ldd $(find /root/.cache/puppeteer/ -name chrome) | grep "not found" ; \
+        ldd $(find /app/node_modules/.cache/puppeteer/ -name chrome -type f) | grep "not found" ; \
         if [ "$?" = 0 ]; then \
             echo "!!! Chromium has unmet shared libs !!!" && \
             exit 1 ; \
@@ -177,7 +178,7 @@ CMD ["npm", "run", "start"]
 #     apt-file \
 # && \
 # apt-file update && \
-# ldd $(find /app/node_modules/puppeteer/ -name chrome) | grep -Po "\S+(?= => not found)" | \
+# ldd $(find /app/node_modules/.cache/puppeteer/ -name chrome -type f) | grep -Po "\S+(?= => not found)" | \
 # sed 's/\./\\./g' | awk '{print $1"$"}' | apt-file search -xlf - | grep ^lib | \
 # xargs -d '\n' -- \
 #     apt-get install -yq --no-install-recommends \
