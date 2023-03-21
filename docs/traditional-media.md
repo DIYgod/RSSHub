@@ -1083,6 +1083,30 @@ IT・科学 tech_science
 
 </Route>
 
+## 广州日报
+
+### 客户端
+
+<Route author="TimWu007" example="/gzdaily/app/74" path="/gzdaily/app/:column" :paramsDesc="['栏目 ID，点击对应栏目后在地址栏找到']">
+
+::: tip 提示
+
+在北京时间深夜可能无法获取内容。
+
+:::
+
+常用栏目 ID：
+
+| 栏目名 | ID   |
+| ------ | ---- |
+| 首页   | 74   |
+| 时局   | 374  |
+| 广州   | 371  |
+| 大湾区 | 397  |
+| 城区   | 2980 |
+
+</Route>
+
 ## 国际金融报栏目
 
 ### 栏目
