@@ -2542,8 +2542,7 @@ others = 热点新闻 + 滚动新闻
 
 ### 播客
 
-<Route author="eternasuno" example="/gcores/radios/45" path="/gcores/radios/:category?" :paramsDesc="['分类名，默认为全部，可在分类页面的 URL 中找到，如 Gadio News -- 45', '分类名']" radar="1" supportPodcast="1">
-</Route>
+<Route author="eternasuno" example="/gcores/radios/45" path="/gcores/radios/:category?" :paramsDesc="['分类名，默认为全部，可在分类页面的 URL 中找到，如 Gadio News -- 45']" radar="1" supportPodcast="1" />
 
 ## 加美财经
 
