@@ -203,7 +203,7 @@ sidebar: auto
                 // 文章标题
                 title: $(item).find('.item-title a').text().trim(),
                 // 文章链接
-                link: url.resolve(link, $(item).find('.item-title a').attr('href')),
+                link: new URL($(item).find('.item-title a').attr('href'), link).href,
                 // 文章作者
                 author: $(item).find('.item-author').text().trim(),
             }))

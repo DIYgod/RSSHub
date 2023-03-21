@@ -201,7 +201,7 @@ Create a new js script in the corresponding [/lib/v2/](https://github.com/DIYgod
                 // the article title
                 title: $(item).find('.item-title a').text().trim(),
                 // the article link
-                link: url.resolve(link, $(item).find('.item-title a').attr('href')),
+                link: new URL($(item).find('.item-title a').attr('href'), link).href,
                 // the article author
                 author: $(item).find('.item-author').text().trim(),
             }))
