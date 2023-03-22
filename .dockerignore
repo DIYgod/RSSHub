@@ -14,7 +14,7 @@ test
 .codecov.yml
 .dockerignore
 .editorconfig
-.env
+.env*
 .eslint*
 .gitignore
 .gitpod.yml
@@ -40,3 +40,7 @@ vercel.json
 #rsshub auxiliary files
 lib/radar-rules.js
 lib/v2/**/radar.js
+
+#dotenv-vault
+!.env.project
+!.env.vault
