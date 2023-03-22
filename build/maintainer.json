@@ -918,6 +918,9 @@
     "/chinaventure/news/:id?": [
         "yuxinliu-alex"
     ],
+    "/chsi/hotnews": [
+        "yanbot-team"
+    ],
     "/chsi/kydt": [
         "SunBK201"
     ],
