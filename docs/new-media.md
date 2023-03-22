@@ -2540,6 +2540,10 @@ others = 热点新闻 + 滚动新闻
 
 </Route>
 
+### 播客
+
+<Route author="eternasuno" example="/gcores/radios/45" path="/gcores/radios/:category?" :paramsDesc="['分类名，默认为全部，可在分类页面的 URL 中找到，如 Gadio News -- 45']" radar="1" supportPodcast="1" />
+
 ## 加美财经
 
 <Route author="nczitzk" example="/caus" path="/caus/:category?" :paramsDesc="['分类，见下表，默认为全部']">
