@@ -61,12 +61,12 @@ path="/ctfhub/search/:limit?/:form?/:class?/:title?"
 
 | `:class` | 类型                              |
 | :------: | --------------------------------- |
-|    0     | Jeopardy [解题]                   |
-|    1     | Attack with Defense [AwD 攻防]    |
-|    2     | Robo Hacking Game [RHG AI 自动化] |
-|    3     | Real World [RW 真实世界]          |
-|    4     | King of The Hill [KoH 抢占山头]   |
-|    5     | Mix [混合]                        |
+|     0    | Jeopardy [解题]                   |
+|     1    | Attack with Defense [AwD 攻防]    |
+|     2    | Robo Hacking Game [RHG AI 自动化] |
+|     3    | Real World [RW 真实世界]          |
+|     4    | King of The Hill [KoH 抢占山头]   |
+|     5    | Mix [混合]                        |
 
 > class 以 <https://api.ctfhub.com/User_API/Event/getType> 的返回结果为准
 
@@ -128,8 +128,8 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="nczitzk" example="/mind42/tag/online" path="/mind42/tag/:id" :paramsDesc="['标签，见下表']">
 
-| in  | online | cleaning | buy | best | services | for | carpet | service | india | company | and | de  | mapa | control | malware | online-dating-website-reviews | virus | international-online-dating-sites-review | repair |
-| --- | ------ | -------- | --- | ---- | -------- | --- | ------ | ------- | ----- | ------- | --- | --- | ---- | ------- | ------- | ----------------------------- | ----- | ---------------------------------------- | ------ |
+| in | online | cleaning | buy | best | services | for | carpet | service | india | company | and | de | mapa | control | malware | online-dating-website-reviews | virus | international-online-dating-sites-review | repair |
+| -- | ------ | -------- | --- | ---- | -------- | --- | ------ | ------- | ----- | ------- | --- | -- | ---- | ------- | ------- | ----------------------------- | ----- | ---------------------------------------- | ------ |
 
 </Route>
 
@@ -274,9 +274,9 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="zytomorrow" example="/dykszx/news" path="/dykszx/news/:type?" :paramsDesc="['考试类型']">
 
-| 新闻中心 | 公务员考试 | 事业单位 | （职）业资格、职称考试 | 其他  |
+| 新闻中心 | 公务员考试 | 事业单位 | （职）业资格、职称考试 |  其他 |
 | :------: | :--------: | :------: | :--------------------: | :---: |
-|   all    |    gwy     |   sydw   |          zyzc          | other |
+|    all   |     gwy    |   sydw   |          zyzc          | other |
 
 </Route>
 
