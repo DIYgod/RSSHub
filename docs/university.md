@@ -2234,7 +2234,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 新闻网
 
-<Route author="StarsBySea" example="/ptu/pykx/1" path="/ptu/:type?/:pageId?" radar="1" :paramsDesc="['发布部门，默认为 `gztz`', '分类，默认为 `all`']">
+<Route author="StarsBySea" example="/ptu/news/pykx/1" path="/ptu/news/:type?/:pageId?" radar="1" :paramsDesc="['发布部门，默认为 `gztz`', '分类，默认为 `all`']">
 
 type 列表：
 
