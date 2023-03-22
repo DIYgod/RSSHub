@@ -1666,6 +1666,9 @@
         "MoguCloud",
         "StevenRCE0"
     ],
+    "/gcores/radios/:category?": [
+        "eternasuno"
+    ],
     "/gcores/tag/:tag/:category?": [
         "StevenRCE0"
     ],
