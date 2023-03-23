@@ -1109,7 +1109,7 @@ IT・科学 tech_science
 
 ### 新花城（广州市融媒体中心）
 
-<Route author="TimWu007" example="/gzdaily/cmc/shouye" path="/gzdaily/cmc/:channel" :paramsDesc="['频道名']">
+<Route author="TimWu007" example="/gzdaily/cmc/shouye" path="/gzdaily/cmc/:channel?" :paramsDesc="['频道名']">
 
 ::: tip 提示
 
