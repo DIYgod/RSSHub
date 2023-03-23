@@ -1107,6 +1107,18 @@ IT・科学 tech_science
 
 </Route>
 
+### 新花城（广州市融媒体中心）
+
+<Route author="TimWu007" example="/gzdaily/cmc/shouye" path="/gzdaily/cmc/:channel" :paramsDesc="['频道名']">
+
+::: tip 提示
+
+`频道名（channel）` 可在对应频道 url 后的参数中获取，如 `首页` 的栏目 url 为`https://huacheng.gz-cmc.com/channel/shouye/index.html`, `频道名` 即为 `shouye`。
+
+:::
+
+</Route>
+
 ## 国际金融报栏目
 
 ### 栏目
