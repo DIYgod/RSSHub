@@ -143,9 +143,8 @@ module.exports = {
                 sidebar: {
                     '/en/joinus/': [
                         {
-                            title: '🤝 Join Us',
+                            title: '👥 Join Us',
                             path: '/en/joinus/quick-start.html',
-                            collapsable: false,
                         },
                         {
                             title: '📰 New RSS rules',
@@ -153,23 +152,23 @@ module.exports = {
                             collapsable: false,
                             children: [
                                 {
-                                    title: 'Prerequisites',
+                                    title: '🔑 Prerequisites',
                                     path: 'new-rss/prerequisites',
                                 },
                                 {
-                                    title: 'Just before you start',
+                                    title: '💡 Just before you start',
                                     path: 'new-rss/before-start',
                                 },
                                 {
-                                    title: 'Create your own RSSHub route',
+                                    title: '🚀 Create your own RSSHub route',
                                     path: 'new-rss/start-code',
                                 },
                                 {
-                                    title: 'Add documentation',
+                                    title: '📖 Add documentation',
                                     path: 'new-rss/add-docs',
                                 },
                                 {
-                                    title: 'Submit your route',
+                                    title: '📤 Submit your route',
                                     path: 'new-rss/submit-route',
                                 },
                             ],
@@ -177,7 +176,6 @@ module.exports = {
                         {
                             title: '📡 New Radar Rules',
                             path: '/en/joinus/new-radar.html',
-                            collapsable: false,
                         },
                         {
                             title: '💪 Advanced',
@@ -185,11 +183,11 @@ module.exports = {
                             collapsable: false,
                             children: [
                                 {
-                                    title: '🪄 Create a Rich Media RSS Feed',
+                                    title: '🎧 Create a Rich Media RSS Feed',
                                     path: 'advanced-feed',
                                 },
                                 {
-                                    title: '⚖️ Script Standard',
+                                    title: '📜 Script Standard',
                                     path: 'script-standard',
                                 },
                                 {
@@ -197,8 +195,12 @@ module.exports = {
                                     path: 'use-cache',
                                 },
                                 {
-                                    title: '📅 Date Handling',
+                                    title: '🗓️ Date Handling',
                                     path: 'pub-date',
+                                },
+                                {
+                                    title: '🐛 Debugging',
+                                    path: 'debug',
                                 },
                             ],
                         },

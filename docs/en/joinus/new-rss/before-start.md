@@ -61,10 +61,10 @@ Before submitting your Pull Request, make sure to carefully review the [Script S
 
 ## Create a namespace
 
-The first step in creating a new RSS route is to create a namespace. The namespace should be the **same** as the domain name of the main website for which you are creating the RSS feed. For example, if you are creating an RSS feed for <https://github.com/DIYgod/RSSHub/issues>, the domain name is `github`. Therefore, you should create a folder called `github` under `lib/v2` to serve as the namespace for your RSS route.
+The first step in creating a new RSS route is to create a namespace. The namespace should be the **same** as the second level domain name of the main website for which you are creating the RSS feed. For example, if you are creating an RSS feed for <https://github.com/DIYgod/RSSHub/issues>, the second level domain name is `github`. Therefore, you should create a folder called `github` under `lib/v2` to serve as the namespace for your RSS route.
 
 ::: tip Tips
-When creating a namespace, it's important to avoid creating multiple namespaces for variations of the same domain. For example, if you are creating an RSS feed for both `yahoo.co.jp` and `yahoo.com`, you should stick with a single namespace `yahoo`, rather than creating multiple namespaces like `yahoo-jp`, `yahoojp`, `yahoo.jp`, `jp.yahoo`, etc.
+When creating a namespace, it's important to avoid creating multiple namespaces for variations of the same domain. For example, if you are creating an RSS feed for both `yahoo.co.jp` and `yahoo.com`, you should stick with a single namespace `yahoo`, rather than creating multiple namespaces like `yahoo-jp`, `yahoojp`, `yahoo.jp`, `jp.yahoo`, `yahoojpco`, etc.
 :::
 
 ## Understand the Basics

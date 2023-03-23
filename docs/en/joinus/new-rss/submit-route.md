@@ -90,7 +90,7 @@ NOROUTE
 
 ### New RSS Route Checklist
 
-This checklist will help you ensure that your pull request includes all necessary components. Although you don't have to check off all items to get your PR merged, please make sure that your new route follows the [v2 Script Standard](https://docs.rsshub.app/en/joinus/script-standard.html). This is a mandatory requirement for all new routes.
+This checklist will help you ensure that your pull request includes all necessary components. Although you don't have to check off all items to get your PR merged, please make sure that your new route follows the [v2 Script Standard](https://docs.rsshub.app/en/joinus/script-standard.html). This is a **mandatory** requirement for all new routes.
 
 ```md
 - [ ] 新的路由 New Route

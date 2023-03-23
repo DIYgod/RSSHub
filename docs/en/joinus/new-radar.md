@@ -26,7 +26,7 @@ module.exports = {
 
 The object key is the domain name without any subdomains, URL path, or protocol.
 
-![Struction of a URL](https://wsrv.nl/?url=https://www.hostinger.com/tutorials/wp-content/uploads/sites/2/2022/03/hostinger-url-structure.png&w=1024&h=480&fit=cover&a=attention&output=webp)
+![Struction of a URL](https://wsrv.nl/?url=https://enwpgo.files.wordpress.com/2022/10/image-30.png&output=webp)
 
 In this case, the domain name is `github.com`, so the object key is `github.com`.
 

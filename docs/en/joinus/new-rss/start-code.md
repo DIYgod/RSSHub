@@ -579,7 +579,7 @@ Now, we will be using `puppeteer` instead of `got` to retrieve data from the web
 <code-group>
 <code-block title="puppeteer">
 
-```js{9-33,39}
+```js{9-33,39-40}
 const cheerio = require('cheerio');
 const { parseDate } = require('@/utils/parse-date');
 const logger = require('@/utils/logger');
@@ -756,10 +756,9 @@ page.on('request', (request) => {
     request.resourceType() === 'document' ? request.continue() : request.abort();
 });
 // These two statements must be placed before page.goto()
-
 ```
 
-You can find all the possible values of `request.resourceType()` [here](https://chromedevtools.github.io/devtools-protocol/tot/Network/#type-ResourceType). When using these values in your code, make sure to use lowercase letters.
+You can find all the possible values of `request.resourceType()` [here](https://chromedevtools.github.io/devtools-protocol/tot/Network/#type-ResourceType). When using these values in your code, make sure to use **lowercase** letters.
 
 #### Wait Until
 

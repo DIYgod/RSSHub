@@ -36,7 +36,7 @@ Each item in an RSS feed is represented by an object with a set of fields that d
 | **`author`**      | *(Optional)* The author of the item                                      | `undefinded`   | A, J, R |
 | **`category`**    | *(Optional)* The category of the item. You can use a plain string or an array of strings | `undefinded` | A, J, R |
 | **`guid`**        | *(Optional)* The unique identifier of the item                           | If not specified, defaults to **`link || title`** | A, J, R |
-| **`pubDate`**     | *(Recommended)* The publication date of the item, which should be a [Date object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) | `undefinded` | A, J, R |
+| **`pubDate`**     | *(Recommended)* The publication date of the item, which should be a [Date object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) following [the standard](/en/joinus/pub-date.html) | `undefinded` | A, J, R |
 | **`updated`**     | *(Optional)* The date of the last modification of the item, which should be a [Date object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) | `undefinded` | A, J |
 | **`itunes_item_image`** | *(Optional)* The URL of an image associated with the item                           | `undefinded` | R |
 | **`itunes_duration`** | *(Optional)* The length of an audio or video item in seconds (or in the format H:mm:ss), which should be a number or string | `undefinded` | J, R |

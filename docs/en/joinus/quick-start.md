@@ -38,11 +38,11 @@ In this guide, you'll learn how to create a new RSS route from scratch. We'll co
 
 It's recommended that you download and install RSSHub Radar in your browser before you start.
 
-Once you have installed RSSHub Radar, open the browser's RSSHub Radar extension settings, switch to the rules list, scroll down and you will see a text box, copy your new rules into the text box and start debugging.
+Once you have installed RSSHub Radar, open the settings and switch to the "List of rules" tab. Then scroll down to the bottom of the page and you will see a text field. Here, you can replace the old rules with your new rules for debugging.
 
-[Let's start!](/en/joinus/new-radar)
+[Let's start!](/en/joinus/new-radar.html)
 
 <a href="https://chrome.google.com/webstore/detail/rsshub-radar/kefjpfngnndepjbopdmoebkipbgkggaa" target="_blank" rel="noopener noreferrer"><img src="https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/UV4C4ybeBTsZt43U4xis.png" alt="Get RSSHub Radar for Chromium" height="58"></a>
 <a href="https://addons.mozilla.org/firefox/addon/rsshub-radar/" target="_blank" rel="noopener noreferrer"><img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" alt="Get Get RSSHub Radar for Firefox" height="58"></a>
-<a href="https://microsoftedge.microsoft.com/addons/detail/rsshub-radar/gangkeiaobmjcjokiofpkfpcobpbmnln" target="_blank" rel="noopener noreferrer"><img src="https://upload.wikimedia.org/wikipedia/commons/f/f7/Get_it_from_Microsoft_Badge.svg" alt="Get RSSHub Radar for Edge" height="58"></a>
+<a href="https://microsoftedge.microsoft.com/addons/detail/rsshub-radar/gangkeiaobmjcjokiofpkfpcobpbmnln" target="_blank" rel="noopener noreferrer"><img src="https://wsrv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/f/f7/Get_it_from_Microsoft_Badge.svg" alt="Get RSSHub Radar for Edge" height="58"></a>
 <a href="https://apps.apple.com/us/app/rsshub-radar/id1610744717" target="_blank" rel="noopener noreferrer"><img src="https://developer.apple.com/news/images/download-on-the-app-store-badge.png" alt="Get RSSHub Radar for Safari" height="58"></a>

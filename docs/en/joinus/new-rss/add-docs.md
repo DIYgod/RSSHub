@@ -23,7 +23,7 @@ npm run docs:dev
 </code-block>
 </code-group>
 
-The documentation is created using [VuePress v1](https://vuepress.vuejs.org).
+The documentation is written in Markdown and rendered with [VuePress v1](https://v1.vuepress.vuejs.org).
 
 To add documentation to your route, use Vue components. They work like HTML tags. The following are the most commonly used components:
 
@@ -90,40 +90,42 @@ To add documentation to your route, use Vue components. They work like HTML tags
 
 ### Custom containers
 
+If you'd like to provide additional information about a particular route, you can use these custom containers:
+
 ```md
 ::: tip Tips title
-This is a tip
+This is a tip.
 :::
 
 ::: warning Warning title
-This is a warning
+This is a warning.
 :::
 
 ::: danger Danger title
-This is a dangerous warning
+This is a dangerous warning.
 :::
 
 ::: details Details title
-This is a details block
+This is a details block.
 :::
 ```
 
 ---
 
 ::: tip Tips title
-This is a tip
+This is a tip.
 :::
 
 ::: warning Warning title
-This is a warning
+This is a warning.
 :::
 
 ::: danger Danger title
-This is a dangerous warning
+This is a dangerous warning.
 :::
 
 ::: details Details title
-This is a details block
+This is a details block.
 :::
 
 ---
