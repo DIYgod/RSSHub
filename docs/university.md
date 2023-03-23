@@ -2232,6 +2232,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 莆田学院
 
+### 主站
+
+<Route author="StarsBySea" example="/ptu/www/xngg/1" path="/ptu/www/:type?/:pageId?" radar="1" :paramsDesc="['校内公告', '页码数，默认为1，为all时获取所有文章']">
+
+type 列表：
+
+| 校内公告 | 招标信息 | 设备共享 | 外联动态 | 学术活动 |
+| ------- | -------- | ------- | ------- | ------- |
+| xngg | zbxx | sbgx | wldt | xshd |
+
+</Route>
+
 ### 新闻网
 
 <Route author="StarsBySea" example="/ptu/news/pykx/1" path="/ptu/news/:type?/:pageId?" radar="1" :paramsDesc="['新闻栏目，默认为莆院要闻', '页码数，默认为1，为all时获取所有文章']">
@@ -2239,7 +2251,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 type 列表：
 
 | 莆院要闻 | 莆院快讯 | 媒体莆院 |
-| ------- | -------- | ------ |
+| ------- | -------- | ------- |
 | pyyw | pykx | mtpy |
 
 </Route>
