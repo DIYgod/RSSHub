@@ -888,6 +888,9 @@
     "/chaping/newsflash": [
         "Fatpandac"
     ],
+    "/chiculture/topic/:category?": [
+        "nczitzk"
+    ],
     "/china/news/military": [
         "jiaaoMario"
     ],
@@ -6636,7 +6639,6 @@
     "/gab/user/:username": [],
     "/gab/popular/:sort?": [],
     "/phrack": [],
-    "/chiculture/topic/:category?": [],
     "/cqut/news": [],
     "/cqut/libnews": [],
     "/growincity/news/:id?": [],

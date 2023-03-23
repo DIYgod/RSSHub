@@ -3714,6 +3714,18 @@
       }
     ]
   },
+  "chiculture.org.hk": {
+    "_name": "通識・現代中國",
+    ".": [
+      {
+        "title": "議題熱話",
+        "docs": "https://docs.rsshub.app/new-media.html#tong-shi-・-xian-dai-zhong-guo",
+        "source": [
+          "/tc/hot-topics"
+        ]
+      }
+    ]
+  },
   "china.com": {
     "_name": "中华网",
     "military": [
