@@ -1087,7 +1087,7 @@ IT・科学 tech_science
 
 ### 客户端
 
-<Route author="TimWu007" example="/gzdaily/app/74" path="/gzdaily/app/:column" :paramsDesc="['栏目 ID，点击对应栏目后在地址栏找到']">
+<Route author="TimWu007" example="/gzdaily/app/74" path="/gzdaily/app/:column?" :paramsDesc="['栏目 ID，点击对应栏目后在地址栏找到']">
 
 ::: tip 提示
 
