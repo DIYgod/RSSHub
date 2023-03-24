@@ -3812,6 +3812,12 @@ column 为 third 时可选的 category:
 
 <Route author="shuiRong" example="/wainao-reads/all-articles" path="/wainao-reads/all-articles" />
 
+## 湾区日报
+
+### 最新推荐
+
+<Route author="Fatpandac" example="/wanqu/news" path="/wanqu/news" radar="1" />
+
 ## 晚点 LatePost
 
 ### 报道
