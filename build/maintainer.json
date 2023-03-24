@@ -3250,6 +3250,14 @@
     "/ngocn2/:category?": [
         "nczitzk"
     ],
+    "/nhentai/search/:keyword/:mode?": [
+        "MegrezZhu",
+        "hoilc"
+    ],
+    "/nhentai/:key/:keyword/:mode?": [
+        "MegrezZhu",
+        "hoilc"
+    ],
     "/nifd/research/:categoryGuid?": [
         "Fatpandac"
     ],
@@ -5777,8 +5785,6 @@
     "/chouti/top/:hour?": [],
     "/chouti/:subject?": [],
     "/westore/new": [],
-    "/nhentai/search/:keyword/:mode?": [],
-    "/nhentai/:key/:keyword/:mode?": [],
     "/ltaaa/:category?": [],
     "/autotrader/:query": [],
     "/geekpark/breakingnews": [],
