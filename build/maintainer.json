@@ -927,6 +927,9 @@
     "/chsi/kydt": [
         "SunBK201"
     ],
+    "/chsi/kyzx/:type": [
+        "yanbot-team"
+    ],
     "/ciidbnu/:id?": [
         "nczitzk"
     ],
