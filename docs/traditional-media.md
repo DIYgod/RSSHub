@@ -1612,6 +1612,50 @@ category 对应的关键词有
 
 </Route>
 
+## 南方网
+
+### 南方 +（按栏目 ID）
+
+<Route author="TimWu007" example="/southcn/nfapp/column/38" path="/southcn/nfapp/column/:column?" :paramsDesc="['栏目或南方号 ID']">
+
+::: tip 提示
+若此处输入的是栏目 ID（而非南方号 ID），则该接口会返回与输入栏目相关联栏目的文章。例如，输入栏目 ID `38`（广州），则返回的结果还会包含 ID 为 `3547`（市长报道集）的文章。
+:::
+
+1.  `pc.nfapp.southcn.com` 下的文章页面，可通过 url 查看，例：<http://pc.nfapp.southcn.com/13707/7491109.html> 的栏目 ID 为 `13707`。
+2.  `static.nfapp.southcn.com` 下的文章页面，可查看网页源代码，搜索 `columnid`。
+3.  <https://m.nfapp.southcn.com/column/all> 列出了部分栏目，`id` 即为栏目 ID。
+
+</Route>
+
+### 南方 +（按作者）
+
+<Route author="TimWu007" example="/southcn/nfapp/reporter/969927791" path="/southcn/nfapp/reporter/:reporter" :paramsDesc="['作者 UUID']">
+
+作者的 UUID 只可通过 `static.nfapp.southcn.com` 下的文章页面获取。点击文章下方的作者介绍，进入该作者的个人主页，即可从 url 中获取。 </Route>
+
+### 南湖晚报
+
+<Route author="nczitzk" example="/cnjxol/nhwb" path="/cnjxol/nhwb/:id?" :paramsDesc="['编号，见下表，默认为全部']" anticrawler="1">
+
+| 版                                   | 编号 |
+| ------------------------------------ | ---- |
+| 全部                                 |      |
+| 第 01 版：要闻                       | 01   |
+| 第 02 版：品质嘉兴・红船旁的美丽城镇 | 02   |
+| 第 03 版：嘉兴新闻                   | 03   |
+| 第 04 版：嘉兴新闻                   | 04   |
+| 第 05 版：今日聚焦                   | 05   |
+| 第 06 版：嘉兴新闻                   | 06   |
+| 第 07 版：热线新闻                   | 07   |
+| 第 08 版：财经新闻                   | 08   |
+| 第 09 版：热线新闻                   | 09   |
+| 第 10 版：公益广告                   | 10   |
+| 第 11 版：消费周刊                   | 11   |
+| 第 12 版：悦读坊                     | 12   |
+
+</Route>
+
 ## 南方周末
 
 ### 新闻分类
@@ -1651,28 +1695,6 @@ category 对应的关键词有
 | 第 14 版：综合       | 14   |
 | 第 15 版：秀・观察   | 15   |
 | 第 16 版：走进高新区 | 16   |
-
-</Route>
-
-### 南湖晚报
-
-<Route author="nczitzk" example="/cnjxol/nhwb" path="/cnjxol/nhwb/:id?" :paramsDesc="['编号，见下表，默认为全部']" anticrawler="1">
-
-| 版                                   | 编号 |
-| ------------------------------------ | ---- |
-| 全部                                 |      |
-| 第 01 版：要闻                       | 01   |
-| 第 02 版：品质嘉兴・红船旁的美丽城镇 | 02   |
-| 第 03 版：嘉兴新闻                   | 03   |
-| 第 04 版：嘉兴新闻                   | 04   |
-| 第 05 版：今日聚焦                   | 05   |
-| 第 06 版：嘉兴新闻                   | 06   |
-| 第 07 版：热线新闻                   | 07   |
-| 第 08 版：财经新闻                   | 08   |
-| 第 09 版：热线新闻                   | 09   |
-| 第 10 版：公益广告                   | 10   |
-| 第 11 版：消费周刊                   | 11   |
-| 第 12 版：悦读坊                     | 12   |
 
 </Route>
 
