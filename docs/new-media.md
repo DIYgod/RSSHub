@@ -824,9 +824,9 @@ Tag
 
 Edition
 
-| Taiwan | Thailand | Indonesia | Hong Kong |
-| ------ | -------- | --------- | --------- |
-| tw     | th       | id        | hk        |
+| Taiwan | Thailand | Hong Kong |
+| ------ | -------- | --------- |
+| tw     | th       | hk        |
 
 </Route>
 
