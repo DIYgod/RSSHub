@@ -709,7 +709,7 @@ path="/ctfhub/upcoming/:limit?"
 
 ### 考研资讯
 
-<Route author="yanbot-team" example="/chsi/kydt/fstj" path="/chsi/kydt/:type" radar="1" :paramsDesc="[' type 见下表，亦可在网站 URL 找到']" >
+<Route author="yanbot-team" example="/chsi/kyzx/fstj" path="/chsi/kyzx/:type" radar="1" :paramsDesc="[' type 见下表，亦可在网站 URL 找到']" >
 
 | `:type` | 专题名称 |
 | ------- | -------- |
