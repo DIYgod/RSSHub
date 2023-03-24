@@ -2100,6 +2100,12 @@
         "DHPO",
         "hoilc"
     ],
+    "/gzdaily/app/:column?": [
+        "TimWu007"
+    ],
+    "/gzdaily/cmc/:channel?": [
+        "TimWu007"
+    ],
     "/gzh360/category/:id?": [
         "Rongronggg9"
     ],
