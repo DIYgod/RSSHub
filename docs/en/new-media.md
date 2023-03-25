@@ -462,9 +462,9 @@ Provides a better reading experience (full text articles) over the official one.
 
 Edition
 
-| Taiwan | Thailand | Indonesia | Hong Kong |
-| ------ | -------- | --------- | --------- |
-| tw     | th       | id        | hk        |
+| Taiwan | Thailand | Hong Kong |
+| ------ | -------- | --------- |
+| tw     | th       | hk        |
 
 </RouteEn>
 
