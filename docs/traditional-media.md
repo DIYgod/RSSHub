@@ -632,13 +632,31 @@ Category 列表：
 
 ## 参考消息
 
-### 新闻分类
+### 栏目
 
-<Route author="yuxinliu-alex" example="/cankaoxiaoxi/news/military_news" path="/cankaoxiaoxi/news/:category">
+<Route author="yuxinliu-alex nczitzk" example="/cankaoxiaoxi/column/diyi" path="/cankaoxiaoxi/column/:id?" :paramsDesc="['栏目 id，默认为 diyi，即第一关注']">
 
-| 中国       | 国际       | 军事          | 台海        | 财经         | 科技            | 文化         |
-| ---------- | ---------- | ------------- | ----------- | ------------ | --------------- | ------------ |
-| china_news | world_news | military_news | taiwan_news | finance_news | technology_news | culture_news |
+| 栏目           | id       |
+| -------------- | -------- |
+| 第一关注       | diyi     |
+| 中国           | zhongguo |
+| 国际           | gj       |
+| 观点           | guandian |
+| 锐参考         | ruick    |
+| 体育健康       | tiyujk   |
+| 科技应用       | kejiyy   |
+| 文化旅游       | wenhualy |
+| 参考漫谈       | cankaomt |
+| 研究动态       | yjdt     |
+| 海外智库       | hwzk     |
+| 业界信息・观点 | yjxx     |
+| 海外看中国城市 | hwkzgcs  |
+| 译名趣谈       | ymymqt   |
+| 译名发布       | ymymfb   |
+| 双语汇         | ymsyh    |
+| 参考视频       | video    |
+| 军事           | junshi   |
+| 参考人物       | cankaorw |
 
 </Route>
 
