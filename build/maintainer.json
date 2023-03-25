@@ -3118,6 +3118,18 @@
     "/mobilism/portal/:type/:fulltext?": [
         "nitezs"
     ],
+    "/modelscope/community": [
+        "TonyRL"
+    ],
+    "/modelscope/datasets": [
+        "TonyRL"
+    ],
+    "/modelscope/models": [
+        "TonyRL"
+    ],
+    "/modelscope/studios": [
+        "TonyRL"
+    ],
     "/mohw/clarification": [
         "nczitzk"
     ],
