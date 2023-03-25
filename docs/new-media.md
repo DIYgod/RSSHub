@@ -824,9 +824,9 @@ Tag
 
 Edition
 
-| Taiwan | Thailand | Indonesia | Hong Kong |
-| ------ | -------- | --------- | --------- |
-| tw     | th       | id        | hk        |
+| Taiwan | Thailand | Hong Kong |
+| ------ | -------- | --------- |
+| tw     | th       | hk        |
 
 </Route>
 
@@ -3811,6 +3811,12 @@ column 为 third 时可选的 category:
 ### 所有文章
 
 <Route author="shuiRong" example="/wainao-reads/all-articles" path="/wainao-reads/all-articles" />
+
+## 湾区日报
+
+### 最新推荐
+
+<Route author="Fatpandac" example="/wanqu/news" path="/wanqu/news" radar="1" />
 
 ## 晚点 LatePost
 
