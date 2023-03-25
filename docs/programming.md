@@ -559,6 +559,24 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
+## ModelScope 魔搭社区
+
+### 数据集
+
+<Route author="TonyRL" example="/modelscope/datasets" path="/modelscope/datasets" radar="1" />
+
+### 模型库
+
+<Route author="TonyRL" example="/modelscope/models" path="/modelscope/models" radar="1" />
+
+### 创空间
+
+<Route author="TonyRL" example="/modelscope/studios" path="/modelscope/studios" radar="1" />
+
+### DevPress 官方社区
+
+<Route author="TonyRL" example="/modelscope/community" path="/modelscope/community" radar="1" />
+
 ## MySQL
 
 ### Release Notes
