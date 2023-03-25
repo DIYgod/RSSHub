@@ -1650,6 +1650,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 江苏海洋大学
+
+<Route author="real-jiakai" example="/jou/tzgg" path="/jou/:type" :paramsDesc="分类名" radar="1">
+
+| 官网通知公告 | 研招网通知公告 |
+| :----------: | :------------: |
+|     /tzgg    |     /yztzgg    |
+
+</Route>
+
 ## 井冈山大学
 
 ### 教务处通知
@@ -2029,9 +2039,13 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 南京晓庄学院
 
-### 官网通知公告
+<Route author="real-jiakai" example="/njxzc/tzgg" path="/njxzc/:type" :paramsDesc="['分类名']" radar="1">
 
-<Route author="real-jiakai" example="/njxzc/tzgg" path="/njxzc/tzgg" radar="1"/>
+\| 官网通知公告 | 图书馆通知公告 |
+\| :------： | :------: |
+\| tzgg | libtzgg |
+
+</Route>
 
 ## 南京信息工程大学
 
