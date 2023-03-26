@@ -157,6 +157,13 @@ pageClass: routes
 
 <Route author="LogicJake" example="/instapaper/person/viridiano" path="/instapaper/person"/>
 
+## Instructables
+
+### Projects
+
+<Route author="wolfg1969" example="/instructables/circuits" path="/instructables/:category?" :paramsDesc="['项目类别。默认空值为全部，可从网页地址中得知']">
+</Route>
+
 ## iYouport
 
 ### 首页（旧版）
