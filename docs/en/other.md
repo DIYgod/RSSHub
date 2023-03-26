@@ -126,6 +126,18 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 <RouteEn author="LogicJake" example="/instapaper/person/viridiano" path="/instapaper/person"/>
 
+## Instructables
+
+### Projects
+
+<Route author="wolfg1969" example="/instructables/circuits" path="/instructables/:category?" :paramsDesc="['category']">
+
+| All | Circuits | Workshop | Craft | Cooking | Living | Outside | Teachers |
+| --- | -------- | -------- | ----- | ------- | ------ | ------- | -------- |
+|     | circuits | workshop | craft | cooking | living | outside | teachers |
+
+</Route>
+
 ## Japanpost
 
 ### Track & Trace Service

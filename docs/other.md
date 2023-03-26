@@ -161,7 +161,12 @@ pageClass: routes
 
 ### Projects
 
-<Route author="wolfg1969" example="/instructables/circuits" path="/instructables/:category?" :paramsDesc="['项目类别。默认空值为全部，可从网页地址中得知']">
+<Route author="wolfg1969" example="/instructables/circuits" path="/instructables/:category?" :paramsDesc="['项目类别。默认空值为全部，从网页地址中得知，见下表']">
+
+| All | Circuits | Workshop | Craft | Cooking | Living | Outside | Teachers |
+| --- | -------- | -------- | ----- | ------- | ------ | ------- | -------- |
+|     | circuits | workshop | craft | cooking | living | outside | teachers |
+
 </Route>
 
 ## iYouport
