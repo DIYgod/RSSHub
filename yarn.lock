@@ -1903,10 +1903,10 @@
   dependencies:
     "@types/koa" "*"
 
-"@types/koa@*", "@types/koa@2.13.5":
-  version "2.13.5"
-  resolved "https://registry.yarnpkg.com/@types/koa/-/koa-2.13.5.tgz#64b3ca4d54e08c0062e89ec666c9f45443b21a61"
-  integrity sha512-HSUOdzKz3by4fnqagwthW/1w/yJspTgppyyalPVbgZf8jQWvdIXcVW5h2DGtw4zYntOaeRGx49r1hxoPWrD4aA==
+"@types/koa@*", "@types/koa@2.13.6":
+  version "2.13.6"
+  resolved "https://registry.yarnpkg.com/@types/koa/-/koa-2.13.6.tgz#6dc14e727baf397310aa6f414ebe5d144983af42"
+  integrity sha512-diYUfp/GqfWBAiwxHtYJ/FQYIXhlEhlyaU7lB/bWQrx4Il9lCET5UwpFy3StOAohfsxxvEQ11qIJgT1j2tfBvw==
   dependencies:
     "@types/accepts" "*"
     "@types/content-disposition" "*"
@@ -3913,10 +3913,10 @@ chromium-bidi@0.4.5:
   dependencies:
     mitt "3.0.0"
 
-chrono-node@2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/chrono-node/-/chrono-node-2.6.1.tgz#1cba8c6bdadd416243c9c431d1e92ba8c0710bff"
-  integrity sha512-TxhueNcckNWTonc0ZPNjOJ8XfIAYQ7EzhlvDjXT1eauo/lhjvXW4oOn6XtInbam6MfL7Mo1hYO/FKI3KMzqBsw==
+chrono-node@2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/chrono-node/-/chrono-node-2.6.2.tgz#cfdd8ddb25efcf7feec6459c4ae8050b70e23a82"
+  integrity sha512-RZvQNwos1gre+xj3n8bZKKlO5BAQ6Z2qMEtbMQuVnF5xtku5kkMLq7F8a0NWPZLwQ5+78yZ9w6FAbqA9d9GwzQ==
   dependencies:
     dayjs "^1.10.0"
 
@@ -9397,10 +9397,10 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==
 
-meilisearch@0.31.1:
-  version "0.31.1"
-  resolved "https://registry.yarnpkg.com/meilisearch/-/meilisearch-0.31.1.tgz#c526274c3cda844e8ee8d9562cbd3febbe1b9508"
-  integrity sha512-ajMieU0e25lLkT+05J0snX0Ycow1UofxIy5sag03flERUbjXq8ouVwkrJkW27JsKftIeDeffRRRr89LasU9+0w==
+meilisearch@0.32.0:
+  version "0.32.0"
+  resolved "https://registry.yarnpkg.com/meilisearch/-/meilisearch-0.32.0.tgz#a756f476ea06dd3dbdd545376a6971e822d0ba4b"
+  integrity sha512-HKdeR3UXLKXCdxacziMRO0dBNf7HzqDnUIHrV9ctjk3XKHXvYm5OxUsctWRurxbpdE0auUrnMaUrjsLTtc+SdQ==
   dependencies:
     cross-fetch "^3.1.5"
 
