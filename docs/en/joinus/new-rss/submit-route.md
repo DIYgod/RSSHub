@@ -31,13 +31,13 @@ Please include route starts with /, with all required and optional parameters in
 /use/the/fenced/code/block/below
 ```
 如果你的 PR 与路由无关, 请在 `routes` 区域 填写 `NOROUTE`，而不是直接删除 `routes` 区域。否则你的 PR 将会被无条件关闭。
-If your changes are not related to route, please fill in `routes` with `NOROUTE`. Fail to comply will result in your PR being closed.
+If your changes are not related to route, please fill in `routes` section with `NOROUTE`. Fail to comply will result in your PR being closed.
 -->
 
 ```routes
 ```
 
-## 新 RSS 检查列表 / New RSS Route Checklist
+## 新 RSS 路由检查表 / New RSS Route Checklist
   
 - [ ] 新的路由 New Route
   - [ ] 跟随 [v2 路由规范](https://docs.rsshub.app/joinus/script-standard.html) Follows [v2 Script Standard](https://docs.rsshub.app/en/joinus/script-standard.html)
@@ -76,7 +76,7 @@ Here you can add the route(s) you're proposing to add, along with all required a
 
 **Do not** fill in `/github/issue/:user/:repo?` or `/issue/:user/:repo?`.
 
-If your changes are not related to a route, such as documentation, you can fill in `routes` with `NOROUTE`.
+If your changes are not related to a route, such as documentation, you can fill in `routes` section with `NOROUTE`.
 
 ````md
 ```routes
@@ -108,7 +108,7 @@ Use this section to include any additional information or comments you'd like to
 
 ## Pull Request Title
 
-The pull request title will be used as the commit message when your pull request is merged. Please follow the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/#summary) specification.
+The pull request title will be used as the commit message when your pull request is merged. Please follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary) specification.
 
 If you are adding a new route, including all required documentation and `radar.js`, use `route` as the scope. If you are adding new radar rules only, use `radar` as the scope.
 

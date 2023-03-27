@@ -1,19 +1,78 @@
-# 路由规范
+---
+sidebarDepth: 2
+---
 
-::: warning 警告
+# Script Standard
 
-这个规范仍在制定过程中，可能会随着时间推移而发生改变，请记得多回来看看！
+## Code Style
 
-:::
+### General Guidelines
 
-在编写新的路由时，RSSHub 会读取文件夹中的：
+-   Use HTTPS instead of HTTP whenever possible.
+-   Use webp format instead of jpg whenever possible since it offers better compression.
 
--   `router.js`注册路由
--   `maintainer.js`获取路由路径，维护者
--   `radar.js`获取路由所对应的网站，以及匹配规则：<https://github.com/DIYgod/RSSHub-Radar/>
--   `templates` 渲染模版
+### Formatting
 
-**以上文件为所有插件必备**
+#### Indentation
+
+-   Use 4 spaces for indentation for consistent and easy-to-read code.
+
+#### Semicolons
+
+-   Add a semicolon at the end of each statement for improved readability and consistency.
+
+#### String
+
+-   Use single quotes instead of double quotes whenever possible for consistency and readability.
+-   Use [template literals](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Template_literals) over complex string concatenation.
+-   Use [template literals](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Template_literals) for GraphQL queries as they make the code more concise and easy to read.
+
+#### Whitespace
+
+-   Add an empty line at the end of each file.
+-   Avoid trailing whitespace for a clean and readable codebase.
+
+### Language Features
+
+#### Casting
+
+-   Avoid re-casting the same type.
+
+#### Functions
+
+-   Prefer [arrow functions](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Functions/Arrow_functions) over the `function` keyword.
+
+#### Loops
+
+-   Use `for-of` instead of `for` for arrays ([javascript:S4138](https://rules.sonarsource.com/javascript/RSPEC-4138)).
+
+#### Variables
+
+-   Use `const` and `let` instead of `var`.
+-   Declare one variable per declaration.
+
+### Naming
+
+-   Use `lowerCamelCase` for variables and functions to adhere to standard naming conventions.
+-   Use `kebab-case` for files and folders. `snake_case` is also acceptable.
+-   Use `CONSTANT_CASE` for constants.
+
+### Additional Notes
+
+-   Be consistent!
+-   Avoid using deprecated features.
+-   Prefer higher ECMAScript Standard features over lower ones.
+-   Sort the entries alphabetically (uppercase first) to make it easier to find an entry.
+
+## v2 Route Standard
+
+When creating a new route in RSSHub, you need to organize your files in a specific way. Your namespace folder should be stored in the `lib/v2` directory and should include three mandatory files:
+
+-   `router.js` Registers the routes
+-   `maintainer.js` Provides information about the route maintainer
+-   `radar.js` Provide a [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) rule for each route
+
+Your namespace folder structure should look like this:
 
     ├───lib/v2
     │   ├───furstar
@@ -24,122 +83,61 @@
     │       ├─── radar.js
     │       ├─── someOtherJs.js
     │   └───test
-    │   └───someOtherScript
+    │   └───someOtherNamespaces
     ...
 
-**所有符合条件的，在`/v2`路径下的路由，将会被自动载入，无需更新`router.js`**
+**All eligible routes under the `lib/v2` path will be automatically loaded without the need for updating the `lib/router.js`.**
 
-## 路由示例
+### Namespace
 
-参考`furstar`: `./lib/v2/furstar`
+RSSHub appends all route namespaces in front of the actual route. Route maintainers should think of the namespace as the root.
 
-可以复制该文件夹作为新路由模版
+#### Naming Standard
 
-## 注册路由
+-   Use the second-level domain (SLD) as your namespace. You can find more information about URL structure [here](/en/joinus/new-radar.html#top-level-object-key).
+-   Do not create variations of the same namespace. For more information, see [this page](/en/joinus/new-rss/before-start.html#create-a-namespace)
 
-`router.js` 应当导出一个方法，我们在初始化路由的时候，会提供一个`@koa/router`对象
+### Registering a Route
 
-### 命名规范
+To register a route, the `router.js` file should export a method that provides a `@koa/router` object when initializing the route.
 
-我们会默认将所有的路由文件夹名字附加在真正的路由前面。路由维护者可以认定自己获取的就是根，我们会在附加对应的命名空间，在这空间底下，开发者有所有的控制权
+### Maintainer List
 
-### 例子
+The `maintainer.js` file should export an object that provides maintainer information related to the route, including:
 
-```js
-module.exports = function (router) {
-    router.get('/characters/:lang?', require('./index'));
-    router.get('/artists/:lang?', require('./artists'));
-    router.get('/archive/:lang?', require('./archive'));
-};
-```
+-   Key: Corresponding path in the `@koa/router` object
+-   Value: Array of string, including all maintainers' GitHub ID.
 
-## 维护者列表
+To generate a list of maintainers, use the following command: `yarn build:maintainer`, which will create the list under `assets/build/`.
 
-`maintainer.js` 应当导出一个对象，在我们获取路径相关信息时，将会在从这里调取开发者信息等
+::: danger Warning
+The path in the `@koa/router` object should be the same as the `path` in the corresponding documentation with the namespace appended in front of it.
+:::
 
--   key: `@koa/router` 对应的路径匹配
--   value: 数组，包含所有开发者的 Github Username
+### Radar Rules
 
-Github ID 可能是更好的选择，但是后续处理不便，目前暂定 Username
+All routes are required to include the `radar.js` file, which includes the corresponding domain name. The minimum requirement for a successful match is for the rule to show up on the corresponding site which requires filling in the `title` and `docs` fields.
 
-### 例子
+To generate a complete `radar-rules.js` file, use the following command: `yarn build:radar`, which will create the file under `assets/build/`.
 
-```js
-module.exports = {
-    '/characters/:lang?': ['NeverBehave'],
-    '/artists/:lang?': ['NeverBehave'],
-    '/archive/:lang?': ['NeverBehave'],
-};
-```
+::: tip Tips
+Remember to remove all build artifacts in `assets/build/` before committing.
+:::
 
-`npm run build:maintainer` 将会在`assets/build`下生成一份贡献者清单
+### Rendering Templates
 
-## Radar Rules
+When rendering custom content with HTML, such as `item.description`, using [art-template](https://aui.github.io/art-template/) for layout is mandatory.
 
-书写方式： <https://docs.rsshub.app/joinus/quick-start.html#ti-jiao-xin-de-rsshub-radar-gui-ze>
+All templates should be placed in the namespace's `templates` folder with the `.art` file extension.
 
-**我们目前要求所有路由，必须包含这个文件，并且包含对应的域名 -- 我们不要求完全的路由匹配，最低要求是在对应的网站，可以显示支持即可。这个文件后续会用于帮助 bug 反馈。**
+#### Example
 
-### 例子
+Here's an example taken from the [furstar](https://github.com/DIYgod/RSSHub/blob/master/lib/v2/furstar) namespace:
+
+<<< @/lib/v2/furstar/templates/author.art
 
 ```js
-module.exports = {
-    'furstar.jp': {
-        _name: 'Furstar',
-        '.': [
-            {
-                title: '最新售卖角色列表',
-                docs: 'https://docs.rsshub.app/shopping.html#furstar-zui-xin-shou-mai-jiao-se-lie-biao',
-                source: ['/:lang', '/'],
-                target: '/furstar/characters/:lang',
-            },
-            {
-                title: '已经出售的角色列表',
-                docs: 'https://docs.rsshub.app/shopping.html#furstar-yi-jing-chu-shou-de-jiao-se-lie-biao',
-                source: ['/:lang/archive.php', '/archive.php'],
-                target: '/furstar/archive/:lang',
-            },
-            {
-                title: '画师列表',
-                docs: 'https://docs.rsshub.app/shopping.html#furstar-hua-shi-lie-biao',
-                source: ['/'],
-                target: '/furstar/artists',
-            },
-        ],
-    },
-};
-```
-
-`npm run build:radar` 将会在`/assets/build/`下生成一份完整的`radar-rules.js`
-
-## Template
-
-我们目前要求所有路由，在渲染`description`等带 HTML 的内容时，**必须**使用 art 引擎进行排版
-
-art 说明文档： <https://aui.github.io/art-template/docs/>
-
-同时，所有模版应该放在插件`templates`文件夹中 -- 后续我们会以此提供自定义模版切换 / 渲染等需求
-
-### 例子
-
-```art
-<div>
-    <img src="{{ avatar }}" />
-    {{ if link !== null }}
-    <a href="{{ link }}">{{name}}</a>
-    {{ else }}
-    <a href="#">{{name}}</a>
-    {{ /if }}
-</div>
-```
-
-```js
+const path = require('path');
 const { art } = require('@/utils/render');
 const renderAuthor = (author) => art(path.join(__dirname, 'templates/author.art'), author);
 ```
-
-## ctx.state.json
-
-插件目前可以提供一个自定义的对象，用于调试 -- 访问对应路由 +`.debug.json`即可获取到对应内容
-
-我们对这个部分格式内容没有任何限制，完全可选，目前会继续观察这个选项的发展方向

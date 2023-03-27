@@ -367,7 +367,7 @@ module.exports = async (ctx) => {
         // channel title
         title: `${user}/${repo} issues`,
         // channel link
-        link: `https://github.com/${user}/${repo}/issues`,
+        link: `${baseUrl}/${user}/${repo}/issues`,
         // each feed item
         item: items,
     };
@@ -439,7 +439,7 @@ Now the RSS feed will have a similar reading experience to the original website.
 ::: tip Note
 Note that in the previous section, we only needed to send one HTTP request using an API to get all the data we needed. However, in this section, we need to send `1 + n` HTTP requests, where `n` is the number of feed items in the list from the first request.
 
-Some websites may not like this behaviour and may return errors like `429 Too Many Requests`.
+Some websites may not want to receive too many requests in a short amount of time, which can cause them to return an error message like `429 Too Many Requests`.
 :::
 
 ## Using the common configured route
@@ -547,7 +547,7 @@ module.exports = async (ctx) => {
 };
 ```
 
-You can see that the above code is very similar to the [previous section](#via-html-web-page-using-got-better-reading-experience). However, it retrieves full articles by adding a few more lines of code. It is recommended that you use the method in the [previous section](#via-html-web-page-using-got-better-reading-experience) whenever possible, as it is more flexible than using `@/utils/common-config`.
+You can see that the above code is very similar to the [previous section](#via-html-web-page-using-got-better-reading-experience) which retrieves full articles by adding a few more lines of code. It is recommended that you use the method in the [previous section](#via-html-web-page-using-got-better-reading-experience) whenever possible, as it is more flexible than using `@/utils/common-config`.
 
 ## Using puppeteer
 

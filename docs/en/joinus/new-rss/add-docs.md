@@ -64,7 +64,7 @@ To add documentation to your route, use Vue components. They work like HTML tags
 
 ---
 
-### Repo Issues (Description with table)
+### Keyword (Description with table)
 
 ```vue
 <RouteEn author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" :paramsDesc="['keyword', 'rank mode, empty or other for time order, `popular` for popular order, `date` by default', 'filte R18 content, see table below, empty by default']">
@@ -78,7 +78,7 @@ To add documentation to your route, use Vue components. They work like HTML tags
 
 ---
 
-<RouteEn author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" :paramsDesc="['keyword', 'rank mode, empty or other for time order, popular for popular order, `date` by default', 'filte R18 content, see table below, empty by default']">
+<RouteEn author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" :paramsDesc="['keyword', 'rank mode, empty or other for time order, `popular` for popular order, `date` by default', 'filte R18 content, see table below, empty by default']">
 
 | only not R18 | only R18 | no filter      |
 | ------------ | -------- | -------------- |

@@ -94,6 +94,70 @@ module.exports = {
                 lastUpdated: '上次更新',
                 nav: require('./nav/zh'),
                 sidebar: {
+                    '/joinus/': [
+                        {
+                            title: '👥 参与我们',
+                            path: '/joinus/quick-start.html',
+                        },
+                        {
+                            title: '📰 提交新的 RSSHub 规则',
+                            path: '/joinus/new-rss/prerequisites.html',
+                            collapsable: false,
+                            children: [
+                                {
+                                    title: '🔑 准备工作',
+                                    path: 'new-rss/prerequisites',
+                                },
+                                {
+                                    title: '💡 开始之前',
+                                    path: 'new-rss/before-start',
+                                },
+                                {
+                                    title: '🚀 创建自己的 RSSHub 路由',
+                                    path: 'new-rss/start-code',
+                                },
+                                {
+                                    title: '📖 添加文档',
+                                    path: 'new-rss/add-docs',
+                                },
+                                {
+                                    title: '📤 提交路由',
+                                    path: 'new-rss/submit-route',
+                                },
+                            ],
+                        },
+                        {
+                            title: '📡 提交新的 RSSHub Radar 规则',
+                            path: '/joinus/new-radar.html',
+                        },
+                        {
+                            title: '💪 Advanced',
+                            path: '/joinus/advanced-feed.html',
+                            collapsable: false,
+                            children: [
+                                {
+                                    title: '🎧 Create a Rich Media RSS Feed',
+                                    path: 'advanced-feed',
+                                },
+                                {
+                                    title: '📜 Script Standard',
+                                    path: 'script-standard',
+                                },
+                                {
+                                    title: '💾 Caching',
+                                    path: 'use-cache',
+                                },
+                                {
+                                    title: '🗓️ Date Handling',
+                                    path: 'pub-date',
+                                },
+                                {
+                                    title: '🐛 Debugging',
+                                    path: 'debug',
+                                },
+                            ],
+                        },
+                    ],
                     '/': [
                         {
                             title: '指南',
@@ -147,7 +211,7 @@ module.exports = {
                             path: '/en/joinus/quick-start.html',
                         },
                         {
-                            title: '📰 New RSS rules',
+                            title: '📰 New RSSHub rules',
                             path: '/en/joinus/new-rss/prerequisites.html',
                             collapsable: false,
                             children: [

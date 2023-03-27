@@ -18,7 +18,7 @@ If you don't know much about them but would like to learn them, here are some go
 
 If you'd like to see examples of how other developers use these technologies to create RSS feeds, you can take a look at some of the code in [our repository](https://github.com/DIYgod/RSSHub/tree/master/lib/v2).
 
-## Submit new RSS rules
+## Submit new RSSHub rules
 
 If you've found a website that doesn't offer an RSS feed, you can create an RSS rule for it using RSSHub. An RSS rule is a short Node.js program code (hereafter referred to as "route") that tells RSSHub how to extract content from a website and generate an RSS feed. By creating a new RSS route, you can help make content from your favourite websites more accessible and easier to follow.
 

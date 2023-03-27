@@ -1,55 +1,62 @@
-# 日期处理
+# Date Handling
 
-在抓取网页的时候，通常情况下网页会提供日期。这篇教程用于说明插件应当如何正确的处理相关情况
+When you visit a website, the website usually provides you with a date or timestamp. This tutorial will show you how to properly handle them in your code.
 
-## 没有日期
+## The Standard
 
-在源没有提供日期的时候，**请勿添加日期**。`pubDate`选项应当被留空。
+### No Date
 
-## 规范
+-   **Do not** add a date when a website does not provide one. Leave the `pubDate` field undefined.
+-   Parse only the date and **do not add a time** to the `pubDate` field when a website provides a date but not an accurate time.
 
-`pubDate`必须是一个
+The `pubDate` field must be a:
 
-1.  [Date Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)。
-2.  **不推荐，用于兼容** 可以被正确解析的字符串。因为其行为可能在不同环境下不一致，[Date.parse()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse)，请尽量避免
+1.  [Date Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)
+2.  **Not recommended. Only use for compatibility**: Strings that can be parsed correctly because their behavior can be inconsistent across deployment environments. Use `Date.parse()` with caution.
 
-同时，脚本传入的`pubDate`应当是对应**服务器所使用的时区 / 时间**。更多细节参阅下方工具类
+The `pubDate` passed from the route script should correspond to the time zone/time used by the server. For more details, see the following:
 
-## 使用工具类
+## Use utilities class
 
-目前，我们推荐使用[dayjs](https://github.com/iamkun/dayjs)进行日期的处理和时区调整。相关工具类有两个：
+We recommend using [day.js](https://github.com/iamkun/dayjs) for date processing and time zone adjustment. There are two related utility classes:
 
 ### Parse Date
 
-这个是一个工具类用于使用[dayjs](https://github.com/iamkun/dayjs)。大部分情况下，应当可以直接使用他获取到正确的`Date Object`
+The RSSHub utility class includes a wrapper for [day.js](https://github.com/iamkun/dayjs) that allows you to easily parse date strings and obtain a [Date Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) in most cases.
 
-具体解析参数请参考 dayjs github 说明
-
-```javascript
+```js
 const { parseDate } = require('@/utils/parse-date');
 
+const pubDate = parseDate('2020/12/30');
+// OR
 const pubDate = parseDate('2020/12/30', 'YYYY/MM/DD');
 ```
 
-如果你需要解析相对日期，请使用 `parseRelativeDate`。
+:::tip Tips
+You can refer to the [day.js documentation](https://day.js.org/docs/en/parse/string-format#list-of-all-available-parsing-tokens) for all available date formats.
+:::
 
-```javascript
+If you need to parse a relative date, use `parseRelativeDate`.
+
+```js
 const { parseRelativeDate } = require('@/utils/parse-date');
 
-const pubDate = parseRelativeDate('2天前');
-const pubDate = parseRelativeDate('前天 15:36');
+const pubDate = parseRelativeDate('2 days ago');
+const pubDate = parseRelativeDate('day before yesterday 15:36');
 ```
 
 ### Timezone
 
-部分网站并不会依据访问者来源进行时区转换，此时获取到的时间是网站本地时间，不一定适合所有 RSS 订阅者。此时，应当手动指定获取的时间时区：
+When parsing dates from websites, it's important to consider time zones. Some websites may not convert the time zone according to the visitor's location, resulting in a date that doesn't accurately reflect the user's local time. To avoid this issue, you can manually specify the time zone.
 
-::: warning 注意
-此时，时间将会被转换到服务器时间，方便后续中间件处理。这个是正常流程！
-:::
+To manually specify the time zone in your code, use the following code:
 
-```javascript
+```js
 const timezone = require('@/utils/timezone');
 
-const pubDate = timezone(new Date(), +8)
+const pubDate = timezone(parseDate('2020/12/30 13:00'), +1);
 ```
+
+The timezone function takes two parameters: the first is the original [Date Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date), and the second is the time zone offset. The offset is specified in hours, so in this example, a time zone of UTC+1 is used.
+
+By doing this, the time will be converted to server time and it will facilitate middleware processing.
