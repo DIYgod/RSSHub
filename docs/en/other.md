@@ -130,13 +130,13 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 ### Projects
 
-<Route author="wolfg1969" example="/instructables/circuits" path="/instructables/:category?" :paramsDesc="['category']">
+<RouteEn author="wolfg1969" example="/instructables/projects/circuits" path="/instructables/projects/:category?" :paramsDesc="['Category, empty by default, can be found in URL or see the table below']" radar="1">
 
 | All | Circuits | Workshop | Craft | Cooking | Living | Outside | Teachers |
 | --- | -------- | -------- | ----- | ------- | ------ | ------- | -------- |
 |     | circuits | workshop | craft | cooking | living | outside | teachers |
 
-</Route>
+</RouteEn>
 
 ## Japanpost
 

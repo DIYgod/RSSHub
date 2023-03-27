@@ -161,7 +161,7 @@ pageClass: routes
 
 ### Projects
 
-<Route author="wolfg1969" example="/instructables/circuits" path="/instructables/:category?" :paramsDesc="['项目类别。默认空值为全部，从网页地址中得知，见下表']">
+<Route author="wolfg1969" example="/instructables/projects/circuits" path="/instructables/projects/:category?" :paramsDesc="['项目类别。默认空值为全部，从网页地址中得知，见下表']" radar="1">
 
 | All | Circuits | Workshop | Craft | Cooking | Living | Outside | Teachers |
 | --- | -------- | -------- | ----- | ------- | ------ | ------- | -------- |
