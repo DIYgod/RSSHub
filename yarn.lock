@@ -3913,10 +3913,10 @@ chromium-bidi@0.4.5:
   dependencies:
     mitt "3.0.0"
 
-chrono-node@2.6.1:
-  version "2.6.1"
-  resolved "https://registry.yarnpkg.com/chrono-node/-/chrono-node-2.6.1.tgz#1cba8c6bdadd416243c9c431d1e92ba8c0710bff"
-  integrity sha512-TxhueNcckNWTonc0ZPNjOJ8XfIAYQ7EzhlvDjXT1eauo/lhjvXW4oOn6XtInbam6MfL7Mo1hYO/FKI3KMzqBsw==
+chrono-node@2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/chrono-node/-/chrono-node-2.6.2.tgz#cfdd8ddb25efcf7feec6459c4ae8050b70e23a82"
+  integrity sha512-RZvQNwos1gre+xj3n8bZKKlO5BAQ6Z2qMEtbMQuVnF5xtku5kkMLq7F8a0NWPZLwQ5+78yZ9w6FAbqA9d9GwzQ==
   dependencies:
     dayjs "^1.10.0"
 
