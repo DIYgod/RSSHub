@@ -2465,6 +2465,9 @@
     "/instagram/2/:category/:key": [
         "TonyRL"
     ],
+    "/instructables/projects/:category?": [
+        "wolfg1969"
+    ],
     "/iqiyi/album/:id": [
         "TonyRL"
     ],
