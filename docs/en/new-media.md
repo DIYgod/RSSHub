@@ -754,6 +754,12 @@ Compared to the official one, this feed:
 
 <RouteEn author="nczitzk" example="/swissinfo/eng/latest-news" path="/swissinfo/:language?/:category?" :paramsDesc="['Language, eng by default', 'Category, Latest News by default']"/>
 
+## TechCrunch
+
+### News
+
+<RouteEn author="NavePnow" example="/techcrunch/news" path="/techcrunch/news"/>
+
 ## The Brain
 
 ### Blog
