@@ -1,0 +1,36 @@
+# This is a basic workflow to help you get started with Actions
+
+name: deploy-prod
+
+# Controls when the workflow will run
+on:
+    # Triggers the workflow on push or pull request events but only for the "master" branch
+    push:
+        branches: ['deploy-prod']
+    pull_request:
+        branches: ['deploy-prod']
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+    deploy:
+        name: Deploy
+        runs-on: ubuntu-latest
+        steps:
+            - name: Deploy
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.HOST_PORD }}
+                  username: ${{ secrets.USER_PORD }}
+                  password: ${{ secrets.PWD_PORD }}
+                  port: ${{ secrets.PORT_PORD }}
+                  script: |
+                      pwd
+                      cd /www/RSSHub
+                      git pull
+                      rm -rf node_modules
+                      nvm use 16
+                      node -v
+                      yarn install --production
+                      pm2 restart rsshub
+                      ls
+                      pm2 ls
