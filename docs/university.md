@@ -2558,6 +2558,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="NeverBehave" example="/slu/tyyjkxy/14754" path="/slu/tyyjkxy/:id" :paramsDesc="['类别ID']" />
 
+## 上海社会科学院
+
+### 研究生院
+
+<Route author="yanbot-team" example="/sassorgcn/gs/1793" path="/sassorgcn/gs/:type" :paramsDesc="['类别ID，见下表，其他未列出的栏目参数可以从页面的 URL Path 中找到，例如：硕士统考招生的网址为https://gs.sass.org.cn/1793/list.htm，则类别ID为1793']" radar="1" >
+
+| 硕士统考招生 | 硕士推免招生 |
+| ------------ | ------------ |
+| 1793         | sstmzs       |
+
+</Route>
+
 ## 深圳大学
 
 ### 深圳大学研究生招生网通知公告
