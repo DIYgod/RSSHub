@@ -462,9 +462,9 @@ Provides a better reading experience (full text articles) over the official one.
 
 Edition
 
-| Taiwan | Thailand | Indonesia | Hong Kong |
-| ------ | -------- | --------- | --------- |
-| tw     | th       | id        | hk        |
+| Taiwan | Thailand | Hong Kong |
+| ------ | -------- | --------- |
+| tw     | th       | hk        |
 
 </RouteEn>
 
@@ -753,6 +753,12 @@ Compared to the official one, this feed:
 ### Category
 
 <RouteEn author="nczitzk" example="/swissinfo/eng/latest-news" path="/swissinfo/:language?/:category?" :paramsDesc="['Language, eng by default', 'Category, Latest News by default']"/>
+
+## TechCrunch
+
+### News
+
+<RouteEn author="NavePnow" example="/techcrunch/news" path="/techcrunch/news"/>
 
 ## The Brain
 

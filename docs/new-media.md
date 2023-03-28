@@ -824,9 +824,9 @@ Tag
 
 Edition
 
-| Taiwan | Thailand | Indonesia | Hong Kong |
-| ------ | -------- | --------- | --------- |
-| tw     | th       | id        | hk        |
+| Taiwan | Thailand | Hong Kong |
+| ------ | -------- | --------- |
+| tw     | th       | hk        |
 
 </Route>
 
@@ -1336,6 +1336,12 @@ IPFS 网关有可能失效，那时候换成其他网关。
 | comments      | feature      | interview      | video          | art-market          |
 
 </Route>
+
+## TechCrunch
+
+### News
+
+<Route author="NavePnow" example="/techcrunch/news" path="/techcrunch/news"/>
 
 ## The Brain
 
@@ -2539,6 +2545,10 @@ others = 热点新闻 + 滚动新闻
 分类名同上。
 
 </Route>
+
+### 播客
+
+<Route author="eternasuno" example="/gcores/radios/45" path="/gcores/radios/:category?" :paramsDesc="['分类名，默认为全部，可在分类页面的 URL 中找到，如 Gadio News -- 45']" radar="1" supportPodcast="1" />
 
 ## 加美财经
 
@@ -3807,6 +3817,12 @@ column 为 third 时可选的 category:
 ### 所有文章
 
 <Route author="shuiRong" example="/wainao-reads/all-articles" path="/wainao-reads/all-articles" />
+
+## 湾区日报
+
+### 最新推荐
+
+<Route author="Fatpandac" example="/wanqu/news" path="/wanqu/news" radar="1" />
 
 ## 晚点 LatePost
 

@@ -21,7 +21,6 @@ pageClass: routes
 支持 [Topic Library](https://abc.net.au/news/topics) 中的所有 Topic，你可以填入其 URL 中 `topic` 后的字段，也可以填入对应的 `documentId`。
 
 如 [Computers and Technology](https://www.abc.net.au/news/topic/computers-and-technology) 的 URL 是 <https://www.abc.net.au/news/topic/computers-and-technology>，其 `topic` 后的字段为 `computers-and-technology`，且该 Topic 的 `documentId` 为 `2302`，所以路由为 [/abc/computers-and-technology](https://rsshub.app/abc/computers-and-technology) 以及 [/abc/2302](https://rsshub.app/abc/2302)。
-
 支持的 Channel 在下表已经全部列出，同上，其他 Channel 请找到对应 Channel 页面的源代码中的 `documentId` 填入。
 
 :::
@@ -632,13 +631,31 @@ Category 列表：
 
 ## 参考消息
 
-### 新闻分类
+### 栏目
 
-<Route author="yuxinliu-alex" example="/cankaoxiaoxi/news/military_news" path="/cankaoxiaoxi/news/:category">
+<Route author="yuxinliu-alex nczitzk" example="/cankaoxiaoxi/column/diyi" path="/cankaoxiaoxi/column/:id?" :paramsDesc="['栏目 id，默认为 diyi，即第一关注']">
 
-| 中国       | 国际       | 军事          | 台海        | 财经         | 科技            | 文化         |
-| ---------- | ---------- | ------------- | ----------- | ------------ | --------------- | ------------ |
-| china_news | world_news | military_news | taiwan_news | finance_news | technology_news | culture_news |
+| 栏目           | id       |
+| -------------- | -------- |
+| 第一关注       | diyi     |
+| 中国           | zhongguo |
+| 国际           | gj       |
+| 观点           | guandian |
+| 锐参考         | ruick    |
+| 体育健康       | tiyujk   |
+| 科技应用       | kejiyy   |
+| 文化旅游       | wenhualy |
+| 参考漫谈       | cankaomt |
+| 研究动态       | yjdt     |
+| 海外智库       | hwzk     |
+| 业界信息・观点 | yjxx     |
+| 海外看中国城市 | hwkzgcs  |
+| 译名趣谈       | ymymqt   |
+| 译名发布       | ymymfb   |
+| 双语汇         | ymsyh    |
+| 参考视频       | video    |
+| 军事           | junshi   |
+| 参考人物       | cankaorw |
 
 </Route>
 
@@ -1080,6 +1097,42 @@ IT・科学 tech_science
 <Route author="Rongronggg9" example="/kyodonews" path="/kyodonews/:language?/:keyword?" :paramsDesc="['语言: `china` = 简体中文 (默认), `tchina` = 繁體中文', '关键词']">
 
 `keyword` 为关键词，由于共同网有许多关键词并不在主页列出，此处不一一列举，可从关键词页的 URL 的最后一级路径中提取。如 `日中关系` 的关键词页 URL 为 `https://china.kyodonews.net/news/japan-china_relationship`, 则将 `japan-china_relationship` 填入 `keyword`。特别地，当填入 `rss` 时，将从共同网官方 RSS 中抓取文章；略去时，将从首页抓取最新报道 (注意：首页更新可能比官方 RSS 稍慢)。
+
+</Route>
+
+## 广州日报
+
+### 客户端
+
+<Route author="TimWu007" example="/gzdaily/app/74" path="/gzdaily/app/:column?" :paramsDesc="['栏目 ID，点击对应栏目后在地址栏找到']">
+
+::: tip 提示
+
+在北京时间深夜可能无法获取内容。
+
+:::
+
+常用栏目 ID：
+
+| 栏目名 | ID   |
+| ------ | ---- |
+| 首页   | 74   |
+| 时局   | 374  |
+| 广州   | 371  |
+| 大湾区 | 397  |
+| 城区   | 2980 |
+
+</Route>
+
+### 新花城（广州市融媒体中心）
+
+<Route author="TimWu007" example="/gzdaily/cmc/shouye" path="/gzdaily/cmc/:channel?" :paramsDesc="['频道名']">
+
+::: tip 提示
+
+`频道名（channel）` 可在对应频道 url 后的参数中获取，如 `首页` 的栏目 url 为`https://huacheng.gz-cmc.com/channel/shouye/index.html`, `频道名` 即为 `shouye`。
+
+:::
 
 </Route>
 

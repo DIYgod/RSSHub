@@ -699,6 +699,10 @@ path="/ctfhub/upcoming/:limit?"
 
 ## 中国研究生招生信息网
 
+### 考研热点新闻
+
+<Route author="yanbot-team" example="/chsi/hotnews" path="/chsi/hotnews" radar="1" />
+
 ### 考研动态
 
 <Route author="SunBK201" example="/chsi/kydt" path="/chsi/kydt" radar="1" />
@@ -706,6 +710,20 @@ path="/ctfhub/upcoming/:limit?"
 ### 考研热点新闻
 
 <Route author="yanbot-team" example="/chsi/hotnews" path="/chsi/hotnews" radar="1" />
+
+### 考研资讯
+
+<Route author="yanbot-team" example="/chsi/kyzx/fstj" path="/chsi/kyzx/:type" radar="1" :paramsDesc="[' type 见下表，亦可在网站 URL 找到']" >
+
+| `:type` | 专题名称 |
+| ------- | -------- |
+| fstj    | 复试调剂 |
+| kydt    | 考研动态 |
+| zcdh    | 政策导航 |
+| kyrw    | 考研人物 |
+| jyxd    | 经验心得 |
+
+</Route>
 
 ## 中国智库网
 
