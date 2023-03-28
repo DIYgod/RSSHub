@@ -234,6 +234,10 @@ pageClass: routes
 
 </Route>
 
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/ustb/yzxc/tzgg" path="/ustb/yzxc/tzgg" />
+
 ### 北京科技大学天津学院
 
 <Route author="henbf" example="/ustb/tj/news/all" path="/ustb/tj/news/:type" :paramsDesc="['默认为 `all`']">
@@ -605,7 +609,7 @@ pageClass: routes
 
 | 博士研究生 | 硕士研究生 | 同等学力攻读硕士学位 | 港澳台地区招生 |
 | :--------: | :--------: | :------------------: | :------------: |
-|    bsyjs   |    ssyjs   |      tdxlgdssxw      |     gatdqzs    |
+|   bsyjs    |   ssyjs    |      tdxlgdssxw      |    gatdqzs     |
 
 </Route>
 
@@ -1195,7 +1199,7 @@ category 列表：
 
 | 通知公告 | 新闻动态 | 学籍注册 | 奖助学金 | 其他 |
 | :------: | :------: | :------: | :------: | :--: |
-|   2981   |   2980   |   3009   |   3011   |  ... |
+|   2981   |   2980   |   3009   |   3011   | ...  |
 
 </Route>
 
@@ -1227,7 +1231,7 @@ category 列表：
 
 |   新闻   | 新闻 - 要闻 | 新闻 - 专题策划 | 其他 |
 | :------: | :---------: | :-------------: | :--: |
-| /card/xw | /list/xw/yw |  /card/xw/ztch  |  ... |
+| /card/xw | /list/xw/yw |  /card/xw/ztch  | ...  |
 
 </Route>
 
@@ -1237,7 +1241,7 @@ category 列表：
 
 | 新闻动态 | 通知公告 | 其他 |
 | :------: | :------: | :--: |
-|   3751   |   3752   |  ... |
+|   3751   |   3752   | ...  |
 
 </Route>
 
@@ -2264,7 +2268,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 | 通知公告 | 本科生教务 | 研究生教务 |
 | :------: | :--------: | :--------: |
-|   tzgg   |    bksjw   |    yjsjw   |
+|   tzgg   |   bksjw    |   yjsjw    |
 
 </Route>
 
@@ -2654,7 +2658,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 | 聚焦天大 | 综合新闻 | 校内新闻 | 媒体报道 | 图说天大 |
 | :------: | :------: | :------: | :------: | :------: |
-|   focus  |  general | internal |   media  |  picture |
+|  focus   | general  | internal |  media   | picture  |
 
 </Route>
 
@@ -2664,7 +2668,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 | 学部新闻 |   通知公告   | 北洋智算论坛 |
 | :------: | :----------: | :----------: |
-|   news   | notification |     forum    |
+|   news   | notification |    forum     |
 
 </Route>
 
@@ -2684,7 +2688,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 | 校级公告 | 统考硕士 | 统考博士 | 在职学位 |
 | :------: | :------: | :------: | :------: |
-|  notice  |  master  |  doctor  |    job   |
+|  notice  |  master  |  doctor  |   job    |
 
 </Route>
 
@@ -2732,7 +2736,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 | 温大新闻 | 媒体温大 | 学术温大 | 通知公告 | 招标信息 | 学术公告 |
 | :------: | :------: | :------: | :------: | :------: | :------: |
-|     0    |     1    |     2    |     3    |     4    |     5    |
+|    0     |    1     |    2     |    3     |    4     |    5     |
 
 </Route>
 
@@ -3537,7 +3541,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 | 招聘类型 | 博士后 | 课题项目聘用 | 管理支撑人才 | 教学科研人才 |
 | :------: | :----: | :----------: | :----------: | :----------: |
-|   参数   |   bsh  |    ktxmpy    |    glzcrc    |    jxkyrc    |
+|   参数   |  bsh   |    ktxmpy    |    glzcrc    |    jxkyrc    |
 
 </Route>
 
