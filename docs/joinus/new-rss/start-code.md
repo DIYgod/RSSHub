@@ -1,9 +1,9 @@
 ---
 sidebarDepth: 2
 ---
-# 创建自己的 RSSHub 路由
+# 制作自己的 RSSHub 路由
 
-如前所述，我们以 [GitHub 仓库 Issues](/programming.html#github-cang-ku-issues) 为例创建 RSS 源。我们将展示前面提到的四种数据获取方法：
+如前所述，我们以 [GitHub 仓库 Issues](/programming.html#github-cang-ku-issues) 为例制作 RSS 源。我们将展示前面提到的四种数据获取方法：
 
 1.  [通过 API](#tong-guo-api)
 2.  [通过 got 从 HTML 获取数据](#tong-guo-got-cong-html-huo-qu-shu-ju)
@@ -14,11 +14,11 @@ sidebarDepth: 2
 
 ### 查看 API 文档
 
-不同的站点有不同的 API。您可以查看要为其创建 RSS 源的站点的 API 文档。在本例中，我们将使用 [GitHub Issues API](https://docs.github.com/zh/rest/issues/issues#list-repository-issues)。
+不同的站点有不同的 API。您可以查看要为其制作 RSS 源的站点的 API 文档。在本例中，我们将使用 [GitHub Issues API](https://docs.github.com/zh/rest/issues/issues#list-repository-issues)。
 
 ### 创建主文件
 
-打开您的代码编辑器并创建一个新文件。由于我们要为 GitHub 仓库 Issues 创建 RSS 源，因此建议将文件命名为 `issue.js`。
+打开您的代码编辑器并创建一个新文件。由于我们要为 GitHub 仓库 Issues 制作 RSS 源，因此建议将文件命名为 `issue.js`。
 
 以下是让您开始的基本代码：
 
@@ -239,7 +239,7 @@ module.exports = async (ctx) => {
 
 ### 创建主文件
 
-打开您的代码编辑器并创建一个新文件。由于我们要为 GitHub 仓库 Issues 创建 RSS 源，因此建议将文件命名为 `issue.js`。
+打开您的代码编辑器并创建一个新文件。由于我们要为 GitHub 仓库 Issues 制作 RSS 源，因此建议将文件命名为 `issue.js`。
 
 以下是让您开始的基本代码：
 
@@ -450,7 +450,7 @@ module.exports = async (ctx) => {
 2.  数据来源链接
 3.  RSS 订阅标题（不是每个文章的标题）
 
-打开您的代码编辑器并创建一个新文件。由于我们要为 GitHub 仓库 Issues 创建 RSS 源，因此建议将文件命名为 `issue.js`。
+打开您的代码编辑器并创建一个新文件。由于我们要为 GitHub 仓库 Issues 制作 RSS 源，因此建议将文件命名为 `issue.js`。
 
 这是一些基础代码，你可以从这里开始：
 
@@ -605,7 +605,7 @@ module.exports = async (ctx) => {
     // 所以我们需要手动记录它们
     logger.debug(`Requesting ${link}`);
     await page.goto(link, {
-        // 指定页面等待加载的时间
+        // 指定页面等待载入的时间
         waitUntil: 'domcontentloaded',
     });
     // 获取页面的 HTML 内容
@@ -755,7 +755,7 @@ await page.setRequestInterception(true);
 page.on('request', (request) => {
     request.resourceType() === 'document' ? request.continue() : request.abort();
 });
-// 这两个语句必须放在 page.goto() 之前
+// 这两条语句必须放在 page.goto() 之前
 ```
 
 您可以在 [这里](https://chromedevtools.github.io/devtools-protocol/tot/Network/#type-ResourceType) 找到 `request.resourceType()` 的所有可能值。在代码中使用这些值时，请确保使用**小写**字母。

@@ -7,8 +7,13 @@ sidebarDepth: 2
 
 ### General Guidelines
 
+-   **Be consistent!**
+-   Avoid using deprecated features.
+-   Conbine repetitive code into functions.
+-   Prefer higher ECMAScript Standard features over lower ones.
+-   Sort the entries alphabetically (uppercase first) to make it easier to find an entry.
 -   Use HTTPS instead of HTTP whenever possible.
--   Use webp format instead of jpg whenever possible since it offers better compression.
+-   Use WebP format instead of JPG whenever possible since it offers better compression.
 
 ### Formatting
 
@@ -56,13 +61,6 @@ sidebarDepth: 2
 -   Use `kebab-case` for files and folders. `snake_case` is also acceptable.
 -   Use `CONSTANT_CASE` for constants.
 
-### Additional Notes
-
--   Be consistent!
--   Avoid using deprecated features.
--   Prefer higher ECMAScript Standard features over lower ones.
--   Sort the entries alphabetically (uppercase first) to make it easier to find an entry.
-
 ## v2 Route Standard
 
 When creating a new route in RSSHub, you need to organize your files in a specific way. Your namespace folder should be stored in the `lib/v2` directory and should include three mandatory files:
@@ -91,7 +89,7 @@ Your namespace folder structure should look like this:
 
 ### Namespace
 
-RSSHub appends all route namespaces in front of the actual route. Route maintainers should think of the namespace as the root.
+RSSHub appends the name of all route namespace folders in front of the actual route. Route maintainers should think of the namespace as the root.
 
 #### Naming Standard
 
@@ -112,7 +110,7 @@ The `maintainer.js` file should export an object that provides maintainer inform
 To generate a list of maintainers, use the following command: `yarn build:maintainer`, which will create the list under `assets/build/`.
 
 ::: danger Warning
-The path in the `@koa/router` object should be the same as the `path` in the corresponding documentation with the namespace appended in front of it.
+The path in the `@koa/router` object should be the same as the `path` in the corresponding documentation before the namespace appended in front of it.
 :::
 
 ### Radar Rules

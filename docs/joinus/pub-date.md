@@ -1,55 +1,55 @@
-# Date Handling
+# 日期处理
 
-When you visit a website, the website usually provides you with a date or timestamp. This tutorial will show you how to properly handle them in your code.
+当你访问网站时，网站通常会提供一个日期或时间戳。本教程将展示如何在代码中正确处理它们。
 
-## The Standard
+## 规范
 
-### No Date
+### 没有日期
 
--   **Do not** add a date when a website does not provide one. Leave the `pubDate` field undefined.
--   Parse only the date and **do not add a time** to the `pubDate` field when a website provides a date but not an accurate time.
+-   当网站没有提供日期时，**请勿**添加日期，`pubDate` 应当被留空。
+-   当网站提供一个日期但没有准确的时间时，只需要解析日期并**不要添加时间**到 `pubDate` 中。
 
-The `pubDate` field must be a:
+`pubDate` 必须是：
 
-1.  [Date Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)
-2.  **Not recommended. Only use for compatibility**: Strings that can be parsed correctly because their behavior can be inconsistent across deployment environments. Use `Date.parse()` with caution.
+1.  [Date 对象](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)
+2.  **不推荐**: 使用字符串时，要确保可正确解析，因为它们的行为可能会在部署环境中发生不一致。请尽量避免 `Date.parse()`。
 
-The `pubDate` passed from the route script should correspond to the time zone/time used by the server. For more details, see the following:
+从路由传入的 `pubDate` 应该对应于**服务器使用的时区 / 时间**。有关更多详细信息，请参见下方工具类：
 
-## Use utilities class
+## 使用工具类
 
-We recommend using [day.js](https://github.com/iamkun/dayjs) for date processing and time zone adjustment. There are two related utility classes:
+我们推荐使用 [day.js](https://github.com/iamkun/dayjs) 进行日期处理和时区调整。有两个相关的工具类：
 
-### Parse Date
+### 日期时间
 
-The RSSHub utility class includes a wrapper for [day.js](https://github.com/iamkun/dayjs) that allows you to easily parse date strings and obtain a [Date Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) in most cases.
+RSSHub 工具类包括了一个 [day.js](https://github.com/iamkun/dayjs) 的包装函数，它允许你直接解析日期字符串并在大多数情况下获得一个 [Date 对象](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)。
 
 ```js
 const { parseDate } = require('@/utils/parse-date');
 
 const pubDate = parseDate('2020/12/30');
-// OR
+// 或
 const pubDate = parseDate('2020/12/30', 'YYYY/MM/DD');
 ```
 
-:::tip Tips
-You can refer to the [day.js documentation](https://day.js.org/docs/en/parse/string-format#list-of-all-available-parsing-tokens) for all available date formats.
+:::tip 提示
+你可以参考 [day.js 文档](https://day.js.org/docs/zh-CN/parse/string-format#支持的解析占位符列表) 查看所有可用日期格式。
 :::
 
-If you need to parse a relative date, use `parseRelativeDate`.
+如果你需要解析相对日期，请使用 `parseRelativeDate`。
 
 ```js
 const { parseRelativeDate } = require('@/utils/parse-date');
 
-const pubDate = parseRelativeDate('2 days ago');
-const pubDate = parseRelativeDate('day before yesterday 15:36');
+const pubDate = parseRelativeDate('2天前');
+const pubDate = parseRelativeDate('前天 15:36');
 ```
 
-### Timezone
+### 时区
 
-When parsing dates from websites, it's important to consider time zones. Some websites may not convert the time zone according to the visitor's location, resulting in a date that doesn't accurately reflect the user's local time. To avoid this issue, you can manually specify the time zone.
+从网站解析日期时，考虑时区非常重要。有些网站可能不会根据访问者的位置转换时区，导致日期不准确地反映用户的本地时间。为避免此问题，你可以手动指定时区。
 
-To manually specify the time zone in your code, use the following code:
+要在代码中手动指定时区，可以使用以下代码：
 
 ```js
 const timezone = require('@/utils/timezone');
@@ -57,6 +57,6 @@ const timezone = require('@/utils/timezone');
 const pubDate = timezone(parseDate('2020/12/30 13:00'), +1);
 ```
 
-The timezone function takes two parameters: the first is the original [Date Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date), and the second is the time zone offset. The offset is specified in hours, so in this example, a time zone of UTC+1 is used.
+`timezone` 函数接受两个参数：第一个是 [日期对象](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)，第二个是时区偏移量。偏移量以小时为单位指定，在此示例中使用了 UTC+1 的时区。
 
-By doing this, the time will be converted to server time and it will facilitate middleware processing.
+这样做将时间转换为服务器时间，方便后续中间件进行处理。

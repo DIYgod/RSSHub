@@ -4,7 +4,7 @@ If you want to see the results, we suggest you install the browser extension. Yo
 
 ## Code the rule
 
-To create a new RSS feed, create a file called `radar.js` under the corresponding namespace in [/lib/v2/](https://github.com/DIYgod/RSSHub/tree/master/lib/v2). We will continue to use the example of creating an RSS feed for GitHub Repo Issues, which is described [here](/en/joinus/new-rss/before-start.html). The resulting code will look like this:
+To create a new RSS feed, create a file called `radar.js` under the corresponding namespace in [/lib/v2/](https://github.com/DIYgod/RSSHub/tree/master/lib/v2). We will continue to use the example of creating an RSS feed for `GitHub Repo Issues`, which is described [here](/en/joinus/new-rss/before-start.html). The resulting code will look like this:
 
 ```js
 module.exports = {
@@ -34,7 +34,7 @@ In this case, the domain name is `github.com`, so the object key is `github.com`
 
 The first inner object key is `_name`, which is the name of the website. This should be the same as the level 2 heading (`##`) of the route documentation. In this case, it's `GitHub`.
 
-The rest of the inner object keys are the subdomains of a website. If a website you want to match does not have any subdomains, or you want to match both `www.example.com` and `example.com`, use `'.'` instead. In this case, we will use `'.'` since we want to match `github.com`. Note that each subdomain should return an array of objects.
+The rest of the inner object keys are the subdomains of a website. If a website you want to match does not have any subdomains, or you want to match both `www.example.com` and `example.com`, use `'.'` instead. In this case, we will use `'.'` since we want to match `github.com`. Note that each subdomain should return **an array of objects**.
 
 <code-group>
 <code-block title="github.com and www.github.com">
@@ -98,17 +98,17 @@ module.exports = {
 
 ### `title`
 
-The title is a **required** field and should be the same as the level 3 heading (`###`) of the route documentation. In this case, it's `Repo Issues`. Do not repeat the website name (`_name`), which is `GitHub`, in `title`.
+The title is a *required* field and should be the same as the level 3 heading (`###`) of the route documentation. In this case, it's `Repo Issues`. Do not repeat the website name (`_name`), which is `GitHub`, in `title`.
 
 ### `docs`
 
-The documentation link is also a **required** field. In this case, the documentation link for `GitHub Repo Issues` will be `https://docs.rsshub.app/en/programming.html#github`.
+The documentation link is also a *required* field. In this case, the documentation link for `GitHub Repo Issues` will be `https://docs.rsshub.app/en/programming.html#github`.
 
 Note that the hash should be positioned to the level 2 heading (`##`), and not `https://docs.rsshub.app/en/programming.html#github-repo-issues`.
 
 ### `source`
 
-The source field is **optional** and should specifies the URL path. Leave it blank if you don't want to match any URL paths. It only appears in `RSSHub for current website` option of the RSSHub Radar browser extension.
+The source field is *optional* and should specifies the URL path. Leave it blank if you don't want to match any URL paths. It only appears in `RSSHub for the current site` option of the RSSHub Radar browser extension.
 
 The source should be an array of strings. For example, if the source for `GitHub Repo Issues` is `/:user/:repo`, it means that when you visit `https://github.com/DIYgod/RSSHub`, which matches the `github.com/:user/:repo` pattern, the parameters for this URL will be: `{user: 'DIYgod', repo: 'RSSHub'}`. The browser extension uses these parameters to create an RSSHub subscription address based on the `target` field.
 
@@ -120,17 +120,17 @@ You can use the `*` symbol to perform wildcard matching. Note that the syntax he
 
 ### `target`
 
-The target field is **optional** and is used to generate an RSSHub subscription address. It accepts both a string or a function. If you don't want to create an RSSHub subscription address, leave this field empty.
+The target field is *optional* and is used to generate an RSSHub subscription address. It accepts both a string or a function. If you don't want to create an RSSHub subscription address, leave this field empty.
 
 For the `GitHub Repo Issues` example, the corresponding route path in the RSSHub documentation is `/github/issue/:user/:repo`.
 
 After matching the `user` with `DIYgod` and `repo` with `RSSHub` in the source path, the `:user` in the RSSHub route path will be replaced with `DIYgod`, and `:repo` will be replaced with `RSSHub`, resulting in `/github/issue/DIYgod/RSSHub`.
 
-#### target as a function
+#### `target` as a function
 
 In some cases, the source path may not match the desired parameters for an RSSHub route. In these situations, we can use the `target` field as a function with `params`, `url`, and `document` parameters.
 
-The `params` parameter contains the parameters matched by the `source` field, while the `url` parameter is the current web page URL string, and the `document` parameter is the [document interface](https://developer.mozilla.org/en-US/docs/Web/API/document).
+The `params` parameter contains the parameters matched by the `source` field, while the `url` parameter is the current web page URL string, and the `document` parameter is the [document interface](https://developer.mozilla.org/docs/Web/API/document).
 
 It is essential to note that the `target` method runs in a sandbox, and any changes made to `document` will not be reflected in the web page.
 

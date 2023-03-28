@@ -1,10 +1,10 @@
-# New RSSHub Radar Rules
+# 提交新的 RSSHub Radar 规则
 
-If you want to see the results, we suggest you install the browser extension. You can download it for your browser on the [Join Us](/en/joinus/quick-start.html#submit-new-rsshub-radar-rules-before-you-start) page.
+如果需要查看新规则的结果，建议您安装浏览器扩展程序。您可以在 [参与我们](/joinus/quick-start.html#ti-jiao-xin-de-rsshub-radar-gui-ze) 页面下载适合您浏览器的扩展程序。
 
-## Code the rule
+## 编写规则
 
-To create a new RSS feed, create a file called `radar.js` under the corresponding namespace in [/lib/v2/](https://github.com/DIYgod/RSSHub/tree/master/lib/v2). We will continue to use the example of creating an RSS feed for GitHub Repo Issues, which is described [here](/en/joinus/new-rss/before-start.html). The resulting code will look like this:
+要制作新的 RSSHub Radar 规则，需要在 `/lib/v2/` 目录下，相应的域名空间创建 `radar.js` 文件。下面以制作 `GitHub 仓库 Issues` 的 RSS 源为例，详见此处。编写的代码应如下所示：
 
 ```js
 module.exports = {
@@ -12,8 +12,8 @@ module.exports = {
         _name: 'GitHub',
         '.': [
             {
-                title: 'Repo Issues',
-                docs: 'https://docs.rsshub.app/en/programming.html#github',
+                title: '仓库 Issues',
+                docs: 'https://docs.rsshub.app/programming.html#github',
                 source: ['/:user/:repo/issues/:id', '/:user/:repo/issues',  '/:user/:repo'],
                 target: '/github/issue/:user/:repo',
             },
@@ -22,22 +22,22 @@ module.exports = {
 };
 ```
 
-## Top-level Object key
+## 顶层对象键
 
-The object key is the domain name without any subdomains, URL path, or protocol.
+对象键是域名本身，不含任何子域名、URL 路径或协议。
 
-![Struction of a URL](https://wsrv.nl/?url=https://enwpgo.files.wordpress.com/2022/10/image-30.png&output=webp)
+![URL 构成](https://wsrv.nl/?url=https://enwpgo.files.wordpress.com/2022/10/image-30.png&output=webp)
 
-In this case, the domain name is `github.com`, so the object key is `github.com`.
+在此示例中，域名为 `github.com`，对象键则为 `github.com`。
 
-## Inner object key
+## 内部对象键
 
-The first inner object key is `_name`, which is the name of the website. This should be the same as the level 2 heading (`##`) of the route documentation. In this case, it's `GitHub`.
+第一个内部对象键是 `_name`，是网站的名称。这应与路由文档的二级标题 (`##`) 相同。在此示例中是 `GitHub`。
 
-The rest of the inner object keys are the subdomains of a website. If a website you want to match does not have any subdomains, or you want to match both `www.example.com` and `example.com`, use `'.'` instead. In this case, we will use `'.'` since we want to match `github.com`. Note that each subdomain should return an array of objects.
+其余的内部对象键是网站的子域名。如果要匹配的网站没有子域名，或者想同时匹配 `www.example.com` 和 `example.com`，则应使用 `'.'`。在此示例中，我们将使用 `'.'`，因为我们希望匹配 `github.com`。请注意，每个子域名键应返回**一个对象数组**。
 
 <code-group>
-<code-block title="github.com and www.github.com">
+<code-block title="github.com 和 www.github.com">
 
 ```js{4}
 module.exports = {
@@ -98,46 +98,42 @@ module.exports = {
 
 ### `title`
 
-The title is a **required** field and should be the same as the level 3 heading (`###`) of the route documentation. In this case, it's `Repo Issues`. Do not repeat the website name (`_name`), which is `GitHub`, in `title`.
+标题是*必填*字段，应与路由文档的三级标题 (`###`) 相同。在此示例中，它是`仓库 Issues`。在 `title` 中无须重复网站名称 (`_name`)，即 `GitHub`。
 
 ### `docs`
 
-The documentation link is also a **required** field. In this case, the documentation link for `GitHub Repo Issues` will be `https://docs.rsshub.app/en/programming.html#github`.
-
-Note that the hash should be positioned to the level 2 heading (`##`), and not `https://docs.rsshub.app/en/programming.html#github-repo-issues`.
+文档链接也是*必填*字段。在这种情况下，`GitHub 仓库 Issues` 的文档链接将是 `https://docs.rsshub.app/programming.html#github`。请注意，URL hash 应位于二级标题 (`##`) 处，而不是三级标题 (`###`) `https://docs.rsshub.app/programming.html#github-cang-ku-issues`。
 
 ### `source`
 
-The source field is **optional** and should specifies the URL path. Leave it blank if you don't want to match any URL paths. It only appears in `RSSHub for current website` option of the RSSHub Radar browser extension.
+source 是*可选*字段，应指定 URL 路径。如果不想匹配任何 URL 路径，请将其留空。它只会出现在 RSSHub Radar 浏览器扩展程序的`适用于当前网站的 RSSHub`选项中。
 
-The source should be an array of strings. For example, if the source for `GitHub Repo Issues` is `/:user/:repo`, it means that when you visit `https://github.com/DIYgod/RSSHub`, which matches the `github.com/:user/:repo` pattern, the parameters for this URL will be: `{user: 'DIYgod', repo: 'RSSHub'}`. The browser extension uses these parameters to create an RSSHub subscription address based on the `target` field.
+source 应为一个字符串数组。例如，如果 `GitHub 仓库 Issues` 的 source 是 `/:user/:repo`，则意味着当您访问 `https://github.com/DIYgod/RSSHub` 时将匹配 `/:user/:repo`，此时返回的结果 params 将是：`{user: 'DIYgod', repo: 'RSSHub'}`。浏览器扩展程序使用这些参数根据 target 字段建立 RSSHub 订阅地址。
 
-::: warning Warning
-If the value you want to extract is in the URL search parameters or URL hash, use target as a function instead of the `source` field. Also, remember that the `source` field only matches the URL path and not any other parts of the URL.
+::: warning 注意
+如果要提取的值在 URL 参数或 URL hash 中，请使用 target 函数而不是 source 字段。 此外，请记住，source 字段仅匹配 URL 路径，而不匹配 URL 的任何其他部分。
 :::
 
-You can use the `*` symbol to perform wildcard matching. Note that the syntax here is not the same as the [path-to-regexp](https://github.com/pillarjs/path-to-regexp). For instance, `/:user/:repo/*` will match both `https://github.com/DIYgod/RSSHub/issues` and `https://github.com/DIYgod/RSSHub/issues/1234`. If you want to name the matching result, you can place the variable name after the `*` symbol. For example, `/user/:repo/*path`, whereby path will be `issues` and `issues/1234` in the above scenario.
+您也可以使用 `*` 符号执行通配符匹配。请注意，此处的语法与 [path-to-regexp](https://github.com/pillarjs/path-to-regexp) 不同。例如，`/:user/:repo/*` 将匹配 `https://github.com/DIYgod/RSSHub/issues` 和 `https://github.com/DIYgod/RSSHub/issues/1234`。如果要对匹配结果进行命名，可以在 `*` 符号后放置变量名。例如，`/user/:repo/*path`，在此情况下，`path` 将是 `issues` 和 `issues/1234`。
 
 ### `target`
 
-The target field is **optional** and is used to generate an RSSHub subscription address. It accepts both a string or a function. If you don't want to create an RSSHub subscription address, leave this field empty.
+目标是**可选**字段，并用于生成 RSSHub 订阅地址，它可以接受字符串或函数作为输入。如果你不想建立 RSSHub 订阅地址，可以将此字段留空。
 
-For the `GitHub Repo Issues` example, the corresponding route path in the RSSHub documentation is `/github/issue/:user/:repo`.
+以 `GitHub 仓库 Issues` 为例，在 RSSHub 文档中相应的路由为 `/github/issue/:user/:repo`。
 
-After matching the `user` with `DIYgod` and `repo` with `RSSHub` in the source path, the `:user` in the RSSHub route path will be replaced with `DIYgod`, and `:repo` will be replaced with `RSSHub`, resulting in `/github/issue/DIYgod/RSSHub`.
+在将 source 路径中的 `user` 匹配为 `DIYgod`，`repo` 匹配为 `RSSHub` 后，RSSHub 路由中的 `:user` 将被替换为 `DIYgod`，`:repo` 将被替换为 `RSSHub`，结果为 `/github/issue/DIYgod/RSSHub`。
 
-#### target as a function
+#### `target` 函数
 
-In some cases, the source path may not match the desired parameters for an RSSHub route. In these situations, we can use the `target` field as a function with `params`, `url`, and `document` parameters.
+如果 source 路径不能匹配 RSSHub 路由的期望参数，则可以将 target 作为函数使用，与 `params`、`url` 和 `document` 参数一起使用。其中，`params` 参数包含 `source` 字段匹配到的参数，而 `url` 参数是当前的网页 URL 字符串，`document` 参数是 [document 接口](https://developer.mozilla.org/docs/Web/API/document)。
 
-The `params` parameter contains the parameters matched by the `source` field, while the `url` parameter is the current web page URL string, and the `document` parameter is the [document interface](https://developer.mozilla.org/en-US/docs/Web/API/document).
+需要注意的是，`target` 函数在沙盒中运行，对 `document` 的任何更改都不会反映在网页中。
 
-It is essential to note that the `target` method runs in a sandbox, and any changes made to `document` will not be reflected in the web page.
-
-Here are two examples of how to use the `target` field as a function:
+下面是使用 `target` 字段作为函数的两个示例：
 
 <code-group>
-<code-block title="Match using params">
+<code-block title="使用 params 匹配">
 
 ```js{9}
 module.exports = {
@@ -145,7 +141,7 @@ module.exports = {
         _name: 'GitHub',
         '.': [
             {
-                title: 'Repo Issues',
+                title: '仓库 Issues',
                 docs: 'https://docs.rsshub.app/en/programming.html#github',
                 source: ['/:user/:repo/issues/:id', '/:user/:repo/issues',  '/:user/:repo'],
                 target: (params) => `/github/issue/${params.user}/${params.repo}`,
@@ -156,7 +152,7 @@ module.exports = {
 ```
 
 </code-block>
-<code-block title="Match using URL">
+<code-block title="使用 URL 匹配">
 
 ```js{9}
 module.exports = {
@@ -164,7 +160,7 @@ module.exports = {
         _name: 'GitHub',
         '.': [
             {
-                title: 'Repo Issues',
+                title: '仓库 Issues',
                 docs: 'https://docs.rsshub.app/en/programming.html#github',
                 source: ['/:user/:repo'],
                 target: (_, url) => `/github/issue${new URL(url).pathname}`
@@ -177,26 +173,26 @@ module.exports = {
 </code-block>
 </code-group>
 
-Both the above examples will return the same RSSHub subscription address as the [first example](/en/joinus/new-radar.html#code-the-rule).
+两个示例将返回与 [第一个示例](/joinus/new-radar.html#bian-xie-gui-ze) 相同的 RSSHub 订阅地址。
 
 ### RSSBud
 
-[RSSBud](https://github.com/Cay-Zhang/RSSBud) supports RSSHub Radar rules and will also be updated automatically, but please note that:
+[RSSBud](https://github.com/Cay-Zhang/RSSBud) 支持 RSSHub Radar 的规则并且也会自动更新，但是请注意：
 
--   Use `'.'` subdomain allows RSSBud to support common mobile domains such as `m` / `mobile`
--   Use `document` in `target` does not apply to RSSBud: RSSBud is not a browser extension, it only fetches and analyzes the URL of a website, it cannot run JavaScript
+-   使用 `'.'` 子域名可以使 RSSBud 支持常见的移动端子域名，例如 `m`/`mobile`。
+-   在 `target` 中使用 `document` 的规则并不适用于 RSSBud：RSSBud 不是浏览器扩展程序，它只能获取和分析网站的 URL，不能运行 JavaScript。
 
-### Update the Documentation
+### 补充文档
 
-As mentioned earlier in [Other components](/en/joinus/new-rss/add-docs.html#documentation-examples-other-components), adding `radar="1"` in the RSSHub docs will show a `Support browser extension` badge. If the rule is also compatible with RSSBud, adding `rssbud="1"` will show a `Support RSSBud` badge.
+[如前所述](/joinus/new-rss/add-docs.html#wen-dang-shi-li-qi-ta-zu-jian)，在 RSSHub 文档添加 radar="1" 将显示“支持浏览器扩展”的徽章。如果规则还与 RSSBud 兼容，则添加 rssbud="1" 将显示“支持 RSSBud”的徽章。
 
-## Debugging Radar Rules
+## 调试 Radar 规则
 
-You can debug your radar rules in the RSSHub Radar extension settings of your browser. First, open the settings and switch to the "List of rules" tab. Then scroll down to the bottom of the page and you will see a text field. Here, you can replace the old rules with your new rules for debugging.
+你可以在浏览器中的 RSSHub Radar 扩展设置中调试你的 radar 规则。首先，打开设置并切换到 “规则列表” 选项页。然后滚动到页面底部，您会看到一个文本框。在这里，您可以使用您的新规则替换旧规则以进行调试。
 
-If you are worried about losing the original RSSHub radar, don't be. It will be restored if you click the "Update Now" button in the settings page.
+如果担心失去原来的 RSSHub Radar 规则，那就不要担心，如果你在设置页面中点击“立即更新”按钮，它将会被恢复。
 
-Here's an example radar rule that you can play with:
+以下是几个可以用来调试的 radar 规则示例：
 
 ```js
 ({
@@ -204,7 +200,7 @@ Here's an example radar rule that you can play with:
         _name: 'GitHub',
         '.': [
             {
-                title: 'Repo Issues',
+                title: '仓库 Issues',
                 docs: 'https://docs.rsshub.app/en/programming.html#github',
                 source: ['/:user/:repo/issues/:id', '/:user/:repo/issues',  '/:user/:repo'],
                 target: '/github/issue/:user/:repo',
@@ -214,7 +210,7 @@ Here's an example radar rule that you can play with:
 })
 ```
 
-::: details Extra examples
+::: details 其他示例
 
 ```js
 ({

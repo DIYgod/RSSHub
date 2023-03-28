@@ -59,7 +59,7 @@ Any assignments to variables that are declared outside of the `tryGet()` functio
 [lib/middleware/cache/index.js](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/cache/index.js#L58)
 
 ::: tip Tips
-Below are two advanced methods for using the cache. You should use `ctx.cache.tryGet()` most of the time.
+Below are advanced methods for using cache. You should use `ctx.cache.tryGet()` most of the time.
 
 Note that you need to use `JSON.parse()` when retrieving the cache using `ctx.cache.get()`.
 :::

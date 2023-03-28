@@ -113,7 +113,7 @@ module.exports = {
                                     path: 'new-rss/before-start',
                                 },
                                 {
-                                    title: '🚀 创建自己的 RSSHub 路由',
+                                    title: '🚀 制作自己的 RSSHub 路由',
                                     path: 'new-rss/start-code',
                                 },
                                 {
@@ -140,19 +140,19 @@ module.exports = {
                                     path: 'advanced-feed',
                                 },
                                 {
-                                    title: '📜 Script Standard',
+                                    title: '📜 路由规范',
                                     path: 'script-standard',
                                 },
                                 {
-                                    title: '💾 Caching',
+                                    title: '💾 使用缓存',
                                     path: 'use-cache',
                                 },
                                 {
-                                    title: '🗓️ Date Handling',
+                                    title: '🗓️ 日期处理',
                                     path: 'pub-date',
                                 },
                                 {
-                                    title: '🐛 Debugging',
+                                    title: '🐛 调试',
                                     path: 'debug',
                                 },
                             ],

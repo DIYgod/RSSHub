@@ -20,7 +20,7 @@ The `pubDate` passed from the route script should correspond to the time zone/ti
 
 We recommend using [day.js](https://github.com/iamkun/dayjs) for date processing and time zone adjustment. There are two related utility classes:
 
-### Parse Date
+### Date and Time
 
 The RSSHub utility class includes a wrapper for [day.js](https://github.com/iamkun/dayjs) that allows you to easily parse date strings and obtain a [Date Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) in most cases.
 

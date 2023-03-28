@@ -4,7 +4,7 @@
 
 ## 安装 Node.js
 
-为了能够编写新的 RSS 规则，您必须首先安装 Node.js。RSSHub 使用 Node.js 运行其代码以及创建 RSS 订阅，需要 Node v16 或更高版本。您可以从 [这里](https://nodejs.org/en/download) 下载最新的 Node.js LTS 版本。
+为了能够编写新的 RSS 规则，您必须首先安装 Node.js。RSSHub 使用 Node.js 运行其代码以及制作 RSS 订阅源，需要 Node v16 或更高版本。您可以从 [这里](https://nodejs.org/en/download) 下载最新的 Node.js LTS 版本。
 
 在 Windows 系统下，您可以下载安装程序并按照安装程序的步骤进行操作。记得勾选安装 **原生模块的工具（Tools for Native Modules）** 选项。
 
