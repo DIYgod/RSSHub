@@ -130,7 +130,7 @@
     "module-alias": "2.2.2",
     "pidusage": "3.0.2",
     "plist": "3.0.6",
-    "proxy-chain": "2.2.1",
+    "proxy-chain": "2.3.0",
     "puppeteer": "19.8.0",
     "puppeteer-extra": "3.3.6",
     "puppeteer-extra-plugin-stealth": "2.11.2",
