@@ -2787,6 +2787,12 @@
     "/jornada/:date?/:category?": [
         "Thealf154"
     ],
+    "/jou/tzgg": [
+        "real-jiakai"
+    ],
+    "/jou/yztzgg": [
+        "real-jiakai"
+    ],
     "/jseea/news/:type?": [
         "schen1024"
     ],
@@ -3385,6 +3391,9 @@
     "/njust/jwc/:type?": [
         "MilkShakeYoung",
         "jasongzy"
+    ],
+    "/njxzc/libtzgg": [
+        "real-jiakai"
     ],
     "/njxzc/tzgg": [
         "real-jiakai"
@@ -4462,6 +4471,9 @@
         "hoilc",
         "TonyRL",
         "ETiV"
+    ],
+    "/techcrunch/news": [
+        "NavePnow"
     ],
     "/techflowpost/express": [
         "nczitzk"
