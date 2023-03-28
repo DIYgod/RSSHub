@@ -7,7 +7,7 @@ Reference: https://github.com/DIYgod/RSSHub/discussions/8002
 
 Close #
 
-## 完整路由地址 / Example for the proposed route(s)
+## 路由地址示例 / Example for the proposed route(s)
 
 <!--
 请在 `routes` 区域填写以 / 开头的完整路由地址，否则你的 PR 将会被无条件关闭。
