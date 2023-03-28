@@ -427,12 +427,6 @@ Solidot 提供的 feed:
 
 </Route>
 
-## TechCrunch
-
-### News
-
-<Route author="NavePnow" example="/techcrunch/news" path="/techcrunch/news"/>
-
 ## Telecompaper
 
 ### News

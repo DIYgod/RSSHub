@@ -572,12 +572,6 @@ Language
 
 <RouteEn author="TonyRL" example="/taiwannews/hot" path="/taiwannews/hot/:lang?" :paramsDesc="['Language, `en` or `zh`, `en` by default']" radar="1" rssbud="1"/>
 
-## TechCrunch
-
-### News
-
-<RouteEn author="NavePnow" example="/techcrunch/news" path="/techcrunch/news"/>
-
 ## The Atlantic
 
 ### News
