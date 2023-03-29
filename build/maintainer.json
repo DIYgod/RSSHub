@@ -2458,6 +2458,9 @@
     "/inoreader/html_clip/:user/:tag/:num?": [
         "BeautyyuYanli"
     ],
+    "/inoreader/rss/:user/:tag": [
+        "NavePnow"
+    ],
     "/instagram/:category/:key": [
         "oppilate",
         "DIYgod"

@@ -9835,6 +9835,13 @@
         "source": [
           "/stream/user/:user/tag/:tag/*"
         ]
+      },
+      {
+        "title": "RSS",
+        "docs": "https://docs.rsshub.app/reading.html#inoreader",
+        "source": [
+          "/stream/user/:user/tag/:tag"
+        ]
       }
     ]
   },

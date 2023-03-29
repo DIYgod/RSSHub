@@ -5114,7 +5114,11 @@
                     const origin = new URL(url);
                     const limit = origin.searchParams.get('n');
                     return `/inoreader/html_clip/${params.user}/${params.tag}` + (limit ? `?limit=${limit}` : '');
-                } } ] },
+                } },
+      { title:"RSS",
+        docs:"https://docs.rsshub.app/reading.html#inoreader",
+        source:[ "/stream/user/:user/tag/:tag" ],
+        target:(params) => `/inoreader/rss/${params.user}/${params.tag}` } ] },
   "instagram.com":{ _name:"Instagram",
     www:[ { title:"用户",
         docs:"https://docs.rsshub.app/social-media.html#instagram",
