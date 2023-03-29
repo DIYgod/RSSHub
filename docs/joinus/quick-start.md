@@ -13,7 +13,7 @@
 如果您对它们不是很了解，但想要学习它们，以下是一些好的资源：
 
 -   [MDN Web Docs 上的 JavaScript 指南](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript#教程)
--   [W3Schools](https://www.w3schools.com/)
+-   [W3Schools](https://www.w3schools.com)
 -   [Codecademy 上的 Git 课程](https://www.codecademy.com/learn/learn-git)
 
 如果您想查看其他开发人员如何使用这些技术来制作 RSS 订阅的示例，您可以查看 [我们的代码库](https://github.com/DIYgod/RSSHub/tree/master/lib/v2) 中的一些代码。

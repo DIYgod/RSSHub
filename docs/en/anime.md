@@ -46,6 +46,12 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 <RouteEn author="EsuRt" example="/hanime/video" path="/hanime/video"/>
 
+## IDOLY PRIDE
+
+### News
+
+<RouteEn author="Mingxia1" example="/idolypride/news" path="/idolypride/news" radar="1" rssbud="1"/>
+
 ## iwara
 
 ### User
@@ -135,6 +141,16 @@ The RSS routing has not been rigorously tested and the information provided cann
 ### Manga Update
 
 <RouteEn author="vzz64" example="/mangadex/58be6aa6-06cb-4ca5-bd20-f1392ce451fb/en" path="/:id/:lang?" :paramsDesc="['manga ID', 'language code']" radar="1" />
+
+## nhentai
+
+### Filter
+
+<RouteEn author="MegrezZhu hoilc" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword/:mode?" :paramsDesc="['Filter term, can be: `parody`, `character`, `tag`, `artist`, `group`, `language` or `category`','Filter value', 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/en/install/#configuration-route-specific-configurations), default to `simple`']" anticrawler="1" supportBT="1" radar="1"/>
+
+### Advanced Search
+
+<RouteEn author="MegrezZhu hoilc" example='/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-"mosaic+censorship"' path="/nhentai/search/:keyword/:mode?" :paramsDesc="['Keywords for search. You can copy the content after `q=` after searching on the original website, or you can enter it directly. See the [official website](https://nhentai.net/info/) for details', 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/en/install/#configuration-route-specific-configurations), default to `simple`']" anticrawler="1" supportBT="1" radar="1"/>
 
 ## QooApp
 

@@ -284,6 +284,12 @@ in pkgs.stdenv.mkDerivation {
 }
 ```
 
+## Deploy to Railway
+
+Automatic updates are included.
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/QxW__f?referralCode=9wT3hc)
+
 ## Deploy to Heroku
 
 ### Notice
