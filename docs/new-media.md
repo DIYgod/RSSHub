@@ -1337,6 +1337,12 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 </Route>
 
+## TechCrunch
+
+### News
+
+<Route author="NavePnow" example="/techcrunch/news" path="/techcrunch/news"/>
+
 ## The Brain
 
 ### Blog
