@@ -3302,6 +3302,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/zju/yjszs/28498" path="zju/yjszs/:type" :paramsDesc="['分类，见下表;其他未列出分类可在网页 url 中找到']" >
+
+| 硕士最新通知 | 硕士招生政策文件 |
+| ------------ | ---------------- |
+| 28498        | 28480            |
+
+</Route>
+
 ## 浙江大学城市学院
 
 ### 新闻通知
