@@ -913,6 +913,16 @@ pageClass: routes
 
 </Route>
 
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/uestc/yz/sszs-tzgg" path="/uestc/yz/:type" :paramsDesc="['分类，见下表, 未列出的type可在对应页 URL 中找到']" puppeteer="1">
+
+| 硕士招生通知公告 | 硕士招生招生简章 |
+| ---------------- | ---------------- |
+| sszs-tzgg        | sszs-zsjz        |
+
+</Route>
+
 ## 东北大学
 
 ### 新闻网
