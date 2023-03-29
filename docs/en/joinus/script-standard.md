@@ -9,6 +9,7 @@ sidebarDepth: 2
 
 -   **Be consistent!**
 -   Avoid using deprecated features.
+-   Avoid modifying `yarn.lock` and `package.json`, unless you are adding a new dependency.
 -   Conbine repetitive code into functions.
 -   Prefer higher ECMAScript Standard features over lower ones.
 -   Sort the entries alphabetically (uppercase first) to make it easier to find an entry.

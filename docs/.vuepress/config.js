@@ -136,7 +136,7 @@ module.exports = {
                             collapsable: false,
                             children: [
                                 {
-                                    title: '🎧 Create a Rich Media RSS Feed',
+                                    title: '🎧 制作多媒体 RSS 订阅源',
                                     path: 'advanced-feed',
                                 },
                                 {

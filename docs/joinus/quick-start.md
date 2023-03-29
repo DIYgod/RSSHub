@@ -12,7 +12,7 @@
 
 如果您对它们不是很了解，但想要学习它们，以下是一些好的资源：
 
--   [MDN Web Docs 上的 JavaScript 教程](https://developer.mozilla.org/en-US/docs/Web/JavaScript#tutorials)
+-   [MDN Web Docs 上的 JavaScript 指南](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript#教程)
 -   [W3Schools](https://www.w3schools.com/)
 -   [Codecademy 上的 Git 课程](https://www.codecademy.com/learn/learn-git)
 

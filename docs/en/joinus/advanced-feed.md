@@ -2,13 +2,13 @@
 
 This guide is intended for advanced users who want to know how to create an RSS feed in detail.  If you're new to creating RSS feeds, we recommend reading [Create Your Own RSSHub Route](/en/joinus/new-rss/start-code.html) first.
 
-Once you have collected the data you want to include in your RSS feed, you can pass it to `ctx.state.data`. RSSHub's middleware `template.js` will then process the data and render the RSS output in the required format (which is RSS 2.0 by default). In addition to the fields mentioned in [Create your own RSSHub route](/en/joinus/new-rss/start-code.html), you can customize your RSS feed further using the following fields.
+Once you have collected the data you want to include in your RSS feed, you can pass it to `ctx.state.data`. RSSHub's middleware [`template.js`](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/template.js) will then process the data and render the RSS output in the required format (which is RSS 2.0 by default). In addition to the fields mentioned in [Create your own RSSHub route](/en/joinus/new-rss/start-code.html), you can customize your RSS feed further using the following fields.
 
 It's important to note that not all fields are applicable to all output formats since RSSHub supports multiple output formats. The table below shows which fields are compatible with different output formats. We use the following symbols to denote compatibility: `A` for Atom, `J` for JSON Feed, `R` for RSS 2.0.
 
 Channel level
 
-The following table lists the fields you can use to customize the channel of your RSS feed at the top level:
+The following table lists the fields you can use to customize your RSS feed at channel level:
 
 | Field       | Description                                                                   | Default      | Compatibility |
 | :---------- | :----------                                                                   | :----------- | :------------ |
@@ -41,7 +41,7 @@ Each item in an RSS feed is represented by an object with a set of fields that d
 | **`itunes_item_image`** | *(Optional)* The URL of an image associated with the item                           | `undefinded` | R |
 | **`itunes_duration`** | *(Optional)* The length of an audio or video item in seconds (or in the format H:mm:ss), which should be a number or string | `undefinded` | J, R |
 | **`enclosure_url`** | *(Optional)* The URL of an enclosure associated with the item                                  | `undefinded` | J, R |
-| **`enclosure_length`** | *(Optional)* The size of the enclosure file in **bytes**, which should be a number                                | `undefinded` | J, R |
+| **`enclosure_length`** | *(Optional)* The size of the enclosure file in **byte**, which should be a number                                | `undefinded` | J, R |
 | **`enclosure_type`** | *(Optional)* The MIME type of the enclosure file, which should be a string                           | `undefinded` | J, R |
 | **`upvotes`** | *(Optional)*  The number of upvotes the item has received, which should be a number                               | `undefinded` | A |
 | **`downvotes`** | *(Optional)* The number of downvotes the item has received, which should be a number                          | `undefinded` | A |
@@ -91,7 +91,7 @@ By setting the `supportBT` attribute to `"1"`, you'll be able to update your doc
 
 ## Create a Journal Feed
 
-RSSHub supports creating journal feeds that can replace `item.link` with a Sci-hub link if users provide the common parameter `scihub`. To create a journal feed, you'll need to include an **additional** field in your RSS feed:
+RSSHub supports creating journal feeds that can replace `item.link` with a Sci-hub link if users provide the [common parameter](/en/parameter.html#sci-hub-link) `scihub`. To create a journal feed, you'll need to include an **additional** field in your RSS feed:
 
 ```js
 ctx.state.data = {
@@ -116,8 +116,6 @@ To update the documentation for your route with support for journal feeds, you'l
 By setting the `supportSciHub` attribute to `"1"`, the documentation for your route will accurately reflect its support for creating journal feeds with Sci-hub links.
 
 ## Create a Podcast Feed
-
-RSSHub supports creating podcast feeds. To create a podcast feed, you need to add these **additional** fields that are in accordance with many podcast players' subscription format:
 
 RSSHub supports creating podcast feeds that can be used with many podcast players' subscription formats. To create a podcast feed, you'll need to include several **additional** fields in your RSS feed:
 

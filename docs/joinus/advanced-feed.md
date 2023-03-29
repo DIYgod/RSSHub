@@ -1,160 +1,158 @@
-# Create a Rich Media RSS Feed
+# 制作多媒体 RSS 订阅源
 
-This guide is intended for advanced users who want to know how to create an RSS feed in detail.  If you're new to creating RSS feeds, we recommend reading [Create Your Own RSSHub Route](/en/joinus/new-rss/start-code.html) first.
+本指南面向希望深入了解如何制作 RSS 订阅源的高级用户。如果您是第一次制作 RSS 订阅源，我们建议先阅读 [制作自己的 RSSHub 路由](/joinus/new-rss/start-code.html)。
 
-Once you have collected the data you want to include in your RSS feed, you can pass it to `ctx.state.data`. RSSHub's middleware `template.js` will then process the data and render the RSS output in the required format (which is RSS 2.0 by default). In addition to the fields mentioned in [Create your own RSSHub route](/en/joinus/new-rss/start-code.html), you can customize your RSS feed further using the following fields.
+一旦您获取了要包含在您的 RSS 订阅源中的数据，就可以将其传递给 `ctx.state.data`。然后RSSHub的中间件 [`template.js`](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/template.js) 将处理数据并以所需的格式呈现 RSS 输出（默认为RSS 2.0）。除了 [制作自己的 RSSHub 路由](/joinus/new-rss/start-code.html) 中提到的字段外，您还可以使用以下字段进一步自定义 RSS 订阅源。
 
-It's important to note that not all fields are applicable to all output formats since RSSHub supports multiple output formats. The table below shows which fields are compatible with different output formats. We use the following symbols to denote compatibility: `A` for Atom, `J` for JSON Feed, `R` for RSS 2.0.
+需要注意的是，并非所有字段都适用于所有的输出格式，因为 RSSHub 支持多种输出格式。下表显示了不同输出格式兼容的字段。我们使用以下符号表示兼容性：`A` 表示 Atom，`J` 表示 JSON Feed，`R` 表示 RSS 2.0。
 
-Channel level
+频道级别
 
-The following table lists the fields you can use to customize the channel of your RSS feed at the top level:
+以下表格列出了你可以用来定制你的 RSS 订阅源频道级别的字段：
 
-| Field       | Description                                                                   | Default      | Compatibility |
-| :---------- | :----------                                                                   | :----------- | :------------ |
-| **`title`**       | *(Recommended)* The name of the feed, which should be plain text only   | `RSSHub`     | A, J, R |
-| **`link`**        | *(Recommended)* The URL of the website associated with the feed, which should link to a human-readable website | `https://rsshub.app`  | A, J, R |
-| **`description`** | *(Optional)* The summary of the feed, which should be plain text only   | If not specified, defaults to **`title`** | J, R |
-| **`language`**    | *(Optional)* The primary language of the feed, which should be a value from [RSS Language Codes](https://www.rssboard.org/rss-language-codes) or ISO 639 language codes | `zh-cn`               | J, R |
-| **`image`**       | *(Recommended)* The URL of the image that represents the channel, which should be relatively large and square | `undefinded` | J, R |
-| **`icon`**        | *(Optional)* The icon of an Atom feed                                   | `undefinded` | J |
-| **`logo`**        | *(Optional)* The logo of an RSS feed                                    | `undefinded` | J |
-| **`subtitle`**    | *(Optional)* The subtitle of an Atom feed                               | `undefinded` | A |
-| **`author`**      | *(Optional)* The author of an Atom feed or the authors of a JSON feed   | `RSSHub`     | A, J |
-| **`itunes_author`** | *(Optional)* The author of a podcast feed                             | `undefinded` | R |
-| **`itunes_category`** | *(Optional)* The category of a podcast feed                         | `undefinded` | R |
-| **`itunes_explicit`** | *(Optional)* The explicit of a podcast feed                         | `undefinded` | R |
-| **`allowEmpty`** | *(Optional)* Whether to allow empty feeds. If set to `true`, the feed will be generated even if there are no items | `undefinded` | A, J, R |
+| 字段            | 描述                  | 默认值 | 兼容性 |
+| :----------      | :----------         | :----------- | :------------ |
+| **`title`**       | *（推荐）* 源的名称，应为纯文本   | `RSSHub`     | A, J, R |
+| **`link`**        | *（推荐）* 与源关联的网站网址，应链接到一个可读的网站 | `https://rsshub.app`  | A, J, R |
+| **`description`** | *（可选）* 源的摘要，应为纯文本   | 如果未指定，默认为 **`title`** | J, R |
+| **`language`**    | *（可选）* 源的主要语言，应为 [RSS语言代码](https://www.rssboard.org/rss-language-codes) 或 ISO 639 语言代码之一 | `zh-cn`               | J, R |
+| **`image`**       | *（推荐）* 表示频道的高清图片的网址 | `undefinded` | J, R |
+| **`icon`**        | *（可选）* Atom 源的图标           | `undefinded` | J |
+| **`logo`**        | *（可选）* RSS 源的标志           | `undefinded` | J |
+| **`subtitle`**    | *（可选）* Atom 源的副标题         | `undefinded` | A |
+| **`author`**      | *（可选）* Atom 源的作者或 JSON Feed 的作者 | `RSSHub`     | A, J |
+| **`itunes_author`** | *（可选）* 播客源的作者       | `undefinded` | R |
+| **`itunes_category`** | *（可选）* 播客源的分类   | `undefinded` | R |
+| **`itunes_explicit`** | *（可选）* 播客源的 explicit     | `undefinded` | R |
+| **`allowEmpty`** | *（可选）* 是否允许空源。如果设置为 `true`，即使没有文章，也会生成源 | `undefinded` | A, J, R |
 
-Each item in an RSS feed is represented by an object with a set of fields that describe it. The table below lists the available fields:
+在 RSS 订阅源中，每个条目都由描述它的一组字段表示。下表列出了可用的字段：
 
-| Field       | Description                                                                   | Default        | Compatibility |
-| :---------- | :----------                                                                   | :------------- | :------------ |
-| **`title`**       | *(Required)* The title of the item, which should be plain text only              | `undefinded`   | A, J, R |
-| **`link`**        | *(Recommended)* The URL of the item, which should link to a human-readable website | `undefinded` | A, J, R |
-| **`description`** | *(Recommended)* The content of the item. For an Atom feed, it's the `atom:content` element. For a JSON feed, it's the `content_html` field | `undefinded` | A, J, R |
-| **`author`**      | *(Optional)* The author of the item                                      | `undefinded`   | A, J, R |
-| **`category`**    | *(Optional)* The category of the item. You can use a plain string or an array of strings | `undefinded` | A, J, R |
-| **`guid`**        | *(Optional)* The unique identifier of the item                           | If not specified, defaults to **`link || title`** | A, J, R |
-| **`pubDate`**     | *(Recommended)* The publication date of the item, which should be a [Date object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) following [the standard](/en/joinus/pub-date.html) | `undefinded` | A, J, R |
-| **`updated`**     | *(Optional)* The date of the last modification of the item, which should be a [Date object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) | `undefinded` | A, J |
-| **`itunes_item_image`** | *(Optional)* The URL of an image associated with the item                           | `undefinded` | R |
-| **`itunes_duration`** | *(Optional)* The length of an audio or video item in seconds (or in the format H:mm:ss), which should be a number or string | `undefinded` | J, R |
-| **`enclosure_url`** | *(Optional)* The URL of an enclosure associated with the item                                  | `undefinded` | J, R |
-| **`enclosure_length`** | *(Optional)* The size of the enclosure file in **bytes**, which should be a number                                | `undefinded` | J, R |
-| **`enclosure_type`** | *(Optional)* The MIME type of the enclosure file, which should be a string                           | `undefinded` | J, R |
-| **`upvotes`** | *(Optional)*  The number of upvotes the item has received, which should be a number                               | `undefinded` | A |
-| **`downvotes`** | *(Optional)* The number of downvotes the item has received, which should be a number                          | `undefinded` | A |
-| **`comments`** | *(Optional)*  The number of comments for the item, which should be a number                             | `undefinded` | A |
-| **`media.*`** | *(Optional)* The media associated with the item. See [Media RSS](https://www.rssboard.org/media-rss) for more details | `undefinded` | R |
-| **`doi`** | *(Optional)* The Digital Object Identifier of the item, which should be a string in the format `10.xxxx/xxxxx.xxxx` | `undefinded` | R |
+| 字段            | 描述                       | 默认值   | 兼容性  |
+| :----------      | :----------              | :------ | :------ |
+| **`title`**       | *（必填）* 条目的标题，应仅使用纯文本         | `undefinded` | A, J, R |
+| **`link`**        | *（推荐）* 条目的链接，应链接到可读的网站 | `undefinded` | A, J, R |
+| **`description`** | *（推荐）* 条目的内容。对于 Atom 订阅，应是 `atom:content` 元素。对于 JSON Feed，应是 `content_html` 字段 | `undefinded` | A, J, R |
+| **`author`**      | *（可选）* 条目的作者                         | `undefinded` | A, J, R |
+| **`category`**    | *（可选）* 条目的分类。字符串或字符串数组皆可 | `undefinded` | A, J, R |
+| **`guid`**        | *（可选）* 条目的唯一标识符。如果未指定，默认为 **`link || title`** | `undefinded` | A, J, R |
+| **`pubDate`**     | *（推荐）* 条目的发布日期，应该 [遵从规范](/joinus/pub-date.html) 是 [Date object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) | `undefinded` | A, J, R |
+| **`updated`**     | *（可选）* 条目的最后修改日期，应该是 [Date object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) | `undefinded` | A, J |
+| **`itunes_item_image`** | *（可选）* 条目相关联的图片的网址 | `undefinded` | R |
+| **`itunes_duration`** | *（可选）* 音频或视频条目的长度，以秒为单位（或格式为 H:mm:ss），应为数字或字符串 | `undefinded` | J, R |
+| **`enclosure_url`** | *（可选）* 条目相关联的附件的网址 | `undefinded` | J, R |
+| **`enclosure_length`** | *（可选）* 附件文件的大小（以 **byte** 为单位），应为数字 | `undefinded` | J, R |
+| **`enclosure_type`** | *（可选）* 附件文件的 MIME 类型，应为字符串 | `undefinded` | J, R |
+| **`upvotes`** | *（可选）* 条目的赞数，应为数字 | `undefinded` | A |
+| **`downvotes`** | *（可选）* 条目的踩数，应为数字 | `undefinded` | A |
+| **`comments`** | *（可选）* 条目的评论数，应为数字 | `undefinded` | A |
+| **`media.*`** | *（可选）* 条目相关的媒体。更多详情请参见 [媒体 RSS](https://www.rssboard.org/media-rss) | `undefinded` | R |
+| **`doi`** | *（可选）* 条目的数字对象标识符 (DOI)，应为格式为 `10.xxx/xxxxx.xxxx` 的字符串 | `undefinded` | R |
 
-::: warning Formatting Considerations
-When specifying certain fields in an RSS feed, it's important to keep in mind some formatting considerations. Specifically, you should avoid including any linebreaks, consecutive whitespace, or leading/trailing whitespace in the following fields: **`title`**, **`subtitle`** (only for Atom), **`author`** (only for Atom), **`item.title`**, and **`item.author`**.
+::: warning 格式考虑
+在指定 RSS 订阅源中的某些字段时，重要的是要注意一些格式考虑因素。具体来说，您应避免在以下字段中包含任何换行符、连续的空格或前导／尾随空格：**`title`**，**`subtitle`**（仅适用于 Atom），**`author`**（仅适用于 Atom），**`item.title`** 和 **`item.author`**。
 
-While most RSS readers will automatically trim these fields, some may not process them properly. Therefore, to ensure compatibility with all RSS readers, we recommend trimming these fields before outputting them. If your route cannot tolerate trimming these fields, you should consider changing their format.
+虽然大多数 RSS 阅读器将自动修剪这些空字符，但有些阅读器可能无法正确处理它们。因此，为确保与所有 RSS 阅读器兼容，我们建议在输出这些字段之前将其修剪。如果您制作的路由无法容忍修剪这些空字符，您应考虑更改它们的格式。
 
-Additionally, while other fields will not be forced to be trimmed, we suggest avoiding violations of the above formatting rules as much as possible. If you are using Cheerio to extract content from web pages, be aware that Cheerio will retain line breaks and indentation. For the **`item.description`** field, in particular, any intended linebreaks should be converted to `<br>` tags to prevent them from being trimmed by the RSS reader. If you're extracting an RSS feed from JSON data, be aware that the JSON may contain linebreaks that need to be displayed, so you should convert them to `<br>` tags in this case.
+另外，虽然其他字段不会被强制修剪，但我们建议尽可能避免违反上述格式规则。如果您正在使用 Cheerio 从网页中提取内容，时刻谨记 Cheerio 会保留换行和缩进。特别是对于 **`item.description`** 字段，任何预期之内的换行都应转换为 `<br>` 标签，以防止其被 RSS 阅读器修剪。尤其是您从 JSON 数据中制作 RSS 订阅时，目标网站返回的 JSON 很有可能含有需要显示的换行符，在这种情况下，应将它们转换为 `<br>` 标签。
 
-It's important to keep these formatting considerations in mind to ensure your RSS feed is compatible with all RSS readers.
+请牢记这些格式考虑因素，以确保您的 RSS 订阅源与所有 RSS 阅读器兼容。
 :::
 
-## Create a BitTorrent/Magnet Feed
+## 制作 BitTorrent／磁力订阅源
 
-RSSHub allows you to create BitTorrent/Magnet feeds, which can be useful for triggering automated downloads. To create a BitTorrent/Magnet feed, you'll need to add **additional** fields to your RSS feed that are in accordance with many downloaders' subscription formats.
+RSSHub 支持制作 BitTorrent／磁力订阅源，这将帮助你的 RSS 订阅源。要制作 BitTorrent／磁力订阅源，您需要在 RSS 源添加附加字段，以符合 BitTorrent 客户端的订阅格式。
 
-Here's an example of how to create a BitTorrent/Magnet feed:
-
-```js
-ctx.state.data = {
-    item: [
-        {
-            enclosure_url: '', // This should be the Magnet URI
-            enclosure_length: '', // The file size in bytes (this field is optional)
-            enclosure_type: 'application/x-bittorrent', // This field should be fixed to 'application/x-bittorrent'
-        },
-    ],
-};
-```
-
-By including these fields in your RSS feed, you'll be able to create BitTorrent/Magnet feeds that can be automatically downloaded by compatible downloaders.
-
-### Update the documentation
-
-If you're adding support for BitTorrent/Magnet feeds in your RSSHub route, it's important to update the documentation to reflect this change. To do this, you'll need to set the `supportBT` attribute of the `RouteEn` component to `"1"`. Here's an example:
-
-```vue
-<RouteEn author="..." example="..." path="..." supportBT="1" />
-```
-
-By setting the `supportBT` attribute to `"1"`, you'll be able to update your documentation to accurately reflect your route's support for BitTorrent/Magnet feeds.
-
-## Create a Journal Feed
-
-RSSHub supports creating journal feeds that can replace `item.link` with a Sci-hub link if users provide the common parameter `scihub`. To create a journal feed, you'll need to include an **additional** field in your RSS feed:
+以下是制作 BitTorrent／磁力订阅源的示例：
 
 ```js
 ctx.state.data = {
     item: [
         {
-            doi: '', // This should be the DOI of the item (e.g., '10.47366/sabia.v5n1a3')
+            enclosure_url: '', // 磁力链接
+            enclosure_length: '', // 文件大小（以 bytes 为单位）（可选）
+            enclosure_type: 'application/x-bittorrent', // 应固定为 'application/x-bittorrent'
         },
     ],
 };
 ```
 
-By including this `doi` field in your RSS feed, you'll be able to create journal feeds that are compatible with RSSHub's Sci-hub functionality.
+在 RSS 源中包含这些字段，您将能够制作被 BitTorrent 客户端识别并自动下载的 BitTorrent／磁力订阅源。
 
-### Update the documentation
+### 更新文档
 
-To update the documentation for your route with support for journal feeds, you'll need to set the `supportScihub` attribute of the RouteEn component to `"1"`. Here's an example:
+如果您要在 RSSHub 路由中添加对 BitTorrent／磁力订阅支持，最重要的是在文档以反映此功能。要做到这一点，您需要将 `Route` 组件的 `supportBT` 属性设置为 `"1"`。 以下是一个示例：
 
 ```vue
-<RouteEn author="..." example="..." path="..." supportScihub="1" />
+<Route author="..." example="..." path="..." supportBT="1" />
 ```
 
-By setting the `supportSciHub` attribute to `"1"`, the documentation for your route will accurately reflect its support for creating journal feeds with Sci-hub links.
+通过将 `supportBT` 属性设置为 `"1"`，您将能够准确反映您的路由支持 BitTorrent／磁力订阅。
 
-## Create a Podcast Feed
+## 制作期刊订阅源
 
-RSSHub supports creating podcast feeds. To create a podcast feed, you need to add these **additional** fields that are in accordance with many podcast players' subscription format:
-
-RSSHub supports creating podcast feeds that can be used with many podcast players' subscription formats. To create a podcast feed, you'll need to include several **additional** fields in your RSS feed:
+RSSHub支持制作期刊订阅源。如果用户提供 [通用参数](/parameter.html#shu-chu-sci-hub-lian-jie) `scihub`，则可以将 `item.link` 替换为 Sci-hub 链接。要制作期刊订阅源，您需要在您的 RSS 源中包含一个附加字段：
 
 ```js
 ctx.state.data = {
-    itunes_author: '', // This field is **required** and should specify the podcast author's name
-    itunes_category: '', // This field specifies the channel category
-    image: '', // This field specifies the channel's cover image or album art
     item: [
         {
-            itunes_item_image: '', // This field specifies the item's cover image
-            itunes_duration: '', // This field is optional and specifies the length of the audio in seconds or the format H:mm:ss
-            enclosure_url: '', // This should be the item's direct audio link
-            enclosure_length: '', // This field is optional and specifies the size of the file in **bytes**
-            enclosure_type: '', // This field specifies the MIME type of the audio file (common types are 'audio/mpeg' for .mp3, 'audio/x-m4a' for .m4a, and 'video/mp4' for .mp4)
+            doi: '', // 条目的 DOI（例如，'10.47366/sabia.v5n1a3'）
         },
     ],
 };
 ```
 
-By including these fields in your RSS feed, you'll be able to create podcast feeds that are compatible with many podcast players.
+通过在 RSS 源中包含 `doi` 字段，您将能够制作与 RSSHub 的 Sci-hub 功能兼容的期刊订阅源。
 
-### Update the documentation
+### 更新文档
 
-To update the documentation for your route with support for podcast feeds, you'll need to set the `supportPodcast` attribute of the `RouteEn` component to `"1"`. Here's an example:
+要显示您制作的期刊订阅源支持 Sui-hub 功能，您需要将 `Route` 组件的 `supportScihub` 属性设置为 `"1"`。以下是一个示例：
 
 ```vue
-<RouteEn author="..." example="..." path="..." supportPodcast="1" />
+<Route author="..." example="..." path="..." supportScihub="1" />
 ```
 
-By setting the `supportPodcast` attribute to `"1"`, the documentation for your route will accurately reflect its support for creating podcast feeds.
+通过将 `supportSciHub` 属性设置为 `"1"`，路由文档将准确反映其支持提供具有 Sci-hub 链接的期刊订阅源。
 
-## Create a Media Feed
+## 制作播客订阅源
 
-RSSHub supports creating [Media RSS](https://www.rssboard.org/media-rss) feeds that are compatible with many [Media RSS](https://www.rssboard.org/media-rss) software subscription formats. To create a [Media RSS](https://www.rssboard.org/media-rss) feed, you'll need to include those **additional** fields in your RSS feed.
+RSSHub 支持制作与播客播放器订阅格式兼容的播客订阅源。要制作播客订阅源，您需要在RSS源中包含几个附加字段：
 
-Here's an example of how to create a [Media RSS](https://www.rssboard.org/media-rss) feed:
+```js
+ctx.state.data = {
+    itunes_author: '', // **必需**，应为主播名称
+    itunes_category: '', // 播客分类
+    image: '', // 专辑封面，作为播客源时**必填**
+    item: [
+        {
+            itunes_item_image: '', // 条目的封面图像
+            itunes_duration: '', // 可选，音频的长度，以秒为单位 或 H:mm:ss 格式
+            enclosure_url: '', // 音频直链
+            enclosure_length: '', // 可选，文件大小，以 Byte 为单位
+            enclosure_type: '', // 音频文件 MIME 类型（常见类型 .mp3 是 'audio/mpeg'，.m4a 是 'audio/x-m4a'，.mp4 是 'video/mp4'）
+        },
+    ],
+};
+```
+
+通过在 RSS 源中包含这些字段，您将能够制作与播客播放器兼容的播客订阅源。
+
+### 更新文档
+
+要显示您制作的订阅源与播客播放器兼容，您需要将 `Route` 组件的 `supportPodcast` 属性设置为 `"1"`。以下是一个示例：
+
+```vue
+<Route author="..." example="..." path="..." supportPodcast="1" />
+```
+
+通过将 `supportPodcast` 属性设置为 `"1"`，路由文档将准确反映其支持播客订阅。
+
+## 制作媒体订阅源
+
+RSSHub支持制作与 [Media RSS](https://www.rssboard.org/media-rss) 格式兼容的媒体订阅源。要制作体订阅源订阅源，您需要在 RSS 源中包含这些附加字段。
+
+以下是制作媒体订阅源的示例：
 
 ```js
 ctx.state.data = {
@@ -162,14 +160,14 @@ ctx.state.data = {
         {
             media: {
                 content: {
-                    url: '...', // This should be the URL of the media content
-                    type: '...', // This should be the MIME type of the media content (e.g., 'audio/mpeg' for an .mp3 file)
+                    url: '...', // 媒体内容的 URL
+                    type: '...', // 媒体内容的 MIME 类型（例如，对于 .mp3 文件是 'audio/mpeg'）
                 },
                 thumbnail: {
-                    url: '...', // This should be the URL of the thumbnail image
+                    url: '...', // 缩略图 URL
                 },
                 '...': {
-                    '...': '...', // Additional media properties can be included here
+                    '...': '...', // 亦可包含其他媒体属性
                 }
             },
         },
@@ -177,24 +175,24 @@ ctx.state.data = {
 };
 ```
 
-By including these fields in your RSS feed, you'll be able to create [Media RSS](https://www.rssboard.org/media-rss) feeds that are compatible with many [Media RSS](https://www.rssboard.org/media-rss) software subscription formats.
+通过在 RSS 源中包含这些字段，您将能够制作与 [Media RSS](https://www.rssboard.org/media-rss) 格式兼容的媒体订阅源。
 
-## Create an Atom Feed with Interactions
+## 制作包含互动的 Atom 订阅源
 
-RSSHub supports creating Atom feeds that include interactions like upvotes, downvotes, and comments. To create an Atom feed with interactions, you'll need to include **additional** fields in your RSS feed that specify the interaction counts for each item.
+RSSHub支持制作包含互动，如点赞、反对和评论的 Atom 订阅源。要制作带有互动的 Atom 订阅源，您需要在 RSS 源中包含附加字段，用于指定每个条目的互动计数。
 
-Here's an example of how to create an Atom feed with interactions:
+以下是制作带有互动的 Atom 订阅源的示例：
 
 ```js
 ctx.state.data = {
     item: [
         {
-            upvotes: 0, // This should be the number of upvotes for this item
-            downvotes: 0, // This should be the number of downvotes for this item
-            comments: 0, // This should be the number of comments for this item
+            upvotes: 0, // 条目的点赞数
+            downvotes: 0, // 条目的踩数
+            comments: 0, // 条目的评论数
         },
     ],
 };
 ```
 
-By including these fields in your Atom feed, you'll be able to create Atom feeds with interactions that are compatible with many Atom feed readers.
+通过在 Atom 源中包含这些字段，您将能够制作包含互动的 Atom 订阅源，这些源与支持 Atom 订阅源的阅读器兼容。
