@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://i.loli.net/2019/04/23/5cbeb7e41414c.png" alt="RSSHub" width="100">
+<img src="https://docs.rsshub.app/logo.png" alt="RSSHub" width="100">
 </p>
 <h1 align="center">RSSHub</h1>
 
@@ -87,6 +87,7 @@ You can support RSSHub via donations.
 Recurring donors will be rewarded via express issue response, or even have your name displayed on our GitHub page and website.
 
 -   Become a Sponser on [GitHub](https://github.com/sponsors/DIYgod)
+-   Become a Sponser on [Open Collective](https://opencollective.com/RSSHub)
 -   Become a Sponser on [Patreon](https://www.patreon.com/DIYgod)
 -   Become a Sponser on [爱发电](https://afdian.net/@diygod)
 -   Contact us directly: i@diygod.me
