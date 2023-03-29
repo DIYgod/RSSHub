@@ -65,8 +65,6 @@ sidebarDepth: 2
 
 ## v2 路由规范
 
-When creating a new route in RSSHub, you need to organize your files in a specific way. Your namespace folder should be stored in the `lib/v2` directory and should include three mandatory files:
-
 当在 RSSHub 中编写新的路由时，需要按特定方式组织文件。命名空间文件夹应该存储在 `lib/v2` 目录下，并且应包括三个必需文件：
 
 -   `router.js` 注册路由

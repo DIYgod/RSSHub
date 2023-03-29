@@ -3,7 +3,7 @@ sidebarDepth: 0
 ---
 # 调试
 
-当调试代码时，除了使用 `console.log` 或将 node 进程附加到调试器，您还可以将自定义对象提供给 ctx.state.json 来进行调试。
+当调试代码时，除了使用 `console.log` 或将 node 进程附加到调试器，您还可以将自定义对象提供给 `ctx.state.json` 来进行调试。
 
 ## 使用 `ctx.state.json`
 

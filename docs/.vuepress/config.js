@@ -131,7 +131,7 @@ module.exports = {
                             path: '/joinus/new-radar.html',
                         },
                         {
-                            title: '💪 Advanced',
+                            title: '💪 高级用法',
                             path: '/joinus/advanced-feed.html',
                             collapsable: false,
                             children: [

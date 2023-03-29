@@ -4,7 +4,7 @@ sidebarDepth: 2
 
 # 添加文档
 
-现在我们完成了代码，是时候为您的路由添加文档了。在 [文档（/docs/）]（https://github.com/DIYgod/RSSHub/blob/master/docs/en）中打开相应的文件，本例中是 `docs/programming.md`。您可以通过运行以下命令实时预览文档：
+现在我们完成了代码，是时候为您的路由添加文档了。在 [文档 (/docs/)](https://github.com/DIYgod/RSSHub/blob/master/docs) 中打开相应的文件，本例中是 `docs/programming.md`。您可以通过运行以下命令实时预览文档：
 
 <code-group>
 <code-block title="yarn" active>
