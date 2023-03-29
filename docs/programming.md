@@ -314,6 +314,16 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="TonyRL" example="/github/wiki/flutter/flutter/Roadmap" path="/github/wiki/:user/:repo/:page?" :paramsDesc="['用户名', '仓库名', '页面 Slug，可在 URL 中找到，留空表示主页']" radar="1" rssbud="1"/>
 
+### 通知
+
+<Route author="zhzy0077" example="/github/notifications" path="/github/notifications" radar="1" rssbud="1"/>
+
+::: warning 注意
+
+需要配置 GITHUB_ACCESS_TOKEN，详见 [Notifications - GitHub Docs](https://docs.github.com/en/rest/activity/notifications?apiVersion=2022-11-28 "Notifications - GitHub Docs")
+
+:::
+
 ## GitLab
 
 ### Explore
