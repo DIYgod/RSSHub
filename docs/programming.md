@@ -316,13 +316,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 通知
 
-<Route author="zhzy0077" example="/github/notifications" path="/github/notifications" radar="1" rssbud="1"/>
-
-::: warning 注意
-
-需要配置 GITHUB_ACCESS_TOKEN，详见 [Notifications - GitHub Docs](https://docs.github.com/en/rest/activity/notifications?apiVersion=2022-11-28 "Notifications - GitHub Docs")
-
-:::
+<Route author="zhzy0077" example="/github/notifications" path="/github/notifications" radar="1" rssbud="1" selfhost="1"/>
 
 ## GitLab
 

@@ -220,13 +220,7 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 ### Notifications
 
-<RouteEn author="zhzy0077" example="/github/notifications" path="/github/notifications" radar="1" rssbud="1"/>
-
-::: warning
-
-This route requires GITHUB_ACCESS_TOKEN. Please refer to [Notifications \- GitHub Docs](https://docs.github.com/en/rest/activity/notifications?apiVersion=2022-11-28 "Notifications - GitHub Docs").
-
-:::
+<RouteEn author="zhzy0077" example="/github/notifications" path="/github/notifications" radar="1" rssbud="1" selfhost="1"/>
 
 ## GitLab
 
