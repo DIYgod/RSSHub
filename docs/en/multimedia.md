@@ -461,9 +461,9 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/360044327034-How-do-I-change-the-language-), English by default. For example:
 
-- `cn` (Chinese), for Pornhub in China <https://cn.pornhub.com/>；
+-   `cn` (Chinese), for Pornhub in China <https://cn.pornhub.com/>；
 
-- `jp` (Japanese), for Pornhub in Japan <https://jp.pornhub.com/> etc.
+-   `jp` (Japanese), for Pornhub in Japan <https://jp.pornhub.com/> etc.
 
 ## PRESTIGE(プレステージ)
 

@@ -183,9 +183,10 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 > -   If there are special characters such as `/` in the **branch name**, they need to be encoded with urlencode, usually `/` needs to be replaced with `%2f`
 > -   If there are special characters in the **file path**, you need to use urlencode to encode them, but the file path can be recognized normally `/` characters
 > -   If the **file path** ends with `.rss`, `.atom`, `.json`, you need to replace the `.` in the suffix with `%2e`
->     > Reeder will make an error when subscribing to `% 2erss` or similar suffixes. At this time, add`.rss` after the route to subscribe
->     >
->     > Such as: replace `https://rsshub.app/github/file/DIYgod/RSSHub/master/lib/router%2ejs` to `https://rsshub.app/github/file/DIYgod/RSSHub/master/lib/router%2ejs.rss`
+>
+> > Reeder will make an error when subscribing to `% 2erss` or similar suffixes. At this time, add`.rss` after the route to subscribe
+> >
+> > Such as: replace `https://rsshub.app/github/file/DIYgod/RSSHub/master/lib/router%2ejs` to `https://rsshub.app/github/file/DIYgod/RSSHub/master/lib/router%2ejs.rss`
 
 </RouteEn>
 
@@ -217,6 +218,10 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 ### Wiki History
 
 <RouteEn author="TonyRL" example="/github/wiki/flutter/flutter/Roadmap" path="/github/wiki/:user/:repo/:page?" :paramsDesc="['User / Org name', 'Repo name', 'Page slug, can be found in URL, empty means Home']" radar="1" rssbud="1"/>
+
+### Notifications
+
+<RouteEn author="zhzy0077" example="/github/notifications" path="/github/notifications" radar="1" rssbud="1" selfhost="1"/>
 
 ## GitLab
 

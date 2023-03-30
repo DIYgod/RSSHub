@@ -234,6 +234,10 @@ pageClass: routes
 
 </Route>
 
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/ustb/yzxc/tzgg" path="/ustb/yzxc/tzgg" />
+
 ### 北京科技大学天津学院
 
 <Route author="henbf" example="/ustb/tj/news/all" path="/ustb/tj/news/:type" :paramsDesc="['默认为 `all`']">
