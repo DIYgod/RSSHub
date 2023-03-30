@@ -102,7 +102,7 @@ Execute the following command to pull RSSHub's docker image.
 $ docker pull diygod/rsshub
 ```
 
-Start a RSSHub container
+Start an RSSHub container
 
 ```bash
 $ docker run -d --name rsshub -p 1200:1200 diygod/rsshub

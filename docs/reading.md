@@ -35,6 +35,13 @@ pageClass: routes
 
 </Route>
 
+### RSS
+
+<Route author="NavePnow" example="/inoreader/rss/1005137674/user-favorites" path="/inoreader/rss/:user/:tag" :paramsDesc="[
+'用户 id, 即举例网址 URL 中的 user/ 后的数字',
+'标签名, 即举例网址 URL 中的 tag/ 后的内容'
+]">
+
 ## kakuyomu
 
 ### 章节更新

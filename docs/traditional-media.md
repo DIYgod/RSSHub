@@ -21,7 +21,6 @@ pageClass: routes
 支持 [Topic Library](https://abc.net.au/news/topics) 中的所有 Topic，你可以填入其 URL 中 `topic` 后的字段，也可以填入对应的 `documentId`。
 
 如 [Computers and Technology](https://www.abc.net.au/news/topic/computers-and-technology) 的 URL 是 <https://www.abc.net.au/news/topic/computers-and-technology>，其 `topic` 后的字段为 `computers-and-technology`，且该 Topic 的 `documentId` 为 `2302`，所以路由为 [/abc/computers-and-technology](https://rsshub.app/abc/computers-and-technology) 以及 [/abc/2302](https://rsshub.app/abc/2302)。
-
 支持的 Channel 在下表已经全部列出，同上，其他 Channel 请找到对应 Channel 页面的源代码中的 `documentId` 填入。
 
 :::

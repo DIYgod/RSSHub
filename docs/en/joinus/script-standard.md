@@ -1,19 +1,76 @@
+---
+sidebarDepth: 2
+---
 # Script Standard
 
-::: warning Warning
+## Code Style
 
-This standard is still WIP and may change over time, so please remember to check it often!
+### General Guidelines
 
-:::
+-   **Be consistent!**
+-   Avoid using deprecated features.
+-   Avoid modifying `yarn.lock` and `package.json`, unless you are adding a new dependency.
+-   Conbine repetitive code into functions.
+-   Prefer higher ECMAScript Standard features over lower ones.
+-   Sort the entries alphabetically (uppercase first) to make it easier to find an entry.
+-   Use HTTPS instead of HTTP whenever possible.
+-   Use WebP format instead of JPG whenever possible since it offers better compression.
 
-When writing a new route, RSSHub will read the following in a folder :
+### Formatting
 
--   `router.js` Register route
--   `maintainer.js` Fetch route path and maintainer
--   `radar.js` Fetch the website and the matching rules corresponding to the route: <https://github.com/DIYgod/RSSHub-Radar/>
--   `templates` Rendering templates
+#### Indentation
 
-**The above files are mandatory for all routes**
+-   Use 4 spaces for indentation for consistent and easy-to-read code.
+
+#### Semicolons
+
+-   Add a semicolon at the end of each statement for improved readability and consistency.
+
+#### String
+
+-   Use single quotes instead of double quotes whenever possible for consistency and readability.
+-   Use [template literals](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Template_literals) over complex string concatenation.
+-   Use [template literals](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Template_literals) for GraphQL queries as they make the code more concise and easy to read.
+
+#### Whitespace
+
+-   Add an empty line at the end of each file.
+-   Avoid trailing whitespace for a clean and readable codebase.
+
+### Language Features
+
+#### Casting
+
+-   Avoid re-casting the same type.
+
+#### Functions
+
+-   Prefer [arrow functions](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Functions/Arrow_functions) over the `function` keyword.
+
+#### Loops
+
+-   Use `for-of` instead of `for` for arrays ([javascript:S4138](https://rules.sonarsource.com/javascript/RSPEC-4138)).
+
+#### Variables
+
+-   Use `const` and `let` instead of `var`.
+-   Declare one variable per declaration.
+
+### Naming
+
+-   Use `lowerCamelCase` for variables and functions to adhere to standard naming conventions.
+-   Use `kebab-case` for files and folders. `snake_case` is also acceptable.
+-   Use `CONSTANT_CASE` for constants.
+
+## v2 Route Standard
+
+When creating a new route in RSSHub, you need to organize your files in a specific way. Your namespace folder should be stored in the `lib/v2` directory and should include three mandatory files:
+
+-   `router.js` Registers the routes
+-   `maintainer.js` Provides information about the route maintainer
+-   `radar.js` Provide a [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) rule for each route
+
+Your namespace folder structure should look like this:
 
 ```
 ├───lib/v2
@@ -25,123 +82,62 @@ When writing a new route, RSSHub will read the following in a folder :
 │       ├─── radar.js
 │       ├─── someOtherJs.js
 │   └───test
-│   └───someOtherScript
+│   └───someOtherNamespaces
 ...
 ```
 
-**All eligible routes under `/v2` path will be loaded automatically without the need of updating `router.js`**
+**All eligible routes under the `lib/v2` path will be automatically loaded without the need for updating the `lib/router.js`.**
 
-## Route Example
+### Namespace
 
-Refer to `furstar`: `./lib/v2/furstar`
+RSSHub appends the name of all route namespace folders in front of the actual route. Route maintainers should think of the namespace as the root.
 
-You can copy the folder as a start-up route template
+#### Naming Standard
 
-## Register Route
+-   Use the second-level domain (SLD) as your namespace. You can find more information about URL structure [here](/en/joinus/new-radar.html#top-level-object-key).
+-   Do not create variations of the same namespace. For more information, see [this page](/en/joinus/new-rss/before-start.html#create-a-namespace)
 
-`router.js` should export a method that provides a `@koa/router` object when we initialize the route
+### Registering a Route
 
-### Naming Standard
+To register a route, the `router.js` file should export a method that provides a `@koa/router` object when initializing the route.
 
-RSSHub will append all the route folder names in front of the actual route by default. The route maintainers can think that the one he gets is the root. We will append the corresponding namespace under which the developers have all the control
+### Maintainer List
 
-### Example
+The `maintainer.js` file should export an object that provides maintainer information related to the route, including:
 
-```js
-module.exports = function (router) {
-    router.get('/characters/:lang?', require('./index'));
-    router.get('/artists/:lang?', require('./artists'));
-    router.get('/archive/:lang?', require('./archive'));
-};
-```
+-   Key: Corresponding path in the `@koa/router` object
+-   Value: Array of string, including all maintainers' GitHub ID.
 
-## Maintainer List
+To generate a list of maintainers, use the following command: `yarn build:maintainer`, which will create the list under `assets/build/`.
 
-`maintainer.js` should export an object from which we will retrieve the maintainer information when we get the path-related information, etc.
+::: danger Warning
+The path in the `@koa/router` object should be the same as the `path` in the corresponding documentation before the namespace appended in front of it.
+:::
 
--   key: `@koa/router` Corresponding path
--   value: Array, includes all maintainers' Github Username
+### Radar Rules
 
-Github ID may be a better choice, but it is inconvenient to deal with the follow-up, so use GitHub Username for now.
+All routes are required to include the `radar.js` file, which includes the corresponding domain name. The minimum requirement for a successful match is for the rule to show up on the corresponding site which requires filling in the `title` and `docs` fields.
 
-### Example
+To generate a complete `radar-rules.js` file, use the following command: `yarn build:radar`, which will create the file under `assets/build/`.
 
-```js
-module.exports = {
-    '/characters/:lang?': ['NeverBehave'],
-    '/artists/:lang?': ['NeverBehave'],
-    '/archive/:lang?': ['NeverBehave'],
-};
-```
+::: tip Tips
+Remember to remove all build artifacts in `assets/build/` before committing.
+:::
 
-`npm run build:maintainer` will generate a list of maintainers under `assets/build`
+### Rendering Templates
 
-## Radar Rules
+When rendering custom content with HTML, such as `item.description`, using [art-template](https://aui.github.io/art-template/) for layout is mandatory.
 
-Writing style: <https://docs.rsshub.app/en/joinus/quick-start.html#submit-new-rsshub-radar-rule>
+All templates should be placed in the namespace's `templates` folder with the `.art` file extension.
 
-**We currently require all routes to include this file and include the corresponding domain name -- we don't require an exact route match. The minimum requirement is that it will show up on the corresponding site. This file will also be used later to help with bug feedback.**
+#### Example
 
-### Example
+Here's an example taken from the [furstar](https://github.com/DIYgod/RSSHub/blob/master/lib/v2/furstar) namespace:
+
+<<< @/lib/v2/furstar/templates/author.art
 
 ```js
-module.exports = {
-    'furstar.jp': {
-        _name: 'Furstar',
-        '.': [
-            {
-                title: '最新售卖角色列表',
-                docs: 'https://docs.rsshub.app/shopping.html#furstar-zui-xin-shou-mai-jiao-se-lie-biao',
-                source: ['/:lang', '/'],
-                target: '/furstar/characters/:lang',
-            },
-            {
-                title: '已经出售的角色列表',
-                docs: 'https://docs.rsshub.app/shopping.html#furstar-yi-jing-chu-shou-de-jiao-se-lie-biao',
-                source: ['/:lang/archive.php', '/archive.php'],
-                target: '/furstar/archive/:lang',
-            },
-            {
-                title: '画师列表',
-                docs: 'https://docs.rsshub.app/shopping.html#furstar-hua-shi-lie-biao',
-                source: ['/'],
-                target: '/furstar/artists',
-            },
-        ],
-    },
-};
-```
-
-`npm run build:radar` will generate a complete `radar-rules.js` under `/assets/build/`
-
-## Template
-
-We currently require all routes, when rendering content with HTML such as `description`, **must** use the art engine for layout
-
-art documentation: <https://aui.github.io/art-template/docs/>
-
-Apart from that, all templates should be placed in the script's `templates` folder: We will use this to provide custom template switching/rendering, etc.
-
-### Example
-
-```art
-<div>
-    <img src="{{ avatar }}" />
-    {{ if link !== null }}
-    <a href="{{ link }}">{{name}}</a>
-    {{ else }}
-    <a href="#">{{name}}</a>
-    {{ /if }}
-</div>
-```
-
-```js
+const path = require('path');
 const { art } = require('@/utils/render');
 const renderAuthor = (author) => art(path.join(__dirname, 'templates/author.art'), author);
 ```
-
-## ctx.state.json
-
-The script can also provide a custom object for debugging: Access the corresponding route + `.debug.json` to get the corresponding content
-
-We don't have any restrictions on the formatting of this part yet, it's completely optional, and we will see where this option goes
