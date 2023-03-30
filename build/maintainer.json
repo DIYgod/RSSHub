@@ -1701,6 +1701,9 @@
     "/gelonghui/user/:id": [
         "nczitzk"
     ],
+    "/geocaching/blogs": [
+        "HankChow"
+    ],
     "/getdr/": [
         "nczitzk"
     ],
