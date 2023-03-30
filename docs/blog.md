@@ -34,9 +34,9 @@ pageClass: routes
 
 ## Geocaching
 
-### Geocacahing 官方博客
+### 官方博客
 
-<Route author="HankChow" example="/geocaching/blogs" path="/geocaching/blogs" />
+<Route author="HankChow" example="/geocaching/blogs" path="/geocaching/blogs" radar="1"/>
 
 ## Google Sites
 

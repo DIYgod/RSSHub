@@ -30,9 +30,9 @@ pageClass: routes
 
 ## Geocaching
 
-### Geocaching Official Blogs
+### Official Blogs
 
-<RouteEn author="HankChow" example="/geocaching/blogs" path="/geocaching/blogs" />
+<RouteEn author="HankChow" example="/geocaching/blogs" path="/geocaching/blogs" radar="1"/>
 
 ## Google Sites
 
