@@ -175,6 +175,12 @@ pageClass: routes
 
 </Route>
 
+## 停气通知
+
+### 重庆市
+
+<Route author="Mai19930513" example="/cqgas/tqtz" path="/cqgas/tqtz" radar="1"/>
+
 ## 香港天文台
 
 ### Current Weather Report
