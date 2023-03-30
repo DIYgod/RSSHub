@@ -2960,6 +2960,9 @@
     "/line/today/:edition?/:tab?": [
         "nczitzk"
     ],
+    "/line/today/:edition/publisher/:id": [
+        "TonyRL"
+    ],
     "/linkedin/cn/jobs/:keywords?": [
         "bigfei"
     ],
