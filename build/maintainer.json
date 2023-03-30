@@ -1744,6 +1744,9 @@
         "HenryQW",
         "AndreyMZ"
     ],
+    "/github/notifications": [
+        "zhzy0077"
+    ],
     "/github/pull/:user/:repo/:state?": [
         "hashman",
         "TonyRL"

@@ -3920,6 +3920,14 @@
           "/:user/:repo/wiki"
         ],
         "target": "/github/wiki/:user/:repo/:page"
+      },
+      {
+        "title": "Notifications 通知",
+        "docs": "https://docs.rsshub.app/programming.html#github",
+        "source": [
+          "/notifications"
+        ],
+        "target": "/github/notifications"
       }
     ]
   },
