@@ -315,7 +315,7 @@ Board and Build can be found in [here](http://api.ineal.me/tss/status)
 
 ### News
 
-<Route author="HankChow" example="/wfdf/news" path="/wfdf/news"/>
+<RouteEn author="HankChow" example="/wfdf/news" path="/wfdf/news" radar="1"/>
 
 ## wikiHow
 

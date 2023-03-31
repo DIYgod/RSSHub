@@ -371,7 +371,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 新闻
 
-<Route author="HankChow" example="/wfdf/news" path="/wfdf/news"/>
+<Route author="HankChow" example="/wfdf/news" path="/wfdf/news" radar="1"/>
 
 ## wikiHow
 
