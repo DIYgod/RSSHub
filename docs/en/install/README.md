@@ -102,7 +102,7 @@ Execute the following command to pull RSSHub's docker image.
 $ docker pull diygod/rsshub
 ```
 
-Start a RSSHub container
+Start an RSSHub container
 
 ```bash
 $ docker run -d --name rsshub -p 1200:1200 diygod/rsshub
@@ -283,6 +283,12 @@ in pkgs.stdenv.mkDerivation {
     buildInputs = [node pkgs.yarn pkgs.pythonPackages.jieba];
 }
 ```
+
+## Deploy to Railway
+
+Automatic updates are included.
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/QxW__f?referralCode=9wT3hc)
 
 ## Deploy to Heroku
 

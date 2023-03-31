@@ -1,39 +1,44 @@
 # Date Handling
 
-When crawling a web page, the web page usually provides a date. This tutorial will illustrate how a script should properly handle that situation
+When you visit a website, the website usually provides you with a date or timestamp. This tutorial will show you how to properly handle them in your code.
 
-## No Date
+## The Standard
 
-**Do not add a date** when a website does not provide one. The `pubDate` option should be left empty.
+### No Date
 
-## Standard
+-   **Do not** add a date when a website does not provide one. Leave the `pubDate` field undefined.
+-   Parse only the date and **do not add a time** to the `pubDate` field when a website provides a date but not an accurate time.
 
-`pubDate` must be a
+The `pubDate` field must be a:
 
-1. [Date Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
-2. **Not recommended, only use for compatible** strings that can be parsed correctly because its behavior may be inconsistent across environments, [Date.parse()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse). Please avoid using it
+1.  [Date Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)
+2.  **Not recommended. Only use for compatibility**: Strings that can be parsed correctly because their behavior can be inconsistent across deployment environments. Use `Date.parse()` with caution.
 
-Also, the `pubDate` passed in from the script should correspond to the time zone/time used by the **server**. For more details, see the following:
+The `pubDate` passed from the route script should correspond to the time zone/time used by the server. For more details, see the following:
 
 ## Use utilities class
 
-We recommend using [Day.js](https://github.com/iamkun/dayjs) for date processing and time zone adjustment as of now. There are two related tool classes:
+We recommend using [day.js](https://github.com/iamkun/dayjs) for date processing and time zone adjustment. There are two related utility classes:
 
-### Parse Date
+### Date and Time
 
-This is a utility class for using [Day.js](https://github.com/iamkun/dayjs). In most cases, it is possible to use it directly to get the correct `Date Object`
+The RSSHub utility class includes a wrapper for [day.js](https://github.com/iamkun/dayjs) that allows you to easily parse date strings and obtain a [Date Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) in most cases.
 
-Please refer to Day.js GitHub description for specific parsing parameters
-
-```javascript
+```js
 const { parseDate } = require('@/utils/parse-date');
 
+const pubDate = parseDate('2020/12/30');
+// OR
 const pubDate = parseDate('2020/12/30', 'YYYY/MM/DD');
 ```
 
+:::tip Tips
+You can refer to the [day.js documentation](https://day.js.org/docs/en/parse/string-format#list-of-all-available-parsing-tokens) for all available date formats.
+:::
+
 If you need to parse a relative date, use `parseRelativeDate`.
 
-```javascript
+```js
 const { parseRelativeDate } = require('@/utils/parse-date');
 
 const pubDate = parseRelativeDate('2 days ago');
@@ -42,14 +47,16 @@ const pubDate = parseRelativeDate('day before yesterday 15:36');
 
 ### Timezone
 
-Some websites will not convert the time zone according to the location of a visitor. The time obtained will be the local time of the website, which may not be suitable for all RSS subscribers. In this case, you should specify the time zone manually:
+When parsing dates from websites, it's important to consider time zones. Some websites may not convert the time zone according to the visitor's location, resulting in a date that doesn't accurately reflect the user's local time. To avoid this issue, you can manually specify the time zone.
 
-::: warning Warning
-Now, the time will be converted to server time, which facilitates middleware processing.
-:::
+To manually specify the time zone in your code, use the following code:
 
-```javascript
+```js
 const timezone = require('@/utils/timezone');
 
-const pubDate = timezone(new Date(), +8);
+const pubDate = timezone(parseDate('2020/12/30 13:00'), +1);
 ```
+
+The timezone function takes two parameters: the first is the original [Date Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date), and the second is the time zone offset. The offset is specified in hours, so in this example, a time zone of UTC+1 is used.
+
+By doing this, the time will be converted to server time and it will facilitate middleware processing.

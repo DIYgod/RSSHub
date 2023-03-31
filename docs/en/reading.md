@@ -35,6 +35,12 @@ Eg: <https://www.inoreader.com/stream/user/1006346356/tag/News/view/html?n=3>
 
 </RouteEn>
 
+### RSS
+
+<RouteEn author="NavePnow" example="/inoreader/rss/1005137674/user-favorites" path="/inoreader/rss/:user/:tag" :paramsDesc="[
+'user id, the interger after user/ in the example URL',
+'tag, the string after tag/ in the example URL',
+]">
 
 ## kakuyomu
 

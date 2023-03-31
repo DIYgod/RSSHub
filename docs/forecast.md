@@ -21,9 +21,9 @@ pageClass: routes
 <Route author="Rongronggg9" example="/uptimerobot/rss/u358785-e4323652448755805d668f1a66506f2f" path="/uptimerobot/rss/:id/:routeParams?" :paramsDesc="['RSS URL 的最后一部分 (e.g. 对于 `https://rss.uptimerobot.com/u358785-e4323652448755805d668f1a66506f2f`，为 `u358785-e4323652448755805d668f1a66506f2f`)', '额外参数，请参阅下面的表格']">
 <!-- example stolen from https://atlas.eff.org//domains/uptimerobot.com.html -->
 
-| 键      | 含义                                        | 接受的值           | 默认值  |
-| ------ | ----------------------------------------- | -------------- | ---- |
-| showID | 是否包含 monitor ID (关闭此项同时也会使得各个 RSS 条目不附链接) | 0/1/true/false | true |
+| 键     | 含义                                                            | 接受的值       | 默认值 |
+| ------ | --------------------------------------------------------------- | -------------- | ------ |
+| showID | 是否包含 monitor ID (关闭此项同时也会使得各个 RSS 条目不附链接) | 0/1/true/false | true   |
 
 </Route>
 
@@ -41,15 +41,15 @@ pageClass: routes
 
 <Route author="SettingDust" example="/earthquake/ceic/1" path="/earthquake/ceic/:type?" :paramsDesc="['类型，见下表']">
 
-| 参数 | 类型               |
-| -- | ---------------- |
-| 1  | 最近 24 小时地震信息     |
-| 2  | 最近 48 小时地震信息     |
-| 5  | 最近一年 3.0 级以上地震信息 |
-| 7  | 最近一年 3.0 级以下地震   |
-| 8  | 最近一年 4.0 级以上地震信息 |
-| 9  | 最近一年 5.0 级以上地震信息 |
-| 0  | 最近一年 6.0 级以上地震信息 |
+| 参数 | 类型                        |
+| ---- | --------------------------- |
+| 1    | 最近 24 小时地震信息        |
+| 2    | 最近 48 小时地震信息        |
+| 5    | 最近一年 3.0 级以上地震信息 |
+| 7    | 最近一年 3.0 级以下地震     |
+| 8    | 最近一年 4.0 级以上地震信息 |
+| 9    | 最近一年 5.0 级以上地震信息 |
+| 0    | 最近一年 6.0 级以上地震信息 |
 
 可通过全局过滤参数订阅您感兴趣的地区.
 
@@ -155,8 +155,8 @@ pageClass: routes
 
 <Route author="MoonBegonia" example="/tingshuitz/wuhan" path="/tingshuitz/wuhan/:channelId">
 
-| channelId | 分类    |
-| --------- | ----- |
+| channelId | 分类       |
+| --------- | ---------- |
 | 68        | 计划性停水 |
 | 69        | 突发性停水 |
 
@@ -168,8 +168,8 @@ pageClass: routes
 
 可能仅限于中国大陆服务器访问，以实际情况为准。
 
-| channelId | 分类   |
-| --------- | ---- |
+| channelId | 分类     |
+| --------- | -------- |
 | 78        | 计划停水 |
 | 157       | 抢修停水 |
 
