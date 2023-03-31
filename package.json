@@ -165,8 +165,10 @@
       "lib/**/*.js",
       "!lib/routes/**/*.js",
       "!lib/v2/**/*.js",
-      "!lib/radar-rules.js",
-      "!lib/router.js"
+      "!lib/router.js",
+      "!lib/maintainer.js",
+      "!lib/radar.js",
+      "!lib/radar-rules.js"
     ],
     "bail": true,
     "testEnvironment": "node",
