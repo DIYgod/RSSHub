@@ -1,0 +1,6 @@
+<div>
+  <img src="{{ image }}" />
+</div>
+<div>
+{{@ description }}
+</div>

@@ -454,11 +454,11 @@ Provides a better reading experience (full text articles) over the official one.
 
 <RouteEn author="loganrockmore" example="/letterboxd/user/followingdiary/demiadejuyigbe" path="/letterboxd/user/followingdiary/:username" :paramsDesc="['username']" />
 
-## Line
+## LINE
 
-### Today
+### TODAY
 
-<RouteEn author="nczitzk" example="/line/today" path="/line/today/:edition?/:tab?" :paramsDesc="['Edition, see below, Taiwan by default', 'Tag, can be found in URL, top by default']">
+<RouteEn author="nczitzk" example="/line/today" path="/line/today/:edition?/:tab?" :paramsDesc="['Edition, see below, Taiwan by default', 'Tag, can be found in URL, `top` by default']">
 
 Edition
 
@@ -467,6 +467,10 @@ Edition
 | tw     | th       | hk        |
 
 </RouteEn>
+
+### TODAY - Channel
+
+<RouteEn author="TonyRL" example="/line/today/th/publisher/101048" path="/line/today/:edition/publisher/:id" :paramsDesc="['Edition, see table above', 'Channel ID, can be found in URL']" radar="1" />
 
 ## Macfilos
 
