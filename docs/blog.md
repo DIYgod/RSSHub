@@ -32,6 +32,12 @@ pageClass: routes
 
 <Route author="Jkker" example="/csdn/blog/csdngeeknews" path="/csdn/blog/:user" radar="1" :paramsDesc="['`user` 为 CSDN 用户名，可以在主页 url 中找到']" />
 
+## Geocaching
+
+### 官方博客
+
+<Route author="HankChow" example="/geocaching/blogs" path="/geocaching/blogs" radar="1"/>
+
 ## Google Sites
 
 ### 文章更新
