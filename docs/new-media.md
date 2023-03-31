@@ -816,11 +816,11 @@ Tag
 
 <Route author="loganrockmore" example="/letterboxd/user/followingdiary/demiadejuyigbe" path="/letterboxd/user/followingdiary/:username" :paramsDesc="['username']" />
 
-## Line
+## LINE
 
-### Today
+### TODAY
 
-<Route author="nczitzk" example="/line/today" path="/line/today/:edition?/:tab?" :paramsDesc="['版本，见下表，默认为 Taiwan', '标签, 可在对应标签页的地址中找到, 默认为 top']">
+<Route author="nczitzk" example="/line/today" path="/line/today/:edition?/:tab?" :paramsDesc="['版本，见下表，默认为 Taiwan', '标签, 可在对应标签页的地址中找到, 默认为 `top`']" radar="1">
 
 Edition
 
@@ -829,6 +829,10 @@ Edition
 | tw     | th       | hk        |
 
 </Route>
+
+### TODAY - 频道
+
+<Route author="TonyRL" example="/line/today/tw/publisher/101286" path="/line/today/:edition/publisher/:id" :paramsDesc="['版本，见上表', '频道 ID，可在 URL 中找到']" radar="1"/>
 
 ## LVV2
 
