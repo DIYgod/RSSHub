@@ -5069,6 +5069,9 @@
     "/wenku8/chapter/:id": [
         "zsakvo"
     ],
+    "/wfdf/news": [
+        "HankChow"
+    ],
     "/wfu/jwc": [
         "cccht"
     ],
