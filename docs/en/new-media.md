@@ -562,6 +562,10 @@ This route provides a flexible plan with full text content to subscribe specific
 
 </RouteEn>
 
+### ChatGPT - Release Notes
+
+<RouteEn author="ETiV" example="/openai/chatgpt/release-notes" path="/openai/chatgpt/release-notes" />
+
 ## Phoronix
 
 ### News & Reviews
