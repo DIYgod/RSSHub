@@ -367,6 +367,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 </Route>
 
+## WFDF
+
+### 新闻
+
+<Route author="HankChow" example="/wfdf/news" path="/wfdf/news" radar="1"/>
+
 ## wikiHow
 
 ### 首页

@@ -490,7 +490,7 @@ Sources
 
 ### 最新动态
 
-<Route author="Ye11" example="/xmanhua" path="/xmanhua/:uid" :paramsDesc="['漫画 id,在浏览器中可见，例如鬼灭之刃对应的 id 为 `73xm`']"/>
+<Route author="Ye11" example="/xmanhua/73xm" path="/xmanhua/:uid" :paramsDesc="['漫画 id,在浏览器中可见，例如鬼灭之刃对应的 id 为 `73xm`']"/>
 
 ## 俺の 3D エロ動画 (oreno3d)
 
