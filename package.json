@@ -92,7 +92,7 @@
   "dependencies": {
     "@koa/router": "12.0.0",
     "@postlight/parser": "2.2.3",
-    "@sentry/node": "7.45.0",
+    "@sentry/node": "7.46.0",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
@@ -165,8 +165,10 @@
       "lib/**/*.js",
       "!lib/routes/**/*.js",
       "!lib/v2/**/*.js",
-      "!lib/radar-rules.js",
-      "!lib/router.js"
+      "!lib/router.js",
+      "!lib/maintainer.js",
+      "!lib/radar.js",
+      "!lib/radar-rules.js"
     ],
     "bail": true,
     "testEnvironment": "node",
