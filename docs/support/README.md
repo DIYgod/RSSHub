@@ -22,6 +22,6 @@ RSSHub 是采用 MIT 许可的开源项目，使用完全免费。但是随着�
 
 我们通过以下方式接受赞助:
 
--   [微信支付](https://diygod.me/images/wx.jpg)
--   [支付宝](https://diygod.me/images/zfb.jpg)
+-   [微信支付](https://archive.diygod.me/images/wx.jpg)
+-   [支付宝](https://archive.diygod.me/images/zfb.jpg)
 -   [Paypal](https://www.paypal.me/DIYgod)
