@@ -3199,6 +3199,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 燕山大学
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/zsyjs/sszs-szdong" path="/zsyjs/:type" :paramsDesc="['分类名']">
+
+| 硕招动态    | 招生简章    | 推荐免试 |
+| ----------- | ----------- | -------- |
+| sszs-szdong | sszs-zsjian | tjms     |
+
+</Route>
+
 ## 扬州大学
 
 ### 官网消息
