@@ -407,6 +407,17 @@ pageClass: routes
 
 <Route author="nczitzk" example="/bupt/rczp" path="/bupt/rczp" />
 
+## 长春理工大学
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/cust/yzb/:type" path="/cust/yzb/:type" :paramsDesc="['分类type,见下表']">
+
+| 硕士生招生 | 博士生招生 |
+| ---------- | ---------- |
+| ssszs      | bsszs      |
+
+</Route>
 ## 常州大学
 
 ### 教务处
