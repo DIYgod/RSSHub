@@ -1925,6 +1925,9 @@
     "/gov/moj/aac/news/:type?": [
         "TonyRL"
     ],
+    "/gov/news/:uid": [
+        "EsuRt"
+    ],
     "/gov/nifdc/:path+": [
         "nczitzk"
     ],
@@ -5958,7 +5961,6 @@
     "/gov/province/:name/:category": [],
     "/gov/city/:name/:category": [],
     "/gov/statecouncil/briefing": [],
-    "/gov/news/:uid": [],
     "/gov/shuju/:caty/:item": [],
     "/gov/xinwen/tujie/:caty": [],
     "/gov/suzhou/news/:uid": [],
