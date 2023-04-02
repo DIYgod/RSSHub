@@ -8361,7 +8361,11 @@
                         return `/openai/blog/${topics}`;
                     }
                     return '/openai/blog';
-                } } ] },
+                } } ],
+    chat:[ { title:"ChatGPT - Release Notes",
+        docs:"https://docs.rsshub.app/en/new-media.html#openai",
+        source:"/chat",
+        target:() => '/openai/chatgpt/release-notes' } ] },
   "openwrt.org":{ _name:"Openwrt",
     ".":[ { title:"Model Releases",
         docs:"https://docs.rsshub.app/program-update.html#openwrt",

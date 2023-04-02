@@ -15422,6 +15422,13 @@
         "docs": "https://docs.rsshub.app/en/new-media.html#openai",
         "source": "/blog"
       }
+    ],
+    "chat": [
+      {
+        "title": "ChatGPT - Release Notes",
+        "docs": "https://docs.rsshub.app/en/new-media.html#openai",
+        "source": "/chat"
+      }
     ]
   },
   "openwrt.org": {
