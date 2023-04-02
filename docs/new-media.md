@@ -1036,6 +1036,10 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 </Route>
 
+### ChatGPT - Release Notes
+
+<Route author="ETiV" example="/openai/chatgpt/release-notes" path="/openai/chatgpt/release-notes" />
+
 ## OR
 
 ### 频道
