@@ -3286,6 +3286,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 <Route author="SettingDust" example="/ynnu/edu/news" path="/ynnu/edu/news" >
 </Route>
 
+## 浙江财经大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/zufe/gs/zsxx-ssyjszs" path="/zufe/gs/:type" :paramsDesc="['分类，见下表']" radar="1">
+
+| 硕士研究生招生 | 博士研究生招生 |
+| -------------- | -------------- |
+| zsxx-ssyjszs   | zsxx-bsyjszs   |
+
+</Route>
+
 ## 浙江大学
 
 ### 普通栏目 如学术 / 图片 / 新闻等
