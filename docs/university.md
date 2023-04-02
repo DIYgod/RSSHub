@@ -1330,6 +1330,18 @@ category 列表：
 
 <Route author="legr4ndk" example="/hdu/cs/pg" path="/hdu/cs/pg" radar="1" rssbud="1"/>
 
+## 河北工业大学
+
+### 研究生院招生工作
+
+<Route author="yanbot-team" example="/hebut/yjs/zsgz/ssyjszszl" path="/yjs/zsgz/:type" :paramsDesc="['分类名，见下表']" >
+
+| 硕士研究生招生 | 推免研究生接收工作 | 招生工作通知公告 |
+| -------------- | ------------------ | ---------------- |
+| ssyjszszl      | zzsszszl           | zsgztzgg         |
+
+</Route>
+
 ## 合肥工业大学
 
 ### 通知公告
