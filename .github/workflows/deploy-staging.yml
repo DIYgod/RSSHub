@@ -27,7 +27,7 @@ jobs:
                       rm -rf node_modules
                       nvm use 16
                       node -v
-                      yarn install --production
+                      yarn install --production --registry=https://registry.npmmirror.com
                       pm2 restart rsshub
                       ls
                       pm2 ls
