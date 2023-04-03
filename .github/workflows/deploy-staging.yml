@@ -25,7 +25,6 @@ jobs:
                       pwd
                       cd /www/RSSHub
                       git pull
-                      rm -rf node_modules
                       nvm use 16
                       node -v
                       yarn install --production --registry=https://registry.npmmirror.com
