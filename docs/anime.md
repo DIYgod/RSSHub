@@ -620,7 +620,7 @@ Sources
 
 ### 开播提醒
 
-<Route author="x2cf" example="/bgmlist/onair/zh-Hans" path="/onair/:lang?" :paramsDesc="['语言']" radar="1" rssbud="1" />
+<Route author="x2cf" example="/bgmlist/onair/zh-Hans" path="/bgmlist/onair/:lang?" :paramsDesc="['语言']" radar="1" rssbud="1" />
 
 ## 风之动漫
 
