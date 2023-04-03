@@ -2985,6 +2985,17 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/xjtu/yz/tzgg" path="/xjtu/yz/:type" :paramsDesc="['编号，见下表']" radar="1" >
+
+| 分类     | 编号 |
+| -------- | ---- |
+| 通知公告 | tzgg |
+| 招生动态 | zsdt |
+
+</Route>
+
 ## 西安理工大学
 
 ### 学校主页
