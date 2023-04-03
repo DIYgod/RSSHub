@@ -1911,6 +1911,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="ret-1" example="/nju/itsc" path="/nju/itsc" />
 
+### 研究生招生网
+
+<Route author="yanbot-team" example="/nju/yzb/47863" path="/nju/yzb/:type" :paramsDesc="['分类名,其他未列出的分类可在网页地址中找到']">
+
+| 硕士最新通知 | 硕士招生简章 |
+| ------------ | ------------ |
+| 47863        | 47862        |
+
+</Route>
+
 ## 南京工程学院
 
 ### 南京工程学院通知公告
