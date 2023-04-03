@@ -21,6 +21,7 @@ jobs:
                   password: ${{ secrets.PWD }}
                   port: ${{ secrets.PORT }}
                   script: |
+                      pm2 ls
                       pwd
                       cd /www/RSSHub
                       git pull
