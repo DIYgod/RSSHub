@@ -508,6 +508,9 @@
     "/bendibao/news/:city": [
         "nczitzk"
     ],
+    "/bgmlist/onair/:lang?": [
+        "x2cf"
+    ],
     "/bigquant/collections": [
         "nczitzk"
     ],
