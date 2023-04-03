@@ -941,6 +941,12 @@
     "/ciidbnu/:id?": [
         "nczitzk"
     ],
+    "/civitai/models": [
+        "DIYgod"
+    ],
+    "/civitai/discussions/:modelId": [
+        "DIYgod"
+    ],
     "/clash/premium": [
         "ttttmr"
     ],
