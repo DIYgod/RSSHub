@@ -474,7 +474,7 @@ pageClass: routes
 
 ### 获取国家医师资格考试通知
 
-<Route author="tzjyxb" example="/gov/jinanhealthcommission/medical_exam_notice" path="/gov/jinanhealthcommission/medical_exam_notice" radar="1"/>
+<Route author="tzjyxb" example="/gov/jinan/healthcommission/medical_exam_notice" path="/gov/jinan/healthcommission/medical_exam_notice" radar="1"/>
 
 ## 江苏省人民政府
 
