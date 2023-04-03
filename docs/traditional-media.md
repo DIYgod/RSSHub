@@ -2186,6 +2186,10 @@ category 对应的关键词有
 
 <Route author="hoilc Fatpandac nczitzk" example="/hk01/tag/2787" path="/hk01/tag/:id" :paramsDesc="['标签 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
 
+### 即時
+
+<Route author="5upernove-heng" example="/hk01/latest" path="/hk01/latest" radar="1" rssbud="1"/>
+
 ## 香港電台
 
 ### 新聞
