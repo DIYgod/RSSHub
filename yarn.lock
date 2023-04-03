@@ -1574,10 +1574,10 @@
   dependencies:
     safe-buffer "^5.0.1"
 
-"@puppeteer/browsers@0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@puppeteer/browsers/-/browsers-0.3.1.tgz#21d43c49f6f8bb5fa905b322d73c11fca9b515bd"
-  integrity sha512-WTFVqWY7ipI+CsJRb6vEddYJ/lMl2bHYP5BjFDBM9JMKPjJNT4psXz6DLuJpi3EkG80Q0ef5Azzv3gKu9MvMUg==
+"@puppeteer/browsers@0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@puppeteer/browsers/-/browsers-0.3.2.tgz#1e57690943a574c9d7ce823503e048a1df6c67b9"
+  integrity sha512-YAwrqy68PskkCDnSsv0afR8l8u90KhodcIFXCage5NLAoeWm0STGmtVugLBp2wc5PnhnCapCKkMjp9fYjvJl2g==
   dependencies:
     debug "4.3.4"
     extract-zip "2.0.1"
@@ -11337,10 +11337,10 @@ pupa@^2.0.1:
   dependencies:
     escape-goat "^2.0.0"
 
-puppeteer-core@19.8.1:
-  version "19.8.1"
-  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-19.8.1.tgz#c592db9c524d418c91b9dd6d3f3dac00b9834901"
-  integrity sha512-7yPMzusYRvJ/laLaMFIQ01E9WakKkJJXLsMAymH6y5EKqYe5hhn68/SbvF+1YJMb843GftU7gT86Fw8y5jkn3w==
+puppeteer-core@19.8.3:
+  version "19.8.3"
+  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-19.8.3.tgz#5925e849207c7b5de845b2336a6873129e66f5ed"
+  integrity sha512-+gPT43K3trUIr+7+tNjCg95vMgM9RkFIeeyck3SXUTBpGkrf6sxfWckncqY8MnzHfRcyapvztKNmqvJ+Ngukyg==
   dependencies:
     chromium-bidi "0.4.6"
     cross-fetch "3.1.5"
@@ -11400,17 +11400,17 @@ puppeteer-extra@3.3.6:
     debug "^4.1.1"
     deepmerge "^4.2.2"
 
-puppeteer@19.8.2:
-  version "19.8.2"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-19.8.2.tgz#e8a3a9aa725b5d445f97454cf13ad9007709576b"
-  integrity sha512-LPdNVYMR6ddp4YS3GK1bqKsasCJj1aZjt9dNOKcnzKezuMoishlHY6bCnFLjTc34iqnGzIrJp07TQ9M+aML2+g==
+puppeteer@19.8.3:
+  version "19.8.3"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-19.8.3.tgz#87a9fe28972cd740a1e42bf8be0f08f669753131"
+  integrity sha512-sKtt3aDRAcWuemeEtRaJqWKRlQ72OyKVcxX3Ur3KyFUEEzb2sEHpFc2mBlTMPmzOiNg5dB4dnxfelV9/xypJrA==
   dependencies:
-    "@puppeteer/browsers" "0.3.1"
+    "@puppeteer/browsers" "0.3.2"
     cosmiconfig "8.1.3"
     https-proxy-agent "5.0.1"
     progress "2.0.3"
     proxy-from-env "1.1.0"
-    puppeteer-core "19.8.1"
+    puppeteer-core "19.8.3"
 
 pure-rand@^6.0.0:
   version "6.0.1"
