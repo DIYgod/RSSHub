@@ -142,6 +142,22 @@ Language
 
 <RouteEn author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" :paramsDesc="['Extension id, can be found in extension url']"/>
 
+## Civitai
+
+### Latest models
+
+<RouteEn author="DIYgod" example="/civitai/models" path="/civitai/models"/>
+
+### Model discussions
+
+::: warning
+
+Need to configure `CIVITAI_COOKIE` to obtain image information of NSFW models.
+
+:::
+
+<RouteEn author="DIYgod" example="/civitai/discussions/4384" path="/civitai/discussions/:modelId"/>
+
 ## Clash
 
 ### Premium Releases
