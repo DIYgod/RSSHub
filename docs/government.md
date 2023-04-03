@@ -470,6 +470,12 @@ pageClass: routes
 
 <Route author="Jeason0228" example="/gov/hunan/notice/all" path="/gov/hunan/notice/:type"  :paramsDesc="['all=全部，cg=采购公告,zb=中标公告,fb=废标公告,ht=合同公告,gz=更正公告,zz=终止公告,qt=其他公告']" />
 
+## 济南市卫生健康委员会
+
+### 获取国家医师资格考试通知
+
+<Route author="tzjyxb" example="/gov/jinan/healthcommission/medical_exam_notice" path="/gov/jinan/healthcommission/medical_exam_notice" radar="1"/>
+
 ## 江苏省人民政府
 
 ### 动态
