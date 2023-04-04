@@ -26,15 +26,15 @@ describe('rand-user-agent', () => {
     });
 
     it('should match ua configurated', async () => {
-        const response1 = await got('https://www.whatsmyua.info/api/v1/ua');
-        expect(response1.data[0].ua.rawUa).toBe(config.ua);
+        const response1 = await got('https://httpbingo.org/user-agent');
+        expect(response1.data['user-agent']).toBe(config.ua);
 
-        const response2 = await got('https://www.whatsmyua.info/api/v1/ua', {
+        const response2 = await got('https://httpbingo.org/user-agent', {
             headers: {
                 'user-agent': mobileUa,
             },
         });
-        expect(response2.data[0].ua.rawUa).toBe(mobileUa);
-        expect(response2.data[0].ua.rawUa).not.toBe(config.ua);
+        expect(response2.data['user-agent']).toBe(mobileUa);
+        expect(response2.data['user-agent']).not.toBe(config.ua);
     });
 });

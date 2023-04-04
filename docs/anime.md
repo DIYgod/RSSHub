@@ -490,7 +490,7 @@ Sources
 
 ### 最新动态
 
-<Route author="Ye11" example="/xmanhua" path="/xmanhua/:uid" :paramsDesc="['漫画 id,在浏览器中可见，例如鬼灭之刃对应的 id 为 `73xm`']"/>
+<Route author="Ye11" example="/xmanhua/73xm" path="/xmanhua/:uid" :paramsDesc="['漫画 id,在浏览器中可见，例如鬼灭之刃对应的 id 为 `73xm`']"/>
 
 ## 俺の 3D エロ動画 (oreno3d)
 
@@ -615,6 +615,12 @@ Sources
 ### 漫画更新
 
 <Route author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" :paramsDesc="['漫画ID']" radar="1"/>
+
+## 番组放送
+
+### 开播提醒
+
+<Route author="x2cf" example="/bgmlist/onair/zh-Hans" path="/bgmlist/onair/:lang?" :paramsDesc="['语言']" radar="1" rssbud="1" />
 
 ## 风之动漫
 

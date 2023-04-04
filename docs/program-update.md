@@ -158,6 +158,22 @@ pageClass: routes
 
 <Route author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" :paramsDesc="['扩展程序 id, 可在应用页 URL 中找到']" />
 
+## Civitai
+
+### Latest models
+
+<Route author="DIYgod" example="/civitai/models" path="/civitai/models"/>
+
+### Model discussions
+
+::: warning 注意
+
+需要配置 `CIVITAI_COOKIE` 才可获取 NSFW 模型的图片信息
+
+:::
+
+<Route author="DIYgod" example="/civitai/discussions/4384" path="/civitai/discussions/:modelId"/>
+
 ## Clash
 
 ### Premium Releases

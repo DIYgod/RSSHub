@@ -1036,6 +1036,10 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 </Route>
 
+### ChatGPT - Release Notes
+
+<Route author="ETiV" example="/openai/chatgpt/release-notes" path="/openai/chatgpt/release-notes" />
+
 ## OR
 
 ### 频道
@@ -4200,6 +4204,32 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 | (空)     | ms   | qg   | qz   |
 
 </Route>
+
+## 香港 01
+
+### 热门
+
+<Route author="hoilc Fatpandac nczitzk" example="/hk01/hot" path="/hk01/hot" radar="1" rssbud="1"/>
+
+### 栏目
+
+<Route author="hoilc Fatpandac nczitzk" example="/hk01/zone/11" path="/hk01/zone/:id" :paramsDesc="['栏目 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
+
+### 子栏目
+
+<Route author="hoilc Fatpandac nczitzk" example="/hk01/channel/391" path="/hk01/channel/:id" :paramsDesc="['子栏目 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
+
+### 专题
+
+<Route author="hoilc Fatpandac nczitzk" example="/hk01/issue/649" path="/hk01/issue/:id" :paramsDesc="['专题 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
+
+### 标签
+
+<Route author="hoilc Fatpandac nczitzk" example="/hk01/tag/2787" path="/hk01/tag/:id" :paramsDesc="['标签 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
+
+### 即時
+
+<Route author="5upernove-heng" example="/hk01/latest" path="/hk01/latest" radar="1" rssbud="1"/>
 
 ## 香港高登
 
