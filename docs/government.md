@@ -156,6 +156,16 @@ pageClass: routes
 
 </Route>
 
+### 今日绵竹
+
+<Route author="zytomorrow" example="/gov/sichuan/deyang/mztoday/zx" path="/gov/sichuan/deyang/mztoday/:infoType?" :paramsDesc="['信息栏目名称。默认最新(zx)']">
+
+| 最新 | 推荐 | 时政 | 教育 | 民生 | 文旅 | 经济 | 文明创建 | 部门 | 镇（街道） | 健康绵竹 | 南轩讲堂 | 视频 | 文明实践 | 领航中国 | 绵竹年画 | 绵竹历史 | 绵竹旅游 | 外媒看绵竹 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | -------- | ---- | ---------- | -------- | -------- | ---- | -------- | -------- | -------- | -------- | -------- | ---------- |
+| zx   | tj   | sz   | jy   | ms   | wl   | jj   | wmcj     | bm   | zj         | jkmz     | nxjt     | sp   | wmsj     | lhzg     | mznh     | mzls     | mzly     | wmkmz      |
+
+</Route>
+
 ## 广东省人民政府
 
 ### 省教育厅
