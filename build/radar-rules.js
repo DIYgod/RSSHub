@@ -4102,7 +4102,7 @@
     ".":[ { title:"德阳市政府公开信息",
         docs:"https://docs.rsshub.app/government.html#de-yang-shi-fu-ren-min-zheng-zheng-fu",
         source:[ "/*" ],
-        target:"/sichuan/deyang/govpulicinfo/:countyName" } ] },
+        target:"/sichuan/deyang/govpublicinfo/:countyName" } ] },
   "dianbai.gov.cn":{ _name:"茂名市电白区人民政府",
     www:[ { title:"茂名市电白区人民政府",
         docs:"https://docs.rsshub.app/government.html#mao-ming-shi-ren-min-zheng-fu-mao-ming-shi-dian-bai-qu-ren-min-zheng-fu",

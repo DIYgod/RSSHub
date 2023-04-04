@@ -7767,7 +7767,7 @@
         "source": [
           "/*"
         ],
-        "target": "/sichuan/deyang/govpulicinfo/:countyName"
+        "target": "/sichuan/deyang/govpublicinfo/:countyName"
       }
     ]
   },
