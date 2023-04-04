@@ -3624,6 +3624,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生招生在线
+
+<Route author="yanbot-team" example="/ustc/yz/176" path="/ustc/yz/:type" :paramsDesc="['分类，见下表']" radar="1" rssbud="1">
+
+| 硕士招生 | 历年分数线 | 通知公告 |
+| -------- | ---------- | -------- |
+| 176      | 205        | 182      |
+
+</Route>
+
 ## 中国科学院
 
 ### 成果转化
