@@ -9411,10 +9411,10 @@ media-typer@0.3.0:
   resolved "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748"
   integrity sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==
 
-meilisearch@0.32.1:
-  version "0.32.1"
-  resolved "https://registry.yarnpkg.com/meilisearch/-/meilisearch-0.32.1.tgz#3b09a3d2a5d70949c38f410a53c22f0136d4e8f6"
-  integrity sha512-ceC0TSKL7GF91b50y1Qb2lKUUF/d5uZ242Iry093cTDRO3KfL/lcSwXxNxKzluk71iBPH0A0cKAIy6v06sPriA==
+meilisearch@0.32.2:
+  version "0.32.2"
+  resolved "https://registry.yarnpkg.com/meilisearch/-/meilisearch-0.32.2.tgz#b771d26fe942d6a23523c54ea171e57e0ce5355e"
+  integrity sha512-Ajc7tahu7fZdSoBfXwIwtF6ZfFhFdpM/5eRTjw3v59sQmE6NWq5I5TxIdpS0FAiJaD3KtD9sOWAQRepdk8QJwA==
   dependencies:
     cross-fetch "^3.1.5"
 
