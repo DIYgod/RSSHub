@@ -64,7 +64,7 @@
     "fs-extra": "11.1.1",
     "jest": "29.5.0",
     "jest-junit": "15.0.0",
-    "meilisearch": "0.32.0",
+    "meilisearch": "0.32.2",
     "mockdate": "3.0.5",
     "nock": "13.3.0",
     "nodemon": "2.0.22",
