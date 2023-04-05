@@ -783,3 +783,6 @@ See docs of the specified route and `lib/config.js` for detailed information.
 -   ZodGame:
 
     -   `ZODGAME_COOKIE`: Cookie of ZodGame User
+
+-   Civitai
+    -   `CIVITAI_COOKIE`: Cookie of Civitai

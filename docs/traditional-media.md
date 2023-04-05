@@ -1629,6 +1629,30 @@ category 对应的关键词有
 
 </Route>
 
+## 南方网
+
+### 南方 +（按栏目 ID）
+
+<Route author="TimWu007" example="/southcn/nfapp/column/38" path="/southcn/nfapp/column/:column?" :paramsDesc="['栏目或南方号 ID']">
+
+::: tip 提示
+若此处输入的是栏目 ID（而非南方号 ID），则该接口会返回与输入栏目相关联栏目的文章。例如，输入栏目 ID `38`（广州），则返回的结果还会包含 ID 为 `3547`（市长报道集）的文章。
+:::
+
+1.  `pc.nfapp.southcn.com` 下的文章页面，可通过 url 查看，例：<http://pc.nfapp.southcn.com/13707/7491109.html> 的栏目 ID 为 `13707`。
+2.  `static.nfapp.southcn.com` 下的文章页面，可查看网页源代码，搜索 `columnid`。
+3.  <https://m.nfapp.southcn.com/column/all> 列出了部分栏目，`id` 即为栏目 ID。
+
+</Route>
+
+### 南方 +（按作者）
+
+<Route author="TimWu007" example="/southcn/nfapp/reporter/969927791" path="/southcn/nfapp/reporter/:reporter" :paramsDesc="['作者 UUID']">
+
+作者的 UUID 只可通过 `static.nfapp.southcn.com` 下的文章页面获取。点击文章下方的作者介绍，进入该作者的个人主页，即可从 url 中获取。
+
+</Route>
+
 ## 南方周末
 
 ### 新闻分类
@@ -2039,6 +2063,26 @@ category 对应的关键词有
 
 <Route author="rainrdx" example="/nikkei/asia" path="/nikkei/asia" radar="1"/>
 
+## 三立新聞網
+
+### 新聞
+
+<Route author="nczitzk" example="/setn" path="/setn/:category?" :paramsDesc="['分类，见下表，默认为即時']">
+
+| 即時 | 熱門 | 娛樂 | 政治 | 社會 |
+| ---- | ---- | ---- | ---- | ---- |
+
+| 國際 | 兩岸 | 生活 | 健康 | 旅遊 |
+| ---- | ---- | ---- | ---- | ---- |
+
+| 運動 | 地方 | 財經 | 富房網 | 名家 |
+| ---- | ---- | ---- | ------ | ---- |
+
+| 新奇 | 科技 | 汽車 | 寵物 | 女孩 | HOT 焦點 |
+| ---- | ---- | ---- | ---- | ---- | -------- |
+
+</Route>
+
 ## 厦门网
 
 ### 数字媒体
@@ -2216,28 +2260,6 @@ category 对应的关键词有
 `https://www.soundofhope.org/term/203` 对应 `/soundofhope/term/203`
 
 </Route>
-
-## 香港 01
-
-### 热门
-
-<Route author="hoilc Fatpandac nczitzk" example="/hk01/hot" path="/hk01/hot" radar="1" rssbud="1"/>
-
-### 栏目
-
-<Route author="hoilc Fatpandac nczitzk" example="/hk01/zone/11" path="/hk01/zone/:id" :paramsDesc="['栏目 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
-
-### 子栏目
-
-<Route author="hoilc Fatpandac nczitzk" example="/hk01/channel/391" path="/hk01/channel/:id" :paramsDesc="['子栏目 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
-
-### 专题
-
-<Route author="hoilc Fatpandac nczitzk" example="/hk01/issue/649" path="/hk01/issue/:id" :paramsDesc="['专题 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
-
-### 标签
-
-<Route author="hoilc Fatpandac nczitzk" example="/hk01/tag/2787" path="/hk01/tag/:id" :paramsDesc="['标签 id, 可在 URL 中找到']" radar="1" rssbud="1"/>
 
 ## 香港電台
 
