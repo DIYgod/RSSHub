@@ -1073,11 +1073,76 @@ pageClass: routes
 
 ### 帖子
 
-<Route author="NavePnow DIYgod" example="/1point3acres/post/hot" path="/1point3acres/post/:category" :paramsDesc="['分类 category, 见下表']"/>
+<Route author="NavePnow DIYgod nczitzk" example="/1point3acres/thread/hot" path="/1point3acres/thread/:type?/:order?" :paramsDesc="['帖子分类, 见下表，默认为 hot，即热门帖子', '排序方式，见下表，默认为空，即最新回复']">
+
+分类
 
 | 热门帖子 | 最新帖子 |
 | -------- | -------- |
 | hot      | new      |
+
+排序方式
+
+| 最新回复 | 最新发布 |
+| -------- | -------- |
+|          | post     |
+
+</Route>
+
+### 分区
+
+<Route author="nczitzk" example="/1point3acres/section/345" path="/1point3acres/section/:id?/:type?/:order?" :paramsDesc="['分区 id，见下表，默认为全部', '帖子分类, 见下表，默认为 hot，即热门帖子', '排序方式，见下表，默认为空，即最新回复']">
+
+分区
+
+| 分区     | id  |
+| -------- | --- |
+| 留学申请 | 257 |
+| 世界公民 | 379 |
+| 投资理财 | 400 |
+| 生活干货 | 31  |
+| 职场达人 | 345 |
+| 人际关系 | 391 |
+| 海外求职 | 38  |
+| 签证移民 | 265 |
+
+分类
+
+| 热门帖子 | 最新帖子 |
+| -------- | -------- |
+| hot      | new      |
+
+排序方式
+
+| 最新回复 | 最新发布 |
+| -------- | -------- |
+|          | post     |
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/1point3acres/category/h1b" path="/1point3acres/category/:id?/:type?/:order?" :paramsDesc="['标签 id，默认为全部', '帖子分类, 见下表，默认为 hot，即热门帖子', '排序方式，见下表，默认为空，即最新回复']">
+
+::: tip
+
+更多标签可以在 [标签列表](https://instant.1point3acres.com/tags) 中找到。
+
+:::
+
+分类
+
+| 热门帖子 | 最新帖子 |
+| -------- | -------- |
+| hot      | new      |
+
+排序方式
+
+| 最新回复 | 最新发布 |
+| -------- | -------- |
+|          | post     |
+
+</Route>
 
 ### 用户主题帖
 
@@ -1090,6 +1155,7 @@ pageClass: routes
 ### 录取结果
 
 <Route author="NavePnow" example="/1point3acres/offer/12/null/CMU" path="/1point3acres/offer/:year?/:major?/:school?" :paramsDesc="['录取年份  id，空为null', '录取专业 id，空为null', '录取学校 id，空为null']">
+
 ::: warning 三个 id 获取方式
 
 1.  打开 <https://offer.1point3acres.com>
