@@ -29,7 +29,14 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
                 core.warning(e);
             });
 
-    if (context.payload.pull_request.state === 'closed') {
+    const pr = await github.rest.issues
+        .get({
+            ...issue_facts,
+        })
+        .catch((e) => {
+            core.warning(e);
+        });
+    if (pr.pull_request && pr.state === 'closed') {
         await github.rest.pulls
             .update({
                 ...pr_facts,
