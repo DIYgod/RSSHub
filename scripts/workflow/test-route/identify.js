@@ -8,26 +8,51 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
     core.debug(`match: ${m}`);
     let res = null;
 
+    const issue_facts = {
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        issue_number: number,
+    };
+    const pr_facts = {
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        pull_number: number,
+    };
+
     const removeLabel = () =>
         github.rest.issues
             .removeLabel({
-                issue_number: number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
+                ...issue_facts,
                 name: noFound,
             })
             .catch((e) => {
                 core.warning(e);
             });
 
+    const pr = await github.rest.issues
+        .get({
+            ...issue_facts,
+        })
+        .catch((e) => {
+            core.warning(e);
+        });
+    if (pr.pull_request && pr.state === 'closed') {
+        await github.rest.pulls
+            .update({
+                ...pr_facts,
+                state: 'open',
+            })
+            .catch((e) => {
+                core.warning(e);
+            });
+    }
+
     if (whiteListedUser.includes(sender)) {
         core.info('PR created by a whitelisted user, passing');
         await removeLabel();
         await github.rest.issues
             .addLabels({
-                issue_number: number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
+                ...issue_facts,
                 labels: ['Auto: whitelisted'],
             })
             .catch((e) => {
@@ -47,9 +72,7 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
             await removeLabel();
             await github.rest.issues
                 .addLabels({
-                    issue_number: number,
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
+                    ...issue_facts,
                     labels: ['Auto: No Route Needed'],
                 })
                 .catch((e) => {
@@ -68,9 +91,7 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
 
     await github.rest.issues
         .addLabels({
-            issue_number: number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
+            ...issue_facts,
             labels: [noFound],
         })
         .catch((e) => {
@@ -78,9 +99,7 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
         });
     await github.rest.issues
         .createComment({
-            issue_number: number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
+            ...issue_facts,
             body: `自动检测失败, 请确认PR正文部分符合格式规范并重新开启, 详情请检查日志
 Auto Route test failed, please check your PR body format and reopen pull request. Check logs for more details`,
         })
@@ -89,14 +108,12 @@ Auto Route test failed, please check your PR body format and reopen pull request
         });
     await github.rest.pulls
         .update({
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            pull_number: number,
+            ...pr_facts,
             state: 'closed',
         })
         .catch((e) => {
             core.warning(e);
         });
 
-    throw 'Please follow the PR rules: failed to detect route';
+    throw Error('Please follow the PR rules: failed to detect route');
 };
