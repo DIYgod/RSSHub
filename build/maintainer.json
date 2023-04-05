@@ -4230,6 +4230,9 @@
     "/sensortower/blog/:language?": [
         "nczitzk"
     ],
+    "/setn/:category?": [
+        "nczitzk"
+    ],
     "/shiep/:type/:id?": [
         "gumibea",
         "TeamSUEP"
