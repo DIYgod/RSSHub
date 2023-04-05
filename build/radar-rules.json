@@ -18607,6 +18607,15 @@
           "/"
         ],
         "target": "/studygolang/jobs"
+      },
+      {
+        "title": "周刊",
+        "docs": "https://docs.rsshub.app/programming.html#go-yu-yan-zhong-wen-wang",
+        "source": [
+          "/go/weekly",
+          "/"
+        ],
+        "target": "/studygolang/weekly"
       }
     ]
   },

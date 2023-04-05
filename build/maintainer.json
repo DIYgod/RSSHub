@@ -4445,6 +4445,9 @@
     "/studygolang/jobs": [
         "CcccFz"
     ],
+    "/studygolang/weekly": [
+        "Weilet"
+    ],
     "/subhd/sub/:category?": [
         "nczitzk"
     ],
@@ -6556,7 +6559,6 @@
     "/amazfitwatchfaces/search/:model/:keyword?/:sortBy?": [],
     "/missevan/drama/latest": [],
     "/missevan/drama/:id": [],
-    "/go-weekly": [],
     "/popiask/:sharecode/:pagesize?": [],
     "/tapechat/questionbox/:sharecode/:pagesize?": [],
     "/amd/graphicsdrivers/:id/:rid?": [],
