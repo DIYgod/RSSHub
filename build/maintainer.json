@@ -4341,6 +4341,12 @@
     "/soundofhope/:channel/:id": [
         "Fatpandac"
     ],
+    "/southcn/nfapp/column/:column?": [
+        "TimWu007"
+    ],
+    "/southcn/nfapp/reporter/:reporter": [
+        "TimWu007"
+    ],
     "/spotify/artist/:id": [
         "outloudvi"
     ],
