@@ -15,6 +15,7 @@ on:
       - 'Dockerfile'
       - 'package.json'
       - 'yarn.lock'
+    types: [opened, reopened, synchronize, edited]
   # Please, always create a pull request instead of push to master.
 
 permissions:
