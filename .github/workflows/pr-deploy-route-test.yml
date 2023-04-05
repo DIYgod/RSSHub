@@ -1,7 +1,7 @@
 name: PR - route test
 on:
   workflow_run:
-    workflows: [ PR - Docker build test ]  # open, reopen, synchronized included
+    workflows: [ PR - Docker build test ]  # open, reopen, synchronized, edited included
     types: [ completed ]
 
 jobs:
