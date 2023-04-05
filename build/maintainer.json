@@ -2443,6 +2443,9 @@
         "Derekmini",
         "auto-bot-ty"
     ],
+    "/ieee/journal/:journal/earlyaccess/:sortType?": [
+        "5upernova-heng"
+    ],
     "/ieee-security/security-privacy": [
         "ZeddYu"
     ],
