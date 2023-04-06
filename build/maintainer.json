@@ -80,6 +80,29 @@
     "/19lou/:city?": [
         "nczitzk"
     ],
+    "/1point3acres/blog/:category?": [
+        "nczitzk"
+    ],
+    "/1point3acres/category/:id?/:type?/:order?": [
+        "nczitzk"
+    ],
+    "/1point3acres/offer/:year?/:major?/:school?": [
+        "NavePnow"
+    ],
+    "/1point3acres/post/:type?/:order?": [
+        "NavePnow",
+        "DIYgod",
+        "nczitzk"
+    ],
+    "/1point3acres/section/:id?/:type?/:order?": [
+        "nczitzk"
+    ],
+    "/1point3acres/user/:id/posts": [
+        "Maecenas"
+    ],
+    "/1point3acres/user/:id/threads": [
+        "Maecenas"
+    ],
     "/2cycd/:fid/:sort?": [
         "shelken"
     ],
@@ -6093,11 +6116,6 @@
     "/bupt/portal": [],
     "/bupt/news": [],
     "/bupt/funbox": [],
-    "/1point3acres/blog/:category?": [],
-    "/1point3acres/user/:id/threads": [],
-    "/1point3acres/user/:id/posts": [],
-    "/1point3acres/offer/:year?/:major?/:school?": [],
-    "/1point3acres/post/:category": [],
     "/gdoujwc": [],
     "/gaoqingla/:tag?": [],
     "/mlhang": [],
