@@ -110,8 +110,6 @@ RSSHub 会将所有路由命名空间的文件夹名附加到路由前面。路�
 要生成维护者列表，可使用以下命令：`yarn build:maintainer`，它将在 `assets/build/` 目录下一份维护者列表。
 
 ::: danger 警告
-The path in the `@koa/router` object should be the same as the `path` in the corresponding documentation with the namespace appended in front of it.
-
 在 `@koa/router` 对象中的路由应该与相应的文档中添加命名空间前的 `path` 一致。
 :::
 
@@ -146,3 +144,11 @@ const renderAuthor = (author) => art(path.join(__dirname, 'templates/author.art'
 ```
 
 <!-- markdownlint-enable MD046 -->
+
+### v1 路由规范
+
+::: danger 警告
+
+v1 路由规范已被弃用。所有新路由都应遵循 [v2 路由规范](#v2-lu-you-gui-fan)。
+
+:::
