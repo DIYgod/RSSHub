@@ -3704,6 +3704,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 中国人民大学
 
+### 研究生招生网
+
+<Route author="yanbot-team" example="/ruc/pgs/sszs" path="/ruc/pgs/:type" :paramsDesc="['分类，见下表']">
+
+| 硕士招生 | 博士招生 | 港澳台生 | 国际学生 |
+| -------- | -------- | -------- | -------- |
+| sszs     | bszs     | gats     | gjxs     |
+
+</Route>
+
 ### 人事处
 
 <Route author="nczitzk" example="/ruc/hr" path="/ruc/hr/:category?" :paramsDesc="['分类，见下方说明，默认为首页通知公告']">
