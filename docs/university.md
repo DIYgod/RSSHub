@@ -2712,6 +2712,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="nczitzk" example="/scvtc/xygg" path="/scvtc/xygg" />
 
+## 苏州大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/sudaedu/yjs/8365" path="/sudaedu/yjs/:type?" :paramsDesc="['类型，见下表']" rssbud="1" radar="1">
+
+| 招生工作 | 博士招生 | 硕士招生 | 港澳台研究生招生 |
+| -------- | -------- | -------- | ---------------- |
+| 8365     | 8385     | 8386     | 8387             |
+
+</Route>
+
 ## 苏州科技大学
 
 ### 教务处
