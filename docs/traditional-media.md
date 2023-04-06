@@ -1128,7 +1128,7 @@ IT・科学 tech_science
 
 ### 频道
 
-<Route author="TimWu007" example="/gzdaily/app/74" path="/gzcmc/:site/:channel?" :paramsDesc="['站点代码', '频道代码']">
+<Route author="TimWu007" example="/gz-cmc/huacheng/shouye" path="/gz-cmc/:site/:channel?" :paramsDesc="['站点代码', '频道代码']">
 
 已知支持的站点及对应的`站点代码`如下：
 
