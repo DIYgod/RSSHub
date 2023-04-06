@@ -23,7 +23,7 @@ The following table lists the fields you can use to customize your RSS feed at c
 | **`author`**      | *(Optional)* The author of an Atom feed or the authors of a JSON feed   | `RSSHub`     | A, J |
 | **`itunes_author`** | *(Optional)* The author of a podcast feed                             | `undefinded` | R |
 | **`itunes_category`** | *(Optional)* The category of a podcast feed                         | `undefinded` | R |
-| **`itunes_explicit`** | *(Optional)* The explicit of a podcast feed                         | `undefinded` | R |
+| **`itunes_explicit`** | *(Optional)* Use this to indicate that a feed contains [explicit](https://help.apple.com/itc/podcasts_connect/#/itcfafb6d665) content. | `undefinded` | R |
 | **`allowEmpty`** | *(Optional)* Whether to allow empty feeds. If set to `true`, the feed will be generated even if there are no items | `undefinded` | A, J, R |
 
 Each item in an RSS feed is represented by an object with a set of fields that describe it. The table below lists the available fields:
@@ -35,7 +35,7 @@ Each item in an RSS feed is represented by an object with a set of fields that d
 | **`description`** | *(Recommended)* The content of the item. For an Atom feed, it's the `atom:content` element. For a JSON feed, it's the `content_html` field | `undefinded` | A, J, R |
 | **`author`**      | *(Optional)* The author of the item                                      | `undefinded`   | A, J, R |
 | **`category`**    | *(Optional)* The category of the item. You can use a plain string or an array of strings | `undefinded` | A, J, R |
-| **`guid`**        | *(Optional)* The unique identifier of the item                           | If not specified, defaults to **`link || title`** | A, J, R |
+| **`guid`**        | *(Optional)* The unique identifier of the item                           | **`link || title`** | A, J, R |
 | **`pubDate`**     | *(Recommended)* The publication date of the item, which should be a [Date object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) following [the standard](/en/joinus/pub-date.html) | `undefinded` | A, J, R |
 | **`updated`**     | *(Optional)* The date of the last modification of the item, which should be a [Date object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) | `undefinded` | A, J |
 | **`itunes_item_image`** | *(Optional)* The URL of an image associated with the item                           | `undefinded` | R |
@@ -137,6 +137,13 @@ ctx.state.data = {
 ```
 
 By including these fields in your RSS feed, you'll be able to create podcast feeds that are compatible with many podcast players.
+
+::: info Further Reading
+
+-   [A Podcaster’s Guide to RSS](https://help.apple.com/itc/podcasts_connect/#/itcb54353390)
+-   [RSS feed guidelines for Google Podcasts](https://support.google.com/podcast-publishers/answer/9889544)
+
+:::
 
 ### Update the documentation
 
