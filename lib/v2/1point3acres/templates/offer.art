@@ -1,0 +1,11 @@
+<b>国家：</b>{{ item.country }}<br>
+<b>学校：</b>{{ item.outname_w }} {{ item.outname }}<br>
+<b>录取学位：</b>{{ item.plandegree }}<br>
+<b>录取项目：</b>{{ item.planmajor }} - {{ item.planprogram }}<br>
+<b>录取结果：</b>{{ item.result }}<br>
+<b>录取时间：</b>{{ item.outtime }}<br>
+<b>通知方式：</b>{{ item.noticemethod }}<br>
+<b>全奖/自费：</b>{{ item.planfin }}<br>
+<b>申入学学期：</b>{{ item.planterm }}<br>
+<b>申入学年度：</b>{{ item.planyr }}<br>
+<b>提交时间：</b>{{ item.submittime }}
