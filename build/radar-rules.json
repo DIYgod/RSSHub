@@ -6858,6 +6858,27 @@
       }
     ]
   },
+  "freecomputerbooks.com": {
+    "_name": "Free Computer Books",
+    ".": [
+      {
+        "title": "Selected New Books",
+        "docs": "https://docs.rsshub.app/en/reading.html#free-computer-books",
+        "source": [
+          "/",
+          "/index.html"
+        ],
+        "target": "/freecomputerbooks"
+      },
+      {
+        "title": "Current Book List",
+        "docs": "https://docs.rsshub.app/en/reading.html#free-computer-books",
+        "source": [
+          "/:category"
+        ]
+      }
+    ]
+  },
   "freewechat.com": {
     "_name": "自由微信",
     ".": [
