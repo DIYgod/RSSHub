@@ -202,6 +202,16 @@ For example:
 
 </RouteEn>
 
+## MacMenuBar
+
+### Collection
+
+<RouteEn author="5upernova-heng" example="/macmenubar/collection/developer-apps/" path="/macmenubar/collection/:category" :paramsDesc="['Category path name, which can be found in url']" radar="1" />
+
+### Recently Added
+
+<RouteEn author="5upernova-heng" example="/macmenubar/recently" path="/macmenubar/recently" radar="1" />
+
 ## MITRE
 
 ### All Publications
