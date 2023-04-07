@@ -10,6 +10,16 @@ pageClass: routes
 
 <RouteEn author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['Ordering, `best` or `newest`, `best` by default']"/>
 
+## Free Computer Books
+
+### Selected New Books
+
+<RouteEn author="cubroe" example="/freecomputerbooks" path="/freecomputerbooks" radar="1" />
+
+### Current Book List
+
+<RouteEn author="cubroe" example="/freecomputerbooks/compscAlgorithmBooks" path="/freecomputerbooks/:category" :paramsDesc="['A category id., which should be the HTML file name (but **without** the `.html` suffix) in the URL path of a book list page.']" radar="1" />
+
 ## hameln
 
 ### chapter
