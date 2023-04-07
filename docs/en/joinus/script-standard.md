@@ -141,3 +141,11 @@ const path = require('path');
 const { art } = require('@/utils/render');
 const renderAuthor = (author) => art(path.join(__dirname, 'templates/author.art'), author);
 ```
+
+### v1 Route Standard
+
+::: danger Warning
+
+The v1 Route Standard is deprecated. All new routes should be following the [v2 Route Standard](/en/joinus/script-standard.html#v2-route-standard).
+
+:::

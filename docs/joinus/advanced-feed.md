@@ -23,7 +23,7 @@
 | **`author`**      | *（可选）* Atom 源的作者或 JSON Feed 的作者 | `RSSHub`     | A, J |
 | **`itunes_author`** | *（可选）* 播客源的作者       | `undefinded` | R |
 | **`itunes_category`** | *（可选）* 播客源的分类   | `undefinded` | R |
-| **`itunes_explicit`** | *（可选）* 播客源的 explicit     | `undefinded` | R |
+| **`itunes_explicit`** | *（可选）* 播客源是否含有煽情露骨内容     | `undefinded` | R |
 | **`allowEmpty`** | *（可选）* 是否允许空源。如果设置为 `true`，即使没有文章，也会生成源 | `undefinded` | A, J, R |
 
 在 RSS 订阅源中，每个条目都由描述它的一组字段表示。下表列出了可用的字段：
@@ -35,7 +35,7 @@
 | **`description`** | *（推荐）* 条目的内容。对于 Atom 订阅，应是 `atom:content` 元素。对于 JSON Feed，应是 `content_html` 字段 | `undefinded` | A, J, R |
 | **`author`**      | *（可选）* 条目的作者                         | `undefinded` | A, J, R |
 | **`category`**    | *（可选）* 条目的分类。字符串或字符串数组皆可 | `undefinded` | A, J, R |
-| **`guid`**        | *（可选）* 条目的唯一标识符。如果未指定，默认为 **`link || title`** | `undefinded` | A, J, R |
+| **`guid`**        | *（可选）* 条目的唯一标识符 | **`link || title`**  | A, J, R |
 | **`pubDate`**     | *（推荐）* 条目的发布日期，应该 [遵从规范](/joinus/pub-date.html) 是 [Date object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) | `undefinded` | A, J, R |
 | **`updated`**     | *（可选）* 条目的最后修改日期，应该是 [Date object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) | `undefinded` | A, J |
 | **`itunes_item_image`** | *（可选）* 条目相关联的图片的网址 | `undefinded` | R |
@@ -137,6 +137,13 @@ ctx.state.data = {
 ```
 
 通过在 RSS 源中包含这些字段，您将能够制作与播客播放器兼容的播客订阅源。
+
+::: info 进一步阅读
+
+-   [A Podcaster’s Guide to RSS](https://help.apple.com/itc/podcasts_connect/#/itcb54353390)
+-   [Google 播客的 RSS Feed 指南](https://support.google.com/podcast-publishers/answer/9889544)
+
+:::
 
 ### 更新文档
 
