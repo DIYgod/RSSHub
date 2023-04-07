@@ -1510,6 +1510,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="shengmaosu" example="/ecnuyjs" path="/ecnuyjs" />
 
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/ecnu/yjszs/sszsxx" path="/ecnu/yjszs/:type" radar="1" :paramsDesc="['分类，见下表']" >
+
+| 硕士研究生招生 | 华东师范大学考点(3111)及考试 | 推免生接收（含公费师范生攻读教育硕士） | 院系及专项招生动态 | 博士研究生招生 |
+| -------------- | ---------------------------- | -------------------------------------- | ------------------ | -------------- |
+| sszsxx         | hskdxx                       | tjmszsxx                               | yxdtxx             | bszsxx         |
+
+</Route>
+
 ## 华南理工大学
 
 ### 研究生院通知公告
