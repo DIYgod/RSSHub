@@ -2593,6 +2593,12 @@ category 对应的关键词有
 
 </Route>
 
+## 中国科技网
+
+### 科技日报
+
+<Route author="lyqluis" example="/stdaily/digitalpaper" path="/stdaily/digitalpaper" />
+
 ## 中国日报
 
 ### 英语点津

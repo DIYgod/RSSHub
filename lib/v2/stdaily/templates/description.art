@@ -1,0 +1,16 @@
+{{if quotation}}
+  <h3>{{quotation}}</h3>
+{{else if subtitle}}
+  <h3>{{subtitle}}</h3>
+{{/if}}
+
+{{if pics.length}}
+    {{each pics}}
+        <div>
+            <img src={{$value.src}} />
+            <p>{{$value.des}}</p>
+        </div>
+    {{/each}}
+{{/if}}
+
+{{@article}}
