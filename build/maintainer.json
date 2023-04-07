@@ -4456,6 +4456,9 @@
     "/stcn/:id?": [
         "nczitzk"
     ],
+    "/stdaily/digitalpaper": [
+        "lyqluis"
+    ],
     "/stheadline/std/realtime/:category*": [
         "TonyRL"
     ],
