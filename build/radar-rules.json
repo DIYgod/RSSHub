@@ -21010,6 +21010,18 @@
       }
     ]
   },
+  "sogou.com": {
+    "_name": "微信",
+    "weixin": [
+      {
+        "title": "公众号（搜狗来源）",
+        "docs": "https://docs.rsshub.app/new-media.html#wei-xin",
+        "source": [
+          "/weixin"
+        ]
+      }
+    ]
+  },
   "wxnmh.com": {
     "_name": "微信",
     ".": [

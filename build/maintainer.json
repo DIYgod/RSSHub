@@ -5140,6 +5140,9 @@
     "/wechat/mp/msgalbum/:biz/:aid": [
         "MisteryMonster"
     ],
+    "/wechat/sogou/:id": [
+        "NavePnow"
+    ],
     "/wechat/tgchannel/:id/:mpName?/:searchQueryType?": [
         "LogicJake",
         "Rongronggg9"

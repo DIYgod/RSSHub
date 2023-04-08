@@ -11440,6 +11440,17 @@
   "privacyhide.com":{ _name:"微信",
     wechat:[ { title:"公众号（wechat-feeds 来源）",
         docs:"https://docs.rsshub.app/new-media.html#wei-xin" } ] },
+  "sogou.com":{ _name:"微信",
+    weixin:[ { title:"公众号（搜狗来源）",
+        docs:"https://docs.rsshub.app/new-media.html#wei-xin",
+        source:[ "/weixin" ],
+        target:(_, url) => {
+                    const id = new URL(url).searchParams.get('query');
+                    if (id === null) {
+                        return false;
+                    }
+                    return `/wechat/sogou/${id}`;
+                } } ] },
   "wxnmh.com":{ _name:"微信",
     ".":[ { title:"公众号（wxnmh.com 来源）",
         docs:"https://docs.rsshub.app/new-media.html#wei-xin",
