@@ -3339,13 +3339,17 @@ column 为 third 时可选的 category:
 
 ### 用户
 
-<Route author="sanmmm" path="/pingwest/user/:uid/:type?" example="/pingwest/user/7781550877/article" :paramsDesc="['用户id, 可从用户主页中得到', '内容类型, 默认为`article`']">
+<Route author="sanmmm" path="/pingwest/user/:uid/:type?/:option?" example="/pingwest/user/7781550877/article" :paramsDesc="['用户id, 可从用户主页中得到', '内容类型, 默认为`article`', '参数']">
 
 内容类型
 
 | 文章    | 动态  |
 | ------- | ----- |
 | article | state |
+
+参数
+
+-   `fulltext`，全文输出，例如：`/pingwest/user/7781550877/article/fulltext`
 
 </Route>
 
