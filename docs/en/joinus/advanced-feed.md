@@ -138,7 +138,7 @@ ctx.state.data = {
 
 By including these fields in your RSS feed, you'll be able to create podcast feeds that are compatible with many podcast players.
 
-::: info Further Reading
+::: tip Further Reading
 
 -   [A Podcaster’s Guide to RSS](https://help.apple.com/itc/podcasts_connect/#/itcb54353390)
 -   [RSS feed guidelines for Google Podcasts](https://support.google.com/podcast-publishers/answer/9889544)

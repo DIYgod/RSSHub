@@ -138,7 +138,7 @@ ctx.state.data = {
 
 通过在 RSS 源中包含这些字段，您将能够制作与播客播放器兼容的播客订阅源。
 
-::: info 进一步阅读
+::: tip 进一步阅读
 
 -   [A Podcaster’s Guide to RSS](https://help.apple.com/itc/podcasts_connect/#/itcb54353390)
 -   [Google 播客的 RSS Feed 指南](https://support.google.com/podcast-publishers/answer/9889544)
