@@ -881,6 +881,91 @@
       }
     ]
   },
+  "6parkbbs.com": {
+    "_name": "留园网",
+    "club": [
+      {
+        "title": "分站",
+        "docs": "https://docs.rsshub.app/new-media.html#liu-yuan-wang",
+        "source": [
+          "/:id/index.php",
+          "/"
+        ],
+        "target": "/6park/:id?"
+      },
+      {
+        "title": "精华区",
+        "docs": "https://docs.rsshub.app/new-media.html#liu-yuan-wang",
+        "source": [
+          "/:id/index.php",
+          "/"
+        ],
+        "target": "/6park/:id/gold"
+      },
+      {
+        "title": "搜索关键字",
+        "docs": "https://docs.rsshub.app/new-media.html#liu-yuan-wang",
+        "source": [
+          "/:id/index.php",
+          "/"
+        ]
+      }
+    ],
+    "local": [
+      {
+        "title": "新闻栏目",
+        "docs": "https://docs.rsshub.app/new-media.html#liu-yuan-wang",
+        "source": [
+          "/index.php",
+          "/"
+        ]
+      },
+      {
+        "title": "头条精选",
+        "docs": "https://docs.rsshub.app/new-media.html#liu-yuan-wang",
+        "source": [
+          "/index.php",
+          "/"
+        ],
+        "target": "/6park/news/newspark/gold"
+      },
+      {
+        "title": "新闻搜索",
+        "docs": "https://docs.rsshub.app/new-media.html#liu-yuan-wang",
+        "source": [
+          "/index.php",
+          "/"
+        ]
+      }
+    ],
+    "newspark": [
+      {
+        "title": "新闻栏目",
+        "docs": "https://docs.rsshub.app/new-media.html#liu-yuan-wang",
+        "source": [
+          "/newspark/index.php",
+          "/"
+        ]
+      },
+      {
+        "title": "头条精选",
+        "docs": "https://docs.rsshub.app/new-media.html#liu-yuan-wang",
+        "source": [
+          "/newspark/index.php",
+          "/"
+        ],
+        "target": "/6park/news/newspark/gold"
+      },
+      {
+        "title": "新闻搜索",
+        "docs": "https://docs.rsshub.app/new-media.html#liu-yuan-wang",
+        "source": [
+          "/newspark/index.php",
+          "/"
+        ]
+      }
+    ]
+  },
   "hao6v.cc": {
     "_name": "6v电影",
     ".": [
