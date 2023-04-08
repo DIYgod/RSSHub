@@ -3337,6 +3337,12 @@
     "/newmuseum/exhibitions": [
         "chazeon"
     ],
+    "/newrank/douyin/:dyid": [
+        "lessmoe"
+    ],
+    "/newrank/wechat/:wxid": [
+        "lessmoe"
+    ],
     "/news/whxw": [
         "nczitzk"
     ],
@@ -6611,8 +6617,6 @@
     "/touhougarakuta/:language/:type": [],
     "/liequtv/room/:id": [],
     "/bwu/news": [],
-    "/newrank/wechat/:wxid": [],
-    "/newrank/douyin/:dyid": [],
     "/manxiaosi/book/:id": [],
     "/jlu/oa": [],
     "/hfut/tzgg": [],
