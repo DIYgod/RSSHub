@@ -19,6 +19,16 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
         pull_number: number,
     };
 
+    const addLabels = (labels) =>
+        github.rest.issues
+            .addLabels({
+                ...issue_facts,
+                labels,
+            })
+            .catch((e) => {
+                core.warning(e);
+            });
+
     const removeLabel = () =>
         github.rest.issues
             .removeLabel({
@@ -29,6 +39,30 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
                 core.warning(e);
             });
 
+    const updatePrState = (state) =>
+        github.rest.pulls
+            .update({
+                ...pr_facts,
+                state,
+            })
+            .catch((e) => {
+                core.warning(e);
+            });
+
+    const createComment = (body) =>
+        github.rest.issues
+            .createComment({
+                ...issue_facts,
+                body,
+            })
+            .catch((e) => {
+                core.warning(e);
+            });
+
+    const createFailedComment = () =>
+        createComment(`自动检测失败，请确认 PR 正文部分符合格式规范并重新开启，详情请检查日志
+    Auto Route test failed, please check your PR body format and reopen pull request. Check logs for more details`);
+
     const pr = await github.rest.issues
         .get({
             ...issue_facts,
@@ -37,27 +71,13 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
             core.warning(e);
         });
     if (pr.pull_request && pr.state === 'closed') {
-        await github.rest.pulls
-            .update({
-                ...pr_facts,
-                state: 'open',
-            })
-            .catch((e) => {
-                core.warning(e);
-            });
+        await updatePrState('open');
     }
 
     if (whiteListedUser.includes(sender)) {
         core.info('PR created by a whitelisted user, passing');
         await removeLabel();
-        await github.rest.issues
-            .addLabels({
-                ...issue_facts,
-                labels: ['Auto: whitelisted'],
-            })
-            .catch((e) => {
-                core.warning(e);
-            });
+        await addLabels(['Auto: whitelisted']);
         return;
     } else {
         core.debug('PR created by ' + sender);
@@ -67,53 +87,24 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
         res = m[1].trim().split(/\r?\n/);
         core.info(`routes detected: ${res}`);
 
-        if (res.length > 0 && res[0] === 'NOROUTE') {
+        if (res.length && res[0] === 'NOROUTE') {
             core.info('PR stated no route, passing');
             await removeLabel();
-            await github.rest.issues
-                .addLabels({
-                    ...issue_facts,
-                    labels: ['Auto: No Route Needed'],
-                })
-                .catch((e) => {
-                    core.warning(e);
-                });
+            await addLabels(['Auto: No Route Needed']);
 
             return;
-        } else if (res.length > 0) {
+        } else if (res.length && !res.some((e) => e.includes('/:'))) {
             core.exportVariable('TEST_CONTINUE', true);
             await removeLabel();
             return res;
         }
     }
 
-    core.warning('seems no route found, failing');
+    core.warning('Seems like no valid routes can be found. Failing.');
 
-    await github.rest.issues
-        .addLabels({
-            ...issue_facts,
-            labels: [noFound],
-        })
-        .catch((e) => {
-            core.warning(e);
-        });
-    await github.rest.issues
-        .createComment({
-            ...issue_facts,
-            body: `自动检测失败, 请确认PR正文部分符合格式规范并重新开启, 详情请检查日志
-Auto Route test failed, please check your PR body format and reopen pull request. Check logs for more details`,
-        })
-        .catch((e) => {
-            core.warning(e);
-        });
-    await github.rest.pulls
-        .update({
-            ...pr_facts,
-            state: 'closed',
-        })
-        .catch((e) => {
-            core.warning(e);
-        });
+    await addLabels([noFound]);
+    await createFailedComment();
+    await updatePrState('closed');
 
     throw Error('Please follow the PR rules: failed to detect route');
 };
