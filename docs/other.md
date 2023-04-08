@@ -212,16 +212,6 @@ pageClass: routes
 
 </Route>
 
-## MacMenuBar
-
-### Collection
-
-<Route author="5upernova-heng" example="/macmenubar/collection/developer-apps/" path="/macmenubar/collection/:category" :paramsDesc="['分类名称，必填，可在 URL 中找到']" radar="1" />
-
-### 最近添加
-
-<Route author="5upernova-heng" example="/macmenubar/recently" path="/macmenubar/recently" radar="1" />
-
 ## MiniFlux
 
 因需设置 API Key，故请自行架设 RSSHub。API 密钥则请于 MiniFlux 实例中的 `设置` -> `API密钥` -> `创建一个新的API密钥` 处获取。

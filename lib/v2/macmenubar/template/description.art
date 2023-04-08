@@ -1,0 +1,26 @@
+<p>Collection: 
+{{ each categories category index}}
+{{ if index == 0 && categories.length != 1}}
+{{ category }} |
+{{ /if }}
+{{ if index != 0 && index != categories.length - 1 }} 
+{{ category }} |
+{{ /if }}
+{{ if index == categories.length - 1 }}
+{{ category }}</p>
+{{ /if }}
+{{/each}}
+<p>Tag:
+{{ each tags tag index}}
+{{ if index == 0 && tags.length != 1}}
+{{ tag }} |
+{{ /if }}
+{{ if index != 0 && index != tags.length - 1 }} 
+{{ tag }} |
+{{ /if }}
+{{ if index == tags.length - 1 }}
+{{ tag }}</p>
+{{ /if }}
+{{/each}}
+<h2>{{ title }}</h2>
+{{@ content }}
