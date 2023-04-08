@@ -3014,7 +3014,7 @@ column 为 third 时可选的 category:
 
 :::
 
-</route>
+</Route>
 
 ### 头条精选
 
