@@ -4083,11 +4083,11 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 :::
 
+</Route>
+
 ### 公众号（搜狗来源）
 
 <Route author="NavePnow" example="/wechat/sogou/qimao0908" path="/wechat/sogou/:id" :paramsDesc="['公众号 id, 打开 weixin.sogou.com 并搜索相应公众号， 在 URL 中找到 id']"/>
-
-</Route>
 
 ## 维基百科
 
