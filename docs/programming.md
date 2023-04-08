@@ -352,7 +352,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### 周刊
 
-<Route author="Weilet" example="/go-weekly" path="/go-weekly"/>
+<Route author="Weilet" example="/studygolang/weekly" path="/studygolang/weekly" radar="1"/>
 
 ### 招聘
 

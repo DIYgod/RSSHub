@@ -1073,11 +1073,76 @@ pageClass: routes
 
 ### 帖子
 
-<Route author="NavePnow DIYgod" example="/1point3acres/post/hot" path="/1point3acres/post/:category" :paramsDesc="['分类 category, 见下表']"/>
+<Route author="NavePnow DIYgod nczitzk" example="/1point3acres/thread/hot" path="/1point3acres/thread/:type?/:order?" :paramsDesc="['帖子分类, 见下表，默认为 hot，即热门帖子', '排序方式，见下表，默认为空，即最新回复']">
+
+分类
 
 | 热门帖子 | 最新帖子 |
 | -------- | -------- |
 | hot      | new      |
+
+排序方式
+
+| 最新回复 | 最新发布 |
+| -------- | -------- |
+|          | post     |
+
+</Route>
+
+### 分区
+
+<Route author="nczitzk" example="/1point3acres/section/345" path="/1point3acres/section/:id?/:type?/:order?" :paramsDesc="['分区 id，见下表，默认为全部', '帖子分类, 见下表，默认为 hot，即热门帖子', '排序方式，见下表，默认为空，即最新回复']">
+
+分区
+
+| 分区     | id  |
+| -------- | --- |
+| 留学申请 | 257 |
+| 世界公民 | 379 |
+| 投资理财 | 400 |
+| 生活干货 | 31  |
+| 职场达人 | 345 |
+| 人际关系 | 391 |
+| 海外求职 | 38  |
+| 签证移民 | 265 |
+
+分类
+
+| 热门帖子 | 最新帖子 |
+| -------- | -------- |
+| hot      | new      |
+
+排序方式
+
+| 最新回复 | 最新发布 |
+| -------- | -------- |
+|          | post     |
+
+</Route>
+
+### 标签
+
+<Route author="nczitzk" example="/1point3acres/category/h1b" path="/1point3acres/category/:id?/:type?/:order?" :paramsDesc="['标签 id，默认为全部', '帖子分类, 见下表，默认为 hot，即热门帖子', '排序方式，见下表，默认为空，即最新回复']">
+
+::: tip
+
+更多标签可以在 [标签列表](https://instant.1point3acres.com/tags) 中找到。
+
+:::
+
+分类
+
+| 热门帖子 | 最新帖子 |
+| -------- | -------- |
+| hot      | new      |
+
+排序方式
+
+| 最新回复 | 最新发布 |
+| -------- | -------- |
+|          | post     |
+
+</Route>
 
 ### 用户主题帖
 
@@ -1090,6 +1155,7 @@ pageClass: routes
 ### 录取结果
 
 <Route author="NavePnow" example="/1point3acres/offer/12/null/CMU" path="/1point3acres/offer/:year?/:major?/:school?" :paramsDesc="['录取年份  id，空为null', '录取专业 id，空为null', '录取学校 id，空为null']">
+
 ::: warning 三个 id 获取方式
 
 1.  打开 <https://offer.1point3acres.com>
@@ -1105,32 +1171,11 @@ pageClass: routes
 
 ### 博客
 
-<Route author="nczitzk" example="/1point3acres/blog" path="/1point3acres/blog/:category?" :paramsDesc="['分类，见下表，可在对应分类页 URL 中找到']">
+<Route author="nczitzk" example="/1point3acres/blog" path="/1point3acres/blog/:category?" :paramsDesc="['分类，见下表，可在对应分类页 URL 中找到']" radar="1">
 
-| 分类       | 分类名                                                                |
-| ---------- | --------------------------------------------------------------------- |
-| 全部       |                                                                       |
-| 一亩三分地 | 一亩三分地                                                            |
-| 论坛精华   | 一亩三分地 - 论坛精华                                                 |
-| 咨询服务   | 咨询服务                                                              |
-| 学校院系   | 学校院系信息                                                          |
-| 找工求职   | 如何找工作                                                            |
-| 美国经济   | 如何找工作 - 美国经济与就业                                           |
-| 杂谈其他   | 其他类别                                                              |
-| 抄袭       | 其他类别 - 抄袭                                                       |
-| 直播       | 其他类别 - 直播                                                       |
-| 热门专业   | eecsmis 统计金工等热门专业                                            |
-| EECSMIS    | eecsmis 统计金工等热门专业 - eecsmis 专业                             |
-| 数据科学   | eecsmis 统计金工等热门专业 - 数据科学                                 |
-| 统计金工   | eecsmis 统计金工等热门专业 - 生物统计金融工程公共健康生物技术制药行业 |
-| 留学申请   | 留学申请信息                                                          |
-| GT 考试    | 留学申请信息 - gt 考试                                                |
-| 定位       | 留学申请信息 - 定位                                                   |
-| 文书写作   | 留学申请信息 - 文书写作                                               |
-| 面试       | 留学申请信息 - 面试                                                   |
-| 移民绿卡   | 移民办绿卡                                                            |
-| 美国学习   | 美国学习                                                              |
-| 美国生活   | 美国生活                                                              |
+| 留学申请   | 找工求职 | 生活攻略  | 投资理财 | 签证移民 | 时政要闻 |
+| ---------- | -------- | --------- | -------- | -------- | -------- |
+| studyinusa | career   | lifestyle | invest   | visa     | news     |
 
 </Route>
 
