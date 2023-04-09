@@ -122,17 +122,17 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 <Route author="xyqfer" example="/leemeng" path="/leemeng"/>
 
-## Miris Whispers
-
-### 博客
-
-<Route author="chazeon" example="/miris/blog" path="/miris/blog" />
-
 ## MacMenuBar
 
 ### Recently
 
 <RouteEn author="5upernova-heng" example="/macmenubar/recently/developer-apps,system-tools" path="/macmenubar/recently/:category?" :paramsDesc="['分类名，多个使用逗号隔开，留空则为全部。分类名可在 URL 中找到']" radar="1" />
+
+## Miris Whispers
+
+### 博客
+
+<Route author="chazeon" example="/miris/blog" path="/miris/blog" />
 
 ## Paul Graham 博客
 
