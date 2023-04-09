@@ -3151,6 +3151,9 @@
     "/macfilos/blog": [
         "nczitzk"
     ],
+    "/macmenubar/recently/:category?": [
+        "5upernova-heng"
+    ],
     "/magazinelib/latest-magazine/:query?": [
         "NavePnow"
     ],
