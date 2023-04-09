@@ -1,0 +1,3 @@
+<p><img src="{{ imageURL }}"></p>
+<p>{{ descriptionText }}</p>
+<p>{{ postDate }}</p>

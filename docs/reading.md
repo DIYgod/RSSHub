@@ -370,6 +370,20 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="junbaor" example="/enclavebooks/collection/103702" path="/enclavebooks/collection/:uid" :paramsDesc="['用户ID, 自行抓包寻找']"/>
 
+## 慧眼看
+
+### 图书分类
+
+<Route author="cubroe" example="/huiyankan/kejijingguan/jisuanji-wangluo" path="/huiyankan/:category?/:subcategory?" :paramsDesc="['主分类路径段', '子分类路径段']" radar="1">
+
+路径段请自行浏览源站并人肉抠 URL；更多样例 ——
+
+-   `/huiyankan`：所有分类
+-   `/huiyankan/kejijingguan`：一级分类 “科技经管”
+-   `/huiyankan/kejijingguan/jisuanji-wangluo`：二级分类 “计算机 / 网络”
+
+</Route>
+
 ## 禁忌书屋
 
 ### 首页
