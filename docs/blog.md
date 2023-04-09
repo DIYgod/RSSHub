@@ -84,15 +84,15 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 ### Next 主题博客
 
-<Route author="fengkx" example="/hexo/next/diygod.me" path="/hexo/next/:url" :paramsDesc="['博客 Url 不带协议头']"/>
+<Route author="fengkx" example="/hexo/next/archive.diygod.me" path="/hexo/next/:url" :paramsDesc="['博客 Url 不带协议头']" selfhost="1"/>
 
 ### Yilia 主题博客
 
-<Route author="aha2mao" example="/hexo/yilia/cloudstone.xin" path="/hexo/yilia/:url" :paramsDesc="['博客 Url 不带协议头']"/>
+<Route author="aha2mao" example="/hexo/yilia/cloudstone.xin" path="/hexo/yilia/:url" :paramsDesc="['博客 Url 不带协议头']" selfhost="1"/>
 
 ### Fluid 主题博客
 
-<Route author="gkkeys" example="/hexo/fluid/blog.tonyzhao.xyz" path="/hexo/fluid/:url" :paramsDesc="['博客 Url 不带协议头']"/>
+<Route author="gkkeys" example="/hexo/fluid/blog.tonyzhao.xyz" path="/hexo/fluid/:url" :paramsDesc="['博客 Url 不带协议头']" selfhost="1"/>
 
 ## Hi, DIYgod
 
