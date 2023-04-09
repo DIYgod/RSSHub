@@ -64,6 +64,12 @@ pageClass: routes
 
 <RouteEn author="james-tindal" example="/ash-maurya" path="/ash-maurya"/>
 
+## MacMenuBar
+
+### Recently
+
+<RouteEn author="5upernova-heng" example="/macmenubar/recently/developer-apps,system-tools" path="/macmenubar/recently/:category?" :paramsDesc="['Category path name, seperate by comma, default is all categories. Category path name can be found in url']" radar="1" />
+
 ## Miris Whispers
 
 ### Blog
