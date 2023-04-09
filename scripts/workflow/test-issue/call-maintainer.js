@@ -64,15 +64,27 @@ module.exports = async ({ github, context, core }) => {
         repo: context.repo.repo,
     };
 
-    if (context.payload.issue.state === 'closed') {
-        await github.rest.issues
-            .update({
+    const addLabels = (labels) =>
+        github.rest.issues
+            .addLabels({
                 ...issue_facts,
-                state: 'open',
+                labels,
             })
             .catch((e) => {
                 core.warning(e);
             });
+    const updateIssueState = (state) =>
+        github.rest.issues
+            .update({
+                ...issue_facts,
+                state,
+            })
+            .catch((e) => {
+                core.warning(e);
+            });
+
+    if (context.payload.issue.state === 'closed') {
+        await updateIssueState('open');
     }
 
     const routes = await parseBodyRoutes(body, core).catch((e) => {
@@ -84,14 +96,7 @@ module.exports = async ({ github, context, core }) => {
     }
 
     if (routes === undefined) {
-        await github.rest.issues
-            .addLabels({
-                ...issue_facts,
-                labels: [parseFailTag],
-            })
-            .catch((e) => {
-                core.warning(e);
-            });
+        await addLabels([parseFailTag]);
         return;
     }
 
@@ -148,14 +153,7 @@ module.exports = async ({ github, context, core }) => {
     }
 
     // Write labels (status, affected route count)
-    await github.rest.issues
-        .addLabels({
-            ...issue_facts,
-            labels,
-        })
-        .catch((e) => {
-            core.warning(e);
-        });
+    await addLabels(labels);
 
     // Reply to the issue and notify the maintainers (if any)
     await github.rest.issues
@@ -175,13 +173,6 @@ If all routes can not be found, the issue will be closed automatically. Please u
         });
 
     if (failedCount && emptyCount === 0 && successCount === 0) {
-        await github.rest.issues
-            .update({
-                ...issue_facts,
-                state: 'closed',
-            })
-            .catch((e) => {
-                core.warning(e);
-            });
+        await updateIssueState('closed');
     }
 };
