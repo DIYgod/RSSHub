@@ -68,7 +68,7 @@ pageClass: routes
 
 ### Recently
 
-<RouteEn author="5upernova-heng" example="/macmenubar/recently/developer-apps" path="/macmenubar/recently/:category?" :paramsDesc="['Category path name(Optional), which can be found in url']" radar="1" />
+<RouteEn author="5upernova-heng" example="/macmenubar/recently/developer-apps,system-tools" path="/macmenubar/recently/:category?" :paramsDesc="['Category path name, seperate by comma, default is all categories. Category path name can be found in url']" radar="1" />
 
 ## Miris Whispers
 
