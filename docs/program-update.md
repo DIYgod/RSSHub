@@ -782,3 +782,19 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 |          | -commentCount | -createdAt | createdAt |
 
 </Route>
+
+## 果核剥壳
+
+### 板块
+
+<Route author="h0ng22" example="/ghxi/new" path="/jandan/:category?" :paramsDesc="['板块，见下表，默认为最新分类']">
+
+| 最新 | 电脑类 | 安卓类 |
+| ---- | ------| ------ |
+| new  | pc    | and    |
+
+</Route>
+
+### 首页
+
+<Route author="h0ng22" example="/ghxi" path="/ghxi"/>
