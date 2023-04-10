@@ -4504,11 +4504,16 @@
     "/stratechery/": [
         "chazeon"
     ],
+    "/studygolang/go/:id?": [
+        "nczitzk"
+    ],
     "/studygolang/jobs": [
-        "CcccFz"
+        "CcccFz",
+        "nczitzk"
     ],
     "/studygolang/weekly": [
-        "Weilet"
+        "CWeilet",
+        "nczitzk"
     ],
     "/subhd/sub/:category?": [
         "nczitzk"
