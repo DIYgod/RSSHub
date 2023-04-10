@@ -147,7 +147,7 @@
     "tough-cookie": "4.1.2",
     "twitter-api-v2": "1.14.2",
     "winston": "3.8.2",
-    "xml2js": "0.4.23"
+    "xml2js": "0.5.0"
   },
   "jest": {
     "testMatch": [
