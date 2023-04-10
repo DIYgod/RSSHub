@@ -108,6 +108,16 @@ pageClass: routes
 
 <Route author="Origami404" example="/ahmu/news" path="/ahmu/news" />
 
+### 研究生学院
+
+<Route author="yanbot-team" example="/ahmu/yjsxy/sszs" path="/ahmu/yjsxy/:type" :paramsDesc="['类型名,见下表，也可在页面URL中找到']"  radar="1" rssbud="1">
+
+| 硕士招生 | 硕士报考点 |
+| -------- | ---------- |
+| sszs     | ssbkd      |
+
+</Route>
+
 ## 北华航天工业学院
 
 ### 新闻
