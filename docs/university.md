@@ -2685,6 +2685,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 首都医科大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/ccmu/yjsh/8365" path="/ccmu/yjsh/:type" :paramsDesc="['类型，见下表']" rssbud="1" radar="1">
+
+| 硕士招生  | 博士招生  | 政策法规  | 港澳台招生 | 下载园地  | 招生简章  | 历年情况  |
+| --------- | --------- | --------- | ---------- | --------- | --------- | --------- |
+| zsgz-sszs | zsgz-bszs | zsgz-zcfg | zsgz-gatzs | zsgz-xzyd | zsgz-zsjz | zsgz-lnqk |
+
+</Route>
+
 ## 四川大学
 
 ### 教务处通知公告
@@ -2761,7 +2773,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生院
 
-<Route author="yanbot-team" example="/sudaedu/yjs/8365" path="/sudaedu/yjs/:type?" :paramsDesc="['类型，见下表']" rssbud="1" radar="1">
+<Route author="yanbot-team" example="/sudaedu/yjs/8365" path="/sudaedu/yjs/:type" :paramsDesc="['类型，见下表']" rssbud="1" radar="1">
 
 | 招生工作 | 博士招生 | 硕士招生 | 港澳台研究生招生 |
 | -------- | -------- | -------- | ---------------- |
