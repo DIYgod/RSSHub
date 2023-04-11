@@ -995,6 +995,19 @@ pageClass: routes
 
 </Route>
 
+## 东北师范大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/nenu/yjsy/z_s1-s_s-j_z" path="/nenu/yjsy/:type" :paramsDesc="['分类 id 见下表，也可在页面URL中找到']" radar="1">
+
+| Id           | 名称         |
+| ------------ | ------------ |
+| z_s1-s_s-j_z | 招生硕士简章 |
+| z_s1-s_s-b_m | 招生硕士报名 |
+
+</Route>
+
 ## 东莞理工学院
 
 ### 教务处通知
