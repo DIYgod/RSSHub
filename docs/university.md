@@ -2051,6 +2051,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 南京晓庄学院
+
+### 官网通知公告
+
+<Route author="real-jiakai" example="/njxzc/tzgg" path="/njxzc/tzgg" radar="1" />
+
+### 图书馆通知公告
+
+<Route author="real-jiakai" example="/njxzc/libtzgg" path="/njxzc/libtzgg" radar="1" />
+
 ## 南京信息工程大学
 
 ::: tip 提示
@@ -3176,16 +3186,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | zkzy     | gzzd     | sjkc     | bylw     | xsxw     | zkby     | zkjc     | zkzn     | lxwm     | zkzx     | bmzn     | rcap     | xsrm     | zkmk     | fxzl     |
 
 </Route>
-
-## 学院
-
-### 官网通知公告
-
-<Route author="real-jiakai" example="/njxzc/tzgg" path="/njxzc/tzgg" radar="1" />
-
-### 图书馆通知公告
-
-<Route author="real-jiakai" example="/njxzc/libtzgg" path="/njxzc/libtzgg" radar="1" />
 
 ## 扬州大学
 
