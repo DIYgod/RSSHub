@@ -1079,6 +1079,16 @@ pageClass: routes
 
 <Route author="Xiaotouming" example="/gdoujwc" path="/gdoujwc"/>
 
+## 广西民族大学
+
+### 研究生院招生公告
+
+<Route author="real-jiakai" example="/gxmzu/yjszsgg" path="/gxmzu/yjszsgg" radar="1" />
+
+### 人工智能学院通知公告
+
+<Route author="real-jiakai" example="/gxmzu/aitzgg" path="/gxmzu/aitzgg" radar="1" />
+
 ## 广州大学
 
 ## 广州大学研招网通知公告
@@ -2040,16 +2050,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | xygg     | xyxw     | xszx     |
 
 </Route>
-
-## 南京晓庄学院
-
-### 官网通知公告
-
-<Route author="real-jiakai" example="/njxzc/tzgg" path="/njxzc/tzgg" radar="1" />
-
-### 图书馆通知公告
-
-<Route author="real-jiakai" example="/njxzc/libtzgg" path="/njxzc/libtzgg" radar="1" />
 
 ## 南京信息工程大学
 
@@ -3176,6 +3176,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | zkzy     | gzzd     | sjkc     | bylw     | xsxw     | zkby     | zkjc     | zkzn     | lxwm     | zkzx     | bmzn     | rcap     | xsrm     | zkmk     | fxzl     |
 
 </Route>
+
+## 学院
+
+### 官网通知公告
+
+<Route author="real-jiakai" example="/njxzc/tzgg" path="/njxzc/tzgg" radar="1" />
+
+### 图书馆通知公告
+
+<Route author="real-jiakai" example="/njxzc/libtzgg" path="/njxzc/libtzgg" radar="1" />
 
 ## 扬州大学
 
