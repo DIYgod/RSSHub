@@ -2459,6 +2459,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 山东财经大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/sdufe/yjszs/tzgg" path="/sdufe/yjszs/:type" :paramsDesc="['专栏名称，见下表，也可在对应页面的URL中找到']" radar="1" rssbud="1">
+
+| 通知公告 | 招生简章 | 专业目录 | 硕士历年分数线 | 博士历年分数线 |
+| -------- | -------- | -------- | -------------- | -------------- |
+| tzgg     | zsjz     | zyml     | sslnfsx        | bslnfsx        |
+
+</Route>
+
 ## 上海大学
 
 ### 上海大学官网信息
