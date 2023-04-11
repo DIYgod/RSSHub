@@ -6728,10 +6728,10 @@ googleapis-common@^6.0.0:
     url-template "^2.0.8"
     uuid "^9.0.0"
 
-googleapis@114.0.0:
-  version "114.0.0"
-  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-114.0.0.tgz#1d0f69b72dfdcb6733db0fba35eb0c2bbe820028"
-  integrity sha512-PbOSZXR0zkEfiX3P2mMW5CX9Kp981Te1bDJfm7Nei0ie9J5J0BscTsljro3POd0RsIQIDvNklJSAlQb6O84PtQ==
+googleapis@115.0.0:
+  version "115.0.0"
+  resolved "https://registry.yarnpkg.com/googleapis/-/googleapis-115.0.0.tgz#4c2ddec9f30a1878c2a5ce76c693210b4adf3935"
+  integrity sha512-GnwFVYzo9NJDeVaNTQxYFmdAuSqCH4ZstKdL3yX6I23gS4fsl5flWcFx81lUlbswFShq6+p1OL7xZCwi5iXomA==
   dependencies:
     google-auth-library "^8.0.2"
     googleapis-common "^6.0.0"
