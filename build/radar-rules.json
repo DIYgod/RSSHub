@@ -8877,23 +8877,23 @@
       }
     ]
   },
-  "gzdaily.cn": {
-    "_name": "广州日报",
+  "gz-cmc.com": {
+    "_name": "广州市融媒体中心",
     ".": [
       {
-        "title": "客户端",
-        "docs": "https://docs.rsshub.app/traditional-media.html#guang-zhou-ri-bao",
+        "title": "频道",
+        "docs": "https://docs.rsshub.app/traditional-media.html#guang-zhou-shi-rong-mei-ti-zhong-xin",
         "source": [
           "/"
         ]
       }
     ]
   },
-  "gz-cmc.com": {
+  "gzdaily.cn": {
     "_name": "广州日报",
-    "huacheng": [
+    ".": [
       {
-        "title": "新花城（广州市融媒体中心）",
+        "title": "客户端",
         "docs": "https://docs.rsshub.app/traditional-media.html#guang-zhou-ri-bao",
         "source": [
           "/"

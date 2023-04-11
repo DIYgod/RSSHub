@@ -2194,10 +2194,10 @@
         "DHPO",
         "hoilc"
     ],
-    "/gzdaily/app/:column?": [
+    "/gz-cmc/:site/:channel?": [
         "TimWu007"
     ],
-    "/gzdaily/cmc/:channel?": [
+    "/gzdaily/app/:column?": [
         "TimWu007"
     ],
     "/gzh360/category/:id?": [
