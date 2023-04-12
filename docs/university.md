@@ -2765,9 +2765,9 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="yanbot-team" example="/scu/yz/" path="/scu/yz/:type" :paramsDesc="['类型，见下表']" rssbud="1" radar="1">
 
-| 硕士公告通知 | 夏令营 | 硕士章程 | 历年数据 |
-| ------------ | ------ | -------- | -------- |
-| ss-gg        | zt-1   | ss-zc    | a-ls     |
+| 硕士公告通知 | 夏令营 | 硕士章程 | 历年数据 | 信息公开 |
+| ------------ | ------ | -------- | -------- | -------- |
+| ss-gg        | zt-1   | ss-zc    | a-ls     | a-gk     |
 
 </Route>
 
