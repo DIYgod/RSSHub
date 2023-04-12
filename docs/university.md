@@ -220,6 +220,16 @@ pageClass: routes
 
 </Route>
 
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/buaa/yzb/xlss" path="/buaa/yzb/:type" :paramsDesc="['分类id，见下表，其他未列出的分类可以在网页URL中找到']">
+
+| 学历硕士 | 资讯速递 |
+| -------- | -------- |
+| xlss     | zxsd     |
+
+</Route>
+
 ## 北京交通大学
 
 ### 研究生院
