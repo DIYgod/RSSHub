@@ -2763,7 +2763,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生招生信息网
 
-<Route author="yanbot-team" example="/scu/yz/" path="/scu/yz/:type" :paramsDesc="['类型，见下表']" rssbud="1" radar="1">
+<Route author="yanbot-team" example="/scu/yz/ss-gg" path="/scu/yz/:type" :paramsDesc="['类型，见下表']" rssbud="1" radar="1">
 
 | 硕士公告通知 | 夏令营 | 硕士章程 | 历年数据 | 信息公开 |
 | ------------ | ------ | -------- | -------- | -------- |
@@ -2907,7 +2907,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 天津师范大学
 
-<Route author="yanbot-team" example="/tjnu/yjsy/notice" path="/tjnu/yjsy/:type" :paramsDesc="['分类，见下表']">
+<Route author="yanbot-team" example="/tjnu/yjsy/zsxx1-ssyjszs" path="/tjnu/yjsy/:type" :paramsDesc="['分类，见下表']">
 
 | 硕士研究生招生 | 招生信息 |
 | :------------: | :------: |
