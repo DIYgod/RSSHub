@@ -222,7 +222,7 @@ pageClass: routes
 
 ### 研究生招生信息网
 
-<Route author="yanbot-team" example="/buaa/yzb/xlss" path="/buaa/yzb/:type" :paramsDesc="['分类id，见下表，其他未列出的分类可以在网页URL中找到']">
+<Route author="yanbot-team" example="/buaa/yzb/xlss" path="/buaa/yzb/:type" :paramsDesc="['分类id，见下表，其他未列出的分类可以在网页URL中找到']" radar="1">
 
 | 学历硕士 | 资讯速递 |
 | -------- | -------- |
@@ -2362,6 +2362,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 通知公告
 
 <Route author="SunBK201" example="/qlu/notice" path="/qlu/notice" radar="1" />
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/qlu/yjszs/6601" path="/qlu/yjszs/:type" :paramsDesc="['分类id，见下表']">
+
+| 通知公告 | 硕士招生简章 | 信息查询 | 考试大纲 |
+| -------- | ------------ | -------- | -------- |
+| 6601     | sszsjz       | 6603     | ksdg     |
+
+</Route>
 
 ## 清华大学
 
