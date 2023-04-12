@@ -8877,6 +8877,31 @@
       }
     ]
   },
+  "gxmzu.edu.cn": {
+    "_name": "广西民族大学",
+    "ai": [
+      {
+        "title": "人工智能学院通知公告",
+        "docs": "https://docs.rsshub.app/university.html#guang-xi-min-zu-da-xue-ren-gong-zhi-neng-xue-yuan-tong-zhi-gong-gao",
+        "source": [
+          "/index/tzgg.htm",
+          "/"
+        ],
+        "target": "/gxmzu/aitzgg"
+      }
+    ],
+    "yjs": [
+      {
+        "title": "研究生院招生公告",
+        "docs": "https://docs.rsshub.app/university.html#guang-xi-min-zu-da-xue-yan-jiu-sheng-yuan-zhao-sheng-gong-gao",
+        "source": [
+          "/tzgg/zsgg.htm",
+          "/"
+        ],
+        "target": "/gxmzu/yjszsgg"
+      }
+    ]
+  },
   "gz-cmc.com": {
     "_name": "广州市融媒体中心",
     ".": [
@@ -15180,7 +15205,7 @@
     "lib": [
       {
         "title": "图书馆通知公告",
-        "docs": "https://docs.rsshub.app/university.html#nan-jing-xiao-zhuang-xue-yuan-guan-wang-tong-zhi-gong-gao",
+        "docs": "https://docs.rsshub.app/university.html#nan-jing-xiao-zhuang-xue-yuan-tu-shu-guan-tong-zhi-gong-gao",
         "source": [
           "/pxyhd/list.htm",
           "/"
@@ -15191,7 +15216,7 @@
     "www": [
       {
         "title": "通知公告",
-        "docs": "https://docs.rsshub.app/university.html#nan-jing-xiao-zhuang-xue-yuan-tu-shu-guan-tong-zhi-gong-gao",
+        "docs": "https://docs.rsshub.app/university.html#nan-jing-xiao-zhuang-xue-yuan-guan-wang-tong-zhi-gong-gao",
         "source": [
           "/89/list.htm",
           "/"
