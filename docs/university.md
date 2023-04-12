@@ -1707,7 +1707,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 暨南大学
 
-## 暨南要闻
+### 暨南要闻
 
 <Route author="hang333" example="/jnu/yw/tt" path="/jnu/yw/:type?" :paramDesc="['暨南要闻类型，默认为 `yw`']">
 
@@ -1724,6 +1724,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 院系速递 | 部门快讯 |
 | -------- | -------- |
 | yxsd     | bmkx     |
+
+</Route>
+
+### 研究生招生信息网
+
+<Route author="yanbot" example="/jnu/yz/tzgg" path="/jnu/yz/:type" :paramDesc="['分类id，见下表']">
+
+| 通知公告 | 硕士招生简章 |
+| -------- | ------------ |
+| tzgg     | sszsjz       |
 
 </Route>
 
