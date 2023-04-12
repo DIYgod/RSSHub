@@ -350,13 +350,17 @@ GitHub 官方也提供了一些 RSS:
 
 ## Go 语言中文网
 
+### 板块
+
+<Route author="nczitzk" example="/studygolang/go/daily" path="/studygolang/go/:id?" :paramsDesc="['板块 id，默认为周刊']" radar="1"/>
+
 ### 周刊
 
-<Route author="Weilet" example="/studygolang/weekly" path="/studygolang/weekly" radar="1"/>
+<Route author="Weilet nczitzk" example="/studygolang/weekly" path="/studygolang/weekly" radar="1"/>
 
 ### 招聘
 
-<Route author="CcccFz" example="/studygolang/jobs" path="/studygolang/jobs" radar="1" rssbud="1"/>
+<Route author="CcccFz nczitzk" example="/studygolang/jobs" path="/studygolang/jobs" radar="1" rssbud="1"/>
 
 ## GoCN
 
