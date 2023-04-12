@@ -2997,6 +2997,33 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/6park/chan1/keywords/都市" path="/6park/:id/keywords/:keyword?" :paramsDesc="['分站，见上表', '关键字']"/>
 
+### 新闻栏目
+
+<Route author="nczitzk" example="/6park/news" path="/6park/news/:site?/:id?" :paramsDesc="['分站，见下表，默认为 newspark', '栏目 id']">
+
+分站
+
+| newspark | local |
+| -------- | ----- |
+
+::: tip 提示
+
+若订阅 [时政](https://www.6parknews.com/newspark/index.php?type=1)，其网址为 <https://www.6parknews.com/newspark/index.php?type=1>，其中 `newspark` 为分站，`1` 为栏目 id。
+
+若订阅 [美国](https://local.6parknews.com/index.php?type_id=1)，其网址为 <https://local.6parknews.com/index.php?type_id=1>，其中 `local` 为分站，`1` 为栏目 id。
+
+:::
+
+</Route>
+
+### 头条精选
+
+<Route author="nczitzk" example="/6park/news/newspark/gold" path="/6park/news/newspark/gold"/>
+
+### 新闻搜索
+
+<Route author="nczitzk" example="/6park/news/newspark/keywords/搜索" path="/6park/news/newspark/keywords/:keyword?" :paramsDesc="['关键字']"/>
+
 ## 隆众资讯
 
 ### 资讯
@@ -3327,25 +3354,37 @@ column 为 third 时可选的 category:
 
 ### 话题动态
 
-<Route author="sanmmm" path="/pingwest/tag/:tag/:type" example="/pingwest/tag/ChinaJoy/1" :paramsDesc="['话题名或话题id, 可从话题页url中得到', '内容类型']">
+<Route author="sanmmm" path="/pingwest/tag/:tag/:type/:option?" example="/pingwest/tag/ChinaJoy/1" :paramsDesc="['话题名或话题id, 可从话题页url中得到', '内容类型', '参数, 默认无']">
 
 内容类型
 
-| 最新 | 最热 |
+| 最新 | 热门 |
 | ---- | ---- |
 | 1    | 2    |
+
+参数
+
+-   `fulltext`，全文输出，例如：`/pingwest/tag/ChinaJoy/1/fulltext`
+
+::: tip 提示
+该路由一次最多显示 30 条文章
+:::
 
 </Route>
 
 ### 用户
 
-<Route author="sanmmm" path="/pingwest/user/:uid/:type?" example="/pingwest/user/7781550877/article" :paramsDesc="['用户id, 可从用户主页中得到', '内容类型, 默认为`article`']">
+<Route author="sanmmm" path="/pingwest/user/:uid/:type?/:option?" example="/pingwest/user/7781550877/article" :paramsDesc="['用户id, 可从用户主页中得到', '内容类型, 默认为`article`', '参数']">
 
 内容类型
 
 | 文章    | 动态  |
 | ------- | ----- |
 | article | state |
+
+参数
+
+-   `fulltext`，全文输出，例如：`/pingwest/user/7781550877/article/fulltext`
 
 </Route>
 
@@ -4084,6 +4123,10 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 :::
 
 </Route>
+
+### 公众号（搜狗来源）
+
+<Route author="NavePnow" example="/wechat/sogou/qimao0908" path="/wechat/sogou/:id" :paramsDesc="['公众号 id, 打开 weixin.sogou.com 并搜索相应公众号， 在 URL 中找到 id']"/>
 
 ## 维基百科
 

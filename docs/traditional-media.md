@@ -1124,15 +1124,44 @@ IT・科学 tech_science
 
 </Route>
 
-### 新花城（广州市融媒体中心）
+## 广州市融媒体中心
 
-<Route author="TimWu007" example="/gzdaily/cmc/shouye" path="/gzdaily/cmc/:channel?" :paramsDesc="['频道名']">
+### 频道
 
-::: tip 提示
+<Route author="TimWu007" example="/gz-cmc/huacheng/shouye" path="/gz-cmc/:site/:channel?" :paramsDesc="['站点代码', '频道代码']">
 
-`频道名（channel）` 可在对应频道 url 后的参数中获取，如 `首页` 的栏目 url 为`https://huacheng.gz-cmc.com/channel/shouye/index.html`, `频道名` 即为 `shouye`。
+已知支持的站点及对应的`站点代码`如下：
 
-:::
+|                       站点 / 客户端名                      |     营运机构     |                      代码                      |
+| :--------------------------------------------------------: | :--------------: | :--------------------------------------------: |
+|          [新花城](https://www.gz-cmc.com "新花城")         |    广州日报社    |                   `huacheng`                   |
+| [广州白云](https://guangzhoubaiyun.gz-cmc.com/ "广州白云") | 白云区融媒体中心 |                `guangzhoubaiyun`               |
+|                          到黄埔去                          | 黄埔区融媒体中心 |                 `daohuangpuqu`                 |
+|                          掌上番禺                          | 番禺区融媒体中心 | `zhangshangfanyu` <br />（注：此处非笔误 = =） |
+|                           阅增城                           | 增城区融媒体中心 |                 `yuezengcheng`                 |
+
+如有上表未列出的站点，欢迎补充。
+
+`频道代码`获取方式：
+
+1.  在对应频道 url 后的参数中获取，如`首页`的栏目 url 为`https://huacheng.gz-cmc.com/channel/shouye/index.html`, `频道代码`即为`shouye`。
+2.  进入相应站点的客户端后抓包。
+
+黄埔、增城、番禺三区的站点无网页，需采用抓包的方式获取频道代码。现列出部分：
+
+|           频道名           |   代码   |
+| :------------------------: | :------: |
+|         黄埔 - 首页        |   `sy`   |
+| 黄埔 -《湾区时报》最新一期 |  `hpxsd` |
+|         黄埔 - 民生        |   `ms`   |
+|        黄埔 - 企明星       |   `qmx`  |
+|         增城 - 首页        | `shouye` |
+|         增城 - 身边        |   `sb`   |
+|         增城 - 本地        |  `zcfb`  |
+|         番禺 - 首页        | `shouye` |
+|         番禺 - 身边        |   `yw`   |
+|         番禺 - 生活        |   `sh`   |
+|         番禺 - 教育        |   `jy`   |
 
 </Route>
 
