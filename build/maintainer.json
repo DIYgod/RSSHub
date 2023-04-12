@@ -2572,6 +2572,9 @@
     "/iqiyi/user/video/:uid": [
         "talengu"
     ],
+    "/iqnew/latest": [
+        "nczitzk"
+    ],
     "/iresearch/report": [
         "brilon",
         "Fatpandac"
@@ -6675,8 +6678,6 @@
     "/nasa/apod": [],
     "/nasa/apod-ncku": [],
     "/nasa/apod-cn": [],
-    "/iqshw/latest": [],
-    "/3k8/latest": [],
     "/justrun": [],
     "/fjnews/:city/:limit": [],
     "/fjnews/jjnews": [],
