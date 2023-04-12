@@ -1079,6 +1079,16 @@ pageClass: routes
 
 <Route author="Xiaotouming" example="/gdoujwc" path="/gdoujwc"/>
 
+## 广西民族大学
+
+### 研究生院招生公告
+
+<Route author="real-jiakai" example="/gxmzu/yjszsgg" path="/gxmzu/yjszsgg" radar="1" />
+
+### 人工智能学院通知公告
+
+<Route author="real-jiakai" example="/gxmzu/aitzgg" path="/gxmzu/aitzgg" radar="1" />
+
 ## 广州大学
 
 ## 广州大学研招网通知公告
