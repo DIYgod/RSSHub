@@ -8747,10 +8747,10 @@ koa-mount@4.0.0:
     debug "^4.0.1"
     koa-compose "^4.1.0"
 
-koa@2.14.1:
-  version "2.14.1"
-  resolved "https://registry.yarnpkg.com/koa/-/koa-2.14.1.tgz#defb9589297d8eb1859936e777f3feecfc26925c"
-  integrity sha512-USJFyZgi2l0wDgqkfD27gL4YGno7TfUkcmOe6UOLFOVuN+J7FwnNu4Dydl4CUQzraM1lBAiGed0M9OVJoT0Kqw==
+koa@2.14.2:
+  version "2.14.2"
+  resolved "https://registry.yarnpkg.com/koa/-/koa-2.14.2.tgz#a57f925c03931c2b4d94b19d2ebf76d3244863fc"
+  integrity sha512-VFI2bpJaodz6P7x2uyLiX6RLYpZmOJqNmoCst/Yyd7hQlszyPwG/I9CQJ63nOtKSxpt5M7NH67V6nJL2BwCl7g==
   dependencies:
     accepts "^1.3.5"
     cache-content-type "^1.0.0"

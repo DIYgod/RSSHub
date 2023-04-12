@@ -119,7 +119,7 @@
     "jsdom": "21.1.1",
     "json-bigint": "1.0.0",
     "json5": "2.2.3",
-    "koa": "2.14.1",
+    "koa": "2.14.2",
     "koa-basic-auth": "4.0.0",
     "koa-favicon": "2.1.0",
     "koa-mount": "4.0.0",
