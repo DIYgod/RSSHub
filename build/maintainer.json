@@ -2019,7 +2019,8 @@
         "TonyRL"
     ],
     "/gov/stats/:path+": [
-        "bigfei"
+        "bigfei",
+        "nczitzk"
     ],
     "/gov/zhengce/govall/:advance?": [
         "ciaranchen"

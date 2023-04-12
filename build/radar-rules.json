@@ -8481,8 +8481,8 @@
     "_name": "国家统计局",
     "www": [
       {
-        "title": "统计数据 > 最新发布",
-        "docs": "https://docs.rsshub.app/government.html#guo-jia-tong-ji-ju-tong-ji-shu-ju-zui-xin-fa-bu",
+        "title": "通用",
+        "docs": "https://docs.rsshub.app/government.html#guo-jia-tong-ji-ju-shu-ju-tong-yong",
         "source": [
           "/*"
         ]
