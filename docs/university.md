@@ -2743,7 +2743,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生院
 
-<Route author="yanbot-team" example="/ccmu/yjsh/8365" path="/ccmu/yjsh/:type" :paramsDesc="['类型，见下表']" rssbud="1" radar="1">
+<Route author="yanbot-team" example="/ccmu/yjsh/zsgz-sszs" path="/ccmu/yjsh/:type" :paramsDesc="['类型，见下表']" rssbud="1" radar="1">
 
 | 硕士招生  | 博士招生  | 政策法规  | 港澳台招生 | 下载园地  | 招生简章  | 历年情况  |
 | --------- | --------- | --------- | ---------- | --------- | --------- | --------- |
@@ -2760,6 +2760,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 学工部通知公告
 
 <Route author="stevelee477" example="/scu/xg/notice" path="/scu/xg/notice" />
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/scu/yz/" path="/scu/yz/:type" :paramsDesc="['类型，见下表']" rssbud="1" radar="1">
+
+| 硕士公告通知 | 夏令营 | 硕士章程 | 历年数据 |
+| ------------ | ------ | -------- | -------- |
+| ss-gg        | zt-1   | ss-zc    | a-ls     |
+
+</Route>
 
 ## 四川旅游学院
 
