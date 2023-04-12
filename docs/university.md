@@ -368,6 +368,18 @@ pageClass: routes
 
 </Route>
 
+## 北京外国语大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/bfsu/graduate/zsxx-sszs" path="/bfsu/graduate/:type" :paramsDesc="['分类type,见下表']" radar="1" >
+
+| 招生信息硕士招生 | 招生信息博士招生 | 新闻通知 |
+| ---------------- | ---------------- | -------- |
+| zsxx-sszs        | zsxx-bszs        | xwtz     |
+
+</Route>
+
 ## 北京物资学院
 
 ### 通知公告
@@ -431,7 +443,7 @@ pageClass: routes
 
 ### 研究生招生网
 
-<Route author="yanbot-team" example="/cust/yzb/:type" path="/cust/yzb/:type" :paramsDesc="['分类type,见下表']">
+<Route author="yanbot-team" example="/cust/yzb/:type" path="/cust/yzb/:type" :paramsDesc="['分类type,见下表']" radar="1" >
 
 | 硕士生招生 | 博士生招生 |
 | ---------- | ---------- |
