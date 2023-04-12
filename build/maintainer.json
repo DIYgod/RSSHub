@@ -3813,6 +3813,15 @@
     "/pincong/topic/:topic": [
         "zphw"
     ],
+    "/pingwest/status": [
+        "sanmmm"
+    ],
+    "/pingwest/tag/:tag/:type/:option?": [
+        "sanmmm"
+    ],
+    "/pingwest/user/:uid/:type?/:option?": [
+        "sanmmm"
+    ],
     "/pixabay/search/:q/:order?": [
         "TonyRL"
     ],
@@ -6288,9 +6297,6 @@
     "/leboncoin/ad/:query": [],
     "/dhl/:id": [],
     "/japanpost/track/:reqCode/:locale?": [],
-    "/pingwest/status": [],
-    "/pingwest/tag/:tag/:type": [],
-    "/pingwest/user/:uid/:type?": [],
     "/hanime/video": [],
     "/soul/:id": [],
     "/soul/posts/hot/:pid*": [],
