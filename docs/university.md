@@ -1079,6 +1079,16 @@ pageClass: routes
 
 <Route author="Xiaotouming" example="/gdoujwc" path="/gdoujwc"/>
 
+## 广西民族大学
+
+### 研究生院招生公告
+
+<Route author="real-jiakai" example="/gxmzu/yjszsgg" path="/gxmzu/yjszsgg" radar="1" />
+
+### 人工智能学院通知公告
+
+<Route author="real-jiakai" example="/gxmzu/aitzgg" path="/gxmzu/aitzgg" radar="1" />
+
 ## 广州大学
 
 ## 广州大学研招网通知公告
@@ -2253,6 +2263,12 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 通知公告
 
 <Route author="SunBK201" example="/qlu/notice" path="/qlu/notice" radar="1" />
+
+## 青岛大学
+
+### 教务处通知
+
+<Route author="abc1763613206" example="/qdu/jwc" path="/qdu/jwc" radar="1" />
 
 ## 清华大学
 

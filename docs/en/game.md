@@ -81,6 +81,20 @@ Category
 
 </RouteEn>
 
+## Fortnite
+
+### News
+
+<RouteEn author="lyqluis" example="/fortnite/news" path="/fortnite/news/:options?" :paramsDesc="['Params']" radar="1" puppeteer="1">
+
+-   `options.lang`, optional, language, eg. `/fortnite/news/lang=en-US`, common languages are listed below, more languages are available one the [official website](https://www.fortnite.com/news)
+
+| English (default) | Spanish | Japanese | French | Korean | Polish |
+| ----------------- | ------- | -------- | ------ | ------ | ------ |
+| en-US             | es-ES   | ja       | fr     | ko     | pl     |
+
+</RouteEn>
+
 ## Gamer Secret
 
 ### Latest News
