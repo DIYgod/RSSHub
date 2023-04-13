@@ -3055,7 +3055,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生招生信息网
 
-<Route author="yanbot" example="/whu/wdyz/index-show-tid-7" path="/whu/wdyz/:type"
+<Route author="yanbot" example="/whu/wdyz/7" path="/whu/wdyz/:type"
 :paramsDesc="['类型，详见表格']">
 
 | 硕士招生 | 普通硕士 | 夏令营 | 推荐免试 | 非全日制招生 |
@@ -3454,7 +3454,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 | 招生 | 招生-硕士招生 | 招生-博士招生 | 招生政策 | 同力申硕 | 推免专栏 |
 | ---- | ------------- | ------------- | -------- | -------- | -------- |
-| 招生 | zs-sszs       | zs-bszs       | zs-zszc  | zs-tlss  | zs-tmzl  |
+| zs   | zs-sszs       | zs-bszs       | zs-zszc  | zs-tlss  | zs-tmzl  |
 
 </Route>
 
