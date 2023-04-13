@@ -534,6 +534,9 @@
     "/barronschina/:id?": [
         "nczitzk"
     ],
+    "/bast/:path+": [
+        "nczitzk"
+    ],
     "/bbcnewslabs/news": [
         "elxy"
     ],

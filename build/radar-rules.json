@@ -2464,6 +2464,19 @@
       }
     ]
   },
+  "bast.net.cn": {
+    "_name": "北京市科学技术协会",
+    ".": [
+      {
+        "title": "通用",
+        "docs": "https://docs.rsshub.app/new-media.html#bei-jing-shi-ke-xue-ji-shu-xie-hui-tong-yong",
+        "source": [
+          "/col",
+          "/"
+        ]
+      }
+    ]
+  },
   "bbcnewslabs.co.uk": {
     "_name": "BBC News Labs",
     ".": [
