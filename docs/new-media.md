@@ -4612,18 +4612,6 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 </Route>
 
-## 中国技术经济学会
-
-### 栏目
-
-<Route author="nczitzk" example="/cste" path="/cste/:id?" :paramsDesc="['分类，见下表，默认为 16，即通知公告']">
-
-| 通知公告 | 学会新闻 | 科协简讯 | 学科动态 | 往事钩沉 |
-| -------- | -------- | -------- | -------- | -------- |
-| 16       | 18       | 19       | 20       | 21       |
-
-</Route>
-
 ## 中国科学院青年创新促进会
 
 ### 最新博文
