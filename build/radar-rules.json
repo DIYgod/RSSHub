@@ -6917,6 +6917,18 @@
       }
     ]
   },
+  "fortnite.com": {
+    "_name": "Fortnite",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/game.html#fortnite",
+        "source": [
+          "/news"
+        ]
+      }
+    ]
+  },
   "fortunechina.com": {
     "_name": "财富中文网",
     ".": [
