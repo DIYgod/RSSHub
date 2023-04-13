@@ -3029,6 +3029,17 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生招生信息网
+
+<Route author="yanbot" example="/whu/wdyz/index-show-tid-7" path="/whu/wdyz/:type"
+:paramsDesc="['类型，详见表格']">
+
+| 硕士招生 | 普通硕士 | 夏令营 | 推荐免试 | 非全日制招生 |
+| -------- | -------- | ------ | -------- | ------------ |
+| 7        | 35       | 35     | 41       | 42           |
+
+</Route>
+
 ## 武汉纺织大学
 
 ### 信息门户公告
