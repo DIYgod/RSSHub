@@ -3387,6 +3387,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 徐州医科大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/xzhmu/yjs/zs-sszs" path="/xzhmu/yjs/:type" :paramsDesc="['分类名，见下表']">
+
+| 招生 | 招生-硕士招生 | 招生-博士招生 | 招生政策 | 同力申硕 | 推免专栏 |
+| ---- | ------------- | ------------- | -------- | -------- | -------- |
+| 招生 | zs-sszs       | zs-bszs       | zs-zszc  | zs-tlss  | zs-tmzl  |
+
+</Route>
+
 ## 燕山大学
 
 ### 研究生招生网
