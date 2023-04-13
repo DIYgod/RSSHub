@@ -1731,6 +1731,26 @@ Supported sub-sites:
 
 <Route author="emdoe" example="/twreporter/category/reviews" path="/twreporter/category/:tid" :paramsDesc="['分类（议题）名称，于主页获取']"/>
 
+## 北京市科学技术协会
+
+### 通用
+
+<Route author="nczitzk" example="/bast/col/col31266" path="/bast/:path+" :paramsDesc="['路径，默认为通知公告']">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `https://www.bast.net.cn/` 后的字段。下面是两个例子。
+
+若订阅 [通知公告](https://www.bast.net.cn/col/col31266) 则将对应页面 URL <https://www.bast.net.cn/col/col31266> 中 `https://www.bast.net.cn/` 后的字段 `col/col31266` 作为路径填入。此时路由为 [`/bast/col/col31266`](https://rsshub.app/bast/col/col31266)
+
+若订阅 [学术动态](https://www.bast.net.cn/col/col31530) 则将对应页面 URL <https://www.bast.net.cn/col/col31530> 中 `https://www.bast.net.cn/` 后的字段 `col/col31530` 作为路径填入。此时路由为 [`/bast/col/col31530`](https://rsshub.app/bast/col/col31530)
+
+如果路由符合 `/col/colXXXXX` 的格式，可以由 [`/bast/col/col31266`](https://rsshub.app/bast/col/col31266) 精简为 [`/bast/31266`](https://rsshub.app/bast/31266)
+
+:::
+
+</Route>
+
 ## 北屋
 
 <Route author="nczitzk" example="/northhouse" path="/northhouse/:category?" :paramsDesc="['分类，见下表，默认为首页']">
