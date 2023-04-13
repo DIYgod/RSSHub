@@ -3193,6 +3193,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 西安外国语大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/xisu/yzw/index-sstzgg" path="/xisu/yzw/:type" :paramsDesc="['分类id，见下表']" radar="1" rssbud="1">
+
+| 硕士通知公告 | 硕士简章  | 硕士推免招生 | 信息公开 |  研招资讯  |
+| :----------: | :-------: | :----------: | :------: | :--------: |
+| index-sstzgg | zsjz-ssjz | zsjz-sstmsjz |  xxgk1   | index-yzzx |
+
+</Route>
+
 ## 西北工业大学
 
 ### 翱翔门户
