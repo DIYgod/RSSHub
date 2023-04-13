@@ -833,6 +833,9 @@
     "/caixin/:column/:category": [
         "idealclover"
     ],
+    "/camchina/:id?": [
+        "nczitzk"
+    ],
     "/cankaoxiaoxi/column/:id?": [
         "yuxinliu-alex",
         "nczitzk"
