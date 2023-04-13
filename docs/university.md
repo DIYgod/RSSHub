@@ -3269,6 +3269,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 西南大学
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/swu/yanzhao/news1" path="/swu/yanzhao/:type" :paramsDesc="['分类名，见下表']" radar="1">
+
+| 最新动态 | 全日制硕士招生 | 博士招生 | 非全日制硕士 |
+| -------- | -------------- | -------- | ------------ |
+| news1    | news2          | news3    | news4        |
+
+</Route>
+
 ## 西南交通大学
 
 ### 教务网
