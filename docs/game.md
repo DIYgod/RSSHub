@@ -103,6 +103,20 @@ pageClass: routes
 
 <Route author="nczitzk" example="/fgo/news" path="/fgo/news"/>
 
+## Fortnite
+
+### News
+
+<Route author="lyqluis" example="/fortnite/news" path="/fortnite/news/:options?" :paramsDesc="['参数']" radar="1" puppeteer="1">
+
+-   `options.lang`，可选，语言，实例：`/fortnite/news/lang=en-US`，常见语言见下表，更多语言参考 [官网](https://www.fortnite.com/news)
+
+| 英语（默认） | 日语 | 法语 | 韩语 |
+| ------------ | ---- | ---- | ---- |
+| en-US        | ja   | fr   | ko   |
+
+</Route>
+
 ## GameApps.hk 香港手机游戏网
 
 ### 最新消息
