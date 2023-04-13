@@ -4588,6 +4588,18 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 </Route>
 
+## 中国管理现代化研究会
+
+### 栏目
+
+<Route author="nczitzk" example="/camchina" path="/camchina/:id?" :paramsDesc="['分类，见下表，默认为 1，即新闻']">
+
+| 新闻 | 通告栏 |
+| ---- | ------ |
+| 1    | 2      |
+
+</Route>
+
 ## 中国机械工程学会
 
 ### 学会新闻
