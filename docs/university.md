@@ -1284,6 +1284,16 @@ category 列表：
 
 </Route>
 
+### 研究生招生网
+
+<Route author="yanbot-team" example="/hrbeu/yzb/3279" path="/hrbeu/yzb/:type" :paramsDesc="['栏目编号，由 `URL` 中获取。']" radar="1" rssbud="1">
+
+| 招生公告 | 招生简章 | 专业目录 | 工作办法 | 其他 |
+| :------: | :------: | :------: | :------: | :--: |
+|   3279   |   3279   |   3277   |   3280   | ...  |
+
+</Route>
+
 ### 就业服务平台
 
 <Route author="Derekmini" example="/hrbeu/job/list/tzgg" path="/hrbeu/job/list/:id" :paramsDesc="['栏目，如下表']" radar="1" rssbud="1">
