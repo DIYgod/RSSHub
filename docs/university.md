@@ -1108,19 +1108,33 @@ pageClass: routes
 
 ### 教务处通知
 
-<Route author="Lao-Liu233" example="/fzu/jxtz" path="/fzu/:type" :paramsDesc="['分类见下表']"/>
+<Route author="Lao-Liu233" example="/fzu/jxtz" path="/fzu/:type" :paramsDesc="['分类见下表']">
 
 | 教学通知 | 专家讲座 |
 | -------- | -------- |
 | jxtz     | zjjz     |
+
+</Route>
 
 ### 教务处通知（无文章内容）
 
-<Route author="Lao-Liu233" example="/fzu_min/jxtz" path="/fzu_min/:type" :paramsDesc="['分类见下表']"/>
+<Route author="Lao-Liu233" example="/fzu_min/jxtz" path="/fzu_min/:type" :paramsDesc="['分类见下表']">
 
 | 教学通知 | 专家讲座 |
 | -------- | -------- |
 | jxtz     | zjjz     |
+
+</Route>
+
+### 研究生院
+
+<Route author="yan-bot" example="/fzu/yjsy/index-tzgg" path="/fzu/yjsy/:type" :paramsDesc="['分类见下表']" radar="1" rssbud="1">
+
+| 通知公告   | 硕士研究生招生 | 文件规定  | 博士研究生招生 | 在职研究生招生 | 港澳台研究生招生 | 外国留学生研究生招生 |
+| ---------- | -------------- | --------- | -------------- | -------------- | ---------------- | -------------------- |
+| index-tzgg | asgz-ssyjszs   | zsgz-wjgd | zsgz-bsyjszs   | zsgz-zzyjszs   | zsgz-gatyjszs    | zsgz-wglxsyjszs      |
+
+</Route>
 
 ## 复旦大学继续教育学院
 
