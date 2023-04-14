@@ -6036,6 +6036,15 @@
           "/"
         ]
       }
+    ],
+    "so": [
+      {
+        "title": "搜索",
+        "docs": "https://docs.rsshub.app/finance.html#dong-fang-cai-fu",
+        "source": [
+          "/News/s"
+        ]
+      }
     ]
   },
   "ecnu.edu.cn": {

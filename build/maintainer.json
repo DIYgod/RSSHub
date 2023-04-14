@@ -1537,6 +1537,9 @@
     "/eastmoney/ttjj/user/:uid": [
         "zidekuls"
     ],
+    "/eastmoney/search/:keyword": [
+        "drgnchan"
+    ],
     "/ecnu/acm/contest/:category?": [
         "a180285"
     ],
