@@ -258,6 +258,10 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="zidekuls" example="/eastmoney/ttjj/user/6551094298949188" path="/eastmoney/ttjj/user/:uid" :paramsDesc="['用户id, 可以通过天天基金App分享用户主页到浏览器，在相应的URL中找到']"/>
 
+### 搜索
+
+<Route author="drgnchan" example="/eastmoney/search/web3" path="/eastmoney/search/:keyword" :paramsDesc="['关键词，可以设置为自己需要检索的关键词']" radar="1"/>
+
 ## 法布财经
 
 ### 新闻
