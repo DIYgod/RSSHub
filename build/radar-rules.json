@@ -15012,6 +15012,20 @@
       }
     ]
   },
+  "njglyy.com": {
+    "_name": "南京鼓楼医院",
+    ".": [
+      {
+        "title": "员工版教育培训",
+        "docs": "https://docs.rsshub.app/university.html#nan-jing-gu-lou-yi-yuan-yuan-gong-ban-jiao-yu-pei-xun",
+        "source": [
+          "/ygb/jypx/jypx.aspx",
+          "/"
+        ],
+        "target": "/njglyy/ygbjypx"
+      }
+    ]
+  },
   "njit.edu.cn": {
     "_name": "南京工程学院",
     "jwc": [
@@ -15185,6 +15199,20 @@
           "/"
         ],
         "target": "/nju/zcc"
+      }
+    ]
+  },
+  "njucm.edu.cn": {
+    "_name": "南京中医药大学",
+    "lib": [
+      {
+        "title": "研究生院博士招生",
+        "docs": "https://docs.rsshub.app/university.html#nan-jing-zhong-yi-yao-da-xue-yan-jiu-sheng-yuan-bo-shi-zhao-sheng",
+        "source": [
+          "/2899/list.htm",
+          "/"
+        ],
+        "target": "/njucm/grabszs"
       }
     ]
   },
