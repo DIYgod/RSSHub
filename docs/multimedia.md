@@ -1201,17 +1201,17 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="x2cf" example="/tmdb/tv/70593/seasons/1/episodes/zh" path="/tmdb/tv/:id/seasons/:seasonNumber/episodes/:lang?" :paramsDesc="['剧集 ID', '季号', '语言']" radar="1" rssbud="1" />
 
-### 目录
+### 片单
 
-<Route author="x2cf" example="/tmdb/tv/top-rated/zh" path="/tmdb/:mediaType/:catalog/:lang?" :paramsDesc="['`movie` 或 `tv`', '目录类别，见下表', '语言']" radar="1" rssbud="1">
+<Route author="x2cf" example="/tmdb/tv/top-rated/zh" path="/tmdb/:mediaType/:sheet/:lang?" :paramsDesc="['`movie` 或 `tv`', '片单，见下表', '语言']" radar="1" rssbud="1">
 
-当 `mediaType` 为 `tv` 时，`catalog` 的值如下：
+当 `mediaType` 为 `tv` 时，`sheet` 的值如下：
 
 | 今日播出     | 电视播出中 | 高分      |
 | ------------ | ---------- | --------- |
 | airing-today | on-the-air | top-rated |
 
-当 `mediaType` 为 `movie` 时，`catalog` 的值如下：
+当 `mediaType` 为 `movie` 时，`sheet` 的值如下：
 
 | 正在上映    | 即将上映 | 高分      |
 | ----------- | -------- | --------- |

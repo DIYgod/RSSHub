@@ -545,17 +545,17 @@ Refer to <https://developers.themoviedb.org/3/getting-started/languages> for the
 
 <RouteEn author="x2cf" example="/tmdb/tv/70593/seasons/1/episodes/en-US" path="/tmdb/tv/:id/seasons/:seasonNumber/episodes/:lang?" :paramsDesc="['TV show ID', 'Season number', 'Language']" radar="1" rssbud="1" />
 
-### Catalog
+### Sheet
 
-<RouteEn author="x2cf" example="/tmdb/tv/top-rated/en-US" path="/tmdb/:mediaType/:catalog/:lang?" :paramsDesc="['`movie` or `tv`', 'Catalog, see below', 'Language']" radar="1" rssbud="1">
+<RouteEn author="x2cf" example="/tmdb/tv/top-rated/en-US" path="/tmdb/:mediaType/:sheet/:lang?" :paramsDesc="['`movie` or `tv`', 'Sheet, see below', 'Language']" radar="1" rssbud="1">
 
-When `mediaType` is `tv`, `catalog` should be:
+When `mediaType` is `tv`, `sheet` should be:
 
 | Airing Today | On TV      | Top Rated |
 | ------------ | ---------- | --------- |
 | airing-today | on-the-air | top-rated |
 
-When `mediaType` is `movie`, `catalog` should be:
+When `mediaType` is `movie`, `sheet` should be:
 
 | Now Playing | Upcoming | Top Rated |
 | ----------- | -------- | --------- |
