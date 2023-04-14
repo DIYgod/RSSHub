@@ -653,6 +653,18 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="xyqfer" example="/icourse163/newest" path="/icourse163/newest" />
 
+## 中国管理现代化研究会
+
+### 栏目
+
+<Route author="nczitzk" example="/camchina" path="/camchina/:id?" :paramsDesc="['分类，见下表，默认为 1，即新闻']">
+
+| 新闻 | 通告栏 |
+| ---- | ------ |
+| 1    | 2      |
+
+</Route>
+
 ## 中国计算机学会
 
 ### 新闻
@@ -678,6 +690,18 @@ path="/ctfhub/upcoming/:limit?"
 ### 大数据专家委员会
 
 <Route author="tudou027" example="/ccf/tfbd/xwdt/tzgg" path="/ccf/tfbd/:caty/:id" :paramsDesc="['主分类，可在 URL 找到', '子分类，可在 URL 找到']" radar="1"/>
+
+## 中国技术经济学会
+
+### 栏目
+
+<Route author="nczitzk" example="/cste" path="/cste/:id?" :paramsDesc="['分类，见下表，默认为 16，即通知公告']">
+
+| 通知公告 | 学会新闻 | 科协简讯 | 学科动态 | 往事钩沉 |
+| -------- | -------- | -------- | -------- | -------- |
+| 16       | 18       | 19       | 20       | 21       |
+
+</Route>
 
 ## 中国留学网
 
