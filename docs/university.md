@@ -2246,6 +2246,12 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 南京中医药大学
+
+### 研究生院博士招生
+
+<Route author="real-jiakai" example="/njucm/grabszs" path="/njucm/grabszs" radar="1" />
+
 ## 南开大学
 
 ### 南开大学教务处
