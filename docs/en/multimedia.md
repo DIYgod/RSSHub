@@ -523,6 +523,46 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 <RouteEn author="outloudvi" example="/spotify/top/artists" path="/spotify/top/artists" />
 
+## TMDB
+
+::: tip Tips
+Refer to <https://developers.themoviedb.org/3/getting-started/languages> for the language parameter in the route.
+:::
+
+### Collection
+
+<RouteEn author="x2cf" example="/tmdb/collection/131292/en-US" path="/tmdb/collection/:id/:lang?" :paramsDesc="['Collection ID', 'Language']" radar="1" rssbud="1" />
+
+### Trending
+
+<RouteEn author="x2cf" example="/tmdb/trending/tv/day/en-US" path="/tmdb/trending/:mediaType/:timeWindow/:lang?" :paramsDesc="['`movie` or `tv`', '`day` or `week`', 'Language']" radar="1" rssbud="1" />
+
+### TV Show Seasons
+
+<RouteEn author="x2cf" example="/tmdb/tv/70593/seasons/en-US" path="/tmdb/tv/:id/seasons/:lang?" :paramsDesc="['TV show ID', 'Language']" radar="1" rssbud="1" />
+
+### TV Show Episodes
+
+<RouteEn author="x2cf" example="/tmdb/tv/70593/seasons/1/episodes/en-US" path="/tmdb/tv/:id/seasons/:seasonNumber/episodes/:lang?" :paramsDesc="['TV show ID', 'Season number', 'Language']" radar="1" rssbud="1" />
+
+### Catalog
+
+<RouteEn author="x2cf" example="/tmdb/tv/top-rated/en-US" path="/tmdb/:mediaType/:catalog/:lang?" :paramsDesc="['`movie` or `tv`', 'Catalog, see below', 'Language']" radar="1" rssbud="1">
+
+When `mediaType` is `tv`, `catalog` should be:
+
+| Airing Today | On TV      | Top Rated |
+| ------------ | ---------- | --------- |
+| airing-today | on-the-air | top-rated |
+
+When `mediaType` is `movie`, `catalog` should be:
+
+| Now Playing | Upcoming | Top Rated |
+| ----------- | -------- | --------- |
+| now-playing | upcoming | top-rated |
+
+</RouteEn>
+
 ## Trakt.tv
 
 ### User Collection
