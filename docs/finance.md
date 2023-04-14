@@ -260,7 +260,7 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ### 搜索
 
-<Route author="drgnchan" example="/eastmoney/search/web3" path="/eastmoney/search/:keyword" :paramsDesc="['关键词，可以设置为自己需要检索的关键词']"/>
+<Route author="drgnchan" example="/eastmoney/search/web3" path="/eastmoney/search/:keyword" :paramsDesc="['关键词，可以设置为自己需要检索的关键词']" radar="1"/>
 
 ## 法布财经
 
