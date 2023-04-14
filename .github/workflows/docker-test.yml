@@ -20,6 +20,10 @@ on:
 
 permissions:
   contents: read
+  
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
