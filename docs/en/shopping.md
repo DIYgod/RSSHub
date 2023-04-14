@@ -62,6 +62,30 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 </RouteEn>
 
+### Outlet
+
+<RouteEn author="NavePnow" example="/arcteryx/outlet/us/mens" path="/arcteryx/outlet/:country/:gender" :paramsDesc="['country', 'gender']">
+
+Country
+
+| United States | Canada | United Kingdom |
+| ------------- | ------ | -------------- |
+| us            | ca     | gb             |
+
+gender
+
+| male | female |
+| ---- | ------ |
+| mens | womens |
+
+::: tip
+
+Parameter `country` can be found within the url of `Arcteryx` website.
+
+:::
+
+</RouteEn>
+
 ### Regear New Arrivals
 
 <RouteEn author="NavePnow" example="/arcteryx/regear/new-arrivals" path="/arcteryx/regear/new-arrivals" />
