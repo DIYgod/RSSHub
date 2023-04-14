@@ -407,6 +407,9 @@
     "/arcteryx/new-arrivals/:country/:gender": [
         "NavePnow"
     ],
+    "/arcteryx/outlet/:country/:gender": [
+        "NavePnow"
+    ],
     "/arcteryx/regear/new-arrivals": [
         "NavePnow"
     ],
