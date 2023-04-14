@@ -1,0 +1,6 @@
+<img src="{{poster}}" />
+<p>
+    User Score: {{vote_average}}<br/>
+    Vote Count: {{vote_count}}<br/>
+</p>
+<p>{{description}}</p>
