@@ -3005,6 +3005,9 @@
     "/kuaidi100/track/:number/:id/:phone?": [
         "NeverBehave"
     ],
+    "/kunchengblog/essay": [
+        "nczitzk"
+    ],
     "/kuwaitlocal/": [
         "TonyRL"
     ],
