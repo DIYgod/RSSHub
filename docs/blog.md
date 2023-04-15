@@ -116,6 +116,12 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 <Route author="nczitzk" example="/justrun" path="/justrun"/>
 
+## Kun Cheng
+
+### Essay
+
+<Route author="nczitzk" example="/kunchengblog/essay" path="/kunchengblog/essay" radar="1"/>
+
 ## LaTeX 开源小屋
 
 ### 首页
