@@ -1,6 +1,6 @@
-<img src="{{poster}}" />
+{{if poster}}<img src="{{poster}}" />{{/if}}
 <p>
-    User Score: {{vote_average}}<br/>
-    Vote Count: {{vote_count}}<br/>
+    User Score: {{vote_average}}<br />
+    Vote Count: {{vote_count}}
 </p>
 <p>{{description}}</p>
