@@ -264,15 +264,17 @@ pageClass: routes
 
 ## 国家统计局
 
-### 统计数据 > 最新发布
+### 通用
 
-<Route author="bigfei" example="/gov/stats/tjsj/zxfb" path="/gov/stats/:path+" :paramsDesc="['路径，默认为 统计数据 > 最新发布']">
+<Route author="bigfei nczitzk" example="/gov/stats/sj/zxfb" path="/gov/stats/:path+" :paramsDesc="['路径，默认为数据最新发布']">
 
 ::: tip 提示
 
 路径处填写对应页面 URL 中 `http://www.stats.gov.cn/` 后的字段。下面是一个例子。
 
-若订阅 [统计数据 > 统计标准](http://www.stats.gov.cn/tjsj/tjbz/) 则将对应页面 URL <http://www.stats.gov.cn/tjsj/tjbz/> 中 `http://www.stats.gov.cn/` 后的字段 `tjsj/tjbz` 作为路径填入。此时路由为 [`/gov/stats/tjsj/tjbz`](https://rsshub.app/gov/stats/tjsj/tjbz)
+若订阅 [数据 > 数据解读](http://www.stats.gov.cn/sj/sjjd/) 则将对应页面 URL <http://www.stats.gov.cn/sj/sjjd/> 中 `http://www.stats.gov.cn/` 后的字段 `sj/sjjd` 作为路径填入。此时路由为 [`/gov/stats/sj/sjjd`](https://rsshub.app/gov/stats/sj/sjjd)
+
+若订阅 [新闻 > 时政要闻 > 中央精神](http://www.stats.gov.cn/xw/szyw/zyjs/) 则将对应页面 URL <http://www.stats.gov.cn/xw/szyw/zyjs/> 中 `http://www.stats.gov.cn/` 后的字段 `xw/szyw/zyjs` 作为路径填入。此时路由为 [`/gov/stats/xw/szyw/zyjs`](https://rsshub.app/gov/stats/xw/szyw/zyjs)
 
 :::
 
@@ -715,6 +717,12 @@ pageClass: routes
 ### 年度信息自由法报告
 
 <Route author="nczitzk" example="/cia/foia-annual-report" path="/cia/foia-annual-report"/>
+
+## 南京鼓楼医院
+
+### 员工版教育培训
+
+<Route author="real-jiakai" example="/njglyy/ygbjypx" path="/njglyy/ygbjypx" radar="1" />
 
 ## 南京市人民政府
 

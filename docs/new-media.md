@@ -1731,6 +1731,26 @@ Supported sub-sites:
 
 <Route author="emdoe" example="/twreporter/category/reviews" path="/twreporter/category/:tid" :paramsDesc="['分类（议题）名称，于主页获取']"/>
 
+## 北京市科学技术协会
+
+### 通用
+
+<Route author="nczitzk" example="/bast/col/col31266" path="/bast/:path+" :paramsDesc="['路径，默认为通知公告']">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `https://www.bast.net.cn/` 后的字段。下面是两个例子。
+
+若订阅 [通知公告](https://www.bast.net.cn/col/col31266) 则将对应页面 URL <https://www.bast.net.cn/col/col31266> 中 `https://www.bast.net.cn/` 后的字段 `col/col31266` 作为路径填入。此时路由为 [`/bast/col/col31266`](https://rsshub.app/bast/col/col31266)
+
+若订阅 [学术动态](https://www.bast.net.cn/col/col31530) 则将对应页面 URL <https://www.bast.net.cn/col/col31530> 中 `https://www.bast.net.cn/` 后的字段 `col/col31530` 作为路径填入。此时路由为 [`/bast/col/col31530`](https://rsshub.app/bast/col/col31530)
+
+如果路由符合 `/col/colXXXXX` 的格式，可以由 [`/bast/col/col31266`](https://rsshub.app/bast/col/col31266) 精简为 [`/bast/31266`](https://rsshub.app/bast/31266)
+
+:::
+
+</Route>
+
 ## 北屋
 
 <Route author="nczitzk" example="/northhouse" path="/northhouse/:category?" :paramsDesc="['分类，见下表，默认为首页']">
@@ -3354,25 +3374,37 @@ column 为 third 时可选的 category:
 
 ### 话题动态
 
-<Route author="sanmmm" path="/pingwest/tag/:tag/:type" example="/pingwest/tag/ChinaJoy/1" :paramsDesc="['话题名或话题id, 可从话题页url中得到', '内容类型']">
+<Route author="sanmmm" path="/pingwest/tag/:tag/:type/:option?" example="/pingwest/tag/ChinaJoy/1" :paramsDesc="['话题名或话题id, 可从话题页url中得到', '内容类型', '参数, 默认无']">
 
 内容类型
 
-| 最新 | 最热 |
+| 最新 | 热门 |
 | ---- | ---- |
 | 1    | 2    |
+
+参数
+
+-   `fulltext`，全文输出，例如：`/pingwest/tag/ChinaJoy/1/fulltext`
+
+::: tip 提示
+该路由一次最多显示 30 条文章
+:::
 
 </Route>
 
 ### 用户
 
-<Route author="sanmmm" path="/pingwest/user/:uid/:type?" example="/pingwest/user/7781550877/article" :paramsDesc="['用户id, 可从用户主页中得到', '内容类型, 默认为`article`']">
+<Route author="sanmmm" path="/pingwest/user/:uid/:type?/:option?" example="/pingwest/user/7781550877/article" :paramsDesc="['用户id, 可从用户主页中得到', '内容类型, 默认为`article`', '参数']">
 
 内容类型
 
 | 文章    | 动态  |
 | ------- | ----- |
 | article | state |
+
+参数
+
+-   `fulltext`，全文输出，例如：`/pingwest/user/7781550877/article/fulltext`
 
 </Route>
 

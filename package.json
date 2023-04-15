@@ -57,7 +57,7 @@
     "@vuepress/plugin-pwa": "1.9.9",
     "@vuepress/shared-utils": "1.9.9",
     "cross-env": "7.0.3",
-    "eslint": "8.37.0",
+    "eslint": "8.38.0",
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-yml": "1.5.0",
@@ -92,7 +92,7 @@
   "dependencies": {
     "@koa/router": "12.0.0",
     "@postlight/parser": "2.2.3",
-    "@sentry/node": "7.47.0",
+    "@sentry/node": "7.48.0",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
@@ -108,7 +108,7 @@
     "etag": "1.8.1",
     "fanfou-sdk": "4.2.0",
     "git-rev-sync": "3.0.2",
-    "googleapis": "114.0.0",
+    "googleapis": "118.0.0",
     "got": "11.8.6",
     "https-proxy-agent": "5.0.1",
     "iconv-lite": "0.6.3",
@@ -138,7 +138,7 @@
     "rand-user-agent": "1.0.109",
     "re2": "1.18.0",
     "require-all": "3.0.0",
-    "rss-parser": "3.12.0",
+    "rss-parser": "3.13.0",
     "showdown": "2.1.0",
     "simplecc-wasm": "0.1.5",
     "socks-proxy-agent": "7.0.0",
@@ -148,7 +148,7 @@
     "tough-cookie": "4.1.2",
     "twitter-api-v2": "1.14.2",
     "winston": "3.8.2",
-    "xml2js": "0.4.23"
+    "xml2js": "0.5.0"
   },
   "jest": {
     "testMatch": [

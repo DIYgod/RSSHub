@@ -74,6 +74,30 @@ pageClass: routes
 
 </Route>
 
+### Outlet
+
+<Route author="NavePnow" example="/arcteryx/outlet/us/mens" path="/arcteryx/outlet/:country/:gender" :paramsDesc="['国家', '性别']">
+
+国家
+
+| 美国 | 加拿大 | 英国 |
+| ---- | ------ | ---- |
+| us   | ca     | gb   |
+
+性别
+
+| 男   | 女     |
+| ---- | ------ |
+| mens | womens |
+
+::: tip 提示
+
+参数 `country` 可以在 `Arcteryx` 官网的 URL 中找到。
+
+:::
+
+</Route>
+
 ### Regear 新发布
 
 <Route author="NavePnow" example="/arcteryx/regear/new-arrivals" path="/arcteryx/regear/new-arrivals" />
