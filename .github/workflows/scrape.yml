@@ -14,16 +14,10 @@ on:
 jobs:
   scrape-docs:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Use Node.js v16
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-          cache: 'yarn'
-      - name: Install dependencies (yarn)
-        run: yarn
       - name: Pull image
         run: docker pull getmeili/docs-scraper
       - name: Wait for Netlify to finish

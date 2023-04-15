@@ -236,9 +236,9 @@ Support all channels, refer to [CNBC RSS feeds](https://www.cnbc.com/rss-feeds/)
 
 <RouteEn author="nczitzk" example="/dw/en" path="/dw/:lang?/:caty?" :paramsDesc="['Language, can be found in the URL of the corresponding language version page, German by default', 'Category, all by default']">
 
-| All  | German Press | Culture | Economy | Science & Nature |
-| ---- | -------- | -------- | -------- | -------- |
-| all  | press    | cul      | eco      | sci      |
+| All | German Press | Culture | Economy | Science & Nature |
+| --- | ------------ | ------- | ------- | ---------------- |
+| all | press        | cul     | eco     | sci              |
 
 </RouteEn>
 
@@ -263,12 +263,12 @@ Support all channels, refer to [CNBC RSS feeds](https://www.cnbc.com/rss-feeds/)
 
 <RouteEn author="Rongronggg9" example="/kcna/en" path="/kcna/:lang/:category?" :paramsDesc="['Language, refer to the table below', 'Category, refer to the table below']" anticrawler="1" radar="1" rssbud="1">
 
-| Language | 조선어  | English | 中国语  | Русский | Español | 日本語  |
-|----------|------|---------|------|---------|---------|------|
-| `:lang`  | `kp` | `en`    | `cn` | `ru`    | `es`    | `jp` |
+| Language | 조선어 | English | 中国语 | Русский | Español | 日本語 |
+| -------- | ------ | ------- | ------ | ------- | ------- | ------ |
+| `:lang`  | `kp`   | `en`    | `cn`   | `ru`    | `es`    | `jp`   |
 
 | Category                                                         | `:category`                        |
-|------------------------------------------------------------------|------------------------------------|
+| ---------------------------------------------------------------- | ---------------------------------- |
 | WPK General Secretary **Kim Jong Un**'s Revolutionary Activities | `54c0ca4ca013a92cc9cf95bd4004c61a` |
 | Latest News (default)                                            | `1ee9bdb7186944f765208f34ecfb5407` |
 | Top News                                                         | `5394b80bdae203fadef02522cfb578c0` |
@@ -278,6 +278,30 @@ Support all channels, refer to [CNBC RSS feeds](https://www.cnbc.com/rss-feeds/)
 | Society-Life                                                     | `93102e5a735d03979bc58a3a7aefb75a` |
 | External                                                         | `0f98b4623a3ef82aeea78df45c423fd0` |
 | News Commentary                                                  | `12c03a49f7dbe829bceea8ac77088c21` |
+
+</RouteEn>
+
+## La Jornada
+
+### News
+
+<RouteEn author="Thealf154" example="/jornada/2022-10-12/capital" path="/jornada/:date?/:category?" :paramsDesc="['Date string, must be in format of `YYYY-MM-DD`. You can get today\'s news using `today`', 'Category, refer to the table below']" radar="1">
+
+Provides a way to get an specific rss feed by date and category over the official one.
+
+| Category             | `:category` |
+| -------------------- | ----------- |
+| Capital              | capital     |
+| Cartones             | cartones    |
+| Ciencia y Tecnología | ciencia     |
+| Cultura              | cultura     |
+| Deportes             | deportes    |
+| Economía             | economia    |
+| Estados              | estados     |
+| Mundo                | mundo       |
+| Opinión              | opinion     |
+| Política             | politica    |
+| Sociedad             | sociedad    |
 
 </RouteEn>
 
@@ -318,30 +342,18 @@ Only `s00017` is in English.
 <RouteEn author="TonyRL" example="/nhk/news/en" path="/nhk/news/:lang?" :paramsDesc="['Language, see below, `en` by default']" radar="1" rssbud="1">
 
 | العربية | বাংলা | မြန်မာဘာသာစကား | 中文（简体） | 中文（繁體） | English | Français |
-| ------- | ----- | -------------- | ------ | ------ | ------- | -------- |
-| ar      | bn    | my             | zh     | zt     | en      | fr       |
+| ------- | ----- | -------------- | ------------ | ------------ | ------- | -------- |
+| ar      | bn    | my             | zh           | zt           | en      | fr       |
 
 | हिन्दी | Bahasa Indonesia | 코리언 | فارسی | Português | Русский | Español |
-| ------  | ---------------- | --- | ----- | --------- | ------- | ------- |
-| hi     | id               | ko  | fa    | pt        | ru      | es      |
+| ------ | ---------------- | ------ | ----- | --------- | ------- | ------- |
+| hi     | id               | ko     | fa    | pt        | ru      | es      |
 
 | Kiswahili | ภาษาไทย | Türkçe | Українська | اردو | Tiếng Việt |
-| --------- | | ------- | ------ | ---------- | ---- | ---------- |
+| --------- | ------- | ------ | ---------- | ---- | ---------- |
 | sw        | th      | tr     | uk         | ur   | vi         |
 
 </RouteEn>
-
-## Nikkei Asia
-
-### Latest News
-
-<RouteEn author="rainrdx" example="/nikkei-asia" path="/nikkei-asia"/>
-
-## Phoronix
-
-### News & Reviews
-
-<RouteEn author="oppliate" example="/phoronix/news_topic/Intel" path="/phoronix/:page/:queryOrItem?" :paramsDesc="['Page name', 'For `category` it corresponds to `item`, for other pages it\'s `q`. You may find available parameters from their navigator links. E.g. to subscribe to the category page `https://www.phoronix.com/scan.php?page=category&item=Computers`, fill in the path `/phoronix/category/Computers`']" />
 
 ## Radio Free Asia (RFA)
 
@@ -371,23 +383,21 @@ Parameters can be obtained from the official website, for instance:
 <RouteEn author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:category/:topic?" :paramsDesc="['find it in the URL, or tables below', 'find it in the URL, or tables below']">
 
 -   `:category`:
-    | World    | Business | Legal | Markets  | Breakingviews | Technology |
-    | -------- | -------  | ----- | -------- | ------------- | ---------- |
-    | world    | business | legal | markets  | breakingviews | technology |
-
+    | World | Business | Legal | Markets | Breakingviews | Technology |
+    | -------- | ------- | ----- | -------- | ------------- | ---------- |
+    | world | business | legal | markets | breakingviews | technology |
 
 -   `world/:topic`:
 
-    | All  | Africa   | Americas | Asia Pacific | China | Europe | India | Middle East | United Kingdom | United States | The Great Reboot | Reuters Next |
-    | ---- | -------  | -------- | ------------ | ----- | ------ | ----- | ----------- | -------------- | ------------- | ---------------- | ------------ |
-    |      | africa    | americas | asia-pacific | china | europe | india | middle-east | uk             | us            | the-great-reboot | reuters-next |
-
+    | All | Africa | Americas | Asia Pacific | China | Europe | India | Middle East | United Kingdom | United States | The Great Reboot | Reuters Next |
+    | --- | ------ | -------- | ------------ | ----- | ------ | ----- | ----------- | -------------- | ------------- | ---------------- | ------------ |
+    |     | africa | americas | asia-pacific | china | europe | india | middle-east | uk             | us            | the-great-reboot | reuters-next |
 
 -   `business/:topic`:
 
-    | All  | Aerospace & Defense | Autos & Transportation | Energy | Environment | Finance | Healthcare & Pharmaceuticals | Media & Telecom | Retail & Consumer | Sustainable Business | Charged | Future of Health | Future of Money | Take Five | Reuters Impact |
-    | ---- | ------------------- | ---------------------- | ------ | ----------- | ------- | ---------------------------- | --------------- | ----------------- | -------------------- | ------- | ---------------- | --------------- | --------- | -------------- |
-    |      | aerospace-defense   | autos-transportation   | energy | environment | finance | healthcare-pharmaceuticals   | media-telecom   | retail-consumer   | sustainable-business | charged | future-of-health | futrue-of-money | take-five | reuters-impact |
+    | All | Aerospace & Defense | Autos & Transportation | Energy | Environment | Finance | Healthcare & Pharmaceuticals | Media & Telecom | Retail & Consumer | Sustainable Business | Charged | Future of Health | Future of Money | Take Five | Reuters Impact |
+    | --- | ------------------- | ---------------------- | ------ | ----------- | ------- | ---------------------------- | --------------- | ----------------- | -------------------- | ------- | ---------------- | --------------- | --------- | -------------- |
+    |     | aerospace-defense   | autos-transportation   | energy | environment | finance | healthcare-pharmaceuticals   | media-telecom   | retail-consumer   | sustainable-business | charged | future-of-health | futrue-of-money | take-five | reuters-impact |
 
 -   `legal/:topic`:
 
@@ -408,6 +418,18 @@ More could be found in the URL of the category/topic page.
 ### Inverstigates
 
 <RouteEn author="LyleLee" example="/reuters/investigates" path="/reuters/investigates" />
+
+## Rodong Sinmun
+
+### News
+
+<RouteEn author="TonyRL" example="/rodong/news" path="/rodong/news/:language?" :paramsDesc="['Language, see below, `ko` by default']" radar="1">
+
+| 조선어 | English | 中文 |
+| ------ | ------- | ---- |
+| ko     | en      | cn   |
+
+</RouteEn>
 
 ## RTHK
 
@@ -437,13 +459,13 @@ When subscribing to podcasts, fill `category` with **podcast**. For example, URL
 
 :::
 
-| 新闻 | 澳大利亚新闻    | 国际新闻           | ​商业与财经      |
+| 新闻 | 澳大利亚新闻    | 国际新闻           | ​ 商业与财经     |
 | ---- | --------------- | ------------------ | ---------------- |
 | news | australian-news | international-news | business-finance |
 
-| 澳中关系                  | ​移民与签证 | Stories in English |
-| ------------------------- | ----------- | ------------------ |
-| australia-china-relations | immigration | english            |
+| 澳中关系                  | ​ 移民与签证 | Stories in English |
+| ------------------------- | ------------ | ------------------ |
+| australia-china-relations | immigration  | english            |
 
 | COVID-19 专题报道 | 澳大利亚华人       | 澳大利亚生活      | 教育      |
 | ----------------- | ------------------ | ----------------- | --------- |
@@ -479,7 +501,7 @@ You still can customize `language`, however, it is important to note that not al
 
 </RouteEn>
 
-## SCMP
+## South China Morning Post
 
 ### News
 
@@ -503,7 +525,7 @@ Categories for International site:
 
 Categories for Chinese site:
 
-| 新闻   | 中国    | 俄罗斯    | 国际             | 俄中关系                   | 评论      |
+| 新闻 | 中国  | 俄罗斯 | 国际           | 俄中关系               | 评论    |
 | ---- | ----- | ------ | -------------- | ---------------------- | ------- |
 | news | china | russia | category_guoji | russia_china_relations | opinion |
 
@@ -550,6 +572,20 @@ Language
 
 <RouteEn author="TonyRL" example="/taiwannews/hot" path="/taiwannews/hot/:lang?" :paramsDesc="['Language, `en` or `zh`, `en` by default']" radar="1" rssbud="1"/>
 
+## The Atlantic
+
+### News
+
+<RouteEn author="NavePnow" example="/theatlantic/latest" path="/theatlantic/:category" :paramsDesc="['category, see below']">
+
+| Popular      | Latest | Politics | Technology | Business |
+| ------------ | ------ | -------- | ---------- | -------- |
+| most-popular | latest | politics | technology | business |
+
+More categories (except photo) can be found within the navigation bar at <https://www.theatlantic.com/>
+
+</RouteEn>
+
 ## The Economist
 
 ### Category
@@ -563,6 +599,10 @@ Language
 ### GRE Vocabulary
 
 <RouteEn author="xyqfer" example="/economist/gre-vocabulary" path="/economist/gre-vocabulary" />
+
+### Global Business Review
+
+<Route author="prnake" example="/economist/global-business-review/cn-en" path="/economist/global-business-review/:language?" :paramsDesc="['Language, `en`, `cn`, `tw` are supported, support multiple options, default to cn-en']"  radar="1" rssbud="1"/>
 
 ### Download
 
@@ -612,25 +652,55 @@ Provides all of the articles by the specified New York Times author.
 
 <RouteEn author="melvinto" example="/nytimes/book/combined-print-and-e-book-nonfiction" path="/nytimes/book/:category?"/>
 
-| Category |
-| -------- |
+| Category                             |
+| ------------------------------------ |
 | combined-print-and-e-book-nonfiction |
-| hardcover-nonfiction|
-| paperback-nonfiction|
-| advice-how-to-and-miscellaneous|
-| combined-print-and-e-book-fiction|
-| hardcover-fiction|
-| trade-fiction-paperback|
-| childrens-middle-grade-hardcover|
-| picture-books|
-| series-books|
-| young-adult-hardcover|
+| hardcover-nonfiction                 |
+| paperback-nonfiction                 |
+| advice-how-to-and-miscellaneous      |
+| combined-print-and-e-book-fiction    |
+| hardcover-fiction                    |
+| trade-fiction-paperback              |
+| childrens-middle-grade-hardcover     |
+| picture-books                        |
+| series-books                         |
+| young-adult-hardcover                |
+
+## The Nikkei 日本経済新聞
+
+### Home
+
+<RouteEn author="zjysdhr" example="/nikkei/index" path="/nikkei/index" radar="1" rssbud="1" />
+
+### News
+
+<RouteEn author="Arracc" example="/nikkei/news" path="/nikkei/:category/:article_type?" :paramsDesc="['Category, see table below','Only includes free articles, set `free` to enable, disabled by default']">
+
+| 総合 | オピニオン | 経済    | 政治     | 金融      | マーケット | ビジネス | マネーのまなび | テック     | 国際          | スポーツ | 社会・調査 | 地域  | 文化    | ライフスタイル |
+| ---- | ---------- | ------- | -------- | --------- | ---------- | -------- | -------------- | ---------- | ------------- | -------- | ---------- | ----- | ------- | -------------- |
+| news | opinion    | economy | politics | financial | business   | 不支持   | 不支持         | technology | international | sports   | society    | local | culture | lifestyle      |
+
+</RouteEn>
+
+### Nikkei Asia Latest News
+
+<RouteEn author="rainrdx" example="/nikkei/asia" path="/nikkei/asia" radar="1"/>
 
 ## The Wall Street Journal (WSJ)
 
 ### News
 
-<RouteEn author="oppilate" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" :paramsDesc="['Language, `en-us`, `zh-cn`, `zh-tw` are supported', 'Category, only supported in `en-us`. Supports `opinion`, `world_news`, `us_bussiness`, `market_news`, `technology`, `lifestyle`.']">
+<RouteEn author="oppilate NavePnow" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" :paramsDesc="['Language, `en-us`, `zh-cn`, `zh-tw`', 'Category. See below']">
+
+en_us
+| World | U.S. | Politics | Economy | Business | Tech | Markets | Opinion | Books & Arts | Real Estate | Life & Work | Sytle | Sports |
+| ------ | ------- | -------- | -------- | ----- | --------- | --------- | --------- | --------- | --------- |--------- | --------- | --------- |
+| world | us | politics | economy | business | technology | markets | opinion | books-arts | realestate | life-work | style-entertainment | sports |
+
+zh-cn / zh-tw
+| 国际 | 中国 | 金融市场 | 经济 | 商业 | 科技 | 派 | 专栏与观点 |
+| ------ | ------- | -------- | -------- | ----- | --------- | --------- | --------- |
+| world | china | markets | economy | business | technology | life-arts | opinion |
 
 Provide full article RSS for WSJ topics.
 
@@ -643,8 +713,8 @@ Provide full article RSS for WSJ topics.
 <RouteEn author="zphw" example="/vom/featured" path="/vom/featured/:lang?" :paramsDesc="['Language, see the table below, `mn` by default']">
 
 | English | 日本語 | Монгол | Русский | 简体中文 |
-| ------- | --- | ------ | ------- | ---- |
-| en      | ja  | mn     | ru      | zh   |
+| ------- | ------ | ------ | ------- | -------- |
+| en      | ja     | mn     | ru      | zh       |
 
 </RouteEn>
 
@@ -652,7 +722,7 @@ Provide full article RSS for WSJ topics.
 
 ### News
 
-<RouteEn author="KeiLongW" example="/yahoo-news/hk/world" path="/yahoo-news/:region/:category?" :paramsDesc="['Region','Category']">
+<RouteEn author="KeiLongW" example="/yahoo/news/hk/world" path="/yahoo/news/:region/:category?" :paramsDesc="['Region','Category']">
 
 `Region`
 | Hong Kong | Taiwan | US |
@@ -684,8 +754,8 @@ Provides all of the articles by the specified Yahoo! author.
 
 Free articles only.
 
-| 新着・速報   | 　　社会     | 政治       | 経済      | スポーツ   | 国際    | 科学・ＩＴ   | 選挙・世論調査  | エンタメ・文化 | 囲碁・将棋     | ライフ  | 地域    | 社説        |    皇室    |
-| ------- | -------- | -------- | ------- | ------ | ----- | ------- | -------- | ------- | --------- | ---- | ----- | --------- | --------- |
-| 　news 　 | national | politics | economy | sports | world | science | election | culture | igoshougi | life | local | editorial | koushitsu |
+| 新着・速報 | 　　社会 | 政治     | 経済    | スポーツ | 国際  | 科学・ＩＴ | 選挙・世論調査 | エンタメ・文化 | 囲碁・将棋 | ライフ | 地域  | 社説      | 皇室      |
+| ---------- | -------- | -------- | ------- | -------- | ----- | ---------- | -------------- | -------------- | ---------- | ------ | ----- | --------- | --------- |
+| 　 news 　 | national | politics | economy | sports   | world | science    | election       | culture        | igoshougi  | life   | local | editorial | koushitsu |
 
 </RouteEn>

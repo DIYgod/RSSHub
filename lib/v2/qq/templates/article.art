@@ -1,0 +1,19 @@
+{{ if data.cover }}
+    <img src="<%= data.cover.startsWith('//') ? `https:${data.cover}` : !data.cover.startsWith('http') ? `https://${data.cover}` : data.cover %>">
+{{ /if }}
+
+{{ if data.rumor }}
+    <div class="saying">流传说法：{{ data.rumor }}</div>
+{{ /if }}
+
+{{ if data.abstract }}查证要点：
+<ol>
+    {{ each data.abstract item }}
+    <li>{{ item.content }}</li>
+    {{ /each }}
+</ol>
+{{ /if }}
+
+{{ if data.content }}
+    <div class="dangerouslySet">{{@ data.content }}</div>
+{{ /if }}

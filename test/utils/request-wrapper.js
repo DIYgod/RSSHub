@@ -145,9 +145,9 @@ describe('got', () => {
         jest.resetModules();
         require('../../lib/utils/request-wrapper');
         check = (request) => {
-            expect(request.agent.constructor.name).toBe('TunnelingAgent');
-            expect(request.agent.options.proxy.host).toBe('rsshub.proxy');
-            expect(request.agent.options.proxy.port).toBe(2333);
+            expect(request.agent.constructor.name).toBe('HttpsProxyAgent');
+            expect(request.agent.proxy.host).toBe('rsshub.proxy');
+            expect(request.agent.proxy.port).toBe(2333);
         };
 
         nock(/rsshub\.test/)
@@ -167,9 +167,9 @@ describe('got', () => {
         jest.resetModules();
         require('../../lib/utils/request-wrapper');
         check = (request) => {
-            expect(request.agent.constructor.name).toBe('TunnelingAgent');
-            expect(request.agent.options.proxy.host).toBe('rsshub.proxy');
-            expect(request.agent.options.proxy.port).toBe(2333);
+            expect(request.agent.constructor.name).toBe('HttpsProxyAgent');
+            expect(request.agent.proxy.host).toBe('rsshub.proxy');
+            expect(request.agent.proxy.port).toBe(2333);
         };
 
         nock(/rsshub\.test/)
@@ -183,7 +183,7 @@ describe('got', () => {
 
     it('auth', async () => {
         process.env.PROXY_AUTH = 'testtest';
-        process.env.PROXY_PROTOCOL = 'socks';
+        process.env.PROXY_PROTOCOL = 'http'; // only http(s) proxies extract auth from Headers
         process.env.PROXY_HOST = 'rsshub.proxy';
         process.env.PROXY_PORT = '2333';
 

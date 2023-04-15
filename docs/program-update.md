@@ -4,6 +4,12 @@ pageClass: routes
 
 # 程序更新
 
+## Amazon
+
+### Kindle 软件更新
+
+<Route author="NavePnow" example="/amazon/kindle/software-updates" path="/amazon/kindle/software-updates" radar="1"/>
+
 ## AMD
 
 ### 显卡驱动更新
@@ -32,11 +38,11 @@ pageClass: routes
 
 <Route author="nczitzk" example="/anytxt/release-notes" path="/anytxt/release-notes"/>
 
-## Apkpure
+## APKPure
 
-### Versions
+### 所有版本
 
-<Route author="maple3142" example="/apkpure/versions/jp/jp.co.craftegg.band" path="/apkpure/versions/:region/:pkg" :paramsDesc="['區域代號', 'package name']"/>
+<Route author="maple3142" example="/apkpure/versions/jp.co.craftegg.band/jp" path="/apkpure/versions/:pkg/:region?" :paramsDesc="['包名稱', '區域代號，預設為 `en`']" radar="1" anticrawler="1" puppeteer="1"/>
 
 ## App Center
 
@@ -95,8 +101,8 @@ pageClass: routes
 语言
 
 | English | 中文 (简体) | 中文 (繁體) | 日本語 | Русский | Español | Français | Deutsch | Italiano | Slovenčina | Українська | Беларуская | Dansk | Polski | Português Brasileiro | Čeština | Nederlands | Slovenščina | Türkçe | ภาษาไทย | 한국어 |
-| ------- | ------- | ------- | --- | ------- | ------- | -------- | ------- | -------- | ---------- | ---------- | ---------- | ----- | ------ | -------------------- | ------- | ---------- | ----------- | ------ | ------- | --- |
-| en      | cn      | tw      | jp  | ru      | es      | fr       | de      | it       | sk         | uk         | be         | da    | pl     | br                   | cs      | nl         | sl          | tr     | th      | kr  |
+| ------- | ----------- | ----------- | ------ | ------- | ------- | -------- | ------- | -------- | ---------- | ---------- | ---------- | ----- | ------ | -------------------- | ------- | ---------- | ----------- | ------ | ------- | ------ |
+| en      | cn          | tw          | jp     | ru      | es      | fr       | de      | it       | sk         | uk         | be         | da    | pl     | br                   | cs      | nl         | sl          | tr     | th      | kr     |
 
 </Route>
 
@@ -106,15 +112,15 @@ pageClass: routes
 
 <Route author="nczitzk" example="/bilibili/app/android" path="/bilibili/app/:id?" :paramsDesc="['客户端 id，见下表，默认为安卓版']">
 
-| 安卓版     | iPhone 版 | iPad HD 版 | UWP 版 | TV 版           |
-| ------- | -------- | --------- | ----- | -------------- |
-| android | iphone   | ipad      | win   | android_tv_yst |
+| 安卓版  | iPhone 版 | iPad HD 版 | UWP 版 | TV 版          |
+| ------- | --------- | ---------- | ------ | -------------- |
+| android | iphone    | ipad       | win    | android_tv_yst |
 
 ## BlueStacks
 
 ### BlueStacks 5 版本日誌
 
-<Route author="TonyRL" example="/bluestacks/release/5" path="/bluestacks/release/5" radar="1" puppeteer="1"/>
+<Route author="TonyRL" example="/bluestacks/release/5" path="/bluestacks/release/5" radar="1" anticrawler="1" puppeteer="1"/>
 
 ## Brave
 
@@ -151,6 +157,22 @@ pageClass: routes
 ### 扩展程序更新
 
 <Route author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" :paramsDesc="['扩展程序 id, 可在应用页 URL 中找到']" />
+
+## Civitai
+
+### Latest models
+
+<Route author="DIYgod" example="/civitai/models" path="/civitai/models"/>
+
+### Model discussions
+
+::: warning 注意
+
+需要配置 `CIVITAI_COOKIE` 才可获取 NSFW 模型的图片信息
+
+:::
+
+<Route author="DIYgod" example="/civitai/discussions/4384" path="/civitai/discussions/:modelId"/>
 
 ## Clash
 
@@ -225,8 +247,8 @@ pageClass: routes
 语言
 
 | 简体中文 | 繁体中文 | 英文 |
-| ---- | ---- | -- |
-| cn   | tw   | en |
+| -------- | -------- | ---- |
+| cn       | tw       | en   |
 
 </Route>
 
@@ -254,7 +276,7 @@ pageClass: routes
 
 <Route author="fengkx" example="/firefox/release/desktop" path="/firefox/release/:platform" :paramsDesc="['操作平台']">
 
-| 桌面      | Android | Beta | Nightly | Android Beta | ESR           |
+| 桌面    | Android | Beta | Nightly | Android Beta | ESR           |
 | ------- | ------- | ---- | ------- | ------------ | ------------- |
 | desktop | android | beta | nightly | android-beta | organizations |
 
@@ -263,6 +285,12 @@ pageClass: routes
 ### 附加组件 (Add-ons) 更新
 
 <Route author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['附加组件 id, 可在应用页 URL 中找到']" />
+
+## fish shell
+
+### Release Notes
+
+<Route author="x2cf" example="/fishshell" path="/fishshell" radar="1" />
 
 ## FossHub
 
@@ -318,9 +346,10 @@ pageClass: routes
 
 ## Logseq
 
-### Changelog
-
-<Route author="nczitzk" example="/logseq/changelog" path="/logseq/changelog"/>
+::: warning
+Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
+请使用 <https://github.com/logseq/logseq/releases.atom> 代替。
+:::
 
 ## MacKed
 
@@ -364,13 +393,13 @@ pageClass: routes
 
 <Route author="Indexyz" example="/miui/aries" path="/miui/:device/:type?/:region?" :paramsDesc="['设备的 `codename` 例如 小米 2s 为 `aries`. 国际版的 `codename` 一般以 `_global` 结尾. 可查阅 MIUI 线刷包下载页面', '类型', '地区, 默认为 `cn`']">
 
-| 类型  | type    |
-| --- | ------- |
+| 类型   | type    |
+| ------ | ------- |
 | 稳定版 | release |
 | 开发版 | dev     |
 
-| 地区  | region |
-| --- | ------ |
+| 地区   | region |
+| ------ | ------ |
 | 国内版 | cn     |
 | 国际版 | global |
 
@@ -452,8 +481,8 @@ pageClass: routes
 <Route author="nczitzk" example="/potplayer/update" path="/potplayer/update/:language?" :paramsDesc="['语言，见下表，默认为英语']">
 
 | 한국어 | 中文 (简体) | 中文 (繁体) | ENGLISH | Українська | РУССКИЙ | Polski |
-| --- | ------- | ------- | ------- | ---------- | ------- | ------ |
-| ko  | zh_CN   | zh_TW   | en      | uk         | ru      | pl     |
+| ------ | ----------- | ----------- | ------- | ---------- | ------- | ------ |
+| ko     | zh_CN       | zh_TW       | en      | uk         | ru      | pl     |
 
 </Route>
 
@@ -565,6 +594,20 @@ pageClass: routes
 
 <Route author="Jeason0228" example="/sketch/updates" path="/sketch/updates"  />
 
+## Sony
+
+### Software Downloads
+
+<Route author="NavePnow" example="/sony/downloads/product/nw-wm1am2" path="/sony/downloads/:productType/:productId" :paramsDesc="['产品类别', '产品Id']">
+
+::: tip 提示
+
+打开 `https://www.sony.com/electronics/support` 并搜索对应的产品，比如 `Sony A7M4` 对应的网站是 `https://www.sony.com/electronics/support/e-mount-body-ilce-7-series/ilce-7m4/downloads`，`productType` 为 `e-mount-body-ilce-7-series`, `productId` 为 `ilce-7m4`
+
+:::
+
+</Route>
+
 ## Thunderbird
 
 ### 更新日志
@@ -585,28 +628,28 @@ pageClass: routes
 
 语言
 
-| 编号 | 语言                  |
-| -- | ------------------- |
-| en | English             |
-| ru | Русский             |
-| ja | 日本語                 |
-| es | Español             |
-| tr | Türkçe              |
-| ko | 한국어                 |
-| it | Italiano            |
-| pt | Português do Brasil |
-| de | Deutsch             |
-| fr | Français            |
-| pl | Polski              |
-| id | Bahasa Indonesia    |
-| my | Bahasa Malaysia     |
-| tw | 繁體                  |
-| cn | 简体                  |
-| vi | Tiếng Việt          |
-| th | ภาษาไทย             |
-| sv | Svenska             |
-| ar | العربية             |
-| il | Hebrew              |
+| 编号 | 语言                |
+| ---- | ------------------- |
+| en   | English             |
+| ru   | Русский             |
+| ja   | 日本語              |
+| es   | Español             |
+| tr   | Türkçe              |
+| ko   | 한국어              |
+| it   | Italiano            |
+| pt   | Português do Brasil |
+| de   | Deutsch             |
+| fr   | Français            |
+| pl   | Polski              |
+| id   | Bahasa Indonesia    |
+| my   | Bahasa Malaysia     |
+| tw   | 繁體                |
+| cn   | 简体                |
+| vi   | Tiếng Việt          |
+| th   | ภาษาไทย             |
+| sv   | Svenska             |
+| ar   | العربية             |
+| il   | Hebrew              |
 
 </Route>
 
@@ -614,11 +657,11 @@ pageClass: routes
 
 ### Changelog
 
-<Route author="cnzgray" example="/typora/changelog" path="/typora/changelog"/>
+<Route author="cnzgray" example="/typora/changelog" path="/typora/changelog" radar="1"/>
 
 ### Dev Release Changelog
 
-<Route author="nczitzk" example="/typora/changelog-dev/macOS" path="/typora/changelog-dev/:os" :paramsDesc="['操作系统类型, 可选 `macOS` 或 `Windows` 与 `Linux`，默认为 `macOS`']"/>
+<Route author="nczitzk" example="/typora/changelog/dev" path="/typora/changelog/dev" radar="1"/>
 
 ## VMware
 
@@ -728,14 +771,14 @@ pageClass: routes
 
 标签
 
-| uTools | 插件发布    |
-| ------ | ------- |
-| utools | plugins |
+| uTools | 插件发布 |
+| ------ | -------- |
+| utools | plugins  |
 
 排序
 
-| 最新回复 | 热门回复          | 新鲜出炉       | 陈年旧贴      |
-| ---- | ------------- | ---------- | --------- |
-|      | -commentCount | -createdAt | createdAt |
+| 最新回复 | 热门回复      | 新鲜出炉   | 陈年旧贴  |
+| -------- | ------------- | ---------- | --------- |
+|          | -commentCount | -createdAt | createdAt |
 
 </Route>

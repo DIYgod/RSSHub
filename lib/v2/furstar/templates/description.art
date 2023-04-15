@@ -2,4 +2,4 @@
 {{ each pics }}
     <img src="{{$value}}"/>
 {{/each}}
-{{ author }}
+{{@ author }}

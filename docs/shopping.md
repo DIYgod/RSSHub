@@ -4,6 +4,18 @@ pageClass: routes
 
 # 购物
 
+## 0818 团
+
+### 分类
+
+<Route author="TonyRL" example="/0818tuan" path="/0818tuan/:listId?" :paramsDesc="['活动分类，见下表，默认为 `1`']" radar="1">
+
+| 最新线报 | 实测活动 | 优惠券 |
+| -------- | -------- | ------ |
+| 1        | 2        | 3      |
+
+</Route>
+
 ## Alter 中国
 
 ### 新闻
@@ -24,9 +36,9 @@ pageClass: routes
 
 时间
 
-| 最近一天 | 最近一周 | 所有时间    |
-| ---- | ---- | ------- |
-| 24h  | week | alltime |
+| 最近一天 | 最近一周 | 所有时间 |
+| -------- | -------- | -------- |
+| 24h      | week     | alltime  |
 
 ::: tip 提示
 
@@ -35,6 +47,66 @@ pageClass: routes
 :::
 
 </Route>
+
+## Arcteryx
+
+### 新发布
+
+<Route author="NavePnow" example="/arcteryx/new-arrivals/us/mens" path="/arcteryx/new-arrivals/:country/:gender" :paramsDesc="['国家', '性别']">
+
+国家
+
+| 美国 | 加拿大 | 英国 |
+| ---- | ------ | ---- |
+| us   | ca     | gb   |
+
+性别
+
+| 男   | 女     |
+| ---- | ------ |
+| mens | womens |
+
+::: tip 提示
+
+参数 `country` 可以在 `Arcteryx` 官网的 URL 中找到。
+
+:::
+
+</Route>
+
+### Outlet
+
+<Route author="NavePnow" example="/arcteryx/outlet/us/mens" path="/arcteryx/outlet/:country/:gender" :paramsDesc="['国家', '性别']">
+
+国家
+
+| 美国 | 加拿大 | 英国 |
+| ---- | ------ | ---- |
+| us   | ca     | gb   |
+
+性别
+
+| 男   | 女     |
+| ---- | ------ |
+| mens | womens |
+
+::: tip 提示
+
+参数 `country` 可以在 `Arcteryx` 官网的 URL 中找到。
+
+:::
+
+</Route>
+
+### Regear 新发布
+
+<Route author="NavePnow" example="/arcteryx/regear/new-arrivals" path="/arcteryx/regear/new-arrivals" />
+
+## Bellroy
+
+### 新发布
+
+<Route author="NavePnow" example="/bellroy/new-releases" path="/bellroy/new-releases" />
 
 ## booth.pm
 
@@ -91,6 +163,32 @@ pageClass: routes
 
 <Route author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" :paramsDesc="['should be one of highlights, hot, new, discussed']" ></Route>
 
+### hottest
+
+<Route author="DIYgod" example="/hotukdeals/hottest" path="/hotukdeals/hottest"></Route>
+
+## IKEA 宜家
+
+### 英国 - 商品上新
+
+<Route author="HenryQW" example="/ikea/gb/new" path="/ikea/gb/new" radar="1"/>
+
+### 英国 - 促销
+
+<Route author="HenryQW" example="/ikea/gb/offer" path="/ikea/gb/offer" radar="1"/>
+
+### 中国 - 会员特惠
+
+<Route author="jzhangdev" example="/ikea/cn/family_offers" path="/ikea/cn/family_offers" radar="1"/>
+
+### 中国 - 低价优选
+
+<Route author="jzhangdev" example="/ikea/cn/low_price" path="/ikea/cn/low_price" radar="1"/>
+
+### 中国 - 当季新品推荐
+
+<Route author="jzhangdev" example="/ikea/cn/new" path="/ikea/cn/new" radar="1"/>
+
 ## lativ
 
 ### 订阅价格
@@ -130,12 +228,12 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 分类
 
 | Figures 一覽 | 物品 | 媒体 |
-| ---------- | -- | -- |
-| 0          | 1  | 2  |
+| ------------ | ---- | ---- |
+| 0            | 1    | 2    |
 
 语言
 
-| id | 语言         |
+| id | 语言       |
 | -- | ---------- |
 |    | en         |
 | de | Deutsch    |
@@ -143,14 +241,14 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 | fi | Suomeksi   |
 | fr | Français   |
 | it | Italiano   |
-| ja | 日本語        |
+| ja | 日本語     |
 | nl | Nederlands |
 | no | Norsk      |
 | pl | Polski     |
 | pt | Português  |
 | ru | Русский    |
 | sv | Svenska    |
-| zh | 中文         |
+| zh | 中文       |
 
 </Route>
 
@@ -158,9 +256,9 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="nczitzk" example="/myfigurecollection/figure" path="/myfigurecollection/:category?/:language?" :paramsDesc="['分类，默认为 Figures一覽', '语言，见上表，默认为空，即 `en`']">
 
-| Figures 一覽 | 物品    | 媒体    |
-| ---------- | ----- | ----- |
-| figures    | goods | media |
+| Figures 一覽 | 物品  | 媒体  |
+| ------------ | ----- | ----- |
+| figures      | goods | media |
 
 </Route>
 
@@ -169,8 +267,20 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 <Route author="nczitzk" example="/myfigurecollection/potd" path="/myfigurecollection/:category?/:language?" :paramsDesc="['分类，默认为每日圖片', '语言，见上表，默认为空，即 `en`']">
 
 | 每日圖片 | 每週圖片 | 每月圖片 |
-| ---- | ---- | ---- |
-| potd | potw | potm |
+| -------- | -------- | -------- |
+| potd     | potw     | potm     |
+
+</Route>
+
+## Patagonia
+
+### New Arrivals
+
+<Route author="NavePnow" example="/patagonia/new-arrivals/mens" path="/patagonia/new-arrivals/:category" :paramsDesc="['分类, 见下表']">
+
+| Men's | Women's | Kids' & Baby | Packs & Gear |
+| ----- | ------- | ------------ | ------------ |
+| mens  | womens  | kids         | luggage      |
 
 </Route>
 
@@ -179,6 +289,12 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 ### Store
 
 <Route author="nczitzk" example="/shopback/shopee-mart" path="/shopback/:store" :paramsDesc="['店铺名，可在 URL 中找到']"/>
+
+## Snow Peak
+
+### New Arrivals(USA)
+
+<Route author="NavePnow" example="/snowpeak/us/new-arrivals" path="/snowpeak/us/new-arrivals"/>
 
 ## The Independent
 
@@ -191,6 +307,14 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 ### 新品
 
 <Route author="xyqfer" example="/westore/new" path="/westore/new"/>
+
+## Zagg
+
+### New Arrivals
+
+<Route author="NavePnow" example="/zagg/new-arrivals/brand=164&cat=3038,3041" path="/zagg/new-arrivals/:query?" :paramsDesc="['query，search page querystring']"/>
+
+For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3041>, the query is `brand=164&cat=3038%2C3041`
 
 ## 大麦网
 
@@ -256,21 +380,21 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 类型
 
-| 全部  | 科技 | 美食 | 家电 | 设计 | 娱乐 | 文化 | 公益 | 其他 |
-| --- | -- | -- | -- | -- | -- | -- | -- | -- |
-| all | kj | ms | jd | sj | yl | wh | gy | qt |
+| 全部 | 科技 | 美食 | 家电 | 设计 | 娱乐 | 文化 | 公益 | 其他 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| all  | kj   | ms   | jd   | sj   | yl   | wh   | gy   | qt   |
 
 状态
 
-| 全部  | 预热中 | 众筹中 | 众筹成功 | 项目成功 |
-| --- | --- | --- | ---- | ---- |
-| all | yrz | zcz | zccg | xmcg |
+| 全部 | 预热中 | 众筹中 | 众筹成功 | 项目成功 |
+| ---- | ------ | ------ | -------- | -------- |
+| all  | yrz    | zcz    | zccg     | xmcg     |
 
 排序方式
 
 | 综合推荐 | 最新上线 | 金额最多 | 支持最多 | 即将结束 |
-| ---- | ---- | ---- | ---- | ---- |
-| zhtj | zxsx | jezg | zczd | jjjs |
+| -------- | -------- | -------- | -------- | -------- |
+| zhtj     | zxsx     | jezg     | zczd     | jjjs     |
 
 </Route>
 
@@ -297,9 +421,9 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="huyyi" example="/mcdonalds/sales+event" path="/mcdonalds/:category" :paramsDesc="['分类名（可用+连接多个分类）']">
 
-| 全部分类      | 社会责任           | 人员品牌  | 产品故事    | 优惠    | 品牌文化    | 活动速报  |
-| --------- | -------------- | ----- | ------- | ----- | ------- | ----- |
-| news_list | responsibility | brand | product | sales | culture | event |
+| 全部分类  | 社会责任       | 人员品牌 | 产品故事 | 优惠  | 品牌文化 | 活动速报 |
+| --------- | -------------- | -------- | -------- | ----- | -------- | -------- |
+| news_list | responsibility | brand    | product  | sales | culture  | event    |
 
 </Route>
 
@@ -337,55 +461,61 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 -   榜单类型
 
-| 好价品类榜  | 好价电商榜     | 海淘 TOP 榜 | 好文排行榜  | 好物排行榜 |
-| ------ | --------- | -------- | ------ | ----- |
-| pinlei | dianshang | haitao   | haowen | haowu |
+| 好价品类榜 | 好价电商榜 | 海淘 TOP 榜 | 好文排行榜 | 好物排行榜 |
+| ---------- | ---------- | ----------- | ---------- | ---------- |
+| pinlei     | dianshang  | haitao      | haowen     | haowu      |
 
 -   榜单 ID
 
 好价品类榜
 
-| 全部 | 时尚运动 | 3C 家电 | 食品家居 | 日百母婴 | 出行游玩 | 白菜 | 凑单品 |
-| -- | ---- | ----- | ---- | ---- | ---- | -- | --- |
-| 11 | 12   | 13    | 14   | 15   | 16   | 17 | 22  |
+| 全部 | 食品生鲜 | 电脑数码 | 运动户外 | 家用电器 | 白菜 | 服饰鞋包 | 日用百货 |
+| ---- | -------- | -------- | -------- | -------- | ---- | -------- | -------- |
+| 11   | 12       | 13       | 14       | 15       | 17   | 74       | 75       |
 
 好价电商榜
 
 | 券活动 | 京东 | 天猫 | 亚马逊中国 | 国美在线 | 苏宁易购 | 网易 | 西集网 | 美国亚马逊 | 日本亚马逊 | ebay |
-| --- | -- | -- | ----- | ---- | ---- | -- | --- | ----- | ----- | ---- |
-| 24  | 23 | 25 | 26    | 27   | 28   | 29 | 30  | 31    | 32    | 33   |
+| ------ | ---- | ---- | ---------- | -------- | -------- | ---- | ------ | ---------- | ---------- | ---- |
+| 24     | 23   | 25   | 26         | 27       | 28       | 29   | 30     | 31         | 32         | 33   |
 
 海淘 TOP 榜
 
 | 全部 | 海外直邮 | 美国榜 | 欧洲榜 | 澳新榜 | 亚洲榜 | 晒物榜 |
-| -- | ---- | --- | --- | --- | --- | --- |
-| 39 | 34   | 35  | 36  | 37  | 38  | hsw |
+| ---- | -------- | ------ | ------ | ------ | ------ | ------ |
+| 39   | 34       | 35     | 36     | 37     | 38     | hsw    |
 
 好文排行榜
 
 | 原创 | 资讯 |
-| -- | -- |
-| yc | zx |
+| ---- | ---- |
+| yc   | zx   |
 
 好物排行榜
 
-| 新晋榜   | 消费众测 | 新锐品牌 | 好物榜单 |
-| ----- | ---- | ---- | ---- |
-| hwall | zc   | nb   | hw   |
+| 新晋榜 | 消费众测 | 新锐品牌 | 好物榜单 |
+| ------ | -------- | -------- | -------- |
+| hwall  | zc       | nb       | hw       |
+
+-   时间跨度
+
+| 3 小时 | 12 小时 | 24 小时 |
+| ------ | ------- | ------- |
+| 3      | 12      | 24      |
 
 </Route>
 
 ### 好文
 
-<Route author="LogicJake" example="/smzdm/haowen/1" path="/smzdm/haowen/:day" :paramsDesc="['以天为时间跨度，默认为all，其余可以选择1，7，30，365']"/>
+<Route author="LogicJake" example="/smzdm/haowen/1" path="/smzdm/haowen/:day?" :paramsDesc="['以天为时间跨度，默认为 `all`，其余可以选择 `1`，`7`，`30`，`365`']"/>
 
 ### 好文分类
 
 <Route author="LogicJake" example="/smzdm/haowen/fenlei/shenghuodianqi" path="/smzdm/haowen/fenlei/:name/:sort?" :paramsDesc="['分类名，可在 URL 中查看','排序方式，默认为最新']">
 
 | 最新 | 周排行 | 月排行 |
-| -- | --- | --- |
-| 0  | 7   | 30  |
+| ---- | ------ | ------ |
+| 0    | 7      | 30     |
 
 </Route>
 
@@ -409,9 +539,9 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="xyqfer Fatpandac" example="/taobao/zhongchou/all" path="/taobao/zhongchou/:type?" :paramsDesc="['类型, 默认为 `all` 全部']">
 
-| 全部  | 科技   | 食品          | 动漫  | 设计     | 公益   | 娱乐   | 影音    | 书籍   | 游戏   | 其他    |
-| --- | ---- | ----------- | --- | ------ | ---- | ---- | ----- | ---- | ---- | ----- |
-| all | tech | agriculture | acg | design | love | tele | music | book | game | other |
+| 全部 | 科技 | 食品        | 动漫 | 设计   | 公益 | 娱乐 | 影音  | 书籍 | 游戏 | 其他  |
+| ---- | ---- | ----------- | ---- | ------ | ---- | ---- | ----- | ---- | ---- | ----- |
+| all  | tech | agriculture | acg  | design | love | tele | music | book | game | other |
 
 </Route>
 
@@ -451,29 +581,15 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="DIYgod" example="/mi/crowdfunding" path="/mi/crowdfunding"/>
 
+## 小米有品
+
 ### 小米有品众筹
 
-<Route author="DIYgod" example="/mi/youpin/crowdfunding" path="/mi/youpin/crowdfunding"/>
+<Route author="bigfei" example="/xiaomiyoupin/crowdfunding" path="/xiaomiyoupin/crowdfunding"/>
 
 ### 小米有品每日上新
 
-<Route author="xyqfer DIYgod" example="/mi/youpin/new" path="/mi/youpin/new/:sort?" :paramsDesc="['排序，见下表']">
-
-| 个性化排序 | 按销量从高到低 | 按好评从高到低 | 按上新时间从近到远 |
-| ----- | ------- | ------- | --------- |
-| 0     | 1       | 2       | 3         |
-
-</Route>
-
-## 宜家 IKEA
-
-### 宜家 IKEA（英国）- 商品上新
-
-<Route author="HenryQW" example="/ikea/uk/new" path="/ikea/uk/new"/>
-
-### 宜家 IKEA（英国）- 促销
-
-<Route author="HenryQW" example="/ikea/uk/offer" path="/ikea/uk/offer"/>
+<Route author="xyqfer DIYgod bigfei" example="/xiaomiyoupin/latest" path="/xiaomiyoupin/latest" />
 
 ## 优衣库
 
@@ -497,8 +613,8 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 <Route author="nczitzk" example="/getitfree" path="/getitfree/:category?" :paramsDesc="['分类，见下表，默认为所有类别']">
 
-| 所有类别 | Android | iOS | Mac | PC | UWP | 公告           | 永久免费 | 限时免费     | 限时折扣     |
-| ---- | ------- | --- | --- | -- | --- | ------------ | ---- | -------- | -------- |
-|      | android | ios | mac | pc | uwp | notification | free | giveaway | discount |
+| 所有类别 | Android | iOS | Mac | PC | UWP | 公告         | 永久免费 | 限时免费 | 限时折扣 |
+| -------- | ------- | --- | --- | -- | --- | ------------ | -------- | -------- | -------- |
+|          | android | ios | mac | pc | uwp | notification | free     | giveaway | discount |
 
 </Route>

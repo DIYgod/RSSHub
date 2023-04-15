@@ -1,0 +1,10 @@
+{{ if item.content }}
+    {{ item.content }}
+{{ /if }}
+
+{{ if item.images }}
+<br>
+    {{ each item.images i }}
+        <img src="{{ i }}">
+    {{ /each }}
+{{ /if }}

@@ -20,6 +20,7 @@ sidebar: auto
 3.  [Redis](https://redis.io/download)
 4.  [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 5.  [Google App Engine](https://cloud.google.com/appengine/)
+6.  [Fly.io](https://fly.io/)
 
 ## Docker 镜像
 
@@ -231,7 +232,7 @@ $ pm2 start lib/index.js --name rsshub
 Debian:
 
 ```bash
-$ apt install chroium
+$ apt install chromium
 $ echo >> .env
 $ echo 'CHROMIUM_EXECUTABLE_PATH=chromium' >> .env
 ```
@@ -285,6 +286,12 @@ in pkgs.stdenv.mkDerivation {
 }
 ```
 
+## 部署到 Railway
+
+包含自动更新。
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/QxW\_\_f?referralCode=9wT3hc)
+
 ## 部署到 Heroku
 
 ### 注意
@@ -303,14 +310,53 @@ Heroku [不再](https://blog.heroku.com/next-chapter) 提供免费服务。
 
 ### 自动更新部署
 
-1.  将 RSSHub [分叉（fork）](https://github.com/login?return_to=%2FDIYgod%2FRSSHub) 到自己的账户下。
+1.  将 RSSHub [分叉（fork）](https://github.com/DIYgod/RSSHub/fork) 到自己的账户下。
 2.  把自己的分叉部署到 Heroku：`https://heroku.com/deploy?template=URL`，其中 `URL` 改为分叉地址 （例如 `https://github.com/USERNAME/RSSHub`)。
 3.  检查 Heroku 设置，随代码库更新自动部署。
 4.  安装 [Pull](https://github.com/apps/pull) 应用，定期将 RSSHub 改动自动同步至你的分叉。
 
-## 部署到 Vercel (Zeit Now)
+## 部署到 Vercel (ZEIT Now)
 
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
+
+## 部署到 Fly.io
+
+1.  将 RSSHub [分叉（fork）](https://github.com/DIYgod/RSSHub/fork) 到自己的账户下。
+2.  下载分叉的源码
+    ```bash
+    $ git clone https://github.com/<your username>/RSSHub.git
+    $ cd RSSHub
+    ```
+3.  前往 [Fly.io 完成注册](https://fly.io/app/sign-up)，并安装 [`flyctl` CLI](https://fly.io/docs/hands-on/install-flyctl/)。
+4.  运行 `flyctl launch`, 并选择一个唯一的名称和实例地区。
+5.  使用 `flyctl secrets set KEY=VALUE` [对部分模块进行配置](#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)。
+6.  [配置通过 GitHub Actions 自动部署](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/)
+7.  安装 [Pull](https://github.com/apps/pull) 应用，定期将 RSSHub 改动自动同步至你的分叉。
+8.  （可选）将自己的域名指向 fly.io 提供的 IPv4 和 IPv6 地址，并在 Certificate 页面添加自有域名
+
+### 配置内置的 Upstash Redis 缓存
+
+在 `RSSHub` 文件夹下运行
+
+```bash
+$ flyctl redis create
+```
+
+来创建一个新的 Redis 数据库，建议选择开启 [eviction](https://redis.io/docs/reference/eviction/)。创建完成后会输出类似于 `redis://default:<password>@<domain>.upstash.io` 的字符串。
+
+再运行
+
+```bash
+$ flyctl secrets set CACHE_TYPE=redis REDIS_URL='<刚才的连接字符串>'
+```
+
+完成在服务器上的配置。
+
+## 部署到 PikaPods
+
+每月只需 1 美元即可运行 RSSHub。包括自动更新和 5 美元的免费起始额度。
+
+[![Run on PikaPods](https://www.pikapods.com/static/run-button.svg)](https://www.pikapods.com/pods?run=rsshub)
 
 ## 部署到 Google App Engine
 
@@ -507,7 +553,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 访问码为 访问密钥 + 路由 共同生成的 md5，例如：
 
-| 访问密钥        | 路由                | 生成过程                                     | 访问码                              |
+| 访问密钥    | 路由              | 生成过程                                 | 访问码                           |
 | ----------- | ----------------- | ---------------------------------------- | -------------------------------- |
 | ILoveRSSHub | /qdaily/column/59 | md5('/qdaily/column/59' + 'ILoveRSSHub') | 0f820530128805ffc10351f22b5fd121 |
 
@@ -517,11 +563,11 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 访问密钥 / 码与黑白名单的访问控制关系如下：
 
-|       | 正确访问密钥 / 码 | 错误访问密钥 / 码 | 无访问密钥 / 码 |
-| ----- | ---------- | ---------- | --------- |
-| 在白名单中 | ✅          | ✅          | ✅         |
-| 在黑名单中 | ✅          | ❌          | ❌         |
-| 无黑白名单 | ✅          | ❌          | ❌         |
+|            | 正确访问密钥 / 码 | 错误访问密钥 / 码 | 无访问密钥 / 码 |
+| ---------- | ----------------- | ----------------- | --------------- |
+| 在白名单中 | ✅                | ✅                | ✅              |
+| 在黑名单中 | ✅                | ❌                | ❌              |
+| 无黑白名单 | ✅                | ❌                | ❌              |
 
 ### 日志配置
 
@@ -565,13 +611,15 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 ::: tip 测试特性
 
-这个板块控制的是一些新特性的选项，默认他们都是关闭的。如果有需要请阅读对应说明后按需开启
+这个板块控制的是一些新特性的选项，他们都是**默认关闭**的。如果有需要请阅读对应说明后按需开启
 
 :::
 
 `ALLOW_USER_HOTLINK_TEMPLATE`: [通用参数 -> 多媒体处理](/parameter.html#duo-mei-ti-chu-li)特性控制
 
 `FILTER_REGEX_ENGINE`: 控制 [通用参数 -> 内容过滤](/parameter.html#nei-rong-guo-lu) 使用的正则引擎。可选`[re2, regexp]`，默认`re2`。我们推荐公开实例不要调整这个选项，这个选项目前主要用于向后兼容。
+
+`ALLOW_USER_SUPPLY_UNSAFE_DOMAIN`: 允许用户为路由提供域名作为参数。建议公共实例不要调整此选项，开启后可能会导致 [服务端请求伪造（SSRF）](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)
 
 ### 其他应用配置
 
@@ -670,9 +718,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   Instagram:
 
-    -   `IG_USERNAME`: Instagram 用户名。
-    -   `IG_PASSWORD`: Instagram 密码。
-    -   `IG_PROXY`: Instagram 代理 URL。
+    -   `IG_USERNAME`: Instagram 用户名（仅 Private API）
+    -   `IG_PASSWORD`: Instagram 密码（仅 Private API）
+    -   `IG_PROXY`: Instagram 代理 URL（仅 Private API，可选）
+    -   `IG_COOKIE`: Instagram 登录后的 Cookie（仅 Cookie）
 
     注意，暂**不支持**两步验证。
 
@@ -715,7 +764,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `PIXIV_BYPASS_CDN`: 绕过 Pixiv 前置的 Cloudflare CDN, 使用`PIXIV_BYPASS_HOSTNAME`指示的 IP 地址访问 Pixiv API, 可以解决因 Cloudflare 机器人验证导致的登录失败问题，默认关闭，设置 true 或 1 开启
     -   `PIXIV_BYPASS_HOSTNAME`: Pixiv 源站的主机名或 IP 地址，主机名会被解析为 IPv4 地址，默认为`public-api.secure.pixiv.net`；仅在`PIXIV_BYPASS_CDN`开启时生效
     -   `PIXIV_BYPASS_DOH`: 用于解析 `PIXIV_BYPASS_HOSTNAME` 的 DoH 端点 URL，需要兼容 Cloudflare 或 Google 的 DoH 服务的 JSON 查询格式，默认为 `https://1.1.1.1/dns-query`
-    -   `PIXIV_IMG_PROXY`: 用于图片地址的代理，因为 pixiv 图片有防盗链，默认为 `https://i.pixiv.cat`
+    -   `PIXIV_IMG_PROXY`: 用于图片地址的代理，因为 pixiv 图片有防盗链，默认为 `https://i.pixiv.re`
 
 -   pixiv fanbox 用于获取付费内容
 
@@ -829,10 +878,6 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `WENKU8_COOKIE`: 登陆轻小说文库后的 cookie
 
--   语雀 全部路由：[注册地址](https://www.yuque.com/register)
-
-    -   `YUQUE_TOKEN`: 语雀 Token，[获取地址](https://www.yuque.com/settings/tokens)。语雀接口做了访问频率限制，为保证正常访问建议配置 Token，详见 [语雀开发者文档](https://www.yuque.com/yuque/developer/api#5b3a1535)。
-
 -   邮箱 邮件列表路由：
 
     -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 与 `.` 替换为 `_`，例如 `EMAIL_CONFIG_xxx_qq_com`。Linux 内容格式为 `password=密码&host=服务器&port=端口`，docker 内容格式为 `password=密码\&host=服务器\&port=端口`，例如：
@@ -869,3 +914,6 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值.
         1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值.
+
+-   Civitai
+    -   `CIVITAI_COOKIE`: Civitai 登录后的 cookie 值

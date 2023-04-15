@@ -12,13 +12,14 @@ jobs:
     name: Automatic Rebase
     if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && github.event.comment.author_association == 'COLLABORATOR'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Checkout the latest code
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: Automatic Rebase
-        uses: cirrus-actions/rebase@1.7
+        uses: cirrus-actions/rebase@1.8
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN_SUPER }}
 
@@ -26,6 +27,7 @@ jobs:
     name: Self Assign
     if: ${{ !github.event.issue.pull_request && startsWith(github.event.comment.body, '/wip') }}
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       contents: read
       issues: write
@@ -41,6 +43,7 @@ jobs:
     name: Test route on demand
     if: startsWith(github.event.comment.body, '/test')
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
       contents: read
       issues: write
@@ -48,10 +51,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Use Node.js v16
+      - name: Use Node.js v18
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
           cache: 'yarn'
 
       - name: Install dependencies (yarn)
@@ -75,6 +78,8 @@ jobs:
         if: env.TEST_CONTINUE
         run: yarn start &
         env:
+          ALLOW_USER_HOTLINK_TEMPLATE: true
+          ALLOW_USER_SUPPLY_UNSAFE_DOMAIN: true
           NODE_ENV: dev
           LOGGER_LEVEL: debug
 
