@@ -1762,6 +1762,30 @@
       }
     ]
   },
+  "apache.org": {
+    "_name": "Apache",
+    "apisix": [
+      {
+        "title": "APISIX 博客",
+        "docs": "https://docs.rsshub.app/blog.html#apache",
+        "source": [
+          "/zh/blog"
+        ]
+      }
+    ]
+  },
+  "apiseven.com": {
+    "_name": "支流科技",
+    ".": [
+      {
+        "title": "博客",
+        "docs": "https://docs.rsshub.app/blog.html#zhi-liu-ke-ji",
+        "source": [
+          "/blog"
+        ]
+      }
+    ]
+  },
   "apkpure.com": {
     "_name": "APKPure",
     ".": [
@@ -4180,6 +4204,18 @@
         "docs": "https://docs.rsshub.app/other.html#clickme",
         "source": [
           "/:grouping/:name"
+        ]
+      }
+    ]
+  },
+  "cloudnative.to": {
+    "_name": "云原生社区",
+    ".": [
+      {
+        "title": "博客",
+        "docs": "https://docs.rsshub.app/blog.html#yun-yuan-sheng-she-qu",
+        "source": [
+          "/blog"
         ]
       }
     ]

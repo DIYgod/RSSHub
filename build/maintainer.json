@@ -367,6 +367,12 @@
     "/anquanke/:category/:fulltext?": [
         "qwertyuiop6"
     ],
+    "/apache/apisix/blog": [
+        "aneasystone"
+    ],
+    "/apiseven/blog": [
+        "aneasystone"
+    ],
     "/apkpure/versions/:pkg/:region?": [
         "maple3142"
     ],
@@ -1005,6 +1011,9 @@
     ],
     "/clickme/:site/:grouping/:name": [
         "hoilc"
+    ],
+    "/cloudnative/blog": [
+        "aneasystone"
     ],
     "/cls/depth/:category?": [
         "nczitzk"
