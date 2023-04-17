@@ -80,7 +80,7 @@ pageClass: routes
 
 ### Community
 
-<Route author="nczitzk" example="/aqara/community" path="/aqara/community/:id?" :paramsDesc="['分类 id，可在对应分类页 URL 中找到，默认为全部']"/>
+<Route author="nczitzk" example="/aqara/community" path="/aqara/community/:id?/:keyword?" :paramsDesc="['分类 id，可在对应分类页 URL 中找到，默认为全部', '关键字，默认为空']"/>
 
 ## AutoTrader
 
