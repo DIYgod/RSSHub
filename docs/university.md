@@ -1717,6 +1717,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="276562578" example="/jlu/oa" path="/jlu" />
 
+### 招生网
+
+<Route author="yanbot-team" example="/jlu/zsb/18" path="/jlu/zsb/:type" :paramDesc="['分类，见下表，其他未列出的可在页面URL中找到']">
+
+| 硕士 | 博士 |
+| ---- | ---- |
+| 18   | 19   |
+
+</Route>
+
 ## 吉林工商学院
 
 ### 主页
