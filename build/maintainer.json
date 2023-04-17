@@ -1320,6 +1320,9 @@
     "/dlsite/campaign/:type/:free?": [
         "cssxsh"
     ],
+    "/dlsite/ci-en/:id/article": [
+        "nczitzk"
+    ],
     "/dlsite/new/:type": [
         "cssxsh"
     ],
