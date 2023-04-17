@@ -1091,7 +1091,7 @@ pageClass: routes
 
 ## 广州大学
 
-## 广州大学研招网通知公告
+### 研招网通知公告
 
 <Route author="shengmaosu" example="/gzyjs" path="/gzyjs" />
 
@@ -1484,17 +1484,17 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生院
 
-<Route author="shengmaosu" example="/ecnuyjs" path="/ecnuyjs" />
+<Route author="shengmaosu" example="/ecnu/yjs" path="/ecnu/yjs" radar="1" />
 
 ## 华南理工大学
 
 ### 研究生院通知公告
 
-<Route author="shengmaosu" example="/scutyjs" path="/scutyjs" />
+<Route author="shengmaosu" example="/scut/yjs" path="/scut/yjs" radar="1" />
 
 ### 教务处通知公告
 
-<Route author="KeNorizon" example="/scut/jwc/notice/all" path="/scut/jwc/notice/:category?" :paramsDesc="['通知分类，默认为 `all`']">
+<Route author="imkero" example="/scut/jwc/notice/all" path="/scut/jwc/notice/:category?" :paramsDesc="['通知分类，默认为 `all`']">
 
 | 全部 | 选课   | 考试 | 实践     | 交流          | 教师    | 信息 |
 | ---- | ------ | ---- | -------- | ------------- | ------- | ---- |
@@ -1504,7 +1504,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 教务处学院通知
 
-<Route author="KeNorizon Rongronggg9" example="/scut/jwc/school/all" path="/scut/jwc/school/:category?" :paramsDesc="['通知分类，默认为 `all`']">
+<Route author="imkero Rongronggg9" example="/scut/jwc/school/all" path="/scut/jwc/school/:category?" :paramsDesc="['通知分类，默认为 `all`']">
 
 | 全部 | 选课   | 考试 | 信息 |
 | ---- | ------ | ---- | ---- |
@@ -1514,15 +1514,15 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 教务处新闻动态
 
-<Route author="KeNorizon" example="/scut/jwc/news" path="/scut/jwc/news" />
+<Route author="imkero" example="/scut/jwc/news" path="/scut/jwc/news" />
 
 ### 土木与交通学院 - 学工通知
 
-<Route author="railzy" example="/scut/scet/notice" path="/scut/scet/notice" />
+<Route author="railzy" example="/scut/scet/notice" path="/scut/scet/notice" radar="1" />
 
 ### 电子与信息学院 - 新闻速递
 
-<Route author="auto-bot-ty" example="/scut/seie/news_center" path="/scut/seie/news_center" />
+<Route author="auto-bot-ty" example="/scut/seie/news_center" path="/scut/seie/news_center" radar="1" />
 
 ::: warning 注意
 由于学院官网对非大陆 IP 的访问存在限制，需自行部署。
