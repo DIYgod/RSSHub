@@ -368,6 +368,16 @@ pageClass: routes
 
 </Route>
 
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/bnu/yz/master" path="/bnu/yz/:type" :paramsDesc="['分类type,见下表']" radar="1" >
+
+| 硕士生招生 | 博士生招生 |
+| ---------- | ---------- |
+| master     | doctor     |
+
+</Route>
+
 ## 北京外国语大学
 
 ### 研究生院
