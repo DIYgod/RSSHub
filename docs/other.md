@@ -411,7 +411,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 周度市场观察
 
-<Route author="nczitzk" example="/iresearch/weekly" path="/iresearch/weekly:category?" :paramsDesc="['分类，见下表，默认为全部']">
+<Route author="nczitzk" example="/iresearch/weekly" path="/iresearch/weekly/:category?" :paramsDesc="['分类，见下表，默认为全部']">
 
 | 家电行业 | 服装行业 | 美妆行业 | 食品饮料行业 |
 | -------- | -------- | -------- | ------------ |
@@ -526,24 +526,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 日榜
 
 <Route author="Gem1ni" example="/guduodata/daily" path="/guduodata/daily" />
-
-## 光大银行
-
-### 外汇牌价
-
-#### 总览
-
-<Route author="linbuxiao" example="/quotation/all" path="/quotation/all" />
-
-#### 历史牌价
-
-<Route author="linbuxiao" example="/quotation/history/usd" path="/quotation/history/:type" :paramsDesc="['货币的缩写，见下表']">
-
-| 美元 | 英镑 | 港币 | 瑞士法郎 | 瑞典克郎 | 丹麦克郎 | 挪威克郎 | 日元 | 加拿大元 | 澳大利亚元 | 新加坡元 | 欧元 | 澳门元 | 泰国铢 | 新西兰元 | 韩圆 |
-| ---- | ---- | ---- | -------- | -------- | -------- | -------- | ---- | -------- | ---------- | -------- | ---- | ------ | ------ | -------- | ---- |
-| usd  | gbp  | hkd  | chf      | sek      | dkk      | nok      | jpy  | cad      | aud        | sgd      | eur  | mop    | thb    | nzd      | krw  |
-
-</Route>
 
 ## 国家留学网
 
@@ -1040,6 +1022,24 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 产业政策
 
 <Route author="nczitzk" example="/cktest/policy" path="/cktest/policy"/>
+
+## 中国光大银行
+
+### 外汇牌价
+
+#### 总览
+
+<Route author="linbuxiao" example="/cebbank/quotation/all" path="/cebbank/quotation/all" />
+
+#### 历史牌价
+
+<Route author="linbuxiao" example="/cebbank/quotation/history/usd" path="/cebbank/quotation/history/:type" :paramsDesc="['货币的缩写，见下表']">
+
+| 美元 | 英镑 | 港币 | 瑞士法郎 | 瑞典克郎 | 丹麦克郎 | 挪威克郎 | 日元 | 加拿大元 | 澳大利亚元 | 新加坡元 | 欧元 | 澳门元 | 泰国铢 | 新西兰元 | 韩圆 |
+| ---- | ---- | ---- | -------- | -------- | -------- | -------- | ---- | -------- | ---------- | -------- | ---- | ------ | ------ | -------- | ---- |
+| usd  | gbp  | hkd  | chf      | sek      | dkk      | nok      | jpy  | cad      | aud        | sgd      | eur  | mop    | thb    | nzd      | krw  |
+
+</Route>
 
 ## 中国互联网联合辟谣平台
 
