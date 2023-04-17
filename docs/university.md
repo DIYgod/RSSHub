@@ -1162,6 +1162,16 @@ pageClass: routes
 
 ## 广州大学
 
+### 研究生院
+
+<Route author="yanbot-team" example="/gzhu/yjsy/zsxx-zsdt" path="/gzhu/yjsy/:type" :paramsDesc="['分类名,见下表']">
+
+| 招生动态  | 招生简章  | 招生目录  |
+| --------- | --------- | --------- |
+| zsxx-zsdt | zsxx-zsjz | zsxx-zsml |
+
+</Route>
+
 ## 广州大学研招网通知公告
 
 <Route author="shengmaosu" example="/gzyjs" path="/gzyjs" />
