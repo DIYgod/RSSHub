@@ -2473,6 +2473,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 招生网
+
+<Route author="yanbot-team" example="/xmu/zs/sss" path="/xmu/zs/:type" :paramsDesc="['分类见下表']"/>
+
+| 硕士生 | 硕士生招生简章 | 硕士生专业目录 | 硕士生往年录取 |
+| :----: | :------------: | :------------: | -------------- |
+|  sss   |    sss-zsjz    |    sss-zymu    | sss-wnlu       |
+
+</Route>
+
 ## 山东大学
 
 ### 软件学院通知
