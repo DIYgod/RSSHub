@@ -76,6 +76,12 @@ pageClass: routes
 
 见 [#app-store-mac-app-store](/program-update.html#app-store-mac-app-store)
 
+## Aqara
+
+### News
+
+<Route author="nczitzk" example="/aqara/news" path="/aqara/news"/>
+
 ## AutoTrader
 
 ### 搜索结果
