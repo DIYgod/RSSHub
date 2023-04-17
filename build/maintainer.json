@@ -410,6 +410,9 @@
     "/appstore/gofans": [
         "HenryQW"
     ],
+    "/aqara/community/:id?/:keyword?": [
+        "nczitzk"
+    ],
     "/aqara/news": [
         "nczitzk"
     ],
