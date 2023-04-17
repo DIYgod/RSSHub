@@ -76,6 +76,12 @@ pageClass: routes
 
 见 [#app-store-mac-app-store](/program-update.html#app-store-mac-app-store)
 
+## Aqara
+
+### Community
+
+<Route author="nczitzk" example="/aqara/community" path="/aqara/community/:id?" :paramsDesc="['分类 id，可在对应分类页 URL 中找到，默认为全部']"/>
+
 ## AutoTrader
 
 ### 搜索结果
