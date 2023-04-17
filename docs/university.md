@@ -2569,6 +2569,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 山东第一医科大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/sdfmu/yz/sszs1-tz" path="/sdfmu/yz/:type" :paramsDesc="['专栏名称，见下表']" radar="1" rssbud="1">
+
+| 硕士最新通知 |
+| ------------ |
+| sszs1-tz     |
+
+</Route>
+
 ## 上海大学
 
 ### 上海大学官网信息
