@@ -1673,6 +1673,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="fengkx" example="/scnu/cs/match" path="/scnu/cs/match"/>
 
+## 华侨大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/hqu/yjszs/zsxx-sszs" path="/hqu/yjszs/:type" :paramsDesc="['分区 type，可在网页 url 中找到']">
+
+| 招生信息-硕士招生 | 招生信息-在职硕士招生 |
+| ----------------- | --------------------- |
+| zsxx-sszs         | zsxx-zzsszs           |
+
+</Route>
+
 ## 华中科技大学
 
 ### 华中科技大学研究生院通知公告
