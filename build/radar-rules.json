@@ -2037,7 +2037,7 @@
         "title": "アークナイツ（日服新闻）",
         "docs": "https://docs.rsshub.app/game.html#ming-ri-fang-zhou",
         "source": [
-          "/news?lang=ja&limit=9&page=1",
+          "/news",
           "/"
         ],
         "target": "/arknights/japan"
@@ -3789,17 +3789,19 @@
     ".": [
       {
         "title": "外汇牌价 - 牌价总览",
-        "docs": "https://docs.rsshub.app/new-media.html#eprice",
+        "docs": "https://docs.rsshub.app/other.html#zhong-guo-guang-da-yin-hang",
         "source": [
-          "/eportal/ui?pageId=477257"
+          "/site/ygzx/whpj/index.html",
+          "/eportal/ui",
+          "/"
         ],
-        "target": "/quotation/all"
+        "target": "/cebbank/quotation/all"
       },
       {
         "title": "外汇牌价 - 历史记录",
-        "docs": "https://docs.rsshub.app/new-media.html#eprice",
+        "docs": "https://docs.rsshub.app/other.html#zhong-guo-guang-da-yin-hang",
         "source": [
-          "/site/ygzx/whpj/rmbwhpjlspj/index.html?currcode=:id"
+          "/site/ygzx/whpj/rmbwhpjlspj/index.html"
         ]
       }
     ]
@@ -4953,8 +4955,8 @@
         "title": "新闻",
         "docs": "https://docs.rsshub.app/new-media.html#da-he-cai-li-fang",
         "source": [
-          "/channel.html?recid=:id",
-          "/index.html?recid=:id"
+          "/channel.html",
+          "/index.html"
         ]
       }
     ]
@@ -6177,14 +6179,28 @@
       }
     ]
   },
-  "jxjy.ecust.edu.cn": {
-    "_name": "华东理工继续教育学院",
-    ".": [
+  "ecust.edu.cn": {
+    "_name": "华东理工大学",
+    "e": [
       {
-        "title": "新闻公告",
-        "docs": "https://docs.rsshub.app/university.html#hua-dong-li-gong-ji-xu-jiao-yu-xue-yuan",
-        "source": "/yeDaZhuanLan.aspx?pk=153",
-        "target": "/ecust-jxjy/news"
+        "title": "继续教育学院 - 学院公告",
+        "docs": "https://docs.rsshub.app/university.html#hua-dong-li-gong-da-xue",
+        "source": [
+          "/engine2/m/38F638B77773ADD3",
+          "/"
+        ],
+        "target": "/ecust/jxjy/news"
+      }
+    ],
+    "gschool": [
+      {
+        "title": "研究生院通知公告",
+        "docs": "https://docs.rsshub.app/university.html#hua-dong-li-gong-da-xue",
+        "source": [
+          "/12753/list.htm",
+          "/"
+        ],
+        "target": "/ecust/yjs"
       }
     ]
   },
@@ -9073,7 +9089,6 @@
         "title": "最新的帖子",
         "docs": "https://docs.rsshub.app/bbs.html#hacker-talk-hei-ke-shuo",
         "source": [
-          "/?tab=new",
           "/"
         ],
         "target": "/hackertalk"
@@ -10551,10 +10566,8 @@
         "title": "周度市场观察",
         "docs": "https://docs.rsshub.app/other.html#ai-rui-zhou-du-shi-chang-guan-cha",
         "source": [
-          "/report.shtml?type=3",
-          ""
-        ],
-        "target": "/iresearch/weekly/:category"
+          "/report.shtml"
+        ]
       }
     ]
   },
@@ -14515,7 +14528,7 @@
         "title": "精彩研究",
         "docs": "https://docs.rsshub.app/journal.html#nature-xi-lie",
         "source": [
-          "/:journal/articles?type=research-highlight",
+          "/:journal/articles",
           "/:journal",
           "/"
         ],
@@ -17141,7 +17154,7 @@
         "title": "腾讯新闻 - 新型冠状病毒肺炎疫情实时追踪",
         "docs": "https://docs.rsshub.app/other.html#xin-guan-fei-yan-yi-qing-xin-wen-dong-tai",
         "source": [
-          "/zt2020/page/feiyan.htm#/"
+          "/zt2020/page/feiyan.htm"
         ],
         "target": "/tencent/news/coronavirus/total"
       }
@@ -22291,7 +22304,6 @@
         "title": "热门节目",
         "docs": "https://docs.rsshub.app/multimedia.html#zhong-wen-bo-ke-bang-re-men-jie-mu",
         "source": [
-          "/#/",
           "/"
         ],
         "target": "/xyzrank"
@@ -22300,28 +22312,22 @@
         "title": "热门播客",
         "docs": "https://docs.rsshub.app/multimedia.html#zhong-wen-bo-ke-bang-re-men-bo-ke",
         "source": [
-          "/#/hot-podcasts",
           "/"
-        ],
-        "target": "/xyzrank/hot-podcasts"
+        ]
       },
       {
         "title": "新锐节目",
         "docs": "https://docs.rsshub.app/multimedia.html#zhong-wen-bo-ke-bang-xin-rui-jie-mu",
         "source": [
-          "/#/hot-episodes-new",
           "/"
-        ],
-        "target": "/xyzrank/hot-episodes-new"
+        ]
       },
       {
         "title": "新锐播客",
         "docs": "https://docs.rsshub.app/multimedia.html#zhong-wen-bo-ke-bang-xin-rui-bo-ke",
         "source": [
-          "/#/new-podcasts",
           "/"
-        ],
-        "target": "/xyzrank/new-podcasts"
+        ]
       }
     ]
   },

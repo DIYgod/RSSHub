@@ -1573,8 +1573,11 @@
     "/economist/:endpoint": [
         "ImSingee"
     ],
-    "/ecust-jxjy/ecust-jxjy/news": [
+    "/ecust/jxjy/news": [
         "jialinghui"
+    ],
+    "/ecust/yjs": [
+        "shengmaosu"
     ],
     "/ehentai/favorites/:favcat?/:order?/:page?/:routeParams?": [
         "yindaheng98",
@@ -6571,7 +6574,6 @@
     "/cauele": [],
     "/moxingfans": [],
     "/chiphell/forum/:forumId?": [],
-    "/ecustyjs": [],
     "/tjuyjs": [],
     "/upcyjs": [],
     "/outyjs": [],
