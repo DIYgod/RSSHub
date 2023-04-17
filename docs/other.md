@@ -78,6 +78,10 @@ pageClass: routes
 
 ## Aqara
 
+### Community
+
+<Route author="nczitzk" example="/aqara/community" path="/aqara/community/:id?/:keyword?" :paramsDesc="['分类 id，可在对应分类页 URL 中找到，默认为全部', '关键字，默认为空']"/>
+
 ### News
 
 <Route author="nczitzk" example="/aqara/news" path="/aqara/news"/>
