@@ -511,7 +511,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Quest
 
-<Route author="nczitzk" example="/layer3/quests" path="/layer3/quests"/>
+<Route author="nczitzk" example="/layer3/quests" path="/layer3/quests" radar="1"/>
 
 ## LeetCode
 
