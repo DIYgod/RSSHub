@@ -507,6 +507,12 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="nczitzk" example="/kaggle/user/antgoldbloom" path="/kaggle/user/:user" :paramsDesc="['用户名']"/>
 
+## Layer3
+
+### Quest
+
+<Route author="nczitzk" example="/layer3/quests" path="/layer3/quests"/>
+
 ## LeetCode
 
 ### 文章
