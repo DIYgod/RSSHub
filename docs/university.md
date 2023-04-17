@@ -4098,6 +4098,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生院
+
+<Route author="yanbot-team" example="/csu/gra/zsgz-ssszs" path="/csu/gra/:type" :paramsDesc="['类型，见下表，其他未列出的类型可在页面URL中找到']" radar="1">
+
+| 类型 | 硕士生招生 | 博士生招生 |
+| ---- | ---------- | ---------- |
+| 参数 | zsgz-ssszs | zsgz-bsszs |
+
+</Route>
+
 ## 中山大学
 
 ### 数据科学与计算机学院动态
