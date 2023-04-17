@@ -1550,6 +1550,14 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="fengkx" example="/scnu/cs/match" path="/scnu/cs/match"/>
 
+### 物理与电信工程学院通知
+
+<Route author="Shinonome28" example="/scnu/physics-school-announcements" path="/scnu/physics-school-announcements" />
+
+### 物理与电信工程学院新闻
+
+<Route author="Shinonome28" example="/scnu/physics-school-news" path="/scnu/physics-school-news" />
+
 ## 华中科技大学
 
 ### 华中科技大学研究生院通知公告
