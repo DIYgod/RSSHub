@@ -40,6 +40,10 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 <RouteEn author="cssxsh" example="/dlsite/campaign/home" path="/dlsite/campaign/:type/:free?" :paramsDesc="['Type, see table above', 'Free only, empty means false, other value means true']"/>
 
+### Ci-en Creators' Article
+
+<RouteEn author="nczitzk" example="/dlsite/ci-en/:id/article" path="/dlsite/ci-en/7400/article" :paramsDesc="['Creator id, can be found in URL']"/>
+
 ## Hanime.tv
 
 ### Recently updated
