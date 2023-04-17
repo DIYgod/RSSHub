@@ -2525,6 +2525,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/sdu/yz/tzgg" path="/sdu/yz/:type" :paramsDesc="['分类，见下表']" radar="1" rssbud="1">
+
+| 通知公告 | 硕士生招生 | 复试专栏 | 复试公示公开 | 调剂信息  | 招生拓展（夏令营） |
+| -------- | ---------- | -------- | ------------ | --------- | ------------------ |
+| tzgg     | zszn-ssszs | fszl     | fszl-gsgk    | fszl-djxx | zstz-mqhd1         |
+
+</Route>
+
 ## 山东大学（威海）
 
 ### 新闻网
