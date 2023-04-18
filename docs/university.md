@@ -1532,11 +1532,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 软件学院通知公告
 
-<Route author="shengmaosu" example="/scnucs" path="/scnucs" />
+<Route author="shengmaosu" example="/scnu/ss" path="/scnu/ss" radar="1"/>
 
 ### 研究生院通知公告
 
-<Route author="shengmaosu" example="/scnuyjs" path="/scnuyjs" />
+<Route author="shengmaosu" example="/scnu/yjs" path="/scnu/yjs" />
 
 ### 教务处通知
 
