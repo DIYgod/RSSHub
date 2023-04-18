@@ -142,6 +142,22 @@ Language
 
 <RouteEn author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" :paramsDesc="['Extension id, can be found in extension url']"/>
 
+## Civitai
+
+### Latest models
+
+<RouteEn author="DIYgod" example="/civitai/models" path="/civitai/models"/>
+
+### Model discussions
+
+::: warning
+
+Need to configure `CIVITAI_COOKIE` to obtain image information of NSFW models.
+
+:::
+
+<RouteEn author="DIYgod" example="/civitai/discussions/4384" path="/civitai/discussions/:modelId"/>
+
 ## Clash
 
 ### Premium Releases
@@ -237,6 +253,12 @@ Language
 ### Add-ons Update
 
 <RouteEn author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" :paramsDesc="['Add-ons id, can be found in add-ons url']"/>
+
+## fish shell
+
+### Release Notes
+
+<RouteEn author="x2cf" example="/fishshell" path="/fishshell" radar="1" />
 
 ## FossHub
 

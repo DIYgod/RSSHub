@@ -28,6 +28,12 @@ pageClass: routes
 
 <RouteEn author="Jkker" example="/csdn/blog/csdngeeknews" path="/csdn/blog/:user" radar="1" :paramsDesc="['`user` is the username of a CSDN blog which can be found in the url of the home page']" />
 
+## Geocaching
+
+### Official Blogs
+
+<RouteEn author="HankChow" example="/geocaching/blogs" path="/geocaching/blogs" radar="1"/>
+
 ## Google Sites
 
 ### Articles
@@ -42,21 +48,27 @@ pageClass: routes
 
 ### Blog using Next theme
 
-<RouteEn author="fengkx" path="/hexo/next/:url" example="/hexo/next/diygod.me" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
+<RouteEn author="fengkx" path="/hexo/next/:url" example="/hexo/next/archive.diygod.me" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" selfhost="1"/>
 
 ### Blog using Yilia theme
 
-<RouteEn author="aha2mao" path="/hexo/yilia/:url" example="/hexo/yilia/cloudstone.xin" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
+<RouteEn author="aha2mao" path="/hexo/yilia/:url" example="/hexo/yilia/cloudstone.xin" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" selfhost="1"/>
 
 ### Blog using Fluid theme
 
-<RouteEn author="gkkeys" path="/hexo/fluid/:url" example="/hexo/fluid/blog.tonyzhao.xyz" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" />
+<RouteEn author="gkkeys" path="/hexo/fluid/:url" example="/hexo/fluid/blog.tonyzhao.xyz" :paramsDesc="['the blog URL without the protocol (http:// and https://)']" selfhost="1"/>
 
 ## Love the Problem
 
 ### Ash Maurya's blog
 
 <RouteEn author="james-tindal" example="/ash-maurya" path="/ash-maurya"/>
+
+## MacMenuBar
+
+### Recently
+
+<RouteEn author="5upernova-heng" example="/macmenubar/recently/developer-apps,system-tools" path="/macmenubar/recently/:category?" :paramsDesc="['Category path name, seperate by comma, default is all categories. Category path name can be found in url']" radar="1" />
 
 ## Miris Whispers
 
@@ -119,4 +131,3 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 ### Entry
 
 <RouteEn author="nczitzk" example="/yuzu-emu/entry" path="/yuzu-emu/entry" />
-

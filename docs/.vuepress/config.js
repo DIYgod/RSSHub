@@ -46,6 +46,7 @@ module.exports = {
         anchor: {
             level: 999, // Disable original Plugin
         },
+        lineNumbers: true,
         extendMarkdown: (md) => {
             md.use(require('../.format/md/hierarchySlug'), {
                 slugify(s) {
@@ -83,6 +84,7 @@ module.exports = {
         editLinks: true,
         docsDir: 'docs',
         smoothScroll: true,
+        logo: '/logo.png',
         locales: {
             '/': {
                 lang: 'zh-CN',
@@ -92,6 +94,70 @@ module.exports = {
                 lastUpdated: '上次更新',
                 nav: require('./nav/zh'),
                 sidebar: {
+                    '/joinus/': [
+                        {
+                            title: '👥 参与我们',
+                            path: '/joinus/quick-start.html',
+                        },
+                        {
+                            title: '📰 提交新的 RSSHub 规则',
+                            path: '/joinus/new-rss/prerequisites.html',
+                            collapsable: false,
+                            children: [
+                                {
+                                    title: '🔑 准备工作',
+                                    path: 'new-rss/prerequisites',
+                                },
+                                {
+                                    title: '💡 开始之前',
+                                    path: 'new-rss/before-start',
+                                },
+                                {
+                                    title: '🚀 制作自己的 RSSHub 路由',
+                                    path: 'new-rss/start-code',
+                                },
+                                {
+                                    title: '📖 添加文档',
+                                    path: 'new-rss/add-docs',
+                                },
+                                {
+                                    title: '📤 提交路由',
+                                    path: 'new-rss/submit-route',
+                                },
+                            ],
+                        },
+                        {
+                            title: '📡 提交新的 RSSHub Radar 规则',
+                            path: '/joinus/new-radar.html',
+                        },
+                        {
+                            title: '💪 高级用法',
+                            path: '/joinus/advanced-feed.html',
+                            collapsable: false,
+                            children: [
+                                {
+                                    title: '🎧 制作多媒体 RSS 订阅源',
+                                    path: 'advanced-feed',
+                                },
+                                {
+                                    title: '📜 路由规范',
+                                    path: 'script-standard',
+                                },
+                                {
+                                    title: '💾 使用缓存',
+                                    path: 'use-cache',
+                                },
+                                {
+                                    title: '🗓️ 日期处理',
+                                    path: 'pub-date',
+                                },
+                                {
+                                    title: '🐛 调试',
+                                    path: 'debug',
+                                },
+                            ],
+                        },
+                    ],
                     '/': [
                         {
                             title: '指南',
@@ -139,6 +205,70 @@ module.exports = {
                 lastUpdated: 'Last Updated',
                 nav: require('./nav/en'),
                 sidebar: {
+                    '/en/joinus/': [
+                        {
+                            title: '👥 Join Us',
+                            path: '/en/joinus/quick-start.html',
+                        },
+                        {
+                            title: '📰 New RSSHub rules',
+                            path: '/en/joinus/new-rss/prerequisites.html',
+                            collapsable: false,
+                            children: [
+                                {
+                                    title: '🔑 Prerequisites',
+                                    path: 'new-rss/prerequisites',
+                                },
+                                {
+                                    title: '💡 Just before you start',
+                                    path: 'new-rss/before-start',
+                                },
+                                {
+                                    title: '🚀 Create your own RSSHub route',
+                                    path: 'new-rss/start-code',
+                                },
+                                {
+                                    title: '📖 Add documentation',
+                                    path: 'new-rss/add-docs',
+                                },
+                                {
+                                    title: '📤 Submit your route',
+                                    path: 'new-rss/submit-route',
+                                },
+                            ],
+                        },
+                        {
+                            title: '📡 New Radar Rules',
+                            path: '/en/joinus/new-radar.html',
+                        },
+                        {
+                            title: '💪 Advanced',
+                            path: '/en/joinus/advanced-feed.html',
+                            collapsable: false,
+                            children: [
+                                {
+                                    title: '🎧 Create a Rich Media RSS Feed',
+                                    path: 'advanced-feed',
+                                },
+                                {
+                                    title: '📜 Script Standard',
+                                    path: 'script-standard',
+                                },
+                                {
+                                    title: '💾 Caching',
+                                    path: 'use-cache',
+                                },
+                                {
+                                    title: '🗓️ Date Handling',
+                                    path: 'pub-date',
+                                },
+                                {
+                                    title: '🐛 Debugging',
+                                    path: 'debug',
+                                },
+                            ],
+                        },
+                    ],
                     '/en/': [
                         {
                             title: 'Guide',

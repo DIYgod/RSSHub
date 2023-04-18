@@ -10,6 +10,16 @@ pageClass: routes
 
 <RouteEn author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" :paramsDesc="['Ordering, `best` or `newest`, `best` by default']"/>
 
+## Free Computer Books
+
+### Selected New Books
+
+<RouteEn author="cubroe" example="/freecomputerbooks" path="/freecomputerbooks" radar="1" />
+
+### Current Book List
+
+<RouteEn author="cubroe" example="/freecomputerbooks/compscAlgorithmBooks" path="/freecomputerbooks/:category" :paramsDesc="['A category id., which should be the HTML file name (but **without** the `.html` suffix) in the URL path of a book list page.']" radar="1" />
+
 ## hameln
 
 ### chapter
@@ -35,6 +45,12 @@ Eg: <https://www.inoreader.com/stream/user/1006346356/tag/News/view/html?n=3>
 
 </RouteEn>
 
+### RSS
+
+<RouteEn author="NavePnow" example="/inoreader/rss/1005137674/user-favorites" path="/inoreader/rss/:user/:tag" :paramsDesc="[
+'user id, the interger after user/ in the example URL',
+'tag, the string after tag/ in the example URL',
+]">
 
 ## kakuyomu
 

@@ -40,7 +40,7 @@ async function parseBodyRoutes(body, core) {
         return dedup;
     }
 
-    throw 'unable to parse the issue body: route does not exist';
+    throw Error('unable to parse the issue body: route does not exist');
 }
 
 async function getMaintainersByRoutes(routes, core) {
@@ -64,6 +64,29 @@ module.exports = async ({ github, context, core }) => {
         repo: context.repo.repo,
     };
 
+    const addLabels = (labels) =>
+        github.rest.issues
+            .addLabels({
+                ...issue_facts,
+                labels,
+            })
+            .catch((e) => {
+                core.warning(e);
+            });
+    const updateIssueState = (state) =>
+        github.rest.issues
+            .update({
+                ...issue_facts,
+                state,
+            })
+            .catch((e) => {
+                core.warning(e);
+            });
+
+    if (context.payload.issue.state === 'closed') {
+        await updateIssueState('open');
+    }
+
     const routes = await parseBodyRoutes(body, core).catch((e) => {
         core.warning(e);
     });
@@ -73,14 +96,7 @@ module.exports = async ({ github, context, core }) => {
     }
 
     if (routes === undefined) {
-        await github.rest.issues
-            .addLabels({
-                ...issue_facts,
-                labels: [parseFailTag],
-            })
-            .catch((e) => {
-                core.warning(e);
-            });
+        await addLabels([parseFailTag]);
         return;
     }
 
@@ -137,14 +153,7 @@ module.exports = async ({ github, context, core }) => {
     }
 
     // Write labels (status, affected route count)
-    await github.rest.issues
-        .addLabels({
-            ...issue_facts,
-            labels,
-        })
-        .catch((e) => {
-            core.warning(e);
-        });
+    await addLabels(labels);
 
     // Reply to the issue and notify the maintainers (if any)
     await github.rest.issues
@@ -155,22 +164,15 @@ module.exports = async ({ github, context, core }) => {
 
 > To maintainers: if you are not willing to be disturbed, list your username in \`scripts/workflow/test-issue/call-maintainer.js\`. In this way, your username will be wrapped in an inline code block when tagged so you will not be notified.
 
-如果有任何路由无法匹配，issue 将会被自动关闭。如果 issue 和路由无关，请使用 \`NOROUTE\` 关键词，或者留下评论。我们会重新审核。
-If there is any route not found, the issue will be closed automatically. Please use \`NOROUTE\` for a route-irrelevant issue or leave a comment if it is a mistake.
+如果所有路由都无法匹配，issue 将会被自动关闭。如果 issue 和路由无关，请使用 \`NOROUTE\` 关键词，或者留下评论。我们会重新审核。
+If all routes can not be found, the issue will be closed automatically. Please use \`NOROUTE\` for a route-irrelevant issue or leave a comment if it is a mistake.
 `,
         })
         .catch((e) => {
             core.warning(e);
         });
 
-    if (failedCount > 0) {
-        await github.rest.issues
-            .update({
-                ...issue_facts,
-                state: 'closed',
-            })
-            .catch((e) => {
-                core.warning(e);
-            });
+    if (failedCount && emptyCount === 0 && successCount === 0) {
+        await updateIssueState('closed');
     }
 };

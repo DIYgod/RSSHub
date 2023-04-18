@@ -126,6 +126,18 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 <RouteEn author="LogicJake" example="/instapaper/person/viridiano" path="/instapaper/person"/>
 
+## Instructables
+
+### Projects
+
+<RouteEn author="wolfg1969" example="/instructables/projects/circuits" path="/instructables/projects/:category?" :paramsDesc="['Category, empty by default, can be found in URL or see the table below']" radar="1">
+
+| All | Circuits | Workshop | Craft | Cooking | Living | Outside | Teachers |
+| --- | -------- | -------- | ----- | ------- | ------ | ------- | -------- |
+|     | circuits | workshop | craft | cooking | living | outside | teachers |
+
+</RouteEn>
+
 ## Japanpost
 
 ### Track & Trace Service
@@ -298,6 +310,12 @@ Board and Build can be found in [here](http://api.ineal.me/tss/status)
 ### Random words
 
 <RouteEn author="TonyRL" example="/urbandictionary/random" path="/urbandictionary/random" radar="1" rssbud="1"/>
+
+## WFDF
+
+### News
+
+<RouteEn author="HankChow" example="/wfdf/news" path="/wfdf/news" radar="1"/>
 
 ## wikiHow
 
