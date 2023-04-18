@@ -1536,39 +1536,39 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生院通知公告
 
-<Route author="shengmaosu" example="/scnu/yjs" path="/scnu/yjs" />
+<Route author="shengmaosu" example="/scnu/yjs" path="/scnu/yjs" radar="1"/>
 
 ### 教务处通知
 
-<Route author="fengkx" example="/scnu/jw" path="/scnu/jw"/>
+<Route author="fengkx" example="/scnu/jw" path="/scnu/jw" radar="1"/>
 
 ### 图书馆通知
 
-<Route author="fengkx" example="/scnu/library" path="/scnu/library"/>
+<Route author="fengkx" example="/scnu/library" path="/scnu/library" radar="1"/>
 
 ### 计算机学院竞赛通知
 
-<Route author="fengkx" example="/scnu/cs/match" path="/scnu/cs/match"/>
+<Route author="fengkx" example="/scnu/cs/match" path="/scnu/cs/match" radar="1"/>
 
 ## 华中科技大学
 
-### 华中科技大学研究生院通知公告
+### 研究生院通知公告
 
-<Route author="shengmaosu" example="/hustyjs" path="/hustyjs" />
+<Route author="shengmaosu" example="/hust/yjs" path="/hust/yjs" radar="1"/>
 
 ### 人工智能和自动化学院通知
 
-<Route author="RayHY" example="/hust/aia/notice/0" path="/hust/aia/notice/:type?" :paramsDesc="['分区 type，默认为最新通知 可在网页 HTML中找到']">
+<Route author="budui" example="/hust/aia/notice" path="/hust/aia/notice/:type?" :paramsDesc="['分区，默认为最新通知，可在网页 URL 中找到']" radar="1">
 
-| 最新 | 行政 | 人事 | 科研 | 讲座 | 本科生 | 研究生 | 学工 |
-| ---- | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
-| 0    | 1    | 2    | 3    | 4    | 5      | 6      | 7    |
+| 最新 | 党政 | 科研 | 本科生 | 研究生 | 学工思政 | 离退休 |
+| ---- | ---- | ---- | ------ | ------ | -------- | ------ |
+|      | dz   | ky   | bk     | yjs    | xgsz     | litui  |
 
 </Route>
 
 ### 人工智能和自动化学院新闻
 
-<Route author="RayHY" example="/hust/aia/news" path="/hust/aia/news" />
+<Route author="budui" example="/hust/aia/news" path="/hust/aia/news" radar="1"/>
 
 ## 华中师范大学
 
