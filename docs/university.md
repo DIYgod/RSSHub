@@ -1572,21 +1572,21 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 华中师范大学
 
-### 华中师范大学研究生通知公告
+### 研究生通知公告
 
-<Route author="shengmaosu" example="/ccnuyjs" path="/ccnuyjs" />
+<Route author="shengmaosu" example="/ccnu/yjs" path="/ccnu/yjs" radar="1"/>
 
-### 华中师范大学计算机学院
+### 计算机学院
 
-<Route author="shengmaosu" example="/ccnucs" path="/ccnucs" />
+<Route author="shengmaosu" example="/ccnu/cs" path="/ccnu/cs" radar="1"/>
 
-### 华中师范大学伍论贡学院
+### 伍论贡学院
 
-<Route author="shengmaosu" example="/ccnuwu" path="/ccnuwu" />
+<Route author="shengmaosu" example="/ccnu/wu" path="/ccnu/wu" radar="1"/>
 
 ### 就业信息
 
-<Route author="jackyu1996" example="/ccnu/career" path="/ccnu/career" />
+<Route author="jackyu1996" example="/ccnu/career" path="/ccnu/career" radar="1"/>
 
 ## 吉林大学
 
