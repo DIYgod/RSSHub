@@ -1091,9 +1091,9 @@ pageClass: routes
 
 ## 广州大学
 
-### 研招网通知公告
+### 研究生院招生动态
 
-<Route author="shengmaosu" example="/gzyjs" path="/gzyjs" />
+<Route author="shengmaosu" example="/gzhu/yjs" path="/gzhu/yjs" radar="1" />
 
 ## 广州航海学院
 
