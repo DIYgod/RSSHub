@@ -1791,17 +1791,17 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 南方科技大学
 
-### 南方科技大学研究生网通知公告
+### 研究生网通知公告
 
-<Route author="shengmaosu" example="/sustyjs" path="/sustyjs" />
+<Route author="shengmaosu" example="/sustech/yjs" path="/sustech/yjs" radar="1"/>
 
-### 南方科技大学新闻网（中文）
+### 新闻网（中文）
 
-<Route author="sparkcyf" example="/sustech/newshub-zh" path="/sustech/newshub-zh" />
+<Route author="sparkcyf" example="/sustech/newshub-zh" path="/sustech/newshub-zh" radar="1"/>
 
-### 南方科技大学采购与招标管理部
+### 采购与招标管理部
 
-<Route author="sparkcyf" example="/sustech/bidding" path="/sustech/bidding" />
+<Route author="sparkcyf" example="/sustech/bidding" path="/sustech/bidding" radar="1"/>
 
 ## 南京大学
 
