@@ -1179,6 +1179,46 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 </Route>
 
+## The Movie Database
+
+::: tip 提示
+路由中的语言参数可参考 <https://developers.themoviedb.org/3/getting-started/languages>。
+:::
+
+### 系列
+
+<Route author="x2cf" example="/themoviedb/collection/131292/zh" path="/themoviedb/collection/:id/:lang?" :paramsDesc="['系列 ID', '语言']" radar="1" rssbud="1" />
+
+### 热门
+
+<Route author="x2cf" example="/themoviedb/trending/tv/day/zh" path="/themoviedb/trending/:mediaType/:timeWindow/:lang?" :paramsDesc="['`movie` 或 `tv`', '`day` 或 `week`', '语言']" radar="1" rssbud="1" />
+
+### 剧集系列
+
+<Route author="x2cf" example="/themoviedb/tv/70593/seasons/zh" path="/themoviedb/tv/:id/seasons/:lang?" :paramsDesc="['剧集 ID', '语言']" radar="1" rssbud="1" />
+
+### 剧集章节
+
+<Route author="x2cf" example="/themoviedb/tv/70593/seasons/1/episodes/zh" path="/themoviedb/tv/:id/seasons/:seasonNumber/episodes/:lang?" :paramsDesc="['剧集 ID', '季号', '语言']" radar="1" rssbud="1" />
+
+### 片单
+
+<Route author="x2cf" example="/themoviedb/tv/top-rated/zh" path="/themoviedb/:mediaType/:sheet/:lang?" :paramsDesc="['`movie` 或 `tv`', '片单，见下表', '语言']" radar="1" rssbud="1">
+
+当 `mediaType` 为 `tv` 时，`sheet` 的值如下：
+
+| 今日播出     | 电视播出中 | 高分      |
+| ------------ | ---------- | --------- |
+| airing-today | on-the-air | top-rated |
+
+当 `mediaType` 为 `movie` 时，`sheet` 的值如下：
+
+| 正在上映    | 即将上映 | 高分      |
+| ----------- | -------- | --------- |
+| now-playing | upcoming | top-rated |
+
+</Route>
+
 ## Trakt.tv
 
 ### 用户收藏

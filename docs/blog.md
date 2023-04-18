@@ -16,6 +16,12 @@ pageClass: routes
 
 </Route>
 
+## Apache
+
+### APISIX 博客
+
+<Route author="aneasystone" example="/apache/apisix/blog" path="/apache/apisix/blog"/>
+
 ## archdaily
 
 ### 首页
@@ -109,6 +115,12 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 ### JustRun
 
 <Route author="nczitzk" example="/justrun" path="/justrun"/>
+
+## Kun Cheng
+
+### Essay
+
+<Route author="nczitzk" example="/kunchengblog/essay" path="/kunchengblog/essay" radar="1"/>
 
 ## LaTeX 开源小屋
 
@@ -410,6 +422,18 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 ### 分类
 
 <Route author="XinRoom" example="/ddosi/category/黑客工具" path="/ddosi/category/:category?"/>
+
+## 云原生社区
+
+### 博客
+
+<Route author="aneasystone" example="/cloudnative/blog" path="/cloudnative/blog"/>
+
+## 支流科技
+
+### 博客
+
+<Route author="aneasystone" example="/apiseven/blog" path="/apiseven/blog"/>
 
 ## 竹白
 

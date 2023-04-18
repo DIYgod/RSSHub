@@ -1468,13 +1468,13 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 华东理工大学
 
-### 华东理工大学研究生院通知公告
+### 研究生院通知公告
 
-<Route author="shengmaosu" example="/ecustyjs" path="/ecustyjs" />
+<Route author="shengmaosu" example="/ecust/yjs" path="/ecust/yjs" radar="1"/>
 
-### 华东理工继续教育学院新闻公告
+### 继续教育学院 - 学院公告
 
-<Route author="jialinghui" example="/ecust-jxjy/news" path="/news" rssbud="1" />
+<Route author="jialinghui" example="/ecust/jxjy/news" path="/ecust/jxjy/news" radar="1" rssbud="1" />
 
 ## 华东师范大学
 
@@ -2245,6 +2245,12 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | notice   | news     |
 
 </Route>
+
+## 南京中医药大学
+
+### 研究生院博士招生
+
+<Route author="real-jiakai" example="/njucm/grabszs" path="/njucm/grabszs" radar="1" />
 
 ## 南开大学
 

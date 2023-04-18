@@ -21,6 +21,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
+
 jobs:
   test:
     name: Docker build & tests
@@ -52,11 +56,15 @@ jobs:
           cache-from: |
             type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled
             type=gha,scope=docker-release
-          # ! build on amd64 is fast enough, and cache between PRs never hit, so never waste the 10GB cache limit !
-          # cache-from: |
-          #   type=gha,scope=docker-test
-          #   type=gha,scope=docker-release
-          # cache-to: type=gha,mode=max,scope=docker-test
+
+      - name: Pull Request Labeler
+        if: ${{ failure() }}
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'add-labels'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          labels: 'Route Test: Failed'
 
       - name: Test Docker image
         run: bash scripts/docker/test-docker.sh
