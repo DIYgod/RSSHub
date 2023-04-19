@@ -322,16 +322,24 @@ Heroku [不再](https://blog.heroku.com/next-chapter) 提供免费服务。
 ## 部署到 Fly.io
 
 1.  将 RSSHub [分叉（fork）](https://github.com/DIYgod/RSSHub/fork) 到自己的账户下。
+
 2.  下载分叉的源码
+
     ```bash
     $ git clone https://github.com/<your username>/RSSHub.git
     $ cd RSSHub
     ```
+
 3.  前往 [Fly.io 完成注册](https://fly.io/app/sign-up)，并安装 [`flyctl` CLI](https://fly.io/docs/hands-on/install-flyctl/)。
+
 4.  运行 `flyctl launch`, 并选择一个唯一的名称和实例地区。
+
 5.  使用 `flyctl secrets set KEY=VALUE` [对部分模块进行配置](#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)。
+
 6.  [配置通过 GitHub Actions 自动部署](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/)
+
 7.  安装 [Pull](https://github.com/apps/pull) 应用，定期将 RSSHub 改动自动同步至你的分叉。
+
 8.  （可选）将自己的域名指向 fly.io 提供的 IPv4 和 IPv6 地址，并在 Certificate 页面添加自有域名
 
 ### 配置内置的 Upstash Redis 缓存
@@ -917,3 +925,6 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   Civitai
     -   `CIVITAI_COOKIE`: Civitai 登录后的 cookie 值
+
+-   Notion
+    -   `NOTION_TOKEN`: Notion 内部集成 Token，请按照[Notion 官方指引](https://developers.notion.com/docs/authorization#internal-integration-auth-flow-set-up)申请 Token
