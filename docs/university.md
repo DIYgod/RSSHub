@@ -3599,13 +3599,13 @@ ji
 
 ## 中国农业大学
 
-### 中国农业大学研招网通知公告
+### 研招网通知公告
 
-<Route author="shengmaosu" example="/cauyjs" path="/cauyjs" />
+<Route author="shengmaosu" example="/cau/yjs" path="/cau/yjs" radar="1"/>
 
-#### 中国农业大学信电学院
+#### 信电学院
 
-<Route author="shengmaosu" example="/cauele" path="/cauele" />
+<Route author="shengmaosu" example="/cau/ele" path="/cau/ele" radar="1"/>
 
 ## 中国人民大学
 
