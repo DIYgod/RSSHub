@@ -1097,11 +1097,11 @@ pageClass: routes
 
 ## 广州航海学院
 
-## 广州航海学院教务处通知公告
+### 教务处通知公告
 
 <Route author="skyedai910" example="/gzmtu/jwc" path="/gzmtu/jwc" />
 
-## 广州航海学院图书馆通知公告
+### 图书馆通知公告
 
 <Route author="skyedai910" example="/gzmtu/tsg" path="/gzmtu/tsg" />
 
@@ -2738,21 +2738,21 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 同济大学
 
-### 同济大学研究生院通知公告
+### 研究生院通知公告
 
-<Route author="shengmaosu" example="/tjuyjs" path="/tjuyjs" />
+<Route author="shengmaosu" example="/tongji/yjs" path="/tongji/yjs" radar="1"/>
 
-### 同济大学软件学院通知
+### 软件学院通知
 
-<Route author="sgqy" example="/tju/sse/xwdt" path="/tju/sse/:type?" :paramsDesc="['通知类型. 默认为 `xwdt`']">
+<Route author="sgqy" example="/tongji/sse/xytz" path="/tongji/sse/:type?" :paramsDesc="['通知类型，默认为 `xytz`']" radar="1">
 
 | 本科生通知 | 研究生通知 | 教工通知 | 全体通知 | 学院通知 | 学院新闻 | 学院活动 |
 | ---------- | ---------- | -------- | -------- | -------- | -------- | -------- |
-| bkstz      | yjstz      | jgtz     | qttz     | xwdt     | xyxw     | xyhd     |
+| bkstz      | yjstz      | jgtz     | qttz     | xytz     | xyxw     | xyhd     |
 
-注意: `qttz` 与 `xwdt` 在原网站等价.
+注意: `qttz` 与 `xytz` 在原网站等价.
 
- </Route>
+</Route>
 
 ## 潍坊学院
 
@@ -3445,12 +3445,12 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="YunYouJun niuyi1017" example="/cuc/yz" path="/cuc/yz" />
 
-## 中国地质大学 (武汉)
+## 中国地质大学（武汉）
 
 ### 今日文章 - 包含全校网站最新通知
 
 <Route author="Dorad" example="/cug/news" path="/cug/news" />
-
+ji
 ### 研究生院综合通知公告
 
 <Route author="sanmmm" example="/cug/graduate" path="/cug/graduate" />
