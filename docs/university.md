@@ -3475,7 +3475,7 @@ ji
 
 ### 信息科学与工程学院
 
-<Route author="Geo" example="/ouc/it/0" path="/ouc/it/:type?" :paramsDesc="['默认为 `0`']">
+<Route author="GeoffreyChen777" example="/ouc/it/0" path="/ouc/it/:type?" :paramsDesc="['默认为 `0`']">
 
 | 学院要闻 | 学院公告 | 学院活动 |
 | -------- | -------- | -------- |
@@ -3483,13 +3483,13 @@ ji
 
 </Route>
 
-### 中国海洋大学研究生院
+### 研究生院
 
-<Route author="shengmaosu" example="/outyjs" path="/outyjs" />
+<Route author="shengmaosu" example="/ouc/yjs" path="/ouc/yjs" />
 
-### 中国海洋大学信电学院通知公告
+### 信息科学与工程学院研究生招生通知公告
 
-<Route author="shengmaosu" example="/outele" path="/outele" />
+<Route author="shengmaosu" example="/ouc/it/postgraduate" path="/ouc/it/postgraduate" />
 
 ## 中国科学技术大学
 
