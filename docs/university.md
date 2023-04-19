@@ -3581,13 +3581,17 @@ ji
 
 ### 招聘信息
 
-<Route author="Fatpandac" example="/ucas/job" path="/ucas/job/:type?" :paramsDesc="['招聘类型，默认为博士后']">
+<Route author="Fatpandac" example="/ucas/job" path="/ucas/job/:type?" :paramsDesc="['招聘类型，默认为博士后']" radar="1">
 
 | 招聘类型 | 博士后 | 课题项目聘用 | 管理支撑人才 | 教学科研人才 |
 | :------: | :----: | :----------: | :----------: | :----------: |
 |   参数   |   bsh  |    ktxmpy    |    glzcrc    |    jxkyrc    |
 
 </Route>
+
+### 人工智能学院
+
+<Route author="shengmaosu" example="/ucas/ai" path="/ucas/ai" radar="1"/>
 
 ## 中国农业大学
 
@@ -3658,10 +3662,6 @@ ji
 ### 中科院自动化所
 
 <Route author="shengmaosu" example="/zkyyjs" path="/zkyyjs" />
-
-### 中科院人工智能所
-
-<Route author="shengmaosu" example="/zkyai" path="/zkyai" />
 
 ## 中南财经政法大学
 
