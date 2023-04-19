@@ -3475,7 +3475,7 @@ ji
 
 ### 信息科学与工程学院
 
-<Route author="GeoffreyChen777" example="/ouc/it/0" path="/ouc/it/:type?" :paramsDesc="['默认为 `0`']">
+<Route author="GeoffreyChen777" example="/ouc/it/0" path="/ouc/it/:type?" :paramsDesc="['默认为 `0`']" radar="1">
 
 | 学院要闻 | 学院公告 | 学院活动 |
 | -------- | -------- | -------- |
@@ -3485,11 +3485,11 @@ ji
 
 ### 研究生院
 
-<Route author="shengmaosu" example="/ouc/yjs" path="/ouc/yjs" />
+<Route author="shengmaosu" example="/ouc/yjs" path="/ouc/yjs" radar="1"/>
 
 ### 信息科学与工程学院研究生招生通知公告
 
-<Route author="shengmaosu" example="/ouc/it/postgraduate" path="/ouc/it/postgraduate" />
+<Route author="shengmaosu" example="/ouc/it/postgraduate" path="/ouc/it/postgraduate" radar="1"/>
 
 ## 中国科学技术大学
 
@@ -3617,13 +3617,13 @@ ji
 
 ## 中国石油大学（华东）
 
-### 中国石油大学研究生院通知公告
+### 研究生院通知公告
 
-<Route author="shengmaosu" example="/upcyjs" path="/upcyjs" />
+<Route author="shengmaosu" example="/upc/yjs" path="/upc/yjs" radar="1"/>
 
 ### 主页
 
-<Route author="Veagau" example="/upc/main" path="/upc/main/:type" :paramsDesc="['分类，见下表']">
+<Route author="Veagau" example="/upc/main/notice" path="/upc/main/:type" :paramsDesc="['分类，见下表']" radar="1">
 
 | 通知公告 | 学术动态 |
 | -------- | -------- |
@@ -3633,7 +3633,7 @@ ji
 
 ### 计算机科学与技术学院
 
-<Route author="Veagau" example="/upc/jsj" path="/upc/jsj/:type" :paramsDesc="['分类，见下表']">
+<Route author="Veagau" example="/upc/jsj/news" path="/upc/jsj/:type" :paramsDesc="['分类，见下表']" radar="1">
 
 | 学院新闻 | 学术关注 | 学工动态 | 通知公告 |
 | -------- | -------- | -------- | -------- |
