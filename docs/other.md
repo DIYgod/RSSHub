@@ -313,7 +313,7 @@ pageClass: routes
 
 ### Database
 
-<Route author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" :paramsDesc="['Database ID']" selfhost="1"  />
+<Route author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" :paramsDesc="['Database ID']" selfhost="1" radar="1" />
 
 可选 query 参数 `properties=`，用来自定义字段对应关系；内置有 description、author、link 三个字段用于增加辅助信息。
 

@@ -8,19 +8,19 @@ RSSHub provides a painless deployment process if you are equipped with basic pro
 
 The deployment may involve the followings:
 
-1. Command line interface
-2. [Git](https://git-scm.com/)
-3. [Node.js](https://nodejs.org/)
-4. [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/zh-Hans/docs/install)
+1.  Command line interface
+2.  [Git](https://git-scm.com/)
+3.  [Node.js](https://nodejs.org/)
+4.  [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/zh-Hans/docs/install)
 
 Deploy for public access may require:
 
-1. [Nginx](https://www.nginx.com/resources/wiki/start/topics/tutorials/install/)
-2. [Docker](https://www.docker.com/get-started) or [docker-compose](https://docs.docker.com/compose/install/)
-3. [Redis](https://redis.io/download)
-4. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
-5. [Google App Engine](https://cloud.google.com/appengine/)
-6. [Fly.io](https://fly.io/)
+1.  [Nginx](https://www.nginx.com/resources/wiki/start/topics/tutorials/install/)
+2.  [Docker](https://www.docker.com/get-started) or [docker-compose](https://docs.docker.com/compose/install/)
+3.  [Redis](https://redis.io/download)
+4.  [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
+5.  [Google App Engine](https://cloud.google.com/appengine/)
+6.  [Fly.io](https://fly.io/)
 
 ## Docker Image
 
@@ -308,10 +308,10 @@ Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product pla
 
 ### Automatic deploy upon update
 
-1. [Fork RSSHub](https://github.com/DIYgod/RSSHub/fork) to your GitHub account.
-2. Deploy your fork to Heroku: `https://heroku.com/deploy?template=URL`, where `URL` is your fork address (_e.g._ `https://github.com/USERNAME/RSSHub`).
-3. Configure `automatic deploy` in Heroku app to follow the changes to your fork.
-4. Install [Pull](https://github.com/apps/pull) app to keep your fork synchronized with RSSHub.
+1.  [Fork RSSHub](https://github.com/DIYgod/RSSHub/fork) to your GitHub account.
+2.  Deploy your fork to Heroku: `https://heroku.com/deploy?template=URL`, where `URL` is your fork address (_e.g._ `https://github.com/USERNAME/RSSHub`).
+3.  Configure `automatic deploy` in Heroku app to follow the changes to your fork.
+4.  Install [Pull](https://github.com/apps/pull) app to keep your fork synchronized with RSSHub.
 
 ## Deploy to Vercel (ZEIT Now)
 
@@ -319,18 +319,20 @@ Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product pla
 
 ## Deploy to Fly.io
 
-1. [Fork RSSHub](https://github.com/DIYgod/RSSHub/fork) to your GitHub account.
-2. Clone the source code from your fork.
+1.  [Fork RSSHub](https://github.com/DIYgod/RSSHub/fork) to your GitHub account.
+2.  Clone the source code from your fork.
+
     ```bash
     $ git clone https://github.com/<your username>/RSSHub.git
     $ cd RSSHub
     ```
-3. [Sign up for Fly.io](https://fly.io/app/sign-up) and install the [`flyctl` CLI](https://fly.io/docs/hands-on/install-flyctl/).
-4. Run `flyctl launch` and choose a unique name and region to deploy.
-5. Use `flyctl secrets set KEY=VALUE` to [configure specific routes](#configuration-route-specific-configurations).
-6. [Set up automatic deployment via GitHub Actions](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/)
-7. Install the [Pull](https://github.com/apps/pull) GitHub app to keep your fork synchronized with upstream.
-8. (Optional) Point your own domain to the IPv4 and IPv6 addresses provided by fly.io, then go to Certificate page and add the domain.
+
+3.  [Sign up for Fly.io](https://fly.io/app/sign-up) and install the [`flyctl` CLI](https://fly.io/docs/hands-on/install-flyctl/).
+4.  Run `flyctl launch` and choose a unique name and region to deploy.
+5.  Use `flyctl secrets set KEY=VALUE` to [configure specific routes](#configuration-route-specific-configurations).
+6.  [Set up automatic deployment via GitHub Actions](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/)
+7.  Install the [Pull](https://github.com/apps/pull) GitHub app to keep your fork synchronized with upstream.
+8.  (Optional) Point your own domain to the IPv4 and IPv6 addresses provided by fly.io, then go to Certificate page and add the domain.
 
 ### Configure built-in Upstash Redis as cache
 
@@ -765,11 +767,11 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
         | url                                    | backbone     |
         | -------------------------------------- | ------------ |
-        | https://imageproxy.pimg.tw/resize?url= | akamai       |
-        | https://images.weserv.nl/?url=         | cloudflare   |
-        | https://pic1.xuehuaimg.com/proxy/      | cloudflare   |
-        | https://cors.netnr.workers.dev/        | cloudflare   |
-        | https://netnr-proxy.openode.io/        | digitalocean |
+        | <https://imageproxy.pimg.tw/resize?url=> | akamai       |
+        | <https://images.weserv.nl/?url=>         | cloudflare   |
+        | <https://pic1.xuehuaimg.com/proxy/>      | cloudflare   |
+        | <https://cors.netnr.workers.dev/>        | cloudflare   |
+        | <https://netnr-proxy.openode.io/>        | digitalocean |
 
 -   YouTube: [API Key application](https://console.developers.google.com/)
 
@@ -786,3 +788,6 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   Civitai
     -   `CIVITAI_COOKIE`: Cookie of Civitai
+
+-   Notion
+    -   `NOTION_TOKEN`: Notion Internal Integration Token, Refer to [Notion Official Set Up Flow](https://developers.notion.com/docs/authorization#internal-integration-auth-flow-set-up) to create Token
