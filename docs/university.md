@@ -3441,7 +3441,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 中国传媒大学
 
-### 中国传媒大学研究生招生网
+### 研究生招生网
 
 <Route author="YunYouJun niuyi1017" example="/cuc/yz" path="/cuc/yz" />
 
