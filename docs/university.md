@@ -3577,6 +3577,10 @@ ji
 
 <Route author="nczitzk" example="/cas/iee/kydt" path="/cas/iee/kydt" radar="1"/>
 
+### 自动化所
+
+<Route author="shengmaosu" example="/cas/ia/yjs" path="/cas/ia/yjs" radar="1"/>
+
 ## 中国科学院大学
 
 ### 招聘信息
@@ -3656,12 +3660,6 @@ ji
 | home | jwc    | yjsy     |
 
 </Route>
-
-## 中科院
-
-### 中科院自动化所
-
-<Route author="shengmaosu" example="/zkyyjs" path="/zkyyjs" />
 
 ## 中南财经政法大学
 
