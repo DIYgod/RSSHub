@@ -1532,6 +1532,12 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 由于学院官网对非大陆 IP 的访问存在限制，需自行部署。
 :::
 
+## 华南农业大学
+
+### 华农研讯
+
+<Route author="shengmaosu" example="/scau/yzb" path="/scau/yzb" radar="1"/>
+
 ## 华南师范大学
 
 ### 软件学院通知公告
