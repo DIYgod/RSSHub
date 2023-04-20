@@ -252,15 +252,19 @@ pageClass: routes
 
 ### 教务处通知
 
-<Route author="sinofp" example="/bit/jwc" path="/bit/jwc" />
+<Route author="sinofp" example="/bit/jwc" path="/bit/jwc" radar="1"/>
 
 ### 计院通知
 
-<Route author="sinofp" example="/bit/cs" path="/bit/cs" />
+<Route author="sinofp" example="/bit/cs" path="/bit/cs" radar="1"/>
 
 ### 人才招聘
 
-<Route author="nczitzk" example="/bit/rszhaopin" path="/bit/rszhaopin" />
+<Route author="nczitzk" example="/bit/rszhaopin" path="/bit/rszhaopin" radar="1"/>
+
+### 研究生院招生信息
+
+<Route author="shengmaosu" example="/bit/yjs" path="/bit/yjs" radar="1"/>
 
 ## 北京林业大学
 
@@ -1091,17 +1095,17 @@ pageClass: routes
 
 ## 广州大学
 
-## 广州大学研招网通知公告
+### 研究生院招生动态
 
-<Route author="shengmaosu" example="/gzyjs" path="/gzyjs" />
+<Route author="shengmaosu" example="/gzhu/yjs" path="/gzhu/yjs" radar="1" />
 
 ## 广州航海学院
 
-## 广州航海学院教务处通知公告
+### 教务处通知公告
 
 <Route author="skyedai910" example="/gzmtu/jwc" path="/gzmtu/jwc" />
 
-## 广州航海学院图书馆通知公告
+### 图书馆通知公告
 
 <Route author="skyedai910" example="/gzmtu/tsg" path="/gzmtu/tsg" />
 
@@ -1484,17 +1488,17 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生院
 
-<Route author="shengmaosu" example="/ecnuyjs" path="/ecnuyjs" />
+<Route author="shengmaosu" example="/ecnu/yjs" path="/ecnu/yjs" radar="1" />
 
 ## 华南理工大学
 
 ### 研究生院通知公告
 
-<Route author="shengmaosu" example="/scutyjs" path="/scutyjs" />
+<Route author="shengmaosu" example="/scut/yjs" path="/scut/yjs" radar="1" />
 
 ### 教务处通知公告
 
-<Route author="KeNorizon" example="/scut/jwc/notice/all" path="/scut/jwc/notice/:category?" :paramsDesc="['通知分类，默认为 `all`']">
+<Route author="imkero" example="/scut/jwc/notice/all" path="/scut/jwc/notice/:category?" :paramsDesc="['通知分类，默认为 `all`']">
 
 | 全部 | 选课   | 考试 | 实践     | 交流          | 教师    | 信息 |
 | ---- | ------ | ---- | -------- | ------------- | ------- | ---- |
@@ -1504,7 +1508,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 教务处学院通知
 
-<Route author="KeNorizon Rongronggg9" example="/scut/jwc/school/all" path="/scut/jwc/school/:category?" :paramsDesc="['通知分类，默认为 `all`']">
+<Route author="imkero Rongronggg9" example="/scut/jwc/school/all" path="/scut/jwc/school/:category?" :paramsDesc="['通知分类，默认为 `all`']">
 
 | 全部 | 选课   | 考试 | 信息 |
 | ---- | ------ | ---- | ---- |
@@ -1514,79 +1518,85 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 教务处新闻动态
 
-<Route author="KeNorizon" example="/scut/jwc/news" path="/scut/jwc/news" />
+<Route author="imkero" example="/scut/jwc/news" path="/scut/jwc/news" />
 
 ### 土木与交通学院 - 学工通知
 
-<Route author="railzy" example="/scut/scet/notice" path="/scut/scet/notice" />
+<Route author="railzy" example="/scut/scet/notice" path="/scut/scet/notice" radar="1" />
 
 ### 电子与信息学院 - 新闻速递
 
-<Route author="auto-bot-ty" example="/scut/seie/news_center" path="/scut/seie/news_center" />
+<Route author="auto-bot-ty" example="/scut/seie/news_center" path="/scut/seie/news_center" radar="1" />
 
 ::: warning 注意
 由于学院官网对非大陆 IP 的访问存在限制，需自行部署。
 :::
 
+## 华南农业大学
+
+### 华农研讯
+
+<Route author="shengmaosu" example="/scau/yzb" path="/scau/yzb" radar="1"/>
+
 ## 华南师范大学
 
 ### 软件学院通知公告
 
-<Route author="shengmaosu" example="/scnucs" path="/scnucs" />
+<Route author="shengmaosu" example="/scnu/ss" path="/scnu/ss" radar="1"/>
 
 ### 研究生院通知公告
 
-<Route author="shengmaosu" example="/scnuyjs" path="/scnuyjs" />
+<Route author="shengmaosu" example="/scnu/yjs" path="/scnu/yjs" radar="1"/>
 
 ### 教务处通知
 
-<Route author="fengkx" example="/scnu/jw" path="/scnu/jw"/>
+<Route author="fengkx" example="/scnu/jw" path="/scnu/jw" radar="1"/>
 
 ### 图书馆通知
 
-<Route author="fengkx" example="/scnu/library" path="/scnu/library"/>
+<Route author="fengkx" example="/scnu/library" path="/scnu/library" radar="1"/>
 
 ### 计算机学院竞赛通知
 
-<Route author="fengkx" example="/scnu/cs/match" path="/scnu/cs/match"/>
+<Route author="fengkx" example="/scnu/cs/match" path="/scnu/cs/match" radar="1"/>
 
 ## 华中科技大学
 
-### 华中科技大学研究生院通知公告
+### 研究生院通知公告
 
-<Route author="shengmaosu" example="/hustyjs" path="/hustyjs" />
+<Route author="shengmaosu" example="/hust/yjs" path="/hust/yjs" radar="1"/>
 
 ### 人工智能和自动化学院通知
 
-<Route author="RayHY" example="/hust/aia/notice/0" path="/hust/aia/notice/:type?" :paramsDesc="['分区 type，默认为最新通知 可在网页 HTML中找到']">
+<Route author="budui" example="/hust/aia/notice" path="/hust/aia/notice/:type?" :paramsDesc="['分区，默认为最新通知，可在网页 URL 中找到']" radar="1">
 
-| 最新 | 行政 | 人事 | 科研 | 讲座 | 本科生 | 研究生 | 学工 |
-| ---- | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
-| 0    | 1    | 2    | 3    | 4    | 5      | 6      | 7    |
+| 最新 | 党政 | 科研 | 本科生 | 研究生 | 学工思政 | 离退休 |
+| ---- | ---- | ---- | ------ | ------ | -------- | ------ |
+|      | dz   | ky   | bk     | yjs    | xgsz     | litui  |
 
 </Route>
 
 ### 人工智能和自动化学院新闻
 
-<Route author="RayHY" example="/hust/aia/news" path="/hust/aia/news" />
+<Route author="budui" example="/hust/aia/news" path="/hust/aia/news" radar="1"/>
 
 ## 华中师范大学
 
-### 华中师范大学研究生通知公告
+### 研究生通知公告
 
-<Route author="shengmaosu" example="/ccnuyjs" path="/ccnuyjs" />
+<Route author="shengmaosu" example="/ccnu/yjs" path="/ccnu/yjs" radar="1"/>
 
-### 华中师范大学计算机学院
+### 计算机学院
 
-<Route author="shengmaosu" example="/ccnucs" path="/ccnucs" />
+<Route author="shengmaosu" example="/ccnu/cs" path="/ccnu/cs" radar="1"/>
 
-### 华中师范大学伍论贡学院
+### 伍论贡学院
 
-<Route author="shengmaosu" example="/ccnuwu" path="/ccnuwu" />
+<Route author="shengmaosu" example="/ccnu/wu" path="/ccnu/wu" radar="1"/>
 
 ### 就业信息
 
-<Route author="jackyu1996" example="/ccnu/career" path="/ccnu/career" />
+<Route author="jackyu1996" example="/ccnu/career" path="/ccnu/career" radar="1"/>
 
 ## 吉林大学
 
@@ -1791,17 +1801,17 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 南方科技大学
 
-### 南方科技大学研究生网通知公告
+### 研究生网通知公告
 
-<Route author="shengmaosu" example="/sustyjs" path="/sustyjs" />
+<Route author="shengmaosu" example="/sustech/yjs" path="/sustech/yjs" radar="1"/>
 
-### 南方科技大学新闻网（中文）
+### 新闻网（中文）
 
-<Route author="sparkcyf" example="/sustech/newshub-zh" path="/sustech/newshub-zh" />
+<Route author="sparkcyf" example="/sustech/newshub-zh" path="/sustech/newshub-zh" radar="1"/>
 
-### 南方科技大学采购与招标管理部
+### 采购与招标管理部
 
-<Route author="sparkcyf" example="/sustech/bidding" path="/sustech/bidding" />
+<Route author="sparkcyf" example="/sustech/bidding" path="/sustech/bidding" radar="1"/>
 
 ## 南京大学
 
@@ -2594,13 +2604,9 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 深圳大学
 
-### 深圳大学研究生招生网通知公告
+### 研究生招生网
 
-<Route author="shengmaosu" example="/szuyjs" path="/szuyjs" />
-
-### 深圳大学研究生招生网
-
-<Route author="NagaruZ" example="/szu/yz/1" path="/szu/yz/:type?" :paramsDesc="['默认为1']" >
+<Route author="NagaruZ" example="/szu/yz/1" path="/szu/yz/:type?" :paramsDesc="['默认为 `1`']" radar="1">
 
 | 研究生 | 博士生 |
 | ------ | ------ |
@@ -2742,21 +2748,21 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 同济大学
 
-### 同济大学研究生院通知公告
+### 研究生院通知公告
 
-<Route author="shengmaosu" example="/tjuyjs" path="/tjuyjs" />
+<Route author="shengmaosu" example="/tongji/yjs" path="/tongji/yjs" radar="1"/>
 
-### 同济大学软件学院通知
+### 软件学院通知
 
-<Route author="sgqy" example="/tju/sse/xwdt" path="/tju/sse/:type?" :paramsDesc="['通知类型. 默认为 `xwdt`']">
+<Route author="sgqy" example="/tongji/sse/xytz" path="/tongji/sse/:type?" :paramsDesc="['通知类型，默认为 `xytz`']" radar="1">
 
 | 本科生通知 | 研究生通知 | 教工通知 | 全体通知 | 学院通知 | 学院新闻 | 学院活动 |
 | ---------- | ---------- | -------- | -------- | -------- | -------- | -------- |
-| bkstz      | yjstz      | jgtz     | qttz     | xwdt     | xyxw     | xyhd     |
+| bkstz      | yjstz      | jgtz     | qttz     | xytz     | xyxw     | xyhd     |
 
-注意: `qttz` 与 `xwdt` 在原网站等价.
+注意: `qttz` 与 `xytz` 在原网站等价.
 
- </Route>
+</Route>
 
 ## 潍坊学院
 
@@ -3445,11 +3451,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 中国传媒大学
 
-### 中国传媒大学研究生招生网
+### 研究生招生网
 
 <Route author="YunYouJun niuyi1017" example="/cuc/yz" path="/cuc/yz" />
 
-## 中国地质大学 (武汉)
+## 中国地质大学（武汉）
 
 ### 今日文章 - 包含全校网站最新通知
 
@@ -3479,7 +3485,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 信息科学与工程学院
 
-<Route author="Geo" example="/ouc/it/0" path="/ouc/it/:type?" :paramsDesc="['默认为 `0`']">
+<Route author="GeoffreyChen777" example="/ouc/it/0" path="/ouc/it/:type?" :paramsDesc="['默认为 `0`']" radar="1">
 
 | 学院要闻 | 学院公告 | 学院活动 |
 | -------- | -------- | -------- |
@@ -3487,13 +3493,13 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-### 中国海洋大学研究生院
+### 研究生院
 
-<Route author="shengmaosu" example="/outyjs" path="/outyjs" />
+<Route author="shengmaosu" example="/ouc/yjs" path="/ouc/yjs" radar="1"/>
 
-### 中国海洋大学信电学院通知公告
+### 信息科学与工程学院研究生招生通知公告
 
-<Route author="shengmaosu" example="/outele" path="/outele" />
+<Route author="shengmaosu" example="/ouc/it/postgraduate" path="/ouc/it/postgraduate" radar="1"/>
 
 ## 中国科学技术大学
 
@@ -3581,11 +3587,15 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="nczitzk" example="/cas/iee/kydt" path="/cas/iee/kydt" radar="1"/>
 
+### 自动化所
+
+<Route author="shengmaosu" example="/cas/ia/yjs" path="/cas/ia/yjs" radar="1"/>
+
 ## 中国科学院大学
 
 ### 招聘信息
 
-<Route author="Fatpandac" example="/ucas/job" path="/ucas/job/:type?" :paramsDesc="['招聘类型，默认为博士后']">
+<Route author="Fatpandac" example="/ucas/job" path="/ucas/job/:type?" :paramsDesc="['招聘类型，默认为博士后']" radar="1">
 
 | 招聘类型 | 博士后 | 课题项目聘用 | 管理支撑人才 | 教学科研人才 |
 | :------: | :----: | :----------: | :----------: | :----------: |
@@ -3593,15 +3603,19 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 人工智能学院
+
+<Route author="shengmaosu" example="/ucas/ai" path="/ucas/ai" radar="1"/>
+
 ## 中国农业大学
 
-### 中国农业大学研招网通知公告
+### 研招网通知公告
 
-<Route author="shengmaosu" example="/cauyjs" path="/cauyjs" />
+<Route author="shengmaosu" example="/cau/yjs" path="/cau/yjs" radar="1"/>
 
-#### 中国农业大学信电学院
+#### 信电学院
 
-<Route author="shengmaosu" example="/cauele" path="/cauele" />
+<Route author="shengmaosu" example="/cau/ele" path="/cau/ele" radar="1"/>
 
 ## 中国人民大学
 
@@ -3621,13 +3635,13 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 中国石油大学（华东）
 
-### 中国石油大学研究生院通知公告
+### 研究生院通知公告
 
-<Route author="shengmaosu" example="/upcyjs" path="/upcyjs" />
+<Route author="shengmaosu" example="/upc/yjs" path="/upc/yjs" radar="1"/>
 
 ### 主页
 
-<Route author="Veagau" example="/upc/main" path="/upc/main/:type" :paramsDesc="['分类，见下表']">
+<Route author="Veagau" example="/upc/main/notice" path="/upc/main/:type" :paramsDesc="['分类，见下表']" radar="1">
 
 | 通知公告 | 学术动态 |
 | -------- | -------- |
@@ -3637,7 +3651,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 计算机科学与技术学院
 
-<Route author="Veagau" example="/upc/jsj" path="/upc/jsj/:type" :paramsDesc="['分类，见下表']">
+<Route author="Veagau" example="/upc/jsj/news" path="/upc/jsj/:type" :paramsDesc="['分类，见下表']" radar="1">
 
 | 学院新闻 | 学术关注 | 学工动态 | 通知公告 |
 | -------- | -------- | -------- | -------- |
@@ -3656,16 +3670,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | home | jwc    | yjsy     |
 
 </Route>
-
-## 中科院
-
-### 中科院自动化所
-
-<Route author="shengmaosu" example="/zkyyjs" path="/zkyyjs" />
-
-### 中科院人工智能所
-
-<Route author="shengmaosu" example="/zkyai" path="/zkyai" />
 
 ## 中南财经政法大学
 
