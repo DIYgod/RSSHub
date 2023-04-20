@@ -648,6 +648,9 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `BITBUCKET_USERNAME`: Your Bitbucket username
     -   `BITBUCKET_PASSWORD`: Your Bitbucket app password
 
+-   Civitai
+    -   `CIVITAI_COOKIE`: Cookie of Civitai
+
 -   Discord
 
     -   `DISCORD_AUTHORIZATION`: Discord authorization token, can be found in the header of XHR requests after logging in Discord web client
@@ -783,6 +786,3 @@ See docs of the specified route and `lib/config.js` for detailed information.
 -   ZodGame:
 
     -   `ZODGAME_COOKIE`: Cookie of ZodGame User
-
--   Civitai
-    -   `CIVITAI_COOKIE`: Cookie of Civitai
