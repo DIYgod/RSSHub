@@ -1362,6 +1362,9 @@
     "/dlsite/new/:type": [
         "cssxsh"
     ],
+    "/dlsite/:path+": [
+        "nczitzk"
+    ],
     "/dmzj/news/:category?": [
         "vzz64"
     ],

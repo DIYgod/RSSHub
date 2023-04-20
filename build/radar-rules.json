@@ -5476,6 +5476,13 @@
     "_name": "DLsite",
     ".": [
       {
+        "title": "通用",
+        "docs": "https://docs.rsshub.app/anime.html#dlsite",
+        "source": [
+          "/"
+        ]
+      },
+      {
         "title": "当前日期发售的新产品",
         "docs": "https://docs.rsshub.app/anime.html#dlsite"
       },
