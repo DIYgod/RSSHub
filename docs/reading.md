@@ -323,7 +323,7 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 ### 单读
 
-<Route author="KeNorizon" example="/owspace/read/0" path="/owspace/read/:type?" :paramsDesc="['栏目分类，不填则默认为首页']">
+<Route author="imkero" example="/owspace/read/0" path="/owspace/read/:type?" :paramsDesc="['栏目分类，不填则默认为首页']">
 
 | 首页 | 文字 | 影像 | 声音 | 单向历 | 谈论 |
 | ---- | ---- | ---- | ---- | ------ | ---- |
