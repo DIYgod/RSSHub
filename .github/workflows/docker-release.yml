@@ -92,7 +92,7 @@ jobs:
       - name: Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
-          COSIGN_EXPERIMENTAL: "true"
+          COSIGN_EXPERIMENTAL: 'true'
         run: echo "${{ steps.meta-ordinary.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
 
       - name: Extract Docker metadata (Chromium-bundled version)
@@ -124,7 +124,7 @@ jobs:
       - name: Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
-          COSIGN_EXPERIMENTAL: "true"
+          COSIGN_EXPERIMENTAL: 'true'
         run: echo "${{ steps.meta-chromium-bundled.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push-chromium.outputs.digest }}
 
   description:
