@@ -252,15 +252,19 @@ pageClass: routes
 
 ### 教务处通知
 
-<Route author="sinofp" example="/bit/jwc" path="/bit/jwc" />
+<Route author="sinofp" example="/bit/jwc" path="/bit/jwc" radar="1"/>
 
 ### 计院通知
 
-<Route author="sinofp" example="/bit/cs" path="/bit/cs" />
+<Route author="sinofp" example="/bit/cs" path="/bit/cs" radar="1"/>
 
 ### 人才招聘
 
-<Route author="nczitzk" example="/bit/rszhaopin" path="/bit/rszhaopin" />
+<Route author="nczitzk" example="/bit/rszhaopin" path="/bit/rszhaopin" radar="1"/>
+
+### 研究生院招生信息
+
+<Route author="shengmaosu" example="/bit/yjs" path="/bit/yjs" radar="1"/>
 
 ## 北京林业大学
 
