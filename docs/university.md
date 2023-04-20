@@ -3460,7 +3460,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 今日文章 - 包含全校网站最新通知
 
 <Route author="Dorad" example="/cug/news" path="/cug/news" />
-ji
+
 ### 研究生院综合通知公告
 
 <Route author="sanmmm" example="/cug/graduate" path="/cug/graduate" />
