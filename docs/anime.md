@@ -203,6 +203,22 @@ pageClass: routes
 
 ## DLsite
 
+### 通用
+
+<Route author="nczitzk" example="/dlsite/home/new" path="/dlsite/:path+" :paramsDesc="['路径，默认为 `/home/new`，即発売カレンダー']">
+
+::: tip 提示
+
+订阅该路由可以先访问网站指定过滤器，然后在路由的路径处填写对应页面 URL 中 `https://www.dlsite.com/` 后的字段。下面是两个例子。
+
+若订阅 [「ボイス・ASMR」の作品一覧 発売日が新しい順](https://www.dlsite.com/home/works/type/=/work_type_category/audio/order/release_d)，则将对应页面 URL <https://www.dlsite.com/home/works/type/=/work_type_category/audio/order/release_d> 中 `https://www.dlsite.com/` 后的字段 `home/works/type/=/work_type_category/audio/order/release_d` 作为路径填入。此时路由为 [`/dlsite/home/works/type/=/work_type_category/audio/order/release_d`](https://rsshub.app/dlsite/home/works/type/=/work_type_category/audio/order/release_d)
+
+若订阅 [割引中作品 割引開始日が新しい順](https://www.dlsite.com/home/works/discount/=/order/cstart_d)，则将对应页面 URL <https://www.dlsite.com/home/works/discount/=/order/cstart_d> 中 `https://www.dlsite.com/` 后的字段 `home/works/discount/=/order/cstart_d` 作为路径填入。此时路由为 [`/dlsite/home/works/discount/=/order/cstart_d`](https://rsshub.app/dlsite/home/works/discount/=/order/cstart_d)
+
+:::
+
+</Route>
+
 ### 当前日期发售的新产品
 
 <Route author="cssxsh" example="/dlsite/new/home" path="/dlsite/new/:type" :paramsDesc="['类型，如下表']">
@@ -216,6 +232,10 @@ pageClass: routes
 ### 产品打折信息
 
 <Route author="cssxsh" example="/dlsite/campaign/home" path="/dlsite/campaign/:type/:free?" :paramsDesc="['类型，同上表', '只看免费，任意值开启，为空关闭']"/>
+
+### Ci-en 创作者文章
+
+<Route author="nczitzk" example="/dlsite/ci-en/:id/article" path="/dlsite/ci-en/7400/article" :paramsDesc="['创作者 id，可在对应创作者页 URL 中找到']"/>
 
 ## ebb.io
 

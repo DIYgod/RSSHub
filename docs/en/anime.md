@@ -26,6 +26,22 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 ## DLsite
 
+### General
+
+<RouteEn author="nczitzk" example="/dlsite/home/new" path="/dlsite/:path+" :paramsDesc="['Path, `/home/new` by default, as Release Calendar']">
+
+::: tip Tip
+
+To subscribe to this route, you can first visit the site and specify filters, and then fill in the field after `https://www.dlsite.com/` in the URL of the corresponding page at the path of the route. Here are 2 examples.
+
+If you subscribe to [Voice / ASMR works Release date - New to Old](https://www.dlsite.com/home/works/type/=/work_type_category/audio/order/release_d), at the URL of the corresponding page <https://www.dlsite.com/home/works/type/=/work_type_category/audio/order/release_d> and after `https://www.dlsite.com/` is `home/works/type/=/work_ type_category/audio/order/release_d`, which can be seen as the path. In this case the route is [`/dlsite/home/works/type/=/work_type_category/audio/order/release_d`](https://rsshub.app/dlsite/home/works/type/=/work_type_category/audio/order/release_d)
+
+If you subscribe to [Discounted works Latest Discounts - Newest to Oldest](https://www.dlsite.com/home/works/discount/=/order/cstart_d), at the URL of the corresponding page <https://www.dlsite.com/home/works/discount/=/order/cstart_d> and after `https://www.dlsite.com/` is `home/works/discount/=/order/cstart_d`, which can be seen as the path. In this case the route is [`/dlsite/home/works/discount/=/order/cstart_d`](https://rsshub.app/dlsite/home/works/discount/=/order/cstart_d)
+
+:::
+
+</RouteEn>
+
 ### Current Release
 
 <RouteEn author="cssxsh" example="/dlsite/new/home" path="/dlsite/new/:type" :paramsDesc="['Type, see table below']">
@@ -39,6 +55,10 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 ### Discounted Works
 
 <RouteEn author="cssxsh" example="/dlsite/campaign/home" path="/dlsite/campaign/:type/:free?" :paramsDesc="['Type, see table above', 'Free only, empty means false, other value means true']"/>
+
+### Ci-en Creators' Article
+
+<RouteEn author="nczitzk" example="/dlsite/ci-en/:id/article" path="/dlsite/ci-en/7400/article" :paramsDesc="['Creator id, can be found in URL']"/>
 
 ## Hanime.tv
 
