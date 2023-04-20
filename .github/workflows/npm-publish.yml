@@ -29,6 +29,6 @@ jobs:
           git config --local user.name "GitHub Action"
           npx version-from-git --allow-same-version --template 'master.short'
       - name: Publish to npmjs
-        run: npm publish
+        run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
