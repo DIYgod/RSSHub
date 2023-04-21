@@ -721,6 +721,12 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="nczitzk" example="/cpta/notice" path="/cpta/notice" />
 
+## 中国社会科学网
+
+### 中国法学网
+
+<Route author="HankChow" example="/cssn/iolaw/zxzp" path="/cssn/iolaw/:section?" :paramsDesc="['板块 ID，可在 URL 找到。例如页面 URL 为 `http://iolaw.cssn.cn/zxzp/`，则板块 ID 为 `zxzp`。若不填该参数，默认为 `zxzp`']"/>
+
 ## 中国研究生招生信息网
 
 ### 考研热点新闻
