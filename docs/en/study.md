@@ -22,7 +22,7 @@ pageClass: routes
 
 ### Institute of Law
 
-<Route author="HankChow" example="/cssn/iolaw/zxzp" path="/cssn/iolaw/:section?" :paramsDesc="['Section ID，can be found in the URL。For example, the Section ID of URL `http://iolaw.cssn.cn/zxzp/` is `zxzp`. The default value is `zxzp`']"/>
+<RouteEn author="HankChow" example="/cssn/iolaw/zxzp" path="/cssn/iolaw/:section?" :paramsDesc="['Section ID, can be found in the URL. For example, the Section ID of URL `http://iolaw.cssn.cn/zxzp/` is `zxzp`. The default value is `zxzp`']"/>
 
 ## gradCafe
 
