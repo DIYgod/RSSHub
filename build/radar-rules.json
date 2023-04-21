@@ -17934,6 +17934,32 @@
         "target": "/scnu/library"
       }
     ],
+    "physics": [
+      {
+        "title": "物理与电信工程学院通知",
+        "docs": "https://docs.rsshub.app/university.html#hua-nan-shi-fan-da-xue",
+        "source": [
+          "/NEWS/Notices/"
+        ],
+        "target": "/scnu/physics-school-announcements"
+      },
+      {
+        "title": "物理与电信工程学院新闻动态",
+        "docs": "https://docs.rsshub.app/university.html#hua-nan-shi-fan-da-xue",
+        "source": [
+          "/NEWS/News/"
+        ],
+        "target": "/scnu/physics-school-news"
+      },
+      {
+        "title": "物理与电信工程学院科学研究动态",
+        "docs": "https://docs.rsshub.app/university.html#hua-nan-shi-fan-da-xue",
+        "source": [
+          "/RESEARCH/"
+        ],
+        "target": "/scnu/physics-school-research-news"
+      }
+    ],
     "ss": [
       {
         "title": "软件学院通知公告",
