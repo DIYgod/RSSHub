@@ -3446,11 +3446,19 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="qizidog" example="/swjtu/jyzpxx" path="/swjtu/jyzpxx"/>
 
-### 交通运输与物流学院
-
-#### 研究生通知
+### 交通运输与物流学院研究生通知
 
 <Route author="zoenglinghou qizidog" example="/swjtu/jtys/yjs" path="/swjtu/jtys/yjs"/>
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/swjtu/yz/sszs" path="/swjtu/yz/:type" :paramsDesc="['栏目(见下表)']">
+
+| 硕士招生 |
+| -------- |
+| sszs     |
+
+</Route>
 
 ## 西南科技大学
 
