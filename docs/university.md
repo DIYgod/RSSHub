@@ -3206,6 +3206,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 武汉理工大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/whut/gd/zs" path="/whut/gd/:type" :paramsDesc="['类型，详见表格']">
+
+| 类型 | 招生 | 研究生管理 | 培养管理 |
+| ---- | ---- | ---------- | -------- |
+| 参数 | zs   | yjsgl      | py       |
+
+</Route>
+
 ## 西安财经大学
 
 ### 教务处
