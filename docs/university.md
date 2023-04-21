@@ -1653,7 +1653,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生招生网
 
-<Route author="yanbot-team" example="/scut/yz/zxdt" path="/scut/yz/zxdt" :paramsDesc="['通知分类，见下表，也可从页面url中找到']">
+<Route author="yanbot-team" example="/scut/yz/zxdt" path="/scut/yz/:type" :paramsDesc="['通知分类，见下表，也可从页面url中找到']">
 
 | 招宣动态 | 硕士招生 | 博士招生 | 港澳台招生 | 专项计划 | 硕士招生简章 | 博士招生简章 | 港澳台招生简章 | 专项计划招生简章 |
 | -------- | -------- | -------- | ---------- | -------- | ------------ | ------------ | -------------- | ---------------- |
@@ -2092,17 +2092,29 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 南京工程学院教务处
 
-<Route author="zefengdaguo" example="/njit/jwc/jx" path="/njit/jwc/:type?" :paramsDesc="['默认为 `jx`']" />
+<Route author="zefengdaguo" example="/njit/jwc/jx" path="/njit/jwc/:type?" :paramsDesc="['默认为 `jx`']" >
 
 | 教学 | 考试 | 信息 | 实践 |
 | ---- | ---- | ---- | ---- |
 | jx   | ks   | xx   | sj   |
+
+</Route>
 
 ## 南京工业大学
 
 ### 南京工业大学教务处
 
 <Route author="TrumanGu" example="/njtech/jwc" path="/njtech/jwc" />
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/njtech/gra/zsw-sszs" path="/njtech/gra/:type" :paramsDesc="['分类ID，见下表']" >
+
+| 硕士招生 | 博士招生 |
+| -------- | -------- |
+| zsw-sszs | zsw-sszs |
+
+</Route>
 
 ## 南京航空航天大学
 
