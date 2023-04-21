@@ -1435,7 +1435,7 @@ category 列表：
 
 ### 研究生院招生工作
 
-<Route author="yanbot-team" example="/hebut/yjs/zsgz/ssyjszszl" path="/yjs/zsgz/:type" :paramsDesc="['分类名，见下表']" >
+<Route author="yanbot-team" example="/hebut/yjs/zsgz/ssyjszszl" path="/hebut/yjs/zsgz/:type" :paramsDesc="['分类名，见下表']" >
 
 | 硕士研究生招生 | 推免研究生接收工作 | 招生工作通知公告 |
 | -------------- | ------------------ | ---------------- |
@@ -1458,6 +1458,16 @@ category 列表：
 ### 常州校区图书馆 - 新闻动态
 
 <Route author="plusmultiply0" example="/hhu/libNewsc" path="/hhu/libNewsc"/>
+
+### 研究生院
+
+<Route author="yanbot-team" example="/hhu/gs/17279" path="/hhu/gs/:type" :paramsDesc="['分类名，见下表']" >
+
+| 硕士研究生招生 | 硕士历年招生目录 | 硕士历年复试分数基本要求 | 招生工作通知公告 |
+| -------------- | ---------------- | ------------------------ | ---------------- |
+| 17279          | 17365            | 17366                    | 17277            |
+
+</Route>
 
 ## 河南财政金融学院
 
@@ -1714,6 +1724,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 人工智能和自动化学院新闻
 
 <Route author="RayHY" example="/hust/aia/news" path="/hust/aia/news" />
+
+## 华中农业大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/hzau/yjs/zsgz" path="/hzau/yjs/:type" :paramsDesc="['分区 type，见下表 可在网页 HTML中找到']">
+
+| 招生工作 | 硕士招生  | 推免生招生 | 考研资料  |
+| -------- | --------- | ---------- | --------- |
+| zsgz     | zsgz-sszs | zsgz-tmszs | zsgz-kyzl |
+
+</Route>
 
 ## 华中师范大学
 
