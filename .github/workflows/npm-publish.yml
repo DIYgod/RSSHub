@@ -5,6 +5,7 @@ on:
     branches:
       - master
     paths:
+      - '.github/workflows/npm-publish.yml'
       - 'lib/**'
 
 permissions:
@@ -21,8 +22,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
+          cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
+      - run: npm install -g npm
       - name: Release
         run: |
           git config --local user.email "action@github.com"
