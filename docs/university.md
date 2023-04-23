@@ -1517,6 +1517,18 @@ category 列表：
 
 </Route>
 
+## 河南科技大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/haust/yjsc/yjsyxwtz-tzgg" path="/haust/yjsc/:type" :paramsDesc="['分类，见下表']">
+
+| 首页通知公告  | 招生简章-硕士招生简章 |
+| ------------- | --------------------- |
+| yjsyxwtz-tzgg | zszx-zsjz-sszsjz      |
+
+</Route>
+
 ## 黑龙江中医药大学
 
 ### 研究生院
