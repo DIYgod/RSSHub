@@ -1180,6 +1180,9 @@
     "/cpuid/cpuid/news": [
         "TonyRL"
     ],
+    "/cqgas/tqtz": [
+        "Mai19930513"
+    ],
     "/cqwu/news/:type?": [
         "Fatpandac"
     ],
@@ -2120,6 +2123,9 @@
     ],
     "/gov/beijing/kw/:channel": [
         "Fatpandac"
+    ],
+    "/gov/chongqing/rsks": [
+        "Mai19930513"
     ],
     "/gov/dianbai/:path+": [
         "ShuiHuo"
