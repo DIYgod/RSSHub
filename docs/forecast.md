@@ -27,6 +27,12 @@ pageClass: routes
 
 </Route>
 
+## 重庆燃气
+
+### 停气检修通知
+
+<Route author="Mai19930513" example="/cqgas/tqtz" path="/cqgas/tqtz" radar="1"/>
+
 ## 地震速报
 
 ### 中国地震局
