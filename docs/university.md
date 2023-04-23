@@ -453,11 +453,23 @@ pageClass: routes
 
 ### 研究生招生网
 
-<Route author="yanbot-team" example="/cust/yzb/:type" path="/cust/yzb/:type" :paramsDesc="['分类type,见下表']" radar="1" >
+<Route author="yanbot-team" example="/cust/yzb/ssszs" path="/cust/yzb/:type" :paramsDesc="['分类type,见下表']" radar="1" >
 
 | 硕士生招生 | 博士生招生 |
 | ---------- | ---------- |
 | ssszs      | bsszs      |
+
+</Route>
+
+## 长沙理工大学
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/csust/yjsy/tzgg" path="/csust/yjsy/:type" :paramsDesc="['分类type,见下表']" radar="1" >
+
+| 通知公告 |
+| -------- |
+| tzgg     |
 
 </Route>
 
@@ -1997,6 +2009,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | tzgg     |
 
 </Route>
+
 ## 南昌航空大学
 
 ### 教务处公告与新闻
