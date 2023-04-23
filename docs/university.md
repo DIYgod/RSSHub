@@ -1986,6 +1986,17 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="gammapi" example="/umass/amherst/ipoevents" path="/umass/amherst/ipoevents" radar="1" rssbud="1"/>
 
+## 南昌大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/ncu/yjsy/tzgg" path="/ncu/yjsy/:type" :paramsDesc="['分类ID，见下表，也可在网页URL中找到']">
+
+| 通知公告 |
+| -------- |
+| tzgg     |
+
+</Route>
 ## 南昌航空大学
 
 ### 教务处公告与新闻
