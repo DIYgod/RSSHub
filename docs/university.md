@@ -1455,6 +1455,18 @@ category 列表：
 
 </Route>
 
+## 河北科技大学
+
+### 研究生院招生工作
+
+<Route author="yanbot-team" example="/hebust/yjsxy/zsgz-tzggzs" path="/hebust/yjsxy/:type" :paramsDesc="['分类名，见下表']" >
+
+| 招生工作-通知公告 | 招生工作招生简章 | 首页通知公告 |
+| ----------------- | ---------------- | ------------ |
+| zsgz-tzggzs       | zsgz-zsjz        | tzgg         |
+
+</Route>
+
 ## 合肥工业大学
 
 ### 通知公告
