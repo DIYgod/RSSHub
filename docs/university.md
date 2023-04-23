@@ -1883,6 +1883,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="real-jiakai" example="/jou/yztzgg" path="/jou/yztzgg" radar="1" />
 
+## 江西理工大学
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/jxust/yz/tzgg-sszs" path="/jxust/yz/:type" radar="1" >
+
+| 通知公告-硕士招生 | 硕士研究生 |
+| ----------------- | ---------- |
+| tzgg-sszs         | ssyjs      |
+
+</Route>
+
 ## 江西师范大学
 
 ### 研究生招生网
