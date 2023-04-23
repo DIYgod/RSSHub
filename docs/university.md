@@ -2549,6 +2549,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/njupt/yzb/7797" path="/njupt/yzb/:type?" :paramsDesc="['见下表，也可在页面URL中找到']">
+
+| 硕士招生动态 | 硕士招生目录 | 统考考生 | 推免生 |
+| ------------ | ------------ | -------- | ------ |
+| 7797         | 7795         | 7801     | 7800   |
+
+</Route>
+
 ## 南开大学
 
 ### 南开大学教务处
