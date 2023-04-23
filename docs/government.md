@@ -144,6 +144,12 @@ pageClass: routes
 
 </Route>
 
+### 人力社保局
+
+#### 人事考试通知
+
+<Route author="Mai19930513" example="/gov/chongqing/rsks" path="/gov/chongqing/rsks" radar="1"/>
+
 ## 德阳市人民政府
 
 ### 政府公开信息
