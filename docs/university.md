@@ -1599,11 +1599,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生院招生工作
 
-<Route author="Pretty9" example="/hnust/graduate/sszs" path="/hnust/graduate/:type?" :paramsDesc="['默认为 `sszs`']">
+<Route author="Pretty9 yanbot-team" example="/hnust/graduate/zsgz-sszs" path="/hnust/graduate/:type" :paramsDesc="['分类，见下表，也可从页面URL中找到']">
 
-| 硕士招生 | 博士招生 |
-| -------- | -------- |
-| sszs     | bszs     |
+| 硕士招生  | 博士招生  |
+| --------- | --------- |
+| zsgz-sszs | zsgz-bszs |
 
 </Route>
 
