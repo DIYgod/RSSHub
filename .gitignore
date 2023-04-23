@@ -25,3 +25,4 @@ Session.vim
 assets/build/
 package-lock.json
 pnpm-lock.yaml
+.yarn
