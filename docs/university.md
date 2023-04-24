@@ -1126,6 +1126,18 @@ pageClass: routes
 
 </Route>
 
+## 福建师范大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/fjnu/yjsy/" path="/fjnu/yjsy/:type" :paramsDesc="['分类见下表']">
+
+| 硕士研究生 | 港澳台研究生 | 博士研究生 | 文档下载 |
+| ---------- | ------------ | ---------- | -------- |
+| 4227       | 4231         | 4225       | wdxz     |
+
+</Route>
+
 ## 福州大学
 
 ### 教务处通知
