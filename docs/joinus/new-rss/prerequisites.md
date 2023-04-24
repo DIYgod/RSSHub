@@ -32,7 +32,7 @@
 
 如果您不想在计算机上安装 Node.js 和代码编辑器，您可以使用云托管的开发环境。您可以使用 [GitHub Codespaces](https://codespace.new) 或 [Gitpod](https://www.gitpod.io)。只需点击以下按钮即可启动新的工作区：
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=master&repo=127769231&machine=basicLinux32gb&devcontainer_path=.devcontainer%2Fdevcontainer.json&location=SouthEastAsia)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/DIYgod/RSSHub?quickstart=1)
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/DIYgod/RSSHub)
 
