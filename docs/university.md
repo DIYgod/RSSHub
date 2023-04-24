@@ -2072,6 +2072,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="sparkcyf" example="/sustech/bidding" path="/sustech/bidding" />
 
+## 南方医科大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/smu/yzw/sszs-zxtz" path="/smu/yzw/:type" :paramsDesc="['分类名，见下表，也可在网页URL中找到']">
+
+| 硕士招生最新通知 | 硕士招生招生简章 | 硕士招生 往年分数线 | 往年录取情况 | 招生动态 |
+| ---------------- | ---------------- | ------------------- | ------------ | -------- |
+| sszs-zxtz        | sszs-zsjz        | sszs-wnfsx          | sszs-wnlqqk  | zsdt     |
+
+</Route>
+
 ## 南京大学
 
 ### 本科生院
