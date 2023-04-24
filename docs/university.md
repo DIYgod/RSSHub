@@ -2284,18 +2284,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-## 南京医科大学
-
-### 研究生招生网
-
-<Route author="yanbot-team" example="/njmu/yjszs/10166" path="/njmu/yjszs/:type" :paramsDesc="['分类名，见下表，也可在页面URL中找到']"  radar="1">
-
-| 硕士招生 | 硕士招生动态 | 硕士招生简章 | 硕士招生政策 | 硕士信息公开 | 硕士历年情况 | 硕士有关下载 |
-| -------- | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
-| 10166    | 10193        | 10194        | 10195        | 10196        | 10197        | 10198        |
-
-</Route>
-
 ## 南京理工大学
 
 ### 教务处
@@ -2375,6 +2363,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 校级发文 | 通知公告 | 上级发文 | 下载专区 |
 | -------- | -------- | -------- | -------- |
 | xjfw     | tzgg     | sjfw     | xzzq     |
+
+</Route>
+
+## 南京农业大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/njau/grasch/zsgz-tzgg" path="/njau/grasch/:type" :paramsDesc="['分类名，见下表，也可在页面URL中找到']"  radar="1">
+
+| 招生工作通知公告 | 招生工作硕士招生 | 招生工作博士招生 |
+| ---------------- | ---------------- | ---------------- |
+| zsgz-tzgg        | zsgg-sszs        | zsgg-bszs        |
 
 </Route>
 
@@ -2515,6 +2515,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 南京信息工程大学图书馆
 
 <Route author="gylidian" example="/nuist/lib" path="/nuist/library/lib" />
+
+## 南京医科大学
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/njmu/yjszs/10166" path="/njmu/yjszs/:type" :paramsDesc="['分类名，见下表，也可在页面URL中找到']"  radar="1">
+
+| 硕士招生 | 硕士招生动态 | 硕士招生简章 | 硕士招生政策 | 硕士信息公开 | 硕士历年情况 | 硕士有关下载 |
+| -------- | ------------ | ------------ | ------------ | ------------ | ------------ | ------------ |
+| 10166    | 10193        | 10194        | 10195        | 10196        | 10197        | 10198        |
+
+</Route>
 
 ## 南京艺术学院
 
