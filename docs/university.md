@@ -2653,6 +2653,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 宁波大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/nbu/graduate/zsgz-ssszs" path="/nbu/graduate/:type" :paramsDesc="['分区 type，可在网页 URL 中找到']">
+
+| 硕士生招生 | 博士生招生   |
+| ---------- | ------------ |
+| zsgz-ssszs | zsgz-bsyjszs |
+
+</Route>
+
 ## 齐鲁工业大学
 
 ### 通知公告
