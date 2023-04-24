@@ -1485,6 +1485,16 @@ category 列表：
 
 <Route author="log-e" example="/hfut/tzgg" path="/hfut/tzgg"/>
 
+### 研究生招生网
+
+<Route author="yanbot-team" example="/hfut/yjszs/13533" path="/hfut/yjszs/:type" :paramsDesc="['分类名，见下表']" >
+
+| 硕士招生 | 硕士招生简章 | 首页招生动态 |
+| -------- | ------------ | ------------ |
+| 13533    | 13534        | 13526        |
+
+</Route>
+
 ## 河海大学
 
 ### 河海大学图书馆 - 新闻动态
