@@ -1130,7 +1130,7 @@ pageClass: routes
 
 ### 研究生院
 
-<Route author="yanbot-team" example="/fjnu/yjsy/" path="/fjnu/yjsy/:type" :paramsDesc="['分类见下表']">
+<Route author="yanbot-team" example="/fjnu/yjsy/4227" path="/fjnu/yjsy/:type" :paramsDesc="['分类见下表']">
 
 | 硕士研究生 | 港澳台研究生 | 博士研究生 | 文档下载 |
 | ---------- | ------------ | ---------- | -------- |
@@ -4036,6 +4036,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生招生网
+
+<Route author="yanbot-team" example="/zzu/yz/1070" path="zzu/yz:type"  :paramsDesc="['可选，见下表，也可在页面URL中找到']">
+
+| 参数名称 | 通知公告 | 硕士招生 | 夏令营 |
+| -------- | -------- | -------- | ------ |
+| 参数     | 1070     | 1092     | 1101   |
+
+</Route>
+
 ## 郑州轻工业大学
 
 ### 智慧门户
@@ -4234,7 +4244,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生招生网
 
-<Route author="yanbot-team" example="/cmut/yz/sszs" path="/cmut/yz/:type" :paramsDesc="['分类type，见下表，也可在网页URL中找到']">
+<Route author="yanbot-team" example="/cumt/yz/sszs" path="/cumt/yz/:type" :paramsDesc="['分类type，见下表，也可在网页URL中找到']">
 
 | 招聘类型 | 硕士招生 | 港澳台招生 |
 | :------: | :------: | :--------: |
