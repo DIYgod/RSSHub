@@ -118,6 +118,9 @@ jobs:
       fail-fast: false
       matrix:
         node-version: [ 16, 18 ]
+    defaults:
+      run:
+        working-directory: docs
     name: Build docs on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v3
@@ -125,14 +128,15 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'yarn'
+          cache-dependency-path: docs/yarn.lock
       - run: yarn
-      - name: Set environment variable for Node v18
-        if: ${{ matrix.node-version == '18' }}
+      - name: Set environment variable for Node v16 above
+        if: ${{ matrix.node-version > '16' }}
         run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
       - name: Build docs
         run: npm run docs:build
-      - name: Unset environment variable for Node v18
-        if: ${{ matrix.node-version == '18' }}
+      - name: Unset environment variable for Node v16 above
+        if: ${{ matrix.node-version > '16' }}
         run: echo "NODE_OPTIONS=''" >> $GITHUB_ENV
 
   all:
