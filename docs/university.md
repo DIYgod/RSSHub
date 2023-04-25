@@ -2707,6 +2707,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 由于学校通知仅允许校园网访问，需自行部署。
 :::
 
+### 研究生招生网
+
+<Route author="yanbto-team" example="/tsinghua/yz/zsxx-sszs-ptzk " path="/tsinghua/yz/:type" :paramsDesc="['分类type，见下表']">
+
+| 硕士招生-普通招考 | 硕士招生-推荐免试 | 硕士招生简章目录 |
+| ----------------- | ----------------- | ---------------- |
+| zsxx-sszs-ptzk    | zsxx-sszs-ptzk    | zsxx-sszs-jzml   |
+
+</Route>
+
 ### 清华大学招聘信息
 
 <Route author="Halcao DylanXie123" example="/thu/career" path="/thu/career" />
