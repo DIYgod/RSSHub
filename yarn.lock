@@ -5998,10 +5998,10 @@ punycode@^2.1.0, punycode@^2.1.1, punycode@^2.3.0:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.3.0.tgz#f67fa67c94da8f4d0cfff981aee4118064199b8f"
   integrity sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==
 
-puppeteer-core@19.11.0:
-  version "19.11.0"
-  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-19.11.0.tgz#2b98bfa8a3fa31daa8e6f816d0014a772470cd9e"
-  integrity sha512-UBlwpyTEKcaOt7bIWWhlhIXDlFbR1wVBcxpMibBhImwagkwDB8ld8ehT5dOdfKIcCHjxXzVEaMtgDKzfwcf7Rg==
+puppeteer-core@19.11.1:
+  version "19.11.1"
+  resolved "https://registry.yarnpkg.com/puppeteer-core/-/puppeteer-core-19.11.1.tgz#4c63d7a0a6cd268ff054ebcac315b646eee32667"
+  integrity sha512-qcuC2Uf0Fwdj9wNtaTZ2OvYRraXpAK+puwwVW8ofOhOgLPZyz1c68tsorfIZyCUOpyBisjr+xByu7BMbEYMepA==
   dependencies:
     "@puppeteer/browsers" "0.5.0"
     chromium-bidi "0.4.7"
@@ -6062,17 +6062,17 @@ puppeteer-extra@3.3.6:
     debug "^4.1.1"
     deepmerge "^4.2.2"
 
-puppeteer@19.11.0:
-  version "19.11.0"
-  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-19.11.0.tgz#1aa5c9d12ff0b8e533a04ee95ce910e36f328956"
-  integrity sha512-xE0BTOFIR/fEXEHQNfGGMWGr3IQBB2AY760K+pE11kjBKe5P0jivzWG1LHr0TA1/xiHxu9nAhQzv5zh2Dy0YEQ==
+puppeteer@19.11.1:
+  version "19.11.1"
+  resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-19.11.1.tgz#bb75d518e87b0b4f6ef9bad1ea7e9d1cdcd18a5d"
+  integrity sha512-39olGaX2djYUdhaQQHDZ0T0GwEp+5f9UB9HmEP0qHfdQHIq0xGQZuAZ5TLnJIc/88SrPLpEflPC+xUqOTv3c5g==
   dependencies:
     "@puppeteer/browsers" "0.5.0"
     cosmiconfig "8.1.3"
     https-proxy-agent "5.0.1"
     progress "2.0.3"
     proxy-from-env "1.1.0"
-    puppeteer-core "19.11.0"
+    puppeteer-core "19.11.1"
 
 pure-rand@^6.0.0:
   version "6.0.2"
