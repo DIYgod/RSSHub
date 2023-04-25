@@ -2643,7 +2643,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生招生信息网
 
-<Route author="yanbot-team" example="/njupt/yzb/7797" path="/njupt/yzb/:type?" :paramsDesc="['见下表，也可在页面URL中找到']">
+<Route author="yanbot-team" example="/njupt/yzb/7797" path="/njupt/yzb/:type" :paramsDesc="['见下表，也可在页面URL中找到']">
 
 | 硕士招生动态 | 硕士招生目录 | 统考考生 | 推免生 |
 | ------------ | ------------ | -------- | ------ |
@@ -2662,6 +2662,14 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 1        | 2        |
 
 </Route>
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/nku/yzb/5509" path="/nku/yzb/:type" :paramsDesc="['见下表，也可在页面URL中找到']">
+
+| 硕士招生 | 博士招生 | 港澳台招生 | 推免生 |
+| -------- | -------- | ---------- | ------ |
+| 5509     | 2552     | 2553       | 7800   |
 
 ## 宁波大学
 
