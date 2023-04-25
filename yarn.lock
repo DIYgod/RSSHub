@@ -745,9 +745,9 @@
     mime-types "^2.1.12"
 
 "@postman/tough-cookie@~4.1.2-postman.1":
-  version "4.1.2-postman.1"
-  resolved "https://registry.yarnpkg.com/@postman/tough-cookie/-/tough-cookie-4.1.2-postman.1.tgz#98cc3370674bbaca0f8919fc5ef801fd3cd59d00"
-  integrity sha512-keOKL3RQohnH5K4GNGSV7JE8+SU/ktWJ3h9ulqttOGUWCZWcbUOtMNXkC3PQ/R1hIa+2qEfh0/5NCcAhWqeMTQ==
+  version "4.1.2-postman.2"
+  resolved "https://registry.yarnpkg.com/@postman/tough-cookie/-/tough-cookie-4.1.2-postman.2.tgz#2047ffed2df833e2260fb606458e18f3f0fcce2a"
+  integrity sha512-nrBdX3jA5HzlxTrGI/I0g6pmUKic7xbGA4fAMLFgmJCA3DL2Ma+3MvmD+Sdiw9gLEzZJIF4fz33sT8raV/L/PQ==
   dependencies:
     psl "^1.1.33"
     punycode "^2.1.1"
@@ -2484,9 +2484,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.284:
-  version "1.4.369"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.369.tgz#a98d838cdd79be4471cd04e9b4dffe891d037874"
-  integrity sha512-LfxbHXdA/S+qyoTEA4EbhxGjrxx7WK2h6yb5K2v0UCOufUKX+VZaHbl3svlzZfv9sGseym/g3Ne4DpsgRULmqg==
+  version "1.4.371"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.371.tgz#393983ef087268a20c926a89be30e9f0bfc803b0"
+  integrity sha512-jlBzY4tFcJaiUjzhRTCWAqRvTO/fWzjA3Bls0mykzGZ7zvcMP7h05W6UcgzfT9Ca1SW2xyKDOFRyI0pQeRNZGw==
 
 ellipsize@0.1.0:
   version "0.1.0"
@@ -6060,9 +6060,9 @@ puppeteer@19.8.3:
     puppeteer-core "19.8.3"
 
 pure-rand@^6.0.0:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/pure-rand/-/pure-rand-6.0.1.tgz#31207dddd15d43f299fdcdb2f572df65030c19af"
-  integrity sha512-t+x1zEHDjBwkDGY5v5ApnZ/utcd4XYDiJsaQQoptTXgUXX95sDg1elCdJghzicm7n2mbCBJ3uYWr6M22SO19rg==
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/pure-rand/-/pure-rand-6.0.2.tgz#a9c2ddcae9b68d736a8163036f088a2781c8b306"
+  integrity sha512-6Yg0ekpKICSjPswYOuC5sku/TSWaRYlA0qsXqJgM/d/4pLPHPuTxK7Nbf7jFKzAeedUhR8C7K9Uv63FBsSo8xQ==
 
 qs@^6.11.0, qs@^6.7.0:
   version "6.11.1"
