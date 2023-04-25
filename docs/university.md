@@ -582,6 +582,16 @@ pageClass: routes
 
 </Route>
 
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/cqu/yz/ss_news" path="/cqu/yz/:type" :paramsDesc="['分类名']">
+
+| 硕士招生-通知公告 | 硕士招生-信息公示 |
+| ----------------- | ----------------- |
+| ss_news           | ss_pub            |
+
+</Route>
+
 ## 重庆科技学院
 
 ### 教务处公告
