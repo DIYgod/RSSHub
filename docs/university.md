@@ -4176,9 +4176,15 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 中国传媒大学
 
-### 中国传媒大学研究生招生网
+### 研究生招生网
 
-<Route author="YunYouJun niuyi1017" example="/cuc/yz" path="/cuc/yz" />
+<Route author="yanbot-team" example="/cuc/yz/8543" path="/cuc/yz/:type" :paramsDesc="['分类type，见下表，也可在URL中找到']">
+
+| 硕士 | 港澳台 | 夏令营 | 推免 | 中外合作 | 博士 |
+| ---- | ------ | ------ | ---- | -------- | ---- |
+| 8543 | 8545   | 8544   | tm   | 8546     | 8542 |
+
+</Route>
 
 ## 中国地质大学 (武汉)
 
@@ -4477,3 +4483,15 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 数据科学与计算机学院动态
 
 <Route author="Neutrino3316 MegrezZhu nczitzk" example="/sysu/cse" path="/sysu/cse"/>
+
+### 中央民族大学
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/muc/grs/sszs" path="/muc/grs/:type" :paramsDesc="['类型，见下表，其他未列出的类型可在页面URL中找到']" radar="1">
+
+| 类型 | 硕士招生 | 博士招生 |
+| ---- | -------- | -------- |
+| 参数 | sszs     | bszs     |
+
+</Route>
