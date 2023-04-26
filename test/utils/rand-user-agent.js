@@ -9,7 +9,7 @@ describe('rand-user-agent', () => {
         const uaArr = Array(100)
             .fill()
             .map(() => randUserAgent({ browser: 'chrome', os: 'windows' }));
-        const match = uaArr.find((e) => (e.includes('Chrome-Lighthouse') || e.includes('HeadlessChrome') ? true : false));
+        const match = uaArr.find((e) => !!(e.includes('Chrome-Lighthouse') || e.includes('HeadlessChrome')));
         expect(match).toBeFalsy();
     });
 
