@@ -2074,6 +2074,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="geekrainy" example="/kmust/job/jobfairs" path="/kmust/job/jobfairs" />
 
+## 兰州大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/lzu/yz/tongzhigonggao" path="/lzu/yz/:type" :paramsDesc="['分类type，见下表']">
+
+| 通知公告       | 招生动态         | 硕士生       |
+| -------------- | ---------------- | ------------ |
+| tongzhigonggao | zhaoshengdongtai | shuoshisheng |
+
+</Route>
+
 ## 辽宁工程技术大学
 
 ### 教务公告
@@ -2091,6 +2103,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | ldyw     | xxgg     |
 
 </Route>
+
 ## 洛阳理工学院
 
 ### 教务处
