@@ -3684,13 +3684,23 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="dingyx99" example="/nwafu/jcc" path="/nwafu/jcc" />
 
+### 信息工程学院公告
+
+<Route author="dingyx99" example="/nwafu/cie" path="/nwafu/cie" />
+
 ### 研究生院公告
 
 <Route author="dingyx99" example="/nwafu/yjshy" path="/nwafu/yjshy" />
 
-### 信息工程学院公告
+### 研究生招生信息网
 
-<Route author="dingyx99" example="/nwafu/cie" path="/nwafu/cie" />
+<Route author="yanbot-team" example="/nwafu/yz/tzgg" path="/nwafu/yz/:type" :paramsDesc="['分类名见下表，也可在URL中找到']" >
+
+| 通知公告 | 招生信息硕士生招生 |
+| -------- | ------------------ |
+| tzgg     | zsxx-ssszs         |
+
+</Route>
 
 ## 西南财经大学
 
