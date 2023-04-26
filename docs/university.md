@@ -4452,6 +4452,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="nczitzk" example="/zuel/notice" path="/zuel/notice"/>
 
+### 研究生招生网
+
+<Route author="yanbot-team" example="/zuel/yzb/4643" path="/zuel/yzb/:type" :paramsDesc="['类型，见下表，其他未列出的类型可在页面URL中找到']" radar="1">
+
+| 类型 | 硕士研究生 | 推免生工作 | 非全日制招生 | 港澳台招生 | 博士研究生 |
+| ---- | ---------- | ---------- | ------------ | ---------- | ---------- |
+| 参数 | 4643       | 4644       | 4647         | 4642       | 4645       |
+
+</Route>
+
 ## 中南大学
 
 ### 就业信息网招聘信息
