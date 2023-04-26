@@ -1,5 +1,5 @@
 {
-    "extends": ["eslint:recommended", "plugin:prettier/recommended", "plugin:yml/recommended"],
+    "extends": ["eslint:recommended", "plugin:n/recommended", "plugin:prettier/recommended", "plugin:yml/recommended"],
     "plugins": ["prettier"],
     "parserOptions": {
         "ecmaVersion": "latest",
@@ -11,16 +11,25 @@
         "browser": true
     },
     "rules": {
-        "no-console": 2,
+        // possible problems
+        "array-callback-return": 2,
+        "no-await-in-loop": 2,
+        "no-control-regex": 0,
+        "no-duplicate-imports": 2,
+        "no-prototype-builtins": 0,
+        "no-unsafe-negation": 2,
+        "require-atomic-updates": 0,
+        // suggestions
+        "arrow-body-style": 2,
         "block-scoped-var": 2,
         "curly": 2,
+        "dot-notation": 2,
         "eqeqeq": 2,
+        "no-console": 2,
+        "no-eval": 2,
+        "no-extend-native": 2,
+        "no-extra-label": 2,
         "no-global-assign": 2,
-        "no-implicit-globals": 2,
-        "no-labels": 2,
-        "no-multi-str": 2,
-        "comma-spacing": 2,
-        "comma-style": 2,
         "no-implicit-coercion": [
             "error",
             {
@@ -30,44 +39,57 @@
                 "disallowTemplateShorthand": true
             }
         ],
+        "no-implicit-globals": 2,
+        "no-labels": 2,
+        "no-multi-str": 2,
+        "no-new-func": 2,
+        "no-restricted-imports": 2,
+        "no-return-await": 2,
+        "no-unneeded-ternary": 2,
+        "no-useless-computed-key": 2,
+        "no-useless-concat": 1,
+        "no-useless-rename": 2,
+        "no-var": 2,
+        "object-shorthand": 2,
+        "prefer-arrow-callback": 2,
+        "prefer-const": 2,
+        "prefer-regex-literals": 1,
+        "require-await": 2,
+        "spaced-comment": 2,
+        // layout & formatting
+        "arrow-parens": 2,
+        "arrow-spacing": 2,
+        "comma-spacing": 2,
+        "comma-style": 2,
         "func-call-spacing": 2,
         "keyword-spacing": 2,
         "linebreak-style": 2,
         "lines-around-comment": 2,
         "no-multiple-empty-lines": 2,
-        "space-infix-ops": 2,
-        "arrow-spacing": 2,
-        "no-var": 2,
-        "prefer-const": 2,
-        "no-unsafe-negation": 2,
-        "array-callback-return": 2,
-        "dot-notation": 2,
-        "no-eval": 2,
-        "no-extend-native": 2,
-        "no-extra-label": 2,
+        "no-trailing-spaces": 2,
+        "rest-spread-spacing": 2,
         "semi": 2,
         "space-before-blocks": 2,
         "space-in-parens": 2,
+        "space-infix-ops": 2,
         "space-unary-ops": 2,
-        "spaced-comment": 2,
-        "arrow-body-style": 2,
-        "arrow-parens": 2,
-        "no-restricted-imports": 2,
-        "no-duplicate-imports": 2,
-        "no-useless-computed-key": 2,
-        "no-useless-rename": 2,
-        "rest-spread-spacing": 2,
-        "no-trailing-spaces": 2,
-        "no-control-regex": 0,
+        // plugin specific
+        "n/no-extraneous-require": [
+            "error",
+            {
+                "allowModules": ["puppeteer-extra-plugin-user-preferences", "puppeteer-extra-plugin-user-data-dir"]
+            }
+        ],
+        "n/no-deprecated-api": 1,
+        "n/no-missing-require": 0,
+        "n/no-process-exit": 0,
+        "n/no-unpublished-require": [
+            "error",
+            {
+                "allowModules": ["tosource"]
+            }
+        ],
         "prettier/prettier": 0,
-        "no-await-in-loop": 2,
-        "require-atomic-updates": 0,
-        "no-prototype-builtins": 0,
-        "no-new-func": 2,
-        "require-await": 2,
-        "no-return-await": 2,
-        "prefer-arrow-callback": 2,
-        "object-shorthand": 2,
         "yml/quotes": [
             "error",
             {
