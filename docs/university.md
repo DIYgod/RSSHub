@@ -282,6 +282,16 @@ pageClass: routes
 
 <Route author="nczitzk" example="/bit/rszhaopin" path="/bit/rszhaopin" />
 
+### 研究生院
+
+<Route author="yanbot-team" example="/bit/grd/zsgz-zsxx" path="/bit/grd/:type" :paramsDesc="['分类type，见下表，也可在页面URL中找到']">
+
+| 招生信息  | 硕士研究生 |
+| --------- | ---------- |
+| zsgz-zsxx | zsgz-ssyjs |
+
+</Route>
+
 ## 北京林业大学
 
 ### 绿色新闻网
