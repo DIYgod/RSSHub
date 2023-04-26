@@ -2,97 +2,81 @@
   "name": "rsshub",
   "version": "1.0.0",
   "description": "Make RSS Great Again!",
-  "main": "lib/pkg.js",
-  "files": [
-    "lib"
+  "keywords": [
+    "RSS"
   ],
-  "scripts": {
-    "start": "node lib/index.js",
-    "dev": "cross-env NODE_ENV=dev nodemon --inspect lib/index.js",
-    "profiling": "NODE_ENV=production node --prof lib/index.js",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
-    "build:all": "npm run build:radar && npm run build:maintainer",
-    "build:radar": "node scripts/workflow/build-radar.js",
-    "build:maintainer": "node scripts/workflow/build-maintainer.js",
-    "lint": "eslint .",
-    "format": "eslint \"**/*.{js,yml}\" --fix && node docs/.format/format.js && prettier \"**/*.{js,json}\" --write",
-    "format:staged": "eslint \"**/*.{js,yml}\" --fix && node docs/.format/format.js --staged && pretty-quick --staged --verbose --pattern \"**/*.{js,json}\"",
-    "format:check": "eslint \"**/*.{js,yml}\" && prettier-check \"**/*.{js,json}\"",
-    "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit --detectOpenHandles",
-    "jest:coverage": "cross-env NODE_ENV=test jest --coverage --reporters=default --reporters=jest-junit --runInBand --forceExit --detectOpenHandles",
-    "jest:watch": "cross-env NODE_ENV=test jest --watch",
-    "test": "npm run format:check && npm run jest:coverage"
-  },
-  "reporters": [
-    "default",
-    "jest-junit"
-  ],
-  "jest-junit": {
-    "outputDirectory": "coverage"
+  "homepage": "https://github.com/DIYgod/RSSHub#readme",
+  "bugs": {
+    "url": "https://github.com/DIYgod/RSSHub/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DIYgod/RSSHub.git"
   },
-  "keywords": [
-    "RSS"
-  ],
-  "gitHooks": {
-    "pre-commit": "npm run format:staged"
-  },
-  "author": "DIYgod",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/DIYgod/RSSHub/issues"
+  "author": "DIYgod",
+  "main": "lib/pkg.js",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build:all": "npm run build:radar && npm run build:maintainer",
+    "build:maintainer": "node scripts/workflow/build-maintainer.js",
+    "build:radar": "node scripts/workflow/build-radar.js",
+    "dev": "cross-env NODE_ENV=dev nodemon --inspect lib/index.js",
+    "format": "eslint \"**/*.{js,yml}\" --fix && node docs/.format/format.js && prettier \"**/*.{js,json}\" --write",
+    "format:check": "eslint \"**/*.{js,yml}\" && prettier-check \"**/*.{js,json}\"",
+    "format:staged": "eslint \"**/*.{js,yml}\" --fix && node docs/.format/format.js --staged && pretty-quick --staged --verbose --pattern \"**/*.{js,json}\"",
+    "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit --detectOpenHandles",
+    "jest:coverage": "cross-env NODE_ENV=test jest --coverage --reporters=default --reporters=jest-junit --runInBand --forceExit --detectOpenHandles",
+    "jest:watch": "cross-env NODE_ENV=test jest --watch",
+    "lint": "eslint .",
+    "profiling": "NODE_ENV=production node --prof lib/index.js",
+    "start": "node lib/index.js",
+    "test": "npm run format:check && npm run jest:coverage"
   },
-  "homepage": "https://github.com/DIYgod/RSSHub#readme",
-  "devDependencies": {
-    "@microsoft/eslint-formatter-sarif": "3.0.0",
-    "@napi-rs/pinyin": "1.7.1",
-    "@types/koa": "2.13.6",
-    "@vercel/nft": "0.22.6",
-    "@vuepress/plugin-back-to-top": "1.9.9",
-    "@vuepress/plugin-google-analytics": "1.9.9",
-    "@vuepress/plugin-pwa": "1.9.9",
-    "@vuepress/shared-utils": "1.9.9",
-    "cross-env": "7.0.3",
-    "eslint": "8.38.0",
-    "eslint-config-prettier": "8.8.0",
-    "eslint-plugin-prettier": "4.2.1",
-    "eslint-plugin-yml": "1.5.0",
-    "fs-extra": "11.1.1",
-    "jest": "29.5.0",
-    "jest-junit": "16.0.0",
-    "meilisearch": "0.32.3",
-    "mockdate": "3.0.5",
-    "nock": "13.3.0",
-    "nodemon": "2.0.22",
-    "prettier": "2.8.7",
-    "prettier-check": "2.0.0",
-    "pretty-quick": "3.1.3",
-    "remark": "13.0.0",
-    "remark-frontmatter": "3.0.0",
-    "remark-gfm": "1.0.0",
-    "remark-pangu": "2.2.0",
-    "remark-parse": "9.0.0",
-    "remark-preset-prettier": "0.5.1",
-    "remark-stringify": "9.0.1",
-    "request-promise-native": "1.0.9",
-    "staged-git-files": "1.3.0",
-    "string-width": "4.2.3",
-    "supertest": "6.3.3",
-    "tosource": "2.0.0-alpha.3",
-    "unified": "9.2.2",
-    "vuepress": "1.9.9",
-    "vuepress-plugin-meilisearch": "0.13.0",
-    "vuepress-plugin-sitemap": "2.3.1",
-    "yorkie": "2.0.0"
+  "nodemonConfig": {
+    "ext": "art,js,mjs,json",
+    "watch": [
+      ".env",
+      "lib",
+      "test"
+    ]
+  },
+  "jest": {
+    "bail": true,
+    "collectCoverageFrom": [
+      "lib/**/*.js",
+      "!lib/routes/**/*.js",
+      "!lib/v2/**/*.js",
+      "!lib/router.js",
+      "!lib/maintainer.js",
+      "!lib/radar.js",
+      "!lib/radar-rules.js"
+    ],
+    "coverageReporters": [
+      "text-summary",
+      "lcov"
+    ],
+    "moduleNameMapper": {
+      "@/(.*)": "<rootDir>/lib/$1"
+    },
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/test/**/*.js"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/lib/"
+    ]
+  },
+  "jest-junit": {
+    "outputDirectory": "coverage"
   },
   "dependencies": {
     "@koa/router": "12.0.0",
     "@postlight/parser": "2.2.3",
-    "@sentry/node": "7.48.0",
+    "@sentry/node": "7.49.0",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
@@ -104,7 +88,7 @@
     "dayjs": "1.11.7",
     "dotenv": "16.0.3",
     "emailjs-imap-client": "3.1.0",
-    "entities": "3.0.1",
+    "entities": "4.5.0",
     "etag": "1.8.1",
     "fanfou-sdk": "4.2.0",
     "git-rev-sync": "3.0.2",
@@ -123,7 +107,7 @@
     "koa-basic-auth": "4.0.0",
     "koa-favicon": "2.1.0",
     "koa-mount": "4.0.0",
-    "lru-cache": "8.0.5",
+    "lru-cache": "9.1.1",
     "lz-string": "1.5.0",
     "mailparser": "3.6.4",
     "markdown-it": "13.0.1",
@@ -131,7 +115,7 @@
     "pidusage": "3.0.2",
     "plist": "3.0.6",
     "proxy-chain": "2.3.0",
-    "puppeteer": "19.8.3",
+    "puppeteer": "19.11.1",
     "puppeteer-extra": "3.3.6",
     "puppeteer-extra-plugin-stealth": "2.11.2",
     "query-string": "7.1.3",
@@ -150,42 +134,47 @@
     "winston": "3.8.2",
     "xml2js": "0.5.0"
   },
-  "jest": {
-    "testMatch": [
-      "**/test/**/*.js"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/lib/"
-    ],
-    "coverageReporters": [
-      "text-summary",
-      "lcov"
-    ],
-    "collectCoverageFrom": [
-      "lib/**/*.js",
-      "!lib/routes/**/*.js",
-      "!lib/v2/**/*.js",
-      "!lib/router.js",
-      "!lib/maintainer.js",
-      "!lib/radar.js",
-      "!lib/radar-rules.js"
-    ],
-    "bail": true,
-    "testEnvironment": "node",
-    "moduleNameMapper": {
-      "@/(.*)": "<rootDir>/lib/$1"
-    }
-  },
-  "nodemonConfig": {
-    "watch": [
-      ".env",
-      "lib",
-      "test"
-    ],
-    "ext": "art,js,mjs,json"
+  "devDependencies": {
+    "@microsoft/eslint-formatter-sarif": "3.0.0",
+    "@types/koa": "2.13.6",
+    "@vercel/nft": "0.22.6",
+    "cross-env": "7.0.3",
+    "eslint": "8.39.0",
+    "eslint-config-prettier": "8.8.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-yml": "1.5.0",
+    "fs-extra": "11.1.1",
+    "jest": "29.5.0",
+    "jest-junit": "16.0.0",
+    "mockdate": "3.0.5",
+    "nock": "13.3.0",
+    "nodemon": "2.0.22",
+    "prettier": "2.8.8",
+    "prettier-check": "2.0.0",
+    "pretty-quick": "3.1.3",
+    "remark": "13.0.0",
+    "remark-frontmatter": "3.0.0",
+    "remark-gfm": "1.0.0",
+    "remark-pangu": "2.2.0",
+    "remark-parse": "9.0.0",
+    "remark-preset-prettier": "0.5.1",
+    "remark-stringify": "9.0.1",
+    "request-promise-native": "1.0.9",
+    "staged-git-files": "1.3.0",
+    "string-width": "4.2.3",
+    "supertest": "6.3.3",
+    "tosource": "2.0.0-alpha.3",
+    "unified": "9.2.2",
+    "yorkie": "2.0.0"
   },
   "engines": {
     "node": ">=16"
-  }
+  },
+  "gitHooks": {
+    "pre-commit": "npm run format:staged"
+  },
+  "reporters": [
+    "default",
+    "jest-junit"
+  ]
 }

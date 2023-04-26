@@ -683,6 +683,9 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
         4.  找到 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw> 请求
         5.  找到请求头中的 Cookie
 
+-   Civitai
+    -   `CIVITAI_COOKIE`: Civitai 登录后的 cookie 值
+
 -   discuz cookies 设定
 
     -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值，cid 可自由设定，取值范围 \[00, 99], 使用 discuz 通用路由时，通过指定 cid 来调用该 cookie
@@ -914,6 +917,3 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值.
         1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值.
-
--   Civitai
-    -   `CIVITAI_COOKIE`: Civitai 登录后的 cookie 值

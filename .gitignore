@@ -28,6 +28,7 @@ Session.vim
 node_modules
 package-lock.json
 pnpm-lock.yaml
+.yarn
 
 !.env.project
 !.env.vault

@@ -5,10 +5,12 @@ on:
     branches:
       - master
     paths:
+      - '.github/workflows/npm-publish.yml'
       - 'lib/**'
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   build:
@@ -21,14 +23,15 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
+          cache: 'npm'
           registry-url: 'https://registry.npmjs.org'
+      - run: npm install -g npm
       - name: Release
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           npx version-from-git --allow-same-version --template 'master.short'
       - name: Publish to npmjs
-        run: npm publish
+        run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
