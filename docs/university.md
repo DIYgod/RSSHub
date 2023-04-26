@@ -1049,6 +1049,17 @@ pageClass: routes
 
 </Route>
 
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/nenu/yz/5932" path="/nenu/yz/:type" :paramsDesc="['分类 id 见下表，也可在页面URL中找到']" radar="1">
+
+| Id   | 名称     |
+| ---- | -------- |
+| 5932 | 硕士公告 |
+| 5933 | 硕士简章 |
+
+</Route>
+
 ## 东北师范大学
 
 ### 研究生院
