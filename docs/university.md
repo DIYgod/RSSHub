@@ -2937,6 +2937,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/shu/yjszs/zslb-sszs" path="/shu/yjszs/:type" :paramsDesc="['类型,见下表,也可在页面URL中找到']">
+
+| 硕士招生  |
+| --------- |
+| zslb-sszs |
+
+</Route>
+
 ## 上海电力大学
 
 ### 新闻网与学院通知
