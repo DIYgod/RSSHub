@@ -459,6 +459,18 @@ pageClass: routes
 
 <Route author="nczitzk" example="/bupt/rczp" path="/bupt/rczp" />
 
+## 长安大学
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/chd/yzb/2769" path="/chd/yzb/:type" :paramsDesc="['分类type,见下表']" radar="1" >
+
+| 硕士招生 | 博士生招生 |
+| -------- | ---------- |
+| 2769     | 2770       |
+
+</Route>
+
 ## 长春理工大学
 
 ### 研究生招生网
@@ -1730,7 +1742,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 华北理工大学
 
-### 研究生学院院
+### 研究生学院
 
 <Route author="yanbot-team" example="/ncst/yjsxy/1413000407580" path="/ncst/yjsxy/:type" :paramsDesc="['类型参数']">
 
@@ -1755,6 +1767,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 华东理工继续教育学院新闻公告
 
 <Route author="jialinghui" example="/ecust-jxjy/news" path="/news" rssbud="1" />
+
+### 研究生院
+
+<Route author="yanbot-team" example="/ecust/gschool/12708" path="/ecust/gschool/:type" :paramsDesc="['类型参数']">
+
+| 类型 | 硕士招生 | 历史数据 | 博士招生 |
+| ---- | -------- | -------- | -------- |
+| 参数 | 12708    | 12710    | 12707    |
+
+</Route>
 
 ## 华东师范大学
 
