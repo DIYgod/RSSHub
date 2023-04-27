@@ -1096,13 +1096,3 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### はてな匿名ダイアリー - 人気記事アーカイブ
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
-
-## FreeBuf
-
-### FreeBuf 文章
-
-<Route author="trganda" example="/articles/web" path="/articles/:web/:id?" :paramsDesc="['文章类别', '文章id号，可选']"/>
-
-::: tip 使用说明
-Freebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的完整内容。
-:::
