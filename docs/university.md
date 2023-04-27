@@ -3532,6 +3532,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生院
+
+<Route author="yanbot-team" example="/xidian/gr/yjszs" path="/xidian/gr/:type" :paramsDesc="['类别，见下表，也可在页面url中找到']" radar="1" rssbud="1">
+
+| 研究生招生 | 博士研究生招生 |
+| :--------: | :------------: |
+|   yjszs    |    bsyjszs     |
+
+</Route>
+
 ## 西安交通大学
 
 ### 教务处
