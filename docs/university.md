@@ -1121,6 +1121,16 @@ pageClass: routes
 
 <Route author="KiraKiseki" example="/dhu/xxgk/news" path="/dhu/xxgk/news"/>
 
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/dhu/yjszs/7128" path="/dhu/yjszs/:type" :paramsDesc="[' 分类type, 见下表，可在对应页 URL 中找到']">
+
+| 硕士招生 | 推免招生 | 暑期夏令营 | 录取比例  | 历年分数  |
+| -------- | -------- | ---------- | --------- | --------- |
+| 7128     | 7127     | 7129       | lqbl_8883 | lnfs_8882 |
+
+</Route>
+
 ## 东南大学
 
 ### 信息科学与工程学院学术活动
