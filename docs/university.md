@@ -1061,7 +1061,7 @@ pageClass: routes
 
 ### 研究生招生信息网
 
-<Route author="yanbot-team" example="/nenu/yz/5932" path="/nenu/yz/:type" :paramsDesc="['分类 id 见下表，也可在页面URL中找到']" radar="1">
+<Route author="yanbot-team" example="/neu/yz/5932" path="/neu/yz/:type" :paramsDesc="['分类 id 见下表，也可在页面URL中找到']" radar="1">
 
 | Id   | 名称     |
 | ---- | -------- |
@@ -3640,6 +3640,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 西北大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/nwu/yzb/zsdt-sszs-zsdt" path="/nwu/yzb/:type" :paramsDesc="['分类id，见下表']" radar="1" rssbud="1">
+
+|    招生动态    |    硕士简章    |
+| :------------: | :------------: |
+| zsdt-sszs-zsdt | zsdt-sszs-zsjz |
+
+</Route>
+
 ## 西北工业大学
 
 ### 翱翔门户
@@ -3704,7 +3716,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生招生信息网
 
-<Route author="yanbot-team" example="/nwafu/yz/tzgg" path="/nwafu/yz/:type" :paramsDesc="['分类名见下表，也可在URL中找到']" >
+<Route author="yanbot-team" example="/nwsuaf/yz/tzgg" path="/nwsuaf/yz/:type" :paramsDesc="['分类名见下表，也可在URL中找到']" >
 
 | 通知公告 | 招生信息硕士生招生 |
 | -------- | ------------------ |
