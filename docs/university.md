@@ -2947,6 +2947,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 上海财经大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/sufe/gs/36" path="/sufe/gs/:type" :paramsDesc="['类型,见下表，也可在页面URL中找到']">
+
+| 硕士生招生 | 历史数据-硕士生招生 |
+| ---------- | ------------------- |
+| 36         | 40                  |
+
+</Route>
+
 ## 上海大学
 
 ### 上海大学官网信息
