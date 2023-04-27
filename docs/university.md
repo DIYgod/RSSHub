@@ -3746,6 +3746,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生招生信息网
+
+<Route author="Hivol" example="/swufe/yz/xwtz-ssyjszstz" path="/swufe/yz/:type" :paramsDesc="['分类type，见下表']" >
+
+| 硕士研究生招生通知 |
+| ------------------ |
+| xwtz-ssyjszstz     |
+
+</Route>
+
 ## 西南大学
 
 ### 研究生招生网
