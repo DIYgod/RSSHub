@@ -1590,7 +1590,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 党委组织部通知公告
 
-<Route author="shengmaosu" example="/hust/zzb/news" path="/hust/zzb/news" radar="1"/>
+<Route author="Lixiang-hfut" example="/hust/zzb/news" path="/hust/zzb/news" radar="1"/>
 
 ### 人工智能和自动化学院新闻
 
