@@ -75,8 +75,10 @@
   },
   "dependencies": {
     "@koa/router": "12.0.0",
+    "@napi-rs/pinyin": "^1.7.1",
     "@postlight/parser": "2.2.3",
     "@sentry/node": "7.49.0",
+    "@vuepress/shared-utils": "^1.9.9",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
@@ -111,6 +113,7 @@
     "lz-string": "1.5.0",
     "mailparser": "3.6.4",
     "markdown-it": "13.0.1",
+    "markdown-it-emoji": "^2.0.2",
     "module-alias": "2.2.2",
     "pidusage": "3.0.2",
     "plist": "3.0.6",
