@@ -134,7 +134,16 @@ All templates should be placed in the namespace's `templates` folder with the `.
 
 Here's an example taken from the [furstar](https://github.com/DIYgod/RSSHub/blob/master/lib/v2/furstar) namespace:
 
-<<< @/../lib/v2/furstar/templates/author.art
+```html
+<div>
+    <img src="{{ avatar }}" />
+    {{ if link !== null }}
+    <a href="{{ link }}">{{name}}</a>
+    {{ else }}
+    <a href="#">{{name}}</a>
+    {{ /if }}
+</div>
+```
 
 ```js
 const path = require('path');

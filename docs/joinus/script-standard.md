@@ -133,9 +133,18 @@ RSSHub 会将所有路由命名空间的文件夹名附加到路由前面。路�
 
 下面是在 [furstar](https://github.com/DIYgod/RSSHub/blob/master/lib/v2/furstar) 命名空间中示例：
 
-<<< @/../lib/v2/furstar/templates/author.art
-
 <!-- markdownlint-disable MD046 -->
+
+```html
+<div>
+    <img src="{{ avatar }}" />
+    {{ if link !== null }}
+    <a href="{{ link }}">{{name}}</a>
+    {{ else }}
+    <a href="#">{{name}}</a>
+    {{ /if }}
+</div>
+```
 
 ```js
 const path = require('path');
