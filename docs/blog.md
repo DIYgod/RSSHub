@@ -42,7 +42,7 @@ pageClass: routes
 
 ### 文章
 
-<Route author="trganda" example="/freebuf/articles/web" path="/freebuf/articles/:web/:id?" :paramsDesc="['文章类别', '文章id号，可选']">
+<Route author="trganda" example="/freebuf/articles/web" path="/freebuf/articles/:type" :paramsDesc="['文章类别', '文章id号，可选']">
 
 ::: tip 使用说明
 Freebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的完整内容。
