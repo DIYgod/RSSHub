@@ -3491,7 +3491,7 @@
     "/newzmz/:category?": [
         "nczitzk"
     ],
-    "/newzmz/view/:id?": [
+    "/newzmz/:id?": [
         "nczitzk"
     ],
     "/nextapple/realtime/:category?": [
