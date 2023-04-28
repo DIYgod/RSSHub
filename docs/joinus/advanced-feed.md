@@ -1,4 +1,4 @@
-# 制作多媒体 RSS 订阅源
+# RSS 基础
 
 本指南面向希望深入了解如何制作 RSS 订阅源的高级用户。如果您是第一次制作 RSS 订阅源，我们建议先阅读 [制作自己的 RSSHub 路由](/joinus/new-rss/start-code.html)。
 
