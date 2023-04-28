@@ -2195,8 +2195,7 @@
         "docs": "https://docs.rsshub.app/programming.html#atcoder-contests",
         "source": [
           "/contests/archive",
-          "/contests",
-          ""
+          "/contests"
         ]
       }
     ]
@@ -4160,7 +4159,7 @@
       {
         "title": "观点与实践",
         "docs": "https://docs.rsshub.app/study.html#zhong-guo-zhi-ku-wang",
-        "source": ""
+        "source": "/"
       }
     ]
   },
@@ -6755,7 +6754,7 @@
       {
         "title": "通知公告 - 名古屋总领事馆",
         "docs": "https://docs.rsshub.app/government.html#zhong-guo-zhu-wai-shi-ling-guan",
-        "source": "",
+        "source": "/",
         "target": "/embassy/jp/nagoya"
       }
     ],
@@ -8390,7 +8389,6 @@
         "title": "获取国家医师资格考试通知",
         "docs": "https://docs.rsshub.app/government.html#ji-nan-shi-wei-sheng-jian-kang-wei-yuan-hui",
         "source": [
-          "",
           "/*"
         ],
         "target": "/gov/jinan/healthcommission/medical_exam_notice"
@@ -10908,7 +10906,6 @@
         "title": "24 小时阅读榜",
         "docs": "https://docs.rsshub.app/new-media.html#it-zhi-jia-re-bang",
         "source": [
-          "",
           "/*"
         ],
         "target": "/ithome/ranking/24h"
@@ -10917,7 +10914,6 @@
         "title": "7 天最热",
         "docs": "https://docs.rsshub.app/new-media.html#it-zhi-jia-re-bang",
         "source": [
-          "",
           "/*"
         ],
         "target": "/ithome/ranking/7days"
@@ -10926,7 +10922,6 @@
         "title": "月榜",
         "docs": "https://docs.rsshub.app/new-media.html#it-zhi-jia-re-bang",
         "source": [
-          "",
           "/*"
         ],
         "target": "/ithome/ranking/monthly"
@@ -11037,7 +11032,7 @@
       {
         "title": "用户订阅列表",
         "docs": "https://docs.rsshub.app/anime.html#iwara",
-        "source": "",
+        "source": "/",
         "target": "/iwara/subscriptions"
       }
     ]
@@ -17722,8 +17717,7 @@
         "title": "有新路由啦",
         "docs": "https://docs.rsshub.app/program-update.html#rsshub",
         "source": [
-          "",
-          "/*tpath"
+          "/*"
         ],
         "target": "/rsshub/routes"
       },
@@ -17731,8 +17725,7 @@
         "title": "有新赞助商啦",
         "docs": "https://docs.rsshub.app/program-update.html#rsshub",
         "source": [
-          "",
-          "/*tpath"
+          "/*"
         ],
         "target": "/rsshub/sponsors"
       }
@@ -19445,8 +19438,7 @@
         "title": "Shortcuts Gallery",
         "docs": "https://docs.rsshub.app/new-media.html#shao-shu-pai-sspai",
         "source": [
-          "",
-          "/*tpath"
+          "/*"
         ],
         "target": "/sspai/shortcuts"
       }
@@ -20957,13 +20949,13 @@
       {
         "title": "日报",
         "docs": "https://docs.rsshub.app/social-media.html#zhi-hu",
-        "source": "",
+        "source": "/",
         "target": "/zhihu/daily"
       },
       {
         "title": "日报",
         "docs": "https://docs.rsshub.app/social-media.html#zhi-hu",
-        "source": "/*tpath",
+        "source": "/*",
         "target": "/zhihu/daily"
       }
     ]
@@ -23624,37 +23616,37 @@
       {
         "title": "发现 - 精选 - 全部推荐",
         "docs": "https://docs.rsshub.app/design.html#zhan-ku",
-        "source": "",
+        "source": "/",
         "target": "/zcool/discover/all"
       },
       {
         "title": "发现 - 精选 - 首页推荐",
         "docs": "https://docs.rsshub.app/design.html#zhan-ku",
-        "source": "",
+        "source": "/",
         "target": "/zcool/discover/home"
       },
       {
         "title": "发现 - 精选 - 编辑精选",
         "docs": "https://docs.rsshub.app/design.html#zhan-ku",
-        "source": "",
+        "source": "/",
         "target": "/zcool/discover/home"
       },
       {
         "title": "发现 - 精选 - 文章 - 编辑精选",
         "docs": "https://docs.rsshub.app/design.html#zhan-ku",
-        "source": "",
+        "source": "/",
         "target": "/zcool/discover/article"
       },
       {
         "title": "作品榜单",
         "docs": "https://docs.rsshub.app/design.html#zhan-ku",
-        "source": "",
+        "source": "/",
         "target": "/zcool/top/design"
       },
       {
         "title": "文章榜单",
         "docs": "https://docs.rsshub.app/design.html#zhan-ku",
-        "source": "",
+        "source": "/",
         "target": "/zcool/top/article"
       },
       {
@@ -23901,8 +23893,7 @@
         "title": "软件学院 - 全部通知",
         "docs": "https://docs.rsshub.app/university.html#zhe-jiang-da-xue",
         "source": [
-          "",
-          "/*tpath"
+          "/*"
         ],
         "target": "/zju/cst/0"
       },
