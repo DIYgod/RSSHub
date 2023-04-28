@@ -960,7 +960,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 ### 指定剧集
 
-<Route author="nczitzk" example="/newzmz/view/qEzRyY3v" path="/newzmz/view/:id?" :paramsDesc="['剧集 id，可在剧集下载页 URL 中找到']">
+<Route author="nczitzk" example="/newzmz/qEzRyY3v" path="/newzmz/:id?" :paramsDesc="['剧集 id，可在剧集下载页 URL 中找到']">
 
 如：雪国列车（剧版）的下载页 URL 为 `https://ysfx.tv/view/qEzRyY3v.html`，即剧集 id 为 `qEzRyY3v`。
 
