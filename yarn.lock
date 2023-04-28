@@ -791,50 +791,50 @@
     domhandler "^5.0.3"
     selderee "^0.10.0"
 
-"@sentry-internal/tracing@7.49.0":
-  version "7.49.0"
-  resolved "https://registry.yarnpkg.com/@sentry-internal/tracing/-/tracing-7.49.0.tgz#f589de565370884b9a13f82c98463de9b2d25dcd"
-  integrity sha512-ESh3+ZneQk/3HESTUmIPNrW5GVPu/HrRJU+eAJJto74vm+6vP7zDn2YV2gJ1w18O/37nc7W/bVCgZJlhZ3cwew==
+"@sentry-internal/tracing@7.50.0":
+  version "7.50.0"
+  resolved "https://registry.yarnpkg.com/@sentry-internal/tracing/-/tracing-7.50.0.tgz#74454af99a03d81762993835d2687c881e14f41e"
+  integrity sha512-4TQ4vN0aMBWsUXfJWk2xbe4x7fKfwCXgXKTtHC/ocwwKM+0EefV5Iw9YFG8IrIQN4vMtuRzktqcs9q0/Sbv7tg==
   dependencies:
-    "@sentry/core" "7.49.0"
-    "@sentry/types" "7.49.0"
-    "@sentry/utils" "7.49.0"
+    "@sentry/core" "7.50.0"
+    "@sentry/types" "7.50.0"
+    "@sentry/utils" "7.50.0"
     tslib "^1.9.3"
 
-"@sentry/core@7.49.0":
-  version "7.49.0"
-  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-7.49.0.tgz#340d059f5efeff1a3359fef66d0c8e34e79ac992"
-  integrity sha512-AlSnCYgfEbvK8pkNluUkmdW/cD9UpvOVCa+ERQswXNRkAv5aDGCL6Ihv6fnIajE++BYuwZh0+HwZUBVKTFzoZg==
+"@sentry/core@7.50.0":
+  version "7.50.0"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-7.50.0.tgz#88bc9cbfc0cb429a28489ece6f0be7a7006436c4"
+  integrity sha512-6oD1a3fYs4aiNK7tuJSd88LHjYJAetd7ZK/AfJniU7zWKj4jxIYfO8nhm0qdnhEDs81RcweVDmPhWm3Kwrzzsg==
   dependencies:
-    "@sentry/types" "7.49.0"
-    "@sentry/utils" "7.49.0"
+    "@sentry/types" "7.50.0"
+    "@sentry/utils" "7.50.0"
     tslib "^1.9.3"
 
-"@sentry/node@7.49.0":
-  version "7.49.0"
-  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-7.49.0.tgz#95c28848b5c27940b079c08e9987088e2bf9d821"
-  integrity sha512-KLIrqcbKk4yR3g8fjl87Eyv4M9j4YI6b7sqVAZYj3FrX3mC6JQyGdlDfUpSKy604n1iAdr6OuUp5f9x7jPJaeQ==
+"@sentry/node@7.50.0":
+  version "7.50.0"
+  resolved "https://registry.yarnpkg.com/@sentry/node/-/node-7.50.0.tgz#d6adab136d87f7dca614ea0d77944f902fa45626"
+  integrity sha512-11UJBKoQFMp7f8sbzeO2gENsKIUkVCNBTzuPRib7l2K1HMjSfacXmwwma7ZEs0mc3ofIZ1UYuyONAXmI1lK9cQ==
   dependencies:
-    "@sentry-internal/tracing" "7.49.0"
-    "@sentry/core" "7.49.0"
-    "@sentry/types" "7.49.0"
-    "@sentry/utils" "7.49.0"
+    "@sentry-internal/tracing" "7.50.0"
+    "@sentry/core" "7.50.0"
+    "@sentry/types" "7.50.0"
+    "@sentry/utils" "7.50.0"
     cookie "^0.4.1"
     https-proxy-agent "^5.0.0"
     lru_map "^0.3.3"
     tslib "^1.9.3"
 
-"@sentry/types@7.49.0":
-  version "7.49.0"
-  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.49.0.tgz#2c217091e13dc373682f5be2e9b5baed9d2ae695"
-  integrity sha512-9yXXh7iv76+O6h2ONUVx0wsL1auqJFWez62mTjWk4350SgMmWp/zUkBxnVXhmcYqscz/CepC+Loz9vITLXtgxg==
+"@sentry/types@7.50.0":
+  version "7.50.0"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-7.50.0.tgz#52a035cad83a80ca26fa53c09eb1241250c3df3e"
+  integrity sha512-Zo9vyI98QNeYT0K0y57Rb4JRWDaPEgmp+QkQ4CRQZFUTWetO5fvPZ4Gb/R7TW16LajuHZlbJBHmvmNj2pkL2kw==
 
-"@sentry/utils@7.49.0":
-  version "7.49.0"
-  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.49.0.tgz#b1b3a2af52067dd27e660c7c3062a31cdf4b94f9"
-  integrity sha512-JdC9yGnOgev4ISJVwmIoFsk8Zx0psDZJAj2DV7x4wMZsO6QK+YjC7G3mUED/S5D5lsrkBZ/3uvQQhr8DQI4UcQ==
+"@sentry/utils@7.50.0":
+  version "7.50.0"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-7.50.0.tgz#2b93a48024651436e95b7c8e2066aee7c2234d57"
+  integrity sha512-iyPwwC6fwJsiPhH27ZbIiSsY5RaccHBqADS2zEjgKYhmP4P9WGgHRDrvLEnkOjqQyKNb6c0yfmv83n0uxYnolw==
   dependencies:
-    "@sentry/types" "7.49.0"
+    "@sentry/types" "7.50.0"
     tslib "^1.9.3"
 
 "@sinclair/typebox@^0.25.16":
@@ -5424,10 +5424,10 @@ no-case@^2.2.0:
   dependencies:
     lower-case "^1.1.1"
 
-nock@13.3.0:
-  version "13.3.0"
-  resolved "https://registry.yarnpkg.com/nock/-/nock-13.3.0.tgz#b13069c1a03f1ad63120f994b04bfd2556925768"
-  integrity sha512-HHqYQ6mBeiMc+N038w8LkMpDCRquCHWeNmN3v6645P3NhN2+qXOBqvPqo7Rt1VyCMzKhJ733wZqw5B7cQVFNPg==
+nock@13.3.1:
+  version "13.3.1"
+  resolved "https://registry.yarnpkg.com/nock/-/nock-13.3.1.tgz#f22d4d661f7a05ebd9368edae1b5dc0a62d758fc"
+  integrity sha512-vHnopocZuI93p2ccivFyGuUfzjq2fxNyNurp7816mlT5V5HF4SzXu8lvLrVzBbNqzs+ODooZ6OksuSUNM7Njkw==
   dependencies:
     debug "^4.1.0"
     json-stringify-safe "^5.0.1"
