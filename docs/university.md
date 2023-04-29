@@ -1424,6 +1424,12 @@ category 列表：
 jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS_REJECT_UNAUTHORIZED = 0
 :::
 
+## 湖南大学
+
+### 校园招聘
+
+<Route author="ningyougan" example="/hnu/careers" path="/hnu/careers"/>
+
 ## 湖南科技大学
 
 ### 教务处通知
