@@ -2410,6 +2410,24 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 山东科技大学
+
+### 研究生招生网
+
+<Route author="nczitzk" example="/sdust/yjsy/zhaosheng" path="/sdust/yjsy/zhaosheng/:id?" :paramsDesc="['栏目 id，见下表，默认为通知公告']">
+
+栏目
+
+| 招生简章 | 专业目录 | 往届录取 | 管理规定 | 资料下载 |
+| -------- | -------- | -------- | -------- | -------- |
+| zsjz     | zyml     | wjlq     | glgd     | zlxz     |
+
+| 通知公告 | 博士招生 | 硕士招生 | 推免生招生 | 招生宣传 |
+| -------- | -------- | -------- | ---------- | -------- |
+| tzgg     | bszs     | sszs     | tms        | zsxc     |
+
+</Route>
+
 ## 上海大学
 
 ### 上海大学官网信息
