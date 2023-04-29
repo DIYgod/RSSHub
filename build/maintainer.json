@@ -4444,6 +4444,9 @@
     "/sdu/wh/jwc/:column?": [
         "kxxt"
     ],
+    "/sdust/yjsy/zhaosheng/:id?": [
+        "nczitzk"
+    ],
     "/secnews/index": [
         "kaiili"
     ],
