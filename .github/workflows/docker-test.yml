@@ -20,6 +20,7 @@ on:
 
 permissions:
   contents: read
+  pull-requests: write
 
 concurrency:
   group: ${{ github.head_ref }}
@@ -63,6 +64,7 @@ jobs:
         with:
           actions: 'add-labels'
           token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
           labels: 'Route Test: Failed'
 
       - name: Test Docker image

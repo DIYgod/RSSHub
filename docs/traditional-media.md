@@ -427,46 +427,6 @@ Solidot 提供的 feed:
 
 </Route>
 
-## Telecompaper
-
-### News
-
-<Route author="nczitzk" example="/telecompaper/news/mobile/2020/China/News" path="/telecompaper/news/:caty/:year?/:country?/:type?" :paramsDesc="['分类，见下表', '年份，可在所选分类页中 Filter 的 `Years` 选择器中选择相应年份，不限年份则填入 `all`，默认为不限', '国家或大洲，可在所选分类页中 Filter 的 `Countries` 选择器中选择相应国家或大洲，不限国家或大洲则填入 `all`，默认为不限', '类型，可在所选分类页中 Filter 的 `Types` 选择器中选择相应类型，不限类型则填入 `all`，默认为不限']">
-
-可选分类如下
-
-| WIRELESS | BROADBAND | VIDEO     | GENERAL | IT | INDUSTRY RESOURCES |
-| -------- | --------- | --------- | ------- | -- | ------------------ |
-| mobile   | internet  | boardcast | general | it | industry-resources |
-
-::: tip 提示
-
-若 `country` 或 `type` 参数包含空格，则用 `-` 替代。如 `United States` 更换为 `United-States`，`White paper` 更换为 `White-paper`
-
-[INDUSTRY RESOURCES](https://www.telecompaper.com/industry-resources) 分类页的 Filter 仅提供了 `Content Type` 选择器，对应路由中 `type` 参数。`year` 和 `country` 参数则对该分类无效。
-
-:::
-
-</Route>
-
-### Search
-
-<Route author="nczitzk" example="/telecompaper/search/Nokia" path="/telecompaper/search/:keyword?/:company?/:sort?/:period?" :paramsDesc="['关键词', '公司名，默认为不限', '排序，见下表，默认为 Date Descending', '发表在时间段内，默认为 12 months']">
-
-排序
-
-| Date Ascending | Date Descending |
-| -------------- | --------------- |
-| 1              | 2               |
-
-发表在时间段内
-
-| 1 month | 3 months | 6 months | 12 months | 24 months |
-| ------- | -------- | -------- | --------- | --------- |
-| 1       | 3        | 6        | 12        | 24        |
-
-</Route>
-
 ## The Atlantic
 
 ### News
@@ -1655,6 +1615,33 @@ category 对应的关键词有
 | s00016   | 娱乐         |
 | s00017   | 英文         |
 | s00018   | 作家专栏     |
+
+</Route>
+
+## 南方都市报
+
+### 奥一网
+
+<Route author="TimWu007" example="/oeeee/web/170" path="/oeeee/web/:channel" :paramsDesc="['频道 ID']">
+
+-   若在桌面端打开奥一网栏目页（如 <https://www.oeeee.com/api/channel.php?s=/index/index/channel/gz），可查看该页源代码，搜索> `OECID`。
+-   若在移动端打开奥一网栏目页（格式例：<https://m.oeeee.com/m.php?s=/m2/channel&channel_id=169），即可从> url 中获取。需注意的是，如果该栏目页的 url 格式为 <https://m.oeeee.com/detailChannel_indexData.html?channel_id=266> ，则 `266` 并非为本路由可用的频道 ID，建议从桌面端获取。
+
+</Route>
+
+### 南都客户端（按南都号 ID）
+
+<Route author="TimWu007" example="/oeeee/app/channel/50" path="/oeeee/app/channel/:id?" :paramsDesc="['南都号 ID']">
+
+南都号的 UID 可通过 `m.mp.oeeee.com` 下的文章页面获取。点击文章上方的南都号头像，进入该南都号的个人主页，即可从 url 中获取。
+
+</Route>
+
+### 南都客户端（按记者）
+
+<Route author="TimWu007" example="/oeeee/app/reporter/249" path="/oeeee/app/reporter/:id" :paramsDesc="['记者 UID']">
+
+记者的 UID 可通过 `m.mp.oeeee.com` 下的文章页面获取。点击文章下方的作者头像，进入该作者的个人主页，即可从 url 中获取。
 
 </Route>
 

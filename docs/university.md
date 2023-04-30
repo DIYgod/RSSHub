@@ -238,9 +238,9 @@ pageClass: routes
 
 <Route author="yanbot-team" example="/ustb/yzxc/tzgg" path="/ustb/yzxc/tzgg" />
 
-### 北京科技大学天津学院
+### 天津学院
 
-<Route author="henbf" example="/ustb/tj/news/all" path="/ustb/tj/news/:type" :paramsDesc="['默认为 `all`']">
+<Route author="henbf" example="/ustb/tj/news/all" path="/ustb/tj/news/:type?" :paramsDesc="['默认为 `all`']">
 
 | 全部 | 学院新闻 | 学术活动 | 城市建设学院 | 信息工程学院 | 经济学院 | 管理学院 | 材料系 | 机械工程系 | 护理系 | 法律系 | 外语系 | 艺术系 |
 | ---- | -------- | -------- | ------------ | ------------ | -------- | -------- | ------ | ---------- | ------ | ------ | ------ | ------ |
@@ -1424,6 +1424,12 @@ category 列表：
 jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS_REJECT_UNAUTHORIZED = 0
 :::
 
+## 湖南大学
+
+### 校园招聘
+
+<Route author="ningyougan" example="/hnu/careers" path="/hnu/careers"/>
+
 ## 湖南科技大学
 
 ### 教务处通知
@@ -2401,6 +2407,24 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 规章制度 | 专业建设 | 实践教学 | 支部风采 | 服务指南 | 教务要闻 | 工作通知 | 教务简报 | 常用下载 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | gzzd     | zyjs     | sjjx     | zbfc     | fwzn     | jwyw     | gztz     | jwjb     | cyxz     |
+
+</Route>
+
+## 山东科技大学
+
+### 研究生招生网
+
+<Route author="nczitzk" example="/sdust/yjsy/zhaosheng" path="/sdust/yjsy/zhaosheng/:id?" :paramsDesc="['栏目 id，见下表，默认为通知公告']">
+
+栏目
+
+| 招生简章 | 专业目录 | 往届录取 | 管理规定 | 资料下载 |
+| -------- | -------- | -------- | -------- | -------- |
+| zsjz     | zyml     | wjlq     | glgd     | zlxz     |
+
+| 通知公告 | 博士招生 | 硕士招生 | 推免生招生 | 招生宣传 |
+| -------- | -------- | -------- | ---------- | -------- |
+| tzgg     | bszs     | sszs     | tms        | zsxc     |
 
 </Route>
 
