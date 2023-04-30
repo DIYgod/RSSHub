@@ -500,7 +500,7 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 
 ### Collection
 
-<RouteEn author="TonyRL" example="/twitter/collection/DIYgod/1527857429467172864" path="/twitter/collection/:uid/:collectionId/:routeParams?" :paramsDesc="['User name, should match the generated token', 'Collection ID, can be found in URL', 'extra parameters, see the table above']" radar="1" rssbud="1" selfhost="1"/>
+<RouteEn author="TonyRL" example="/twitter/collection/DIYgod/1527857429467172864" path="/twitter/collection/:uid/:collectionId/:routeParams?" :paramsDesc="['User name, should match the generated token', 'Collection ID, can be found in URL', 'extra parameters, see the table above']" radar="1" rssbud="1" selfhost="1">
 
 ::: warning
 
@@ -509,6 +509,10 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 :::
 
 </RouteEn>
+
+### Tweet Details
+
+<Route author="LarchLiu" example="/twitter/tweet/DIYgod/status/1650844643997646852" path="/twitter/tweet/:id/status/:status/:original?" :paramsDesc="['User name', 'Tweet ID', 'extra parameters, data type of return, if the value is not `0`/`false` and `config.isPackage` is `true`, return the original data of twitter']" radar="1" rssbud="1"/>
 
 ## Vimeo
 
