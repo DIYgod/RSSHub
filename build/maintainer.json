@@ -1772,6 +1772,9 @@
     "/fosshub/:id": [
         "nczitzk"
     ],
+    "/freebuf/articles/:type": [
+        "trganda"
+    ],
     "/freecomputerbooks/": [
         "cubroe"
     ],
