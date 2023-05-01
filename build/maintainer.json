@@ -4104,6 +4104,9 @@
     "/pubmed/trending/:filters?": [
         "nczitzk"
     ],
+    "/pumc/mdadmission": [
+        "nczitzk"
+    ],
     "/putty/changes": [
         "nczitzk"
     ],
