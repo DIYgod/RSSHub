@@ -11432,6 +11432,14 @@
                     if (params.uid !== 'home' && params.uid !== 'explore' && params.uid !== 'notifications' && params.uid !== 'messages' && params.uid !== 'explore' && params.uid !== 'search') {
                         return '/twitter/collection/:uid/:collectionId';
                     }
+                } },
+      { title:"推文详情",
+        docs:"https://docs.rsshub.app/social-media.html#twitter",
+        source:"/:id/status/:status",
+        target:(params) => {
+                    if (params.id !== 'home' && params.id !== 'explore' && params.id !== 'notifications' && params.id !== 'messages' && params.id !== 'explore' && params.id !== 'search') {
+                        return '/twitter/tweet/:id/suatus/:status';
+                    }
                 } } ] },
   "twreporter.org":{ _name:"報導者",
     ".":[ { title:"最新",

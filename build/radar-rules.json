@@ -21088,6 +21088,11 @@
         "title": "推文收集",
         "docs": "https://docs.rsshub.app/social-media.html#twitter",
         "source": "/:uid/timelines/:collectionId"
+      },
+      {
+        "title": "推文详情",
+        "docs": "https://docs.rsshub.app/social-media.html#twitter",
+        "source": "/:id/status/:status"
       }
     ]
   },

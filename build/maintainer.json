@@ -5100,6 +5100,9 @@
     "/twitter/trends/:woeid?": [
         "sakamossan"
     ],
+    "/twitter/tweet/:id/status/:status/:original?": [
+        "LarchLiu"
+    ],
     "/twitter/user/:id/:routeParams?": [
         "DIYgod",
         "yindaheng98",
