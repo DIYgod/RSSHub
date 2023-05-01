@@ -362,6 +362,12 @@ pageClass: routes
 由于学校官网对非大陆 IP 的访问存在限制，需自行部署。
 :::
 
+## 北京协和医学院
+
+### “4+4” 试点班招生网通知公告
+
+<Route author="nczitzk" example="/pumc/mdadmission" path="/pumc/mdadmission"/>
+
 ## 北京邮电大学
 
 ### 硕士研究生招生通知
