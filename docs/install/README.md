@@ -730,7 +730,8 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   Iwara:
 
-    -   `IWARA_COOKIE`: Iwara 登录后的 Cookie 值
+    -   `IWARA_USERNAME`: Iwara 用户名
+    -   `IWARA_PASSWORD`: Iwara 密码
 
 -   Last.fm 全部路由：[申请地址](https://www.last.fm/api/)
 

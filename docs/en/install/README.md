@@ -699,7 +699,8 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   Iwara:
 
-    -   `IWARA_COOKIE`: Cookie of Iwara User
+    -   `IWARA_USERNAME`: username of Iwara User
+    -   `IWARA_PASSWORD`: password of Iwara User
 
 -   Last.fm
 
