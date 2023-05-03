@@ -22,6 +22,7 @@ COPY ./package.json /app/
 RUN \
     set -ex && \
     export PUPPETEER_SKIP_DOWNLOAD=true && \
+    corepack enable pnpm && \
     pnpm install --prod --frozen-lockfile
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -56,6 +57,7 @@ RUN \
         yarn config set registry https://registry.npmmirror.com && \
         pnpm config set registry https://registry.npmmirror.com ; \
     fi; \
+    corepack enable pnpm && \
     pnpm add @vercel/nft@$(cat .nft_version) fs-extra@$(cat .fs_extra_version) --save-prod
 
 COPY . /app
@@ -97,6 +99,7 @@ RUN \
         fi; \
         echo 'Downloading Chromium...' && \
         unset PUPPETEER_SKIP_DOWNLOAD && \
+        corepack enable pnpm && \
         pnpm add puppeteer@$(cat /app/.puppeteer_version) --save-prod ; \
     else \
         mkdir -p /app/node_modules/.cache/puppeteer ; \
