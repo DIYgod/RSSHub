@@ -1,7 +1,7 @@
 {{ if articleDetail.images }}
-    {{ each articleDetail.images i }}
-        <img src="{{ i }}">
-    {{ /each }}
+{{ each articleDetail.images i }}
+<img src="{{ i }}">
+{{ /each }}
 <br>
 {{ /if }}
 
