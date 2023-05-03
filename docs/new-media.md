@@ -2742,6 +2742,14 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 科技玩家
+
+### 精选
+
+<Route author="gkeyes" example="/kejiwanjia/jingxuanpost" path="/kejiwanjia/jingxuanpost"/>
+
+</Route>
+
 ## 科学网
 
 ### 精选博客
