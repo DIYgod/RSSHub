@@ -90,7 +90,7 @@ If you subscribe to [Discounted works Latest Discounts - Newest to Oldest](https
 
 ::: warning
 
-This route requires Cookie, therefore it's only available when self-hosting, refer to the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
+This route requires username and password, therefore it's only available when self-hosting, refer to the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
 
 :::
 
