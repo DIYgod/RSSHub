@@ -21,10 +21,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
-      - run: yarn install
-      - run: yarn install
-        working-directory: ./docs
+          cache: 'pnpm'
+      - run: pnpm -r i
       - run: npm run format
       - name: Commit files
         run: |

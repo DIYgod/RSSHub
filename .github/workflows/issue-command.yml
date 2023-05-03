@@ -55,10 +55,10 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
+          cache: 'pnpm'
 
-      - name: Install dependencies (yarn)
-        run: yarn
+      - name: Install dependencies (pnpm)
+        run: pnpm -r i
 
       - name: Fetch affected routes
         id: fetchRoute
@@ -76,7 +76,7 @@ jobs:
 
       - name: Start RSSHub
         if: env.TEST_CONTINUE
-        run: yarn start &
+        run: pnpm run start &
         env:
           ALLOW_USER_HOTLINK_TEMPLATE: true
           ALLOW_USER_SUPPLY_UNSAFE_DOMAIN: true

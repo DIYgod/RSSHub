@@ -12,7 +12,7 @@ on:
       - '!**/radar-rules.js'
       - 'Dockerfile'
       - 'package.json'
-      - 'yarn.lock'
+      - 'pnpm-lock.yaml'
   workflow_dispatch: ~
 
 jobs:

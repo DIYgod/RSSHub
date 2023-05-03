@@ -20,9 +20,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
-      - name: Build file
-        run: yarn && npm run build:all
+          cache: 'pnpm'
+      - name: Install dependencies (yarn)
+        run: pnpm -r i
+      - name: Build assets
+        run: npm run build:all
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

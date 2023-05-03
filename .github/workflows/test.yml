@@ -11,7 +11,7 @@ on:
       - '!**/radar.js'
       - '!**/radar-rules.js'
       - 'package.json'
-      - 'yarn.lock'
+      - 'pnpm-lock.yaml'
       - '.github/workflows/test.yml'
   pull_request: ~
 
@@ -43,11 +43,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-      - name: Install dependencies (yarn)
-        run: yarn
+          cache: 'pnpm'
+      - name: Install dependencies (pnpm)
+        run: pnpm -r i
       - name: Test all and generate coverage
-        run: npm run jest:coverage
+        run: pnpm jest:coverage
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
       - name: Upload coverage to Codecov
@@ -90,9 +90,9 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-      - name: Install dependencies (yarn)
-        run: yarn
+          cache: 'pnpm'
+      - name: Install dependencies (pnpm)
+        run: pnpm -r i
       - name: Install Chromium
         if: ${{ matrix.chromium.dependency != '' }}
         # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
@@ -108,7 +108,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -yq --no-install-recommends ${{ matrix.chromium.dependency }}
       - name: Test puppeteer
-        run: npm run jest puppeteer
+        run: pnpm jest puppeteer
         env: ${{ fromJSON(matrix.chromium.environment) }}
 
   docs:
@@ -118,23 +118,20 @@ jobs:
       fail-fast: false
       matrix:
         node-version: [ 16, 18 ]
-    defaults:
-      run:
-        working-directory: docs
     name: Build docs on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-          cache-dependency-path: docs/yarn.lock
-      - run: yarn
+          cache: 'pnpm'
+      - run: pnpm -r i
       - name: Set environment variable for Node v16 above
         if: ${{ matrix.node-version > '16' }}
         run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
       - name: Build docs
         run: npm run docs:build
+        working-directory: docs
       - name: Unset environment variable for Node v16 above
         if: ${{ matrix.node-version > '16' }}
         run: echo "NODE_OPTIONS=''" >> $GITHUB_ENV
@@ -152,8 +149,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-      - run: yarn
+          cache: 'pnpm'
+      - run: pnpm -r i
       - name: Build radar and maintainer
         run: npm run build:all
 
