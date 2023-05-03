@@ -49,7 +49,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          build-args: PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=0  # also test bundling Chromium
+          build-args: PUPPETEER_SKIP_DOWNLOAD=0  # also test bundling Chromium
           load: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
