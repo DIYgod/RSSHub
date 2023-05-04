@@ -66,6 +66,10 @@ jobs:
             -p 1200:1200 \
             rsshub:latest
 
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - uses: actions/setup-node@v3  # just need its cache
         if: (env.TEST_CONTINUE)
         with:
