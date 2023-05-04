@@ -24,5 +24,5 @@ error.log
 npm-debug.log
 package-lock.json
 # pnpm-lock.yaml
-yarn.lock
+# yarn.lock
 yarn-error.log

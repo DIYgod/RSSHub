@@ -185,17 +185,29 @@ $ cd RSSHub
 
 下载完成后，需要安装依赖（开发不要加 `--production` 参数）
 
-使用 `yarn`
+<code-group>
+<code-block title="pnpm" active>
 
 ```bash
-$ yarn install --production
+pnpm install --prod
 ```
 
-或 `npm`
+</code-block>
+<code-block title="yarnv1">
 
 ```bash
-$ npm ci --production
+yarn --production
 ```
+
+</code-block>
+<code-block title="npm">
+
+```bash
+npm install --omit=dev
+```
+
+</code-block>
+</code-group>
 
 由于众所周知的原因，在中国使用 `npm` 下载依赖十分缓慢，建议挂一个代理或者考虑使用 [NPM 镜像](https://npm.taobao.org/)
 
