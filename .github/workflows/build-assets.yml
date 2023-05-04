@@ -26,7 +26,7 @@ jobs:
           node-version: 18
           cache: 'pnpm'
       - name: Install dependencies (yarn)
-        run: pnpm -r i
+        run: pnpm i
       - name: Build assets
         run: npm run build:all
       - name: Deploy

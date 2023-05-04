@@ -19,7 +19,7 @@ jobs:
           node-version: 18
           cache: 'pnpm'
       - name: Install dependencies (pnpm) # needed since we need to parse markdown, so we also use got instead
-        run: pnpm -r i
+        run: pnpm i
       - name: Generate feedback
         uses: actions/github-script@v6
         with:

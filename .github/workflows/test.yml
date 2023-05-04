@@ -48,7 +48,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
       - name: Install dependencies (pnpm)
-        run: pnpm -r i
+        run: pnpm i
       - name: Test all and generate coverage
         run: pnpm jest:coverage
         env:
@@ -98,7 +98,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
       - name: Install dependencies (pnpm)
-        run: pnpm -r i
+        run: pnpm i
       - name: Install Chromium
         if: ${{ matrix.chromium.dependency != '' }}
         # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
@@ -124,6 +124,9 @@ jobs:
       fail-fast: false
       matrix:
         node-version: [ 16, 18 ]
+    defaults:
+      run:
+        working-directory: docs
     name: Build docs on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v3
@@ -134,7 +137,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-      - run: pnpm -r i
+          cache-dependency-path: docs/pnpm-lock.yaml
+      - run: pnpm i
       - name: Set environment variable for Node v16 above
         if: ${{ matrix.node-version > '16' }}
         run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
@@ -162,7 +166,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-      - run: pnpm -r i
+      - run: pnpm i
       - name: Build radar and maintainer
         run: npm run build:all
 

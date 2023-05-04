@@ -17,7 +17,7 @@ jobs:
         with:
           node-version: 18
           cache: 'pnpm'
-      - run: pnpm -r i
+      - run: pnpm i
       - name: Lint
         run: pnpm lint
 
@@ -38,7 +38,7 @@ jobs:
         with:
           node-version: 18
           cache: 'pnpm'
-      - run: pnpm -r i
+      - run: pnpm i
       - name: Lint
         run: pnpm lint
           --format @microsoft/eslint-formatter-sarif

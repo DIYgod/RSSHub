@@ -78,7 +78,7 @@ jobs:
 
       - name: Install dependencies (pnpm)  # `got` needed since `github.request` disallows HTTP requests
         if: (env.TEST_CONTINUE)
-        run: pnpm -r i
+        run: pnpm i
 
       - name: Generate feedback
         if: (env.TEST_CONTINUE)

@@ -63,7 +63,7 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies (pnpm)
-        run: pnpm -r i
+        run: pnpm i
 
       - name: Fetch affected routes
         id: fetchRoute
