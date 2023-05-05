@@ -17731,6 +17731,19 @@
       }
     ]
   },
+  "right.com.cn": {
+    "_name": "恩山无线论坛",
+    ".": [
+      {
+        "title": "板块",
+        "docs": "https://docs.rsshub.app/bbs.html#en-shan-wu-xian-lun-tan",
+        "source": [
+          "/forum",
+          "/"
+        ]
+      }
+    ]
+  },
   "rodong.rep.kp": {
     "_name": "劳动新闻",
     ".": [
