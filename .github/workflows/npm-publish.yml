@@ -20,18 +20,24 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'
+          cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm install -g npm
+      - name: Install dependencies (pnpm)
+        run: pnpm i
+      - name: Run postinstall script for dependencies
+        run: pnpm rb
       - name: Release
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           npx version-from-git --allow-same-version --template 'master.short'
       - name: Publish to npmjs
-        run: npm publish --provenance --access public
+        run: pnpm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
