@@ -133,6 +133,12 @@ dependencies:
   puppeteer-extra-plugin-stealth:
     specifier: 2.11.2
     version: 2.11.2(puppeteer-extra@3.3.6)
+  puppeteer-extra-plugin-user-data-dir:
+    specifier: 2.4.1
+    version: 2.4.1(puppeteer-extra@3.3.6)
+  puppeteer-extra-plugin-user-preferences:
+    specifier: 2.4.1
+    version: 2.4.1(puppeteer-extra@3.3.6)
   query-string:
     specifier: 7.1.3
     version: 7.1.3

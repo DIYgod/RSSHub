@@ -23,7 +23,8 @@ RUN \
     set -ex && \
     export PUPPETEER_SKIP_DOWNLOAD=true && \
     corepack enable pnpm && \
-    pnpm install --prod --frozen-lockfile
+    pnpm install --prod --frozen-lockfile && \
+    pnpm rb
 
 # ---------------------------------------------------------------------------------------------------------------------
 
@@ -100,7 +101,8 @@ RUN \
         echo 'Downloading Chromium...' && \
         unset PUPPETEER_SKIP_DOWNLOAD && \
         corepack enable pnpm && \
-        pnpm add puppeteer@$(cat /app/.puppeteer_version) --save-prod ; \
+        pnpm add puppeteer@$(cat /app/.puppeteer_version) --save-prod && \
+        pnpm rb ; \
     else \
         mkdir -p /app/node_modules/.cache/puppeteer ; \
     fi;

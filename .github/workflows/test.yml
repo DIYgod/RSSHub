@@ -49,6 +49,8 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies (pnpm)
         run: pnpm i
+      - name: Run postinstall script for dependencies
+        run: pnpm rb
       - name: Test all and generate coverage
         run: pnpm run jest:coverage
         env:
@@ -99,6 +101,8 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies (pnpm)
         run: pnpm i
+      - name: Run postinstall script for dependencies
+        run: pnpm rb
       - name: Install Chromium
         if: ${{ matrix.chromium.dependency != '' }}
         # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means

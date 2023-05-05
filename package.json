@@ -118,6 +118,8 @@
     "puppeteer": "20.1.0",
     "puppeteer-extra": "3.3.6",
     "puppeteer-extra-plugin-stealth": "2.11.2",
+    "puppeteer-extra-plugin-user-data-dir": "2.4.1",
+    "puppeteer-extra-plugin-user-preferences": "2.4.1",
     "query-string": "7.1.3",
     "rand-user-agent": "1.0.109",
     "re2": "1.18.0",
