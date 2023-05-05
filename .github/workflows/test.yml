@@ -11,7 +11,7 @@ on:
       - '!**/radar.js'
       - '!**/radar-rules.js'
       - 'package.json'
-      - 'yarn.lock'
+      - 'pnpm-lock.yaml'
       - '.github/workflows/test.yml'
   pull_request: ~
 
@@ -40,14 +40,19 @@ jobs:
         with:
           api_key: ${{ secrets.FORESIGHT_KEY }}
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-      - name: Install dependencies (yarn)
-        run: yarn
+          cache: 'pnpm'
+      - name: Install dependencies (pnpm)
+        run: pnpm i
+      - name: Run postinstall script for dependencies
+        run: pnpm rb
       - name: Test all and generate coverage
-        run: npm run jest:coverage
+        run: pnpm run jest:coverage
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
       - name: Upload coverage to Codecov
@@ -87,12 +92,17 @@ jobs:
     name: Jest puppeteer on Node ${{ matrix.node-version }} with ${{ matrix.chromium.name }}
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-      - name: Install dependencies (yarn)
-        run: yarn
+          cache: 'pnpm'
+      - name: Install dependencies (pnpm)
+        run: pnpm i
+      - name: Run postinstall script for dependencies
+        run: pnpm rb
       - name: Install Chromium
         if: ${{ matrix.chromium.dependency != '' }}
         # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
@@ -108,7 +118,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -yq --no-install-recommends ${{ matrix.chromium.dependency }}
       - name: Test puppeteer
-        run: npm run jest puppeteer
+        run: pnpm run jest puppeteer
         env: ${{ fromJSON(matrix.chromium.environment) }}
 
   docs:
@@ -124,17 +134,21 @@ jobs:
     name: Build docs on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-          cache-dependency-path: docs/yarn.lock
-      - run: yarn
+          cache: 'pnpm'
+          cache-dependency-path: docs/pnpm-lock.yaml
+      - run: pnpm i
       - name: Set environment variable for Node v16 above
         if: ${{ matrix.node-version > '16' }}
         run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
       - name: Build docs
         run: npm run docs:build
+        working-directory: docs
       - name: Unset environment variable for Node v16 above
         if: ${{ matrix.node-version > '16' }}
         run: echo "NODE_OPTIONS=''" >> $GITHUB_ENV
@@ -149,11 +163,14 @@ jobs:
     name: Build radar and maintainer on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-      - run: yarn
+          cache: 'pnpm'
+      - run: pnpm i
       - name: Build radar and maintainer
         run: npm run build:all
 

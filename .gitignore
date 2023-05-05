@@ -1,34 +1,31 @@
-*.swp
-*.iml
-
 .DS_Store
-.env*
+.env
 .idea
 .log
 .now
 .vercel
 .vscode
+.yarn
+
+*.swp
+*.iml
 
 app-minimal/
 assets/build/
 coverage
 docs/.vuepress/dist
-lib/config/app.json
-lib/config/config.js
+node_modules
 tmp
 
-combined.log
-npm-debug.log
-error.log
-yarn-error.log
-
-dump.rdb
 Session.vim
-
-node_modules
+combined.log
+dump.rdb
+error.log
+npm-debug.log
 package-lock.json
-pnpm-lock.yaml
-.yarn
+# pnpm-lock.yaml
+yarn.lock
+yarn-error.log
 
 !.env.project
 !.env.vault
