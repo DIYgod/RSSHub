@@ -41,7 +41,7 @@ npm install
 <code-block title="pnpm" active>
 
 ```bash
-pnpm dev
+pnpm run dev
 ```
 
 </code-block>

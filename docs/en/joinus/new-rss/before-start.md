@@ -41,7 +41,7 @@ Once you have successfully installed the dependencies, you can start debugging R
 <code-block title="pnpm" active>
 
 ```bash
-pnpm dev
+pnpm run dev
 ```
 
 </code-block>

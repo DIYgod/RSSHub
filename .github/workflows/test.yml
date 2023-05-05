@@ -50,7 +50,7 @@ jobs:
       - name: Install dependencies (pnpm)
         run: pnpm i
       - name: Test all and generate coverage
-        run: pnpm jest:coverage
+        run: pnpm run jest:coverage
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
       - name: Upload coverage to Codecov
@@ -114,7 +114,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -yq --no-install-recommends ${{ matrix.chromium.dependency }}
       - name: Test puppeteer
-        run: pnpm jest puppeteer
+        run: pnpm run jest puppeteer
         env: ${{ fromJSON(matrix.chromium.environment) }}
 
   docs:

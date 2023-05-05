@@ -38,7 +38,7 @@ You can now preview the documentation in real-time by running the following comm
 <code-block title="pnpm" active>
 
 ```bash
-pnpm docs:dev
+pnpm run docs:dev
 ```
 
 </code-block>
@@ -203,7 +203,7 @@ By using these components, you can provide valuable information to users and mak
 <code-block title="pnpm" active>
 
 ```bash
-pnpm format
+pnpm run format
 ```
 
 </code-block>

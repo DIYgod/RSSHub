@@ -38,7 +38,7 @@ npm install
 <code-block title="pnpm" active>
 
 ```bash
-pnpm docs:dev
+pnpm run docs:dev
 ```
 
 </code-block>
@@ -202,7 +202,7 @@ npm run docs:dev
 <code-block title="pnpm" active>
 
 ```bash
-pnpm format
+pnpm run format
 ```
 
 </code-block>
