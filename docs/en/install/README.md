@@ -185,17 +185,29 @@ $ cd RSSHub
 
 Execute the following commands to install dependencies (Do not add the `--production` parameter for development).
 
-Using `yarnv1`
+<code-group>
+<code-block title="pnpm" active>
 
 ```bash
-$ yarn --production
+pnpm install --prod
 ```
 
-or using `npm`
+</code-block>
+<code-block title="yarnv1">
 
 ```bash
-$ npm ci --production
+yarn --production
 ```
+
+</code-block>
+<code-block title="npm">
+
+```bash
+npm install --omit=dev
+```
+
+</code-block>
+</code-group>
 
 ### Launch
 

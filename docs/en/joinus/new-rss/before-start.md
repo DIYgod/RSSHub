@@ -10,7 +10,14 @@ In this tutorial, we will walk you through the process of creating an RSS feed f
 Before you start, you need to install the dependencies for RSSHub. You can do this by running the following command in the root directory of RSSHub:
 
 <code-group>
-<code-block title="yarn" active>
+<code-block title="pnpm" active>
+
+```bash
+pnpm i
+```
+
+</code-block>
+<code-block title="yarn">
 
 ```bash
 yarn
@@ -31,7 +38,14 @@ npm install
 Once you have successfully installed the dependencies, you can start debugging RSSHub by running the following command:
 
 <code-group>
-<code-block title="yarn" active>
+<code-block title="pnpm" active>
+
+```bash
+pnpm run dev
+```
+
+</code-block>
+<code-block title="yarn">
 
 ```bash
 yarn dev

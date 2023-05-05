@@ -11,18 +11,19 @@ RUN \
     if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
         echo 'use npm mirror' && \
         npm config set registry https://registry.npmmirror.com && \
-        yarn config set registry https://registry.npmmirror.com ; \
+        yarn config set registry https://registry.npmmirror.com && \
+        pnpm config set registry https://registry.npmmirror.com ; \
     fi;
 
-COPY ./yarn.lock /app/
+COPY ./pnpm-lock.yaml /app/
 COPY ./package.json /app/
 
 # lazy install Chromium to avoid cache miss, only install production dependencies to minimize the image size
 RUN \
     set -ex && \
     export PUPPETEER_SKIP_DOWNLOAD=true && \
-    yarn install --production --frozen-lockfile --network-timeout 1000000 && \
-    yarn cache clean
+    corepack enable pnpm && \
+    pnpm install --prod --frozen-lockfile
 
 # ---------------------------------------------------------------------------------------------------------------------
 
@@ -53,10 +54,11 @@ RUN \
     set -ex && \
     if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
         npm config set registry https://registry.npmmirror.com && \
-        yarn config set registry https://registry.npmmirror.com ; \
+        yarn config set registry https://registry.npmmirror.com && \
+        pnpm config set registry https://registry.npmmirror.com ; \
     fi; \
-    yarn add @vercel/nft@$(cat .nft_version) fs-extra@$(cat .fs_extra_version) && \
-    yarn cache clean
+    corepack enable pnpm && \
+    pnpm add @vercel/nft@$(cat .nft_version) fs-extra@$(cat .fs_extra_version) --save-prod
 
 COPY . /app
 COPY --from=dep-builder /app /app
@@ -92,12 +94,13 @@ RUN \
     if [ "$PUPPETEER_SKIP_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
         if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
             npm config set registry https://registry.npmmirror.com && \
-            yarn config set registry https://registry.npmmirror.com ; \
+            yarn config set registry https://registry.npmmirror.com && \
+            pnpm config set registry https://registry.npmmirror.com ; \
         fi; \
         echo 'Downloading Chromium...' && \
         unset PUPPETEER_SKIP_DOWNLOAD && \
-        yarn add puppeteer@$(cat /app/.puppeteer_version) && \
-        yarn cache clean ; \
+        corepack enable pnpm && \
+        pnpm add puppeteer@$(cat /app/.puppeteer_version) --save-prod ; \
     else \
         mkdir -p /app/node_modules/.cache/puppeteer ; \
     fi;
