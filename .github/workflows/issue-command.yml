@@ -51,14 +51,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - name: Use Node.js v18
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
+          cache: 'pnpm'
 
-      - name: Install dependencies (yarn)
-        run: yarn
+      - name: Install dependencies (pnpm)
+        run: pnpm i
 
       - name: Fetch affected routes
         id: fetchRoute
@@ -76,7 +81,7 @@ jobs:
 
       - name: Start RSSHub
         if: env.TEST_CONTINUE
-        run: yarn start &
+        run: pnpm start &
         env:
           ALLOW_USER_HOTLINK_TEMPLATE: true
           ALLOW_USER_SUPPLY_UNSAFE_DOMAIN: true
