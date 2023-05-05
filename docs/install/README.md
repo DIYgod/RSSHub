@@ -370,6 +370,13 @@ $ flyctl secrets set CACHE_TYPE=redis REDIS_URL='<刚才的连接字符串>'
 
 [![Run on PikaPods](https://www.pikapods.com/static/run-button.svg)](https://www.pikapods.com/pods?run=rsshub)
 
+## 部署到 Zeabur
+
+1.  前往 [Zeabur 完成注册](https://dash.zeabur.com)
+2.  创建一个新项目
+3.  在项目中选择创建新服务，选择从**服务市场**部署。
+4.  添加域名，若使用自定义域名，可参见 [Zeabur 的域名绑定文档](https://docs.zeabur.com/zh-CN/deploy/domain-binding)。
+
 ## 部署到 Google App Engine
 
 ### 准备

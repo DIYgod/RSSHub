@@ -368,6 +368,13 @@ Run RSSHub from just $1/month. Includes automatic updates and $5 free starting c
 
 [![Run on PikaPods](https://www.pikapods.com/static/run-button.svg)](https://www.pikapods.com/pods?run=rsshub)
 
+## Deploy to Zeabur
+
+1.  [Sign up for Zeabur](https://dash.zeabur.com)
+2.  Create a new project.
+3.  在项目中选择创建新服务，选择从**服务市场**部署。Create a new service in the projec, select deploying from the **marketplace**.
+4.  Add a domain name, if you use a custom domain name, you can refer to [Zeabur's domain name binding document](https://docs.zeabur.com/deploy/domain-binding).
+
 ## Deploy to Google App Engine(GAE)
 
 ### Before You Begin
