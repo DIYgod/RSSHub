@@ -11,12 +11,15 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v3 # just need its cache
         with:
           node-version: 18
-          cache: 'yarn'
-      - name: Install dependencies (yarn) # needed since we need to parse markdown, so we also use got instead
-        run: yarn
+          cache: 'pnpm'
+      - name: Install dependencies (pnpm) # needed since we need to parse markdown, so we also use got instead
+        run: pnpm i
       - name: Generate feedback
         uses: actions/github-script@v6
         with:
