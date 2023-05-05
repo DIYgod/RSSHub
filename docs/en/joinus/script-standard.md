@@ -108,7 +108,7 @@ The `maintainer.js` file should export an object that provides maintainer inform
 -   Key: Corresponding path in the `@koa/router` object
 -   Value: Array of string, including all maintainers' GitHub ID.
 
-To generate a list of maintainers, use the following command: `yarn build:maintainer`, which will create the list under `assets/build/`.
+To generate a list of maintainers, use the following command: `pnpm run build:maintainer`, which will create the list under `assets/build/`.
 
 ::: danger Warning
 The path in the `@koa/router` object should be the same as the `path` in the corresponding documentation before the namespace appended in front of it.

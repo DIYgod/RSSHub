@@ -14,7 +14,7 @@ on:
       - '!**/radar-rules.js'
       - 'Dockerfile'
       - 'package.json'
-      - 'yarn.lock'
+      - 'pnpm-lock.yaml'
     types: [opened, reopened, synchronize, edited]
   # Please, always create a pull request instead of push to master.
 

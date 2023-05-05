@@ -66,15 +66,19 @@ jobs:
             -p 1200:1200 \
             rsshub:latest
 
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
       - uses: actions/setup-node@v3  # just need its cache
         if: (env.TEST_CONTINUE)
         with:
           node-version: 18
-          cache: 'yarn'
+          cache: 'pnpm'
 
-      - name: Install dependencies (yarn)  # `got` needed since `github.request` disallows HTTP requests
+      - name: Install dependencies (pnpm)  # `got` needed since `github.request` disallows HTTP requests
         if: (env.TEST_CONTINUE)
-        run: yarn
+        run: pnpm i
 
       - name: Generate feedback
         if: (env.TEST_CONTINUE)

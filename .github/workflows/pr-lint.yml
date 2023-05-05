@@ -10,13 +10,16 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
-      - run: yarn
+          cache: 'pnpm'
+      - run: pnpm i
       - name: Lint
-        run: yarn lint
+        run: pnpm run lint
 
   eslint-warning:
     name: Lint
@@ -28,13 +31,16 @@ jobs:
       security-events: write
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'yarn'
-      - run: yarn
+          cache: 'pnpm'
+      - run: pnpm i
       - name: Lint
-        run: yarn lint
+        run: pnpm run lint
           --format @microsoft/eslint-formatter-sarif
           --output-file eslint-results.sarif
         continue-on-error: true

@@ -4,10 +4,45 @@ sidebarDepth: 2
 
 # Add documentation
 
-Now that we have completed the code, it's time to add the documentation for your route. Open the appropriate file in the [documentation (/docs/en/)](https://github.com/DIYgod/RSSHub/blob/master/docs/en), which in this example is `docs/en/programming.md`. You can preview the documentation in real-time by running the following command:
+Now that we have completed the code, it's time to add the documentation for your route. Open the appropriate file in the [documentation (/docs/en/)](https://github.com/DIYgod/RSSHub/blob/master/docs/en), which in this example is `docs/en/programming.md`.
+
+In order to preview the documentation in real-time, you need to install the dependencies for the documentation. Run the following command in the **`docs` directory**:
 
 <code-group>
-<code-block title="yarn" active>
+<code-block title="pnpm" active>
+
+```bash
+pnpm i
+```
+
+</code-block>
+<code-block title="yarn">
+
+```bash
+yarn
+```
+
+</code-block>
+<code-block title="npm">
+
+```bash
+npm install
+```
+
+</code-block>
+</code-group>
+
+You can now preview the documentation in real-time by running the following command in the **`docs` directory**:
+
+<code-group>
+<code-block title="pnpm" active>
+
+```bash
+pnpm run docs:dev
+```
+
+</code-block>
+<code-block title="yarn">
 
 ```bash
 yarn docs:dev
@@ -162,10 +197,17 @@ By using these components, you can provide valuable information to users and mak
 -   If the documentation contains a large table, it is suggested to put it inside a [details container](/en/joinus/new-rss/add-docs.html#documentation-examples-custom-containers)
 -   Components can be written in two ways: as a self-closing tag (`<RouteEn .../>`) or as a pair of tags (`<RouteEn>...</RouteEn>`).
 -   **Remember to close the tag!**
--   Don't forget to run the following command to check and format your code before committing and submitting a merge request:
+-   Don't forget to run the following command in the **root directory** of the project to check and format your code before committing and submitting a merge request:
 
 <code-group>
-<code-block title="yarn" active>
+<code-block title="pnpm" active>
+
+```bash
+pnpm run format
+```
+
+</code-block>
+<code-block title="yarn">
 
 ```bash
 yarn format
