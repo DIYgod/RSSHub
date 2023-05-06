@@ -529,7 +529,7 @@ resolved by the SOCKS server, recommanded, prevents DNS poisoning or DNS leak), 
 
 #### Proxy options
 
-`PROXY_PROTOCOL`: Using proxy, supports socks, http, https, etc. See [socks-proxy-agent](https://www.npmjs.com/package/socks-proxy-agent) NPM package page and [source](https://github.com/TooTallNate/node-socks-proxy-agent/blob/master/src/agent.ts) for what these protocols mean. See also [cURL OOTW: SOCKS5](https://daniel.haxx.se/blog/2020/05/26/curl-ootw-socks5/) for reference.
+`PROXY_PROTOCOL`: Using proxy, supports socks, http, https, etc. See [socks-proxy-agent](https://www.npmjs.com/package/socks-proxy-agent) NPM package page and [source](https://github.com/TooTallNate/proxy-agents/blob/63adbcefdb4783cc67c0eb90200886b4064e8639/packages/socks-proxy-agent/src/index.ts#L81) for what these protocols mean. See also [cURL OOTW: SOCKS5](https://daniel.haxx.se/blog/2020/05/26/curl-ootw-socks5/) for reference.
 
 `PROXY_HOST`: host or IP of the proxy
 
