@@ -701,6 +701,18 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 </Route>
 
+### 崩坏：星穹铁道
+
+#### 新闻
+
+<Route author="momizi" example="/mihoyo/sr" path="/mihoyo/sr/:location?/:num?" :paramsDesc="['分类，见下表，默认为最新', '数量，默认为最新的5条']">
+
+| 最新 | 新闻 | 公告 | 活动 |
+| --- | ---- | ---- | ---- |
+| 255 |  256 |  257 |  258 |
+
+</Route>
+
 ## 明日方舟
 
 ### 游戏公告与新闻
