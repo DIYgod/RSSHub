@@ -524,6 +524,12 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 <Route author="everyonus" example="/hentaimama/videos" path="/hentaimama/videos" />
 
+## IBC 岩手放送
+
+### イヤーマイッタマイッタ
+
+<Route author="fengkx" example="/ibc/maitta" path="/ibc/maitta" supportPodcast="1" radar="1"/>
+
 ## JavBus
 
 ::: tip 提示
@@ -1356,12 +1362,6 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 | 0        | 1        |
 
 </Route>
-
-## 播客 IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
-
-### IBC 岩手放送｜ IBC ラジオ　イヤーマイッタマイッタ
-
-<Route author="fengkx" example="/maitta" path="/maitta" supportPodcast="1" />
 
 ## 草榴社区
 

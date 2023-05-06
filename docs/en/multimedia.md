@@ -153,6 +153,12 @@ Official RSS: <https://eztv.io/ezrss.xml>
 
 <RouteEn author="everyonus" example="/hentaimama/videos" path="/hentaimama/videos" />
 
+## IBC 岩手放送
+
+### イヤーマイッタマイッタ
+
+<RouteEn author="fengkx" example="/ibc/maitta" path="/ibc/maitta" supportPodcast="1" radar="1"/>
+
 ## JavBus
 
 ::: tip Language
