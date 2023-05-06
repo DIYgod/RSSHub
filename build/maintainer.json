@@ -2592,6 +2592,9 @@
     "/hyqss/hywb/:id?": [
         "nczitzk"
     ],
+    "/ibc/maitta": [
+        "fengkx"
+    ],
     "/icac/news/:lang?": [
         "linbuxiao, TonyRL"
     ],
@@ -6307,7 +6310,6 @@
     "/ui-cn/article": [],
     "/ui-cn/user/:id": [],
     "/juesheng": [],
-    "/maitta": [],
     "/blogs/jingwei.link": [],
     "/blogs/wangyin": [],
     "/blogs/wang54/:id?": [],
