@@ -166,9 +166,6 @@ dependencies:
   source-map:
     specifier: 0.7.4
     version: 0.7.4
-  string-similarity:
-    specifier: 4.0.4
-    version: 4.0.4
   tiny-async-pool:
     specifier: 2.1.0
     version: 2.1.0
@@ -6955,11 +6952,6 @@ packages:
       char-regex: 1.0.2
       strip-ansi: 6.0.1
     dev: true
-
-  /string-similarity@4.0.4:
-    resolution: {integrity: sha512-/q/8Q4Bl4ZKAPjj8WerIBJWALKkaPRfrvhfF8k/B23i4nzrlRj2/go1m90In7nG/3XDSbOo0+pu6RvCTM9RGMQ==}
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
-    dev: false
 
   /string-width@4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
