@@ -62,8 +62,8 @@ dependencies:
     specifier: 11.8.6
     version: 11.8.6
   https-proxy-agent:
-    specifier: 5.0.1
-    version: 5.0.1
+    specifier: 6.0.0
+    version: 6.0.0
   iconv-lite:
     specifier: 0.6.3
     version: 0.6.3
@@ -1570,6 +1570,15 @@ packages:
       debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
+
+  /agent-base@7.0.1:
+    resolution: {integrity: sha512-V9to8gr2GK7eA+xskWGAFUX/TLSQKuH2TI06c/jGLL6yLp3oEjtnqM7a5tPV9fC1rabLeAgThZeBwsYX+WWHpw==}
+    engines: {node: '>= 14'}
+    dependencies:
+      debug: 4.3.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /agentkeepalive@4.3.0:
     resolution: {integrity: sha512-7Epl1Blf4Sy37j4v9f9FjICCh4+KAQOyXgHEwlyBiAQLbhKdq/i2QQU3amQalS/wPhdPzDXPL5DMR5bkn+YeWg==}
@@ -3842,6 +3851,16 @@ packages:
       debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
+
+  /https-proxy-agent@6.0.0:
+    resolution: {integrity: sha512-g821um/ZvXlENs8tqKh96b6G0wafab6ypfkZdFZImJEGZrn47oLeRhWMKvCYxrasOgNi3Yh6Cxkws2Zn13v2QA==}
+    engines: {node: '>= 14'}
+    dependencies:
+      agent-base: 7.0.1
+      debug: 4.3.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /human-signals@1.1.1:
     resolution: {integrity: sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==}
