@@ -8104,6 +8104,18 @@
       }
     ]
   },
+  "cac.gov.cn": {
+    "_name": "中央网信办",
+    ".": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/government.html#zhong-yang-wang-xin-ban",
+        "source": [
+          "/*"
+        ]
+      }
+    ]
+  },
   "ccdi.gov.cn": {
     "_name": "中央纪委国家监委",
     "www": [
