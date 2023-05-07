@@ -1100,6 +1100,13 @@
     "/cncf/:cate?": [
         "Fatpandac"
     ],
+    "/cneb/yjxw/:category?": [
+        "nczitzk"
+    ],
+    "/cneb/yjxx/:level?/:province?/:city?": [
+        "muzea",
+        "nczitzk"
+    ],
     "/cngal/entry/:id": [
         "chengyuhui"
     ],
@@ -6510,8 +6517,6 @@
     "/sans/summit_archive": [],
     "/latexstudio/home": [],
     "/jskou/:type?": [],
-    "/cneb/yjxx": [],
-    "/cneb/guoneinews": [],
     "/mail/imap/:email": [],
     "/network360/jobs": [],
     "/zhilian/:city/:keyword": [],
