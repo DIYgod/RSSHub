@@ -1634,3 +1634,20 @@ pageClass: routes
 :::
 
 </Route>
+
+## 中央网信办
+
+### 分类
+
+<Route author="drgnchan" example="/gov/cac/xxh" path="/gov/cac/:path+" :paramsDesc="['路径，比如xxh表示信息化']" radar='1'>
+
+::: tip 提示
+
+路径填写对应页面 URL 中间部分。例如：
+
+首页 > 权威发布 > 办公室发布： <http://www.cac.gov.cn/qwfb/bgsfb/A090302index_1.htm>
+此时，path 参数为：/qwfb/bgsfb
+
+:::
+
+</Route>
