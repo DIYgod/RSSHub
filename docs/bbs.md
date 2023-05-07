@@ -527,7 +527,7 @@ pageClass: routes
 
 ### 板块
 
-<Route author="nczitzk" example="/right/forum/31" path="/right/forum/:id?" :paramsDesc="['板块 id，可在板块页 URL 中找到']"/>
+<Route author="nczitzk" example="/right/forum/31" path="/right/forum/:id?" :paramsDesc="['板块 id，可在板块页 URL 中找到，默认为新手入门及其它(硬件)']"/>
 
 ## 二次元虫洞
 

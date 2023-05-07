@@ -370,6 +370,13 @@ $ flyctl secrets set CACHE_TYPE=redis REDIS_URL='<刚才的连接字符串>'
 
 [![Run on PikaPods](https://www.pikapods.com/static/run-button.svg)](https://www.pikapods.com/pods?run=rsshub)
 
+## 部署到 Zeabur
+
+1.  前往 [Zeabur 完成注册](https://dash.zeabur.com)
+2.  创建一个新项目
+3.  在项目中选择创建新服务，选择从**服务市场**部署。
+4.  添加域名，若使用自定义域名，可参见 [Zeabur 的域名绑定文档](https://docs.zeabur.com/zh-CN/deploy/domain-binding)。
+
 ## 部署到 Google App Engine
 
 ### 准备
@@ -507,7 +514,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 #### 代理 URI
 
-`PROXY_URI`: 代理 URI，支持 socks4, socks5（本地查询域名的 SOCKS5，不推荐使用）, socks5h（传域名的 SOCKS5，推荐使用，以防止 DNS 污染或 DNS 泄露）, http, https，具体以[socks-proxy-agent](https://www.npmjs.com/package/socks-proxy-agent) NPM 包的支持为准，也可参考[curl 中 SOCKS 代理协议的用法](https://daniel.haxx.se/blog/2020/05/26/curl-ootw-socks5/)。
+`PROXY_URI`: 代理 URI，支持 socks4, socks5（本地查询域名的 SOCKS5，不推荐使用）, socks5h（传域名的 SOCKS5，推荐使用，以防止 DNS 污染或 DNS 泄露）, http, https，具体以 [socks-proxy-agent](https://www.npmjs.com/package/socks-proxy-agent) NPM 包的支持为准，也可参考[curl 中 SOCKS 代理协议的用法](https://daniel.haxx.se/blog/2020/05/26/curl-ootw-socks5/)。
 
 > 代理 URI 的格式为：
 >

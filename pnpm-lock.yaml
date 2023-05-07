@@ -8,8 +8,8 @@ dependencies:
     specifier: 2.2.3
     version: 2.2.3
   '@sentry/node':
-    specifier: 7.50.0
-    version: 7.50.0
+    specifier: 7.51.0
+    version: 7.51.0
   aes-js:
     specifier: 3.1.2
     version: 3.1.2
@@ -62,8 +62,8 @@ dependencies:
     specifier: 11.8.6
     version: 11.8.6
   https-proxy-agent:
-    specifier: 5.0.1
-    version: 5.0.1
+    specifier: 6.1.0
+    version: 6.1.0
   iconv-lite:
     specifier: 0.6.3
     version: 0.6.3
@@ -133,6 +133,12 @@ dependencies:
   puppeteer-extra-plugin-stealth:
     specifier: 2.11.2
     version: 2.11.2(puppeteer-extra@3.3.6)
+  puppeteer-extra-plugin-user-data-dir:
+    specifier: 2.4.1
+    version: 2.4.1(puppeteer-extra@3.3.6)
+  puppeteer-extra-plugin-user-preferences:
+    specifier: 2.4.1
+    version: 2.4.1(puppeteer-extra@3.3.6)
   query-string:
     specifier: 7.1.3
     version: 7.1.3
@@ -155,14 +161,11 @@ dependencies:
     specifier: 0.1.5
     version: 0.1.5
   socks-proxy-agent:
-    specifier: 7.0.0
-    version: 7.0.0
+    specifier: 8.0.1
+    version: 8.0.1
   source-map:
     specifier: 0.7.4
     version: 0.7.4
-  string-similarity:
-    specifier: 4.0.4
-    version: 4.0.4
   tiny-async-pool:
     specifier: 2.1.0
     version: 2.1.0
@@ -1147,33 +1150,33 @@ packages:
       selderee: 0.10.0
     dev: false
 
-  /@sentry-internal/tracing@7.50.0:
-    resolution: {integrity: sha512-4TQ4vN0aMBWsUXfJWk2xbe4x7fKfwCXgXKTtHC/ocwwKM+0EefV5Iw9YFG8IrIQN4vMtuRzktqcs9q0/Sbv7tg==}
+  /@sentry-internal/tracing@7.51.0:
+    resolution: {integrity: sha512-mhXl4B02OQq6/vevjX04OchmQbxPRaLci9vTTPcPcIz/n+wkum29ze35gHcJsPJUesScjd0m19Xou3C8fNnZRA==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.50.0
-      '@sentry/types': 7.50.0
-      '@sentry/utils': 7.50.0
+      '@sentry/core': 7.51.0
+      '@sentry/types': 7.51.0
+      '@sentry/utils': 7.51.0
       tslib: 1.14.1
     dev: false
 
-  /@sentry/core@7.50.0:
-    resolution: {integrity: sha512-6oD1a3fYs4aiNK7tuJSd88LHjYJAetd7ZK/AfJniU7zWKj4jxIYfO8nhm0qdnhEDs81RcweVDmPhWm3Kwrzzsg==}
+  /@sentry/core@7.51.0:
+    resolution: {integrity: sha512-GgYwlXU8Y1kDEHsJO1Bmr2CNan5BzoNRR0TDBmxRgI/DgTNNSYrXeFDELgPi9/p/0XENeuttzDZ3iYd1nF7meA==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.50.0
-      '@sentry/utils': 7.50.0
+      '@sentry/types': 7.51.0
+      '@sentry/utils': 7.51.0
       tslib: 1.14.1
     dev: false
 
-  /@sentry/node@7.50.0:
-    resolution: {integrity: sha512-11UJBKoQFMp7f8sbzeO2gENsKIUkVCNBTzuPRib7l2K1HMjSfacXmwwma7ZEs0mc3ofIZ1UYuyONAXmI1lK9cQ==}
+  /@sentry/node@7.51.0:
+    resolution: {integrity: sha512-UHJ0yN3I8hSrythr3/KPewh+xLIdjF6AU+BW3bgsP0ZtztrftrQk9+XnWRIX0p6ZstzoP4F3arkJIXkWfOk5Pg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry-internal/tracing': 7.50.0
-      '@sentry/core': 7.50.0
-      '@sentry/types': 7.50.0
-      '@sentry/utils': 7.50.0
+      '@sentry-internal/tracing': 7.51.0
+      '@sentry/core': 7.51.0
+      '@sentry/types': 7.51.0
+      '@sentry/utils': 7.51.0
       cookie: 0.4.2
       https-proxy-agent: 5.0.1
       lru_map: 0.3.3
@@ -1182,16 +1185,16 @@ packages:
       - supports-color
     dev: false
 
-  /@sentry/types@7.50.0:
-    resolution: {integrity: sha512-Zo9vyI98QNeYT0K0y57Rb4JRWDaPEgmp+QkQ4CRQZFUTWetO5fvPZ4Gb/R7TW16LajuHZlbJBHmvmNj2pkL2kw==}
+  /@sentry/types@7.51.0:
+    resolution: {integrity: sha512-8REzzY0DslDryp6Yxj+tJ4NkXFHulLW9k8dgZV2Qo/0rBDMKir8g0IHYeN8ZBcnWrx2F+6rQb6uN6BjyLZY7Dg==}
     engines: {node: '>=8'}
     dev: false
 
-  /@sentry/utils@7.50.0:
-    resolution: {integrity: sha512-iyPwwC6fwJsiPhH27ZbIiSsY5RaccHBqADS2zEjgKYhmP4P9WGgHRDrvLEnkOjqQyKNb6c0yfmv83n0uxYnolw==}
+  /@sentry/utils@7.51.0:
+    resolution: {integrity: sha512-y5zq4IfZDCm6cg0EQJMghUM4YjZToFni7J5OKopLXKVtc9YtRtkYoFuFqEWm4HBuBwplreiS/KkDQgWn3FVn7A==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.50.0
+      '@sentry/types': 7.51.0
       tslib: 1.14.1
     dev: false
 
@@ -1564,6 +1567,15 @@ packages:
       debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
+
+  /agent-base@7.0.1:
+    resolution: {integrity: sha512-V9to8gr2GK7eA+xskWGAFUX/TLSQKuH2TI06c/jGLL6yLp3oEjtnqM7a5tPV9fC1rabLeAgThZeBwsYX+WWHpw==}
+    engines: {node: '>= 14'}
+    dependencies:
+      debug: 4.3.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /agentkeepalive@4.3.0:
     resolution: {integrity: sha512-7Epl1Blf4Sy37j4v9f9FjICCh4+KAQOyXgHEwlyBiAQLbhKdq/i2QQU3amQalS/wPhdPzDXPL5DMR5bkn+YeWg==}
@@ -3836,6 +3848,16 @@ packages:
       debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
+
+  /https-proxy-agent@6.1.0:
+    resolution: {integrity: sha512-rvGRAlc3y+iS7AC9Os2joN91mX8wHpJ4TEklmHHxr7Gz2Juqa7fJmJ8wWxXNpTaRt56MQTwojxV5d82UW/+jwg==}
+    engines: {node: '>= 14'}
+    dependencies:
+      agent-base: 7.0.1
+      debug: 4.3.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
 
   /human-signals@1.1.1:
     resolution: {integrity: sha512-SEQu7vl8KjNL2eoGBLF3+wAjpsNfA9XMlXAYj/3EdaNfAlxKthD1xjEQfGOUhllCGGJVNY34bRr6lPINhNjyZw==}
@@ -6803,6 +6825,17 @@ packages:
       - supports-color
     dev: false
 
+  /socks-proxy-agent@8.0.1:
+    resolution: {integrity: sha512-59EjPbbgg8U3x62hhKOFVAmySQUcfRQ4C7Q/D5sEHnZTQRrQlNKINks44DMR1gwXp0p4LaVIeccX2KHTTcHVqQ==}
+    engines: {node: '>= 14'}
+    dependencies:
+      agent-base: 7.0.1
+      debug: 4.3.4
+      socks: 2.7.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /socks@2.7.1:
     resolution: {integrity: sha512-7maUZy1N7uo6+WVEX6psASxtNlKaNVMlGQKkG/63nEDdLOWNbiUMoLK7X4uYoLhQstau72mLgfEWcXcwsaHbYQ==}
     engines: {node: '>= 10.13.0', npm: '>= 3.0.0'}
@@ -6919,11 +6952,6 @@ packages:
       char-regex: 1.0.2
       strip-ansi: 6.0.1
     dev: true
-
-  /string-similarity@4.0.4:
-    resolution: {integrity: sha512-/q/8Q4Bl4ZKAPjj8WerIBJWALKkaPRfrvhfF8k/B23i4nzrlRj2/go1m90In7nG/3XDSbOo0+pu6RvCTM9RGMQ==}
-    deprecated: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
-    dev: false
 
   /string-width@4.2.3:
     resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
