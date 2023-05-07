@@ -13989,6 +13989,14 @@
         "source": "/:location/news",
         "target": "/mihoyo/ys/:location"
       }
+    ],
+    "hsr": [
+      {
+        "title": "崩坏：星穹铁道 - 新闻",
+        "docs": "https://docs.rsshub.app/game.html##mi-ha-you",
+        "source": "/:location/news",
+        "target": "/mihoyo/sr/:location"
+      }
     ]
   },
   "mihoyo.com": {
@@ -14005,6 +14013,14 @@
           "/:game/home/53",
           "/:game/home/58"
         ]
+      }
+    ],
+    "sr": [
+      {
+        "title": "崩坏：星穹铁道 - 新闻",
+        "docs": "https://docs.rsshub.app/game.html##mi-ha-you",
+        "source": "/news",
+        "target": "/mihoyo/sr"
       }
     ],
     "ys": [

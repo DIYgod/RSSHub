@@ -7390,7 +7390,11 @@
     genshin:[ { title:"原神 - 新闻",
         docs:"https://docs.rsshub.app/game.html##mi-ha-you",
         source:"/:location/news",
-        target:"/mihoyo/ys/:location" } ] },
+        target:"/mihoyo/ys/:location" } ],
+    hsr:[ { title:"崩坏：星穹铁道 - 新闻",
+        docs:"https://docs.rsshub.app/game.html##mi-ha-you",
+        source:"/:location/news",
+        target:"/mihoyo/sr/:location" } ] },
   "mihoyo.com":{ _name:"米哈游",
     bbs:[ { title:"米游社 - 官方公告",
         docs:"https://docs.rsshub.app/game.html#mi-ha-you-mi-you-she-guan-fang-gong-gao",
@@ -7419,6 +7423,10 @@
                     const last_id = '';
                     return `/mihoyo/bbs/official/${gids}/${type}/${page_size}/${last_id}`;
                 } } ],
+    sr:[ { title:"崩坏：星穹铁道 - 新闻",
+        docs:"https://docs.rsshub.app/game.html##mi-ha-you",
+        source:"/news",
+        target:"/mihoyo/sr" } ],
     ys:[ { title:"原神 - 新闻",
         docs:"https://docs.rsshub.app/game.html##mi-ha-you",
         source:"/:location/news/:category",

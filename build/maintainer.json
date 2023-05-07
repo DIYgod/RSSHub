@@ -3330,6 +3330,9 @@
     "/mihoyo/bbs/official/:gids/:type?/:page_size?/:last_id?": [
         "CaoMeiYouRen"
     ],
+    "/mihoyo/sr/:location?/:category?": [
+        "shinanory"
+    ],
     "/mihoyo/ys/:location?/:category?": [
         "nczitzk"
     ],
