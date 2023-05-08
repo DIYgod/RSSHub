@@ -1191,6 +1191,16 @@ pageClass: routes
 
 </Route>
 
+### 研究生招生网
+
+<Route author="yanbot-team" example="/uibe/yjsy/400" path="/uibe/yjsy/:type" :paramsDesc="['分类见下表']">
+
+| 硕士生招生 | 推免生招生 | 历年数据统计 | 博士生招生 |
+| ---------- | ---------- | ------------ | ---------- |
+| 400        | 403        | 406          | 401        |
+
+</Route>
+
 ## 福建师范大学
 
 ### 研究生院
