@@ -15,6 +15,7 @@ RUN \
         pnpm config set registry https://registry.npmmirror.com ; \
     fi;
 
+COPY ./scripts/prepare.js /app/scripts/
 COPY ./pnpm-lock.yaml /app/
 COPY ./package.json /app/
 
