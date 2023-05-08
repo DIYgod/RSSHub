@@ -26,11 +26,12 @@
     "dev": "cross-env NODE_ENV=dev nodemon --inspect lib/index.js",
     "format": "eslint \"**/*.{js,yml}\" --fix && node docs/.format/format.js && prettier \"**/*.{js,json}\" --write",
     "format:check": "eslint \"**/*.{js,yml}\" && prettier-check \"**/*.{js,json}\"",
-    "format:staged": "eslint \"**/*.{js,yml}\" --fix && node docs/.format/format.js --staged && pretty-quick --staged --verbose --pattern \"**/*.{js,json}\"",
+    "format:staged": "eslint --cache \"**/*.{js,yml}\" --fix && node docs/.format/format.js --staged && pretty-quick --staged --verbose --pattern \"**/*.{js,json}\"",
     "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit --detectOpenHandles",
     "jest:coverage": "cross-env NODE_ENV=test jest --coverage --reporters=default --reporters=jest-junit --runInBand --forceExit --detectOpenHandles",
     "jest:watch": "cross-env NODE_ENV=test jest --watch",
     "lint": "eslint .",
+    "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
     "profiling": "NODE_ENV=production node --prof lib/index.js",
     "start": "node lib/index.js",
     "test": "npm run format:check && npm run jest:coverage"
@@ -76,7 +77,7 @@
   "dependencies": {
     "@koa/router": "12.0.0",
     "@postlight/parser": "2.2.3",
-    "@sentry/node": "7.50.0",
+    "@sentry/node": "7.51.0",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
@@ -146,6 +147,7 @@
     "eslint-plugin-prettier": "4.2.1",
     "eslint-plugin-yml": "1.5.0",
     "fs-extra": "11.1.1",
+    "husky": "8.0.3",
     "jest": "29.5.0",
     "jest-junit": "16.0.0",
     "mockdate": "3.0.5",
@@ -166,14 +168,10 @@
     "string-width": "4.2.3",
     "supertest": "6.3.3",
     "tosource": "2.0.0-alpha.3",
-    "unified": "9.2.2",
-    "yorkie": "2.0.0"
+    "unified": "9.2.2"
   },
   "engines": {
     "node": ">=16"
-  },
-  "gitHooks": {
-    "pre-commit": "npm run format:staged"
   },
   "reporters": [
     "default",

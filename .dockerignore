@@ -1,6 +1,7 @@
 # folders
 .devcontainer
 .github
+.husky
 .idea
 .vscode
 Dockerfile*
