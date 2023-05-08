@@ -4558,6 +4558,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 中国政法大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/cupl/yjsy/yjszs" path="/cupl/yjsy:type" :paramsDesc="['分类，见下表']">
+
+| 研究生招生 |
+| ---------- |
+| yjszs      |
+
+</Route>
+
 ## 中科院
 
 ### 中科院自动化所
