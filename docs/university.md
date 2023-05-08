@@ -208,6 +208,18 @@ pageClass: routes
 
 <Route author="legr4ndk" example="/pku/ss/pgadmin" path="/pku/ss/pgadmin" radar="1" rssbud="1"/>
 
+### 北京工业大学
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/bjut/yanzhao/sszs-sszs" path="/bjut/yanzhao/:type" :paramsDesc="['分类id，见下表，其他未列出的分类可以在网页URL中找到']" radar="1">
+
+| 硕士招生  | 通知公告 | 招生简章及专业目录 | 博士招生 |
+| --------- | -------- | ------------------ | -------- |
+| sszs-sszs | tzgg     | zsjzjzyml          | bszs     |
+
+</Route>
+
 ## 北京航空航天大学
 
 ### 北京航空航天大学
