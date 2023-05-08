@@ -331,36 +331,57 @@ Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product pla
 
 ## Deploy to Fly.io
 
-1. [Fork RSSHub](https://github.com/DIYgod/RSSHub/fork) to your GitHub account.
-2. Clone the source code from your fork.
+### Method 1: Fork
+
+1. [Fork RSSHub](https://github.com/DIYgod/RSSHub/fork) to your GitHub account;
+2. Clone the source code from your fork
     ```bash
     $ git clone https://github.com/<your username>/RSSHub.git
     $ cd RSSHub
     ```
-3. [Sign up for Fly.io](https://fly.io/app/sign-up) and install the [`flyctl` CLI](https://fly.io/docs/hands-on/install-flyctl/).
-4. Run `flyctl launch` and choose a unique name and region to deploy.
-5. Use `flyctl secrets set KEY=VALUE` to [configure specific routes](#configuration-route-specific-configurations).
-6. [Set up automatic deployment via GitHub Actions](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/)
-7. Install the [Pull](https://github.com/apps/pull) GitHub app to keep your fork synchronized with upstream.
-8. (Optional) Point your own domain to the IPv4 and IPv6 addresses provided by fly.io, then go to Certificate page and add the domain.
+3. [Sign up for Fly.io](https://fly.io/app/sign-up) and install the [flyctl CLI](https://fly.io/docs/hands-on/install-flyctl/);
+4. Run `fly launch` and choose a unique name and region to deploy;
+5. Use `fly secrets set KEY=VALUE` to [configure some modules](#configuration-route-specific-configurations);
+6. [Set up automatic deployment via GitHub Actions](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/);
+7. (Optional) Use `fly certs add your domain` to configure a custom domain, and follow the instructions to configure the related domain resolution at your DNS service provider (you can check the domain configuration status on the Dashboard Certificate page).
+
+Upgrade: On the homepage of your Forked repository, click "Sync fork - Update Branch" to manually update to the latest official master branch, or install the [Pull](https://github.com/apps/pull) GitHub app to keep your fork synchronized with upstream.
+
+### Method 2: Maintain fly.toml by yourself
+
+1. [Sign up for Fly.io](https://fly.io/app/sign-up) and install the [flyctl CLI](https://fly.io/docs/hands-on/install-flyctl/);
+2. Create a new empty directory locally, run `fly launch` in it, and choose a unique name and instance region;
+3. Edit the generated fly.toml file, add
+   ```toml
+   [build]
+   image = "diygod/rsshub:latest"
+   ```
+   Depending on the actual situation, you may want to use other image tags, please read the relevant content of [Docker Image](#docker-image);
+4. Modify the `[env]` section in fly.toml or use `fly secrets set KEY=VALUE` to [configure some modules](#configuration-route-specific-configurations);
+5. Execute `fly deploy` to start the application;
+6. (Optional) Use `fly certs add your domain` to configure a custom domain, and follow the instructions to configure the related domain resolution at your DNS service provider (you can check the domain configuration status on the Dashboard Certificate page).
+
+Upgrade: Enter the directory where you saved the `fly.toml` file and execute `fly deploy` to trigger the steps of pulling the latest image and starting the upgraded application.
 
 ### Configure built-in Upstash Redis as cache
 
-Run
+Run in the `RSSHub` folder
 
 ```bash
 $ flyctl redis create
 ```
 
-under the `RSSHub` folder in order to create a new Redis database; [eviction](https://redis.io/docs/reference/eviction/) is recommended to be turned on. After creation is successful, a string in the form of `redis://default:<password>@<domain>.upstash.io` will be printed.
+to create a new Redis database. Choose the same region as when you created the RSSHub app above, and it is recommended to enable [eviction](https://redis.io/docs/reference/eviction/). After creation, a string in the form of `redis://default:<password>@<domain>.upstash.io` will be printed.
 
-Then run
+Due to [a bug in a dependency](https://github.com/luin/ioredis/issues/1576), you currently need to append the `family=6` parameter to the URL provided by Fly.io, i.e., use `redis://default:<password>@<domain>.upstash.io/?family=6` as the connection URL.
+
+Then configure the `[env]` section in fly.toml or run
 
 ```bash
-$ flyctl secrets set CACHE_TYPE=redis REDIS_URL='<the printed connection string>'
+$ fly secrets set CACHE_TYPE=redis REDIS_URL='<the connection URL>'
 ```
 
-to configure RSSHub to use this Redis database for caching.
+and execute `fly deploy` (if use the second install method) to trigger a redeployment to complete the configuration.
 
 ## Deploy to PikaPods
 
