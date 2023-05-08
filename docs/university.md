@@ -1281,6 +1281,18 @@ pageClass: routes
 
 <Route author="Xiaotouming" example="/gdoujwc" path="/gdoujwc"/>
 
+## 广西大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/gxu/yjsc/zsgz1-sszs" path="/gxu/yjsc/:type" :paramsDesc="['分类名,见下表，也可在页面url中找到']">
+
+| 硕士招生   | 推免招生    |
+| ---------- | ----------- |
+| zsgz1-sszs | zsgz1-tmszs |
+
+</Route>
+
 ## 广州大学
 
 ### 研究生院
