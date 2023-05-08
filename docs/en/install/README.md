@@ -758,6 +758,11 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `MASTODON_API_ACCESS_TOKEN`: user access token
     -   `MASTODON_API_ACCT_DOMAIN`: acct domain for particular instance
 
+-  Medium related routes: Open the console, copy the cookie (in theory, only uid and sid are required)
+	
+    -  `MEDIUM_ARTICLE_COOKIE`: Cookie used when requesting the full article, can access the full text of paid content when there is an active Member subscription.
+	-  `MEDIUM_COOKIE_{username}`: Cookie of the user corresponding to the username, required for personalized recommendation related routes.
+
 -   nhentai torrent: [Registration](https://nhentai.net/register/)
 
     -   `NHENTAI_USERNAME`: nhentai username or email

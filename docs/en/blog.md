@@ -70,6 +70,52 @@ pageClass: routes
 
 <RouteEn author="5upernova-heng" example="/macmenubar/recently/developer-apps,system-tools" path="/macmenubar/recently/:category?" :paramsDesc="['Category path name, seperate by comma, default is all categories. Category path name can be found in url']" radar="1" />
 
+## Medium
+
+### List
+
+<Route author="ImSingee" example="/medium/list/imsingee/f2d8d48096a9" path="/medium/list/:user/:catalogId" :paramsDesc="['Username', 'List ID']" />
+
+The List ID is the last part of the URL after `-`, for example, the username in "https://medium.com/@imsingee/list/collection-7e67004f23f9" is `imsingee`, and the ID is `7e67004f23f9`.
+
+::: warning Note
+
+To access private lists, only self-hosting is supported.
+
+:::
+
+### Personalized Recommendations - For You
+
+<Route author="ImSingee" example="/medium/for-you/imsingee" path="/medium/for-you/:user" :paramsDesc="['Username']" selfhost="1" />
+
+::: warning Note
+
+Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
+
+:::
+
+### Personalized Recommendations - Following
+
+<Route author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" :paramsDesc="['Username']" selfhost="1" />
+
+::: warning Note
+
+Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
+
+:::
+
+### Personalized Recommendations - Tag
+
+<Route author="ImSingee" example="/medium/tag/imsingee/cybersecurity" path="/medium/tag/:user/:tag" :paramsDesc="['Username', 'Subscribed Tag']" selfhost="1" />
+
+There are many tags, which can be obtained by clicking on a tag from the homepage and looking at the URL. For example, if the URL is `https://medium.com/?tag=web3`, then the tag is `web3`.
+
+::: warning Note
+
+Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
+
+:::
+
 ## Miris Whispers
 
 ### Blog
