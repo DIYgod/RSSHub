@@ -1909,6 +1909,9 @@
     "/github/file/:user/:repo/:branch/:filepath+": [
         "zengxs"
     ],
+    "/github/gist/:gistId": [
+        "TonyRL"
+    ],
     "/github/issue/:user/:repo/:state?/:labels?": [
         "HenryQW",
         "AndreyMZ"
