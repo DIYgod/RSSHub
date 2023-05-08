@@ -1532,6 +1532,9 @@
     "/dtcj/datainsight/:id?": [
         "nczitzk"
     ],
+    "/duozhuayu/search/:wd": [
+        "fengkx"
+    ],
     "/dushu/fuzhou": [
         "Fatpandac"
     ],
@@ -6275,7 +6278,6 @@
     "/patchwork.kernel.org/comments/:id": [],
     "/jingdong/zhongchou/:type/:status/:sort": [],
     "/allpoetry/:order?": [],
-    "/duozhuayu/search/:wd": [],
     "/cyzone/author/:id": [],
     "/cyzone/label/:name": [],
     "/gov/province/:name/:category": [],
