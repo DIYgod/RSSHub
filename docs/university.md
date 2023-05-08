@@ -208,7 +208,7 @@ pageClass: routes
 
 <Route author="legr4ndk" example="/pku/ss/pgadmin" path="/pku/ss/pgadmin" radar="1" rssbud="1"/>
 
-### 北京工业大学
+## 北京工业大学
 
 ### 研究生招生网
 
@@ -4638,7 +4638,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="Neutrino3316 MegrezZhu nczitzk" example="/sysu/cse" path="/sysu/cse"/>
 
-### 中央财经大学
+## 中央财经大学
 
 ### 研究生院
 
@@ -4646,11 +4646,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 | 类型 | 硕士招生（双证） | 报考统计  |
 | ---- | ---------------- | --------- |
-| 参数 | zsgz/sszs*sz*    | zsgz/bktj |
+| 参数 | zsgz-sszs*sz*    | zsgz/bktj |
 
 </Route>
 
-### 中央民族大学
+## 中央民族大学
 
 ### 研究生招生网
 
