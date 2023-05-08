@@ -318,6 +318,10 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="zhzy0077" example="/github/notifications" path="/github/notifications" radar="1" rssbud="1" selfhost="1"/>
 
+### Gist Commits
+
+<Route author="TonyRL" example="/github/gist/d2c152bb7179d07015f336b1a0582679" path="/github/gist/:gistId" :paramsDesc="['Gist ID']" radar="1" rssbud="1"/>
+
 ## GitLab
 
 ### Explore
