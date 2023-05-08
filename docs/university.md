@@ -4638,6 +4638,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="Neutrino3316 MegrezZhu nczitzk" example="/sysu/cse" path="/sysu/cse"/>
 
+### 中央财经大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/cufe/gs/zsgz-sszs_sz_" path="/cufe/gs/:type" :paramsDesc="['类型，见下表，其他未列出的类型可在页面URL中找到']" radar="1">
+
+| 类型 | 硕士招生（双证） | 报考统计  |
+| ---- | ---------------- | --------- |
+| 参数 | zsgz/sszs*sz*    | zsgz/bktj |
+
+</Route>
+
 ### 中央民族大学
 
 ### 研究生招生网
