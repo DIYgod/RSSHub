@@ -351,17 +351,17 @@ Heroku [不再](https://blog.heroku.com/next-chapter) 提供免费服务。
 
 ### 方案二：自行维护 fly.toml
 
-1. 前往 [Fly.io 完成注册](https://fly.io/app/sign-up)，并安装 [flyctl CLI](https://fly.io/docs/hands-on/install-flyctl/)；
-2. 自行在本地新建一个空目录，在其中运行 `fly launch`, 并选择一个唯一的名称和实例地区；
-3. 编辑生成的 fly.toml 文件，新增
-   ```toml
-   [build]
-   image = "diygod/rsshub:latest"
-   ```
-   根据实际情况，你可能希望使用其他镜像标签，请阅读 [Docker 镜像](#docker-jing-xiang) 的有关内容；
-4. 修改 fly.toml 中的 `[env]` 段或使用`fly secrets set KEY=VALUE` [对部分模块进行配置](#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)；
-5. 执行 `fly deploy` 启动应用；
-6. （可选）利用 `fly certs add 你的域名` 来配置自定义域名，并根据指引在你的 DNS 服务商配置相关域名解析（你可在 Dashboard Certificate 页面查看域名的配置状态）。
+1.  前往 [Fly.io 完成注册](https://fly.io/app/sign-up)，并安装 [flyctl CLI](https://fly.io/docs/hands-on/install-flyctl/)；
+2.  自行在本地新建一个空目录，在其中运行 `fly launch`, 并选择一个唯一的名称和实例地区；
+3.  编辑生成的 fly.toml 文件，新增
+    ```toml
+    [build]
+    image = "diygod/rsshub:latest"
+    ```
+    根据实际情况，你可能希望使用其他镜像标签，请阅读 [Docker 镜像](#docker-jing-xiang) 的有关内容；
+4.  修改 fly.toml 中的 `[env]` 段或使用`fly secrets set KEY=VALUE` [对部分模块进行配置](#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)；
+5.  执行 `fly deploy` 启动应用；
+6.  （可选）利用 `fly certs add 你的域名` 来配置自定义域名，并根据指引在你的 DNS 服务商配置相关域名解析（你可在 Dashboard Certificate 页面查看域名的配置状态）。
 
 更新：进入你存储了 `fly.toml` 文件的目录，执行 `fly deploy` 即可触发拉取最新镜像、启动应用的步骤。
 
