@@ -8,15 +8,21 @@ pageClass: routes
 
 ### 新闻中心
 
-<Route author="zhboner" example="/3dm/news" path="/3dm/news"/>
+<Route author="zhboner" example="/3dmgame/news" path="/3dmgame/news/:category?" :paramsDesc="['分类名或 ID，见下表，默认为新闻推荐，ID 可从分类 URL 中找到，如 Steam 为 `22221`']" radar="1">
+
+| 新闻推荐 | 游戏新闻 | 动漫影视 | 智能数码 | 时事焦点  |
+| -------- | -------- | -------- | -------- | --------- |
+|          | game     | acg      | next     | news_36_1 |
+
+</Route>
 
 ### 游戏资讯
 
-<Route author="sinchang jacky2001114 HenryQW" example="/3dm/detroitbecomehuman/news" path="/3dm/:name/:type" :paramsDesc="['游戏的名字, 可以在专题页的 url 中找到', '资讯类型']">
+<Route author="sinchang jacky2001114 HenryQW" example="/3dmgame/detroitbecomehuman/news" path="/3dm/:name/:type?" :paramsDesc="['游戏名字，可以在专题页的 url 中找到', '资讯类型，见下表，默认为 `news`']" radar="1">
 
-| 新闻 | 攻略 | 下载资源 | 区块链快讯 |
-| ---- | ---- | -------- | ---------- |
-| news | gl   | resource | blockchain |
+| 新闻 | 攻略 | 资源     |
+| ---- | ---- | -------- |
+| news | gl   | resource |
 
 </Route>
 
