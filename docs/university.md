@@ -3213,6 +3213,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 陕西师范大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/snnu/yz/tzgg-ssyjszs" path="/snnu/yz/:type" :paramsDesc="['类别ID，见下表，其他未列出的栏目参数可以从页面的 URL Path 中找到，例如：硕士研究生招生的网址为http://yz.snnu.edu.cn/tzgg/ssyjszs.htm，则类别ID为tzgg-ssyjszs']" radar="1" >
+
+| 硕士研究生招生 | 推免生接收 | 公费师范毕业生在职攻读教育硕士 |
+| -------------- | ---------- | ------------------------------ |
+| tzgg-ssyjszs   | tzgg-tmsjs | tzgg-gfsfbyszzgdjyss           |
+
+</Route>
+
 ## 深圳大学
 
 ### 深圳大学研究生招生网通知公告
