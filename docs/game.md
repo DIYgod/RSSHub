@@ -1033,3 +1033,9 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 ### 游戏横幅
 
 <Route author="y2361547758" example="/magireco/event_banner" path="/magireco/event_banner"/>
+
+## 5EPLAY
+
+### 新闻列表
+
+<Route author="Dlouxgit" example="/5eplay/article" path="/5eplay/article"/>
