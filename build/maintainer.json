@@ -3336,6 +3336,18 @@
     "/mdpi/:journal": [
         "Derekmini"
     ],
+    "/medium/following/:user": [
+        "ImSingee"
+    ],
+    "/medium/for-you/:user": [
+        "ImSingee"
+    ],
+    "/medium/list/:user/:catalogId": [
+        "ImSingee"
+    ],
+    "/medium/tag/:user/:tag": [
+        "ImSingee"
+    ],
     "/medsci/:sid?/:tid?": [
         "nczitzk"
     ],
