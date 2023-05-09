@@ -2174,6 +2174,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 辽宁大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/lnu/grs/zsgz-sszs" path="/lnu/grs/:type" :paramsDesc="['分类type，见下表']">
+
+| 硕士招生  |
+| --------- |
+| zsgz-sszs |
+
+</Route>
+
 ## 辽宁工程技术大学
 
 ### 教务公告
