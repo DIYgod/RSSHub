@@ -182,13 +182,15 @@ List ID 取的是网址中最后一部分 `-` 后面的内容，例如 `https://
 
 ### 个性推荐 - Following
 
-<Route author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" :paramsDesc="['用户名']" selfhost="1" />
+<Route author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" :paramsDesc="['用户名']" selfhost="1">
 
 ::: warning 注意
 
 个性推荐需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
 :::
+
+</Route>
 
 ### 个性推荐 - Tag
 
