@@ -112,7 +112,7 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 ### Personalized Recommendations - Tag
 
-<Route author="ImSingee" example="/medium/tag/imsingee/cybersecurity" path="/medium/tag/:user/:tag" :paramsDesc="['Username', 'Subscribed Tag']" selfhost="1" />
+<RouteEn author="ImSingee" example="/medium/tag/imsingee/cybersecurity" path="/medium/tag/:user/:tag" :paramsDesc="['Username', 'Subscribed Tag']" selfhost="1">
 
 There are many tags, which can be obtained by clicking on a tag from the homepage and looking at the URL. For example, if the URL is `https://medium.com/?tag=web3`, then the tag is `web3`.
 
@@ -121,6 +121,8 @@ There are many tags, which can be obtained by clicking on a tag from the homepag
 Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
 
 :::
+
+</RouteEn>
 
 ## Miris Whispers
 
