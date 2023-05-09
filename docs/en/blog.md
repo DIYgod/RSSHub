@@ -88,13 +88,15 @@ To access private lists, only self-hosting is supported.
 
 ### Personalized Recommendations - For You
 
-<Route author="ImSingee" example="/medium/for-you/imsingee" path="/medium/for-you/:user" :paramsDesc="['Username']" selfhost="1" />
+<RouteEn author="ImSingee" example="/medium/for-you/imsingee" path="/medium/for-you/:user" :paramsDesc="['Username']" selfhost="1">
 
 ::: warning Note
 
 Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
 
 :::
+
+</RouteEn>
 
 ### Personalized Recommendations - Following
 
