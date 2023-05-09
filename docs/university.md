@@ -1104,6 +1104,18 @@ pageClass: routes
 
 </Route>
 
+## 东北林业大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/nefu/yz/ssszs" path="/nefu/yz/:type" :paramsDesc="['分类 id 见下表，也可在页面URL中找到']" radar="1">
+
+| Id    | 名称       |
+| ----- | ---------- |
+| ssszs | 硕士生招生 |
+
+</Route>
+
 ## 东北师范大学
 
 ### 研究生院
