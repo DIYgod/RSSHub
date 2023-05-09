@@ -4352,6 +4352,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 中国地质大学 (北京)
+
+### 研究生院
+
+<Route author="yanbot-team" example="/cugb/yjsyzsb/zsxx-sszs" path="/cugb/yjsyzsb/:type" :paramsDesc="['分类type，见下表，也可在URL中找到']">
+
+| 硕士招生  | 推荐免试       | 夏令营 | 推免 | 中外合作 | 博士 |
+| --------- | -------------- | ------ | ---- | -------- | ---- |
+| zsxx-sszs | zsxx-sszs-tjms | 8544   | tm   | 8546     | 8542 |
+
+</Route>
+
 ## 中国地质大学 (武汉)
 
 ### 今日文章 - 包含全校网站最新通知
