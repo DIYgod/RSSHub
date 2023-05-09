@@ -4524,9 +4524,21 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="yanbot-team" example="/cumt/yz/sszs" path="/cumt/yz/:type" :paramsDesc="['分类type，见下表，也可在网页URL中找到']">
 
-| 招聘类型 | 硕士招生 | 港澳台招生 |
-| :------: | :------: | :--------: |
-|   参数   |   sszs   |   gatzs    |
+| 类型 | 硕士招生 | 港澳台招生 |
+| :--: | :------: | :--------: |
+| 参数 |   sszs   |   gatzs    |
+
+</Route>
+
+## 中国矿业大学 （北京）
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/cumtb/yz/156" path="/cumtb/yz/:type" :paramsDesc="['分类type，见下表，也可在网页URL中找到']">
+
+| 类型 | 通知公告 | 推荐免试 | 招生简章 |
+| :--: | :------: | :------: | -------- |
+| 参数 |   156    |   189    | 155      |
 
 </Route>
 
