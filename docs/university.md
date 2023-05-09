@@ -316,6 +316,16 @@ pageClass: routes
 
 </Route>
 
+### 研究生院
+
+<Route author="yanbot-team" example="/bjfu/graduate/zsgl-zsdt" path="/bjfu/graduate/:type" :paramsDesc="['栏目']">
+
+| 招生动态  | 培养动态  |
+| --------- | --------- |
+| zsgl-zsdt | pygl-pydt |
+
+</Route>
+
 ### 研究生院培养动态
 
 <Route author="markmingjie" example="/bjfu/grs" path="/bjfu/grs" />
