@@ -156,7 +156,7 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 ### List
 
-<Route author="ImSingee" example="/medium/list/imsingee/f2d8d48096a9" path="/medium/list/:user/:catalogId" :paramsDesc="['用户名', 'List 的 ID']" />
+<Route author="ImSingee" example="/medium/list/imsingee/f2d8d48096a9" path="/medium/list/:user/:catalogId" :paramsDesc="['用户名', 'List 的 ID']">
 
 List ID 取的是网址中最后一部分 `-` 后面的内容，例如 `https://medium.com/@imsingee/list/collection-7e67004f23f9` 的用户名为 imsingee、ID 为 `7e67004f23f9`
 
@@ -165,6 +165,8 @@ List ID 取的是网址中最后一部分 `-` 后面的内容，例如 `https://
 想要获取 Private 的 List 则只支持自建
 
 :::
+
+</Route>
 
 ### 个性推荐 - For You
 
