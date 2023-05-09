@@ -31,7 +31,7 @@
     "jest:coverage": "cross-env NODE_ENV=test jest --coverage --reporters=default --reporters=jest-junit --runInBand --forceExit --detectOpenHandles",
     "jest:watch": "cross-env NODE_ENV=test jest --watch",
     "lint": "eslint .",
-    "prepare": "node -e \"try { require('husky').install() } catch (e) {if (e.code !== 'MODULE_NOT_FOUND') throw e}\"",
+    "prepare": "node ./scripts/prepare.js",
     "profiling": "NODE_ENV=production node --prof lib/index.js",
     "start": "node lib/index.js",
     "test": "npm run format:check && npm run jest:coverage"
