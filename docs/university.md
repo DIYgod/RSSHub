@@ -4520,6 +4520,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 中国社会科学院大学
+
+### 招生网
+
+<Route author="yanbot-team" example="/ucass/skdzs/tzgg" path="/ucass/skdzs/:type" :paramsDesc="['分类，见下表']">
+
+| 通知公告 | 招生信息   |
+| -------- | ---------- |
+| tzgg     | sszs1-zsxx |
+
+</Route>
+
 ## 中国石油大学（华东）
 
 ### 中国石油大学研究生院通知公告
