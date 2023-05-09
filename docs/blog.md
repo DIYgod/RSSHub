@@ -194,7 +194,7 @@ List ID 取的是网址中最后一部分 `-` 后面的内容，例如 `https://
 
 ### 个性推荐 - Tag
 
-<Route author="ImSingee" example="/medium/tag/imsingee/cybersecurity" path="/medium/tag/:user/:tag" :paramsDesc="['用户名', '订阅的 Tag']" selfhost="1" />
+<Route author="ImSingee" example="/medium/tag/imsingee/cybersecurity" path="/medium/tag/:user/:tag" :paramsDesc="['用户名', '订阅的 Tag']" selfhost="1">
 
 Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://medium.com/?tag=web3` 则 tag 为 `web3`
 
@@ -203,6 +203,8 @@ Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://me
 个性推荐需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
 :::
+
+</Route>
 
 ## Miris Whispers
 
