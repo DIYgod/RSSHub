@@ -3241,6 +3241,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 石河子大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/shzu/yz/gsgg" path="/shzu/yz/:type" :paramsDesc="['类型，见下表']" rssbud="1" radar="1">
+
+| 公示公告 | 推免动态 | 招生简章 |
+| -------- | -------- | -------- |
+| gsgg     | tmdt     | zsjz     |
+
+</Route>
+
 ## 首都医科大学
 
 ### 研究生院
