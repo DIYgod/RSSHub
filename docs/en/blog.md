@@ -100,13 +100,15 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 ### Personalized Recommendations - Following
 
-<Route author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" :paramsDesc="['Username']" selfhost="1" />
+<RouteEn author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" :paramsDesc="['Username']" selfhost="1">
 
 ::: warning Note
 
 Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
 
 :::
+
+</RouteEn>
 
 ### Personalized Recommendations - Tag
 
