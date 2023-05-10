@@ -4586,6 +4586,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 地球化学研究所
+
+<Route author="yanbot-team" example="/gyigcas/yjsjy/zsxx_-sszs_" path="/gyigcas/yjsjy/:type" :paramsDesc="['分类，见下表']" radar="1">
+
+| 硕士招生    | 博士招生    |
+| ----------- | ----------- |
+| zsxx*-sszs* | zsxx*-bszs* |
+
+</Route>
+
 ### 上海微系统与信息技术研究所 科技进展
 
 <Route author="HenryQW" example="/cas/sim/kyjz" path="/cas/sim/kyjz" radar="1"/>
