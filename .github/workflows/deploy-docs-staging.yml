@@ -6,9 +6,9 @@ name: deploy docs staging
 # events but only for the master branch
 on:
     push:
-        branches: [staging]
+        branches: [deploy-staging]
     pull_request:
-        branches: [staging]
+        branches: [deploy-staging]
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
