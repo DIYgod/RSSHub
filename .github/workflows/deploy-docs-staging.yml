@@ -37,7 +37,7 @@ jobs:
             - name: deploy to aliyun oss
               uses: manyuanrong/setup-ossutil@master
               with:
-                  endpoint: oss-cn-hangzhou.aliyuncs.com
+                  endpoint: oss-cn-beijing.aliyuncs.com
                   access-key-id: ${{ secrets.ACCESS_KEY_ID }}
                   access-key-secret: ${{ secrets.ACCESS_KEY_SECRET }}
 
