@@ -1140,6 +1140,18 @@ pageClass: routes
 
 </Route>
 
+## 东北农业大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/neau/graduate/zsgz-tzgg" path="/neau/graduate/:type" :paramsDesc="['分类 id 见下表，也可在页面URL中找到']" radar="1">
+
+| Id        | 名称             |
+| --------- | ---------------- |
+| zsgz-tzgg | 招生工作通知公告 |
+
+</Route>
+
 ## 东北师范大学
 
 ### 研究生院
@@ -3280,6 +3292,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 硕士统考招生 | 硕士推免招生 |
 | ------------ | ------------ |
 | 1793         | sstmzs       |
+
+</Route>
+
+## 上海外国语大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/shisu/yz/8899" path="/shisu/yz/:type" :paramsDesc="['类别ID，见下表，其他未列出的栏目参数可以从页面的 URL Path 中找到，例如：硕士统考招生的网址为https://yz.shisu.edu.cn/8899/list.htm，则类别ID为8899']" radar="1" >
+
+| 报名初试 | 招生简章 | 推荐免试 | 复试录取 | 报考点 |
+| -------- | -------- | -------- | -------- | ------ |
+| 8899     | 8897     | 8898     | 8890     | bkd    |
 
 </Route>
 
