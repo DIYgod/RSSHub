@@ -4480,7 +4480,13 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 ### 财经－国內
 
-<Route author="yubinbai" example="/sina/finance" path="/sina/finance" />
+<Route author="yubinbai" example="/sina/finance/china" path="/sina/finance/china/:lid?"  :paramsDesc="['分区 id，见下表，默认为 `1686`]">
+
+| 国内滚动 | 宏观经济 | 金融新闻 | 地方经济 | 部委动态 | 今日财经 TOP10 |
+| -------- | -------- | -------- | -------- | -------- | -------------- |
+| 1686     | 1687     | 1690     | 1688     | 1689     | 3231           |
+
+</Route>
 
 ### 专栏 - 创事记
 
