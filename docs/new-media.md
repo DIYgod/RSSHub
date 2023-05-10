@@ -4466,11 +4466,15 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 <Route author="xyqfer" example="/sina/rollnews" path="/sina/rollnews/:lid?" :paramsDesc="['分区 id，可在 URL 中找到']" >
 
+| 全部 | 国内 | 国际 | 社会 | 体育 | 娱乐 | 军事 | 科技 | 财经 | 股市 | 美股 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 2509 | 2510 | 2511 | 2669 | 2512 | 2513 | 2514 | 2515 | 2516 | 2517 | 2518 |
+
 </Route>
 
 ### 体育 - 综合
 
-<Route author="nczitzk" example="/sina/sports/volley" path="/sina/sports/:type?" :paramsDesc="['运动类型，见下表，默认为 `volley`']">
+<Route author="nczitzk" example="/sina/sports/volley" path="/sina/sports/:type" :paramsDesc="['运动类型，见下表']">
 
 | 排球   | 游泳 | 乒乓球   | 羽毛球 | 台球    | 田径     | 体操  | 冰雪   | 射击 | 马术  | 拳击搏击 | UFC | 其他   |
 | ------ | ---- | -------- | ------ | ------- | -------- | ----- | ------ | ---- | ----- | -------- | --- | ------ |
@@ -4485,6 +4489,16 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 | 国内滚动 | 宏观经济 | 金融新闻 | 地方经济 | 部委动态 | 今日财经 TOP10 |
 | -------- | -------- | -------- | -------- | -------- | -------------- |
 | 1686     | 1687     | 1690     | 1688     | 1689     | 3231           |
+
+</Route>
+
+### 美股
+
+<Route author="TonyRL" example="/sina/finance/stock/usstock" path="/sina/finance/stock/usstock/:cids?"  :paramsDesc="['分区 id，见下表，默认为 `57045`]">
+
+| 最新报道 | 中概股 | 国际财经 | 互联网 |
+| -------- | ------ | -------- | ------ |
+| 57045    | 57046  | 56409    | 40811  |
 
 </Route>
 
