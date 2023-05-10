@@ -242,6 +242,18 @@ pageClass: routes
 
 </Route>
 
+## 北京化工大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/buct/graduate/1392" path="/buct/graduate/:type" :paramsDesc="['分类id，见下表，其他未列出的分类可以在网页URL中找到']" radar="1">
+
+| 招生工作最新通知 | 考研资料 | 相关政策 |
+| ---------------- | -------- | -------- |
+| 1392             | 1394     | 1393     |
+
+</Route>
+
 ## 北京交通大学
 
 ### 研究生院
