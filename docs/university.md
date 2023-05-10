@@ -3489,6 +3489,15 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 天津财经大学
+
+<Route author="yanbot-team" example="/tjufe/yjsy/zsxx-ssszs" path="/tjufe/yjsy/:type" :paramsDesc="['分类，见下表']">
+
+| 硕士研究生招生 |
+| :------------: |
+|   zsxx-ssszs   |
+
+</Route>
 ## 天津师范大学
 
 <Route author="yanbot-team" example="/tjnu/yjsy/zsxx1-ssyjszs" path="/tjnu/yjsy/:type" :paramsDesc="['分类，见下表']">
