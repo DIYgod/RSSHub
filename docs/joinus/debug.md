@@ -3,7 +3,9 @@ sidebarDepth: 0
 ---
 # 调试
 
-当调试代码时，除了使用 `console.log` 或将 node 进程附加到调试器，您还可以将自定义对象提供给 `ctx.state.json` 来进行调试。
+当调试代码时，除了使用 `console.log` 或将 node 进程附加到调试器，您还可以使用如下方式进行调试。
+
+注意：需要实例运行在 `debugInfo=true` 的情况下以下方式才有效
 
 ## 使用 `ctx.state.json`
 
@@ -24,3 +26,9 @@ ctx.state.json = {
 ```
 
 在上面的示例中，我们将 `info` 对象传递给 `ctx.state.json`，然后可以使用相应的路由 + `.debug.json` 来访问它。
+
+## debug.html
+
+为了快速测试 `ctx.state.data` 中的 description 是否正确，你可以利用 `debug.html` 机制来获取相关条目的 HTML，该链接可以直接在浏览器中打开以预览渲染结果。
+
+使用方式：访问相应的路由 + `.{index}.debug.html`，其中 `{index}` 为你的 `ctx.state.data.item` 中的项目序号（从 0 开始），即返回对应路由结果中的 `ctx.state.data.item[index].description` 信息。
