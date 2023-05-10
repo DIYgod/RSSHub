@@ -4454,13 +4454,11 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 ### 科技 - 科学探索
 
-<Route author="LogicJake" example="/sina/discovery/zx" path="/sina/discovery/:type" :paramsDesc="['订阅分区类型']">
+<Route author="LogicJake" example="/sina/discovery/zx" path="/sina/discovery/:type" :paramsDesc="['订阅分区类型，见下表']">
 
-分类：
-
-| zx   | twhk     | dwzw     | zrdl     | lskg     | smyx     | shbk     | kjqy     |
-| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | 最新 | 天文航空 | 动物植物 | 自然地理 | 历史考古 | 生命医学 | 生活百科 | 科技前沿 |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| zx   | twhk     | dwzw     | zrdl     | lskg     | smyx     | shbk     | kjqy     |
 
 </Route>
 
