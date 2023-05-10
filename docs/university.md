@@ -493,6 +493,18 @@ pageClass: routes
 
 <Route author="nczitzk" example="/bupt/rczp" path="/bupt/rczp" />
 
+## 北京语言大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/blcu/yjsy/13223" path="/blcu/yjsy/:type" :paramsDesc="['分类type,见下表']" radar="1" >
+
+| 硕士生招生 |
+| ---------- |
+| 13223      |
+
+</Route>
+
 ## 长安大学
 
 ### 研究生招生网
