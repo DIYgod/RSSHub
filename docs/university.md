@@ -3323,6 +3323,17 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 首都师范大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/cnu/grad/zs-sszs" path="/cnu/grad/:type" :paramsDesc="['类型，见下表']" rssbud="1" radar="1">
+
+| 硕士招生 | 博士招生 | 港澳台招生 |
+| -------- | -------- | ---------- |
+| zs-sszs  | zs-bszs  | zs-gatzs   |
+
+</Route>
 ## 首都医科大学
 
 ### 研究生院
