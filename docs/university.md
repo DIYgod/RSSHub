@@ -3358,6 +3358,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | zs-sszs  | zs-bszs  | zs-gatzs   |
 
 </Route>
+
 ## 首都医科大学
 
 ### 研究生院
