@@ -4682,6 +4682,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 中国石油大学（北京）
+
+### 研究生院
+
+<Route author="yanbot-team" example="/cup/grs/D02" path="/cup/grs/:type" :paramsDesc="['分类，见下表']">
+
+| 硕士招生 |
+| -------- |
+| D02      |
+
+</Route>
+
 ## 中国石油大学（华东）
 
 ### 中国石油大学研究生院通知公告
