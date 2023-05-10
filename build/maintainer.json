@@ -2619,6 +2619,9 @@
     "/ibc/maitta": [
         "fengkx"
     ],
+    "/ibc/radio/:id?": [
+        "nczitzk"
+    ],
     "/icac/news/:lang?": [
         "linbuxiao, TonyRL"
     ],
