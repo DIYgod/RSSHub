@@ -1351,6 +1351,18 @@ pageClass: routes
 
 <Route author="Xiaotouming" example="/gdoujwc" path="/gdoujwc"/>
 
+## 广东外语外贸大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/gdufs/yz/ss" path="/gdufs/yz/:type" :paramsDesc="['分类名,见下表，也可在页面url中找到']">
+
+| 硕士招生 |
+| -------- |
+| ss       |
+
+</Route>
+
 ## 广西大学
 
 ### 研究生院
