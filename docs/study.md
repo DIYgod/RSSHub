@@ -268,6 +268,10 @@ path="/ctfhub/upcoming/:limit?"
 
 </Route>
 
+## 安徽人事考试网
+
+<Route author="leiseya" example="/apta/Officer" path="/apta/:fenlei" :paramsDesc="[' fenlei 可在网站 URL 找到']" />
+
 ## 德阳考试中心
 
 ### 考试新闻
