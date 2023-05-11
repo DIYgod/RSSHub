@@ -1040,6 +1040,10 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="ETiV" example="/openai/chatgpt/release-notes" path="/openai/chatgpt/release-notes" />
 
+### Research
+
+<Route author="yuguorui" example="/openai/research" path="/openai/research" />
+
 ## OR
 
 ### 频道
