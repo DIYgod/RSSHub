@@ -4783,6 +4783,12 @@
     "/storm/:category?/:id?": [
         "nczitzk"
     ],
+    "/storyfm/episodes": [
+        "nczitzk"
+    ],
+    "/storyfm/index": [
+        "sanmmm"
+    ],
     "/stratechery/": [
         "chazeon"
     ],
@@ -6534,7 +6540,6 @@
     "/ctfhub/upcoming/:limit?": [],
     "/ctfhub/search/:limit?/:form?/:class?/:title?": [],
     "/liwushuo/index": [],
-    "/storyfm/index": [],
     "/chinadaily/english/:category": [],
     "/leboncoin/ad/:query": [],
     "/dhl/:id": [],
