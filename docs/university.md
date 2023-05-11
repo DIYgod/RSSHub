@@ -505,6 +505,18 @@ pageClass: routes
 
 </Route>
 
+## 北京中医药大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/bucm/yanjiusheng/zsjy-sszs" path="/bucm/yanjiusheng/:type" :paramsDesc="['分类type,见下表']" radar="1" >
+
+| 硕士招生  | 招生简章  |
+| --------- | --------- |
+| zsjy-sszs | zsjy-zsjz |
+
+</Route>
+
 ## 长安大学
 
 ### 研究生招生网
