@@ -4790,6 +4790,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生招生信息网
+
+<Route author="kba977" example="/cpu/yjszs/10916" path="/cpu/yjszs/:type" :paramsDesc="['分类，见下表']">
+
+| 硕士最新通知 |
+| ------------ |
+| 10916        |
+
+</Route>
+
 ## 中国政法大学
 
 ### 研究生院
