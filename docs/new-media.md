@@ -4464,7 +4464,7 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 ### 滚动新闻
 
-<Route author="xyqfer" example="/sina/rollnews" path="/sina/rollnews/:lid?" :paramsDesc="['分区 id，可在 URL 中找到']" >
+<Route author="xyqfer" example="/sina/rollnews" path="/sina/rollnews/:lid?" :paramsDesc="['分区 id，可在 URL 中找到，默认为 `2509`']" >
 
 | 全部 | 国内 | 国际 | 社会 | 体育 | 娱乐 | 军事 | 科技 | 财经 | 股市 | 美股 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
