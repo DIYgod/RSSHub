@@ -16394,6 +16394,13 @@
         "docs": "https://docs.rsshub.app/en/new-media.html#openai",
         "source": "/chat"
       }
+    ],
+    "research": [
+      {
+        "title": "Research",
+        "docs": "https://docs.rsshub.app/en/new-media.html#openai",
+        "source": "/research"
+      }
     ]
   },
   "openwrt.org": {

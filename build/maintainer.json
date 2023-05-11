@@ -3873,6 +3873,9 @@
         "StevenRCE0",
         "nczitzk"
     ],
+    "/openai/research": [
+        "yuguorui"
+    ],
     "/openwrt/releases/:model?": [
         "DIYgod"
     ],
