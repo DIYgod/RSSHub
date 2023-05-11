@@ -1493,6 +1493,10 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="sanmmm" example="/storyfm/index" path="/storyfm/index"/>
 
+### 播客
+
+<Route author="nczitzk" example="/storyfm/episodes" path="/storyfm/episodes" supportPodcast="1"/>
+
 ## 开眼
 
 ### 每日精选
