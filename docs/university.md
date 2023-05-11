@@ -3501,6 +3501,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 太原理工大学
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/tyut/yz/sszs" path="/tyut/yz/:type" :paramsDesc="['类型，见下表']" rssbud="1" radar="1">
+
+| 硕士招生 |
+| -------- |
+| sszs     |
+
+</Route>
+
 ## 太原师范学院
 
 ### 通知公告
