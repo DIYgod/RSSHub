@@ -566,12 +566,6 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-## 新浪财经
-
-### 新浪财经－国內
-
-<Route author="yubinbai" example="/sina/finance" path="/sina/finance" />
-
 ## 雪球
 
 ### 今日话题
