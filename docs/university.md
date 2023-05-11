@@ -3558,6 +3558,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 |   zsxx-ssszs   |
 
 </Route>
+
 ## 天津师范大学
 
 <Route author="yanbot-team" example="/tjnu/yjsy/zsxx1-ssyjszs" path="/tjnu/yjsy/:type" :paramsDesc="['分类，见下表']">
@@ -3565,6 +3566,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 硕士研究生招生 | 招生信息 |
 | :------------: | :------: |
 | zsxx1-ssyjszs  |   zsxx   |
+
+</Route>
+
+## 天津医科大学
+
+<Route author="yanbot-team" example="/tmu/yz/3111" path="/tmu/yz/:type" :paramsDesc="['分类，见下表']">
+
+| 硕士生招生 |
+| :--------: |
+|    3111    |
 
 </Route>
 
