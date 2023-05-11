@@ -157,9 +157,9 @@ pageClass: routes
 
 <Route author="nczitzk" example="/agora0/initium" path="/agora0/:category?" :paramsDesc="['分类，见下表，默认为 initium，即端传媒']" radar="1" rssbud="1">
 
-| muitinⒾ | aidemnⒾ | srettaⓂ | qⓅ | sucoⓋ |
-| ------- | ------- | ------- | -- | ----- |
-| initium | inmedia | matters | pq | vocus |
+| muitinⒾ | aidemnⒾ | srettaⓂ | qⓅ  | sucoⓋ |
+| ------- | ------- | ------- | --- | ----- |
+| initium | inmedia | matters | pq  | vocus |
 
 </Route>
 
@@ -369,9 +369,9 @@ pageClass: routes
 
 <Route author="JamesWDGu KeiLongW" example="/engadget/chinese" path="/engadget/:lang" :paramsDesc="['語言']">
 
-| 繁體中文 | 簡體中文 | US | 日文     |
-| -------- | -------- | -- | -------- |
-| chinese  | cn       | us | japanese |
+| 繁體中文 | 簡體中文 | US  | 日文     |
+| -------- | -------- | --- | -------- |
+| chinese  | cn       | us  | japanese |
 
 </Route>
 
@@ -616,9 +616,9 @@ Life
 
 Gadget
 
-| All topics | 3C | 車   | 腕錶  | 特別報導 |
-| ---------- | -- | ---- | ----- | -------- |
-|            | 3c | auto | watch | special  |
+| All topics | 3C  | 車   | 腕錶  | 特別報導 |
+| ---------- | --- | ---- | ----- | -------- |
+|            | 3c  | auto | watch | special  |
 
 Better Men
 
@@ -846,7 +846,7 @@ Edition
 
 | 排序方式 | 一小时内 | 一天内 | 一个周内 | 一个月内 |
 | :------: | :------: | :----: | :------: | :------: |
-|          |  t-hour  |  t-day |  t-week  |  t-month |
+|          |  t-hour  | t-day  |  t-week  | t-month  |
 
 </Route>
 
@@ -860,7 +860,7 @@ Edition
 
 | 排序方式 | 一小时内 | 一天内 | 一个周内 | 一个月内 |
 | :------: | :------: | :----: | :------: | :------: |
-|          |  t-hour  |  t-day |  t-week  |  t-month |
+|          |  t-hour  | t-day  |  t-week  | t-month  |
 
 </Route>
 
@@ -1169,9 +1169,9 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 标签
 
-| 全部标签 | 5G | 双十一 | 直播带货 | 电商平台 |
-| -------- | -- | ------ | -------- | -------- |
-| 0        | 75 | 74     | 73       | 72       |
+| 全部标签 | 5G  | 双十一 | 直播带货 | 电商平台 |
+| -------- | --- | ------ | -------- | -------- |
+| 0        | 75  | 74     | 73       | 72       |
 
 | 新蓝领 | 市场竞争 | KOL | 品牌营销 | 互联网研究 |
 | ------ | -------- | --- | -------- | ---------- |
@@ -1499,9 +1499,9 @@ Provides all of the Thrillist articles with the specified tag.
 
 Supported sub-sites:
 
-| TV | Movies | Comedy | Music | TV Recaps | Books | Theater | Art | Awards | Video |
-| -- | ------ | ------ | ----- | --------- | ----- | ------- | --- | ------ | ----- |
-| tv | movies | comedy | music | tvrecaps  | books | theater | art | awards | video |
+| TV  | Movies | Comedy | Music | TV Recaps | Books | Theater | Art | Awards | Video |
+| --- | ------ | ------ | ----- | --------- | ----- | ------- | --- | ------ | ----- |
+| tv  | movies | comedy | music | tvrecaps  | books | theater | art | awards | video |
 
 </Route>
 
@@ -1540,6 +1540,17 @@ Supported sub-sites:
 ### 精读
 
 <Route author="AlexdanerZe TonyRL" example="/zaker/focusread" path="/zaker/focusread" />
+
+## 阿里研究院
+
+### 资讯
+
+<Route author="nczitzk" example="/aliresearch/information" path="/aliresearch/information/:type?" :paramsDesc="['类型，见下表，默认为新闻']">
+
+| 新闻 | 观点 | 案例 |
+| ---- | ---- | ---- |
+
+</Route>
 
 ## 艾莱资讯
 
@@ -1687,7 +1698,7 @@ Supported sub-sites:
 | 48   | 松田 里奈   |
 | 50   | 森田 ひかる |
 | 58   | 守屋 麗奈   |
-| 51   | 山﨑 天     |
+| 51   | 山﨑 天      |
 
 </Route>
 
@@ -2318,19 +2329,19 @@ Type 栏目：
 
 <Route author="Rongronggg9" example="/gzh360/category/5d357964e2eb992114a3d588" path="/gzh360/category/:id?" :paramsDesc="['分类 id，见下表']" radar="1">
 
-| `id`                       | 分类   |   | `id`                       | 分类 |
-| -------------------------- | ------ | - | -------------------------- | ---- |
-|                            | 首页   |   | `5d357ae6e2eb992114a3d592` | 育儿 |
-| `5d357964e2eb992114a3d588` | 热门   |   | `5d357b00e2eb992114a3d593` | 旅游 |
-| `5d3579a2e2eb992114a3d589` | 搞笑   |   | `5d357b17e2eb992114a3d594` | 职场 |
-| `5d3579b0e2eb992114a3d58a` | 健康   |   | `5d357b34e2eb992114a3d595` | 美食 |
-| `5d3579bae2eb992114a3d58b` | 私房话 |   | `5d357b4ae2eb992114a3d596` | 历史 |
-| `5d357a10e2eb992114a3d58c` | 八卦精 |   | `5d357b60e2eb992114a3d597` | 教育 |
-| `5d357a4ae2eb992114a3d58d` | 科技咖 |   | `5d357b76e2eb992114a3d598` | 星座 |
-| `5d357a72e2eb992114a3d58e` | 财经迷 |   | `5d357b8de2eb992114a3d599` | 体育 |
-| `5d357a8be2eb992114a3d58f` | 汽车控 |   | `5d357b9be2eb992114a3d59a` | 军事 |
-| `5d357aa1e2eb992114a3d590` | 生活家 |   | `5d357bc2e2eb992114a3d59b` | 游戏 |
-| `5d357ab6e2eb992114a3d591` | 时尚圈 |   | `5d357bd4e2eb992114a3d59c` | 萌宠 |
+| `id`                       | 分类   |     | `id`                       | 分类 |
+| -------------------------- | ------ | --- | -------------------------- | ---- |
+|                            | 首页   |     | `5d357ae6e2eb992114a3d592` | 育儿 |
+| `5d357964e2eb992114a3d588` | 热门   |     | `5d357b00e2eb992114a3d593` | 旅游 |
+| `5d3579a2e2eb992114a3d589` | 搞笑   |     | `5d357b17e2eb992114a3d594` | 职场 |
+| `5d3579b0e2eb992114a3d58a` | 健康   |     | `5d357b34e2eb992114a3d595` | 美食 |
+| `5d3579bae2eb992114a3d58b` | 私房话 |     | `5d357b4ae2eb992114a3d596` | 历史 |
+| `5d357a10e2eb992114a3d58c` | 八卦精 |     | `5d357b60e2eb992114a3d597` | 教育 |
+| `5d357a4ae2eb992114a3d58d` | 科技咖 |     | `5d357b76e2eb992114a3d598` | 星座 |
+| `5d357a72e2eb992114a3d58e` | 财经迷 |     | `5d357b8de2eb992114a3d599` | 体育 |
+| `5d357a8be2eb992114a3d58f` | 汽车控 |     | `5d357b9be2eb992114a3d59a` | 军事 |
+| `5d357aa1e2eb992114a3d590` | 生活家 |     | `5d357bc2e2eb992114a3d59b` | 游戏 |
+| `5d357ab6e2eb992114a3d591` | 时尚圈 |     | `5d357bd4e2eb992114a3d59c` | 萌宠 |
 
 </Route>
 
@@ -2589,8 +2600,8 @@ others = 热点新闻 + 滚动新闻
 <Route author="nczitzk" example="/radio-canada/latest" path="/radio-canada/latest/:language?" :paramsDesc="['语言，见下表，默认为 English']">
 
 | Français | English | Español | 简体中文 | 繁體中文 | العربية | ਪੰਜਾਬੀ | Tagalog |
-| -------- | ------- | ------- | -------- | -------- | ------- | ------ | ------- |
-| fr       | en      | es      | zh-hans  | zh-hant  | ar      | pa     | tl      |
+| -------- | ------- | ------- | -------- | -------- | ------- | --- | ------- |
+| fr       | en      | es      | zh-hans  | zh-hant  | ar      | pa  | tl      |
 
 </Route>
 
@@ -2885,51 +2896,51 @@ column 为 third 时可选的 category:
 
     -   人工智能
 
-                        | 学术       | 开发者      |
+                        | 学术     | 开发者   |
                         | -------- | -------- |
                         | academic | yanxishe |
 
     -   数智化
 
-                        | 零售数智化     | 金融数智化      | 工业数智化      | 医疗数智化     | 城市数智化       |
-                        | --------- | ---------- | ---------- | --------- | ----------- |
-                        | redigital | findigital | mandigital | medigital | citydigital |
+                        | 零售数智化 | 金融数智化 | 工业数智化 | 医疗数智化 | 城市数智化  |
+                        | ---------- | ---------- | ---------- | ---------- | ----------- |
+                        | redigital  | findigital | mandigital | medigital  | citydigital |
 
     -   金融科技
 
-                        | 科技巨头    | 银行 AI | 金融云          | 风控与安全        |
-                        | ------- | ----- | ------------ | ------------ |
-                        | BigTech | bank  | FinanceCloud | DataSecurity |
+                        | 科技巨头 | 银行 AI | 金融云       | 风控与安全   |
+                        | -------- | ------- | ------------ | ------------ |
+                        | BigTech  | bank    | FinanceCloud | DataSecurity |
 
     -   医疗科技
 
-                        | 医疗 AI    | 投融资   | 医疗器械  | 互联网医疗            | 生物医药         | 健康险          |
-                        | -------- | ----- | ----- | ---------------- | ------------ | ------------ |
-                        | healthai | touzi | qixie | hulianwangyiliao | shengwuyiyao | jiankangxian |
+                        | 医疗 AI  | 投融资 | 医疗器械 | 互联网医疗       | 生物医药     | 健康险       |
+                        | -------- | ------ | -------- | ---------------- | ------------ | ------------ |
+                        | healthai | touzi  | qixie    | hulianwangyiliao | shengwuyiyao | jiankangxian |
 
     -   芯片
 
-                        | 材料设备      | 芯片设计       | 晶圆代工          | 封装测试      |
+                        | 材料设备  | 芯片设计   | 晶圆代工      | 封装测试  |
                         | --------- | ---------- | ------------- | --------- |
                         | materials | chipdesign | manufacturing | packaging |
 
     -   智慧城市
 
-                        | 智慧安防          | 智慧教育           | 智慧交通                | 智慧社区           | 智慧零售           | 智慧政务            | 智慧地产     |
+                        | 智慧安防      | 智慧教育       | 智慧交通            | 智慧社区       | 智慧零售       | 智慧政务        | 智慧地产 |
                         | ------------- | -------------- | ------------------- | -------------- | -------------- | --------------- | -------- |
                         | smartsecurity | smarteducation | smarttransportation | smartcommunity | smartretailing | smartgovernment | proptech |
 
     -   工业互联网
 
-                        | 工业软件       | 工业安全     | 5G 工业互联网 | 工业转型实践    |
-                        | ---------- | -------- | -------- | --------- |
-                        | gysoftware | gysafety | 5ggy     | gypratice |
+                        | 工业软件   | 工业安全 | 5G 工业互联网 | 工业转型实践 |
+                        | ---------- | -------- | ------------- | ------------ |
+                        | gysoftware | gysafety | 5ggy          | gypratice    |
 
     -   AIoT
 
-                        | 物联网 | 智能硬件 | 机器人   | 智能家居      |
-                        | --- | ---- | ----- | --------- |
-                        | 5G  | arvr | robot | smarthome |
+                        | 物联网 | 智能硬件 | 机器人 | 智能家居  |
+                        | ------ | -------- | ------ | --------- |
+                        | 5G     | arvr     | robot  | smarthome |
 
 </Route>
 
@@ -3060,7 +3071,7 @@ column 为 third 时可选的 category:
 
 <Route author="Fatpandac jameshih" example="/blockbeats/newsflash" path="/blockbeats/:channel?" :paramsDesc="['类型，见下表，默认为快讯']">
 
-|    快讯   |   文章  |
+|   快讯    |  文章   |
 | :-------: | :-----: |
 | newsflash | article |
 
@@ -3314,7 +3325,7 @@ column 为 third 时可选的 category:
 
 | 互联网早报 | 站长圈 |
 | :--------: | :----: |
-|  internet  |   seo  |
+|  internet  |  seo   |
 
 </Route>
 
@@ -3855,9 +3866,9 @@ column 为 third 时可选的 category:
 
 <Route author="yunxinliu-alex" example="/chinaventure/news/78" path="/chinaventure/news/:id?" :paramsDesc="['分类，见下表，默认为推荐']">
 
-| 推荐 | 商业深度 | 资本市场 | 5G | 健康 | 教育 | 地产 | 金融 | 硬科技 | 新消费 |
-| ---- | -------- | -------- | -- | ---- | ---- | ---- | ---- | ------ | ------ |
-|      | 78       | 80       | 83 | 111  | 110  | 112  | 113  | 114    | 116    |
+| 推荐 | 商业深度 | 资本市场 | 5G  | 健康 | 教育 | 地产 | 金融 | 硬科技 | 新消费 |
+| ---- | -------- | -------- | --- | ---- | ---- | ---- | ---- | ------ | ------ |
+|      | 78       | 80       | 83  | 111  | 110  | 112  | 113  | 114    | 116    |
 
 </Route>
 
@@ -4049,11 +4060,11 @@ column 为 third 时可选的 category:
 
 <Route author="LogicJake Rongronggg9" example="/wechat/tgchannel/lifeweek" path="/wechat/tgchannel/:id/:mpName?/:searchQueryType?" :paramsDesc="['公众号绑定频道 id', '欲筛选的公众号全名（URL-encoded，精确匹配），在频道订阅了多个公众号时可选用', '搜索查询类型，见下表']">
 
-| 搜索查询类型 | 将使用的搜索关键字 |            适用于           |
+| 搜索查询类型 | 将使用的搜索关键字 |           适用于            |
 | :----------: | :----------------: | :-------------------------: |
-|      `0`     |     (禁用搜索)     |       所有情况 (默认)       |
-|      `1`     |     公众号全名     | 未启用 efb-patch-middleware |
-|      `2`     |     #公众号全名    | 已启用 efb-patch-middleware |
+|     `0`      |     (禁用搜索)     |       所有情况 (默认)       |
+|     `1`      |     公众号全名     | 未启用 efb-patch-middleware |
+|     `2`      |    #公众号全名     | 已启用 efb-patch-middleware |
 
 ::: tip 提示
 
