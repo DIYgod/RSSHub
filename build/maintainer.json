@@ -4604,6 +4604,24 @@
     "/simpleinfo/:category?": [
         "haukeng"
     ],
+    "/sina/csj": [
+        "xapool"
+    ],
+    "/sina/discovery/:type": [
+        "LogicJake"
+    ],
+    "/sina/finance/china/:lid?": [
+        "yubinbai"
+    ],
+    "/sina/finance/stock/usstock/:cids?": [
+        "TonyRL"
+    ],
+    "/sina/rollnews/:lid?": [
+        "xyqfer"
+    ],
+    "/sina/sports/:type?": [
+        "nczitzk"
+    ],
     "/sinchew/category/:category?": [
         "nczitzk"
     ],
@@ -6324,11 +6342,6 @@
     "/xiaoheihe/news": [],
     "/xiaoheihe/discount/:platform?": [],
     "/fitchratings/site/:type": [],
-    "/sina/discovery/:type": [],
-    "/sina/rollnews": [],
-    "/sina/sports/:type": [],
-    "/sina/csj": [],
-    "/sina/finance": [],
     "/animen/news/:type": [],
     "/d2/daily": [],
     "/ebb": [],
