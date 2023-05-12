@@ -1040,6 +1040,10 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="ETiV" example="/openai/chatgpt/release-notes" path="/openai/chatgpt/release-notes" />
 
+### Research
+
+<Route author="yuguorui" example="/openai/research" path="/openai/research" />
+
 ## OR
 
 ### 频道
@@ -4450,11 +4454,61 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 <Route author="nczitzk" example="/news/whxw" path="/news/whxw"/>
 
-## 新浪专栏
+## 新浪
 
-### 创事记
+### 科技 - 科学探索
 
-<Route author="xapool" example="/sina/csj" path="/sina/csj"/>
+<Route author="LogicJake" example="/sina/discovery/zx" path="/sina/discovery/:type" :paramsDesc="['订阅分区类型，见下表']" radar="1">
+
+| 最新 | 天文航空 | 动物植物 | 自然地理 | 历史考古 | 生命医学 | 生活百科 | 科技前沿 |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| zx   | twhk     | dwzw     | zrdl     | lskg     | smyx     | shbk     | kjqy     |
+
+</Route>
+
+### 滚动新闻
+
+<Route author="xyqfer" example="/sina/rollnews" path="/sina/rollnews/:lid?" :paramsDesc="['分区 id，可在 URL 中找到，默认为 `2509`']" radar="1">
+
+| 全部 | 国内 | 国际 | 社会 | 体育 | 娱乐 | 军事 | 科技 | 财经 | 股市 | 美股 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 2509 | 2510 | 2511 | 2669 | 2512 | 2513 | 2514 | 2515 | 2516 | 2517 | 2518 |
+
+</Route>
+
+### 体育 - 综合
+
+<Route author="nczitzk" example="/sina/sports/volley" path="/sina/sports/:type" :paramsDesc="['运动类型，见下表']" radar="1">
+
+| 排球   | 游泳 | 乒乓球   | 羽毛球 | 台球    | 田径     | 体操  | 冰雪   | 射击 | 马术  | 拳击搏击 | UFC | 其他   |
+| ------ | ---- | -------- | ------ | ------- | -------- | ----- | ------ | ---- | ----- | -------- | --- | ------ |
+| volley | swim | pingpang | badmin | snooker | tianjing | ticao | winter | sh   | horse | kungfu   | ufc | others |
+
+</Route>
+
+### 财经－国內
+
+<Route author="yubinbai" example="/sina/finance/china" path="/sina/finance/china/:lid?" :paramsDesc="['分区 id，见下表，默认为 `1686`']" radar="1">
+
+| 国内滚动 | 宏观经济 | 金融新闻 | 地方经济 | 部委动态 | 今日财经 TOP10 |
+| -------- | -------- | -------- | -------- | -------- | -------------- |
+| 1686     | 1687     | 1690     | 1688     | 1689     | 3231           |
+
+</Route>
+
+### 美股
+
+<Route author="TonyRL" example="/sina/finance/stock/usstock" path="/sina/finance/stock/usstock/:cids?" :paramsDesc="['分区 id，见下表，默认为 `57045`']" radar="1">
+
+| 最新报道 | 中概股 | 国际财经 | 互联网 |
+| -------- | ------ | -------- | ------ |
+| 57045    | 57046  | 56409    | 40811  |
+
+</Route>
+
+### 专栏 - 创事记
+
+<Route author="xapool" example="/sina/csj" path="/sina/csj" radar="1"/>
 
 ## 选股宝
 

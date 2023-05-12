@@ -2413,36 +2413,6 @@ category 对应的关键词有
 
 <Route author="yhkang" example="/cztv/zjxwlb/daily" path="/cztv/zjxwlb/daily" />
 
-## 新浪科技
-
-### 科学探索
-
-<Route author="LogicJake" example="/sina/discovery/zx" path="/sina/discovery/:type" :paramsDesc="['订阅分区类型']">
-
-分类：
-
-| zx   | twhk     | dwzw     | zrdl     | lskg     | smyx     | shbk     | kjqy     |
-| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 最新 | 天文航空 | 动物植物 | 自然地理 | 历史考古 | 生命医学 | 生活百科 | 科技前沿 |
-
-</Route>
-
-### 滚动新闻
-
-<Route author="xyqfer" example="/sina/rollnews" path="/sina/rollnews" />
-
-## 新浪体育
-
-### 综合
-
-<Route author="nczitzk" example="/sina/sports/volley" path="/sina/sports/:type" :paramsDesc="['运动类型，见下表']">
-
-| 排球   | 游泳 | 乒乓球   | 羽毛球 | 台球    | 田径     | 体操  | 冰雪   | 射击 | 马术  | 拳击搏击 | UFC | 其他   |
-| ------ | ---- | -------- | ------ | ------- | -------- | ----- | ------ | ---- | ----- | -------- | --- | ------ |
-| volley | swim | pingpang | badmin | snooker | tianjing | ticao | winter | sh   | mashu | kungfu   | ufc | others |
-
-</Route>
-
 ## 新唐人电视台
 
 ### 频道
