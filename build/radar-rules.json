@@ -10407,6 +10407,19 @@
       }
     ]
   },
+  "i-cable.com": {
+    "_name": "有線寬頻 i-CABLE",
+    ".": [
+      {
+        "title": "有線新聞 | Cable News",
+        "docs": "https://docs.rsshub.app/traditional-media.html#you-xian-kuan-pin-i-cable",
+        "source": [
+          "/category/*path",
+          "/"
+        ]
+      }
+    ]
+  },
   "ibc.co.jp": {
     "_name": "IBC 岩手放送",
     ".": [

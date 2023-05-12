@@ -2616,6 +2616,9 @@
     "/hyqss/hywb/:id?": [
         "nczitzk"
     ],
+    "/i-cable/:category?": [
+        "tpnonthealps"
+    ],
     "/ibc/maitta": [
         "fengkx"
     ],
@@ -7008,7 +7011,6 @@
     "/matataki/tags/:tagId/:tagName/posts/:ipfsFlag?": [],
     "/matataki/users/:userId/favorites/:favoriteListId/posts/:ipfsFlag?": [],
     "/zhimap/:categoryUuid?/:recommend?": [],
-    "/icable/:category/:option?": [],
     "/processon/popular/:cate?/:sort?": [],
     "/mathpix/blog": [],
     "/onenotegem/release": [],
