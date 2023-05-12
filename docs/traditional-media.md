@@ -256,30 +256,6 @@ pageClass: routes
 
 </Route>
 
-## i-CABLE 有線新聞
-
-<Route author="tpnonthealps" example="/icable/all" path="/icable/:category/:option?" :paramsDesc="['栏目', '选项（不指定时预设为「全文输出 （含题图）」的 `withphoto` ）']">
-
-细则：
-
--   `:category` 栏目参数：
-
-    -   `all`: 全站
-    -   `local`: 港聞
-    -   `international`: 兩岸國際
-    -   `china`: 有線中國組
-    -   `sports`: 體育
-
--   `:option?` 可开启的选项：
-
-    -   `plain`: 全文输出为纯文字
-    -   `brief`: 输出为 100 字简讯
-
--   全文输出转换为简体字：`?opencc=t2s`
-    (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
-
-</Route>
-
 ## NHK
 
 ### News Web Easy
@@ -2556,6 +2532,17 @@ category 对应的关键词有
 
 </Route>
 
+## 有線寬頻 i-CABLE
+
+### 有線新聞 | Cable News
+
+<Route author="tpnonthealps" example="/i-cable" path="/i-cable/:category?" :paramsDesc="['分類，頁面內紅色標籤，下表僅列出部分，留空為全部']" radar="1">
+
+| 新聞資訊 | 財經資訊 | 港聞 | 兩岸國際 | 中國在線 | 體育 | 娛樂 |
+| -------- | -------- | ---- | -------- | -------- | ---- | ---- |
+
+</Route>
+
 ## 浙江在线
 
 ### 浙报集团系列报刊
@@ -2572,7 +2559,7 @@ category 对应的关键词有
 
 ### 播客
 
-<Route author="5upernova-heng" example="/cgtn/podcast/ezfm/4" path="/cgtn/podcast/:category/:id" :paramsDesc="['类型名','播客 id']" radar=1> 
+<Route author="5upernova-heng" example="/cgtn/podcast/ezfm/4" path="/cgtn/podcast/:category/:id" :paramsDesc="['类型名','播客 id']" radar=1>
 
 > 类型名与播客 id 可以在播客对应的 URL 中找到
 > 如 URL `https://radio.cgtn.com/podcast/column/ezfm/More-to-Read/4` ，其 `category` 为 `ezfm` ，`id` 为 `4`，对应的订阅路由为 [`/podcast/ezfm/4`](https://rsshub.app/podcast/ezfm/4)
