@@ -152,6 +152,60 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 <RouteEn author="5upernova-heng" example="/macmenubar/recently/developer-apps,system-tools" path="/macmenubar/recently/:category?" :paramsDesc="['分类名，多个使用逗号隔开，留空则为全部。分类名可在 URL 中找到']" radar="1" />
 
+## Medium
+
+### List
+
+<Route author="ImSingee" example="/medium/list/imsingee/f2d8d48096a9" path="/medium/list/:user/:catalogId" :paramsDesc="['用户名', 'List 的 ID']">
+
+List ID 取的是网址中最后一部分 `-` 后面的内容，例如 `https://medium.com/@imsingee/list/collection-7e67004f23f9` 的用户名为 imsingee、ID 为 `7e67004f23f9`
+
+::: warning 注意
+
+想要获取 Private 的 List 则只支持自建
+
+:::
+
+</Route>
+
+### 个性推荐 - For You
+
+<Route author="ImSingee" example="/medium/for-you/imsingee" path="/medium/for-you/:user" :paramsDesc="['用户名']" selfhost="1">
+
+::: warning 注意
+
+个性推荐需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
+
+</Route>
+
+### 个性推荐 - Following
+
+<Route author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" :paramsDesc="['用户名']" selfhost="1">
+
+::: warning 注意
+
+个性推荐需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
+
+</Route>
+
+### 个性推荐 - Tag
+
+<Route author="ImSingee" example="/medium/tag/imsingee/cybersecurity" path="/medium/tag/:user/:tag" :paramsDesc="['用户名', '订阅的 Tag']" selfhost="1">
+
+Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://medium.com/?tag=web3` 则 tag 为 `web3`
+
+::: warning 注意
+
+个性推荐需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
+
+</Route>
+
 ## Miris Whispers
 
 ### 博客

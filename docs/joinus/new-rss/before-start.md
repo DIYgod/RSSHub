@@ -10,7 +10,14 @@ sidebarDepth: 2
 开始之前，您需要安装 RSSHub 的依赖项。您可以在 RSSHub 的根目录下运行以下命令来完成安装：
 
 <code-group>
-<code-block title="yarn" active>
+<code-block title="pnpm" active>
+
+```bash
+pnpm i
+```
+
+</code-block>
+<code-block title="yarn">
 
 ```bash
 yarn
@@ -31,7 +38,14 @@ npm install
 一旦您成功安装了依赖，您可以通过运行以下命令来开始调试 RSSHub：
 
 <code-group>
-<code-block title="yarn" active>
+<code-block title="pnpm" active>
+
+```bash
+pnpm run dev
+```
+
+</code-block>
+<code-block title="yarn">
 
 ```bash
 yarn dev

@@ -153,6 +153,26 @@ Official RSS: <https://eztv.io/ezrss.xml>
 
 <RouteEn author="everyonus" example="/hentaimama/videos" path="/hentaimama/videos" />
 
+## IBC 岩手放送
+
+### イヤーマイッタマイッタ
+
+<RouteEn author="fengkx" example="/ibc/maitta" path="/ibc/maitta" supportPodcast="1" radar="1"/>
+
+### ラジオ
+
+<RouteEn author="nczitzk" example="/ibc/radio/maitta" path="/ibc/radio/:id?" :paramsDesc="['Radio id, can be found in URL, イヤーマイッタマイッタ by default']" supportPodcast="1">
+
+::: tip Tip
+
+If you subscribe to [イヤーマイッタマイッタ](https://www.ibc.co.jp/radio/maitta/audio), the URL is <https://www.ibc.co.jp/radio/maitta/audio>. Intercept `maitta` between `https://www.ibc.co.jp/radio/` and `/audio/` as an argument, then the route will be [`/ibc/radio/maitta`](https://rsshub.app/ibc/radio/maitta).
+
+If you subscribe to [火曜ワイド「境界トラブル解決ラジオ！] (https://www.ibc.co.jp/radio/TochiKyokai/audio), the URL is <https://www.ibc.co.jp/radio/TochiKyokai/audio>. Intercept `TochiKyokai` between `https://www.ibc.co.jp/radio/` and `/audio/` as an argument, then the route is [`/ibc/radio/TochiKyokai`](https://rsshub.app/ibc/radio/TochiKyokai).
+
+:::
+
+</RouteEn>
+
 ## JavBus
 
 ::: tip Language

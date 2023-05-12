@@ -148,7 +148,7 @@ E.g.
 -   JSON Feed - [https://rsshub.app/twitter/user/DIYgod.json](https://rsshub.app/twitter/user/DIYgod.json)
 -   Apply filters or URL query - [https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black)
 
-### Debug
+### debug.json
 
 If the RSSHub instance is running with `debugInfo=true` enabled, suffixing a route with `.debug.json` will result in the value of `ctx.state.json` being returned.
 
@@ -157,6 +157,15 @@ This feature aims to facilitate debugging or developing customized features. A r
 For example：
 
 -   `/furstar/characters/cn.debug.json`
+
+### debug.html
+
+By adding `.{index}.debug.html` (where `{index}` is a number starting from 0) at the end of the route and running the instance with `debugInfo=true`, RSSHub will return the content set in the plugin's `ctx.state.data.item[index].description`. You can access this page with a browser to quickly view the extracted information.
+
+Example:
+
+-  `/furstar/characters/cn.0.debug.html`
+
 
 ## Brief introduction
 

@@ -147,7 +147,7 @@ RSSHub 同时支持 RSS 2.0、Atom 和 JSON Feed 输出格式，在路由末尾�
 -   JSON Feed - <https://rsshub.app/twitter/user/DIYgod.json>
 -   和 filter 或其他 URL query 一起使用 - `https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件`
 
-### debug
+### debug.json
 
 在路由末尾添加 `.debug.json`且实例运行在`debugInfo=true`的情况下，RSShub 将会返回插件设置在`ctx.state.json`的内容
 
@@ -156,6 +156,14 @@ RSSHub 同时支持 RSS 2.0、Atom 和 JSON Feed 输出格式，在路由末尾�
 举例：
 
 -   `/furstar/characters/cn.debug.json`
+
+### debug.html
+
+在路由末尾添加 `.{index}.debug.html` （`{index}` 为数字，为从 0 开始的下标）且实例运行在 `debugInfo=true` 的情况下，RSShub 将会返回插件设置在 `ctx.state.data.item[index].description` 的内容，你可用浏览器访问该页面来快速查看提取的信息的展示结果。
+
+举例：
+
+-   `/furstar/characters/cn.0.debug.html`
 
 ## 输出简讯
 

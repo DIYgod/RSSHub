@@ -11,18 +11,21 @@ RUN \
     if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
         echo 'use npm mirror' && \
         npm config set registry https://registry.npmmirror.com && \
-        yarn config set registry https://registry.npmmirror.com ; \
+        yarn config set registry https://registry.npmmirror.com && \
+        pnpm config set registry https://registry.npmmirror.com ; \
     fi;
 
-COPY ./yarn.lock /app/
+COPY ./pnpm-lock.yaml /app/
 COPY ./package.json /app/
 
 # lazy install Chromium to avoid cache miss, only install production dependencies to minimize the image size
 RUN \
     set -ex && \
-    export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true && \
-    yarn install --production --frozen-lockfile --network-timeout 1000000 && \
-    yarn cache clean
+    export PUPPETEER_SKIP_DOWNLOAD=true && \
+    npm pkg delete scripts.prepare && \
+    corepack enable pnpm && \
+    pnpm install --prod --frozen-lockfile && \
+    pnpm rb
 
 # ---------------------------------------------------------------------------------------------------------------------
 
@@ -53,10 +56,11 @@ RUN \
     set -ex && \
     if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
         npm config set registry https://registry.npmmirror.com && \
-        yarn config set registry https://registry.npmmirror.com ; \
+        yarn config set registry https://registry.npmmirror.com && \
+        pnpm config set registry https://registry.npmmirror.com ; \
     fi; \
-    yarn add @vercel/nft@$(cat .nft_version) fs-extra@$(cat .fs_extra_version) && \
-    yarn cache clean
+    corepack enable pnpm && \
+    pnpm add @vercel/nft@$(cat .nft_version) fs-extra@$(cat .fs_extra_version) --save-prod
 
 COPY . /app
 COPY --from=dep-builder /app /app
@@ -84,20 +88,22 @@ COPY --from=dep-version-parser /ver/.puppeteer_version /app/.puppeteer_version
 
 ARG TARGETPLATFORM
 ARG USE_CHINA_NPM_REGISTRY=0
-ARG PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
+ARG PUPPETEER_SKIP_DOWNLOAD=1
 # The official recommended way to use Puppeteer on x86(_64) is to use the bundled Chromium from Puppeteer:
 # https://pptr.dev/faq#q-why-doesnt-puppeteer-vxxx-work-with-chromium-vyyy
 RUN \
     set -ex ; \
-    if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
+    if [ "$PUPPETEER_SKIP_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
         if [ "$USE_CHINA_NPM_REGISTRY" = 1 ]; then \
             npm config set registry https://registry.npmmirror.com && \
-            yarn config set registry https://registry.npmmirror.com ; \
+            yarn config set registry https://registry.npmmirror.com && \
+            pnpm config set registry https://registry.npmmirror.com ; \
         fi; \
         echo 'Downloading Chromium...' && \
-        unset PUPPETEER_SKIP_CHROMIUM_DOWNLOAD && \
-        yarn add puppeteer@$(cat /app/.puppeteer_version) && \
-        yarn cache clean ; \
+        unset PUPPETEER_SKIP_DOWNLOAD && \
+        corepack enable pnpm && \
+        pnpm add puppeteer@$(cat /app/.puppeteer_version) --save-prod && \
+        pnpm rb ; \
     else \
         mkdir -p /app/node_modules/.cache/puppeteer ; \
     fi;
@@ -115,7 +121,7 @@ WORKDIR /app
 
 # install deps first to avoid cache miss or disturbing buildkit to build concurrently
 ARG TARGETPLATFORM
-ARG PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=1
+ARG PUPPETEER_SKIP_DOWNLOAD=1
 # https://pptr.dev/troubleshooting#chrome-headless-doesnt-launch-on-unix
 # https://github.com/puppeteer/puppeteer/issues/7822
 # https://www.debian.org/releases/bullseye/amd64/release-notes/ch-information.en.html#noteworthy-obsolete-packages
@@ -127,7 +133,7 @@ RUN \
     apt-get install -yq --no-install-recommends \
         dumb-init \
     ; \
-    if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ]; then \
+    if [ "$PUPPETEER_SKIP_DOWNLOAD" = 0 ]; then \
         if [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
             apt-get install -yq --no-install-recommends \
                 ca-certificates fonts-liberation wget xdg-utils \
@@ -149,7 +155,7 @@ COPY --from=chromium-downloader /app/node_modules/.cache/puppeteer /app/node_mod
 # if grep matches nothing then it will exit with 1, thus, we cannot `set -e` here
 RUN \
     set -x && \
-    if [ "$PUPPETEER_SKIP_CHROMIUM_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
+    if [ "$PUPPETEER_SKIP_DOWNLOAD" = 0 ] && [ "$TARGETPLATFORM" = 'linux/amd64' ]; then \
         echo 'Verifying Chromium installation...' && \
         ldd $(find /app/node_modules/.cache/puppeteer/ -name chrome -type f) | grep "not found" ; \
         if [ "$?" = 0 ]; then \

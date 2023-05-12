@@ -362,6 +362,12 @@ pageClass: routes
 由于学校官网对非大陆 IP 的访问存在限制，需自行部署。
 :::
 
+## 北京协和医学院
+
+### “4+4” 试点班招生网通知公告
+
+<Route author="nczitzk" example="/pumc/mdadmission" path="/pumc/mdadmission"/>
+
 ## 北京邮电大学
 
 ### 硕士研究生招生通知
@@ -3744,3 +3750,17 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 数据科学与计算机学院动态
 
 <Route author="Neutrino3316 MegrezZhu nczitzk" example="/sysu/cse" path="/sysu/cse"/>
+
+### 粤港澳发展研究院
+
+<Route author="TonyRL" example="/sysu/ygafz" path="/sysu/ygafz/:type?" :paramsDesc="['分类，见下表，默认为 `notice`']" radar="1" puppeteer="1">
+
+| 人才招聘   | 人才培养      | 新闻动态 | 通知公告 | 专家观点 |
+| ---------- | ------------- | -------- | -------- | -------- |
+| jobopening | personnelplan | news     | notice   | opinion  |
+
+| 研究成果 | 研究论文 | 学术著作 | 形势政策 |
+| -------- | -------- | -------- | -------- |
+| results  | papers   | writings | policy   |
+
+</Route>
