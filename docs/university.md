@@ -2677,7 +2677,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 <Route author="HyperCherry" example="/stbu/jsjxy" path="/stbu/jsjxy" />
 
 ::: warning 注意
-计算机学院通知公告疑似禁止了非大陆IP访问，使用路由需要自行 [部署](https://docs.rsshub.app/install)。
+计算机学院通知公告疑似禁止了非大陆 IP 访问，使用路由需要自行 [部署](https://docs.rsshub.app/install)。
 :::
 
 ## 四川旅游学院
