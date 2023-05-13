@@ -338,6 +338,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/imagemagick/changelog" path="/imagemagick/changelog"/>
 
+## Infuse
+
+### Release Notes
+
+<Route author="NathanDai" example="/firecore/iOS" path="/firecore/:os" :paramsDesc="['`iOS`,`atv`,`mac`']"/>
+
 ## IPSW\.me
 
 ### 苹果固件更新 - IPSWs/OTAs 版本
