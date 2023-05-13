@@ -327,6 +327,9 @@
     "/ajmide/:id": [
         "Fatpandac"
     ],
+    "/aliresearch/information/:type?": [
+        "nczitzk"
+    ],
     "/aliyun/database_month": [
         "junbaor"
     ],

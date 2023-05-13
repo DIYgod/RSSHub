@@ -897,6 +897,12 @@
                     const id = new URL(url).searchParams.get('id');
                     return `/ajmide/${id}`;
                 } } ] },
+  "aliresearch.com":{ _name:"阿里研究院",
+    ".":[ { title:"资讯",
+        docs:"https://docs.rsshub.app/new-media.html#a-li-yan-jiu-yuan",
+        source:[ "/cn/information",
+          "/" ],
+        target:"/aliresearch/information" } ] },
   "aliyun.com":{ _name:"阿里云",
     developer:[ { title:"开发者社区 - 主题",
         docs:"https://docs.rsshub.app/programming.html#a-li-yun",
