@@ -1745,6 +1745,9 @@
     "/finviz/:category?": [
         "nczitzk"
     ],
+    "/firecore/:os": [
+        "NathanDai"
+    ],
     "/firefox/breaches": [
         "TonyRL"
     ],
