@@ -310,7 +310,7 @@ Language
 
 ### Release Notes
 
-<Route author="NathanDai" example="/firecore/iOS" path="/firecore/:os" :paramsDesc="['`iOS`,`atv`,`mac`']"/>
+<RouteEn author="NathanDai" example="/firecore/iOS" path="/firecore/:os" :paramsDesc="['`iOS`,`atv`,`mac`']"/>
 
 ## IPSW.me
 
