@@ -306,6 +306,12 @@ Language
 
 <RouteEn author="nczitzk" example="/imagemagick/changelog" path="/imagemagick/changelog"/>
 
+## Infuse
+
+### Release Notes
+
+<RouteEn author="NathanDai" example="/firecore/iOS" path="/firecore/:os" :paramsDesc="['`iOS`,`atv`,`mac`']"/>
+
 ## IPSW.me
 
 ### Apple Firmware Update-IPSWs/OTAs version
