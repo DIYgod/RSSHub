@@ -1545,6 +1545,17 @@ Supported sub-sites:
 
 <Route author="AlexdanerZe TonyRL" example="/zaker/focusread" path="/zaker/focusread" />
 
+## 阿里研究院
+
+### 资讯
+
+<Route author="nczitzk" example="/aliresearch/information" path="/aliresearch/information/:type?" :paramsDesc="['类型，见下表，默认为新闻']">
+
+| 新闻 | 观点 | 案例 |
+| ---- | ---- | ---- |
+
+</Route>
+
 ## 艾莱资讯
 
 ### 世界轨道交通资讯网
