@@ -515,7 +515,7 @@ pageClass: routes
 
 ### 个人帖子
 
-<Route author="TonyRL" example="/dxy/bbs/profile/threads/8335054" path="/dxy/bbs/profile/threads/:userId" :paramsDesc="['个人 ID，可在 URL 中找到']" radar="1"/>
+<Route author="TonyRL" example="/dxy/bbs/profile/thread/8335054" path="/dxy/bbs/profile/thread/:userId" :paramsDesc="['个人 ID，可在 URL 中找到']" radar="1"/>
 
 ## 斗鱼
 
