@@ -6114,6 +6114,29 @@
       }
     ]
   },
+  "dxy.cn": {
+    "_name": "丁香园",
+    ".": [
+      {
+        "title": "个人帖子",
+        "docs": "https://docs.rsshub.app/bbs.html#ding-xiang-yuan",
+        "source": [
+          "/bbs/newweb/pc/profile/:userId/threads",
+          "/bbs/newweb/pc/profile/:userId"
+        ],
+        "target": "/dxy/bbs/profile/thread/:userId"
+      }
+    ],
+    "3g": [
+      {
+        "title": "专题",
+        "docs": "https://docs.rsshub.app/bbs.html#ding-xiang-yuan",
+        "source": [
+          "/bbs/special"
+        ]
+      }
+    ]
+  },
   "e-hentai.org": {
     "_name": "E-Hentai",
     ".": [

@@ -1583,6 +1583,12 @@
     "/dx2025/:type?/:category?": [
         "nczitzk"
     ],
+    "/dxy/bbs/profile/thread/:userId": [
+        "TonyRL"
+    ],
+    "/dxy/bbs/special/:specialId": [
+        "TonyRL"
+    ],
     "/e-hentai/category/:category?/:needTorrents?/:needImages?": [
         "nczitzk"
     ],
