@@ -1574,6 +1574,22 @@ rule
 
 </Route>
 
+### 自定义分组
+
+<Route author="monologconnor" example="/weibo/group/4541216424989965/微博分组/:routeParams?" path="/weibo/group/:gid/:gname?/:routeParams?" :paramsDesc="['分组id, 在网页版分组地址栏末尾`?gid=`处获取', '分组显示名称; 默认为: `微博分组`', '额外参数；请参阅上面的说明和表格']" anticrawler="1" selfhost="1">
+
+::: warning 注意
+
+由于微博官方未提供自定义分组相关api, 此方案必须使用用户`Cookie`进行抓取
+
+因微博cookies的过期与更新方案未经验证, 部署一次Cookie的有效时长未知
+
+微博用户Cookie的配置可参照部署文档
+
+:::
+
+</Route>
+
 ## 微博绿洲
 
 ### 用户

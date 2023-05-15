@@ -7,6 +7,8 @@
 .vercel
 .vscode
 .yarn
+.yarnrc.yml
+.pnp*
 
 *.swp
 *.iml
