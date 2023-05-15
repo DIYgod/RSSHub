@@ -5635,8 +5635,9 @@
     "/xiaohongshu/user/:user_id/collect": [
         "lotosbin"
     ],
-    "/xiaohongshu/user/:user_id/notes": [
-        "lotosbin"
+    "/xiaohongshu/user/:user_id/notes/:fulltext?": [
+        "lotosbin",
+        "howerhe"
     ],
     "/xiaomiyoupin/crowdfunding": [
         "bigfei"
