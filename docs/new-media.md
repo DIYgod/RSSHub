@@ -1545,6 +1545,17 @@ Supported sub-sites:
 
 <Route author="AlexdanerZe TonyRL" example="/zaker/focusread" path="/zaker/focusread" />
 
+## 阿里研究院
+
+### 资讯
+
+<Route author="nczitzk" example="/aliresearch/information" path="/aliresearch/information/:type?" :paramsDesc="['类型，见下表，默认为新闻']">
+
+| 新闻 | 观点 | 案例 |
+| ---- | ---- | ---- |
+
+</Route>
+
 ## 艾莱资讯
 
 ### 世界轨道交通资讯网
@@ -4075,7 +4086,16 @@ column 为 third 时可选的 category:
 
 ### 公众号（feeddd 来源）
 
-<Route author="TonyRL Rongronggg9" example="/wechat/feeddd/6131e1441269c358aa0e2141" path="/wechat/feeddd/:id" :paramsDesc="['公众号 id，打开 `https://feeddd.org/feeds` 或 `https://cdn.jsdelivr.net/gh/feeddd/feeds/feeds_all_rss.txt`，在 URL 中找到 id；注意不是公众号页的 id，而是订阅的 id']"/>
+::: warning 注意
+
+feeddd 网站不提供检索功能，请自行在 <https://cdn.jsdelivr.net/gh/feeddd/feeds/feeds_all_rss.txt> 中检索所需公众号。\
+也可以在 <https://feed.hamibot.com/feeds> 上找到最近更新的公众号。请注意公众号页 id 与订阅时实际使用的 id 不同，请先复制订阅链接，再从中获取 id。
+
+feeddd 自 2023/05/04 已更换域名，原 `feeddd.org` 已失效，现在使用 `feed.hamibot.com`。请及时更新自建实例。
+
+:::
+
+<Route author="TonyRL Rongronggg9" example="/wechat/feeddd/6131e1441269c358aa0e2141" path="/wechat/feeddd/:id" :paramsDesc="['公众号 id，详见上方说明']"/>
 
 ### 公众号（自由微信来源）
 
