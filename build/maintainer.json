@@ -5494,6 +5494,9 @@
     "/weekendhk/": [
         "TonyRL"
     ],
+    "/weibo/group/:gid/:gname?/:routeParams?": [
+        "monologconnor"
+    ],
     "/weibo/keyword/:keyword/:routeParams?": [
         "DIYgod"
     ],
