@@ -943,6 +943,14 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `WEIBO_APP_SECRET`: 微博 App Secret
     -   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub 地址/weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub 地址/weibo/timeline/0?code=xxx`
 
+-   微博 自定义分组
+
+    -   `WEIBO_COOKIES`: 用户访问网页微博时所使用的 cookie, 获取方式:
+        1.  打开并登录 <https://m.weibo.cn> (确保打开页面为手机版，如果强制跳转电脑端可尝试使用可更改 UserAgent 的浏览器插件)
+        2.  按下`F12`打开控制台，切换至`Network(网络)`面板
+        3.  在该网页切换至任意关注分组，并在面板打开最先捕获到的请求 (该情形下捕获到的请求路径应包含`/feed/group`)
+        4.  查看该请求的`Headers(请求头)`, 找到`Cookie`字段并复制内容
+
 -   小宇宙：需要 App 登陆后抓包获取相应数据。
 
     -   `XIAOYUZHOU_ID`: 即数据包中的 `x-jike-device-id`。

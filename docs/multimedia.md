@@ -1671,6 +1671,12 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="Andiedie" example="/tencentvideo/playlist/jx7g4sm320sqm7i" path="/tencentvideo/playlist/:id" :paramsDesc="['播放列表 ID，可以在 URL 中找到']" radar="1" />
 
+## 听听 FM
+
+### 节目
+
+<Route author="TonyRL" example="/tingtingfm/program/M7VJv6Jj4R" path="/tingtingfm/program/:programId" :paramsDesc="['节目 ID，可以在 URL 中找到']" radar="1" supportPodcast="1"/>
+
 ## 弯弯字幕组
 
 ### 分类
