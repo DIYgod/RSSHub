@@ -1323,6 +1323,12 @@
     "/ddosi/category/:category": [
         "XinRoom"
     ],
+    "/deadline": [
+        "TonyRL"
+    ],
+    "/deadline/": [
+        "TonyRL"
+    ],
     "/dedao/figure": [
         "nczitzk"
     ],
