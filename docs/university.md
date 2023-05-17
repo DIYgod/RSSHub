@@ -2666,6 +2666,20 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="stevelee477" example="/scu/xg/notice" path="/scu/xg/notice" />
 
+## 四川工商学院
+
+### 学院新闻
+
+<Route author="HyperCherry" example="/stbu/xyxw" path="/stbu/syxw" />
+
+### 计算机学院通知公告
+
+<Route author="HyperCherry" example="/stbu/jsjxy" path="/stbu/jsjxy" />
+
+::: warning 注意
+计算机学院通知公告疑似禁止了非大陆 IP 访问，使用路由需要自行 [部署](https://docs.rsshub.app/install)。
+:::
+
 ## 四川旅游学院
 
 ### 信息与工程学院动态公告列表
@@ -3750,3 +3764,17 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 数据科学与计算机学院动态
 
 <Route author="Neutrino3316 MegrezZhu nczitzk" example="/sysu/cse" path="/sysu/cse"/>
+
+### 粤港澳发展研究院
+
+<Route author="TonyRL" example="/sysu/ygafz" path="/sysu/ygafz/:type?" :paramsDesc="['分类，见下表，默认为 `notice`']" radar="1" puppeteer="1">
+
+| 人才招聘   | 人才培养      | 新闻动态 | 通知公告 | 专家观点 |
+| ---------- | ------------- | -------- | -------- | -------- |
+| jobopening | personnelplan | news     | notice   | opinion  |
+
+| 研究成果 | 研究论文 | 学术著作 | 形势政策 |
+| -------- | -------- | -------- | -------- |
+| results  | papers   | writings | policy   |
+
+</Route>

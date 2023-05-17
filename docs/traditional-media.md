@@ -256,30 +256,6 @@ pageClass: routes
 
 </Route>
 
-## i-CABLE 有線新聞
-
-<Route author="tpnonthealps" example="/icable/all" path="/icable/:category/:option?" :paramsDesc="['栏目', '选项（不指定时预设为「全文输出 （含题图）」的 `withphoto` ）']">
-
-细则：
-
--   `:category` 栏目参数：
-
-    -   `all`: 全站
-    -   `local`: 港聞
-    -   `international`: 兩岸國際
-    -   `china`: 有線中國組
-    -   `sports`: 體育
-
--   `:option?` 可开启的选项：
-
-    -   `plain`: 全文输出为纯文字
-    -   `brief`: 输出为 100 字简讯
-
--   全文输出转换为简体字：`?opencc=t2s`
-    (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
-
-</Route>
-
 ## NHK
 
 ### News Web Easy
@@ -936,13 +912,28 @@ IT・科学 tech_science
 
 ### 新聞
 
-<Route author="Arracc" example="/yomiuri/news" path="/yomiuri/:category" :paramsDesc="['板块']">
+<Route author="Arracc" example="/yomiuri/news" path="/yomiuri/:category?" :paramsDesc="['板块，默认为 `news`']">
 
 无料全文，综合页 (新着・速報) 文章标题补充板块标签。
 
-| 新着・速報 | 社会     | 政治     | 経済    | スポーツ | 国際  | 科学・ＩＴ | 選挙・世論調査 | エンタメ・文化 | 囲碁・将棋 | ライフ | 地域  | 社説      | 皇室      |
-| ---------- | -------- | -------- | ------- | -------- | ----- | ---------- | -------------- | -------------- | ---------- | ------ | ----- | --------- | --------- |
-| news       | national | politics | economy | sports   | world | science    | election       | culture        | igoshougi  | life   | local | editorial | koushitsu |
+| Category       | Parameter |
+| -------------- | --------- |
+| 新着・速報     | news      |
+| 社会           | national  |
+| 政治           | politics  |
+| 経済           | economy   |
+| スポーツ       | sports    |
+| 国際           | world     |
+| 地域           | local     |
+| 科学・ＩＴ     | science   |
+| エンタメ・文化 | culture   |
+| ライフ         | life      |
+| 医療・健康     | medical   |
+| 教育・就活     | kyoiku    |
+| 選挙・世論調査 | election  |
+| 囲碁・将棋     | igoshougi |
+| 社説           | editorial |
+| 皇室           | koushitsu |
 
 </Route>
 
@@ -2413,36 +2404,6 @@ category 对应的关键词有
 
 <Route author="yhkang" example="/cztv/zjxwlb/daily" path="/cztv/zjxwlb/daily" />
 
-## 新浪科技
-
-### 科学探索
-
-<Route author="LogicJake" example="/sina/discovery/zx" path="/sina/discovery/:type" :paramsDesc="['订阅分区类型']">
-
-分类：
-
-| zx   | twhk     | dwzw     | zrdl     | lskg     | smyx     | shbk     | kjqy     |
-| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 最新 | 天文航空 | 动物植物 | 自然地理 | 历史考古 | 生命医学 | 生活百科 | 科技前沿 |
-
-</Route>
-
-### 滚动新闻
-
-<Route author="xyqfer" example="/sina/rollnews" path="/sina/rollnews" />
-
-## 新浪体育
-
-### 综合
-
-<Route author="nczitzk" example="/sina/sports/volley" path="/sina/sports/:type" :paramsDesc="['运动类型，见下表']">
-
-| 排球   | 游泳 | 乒乓球   | 羽毛球 | 台球    | 田径     | 体操  | 冰雪   | 射击 | 马术  | 拳击搏击 | UFC | 其他   |
-| ------ | ---- | -------- | ------ | ------- | -------- | ----- | ------ | ---- | ----- | -------- | --- | ------ |
-| volley | swim | pingpang | badmin | snooker | tianjing | ticao | winter | sh   | mashu | kungfu   | ufc | others |
-
-</Route>
-
 ## 新唐人电视台
 
 ### 频道
@@ -2586,6 +2547,17 @@ category 对应的关键词有
 
 </Route>
 
+## 有線寬頻 i-CABLE
+
+### 有線新聞 | Cable News
+
+<Route author="tpnonthealps" example="/i-cable" path="/i-cable/:category?" :paramsDesc="['分類，頁面內紅色標籤，下表僅列出部分，留空為全部']" radar="1">
+
+| 新聞資訊 | 財經資訊 | 港聞 | 兩岸國際 | 中國在線 | 體育 | 娛樂 |
+| -------- | -------- | ---- | -------- | -------- | ---- | ---- |
+
+</Route>
+
 ## 浙江在线
 
 ### 浙报集团系列报刊
@@ -2602,7 +2574,7 @@ category 对应的关键词有
 
 ### 播客
 
-<Route author="5upernova-heng" example="/cgtn/podcast/ezfm/4" path="/cgtn/podcast/:category/:id" :paramsDesc="['类型名','播客 id']" radar=1> 
+<Route author="5upernova-heng" example="/cgtn/podcast/ezfm/4" path="/cgtn/podcast/:category/:id" :paramsDesc="['类型名','播客 id']" radar=1>
 
 > 类型名与播客 id 可以在播客对应的 URL 中找到
 > 如 URL `https://radio.cgtn.com/podcast/column/ezfm/More-to-Read/4` ，其 `category` 为 `ezfm` ，`id` 为 `4`，对应的订阅路由为 [`/podcast/ezfm/4`](https://rsshub.app/podcast/ezfm/4)

@@ -1522,6 +1522,7 @@ rule
 | displayComments            | 是否直接显示热门评论，只在博主或个人时间线 RSS 中有效              | 0/1/true/false | false                               |
 | showEmojiInDescription     | 是否展示正文中的微博表情，关闭则替换为 `[表情名]`                  | 0/1/true/false | true                                |
 | showLinkIconInDescription  | 是否展示正文中的链接图标                                           | 0/1/true/false | true                                |
+| preferMobileLink           | 是否使用移动版链接（默认使用 PC 版）                               | 0/1/true/false | false                               |
 
 指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
 
@@ -1541,7 +1542,7 @@ rule
 
 ### 关键词
 
-<Route author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword/:routeParams?" :paramsDesc="['你想订阅的微博关键词', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
+<Route author="DIYgod Rongronggg9" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword/:routeParams?" :paramsDesc="['你想订阅的微博关键词', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 热搜榜
 
@@ -1549,7 +1550,7 @@ rule
 
 ### 超话
 
-<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9/sort_time" path="/weibo/super_index/:id/:type?/:routeParams?" :paramsDesc="['超话ID', '类型：见下表', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
+<Route author="zengxs Rongronggg9" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9/sort_time" path="/weibo/super_index/:id/:type?/:routeParams?" :paramsDesc="['超话ID', '类型：见下表', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
 
 | type      | 备注             |
 | --------- | ---------------- |
@@ -1569,6 +1570,22 @@ rule
 需要对应用户打开页面进行授权生成 token 才能生成内容
 
 自部署需要申请并配置微博 key，具体见部署文档
+
+:::
+
+</Route>
+
+### 自定义分组
+
+<Route author="monologconnor Rongronggg9" example="/weibo/group/4541216424989965/微博分组/:routeParams?" path="/weibo/group/:gid/:gname?/:routeParams?" :paramsDesc="['分组id, 在网页版分组地址栏末尾`?gid=`处获取', '分组显示名称; 默认为: `微博分组`', '额外参数；请参阅上面的说明和表格']" anticrawler="1" selfhost="1">
+
+::: warning 注意
+
+由于微博官方未提供自定义分组相关 api, 此方案必须使用用户`Cookie`进行抓取
+
+因微博 cookies 的过期与更新方案未经验证，部署一次 Cookie 的有效时长未知
+
+微博用户 Cookie 的配置可参照部署文档
 
 :::
 
@@ -1600,7 +1617,11 @@ rule
 
 ### 用户笔记
 
-<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/notes" path="/xiaohongshu/user/:user_id/notes" :paramsDesc="['用户 ID']" puppeteer="1" anticrawler="1" radar="1" rssbud="1"/>
+<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/notes" path="/xiaohongshu/user/:user_id/notes/:fulltext?" :paramsDesc="['用户 ID', '若为`fulltext`将抓取笔记全文，若为空则只抓取笔记标题']" puppeteer="1" anticrawler="1" radar="1" rssbud="1"/>
+
+::: tip 提示
+笔记全文不支持显示视频
+:::
 
 ### 用户收藏
 

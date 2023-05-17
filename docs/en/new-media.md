@@ -162,6 +162,12 @@ Category of news
 
 <RouteEn author="nczitzk" example="/dayone/blog" path="/dayone/blog"/>
 
+## Deadline
+
+### Latest Article
+
+<RouteEn author="TonyRL" example="/deadline" path="/deadline" radar="1"/>
+
 ## DeepMind
 
 ### Blog
@@ -569,6 +575,10 @@ This route provides a flexible plan with full text content to subscribe specific
 ### ChatGPT - Release Notes
 
 <RouteEn author="ETiV" example="/openai/chatgpt/release-notes" path="/openai/chatgpt/release-notes" />
+
+### Research
+
+<RouteEn author="yuguorui" example="/openai/research" path="/openai/research" />
 
 ## Phoronix
 
