@@ -5819,7 +5819,7 @@
     "/yoasobi-music/media": [
         "Kiotlin"
     ],
-    "/yomiuri/yomiuri/:category?": [
+    "/yomiuri/:category?": [
         "Arracc"
     ],
     "/youku/channel/:channelId/:embed?": [
