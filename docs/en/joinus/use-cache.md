@@ -29,14 +29,14 @@ The object returned from the previous statement will be reused, and an extra `de
 Any assignments to variables that are declared outside of the `tryGet()` function will not be processed under a cache-hit scenario. For example, the following code will not work as expected:
 
 ```js
-    let variable = 'value';
-    await ctx.cache.tryGet('cache:key', async () => {
-        variable = 'new value';
-        const newVariable = 'new variable';
-        return newVariable;
+    let x = '1';
+    const z = await ctx.cache.tryGet('cache:key', async () => {
+        x = '2';
+        const y = '3';
+        return y;
     })
-    console.log(variable); // cache miss: 'new value', cache hit: 'value'
-       
+    console.log(x); // cache miss: '2', cache hit: '1'
+    console.log(z): // '3'
 ```
 
 :::
