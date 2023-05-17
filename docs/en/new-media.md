@@ -162,6 +162,12 @@ Category of news
 
 <RouteEn author="nczitzk" example="/dayone/blog" path="/dayone/blog"/>
 
+## Deadline
+
+### Latest Article
+
+<RouteEn author="TonyRL" example="/deadline" path="/deadline" radar="1"/>
+
 ## DeepMind
 
 ### Blog
