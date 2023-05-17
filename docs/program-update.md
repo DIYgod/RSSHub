@@ -342,7 +342,7 @@ pageClass: routes
 
 ### Release Notes
 
-<Route author="NathanDai" example="/firecore/iOS" path="/firecore/:os" :paramsDesc="['`iOS`,`atv`,`mac`']"/>
+<Route author="NathanDai" example="/firecore/ios" path="/firecore/:os" :paramsDesc="['`ios`,`tvos`,`macos`']"/>
 
 ## IPSW\.me
 
