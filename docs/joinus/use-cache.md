@@ -35,7 +35,7 @@
         const y = '3';
         return y;
     })
-    console.log(x); // 缓存未命中: '2', 缓存命中: 'value'
+    console.log(x); // 缓存未命中: '2', 缓存命中: '1'
     console.log(z): // '3'
 ```
 
