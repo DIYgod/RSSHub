@@ -192,7 +192,7 @@ It's highly recommended to deploy with Redis cache enabled.
 | ---- | ---- | ---- | ----- | ----- |
 | 最新 | 日榜 | 周榜 | 月榜  | 总榜  |
 
-</Route>
+</RouteEn>
 
 ## Mastodon
 
