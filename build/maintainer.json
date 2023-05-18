@@ -2305,6 +2305,9 @@
     "/guangdiu/:query?": [
         "Fatpandac"
     ],
+    "/guangzhoumetro/news": [
+        "HankChow"
+    ],
     "/guanhai": [
         "TonyRL"
     ],
