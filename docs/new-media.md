@@ -1545,6 +1545,23 @@ Supported sub-sites:
 
 <Route author="AlexdanerZe TonyRL" example="/zaker/focusread" path="/zaker/focusread" />
 
+## zyw
+
+### 今日热榜
+
+<Route author="nczitzk" example="/zyw/hot" path="/zyw/hot/:site?" :paramsDesc="['站点，见下表，默认为空，即全部']">
+
+::: tip 提示
+
+全部站点请见 [此处](https://hot.zyw.asia/#/list)
+
+:::
+
+| 哔哩哔哩 | 微博 | 知乎 | 36氪 | 百度 | 少数派 | IT之家 | 澎湃新闻 | 今日头条 | 百度贴吧 | 稀土掘金 | 腾讯新闻 |
+| -------- | ---- | ---- | ---- | ---- | ------ | ------ | -------- | -------- | -------- | -------- | -------- |
+
+</Route>
+
 ## 阿里研究院
 
 ### 资讯
