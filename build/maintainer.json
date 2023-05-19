@@ -6071,6 +6071,9 @@
     "/zyshow/:region?/:id": [
         "nczitzk"
     ],
+    "/zyw/hot/:site?": [
+        "nczitzk"
+    ],
     "/1draw": [],
     "/benedictevans": [],
     "/ziroom/room/:city/:iswhole/:room/:keyword": [],

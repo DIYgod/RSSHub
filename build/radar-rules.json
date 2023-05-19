@@ -24521,6 +24521,18 @@
       }
     ]
   },
+  "zyw.asia": {
+    "_name": "zyw",
+    "hot": [
+      {
+        "title": "今日热榜",
+        "docs": "https://docs.rsshub.app/new-media.html#zyw-jin-ri-re-bang",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
   "ximalaya.com": {
     "_name": "喜马拉雅",
     ".": [
