@@ -32,7 +32,7 @@ If the city name contains a space like `Mexico City`, replace the space with `%2
 
 ### Announcements
 
-<RouteEn author="HankChow" example="/fuzhoumetro/announcements" path="/fuzhoumetro/announcements" />
+<RouteEn author="HankChow" example="/fzmtr/announcements" path="/fzmtr/announcements" />
 
 ## Guangzhou Metro
 
