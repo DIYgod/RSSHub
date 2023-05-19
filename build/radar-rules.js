@@ -895,6 +895,26 @@
         docs:"https://docs.rsshub.app/travel.html#zhong-guo-guo-ji-hang-kong-gong-si",
         source:"/",
         target:"/airchina/announcement" } ] },
+  "aisixiang.com":{ _name:"爱思想",
+    ".":[ { title:"栏目",
+        docs:"https://docs.rsshub.app/reading.html#ai-si-xiang",
+        source:[ "/data/search",
+          "/" ],
+        target:(params, url) => `/aisixiang/column/${new URL(url).searchParams.get('column')}` },
+      { title:"排行",
+        docs:"https://docs.rsshub.app/reading.html#ai-si-xiang",
+        source:[ "/toplist",
+          "/" ],
+        target:(params, url) => {
+                    const id = new URL(url).searchParams.get('id');
+                    const period = new URL(url).searchParams.get('period');
+                    return `/aisixiang/toplist${id ? `/${id}${(id === '1' || !id) && period ? `/${period}` : ''}` : ''}`;
+                } },
+      { title:"思想库（专栏）",
+        docs:"https://docs.rsshub.app/reading.html#ai-si-xiang",
+        source:[ "/thinktank",
+          "/" ],
+        target:(params, url) => `/aisixiang/thinktank/${new URL(url).href.match(/thinktank\/(.*)\.html/)[1]}` } ] },
   "ajmide.com":{ _name:"阿基米德FM",
     m:[ { title:"播客",
         docs:"https://docs.rsshub.app/multimedia.html#a-ji-mi-de-fm-bo-ke",
