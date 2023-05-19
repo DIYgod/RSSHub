@@ -89,6 +89,12 @@ IATA 国际航空运输协会机场代码，参见[维基百科 国际航空运�
 
 </Route>
 
+## 福州地铁
+
+### 通知公告
+
+<Route author="HankChow" example="/fzmtr/announcements" path="/fzmtr/announcements"/>
+
 ## 广州地铁
 
 ### 新闻
