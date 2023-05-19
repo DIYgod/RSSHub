@@ -1843,6 +1843,9 @@
     "/fx-markets/fx-markets/:channel": [
         "mikkkee"
     ],
+    "/fzmtr/announcements": [
+        "HankChow"
+    ],
     "/gameapps/": [
         "TonyRL"
     ],
