@@ -173,6 +173,7 @@ pageClass: routes
 
 ### 深圳市
 <Route author="lilPiper" example="/tingshuitz/shenzhen" path="/tingshuitz/shenzhen">
+可能仅限中国大陆服务器访问，以实际情况为准。
 
 ## 香港天文台
 
