@@ -171,6 +171,9 @@ pageClass: routes
 
 </Route>
 
+### 深圳市
+<Route author="lilPiper" example="/tingshuitz/shenzhen" path="/tingshuitz/shenzhen">
+
 ## 香港天文台
 
 ### Current Weather Report
