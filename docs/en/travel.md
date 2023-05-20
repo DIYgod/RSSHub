@@ -28,6 +28,18 @@ If the city name contains a space like `Mexico City`, replace the space with `%2
     :paramsDesc="['state of the exhibition: `current`，`past`, or `upcoming`, the default value is `current`']"
 />
 
+## Fuzhou Metro
+
+### Announcements
+
+<RouteEn author="HankChow" example="/fzmtr/announcements" path="/fzmtr/announcements" />
+
+## Guangzhou Metro
+
+### News
+
+<RouteEn author="HankChow" example="/guangzhoumetro/news" path="/guangzhoumetro/news" />
+
 ## Hopper
 
 ### Flight Deals
