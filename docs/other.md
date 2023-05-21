@@ -1105,6 +1105,12 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 :::
 
+::: tip 建议
+
+建议与 Notion Web Clipper 等剪藏工具搭配使用
+
+:::
+
 ### Database
 
 <Route author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" :paramsDesc="['Database ID']" selfhost="1" radar="1" />
