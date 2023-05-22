@@ -772,6 +772,16 @@ Compared to the official one, this feed:
 
 <RouteEn author="NavePnow" example="/techcrunch/news" path="/techcrunch/news"/>
 
+## TechPowerUp
+
+### Latest Content
+
+<RouteEn author="TonyRL" example="/techpowerup" path="/techpowerup" radar="1" />
+
+### Reviews
+
+<RouteEn author="TonyRL" example="/techpowerup/review/4090" path="/techpowerup/review/:keyword?" :paramsDesc="['Search Keyword']" radar="1" />
+
 ## The Brain
 
 ### Blog
