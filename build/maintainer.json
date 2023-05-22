@@ -502,6 +502,9 @@
     "/baai/hub/:tagId?/:sort?/:range?": [
         "TonyRL"
     ],
+    "/bad/:path+": [
+        "nczitzk"
+    ],
     "/baidu/gushitong/index": [
         "CaoMeiYouRen"
     ],

@@ -2322,6 +2322,18 @@
       }
     ]
   },
+  "bad.news": {
+    "_name": "Bad.news",
+    ".": [
+      {
+        "title": "通用",
+        "docs": "https://docs.rsshub.app/new-media.html#bad-news-tong-yong",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
   "baidu.com": {
     "_name": "百度",
     "gushitong": [
