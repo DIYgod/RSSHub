@@ -8,19 +8,19 @@ RSSHub provides a painless deployment process if you are equipped with basic pro
 
 The deployment may involve the followings:
 
-1. Command line interface
-2. [Git](https://git-scm.com/)
-3. [Node.js](https://nodejs.org/)
-4. [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/zh-Hans/docs/install)
+1.  Command line interface
+2.  [Git](https://git-scm.com/)
+3.  [Node.js](https://nodejs.org/)
+4.  [npm](https://www.npmjs.com/get-npm) or [yarn](https://yarnpkg.com/zh-Hans/docs/install)
 
 Deploy for public access may require:
 
-1. [Nginx](https://www.nginx.com/resources/wiki/start/topics/tutorials/install/)
-2. [Docker](https://www.docker.com/get-started) or [docker-compose](https://docs.docker.com/compose/install/)
-3. [Redis](https://redis.io/download)
-4. [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
-5. [Google App Engine](https://cloud.google.com/appengine/)
-6. [Fly.io](https://fly.io/)
+1.  [Nginx](https://www.nginx.com/resources/wiki/start/topics/tutorials/install/)
+2.  [Docker](https://www.docker.com/get-started) or [docker-compose](https://docs.docker.com/compose/install/)
+3.  [Redis](https://redis.io/download)
+4.  [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
+5.  [Google App Engine](https://cloud.google.com/appengine/)
+6.  [Fly.io](https://fly.io/)
 
 ## Docker Image
 
@@ -320,10 +320,10 @@ Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product pla
 
 ### Automatic deploy upon update
 
-1. [Fork RSSHub](https://github.com/DIYgod/RSSHub/fork) to your GitHub account.
-2. Deploy your fork to Heroku: `https://heroku.com/deploy?template=URL`, where `URL` is your fork address (_e.g._ `https://github.com/USERNAME/RSSHub`).
-3. Configure `automatic deploy` in Heroku app to follow the changes to your fork.
-4. Install [Pull](https://github.com/apps/pull) app to keep your fork synchronized with RSSHub.
+1.  [Fork RSSHub](https://github.com/DIYgod/RSSHub/fork) to your GitHub account.
+2.  Deploy your fork to Heroku: `https://heroku.com/deploy?template=URL`, where `URL` is your fork address (_e.g._ `https://github.com/USERNAME/RSSHub`).
+3.  Configure `automatic deploy` in Heroku app to follow the changes to your fork.
+4.  Install [Pull](https://github.com/apps/pull) app to keep your fork synchronized with RSSHub.
 
 ## Deploy to Vercel (ZEIT Now)
 
@@ -333,33 +333,37 @@ Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product pla
 
 ### Method 1: Fork
 
-1. [Fork RSSHub](https://github.com/DIYgod/RSSHub/fork) to your GitHub account;
-2. Clone the source code from your fork
+1.  [Fork RSSHub](https://github.com/DIYgod/RSSHub/fork) to your GitHub account;
+2.  Clone the source code from your fork
+
     ```bash
     $ git clone https://github.com/<your username>/RSSHub.git
     $ cd RSSHub
     ```
-3. [Sign up for Fly.io](https://fly.io/app/sign-up) and install the [flyctl CLI](https://fly.io/docs/hands-on/install-flyctl/);
-4. Run `fly launch` and choose a unique name and region to deploy;
-5. Use `fly secrets set KEY=VALUE` to [configure some modules](#configuration-route-specific-configurations);
-6. [Set up automatic deployment via GitHub Actions](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/);
-7. (Optional) Use `fly certs add your domain` to configure a custom domain, and follow the instructions to configure the related domain resolution at your DNS service provider (you can check the domain configuration status on the Dashboard Certificate page).
+
+3.  [Sign up for Fly.io](https://fly.io/app/sign-up) and install the [flyctl CLI](https://fly.io/docs/hands-on/install-flyctl/);
+4.  Run `fly launch` and choose a unique name and region to deploy;
+5.  Use `fly secrets set KEY=VALUE` to [configure some modules](#configuration-route-specific-configurations);
+6.  [Set up automatic deployment via GitHub Actions](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/);
+7.  (Optional) Use `fly certs add your domain` to configure a custom domain, and follow the instructions to configure the related domain resolution at your DNS service provider (you can check the domain configuration status on the Dashboard Certificate page).
 
 Upgrade: On the homepage of your Forked repository, click "Sync fork - Update Branch" to manually update to the latest official master branch, or install the [Pull](https://github.com/apps/pull) GitHub app to keep your fork synchronized with upstream.
 
 ### Method 2: Maintain fly.toml by yourself
 
-1. [Sign up for Fly.io](https://fly.io/app/sign-up) and install the [flyctl CLI](https://fly.io/docs/hands-on/install-flyctl/);
-2. Create a new empty directory locally, run `fly launch` in it, and choose a unique name and instance region;
-3. Edit the generated fly.toml file, add
+1.  [Sign up for Fly.io](https://fly.io/app/sign-up) and install the [flyctl CLI](https://fly.io/docs/hands-on/install-flyctl/);
+2.  Create a new empty directory locally, run `fly launch` in it, and choose a unique name and instance region;
+3.  Edit the generated fly.toml file, add
+
    ```toml
    [build]
    image = "diygod/rsshub:latest"
    ```
+
    Depending on the actual situation, you may want to use other image tags, please read the relevant content of [Docker Image](#docker-image);
-4. Modify the `[env]` section in fly.toml or use `fly secrets set KEY=VALUE` to [configure some modules](#configuration-route-specific-configurations);
-5. Execute `fly deploy` to start the application;
-6. (Optional) Use `fly certs add your domain` to configure a custom domain, and follow the instructions to configure the related domain resolution at your DNS service provider (you can check the domain configuration status on the Dashboard Certificate page).
+4.  Modify the `[env]` section in fly.toml or use `fly secrets set KEY=VALUE` to [configure some modules](#configuration-route-specific-configurations);
+5.  Execute `fly deploy` to start the application;
+6.  (Optional) Use `fly certs add your domain` to configure a custom domain, and follow the instructions to configure the related domain resolution at your DNS service provider (you can check the domain configuration status on the Dashboard Certificate page).
 
 Upgrade: Enter the directory where you saved the `fly.toml` file and execute `fly deploy` to trigger the steps of pulling the latest image and starting the upgraded application.
 
@@ -758,15 +762,18 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `MASTODON_API_ACCESS_TOKEN`: user access token
     -   `MASTODON_API_ACCT_DOMAIN`: acct domain for particular instance
 
--  Medium related routes: Open the console, copy the cookie (in theory, only uid and sid are required)
-	
-    -  `MEDIUM_ARTICLE_COOKIE`: Cookie used when requesting the full article, can access the full text of paid content when there is an active Member subscription.
-	-  `MEDIUM_COOKIE_{username}`: Cookie of the user corresponding to the username, required for personalized recommendation related routes.
+-   Medium related routes: Open the console, copy the cookie (in theory, only uid and sid are required)
+
+    -   `MEDIUM_ARTICLE_COOKIE`: Cookie used when requesting the full article, can access the full text of paid content when there is an active Member subscription.
+    -   `MEDIUM_COOKIE_{username}`: Cookie of the user corresponding to the username, required for personalized recommendation related routes.
 
 -   nhentai torrent: [Registration](https://nhentai.net/register/)
 
     -   `NHENTAI_USERNAME`: nhentai username or email
     -   `NHENTAI_PASSWORD`: nhentai password
+
+-   Notion
+    -   `NOTION_TOKEN`: Notion Internal Integration Token, Refer to [Notion Official Set Up Flow](https://developers.notion.com/docs/authorization#internal-integration-auth-flow-set-up) to create Token
 
 -   Pixabay: [Documentation](https://pixabay.com/api/docs/)
 
@@ -814,11 +821,11 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
         | url                                    | backbone     |
         | -------------------------------------- | ------------ |
-        | https://imageproxy.pimg.tw/resize?url= | akamai       |
-        | https://images.weserv.nl/?url=         | cloudflare   |
-        | https://pic1.xuehuaimg.com/proxy/      | cloudflare   |
-        | https://cors.netnr.workers.dev/        | cloudflare   |
-        | https://netnr-proxy.openode.io/        | digitalocean |
+        | <https://imageproxy.pimg.tw/resize?url=> | akamai       |
+        | <https://images.weserv.nl/?url=>         | cloudflare   |
+        | <https://pic1.xuehuaimg.com/proxy/>      | cloudflare   |
+        | <https://cors.netnr.workers.dev/>        | cloudflare   |
+        | <https://netnr-proxy.openode.io/>        | digitalocean |
 
 -   YouTube: [API Key application](https://console.developers.google.com/)
 

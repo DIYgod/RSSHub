@@ -336,15 +336,22 @@ Heroku [不再](https://blog.heroku.com/next-chapter) 提供免费服务。
 ### 方案一：Fork
 
 1.  将 RSSHub [Fork](https://github.com/DIYgod/RSSHub/fork) 到自己的账户下；
+
 2.  下载分叉的源码
+
     ```bash
     $ git clone https://github.com/<your username>/RSSHub.git
     $ cd RSSHub
     ```
+
 3.  前往 [Fly.io 完成注册](https://fly.io/app/sign-up)，并安装 [flyctl CLI](https://fly.io/docs/hands-on/install-flyctl/)；
+
 4.  运行 `fly launch`, 并选择一个唯一的名称和实例地区；
+
 5.  使用 `fly secrets set KEY=VALUE` [对部分模块进行配置](#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)；
+
 6.  [配置通过 GitHub Actions 自动部署](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/)；
+
 7.  （可选）利用 `fly certs add 你的域名` 来配置自定义域名，并根据指引在你的 DNS 服务商配置相关域名解析（你可在 Dashboard Certificate 页面查看域名的配置状态）。
 
 更新：在你 Fork 出来的仓库首页点击「Sync fork - Update Branch」来手动更新至官方最新的 master 分支，或安装 [Pull](https://github.com/apps/pull) 应用来定期自动同步。
@@ -354,10 +361,12 @@ Heroku [不再](https://blog.heroku.com/next-chapter) 提供免费服务。
 1.  前往 [Fly.io 完成注册](https://fly.io/app/sign-up)，并安装 [flyctl CLI](https://fly.io/docs/hands-on/install-flyctl/)；
 2.  自行在本地新建一个空目录，在其中运行 `fly launch`, 并选择一个唯一的名称和实例地区；
 3.  编辑生成的 fly.toml 文件，新增
+
     ```toml
     [build]
     image = "diygod/rsshub:latest"
     ```
+
     根据实际情况，你可能希望使用其他镜像标签，请阅读 [Docker 镜像](#docker-jing-xiang) 的有关内容；
 4.  修改 fly.toml 中的 `[env]` 段或使用`fly secrets set KEY=VALUE` [对部分模块进行配置](#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)；
 5.  执行 `fly deploy` 启动应用；
@@ -802,6 +811,9 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `NHENTAI_USERNAME`: nhentai 用户名或邮箱
     -   `NHENTAI_PASSWORD`: nhentai 密码
+
+-   Notion
+    -   `NOTION_TOKEN`: Notion 内部集成 Token，请按照[Notion 官方指引](https://developers.notion.com/docs/authorization#internal-integration-auth-flow-set-up)申请 Token
 
 -   pianyuan 全部路由：[注册地址](https://pianyuan.org)
 

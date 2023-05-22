@@ -12,7 +12,7 @@ pageClass: routes
 
 ::: tip Tip
 
-Copy the URL of the 591 filter housing page and remove the front part "https://rent.591.com.tw/?", you will get the query parameters.
+Copy the URL of the 591 filter housing page and remove the front part "<https://rent.591.com.tw/>?", you will get the query parameters.
 
 :::
 
@@ -34,8 +34,8 @@ See [#app-store-mac-app-store](/en/program-update.html#app-store-mac-app-store)
 
 <RouteEn author="HenryQW" example="/autotrader/radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on" path="/autotrader/:query" :paramsDesc="['the search query']">
 
-1. Conduct a search with desired filters on AutoTrader
-1. Copy everything in the URL after `?`, for example: `https://www.autotrader.co.uk/car-search?radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on` will produce `radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on`
+1.  Conduct a search with desired filters on AutoTrader
+1.  Copy everything in the URL after `?`, for example: `https://www.autotrader.co.uk/car-search?radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on` will produce `radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on`
 
 </RouteEn>
 
@@ -195,8 +195,9 @@ RSS source in the original site is outdated.
 | 1         | 2           | 3         | 4                | 5        | all |
 
 For example:
-1. If we want to search software engineer jobs of all levels and all job types, use `/linkedin/jobs/all/all/software engineer`
-2. If we want to search all entry level contractor/part time software engineer jobs, use `/linkedin/jobs/P-C/2/software engineer`
+
+1.  If we want to search software engineer jobs of all levels and all job types, use `/linkedin/jobs/all/all/software engineer`
+2.  If we want to search all entry level contractor/part time software engineer jobs, use `/linkedin/jobs/P-C/2/software engineer`
 
 **To make it easier, the recommended way is to start a search on <a href="https://www.linkedin.com/jobs/search">LinkedIn</a> and use <a href="https://github.com/DIYgod/RSSHub-Radar">RSSHub Radar</a> to load the specific feed.**
 
@@ -223,6 +224,38 @@ For example:
 | Physics | Chemistry | Physiology or Medicine | Literature | Peace | Economic Science  |
 | ------- | --------- | ---------------------- | ---------- | ----- | ----------------- |
 | physics | chemistry | physiology-or-medicine | literature | peace | economic-sciences |
+
+</RouteEn>
+
+## Notion
+
+::: warning Warning
+
+Need to set up Notion integration, please refer to [Route-specific Configurations](https://docs.rsshub.app/en/install/#Deployment) for details.
+
+:::
+
+::: tip Recommendation
+
+It is recommended to use with clipping tools such as Notion Web Clipper.
+
+:::
+
+### Database
+
+<RouteEn author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" :paramsDesc="['Database ID']" selfhost="1" radar="1">
+
+There is an optional query parameter called `properties=` that can be used to customize field mapping. There are three built-in fields: author, pubTime and link, which can be used to add additional information.
+
+For example, if you have set up three properties in your database - "Publish Time", "Author", and "Original Article Link" - then execute the following JavaScript code to get the result for the properties parameter.
+
+```js
+encodeURIComponent(JSON.stringify({"pubTime": "Publish Time", "author": "Author", "link": "Original Article Link"}))
+```
+
+There is an optional query parameter called `query=` that can be used to customize the search rules for your database, such as custom sorting and filtering rules.
+
+please refer to the [Notion API documentation](https://developers.notion.com/reference/post-database-query) and execute `encodeURIComponent(JSON.stringify(custom rules))` to provide the query parameter.
 
 </RouteEn>
 
