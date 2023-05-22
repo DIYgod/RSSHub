@@ -1,0 +1,8 @@
+<p>{{ item.title }}</p>
+<p>{{if item.reginName }}
+  【{{ item.reginName }}】
+{{ /if }}
+(影响用户{{ item.affectUser }}),
+{{if item.stopwaterType }}
+  [{{ item.stopwaterType }}]
+{{ /if }}原因：{{ item.reason }},停水开始时间{{ item.stopStartTime }},停水结束时间{{ item.stopEndTime }}</p>
