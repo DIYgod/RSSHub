@@ -285,6 +285,24 @@ pageClass: routes
 
 <Route author="TonyRL" example="/firefox/breaches" path="/firefox/breaches"/>
 
+## NOI 全国青少年信息学奥林匹克竞赛
+
+### 新闻
+
+<Route author="WenryXu" example="/noi" path="/noi"/>
+
+### 获奖名单
+
+<Route author="WenryXu" example="/noi/winners-list" path="/noi/winners-list"/>
+
+### 各省新闻
+
+<Route author="WenryXu" example="/noi/province-news" path="/noi/province-news"/>
+
+### 报名新闻
+
+<Route author="WenryXu" example="/noi/rg-news" path="/noi/rg-news"/>
+
 ## Notion
 
 ::: warning 注意
@@ -316,24 +334,6 @@ encodeURIComponent(JSON.stringify({"author": "作者", "link": "文章原链接"
 书写结构请查阅 [Notion 文档](https://developers.notion.com/reference/post-database-query)，将 `encodeURIComponent(JSON.stringify(自定义规则))` 的执行给 `query` 参数。
 
 </Route>
-
-## NOI 全国青少年信息学奥林匹克竞赛
-
-### 新闻
-
-<Route author="WenryXu" example="/noi" path="/noi"/>
-
-### 获奖名单
-
-<Route author="WenryXu" example="/noi/winners-list" path="/noi/winners-list"/>
-
-### 各省新闻
-
-<Route author="WenryXu" example="/noi/province-news" path="/noi/province-news"/>
-
-### 报名新闻
-
-<Route author="WenryXu" example="/noi/rg-news" path="/noi/rg-news"/>
 
 ## ONE・一个
 

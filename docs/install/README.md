@@ -336,6 +336,7 @@ Heroku [不再](https://blog.heroku.com/next-chapter) 提供免费服务。
 ### 方案一：Fork
 
 1.  将 RSSHub [Fork](https://github.com/DIYgod/RSSHub/fork) 到自己的账户下；
+
 2.  下载分叉的源码
 
     ```bash
@@ -344,9 +345,13 @@ Heroku [不再](https://blog.heroku.com/next-chapter) 提供免费服务。
     ```
 
 3.  前往 [Fly.io 完成注册](https://fly.io/app/sign-up)，并安装 [flyctl CLI](https://fly.io/docs/hands-on/install-flyctl/)；
+
 4.  运行 `fly launch`, 并选择一个唯一的名称和实例地区；
+
 5.  使用 `fly secrets set KEY=VALUE` [对部分模块进行配置](#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)；
+
 6.  [配置通过 GitHub Actions 自动部署](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/)；
+
 7.  （可选）利用 `fly certs add 你的域名` 来配置自定义域名，并根据指引在你的 DNS 服务商配置相关域名解析（你可在 Dashboard Certificate 页面查看域名的配置状态）。
 
 更新：在你 Fork 出来的仓库首页点击「Sync fork - Update Branch」来手动更新至官方最新的 master 分支，或安装 [Pull](https://github.com/apps/pull) 应用来定期自动同步。
