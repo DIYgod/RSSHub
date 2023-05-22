@@ -1113,7 +1113,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### Database
 
-<Route author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" :paramsDesc="['Database ID']" selfhost="1" radar="1" />
+<Route author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" :paramsDesc="['Database ID']" selfhost="1" radar="1">
 
 可选 query 参数 `properties=`，用来自定义字段对应关系；内置有 author、link、pubTime 三个字段用于增加辅助信息。
 
@@ -1126,3 +1126,5 @@ encodeURIComponent(JSON.stringify({"author": "作者", "link": "文章原链接"
 可选 query 参数 `query=`，用来自定义 Database 的查询规则，例如自定义排序和筛选规则。
 
 书写结构请查阅 [Notion 文档](https://developers.notion.com/reference/post-database-query)，将 `encodeURIComponent(JSON.stringify(自定义规则))` 的执行给 `query` 参数。
+
+</Route>

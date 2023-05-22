@@ -374,7 +374,7 @@ It is recommended to use with clipping tools such as Notion Web Clipper.
 
 ### Database
 
-<RouteEn author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" :paramsDesc="['Database ID']" selfhost="1" radar="1" />
+<RouteEn author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" :paramsDesc="['Database ID']" selfhost="1" radar="1">
 
 There is an optional query parameter called `properties=` that can be used to customize field mapping. There are three built-in fields: author, pubTime and link, which can be used to add additional information.
 
@@ -387,3 +387,5 @@ encodeURIComponent(JSON.stringify({"pubTime": "Publish Time", "author": "Author"
 There is an optional query parameter called `query=` that can be used to customize the search rules for your database, such as custom sorting and filtering rules.
 
 please refer to the [Notion API documentation](https://developers.notion.com/reference/post-database-query) and execute `encodeURIComponent(JSON.stringify(custom rules))` to provide the query parameter.
+
+</RouteEn>
