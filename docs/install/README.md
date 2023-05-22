@@ -807,6 +807,9 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `NHENTAI_USERNAME`: nhentai 用户名或邮箱
     -   `NHENTAI_PASSWORD`: nhentai 密码
 
+-   Notion
+    -   `NOTION_TOKEN`: Notion 内部集成 Token，请按照[Notion 官方指引](https://developers.notion.com/docs/authorization#internal-integration-auth-flow-set-up)申请 Token
+
 -   pianyuan 全部路由：[注册地址](https://pianyuan.org)
 
     -   `PIANYUAN_COOKIE`: 对应 cookie 中的 `py_loginauth`, 例: PIANYUAN_COOKIE='py_loginauth=xxxxxxxxxx'
@@ -975,6 +978,3 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值.
         1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值.
-
--   Notion
-    -   `NOTION_TOKEN`: Notion 内部集成 Token，请按照[Notion 官方指引](https://developers.notion.com/docs/authorization#internal-integration-auth-flow-set-up)申请 Token

@@ -227,6 +227,38 @@ For example:
 
 </RouteEn>
 
+## Notion
+
+::: warning Warning
+
+Need to set up Notion integration, please refer to [Route-specific Configurations](https://docs.rsshub.app/en/install/#Deployment) for details.
+
+:::
+
+::: tip Recommendation
+
+It is recommended to use with clipping tools such as Notion Web Clipper.
+
+:::
+
+### Database
+
+<RouteEn author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" :paramsDesc="['Database ID']" selfhost="1" radar="1">
+
+There is an optional query parameter called `properties=` that can be used to customize field mapping. There are three built-in fields: author, pubTime and link, which can be used to add additional information.
+
+For example, if you have set up three properties in your database - "Publish Time", "Author", and "Original Article Link" - then execute the following JavaScript code to get the result for the properties parameter.
+
+```js
+encodeURIComponent(JSON.stringify({"pubTime": "Publish Time", "author": "Author", "link": "Original Article Link"}))
+```
+
+There is an optional query parameter called `query=` that can be used to customize the search rules for your database, such as custom sorting and filtering rules.
+
+please refer to the [Notion API documentation](https://developers.notion.com/reference/post-database-query) and execute `encodeURIComponent(JSON.stringify(custom rules))` to provide the query parameter.
+
+</RouteEn>
+
 ## oshwhub
 
 ### OpenSource Square
@@ -357,35 +389,3 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 ### User
 
 <RouteEn author="SettingDust Halcao" example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['User ID']" radar="1" rssbud="1" puppeteer="1"/>
-
-## Notion
-
-::: warning Warning
-
-Need to set up Notion integration, please refer to [Route-specific Configurations](https://docs.rsshub.app/en/install/#Deployment) for details.
-
-:::
-
-::: tip Recommendation
-
-It is recommended to use with clipping tools such as Notion Web Clipper.
-
-:::
-
-### Database
-
-<RouteEn author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" :paramsDesc="['Database ID']" selfhost="1" radar="1">
-
-There is an optional query parameter called `properties=` that can be used to customize field mapping. There are three built-in fields: author, pubTime and link, which can be used to add additional information.
-
-For example, if you have set up three properties in your database - "Publish Time", "Author", and "Original Article Link" - then execute the following JavaScript code to get the result for the properties parameter.
-
-```js
-encodeURIComponent(JSON.stringify({"pubTime": "Publish Time", "author": "Author", "link": "Original Article Link"}))
-```
-
-There is an optional query parameter called `query=` that can be used to customize the search rules for your database, such as custom sorting and filtering rules.
-
-please refer to the [Notion API documentation](https://developers.notion.com/reference/post-database-query) and execute `encodeURIComponent(JSON.stringify(custom rules))` to provide the query parameter.
-
-</RouteEn>

@@ -763,7 +763,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `MASTODON_API_ACCT_DOMAIN`: acct domain for particular instance
 
 -   Medium related routes: Open the console, copy the cookie (in theory, only uid and sid are required)
- 
+
     -   `MEDIUM_ARTICLE_COOKIE`: Cookie used when requesting the full article, can access the full text of paid content when there is an active Member subscription.
     -   `MEDIUM_COOKIE_{username}`: Cookie of the user corresponding to the username, required for personalized recommendation related routes.
 
@@ -771,6 +771,9 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
     -   `NHENTAI_USERNAME`: nhentai username or email
     -   `NHENTAI_PASSWORD`: nhentai password
+
+-   Notion
+    -   `NOTION_TOKEN`: Notion Internal Integration Token, Refer to [Notion Official Set Up Flow](https://developers.notion.com/docs/authorization#internal-integration-auth-flow-set-up) to create Token
 
 -   Pixabay: [Documentation](https://pixabay.com/api/docs/)
 
@@ -836,6 +839,3 @@ See docs of the specified route and `lib/config.js` for detailed information.
 -   ZodGame:
 
     -   `ZODGAME_COOKIE`: Cookie of ZodGame User
-
--   Notion
-    -   `NOTION_TOKEN`: Notion Internal Integration Token, Refer to [Notion Official Set Up Flow](https://developers.notion.com/docs/authorization#internal-integration-auth-flow-set-up) to create Token
