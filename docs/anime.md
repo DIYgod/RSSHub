@@ -191,6 +191,12 @@ pageClass: routes
 
 <Route author="TonyRL" example="/creative-comic/book/117" path="/creative-comic/book/:id/:coverOnly?/:quality?" :paramsDesc="['漫畫 ID，可在 URL 中找到', '僅獲取封面，非 `true` 時將獲取**全部**頁面，預設 `true`', '閱讀品質，標準畫質 `1`，高畫質 `2`，預設 `1`']" radar="1" rssbud="1"/>
 
+## Comicat
+
+### 搜索关键词
+
+<Route author="Cyang39" example="/comicat/search/喵萌奶茶屋+跃动青春+720P+简日" path="/comicat/search/:keyword" :paramsDesc="['关键词，请用`+`号连接']" supportBT=1/>
+
 ## CnGal
 
 ### 每周速报
