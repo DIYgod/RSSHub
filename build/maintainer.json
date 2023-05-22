@@ -1173,6 +1173,9 @@
     "/coindesk/consensus-magazine": [
         "jameshih"
     ],
+    "/comicat/search/:keyword": [
+        "Cyang39"
+    ],
     "/comicskingdom/:name": [
         "stjohnjohnson"
     ],
