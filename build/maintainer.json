@@ -3760,6 +3760,9 @@
     "/nogizaka46/blog": [
         "Kasper4649"
     ],
+    "/notion/database/:databaseId": [
+        "curly210102"
+    ],
     "/now/news/:category?/:id?": [
         "nczitzk"
     ],
