@@ -195,7 +195,7 @@ pageClass: routes
 
 ### 搜索关键词
 
-<Route author="Cyang39" example="/comicat/search/喵萌奶茶屋+跃动青春+720P+简体" path="/comicat/search/:keyworkd" :paramsDesc="['关键词，请用`+`号连接']" supportBT=1/>
+<Route author="Cyang39" example="/comicat/search/喵萌奶茶屋+跃动青春+720P+简体" path="/comicat/search/:keyword" :paramsDesc="['关键词，请用`+`号连接']" supportBT=1/>
 
 ## CnGal
 
