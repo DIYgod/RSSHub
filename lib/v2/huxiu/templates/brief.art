@@ -1,0 +1,22 @@
+{{ if brief.preface }}{{@ brief.preface }}<br>{{ /if }}
+
+{{ if brief.audio_info }}
+<figure>
+    <figcaption>{{ brief.audio_title }}</figcaption>
+    <audio controls src="{{ brief.audio_info.audio_path }}"></audio>
+</figure>
+<br>
+{{ /if }}
+
+{{ if brief.part_list }}{{ each brief.part_list part }}
+    {{ if part.title }}<h2>{{ part.title }}</h2>{{ /if }}
+    {{ if part.content_info }}{{ each part.content_info content }}
+        {{ if content.type === 'text' }}{{@ content.text }}{{ /if }}
+        {{ if content.type === 'video' }}
+            <video controls poster="{{ content.video.poster }}"><source src="{{ content.video.url }}" type="video/mp4"></video>
+        {{ /if }}
+        {{ if content.type === 'image'}}{{ /if }}
+    {{ /each }}<br>{{ /if }}
+{{ /each }}{{ /if }}
+
+{{ if brief.peroration }}{{ brief.peroration }}{{ /if }}

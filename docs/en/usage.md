@@ -1,12 +1,12 @@
 # Getting Started
 
-## Generate a RSS Feed
+## Generate an RSS Feed
 
 To subscribe to a Twitter user's timeline, first look at the route document of [Twitter User Timeline](en/social-media.html#twitter-user-timeline).
 
 `/twitter/user/:id` is the route where `:id` is the actual Twitter username you need to replace. For instance, `/twitter/user/DIYgod` with a prefix domain name will give you the timeline of Twitter user DIYgod.
 
-The demo instance will generate a RSS feed at <https://rsshub.app/twitter/user/DIYgod>, use your own domain name when applicable. This feed should work with all RSS readers conforming to the RSS Standard.
+The demo instance will generate an RSS feed at <https://rsshub.app/twitter/user/DIYgod>, use your own domain name when applicable. This feed should work with all RSS readers conforming to the RSS Standard.
 
 You can replace the domain name `https://rsshub.app` with your [self-hosted instance](/en/install/).
 
@@ -22,15 +22,29 @@ Apart from serving as an information source hub, RSSHub is also made compatible 
 
 ### Install
 
+<code-group>
+<code-block title="pnpm" active>
+
 ```bash
-npm install rsshub --save
+pnpm add rsshub
 ```
 
-Or user Yarn
+</code-block>
+<code-block title="yarnv1">
 
 ```bash
 yarn add rsshub
 ```
+
+</code-block>
+<code-block title="npm">
+
+```bash
+npm install rsshub --save
+```
+
+</code-block>
+</code-group>
 
 ### Usage
 

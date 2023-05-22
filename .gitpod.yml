@@ -1,0 +1,46 @@
+image: gitpod/workspace-node-lts
+
+ports:
+  - port: 1200
+    onOpen: notify
+    visibility: public
+  - port: 8080
+    onOpen: notify
+    visibility: public
+
+tasks:
+  - name: deps
+    before: |
+      sudo apt update
+      sudo apt install -y ca-certificates fonts-liberation libasound2 libatk-bridge2.0-0 libatk1.0-0 libatspi2.0-0 libcairo2 libcups2 libdbus-1-3 libexpat1 libgbm1 libglib2.0-0 libnspr4 libnss3 libpango-1.0-0 libx11-6 libxcb1 libxcomposite1 libxdamage1 libxext6 libxfixes3 libxkbcommon0 libxrandr2 wget xdg-util
+      sudo apt install -y redis-server
+    init: pnpm i && pnpm i -C docs && pnpm rb
+  - name: app
+    command: pnpm run dev
+    openMode: tab-after
+  # - name: docs
+  #   command: |
+  #     cd docs
+  #     pnpm run docs:dev
+  #   openMode: tab-after
+
+vscode:
+  extensions:
+    - cweijan.vscode-database-client2 # you may need to rollback to v5.3.1 or below in **VS Code Desktop**
+    - dbaeumer.vscode-eslint
+    - eamodio.gitlens
+    - EditorConfig.EditorConfig
+    - esbenp.prettier-vscode
+    - deepscan.vscode-deepscan
+    - rangav.vscode-thunder-client
+    - sonarsource.sonarlint-vscode
+    # - ZihanLi.at-helper not available on Open VSX
+
+github:
+  prebuilds:
+    master: true
+    branches: true
+    pullRequests: false
+    pullRequestsFromForks: false
+    addCheck: false
+    addComment: false

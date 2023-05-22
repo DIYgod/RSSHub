@@ -11,7 +11,7 @@ on:
       - '!**/radar.js'
       - '!**/radar-rules.js'
       - 'package.json'
-      - 'yarn.lock'
+      - 'pnpm-lock.yaml'
       - '.github/workflows/test.yml'
   pull_request: ~
 
@@ -21,6 +21,7 @@ permissions:
 jobs:
   jest:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     services:
       redis:
         image: redis
@@ -30,7 +31,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 14, 16, 18 ]
+        node-version: [ 16, 18 ]
     name: Jest on Node ${{ matrix.node-version }}
     steps:
       - name: Collect Workflow Telemetry
@@ -39,14 +40,19 @@ jobs:
         with:
           api_key: ${{ secrets.FORESIGHT_KEY }}
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-      - name: Install dependencies (yarn)
-        run: yarn
+          cache: 'pnpm'
+      - name: Install dependencies (pnpm)
+        run: pnpm i
+      - name: Run postinstall script for dependencies
+        run: pnpm rb
       - name: Test all and generate coverage
-        run: npm run jest:coverage
+        run: pnpm run jest:coverage
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
       - name: Upload coverage to Codecov
@@ -62,13 +68,17 @@ jobs:
           test_format: JUNIT
           test_framework: JEST
           test_path: ./coverage/junit.xml
+          coverage_format: LCOV/TXT
+          coverage_path: ./coverage/lcov.info
+
 
   puppeteer:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 14, 16, 18 ]
+        node-version: [ 16, 18 ]
         chromium:
           - name: bundled Chromium
             dependency: ''
@@ -82,17 +92,23 @@ jobs:
     name: Jest puppeteer on Node ${{ matrix.node-version }} with ${{ matrix.chromium.name }}
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-      - name: Install dependencies (yarn)
-        run: yarn
+          cache: 'pnpm'
+      - name: Install dependencies (pnpm)
+        run: pnpm i
+      - name: Run postinstall script for dependencies
+        run: pnpm rb
       - name: Install Chromium
         if: ${{ matrix.chromium.dependency != '' }}
-        # Chromium from Ubuntu is too old (85), but can still pass the tests
-        # That's not really a problem since Chromium-bundled Docker image is based on Debian bullseye,
-        # which updates Chromium frequently, and only on arm/arm64 the image needs Chromium from Debian.
+        # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
+        # nothing since it calls Snap (disgusting!) to install Chromium, which should be up-to-date.
+        # That's not really a problem since the Chromium-bundled Docker image is based on Debian bullseye,
+        # which provides up-to-date native packages.
         run: |
           set -ex
           curl -s "https://dl.google.com/linux/linux_signing_key.pub" | gpg --dearmor |
@@ -102,46 +118,59 @@ jobs:
           sudo apt-get update
           sudo apt-get install -yq --no-install-recommends ${{ matrix.chromium.dependency }}
       - name: Test puppeteer
-        run: npm run jest puppeteer
+        run: pnpm run jest puppeteer
         env: ${{ fromJSON(matrix.chromium.environment) }}
 
   docs:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 14, 16, 18 ]
+        node-version: [ 16, 18 ]
+    defaults:
+      run:
+        working-directory: docs
     name: Build docs on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-      - run: yarn
-      - name: Set environment variable for Node v18
-        if: ${{ matrix.node-version == '18' }}
+          cache: 'pnpm'
+          cache-dependency-path: docs/pnpm-lock.yaml
+      - run: pnpm i
+      - name: Set environment variable for Node v16 above
+        if: ${{ matrix.node-version > '16' }}
         run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
       - name: Build docs
         run: npm run docs:build
-      - name: Unset environment variable for Node v18
-        if: ${{ matrix.node-version == '18' }}
+        working-directory: docs
+      - name: Unset environment variable for Node v16 above
+        if: ${{ matrix.node-version > '16' }}
         run: echo "NODE_OPTIONS=''" >> $GITHUB_ENV
 
   all:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 14, 16, 18 ]
+        node-version: [ 16, 18 ]
     name: Build radar and maintainer on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'yarn'
-      - run: yarn
+          cache: 'pnpm'
+      - run: pnpm i
       - name: Build radar and maintainer
         run: npm run build:all
 

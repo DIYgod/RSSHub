@@ -4,6 +4,33 @@ pageClass: routes
 
 # Finance
 
+## Bloomberg
+
+### News
+
+<RouteEn author="bigfei" example="/bloomberg" path="/bloomberg/:site?" :paramsDesc="['Site, see below, News by default']" anticrawler="1">
+
+| Site | Name |
+| ---- | ---- |
+| / | News |
+| bpol | Politics |
+| bbiz | Business |
+| markets | Markets |
+| technology | Technology |
+| green | Green |
+| wealth | Wealth |
+| pursuits | Pursuits |
+| bview | Opinion |
+| equality | Equality |
+| businessweek | Businessweek |
+| citylab | CityLab |
+
+</RouteEn>
+
+### Authors
+
+<RouteEn author="josh" example="/bloomberg/authors/ARbTQlRLRjE/matthew-s-levine" path="/bloomberg/authors/:id/:slug/:source?" :paramsDesc="['Author ID, can be found in URL', 'Author Slug, can be found in URL', 'Data source, either `api` or `rss`,`api` by default']" anticrawler="1" radar="1"/>
+
 ## CFD
 
 ### Indices Dividend Adjustment (GBP)
@@ -37,6 +64,12 @@ pageClass: routes
 | trading | infrastructure | tech-and-data | regulation |
 
 </RouteEn>
+
+## Paradigm
+
+### Writing
+
+<RouteEn author="Fatpandac" example="/paradigm/writing" path="/paradigm/writing" />
 
 ## Seeking Alpha
 

@@ -9,9 +9,20 @@
 {{/if}}
 <br>
 <h4>磁力連結投稿</h4>
+<table>
+<tr>
+<th>磁力名稱</th>
+<th>檔案大小</th>
+<th>分享日期</th>
+</tr>
 {{each magnets magnet}}
-<li><a href="{{ magnet.link }}">{{ magnet.title }} [{{ magnet.size }}] ({{ magnet.date }})</a></li>
+<tr>
+<td><a href="{{ magnet.link }}">{{ magnet.title }}</a></td>
+<td>{{ magnet.size }}</td>
+<td>{{ magnet.date }}</td>
+</tr>
 {{/each}}
+</table>
 <h4>樣品圖像</h4>
 {{each thumbs}}
 <img src="{{ $value }}">

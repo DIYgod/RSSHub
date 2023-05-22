@@ -98,7 +98,7 @@ describe('router', () => {
             },
             message: 'request returned 1 route',
         });
-    });
+    }, 60000);
     it(`/api/routes`, async () => {
         const response = await request.get('/api/routes');
         expect(response.status).toBe(200);

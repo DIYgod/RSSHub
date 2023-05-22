@@ -14,6 +14,25 @@ pageClass: routes
 
 </Route>
 
+## Uptime Robot
+
+### RSS
+
+<Route author="Rongronggg9" example="/uptimerobot/rss/u358785-e4323652448755805d668f1a66506f2f" path="/uptimerobot/rss/:id/:routeParams?" :paramsDesc="['RSS URL 的最后一部分 (e.g. 对于 `https://rss.uptimerobot.com/u358785-e4323652448755805d668f1a66506f2f`，为 `u358785-e4323652448755805d668f1a66506f2f`)', '额外参数，请参阅下面的表格']">
+<!-- example stolen from https://atlas.eff.org//domains/uptimerobot.com.html -->
+
+| 键     | 含义                                                            | 接受的值       | 默认值 |
+| ------ | --------------------------------------------------------------- | -------------- | ------ |
+| showID | 是否包含 monitor ID (关闭此项同时也会使得各个 RSS 条目不附链接) | 0/1/true/false | true   |
+
+</Route>
+
+## 重庆燃气
+
+### 停气检修通知
+
+<Route author="Mai19930513" example="/cqgas/tqtz" path="/cqgas/tqtz" radar="1"/>
+
 ## 地震速报
 
 ### 中国地震局
@@ -28,15 +47,15 @@ pageClass: routes
 
 <Route author="SettingDust" example="/earthquake/ceic/1" path="/earthquake/ceic/:type?" :paramsDesc="['类型，见下表']">
 
-| 参数 | 类型               |
-| -- | ---------------- |
-| 1  | 最近 24 小时地震信息     |
-| 2  | 最近 48 小时地震信息     |
-| 5  | 最近一年 3.0 级以上地震信息 |
-| 7  | 最近一年 3.0 级以下地震   |
-| 8  | 最近一年 4.0 级以上地震信息 |
-| 9  | 最近一年 5.0 级以上地震信息 |
-| 0  | 最近一年 6.0 级以上地震信息 |
+| 参数 | 类型                        |
+| ---- | --------------------------- |
+| 1    | 最近 24 小时地震信息        |
+| 2    | 最近 48 小时地震信息        |
+| 5    | 最近一年 3.0 级以上地震信息 |
+| 7    | 最近一年 3.0 级以下地震     |
+| 8    | 最近一年 4.0 级以上地震信息 |
+| 9    | 最近一年 5.0 级以上地震信息 |
+| 0    | 最近一年 6.0 级以上地震信息 |
 
 可通过全局过滤参数订阅您感兴趣的地区.
 
@@ -57,16 +76,6 @@ pageClass: routes
 ### 当前生效预警
 
 <Route author="nczitzk" example="/12379" path="/12379/index"/>
-
-## 国家应急广播网
-
-### 预警信息
-
-<Route author="muzea" example="/cneb/yjxx" path="/cneb/yjxx"/>
-
-### 国内新闻
-
-<Route author="muzea" example="/cneb/guoneinews" path="/cneb/guoneinews"/>
 
 ## 和风天气
 
@@ -142,10 +151,31 @@ pageClass: routes
 
 <Route author="MoonBegonia" example="/tingshuitz/wuhan" path="/tingshuitz/wuhan/:channelId">
 
-| channelId | 分类    |
-| --------- | ----- |
+| channelId | 分类       |
+| --------- | ---------- |
 | 68        | 计划性停水 |
 | 69        | 突发性停水 |
+
+</Route>
+
+### 长沙市
+
+<Route author="shansing" example="/tingshuitz/changsha/78" path="/tingshuitz/changsha/:channelId?">
+
+可能仅限于中国大陆服务器访问，以实际情况为准。
+
+| channelId | 分类     |
+| --------- | -------- |
+| 78        | 计划停水 |
+| 157       | 抢修停水 |
+
+</Route>
+
+### 深圳市
+
+<Route author="lilPiper" example="/tingshuitz/shenzhen" path="/tingshuitz/shenzhen">
+
+可能仅限中国大陆服务器访问，以实际情况为准。
 
 </Route>
 
@@ -154,6 +184,48 @@ pageClass: routes
 ### Current Weather Report
 
 <Route author="calpa" example="/hko/weather" path="/hko/weather"/>
+
+## 中国国家应急广播
+
+### 预警信息
+
+<Route author="muzea nczitzk" example="/cneb/yjxx" path="/cneb/yjxx/:level?/:province?/:city?" :paramsDesc="['灾害级别，见下表，默认为全部', '省份，默认为空，即全国', '城市，默认为空，即全省']">
+
+灾害级别
+
+| 全部 | 红色 | 橙色 | 黄色 | 蓝色 |
+| ---- | ---- | ---- | ---- | ---- |
+|      | 红色 | 橙色 | 黄色 | 蓝色 |
+
+::: tip 提示
+
+若订阅全国的全部预警信息，此时路由为 [`/cneb/yjxx`](https://rsshub.app/cneb/yjxx)。
+
+若订阅全国的 **红色** 预警信息，此时路由为 [`/cneb/yjxx/红色`](https://rsshub.app/cneb/yjxx/红色)。
+
+若订阅 **北京市** 的全部预警信息，此时路由为 [`/cneb/yjxx/北京市`](https://rsshub.app/cneb/yjxx/北京市)。
+
+若订阅 **北京市** 的 **蓝色** 预警信息，此时路由为 [`/cneb/yjxx/北京市/蓝色`](https://rsshub.app/cneb/yjxx/北京市/蓝色)。
+
+若订阅 **广东省** 的 **橙色** 预警信息，此时路由为 [`/cneb/yjxx/广东省/橙色`](https://rsshub.app/cneb/yjxx/广东省/橙色)。
+
+若订阅 **广东省广州市** 的全部预警信息，此时路由为 [`/cneb/yjxx/广东省/广州市`](https://rsshub.app/cneb/yjxx/广东省/广州市)。
+
+若订阅 **广东省广州市** 的 **黄色** 预警信息，此时路由为 [`/cneb/yjxx/广东省/广州市/黄色`](https://rsshub.app/cneb/yjxx/广东省/广州市/黄色)。
+
+:::
+
+</Route>
+
+### 应急新闻
+
+<Route author="nczitzk" example="/cneb/yjxw" path="/cneb/yjxw/:category?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 全部 | 国内新闻 | 国际新闻 |
+| ---- | -------- | -------- |
+|      | gnxw     | gjxw     |
+
+</Route>
 
 ## 中央气象台
 

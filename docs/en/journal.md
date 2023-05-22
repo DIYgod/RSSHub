@@ -23,6 +23,16 @@ pageClass: routes
 
 </RouteEn>
 
+## ACM Special Interest Group on Security Audit and Control
+
+### The ACM Conference on Computer and Communications Security
+
+<RouteEn author="ZeddYu" example="/sigsac/ccs" path="/sigsac/ccs">
+
+Return results from 2020
+
+</RouteEn>
+
 ## American Chemistry Society
 
 ### Journal
@@ -32,6 +42,38 @@ pageClass: routes
 ::: tip Tip
 
 See [Browse Content](https://pubs.acs.org)
+
+:::
+
+</RouteEn>
+
+## American Economic Association
+
+### Journal
+
+<RouteEn author="nczitzk" example="/aeaweb/aer" path="/aeaweb/:id" :paramsDesc="['Journal id, can be found in URL']" supportScihub="1">
+
+The URL of the journal [American Economic Review](https://www.aeaweb.org/journals/aer) is `https://www.aeaweb.org/journals/aer`, where `aer` is the id of the journal, so the route for this journal is `/aeaweb/aer`.
+
+::: tip Tip
+
+More jounals can be found in [AEA Journals](https://www.aeaweb.org/journals).
+
+:::
+
+</RouteEn>
+
+## Annual Reviews
+
+### Journal
+
+<RouteEn author="nczitzk" example="/annualreviews/anchem" path="/annualreviews/:id" :paramsDesc="['Journal id, can be found in URL']" supportScihub="1">
+
+The URL of the journal [Annual Review of Analytical Chemistry](https://www.annualreviews.org/journal/anchem) is `https://www.annualreviews.org/journal/anchem`, where `anchem` is the id of the journal, so the route for this journal is `/annualreviews/anchem`.
+
+::: tip Tip
+
+More jounals can be found in [Browse Journals](https://www.annualreviews.org/action/showPublications).
 
 :::
 
@@ -124,9 +166,9 @@ Google Scholar has strict anti-crawling mechanism implemented, the demo below do
 
 :::
 
-1. Basic mode, sample query is the keywords desired, eg.「data visualization」, [https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization).
+1.  Basic mode, sample query is the keywords desired, eg.「data visualization」, [https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization).
 
-2. Advanced mode, visit [Google Scholar](https://scholar.google.com/schhp?hl=en&as_sdt=0,5), click the top left corner and select「Advanced Search」, fill in your conditions and submit the search. The URL should look like this: [https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5), copy everything after `https://scholar.google.com/scholar?` from the URL and use it as the query for this route. The complete URL for the above example should look like this: [https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5).
+2.  Advanced mode, visit [Google Scholar](https://scholar.google.com/schhp?hl=en&as_sdt=0,5), click the top left corner and select「Advanced Search」, fill in your conditions and submit the search. The URL should look like this: [https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5), copy everything after `https://scholar.google.com/scholar?` from the URL and use it as the query for this route. The complete URL for the above example should look like this: [https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5).
 
 </RouteEn>
 
@@ -135,6 +177,16 @@ Google Scholar has strict anti-crawling mechanism implemented, the demo below do
 <RouteEn author="KellyHwong" example="/google/citations/mlmE4JMAAAAJ" path="/google/citations/:id" anticrawler="1">
 
 The parameter id in the route is the id in the URL of the user's Google Scholar reference page, for example `https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ` to `mlmE4JMAAAAJ`
+
+</RouteEn>
+
+## IEEE Computer Society
+
+### IEEE Symposium on Security and Privacy
+
+<RouteEn author="ZeddYu" example="/ieee-security/security-privacy" path="/ieee-security/security-privacy">
+
+Return results from 2020
 
 </RouteEn>
 
@@ -147,6 +199,10 @@ The parameter id in the route is the id in the URL of the user's Google Scholar 
 ### Journal (Papers within the recent 2 months)
 
 <RouteEn author="Derekmini auto-bot-ty" example="/ieee/journal/78/recent" path="/ieee/journal/:journal/recent/:sortType?" :paramsDesc="['Journal code, the number of the `punumber` in the URL','Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`']" radar="1" rssbud="1"/>
+
+### Early Access Journal
+
+<RouteEn author="5upernova-heng" example="/ieee/journal/5306045/earlyaccess" path="/ieee/journal/:journal/earlyaccess/:sortType?" :paramsDesc="['Issue code, the number of the `isnumber` in the URL','Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`']" radar="1" rssbud="1"/>
 
 ## INFORMS
 
@@ -182,6 +238,20 @@ The parameter id in the route is the id in the URL of the user's Google Scholar 
 | smart-cities | /technologyreview/smart-cities|
 | space | /technologyreview/space |
 
+## National Bureau of Economic Research
+
+### All Papers
+
+<RouteEn author="5upernova-heng" example="/nber/papers" path="/nber/papers" radar="1" supportScihub="1"/>
+
+### New Papers
+
+<RouteEn author="5upernova-heng" example="/nber/news" path="/nber/news" radar="1" supportScihub="1">
+
+Papers that are published in this week.
+
+</RouteEn>
+
 ## Nature Journal
 
 ::: tip Tips
@@ -206,10 +276,10 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 |     nmat      |      Nature Materials       | [/nature/research/nmat](https://rsshub.app/nature/research/nmat)                   |
 | natmachintell | Nature Machine Intelligence | [/nature/research/natmachintell](https://rsshub.app/nature/research/natmachintell) |
 
-- Using router (`/nature/research/` + "short name for a journal") to query latest research paper for a certain journal of Nature Publishing Group.
+-   Using router (`/nature/research/` + "short name for a journal") to query latest research paper for a certain journal of Nature Publishing Group.
     If the `:journal` parameter is blank, then latest research of Nature will return.
-- The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals
-- Only abstract is rendered in some researches
+-   The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals
+-   Only abstract is rendered in some researches
 
 </RouteEn>
 
@@ -228,8 +298,8 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 |     nmat      |      Nature Materials       | [/nature/news-and-comment/nmat](https://rsshub.app/nature/news-and-comment/nmat)                                      |
 | natmachintell | Nature Machine Intelligence | [/nature/news-and-https://rsshub.app/comment/natmachintell](https://rsshub.app/nature/news-and-comment/natmachintell) |
 
-- Using router (`/nature/research/` + "short name for a journal") to query latest research paper for a certain journal of Nature Publishing Group.
-- The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals
+-   Using router (`/nature/research/` + "short name for a journal") to query latest research paper for a certain journal of Nature Publishing Group.
+-   The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals
 
 </RouteEn>
 
@@ -261,6 +331,16 @@ Only some journals are supported.
 
 <RouteEn author="TonyRL" example="/nature/siteindex" path="/nature/siteindex"/>
 
+## Network and Distributed System Security (NDSS) Symposium
+
+### Accepted papers
+
+<RouteEn author="ZeddYu" example="/ndss-symposium/ndss" path="/ndss-symposium/ndss">
+
+Return results from 2020
+
+</RouteEn>
+
 ## Oxford University Press
 
 ### Oxford Academic
@@ -269,20 +349,17 @@ Only some journals are supported.
 
 <RouteEn author="Fatpandac" example="/oup/journals/adaptation" path="/oup/journals/:name" :paramsDesc="['short name for a journal, can be found in URL']" anticrawler="1"/>
 
-## Proceedings of The National Academy of Sciences (PNAS)
+## Proceedings of The National Academy of Sciences
 
-### Latest Articles - Articles by Topic
+### Journal
 
-### Proceedings of The National Academy of Sciences (PNAS) - Latest Articles
+<RouteEn author="emdoe HenryQW y9c" example="/pnas/latest" path="/pnas/:topicPath*" :paramsDesc="['Topic path, support **Featured Topics**, **Articles By Topic** and [**Collected Papers**](https://www.pnas.org/about/collected-papers), `latest` by default']" radar="1" anticrawler="1" puppeteer="1" supportScihub="1">
 
-<RouteEn author="emdoe" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['topic name', 'obtain it from pnas.org (new research in ...)']" />
-
-- Using router (`/pnas/` + Topic of Interest) to query latest research paper for a certain topic from PNAS journal.
-    If the `:topic` parameter is blank, or equal to 'latest', then all the latest papers will return.
+::: tip Tips
+Some topics require adding `topic/` to `topicPath` like [`/pnas/topic/app-math`](https://rsshub.app/pnas/topic/app-math) and some don't like [`/pnas/biophysics-and-computational-biology`](https://rsshub.app/pnas/biophysics-and-computational-biology)
+:::
 
 </RouteEn>
-
-<RouteEn author="emdoe HenryQW" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['topic name', 'obtain it from pnas.org (new research in ...). `Latest` will include all.']" supportScihub="1"/>
 
 ## PubMed
 
@@ -315,8 +392,8 @@ In <https://pubmed.ncbi.nlm.nih.gov/trending/?filter=simsearch1.fha&filter=pubt.
 |  signaling  |        Science Signaling       | [/science/current/signaling](https://rsshub.app/science/current/signaling)     |
 |     stm     | Science Translational Medicine | [/science/current/stm](https://rsshub.app/science/current/stm)                 |
 
-- Using route (`/science/current/` + "short name for a journal") to get current issue of a journal from AAAS.
-- Leaving it empty (`/science/current`) to get update from Science.
+-   Using route (`/science/current/` + "short name for a journal") to get current issue of a journal from AAAS.
+-   Leaving it empty (`/science/current`) to get update from Science.
 
 </RouteEn>
 
@@ -359,6 +436,62 @@ Including 'Science', 'Science Advances', 'Science Immunology', 'Science Robotics
 ### Journal
 
 <RouteEn author="Derekmini TonyRL" example="/springer/journal/10450" path="/springer/journal/:journal" :paramsDesc="['Journal Code, the number in the URL from the journal homepage']" radar="1" rssbud="1"/>
+
+## Telecompaper
+
+### News
+
+<RouteEn author="nczitzk" example="/telecompaper/news/mobile/2020/China/News" path="/telecompaper/news/:caty/:year?/:country?/:type?" :paramsDesc="['Category, see table below', 'Year. The year in respective category page filter, `all` for unlimited year, empty by default', 'Country or continent, `all` for unlimited country or continent, empty by default', 'Type, can be found in the `Types` filter, `all` for unlimited type, unlimited by default']">
+
+Category
+
+| WIRELESS | BROADBAND | VIDEO     | GENERAL | IT | INDUSTRY RESOURCES |
+| -------- | --------- | --------- | ------- | -- | ------------------ |
+| mobile   | internet  | boardcast | general | it | industry-resources |
+
+::: tip Tips
+
+If `country` or `type` includes empty space, use `-` instead. For example, `United States` needs to be replaced with `United-States`, `White paper` needs to be replaced with `White-paper`
+
+Filters in [INDUSTRY RESOURCES](https://www.telecompaper.com/industry-resources) only provides `Content Type` which corresponds to `type`. `year` and `country` are not supported.
+
+:::
+
+</RouteEn>
+
+### Search
+
+<RouteEn author="nczitzk" example="/telecompaper/search/Nokia" path="/telecompaper/search/:keyword?/:company?/:sort?/:period?" :paramsDesc="['Keyword', 'Company name, empty by default', 'Sorting, see table below, `Date Descending` by default', 'Date selection, Last 12 months by default']">
+
+Sorting
+
+| Date Ascending | Date Descending |
+| -------------- | --------------- |
+| 1              | 2               |
+
+Date selection
+
+| 1 month | 3 months | 6 months | 12 months | 24 months |
+| ------- | -------- | -------- | --------- | --------- |
+| 1       | 3        | 6        | 12        | 24        |
+
+</RouteEn>
+
+## The University of Chicago Press: Journals
+
+### Current Issue
+
+<RouteEn author="TonyRL" example="/uchicago/journals/current/jpe" path="/uchicago/journals/current/:journal" :paramsDesc="['Journal id, can be found in URL. [Browse journals by title](https://www.journals.uchicago.edu/action/showPublications)']" radar="1"/>
+
+## USENIX
+
+### Security Symposia
+
+<RouteEn author="ZeddYu" example="/usenix/usenix-security-sympoium" path="/usenix/usenix-security-sympoium">
+
+Return results from 2020
+
+</RouteEn>
 
 ## X-MOL Platform
 

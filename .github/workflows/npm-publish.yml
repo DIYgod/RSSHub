@@ -5,29 +5,39 @@ on:
     branches:
       - master
     paths:
+      - '.github/workflows/npm-publish.yml'
       - 'lib/**'
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   build:
     name: npm publish
     if: github.repository == 'DIYgod/RSSHub'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
       - uses: actions/setup-node@v3
         with:
-          node-version: 16
-          cache: 'yarn'
+          node-version: 18
+          cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
+      - name: Install dependencies (pnpm)
+        run: pnpm i
+      - name: Run postinstall script for dependencies
+        run: pnpm rb
       - name: Release
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           npx version-from-git --allow-same-version --template 'master.short'
       - name: Publish to npmjs
-        run: npm publish
+        run: pnpm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

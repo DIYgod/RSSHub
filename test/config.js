@@ -59,6 +59,20 @@ describe('config', () => {
         delete process.env.DISCUZ_COOKIE_34;
     });
 
+    it('medium cookie', () => {
+        process.env.MEDIUM_COOKIE_12 = 'cookie1';
+        process.env.MEDIUM_COOKIE_34 = 'cookie2';
+
+        const config = require('../lib/config').value;
+        expect(config.medium.cookies).toMatchObject({
+            12: 'cookie1',
+            34: 'cookie2',
+        });
+
+        delete process.env.MEDIUM_COOKIE_12;
+        delete process.env.MEDIUM_COOKIE_34;
+    });
+
     it('no random ua', () => {
         process.env.NO_RANDOM_UA = true;
 

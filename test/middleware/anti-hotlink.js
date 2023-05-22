@@ -200,13 +200,13 @@ const testAntiHotlink = async (path, expectObj, query) => {
     return parsed;
 };
 
-const expectImgOrigin = async (query) => await testAntiHotlink('/test/complicated', expects.complicated.origin, query);
-const expectImgProcessed = async (query) => await testAntiHotlink('/test/complicated', expects.complicated.processed, query);
-const expectImgUrlencoded = async (query) => await testAntiHotlink('/test/complicated', expects.complicated.urlencoded, query);
-const expectMultimediaOrigin = async (query) => await testAntiHotlink('/test/multimedia', expects.multimedia.origin, query);
-const expectMultimediaRelayed = async (query) => await testAntiHotlink('/test/multimedia', expects.multimedia.relayed, query);
-const expectMultimediaPartlyRelayed = async (query) => await testAntiHotlink('/test/multimedia', expects.multimedia.partlyRelayed, query);
-const expectMultimediaWrappedInIframe = async (query) => await testAntiHotlink('/test/multimedia', expects.multimedia.wrappedInIframe, query);
+const expectImgOrigin = (query) => testAntiHotlink('/test/complicated', expects.complicated.origin, query);
+const expectImgProcessed = (query) => testAntiHotlink('/test/complicated', expects.complicated.processed, query);
+const expectImgUrlencoded = (query) => testAntiHotlink('/test/complicated', expects.complicated.urlencoded, query);
+const expectMultimediaOrigin = (query) => testAntiHotlink('/test/multimedia', expects.multimedia.origin, query);
+const expectMultimediaRelayed = (query) => testAntiHotlink('/test/multimedia', expects.multimedia.relayed, query);
+const expectMultimediaPartlyRelayed = (query) => testAntiHotlink('/test/multimedia', expects.multimedia.partlyRelayed, query);
+const expectMultimediaWrappedInIframe = (query) => testAntiHotlink('/test/multimedia', expects.multimedia.wrappedInIframe, query);
 
 describe('anti-hotlink', () => {
     it('template-legacy', async () => {
