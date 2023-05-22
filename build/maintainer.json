@@ -4991,6 +4991,15 @@
     "/techflowpost/": [
         "nczitzk"
     ],
+    "/techpowerup": [
+        "TonyRL"
+    ],
+    "/techpowerup/": [
+        "TonyRL"
+    ],
+    "/techpowerup/review/:keyword?": [
+        "TonyRL"
+    ],
     "/telecompaper/news/:caty/:year?/:country?/:type?": [
         "nczitzk"
     ],
