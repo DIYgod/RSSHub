@@ -5,7 +5,7 @@ dependencies:
     specifier: 12.0.0
     version: 12.0.0
   '@notionhq/client':
-    specifier: ^2.2.5
+    specifier: 2.2.5
     version: 2.2.5
   '@postlight/parser':
     specifier: 2.2.3
@@ -119,7 +119,7 @@ dependencies:
     specifier: 2.2.2
     version: 2.2.2
   notion-to-md:
-    specifier: ^3.0.1
+    specifier: 3.0.1
     version: 3.0.1
   pidusage:
     specifier: 3.0.2
@@ -7827,7 +7827,7 @@ packages:
     dev: true
 
   github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git+ssh://git@github.com/postlight/difflib.js.git, type: git}
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     name: difflib
     version: 0.2.6
     dependencies:
