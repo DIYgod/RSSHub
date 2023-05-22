@@ -28,6 +28,12 @@ pageClass: routes
 
 <RouteEn author="Jkker" example="/csdn/blog/csdngeeknews" path="/csdn/blog/:user" radar="1" :paramsDesc="['`user` is the username of a CSDN blog which can be found in the url of the home page']" />
 
+## DevolverDigital
+
+### Official Blogs
+
+<RouteEn author="XXY233" example="/devolverdigital/blog" path="/devolverdigital/blog" radar="1" />
+
 ## Geocaching
 
 ### Official Blogs
