@@ -1413,6 +1413,18 @@ pageClass: routes
 
 <Route author="skyedai910" example="/gzmtu/tsg" path="/gzmtu/tsg" />
 
+## 广州中医药大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/gzucm/yjsy/zsgz1-ssszs" path="/gzucm/yjsy/:type" :paramsDesc="['分类名,见下表，也可在页面url中找到']">
+
+| 硕士生招生  |
+| ----------- |
+| zsgz1-ssszs |
+
+</Route>
+
 ## 桂林电子科技大学
 
 ### 新闻资讯
