@@ -444,6 +444,18 @@ pageClass: routes
 由于学校官网对非大陆 IP 的访问存在限制，需自行部署。
 :::
 
+## 北京协和医学院
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/pumc/graduate/sszs" path="/pumc/graduate/:type" :paramsDesc="['分类type,见下表']" radar="1" >
+
+| 硕士招生 | 夏令营 | 推免生 |
+| -------- | ------ | ------ |
+| sszs     | xly    | tms    |
+
+</Route>
+
 ## 北京邮电大学
 
 ### 硕士研究生招生通知
@@ -4355,8 +4367,8 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 <Route author="yanbot-team" example="/zjut/yz/4270" path="/zjut/yz/:type" :paramsDesc="['分类，见下表']">
 
 | 最新通知公告 | 硕士生招生 | 公示公告 |
-| -------- | -------- | -------- |
-| 4269     | 4270     | gsgg     |
+| ------------ | ---------- | -------- |
+| 4269         | 4270       | gsgg     |
 
 </Route>
 
