@@ -4348,6 +4348,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 浙江工业大学
+
+### 浙江工业大学
+
+<Route author="yanbot-team" example="/zjut/yz/4270" path="/zjut/yz/:type" :paramsDesc="['分类，见下表']">
+
+| 最新通知公告 | 硕士生招生 | 公示公告 |
+| -------- | -------- | -------- |
+| 4269     | 4270     | gsgg     |
+
+</Route>
+
 ## 浙江工商大学
 
 ### 浙江工商大学
