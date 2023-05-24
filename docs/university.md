@@ -4372,18 +4372,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-## 浙江工业大学
-
-### 浙江工业大学
-
-<Route author="yanbot-team" example="/zjut/yz/4270" path="/zjut/yz/:type" :paramsDesc="['分类，见下表']">
-
-| 最新通知公告 | 硕士生招生 | 公示公告 |
-| ------------ | ---------- | -------- |
-| 4269         | 4270       | gsgg     |
-
-</Route>
-
 ## 浙江工商大学
 
 ### 浙江工商大学
@@ -4415,6 +4403,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 公告栏 | 每周会议 | 屏峰班车 | 新闻速递 | 学术动态 |
 | ------ | -------- | -------- | -------- | -------- |
 | 1      | 2        | 3        | 10       | 25       |
+
+</Route>
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/zjut/yz/4270" path="/zjut/yz/:type" :paramsDesc="['分类，见下表']">
+
+| 最新通知公告 | 硕士生招生 | 公示公告 |
+| ------------ | ---------- | -------- |
+| 4269         | 4270       | gsgg     |
 
 </Route>
 
@@ -4677,6 +4675,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 硕士招生    | 博士招生    |
 | ----------- | ----------- |
 | zsxx*-sszs* | zsxx*-bszs* |
+
+</Route>
+
+### 广州地球化学研究所
+
+<Route author="yanbot-team" example="/gigcas/yjsjy/zsxx-sszs" path="/gigcas/yjsjy/:type" :paramsDesc="['分类，见下表']" radar="1">
+
+| 硕士招生  | 博士招生  |
+| --------- | --------- |
+| zsxx-sszs | zsxx-bszs |
 
 </Route>
 
