@@ -38,6 +38,12 @@ pageClass: routes
 
 <Route author="Jkker" example="/csdn/blog/csdngeeknews" path="/csdn/blog/:user" radar="1" :paramsDesc="['`user` 为 CSDN 用户名，可以在主页 url 中找到']" />
 
+## DevolverDigital
+
+### 官方博客
+
+<Route author="XXY233" example="/devolverdigital/blog" path="/devolverdigital/blog" radar="1" />
+
 ## FreeBuf
 
 ### 文章
