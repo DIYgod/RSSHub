@@ -4194,6 +4194,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 新乡医学院
+
+### 研究生院
+
+<Route author="yanbot-team" example="/xxmu/yjsc/zsgz1-qrzssyjszs" path="/xxmu/yjsc/:type" :paramsDesc="['分类名，见下表']">
+
+| 全日制硕士研究生招生 |
+| -------------------- |
+| zsgz1-qrzssyjszs     |
+
+</Route>
+
 ## 徐州医科大学
 
 ### 研究生院
