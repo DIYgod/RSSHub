@@ -2927,6 +2927,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 南京中医药大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/njucm/gra/2898" path="/njucm/gra/:type" :paramsDesc="['见下表，也可在页面URL中找到']">
+
+| 硕士招生 |
+| -------- |
+| 2898     |
+
+</Route>
+
 ## 南开大学
 
 ### 南开大学教务处
