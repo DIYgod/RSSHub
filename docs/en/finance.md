@@ -53,6 +53,12 @@ pageClass: routes
 
 <RouteEn author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['The stock ticker']"/>
 
+## Futubull
+
+### Headlines
+
+<RouteEn author="Wsine nczitzk" example="/futunn/main" path="/futunn/main" />
+
 ## FX Markets
 
 ### Channel

@@ -276,7 +276,7 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ### 要闻
 
-<Route author="Wsine" example="/futunn/highlights" path="/futunn/highlights" />
+<Route author="Wsine nczitzk" example="/futunn/main" path="/futunn/main" />
 
 ## 格隆汇
 
