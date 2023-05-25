@@ -2416,6 +2416,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 南京财经大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/nufe/yjsc/zsgz-ssyjszs" path="/nufe/yjsc/:type" :paramsDesc="['分类名，见下表，也可在网页URL中找到']">
+
+| 硕士研究生招生 |
+| -------------- |
+| zsgz-ssyjszs   |
+
+</Route>
+
 ## 南京大学
 
 ### 本科生院
