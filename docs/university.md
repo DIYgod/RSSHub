@@ -4266,6 +4266,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 延边大学
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/ybu/grad/tzgg-zs" path="/ybu/grad/:type" :paramsDesc="['分类名']">
+
+| 招生    | 招生简章    | 推荐免试 |
+| ------- | ----------- | -------- |
+| tzgg-zs | sszs-zsjian | tjms     |
+
+</Route>
+
 ## 燕山大学
 
 ### 研究生招生网
@@ -4483,6 +4495,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 学院新闻 | 公告通知 | 学术交流 |
 | -------- | -------- | -------- |
 | 16       | 18       | 20       |
+
+</Route>
+
+## 浙江师范大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/zjnu/yzw/qrzssszs" path="/zjnu/yzw/:type" :paramsDesc="['分类，见下表']">
+
+| 硕士生招生 |
+| ---------- |
+| qrzssszs   |
 
 </Route>
 
