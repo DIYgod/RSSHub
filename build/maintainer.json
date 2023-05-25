@@ -811,6 +811,12 @@
     "/bluestacks/release/5": [
         "TonyRL"
     ],
+    "/bmkg/earthquake": [
+        "Shinanory"
+    ],
+    "/bmkg/news": [
+        "Shinanory"
+    ],
     "/bnu/bs/:category?": [
         "nczitzk"
     ],
