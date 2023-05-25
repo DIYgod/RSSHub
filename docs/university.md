@@ -1990,6 +1990,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 华南农业大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/scau/yzb/2138" path="/scau/yzb/:type" :paramsDesc="['通知分类，见下表，也可从页面url中找到']">
+
+| 研究生招生信息 |
+| -------------- |
+| 2138           |
+
+</Route>
+
 ## 华南师范大学
 
 ### 软件学院通知公告
