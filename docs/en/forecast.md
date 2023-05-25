@@ -4,6 +4,16 @@ pageClass: routes
 
 # Forecast and alerts
 
+## BADAN METEOROLOGI, KLIMATOLOGI, DAN GEOFISIKA(Indonesian)
+
+### Recent Earthquakes
+
+<RouteEn author="Shinanory" example="/bmkg/earthquake" path="/bmkg/earthquake" />
+
+### News
+
+<RouteEn author="Shinanory" example="/bmkg/news" path="/bmkg/news" />
+
 ## Outage.Report
 
 ### Report
