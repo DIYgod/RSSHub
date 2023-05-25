@@ -2288,6 +2288,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="ikvarxt" example="/lntu/jwnews" path="/lntu/jwnews" />
 
+## 辽宁师范大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/lnnu/master/zsgz-ssyjs-qgtk" path="/lnnu/master/:type" :paramsDesc="['分类type，见下表']">
+
+| 硕士研究生全国统考 |
+| ------------------ |
+| zsgz-ssyjs-qgtk    |
+
+</Route>
+
 ## 临沂大学
 
 ### 新闻
