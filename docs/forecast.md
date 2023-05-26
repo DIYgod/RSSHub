@@ -4,6 +4,16 @@ pageClass: routes
 
 # 预报预警
 
+## BMKG 印尼气象气候和地球物理局
+
+### 最近的地震
+
+<Route author="Shinanory" example="/bmkg/earthquake" path="/bmkg/earthquake" />
+
+### 新闻
+
+<Route author="Shinanory" example="/bmkg/news" path="/bmkg/news" />
+
 ## Outage.Report
 
 ### Report

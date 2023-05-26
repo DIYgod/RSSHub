@@ -517,4 +517,8 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### 作者期刊文献
 
-<Route author="harveyqiu" example="/cnki/author/000042423923" path="/cnki/author/:code" :paramsDesc="['作者对应code，可以在网址中得到']"/>
+::: tip 注意
+可能仅限中国大陆服务器访问，以实际情况为准。
+:::
+
+<Route author="harveyqiu Derekmini" example="/cnki/author/000042423923" path="/cnki/author/:code" :paramsDesc="['作者对应code，可以在网址中得到']"/>
