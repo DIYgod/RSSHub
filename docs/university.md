@@ -3571,11 +3571,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生院
 
-<Route author="nczitzk" example="/sicau/yan/xwgg" path="/sicau/yan/:category?" :paramsDesc="['分类，见下表，默认为新闻公告']">
+<Route author="nczitzk" example="/sicau/yan/zsks" path="/sicau/yan/:category?" :paramsDesc="['分类，见下表，']">
 
-| 新闻公告 | 学术报告 |
-| -------- | -------- |
-| xwgg     | xsbg     |
+| 招生考试 | 新闻公告 | 学术报告 |
+| -------- | -------- | -------- |
+| zsks     | xwgg     | xsbg     |
 
 </Route>
 
