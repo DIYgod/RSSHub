@@ -3287,6 +3287,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | ------------ | ------------------ | -------- |
 | bmtzgg       | xsydxhdgg          | bmdt     |
 
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/shmtu/yz/8927" path="/shmtu/yz/:type" :paramsDesc="['类型名称']">
+
+| 硕士招生 |
+| -------- |
+| 8927     |
+
+</Route>
+
 ## 上海海洋大学
 
 ### 官网信息
