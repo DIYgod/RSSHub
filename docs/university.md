@@ -422,6 +422,18 @@ pageClass: routes
 
 </Route>
 
+## 北京体育大学
+
+### 招生网
+
+<Route author="yanbot-team" example="/bsu/zs/188" path="//bsu/zs/:type" :paramsDesc="['分类type,见下表']" radar="1" >
+
+| 硕士研究生统招 | 接收推免生 | 冠军班 |
+| -------------- | ---------- | ------ |
+| 188            | 187        | 189    |
+
+</Route>
+
 ## 北京外国语大学
 
 ### 研究生院
