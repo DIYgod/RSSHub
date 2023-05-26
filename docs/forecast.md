@@ -4,6 +4,16 @@ pageClass: routes
 
 # 预报预警
 
+## BMKG 印尼气象气候和地球物理局
+
+### 最近的地震
+
+<Route author="Shinanory" example="/bmkg/earthquake" path="/bmkg/earthquake" />
+
+### 新闻
+
+<Route author="Shinanory" example="/bmkg/news" path="/bmkg/news" />
+
 ## Outage.Report
 
 ### Report
@@ -168,6 +178,14 @@ pageClass: routes
 | --------- | -------- |
 | 78        | 计划停水 |
 | 157       | 抢修停水 |
+
+</Route>
+
+### 深圳市
+
+<Route author="lilPiper" example="/tingshuitz/shenzhen" path="/tingshuitz/shenzhen">
+
+可能仅限中国大陆服务器访问，以实际情况为准。
 
 </Route>
 

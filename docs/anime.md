@@ -201,6 +201,12 @@ pageClass: routes
 
 <Route author="chengyuhui" example="/cngal/entry/2693" path="/cngal/entry/:id" :paramsDesc="['词条ID，游戏或制作者页面URL的最后一串数字']" radar="1" rssbud="1"/>
 
+## Comicat
+
+### 搜索关键词
+
+<Route author="Cyang39" example="/comicat/search/喵萌奶茶屋+跃动青春+720P+简日" path="/comicat/search/:keyword" :paramsDesc="['关键词，请用`+`号连接']" supportBT=1/>
+
 ## DLsite
 
 ### 通用

@@ -303,6 +303,38 @@ pageClass: routes
 
 <Route author="WenryXu" example="/noi/rg-news" path="/noi/rg-news"/>
 
+## Notion
+
+::: warning 注意
+
+需要设置 Notion 集成，详情请见 [部分 RSS 模块配置](/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)
+
+:::
+
+::: tip 建议
+
+建议与 Notion Web Clipper 等剪藏工具搭配使用
+
+:::
+
+### Database
+
+<Route author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" :paramsDesc="['Database ID']" selfhost="1" radar="1">
+
+可选 query 参数 `properties=`，用来自定义字段对应关系；内置有 author、link、pubTime 三个字段用于增加辅助信息。
+
+例如，在 Database 中设置了 "作者"、"文章原链接"、"发布时间"" 三个 property，将下述 JS 代码的执行结果给 `properties` 参数。
+
+```js
+encodeURIComponent(JSON.stringify({"author": "作者", "link": "文章原链接", "pubTime": "发布时间"}))
+```
+
+可选 query 参数 `query=`，用来自定义 Database 的查询规则，例如自定义排序和筛选规则。
+
+书写结构请查阅 [Notion 文档](https://developers.notion.com/reference/post-database-query)，将 `encodeURIComponent(JSON.stringify(自定义规则))` 的执行给 `query` 参数。
+
+</Route>
+
 ## ONE・一个
 
 ### 图片文字问答
