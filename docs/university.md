@@ -1678,6 +1678,18 @@ category 列表：
 
 </Route>
 
+## 哈尔滨师范大学
+
+### 研究生学院
+
+<Route author="yanbot-team" example="/hrbnu/yjsxy/1045" path="/hrbnu/yjsxy/:type" :paramsDesc="['分类名，见下表']" >
+
+| 硕士招生 |
+| -------- |
+| 1045     |
+
+</Route>
+
 ## 海南大学
 
 ### 硕士研究生招生动态
