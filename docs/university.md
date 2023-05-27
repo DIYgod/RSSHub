@@ -4750,6 +4750,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="shengmaosu" example="/outele" path="/outele" />
 
+## 中国计量大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/cjlu/yjszs/sszs" path="/cjlu/yjszs/:type" :paramsDesc="['分类，见下表']" radar="1" rssbud="1">
+
+| 硕士招生 |
+| -------- |
+| sszs     |
+
+</Route>
+
 ## 中国科学技术大学
 
 ### 官网通知公告
