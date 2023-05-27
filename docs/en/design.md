@@ -105,9 +105,9 @@ Default is under 'https://www.methodstudios.com/en/features'.
 
 ### Works
 
-<Route author="BianTan" example="/notefolio/search/1/pick/all/life" path="/notefolio/search/:category?/:order?/:time?/:query?" :paramsDesc="['Category, see below, `all` by default', 'Order, `pick` as Notefolio Pick, `published` as Newest, `like` as like, `pick` by default', 'Time, `all` as All the time, `one-day` as Latest 24 hours, `week` as Latest week, `month` as Latest month, `three-month` as Latest 3 months, `all` by default', 'Keyword, empty by default']">
+<RouteEn author="BianTan" example="/notefolio/search/1/pick/all/life" path="/notefolio/search/:category?/:order?/:time?/:query?" :paramsDesc="['Category, see below, `all` by default', 'Order, `pick` as Notefolio Pick, `published` as Newest, `like` as like, `pick` by default', 'Time, `all` as All the time, `one-day` as Latest 24 hours, `week` as Latest week, `month` as Latest month, `three-month` as Latest 3 months, `all` by default', 'Keyword, empty by default']">
 
-| 分类 | 韩文分类名      | Name in English |
+| Category | Name in Korean | Name in English |
 | ---- | --------------- | --------------- |
 | all  | 전체            | All        |
 | 1   | 영상/모션그래픽 | Video / Motion Graphics |
