@@ -102,6 +102,18 @@ pageClass: routes
 
 </Route>
 
+## 安徽师范大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/ahnu/yz/sszs-zxdt" path="/ahnu/yz/:type" :paramsDesc="['类型名,见下表，也可在页面URL中找到']"  radar="1" rssbud="1">
+
+| 硕士招生-最新动态 |
+| ----------------- |
+| sszs-zxdt         |
+
+</Route>
+
 ## 安徽医科大学
 
 ### 研究生学院通知公告
