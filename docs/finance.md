@@ -96,7 +96,7 @@ pageClass: routes
 
 ### 首页
 
-<RouteEn author="TonyRL" example="/followin" path="/followin/:categoryId?/:lang?" :paramsDesc="['分类 ID，见下表，默认为 `1`', '语言，见下表，默认为 `en`']" radar="1">
+<Route author="TonyRL" example="/followin" path="/followin/:categoryId?/:lang?" :paramsDesc="['分类 ID，见下表，默认为 `1`', '语言，见下表，默认为 `en`']" radar="1">
 
 分类 ID
 
@@ -110,23 +110,23 @@ pageClass: routes
 | ------- | -------- | -------- | ---------- |
 | en      | zh-Hans  | zh-Hant  | vi         |
 
-</RouteEn>
+</Route>
 
 ### 快讯
 
-<RouteEn author="TonyRL" example="/followin/news" path="/followin/news/:lang?" :paramsDesc="['语言，见上表，默认为 `en`']" radar="1" />
+<Route author="TonyRL" example="/followin/news" path="/followin/news/:lang?" :paramsDesc="['语言，见上表，默认为 `en`']" radar="1" />
 
 ### KOL
 
-<RouteEn author="TonyRL" example="/followin/kol/4075592991" path="/followin/:kolId/:lang?" :paramsDesc="['KOL ID，可在 URL 找到', '语言，见上表，默认为 `en`']" radar="1" />
+<Route author="TonyRL" example="/followin/kol/4075592991" path="/followin/kol/:kolId/:lang?" :paramsDesc="['KOL ID，可在 URL 找到', '语言，见上表，默认为 `en`']" radar="1" />
 
 ### 话题
 
-<RouteEn author="TonyRL" example="/followin/topic/40" path="/followin/topic/:topicId/:lang?" :paramsDesc="['话题 ID，可在 URL 找到', '语言，见上表，默认为 `en`']" radar="1" />
+<Route author="TonyRL" example="/followin/topic/40" path="/followin/topic/:topicId/:lang?" :paramsDesc="['话题 ID，可在 URL 找到', '语言，见上表，默认为 `en`']" radar="1" />
 
 ### 标签
 
-<RouteEn author="TonyRL" example="/followin/tag/177008" path="/followin/tag/:tagId/:lang?" :paramsDesc="['标签 ID，可在 URL 找到', '语言，见上表，默认为 `en`']" radar="1" />
+<Route author="TonyRL" example="/followin/tag/177008" path="/followin/tag/:tagId/:lang?" :paramsDesc="['标签 ID，可在 URL 找到', '语言，见上表，默认为 `en`']" radar="1" />
 
 ## FX Markets
 

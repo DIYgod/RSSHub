@@ -75,11 +75,11 @@ Language
 
 ### News
 
-<RouteEn author="TonyRL" example="/followin/news" path="/news/:lang?" :paramsDesc="['Language, see table above, `en` by default']" radar="1" />
+<RouteEn author="TonyRL" example="/followin/news" path="/followin/news/:lang?" :paramsDesc="['Language, see table above, `en` by default']" radar="1" />
 
 ### KOL
 
-<RouteEn author="TonyRL" example="/followin/kol/4075592991" path="/followin/:kolId/:lang?" :paramsDesc="['KOL ID, can be found in URL', 'Language, see table above, `en` by default']" radar="1" />
+<RouteEn author="TonyRL" example="/followin/kol/4075592991" path="/followin/kol/:kolId/:lang?" :paramsDesc="['KOL ID, can be found in URL', 'Language, see table above, `en` by default']" radar="1" />
 
 ### Topic
 
