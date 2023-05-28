@@ -92,6 +92,42 @@ pageClass: routes
 
 <Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['股票代码']"/>
 
+## Followin
+
+### 首页
+
+<Route author="TonyRL" example="/followin" path="/followin/:categoryId?/:lang?" :paramsDesc="['分类 ID，见下表，默认为 `1`', '语言，见下表，默认为 `en`']" radar="1">
+
+分类 ID
+
+| 推荐 | 行情 | Meme | BRC20 | NFT | 长推 | 深度 | 入门 | 视频 |
+| ---- | ---- | ---- | ----- | --- | ---- | ---- | ---- | ---- |
+| 1    | 9    | 13   | 14    | 3   | 5    | 6    | 8    | 11   |
+
+语言
+
+| English | 简体中文 | 繁體中文 | Tiếng Việt |
+| ------- | -------- | -------- | ---------- |
+| en      | zh-Hans  | zh-Hant  | vi         |
+
+</Route>
+
+### 快讯
+
+<Route author="TonyRL" example="/followin/news" path="/followin/news/:lang?" :paramsDesc="['语言，见上表，默认为 `en`']" radar="1" />
+
+### KOL
+
+<Route author="TonyRL" example="/followin/kol/4075592991" path="/followin/kol/:kolId/:lang?" :paramsDesc="['KOL ID，可在 URL 找到', '语言，见上表，默认为 `en`']" radar="1" />
+
+### 话题
+
+<Route author="TonyRL" example="/followin/topic/40" path="/followin/topic/:topicId/:lang?" :paramsDesc="['话题 ID，可在 URL 找到', '语言，见上表，默认为 `en`']" radar="1" />
+
+### 标签
+
+<Route author="TonyRL" example="/followin/tag/177008" path="/followin/tag/:tagId/:lang?" :paramsDesc="['标签 ID，可在 URL 找到', '语言，见上表，默认为 `en`']" radar="1" />
+
 ## FX Markets
 
 ### 分类
