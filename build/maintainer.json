@@ -3792,6 +3792,9 @@
     "/nogizaka46/blog": [
         "Kasper4649"
     ],
+    "/notefolio/search/:category?/:order?/:time?/:query?": [
+        "BianTan"
+    ],
     "/notion/database/:databaseId": [
         "curly210102"
     ],
@@ -7049,7 +7052,6 @@
     "/cktest/policy": [],
     "/mamibuy/:caty?/:age?/:sort?": [],
     "/mercari/:type/:id": [],
-    "/notefolio/:caty?/:order?/:time?/:query?": [],
     "/weforum/report/:lang?/:year?/:platform?": [],
     "/nobelprize/:caty?": [],
     "/gov/taiwan/mnd": [],
