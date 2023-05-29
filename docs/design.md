@@ -159,7 +159,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### Works
 
-<Route author="BianTan" example="/notefolio/search/1/pick/all/life" path="/notefolio/search/:category?/:order?/:time?/:query?" :paramsDesc="['分类，见下表，默认为 `all`', '排序，可选 `pick` 指 Notefolio 精选，`published` 指 最新，`like` 指 推荐，默认为 `pick`', '时间，可选 `all` 指 全部，`day` 指 最近24小时，`week` 指 最近一周，`month` 指 最近一个月，`three-month` 指 最近三个月，默认为`all`', '关键词，默认为空']">
+<Route author="BianTan" example="/notefolio/search/1/pick/all/life" path="/notefolio/search/:category?/:order?/:time?/:query?" :paramsDesc="['分类，见下表，默认为 `all`', '排序，可选 `pick` 指 Notefolio 精选，`published` 指 最新，`like` 指 推荐，默认为 `pick`', '时间，可选 `all` 指 全部，`one-day` 指 最近24小时，`week` 指 最近一周，`month` 指 最近一个月，`three-month` 指 最近三个月，默认为`all`', '关键词，默认为空']">
 
 | 分类 | 韩文分类名       | 中文分类名      |
 | ---- | ---------------- | --------------- |
