@@ -53,6 +53,42 @@ pageClass: routes
 
 <RouteEn author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['The stock ticker']"/>
 
+## Followin
+
+### Home
+
+<RouteEn author="TonyRL" example="/followin" path="/followin/:categoryId?/:lang?" :paramsDesc="['Category ID, see table below, `1` by default', 'Language, see table below, `en` by default']" radar="1">
+
+Category ID
+
+| For You | Market | Meme | BRC20 | NFT | Thread | In-depth | Tutorials | Videos |
+| ------- | ------ | ---- | ----- | --- | ------ | -------- | --------- | ------ |
+| 1       | 9      | 13   | 14    | 3   | 5      | 6        | 8         | 11     |
+
+Language
+
+| English | 简体中文 | 繁體中文 | Tiếng Việt |
+| ------- | ------- | -------- | ---------- |
+| en      | zh-Hans | zh-Hant  | vi      |
+
+</RouteEn>
+
+### News
+
+<RouteEn author="TonyRL" example="/followin/news" path="/followin/news/:lang?" :paramsDesc="['Language, see table above, `en` by default']" radar="1" />
+
+### KOL
+
+<RouteEn author="TonyRL" example="/followin/kol/4075592991" path="/followin/kol/:kolId/:lang?" :paramsDesc="['KOL ID, can be found in URL', 'Language, see table above, `en` by default']" radar="1" />
+
+### Topic
+
+<RouteEn author="TonyRL" example="/followin/topic/40" path="/followin/topic/:topicId/:lang?" :paramsDesc="['Topic ID, can be found in URL', 'Language, see table above, `en` by default']" radar="1" />
+
+### Tag
+
+<RouteEn author="TonyRL" example="/followin/tag/177008" path="/followin/tag/:tagId/:lang?" :paramsDesc="['Tag ID, can be found in URL', 'Language, see table above, `en` by default']" radar="1" />
+
 ## Futubull
 
 ### Headlines
