@@ -1473,7 +1473,7 @@ Provides all of the Thrillist articles with the specified tag.
 
 ### 分类
 
-<Route author="nczitzk" example="/untag/category/method" path="/untag/category/:category?" :paramsDesc="['分类，可在对应分类页的 URL 中找到，默认为方法']">
+<Route author="nczitzk" example="/untag/method" path="/untag/:category?" :paramsDesc="['分类，可在对应分类页的 URL 中找到，默认为方法']">
 
 | 方法   | 观点    |
 | ------ | ------- |
