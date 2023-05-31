@@ -1473,7 +1473,7 @@ Provides all of the Thrillist articles with the specified tag.
 
 ### 分类
 
-<Route author="nczitzk" example="/untag/method" path="/untag/:category?" :paramsDesc="['分类，可在对应分类页的 URL 中找到，默认为方法']">
+<Route author="nczitzk" example="/utgd/method" path="/utgd/:category?" :paramsDesc="['分类，可在对应分类页的 URL 中找到，默认为方法']">
 
 | 方法   | 观点    |
 | ------ | ------- |
@@ -1483,7 +1483,7 @@ Provides all of the Thrillist articles with the specified tag.
 
 ### 专题
 
-<Route author="nczitzk" example="/untag/topic/在线阅读专栏" path="/untag/topic/:topic?" :paramsDesc="['专题，默认为在线阅读专栏']">
+<Route author="nczitzk" example="/utgd/topic/在线阅读专栏" path="/utgd/topic/:topic?" :paramsDesc="['专题，默认为在线阅读专栏']">
 
 | 在线阅读专栏 | 卡片笔记专题 |
 | ------------ | ------------ |
