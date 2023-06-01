@@ -3783,6 +3783,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/wzu/yjsb/sszsdt" path="/wzu/yjsb/:type" :paramsDesc="['分类，见下表']" />
+
+| 硕士招生动态 |
+| :------: |
+|    sszsdt     |
+
+</Route>
+
 ## 温州商学院
 
 ### 温州商学院
