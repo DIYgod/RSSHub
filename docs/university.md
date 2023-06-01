@@ -3788,8 +3788,8 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 <Route author="yanbot-team" example="/wzu/yjsb/sszsdt" path="/wzu/yjsb/:type" :paramsDesc="['分类，见下表']" />
 
 | 硕士招生动态 |
-| :------: |
-|    sszsdt     |
+| :----------: |
+|    sszsdt    |
 
 </Route>
 
@@ -4181,6 +4181,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 通知公告 | 招生信息硕士生招生 |
 | -------- | ------------------ |
 | tzgg     | zsxx-ssszs         |
+
+</Route>
+
+## 西北师范大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/nwnu/yjsy/2713" path="/nwnu/yjsy/:type" :paramsDesc="['分类名见下表，也可在URL中找到']" >
+
+| 硕士招生 |
+| -------- |
+| 2713     |
 
 </Route>
 
