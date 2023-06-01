@@ -3231,6 +3231,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 山东科技大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/sdust/yjsy/tzgg" path="/sdust/yjsy/tzgg" :paramsDesc="['专栏名称，见下表，也可在对应页面的URL中找到']" radar="1" rssbud="1">
+
+| 通知公告 |
+| -------- |
+| tzgg     |
+
+</Route>
+
 ## 上海财经大学
 
 ### 研究生院
