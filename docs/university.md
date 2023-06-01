@@ -4366,6 +4366,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生院
+
+<Route author="yanbot-team" example="/swpu/gs/zsgz-tzgg" path="/swpu/gs/:type" :paramsDesc="['分类名，见下表']">
+
+| 招生工作-通知公告 |
+| ----------------- |
+| zsgz-tzgg         |
+
+</Route>
+
 ## 新疆大学
 
 ### 研究生院
