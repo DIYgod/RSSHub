@@ -232,6 +232,18 @@ pageClass: routes
 
 </Route>
 
+## 北京工商大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/btbu/yzb/sszs" path="/btbu/yzb/:type" :paramsDesc="['分类id，见下表，其他未列出的分类可以在网页URL中找到']" radar="1">
+
+| 硕士招生 | 通知公告 |
+| -------- | -------- |
+| sszs     | zsgztzgg |
+
+</Route>
+
 ## 北京航空航天大学
 
 ### 北京航空航天大学
