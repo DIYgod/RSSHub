@@ -4056,6 +4056,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生院
+
+<Route author="yanbot-team" example="/xaut/yjsy/zsgz" path="/xaut/yjsy/:type" :paramsDesc="['分类id，见下表']" radar="1" rssbud="1">
+
+| 招生工作 |
+| :------: |
+|   zsgz   |
+
+</Route>
+
 ## 西安外国语大学
 
 ### 研究生招生信息网
