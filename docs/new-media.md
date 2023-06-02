@@ -135,13 +135,15 @@ pageClass: routes
 
 ## AEON
 
-<Route author="emdoe" example="/aeon/ideas" path="/aeon/:category" :paramsDesc="['类别']">
+<Route author="emdoe" example="/aeon/essays" path="/aeon/:category" :paramsDesc="['类别']">
 
 支持以文体分类：
 
 | Ideas | Essays | Videos |
 | ----- | ------ | ------ |
 | ideas | essays | videos |
+
+其中 `ideas` 已不再更新。
 
 同样支持以话题分类：
 
