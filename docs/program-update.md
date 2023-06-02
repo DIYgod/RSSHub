@@ -755,7 +755,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### 版本详细信息
 
-<Route author="mrbruce516" example="/tesla" path="/tesla/update"/>
+<Route author="mrbruce516" example="/tesla/ota" path="/tesla/ota"/>
 
 ## 腾讯云移动直播 SDK
 
