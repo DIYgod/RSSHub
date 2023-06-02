@@ -1635,6 +1635,10 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 </Route>
 
+### 作者文章
+
+<Route author="JamYiz" example="/sehuatang/user/411096" path="/sehuatang/user/:uid" :paramsDesc="['用户 uid, 可在用户主页 URL 中找到']" selfhost="1"/>
+
 ## 深影译站
 
 ### 首页
