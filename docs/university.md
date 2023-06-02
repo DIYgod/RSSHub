@@ -3829,6 +3829,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 温州医科大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/wmu/yjsy/1011" path="/wmu/yjsy/:type" :paramsDesc="['分类，见下表']" />
+
+| 硕士招生 |
+| :------: |
+|   1011   |
+
+</Route>
+
 ## 武昌首义学院
 
 ### 新闻中心
