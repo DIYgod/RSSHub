@@ -953,6 +953,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
         -   Linux 环境变量：`EMAIL_CONFIG_xxx_qq_com="password=123456&host=imap.qq.com&port=993"`
         -   docker 环境变量：`EMAIL_CONFIG_xxx_qq_com=password=123456\&host=imap.qq.com\&port=993`，请勿添加引号 `'`，`"`。
 
+- 色花堂
+
+    -  `SEHUATANG_COOKIE`: 登陆色花堂后的 cookie值。
+
 -   网易云歌单及听歌排行
 
     -   `NCM_COOKIES`: 网易云音乐登陆后的 cookie 值.
