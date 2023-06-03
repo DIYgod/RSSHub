@@ -3533,6 +3533,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 山西大学
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/sxu/yjszsw/sszs" path="/sxu/yjszsw/:type" :paramsDesc="['类别ID，见下表，其他未列出的栏目参数可以从页面的 URL Path 中找到']" radar="1" >
+
+| 硕士招生 |
+| -------- |
+| sszs     |
+
+</Route>
+
 ## 陕西师范大学
 
 ### 研究生招生信息网
