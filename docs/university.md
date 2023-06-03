@@ -3990,8 +3990,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生招生信息网
 
-<Route author="yanbot" example="/whu/wdyz/7" path="/whu/wdyz/:type"
-:paramsDesc="['类型，详见表格']">
+<Route author="yanbot" example="/whu/wdyz/7" path="/whu/wdyz/:type" :paramsDesc="['类型，详见表格']">
 
 | 硕士招生 | 普通硕士 | 夏令营 | 推荐免试 | 非全日制招生 |
 | -------- | -------- | ------ | -------- | ------------ |
@@ -4008,6 +4007,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 公告类型 | 通知公告 | 教务信息 | 科研动态 |
 | -------- | -------- | -------- | -------- |
 | 参数     | 1        | 2        | 3        |
+
+</Route>
+
+## 武汉工程大学
+
+### 研究生院
+
+<Route author="yanbot" example="wit/yjs/zsgz-tzgg" path="wit/yjs/:type" :paramsDesc="['类型，详见表格']">
+
+| 招生工作通知公告 |
+| ---------------- |
+| zsgz-tzgg        |
 
 </Route>
 
