@@ -947,6 +947,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `WENKU8_COOKIE`: 登陆轻小说文库后的 cookie
 
+-   色花堂
+
+    -   `SEHUATANG_COOKIE`: 登陆色花堂后的 cookie 值。
+
 -   邮箱 邮件列表路由：
 
     -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 与 `.` 替换为 `_`，例如 `EMAIL_CONFIG_xxx_qq_com`。Linux 内容格式为 `password=密码&host=服务器&port=端口`，docker 内容格式为 `password=密码\&host=服务器\&port=端口`，例如：
