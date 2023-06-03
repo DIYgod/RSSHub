@@ -720,6 +720,18 @@ pageClass: routes
 
 </Route>
 
+## 重庆交通大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/cqjtu/yjszs/zsxx1-ssyjs" path="/cqjtu/yjszs/:type" :paramsDesc="['分类名']">
+
+| 硕士研究生  |
+| ----------- |
+| zsxx1-ssyjs |
+
+</Route>
+
 ## 重庆科技学院
 
 ### 教务处公告
