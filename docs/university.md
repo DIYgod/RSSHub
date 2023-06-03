@@ -5293,6 +5293,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 中南林业大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/csuft/yjsb/zsgz-qrzss" path="/csuft/yjsb/:type" :paramsDesc="['类型，见下表，其他未列出的类型可在页面URL中找到']" radar="1">
+
+| 类型 | 硕士招生   |
+| ---- | ---------- |
+| 参数 | zsgz-qrzss |
+
+</Route>
+
 ## 中南民族大学
 
 ### 研究生院
