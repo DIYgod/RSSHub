@@ -1778,6 +1778,18 @@ category 列表：
 
 </Route>
 
+## 衡阳师范学院
+
+### 研究生院
+
+<Route author="yanbot-team" example="/hynu/xkjsb/yjszs-zsdt" path="/hynu/xkjsb/:type" :paramsDesc="['分类名，见下表']" >
+
+| 招生动态   |
+| ---------- |
+| yjszs-zsdt |
+
+</Route>
+
 ## 合肥工业大学
 
 ### 通知公告
