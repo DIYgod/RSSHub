@@ -3521,6 +3521,17 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 上海体育学院
+
+### 研究生处
+
+<Route author="yanbot-team" example="sus/yjsc/zsxx-ssszs" path="sus/yjsc/:type" :paramsDesc="['类别ID，见下表，其他未列出的栏目参数可以从页面的 URL Path 中找到']" radar="1" >
+
+| 硕士生招生 |
+| ---------- |
+| zsxx-ssszs |
+
+</Route>
 ## 上海外国语大学
 
 ### 研究生院
