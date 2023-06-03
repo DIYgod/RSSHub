@@ -1007,19 +1007,19 @@ pageClass: routes
 
 </Route>
 
+### 最新信息公开
+
+<Route author="KiraKiseki" example="/dhu/xxgk/news" path="/dhu/xxgk/news"/>
+
 ### 研究生招生信息
 
 <Route author="fox2049" example="/dhu/yjs/zs" path="/dhu/yjs/zs/:type?" :paramsDesc="['默认为 `master`']">
 
-|   博士   |   硕士   |
+| 博士招生 | 硕士招生 |
 | -------- | -------- |
 |  doctor  |  master  |
 
 </Route>
-
-### 最新信息公开
-
-<Route author="KiraKiseki" example="/dhu/xxgk/news" path="/dhu/xxgk/news"/>
 
 ## 东南大学
 
