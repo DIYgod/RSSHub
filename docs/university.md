@@ -1007,6 +1007,16 @@ pageClass: routes
 
 </Route>
 
+### 研究生招生信息
+
+<Route author="fox2049" example="/dhu/yjs/zs" path="/dhu/yjs/zs/:type?" :paramsDesc="['默认为 `master`']">
+
+|   博士   |   硕士   |
+| -------- | -------- |
+|  doctor  |  master  |
+
+</Route>
+
 ### 最新信息公开
 
 <Route author="KiraKiseki" example="/dhu/xxgk/news" path="/dhu/xxgk/news"/>
