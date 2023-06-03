@@ -1459,6 +1459,18 @@ pageClass: routes
 
 </Route>
 
+## 广西中医药大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/gxtcmu/yjsy/zsgz1-sszs" path="/gxtcmu/yjsy/:type" :paramsDesc="['分类名,见下表，也可在页面url中找到']">
+
+| 硕士招生   |
+| ---------- |
+| zsgz1-sszs |
+
+</Route>
+
 ## 广州大学
 
 ### 研究生院
