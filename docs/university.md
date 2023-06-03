@@ -2006,6 +2006,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="vuhe" example="/ncwu/notice" path="/ncwu/notice" radar="1" rssbud="1"/>
 
+### 研究生招生网
+
+<Route author="yanbot-team" example="/ncwu/yz/zsxx-sszs" path="/ncwu/yz/:type" :paramsDesc="['类型参数']">
+
+| 类型 | 硕士招生  |
+| ---- | --------- |
+| 参数 | zsxx-sszs |
+
+</Route>
+
 ## 华东理工大学
 
 ### 华东理工大学研究生院通知公告
