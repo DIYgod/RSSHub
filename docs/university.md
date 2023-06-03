@@ -2354,6 +2354,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 聊城大学
+
+### 研究生处
+
+<Route author="yanbot-team" example="/lcu/yjsc/zsgz-zsdt" path="/lcu/yjsc/:type" :paramsDesc="['分类type，见下表']">
+
+| 招生动态  |
+| --------- |
+| zsgz-zsdt |
+
+</Route>
+
 ## 辽宁大学
 
 ### 研究生院
