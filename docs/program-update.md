@@ -681,6 +681,12 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 <Route author="nczitzk" example="/wdc/download/279" path="/wdc/download/:id?" :paramsDesc="['软件 id，可在对应软件页 URL 中找到，默认为 279，即 Western Digital Dashboard']"/>
 
+## winstall
+
+### 应用更新
+
+<Route author="TonyRL" example="/winstall/Mozilla.Firefox" path="/winstall/:appId" :paramsDesc="['应用名']" radar="1"/>
+
 ## WizFile
 
 ### 更新日志

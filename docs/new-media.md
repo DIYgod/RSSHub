@@ -135,7 +135,15 @@ pageClass: routes
 
 ## AEON
 
+<<<<<<< HEAD <Route author="emdoe" example="/aeon/essays" path="/aeon/essays" :paramsDesc="['类别']">
+
+\=======
+
+### Essays
+
 <Route author="emdoe" example="/aeon/essays" path="/aeon/essays" :paramsDesc="['类别']">
+
+> > > > > > > 0fb29a03d02c6c55bd29e5b06b4bc53fef0cd290
 
 支持获取 Essays.
 
