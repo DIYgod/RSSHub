@@ -276,6 +276,9 @@
     "/aeaweb/:id": [
         "nczitzk"
     ],
+    "/aeon/essays": [
+        "emdoe"
+    ],
     "/agefans/detail/:id": [
         "s2marine"
     ],
@@ -6588,7 +6591,6 @@
     "/maxnews/dota2": [],
     "/ningmeng/song": [],
     "/zzz/:category?/:language?": [],
-    "/aeon/:cid": [],
     "/algocasts": [],
     "/aqicn/:city/:pollution?": [],
     "/maoyan/hot": [],
