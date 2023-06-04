@@ -233,6 +233,54 @@
       }
     ]
   },
+  "141jav.com": {
+    "_name": "141JAV",
+    ".": [
+      {
+        "title": "今日种子",
+        "docs": "https://docs.rsshub.app/multimedia.html#_141jav",
+        "source": "/"
+      },
+      {
+        "title": "今日演员",
+        "docs": "https://docs.rsshub.app/multimedia.html#_141jav",
+        "source": "/"
+      },
+      {
+        "title": "页面种子",
+        "docs": "https://docs.rsshub.app/multimedia.html#_141jav",
+        "source": [
+          "/:type",
+          "/:type/:key",
+          "/:type/:key/:morekey"
+        ]
+      }
+    ]
+  },
+  "141ppv.com": {
+    "_name": "141JAV",
+    ".": [
+      {
+        "title": "今日种子",
+        "docs": "https://docs.rsshub.app/multimedia.html#_141ppv",
+        "source": "/"
+      },
+      {
+        "title": "今日演员",
+        "docs": "https://docs.rsshub.app/multimedia.html#_141ppv",
+        "source": "/"
+      },
+      {
+        "title": "页面种子",
+        "docs": "https://docs.rsshub.app/multimedia.html#_141ppv",
+        "source": [
+          "/:type",
+          "/:type/:key",
+          "/:type/:key/:morekey"
+        ]
+      }
+    ]
+  },
   "18comic.org": {
     "_name": "禁漫天堂",
     ".": [
@@ -25791,54 +25839,6 @@
       {
         "title": "页面种子",
         "docs": "https://docs.rsshub.app/multimedia.html#onejav",
-        "source": [
-          "/:type",
-          "/:type/:key",
-          "/:type/:key/:morekey"
-        ]
-      }
-    ]
-  },
-  "141jav.com": {
-    "_name": "141JAV BT",
-    ".": [
-      {
-        "title": "今日种子",
-        "docs": "https://docs.rsshub.app/multimedia.html#141jav",
-        "source": "/"
-      },
-      {
-        "title": "今日演员",
-        "docs": "https://docs.rsshub.app/multimedia.html#141jav",
-        "source": "/"
-      },
-      {
-        "title": "页面种子",
-        "docs": "https://docs.rsshub.app/multimedia.html#141jav",
-        "source": [
-          "/:type",
-          "/:type/:key",
-          "/:type/:key/:morekey"
-        ]
-      }
-    ]
-  },
-  "141ppv.com": {
-    "_name": "141ppv BT",
-    ".": [
-      {
-        "title": "今日种子",
-        "docs": "https://docs.rsshub.app/multimedia.html#141pvp",
-        "source": "/"
-      },
-      {
-        "title": "今日演员",
-        "docs": "https://docs.rsshub.app/multimedia.html#141ppv",
-        "source": "/"
-      },
-      {
-        "title": "页面种子",
-        "docs": "https://docs.rsshub.app/multimedia.html#141ppv",
         "source": [
           "/:type",
           "/:type/:key",
