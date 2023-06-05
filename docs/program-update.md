@@ -423,6 +423,12 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 见 [#nintendo](/game.html#nintendo)
 
+## Not a Tesla App
+
+### 特斯拉系统更新
+
+<Route author="mrbruce516" example="/notateslaapp/ota" path="/notateslaapp/ota" radar="1"/>
+
 ## NPM
 
 ### 包
@@ -756,12 +762,6 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 ### app 更新
 
 <Route author="zytomorrow" example="/pgyer/:app" path="/pgyer/kz-test" :paramsDesc="['app为下载页最后的路径']" radar="1" rssbud="1"/>
-
-## 特斯拉系统更新
-
-### 版本详细信息
-
-<Route author="mrbruce516" example="/tesla" path="/tesla/update"/>
 
 ## 腾讯云移动直播 SDK
 
