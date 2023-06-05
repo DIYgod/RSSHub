@@ -1907,6 +1907,18 @@ category 列表：
 
 </Route>
 
+## 黑龙江大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/hlju/yjsy/zsgz-sszs" path="/hlju/yjsy/:type" :paramsDesc="['分类，见下表']">
+
+| 硕士招生  |
+| --------- |
+| zsgz-sszs |
+
+</Route>
+
 ## 黑龙江中医药大学
 
 ### 研究生院
