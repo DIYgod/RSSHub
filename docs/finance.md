@@ -300,7 +300,7 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ### 研究报告
 
-<Route  author="syzq" example="/eastmoney/report/strategyreport" path="/eastmoney/report/:category" :paramsDesc="['研报类型']">
+<Route author="syzq" example="/eastmoney/report/strategyreport" path="/eastmoney/report/:category" :paramsDesc="['研报类型']">
 
 | 策略报告       | 宏观研究    | 券商晨报     |
 | -------------- | ----------- | ------------ |
