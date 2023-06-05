@@ -217,7 +217,7 @@ Use `library` as the `owner` for official images, such as <https://rsshub.app/do
 ### Changelog
 
 <RouteEn author="tigercubden" example="/eagle/changelog/en" path="/eagle/changelog/:language?" :paramsDesc="['Language, see list, default to be `cn`']" radar="1">
-  
+
 Language
 
 | Simplified Chinese | Traditional Chinese | English |
@@ -598,6 +598,12 @@ Language
 ### Download
 
 <RouteEn author="nczitzk" example="/wdc/download/279" path="/wdc/download/:id?" :paramsDesc="['Software id, can be found in URL, 279 as Western Digital Dashboard by default']"/>
+
+## winstall
+
+### Apps Update
+
+<RouteEn author="TonyRL" example="/winstall/Mozilla.Firefox" path="/winstall/:appId" :paramsDesc="['Application ID']" radar="1"/>
 
 ## WizTree
 
