@@ -284,7 +284,10 @@
     "/aeaweb/:id": [
         "nczitzk"
     ],
-    "/aeon/essays": [
+    "/aeon/category/:category": [
+        "emdoe"
+    ],
+    "/aeon/:type": [
         "emdoe"
     ],
     "/agefans/detail/:id": [
