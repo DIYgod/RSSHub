@@ -1885,6 +1885,16 @@ category 列表：
 
 </Route>
 
+### 研究生院
+
+<Route author="yanbot-team" example="/henu/grs/zszx-sszs___" path="/henu/grs/:type" :paramsDesc="['分类，见下表']">
+
+| 硕士招生        |
+| --------------- |
+| zszx-sszs\_\_\_ |
+
+</Route>
+
 ## 河南科技大学
 
 ### 研究生院
