@@ -3025,6 +3025,8 @@
     jw:[ { title:"教务处通知",
         docs:"https://docs.rsshub.app/university.html#dong-hua-da-xue" } ],
     xxgk:[ { title:"最新信息公开",
+        docs:"https://docs.rsshub.app/university.html#dong-hua-da-xue" } ],
+    yjs:[ { title:"研究生信息",
         docs:"https://docs.rsshub.app/university.html#dong-hua-da-xue" } ] },
   "diandong.com":{ _name:"电动邦",
     ".":[ { title:"资讯",

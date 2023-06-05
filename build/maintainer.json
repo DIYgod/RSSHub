@@ -1405,6 +1405,9 @@
     "/dhu/xxgk/news": [
         "KiraKiseki"
     ],
+    "/dhu/yjs/zs/:type?": [
+        "fox2049"
+    ],
     "/diandong/news/:cate?": [
         "Fatpandac"
     ],
