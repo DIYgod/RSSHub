@@ -1943,6 +1943,16 @@ category 列表：
 
 </Route>
 
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/hubu/yz/zsxy-sszs" path="/hubu/yz/:type" :paramsDesc="['分类，见下表']">
+
+| 硕士招生  |
+| --------- |
+| zsxy-sszs |
+
+</Route>
+
 ## 湖北工业大学
 
 ### 新闻中心
