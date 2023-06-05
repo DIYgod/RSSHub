@@ -3372,11 +3372,23 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生院
 
-<Route author="yanbot-team" example="/sdust/yjsy/tzgg" path="/sdust/yjsy/tzgg" :paramsDesc="['专栏名称，见下表，也可在对应页面的URL中找到']" radar="1" rssbud="1">
+<Route author="yanbot-team" example="/sdust/yjsy/tzgg" path="/sdust/yjsy/:type" :paramsDesc="['专栏名称，见下表，也可在对应页面的URL中找到']" radar="1" rssbud="1">
 
 | 通知公告 |
 | -------- |
 | tzgg     |
+
+</Route>
+
+## 山东师范大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/sdnu/yjszs/zsdt-sszs" path="/sdnu/yjszs/:type" :paramsDesc="['专栏名称，见下表，也可在对应页面的URL中找到']" radar="1" rssbud="1">
+
+| 硕士招生  |
+| --------- |
+| zsdt-sszs |
 
 </Route>
 
