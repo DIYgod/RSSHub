@@ -329,7 +329,15 @@ Heroku [不再](https://blog.heroku.com/next-chapter) 提供免费服务。
 
 ## 部署到 Vercel (ZEIT Now)
 
+### 一键部署（无自动更新）
+
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
+
+### 自动更新部署
+
+1.  将 RSSHub [分叉（fork）](https://github.com/DIYgod/RSSHub/fork) 到自己的账户下
+2.  去 Vercel 部署一个新项目：使用 GitHub 账户登录 Vercel，进入[项目创建页面](https://vercel.com/new/) 选择导入 RSSHub 仓库进行部署
+3.  安装 [Pull](https://github.com/apps/pull) 应用，定期将 RSSHub 改动自动同步至你的仓库
 
 ## 部署到 Fly.io
 
@@ -938,6 +946,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 -   轻小说文库
 
     -   `WENKU8_COOKIE`: 登陆轻小说文库后的 cookie
+
+-   色花堂
+
+    -   `SEHUATANG_COOKIE`: 登陆色花堂后的 cookie 值。
 
 -   邮箱 邮件列表路由：
 

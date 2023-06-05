@@ -135,19 +135,11 @@ pageClass: routes
 
 ## AEON
 
-<Route author="emdoe" example="/aeon/ideas" path="/aeon/:category" :paramsDesc="['类别']">
+### Essays
 
-支持以文体分类：
+<Route author="emdoe" example="/aeon/essays" path="/aeon/essays" :paramsDesc="['类别']">
 
-| Ideas | Essays | Videos |
-| ----- | ------ | ------ |
-| ideas | essays | videos |
-
-同样支持以话题分类：
-
-| Culture | Philosophy | Psychology | Society | Science |
-| ------- | ---------- | ---------- | ------- | ------- |
-| culture | philosophy | psychology | society | science |
+支持获取 Essays.
 
 </Route>
 
@@ -1488,6 +1480,29 @@ Provides all of the Thrillist articles with the specified tag.
 ### Latest News
 
 <Route author="Rongronggg9" example="/tribalfootball" path="/tribalfootball" />
+
+## UNTAG
+
+### 分类
+
+<Route author="nczitzk" example="/utgd/method" path="/utgd/:category?" :paramsDesc="['分类，可在对应分类页的 URL 中找到，默认为方法']">
+
+| 方法   | 观点    |
+| ------ | ------- |
+| method | opinion |
+
+</Route>
+
+### 专题
+
+<Route author="nczitzk" example="/utgd/topic/在线阅读专栏" path="/utgd/topic/:topic?" :paramsDesc="['专题，默认为在线阅读专栏']">
+
+| 在线阅读专栏 | 卡片笔记专题 |
+| ------------ | ------------ |
+
+更多专栏请见 [专题广场](https://utgd.net/topic)
+
+</Route>
 
 ## Uwants
 
