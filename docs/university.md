@@ -1762,6 +1762,17 @@ category 列表：
 
 </Route>
 
+## 哈尔滨医科大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/hrbmu/yjsy/zsgz-sszs" path="/hrbmu/yjsy/:type" :paramsDesc="['分类名，见下表']" >
+
+| 硕士招生  |
+| --------- |
+| zsgz-sszs |
+
+</Route>
 ## 海南大学
 
 ### 硕士研究生招生动态
