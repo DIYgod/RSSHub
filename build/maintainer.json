@@ -1676,6 +1676,9 @@
     "/eastmoney/ttjj/user/:uid": [
         "zidekuls"
     ],
+    "/eastmoney/report/:category": [
+        "syzq"
+    ],
     "/eastmoney/search/:keyword": [
         "drgnchan"
     ],
