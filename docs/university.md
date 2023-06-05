@@ -1011,6 +1011,16 @@ pageClass: routes
 
 <Route author="KiraKiseki" example="/dhu/xxgk/news" path="/dhu/xxgk/news"/>
 
+### 研究生招生信息
+
+<Route author="fox2049" example="/dhu/yjs/zs" path="/dhu/yjs/zs/:type?" :paramsDesc="['默认为 `master`']">
+
+| 博士招生 | 硕士招生 |
+| -------- | -------- |
+| doctor   | master   |
+
+</Route>
+
 ## 东南大学
 
 ### 信息科学与工程学院学术活动

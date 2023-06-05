@@ -386,6 +386,12 @@ See [#Monster Hunter World](/en/game.html#monster-hunter-world)
 
 See [#nintendo](/game.html#nintendo)
 
+## Not a Tesla App
+
+### Tesla Software Updates
+
+<RouteEn author="mrbruce516" example="/notateslaapp/ota" path="/notateslaapp/ota" radar="1"/>
+
 ## NPM
 
 ### Package
@@ -530,7 +536,6 @@ Open `https://www.sony.com/electronics/support` and search for the corresponding
 :::
 
 </RouteEn>
-
 
 ## Thunderbird
 
