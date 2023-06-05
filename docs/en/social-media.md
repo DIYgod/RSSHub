@@ -34,6 +34,20 @@ pageClass: routes
 
 <RouteEn author="Ovler-Young" example="/curius/links/yuu-yuu" path="/curius/links/:name" :paramsDesc="['Username, can be found in URL']"/>
 
+## Daily.dev
+
+### Popular
+
+<RouteEn author="Rjnishant530" example="/daily.dev" path="/daily.dev">
+
+### Most upvoted
+
+<RouteEn author="Rjnishant530" example="/daily.dev/upvoted" path="/daily.dev/upvoted">
+
+### Most Discussed
+
+<RouteEn author="Rjnishant530" example="/daily.dev/discussed" path="/daily.dev/discussed">
+
 ## Dev.to
 
 ### Top Posts
