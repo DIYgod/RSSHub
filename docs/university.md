@@ -1017,7 +1017,7 @@ pageClass: routes
 
 | 博士招生 | 硕士招生 |
 | -------- | -------- |
-|  doctor  |  master  |
+| doctor   | master   |
 
 </Route>
 
