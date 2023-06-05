@@ -3803,6 +3803,9 @@
     "/nogizaka46/blog": [
         "Kasper4649"
     ],
+    "/notateslaapp/ota": [
+        "mrbruce516"
+    ],
     "/notefolio/search/:category?/:order?/:time?/:query?": [
         "BianTan"
     ],
@@ -7153,7 +7156,6 @@
     "/gvm/index/:category?": [],
     "/chuapp/index/:category?": [],
     "/deloitte/industries/:category?": [],
-    "/tesla": [],
     "/fudan/cce": [],
     "/lowendtalk/discussion/:id?": [],
     "/proletar/:type?/:id?": [],
