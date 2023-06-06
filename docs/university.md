@@ -4665,6 +4665,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 西藏大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/utibet/yjszs/sszs" path="/utibet/yjszs/:type" :paramsDesc="['分类名，见下表']">
+
+| 硕士招生 |
+| -------- |
+| sszs     |
+
+</Route>
+
 ## 新疆大学
 
 ### 研究生院
