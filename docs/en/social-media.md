@@ -38,15 +38,15 @@ pageClass: routes
 
 ### Popular
 
-<RouteEn author="Rjnishant530" example="/daily" path="/daily">
+<RouteEn author="Rjnishant530" example="/daily" path="/daily" />
 
 ### Most Discussed
 
-<RouteEn author="Rjnishant530" example="/daily/discussed" path="/daily/discussed">
+<RouteEn author="Rjnishant530" example="/daily/discussed" path="/daily/discussed" />
 
 ### Most upvoted
 
-<RouteEn author="Rjnishant530" example="/daily/upvoted" path="/daily/upvoted">
+<RouteEn author="Rjnishant530" example="/daily/upvoted" path="/daily/upvoted" />
 
 ## Dev.to
 
