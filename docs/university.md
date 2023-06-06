@@ -3232,6 +3232,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 青海大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/qhu/yjs/zsgz-xlsszs" path="/qhu/yjs/:type" :paramsDesc="['分类id，见下表']">
+
+| 学历硕士招生 |
+| ------------ |
+| zsgz-xlsszs  |
+
+</Route>
+
 ## 清华大学
 
 ### 清华大学校内信息发布平台
