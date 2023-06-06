@@ -3869,6 +3869,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 四川师范大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/sicnu/yjsc/23" path="/sicnu/yjsc/:type" :paramsDesc="['类型，见下表']" rssbud="1" radar="1">
+
+| 招生新闻 |
+| -------- |
+| 23       |
+
+</Route>
+
 ## 四川职业技术学院
 
 ### 学院公告
