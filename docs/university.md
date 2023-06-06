@@ -3440,6 +3440,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 山东中医药大学
+
+### 研究生处
+
+<Route author="yanbot-team" example="/sdutcm/yjs/zsgz1" path="/sdutcm/yjs/:type" :paramsDesc="['专栏名称，见下表，也可在对应页面的URL中找到']" radar="1" rssbud="1">
+
+| 招生工作 |
+| -------- |
+| zsgz1    |
+
+</Route>
+
 ## 上海财经大学
 
 ### 研究生院
