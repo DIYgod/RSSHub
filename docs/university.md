@@ -1979,11 +1979,23 @@ category 列表：
 jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS_REJECT_UNAUTHORIZED = 0
 :::
 
+## 湖北师范大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/hbnu/grad/1082" path="/hbnu/grad/:type"  :paramsDesc="['分类']">
+
+| 招生信息 |
+| -------- |
+| 1082     |
+
+</Route>
+
 ## 湖南大学
 
 ### 研究生院
 
-<Route author="yanbot-team" example="/hnu/gra/zsxx" path="/hnu/gra/zsxx"  :paramsDesc="['分类']">
+<Route author="yanbot-team" example="/hnu/gra/zsxx" path="/hnu/gra/:type"  :paramsDesc="['分类']">
 
 | 招生信息 |
 | -------- |
