@@ -5528,3 +5528,15 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 参数 | sszs     | bszs     |
 
 </Route>
+
+## 中央音乐学院
+
+### 研究生部
+
+<Route author="yanbot-team" example="/ccom/yjsb/zsxx-sszs" path="/ccom/yjsb/:type" :paramsDesc="['类型，见下表，其他未列出的类型可在页面URL中找到']" radar="1">
+
+| 类型 | 硕士招生  |
+| ---- | --------- |
+| 参数 | zsxx-sszs |
+
+</Route>
