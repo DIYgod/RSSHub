@@ -3274,6 +3274,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="Halcao DylanXie123" example="/thu/career" path="/thu/career" />
 
+## 三峡大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/ctgu/sxdxyjsy/tzgg-zstzgg" path="/ctgu/sxdxyjsy/:type" :paramsDesc="['分类见下表']"/>
+
+| 招生通知公告 |
+| :----------: |
+| tzgg-zstzgg  |
+
+</Route>
+
 ## 厦门大学
 
 ### 航空航天学院
