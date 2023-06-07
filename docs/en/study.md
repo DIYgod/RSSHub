@@ -24,6 +24,12 @@ pageClass: routes
 
 <RouteEn author="HankChow" example="/cssn/iolaw/zxzp" path="/cssn/iolaw/:section?" :paramsDesc="['Section ID, can be found in the URL. For example, the Section ID of URL `http://iolaw.cssn.cn/zxzp/` is `zxzp`. The default value is `zxzp`']"/>
 
+## DBLP
+
+### Keyword Search
+
+<RouteEn author="ytno1" example="/dblp/knowledge%20tracing" path="/dblp/:field" :paramsDesc="['Research field']" radar="1" />
+
 ## gradCafe
 
 ### gradCafe result
