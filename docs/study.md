@@ -85,6 +85,12 @@ path="/ctfhub/upcoming/:limit?"
 
 </Route>
 
+## DBLP
+
+### 关键字搜索
+
+<Route author="ytno1" example="/dblp/knowledge%20tracing" path="/dblp/:field" :paramsDesc="['研究领域']" radar="1" />
+
 ## gradCafe
 
 ### gradCafe result
