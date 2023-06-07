@@ -376,6 +376,12 @@ Only for self-hosted
 
 <RouteEn author="TonyRL" path="/plurk/user/:user" example="/plurk/user/plurkoffice" :paramsDesc="['User ID, can be found in URL']" radar="1" rssbud="1"/>
 
+## Rattibha
+
+### User Threads
+
+<RouteEn author="yshalsager" example="/rattibha/user/elonmusk" path="/rattibha/user/:user" :paramsDesc="['Twitter username, without @']" radar="1" rssbud="1"/>
+
 ## Telegram
 
 ### Channel
