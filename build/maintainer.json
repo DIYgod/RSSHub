@@ -1350,6 +1350,9 @@
     "/dayanzai/dayanzai/:category/:fulltext?": [
         "nitezs"
     ],
+    "/dblp/:field": [
+        "ytno1"
+    ],
     "/dbmv/:category?": [
         "kba977"
     ],
