@@ -203,7 +203,7 @@ pageClass: routes
 
 ## A 姐分享
 
-<Route author="佛学049" example="/ahhhhfs/post" path="/ahhhhfs/post"/>
+<Route author="fox2049" example="/ahhhhfs/post" path="/ahhhhfs/post"/>
 
 ## Bell Labs
 
