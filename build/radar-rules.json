@@ -6017,6 +6017,20 @@
       }
     ]
   },
+  "dorohedoro.net": {
+    "_name": "Dorohedoro",
+    ".": [
+      {
+        "title": "News",
+        "docs": "https://docs.rsshub.app/game.html#dorohedoro",
+        "source": [
+          "/news",
+          "/"
+        ],
+        "target": "/dorohedoro/news"
+      }
+    ]
+  },
   "douban.com": {
     "_name": "豆瓣",
     "www": [

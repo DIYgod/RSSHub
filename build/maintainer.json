@@ -1498,6 +1498,9 @@
     "/dongqiudi/top_news/:id?": [
         "HendricksZheng"
     ],
+    "/dorohedoro/news": [
+        "nczitzk"
+    ],
     "/douban/book/latest": [
         "fengkx"
     ],
