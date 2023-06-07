@@ -34,6 +34,20 @@ pageClass: routes
 
 <RouteEn author="Ovler-Young" example="/curius/links/yuu-yuu" path="/curius/links/:name" :paramsDesc="['Username, can be found in URL']"/>
 
+## Daily.dev
+
+### Popular
+
+<RouteEn author="Rjnishant530" example="/daily" path="/daily" />
+
+### Most Discussed
+
+<RouteEn author="Rjnishant530" example="/daily/discussed" path="/daily/discussed" />
+
+### Most upvoted
+
+<RouteEn author="Rjnishant530" example="/daily/upvoted" path="/daily/upvoted" />
+
 ## Dev.to
 
 ### Top Posts
@@ -165,8 +179,8 @@ If you don't want to setup credentials, you can use [Picnob](#picnob) or [Picuki
 <RouteEn author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" :paramsDesc="['Feed category, see table below','Username / Hashtag name']" radar="1" anticrawler="1" selfhost="1">
 
 | User timeline | Hashtag |
-| ---------- | ---- |
-| user       | tags  |
+| ------------- | ------- |
+| user          | tags    |
 
 ::: tip Tips
 It's highly recommended to deploy with Redis cache enabled.
@@ -337,8 +351,8 @@ Only for self-hosted
 | topReplurks  | topFavorites  | topResponded  |
 
 | English | 中文（繁體） |
-| ------- | ----------- |
-| en     | zh      |
+| ------- | ------------ |
+| en      | zh           |
 
 </RouteEn>
 
@@ -437,7 +451,7 @@ Specify options (in the format of query string) in parameter `routeParams` to co
 | `showAuthorInDesc`             | Show author name in description (RSS body)                                                                                           | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |
 | `showQuotedAuthorAvatarInDesc` | Show avatar of quoted Tweet's author in description (RSS body) (Not recommended if your RSS reader extracts images from description) | `0`/`1`/`true`/`false` | `false`                                   |
 | `showAuthorAvatarInDesc`       | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)                | `0`/`1`/`true`/`false` | `false`                                   |
-| `showEmojiForRetweetAndReply`  | Use "🔁" instead of "RT", "↩️" & "💬" instead of "Re"                                                                               | `0`/`1`/`true`/`false` | `false`                                   |
+| `showEmojiForRetweetAndReply`  | Use "🔁" instead of "RT", "↩️" & "💬" instead of "Re"                                                                                | `0`/`1`/`true`/`false` | `false`                                   |
 | `showSymbolForRetweetAndReply` | Use " RT " instead of "", " Re " instead of ""                                                                                       | `0`/`1`/`true`/`false` | `true`                                    |
 | `showRetweetTextInTitle`       | Show quote comments in title (if `false`, only the retweeted tweet will be shown in the title)                                       | `0`/`1`/`true`/`false` | `true`                                    |
 | `addLinkForPics`               | Add clickable links for Tweet pictures                                                                                               | `0`/`1`/`true`/`false` | `false`                                   |
@@ -580,13 +594,13 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 ::: details Chart
 | Top artists | Top songs | Top music videos | Trending |
 | ----------- | --------- | ---------------- | -------- |
-| TopArtists  | TopSongs  | TopVideos        | TrendingVideos |
+| TopArtists | TopSongs | TopVideos | TrendingVideos |
 :::
 
 ::: details Country Code
 | Argentina | Australia | Austria | Belgium | Bolivia | Brazil | Canada |
 | --------- | --------- | ------- | ------- | ------- | ------ | ------ |
-| ar        | au        | at      | be      | bo      | br     | ca     |
+| ar | au | at | be | bo | br | ca |
 
 | Chile | Colombia | Costa Rica | Czechia | Denmark | Dominican Republic | Ecuador |
 | ----- | -------- | ---------- | ------- | ------- | ------------------ | ------- |
@@ -609,8 +623,8 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 | ng      | no     | pa     | py       | pe   | pl     | pt       | ro      |
 
 | Russia | Saudi Arabia | Serbia | South Africa | South Korea | Spain | Sweden | Switzerland |
-| ----- | ------------- | ------ | ------------ | ----------- | ----- | ------ | ----------- |
-| ru    | sa            | rs     | za           | kr          | es    | se     | ch          |
+| ------ | ------------ | ------ | ------------ | ----------- | ----- | ------ | ----------- |
+| ru     | sa           | rs     | za           | kr          | es    | se     | ch          |
 
 | Tanzania | Turkey | Uganda | Ukraine | United Arab Emirates | United Kingdom | United States |
 | -------- | ------ | ------ | ------- | -------------------- | -------------- | ------------- |
@@ -619,6 +633,7 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 | Uruguay | Zimbabwe |
 | ------- | -------- |
 | uy      | zw       |
+
 :::
 
 </RouteEn>
