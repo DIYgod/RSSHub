@@ -1013,7 +1013,11 @@ pageClass: routes
 
 ### 研究生招生信息
 
+<<<<<<< HEAD
 <Route author="fox2049" example="/dhu/yjs/zs/master" path="/dhu/yjs/zs/:type?" :paramsDesc="['默认为 `master`']">
+=======
+<Route author="fox2049" example="/dhu/yjs/zs" path="/dhu/yjs/zs/:type?" :paramsDesc="['默认为 `master`']">
+>>>>>>> 89e66ea39cd96986fb33dbd908b7dec96cafabc4
 
 | 博士招生 | 硕士招生 |
 | -------- | -------- |
