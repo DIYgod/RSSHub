@@ -1799,6 +1799,18 @@ category 列表：
 
 <Route author="legr4ndk" example="/hdu/cs/pg" path="/hdu/cs/pg" radar="1" rssbud="1"/>
 
+## 杭州师范大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/hznu/yjs/yjszs-sszs" path="/hznu/yjs/:type" :paramsDesc="['分类名，见下表']" >
+
+| 硕士招生   |
+| ---------- |
+| yjszs-sszs |
+
+</Route>
+
 ## 河北工业大学
 
 ### 研究生院招生工作
