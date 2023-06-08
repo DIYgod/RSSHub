@@ -3462,6 +3462,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 山东工艺美术学院
+
+### 研究生处
+
+<Route author="yanbot-team" example="/sdada/yjsc/zsxx" path="/sdada/yjsc/:type" :paramsDesc="['专栏名称，见下表']" radar="1" rssbud="1">
+
+| 招生信息 |
+| -------- |
+| zsxx     |
+
+</Route>
+
 ## 山东科技大学
 
 ### 研究生院
@@ -5300,6 +5312,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 硕士招生  | 博士招生  |
 | --------- | --------- |
 | zsxx-sszs | zsxx-bszs |
+
+</Route>
+
+### 空天信息创新研究院-教育培养
+
+<Route author="yanbot-team" example="/aircas/kjrh/rhtzgg" path="/aircas/kjrh/:type" :paramsDesc="['分类，见下表']" radar="1">
+
+| 教育培养通知公告 |
+| ---------------- |
+| rhtzgg           |
 
 </Route>
 
