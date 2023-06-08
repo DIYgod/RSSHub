@@ -1445,6 +1445,18 @@ pageClass: routes
 
 </Route>
 
+## 广东医科大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/gdmu/yjsxy/zsgz-sszs" path="/gdmu/yjsxy/:type" :paramsDesc="['分类名,见下表，也可在页面url中找到']">
+
+| 硕士招生  |
+| --------- |
+| zsgz-sszs |
+
+</Route>
+
 ## 广西大学
 
 ### 研究生院
