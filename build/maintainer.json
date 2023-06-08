@@ -3579,6 +3579,9 @@
     "/natgeo/:cat/:type?": [
         "fengkx"
     ],
+    "/nationalgeographic/latest-stories": [
+        "miles170"
+    ],
     "/nature/cover": [
         "y9c"
     ],

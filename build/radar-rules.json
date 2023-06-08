@@ -15270,16 +15270,13 @@
     ]
   },
   "nationalgeographic.com": {
-    "_name": "国家地理",
-    ".": [
+    "_name": "National Geographic",
+    "www": [
       {
-        "title": "每日一图",
-        "docs": "https://docs.rsshub.app/picture.html#guo-jia-di-li",
-        "source": [
-          "/photo-of-the-day/*",
-          "/"
-        ],
-        "target": "/natgeo/dailyphoto"
+        "title": "Latest Stories",
+        "docs": "https://docs.rsshub.app/traditional-media.html#hua-shi-xin-wen",
+        "source": "/pages/topic/latest-stories",
+        "target": "/nationalgeographic/latest-stories"
       }
     ]
   },
