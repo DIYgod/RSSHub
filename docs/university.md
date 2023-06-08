@@ -4689,6 +4689,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 新疆师范大学
+
+### 新疆师范大学
+
+<Route author="yanbot-team" example="/xju/gs/zsxx-ssyjs" path="/xju/gs/:type" :paramsDesc="['分类名，见下表']">
+
+| 硕士研究生 |
+| ---------- |
+| zsxx-ssyjs |
+
+</Route>
+
 ## 信阳师范学院
 
 ### 高等教育自学考试办公室
