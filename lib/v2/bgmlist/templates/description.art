@@ -1,0 +1,4 @@
+{{each}}
+<a href="{{$value.url}}">{{$value.title}}</a>{{if $value.begin}}（开播时间：{{$value.begin}}）{{/if}}
+<br>
+{{/each}}

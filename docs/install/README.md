@@ -185,17 +185,29 @@ $ cd RSSHub
 
 下载完成后，需要安装依赖（开发不要加 `--production` 参数）
 
-使用 `yarn`
+<code-group>
+<code-block title="pnpm" active>
 
 ```bash
-$ yarn install --production
+pnpm install --prod
 ```
 
-或 `npm`
+</code-block>
+<code-block title="yarnv1">
 
 ```bash
-$ npm ci --production
+yarn --production
 ```
+
+</code-block>
+<code-block title="npm">
+
+```bash
+npm install --omit=dev
+```
+
+</code-block>
+</code-group>
 
 由于众所周知的原因，在中国使用 `npm` 下载依赖十分缓慢，建议挂一个代理或者考虑使用 [NPM 镜像](https://npm.taobao.org/)
 
@@ -286,6 +298,12 @@ in pkgs.stdenv.mkDerivation {
 }
 ```
 
+## 部署到 Railway
+
+包含自动更新。
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/QxW\_\_f?referralCode=9wT3hc)
+
 ## 部署到 Heroku
 
 ### 注意
@@ -311,46 +329,91 @@ Heroku [不再](https://blog.heroku.com/next-chapter) 提供免费服务。
 
 ## 部署到 Vercel (ZEIT Now)
 
+### 一键部署（无自动更新）
+
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
+
+### 自动更新部署
+
+1.  将 RSSHub [分叉（fork）](https://github.com/DIYgod/RSSHub/fork) 到自己的账户下
+2.  去 Vercel 部署一个新项目：使用 GitHub 账户登录 Vercel，进入[项目创建页面](https://vercel.com/new/) 选择导入 RSSHub 仓库进行部署
+3.  安装 [Pull](https://github.com/apps/pull) 应用，定期将 RSSHub 改动自动同步至你的仓库
 
 ## 部署到 Fly.io
 
-1.  将 RSSHub [分叉（fork）](https://github.com/DIYgod/RSSHub/fork) 到自己的账户下。
+### 方案一：Fork
+
+1.  将 RSSHub [Fork](https://github.com/DIYgod/RSSHub/fork) 到自己的账户下；
+
 2.  下载分叉的源码
+
     ```bash
     $ git clone https://github.com/<your username>/RSSHub.git
     $ cd RSSHub
     ```
-3.  前往 [Fly.io 完成注册](https://fly.io/app/sign-up)，并安装 [`flyctl` CLI](https://fly.io/docs/hands-on/install-flyctl/)。
-4.  运行 `flyctl launch`, 并选择一个唯一的名称和实例地区。
-5.  使用 `flyctl secrets set KEY=VALUE` [对部分模块进行配置](#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)。
-6.  [配置通过 GitHub Actions 自动部署](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/)
-7.  安装 [Pull](https://github.com/apps/pull) 应用，定期将 RSSHub 改动自动同步至你的分叉。
-8.  （可选）将自己的域名指向 fly.io 提供的 IPv4 和 IPv6 地址，并在 Certificate 页面添加自有域名
+
+3.  前往 [Fly.io 完成注册](https://fly.io/app/sign-up)，并安装 [flyctl CLI](https://fly.io/docs/hands-on/install-flyctl/)；
+
+4.  运行 `fly launch`, 并选择一个唯一的名称和实例地区；
+
+5.  使用 `fly secrets set KEY=VALUE` [对部分模块进行配置](#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)；
+
+6.  [配置通过 GitHub Actions 自动部署](https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/)；
+
+7.  （可选）利用 `fly certs add 你的域名` 来配置自定义域名，并根据指引在你的 DNS 服务商配置相关域名解析（你可在 Dashboard Certificate 页面查看域名的配置状态）。
+
+更新：在你 Fork 出来的仓库首页点击「Sync fork - Update Branch」来手动更新至官方最新的 master 分支，或安装 [Pull](https://github.com/apps/pull) 应用来定期自动同步。
+
+### 方案二：自行维护 fly.toml
+
+1.  前往 [Fly.io 完成注册](https://fly.io/app/sign-up)，并安装 [flyctl CLI](https://fly.io/docs/hands-on/install-flyctl/)；
+2.  自行在本地新建一个空目录，在其中运行 `fly launch`, 并选择一个唯一的名称和实例地区；
+3.  编辑生成的 fly.toml 文件，新增
+
+    ```toml
+    [build]
+    image = "diygod/rsshub:latest"
+    ```
+
+    根据实际情况，你可能希望使用其他镜像标签，请阅读 [Docker 镜像](#docker-jing-xiang) 的有关内容；
+4.  修改 fly.toml 中的 `[env]` 段或使用`fly secrets set KEY=VALUE` [对部分模块进行配置](#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)；
+5.  执行 `fly deploy` 启动应用；
+6.  （可选）利用 `fly certs add 你的域名` 来配置自定义域名，并根据指引在你的 DNS 服务商配置相关域名解析（你可在 Dashboard Certificate 页面查看域名的配置状态）。
+
+更新：进入你存储了 `fly.toml` 文件的目录，执行 `fly deploy` 即可触发拉取最新镜像、启动应用的步骤。
 
 ### 配置内置的 Upstash Redis 缓存
 
 在 `RSSHub` 文件夹下运行
 
 ```bash
-$ flyctl redis create
+$ fly redis create
 ```
 
-来创建一个新的 Redis 数据库，建议选择开启 [eviction](https://redis.io/docs/reference/eviction/)。创建完成后会输出类似于 `redis://default:<password>@<domain>.upstash.io` 的字符串。
+来创建一个新的 Redis 数据库，地域选择与你上面创建 RSSHub app 时相同的地域，建议选择开启 [eviction](https://redis.io/docs/reference/eviction/)。创建完成后会输出类似于 `redis://default:<password>@<domain>.upstash.io` 的字符串。
 
-再运行
+因目前[上游依赖的一个 bug](https://github.com/luin/ioredis/issues/1576)，你暂时需要在 Fly.io 给你的连接 URL 后追加 `family=6` 的参数，即使用 `redis://default:<password>@<domain>.upstash.io/?family=6` 作为连接 URL。
+
+再配置 fly.toml 中的 `[env]` 段或运行
 
 ```bash
-$ flyctl secrets set CACHE_TYPE=redis REDIS_URL='<刚才的连接字符串>'
+$ fly secrets set CACHE_TYPE=redis REDIS_URL='<刚才的连接 URL>'
 ```
 
-完成在服务器上的配置。
+并执行 `fly deploy` 触发重新部署来完成配置。
 
 ## 部署到 PikaPods
 
 每月只需 1 美元即可运行 RSSHub。包括自动更新和 5 美元的免费起始额度。
 
 [![Run on PikaPods](https://www.pikapods.com/static/run-button.svg)](https://www.pikapods.com/pods?run=rsshub)
+
+## 部署到 Zeabur
+
+1.  前往 [Zeabur 完成注册](https://dash.zeabur.com)
+2.  创建一个新项目
+3.  在项目中选择创建新服务，选择从**服务市场**部署。
+4.  添加域名，若使用自定义域名，可参见 [Zeabur 的域名绑定文档](https://docs.zeabur.com/zh-CN/deploy/domain-binding)。
 
 ## 部署到 Google App Engine
 
@@ -489,7 +552,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 #### 代理 URI
 
-`PROXY_URI`: 代理 URI，支持 socks4, socks5（本地查询域名的 SOCKS5，不推荐使用）, socks5h（传域名的 SOCKS5，推荐使用，以防止 DNS 污染或 DNS 泄露）, http, https，具体以[socks-proxy-agent](https://www.npmjs.com/package/socks-proxy-agent) NPM 包的支持为准，也可参考[curl 中 SOCKS 代理协议的用法](https://daniel.haxx.se/blog/2020/05/26/curl-ootw-socks5/)。
+`PROXY_URI`: 代理 URI，支持 socks4, socks5（本地查询域名的 SOCKS5，不推荐使用）, socks5h（传域名的 SOCKS5，推荐使用，以防止 DNS 污染或 DNS 泄露）, http, https，具体以 [socks-proxy-agent](https://www.npmjs.com/package/socks-proxy-agent) NPM 包的支持为准，也可参考[curl 中 SOCKS 代理协议的用法](https://daniel.haxx.se/blog/2020/05/26/curl-ootw-socks5/)。
 
 > 代理 URI 的格式为：
 >
@@ -547,7 +610,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 访问码为 访问密钥 + 路由 共同生成的 md5，例如：
 
-| 访问密钥        | 路由                | 生成过程                                     | 访问码                              |
+| 访问密钥    | 路由              | 生成过程                                 | 访问码                           |
 | ----------- | ----------------- | ---------------------------------------- | -------------------------------- |
 | ILoveRSSHub | /qdaily/column/59 | md5('/qdaily/column/59' + 'ILoveRSSHub') | 0f820530128805ffc10351f22b5fd121 |
 
@@ -557,11 +620,11 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 访问密钥 / 码与黑白名单的访问控制关系如下：
 
-|       | 正确访问密钥 / 码 | 错误访问密钥 / 码 | 无访问密钥 / 码 |
-| ----- | ---------- | ---------- | --------- |
-| 在白名单中 | ✅          | ✅          | ✅         |
-| 在黑名单中 | ✅          | ❌          | ❌         |
-| 无黑白名单 | ✅          | ❌          | ❌         |
+|            | 正确访问密钥 / 码 | 错误访问密钥 / 码 | 无访问密钥 / 码 |
+| ---------- | ----------------- | ----------------- | --------------- |
+| 在白名单中 | ✅                | ✅                | ✅              |
+| 在黑名单中 | ✅                | ❌                | ❌              |
+| 无黑白名单 | ✅                | ❌                | ❌              |
 
 ### 日志配置
 
@@ -677,6 +740,9 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
         4.  找到 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw> 请求
         5.  找到请求头中的 Cookie
 
+-   Civitai
+    -   `CIVITAI_COOKIE`: Civitai 登录后的 cookie 值
+
 -   discuz cookies 设定
 
     -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值，cid 可自由设定，取值范围 \[00, 99], 使用 discuz 通用路由时，通过指定 cid 来调用该 cookie
@@ -721,7 +787,8 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   Iwara:
 
-    -   `IWARA_COOKIE`: Iwara 登录后的 Cookie 值
+    -   `IWARA_USERNAME`: Iwara 用户名
+    -   `IWARA_PASSWORD`: Iwara 密码
 
 -   Last.fm 全部路由：[申请地址](https://www.last.fm/api/)
 
@@ -732,6 +799,11 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `MASTODON_API_HOST`: API 请求的实例
     -   `MASTODON_API_ACCESS_TOKEN`: 用户 access token, 申请应用后，在应用配置页可以看到申请者的 access token
     -   `MASTODON_API_ACCT_DOMAIN`: 该实例本地用户 acct 标识的域名
+
+-   Medium 相关路由：打开控制台，复制 Cookie（理论上只需要 uid 和 sid 即可）
+
+    -   `MEDIUM_ARTICLE_COOKIE`：请求全文时使用的 Cookie，存在活跃的 Member 订阅时可获取付费内容全文
+    -   `MEDIUM_COOKIE_{username}`：对应 username 的用户的 Cookie，个性推荐相关路由需要
 
 -   MiniFlux 全部路由：
 
@@ -747,6 +819,9 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `NHENTAI_USERNAME`: nhentai 用户名或邮箱
     -   `NHENTAI_PASSWORD`: nhentai 密码
+
+-   Notion
+    -   `NOTION_TOKEN`: Notion 内部集成 Token，请按照[Notion 官方指引](https://developers.notion.com/docs/authorization#internal-integration-auth-flow-set-up)申请 Token
 
 -   pianyuan 全部路由：[注册地址](https://pianyuan.org)
 
@@ -872,6 +947,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `WENKU8_COOKIE`: 登陆轻小说文库后的 cookie
 
+-   色花堂
+
+    -   `SEHUATANG_COOKIE`: 登陆色花堂后的 cookie 值。
+
 -   邮箱 邮件列表路由：
 
     -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 与 `.` 替换为 `_`，例如 `EMAIL_CONFIG_xxx_qq_com`。Linux 内容格式为 `password=密码&host=服务器&port=端口`，docker 内容格式为 `password=密码\&host=服务器\&port=端口`，例如：
@@ -887,6 +966,14 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `WEIBO_APP_KEY`: 微博 App Key
     -   `WEIBO_APP_SECRET`: 微博 App Secret
     -   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub 地址/weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub 地址/weibo/timeline/0?code=xxx`
+
+-   微博 自定义分组
+
+    -   `WEIBO_COOKIES`: 用户访问网页微博时所使用的 cookie, 获取方式:
+        1.  打开并登录 <https://m.weibo.cn> (确保打开页面为手机版，如果强制跳转电脑端可尝试使用可更改 UserAgent 的浏览器插件)
+        2.  按下`F12`打开控制台，切换至`Network(网络)`面板
+        3.  在该网页切换至任意关注分组，并在面板打开最先捕获到的请求 (该情形下捕获到的请求路径应包含`/feed/group`)
+        4.  查看该请求的`Headers(请求头)`, 找到`Cookie`字段并复制内容
 
 -   小宇宙：需要 App 登陆后抓包获取相应数据。
 

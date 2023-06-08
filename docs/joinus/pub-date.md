@@ -1,55 +1,62 @@
 # 日期处理
 
-在抓取网页的时候，通常情况下网页会提供日期。这篇教程用于说明插件应当如何正确的处理相关情况
-
-## 没有日期
-
-在源没有提供日期的时候，**请勿添加日期**。`pubDate`选项应当被留空。
+当你访问网站时，网站通常会提供一个日期或时间戳。本指南将展示如何在代码中正确处理它们。
 
 ## 规范
 
-`pubDate`必须是一个
+### 没有日期
 
-1.  [Date Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)。
-2.  **不推荐，用于兼容** 可以被正确解析的字符串。因为其行为可能在不同环境下不一致，[Date.parse()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse)，请尽量避免
+-   当网站没有提供日期时，**请勿**添加日期，`pubDate` 应当被留空。
+-   当网站提供一个日期但没有准确的时间时，只需要解析日期并**不要添加时间**到 `pubDate` 中。
 
-同时，脚本传入的`pubDate`应当是对应**服务器所使用的时区 / 时间**。更多细节参阅下方工具类
+`pubDate` 必须是：
+
+1.  [Date 对象](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)
+2.  **不推荐**: 使用字符串时，要确保可正确解析，因为它们的行为可能会在部署环境中发生不一致。请尽量避免 `Date.parse()`。
+
+从路由传入的 `pubDate` 应该对应于**服务器使用的时区 / 时间**。有关更多详细信息，请参见下方工具类：
 
 ## 使用工具类
 
-目前，我们推荐使用[dayjs](https://github.com/iamkun/dayjs)进行日期的处理和时区调整。相关工具类有两个：
+我们推荐使用 [day.js](https://github.com/iamkun/dayjs) 进行日期处理和时区调整。有两个相关的工具类：
 
-### Parse Date
+### 日期时间
 
-这个是一个工具类用于使用[dayjs](https://github.com/iamkun/dayjs)。大部分情况下，应当可以直接使用他获取到正确的`Date Object`
+RSSHub 工具类包括了一个 [day.js](https://github.com/iamkun/dayjs) 的包装函数，它允许你直接解析日期字符串并在大多数情况下获得一个 [Date 对象](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)。
 
-具体解析参数请参考 dayjs github 说明
-
-```javascript
+```js
 const { parseDate } = require('@/utils/parse-date');
 
+const pubDate = parseDate('2020/12/30');
+// 或
 const pubDate = parseDate('2020/12/30', 'YYYY/MM/DD');
 ```
 
+:::tip 提示
+你可以参考 [day.js 文档](https://day.js.org/docs/zh-CN/parse/string-format#支持的解析占位符列表) 查看所有可用日期格式。
+:::
+
 如果你需要解析相对日期，请使用 `parseRelativeDate`。
 
-```javascript
+```js
 const { parseRelativeDate } = require('@/utils/parse-date');
 
 const pubDate = parseRelativeDate('2天前');
 const pubDate = parseRelativeDate('前天 15:36');
 ```
 
-### Timezone
+### 时区
 
-部分网站并不会依据访问者来源进行时区转换，此时获取到的时间是网站本地时间，不一定适合所有 RSS 订阅者。此时，应当手动指定获取的时间时区：
+从网站解析日期时，考虑时区非常重要。有些网站可能不会根据访问者的位置转换时区，导致日期不准确地反映用户的本地时间。为避免此问题，你可以手动指定时区。
 
-::: warning 注意
-此时，时间将会被转换到服务器时间，方便后续中间件处理。这个是正常流程！
-:::
+要在代码中手动指定时区，可以使用以下代码：
 
-```javascript
+```js
 const timezone = require('@/utils/timezone');
 
-const pubDate = timezone(new Date(), +8)
+const pubDate = timezone(parseDate('2020/12/30 13:00'), +1);
 ```
+
+`timezone` 函数接受两个参数：第一个是 [日期对象](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date)，第二个是时区偏移量。偏移量以小时为单位指定，在此示例中使用了 UTC+1 的时区。
+
+这样做将时间转换为服务器时间，方便后续中间件进行处理。

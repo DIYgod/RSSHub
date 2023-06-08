@@ -1,4 +1,7 @@
+# folders
+.devcontainer
 .github
+.husky
 .idea
 .vscode
 Dockerfile*
@@ -10,17 +13,22 @@ coverage
 docs
 node_modules
 test
+
+# files
 .codecov.yml
 .dockerignore
 .editorconfig
 .env
 .eslint*
 .gitignore
+.gitpod.yml
+.markdownlint.jsonc
 .prettier*
 .(yarn|npm|nvm)rc
 *.md
 app.json
 docker-compose*
+fly.toml
 jsconfig.json
 npm-debug.log
 process.json
@@ -33,3 +41,7 @@ vercel.json
 .git/index
 .git/info
 .git/hooks
+
+#rsshub auxiliary files
+lib/radar-rules.js
+lib/v2/**/radar.js

@@ -28,6 +28,18 @@ If the city name contains a space like `Mexico City`, replace the space with `%2
     :paramsDesc="['state of the exhibition: `current`，`past`, or `upcoming`, the default value is `current`']"
 />
 
+## Fuzhou Metro
+
+### Announcements
+
+<RouteEn author="HankChow" example="/fzmtr/announcements" path="/fzmtr/announcements" />
+
+## Guangzhou Metro
+
+### News
+
+<RouteEn author="HankChow" example="/guangzhoumetro/news" path="/guangzhoumetro/news" />
+
 ## Hopper
 
 ### Flight Deals
@@ -43,6 +55,14 @@ For airport IATA code please refer to [Wikipedia List of airports by IATA code](
 ## Museum of Contemporary Art Chicago
 
 <RouteEn author="chazeon" example="/mcachicago/exhibitions" path="/mcachicago/exhibitions" />
+
+## National Geographic
+
+### Latest Stories
+
+<RouteEn author="miles170"
+    example="/nationalgeographic/latest-stories"
+    path="/nationalgeographic/latest-stories" />
 
 ## New Museum
 

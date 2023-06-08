@@ -1,6 +1,5 @@
 <p>比赛：{{ title }}</p>
 <p>开始时间：{{ startTime }}</p>
-<p>持续时间：{{ durationTime }} 分钟</p>
-<p>相对时间：{{ relativeTime }} 分钟</p>
+<p>持续时间：{{ durationTime }}</p>
+<!-- <p>相对时间：{{ relativeTime }}</p> -->
 <p>比赛类型：{{ type }}</p>
-
