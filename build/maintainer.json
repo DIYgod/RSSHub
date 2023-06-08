@@ -6140,6 +6140,9 @@
     "/zhiy/posts/:author": [
         "TonyRL"
     ],
+    "/zhubai/top20": [
+        "nczitzk"
+    ],
     "/zhubai/:id": [
         "naixy28"
     ],
