@@ -102,6 +102,16 @@ pageClass: routes
 
 </Route>
 
+### 研究生院
+
+<Route author="yanbot-team" example="/ahau/yjs/tzgg-zs" path="/ahau/yjs/:type" :paramsDesc="['类型名,见下表，也可在页面URL中找到']"  radar="1" rssbud="1">
+
+| 通知公告招生 |
+| ------------ |
+| tzgg-zs      |
+
+</Route>
+
 ## 安徽师范大学
 
 ### 研究生招生信息网
