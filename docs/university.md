@@ -3296,6 +3296,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="Halcao DylanXie123" example="/thu/career" path="/thu/career" />
 
+## 曲阜师范大学
+
+### 研究生教育
+
+<Route author="yanbot-team" example="/qfnu/yjs/zsgz-tzgg" path="/qfnu/yjs/:type" :paramsDesc="['分类见下表']"/>
+
+| 招生工作通知公告 |
+| :--------------: |
+|    zsgz-tzgg     |
+
+</Route>
+
 ## 三峡大学
 
 ### 研究生院
