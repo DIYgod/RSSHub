@@ -973,6 +973,18 @@ pageClass: routes
 
 </Route>
 
+## 东北师范大学
+
+### 历史文化学院
+
+<Route author="nczitzk" example="/nenu/sohac" path="/nenu/sohac/:path+" :paramsDesc="['路径，见下表，默认为通知公告']">
+
+| 通知公告   | 学员信息   |
+| ---------- | ---------- |
+| index/tzgg | index/xyxx |
+
+</Route>
+
 ## 东莞理工学院
 
 ### 教务处通知
