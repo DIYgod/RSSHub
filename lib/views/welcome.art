@@ -79,13 +79,13 @@
 <body>
     <div class="content">
         <p>
-            <img src="https://i.loli.net/2019/04/23/5cbeb7e41414c.png" alt="RSSHub" width="100">
+            <img src="/logo.png" alt="RSSHub" width="100">
         </p>
 
         <h1>Welcome to
             <span style="color: #F5712C;">RSSHub</span>!</h1>
 
-        <p>If you see this page, the RSSHub{{ if hash }} ({{ hash }}){{ /if }} is successfully installed and working.</p>
+        <p>If you see this page, the RSSHub is successfully installed and working.</p>
 
         <p>For online documentation and support please refer to
             <a href="https://docs.rsshub.app/" target="_blank">docs.rsshub.app</a>.</p>

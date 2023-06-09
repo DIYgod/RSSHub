@@ -135,19 +135,19 @@ pageClass: routes
 
 ## AEON
 
-<Route author="emdoe" example="/aeon/ideas" path="/aeon/:category" :paramsDesc="['类别']">
+### 类型
 
-支持以文体分类：
+<Route author="emdoe" example="/aeon/essays" path="/aeon/:type" :paramsDesc="['类别']">
 
-| Ideas | Essays | Videos |
-| ----- | ------ | ------ |
-| ideas | essays | videos |
+支持获取 Essays, Videos, 以及 Audio. 但 Audio 仅输出正文内容，并不包括音轨链接。
 
-同样支持以话题分类：
+</Route>
 
-| Culture | Philosophy | Psychology | Society | Science |
-| ------- | ---------- | ---------- | ------- | ------- |
-| culture | philosophy | psychology | society | science |
+### 分类
+
+<Route author="emdoe" example="/aeon/category/philosophy" path="/aeon/category/:category" :paramsDesc="['分类']">
+
+支持获取的分类包括: Philosophy, Science, Psychology, Society, 以及 Culture.
 
 </Route>
 

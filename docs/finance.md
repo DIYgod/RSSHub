@@ -298,6 +298,16 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="drgnchan" example="/eastmoney/search/web3" path="/eastmoney/search/:keyword" :paramsDesc="['关键词，可以设置为自己需要检索的关键词']" radar="1"/>
 
+### 研究报告
+
+<Route author="syzq" example="/eastmoney/report/strategyreport" path="/eastmoney/report/:category" :paramsDesc="['研报类型']">
+
+| 策略报告       | 宏观研究    | 券商晨报     |
+| -------------- | ----------- | ------------ |
+| strategyreport | macresearch | brokerreport |
+
+</Route>
+
 ## 法布财经
 
 ### 新闻

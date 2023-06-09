@@ -985,6 +985,18 @@ pageClass: routes
 
 若订阅 [学院信息](https://sohac.nenu.edu.cn/index/xyxx.htm)，网址为 <https://sohac.nenu.edu.cn/index/xyxx.htm>。截取 `https://sohac.nenu.edu.cn/` 到末尾 `.htm` 的部分 `index/xyxx` 作为参数，此时路由为 [`/nenu/sohac/index/xyxx`](https://rsshub.app/nenu/sohac/index/xyxx)。
 
+</Route>
+
+### 研究生院
+
+<Route author="nczitzk" example="/nenu/yjsy" path="/nenu/yjsy/:path+" :paramsDesc="['路径，默认为通知公告']">
+
+::: tip 提示
+
+若订阅 [通知公告](https://yjsy.nenu.edu.cn/tzgg.htm)，网址为 <https://yjsy.nenu.edu.cn/tzgg.htm>。截取 `https://yjsy.nenu.edu.cn/` 到末尾 `.htm` 的部分 `tzgg` 作为参数，此时路由为 [`/nenu/yjsy/tzgg`](https://rsshub.app/nenu/yjsy/tzgg)。
+
+若订阅 [校内新闻](https://yjsy.nenu.edu.cn/xwdt/xnxw.htm)，网址为 <https://yjsy.nenu.edu.cn/xwdt/xnxw.htm>。截取 `https://yjsy.nenu.edu.cn/` 到末尾 `.htm` 的部分 `xwdt/xnxw` 作为参数，此时路由为 [`/nenu/yjsy/xwdt/xnxw`](https://rsshub.app/nenu/yjsy/xwdt/xnxw)。
+
 :::
 
 </Route>
@@ -1026,6 +1038,16 @@ pageClass: routes
 ### 最新信息公开
 
 <Route author="KiraKiseki" example="/dhu/xxgk/news" path="/dhu/xxgk/news"/>
+
+### 研究生招生信息
+
+<Route author="fox2049" example="/dhu/yjs/zs/master" path="/dhu/yjs/zs/:type?" :paramsDesc="['默认为 `master`']">
+
+| 博士招生 | 硕士招生 |
+| -------- | -------- |
+| doctor   | master   |
+
+</Route>
 
 ## 东南大学
 
