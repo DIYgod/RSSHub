@@ -4,6 +4,7 @@ on:
     paths:
       - '.github/workflows/yarn-lock-changes.yml'
       - 'yarn.lock'
+      - 'docs/yarn.lock'
 
 jobs:
   yarn_lock_changes:

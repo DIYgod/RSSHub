@@ -1,0 +1,4 @@
+<h1>{{ length }} pages</h1><br>
+{{ each images i }}
+    <img src="{{ i }}"><br>
+{{ /each }}

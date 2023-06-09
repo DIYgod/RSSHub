@@ -11,7 +11,7 @@ module.exports = async ({ github, context, core, got }, baseUrl, routes, number)
     });
 
     let com_l = [];
-    let com = `Successfully [generated](https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) as following:\n`;
+    let com = `Successfully [generated](${process.env.GITHUB_SERVER_URL}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}) as following:\n`;
 
     for (const lks of links) {
         core.info(`testing route:  ${lks}`);
@@ -38,7 +38,7 @@ module.exports = async ({ github, context, core, got }, baseUrl, routes, number)
 
         let temp_com = `
 <details>
-<summary><a href="${lks}">${lks}</a> - ${success ? 'Success' : '<b>Failed</b>'}</summary>
+<summary><a href="${lks}">${lks}</a> - ${success ? 'Success ✔️' : '<b>Failed ❌</b>'}</summary>
 
 \`\`\`${success ? 'rss' : ''}`;
         temp_com += `

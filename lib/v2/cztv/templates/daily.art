@@ -1,0 +1,4 @@
+{{each list item}}
+    <a href="{{item.link}}">{{item.title}}</a>
+    <br>
+{{/each}}

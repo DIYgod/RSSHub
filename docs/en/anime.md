@@ -26,6 +26,22 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 ## DLsite
 
+### General
+
+<RouteEn author="nczitzk" example="/dlsite/home/new" path="/dlsite/:path+" :paramsDesc="['Path, `/home/new` by default, as Release Calendar']">
+
+::: tip Tip
+
+To subscribe to this route, you can first visit the site and specify filters, and then fill in the field after `https://www.dlsite.com/` in the URL of the corresponding page at the path of the route. Here are 2 examples.
+
+If you subscribe to [Voice / ASMR works Release date - New to Old](https://www.dlsite.com/home/works/type/=/work_type_category/audio/order/release_d), at the URL of the corresponding page <https://www.dlsite.com/home/works/type/=/work_type_category/audio/order/release_d> and after `https://www.dlsite.com/` is `home/works/type/=/work_ type_category/audio/order/release_d`, which can be seen as the path. In this case the route is [`/dlsite/home/works/type/=/work_type_category/audio/order/release_d`](https://rsshub.app/dlsite/home/works/type/=/work_type_category/audio/order/release_d)
+
+If you subscribe to [Discounted works Latest Discounts - Newest to Oldest](https://www.dlsite.com/home/works/discount/=/order/cstart_d), at the URL of the corresponding page <https://www.dlsite.com/home/works/discount/=/order/cstart_d> and after `https://www.dlsite.com/` is `home/works/discount/=/order/cstart_d`, which can be seen as the path. In this case the route is [`/dlsite/home/works/discount/=/order/cstart_d`](https://rsshub.app/dlsite/home/works/discount/=/order/cstart_d)
+
+:::
+
+</RouteEn>
+
 ### Current Release
 
 <RouteEn author="cssxsh" example="/dlsite/new/home" path="/dlsite/new/:type" :paramsDesc="['Type, see table below']">
@@ -40,11 +56,21 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 <RouteEn author="cssxsh" example="/dlsite/campaign/home" path="/dlsite/campaign/:type/:free?" :paramsDesc="['Type, see table above', 'Free only, empty means false, other value means true']"/>
 
+### Ci-en Creators' Article
+
+<RouteEn author="nczitzk" example="/dlsite/ci-en/:id/article" path="/dlsite/ci-en/7400/article" :paramsDesc="['Creator id, can be found in URL']"/>
+
 ## Hanime.tv
 
 ### Recently updated
 
 <RouteEn author="EsuRt" example="/hanime/video" path="/hanime/video"/>
+
+## IDOLY PRIDE
+
+### News
+
+<RouteEn author="Mingxia1" example="/idolypride/news" path="/idolypride/news" radar="1" rssbud="1"/>
 
 ## iwara
 
@@ -64,7 +90,7 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 ::: warning
 
-This route requires Cookie, therefore it's only available when self-hosting, refer to the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
+This route requires username and password, therefore it's only available when self-hosting, refer to the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
 
 :::
 
@@ -135,6 +161,16 @@ The RSS routing has not been rigorously tested and the information provided cann
 ### Manga Update
 
 <RouteEn author="vzz64" example="/mangadex/58be6aa6-06cb-4ca5-bd20-f1392ce451fb/en" path="/:id/:lang?" :paramsDesc="['manga ID', 'language code']" radar="1" />
+
+## nhentai
+
+### Filter
+
+<RouteEn author="MegrezZhu hoilc" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword/:mode?" :paramsDesc="['Filter term, can be: `parody`, `character`, `tag`, `artist`, `group`, `language` or `category`','Filter value', 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/en/install/#configuration-route-specific-configurations), default to `simple`']" anticrawler="1" supportBT="1" radar="1"/>
+
+### Advanced Search
+
+<RouteEn author="MegrezZhu hoilc" example='/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-"mosaic+censorship"' path="/nhentai/search/:keyword/:mode?" :paramsDesc="['Keywords for search. You can copy the content after `q=` after searching on the original website, or you can enter it directly. See the [official website](https://nhentai.net/info/) for details', 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/en/install/#configuration-route-specific-configurations), default to `simple`']" anticrawler="1" supportBT="1" radar="1"/>
 
 ## QooApp
 

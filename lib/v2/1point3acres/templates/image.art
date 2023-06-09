@@ -1,0 +1,1 @@
+<img src="{{ url }}" height="{{ height }}" width="{{ width }}">

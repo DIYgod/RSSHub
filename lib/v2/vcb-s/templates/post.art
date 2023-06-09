@@ -1,0 +1,9 @@
+
+{{ if medias }}
+{{ each medias media }}
+<figure class="thumbnail"><img width="{{@ media.media_details.width }}" height="{{@ media.media_details.height }}" src="{{@ media.source_url }}"></figure>
+{{ /each }}
+{{ /if }}
+{{ if post }}
+{{@ post }}
+{{ /if }}

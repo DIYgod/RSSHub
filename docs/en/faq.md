@@ -12,7 +12,7 @@
 
 **A:** RSSHub fetches and respects the original image/video URLs from original sites, in which some are behind anti-hotlink filters. `referrerpolicy="no-referrer"` attribute is added to all images to solve the issues caused by cross-domain requests. Third party RSS service providers such as Feedly and Inoreader, strip this attribute off, resulting in cross-domain requests being blocked. Meanwhile, the attribute is not available for videos yet, resulting in most RSS readers unable to pass the anti-hotlink check. Here are some workarounds:
 
-1.  Migrate to RSS readers that do not send Referer，such as [Inoreader for Web](https://www.inoreader.com/) with a [user script disabling Referer](https://greasyfork.org/en/scripts/376884), [RSS to Telegram Bot](https://github.com/Rongronggg9/RSS-to-Telegram-Bot), etc. If your RSS reader can bypass the anti-hotlink check successfully and play embedded videos, it's an RSS reader that do not send Referer. Please consider adding it to the documentation to help more people.
+1.  Migrate to RSS readers that do not send Referer，such as [Inoreader for Web](https://www.inoreader.com/) with a [user script disabling Referer](https://greasyfork.org/en/scripts/376884), [fix-image-error at inoreader](https://greasyfork.org/scripts/463461-fix-image-error-at-inoreader), [RSS to Telegram Bot](https://github.com/Rongronggg9/RSS-to-Telegram-Bot), etc. If your RSS reader can bypass the anti-hotlink check successfully and play embedded videos, it's an RSS reader that do not send Referer. Please consider adding it to the documentation to help more people.
 2.  Set up a reverse proxy, refer to [Parameters->Multimedia processing](/en/parameter.html#multimedia-processing) for more details.
 3.  Navigate back to the original site.
 

@@ -10,7 +10,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/aom/journal/amr" path="/aom/journal/:id" :paramsDesc="['期刊 id，见下表']" supportScihub="1">
 
-| Id        | 名称                                         |
+| Id        | 名称                                       |
 | --------- | ------------------------------------------ |
 | annals    | Academy of Management Annals               |
 | amd       | Academy of Management Discoveries          |
@@ -121,10 +121,10 @@ pageClass: routes
 
 <Route author="y9c" example="/cell/cell/current" path="/journals/cell/cell/:category" supportScihub="1"/>
 
-| `:category` |     类型说明    | 路由                                                         |
-| :---------: | :---------: | ---------------------------------------------------------- |
+| `:category` |       类型说明      | 路由                                                       |
+| :---------: | :-----------------: | ---------------------------------------------------------- |
 |   current   | 本期刊物 (默认选项) | [/cell/cell/current](https://rsshub.app/cell/cell/current) |
-|   inpress   |     在线发表    | [/cell/cell/inpress](https://rsshub.app/cell/cell/inpress) |
+|   inpress   |       在线发表      | [/cell/cell/inpress](https://rsshub.app/cell/cell/inpress) |
 
 </Route>
 
@@ -142,7 +142,7 @@ pageClass: routes
 
 <Route author="laampui" example="/deloitte/industries/consumer" path="/deloitte/industries/:category?" :paramsDesc="['默认为 energy-resources-industrials']">
 
-| 消费行业     | 能源、资源及工业行业                   | 金融服务行业             | 政府及公共服务                    | 生命科学与医疗行业                | 科技、传媒及电信行业                          |
+| 消费行业 | 能源、资源及工业行业         | 金融服务行业       | 政府及公共服务             | 生命科学与医疗行业       | 科技、传媒及电信行业                |
 | -------- | ---------------------------- | ------------------ | -------------------------- | ------------------------ | ----------------------------------- |
 | consumer | energy-resources-industrials | financial-services | government-public-services | life-sciences-healthcare | technology-media-telecommunications |
 
@@ -180,7 +180,7 @@ pageClass: routes
 
 <Route author="queensferryme" example="/ieee/author/37283006000/newest/10" path="/ieee/author/:aid/:sortType/:count?" :paramsDesc="['作者 ID，可以在 URL 中找到，例如 [https://ieeexplore.ieee.org/author/37283006000](https://ieeexplore.ieee.org/author/37283006000)', '排序方式，详细见下', '数量限制，默认为 10 篇']">
 
-| 排序方式        | 最新       | 最旧       | 最多论文引用            | 最多专利引用             | 最流行            | 标题升序            | 标题降序             |
+| 排序方式    | 最新     | 最旧     | 最多论文引用      | 最多专利引用       | 最流行         | 标题升序        | 标题降序         |
 | ----------- | -------- | -------- | ----------------- | ------------------ | -------------- | --------------- | ---------------- |
 | `:sortType` | `newest` | `oldest` | `paper-citations` | `patent-citations` | `most-popular` | `pub-title-asc` | `pub-title-desc` |
 
@@ -194,6 +194,10 @@ pageClass: routes
 
 <Route author="Derekmini auto-bot-ty" example="/ieee/journal/78/recent" path="/ieee/journal/:journal/recent/:sortType?" :paramsDesc="['期刊代码，URL 中 `punumber` 部分','排序方式，默认`vol-only-seq`，URL 中 `sortType` 部分']" radar="1" rssbud="1"/>
 
+### 预印版
+
+<Route author="5upernova-heng" example="/ieee/journal/5306045/earlyaccess" path="/ieee/journal/:journal/earlyaccess/:sortType?" :paramsDesc="['发布代码，URL 中 `isnumber` 部分','排序方式，默认`vol-only-seq`，URL 中 `sortType` 部分']" radar="1" rssbud="1"/>
+
 ## INFORMS
 
 ### 类型
@@ -205,6 +209,20 @@ pageClass: routes
 ### 期刊
 
 <Route author="Derekmini" example="/mdpi/analytica" path="/mdpi/:journal" :paramsDesc="['期刊名称，从期刊主页 URL 中获得']" radar="1" rssbud="1"/>
+
+## National Bureau of Economic Research
+
+### 全部论文
+
+<Route author="5upernova-heng" example="/nber/papers" path="/nber/papers" radar="1" supportScihub="1"/>
+
+### 新论文
+
+<Route author="5upernova-heng" example="/nber/news" path="/nber/news" radar="1" supportScihub="1">
+
+在网站上被标记为 "new" 的论文
+
+</Route>
 
 ## Nature 系列
 
@@ -218,7 +236,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 <Route author="y9c TonyRL" example="/nature/research/ng" path="/nature/research/:journal?" :paramsDesc="['期刊名简写，默认为 `nature`']" supportScihub="1" radar="1" rssbud="1"/>
 
-|   `:journal`  |             期刊名             | 路由                                                                                 |
+|   `:journal`  |            期刊名           | 路由                                                                               |
 | :-----------: | :-------------------------: | ---------------------------------------------------------------------------------- |
 |     nature    |            Nature           | [/nature/research/nature](https://rsshub.app/nature/research/nature)               |
 |      nbt      |     Nature Biotechnology    | [/nature/research/nbt](https://rsshub.app/nature/research/nbt)                     |
@@ -241,7 +259,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 <Route author="y9c TonyRL" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" :paramsDesc="['期刊名简写']" supportScihub="1" radar="1" rssbud="1"/>
 
-|   `:journal`  |             期刊名             | 路由                                                                                                 |
+|   `:journal`  |            期刊名           | 路由                                                                                               |
 | :-----------: | :-------------------------: | -------------------------------------------------------------------------------------------------- |
 |      nbt      |     Nature Biotechnology    | [/nature/news-and-comment/nbt](https://rsshub.app/nature/news-and-comment/nbt)                     |
 |     neuro     |     Nature Neuroscience     | [/nature/news-and-comment/neuro](https://rsshub.app/nature/news-and-comment/neuro)                 |
@@ -302,14 +320,15 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 <Route author="Fatpandac" example="/oup/journals/adaptation" path="/oup/journals/:name" :paramsDesc="['期刊名称缩写，可以在网址中得到']" anticrawler="1"/>
 
-## PNAS
+## Proceedings of The National Academy of Sciences
 
-### 最新文章（可筛选领域）
+### 期刊
 
-<Route author="emdoe y9c" example="/pnas/Applied Mathematics" path="/pnas/:topic" :paramsDesc="['领域名称','可从 pnas.org 获得']" supportScihub="1"/>
+<Route author="emdoe HenryQW y9c" example="/pnas/latest" path="/pnas/:topicPath*" :paramsDesc="['领域路径，支持 **Featured Topics**、**Articles By Topic** 及 [**Collected Papers**](https://www.pnas.org/about/collected-papers), 预设为 `latest`']" radar="1" anticrawler="1" puppeteer="1" supportScihub="1">
 
--   通过 `/pnas/` + “领域名称” 来获取对应 “领域” 的最新文章（Latest Research）。
-    若参数置空（`/pnas`）或为 latest（`/pnas/latest`），则默认获取全部文章。
+::: tip Tips
+有些领域需要在 `topicPath` 中添加 `topic/`，如 [`/pnas/topic/app-math`](https://rsshub.app/pnas/topic/app-math)，有些则不需要，如 [`/pnas/biophysics-and-computational-biology`](https://rsshub.app/pnas/biophysics-and-computational-biology)
+:::
 
 </Route>
 
@@ -335,7 +354,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 <Route author="y9c TonyRL" example="/science/current/science" path="/science/current/:journal" :paramsDesc="['期刊名简写']" supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
 
-|      简写     |               期刊名              | 路由                                                                             |
+|     简写    |             期刊名             | 路由                                                                           |
 | :---------: | :----------------------------: | ------------------------------------------------------------------------------ |
 |   science   |             Science            | [/science/current/science](https://rsshub.app/science/current/science)         |
 |    sciadv   |        Science Advances        | [/science/current/sciadv](https://rsshub.app/science/current/sciadv)           |
@@ -399,6 +418,46 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 </Route>
 
+## Telecompaper
+
+### News
+
+<Route author="nczitzk" example="/telecompaper/news/mobile/2020/China/News" path="/telecompaper/news/:caty/:year?/:country?/:type?" :paramsDesc="['分类，见下表', '年份，可在所选分类页中 Filter 的 `Years` 选择器中选择相应年份，不限年份则填入 `all`，默认为不限', '国家或大洲，可在所选分类页中 Filter 的 `Countries` 选择器中选择相应国家或大洲，不限国家或大洲则填入 `all`，默认为不限', '类型，可在所选分类页中 Filter 的 `Types` 选择器中选择相应类型，不限类型则填入 `all`，默认为不限']">
+
+可选分类如下
+
+| WIRELESS | BROADBAND | VIDEO     | GENERAL | IT | INDUSTRY RESOURCES |
+| -------- | --------- | --------- | ------- | -- | ------------------ |
+| mobile   | internet  | boardcast | general | it | industry-resources |
+
+::: tip 提示
+
+若 `country` 或 `type` 参数包含空格，则用 `-` 替代。如 `United States` 更换为 `United-States`，`White paper` 更换为 `White-paper`
+
+[INDUSTRY RESOURCES](https://www.telecompaper.com/industry-resources) 分类页的 Filter 仅提供了 `Content Type` 选择器，对应路由中 `type` 参数。`year` 和 `country` 参数则对该分类无效。
+
+:::
+
+</Route>
+
+### Search
+
+<Route author="nczitzk" example="/telecompaper/search/Nokia" path="/telecompaper/search/:keyword?/:company?/:sort?/:period?" :paramsDesc="['关键词', '公司名，默认为不限', '排序，见下表，默认为 Date Descending', '发表在时间段内，默认为 12 months']">
+
+排序
+
+| Date Ascending | Date Descending |
+| -------------- | --------------- |
+| 1              | 2               |
+
+发表在时间段内
+
+| 1 month | 3 months | 6 months | 12 months | 24 months |
+| ------- | -------- | -------- | --------- | --------- |
+| 1       | 3        | 6        | 12        | 24        |
+
+</Route>
+
 ## USENIX
 
 ### Security Symposia
@@ -441,8 +500,8 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 <Route author="nczitzk" example="/mvm" path="/mvm/:category?" :paramsDesc="['分类，见下表，默认为本期要目']">
 
 | 本期要目 | 网络首发 | 学术活动 | 通知公告 |
-| ---- | ---- | ---- | ---- |
-| bqym | wlsf | xshd | tzgg |
+| -------- | -------- | -------- | -------- |
+| bqym     | wlsf     | xshd     | tzgg     |
 
 </Route>
 
@@ -458,4 +517,8 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### 作者期刊文献
 
-<Route author="harveyqiu" example="/cnki/author/000042423923" path="/cnki/author/:code" :paramsDesc="['作者对应code，可以在网址中得到']"/>
+::: tip 注意
+可能仅限中国大陆服务器访问，以实际情况为准。
+:::
+
+<Route author="harveyqiu Derekmini" example="/cnki/author/000042423923" path="/cnki/author/:code" :paramsDesc="['作者对应code，可以在网址中得到']"/>
