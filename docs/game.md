@@ -103,6 +103,12 @@ pageClass: routes
 
 <Route author="LogicJake" example="/dekudeals/most-wanted" path="/dekudeals/:type" :paramsDesc="['分类名称，可在 URL 中查看']"/>
 
+## Dorohedoro
+
+### News
+
+<Route author="nczitzk" example="/dorohedoro/news" path="/dorohedoro/news" />
+
 ## Epic Games Store
 
 ### 免费游戏
