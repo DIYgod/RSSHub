@@ -3637,6 +3637,9 @@
     "/neea/:type?": [
         "SunShinenny"
     ],
+    "/nenu/sohac/:path+": [
+        "nczitzk"
+    ],
     "/nenu/yjsy/:path+": [
         "nczitzk"
     ],
