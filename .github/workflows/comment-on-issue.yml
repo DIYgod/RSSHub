@@ -16,7 +16,7 @@ jobs:
           version: 8
       - uses: actions/setup-node@v3 # just need its cache
         with:
-          node-version: 18
+          node-version: lts/*
           cache: 'pnpm'
       - name: Install dependencies (pnpm) # needed since we need to parse markdown, so we also use got instead
         run: pnpm i
@@ -26,4 +26,4 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-issue/call-maintainer.js`)
-            return await script({ github, context, core })
+            return script({ github, context, core })

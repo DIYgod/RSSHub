@@ -1,0 +1,56 @@
+{{ if picture }}
+<img src="{{ picture }}">
+{{ /if }}
+
+{{ if details }}
+<table>
+  <tbody>
+    <tr>
+      <th>片名</th>
+      <td>{{ name }}</td>
+    </tr>
+    <tr>
+      <th>时间</th>
+      <td>{{ time }}</td>
+    </tr>
+    <tr>
+      <th>豆瓣评分</th>
+      <td>{{ score }}</td>
+    </tr>
+    {{ each detailKeys detail }}
+      <tr>
+        <th>{{ detail }}</th>
+        <td>{{@ details[detail] }}</td>
+      </tr>
+    {{ /each }}
+    </tbody>
+</table>
+{{ /if }}
+
+<h1>简介</h1>
+　　{{@ intro }}
+<br>
+
+<h1>网盘下载</h1>
+{{ if links }}
+<table>
+  <tbody>
+    {{ each linkKeys link }}
+      <tr>
+        <th>{{ link }}</th>
+        <td>{{@ links[link] }}</td>
+      </tr>
+    {{ /each }}
+    </tbody>
+</table>
+{{ /if }}
+<br>
+
+<h1>BT种子 / 磁力链下载</h1>
+{{@ bt }}
+<br>
+
+<h1>影片信息</h1>
+{{ if info }}
+{{@ info }}
+{{ /if }}
