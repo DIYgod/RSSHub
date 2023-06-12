@@ -73,7 +73,7 @@ jobs:
       - uses: actions/setup-node@v3  # just need its cache
         if: (env.TEST_CONTINUE)
         with:
-          node-version: 18
+          node-version: lts/*
           cache: 'pnpm'
 
       - name: Install dependencies (pnpm)  # `got` needed since `github.request` disallows HTTP requests
