@@ -116,6 +116,7 @@
     "markdown-it": "13.0.1",
     "module-alias": "2.2.2",
     "notion-to-md": "3.0.1",
+    "pako": "2.1.0",
     "pidusage": "3.0.2",
     "plist": "3.0.6",
     "proxy-chain": "2.3.0",
