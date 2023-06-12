@@ -26,4 +26,4 @@ jobs:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
             const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-issue/call-maintainer.js`)
-            return await script({ github, context, core })
+            return script({ github, context, core })
