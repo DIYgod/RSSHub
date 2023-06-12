@@ -167,6 +167,9 @@
     "/423down/:category/:type": [
         "Fatpandac"
     ],
+    "/4ksj/forum/:id?": [
+        "nczitzk"
+    ],
     "/500px/tribe/set/:id": [
         "TonyRL"
     ],
