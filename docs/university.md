@@ -2984,7 +2984,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 就业信息
 
-<Route author="ticks-tan" example="/wtu/job/xxtz" path="/wtu/job/:type" :paramsDesc="[必选-信息类型]">
+<Route author="ticks-tan" example="/wtu/job/xxtz" path="/wtu/job/:type" :paramsDesc="['信息类型']">
 
 | 信息类型 | 消息通知 | 通知公告 | 新闻快递 |
 | ------ | ------ | ------  | ------ |
