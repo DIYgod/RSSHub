@@ -5761,6 +5761,12 @@
     "/wsyu/news/:type?": [
         "Derekmini"
     ],
+    "/wtu/:type": [
+        "loyio"
+    ],
+    "/wtu/job/:type": [
+        "ticks-tan"
+    ],
     "/wxkol/show/:id": [
         "TonyRL"
     ],
@@ -7257,7 +7263,6 @@
     "/growincity/news/:id?": [],
     "/thrillist/:tag?": [],
     "/dxy/vaccine/:province?/:city?/:location?": [],
-    "/wtu/:type": [],
     "/tingshen": [],
     "/gov/mohrss/sbjm/:category?": [],
     "/shinybbs/latest": [],
