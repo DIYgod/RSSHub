@@ -23,7 +23,7 @@ jobs:
           version: 8
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: lts/*
           cache: 'pnpm'
       - run: pnpm i
       - run: pnpm i
