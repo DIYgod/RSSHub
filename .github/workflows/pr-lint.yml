@@ -15,7 +15,7 @@ jobs:
           version: 8
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: lts/*
           cache: 'pnpm'
       - run: pnpm i
       - name: Lint
@@ -36,7 +36,7 @@ jobs:
           version: 8
       - uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: lts/*
           cache: 'pnpm'
       - run: pnpm i
       - name: Lint
@@ -75,3 +75,21 @@ jobs:
       - uses: actions/labeler@v4
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+  chatgpt-review:
+    name: ChatGPT PR reviewer
+    if: ${{ github.event_name == 'pull_request_target' }}
+    permissions:
+      contents: read
+      pull-requests: write
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: fluxninja/openai-pr-reviewer@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        with:
+          openai_base_url: ${{ secrets.OPENAI_API_ENDPOINT }}
+          openai_model_temperature: '1.0'
+          disable_release_notes: true
