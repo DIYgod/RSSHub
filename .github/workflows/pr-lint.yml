@@ -77,7 +77,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
   chatgpt-review:
-    name: ChatGPT CodeReviewer
+    name: ChatGPT PR reviewer
     if: ${{ github.event_name == 'pull_request_target' }}
     permissions:
       contents: read
@@ -85,8 +85,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: anc95/ChatGPT-CodeReview@v1.0.8
+      - uses: fluxninja/openai-pr-reviewer@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_API_ENDPOINT: ${{ secrets.OPENAI_API_ENDPOINT }}
+        with:
+          openai_base_url: ${{ secrets.OPENAI_API_ENDPOINT }}
+          openai_model_temperature: '1.0'
+          disable_release_notes: true
