@@ -1491,6 +1491,10 @@ Provides all of the Thrillist articles with the specified tag.
 
 ## UNTAG
 
+### 时间线
+
+<Route author="nczitzk" example="/utgd/timeline" path="/utgd/timeline" />
+
 ### 分类
 
 <Route author="nczitzk" example="/utgd/method" path="/utgd/:category?" :paramsDesc="['分类，可在对应分类页的 URL 中找到，默认为方法']">
