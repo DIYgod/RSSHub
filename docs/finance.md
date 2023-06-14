@@ -374,6 +374,10 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="laampui" example="/jin10" path="/jin10/:important?" :paramsDesc="['只看重要，任意值开启，留空关闭']" radar="1"/>
 
+### 主题文章
+
+<Route author="miles170" example="/jin10/topic/396" path="/jin10/topic/:id" radar="1"/>
+
 ## 老虎社区
 
 ### 个人主页
