@@ -2974,11 +2974,21 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 信息门户公告
 
-<Route author="Loyio" example="/wtu/2" path="/wtu/:type" :paramsDesc="['公告类型，详见表格']">
+<Route author="loyio" example="/wtu/2" path="/wtu/:type" :paramsDesc="['公告类型，详见表格']">
 
 | 公告类型 | 通知公告 | 教务信息 | 科研动态 |
 | -------- | -------- | -------- | -------- |
 | 参数     | 1        | 2        | 3        |
+
+</Route>
+
+### 就业信息
+
+<Route author="ticks-tan" example="/wtu/job/xxtz" path="/wtu/job/:type" :paramsDesc="['信息类型']">
+
+| 信息类型 | 消息通知 | 通知公告 | 新闻快递 |
+| -------- | -------- | -------- | -------- |
+| 参数     | xxtz     | tzgg     | xwkd     |
 
 </Route>
 
