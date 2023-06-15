@@ -2639,17 +2639,9 @@ others = 热点新闻 + 滚动新闻
 
 </Route>
 
-### 专题
+### 专题文章
 
-<Route author="kudryavka1013" example="/gcores/collections/64" path="/gcores/collections/:collection/:category?" :paramsDesc="['专题id，可在专题页面的 URL 中找到，如 游戏开发设计心得分享 -- 64','分类名']" radar="1" />
-
-专题不存在 资讯 分类
-
- | 视频   | 电台   | 文章     |
- | ------ | ------ | -------- |
- | videos | radios | articles |
-
-</Route>
+<Route author="kudryavka1013" example="/gcores/collections/64" path="/gcores/collections/:collection" :paramsDesc="['专题id，可在专题页面的 URL 中找到，如 游戏开发设计心得分享 -- 64']" radar="1" />
 
 ### 播客
 
