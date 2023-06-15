@@ -302,9 +302,9 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="syzq" example="/eastmoney/report/strategyreport" path="/eastmoney/report/:category" :paramsDesc="['研报类型']">
 
-| 策略报告       | 宏观研究    | 券商晨报     |
-| -------------- | ----------- | ------------ |
-| strategyreport | macresearch | brokerreport |
+| 策略报告       | 宏观研究    | 券商晨报     | 行业研究 |
+| -------------- | ----------- | ------------ | -------- |
+| strategyreport | macresearch | brokerreport | industry |
 
 </Route>
 
