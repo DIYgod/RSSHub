@@ -2157,6 +2157,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 华东政法大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/ecupl/gs/11350" path="/ecupl/gs/:type" radar="1" :paramsDesc="['分类，见下表']" >
+
+| 硕士生招生 |
+| ---------- |
+| 11350      |
+
+</Route>
+
 ## 华南理工大学
 
 ### 研究生院通知公告
@@ -5375,13 +5387,19 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 中国农业大学
 
-### 中国农业大学研招网通知公告
-
-<Route author="shengmaosu" example="/cauyjs" path="/cauyjs" />
-
-#### 中国农业大学信电学院
+### 中国农业大学信电学院
 
 <Route author="shengmaosu" example="/cauele" path="/cauele" />
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/cau/yz/41740" path="/cau/yz/:type" :paramsDesc="['分类，见下表']">
+
+| 通知公告 |
+| -------- |
+| 41740    |
+
+</Route>
 
 ## 中国人民大学
 
