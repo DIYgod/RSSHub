@@ -4644,6 +4644,9 @@
     "/sdust/yjsy/zhaosheng/:id?": [
         "nczitzk"
     ],
+    "/sdzk/:bcid?/:cid?": [
+        "nczitzk"
+    ],
     "/secnews/index": [
         "kaiili"
     ],

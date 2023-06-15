@@ -19030,6 +19030,19 @@
       }
     ]
   },
+  "sdzk.cn": {
+    "_name": "山东省教育招生考试院",
+    ".": [
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/study.html#shan-dong-sheng-jiao-yu-zhao-sheng-kao-shi-yuan-xin-wen",
+        "source": [
+          "/NewsList.aspx",
+          "/"
+        ]
+      }
+    ]
+  },
   "secrss.com": {
     "_name": "安全内参",
     ".": [
