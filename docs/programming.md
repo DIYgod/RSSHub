@@ -412,9 +412,9 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="nczitzk" example="/hacking8" path="/hacking8/:category?" :paramsDesc="['分类，见下表，默认为最近更新']">
 
-| 推荐  | 最近更新 | 漏洞/PoC监控 | PDF |
-| ----- | -------- | ------------ | --- |
-| likes | index    | vul-poc      | pdf |
+| 推荐  | 最近更新 | 漏洞 / PoC 监控 | PDF |
+| ----- | -------- | --------------- | --- |
+| likes | index    | vul-poc         | pdf |
 
 </Route>
 
