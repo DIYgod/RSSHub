@@ -56,6 +56,14 @@ For airport IATA code please refer to [Wikipedia List of airports by IATA code](
 
 <RouteEn author="chazeon" example="/mcachicago/exhibitions" path="/mcachicago/exhibitions" />
 
+## National Geographic
+
+### Latest Stories
+
+<RouteEn author="miles170"
+    example="/nationalgeographic/latest-stories"
+    path="/nationalgeographic/latest-stories" />
+
 ## New Museum
 
 <RouteEn author="chazeon" example="/newmuseum/exhibitions" path="/newmuseum/exhibitions" />
