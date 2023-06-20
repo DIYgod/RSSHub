@@ -1737,7 +1737,7 @@ Supported sub-sites:
 
 ### 櫻坂 46 博客
 
-<Route author="victor21813 nczitzk" example="/sakurazaka46/blog" path="/sakurazaka46/blog/:id?" :paramsDesc="['成员编号，见下表，默认为全部']">
+<Route author="victor21813 nczitzk akashigakki" example="/sakurazaka46/blog" path="/sakurazaka46/blog/:id?/:page?" :paramsDesc="['成员编号，见下表，默认为`all` (全部)', '订阅页码，默认为`0` (第一页)']">
 
 | 编号 | 姓名        |
 | ---- | ----------- |
