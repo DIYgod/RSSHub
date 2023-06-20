@@ -5623,6 +5623,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="Neutrino3316 MegrezZhu nczitzk" example="/sysu/cse" path="/sysu/cse"/>
 
+### 研究生招生网
+
+<Route author="yanbot-team" example="/sysu/graduate/postgraduate" path="/sysu/graduate/:type" :paramsDesc="['类型，见下表，其他未列出的类型可在页面URL中找到']" radar="1" puppeteer="1">
+
+| 类型 | 硕士招生     |
+| ---- | ------------ |
+| 参数 | postgraduate |
+
+</Route>
+
 ## 中央财经大学
 
 ### 研究生院
