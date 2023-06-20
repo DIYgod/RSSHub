@@ -3069,6 +3069,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="gylidian" example="/nuist/lib" path="/nuist/library/lib" />
 
+### 研究生招生网
+
+<Route author="yanbot-team" example="/nuist/yzb/sszs-tzgg" path="/nuist/yzb/:type" :paramsDesc="['分类名，见下表，也可在页面URL中找到']"  radar="1" puppeteer="1">
+
+| 硕士招生通知公告 |
+| ---------------- |
+| sszs-tzgg        |
+
+</Route>
+
 ## 南京医科大学
 
 ### 研究生招生网
