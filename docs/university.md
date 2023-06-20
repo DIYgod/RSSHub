@@ -2809,16 +2809,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-### 研究生院
-
-<Route author="junfengP Seiry Xm798" example="/nuaa/yjsy/tzgg/getDescription" path="/nuaa/yjsy/:type/:getDescription?" :paramsDesc="['分类名，见下表', '是否获取全文']" puppeteer="1" radar="1">
-
-| 通知公告 | 新闻动态 | 学术信息 | 师生风采 |
-| -------- | -------- | -------- | -------- |
-| tzgg     | xwdt     | xsxx     | ssfc     |
-
-</Route>
-
 ### 自动化学院
 
 <Route author="Xm798" example="/nuaa/cae/zhxw" path="/nuaa/cs/:type/:getDescription?" :paramsDesc="['分类名，见下表', '是否获取全文']" puppeteer="1" radar="1">
@@ -2834,6 +2824,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 通知公告 | 热点新闻 | 学科科研 | 教学动态 | 本科生培养 | 研究生培养 | 学生工作 |
 | -------- | -------- | -------- | -------- | ---------- | ---------- | -------- |
 | tzgg     | rdxw     | xkky     | jxdt     | be         | me         | xsgz     |
+
+</Route>
+
+### 研究生院
+
+<Route author="yanbot-team" example="/nuaa/graduate/xxdt_13494" path="/nuaa/graduate/:type" :paramsDesc="['分类名，见下表，也可在页面URL中找到']"  radar="1">
+
+| 招生工作动态信息 | 招生工作硕士招生 | 招生工作博士招生 |
+| ---------------- | ---------------- | ---------------- |
+| xxdt_13494       | zsgg-sszs        | zsgg-bszs        |
 
 </Route>
 
