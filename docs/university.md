@@ -2443,6 +2443,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="real-jiakai" example="/jou/yztzgg" path="/jou/yztzgg" radar="1" />
 
+## 江西财经大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/jxufe/grs/162" path="/jxufe/grs/:type" radar="1" >
+
+| 研究生院新闻动态 |
+| ---------------- |
+| 162              |
+
+</Route>
+
 ## 江西理工大学
 
 ### 研究生招生网
