@@ -1732,6 +1732,16 @@ category 列表：
 
 <Route author="hlmu" example="/hit/hitgs" path="/hit/hitgs" radar="1" rssbud="1"/>
 
+### 研究生招生网
+
+<Route author="yanbot-team" example="/hit/yzb/8822" path="/hit/yzb/:type" :paramsDesc="['分类名，见下表']" puppeteer="1" >
+
+| 硕士公告 |
+| -------- |
+| 8822     |
+
+</Route>
+
 ## 哈尔滨工业大学（深圳）
 
 ### 新闻中心
