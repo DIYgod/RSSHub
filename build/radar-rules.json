@@ -24493,6 +24493,11 @@
         "target": "/youtube/user/:username"
       },
       {
+        "title": "用户",
+        "docs": "https://docs.rsshub.app/social-media.html#youtube",
+        "source": "/:handle"
+      },
+      {
         "title": "频道",
         "docs": "https://docs.rsshub.app/social-media.html#youtube",
         "source": "/channel/:id",
