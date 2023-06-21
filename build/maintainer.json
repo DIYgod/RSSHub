@@ -132,6 +132,9 @@
     "/35photo/new": [
         "nczitzk"
     ],
+    "/36kr/hot-list/:category?": [
+        "nczitzk"
+    ],
     "/36kr/information/:category?": [
         "nczitzk"
     ],
