@@ -50,6 +50,18 @@ pageClass: routes
 
 </Route>
 
+## 安徽大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/ahu/graschool/9509" path="/ahu/graschool/:type" :paramsDesc="['类型名,见下表，也可在页面URL中找到']"  radar="1" rssbud="1" puppeteer="1">
+
+| 招生工作近期热点 |
+| ---------------- |
+| 9509             |
+
+</Route>
+
 ## 安徽工业大学
 
 ### 教务处
