@@ -1776,6 +1776,8 @@ Supported sub-sites:
 | 36749 | 伊藤 理々杏           |
 | 264   | 齋藤 飛鳥             |
 
+</Route>
+
 ### 欅坂 46 新闻
 
 <Route author="crispgm" example="/keyakizaka46/news" path="/keyakizaka46/news" />

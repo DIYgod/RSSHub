@@ -674,6 +674,8 @@ Compared to the official one, this feed:
 | 36749     | 伊藤 理々杏           |
 | 264       | 齋藤 飛鳥             |
 
+</RouteEn>
+
 ### Keyakizaka46 News
 
 <RouteEn author="crispgm" example="/keyakizaka46/news" path="/keyakizaka46/news" />
