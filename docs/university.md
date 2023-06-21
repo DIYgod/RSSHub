@@ -3929,6 +3929,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 首都经济贸易大学
+
+### 研招办
+
+<Route author="yanbot-team" example="/cueb/yjs/zsks-zsdt" path="/cueb/yjs/:type" :paramsDesc="['类型，见下表']" rssbud="1" radar="1">
+
+| 招生动态  |
+| --------- |
+| zsks-zsdt |
+
+</Route>
+
 ## 首都师范大学
 
 ### 研究生院
