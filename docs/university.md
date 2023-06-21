@@ -242,6 +242,18 @@ pageClass: routes
 
 <Route author="legr4ndk" example="/pku/ss/pgadmin" path="/pku/ss/pgadmin" radar="1" rssbud="1"/>
 
+## 北京电影学院
+
+### 研究生院
+
+<Route author="yanbot-team" example="/bfa/yanjiusheng/zsgz-zstz" path="/bfa/yanjiusheng/:type" :paramsDesc="['分类id，见下表，其他未列出的分类可以在网页URL中找到']" radar="1" puppeteer="1">
+
+| 招生通知  |
+| --------- |
+| zsgz-zstz |
+
+</Route>
+
 ## 北京工业大学
 
 ### 研究生招生网
