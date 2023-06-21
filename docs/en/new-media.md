@@ -645,7 +645,7 @@ Compared to the official one, this feed:
 
 ### Sakurazaka46 Blog
 
-<RouteEn author="victor21813 nczitzk" example="/sakurazaka46/blog" path="/sakurazaka46/blog/:id?" :paramsDesc="['Member ID, see below, all by default']">
+<RouteEn author="victor21813 nczitzk akashigakki" example="/sakurazaka46/blog" path="/sakurazaka46/blog/:id?/:page?" :paramsDesc="['Member ID, see below, `all` by default', 'Page, `0` by default']">
 
 | Member ID | Name     |
 | -- | ------ |
