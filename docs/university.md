@@ -4767,6 +4767,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 西南政法大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/swupl/yjsy/zsgl-qrzssszlxx" path="/swupl/yjsy/:type" :paramsDesc="['分类名，见下表']">
+
+| 硕士生招录信息  |
+| --------------- |
+| zsgl-qrzssszlxx |
+
+</Route>
+
 ## 西藏大学
 
 ### 研究生招生信息网
