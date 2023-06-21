@@ -2455,6 +2455,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="real-jiakai" example="/jou/yztzgg" path="/jou/yztzgg" radar="1" />
 
+## 江苏科技大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/just/yjsb/zsgz" path="/just/yjsb/:type" radar="1" >
+
+| 招生工作 |
+| -------- |
+| zsgz     |
+
+</Route>
+
 ## 江西财经大学
 
 ### 研究生院
