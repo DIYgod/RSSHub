@@ -575,6 +575,18 @@ pageClass: routes
 
 </Route>
 
+## 渤海大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/bhu/yjszsxxw/506189" path="/bhu/yjszsxxw/:type" :paramsDesc="['分类type,见下表']" radar="1" >
+
+| 最新公告 |
+| -------- |
+| 506189   |
+
+</Route>
+
 ## 长安大学
 
 ### 研究生招生网
