@@ -1731,7 +1731,7 @@ Supported sub-sites:
 
 ### 乃木坂 46 博客
 
-<Route author="Kasper4649 akashigakki" example="/nogizaka46/blog" path="/nogizaka46/blog/:id?" :paramsDesc="['成员编号，见下表，默认为`all` (全部)']" />
+<Route author="Kasper4649 akashigakki" example="/nogizaka46/blog" path="/nogizaka46/blog/:id?" :paramsDesc="['成员编号，见下表，默认为`all` (全部)']">
 
 | 编号  | 姓名                  |
 | ----- | --------------------- |
@@ -1790,7 +1790,7 @@ Supported sub-sites:
 
 ### 櫻坂 46 博客
 
-<Route author="victor21813 nczitzk akashigakki" example="/sakurazaka46/blog" path="/sakurazaka46/blog/:id?/:page?" :paramsDesc="['成员编号，见下表，默认为`all` (全部)', '订阅页码，默认为`0` (第一页)']" />
+<Route author="victor21813 nczitzk akashigakki" example="/sakurazaka46/blog" path="/sakurazaka46/blog/:id?/:page?" :paramsDesc="['成员编号，见下表，默认为`all` (全部)', '订阅页码，默认为`0` (第一页)']">
 
 | 编号 | 姓名        |
 | ---- | ----------- |
@@ -3013,51 +3013,51 @@ column 为 third 时可选的 category:
 
     -   人工智能
 
-                        | 学术       | 开发者      |
+                        | 学术     | 开发者   |
                         | -------- | -------- |
                         | academic | yanxishe |
 
     -   数智化
 
-                        | 零售数智化     | 金融数智化      | 工业数智化      | 医疗数智化     | 城市数智化       |
-                        | --------- | ---------- | ---------- | --------- | ----------- |
-                        | redigital | findigital | mandigital | medigital | citydigital |
+                        | 零售数智化 | 金融数智化 | 工业数智化 | 医疗数智化 | 城市数智化  |
+                        | ---------- | ---------- | ---------- | ---------- | ----------- |
+                        | redigital  | findigital | mandigital | medigital  | citydigital |
 
     -   金融科技
 
-                        | 科技巨头    | 银行 AI | 金融云          | 风控与安全        |
-                        | ------- | ----- | ------------ | ------------ |
-                        | BigTech | bank  | FinanceCloud | DataSecurity |
+                        | 科技巨头 | 银行 AI | 金融云       | 风控与安全   |
+                        | -------- | ------- | ------------ | ------------ |
+                        | BigTech  | bank    | FinanceCloud | DataSecurity |
 
     -   医疗科技
 
-                        | 医疗 AI    | 投融资   | 医疗器械  | 互联网医疗            | 生物医药         | 健康险          |
-                        | -------- | ----- | ----- | ---------------- | ------------ | ------------ |
-                        | healthai | touzi | qixie | hulianwangyiliao | shengwuyiyao | jiankangxian |
+                        | 医疗 AI  | 投融资 | 医疗器械 | 互联网医疗       | 生物医药     | 健康险       |
+                        | -------- | ------ | -------- | ---------------- | ------------ | ------------ |
+                        | healthai | touzi  | qixie    | hulianwangyiliao | shengwuyiyao | jiankangxian |
 
     -   芯片
 
-                        | 材料设备      | 芯片设计       | 晶圆代工          | 封装测试      |
+                        | 材料设备  | 芯片设计   | 晶圆代工      | 封装测试  |
                         | --------- | ---------- | ------------- | --------- |
                         | materials | chipdesign | manufacturing | packaging |
 
     -   智慧城市
 
-                        | 智慧安防          | 智慧教育           | 智慧交通                | 智慧社区           | 智慧零售           | 智慧政务            | 智慧地产     |
+                        | 智慧安防      | 智慧教育       | 智慧交通            | 智慧社区       | 智慧零售       | 智慧政务        | 智慧地产 |
                         | ------------- | -------------- | ------------------- | -------------- | -------------- | --------------- | -------- |
                         | smartsecurity | smarteducation | smarttransportation | smartcommunity | smartretailing | smartgovernment | proptech |
 
     -   工业互联网
 
-                        | 工业软件       | 工业安全     | 5G 工业互联网 | 工业转型实践    |
-                        | ---------- | -------- | -------- | --------- |
-                        | gysoftware | gysafety | 5ggy     | gypratice |
+                        | 工业软件   | 工业安全 | 5G 工业互联网 | 工业转型实践 |
+                        | ---------- | -------- | ------------- | ------------ |
+                        | gysoftware | gysafety | 5ggy          | gypratice    |
 
     -   AIoT
 
-                        | 物联网 | 智能硬件 | 机器人   | 智能家居      |
-                        | --- | ---- | ----- | --------- |
-                        | 5G  | arvr | robot | smarthome |
+                        | 物联网 | 智能硬件 | 机器人 | 智能家居  |
+                        | ------ | -------- | ------ | --------- |
+                        | 5G     | arvr     | robot  | smarthome |
 
 </Route>
 
