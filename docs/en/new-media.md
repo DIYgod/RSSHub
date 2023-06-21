@@ -69,9 +69,9 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 <RouteEn author="nczitzk" example="/bell-labs/events-news" path="/bell-labs/events-news/:category?" :paramsDesc="['Category, see below, Press releases by default']">
 
-| Featured events | Latest recognition | Press releases |
-| ------- | ---------- | -------- |
-| events | industry-recognition | press-releases |
+| Featured events | Latest recognition   | Press releases |
+| --------------- | -------------------- | -------------- |
+| events          | industry-recognition | press-releases |
 
 </RouteEn>
 
@@ -130,8 +130,8 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 <RouteEn author="nczitzk" example="/chinalaborwatch/reports" path="/chinalaborwatch/reports/:lang?/:industry?" :paramsDesc="['Language, English by default, or `cn` as Simplified Chinese', 'Industry id, see below, all by default']">
 
 | All | Automotive | Cookware | Electronics | Footwear | Furniture | Garment | General | Printing | Retail | Toys |
-| - | - | - | - | - | - | - | - | - | - | - |
-| | 2 | 6 | 14 | 3 | 4 | 10 | 8 | 1 | 9 | 7 |
+| --- | ---------- | -------- | ----------- | -------- | --------- | ------- | ------- | -------- | ------ | ---- |
+|     | 2          | 6        | 14          | 3        | 4         | 10      | 8       | 1        | 9      | 7    |
 
 </RouteEn>
 
@@ -148,9 +148,9 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 Category of news
 
-| China News     | International News          | Social News   | Breaking News    |
-| -------- | ------------- | ------ | ------- |
-| domestic | international | social | news100 |
+| China News | International News | Social News | Breaking News |
+| ---------- | ------------------ | ----------- | ------------- |
+| domestic   | international      | social      | news100       |
 
 </RouteEn>
 
@@ -513,7 +513,7 @@ Edition
 <RouteEn author="Bubbu0129" example="/mclaren/en/all" path="/mclaren/:lang/:category?" :paramsDesc="['Supports English(en), Simplified Chinese(zh), and Spanish(es).', 'Default to exporting all media (all); See the table below for details']" radar="1" rssbud="1">
 
 | All Media | Article | Report | Gallery | Video | Blog | Photo Essay  |
-| --------- | ------- | ------ | ------- | ----- | ---- | -----------  |
+| --------- | ------- | ------ | ------- | ----- | ---- | ------------ |
 | all       | article | report | gallery | video | blog | photo\_essay |
 
 </RouteEn>
@@ -530,9 +530,9 @@ Edition
 
 <RouteEn author="nczitzk" example="/nace/blog" path="/nace/blog/:sort?" :paramsDesc="['Sort, see below, Most Recent by default']">
 
-| Most Recent | Top Rated | Most Read |
-| - | - | - |
-| | top-blogs | mostreadblogs |
+| Most Recent | Top Rated | Most Read     |
+| ----------- | --------- | ------------- |
+|             | top-blogs | mostreadblogs |
 
 </RouteEn>
 
@@ -616,8 +616,8 @@ Compared to the official one, this feed:
 <RouteEn author="nczitzk" example="/radio-canada/latest" path="/radio-canada/latest/:language?" :paramsDesc="['Language, see below, English by default']">
 
 | Français | English | Español | 简体中文 | 繁體中文 | العربية | ਪੰਜਾਬੀ | Tagalog |
-| -------- | ------- | ------- | -------- | -------- | ------- | ------ | ------- |
-| fr       | en      | es      | zh-hans  | zh-hant  | ar      | pa     | tl      |
+| -------- | ------- | ------- | -------- | -------- | ------- | --- | ------- |
+| fr       | en      | es      | zh-hans  | zh-hant  | ar      | pa  | tl      |
 
 </RouteEn>
 
@@ -629,7 +629,52 @@ Compared to the official one, this feed:
 
 ### Nogizaka46 Blog
 
-<RouteEn author="Kasper4649" example="/nogizaka46/blog" path="/nogizaka46/blog" />
+<RouteEn author="Kasper4649 akashigakki" example="/nogizaka46/blog" path="/nogizaka46/blog/:id?" :paramsDesc="['Member ID, see below, `all` by default']">
+
+| Member ID | Name                  |
+| --------- | --------------------- |
+| 55401     | 岡本 姫奈             |
+| 55400     | 川﨑 桜                |
+| 55397     | 池田 瑛紗             |
+| 55396     | 五百城 茉央           |
+| 55395     | 中西 アルノ           |
+| 55394     | 奥田 いろは           |
+| 55393     | 冨里 奈央             |
+| 55392     | 小川 彩               |
+| 55391     | 菅原 咲月             |
+| 55390     | 一ノ瀬 美空           |
+| 55389     | 井上 和               |
+| 55387     | 弓木 奈於             |
+| 55386     | 松尾 美佑             |
+| 55385     | 林 瑠奈               |
+| 55384     | 佐藤 璃果             |
+| 55383     | 黒見 明香             |
+| 48014     | 清宮 レイ             |
+| 48012     | 北川 悠理             |
+| 48010     | 金川 紗耶             |
+| 48019     | 矢久保 美緒           |
+| 48018     | 早川 聖来             |
+| 48009     | 掛橋 沙耶香           |
+| 48008     | 賀喜 遥香             |
+| 48017     | 筒井 あやめ           |
+| 48015     | 田村 真佑             |
+| 48013     | 柴田 柚菜             |
+| 48006     | 遠藤 さくら           |
+| 36760     | 与田 祐希             |
+| 36759     | 吉田 綾乃クリスティー |
+| 36758     | 山下 美月             |
+| 36757     | 向井 葉月             |
+| 36756     | 中村 麗乃             |
+| 36755     | 佐藤 楓               |
+| 36754     | 阪口 珠美             |
+| 36753     | 久保 史緒里           |
+| 36752     | 大園 桃子             |
+| 36751     | 梅澤 美波             |
+| 36750     | 岩本 蓮加             |
+| 36749     | 伊藤 理々杏           |
+| 264       | 齋藤 飛鳥             |
+
+</RouteEn>
 
 ### Keyakizaka46 News
 
@@ -647,30 +692,30 @@ Compared to the official one, this feed:
 
 <RouteEn author="victor21813 nczitzk akashigakki" example="/sakurazaka46/blog" path="/sakurazaka46/blog/:id?/:page?" :paramsDesc="['Member ID, see below, `all` by default', 'Page, `0` by default']">
 
-| Member ID | Name     |
-| -- | ------ |
-| 03 | 上村 莉菜  |
-| 04 | 尾関 梨香  |
-| 06 | 小池 美波  |
-| 07 | 小林 由依  |
-| 08 | 齋藤 冬優花 |
-| 11 | 菅井 友香  |
-| 14 | 土生 瑞穂  |
-| 15 | 原田 葵   |
-| 43 | 井上 梨名  |
-| 53 | 遠藤 光莉  |
-| 54 | 大園 玲   |
-| 55 | 大沼 晶保  |
-| 56 | 幸阪 茉里乃 |
-| 44 | 関 有美子  |
-| 45 | 武元 唯衣  |
-| 46 | 田村 保乃  |
-| 47 | 藤吉 夏鈴  |
-| 57 | 増本 綺良  |
-| 48 | 松田 里奈  |
-| 50 | 森田 ひかる |
-| 58 | 守屋 麗奈  |
-| 51 | 山﨑 天   |
+| Member ID | Name        |
+| --------- | ----------- |
+| 03        | 上村 莉菜   |
+| 04        | 尾関 梨香   |
+| 06        | 小池 美波   |
+| 07        | 小林 由依   |
+| 08        | 齋藤 冬優花 |
+| 11        | 菅井 友香   |
+| 14        | 土生 瑞穂   |
+| 15        | 原田 葵     |
+| 43        | 井上 梨名   |
+| 53        | 遠藤 光莉   |
+| 54        | 大園 玲     |
+| 55        | 大沼 晶保   |
+| 56        | 幸阪 茉里乃 |
+| 44        | 関 有美子   |
+| 45        | 武元 唯衣   |
+| 46        | 田村 保乃   |
+| 47        | 藤吉 夏鈴   |
+| 57        | 増本 綺良   |
+| 48        | 松田 里奈   |
+| 50        | 森田 ひかる |
+| 58        | 守屋 麗奈   |
+| 51        | 山﨑 天      |
 
 </RouteEn>
 
@@ -793,7 +838,7 @@ Compared to the official one, this feed:
 <RouteEn author="nczitzk" example="/thebrain/blog" path="/thebrain/blog/:category?" :paramsDesc="['Category, see below, Blog by default']">
 
 | Blog | Recorded Events | Big Thinkers |
-| ---- | ---- | ---- |
+| ---- | --------------- | ------------ |
 | blog | recorded-events | big-thinkers |
 
 </RouteEn>
