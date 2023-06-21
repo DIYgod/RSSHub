@@ -5003,6 +5003,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 云南财经大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/ynufe/yjsyxz/zs-sszs" path="/ynufe/yjsyxz/:type" :paramsDesc="['分类名，见下表']">
+
+| 硕士招生 |
+| -------- |
+| zs-sszs  |
+
+</Route>
+
 ## 云南大学
 
 ### 官网消息通告
