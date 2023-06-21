@@ -3023,6 +3023,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生招生网
+
+<Route author="yanbot-team" example="/njnu/yz/2" path="/njnu/yz/:type" :paramsDesc="['分类名，见下表，也可在页面URL中找到']"  radar="1" puppeteer="1">
+
+| 硕士招生 |
+| -------- |
+| 2        |
+
+</Route>
+
 ## 南京晓庄学院
 
 ### 官网通知公告
