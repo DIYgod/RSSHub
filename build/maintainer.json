@@ -3852,8 +3852,9 @@
         "crispgm",
         "Fatpandac"
     ],
-    "/nogizaka46/blog": [
-        "Kasper4649"
+    "/nogizaka46/blog/:id?": [
+        "Kasper4649",
+        "akashigakki"
     ],
     "/notateslaapp/ota": [
         "mrbruce516"
