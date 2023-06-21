@@ -2445,6 +2445,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 江苏大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/ujs/yz/sszs" path="/ujs/yz/:type" radar="1" puppeteer="1">
+
+| 硕士招生 |
+| -------- |
+| sszs     |
+
+</Route>
+
 ## 江苏海洋大学
 
 ### 官网通知公告
