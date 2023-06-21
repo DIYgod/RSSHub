@@ -72,9 +72,9 @@ pageClass: routes
 
 <Route author="nczitzk" example="/36kr/hot-list" path="/36kr/hot-list/:category?" :paramsDesc="['分类，默认为24小时热榜']">
 
-| 24小时热榜 | 资讯人气榜 | 资讯综合榜 | 资讯收藏榜 |
-| ---------- | ---------- | ---------- | ---------- |
-| 24         | renqi      | zonghe     | shoucang   |
+| 24 小时热榜 | 资讯人气榜 | 资讯综合榜 | 资讯收藏榜 |
+| ----------- | ---------- | ---------- | ---------- |
+| 24          | renqi      | zonghe     | shoucang   |
 
 </Route>
 
