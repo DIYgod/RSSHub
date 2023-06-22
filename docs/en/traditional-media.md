@@ -355,6 +355,16 @@ Only `s00017` is in English.
 
 </RouteEn>
 
+## Radio France
+
+### Géopolitique
+
+<Route author="xdu" example="/radiofrance/geopolitique" path="/radiofrance/geopolitique">
+
+French podcast on the international politics. This feed provides a better reading experience (full text) for the 3 latest articles.
+
+</Route>
+
 ## Radio Free Asia (RFA)
 
 ### News
