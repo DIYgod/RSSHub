@@ -359,11 +359,11 @@ Only `s00017` is in English.
 
 ### Géopolitique
 
-<Route author="xdu" example="/radiofrance/geopolitique" path="/radiofrance/geopolitique">
+<RouteEn author="xdu" example="/radiofrance/geopolitique" path="/radiofrance/geopolitique">
 
 French podcast on the international politics. This feed provides a better reading experience (full text) for the 3 latest articles.
 
-</Route>
+</RouteEn>
 
 ## Radio Free Asia (RFA)
 
