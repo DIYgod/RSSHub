@@ -2711,7 +2711,7 @@ category 对应的关键词有
 
 ### 地缘政治栏目
 
-<Route author="xdu" example="/radiofrance/geopolitique" path="/radiofrance/geopolitique" supportPodcast="1">
+<Route author="xdu" example="/radiofrance/geopolitique" path="/radiofrance/geopolitique" supportPodcast="0">
 
 法广电台地缘政治栏目最新3篇文章全文抓取，提供比官方源更佳的阅读体验。
 
