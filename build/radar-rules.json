@@ -10975,16 +10975,30 @@
   },
   "ifeng.com": {
     "_name": "凤凰网",
-    ".": [
+    "feng": [
       {
         "title": "大风号",
-        "docs": "https://docs.rsshub.app/new-media.html#feng-huang-wang"
+        "docs": "https://docs.rsshub.app/new-media.html#feng-huang-wang",
+        "source": [
+          "/author/:id"
+        ],
+        "target": "/ifeng/feng/:id/doc"
       }
     ],
     "news": [
       {
         "title": "资讯",
         "docs": "https://docs.rsshub.app/new-media.html#feng-huang-wang-zi-xun"
+      }
+    ],
+    "ishare": [
+      {
+        "title": "大风号",
+        "docs": "https://docs.rsshub.app/new-media.html#feng-huang-wang",
+        "source": [
+          "/mediaShare/home/:id/media"
+        ],
+        "target": "/ifeng/feng/:id/doc"
       }
     ]
   },
