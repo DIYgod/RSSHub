@@ -21,6 +21,7 @@ Deploy for public access may require:
 4.  [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 5.  [Google App Engine](https://cloud.google.com/appengine/)
 6.  [Fly.io](https://fly.io/)
+7.  [Zeabur](https://zeabur.com)
 
 ## Docker Image
 
@@ -407,6 +408,8 @@ Run RSSHub from just $1/month. Includes automatic updates and $5 free starting c
 2.  Create a new project.
 3.  Create a new service in the project, select deploying from the **marketplace**.
 4.  Add a domain name, if you use a custom domain name, you can refer to [Zeabur's domain name binding document](https://docs.zeabur.com/deploy/domain-binding).
+
+[![Deploy on Zeabur](https://zeabur.com/button.svg)](https://dash.zeabur.com/templates/X46PTP)
 
 ## Deploy to Google App Engine(GAE)
 
