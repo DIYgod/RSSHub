@@ -2529,6 +2529,14 @@
         "hellodword ",
         "TonyRL"
     ],
+    "/hinatazaka46/news": [
+        "crispgm",
+        "akashigakki"
+    ],
+    "/hinatazaka46/blog": [
+        "nwindz",
+        "akashigakki"
+    ],
     "/hit/hitgs": [
         "hlmu"
     ],
@@ -6740,9 +6748,7 @@
     "/yidoutang/case/:type": [],
     "/kaiyan/index": [],
     "/keyakizaka46/news": [],
-    "/hinatazaka46/news": [],
     "/keyakizaka46/blog": [],
-    "/hinatazaka46/blog": [],
     "/moxingnet": [],
     "/hubu/news/:type": [],
     "/dlmu/news/:type": [],
