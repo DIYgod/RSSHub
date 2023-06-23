@@ -2706,3 +2706,13 @@ category 对应的关键词有
 | 1           | 2           | 3           | 4               | 5               | 6               | 7               | 8           |
 
 </Route>
+
+## 法国广播电台
+
+### 地缘政治栏目
+
+<Route author="xdu" example="/radiofrance/geopolitique" path="/radiofrance/geopolitique">
+
+法广电台地缘政治栏目最新3篇文章全文抓取，提供比官方源更佳的阅读体验。
+
+</Route>
