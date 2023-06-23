@@ -2533,7 +2533,7 @@
         "crispgm",
         "akashigakki"
     ],
-    "/hinatazaka46/blog": [
+    "/hinatazaka46/blog/:id?": [
         "nwindz",
         "akashigakki"
     ],
