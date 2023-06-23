@@ -4468,6 +4468,9 @@
     "/radio-canada/latest/:language?": [
         "nczitzk"
     ],
+    "/radiofrance/geopolitique": [
+        "xdu"
+    ],
     "/rarehistoricalphotos/": [
         "TonyRL"
     ],
