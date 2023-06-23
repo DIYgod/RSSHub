@@ -992,6 +992,15 @@ IT・科学 tech_science
 
 </Route>
 
+## 法国广播电台
+
+### 地缘政治栏目
+
+<Route author="xdu" example="/radiofrance/geopolitique" path="/radiofrance/geopolitique">
+
+法广电台地缘政治栏目最新 3 篇文章全文抓取，提供比官方源更佳的阅读体验。
+
+</Route>
 ## 公視新聞網
 
 ### 即時新聞
@@ -2704,15 +2713,5 @@ category 对应的关键词有
 | 第一版 要闻 | 第二版 要闻 | 第三版 人才 | 第四版 人社工作 | 第五版 基层党建 | 第六版 理论评论 | 第七版 史事通鉴 | 第八版 关注 |
 | ----------- | ----------- | ----------- | --------------- | --------------- | --------------- | --------------- | ----------- |
 | 1           | 2           | 3           | 4               | 5               | 6               | 7               | 8           |
-
-</Route>
-
-## 法国广播电台
-
-### 地缘政治栏目
-
-<Route author="xdu" example="/radiofrance/geopolitique" path="/radiofrance/geopolitique">
-
-法广电台地缘政治栏目最新3篇文章全文抓取，提供比官方源更佳的阅读体验。
 
 </Route>
