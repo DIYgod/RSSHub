@@ -733,11 +733,11 @@ Compared to the official one, this feed:
 
 ### Hinatazaka46 News
 
-<RouteEn author="crispgm" example="/hinatazaka46/news" path="/hinatazaka46/news" />
+<RouteEn author="crispgm akashigakki" example="/hinatazaka46/news" path="/hinatazaka46/news" />
 
 ### Hinatazaka46 Blog
 
-<RouteEn author="nwindz" example="/hinatazaka46/blog" path="/hinatazaka46/blog/:id?" :paramsDesc="['Member ID, see below, `all` by default']">
+<RouteEn author="nwindz akashigakki" example="/hinatazaka46/blog" path="/hinatazaka46/blog/:id?/:page?" :paramsDesc="['Member ID, see below, `all` by default', 'Page, `0` by default']">
 
 | Member ID | Name         |
 | --------- | ------------ |
