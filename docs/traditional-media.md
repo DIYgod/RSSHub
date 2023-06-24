@@ -992,6 +992,15 @@ IT・科学 tech_science
 
 </Route>
 
+## 法国广播电台
+
+### 地缘政治栏目
+
+<Route author="xdu" example="/radiofrance/geopolitique" path="/radiofrance/geopolitique">
+
+法广电台地缘政治栏目最新 3 篇文章全文抓取，提供比官方源更佳的阅读体验。
+
+</Route>
 ## 公視新聞網
 
 ### 即時新聞
