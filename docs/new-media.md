@@ -1837,11 +1837,11 @@ Supported sub-sites:
 
 ### 日向坂 46 新闻
 
-<Route author="crispgm" example="/hinatazaka46/news" path="/hinatazaka46/news" />
+<Route author="crispgm akashigakki" example="/hinatazaka46/news" path="/hinatazaka46/news" />
 
 ### 日向坂 46 博客
 
-<Route author="nwindz" example="/hinatazaka46/blog" path="/hinatazaka46/blog/:id?" :paramsDesc="['成员编号，见下表，默认为`all` (全部)']">
+<Route author="nwindz akashigakki" example="/hinatazaka46/blog" path="/hinatazaka46/blog/:id?/:page?" :paramsDesc="['成员编号，见下表，默认为`all` (全部)', '订阅页码，默认为`0` (第一页)']">
 
 | 编号 | 姓名         |
 | ---- | ------------ |
