@@ -5068,6 +5068,9 @@
     "/taiwannews/hot/:lang?": [
         "TonyRL"
     ],
+    "/tangshufang/:category?": [
+        "nczitzk"
+    ],
     "/taobao/zhongchou/:type?": [
         "xyqfer",
         "Fatpandac"
