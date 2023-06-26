@@ -1882,6 +1882,16 @@ category 列表：
 
 <Route author="legr4ndk" example="/hdu/cs/pg" path="/hdu/cs/pg" radar="1" rssbud="1"/>
 
+### 研究生院
+
+<Route author="yanbot-team" example="/hdu/grs/1708" path="/hdu/grs/:type" :paramsDesc="['分类名，见下表']" >
+
+| 招生工作 |
+| -------- |
+| 1708     |
+
+</Route>
+
 ## 杭州师范大学
 
 ### 研究生院
