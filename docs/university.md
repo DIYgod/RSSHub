@@ -1631,6 +1631,18 @@ pageClass: routes
 
 </Route>
 
+## 贵州民族大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/gzu/gs/sszs" path="/gzu/gs/:sszs" :paramsDesc="['分类名,见下表']">
+
+| 硕士招生 |
+| -------- |
+| sszs     |
+
+</Route>
+
 ## 国防科技大学
 
 ### 研究生招生信息网
