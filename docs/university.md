@@ -1865,6 +1865,7 @@ category 列表：
 | zsgz-sszs |
 
 </Route>
+
 ## 海南大学
 
 ### 硕士研究生招生动态
@@ -3327,6 +3328,20 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 硕士招生 | 博士招生 | 港澳台招生 | 推免生 |
 | -------- | -------- | ---------- | ------ |
 | 5509     | 2552     | 2553       | 7800   |
+
+</Route>
+
+### 南宁师范大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/nnnu/yjsxy/zsgztzygg" path="/nnnu/yjsxy/zsgztzygg" :paramsDesc="['分区 type，可在网页 URL 中找到']">
+
+| 招生工作通知与公告 |
+| ------------------ |
+| zsgztzygg          |
+
+</Route>
 
 ## 内蒙古大学
 
