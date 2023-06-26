@@ -4811,6 +4811,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生招生网
+
+<Route author="yanbot-team" example="/swust/gs/7797" path="/swust/gs/:type" :paramsDesc="['分类名见下表，也可在URL中找到']" >
+
+| 硕士招生 |
+| -------- |
+| 7797     |
+
+</Route>
+
 ## 西南石油大学
 
 ### 办公网
