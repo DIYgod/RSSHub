@@ -3881,6 +3881,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="Diffumist" example="/usst/jwc" path="/usst/jwc"/>
 
+### 研究生院
+
+<Route author="yanbot-team" example="/shanghaitech/yanzhao/tzgg" path="/shanghaitech/yanzhao/:type" :paramsDesc="['类型,见下表，也可在页面URL中找到']">
+
+| 通知公告 |
+| -------- |
+| tzgg     |
+
+</Route>
+
 ## 上海立信会计金融学院
 
 ::: warning 注意
