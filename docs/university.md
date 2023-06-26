@@ -681,6 +681,18 @@ pageClass: routes
 
 </Route>
 
+## 成都理工大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/cdut/gra/zsgz-tzgg" path="/cdut/gra/zsgz-tzgg:type" :paramsDesc="['分类type,见下表']" radar="1" >
+
+| 招生工作-通知公告 |
+| ----------------- |
+| zsgz-tzgg         |
+
+</Route>
+
 ## 成都信息工程大学
 
 ### 成信新闻网
@@ -5005,13 +5017,13 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-### 研究生招生
+### 研究生院
 
-<Route author="LogicJake" example="/yzu/yjszs/tzgg" path="/yzu/yjszs/:type" :paramsDesc="['分类名']">
+<Route author="yanbot-team" example="/yzu/yjsc/tzgg-zsxx" path="/yzu/yjsc/:type" :paramsDesc="['分类名']">
 
-| 通知公告 | 博士招生 | 硕士招生 |
-| -------- | -------- | -------- |
-| tzgg     | bszs     | sszs     |
+| 通知公告-招生信息 |
+| ----------------- |
+| tzgg-zsxx         |
 
 </Route>
 
@@ -5056,6 +5068,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 招生工作 | 研究生培养 | 质量管理 | 学位工作 | 综合办公室 | 相关下载 |
 | -------- | ---------- | -------- | -------- | ---------- | -------- |
 | 1        | 2          | 3        | 4        | 5          | 6        |
+
+</Route>
+
+## 云南民族大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/ynun/yjs/zs" path="/ynun/yjs/:type" :paramsDesc="['分类名，见下表']">
+
+| 招生 |
+| ---- |
+| zs   |
 
 </Route>
 
