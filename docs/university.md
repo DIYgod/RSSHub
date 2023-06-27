@@ -2468,6 +2468,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="jackyu1996" example="/ccnu/career" path="/ccnu/career" />
 
+## 吉林财经大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/jlufe/yzb/zsxx" path="/jlufe/yzb/:type" :paramsDesc="['分区 type，见下表 可在网页 HTML中找到']">
+
+| 招生信息 |
+| -------- |
+| zsxx     |
+
+</Route>
+
 ## 吉林大学
 
 ### 校内通知
@@ -2605,6 +2617,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 招生工作 |
 | -------- |
 | zsgz     |
+
+</Route>
+
+## 江苏师范大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/jsnu/yjsc/sszs" path="/jsnu/yjsc/:type" radar="1" >
+
+| 硕士招生 |
+| -------- |
+| sszs     |
 
 </Route>
 
