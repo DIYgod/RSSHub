@@ -1437,6 +1437,18 @@ pageClass: routes
 
 </Route>
 
+## 福建医科大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/fjmu/yjsy/2439" path="/fjmu/yjsy/:type" :paramsDesc="['分类见下表']">
+
+| 招收硕士学位研究生 |
+| ------------------ |
+| 2439               |
+
+</Route>
+
 ## 福州大学
 
 ### 教务处通知
