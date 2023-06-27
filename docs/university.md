@@ -4016,6 +4016,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | zsxx-ssszs |
 
 </Route>
+
 ## 上海外国语大学
 
 ### 研究生院
@@ -4025,6 +4026,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 报名初试 | 招生简章 | 推荐免试 | 复试录取 | 报考点 |
 | -------- | -------- | -------- | -------- | ------ |
 | 8899     | 8897     | 8898     | 8890     | bkd    |
+
+</Route>
+
+## 上海中医药大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/shutcm/yjsy/1125" path="/shutcm/yjsy/:type" :paramsDesc="['类别ID，见下表，其他未列出的栏目参数可以从页面的 URL Path 中找到']" radar="1" >
+
+| 招生信息 |
+| -------- |
+| 1125     |
 
 </Route>
 
