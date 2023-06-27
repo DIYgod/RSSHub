@@ -1511,6 +1511,16 @@ pageClass: routes
 
 </Route>
 
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/gdut/yzw/sszs" path="/gdut/yzw/:type" :paramsDesc="['分类名']">
+
+| 硕士招生 |
+| -------- |
+| sszs     |
+
+</Route>
+
 ## 广东海洋大学
 
 ### 广东海洋大学
@@ -1664,6 +1674,18 @@ pageClass: routes
 | 招生与就业 |
 | ---------- |
 | bmgk1      |
+
+</Route>
+
+## 贵州师范大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/gznu/yjsc/1077" path="/gznu/yjsc/:type" :paramsDesc="['分类名,见下表']">
+
+| 招生信息 |
+| -------- |
+| 1077     |
 
 </Route>
 
