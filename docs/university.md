@@ -4818,6 +4818,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 西北政法大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/nwupl/grs/10503" path="/nwupl/grs/:type" :paramsDesc="['分类名见下表，也可在URL中找到']" >
+
+| 硕士招生 |
+| -------- |
+| 10503    |
+
+</Route>
+
 ## 西南财经大学
 
 ### 经济信息工程学院
