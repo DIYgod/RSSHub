@@ -846,6 +846,18 @@ pageClass: routes
 
 <Route author="Colin-XKL" example="/cqut/libnews" path="/cqut/libnews" radar="1"/>
 
+## 重庆师范大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/cqnu/graduate/zsgz1-sszs-tzgg" path="/cqnu/graduate/:type" :paramsDesc="['分类，见下表, 未列出的type可在对应页 URL 中找到']" radar="1">
+
+| 硕士招生通知公告 |
+| ---------------- |
+| zsgz1-sszs-tzgg  |
+
+</Route>
+
 ## 重庆文理学院
 
 ### 通知公告
@@ -3833,6 +3845,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生院
+
+<Route author="yanbot-team" example="/shiep/yjsc/948" path="/shiep/yjsc/:type" :paramsDesc="['类型,见下表,也可在页面URL中找到']">
+
+| 招生工作 |
+| -------- |
+| 948      |
+
+</Route>
+
 ## 上海海事大学
 
 ### 官网信息
@@ -5452,6 +5474,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 通知公告 | 评优评奖 | 文明规范 | 创新创业 | 校园文化 | 心理驿站 | 日常通知 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | 0        | 1        | 2        | 3        | 4        | 5        | 6        |
+
+</Route>
+
+### 研究生院
+
+<Route author="yanbot-team" example="/zcmu/yjsgl/20" path="/zcmu/yjsgl/:type" :paramsDecs="['模块id']">
+
+| 研究生招生 |
+| ---------- |
+| 20         |
 
 </Route>
 
