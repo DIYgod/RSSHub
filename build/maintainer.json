@@ -941,6 +941,9 @@
     "/cas/iee/kydt": [
         "nczitzk"
     ],
+    "/cas/is/:path+": [
+        "Misaka13514"
+    ],
     "/cas/mesalab/kb": [
         "renzhexigua"
     ],

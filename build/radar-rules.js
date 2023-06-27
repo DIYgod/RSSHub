@@ -2124,6 +2124,14 @@
         source:[ "/yjsjy/zs/sszs",
           "/" ],
         target:"/cas/ia/yjs" } ],
+    "www.is":[ { title:"软件研究所",
+        docs:"https://docs.rsshub.app/university.html#zhong-guo-ke-xue-yuan",
+        source:[ "/" ],
+        target:(params, url, document) => {
+                    if (document.querySelector('.list-news')) {
+                        return `/cas/is/${url.split('/').slice(3, -1).join('/')}`;
+                    }
+                } } ],
     "www.sim":[ { title:"上海微系统与信息技术研究所 - 科技进展",
         docs:"https://docs.rsshub.app/university.html#zhong-guo-ke-xue-yuan",
         source:[ "/xwzx2016/kyjz",
