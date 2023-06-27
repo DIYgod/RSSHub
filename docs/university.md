@@ -1986,6 +1986,18 @@ category 列表：
 
 </Route>
 
+## 河北师范大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/hebtu/yjsy/zsgl-tzgg" path="/hebtu/yjsy/:type" :paramsDesc="['分类名，见下表']" >
+
+| 招生管理-通知公告 |
+| ----------------- |
+| zsgl-tzgg         |
+
+</Route>
+
 ## 衡阳师范学院
 
 ### 研究生院
