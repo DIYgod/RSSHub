@@ -101,6 +101,12 @@ path="/ctfhub/upcoming/:limit?"
 
 <Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['按关键词进行搜索，如 computer']"/>
 
+## Huggingface Daily Papers
+
+### Huggingface Daily Papers
+
+<Route author="zeyugao" example="/huggingface_daily_papers" path="/huggingface_daily_papers" />
+
 ## IELTS 雅思
 
 ### 最新消息
