@@ -50,7 +50,7 @@ pageClass: routes
 
 ### Huggingface Daily Papers
 
-<RouteEn author="zeyugao" example="/huggingface_daily_papers" path="/huggingface_daily_papers" />
+<RouteEn author="zeyugao" example="/huggingface-daily-papers" path="/huggingface-daily-papers" />
 
 ## iciba
 

@@ -105,7 +105,7 @@ path="/ctfhub/upcoming/:limit?"
 
 ### Huggingface Daily Papers
 
-<Route author="zeyugao" example="/huggingface_daily_papers" path="/huggingface_daily_papers" />
+<Route author="zeyugao" example="/huggingface-daily-papers" path="/huggingface-daily-papers" />
 
 ## IELTS 雅思
 
