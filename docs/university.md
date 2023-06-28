@@ -858,6 +858,16 @@ pageClass: routes
 
 <Route author="Colin-XKL" example="/cqut/libnews" path="/cqut/libnews" radar="1"/>
 
+### 研究生院
+
+<Route author="yanbot-team" example="/cqut/yjszs/zsxx" path="/cqut/yjszs:type" :paramsDesc="['分类，见下表, 未列出的type可在对应页 URL 中找到']" radar="1">
+
+| 招生信息 |
+| -------- |
+| zsxx     |
+
+</Route>
+
 ## 重庆师范大学
 
 ### 研究生院
