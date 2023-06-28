@@ -2704,6 +2704,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 景德镇陶瓷大学
+
+### 招生网
+
+<Route author="yanbot-team" example="/jci/zs/ssyjszs-zxdt" path="/jci/zs/:type" radar="1" >
+
+| 硕士研究生招生最新动态 |
+| ---------------------- |
+| ssyjszs-zxdt           |
+
+</Route>
+
 ## 井冈山大学
 
 ### 教务处通知
