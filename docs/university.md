@@ -973,6 +973,34 @@ pageClass: routes
 
 </Route>
 
+## 东北师范大学
+
+### 历史文化学院
+
+<Route author="nczitzk" example="/nenu/sohac" path="/nenu/sohac/:path+" :paramsDesc="['路径，默认为通知公告']">
+
+::: tip 提示
+
+若订阅 [通知公告](https://sohac.nenu.edu.cn/index/tzgg.htm)，网址为 <https://sohac.nenu.edu.cn/index/tzgg.htm>。截取 `https://sohac.nenu.edu.cn/` 到末尾 `.htm` 的部分 `index/tzgg` 作为参数，此时路由为 [`/nenu/sohac/index/tzgg`](https://rsshub.app/nenu/sohac/index/tzgg)。
+
+若订阅 [学院信息](https://sohac.nenu.edu.cn/index/xyxx.htm)，网址为 <https://sohac.nenu.edu.cn/index/xyxx.htm>。截取 `https://sohac.nenu.edu.cn/` 到末尾 `.htm` 的部分 `index/xyxx` 作为参数，此时路由为 [`/nenu/sohac/index/xyxx`](https://rsshub.app/nenu/sohac/index/xyxx)。
+
+</Route>
+
+### 研究生院
+
+<Route author="nczitzk" example="/nenu/yjsy" path="/nenu/yjsy/:path+" :paramsDesc="['路径，默认为通知公告']">
+
+::: tip 提示
+
+若订阅 [通知公告](https://yjsy.nenu.edu.cn/tzgg.htm)，网址为 <https://yjsy.nenu.edu.cn/tzgg.htm>。截取 `https://yjsy.nenu.edu.cn/` 到末尾 `.htm` 的部分 `tzgg` 作为参数，此时路由为 [`/nenu/yjsy/tzgg`](https://rsshub.app/nenu/yjsy/tzgg)。
+
+若订阅 [校内新闻](https://yjsy.nenu.edu.cn/xwdt/xnxw.htm)，网址为 <https://yjsy.nenu.edu.cn/xwdt/xnxw.htm>。截取 `https://yjsy.nenu.edu.cn/` 到末尾 `.htm` 的部分 `xwdt/xnxw` 作为参数，此时路由为 [`/nenu/yjsy/xwdt/xnxw`](https://rsshub.app/nenu/yjsy/xwdt/xnxw)。
+
+:::
+
+</Route>
+
 ## 东莞理工学院
 
 ### 教务处通知
@@ -1010,6 +1038,16 @@ pageClass: routes
 ### 最新信息公开
 
 <Route author="KiraKiseki" example="/dhu/xxgk/news" path="/dhu/xxgk/news"/>
+
+### 研究生招生信息
+
+<Route author="fox2049" example="/dhu/yjs/zs/master" path="/dhu/yjs/zs/:type?" :paramsDesc="['默认为 `master`']">
+
+| 博士招生 | 硕士招生 |
+| -------- | -------- |
+| doctor   | master   |
+
+</Route>
 
 ## 东南大学
 
@@ -2464,15 +2502,33 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 类型名称与默认 ID：
 
-| 新闻网 | 信息公开网 | 教务处 | 研究生院 / 研工部 | 党委教师工作部、人事处 | 科研处 | 国际交流与合作处（港澳台办公室） | 本科招生网 |
-| ------ | ---------- | ------ | ----------------- | ---------------------- | ------ | -------------------------------- | ---------- |
-| news   | xxgk       | jwc    | yjsc              | rsc                    | kyc    | fao                              | zs         |
-| notice | zxgkxx     | 227    | 1161              | 1695                   | 834    | tzgg                             | zxxx       |
+学院一览：
 
-| 能源与机械工程学院 | 环境与化学工程学院 | 电气工程学院 | 自动化工程学院 | 计算机科学与技术学院 | 电子与信息工程学院 | 经济与管理学院 | 数理学院 | 外国语学院 | 继续教育学院 | 马克思主义学院 | 体育学院 |
-| ------------------ | ------------------ | ------------ | -------------- | -------------------- | ------------------ | -------------- | -------- | ---------- | ------------ | -------------- | -------- |
-| energy             | hhxy               | dqxy         | zdhxy          | jsjxy                | dxxy               | jgxy           | slxy     | wgyxy      | jjxy         | skb            | tyb      |
-| 892                | 1231               | 2462         | 2002           | 973                  | tzgg               | 3633           | 2063     | tzgg       | 2582         | 1736           | 2891     |
+| 能源与机械工程学院 | 环境与化学工程学院 | 电气工程学院 | 自动化工程学院 | 计算机科学与技术学院 | 电子与信息工程学院 | 经济与管理学院 | 数理学院 | 外国语学院 | 体育学院 | 马克思主义学院 | 人文艺术学院 | 继续教育学院（国际教育学院） |
+| ------------------ | ------------------ | ------------ | -------------- | -------------------- | ------------------ | -------------- | -------- | ---------- | -------- | -------------- | ------------ | ---------------------------- |
+| energy             | hhxy               | dqxy         | zdhxy          | jsjxy                | dxxy               | jgxy           | slxy     | wgyxy      | tyb      | skb            | rwysxy       | jjxy                         |
+| 892                | 1231               | 2462         | 2002           | 973                  | tzgg               | 3633           | 2063     | tzgg       | 2891     | 1736           | 3089         | 2582                         |
+
+党群部门：
+
+| 党委办公室 | 组织部（老干部处、党校） | 党建服务中心 / 党建督查室 | 宣传部（文明办、融媒体中心） | 文明办  | 统战部 | 机关党委 | 纪委（监察专员办公室） | 巡查办    | 宣传部（文明办、融媒体中心） | 团委 | 工会    | 妇工委 | 离退休党委 / 退管办 |
+| ---------- | ------------------------ | ------------------------- | ---------------------------- | ------- | ------ | -------- | ---------------------- | --------- | ---------------------------- | ---- | ------- | ------ | ------------------- |
+| dangban    | zzb                      | djfwzxdcs                 | xcb                          | wenming | tzb    | jgdw     | jijian                 | xunchaban | xcb                          | tw   | gonghui | fgw    | tgb                 |
+| 4014       | 1534                     | tzgg                      | 2925                         | 2202    | 3858   | 3205     | 59                     | 5044      | 2925                         | 2092 | 1806    | 1411   | notice              |
+
+行政部门：
+
+| 校长办公室（档案馆） | 对外联络处 | 发展规划处 | 审计处 | 武装部保卫处 | 学生处 | 党委教师工作部 / 人事处 | 离退休党委 / 退管办 | 国际交流与合作处（港澳台办公室） | 科研处 / 融合办 | 教务处 | 研究生院 / 研工部 | 后勤管理处（后勤服务中心） | 实验室与资产管理处 | 基建处 | 临港新校区建设综合办公室 | 图书馆  | 现代教育技术中心 / 信息办 | 创新创业工程训练中心 | 资产经营公司 / 产业办 | 能源电力科创中心 | 技术转移中心 |
+| -------------------- | ---------- | ---------- | ------ | ------------ | ------ | ----------------------- | ------------------- | -------------------------------- | --------------- | ------ | ----------------- | -------------------------- | ------------------ | ------ | ------------------------ | ------- | ------------------------- | -------------------- | --------------------- | ---------------- | ------------ |
+| office               | dwllc      | fzghc      | sjc    | bwc          | xsc    | rsc                     | tgb                 | fao                              | kyc             | jwc    | yjsc              | hqglc                      | sysyzcglc          | jjc    | lgxq                     | library | metc                      | ieetc                | cyb                   | kczx             | jszyzx       |
+| 389                  | 2649       | 291        | 199    | tzgg         | 3482   | 1695                    | notice              | tzgg                             | 834             | 227    | 1161              | 1616                       | 312                | 327    | 377                      | 4866    | tzgg                      | cxcy                 | 367                   | 3946             | 4247         |
+
+其它：
+
+| 新闻网 | Shanghai University of Electric Power | 信息公开网 | 本科就业信息网 | 本科招生网 | 上海热交换系统节能工程技术研究中心 | 上海新能源人才技术教育交流中心 | 上海绿色能源并网技术研究中心 | 能源化学实验教学中心 | 教师教学发展中心 | 上海市电力材料防护与新材料重点实验室 |
+| ------ | ------------------------------------- | ---------- | -------------- | ---------- | ---------------------------------- | ------------------------------ | ---------------------------- | -------------------- | ---------------- | ------------------------------------ |
+| news   | english                               | xxgk       | career         | zs         | energy-saving                      | gec                            | green-energy                 | hhsyzx               | jsjxfzzx         | mpep                                 |
+| notice | events                                | zxgkxx     | tzgg           | zxxx       | tzgg                               | 1959                           | 118                          | 3709                 | 3909             | 1134                                 |
 
 参数与来源页面对应规则为：`https://${type}.shiep.edu.cn/${id}/list.htm`
 
@@ -2918,11 +2974,21 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 信息门户公告
 
-<Route author="Loyio" example="/wtu/2" path="/wtu/:type" :paramsDesc="['公告类型，详见表格']">
+<Route author="loyio" example="/wtu/2" path="/wtu/:type" :paramsDesc="['公告类型，详见表格']">
 
 | 公告类型 | 通知公告 | 教务信息 | 科研动态 |
 | -------- | -------- | -------- | -------- |
 | 参数     | 1        | 2        | 3        |
+
+</Route>
+
+### 就业信息
+
+<Route author="ticks-tan" example="/wtu/job/xxtz" path="/wtu/job/:type" :paramsDesc="['信息类型']">
+
+| 信息类型 | 消息通知 | 通知公告 | 新闻快递 |
+| -------- | -------- | -------- | -------- |
+| 参数     | xxtz     | tzgg     | xwkd     |
 
 </Route>
 
@@ -3646,6 +3712,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 自动化所
 
 <Route author="shengmaosu" example="/cas/ia/yjs" path="/cas/ia/yjs" radar="1"/>
+
+### 软件研究所
+
+<Route author="Misaka13514" example="/cas/isxwdt2016/tzgg2016" path="/cas/is/:path+" :paramsDesc="['路径，可在 URL 找到']" radar="1">
+
+路径参数示例：
+
+| 通知公告          | 科技动态          | 科普动态          |
+| ----------------- | ----------------- | ----------------- |
+| xwdt2016/tzgg2016 | xwdt2016/kjdt2016 | kxcb2016/kpdt2016 |
+
+</Route>
 
 ## 中国科学院大学
 

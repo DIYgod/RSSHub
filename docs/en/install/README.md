@@ -21,6 +21,7 @@ Deploy for public access may require:
 4.  [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 5.  [Google App Engine](https://cloud.google.com/appengine/)
 6.  [Fly.io](https://fly.io/)
+7.  [Zeabur](https://zeabur.com)
 
 ## Docker Image
 
@@ -327,7 +328,15 @@ Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product pla
 
 ## Deploy to Vercel (ZEIT Now)
 
+### Instant deploy (without automatic update)
+
 [![Deploy to Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/DIYgod/RSSHub)
+
+### Automatic deploy upon update
+
+1.  [Fork RSSHub](https://github.com/DIYgod/RSSHub/fork) to your GitHub account.
+2.  Deploy your fork to Vercel: Login Vercel with your GitHub account, create and deploy [new Vercel project](https://vercel.com/new/) with your RSSHub repository.
+3.  Install [Pull](https://github.com/apps/pull) app to keep your fork synchronized with RSSHub.
 
 ## Deploy to Fly.io
 
@@ -399,6 +408,8 @@ Run RSSHub from just $1/month. Includes automatic updates and $5 free starting c
 2.  Create a new project.
 3.  Create a new service in the project, select deploying from the **marketplace**.
 4.  Add a domain name, if you use a custom domain name, you can refer to [Zeabur's domain name binding document](https://docs.zeabur.com/deploy/domain-binding).
+
+[![Deploy on Zeabur](https://zeabur.com/button.svg)](https://dash.zeabur.com/templates/X46PTP)
 
 ## Deploy to Google App Engine(GAE)
 

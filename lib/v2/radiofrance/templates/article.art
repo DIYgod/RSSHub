@@ -1,0 +1,4 @@
+<p>{{ standFirst }}</p>
+{{ each bodyJson }}
+<p>{{ $value.children[0].value }}</p>
+{{/each}}
