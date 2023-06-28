@@ -693,11 +693,23 @@ pageClass: routes
 
 </Route>
 
+## 成都大学
+
+### 研究生处
+
+<Route author="yanbot-team" example="/cdu/yjsc/yjszs" path="/cdu/yjsc/:type" :paramsDesc="['分类type,见下表']" radar="1" >
+
+| 研究生招生 |
+| ---------- |
+| yjszs      |
+
+</Route>
+
 ## 成都理工大学
 
 ### 研究生院
 
-<Route author="yanbot-team" example="/cdut/gra/zsgz-tzgg" path="/cdut/gra/zsgz-tzgg:type" :paramsDesc="['分类type,见下表']" radar="1" >
+<Route author="yanbot-team" example="/cdut/gra/zsgz-tzgg" path="/cdut/gra/:type" :paramsDesc="['分类type,见下表']" radar="1" >
 
 | 招生工作-通知公告 |
 | ----------------- |
