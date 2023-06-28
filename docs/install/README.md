@@ -21,6 +21,7 @@ sidebar: auto
 4.  [Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 5.  [Google App Engine](https://cloud.google.com/appengine/)
 6.  [Fly.io](https://fly.io/)
+7.  [Zeabur](https://zeabur.com)
 
 ## Docker 镜像
 
@@ -414,6 +415,8 @@ $ fly secrets set CACHE_TYPE=redis REDIS_URL='<刚才的连接 URL>'
 2.  创建一个新项目
 3.  在项目中选择创建新服务，选择从**服务市场**部署。
 4.  添加域名，若使用自定义域名，可参见 [Zeabur 的域名绑定文档](https://docs.zeabur.com/zh-CN/deploy/domain-binding)。
+
+[![Deploy on Zeabur](https://zeabur.com/button.svg)](https://dash.zeabur.com/templates/X46PTP)
 
 ## 部署到 Google App Engine
 
@@ -946,6 +949,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 -   轻小说文库
 
     -   `WENKU8_COOKIE`: 登陆轻小说文库后的 cookie
+
+-   色花堂
+
+    -   `SEHUATANG_COOKIE`: 登陆色花堂后的 cookie 值。
 
 -   邮箱 邮件列表路由：
 
