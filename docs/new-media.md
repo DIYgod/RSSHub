@@ -2752,6 +2752,10 @@ others = 热点新闻 + 滚动新闻
 
 </Route>
 
+### 专题文章
+
+<Route author="kudryavka1013" example="/gcores/collections/64" path="/gcores/collections/:collection" :paramsDesc="['专题id，可在专题页面的 URL 中找到，如 游戏开发设计心得分享 -- 64']" radar="1" />
+
 ### 播客
 
 <Route author="eternasuno" example="/gcores/radios/45" path="/gcores/radios/:category?" :paramsDesc="['分类名，默认为全部，可在分类页面的 URL 中找到，如 Gadio News -- 45']" radar="1" supportPodcast="1" />
