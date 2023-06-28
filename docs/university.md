@@ -894,6 +894,18 @@ pageClass: routes
 
 </Route>
 
+## 重庆邮电大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/cqupt/yjs/1180" path="/cqupt/yjs/:type" :paramsDesc="['分类，见下表, 未列出的type可在对应页 URL 中找到']" radar="1">
+
+| 硕士招生 |
+| -------- |
+| 1180     |
+
+</Route>
+
 ## 大连大学
 
 ### 教务处信息
