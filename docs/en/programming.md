@@ -303,7 +303,7 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 ### Daily Papers
 
-<Route author="zeyugao" example="/huggingface/daily-papers" path="/huggingface/daily-papers" />
+<RouteEn author="zeyugao" example="/huggingface/daily-papers" path="/huggingface/daily-papers" />
 
 ## Issue Hunt
 
