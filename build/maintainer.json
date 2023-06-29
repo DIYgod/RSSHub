@@ -2700,6 +2700,9 @@
     "/huanqiu/news/:category?": [
         "yuxinliu-alex"
     ],
+    "/huggingface/daily-papers": [
+        "zeyugao"
+    ],
     "/hunanpea/rsks/:guid": [
         "TonyRL"
     ],
