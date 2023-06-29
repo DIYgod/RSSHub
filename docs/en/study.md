@@ -46,12 +46,6 @@ pageClass: routes
 
 <RouteEn author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
 
-## Huggingface Daily Papers
-
-### Huggingface Daily Papers
-
-<RouteEn author="zeyugao" example="/huggingface-daily-papers" path="/huggingface-daily-papers" />
-
 ## iciba
 
 ### Daily English Sentence
