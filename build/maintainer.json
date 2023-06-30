@@ -1940,6 +1940,10 @@
     "/fx-markets/fx-markets/:channel": [
         "mikkkee"
     ],
+    "/fx678/kx": [
+        "occupy5",
+        "dousha"
+    ],
     "/fzmtr/announcements": [
         "HankChow"
     ],
@@ -6679,7 +6683,6 @@
     "/shuhui/comics/:id": [],
     "/asahi/area/:id": [],
     "/asahi/:genre?/:category?": [],
-    "/fx678/kx": [],
     "/soundcloud/tracks/:user": [],
     "/dilidili/fanju/:id": [],
     "/qtfyfl/:category": [],
