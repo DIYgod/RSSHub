@@ -489,6 +489,12 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news"/>
 
+## Huggingface
+
+### Daily Papers
+
+<Route author="zeyugao" example="/huggingface/daily-papers" path="/huggingface/daily-papers" />
+
 ## Issue Hunt
 
 ### 项目悬赏
