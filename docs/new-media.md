@@ -2726,12 +2726,6 @@ others = 热点新闻 + 滚动新闻
 
 </Route>
 
-## 汇通网
-
-### 7x24 小时快讯
-
-<Route author="occupy5" example="/fx678/kx" path="/fx678/kx" />
-
 ## 机核网
 
 ### 分类

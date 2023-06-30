@@ -368,6 +368,12 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
+## 汇通网
+
+### 7x24 小时快讯
+
+<Route author="occupy5 dousha" example="/fx678/kx" path="/fx678/kx" radar="1"/>
+
 ## 金十数据
 
 ### 市场快讯
