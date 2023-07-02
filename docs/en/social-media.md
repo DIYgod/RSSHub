@@ -384,11 +384,15 @@ Only for self-hosted
 
 ## Substack
 
+::: tip
+Substack [automatically generates feeds for publications](https://support.substack.com/hc/en-us/articles/360038239391-Is-there-an-RSS-feed-for-my-publication-).
+:::
+
 ### Trending
 
 <RouteEn author="bendobos" example="/substack/trending/staff-picks/false/10" path="/substack/trending/:category/:allowPaid?/:limit?" :paramsDesc="['Substack category name - see table below for valid values.', '`true | false` - If paid posts should be shown or not (boolean value). Default is `false`.', 'The maximum amount of posts to fetch, a number between `1` and `36`. Default is `36`.']" radar="1" rssbud="1">
 
-Substack currently does not offer a public developer API, so the internal API utilized on the Substack website is used here.
+Substack [currently does not offer a public developer API](https://support.substack.com/hc/en-us/articles/360038433912-Does-Substack-have-an-API-), so the internal API utilized on the Substack website is used here.
 Since it is not an "official" API, keep in mind that the API calls might break at any time.
 
 ::: details Available categories
@@ -428,7 +432,7 @@ You can find the `category` by using the table above, or via the URL on the Subs
 :::
 
 ::: warning
-Since an unofficial API is used, it is not clear how rate limits or other specifics of it work.
+Since an [unofficial API](https://support.substack.com/hc/en-us/articles/360038433912-Does-Substack-have-an-API-) is used, it is not clear how rate limits or other specifics of it work.
 
 Consider setting your RSS reader to not refresh the Substack feed too frequently.
 
