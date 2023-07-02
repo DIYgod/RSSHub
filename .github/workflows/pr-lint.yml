@@ -78,7 +78,7 @@ jobs:
 
   chatgpt-review:
     name: ChatGPT PR reviewer
-    if: ${{ github.event_name == 'pull_request_target' }}
+    if: ${{ github.event_name == 'pull_request_target' && false }}
     permissions:
       contents: read
       pull-requests: write
