@@ -1,0 +1,30 @@
+{{link}}
+
+{{subtitle}}
+{{if subtitle}}
+    <h2>{{subtitle}}</h2>
+{{/if}}
+
+{{if coverImage}}
+    <img src={{@ coverImage}} />
+{{/if}}
+
+<p>{{truncatedBodyText}}</p>
+
+<a href={{@ link}}>Read More...</a>
+
+<hr />
+
+<p>
+    <small>
+        {{wordcount}} words |
+        {{reactions}} ❤
+        {{if tags.length > 0}}
+            | tags:
+            {{each tags}}
+                {{$value.name}}
+                {{if $index != tags.length - 1}},{{/if}}
+            {{/each}}
+        {{/if}}
+    </small>
+</p>
