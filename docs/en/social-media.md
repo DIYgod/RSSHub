@@ -384,7 +384,9 @@ Only for self-hosted
 
 ## Substack
 
-<RouteEn author="bendobos" example="/substack/trending/staff-picks/false/10" path="/substack/trending/:category/:allowPaid?/:limit?" :paramsDesc="['Substack category name - see table below for valid values.', '`true | false` - If paid posts should be shown or not (boolean value). Default is `false`.', 'The maximum amount of posts to fetch, a number between `1` and `36`. Default is `36`.']" radar="1">
+### Trending
+
+<RouteEn author="bendobos" example="/substack/trending/staff-picks/false/10" path="/substack/trending/:category/:allowPaid?/:limit?" :paramsDesc="['Substack category name - see table below for valid values.', '`true | false` - If paid posts should be shown or not (boolean value). Default is `false`.', 'The maximum amount of posts to fetch, a number between `1` and `36`. Default is `36`.']" radar="1" rssbud="1">
 
 Substack currently does not offer a public developer API, so the internal API utilized on the Substack website is used here.
 Since it is not an "official" API, keep in mind that the API calls might break at any time.
