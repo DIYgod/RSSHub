@@ -382,6 +382,57 @@ Only for self-hosted
 
 <RouteEn author="yshalsager" example="/rattibha/user/elonmusk" path="/rattibha/user/:user" :paramsDesc="['Twitter username, without @']" radar="1" rssbud="1"/>
 
+## Substack
+
+<RouteEn author="bendobos" example="/substack/trending/staff-picks/false/10" path="/substack/trending/:category/:allowPaid?/:limit?" :paramsDesc="['Substack Category name, see table below', 'If paid-only posts should be shown', 'The maximum amount of posts to fetch, `36` by default']" radar="1">
+
+This route allows subscribing Substack "Explore" categories, available via https://substack.com/browse.
+
+Substack currently does not offer a public developer API, so the internal API utilized on the Substack website is used here.
+Since it is not an "official" API, keep in mind that the API calls might break at any time.
+
+::: tip
+You can find the `category` by using the table below, or via the URL in Substack: `https://substack.com/browse/<category name you need>`.
+:::
+
+| `category` Value | Category              | Comment                                                                      |
+| ---------------- | --------------------- | ---------------------------------------------------------------------------- |
+| `staff-picks`    | Staff Picks           | Substack uses a special API-URL for staff picks. This is handled internally. |
+| `culture`        | Culture               |                                                                              |
+| `technology`     | Technology            |                                                                              |
+| `politics`       | Politics              |                                                                              |
+| `finance`        | Finance               |                                                                              |
+| `food`           | Food & Drink          |                                                                              |
+| `sports`         | Sports                |                                                                              |
+| `faith`          | Faith & Spirituality  |                                                                              |
+| `news`           | News                  |                                                                              |
+| `music`          | Music                 |                                                                              |
+| `comics`         | Comics                |                                                                              |
+| `crypto`         | Crypto                |                                                                              |
+| `international`  | International         |                                                                              |
+| `art`            | Art & Illustration    |                                                                              |
+| `climate`        | Climate & Environment |                                                                              |
+| `science`        | Science               |                                                                              |
+| `health`         | Health & Wellness     |                                                                              |
+| `literature`     | Literature            |                                                                              |
+| `fiction`        | Fiction               |                                                                              |
+| `parenting`      | Parenting             |                                                                              |
+| `design`         | Design                |                                                                              |
+| `travel`         | Travel                |                                                                              |
+| `education`      | Education             |                                                                              |
+| `philosophy`     | Philosophy            |                                                                              |
+| `history`        | History               |                                                                              |
+| `humor`          | Humor                 |                                                                              |
+| `fashion`        | Fashion & Beauty      |                                                                              |
+
+::: warn
+Since an unofficial API is used, it is not clear how rate limits or other specifics of it work.
+
+Consider not refreshing the Substack-feed too frequently.
+:::
+
+</RouteEn>
+
 ## Telegram
 
 ### Channel
