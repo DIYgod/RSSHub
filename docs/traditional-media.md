@@ -1524,12 +1524,12 @@ category 对应的关键词有
 
 ### 分类 / 话题 / 作者
 
-<Route author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:category/:topic?" :paramsDesc="['可在 URL 中找到，或参考下面的表格', '可在 URL 中找到，或参考下面的表格']">
+<Route author="HenryQW proletarius101 LyleLee nczitzk" example="/reuters/world/us" path="/reuters/:category/:topic?" :paramsDesc="['可在 URL 中找到，或参考下面的表格', '可在 URL 中找到，或参考下面的表格']">
 
 -   `:category`:
-    | World | Business | Legal | Markets | Breakingviews | Technology |
-    | ----- | -------- | ----- | ------- | ------------- | ---------- |
-    | world | business | legal | markets | breakingviews | technology |
+    | World | Business | Legal | Markets | Breakingviews | Technology | Graphics |
+    | ----- | -------- | ----- | ------- | ------------- | ---------- | -------- |
+    | world | business | legal | markets | breakingviews | technology | graphics |
 
 -   `world/:topic`:
 
