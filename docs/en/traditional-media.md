@@ -355,6 +355,16 @@ Only `s00017` is in English.
 
 </RouteEn>
 
+## Radio France
+
+### Géopolitique
+
+<RouteEn author="xdu" example="/radiofrance/geopolitique" path="/radiofrance/geopolitique">
+
+French podcast on the international politics. This feed provides a better reading experience (full text) for the 3 latest articles.
+
+</RouteEn>
+
 ## Radio Free Asia (RFA)
 
 ### News
@@ -380,12 +390,12 @@ Parameters can be obtained from the official website, for instance:
 
 ### Category/Topic/Author
 
-<RouteEn author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:category/:topic?" :paramsDesc="['find it in the URL, or tables below', 'find it in the URL, or tables below']">
+<RouteEn author="HenryQW proletarius101 LyleLee nczitzk" example="/reuters/world/us" path="/reuters/:category/:topic?" :paramsDesc="['find it in the URL, or tables below', 'find it in the URL, or tables below']">
 
 -   `:category`:
-    | World | Business | Legal | Markets | Breakingviews | Technology |
-    | -------- | ------- | ----- | -------- | ------------- | ---------- |
-    | world | business | legal | markets | breakingviews | technology |
+    | World | Business | Legal | Markets | Breakingviews | Technology | Graphics |
+    | ----- | -------- | ----- | ------- | ------------- | ---------- | -------- |
+    | world | business | legal | markets | breakingviews | technology | graphics |
 
 -   `world/:topic`:
 

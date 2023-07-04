@@ -623,6 +623,12 @@ News 的数据来自 <https://warthunder.com/en/news/>
 
 <Route author="DIYgod" example="/mhw/news" path="/mhw/news" radar="1" rssbud="1"/>
 
+## 盒心光环
+
+### 资讯
+
+<Route author="XXY233" example="/xboxfan/news" path="/xboxfan/news" radar="1"/>
+
 ## 剑网 3
 
 ### 新闻资讯

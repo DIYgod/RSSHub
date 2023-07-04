@@ -406,6 +406,22 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="cf020031308 nczitzk xie-dongping" example="/hackernews/threads/comments_list/dang" path="/hackernews/:section?/:type?/:user?" :paramsDesc="['内容分区，见上表，默认为 `index`', '链接类型，见上表，默认为 `sources`', '设定用户，只在 `threads` 和 `submitted` 分区有效']" />
 
+## Hacking8
+
+### 信息流
+
+<Route author="nczitzk" example="/hacking8" path="/hacking8/:category?" :paramsDesc="['分类，见下表，默认为最近更新']">
+
+| 推荐  | 最近更新 | 漏洞 / PoC 监控 | PDF |
+| ----- | -------- | --------------- | --- |
+| likes | index    | vul-poc         | pdf |
+
+</Route>
+
+### 搜索
+
+<Route author="nczitzk" example="/hacking8/search/+node%3Ahackernews.cc" path="/hacking8/search/:keyword?" :paramsDesc="['关键字，默认为空']"/>
+
 ## HackMD
 
 ### Profile
@@ -472,6 +488,12 @@ GitHub 官方也提供了一些 RSS:
 ### Hex-Rays News
 
 <Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news"/>
+
+## Huggingface
+
+### Daily Papers
+
+<Route author="zeyugao" example="/huggingface/daily-papers" path="/huggingface/daily-papers" />
 
 ## Issue Hunt
 
