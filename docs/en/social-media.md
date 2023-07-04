@@ -225,6 +225,10 @@ These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for us
 
 <RouteEn author="notofoe" example="/mastodon/acct/CatWhitney@mastodon.social/statuses" path="/mastodon/acct/:acct/statuses/:only_media?" :paramsDesc="['Webfinger account URI, like `user@host`', 'whether only display media content, default to false, any value to true']"/>
 
+Started from Mastodon v4.0.0, the use of the `search` API in the route no longer requires a user token.
+If the domain of your Webfinger account URI is the same as the API host of the instance (i.e., no delegation called in some other protocols), then no configuration is required and the route is available out of the box.
+However, you can still specify these route-specific configurations if you need to override them.
+
 ### Instance timeline (local)
 
 <RouteEn author="hoilc" example="/mastodon/timeline/pawoo.net/true" path="/mastodon/timeline/:site/:only_media?" :paramsDesc="['instance address, only domain, no `http://` or `https://` protocol header', 'whether only display media content, default to false, any value to true']"/>
