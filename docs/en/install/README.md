@@ -769,9 +769,9 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   Mastodon user timeline: apply API here `https://mastodon.example/settings/applications`(repalce `mastodon.example`), please check scope `read:search`
 
-    -   `MASTODON_API_HOST`: API instance domain
+    -   `MASTODON_API_HOST`: API instance domain, only domain, no `http://` or `https://` protocol header
     -   `MASTODON_API_ACCESS_TOKEN`: user access token
-    -   `MASTODON_API_ACCT_DOMAIN`: acct domain for particular instance
+    -   `MASTODON_API_ACCT_DOMAIN`: acct domain for particular instance, Webfinger account URI, like `user@host`
 
 -   Medium related routes: Open the console, copy the cookie (in theory, only uid and sid are required)
 
