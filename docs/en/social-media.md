@@ -532,7 +532,7 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 
 ### Tweet Details
 
-<Route author="LarchLiu" example="/twitter/tweet/DIYgod/status/1650844643997646852" path="/twitter/tweet/:id/status/:status/:original?" :paramsDesc="['User name', 'Tweet ID', 'extra parameters, data type of return, if the value is not `0`/`false` and `config.isPackage` is `true`, return the original data of twitter']" radar="1" rssbud="1"/>
+<Route author="LarchLiu Rongronggg9" example="/twitter/tweet/DIYgod/status/1650844643997646852" path="/twitter/tweet/:id/status/:status/:original?" :paramsDesc="['User name', 'Tweet ID', 'extra parameters, data type of return, if the value is not `0`/`false` and `config.isPackage` is `true`, return the original data of twitter']" radar="1" rssbud="1"/>
 
 ## Vimeo
 
