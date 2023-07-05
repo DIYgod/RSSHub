@@ -3485,6 +3485,18 @@
     "/manhuagui/twmanhuagui/comic/:id/:chapterCnt?": [
         "btdwv"
     ],
+    "/mastodon/account_id/:site/:account_id/statuses/:only_media?": [
+        "notofoe"
+    ],
+    "/mastodon/acct/:acct/statuses/:only_media?": [
+        "notofoe"
+    ],
+    "/mastodon/remote/:site/:only_media?": [
+        "hoilc"
+    ],
+    "/mastodon/timeline/:site/:only_media?": [
+        "hoilc"
+    ],
     "/mcachicago/exhibitions": [
         "chazeon"
     ],
@@ -6899,10 +6911,6 @@
     "/bahamut/creation_index/:category?/:subcategory?/:type?": [],
     "/centbrowser/history": [],
     "/755/user/:username": [],
-    "/mastodon/timeline/:site/:only_media?": [],
-    "/mastodon/remote/:site/:only_media?": [],
-    "/mastodon/account_id/:site/:account_id/statuses/:only_media?": [],
-    "/mastodon/acct/:acct/statuses/:only_media?": [],
     "/aliyun-kernel/index": [],
     "/vulture/:tag/:excludetags?": [],
     "/xinwenlianbo/index": [],

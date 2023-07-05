@@ -14354,6 +14354,39 @@
       }
     ]
   },
+  "mastodon.social": {
+    "_name": "Mastodon",
+    ".": [
+      {
+        "title": "用户公共时间线",
+        "docs": "https://docs.rsshub.app/social-media.html#mastodon",
+        "source": [
+          "/:acct"
+        ]
+      },
+      {
+        "title": "实例公共时间线（本站）",
+        "docs": "https://docs.rsshub.app/social-media.html#mastodon",
+        "source": [
+          "/"
+        ]
+      },
+      {
+        "title": "实例公共时间线（跨站）",
+        "docs": "https://docs.rsshub.app/social-media.html#mastodon",
+        "source": [
+          "/"
+        ]
+      },
+      {
+        "title": "用户公共时间线（备用）",
+        "docs": "https://docs.rsshub.app/social-media.html#mastodon",
+        "source": [
+          "/:acct"
+        ]
+      }
+    ]
+  },
   "mcachicago.org": {
     "_name": "MCA Chicago",
     ".": [
