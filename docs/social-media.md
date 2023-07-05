@@ -549,7 +549,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 例如：<https://pawoo.net/users/pawoo_support.rss> 或 <https://pawoo.net/users/pawoo_support.atom>
 
-上述订阅源的内容不包括用户的转嘟。RSSHub 提供基于 Mastodon API 的订阅源，但需要您在某个 Mastodon 实例申请 API，并对 RSSHub 实例进行配置。详情见部署页面的配置模块。
+上述订阅源的内容不包括用户的转嘟。RSSHub 提供基于 Mastodon API 的订阅源，但可能需要您在某个 Mastodon 实例申请 API，并对 RSSHub 实例进行配置。详情见部署页面的[配置模块](/install/#route-specific-configurations)。
 
 :::
 
@@ -557,17 +557,27 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="notofoe" example="/mastodon/acct/CatWhitney@mastodon.social/statuses" path="/mastodon/acct/:acct/statuses/:only_media?" :paramsDesc="['Webfinger account URI, 形如 `user@host`', '是否只显示包含媒体（图片或视频）的推文, 默认置空为否, 任意值为是']"/>
 
+自 Mastodon v4.0.0 起，本路由中对于 `search` API 的使用不再需要访问令牌。
+如果你的 Webfinger account URI 域和实例的 API 服务器域名是一样的（即没有一些其他协议称呼的 deletation），那么此路由不需要额外配置且开箱即用。
+不过，你依然可以提供这些路由特定的配置来覆盖它们。
+
 ### 实例公共时间线（本站）
 
 <Route author="hoilc" example="/mastodon/timeline/pawoo.net/true" path="/mastodon/timeline/:site/:only_media?" :paramsDesc="['实例地址, 仅域名, 不包括`http://`或`https://`协议头', '是否只显示包含媒体（图片或视频）的推文, 默认置空为否, 任意值为是']"/>
+
+实例地址不为 `mastodon.social` 或 `pawoo.net` 的情况下均需要 `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` 为 `true`。
 
 ### 实例公共时间线（跨站）
 
 <Route author="hoilc" example="/mastodon/remote/pawoo.net/true" path="/mastodon/remote/:site/:only_media?" :paramsDesc="['实例地址, 仅域名, 不包括`http://`或`https://`协议头', '是否只显示包含媒体（图片或视频）的推文, 默认置空为否, 任意值为是']"/>
 
+实例地址不为 `mastodon.social` 或 `pawoo.net` 的情况下均需要 `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` 为 `true`。
+
 ### 用户公共时间线（备用）
 
 <Route author="notofoe" example="/mastodon/account_id/mastodon.social/23634/statuses/only_media" path="/mastodon/account/:site/:account_id/statuses/:only_media?" :paramsDesc="['实例地址, 仅域名, 不包括`http://`或`https://`协议头', '用户 ID. 登录实例后, 搜索用户并进入用户页, 在地址中可以找到这串数字', '是否只显示包含媒体（图片或视频）的推文, 默认置空为否, 任意值为是']"/>
+
+实例地址不为 `mastodon.social` 或 `pawoo.net` 的情况下均需要 `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` 为 `true`。
 
 ## Misskey
 
