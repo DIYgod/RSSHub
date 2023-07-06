@@ -448,15 +448,15 @@ Due to Telegram restrictions, some channels involving pornography, copyright, an
 cd .
 Specify options (in the format of query string) in parameter `routeParams` to control some extra features for threads
 
-| Key                            | Description                                                                                                                       | Accepts                | Defaults to                               |
-|--------------------------------|-----------------------------------------------------------------------------------------------------------------------------------| ---------------------- | ----------------------------------------- |
-| `showAuthorInTitle`            | Show author name in title                                                                                                         | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |
-| `showAuthorInDesc`             | Show author name in description (RSS body)                                                                                        | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |
-| `showQuotedAuthorAvatarInDesc` | Show avatar of quoted author in description (RSS body) (Not recommended if your RSS reader extracts images from description) | `0`/`1`/`true`/`false` | `false`                                   |
-| `showAuthorAvatarInDesc`       | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)             | `0`/`1`/`true`/`false` | `false`                                   |
-| `showEmojiForQuotesAndReply`  | Use "🔁" instead of "QT", "↩️" instead of "Re"                                                                                    | `0`/`1`/`true`/`false` | `false`                                   |
-| `showQuotedInTitle`            | Show quoted tweet in title                                                                                                        | `0`/`1`/`true`/`false` | `false`                                   |
-| `replies`                      | Show replies                                                                                                                      | `0`/`1`/`true`/`false` | `true`                                    |
+| Key                             | Description                                                                                                                    | Accepts                | Defaults to |
+|---------------------------------|--------------------------------------------------------------------------------------------------------------------------------| ---------------------- |-------------|
+| `showAuthorInTitle`             | Show author name in title                                                                                                      | `0`/`1`/`true`/`false` | `true`      |
+| `showAuthorInDesc`              | Show author name in description (RSS body)                                                                                     | `0`/`1`/`true`/`false` | `true`      |
+| `showQuotedAuthorAvatarInDesc`  | Show avatar of quoted author in description (RSS body) (Not recommended if your RSS reader extracts images from description)   | `0`/`1`/`true`/`false` | `true`      |
+| `showAuthorAvatarInDesc`        | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)          | `0`/`1`/`true`/`false` | `true`      |
+| `showEmojiForQuotesAndReply`    | Use "🔁" instead of "QT", "↩️" instead of "Re"                                                                                 | `0`/`1`/`true`/`false` | `true`      |
+| `showQuotedInTitle`             | Show quoted tweet in title                                                                                                     | `0`/`1`/`true`/`false` | `true`      |
+| `replies`                       | Show replies                                                                                                                   | `0`/`1`/`true`/`false` | `true`      |
 
 Specify different option values than default values to improve readability. The URL
 
