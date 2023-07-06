@@ -1,0 +1,39 @@
+<div>
+    <div>
+        <span>演出日期： {{ SCS_WEBPERCYCLE }}</span><br/>
+        <span>入场时间： {{ SCS_ENLASSNAME }}</span><br/>
+        <span>演出类型： {{ SCS_PERFORMANCE_TYPENAME }}</span><br/>
+        <span>演出时长： {{ SCS_LENGTH }}分钟</span><br/>
+        <span>演出语言： {{ SCS_PERLANGUAGENAME }}</span><br/>
+    </div>
+
+    <h1>演出介绍</h1>
+    {{ if SCS_PC_LUNBO_YCJS_PIC }}
+        <img src="https://www.shcstheatre.com{{ SCS_PC_LUNBO_YCJS_PIC }}" />
+    {{ /if }}
+    <div> {{@ SCS_PC_LUNBO_YCJS_EDITOR }} </div>
+
+    <h1>主创团队</h1>
+    {{ if SCS_PC_LUNBO_ZCTD_PIC }}
+        <img src="https://www.shcstheatre.com{{ SCS_PC_LUNBO_ZCTD_PIC }}" />
+    {{ /if }}
+    <div> {{@ SCS_PC_LUNBO_ZCTD_EDITOR }} </div>
+
+    <h1>剧情梗概</h1>
+    {{ if SCS_PC_LUNBO_JQGG_PIC }}
+        <img src="https://www.shcstheatre.com{{ SCS_PC_LUNBO_JQGG_PIC }}" />
+    {{ /if }}
+    <div> {{@ SCS_PC_LUNBO_JQGG_EDITOR }} </div>
+
+    <h1>获奖记录</h1>
+    {{ if SCS_PC_LUNBO_HJJL_PIC }}
+        <img src="https://www.shcstheatre.com{{ SCS_PC_LUNBO_HJJL_PIC }}" />
+    {{ /if }}
+    <div> {{@ SCS_PC_LUNBO_HJJL_EDITOR }} </div>
+
+    <h1>媒体评论</h1>
+    {{ if SCS_PC_LUNBO_MTPL_PIC }}
+        <img src="https://www.shcstheatre.com{{ SCS_PC_LUNBO_MTPL_PIC }}" />
+    {{ /if }}
+    <div> {{@ SCS_PC_LUNBO_MTPL_EDITOR }} </div>
+</div>
