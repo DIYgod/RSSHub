@@ -1,7 +1,7 @@
 <div>
     <div>
         <span>演出日期： {{ SCS_WEBPERCYCLE }}</span><br/>
-        <span>入场时间： {{ SCS_ENLASSNAME }}</span><br/>
+        <span>入场时间： {{ SCS_EINLASSNAME }}</span><br/>
         <span>演出类型： {{ SCS_PERFORMANCE_TYPENAME }}</span><br/>
         <span>演出时长： {{ SCS_LENGTH }}分钟</span><br/>
         <span>演出语言： {{ SCS_PERLANGUAGENAME }}</span><br/>
