@@ -1,4 +1,10 @@
 <div>
+    {{ if SCS_PC_YMXQ_PIC }}
+        {{ each SCS_PC_YMXQ_PIC.split(';').map(s => s.trim() )}}
+            <img src="https://www.shcstheatre.com{{ $value }}" />
+        {{ /each }}
+    {{ /if }}
+
     <ul>
         <li>演出日期：{{ SCS_WEBPERCYCLE }}</li>
         <li>入场时间：{{ SCS_EINLASSNAME }}</li>
