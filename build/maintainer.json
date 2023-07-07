@@ -4777,6 +4777,9 @@
     "/setn/:category?": [
         "nczitzk"
     ],
+    "/shcstheatre/programs": [
+        "fuzy112"
+    ],
     "/shiep/:type/:id?": [
         "gumibea",
         "TeamSUEP"
