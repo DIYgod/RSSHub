@@ -1,4 +1,16 @@
 {
+  "81.cn": {
+    "_name": "中国军网",
+    "81rc": [
+      {
+        "title": "军队人才网",
+        "docs": "https://docs.rsshub.app/government.html#zhon-guo-jun-wang-jun-dui-ren-cai-wang",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
   "163.com": {
     "_name": "网易",
     ".": [

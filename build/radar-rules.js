@@ -1,4 +1,14 @@
-({ "163.com":{ _name:"网易",
+({ "81.cn":{ _name:"中国军网",
+    "81rc":[ { title:"军队人才网",
+        docs:"https://docs.rsshub.app/government.html#zhon-guo-jun-wang-jun-dui-ren-cai-wang",
+        source:[ "/" ],
+        target:(params, url) => {
+                    url = new URL(url);
+                    const path = url.href.match(/81rc\.81\.cn(.*?)/).replace(/\/index\.html$/, '');
+
+                    return `/81/81rc${path === '/' ? '' : path}`;
+                } } ] },
+  "163.com":{ _name:"网易",
     ".":[ { title:"网易号（通用）",
         docs:"https://docs.rsshub.app/new-media.html#wang-yi-hao",
         source:[ "/dy/media/:id",
