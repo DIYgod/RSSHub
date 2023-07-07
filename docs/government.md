@@ -1112,6 +1112,22 @@ pageClass: routes
 
 </Route>
 
+## 中国军网
+
+### 军队人才网
+
+<Route author="nczitzk" example="/81/81rc" path="/81/81rc/:path+" :paramsDesc="['路径，默认为工作动态']">
+
+::: tip 提示
+
+若订阅 [文职人员 - 工作动态](https://81rc.81.cn/wzry/gzdt)，网址为 <https://81rc.81.cn/wzry/gzdt>。截取 `https://81rc.81.cn` 到末尾的部分 `/wzry/gzdt` 作为参数，此时路由为 [`/81/81rc/wzry/gzdt`](https://rsshub.app/81/81rc/wzry/gzdt)。
+
+若订阅子分类 [文职人员 - 各部门各单位招考动态](https://81rc.81.cn/wzry/jwjgbmhddwzkdt)，网址为 <https://81rc.81.cn/wzry/jwjgbmhddwzkdt>。截取 `https://81rc.81.cn` 到末尾的部分 `/wzry/jwjgbmhddwzkdt` 作为参数，此时路由为 [`/81/81rc/wzry/jwjgbmhddwzkdt`](https://rsshub.app/81/81rc/wzry/jwjgbmhddwzkdt)。
+
+:::
+
+</Route>
+
 ## 中国科学技术协会
 
 ### 通用
