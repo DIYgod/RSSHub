@@ -2590,7 +2590,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生通知公告
 
-<Route author="dzx-dzx" example="/sjtu/gs/enroll/59" path="/sjtu/gs/:type/:num?" :paramsDesc="['类别', '细分类别, 仅对`type`为`enroll`或`exchange`有效']">
+<Route author="mzr1996 dzx-dzx" example="/sjtu/gs/enroll/59" path="/sjtu/gs/:type/:num?" :paramsDesc="['类别', '细分类别, 仅对`type`为`enroll`或`exchange`有效']">
 
 | 工作信息 | 招生信息 | 培养信息 | 学位学科 | 国际交流 | 创新工程 |
 | -------- | -------- | -------- | -------- | -------- | -------- |
