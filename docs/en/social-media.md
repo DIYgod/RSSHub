@@ -444,7 +444,7 @@ Due to Telegram restrictions, some channels involving pornography, copyright, an
 
 ### User timeline
 
-<RouteEn author="ninboy" path="/threads/:user/:routeParams?" example="/threads/zuck" radar="1" rssbud="1">
+<RouteEn author="ninboy" path="/threads/:user/:routeParams?" example="/threads/zuck" radar="1" rssbud="1" puppeteer="1">
 
 Specify options (in the format of query string) in parameter `routeParams` to control some extra features for threads
 
