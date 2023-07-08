@@ -5306,6 +5306,9 @@
         "HenryQW",
         "vbali"
     ],
+    "/threads/:user/:routeParams?": [
+        "ninboy"
+    ],
     "/thwiki/calendar/:before?/:after?": [
         "aether17"
     ],
