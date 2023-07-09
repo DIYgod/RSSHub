@@ -4855,6 +4855,28 @@
     "/sis001/forum/:id": [
         "TonyRL"
     ],
+    "/sjtu/gs/:type/:num?": [
+        "dzx-dzx"
+    ],
+    "/sjtu/jwc/:type?": [
+        "SeanChao"
+    ],
+    "/sjtu/seiee/academic": [
+        "HenryQW"
+    ],
+    "/sjtu/seiee/bjwb/:type": [
+        "Polynomia"
+    ],
+    "/sjtu/seiee/xsb/:type?": [
+        "Polynomia",
+        "xxchan"
+    ],
+    "/sjtu/tongqu/:type?": [
+        "SeanChao"
+    ],
+    "/sjtu/yzb/zkxx/:type": [
+        "stdrc"
+    ],
     "/skysports/news/:team": [
         "nczitzk"
     ],
@@ -6429,13 +6451,6 @@
     "/hhu/libNewsc": [],
     "/shanghaitech/activity": [],
     "/shanghaitech/sist/activity": [],
-    "/sjtu/seiee/academic": [],
-    "/sjtu/seiee/bjwb/:type": [],
-    "/sjtu/seiee/xsb/:type?": [],
-    "/sjtu/gs/tzgg/:type?": [],
-    "/sjtu/jwc/:type?": [],
-    "/sjtu/tongqu/:type?": [],
-    "/sjtu/yzb/zkxx/:type": [],
     "/ju/jwc/:type?": [],
     "/lit/jwc": [],
     "/lit/xwzx/:name?": [],

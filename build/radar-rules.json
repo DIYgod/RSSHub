@@ -20286,6 +20286,54 @@
       }
     ]
   },
+  "sjtu.edu.cn": {
+    "_name": "上海交通大学",
+    "bjwb.seiee": [
+      {
+        "title": "电子信息与电气工程学院",
+        "docs": "https://docs.rsshub.app/university.html#shang-hai-jiao-tong-da-xue",
+        "source": [
+          "/seiee/list/:type",
+          "/bkjwb/list/:type",
+          "/xsb/list/:type"
+        ]
+      }
+    ],
+    "gs": [
+      {
+        "title": "研究生通知公告",
+        "docs": "https://docs.rsshub.app/university.html#shang-hai-jiao-tong-da-xue-yan-jiu-sheng-tong-zhi-gong-gao",
+        "source": [
+          "/announcement/:type"
+        ],
+        "target": "/sjtu/gs/:type"
+      }
+    ],
+    "jwc": [
+      {
+        "title": "教务处通知公告",
+        "docs": "https://docs.rsshub.app/university.html#shang-hai-jiao-tong-da-xue",
+        "source": [
+          "/xwtg/:type"
+        ]
+      }
+    ],
+    "tongqu": [
+      {
+        "title": "同去网最新活动",
+        "docs": "https://docs.rsshub.app/university.html#shang-hai-jiao-tong-da-xue"
+      }
+    ],
+    "yzb": [
+      {
+        "title": "研究生招生网招考信息",
+        "docs": "https://docs.rsshub.app/university.html#shang-hai-jiao-tong-da-xue",
+        "source": [
+          "/index/zkxx/:type"
+        ]
+      }
+    ]
+  },
   "skysports.com": {
     "_name": "Sky Sports",
     ".": [
