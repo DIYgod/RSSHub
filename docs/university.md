@@ -2576,11 +2576,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 电子信息与电气工程学院学术动态
 
-<Route author="HenryQW" example="/sjtu/seiee/academic" path="/sjtu/seiee/academic"/>
+<Route author="HenryQW" example="/sjtu/seiee/academic" path="/sjtu/seiee/academic" radar="1"/>
 
 ### 电子信息与电气工程学院本科教务办
 
-<Route author="Polynomia" example="/sjtu/seiee/bjwb/major_select" path="/sjtu/seiee/bjwb/:type" :paramsDesc="['无默认选项']">
+<Route author="Polynomia" example="/sjtu/seiee/bjwb/major_select" path="/sjtu/seiee/bjwb/:type" :paramsDesc="['无默认选项']" radar="1">
 
 | 分专业       | 转专业         | 直升研究生   | 交换交流 | 国际办学      |
 | ------------ | -------------- | ------------ | -------- | ------------- |
@@ -2588,19 +2588,9 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-### 研究生通知公告
-
-<Route author="mzr1996" example="/sjtu/gs/tzgg/pyxx" path="/sjtu/gs/tzgg/:type?" :paramsDesc="['默认列举所有通知公告']">
-
-| 通知公告 | 工作信息 | 招生信息 | 培养信息 | 学位学科 | 国际交流 | 创新工程 |
-| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 空       | gzxx     | xwxx1    | pyxx     | xwxx     | gjjl     | cxgc     |
-
-</Route>
-
 ### 电子信息与电气工程学院学生工作办公室
 
-<Route author="Polynomia xxchan" example="/sjtu/seiee/xsb/news" path="/sjtu/seiee/xsb/:type?" :paramsDesc="['默认列举所有通知公告']">
+<Route author="Polynomia xxchan" example="/sjtu/seiee/xsb/news" path="/sjtu/seiee/xsb/:type?" :paramsDesc="['默认列举所有通知公告']" radar="1">
 
 | 信息通告 | 奖学金      | 助学金       | 讲座活动 | 党团活动 | 新闻发布 | 本科生综合测评 |
 | -------- | ----------- | ------------ | -------- | -------- | -------- | -------------- |
@@ -2608,9 +2598,31 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生通知公告
+
+<Route author="mzr1996 dzx-dzx" example="/sjtu/gs/enroll/59" path="/sjtu/gs/:type/:num?" :paramsDesc="['类别', '细分类别, 仅对`type`为`enroll`或`exchange`有效']" radar="1">
+
+| 工作信息 | 招生信息 | 培养信息 | 学位学科 | 国际交流 | 创新工程 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| work     | enroll   | train    | degree   | exchange | xsjy     |
+
+当`type`为`enroll`, `num`可选字段:
+
+| 58       | 59       | 60         | 61       | 62       |
+| -------- | -------- | ---------- | -------- | -------- |
+| 博士招生 | 硕士招生 | 港澳台招生 | 考点信息 | 院系动态 |
+
+当`type`为`exchange`, `num`可选字段:
+
+| 67             | 68             | 69             | 70             | 71             |
+| -------------- | -------------- | -------------- | -------------- | -------------- |
+| 国家公派研究生 | 国际化培养资助 | 校际交换与联培 | 交流与合作项目 | 项目招募与宣讲 |
+
+</Route>
+
 ### 教务处通知公告
 
-<Route author="SeanChao" example="/sjtu/jwc/" path="/sjtu/jwc/:type?" :paramsDesc="['默认为 all ']">
+<Route author="SeanChao" example="/sjtu/jwc" path="/sjtu/jwc/:type?" :paramsDesc="['默认为 notice']" radar="1">
 
 | 新闻中心 | 通知通告 | 教学运行  | 注册学务 | 研究办 | 教改办 | 综合办 | 语言文字 | 工会与支部 | 通识教育 |
 | -------- | -------- | --------- | -------- | ------ | ------ | ------ | -------- | ---------- | -------- |
@@ -2630,7 +2642,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生招生网招考信息
 
-<Route author="richardchien" example="/sjtu/yzb/zkxx/sszs" path="/sjtu/yzb/zkxx/:type" :paramsDesc="['无默认选项']">
+<Route author="stdrc" example="/sjtu/yzb/zkxx/sszs" path="/sjtu/yzb/zkxx/:type" :paramsDesc="['无默认选项']" radar="1">
 
 | 博士招生 | 硕士招生 | 港澳台招生 | 考点信息 | 院系动态 |
 | -------- | -------- | ---------- | -------- | -------- |
