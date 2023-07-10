@@ -329,7 +329,13 @@ Please use <https://github.com/logseq/logseq/releases.atom> instead.
 
 ### APP Update
 
-<RouteEn author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" :paramsDesc="['app name, can be find in URL']"/>
+<RouteEn author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" :paramsDesc="['app name, can be found in URL']"/>
+
+## MacUpdate
+
+### Update
+
+<RouteEn author="TonyRL" example="/macupdate/app/11942" path="/macupdate/app/:appId/:appSlug?" :paramsDesc="['Application unique ID, can be found in URL', 'Application slug, can be found in URL']" radar="1"/>
 
 ## ManicTime
 
