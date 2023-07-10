@@ -3593,7 +3593,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### CUG - 本月新闻
 
-中国地质大学(武汉) 本月新闻，几乎包含全校站点最新信息。
+中国地质大学 (武汉) 本月新闻，几乎包含全校站点最新信息。
 
 <Route author="Dorad" example="/cug/news" path="/cug/news" />
 
