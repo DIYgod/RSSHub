@@ -3266,6 +3266,9 @@
     "/kemono/posts": [
         "nczitzk"
     ],
+    "/keylol/:path+": [
+        "nczitzk"
+    ],
     "/kimlaw/thesis": [
         "TonyRL"
     ],

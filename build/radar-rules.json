@@ -13428,6 +13428,19 @@
       }
     ]
   },
+  "keylol.com": {
+    "_name": "其乐",
+    ".": [
+      {
+        "title": "论坛",
+        "docs": "https://docs.rsshub.app/game.html#qi-le-lun-tan",
+        "source": [
+          "/:category",
+          "/"
+        ]
+      }
+    ]
+  },
   "kimlaw.or.kr": {
     "_name": "韓國海事法學會",
     ".": [
