@@ -3579,7 +3579,9 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 中国地质大学（武汉）
 
-### 今日文章 - 包含全校网站最新通知
+### CUG - 本月新闻
+
+中国地质大学(武汉) 本月新闻，几乎包含全校站点最新信息。
 
 <Route author="Dorad" example="/cug/news" path="/cug/news" />
 
@@ -3597,7 +3599,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 工程学院
 
-<Route author="Dorad" example="/cug/gcxy/0" path="/cug/gcxy/:type" />
+<Route author="Dorad" example="/cug/gcxy/1" path="/cug/gcxy/:type" />
 
 | 所有 | 学院新闻 | 通知公告 | 党建工作 | 学术动态 | 本科生教育 | 研究生教育 |
 | ---- | -------- | -------- | -------- | -------- | ---------- | ---------- |
