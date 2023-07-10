@@ -348,7 +348,7 @@ pageClass: routes
 
 ### 苹果固件更新 - IPSWs/OTAs 版本
 
-<Route author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" :paramsDesc="['填写ipsws或otas,得到不同版本的固件','产品名, `http://rsshub.app/ipsw/index/ipsws/iPod`如填写iPad则关注iPad整个系列(ptype选填为ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`如果填写具体的iPhone11,8则关注这个机型的ipsws固件信息']"/>
+<Route author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" :paramsDesc="['填写ipsws或otas，得到不同版本的固件','产品名，`http://rsshub.app/ipsw/index/ipsws/iPod`如填写iPad则关注iPad整个系列(ptype选填为ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`如果填写具体的iPhone11,8则关注这个机型的ipsws固件信息']"/>
 
 ## Logseq
 
@@ -363,11 +363,17 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 <Route author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" :paramsDesc="['应用名, 可在应用页 URL 中找到']"/>
 
+## MacUpdate
+
+### 更新
+
+<Route author="TonyRL" example="/macupdate/app/11942" path="/macupdate/app/:appId/:appSlug?" :paramsDesc="['应用 ID，可在 URL 找到', '应用名，可在 URL 找到']" radar="1"/>
+
 ## MacWk
 
 ### 应用更新
 
-<Route author="f48vj" example="/macwk/soft/sublime-text" path="/macwk/soft/:name" :paramsDesc="['应用名, 可在应用页 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="f48vj" example="/macwk/soft/sublime-text" path="/macwk/soft/:name" :paramsDesc="['应用名，可在应用页 URL 中找到']" radar="1" rssbud="1"/>
 
 ## ManicTime
 
@@ -381,7 +387,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### 外接程序更新
 
-<Route author="hoilc" example="/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln" path="/edge/addon/:crxid" :paramsDesc="['扩展 id, 可在扩展页 URL 中找到']" />
+<Route author="hoilc" example="/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln" path="/edge/addon/:crxid" :paramsDesc="['扩展 id，可在扩展页 URL 中找到']" />
 
 ## Microsoft Store
 

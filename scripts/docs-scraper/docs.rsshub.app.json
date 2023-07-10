@@ -13,10 +13,10 @@
         "lvl3": ".theme-default-content h3",
         "lvl4": ".theme-default-content h4",
         "lvl5": ".theme-default-content h5",
-        "text": ".theme-default-content p, .docs-content li"
+        "text": ".theme-default-content p, .theme-default-content table"
     },
     "strip_chars": " .,;:#",
-    "scrap_start_urls": true,
+    "scrap_start_urls": false,
     "min_indexed_level": 1,
     "custom_settings": {
         "displayedAttributes": [
@@ -53,5 +53,6 @@
             "content"
         ],
         "sortableAttributes": ["anchor"]
-    }
+    },
+    "selectors_exclude": [".badge", ".author"]
 }
