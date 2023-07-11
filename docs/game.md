@@ -623,6 +623,12 @@ News 的数据来自 <https://warthunder.com/en/news/>
 
 <Route author="DIYgod" example="/mhw/news" path="/mhw/news" radar="1" rssbud="1"/>
 
+## 盒心光环
+
+### 资讯
+
+<Route author="XXY233" example="/xboxfan/news" path="/xboxfan/news" radar="1"/>
+
 ## 剑网 3
 
 ### 新闻资讯
@@ -768,6 +774,22 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 ### 元素文章
 
 <Route author="hoilc" example="/cowlevel/element/1370" path="/cowlevel/element/:id" :paramsDesc="['元素 ID, 可在 URL 中找到']" radar="1" rssbud="1"/>
+
+## 其乐
+
+### 论坛
+
+<Route author="nczitzk" example="/keylol" path="/keylol/:path+" :paramsDesc="['路径，默认为热点聚焦']">
+
+::: tip 提示
+
+若订阅 [热点聚焦](https://keylol.com/f161-1)，网址为 <https://keylol.com/f161-1>。截取 `https://keylol.com/` 到末尾的部分 `f161-1` 作为参数，此时路由为 [`/keylol/f161-1`](https://rsshub.app/keylol/f161-1)。
+
+若订阅子分类 [试玩免费 - 热点聚焦](https://keylol.com/forum.php?mod=forumdisplay\&fid=161\&filter=typeid\&typeid=459)，网址为 <https://keylol.com/forum.php?mod=forumdisplay&fid=161&filter=typeid&typeid=459>。截取 `https://keylol.com/forum.php?mod=forumdisplay&` 到末尾的部分 `fid=161&filter=typeid&typeid=459` 作为参数，此时路由为 [`/keylol/fid=161&filter=typeid&typeid=459`](https://rsshub.app/keylol/fid=161\&filter=typeid\&typeid=459)。
+
+:::
+
+</Route>
 
 ## 少女前线
 
