@@ -94,6 +94,16 @@ pageClass: routes
 
 <Route author="Yuk-0v0" example="/ahjzu/news" path="/ahjzu/news" />
 
+### 研究生院
+
+<Route author="yanbot-team" example="/ahjzu/yjsc/12948" path="/ahjzu/yjsc/:type" :paramsDesc="['类型名,见下表，也可在页面URL中找到']"  radar="1" rssbud="1">
+
+| 硕士招生 |
+| -------- |
+| 12948    |
+
+</Route>
+
 ## 安徽农业大学
 
 ### 计算机学院
@@ -3908,6 +3918,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 招生工作 |
 | -------- |
 | 948      |
+
+</Route>
+
+### 上海对外经贸大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/suibe/yjsy/zsxx" path="/suibe/yjsy/:type" :paramsDesc="['类型,见下表,也可在页面URL中找到']">
+
+| 招生信息 |
+| -------- |
+| zsxx     |
 
 </Route>
 
