@@ -2916,6 +2916,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="sparkcyf" example="/sustech/bidding" path="/sustech/bidding" />
 
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/sustech/gs/92" path="/sustech/gs/:type" :paramsDesc="['分类名，见下表，也可在网页URL中找到']">
+
+| 招生信息硕士 |
+| ------------ |
+| 92           |
+
+</Route>
+
 ## 南方医科大学
 
 ### 研究生招生信息网
