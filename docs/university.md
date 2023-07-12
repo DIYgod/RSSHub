@@ -5521,6 +5521,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 浙江理工大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/zstu/gra/sszs" path=/zstu/gra/:type" :paramsDesc="['分类，见下表']">
+
+| 硕士招生 |
+| -------- |
+| sszs     |
+
+</Route>
+
 ## 浙江师范大学
 
 ### 研究生招生信息网
