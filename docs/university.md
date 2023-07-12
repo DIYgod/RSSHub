@@ -1221,6 +1221,18 @@ pageClass: routes
 
 </Route>
 
+## 大连医科大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/dmu/yjs/zsgz-tzgg" path="/dmu/yjs/:type" :paramsDesc="['分类，见下表, 未列出的type可在对应页 URL 中找到']" >
+
+| 招生工作通知公告 |
+| ---------------- |
+| zsgz-tzgg        |
+
+</Route>
+
 ## 电子科技大学
 
 ### 研究生院
