@@ -2040,6 +2040,18 @@ category 列表：
 
 </Route>
 
+## 河北大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/hbu/yjsy/zsgz-tzgg" path="/hbu/yjsy/:type" :paramsDesc="['分类名，见下表']" >
+
+| 招生工作通知公告 |
+| ---------------- |
+| zsgz-tzgg        |
+
+</Route>
+
 ## 河北工业大学
 
 ### 研究生院招生工作
