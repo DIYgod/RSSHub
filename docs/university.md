@@ -2596,6 +2596,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 集美大学
+
+### 招生办
+
+<Route author="yanbot-team" example="/jmu/zsb/yjszs" path="/jmu/zsb/:type" :paramDesc="['分类id，见下表']">
+
+| 研究生招生 |
+| ---------- |
+| yjszs      |
+
+</Route>
+
 ## 暨南大学
 
 ### 暨南要闻
@@ -2620,7 +2632,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生招生信息网
 
-<Route author="yanbot" example="/jnu/yz/tzgg" path="/jnu/yz/:type" :paramDesc="['分类id，见下表']">
+<Route author="yanbot-team" example="/jnu/yz/tzgg" path="/jnu/yz/:type" :paramDesc="['分类id，见下表']">
 
 | 通知公告 | 硕士招生简章 |
 | -------- | ------------ |
