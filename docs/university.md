@@ -1956,6 +1956,16 @@ category 列表：
 
 <Route author="raptazure" example="/hitwh/today" path="/hitwh/today" radar="1" rssbud="1"/>
 
+### 研究生处
+
+<Route author="yanbot-team" example="/hitwh/yjsc/zsgz_2083" path="/hitwh/yjsc/:type" :paramsDesc="['分类名，见下表']" >
+
+| 招生工作通知公告 |
+| ---------------- |
+| zsgz_2083        |
+
+</Route>
+
 ## 哈尔滨理工大学
 
 ### 教务处
