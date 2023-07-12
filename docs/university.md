@@ -2642,6 +2642,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 济南大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/ujn/yz/1033" path="/ujn/yz/:type" :paramDesc="['分类id，见下表']">
+
+| 硕士报考信息 |
+| ------------ |
+| 1033         |
+
+</Route>
+
 ## 暨南大学
 
 ### 暨南要闻
