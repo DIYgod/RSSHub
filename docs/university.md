@@ -1655,6 +1655,18 @@ pageClass: routes
 
 </Route>
 
+## 广西师范大学
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/gxnu/yz/xxgg" path="/gxnu/yz/:type" :paramsDesc="['分类名,见下表，也可在页面url中找到']">
+
+| 信息公告 |
+| -------- |
+| xxgg     |
+
+</Route>
+
 ## 广西中医药大学
 
 ### 研究生院
@@ -2642,7 +2654,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-## 济南大学
+## 济南大学（山东）
 
 ### 研究生招生信息网
 
@@ -3991,7 +4003,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-### 上海对外经贸大学
+## 上海对外经贸大学
 
 ### 研究生院
 
@@ -5595,7 +5607,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生院
 
-<Route author="yanbot-team" example="/zstu/gra/sszs" path=/zstu/gra/:type" :paramsDesc="['分类，见下表']">
+<Route author="yanbot-team" example="/zstu/gra/sszs" path="/zstu/gra/:type" :paramsDesc="['分类，见下表']">
 
 | 硕士招生 |
 | -------- |
