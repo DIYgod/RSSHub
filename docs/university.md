@@ -5775,6 +5775,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生院
+
+<Route author="yanbot-team" example="/nuc/grs/zsgz-zsgz" path="/nuc/grs/:type" :paramsDesc="['分类type，见下表，也可在URL中找到']">
+
+| 招生工作  |
+| --------- |
+| zsgz-zsgz |
+
+</Route>
+
 ## 中国传媒大学
 
 ### 研究生招生网
