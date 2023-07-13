@@ -24633,6 +24633,19 @@
       }
     ]
   },
+  "yangtzeu.edu.cn": {
+    "_name": "长江大学",
+    ".": [
+      {
+        "title": "动物科学学院",
+        "docs": "https://docs.rsshub.app/universities.html#chang-jiang-da-xue-dong-wu-ke-xue-xue-yuan",
+        "source": [
+          "/:category",
+          "/"
+        ]
+      }
+    ]
+  },
   "yaohuo.me": {
     "_name": "妖火",
     ".": [

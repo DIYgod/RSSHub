@@ -13261,6 +13261,17 @@
         docs:"https://docs.rsshub.app/traditional-media.html#yahoo",
         source:[ "/" ],
         target:"/yahoo/news/:region/:category?" } ] },
+  "yangtzeu.edu.cn":{ _name:"长江大学",
+    ".":[ { title:"动物科学学院",
+        docs:"https://docs.rsshub.app/universities.html#chang-jiang-da-xue-dong-wu-ke-xue-xue-yuan",
+        source:[ "/:category",
+          "/" ],
+        target:(params, url) => {
+                    url = new URL(url);
+                    const path = /\.edu\.cn(.*?)\.htm/.test(url.href) ? url.href.match(/\.edu\.cn(.*?)\.htm/)[1] : '';
+
+                    return `/yangtzeu/dongke${path}`;
+                } } ] },
   "yaohuo.me":{ _name:"妖火",
     ".":[ { title:"首页",
         docs:"https://docs.rsshub.app/new-media.html#yao-huo-shou-ye",
