@@ -1037,7 +1037,7 @@ pageClass: routes
 
 ### 最新信息公开
 
-<Route author="KiraKiseki" example="/dhu/xxgk/news" path="/dhu/xxgk/news"/>
+<Route author="KiraKiseki" example="/dhu/xxgk/news" path="/dhu/xxgk/news"/></Route>
 
 ### 研究生招生信息
 
@@ -1048,6 +1048,10 @@ pageClass: routes
 | doctor   | master   |
 
 </Route>
+
+### 学术信息
+
+<Route author="fox2049" example="/dhu/news/xsxx" path="/dhu/news/xsxx"/></Route>
 
 ## 东南大学
 
