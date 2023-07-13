@@ -2112,6 +2112,18 @@ category 列表：
 
 </Route>
 
+## 河北医科大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/hebmu/gschool/zsgz-sszs" path="/hebmu/gschool/:type" :paramsDesc="['分类名，见下表']" >
+
+| 招生工作硕士招生 |
+| ---------------- |
+| zsgz-sszs        |
+
+</Route>
+
 ## 衡阳师范学院
 
 ### 研究生院
