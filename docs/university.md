@@ -5385,6 +5385,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 烟台大学
+
+### 研究生处
+
+<Route author="yanbot-team" example="/ytu/yjs/zsgz" path="/ytu/yjs/:type" :paramsDesc="['分类名']">
+
+| 招生工作 |
+| -------- |
+| zsgz     |
+
+</Route>
+
 ## 扬州大学
 
 ### 官网消息
