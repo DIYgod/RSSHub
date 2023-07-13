@@ -1505,6 +1505,18 @@ pageClass: routes
 
 </Route>
 
+## 福建农林大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/fafu/yjsy/3604" path="/fafu/yjsy/:type" :paramsDesc="['分类见下表']">
+
+| 硕士生招生 |
+| ---------- |
+| 3604       |
+
+</Route>
+
 ## 福建师范大学
 
 ### 研究生院
