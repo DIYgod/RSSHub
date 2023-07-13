@@ -3695,6 +3695,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 青岛理工大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/qtech/yjsh/tzgg" path="/qtech/yjsh/:type" :paramsDesc="['分类id，见下表']">
+
+| 通知公告 |
+| -------- |
+| tzgg     |
+
+</Route>
+
 ## 青海大学
 
 ### 研究生院
