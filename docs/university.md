@@ -3831,6 +3831,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 厦门理工学院
+
+### 研究生院
+
+<Route author="yanbot-team" example="/xmut/yjs/zsxx-zsgg" path="/xmut/yjs/:type" :paramsDesc="['分类见下表']"/>
+
+| 招生公告  |
+| :-------: |
+| zsxx-zsgg |
+
+</Route>
+
 ## 山东大学
 
 ### 软件学院通知
