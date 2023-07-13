@@ -417,6 +417,22 @@ pageClass: routes
 
 <Route author="nczitzk" example="/bupt/rczp" path="/bupt/rczp" />
 
+## 长江大学
+
+### 动物科学学院
+
+<Route author="nczitzk" example="/yangtzeu/dongke" path="/yangtzeu/dongke/:path+" :paramsDesc="['路径，默认为学院新闻']">
+
+::: tip 提示
+
+若订阅 [院情总览 - 通知公告](https://dongke.yangtzeu.edu.cn/yqzl/tzgg.htm)，网址为 <https://dongke.yangtzeu.edu.cn/yqzl/tzgg.htm>。截取 `https://dongke.yangtzeu.edu.cn` 到末尾 `.htm` 的部分 `/yqzl/tzgg` 作为参数，此时路由为 [`/yangtzeu/dongke/yqzl/tzgg`](https://rsshub.app/yangtzeu/dongke/yqzl/tzgg)。
+
+若订阅子分类 [学生工作](https://dongke.yangtzeu.edu.cn/xsgz.htm)，网址为 <https://dongke.yangtzeu.edu.cn/xsgz.htm>。截取 `https://dongke.yangtzeu.edu.cn` 到末尾 `.htm` 的部分 `/xsgz` 作为参数，此时路由为 [`/yangtzeu/dongke/xsgz`](https://rsshub.app/yangtzeu/dongke/xsgz)。
+
+:::
+
+</Route>
+
 ## 常州大学
 
 ### 教务处
