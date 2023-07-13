@@ -2354,6 +2354,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 湖南农业大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/hunau/yjsy/yjszs" path="/hunau/yjsy/:type" :paramsDesc="['分类，见下表，也可从页面URL中找到']">
+
+| 招生工作 |
+| -------- |
+| yjszs    |
+
+</Route>
+
 ## 湖南师范大学
 
 ### 研究生院
