@@ -2928,6 +2928,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 鲁东大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/ldu/grad/zslq-gzdt" path="/ldu/grad/:type" :paramsDesc="['分类type，见下表']">
+
+| 招生录取工作动态 |
+| ---------------- |
+| zslq-gzdt        |
+
+</Route>
+
 ## 洛阳理工学院
 
 ### 教务处
