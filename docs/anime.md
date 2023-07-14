@@ -554,7 +554,7 @@ Sources
 
 ## 包子漫画
 
-#### 订阅漫画
+### 订阅漫画
 
 <Route author="Fatpandac" example="/baozimh/comic/guowangpaiming-shiricaofu" path="/baozimh/comic/:name" :paramsDesc="['漫画名称，在漫画链接可以得到(`comic/` 后的那段)']"/>
 
