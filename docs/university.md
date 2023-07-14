@@ -1049,6 +1049,10 @@ pageClass: routes
 
 </Route>
 
+### 学术信息
+
+<Route author="fox2049" example="/dhu/news/xsxx" path="/dhu/news/xsxx"/>
+
 ## 东南大学
 
 ### 信息科学与工程学院学术活动
