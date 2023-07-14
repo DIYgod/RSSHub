@@ -266,11 +266,23 @@ pageClass: routes
 
 ### 分类
 
-<Route author="yuxinliu-alex" example="/gov/nrta/news" path="/gov/nrta/news/:category?" :paramsDesc="['资讯类别， 可从地址中获取，默认为总局要闻']"/>
+<Route author="yuxinliu-alex" example="/gov/nrta/news" path="/gov/nrta/news/:category?" :paramsDesc="['资讯类别，可从地址中获取，默认为总局要闻']"/>
 
 | 总局要闻 | 公告公示 | 工作动态 | 其他 |
-| :------: | :------: | :------: | :--: |
-|    112   |    113   |    114   |      |
+| -------- | -------- | -------- | ---- |
+| 112      | 113      | 114      |      |
+
+</Route>
+
+### 电视剧政务平台
+
+<Route author="nczitzk" example="/gov/nrta/dsj" path="/gov/nrta/dsj/:category?" :paramsDesc="['分类，见下表，默认为备案公示']">
+
+| 备案公示 | 发行许可通告 | 重大题材立项     | 重大题材摄制    | 变更通报 |
+| -------- | ------------ | ---------------- | --------------- | -------- |
+| note     | announce     | importantLixiang | importantShezhi | changing |
+
+</Route>
 
 ## 国家税务总局
 
