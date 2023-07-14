@@ -2716,6 +2716,9 @@
     "/hunanpea/rsks/:guid": [
         "TonyRL"
     ],
+    "/huoxian/zone": [
+        "p7e4"
+    ],
     "/hupu/all/:id?": [
         "nczitzk"
     ],
