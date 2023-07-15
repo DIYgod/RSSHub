@@ -350,6 +350,12 @@ pageClass: routes
 
 </Route>
 
+## SecIN 信息安全技术社区
+
+### 最新文章
+
+<Route author="p7e4" example="/sec-in" path="/sec-in"/>
+
 ## The Ring of Wonder
 
 ### 首页更新
