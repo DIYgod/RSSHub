@@ -4735,6 +4735,9 @@
     "/sdzk/:bcid?/:cid?": [
         "nczitzk"
     ],
+    "/sec-in/": [
+        "p7e4"
+    ],
     "/secnews/index": [
         "kaiili"
     ],
