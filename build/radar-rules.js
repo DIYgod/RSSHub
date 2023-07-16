@@ -4851,7 +4851,17 @@
     ".":[ { title:"分类",
         docs:"https://docs.rsshub.app/government.html#guo-jia-guang-bo-dian-shi-zong-ju",
         source:[ "/col/*category" ],
-        target:(params) => `/gov/nrta/news/${params.category.replace('col', '').replace('/index.html', '')}` } ] },
+        target:(params) => `/gov/nrta/news/${params.category.replace('col', '').replace('/index.html', '')}` } ],
+    dsj:[ { title:"电视剧政务平台",
+        docs:"https://docs.rsshub.app/government.html#guo-jia-guang-bo-dian-shi-zong-ju",
+        source:[ "/tims/site/views/applications.shanty",
+          "/" ],
+        target:(params, url) => {
+                    url = new URL(url);
+                    const category = url.searchParams.get('appName');
+
+                    return `/gov/nrta/dsj/${category}`;
+                } } ] },
   "nsfc.gov.cn":{ _name:"国家自然科学基金委员会",
     ".":[ { title:"基金要闻",
         docs:"https://docs.rsshub.app/other.html#guo-jia-zi-ran-ke-xue-ji-jin-wei-yuan-hui-ji-jin-yao-wen",

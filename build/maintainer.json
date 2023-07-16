@@ -2249,6 +2249,9 @@
     "/gov/nrta/news/:category?": [
         "yuxinliu-alex"
     ],
+    "/gov/nrta/dsj/:category?": [
+        "nczitzk"
+    ],
     "/gov/nsfc/news/:type?": [
         "Derekmini",
         "nczitzk"
