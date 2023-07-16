@@ -331,7 +331,7 @@ pageClass: routes
 
 ### 通用
 
-<Route author="TonyRL" example="/gov/nmpa/xxgk/ggtg" path="/gov/nmpa/:path+" :paramsDesc="['路径，默认为公告通告']" radar="1" rssbud="1" puppeteer="1">
+<Route author="TonyRL" example="/gov/nmpa/xxgk/ggtg" path="/gov/nmpa/:path+" :paramsDesc="['路径，默认为公告通告']" radar="1" rssbud="1">
 
 ::: tip 提示
 
@@ -347,7 +347,7 @@ pageClass: routes
 
 ### 通用
 
-<Route author="nczitzk" example="/gov/nifdc/bshff/ylqxbzhgl/qxggtzh" path="/gov/nifdc/:path+" :paramsDesc="['路径，默认为公告通告']" radar="1" rssbud="1" puppeteer="1">
+<Route author="nczitzk" example="/gov/nifdc/bshff/ylqxbzhgl/qxggtzh" path="/gov/nifdc/:path+" :paramsDesc="['路径，默认为公告通告']" radar="1" rssbud="1">
 
 ::: tip 提示
 
