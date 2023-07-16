@@ -70,11 +70,27 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### UP 主粉丝
 
-<Route author="Qixingchen" example="/bilibili/user/followers/2267573" path="/bilibili/user/followers/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']" radar="1" rssbud="1"/>
+<Route author="Qixingchen" example="/bilibili/user/followers/2267573/3" path="/bilibili/user/followers/:uid/:loginUid" :paramsDesc="['用户 id, 可在 UP 主主页中找到','用于登入的用户id,需要配置对应的 Cookie 值']" radar="1" rssbud="1" selfhost="1">
+
+::: warning 注意
+
+UP 主粉丝现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
+
+</Route>
 
 ### UP 主关注用户
 
-<Route author="Qixingchen" example="/bilibili/user/followings/2267573" path="/bilibili/user/followings/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']" radar="1" rssbud="1"/>
+<Route author="Qixingchen" example="/bilibili/user/followings/2267573/3" path="/bilibili/user/followings/:uid/:loginUid" :paramsDesc="['用户 id, 可在 UP 主主页中找到','用于登入的用户id,需要配置对应的 Cookie 值']" radar="1" rssbud="1" selfhost="1">
+
+::: warning 注意
+
+UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
+
+</Route>
 
 ### 分区视频
 
