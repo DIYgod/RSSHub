@@ -718,7 +718,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
         1.  打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8>
         2.  打开控制台，切换到 Network 面板，刷新
         3.  点击 dynamic_new 请求，找到 Cookie
-        4.  视频和专栏只要求 `SESSDATA` 字段，动态需复制整段 Cookie
+        4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie
 
 -   Bitbucket: [Basic auth with App passwords](https://developer.atlassian.com/cloud/bitbucket/rest/intro/#basic-auth)
 
