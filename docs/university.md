@@ -3975,6 +3975,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 山东农业大学
+
+### 研究生处
+
+<Route author="yanbot-team" example="/sdau/yjsc/zsgz" path="/sdau/yjsc/:type" :paramsDesc="['专栏名称，见下表，也可在对应页面的URL中找到']" radar="1" rssbud="1">
+
+| 招生工作 |
+| -------- |
+| zsgz     |
+
+</Route>
+
 ## 山东师范大学
 
 ### 研究生招生信息网
