@@ -657,6 +657,18 @@ pageClass: routes
 
 </Route>
 
+## 长春工业大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/ccut/yjsy/a2023yzxxgk" path="/ccut/yjsy/:type" :paramsDesc="['分类type,见下表']" radar="1" >
+
+| 2023 研招信息公开 |
+| ----------------- |
+| sssza2023yzxxgks  |
+
+</Route>
+
 ## 长春理工大学
 
 ### 研究生招生网
@@ -4534,6 +4546,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 类型 | 教务动态 | 公告在线 | 选课通知 |
 | ---- | -------- | -------- | -------- |
 |      | jwdt     | ggzx     | xktz     |
+
+</Route>
+
+### 研究生院
+
+<Route author="yanbot-team" example="/usts/yjsb/zsgz" path="/usts/yjsb/:type" :paramsDesc="['类型，见下表']" rssbud="1" radar="1">
+
+| 招生工作 |
+| -------- |
+| zsgz     |
 
 </Route>
 
