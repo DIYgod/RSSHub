@@ -6097,6 +6097,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 中国科学院大学宁波材料工程学院
+
+### 招生信息
+
+<Route author="yanbot-team" example="/nimte/ncmte/zhaosheng" path="/nimte/ncmte/:type" :paramsDesc="['分类type，见下表，也可在网页URL中找到']">
+
+| 招生类型 | 招生工作  |
+| :------: | :-------: |
+|   参数   | zhaosheng |
+
+</Route>
+
 ## 中国矿业大学
 
 ### 研究生招生网
