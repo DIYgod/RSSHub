@@ -380,6 +380,12 @@ encodeURIComponent(JSON.stringify({"author": "作者", "link": "文章原链接"
 
 <Route author="sbilly" example="/sans/summit_archive" path="/sans/summit_archive" />
 
+## SecWiki - 安全维基
+
+### 最新周刊
+
+<Route author="p7e4" example="/sec-wiki/weekly" path="/sec-wiki/weekly" />
+
 ## TSSstatus（iOS 降级通道）
 
 ### Status
