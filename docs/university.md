@@ -6089,6 +6089,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="HenryQW" example="/cas/sim/kyjz" path="/cas/sim/kyjz" radar="1"/>
 
+### 沈阳应用生态研究所
+
+<Route author="yanbot-team" example="/iaecsc/yjsjy/zhaoshengxinxi" path="/iaecsc/yjsjy/:type" :paramsDesc="['分类，见下表']" radar="1">
+
+| 招生信息       |
+| -------------- |
+| zhaoshengxinxi |
+
+</Route>
+
 ### 信息工程研究所 第二研究室 处理架构组 知识库
 
 <Route author="renzhexigua" example="/cas/mesalab/kb" path="/cas/mesalab/kb" radar="1"/>
