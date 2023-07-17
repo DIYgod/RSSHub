@@ -6155,6 +6155,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 中国美术学院
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/caa/zb/sszs" path="/caa/zb/:type" :paramsDesc="['分类type，见下表，也可在网页URL中找到']">
+
+| 类型 | 通知公告 |
+| :--: | :------: |
+| 参数 |   sszs   |
+
+</Route>
+
 ## 中国农业大学
 
 ### 中国农业大学信电学院
