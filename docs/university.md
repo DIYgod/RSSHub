@@ -5121,6 +5121,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 西北民族大学
+
+### 研究生招生信息网
+
+<Route author="yanbot-team" example="/xbmu/yz/sszs-tzgg" path="/xbmu/yz/:type" :paramsDesc="['栏目ID,见下表，也可在页面URL中找到']">
+
+| 硕士招生  |
+| --------- |
+| sszs-tzgg |
+
+</Route>
+
 ## 西北农林科技大学
 
 ### 校园要闻
