@@ -1553,6 +1553,18 @@ pageClass: routes
 
 </Route>
 
+## 福建中医药大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/fjtcm/yjsy/500" path=/fjtcm/yjsy/:type" :paramsDesc="['分类见下表']">
+
+| 硕士招生 |
+| -------- |
+| 500      |
+
+</Route>
+
 ## 福州大学
 
 ### 教务处通知
