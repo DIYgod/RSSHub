@@ -2478,23 +2478,23 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 上海大学
 
-### 上海大学官网信息
+### 官网信息
 
 <Route author="lonelyion" example="/shu/news" path="/shu/:type?" :paramsDesc="['消息类型,默认为`news`']">
 
-| 综合新闻 | 科研动态 | 通知公告 |
-| -------- | -------- | -------- |
-| news     | research | notice   |
+| 综合新闻 | 科研动态 | 通知公告 | 重要新闻  |
+| -------- | -------- | -------- | --------- |
+| news     | research | notice   | important |
 
 </Route>
 
-### 上海大学教务处通知公告
+### 教务处通知公告
 
-<Route author="tuxinghuan" example="/shu/jwc/notice" path="/shu/jwc/:type?" :paramsDesc="['消息类型,默认为`notice`']">
+<Route author="tuxinghuan" example="/shu/jwb/notice" path="/shu/jwb/:type?" :paramsDesc="['消息类型,默认为`notice`']">
 
-| 通知通告 | 新闻 |
-| -------- | ---- |
-| notice   | news |
+| 通知通告 | 新闻 | 政策文件 |
+| -------- | ---- | -------- |
+| notice   | news | policy   |
 
 </Route>
 
