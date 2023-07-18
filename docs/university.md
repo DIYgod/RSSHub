@@ -4765,6 +4765,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 潍坊医学院
+
+### 研究生处
+
+<Route author="yanbot-team" example="/wfmc/yjshb/zxdt" path="/wfmc/yjshb/:type" :paramsDesc="['具体参数见下表']">
+
+| **内容** | **参数** |
+| :------: | :------: |
+| 最新动态 |   zxdt   |
+
+</Route>
+
 ### 教务处通知
 
 <Route author="cccht" example="/wfu/jwc" path="/wfu/jwc" />
