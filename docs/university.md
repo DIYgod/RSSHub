@@ -3000,6 +3000,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 陆军军医大学
+
+### 招生就业
+
+<Route author="yanbot-team" example="/ljjyu/zsjy/zsjy-default2" path="/ljjyu/zsjy/:type" :paramsDesc="['分类type，见下表']">
+
+| 招生就业      |
+| ------------- |
+| zsjy-default2 |
+
+</Route>
+
 ## 洛阳理工学院
 
 ### 教务处
