@@ -2112,6 +2112,18 @@ category 列表：
 
 </Route>
 
+## 河北传媒学院
+
+### 研究生院
+
+<Route author="yanbot-team" example="/hebic/yjs/" path="/hebic/yjs/:type" :paramsDesc="['分类名，见下表']" >
+
+| 招生工作 |
+| -------- |
+| 11018    |
+
+</Route>
+
 ## 河北大学
 
 ### 研究生院
