@@ -4723,6 +4723,8 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 天津医科大学
 
+### 研究生院
+
 <Route author="yanbot-team" example="/tmu/yz/3111" path="/tmu/yz/:type" :paramsDesc="['分类，见下表']">
 
 | 硕士生招生 |
@@ -4731,7 +4733,17 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 天津中医药大学
+
 ### 研究生院
+
+<Route author="yanbot-team" example="/tjutcm/yjsy/1976" path="/tjutcm/yjsy/:type" :paramsDesc="['分类，见下表']">
+
+| 硕士招生考试 |
+| :----------: |
+|     1976     |
+
+</Route>
 
 ## 同济大学
 
