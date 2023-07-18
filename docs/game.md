@@ -60,40 +60,42 @@ pageClass: routes
 
 分类
 
-| 分类                 | 分类名              |
-| -------------------- | ------------------- |
-| 所有新闻             |                     |
-| 暗黑破坏神 III       | diablo3             |
-| 暗黑破坏神：不朽     | diablo-immortal     |
-| 炉石传说             | hearthstone         |
-| 风暴英雄             | heroes-of-the-storm |
-| 守望先锋             | overwatch           |
-| 星际争霸：重制版     | starcraft           |
-| 星际争霸 II          | starcraft2          |
-| 魔兽世界             | world-of-warcraft   |
-| 魔兽争霸 III：重制版 | warcraft3           |
-| 暴雪嘉年华           | blizzcon            |
-| 走进暴雪             | blizzard            |
+| 分类                   | 分类名              |
+| ---------------------- | ------------------- |
+| 所有新闻               |                     |
+| Diablo II: Resurrected | diablo2             |
+| 暗黑破坏神 III         | diablo3             |
+| 暗黑破坏神 IV          | diablo4             |
+| 暗黑破坏神：不朽       | diablo-immortal     |
+| 炉石传说               | hearthstone         |
+| 风暴英雄               | heroes-of-the-storm |
+| 守望先锋 2             | overwatch           |
+| 星际争霸：重制版       | starcraft           |
+| 星际争霸 II            | starcraft2          |
+| 魔兽世界               | world-of-warcraft   |
+| 魔兽争霸 III：重制版   | warcraft3           |
+| Battle.net             | battlenet           |
+| 暴雪嘉年华             | blizzcon            |
+| 走进暴雪               | blizzard            |
 
 语言代码
 
-| 语言           | 语言代码 |
-| -------------- | -------- |
-| Deutsch        | de-de    |
-| English (US)   | en-us    |
-| English (EU)   | en-gb    |
-| Español (EU)   | es-es    |
-| Español (AL)   | es-mx    |
-| Français       | fr-fr    |
-| Italiano       | it-it    |
-| Português (AL) | pt-br    |
-| Polski         | pl-pl    |
-| Русский        | ru-ru    |
-| 한국어         | ko-kr    |
-| ภาษาไทย        | th-th    |
-| 日本語         | ja-jp    |
-| 繁體中文       | zh-tw    |
-| 简体中文       | zh-cn    |
+| 语言               | 语言代码 |
+| ------------------ | -------- |
+| Deutsch            | de-de    |
+| English (US)       | en-us    |
+| English (EU)       | en-gb    |
+| Español (EU)       | es-es    |
+| Español (Latino)   | es-mx    |
+| Français           | fr-fr    |
+| Italiano           | it-it    |
+| Português (Brasil) | pt-br    |
+| Polski             | pl-pl    |
+| Русский            | ru-ru    |
+| 한국어             | ko-kr    |
+| ภาษาไทย            | th-th    |
+| 日本語             | ja-jp    |
+| 繁體中文           | zh-tw    |
 
 </Route>
 
