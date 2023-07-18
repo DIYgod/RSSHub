@@ -3755,6 +3755,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 齐齐哈尔医学院
+
+### 研究生处
+
+<Route author="yanbot-team" example="/qmu/yzb/734" path="/qmu/yzb/:type" :paramsDesc="['分类id，见下表']">
+
+| 研究生处 |
+| -------- |
+| 734      |
+
+</Route>
+
 ## 青岛大学
 
 ### 研究生招生信息网
