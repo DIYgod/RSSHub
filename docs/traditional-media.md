@@ -2718,6 +2718,10 @@ category 对应的关键词有
 
 ## NPR
 
+### 新闻
+
 <Route author="bennyyip" example="/npr/1001" path="/npr/:endpoint?" :paramsDesc="['频道 ID，可在官方频道 RSS URL 中找到，默认为 `1001`']">
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+</Route>

@@ -787,7 +787,12 @@ Free articles only.
 
 ## NPR
 
-<Route author="bennyyip" example="/npr/1001" path="/npr/:endpoint?" :paramsDesc="['Channel ID，can be found in Official RSS URL, `1001` by default']">
+### News
+
+<RouteEn author="bennyyip" example="/npr/1001" path="/npr/:endpoint?" :paramsDesc="['Channel ID, can be found in Official RSS URL, `1001` by default']">
 
 Provide full article RSS for CBC topics.
+
+</RouteEn>
+
 
