@@ -2266,6 +2266,18 @@ category 列表：
 
 </Route>
 
+## 河南农业大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/henau/gra/11" path="/henau/gra/:type" :paramsDesc="['分类，见下表']">
+
+| 招生工作 |
+| -------- |
+| 11       |
+
+</Route>
+
 ## 黑龙江大学
 
 ### 研究生院
