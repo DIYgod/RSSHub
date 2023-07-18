@@ -2336,6 +2336,16 @@ category 列表：
 
 </Route>
 
+### 研究生院
+
+<Route author="yanbot-team" example="/hbut/gra/zsxx-sszs" path="/hbut/gra/:type" :paramsDesc="['分类，见下表']">
+
+| 硕士招生  |
+| --------- |
+| zsxx-sszs |
+
+</Route>
+
 ### 计算机学院
 
 <Route author="Lava-Swimmer" example="/hbut/cs/xwdt" path="/hbut/cs/:type" radar="1" rssbud="1" :paramsDesc="['分类']">
@@ -4436,6 +4446,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 硕士研究生招生 | 推免生接收 | 公费师范毕业生在职攻读教育硕士 |
 | -------------- | ---------- | ------------------------------ |
 | tzgg-ssyjszs   | tzgg-tmsjs | tzgg-gfsfbyszzgdjyss           |
+
+</Route>
+
+## 沈阳大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/syu/yjs/zsgz-sszs" path="/syu/yjs/:type" :paramsDesc="['类别ID，见下表，其他未列出的栏目参数可以从页面的 URL Path 中找到']" radar="1" >
+
+| 硕士招生  |
+| --------- |
+| zsgz-sszs |
 
 </Route>
 
