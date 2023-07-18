@@ -4834,6 +4834,12 @@
     "/shoppingdesign/posts": [
         "miles170"
     ],
+    "/shu/:type?": [
+        "lonelyion"
+    ],
+    "/shu/jwb/:type?": [
+        "tuxinghuan"
+    ],
     "/shuiguopai/": [
         "nczitzk"
     ],
@@ -6541,8 +6547,6 @@
     "/buaa/news/:type": [],
     "/zjut/:type": [],
     "/zjut/design/:type": [],
-    "/shu/:type?": [],
-    "/shu/jwc/:type?": [],
     "/nuc/:type": [],
     "/ahau/cs_news/:type": [],
     "/ahau/jwc/:type": [],
