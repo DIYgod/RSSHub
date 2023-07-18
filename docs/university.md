@@ -2478,7 +2478,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 上海大学
 
-### 上海大学官网信息
+### 官网信息
 
 <Route author="lonelyion" example="/shu/news" path="/shu/:type?" :paramsDesc="['消息类型,默认为`news`']">
 
@@ -2488,7 +2488,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-### 上海大学教务处通知公告
+### 教务处通知公告
 
 <Route author="tuxinghuan" example="/shu/jwb/notice" path="/shu/jwb/:type?" :paramsDesc="['消息类型,默认为`notice`']">
 
