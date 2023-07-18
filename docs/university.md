@@ -1557,7 +1557,7 @@ pageClass: routes
 
 ### 研究生院
 
-<Route author="yanbot-team" example="/fjtcm/yjsy/500" path=/fjtcm/yjsy/:type" :paramsDesc="['分类见下表']">
+<Route author="yanbot-team" example="/fjtcm/yjsy/500" path="/fjtcm/yjsy/:type" :paramsDesc="['分类见下表']">
 
 | 硕士招生 |
 | -------- |
@@ -2059,6 +2059,18 @@ category 列表：
 | 硕士招生  |
 | --------- |
 | zsgz-sszs |
+
+</Route>
+
+## 海军军医大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/smmu/ao/yjszs" path="/smmu/ao/:type" :paramsDesc="['分类名，见下表']" >
+
+| 研究生招生 |
+| ---------- |
+| yjszs      |
 
 </Route>
 
