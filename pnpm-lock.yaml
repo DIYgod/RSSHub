@@ -190,9 +190,6 @@ dependencies:
   winston:
     specifier: 3.9.0
     version: 3.9.0
-  xml2js:
-    specifier: 0.5.0
-    version: 0.5.0
 
 devDependencies:
   '@microsoft/eslint-formatter-sarif':
