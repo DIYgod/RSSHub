@@ -2408,6 +2408,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 湖南工业大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/hut/yjsy/zsxx-ssszs" path="/hut/yjsy/:type"  :paramsDesc="['分类']">
+
+| 招生信息-硕士生招生 |
+| ------------------- |
+| zsxx-ssszs          |
+
+</Route>
+
 ## 湖南科技大学
 
 ### 教务处通知
