@@ -3958,6 +3958,9 @@
     "/npm/package/:name": [
         "Fatpandac"
     ],
+    "/npr/:endpoint?": [
+        "bennyyip"
+    ],
     "/ntdtv/:language/:id": [
         "Fatpandac"
     ],
