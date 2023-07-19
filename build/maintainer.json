@@ -1441,6 +1441,9 @@
     "/dhu/xxgk/news": [
         "KiraKiseki"
     ],
+    "/dhu/yjs/news/:type?": [
+        "fox2049"
+    ],
     "/dhu/yjs/zs/:type?": [
         "fox2049"
     ],

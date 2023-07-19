@@ -3083,6 +3083,8 @@
         source:[ "/" ],
         target:(params, url) => `/dgjyw/${new URL(url).toString().match(/dgjyw\.com\/(.*)\.htm$/)[1]}` } ] },
   "dhu.edu.cn":{ _name:"东华大学",
+    gs:[ { title:"研究生院通知",
+        docs:"https://docs.rsshub.app/university.html#dong-hua-da-xue" } ],
     jw:[ { title:"教务处通知",
         docs:"https://docs.rsshub.app/university.html#dong-hua-da-xue" } ],
     news:[ { title:"学术信息",
