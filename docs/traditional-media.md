@@ -312,6 +312,16 @@ pageClass: routes
 
 <Route author="nczitzk" example="/now/news/rank" path="/now/news/rank"/>
 
+## NPR
+
+### 新闻
+
+<Route author="bennyyip" example="/npr/1001" path="/npr/:endpoint?" :paramsDesc="['频道 ID，可在官方频道 RSS URL 中找到，默认为 `1001`']">
+
+通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+</Route>
+
 ## RTHK 傳媒透視
 
 <Route author="tpnonthealps" example="/mediadigest/latest" path="/mediadigest/:range" :paramsDesc="['时间范围']">
@@ -2713,15 +2723,5 @@ category 对应的关键词有
 | 第一版 要闻 | 第二版 要闻 | 第三版 人才 | 第四版 人社工作 | 第五版 基层党建 | 第六版 理论评论 | 第七版 史事通鉴 | 第八版 关注 |
 | ----------- | ----------- | ----------- | --------------- | --------------- | --------------- | --------------- | ----------- |
 | 1           | 2           | 3           | 4               | 5               | 6               | 7               | 8           |
-
-</Route>
-
-## NPR
-
-### 新闻
-
-<Route author="bennyyip" example="/npr/1001" path="/npr/:endpoint?" :paramsDesc="['频道 ID，可在官方频道 RSS URL 中找到，默认为 `1001`']">
-
-通过提取文章全文，以提供比官方源更佳的阅读体验。
 
 </Route>
