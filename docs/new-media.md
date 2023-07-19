@@ -2754,6 +2754,24 @@ others = 热点新闻 + 滚动新闻
 
 <Route author="eternasuno" example="/gcores/radios/45" path="/gcores/radios/:category?" :paramsDesc="['分类名，默认为全部，可在分类页面的 URL 中找到，如 Gadio News -- 45']" radar="1" supportPodcast="1" />
 
+## 纪妖
+
+### 通用
+
+<Route author="nczitzk" example="/cbaigui" path="/cbaigui/:path+" :paramsDesc="['路径，默认为首页']">
+
+::: tip 提示
+
+若订阅 [标签：妖](https://www.cbaigui.com/post-tag/妖)，网址为 [https://www.cbaigui.com/post-tag/ 妖](https://www.cbaigui.com/post-tag/妖)。截取 `https://www.cbaigui.com` 到末尾的部分 `/post-tag/妖` 作为参数，此时路由为 [`/cbaigui/post-tag/妖`](https://rsshub.app/cbaigui/post-tag/妖)。
+
+若订阅 [分类：埃及](https://www.cbaigui.com/post-category/世界/非洲/埃及)，网址为 [https://www.cbaigui.com/post-category/ 世界 / 非洲 / 埃及](https://www.cbaigui.com/post-category/世界/非洲/埃及)。截取 `https://www.cbaigui.com` 到末尾的部分 `/post-category/世界/非洲/埃及` 作为参数，此时路由为 [`/cbaigui/post-category/世界/非洲/埃及`](https://rsshub.app/cbaigui/post-category/世界/非洲/埃及)。
+
+若订阅 [词条：白泽图](https://www.cbaigui.com/post-category/词条/白泽图)，网址为 [https://www.cbaigui.com/post-category/ 词条 / 白泽图](https://www.cbaigui.com/post-category/词条/白泽图)。截取 `https://www.cbaigui.com` 到末尾的部分 `/post-category/词条/白泽图` 作为参数，此时路由为 [`/cbaigui/post-category/词条/白泽图`](https://rsshub.app/cbaigui/post-category/词条/白泽图)。
+
+:::
+
+</Route>
+
 ## 加美财经
 
 <Route author="nczitzk" example="/caus" path="/caus/:category?" :paramsDesc="['分类，见下表，默认为全部']">

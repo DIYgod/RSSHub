@@ -1039,6 +1039,16 @@ pageClass: routes
 
 <Route author="KiraKiseki" example="/dhu/xxgk/news" path="/dhu/xxgk/news"/>
 
+### 研究生院通知
+
+<Route author="fox2049" example="/dhu/yjs/news/class" path="/dhu/yjs/news/:type?" :paramsDesc="['默认为 `class`']">
+
+| 新闻动态 | 通知公告 | 选课考试 |
+| -------- | -------- | -------- |
+| trend    | notice   | class    |
+
+</Route>
+
 ### 研究生招生信息
 
 <Route author="fox2049" example="/dhu/yjs/zs/master" path="/dhu/yjs/zs/:type?" :paramsDesc="['默认为 `master`']">
