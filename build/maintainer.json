@@ -965,6 +965,9 @@
     "/cau/yjs": [
         "shengmaosu"
     ],
+    "/cbaigui/:path+": [
+        "nczitzk"
+    ],
     "/cbirc/:category?": [
         "JkCheung"
     ],
