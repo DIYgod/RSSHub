@@ -2472,6 +2472,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 湖南中医药大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/hnucm/yjsy/zsxx-ssszs" path="/hnucm/yjsy/:type" :paramsDesc="['分类，见下表，也可从页面URL中找到']">
+
+| 招生信息-硕士生招生 |
+| ------------------- |
+| zsxx-ssszs          |
+
+</Route>
+
 ## 华北电力大学
 
 ### 北京校区研究生院
