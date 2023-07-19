@@ -5647,6 +5647,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 延安大学
+
+### 研究生招生网
+
+<Route author="yanbot-team" example="/yau/yjsc/zsxx-zsdt" path="/yau/yjsc/:type" :paramsDesc="['分类名']">
+
+| 招生动态  |
+| --------- |
+| zsxx-zsdt |
+
+</Route>
+
 ## 延边大学
 
 ### 研究生招生网
