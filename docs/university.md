@@ -2116,7 +2116,7 @@ category 列表：
 
 ### 研究生院
 
-<Route author="yanbot-team" example="/hebic/yjs/" path="/hebic/yjs/:type" :paramsDesc="['分类名，见下表']" >
+<Route author="yanbot-team" example="/hebic/yjs/11018" path="/hebic/yjs/:type" :paramsDesc="['分类名，见下表']" >
 
 | 招生工作 |
 | -------- |
@@ -2157,6 +2157,18 @@ category 列表：
 | 招生工作-通知公告 | 招生工作招生简章 | 首页通知公告 |
 | ----------------- | ---------------- | ------------ |
 | zsgz-tzggzs       | zsgz-zsjz        | tzgg         |
+
+</Route>
+
+## 河北农业大学
+
+### 学位与研究生教育
+
+<Route author="yanbot-team" example="/hebau/yjs/zsxx" path="/hebau/yjs/:type" :paramsDesc="['分类名，见下表']" >
+
+| 招生信息 |
+| -------- |
+| zsxx     |
 
 </Route>
 
