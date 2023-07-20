@@ -182,6 +182,18 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 <Route author="HenryQW nczitzk" example="/aisixiang/column/722" path="/aisixiang/column/:id" :paramsDesc="['栏目 ID, 可在对应栏目 URL 中找到']"/>
 
+### 专题
+
+<Route author="nczitzk" example="/aisixiang/zhuanti/211" path="/aisixiang/zhuanti/:id" :paramsDesc="['专题 ID, 可在对应专题 URL 中找到']">
+
+::: tip 提示
+
+更多专题请见 [关键词](http://www.aisixiang.com/zhuanti/)
+
+:::
+
+</Route>
+
 ### 排行
 
 <Route author="HenryQW nczitzk" example="/aisixiang/toplist/1/7" path="/aisixiang/toplist/:id?/:period?" :paramsDesc="['类型', '范围, 仅适用于点击排行榜, 可选一天(1)，一周(7)，一月(30)，所有(-1)，默认为一天']">
