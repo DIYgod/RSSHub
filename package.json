@@ -37,11 +37,12 @@
     "test": "npm run format:check && npm run jest:coverage"
   },
   "lint-staged": {
-    "*.md": "node docs/.format/format.js --staged",
-    "*.{js,yml}": [
+    "*.js": [
       "eslint --cache --fix",
       "prettier --ignore-unknown --ignore-path ./.gitignore --write"
-    ]
+    ],
+    "*.md": "node docs/.format/format.js --staged",
+    "*.yml": "eslint --cache --fix"
   },
   "nodemonConfig": {
     "ext": "art,js,mjs,json",
