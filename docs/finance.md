@@ -92,6 +92,42 @@ pageClass: routes
 
 <Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['股票代码']"/>
 
+## Followin
+
+### 首页
+
+<Route author="TonyRL" example="/followin" path="/followin/:categoryId?/:lang?" :paramsDesc="['分类 ID，见下表，默认为 `1`', '语言，见下表，默认为 `en`']" radar="1">
+
+分类 ID
+
+| 推荐 | 行情 | Meme | BRC20 | NFT | 长推 | 深度 | 入门 | 视频 |
+| ---- | ---- | ---- | ----- | --- | ---- | ---- | ---- | ---- |
+| 1    | 9    | 13   | 14    | 3   | 5    | 6    | 8    | 11   |
+
+语言
+
+| English | 简体中文 | 繁體中文 | Tiếng Việt |
+| ------- | -------- | -------- | ---------- |
+| en      | zh-Hans  | zh-Hant  | vi         |
+
+</Route>
+
+### 快讯
+
+<Route author="TonyRL" example="/followin/news" path="/followin/news/:lang?" :paramsDesc="['语言，见上表，默认为 `en`']" radar="1" />
+
+### KOL
+
+<Route author="TonyRL" example="/followin/kol/4075592991" path="/followin/kol/:kolId/:lang?" :paramsDesc="['KOL ID，可在 URL 找到', '语言，见上表，默认为 `en`']" radar="1" />
+
+### 话题
+
+<Route author="TonyRL" example="/followin/topic/40" path="/followin/topic/:topicId/:lang?" :paramsDesc="['话题 ID，可在 URL 找到', '语言，见上表，默认为 `en`']" radar="1" />
+
+### 标签
+
+<Route author="TonyRL" example="/followin/tag/177008" path="/followin/tag/:tagId/:lang?" :paramsDesc="['标签 ID，可在 URL 找到', '语言，见上表，默认为 `en`']" radar="1" />
+
 ## FX Markets
 
 ### 分类
@@ -236,15 +272,15 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="nczitzk" example="/cls/depth/1000" path="/cls/depth/:category?" :paramsDesc="['分类代码，可在首页导航栏的目标网址 URL 中找到']" radar="1">
 
-| 头条 | 股市 | 港股 | 环球 | 公司 | 券商 | 基金 | 地产 | 金融 | 汽车 | 科创版 | 品见 | 期货 | 投教 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | ---- |
-| 1000 | 1003 | 1135 | 1007 | 1005 | 1118 | 1110 | 1006 | 1032 | 1119 | 1111   | 1160 | 1124 | 1176 |
+| 头条 | 股市 | 港股 | 环球 | 公司 | 券商 | 基金 | 地产 | 金融 | 汽车 | 科创 | 创业版 | 品见 | 期货 | 投教 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | ---- |
+| 1000 | 1003 | 1135 | 1007 | 1005 | 1118 | 1110 | 1006 | 1032 | 1119 | 1111 | 1127   | 1160 | 1124 | 1176 |
 
 </Route>
 
 ### 热门文章排行榜
 
-<Route author="5upernova-heng" example="/cls/hot" path="/cls/hot" radar="1"/>
+<Route author="5upernova-heng nczitzk" example="/cls/hot" path="/cls/hot" radar="1"/>
 
 ## 第一财经杂志
 
@@ -257,6 +293,20 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 ### 天天基金用户动态
 
 <Route author="zidekuls" example="/eastmoney/ttjj/user/6551094298949188" path="/eastmoney/ttjj/user/:uid" :paramsDesc="['用户id, 可以通过天天基金App分享用户主页到浏览器，在相应的URL中找到']"/>
+
+### 搜索
+
+<Route author="drgnchan" example="/eastmoney/search/web3" path="/eastmoney/search/:keyword" :paramsDesc="['关键词，可以设置为自己需要检索的关键词']" radar="1"/>
+
+### 研究报告
+
+<Route author="syzq" example="/eastmoney/report/strategyreport" path="/eastmoney/report/:category" :paramsDesc="['研报类型']">
+
+| 策略报告       | 宏观研究    | 券商晨报     | 行业研究 |
+| -------------- | ----------- | ------------ | -------- |
+| strategyreport | macresearch | brokerreport | industry |
+
+</Route>
 
 ## 法布财经
 
@@ -272,7 +322,7 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 ### 要闻
 
-<Route author="Wsine" example="/futunn/highlights" path="/futunn/highlights" />
+<Route author="Wsine nczitzk" example="/futunn/main" path="/futunn/main" />
 
 ## 格隆汇
 
@@ -318,11 +368,21 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
+## 汇通网
+
+### 7x24 小时快讯
+
+<Route author="occupy5 dousha" example="/fx678/kx" path="/fx678/kx" radar="1"/>
+
 ## 金十数据
 
 ### 市场快讯
 
 <Route author="laampui" example="/jin10" path="/jin10/:important?" :paramsDesc="['只看重要，任意值开启，留空关闭']" radar="1"/>
+
+### 主题文章
+
+<Route author="miles170" example="/jin10/topic/396" path="/jin10/topic/:id" radar="1"/>
 
 ## 老虎社区
 
@@ -561,12 +621,6 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 | stock_research | industry_research | strategy_research | macro_research | ipo_research |    brokerage_news    |
 
 </Route>
-
-## 新浪财经
-
-### 新浪财经－国內
-
-<Route author="yubinbai" example="/sina/finance" path="/sina/finance" />
 
 ## 雪球
 

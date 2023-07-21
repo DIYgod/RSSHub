@@ -70,11 +70,27 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### UP 主粉丝
 
-<Route author="Qixingchen" example="/bilibili/user/followers/2267573" path="/bilibili/user/followers/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']" radar="1" rssbud="1"/>
+<Route author="Qixingchen" example="/bilibili/user/followers/2267573/3" path="/bilibili/user/followers/:uid/:loginUid" :paramsDesc="['用户 id, 可在 UP 主主页中找到','用于登入的用户id,需要配置对应的 Cookie 值']" radar="1" rssbud="1" selfhost="1">
+
+::: warning 注意
+
+UP 主粉丝现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
+
+</Route>
 
 ### UP 主关注用户
 
-<Route author="Qixingchen" example="/bilibili/user/followings/2267573" path="/bilibili/user/followings/:uid" :paramsDesc="['用户 id, 可在 UP 主主页中找到']" radar="1" rssbud="1"/>
+<Route author="Qixingchen" example="/bilibili/user/followings/2267573/3" path="/bilibili/user/followings/:uid/:loginUid" :paramsDesc="['用户 id, 可在 UP 主主页中找到','用于登入的用户id,需要配置对应的 Cookie 值']" radar="1" rssbud="1" selfhost="1">
+
+::: warning 注意
+
+UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
+
+</Route>
 
 ### 分区视频
 
@@ -549,7 +565,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 例如：<https://pawoo.net/users/pawoo_support.rss> 或 <https://pawoo.net/users/pawoo_support.atom>
 
-上述订阅源的内容不包括用户的转嘟。RSSHub 提供基于 Mastodon API 的订阅源，但需要您在某个 Mastodon 实例申请 API，并对 RSSHub 实例进行配置。详情见部署页面的配置模块。
+上述订阅源的内容不包括用户的转嘟。RSSHub 提供基于 Mastodon API 的订阅源，但可能需要您在某个 Mastodon 实例申请 API，并对 RSSHub 实例进行配置。详情见部署页面的[配置模块](/install/#route-specific-configurations)。
 
 :::
 
@@ -557,17 +573,27 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="notofoe" example="/mastodon/acct/CatWhitney@mastodon.social/statuses" path="/mastodon/acct/:acct/statuses/:only_media?" :paramsDesc="['Webfinger account URI, 形如 `user@host`', '是否只显示包含媒体（图片或视频）的推文, 默认置空为否, 任意值为是']"/>
 
+自 Mastodon v4.0.0 起，本路由中对于 `search` API 的使用不再需要访问令牌。
+如果你的 Webfinger account URI 域和实例的 API 服务器域名是一样的（即没有一些其他协议称呼的 deletation），那么此路由不需要额外配置且开箱即用。
+不过，你依然可以提供这些路由特定的配置来覆盖它们。
+
 ### 实例公共时间线（本站）
 
 <Route author="hoilc" example="/mastodon/timeline/pawoo.net/true" path="/mastodon/timeline/:site/:only_media?" :paramsDesc="['实例地址, 仅域名, 不包括`http://`或`https://`协议头', '是否只显示包含媒体（图片或视频）的推文, 默认置空为否, 任意值为是']"/>
+
+实例地址不为 `mastodon.social` 或 `pawoo.net` 的情况下均需要 `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` 为 `true`。
 
 ### 实例公共时间线（跨站）
 
 <Route author="hoilc" example="/mastodon/remote/pawoo.net/true" path="/mastodon/remote/:site/:only_media?" :paramsDesc="['实例地址, 仅域名, 不包括`http://`或`https://`协议头', '是否只显示包含媒体（图片或视频）的推文, 默认置空为否, 任意值为是']"/>
 
+实例地址不为 `mastodon.social` 或 `pawoo.net` 的情况下均需要 `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` 为 `true`。
+
 ### 用户公共时间线（备用）
 
 <Route author="notofoe" example="/mastodon/account_id/mastodon.social/23634/statuses/only_media" path="/mastodon/account/:site/:account_id/statuses/:only_media?" :paramsDesc="['实例地址, 仅域名, 不包括`http://`或`https://`协议头', '用户 ID. 登录实例后, 搜索用户并进入用户页, 在地址中可以找到这串数字', '是否只显示包含媒体（图片或视频）的推文, 默认置空为否, 任意值为是']"/>
+
+实例地址不为 `mastodon.social` 或 `pawoo.net` 的情况下均需要 `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` 为 `true`。
 
 ## Misskey
 
@@ -822,11 +848,11 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 ### 用户时间线
 
-<Route author="DIYgod yindaheng98 Rongronggg9" example="/twitter/user/DIYgod" path="/twitter/user/:id/:routeParams?" :paramsDesc="['用户名', '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=exclude_replies`时去除回复，`routeParams=exclude_rts`去除转推，`routeParams=exclude_rts_replies`去除回复和转推，默认包含全部回复和转推。']" radar="1" rssbud="1"/>
+<Route author="DIYgod yindaheng98 Rongronggg9" example="/twitter/user/DIYgod" path="/twitter/user/:id/:routeParams?" :paramsDesc="['用户名；特别地，以 `+` 开头则代表[唯一 ID](https://github.com/DIYgod/RSSHub/issues/12221)，如 `+44196397`', '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=exclude_replies`时去除回复，`routeParams=exclude_rts`去除转推，`routeParams=exclude_rts_replies`去除回复和转推，默认包含全部回复和转推。']" radar="1" rssbud="1"/>
 
 ### 用户媒体时间线
 
-<Route author="yindaheng98 Rongronggg9" example="/twitter/media/DIYgod" path="/twitter/media/:id/:routeParams?" :paramsDesc="['用户名', '额外参数；请参阅上面的说明和表格。']" radar="1" rssbud="1"/>
+<Route author="yindaheng98 Rongronggg9" example="/twitter/media/DIYgod" path="/twitter/media/:id/:routeParams?" :paramsDesc="['用户名；特别地，以 `+` 开头则代表[唯一 ID](https://github.com/DIYgod/RSSHub/issues/12221)，如 `+44196397`', '额外参数；请参阅上面的说明和表格。']" radar="1" rssbud="1"/>
 
 ### 用户关注时间线
 
@@ -867,6 +893,10 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 :::
 
 </Route>
+
+### 推文详情
+
+<Route author="LarchLiu Rongronggg9" example="/twitter/tweet/DIYgod/status/1650844643997646852" path="/twitter/tweet/:id/status/:status/:original?" :paramsDesc="['用户名；特别地，以 `+` 开头则代表[唯一 ID](https://github.com/DIYgod/RSSHub/issues/12221)，如 `+44196397`', '推文 ID', '额外参数；返回数据类型，当非 `0`/`false` 且 `config.isPackage` 为 `true`时，返回 twitter 原始数据']" radar="1" rssbud="1"/>
 
 ## Vimeo
 
@@ -1518,6 +1548,7 @@ rule
 | displayComments            | 是否直接显示热门评论，只在博主或个人时间线 RSS 中有效              | 0/1/true/false | false                               |
 | showEmojiInDescription     | 是否展示正文中的微博表情，关闭则替换为 `[表情名]`                  | 0/1/true/false | true                                |
 | showLinkIconInDescription  | 是否展示正文中的链接图标                                           | 0/1/true/false | true                                |
+| preferMobileLink           | 是否使用移动版链接（默认使用 PC 版）                               | 0/1/true/false | false                               |
 
 指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
 
@@ -1537,7 +1568,7 @@ rule
 
 ### 关键词
 
-<Route author="DIYgod" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword/:routeParams?" :paramsDesc="['你想订阅的微博关键词', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
+<Route author="DIYgod Rongronggg9" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword/:routeParams?" :paramsDesc="['你想订阅的微博关键词', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
 
 ### 热搜榜
 
@@ -1545,7 +1576,7 @@ rule
 
 ### 超话
 
-<Route author="zengxs" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9/sort_time" path="/weibo/super_index/:id/:type?/:routeParams?" :paramsDesc="['超话ID', '类型：见下表', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
+<Route author="zengxs Rongronggg9" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9/sort_time" path="/weibo/super_index/:id/:type?/:routeParams?" :paramsDesc="['超话ID', '类型：见下表', '额外参数；请参阅上面的说明和表格']" anticrawler="1" radar="1" rssbud="1"/>
 
 | type      | 备注             |
 | --------- | ---------------- |
@@ -1565,6 +1596,22 @@ rule
 需要对应用户打开页面进行授权生成 token 才能生成内容
 
 自部署需要申请并配置微博 key，具体见部署文档
+
+:::
+
+</Route>
+
+### 自定义分组
+
+<Route author="monologconnor Rongronggg9" example="/weibo/group/4541216424989965/微博分组/:routeParams?" path="/weibo/group/:gid/:gname?/:routeParams?" :paramsDesc="['分组id, 在网页版分组地址栏末尾`?gid=`处获取', '分组显示名称; 默认为: `微博分组`', '额外参数；请参阅上面的说明和表格']" anticrawler="1" selfhost="1">
+
+::: warning 注意
+
+由于微博官方未提供自定义分组相关 api, 此方案必须使用用户`Cookie`进行抓取
+
+因微博 cookies 的过期与更新方案未经验证，部署一次 Cookie 的有效时长未知
+
+微博用户 Cookie 的配置可参照部署文档
 
 :::
 
@@ -1596,7 +1643,11 @@ rule
 
 ### 用户笔记
 
-<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/notes" path="/xiaohongshu/user/:user_id/notes" :paramsDesc="['用户 ID']" puppeteer="1" anticrawler="1" radar="1" rssbud="1"/>
+<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/notes" path="/xiaohongshu/user/:user_id/notes/:fulltext?" :paramsDesc="['用户 ID', '若为`fulltext`将抓取笔记全文，若为空则只抓取笔记标题']" puppeteer="1" anticrawler="1" radar="1" rssbud="1"/>
+
+::: tip 提示
+笔记全文不支持显示视频
+:::
 
 ### 用户收藏
 

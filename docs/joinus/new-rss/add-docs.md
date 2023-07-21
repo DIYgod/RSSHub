@@ -4,10 +4,45 @@ sidebarDepth: 2
 
 # 添加文档
 
-现在我们完成了代码，是时候为您的路由添加文档了。在 [文档 (/docs/)](https://github.com/DIYgod/RSSHub/blob/master/docs) 中打开相应的文件，本例中是 `docs/programming.md`。您可以通过运行以下命令实时预览文档：
+现在我们完成了代码，是时候为您的路由添加文档了。在 [文档 (/docs/)](https://github.com/DIYgod/RSSHub/blob/master/docs) 中打开相应的文件，本例中是 `docs/programming.md`。
+
+为了实时预览文档，您需要在 **`docs` 目录** 下安装文档的依赖项。在终端中输入以下命令：
 
 <code-group>
-<code-block title="yarn" active>
+<code-block title="pnpm" active>
+
+```bash
+pnpm i
+```
+
+</code-block>
+<code-block title="yarn">
+
+```bash
+yarn
+```
+
+</code-block>
+<code-block title="npm">
+
+```bash
+npm install
+```
+
+</code-block>
+</code-group>
+
+您现在可以在 **`docs` 目录** 下运行以下命令实时预览文档：
+
+<code-group>
+<code-block title="pnpm" active>
+
+```bash
+pnpm run docs:dev
+```
+
+</code-block>
+<code-block title="yarn">
 
 ```bash
 yarn docs:dev
@@ -161,10 +196,17 @@ npm run docs:dev
 -   如果文档包含大型表格，建议将其放入 [details 容器](#wen-dang-shi-li-zi-ding-yi-rong-qi) 中。
 -   组件可以有两种写法：自闭合标签形式（`<Route .../>`）或成对标签形式（`<Route>...</Route>`）。
 -   **别忘了关闭标签！**
--   在提交 Pull Request 之前，请务必运行以下命令检查和格式化您的代码：
+-   在提交 Pull Request 之前，请务必运行在 RSSHub 的根目录运行以下命令检查和格式化您的代码：
 
 <code-group>
-<code-block title="yarn" active>
+<code-block title="pnpm" active>
+
+```bash
+pnpm run format
+```
+
+</code-block>
+<code-block title="yarn">
 
 ```bash
 yarn format

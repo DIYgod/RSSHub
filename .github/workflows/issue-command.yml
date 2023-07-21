@@ -32,12 +32,10 @@ jobs:
       contents: read
       issues: write
     steps:
-      - uses: bhermann/issue-volunteer@v0.1.20
+      - uses: bdougie/take-action@v1.5
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          assign_phrase: '/wip'
-          label_phase1: RSS proposal
-          label_phase2: RSS bug
+          token: ${{ secrets.GITHUB_TOKEN }}
+          trigger: '/wip'
 
   test-on-demand:
     name: Test route on demand
@@ -51,14 +49,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Use Node.js v18
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: Use Node.js Active LTS
         uses: actions/setup-node@v3
         with:
-          node-version: 18
-          cache: 'yarn'
+          node-version: lts/*
+          cache: 'pnpm'
 
-      - name: Install dependencies (yarn)
-        run: yarn
+      - name: Install dependencies (pnpm)
+        run: pnpm i && pnpm rb
 
       - name: Fetch affected routes
         id: fetchRoute
@@ -72,11 +75,11 @@ jobs:
             const number = event.issue.number
             const sender = event.comment.user.login
             const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/identify.js`)
-            return await script({ github, context, core }, body, number, sender)
+            return script({ github, context, core }, body, number, sender)
 
       - name: Start RSSHub
         if: env.TEST_CONTINUE
-        run: yarn start &
+        run: pnpm start &
         env:
           ALLOW_USER_HOTLINK_TEMPLATE: true
           ALLOW_USER_SUPPLY_UNSAFE_DOMAIN: true
@@ -99,7 +102,7 @@ jobs:
             core.info(`${link}, ${routes}, ${number}`)
             const got = require("got")
             const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/test.js`)
-            return await script({ github, context, core, got }, link, routes, number)
+            return script({ github, context, core, got }, link, routes, number)
 
       - name: Print logs
         if: (env.TEST_CONTINUE)

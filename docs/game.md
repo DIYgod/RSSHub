@@ -8,15 +8,21 @@ pageClass: routes
 
 ### 新闻中心
 
-<Route author="zhboner" example="/3dm/news" path="/3dm/news"/>
+<Route author="zhboner" example="/3dmgame/news" path="/3dmgame/news/:category?" :paramsDesc="['分类名或 ID，见下表，默认为新闻推荐，ID 可从分类 URL 中找到，如 Steam 为 `22221`']" radar="1">
+
+| 新闻推荐 | 游戏新闻 | 动漫影视 | 智能数码 | 时事焦点  |
+| -------- | -------- | -------- | -------- | --------- |
+|          | game     | acg      | next     | news_36_1 |
+
+</Route>
 
 ### 游戏资讯
 
-<Route author="sinchang jacky2001114 HenryQW" example="/3dm/detroitbecomehuman/news" path="/3dm/:name/:type" :paramsDesc="['游戏的名字, 可以在专题页的 url 中找到', '资讯类型']">
+<Route author="sinchang jacky2001114 HenryQW" example="/3dmgame/detroitbecomehuman/news" path="/3dm/:name/:type?" :paramsDesc="['游戏名字，可以在专题页的 url 中找到', '资讯类型，见下表，默认为 `news`']" radar="1">
 
-| 新闻 | 攻略 | 下载资源 | 区块链快讯 |
-| ---- | ---- | -------- | ---------- |
-| news | gl   | resource | blockchain |
+| 新闻 | 攻略 | 资源     |
+| ---- | ---- | -------- |
+| news | gl   | resource |
 
 </Route>
 
@@ -34,6 +40,12 @@ pageClass: routes
 
 <Route author="bestpika" example="/4gamers/topic/gentlemen-topic" path="/4gamers/topic/:topic" :paramsDesc="['主题, 可在首页上方页面内找到']" />
 
+## 5EPLAY
+
+### 新闻列表
+
+<Route author="Dlouxgit" example="/5eplay/article" path="/5eplay/article"/>
+
 ## a9vgNews 游戏新闻
 
 ### a9vgNews 游戏新闻
@@ -48,40 +60,42 @@ pageClass: routes
 
 分类
 
-| 分类                 | 分类名              |
-| -------------------- | ------------------- |
-| 所有新闻             |                     |
-| 暗黑破坏神 III       | diablo3             |
-| 暗黑破坏神：不朽     | diablo-immortal     |
-| 炉石传说             | hearthstone         |
-| 风暴英雄             | heroes-of-the-storm |
-| 守望先锋             | overwatch           |
-| 星际争霸：重制版     | starcraft           |
-| 星际争霸 II          | starcraft2          |
-| 魔兽世界             | world-of-warcraft   |
-| 魔兽争霸 III：重制版 | warcraft3           |
-| 暴雪嘉年华           | blizzcon            |
-| 走进暴雪             | blizzard            |
+| 分类                   | 分类名              |
+| ---------------------- | ------------------- |
+| 所有新闻               |                     |
+| Diablo II: Resurrected | diablo2             |
+| 暗黑破坏神 III         | diablo3             |
+| 暗黑破坏神 IV          | diablo4             |
+| 暗黑破坏神：不朽       | diablo-immortal     |
+| 炉石传说               | hearthstone         |
+| 风暴英雄               | heroes-of-the-storm |
+| 守望先锋 2             | overwatch           |
+| 星际争霸：重制版       | starcraft           |
+| 星际争霸 II            | starcraft2          |
+| 魔兽世界               | world-of-warcraft   |
+| 魔兽争霸 III：重制版   | warcraft3           |
+| Battle.net             | battlenet           |
+| 暴雪嘉年华             | blizzcon            |
+| 走进暴雪               | blizzard            |
 
 语言代码
 
-| 语言           | 语言代码 |
-| -------------- | -------- |
-| Deutsch        | de-de    |
-| English (US)   | en-us    |
-| English (EU)   | en-gb    |
-| Español (EU)   | es-es    |
-| Español (AL)   | es-mx    |
-| Français       | fr-fr    |
-| Italiano       | it-it    |
-| Português (AL) | pt-br    |
-| Polski         | pl-pl    |
-| Русский        | ru-ru    |
-| 한국어         | ko-kr    |
-| ภาษาไทย        | th-th    |
-| 日本語         | ja-jp    |
-| 繁體中文       | zh-tw    |
-| 简体中文       | zh-cn    |
+| 语言               | 语言代码 |
+| ------------------ | -------- |
+| Deutsch            | de-de    |
+| English (US)       | en-us    |
+| English (EU)       | en-gb    |
+| Español (EU)       | es-es    |
+| Español (Latino)   | es-mx    |
+| Français           | fr-fr    |
+| Italiano           | it-it    |
+| Português (Brasil) | pt-br    |
+| Polski             | pl-pl    |
+| Русский            | ru-ru    |
+| 한국어             | ko-kr    |
+| ภาษาไทย            | th-th    |
+| 日本語             | ja-jp    |
+| 繁體中文           | zh-tw    |
 
 </Route>
 
@@ -90,6 +104,12 @@ pageClass: routes
 ### 分类
 
 <Route author="LogicJake" example="/dekudeals/most-wanted" path="/dekudeals/:type" :paramsDesc="['分类名称，可在 URL 中查看']"/>
+
+## Dorohedoro
+
+### News
+
+<Route author="nczitzk" example="/dorohedoro/news" path="/dorohedoro/news" />
 
 ## Epic Games Store
 
@@ -102,6 +122,20 @@ pageClass: routes
 ### News
 
 <Route author="nczitzk" example="/fgo/news" path="/fgo/news"/>
+
+## Fortnite
+
+### News
+
+<Route author="lyqluis" example="/fortnite/news" path="/fortnite/news/:options?" :paramsDesc="['参数']" radar="1" puppeteer="1">
+
+-   `options.lang`，可选，语言，实例：`/fortnite/news/lang=en-US`，常见语言见下表，更多语言参考 [官网](https://www.fortnite.com/news)
+
+| 英语（默认） | 日语 | 法语 | 韩语 |
+| ------------ | ---- | ---- | ---- |
+| en-US        | ja   | fr   | ko   |
+
+</Route>
 
 ## GameApps.hk 香港手机游戏网
 
@@ -591,6 +625,12 @@ News 的数据来自 <https://warthunder.com/en/news/>
 
 <Route author="DIYgod" example="/mhw/news" path="/mhw/news" radar="1" rssbud="1"/>
 
+## 盒心光环
+
+### 资讯
+
+<Route author="XXY233" example="/xboxfan/news" path="/xboxfan/news" radar="1"/>
+
 ## 剑网 3
 
 ### 新闻资讯
@@ -687,6 +727,18 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 </Route>
 
+### 崩坏：星穹铁道
+
+#### 新闻
+
+<Route author="shinanory" example="/mihoyo/sr" path="/mihoyo/sr/:location?/:category?" :paramsDesc="['区域，可选 `zh-cn`（国服，简中）或 `zh-tw`（国际服，繁中）','分类，见下表，默认为最新']">
+
+| 最新     | 新闻 | 公告   | 活动     |
+| -------- | ---- | ------ | -------- |
+| news-all | news | notice | activity |
+
+</Route>
+
 ## 明日方舟
 
 ### 游戏公告与新闻
@@ -724,6 +776,22 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 ### 元素文章
 
 <Route author="hoilc" example="/cowlevel/element/1370" path="/cowlevel/element/:id" :paramsDesc="['元素 ID, 可在 URL 中找到']" radar="1" rssbud="1"/>
+
+## 其乐
+
+### 论坛
+
+<Route author="nczitzk" example="/keylol" path="/keylol/:path+" :paramsDesc="['路径，默认为热点聚焦']">
+
+::: tip 提示
+
+若订阅 [热点聚焦](https://keylol.com/f161-1)，网址为 <https://keylol.com/f161-1>。截取 `https://keylol.com/` 到末尾的部分 `f161-1` 作为参数，此时路由为 [`/keylol/f161-1`](https://rsshub.app/keylol/f161-1)。
+
+若订阅子分类 [试玩免费 - 热点聚焦](https://keylol.com/forum.php?mod=forumdisplay\&fid=161\&filter=typeid\&typeid=459)，网址为 <https://keylol.com/forum.php?mod=forumdisplay&fid=161&filter=typeid&typeid=459>。截取 `https://keylol.com/forum.php?mod=forumdisplay&` 到末尾的部分 `fid=161&filter=typeid&typeid=459` 作为参数，此时路由为 [`/keylol/fid=161&filter=typeid&typeid=459`](https://rsshub.app/keylol/fid=161\&filter=typeid\&typeid=459)。
+
+:::
+
+</Route>
 
 ## 少女前线
 

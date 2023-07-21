@@ -60,6 +60,16 @@ pageClass: routes
 
 </Route>
 
+### 基金项目管理平台
+
+<Route author="nczitzk" example="/bjsk/keti" path="/bjsk/keti/:id?" :paramsDesc="['分类 id，见下表，默认为通知公告']">
+
+| 通知公告                         | 资料下载                         |
+| -------------------------------- | -------------------------------- |
+| 402881027cbb8c6f017cbb8e17710002 | 2c908aee818e04f401818e08645c0002 |
+
+</Route>
+
 ## 北京市保障房中心有限公司
 
 ### 北京市共有产权住房租赁服务平台
@@ -143,6 +153,12 @@ pageClass: routes
 | lzyj     | gsgg     |
 
 </Route>
+
+### 人力社保局
+
+#### 人事考试通知
+
+<Route author="Mai19930513" example="/gov/chongqing/rsks" path="/gov/chongqing/rsks" radar="1"/>
 
 ## 德阳市人民政府
 
@@ -250,11 +266,23 @@ pageClass: routes
 
 ### 分类
 
-<Route author="yuxinliu-alex" example="/gov/nrta/news" path="/gov/nrta/news/:category?" :paramsDesc="['资讯类别， 可从地址中获取，默认为总局要闻']"/>
+<Route author="yuxinliu-alex" example="/gov/nrta/news" path="/gov/nrta/news/:category?" :paramsDesc="['资讯类别，可从地址中获取，默认为总局要闻']"/>
 
 | 总局要闻 | 公告公示 | 工作动态 | 其他 |
-| :------: | :------: | :------: | :--: |
-|    112   |    113   |    114   |      |
+| -------- | -------- | -------- | ---- |
+| 112      | 113      | 114      |      |
+
+</Route>
+
+### 电视剧政务平台
+
+<Route author="nczitzk" example="/gov/nrta/dsj" path="/gov/nrta/dsj/:category?" :paramsDesc="['分类，见下表，默认为备案公示']">
+
+| 备案公示 | 发行许可通告 | 重大题材立项     | 重大题材摄制    | 变更通报 |
+| -------- | ------------ | ---------------- | --------------- | -------- |
+| note     | announce     | importantLixiang | importantShezhi | changing |
+
+</Route>
 
 ## 国家税务总局
 
@@ -315,7 +343,7 @@ pageClass: routes
 
 ### 通用
 
-<Route author="TonyRL" example="/gov/nmpa/xxgk/ggtg" path="/gov/nmpa/:path+" :paramsDesc="['路径，默认为公告通告']" radar="1" rssbud="1" puppeteer="1">
+<Route author="TonyRL" example="/gov/nmpa/xxgk/ggtg" path="/gov/nmpa/:path+" :paramsDesc="['路径，默认为公告通告']" radar="1" rssbud="1">
 
 ::: tip 提示
 
@@ -331,7 +359,7 @@ pageClass: routes
 
 ### 通用
 
-<Route author="nczitzk" example="/gov/nifdc/bshff/ylqxbzhgl/qxggtzh" path="/gov/nifdc/:path+" :paramsDesc="['路径，默认为公告通告']" radar="1" rssbud="1" puppeteer="1">
+<Route author="nczitzk" example="/gov/nifdc/bshff/ylqxbzhgl/qxggtzh" path="/gov/nifdc/:path+" :paramsDesc="['路径，默认为公告通告']" radar="1" rssbud="1">
 
 ::: tip 提示
 
@@ -718,6 +746,12 @@ pageClass: routes
 
 <Route author="nczitzk" example="/cia/foia-annual-report" path="/cia/foia-annual-report"/>
 
+## 南京鼓楼医院
+
+### 员工版教育培训
+
+<Route author="real-jiakai" example="/njglyy/ygbjypx" path="/njglyy/ygbjypx" radar="1" />
+
 ## 南京市人民政府
 
 ### 信息公开
@@ -1085,6 +1119,22 @@ pageClass: routes
 路径处填写对应页面 URL 中 `http://www.cnnic.net.cn/` 后的字段。下面是一个例子。
 
 若订阅 [热点信息](http://www.cnnic.net.cn/gywm/xwzx/rdxw) 则将对应页面 URL <http://www.cnnic.net.cn/gywm/xwzx/rdxw> 中 `http://www.cnnic.net.cn/` 后的字段 `gywm/xwzx/rdxw` 作为路径填入。此时路由为 [`/gov/cnnic/gywm/xwzx/rdxw`](https://rsshub.app/gov/cnnic/gywm/xwzx/rdxw)
+
+:::
+
+</Route>
+
+## 中国军网
+
+### 军队人才网
+
+<Route author="nczitzk" example="/81/81rc" path="/81/81rc/:path+" :paramsDesc="['路径，默认为工作动态']">
+
+::: tip 提示
+
+若订阅 [文职人员 - 工作动态](https://81rc.81.cn/wzry/gzdt)，网址为 <https://81rc.81.cn/wzry/gzdt>。截取 `https://81rc.81.cn` 到末尾的部分 `/wzry/gzdt` 作为参数，此时路由为 [`/81/81rc/wzry/gzdt`](https://rsshub.app/81/81rc/wzry/gzdt)。
+
+若订阅子分类 [文职人员 - 各部门各单位招考动态](https://81rc.81.cn/wzry/jwjgbmhddwzkdt)，网址为 <https://81rc.81.cn/wzry/jwjgbmhddwzkdt>。截取 `https://81rc.81.cn` 到末尾的部分 `/wzry/jwjgbmhddwzkdt` 作为参数，此时路由为 [`/81/81rc/wzry/jwjgbmhddwzkdt`](https://rsshub.app/81/81rc/wzry/jwjgbmhddwzkdt)。
 
 :::
 
@@ -1608,6 +1658,23 @@ pageClass: routes
 路径处填写对应页面 URL 中 `http://www.ccdi.gov.cn/` 后的字段。下面是一个例子。
 
 若订阅 [审查调查 > 中管干部 > 执纪审查](https://www.ccdi.gov.cn/scdcn/zggb/zjsc/) 则将对应页面 URL <https://www.ccdi.gov.cn/scdcn/zggb/zjsc/> 中 `http://www.ccdi.gov.cn/` 后的字段 `scdcn/zggb/zjsc` 作为路径填入。此时路由为 [`/gov/ccdi/scdcn/zggb/zjsc`](https://rsshub.app/gov/ccdi/scdcn/zggb/zjsc)
+
+:::
+
+</Route>
+
+## 中央网信办
+
+### 分类
+
+<Route author="drgnchan" example="/gov/cac/xxh" path="/gov/cac/:path+" :paramsDesc="['路径，比如xxh表示信息化']" radar='1'>
+
+::: tip 提示
+
+路径填写对应页面 URL 中间部分。例如：
+
+首页 > 权威发布 > 办公室发布： <http://www.cac.gov.cn/qwfb/bgsfb/A090302index_1.htm>
+此时，path 参数为：/qwfb/bgsfb
 
 :::
 

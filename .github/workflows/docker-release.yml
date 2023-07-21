@@ -10,9 +10,11 @@ on:
       - '!**/maintainer.js'
       - '!**/radar.js'
       - '!**/radar-rules.js'
+      - '!lib/v2/test/**'
+      - '!test/**'
       - 'Dockerfile'
       - 'package.json'
-      - 'yarn.lock'
+      - 'pnpm-lock.yaml'
   workflow_dispatch: ~
 
 jobs:
@@ -37,9 +39,14 @@ jobs:
     permissions:
       packages: write
       contents: read
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Install cosign
+        if: github.event_name != 'pull_request'
+        uses: sigstore/cosign-installer@v3
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
@@ -73,6 +80,7 @@ jobs:
           flavor: latest=false
 
       - name: Build and push Docker image (ordinary version)
+        id: build-and-push
         uses: docker/build-push-action@v4
         with:
           context: .
@@ -82,8 +90,12 @@ jobs:
           platforms: linux/amd64,linux/arm/v7,linux/arm64
           cache-from: type=gha,scope=docker-release
           cache-to: type=gha,mode=max,scope=docker-release
-          # cache-from: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:buildcache
-          # cache-to: type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:buildcache,mode=max
+
+      - name: Sign the published Docker image
+        if: ${{ github.event_name != 'pull_request' }}
+        env:
+          COSIGN_EXPERIMENTAL: 'true'
+        run: echo "${{ steps.meta-ordinary.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push.outputs.digest }}
 
       - name: Extract Docker metadata (Chromium-bundled version)
         id: meta-chromium-bundled
@@ -98,19 +110,24 @@ jobs:
           flavor: latest=false
 
       - name: Build and push Docker image (Chromium-bundled version)
+        id: build-and-push-chromium
         uses: docker/build-push-action@v4
         with:
           context: .
-          build-args: PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=0
+          build-args: PUPPETEER_SKIP_DOWNLOAD=0
           push: true
           tags: ${{ steps.meta-chromium-bundled.outputs.tags }}
           labels: ${{ steps.meta-chromium-bundled.outputs.labels }}
           platforms: linux/amd64,linux/arm/v7,linux/arm64
           cache-from: |
             type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled
-          # type=gha,scope=docker-release # not needed, Docker automatically uses local cache from the builder
-          # type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:buildcache
           cache-to: type=inline,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled  # inline cache is enough
+
+      - name: Sign the published Docker image
+        if: ${{ github.event_name != 'pull_request' }}
+        env:
+          COSIGN_EXPERIMENTAL: 'true'
+        run: echo "${{ steps.meta-chromium-bundled.outputs.tags }}" | xargs -I {} cosign sign --yes {}@${{ steps.build-and-push-chromium.outputs.digest }}
 
   description:
     runs-on: ubuntu-latest

@@ -256,30 +256,6 @@ pageClass: routes
 
 </Route>
 
-## i-CABLE 有線新聞
-
-<Route author="tpnonthealps" example="/icable/all" path="/icable/:category/:option?" :paramsDesc="['栏目', '选项（不指定时预设为「全文输出 （含题图）」的 `withphoto` ）']">
-
-细则：
-
--   `:category` 栏目参数：
-
-    -   `all`: 全站
-    -   `local`: 港聞
-    -   `international`: 兩岸國際
-    -   `china`: 有線中國組
-    -   `sports`: 體育
-
--   `:option?` 可开启的选项：
-
-    -   `plain`: 全文输出为纯文字
-    -   `brief`: 输出为 100 字简讯
-
--   全文输出转换为简体字：`?opencc=t2s`
-    (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](https://docs.rsshub.app/parameter.html#zhong-wen-jian-fan-ti-zhuan-huan))
-
-</Route>
-
 ## NHK
 
 ### News Web Easy
@@ -335,6 +311,16 @@ pageClass: routes
 ### 熱門
 
 <Route author="nczitzk" example="/now/news/rank" path="/now/news/rank"/>
+
+## NPR
+
+### 新闻
+
+<Route author="bennyyip" example="/npr/1001" path="/npr/:endpoint?" :paramsDesc="['频道 ID，可在官方频道 RSS URL 中找到，默认为 `1001`']">
+
+通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+</Route>
 
 ## RTHK 傳媒透視
 
@@ -424,46 +410,6 @@ Solidot 提供的 feed:
 | 全部 | 创业    | Linux | 科学    | 科技       | 移动   | 苹果  | 硬件     | 软件     | 安全     | 游戏  | 书籍  | ask | idle | 博客 | 云计算 | 奇客故事 |
 | ---- | ------- | ----- | ------- | ---------- | ------ | ----- | -------- | -------- | -------- | ----- | ----- | --- | ---- | ---- | ------ | -------- |
 | www  | startup | linux | science | technology | mobile | apple | hardware | software | security | games | books | ask | idle | blog | cloud  | story    |
-
-</Route>
-
-## Telecompaper
-
-### News
-
-<Route author="nczitzk" example="/telecompaper/news/mobile/2020/China/News" path="/telecompaper/news/:caty/:year?/:country?/:type?" :paramsDesc="['分类，见下表', '年份，可在所选分类页中 Filter 的 `Years` 选择器中选择相应年份，不限年份则填入 `all`，默认为不限', '国家或大洲，可在所选分类页中 Filter 的 `Countries` 选择器中选择相应国家或大洲，不限国家或大洲则填入 `all`，默认为不限', '类型，可在所选分类页中 Filter 的 `Types` 选择器中选择相应类型，不限类型则填入 `all`，默认为不限']">
-
-可选分类如下
-
-| WIRELESS | BROADBAND | VIDEO     | GENERAL | IT | INDUSTRY RESOURCES |
-| -------- | --------- | --------- | ------- | -- | ------------------ |
-| mobile   | internet  | boardcast | general | it | industry-resources |
-
-::: tip 提示
-
-若 `country` 或 `type` 参数包含空格，则用 `-` 替代。如 `United States` 更换为 `United-States`，`White paper` 更换为 `White-paper`
-
-[INDUSTRY RESOURCES](https://www.telecompaper.com/industry-resources) 分类页的 Filter 仅提供了 `Content Type` 选择器，对应路由中 `type` 参数。`year` 和 `country` 参数则对该分类无效。
-
-:::
-
-</Route>
-
-### Search
-
-<Route author="nczitzk" example="/telecompaper/search/Nokia" path="/telecompaper/search/:keyword?/:company?/:sort?/:period?" :paramsDesc="['关键词', '公司名，默认为不限', '排序，见下表，默认为 Date Descending', '发表在时间段内，默认为 12 months']">
-
-排序
-
-| Date Ascending | Date Descending |
-| -------------- | --------------- |
-| 1              | 2               |
-
-发表在时间段内
-
-| 1 month | 3 months | 6 months | 12 months | 24 months |
-| ------- | -------- | -------- | --------- | --------- |
-| 1       | 3        | 6        | 12        | 24        |
 
 </Route>
 
@@ -976,13 +922,28 @@ IT・科学 tech_science
 
 ### 新聞
 
-<Route author="Arracc" example="/yomiuri/news" path="/yomiuri/:category" :paramsDesc="['板块']">
+<Route author="Arracc" example="/yomiuri/news" path="/yomiuri/:category?" :paramsDesc="['板块，默认为 `news`']">
 
 无料全文，综合页 (新着・速報) 文章标题补充板块标签。
 
-| 新着・速報 | 社会     | 政治     | 経済    | スポーツ | 国際  | 科学・ＩＴ | 選挙・世論調査 | エンタメ・文化 | 囲碁・将棋 | ライフ | 地域  | 社説      | 皇室      |
-| ---------- | -------- | -------- | ------- | -------- | ----- | ---------- | -------------- | -------------- | ---------- | ------ | ----- | --------- | --------- |
-| news       | national | politics | economy | sports   | world | science    | election       | culture        | igoshougi  | life   | local | editorial | koushitsu |
+| Category       | Parameter |
+| -------------- | --------- |
+| 新着・速報     | news      |
+| 社会           | national  |
+| 政治           | politics  |
+| 経済           | economy   |
+| スポーツ       | sports    |
+| 国際           | world     |
+| 地域           | local     |
+| 科学・ＩＴ     | science   |
+| エンタメ・文化 | culture   |
+| ライフ         | life      |
+| 医療・健康     | medical   |
+| 教育・就活     | kyoiku    |
+| 選挙・世論調査 | election  |
+| 囲碁・将棋     | igoshougi |
+| 社説           | editorial |
+| 皇室           | koushitsu |
 
 </Route>
 
@@ -1041,6 +1002,15 @@ IT・科学 tech_science
 
 </Route>
 
+## 法国广播电台
+
+### 地缘政治栏目
+
+<Route author="xdu" example="/radiofrance/geopolitique" path="/radiofrance/geopolitique">
+
+法广电台地缘政治栏目最新 3 篇文章全文抓取，提供比官方源更佳的阅读体验。
+
+</Route>
 ## 公視新聞網
 
 ### 即時新聞
@@ -1564,12 +1534,12 @@ category 对应的关键词有
 
 ### 分类 / 话题 / 作者
 
-<Route author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:category/:topic?" :paramsDesc="['可在 URL 中找到，或参考下面的表格', '可在 URL 中找到，或参考下面的表格']">
+<Route author="HenryQW proletarius101 LyleLee nczitzk" example="/reuters/world/us" path="/reuters/:category/:topic?" :paramsDesc="['可在 URL 中找到，或参考下面的表格', '可在 URL 中找到，或参考下面的表格']">
 
 -   `:category`:
-    | World | Business | Legal | Markets | Breakingviews | Technology |
-    | ----- | -------- | ----- | ------- | ------------- | ---------- |
-    | world | business | legal | markets | breakingviews | technology |
+    | World | Business | Legal | Markets | Breakingviews | Technology | Graphics |
+    | ----- | -------- | ----- | ------- | ------------- | ---------- | -------- |
+    | world | business | legal | markets | breakingviews | technology | graphics |
 
 -   `world/:topic`:
 
@@ -1655,6 +1625,33 @@ category 对应的关键词有
 | s00016   | 娱乐         |
 | s00017   | 英文         |
 | s00018   | 作家专栏     |
+
+</Route>
+
+## 南方都市报
+
+### 奥一网
+
+<Route author="TimWu007" example="/oeeee/web/170" path="/oeeee/web/:channel" :paramsDesc="['频道 ID']">
+
+-   若在桌面端打开奥一网栏目页（如 <https://www.oeeee.com/api/channel.php?s=/index/index/channel/gz），可查看该页源代码，搜索> `OECID`。
+-   若在移动端打开奥一网栏目页（格式例：<https://m.oeeee.com/m.php?s=/m2/channel&channel_id=169），即可从> url 中获取。需注意的是，如果该栏目页的 url 格式为 <https://m.oeeee.com/detailChannel_indexData.html?channel_id=266> ，则 `266` 并非为本路由可用的频道 ID，建议从桌面端获取。
+
+</Route>
+
+### 南都客户端（按南都号 ID）
+
+<Route author="TimWu007" example="/oeeee/app/channel/50" path="/oeeee/app/channel/:id?" :paramsDesc="['南都号 ID']">
+
+南都号的 UID 可通过 `m.mp.oeeee.com` 下的文章页面获取。点击文章上方的南都号头像，进入该南都号的个人主页，即可从 url 中获取。
+
+</Route>
+
+### 南都客户端（按记者）
+
+<Route author="TimWu007" example="/oeeee/app/reporter/249" path="/oeeee/app/reporter/:id" :paramsDesc="['记者 UID']">
+
+记者的 UID 可通过 `m.mp.oeeee.com` 下的文章页面获取。点击文章下方的作者头像，进入该作者的个人主页，即可从 url 中获取。
 
 </Route>
 
@@ -2426,36 +2423,6 @@ category 对应的关键词有
 
 <Route author="yhkang" example="/cztv/zjxwlb/daily" path="/cztv/zjxwlb/daily" />
 
-## 新浪科技
-
-### 科学探索
-
-<Route author="LogicJake" example="/sina/discovery/zx" path="/sina/discovery/:type" :paramsDesc="['订阅分区类型']">
-
-分类：
-
-| zx   | twhk     | dwzw     | zrdl     | lskg     | smyx     | shbk     | kjqy     |
-| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 最新 | 天文航空 | 动物植物 | 自然地理 | 历史考古 | 生命医学 | 生活百科 | 科技前沿 |
-
-</Route>
-
-### 滚动新闻
-
-<Route author="xyqfer" example="/sina/rollnews" path="/sina/rollnews" />
-
-## 新浪体育
-
-### 综合
-
-<Route author="nczitzk" example="/sina/sports/volley" path="/sina/sports/:type" :paramsDesc="['运动类型，见下表']">
-
-| 排球   | 游泳 | 乒乓球   | 羽毛球 | 台球    | 田径     | 体操  | 冰雪   | 射击 | 马术  | 拳击搏击 | UFC | 其他   |
-| ------ | ---- | -------- | ------ | ------- | -------- | ----- | ------ | ---- | ----- | -------- | --- | ------ |
-| volley | swim | pingpang | badmin | snooker | tianjing | ticao | winter | sh   | mashu | kungfu   | ufc | others |
-
-</Route>
-
 ## 新唐人电视台
 
 ### 频道
@@ -2599,6 +2566,17 @@ category 对应的关键词有
 
 </Route>
 
+## 有線寬頻 i-CABLE
+
+### 有線新聞 | Cable News
+
+<Route author="tpnonthealps" example="/i-cable" path="/i-cable/:category?" :paramsDesc="['分類，頁面內紅色標籤，下表僅列出部分，留空為全部']" radar="1">
+
+| 新聞資訊 | 財經資訊 | 港聞 | 兩岸國際 | 中國在線 | 體育 | 娛樂 |
+| -------- | -------- | ---- | -------- | -------- | ---- | ---- |
+
+</Route>
+
 ## 浙江在线
 
 ### 浙报集团系列报刊
@@ -2615,7 +2593,7 @@ category 对应的关键词有
 
 ### 播客
 
-<Route author="5upernova-heng" example="/cgtn/podcast/ezfm/4" path="/cgtn/podcast/:category/:id" :paramsDesc="['类型名','播客 id']" radar=1> 
+<Route author="5upernova-heng" example="/cgtn/podcast/ezfm/4" path="/cgtn/podcast/:category/:id" :paramsDesc="['类型名','播客 id']" radar=1>
 
 > 类型名与播客 id 可以在播客对应的 URL 中找到
 > 如 URL `https://radio.cgtn.com/podcast/column/ezfm/More-to-Read/4` ，其 `category` 为 `ezfm` ，`id` 为 `4`，对应的订阅路由为 [`/podcast/ezfm/4`](https://rsshub.app/podcast/ezfm/4)

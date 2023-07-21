@@ -33,12 +33,12 @@ describe('puppeteer', () => {
         const html = await page.evaluate(() => document.body.innerHTML);
         expect(html.length).toBeGreaterThan(0);
 
-        expect((await browser.process()).signalCode).toBe(null);
+        expect(browser.process().exitCode).toBe(null); // browser is still running
         const sleepTime = 31 * 1000 - (Date.now() - startTime); // prevent long loading time from failing the test
         if (sleepTime > 0) {
             await wait(sleepTime);
         }
-        expect((await browser.process()).signalCode).toBe('SIGKILL');
+        expect(browser.process().exitCode).toBe(0); // browser is closed
         browser = null;
     }, 45000);
 

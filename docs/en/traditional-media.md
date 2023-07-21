@@ -355,6 +355,28 @@ Only `s00017` is in English.
 
 </RouteEn>
 
+## NPR
+
+### News
+
+<RouteEn author="bennyyip" example="/npr/1001" path="/npr/:endpoint?" :paramsDesc="['Channel ID, can be found in Official RSS URL, `1001` by default']">
+
+Provide full article RSS for CBC topics.
+
+</RouteEn>
+
+
+
+## Radio France
+
+### Géopolitique
+
+<RouteEn author="xdu" example="/radiofrance/geopolitique" path="/radiofrance/geopolitique">
+
+French podcast on the international politics. This feed provides a better reading experience (full text) for the 3 latest articles.
+
+</RouteEn>
+
 ## Radio Free Asia (RFA)
 
 ### News
@@ -380,12 +402,12 @@ Parameters can be obtained from the official website, for instance:
 
 ### Category/Topic/Author
 
-<RouteEn author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:category/:topic?" :paramsDesc="['find it in the URL, or tables below', 'find it in the URL, or tables below']">
+<RouteEn author="HenryQW proletarius101 LyleLee nczitzk" example="/reuters/world/us" path="/reuters/:category/:topic?" :paramsDesc="['find it in the URL, or tables below', 'find it in the URL, or tables below']">
 
 -   `:category`:
-    | World | Business | Legal | Markets | Breakingviews | Technology |
-    | -------- | ------- | ----- | -------- | ------------- | ---------- |
-    | world | business | legal | markets | breakingviews | technology |
+    | World | Business | Legal | Markets | Breakingviews | Technology | Graphics |
+    | ----- | -------- | ----- | ------- | ------------- | ---------- | -------- |
+    | world | business | legal | markets | breakingviews | technology | graphics |
 
 -   `world/:topic`:
 
@@ -750,12 +772,27 @@ Provides all of the articles by the specified Yahoo! author.
 
 ### News
 
-<RouteEn author="Arracc" example="/yomiuri/news" path="/yomiuri/:category" :paramsDesc="['category']">
+<RouteEn author="Arracc" example="/yomiuri/news" path="/yomiuri/:category?" :paramsDesc="['Category, `news` by default']">
 
 Free articles only.
 
-| 新着・速報 | 　　社会 | 政治     | 経済    | スポーツ | 国際  | 科学・ＩＴ | 選挙・世論調査 | エンタメ・文化 | 囲碁・将棋 | ライフ | 地域  | 社説      | 皇室      |
-| ---------- | -------- | -------- | ------- | -------- | ----- | ---------- | -------------- | -------------- | ---------- | ------ | ----- | --------- | --------- |
-| 　 news 　 | national | politics | economy | sports   | world | science    | election       | culture        | igoshougi  | life   | local | editorial | koushitsu |
+| Category       | Parameter |
+| -------------- | --------- |
+| 新着・速報     | news      |
+| 社会           | national  |
+| 政治           | politics  |
+| 経済           | economy   |
+| スポーツ       | sports    |
+| 国際           | world     |
+| 地域           | local     |
+| 科学・ＩＴ     | science   |
+| エンタメ・文化 | culture   |
+| ライフ         | life      |
+| 医療・健康     | medical   |
+| 教育・就活     | kyoiku    |
+| 選挙・世論調査 | election  |
+| 囲碁・将棋     | igoshougi |
+| 社説           | editorial |
+| 皇室           | koushitsu |
 
 </RouteEn>

@@ -16,6 +16,12 @@ pageClass: routes
 
 </Route>
 
+## Apache
+
+### APISIX 博客
+
+<Route author="aneasystone" example="/apache/apisix/blog" path="/apache/apisix/blog"/>
+
 ## archdaily
 
 ### 首页
@@ -31,6 +37,24 @@ pageClass: routes
 ### 用户博客
 
 <Route author="Jkker" example="/csdn/blog/csdngeeknews" path="/csdn/blog/:user" radar="1" :paramsDesc="['`user` 为 CSDN 用户名，可以在主页 url 中找到']" />
+
+## DevolverDigital
+
+### 官方博客
+
+<Route author="XXY233" example="/devolverdigital/blog" path="/devolverdigital/blog" radar="1" />
+
+## FreeBuf
+
+### 文章
+
+<Route author="trganda" example="/freebuf/articles/web" path="/freebuf/articles/:type" :paramsDesc="['文章类别', '文章id号，可选']">
+
+::: tip 使用说明
+Freebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的完整内容。
+:::
+
+</Route>
 
 ## Geocaching
 
@@ -110,6 +134,12 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 <Route author="nczitzk" example="/justrun" path="/justrun"/>
 
+## Kun Cheng
+
+### Essay
+
+<Route author="nczitzk" example="/kunchengblog/essay" path="/kunchengblog/essay" radar="1"/>
+
 ## LaTeX 开源小屋
 
 ### 首页
@@ -127,6 +157,60 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 ### Recently
 
 <RouteEn author="5upernova-heng" example="/macmenubar/recently/developer-apps,system-tools" path="/macmenubar/recently/:category?" :paramsDesc="['分类名，多个使用逗号隔开，留空则为全部。分类名可在 URL 中找到']" radar="1" />
+
+## Medium
+
+### List
+
+<Route author="ImSingee" example="/medium/list/imsingee/f2d8d48096a9" path="/medium/list/:user/:catalogId" :paramsDesc="['用户名', 'List 的 ID']">
+
+List ID 取的是网址中最后一部分 `-` 后面的内容，例如 `https://medium.com/@imsingee/list/collection-7e67004f23f9` 的用户名为 imsingee、ID 为 `7e67004f23f9`
+
+::: warning 注意
+
+想要获取 Private 的 List 则只支持自建
+
+:::
+
+</Route>
+
+### 个性推荐 - For You
+
+<Route author="ImSingee" example="/medium/for-you/imsingee" path="/medium/for-you/:user" :paramsDesc="['用户名']" selfhost="1">
+
+::: warning 注意
+
+个性推荐需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
+
+</Route>
+
+### 个性推荐 - Following
+
+<Route author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" :paramsDesc="['用户名']" selfhost="1">
+
+::: warning 注意
+
+个性推荐需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
+
+</Route>
+
+### 个性推荐 - Tag
+
+<Route author="ImSingee" example="/medium/tag/imsingee/cybersecurity" path="/medium/tag/:user/:tag" :paramsDesc="['用户名', '订阅的 Tag']" selfhost="1">
+
+Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://medium.com/?tag=web3` 则 tag 为 `web3`
+
+::: warning 注意
+
+个性推荐需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
+
+</Route>
 
 ## Miris Whispers
 
@@ -411,6 +495,18 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 <Route author="XinRoom" example="/ddosi/category/黑客工具" path="/ddosi/category/:category?"/>
 
+## 云原生社区
+
+### 博客
+
+<Route author="aneasystone" example="/cloudnative/blog" path="/cloudnative/blog"/>
+
+## 支流科技
+
+### 博客
+
+<Route author="aneasystone" example="/apiseven/blog" path="/apiseven/blog"/>
+
 ## 竹白
 
 ### 文章
@@ -424,3 +520,7 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 :::
 
 </Route>
+
+### TOP 20
+
+<Route author="nczitzk" example="/zhubai/top20" path="/zhubai/top20"/>

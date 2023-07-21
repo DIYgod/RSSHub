@@ -1,0 +1,31 @@
+{{ each content c }}
+  {{ if c.text }}
+    {{ c.text }}
+  {{ else if c.type === 'paragraph' }}
+    <p>{{@ c.children | parseContent }}</p>
+  {{ else if c.type === 'link' }}
+    <a href="{{ c.url }}">{{@ c.children | parseContent }}</a>
+  {{ else if c.type === 'image' }}
+    <img src="{{ c.url }}" height="{{ c.naturalHeight }}" width="{{ c.naturalWidth }}">
+  {{ else if c.type === 'list-item' }}
+    <li>{{@ c.children | parseContent }}</li>
+  {{ else if c.type === 'bulleted-list' }}
+    <ul>{{@ c.children | parseContent }}</ul>
+  {{ else if c.type === 'numbered-list' }}
+    <ol>{{@ c.children | parseContent }}</ol>
+  {{ else if c.type === 'block-quote' }}
+    <blockquote>{{@ c.children | parseContent }}</blockquote>
+  {{ else if c.type === 'heading-one' }}
+    <h1>{{@ c.children | parseContent }}</h1>
+  {{ else if c.type === 'heading-two' }}
+    <h2>{{@ c.children | parseContent }}</h2>
+  {{ else if c.type === 'heading-three' }}
+    <h3>{{@ c.children | parseContent }}</h3>
+  {{ else if c.type === 'heading-four' }}
+    <h4>{{@ c.children | parseContent }}</h4>
+  {{ else if c.type === 'heading-five' }}
+    <h5>{{@ c.children | parseContent }}</h5>
+  {{ else if c.type === 'heading-six' }}
+    <h6>{{@ c.children | parseContent }}</h6>
+  {{ /if }}
+{{ /each }}

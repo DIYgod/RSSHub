@@ -4,6 +4,16 @@ pageClass: routes
 
 # 预报预警
 
+## BMKG 印尼气象气候和地球物理局
+
+### 最近的地震
+
+<Route author="Shinanory" example="/bmkg/earthquake" path="/bmkg/earthquake" />
+
+### 新闻
+
+<Route author="Shinanory" example="/bmkg/news" path="/bmkg/news" />
+
 ## Outage.Report
 
 ### Report
@@ -26,6 +36,12 @@ pageClass: routes
 | showID | 是否包含 monitor ID (关闭此项同时也会使得各个 RSS 条目不附链接) | 0/1/true/false | true   |
 
 </Route>
+
+## 重庆燃气
+
+### 停气检修通知
+
+<Route author="Mai19930513" example="/cqgas/tqtz" path="/cqgas/tqtz" radar="1"/>
 
 ## 地震速报
 
@@ -70,16 +86,6 @@ pageClass: routes
 ### 当前生效预警
 
 <Route author="nczitzk" example="/12379" path="/12379/index"/>
-
-## 国家应急广播网
-
-### 预警信息
-
-<Route author="muzea" example="/cneb/yjxx" path="/cneb/yjxx"/>
-
-### 国内新闻
-
-<Route author="muzea" example="/cneb/guoneinews" path="/cneb/guoneinews"/>
 
 ## 和风天气
 
@@ -175,11 +181,61 @@ pageClass: routes
 
 </Route>
 
+### 深圳市
+
+<Route author="lilPiper" example="/tingshuitz/shenzhen" path="/tingshuitz/shenzhen">
+
+可能仅限中国大陆服务器访问，以实际情况为准。
+
+</Route>
+
 ## 香港天文台
 
 ### Current Weather Report
 
 <Route author="calpa" example="/hko/weather" path="/hko/weather"/>
+
+## 中国国家应急广播
+
+### 预警信息
+
+<Route author="muzea nczitzk" example="/cneb/yjxx" path="/cneb/yjxx/:level?/:province?/:city?" :paramsDesc="['灾害级别，见下表，默认为全部', '省份，默认为空，即全国', '城市，默认为空，即全省']">
+
+灾害级别
+
+| 全部 | 红色 | 橙色 | 黄色 | 蓝色 |
+| ---- | ---- | ---- | ---- | ---- |
+|      | 红色 | 橙色 | 黄色 | 蓝色 |
+
+::: tip 提示
+
+若订阅全国的全部预警信息，此时路由为 [`/cneb/yjxx`](https://rsshub.app/cneb/yjxx)。
+
+若订阅全国的 **红色** 预警信息，此时路由为 [`/cneb/yjxx/红色`](https://rsshub.app/cneb/yjxx/红色)。
+
+若订阅 **北京市** 的全部预警信息，此时路由为 [`/cneb/yjxx/北京市`](https://rsshub.app/cneb/yjxx/北京市)。
+
+若订阅 **北京市** 的 **蓝色** 预警信息，此时路由为 [`/cneb/yjxx/北京市/蓝色`](https://rsshub.app/cneb/yjxx/北京市/蓝色)。
+
+若订阅 **广东省** 的 **橙色** 预警信息，此时路由为 [`/cneb/yjxx/广东省/橙色`](https://rsshub.app/cneb/yjxx/广东省/橙色)。
+
+若订阅 **广东省广州市** 的全部预警信息，此时路由为 [`/cneb/yjxx/广东省/广州市`](https://rsshub.app/cneb/yjxx/广东省/广州市)。
+
+若订阅 **广东省广州市** 的 **黄色** 预警信息，此时路由为 [`/cneb/yjxx/广东省/广州市/黄色`](https://rsshub.app/cneb/yjxx/广东省/广州市/黄色)。
+
+:::
+
+</Route>
+
+### 应急新闻
+
+<Route author="nczitzk" example="/cneb/yjxw" path="/cneb/yjxw/:category?" :paramsDesc="['分类，见下表，默认为全部']">
+
+| 全部 | 国内新闻 | 国际新闻 |
+| ---- | -------- | -------- |
+|      | gnxw     | gjxw     |
+
+</Route>
 
 ## 中央气象台
 

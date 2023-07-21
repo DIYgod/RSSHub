@@ -105,22 +105,23 @@ Default is under 'https://www.methodstudios.com/en/features'.
 
 ### Works
 
-<RouteEn author="nczitzk" example="/notefolio" path="/notefolio/:caty?/:order?/:time?/:query?" :paramsDesc="['Category, see below, `all` by default', 'Order, `pick` as Notefolio Pick, `newest` as Newest, `noted` as Noted, `pick` by default', 'Time, `all` as All the time, `day` as Latest 24 hours, `week` as Latest week, `month` as Latest month, `month3` as Latest 3 months, `all` by default', 'Keyword, empty by default']">
+<RouteEn author="BianTan" example="/notefolio/search/1/pick/all/life" path="/notefolio/search/:category?/:order?/:time?/:query?" :paramsDesc="['Category, see below, `all` by default', 'Order, `pick` as Notefolio Pick, `published` as Newest, `like` as like, `pick` by default', 'Time, `all` as All the time, `one-day` as Latest 24 hours, `week` as Latest week, `month` as Latest month, `three-month` as Latest 3 months, `all` by default', 'Keyword, empty by default']">
 
 | Category | Name in Korean | Name in English |
-| -------- | -------------- | --------------- |
-| all | 전체 | All |
-| A7 | 공예 | Crafts |
-| J7 | 그래픽 디자인 | Graphic Design |
-| B7 | 디지털 아트 | Digital Art |
-| C7 | 영상/모션그래픽 | Video / Motion Graphics |
-| D7 | 브랜딩/편집 | Branding / Editing |
-| E7 | 산업 디자인 | Industrial Design |
-| F7 | UI/UX | UI/UX |
-| G7 | 일러스트레이션 | Illustration |
-| K7 | 타이포그래피 | Typography |
-| H7 | 파인아트 | Fine Art |
-| I7 | 포토그래피 | Photography |
+| ---- | --------------- | --------------- |
+| all  | 전체            | All        |
+| 1   | 영상/모션그래픽 | Video / Motion Graphics |
+| 2   | 그래픽 디자인   | Graphic Design |
+| 3   |  브랜딩/편집    | Branding / Editing |
+| 4   | UI/UX       | UI/UX |
+| 5   | 일러스트레이션  | Illustration |
+| 6   | 디지털 아트     | Digital Art |
+| 7   | 캐릭터 디자인   | Character Design |
+| 8   | 제품/패키지 디자인 | Product Package Design |
+| 9   | 포토그래피      | Photography |
+| 10   | 타이포그래피    | Typography |
+| 11   | 공예            | Crafts |
+| 12   | 파인아트        | Fine Art|
 
 </RouteEn>
 

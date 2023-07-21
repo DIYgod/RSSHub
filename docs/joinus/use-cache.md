@@ -29,14 +29,14 @@
 在 `tryGet()` 函数之外声明的变量的任何赋值都不会在缓存命中的情况下被处理。例如，以下代码将无法按预期工作：
 
 ```js
-    let variable = 'value';
-    await ctx.cache.tryGet('cache:key', async () => {
-        variable = 'new value';
-        const newVariable = 'new variable';
-        return newVariable;
+    let x = '1';
+    const z = await ctx.cache.tryGet('cache:key', async () => {
+        x = '2';
+        const y = '3';
+        return y;
     })
-    console.log(variable); // 缓存未命中: 'new value', 缓存命中: 'value'
-       
+    console.log(x); // 缓存未命中: '2', 缓存命中: '1'
+    console.log(z): // '3'
 ```
 
 :::

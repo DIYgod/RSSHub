@@ -74,6 +74,30 @@ pageClass: routes
 
 </Route>
 
+### Outlet
+
+<Route author="NavePnow" example="/arcteryx/outlet/us/mens" path="/arcteryx/outlet/:country/:gender" :paramsDesc="['国家', '性别']">
+
+国家
+
+| 美国 | 加拿大 | 英国 |
+| ---- | ------ | ---- |
+| us   | ca     | gb   |
+
+性别
+
+| 男   | 女     |
+| ---- | ------ |
+| mens | womens |
+
+::: tip 提示
+
+参数 `country` 可以在 `Arcteryx` 官网的 URL 中找到。
+
+:::
+
+</Route>
+
 ### Regear 新发布
 
 <Route author="NavePnow" example="/arcteryx/regear/new-arrivals" path="/arcteryx/regear/new-arrivals" />
@@ -304,7 +328,7 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 搜索结果
 
-<Route author="fengkx" example="/duozhuayu/search/JavaScript" path="/duozhuayu/search/:wd" :paramsDesc="['搜索关键词']"/>
+<Route author="fengkx" example="/duozhuayu/search/JavaScript" path="/duozhuayu/search/:wd" :paramsDesc="['搜索关键词']" radar="1"/>
 
 ## 逛丢
 
@@ -418,6 +442,12 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 ### 图书列表
 
 <Route author="hoilc" example="/ptpress/book/new" path="/ptpress/book/:type?" :paramsDesc="['排序方式，默认`new`为最新图书，可选`hot`为最热图书']"/>
+
+## 上海文化广场
+
+### 节目列表
+
+<Route author="fuzy112" example="/shcstheatre/programs" path="/shcstheatre/programs"/>
 
 ## 什么值得买
 

@@ -22,15 +22,29 @@ Apart from serving as an information source hub, RSSHub is also made compatible 
 
 ### Install
 
+<code-group>
+<code-block title="pnpm" active>
+
 ```bash
-npm install rsshub --save
+pnpm add rsshub
 ```
 
-Or user Yarn
+</code-block>
+<code-block title="yarnv1">
 
 ```bash
 yarn add rsshub
 ```
+
+</code-block>
+<code-block title="npm">
+
+```bash
+npm install rsshub --save
+```
+
+</code-block>
+</code-group>
 
 ### Usage
 

@@ -1,4 +1,4 @@
-const { pinyin, PINYIN_STYLE } = require('@napi-rs/pinyin');
+const { pinyin } = require('pinyin-pro');
 const { slugify: _slugify } = require('@vuepress/shared-utils');
 
 module.exports = {
@@ -52,12 +52,10 @@ module.exports = {
                 slugify(s) {
                     return _slugify(
                         pinyin(s, {
-                            style: PINYIN_STYLE.Plain,
-                            heteronym: true,
-                            segment: true,
-                        })
-                            .map((item) => item[0])
-                            .join('-')
+                            nonZh: 'consecutive',
+                            toneType: 'none',
+                            type: 'array',
+                        }).join('-')
                     );
                 },
                 level: 2,
@@ -136,7 +134,7 @@ module.exports = {
                             collapsable: false,
                             children: [
                                 {
-                                    title: '🎧 制作多媒体 RSS 订阅源',
+                                    title: '🌱 RSS 基础',
                                     path: 'advanced-feed',
                                 },
                                 {
@@ -247,7 +245,7 @@ module.exports = {
                             collapsable: false,
                             children: [
                                 {
-                                    title: '🎧 Create a Rich Media RSS Feed',
+                                    title: '🌱 RSS Feed Fundamentals',
                                     path: 'advanced-feed',
                                 },
                                 {

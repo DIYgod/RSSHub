@@ -14,7 +14,7 @@
             "value": "80",
             "required": false
         },
-        "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD": {
+        "PUPPETEER_SKIP_DOWNLOAD": {
             "value": "1",
             "required": false
         }

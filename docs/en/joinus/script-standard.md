@@ -108,7 +108,7 @@ The `maintainer.js` file should export an object that provides maintainer inform
 -   Key: Corresponding path in the `@koa/router` object
 -   Value: Array of string, including all maintainers' GitHub ID.
 
-To generate a list of maintainers, use the following command: `yarn build:maintainer`, which will create the list under `assets/build/`.
+To generate a list of maintainers, use the following command: `pnpm run build:maintainer`, which will create the list under `assets/build/`.
 
 ::: danger Warning
 The path in the `@koa/router` object should be the same as the `path` in the corresponding documentation before the namespace appended in front of it.
@@ -134,7 +134,16 @@ All templates should be placed in the namespace's `templates` folder with the `.
 
 Here's an example taken from the [furstar](https://github.com/DIYgod/RSSHub/blob/master/lib/v2/furstar) namespace:
 
-<<< @/lib/v2/furstar/templates/author.art
+```html
+<div>
+    <img src="{{ avatar }}" />
+    {{ if link !== null }}
+    <a href="{{ link }}">{{name}}</a>
+    {{ else }}
+    <a href="#">{{name}}</a>
+    {{ /if }}
+</div>
+```
 
 ```js
 const path = require('path');

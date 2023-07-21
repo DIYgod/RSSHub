@@ -68,6 +68,16 @@ pageClass: routes
 
 <Route author="nczitzk" example="/36kr/search/newsflashes/ofo" path="/36kr/search/newsflashes/:keyword" :paramsDesc="['关键字']" />
 
+### 资讯热榜
+
+<Route author="nczitzk" example="/36kr/hot-list" path="/36kr/hot-list/:category?" :paramsDesc="['分类，默认为24小时热榜']">
+
+| 24 小时热榜 | 资讯人气榜 | 资讯综合榜 | 资讯收藏榜 |
+| ----------- | ---------- | ---------- | ---------- |
+| 24          | renqi      | zonghe     | shoucang   |
+
+</Route>
+
 ## 52hrtt 华人头条
 
 ### 新闻
@@ -135,19 +145,19 @@ pageClass: routes
 
 ## AEON
 
-<Route author="emdoe" example="/aeon/ideas" path="/aeon/:category" :paramsDesc="['类别']">
+### 类型
 
-支持以文体分类：
+<Route author="emdoe" example="/aeon/essays" path="/aeon/:type" :paramsDesc="['类别']">
 
-| Ideas | Essays | Videos |
-| ----- | ------ | ------ |
-| ideas | essays | videos |
+支持获取 Essays, Videos, 以及 Audio. 但 Audio 仅输出正文内容，并不包括音轨链接。
 
-同样支持以话题分类：
+</Route>
 
-| Culture | Philosophy | Psychology | Society | Science |
-| ------- | ---------- | ---------- | ------- | ------- |
-| culture | philosophy | psychology | society | science |
+### 分类
+
+<Route author="emdoe" example="/aeon/category/philosophy" path="/aeon/category/:category" :paramsDesc="['分类']">
+
+支持获取的分类包括: Philosophy, Science, Psychology, Society, 以及 Culture.
 
 </Route>
 
@@ -184,6 +194,22 @@ pageClass: routes
 ### Press releases & announcements
 
 <Route author="nczitzk" example="/asml/press-releases" path="/asml/press-releases"/>
+
+## Bad.news
+
+### 通用
+
+<Route author="nczitzk" example="/bad" path="/bad/:path+" :paramsDesc="['路径，默认为首页热门']">
+
+::: tip 提示
+
+若订阅 [每日热点 - 最新](https://bad.news/tag/每日热点/sort-new)，网址为 [https://bad.news/tag/ 每日热点 /sort-new](https://bad.news/tag/每日热点/sort-new)。截取 `https://bad.news` 到末尾的部分 `/tag/每日热点/sort-new` 作为参数，此时路由为 [`/bad/tag/每日热点/sort-new`](https://rsshub.app/bad/tag/每日热点/sort-new)。
+
+若订阅子分类 [大陆资讯 - 热门](https://bad.news/tag/大陆资讯/sort-hot)，网址为 [https://bad.news/tag/ 大陆资讯 /sort-hot](https://bad.news/tag/大陆资讯/sort-hot)。截取 `https://bad.news` 到末尾的部分 `/tag/大陆资讯/sort-hot` 作为参数，路由为 [`/bad/tag/大陆资讯/sort-hot`](https://rsshub.app/bad/tag/大陆资讯/sort-hot)。
+
+:::
+
+</Route>
 
 ## Bell Labs
 
@@ -1040,6 +1066,10 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="ETiV" example="/openai/chatgpt/release-notes" path="/openai/chatgpt/release-notes" />
 
+### Research
+
+<Route author="yuguorui" example="/openai/research" path="/openai/research" />
+
 ## OR
 
 ### 频道
@@ -1230,12 +1260,6 @@ IPFS 网关有可能失效，那时候换成其他网关。
 | topic    | news     | tech     | blockchain | daily    |
 
 </Route>
-
-## RSS3
-
-### Blog
-
-<Route author="nczitzk" example="/rss3/blog" path="/rss3/blog"/>
 
 ## Samsung
 
@@ -1475,6 +1499,33 @@ Provides all of the Thrillist articles with the specified tag.
 
 <Route author="Rongronggg9" example="/tribalfootball" path="/tribalfootball" />
 
+## UNTAG
+
+### 时间线
+
+<Route author="nczitzk" example="/utgd/timeline" path="/utgd/timeline" />
+
+### 分类
+
+<Route author="nczitzk" example="/utgd/method" path="/utgd/:category?" :paramsDesc="['分类，可在对应分类页的 URL 中找到，默认为方法']">
+
+| 方法   | 观点    |
+| ------ | ------- |
+| method | opinion |
+
+</Route>
+
+### 专题
+
+<Route author="nczitzk" example="/utgd/topic/在线阅读专栏" path="/utgd/topic/:topic?" :paramsDesc="['专题，默认为在线阅读专栏']">
+
+| 在线阅读专栏 | 卡片笔记专题 |
+| ------------ | ------------ |
+
+更多专栏请见 [专题广场](https://utgd.net/topic)
+
+</Route>
+
 ## Uwants
 
 ### 版塊
@@ -1546,6 +1597,34 @@ Supported sub-sites:
 ### 精读
 
 <Route author="AlexdanerZe TonyRL" example="/zaker/focusread" path="/zaker/focusread" />
+
+## zyw
+
+### 今日热榜
+
+<Route author="nczitzk" example="/zyw/hot" path="/zyw/hot/:site?" :paramsDesc="['站点，见下表，默认为空，即全部']">
+
+::: tip 提示
+
+全部站点请见 [此处](https://hot.zyw.asia/#/list)
+
+:::
+
+| 哔哩哔哩 | 微博 | 知乎 | 36 氪 | 百度 | 少数派 | IT 之家 | 澎湃新闻 | 今日头条 | 百度贴吧 | 稀土掘金 | 腾讯新闻 |
+| -------- | ---- | ---- | ----- | ---- | ------ | ------- | -------- | -------- | -------- | -------- | -------- |
+
+</Route>
+
+## 阿里研究院
+
+### 资讯
+
+<Route author="nczitzk" example="/aliresearch/information" path="/aliresearch/information/:type?" :paramsDesc="['类型，见下表，默认为新闻']">
+
+| 新闻 | 观点 | 案例 |
+| ---- | ---- | ---- |
+
+</Route>
 
 ## 艾莱资讯
 
@@ -1652,7 +1731,52 @@ Supported sub-sites:
 
 ### 乃木坂 46 博客
 
-<Route author="Kasper4649" example="/nogizaka46/blog" path="/nogizaka46/blog" />
+<Route author="Kasper4649 akashigakki" example="/nogizaka46/blog" path="/nogizaka46/blog/:id?" :paramsDesc="['成员编号，见下表，默认为`all` (全部)']">
+
+| 编号  | 姓名                  |
+| ----- | --------------------- |
+| 55401 | 岡本 姫奈             |
+| 55400 | 川﨑 桜               |
+| 55397 | 池田 瑛紗             |
+| 55396 | 五百城 茉央           |
+| 55395 | 中西 アルノ           |
+| 55394 | 奥田 いろは           |
+| 55393 | 冨里 奈央             |
+| 55392 | 小川 彩               |
+| 55391 | 菅原 咲月             |
+| 55390 | 一ノ瀬 美空           |
+| 55389 | 井上 和               |
+| 55387 | 弓木 奈於             |
+| 55386 | 松尾 美佑             |
+| 55385 | 林 瑠奈               |
+| 55384 | 佐藤 璃果             |
+| 55383 | 黒見 明香             |
+| 48014 | 清宮 レイ             |
+| 48012 | 北川 悠理             |
+| 48010 | 金川 紗耶             |
+| 48019 | 矢久保 美緒           |
+| 48018 | 早川 聖来             |
+| 48009 | 掛橋 沙耶香           |
+| 48008 | 賀喜 遥香             |
+| 48017 | 筒井 あやめ           |
+| 48015 | 田村 真佑             |
+| 48013 | 柴田 柚菜             |
+| 48006 | 遠藤 さくら           |
+| 36760 | 与田 祐希             |
+| 36759 | 吉田 綾乃クリスティー |
+| 36758 | 山下 美月             |
+| 36757 | 向井 葉月             |
+| 36756 | 中村 麗乃             |
+| 36755 | 佐藤 楓               |
+| 36754 | 阪口 珠美             |
+| 36753 | 久保 史緒里           |
+| 36752 | 大園 桃子             |
+| 36751 | 梅澤 美波             |
+| 36750 | 岩本 蓮加             |
+| 36749 | 伊藤 理々杏           |
+| 264   | 齋藤 飛鳥             |
+
+</Route>
 
 ### 欅坂 46 新闻
 
@@ -1668,42 +1792,96 @@ Supported sub-sites:
 
 ### 櫻坂 46 博客
 
-<Route author="victor21813 nczitzk" example="/sakurazaka46/blog" path="/sakurazaka46/blog/:id?" :paramsDesc="['成员编号，见下表，默认为全部']">
+<Route author="victor21813 nczitzk akashigakki" example="/sakurazaka46/blog" path="/sakurazaka46/blog/:id?/:page?" :paramsDesc="['成员编号，见下表，默认为`all` (全部)', '订阅页码，默认为`0` (第一页)']">
 
-| 编号 | 姓名        |
-| ---- | ----------- |
-| 03   | 上村 莉菜   |
-| 04   | 尾関 梨香   |
-| 06   | 小池 美波   |
-| 07   | 小林 由依   |
-| 08   | 齋藤 冬優花 |
-| 11   | 菅井 友香   |
-| 14   | 土生 瑞穂   |
-| 15   | 原田 葵     |
-| 43   | 井上 梨名   |
-| 53   | 遠藤 光莉   |
-| 54   | 大園 玲     |
-| 55   | 大沼 晶保   |
-| 56   | 幸阪 茉里乃 |
-| 44   | 関 有美子   |
-| 45   | 武元 唯衣   |
-| 46   | 田村 保乃   |
-| 47   | 藤吉 夏鈴   |
-| 57   | 増本 綺良   |
-| 48   | 松田 里奈   |
-| 50   | 森田 ひかる |
-| 58   | 守屋 麗奈   |
-| 51   | 山﨑 天     |
+| 编号 | 姓名         |
+| ---- | ------------ |
+| 2000 | 三期生リレー |
+| 69   | 山下 瞳月    |
+| 68   | 村山 美羽    |
+| 67   | 村井 優      |
+| 66   | 向井 純葉    |
+| 65   | 的野 美青    |
+| 64   | 中嶋 優月    |
+| 63   | 谷口 愛季    |
+| 62   | 小島 凪紗    |
+| 61   | 小田倉 麗奈  |
+| 60   | 遠藤 理子    |
+| 59   | 石森 璃花    |
+| 58   | 守屋 麗奈    |
+| 57   | 増本 綺良    |
+| 56   | 幸阪 茉里乃  |
+| 55   | 大沼 晶保    |
+| 54   | 大園 玲      |
+| 53   | 遠藤 光莉    |
+| 51   | 山﨑 天      |
+| 50   | 森田 ひかる  |
+| 48   | 松田 里奈    |
+| 47   | 藤吉 夏鈴    |
+| 46   | 田村 保乃    |
+| 45   | 武元 唯衣    |
+| 44   | 関 有美子    |
+| 43   | 井上 梨名    |
+| 15   | 原田 葵      |
+| 14   | 土生 瑞穂    |
+| 11   | 菅井 友香    |
+| 08   | 齋藤 冬優花  |
+| 07   | 小林 由依    |
+| 06   | 小池 美波    |
+| 04   | 尾関 梨香    |
+| 03   | 上村 莉菜    |
+
+> 注：三期生个人博客暂未开通，统一博客编号为 `2000`。
 
 </Route>
 
 ### 日向坂 46 新闻
 
-<Route author="crispgm" example="/hinatazaka46/news" path="/hinatazaka46/news" />
+<Route author="crispgm akashigakki" example="/hinatazaka46/news" path="/hinatazaka46/news" />
 
 ### 日向坂 46 博客
 
-<Route author="nwindz" example="/hinatazaka46/blog" path="/hinatazaka46/blog" />
+<Route author="nwindz akashigakki" example="/hinatazaka46/blog" path="/hinatazaka46/blog/:id?/:page?" :paramsDesc="['成员编号，见下表，默认为`all` (全部)', '订阅页码，默认为`0` (第一页)']">
+
+| 编号 | 姓名         |
+| ---- | ------------ |
+| 2000 | 四期生リレー |
+| 36   | 渡辺 莉奈    |
+| 35   | 山下 葉留花  |
+| 34   | 宮地 すみれ  |
+| 33   | 藤嶌 果歩    |
+| 32   | 平岡 海月    |
+| 31   | 平尾 帆夏    |
+| 30   | 竹内 希来里  |
+| 29   | 正源司 陽子  |
+| 28   | 清水 理央    |
+| 27   | 小西 夏菜実  |
+| 26   | 岸 帆夏      |
+| 25   | 石塚 瑶季    |
+| 24   | 山口 陽世    |
+| 23   | 森本 茉莉    |
+| 22   | 髙橋 未来虹  |
+| 21   | 上村 ひなの  |
+| 18   | 松田 好花    |
+| 17   | 濱岸 ひより  |
+| 16   | 丹生 明里    |
+| 15   | 富田 鈴花    |
+| 14   | 小坂 菜緒    |
+| 13   | 河田 陽菜    |
+| 12   | 金村 美玖    |
+| 11   | 東村 芽依    |
+| 10   | 高本 彩花    |
+| 9    | 高瀬 愛奈    |
+| 8    | 佐々木 美玲  |
+| 7    | 佐々木 久美  |
+| 6    | 齊藤 京子    |
+| 5    | 加藤 史帆    |
+| 4    | 影山 優佳    |
+| 2    | 潮 紗理菜    |
+
+> 注：四期生个人博客暂未开通，统一博客编号为 `2000`。
+
+</Route>
 
 ## 半月谈
 
@@ -1730,6 +1908,26 @@ Supported sub-sites:
 ### 分类
 
 <Route author="emdoe" example="/twreporter/category/reviews" path="/twreporter/category/:tid" :paramsDesc="['分类（议题）名称，于主页获取']"/>
+
+## 北京市科学技术协会
+
+### 通用
+
+<Route author="nczitzk" example="/bast/col/col31266" path="/bast/:path+" :paramsDesc="['路径，默认为通知公告']">
+
+::: tip 提示
+
+路径处填写对应页面 URL 中 `https://www.bast.net.cn/` 后的字段。下面是两个例子。
+
+若订阅 [通知公告](https://www.bast.net.cn/col/col31266) 则将对应页面 URL <https://www.bast.net.cn/col/col31266> 中 `https://www.bast.net.cn/` 后的字段 `col/col31266` 作为路径填入。此时路由为 [`/bast/col/col31266`](https://rsshub.app/bast/col/col31266)
+
+若订阅 [学术动态](https://www.bast.net.cn/col/col31530) 则将对应页面 URL <https://www.bast.net.cn/col/col31530> 中 `https://www.bast.net.cn/` 后的字段 `col/col31530` 作为路径填入。此时路由为 [`/bast/col/col31530`](https://rsshub.app/bast/col/col31530)
+
+如果路由符合 `/col/colXXXXX` 的格式，可以由 [`/bast/col/col31266`](https://rsshub.app/bast/col/col31266) 精简为 [`/bast/31266`](https://rsshub.app/bast/31266)
+
+:::
+
+</Route>
 
 ## 北屋
 
@@ -2528,12 +2726,6 @@ others = 热点新闻 + 滚动新闻
 
 </Route>
 
-## 汇通网
-
-### 7x24 小时快讯
-
-<Route author="occupy5" example="/fx678/kx" path="/fx678/kx" />
-
 ## 机核网
 
 ### 分类
@@ -2554,9 +2746,31 @@ others = 热点新闻 + 滚动新闻
 
 </Route>
 
+### 专题文章
+
+<Route author="kudryavka1013" example="/gcores/collections/64" path="/gcores/collections/:collection" :paramsDesc="['专题id，可在专题页面的 URL 中找到，如 游戏开发设计心得分享 -- 64']" radar="1" />
+
 ### 播客
 
 <Route author="eternasuno" example="/gcores/radios/45" path="/gcores/radios/:category?" :paramsDesc="['分类名，默认为全部，可在分类页面的 URL 中找到，如 Gadio News -- 45']" radar="1" supportPodcast="1" />
+
+## 纪妖
+
+### 通用
+
+<Route author="nczitzk" example="/cbaigui" path="/cbaigui/:path+" :paramsDesc="['路径，默认为首页']">
+
+::: tip 提示
+
+若订阅 [标签：妖](https://www.cbaigui.com/post-tag/妖)，网址为 [https://www.cbaigui.com/post-tag/ 妖](https://www.cbaigui.com/post-tag/妖)。截取 `https://www.cbaigui.com` 到末尾的部分 `/post-tag/妖` 作为参数，此时路由为 [`/cbaigui/post-tag/妖`](https://rsshub.app/cbaigui/post-tag/妖)。
+
+若订阅 [分类：埃及](https://www.cbaigui.com/post-category/世界/非洲/埃及)，网址为 [https://www.cbaigui.com/post-category/ 世界 / 非洲 / 埃及](https://www.cbaigui.com/post-category/世界/非洲/埃及)。截取 `https://www.cbaigui.com` 到末尾的部分 `/post-category/世界/非洲/埃及` 作为参数，此时路由为 [`/cbaigui/post-category/世界/非洲/埃及`](https://rsshub.app/cbaigui/post-category/世界/非洲/埃及)。
+
+若订阅 [词条：白泽图](https://www.cbaigui.com/post-category/词条/白泽图)，网址为 [https://www.cbaigui.com/post-category/ 词条 / 白泽图](https://www.cbaigui.com/post-category/词条/白泽图)。截取 `https://www.cbaigui.com` 到末尾的部分 `/post-category/词条/白泽图` 作为参数，此时路由为 [`/cbaigui/post-category/词条/白泽图`](https://rsshub.app/cbaigui/post-category/词条/白泽图)。
+
+:::
+
+</Route>
 
 ## 加美财经
 
@@ -2871,51 +3085,51 @@ column 为 third 时可选的 category:
 
     -   人工智能
 
-                        | 学术       | 开发者      |
+                        | 学术     | 开发者   |
                         | -------- | -------- |
                         | academic | yanxishe |
 
     -   数智化
 
-                        | 零售数智化     | 金融数智化      | 工业数智化      | 医疗数智化     | 城市数智化       |
-                        | --------- | ---------- | ---------- | --------- | ----------- |
-                        | redigital | findigital | mandigital | medigital | citydigital |
+                        | 零售数智化 | 金融数智化 | 工业数智化 | 医疗数智化 | 城市数智化  |
+                        | ---------- | ---------- | ---------- | ---------- | ----------- |
+                        | redigital  | findigital | mandigital | medigital  | citydigital |
 
     -   金融科技
 
-                        | 科技巨头    | 银行 AI | 金融云          | 风控与安全        |
-                        | ------- | ----- | ------------ | ------------ |
-                        | BigTech | bank  | FinanceCloud | DataSecurity |
+                        | 科技巨头 | 银行 AI | 金融云       | 风控与安全   |
+                        | -------- | ------- | ------------ | ------------ |
+                        | BigTech  | bank    | FinanceCloud | DataSecurity |
 
     -   医疗科技
 
-                        | 医疗 AI    | 投融资   | 医疗器械  | 互联网医疗            | 生物医药         | 健康险          |
-                        | -------- | ----- | ----- | ---------------- | ------------ | ------------ |
-                        | healthai | touzi | qixie | hulianwangyiliao | shengwuyiyao | jiankangxian |
+                        | 医疗 AI  | 投融资 | 医疗器械 | 互联网医疗       | 生物医药     | 健康险       |
+                        | -------- | ------ | -------- | ---------------- | ------------ | ------------ |
+                        | healthai | touzi  | qixie    | hulianwangyiliao | shengwuyiyao | jiankangxian |
 
     -   芯片
 
-                        | 材料设备      | 芯片设计       | 晶圆代工          | 封装测试      |
+                        | 材料设备  | 芯片设计   | 晶圆代工      | 封装测试  |
                         | --------- | ---------- | ------------- | --------- |
                         | materials | chipdesign | manufacturing | packaging |
 
     -   智慧城市
 
-                        | 智慧安防          | 智慧教育           | 智慧交通                | 智慧社区           | 智慧零售           | 智慧政务            | 智慧地产     |
+                        | 智慧安防      | 智慧教育       | 智慧交通            | 智慧社区       | 智慧零售       | 智慧政务        | 智慧地产 |
                         | ------------- | -------------- | ------------------- | -------------- | -------------- | --------------- | -------- |
                         | smartsecurity | smarteducation | smarttransportation | smartcommunity | smartretailing | smartgovernment | proptech |
 
     -   工业互联网
 
-                        | 工业软件       | 工业安全     | 5G 工业互联网 | 工业转型实践    |
-                        | ---------- | -------- | -------- | --------- |
-                        | gysoftware | gysafety | 5ggy     | gypratice |
+                        | 工业软件   | 工业安全 | 5G 工业互联网 | 工业转型实践 |
+                        | ---------- | -------- | ------------- | ------------ |
+                        | gysoftware | gysafety | 5ggy          | gypratice    |
 
     -   AIoT
 
-                        | 物联网 | 智能硬件 | 机器人   | 智能家居      |
-                        | --- | ---- | ----- | --------- |
-                        | 5G  | arvr | robot | smarthome |
+                        | 物联网 | 智能硬件 | 机器人 | 智能家居  |
+                        | ------ | -------- | ------ | --------- |
+                        | 5G     | arvr     | robot  | smarthome |
 
 </Route>
 
@@ -3799,6 +4013,26 @@ column 为 third 时可选的 category:
 
 <Route author="xyqfer" example="/tanwu/products" path="/tanwu/products"/>
 
+## 唐书房
+
+### 分类
+
+<Route author="nczitzk" example="/tangshufang" path="/tangshufang/:category?" :paramsDesc="['分类，见下表，默认为首页']">
+
+| 首页 | 老唐实盘 | 书房拾遗 | 理念 & 估值 | 经典陪读 | 财务套利 |
+| ---- | -------- | -------- | ----------- | -------- | -------- |
+|      | shipan   | wenda    | linian      | peidu    | taoli    |
+
+| 企业分析 | 白酒企业 | 腾讯控股 | 分众传媒 | 海康威视 | 其他企业 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| qiye     | baijiu   | tengxun  | fenzhong | haikang  | qita     |
+
+| 核心五篇 | 读者投稿 | 读书随笔 | 财报浅析 | 出行游记 | 巴芒连载 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| hexin    | tougao   | suibi    | caibao   | youji    | bamang   |
+
+</Route>
+
 ## 腾讯 NBA
 
 ### 头条新闻
@@ -4055,10 +4289,6 @@ column 为 third 时可选的 category:
 
 </Route>
 
-### 公众号（feeddd 来源）
-
-<Route author="TonyRL Rongronggg9" example="/wechat/feeddd/6131e1441269c358aa0e2141" path="/wechat/feeddd/:id" :paramsDesc="['公众号 id，打开 `https://feeddd.org/feeds` 或 `https://cdn.jsdelivr.net/gh/feeddd/feeds/feeds_all_rss.txt`，在 URL 中找到 id；注意不是公众号页的 id，而是订阅的 id']"/>
-
 ### 公众号（自由微信来源）
 
 见 [#自由微信](#zi-you-wei-xin)
@@ -4092,20 +4322,6 @@ column 为 third 时可选的 category:
 ### 公众号（优读来源）
 
 <Route author="kt286" example="/wechat/uread/shensing" path="/wechat/uread/:userid" :paramsDesc="['公众号的微信号, 可在 微信-公众号-更多资料 中找到。并不是所有的都支持，能不能用随缘']"/>
-
-### 公众号（wxnmh.com 来源）
-
-<Route author="laampui" example="/wechat/wxnmh/51798" path="/wechat/wxnmh/:id" :paramsDesc="['公众号 id, 打开 wxnmh.com, 在 URL 中找到 id']" anticrawler="1"/>
-
-### 公众号（wechat-feeds 来源）
-
-::: warning 注意
-
-wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/issues/3882)，历史文章可以正常订阅阅读
-
-:::
-
-<Route author="tylinux" example="/wechat/feeds/MzIwMzAwMzQxNw==" path="/wechat/feeds/:id" :paramsDesc="['公众号 id, 打开 `https://wechat.privacyhide.com/`, 在选定公众号的订阅 URL 中找到 id, 不包含最后的 .xml']"/>
 
 ### 公众号（公众号 360 来源）
 
@@ -4436,11 +4652,61 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 <Route author="nczitzk" example="/news/whxw" path="/news/whxw"/>
 
-## 新浪专栏
+## 新浪
 
-### 创事记
+### 科技 - 科学探索
 
-<Route author="xapool" example="/sina/csj" path="/sina/csj"/>
+<Route author="LogicJake" example="/sina/discovery/zx" path="/sina/discovery/:type" :paramsDesc="['订阅分区类型，见下表']" radar="1">
+
+| 最新 | 天文航空 | 动物植物 | 自然地理 | 历史考古 | 生命医学 | 生活百科 | 科技前沿 |
+| ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| zx   | twhk     | dwzw     | zrdl     | lskg     | smyx     | shbk     | kjqy     |
+
+</Route>
+
+### 滚动新闻
+
+<Route author="xyqfer" example="/sina/rollnews" path="/sina/rollnews/:lid?" :paramsDesc="['分区 id，可在 URL 中找到，默认为 `2509`']" radar="1">
+
+| 全部 | 国内 | 国际 | 社会 | 体育 | 娱乐 | 军事 | 科技 | 财经 | 股市 | 美股 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 2509 | 2510 | 2511 | 2669 | 2512 | 2513 | 2514 | 2515 | 2516 | 2517 | 2518 |
+
+</Route>
+
+### 体育 - 综合
+
+<Route author="nczitzk" example="/sina/sports/volley" path="/sina/sports/:type" :paramsDesc="['运动类型，见下表']" radar="1">
+
+| 排球   | 游泳 | 乒乓球   | 羽毛球 | 台球    | 田径     | 体操  | 冰雪   | 射击 | 马术  | 拳击搏击 | UFC | 其他   |
+| ------ | ---- | -------- | ------ | ------- | -------- | ----- | ------ | ---- | ----- | -------- | --- | ------ |
+| volley | swim | pingpang | badmin | snooker | tianjing | ticao | winter | sh   | horse | kungfu   | ufc | others |
+
+</Route>
+
+### 财经－国內
+
+<Route author="yubinbai" example="/sina/finance/china" path="/sina/finance/china/:lid?" :paramsDesc="['分区 id，见下表，默认为 `1686`']" radar="1">
+
+| 国内滚动 | 宏观经济 | 金融新闻 | 地方经济 | 部委动态 | 今日财经 TOP10 |
+| -------- | -------- | -------- | -------- | -------- | -------------- |
+| 1686     | 1687     | 1690     | 1688     | 1689     | 3231           |
+
+</Route>
+
+### 美股
+
+<Route author="TonyRL" example="/sina/finance/stock/usstock" path="/sina/finance/stock/usstock/:cids?" :paramsDesc="['分区 id，见下表，默认为 `57045`']" radar="1">
+
+| 最新报道 | 中概股 | 国际财经 | 互联网 |
+| -------- | ------ | -------- | ------ |
+| 57045    | 57046  | 56409    | 40811  |
+
+</Route>
+
+### 专栏 - 创事记
+
+<Route author="xapool" example="/sina/csj" path="/sina/csj" radar="1"/>
 
 ## 选股宝
 

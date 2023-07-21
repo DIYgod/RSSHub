@@ -223,6 +223,10 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 <RouteEn author="zhzy0077" example="/github/notifications" path="/github/notifications" radar="1" rssbud="1" selfhost="1"/>
 
+### Gist Commits
+
+<RouteEn author="TonyRL" example="/github/gist/d2c152bb7179d07015f336b1a0582679" path="/github/gist/:gistId" :paramsDesc="['Gist ID']" radar="1" rssbud="1"/>
+
 ## GitLab
 
 ### Explore
@@ -295,6 +299,12 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <RouteEn author="hellodword" example="/hex-rays/news" path="/hex-rays/news" />
 
+## Huggingface
+
+### Daily Papers
+
+<RouteEn author="zeyugao" example="/huggingface/daily-papers" path="/huggingface/daily-papers" />
+
 ## Issue Hunt
 
 ### Project Funded
@@ -322,6 +332,13 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 | All Categories | Featured | Research | Recruitment | Getting started | Masters | Playground | Analytics |
 
 </RouteEn>
+
+## Layer3
+
+### Quest
+
+<RouteEn author="nczitzk" example="/layer3/quests" path="/layer3/quests" radar="1"/>
+
 
 ## LeetCode
 

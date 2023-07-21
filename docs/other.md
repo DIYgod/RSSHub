@@ -76,6 +76,16 @@ pageClass: routes
 
 见 [#app-store-mac-app-store](/program-update.html#app-store-mac-app-store)
 
+## Aqara
+
+### Community
+
+<Route author="nczitzk" example="/aqara/community" path="/aqara/community/:id?/:keyword?" :paramsDesc="['分类 id，可在对应分类页 URL 中找到，默认为全部', '关键字，默认为空']"/>
+
+### News
+
+<Route author="nczitzk" example="/aqara/news" path="/aqara/news"/>
+
 ## AutoTrader
 
 ### 搜索结果
@@ -293,6 +303,38 @@ pageClass: routes
 
 <Route author="WenryXu" example="/noi/rg-news" path="/noi/rg-news"/>
 
+## Notion
+
+::: warning 注意
+
+需要设置 Notion 集成，详情请见 [部分 RSS 模块配置](/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)
+
+:::
+
+::: tip 建议
+
+建议与 Notion Web Clipper 等剪藏工具搭配使用
+
+:::
+
+### Database
+
+<Route author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" :paramsDesc="['Database ID']" selfhost="1" radar="1">
+
+可选 query 参数 `properties=`，用来自定义字段对应关系；内置有 author、link、pubTime 三个字段用于增加辅助信息。
+
+例如，在 Database 中设置了 "作者"、"文章原链接"、"发布时间"" 三个 property，将下述 JS 代码的执行结果给 `properties` 参数。
+
+```js
+encodeURIComponent(JSON.stringify({"author": "作者", "link": "文章原链接", "pubTime": "发布时间"}))
+```
+
+可选 query 参数 `query=`，用来自定义 Database 的查询规则，例如自定义排序和筛选规则。
+
+书写结构请查阅 [Notion 文档](https://developers.notion.com/reference/post-database-query)，将 `encodeURIComponent(JSON.stringify(自定义规则))` 的执行给 `query` 参数。
+
+</Route>
+
 ## ONE・一个
 
 ### 图片文字问答
@@ -411,7 +453,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 周度市场观察
 
-<Route author="nczitzk" example="/iresearch/weekly" path="/iresearch/weekly:category?" :paramsDesc="['分类，见下表，默认为全部']">
+<Route author="nczitzk" example="/iresearch/weekly" path="/iresearch/weekly/:category?" :paramsDesc="['分类，见下表，默认为全部']">
 
 | 家电行业 | 服装行业 | 美妆行业 | 食品饮料行业 |
 | -------- | -------- | -------- | ------------ |
@@ -526,24 +568,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 日榜
 
 <Route author="Gem1ni" example="/guduodata/daily" path="/guduodata/daily" />
-
-## 光大银行
-
-### 外汇牌价
-
-#### 总览
-
-<Route author="linbuxiao" example="/quotation/all" path="/quotation/all" />
-
-#### 历史牌价
-
-<Route author="linbuxiao" example="/quotation/history/usd" path="/quotation/history/:type" :paramsDesc="['货币的缩写，见下表']">
-
-| 美元 | 英镑 | 港币 | 瑞士法郎 | 瑞典克郎 | 丹麦克郎 | 挪威克郎 | 日元 | 加拿大元 | 澳大利亚元 | 新加坡元 | 欧元 | 澳门元 | 泰国铢 | 新西兰元 | 韩圆 |
-| ---- | ---- | ---- | -------- | -------- | -------- | -------- | ---- | -------- | ---------- | -------- | ---- | ------ | ------ | -------- | ---- |
-| usd  | gbp  | hkd  | chf      | sek      | dkk      | nok      | jpy  | cad      | aud        | sgd      | eur  | mop    | thb    | nzd      | krw  |
-
-</Route>
 
 ## 国家留学网
 
@@ -1040,6 +1064,24 @@ type 为 all 时，category 参数不支持 cost 和 free
 ### 产业政策
 
 <Route author="nczitzk" example="/cktest/policy" path="/cktest/policy"/>
+
+## 中国光大银行
+
+### 外汇牌价
+
+#### 总览
+
+<Route author="linbuxiao" example="/cebbank/quotation/all" path="/cebbank/quotation/all" />
+
+#### 历史牌价
+
+<Route author="linbuxiao" example="/cebbank/quotation/history/usd" path="/cebbank/quotation/history/:type" :paramsDesc="['货币的缩写，见下表']">
+
+| 美元 | 英镑 | 港币 | 瑞士法郎 | 瑞典克郎 | 丹麦克郎 | 挪威克郎 | 日元 | 加拿大元 | 澳大利亚元 | 新加坡元 | 欧元 | 澳门元 | 泰国铢 | 新西兰元 | 韩圆 |
+| ---- | ---- | ---- | -------- | -------- | -------- | -------- | ---- | -------- | ---------- | -------- | ---- | ------ | ------ | -------- | ---- |
+| usd  | gbp  | hkd  | chf      | sek      | dkk      | nok      | jpy  | cad      | aud        | sgd      | eur  | mop    | thb    | nzd      | krw  |
+
+</Route>
 
 ## 中国互联网联合辟谣平台
 

@@ -1,5 +1,7 @@
+# folders
 .devcontainer
 .github
+.husky
 .idea
 .vscode
 Dockerfile*
@@ -11,6 +13,8 @@ coverage
 docs
 node_modules
 test
+
+# files
 .codecov.yml
 .dockerignore
 .editorconfig
@@ -18,6 +22,7 @@ test
 .eslint*
 .gitignore
 .gitpod.yml
+.markdownlint.jsonc
 .prettier*
 .(yarn|npm|nvm)rc
 *.md

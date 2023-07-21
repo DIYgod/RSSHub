@@ -217,7 +217,7 @@ Use `library` as the `owner` for official images, such as <https://rsshub.app/do
 ### Changelog
 
 <RouteEn author="tigercubden" example="/eagle/changelog/en" path="/eagle/changelog/:language?" :paramsDesc="['Language, see list, default to be `cn`']" radar="1">
-  
+
 Language
 
 | Simplified Chinese | Traditional Chinese | English |
@@ -306,6 +306,12 @@ Language
 
 <RouteEn author="nczitzk" example="/imagemagick/changelog" path="/imagemagick/changelog"/>
 
+## Infuse
+
+### Release Notes
+
+<RouteEn author="NathanDai" example="/firecore/ios" path="/firecore/:os" :paramsDesc="['`ios`,`tvos`,`macos`']"/>
+
 ## IPSW.me
 
 ### Apple Firmware Update-IPSWs/OTAs version
@@ -323,7 +329,13 @@ Please use <https://github.com/logseq/logseq/releases.atom> instead.
 
 ### APP Update
 
-<RouteEn author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" :paramsDesc="['app name, can be find in URL']"/>
+<RouteEn author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" :paramsDesc="['app name, can be found in URL']"/>
+
+## MacUpdate
+
+### Update
+
+<RouteEn author="TonyRL" example="/macupdate/app/11942" path="/macupdate/app/:appId/:appSlug?" :paramsDesc="['Application unique ID, can be found in URL', 'Application slug, can be found in URL']" radar="1"/>
 
 ## ManicTime
 
@@ -379,6 +391,12 @@ See [#Monster Hunter World](/en/game.html#monster-hunter-world)
 ### Switch System Update（Japan）
 
 See [#nintendo](/game.html#nintendo)
+
+## Not a Tesla App
+
+### Tesla Software Updates
+
+<RouteEn author="mrbruce516" example="/notateslaapp/ota" path="/notateslaapp/ota" radar="1"/>
 
 ## NPM
 
@@ -525,7 +543,6 @@ Open `https://www.sony.com/electronics/support` and search for the corresponding
 
 </RouteEn>
 
-
 ## Thunderbird
 
 ### Changelog
@@ -592,6 +609,12 @@ Language
 ### Download
 
 <RouteEn author="nczitzk" example="/wdc/download/279" path="/wdc/download/:id?" :paramsDesc="['Software id, can be found in URL, 279 as Western Digital Dashboard by default']"/>
+
+## winstall
+
+### Apps Update
+
+<RouteEn author="TonyRL" example="/winstall/Mozilla.Firefox" path="/winstall/:appId" :paramsDesc="['Application ID']" radar="1"/>
 
 ## WizTree
 
