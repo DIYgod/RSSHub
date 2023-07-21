@@ -394,7 +394,7 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
 ### 免费节点
 
-<Route author="钛白" example="/v2rayshare" path="/v2rayshare">
+<Route author="77taibai" example="/v2rayshare" path="/v2rayshare">
 
 获取来自 V2rayShare 的免费节点，可以通过链接复制或下载
 
