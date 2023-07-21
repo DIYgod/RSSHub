@@ -4421,10 +4421,10 @@
         "miles170"
     ],
     "/qidian/chapter/:id": [
-        "Chingyat"
+        "fuzy112"
     ],
     "/qidian/forum/:id": [
-        "Chingyat"
+        "fuzy112"
     ],
     "/qidian/free/:type?": [
         "LogicJake"
