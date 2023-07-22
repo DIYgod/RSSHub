@@ -444,11 +444,11 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 ### 章节
 
-<Route author="Chingyat" example="/qidian/chapter/1010400217" path="/qidian/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+<Route author="fuzy112" example="/qidian/chapter/1010400217" path="/qidian/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
 ### 讨论区
 
-<Route author="Chingyat" example="/qidian/forum/1010400217" path="/qidian/forum/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+<Route author="fuzy112" example="/qidian/forum/1010400217" path="/qidian/forum/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
 ### 限时免费
 
