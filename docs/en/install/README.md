@@ -565,6 +565,12 @@ resolved by the SOCKS server, recommanded, prevents DNS poisoning or DNS leak), 
 
 ### Reverse proxy
 
+::: warning
+
+This proxy method cannot proxy requests that contain cookies.
+
+:::
+
 `REVERSE_PROXY_URL`: Reverse proxy URL, RSSHub will use this URL as a prefix to initiate requests, for example `https://proxy.example.com?target=`, requests to `https://google.com` will be automatically converted to `https://proxy.example.com?target=https%3A%2F%2Fgoogle.com`
 
 You can use Cloudflare Workers to build a simple reverse proxy, for example:

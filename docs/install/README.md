@@ -585,6 +585,12 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 ### 反向代理
 
+::: warning 注意
+
+这种代理方式无法代理包含 cookie 的请求。
+
+:::
+
 `REVERSE_PROXY_URL`: 反向代理地址，RSSHub 将会使用该地址作为前缀来发起请求，例如 `https://proxy.example.com/?target=`，对 `https://google.com` 发起的请求将被自动转换为 `https://proxy.example.com/?target=https%3A%2F%2Fgoogle.com`
 
 你可以使用 Cloudflare Workers 来搭建一个简易的反向代理，例如：
