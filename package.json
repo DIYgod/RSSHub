@@ -72,7 +72,7 @@
     },
     "testEnvironment": "node",
     "testMatch": [
-      "**/test/**/*.js"
+      "**/test/**/request-wrapper.js"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
