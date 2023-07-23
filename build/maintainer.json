@@ -2371,6 +2371,9 @@
     "/gov/shanghai/yjj/:path+": [
         "nczitzk"
     ],
+    "/gov/shanghai/wgj/:page?": [
+        "gideonsenku"
+    ],
     "/gov/shenzhen/hrss/szksy/:caty/:page?": [
         "zlasd"
     ],
