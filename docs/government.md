@@ -848,7 +848,7 @@ pageClass: routes
 
 ### 上海市文旅局审批公告
 
-<Route author="gideonsenku" example="/gov/shanghai/wgj" path="/gov/shanghai/wgj/:page?" :paramsDesc="['页数，默认当前页']" radar="1">
+<Route author="gideonsenku" example="/gov/shanghai/wgj" path="/gov/shanghai/wgj/:page?" :paramsDesc="['页数，默认第 1 页']" radar="1">
 </Route>
 
 ## 世界贸易组织
