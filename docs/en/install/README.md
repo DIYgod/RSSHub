@@ -542,7 +542,7 @@ RSSHub supports two caching methods: memory and redis
 
 Partial routes have a strict anti-crawler policy, and can be configured to use proxy.
 
-Proxy can be configured via either **Proxy URI** or **Proxy options**. When both are configured, RSSHub will use the configuration in **Proxy URI**.
+Proxy can be configured through **Proxy URI**, **Proxy options**, or **Reverse proxy**.
 
 #### Proxy URI
 
@@ -562,6 +562,41 @@ resolved by the SOCKS server, recommanded, prevents DNS poisoning or DNS leak), 
 > -   `http://127.0.0.1:8080`
 > -   `http://user:pass@127.0.0.1:8080`
 > -   `https://127.0.0.1:8443`
+
+### Reverse proxy
+
+::: warning
+
+This proxy method cannot proxy requests that contain cookies.
+
+:::
+
+`REVERSE_PROXY_URL`: Reverse proxy URL, RSSHub will use this URL as a prefix to initiate requests, for example `https://proxy.example.com?target=`, requests to `https://google.com` will be automatically converted to `https://proxy.example.com?target=https%3A%2F%2Fgoogle.com`
+
+You can use Cloudflare Workers to build a simple reverse proxy, for example:
+
+```js
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request))
+})
+
+async function handleRequest(request) {
+  const url = new URL(request.url)
+  let target = url.searchParams.get('target')
+
+  if (!target) {
+    return new Response('Hello, this is Cloudflare Proxy Service. To proxy your requests, please use the "target" URL parameter.')
+  } else {
+    target = decodeURIComponent(target)
+    const newRequest = new Request(target, {
+      headers: request.headers, 
+      method: request.method, 
+      body: request.body
+    })
+    return await fetch(newRequest)
+  }
+}
+```
 
 #### Proxy options
 
