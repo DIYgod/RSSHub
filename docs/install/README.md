@@ -551,7 +551,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 部分路由反爬严格，可以配置使用代理抓取。
 
-可通过**代理 URI**或**代理选项**两种方式来配置代理，当两种配置方式同时被设置时，RSSHub 将会使用**代理 URI**中的配置。
+可通过**代理 URI**或**代理选项**或**反向代理**三种方式来配置代理。
 
 #### 代理 URI
 
@@ -582,6 +582,41 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 `PROXY_AUTH`: 给代理服务器的身份验证凭证，`Proxy-Authorization: Basic ${process.env.PROXY_AUTH}`
 
 `PROXY_URL_REGEX`: 启用代理的 URL 正则表达式，默认全部开启 `.*`
+
+### 反向代理
+
+::: warning 注意
+
+这种代理方式无法代理包含 cookie 的请求。
+
+:::
+
+`REVERSE_PROXY_URL`: 反向代理地址，RSSHub 将会使用该地址作为前缀来发起请求，例如 `https://proxy.example.com/?target=`，对 `https://google.com` 发起的请求将被自动转换为 `https://proxy.example.com/?target=https%3A%2F%2Fgoogle.com`
+
+你可以使用 Cloudflare Workers 来搭建一个简易的反向代理，例如：
+
+```js
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request))
+})
+
+async function handleRequest(request) {
+  const url = new URL(request.url)
+  let target = url.searchParams.get('target')
+
+  if (!target) {
+    return new Response('Hello, this is Cloudflare Proxy Service. To proxy your requests, please use the "target" URL parameter.')
+  } else {
+    target = decodeURIComponent(target)
+    const newRequest = new Request(target, {
+      headers: request.headers, 
+      method: request.method, 
+      body: request.body
+    })
+    return await fetch(newRequest)
+  }
+}
+```
 
 ### 用户认证
 
@@ -867,7 +902,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `TWITTER_CONSUMER_KEY`: Twitter Developer API key，支持多个 key，用英文逗号 `,` 隔开
     -   `TWITTER_CONSUMER_SECRET`: Twitter Developer API key secret，支持多个 key，用英文逗号 `,` 隔开，顺序与 key 对应
-    -   `TWITTER_WEBAPI_AUTHORIZAION`: Twitter Web API authorization，格式为 `key:secret`，支持多个，用英文逗号 `,` 隔开。如果上述两个环境变量中的任意一个未设置，就会使用 Twitter Web API。然而，没有必要设置这个环境变量，因为 RSSHub 已经内置了目前已知可用的 token。
+    -   `TWITTER_WEBAPI_AUTHORIZAION`: Twitter Web API authorization，格式为 `key:secret` 或 `Bearer ****`，支持多个，用英文逗号 `,` 隔开。如果上述两个环境变量中的任意一个未设置，就会使用 Twitter Web API。然而，没有必要设置这个环境变量，因为 RSSHub 已经内置了目前已知可用的 token。
     -   `TWITTER_TOKEN_{handler}`: 对应 Twitter 用户名生成的 token，`{handler}` 替换为用于生成该 token 的 Twitter 用户名，值为 `Twitter API key, Twitter API key secret, Access token, Access token secret` 用逗号隔开，例如：`TWITTER_TOKEN_RSSHub=bX1zry5nG4d1RbESQbnADpVIo,2YrD8qo9sXbB8VlYfVmo1Qtw0xsexnOliU5oZofq7aPIGou0Xx,123456789-hlkUHFYmeXrRcf6SEQciP8rP4lzmRgMgwdqIN9aK,pHcPnfa28rCIKhSICUCiaw9ppuSSl7T2f3dnGYpSM0bod`
 
 -   Wordpress
