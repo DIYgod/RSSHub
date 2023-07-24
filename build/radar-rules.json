@@ -13032,6 +13032,14 @@
           "/makers/:id",
           "/"
         ]
+      },
+      {
+        "title": "清单",
+        "docs": "https://docs.rsshub.app/multimedia.html#javdb-qing-dan",
+        "source": [
+          "/lists/:id/",
+          "/"
+        ]
       }
     ]
   },

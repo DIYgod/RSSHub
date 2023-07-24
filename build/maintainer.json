@@ -3132,25 +3132,28 @@
     "/javbus/en/western/search/:keyword": [
         "nczitzk"
     ],
-    "/javdb/home/:category?/:sort?/:filter?": [
-        "nczitzk"
-    ],
-    "/javdb/search/:keyword?/:filter?": [
-        "nczitzk"
-    ],
-    "/javdb/tags/:query?/:category?": [
-        "nczitzk"
-    ],
     "/javdb/actors/:id/:filter?": [
         "nczitzk"
     ],
+    "/javdb/home/:category?/:sort?/:filter?": [
+        "nczitzk"
+    ],
+    "/javdb/lists/:id/:filter?/:sort?": [
+        "dddepg"
+    ],
     "/javdb/makers/:id/:filter?": [
+        "nczitzk"
+    ],
+    "/javdb/rankings/:category?/:time?": [
+        "nczitzk"
+    ],
+    "/javdb/search/:keyword?/:filter?/:sort?": [
         "nczitzk"
     ],
     "/javdb/series/:id/:filter?": [
         "nczitzk"
     ],
-    "/javdb/rankings/:category?/:time?": [
+    "/javdb/tags/:query?/:category?": [
         "nczitzk"
     ],
     "/javdb/:category?/:sort?/:filter?": [
