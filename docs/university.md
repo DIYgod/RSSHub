@@ -1039,6 +1039,16 @@ pageClass: routes
 
 <Route author="KiraKiseki" example="/dhu/xxgk/news" path="/dhu/xxgk/news"/>
 
+### 研究生院通知
+
+<Route author="fox2049" example="/dhu/yjs/news/class" path="/dhu/yjs/news/:type?" :paramsDesc="['默认为 `class`']">
+
+| 新闻动态 | 通知公告 | 选课考试 |
+| -------- | -------- | -------- |
+| trend    | notice   | class    |
+
+</Route>
+
 ### 研究生招生信息
 
 <Route author="fox2049" example="/dhu/yjs/zs/master" path="/dhu/yjs/zs/:type?" :paramsDesc="['默认为 `master`']">
@@ -1049,6 +1059,10 @@ pageClass: routes
 
 </Route>
 
+### 学术信息
+
+<Route author="fox2049" example="/dhu/news/xsxx" path="/dhu/news/xsxx"/>
+
 ## 东南大学
 
 ### 信息科学与工程学院学术活动
@@ -1057,9 +1071,9 @@ pageClass: routes
 
 ### 研究生招生网通知公告
 
-<Route author="Chingyat" example="/seu/yzb/1" path="/seu/yzb/:type" :paramsDesc="['1 为硕士招生，2 为博士招生，3 为港澳台及中外合作办学']"/>
+<Route author="fuzy112" example="/seu/yzb/1" path="/seu/yzb/:type" :paramsDesc="['1 为硕士招生，2 为博士招生，3 为港澳台及中外合作办学']"/>
 
-### 东南大学计算机技术与工程学院
+### 计算机技术与工程学院
 
 <Route author="LogicJake" example="/seu/cse/xyxw" path="/seu/cse/:type?" :paramsDesc="['分类名(默认为xyxw)']">
 
@@ -1724,7 +1738,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 教务处通知
 
-<Route author="Chingyat" example="/ju/jwc/all" path="/ju/jwc/:type?" :paramsDesc="['默认为 `all`']">
+<Route author="fuzy112" example="/ju/jwc/all" path="/ju/jwc/:type?" :paramsDesc="['默认为 `all`']">
 
 | all  | tzgg     | ksap     | wjgg     | tmgz     | djks     | xjgl     | bysj     | syjs     |
 | ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
@@ -2474,23 +2488,23 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 上海大学
 
-### 上海大学官网信息
+### 官网信息
 
 <Route author="lonelyion" example="/shu/news" path="/shu/:type?" :paramsDesc="['消息类型,默认为`news`']">
 
-| 综合新闻 | 科研动态 | 通知公告 |
-| -------- | -------- | -------- |
-| news     | research | notice   |
+| 综合新闻 | 科研动态 | 通知公告 | 重要新闻  |
+| -------- | -------- | -------- | --------- |
+| news     | research | notice   | important |
 
 </Route>
 
-### 上海大学教务处通知公告
+### 教务处通知公告
 
-<Route author="tuxinghuan" example="/shu/jwc/notice" path="/shu/jwc/:type?" :paramsDesc="['消息类型,默认为`notice`']">
+<Route author="tuxinghuan" example="/shu/jwb/notice" path="/shu/jwb/:type?" :paramsDesc="['消息类型,默认为`notice`']">
 
-| 通知通告 | 新闻 |
-| -------- | ---- |
-| notice   | news |
+| 通知通告 | 新闻 | 政策文件 |
+| -------- | ---- | -------- |
+| notice   | news | policy   |
 
 </Route>
 
@@ -2576,11 +2590,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 电子信息与电气工程学院学术动态
 
-<Route author="HenryQW" example="/sjtu/seiee/academic" path="/sjtu/seiee/academic"/>
+<Route author="HenryQW" example="/sjtu/seiee/academic" path="/sjtu/seiee/academic" radar="1"/>
 
 ### 电子信息与电气工程学院本科教务办
 
-<Route author="Polynomia" example="/sjtu/seiee/bjwb/major_select" path="/sjtu/seiee/bjwb/:type" :paramsDesc="['无默认选项']">
+<Route author="Polynomia" example="/sjtu/seiee/bjwb/major_select" path="/sjtu/seiee/bjwb/:type" :paramsDesc="['无默认选项']" radar="1">
 
 | 分专业       | 转专业         | 直升研究生   | 交换交流 | 国际办学      |
 | ------------ | -------------- | ------------ | -------- | ------------- |
@@ -2588,19 +2602,9 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-### 研究生通知公告
-
-<Route author="mzr1996" example="/sjtu/gs/tzgg/pyxx" path="/sjtu/gs/tzgg/:type?" :paramsDesc="['默认列举所有通知公告']">
-
-| 通知公告 | 工作信息 | 招生信息 | 培养信息 | 学位学科 | 国际交流 | 创新工程 |
-| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-| 空       | gzxx     | xwxx1    | pyxx     | xwxx     | gjjl     | cxgc     |
-
-</Route>
-
 ### 电子信息与电气工程学院学生工作办公室
 
-<Route author="Polynomia xxchan" example="/sjtu/seiee/xsb/news" path="/sjtu/seiee/xsb/:type?" :paramsDesc="['默认列举所有通知公告']">
+<Route author="Polynomia xxchan" example="/sjtu/seiee/xsb/news" path="/sjtu/seiee/xsb/:type?" :paramsDesc="['默认列举所有通知公告']" radar="1">
 
 | 信息通告 | 奖学金      | 助学金       | 讲座活动 | 党团活动 | 新闻发布 | 本科生综合测评 |
 | -------- | ----------- | ------------ | -------- | -------- | -------- | -------------- |
@@ -2608,9 +2612,31 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 研究生通知公告
+
+<Route author="mzr1996 dzx-dzx" example="/sjtu/gs/enroll/59" path="/sjtu/gs/:type/:num?" :paramsDesc="['类别', '细分类别, 仅对`type`为`enroll`或`exchange`有效']" radar="1">
+
+| 工作信息 | 招生信息 | 培养信息 | 学位学科 | 国际交流 | 创新工程 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| work     | enroll   | train    | degree   | exchange | xsjy     |
+
+当`type`为`enroll`, `num`可选字段:
+
+| 58       | 59       | 60         | 61       | 62       |
+| -------- | -------- | ---------- | -------- | -------- |
+| 博士招生 | 硕士招生 | 港澳台招生 | 考点信息 | 院系动态 |
+
+当`type`为`exchange`, `num`可选字段:
+
+| 67             | 68             | 69             | 70             | 71             |
+| -------------- | -------------- | -------------- | -------------- | -------------- |
+| 国家公派研究生 | 国际化培养资助 | 校际交换与联培 | 交流与合作项目 | 项目招募与宣讲 |
+
+</Route>
+
 ### 教务处通知公告
 
-<Route author="SeanChao" example="/sjtu/jwc/" path="/sjtu/jwc/:type?" :paramsDesc="['默认为 all ']">
+<Route author="SeanChao" example="/sjtu/jwc" path="/sjtu/jwc/:type?" :paramsDesc="['默认为 notice']" radar="1">
 
 | 新闻中心 | 通知通告 | 教学运行  | 注册学务 | 研究办 | 教改办 | 综合办 | 语言文字 | 工会与支部 | 通识教育 |
 | -------- | -------- | --------- | -------- | ------ | ------ | ------ | -------- | ---------- | -------- |
@@ -2630,7 +2656,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生招生网招考信息
 
-<Route author="richardchien" example="/sjtu/yzb/zkxx/sszs" path="/sjtu/yzb/zkxx/:type" :paramsDesc="['无默认选项']">
+<Route author="stdrc" example="/sjtu/yzb/zkxx/sszs" path="/sjtu/yzb/zkxx/:type" :paramsDesc="['无默认选项']" radar="1">
 
 | 博士招生 | 硕士招生 | 港澳台招生 | 考点信息 | 院系动态 |
 | -------- | -------- | ---------- | -------- | -------- |
@@ -3388,6 +3414,22 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 #### 新闻
 
 <Route author="SettingDust" example="/ynnu/edu/news" path="/ynnu/edu/news" >
+</Route>
+
+## 长江大学
+
+### 动物科学学院
+
+<Route author="nczitzk" example="/yangtzeu/dongke" path="/yangtzeu/dongke/:path+" :paramsDesc="['路径，默认为学院新闻']">
+
+::: tip 提示
+
+若订阅 [院情总览 - 通知公告](https://dongke.yangtzeu.edu.cn/yqzl/tzgg.htm)，网址为 <https://dongke.yangtzeu.edu.cn/yqzl/tzgg.htm>。截取 `https://dongke.yangtzeu.edu.cn` 到末尾 `.htm` 的部分 `/yqzl/tzgg` 作为参数，此时路由为 [`/yangtzeu/dongke/yqzl/tzgg`](https://rsshub.app/yangtzeu/dongke/yqzl/tzgg)。
+
+若订阅子分类 [学生工作](https://dongke.yangtzeu.edu.cn/xsgz.htm)，网址为 <https://dongke.yangtzeu.edu.cn/xsgz.htm>。截取 `https://dongke.yangtzeu.edu.cn` 到末尾 `.htm` 的部分 `/xsgz` 作为参数，此时路由为 [`/yangtzeu/dongke/xsgz`](https://rsshub.app/yangtzeu/dongke/xsgz)。
+
+:::
+
 </Route>
 
 ## 浙江大学

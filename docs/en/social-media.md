@@ -217,25 +217,35 @@ Official user RSS:
 -   RSS: `https://**:instance**/users/**:username**.rss` ([Example](https://pawoo.net/users/pawoo_support.rss))
 -   Atom: ~~`https://**:instance**/users/**:username**.atom`~~ (Only for pawoo.net, [example](https://pawoo.net/users/pawoo_support.atom))
 
-These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for user timeline based on the Mastodon API, but to use that, you will need to create application on a Mastodon instance, and configure your RSSHub instance. Check the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
+These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for user timeline based on the Mastodon API, but to use that, you may need to create application on a Mastodon instance, and configure your RSSHub instance. Check the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
 
 :::
 
 ### User timeline
 
-<RouteEn author="notofoe" example="/mastodon/acct/CatWhitney@mastodon.social/statuses" path="/mastodon/acct/:acct/statuses/:only_media?" :paramsDesc="['Webfinger account URI', 'whether only display media content, default to false, any value to true']"/>
+<RouteEn author="notofoe" example="/mastodon/acct/CatWhitney@mastodon.social/statuses" path="/mastodon/acct/:acct/statuses/:only_media?" :paramsDesc="['Webfinger account URI, like `user@host`', 'whether only display media content, default to false, any value to true']"/>
+
+Started from Mastodon v4.0.0, the use of the `search` API in the route no longer requires a user token.
+If the domain of your Webfinger account URI is the same as the API host of the instance (i.e., no delegation called in some other protocols), then no configuration is required and the route is available out of the box.
+However, you can still specify these route-specific configurations if you need to override them.
 
 ### Instance timeline (local)
 
 <RouteEn author="hoilc" example="/mastodon/timeline/pawoo.net/true" path="/mastodon/timeline/:site/:only_media?" :paramsDesc="['instance address, only domain, no `http://` or `https://` protocol header', 'whether only display media content, default to false, any value to true']"/>
 
+If the instance address is not `mastodon.social` or `pawoo.net`, then the route requires `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` to be `true`.
+
 ### Instance timeline (federated)
 
 <RouteEn author="hoilc" example="/mastodon/remote/pawoo.net/true" path="/mastodon/remote/:site/:only_media?" :paramsDesc="['instance address, only domain, no `http://` or `https://` protocol header', 'whether only display media content, default to false, any value to true']"/>
 
+If the instance address is not `mastodon.social` or `pawoo.net`, then the route requires `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` to be `true`.
+
 ### User timeline (backup)
 
 <RouteEn author="notofoe" example="/mastodon/account_id/mastodon.social/23634/statuses/only_media" path="/mastodon/account/:site/:account_id/statuses/:only_media?" :paramsDesc="['instance address, only domain, no `http://` or `https://` protocol header', 'account id. login your instance, then search for the user profile; the account id is in the url', 'whether only display media content, default to false, any value to true']"/>
+
+If the instance address is not `mastodon.social` or `pawoo.net`, then the route requires `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` to be `true`.
 
 ## Misskey
 
@@ -430,6 +440,31 @@ Due to Telegram restrictions, some channels involving pornography, copyright, an
 
 <RouteEn author="fengkx" example="/telegram/blog" path="/telegram/blog" />
 
+## Threads
+
+### User timeline
+
+<RouteEn author="ninboy" path="/threads/:user/:routeParams?" example="/threads/zuck" radar="1" rssbud="1" puppeteer="1">
+
+Specify options (in the format of query string) in parameter `routeParams` to control some extra features for threads
+
+| Key                             | Description                                                                                                                    | Accepts                | Defaults to |
+|---------------------------------|--------------------------------------------------------------------------------------------------------------------------------| ---------------------- |-------------|
+| `showAuthorInTitle`             | Show author name in title                                                                                                      | `0`/`1`/`true`/`false` | `true`      |
+| `showAuthorInDesc`              | Show author name in description (RSS body)                                                                                     | `0`/`1`/`true`/`false` | `true`      |
+| `showQuotedAuthorAvatarInDesc`  | Show avatar of quoted author in description (RSS body) (Not recommended if your RSS reader extracts images from description)   | `0`/`1`/`true`/`false` | `false`     |
+| `showAuthorAvatarInDesc`        | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)          | `0`/`1`/`true`/`false` | `falseP`    |
+| `showEmojiForQuotesAndReply`    | Use "🔁" instead of "QT", "↩️" instead of "Re"                                                                                 | `0`/`1`/`true`/`false` | `true`      |
+| `showQuotedInTitle`             | Show quoted tweet in title                                                                                                     | `0`/`1`/`true`/`false` | `true`      |
+| `replies`                       | Show replies                                                                                                                   | `0`/`1`/`true`/`false` | `true`      |
+
+Specify different option values than default values to improve readability. The URL
+
+```
+https://rsshub.app/threads/zuck/showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForQuotesAndReply=1&showQuotedInTitle=1
+```
+</RouteEn>
+
 ## TikTok
 
 ### User
@@ -484,15 +519,15 @@ generates
 
 ### User timeline
 
-<RouteEn author="DIYgod yindaheng98 Rongronggg9" path="/twitter/user/:id/:routeParams?" example="/twitter/user/DIYgod" :paramsDesc="['user id', 'extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all.']" radar="1" rssbud="1"/>
+<RouteEn author="DIYgod yindaheng98 Rongronggg9" path="/twitter/user/:id/:routeParams?" example="/twitter/user/DIYgod" :paramsDesc="['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all.']" radar="1" rssbud="1"/>
 
 ### User media
 
-<RouteEn author="yindaheng98 Rongronggg9" path="/twitter/media/:id/:routeParams?" example="/twitter/media/DIYgod" :paramsDesc="['user id', 'extra parameters, see the table above.']" radar="1" rssbud="1"/>
+<RouteEn author="yindaheng98 Rongronggg9" path="/twitter/media/:id/:routeParams?" example="/twitter/media/DIYgod" :paramsDesc="['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'extra parameters, see the table above.']" radar="1" rssbud="1"/>
 
 ### User following timeline
 
-<RouteEn author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" :paramsDesc="['user id', 'extra parameters, see the table above']" radar="1" rssbud="1" selfhost="1">
+<RouteEn author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" :paramsDesc="['username', 'extra parameters, see the table above']" radar="1" rssbud="1" selfhost="1">
 
 ::: warning
 
@@ -504,11 +539,11 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 
 ### List timeline
 
-<RouteEn author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name/:routeParams?" :paramsDesc="['user name', 'list name', 'extra parameters, see the table above']" radar="1" rssbud="1"/>
+<RouteEn author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name/:routeParams?" :paramsDesc="['username', 'list name', 'extra parameters, see the table above']" radar="1" rssbud="1"/>
 
 ### User likes
 
-<RouteEn author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id/:routeParams?" :paramsDesc="['user name', 'extra parameters, see the table above']" radar="1" rssbud="1"/>
+<RouteEn author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id/:routeParams?" :paramsDesc="['username', 'extra parameters, see the table above']" radar="1" rssbud="1"/>
 
 ### Keyword
 
@@ -520,7 +555,7 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 
 ### Collection
 
-<RouteEn author="TonyRL" example="/twitter/collection/DIYgod/1527857429467172864" path="/twitter/collection/:uid/:collectionId/:routeParams?" :paramsDesc="['User name, should match the generated token', 'Collection ID, can be found in URL', 'extra parameters, see the table above']" radar="1" rssbud="1" selfhost="1">
+<RouteEn author="TonyRL" example="/twitter/collection/DIYgod/1527857429467172864" path="/twitter/collection/:uid/:collectionId/:routeParams?" :paramsDesc="['username, should match the generated token', 'collection ID, can be found in URL', 'extra parameters, see the table above']" radar="1" rssbud="1" selfhost="1">
 
 ::: warning
 
@@ -532,7 +567,7 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 
 ### Tweet Details
 
-<Route author="LarchLiu" example="/twitter/tweet/DIYgod/status/1650844643997646852" path="/twitter/tweet/:id/status/:status/:original?" :paramsDesc="['User name', 'Tweet ID', 'extra parameters, data type of return, if the value is not `0`/`false` and `config.isPackage` is `true`, return the original data of twitter']" radar="1" rssbud="1"/>
+<Route author="LarchLiu Rongronggg9" example="/twitter/tweet/DIYgod/status/1650844643997646852" path="/twitter/tweet/:id/status/:status/:original?" :paramsDesc="['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'tweet ID', 'extra parameters, data type of return, if the value is not `0`/`false` and `config.isPackage` is `true`, return the original data of twitter']" radar="1" rssbud="1"/>
 
 ## Vimeo
 

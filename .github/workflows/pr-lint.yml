@@ -65,7 +65,7 @@ jobs:
 
   labeler:
     name: Pull Request Labeler
-    if: ${{ github.event_name == 'pull_request_target' }}
+    if: ${{ github.event_name == 'pull_request_target' && github.actor != 'dependabot[bot]' }}
     permissions:
       contents: read
       pull-requests: write
@@ -85,7 +85,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: fluxninja/openai-pr-reviewer@v0
+      - uses: fluxninja/openai-pr-reviewer@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

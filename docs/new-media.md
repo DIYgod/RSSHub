@@ -2754,6 +2754,24 @@ others = 热点新闻 + 滚动新闻
 
 <Route author="eternasuno" example="/gcores/radios/45" path="/gcores/radios/:category?" :paramsDesc="['分类名，默认为全部，可在分类页面的 URL 中找到，如 Gadio News -- 45']" radar="1" supportPodcast="1" />
 
+## 纪妖
+
+### 通用
+
+<Route author="nczitzk" example="/cbaigui" path="/cbaigui/:path+" :paramsDesc="['路径，默认为首页']">
+
+::: tip 提示
+
+若订阅 [标签：妖](https://www.cbaigui.com/post-tag/妖)，网址为 [https://www.cbaigui.com/post-tag/ 妖](https://www.cbaigui.com/post-tag/妖)。截取 `https://www.cbaigui.com` 到末尾的部分 `/post-tag/妖` 作为参数，此时路由为 [`/cbaigui/post-tag/妖`](https://rsshub.app/cbaigui/post-tag/妖)。
+
+若订阅 [分类：埃及](https://www.cbaigui.com/post-category/世界/非洲/埃及)，网址为 [https://www.cbaigui.com/post-category/ 世界 / 非洲 / 埃及](https://www.cbaigui.com/post-category/世界/非洲/埃及)。截取 `https://www.cbaigui.com` 到末尾的部分 `/post-category/世界/非洲/埃及` 作为参数，此时路由为 [`/cbaigui/post-category/世界/非洲/埃及`](https://rsshub.app/cbaigui/post-category/世界/非洲/埃及)。
+
+若订阅 [词条：白泽图](https://www.cbaigui.com/post-category/词条/白泽图)，网址为 [https://www.cbaigui.com/post-category/ 词条 / 白泽图](https://www.cbaigui.com/post-category/词条/白泽图)。截取 `https://www.cbaigui.com` 到末尾的部分 `/post-category/词条/白泽图` 作为参数，此时路由为 [`/cbaigui/post-category/词条/白泽图`](https://rsshub.app/cbaigui/post-category/词条/白泽图)。
+
+:::
+
+</Route>
+
 ## 加美财经
 
 <Route author="nczitzk" example="/caus" path="/caus/:category?" :paramsDesc="['分类，见下表，默认为全部']">
@@ -4271,19 +4289,6 @@ column 为 third 时可选的 category:
 
 </Route>
 
-### 公众号（feeddd 来源）
-
-::: warning 注意
-
-feeddd 网站不提供检索功能，请自行在 <https://cdn.jsdelivr.net/gh/feeddd/feeds/feeds_all_rss.txt> 中检索所需公众号。\
-也可以在 <https://feed.hamibot.com/feeds> 上找到最近更新的公众号。请注意公众号页 id 与订阅时实际使用的 id 不同，请先复制订阅链接，再从中获取 id。
-
-feeddd 自 2023/05/04 已更换域名，原 `feeddd.org` 已失效，现在使用 `feed.hamibot.com`。请及时更新自建实例。
-
-:::
-
-<Route author="TonyRL Rongronggg9" example="/wechat/feeddd/6131e1441269c358aa0e2141" path="/wechat/feeddd/:id" :paramsDesc="['公众号 id，详见上方说明']"/>
-
 ### 公众号（自由微信来源）
 
 见 [#自由微信](#zi-you-wei-xin)
@@ -4317,20 +4322,6 @@ feeddd 自 2023/05/04 已更换域名，原 `feeddd.org` 已失效，现在使�
 ### 公众号（优读来源）
 
 <Route author="kt286" example="/wechat/uread/shensing" path="/wechat/uread/:userid" :paramsDesc="['公众号的微信号, 可在 微信-公众号-更多资料 中找到。并不是所有的都支持，能不能用随缘']"/>
-
-### 公众号（wxnmh.com 来源）
-
-<Route author="laampui" example="/wechat/wxnmh/51798" path="/wechat/wxnmh/:id" :paramsDesc="['公众号 id, 打开 wxnmh.com, 在 URL 中找到 id']" anticrawler="1"/>
-
-### 公众号（wechat-feeds 来源）
-
-::: warning 注意
-
-wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/issues/3882)，历史文章可以正常订阅阅读
-
-:::
-
-<Route author="tylinux" example="/wechat/feeds/MzIwMzAwMzQxNw==" path="/wechat/feeds/:id" :paramsDesc="['公众号 id, 打开 `https://wechat.privacyhide.com/`, 在选定公众号的订阅 URL 中找到 id, 不包含最后的 .xml']"/>
 
 ### 公众号（公众号 360 来源）
 
