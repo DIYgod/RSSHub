@@ -763,6 +763,16 @@ pageClass: routes
 
 </Route>
 
+### 研究生院
+
+<Route author="yanbot-team" example="/cuit/yjsc/1020" path="/cuit/yjsc/:type" :paramsDesc="['分类type,见下表']" radar="1" >
+
+| 招生动态 |
+| -------- |
+| 1020     |
+
+</Route>
+
 ## 重庆大学
 
 ### 本科教学信息网通知公告
