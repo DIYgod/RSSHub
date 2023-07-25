@@ -5655,6 +5655,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 西南医科大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/swmu/yjs/zsgz" path="/swmu/yjs/:type" :paramsDesc="['分类名，见下表']" puppeteer="1">
+
+| 招生工作 |
+| -------- |
+| zsgz     |
+
+</Route>
+
 ## 西藏大学
 
 ### 研究生招生信息网
