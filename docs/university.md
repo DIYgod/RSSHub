@@ -681,6 +681,18 @@ pageClass: routes
 
 </Route>
 
+## 长春师范大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/ccsfu/yjs/zsgz" path="/ccsfu/yjs/:type" :paramsDesc="['分类type,见下表']" radar="1" >
+
+| 招生工作 |
+| -------- |
+| zsgz     |
+
+</Route>
+
 ## 长沙理工大学
 
 ### 研究生招生网
@@ -5965,11 +5977,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生院
 
-<Route author="yanbot-team" example="/zstu/gra/sszs" path="/zstu/gra/:type" :paramsDesc="['分类，见下表']">
+<Route author="yanbot-team" example="/zjou/yjsyzs/ssyjszs" path="/zjou/yjsyzs/:type" :paramsDesc="['分类，见下表']">
 
-| 硕士招生 |
-| -------- |
-| sszs     |
+| 硕士研究生招生 |
+| -------------- |
+| ssyjszs        |
 
 </Route>
 
