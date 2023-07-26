@@ -4687,6 +4687,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 沈阳药科大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/syphu/grs/zsgz-zsdt" path="/syphu/grs/:type" :paramsDesc="['类别ID，见下表，其他未列出的栏目参数可以从页面的 URL Path 中找到']" radar="1" >
+
+| 招生动态  |
+| --------- |
+| zsgz-zsdt |
+
+</Route>
+
 ## 深圳大学
 
 ### 深圳大学研究生招生网通知公告
