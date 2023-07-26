@@ -858,6 +858,18 @@ pageClass: routes
 
 </Route>
 
+## 重庆工商大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/ctbu/grs/zsgl" path="/ctbu/grs/:type" :paramsDesc="['分类名']">
+
+| 招生管理 |
+| -------- |
+| zsgl     |
+
+</Route>
+
 ## 重庆交通大学
 
 ### 研究生招生信息网
