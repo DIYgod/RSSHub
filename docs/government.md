@@ -433,13 +433,45 @@ pageClass: routes
 
 ## 国家自然科学基金委员会
 
-### 基金要闻
+### 通用
 
-<Route author="Derekmini nczitzk" example="/gov/nsfc/news/jjyw" path="/gov/nsfc/news/:type?" :paramsDesc="['分类，默认为基金要闻，即 `jjyw`']" radar="1" rssbud="1">
+<Route author="Derekmini nczitzk" example="/gov/nsfc" path="/gov/nsfc/path+" :paramsDesc="['路径，默认为基金要闻']" radar="1" rssbud="1">
 
-| 基金要闻 | 通知公告 | 资助成果 | 科普快讯 |
-| -------- | -------- | -------- | -------- |
-| jjyw     | tzgg     | zzcg     | kpkx     |
+::: tip 提示
+
+若订阅 [基金要闻 - 通知公告](https://www.nsfc.gov.cn/publish/portal0/tab442)，网址为 <https://www.nsfc.gov.cn/publish/portal0/tab442>。截取 `https://www.nsfc.gov.cn` 到末尾的部分 `/publish/portal0/tab442` 作为参数，此时路由为 [`/gov/nsfc/publish/portal0/tab442`](https://rsshub.app/gov/nsfc/publish/portal0/tab442)。
+
+当然，也可以填入路径在下表中对应的快捷方式。其中 [基金要闻 - 通知公告](https://www.nsfc.gov.cn/publish/portal0/tab442) 的快捷方式为 `tzgg`，此时路由为 [`/gov/nsfc/tzgg`](https://rsshub.app/gov/nsfc/tzgg)。
+
+若订阅 [管理科学部 - 通知公告](https://www.nsfc.gov.cn/publish/portal0/tab1212)，网址为 <https://www.nsfc.gov.cn/publish/portal0/tab1212>。截取 `https://www.nsfc.gov.cn` 到末尾的部分 `/publish/portal0/tab1212` 作为参数，此时路由为 [`/gov/nsfc/publish/portal0/tab1212`](https://rsshub.app/gov/nsfc/publish/portal0/tab1212)。
+
+同理，也可以填入路径在下表中对应的快捷方式。其中 [管理科学部 - 通知公告](https://www.nsfc.gov.cn/publish/portal0/tab1212) 的快捷方式为 `glkxb-tzgg`，此时路由为 [`/gov/nsfc/glkxb-tzgg`](https://rsshub.app/gov/nsfc/glkxb-tzgg)。
+
+:::
+
+基金要闻
+
+| 基金要闻 | 通知公告 | 部门动态 | 科普快讯 | 资助成果 |
+| -------- | -------- | -------- | -------- | -------- |
+| jjyw     | tzgg     | bmdt     | kpkx     | zzcg     |
+
+政策法规
+
+| 国家自然科学基金条例 | 国家自然科学基金发展规划 | 国家自然科学基金规章制度 | 国家科学技术相关法律法规 |
+| -------------------- | ------------------------ | ------------------------ | ------------------------ |
+| zcfg-jjtl            | zcfg-fzgh                | zcfg-gzzd                | zcfg-flfg                |
+
+管理科学部
+
+| 工作动态   | 通知公告   | 资助成果   |
+| ---------- | ---------- | ---------- |
+| glkxb-gzdt | glkxb-tzgg | glkxb-zzcg |
+
+国际合作局
+
+| 项目指南   | 初审结果   | 批准通知   | 进程简表   | 信息公开   |
+| ---------- | ---------- | ---------- | ---------- | ---------- |
+| gjhzj-xmzn | gjhzj-csjg | gjhzj-pztz | gjhzj-jcjb | gjhzj-xxgk |
 
 </Route>
 
