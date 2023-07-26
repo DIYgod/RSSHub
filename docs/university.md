@@ -3665,6 +3665,10 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="shengmaosu" example="/ouc/it/postgraduate" path="/ouc/it/postgraduate" radar="1"/>
 
+### 教务处
+
+<Route author="3401797899" example="/ouc/jwc" path="/ouc/jwc" radar="1"/>
+
 ## 中国科学技术大学
 
 ### 官网通知公告
