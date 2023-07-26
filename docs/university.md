@@ -4687,6 +4687,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 沈阳理工大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/sylu/yanjiusheng/zsgz-tzgg" path="/sylu/yanjiusheng/:type" :paramsDesc="['类别ID，见下表，其他未列出的栏目参数可以从页面的 URL Path 中找到']" radar="1" >
+
+| 招生工作通知公告 | 培养工作通知公告 |
+| ---------------- | ---------------- |
+| zsgz-tzgg        | pygz-tztg        |
+
+</Route>
+
 ## 沈阳师范大学
 
 ### 研究生教育网
