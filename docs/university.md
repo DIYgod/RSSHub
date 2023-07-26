@@ -5489,6 +5489,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 西华师范大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/cwnu/yjsy/zsgz" path="/cwnu/yjsy/:type" :paramsDesc="['分类名见下表，也可在URL中找到']" >
+
+| 招生工作 |
+| -------- |
+| zsgz     |
+
+</Route>
+
 ## 西南财经大学
 
 ### 经济信息工程学院
