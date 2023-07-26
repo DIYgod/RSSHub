@@ -5787,6 +5787,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 西藏农牧学院
+
+### 研究生处
+
+<Route author="yanbot-team" example="/xza/yjsc/1" path="/xza/yjsc/:type" :paramsDesc="['分类名，见下表']">
+
+| 通知公告 |
+| -------- |
+| 1        |
+
+</Route>
+
 ## 新疆大学
 
 ### 研究生院
