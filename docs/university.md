@@ -1025,6 +1025,18 @@ pageClass: routes
 
 </Route>
 
+## 大连交通大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/djtu/gs/4" path="/djtu/gs/:type" :paramsDesc="['招生类别']">
+
+| 招生工作 |
+| :------: |
+|    4     |
+
+</Route>
+
 ## 大连理工大学
 
 ### 通用
