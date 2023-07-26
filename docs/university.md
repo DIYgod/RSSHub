@@ -2218,6 +2218,18 @@ category 列表：
 
 </Route>
 
+## 河北经贸大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/hueb/yjs/zsgz" path="/hueb/yjs/:type" :paramsDesc="['分类名，见下表']" >
+
+| 招生工作 |
+| -------- |
+| zsgz     |
+
+</Route>
+
 ## 河北科技大学
 
 ### 研究生院招生工作
