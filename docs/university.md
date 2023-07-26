@@ -1725,6 +1725,18 @@ pageClass: routes
 
 </Route>
 
+## 广西科技大学
+
+### 研究生院
+
+<Route author="yanbot-team" example="/gxust/yjs/zsgz" path="/gxust/yjs/:type" :paramsDesc="['分类名,见下表，也可在页面url中找到']">
+
+| 招生工作 |
+| -------- |
+| zsgz     |
+
+</Route>
+
 ## 广西民族大学
 
 ### 研究生院
