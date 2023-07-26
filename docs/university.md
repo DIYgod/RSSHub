@@ -2132,6 +2132,18 @@ category 列表：
 
 </Route>
 
+## 哈尔滨音乐学院
+
+### 招生工作
+
+<Route author="yanbot-team" example="/hrbcm/zsgz/yjszs" path="/hrbcm/zsgz/:type" :paramsDesc="['分类名，见下表']" >
+
+| 研究生招生 |
+| ---------- |
+| yjszs      |
+
+</Route>
+
 ## 海军军医大学
 
 ### 研究生院
