@@ -4235,6 +4235,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 山东艺术学院
+
+### 研究生处
+
+<Route author="yanbot-team" example="/sdca/graduate/yjszs-qrzzs" path="/sdca/graduate/:type" :paramsDesc="['专栏名称，见下表，也可在对应页面的URL中找到']" radar="1" rssbud="1">
+
+| 研究生招生全日制招生 |
+| -------------------- |
+| yjszs-qrzzs          |
+
+</Route>
+
 ## 山东中医药大学
 
 ### 研究生处
