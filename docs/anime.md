@@ -460,6 +460,12 @@ Sources
 
 <Route author="TonyRL" example="/qoo-app/notes/user/23266114" path="/qoo-app/notes/:lang?/user/:uid" :paramsDesc="['語言，見上表，留空為中文', '用户 ID，可在 URL 找到']"  radar="1"/>
 
+## Rawkuma
+
+### Manga
+
+<Route author="nczitzk" example="/rawkuma/manga/tensei-shitara-dai-nana-ouji-dattanode-kimamani-majutsu-o-kiwamemasu" path="/rawkuma/manga/:id" :paramsDesc="['Manga ID，可在 URL 找到']" radar="1"/>
+
 ## say 花火
 
 ### 文章
