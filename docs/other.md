@@ -554,23 +554,24 @@ type 为 all 时，category 参数不支持 cost 和 free
 | `title`         | 指定 RSS 的标题                                        | `string` | 从当前网页中取`<title>` |
 | `item`          | 通过 CSS 选择器查找 HTML 元素作为`item`元素            | `string` | html                    |
 | `itemTitle`     | 在`item`中通过 CSS 选择器查找 HTML 元素作为`title`元素 | `string` | `item`元素              |
-| `itemTitleAttr` | 获取`title`元素属性作为标题                            | `string` | 元素文本                |
+| `itemTitleAttr` | 获取`title`元素属性作为标题                            | `string` | 元素 text               |
 | `itemLink`      | 在`item`中通过 CSS 选择器查找 HTML 元素作为`link`元素  | `string` | `item`元素              |
-| `itemLinkAttr`  | 获取`link`元素属性作为链接                             | `string` | 元素文本                |
+| `itemLinkAttr`  | 获取`link`元素属性作为链接                             | `string` | `href`                  |
+| `itemDesc`      | 在`item`中通过 CSS 选择器查找 HTML 元素作为`desc`元素  | `string` | `item`元素              |
+| `itemDescAttr`  | 获取`desc`元素属性作为描述                             | `string` | 元素 html               |
 
-<Route author="ttttmr" example="/proxy/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div[class='post-content']%20p%20a&itemLinkAttr=href" path="/html/:url/:routeParams" :paramsDesc="[' URL地址，需要经过URL编码', '转换规则']">
+<Route author="ttttmr" example="/proxy/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div[class='post-content']%20p%20a" path="/html/:url/:routeParams" :paramsDesc="[' URL地址，需要经过URL编码', '转换规则']">
 
-| 参数           | 值                                                     |
-| -------------- | ------------------------------------------------------ |
-| `:url`         | `https://wechat2rss.xlab.app/posts/list/`              |
-| `:routeParams` | `item=div[class='post-content'] p a&itemLinkAttr=href` |
+| 参数           | 值                                        |
+| -------------- | ----------------------------------------- |
+| `:url`         | `https://wechat2rss.xlab.app/posts/list/` |
+| `:routeParams` | `item=div[class='post-content'] p a`      |
 
 `routeParams`参数解析如下
 
-| 参数           | 值                              |
-| -------------- | ------------------------------- |
-| `item`         | `div[class='post-content'] p a` |
-| `itemLinkAttr` | `href`                          |
+| 参数   | 值                              |
+| ------ | ------------------------------- |
+| `item` | `div[class='post-content'] p a` |
 
 </Route>
 
@@ -584,6 +585,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 | `item`      | 通过 JSON Path 查找作为`item`元素     | `string` | 整个响应 JSON                       |
 | `itemTitle` | 在`item`中通过 JSON Path 查找作为标题 | `string` | 无                                  |
 | `itemLink`  | 在`item`中通过 JSON Path 查找作为链接 | `string` | 无                                  |
+| `itemDesc`  | 在`item`中通过 JSON Path 查找作为描述 | `string` | 无                                  |
 
 ::: tip 注意
 
@@ -591,12 +593,12 @@ JSON Path 目前只支持例如`a.b.c`的形式，如果需要从数组中读取
 
 :::
 
-<Route author="ttttmr" example="/proxy/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url" path="/json/:url/:routeParams" :paramsDesc="[' URL地址，需要经过URL编码', '转换规则']">
+<Route author="ttttmr" example="/proxy/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body" path="/json/:url/:routeParams" :paramsDesc="[' URL地址，需要经过URL编码', '转换规则']">
 
-| 参数           | 值                                                         |
-| -------------- | ---------------------------------------------------------- |
-| `:url`         | `https://api.github.com/repos/ginuerzh/gost/releases`      |
-| `:routeParams` | `title=Gost releases&itemTitle=tag_name&itemLink=html_url` |
+| 参数           | 值                                                                       |
+| -------------- | ------------------------------------------------------------------------ |
+| `:url`         | `https://api.github.com/repos/ginuerzh/gost/releases`                    |
+| `:routeParams` | `title=Gost releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body` |
 
 `routeParams`参数解析如下
 
@@ -605,6 +607,7 @@ JSON Path 目前只支持例如`a.b.c`的形式，如果需要从数组中读取
 | `title`     | `Gost releases` |
 | `itemTitle` | `tag_name`      |
 | `itemLink`  | `html_url`      |
+| `itemDesc`  | `body`          |
 
 </Route>
 
