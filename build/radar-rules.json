@@ -4545,6 +4545,14 @@
         "target": "/github/comments/:user/:repo/:number"
       },
       {
+        "title": "Issue & Pull Request comments",
+        "docs": "https://docs.rsshub.app/programming.html#github",
+        "source": [
+          "/:user/:repo/:type"
+        ],
+        "target": "/github/comments/:user/:repo"
+      },
+      {
         "title": "仓库 Contributors",
         "docs": "https://docs.rsshub.app/programming.html#github",
         "source": [

@@ -2060,8 +2060,9 @@
     "/github/branches/:user/:repo": [
         "max-arnold"
     ],
-    "/github/comments/:user/:repo/:number": [
-        "TonyRL"
+    "/github/comments/:user/:repo/:number?": [
+        "TonyRL",
+        "FliegendeWurst"
     ],
     "/github/contributors/:user/:repo/:order?/:anon?": [
         "zoenglinghou"
