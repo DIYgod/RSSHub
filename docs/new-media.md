@@ -4748,19 +4748,15 @@ column 为 third 时可选的 category:
 
 ### 最新新聞
 
-<Route author="miles170" example="/nextapple/realtime/today" path="/nextapple/realtime/:category?" :paramsDesc="['類別，見下表，默認為首頁']">
+<Route author="miles170" example="/nextapple/realtime/latest" path="/nextapple/realtime/:category?" :paramsDesc="['類別，見下表，默認為首頁']">
 
-| 首頁  | 最新   | 焦點      | 熱門 | 娛樂          | 生活 | 女神     | 社會  |
-| ----- | ------ | --------- | ---- | ------------- | ---- | -------- | ----- |
-| today | latest | recommend | hit  | entertainment | life | gorgeous | local |
+| 首頁   | 焦點      | 熱門 | 娛樂          | 生活 | 女神     | 社會  |
+| ------ | --------- | ---- | ------------- | ---- | -------- | ----- |
+| latest | recommend | hit  | entertainment | life | gorgeous | local |
 
-| 政治     | 國際          | 財經    | 區塊鏈     | 房市     | 時尚    | 體育   |
-| -------- | ------------- | ------- | ---------- | -------- | ------- | ------ |
-| politics | international | finance | blockchain | property | fashion | sports |
-
-| 旅遊美食  | 3C 車市 | 蘋理  |
-| --------- | ------- | ----- |
-| lifestyle | gadget  | forum |
+| 政治     | 國際          | 財經    | 體育   | 旅遊美食  | 3C 車市 |
+| -------- | ------------- | ------- | ------ | --------- | ------- |
+| politics | international | finance | sports | lifestyle | gadget  |
 
 </Route>
 
