@@ -4,6 +4,12 @@ pageClass: routes
 
 # Social Media
 
+## Bluesky (bsky)
+
+### Keywords
+
+<RouteEn author="untitaker" example="/bsky/keyword/hello" path="/bsky/keyword/:keyword" radar="1" rssbud="1" />
+
 ## Crossbell
 
 ### Notes
