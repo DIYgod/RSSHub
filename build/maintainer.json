@@ -870,6 +870,9 @@
     "/bse/:category?/:keyword?": [
         "nczitzk"
     ],
+    "/bsky/keyword/:keyword": [
+        "untitaker"
+    ],
     "/btzj/:category?": [
         "nczitzk"
     ],
