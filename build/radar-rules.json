@@ -2903,10 +2903,16 @@
         "target": "/bilibili/online"
       },
       {
-        "title": "bilibili热搜",
+        "title": "热搜",
         "docs": "https://docs.rsshub.app/social-media.html#bilibili",
         "source": "/",
         "target": "/bilibili/hot-search"
+      },
+      {
+        "title": "频道排行榜",
+        "docs": "https://docs.rsshub.app/social-media.html#bilibili",
+        "source": "/v/channel/:channelid/",
+        "target": "/bilibili/channel/:channelid/hot"
       }
     ],
     "space": [

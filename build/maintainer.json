@@ -646,6 +646,9 @@
     "/bilibili/bangumi/media/:mediaid": [
         "DIYgod"
     ],
+    "/bilibili/channel/:channelid/hot/:disableEmbed?": [
+        "3401797899"
+    ],
     "/bilibili/fav/:uid/:fid/:disableEmbed?": [
         "Qixingchen"
     ],
