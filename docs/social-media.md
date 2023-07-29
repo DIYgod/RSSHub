@@ -24,12 +24,6 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 :::
 
-## Bluesky (bsky)
-
-### 关键词
-
-<Route author="untitaker" example="/bsky/keyword/hello" path="/bsky/keyword/:keyword" radar="1" rssbud="1" />
-
 ### 番剧
 
 <Route author="DIYgod" example="/bilibili/bangumi/media/9192" path="/bilibili/bangumi/media/:mediaid" :paramsDesc="['番剧媒体 id, 番剧主页 URL 中获取']"/>
@@ -372,7 +366,13 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ### 频道排行榜
 
-<Route author="3401797899" example="/bilibili/channel/5417/hot" path="/bilibili/channel/:channelid/hot/:disableEmbed?" :paramsDesc="['频道id，可在频道链接中找到', '默认为开启内嵌视频, 任意值为关闭']">
+<Route author="3401797899" example="/bilibili/channel/5417/hot" path="/bilibili/channel/:channelid/hot/:disableEmbed?" :paramsDesc="['频道id，可在频道链接中找到', '默认为开启内嵌视频, 任意值为关闭']"/>
+
+## Bluesky (bsky)
+
+### 关键词
+
+<Route author="untitaker" example="/bsky/keyword/hello" path="/bsky/keyword/:keyword" radar="1" rssbud="1" />
 
 ## Crossbell
 
