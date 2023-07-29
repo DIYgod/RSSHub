@@ -324,7 +324,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 <Route author="ziminliu" example="/bilibili/popular/all" path="/bilibili/popular/all" />
 
-### bilibili 热搜
+### 热搜
 
 <Route author="CaoMeiYouRen" example="/bilibili/hot-search" path="/bilibili/hot-search" />
 
@@ -360,7 +360,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ### 用户追漫更新
 
-<Route author="yindaheng98" example="/bilibili/manga/followings/26009" path="/manga/followings/:uid/:limits?" :paramsDesc="['用户 id', '抓取最近更新前多少本漫画，默认为10']" selfhost="1">
+<Route author="yindaheng98" example="/bilibili/manga/followings/26009" path="/bilibili/manga/followings/:uid/:limits?" :paramsDesc="['用户 id', '抓取最近更新前多少本漫画，默认为10']" selfhost="1">
 
 ::: warning 注意
 
@@ -369,6 +369,10 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 :::
 
 </Route>
+
+### 频道排行榜
+
+<Route author="3401797899" example="/bilibili/channel/5417/hot" path="/bilibili/channel/:channelid/hot/:disableEmbed?" :paramsDesc="['频道id，可在频道链接中找到', '默认为开启内嵌视频, 任意值为关闭']">
 
 ## Crossbell
 
