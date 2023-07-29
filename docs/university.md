@@ -1516,6 +1516,49 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 湖南农业大学
+
+### 教务处
+
+<Route author="lcandy2" example="/hunau/jwc" path="/hunau/jwc/:category?/:page?" :paramsDesc="['页面分类，默认为 `tzgg`', '页码，默认为 `1`']">
+
+| 分类 | 通知公告 | 教务动态 | 其他教务通知... |
+| ---- | -------- | -------- | --------------- |
+| 参数 | tzgg     | jwds     | 对应 URL        |
+
+</Route>
+
+### 国际交流与合作处、国际教育学院、港澳台事务办公室
+
+<Route author="lcandy2" example="/hunau/ied" path="/hunau/ied/:type?/:category?/:page?" :paramsDesc="['页面归属，默认为 `xwzx`','页面分类，默认为 `ggtz`', '页码，默认为 `1`']">
+
+| 分类     | 公告通知 | 新闻快讯 | 其他分类... |
+| -------- | -------- | -------- | ----------- |
+| type     | xwzx     | xwzx     | 对应 URL    |
+| category | tzgg     | xwkx     | 对应 URL    |
+
+</Route>
+
+### 公共管理与法学学院
+
+<Route author="lcandy2" example="/hunau/gfxy" path="/hunau/gfxy/:category?/:page?" :paramsDesc="['页面分类，默认为 `tzgg`', '页码，默认为 `1`']">
+
+| 分类 | 通知公告 | 学院新闻 | 其他分类通知... |
+| ---- | -------- | -------- | --------------- |
+| 参数 | tzgg     | xyxw     | 对应 URL        |
+
+</Route>
+
+### 信息与智能科学学院
+
+<Route author="lcandy2" example="/hunau/xky" path="/hunau/xky/:category?/:page?" :paramsDesc="['页面分类，默认为 `tzgg_8472`', '页码，默认为 `1`']">
+
+| 分类 | 通知公告  | 学院新闻 | 其他分类通知... |
+| ---- | --------- | -------- | --------------- |
+| 参数 | tzgg_8472 | xyxw     | 对应 URL        |
+
+</Route>
+
 ## 华北电力大学
 
 ### 北京校区研究生院
