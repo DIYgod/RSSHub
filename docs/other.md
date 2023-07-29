@@ -560,7 +560,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 | `itemDesc`      | 在`item`中通过 CSS 选择器查找 HTML 元素作为`desc`元素  | `string` | `item`元素              |
 | `itemDescAttr`  | 获取`desc`元素属性作为描述                             | `string` | 元素 html               |
 
-<Route author="ttttmr" example="/proxy/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div[class='post-content']%20p%20a" path="/html/:url/:routeParams" :paramsDesc="[' URL地址，需要经过URL编码', '转换规则']">
+<Route author="ttttmr" example="/proxy/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item%3Ddiv%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a" path="/html/:url/:routeParams" :paramsDesc="['URL地址，需要经过URL编码', '转换规则']">
 
 | 参数           | 值                                        |
 | -------------- | ----------------------------------------- |
@@ -593,7 +593,7 @@ JSON Path 目前只支持例如`a.b.c`的形式，如果需要从数组中读取
 
 :::
 
-<Route author="ttttmr" example="/proxy/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body" path="/json/:url/:routeParams" :paramsDesc="[' URL地址，需要经过URL编码', '转换规则']">
+<Route author="ttttmr" example="/proxy/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title%3DGost%20releases%26itemTitle%3Dtag%5Fname%26itemLink%3Dhtml%5Furl%26itemDesc%3Dbody" path="/json/:url/:routeParams" :paramsDesc="['URL地址，需要经过URL编码', '转换规则']">
 
 | 参数           | 值                                                                       |
 | -------------- | ------------------------------------------------------------------------ |
