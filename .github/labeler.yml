@@ -10,4 +10,6 @@ core enhancement:
 - any: ['lib/**', '!lib/radar-rules.js', '!lib/router.js', '!lib/routes/**', '!lib/v2/**']
 
 dependencies:
+- package.json
+- pnpm-lock.yaml
 - yarn.lock

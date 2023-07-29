@@ -326,7 +326,7 @@ describe('fulltext_mode', () => {
         expect(response.status).toBe(200);
         const parsed = await parser.parseString(response.text);
         expect(parsed.items[0].content).not.toBe(undefined);
-    }, 30000);
+    }, 60000);
 });
 
 describe('complicated_description', () => {

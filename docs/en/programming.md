@@ -213,7 +213,7 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 ### Issue / Pull Request comments
 
-<RouteEn author="TonyRL" example="/github/comments/DIYgod/RSSHub/8116" path="/github/comments/:user/:repo/:number" :paramsDesc="['User / Org name', 'Repo name', 'Issue or pull number']" radar="1" rssbud="1"/>
+<RouteEn author="TonyRL FliegendeWurst" example="/github/comments/DIYgod/RSSHub/8116" path="/github/comments/:user/:repo/:number?" :paramsDesc="['User / Org name', 'Repo name', 'Issue or pull number (if omitted: all)']" radar="1" rssbud="1"/>
 
 ### Wiki History
 
