@@ -222,6 +222,12 @@ The RSS routing has not been rigorously tested and the information provided cann
 
 <RouteEn author="TonyRL" example="/qoo-app/notes/en/user/35399143" path="/qoo-app/notes/:lang?/user/:uid" :paramsDesc="['Language, see the table above, empty means `中文`', 'User ID, can be found in URL']"  radar="1"/>
 
+## Rawkuma
+
+### Manga
+
+<RouteEn author="nczitzk" example="/rawkuma/manga/tensei-shitara-dai-nana-ouji-dattanode-kimamani-majutsu-o-kiwamemasu" path="/rawkuma/manga/:id" :paramsDesc="['Manga ID, can be found in URL']" radar="1"/>
+
 ## THBWiki
 
 ### Calendar

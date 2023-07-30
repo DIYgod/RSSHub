@@ -460,6 +460,12 @@ Sources
 
 <Route author="TonyRL" example="/qoo-app/notes/user/23266114" path="/qoo-app/notes/:lang?/user/:uid" :paramsDesc="['語言，見上表，留空為中文', '用户 ID，可在 URL 找到']"  radar="1"/>
 
+## Rawkuma
+
+### Manga
+
+<Route author="nczitzk" example="/rawkuma/manga/tensei-shitara-dai-nana-ouji-dattanode-kimamani-majutsu-o-kiwamemasu" path="/rawkuma/manga/:id" :paramsDesc="['Manga ID，可在 URL 找到']" radar="1"/>
+
 ## say 花火
 
 ### 文章
@@ -661,6 +667,12 @@ Sources
 <Route author="zytomorrow" path="/haimaoba/:id" example="/haimaoba/4026" :paramsDesc="['漫画id，漫画主页的地址栏中最后一位数字']" radar="1" rssbud="1"/>
 
 ## 禁漫天堂
+
+::: tip 提示
+
+禁漫天堂有多个备用域名，本路由默认使用域名 <https://jmcomic.me>，若该域名无法访问，可以通过在路由最后加上 `?domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://jmcomic1.me>，则在所有禁漫天堂路由最后加上 `?domain=jmcomic1.me` 即可，此时路由为 [`/18comic?domain=jmcomic1.me`](https://rsshub.app/18comic?domain=jmcomic1.me)
+
+:::
 
 ### 成人 A 漫
 
