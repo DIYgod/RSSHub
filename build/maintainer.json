@@ -4104,6 +4104,9 @@
     "/odaily/newsflash": [
         "nczitzk"
     ],
+    "/odaily/search/news/:keyword": [
+        "snowraincloud"
+    ],
     "/odaily/user/:id": [
         "nczitzk"
     ],

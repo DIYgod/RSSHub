@@ -17155,6 +17155,14 @@
         "target": "/odaily/newsflash"
       },
       {
+        "title": "搜索快讯",
+        "docs": "https://docs.rsshub.app/new-media.html#odaily-xing-qiu-ri-bao-sou-suo-kuai-xun",
+        "source": [
+          "/search/:keyword"
+        ],
+        "target": "/odaily/search/news/:keyword"
+      },
+      {
         "title": "文章",
         "docs": "https://docs.rsshub.app/new-media.html#odaily-xing-qiu-ri-bao-wen-zhang",
         "source": [
@@ -17193,6 +17201,14 @@
           "/"
         ],
         "target": "/odaily/newsflash"
+      },
+      {
+        "title": "搜索快讯",
+        "docs": "https://docs.rsshub.app/new-media.html#odaily-xing-qiu-ri-bao-sou-suo-kuai-xun",
+        "source": [
+          "/search/:keyword"
+        ],
+        "target": "/odaily/search/news/:keyword"
       },
       {
         "title": "文章",
