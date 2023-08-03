@@ -312,6 +312,16 @@ pageClass: routes
 
 <Route author="nczitzk" example="/now/news/rank" path="/now/news/rank"/>
 
+## NPR
+
+### 新闻
+
+<Route author="bennyyip" example="/npr/1001" path="/npr/:endpoint?" :paramsDesc="['频道 ID，可在官方频道 RSS URL 中找到，默认为 `1001`']">
+
+通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+</Route>
+
 ## RTHK 傳媒透視
 
 <Route author="tpnonthealps" example="/mediadigest/latest" path="/mediadigest/:range" :paramsDesc="['时间范围']">
@@ -1524,12 +1534,12 @@ category 对应的关键词有
 
 ### 分类 / 话题 / 作者
 
-<Route author="HenryQW proletarius101 LyleLee" example="/reuters/world/us" path="/reuters/:category/:topic?" :paramsDesc="['可在 URL 中找到，或参考下面的表格', '可在 URL 中找到，或参考下面的表格']">
+<Route author="HenryQW proletarius101 LyleLee nczitzk" example="/reuters/world/us" path="/reuters/:category/:topic?" :paramsDesc="['可在 URL 中找到，或参考下面的表格', '可在 URL 中找到，或参考下面的表格']">
 
 -   `:category`:
-    | World | Business | Legal | Markets | Breakingviews | Technology |
-    | ----- | -------- | ----- | ------- | ------------- | ---------- |
-    | world | business | legal | markets | breakingviews | technology |
+    | World | Business | Legal | Markets | Breakingviews | Technology | Graphics |
+    | ----- | -------- | ----- | ------- | ------------- | ---------- | -------- |
+    | world | business | legal | markets | breakingviews | technology | graphics |
 
 -   `world/:topic`:
 

@@ -182,6 +182,18 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 <Route author="HenryQW nczitzk" example="/aisixiang/column/722" path="/aisixiang/column/:id" :paramsDesc="['栏目 ID, 可在对应栏目 URL 中找到']"/>
 
+### 专题
+
+<Route author="nczitzk" example="/aisixiang/zhuanti/211" path="/aisixiang/zhuanti/:id" :paramsDesc="['专题 ID, 可在对应专题 URL 中找到']">
+
+::: tip 提示
+
+更多专题请见 [关键词](http://www.aisixiang.com/zhuanti/)
+
+:::
+
+</Route>
+
 ### 排行
 
 <Route author="HenryQW nczitzk" example="/aisixiang/toplist/1/7" path="/aisixiang/toplist/:id?/:period?" :paramsDesc="['类型', '范围, 仅适用于点击排行榜, 可选一天(1)，一周(7)，一月(30)，所有(-1)，默认为一天']">
@@ -432,11 +444,11 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 ### 章节
 
-<Route author="Chingyat" example="/qidian/chapter/1010400217" path="/qidian/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+<Route author="fuzy112" example="/qidian/chapter/1010400217" path="/qidian/chapter/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
 ### 讨论区
 
-<Route author="Chingyat" example="/qidian/forum/1010400217" path="/qidian/forum/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
+<Route author="fuzy112" example="/qidian/forum/1010400217" path="/qidian/forum/:id" :paramsDesc="['小说 id, 可在对应小说页 URL 中找到']"/>
 
 ### 限时免费
 

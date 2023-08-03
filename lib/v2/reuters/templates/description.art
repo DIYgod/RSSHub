@@ -9,7 +9,7 @@ Summary:
 {{ each result.related_content.galleries g }}
     {{ each g.content_elements e }}
         {{ if e.type === 'image' }}
-            <figure><img src="{{ e.url }}" alt="{{ e.alt_text }}">
+            <figure><img src="{{ e.renditions.original['1920w'] }}" alt="{{ e.alt_text }}">
             <figcaption>{{ e.caption }}</figcaption>
             </figure>
         {{ /if }}
@@ -17,7 +17,7 @@ Summary:
 {{ /each }}
 {{ each result.related_content.images i }}
     {{ if i.type === 'image' }}
-        <figure><img src="{{ i.url }}" alt="{{ i.alt_text }}">
+        <figure><img src="{{ i.renditions.original['1920w'] }}" alt="{{ i.alt_text }}">
         <figcaption>{{ i.caption }}</figcaption>
         </figure>
     {{ /if }}
