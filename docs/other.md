@@ -1140,7 +1140,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 | `itemDesc`      | 在 `item` 中通过 CSS 选择器查找 HTML 元素作为 `descrption` 元素 | `string` | `item` 元素              |
 | `itemDescAttr`  | 获取 `descrption` 元素属性作为描述                              | `string` | 元素 html                |
 
-<Route author="ttttmr" example="/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item%3Ddiv%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a" path="/rsshub/transform/html/:url/:routeParams" :paramsDesc="['URL地址，需经 URL 编码', '转换规则，需经 URL 编码']" selfhost="1">
+<Route author="ttttmr" example="/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a" path="/rsshub/transform/html/:url/:routeParams" :paramsDesc="['URL地址，需经 URL 编码', '转换规则，需经 URL 编码']" selfhost="1">
 
 上述例子中参数解析如下
 
@@ -1175,7 +1175,7 @@ JSON Path 目前只支持例如 `a.b.c` 的形式，如果需要从数组中读�
 
 :::
 
-<Route author="ttttmr" example="/rsshub/transform/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title%3DGost%20releases%26itemTitle%3Dtag%5Fname%26itemLink%3Dhtml%5Furl%26itemDesc%3Dbody" path="/rsshub/transform/json/:url/:routeParams" :paramsDesc="['URL地址，需经 URL 编码', '转换规则，需经 URL 编码']" selfhost="1">
+<Route author="ttttmr" example="/rsshub/transform/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body" path="/rsshub/transform/json/:url/:routeParams" :paramsDesc="['URL地址，需经 URL 编码', '转换规则，需经 URL 编码']" selfhost="1">
 
 上述例子中参数解析如下
 
