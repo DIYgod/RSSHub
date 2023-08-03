@@ -1915,6 +1915,19 @@
       }
     ]
   },
+  "altervista.org": {
+    "_name": "Altervista",
+    "hyp3rlinx": [
+      {
+        "title": "hyp3rlinx blog",
+        "docs": "https://docs.rsshub.app/",
+        "source": [
+          "/"
+        ],
+        "target": "/rsshub/transform/html/http%3A%2F%2Fhyp3rlinx.altervista.org%2F/item=table[border=%221%22]%20tr%20td%20a"
+      }
+    ]
+  },
   "amazon.com": {
     "_name": "Amazon",
     ".": [
@@ -19573,6 +19586,20 @@
           "/NewsList.aspx",
           "/"
         ]
+      }
+    ]
+  },
+  "sec.today": {
+    "_name": "每日安全",
+    ".": [
+      {
+        "title": "动态",
+        "docs": "https://docs.rsshub.app/",
+        "source": [
+          "/pulses",
+          "/"
+        ],
+        "target": "/rsshub/transform/html/https%3A%2F%2Fsec.today%2Fpulses%2F/item=div[class=\"card-body\"]"
       }
     ]
   },
