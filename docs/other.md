@@ -1121,6 +1121,80 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="Fatpandac" example="/ems/apple/EZ319397281CN" path="/ems/apple/:id" :paramsDesc="['苹果邮件编号']"/>
 
+## 转换
+
+传递 URL 和转化规则，将 HTML/JSON 转换为 RSS
+
+### HTML
+
+在 `routeParams` 参数中以 query string 格式指定选项，可以控制提取数据
+
+| 键              | 含义                                                            | 接受的值 | 默认值                   |
+| --------------- | --------------------------------------------------------------- | -------- | ------------------------ |
+| `title`         | 指定 RSS 的标题                                                 | `string` | 从当前网页中取 `<title>` |
+| `item`          | 通过 CSS 选择器查找 HTML 元素作为 `item` 元素                   | `string` | html                     |
+| `itemTitle`     | 在 `item` 中通过 CSS 选择器查找 HTML 元素作为 `title` 元素      | `string` | `item` 元素              |
+| `itemTitleAttr` | 获取 `title` 元素属性作为标题                                   | `string` | 元素 text                |
+| `itemLink`      | 在 `item` 中通过 CSS 选择器查找 HTML 元素作为 `link` 元素       | `string` | `item` 元素              |
+| `itemLinkAttr`  | 获取 `link` 元素属性作为链接                                    | `string` | `href`                   |
+| `itemDesc`      | 在 `item` 中通过 CSS 选择器查找 HTML 元素作为 `descrption` 元素 | `string` | `item` 元素              |
+| `itemDescAttr`  | 获取 `descrption` 元素属性作为描述                              | `string` | 元素 html                |
+
+<Route author="ttttmr" example="/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a" path="/rsshub/transform/html/:url/:routeParams" :paramsDesc="['URL地址，需经 URL 编码', '转换规则，需经 URL 编码']" selfhost="1">
+
+上述例子中参数解析如下
+
+| 参数           | 值                                        |
+| -------------- | ----------------------------------------- |
+| `:url`         | `https://wechat2rss.xlab.app/posts/list/` |
+| `:routeParams` | `item=div[class='post-content'] p a`      |
+
+`routeParams`参数解析如下
+
+| 参数   | 值                              |
+| ------ | ------------------------------- |
+| `item` | `div[class='post-content'] p a` |
+
+</Route>
+
+### JSON
+
+在 `routeParams` 参数中以 query string 格式指定选项，可以控制提取数据
+
+| 键          | 含义                                    | 接受的值 | 默认值                               |
+| ----------- | --------------------------------------- | -------- | ------------------------------------ |
+| `title`     | 指定 RSS 的标题                         | `string` | 从当前域名的根路径网页中取 `<title>` |
+| `item`      | 通过 JSON Path 查找作为 `item` 元素     | `string` | 整个响应 JSON                        |
+| `itemTitle` | 在 `item` 中通过 JSON Path 查找作为标题 | `string` | 无                                   |
+| `itemLink`  | 在 `item` 中通过 JSON Path 查找作为链接 | `string` | 无                                   |
+| `itemDesc`  | 在 `item` 中通过 JSON Path 查找作为描述 | `string` | 无                                   |
+
+::: tip 注意
+
+JSON Path 目前只支持例如 `a.b.c` 的形式，如果需要从数组中读取，例如 `a[0].b`，可以写成 `a.0.b`
+
+:::
+
+<Route author="ttttmr" example="/rsshub/transform/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body" path="/rsshub/transform/json/:url/:routeParams" :paramsDesc="['URL地址，需经 URL 编码', '转换规则，需经 URL 编码']" selfhost="1">
+
+上述例子中参数解析如下
+
+| 参数           | 值                                                                       |
+| -------------- | ------------------------------------------------------------------------ |
+| `:url`         | `https://api.github.com/repos/ginuerzh/gost/releases`                    |
+| `:routeParams` | `title=Gost releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body` |
+
+`routeParams` 参数解析如下
+
+| 参数        | 值              |
+| ----------- | --------------- |
+| `title`     | `Gost releases` |
+| `itemTitle` | `tag_name`      |
+| `itemLink`  | `html_url`      |
+| `itemDesc`  | `body`          |
+
+</Route>
+
 ## 自如
 
 ### 房源
