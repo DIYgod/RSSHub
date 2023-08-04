@@ -357,7 +357,7 @@ Parsing of `routeParams` parameter:
 Specify options (in the format of query string) in parameter `routeParams` parameter to extract data from JSON.
 
 | Key         | Meaning                                  | Accepted Values | Default                                    |
-| ----------  | ----------------------------- ---------- | --------------- | ----------  ------------------------------ |
+| ----------  | ---------------------------------------- | --------------- | ------------------------------------------ |
 | `title`     | The title of the RSS                     | `string`        | Extracted from home page of current domain |
 | `item`      | The JSON Path as `item` element          | `string`        | Entire JSON response                       |
 | `itemTitle` | The JSON Path as `title` in `item`       | `string`        | None                                       |
