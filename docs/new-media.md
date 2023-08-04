@@ -1032,6 +1032,10 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="ncziztk" example="/odaily/newsflash" path="/odaily/newsflash"/>
 
+### 搜索快讯
+
+<Route author="snowraincloud" example="/odaily/search/news/Lens%20Protocol" path="/odaily/search/news/:keyword" :paramsDesc="['搜索关键字']"/>
+
 ### 文章
 
 <Route author="ncziztk" example="/odaily" path="/odaily/:id?" :paramsDesc="['id，见下表，默认为最新']">
