@@ -21,8 +21,8 @@ dependencies:
     specifier: 13.0.1
     version: 13.0.1
   pinyin-pro:
-    specifier: 3.16.1
-    version: 3.16.1
+    specifier: 3.16.2
+    version: 3.16.2
   remark:
     specifier: 13.0.0
     version: 13.0.0
@@ -7223,8 +7223,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
-  /pinyin-pro@3.16.1:
-    resolution: {integrity: sha512-Pm5vKjAO7EZ1w39Xw9/yzynNDbqFVWkvgCSPyHvvCCrhWrkeOK//2FvX2uoWb2yUzGTsruUqrAaKySG8TQV/0Q==}
+  /pinyin-pro@3.16.2:
+    resolution: {integrity: sha512-0Q+boRY7u0X7NApcS8ZDLWUw0H8PoopaH4yN/KVqeAFsrRTwhKEbv0bG/ZYwLrQRSfGhWEm5wxl/l4qyVQTrnQ==}
     dev: false
 
   /pkg-dir@3.0.0:
