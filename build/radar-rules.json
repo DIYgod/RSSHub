@@ -24895,6 +24895,7 @@
         "title": "组合最新调仓信息",
         "docs": "https://docs.rsshub.app/finance.html#xue-qiu",
         "source": [
+          "/P/:id",
           "/p/:id"
         ],
         "target": "/xueqiu/snb/:id"
@@ -24903,7 +24904,8 @@
         "title": "股票信息",
         "docs": "https://docs.rsshub.app/finance.html#xue-qiu",
         "source": [
-          "/S/:id"
+          "/S/:id",
+          "/s/:id"
         ],
         "target": "/xueqiu/stock_info/:id"
       },
