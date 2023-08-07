@@ -246,7 +246,7 @@ Support all channels, refer to [CNBC RSS feeds](https://www.cnbc.com/rss-feeds/)
 
 ### News
 
-<RouteEn auther="Rjnishant530" example="/dnaindia/headlines" path="/dnaindia/:category" :paramsDesc="['Find it in the URL, or tables below']">
+<RouteEn auther="Rjnishant530" example="/dnaindia/headlines" path="/dnaindia/:category" :paramsDesc="['Find it in the URL, or tables below']" radar="1">
 
 Categories:
 
@@ -258,7 +258,7 @@ Categories:
 
 ### Topic
 
-<RouteEn auther="Rjnishant530" example="/dnaindia/topic/dna-verified" path="/dnaindia/topic/:topic" :paramsDesc="['Find it in the URL']">
+<RouteEn auther="Rjnishant530" example="/dnaindia/topic/dna-verified" path="/dnaindia/topic/:topic" :paramsDesc="['Find it in the URL']" radar="1">
 
 Topics:
 
