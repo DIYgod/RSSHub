@@ -6035,6 +6035,16 @@
     "/xidian/jwc/:category?": [
         "ShadowySpirits"
     ],
+    "/ximalaya/:type/:id/:all?": [
+        "lengthmin",
+        "jjeejj",
+        "prnake"
+    ],
+    "/ximalaya/:type/:id/:all/:shownote?": [
+        "lengthmin",
+        "jjeejj",
+        "prnake"
+    ],
     "/xjtu/2yuan/news/:id?": [
         "nczitzk"
     ],
@@ -6476,8 +6486,6 @@
     "/pornhub/:language?/pornstar/:username/:sort?": [],
     "/yande.re/post/popular_recent": [],
     "/yande.re/post/popular_recent/:period": [],
-    "/ximalaya/:type/:id/:all?": [],
-    "/ximalaya/:type/:id/:all/:shownote?": [],
     "/eztv/torrents/:imdb_id": [],
     "/bjnews/:cat": [],
     "/bjnews/epaper/:cat": [],

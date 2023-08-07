@@ -24735,6 +24735,16 @@
       }
     ]
   },
+  "ximalaya.com": {
+    "_name": "喜马拉雅",
+    ".": [
+      {
+        "title": "专辑",
+        "docs": "https://docs.rsshub.app/multimedia.html#xi-ma-la-ya",
+        "source": "/:type/:id"
+      }
+    ]
+  },
   "xjtu.edu.cn": {
     "_name": "西安交通大学",
     "2yuan": [
@@ -26175,16 +26185,6 @@
         "source": [
           "/"
         ]
-      }
-    ]
-  },
-  "ximalaya.com": {
-    "_name": "喜马拉雅",
-    ".": [
-      {
-        "title": "专辑",
-        "docs": "https://docs.rsshub.app/multimedia.html#xi-ma-la-ya",
-        "source": "/:type/:id"
       }
     ]
   },
