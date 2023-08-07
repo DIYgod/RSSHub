@@ -2201,6 +2201,30 @@ area 分区选项
 
 <Route author="TonyRL" example="/agirls/topic_list" path="/agirls/topic_list" radar="1" rssbud="1"/>
 
+## 电子工程专辑
+
+### 芯语
+
+<Route author="nczitzk" example="/eet-china/mp" path="/eet-china/mp/:category?" :paramsDesc="['分类，见下表，默认为最新']">
+
+| 最新 | 半导体 | 通信网络 | 消费电子 / 手机 | 汽车电子 |
+| ---- | ------ | -------- | --------------- | -------- |
+|      | 1      | 2        | 3               | 4        |
+
+| 物联网 | 工控 | 硬件设计 | 嵌入式 / FPGA | 电源 / 能源 |
+| ------ | ---- | -------- | ------------- | ----------- |
+| 5      | 6    | 7        | 8             | 9           |
+
+| 测试测量 | 人工智能 / 机器人 | 科技前沿 | 供应链 | 工程师职场 |
+| -------- | ----------------- | -------- | ------ | ---------- |
+| 10       | 11                | 12       | 13     | 14         |
+
+</Route>
+
+### 芯语标签
+
+<Route author="nczitzk" example="/eet-china/mp/tags/36806" path="/eet-china/mp/tags/:id" :paramsDesc="['标签 id，可在对应标签页中找到']"/>
+
 ## 丁香园
 
 ### 新冠疫苗实时动态
