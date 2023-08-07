@@ -60,40 +60,42 @@ pageClass: routes
 
 分类
 
-| 分类                 | 分类名              |
-| -------------------- | ------------------- |
-| 所有新闻             |                     |
-| 暗黑破坏神 III       | diablo3             |
-| 暗黑破坏神：不朽     | diablo-immortal     |
-| 炉石传说             | hearthstone         |
-| 风暴英雄             | heroes-of-the-storm |
-| 守望先锋             | overwatch           |
-| 星际争霸：重制版     | starcraft           |
-| 星际争霸 II          | starcraft2          |
-| 魔兽世界             | world-of-warcraft   |
-| 魔兽争霸 III：重制版 | warcraft3           |
-| 暴雪嘉年华           | blizzcon            |
-| 走进暴雪             | blizzard            |
+| 分类                   | 分类名              |
+| ---------------------- | ------------------- |
+| 所有新闻               |                     |
+| Diablo II: Resurrected | diablo2             |
+| 暗黑破坏神 III         | diablo3             |
+| 暗黑破坏神 IV          | diablo4             |
+| 暗黑破坏神：不朽       | diablo-immortal     |
+| 炉石传说               | hearthstone         |
+| 风暴英雄               | heroes-of-the-storm |
+| 守望先锋 2             | overwatch           |
+| 星际争霸：重制版       | starcraft           |
+| 星际争霸 II            | starcraft2          |
+| 魔兽世界               | world-of-warcraft   |
+| 魔兽争霸 III：重制版   | warcraft3           |
+| Battle.net             | battlenet           |
+| 暴雪嘉年华             | blizzcon            |
+| 走进暴雪               | blizzard            |
 
 语言代码
 
-| 语言           | 语言代码 |
-| -------------- | -------- |
-| Deutsch        | de-de    |
-| English (US)   | en-us    |
-| English (EU)   | en-gb    |
-| Español (EU)   | es-es    |
-| Español (AL)   | es-mx    |
-| Français       | fr-fr    |
-| Italiano       | it-it    |
-| Português (AL) | pt-br    |
-| Polski         | pl-pl    |
-| Русский        | ru-ru    |
-| 한국어         | ko-kr    |
-| ภาษาไทย        | th-th    |
-| 日本語         | ja-jp    |
-| 繁體中文       | zh-tw    |
-| 简体中文       | zh-cn    |
+| 语言               | 语言代码 |
+| ------------------ | -------- |
+| Deutsch            | de-de    |
+| English (US)       | en-us    |
+| English (EU)       | en-gb    |
+| Español (EU)       | es-es    |
+| Español (Latino)   | es-mx    |
+| Français           | fr-fr    |
+| Italiano           | it-it    |
+| Português (Brasil) | pt-br    |
+| Polski             | pl-pl    |
+| Русский            | ru-ru    |
+| 한국어             | ko-kr    |
+| ภาษาไทย            | th-th    |
+| 日本語             | ja-jp    |
+| 繁體中文           | zh-tw    |
 
 </Route>
 
@@ -623,6 +625,12 @@ News 的数据来自 <https://warthunder.com/en/news/>
 
 <Route author="DIYgod" example="/mhw/news" path="/mhw/news" radar="1" rssbud="1"/>
 
+## 盒心光环
+
+### 资讯
+
+<Route author="XXY233" example="/xboxfan/news" path="/xboxfan/news" radar="1"/>
+
 ## 剑网 3
 
 ### 新闻资讯
@@ -768,6 +776,22 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 ### 元素文章
 
 <Route author="hoilc" example="/cowlevel/element/1370" path="/cowlevel/element/:id" :paramsDesc="['元素 ID, 可在 URL 中找到']" radar="1" rssbud="1"/>
+
+## 其乐
+
+### 论坛
+
+<Route author="nczitzk" example="/keylol" path="/keylol/:path+" :paramsDesc="['路径，默认为热点聚焦']">
+
+::: tip 提示
+
+若订阅 [热点聚焦](https://keylol.com/f161-1)，网址为 <https://keylol.com/f161-1>。截取 `https://keylol.com/` 到末尾的部分 `f161-1` 作为参数，此时路由为 [`/keylol/f161-1`](https://rsshub.app/keylol/f161-1)。
+
+若订阅子分类 [试玩免费 - 热点聚焦](https://keylol.com/forum.php?mod=forumdisplay\&fid=161\&filter=typeid\&typeid=459)，网址为 <https://keylol.com/forum.php?mod=forumdisplay&fid=161&filter=typeid&typeid=459>。截取 `https://keylol.com/forum.php?mod=forumdisplay&` 到末尾的部分 `fid=161&filter=typeid&typeid=459` 作为参数，此时路由为 [`/keylol/fid=161&filter=typeid&typeid=459`](https://rsshub.app/keylol/fid=161\&filter=typeid\&typeid=459)。
+
+:::
+
+</Route>
 
 ## 少女前线
 

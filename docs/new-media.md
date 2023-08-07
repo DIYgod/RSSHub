@@ -1032,6 +1032,10 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="ncziztk" example="/odaily/newsflash" path="/odaily/newsflash"/>
 
+### 搜索快讯
+
+<Route author="snowraincloud" example="/odaily/search/news/Lens%20Protocol" path="/odaily/search/news/:keyword" :paramsDesc="['搜索关键字']"/>
+
 ### 文章
 
 <Route author="ncziztk" example="/odaily" path="/odaily/:id?" :paramsDesc="['id，见下表，默认为最新']">
@@ -2197,6 +2201,30 @@ area 分区选项
 
 <Route author="TonyRL" example="/agirls/topic_list" path="/agirls/topic_list" radar="1" rssbud="1"/>
 
+## 电子工程专辑
+
+### 芯语
+
+<Route author="nczitzk" example="/eet-china/mp" path="/eet-china/mp/:category?" :paramsDesc="['分类，见下表，默认为最新']">
+
+| 最新 | 半导体 | 通信网络 | 消费电子 / 手机 | 汽车电子 |
+| ---- | ------ | -------- | --------------- | -------- |
+|      | 1      | 2        | 3               | 4        |
+
+| 物联网 | 工控 | 硬件设计 | 嵌入式 / FPGA | 电源 / 能源 |
+| ------ | ---- | -------- | ------------- | ----------- |
+| 5      | 6    | 7        | 8             | 9           |
+
+| 测试测量 | 人工智能 / 机器人 | 科技前沿 | 供应链 | 工程师职场 |
+| -------- | ----------------- | -------- | ------ | ---------- |
+| 10       | 11                | 12       | 13     | 14         |
+
+</Route>
+
+### 芯语标签
+
+<Route author="nczitzk" example="/eet-china/mp/tags/36806" path="/eet-china/mp/tags/:id" :paramsDesc="['标签 id，可在对应标签页中找到']"/>
+
 ## 丁香园
 
 ### 新冠疫苗实时动态
@@ -2726,12 +2754,6 @@ others = 热点新闻 + 滚动新闻
 
 </Route>
 
-## 汇通网
-
-### 7x24 小时快讯
-
-<Route author="occupy5" example="/fx678/kx" path="/fx678/kx" />
-
 ## 机核网
 
 ### 分类
@@ -2759,6 +2781,24 @@ others = 热点新闻 + 滚动新闻
 ### 播客
 
 <Route author="eternasuno" example="/gcores/radios/45" path="/gcores/radios/:category?" :paramsDesc="['分类名，默认为全部，可在分类页面的 URL 中找到，如 Gadio News -- 45']" radar="1" supportPodcast="1" />
+
+## 纪妖
+
+### 通用
+
+<Route author="nczitzk" example="/cbaigui" path="/cbaigui/:path+" :paramsDesc="['路径，默认为首页']">
+
+::: tip 提示
+
+若订阅 [标签：妖](https://www.cbaigui.com/post-tag/妖)，网址为 [https://www.cbaigui.com/post-tag/ 妖](https://www.cbaigui.com/post-tag/妖)。截取 `https://www.cbaigui.com` 到末尾的部分 `/post-tag/妖` 作为参数，此时路由为 [`/cbaigui/post-tag/妖`](https://rsshub.app/cbaigui/post-tag/妖)。
+
+若订阅 [分类：埃及](https://www.cbaigui.com/post-category/世界/非洲/埃及)，网址为 [https://www.cbaigui.com/post-category/ 世界 / 非洲 / 埃及](https://www.cbaigui.com/post-category/世界/非洲/埃及)。截取 `https://www.cbaigui.com` 到末尾的部分 `/post-category/世界/非洲/埃及` 作为参数，此时路由为 [`/cbaigui/post-category/世界/非洲/埃及`](https://rsshub.app/cbaigui/post-category/世界/非洲/埃及)。
+
+若订阅 [词条：白泽图](https://www.cbaigui.com/post-category/词条/白泽图)，网址为 [https://www.cbaigui.com/post-category/ 词条 / 白泽图](https://www.cbaigui.com/post-category/词条/白泽图)。截取 `https://www.cbaigui.com` 到末尾的部分 `/post-category/词条/白泽图` 作为参数，此时路由为 [`/cbaigui/post-category/词条/白泽图`](https://rsshub.app/cbaigui/post-category/词条/白泽图)。
+
+:::
+
+</Route>
 
 ## 加美财经
 
@@ -4277,19 +4317,6 @@ column 为 third 时可选的 category:
 
 </Route>
 
-### 公众号（feeddd 来源）
-
-::: warning 注意
-
-feeddd 网站不提供检索功能，请自行在 <https://cdn.jsdelivr.net/gh/feeddd/feeds/feeds_all_rss.txt> 中检索所需公众号。\
-也可以在 <https://feed.hamibot.com/feeds> 上找到最近更新的公众号。请注意公众号页 id 与订阅时实际使用的 id 不同，请先复制订阅链接，再从中获取 id。
-
-feeddd 自 2023/05/04 已更换域名，原 `feeddd.org` 已失效，现在使用 `feed.hamibot.com`。请及时更新自建实例。
-
-:::
-
-<Route author="TonyRL Rongronggg9" example="/wechat/feeddd/6131e1441269c358aa0e2141" path="/wechat/feeddd/:id" :paramsDesc="['公众号 id，详见上方说明']"/>
-
 ### 公众号（自由微信来源）
 
 见 [#自由微信](#zi-you-wei-xin)
@@ -4323,20 +4350,6 @@ feeddd 自 2023/05/04 已更换域名，原 `feeddd.org` 已失效，现在使�
 ### 公众号（优读来源）
 
 <Route author="kt286" example="/wechat/uread/shensing" path="/wechat/uread/:userid" :paramsDesc="['公众号的微信号, 可在 微信-公众号-更多资料 中找到。并不是所有的都支持，能不能用随缘']"/>
-
-### 公众号（wxnmh.com 来源）
-
-<Route author="laampui" example="/wechat/wxnmh/51798" path="/wechat/wxnmh/:id" :paramsDesc="['公众号 id, 打开 wxnmh.com, 在 URL 中找到 id']" anticrawler="1"/>
-
-### 公众号（wechat-feeds 来源）
-
-::: warning 注意
-
-wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/issues/3882)，历史文章可以正常订阅阅读
-
-:::
-
-<Route author="tylinux" example="/wechat/feeds/MzIwMzAwMzQxNw==" path="/wechat/feeds/:id" :paramsDesc="['公众号 id, 打开 `https://wechat.privacyhide.com/`, 在选定公众号的订阅 URL 中找到 id, 不包含最后的 .xml']"/>
 
 ### 公众号（公众号 360 来源）
 
@@ -4763,19 +4776,15 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 ### 最新新聞
 
-<Route author="miles170" example="/nextapple/realtime/today" path="/nextapple/realtime/:category?" :paramsDesc="['類別，見下表，默認為首頁']">
+<Route author="miles170" example="/nextapple/realtime/latest" path="/nextapple/realtime/:category?" :paramsDesc="['類別，見下表，默認為首頁']">
 
-| 首頁  | 最新   | 焦點      | 熱門 | 娛樂          | 生活 | 女神     | 社會  |
-| ----- | ------ | --------- | ---- | ------------- | ---- | -------- | ----- |
-| today | latest | recommend | hit  | entertainment | life | gorgeous | local |
+| 首頁   | 焦點      | 熱門 | 娛樂          | 生活 | 女神     | 社會  |
+| ------ | --------- | ---- | ------------- | ---- | -------- | ----- |
+| latest | recommend | hit  | entertainment | life | gorgeous | local |
 
-| 政治     | 國際          | 財經    | 區塊鏈     | 房市     | 時尚    | 體育   |
-| -------- | ------------- | ------- | ---------- | -------- | ------- | ------ |
-| politics | international | finance | blockchain | property | fashion | sports |
-
-| 旅遊美食  | 3C 車市 | 蘋理  |
-| --------- | ------- | ----- |
-| lifestyle | gadget  | forum |
+| 政治     | 國際          | 財經    | 體育   | 旅遊美食  | 3C 車市 |
+| -------- | ------------- | ------- | ------ | --------- | ------- |
+| politics | international | finance | sports | lifestyle | gadget  |
 
 </Route>
 

@@ -316,6 +316,80 @@ please refer to the [Notion API documentation](https://developers.notion.com/ref
 
 <RouteEn author="sbilly" example="/sans/summit_archive" path="/sans/summit_archive" />
 
+## Transformation
+
+Pass URL and transformation rules to convert HTML/JSON into RSS.
+
+### HTML
+
+Specify options (in the format of query string) in parameter `routeParams` parameter to extract data from HTML.
+
+| Key            | Meaning                                            | Accepted Values | Default                 |
+| -------------- | -------------------------------------------------- | --------------- | ----------------------- |
+| `title`        | The title of the RSS                               | `string`        | Extract from `<title>`  |
+| `item`         | The HTML elements as `item` using CSS selector     | `string`        | html                    |
+| `itemTitle`    | The HTML elements as `title` in `item` using CSS selector | `string` | `item` element          |
+| `itemTitleAttr` | The attributes of `title` element as title        | `string`        | Element text            |
+| `itemLink`     | The HTML elements as `link` in `item` using CSS selector | `string`  | `item` element          |
+| `itemLinkAttr` | The attributes of `link` element as link           | `string`        | `href`                  |
+| `itemDesc`     | The HTML elements as `descrption` in `item` using CSS selector | `string` | `item` element     |
+| `itemDescAttr` | The attributes of `descrption` element as description | `string`     | Element html            |
+
+<RouteEn author="ttttmr" example="/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a" path="/rsshub/transform/html/:url/:routeParams" :paramsDesc="['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']" selfhost="1">
+
+Parameters parsing in the above example:
+
+| Parameter    | Value                                     |
+| ------------ | ----------------------------------------- |
+| `url`        | `https://wechat2rss.xlab.app/posts/list/` |
+| `routeParams`| `item=div[class='post-content'] p a`      |
+
+Parsing of `routeParams` parameter:
+
+| Parameter | Value                           |
+| --------- | ------------------------------- |
+| `item`    | `div[class='post-content'] p a` |
+
+</RouteEn>
+
+### JSON
+
+Specify options (in the format of query string) in parameter `routeParams` parameter to extract data from JSON.
+
+| Key         | Meaning                                  | Accepted Values | Default                                    |
+| ----------  | ---------------------------------------- | --------------- | ------------------------------------------ |
+| `title`     | The title of the RSS                     | `string`        | Extracted from home page of current domain |
+| `item`      | The JSON Path as `item` element          | `string`        | Entire JSON response                       |
+| `itemTitle` | The JSON Path as `title` in `item`       | `string`        | None                                       |
+| `itemLink`  | The JSON Path as `link` in `item`        | `string`        | None                                       |
+| `itemDesc`  | The JSON Path as `description` in `item` | `string`        | None                                       |
+
+::: tip Note
+
+JSON Path only supports format like `a.b.c`. if you need to access arrays, like `a[0].b`, you can write it as `a.0.b`.
+
+:::
+
+<RouteEn author="ttttmr" example="/rsshub/transform/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body" path="/rsshub/transform/json/:url/:routeParams" :paramsDesc="['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']" selfhost="1">
+
+Parameters parsing in the above example:
+
+| Parameter     | Value                                           |
+| ------------- | ----------------------------------------------- |
+| `url`         | `https://api.github.com/repos/ginuerzh/gost/releases` |
+| `routeParams` | `title=Gost releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body` |
+
+Parsing of `routeParams` parameter:
+
+| Parameter    | Value            |
+| ------------ | ---------------- |
+| `title`      | `Gost releases`  |
+| `itemTitle`  | `tag_name`       |
+| `itemLink`   | `html_url`       |
+| `itemDesc`   | `body`           |
+
+</RouteEn>
+
 ## Trending Search Keyword Aggregator
 
 ### Aggregated Keyword Tracker
