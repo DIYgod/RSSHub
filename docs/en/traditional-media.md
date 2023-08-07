@@ -254,6 +254,8 @@ Categories:
 | --------- | --------- | ----- | ------------- | ------ | ----- | --------- | --------- | -------- | ----- |
 | headlines | explainer | india | entertainment | sports | viral | lifestyle | education | business | world |
 
+</RouteEn>
+
 ### Topic
 
 <RouteEn auther="Rjnishant530" example="/dnaindia/topic/dna-verified" path="/dnaindia/topic/:topic" :paramsDesc="['Find it in the URL']">
