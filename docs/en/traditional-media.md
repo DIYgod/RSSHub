@@ -256,7 +256,7 @@ Categories:
 
 ### Topic
 
-<RouteEn auther="Rjnishant530" example="/topic/dna-verified" path="/dnaindia/topic/:topic" :paramsDesc="['find it in the URL']"/>
+<RouteEn auther="Rjnishant530" example="/dnaindia/topic/dna-verified" path="/dnaindia/topic/:topic" :paramsDesc="['Find it in the URL']">
 
 Topics:
 
