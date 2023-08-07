@@ -248,7 +248,7 @@ Support all channels, refer to [CNBC RSS feeds](https://www.cnbc.com/rss-feeds/)
 
 <RouteEn auther="Rjnishant530" example="/dnaindia/headlines" path="/dnaindia/:category" :paramsDesc="['Find it in the URL, or tables below']">
 
-Categories :
+Categories:
 
 | Headlines | Explainer | India | Entertainment | Sports | Viral | Lifestyle | Education | Business | World |
 | --------- | --------- | ----- | ------------- | ------ | ----- | --------- | --------- | -------- | ----- |
