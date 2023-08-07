@@ -242,6 +242,32 @@ Support all channels, refer to [CNBC RSS feeds](https://www.cnbc.com/rss-feeds/)
 
 </RouteEn>
 
+## DNA India
+
+### News
+
+<RouteEn auther="Rjnishant530" example="/headlines" path="/dnaindia/:category" :paramsDesc="['find it in the URL, or tables below']"/>
+
+Categories :
+
+| Headlines | Explainer | India | Entertainment | Sports | Viral | Lifestyle | Education | Business | World |
+| --------- | --------- | ----- | ------------- | ------ | ----- | --------- | --------- | -------- | ----- |
+| headlines | explainer | india | entertainment | sports | viral | lifestyle | education | business | world |
+
+### Topic
+
+<RouteEn auther="Rjnishant530" example="/topic/dna-verified" path="/dnaindia/topic/:topic" :paramsDesc="['find it in the URL']"/>
+
+Topics:
+
+|DNA verified|
+|------------|
+|dna-verified|
+
+::: tip Topic
+See the URL for `https://www.dnaindia.com/topic/dna-verified` for the subdomain `topic`
+:::
+
 ## Financial Times
 
 ### myFT personal RSS
