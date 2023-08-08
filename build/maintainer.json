@@ -5044,6 +5044,9 @@
     "/spotify/saved/:limit?": [
         "outloudvi"
     ],
+    "/spotify/show/:id": [
+        "caiohsramos"
+    ],
     "/spotify/top/tracks": [
         "outloudvi"
     ],
