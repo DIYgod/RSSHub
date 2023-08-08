@@ -515,7 +515,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### 期刊
 
-<Route author="Fatpandac" example="/cnki/journals/LKGP" path="/cnki/journals/:name" :paramsDesc="['期刊缩写，可以在网址中得到']"/>
+<Route author="Fatpandac Derekmini" example="/cnki/journals/LKGP" path="/cnki/journals/:name" :paramsDesc="['期刊缩写，可以在网址中得到']"/>
 
 ### 网络首发
 
