@@ -537,7 +537,7 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 ### Personal Top Tracks
 
-<RouteEn author="outloudvi" example="/spotify/top/tracks" path="/spotify/top/tracks" selfhost="1" selfhost="1"/>
+<RouteEn author="outloudvi" example="/spotify/top/tracks" path="/spotify/top/tracks" selfhost="1"/>
 
 ### Personal Top Artists
 
