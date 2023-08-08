@@ -1219,6 +1219,10 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="outloudvi" example="/spotify/top/artists" path="/spotify/top/artists" />
 
+### 节目
+
+<Route author="caiohsramos" example="/spotify/show/38bS44xjbVVZ3No3ByF1dJ" path="/spotify/show/:id" :paramsDesc="['节目 ID']" />
+
 ## Sub HD
 
 ### 字幕

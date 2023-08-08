@@ -543,6 +543,10 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 <RouteEn author="outloudvi" example="/spotify/top/artists" path="/spotify/top/artists" />
 
+### Show
+
+<RouteEn author="caiohsramos" example="/spotify/show/38bS44xjbVVZ3No3ByF1dJ" path="/spotify/show/:id" :paramsDesc="['Show ID']" />
+
 ## The Movie Database
 
 ::: tip Tips
