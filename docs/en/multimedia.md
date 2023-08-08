@@ -525,23 +525,27 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 ### Artist Albums
 
-<RouteEn author="outloudvi" example="/spotify/artist/6k9TBCxyr4bXwZ8Y21Kwn1" path="/spotify/artist/:id" :paramsDesc="['Artist ID']" />
+<RouteEn author="outloudvi" example="/spotify/artist/6k9TBCxyr4bXwZ8Y21Kwn1" path="/spotify/artist/:id" :paramsDesc="['Artist ID']" selfhost="1"/>
 
 ### Playlist
 
-<RouteEn author="outloudvi" example="/spotify/playlist/4UBVy1LttvodwivPUuwJk2" path="/spotify/playlist/:id" :paramsDesc="['Playlist ID']" />
+<RouteEn author="outloudvi" example="/spotify/playlist/4UBVy1LttvodwivPUuwJk2" path="/spotify/playlist/:id" :paramsDesc="['Playlist ID']" selfhost="1"/>
 
 ### Personal Saved Tracks
 
-<RouteEn author="outloudvi" example="/spotify/saved/50" path="/spotify/saved/:limit?" :paramsDesc="['Track count, 50 by default']" />
+<RouteEn author="outloudvi" example="/spotify/saved/50" path="/spotify/saved/:limit?" :paramsDesc="['Track count, 50 by default']" selfhost="1"/>
 
 ### Personal Top Tracks
 
-<RouteEn author="outloudvi" example="/spotify/top/tracks" path="/spotify/top/tracks" />
+<RouteEn author="outloudvi" example="/spotify/top/tracks" path="/spotify/top/tracks" selfhost="1"/>
 
 ### Personal Top Artists
 
-<RouteEn author="outloudvi" example="/spotify/top/artists" path="/spotify/top/artists" />
+<RouteEn author="outloudvi" example="/spotify/top/artists" path="/spotify/top/artists" selfhost="1"/>
+
+### Show
+
+<RouteEn author="caiohsramos" example="/spotify/show/38bS44xjbVVZ3No3ByF1dJ" path="/spotify/show/:id" :paramsDesc="['Show ID']" selfhost="1"/>
 
 ## The Movie Database
 
