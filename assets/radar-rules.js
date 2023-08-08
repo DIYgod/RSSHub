@@ -27,21 +27,6 @@
             { title: '仓库 Contributors', docs: 'https://docs.rsshub.app/programming.html#github', source: ['/:user/:repo/graphs/contributors', '/:user/:repo'], target: '/github/contributors/:user/:repo' },
         ],
     },
-    'ximalaya.com': {
-        _name: '喜马拉雅',
-        '.': [
-            {
-                title: '专辑',
-                docs: 'https://docs.rsshub.app/multimedia.html#xi-ma-la-ya',
-                source: '/:type/:id',
-                target: (params) => {
-                    if (parseInt(params.id) + '' === params.id) {
-                        return '/ximalaya/:type/:id/';
-                    }
-                },
-            },
-        ],
-    },
     'algocasts.io': { _name: 'AlgoCasts', '.': [{ title: '视频更新', docs: 'https://docs.rsshub.app/programming.html#algocasts', source: '/episodes', target: '/algocasts' }] },
     'soulapp.cn': { _name: 'Soul', '.': [{ title: '瞬间更新', docs: 'https://docs.rsshub.app/social-media.html#soul' }] },
     'anime1.me': {
