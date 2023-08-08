@@ -1199,7 +1199,8 @@
         "nczitzk"
     ],
     "/cnki/journals/:name": [
-        "Fatpandac"
+        "Fatpandac",
+        "Derekmini"
     ],
     "/cnki/journals/debut/:name": [
         "Fatpandac"
