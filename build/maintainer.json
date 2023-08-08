@@ -1501,6 +1501,12 @@
     "/dmzj/news/:category?": [
         "vzz64"
     ],
+    "/dnaindia/:category": [
+        "Rjnishant530"
+    ],
+    "/dnaindia/topic/:topic": [
+        "Rjnishant530"
+    ],
     "/dockerhub/build/:owner/:image/:tag?": [
         "HenryQW"
     ],
