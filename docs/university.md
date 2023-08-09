@@ -1083,6 +1083,10 @@ pageClass: routes
 
 </Route>
 
+### 研究生院全部公告
+
+<Route author="Denkiyohou" example="/seu/yjs" path="/seu/yjs"/>
+
 ## 对外经济贸易大学
 
 ### 人力资源处
