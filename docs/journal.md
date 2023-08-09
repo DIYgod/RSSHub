@@ -396,7 +396,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### 期刊
 
-<Route author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp" path="/scitation/:pub/:jrn" :paramsDesc="['出版社，URL 中 `scitation.org` 前部分','期刊，URL 中 `/toc/` 后部分']" radar="1" rssbud="1" puppeteer="1"/>
+<Route author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp" path="/scitation/:pub/:jrn" :paramsDesc="['出版社，参考 URL 格式 `pubs.aip.org/:pub/:jrn`','期刊，参考 URL 格式 `pubs.aip.org/:pub/:jrn`']" radar="1" rssbud="1"/>
 
 ### 专栏
 
