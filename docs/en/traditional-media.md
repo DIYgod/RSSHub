@@ -118,7 +118,7 @@ There is no RSS source for Al Jazeera Chinese, returning homepage content by def
 
 ### Topics
 
-<RouteEn author="zoenglinghou mjysci TonyRL" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic?" :paramsDesc="['Topic name，can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`, `trending-news` by default']" radar="1" rssbud="1" />
+<RouteEn author="zoenglinghou mjysci TonyRL" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic?" :paramsDesc="['Topic name, can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`, `trending-news` by default']" radar="1" rssbud="1" />
 
 ## BBC
 
@@ -677,6 +677,12 @@ Provides a better reading experience (full text articles) over the official one.
 ### China
 
 <RouteEn author="Polynomia" example="/guardian/china" path="/guardian/china"/>
+
+## The Hindu
+
+### Topic
+
+<RouteEn author="TonyRL" example="/thehindu/topic/rains" path="/thehindu/topic/:topic" :paramsDesc="['Topic slug, can be found in URL.']" radar="1" rssbud="1" />
 
 ## The New York Times
 
