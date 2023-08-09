@@ -3574,6 +3574,12 @@ column 为 third 时可选的 category:
 
 <Route author="qiwihui" example="/paidai/news" path="/paidao/news" />
 
+## 跑野大爆炸
+
+### 最新文章
+
+<Route author="TonyRL" example="/runtrail" path="/runtrail" radar="1" rssbud="1"/>
+
 ## 品途商业评论
 
 ### 文章

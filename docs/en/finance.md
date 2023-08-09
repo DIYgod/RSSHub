@@ -125,6 +125,12 @@ Language
 
 </RouteEn>
 
+## Stock Edge
+
+### Daily Updates News
+
+<RouteEn author="Rjnishant530" example="/stockedge/daily-updates/news" path="/stockedge/daily-updates/news" radar="1"/>
+
 ## TokenInsight
 
 ::: tip Tips
