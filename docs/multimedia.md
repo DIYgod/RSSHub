@@ -1201,23 +1201,27 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 ### 艺术家专辑
 
-<Route author="outloudvi" example="/spotify/artist/6k9TBCxyr4bXwZ8Y21Kwn1" path="/spotify/artist/:id" :paramsDesc="['艺术家 ID']" />
+<Route author="outloudvi" example="/spotify/artist/6k9TBCxyr4bXwZ8Y21Kwn1" path="/spotify/artist/:id" :paramsDesc="['艺术家 ID']" selfhost="1"/>
 
 ### 播放列表
 
-<Route author="outloudvi" example="/spotify/playlist/4UBVy1LttvodwivPUuwJk2" path="/spotify/playlist/:id" :paramsDesc="['播放列表 ID']" />
+<Route author="outloudvi" example="/spotify/playlist/4UBVy1LttvodwivPUuwJk2" path="/spotify/playlist/:id" :paramsDesc="['播放列表 ID']" selfhost="1"/>
 
 ### 个人 Saved Tracks
 
-<Route author="outloudvi" example="/spotify/saved/50" path="/spotify/saved/:limit?" :paramsDesc="['歌曲数量，默认为 50']" />
+<Route author="outloudvi" example="/spotify/saved/50" path="/spotify/saved/:limit?" :paramsDesc="['歌曲数量，默认为 50']" selfhost="1"/>
 
 ### 个人 Top Tracks
 
-<Route author="outloudvi" example="/spotify/top/tracks" path="/spotify/top/tracks" />
+<Route author="outloudvi" example="/spotify/top/tracks" path="/spotify/top/tracks" selfhost="1"/>
 
 ### 个人 Top Artists
 
-<Route author="outloudvi" example="/spotify/top/artists" path="/spotify/top/artists" />
+<Route author="outloudvi" example="/spotify/top/artists" path="/spotify/top/artists" selfhost="1"/>
+
+### 节目
+
+<Route author="caiohsramos" example="/spotify/show/38bS44xjbVVZ3No3ByF1dJ" path="/spotify/show/:id" :paramsDesc="['节目 ID']" selfhost="1"/>
 
 ## Sub HD
 
