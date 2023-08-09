@@ -425,7 +425,7 @@ Including 'Science', 'Science Advances', 'Science Immunology', 'Science Robotics
 
 ### Journal
 
-<RouteEn author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp" path="/scitation/:pub/:jrn" :paramsDesc="['Publisher, the part of the URL before `scitation.org`','Journal, the part of the URL after `/toc/`']" radar="1" rssbud="1" puppeteer="1"/>
+<RouteEn author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp" path="/scitation/:pub/:jrn" :paramsDesc="['Publisher, refer to the URL format `pubs.aip.org/:pub/:jrn`','Journal, refer to the URL format `pubs.aip.org/:pub/:jrn`']" radar="1" rssbud="1"/>
 
 ### Section
 
