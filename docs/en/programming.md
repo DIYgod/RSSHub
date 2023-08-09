@@ -442,6 +442,54 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 <RouteEn author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" :paramsDesc="['part parmater can be found in the url of blog']" >
 </RouteEn>
 
+## Smashing Magazine
+
+### Articles
+
+<RouteEn author="Rjnishant530" example="/smashingmagazine" path="/smashingmagazine"/>
+
+### Category
+
+<RouteEn author="Rjnishant530" example="/smashingmagazine/react" path="/smashingmagazine/:category?" :paramsDesc="['Find in URL or Table below']"/>
+
+Few Categories :
+
+| Category           |
+|--------------------|
+| Accessibility      |
+| Best practices     |
+| Business           |
+| Career             |
+| Checklists         |
+| CSS                |
+| Data Visualization |
+| Design             |
+| Design Patterns    |
+| Design Systems     |
+| E-Commerce         |
+| Figma              |
+| Freebies           |
+| HTML               |
+| Illustrator        |
+| Inspiration        |
+| JavaScript         |
+| Mobile             |
+| Performance        |
+| Privacy            |
+| React              |
+| Responsive Design  |
+| Round-Ups          |
+| SEO                |
+| Typography         |
+| Tools              |
+| UI                 |
+| Usability          |
+| UX                 |
+| Vue                |
+| Wallpapers         |
+| Web Design         |
+| Workflow           |
+
 ## ui.dev
 
 ### BYTES - Your weekly dose of JS
