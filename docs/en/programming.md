@@ -446,11 +446,11 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 ### Articles
 
-<RouteEn author="Rjnishant530" example="/smashingmagazine" path="/smashingmagazine"/>
+<RouteEn author="Rjnishant530" example="/smashingmagazine" path="/smashingmagazine" radar="1"/>
 
 ### Category
 
-<RouteEn author="Rjnishant530" example="/smashingmagazine/react" path="/smashingmagazine/:category?" :paramsDesc="['Find in URL or Table below']"/>
+<RouteEn author="Rjnishant530" example="/smashingmagazine/react" path="/smashingmagazine/:category?" :paramsDesc="['Find in URL or Table below']" radar="1">
 
 Few Categories :
 
@@ -490,6 +490,8 @@ Few Categories :
 | Web Design         |
 | Workflow           |
 
+</RouteEn>
+
 ## ui.dev
 
 ### BYTES - Your weekly dose of JS
@@ -508,7 +510,7 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 ### Visual Studio Code Plugins Marketplace
 
-<RouteEn author="SeanChao" example="/vscode/marketplace" path="/vscode/marketplace/:category?" :paramsDesc="['Category']">
+<RouteEn author="SeanChao" example="/vscode/marketplace" path="/vscode/marketplace/:category?" :paramsDesc="['Category']" >
 
 | Featured | Trending Weekly | Trending Monthly | Trending Daily | Most Popular | Recently Added |
 | -------- | --------------- | ---------------- | -------------- | ------------ | -------------- |
