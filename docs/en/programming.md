@@ -10,6 +10,74 @@ pageClass: routes
 
 <RouteEn author="nczitzk" example="/acm/amturingaward" path="/acm/amturingaward"/>
 
+## A List Apart
+
+### Articles
+
+<RouteEn author="Rjnishant530" example="/alistapart" path="/alistapart" radar="1"/>
+
+### Topics
+
+<RouteEn author="Rjnishant530" example="/alistapart/application-development" path="/alistapart/:topic?" :paramsDesc="['Any Topic or from the table below. Defaults to All Articles']" radar="1"/>
+
+You have the option to utilize the main heading or use individual categories as topics for the path.
+
+Topics :
+
+| Code                     |
+|-------------------------|
+| Application Development |
+| Browsers                |
+| CSS                     |
+| HTML                    |
+| JavaScript              |
+| The Server Side         |
+
+
+| Content         |
+|-----------------|
+| Community       |
+| Content Strategy|
+| Writing         |
+
+
+| Design            |
+|-------------------|
+| Brand Identity    |
+| Graphic Design    |
+| Layout & Grids    |
+| Mobile/Multidevice|
+| Responsive Design |
+| Typography & Web Fonts|
+
+
+| Industry & Business|
+|---------------------|
+| Business            |
+| Career              |
+| Industry            |
+| State of the Web    |
+
+
+| Process            |
+|-------------------|
+| Creativity         |
+| Project Management|
+| Web Strategy       |
+| Workflow & Tools   |
+
+
+| User Experience  |
+|------------------|
+| Accessibility    |
+| Information Architecture|
+| Interaction Design|
+| Usability        |
+| User Research    |
+
+
+</RouteEn>
+
 ## AtCoder
 
 ### Present Contests
