@@ -4,12 +4,6 @@ pageClass: routes
 
 # Programming
 
-## ACM
-
-### A.M.Turing Award Winners
-
-<RouteEn author="nczitzk" example="/acm/amturingaward" path="/acm/amturingaward"/>
-
 ## A List Apart
 
 ### Articles
@@ -22,7 +16,7 @@ pageClass: routes
 
 You have the option to utilize the main heading or use individual categories as topics for the path.
 
-Topics :
+::: details Topics
 
 | **Code**                | _code_                  |
 |-------------------------|-------------------------|
@@ -70,7 +64,15 @@ Topics :
 | **Usability**           | _usability_             |
 | **User Research**       | _user-research_         |
 
+:::
+
 </RouteEn>
+
+## ACM
+
+### A.M.Turing Award Winners
+
+<RouteEn author="nczitzk" example="/acm/amturingaward" path="/acm/amturingaward"/>
 
 ## AtCoder
 
