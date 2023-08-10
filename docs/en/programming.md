@@ -454,41 +454,41 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 Few Categories :
 
-| Category           |
-|--------------------|
-| Accessibility      |
-| Best practices     |
-| Business           |
-| Career             |
-| Checklists         |
-| CSS                |
-| Data Visualization |
-| Design             |
-| Design Patterns    |
-| Design Systems     |
-| E-Commerce         |
-| Figma              |
-| Freebies           |
-| HTML               |
-| Illustrator        |
-| Inspiration        |
-| JavaScript         |
-| Mobile             |
-| Performance        |
-| Privacy            |
-| React              |
-| Responsive Design  |
-| Round-Ups          |
-| SEO                |
-| Typography         |
-| Tools              |
-| UI                 |
-| Usability          |
-| UX                 |
-| Vue                |
-| Wallpapers         |
-| Web Design         |
-| Workflow           |
+| **Category**         |                       |
+|----------------------|-----------------------|
+| Accessibility        | accessibility         |
+| Best practices       | best-practices       |
+| Business             | business              |
+| Career               | career                |
+| Checklists           | checklists            |
+| CSS                  | css                   |
+| Data Visualization   | data-visualization   |
+| Design               | design                |
+| Design Patterns      | design-patterns      |
+| Design Systems       | design-systems       |
+| E-Commerce           | e-commerce           |
+| Figma                | figma                 |
+| Freebies             | freebies              |
+| HTML                 | html                  |
+| Illustrator          | illustrator           |
+| Inspiration          | inspiration           |
+| JavaScript           | javascript           |
+| Mobile               | mobile                |
+| Performance          | performance           |
+| Privacy              | privacy               |
+| React                | react                 |
+| Responsive Design    | responsive-design    |
+| Round-Ups            | round-ups            |
+| SEO                  | seo                   |
+| Typography           | typography            |
+| Tools                | tools                 |
+| UI                   | ui                    |
+| Usability            | usability             |
+| UX                   | ux                    |
+| Vue                  | vue                   |
+| Wallpapers           | wallpapers            |
+| Web Design           | web-design            |
+| Workflow             | workflow              |
 
 </RouteEn>
 
