@@ -4996,6 +4996,9 @@
     "/slowmist/:type?": [
         "AtlasQuan"
     ],
+    "/smashingmagazine/:category?": [
+        "Rjnishant530"
+    ],
     "/smzdm/article/:uid": [
         "xfangbao"
     ],
