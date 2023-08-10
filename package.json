@@ -134,7 +134,7 @@
     "puppeteer-extra-plugin-user-preferences": "2.4.1",
     "query-string": "7.1.3",
     "rand-user-agent": "1.0.109",
-    "re2": "1.19.1",
+    "re2": "1.20.1",
     "require-all": "3.0.0",
     "rfc4648": "1.5.2",
     "rss-parser": "3.13.0",
