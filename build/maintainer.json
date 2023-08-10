@@ -374,6 +374,12 @@
     "/aliresearch/information/:type?": [
         "nczitzk"
     ],
+    "/alistapart/": [
+        "Rjnishant530"
+    ],
+    "/alistapart/:topic": [
+        "Rjnishant530"
+    ],
     "/aliyun/database_month": [
         "junbaor"
     ],
