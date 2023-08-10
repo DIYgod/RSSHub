@@ -165,7 +165,7 @@
     "mockdate": "3.0.5",
     "nock": "13.3.2",
     "nodemon": "3.0.1",
-    "prettier": "3.0.0",
+    "prettier": "3.0.1",
     "remark": "13.0.0",
     "remark-frontmatter": "3.0.0",
     "remark-gfm": "1.0.0",
