@@ -452,7 +452,7 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <RouteEn author="Rjnishant530" example="/smashingmagazine/react" path="/smashingmagazine/:category?" :paramsDesc="['Find in URL or Table below']" radar="1">
 
-Few Categories :
+::: details Category
 
 | **Category**         |                       |
 |----------------------|-----------------------|
@@ -489,6 +489,8 @@ Few Categories :
 | Wallpapers           | wallpapers            |
 | Web Design           | web-design            |
 | Workflow             | workflow              |
+
+:::
 
 </RouteEn>
 
