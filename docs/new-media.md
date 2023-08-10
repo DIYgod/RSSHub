@@ -4841,6 +4841,18 @@ wechat-feeds 来源[已停止更新](https://github.com/hellodword/wechat-feeds/
 
 <Route author="x2009again" example="/yunspe/newsflash" path="/yunspe/newsflash" />
 
+## 早报网
+
+### 每日早报
+
+<Route author="nczitzk" example="/qqorw" path="/qqorw/:category?" :paramsDesc="['分类，见下表，默认为首页']" radar="1" rssbud="1">
+
+| 首页 | 每日早报 | 国际早报 | 生活冷知识 |
+| ---- | -------- | -------- | ---------- |
+|      | mrzb     | zbapp    | zbzzd      |
+
+</Route>
+
 ## 知园
 
 ### Newsletter
