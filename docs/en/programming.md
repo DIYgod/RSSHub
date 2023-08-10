@@ -506,6 +506,58 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 <RouteEn author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" :paramsDesc="['part parmater can be found in the url of blog']" >
 </RouteEn>
 
+## Smashing Magazine
+
+### Articles
+
+<RouteEn author="Rjnishant530" example="/smashingmagazine" path="/smashingmagazine" radar="1"/>
+
+### Category
+
+<RouteEn author="Rjnishant530" example="/smashingmagazine/react" path="/smashingmagazine/:category?" :paramsDesc="['Find in URL or Table below']" radar="1">
+
+::: details Category
+
+| **Category**         |                       |
+|----------------------|-----------------------|
+| Accessibility        | accessibility         |
+| Best practices       | best-practices       |
+| Business             | business              |
+| Career               | career                |
+| Checklists           | checklists            |
+| CSS                  | css                   |
+| Data Visualization   | data-visualization   |
+| Design               | design                |
+| Design Patterns      | design-patterns      |
+| Design Systems       | design-systems       |
+| E-Commerce           | e-commerce           |
+| Figma                | figma                 |
+| Freebies             | freebies              |
+| HTML                 | html                  |
+| Illustrator          | illustrator           |
+| Inspiration          | inspiration           |
+| JavaScript           | javascript           |
+| Mobile               | mobile                |
+| Performance          | performance           |
+| Privacy              | privacy               |
+| React                | react                 |
+| Responsive Design    | responsive-design    |
+| Round-Ups            | round-ups            |
+| SEO                  | seo                   |
+| Typography           | typography            |
+| Tools                | tools                 |
+| UI                   | ui                    |
+| Usability            | usability             |
+| UX                   | ux                    |
+| Vue                  | vue                   |
+| Wallpapers           | wallpapers            |
+| Web Design           | web-design            |
+| Workflow             | workflow              |
+
+:::
+
+</RouteEn>
+
 ## ui.dev
 
 ### BYTES - Your weekly dose of JS
@@ -524,7 +576,7 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 ### Visual Studio Code Plugins Marketplace
 
-<RouteEn author="SeanChao" example="/vscode/marketplace" path="/vscode/marketplace/:category?" :paramsDesc="['Category']">
+<RouteEn author="SeanChao" example="/vscode/marketplace" path="/vscode/marketplace/:category?" :paramsDesc="['Category']" >
 
 | Featured | Trending Weekly | Trending Monthly | Trending Daily | Most Popular | Recently Added |
 | -------- | --------------- | ---------------- | -------------- | ------------ | -------------- |
