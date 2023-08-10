@@ -4559,6 +4559,12 @@
     "/qq88/:category?": [
         "nczitzk"
     ],
+    "/qqorw/:category?": [
+        "nczitzk"
+    ],
+    "/qqorw": [
+        "nczitzk"
+    ],
     "/quicker/qa/:category?/:state?": [
         "Cesaryuan",
         "nczitzk"
