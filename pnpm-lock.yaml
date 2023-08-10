@@ -63,8 +63,8 @@ dependencies:
     specifier: 3.0.2
     version: 3.0.2
   googleapis:
-    specifier: 122.0.0
-    version: 122.0.0
+    specifier: 124.0.0
+    version: 124.0.0
   got:
     specifier: 11.8.6
     version: 11.8.6
@@ -1111,7 +1111,7 @@ packages:
       '@babel/runtime-corejs2': 7.21.0
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.29.4
@@ -1745,11 +1745,6 @@ packages:
   /arr-union@3.1.0:
     resolution: {integrity: sha512-sKpyeERZ02v1FeCZT8lrfJq5u6goHCtpTAzPwJYe7c8SPFOboNjNg1vz2L4VTn9T4PQxEx13TbXLmYUcS6Ug7Q==}
     engines: {node: '>=0.10.0'}
-    dev: false
-
-  /arrify@2.0.1:
-    resolution: {integrity: sha512-3duEwti880xqi4eAMN8AyR4a0ByT90zoYdLlevfrvU43vb0YZwZVfxOgxWrLXXXpyugL0hNZc9G6BiB5B3nUug==}
-    engines: {node: '>=8'}
     dev: false
 
   /art-template@4.13.2:
@@ -3306,10 +3301,6 @@ packages:
     resolution: {integrity: sha512-W+KJc2dmILlPplD/H4K9l9LcAHAfPtP6BY84uVLXQ6Evcz9Lcg33Y2z1IVblT6xdY54PXYVHEv+0Wpq8Io6zkA==}
     dev: true
 
-  /fast-text-encoding@1.0.6:
-    resolution: {integrity: sha512-VhXlQgj9ioXCqGstD37E/HBeqEGV/qOD/kmbVG8h5xKBYvM1L3lR1Zn4555cQ8GkYbJa8aJSipLPndE1k6zK2w==}
-    dev: false
-
   /fastq@1.15.0:
     resolution: {integrity: sha512-wBrocU2LCXXa+lWBt8RoIRD89Fi8OdABODa/kEnyeyjS5aZO5/GNvI5sEINADqP/h8M29UHTHUb53sUu5Ihqdw==}
     dependencies:
@@ -3557,12 +3548,12 @@ packages:
       wide-align: 1.1.5
     dev: false
 
-  /gaxios@5.1.0:
-    resolution: {integrity: sha512-aezGIjb+/VfsJtIcHGcBSerNEDdfdHeMros+RbYbGpmonKWQCOVOes0LVZhn1lDtIgq55qq0HaxymIoae3Fl/A==}
-    engines: {node: '>=12'}
+  /gaxios@6.0.4:
+    resolution: {integrity: sha512-mwKfHJn7f3pLRfahdEPNyvygXRwjwgsgDPaIIoBRIDkgP4SFyezkYGWQ2aLCfrAnzimSrP+mAg1aSUj5gidXvw==}
+    engines: {node: '>=14'}
     dependencies:
       extend: 3.0.2
-      https-proxy-agent: 5.0.1
+      https-proxy-agent: 7.0.1
       is-stream: 2.0.1
       node-fetch: 2.6.12
     transitivePeerDependencies:
@@ -3570,11 +3561,11 @@ packages:
       - supports-color
     dev: false
 
-  /gcp-metadata@5.2.0:
-    resolution: {integrity: sha512-aFhhvvNycky2QyhG+dcfEdHBF0FRbYcf39s6WNHUDysKSrbJ5vuFbjydxBcmewtXeV248GP8dWT3ByPNxsyHCw==}
-    engines: {node: '>=12'}
+  /gcp-metadata@6.0.0:
+    resolution: {integrity: sha512-Ozxyi23/1Ar51wjUT2RDklK+3HxqDr8TLBNK8rBBFQ7T85iIGnXnVusauj06QyqCXRFZig8LZC+TUddWbndlpQ==}
+    engines: {node: '>=14'}
     dependencies:
-      gaxios: 5.1.0
+      gaxios: 6.0.4
       json-bigint: 1.0.0
     transitivePeerDependencies:
       - encoding
@@ -3687,17 +3678,15 @@ packages:
       type-fest: 0.20.2
     dev: true
 
-  /google-auth-library@8.7.0:
-    resolution: {integrity: sha512-1M0NG5VDIvJZEnstHbRdckLZESoJwguinwN8Dhae0j2ZKIQFIV63zxm6Fo6nM4xkgqUr2bbMtV5Dgo+Hy6oo0Q==}
-    engines: {node: '>=12'}
+  /google-auth-library@9.0.0:
+    resolution: {integrity: sha512-IQGjgQoVUAfOk6khqTVMLvWx26R+yPw9uLyb1MNyMQpdKiKt0Fd9sp4NWoINjyGHR8S3iw12hMTYK7O8J07c6Q==}
+    engines: {node: '>=14'}
     dependencies:
-      arrify: 2.0.1
       base64-js: 1.5.1
       ecdsa-sig-formatter: 1.0.11
-      fast-text-encoding: 1.0.6
-      gaxios: 5.1.0
-      gcp-metadata: 5.2.0
-      gtoken: 6.1.2
+      gaxios: 6.0.4
+      gcp-metadata: 6.0.0
+      gtoken: 7.0.1
       jws: 4.0.0
       lru-cache: 6.0.0
     transitivePeerDependencies:
@@ -3705,21 +3694,13 @@ packages:
       - supports-color
     dev: false
 
-  /google-p12-pem@4.0.1:
-    resolution: {integrity: sha512-WPkN4yGtz05WZ5EhtlxNDWPhC4JIic6G8ePitwUWy4l+XPVYec+a0j0Ts47PDtW59y3RwAhUd9/h9ZZ63px6RQ==}
-    engines: {node: '>=12.0.0'}
-    hasBin: true
-    dependencies:
-      node-forge: 1.3.1
-    dev: false
-
-  /googleapis-common@6.0.4:
-    resolution: {integrity: sha512-m4ErxGE8unR1z0VajT6AYk3s6a9gIMM6EkDZfkPnES8joeOlEtFEJeF8IyZkb0tjPXkktUfYrE4b3Li1DNyOwA==}
-    engines: {node: '>=12.0.0'}
+  /googleapis-common@7.0.0:
+    resolution: {integrity: sha512-58iSybJPQZ8XZNMpjrklICefuOuyJ0lMxfKmBqmaC0/xGT4SiOs4BE60LAOOGtBURy1n8fHa2X2YUNFEWWbXyQ==}
+    engines: {node: '>=14.0.0'}
     dependencies:
       extend: 3.0.2
-      gaxios: 5.1.0
-      google-auth-library: 8.7.0
+      gaxios: 6.0.4
+      google-auth-library: 9.0.0
       qs: 6.11.1
       url-template: 2.0.8
       uuid: 9.0.0
@@ -3728,12 +3709,12 @@ packages:
       - supports-color
     dev: false
 
-  /googleapis@122.0.0:
-    resolution: {integrity: sha512-n8Gt7j9LzSkhQEGPOrcLBKxllTvW/0v6oILuwszL/zqgelNsGJYXVqPJllgJJ6RM7maJ6T35UBeYqI6GQ/IlJg==}
-    engines: {node: '>=12.0.0'}
+  /googleapis@124.0.0:
+    resolution: {integrity: sha512-kNIN8tu33K1pbvKD8m1TQTDcdH+GF7wOm0QFF+2+etBwLM36/z8tUVKFsTVzE25B0aIcbTdxrGBTRZztRF/K8Q==}
+    engines: {node: '>=14.0.0'}
     dependencies:
-      google-auth-library: 8.7.0
-      googleapis-common: 6.0.4
+      google-auth-library: 9.0.0
+      googleapis-common: 7.0.0
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -3790,12 +3771,11 @@ packages:
     resolution: {integrity: sha512-EtKwoO6kxCL9WO5xipiHTZlSzBm7WLT627TqC/uVRd0HKmq8NXyebnNYxDoBi7wt8eTWrUrKXCOVaFq9x1kgag==}
     dev: true
 
-  /gtoken@6.1.2:
-    resolution: {integrity: sha512-4ccGpzz7YAr7lxrT2neugmXQ3hP9ho2gcaityLVkiUecAiwiy60Ii8gRbZeOsXV19fYaRjgBSshs8kXw+NKCPQ==}
-    engines: {node: '>=12.0.0'}
+  /gtoken@7.0.1:
+    resolution: {integrity: sha512-KcFVtoP1CVFtQu0aSk3AyAt2og66PFhZAlkUOuWKwzMLoulHXG5W5wE5xAnHb+yl3/wEFoqGW7/cDGMU8igDZQ==}
+    engines: {node: '>=14.0.0'}
     dependencies:
-      gaxios: 5.1.0
-      google-p12-pem: 4.0.1
+      gaxios: 6.0.4
       jws: 4.0.0
     transitivePeerDependencies:
       - encoding
@@ -5869,11 +5849,6 @@ packages:
 
   /node-forge@0.7.6:
     resolution: {integrity: sha512-sol30LUpz1jQFBjOKwbjxijiE3b6pjd74YwfD0fJOKPjF+fONKb2Yg8rYgS6+bK6VDl+/wfr4IYpC7jDzLUIfw==}
-    dev: false
-
-  /node-forge@1.3.1:
-    resolution: {integrity: sha512-dPEtOeMvF9VMcYV/1Wb8CPoVAXtp6MKMlcbAt4ddqmGqUJ6fQZFXkNZNkNlfevtNkGtaSoXf/vNNNSvgrdXwtA==}
-    engines: {node: '>= 6.13.0'}
     dev: false
 
   /node-gyp-build@4.6.0:
@@ -8146,8 +8121,8 @@ packages:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
     dev: true
 
-  github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     name: difflib
     version: 0.2.6
     dependencies:
