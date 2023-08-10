@@ -149,7 +149,7 @@
   },
   "devDependencies": {
     "@microsoft/eslint-formatter-sarif": "3.0.0",
-    "@types/koa": "2.13.6",
+    "@types/koa": "2.13.8",
     "@vercel/nft": "0.22.6",
     "cross-env": "7.0.3",
     "eslint": "8.45.0",
