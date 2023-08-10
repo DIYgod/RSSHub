@@ -18,63 +18,57 @@ pageClass: routes
 
 ### Topics
 
-<RouteEn author="Rjnishant530" example="/alistapart/application-development" path="/alistapart/:topic?" :paramsDesc="['Any Topic or from the table below. Defaults to All Articles']" radar="1"/>
+<RouteEn author="Rjnishant530" example="/alistapart/application-development" path="/alistapart/:topic" :paramsDesc="['Any Topic or from the table below. Defaults to All Articles']" radar="1"/>
 
 You have the option to utilize the main heading or use individual categories as topics for the path.
 
 Topics :
 
-| Code                     |
-|-------------------------|
-| Application Development |
-| Browsers                |
-| CSS                     |
-| HTML                    |
-| JavaScript              |
-| The Server Side         |
+| **Code**                | _code_                  |
+|-------------------------|-------------------------|
+| **Application Development** | _application-development_ |
+| **Browsers**             | _browsers_              |
+| **CSS**                  | _css_                   |
+| **HTML**                 | _html_                  |
+| **JavaScript**           | _javascript_            |
+| **The Server Side**      | _the-server-side_       |
 
+| **Content**             | _content_               |
+|-------------------------|-------------------------|
+| **Community**           | _community_             |
+| **Content Strategy**    | _content-strategy_      |
+| **Writing**             | _writing_               |
 
-| Content         |
-|-----------------|
-| Community       |
-| Content Strategy|
-| Writing         |
+| **Design**              | _design_                |
+|-------------------------|-------------------------|
+| **Brand Identity**      | _brand-identity_        |
+| **Graphic Design**      | _graphic-design_        |
+| **Layout & Grids**      | _layout-grids_          |
+| **Mobile/Multidevice**  | _mobile-multidevice_    |
+| **Responsive Design**   | _responsive-design_     |
+| **Typography & Web Fonts** | _typography-web-fonts_ |
 
+| **Industry & Business** | _industry-business_     |
+|-------------------------|-------------------------|
+| **Business**            | _business_              |
+| **Career**              | _career_                |
+| **Industry**            | _industry_              |
+| **State of the Web**    | _state-of-the-web_      |
 
-| Design            |
-|-------------------|
-| Brand Identity    |
-| Graphic Design    |
-| Layout & Grids    |
-| Mobile/Multidevice|
-| Responsive Design |
-| Typography & Web Fonts|
+| **Process**             | _process_               |
+|-------------------------|-------------------------|
+| **Creativity**          | _creativity_            |
+| **Project Management**  | _project-management_    |
+| **Web Strategy**        | _web-strategy_          |
+| **Workflow & Tools**    | _workflow-tools_        |
 
-
-| Industry & Business|
-|---------------------|
-| Business            |
-| Career              |
-| Industry            |
-| State of the Web    |
-
-
-| Process            |
-|-------------------|
-| Creativity         |
-| Project Management|
-| Web Strategy       |
-| Workflow & Tools   |
-
-
-| User Experience  |
-|------------------|
-| Accessibility    |
-| Information Architecture|
-| Interaction Design|
-| Usability        |
-| User Research    |
-
+| **User Experience**     | _user-experience_       |
+|-------------------------|-------------------------|
+| **Accessibility**       | _accessibility_         |
+| **Information Architecture** | _information-architecture_ |
+| **Interaction Design**  | _interaction-design_    |
+| **Usability**           | _usability_             |
+| **User Research**       | _user-research_         |
 
 </RouteEn>
 
