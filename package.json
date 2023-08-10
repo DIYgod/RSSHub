@@ -95,7 +95,7 @@
     "city-timezones": "1.2.1",
     "crypto-js": "4.1.1",
     "currency-symbol-map": "5.1.0",
-    "dayjs": "1.11.8",
+    "dayjs": "1.11.9",
     "dotenv": "16.3.1",
     "emailjs-imap-client": "3.1.0",
     "entities": "4.5.0",
