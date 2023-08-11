@@ -352,11 +352,77 @@ Country
 
 <RouteEn author="zoenglinghou" example="/google/news/Top stories/hl=en-US&gl=US&ceid=US:en" path="/google/news/:category/:locale" :paramsDesc="['Category Title', 'locales, could be found behind `?`, including `hl`, `gl`, and `ceid` as parameters']"/>
 
+## Grist
+
+### Articles
+
+<RouteEn author="Rjnishant530" example="/grist/" path="/grist/" radar="1"/>
+
+### Featured
+
+<RouteEn author="Rjnishant530" example="/grist/featured" path="/grist/featured" radar="1"/>
+
+### Series
+
+<RouteEn author="Rjnishant530" example="/grist/series/best-of-grist" path="/grist/series/:series" :paramsDesc="['Find in the URL which has /series/']" radar="1"/>
+
+### Topic
+
+<RouteEn author="Rjnishant530" example="/grist/topic/extreme-heat" path="/grist/topic/:topic" :paramsDesc="['Any Topic from Table below']" radar="1">
+
+Topics:
+
+| Topic Name          | Topic Link          |
+|---------------------|---------------------|
+| Accountability     | accountability     |
+| Agriculture        | agriculture        |
+| Ask Umbra          | ask-umbra-series   |
+| Buildings          | buildings          |
+| Cities             | cities             |
+| Climate & Energy   | climate-energy     |
+| Climate Fiction    | climate-fiction    |
+| Climate of Courage | climate-of-courage |
+| COP26              | cop26              |
+| COP27              | cop27              |
+| Culture            | culture            |
+| Economics          | economics          |
+| Energy             | energy             |
+| Equity             | equity             |
+| Extreme Weather    | extreme-weather    |
+| Fix                | fix                |
+| Food               | food               |
+| Grist              | grist              |
+| Grist News         | grist-news         |
+| Health             | health             |
+| Housing            | housing            |
+| Indigenous Affairs | indigenous         |
+| International      | international      |
+| Labor              | labor              |
+| Language           | language           |
+| Migration          | migration          |
+| Opinion            | opinion            |
+| Politics           | politics           |
+| Protest            | protest            |
+| Race               | race               |
+| Regulation         | regulation         |
+| Science            | science            |
+| Shift Happens Newsletter | shift-happens |
+| Solutions          | solutions          |
+| Spanish            | spanish            |
+| Sponsored          | sponsored          |
+| Technology         | technology         |
+| Temperature Check  | temperature-check  |
+| Uncategorized     | article            |
+| Updates            | updates            |
+| Video              | video              |
+
+</RouteEn>
+
 ## Grub Street
 
 ### Posts
 
-<RouteEn author="loganrockmore" example="/grubstreet" path="/grubstreet" />
+<RouteEn author="loganrockmore" example="/grubstreet" path="/grubstreet" /> 
 
 ## Harvard Business Review
 
