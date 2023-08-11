@@ -37,7 +37,7 @@ pageClass: routes
 
 <RouteEn author="HenryQW" example="/cfd/div_gbp" path="/cfd/div_gbp" />
 
-## Insider by Finology
+## Finology Insider
 
 ### Bullets
 
