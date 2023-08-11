@@ -4893,6 +4893,18 @@
     "/setn/:category?": [
         "nczitzk"
     ],
+    "/seu/cse/:type?": [
+        "LogicJake"
+    ],
+    "/seu/radio/academic": [
+        "HenryQW"
+    ],
+    "/seu/yjs": [
+        "Denkiyohou"
+    ],
+    "/seu/yzb/:type": [
+        "fuzy112"
+    ],
     "/shcstheatre/programs": [
         "fuzy112"
     ],
@@ -6591,9 +6603,6 @@
     "/bjtu/gs/:type": [],
     "/dpu/jiaowu/news/:type?": [],
     "/dpu/wlfw/news/:type?": [],
-    "/seu/radio/academic": [],
-    "/seu/yzb/:type": [],
-    "/seu/cse/:type?": [],
     "/njtech/jwc": [],
     "/hhu/libNews": [],
     "/hhu/libNewsc": [],
