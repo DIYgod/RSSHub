@@ -178,6 +178,29 @@ Category of news
 
 <RouteEn author="nczitzk" example="/deepmind/blog" path="/deepmind/blog" radar="1" rssbud="1"/>
 
+### DL NEWS
+
+### All Articles
+
+<RouteEn author="Rjnishant530" example="/dlnews" path="/dlnews" radar="1"/>
+
+### Topic
+
+<RouteEn author="Rjnishant530" example="/dlnews/fintech" path="/dlnews/:category" :paramsDesc="['Find in Table. Defaults to All articles']" radar="1">
+
+| Topic              | Link                |
+|--------------------|---------------------|
+| DeFi               | defi    |
+| Fintech/VC/Deals   | fintech  |
+| Llama U            | llama-u  |
+| Markets            | markets  |
+| People & Culture   | people-culture |
+| Regulation         | regulation |
+| Snapshot           | snapshot |
+| Web3               | web3     |
+
+
+
 ## Engadget
 
 ### Chinese
