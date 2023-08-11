@@ -1587,6 +1587,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="jialinghui" example="/ecust/jxjy/news" path="/ecust/jxjy/news" radar="1" rssbud="1" />
 
+### 本科教务处信息网
+
+<Route author="lxl66566" example="/ecust/jwc/mto" path="/ecust/jwc/:category?" :paramsDesc="['订阅板块，默认为全部订阅']">
+
+| 其他任意值 | mto | mttb | gi | mpt | fai |
+| --- | --- | --- | --- | --- | --- |
+| 全部订阅 | 教学运行管理 | 培养与教学建设管理 | 综合信息 | 实践教学管理 | 学院教务信息 |
+
+</Route>
+
 ## 华东师范大学
 
 ### ACM OJ 比赛列表
