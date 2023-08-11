@@ -356,7 +356,7 @@ Country
 
 ### Articles
 
-<RouteEn author="Rjnishant530" example="/grist/" path="/grist/" radar="1"/>
+<RouteEn author="Rjnishant530" example="/grist" path="/grist" radar="1"/>
 
 ### Featured
 
