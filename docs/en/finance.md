@@ -70,7 +70,7 @@ pageClass: routes
 
 ### Most Viewed
 
-<RouteEn author="Rjnishant530" example="/finology/most-viewed/monthly" path="/finology/most-viewed/:time" :paramDesc="['Accepts : `alltime`` or `monthly` only']" radar="1"/>
+<RouteEn author="Rjnishant530" example="/finology/most-viewed/monthly" path="/finology/most-viewed/:time" :paramDesc="['Accepts : `alltime` or `monthly` only']" radar="1"/>
 
 ### Trending Topic
 
