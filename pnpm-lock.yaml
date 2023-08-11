@@ -189,8 +189,8 @@ dependencies:
     specifier: 4.1.3
     version: 4.1.3
   twitter-api-v2:
-    specifier: 1.15.0
-    version: 1.15.0
+    specifier: 1.15.1
+    version: 1.15.1
   winston:
     specifier: 3.10.0
     version: 3.10.0
@@ -7311,8 +7311,8 @@ packages:
   /tweetnacl@0.14.5:
     resolution: {integrity: sha512-KXXFFdAbFXY4geFIwoyNK+f5Z1b7swfXABfL7HXCmoIWMKU3dmS26672A4EeQtDzLKy7SXmfBu51JolvEKwtGA==}
 
-  /twitter-api-v2@1.15.0:
-    resolution: {integrity: sha512-Cqg3pIGhSwPyFBndpBrucdeNXecNFnYcXy3ixQ4brJHd/3k1CAtBVcX0e3s6jRYl/QIx5BmyGXS/SHEGtYZ3gw==}
+  /twitter-api-v2@1.15.1:
+    resolution: {integrity: sha512-KNxoJL+sldWMI3AooPGcNkbP8awQai93d9xxsTurVPuUo/qnOUR3iO0XZTGC5sezdejHHqNyTwBAgGGw948MDg==}
     dev: false
 
   /type-check@0.3.2:
