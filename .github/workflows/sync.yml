@@ -1,0 +1,28 @@
+name: Scheduled Sync
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # 每天执行一次，UTC 时间 00:00
+
+jobs:
+  sync_latest_from_upstream:
+    name: Sync latest commits from upstream repo
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: 运行标准的 checkout action
+      - name: Checkout target repo
+        uses: actions/checkout@v3
+
+      # Step 2: 运行 sync action
+      - name: Sync upstream changes
+        id: sync
+        uses: aormsby/Fork-Sync-With-Upstream-action@v3.4
+        with:
+          upstream_sync_repo: DIYgod/RSSHub
+          upstream_sync_branch: master
+          target_sync_branch: main
+          target_repo_token: ${{ secrets.GITHUB_TOKEN }} # 自动生成的，无需设置
+
+          # 设置 test_mode 为 true 可以运行测试而不是真正的同步操作！
+          test_mode: false
