@@ -1773,6 +1773,9 @@
     "/economist/:endpoint": [
         "ImSingee"
     ],
+    "/ecust/jwc/:category?": [
+        "lxl66566"
+    ],
     "/ecust/jxjy/news": [
         "jialinghui"
     ],
