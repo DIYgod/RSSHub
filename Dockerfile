@@ -70,8 +70,6 @@ RUN \
     cp /app/scripts/docker/minify-docker.js /minifier/ && \
     export PROJECT_ROOT=/app && \
     node /minifier/minify-docker.js && \
-    # Add back anything that are required but removed by by @vercel/nft
-    cp /app/node_modules/re2-wasm/build/wasm/re2.wasm /app/app-minimal/node_modules/re2-wasm/build/wasm/re2.wasm && \
     # Use the minified node_modules
     rm -rf /app/node_modules /app/scripts && \
     mv /app/app-minimal/node_modules /app/ && \
