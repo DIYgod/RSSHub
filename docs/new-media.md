@@ -1032,6 +1032,10 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 <Route author="ncziztk" example="/odaily/newsflash" path="/odaily/newsflash"/>
 
+### 搜索快讯
+
+<Route author="snowraincloud" example="/odaily/search/news/Lens%20Protocol" path="/odaily/search/news/:keyword" :paramsDesc="['搜索关键字']"/>
+
 ### 文章
 
 <Route author="ncziztk" example="/odaily" path="/odaily/:id?" :paramsDesc="['id，见下表，默认为最新']">
@@ -2196,6 +2200,30 @@ area 分区选项
 ### 当前精选主题列表
 
 <Route author="TonyRL" example="/agirls/topic_list" path="/agirls/topic_list" radar="1" rssbud="1"/>
+
+## 电子工程专辑
+
+### 芯语
+
+<Route author="nczitzk" example="/eet-china/mp" path="/eet-china/mp/:category?" :paramsDesc="['分类，见下表，默认为最新']">
+
+| 最新 | 半导体 | 通信网络 | 消费电子 / 手机 | 汽车电子 |
+| ---- | ------ | -------- | --------------- | -------- |
+|      | 1      | 2        | 3               | 4        |
+
+| 物联网 | 工控 | 硬件设计 | 嵌入式 / FPGA | 电源 / 能源 |
+| ------ | ---- | -------- | ------------- | ----------- |
+| 5      | 6    | 7        | 8             | 9           |
+
+| 测试测量 | 人工智能 / 机器人 | 科技前沿 | 供应链 | 工程师职场 |
+| -------- | ----------------- | -------- | ------ | ---------- |
+| 10       | 11                | 12       | 13     | 14         |
+
+</Route>
+
+### 芯语标签
+
+<Route author="nczitzk" example="/eet-china/mp/tags/36806" path="/eet-china/mp/tags/:id" :paramsDesc="['标签 id，可在对应标签页中找到']"/>
 
 ## 丁香园
 
@@ -3546,6 +3574,12 @@ column 为 third 时可选的 category:
 
 <Route author="qiwihui" example="/paidai/news" path="/paidao/news" />
 
+## 跑野大爆炸
+
+### 最新文章
+
+<Route author="TonyRL" example="/runtrail" path="/runtrail" radar="1" rssbud="1"/>
+
 ## 品途商业评论
 
 ### 文章
@@ -4827,6 +4861,18 @@ column 为 third 时可选的 category:
 ### 微语简报
 
 <Route author="x2009again" example="/yunspe/newsflash" path="/yunspe/newsflash" />
+
+## 早报网
+
+### 每日早报
+
+<Route author="nczitzk" example="/qqorw" path="/qqorw/:category?" :paramsDesc="['分类，见下表，默认为首页']" radar="1" rssbud="1">
+
+| 首页 | 每日早报 | 国际早报 | 生活冷知识 |
+| ---- | -------- | -------- | ---------- |
+|      | mrzb     | zbapp    | zbzzd      |
+
+</Route>
 
 ## 知园
 

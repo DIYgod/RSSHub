@@ -118,7 +118,7 @@ There is no RSS source for Al Jazeera Chinese, returning homepage content by def
 
 ### Topics
 
-<RouteEn author="zoenglinghou mjysci TonyRL" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic?" :paramsDesc="['Topic name，can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`, `trending-news` by default']" radar="1" rssbud="1" />
+<RouteEn author="zoenglinghou mjysci TonyRL" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic?" :paramsDesc="['Topic name, can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`, `trending-news` by default']" radar="1" rssbud="1" />
 
 ## BBC
 
@@ -239,6 +239,36 @@ Support all channels, refer to [CNBC RSS feeds](https://www.cnbc.com/rss-feeds/)
 | All | German Press | Culture | Economy | Science & Nature |
 | --- | ------------ | ------- | ------- | ---------------- |
 | all | press        | cul     | eco     | sci              |
+
+</RouteEn>
+
+## DNA India
+
+### News
+
+<RouteEn author="Rjnishant530" example="/dnaindia/headlines" path="/dnaindia/:category" :paramsDesc="['Find it in the URL, or tables below']" radar="1">
+
+Categories:
+
+| Headlines | Explainer | India | Entertainment | Sports | Viral | Lifestyle | Education | Business | World |
+| --------- | --------- | ----- | ------------- | ------ | ----- | --------- | --------- | -------- | ----- |
+| headlines | explainer | india | entertainment | sports | viral | lifestyle | education | business | world |
+
+</RouteEn>
+
+### Topic
+
+<RouteEn author="Rjnishant530" example="/dnaindia/topic/dna-verified" path="/dnaindia/topic/:topic" :paramsDesc="['Find it in the URL']" radar="1">
+
+Topics:
+
+|DNA verified|
+|------------|
+|dna-verified|
+
+::: tip Topic
+The URL of the form `https://www.dnaindia.com/topic/dna-verified` demonstrates the utilization of the subdomain `topic`
+:::
 
 </RouteEn>
 
@@ -647,6 +677,12 @@ Provides a better reading experience (full text articles) over the official one.
 ### China
 
 <RouteEn author="Polynomia" example="/guardian/china" path="/guardian/china"/>
+
+## The Hindu
+
+### Topic
+
+<RouteEn author="TonyRL" example="/thehindu/topic/rains" path="/thehindu/topic/:topic" :paramsDesc="['Topic slug, can be found in URL.']" radar="1" rssbud="1" />
 
 ## The New York Times
 
