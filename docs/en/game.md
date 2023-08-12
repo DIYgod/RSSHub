@@ -264,7 +264,7 @@ Compatible with Product with an URL like <https://store.playstation.com/en-us/pr
 
 ### Scarlet and Violet News
 
-<Route author="Charleszhang" example="/pokemon/sv/news/sc" path="/pokemon/sv/news/:lang?" :paramsDesc="[‘Language, default is `ja`’]">
+<Route author="Charleszhang" example="/pokemon/sv/news/sc" path="/pokemon/sv/news/:lang?" :paramsDesc="['Language, default is `ja`']">
 
 | Simplified Chinese | Tranditional Chinese | Japanese | English | French | Italian | German | Spanish | Korean |
 | ---- | ---- | -- | -- | -- | ---- | -- | ----- | -- |

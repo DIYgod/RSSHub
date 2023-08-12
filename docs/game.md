@@ -589,7 +589,7 @@ News 的数据来自 <https://warthunder.com/en/news/>
 
 ### 朱紫公告
 
-<Route author="Charleszhang" example="/pokemon/sv/news/sc" path="/pokemon/sv/news/:lang?" :paramsDesc="[‘语言，缺省为`ja`’]">
+<Route author="Charleszhang" example="/pokemon/sv/news/sc" path="/pokemon/sv/news/:lang?" :paramsDesc="['语言，缺省为`ja`']">
 
 | 简体中文 | 繁体中文 | 日语 | 英语 | 法语 | 意大利语 | 德语 | 西班牙语 | 韩语 |
 | -------- | -------- | ---- | ---- | ---- | -------- | ---- | -------- | ---- |
