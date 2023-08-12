@@ -152,7 +152,7 @@
     "@types/koa": "2.13.8",
     "@vercel/nft": "0.23.0",
     "cross-env": "7.0.3",
-    "eslint": "8.46.0",
+    "eslint": "8.47.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-n": "16.0.1",
     "eslint-plugin-prettier": "5.0.0",
