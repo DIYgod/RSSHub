@@ -260,6 +260,19 @@ Compatible with Product with an URL like <https://store.playstation.com/en-us/pr
 
 <RouteEn author="Jeason0228" example="/ps/ps4updates/" path="/ps/ps4updates/" radar="1" rssbud="1"/>
 
+## Pokémon
+
+### Scarlet and Violet News
+
+<Route author="Charleszhang" example="/pokemon/sv/news/sc" path="/pokemon/sv/news/:lang?" :paramsDesc="[‘Language, default is `ja`’]">
+
+| Simplified Chinese | Tranditional Chinese | Japanese | English | French | Italian | German | Spanish | Korean |
+| ---- | ---- | -- | -- | -- | ---- | -- | ----- | -- |
+| sc | tc | ja | en | fr | it | de | es | ko |
+
+</Route>
+
+
 ## ProjectSekai ｜ プロセカ
 
 ### News

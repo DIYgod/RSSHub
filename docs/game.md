@@ -585,6 +585,18 @@ News 的数据来自 <https://warthunder.com/en/news/>
 
 </Route>
 
+## 宝可梦
+
+### 朱紫公告
+
+<Route author="Charleszhang" example="/pokemon/sv/news/sc" path="/pokemon/sv/news/:lang?" :paramsDesc="[‘语言，缺省为`ja`’]">
+
+| 简体中文 | 繁体中文 | 日语 | 英语 | 法语 | 意大利语 | 德语 | 西班牙语 | 韩语 |
+| -------- | -------- | ---- | ---- | ---- | -------- | ---- | -------- | ---- |
+| sc       | tc       | ja   | en   | fr   | it       | de   | es       | ko   |
+
+</Route>
+
 ## 触乐
 
 <Route author="laampui" example="/chuapp/index/daily" path="/chuapp/index/:category?" :paramsDesc="['默认为 night']">
