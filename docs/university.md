@@ -1067,21 +1067,31 @@ pageClass: routes
 
 ### 信息科学与工程学院学术活动
 
-<Route author="HenryQW" example="/seu/radio/academic" path="/seu/radio/academic"/>
+<Route author="HenryQW" example="/seu/radio/academic" path="/seu/radio/academic" radar="1"/>
 
 ### 研究生招生网通知公告
 
-<Route author="fuzy112" example="/seu/yzb/1" path="/seu/yzb/:type" :paramsDesc="['1 为硕士招生，2 为博士招生，3 为港澳台及中外合作办学']"/>
+<Route author="fuzy112" example="/seu/yzb/6676" path="/seu/yzb/:type" :paramsDesc="['分类名，见下表']" radar="1">
+
+| 硕士招生 | 博士招生 | 港澳台及中外合作办学 |
+| -------- | -------- | -------------------- |
+| 6676     | 6677     | 6679                 |
+
+</Route>
 
 ### 计算机技术与工程学院
 
-<Route author="LogicJake" example="/seu/cse/xyxw" path="/seu/cse/:type?" :paramsDesc="['分类名(默认为xyxw)']">
+<Route author="LogicJake" example="/seu/cse/xyxw" path="/seu/cse/:type?" :paramsDesc="['分类名，默认为 `xyxw`']" radar="1">
 
 | 学院新闻 | 通知公告 | 教务信息 | 就业信息 | 学工事务 |
 | -------- | -------- | -------- | -------- | -------- |
 | xyxw     | tzgg     | jwxx     | jyxx     | xgsw     |
 
 </Route>
+
+### 研究生院全部公告
+
+<Route author="Denkiyohou" example="/seu/yjs" path="seu/yjs"/>
 
 ## 对外经济贸易大学
 
@@ -1586,6 +1596,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 继续教育学院 - 学院公告
 
 <Route author="jialinghui" example="/ecust/jxjy/news" path="/ecust/jxjy/news" radar="1" rssbud="1" />
+
+### 本科教务处信息网
+
+<Route author="lxl66566" example="/ecust/jwc/mto" path="/ecust/jwc/:category?" :paramsDesc="['订阅板块，默认为全部订阅']">
+
+| 其他任意值 | mto          | mttb               | gi       | mpt          | fai          |
+| ---------- | ------------ | ------------------ | -------- | ------------ | ------------ |
+| 全部订阅   | 教学运行管理 | 培养与教学建设管理 | 综合信息 | 实践教学管理 | 学院教务信息 |
+
+</Route>
 
 ## 华东师范大学
 

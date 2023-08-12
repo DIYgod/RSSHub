@@ -34,11 +34,6 @@ jobs:
         node-version: [ 18, 20 ]
     name: Jest on Node ${{ matrix.node-version }}
     steps:
-      - name: Collect Workflow Telemetry
-        uses: runforesight/foresight-workflow-kit-action@v1
-        if: success() || failure()
-        with:
-          api_key: ${{ secrets.FORESIGHT_KEY }}
       - uses: actions/checkout@v3
       - uses: pnpm/action-setup@v2
         with:
@@ -107,7 +102,7 @@ jobs:
         if: ${{ matrix.chromium.dependency != '' }}
         # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
         # nothing since it calls Snap (disgusting!) to install Chromium, which should be up-to-date.
-        # That's not really a problem since the Chromium-bundled Docker image is based on Debian bullseye,
+        # That's not really a problem since the Chromium-bundled Docker image is based on Debian bookworm,
         # which provides up-to-date native packages.
         run: |
           set -ex
