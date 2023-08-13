@@ -2443,6 +2443,18 @@
     "/greasyfork/scripts/:script/versions": [
         "miles170"
     ],
+    "/grist/": [
+        "Rjnishant530"
+    ],
+    "/grist/featured": [
+        "Rjnishant530"
+    ],
+    "/grist/series/:series": [
+        "Rjnishant530"
+    ],
+    "/grist/topic/:topic": [
+        "Rjnishant530"
+    ],
     "/guancha/:category?": [
         "nczitzk",
         "Jeason0228"
