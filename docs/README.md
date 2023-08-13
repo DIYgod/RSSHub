@@ -5,7 +5,7 @@ sidebarDepth: 0
 # 介绍
 
 <p align="center" class="logo-img">
-    <img src="/logo.png" alt="RSSHub" width="100">
+    <img src="/logo.png" alt="RSSHub" width="100" />
 </p>
 <h1 align="center" class="logo-text">RSSHub</h1>
 
@@ -30,7 +30,7 @@ RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以�
 ### 赞助商
 
 <p>
-<a href="https://xlog.app/" target="_blank"><img height="100px" src="https://i.imgur.com/2B9pXBg.png"></a>
+<a href="https://xlog.app/" target="_blank"><img height="100px" src="https://i.imgur.com/2B9pXBg.png" /></a>
 </p>
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
@@ -43,7 +43,7 @@ Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 ### Backers
 
-<a href="https://www.cloudflare.com" target="_blank"><img height="50px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/cloudflare.png"></a><a href="https://www.netlify.com" target="_blank" style="margin-left: 60px;"><img height="40px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/netlify.png"></a>
+<a href="https://www.cloudflare.com" target="_blank"><img height="50px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/cloudflare.png" /></a><a href="https://www.netlify.com" target="_blank" style="margin-left: 60px;"><img height="40px" src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/netlify.png" /></a>
 
 ## 相关项目
 

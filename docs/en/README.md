@@ -5,7 +5,7 @@ sidebarDepth: 0
 # Introduction
 
 <p align="center" class="logo-img">
-    <img src="/logo.png" alt="RSSHub" width="100">
+    <img src="/logo.png" alt="RSSHub" width="100" />
 </p>
 <h1 align="center" class="logo-text">RSSHub</h1>
 
