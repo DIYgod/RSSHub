@@ -2,7 +2,7 @@
 
 **Q: RSS 是什么？RSS 如何使用？可以推荐一下好用的 RSS 阅读器么？**
 
-**A:** [我有特别的 RSS 使用技巧](https://diygod.me/ohmyrss/)
+**A:** [我有特别的 RSS 使用技巧](https://diygod.cc/ohmyrss/)
 
 **Q: RSSHub 是如何工作的？**
 
