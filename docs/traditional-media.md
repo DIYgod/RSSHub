@@ -575,6 +575,10 @@ Category 列表：
 
 <Route author="boypt" example="/caixin/k" path="/caixin/k" radar="1" supportPodcast="1"/>
 
+### 财新周刊
+
+<Route author="TonyRL" example="/caixin/weekly" path="/caixin/weekly" radar="1" rssbud="1"/>
+
 ## 参考消息
 
 ### 栏目
@@ -608,10 +612,6 @@ Category 列表：
 :::
 
 </Route>
-
-### 财新周刊
-
-<Route author="TonyRL" example="/caixin/weekly" path="/caixin/weekly" radar="1" rssbud="1"/>
 
 ## 朝日新聞中文網（繁體中文版）
 
