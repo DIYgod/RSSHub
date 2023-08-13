@@ -11,6 +11,7 @@ pageClass: routes
 <RouteEn author="HenryQW" example="/9to5/mac/aapl" path="/9to5/:subsite/:category?" :paramsDesc="['Subsite name', 'Tag name inside the url of the tag page']" rssbud="1" radar="1">
 
 Supported sub-sites：
+
 | 9To5Mac | 9To5Google | 9To5Toys |
 | ------- | ---------- | -------- |
 | Mac     | Google     | Toys     |
@@ -206,6 +207,8 @@ Category of news
 
 <RouteEn author="nczitzk" example="/europapress" path="/europapress/:category?" :paramsDesc="['Category, see below, Home by default']">
 
+::: details Categories
+
 | España   | Internacional | Economía | Deportes |
 | -------- | ------------- | -------- | -------- |
 | nacional | internacional | economía | deportes |
@@ -237,6 +240,8 @@ Category of news
 | Murcia | Ceuta y Melilla |
 | ------ | --------------- |
 | murcia | ceuta-y-melilla |
+
+:::
 
 </RouteEn>
 
@@ -370,7 +375,7 @@ Country
 
 <RouteEn author="Rjnishant530" example="/grist/topic/extreme-heat" path="/grist/topic/:topic" :paramsDesc="['Any Topic from Table below']" radar="1">
 
-Topics:
+::: details Topics
 
 | Topic Name          | Topic Link          |
 |---------------------|---------------------|
@@ -415,6 +420,8 @@ Topics:
 | Uncategorized     | article            |
 | Updates            | updates            |
 | Video              | video              |
+
+:::
 
 </RouteEn>
 
@@ -697,6 +704,8 @@ Compared to the official one, this feed:
 
 <RouteEn author="Kasper4649 akashigakki" example="/nogizaka46/blog" path="/nogizaka46/blog/:id?" :paramsDesc="['Member ID, see below, `all` by default']">
 
+::: details Member ID
+
 | Member ID | Name                  |
 | --------- | --------------------- |
 | 55401     | 岡本 姫奈             |
@@ -740,6 +749,8 @@ Compared to the official one, this feed:
 | 36749     | 伊藤 理々杏           |
 | 264       | 齋藤 飛鳥             |
 
+:::
+
 </RouteEn>
 
 ### Keyakizaka46 News
@@ -757,6 +768,8 @@ Compared to the official one, this feed:
 ### Sakurazaka46 Blog
 
 <RouteEn author="victor21813 nczitzk akashigakki" example="/sakurazaka46/blog" path="/sakurazaka46/blog/:id?/:page?" :paramsDesc="['Member ID, see below, `all` by default', 'Page, `0` by default']">
+
+::: details Member ID
 
 | Member ID | Name         |
 | --------- | ------------ |
@@ -795,6 +808,8 @@ Compared to the official one, this feed:
 | 04        | 尾関 梨香    |
 | 03        | 上村 莉菜    |
 
+:::
+
 </RouteEn>
 
 ### Hinatazaka46 News
@@ -804,6 +819,8 @@ Compared to the official one, this feed:
 ### Hinatazaka46 Blog
 
 <RouteEn author="nwindz akashigakki" example="/hinatazaka46/blog" path="/hinatazaka46/blog/:id?/:page?" :paramsDesc="['Member ID, see below, `all` by default', 'Page, `0` by default']">
+
+::: details Member ID
 
 | Member ID | Name         |
 | --------- | ------------ |
@@ -840,6 +857,8 @@ Compared to the official one, this feed:
 | 5         | 加藤 史帆    |
 | 4         | 影山 優佳    |
 | 2         | 潮 紗理菜    |
+
+:::
 
 </RouteEn>
 
@@ -969,7 +988,7 @@ Compared to the official one, this feed:
 
 ### The Verge
 
-<RouteEn author="HenryQW vbali" example="/theverge" path="/theverge/:hub? :paramsDesc="['Hub, see below, All Posts by default']">
+<RouteEn author="HenryQW vbali" example="/theverge" path="/theverge/:hub?" :paramsDesc="['Hub, see below, All Posts by default']">
 
 | Hub         | Hub name            |
 | ----------- | ------------------- |
