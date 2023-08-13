@@ -78,13 +78,37 @@ pageClass: routes
 
 ## Aqara
 
-### Community
+### 社区
 
 <Route author="nczitzk" example="/aqara/community" path="/aqara/community/:id?/:keyword?" :paramsDesc="['分类 id，可在对应分类页 URL 中找到，默认为全部', '关键字，默认为空']"/>
 
-### News
+### 新闻
 
-<Route author="nczitzk" example="/aqara/news" path="/aqara/news"/>
+<Route author="nczitzk" example="/aqara/:region/news" path="/aqara/news" :paramsDesc="['地区 id，可在对应新闻页 URL 中找到，默认为 en，即 Global']">
+
+| 中国/大陆 | 대한민국 | Europe | United States | Russia | Global |
+| --------- | -------- | ------ | ------------- | ------ | ------ |
+| cn        | kr       | eu     | us            | ru     | en     |
+
+</Route>
+
+### 博客
+
+<Route author="nczitzk" example="/aqara/:region/news" path="/aqara/news" :paramsDesc="['地区 id，可在对应博客页 URL 中找到，默认为 en，即 Global']">
+
+| 대한민국 | Europe | United States | Russia | Global |
+| -------- | ------ | ------------- | ------ | ------ |
+| kr       | eu     | us            | ru     | en     |
+
+</Route>
+
+### 分类
+
+<Route author="nczitzk" example="/aqara/en/category/press-release" path="/aqara/:region/category/:id" :paramsDesc="['地区 id，可在对应分类页 URL 中找到，默认为 en，即 Global', '分类 id，可在对应分类页 URL 中找到']"/>
+
+### 标签
+
+<Route author="nczitzk" example="/aqara/en/tag/global" path="/aqara/:region/tag/:id" :paramsDesc="['地区 id，可在对应标签页 URL 中找到，默认为 en，即 Global', '标签 id，可在对应标签页 URL 中找到']"/>
 
 ## AutoTrader
 
