@@ -936,6 +936,9 @@
     "/caixin/latest": [
         "tpnonthealps"
     ],
+    "/caixin/weekly": [
+        "TonyRL"
+    ],
     "/caixin/:column/:category": [
         "idealclover"
     ],

@@ -3832,6 +3832,17 @@
         ],
         "target": "/caixin/database"
       }
+    ],
+    "weekly": [
+      {
+        "title": "财新周刊",
+        "docs": "https://docs.rsshub.app/traditional-media.html#cai-xin-wang",
+        "source": [
+          "/",
+          "/*"
+        ],
+        "target": "/caixin/weekly"
+      }
     ]
   },
   "cste.org.cn": {
