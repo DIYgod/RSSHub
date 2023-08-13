@@ -92,7 +92,7 @@
 
         <p>-- Made with
             <i style="color:#d43f57">♥</i> by
-            <a href="https://diygod.me" target="_blank">DIYgod</a>
+            <a href="https://diygod.cc" target="_blank">DIYgod</a>
         </p>
 
         {{ if showDebug }}
