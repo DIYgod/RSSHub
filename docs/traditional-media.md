@@ -573,13 +573,15 @@ Category 列表：
 
 ### 财新一线
 
-<Route author="boypt"  example="/caixin/k" path="/caixin/k" radar="1" supportPodcast="1"/>
+<Route author="boypt" example="/caixin/k" path="/caixin/k" radar="1" supportPodcast="1"/>
 
 ## 参考消息
 
 ### 栏目
 
-<Route author="yuxinliu-alex nczitzk" example="/cankaoxiaoxi/column/diyi" path="/cankaoxiaoxi/column/:id?" :paramsDesc="['栏目 id，默认为 diyi，即第一关注']">
+<Route author="yuxinliu-alex nczitzk" example="/cankaoxiaoxi/column/diyi" path="/cankaoxiaoxi/column/:id?" :paramsDesc="['栏目 id，默认为 `diyi`，即第一关注']">
+
+::: details 栏目
 
 | 栏目           | id       |
 | -------------- | -------- |
@@ -603,7 +605,13 @@ Category 列表：
 | 军事           | junshi   |
 | 参考人物       | cankaorw |
 
+:::
+
 </Route>
+
+### 财新周刊
+
+<Route author="TonyRL" example="/caixin/weekly" path="/caixin/weekly" radar="1" rssbud="1"/>
 
 ## 朝日新聞中文網（繁體中文版）
 
