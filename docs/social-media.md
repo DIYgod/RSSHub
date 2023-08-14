@@ -1656,7 +1656,7 @@ rule
 <Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/notes" path="/xiaohongshu/user/:user_id/notes/:fulltext?" :paramsDesc="['用户 ID', '若为`fulltext`将抓取笔记全文，若为空则只抓取笔记标题']" puppeteer="1" anticrawler="1" radar="1" rssbud="1"/>
 
 ::: tip 提示
-笔记全文不支持显示视频
+用户笔记全文不支持显示视频，但是笔记可以
 :::
 
 ### 用户收藏
@@ -1666,6 +1666,10 @@ rule
 ### 专辑
 
 <Route author="lotosbin" example="/xiaohongshu/board/5db6f79200000000020032df" path="/xiaohongshu/board/:board_id" :paramsDesc="['专辑 ID']" puppeteer="1" anticrawler="1" radar="1" rssbud="1"/>
+
+### 笔记
+
+<Route author="lotosbin" example="/xiaohongshu/notes/5db6f79200000000020032df" path="/xiaohongshu/notes/:user_id" :paramsDesc="['用户 ID']" puppeteer="0" anticrawler="1" radar="1" rssbud="1"/>
 
 ## 新榜
 
