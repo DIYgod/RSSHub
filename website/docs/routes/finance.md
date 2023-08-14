@@ -1,6 +1,6 @@
 import Route from '@site/src/components/Route';
 
-# 金融
+# 💰 金融
 
 ## AI 财经社
 

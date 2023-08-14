@@ -1,6 +1,6 @@
 import Route from '@site/src/components/Route';
 
-# 二次元
+# 🎨️ 二次元
 
 ## 005.tv
 
@@ -178,10 +178,6 @@ import Route from '@site/src/components/Route';
 ### 用户日志
 
 <Route author="nczitzk" example="/bangumi/tv/user/blog/sai" path="/bangumi/tv/user/blog/:id" paramsDesc={['用户 id, 在用户页面地址栏查看']} radar="1"/>
-
-## bilibili
-
-见 [#bilibili](/routes/social-media#bilibili)
 
 ## CCC 創作集
 

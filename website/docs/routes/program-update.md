@@ -1,6 +1,6 @@
 import Route from '@site/src/components/Route';
 
-# 程序更新
+# 🔄 程序更新
 
 ## Amazon
 
@@ -393,10 +393,6 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 <Route author="hellodword" example="/microsoft-store/updates/9WZDNCRFHVN5/CN" path="/microsoft-store/updates/:productid/:market?" paramsDesc={['在 Store 中点击 `分享` - `复制链接` 即可获得', '默认为 `CN`']} />
 
-## Minecraft
-
-见 [#minecraft](/routes/game#minecraft)
-
 ## MIUI
 
 ### MIUI 新版本发布
@@ -420,12 +416,6 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 ### Download
 
 <Route author="nczitzk" example="/neatdownloadmanager/download" path="/neatdownloadmanager/download/:os?" paramsDesc={['操作系统，可选 windows 或 macos，默认为全部']}/>
-
-## Nintendo Switch
-
-### Switch 本体更新情报（日本）
-
-见 [#nintendo](/routes/game#nintendo)
 
 ## Not a Tesla App
 
@@ -477,12 +467,6 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 ### Releases
 
 <Route author="DIYgod" example="/openwrt/releases/xiaomi/xiaomi_redmi_router_ac2100" path="/releases/:brand/:model" paramsDesc={['产品型号，可在 `Table of Hardware` -> `Device Page` 的 URL 中找到', '同上']}/>
-
-## PlayStation
-
-### PlayStation 4 系统更新纪录
-
-见 [#playstation](/routes/game#playstation)
 
 ## Postman
 
@@ -744,12 +728,6 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 ### 版本历史
 
 <Route author="jasongzy" example="/zotero/versions" path="/zotero/versions"/>
-
-## 怪物猎人世界
-
-### 更新
-
-见 [#怪物猎人世界](/routes/game#怪物猎人世界)
 
 ## 华硕
 

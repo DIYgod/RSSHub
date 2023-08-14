@@ -1,6 +1,6 @@
 import RouteEn from '@site/src/components/RouteEn';
 
-# Uncategorized
+# 🔍 Uncategorized
 
 ## 591 Rental house
 

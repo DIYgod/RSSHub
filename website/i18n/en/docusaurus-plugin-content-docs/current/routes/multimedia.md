@@ -1,6 +1,6 @@
 import RouteEn from '@site/src/components/RouteEn';
 
-# Multimedia
+# 🔊 Multimedia
 
 ## 60-Second Science - Scientific American
 
@@ -610,7 +610,3 @@ When `mediaType` is `movie`, `sheet` should be:
 ### Search
 
 <RouteEn author="TonyRL" example="/u9a9/search/新片速递" path="/u3c3/search/:keyword/:preview?" paramsDesc={['Search keyword', 'Show image preview, off by default, non empty value means on']} supportBT="1" radar="1" />
-
-## YouTube
-
-Refer to [#youtube](/en/routes/social-media#youtube)

@@ -41,3 +41,11 @@
   display: flex;
   gap: 10px;
 }
+
+.container .card > h2 {
+  margin-bottom: 0;
+}
+
+.container .card > h2 + p {
+  display: none;
+}

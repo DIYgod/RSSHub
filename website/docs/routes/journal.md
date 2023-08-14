@@ -1,6 +1,6 @@
 import Route from '@site/src/components/Route';
 
-# 科学期刊
+# 🔬 科学期刊
 
 ## Academy of Management
 

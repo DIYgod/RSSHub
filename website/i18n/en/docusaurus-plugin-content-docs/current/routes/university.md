@@ -1,6 +1,6 @@
 import RouteEn from '@site/src/components/RouteEn';
 
-# University
+# 🎓 University
 
 ## Beijing Jiaotong University
 

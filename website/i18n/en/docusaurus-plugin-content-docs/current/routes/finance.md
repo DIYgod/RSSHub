@@ -1,6 +1,6 @@
 import RouteEn from '@site/src/components/RouteEn';
 
-# Finance
+# 💰 Finance
 
 ## Bloomberg
 

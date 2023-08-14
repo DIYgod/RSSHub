@@ -1,6 +1,6 @@
 import Route from '@site/src/components/Route';
 
-# 图片
+# 🖼️ 图片
 
 ## 1X
 

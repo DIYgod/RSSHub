@@ -1,6 +1,6 @@
 import Route from '@site/src/components/Route';
 
-# 音视频
+# 🔊 音视频
 
 ## 141JAV
 
@@ -279,14 +279,6 @@ import Route from '@site/src/components/Route';
 
 <Route author="zhenhappy" example="/abskoop/nsfw" path="/abskoop/:type?" paramsDesc={['为空, 订阅主站点, `nsfw`订阅nsfw子站点']}>
 
-## AcFun
-
-见 [#AcFun](/routes/anime#acfun)
-
-## AGE 动漫
-
-见 [#AGE 动漫](/routes/anime#age-动漫)
-
 ## AV01（av01.tv）
 
 ### 演员
@@ -335,10 +327,6 @@ import Route from '@site/src/components/Route';
 ### Upcoming Live Streams
 
 <Route author="nczitzk" example="/bandcamp/live" path="/bandcamp/live"/>
-
-## bilibili
-
-见 [#bilibili](/routes/social-media#bilibili)
 
 ## BT 之家
 
@@ -1315,10 +1303,6 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="sakamossan" example="/yahoo-jp-tv/%E8%8A%B1%E6%BE%A4%E9%A6%99%E8%8F%9C" path="/yahoo-jp-tv/:query" paramsDesc={['搜索查询']}/>
 
-## YouTube
-
-见 [#youtube](/routes/social-media#youtube)
-
 ## 阿基米德 FM
 
 ### 播客
@@ -1514,10 +1498,6 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 ### 新片精品
 
 <Route author="imgss" example="/dytt" path="/dytt" supportBT="1"/>
-
-## 抖音
-
-见 [#抖音](/routes/social-media#抖音)
 
 ## 法国国际广播电台
 

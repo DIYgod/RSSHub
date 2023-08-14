@@ -1,6 +1,6 @@
 import RouteEn from '@site/src/components/RouteEn';
 
-# Picture
+# 🖼️ Picture
 
 ## 1X
 

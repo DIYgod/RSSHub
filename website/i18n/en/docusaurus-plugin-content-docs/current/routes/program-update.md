@@ -1,6 +1,6 @@
 import RouteEn from '@site/src/components/RouteEn';
 
-# Application Updates
+# 🔄 Application Updates
 
 ## Amazon
 
@@ -351,10 +351,6 @@ Please use <https://github.com/logseq/logseq/releases.atom> instead.
 
 <RouteEn author="hellodword" example="/microsoft-store/updates/9WZDNCRFHVN5/CN" path="/microsoft-store/updates/:productid/:market?" paramsDesc={['`Share` - `Copy Link` in the Store', '`CN` as default']} />
 
-## Minecraft
-
-Refer to [#minecraft](/en/routes/game#minecraft)
-
 ## MIUI
 
 ### New firmware
@@ -434,12 +430,6 @@ See [#nintendo](/en/routes/game#nintendo)
 ### Releases
 
 <RouteEn author="DIYgod" example="/openwrt/releases/xiaomi/xiaomi_redmi_router_ac2100" path="/releases/:brand/:model" paramsDesc={['Device Model, can be found in url of `Table of Hardware` -> `Device Page`', 'Same as above']}/>
-
-## PlayStation
-
-### PlayStation 4 System Update
-
-见 [#playstation](/en/routes/game#playstation)
 
 ## Postman
 

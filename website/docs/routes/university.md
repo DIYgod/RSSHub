@@ -1,6 +1,6 @@
 import Route from '@site/src/components/Route';
 
-# 大学通知
+# 🎓 大学通知
 
 ## MIT
 

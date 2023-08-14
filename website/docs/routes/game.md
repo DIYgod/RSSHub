@@ -1,6 +1,6 @@
 import Route from '@site/src/components/Route';
 
-# 游戏
+# 🎮 游戏
 
 ## 3DMGame
 

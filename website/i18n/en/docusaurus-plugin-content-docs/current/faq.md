@@ -1,3 +1,5 @@
+import Badge from '@site/src/components/Badge';
+
 # FAQs
 
 **Q: How does RSSHub work？**

@@ -1,6 +1,6 @@
 import RouteEn from '@site/src/components/RouteEn';
 
-# New media
+# 📱 New media
 
 ## 9To5
 

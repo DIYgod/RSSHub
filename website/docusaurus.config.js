@@ -53,6 +53,22 @@ const config = {
         ],
     ],
 
+    themes: [
+        [
+            require.resolve('@easyops-cn/docusaurus-search-local'),
+            {
+                // ... Your options.
+                // `hashed` is recommended as long-term-cache of index file is possible.
+                hashed: true,
+                indexBlog: false,
+                language: ['en', 'zh'],
+                docsRouteBasePath: '/',
+                highlightSearchTermsOnTargetPage: true,
+                explicitSearchResultPath: true,
+                searchResultLimits: 10,
+            },
+        ],
+    ],
     themeConfig:
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
@@ -69,29 +85,19 @@ const config = {
                         to: '/',
                         position: 'left',
                         label: '指南',
+                        activeBaseRegex: '^/(usage|faq|parameter|api)?$',
                     },
                     {
-                        type: 'dropdown',
+                        to: '/routes',
+                        position: 'left',
+                        label: '路由',
+                        activeBaseRegex: '^/routes/',
+                    },
+                    {
+                        to: '/joinus/quick-start',
                         label: '参与我们',
                         position: 'left',
-                        items: [
-                            {
-                                to: '/joinus/quick-start',
-                                label: '快速开始',
-                            },
-                            {
-                                to: '/joinus/advanced/script-standard',
-                                label: '路由规范',
-                            },
-                            {
-                                to: '/joinus/advanced/pub-date',
-                                label: '日期处理',
-                            },
-                            {
-                                to: '/joinus/advanced/use-cache',
-                                label: '使用缓存',
-                            },
-                        ],
+                        activeBaseRegex: '^/joinus/',
                     },
                     {
                         to: '/install',
@@ -102,6 +108,10 @@ const config = {
                         to: '/support',
                         position: 'left',
                         label: '支持 RSSHub',
+                    },
+                    {
+                        type: 'search',
+                        position: 'right',
                     },
                     {
                         type: 'localeDropdown',

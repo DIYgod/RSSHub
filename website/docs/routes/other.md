@@ -1,6 +1,6 @@
 import Route from '@site/src/components/Route';
 
-# 其他
+# 🔍 其他
 
 ## 4399 论坛
 
