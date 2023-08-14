@@ -1,3 +1,5 @@
+import Route from '@site/src/components/Route';
+
 ---
 pageClass: routes
 ---
@@ -8,7 +10,7 @@ pageClass: routes
 
 ### AWS 博客
 
-<Route author="HankChow" example="/amazon/awsblogs" path="/awsblogs/:locale?" :paramsDesc="['指定语言的博客文章，仅支持以下选项，默认为 `zh_CN`']">
+<Route author="HankChow" example="/amazon/awsblogs" path="/awsblogs/:locale?" paramsDesc={['指定语言的博客文章，仅支持以下选项，默认为 `zh_CN`']}>
 
 | zh_CN | en_US | fr_FR | de_DE | ja_JP | ko_KR | pt_BR    | es_ES    | ru_RU | id_ID  | tr_TR    |
 | ----- | ----- | ----- | ----- | ----- | ----- | -------- | -------- | ----- | ------ | -------- |
@@ -36,7 +38,7 @@ pageClass: routes
 
 ### 用户博客
 
-<Route author="Jkker" example="/csdn/blog/csdngeeknews" path="/csdn/blog/:user" radar="1" :paramsDesc="['`user` 为 CSDN 用户名，可以在主页 url 中找到']" />
+<Route author="Jkker" example="/csdn/blog/csdngeeknews" path="/csdn/blog/:user" radar="1" paramsDesc={['`user` 为 CSDN 用户名，可以在主页 url 中找到']} />
 
 ## DevolverDigital
 
@@ -48,7 +50,7 @@ pageClass: routes
 
 ### 文章
 
-<Route author="trganda" example="/freebuf/articles/web" path="/freebuf/articles/:type" :paramsDesc="['文章类别', '文章id号，可选']">
+<Route author="trganda" example="/freebuf/articles/web" path="/freebuf/articles/:type" paramsDesc={['文章类别', '文章id号，可选']}>
 
 ::: tip 使用说明
 Freebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的完整内容。
@@ -66,23 +68,23 @@ Freebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的
 
 ### 文章更新
 
-<Route author="hoilc" example="/google/sites/outlierseconomics" path="/google/sites/:id" :paramsDesc="['Site ID, 可在 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="hoilc" example="/google/sites/outlierseconomics" path="/google/sites/:id" paramsDesc={['Site ID, 可在 URL 中找到']} radar="1" rssbud="1"/>
 
 ### 文章最近改动
 
-<Route author="nczitzk" example="/google/sites/recentChanges/outlierseconomics" path="/google/sites/recentChanges/:id" :paramsDesc="['Site ID, 可在 URL 中找到']"/>
+<Route author="nczitzk" example="/google/sites/recentChanges/outlierseconomics" path="/google/sites/recentChanges/:id" paramsDesc={['Site ID, 可在 URL 中找到']}/>
 
 ## Gwern Branwen
 
 ### 博客
 
-<Route author="cerebrater" example="/gwern/newest" path="/gwern/:category" :paramsDesc="['網誌主頁的分類訊息']"/>
+<Route author="cerebrater" example="/gwern/newest" path="/gwern/:category" paramsDesc={['網誌主頁的分類訊息']}/>
 
 ## hashnode
 
 ### 用户博客
 
-<Route author="hnrainll" example="/hashnode/blog/inklings" path="/hashnode/blog/:username" :paramsDesc="['博主名称，用户头像 URL 中找到']">
+<Route author="hnrainll" example="/hashnode/blog/inklings" path="/hashnode/blog/:username" paramsDesc={['博主名称，用户头像 URL 中找到']}>
 
 ::: tip 提示
 
@@ -96,7 +98,7 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 ### 博客
 
-<Route author="zwithz" example="/blogs/hedwig/zmd" path="/blogs/hedwig/:type" :paramsDesc="['分类, 见下表']"/>
+<Route author="zwithz" example="/blogs/hedwig/zmd" path="/blogs/hedwig/:type" paramsDesc={['分类, 见下表']}/>
 
 | 呆唯的 Newsletter | 0neSe7en 的技术周刊 | 地心引力 | 宪学宪卖 | Comeet 每周精选 | 无鸡之谈 | 我有一片芝麻地 |
 | ----------------- | ------------------- | -------- | -------- | --------------- | -------- | -------------- |
@@ -108,15 +110,15 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 ### Next 主题博客
 
-<Route author="fengkx" example="/hexo/next/archive.diygod.me" path="/hexo/next/:url" :paramsDesc="['博客 Url 不带协议头']" selfhost="1"/>
+<Route author="fengkx" example="/hexo/next/archive.diygod.me" path="/hexo/next/:url" paramsDesc={['博客 Url 不带协议头']} selfhost="1"/>
 
 ### Yilia 主题博客
 
-<Route author="aha2mao" example="/hexo/yilia/cloudstone.xin" path="/hexo/yilia/:url" :paramsDesc="['博客 Url 不带协议头']" selfhost="1"/>
+<Route author="aha2mao" example="/hexo/yilia/cloudstone.xin" path="/hexo/yilia/:url" paramsDesc={['博客 Url 不带协议头']} selfhost="1"/>
 
 ### Fluid 主题博客
 
-<Route author="gkkeys" example="/hexo/fluid/blog.tonyzhao.xyz" path="/hexo/fluid/:url" :paramsDesc="['博客 Url 不带协议头']" selfhost="1"/>
+<Route author="gkkeys" example="/hexo/fluid/blog.tonyzhao.xyz" path="/hexo/fluid/:url" paramsDesc={['博客 Url 不带协议头']} selfhost="1"/>
 
 ## Hi, DIYgod
 
@@ -156,13 +158,13 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 ### Recently
 
-<RouteEn author="5upernova-heng" example="/macmenubar/recently/developer-apps,system-tools" path="/macmenubar/recently/:category?" :paramsDesc="['分类名，多个使用逗号隔开，留空则为全部。分类名可在 URL 中找到']" radar="1" />
+<RouteEn author="5upernova-heng" example="/macmenubar/recently/developer-apps,system-tools" path="/macmenubar/recently/:category?" paramsDesc={['分类名，多个使用逗号隔开，留空则为全部。分类名可在 URL 中找到']} radar="1" />
 
 ## Medium
 
 ### List
 
-<Route author="ImSingee" example="/medium/list/imsingee/f2d8d48096a9" path="/medium/list/:user/:catalogId" :paramsDesc="['用户名', 'List 的 ID']">
+<Route author="ImSingee" example="/medium/list/imsingee/f2d8d48096a9" path="/medium/list/:user/:catalogId" paramsDesc={['用户名', 'List 的 ID']}>
 
 List ID 取的是网址中最后一部分 `-` 后面的内容，例如 `https://medium.com/@imsingee/list/collection-7e67004f23f9` 的用户名为 imsingee、ID 为 `7e67004f23f9`
 
@@ -176,7 +178,7 @@ List ID 取的是网址中最后一部分 `-` 后面的内容，例如 `https://
 
 ### 个性推荐 - For You
 
-<Route author="ImSingee" example="/medium/for-you/imsingee" path="/medium/for-you/:user" :paramsDesc="['用户名']" selfhost="1">
+<Route author="ImSingee" example="/medium/for-you/imsingee" path="/medium/for-you/:user" paramsDesc={['用户名']} selfhost="1">
 
 ::: warning 注意
 
@@ -188,7 +190,7 @@ List ID 取的是网址中最后一部分 `-` 后面的内容，例如 `https://
 
 ### 个性推荐 - Following
 
-<Route author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" :paramsDesc="['用户名']" selfhost="1">
+<Route author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" paramsDesc={['用户名']} selfhost="1">
 
 ::: warning 注意
 
@@ -200,7 +202,7 @@ List ID 取的是网址中最后一部分 `-` 后面的内容，例如 `https://
 
 ### 个性推荐 - Tag
 
-<Route author="ImSingee" example="/medium/tag/imsingee/cybersecurity" path="/medium/tag/:user/:tag" :paramsDesc="['用户名', '订阅的 Tag']" selfhost="1">
+<Route author="ImSingee" example="/medium/tag/imsingee/cybersecurity" path="/medium/tag/:user/:tag" paramsDesc={['用户名', '订阅的 Tag']} selfhost="1">
 
 Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://medium.com/?tag=web3` 则 tag 为 `web3`
 
@@ -270,7 +272,7 @@ Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://me
 
 ### 分類
 
-<Route author="nczitzk" example="/whoscall/categories/5-Whoscall 百科" path="/whoscall/categories/:category?" :paramsDesc="['分类，见下表，可在对应分類页 URL 中找到，默认为最新文章']">
+<Route author="nczitzk" example="/whoscall/categories/5-Whoscall 百科" path="/whoscall/categories/:category?" paramsDesc={['分类，见下表，可在对应分類页 URL 中找到，默认为最新文章']}>
 
 | News   | Whoscall 百科   | 防詐小學堂     | Whoscall 日常   |
 | ------ | --------------- | -------------- | --------------- |
@@ -280,7 +282,7 @@ Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://me
 
 ### 標籤
 
-<Route author="nczitzk" example="/whoscall/tags/whoscall小百科" path="/whoscall/tags/:tag?" :paramsDesc="['標籤，见下表，可在对应標籤页 URL 中找到，默认为最新文章']">
+<Route author="nczitzk" example="/whoscall/tags/whoscall小百科" path="/whoscall/tags/:tag?" paramsDesc={['標籤，见下表，可在对应標籤页 URL 中找到，默认为最新文章']}>
 
 | 防疫也防詐 | 防詐專家 | 來電辨識 | whoscall 日常 |
 | ---------- | -------- | -------- | ------------- |
@@ -291,7 +293,7 @@ Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://me
 
 ### 博客
 
-<Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" :paramsDesc="['WordPress 博客域名', '默认 https 协议。填写 `http`或`https`']"/>
+<Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" paramsDesc={['WordPress 博客域名', '默认 https 协议。填写 `http`或`https`']}/>
 
 ## yuzu emulator
 
@@ -321,7 +323,7 @@ Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://me
 
 ### 分类
 
-<Route author="hujingnb" example="/cnblogs/cate/go" path="/cnblogs/cate/:type" :paramsDesc="['类型']" radar="1" rssbud="1">
+<Route author="hujingnb" example="/cnblogs/cate/go" path="/cnblogs/cate/:type" paramsDesc={['类型']} radar="1" rssbud="1">
 
 在博客园主页的分类出可查看所有类型。例如，go 的分类地址为: `https://www.cnblogs.com/cate/go/`, 则: [`/cnblogs/cate/go`](https://rsshub.app/cnblogs/cate/go)
 
@@ -335,7 +337,7 @@ Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://me
 
 ### 用户博客
 
-<Route author="Maecenas" example="/caixin/blog/zhangwuchang" path="/caixin/blog/:column" :paramsDesc="['博客名称，可在博客主页的 URL 找到']">
+<Route author="Maecenas" example="/caixin/blog/zhangwuchang" path="/caixin/blog/:column" paramsDesc={['博客名称，可在博客主页的 URL 找到']}>
 
 通过提取文章全文，以提供比官方源更佳的阅读体验.
 
@@ -351,7 +353,7 @@ Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://me
 
 ### 分类
 
-<Route author="nitezs" example="/dayanzai/windows" path="/dayanzai/:category/:fulltext?" :paramsDesc="['分类','是否获取全文，需要获取则传入参数`y`']" radar="1">
+<Route author="nitezs" example="/dayanzai/windows" path="/dayanzai/:category/:fulltext?" paramsDesc={['分类','是否获取全文，需要获取则传入参数`y`']} radar="1">
 
 | 微软应用 | 安卓应用 | 教程资源 | 其他资源 |
 | -------- | -------- | -------- | -------- |
@@ -387,7 +389,7 @@ Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://me
 
 ### 分类
 
-<Route author="nczitzk" example="/kenshin" path="/kenshin/:category?/:type?" :paramsDesc="['分类，见下表，默认为首页', '子分类，见下表，默认为首页']">
+<Route author="nczitzk" example="/kenshin" path="/kenshin/:category?/:type?" paramsDesc={['分类，见下表，默认为首页', '子分类，见下表，默认为首页']}>
 
 ::: tip 提示
 
@@ -465,7 +467,7 @@ Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://me
 
 ### 文章
 
-<Route author="prnake" example="/blogs/wang54" path="/blogs/wang54/:id?" :paramsDesc="['RSS抓取地址：https://wangwusiwj.blogspot.com/:id?，默认为2020']"/>
+<Route author="prnake" example="/blogs/wang54" path="/blogs/wang54/:id?" paramsDesc={['RSS抓取地址：https://wangwusiwj.blogspot.com/:id?，默认为2020']}/>
 
 ## 王垠博客
 
@@ -483,7 +485,7 @@ Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://me
 
 ### 工程技术
 
-<Route author="hulb" example="/uber/blog" path="/uber/blog/:maxPage?" :paramsDesc="['获取的最多页数，默认最多获取第一页']" />
+<Route author="hulb" example="/uber/blog" path="/uber/blog/:maxPage?" paramsDesc={['获取的最多页数，默认最多获取第一页']} />
 
 ## 雨苁博客
 
@@ -511,7 +513,7 @@ Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://me
 
 ### 文章
 
-<Route author="naixy28" example="/zhubai/via" path="/zhubai/:id"  :paramsDesc="['`id` 为竹白主页 url 中的三级域名，如 via.zhubai.love 的 `id` 为 `via`']">
+<Route author="naixy28" example="/zhubai/via" path="/zhubai/:id"  paramsDesc={['`id` 为竹白主页 url 中的三级域名，如 via.zhubai.love 的 `id` 为 `via`']}>
 
 ::: tip 提示
 

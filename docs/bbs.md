@@ -1,3 +1,5 @@
+import Route from '@site/src/components/Route';
+
 ---
 pageClass: routes
 ---
@@ -8,7 +10,7 @@ pageClass: routes
 
 ### 头条
 
-<Route author="nczitzk" example="/19lou/jiaxing" path="/19lou/:city?" :paramsDesc="['分类，见下表，默认为 www，即杭州']">
+<Route author="nczitzk" example="/19lou/jiaxing" path="/19lou/:city?" paramsDesc={['分类，见下表，默认为 www，即杭州']}>
 
 | 杭州 | 台州    | 嘉兴    | 宁波   | 湖州   |
 | ---- | ------- | ------- | ------ | ------ |
@@ -32,7 +34,7 @@ pageClass: routes
 
 ### 分类
 
-<Route author="nczitzk" example="/2047" path="/2047/:category?/:sort?" :paramsDesc="['分类，见下表，默认为首页', '排序，见下表，默认为综合']">
+<Route author="nczitzk" example="/2047" path="/2047/:category?/:sort?" paramsDesc={['分类，见下表，默认为首页', '排序，见下表，默认为综合']}>
 
 分类
 
@@ -92,7 +94,7 @@ pageClass: routes
 
 ### 分类
 
-<Route author="Fatpandac" example="/423down/index/all" path="/423down/:category/:type" :paramsDesc="['类型', '分类']" radar="1">
+<Route author="Fatpandac" example="/423down/index/all" path="/423down/:category/:type" paramsDesc={['类型', '分类']} radar="1">
 
 | category | 全部 |
 | :------: | :--: |
@@ -116,11 +118,11 @@ pageClass: routes
 
 ### 子版块
 
-<Route author="tylinux" example="/chiphell/forum/80" path="/chiphell/forum/:forumId" :paramsDesc="['子版块 id，可在子版块 URL 找到']"/>
+<Route author="tylinux" example="/chiphell/forum/80" path="/chiphell/forum/:forumId" paramsDesc={['子版块 id，可在子版块 URL 找到']}/>
 
 ## Citavi 中文网站论坛
 
-<Route author="nczitzk" example="/citavi" path="/citavi/:caty" :paramsDesc="['分类名，可在对应分类页 URL 中找到，默认为全部']">
+<Route author="nczitzk" example="/citavi" path="/citavi/:caty" paramsDesc={['分类名，可在对应分类页 URL 中找到，默认为全部']}>
 
 | 全部 | 下载安装   | 许可证  | 入门指南       | 升级更新 | 教程           | 新闻资讯 | 技巧分享 | 账户插件      | 其他   |        |
 | ---- | ---------- | ------- | -------------- | -------- | -------------- | -------- | -------- | ------------- | ------ | ------ |
@@ -138,21 +140,21 @@ pageClass: routes
 
 ### 首頁帖子
 
-<Route author="DIYgod" example="/dcard/posts/popular" path="/dcard/posts/:type?" :paramsDesc="['排序，popular 熱門；latest 最新，默認為 latest']" radar="1" rssbud="1" anticrawler="1" puppeteer="1"/>
+<Route author="DIYgod" example="/dcard/posts/popular" path="/dcard/posts/:type?" paramsDesc={['排序，popular 熱門；latest 最新，默認為 latest']} radar="1" rssbud="1" anticrawler="1" puppeteer="1"/>
 
 ### 板塊帖子
 
-<Route author="HenryQW" example="/dcard/funny/popular" path="/dcard/:section/:type?" :paramsDesc="['板塊名稱，URL 中獲得', '排序，popular 熱門；latest 最新，默認為 latest']" radar="1" rssbud="1" anticrawler="1" puppeteer="1"/>
+<Route author="HenryQW" example="/dcard/funny/popular" path="/dcard/:section/:type?" paramsDesc={['板塊名稱，URL 中獲得', '排序，popular 熱門；latest 最新，默認為 latest']} radar="1" rssbud="1" anticrawler="1" puppeteer="1"/>
 
 ## Discuz
 
 ### 通用子版块 - 自动检测
 
-<Route author="junfengP" example="/discuz/http%3a%2f%2fwww.u-share.cn%2fforum.php%3fmod%3dforumdisplay%26fid%3d56" path="/discuz/:link" :paramsDesc="['子版块链接， 需要手动Url编码']"/>
+<Route author="junfengP" example="/discuz/http%3a%2f%2fwww.u-share.cn%2fforum.php%3fmod%3dforumdisplay%26fid%3d56" path="/discuz/:link" paramsDesc={['子版块链接， 需要手动Url编码']}/>
 
 ### 通用子版块 - 指定版本
 
-<Route author="junfengP" example="/discuz/x/https%3a%2f%2fwww.52pojie.cn%2fforum-16-1.html" path="/discuz/:ver/:link" :paramsDesc="['discuz版本类型，见下表','子版块链接， 需要手动Url编码']" >
+<Route author="junfengP" example="/discuz/x/https%3a%2f%2fwww.52pojie.cn%2fforum-16-1.html" path="/discuz/:ver/:link" paramsDesc={['discuz版本类型，见下表','子版块链接， 需要手动Url编码']} >
 
 | Discuz X 系列 | Discuz 7.x 系列 |
 | ------------- | --------------- |
@@ -162,7 +164,7 @@ pageClass: routes
 
 ### 通用子版块 - 支持 Cookie
 
-<Route author="junfengP" example="/discuz/x/00/https%3a%2f%2fbbs.zdfx.net%2fforum-2-1.html" path="/discuz/:ver/:cid/:link" :paramsDesc="['discuz版本类型，见下表', 'Cookie id，需自建并配置环境变量，详情见部署页面的配置模块','子版块链接， 需要手动Url编码']" >
+<Route author="junfengP" example="/discuz/x/00/https%3a%2f%2fbbs.zdfx.net%2fforum-2-1.html" path="/discuz/:ver/:cid/:link" paramsDesc={['discuz版本类型，见下表', 'Cookie id，需自建并配置环境变量，详情见部署页面的配置模块','子版块链接， 需要手动Url编码']} >
 
 | Discuz X 系列 | Discuz 7.x 系列 |
 | ------------- | --------------- |
@@ -174,7 +176,7 @@ pageClass: routes
 
 ### 发现
 
-<Route author="nczitzk" example="/elasticsearch-cn" path="/elasticsearch-cn/:params?" :paramsDesc="['分类，可在对应分类页 URL 中找到']">
+<Route author="nczitzk" example="/elasticsearch-cn" path="/elasticsearch-cn/:params?" paramsDesc={['分类，可在对应分类页 URL 中找到']}>
 
 如 [Elasticsearch 最新](https://elasticsearch.cn/category-2) 的 URL 为 <https://elasticsearch.cn/category-2>，则分类参数处填写 `category-2`，最后得到路由地址 [`/elasticsearch-cn/category-2`](https://rsshub.app/elasticsearch-cn/category-2)。
 
@@ -186,7 +188,7 @@ pageClass: routes
 
 ### 主题贴
 
-<Route author="mengx8" example="/etoland/star01" path="/etoland/:boardId" :paramsDesc="['板块 id，可在板块 URL 找到']" radar="1" rssbud="1"/>
+<Route author="mengx8" example="/etoland/star01" path="/etoland/:boardId" paramsDesc={['板块 id，可在板块 URL 找到']} radar="1" rssbud="1"/>
 
 ## HACKER TALK 黑客说
 
@@ -198,7 +200,7 @@ pageClass: routes
 
 ### 社区
 
-<Route author="haokaiyang" example="/learnku/laravel/qa" path="/learnku/:community/:category?" :paramsDesc="['社区 标识，可在 <https://learnku.com/communities> 找到', '分类，如果不传 `category` 则获取全部分类']"/>
+<Route author="haokaiyang" example="/learnku/laravel/qa" path="/learnku/:community/:category?" paramsDesc={['社区 标识，可在 <https://learnku.com/communities> 找到', '分类，如果不传 `category` 则获取全部分类']}/>
 
 | 招聘 | 翻译         | 问答 | 链接  |
 | ---- | ------------ | ---- | ----- |
@@ -208,23 +210,23 @@ pageClass: routes
 
 ### Discussion
 
-<Route author="nczitzk" example="/lowendtalk/discussion/168480" path="/lowendtalk/discussion/:id?" :paramsDesc="['讨论 id']"/>
+<Route author="nczitzk" example="/lowendtalk/discussion/168480" path="/lowendtalk/discussion/:id?" paramsDesc={['讨论 id']}/>
 
 ## MCBBS
 
 ### 版块
 
-<Route author="cssxsh" example="/mcbbs/forum/news" path="/mcbbs/forum/:type" :paramsDesc="['版块名称或者版块号']"/>
+<Route author="cssxsh" example="/mcbbs/forum/news" path="/mcbbs/forum/:type" paramsDesc={['版块名称或者版块号']}/>
 
 ### 帖子
 
-<Route author="cssxsh" example="/mcbbs/post/915861/3038" path="/mcbbs/post/:tid/:authorid?" :paramsDesc="['贴子id，可在帖子 URL 找到', '用户id，此参数不为空时，只看此作者']"/>
+<Route author="cssxsh" example="/mcbbs/post/915861/3038" path="/mcbbs/post/:tid/:authorid?" paramsDesc={['贴子id，可在帖子 URL 找到', '用户id，此参数不为空时，只看此作者']}/>
 
 ## Meteor
 
 ### 看板
 
-<Route author="TonyRL" example="/meteor/all" path="/meteor/:board?" :paramsDesc="['看板 ID 或簡稱，可在 URL 或下方路由找到，預設為 `all`']" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/meteor/all" path="/meteor/:board?" paramsDesc={['看板 ID 或簡稱，可在 URL 或下方路由找到，預設為 `all`']} radar="1" rssbud="1"/>
 
 ### 看板列表
 
@@ -234,7 +236,7 @@ pageClass: routes
 
 ### 论坛
 
-<Route author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type/:fulltext?" :paramsDesc="['分类', '种类', '是否获取全文，如需获取全文参数传入 `y`']">
+<Route author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type/:fulltext?" paramsDesc={['分类', '种类', '是否获取全文，如需获取全文参数传入 `y`']}>
 
 | 安卓    | iPhone | iPad |
 | ------- | ------ | ---- |
@@ -248,7 +250,7 @@ pageClass: routes
 
 ### 门户
 
-<Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type/:fulltext?" :paramsDesc="['种类', '是否获取全文，如需获取全文参数传入 `y`']">
+<Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type/:fulltext?" paramsDesc={['种类', '是否获取全文，如需获取全文参数传入 `y`']}>
 
 | 安卓应用 | 安卓游戏 | 图书  | iPad 应用 | iPad 游戏 | iPhone 应用 | iPhone 游戏 |
 | -------- | -------- | ----- | --------- | --------- | ----------- | ----------- |
@@ -260,11 +262,11 @@ pageClass: routes
 
 ### 分区帖子
 
-<Route author="xyqfer" example="/nga/forum/489" path="/nga/forum/:fid/:recommend?"  :paramsDesc="['分区 id, 可在分区主页 URL 找到, 没有 fid 时 stid 同样适用','是否只显示精华主题, 留空为否, 任意值为是']" radar="1" rssbud="1"/>
+<Route author="xyqfer" example="/nga/forum/489" path="/nga/forum/:fid/:recommend?"  paramsDesc={['分区 id, 可在分区主页 URL 找到, 没有 fid 时 stid 同样适用','是否只显示精华主题, 留空为否, 任意值为是']} radar="1" rssbud="1"/>
 
 ### 帖子
 
-<Route author="xyqfer syrinka" example="/nga/post/18449558" path="/nga/post/:tid/:authorId?"  :paramsDesc="['帖子 id, 可在帖子 URL 找到', '作者 id']" radar="1" rssbud="1"/>
+<Route author="xyqfer syrinka" example="/nga/post/18449558" path="/nga/post/:tid/:authorId?"  paramsDesc={['帖子 id, 可在帖子 URL 找到', '作者 id']} radar="1" rssbud="1"/>
 
 ## PLAYNO.1 玩樂達人
 
@@ -276,7 +278,7 @@ pageClass: routes
 
 :::
 
-<Route author="TonyRL" example="/playno1/av" path="/playno1/av/:catid?" :paramsDesc="['分类，见下表，默认为全部文章']" radar="1" rssbud="1">
+<Route author="TonyRL" example="/playno1/av" path="/playno1/av/:catid?" paramsDesc={['分类，见下表，默认为全部文章']} radar="1" rssbud="1">
 
 | 全部文章 | AV 新聞 | AV 導覽 |
 | -------- | ------- | ------- |
@@ -286,7 +288,7 @@ pageClass: routes
 
 ### 情趣
 
-<Route author="TonyRL" example="/playno1/st" path="/playno1/st/:catid?" :paramsDesc="['分类，见下表，默认为全部文章']" radar="1" rssbud="1">
+<Route author="TonyRL" example="/playno1/st" path="/playno1/st/:catid?" paramsDesc={['分类，见下表，默认为全部文章']} radar="1" rssbud="1">
 
 | 全部文章 | 情趣體驗報告 | 情趣新聞 | 情趣研究所 |
 | -------- | ------------ | -------- | ---------- |
@@ -306,7 +308,7 @@ pageClass: routes
 
 ### 主题
 
-<Route author="ahonn" example="/ruby-china/topics" path="/ruby-china/topics/:type" :paramsDesc="['主题类型，在 URL 可以找到']"/>
+<Route author="ahonn" example="/ruby-china/topics" path="/ruby-china/topics/:type" paramsDesc={['主题类型，在 URL 可以找到']}/>
 
 | 主题类型 | type       |
 | -------- | ---------- |
@@ -324,7 +326,7 @@ pageClass: routes
 
 ### 帖子
 
-<Route author="zengxs" example="/saraba1st/thread/1842868" path="/saraba1st/thread/:tid" :paramsDesc="['帖子 id']" radar="1">
+<Route author="zengxs" example="/saraba1st/thread/1842868" path="/saraba1st/thread/:tid" paramsDesc={['帖子 id']} radar="1">
 
 帖子网址如果为 <https://bbs.saraba1st.com/2b/thread-1842868-1-1.html> 那么帖子 id 就是 `1789863`。
 
@@ -332,7 +334,7 @@ pageClass: routes
 
 ### 论坛摘要
 
-<Route author="shinemoon" example="/saraba1st/digest/forum-75-1" path="/saraba1st/digest/:tid" :paramsDesc="['论坛 id']" radar="1">
+<Route author="shinemoon" example="/saraba1st/digest/forum-75-1" path="/saraba1st/digest/:tid" paramsDesc={['论坛 id']} radar="1">
 
 版面网址如果为 <https://bbs.saraba1st.com/2b/forum-75-1.html> 那么论坛 id 就是 `forum-75-1`。
 
@@ -342,7 +344,7 @@ pageClass: routes
 
 ### 帖子
 
-<Route author="totorowechat" example="/scboy/thread/188673" path="/scboy/thread/:tid" :paramsDesc="['帖子 tid']" radar="1">
+<Route author="totorowechat" example="/scboy/thread/188673" path="/scboy/thread/:tid" paramsDesc={['帖子 tid']} radar="1">
 
 帖子网址如果为 <https://www.scboy.com/?thread-188673.htm> 那么帖子 tid 就是 `1789863`。
 
@@ -362,27 +364,25 @@ pageClass: routes
 
 <Route author="shiningdracon" example="/trow/portal" path="/trow/portal" />
 
-</Route>
-
 ## V2EX
 
 ### 最热 / 最新主题
 
-<Route author="WhiteWorld" example="/v2ex/topics/latest" path="/v2ex/topics/:type" :paramsDesc="['hot 或 latest']"/>
+<Route author="WhiteWorld" example="/v2ex/topics/latest" path="/v2ex/topics/:type" paramsDesc={['hot 或 latest']}/>
 
 ### 帖子
 
-<Route author="kt286" example="/v2ex/post/584403" path="/v2ex/post/:postid" :paramsDesc="['帖子ID，在 URL 可以找到']"/>
+<Route author="kt286" example="/v2ex/post/584403" path="/v2ex/post/:postid" paramsDesc={['帖子ID，在 URL 可以找到']}/>
 
 ### 标签
 
-<Route author="liyefox" example="/v2ex/tab/hot" path="/v2ex/tab/:tabid" :paramsDesc="['tab标签ID,在 URL 可以找到']"/>
+<Route author="liyefox" example="/v2ex/tab/hot" path="/v2ex/tab/:tabid" paramsDesc={['tab标签ID,在 URL 可以找到']}/>
 
 ## X 岛匿名版
 
 ### 串
 
-<Route author="miles170" example="/nmbxd1/1" path="/nmbxd1/:id" :paramsDesc="['板块 id 或者板块名称，现有板块请参考下表']" >
+<Route author="miles170" example="/nmbxd1/1" path="/nmbxd1/:id" paramsDesc={['板块 id 或者板块名称，现有板块请参考下表']} >
 
 | 综合线 | 非创作线 | 综合版 1 | 欢乐恶搞 | 买买买 (剁手) | 数码 (装机) | 技术 (码农) | 科学 (干货) | 二创 (画师) | 电影 / 电视 | ROLL 点 |
 | ------ | -------- | -------- | -------- | ------------- | ----------- | ----------- | ----------- | ----------- | ----------- | ------- |
@@ -406,13 +406,13 @@ pageClass: routes
 
 ### 论坛版块
 
-<Route author="FeCCC" example="/zodgame/forum/13" path="/zodgame/forum/:fid?" :paramsDesc="['版块 id，在 URL 可以找到']" radar="1" rssbud="1" selfhost="1"/>
+<Route author="FeCCC" example="/zodgame/forum/13" path="/zodgame/forum/:fid?" paramsDesc={['版块 id，在 URL 可以找到']} radar="1" rssbud="1" selfhost="1"/>
 
 ## Zuvio
 
 ### 校園話題
 
-<Route author="TonyRL" example="/zuvio/student5/34" path="/zuvio/student5/:board?" :paramsDesc="['看板 ID，空为全站文章，可在看板 URL 或下方路由找到']" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/zuvio/student5/34" path="/zuvio/student5/:board?" paramsDesc={['看板 ID，空为全站文章，可在看板 URL 或下方路由找到']} radar="1" rssbud="1"/>
 
 ### 看板列表
 
@@ -422,29 +422,29 @@ pageClass: routes
 
 ### 熱門推薦
 
-<Route author="nczitzk" example="/gamer/hot/47157" path="/gamer/hot/:bsn" :paramsDesc="['板块 id，在 URL 可以找到']"/>
+<Route author="nczitzk" example="/gamer/hot/47157" path="/gamer/hot/:bsn" paramsDesc={['板块 id，在 URL 可以找到']}/>
 
 ## 百度贴吧
 
 ### 帖子列表
 
-<Route author="u3u" example="/baidu/tieba/forum/女图" path="/baidu/tieba/forum/:kw" :paramsDesc="['吧名']" radar="1"/>
+<Route author="u3u" example="/baidu/tieba/forum/女图" path="/baidu/tieba/forum/:kw" paramsDesc={['吧名']} radar="1"/>
 
 ### 精品帖子
 
-<Route author="u3u" example="/baidu/tieba/forum/good/女图" path="/baidu/tieba/forum/good/:kw/:cid?" :paramsDesc="['吧名', '精品分类, 如果不传 `cid` 则获取全部分类']" radar="1"/>
+<Route author="u3u" example="/baidu/tieba/forum/good/女图" path="/baidu/tieba/forum/good/:kw/:cid?" paramsDesc={['吧名', '精品分类, 如果不传 `cid` 则获取全部分类']} radar="1"/>
 
 ### 帖子动态
 
-<Route author="u3u" example="/baidu/tieba/post/5853240586" path="/baidu/tieba/post/:id" :paramsDesc="['帖子 ID']" radar="1"/>
+<Route author="u3u" example="/baidu/tieba/post/5853240586" path="/baidu/tieba/post/:id" paramsDesc={['帖子 ID']} radar="1"/>
 
 ### 楼主动态
 
-<Route author="u3u" example="/baidu/tieba/post/lz/5853240586" path="/baidu/tieba/post/lz/:id" :paramsDesc="['帖子 ID']" radar="1"/>
+<Route author="u3u" example="/baidu/tieba/post/lz/5853240586" path="/baidu/tieba/post/lz/:id" paramsDesc={['帖子 ID']} radar="1"/>
 
 ### 用户帖子
 
-<Route author="igxlin nczitzk" example="/baidu/tieba/user/斗鱼游戏君" path="/baidu/tieba/user/:uid" :paramsDesc="['用户 ID']" radar="1">
+<Route author="igxlin nczitzk" example="/baidu/tieba/user/斗鱼游戏君" path="/baidu/tieba/user/:uid" paramsDesc={['用户 ID']} radar="1">
 
 用户 ID 可以通过打开用户的主页后查看地址栏的 `un` 字段来获取。
 
@@ -454,17 +454,17 @@ pageClass: routes
 
 ### 用户动态
 
-<Route author="nczitzk" example="/91ddcc/user/2377095" path="/91ddcc/user/:user" :paramsDesc="['用户ID，在 URL 可以找到']"/>
+<Route author="nczitzk" example="/91ddcc/user/2377095" path="/91ddcc/user/:user" paramsDesc={['用户ID，在 URL 可以找到']}/>
 
 ### 驿站帖子
 
-<Route author="nczitzk" example="/91ddcc/stage/206" path="/91ddcc/stage/:stage" :paramsDesc="['驿站ID，在 URL 可以找到']"/>
+<Route author="nczitzk" example="/91ddcc/stage/206" path="/91ddcc/stage/:stage" paramsDesc={['驿站ID，在 URL 可以找到']}/>
 
 ## 超理论坛
 
 ### 板块
 
-<Route author="nczitzk" example="/chaoli" path="/chaoli/:channel?" :paramsDesc="['板块，见下表，默认为全部']">
+<Route author="nczitzk" example="/chaoli" path="/chaoli/:channel?" paramsDesc={['板块，见下表，默认为全部']}>
 
 | 数学 | 物理    | 化学 | 生物    | 天文  | 技术 | 管理  | 公告   |
 | ---- | ------- | ---- | ------- | ----- | ---- | ----- | ------ |
@@ -480,7 +480,7 @@ pageClass: routes
 
 ### 子版块
 
-<Route author="TonyRL" example="/sis001/forum/322" path="/sis001/forum/:id?" :paramsDesc="['子版块 ID，可在子论坛 URL 找到，默认为 `Funny Jokes | 短篇笑话区`']" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/sis001/forum/322" path="/sis001/forum/:id?" paramsDesc={['子版块 ID，可在子论坛 URL 找到，默认为 `Funny Jokes | 短篇笑话区`']} radar="1" rssbud="1"/>
 
 ## 电鸭社区
 
@@ -490,7 +490,7 @@ pageClass: routes
 
 ### 分类文章
 
-<Route author="running-grass" example="/eleduck/posts/4" path="/eleduck/posts/:id?" :paramsDesc="['分类id,可以论坛的URL找到，默认为全部']" radar="1">
+<Route author="running-grass" example="/eleduck/posts/4" path="/eleduck/posts/:id?" paramsDesc={['分类id,可以论坛的URL找到，默认为全部']} radar="1">
 
 | id | 分类     |
 | -- | -------- |
@@ -517,17 +517,17 @@ pageClass: routes
 
 ### 专题
 
-<Route author="TonyRL" example="/dxy/bbs/special/72" path="/dxy/bbs/special/:specialId" :paramsDesc="['专题 ID，可在对应专题页 URL 中找到']" radar="1"/>
+<Route author="TonyRL" example="/dxy/bbs/special/72" path="/dxy/bbs/special/:specialId" paramsDesc={['专题 ID，可在对应专题页 URL 中找到']} radar="1"/>
 
 ### 个人帖子
 
-<Route author="TonyRL" example="/dxy/bbs/profile/thread/8335054" path="/dxy/bbs/profile/thread/:userId" :paramsDesc="['个人 ID，可在 URL 中找到']" radar="1"/>
+<Route author="TonyRL" example="/dxy/bbs/profile/thread/8335054" path="/dxy/bbs/profile/thread/:userId" paramsDesc={['个人 ID，可在 URL 中找到']} radar="1"/>
 
 ## 斗鱼
 
 ### 鱼吧帖子
 
-<Route author="nczitzk" example="/douyu/group/1011" path="/douyu/group/:id/:sort?" :paramsDesc="['鱼吧 id，可在鱼吧页 URL 中找到', '排序方式，见下表，默认为发布时间排序']">
+<Route author="nczitzk" example="/douyu/group/1011" path="/douyu/group/:id/:sort?" paramsDesc={['鱼吧 id，可在鱼吧页 URL 中找到', '排序方式，见下表，默认为发布时间排序']}>
 
 | 回复时间排序 | 发布时间排序 |
 | ------------ | ------------ |
@@ -537,19 +537,19 @@ pageClass: routes
 
 ### 鱼吧跟帖
 
-<Route author="nczitzk" example="/douyu/post/631737151576473201" path="/douyu/post/:id" :paramsDesc="['帖子 id，可在帖子页 URL 中找到']" />
+<Route author="nczitzk" example="/douyu/post/631737151576473201" path="/douyu/post/:id" paramsDesc={['帖子 id，可在帖子页 URL 中找到']} />
 
 ## 恩山无线论坛
 
 ### 板块
 
-<Route author="nczitzk" example="/right/forum/31" path="/right/forum/:id?" :paramsDesc="['板块 id，可在板块页 URL 中找到，默认为新手入门及其它(硬件)']"/>
+<Route author="nczitzk" example="/right/forum/31" path="/right/forum/:id?" paramsDesc={['板块 id，可在板块页 URL 中找到，默认为新手入门及其它(硬件)']}/>
 
 ## 二次元虫洞
 
 ### 板块
 
-<Route author="shelken" example="/2cycd/43/dateline" path="/2cycd/:fid?/:sort?" :paramsDesc="['板块', '排序']" radar="1">
+<Route author="shelken" example="/2cycd/43/dateline" path="/2cycd/:fid?/:sort?" paramsDesc={['板块', '排序']} radar="1">
 
 板块（更多板块请自行 [查看](http://www.2cycd.com)）
 
@@ -569,7 +569,7 @@ pageClass: routes
 
 ### 子论坛
 
-<Route author="nczitzk" example="/guanggoo/index" path="/guanggoo/:category?" :paramsDesc="['子论坛，默认为首页']">
+<Route author="nczitzk" example="/guanggoo/index" path="/guanggoo/:category?" paramsDesc={['子论坛，默认为首页']}>
 
 | 首页 | 你问我答 | 同城活动 | IT 技术 | 金融财经 | 创业创客 | 城市建设 |
 | ---- | -------- | -------- | ------- | -------- | -------- | -------- |
@@ -609,7 +609,7 @@ pageClass: routes
 
 ### 文章
 
-<Route author="nczitzk" example="/hjedd/1288/1" path="/hjedd/:node?/:type?" :paramsDesc="['节点 id，可在对应节点页 URL 中找到，默认为 `258`，即 大事记', '类型 id，见下表，默认为 `0`，即 默认']">
+<Route author="nczitzk" example="/hjedd/1288/1" path="/hjedd/:node?/:type?" paramsDesc={['节点 id，可在对应节点页 URL 中找到，默认为 `258`，即 大事记', '类型 id，见下表，默认为 `0`，即 默认']}>
 
 | 默认 | 最新 | 热门 | 精华 | 悬赏 | 出售 |
 | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -621,7 +621,7 @@ pageClass: routes
 
 ### 首页
 
-<Route author="nczitzk" example="/hupu/nba" path="/hupu/:category?" :paramsDesc="['分类，见下表']">
+<Route author="nczitzk" example="/hupu/nba" path="/hupu/:category?" paramsDesc={['分类，见下表']}>
 
 | NBA | CBA | 足球   |
 | --- | --- | ------ |
@@ -637,7 +637,7 @@ pageClass: routes
 
 ### 社区
 
-<Route author="LogicJake nczitzk" example="/hupu/bbs/topic-daily" path="/hupu/bbs/:id?/:order?" :paramsDesc="['编号，可在对应社区 URL 中找到，默认为#步行街主干道', '排序方式，可选 `0` 即 最新回复 或 `1` 即 最新发布，默认为最新回复']">
+<Route author="LogicJake nczitzk" example="/hupu/bbs/topic-daily" path="/hupu/bbs/:id?/:order?" paramsDesc={['编号，可在对应社区 URL 中找到，默认为#步行街主干道', '排序方式，可选 `0` 即 最新回复 或 `1` 即 最新发布，默认为最新回复']}>
 
 ::: tip 提示
 
@@ -649,7 +649,7 @@ pageClass: routes
 
 ### 热帖
 
-<Route author="nczitzk" example="/hupu/all/topic-daily" path="/hupu/all/:id?" :paramsDesc="['编号，可在对应热帖版面 URL 中找到，默认为步行街每日话题']">
+<Route author="nczitzk" example="/hupu/all/topic-daily" path="/hupu/all/:id?" paramsDesc={['编号，可在对应热帖版面 URL 中找到，默认为步行街每日话题']}>
 
 ::: tip 提示
 
@@ -663,7 +663,7 @@ pageClass: routes
 
 ### 华为家事
 
-<Route author="nczitzk" example="/huawei/xinsheng" path="/huawei/xinsheng/:caty?/:order?/:keyword?" :paramsDesc="['分区 ID, 见下表，默认为全部帖子', '排序方式, 见下表，默认为最新回复', '关键词，默认为空']">
+<Route author="nczitzk" example="/huawei/xinsheng" path="/huawei/xinsheng/:caty?/:order?/:keyword?" paramsDesc={['分区 ID, 见下表，默认为全部帖子', '排序方式, 见下表，默认为最新回复', '关键词，默认为空']}>
 
 分区 ID
 
@@ -689,7 +689,7 @@ pageClass: routes
 
 ### 广场
 
-<Route author="nczitzk" example="/jisilu" path="/jisilu/:category?/:sort?/:day?" :paramsDesc="['分类，见下表，默认为全部，可在 URL 中找到', '排序，见下表，默认为最新，可在 URL 中找到', '几天内，见下表，默认为30天，本参数仅在排序参数设定为 `热门` 后才可生效']">
+<Route author="nczitzk" example="/jisilu" path="/jisilu/:category?/:sort?/:day?" paramsDesc={['分类，见下表，默认为全部，可在 URL 中找到', '排序，见下表，默认为最新，可在 URL 中找到', '几天内，见下表，默认为30天，本参数仅在排序参数设定为 `热门` 后才可生效']}>
 
 分类
 
@@ -713,17 +713,17 @@ pageClass: routes
 
 ### 用户回复
 
-<Route author="nczitzk" example="/jisilu/reply/BKL" path="/jisilu/reply/:user" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
+<Route author="nczitzk" example="/jisilu/reply/BKL" path="/jisilu/reply/:user" paramsDesc={['用户名，可在用户页 URL 中找到']}/>
 
 ### 用户主题
 
-<Route author="nczitzk" example="/jisilu/topic/BKL" path="/jisilu/topic/:user" :paramsDesc="['用户名，可在用户页 URL 中找到']"/>
+<Route author="nczitzk" example="/jisilu/topic/BKL" path="/jisilu/topic/:user" paramsDesc={['用户名，可在用户页 URL 中找到']}/>
 
 ## 看雪
 
 ### 论坛
 
-<Route author="renzhexigua" example="/pediy/topic/android/digest" path="/pediy/topic/:category?/:type?" :paramsDesc="['版块, 缺省为`all`', '类型, 缺省为`latest`']"/>
+<Route author="renzhexigua" example="/pediy/topic/android/digest" path="/pediy/topic/:category?/:type?" paramsDesc={['版块, 缺省为`all`', '类型, 缺省为`latest`']}/>
 
 | 版块         | category   |
 | ------------ | ---------- |
@@ -755,31 +755,31 @@ pageClass: routes
 
 ### 主题帖（板块）
 
-<Route author="WooMai" example="/liyuan-forums/threads/forum/1" path="/liyuan-forums/threads/forum/:forum_id" :paramsDesc="['板块 ID, 支持多个, 使用英文逗号分隔']" />
+<Route author="WooMai" example="/liyuan-forums/threads/forum/1" path="/liyuan-forums/threads/forum/:forum_id" paramsDesc={['板块 ID, 支持多个, 使用英文逗号分隔']} />
 
 ### 主题帖（专题）
 
-<Route author="WooMai" example="/liyuan-forums/threads/topic/1" path="/liyuan-forums/threads/topic/:topic_id" :paramsDesc="['专题 ID, 支持多个, 使用英文逗号分隔']" />
+<Route author="WooMai" example="/liyuan-forums/threads/topic/1" path="/liyuan-forums/threads/topic/:topic_id" paramsDesc={['专题 ID, 支持多个, 使用英文逗号分隔']} />
 
 ### 主题帖（用户）
 
-<Route author="WooMai" example="/liyuan-forums/threads/user/1" path="/liyuan-forums/threads/user/:user_id" :paramsDesc="['用户 ID (仅支持数字 ID), 支持多个, 使用英文逗号分隔']" />
+<Route author="WooMai" example="/liyuan-forums/threads/user/1" path="/liyuan-forums/threads/user/:user_id" paramsDesc={['用户 ID (仅支持数字 ID), 支持多个, 使用英文逗号分隔']} />
 
 ## 龙空
 
 ### 分区
 
-<Route author="ma6254 nczitzk" example="/lkong/forum/60" path="/lkong/forum/:id/:digest?" :paramsDesc="['分区 id, 可在分区的URL里找到','默认获取全部主题，任意值则只获取精华主题']"/>
+<Route author="ma6254 nczitzk" example="/lkong/forum/60" path="/lkong/forum/:id/:digest?" paramsDesc={['分区 id, 可在分区的URL里找到','默认获取全部主题，任意值则只获取精华主题']}/>
 
 ### 帖子
 
-<Route author="ma6254 nczitzk" example="/lkong/thread/3100275" path="/lkong/thread/:id?" :paramsDesc="['帖子 id, 可在帖子的URL里找到']"/>
+<Route author="ma6254 nczitzk" example="/lkong/thread/3100275" path="/lkong/thread/:id?" paramsDesc={['帖子 id, 可在帖子的URL里找到']}/>
 
 ## 龙腾网
 
 ### 网帖翻译
 
-<Route author="sgqy nczitzk" example="/ltaaa" path="/ltaaa/:category?" :paramsDesc="['分类，见下表，默认为最新']">
+<Route author="sgqy nczitzk" example="/ltaaa" path="/ltaaa/:category?" paramsDesc={['分类，见下表，默认为最新']}>
 
 | 最新   | 科技       | 娱乐  | 文化    | 社会      | 体育  | 历史    | 趣闻        | 图说世界 |
 | ------ | ---------- | ----- | ------- | --------- | ----- | ------- | ----------- | -------- |
@@ -791,7 +791,7 @@ pageClass: routes
 
 ### 面经
 
-<Route author="huyyi" example="/nowcoder/experience/639?order=3&companyId=665&phaseId=0" path="/nowcoder/experience/:tagId" :paramsDesc="['职位id [🔗查询链接](https://www.nowcoder.com/profile/all-jobs)复制打开']">
+<Route author="huyyi" example="/nowcoder/experience/639?order=3&companyId=665&phaseId=0" path="/nowcoder/experience/:tagId" paramsDesc={['职位id [🔗查询链接](https://www.nowcoder.com/profile/all-jobs)复制打开']}>
 
 可选参数：
 
@@ -803,7 +803,7 @@ pageClass: routes
 
 ### 讨论区
 
-<Route author="LogicJake" example="/nowcoder/discuss/2/4" path="/nowcoder/discuss/:type/:order" :paramsDesc="['讨论区分区id 在 URL 中可以找到', '排序方式']">
+<Route author="LogicJake" example="/nowcoder/discuss/2/4" path="/nowcoder/discuss/:type/:order" paramsDesc={['讨论区分区id 在 URL 中可以找到', '排序方式']}>
 
 | 最新回复 | 最新发表 | 最新 | 精华 |
 | -------- | -------- | ---- | ---- |
@@ -813,7 +813,7 @@ pageClass: routes
 
 ### 校招日程
 
-<Route author="junfengP" example="/nowcoder/schedule" path="/nowcoder/schedule/:propertyId?/:typeId?" :paramsDesc="['行业, 在控制台中抓取接口，可获得行业id，默认0', '类别，同上']" />
+<Route author="junfengP" example="/nowcoder/schedule" path="/nowcoder/schedule/:propertyId?/:typeId?" paramsDesc={['行业, 在控制台中抓取接口，可获得行业id，默认0', '类别，同上']} />
 
 ### 求职推荐
 
@@ -821,7 +821,7 @@ pageClass: routes
 
 ### 实习广场 & 社招广场
 
-<Route author="nczitzk" example="/nowcoder/jobcenter/1/北京/1/1/true" path="/nowcoder/jobcenter/:recruitType?/:city?/:type?/:order?/:latest?" :paramsDesc="['招聘分类，`1` 指 实习广场，`2` 指 社招广场，默认为 `1`', '所在城市，可选城市见下表，若空则为 `全国`', '职位类型，可选职位代码见下表，若空则为 `全部`', '排序参数，可选排序参数代码见下表，若空则为 `默认`', '是否仅查看最近一周，可选 `true` 和 `false`，默认为 `false`']">
+<Route author="nczitzk" example="/nowcoder/jobcenter/1/北京/1/1/true" path="/nowcoder/jobcenter/:recruitType?/:city?/:type?/:order?/:latest?" paramsDesc={['招聘分类，`1` 指 实习广场，`2` 指 社招广场，默认为 `1`', '所在城市，可选城市见下表，若空则为 `全国`', '职位类型，可选职位代码见下表，若空则为 `全部`', '排序参数，可选排序参数代码见下表，若空则为 `默认`', '是否仅查看最近一周，可选 `true` 和 `false`，默认为 `false`']}>
 
 可选城市有：北京、上海、广州、深圳、杭州、南京、成都、厦门、武汉、西安、长沙、哈尔滨、合肥、其他
 
@@ -843,7 +843,7 @@ pageClass: routes
 
 ### 发现
 
-<Route author="zphw" example="/pincong/category/1/new" path="/pincong/category/:category?/:sort?" :paramsDesc="['分类，与官网分类 URL `category-` 后的数字对应，默认为全部', '排序方式，参数可见下表，默认为推荐']" anticrawler="1" puppeteer="1"/>
+<Route author="zphw" example="/pincong/category/1/new" path="/pincong/category/:category?/:sort?" paramsDesc={['分类，与官网分类 URL `category-` 后的数字对应，默认为全部', '排序方式，参数可见下表，默认为推荐']} anticrawler="1" puppeteer="1"/>
 
 | 最新 | 推荐      | 热门 |
 | ---- | --------- | ---- |
@@ -851,11 +851,11 @@ pageClass: routes
 
 ### 精选
 
-<Route author="zphw" example="/pincong/hot" path="/pincong/hot/:category?" :paramsDesc="['分类，与官网分类 URL `category-` 后的数字对应，默认为全部']" anticrawler="1" puppeteer="1"/>
+<Route author="zphw" example="/pincong/hot" path="/pincong/hot/:category?" paramsDesc={['分类，与官网分类 URL `category-` 后的数字对应，默认为全部']} anticrawler="1" puppeteer="1"/>
 
 ### 话题
 
-<Route author="zphw" example="/pincong/topic/美国" path="/pincong/topic/:topic?" :paramsDesc="['话题，可在官网获取']" anticrawler="1" puppeteer="1"/>
+<Route author="zphw" example="/pincong/topic/美国" path="/pincong/topic/:topic?" paramsDesc={['话题，可在官网获取']} anticrawler="1" puppeteer="1"/>
 
 ## 三星盖乐世社区
 
@@ -867,7 +867,7 @@ pageClass: routes
 
 ### 导读
 
-<Route author="AngUOI" example="/andyt/newthread" path="/andyt/:view?" :paramsDesc="['子版块 view, 为空默认最新发表']">
+<Route author="AngUOI" example="/andyt/newthread" path="/andyt/:view?" paramsDesc={['子版块 view, 为空默认最新发表']}>
 
 | 最新发表  | 最新热门 | 最新精华 | 最新回复 |
 | --------- | -------- | -------- | -------- |
@@ -879,7 +879,7 @@ pageClass: routes
 
 ### 分区文章
 
-<Route author="nczitzk" example="/newsmth/section/university" path="/newsmth/section/:section" :paramsDesc="['分区名，见下表']">
+<Route author="nczitzk" example="/newsmth/section/university" path="/newsmth/section/:section" paramsDesc={['分区名，见下表']}>
 
 | 社区管理  | 国内院校   | 休闲娱乐      | 五湖四海 | 游戏运动 | 社会信息 | 知性感性 | 文化人文 | 学术科学 | 电脑技术   |
 | --------- | ---------- | ------------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
@@ -889,13 +889,13 @@ pageClass: routes
 
 ### 用户文章
 
-<Route author="nczitzk" example="/newsmth/account/fef705ec94819a5a87941759e33c0982" path="/newsmth/account/:id" :paramsDesc="['用户 id，可在用户页的 URL 中找到']"/>
+<Route author="nczitzk" example="/newsmth/account/fef705ec94819a5a87941759e33c0982" path="/newsmth/account/:id" paramsDesc={['用户 id，可在用户页的 URL 中找到']}/>
 
 ## 司机社
 
 ### 论坛
 
-<Route author="akynazh" example="/xsijishe/forum/51" path="/xsijishe/forum/:fid" :paramDesc="['子论坛 id']" radar="1">
+<Route author="akynazh" example="/xsijishe/forum/51" path="/xsijishe/forum/:fid" paramsDesc={['子论坛 id']} radar="1">
 
 ::: tip 关于子论坛 id 的获取方法
 
@@ -909,21 +909,21 @@ pageClass: routes
 
 ### 子版块
 
-<Route author="a14907" example="/tianya/index/lookout" path="/tianya/index/:type" :paramsDesc="['板块类型 type，可在 URL 找到 例如，天涯杂谈板块的地址是http://bbs.tianya.cn/list-free-1.shtml， 这个板块的type就是free; 同理，我的大学板块地址为http://bbs.tianya.cn/list-university-1.shtml，类型是university']"/>
+<Route author="a14907" example="/tianya/index/lookout" path="/tianya/index/:type" paramsDesc={['板块类型 type，可在 URL 找到 例如，天涯杂谈板块的地址是http://bbs.tianya.cn/list-free-1.shtml， 这个板块的type就是free; 同理，我的大学板块地址为http://bbs.tianya.cn/list-university-1.shtml，类型是university']}/>
 
 ### 用户帖子
 
-<Route author="a14907" example="/tianya/user/11488997" path="/tianya/user/:userid" :paramsDesc="['用户id userid，可在 URL 找到 例如，用户苕木匠的地址是http://www.tianya.cn/11488997/bbs， 苕木匠的userid就是11488997']"/>
+<Route author="a14907" example="/tianya/user/11488997" path="/tianya/user/:userid" paramsDesc={['用户id userid，可在 URL 找到 例如，用户苕木匠的地址是http://www.tianya.cn/11488997/bbs， 苕木匠的userid就是11488997']}/>
 
 ### 用户的回帖
 
-<Route author="a14907" example="/tianya/comments/11488997" path="/tianya/comments/:userid" :paramsDesc="['用户id userid，可在 URL 找到 例如，用户苕木匠的地址是http://www.tianya.cn/11488997/bbs， 苕木匠的userid就是11488997']"/>
+<Route author="a14907" example="/tianya/comments/11488997" path="/tianya/comments/:userid" paramsDesc={['用户id userid，可在 URL 找到 例如，用户苕木匠的地址是http://www.tianya.cn/11488997/bbs， 苕木匠的userid就是11488997']}/>
 
 ## 通信人家园
 
 ### 论坛 频道
 
-<Route author="Fatpandac" example="/txrjy/fornumtopic" path="/txrjy/fornumtopic/:channel?" :paramsDesc="['频道的 id，见下表，默认为最新500个主题帖']">
+<Route author="Fatpandac" example="/txrjy/fornumtopic" path="/txrjy/fornumtopic/:channel?" paramsDesc={['频道的 id，见下表，默认为最新500个主题帖']}>
 
 | 最新 500 个主题帖 | 最新 500 个回复帖 | 最新精华帖 | 最新精华帖 | 一周热帖 | 本月热帖 |
 | :---------------: | :---------------: | :--------: | :--------: | :------: | :------: |
@@ -941,7 +941,7 @@ pageClass: routes
 
 ### 社区
 
-<Route author="TonyRL" example="/feng/forum/1" path="/feng/forum/:id/:type?" :paramsDesc="['版块 ID，可在版块 URL 找到', '排序，见下表，默认为 `all`']" radar="1" rssbud="1">
+<Route author="TonyRL" example="/feng/forum/1" path="/feng/forum/:id/:type?" paramsDesc={['版块 ID，可在版块 URL 找到', '排序，见下表，默认为 `all`']} radar="1" rssbud="1">
 
 | 最新回复 | 最新发布 | 热门 | 精华    |
 | -------- | -------- | ---- | ------- |
@@ -953,15 +953,15 @@ pageClass: routes
 
 ### 博客
 
-<Route author="changlan" example="/wenxuecity/blog/43626" path="/wenxuecity/blog/:id" :paramsDesc="['博客 ID, 可在 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="changlan" example="/wenxuecity/blog/43626" path="/wenxuecity/blog/:id" paramsDesc={['博客 ID, 可在 URL 中找到']} radar="1" rssbud="1"/>
 
 ### 最热主题
 
-<Route author="changlan" example="/wenxuecity/hot/9" path="/wenxuecity/hot/:cid" :paramsDesc="['版面 ID, 可在 URL 中找到']" radar="1"/>
+<Route author="changlan" example="/wenxuecity/hot/9" path="/wenxuecity/hot/:cid" paramsDesc={['版面 ID, 可在 URL 中找到']} radar="1"/>
 
 ### 最新主题
 
-<Route author="changlan" example="/wenxuecity/bbs/tzlc" path="/wenxuecity/bbs/:cat/:elite?" :paramsDesc="['版面名, 可在 URL 中找到', '是否精华区, 1 为精华区']" radar="1" rssbud="1"/>
+<Route author="changlan" example="/wenxuecity/bbs/tzlc" path="/wenxuecity/bbs/:cat/:elite?" paramsDesc={['版面名, 可在 URL 中找到', '是否精华区, 1 为精华区']} radar="1" rssbud="1"/>
 
 ### 焦点新闻
 
@@ -971,13 +971,13 @@ pageClass: routes
 
 ### 圈子
 
-<Route author="DIYgod" example="/mi/bbs/board/18066617" path="/mi/bbs/board/:boardId" :paramsDesc="['圈子 id，可在圈子 URL 找到']" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/mi/bbs/board/18066617" path="/mi/bbs/board/:boardId" paramsDesc={['圈子 id，可在圈子 URL 找到']} radar="1" rssbud="1"/>
 
 ## 小木虫论坛
 
 ### 期刊点评
 
-<Route author="nczitzk" example="/muchong/journal" path="/muchong/journal/:type?" :paramsDesc="['类型，见下表']"/>
+<Route author="nczitzk" example="/muchong/journal" path="/muchong/journal/:type?" paramsDesc={['类型，见下表']}/>
 
 | SCI 期刊 | 中文期刊 |
 | -------- | -------- |
@@ -985,7 +985,7 @@ pageClass: routes
 
 ### 分类
 
-<Route author="nczitzk" example="/muchong/290" path="/muchong/:id/:type?/:sort?" :paramsDesc="['板块 id，可在板块页 URL 中找到', '子类别 id，可在板块页导航栏中找到，默认为 `all` 即 全部', '排序，可选 `order-tid` 即 发表排序，默认为 回帖排序']">
+<Route author="nczitzk" example="/muchong/290" path="/muchong/:id/:type?/:sort?" paramsDesc={['板块 id，可在板块页 URL 中找到', '子类别 id，可在板块页导航栏中找到，默认为 `all` 即 全部', '排序，可选 `order-tid` 即 发表排序，默认为 回帖排序']}>
 
 ::: tip 提示
 
@@ -1095,7 +1095,7 @@ pageClass: routes
 
 ### 帖子
 
-<Route author="NavePnow DIYgod nczitzk" example="/1point3acres/thread/hot" path="/1point3acres/thread/:type?/:order?" :paramsDesc="['帖子分类, 见下表，默认为 hot，即热门帖子', '排序方式，见下表，默认为空，即最新回复']">
+<Route author="NavePnow DIYgod nczitzk" example="/1point3acres/thread/hot" path="/1point3acres/thread/:type?/:order?" paramsDesc={['帖子分类, 见下表，默认为 hot，即热门帖子', '排序方式，见下表，默认为空，即最新回复']}>
 
 分类
 
@@ -1113,7 +1113,7 @@ pageClass: routes
 
 ### 分区
 
-<Route author="nczitzk" example="/1point3acres/section/345" path="/1point3acres/section/:id?/:type?/:order?" :paramsDesc="['分区 id，见下表，默认为全部', '帖子分类, 见下表，默认为 hot，即热门帖子', '排序方式，见下表，默认为空，即最新回复']">
+<Route author="nczitzk" example="/1point3acres/section/345" path="/1point3acres/section/:id?/:type?/:order?" paramsDesc={['分区 id，见下表，默认为全部', '帖子分类, 见下表，默认为 hot，即热门帖子', '排序方式，见下表，默认为空，即最新回复']}>
 
 分区
 
@@ -1144,7 +1144,7 @@ pageClass: routes
 
 ### 标签
 
-<Route author="nczitzk" example="/1point3acres/category/h1b" path="/1point3acres/category/:id?/:type?/:order?" :paramsDesc="['标签 id，默认为全部', '帖子分类, 见下表，默认为 hot，即热门帖子', '排序方式，见下表，默认为空，即最新回复']">
+<Route author="nczitzk" example="/1point3acres/category/h1b" path="/1point3acres/category/:id?/:type?/:order?" paramsDesc={['标签 id，默认为全部', '帖子分类, 见下表，默认为 hot，即热门帖子', '排序方式，见下表，默认为空，即最新回复']}>
 
 ::: tip
 
@@ -1168,15 +1168,15 @@ pageClass: routes
 
 ### 用户主题帖
 
-<Route author="Maecenas" example="/1point3acres/user/1/threads" path="/1point3acres/user/:id/threads" :paramsDesc="['用户 id，可在 Instant 版网站的个人主页 URL 找到']"/>
+<Route author="Maecenas" example="/1point3acres/user/1/threads" path="/1point3acres/user/:id/threads" paramsDesc={['用户 id，可在 Instant 版网站的个人主页 URL 找到']}/>
 
 ### 用户回帖
 
-<Route author="Maecenas" example="/1point3acres/user/1/posts" path="/1point3acres/user/:id/posts" :paramsDesc="['用户 id，可在 Instant 版网站的个人主页 URL 找到']"/>
+<Route author="Maecenas" example="/1point3acres/user/1/posts" path="/1point3acres/user/:id/posts" paramsDesc={['用户 id，可在 Instant 版网站的个人主页 URL 找到']}/>
 
 ### 录取结果
 
-<Route author="NavePnow" example="/1point3acres/offer/12/null/CMU" path="/1point3acres/offer/:year?/:major?/:school?" :paramsDesc="['录取年份  id，空为null', '录取专业 id，空为null', '录取学校 id，空为null']">
+<Route author="NavePnow" example="/1point3acres/offer/12/null/CMU" path="/1point3acres/offer/:year?/:major?/:school?" paramsDesc={['录取年份  id，空为null', '录取专业 id，空为null', '录取学校 id，空为null']}>
 
 ::: warning 三个 id 获取方式
 
@@ -1193,7 +1193,7 @@ pageClass: routes
 
 ### 博客
 
-<Route author="nczitzk" example="/1point3acres/blog" path="/1point3acres/blog/:category?" :paramsDesc="['分类，见下表，可在对应分类页 URL 中找到']" radar="1">
+<Route author="nczitzk" example="/1point3acres/blog" path="/1point3acres/blog/:category?" paramsDesc={['分类，见下表，可在对应分类页 URL 中找到']} radar="1">
 
 | 留学申请   | 找工求职 | 生活攻略  | 投资理财 | 签证移民 | 时政要闻 |
 | ---------- | -------- | --------- | -------- | -------- | -------- |
@@ -1211,15 +1211,15 @@ pageClass: routes
 
 ### 子论坛
 
-<Route author="LogicJake" example="/zhibo8/forum/8" path="/zhibo8/forum/:id" :paramsDesc="['子论坛 id，可在子论坛 URL 找到']" radar="1"/>
+<Route author="LogicJake" example="/zhibo8/forum/8" path="/zhibo8/forum/:id" paramsDesc={['子论坛 id，可在子论坛 URL 找到']} radar="1"/>
 
 ### 回帖
 
-<Route author="LogicJake" example="/zhibo8/post/3022946" path="/zhibo8/post/:id" :paramsDesc="['帖子 id，可在帖子 URL 找到']" radar="1"/>
+<Route author="LogicJake" example="/zhibo8/post/3022946" path="/zhibo8/post/:id" paramsDesc={['帖子 id，可在帖子 URL 找到']} radar="1"/>
 
 ### 滚动新闻
 
-<Route author="nczitzk" example="/zhibo8/more/nba" path="/zhibo8/more/:category?" :paramsDesc="['分类，见下表，默认为 NBA']" radar="1">
+<Route author="nczitzk" example="/zhibo8/more/nba" path="/zhibo8/more/:category?" paramsDesc={['分类，见下表，默认为 NBA']} radar="1">
 
 | NBA | 足球  | 电竞     | 综合   |
 | --- | ----- | -------- | ------ |
@@ -1231,7 +1231,7 @@ pageClass: routes
 
 ### 分类
 
-<Route author="sanmmm" example="/lingyi/qiwenyishi" path="/lingyi/:qiwenyishi" :paramsDesc="['分类']">
+<Route author="sanmmm" example="/lingyi/qiwenyishi" path="/lingyi/:qiwenyishi" paramsDesc={['分类']}>
 
 | 编辑推荐 | 奇闻异事   | 鬼话连篇       |
 | -------- | ---------- | -------------- |

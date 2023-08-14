@@ -1,3 +1,5 @@
+import RouteEn from '@site/src/components/RouteEn';
+
 ---
 pageClass: routes
 ---
@@ -8,7 +10,7 @@ pageClass: routes
 
 ### BJTU Graduate School
 
-<RouteEn author="E1nzbern" example="/bjtu/gs/all" path="/bjtu/gs/:type" :paramsDesc="['Type of articles']">
+<RouteEn author="E1nzbern" example="/bjtu/gs/all" path="/bjtu/gs/:type" paramsDesc={['Type of articles']}>
 
 | All articles | Notification | News | Admissions Promotion | Training | Degrees | Admissions | Master Admissions | PhD Admissions | Admissions Brochure | Admissions Policies and Regulations | Notice from Graduate Student Work Department | News from Graduate Student Work Department |
 | ---- | -------- | -------- | ------------ | ------------ | -------- | -------- | ------ | ---------- | ------ | ------ | ------ | ------ |
@@ -22,7 +24,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ### ACM Online-Judge contests list
 
-<RouteEn author="a180285" example="/ecnu/acm/contest/public" path="/ecnu/acm/contest/:category?" radar="1" rssbud="1" :paramsDesc="['category is optional, default is all, use `public` for public only contests']" />
+<RouteEn author="a180285" example="/ecnu/acm/contest/public" path="/ecnu/acm/contest/:category?" radar="1" rssbud="1" paramsDesc={['category is optional, default is all, use `public` for public only contests']} />
 
 ## MIT
 
@@ -36,11 +38,11 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ### MIT graduateadmissions's blogs by department
 
-<RouteEn author="LogicJake" example="/mit/graduateadmissions/department/eecs" path="/mit/graduateadmissions/department/:name" :paramsDesc="['department name which can be found in url']"/>
+<RouteEn author="LogicJake" example="/mit/graduateadmissions/department/eecs" path="/mit/graduateadmissions/department/:name" paramsDesc={['department name which can be found in url']}/>
 
 ### MIT graduateadmissions's blogs by category
 
-<RouteEn author="LogicJake" example="/mit/graduateadmissions/category/beyond-the-lab" path="/mit/graduateadmissions/category/:name" :paramsDesc="['category name which can be found in url']"/>
+<RouteEn author="LogicJake" example="/mit/graduateadmissions/category/beyond-the-lab" path="/mit/graduateadmissions/category/:name" paramsDesc={['category name which can be found in url']}/>
 
 ### MIT CSAIL
 
@@ -50,7 +52,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ### Official Information
 
-<RouteEn author="evnydd0sf" example="/nua/index/346" path="/nua/index/:type" :paramsDesc="['News Type']" radar="1">
+<RouteEn author="evnydd0sf" example="/nua/index/346" path="/nua/index/:type" paramsDesc={['News Type']} radar="1">
 
 | News Type | Parameters  |
 | ---- | --- |
@@ -61,7 +63,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ### Shuangxing Information
 
-<RouteEn author="evnydd0sf" example="/nua/sxw/230" path="/nua/sxw/:type" :paramsDesc="['News Type']" radar="1">
+<RouteEn author="evnydd0sf" example="/nua/sxw/230" path="/nua/sxw/:type" paramsDesc={['News Type']} radar="1">
 
 | News Type | Parameters  |
 | ---- | --- |
@@ -75,7 +77,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ### School of Design
 
-<RouteEn author="evnydd0sf" example="/nua/dc/news" path="/nua/dc/:type" :paramsDesc="['News Type']" radar="1">
+<RouteEn author="evnydd0sf" example="/nua/dc/news" path="/nua/dc/:type" paramsDesc={['News Type']} radar="1">
 
 | News Type                   | Parameters         |
 | ---------------------- | ---------- |
@@ -90,7 +92,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ### Graduate Institute
 
-<RouteEn author="evnydd0sf" example="/nua/gra/1959" path="/nua/gra/:type" :paramsDesc="['News Type']" radar="1">
+<RouteEn author="evnydd0sf" example="/nua/gra/1959" path="/nua/gra/:type" paramsDesc={['News Type']} radar="1">
 
 | News Type | Parameters   |
 | ---- | ---- |
@@ -102,7 +104,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ### Library
 
-<RouteEn author="evnydd0sf" example="/nua/lib/xwdt" path="/nua/lib/:type" :paramsDesc="['News Type']" radar="1">
+<RouteEn author="evnydd0sf" example="/nua/lib/xwdt" path="/nua/lib/:type" paramsDesc={['News Type']} radar="1">
 
 | News Type | Parameters   |
 | ---- | ---- |
@@ -117,13 +119,13 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ### News
 
-<RouteEn author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" :paramsDesc="['English language code en']" />
+<RouteEn author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" paramsDesc={['English language code en']} />
 
 ## Tianjin University
 
 ### Admission Office of Graduate
 
-<RouteEn author="SuperPung" example="/tju/yzb/notice" path="/tju/yzb/:type?" :paramsDesc="['default `notice`']">
+<RouteEn author="SuperPung" example="/tju/yzb/notice" path="/tju/yzb/:type?" paramsDesc={['default `notice`']}>
 
 | School-level Notice | Master | Doctor | On-the-job Degree |
 | :-----------------: | :----: | :----: |:-----------------:|
@@ -133,7 +135,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ### College of Intelligence and Computing
 
-<RouteEn author="SuperPung" example="/tju/cic/news" path="/tju/cic/:type?" :paramsDesc="['default `news`']">
+<RouteEn author="SuperPung" example="/tju/cic/news" path="/tju/cic/:type?" paramsDesc={['default `news`']}>
 
 | College News | Notification | TJU Forum for CIC |
 | :----------: | :----------: | :---------------: |
@@ -143,7 +145,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ### News
 
-<RouteEn author="SuperPung" example="/tju/news/focus" path="/tju/news/:type?" :paramsDesc="['default `focus`']">
+<RouteEn author="SuperPung" example="/tju/news/focus" path="/tju/news/:type?" paramsDesc={['default `focus`']}>
 
 | Focus on TJU | General News | Internal News | Media Report | Pictures of TJU |
 | :----------: | :----------: | :-----------: | :----------: | :-------------: |
@@ -153,7 +155,7 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ### The Office of Academic Affairs
 
-<RouteEn author="AmosChenYQ SuperPung" example="/tju/oaa/news" path="/tju/oaa/:type?" :paramsDesc="['default `news`']">
+<RouteEn author="AmosChenYQ SuperPung" example="/tju/oaa/news" path="/tju/oaa/:type?" paramsDesc={['default `news`']}>
 
 | News | Notification |
 | :--: | :----------: |
@@ -199,7 +201,7 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 
 ### Global Innovation Exchange News
 
-<RouteEn author="dykderrick" example="/uw/gix/news/blog" path="/uw/gix/news/:category" :paramsDesc="['Blog Type']">
+<RouteEn author="dykderrick" example="/uw/gix/news/blog" path="/uw/gix/news/:category" paramsDesc={['Blog Type']}>
 
 | Blog | In The News |
 | ---- | ----------- |

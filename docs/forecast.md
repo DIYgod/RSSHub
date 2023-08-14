@@ -1,3 +1,5 @@
+import Route from '@site/src/components/Route';
+
 ---
 pageClass: routes
 ---
@@ -18,7 +20,7 @@ pageClass: routes
 
 ### Report
 
-<Route author="cxumol nczitzk" example="/outagereport/ubisoft/5" path="/outagereport/:name/:count?" :paramsDesc="['服务名称｡ 拼写格式须与 URL 保持一致', '计数门槛｡ 仅当报告停服的人不低于此数量时, 才会写进 RSS']">
+<Route author="cxumol nczitzk" example="/outagereport/ubisoft/5" path="/outagereport/:name/:count?" paramsDesc={['服务名称｡ 拼写格式须与 URL 保持一致', '计数门槛｡ 仅当报告停服的人不低于此数量时, 才会写进 RSS']}>
 
 其中 name 参数，请略过本地服务的区域码，例如 `https://outage.report/us/verizon-wireless` 填入 `verizon-wireless` 即可｡
 
@@ -28,8 +30,7 @@ pageClass: routes
 
 ### RSS
 
-<Route author="Rongronggg9" example="/uptimerobot/rss/u358785-e4323652448755805d668f1a66506f2f" path="/uptimerobot/rss/:id/:routeParams?" :paramsDesc="['RSS URL 的最后一部分 (e.g. 对于 `https://rss.uptimerobot.com/u358785-e4323652448755805d668f1a66506f2f`，为 `u358785-e4323652448755805d668f1a66506f2f`)', '额外参数，请参阅下面的表格']">
-<!-- example stolen from https://atlas.eff.org//domains/uptimerobot.com.html -->
+<Route author="Rongronggg9" example="/uptimerobot/rss/u358785-e4323652448755805d668f1a66506f2f" path="/uptimerobot/rss/:id/:routeParams?" paramsDesc={['RSS URL 的最后一部分 (e.g. 对于 `https://rss.uptimerobot.com/u358785-e4323652448755805d668f1a66506f2f`，为 `u358785-e4323652448755805d668f1a66506f2f`)', '额外参数，请参阅下面的表格']}>
 
 | 键     | 含义                                                            | 接受的值       | 默认值 |
 | ------ | --------------------------------------------------------------- | -------------- | ------ |
@@ -47,7 +48,7 @@ pageClass: routes
 
 ### 中国地震局
 
-<Route author="LogicJake" example="/earthquake" path="/earthquake/:region?" :paramsDesc="['区域，0全部，1国内（默认），2国外']" anticrawler="1">
+<Route author="LogicJake" example="/earthquake" path="/earthquake/:region?" paramsDesc={['区域，0全部，1国内（默认），2国外']} anticrawler="1">
 
 可通过全局过滤参数订阅您感兴趣的地区.
 
@@ -55,7 +56,7 @@ pageClass: routes
 
 ### 中国地震台
 
-<Route author="SettingDust" example="/earthquake/ceic/1" path="/earthquake/ceic/:type?" :paramsDesc="['类型，见下表']">
+<Route author="SettingDust" example="/earthquake/ceic/1" path="/earthquake/ceic/:type?" paramsDesc={['类型，见下表']}>
 
 | 参数 | 类型                        |
 | ---- | --------------------------- |
@@ -115,7 +116,7 @@ pageClass: routes
 
 ### 95598 停电查询网
 
-<Route author="mjysci" example="/tingdiantz/95598/hb1/wh/wc/" path="/tingdiantz/95598/:province/:city/:district?" :paramsDesc="['省，2~3位拼音缩写，详情见http://www.sttcq.com/td/', '市，同上', '区，同上']"/>
+<Route author="mjysci" example="/tingdiantz/95598/hb1/wh/wc/" path="/tingdiantz/95598/:province/:city/:district?" paramsDesc={['省，2~3位拼音缩写，详情见http://www.sttcq.com/td/', '市，同上', '区，同上']}/>
 
 ### 南京市
 
@@ -199,7 +200,7 @@ pageClass: routes
 
 ### 预警信息
 
-<Route author="muzea nczitzk" example="/cneb/yjxx" path="/cneb/yjxx/:level?/:province?/:city?" :paramsDesc="['灾害级别，见下表，默认为全部', '省份，默认为空，即全国', '城市，默认为空，即全省']">
+<Route author="muzea nczitzk" example="/cneb/yjxx" path="/cneb/yjxx/:level?/:province?/:city?" paramsDesc={['灾害级别，见下表，默认为全部', '省份，默认为空，即全国', '城市，默认为空，即全省']}>
 
 灾害级别
 
@@ -229,7 +230,7 @@ pageClass: routes
 
 ### 应急新闻
 
-<Route author="nczitzk" example="/cneb/yjxw" path="/cneb/yjxw/:category?" :paramsDesc="['分类，见下表，默认为全部']">
+<Route author="nczitzk" example="/cneb/yjxw" path="/cneb/yjxw/:category?" paramsDesc={['分类，见下表，默认为全部']}>
 
 | 全部 | 国内新闻 | 国际新闻 |
 | ---- | -------- | -------- |
@@ -241,7 +242,7 @@ pageClass: routes
 
 ### 全国气象预警
 
-<Route author="ylc395" example="/weatheralarm/广东省" path="/weatheralarm/:province?" :paramsDesc="['省份']">
+<Route author="ylc395" example="/weatheralarm/广东省" path="/weatheralarm/:province?" paramsDesc={['省份']}>
 
 可通过全局过滤参数订阅您感兴趣的地区.
 

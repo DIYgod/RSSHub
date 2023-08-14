@@ -1,3 +1,5 @@
+import RouteEn from '@site/src/components/RouteEn';
+
 ---
 pageClass: routes
 ---
@@ -8,7 +10,7 @@ pageClass: routes
 
 ### Seminar Series
 
-<RouteEn author="zxx-457" example="/aiea/seminars/upcoming" path="/aiea/seminars/:period" :paramsDesc="['Time frame']">
+<RouteEn author="zxx-457" example="/aiea/seminars/upcoming" path="/aiea/seminars/:period" paramsDesc={['Time frame']}>
 
 | Time frame |
 | ----- |
@@ -22,13 +24,13 @@ pageClass: routes
 
 ### Institute of Law
 
-<RouteEn author="HankChow" example="/cssn/iolaw/zxzp" path="/cssn/iolaw/:section?" :paramsDesc="['Section ID, can be found in the URL. For example, the Section ID of URL `http://iolaw.cssn.cn/zxzp/` is `zxzp`. The default value is `zxzp`']"/>
+<RouteEn author="HankChow" example="/cssn/iolaw/zxzp" path="/cssn/iolaw/:section?" paramsDesc={['Section ID, can be found in the URL. For example, the Section ID of URL `http://iolaw.cssn.cn/zxzp/` is `zxzp`. The default value is `zxzp`']}/>
 
 ## DBLP
 
 ### Keyword Search
 
-<RouteEn author="ytno1" example="/dblp/knowledge%20tracing" path="/dblp/:field" :paramsDesc="['Research field']" radar="1" />
+<RouteEn author="ytno1" example="/dblp/knowledge%20tracing" path="/dblp/:field" paramsDesc={['Research field']} radar="1" />
 
 ## gradCafe
 
@@ -38,7 +40,7 @@ pageClass: routes
 
 ### gradCafe result by key words
 
-<RouteEn author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" :paramsDesc="['Keyword']"/>
+<RouteEn author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" paramsDesc={['Keyword']}/>
 
 ## Great Britain China Centre
 
@@ -50,7 +52,7 @@ pageClass: routes
 
 ### Daily English Sentence
 
-<RouteEn author="mashirozx" example="/iciba/7/poster" path="/iciba/:days?/:img_type?" :paramsDesc="['number of items to show (min = 1, max = 7, default = 1)', 'image style']">
+<RouteEn author="mashirozx" example="/iciba/7/poster" path="/iciba/:days?/:img_type?" paramsDesc={['number of items to show (min = 1, max = 7, default = 1)', 'image style']}>
 
 | `:img_type` | image style    |
 | ----------- | -------------- |
@@ -65,7 +67,7 @@ pageClass: routes
 
 ### Theses
 
-<RouteEn author="y9c" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" :paramsDesc="['key=value，eg. subject=生物']" radar="1" rssbud="1">
+<RouteEn author="y9c" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" paramsDesc={['key=value，eg. subject=生物']} radar="1" rssbud="1">
 
 | `:param` | example         | definition                             |
 | -------- | --------------- | -------------------------------------- |
@@ -80,7 +82,7 @@ pageClass: routes
 
 ### Public Maps
 
-<RouteEn author="TonyRL" example="/mindmeister/mind-map-examples" path="/mindmeister/:category?/:language?" :paramsDesc="['Categories, see the table below, `mind-map-examples` by default', 'Languages, see the table below, `en` by default']" radar="1" rssbud="1">
+<RouteEn author="TonyRL" example="/mindmeister/mind-map-examples" path="/mindmeister/:category?/:language?" paramsDesc={['Categories, see the table below, `mind-map-examples` by default', 'Languages, see the table below, `en` by default']} radar="1" rssbud="1">
 
 | Categories | parameter |
 | -------- | --------------- |
@@ -118,13 +120,13 @@ pageClass: routes
 
 ### Works List
 
-<RouteEn author="OrangeEd1t" example="/orcid/0000-0002-4731-9700" path="/orcid/:id" :paramsDesc="['Open Researcher and Contributor ID']"/>
+<RouteEn author="OrangeEd1t" example="/orcid/0000-0002-4731-9700" path="/orcid/:id" paramsDesc={['Open Researcher and Contributor ID']}/>
 
 ## ResearchGate
 
 ### Publications
 
-<RouteEn author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" :paramsDesc="['Username, can be found in URL']" puppeteer="1" anticrawler="1"/>
+<RouteEn author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" paramsDesc={['Username, can be found in URL']} puppeteer="1" anticrawler="1"/>
 
 ## The Korea Institute of Marine Law
 
@@ -136,13 +138,13 @@ pageClass: routes
 
 ### News
 
-<RouteEn author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" :paramsDesc="['Tag number, can be obtained from news list URL. Empty value means news index.']" />
+<RouteEn author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" paramsDesc={['Tag number, can be obtained from news list URL. Empty value means news index.']} />
 
 ## XMind
 
 ### Mindmap Gallery
 
-<RouteEn author="nczitzk" example="/xmind/mindmap" path="/xmind/mindmap/:lang?" :paramsDesc="['language code, all languages by default']">
+<RouteEn author="nczitzk" example="/xmind/mindmap" path="/xmind/mindmap/:lang?" paramsDesc={['language code, all languages by default']}>
 
 | English | Español | Deutsch | Français | 中文 | 日本語 |
 | ------- | ------- | ------- | -------- | ---- | ------ |
@@ -154,7 +156,7 @@ pageClass: routes
 
 ### News
 
-<RouteEn author="y9c" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" :paramsDesc="['type，eg. ai']">
+<RouteEn author="y9c" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" paramsDesc={['type，eg. ai']}>
 
 | `:type`   | type name |
 | --------- | --------- |
@@ -176,7 +178,7 @@ pageClass: routes
 
 ### innovation
 
-<RouteEn author="y9c" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" :paramsDesc="['type，eg. company']">
+<RouteEn author="y9c" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" paramsDesc={['type，eg. company']}>
 
 | `:type`       | type name     |
 | ------------- | ------------- |

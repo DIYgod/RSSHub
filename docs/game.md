@@ -1,3 +1,5 @@
+import Route from '@site/src/components/Route';
+
 ---
 pageClass: routes
 ---
@@ -8,7 +10,7 @@ pageClass: routes
 
 ### 新闻中心
 
-<Route author="zhboner" example="/3dmgame/news" path="/3dmgame/news/:category?" :paramsDesc="['分类名或 ID，见下表，默认为新闻推荐，ID 可从分类 URL 中找到，如 Steam 为 `22221`']" radar="1">
+<Route author="zhboner" example="/3dmgame/news" path="/3dmgame/news/:category?" paramsDesc={['分类名或 ID，见下表，默认为新闻推荐，ID 可从分类 URL 中找到，如 Steam 为 `22221`']} radar="1">
 
 | 新闻推荐 | 游戏新闻 | 动漫影视 | 智能数码 | 时事焦点  |
 | -------- | -------- | -------- | -------- | --------- |
@@ -18,7 +20,7 @@ pageClass: routes
 
 ### 游戏资讯
 
-<Route author="sinchang jacky2001114 HenryQW" example="/3dmgame/detroitbecomehuman/news" path="/3dm/:name/:type?" :paramsDesc="['游戏名字，可以在专题页的 url 中找到', '资讯类型，见下表，默认为 `news`']" radar="1">
+<Route author="sinchang jacky2001114 HenryQW" example="/3dmgame/detroitbecomehuman/news" path="/3dm/:name/:type?" paramsDesc={['游戏名字，可以在专题页的 url 中找到', '资讯类型，见下表，默认为 `news`']} radar="1">
 
 | 新闻 | 攻略 | 资源     |
 | ---- | ---- | -------- |
@@ -30,15 +32,15 @@ pageClass: routes
 
 ### 分类
 
-<Route author="hoilc" example="/4gamers/category/352" path="/4gamers/category/:category" :paramsDesc="['分类 ID, 可从分类 URL 中找到']"/>
+<Route author="hoilc" example="/4gamers/category/352" path="/4gamers/category/:category" paramsDesc={['分类 ID, 可从分类 URL 中找到']}/>
 
 ### 标签
 
-<Route author="hoilc" example="/4gamers/tag/英雄聯盟" path="/4gamers/tag/:tag" :paramsDesc="['标签名, 可在标签 URL 中找到']"/>
+<Route author="hoilc" example="/4gamers/tag/英雄聯盟" path="/4gamers/tag/:tag" paramsDesc={['标签名, 可在标签 URL 中找到']}/>
 
 ### 主題
 
-<Route author="bestpika" example="/4gamers/topic/gentlemen-topic" path="/4gamers/topic/:topic" :paramsDesc="['主题, 可在首页上方页面内找到']" />
+<Route author="bestpika" example="/4gamers/topic/gentlemen-topic" path="/4gamers/topic/:topic" paramsDesc={['主题, 可在首页上方页面内找到']} />
 
 ## 5EPLAY
 
@@ -56,7 +58,7 @@ pageClass: routes
 
 ### News
 
-<Route author="nczitzk" example="/blizzard/news" path="/blizzard/news/:language?/:category?" :paramsDesc="['语言代码，见下表，默认为 en-US', '分类，见下表，默认为全部新闻']">
+<Route author="nczitzk" example="/blizzard/news" path="/blizzard/news/:language?/:category?" paramsDesc={['语言代码，见下表，默认为 en-US', '分类，见下表，默认为全部新闻']}>
 
 分类
 
@@ -103,7 +105,7 @@ pageClass: routes
 
 ### 分类
 
-<Route author="LogicJake" example="/dekudeals/most-wanted" path="/dekudeals/:type" :paramsDesc="['分类名称，可在 URL 中查看']"/>
+<Route author="LogicJake" example="/dekudeals/most-wanted" path="/dekudeals/:type" paramsDesc={['分类名称，可在 URL 中查看']}/>
 
 ## Dorohedoro
 
@@ -115,7 +117,7 @@ pageClass: routes
 
 ### 免费游戏
 
-<Route author="Zyx-A nczitzk KotaHv" example="/epicgames/freegames" path="/epicgames/freegames/:locale?/:country?" :paramsDesc="['地区，默认为 en_US', '国家，默认为 en_US']"/>
+<Route author="Zyx-A nczitzk KotaHv" example="/epicgames/freegames" path="/epicgames/freegames/:locale?/:country?" paramsDesc={['地区，默认为 en_US', '国家，默认为 en_US']}/>
 
 ## Fate Grand Order
 
@@ -127,7 +129,7 @@ pageClass: routes
 
 ### News
 
-<Route author="lyqluis" example="/fortnite/news" path="/fortnite/news/:options?" :paramsDesc="['参数']" radar="1" puppeteer="1">
+<Route author="lyqluis" example="/fortnite/news" path="/fortnite/news/:options?" paramsDesc={['参数']} radar="1" puppeteer="1">
 
 -   `options.lang`，可选，语言，实例：`/fortnite/news/lang=en-US`，常见语言见下表，更多语言参考 [官网](https://www.fortnite.com/news)
 
@@ -151,7 +153,7 @@ pageClass: routes
 
 ### 分類
 
-<Route author="nczitzk" example="/gamersecret/pc" path="/gamersecret/:type?/:category?" :paramsDesc="['类型，见下表，默认为 Latest News', '分类，见下表，默认为空']">
+<Route author="nczitzk" example="/gamersecret/pc" path="/gamersecret/:type?/:category?" paramsDesc={['类型，见下表，默认为 Latest News', '分类，见下表，默认为空']}>
 
 | Latest News | PC | Playstation | Nintendo | Xbox | Moblie |
 | ----------- | -- | ----------- | -------- | ---- | ------ |
@@ -185,7 +187,7 @@ pageClass: routes
 
 ### 列表
 
-<Route author="nczitzk" example="/gameres/list/26" path="/gameres/list/:id" :paramsDesc="['列表 id']">
+<Route author="nczitzk" example="/gameres/list/26" path="/gameres/list/:id" paramsDesc={['列表 id']}>
 
 产业
 
@@ -229,13 +231,13 @@ pageClass: routes
 
 ### indienova 文章
 
-<Route author="GensouSakuya kt286" example="/indienova/article" path="indienova/:type" :paramsDesc="['类型: `article` 文章，`development` 开发']"/>
+<Route author="GensouSakuya kt286" example="/indienova/article" path="indienova/:type" paramsDesc={['类型: `article` 文章，`development` 开发']}/>
 
 ## itch.io
 
 ### Browse
 
-<Route author="nczitzk" example="/itch/games/new-and-popular/featured" path="/itch/:params?" :paramsDesc="['参数']">
+<Route author="nczitzk" example="/itch/games/new-and-popular/featured" path="/itch/:params?" paramsDesc={['参数']}>
 
 参数为对应页面 URL 中 `itch.io` 后的字段，如 [Top rated Games tagged Singleplayer](https://itch.io/games/top-rated/tag-singleplayer) 的 URL 是 <https://itch.io/games/top-rated/tag-singleplayer>，其中 `itch.io` 后的字段为 `/games/top-rated/tag-singleplayer`。
 
@@ -251,7 +253,7 @@ pageClass: routes
 
 ### Developer Logs
 
-<Route author="nczitzk" example="/itch/devlog/teamterrible/the-baby-in-yellow" path="/itch/devlog/:user/:id" :paramsDesc="['用户 id，可在对应页面地址栏中找到', '项目 id，可在对应页面地址栏中找到']">
+<Route author="nczitzk" example="/itch/devlog/teamterrible/the-baby-in-yellow" path="/itch/devlog/:user/:id" paramsDesc={['用户 id，可在对应页面地址栏中找到', '项目 id，可在对应页面地址栏中找到']}>
 
 用户 id 为对应页面 URL 中 `.itch.io` 前的字段，如 [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) 的 URL 是 <https://teamterrible.itch.io/the-baby-in-yellow/devlog>，其中 `.itch.io` 前的字段为 `teamterrible`；
 
@@ -263,13 +265,13 @@ pageClass: routes
 
 ### Posts
 
-<Route author="nczitzk" example="/itch/posts/9539/introduce-yourself" path="/itch/posts/:topic/:id" :paramsDesc="['话题 id，可在对应页面地址栏中找到', '话题名，可在对应页面地址栏中找到']"/>
+<Route author="nczitzk" example="/itch/posts/9539/introduce-yourself" path="/itch/posts/:topic/:id" paramsDesc={['话题 id，可在对应页面地址栏中找到', '话题名，可在对应页面地址栏中找到']}/>
 
 ## JUMP
 
 ### 游戏折扣
 
-<Route author="zytomorrow" path="/jump/discount/:platform/:filter?/:countries?" example="/jump/discount/ps5/all" :paramsDesc="['平台:switch,ps4,ps5,xbox,steam,epic', '过滤参数,all-全部，jx-精选，sd-史低，dl-独立，vip-会员', '地区，具体支持较多，可自信查看地区简写']">
+<Route author="zytomorrow" path="/jump/discount/:platform/:filter?/:countries?" example="/jump/discount/ps5/all" paramsDesc={['平台:switch,ps4,ps5,xbox,steam,epic', '过滤参数,all-全部，jx-精选，sd-史低，dl-独立，vip-会员', '地区，具体支持较多，可自信查看地区简写']}>
 | switch | ps4  | ps5  | xbox   | steam | epic   |
 | ------ | ---- | ---- | ------ | ----- | ------ |
 | 可用   | 可用 | 可用 | 不可用 | 可用  | 不可用 |
@@ -292,13 +294,13 @@ pageClass: routes
 
 ### PES Mobile 公告
 
-<Route author="HenryQW" example="/konami/pesmobile/zh-cn/ios" path="/konami/pesmobile/:lang?/:os?" :paramsDesc="['语言，在URL中获得，如zh-cn, zh-tw, en', '操作系统，iOS 或 Android']"/>
+<Route author="HenryQW" example="/konami/pesmobile/zh-cn/ios" path="/konami/pesmobile/:lang?/:os?" paramsDesc={['语言，在URL中获得，如zh-cn, zh-tw, en', '操作系统，iOS 或 Android']}/>
 
 ## Liquipedia
 
 ### Dota2 战队最近比赛结果
 
-<Route author="wzekin" example="/liquipedia/dota2/matches/Team_Aster" path="liquipedia/dota2/matches/:id" :paramsDesc="['战队名称，可在url中找到。例如:https://liquipedia.net/dota2/Team_Aster']"/>
+<Route author="wzekin" example="/liquipedia/dota2/matches/Team_Aster" path="liquipedia/dota2/matches/:id" paramsDesc={['战队名称，可在url中找到。例如:https://liquipedia.net/dota2/Team_Aster']}/>
 
 ## Maxjia News
 
@@ -310,7 +312,7 @@ pageClass: routes
 
 ### 新游发行
 
-<Route author="HenryQW" example="/metacritic/release/switch/coming" path="/metacritic/release/:platform/:type?/:sort?" :paramsDesc="['主机平台', '发行类型，默认为 `new`', '排序类型，默认为`date`']">
+<Route author="HenryQW" example="/metacritic/release/switch/coming" path="/metacritic/release/:platform/:type?/:sort?" paramsDesc={['主机平台', '发行类型，默认为 `new`', '排序类型，默认为`date`']}>
 
 支持的主机平台:
 
@@ -340,11 +342,11 @@ pageClass: routes
 
 ### CurseForge Mod 更新
 
-<Route author="Indexyz Discreater" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['项目的 ID， 可在 mod 主页的 `About This Project` 中找到']"/>
+<Route author="Indexyz Discreater" example="/curseforge/files/jei" path="/curseforge/files/:project" paramsDesc={['项目的 ID， 可在 mod 主页的 `About This Project` 中找到']}/>
 
 ### Feed The Beast (FTB) 模组包更新
 
-<Route author="gucheen" example="/feed-the-beast/modpack/ftb_presents_direwolf20_1_16" path="/feed-the-beast/modpack/:modpackEntry" :paramsDesc="['模组包的短名.']">
+<Route author="gucheen" example="/feed-the-beast/modpack/ftb_presents_direwolf20_1_16" path="/feed-the-beast/modpack/:modpackEntry" paramsDesc={['模组包的短名.']}>
 | 参数         | 说明                                                                                                                                                        |
 | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | modpackEntry | 模组包的短名从模组包的页面链接中找到，例如 `https://www.feed-the-beast.com/modpack/ftb_presents_direwolf20_1_16`，短名就是 `ftb_presents_direwolf20_1_16`。 |
@@ -354,7 +356,7 @@ pageClass: routes
 
 ### eShop 新发售游戏
 
-<Route author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" :paramsDesc="['地区标识，可为`hk`(港服),`jp`(日服),`us`(美服), `cn`(国服)']"/>
+<Route author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" paramsDesc={['地区标识，可为`hk`(港服),`jp`(日服),`us`(美服), `cn`(国服)']}/>
 
 ### 首页资讯（香港）
 
@@ -376,7 +378,7 @@ pageClass: routes
 
 ### PlayStation Store 游戏列表
 
-<Route author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" :paramsDesc="['列表的 grid 名']" radar="1" rssbud="1">
+<Route author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" paramsDesc={['列表的 grid 名']} radar="1" rssbud="1">
 
 适用于 URL 如 <https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT> 的列表页，比如 [PSN 每月免费游戏](https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT) 的 gridName 为 STORE-MSF86012-PLUS_FTT_CONTENT
 
@@ -384,7 +386,7 @@ pageClass: routes
 
 ### PlayStation Store 游戏折扣 | 价格
 
-<Route author="MisteryMonster" example="/ps/product/UP9000-CUSA00552_00-THELASTOFUS00000" path="/ps/:lang/product/:gridName" :paramsDesc="['地区语言','游戏的 grid 名']" radar="1" rssbud="1">
+<Route author="MisteryMonster" example="/ps/product/UP9000-CUSA00552_00-THELASTOFUS00000" path="/ps/:lang/product/:gridName" paramsDesc={['地区语言','游戏的 grid 名']} radar="1" rssbud="1">
 
 地区语言如 `zh-hans-hk` 代表香港区简体中文， `zh-hant-tw` 为台湾繁体中文。不同地区游戏 gridName 不同，非中文地区使用英文提示。
 
@@ -396,7 +398,7 @@ pageClass: routes
 
 ### PlayStation Network 用户奖杯
 
-<Route author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" :paramsDesc="['用户 ID']" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" paramsDesc={['用户 ID']} radar="1" rssbud="1"/>
 
 ### PlayStation 4 系统更新纪录
 
@@ -410,7 +412,7 @@ pageClass: routes
 
 ### 节点
 
-<Route author="nczitzk" example="/psnine/node/news" path="/psnine/node/:id?/:order?" :paramsDesc="['节点 id，见下表，默认为 news', '排序，可选 `date` 即最新，默认为 `obdate` 即综合排序']">
+<Route author="nczitzk" example="/psnine/node/news" path="/psnine/node/:id?/:order?" paramsDesc={['节点 id，见下表，默认为 news', '排序，可选 `date` 即最新，默认为 `obdate` 即综合排序']}>
 
 | 站务 | 活动  | 旅记   | 折扣 | 会免 |
 | ---- | ----- | ------ | ---- | ---- |
@@ -446,7 +448,7 @@ pageClass: routes
 
 ### 在线活动
 
-<Route author="kookxiang" example="/socialclub/events/GTAV" path="/socialclub/events/:game?" :paramsDesc="['游戏代码（默认所有）']">
+<Route author="kookxiang" example="/socialclub/events/GTAV" path="/socialclub/events/:game?" paramsDesc={['游戏代码（默认所有）']}>
 
 | 游戏代码 | 游戏名称     |
 | -------- | ------------ |
@@ -459,13 +461,13 @@ pageClass: routes
 
 ### 用户动态
 
-<Route author="zhangpeng2k" example="/scoresaber/user/76561198400378578" path="/scoresaber/user/:id" :paramsDesc="['用户 id, 用户主页URL中获取']"/>
+<Route author="zhangpeng2k" example="/scoresaber/user/76561198400378578" path="/scoresaber/user/:id" paramsDesc={['用户 id, 用户主页URL中获取']}/>
 
 ## Steam
 
 ### Steam search
 
-<Route author="maple3142" example="/steam/search/specials=1" path="/steam/search/:params" :paramsDesc="['搜寻参数']" radar="1" rssbud="1">
+<Route author="maple3142" example="/steam/search/specials=1" path="/steam/search/:params" paramsDesc={['搜寻参数']} radar="1" rssbud="1">
 
 参数 params 请从 Steam 的 URL 取得
 
@@ -489,7 +491,7 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 ### Discussions
 
-<Route author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" :paramsDesc="['分类名称，默认为All']"/>
+<Route author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" paramsDesc={['分类名称，默认为All']}/>
 
 ## TapTap
 
@@ -502,7 +504,7 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 ### 游戏论坛
 
-<Route author="hoilc TonyRL" example="/taptap/topic/142793/official" path="/taptap/topic/:id/:type?/:sort?/:lang?" :paramsDesc="['游戏 ID，游戏主页 URL 中获取', '论坛版块，默认显示所有帖子，论坛版块 URL 中 `type` 参数，见下表，默认为 `feed `', '排序，见下表，默认为 `created `', '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`']">
+<Route author="hoilc TonyRL" example="/taptap/topic/142793/official" path="/taptap/topic/:id/:type?/:sort?/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '论坛版块，默认显示所有帖子，论坛版块 URL 中 `type` 参数，见下表，默认为 `feed `', '排序，见下表，默认为 `created `', '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`']}>
 
 | 全部 | 精华  | 官方     | 影片  |
 | ---- | ----- | -------- | ----- |
@@ -516,11 +518,11 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 ### 游戏更新
 
-<Route author="hoilc ETiV" example="/taptap/changelog/60809/en_US" path="/taptap/changelog/:id/:lang?" :paramsDesc="['游戏 ID，游戏主页 URL 中获取', '语言，默认使用 `zh_CN`，亦可使用 `en_US`']"/>
+<Route author="hoilc ETiV" example="/taptap/changelog/60809/en_US" path="/taptap/changelog/:id/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '语言，默认使用 `zh_CN`，亦可使用 `en_US`']}/>
 
 ### 游戏更新 - 国际版
 
-<Route author="hoilc ETiV" example="/taptap/intl/changelog/191001/zh_TW" path="/taptap/intl/changelog/:id/:lang?" :paramsDesc="['游戏 ID，游戏主页 URL 中获取', '语言代码，默认使用 `en_US`，可选项目见下表']">
+<Route author="hoilc ETiV" example="/taptap/intl/changelog/191001/zh_TW" path="/taptap/intl/changelog/:id/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '语言代码，默认使用 `en_US`，可选项目见下表']}>
 
 #### 语言代码
 
@@ -532,7 +534,7 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 ### 游戏评价
 
-<Route author="hoilc TonyRL" example="/taptap/review/142793/hot" path="/taptap/review/:id/:order?/:lang?" :paramsDesc="['游戏 ID，游戏主页 URL 中获取', '排序方式，空为默认排序，可选如下', '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`']"/>
+<Route author="hoilc TonyRL" example="/taptap/review/142793/hot" path="/taptap/review/:id/:order?/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '排序方式，空为默认排序，可选如下', '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`']}>
 
 | 最新   | 最热 | 游戏时长 | 默认排序 |
 | ------ | ---- | -------- | -------- |
@@ -542,7 +544,7 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 ### 游戏评价 - 国际版
 
-<Route author="hoilc TonyRL ETiV" example="/taptap/intl/review/82354/new" path="/taptap/intl/review/:id/:order?/:lang?" :paramsDesc="['游戏 ID，游戏主页 URL 中获取', '排序方式，空为默认排序，可选如下', '语言代码，默认使用 `en_US`，可选项目见下表']">
+<Route author="hoilc TonyRL ETiV" example="/taptap/intl/review/82354/new" path="/taptap/intl/review/:id/:order?/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '排序方式，空为默认排序，可选如下', '语言代码，默认使用 `en_US`，可选项目见下表']}>
 
 #### 排序方式
 
@@ -573,7 +575,7 @@ News 的数据来自 <https://warthunder.com/en/news/>
 
 ### GNN 新聞
 
-<Route author="Arracc" example="/gamer/gnn/1" path="/gamer/gnn/:category?"  :paramsDesc="['版块']">
+<Route author="Arracc" example="/gamer/gnn/1" path="/gamer/gnn/:category?"  paramsDesc={['版块']}>
 
 | 首頁 | PC | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
 | ---- | -- | ------- | -------- | ------ | -------- | -------- | ---- |
@@ -587,7 +589,7 @@ News 的数据来自 <https://warthunder.com/en/news/>
 
 ## 触乐
 
-<Route author="laampui" example="/chuapp/index/daily" path="/chuapp/index/:category?" :paramsDesc="['默认为 night']">
+<Route author="laampui" example="/chuapp/index/daily" path="/chuapp/index/:category?" paramsDesc={['默认为 night']}>
 
 | 每日聚焦 | 最好玩 | 触乐夜话 | 动态资讯 |
 | -------- | ------ | -------- | -------- |
@@ -635,7 +637,7 @@ News 的数据来自 <https://warthunder.com/en/news/>
 
 ### 新闻资讯
 
-<Route author="nczitzk" example="/jx3" path="/jx3/:caty?" :paramsDesc="['分类，见下表，默认为最新']">
+<Route author="nczitzk" example="/jx3" path="/jx3/:caty?" paramsDesc={['分类，见下表，默认为最新']}>
 
 | 最新    | 新闻  | 活动 | 公告     |
 | ------- | ----- | ---- | -------- |
@@ -655,7 +657,7 @@ News 的数据来自 <https://warthunder.com/en/news/>
 
 ### 分区
 
-<Route author="auto-bot-ty" example="/lfsyd/tag/17" path="/lfsyd/tag/:tagId" :paramsDesc="['订阅分区类型']" radar="1" rssbud="1">
+<Route author="auto-bot-ty" example="/lfsyd/tag/17" path="/lfsyd/tag/:tagId" paramsDesc={['订阅分区类型']} radar="1" rssbud="1">
 
 | 炉石传说 | 万智牌 | 游戏王 | 昆特牌 | 影之诗 | 符文之地传奇 | 阴阳师百闻牌 |
 | :------: | :----: | :----: | :----: | :----: | :----------: | :----------: |
@@ -669,7 +671,7 @@ News 的数据来自 <https://warthunder.com/en/news/>
 
 ### 用户的帖子
 
-<Route author="auto-bot-ty" example="/lfsyd/user/55547" path="/lfsyd/user/:id" :paramsDesc="['用户 id']" radar="1" rssbud="1"/>
+<Route author="auto-bot-ty" example="/lfsyd/user/55547" path="/lfsyd/user/:id" paramsDesc={['用户 id']} radar="1" rssbud="1"/>
 
 可以在用户主页的 URL 中找到
 
@@ -679,7 +681,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 崩坏 2 - 游戏公告
 
-<Route author="deepred5" example="/mihoyo/bh2/gach" path="/mihoyo/bh2/:type" :paramsDesc="['公告种类']">
+<Route author="deepred5" example="/mihoyo/bh2/gach" path="/mihoyo/bh2/:type" paramsDesc={['公告种类']}>
 
 | 最新公告 | 版本信息 | 祈愿信息 | 活动介绍 |
 | -------- | -------- | -------- | -------- |
@@ -689,7 +691,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 崩坏 3 - 游戏公告
 
-<Route author="deepred5 nczitzk" example="/mihoyo/bh3/latest" path="/mihoyo/bh3/:type" :paramsDesc="['公告种类']">
+<Route author="deepred5 nczitzk" example="/mihoyo/bh3/latest" path="/mihoyo/bh3/:type" paramsDesc={['公告种类']}>
 
 | 最新   | 动态 | 公告   | 活动     | 补给     |
 | ------ | ---- | ------ | -------- | -------- |
@@ -699,7 +701,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 米游社 - 官方公告
 
-<Route author="CaoMeiYouRen" example="/mihoyo/bbs/official/2/3/20/" path="/bbs/official/:gids/:type?/:page_size?/:last_id?" :paramsDesc="['游戏id','公告类型，默认为 2(即 活动)','分页大小，默认为 20 ','跳过的公告数，例如指定为 40 就是从第 40 条公告开始，可用于分页']" radar="1">
+<Route author="CaoMeiYouRen" example="/mihoyo/bbs/official/2/3/20/" path="/bbs/official/:gids/:type?/:page_size?/:last_id?" paramsDesc={['游戏id','公告类型，默认为 2(即 活动)','分页大小，默认为 20 ','跳过的公告数，例如指定为 40 就是从第 40 条公告开始，可用于分页']} radar="1">
 
 游戏 id
 
@@ -719,7 +721,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 #### 新闻
 
-<Route author="nczitzk" example="/mihoyo/ys" path="/mihoyo/ys/:location?/:category?" :paramsDesc="['区域，可选 `main`（简中）或 `zh-tw`（繁中）', '分类，见下表，默认为最新']">
+<Route author="nczitzk" example="/mihoyo/ys" path="/mihoyo/ys/:location?/:category?" paramsDesc={['区域，可选 `main`（简中）或 `zh-tw`（繁中）', '分类，见下表，默认为最新']}>
 
 | 最新   | 新闻 | 公告   | 活动     |
 | ------ | ---- | ------ | -------- |
@@ -731,7 +733,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 #### 新闻
 
-<Route author="shinanory" example="/mihoyo/sr" path="/mihoyo/sr/:location?/:category?" :paramsDesc="['区域，可选 `zh-cn`（国服，简中）或 `zh-tw`（国际服，繁中）','分类，见下表，默认为最新']">
+<Route author="shinanory" example="/mihoyo/sr" path="/mihoyo/sr/:location?/:category?" paramsDesc={['区域，可选 `zh-cn`（国服，简中）或 `zh-tw`（国际服，繁中）','分类，见下表，默认为最新']}>
 
 | 最新     | 新闻 | 公告   | 活动     |
 | -------- | ---- | ------ | -------- |
@@ -747,7 +749,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 游戏内公告
 
-<Route author="swwind" example="/arknights/announce" path="/arknights/announce/:platform?/:group?" :paramsDesc="['平台，默认为 Android','分组，默认为 ALL']">
+<Route author="swwind" example="/arknights/announce" path="/arknights/announce/:platform?/:group?" paramsDesc={['平台，默认为 Android','分组，默认为 ALL']}>
 
 平台
 
@@ -775,13 +777,13 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 元素文章
 
-<Route author="hoilc" example="/cowlevel/element/1370" path="/cowlevel/element/:id" :paramsDesc="['元素 ID, 可在 URL 中找到']" radar="1" rssbud="1"/>
+<Route author="hoilc" example="/cowlevel/element/1370" path="/cowlevel/element/:id" paramsDesc={['元素 ID, 可在 URL 中找到']} radar="1" rssbud="1"/>
 
 ## 其乐
 
 ### 论坛
 
-<Route author="nczitzk" example="/keylol" path="/keylol/:path+" :paramsDesc="['路径，默认为热点聚焦']">
+<Route author="nczitzk" example="/keylol" path="/keylol/:path+" paramsDesc={['路径，默认为热点聚焦']}>
 
 ::: tip 提示
 
@@ -797,7 +799,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 情报局
 
-<Route author="nczitzk" example="/gf-cn/news" path="/gf-cn/news/:category?" :paramsDesc="['分类，见下表，默认为新闻']">
+<Route author="nczitzk" example="/gf-cn/news" path="/gf-cn/news/:category?" paramsDesc={['分类，见下表，默认为新闻']}>
 
 | 新闻 | 公告 |
 | ---- | ---- |
@@ -815,7 +817,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 新闻中心
 
-<Route author="Jeason0228 HenryQW" example="/tencent/pvp/newsindex/all" path="/tencent/pvp/newsindex/:type" :paramsDesc="['栏目分类，见下表']">
+<Route author="Jeason0228 HenryQW" example="/tencent/pvp/newsindex/all" path="/tencent/pvp/newsindex/:type" paramsDesc={['栏目分类，见下表']}>
 
 | 全部 | 热门 | 新闻 | 公告 | 活动 | 赛事 | 优化 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -827,13 +829,13 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 用户发帖
 
-<Route author="luyuhuang" example="/163/ds/63dfbaf4117741daaf73404601165843" path="/163/ds/:id" :paramsDesc="['用户ID']"/>
+<Route author="luyuhuang" example="/163/ds/63dfbaf4117741daaf73404601165843" path="/163/ds/:id" paramsDesc={['用户ID']}/>
 
 ## 小黑盒
 
 ### 用户动态
 
-<Route author="auto-bot-ty" example="/xiaoheihe/user/7775687" path="xiaoheihe/user/:id" :paramsDesc="['用户 id']"/>
+<Route author="auto-bot-ty" example="/xiaoheihe/user/7775687" path="xiaoheihe/user/:id" paramsDesc={['用户 id']}/>
 
 ### 游戏新闻
 
@@ -841,7 +843,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 游戏折扣信息
 
-<Route author="MyFaith" example="/xiaoheihe/discount/pc" path="xiaoheihe/discount/:platform?" :paramsDesc="['平台，默认为 Steam']">
+<Route author="MyFaith" example="/xiaoheihe/discount/pc" path="xiaoheihe/discount/:platform?" paramsDesc={['平台，默认为 Steam']}>
 
 | Steam | PlatStation4 | Switch |
 | ----- | ------------ | ------ |
@@ -853,7 +855,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 国服新闻
 
-<Route author="Jeason0228" example="/lol/newsindex/all" path="/lol/newsindex/:type" :paramsDesc="['栏目分类，见下表']">
+<Route author="Jeason0228" example="/lol/newsindex/all" path="/lol/newsindex/:type" paramsDesc={['栏目分类，见下表']}>
 
 | 全部 | 综合 | 公告 | 赛事 | 攻略 | 社区 |
 | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -863,7 +865,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 台服新闻
 
-<Route author="hoilc" example="/loltw/news" path="/loltw/news/:category?" :paramsDesc="['新闻分类，置空为全部新闻']" radar="1" rssbud="1">
+<Route author="hoilc" example="/loltw/news" path="/loltw/news/:category?" paramsDesc={['新闻分类，置空为全部新闻']} radar="1" rssbud="1">
 
 | 活动  | 资讯 | 系统   | 电竞   | 版本资讯 | 战棋资讯 |
 | ----- | ---- | ------ | ------ | -------- | -------- |
@@ -879,7 +881,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 游民娱乐
 
-<Route author="LogicJake" example="/gamersky/ent/ymfl" path="/gamersky/ent/:category" :paramsDesc="['分类类型']">
+<Route author="LogicJake" example="/gamersky/ent/ymfl" path="/gamersky/ent/:category" paramsDesc={['分类类型']}>
 
 | 趣囧时间 | 游民影院 | 游观天下 | 壁纸图库 | 游民盘点 | 游民福利 |
 | -------- | -------- | -------- | -------- | -------- | -------- |
@@ -891,7 +893,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 游戏折扣
 
-<Route author="LogicJake nczitzk" example="/yxdzqb/popular_cn" path="/yxdzqb/:type" :paramsDesc="['折扣类型']">
+<Route author="LogicJake nczitzk" example="/yxdzqb/popular_cn" path="/yxdzqb/:type" paramsDesc={['折扣类型']}>
 
 | Steam 最新折扣 | Steam 热门游戏折扣 | Steam 热门中文游戏折扣 | Steam 历史低价 | Steam 中文游戏历史低价 |
 | -------------- | ------------------ | ---------------------- | -------------- | ---------------------- |
@@ -903,7 +905,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 游戏资讯
 
-<Route author="wy916787036" example="/vgn" path="/vgn/:platform?" :paramsDesc="['平台，见下表，默认为全部']">
+<Route author="wy916787036" example="/vgn" path="/vgn/:platform?" paramsDesc={['平台，见下表，默认为全部']}>
 
 | Switch | PS4 | PC | Xbox |
 | ------ | --- | -- | ---- |
@@ -915,7 +917,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 分类
 
-<Route author="nczitzk" example="/bibgame/sgame" path="/bibgame/:category?/:type?" :paramsDesc="['分类，见下表，默认为 PC 游戏', '类型，可在各分类页中导航栏中找到']">
+<Route author="nczitzk" example="/bibgame/sgame" path="/bibgame/:category?/:type?" paramsDesc={['分类，见下表，默认为 PC 游戏', '类型，可在各分类页中导航栏中找到']}>
 
 | PC 游戏 | PS4 游戏 | Switch 游戏 | NS 其他板块 | galgame | VR 游戏 | 3DS 游戏 | psv 游戏 | xbox360 游戏 | ps3 游戏 | 其他掌机 |
 | ------- | -------- | ----------- | ----------- | ------- | ------- | -------- | -------- | ------------ | -------- | -------- |
@@ -927,7 +929,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 分类
 
-<Route author="TonyRL" example="/yxrb/info" path="/yxrb/:category?" :paramsDesc="['分类，见下表，预设为 `info`']" radar="1">
+<Route author="TonyRL" example="/yxrb/info" path="/yxrb/:category?" paramsDesc={['分类，见下表，预设为 `info`']} radar="1">
 
 | 资讯 | 访谈    | 服务    | 游理游据 |
 | ---- | ------- | ------- | -------- |
@@ -953,7 +955,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 资讯
 
-<Route author="nczitzk" example="/yxdown/news" path="/yxdown/news/:category?" :paramsDesc="['分类，见下表，默认为资讯首页']">
+<Route author="nczitzk" example="/yxdown/news" path="/yxdown/news/:category?" paramsDesc={['分类，见下表，默认为资讯首页']}>
 
 | 资讯首页 | 业界动态 | 视频预告 | 新作发布 | 游戏资讯 | 游戏评测 | 网络游戏 | 手机游戏 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
@@ -969,7 +971,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 游研社 - 分类文章
 
-<Route author="LightStrawberry" example="/yystv/category/recommend" path="/yystv/category/:category" :paramsDesc="['专栏类型']">
+<Route author="LightStrawberry" example="/yystv/category/recommend" path="/yystv/category/:category" paramsDesc={['专栏类型']}>
 
 | 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 |
 | --------- | ------- | ------ | ------- | ---- | -------- |
@@ -985,7 +987,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 新聞
 
-<Route author="nczitzk" example="/gamebase/news" path="/gamebase/news/:type?/:category?" :paramsDesc="['类型，见下表，默认为 newslist', '分类，可在对应分类页 URL 中找到，默认为 `all` 即全部']">
+<Route author="nczitzk" example="/gamebase/news" path="/gamebase/news/:type?/:category?" paramsDesc={['类型，见下表，默认为 newslist', '分类，可在对应分类页 URL 中找到，默认为 `all` 即全部']}>
 
 类型
 
@@ -1002,13 +1004,13 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 用户文章
 
-<Route author="ztmzzz" example="/lolapp/article/ee97e19c-4a64-4637-b916-b9ee23744d1f" path="/lolapp/article/:uuid" :paramsDesc="['用户UUID，可在文章html中获取']"/>
+<Route author="ztmzzz" example="/lolapp/article/ee97e19c-4a64-4637-b916-b9ee23744d1f" path="/lolapp/article/:uuid" paramsDesc={['用户UUID，可在文章html中获取']}/>
 
 ## 掌游宝
 
 ### 推荐
 
-<Route author="ztmzzz" example="/zhangyoubao/lol" path="/zhangyoubao/:category" :paramsDesc="['分类，见下表']">
+<Route author="ztmzzz" example="/zhangyoubao/lol" path="/zhangyoubao/:category" paramsDesc={['分类，见下表']}>
 
 | 英雄联盟 | 炉石传说 | DNF | 守望先锋 | 王者荣耀 | 单机综合 | 手游综合 | 云顶之弈 | 部落冲突 | 皇室战争 | DNF 手游 | 荒野乱斗   |
 | -------- | -------- | --- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
@@ -1020,7 +1022,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 最终幻想 14 国服
 
-<Route author="Kiotlin" example="/ff14/zh/news" path="/ff14/zh/:type?" :paramsDesc="['分类名，预设为 `all`']">
+<Route author="Kiotlin" example="/ff14/zh/news" path="/ff14/zh/:type?" paramsDesc={['分类名，预设为 `all`']}>
 
 | 新闻 | 公告     | 活动   | 广告      | 所有 |
 | ---- | -------- | ------ | --------- | ---- |
@@ -1030,7 +1032,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 最终幻想 14 国际服 （Lodestone）
 
-<Route author="chengyuhui" example="/ff14/global/na/all" path="/ff14/global/:lang/:type?" :paramsDesc="['地区', '分类名，预设为 `all`']">
+<Route author="chengyuhui" example="/ff14/global/na/all" path="/ff14/global/:lang/:type?" paramsDesc={['地区', '分类名，预设为 `all`']}>
 
 | 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
 | ---- | ------------ | ---- | ---- | ---- |
@@ -1052,7 +1054,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 分类
 
-<Route author="TonyRL" example="/famitsu/category/new-article" path="/famitsu/category/:category?" :paramsDesc="['分类，见下表，预设为 `new-article`']" radar="1">
+<Route author="TonyRL" example="/famitsu/category/new-article" path="/famitsu/category/:category?" paramsDesc={['分类，见下表，预设为 `new-article`']} radar="1">
 
 | 新着        | PS5 | Switch | PS4 | ニュース | ゲームニュース | PR TIMES | 動画   | 特集・企画記事  | インタビュー | 取材・リポート | レビュー | インディーゲーム |
 | ----------- | --- | ------ | --- | -------- | -------------- | -------- | ------ | --------------- | ------------ | -------------- | -------- | ---------------- |

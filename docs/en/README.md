@@ -5,7 +5,7 @@ sidebarDepth: 0
 # Introduction
 
 <p align="center" class="logo-img">
-    <img src="/logo.png" alt="RSSHub" width="100" />
+    <img src="/img/logo.png" alt="RSSHub" width="100" />
 </p>
 <h1 align="center" class="logo-text">RSSHub</h1>
 
@@ -30,7 +30,7 @@ RSSHub can be used with browser extension [RSSHub Radar](https://github.com/DIYg
 ### Special Sponsors
 
 <p>
-<a href="https://xlog.app/" target="_blank"><img height="100px" src="https://i.imgur.com/JuhHTKD.png"></a>
+<a href="https://xlog.app/" target="_blank"><img style={{height: "100px"}} src="https://i.imgur.com/JuhHTKD.png" /></a>
 </p>
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/en/support/)
@@ -43,7 +43,7 @@ Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 ### Backers
 
-<a href="https://www.cloudflare.com" target="_blank"><img height="50px" src="https://i.imgur.com/7Ph27Fq.png"></a><a href="https://www.netlify.com" target="_blank" style="margin-left: 60px;"><img height="40px" src="https://i.imgur.com/cU01915.png"></a>
+<a href="https://www.cloudflare.com" target="_blank"><img style={{height: "50px"}} src="https://i.imgur.com/7Ph27Fq.png" /></a><a href="https://www.netlify.com" target="_blank" style={{marginLeft: "60px"}}><img style={{height: "40px"}} src="https://i.imgur.com/cU01915.png" /></a>
 
 ## Related Projects
 

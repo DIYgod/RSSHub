@@ -1,3 +1,5 @@
+import RouteEn from '@site/src/components/RouteEn';
+
 ---
 pageClass: routes
 ---
@@ -8,7 +10,7 @@ pageClass: routes
 
 ### News
 
-<RouteEn author="nczitzk" example="/blizzard/news" path="/blizzard/news/:language?/:category?" :paramsDesc="['Language code, see below, en-US by default', 'Category, see below, All News by default']">
+<RouteEn author="nczitzk" example="/blizzard/news" path="/blizzard/news/:language?/:category?" paramsDesc={['Language code, see below, en-US by default', 'Category, see below, All News by default']}>
 
 Categories
 
@@ -55,19 +57,19 @@ Language codes
 
 ### Category
 
-<RouteEn author="LogicJake" example="/dekudeals/most-wanted" path="/dekudeals/:type" :paramsDesc="['Category name']"/>
+<RouteEn author="LogicJake" example="/dekudeals/most-wanted" path="/dekudeals/:type" paramsDesc={['Category name']}/>
 
 ## Epic Games Store
 
 ### Free games
 
-<RouteEn author="Zyx-A nczitzk  KotaHv" example="/epicgames/freegames" path="/epicgames/freegames/:locale?/:country?" :paramsDesc="['Locale, en_US by default', 'Country, en_US by default']"/>
+<RouteEn author="Zyx-A nczitzk  KotaHv" example="/epicgames/freegames" path="/epicgames/freegames/:locale?/:country?" paramsDesc={['Locale, en_US by default', 'Country, en_US by default']}/>
 
 ## FINAL FANTASY XIV
 
 ### FINAL FANTASY XIV (The Lodestone)
 
-<RouteEn author="chengyuhui" example="/ff14/global/na/all" path="/ff14/global/:lang/:type?" :paramsDesc="['Region', 'Category, `all` by default']">
+<RouteEn author="chengyuhui" example="/ff14/global/na/all" path="/ff14/global/:lang/:type?" paramsDesc={['Region', 'Category, `all` by default']}>
 
 Region
 
@@ -86,7 +88,7 @@ Category
 
 ### News
 
-<RouteEn author="lyqluis" example="/fortnite/news" path="/fortnite/news/:options?" :paramsDesc="['Params']" radar="1" puppeteer="1">
+<RouteEn author="lyqluis" example="/fortnite/news" path="/fortnite/news/:options?" paramsDesc={['Params']} radar="1" puppeteer="1">
 
 -   `options.lang`, optional, language, eg. `/fortnite/news/lang=en-US`, common languages are listed below, more languages are available one the [official website](https://www.fortnite.com/news)
 
@@ -104,7 +106,7 @@ Category
 
 ### Category
 
-<RouteEn author="nczitzk" example="/gamersecret" path="/gamersecret/:type?/:category?" :paramsDesc="['Type, see below, Latest News by default', 'Category, see below']">
+<RouteEn author="nczitzk" example="/gamersecret" path="/gamersecret/:type?/:category?" paramsDesc={['Type, see below, Latest News by default', 'Category, see below']}>
 
 | Latest News | PC | Playstation | Nintendo | Xbox | Moblie |
 | ----------- | -- | ----------- | -------- | ---- | ------ |
@@ -134,7 +136,7 @@ Or
 
 ### Browse
 
-<RouteEn author="nczitzk" example="/itch/games/new-and-popular/featured" path="/itch/:params?" :paramsDesc="['Params']">
+<RouteEn author="nczitzk" example="/itch/games/new-and-popular/featured" path="/itch/:params?" paramsDesc={['Params']}>
 
 `params` is the field after `itch.io` in the URL of the corresponding page, e.g. the URL of [Top Rated Games tagged Singleplayer](https://itch.io/games/top-rated/tag-singleplayer) is <https://itch.io/games/top-rated/tag-singleplayer>, where the field after `itch.io` is `/games/top-rated/tag-singleplayer`.
 
@@ -150,7 +152,7 @@ You can browse all the tags at [here](https://itch.io/tags).
 
 ### Developer Logs
 
-<RouteEn author="nczitzk" example="/itch/devlog/teamterrible/the-baby-in-yellow" path="/itch/devlog/:user/:id" :paramsDesc="['User id, can be found in URL', 'Item id, can be found in URL']">
+<RouteEn author="nczitzk" example="/itch/devlog/teamterrible/the-baby-in-yellow" path="/itch/devlog/:user/:id" paramsDesc={['User id, can be found in URL', 'Item id, can be found in URL']}>
 
 `User id` is the field before `.itch.io` in the URL of the corresponding page, e.g. the URL of [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is <https://teamterrible.itch.io/the-baby-in-yellow/devlog>, where the field before `.itch.io` is `teamterrible`.
 
@@ -162,19 +164,19 @@ So the route is [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub
 
 ### Posts
 
-<RouteEn author="nczitzk" example="/itch/posts/9539/introduce-yourself" path="/itch/posts/:topic/:id" :paramsDesc="['Topic id, can be found in URL', 'Topic name, can be found in URL']"/>
+<RouteEn author="nczitzk" example="/itch/posts/9539/introduce-yourself" path="/itch/posts/:topic/:id" paramsDesc={['Topic id, can be found in URL', 'Topic name, can be found in URL']}/>
 
 ## Konami
 
 ### PES Mobile Announcement
 
-<RouteEn author="HenryQW" example="/konami/pesmobile/en/ios" path="/konami/pesmobile/:lang?/:os?" :paramsDesc="['language, obtained from the URL, eg. zh-cn, zh-tw, en', 'operating system，iOS or Android']"/>
+<RouteEn author="HenryQW" example="/konami/pesmobile/en/ios" path="/konami/pesmobile/:lang?/:os?" paramsDesc={['language, obtained from the URL, eg. zh-cn, zh-tw, en', 'operating system，iOS or Android']}/>
 
 ## Metacritic
 
 ### Game Releases
 
-<RouteEn author="HenryQW" example="/metacritic/release/switch/coming" path="/metacritic/release/:platform/:type?/:sort?" :paramsDesc="['console platform', 'release type, default to `new`', 'sorting type, default to `date`']">
+<RouteEn author="HenryQW" example="/metacritic/release/switch/coming" path="/metacritic/release/:platform/:type?/:sort?" paramsDesc={['console platform', 'release type, default to `new`', 'sorting type, default to `date`']}>
 
 Platforms supported:
 
@@ -204,11 +206,11 @@ Sorting types, default to `date`:
 
 ### CurseForge Mod Update
 
-<RouteEn author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" :paramsDesc="['Progect shortname or `Project ID`. The short name of the project can be found in the address bar, for example `https://minecraft.curseforge.com/projects/non-update` to `non-update`. `Project ID` can be found in `About This Project` in `Overview`']"/>
+<RouteEn author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" paramsDesc={['Progect shortname or `Project ID`. The short name of the project can be found in the address bar, for example `https://minecraft.curseforge.com/projects/non-update` to `non-update`. `Project ID` can be found in `About This Project` in `Overview`']}/>
 
 ### Feed The Beast Modpack Updates
 
-<RouteEn author="gucheen" example="/feed-the-beast/modpack/ftb_presents_direwolf20_1_16" path="/feed-the-beast/modpack/:modpackEntry" :paramsDesc="['entry name of modpack.']">
+<RouteEn author="gucheen" example="/feed-the-beast/modpack/ftb_presents_direwolf20_1_16" path="/feed-the-beast/modpack/:modpackEntry" paramsDesc={['entry name of modpack.']}>
 | param | description |
 | ------| ------------ |
 | modpackEntry | The entry name of modpack, can be found in modpack\'s page link, for `https://www.feed-the-beast.com/modpack/ftb_presents_direwolf20_1_16`, use `ftb_presents_direwolf20_1_16`. |
@@ -218,7 +220,7 @@ Sorting types, default to `date`:
 
 ### eShop New Game Releases
 
-<RouteEn author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" :paramsDesc="['Region, currently supports `hk`(Hong Kong), `jp`(Japan) and `us`(USA)']"/>
+<RouteEn author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" paramsDesc={['Region, currently supports `hk`(Hong Kong), `jp`(Japan) and `us`(USA)']}/>
 
 ### Nintendo Direct
 
@@ -236,7 +238,7 @@ Sorting types, default to `date`:
 
 ### Game List（Hong Kong）
 
-<RouteEn author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" :paramsDesc="['gridName from the list']">
+<RouteEn author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" paramsDesc={['gridName from the list']}>
 
 Compatible with lists with an URL like <https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT>. For instance [PSN Free to Play](https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT), the gridName is STORE-MSF86012-PLUS_FTT_CONTENT
 
@@ -244,7 +246,7 @@ Compatible with lists with an URL like <https://store.playstation.com/zh-hans-hk
 
 ### Game Product Price
 
-<RouteEn author="MisteryMonster" example="/ps/product/UP9000-CUSA00552_00-THELASTOFUS00000" path="/ps/:lang/product/:gridName" :paramsDesc="['region','gridName from the product']" radar="1" rssbud="1">
+<RouteEn author="MisteryMonster" example="/ps/product/UP9000-CUSA00552_00-THELASTOFUS00000" path="/ps/:lang/product/:gridName" paramsDesc={['region','gridName from the product']} radar="1" rssbud="1">
 
 Tested some countries, it should be work for most.
 
@@ -254,7 +256,7 @@ Compatible with Product with an URL like <https://store.playstation.com/en-us/pr
 
 ### PlayStation Network user trophy
 
-<RouteEn author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" :paramsDesc="['User ID']" radar="1" rssbud="1"/>
+<RouteEn author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" paramsDesc={['User ID']} radar="1" rssbud="1"/>
 
 ### PlayStation 4 System Update
 
@@ -270,7 +272,7 @@ Compatible with Product with an URL like <https://store.playstation.com/en-us/pr
 
 ### Steam search
 
-<RouteEn author="maple3142" example="/steam/search/specials=1" path="/steam/search/:params" :paramsDesc="['search parameters']" radar="1" rssbud="1">
+<RouteEn author="maple3142" example="/steam/search/specials=1" path="/steam/search/:params" paramsDesc={['search parameters']} radar="1" rssbud="1">
 
 Get serach parameters from the URL.
 
@@ -294,7 +296,7 @@ Steam provides some official RSS feeds:
 
 ### Discussions
 
-<RouteEn author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" :paramsDesc="['category name, default to All']"/>
+<RouteEn author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" paramsDesc={['category name, default to All']}/>
 
 ## TapTap International
 
@@ -314,7 +316,7 @@ Unlike TapTap China Mainland Website, the International Website has no BBS.
 
 ### Game's Changelog
 
-<RouteEn author="hoilc ETiV" example="/taptap/intl/changelog/191001/zh_TW" path="/taptap/intl/changelog/:id/:lang?" :paramsDesc="['Game\'s App ID, you may find it from the URL of the Game', 'Language, checkout the table below for possible values, default is `en_US`']">
+<RouteEn author="hoilc ETiV" example="/taptap/intl/changelog/191001/zh_TW" path="/taptap/intl/changelog/:id/:lang?" paramsDesc={['Game\'s App ID, you may find it from the URL of the Game', 'Language, checkout the table below for possible values, default is `en_US`']}>
 
 #### Language Code
 
@@ -326,7 +328,7 @@ Unlike TapTap China Mainland Website, the International Website has no BBS.
 
 ### Ratings & Reviews
 
-<RouteEn author="hoilc TonyRL ETiV" example="/taptap/intl/review/82354/new/zh_TW" path="/taptap/intl/review/:id/:order?/:lang?" :paramsDesc="['Game\'s App ID, you may find it from the URL of the Game', 'Sort Method, you may use `new` as the **Most Recent**, use `default` or leave it empty for the **Most Relevant**', 'Language, checkout the table below for possible values, default is `en_US`']">
+<RouteEn author="hoilc TonyRL ETiV" example="/taptap/intl/review/82354/new/zh_TW" path="/taptap/intl/review/:id/:order?/:lang?" paramsDesc={['Game\'s App ID, you may find it from the URL of the Game', 'Sort Method, you may use `new` as the **Most Recent**, use `default` or leave it empty for the **Most Relevant**', 'Language, checkout the table below for possible values, default is `en_US`']}>
 
 #### Sort Method
 
@@ -357,7 +359,7 @@ The year, month and day provided under UTC time zone are the same as the officia
 
 ### Category
 
-<RouteEn author="TonyRL" example="/famitsu/category/new-article" path="/famitsu/category/:category?" :paramsDesc="['Category, see table below, `new-article` by default']" radar="1">
+<RouteEn author="TonyRL" example="/famitsu/category/new-article" path="/famitsu/category/:category?" paramsDesc={['Category, see table below, `new-article` by default']} radar="1">
 
 | 新着          | PS5 | Switch | PS4 | ニュース | ゲームニュース   | PR TIMES | 動画     | 特集・企画記事         | インタビュー    | 取材・リポート      | レビュー   | インディーゲーム   |
 | ----------- | --- | ------ | --- | ---- | --------- | -------- | ------ | --------------- | --------- | ------------ | ------ | ---------- |

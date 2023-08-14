@@ -1,3 +1,5 @@
+import Route from '@site/src/components/Route';
+
 ---
 sidebarDepth: 2
 ---
@@ -89,19 +91,19 @@ npm run docs:dev
 ### 仓库 Issues（多个参数）
 
 ```vue
-<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" :paramsDesc="['GitHub 用户名', 'GitHub 仓库名称，默认为 `RSSHub`']" />
+<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub 用户名', 'GitHub 仓库名称，默认为 `RSSHub`']} />
 ```
 
 ---
 
-<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" :paramsDesc="['GitHub 用户名', 'GitHub 仓库名称，默认为 `RSSHub`']" />
+<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub 用户名', 'GitHub 仓库名称，默认为 `RSSHub`']} />
 
 ---
 
 ### 关键词（带表格的说明）
 
 ```vue
-<Route author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" :paramsDesc="['关键词', '排序方式，`popular` 按热门度排序，空或其他任意值按时间排，默认为 `date`', '过滤方式，见下表 默认为空']">
+<Route author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" paramsDesc={['关键词', '排序方式，`popular` 按热门度排序，空或其他任意值按时间排，默认为 `date`', '过滤方式，见下表 默认为空']}>
 
 | 只看非 R18 内容 | 只看 R18 内容 | 不过滤   |
 | ------------ | -------- | ------------ |
@@ -112,7 +114,7 @@ npm run docs:dev
 
 ---
 
-<Route author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" :paramsDesc="['关键词', '排序方式，`popular` 按热门度排序，空或其他任意值按时间排，默认为 `date`', '过滤方式，见下表 默认为空']">
+<Route author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" paramsDesc={['关键词', '排序方式，`popular` 按热门度排序，空或其他任意值按时间排，默认为 `date`', '过滤方式，见下表 默认为空']}>
 
 | 只看非 R18 内容 | 只看 R18 内容 | 不过滤   |
 | ------------ | -------- | ------------ |
@@ -180,12 +182,12 @@ npm run docs:dev
 通过添加这些组件，您可以向用户提供有用的信息，并使其更易于理解和使用您的路由。将这些组件添加到路由文档中将在其前面添加一个徽章。
 
 ```vue
-<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" :paramsDesc="['GitHub 用户名', 'GitHub 仓库名称，默认为 `RSSHub`']" anticrawler="1" puppeteer="1" radar="1" rssbud="1" selfhost="1" supportBT="1" supportPodcast="1" supportScihub="1" />
+<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub 用户名', 'GitHub 仓库名称，默认为 `RSSHub`']} anticrawler="1" puppeteer="1" radar="1" rssbud="1" selfhost="1" supportBT="1" supportPodcast="1" supportScihub="1" />
 ```
 
 ---
 
-<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" :paramsDesc="['GitHub 用户名', 'GitHub 仓库名称，默认为 `RSSHub`']" anticrawler="1" puppeteer="1" radar="1" rssbud="1" selfhost="1" supportBT="1" supportPodcast="1" supportScihub="1" />
+<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub 用户名', 'GitHub 仓库名称，默认为 `RSSHub`']} anticrawler="1" puppeteer="1" radar="1" rssbud="1" selfhost="1" supportBT="1" supportPodcast="1" supportScihub="1" />
 
 ---
 

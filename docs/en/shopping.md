@@ -1,3 +1,5 @@
+import RouteEn from '@site/src/components/RouteEn';
+
 ---
 pageClass: routes
 ---
@@ -14,7 +16,7 @@ pageClass: routes
 
 ### Apps
 
-<RouteEn author="nczitzk" example="/appsales/highlights" path="/appsales/:caty?/:time?" :paramsDesc="['Category, `highlights` by default', 'Time, `24h` by default']">
+<RouteEn author="nczitzk" example="/appsales/highlights" path="/appsales/:caty?/:time?" paramsDesc={['Category, `highlights` by default', 'Time, `24h` by default']}>
 
 Category
 
@@ -40,7 +42,7 @@ Parameter `time` only works when `mostwanted` is chosen as the category.
 
 ### New Arrivals
 
-<RouteEn author="NavePnow" example="/arcteryx/new-arrivals/us/mens" path="/arcteryx/new-arrivals/:country/:gender" :paramsDesc="['country', 'gender']">
+<RouteEn author="NavePnow" example="/arcteryx/new-arrivals/us/mens" path="/arcteryx/new-arrivals/:country/:gender" paramsDesc={['country', 'gender']}>
 
 Country
 
@@ -64,7 +66,7 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 ### Outlet
 
-<RouteEn author="NavePnow" example="/arcteryx/outlet/us/mens" path="/arcteryx/outlet/:country/:gender" :paramsDesc="['country', 'gender']">
+<RouteEn author="NavePnow" example="/arcteryx/outlet/us/mens" path="/arcteryx/outlet/:country/:gender" paramsDesc={['country', 'gender']}>
 
 Country
 
@@ -100,13 +102,13 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 ### Shop
 
-<RouteEn author="KTachibanaM" example="/booth.pm/shop/annn-boc0123" path="/booth.pm/shop/:subdomain" :paramsDesc="['Shop subdomain']" />
+<RouteEn author="KTachibanaM" example="/booth.pm/shop/annn-boc0123" path="/booth.pm/shop/:subdomain" paramsDesc={['Shop subdomain']} />
 
 ## Craigslist
 
 ### Shop
 
-<RouteEn author="lxiange" example="/craigslist/sfbay/sso?query=folding+bike&sort=rel" path="/craigslist/:location/:type?" :paramsDesc="['location, Craigslist subdomain, e.g., `sfbay`', 'search type, e.g., `sso`']"/>
+<RouteEn author="lxiange" example="/craigslist/sfbay/sso?query=folding+bike&sort=rel" path="/craigslist/:location/:type?" paramsDesc={['location, Craigslist subdomain, e.g., `sfbay`', 'search type, e.g., `sso`']}/>
 
 > We use RSSHub to implement the searching of Craigslist
 > An example of a full original search url:
@@ -125,7 +127,7 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 ### Products
 
-<RouteEn author="Fatpandac" example="/gumroad/afkmaster/Eve10" path="/gumroad/:username/:products" :paramsDesc="['username, can be found in URL', 'products name, can be found in URL']" radar="1" rssbud="1">
+<RouteEn author="Fatpandac" example="/gumroad/afkmaster/Eve10" path="/gumroad/:username/:products" paramsDesc={['username, can be found in URL', 'products name, can be found in URL']} radar="1" rssbud="1">
 
 `https://afkmaster.gumroad.com/l/Eve10` -> `/gumroad/afkmaster/Eve10`
 
@@ -135,7 +137,7 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 ### thread
 
-<RouteEn author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" :paramsDesc="['should be one of highlights, hot, new, discussed']"/>
+<RouteEn author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" paramsDesc={['should be one of highlights, hot, new, discussed']}/>
 
 ### hottest
 
@@ -157,7 +159,7 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 Transform any search into a feed.
 
-<RouteEn author="Platane" example="/leboncoin/ad/category=10&locations=Paris_75015" path="/leboncoin/ad/:query" :paramsDesc="['search page querystring']">
+<RouteEn author="Platane" example="/leboncoin/ad/category=10&locations=Paris_75015" path="/leboncoin/ad/:query" paramsDesc={['search page querystring']}>
 
 For instance, in <https://www.leboncoin.fr/recherche/?category=10&locations=Paris_75015>, the query is **category=10&locations=Paris_75015**
 
@@ -167,7 +169,7 @@ For instance, in <https://www.leboncoin.fr/recherche/?category=10&locations=Pari
 
 ### Goods
 
-<RouteEn author="nczitzk" example="/mercari/category/1" path="/mercari/:type/:id" :paramsDesc="['`category` as seaching by category, `brand` as searching by brand, `search` as searching for keyword', 'can be found in URL of the category or brand page. If you choose `search` as `type`, then put keyword here']">
+<RouteEn author="nczitzk" example="/mercari/category/1" path="/mercari/:type/:id" paramsDesc={['`category` as seaching by category, `brand` as searching by brand, `search` as searching for keyword', 'can be found in URL of the category or brand page. If you choose `search` as `type`, then put keyword here']}>
 
 All categories, see [Category list](https://www.mercari.com/jp/category/)
 
@@ -179,7 +181,7 @@ All brands, see [Brand list](https://www.mercari.com/jp/brand/)
 
 ### Activity
 
-<RouteEn author="nczitzk" example="/myfigurecollection/activity" path="/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" :paramsDesc="['Category, Figures by default', 'Language, as above, `en` by default', 'Latest Additions, on as `1` by default, off as `0`', 'Changes, on as `1` by default, off as `0`', 'Alerts, on as `1` by default, off as `0`', 'Pictures, on as `1` by default, off as `0`']">
+<RouteEn author="nczitzk" example="/myfigurecollection/activity" path="/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" paramsDesc={['Category, Figures by default', 'Language, as above, `en` by default', 'Latest Additions, on as `1` by default, off as `0`', 'Changes, on as `1` by default, off as `0`', 'Alerts, on as `1` by default, off as `0`', 'Pictures, on as `1` by default, off as `0`']}>
 
 Category
 
@@ -210,7 +212,7 @@ Language
 
 ### Database
 
-<RouteEn author="nczitzk" example="/myfigurecollection/figure" path="/myfigurecollection/:category?/:language?" :paramsDesc="['Category, Figures by default', 'Language, as above, `en` by default']">
+<RouteEn author="nczitzk" example="/myfigurecollection/figure" path="/myfigurecollection/:category?/:language?" paramsDesc={['Category, Figures by default', 'Language, as above, `en` by default']}>
 
 | Figures | Goods | Media |
 | ------- | ----- | ----- |
@@ -220,7 +222,7 @@ Language
 
 ### Pictures
 
-<RouteEn author="nczitzk" example="/myfigurecollection/potd" path="/myfigurecollection/:category?/:language?" :paramsDesc="['Category, Pictures OTD by default', 'Language, as above, `en` by default']">
+<RouteEn author="nczitzk" example="/myfigurecollection/potd" path="/myfigurecollection/:category?/:language?" paramsDesc={['Category, Pictures OTD by default', 'Language, as above, `en` by default']}>
 
 | Pictures OTD | Pictures OTW | Pictures OTM |
 | ------------ | ------------ | ------------ |
@@ -232,7 +234,7 @@ Language
 
 ### New Arrivals
 
-<RouteEn author="NavePnow" example="/patagonia/new-arrivals/mens" path="/patagonia/new-arrivals/:category" :paramsDesc="['category, see below']">
+<RouteEn author="NavePnow" example="/patagonia/new-arrivals/mens" path="/patagonia/new-arrivals/:category" paramsDesc={['category, see below']}>
 
 | Men's | Women's | Kids' & Baby | Packs & Gear |
 | ----- | ------- | ------------ | ------------ |
@@ -245,7 +247,7 @@ Language
 
 ### Store
 
-<RouteEn author="nczitzk" example="/shopback/shopee-mart" path="/shopback/:store" :paramsDesc="['Store, can be found in URL']"/>
+<RouteEn author="nczitzk" example="/shopback/shopee-mart" path="/shopback/:store" paramsDesc={['Store, can be found in URL']}/>
 
 ## Snow Peak
 
@@ -263,7 +265,7 @@ Language
 
 ### New Arrivals
 
-<RouteEn author="NavePnow" example="/zagg/new-arrivals/brand=164&cat=3038,3041" path="/zagg/new-arrivals/:query?" :paramsDesc="['query, search page querystring']"/>
+<RouteEn author="NavePnow" example="/zagg/new-arrivals/brand=164&cat=3038,3041" path="/zagg/new-arrivals/:query?" paramsDesc={['query, search page querystring']}/>
 
 For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3041>, the query is `brand=164&cat=3038%2C3041`
 

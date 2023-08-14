@@ -1,3 +1,5 @@
+import Route from '@site/src/components/Route';
+
 ---
 pageClass: routes
 ---
@@ -8,7 +10,7 @@ pageClass: routes
 
 ### 4399 论坛
 
-<Route author="DIYgod" example="/forum4399/mtag-83932" path="/forum4399/:mtag" :paramsDesc="['mtag,必选-论坛网址最后的mtag字段']" selfhost="1"/>
+<Route author="DIYgod" example="/forum4399/mtag-83932" path="/forum4399/:mtag" paramsDesc={['mtag,必选-论坛网址最后的mtag字段']} selfhost="1">
 
 ::: warning 注意
 
@@ -22,7 +24,7 @@ pageClass: routes
 
 ### 租屋
 
-<Route author="Yukaii" example="/591/tw/rent/order=posttime&orderType=desc" path="/591/:country/rent/:query?" :paramsDesc="['網址國碼，目前僅支援 tw', '查詢參數']">
+<Route author="Yukaii" example="/591/tw/rent/order=posttime&orderType=desc" path="/591/:country/rent/:query?" paramsDesc={['網址國碼，目前僅支援 tw', '查詢參數']}>
 
 ::: tip 提示
 
@@ -48,25 +50,25 @@ pageClass: routes
 
 ### 新品上架
 
-<Route author="nczitzk" example="/amazfitwatchfaces/fresh/bip/Bip/zh" path="/amazfitwatchfaces/fresh/:model/:type?/:lang?" :paramsDesc="['手表型号', '手表款式，款式代码可在目标网站选择后到地址栏查看，`all` 指 全部款式', '表盘语言，语言代码可在目标网站选择后到地址栏查看，如 `zh` 指 中文']"/>
+<Route author="nczitzk" example="/amazfitwatchfaces/fresh/bip/Bip/zh" path="/amazfitwatchfaces/fresh/:model/:type?/:lang?" paramsDesc={['手表型号', '手表款式，款式代码可在目标网站选择后到地址栏查看，`all` 指 全部款式', '表盘语言，语言代码可在目标网站选择后到地址栏查看，如 `zh` 指 中文']}/>
 
 ### 最近更新
 
-<Route author="nczitzk" example="/amazfitwatchfaces/updated/bip/Bip/zh" path="/amazfitwatchfaces/updated/:model/:type?/:lang?" :paramsDesc="['手表型号', '手表款式，款式代码可在目标网站选择后到地址栏查看，`all` 指 全部款式', '表盘语言，语言代码可在目标网站选择后到地址栏查看，如 `zh` 指 中文']"/>
+<Route author="nczitzk" example="/amazfitwatchfaces/updated/bip/Bip/zh" path="/amazfitwatchfaces/updated/:model/:type?/:lang?" paramsDesc={['手表型号', '手表款式，款式代码可在目标网站选择后到地址栏查看，`all` 指 全部款式', '表盘语言，语言代码可在目标网站选择后到地址栏查看，如 `zh` 指 中文']}/>
 
 ### 排行榜
 
-<Route author="nczitzk" example="/amazfitwatchfaces/top/bip/Bip/month/views/zh" path="/amazfitwatchfaces/top/:model/:type?/:time?/:sortBy?/:lang?" :paramsDesc="['手表型号', '手表款式，款式代码可在目标网站选择后到地址栏查看，`all` 指 全部款式', '统计时间，`week` 指 上周，`month` 指 上月，`alltime` 指 全部时间', '排序参数，`download` 指 下载量，`views` 指 查看量，`fav` 指 收藏数', '表盘语言，语言代码可在目标网站选择后到地址栏查看，如 `zh` 指 中文']"/>
+<Route author="nczitzk" example="/amazfitwatchfaces/top/bip/Bip/month/views/zh" path="/amazfitwatchfaces/top/:model/:type?/:time?/:sortBy?/:lang?" paramsDesc={['手表型号', '手表款式，款式代码可在目标网站选择后到地址栏查看，`all` 指 全部款式', '统计时间，`week` 指 上周，`month` 指 上月，`alltime` 指 全部时间', '排序参数，`download` 指 下载量，`views` 指 查看量，`fav` 指 收藏数', '表盘语言，语言代码可在目标网站选择后到地址栏查看，如 `zh` 指 中文']}/>
 
 ### 搜索结果
 
-<Route author="nczitzk" example="/amazfitwatchfaces/search/bip/battery" path="/amazfitwatchfaces/search/:model/:keyword?/:sortBy?" :paramsDesc="['手表型号', '关键词，多个关键词用半角逗号隔开', '排序参数，`fresh` 指 新品上架，`updated` 指 已更新的，`views` 指 查看量，`download` 指 下载量，`fav` 指 收藏数']"/>
+<Route author="nczitzk" example="/amazfitwatchfaces/search/bip/battery" path="/amazfitwatchfaces/search/:model/:keyword?/:sortBy?" paramsDesc={['手表型号', '关键词，多个关键词用半角逗号隔开', '排序参数，`fresh` 指 新品上架，`updated` 指 已更新的，`views` 指 查看量，`download` 指 下载量，`fav` 指 收藏数']}/>
 
 ## Apple
 
 ### 更换和维修扩展计划
 
-<Route author="metowolf HenryQW kt286" example="/apple/exchange_repair/zh-cn" path="/apple/exchange_repair/:country?" :paramsDesc="['苹果官网 URL 中的国家代码, 默认美国 ，中国 `zh-cn`']"/>
+<Route author="metowolf HenryQW kt286" example="/apple/exchange_repair/zh-cn" path="/apple/exchange_repair/:country?" paramsDesc={['苹果官网 URL 中的国家代码, 默认美国 ，中国 `zh-cn`']}/>
 
 ### 苹果邮件
 
@@ -80,7 +82,7 @@ pageClass: routes
 
 ### Community
 
-<Route author="nczitzk" example="/aqara/community" path="/aqara/community/:id?/:keyword?" :paramsDesc="['分类 id，可在对应分类页 URL 中找到，默认为全部', '关键字，默认为空']"/>
+<Route author="nczitzk" example="/aqara/community" path="/aqara/community/:id?/:keyword?" paramsDesc={['分类 id，可在对应分类页 URL 中找到，默认为全部', '关键字，默认为空']}/>
 
 ### News
 
@@ -90,7 +92,7 @@ pageClass: routes
 
 ### 搜索结果
 
-<Route author="HenryQW" example="/autotrader/radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on" path="/autotrader/:query" :paramsDesc="['查询语句']">
+<Route author="HenryQW" example="/autotrader/radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on" path="/autotrader/:query" paramsDesc={['查询语句']}>
 
 1.  在 AutoTrader 选择筛选条件进行搜索
 2.  复制查询结果 URL 中`?`后的部分，例如 `https://www.autotrader.co.uk/car-search?radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on` 则为 `radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on`
@@ -113,13 +115,13 @@ pageClass: routes
 
 ### 美国签证 check 动态
 
-<Route author="lalxyy" example="/checkee/2019-03" path="/checkee/:month" :paramsDesc="['签证被 check 的年份-月份，如 2019-03']" />
+<Route author="lalxyy" example="/checkee/2019-03" path="/checkee/:month" paramsDesc={['签证被 check 的年份-月份，如 2019-03']} />
 
 ## ClickMe
 
 ### 文章
 
-<Route author="hoilc" example="/clickme/default/category/beauty" path="/clickme/:site/:grouping/:name" :paramsDesc="['站点，`default`为普通站，`r18`为成人站，其它值默认为普通站','分组方式，`category`为分类，`tag`为标签，其他值默认为分类','分类名或标签名，分类名为英文，可以在分类 URL 中找到']" radar="1"/>
+<Route author="hoilc" example="/clickme/default/category/beauty" path="/clickme/:site/:grouping/:name" paramsDesc={['站点，`default`为普通站，`r18`为成人站，其它值默认为普通站','分组方式，`category`为分类，`tag`为标签，其他值默认为分类','分类名或标签名，分类名为英文，可以在分类 URL 中找到']} radar="1"/>
 
 ## Darwin Awards
 
@@ -131,19 +133,19 @@ pageClass: routes
 
 ### board
 
-<Route author="zfanta" example="/dcinside/board/programming" path="/dcinside/board/:id" :paramsDesc="['board id']" />
+<Route author="zfanta" example="/dcinside/board/programming" path="/dcinside/board/:id" paramsDesc={['board id']} />
 
 ## DHL
 
 ### DHL 国际快递包裹追踪
 
-<Route author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" :paramsDesc="['运单号']"/>
+<Route author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" paramsDesc={['运单号']}/>
 
 ## Etherscan
 
 ### Etherscan 转账追踪
 
-<Route author="Pretty9" example="/etherscan/transactions/0x283af0b28c62c092c9727f1ee09c02ca627eb7f5" path="/etherscan/transactions/:address" :paramsDesc="['地址']"/>
+<Route author="Pretty9" example="/etherscan/transactions/0x283af0b28c62c092c9727f1ee09c02ca627eb7f5" path="/etherscan/transactions/:address" paramsDesc={['地址']}/>
 
 ## Grand-Challenge
 
@@ -153,7 +155,7 @@ pageClass: routes
 
 ### 用户参加的 Challenge
 
-<Route author="WhoIsSure" example="/grandchallenge/user/Isensee" path="/grandchallenge/user/:id" :paramsDesc="['用户ID,必选-用户页面网址里面的用户ID']"/>
+<Route author="WhoIsSure" example="/grandchallenge/user/Isensee" path="/grandchallenge/user/:id" paramsDesc={['用户ID,必选-用户页面网址里面的用户ID']}/>
 
 ## HackerOne
 
@@ -171,7 +173,7 @@ pageClass: routes
 
 ### Projects
 
-<Route author="wolfg1969" example="/instructables/projects/circuits" path="/instructables/projects/:category?" :paramsDesc="['项目类别。默认空值为全部，从网页地址中得知，见下表']" radar="1">
+<Route author="wolfg1969" example="/instructables/projects/circuits" path="/instructables/projects/:category?" paramsDesc={['项目类别。默认空值为全部，从网页地址中得知，见下表']} radar="1">
 
 | All | Circuits | Workshop | Craft | Cooking | Living | Outside | Teachers |
 | --- | -------- | -------- | ----- | ------- | ------ | ------- | -------- |
@@ -203,7 +205,7 @@ pageClass: routes
 
 ### Jobs
 
-<Route author="bigfei" example="/linkedin/cn/jobs/Software" path="/linkedin/cn/jobs/:keywords?" :paramsDesc="['搜索关键字']" radar="1">
+<Route author="bigfei" example="/linkedin/cn/jobs/Software" path="/linkedin/cn/jobs/:keywords?" paramsDesc={['搜索关键字']} radar="1">
 
 另外，可以通过添加额外的以下 query 参数来输出满足特定要求的工作职位：
 
@@ -228,7 +230,7 @@ pageClass: routes
 
 ### 订阅列表
 
-<Route author="emdoe" example="/miniflux/subscription/categories=科技,影音" path="/miniflux/subscription/:parameters?" :paramsDesc="['分类名或分类 ID 或/且 订阅源名称或订阅源 ID']" selfhost="1">
+<Route author="emdoe" example="/miniflux/subscription/categories=科技,影音" path="/miniflux/subscription/:parameters?" paramsDesc={['分类名或分类 ID 或/且 订阅源名称或订阅源 ID']} selfhost="1">
 
 1.  如无指定参数，默认输出全部订阅源
 2.  分类 ID 或订阅源 ID 请于`分类`（快捷键 `g` `c`）或`源`（快捷键 `g` `f`）页面获取，每个分类（或订阅源）的网址即显示其 ID 信息。
@@ -240,7 +242,7 @@ pageClass: routes
 
 ### 获取订阅源内容
 
-<Route author="emdoe" example="/miniflux/feeds=1&2&3/mark=read&limit=7&status=unread" path="/miniflux/:feeds/:parameters?" :paramsDesc="['订阅源 ID 或获取全部', '过滤及设置参数，多个请用 `&` 连接']" selfhost="1">
+<Route author="emdoe" example="/miniflux/feeds=1&2&3/mark=read&limit=7&status=unread" path="/miniflux/:feeds/:parameters?" paramsDesc={['订阅源 ID 或获取全部', '过滤及设置参数，多个请用 `&` 连接']} selfhost="1">
 
 1.  支持获取全部内容：即可通过 `/miniflux/all` 或 `/miniflux/default` 等关键字获取全部订阅源下的内容。
 2.  支持通过订阅源的 ID 获取指定订阅源的订阅内容，订阅源 ID 请于`源`（快捷键 `g` `f`）所在的页面获取，每个分类（或订阅源）的网址即显示其 ID 信息。而格式上有如下选择：
@@ -319,7 +321,7 @@ pageClass: routes
 
 ### Database
 
-<Route author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" :paramsDesc="['Database ID']" selfhost="1" radar="1">
+<Route author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" paramsDesc={['Database ID']} selfhost="1" radar="1">
 
 可选 query 参数 `properties=`，用来自定义字段对应关系；内置有 author、link、pubTime 三个字段用于增加辅助信息。
 
@@ -345,7 +347,7 @@ encodeURIComponent(JSON.stringify({"author": "作者", "link": "文章原链接"
 
 ### Feeds
 
-<Route author="lyrl" example="/usepanda/feeds/5718e53e7a84fb1901e059cc" path="/usepanda/feeds/:id" :paramsDesc="['频道id/feedId']">
+<Route author="lyrl" example="/usepanda/feeds/5718e53e7a84fb1901e059cc" path="/usepanda/feeds/:id" paramsDesc={['频道id/feedId']}>
 
 | 频道            | feedId                   |
 | --------------- | ------------------------ |
@@ -357,7 +359,7 @@ encodeURIComponent(JSON.stringify({"author": "作者", "link": "文章原链接"
 
 ### Hermes UK
 
-<Route author="HenryQW" example="/parcel/hermesuk/[tracking number]" path="/parcel/hermesuk/:tracking" :paramsDesc="['Tracking number']"/>
+<Route author="HenryQW" example="/parcel/hermesuk/[tracking number]" path="/parcel/hermesuk/:tracking" paramsDesc={['Tracking number']}/>
 
 ## Pocket
 
@@ -384,7 +386,7 @@ encodeURIComponent(JSON.stringify({"author": "作者", "link": "文章原链接"
 
 ### Status
 
-<Route author="xyqfer" example="/tssstatus/j42dap/14W585a" path="/tssstatus/:board/:build" :paramsDesc="['平台 id', '版本 id']">
+<Route author="xyqfer" example="/tssstatus/j42dap/14W585a" path="/tssstatus/:board/:build" paramsDesc={['平台 id', '版本 id']}>
 
 board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 
@@ -407,7 +409,7 @@ board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
 <Route author="LogicJake" example="/wegene/newest" path="/wegene/newest" radar="1" rssbud="1"/>
 ### 栏目
 
-<Route author="LogicJake" example="/wegene/column/all/all" path="/wegene/column/:type/:category" :paramsDesc="['栏目类型，all（全部项目） 或 weapp（专业版）','栏目分类']" radar="1" rssbud="1">
+<Route author="LogicJake" example="/wegene/column/all/all" path="/wegene/column/:type/:category" paramsDesc={['栏目类型，all（全部项目） 或 weapp（专业版）','栏目分类']} radar="1" rssbud="1">
 
 :::
 type 为 all 时，category 参数不支持 cost 和 free
@@ -433,7 +435,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 分类目录
 
-<Route author="sanmmm" example="/wikihow/category/饮食与休闲/all" path="/wikihow/category/:category/:type?" :paramsDesc="['目录分类', '类型, 默认为`all`']">
+<Route author="sanmmm" example="/wikihow/category/饮食与休闲/all" path="/wikihow/category/:category/:type?" paramsDesc={['目录分类', '类型, 默认为`all`']}>
 
 顶级目录分类可在目录分类页[查看](https://zh.wikihow.com/Special:CategoryListing), 支持二级目录
 
@@ -449,7 +451,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 昨日汇率变动
 
-<Route author="HenryQW" example="/wise/pair/GBP/USD" path="/wise/pair/:source/:target" :paramsDesc="['本币缩写','外币缩写']" radar="1">
+<Route author="HenryQW" example="/wise/pair/GBP/USD" path="/wise/pair/:source/:target" paramsDesc={['本币缩写','外币缩写']} radar="1">
 
 参见支持的 [货币列表](https://wise.com/tools/exchange-rate-alerts/)。
 
@@ -463,7 +465,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 周度市场观察
 
-<Route author="nczitzk" example="/iresearch/weekly" path="/iresearch/weekly/:category?" :paramsDesc="['分类，见下表，默认为全部']">
+<Route author="nczitzk" example="/iresearch/weekly" path="/iresearch/weekly/:category?" paramsDesc={['分类，见下表，默认为全部']}>
 
 | 家电行业 | 服装行业 | 美妆行业 | 食品饮料行业 |
 | -------- | -------- | -------- | ------------ |
@@ -480,7 +482,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 发现用户
 
-<Route author="sanmmm" example="/afdian/explore/hot/所有" path="/afdian/explore/:type/:category?" :paramsDesc="['分类', '目录类型，默认为 `所有`']">
+<Route author="sanmmm" example="/afdian/explore/hot/所有" path="/afdian/explore/:type/:category?" paramsDesc={['分类', '目录类型，默认为 `所有`']}>
 分类
 
 | 推荐 | 最热 |
@@ -497,13 +499,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 用户动态
 
-<Route author="sanmmm" example="/afdian/dynamic/@afdian" path="/afdian/dynamic/:uid?" :paramsDesc="['用户id，用户动态页面url里可找到']"/>
+<Route author="sanmmm" example="/afdian/dynamic/@afdian" path="/afdian/dynamic/:uid?" paramsDesc={['用户id，用户动态页面url里可找到']}/>
 
 ## 澳門特別行政區政府各公共部門獎助貸學金服務平台
 
 官方網址：<https://www.bolsas.gov.mo/>
 
-<Route author="KeiLongW" example="/macau-bolsas" path="/macau-bolsas/:lang?" :paramsDesc="['語言']" >
+<Route author="KeiLongW" example="/macau-bolsas" path="/macau-bolsas/:lang?" paramsDesc={['語言']} >
 
 | 中文 | 葡文 |
 | ---- | ---- |
@@ -515,7 +517,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 榜单
 
-<Route author="xyqfer" example="/baidu/top" path="/baidu/top/:board?" :paramsDesc="['榜单，默认为 `realtime`']" radar="1">
+<Route author="xyqfer" example="/baidu/top" path="/baidu/top/:board?" paramsDesc={['榜单，默认为 `realtime`']} radar="1">
 
 | 热搜榜   | 小说榜 | 电影榜 | 电视剧榜 | 汽车榜 | 游戏榜 |
 | -------- | ------ | ------ | -------- | ------ | ------ |
@@ -563,7 +565,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 首页推荐
 
-<Route author="LogicJake" example="/gushiwen/recommend/zhushang" path="/gushiwen/recommend/:annotation?"/>
+<Route author="LogicJake" example="/gushiwen/recommend/zhushang" path="/gushiwen/recommend/:annotation?">
 
 `annotation` 字段为添加哪些附加信息。可从以下表格中选择值后按顺序拼接。例如如果需要注释和赏析，则为`zhushang`。
 
@@ -583,7 +585,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 通知
 
-<Route author="Derekmini markmingjie" example="/csc/notice/lxtz" path="/csc/notice/:type?" :paramsDesc="['分类, 默认为 `lxtz`']" radar="1" rssbud="1">
+<Route author="Derekmini markmingjie" example="/csc/notice/lxtz" path="/csc/notice/:type?" paramsDesc={['分类, 默认为 `lxtz`']} radar="1" rssbud="1">
 
 | 遴选通知 | 综合项目专栏 | 常见问题解答 | 录取公告 | 新闻资讯 | 新闻公告 |
 | -------- | ------------ | ------------ | -------- | -------- | -------- |
@@ -601,7 +603,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 板块信息
 
-<Route author="LogicJake" example="/fitchratings/site/economics" path="/fitchratings/site/:type" :paramsDesc="['板块名称，在网址 site 后面']"/>
+<Route author="LogicJake" example="/fitchratings/site/economics" path="/fitchratings/site/:type" paramsDesc={['板块名称，在网址 site 后面']}/>
 
 ## 静态模型爱好者
 
@@ -613,13 +615,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 抖音指数波峰
 
-<Route author="Jkker" example="/oceanengine/index/教材" path="/oceanengine/index/:keyword" :paramsDesc="['热点关键词']" anticrawler="1" puppeteer="1"/>
+<Route author="Jkker" example="/oceanengine/index/教材" path="/oceanengine/index/:keyword" paramsDesc={['热点关键词']} anticrawler="1" puppeteer="1"/>
 
 爬取巨量算数近 6 个月的抖音指数，解密后提取指数波峰当日的热门搜索关键词，生成为 RSS。可用于追踪新闻热点事件。
 
 ### 头条指数波峰
 
-<Route author="Jkker" example="/oceanengine/index/教材/toutiao" path="/oceanengine/index/:keyword/toutiao" :paramsDesc="['热点关键词']" anticrawler="1" puppeteer="1"/>
+<Route author="Jkker" example="/oceanengine/index/教材/toutiao" path="/oceanengine/index/:keyword/toutiao" paramsDesc={['热点关键词']} anticrawler="1" puppeteer="1"/>
 
 爬取巨量算数近 6 个月的头条指数，解密后提取指数波峰当日的热门搜索关键词，生成为 RSS。可用于追踪新闻热点事件。
 
@@ -633,7 +635,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 实时 AQI
 
-<Route author="xapool" example="/aqicn/beijing/pm25,pm10" path="/aqicn/:city/:pollution?" :paramsDesc="['城市拼音或地区 ID，详见[aqicn.org](http://aqicn.org/city/)', '可选择显示更详细的空气污染成分']"/>
+<Route author="xapool" example="/aqicn/beijing/pm25,pm10" path="/aqicn/:city/:pollution?" paramsDesc={['城市拼音或地区 ID，详见[aqicn.org](http://aqicn.org/city/)', '可选择显示更详细的空气污染成分']}/>
 
 | 参数 | 污染成分 |
 | ---- | -------- |
@@ -653,7 +655,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 快递订单追踪
 
-<Route author="NeverBehave" example="/kuaidi100/track/shunfeng/SF1007896781640/0383" path="/kuaidi100/track/:number/:id/:phone?" :paramsDesc="['快递公司代号', '订单号', '手机号后四位（仅顺丰）']" radar="1">
+<Route author="NeverBehave" example="/kuaidi100/track/shunfeng/SF1007896781640/0383" path="/kuaidi100/track/:number/:id/:phone?" paramsDesc={['快递公司代号', '订单号', '手机号后四位（仅顺丰）']} radar="1">
 
 快递公司代号如果不能确定，可通过下方快递列表获得。
 
@@ -679,13 +681,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 用户
 
-<Route author="SettingDust Halcao" example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['用户名']" radar="1" rssbud="1" puppeteer="1"/>
+<Route author="SettingDust Halcao" example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" paramsDesc={['用户名']} radar="1" rssbud="1" puppeteer="1"/>
 
 ## 立创开源硬件平台
 
 ### 开源广场
 
-<Route author="tylinux" example="/oshwhub" path="/oshwhub/:sortType?" :paramsDesc="['排序类型']" radar="1" rssbud="1"/>
+<Route author="tylinux" example="/oshwhub" path="/oshwhub/:sortType?" paramsDesc={['排序类型']} radar="1" rssbud="1"/>
 
 ## 律师事务所文章
 
@@ -741,7 +743,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 表盘更新
 
-<Route author="hoilc" example="/watchface/mi4/" path="/watchface/:watch_type?/:list_type?" :paramsDesc="['手环型号, 默认为`小米手环4`', '列表类型, 默认为`最新上传`']">
+<Route author="hoilc" example="/watchface/mi4/" path="/watchface/:watch_type?/:list_type?" paramsDesc={['手环型号, 默认为`小米手环4`', '列表类型, 默认为`最新上传`']}>
 
 表盘型号
 
@@ -767,7 +769,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 获奖名单
 
-<Route author="nczitzk" example="/nobelprize" path="/nobelprize/:caty" :paramsDesc="['类别，见下表，默认为全部']">
+<Route author="nczitzk" example="/nobelprize" path="/nobelprize/:caty" paramsDesc={['类别，见下表，默认为全部']}>
 
 | 物理学  | 化学      | 生理学或医学           | 文学       | 和平  | 经济学            |
 | ------- | --------- | ---------------------- | ---------- | ----- | ----------------- |
@@ -779,7 +781,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 今日油价查询
 
-<Route author="TonyRL" example="/qiyoujiage/shanghai" path="/qiyoujiage/:path+" :paramsDesc="['路径']">
+<Route author="TonyRL" example="/qiyoujiage/shanghai" path="/qiyoujiage/:path+" paramsDesc={['路径']}>
 
 ::: tip 提示
 
@@ -795,7 +797,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 分类
 
-<Route author="qiwihui" example="/qtfyfl/guoji" path="/qtfyfl/:category" :paramsDesc="['分类，可在 URL 中找到']">
+<Route author="qiwihui" example="/qtfyfl/guoji" path="/qtfyfl/:category" paramsDesc={['分类，可在 URL 中找到']}>
 
 | 最新文章 | 福利社  | 求出处    | 套图集  | 门事件     | 内涵图   | 电影下载       | 影视资讯 |
 | -------- | ------- | --------- | ------- | ---------- | -------- | -------------- | -------- |
@@ -815,7 +817,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 板块
 
-<Route author="LogicJake"  example="/babykingdom/19/view" path="/babykingdom/:id/:order?" :paramsDesc="['板块id，可在 URL 中找到', '排序方式']">
+<Route author="LogicJake"  example="/babykingdom/19/view" path="/babykingdom/:id/:order?" paramsDesc={['板块id，可在 URL 中找到', '排序方式']}>
 
 | 发帖时间 | 回复 / 查看 | 查看 | 最后发表 | 热门 |
 | -------- | ----------- | ---- | -------- | ---- |
@@ -833,13 +835,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 数据源: [trending-in-one](https://github.com/huqi-pr/trending-in-one)
 
-<Route author="Jkker" example="/trending/唐山,打人/3" path="/trending/:keywords/:numberOfDays?" radar="1" :paramsDesc="['通过逗号区隔的关键词列表', '向前追溯的天数，默认为3天']"/>
+<Route author="Jkker" example="/trending/唐山,打人/3" path="/trending/:keywords/:numberOfDays?" radar="1" paramsDesc={['通过逗号区隔的关键词列表', '向前追溯的天数，默认为3天']}/>
 
 ## 日本郵便
 
 ### 郵便追跡サービス
 
-<Route author="tuzi3040" example="/japanpost/track/EJ123456789JP/ja" path="/japanpost/track/:reqCode/:locale?" :paramsDesc="['运单号', '语言，默认为`ja`']" radar="1" rssbud="1">
+<Route author="tuzi3040" example="/japanpost/track/EJ123456789JP/ja" path="/japanpost/track/:reqCode/:locale?" paramsDesc={['运单号', '语言，默认为`ja`']} radar="1" rssbud="1">
 
 | 日语 | 英语 |
 | ---- | ---- |
@@ -857,7 +859,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 四川省科学技术厅 - 公示公告
 
-<Route author="Cubernet" example="/sckjt/news" path="/sckjt/news/:type?" :paramsDesc="['默认为`tz`']">
+<Route author="Cubernet" example="/sckjt/news" path="/sckjt/news/:type?" paramsDesc={['默认为`tz`']}>
 
 | 通知 | 公示公告 |
 | ---- | -------- |
@@ -875,7 +877,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 吐槽新帖
 
-<Route author="Qixingchen" example="/tucaoqq/post/28564/CdRI0728" path="/tucaoqq/post/:project/:key" :paramsDesc="['产品 ID', '产品密钥']"/>
+<Route author="Qixingchen" example="/tucaoqq/post/28564/CdRI0728" path="/tucaoqq/post/:project/:key" paramsDesc={['产品 ID', '产品密钥']}/>
 
 ## 腾讯新闻较真查证平台
 
@@ -907,7 +909,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 案例
 
-<Route author="alienmao" example="/itslaw/judgements/regulation+1121495748+13+中华人民共和国公司法（2018）第二十一条" path="/itslaw/judgements/:conditions" :paramsDesc="['筛选条件，见示例']"/>
+<Route author="alienmao" example="/itslaw/judgements/regulation+1121495748+13+中华人民共和国公司法（2018）第二十一条" path="/itslaw/judgements/:conditions" paramsDesc={['筛选条件，见示例']}/>
 
 ## 新冠肺炎疫情新闻动态
 
@@ -925,7 +927,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 丁香园 - 新冠病毒疫情数据统计
 
-<Route author="DIYgod HenryQW" example="/coronavirus/dxy/data/湖北/武汉" path="/coronavirus/dxy/data/:province?/:city?" :paramsDesc="['省/直辖市名，缺省或错误则返回国内数据','城市名，缺省或错误则返回全省数据。直辖市请使用区/县名。']"/>
+<Route author="DIYgod HenryQW" example="/coronavirus/dxy/data/湖北/武汉" path="/coronavirus/dxy/data/:province?/:city?" paramsDesc={['省/直辖市名，缺省或错误则返回国内数据','城市名，缺省或错误则返回全省数据。直辖市请使用区/县名。']}/>
 
 ### 腾讯新闻 - 新型冠状病毒肺炎实时辟谣
 
@@ -941,7 +943,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 #### 省市疫情数据
 
-<Route author="CaoMeiYouRen" example="/tencent/news/coronavirus/data/湖北/武汉" path="/tencent/news/coronavirus/data/:province?/:city?" :paramsDesc="['省/直辖市名，缺省则返回国内数据','城市名，缺省则返回全省数据。直辖市请使用区/县名。']"/>
+<Route author="CaoMeiYouRen" example="/tencent/news/coronavirus/data/湖北/武汉" path="/tencent/news/coronavirus/data/:province?/:city?" paramsDesc={['省/直辖市名，缺省则返回国内数据','城市名，缺省则返回全省数据。直辖市请使用区/县名。']}/>
 
 ### South China Morning Post - China coronavirus outbreak
 
@@ -951,7 +953,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 官方網址：<https://www.ssm.gov.mo/apps1/PreventWuhanInfection/ch.aspx>
 
-<Route author="KeiLongW" example="/coronavirus/mogov-2019ncov/ch" path="/coronavirus/mogov-2019ncov/:lang" :paramsDesc="['語言']"/>
+<Route author="KeiLongW" example="/coronavirus/mogov-2019ncov/ch" path="/coronavirus/mogov-2019ncov/:lang" paramsDesc={['語言']}/>
 
 | 中文 | 英文 | 葡文 |
 | ---- | ---- | ---- |
@@ -965,7 +967,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 新闻主页：<https://news.yahoo.co.jp/pages/article/20200207>
 
-<Route author="sgqy" example="/coronavirus/yahoo-japan" path="/coronavirus/yahoo-japan/:tdfk?" :paramsDesc="['都道府県的拼音，可从地图详情页的链接中获取。例如：京都府 = kyoto']"/>
+<Route author="sgqy" example="/coronavirus/yahoo-japan" path="/coronavirus/yahoo-japan/:tdfk?" paramsDesc={['都道府県的拼音，可从地图详情页的链接中获取。例如：京都府 = kyoto']}/>
 
 ## 新趣集
 
@@ -997,7 +999,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 > 仅支持 IMAP 协议，邮件密码等设置见 [邮件设置](/install/#其他应用配置)
 
-<Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['邮箱账号']" selfhost="1"/>
+<Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" paramsDesc={['邮箱账号']} selfhost="1"/>
 
 ## 有据
 
@@ -1009,7 +1011,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 源仓库更新
 
-<Route author="vhxubo" example="/ku" path="/ku/:name?" :paramsDesc="['默认为 `yuedu`']">
+<Route author="vhxubo" example="/ku" path="/ku/:name?" paramsDesc={['默认为 `yuedu`']}>
 | 阅读  | 异次元   | 海阔   |
 | ----- | -------- | ------ |
 | yuedu | yiciyuan | haikuo |
@@ -1020,7 +1022,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 远程 work 招聘信息
 
-<Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['职位类型, 默认为全部职位']" radar="1" rssbud="1">
+<Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" paramsDesc={['职位类型, 默认为全部职位']} radar="1" rssbud="1">
 
 | 所有职位 |     技术    |  设计  |    运营   |   产品  |  其他 |    市场   |  销售 |
 | :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
@@ -1032,7 +1034,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 分类列表
 
-<Route author="sanmmm" example="/getitfree/category/8" path="/getitfree/category/:category?" :paramsDesc="['内容类型, 默认为`全部`']">
+<Route author="sanmmm" example="/getitfree/category/8" path="/getitfree/category/:category?" paramsDesc={['内容类型, 默认为`全部`']}>
 
 类型
 
@@ -1044,19 +1046,19 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 搜索
 
-<Route author="sanmmm" example="/getitfree/search/windows" path="/getitfree/search/:keyword" :paramsDesc="['搜索关键词']"/>
+<Route author="sanmmm" example="/getitfree/search/windows" path="/getitfree/search/:keyword" paramsDesc={['搜索关键词']}/>
 
 ## 智联招聘
 
 ### 搜索
 
-<Route author="SunShinenny" example="/zhilian/台州/JavaScript" path="/zhilian/:city/:keyword" :paramsDesc="['城市「如若无该城市数据，将会报错」','搜索关键词']"/>
+<Route author="SunShinenny" example="/zhilian/台州/JavaScript" path="/zhilian/:city/:keyword" paramsDesc={['城市「如若无该城市数据，将会报错」','搜索关键词']}/>
 
 ## 中国工程科技知识中心
 
 ### 知识应用
 
-<Route author="nczitzk" example="/cktest/app" path="/cktest/app/:ctgroup?/:domain?" :paramsDesc="['所属类别，见下表，默认为全部类别', '领域，见下表，默认为全部列表']">
+<Route author="nczitzk" example="/cktest/app" path="/cktest/app/:ctgroup?/:domain?" paramsDesc={['所属类别，见下表，默认为全部类别', '领域，见下表，默认为全部列表']}>
 
 所属类别
 
@@ -1085,7 +1087,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 #### 历史牌价
 
-<Route author="linbuxiao" example="/cebbank/quotation/history/usd" path="/cebbank/quotation/history/:type" :paramsDesc="['货币的缩写，见下表']">
+<Route author="linbuxiao" example="/cebbank/quotation/history/usd" path="/cebbank/quotation/history/:type" paramsDesc={['货币的缩写，见下表']}>
 
 | 美元 | 英镑 | 港币 | 瑞士法郎 | 瑞典克郎 | 丹麦克郎 | 挪威克郎 | 日元 | 加拿大元 | 澳大利亚元 | 新加坡元 | 欧元 | 澳门元 | 泰国铢 | 新西兰元 | 韩圆 |
 | ---- | ---- | ---- | -------- | -------- | -------- | -------- | ---- | -------- | ---------- | -------- | ---- | ------ | ------ | -------- | ---- |
@@ -1103,7 +1105,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 中国银行外汇牌价
 
-<Route author="LogicJake HenryQW" example="/boc/whpj/zs?filter_title=%E8%8B%B1%E9%95%91" path="/boc/whpj/:format?" :paramsDesc="['输出的标题格式，默认为标题 + 所有价格。短格式仅包含货币名称。']">
+<Route author="LogicJake HenryQW" example="/boc/whpj/zs?filter_title=%E8%8B%B1%E9%95%91" path="/boc/whpj/:format?" paramsDesc={['输出的标题格式，默认为标题 + 所有价格。短格式仅包含货币名称。']}>
 
 | 短格式 | 中行折算价 | 现汇买卖 | 现钞买卖 | 现汇买入 | 现汇卖出 | 现钞买入 | 现钞卖出 |
 | ------ | ---------- | -------- | -------- | -------- | -------- | -------- | -------- |
@@ -1119,7 +1121,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 苹果邮件
 
-<Route author="Fatpandac" example="/ems/apple/EZ319397281CN" path="/ems/apple/:id" :paramsDesc="['苹果邮件编号']"/>
+<Route author="Fatpandac" example="/ems/apple/EZ319397281CN" path="/ems/apple/:id" paramsDesc={['苹果邮件编号']}/>
 
 ## 转换
 
@@ -1140,7 +1142,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 | `itemDesc`      | 在 `item` 中通过 CSS 选择器查找 HTML 元素作为 `descrption` 元素 | `string` | `item` 元素              |
 | `itemDescAttr`  | 获取 `descrption` 元素属性作为描述                              | `string` | 元素 html                |
 
-<Route author="ttttmr" example="/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a" path="/rsshub/transform/html/:url/:routeParams" :paramsDesc="['URL地址，需经 URL 编码', '转换规则，需经 URL 编码']" selfhost="1">
+<Route author="ttttmr" example="/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a" path="/rsshub/transform/html/:url/:routeParams" paramsDesc={['URL地址，需经 URL 编码', '转换规则，需经 URL 编码']} selfhost="1">
 
 上述例子中参数解析如下
 
@@ -1175,7 +1177,7 @@ JSON Path 目前只支持例如 `a.b.c` 的形式，如果需要从数组中读�
 
 :::
 
-<Route author="ttttmr" example="/rsshub/transform/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body" path="/rsshub/transform/json/:url/:routeParams" :paramsDesc="['URL地址，需经 URL 编码', '转换规则，需经 URL 编码']" selfhost="1">
+<Route author="ttttmr" example="/rsshub/transform/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body" path="/rsshub/transform/json/:url/:routeParams" paramsDesc={['URL地址，需经 URL 编码', '转换规则，需经 URL 编码']} selfhost="1">
 
 上述例子中参数解析如下
 
@@ -1199,13 +1201,13 @@ JSON Path 目前只支持例如 `a.b.c` 的形式，如果需要从数组中读�
 
 ### 房源
 
-<Route author="DIYgod" example="/ziroom/room/sh/1/2/五角场" path="/ziroom/room/:city/:iswhole/:room/:keyword" :paramsDesc="['城市, 北京 bj; 上海 sh; 深圳 sz; 杭州 hz; 南京 nj; 广州 gz; 成都 cd; 武汉 wh; 天津 tj', '是否整租', '房间数', '关键词']"/>
+<Route author="DIYgod" example="/ziroom/room/sh/1/2/五角场" path="/ziroom/room/:city/:iswhole/:room/:keyword" paramsDesc={['城市, 北京 bj; 上海 sh; 深圳 sz; 杭州 hz; 南京 nj; 广州 gz; 成都 cd; 武汉 wh; 天津 tj', '是否整租', '房间数', '关键词']}/>
 
 ## 佐川急便
 
 ### 查询快递
 
-<Route author="nczitzk" example="/sagawa/359554419420" path="/sagawa/:id" :paramsDesc="['快递编号']"/>
+<Route author="nczitzk" example="/sagawa/359554419420" path="/sagawa/:id" paramsDesc={['快递编号']}/>
 
 ## はてな
 

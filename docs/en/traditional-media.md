@@ -1,3 +1,5 @@
+import RouteEn from '@site/src/components/RouteEn';
+
 ---
 pageClass: routes
 ---
@@ -8,7 +10,7 @@ pageClass: routes
 
 ### Channel & Topic
 
-<RouteEn author="nczitzk" example="/abc" path="/abc/:id?" :paramsDesc="['id, can be found in the Channel or Topic page, can also be filled in the `documentId` in the source code of the page, see below, Just In by default']">
+<RouteEn author="nczitzk" example="/abc" path="/abc/:id?" paramsDesc={['id, can be found in the Channel or Topic page, can also be filled in the `documentId` in the source code of the page, see below, Just In by default']}>
 
 ::: tip Tip
 
@@ -60,7 +62,7 @@ The following are some of the supported Channel and Topic ids.
 
 ### News
 
-<RouteEn author="nczitzk" example="/aljazeera/english/news" path="/aljazeera/:language?/:category?" :paramsDesc="['Language, see below, arbric by default, as Arbric', 'Category, can be found in URL, homepage by default']">
+<RouteEn author="nczitzk" example="/aljazeera/english/news" path="/aljazeera/:language?/:category?" paramsDesc={['Language, see below, arbric by default, as Arbric', 'Category, can be found in URL, homepage by default']}>
 
 Language
 
@@ -80,7 +82,7 @@ If you subscribe to [Al Jazeera Chinese - Political](https://chinese.aljazeera.n
 
 ### Tag
 
-<RouteEn author="nczitzk" example="/aljazeera/english/tag/science-and-technology" path="/aljazeera/:language?/tag/:id" :paramsDesc="['Language, see below, arbric by default, as Arbric', 'Tag id, can be found in URL']">
+<RouteEn author="nczitzk" example="/aljazeera/english/tag/science-and-technology" path="/aljazeera/:language?/tag/:id" paramsDesc={['Language, see below, arbric by default, as Arbric', 'Tag id, can be found in URL']}>
 
 Language
 
@@ -98,7 +100,7 @@ If you subscribe to [Al Jazeera English - Science and Technology](https://www.al
 
 ### Official RSS
 
-<RouteEn author="nczitzk" example="/aljazeera/english/rss" path="/aljazeera/:language?/rss" :paramsDesc="['Language, see below, arbric by default, as Arbric']">
+<RouteEn author="nczitzk" example="/aljazeera/english/rss" path="/aljazeera/:language?/rss" paramsDesc={['Language, see below, arbric by default, as Arbric']}>
 
 Language
 
@@ -118,13 +120,13 @@ There is no RSS source for Al Jazeera Chinese, returning homepage content by def
 
 ### Topics
 
-<RouteEn author="zoenglinghou mjysci TonyRL" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic?" :paramsDesc="['Topic name, can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`, `trending-news` by default']" radar="1" rssbud="1" />
+<RouteEn author="zoenglinghou mjysci TonyRL" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic?" paramsDesc={['Topic name, can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`, `trending-news` by default']} radar="1" rssbud="1" />
 
 ## BBC
 
 ### BBC
 
-<RouteEn author="HenryQW DIYgod" example="/bbc/world-asia" path="/bbc/:channel?" :paramsDesc="['channel, default to `top stories`']">
+<RouteEn author="HenryQW DIYgod" example="/bbc/world-asia" path="/bbc/:channel?" paramsDesc={['channel, default to `top stories`']}>
 
 Provides a better reading experience (full text articles) over the official ones.
 
@@ -136,7 +138,7 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 
 ### BBC Chinese
 
-<RouteEn author="HenryQW" example="/bbc/chinese/business" path="/bbc/:lang/:channel?" :paramsDesc="['lang, Simplified or Traditional Chinese','channel, default to `top stories`']">
+<RouteEn author="HenryQW" example="/bbc/chinese/business" path="/bbc/:lang/:channel?" paramsDesc={['lang, Simplified or Traditional Chinese','channel, default to `top stories`']}>
 
 See [BBC 中文网](../traditional-media.html#bbc-bbc-zhong-wen-wang).
 
@@ -146,7 +148,7 @@ See [BBC 中文网](../traditional-media.html#bbc-bbc-zhong-wen-wang).
 
 ### News
 
-<RouteEn author="oppilate" example="/boston/technology" path="/boston/:tag?" :paramsDesc="['Tag']">
+<RouteEn author="oppilate" example="/boston/technology" path="/boston/:tag?" paramsDesc={['Tag']}>
 
 Generates full-text feeds that the official feed doesn't provide.
 Refer to [Boston.com's feed page](https://www.boston.com/rss-feeds) for tags. For instance, `https://www.boston.com/tag/local-news/?feed=rss` corresponds to `/boston/local-news`.
@@ -157,13 +159,13 @@ Refer to [Boston.com's feed page](https://www.boston.com/rss-feeds) for tags. Fo
 
 Provide full article RSS for CBC topics.
 
-<RouteEn author="wb14123" example="/cbc/topics" path="/cbc/topics/:topic?" :paramsDesc="['CBC topics. Default to Top Stories. For second level topics like canada/toronto, need to replace `/` by `-`.']"/>
+<RouteEn author="wb14123" example="/cbc/topics" path="/cbc/topics/:topic?" paramsDesc={['CBC topics. Default to Top Stories. For second level topics like canada/toronto, need to replace `/` by `-`.']}/>
 
 ## Chicago Tribune
 
 ### News
 
-<RouteEn author="oppilate" example="/chicagotribune/nation-world" path="/chicagotribune/:category/:subcategory?" :paramsDesc="['Category', 'Subcategory']">
+<RouteEn author="oppilate" example="/chicagotribune/nation-world" path="/chicagotribune/:category/:subcategory?" paramsDesc={['Category', 'Subcategory']}>
 
 Generates full-text that the official feed doesn't provide.
 Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-chicago-tribune-rss-feeds-htmlstory.html) for categories. For instance, `https://www.chicagotribune.com/arcio/rss/category/nation-world/` corresponds to `/chicagotribune/nation-world`.
@@ -174,7 +176,7 @@ Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-c
 
 ### Topics
 
-<RouteEn author="zoenglinghou" example="/chinadialogue/topics/cities" path="/chinadialogue/topics/:topic" :paramsDesc="['Topics']">
+<RouteEn author="zoenglinghou" example="/chinadialogue/topics/cities" path="/chinadialogue/topics/:topic" paramsDesc={['Topics']}>
 
 | Business | Cities | Climate Change            | Conservation | Governance & Law   | Health and Food | Natural Disasters | Pollution | Science & Tech   | Security | Water |
 | -------- | ------ | ------------------------- | ------------ | ------------------ | --------------- | ----------------- | --------- | ---------------- | -------- | ----- |
@@ -184,7 +186,7 @@ Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-c
 
 ### Columns
 
-<RouteEn author="zoenglinghou" example="/chinadialogue/article" path="/chinadialogue/:column" :paramsDesc="['栏目分类']">
+<RouteEn author="zoenglinghou" example="/chinadialogue/article" path="/chinadialogue/:column" paramsDesc={['栏目分类']}>
 
 | Articles | Blogs | Culture | Reports |
 | -------- | ----- | ------- | ------- |
@@ -196,7 +198,7 @@ Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-c
 
 ### News
 
-<RouteEn author="luyuhuang" example="/chinatimes/realtimenews" path="/chinatimes/:caty" :paramsDesc="['category']" radar="1" rssbud="1">
+<RouteEn author="luyuhuang" example="/chinatimes/realtimenews" path="/chinatimes/:caty" paramsDesc={['category']} radar="1" rssbud="1">
 
 | realtimenews   | politic | opinion | life | star    | money   | society | hottopic   | tube   | world | armament | chinese           | fashion | sports | technologynews  | travel | album   |
 | -------------- | ------- | ------- | ---- | ------- | ------- | ------- | ---------- | ------ | ----- | -------- | ----------------- | ------- | ------ | --------------- | ------ | ------- |
@@ -208,7 +210,7 @@ Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-c
 
 ### Reporting & Opinion
 
-<RouteEn author="oppilate" example="/chinafile/all" path="/chinafile/:category?" :paramsDesc="['Category, by default `all`']">
+<RouteEn author="oppilate" example="/chinafile/all" path="/chinafile/:category?" paramsDesc={['Category, by default `all`']}>
 
 Generates full-text feeds that the official feed doesn't provide.
 
@@ -222,7 +224,7 @@ Generates full-text feeds that the official feed doesn't provide.
 
 ### Full article RSS
 
-<RouteEn author="TonyRL" example="/cnbc/rss" path="/cnbc/rss/:id?" :paramsDesc="['Channel ID, can be found in Official RSS URL, `100003114` (Top News) by default']">
+<RouteEn author="TonyRL" example="/cnbc/rss" path="/cnbc/rss/:id?" paramsDesc={['Channel ID, can be found in Official RSS URL, `100003114` (Top News) by default']}>
 
 Provides a better reading experience (full articles) over the official ones.
 
@@ -234,7 +236,7 @@ Support all channels, refer to [CNBC RSS feeds](https://www.cnbc.com/rss-feeds/)
 
 ### News
 
-<RouteEn author="nczitzk" example="/dw/en" path="/dw/:lang?/:caty?" :paramsDesc="['Language, can be found in the URL of the corresponding language version page, German by default', 'Category, all by default']">
+<RouteEn author="nczitzk" example="/dw/en" path="/dw/:lang?/:caty?" paramsDesc={['Language, can be found in the URL of the corresponding language version page, German by default', 'Category, all by default']}>
 
 | All | German Press | Culture | Economy | Science & Nature |
 | --- | ------------ | ------- | ------- | ---------------- |
@@ -246,7 +248,7 @@ Support all channels, refer to [CNBC RSS feeds](https://www.cnbc.com/rss-feeds/)
 
 ### News
 
-<RouteEn author="Rjnishant530" example="/dnaindia/headlines" path="/dnaindia/:category" :paramsDesc="['Find it in the URL, or tables below']" radar="1">
+<RouteEn author="Rjnishant530" example="/dnaindia/headlines" path="/dnaindia/:category" paramsDesc={['Find it in the URL, or tables below']} radar="1">
 
 Categories:
 
@@ -258,7 +260,7 @@ Categories:
 
 ### Topic
 
-<RouteEn author="Rjnishant530" example="/dnaindia/topic/dna-verified" path="/dnaindia/topic/:topic" :paramsDesc="['Find it in the URL']" radar="1">
+<RouteEn author="Rjnishant530" example="/dnaindia/topic/dna-verified" path="/dnaindia/topic/:topic" paramsDesc={['Find it in the URL']} radar="1">
 
 Topics:
 
@@ -276,7 +278,7 @@ The URL of the form `https://www.dnaindia.com/topic/dna-verified` demonstrates t
 
 ### myFT personal RSS
 
-<RouteEn author="HenryQW" example="/ft/myft/rss-key" path="/ft/myft/:key" :paramsDesc="['the last part of myFT personal RSS address']">
+<RouteEn author="HenryQW" example="/ft/myft/rss-key" path="/ft/myft/:key" paramsDesc={['the last part of myFT personal RSS address']}>
 
 ::: tip tips
 
@@ -291,7 +293,7 @@ The URL of the form `https://www.dnaindia.com/topic/dna-verified` demonstrates t
 
 ### News
 
-<RouteEn author="Rongronggg9" example="/kcna/en" path="/kcna/:lang/:category?" :paramsDesc="['Language, refer to the table below', 'Category, refer to the table below']" anticrawler="1" radar="1" rssbud="1">
+<RouteEn author="Rongronggg9" example="/kcna/en" path="/kcna/:lang/:category?" paramsDesc={['Language, refer to the table below', 'Category, refer to the table below']} anticrawler="1" radar="1" rssbud="1">
 
 | Language | 조선어 | English | 中国语 | Русский | Español | 日本語 |
 | -------- | ------ | ------- | ------ | ------- | ------- | ------ |
@@ -315,7 +317,7 @@ The URL of the form `https://www.dnaindia.com/topic/dna-verified` demonstrates t
 
 ### News
 
-<RouteEn author="Thealf154" example="/jornada/2022-10-12/capital" path="/jornada/:date?/:category?" :paramsDesc="['Date string, must be in format of `YYYY-MM-DD`. You can get today\'s news using `today`', 'Category, refer to the table below']" radar="1">
+<RouteEn author="Thealf154" example="/jornada/2022-10-12/capital" path="/jornada/:date?/:category?" paramsDesc={['Date string, must be in format of `YYYY-MM-DD`. You can get today\'s news using `today`', 'Category, refer to the table below']} radar="1">
 
 Provides a way to get an specific rss feed by date and category over the official one.
 
@@ -339,7 +341,7 @@ Provides a way to get an specific rss feed by date and category over the officia
 
 ### Ming Pao Daily
 
-<RouteEn author="TonyRL" example="/mingpao/pns/s00017" path="/mingpao/pns/:category?" :paramsDesc="['channel，default to brief']"/>
+<RouteEn author="TonyRL" example="/mingpao/pns/s00017" path="/mingpao/pns/:category?" paramsDesc={['channel，default to brief']}/>
 
 ::: tip tips
 Only `s00017` is in English.
@@ -369,7 +371,7 @@ Only `s00017` is in English.
 
 ### WORLD-JAPAN - Top Stories
 
-<RouteEn author="TonyRL" example="/nhk/news/en" path="/nhk/news/:lang?" :paramsDesc="['Language, see below, `en` by default']" radar="1" rssbud="1">
+<RouteEn author="TonyRL" example="/nhk/news/en" path="/nhk/news/:lang?" paramsDesc={['Language, see below, `en` by default']} radar="1" rssbud="1">
 
 | العربية | বাংলা | မြန်မာဘာသာစကား | 中文（简体） | 中文（繁體） | English | Français |
 | ------- | ----- | -------------- | ------------ | ------------ | ------- | -------- |
@@ -389,7 +391,7 @@ Only `s00017` is in English.
 
 ### News
 
-<RouteEn author="bennyyip" example="/npr/1001" path="/npr/:endpoint?" :paramsDesc="['Channel ID, can be found in Official RSS URL, `1001` by default']">
+<RouteEn author="bennyyip" example="/npr/1001" path="/npr/:endpoint?" paramsDesc={['Channel ID, can be found in Official RSS URL, `1001` by default']}>
 
 Provide full article RSS for CBC topics.
 
@@ -411,7 +413,7 @@ French podcast on the international politics. This feed provides a better readin
 
 ### News
 
-<RouteEn author="zphw" example="/rfa/english" path="/rfa/:language?/:channel?/:subChannel?" :paramsDesc="['language, English by default', 'channel', 'subchannel, where applicable']" />
+<RouteEn author="zphw" example="/rfa/english" path="/rfa/:language?/:channel?/:subChannel?" paramsDesc={['language, English by default', 'channel', 'subchannel, where applicable']} />
 
 Delivers a better experience by supporting parameter specification.
 
@@ -432,7 +434,7 @@ Parameters can be obtained from the official website, for instance:
 
 ### Category/Topic/Author
 
-<RouteEn author="HenryQW proletarius101 LyleLee nczitzk" example="/reuters/world/us" path="/reuters/:category/:topic?" :paramsDesc="['find it in the URL, or tables below', 'find it in the URL, or tables below']">
+<RouteEn author="HenryQW proletarius101 LyleLee nczitzk" example="/reuters/world/us" path="/reuters/:category/:topic?" paramsDesc={['find it in the URL, or tables below', 'find it in the URL, or tables below']}>
 
 -   `:category`:
     | World | Business | Legal | Markets | Breakingviews | Technology | Graphics |
@@ -475,7 +477,7 @@ More could be found in the URL of the category/topic page.
 
 ### News
 
-<RouteEn author="TonyRL" example="/rodong/news" path="/rodong/news/:language?" :paramsDesc="['Language, see below, `ko` by default']" radar="1">
+<RouteEn author="TonyRL" example="/rodong/news" path="/rodong/news/:language?" paramsDesc={['Language, see below, `ko` by default']} radar="1">
 
 | 조선어 | English | 中文 |
 | ------ | ------- | ---- |
@@ -491,7 +493,7 @@ RTHK offical provides full text RSS, check the offical website for detail inform
 
 This route adds the missing photo and Link element. (Offical RSS doesn't have Link element may cause issue on some RSS client)
 
-<RouteEn author="KeiLongW" example="/rthk-news/hk/international" path="/rthk-news/:lang/:category" :paramsDesc="['Language，Traditional Chinese`hk`，English`en`','Category']">
+<RouteEn author="KeiLongW" example="/rthk-news/hk/international" path="/rthk-news/:lang/:category" paramsDesc={['Language，Traditional Chinese`hk`，English`en`','Category']}>
 
 | local      | greaterchina       | international | finance      | sport      |
 | ---------- | ------------------ | ------------- | ------------ | ---------- |
@@ -503,7 +505,7 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 
 ### Chinese
 
-<RouteEn author="nczitzk" example="/sbs/chinese" path="/sbs/chinese/:category?/:id?/:dialect?/:language?" :paramsDesc="['Category, `news` or `podcast`, `news` by default', 'Id, see below, can be found in URL, `news` by default', 'Dialect, `mandarin` or `cantonese`, `mandarin` by default', 'Language, `zh-hans` or `zh-hant`, `zh-hans` by default']">
+<RouteEn author="nczitzk" example="/sbs/chinese" path="/sbs/chinese/:category?/:id?/:dialect?/:language?" paramsDesc={['Category, `news` or `podcast`, `news` by default', 'Id, see below, can be found in URL, `news` by default', 'Dialect, `mandarin` or `cantonese`, `mandarin` by default', 'Language, `zh-hans` or `zh-hant`, `zh-hans` by default']}>
 
 ::: tip Tip
 
@@ -557,7 +559,7 @@ You still can customize `language`, however, it is important to note that not al
 
 ### News
 
-<RouteEn author="proletarius101" example="/scmp/3" path="/scmp/:category_id" :paramsDesc="['Category']">
+<RouteEn author="proletarius101" example="/scmp/3" path="/scmp/:category_id" paramsDesc={['Category']}>
 
 See the [official RSS page](https://www.scmp.com/rss) to get the ID of each category. This route provides fulltext that the offical feed doesn't.
 
@@ -567,7 +569,7 @@ See the [official RSS page](https://www.scmp.com/rss) to get the ID of each cate
 
 ### Category
 
-<RouteEn author="nczitzk" example="/sputniknews" path="/sputniknews/:category?/:language?" :paramsDesc="['Categort, can be found in URL, `news` by default', 'Language, see below, English by default']">
+<RouteEn author="nczitzk" example="/sputniknews" path="/sputniknews/:category?/:language?" paramsDesc={['Categort, can be found in URL, `news` by default', 'Language, see below, English by default']}>
 
 Categories for International site:
 
@@ -622,13 +624,13 @@ Language
 
 ### Hot News
 
-<RouteEn author="TonyRL" example="/taiwannews/hot" path="/taiwannews/hot/:lang?" :paramsDesc="['Language, `en` or `zh`, `en` by default']" radar="1" rssbud="1"/>
+<RouteEn author="TonyRL" example="/taiwannews/hot" path="/taiwannews/hot/:lang?" paramsDesc={['Language, `en` or `zh`, `en` by default']} radar="1" rssbud="1"/>
 
 ## The Atlantic
 
 ### News
 
-<RouteEn author="NavePnow" example="/theatlantic/latest" path="/theatlantic/:category" :paramsDesc="['category, see below']">
+<RouteEn author="NavePnow" example="/theatlantic/latest" path="/theatlantic/:category" paramsDesc={['category, see below']}>
 
 | Popular      | Latest | Politics | Technology | Business |
 | ------------ | ------ | -------- | ---------- | -------- |
@@ -642,7 +644,7 @@ More categories (except photo) can be found within the navigation bar at <https:
 
 ### Category
 
-<RouteEn author="ImSingee" example="/economist/latest" path="/economist/:endpoint" :paramsDesc="['Category name, can be found on the [official page](https://www.economist.com/rss). For example, https://www.economist.com/china/rss.xml to china']" radar="1" rssbud="1"/>
+<RouteEn author="ImSingee" example="/economist/latest" path="/economist/:endpoint" paramsDesc={['Category name, can be found on the [official page](https://www.economist.com/rss). For example, https://www.economist.com/china/rss.xml to china']} radar="1" rssbud="1"/>
 
 ### Espresso
 
@@ -654,7 +656,7 @@ More categories (except photo) can be found within the navigation bar at <https:
 
 ### Global Business Review
 
-<Route author="prnake" example="/economist/global-business-review/cn-en" path="/economist/global-business-review/:language?" :paramsDesc="['Language, `en`, `cn`, `tw` are supported, support multiple options, default to cn-en']"  radar="1" rssbud="1"/>
+<Route author="prnake" example="/economist/global-business-review/cn-en" path="/economist/global-business-review/:language?" paramsDesc={['Language, `en`, `cn`, `tw` are supported, support multiple options, default to cn-en']}  radar="1" rssbud="1"/>
 
 ### Download
 
@@ -682,13 +684,13 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### Topic
 
-<RouteEn author="TonyRL" example="/thehindu/topic/rains" path="/thehindu/topic/:topic" :paramsDesc="['Topic slug, can be found in URL.']" radar="1" rssbud="1" />
+<RouteEn author="TonyRL" example="/thehindu/topic/rains" path="/thehindu/topic/:topic" paramsDesc={['Topic slug, can be found in URL.']} radar="1" rssbud="1" />
 
 ## The New York Times
 
 ### News
 
-<RouteEn author="HenryQW" example="/nytimes/dual" path="/nytimes/:lang?" :paramsDesc="['language, default to Chinese']">
+<RouteEn author="HenryQW" example="/nytimes/dual" path="/nytimes/:lang?" paramsDesc={['language, default to Chinese']}>
 
 By extracting the full text of articles, we provide a better reading experience (full text articles) over the official one.
 
@@ -700,7 +702,7 @@ By extracting the full text of articles, we provide a better reading experience 
 
 ### News by author
 
-<RouteEn author="kevinschaul" example="/nytimes/author/farhad-manjoo" path="/nytimes/author/:byline" :paramsDesc="['Author’s name in New York Times’ URL format']">
+<RouteEn author="kevinschaul" example="/nytimes/author/farhad-manjoo" path="/nytimes/author/:byline" paramsDesc={['Author’s name in New York Times’ URL format']}>
 
 Provides all of the articles by the specified New York Times author.
 
@@ -732,7 +734,7 @@ Provides all of the articles by the specified New York Times author.
 
 ### News
 
-<RouteEn author="Arracc" example="/nikkei/news" path="/nikkei/:category/:article_type?" :paramsDesc="['Category, see table below','Only includes free articles, set `free` to enable, disabled by default']">
+<RouteEn author="Arracc" example="/nikkei/news" path="/nikkei/:category/:article_type?" paramsDesc={['Category, see table below','Only includes free articles, set `free` to enable, disabled by default']}>
 
 | 総合 | オピニオン | 経済    | 政治     | 金融      | マーケット | ビジネス | マネーのまなび | テック     | 国際          | スポーツ | 社会・調査 | 地域  | 文化    | ライフスタイル |
 | ---- | ---------- | ------- | -------- | --------- | ---------- | -------- | -------------- | ---------- | ------------- | -------- | ---------- | ----- | ------- | -------------- |
@@ -748,7 +750,7 @@ Provides all of the articles by the specified New York Times author.
 
 ### News
 
-<RouteEn author="oppilate NavePnow" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" :paramsDesc="['Language, `en-us`, `zh-cn`, `zh-tw`', 'Category. See below']">
+<RouteEn author="oppilate NavePnow" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" paramsDesc={['Language, `en-us`, `zh-cn`, `zh-tw`', 'Category. See below']}>
 
 en_us
 | World | U.S. | Politics | Economy | Business | Tech | Markets | Opinion | Books & Arts | Real Estate | Life & Work | Sytle | Sports |
@@ -768,7 +770,7 @@ Provide full article RSS for WSJ topics.
 
 ### News
 
-<RouteEn author="zphw" example="/vom/featured" path="/vom/featured/:lang?" :paramsDesc="['Language, see the table below, `mn` by default']">
+<RouteEn author="zphw" example="/vom/featured" path="/vom/featured/:lang?" paramsDesc={['Language, see the table below, `mn` by default']}>
 
 | English | 日本語 | Монгол | Русский | 简体中文 |
 | ------- | ------ | ------ | ------- | -------- |
@@ -780,7 +782,7 @@ Provide full article RSS for WSJ topics.
 
 ### News
 
-<RouteEn author="KeiLongW" example="/yahoo/news/hk/world" path="/yahoo/news/:region/:category?" :paramsDesc="['Region','Category']">
+<RouteEn author="KeiLongW" example="/yahoo/news/hk/world" path="/yahoo/news/:region/:category?" paramsDesc={['Region','Category']}>
 
 `Region`
 | Hong Kong | Taiwan | US |
@@ -798,7 +800,7 @@ Provide full article RSS for WSJ topics.
 
 ### News
 
-<RouteEn author="loganrockmore" example="/yahoo-author/hannah-keyser" path="/yahoo-news/:author" :paramsDesc="['Author']">
+<RouteEn author="loganrockmore" example="/yahoo-author/hannah-keyser" path="/yahoo-news/:author" paramsDesc={['Author']}>
 
 Provides all of the articles by the specified Yahoo! author.
 
@@ -808,7 +810,7 @@ Provides all of the articles by the specified Yahoo! author.
 
 ### News
 
-<RouteEn author="Arracc" example="/yomiuri/news" path="/yomiuri/:category?" :paramsDesc="['Category, `news` by default']">
+<RouteEn author="Arracc" example="/yomiuri/news" path="/yomiuri/:category?" paramsDesc={['Category, `news` by default']}>
 
 Free articles only.
 

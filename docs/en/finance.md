@@ -1,3 +1,5 @@
+import RouteEn from '@site/src/components/RouteEn';
+
 ---
 pageClass: routes
 ---
@@ -8,7 +10,7 @@ pageClass: routes
 
 ### News
 
-<RouteEn author="bigfei" example="/bloomberg" path="/bloomberg/:site?" :paramsDesc="['Site, see below, News by default']" anticrawler="1">
+<RouteEn author="bigfei" example="/bloomberg" path="/bloomberg/:site?" paramsDesc={['Site, see below, News by default']} anticrawler="1">
 
 | Site | Name |
 | ---- | ---- |
@@ -29,7 +31,7 @@ pageClass: routes
 
 ### Authors
 
-<RouteEn author="josh" example="/bloomberg/authors/ARbTQlRLRjE/matthew-s-levine" path="/bloomberg/authors/:id/:slug/:source?" :paramsDesc="['Author ID, can be found in URL', 'Author Slug, can be found in URL', 'Data source, either `api` or `rss`,`api` by default']" anticrawler="1" radar="1"/>
+<RouteEn author="josh" example="/bloomberg/authors/ARbTQlRLRjE/matthew-s-levine" path="/bloomberg/authors/:id/:slug/:source?" paramsDesc={['Author ID, can be found in URL', 'Author Slug, can be found in URL', 'Data source, either `api` or `rss`,`api` by default']} anticrawler="1" radar="1"/>
 
 ## CFD
 
@@ -41,7 +43,7 @@ pageClass: routes
 
 ### News
 
-<RouteEn author="nczitzk" example="/finviz" path="/finviz/:category?" :paramsDesc="['Category, see below, News by default']">
+<RouteEn author="nczitzk" example="/finviz" path="/finviz/:category?" paramsDesc={['Category, see below, News by default']}>
 
 | News | Blog |
 | ---- | ---- |
@@ -51,13 +53,13 @@ pageClass: routes
 
 ### US Stock News
 
-<RouteEn author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" :paramsDesc="['The stock ticker']"/>
+<RouteEn author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" paramsDesc={['The stock ticker']}/>
 
 ## Followin
 
 ### Home
 
-<RouteEn author="TonyRL" example="/followin" path="/followin/:categoryId?/:lang?" :paramsDesc="['Category ID, see table below, `1` by default', 'Language, see table below, `en` by default']" radar="1">
+<RouteEn author="TonyRL" example="/followin" path="/followin/:categoryId?/:lang?" paramsDesc={['Category ID, see table below, `1` by default', 'Language, see table below, `en` by default']} radar="1">
 
 Category ID
 
@@ -75,19 +77,19 @@ Language
 
 ### News
 
-<RouteEn author="TonyRL" example="/followin/news" path="/followin/news/:lang?" :paramsDesc="['Language, see table above, `en` by default']" radar="1" />
+<RouteEn author="TonyRL" example="/followin/news" path="/followin/news/:lang?" paramsDesc={['Language, see table above, `en` by default']} radar="1" />
 
 ### KOL
 
-<RouteEn author="TonyRL" example="/followin/kol/4075592991" path="/followin/kol/:kolId/:lang?" :paramsDesc="['KOL ID, can be found in URL', 'Language, see table above, `en` by default']" radar="1" />
+<RouteEn author="TonyRL" example="/followin/kol/4075592991" path="/followin/kol/:kolId/:lang?" paramsDesc={['KOL ID, can be found in URL', 'Language, see table above, `en` by default']} radar="1" />
 
 ### Topic
 
-<RouteEn author="TonyRL" example="/followin/topic/40" path="/followin/topic/:topicId/:lang?" :paramsDesc="['Topic ID, can be found in URL', 'Language, see table above, `en` by default']" radar="1" />
+<RouteEn author="TonyRL" example="/followin/topic/40" path="/followin/topic/:topicId/:lang?" paramsDesc={['Topic ID, can be found in URL', 'Language, see table above, `en` by default']} radar="1" />
 
 ### Tag
 
-<RouteEn author="TonyRL" example="/followin/tag/177008" path="/followin/tag/:tagId/:lang?" :paramsDesc="['Tag ID, can be found in URL', 'Language, see table above, `en` by default']" radar="1" />
+<RouteEn author="TonyRL" example="/followin/tag/177008" path="/followin/tag/:tagId/:lang?" paramsDesc={['Tag ID, can be found in URL', 'Language, see table above, `en` by default']} radar="1" />
 
 ## Futubull
 
@@ -99,7 +101,7 @@ Language
 
 ### Channel
 
-<RouteEn author="mikkkee" example="/fx-markets/trading" path="/fx-markets/:channel" :paramsDesc="['channel, can be found in the navi bar links at the home page']">
+<RouteEn author="mikkkee" example="/fx-markets/trading" path="/fx-markets/:channel" paramsDesc={['channel, can be found in the navi bar links at the home page']}>
 
 | Trading | Infrastructure | Tech and Data | Regulation |
 | ------- | -------------- | ------------- | ---------- |
@@ -117,7 +119,7 @@ Language
 
 ### Summary
 
-<RouteEn author="TonyRL" example="/seekingalpha/TSM/transcripts" path="/seekingalpha/:symbol/:category?" :paramsDesc="['Stock symbol', 'Category, see below, `news` by default']" radar="1" rssbud="1">
+<RouteEn author="TonyRL" example="/seekingalpha/TSM/transcripts" path="/seekingalpha/:symbol/:category?" paramsDesc={['Stock symbol', 'Category, see below, `news` by default']} radar="1" rssbud="1">
 
 | Analysis | News | Transcripts | Press Releases | Related Analysis |
 | ------- | ------- | -------- | ---- | ------ |
@@ -141,15 +143,15 @@ TokenInsight also provides official RSS, you can take a look at <https://api.tok
 
 ### Blogs
 
-<RouteEn author="fuergaosi233" example="/tokeninsight/blog/en" path="/tokeninsight/blog/:lang?" :paramsDesc="['Language, see below, Chinese by default']" />
+<RouteEn author="fuergaosi233" example="/tokeninsight/blog/en" path="/tokeninsight/blog/:lang?" paramsDesc={['Language, see below, Chinese by default']} />
 
 ### Latest
 
-<RouteEn author="fuergaosi233" example="/tokeninsight/bulletin/en" path="/tokeninsight/bulletin/:lang?" :paramsDesc="['Language, see below, Chinese by default']" />
+<RouteEn author="fuergaosi233" example="/tokeninsight/bulletin/en" path="/tokeninsight/bulletin/:lang?" paramsDesc={['Language, see below, Chinese by default']} />
 
 ### Research
 
-<RouteEn author="fuergaosi233" example="/tokeninsight/report/en" path="/tokeninsight/report/:lang?" :paramsDesc="['Language, see below, Chinese by default']">
+<RouteEn author="fuergaosi233" example="/tokeninsight/report/en" path="/tokeninsight/report/:lang?" paramsDesc={['Language, see below, Chinese by default']}>
 
 Language:
 
@@ -169,7 +171,7 @@ Language:
 
 ### Report
 
-<RouteEn author="nczitzk" example="/weforum/report" path="/weforum/report/:lang?/:year?/:platform?" :paramsDesc="['Language, see below, `en` by default', 'Year, filter by year, all by default', 'Platform, filter by platform, all by default']">
+<RouteEn author="nczitzk" example="/weforum/report" path="/weforum/report/:lang?/:year?/:platform?" paramsDesc={['Language, see below, `en` by default', 'Year, filter by year, all by default', 'Platform, filter by platform, all by default']}>
 
 Languages
 

@@ -1,3 +1,5 @@
+import RouteEn from '@site/src/components/RouteEn';
+
 ---
 pageClass: routes
 ---
@@ -8,7 +10,7 @@ pageClass: routes
 
 ### 9To5 Sub-site
 
-<RouteEn author="HenryQW" example="/9to5/mac/aapl" path="/9to5/:subsite/:category?" :paramsDesc="['Subsite name', 'Tag name inside the url of the tag page']" rssbud="1" radar="1">
+<RouteEn author="HenryQW" example="/9to5/mac/aapl" path="/9to5/:subsite/:category?" paramsDesc={['Subsite name', 'Tag name inside the url of the tag page']} rssbud="1" radar="1">
 
 Supported sub-sites：
 | 9To5Mac | 9To5Google | 9To5Toys |
@@ -21,7 +23,7 @@ Supported sub-sites：
 
 ### Types
 
-<RouteEn author="emdoe" example="/aeon/essays" path="/aeon/:type" :paramsDesc="['Type']">
+<RouteEn author="emdoe" example="/aeon/essays" path="/aeon/:type" paramsDesc={['Type']}>
 
 Supported types: Essays, Videos, and Audio.
 
@@ -33,7 +35,7 @@ However, The content generated under `audio` does not contain links to audio fil
 
 ### Categories
 
-<RouteEn author="emdoe" example="/aeon/category/philosophy" path="/aeon/category/:category" :paramsDesc="['Category']">
+<RouteEn author="emdoe" example="/aeon/category/philosophy" path="/aeon/category/:category" paramsDesc={['Category']}>
 
 Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
@@ -49,7 +51,7 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 ### Category
 
-<RouteEn author="nczitzk" example="/appleinsider" path="/appleinsider/:category?" :paramsDesc="['Category, see below, News by default']">
+<RouteEn author="nczitzk" example="/appleinsider" path="/appleinsider/:category?" paramsDesc={['Category, see below, News by default']}>
 
 | News | Reviews | How-tos |
 | ---- | ------- | ------- |
@@ -67,7 +69,7 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 ### Event and News
 
-<RouteEn author="nczitzk" example="/bell-labs/events-news" path="/bell-labs/events-news/:category?" :paramsDesc="['Category, see below, Press releases by default']">
+<RouteEn author="nczitzk" example="/bell-labs/events-news" path="/bell-labs/events-news/:category?" paramsDesc={['Category, see below, Press releases by default']}>
 
 | Featured events | Latest recognition   | Press releases |
 | --------------- | -------------------- | -------------- |
@@ -79,7 +81,7 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 ### Channel
 
-<RouteEn author="aidistan" example="/biodiscover" path="/biodiscover/:channel" :paramsDesc="['channel, see below']">
+<RouteEn author="aidistan" example="/biodiscover" path="/biodiscover/:channel" paramsDesc={['channel, see below']}>
 
 | Research | Interview | Industry | Activity |
 | -------- | --------- | -------- | -------- |
@@ -107,7 +109,7 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 ### Most Read & Most Share
 
-<RouteEn author="nczitzk" example="/cgtn/most/read/day" path="/cgtn/most/:type?/:time?" :paramsDesc="['Type, `read` as most read, `share` as most share, `read` by default', 'Time range, `all` as all the time, `day` as today, `week` as this week, `month` as this month, `year` as this year, `all` by default']"/>
+<RouteEn author="nczitzk" example="/cgtn/most/read/day" path="/cgtn/most/:type?/:time?" paramsDesc={['Type, `read` as most read, `share` as most share, `read` by default', 'Time range, `all` as all the time, `day` as today, `week` as this week, `month` as this month, `year` as this year, `all` by default']}/>
 
 ### Top News
 
@@ -121,13 +123,13 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 ### Commentary and Analysis
 
-<RouteEn author="nczitzk" example="/clb/commentary" path="/clb/commentary/:lang?" :paramsDesc="['Language, Simplified Chinese by default, or `en` as English']"/>
+<RouteEn author="nczitzk" example="/clb/commentary" path="/clb/commentary/:lang?" paramsDesc={['Language, Simplified Chinese by default, or `en` as English']}/>
 
 ## China Labour Watch
 
 ### Reports
 
-<RouteEn author="nczitzk" example="/chinalaborwatch/reports" path="/chinalaborwatch/reports/:lang?/:industry?" :paramsDesc="['Language, English by default, or `cn` as Simplified Chinese', 'Industry id, see below, all by default']">
+<RouteEn author="nczitzk" example="/chinalaborwatch/reports" path="/chinalaborwatch/reports/:lang?/:industry?" paramsDesc={['Language, English by default, or `cn` as Simplified Chinese', 'Industry id, see below, all by default']}>
 
 | All | Automotive | Cookware | Electronics | Footwear | Furniture | Garment | General | Printing | Retail | Toys |
 | --- | ---------- | -------- | ----------- | -------- | --------- | ------- | ------- | -------- | ------ | ---- |
@@ -144,7 +146,7 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 ### News and current affairs
 
-<RouteEn author="jiaaoMario" example="/china/news" path="/china/news/:category?" :paramsDesc="['Category of news. See the form below for details, default is china news.']">
+<RouteEn author="jiaaoMario" example="/china/news" path="/china/news/:category?" paramsDesc={['Category of news. See the form below for details, default is china news.']}>
 
 Category of news
 
@@ -186,7 +188,7 @@ Category of news
 
 ### Multi-language
 
-<RouteEn author="JamesWDGu KeiLongW" example="/engadget/chinese" path="/engadget/:lang" :paramsDesc="['Language']">
+<RouteEn author="JamesWDGu KeiLongW" example="/engadget/chinese" path="/engadget/:lang" paramsDesc={['Language']}>
 
 | Traditional Chinese | Simplified Chinese | US  | Japanese |
 | ------------------- | ------------------ | --- | -------- |
@@ -204,7 +206,7 @@ Category of news
 
 ### Category
 
-<RouteEn author="nczitzk" example="/europapress" path="/europapress/:category?" :paramsDesc="['Category, see below, Home by default']">
+<RouteEn author="nczitzk" example="/europapress" path="/europapress/:category?" paramsDesc={['Category, see below, Home by default']}>
 
 | España   | Internacional | Economía | Deportes |
 | -------- | ------------- | -------- | -------- |
@@ -244,7 +246,7 @@ Category of news
 
 ### Category
 
-<RouteEn author="nczitzk" example="/ezone" path="/ezone/:category?" :paramsDesc="['Category,see below, latest news by default']">
+<RouteEn author="nczitzk" example="/ezone" path="/ezone/:category?" paramsDesc={['Category,see below, latest news by default']}>
 
 | 科技焦點 | 網絡生活 | 教學評測 | IT Times |
 | -------- | -------- | -------- | -------- |
@@ -256,11 +258,11 @@ Category of news
 
 ### Headline
 
-<RouteEn author="nczitzk" example="/fashionnetwork/headline" path="/fashionnetwork/headline/:country?" :paramsDesc="['Country, see below, `ww` by default']"/>
+<RouteEn author="nczitzk" example="/fashionnetwork/headline" path="/fashionnetwork/headline/:country?" paramsDesc={['Country, see below, `ww` by default']}/>
 
 ### News
 
-<RouteEn author="nczitzk" example="/fashionnetwork/news/5,6/15,112" path="/fashionnetwork/news/:sectors?/:categories?/:country?" :paramsDesc="['Sectors, see below, `all` by default', 'Categories, see below, `all` by default', 'Country, see below, `ww` as Worldwide by default']">
+<RouteEn author="nczitzk" example="/fashionnetwork/news/5,6/15,112" path="/fashionnetwork/news/:sectors?/:categories?/:country?" paramsDesc={['Sectors, see below, `all` by default', 'Categories, see below, `all` by default', 'Country, see below, `ww` as Worldwide by default']}>
 
 Sectoies
 
@@ -328,7 +330,7 @@ Country
 
 ### News
 
-<RouteEn author="nczitzk" example="/fnal/news" path="/fnal/news/:category?" :paramsDesc="['Category, see below, All News by default']">
+<RouteEn author="nczitzk" example="/fnal/news" path="/fnal/news/:category?" paramsDesc={['Category, see below, All News by default']}>
 
 | All News | Fermilab features | Press releases | Symmetry features |
 | -------- | ----------------- | -------------- | ----------------- |
@@ -350,7 +352,7 @@ Country
 
 ### News
 
-<RouteEn author="zoenglinghou" example="/google/news/Top stories/hl=en-US&gl=US&ceid=US:en" path="/google/news/:category/:locale" :paramsDesc="['Category Title', 'locales, could be found behind `?`, including `hl`, `gl`, and `ceid` as parameters']"/>
+<RouteEn author="zoenglinghou" example="/google/news/Top stories/hl=en-US&gl=US&ceid=US:en" path="/google/news/:category/:locale" paramsDesc={['Category Title', 'locales, could be found behind `?`, including `hl`, `gl`, and `ceid` as parameters']}/>
 
 ## Grub Street
 
@@ -362,7 +364,7 @@ Country
 
 ### Topic
 
-<RouteEn author="nczitzk" example="/hbr/topic/leadership" path="/hbr/topic/:topic?/:type?" :paramsDesc="['Topic, can be found in URL, Leadership by default', 'Type, see below, Latest by default']">
+<RouteEn author="nczitzk" example="/hbr/topic/leadership" path="/hbr/topic/:topic?/:type?" paramsDesc={['Topic, can be found in URL, Leadership by default', 'Type, see below, Latest by default']}>
 
 | LATEST | POPULAR | FROM THE STORE | FOR YOU |
 | ------ | ------- | -------------- | ------- |
@@ -408,7 +410,7 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### News and events
 
-<RouteEn author="nczitzk" example="/iea/news-and-events" path="/iea/:category?" :paramsDesc="['Category, see below, Featured by default']">
+<RouteEn author="nczitzk" example="/iea/news-and-events" path="/iea/:category?" paramsDesc={['Category, see below, Featured by default']}>
 
 | Featured        | News | Calendar | Past events |
 | --------------- | ---- | -------- | ----------- |
@@ -426,7 +428,7 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### News
 
-<RouteEn author="nczitzk" example="/kbs/news" path="/kbs/news/:category?/:language?" :paramsDesc="['Category, can be found in Url as `id`, all by default', 'Language, see below, e as English by default']">
+<RouteEn author="nczitzk" example="/kbs/news" path="/kbs/news/:category?/:language?" paramsDesc={['Category, can be found in Url as `id`, all by default', 'Language, see below, e as English by default']}>
 
 | 한국어 | عربي | 中国语 | English | Français | Deutsch | Bahasa Indonesia | 日本語 | Русский | Español | Tiếng Việt |
 | ------ | ---- | ------ | ------- | -------- | ------- | ---------------- | ------ | ------- | ------- | ---------- |
@@ -436,7 +438,7 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### Today
 
-<RouteEn author="nczitzk" example="/kbs/today" path="/kbs/today/:language?" :paramsDesc="['Language, see below, e as English by default']">
+<RouteEn author="nczitzk" example="/kbs/today" path="/kbs/today/:language?" paramsDesc={['Language, see below, e as English by default']}>
 
 | 한국어 | عربي | 中国语 | English | Français | Deutsch | Bahasa Indonesia | 日本語 | Русский | Español | Tiếng Việt |
 | ------ | ---- | ------ | ------- | -------- | ------- | ---------------- | ------ | ------- | ------- | ---------- |
@@ -452,23 +454,23 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### Categorised News
 
-<RouteEn author="TonyRL" example="/kuwaitlocal/article" path="/kuwaitlocal/:category?" :paramsDesc="['Category name, can be found in URL, `latest` by default']" radar="1" rssbud="1"/>
+<RouteEn author="TonyRL" example="/kuwaitlocal/article" path="/kuwaitlocal/:category?" paramsDesc={['Category name, can be found in URL, `latest` by default']} radar="1" rssbud="1"/>
 
 ## Letterboxd
 
 ### User diary
 
-<RouteEn author="loganrockmore" example="/letterboxd/user/diary/demiadejuyigbe" path="/letterboxd/user/diary/:username" :paramsDesc="['username']" />
+<RouteEn author="loganrockmore" example="/letterboxd/user/diary/demiadejuyigbe" path="/letterboxd/user/diary/:username" paramsDesc={['username']} />
 
 ### Following diary
 
-<RouteEn author="loganrockmore" example="/letterboxd/user/followingdiary/demiadejuyigbe" path="/letterboxd/user/followingdiary/:username" :paramsDesc="['username']" />
+<RouteEn author="loganrockmore" example="/letterboxd/user/followingdiary/demiadejuyigbe" path="/letterboxd/user/followingdiary/:username" paramsDesc={['username']} />
 
 ## LINE
 
 ### TODAY
 
-<RouteEn author="nczitzk" example="/line/today" path="/line/today/:edition?/:tab?" :paramsDesc="['Edition, see below, Taiwan by default', 'Tag, can be found in URL, `top` by default']">
+<RouteEn author="nczitzk" example="/line/today" path="/line/today/:edition?/:tab?" paramsDesc={['Edition, see below, Taiwan by default', 'Tag, can be found in URL, `top` by default']}>
 
 Edition
 
@@ -480,7 +482,7 @@ Edition
 
 ### TODAY - Channel
 
-<RouteEn author="TonyRL" example="/line/today/th/publisher/101048" path="/line/today/:edition/publisher/:id" :paramsDesc="['Edition, see table above', 'Channel ID, can be found in URL']" radar="1" />
+<RouteEn author="TonyRL" example="/line/today/th/publisher/101048" path="/line/today/:edition/publisher/:id" paramsDesc={['Edition, see table above', 'Channel ID, can be found in URL']} radar="1" />
 
 ## Macfilos
 
@@ -490,7 +492,7 @@ Edition
 
 ## MakeUseOf
 
-<RouteEn author="nczitzk" example="/makeuseof" path="/makeuseof/:category?" :paramsDesc="['Category, Trending by default']"/>
+<RouteEn author="nczitzk" example="/makeuseof" path="/makeuseof/:category?" paramsDesc={['Category, Trending by default']}/>
 
 ## Matters
 
@@ -500,17 +502,17 @@ Edition
 
 ### Tags
 
-<RouteEn author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" :paramsDesc="['Tag id, can be found in the url of the tag page']" radar="1" rssbud="1"/>
+<RouteEn author="Cerebrater" example="/matters/tags/VGFnOjk3Mg" path="/matters/tags/:tid" paramsDesc={['Tag id, can be found in the url of the tag page']} radar="1" rssbud="1"/>
 
 ### Author
 
-<RouteEn author="Cerebrater xosdy" example="/matters/author/az" path="/matters/author/:uid" :paramsDesc="['Author id, can be found at author\'s homepage url']" radar="1" rssbud="1"/>
+<RouteEn author="Cerebrater xosdy" example="/matters/author/az" path="/matters/author/:uid" paramsDesc={['Author id, can be found at author\'s homepage url']} radar="1" rssbud="1"/>
 
 ## McLaren Racing
 
 ### Articles
 
-<RouteEn author="Bubbu0129" example="/mclaren/en/all" path="/mclaren/:lang/:category?" :paramsDesc="['Supports English(en), Simplified Chinese(zh), and Spanish(es).', 'Default to exporting all media (all); See the table below for details']" radar="1" rssbud="1">
+<RouteEn author="Bubbu0129" example="/mclaren/en/all" path="/mclaren/:lang/:category?" paramsDesc={['Supports English(en), Simplified Chinese(zh), and Spanish(es).', 'Default to exporting all media (all); See the table below for details']} radar="1" rssbud="1">
 
 | All Media | Article | Report | Gallery | Video | Blog | Photo Essay  |
 | --------- | ------- | ------ | ------- | ----- | ---- | ------------ |
@@ -522,13 +524,13 @@ Edition
 
 ### User
 
-<RouteEn author="fifteen42 rde9 nczitzk" example="/mirror/tingfei.eth" path="/mirror/:id" :paramsDesc="['user id']" />
+<RouteEn author="fifteen42 rde9 nczitzk" example="/mirror/tingfei.eth" path="/mirror/:id" paramsDesc={['user id']} />
 
 ## National Association of Colleges and Employers
 
 ### Blog
 
-<RouteEn author="nczitzk" example="/nace/blog" path="/nace/blog/:sort?" :paramsDesc="['Sort, see below, Most Recent by default']">
+<RouteEn author="nczitzk" example="/nace/blog" path="/nace/blog/:sort?" paramsDesc={['Sort, see below, Most Recent by default']}>
 
 | Most Recent | Top Rated | Most Read     |
 | ----------- | --------- | ------------- |
@@ -540,7 +542,7 @@ Edition
 
 ### Topics
 
-<RouteEn author="emdoe" example="/nautil/topic/arts" path="/nautil/topic/:tid" :paramsDesc="['topic']">
+<RouteEn author="emdoe" example="/nautil/topic/arts" path="/nautil/topic/:tid" paramsDesc={['topic']}>
 
 This route provides a flexible plan with full text content to subscribe specific topic(s) on the Nautilus. Please visit [nautil.us](https://nautil.us) and click `Topics` to acquire whole topic list.
 
@@ -550,7 +552,7 @@ This route provides a flexible plan with full text content to subscribe specific
 
 ### News
 
-<RouteEn author="Hivol" example="/nltimes/news/top-stories" path="/nltimes/news/:category?" :paramsDesc="['category']" >
+<RouteEn author="Hivol" example="/nltimes/news/top-stories" path="/nltimes/news/:category?" paramsDesc={['category']} >
 
 | Top Stories (default) | Health | Crime | Politics | Business | Tech | Culture | Sports | Weird | 1-1-2 |
 | --------------------- | ------ | ----- | -------- | -------- | ---- | ------- | ------ | ----- | ----- |
@@ -568,7 +570,7 @@ This route provides a flexible plan with full text content to subscribe specific
 
 ### Blog
 
-<RouteEn author="ncziztk StevenRCE0" example="/openai/blog" path="/openai/blog/:tag?" :paramsDesc="['Tag, see below, All by default']">
+<RouteEn author="ncziztk StevenRCE0" example="/openai/blog" path="/openai/blog/:tag?" paramsDesc={['Tag, see below, All by default']}>
 
 | All | Announcements | Events | Safety & Alignment | Community | Product | Culture & Careers   | Milestones | Research |
 | --- | ------------- | ------ | ------------------ | --------- | ------- | ------------------- | ---------- | -------- |
@@ -588,7 +590,7 @@ This route provides a flexible plan with full text content to subscribe specific
 
 ### News & Reviews
 
-<RouteEn author="oppliate" example="/phoronix/news_topic/Intel" path="/phoronix/:page/:queryOrItem?" :paramsDesc="['Page name', 'For `category` it corresponds to `item`, for other pages it\'s `q`. You may find available parameters from their navigator links. E.g. to subscribe to the category page `https://www.phoronix.com/scan.php?page=category&item=Computers`, fill in the path `/phoronix/category/Computers`']" radar="1"/>
+<RouteEn author="oppliate" example="/phoronix/news_topic/Intel" path="/phoronix/:page/:queryOrItem?" paramsDesc={['Page name', 'For `category` it corresponds to `item`, for other pages it\'s `q`. You may find available parameters from their navigator links. E.g. to subscribe to the category page `https://www.phoronix.com/scan.php?page=category&item=Computers`, fill in the path `/phoronix/category/Computers`']} radar="1"/>
 
 ## Polar
 
@@ -613,7 +615,7 @@ Compared to the official one, this feed:
 
 ### Latest News
 
-<RouteEn author="nczitzk" example="/radio-canada/latest" path="/radio-canada/latest/:language?" :paramsDesc="['Language, see below, English by default']">
+<RouteEn author="nczitzk" example="/radio-canada/latest" path="/radio-canada/latest/:language?" paramsDesc={['Language, see below, English by default']}>
 
 | Français | English | Español | 简体中文 | 繁體中文 | العربية | ਪੰਜਾਬੀ | Tagalog |
 | -------- | ------- | ------- | -------- | -------- | ------- | --- | ------- |
@@ -629,7 +631,7 @@ Compared to the official one, this feed:
 
 ### Nogizaka46 Blog
 
-<RouteEn author="Kasper4649 akashigakki" example="/nogizaka46/blog" path="/nogizaka46/blog/:id?" :paramsDesc="['Member ID, see below, `all` by default']">
+<RouteEn author="Kasper4649 akashigakki" example="/nogizaka46/blog" path="/nogizaka46/blog/:id?" paramsDesc={['Member ID, see below, `all` by default']}>
 
 | Member ID | Name                  |
 | --------- | --------------------- |
@@ -690,7 +692,7 @@ Compared to the official one, this feed:
 
 ### Sakurazaka46 Blog
 
-<RouteEn author="victor21813 nczitzk akashigakki" example="/sakurazaka46/blog" path="/sakurazaka46/blog/:id?/:page?" :paramsDesc="['Member ID, see below, `all` by default', 'Page, `0` by default']">
+<RouteEn author="victor21813 nczitzk akashigakki" example="/sakurazaka46/blog" path="/sakurazaka46/blog/:id?/:page?" paramsDesc={['Member ID, see below, `all` by default', 'Page, `0` by default']}>
 
 | Member ID | Name         |
 | --------- | ------------ |
@@ -737,7 +739,7 @@ Compared to the official one, this feed:
 
 ### Hinatazaka46 Blog
 
-<RouteEn author="nwindz akashigakki" example="/hinatazaka46/blog" path="/hinatazaka46/blog/:id?/:page?" :paramsDesc="['Member ID, see below, `all` by default', 'Page, `0` by default']">
+<RouteEn author="nwindz akashigakki" example="/hinatazaka46/blog" path="/hinatazaka46/blog/:id?/:page?" paramsDesc={['Member ID, see below, `all` by default', 'Page, `0` by default']}>
 
 | Member ID | Name         |
 | --------- | ------------ |
@@ -793,7 +795,7 @@ Compared to the official one, this feed:
 
 ### Blog
 
-<RouteEn author="nczitzk" example="/sensortower/blog" path="/sensortower/blog/:language?" :paramsDesc="['Language, see below, English by default']">
+<RouteEn author="nczitzk" example="/sensortower/blog" path="/sensortower/blog/:language?" paramsDesc={['Language, see below, English by default']}>
 
 | English | Chinese | Japanese | Korean |
 | ------- | ------- | -------- | ------ |
@@ -821,13 +823,13 @@ Compared to the official one, this feed:
 
 ### News
 
-<RouteEn author="nczitzk" example="/skysports/news/ac-milan" path="/skysports/news/:team" :paramsDesc="['Team id, can be found in URL to the team page']" />
+<RouteEn author="nczitzk" example="/skysports/news/ac-milan" path="/skysports/news/:team" paramsDesc={['Team id, can be found in URL to the team page']} />
 
 ## Soomal
 
 ### 话题
 
-<RouteEn author="zoenglinghou" example="/soomal/topics/Phone/en" path="/soomal/topics/:category/:language?" :paramsDesc="['Topic, found on the top menu bar', 'locale, default to simplified Chinese']">
+<RouteEn author="zoenglinghou" example="/soomal/topics/Phone/en" path="/soomal/topics/:category/:language?" paramsDesc={['Topic, found on the top menu bar', 'locale, default to simplified Chinese']}>
 
 -   Available languages：
 
@@ -863,7 +865,7 @@ Compared to the official one, this feed:
 
 ### Category
 
-<RouteEn author="nczitzk" example="/swissinfo/eng/latest-news" path="/swissinfo/:language?/:category?" :paramsDesc="['Language, eng by default', 'Category, Latest News by default']"/>
+<RouteEn author="nczitzk" example="/swissinfo/eng/latest-news" path="/swissinfo/:language?/:category?" paramsDesc={['Language, eng by default', 'Category, Latest News by default']}/>
 
 ## TechCrunch
 
@@ -879,13 +881,13 @@ Compared to the official one, this feed:
 
 ### Reviews
 
-<RouteEn author="TonyRL" example="/techpowerup/review/4090" path="/techpowerup/review/:keyword?" :paramsDesc="['Search Keyword']" radar="1" />
+<RouteEn author="TonyRL" example="/techpowerup/review/4090" path="/techpowerup/review/:keyword?" paramsDesc={['Search Keyword']} radar="1" />
 
 ## The Brain
 
 ### Blog
 
-<RouteEn author="nczitzk" example="/thebrain/blog" path="/thebrain/blog/:category?" :paramsDesc="['Category, see below, Blog by default']">
+<RouteEn author="nczitzk" example="/thebrain/blog" path="/thebrain/blog/:category?" paramsDesc={['Category, see below, Blog by default']}>
 
 | Blog | Recorded Events | Big Thinkers |
 | ---- | --------------- | ------------ |
@@ -903,7 +905,7 @@ Compared to the official one, this feed:
 
 ### The Verge
 
-<RouteEn author="HenryQW vbali" example="/theverge" path="/theverge/:hub? :paramsDesc="['Hub, see below, All Posts by default']">
+<RouteEn author="HenryQW vbali" example="/theverge" path="/theverge/:hub?" paramsDesc={['Hub, see below, All Posts by default']}>
 
 | Hub         | Hub name            |
 | ----------- | ------------------- |
@@ -926,7 +928,7 @@ Provides a better reading experience (full text articles) over the official one.
 
 ## Thrillist
 
-<RouteEn author="loganrockmore" example="/thrillist/food-and-drink" path="/vulture/:tag" :paramsDesc="['Tag']">
+<RouteEn author="loganrockmore" example="/thrillist/food-and-drink" path="/vulture/:tag" paramsDesc={['Tag']}>
 
 Provides all of the Thrillist articles with the specified tag.
 
@@ -946,7 +948,7 @@ Provides all of the Thrillist articles with the specified tag.
 
 ## Vulture
 
-<RouteEn author="loganrockmore" example="/vulture/movies" path="/vulture/:tag/:excludetags?" :paramsDesc="['Tag', 'Comma-delimited list of tags. If an article includes one of these tags, it will be excluded from the RSS feed.']" />
+<RouteEn author="loganrockmore" example="/vulture/movies" path="/vulture/:tag/:excludetags?" paramsDesc={['Tag', 'Comma-delimited list of tags. If an article includes one of these tags, it will be excluded from the RSS feed.']} />
 
 ## World Happiness
 

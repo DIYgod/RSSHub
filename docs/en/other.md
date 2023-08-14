@@ -1,3 +1,5 @@
+import RouteEn from '@site/src/components/RouteEn';
+
 ---
 pageClass: routes
 ---
@@ -8,7 +10,7 @@ pageClass: routes
 
 ### Rental house
 
-<RouteEn author="Yukaii" example="/591/tw/rent/order=posttime&orderType=desc" path="/591/:country/rent/:query?" :paramsDesc="['Country code. Only tw is supported now', 'Query Parameters']">
+<RouteEn author="Yukaii" example="/591/tw/rent/order=posttime&orderType=desc" path="/591/:country/rent/:query?" paramsDesc={['Country code. Only tw is supported now', 'Query Parameters']}>
 
 ::: tip Tip
 
@@ -22,7 +24,7 @@ Copy the URL of the 591 filter housing page and remove the front part "<https://
 
 ### Exchange and Repair Extension Programs
 
-<RouteEn author="metowolf HenryQW" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" :paramsDesc="['country code in apple.com URL (exception: for `United States` please use `us`), default to China `cn`']" />
+<RouteEn author="metowolf HenryQW" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" paramsDesc={['country code in apple.com URL (exception: for `United States` please use `us`), default to China `cn`']} />
 
 ### App Store/Mac App Store
 
@@ -32,7 +34,7 @@ See [#app-store-mac-app-store](/en/program-update.html#app-store-mac-app-store)
 
 ### Search
 
-<RouteEn author="HenryQW" example="/autotrader/radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on" path="/autotrader/:query" :paramsDesc="['the search query']">
+<RouteEn author="HenryQW" example="/autotrader/radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on" path="/autotrader/:query" paramsDesc={['the search query']}>
 
 1.  Conduct a search with desired filters on AutoTrader
 1.  Copy everything in the URL after `?`, for example: `https://www.autotrader.co.uk/car-search?radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on` will produce `radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on`
@@ -43,7 +45,7 @@ See [#app-store-mac-app-store](/en/program-update.html#app-store-mac-app-store)
 
 ### US Visa check status
 
-<RouteEn author="lalxyy" example="/checkee/2019-03" path="/checkee/:month" :paramsDesc="['Year-month of visa check，for example 2019-03']" />
+<RouteEn author="lalxyy" example="/checkee/2019-03" path="/checkee/:month" paramsDesc={['Year-month of visa check，for example 2019-03']} />
 
 ## Corona Virus Disease 2019
 
@@ -55,7 +57,7 @@ See [#app-store-mac-app-store](/en/program-update.html#app-store-mac-app-store)
 
 Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx)
 
-<RouteEn author="KeiLongW" example="/coronavirus/mogov-2019ncov/ch" path="/coronavirus/mogov-2019ncov/:lang" :paramsDesc="['Language']" />
+<RouteEn author="KeiLongW" example="/coronavirus/mogov-2019ncov/ch" path="/coronavirus/mogov-2019ncov/:lang" paramsDesc={['Language']} />
 
 | Chinese | English | Portuguese |
 | ------- | ------- | ---------- |
@@ -69,7 +71,7 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
-<RouteEn author="sgqy" example="/coronavirus/yahoo-japan" path="/coronavirus/yahoo-japan/:tdfk?" :paramsDesc="['Romaji of Todofuken. Can be got from URLs on area detail page. Example: kyoto']"/>
+<RouteEn author="sgqy" example="/coronavirus/yahoo-japan" path="/coronavirus/yahoo-japan/:tdfk?" paramsDesc={['Romaji of Todofuken. Can be got from URLs on area detail page. Example: kyoto']}/>
 
 ## Darwin Awards
 
@@ -81,13 +83,13 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 ### board
 
-<RouteEn author="zfanta" example="/dcinside/board/programming" path="/dcinside/board/:id" :paramsDesc="['board id']" />
+<RouteEn author="zfanta" example="/dcinside/board/programming" path="/dcinside/board/:id" paramsDesc={['board id']} />
 
 ## DHL
 
 ### DHL express
 
-<RouteEn author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" :paramsDesc="['Waybill number']"/>
+<RouteEn author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" paramsDesc={['Waybill number']}/>
 
 ## Email
 
@@ -95,7 +97,7 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 > Only support IMAP protocol, email password and other settings refer to [Email setting](/en/install)
 
-<RouteEn author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" :paramsDesc="['Email account']" selfhost="1"/>
+<RouteEn author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" paramsDesc={['Email account']} selfhost="1"/>
 
 ## Emi Nitta official website
 
@@ -118,7 +120,7 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 ### HackerOne Hacker Activity
 
 <RouteEn author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1" rssbud="1"/>
-<RouteEn author="imlonghao" example="/hackerone/search/rocket_chat" path="/hackerone/search/:search" :paramsDesc="['Search string']" radar="1" rssbud="1"/>
+<RouteEn author="imlonghao" example="/hackerone/search/rocket_chat" path="/hackerone/search/:search" paramsDesc={['Search string']} radar="1" rssbud="1"/>
 
 ## Instapaper
 
@@ -130,7 +132,7 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 ### Projects
 
-<RouteEn author="wolfg1969" example="/instructables/projects/circuits" path="/instructables/projects/:category?" :paramsDesc="['Category, empty by default, can be found in URL or see the table below']" radar="1">
+<RouteEn author="wolfg1969" example="/instructables/projects/circuits" path="/instructables/projects/:category?" paramsDesc={['Category, empty by default, can be found in URL or see the table below']} radar="1">
 
 | All | Circuits | Workshop | Craft | Cooking | Living | Outside | Teachers |
 | --- | -------- | -------- | ----- | ------- | ------ | ------- | -------- |
@@ -142,7 +144,7 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 ### Track & Trace Service
 
-<RouteEn author="tuzi3040" example="/japanpost/track/EJ123456789JP/en" path="/japanpost/track/:reqCode/:locale?" :paramsDesc="['Package Number', 'Language, default to japanese `ja`']" radar="1" rssbud="1">
+<RouteEn author="tuzi3040" example="/japanpost/track/EJ123456789JP/en" path="/japanpost/track/:reqCode/:locale?" paramsDesc={['Package Number', 'Language, default to japanese `ja`']} radar="1" rssbud="1">
 
 | Japanese | English |
 | -------- | ------- |
@@ -174,13 +176,13 @@ RSS source in the original site is outdated.
 
 ### Recruitment
 
-<RouteEn author="tsarlewey" example="/lever/lever" path="/lever/:domain" :paramsDesc="['Company with Lever Board']"/>
+<RouteEn author="tsarlewey" example="/lever/lever" path="/lever/:domain" paramsDesc={['Company with Lever Board']}/>
 
 ## LinkedIn
 
 ### Jobs
 
-<RouteEn author="BrandNewLifeJackie26" example="/linkedin/jobs/C-P/1/software engineer" path="/linkedin/jobs/:job_types/:exp_levels/:keywords?" :paramsDesc="['See the following table for details, use \'-\' as delimiter', 'See the following table for details, use \'-\' as delimiter', 'keywords']" radar="1">
+<RouteEn author="BrandNewLifeJackie26" example="/linkedin/jobs/C-P/1/software engineer" path="/linkedin/jobs/:job_types/:exp_levels/:keywords?" paramsDesc={['See the following table for details, use \'-\' as delimiter', 'See the following table for details, use \'-\' as delimiter', 'keywords']} radar="1">
 
 #### `job_types` list
 
@@ -219,7 +221,7 @@ For example:
 
 ### List
 
-<RouteEn author="nczitzk" example="/nobelprize" path="/nobelprize/:caty" :paramsDesc="['Category, see below, all by default']">
+<RouteEn author="nczitzk" example="/nobelprize" path="/nobelprize/:caty" paramsDesc={['Category, see below, all by default']}>
 
 | Physics | Chemistry | Physiology or Medicine | Literature | Peace | Economic Science  |
 | ------- | --------- | ---------------------- | ---------- | ----- | ----------------- |
@@ -243,7 +245,7 @@ It is recommended to use with clipping tools such as Notion Web Clipper.
 
 ### Database
 
-<RouteEn author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" :paramsDesc="['Database ID']" selfhost="1" radar="1">
+<RouteEn author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" paramsDesc={['Database ID']} selfhost="1" radar="1">
 
 There is an optional query parameter called `properties=` that can be used to customize field mapping. There are three built-in fields: author, pubTime and link, which can be used to add additional information.
 
@@ -263,13 +265,13 @@ please refer to the [Notion API documentation](https://developers.notion.com/ref
 
 ### OpenSource Square
 
-<RouteEn author="tylinux" example="/oshwhub" path="/oshwhub/:sortType?" :paramsDesc="['sortType']" radar="1" rssbud="1"/>
+<RouteEn author="tylinux" example="/oshwhub" path="/oshwhub/:sortType?" paramsDesc={['sortType']} radar="1" rssbud="1"/>
 
 ## Panda
 
 ### Feeds
 
-<RouteEn author="lyrl" example="/usepanda/feeds/5718e53e7a84fb1901e059cc" path="/usepanda/feeds/:id" :paramsDesc="['Feed ID']">
+<RouteEn author="lyrl" example="/usepanda/feeds/5718e53e7a84fb1901e059cc" path="/usepanda/feeds/:id" paramsDesc={['Feed ID']}>
 
 | Channel | feedId                   |
 | ------- | ------------------------ |
@@ -281,7 +283,7 @@ please refer to the [Notion API documentation](https://developers.notion.com/ref
 
 ### Hermes UK
 
-<RouteEn author="HenryQW" example="/parcel/hermesuk/[tracking number]" path="/parcel/hermesuk/:tracking" :paramsDesc="['Tracking number']"/>
+<RouteEn author="HenryQW" example="/parcel/hermesuk/[tracking number]" path="/parcel/hermesuk/:tracking" paramsDesc={['Tracking number']}/>
 
 ## Pocket
 
@@ -302,7 +304,7 @@ please refer to the [Notion API documentation](https://developers.notion.com/ref
 
 ### Remote.work Job Information
 
-<RouteEn author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" :paramsDesc="['Job category, default to all']" radar="1" rssbud="1">
+<RouteEn author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" paramsDesc={['Job category, default to all']} radar="1" rssbud="1">
 
 | All Jobs | Development | Design | Operation | Product | Other | Marketing | Sales |
 | :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
@@ -335,7 +337,7 @@ Specify options (in the format of query string) in parameter `routeParams` param
 | `itemDesc`     | The HTML elements as `descrption` in `item` using CSS selector | `string` | `item` element     |
 | `itemDescAttr` | The attributes of `descrption` element as description | `string`     | Element html            |
 
-<RouteEn author="ttttmr" example="/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a" path="/rsshub/transform/html/:url/:routeParams" :paramsDesc="['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']" selfhost="1">
+<RouteEn author="ttttmr" example="/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a" path="/rsshub/transform/html/:url/:routeParams" paramsDesc={['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']} selfhost="1">
 
 Parameters parsing in the above example:
 
@@ -370,7 +372,7 @@ JSON Path only supports format like `a.b.c`. if you need to access arrays, like 
 
 :::
 
-<RouteEn author="ttttmr" example="/rsshub/transform/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body" path="/rsshub/transform/json/:url/:routeParams" :paramsDesc="['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']" selfhost="1">
+<RouteEn author="ttttmr" example="/rsshub/transform/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body" path="/rsshub/transform/json/:url/:routeParams" paramsDesc={['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']} selfhost="1">
 
 Parameters parsing in the above example:
 
@@ -400,13 +402,13 @@ Current listings: _Weibo Search_、_Toutiao Search_、_Zhihu Search_、_Zhihu Vi
 
 Data Source: [trending-in-one](https://github.com/huqi-pr/trending-in-one)
 
-<RouteEn author="Jkker" example="/trending/taiwan/3" path="/trending/:keywords/:numberOfDays?" radar="1" :paramsDesc="['List of keywords separated by commas', 'Number of previous days (defaults to 3)']"/>
+<RouteEn author="Jkker" example="/trending/taiwan/3" path="/trending/:keywords/:numberOfDays?" radar="1" paramsDesc={['List of keywords separated by commas', 'Number of previous days (defaults to 3)']}/>
 
 ## TSSstatus (iOS downgrade channel)
 
 ### Status
 
-<RouteEn author="xyqfer" example="/tssstatus/j42dap/14W585a" path="/tssstatus/:board/:build" :paramsDesc="['Board id', 'Build id']">
+<RouteEn author="xyqfer" example="/tssstatus/j42dap/14W585a" path="/tssstatus/:board/:build" paramsDesc={['Board id', 'Build id']}>
 
 Board and Build can be found in [here](http://api.ineal.me/tss/status)
 
@@ -432,7 +434,7 @@ Board and Build can be found in [here](http://api.ineal.me/tss/status)
 
 ### Category
 
-<RouteEn author="sanmmm" example="/wikihow/category/饮食与休闲/all" path="/wikihow/category/:category/:type?" :paramsDesc="['Category', 'Type, default to `all`']">
+<RouteEn author="sanmmm" example="/wikihow/category/饮食与休闲/all" path="/wikihow/category/:category/:type?" paramsDesc={['Category', 'Type, default to `all`']}>
 
 Top category can be found in [category Page](https://zh.wikihow.com/Special:CategoryListing), support secondary directories
 
@@ -448,7 +450,7 @@ Type
 
 ### FX Pair Yesterday
 
-<RouteEn author="HenryQW" example="/wise/pair/GBP/USD" path="/wise/pair/:source/:target" :paramsDesc="['Base currency abbreviation','Quote currency abbreviation']" radar="1">
+<RouteEn author="HenryQW" example="/wise/pair/GBP/USD" path="/wise/pair/:source/:target" paramsDesc={['Base currency abbreviation','Quote currency abbreviation']} radar="1">
 
 Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate-alerts/).
 
@@ -462,4 +464,4 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### User
 
-<RouteEn author="SettingDust Halcao" example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" :paramsDesc="['User ID']" radar="1" rssbud="1" puppeteer="1"/>
+<RouteEn author="SettingDust Halcao" example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" paramsDesc={['User ID']} radar="1" rssbud="1" puppeteer="1"/>

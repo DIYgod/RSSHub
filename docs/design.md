@@ -1,3 +1,5 @@
+import Route from '@site/src/components/Route';
+
 ---
 pageClass: routes
 ---
@@ -8,7 +10,7 @@ pageClass: routes
 
 ### Work type
 
-<Route author="MisteryMonster" example="/axis-studios/work/full-service-cg-production" path="/axis-studios/:type/:tag?" :paramsDesc="['`work`, `blog`','文章内的 Work type URL: `compositing`, `full-service-cg-production`, `vfx-supervision`, `realtime`, `art-direction`, `animation`']">
+<Route author="MisteryMonster" example="/axis-studios/work/full-service-cg-production" path="/axis-studios/:type/:tag?" paramsDesc={['`work`, `blog`','文章内的 Work type URL: `compositing`, `full-service-cg-production`, `vfx-supervision`, `realtime`, `art-direction`, `animation`']}>
 
 文章内 Work type 指向的栏目地址，比如： <https://axisstudiosgroup.com/work/full-service-cg-production> 的 tag 为 `full-service-cg-production`，要注意的是 tag 和文章的目录是一样的。
 
@@ -20,7 +22,7 @@ pageClass: routes
 
 ### 用户作品
 
-<Route author="MisteryMonster" example="/behance/mishapetrick" path="/behance/:user/:type?" :paramsDesc="['用户名', '类型，可选 `projects` 或 `appreciated`，默认为 `projects`']" radar="1">
+<Route author="MisteryMonster" example="/behance/mishapetrick" path="/behance/:user/:type?" paramsDesc={['用户名', '类型，可选 `projects` 或 `appreciated`，默认为 `projects`']} radar="1">
 
 Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapetrick> 的用户名为 `mishapetrick`。
 
@@ -42,27 +44,27 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### 作品和新闻
 
-<Route author="MisteryMonster" example="/digic-pictures/works/real-time-engine" path="/digic-pictures/:menu/:tag?" :paramsDesc="['`news`, `works`', 'WORK 下项目类型: `/game-cinematics`, `/feature`, `/making-of`, `/commercials-vfx`, `/real-time-engine`']"/>
+<Route author="MisteryMonster" example="/digic-pictures/works/real-time-engine" path="/digic-pictures/:menu/:tag?" paramsDesc={['`news`, `works`', 'WORK 下项目类型: `/game-cinematics`, `/feature`, `/making-of`, `/commercials-vfx`, `/real-time-engine`']}/>
 
 ## Dribbble
 
 ### 流行
 
-<Route author="DIYgod" example="/dribbble/popular/week" path="/dribbble/popular/:timeframe?" :paramsDesc="['时间维度, 支持 week month year ever']"/>
+<Route author="DIYgod" example="/dribbble/popular/week" path="/dribbble/popular/:timeframe?" paramsDesc={['时间维度, 支持 week month year ever']}/>
 
 ### 用户（团队）
 
-<Route author="DIYgod" example="/dribbble/user/google" path="/dribbble/user/:name" :paramsDesc="['用户名, 可在该用户主页 URL 中找到']"/>
+<Route author="DIYgod" example="/dribbble/user/google" path="/dribbble/user/:name" paramsDesc={['用户名, 可在该用户主页 URL 中找到']}/>
 
 ### 关键词
 
-<Route author="DIYgod" example="/dribbble/keyword/player" path="/dribbble/keyword/:keyword" :paramsDesc="['想要订阅的关键词']"/>
+<Route author="DIYgod" example="/dribbble/keyword/player" path="/dribbble/keyword/:keyword" paramsDesc={['想要订阅的关键词']}/>
 
 ## Eagle
 
 ### 博客
 
-<Route author="Fatpandac" example="/eagle/blog" path="/eagle/blog/:cate?/:language?" :paramsDesc="['分类，默认为全部，见下表', '语言，`cn`、`tw`、`en` 默认为 `cn`']" radar="1" rsshub="1">
+<Route author="Fatpandac" example="/eagle/blog" path="/eagle/blog/:cate?/:language?" paramsDesc={['分类，默认为全部，见下表', '语言，`cn`、`tw`、`en` 默认为 `cn`']} radar="1" rsshub="1">
 
 | 全部 | 设计资源         | 设计技巧     | 最新消息     |
 | ---- | ---------------- | ------------ | ------------ |
@@ -74,7 +76,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### Google Fonts
 
-<Route author="Fatpandac" example="/google/fonts/date" path="/google/fonts/:sort?" :paramsDesc="['排序，见下表，默认为最新']" selfhost="1">
+<Route author="Fatpandac" example="/google/fonts/date" path="/google/fonts/:sort?" paramsDesc={['排序，见下表，默认为最新']} selfhost="1">
 
 | 最新 |   趋势   |  最受欢迎  |  名字 | 风格数量 |
 | :--: | :------: | :--------: | :---: | :------: |
@@ -103,7 +105,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### 文章分类
 
-<Route author="nczitzk" example="/logonews/category/news/newsletter" path="/logonews/category/:category/:type" :paramsDesc="['分类，可在对应分类页 URL 中找到', '类型，可在对应分类页 URL 中找到']">
+<Route author="nczitzk" example="/logonews/category/news/newsletter" path="/logonews/category/:category/:type" paramsDesc={['分类，可在对应分类页 URL 中找到', '类型，可在对应分类页 URL 中找到']}>
 
 如 [简讯 - 标志情报局](https://www.logonews.cn/category/news/newsletter) 的 URL 为 <https://www.logonews.cn/category/news/newsletter>，可得路由为 [`/logonews/category/news/newsletter`](https://rsshub.app/logonews/category/news/newsletter)。
 
@@ -111,7 +113,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### 文章标签
 
-<Route author="nczitzk" example="/logonews/tag/china" path="/logonews/tag/:tag" :paramsDesc="['标签，可在对应标签页 URL 中找到']">
+<Route author="nczitzk" example="/logonews/tag/china" path="/logonews/tag/:tag" paramsDesc={['标签，可在对应标签页 URL 中找到']}>
 
 如 [中国 - 标志情报局](https://www.logonews.cn/tag/china) 的 URL 为 <https://www.logonews.cn/tag/china>，可得路由为 [`/logonews/tag/china`](https://rsshub.app/logonews/tag/china)。
 
@@ -123,7 +125,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### 作品分类
 
-<Route author="nczitzk" example="/logonews/work/categorys/hotel-catering" path="/logonews/work/categorys/:category" :paramsDesc="['分类，可在对应分类页 URL 中找到']">
+<Route author="nczitzk" example="/logonews/work/categorys/hotel-catering" path="/logonews/work/categorys/:category" paramsDesc={['分类，可在对应分类页 URL 中找到']}>
 
 如 [LOGO 作品分类：酒店餐饮 - 标志情报局](https://www.logonews.cn/work/categorys/hotel-catering) 的 URL 为 <https://www.logonews.cn/work/categorys/hotel-catering>，可得路由为 [`/logonews/work/categorys/hotel-catering`](https://rsshub.app/logonews/work/categorys/hotel-catering)。
 
@@ -131,7 +133,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### 作品标签
 
-<Route author="nczitzk" example="/logonews/work/tags/旅游" path="/logonews/work/tags/:tag?" :paramsDesc="['标签，可在对应标签页 URL 中找到']">
+<Route author="nczitzk" example="/logonews/work/tags/旅游" path="/logonews/work/tags/:tag?" paramsDesc={['标签，可在对应标签页 URL 中找到']}>
 
 如 [LOGO 标签：旅游 - 标志情报局](https://www.logonews.cn/work/tags/旅游) 的 URL 为 [https://www.logonews.cn/work/tags/ 旅游](https://www.logonews.cn/work/tags/旅游)，可得路由为 [`/logonews/work/tags/旅游`](https://rsshub.app/logonews/work/tags/旅游)。
 
@@ -141,7 +143,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### 菜单
 
-<Route author="MisteryMonster" example="/method-studios/games" path="/method-studios/:menu?" :paramsDesc="['地址栏下 /en 后的栏目: `features`, `advertising`, `episodic`, `games`, `methodmade`']">
+<Route author="MisteryMonster" example="/method-studios/games" path="/method-studios/:menu?" paramsDesc={['地址栏下 /en 后的栏目: `features`, `advertising`, `episodic`, `games`, `methodmade`']}>
 
 不支持`news`和`main`。
 
@@ -159,7 +161,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### Works
 
-<Route author="BianTan" example="/notefolio/search/1/pick/all/life" path="/notefolio/search/:category?/:order?/:time?/:query?" :paramsDesc="['分类，见下表，默认为 `all`', '排序，可选 `pick` 指 Notefolio 精选，`published` 指 最新，`like` 指 推荐，默认为 `pick`', '时间，可选 `all` 指 全部，`one-day` 指 最近24小时，`week` 指 最近一周，`month` 指 最近一个月，`three-month` 指 最近三个月，默认为`all`', '关键词，默认为空']">
+<Route author="BianTan" example="/notefolio/search/1/pick/all/life" path="/notefolio/search/:category?/:order?/:time?/:query?" paramsDesc={['分类，见下表，默认为 `all`', '排序，可选 `pick` 指 Notefolio 精选，`published` 指 最新，`like` 指 推荐，默认为 `pick`', '时间，可选 `all` 指 全部，`one-day` 指 最近24小时，`week` 指 最近一周，`month` 指 最近一个月，`three-month` 指 最近三个月，默认为`all`', '关键词，默认为空']}>
 
 | 分类 | 韩文分类名       | 中文分类名      |
 | ---- | ---------------- | --------------- |
@@ -193,13 +195,13 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### 个人作品
 
-<Route author="WenryXu" example="/ui-cn/user/85974" path="/ui-cn/user/:id" :paramsDesc="['用户id']"/>
+<Route author="WenryXu" example="/ui-cn/user/85974" path="/ui-cn/user/:id" paramsDesc={['用户id']}/>
 
 ## Unit Image
 
 ### Films
 
-<Route author="MisteryMonster" example="/unit-image/films/vfx" path="/unit-image/films/:type?" :paramsDesc="['Films 下分类，`vfx`, `game-trailer`, `animation`, `commercials`, `making-of`']"/>
+<Route author="MisteryMonster" example="/unit-image/films/vfx" path="/unit-image/films/:type?" paramsDesc={['Films 下分类，`vfx`, `game-trailer`, `animation`, `commercials`, `making-of`']}/>
 
 ## 爱果果
 
@@ -211,7 +213,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### 设计专题
 
-<Route author="nczitzk" example="/uisdc/zt/design-history" path="/uisdc/zt/:title?" :paramsDesc="['专题名称，可在标签页的 URL 中找到，如 `design-history`；也可填入 `hot` 展示最热门专题，默认展示最新鲜专题']">
+<Route author="nczitzk" example="/uisdc/zt/design-history" path="/uisdc/zt/:title?" paramsDesc={['专题名称，可在标签页的 URL 中找到，如 `design-history`；也可填入 `hot` 展示最热门专题，默认展示最新鲜专题']}>
 
 更多设计专题请参见 [优设专题](https://www.uisdc.com/zt)
 
@@ -219,7 +221,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### 细节猎人
 
-<Route author="nczitzk" example="/uisdc/topic/all" path="/uisdc/topic/:title?/:sort?" :paramsDesc="['标签名称，可在标签页的 URL 中找到', '排序方式，`hot` 指最热门，默认为最新鲜']">
+<Route author="nczitzk" example="/uisdc/topic/all" path="/uisdc/topic/:title?/:sort?" paramsDesc={['标签名称，可在标签页的 URL 中找到', '排序方式，`hot` 指最热门，默认为最新鲜']}>
 
 更多细节标签请参见 [全部标签](https://www.uisdc.com/alltopics)
 
@@ -227,11 +229,11 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### 设计话题
 
-<Route author="nczitzk" example="/uisdc/talk" path="/uisdc/talk/:sort?" :paramsDesc="['排序方式，`hot` 指最热门，默认为最新鲜']"/>
+<Route author="nczitzk" example="/uisdc/talk" path="/uisdc/talk/:sort?" paramsDesc={['排序方式，`hot` 指最热门，默认为最新鲜']}/>
 
 ### 行业新闻
 
-<Route author="nczitzk" example="/uisdc/hangye" path="/uisdc/hangye/:caty?" :paramsDesc="['分类，见下表，默认为全部新闻']">
+<Route author="nczitzk" example="/uisdc/hangye" path="/uisdc/hangye/:caty?" paramsDesc={['分类，见下表，默认为全部新闻']}>
 
 | 全部新闻 | 活动赛事        | 品牌资讯   | 新品推荐     |
 | -------- | --------------- | ---------- | ------------ |
@@ -247,7 +249,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### 发现（+ 推荐预设）
 
-<Route author="junbaor nczitzk" example="/zcool/discover/all" path="/zcool/discover/:type?" :paramsDesc="['预设参数，见下表']" radar="1" rssbud="1">
+<Route author="junbaor nczitzk" example="/zcool/discover/all" path="/zcool/discover/:type?" paramsDesc={['预设参数，见下表']} radar="1" rssbud="1">
 
 推荐类型
 
@@ -259,7 +261,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### 发现（+ 查询参数）
 
-<Route author="nczitzk" example="/zcool/discover/cate=0&subCate=0" path="/zcool/discover/:query?" :paramsDesc="['查询参数']" radar="1" rssbud="1">
+<Route author="nczitzk" example="/zcool/discover/cate=0&subCate=0" path="/zcool/discover/:query?" paramsDesc={['查询参数']} radar="1" rssbud="1">
 
 在 [站酷发现页](https://www.zcool.com.cn/discover) 中选择好所有可选的查询参数后会跳转到对应搜索结果页面。此时地址栏 `https://www.zcool.com.cn/discover/` 后的字段即为查询参数。
 
@@ -273,7 +275,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### 发现
 
-<Route author="nczitzk" example="/zcool/discover" path="/zcool/discover/:query?/:subCate?/:hasVideo?/:city?/:college?/:recommendLevel?/:sort?" :paramsDesc="['查询参数或分类，若填写分类见下表，默认为空 或 `0` 即精选', '子分类，见下表，默认为 `0` 即该父分类下全部', '是否含视频，默认为 `0` 即全部，亦可选 `1` 即含视频', '地区代码，填入发现页中 `选择城市` 中的各级地名，如 `亚洲`、`中国`、`北京`、`纽约`、`巴黎`等', '学校，默认为 `0` 即全部', '推荐等级，见下表，默认为 `2` 即编辑精选', '排序方式，可选 `0` 即最新发布 或 `9` 即默认排序，默认为 `9`']" radar="1" rssbud="1">
+<Route author="nczitzk" example="/zcool/discover" path="/zcool/discover/:query?/:subCate?/:hasVideo?/:city?/:college?/:recommendLevel?/:sort?" paramsDesc={['查询参数或分类，若填写分类见下表，默认为空 或 `0` 即精选', '子分类，见下表，默认为 `0` 即该父分类下全部', '是否含视频，默认为 `0` 即全部，亦可选 `1` 即含视频', '地区代码，填入发现页中 `选择城市` 中的各级地名，如 `亚洲`、`中国`、`北京`、`纽约`、`巴黎`等', '学校，默认为 `0` 即全部', '推荐等级，见下表，默认为 `2` 即编辑精选', '排序方式，可选 `0` 即最新发布 或 `9` 即默认排序，默认为 `9`']} radar="1" rssbud="1">
 
 查看 **精选** 分类下的全部内容，其他参数选择默认，可直接使用路由 [`/zcool/discover/0`](https://rsshub.app/zcool/discover/0)
 
@@ -397,7 +399,7 @@ UI 17
 
 ### 作品总榜单
 
-<Route author="mexunco" example="/zcool/top/design" path="/zcool/top/:type" :paramsDesc="['推荐类型,详见下面的表格']" radar="1" rssbud="1">
+<Route author="mexunco" example="/zcool/top/design" path="/zcool/top/:type" paramsDesc={['推荐类型,详见下面的表格']} radar="1" rssbud="1">
 
 榜单类型
 
@@ -409,7 +411,7 @@ UI 17
 
 ### 用户作品
 
-<Route author="junbaor" example="/zcool/user/baiyong" path="/zcool/user/:uid" :paramsDesc="['个性域名前缀或者用户ID']" radar="1" rssbud="1">
+<Route author="junbaor" example="/zcool/user/baiyong" path="/zcool/user/:uid" paramsDesc={['个性域名前缀或者用户ID']} radar="1" rssbud="1">
 
 例如:
 

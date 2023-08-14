@@ -1,3 +1,5 @@
+import RouteEn from '@site/src/components/RouteEn';
+
 ---
 pageClass: routes
 ---
@@ -8,7 +10,7 @@ pageClass: routes
 
 ### Photos
 
-<RouteEn author="nczitzk" example="/1x" path="/1x/:category?" :paramsDesc="['Category, Latest awarded by default, see below']">
+<RouteEn author="nczitzk" example="/1x" path="/1x/:category?" paramsDesc={['Category, Latest awarded by default, see below']}>
 
 | Category         | Title         |
 | ---------------- | ------------- |
@@ -58,11 +60,11 @@ pageClass: routes
 
 ### Genre
 
-<RouteEn author="nczitzk" example="/35photo/genre/99"  path="/35photo/genre/:id" :paramsDesc="['id, can be found in URL']"/>
+<RouteEn author="nczitzk" example="/35photo/genre/99"  path="/35photo/genre/:id" paramsDesc={['id, can be found in URL']}/>
 
 ### Author
 
-<RouteEn author="nczitzk" example="/35photo/author/mariuszsix"  path="/35photo/author/:id" :paramsDesc="['id, can be found in URL']"/>
+<RouteEn author="nczitzk" example="/35photo/author/mariuszsix"  path="/35photo/author/:id" paramsDesc={['id, can be found in URL']}/>
 
 ## Asian to lick
 
@@ -72,21 +74,21 @@ pageClass: routes
 
 ### Category
 
-<RouteEn author="nczitzk" example="/asiantolick/category/90" path="/asiantolick/category/:category?" :paramsDesc="['Category, the id can be found in URL, homepage by default']"/>
+<RouteEn author="nczitzk" example="/asiantolick/category/90" path="/asiantolick/category/:category?" paramsDesc={['Category, the id can be found in URL, homepage by default']}/>
 
 ### Tag
 
-<RouteEn author="nczitzk" example="/asiantolick/tag/1045" path="/asiantolick/tag/:tag?" :paramsDesc="['Tag, the id can be found in URL, homepage by default']"/>
+<RouteEn author="nczitzk" example="/asiantolick/tag/1045" path="/asiantolick/tag/:tag?" paramsDesc={['Tag, the id can be found in URL, homepage by default']}/>
 
 ### Search
 
-<RouteEn author="nczitzk" example="/asiantolick/search/lolita" path="/asiantolick/search/:keyword?" :paramsDesc="['Keyword, empty by default']"/>
+<RouteEn author="nczitzk" example="/asiantolick/search/lolita" path="/asiantolick/search/:keyword?" paramsDesc={['Keyword, empty by default']}/>
 
 ## BabeHub
 
 ### Category
 
-<RouteEn author="nczitzk" example="/babehub" path="/babehub/:category?" :paramsDesc="['Category, see below, Home by default']">
+<RouteEn author="nczitzk" example="/babehub" path="/babehub/:category?" paramsDesc={['Category, see below, Home by default']}>
 
 | Home | Most Viewed | Picture Archive | Video Archive |
 | - | - | - | - |
@@ -96,7 +98,7 @@ pageClass: routes
 
 ### Search
 
-<RouteEn author="nczitzk" example="/babehub/search/babe" path="/babehub/search/:keyword?" :paramsDesc="['关键字']"/>
+<RouteEn author="nczitzk" example="/babehub/search/babe" path="/babehub/search/:keyword?" paramsDesc={['关键字']}/>
 
 ## Bing Wallpaper
 
@@ -106,7 +108,7 @@ pageClass: routes
 
 ## DailyArt
 
-<RouteEn author="zphw" example="/dailyart/en" path="/dailyart/:language?" :paramsDesc="['Support en, es, fr, de, it, zh, jp, etc. English by default.']" />
+<RouteEn author="zphw" example="/dailyart/en" path="/dailyart/:language?" paramsDesc={['Support en, es, fr, de, it, zh, jp, etc. English by default.']} />
 
 ## Dilbert Comic Strip
 
@@ -123,47 +125,47 @@ For RSS content, specify options in the `routeParams` parameter in query string 
 
 ### Favorites
 
-<RouteEn author="yindaheng98" example="/ehentai/favorites/0/posted/1" path="/ehentai/favorites/:favcat?/:order?/:page?/:routeParams?" :paramsDesc="['Favorites folder number','`posted`(Sort by gallery release time) , `favorited`(Sort by time added to favorites)', 'Page number', 'Additional parameters, see the table above']" anticrawler="1" supportBT="1" />
+<RouteEn author="yindaheng98" example="/ehentai/favorites/0/posted/1" path="/ehentai/favorites/:favcat?/:order?/:page?/:routeParams?" paramsDesc={['Favorites folder number','`posted`(Sort by gallery release time) , `favorited`(Sort by time added to favorites)', 'Page number', 'Additional parameters, see the table above']} anticrawler="1" supportBT="1" />
 
 ### Tag
 
-<RouteEn author="yindaheng98" example="/ehentai/tag/language:chinese/1" path="/ehentai/tag/:tag/:page?/:routeParams?" :paramsDesc="['Tag', 'Page number', 'Additional parameters, see the table above']" anticrawler="1" supportBT="1" />
+<RouteEn author="yindaheng98" example="/ehentai/tag/language:chinese/1" path="/ehentai/tag/:tag/:page?/:routeParams?" paramsDesc={['Tag', 'Page number', 'Additional parameters, see the table above']} anticrawler="1" supportBT="1" />
 
 ### Search
 
-<RouteEn author="yindaheng98" example="/ehentai/search/f_search=artist%3Amana%24/1" path="/ehentai/search/:params?/:page?/:routeParams?" :paramsDesc="['Search parameters. You can copy the content after `https://e-hentai.org/?`', 'Page number', 'Additional parameters, see the table above']" anticrawler="1" supportBT="1" />
+<RouteEn author="yindaheng98" example="/ehentai/search/f_search=artist%3Amana%24/1" path="/ehentai/search/:params?/:page?/:routeParams?" paramsDesc={['Search parameters. You can copy the content after `https://e-hentai.org/?`', 'Page number', 'Additional parameters, see the table above']} anticrawler="1" supportBT="1" />
 
 ## Elite Babes
 
 ### Home
 
-<RouteEn author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" :paramsDesc="['Category, see below, Home by default']"/>
+<RouteEn author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" paramsDesc={['Category, see below, Home by default']}>
 
 | Home | Hot | Popular | Recent |
 | ---- | --- | ------- | ------ |
 |      | hot | popular | recent |
 
-</Route>
+</RouteEn>
 
 ### Videos
 
-<RouteEn author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" :paramsDesc="['Sort, see below, Popular by default']" />
+<RouteEn author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" paramsDesc={['Sort, see below, Popular by default']}>
 
 | Popular | Recent |
 | ------- | ------ |
 | popular | recent |
 
-</Route>
+</RouteEn>
 
 ### Search
 
-<RouteEn author="nczitzk" example="/elitebabes/search/pose" path="/elitebabes/search/:keyword?" :paramsDesc="['Keyword']"/>
+<RouteEn author="nczitzk" example="/elitebabes/search/pose" path="/elitebabes/search/:keyword?" paramsDesc={['Keyword']}/>
 
 ## Fantia
 
 ### Search
 
-<RouteEn author="nczitzk" example="/fantia/search/posts/all/daily" path="/fantia/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?" :paramsDesc="['Type, see the table below, `posts` by default', 'Category, see the table below, can also be found in search page URL, `すべてのクリエイター` by default', 'Ranking period, see the table below, empty by default' ,'Sorting, see the table below, `更新の新しい順` by default', 'Rating, see the table below, `すべて` by default', 'Keyword, empty by default']">
+<RouteEn author="nczitzk" example="/fantia/search/posts/all/daily" path="/fantia/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?" paramsDesc={['Type, see the table below, `posts` by default', 'Category, see the table below, can also be found in search page URL, `すべてのクリエイター` by default', 'Ranking period, see the table below, empty by default' ,'Sorting, see the table below, `更新の新しい順` by default', 'Rating, see the table below, `すべて` by default', 'Keyword, empty by default']}>
 
 Type
 
@@ -219,23 +221,23 @@ Rating
 
 ### User Posts
 
-<RouteEn author="nczitzk" example="/fantia/user/3498" path="/fantia/user/:id" :paramsDesc="['User id, can be found in user profile URL']" />
+<RouteEn author="nczitzk" example="/fantia/user/3498" path="/fantia/user/:id" paramsDesc={['User id, can be found in user profile URL']} />
 
 ## GoComics Comic Strips
 
-<RouteEn author="stjohnjohnson" example="/gocomics/foxtrot" path="/gocomics/:strip" :paramsDesc="['URL path of the strip on gocomics.com']" />
+<RouteEn author="stjohnjohnson" example="/gocomics/foxtrot" path="/gocomics/:strip" paramsDesc={['URL path of the strip on gocomics.com']} />
 
 ## Google Doodles
 
 ### Update
 
-<RouteEn author="xyqfer" example="/google/doodles/zh-CN" path="/google/doodles/:language?" :paramsDesc="['Language, default to `zh-CN`, for other language values, you can get it from [Google Doodles official website](https://www.google.com/doodles)']" />
+<RouteEn author="xyqfer" example="/google/doodles/zh-CN" path="/google/doodles/:language?" paramsDesc={['Language, default to `zh-CN`, for other language values, you can get it from [Google Doodles official website](https://www.google.com/doodles)']} />
 
 ## Google Photos
 
 ### Public Albums
 
-<RouteEn author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" :paramsDesc="['album ID, can be found in URL, for example, `https://photos.app.goo.gl/msFFnAzKmQmWj76EA` to `msFFnAzKmQmWj76EA`']" radar="1"/>
+<RouteEn author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" paramsDesc={['album ID, can be found in URL, for example, `https://photos.app.goo.gl/msFFnAzKmQmWj76EA` to `msFFnAzKmQmWj76EA`']} radar="1"/>
 
 ## Konachan Anime Wallpapers
 
@@ -249,7 +251,7 @@ Rating
 
 ### Popular Recent Posts
 
-<RouteEn author="magic-akari" example="/konachan/post/popular_recent" path="/konachan/post/popular_recent/:period?" :paramsDesc="['Default to 24 hours']">
+<RouteEn author="magic-akari" example="/konachan/post/popular_recent" path="/konachan/post/popular_recent/:period?" paramsDesc={['Default to 24 hours']}>
 
 For example:
 
@@ -264,7 +266,7 @@ For example:
 
 ### Manga Updates
 
-<RouteEn author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" :paramsDesc="['Manga slug, can be found in URL, including neither `manga-` nor `.html`']" />
+<RouteEn author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" paramsDesc={['Manga slug, can be found in URL, including neither `manga-` nor `.html`']} />
 
 ## Meituclub
 
@@ -292,7 +294,7 @@ For example:
 
 ### Search
 
-<RouteEn author="TonyRL" example="/pixabay/search/cat" path="/pixabay/search/:q/:order?" :paramsDesc="['Search term', 'Order, `popular` or `latest`, `latest` by default']" radar="1" selfhost="1"/>
+<RouteEn author="TonyRL" example="/pixabay/search/cat" path="/pixabay/search/:q/:order?" paramsDesc={['Search term', 'Order, `popular` or `latest`, `latest` by default']} radar="1" selfhost="1"/>
 
 ## Rare Historical Photos
 
@@ -312,11 +314,11 @@ For example:
 
 ### Models
 
-<RouteEn author="MegrezZhu" example="/tits-guru/model/mila-azul" path="/tits-guru/model/:name" :paramsDesc="['Module name, see [here](https://tits-guru.com/models) for details']"/>
+<RouteEn author="MegrezZhu" example="/tits-guru/model/mila-azul" path="/tits-guru/model/:name" paramsDesc={['Module name, see [here](https://tits-guru.com/models) for details']}/>
 
 ### Categories
 
-<RouteEn author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" :paramsDesc="['Category, see [here](https://tits-guru.com/categories) for details']"/>
+<RouteEn author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" paramsDesc={['Category, see [here](https://tits-guru.com/categories) for details']}/>
 
 ## wallhaven
 
@@ -332,7 +334,7 @@ For example [Latest Wallpapers](https://wallhaven.cc/latest), the route turning 
 
 ### Category
 
-<RouteEn author="nczitzk Fatpandac" example="/wallhaven/latest" path="/wallhaven/:category?/:needDetails?" :paramsDesc="['Category, see below, Latest by default', 'Need Details, `true/yes` as yes, no by default']">
+<RouteEn author="nczitzk Fatpandac" example="/wallhaven/latest" path="/wallhaven/:category?/:needDetails?" paramsDesc={['Category, see below, Latest by default', 'Need Details, `true/yes` as yes, no by default']}>
 
 | Latest | Hot | Toplist | Random |
 | ------ | --- | ------- | ------ |
@@ -342,7 +344,7 @@ For example [Latest Wallpapers](https://wallhaven.cc/latest), the route turning 
 
 ### Search
 
-<RouteEn author="nczitzk Fatpandac" example="/wallhaven/search/categories=110&purity=110&sorting=date_added&order=desc" path="/wallhaven/search/:filter?/:needDetails?" :paramsDesc="['Filter, empty by default', 'Need Details, `true`/`yes` as yes, no by default']">
+<RouteEn author="nczitzk Fatpandac" example="/wallhaven/search/categories=110&purity=110&sorting=date_added&order=desc" path="/wallhaven/search/:filter?/:needDetails?" paramsDesc={['Filter, empty by default', 'Need Details, `true`/`yes` as yes, no by default']}>
 
 ::: tip Tip
 
@@ -370,7 +372,7 @@ The text after `?` is `q=id%3A711&sorting=random&ref=fp&seed=8g0dgd` for [Wallpa
 
 ### Popular Recent Posts
 
-<RouteEn author="magic-akari SettingDust" example="/yande.re/post/popular_recent" path="/yande.re/post/popular_recent/:period?" :paramsDesc="['Default to 24 hours']">
+<RouteEn author="magic-akari SettingDust" example="/yande.re/post/popular_recent" path="/yande.re/post/popular_recent/:period?" paramsDesc={['Default to 24 hours']}>
 
 For example:
 

@@ -1,3 +1,5 @@
+import Route from '@site/src/components/Route';
+
 ---
 pageClass: routes
 ---
@@ -8,7 +10,7 @@ pageClass: routes
 
 ### Photos
 
-<Route author="nczitzk" example="/1x" path="/1x/:category?" :paramsDesc="['类别，默认为 Latest awarded，见下表']">
+<Route author="nczitzk" example="/1x" path="/1x/:category?" paramsDesc={['类别，默认为 Latest awarded，见下表']}>
 
 | Category         | Title         |
 | ---------------- | ------------- |
@@ -58,21 +60,21 @@ pageClass: routes
 
 ### Genre
 
-<Route author="nczitzk" example="/35photo/genre/99"  path="/35photo/genre/:id" :paramsDesc="['id，可在对应分类页 URL 中找到']"/>
+<Route author="nczitzk" example="/35photo/genre/99"  path="/35photo/genre/:id" paramsDesc={['id，可在对应分类页 URL 中找到']}/>
 
 ### Author
 
-<Route author="nczitzk" example="/35photo/author/mariuszsix"  path="/35photo/author/:id" :paramsDesc="['id，可在对应作者页 URL 中找到']"/>
+<Route author="nczitzk" example="/35photo/author/mariuszsix"  path="/35photo/author/:id" paramsDesc={['id，可在对应作者页 URL 中找到']}/>
 
 ## 500px 摄影社区
 
 ### 部落影集
 
-<Route author="TonyRL" example="/500px/tribe/set/f5de0b8aa6d54ec486f5e79616418001"  path="/500px/tribe/set/:id" :paramsDesc="['部落 ID']" radar="1"/>
+<Route author="TonyRL" example="/500px/tribe/set/f5de0b8aa6d54ec486f5e79616418001"  path="/500px/tribe/set/:id" paramsDesc={['部落 ID']} radar="1"/>
 
 ### 摄影师作品
 
-<Route author="TonyRL" example="/500px/user/works/hujunli"  path="/500px/user/works/:id" :paramsDesc="['摄影师 ID']" radar="1"/>
+<Route author="TonyRL" example="/500px/user/works/hujunli"  path="/500px/user/works/:id" paramsDesc={['摄影师 ID']} radar="1"/>
 
 ## 8KCosplay
 
@@ -82,11 +84,11 @@ pageClass: routes
 
 ### 分类
 
-<Route author="KotoriK" example="/8kcos/cat/8kasianidol"  path="/8kcos/cat/:cat*" :paramsDesc="['默认值为8kasianidol，将目录页面url中 /category/ 后面的部分填入。如：https://www.8kcosplay.com/category/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/ 对应的RSS页面为/8kcos/cat/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/。']"/>
+<Route author="KotoriK" example="/8kcos/cat/8kasianidol"  path="/8kcos/cat/:cat*" paramsDesc={['默认值为8kasianidol，将目录页面url中 /category/ 后面的部分填入。如：https://www.8kcosplay.com/category/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/ 对应的RSS页面为/8kcos/cat/8kchineseidol/%e9%a3%8e%e4%b9%8b%e9%a2%86%e5%9f%9f/。']}/>
 
 ### 标签
 
-<Route author="KotoriK" example="/8kcos/tag/cosplay"  path="/8kcos/tag/:tag" :paramsDesc="['标签名']"/>
+<Route author="KotoriK" example="/8kcos/tag/cosplay"  path="/8kcos/tag/:tag" paramsDesc={['标签名']}/>
 
 ## Asian to lick
 
@@ -96,21 +98,21 @@ pageClass: routes
 
 ### 分类
 
-<Route author="nczitzk" example="/asiantolick/category/90" path="/asiantolick/category/:category?" :paramsDesc="['分类，可在对应分类页 URL 中找到分类编号，默认为首页']"/>
+<Route author="nczitzk" example="/asiantolick/category/90" path="/asiantolick/category/:category?" paramsDesc={['分类，可在对应分类页 URL 中找到分类编号，默认为首页']}/>
 
 ### 标签
 
-<Route author="nczitzk" example="/asiantolick/tag/90" path="/asiantolick/tag/:tag?" :paramsDesc="['标签，可在对应标签页 URL 中找到标签编号，默认为首页']"/>
+<Route author="nczitzk" example="/asiantolick/tag/90" path="/asiantolick/tag/:tag?" paramsDesc={['标签，可在对应标签页 URL 中找到标签编号，默认为首页']}/>
 
 ### 搜索
 
-<Route author="nczitzk" example="/asiantolick/search/lolita" path="/asiantolick/search/:keyword?" :paramsDesc="['关键词，默认为空']"/>
+<Route author="nczitzk" example="/asiantolick/search/lolita" path="/asiantolick/search/:keyword?" paramsDesc={['关键词，默认为空']}/>
 
 ## BabeHub
 
 ### 分类
 
-<Route author="nczitzk" example="/babehub" path="/babehub/:category?" :paramsDesc="['分类，见下表，默认为首页']">
+<Route author="nczitzk" example="/babehub" path="/babehub/:category?" paramsDesc={['分类，见下表，默认为首页']}>
 
 | Home | Most Viewed | Picture Archive | Video Archive |
 | ---- | ----------- | --------------- | ------------- |
@@ -120,7 +122,7 @@ pageClass: routes
 
 ### 搜索关键字
 
-<Route author="nczitzk" example="/babehub/search/babe" path="/babehub/search/:keyword?" :paramsDesc="['关键字']"/>
+<Route author="nczitzk" example="/babehub/search/babe" path="/babehub/search/:keyword?" paramsDesc={['关键字']}/>
 
 ## Bing 壁纸
 
@@ -136,7 +138,7 @@ pageClass: routes
 
 ### 发现
 
-<Route author="hoilc" example="/cnu/discovery/hot/自然" path="/cnu/discovery/:type?/:category?" :paramsDesc="['板块类型, 默认为`热门`, 具体参见下表', '图片类别, 默认为`0`代表全部, 可参见[这里](http://www.cnu.cc/discoveryPage/hot-0)']"/>
+<Route author="hoilc" example="/cnu/discovery/hot/自然" path="/cnu/discovery/:type?/:category?" paramsDesc={['板块类型, 默认为`热门`, 具体参见下表', '图片类别, 默认为`0`代表全部, 可参见[这里](http://www.cnu.cc/discoveryPage/hot-0)']}/>
 
 | 热门 | 推荐      | 最新   |
 | ---- | --------- | ------ |
@@ -144,11 +146,11 @@ pageClass: routes
 
 ## DailyArt 每日艺术
 
-<Route author="zphw" example="/dailyart/zh" path="/dailyart/:language?" :paramsDesc="['语言，支持 en, zh, jp 等，默认为 en']" />
+<Route author="zphw" example="/dailyart/zh" path="/dailyart/:language?" paramsDesc={['语言，支持 en, zh, jp 等，默认为 en']} />
 
 ## Dilbert Comic Strip
 
-<Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip" />
+<Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip">
 
 通过提取漫画，提供比官方源更佳的阅读体验。
 
@@ -165,21 +167,21 @@ pageClass: routes
 
 ### 收藏
 
-<Route author="yindaheng98" example="/ehentai/favorites/0/posted" path="/ehentai/favorites/:favcat?/:order?/:page?/:routeParams?" :paramsDesc="['收藏夹编号','顺序：posted-按画廊发布时间排序，favorited-按添加收藏的时间排序', '翻页参数，对应E站地址中的next参数', '额外参数；请参阅上面的说明和表格']" anticrawler="1" supportBT="1" />
+<Route author="yindaheng98" example="/ehentai/favorites/0/posted" path="/ehentai/favorites/:favcat?/:order?/:page?/:routeParams?" paramsDesc={['收藏夹编号','顺序：posted-按画廊发布时间排序，favorited-按添加收藏的时间排序', '翻页参数，对应E站地址中的next参数', '额外参数；请参阅上面的说明和表格']} anticrawler="1" supportBT="1" />
 
 ### 标签
 
-<Route author="yindaheng98" example="/ehentai/tag/language:chinese" path="/ehentai/tag/:tag/:page?/:routeParams?" :paramsDesc="['标签', '翻页参数，对应E站地址中的next参数', '额外参数；请参阅上面的说明和表格']" anticrawler="1" supportBT="1" />
+<Route author="yindaheng98" example="/ehentai/tag/language:chinese" path="/ehentai/tag/:tag/:page?/:routeParams?" paramsDesc={['标签', '翻页参数，对应E站地址中的next参数', '额外参数；请参阅上面的说明和表格']} anticrawler="1" supportBT="1" />
 
 ### 搜索
 
-<Route author="yindaheng98" example="/ehentai/search/f_search=artist%3Amama%24" path="/ehentai/search/:params?/:page?/:routeParams?" :paramsDesc="['用于搜索的关键词。可在原网站搜索后复制 `https://e-hentai.org/?` 后面的内容', '翻页参数，对应E站地址中的next参数', '额外参数；请参阅上面的说明和表格']" anticrawler="1" supportBT="1" />
+<Route author="yindaheng98" example="/ehentai/search/f_search=artist%3Amama%24" path="/ehentai/search/:params?/:page?/:routeParams?" paramsDesc={['用于搜索的关键词。可在原网站搜索后复制 `https://e-hentai.org/?` 后面的内容', '翻页参数，对应E站地址中的next参数', '额外参数；请参阅上面的说明和表格']} anticrawler="1" supportBT="1" />
 
 ## Elite Babes
 
 ### Home
 
-<Route author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" :paramsDesc="['分类，见下表，默认为 Home']" />
+<Route author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" paramsDesc={['分类，见下表，默认为 Home']}>
 
 | Home | Hot | Popular | Recent |
 | ---- | --- | ------- | ------ |
@@ -189,7 +191,7 @@ pageClass: routes
 
 ### Videos
 
-<Route author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" :paramsDesc="['排序，见下表，默认为 Popular']"/>
+<Route author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" paramsDesc={['排序，见下表，默认为 Popular']}>
 
 | Popular | Recent |
 | ------- | ------ |
@@ -199,13 +201,13 @@ pageClass: routes
 
 ### Search
 
-<Route author="nczitzk" example="/elitebabes/search/pose" path="/elitebabes/search/:keyword?" :paramsDesc="['关键字']"/>
+<Route author="nczitzk" example="/elitebabes/search/pose" path="/elitebabes/search/:keyword?" paramsDesc={['关键字']} />
 
 ## Fantia
 
 ### 搜索
 
-<Route author="nczitzk" example="/fantia/search/posts/all/daily" path="/fantia/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?" :paramsDesc="['类型，见下表，默认为 posts','分类，见下表，也可在搜索页的 URL 中找到，默认为 すべてのクリエイター', '排行时段，见下表，填写该字段即返回排行榜，默认为空，即不排名' ,'排序，见下表，默认为 更新の新しい順', 'R18显示，见下表，默认为 すべて', '关键字，默认为空']">
+<Route author="nczitzk" example="/fantia/search/posts/all/daily" path="/fantia/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?" paramsDesc={['类型，见下表，默认为 posts','分类，见下表，也可在搜索页的 URL 中找到，默认为 すべてのクリエイター', '排行时段，见下表，填写该字段即返回排行榜，默认为空，即不排名' ,'排序，见下表，默认为 更新の新しい順', 'R18显示，见下表，默认为 すべて', '关键字，默认为空']}>
 
 类型
 
@@ -261,31 +263,31 @@ R18 显示
 
 ### 用户投稿
 
-<Route author="nczitzk" example="/fantia/user/3498" path="/fantia/user/:id" :paramsDesc="['用户 id，可在用户页 URL 中找到']" />
+<Route author="nczitzk" example="/fantia/user/3498" path="/fantia/user/:id" paramsDesc={['用户 id，可在用户页 URL 中找到']} />
 
 ## GirlImg
 
 ### album
 
-<Route author="junfengP" example="/girlimg/album" path="/girlimg/album/:tag?/:mode?" :paramsDesc="['过滤标签，在链接参数中&tab=部分，如：中国,BoLoLi','加载模式，留空为简单模式，获取20篇文章标题与封面；非空为详细模式，加载10篇文章内容']" />
+<Route author="junfengP" example="/girlimg/album" path="/girlimg/album/:tag?/:mode?" paramsDesc={['过滤标签，在链接参数中&tab=部分，如：中国,BoLoLi','加载模式，留空为简单模式，获取20篇文章标题与封面；非空为详细模式，加载10篇文章内容']} />
 
 ## Google Doodles
 
 ### 更新
 
-<Route author="xyqfer" example="/google/doodles/zh-CN" path="/google/doodles/:language?" :paramsDesc="['语言，默认为`zh-CN`简体中文，如需其他语言值可从[Google Doodles 官网](https://www.google.com/doodles)获取']" />
+<Route author="xyqfer" example="/google/doodles/zh-CN" path="/google/doodles/:language?" paramsDesc={['语言，默认为`zh-CN`简体中文，如需其他语言值可从[Google Doodles 官网](https://www.google.com/doodles)获取']} />
 
 ## Google 相册
 
 ### 公开影集
 
-<Route author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" :paramsDesc="['影集 ID, 可在 URL 中找到, 例如, 分享链接为`https://photos.app.goo.gl/msFFnAzKmQmWj76EA`, 则 ID 为`msFFnAzKmQmWj76EA`']" radar="1"/>
+<Route author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" paramsDesc={['影集 ID, 可在 URL 中找到, 例如, 分享链接为`https://photos.app.goo.gl/msFFnAzKmQmWj76EA`, 则 ID 为`msFFnAzKmQmWj76EA`']} radar="1"/>
 
 ## Hentai Cosplay
 
 ### 最新图片
 
-<Route author="hoilc" example="/hentai-cosplays/tag/swimsuit" path="/hentai-cosplays/:type?/:name?" :paramsDesc="['搜索类型, `tag`为标签, `keyword`为关键字, 默认留空为全部','搜索内容, 可在 URL 中找到，默认留空为全部']" />
+<Route author="hoilc" example="/hentai-cosplays/tag/swimsuit" path="/hentai-cosplays/:type?/:name?" paramsDesc={['搜索类型, `tag`为标签, `keyword`为关键字, 默认留空为全部','搜索内容, 可在 URL 中找到，默认留空为全部']} />
 
 ## Konachan Anime Wallpapers
 
@@ -299,7 +301,7 @@ R18 显示
 
 ### Popular Recent Posts
 
-<Route author="magic-akari" example="/konachan/post/popular_recent" path="/konachan/post/popular_recent/:period?" :paramsDesc="['默认过去 24 小时']">
+<Route author="magic-akari" example="/konachan/post/popular_recent" path="/konachan/post/popular_recent/:period?" paramsDesc={['默认过去 24 小时']}>
 
 举例:
 
@@ -314,7 +316,7 @@ R18 显示
 
 ### 漫画更新
 
-<Route author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" :paramsDesc="['漫画 slug，可在漫画页面URL中找到，不包括开头的`manga-`，也不包括末尾的`.html`']" />
+<Route author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" paramsDesc={['漫画 slug，可在漫画页面URL中找到，不包括开头的`manga-`，也不包括末尾的`.html`']} />
 
 ## Mic Mic Idol
 
@@ -324,14 +326,14 @@ R18 显示
 
 ### 标签
 
-<Route author="KotoriK" example="/micmicidol/search/Young%20Jump?limit=50" path="/micmicidol/search/:label" :paramsDesc="['标签名']"/>
+<Route author="KotoriK" example="/micmicidol/search/Young%20Jump?limit=50" path="/micmicidol/search/:label" paramsDesc={['标签名']}/>
 获取数量可以通过 [limit](https://docs.rsshub.app/parameter.html#tiao-shu-xian-zhi) 参数控制。默认值为`50`。
 
 ## MM 范
 
 ### 分类
 
-<Route author="nczitzk" example="/95mm/tab/热门" path="/95mm/tab/:tab?" :paramsDesc="['分类，见下表，默认为最新']">
+<Route author="nczitzk" example="/95mm/tab/热门" path="/95mm/tab/:tab?" paramsDesc={['分类，见下表，默认为最新']}>
 
 | 最新 | 热门 | 校花 | 森系 | 清纯 | 童颜 | 嫩模 | 少女 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -340,11 +342,11 @@ R18 显示
 
 ### 标签
 
-<Route author="nczitzk" example="/95mm/tag/黑丝" path="/95mm/tag/:tag" :paramsDesc="['标签，可在对应标签页中找到']"/>
+<Route author="nczitzk" example="/95mm/tag/黑丝" path="/95mm/tag/:tag" paramsDesc={['标签，可在对应标签页中找到']}/>
 
 ### 集合
 
-<Route author="nczitzk" example="/95mm/category/1" path="/95mm/category/:category" :paramsDesc="['集合，见下表']">
+<Route author="nczitzk" example="/95mm/category/1" path="/95mm/category/:category" paramsDesc={['集合，见下表']}>
 
 | 清纯唯美 | 摄影私房 | 明星写真 | 三次元 | 异域美景 | 性感妖姬 | 游戏主题 | 美女壁纸 |
 | -------- | -------- | -------- | ------ | -------- | -------- | -------- | -------- |
@@ -378,7 +380,7 @@ R18 显示
 
 ### 最新图片
 
-<Route author="hoilc" example="/porn-images-xxx/tag/jk" path="/porn-images-xxx/:type?/:name?" :paramsDesc="['搜索类型, `tag`为标签, `keyword`为关键字, 默认留空为全部','搜索内容, 可在 URL 中找到，默认留空为全部']" />
+<Route author="hoilc" example="/porn-images-xxx/tag/jk" path="/porn-images-xxx/:type?/:name?" paramsDesc={['搜索类型, `tag`为标签, `keyword`为关键字, 默认留空为全部','搜索内容, 可在 URL 中找到，默认留空为全部']} />
 
 ## Tits Guru
 
@@ -390,10 +392,10 @@ R18 显示
 <Route author="MegrezZhu" example="/tits-guru/daily" path="/tits-guru/daily"/>
 ### Models
 
-<Route author="MegrezZhu" example="/tits-guru/model/mila-azul" path="/tits-guru/model/:name" :paramsDesc="['指定模特名字，详见[这里](https://tits-guru.com/models)']"/>
+<Route author="MegrezZhu" example="/tits-guru/model/mila-azul" path="/tits-guru/model/:name" paramsDesc={['指定模特名字，详见[这里](https://tits-guru.com/models)']}/>
 ### Categories
 
-<Route author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" :paramsDesc="['指定类别，详见[这里](https://tits-guru.com/categories)']"/>
+<Route author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" paramsDesc={['指定类别，详见[这里](https://tits-guru.com/categories)']}/>
 
 ## wallhaven
 
@@ -409,7 +411,7 @@ R18 显示
 
 ### 分类
 
-<Route author="nczitzk Fatpandac" example="/wallhaven/latest" path="/wallhaven/:category?/:needDetails?" :paramsDesc="['分类，见下表，默认为 Latest', '需要图片信息，填写 true/yes 表示需要，默认不需要']">
+<Route author="nczitzk Fatpandac" example="/wallhaven/latest" path="/wallhaven/:category?/:needDetails?" paramsDesc={['分类，见下表，默认为 Latest', '需要图片信息，填写 true/yes 表示需要，默认不需要']}>
 
 | Latest | Hot | Toplist | Random |
 | ------ | --- | ------- | ------ |
@@ -419,7 +421,7 @@ R18 显示
 
 ### 搜索
 
-<Route author="nczitzk Fatpandac" example="/wallhaven/search/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd" path="/wallhaven/search/:filter?/:needDetails?" :paramsDesc="['过滤器，默认为空', '需要图片信息，填写 `true`/`yes` 表示需要，默认不需要']">
+<Route author="nczitzk Fatpandac" example="/wallhaven/search/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd" path="/wallhaven/search/:filter?/:needDetails?" paramsDesc={['过滤器，默认为空', '需要图片信息，填写 `true`/`yes` 表示需要，默认不需要']}>
 
 ::: tip 提示
 
@@ -447,7 +449,7 @@ R18 显示
 
 ### Popular Recent Posts
 
-<Route author="magic-akari SettingDust" example="/yande.re/post/popular_recent" path="/yande.re/post/popular_recent/:period?" :paramsDesc="['默认过去 24 小时']">
+<Route author="magic-akari SettingDust" example="/yande.re/post/popular_recent" path="/yande.re/post/popular_recent/:period?" paramsDesc={['默认过去 24 小时']}>
 
 举例:
 
@@ -474,7 +476,7 @@ R18 显示
 
 ### 分类
 
-<Route author="kba977" example="/dbmv" path="/dbmv/:category?" :paramsDesc="['分类 id - 若不填该参数, 默认所有']">
+<Route author="kba977" example="/dbmv" path="/dbmv/:category?" paramsDesc={['分类 id - 若不填该参数, 默认所有']}>
 
 | 大胸妹 | 小翘臀 | 黑丝袜 | 美腿控 | 有颜值 | 大杂烩 |
 | ------ | ------ | ------ | ------ | ------ | ------ |
@@ -496,7 +498,7 @@ R18 显示
 
 ### 板块
 
-<Route author="nczitzk" example="/jandan/top" path="/jandan/:category?" :paramsDesc="['板块，见下表，默认为无聊图热榜']">
+<Route author="nczitzk" example="/jandan/top" path="/jandan/:category?" paramsDesc={['板块，见下表，默认为无聊图热榜']}>
 
 | 问答 | 树洞     | 动物园 | 女装 | 随手拍 | 无聊图 | 鱼塘 |
 | ---- | -------- | ------ | ---- | ------ | ------ | ---- |
@@ -506,7 +508,7 @@ R18 显示
 
 ### 热榜
 
-<Route author="kobemtl Xuanwo xyqfer 9uanhuo nczitzk" example="/jandan/top-4h" path="/jandan/:category?" :paramsDesc="['板块，见下表，默认为无聊图热榜']"/>
+<Route author="kobemtl Xuanwo xyqfer 9uanhuo nczitzk" example="/jandan/top-4h" path="/jandan/:category?" paramsDesc={['板块，见下表，默认为无聊图热榜']}/>
 
 | 4 小时热门 | 吐槽      | 无聊图 | 随手拍   | 动物园  | 优评         | 3 日最佳  | 7 日最佳  |
 | ---------- | --------- | ------ | -------- | ------- | ------------ | --------- | --------- |
@@ -520,7 +522,7 @@ R18 显示
 
 ### 图集文章
 
-<Route author="Kherrisan" example="/jdlingyu/tuji" path="/jdlingyu/:type" :paramsDesc="['分区名']"/>
+<Route author="Kherrisan" example="/jdlingyu/tuji" path="/jdlingyu/:type" paramsDesc={['分区名']}/>
 
 | 图集 | 文章 |
 | ---- | ---- |
@@ -530,7 +532,7 @@ R18 显示
 
 ### 分站
 
-<Route author="nczitzk" example="/cool18" path="/cool18/:id?" :paramsDesc="['分站，见下表，默认为禁忌书屋']">
+<Route author="nczitzk" example="/cool18" path="/cool18/:id?" paramsDesc={['分站，见下表，默认为禁忌书屋']}>
 
 | 性趣贴图 | 色色动漫 | 情色靓影 | 私房自拍 | 禁忌书屋 | 性趣论坛 | 情色无忌 | 成人影视 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
@@ -548,11 +550,11 @@ R18 显示
 
 ### 精华区
 
-<Route author="nczitzk" example="/cool18/bbs/gold" path="/cool18/:id/gold" :paramsDesc="['分站，见上表，默认为禁忌书屋']"/>
+<Route author="nczitzk" example="/cool18/bbs/gold" path="/cool18/:id/gold" paramsDesc={['分站，见上表，默认为禁忌书屋']}/>
 
 ### 搜索关键字
 
-<Route author="nczitzk" example="/cool18/bbs/keywords/都市" path="/cool18/:id/keywords/:keyword?" :paramsDesc="['分站，见上表，默认为禁忌书屋', '关键字']"/>
+<Route author="nczitzk" example="/cool18/bbs/keywords/都市" path="/cool18/:id/keywords/:keyword?" paramsDesc={['分站，见上表，默认为禁忌书屋', '关键字']}/>
 
 ## 妹图社
 
@@ -564,11 +566,11 @@ R18 显示
 
 ### 首页（最新）
 
-<Route author="gee1k xyqfer LogicJake" example="/mzitu/home" path="/mzitu/home/:type?" :paramsDesc="['类型，默认最新，可选`hot`最热或`best`推荐']" anticrawler="1"/>
+<Route author="gee1k xyqfer LogicJake" example="/mzitu/home" path="/mzitu/home/:type?" paramsDesc={['类型，默认最新，可选`hot`最热或`best`推荐']} anticrawler="1"/>
 
 ### 分类
 
-<Route author="gee1k xyqfer LogicJake" example="/mzitu/category/xinggan" path="/mzitu/category/:category" :paramsDesc="['分类名']" anticrawler="1">
+<Route author="gee1k xyqfer LogicJake" example="/mzitu/category/xinggan" path="/mzitu/category/:category" paramsDesc={['分类名']} anticrawler="1">
 
 | 性感妹子 | 日本妹子 | 台湾妹子 | 清纯妹子 |
 | -------- | -------- | -------- | -------- |
@@ -582,11 +584,11 @@ R18 显示
 
 ### 专题详情
 
-<Route author="gee1k xyqfer LogicJake" example="/mzitu/tag/shishen" path="/mzitu/tag/:tag" :paramsDesc="['专题名, 可在专题页 URL 中找到']" anticrawler="1"/>
+<Route author="gee1k xyqfer LogicJake" example="/mzitu/tag/shishen" path="/mzitu/tag/:tag" paramsDesc={['专题名, 可在专题页 URL 中找到']} anticrawler="1"/>
 
 ### 详情
 
-<Route author="gee1k xyqfer LogicJake" example="/mzitu/post/129452" path="/mzitu/post/:id" :paramsDesc="['详情 id, 可在详情页 URL 中找到']" anticrawler="1"/>
+<Route author="gee1k xyqfer LogicJake" example="/mzitu/post/129452" path="/mzitu/post/:id" paramsDesc={['详情 id, 可在详情页 URL 中找到']} anticrawler="1"/>
 
 ## 喷嚏
 
@@ -596,19 +598,19 @@ R18 显示
 
 ### 主题
 
-<Route author="xyqfer" example="/dapenti/subject/184" path="/dapenti/subject/:id" :paramsDesc="['主题 id']"/>
+<Route author="xyqfer" example="/dapenti/subject/184" path="/dapenti/subject/:id" paramsDesc={['主题 id']}/>
 
 ## 奇葩买家秀
 
 ### 频道
 
-<Route author="Fatpandac nczitzk" example="/qipamaijia/fuli" path="/qipamaijia/:cate?" :paramsDesc="['频道名，可在对应网址中找到，默认为最新']" radar="1" rssbud="1"/>
+<Route author="Fatpandac nczitzk" example="/qipamaijia/fuli" path="/qipamaijia/:cate?" paramsDesc={['频道名，可在对应网址中找到，默认为最新']} radar="1" rssbud="1"/>
 
 ## 涂鸦王国
 
 ### 用户上传作品和用户喜欢作品
 
-<Route author="LanceZhu" example="/gracg/user11968EIcqS3" path="/gracg/:user/:love?" :paramsDesc="['用户访问ID，用户主页URL获取', '是否切换为用户喜欢作品, 不选或为 0 不切换，1则切换']"/>
+<Route author="LanceZhu" example="/gracg/user11968EIcqS3" path="/gracg/:user/:love?" paramsDesc={['用户访问ID，用户主页URL获取', '是否切换为用户喜欢作品, 不选或为 0 不切换，1则切换']}/>
 
 ## 致美化
 

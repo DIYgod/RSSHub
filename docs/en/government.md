@@ -1,3 +1,5 @@
+import RouteEn from '@site/src/components/RouteEn';
+
 ---
 pageClass: routes
 ---
@@ -20,13 +22,13 @@ pageClass: routes
 
 ### Press releases
 
-<RouteEn author="quinn-dev" example="/verfghbw/press" path="/verfghbw/press/:keyword?" :paramsDesc="['Keyword']"/>
+<RouteEn author="quinn-dev" example="/verfghbw/press" path="/verfghbw/press/:keyword?" paramsDesc={['Keyword']}/>
 
 ## Hong Kong Centre for Health Protection
 
 ### Category
 
-<RouteEn author="nczitzk" example="/chp" path="/chp/:category?/:language?" :paramsDesc="['Category, see below, Important Topics by default', 'Language, see below, zh_tw by default']">
+<RouteEn author="nczitzk" example="/chp" path="/chp/:category?/:language?" paramsDesc={['Category, see below, Important Topics by default', 'Language, see below, zh_tw by default']}>
 
 Category
 
@@ -46,7 +48,7 @@ Language
 
 ### Press Release
 
-<RouteEn author="nczitzk" example="/hongkong/dh" path="/hongkong/dh/:language?" :paramsDesc="['Language, see below, tc_chi by default']">
+<RouteEn author="nczitzk" example="/hongkong/dh" path="/hongkong/dh/:language?" paramsDesc={['Language, see below, tc_chi by default']}>
 
 Language
 
@@ -60,13 +62,13 @@ Language
 
 ### Press Releases
 
-<RouteEn author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" :paramsDesc="['Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese) and `tc`(Traditional Chinese)']"/>
+<RouteEn author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" paramsDesc={['Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese) and `tc`(Traditional Chinese)']}/>
 
 ## Macau Independent Commission Against Corruption
 
 ### Latest News
 
-<RouteEn author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" :paramsDesc="['Category', 'Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese), `tc`(Traditional Chinese) and `pt`(Portuguese)']" puppeteer="1">
+<RouteEn author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" paramsDesc={['Category', 'Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese), `tc`(Traditional Chinese) and `pt`(Portuguese)']} puppeteer="1">
 Category
 
 | All  | Detected Cases | Investigation Reports or Recommendations  | Annual Reports | CCAC's Updates |
@@ -85,13 +87,13 @@ Category
 
 ### Arguments Audios
 
-<RouteEn author="nczitzk" example="/us/supremecourt/argument_audio" path="/us/supremecourt/argument_audio/:year?" :paramsDesc="['Year, current year by default']"/>
+<RouteEn author="nczitzk" example="/us/supremecourt/argument_audio" path="/us/supremecourt/argument_audio/:year?" paramsDesc={['Year, current year by default']}/>
 
 ## The United States Trade Representative
 
 ### Press Releases
 
-<RouteEn author="nczitzk" example="/ustr/press-releases" path="/ustr/press-releases/:year?/:month?" :paramsDesc="['Year, current year by default', 'Month, empty by default, show contents in all year']">
+<RouteEn author="nczitzk" example="/ustr/press-releases" path="/ustr/press-releases/:year?/:month?" paramsDesc={['Year, current year by default', 'Month, empty by default, show contents in all year']}>
 
 ::: tip Tip
 
@@ -105,7 +107,7 @@ Fill in the English expression for the month in the Month field, eg `December` f
 
 ### Briefing Room
 
-<RouteEn author="nczitzk" example="/whitehouse/briefing-room" path="/whitehouse/briefing-room/:category?" :paramsDesc="['Category, see below, all by default']">
+<RouteEn author="nczitzk" example="/whitehouse/briefing-room" path="/whitehouse/briefing-room/:category?" paramsDesc={['Category, see below, all by default']}>
 
 | All | Blog | Legislation | Presidential Actions | Press Briefings | Speeches and Remarks | Statements and Releases |
 | - | - | - | - | - | - | - |
@@ -121,7 +123,7 @@ Fill in the English expression for the month in the Month field, eg `December` f
 
 ### Press Releases
 
-<RouteEn author="nczitzk" example="/treasury/press-releases" path="/treasury/press-releases/:category?/:title?" :paramsDesc="['Category, see below, all by default', 'Title keywords, empty by default']">
+<RouteEn author="nczitzk" example="/treasury/press-releases" path="/treasury/press-releases/:category?/:title?" paramsDesc={['Category, see below, all by default', 'Title keywords, empty by default']}>
 
 Category
 
@@ -147,7 +149,7 @@ Category
 
 ### News
 
-<RouteEn author="nczitzk" example="/who/news" path="/who/news/:language?" :paramsDesc="['Language, see below, English by default']">
+<RouteEn author="nczitzk" example="/who/news" path="/who/news/:language?" paramsDesc={['Language, see below, English by default']}>
 
 Language
 
@@ -159,7 +161,7 @@ Language
 
 ### Newsroom
 
-<RouteEn author="LogicJake nczitzk" example="/who/news-room/feature-stories" path="/who/news-room/:category?/:language?" :paramsDesc="['Category, see below, Feature stories by default', 'Language, see below, English by default']">
+<RouteEn author="LogicJake nczitzk" example="/who/news-room/feature-stories" path="/who/news-room/:category?/:language?" paramsDesc={['Category, see below, Feature stories by default', 'Language, see below, English by default']}>
 
 Category
 
@@ -177,7 +179,7 @@ Language
 
 ### Speeches
 
-<RouteEn author="nczitzk" example="/who/speeches" path="/who/speeches/:language?" :paramsDesc="['Language, see below, English by default']">
+<RouteEn author="nczitzk" example="/who/speeches" path="/who/speeches/:language?" paramsDesc={['Language, see below, English by default']}>
 
 Language
 
@@ -191,4 +193,4 @@ Language
 
 ### Dispute settlement news
 
-<RouteEn author="nczitzk" example="/wto/dispute-settlement" path="/wto/dispute-settlement/:year?" :paramsDesc="['Year, current year by default']"/>
+<RouteEn author="nczitzk" example="/wto/dispute-settlement" path="/wto/dispute-settlement/:year?" paramsDesc={['Year, current year by default']}/>

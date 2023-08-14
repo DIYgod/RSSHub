@@ -1,3 +1,5 @@
+import RouteEn from '@site/src/components/RouteEn';
+
 ---
 pageClass: routes
 ---
@@ -14,7 +16,7 @@ Full transcript support for better user experience.
 
 ### Category
 
-<RouteEn author="nczitzk" example="/7mmtv/zh/censored_list/all" path="/7mmtv/:language?/:category?/:type?" :paramsDesc="['Language, see below, `en` as English by default', 'Category, see below, `censored_list` as Censored by default', 'Server, see below, all server by default']" anticrawler="1">
+<RouteEn author="nczitzk" example="/7mmtv/zh/censored_list/all" path="/7mmtv/:language?/:category?/:type?" paramsDesc={['Language, see below, `en` as English by default', 'Category, see below, `censored_list` as Censored by default', 'Server, see below, all server by default']} anticrawler="1">
 
 **Language**
 
@@ -42,7 +44,7 @@ Full transcript support for better user experience.
 
 ### Maker
 
-<RouteEn author="nczitzk" example="/7mmtv/zh/amateurjav_makersr/1752" path="/7mmtv/:language?/:category?/:id?" :paramsDesc="['Language, see below, `en` as English by default', 'Category, see below', 'Id, see below']" anticrawler="1">
+<RouteEn author="nczitzk" example="/7mmtv/zh/amateurjav_makersr/1752" path="/7mmtv/:language?/:category?/:id?" paramsDesc={['Language, see below, `en` as English by default', 'Category, see below', 'Id, see below']} anticrawler="1">
 
 **Language**
 
@@ -93,7 +95,7 @@ When `uncensored_makersr` as **Uncensored** is chosen as **Category**, the avail
 
 ### Hot Video Today
 
-<RouteEn author="TonyRL" example="/91porn" path="/91porn/:lang?" :paramsDesc="['Language, see below, `en_US` by default ']" radar="1" rssbud="1" anticrawler="1">
+<RouteEn author="TonyRL" example="/91porn" path="/91porn/:lang?" paramsDesc={['Language, see below, `en_US` by default ']} radar="1" rssbud="1" anticrawler="1">
 
 | English | 简体中文 | 繁體中文 |
 | -- | -- | -- |
@@ -103,7 +105,7 @@ When `uncensored_makersr` as **Uncensored** is chosen as **Category**, the avail
 
 ### Author
 
-<RouteEn author="TonyRL" example="/91porn/author/2d6d2iWm4vVCwqujAZbSrKt2QJCbbaObv9HQ21Zo8wGJWudWBg" path="/91porn/author/:uid/:lang?" :paramsDesc="['Author ID, can be found in URL', 'Language, see above, `en_US` by default ']" radar="1" rssbud="1" anticrawler="1" />
+<RouteEn author="TonyRL" example="/91porn/author/2d6d2iWm4vVCwqujAZbSrKt2QJCbbaObv9HQ21Zo8wGJWudWBg" path="/91porn/author/:uid/:lang?" paramsDesc={['Author ID, can be found in URL', 'Language, see above, `en_US` by default ']} radar="1" rssbud="1" anticrawler="1" />
 
 ## 99% Invisible
 
@@ -119,7 +121,7 @@ When `uncensored_makersr` as **Uncensored** is chosen as **Category**, the avail
 
 ### Tag
 
-<RouteEn author="nczitzk" example="/bandcamp/tag/united-kingdom" path="/bandcamp/tag/:tag?" :paramsDesc="['Tag, can be found in URL']"/>
+<RouteEn author="nczitzk" example="/bandcamp/tag/united-kingdom" path="/bandcamp/tag/:tag?" paramsDesc={['Tag, can be found in URL']}/>
 
 ### Upcoming Live Streams
 
@@ -129,7 +131,7 @@ When `uncensored_makersr` as **Uncensored** is chosen as **Category**, the avail
 
 ### Artist
 
-<RouteEn author="nczitzk" example="/coomer/artist/belledelphine" path="/coomer/artist/:id" :paramsDesc="['Artist id, can be found in URL']"/>
+<RouteEn author="nczitzk" example="/coomer/artist/belledelphine" path="/coomer/artist/:id" paramsDesc={['Artist id, can be found in URL']}/>
 
 ### Recent Posts
 
@@ -145,7 +147,7 @@ Official RSS: <https://eztv.io/ezrss.xml>
 
 ### Lookup Torrents by IMDB ID
 
-<RouteEn author="Songkeys" example="/eztv/torrents/6048596" path="/eztv/torrents/:imdb_id" :paramsDesc="['The IMDB ID corresponding to the seed of show you want to search can be found on the official website [IMDB](https://www.imdb.com)']" supportBT="1"/>
+<RouteEn author="Songkeys" example="/eztv/torrents/6048596" path="/eztv/torrents/:imdb_id" paramsDesc={['The IMDB ID corresponding to the seed of show you want to search can be found on the official website [IMDB](https://www.imdb.com)']} supportBT="1"/>
 
 ## Hentaimama
 
@@ -161,7 +163,7 @@ Official RSS: <https://eztv.io/ezrss.xml>
 
 ### ラジオ
 
-<RouteEn author="nczitzk" example="/ibc/radio/maitta" path="/ibc/radio/:id?" :paramsDesc="['Radio id, can be found in URL, イヤーマイッタマイッタ by default']" supportPodcast="1">
+<RouteEn author="nczitzk" example="/ibc/radio/maitta" path="/ibc/radio/:id?" paramsDesc={['Radio id, can be found in URL, イヤーマイッタマイッタ by default']} supportPodcast="1">
 
 ::: tip Tip
 
@@ -199,7 +201,7 @@ JavBus has multiple backup domains, these routes use default domain <https://jav
 
 ### Censored - Genre
 
-<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/genre/7g" path="/javbus/en/genre/:id" :paramsDesc="['Genre id, can be found in URL']">
+<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/genre/7g" path="/javbus/en/genre/:id" paramsDesc={['Genre id, can be found in URL']}>
 
 For more genre, please visit [Censored - Genre](https://www.javbus.com/en/genre)
 
@@ -207,7 +209,7 @@ For more genre, please visit [Censored - Genre](https://www.javbus.com/en/genre)
 
 ### Censored - Actresses
 
-<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/star/2jv" path="/javbus/en/star/:id" :paramsDesc="['Actresses id, can be found in URL']">
+<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/star/2jv" path="/javbus/en/star/:id" paramsDesc={['Actresses id, can be found in URL']}>
 
 For more actresses, please visit [Censored JAV Idols](https://www.javbus.com/en/actresses)
 
@@ -215,23 +217,23 @@ For more actresses, please visit [Censored JAV Idols](https://www.javbus.com/en/
 
 ### Censored - Series
 
-<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/series/44q" path="/javbus/en/series/:id" :paramsDesc="['Series id, can be found in URL']" />
+<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/series/44q" path="/javbus/en/series/:id" paramsDesc={['Series id, can be found in URL']} />
 
 ### Censored - Studio
 
-<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/studio/ej" path="/javbus/en/studio/:id" :paramsDesc="['Studio id, can be found in URL']" />
+<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/studio/ej" path="/javbus/en/studio/:id" paramsDesc={['Studio id, can be found in URL']} />
 
 ### Censored - Label
 
-<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/label/x8" path="/javbus/en/label/:id" :paramsDesc="['Label id, can be found in URL']" />
+<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/label/x8" path="/javbus/en/label/:id" paramsDesc={['Label id, can be found in URL']} />
 
 ### Censored - Director
 
-<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/director/4gv" path="/javbus/en/director/:id" :paramsDesc="['Director id, can be found in URL']" />
+<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/director/4gv" path="/javbus/en/director/:id" paramsDesc={['Director id, can be found in URL']} />
 
 ### Censored - Search
 
-<RouteEn author="nczitzk" example="/javbus/en/search/REBD" path="/javbus/en/search/:keyword" :paramsDesc="['Keyword, empty by default']" />
+<RouteEn author="nczitzk" example="/javbus/en/search/REBD" path="/javbus/en/search/:keyword" paramsDesc={['Keyword, empty by default']} />
 
 ### Uncensored - Home
 
@@ -239,7 +241,7 @@ For more actresses, please visit [Censored JAV Idols](https://www.javbus.com/en/
 
 ### Uncensored - Genre
 
-<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/uncensored/genre/1bc" path="/javbus/en/uncensored/genre/:id" :paramsDesc="['Genre id, can be found in URL']">
+<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/uncensored/genre/1bc" path="/javbus/en/uncensored/genre/:id" paramsDesc={['Genre id, can be found in URL']}>
 
 For more genre, please visit [Uncensored - Genre](https://www.javbus.com/en/uncensored/genre)
 
@@ -247,7 +249,7 @@ For more genre, please visit [Uncensored - Genre](https://www.javbus.com/en/unce
 
 ### Uncensored - Actresses
 
-<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/uncensored/star/b5b" path="/javbus/en/uncensored/star/:id" :paramsDesc="['Actresses id, can be found in URL']">
+<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/uncensored/star/b5b" path="/javbus/en/uncensored/star/:id" paramsDesc={['Actresses id, can be found in URL']}>
 
 For more actresses, please visit [Uncensored JAV Idols](https://www.javbus.com/en/uncensored/actresses)
 
@@ -255,15 +257,15 @@ For more actresses, please visit [Uncensored JAV Idols](https://www.javbus.com/e
 
 ### Uncensored - Series
 
-<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/uncensored/series/1ft" path="/javbus/en/uncensored/series/:id" :paramsDesc="['系列 id, can be found in URL']" />
+<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/uncensored/series/1ft" path="/javbus/en/uncensored/series/:id" paramsDesc={['系列 id, can be found in URL']} />
 
 ### Uncensored - Studio
 
-<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/uncensored/studio/3n" path="/javbus/en/uncensored/studio/:id" :paramsDesc="[', can be found in URL']" />
+<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/uncensored/studio/3n" path="/javbus/en/uncensored/studio/:id" paramsDesc={[', can be found in URL']} />
 
 ### Uncensored - Search
 
-<RouteEn author="nczitzk" example="/javbus/en/uncensored/search/HEYZO" path="/javbus/en/uncensored/search/:keyword" :paramsDesc="['Keyword, empty by default']" />
+<RouteEn author="nczitzk" example="/javbus/en/uncensored/search/HEYZO" path="/javbus/en/uncensored/search/:keyword" paramsDesc={['Keyword, empty by default']} />
 
 ### Western - Home
 
@@ -271,7 +273,7 @@ For more actresses, please visit [Uncensored JAV Idols](https://www.javbus.com/e
 
 ### Western - Genre
 
-<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/western/genre/86" path="/javbus/en/western/genre/:id" :paramsDesc="['Genre id, can be found in URL']">
+<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/western/genre/86" path="/javbus/en/western/genre/:id" paramsDesc={['Genre id, can be found in URL']}>
 
 For more genre, please visit [Genre - Video](https://www.javbus.org/en/genre)
 
@@ -279,7 +281,7 @@ For more genre, please visit [Genre - Video](https://www.javbus.org/en/genre)
 
 ### Western - Actresses
 
-<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/western/star/4hv" path="/javbus/en/western/star/:id" :paramsDesc="['Actresses id, can be found in URL']">
+<RouteEn author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/western/star/4hv" path="/javbus/en/western/star/:id" paramsDesc={['Actresses id, can be found in URL']}>
 
 For more actresses [Western AV Idols](https://www.javbus.org/en/actresses)
 
@@ -287,25 +289,25 @@ For more actresses [Western AV Idols](https://www.javbus.org/en/actresses)
 
 ### Western - Series
 
-<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/western/series/20" path="/javbus/en/western/series/:id" :paramsDesc="['Series id, can be found in URL']" />
+<RouteEn author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/western/series/20" path="/javbus/en/western/series/:id" paramsDesc={['Series id, can be found in URL']} />
 
 ### Western - Studio
 
-<RouteEn author="nczitzk" example="/javbus/en/western/studio/4" path="/javbus/en/western/studio/:id" :paramsDesc="['Studio id, can be found in URLL']" />
+<RouteEn author="nczitzk" example="/javbus/en/western/studio/4" path="/javbus/en/western/studio/:id" paramsDesc={['Studio id, can be found in URLL']} />
 
 ### Western - Search
 
-<RouteEn author="nczitzk" example="/javbus/en/western/search/Brazzers" path="/javbus/en/western/search/:keyword" :paramsDesc="['Keyword, empty by default']" />
+<RouteEn author="nczitzk" example="/javbus/en/western/search/Brazzers" path="/javbus/en/western/search/:keyword" paramsDesc={['Keyword, empty by default']} />
 
 ## JAVLibrary
 
 ### Recently Discussed Videos
 
-<RouteEn author="nczitzk" example="/javlibrary/update/en" path="/javlibrary/update/:language?" :paramsDesc="['Language, see below, Japanese by default, as `ja`']" radar="1" rssbud="1"/>
+<RouteEn author="nczitzk" example="/javlibrary/update/en" path="/javlibrary/update/:language?" paramsDesc={['Language, see below, Japanese by default, as `ja`']} radar="1" rssbud="1"/>
 
 ### New Releases
 
-<RouteEn author="nczitzk" example="/javlibrary/newrelease/en" path="/javlibrary/newrelease/:language?/:mode?" :paramsDesc="['Language, see below, Japanese by default, as `ja`', 'Mode, see below, videos with comments (by date) by default, as `1`']" radar="1" rssbud="1">
+<RouteEn author="nczitzk" example="/javlibrary/newrelease/en" path="/javlibrary/newrelease/:language?/:mode?" paramsDesc={['Language, see below, Japanese by default, as `ja`', 'Mode, see below, videos with comments (by date) by default, as `1`']} radar="1" rssbud="1">
 
 | videos with comments (by date) | everything (by date) |
 | ------------------------------ | -------------------- |
@@ -315,11 +317,11 @@ For more actresses [Western AV Idols](https://www.javbus.org/en/actresses)
 
 ### Recently Inserted Videos
 
-<RouteEn author="nczitzk" example="/javlibrary/newentries/en" path="/javlibrary/newentries/:language?" :paramsDesc="['Language, see below, Japanese by default, as `ja`']" radar="1" rssbud="1"/>
+<RouteEn author="nczitzk" example="/javlibrary/newentries/en" path="/javlibrary/newentries/:language?" paramsDesc={['Language, see below, Japanese by default, as `ja`']} radar="1" rssbud="1"/>
 
 ### Most Wanted Videos
 
-<RouteEn author="nczitzk" example="/javlibrary/mostwanted/en" path="/javlibrary/mostwanted/:language?/:mode?" :paramsDesc="['Language, see below, Japanese by default, as `ja`', 'Mode, see below, Last Month by default, as `1`']" radar="1" rssbud="1">
+<RouteEn author="nczitzk" example="/javlibrary/mostwanted/en" path="/javlibrary/mostwanted/:language?/:mode?" paramsDesc={['Language, see below, Japanese by default, as `ja`', 'Mode, see below, Last Month by default, as `1`']} radar="1" rssbud="1">
 
 | Last Month | All Time |
 | ---------- | -------- |
@@ -329,7 +331,7 @@ For more actresses [Western AV Idols](https://www.javbus.org/en/actresses)
 
 ### Best Rated Videos
 
-<RouteEn author="nczitzk" example="/javlibrary/bestrated/en" path="/javlibrary/bestrated/:language?/:mode?" :paramsDesc="['Language, see below, Japanese by default, as `ja`', 'Mode, see below, Last Month by default, as `1`']" radar="1" rssbud="1">
+<RouteEn author="nczitzk" example="/javlibrary/bestrated/en" path="/javlibrary/bestrated/:language?/:mode?" paramsDesc={['Language, see below, Japanese by default, as `ja`', 'Mode, see below, Last Month by default, as `1`']} radar="1" rssbud="1">
 
 | Last Month | All Time |
 | ---------- | -------- |
@@ -339,7 +341,7 @@ For more actresses [Western AV Idols](https://www.javbus.org/en/actresses)
 
 ### Best Reviews
 
-<RouteEn author="DCJaous nczitzk" example="/javlibrary/bestreviews/en" path="/javlibrary/bestreviews/:language?/:mode?" :paramsDesc="['Language, see below, Japanese by default, as `ja`', 'Mode, see below, Last Month by default, as `1`']" radar="1" rssbud="1">
+<RouteEn author="DCJaous nczitzk" example="/javlibrary/bestreviews/en" path="/javlibrary/bestreviews/:language?/:mode?" paramsDesc={['Language, see below, Japanese by default, as `ja`', 'Mode, see below, Last Month by default, as `1`']} radar="1" rssbud="1">
 
 | Last Month | All Time |
 | ---------- | -------- |
@@ -349,7 +351,7 @@ For more actresses [Western AV Idols](https://www.javbus.org/en/actresses)
 
 ### Videos by categories
 
-<RouteEn author="nczitzk" example="/javlibrary/genre/amjq/en" path="/javlibrary/genre/:genre?/:language?/:mode?" :paramsDesc="['Category, Acme · Orgasm by default, as `amjq`', 'Language, see below, Japanese by default, as `ja`', 'Mode, see below, videos with comments (by date) by default, as `1`']" radar="1" rssbud="1">
+<RouteEn author="nczitzk" example="/javlibrary/genre/amjq/en" path="/javlibrary/genre/:genre?/:language?/:mode?" paramsDesc={['Category, Acme · Orgasm by default, as `amjq`', 'Language, see below, Japanese by default, as `ja`', 'Mode, see below, videos with comments (by date) by default, as `1`']} radar="1" rssbud="1">
 
 | videos with comments (by date) | everything (by date) |
 | ------------------------------ | -------------------- |
@@ -365,7 +367,7 @@ See [Categories](https://www.javlibrary.com/en/genres.php) to view all categorie
 
 ### Videos by star
 
-<RouteEn author="Diygod junfengP nczitzk" example="/javlibrary/star/abbds/en" path="/javlibrary/star/:id/:language?/:mode?" :paramsDesc="['Star id, can be found in URL', 'Language, see below, Japanese by default, as `ja`', 'Mode, see below, videos with comments (by date) by default, as `1`']" radar="1" rssbud="1">
+<RouteEn author="Diygod junfengP nczitzk" example="/javlibrary/star/abbds/en" path="/javlibrary/star/:id/:language?/:mode?" paramsDesc={['Star id, can be found in URL', 'Language, see below, Japanese by default, as `ja`', 'Mode, see below, videos with comments (by date) by default, as `1`']} radar="1" rssbud="1">
 
 | videos with comments (by date) | everything (by date) |
 | ------------------------------ | -------------------- |
@@ -383,11 +385,11 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 ### Posts published by user
 
-<RouteEn author="Diygod junfengP nczitzk" example="/javlibrary/userposts/mangudai/en" path="/javlibrary/userposts/:id/:language?" :paramsDesc="['User id, can be found in URL', 'Language, see below, Japanese by default, as `ja`']" radar="1" rssbud="1"/>
+<RouteEn author="Diygod junfengP nczitzk" example="/javlibrary/userposts/mangudai/en" path="/javlibrary/userposts/:id/:language?" paramsDesc={['User id, can be found in URL', 'Language, see below, Japanese by default, as `ja`']} radar="1" rssbud="1"/>
 
 ### Videos by user
 
-<RouteEn author="Diygod junfengP nczitzk" example="/javlibrary/userwatched/mangudai/en" path="/javlibrary/:type/:id/:language?" :paramsDesc="['Type, see below', 'User id, can be found in URL', 'Language, see below, Japanese by default, as `ja`']" radar="1" rssbud="1">
+<RouteEn author="Diygod junfengP nczitzk" example="/javlibrary/userwatched/mangudai/en" path="/javlibrary/:type/:id/:language?" paramsDesc={['Type, see below', 'User id, can be found in URL', 'Language, see below, Japanese by default, as `ja`']} radar="1" rssbud="1">
 
 | Wanted     | Watched     | Owned     |
 | ---------- | ----------- | --------- |
@@ -399,7 +401,7 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 ### Chart
 
-<RouteEn author="nczitzk" example="/melon/chart" path="/melon/chart/:category?" :paramsDesc="['Category, see below, 24H by default']">
+<RouteEn author="nczitzk" example="/melon/chart" path="/melon/chart/:category?" paramsDesc={['Category, see below, 24H by default']}>
 
 | 24H | 일간 | 주간 | 월간  |
 | --- | ---- | ---- | ----- |
@@ -411,7 +413,7 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 ### User
 
-<RouteEn author="Misaka13514" example="/mixcloud/dholbach/uploads" path="/mixcloud/:username/:type?" :paramsDesc="['Username, can be found in URL', 'Type, see below, uploads by default']" radar="1" rssbud="1" supportPodcast="1">
+<RouteEn author="Misaka13514" example="/mixcloud/dholbach/uploads" path="/mixcloud/:username/:type?" paramsDesc={['Username, can be found in URL', 'Type, see below, uploads by default']} radar="1" rssbud="1" supportPodcast="1">
 
 | Shows   | Favorites | History | Stream |
 | ------- | --------- | ------- | ------ |
@@ -423,49 +425,49 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 ### Search Result
 
-<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/search/psycho-pass" path="/nyaa/search/:query?" :paramsDesc="['Search keyword']" supportBT="1" radar="1"/>
+<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/search/psycho-pass" path="/nyaa/search/:query?" paramsDesc={['Search keyword']} supportBT="1" radar="1"/>
 
 ### User
 
-<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/user/silver-khaie" path="/nyaa/user/:username?" :paramsDesc="['Username']" supportBT="1" radar="1"/>
+<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/user/silver-khaie" path="/nyaa/user/:username?" paramsDesc={['Username']} supportBT="1" radar="1"/>
 
 ### Search Result with specify user
 
-<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/user/silver-khaie/search/a" path="/nyaa/user/:username/search/:query?" :paramsDesc="['Username', 'Search keyword']" supportBT="1" radar="1"/>
+<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/user/silver-khaie/search/a" path="/nyaa/user/:username/search/:query?" paramsDesc={['Username', 'Search keyword']} supportBT="1" radar="1"/>
 
 ### Sukebei Search Result
 
-<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/sukebei/search/hi" path="/nyaa/sukebei/search/:query?" :paramsDesc="['Search keyword']" supportBT="1" radar="1"/>
+<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/sukebei/search/hi" path="/nyaa/sukebei/search/:query?" paramsDesc={['Search keyword']} supportBT="1" radar="1"/>
 
 ### Sukebei User
 
-<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/sukebei/user/Tarakara168" path="/nyaa/sukebei/user/:username?" :paramsDesc="['Username']" supportBT="1" radar="1"/>
+<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/sukebei/user/Tarakara168" path="/nyaa/sukebei/user/:username?" paramsDesc={['Username']} supportBT="1" radar="1"/>
 
 ### Sukebei search Result with specify user
 
-<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/sukebei/user/Tarakara168/search/a" path="/nyaa/sukebei/user/:username/search/:query?" :paramsDesc="['Username', 'Search keyword']" supportBT="1" radar="1"/>
+<RouteEn author="Lava-Swimmer noname1776" example="/nyaa/sukebei/user/Tarakara168/search/a" path="/nyaa/sukebei/user/:username/search/:query?" paramsDesc={['Username', 'Search keyword']} supportBT="1" radar="1"/>
 
 ## PornHub
 
 ### Category
 
-<RouteEn author="nczitzk" example="/pornhub/category/popular-with-women" path="/pornhub/category/:caty" :paramsDesc="['category，see [categories](https://cn.pornhub.com/webmasters/categories)']"/>
+<RouteEn author="nczitzk" example="/pornhub/category/popular-with-women" path="/pornhub/category/:caty" paramsDesc={['category，see [categories](https://cn.pornhub.com/webmasters/categories)']}/>
 
 ### Keyword Search
 
-<RouteEn author="nczitzk" example="/pornhub/search/stepsister" path="/pornhub/search/:keyword" :paramsDesc="['keyword']"/>
+<RouteEn author="nczitzk" example="/pornhub/search/stepsister" path="/pornhub/search/:keyword" paramsDesc={['keyword']}/>
 
 ### Users
 
-<RouteEn author="I2IMk queensferryme" example="/pornhub/users/pornhubmodels" path="/pornhub/:language?/users/:username" :paramsDesc="['language, see below', 'username, part of the url e.g. `pornhub.com/users/pornhubmodels`']" />
+<RouteEn author="I2IMk queensferryme" example="/pornhub/users/pornhubmodels" path="/pornhub/:language?/users/:username" paramsDesc={['language, see below', 'username, part of the url e.g. `pornhub.com/users/pornhubmodels`']} />
 
 ### Verified amateur / Model
 
-<RouteEn author="I2IMk queensferryme" example="/pornhub/model/stacy-starando" path="/pornhub/:language?/model/:username/:sort?" :paramsDesc="['language, see below', 'username, part of the url e.g. `pornhub.com/model/stacy-starando`', 'sorting method, see below']" />
+<RouteEn author="I2IMk queensferryme" example="/pornhub/model/stacy-starando" path="/pornhub/:language?/model/:username/:sort?" paramsDesc={['language, see below', 'username, part of the url e.g. `pornhub.com/model/stacy-starando`', 'sorting method, see below']} />
 
 ### Verified model / Pornstar
 
-<RouteEn author="I2IMk queensferryme" example="/pornhub/pornstar/june-liu" path="/pornhub/:language?/pornstar/:username/:sort?" :paramsDesc="['language, see below', 'username, part of the url e.g. `pornhub.com/pornstar/june-liu`', 'sorting method, see below']" />
+<RouteEn author="I2IMk queensferryme" example="/pornhub/pornstar/june-liu" path="/pornhub/:language?/pornstar/:username/:sort?" paramsDesc={['language, see below', 'username, part of the url e.g. `pornhub.com/pornstar/june-liu`', 'sorting method, see below']} />
 
 **`sort`**
 
@@ -475,7 +477,7 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 ### Video List
 
-<RouteEn author="I2IMk queensferryme" example="/pornhub/category_url/video%3Fc%3D15%26o%3Dmv%26t%3Dw%26cc%3Djp" path="/pornhub/:language?/category_url/:url?" :paramsDesc="['language, see below', 'relative path after `pornhub.com/`, need to be URL encoded']"/>
+<RouteEn author="I2IMk queensferryme" example="/pornhub/category_url/video%3Fc%3D15%26o%3Dmv%26t%3Dw%26cc%3Djp" path="/pornhub/:language?/category_url/:url?" paramsDesc={['language, see below', 'relative path after `pornhub.com/`, need to be URL encoded']}/>
 
 **`language`**
 
@@ -489,7 +491,7 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 ### シリーズ
 
-<RouteEn author="minimalistrojan" example="/prestige-av/series/847" path="/prestige-av/series/:mid/:sort?" :paramsDesc="['Series number', 'Sorting, `near` by default']" puppeteer="1">
+<RouteEn author="minimalistrojan" example="/prestige-av/series/847" path="/prestige-av/series/:mid/:sort?" paramsDesc={['Series number', 'Sorting, `near` by default']} puppeteer="1">
 
 | 人気順 | 新着順 | 発売日順 | タイトル順 | 価格の安い順 | 価格の高い順 |
 | ------- | ------ | ---- | ----- | ---- | ---- |
@@ -501,7 +503,7 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 ### Category
 
-<RouteEn author="nczitzk" example="/s-hentai" path="/hentai/:id?" :paramsDesc="['id, see below, ready-to-download by default']">
+<RouteEn author="nczitzk" example="/s-hentai" path="/hentai/:id?" paramsDesc={['id, see below, ready-to-download by default']}>
 
 | Doujin | HCG | Games・Animes | Voices・ASMR | Ready to Download |
 | ------ | --- | ------------- | ------------ | ----------------- |
@@ -519,21 +521,21 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 ### Tracks
 
-<RouteEn author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" :paramsDesc="['User name']" />
+<RouteEn author="fallenhh" example="/soundcloud/tracks/angeart" path="/soundcloud/tracks/:user" paramsDesc={['User name']} />
 
 ## Spotify
 
 ### Artist Albums
 
-<RouteEn author="outloudvi" example="/spotify/artist/6k9TBCxyr4bXwZ8Y21Kwn1" path="/spotify/artist/:id" :paramsDesc="['Artist ID']" selfhost="1"/>
+<RouteEn author="outloudvi" example="/spotify/artist/6k9TBCxyr4bXwZ8Y21Kwn1" path="/spotify/artist/:id" paramsDesc={['Artist ID']} selfhost="1"/>
 
 ### Playlist
 
-<RouteEn author="outloudvi" example="/spotify/playlist/4UBVy1LttvodwivPUuwJk2" path="/spotify/playlist/:id" :paramsDesc="['Playlist ID']" selfhost="1"/>
+<RouteEn author="outloudvi" example="/spotify/playlist/4UBVy1LttvodwivPUuwJk2" path="/spotify/playlist/:id" paramsDesc={['Playlist ID']} selfhost="1"/>
 
 ### Personal Saved Tracks
 
-<RouteEn author="outloudvi" example="/spotify/saved/50" path="/spotify/saved/:limit?" :paramsDesc="['Track count, 50 by default']" selfhost="1"/>
+<RouteEn author="outloudvi" example="/spotify/saved/50" path="/spotify/saved/:limit?" paramsDesc={['Track count, 50 by default']} selfhost="1"/>
 
 ### Personal Top Tracks
 
@@ -545,7 +547,7 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 ### Show
 
-<RouteEn author="caiohsramos" example="/spotify/show/38bS44xjbVVZ3No3ByF1dJ" path="/spotify/show/:id" :paramsDesc="['Show ID']" selfhost="1"/>
+<RouteEn author="caiohsramos" example="/spotify/show/38bS44xjbVVZ3No3ByF1dJ" path="/spotify/show/:id" paramsDesc={['Show ID']} selfhost="1"/>
 
 ## The Movie Database
 
@@ -555,23 +557,23 @@ Refer to <https://developers.themoviedb.org/3/getting-started/languages> for the
 
 ### Collection
 
-<RouteEn author="x2cf" example="/themoviedb/collection/131292/en-US" path="/themoviedb/collection/:id/:lang?" :paramsDesc="['Collection ID', 'Language']" radar="1" rssbud="1" />
+<RouteEn author="x2cf" example="/themoviedb/collection/131292/en-US" path="/themoviedb/collection/:id/:lang?" paramsDesc={['Collection ID', 'Language']} radar="1" rssbud="1" />
 
 ### Trending
 
-<RouteEn author="x2cf" example="/themoviedb/trending/tv/day/en-US" path="/themoviedb/trending/:mediaType/:timeWindow/:lang?" :paramsDesc="['`movie` or `tv`', '`day` or `week`', 'Language']" radar="1" rssbud="1" />
+<RouteEn author="x2cf" example="/themoviedb/trending/tv/day/en-US" path="/themoviedb/trending/:mediaType/:timeWindow/:lang?" paramsDesc={['`movie` or `tv`', '`day` or `week`', 'Language']} radar="1" rssbud="1" />
 
 ### TV Show Seasons
 
-<RouteEn author="x2cf" example="/themoviedb/tv/70593/seasons/en-US" path="/themoviedb/tv/:id/seasons/:lang?" :paramsDesc="['TV show ID', 'Language']" radar="1" rssbud="1" />
+<RouteEn author="x2cf" example="/themoviedb/tv/70593/seasons/en-US" path="/themoviedb/tv/:id/seasons/:lang?" paramsDesc={['TV show ID', 'Language']} radar="1" rssbud="1" />
 
 ### TV Show Episodes
 
-<RouteEn author="x2cf" example="/themoviedb/tv/70593/seasons/1/episodes/en-US" path="/themoviedb/tv/:id/seasons/:seasonNumber/episodes/:lang?" :paramsDesc="['TV show ID', 'Season number', 'Language']" radar="1" rssbud="1" />
+<RouteEn author="x2cf" example="/themoviedb/tv/70593/seasons/1/episodes/en-US" path="/themoviedb/tv/:id/seasons/:seasonNumber/episodes/:lang?" paramsDesc={['TV show ID', 'Season number', 'Language']} radar="1" rssbud="1" />
 
 ### Sheet
 
-<RouteEn author="x2cf" example="/themoviedb/tv/top-rated/en-US" path="/themoviedb/:mediaType/:sheet/:lang?" :paramsDesc="['`movie` or `tv`', 'Sheet, see below', 'Language']" radar="1" rssbud="1">
+<RouteEn author="x2cf" example="/themoviedb/tv/top-rated/en-US" path="/themoviedb/:mediaType/:sheet/:lang?" paramsDesc={['`movie` or `tv`', 'Sheet, see below', 'Language']} radar="1" rssbud="1">
 
 When `mediaType` is `tv`, `sheet` should be:
 
@@ -591,27 +593,27 @@ When `mediaType` is `movie`, `sheet` should be:
 
 ### User Collection
 
-<RouteEn author="hoilc" example="/trakt/collection/tomyangsh/movies" path="/trakt/collection/:username/:type?" :paramsDesc="['Username','Collection type, can be `movies`,`shows`,`episodes`,`all`, default to `all`']" radar="1" rssbud="1" />
+<RouteEn author="hoilc" example="/trakt/collection/tomyangsh/movies" path="/trakt/collection/:username/:type?" paramsDesc={['Username','Collection type, can be `movies`,`shows`,`episodes`,`all`, default to `all`']} radar="1" rssbud="1" />
 
 ## U3C3
 
 ### Keyword Search
 
-<RouteEn author="noname1897" example="/u3c3/search/les" path="/u3c3/search/:keyword?" :paramsDesc="['search keyword']" supportBT="1" radar="1"/>
+<RouteEn author="noname1897" example="/u3c3/search/les" path="/u3c3/search/:keyword?" paramsDesc={['search keyword']} supportBT="1" radar="1"/>
 
 ### Type
 
-<RouteEn author="noname1897" example="/u3c3/U3C3" path="/u3c3/:type?" :paramsDesc="['type, pay attention to case, it should be exactly same as the choices: `U3C3`/`Video`/`Photo`/`Book`/`Game`/`Software`/`Other`, if no type is provided, show the home index']" supportBT="1" radar="1"/>
+<RouteEn author="noname1897" example="/u3c3/U3C3" path="/u3c3/:type?" paramsDesc={['type, pay attention to case, it should be exactly same as the choices: `U3C3`/`Video`/`Photo`/`Book`/`Game`/`Software`/`Other`, if no type is provided, show the home index']} supportBT="1" radar="1"/>
 
 ## U9A9
 
 ### Home
 
-<RouteEn author="TonyRL" example="/u9a9" path="/u3c3/:preview?" :paramsDesc="['Show image preview, off by default, non empty value means on']" supportBT="1" radar="1" />
+<RouteEn author="TonyRL" example="/u9a9" path="/u3c3/:preview?" paramsDesc={['Show image preview, off by default, non empty value means on']} supportBT="1" radar="1" />
 
 ### Search
 
-<RouteEn author="TonyRL" example="/u9a9/search/新片速递" path="/u3c3/search/:keyword/:preview?" :paramsDesc="['Search keyword', 'Show image preview, off by default, non empty value means on']" supportBT="1" radar="1" />
+<RouteEn author="TonyRL" example="/u9a9/search/新片速递" path="/u3c3/search/:keyword/:preview?" paramsDesc={['Search keyword', 'Show image preview, off by default, non empty value means on']} supportBT="1" radar="1" />
 
 ## YouTube
 
