@@ -4749,6 +4749,9 @@
     "/scau/yzb": [
         "shengmaosu"
     ],
+    "/science/blogs/:name?": [
+        "TomHodson"
+    ],
     "/science/cover": [
         "y9c",
         "TonyRL"
