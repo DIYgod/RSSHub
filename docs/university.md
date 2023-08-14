@@ -985,6 +985,8 @@ pageClass: routes
 
 若订阅 [学院信息](https://sohac.nenu.edu.cn/index/xyxx.htm)，网址为 <https://sohac.nenu.edu.cn/index/xyxx.htm>。截取 `https://sohac.nenu.edu.cn/` 到末尾 `.htm` 的部分 `index/xyxx` 作为参数，此时路由为 [`/nenu/sohac/index/xyxx`](https://rsshub.app/nenu/sohac/index/xyxx)。
 
+:::
+
 </Route>
 
 ### 研究生院
@@ -3840,6 +3842,10 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | xwdt2016/tzgg2016 | xwdt2016/kjdt2016 | kxcb2016/kpdt2016 |
 
 </Route>
+
+### 遗传与发育生物学研究所 学术活动
+
+<Route author="panyq357" example="/cas/genetics/xshd" path="/cas/genetics/xshd" radar="1"/>
 
 ## 中国科学院大学
 
