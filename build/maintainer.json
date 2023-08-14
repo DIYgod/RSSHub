@@ -1884,6 +1884,18 @@
     "/filmdeepfocus/:category?": [
         "nczitzk"
     ],
+    "/finology/bullets": [
+        "Rjnishant530"
+    ],
+    "/finology/:category": [
+        "Rjnishant530"
+    ],
+    "/finology/most-viewed/:time": [
+        "Rjnishant530"
+    ],
+    "/finology/tag/:topic": [
+        "Rjnishant530"
+    ],
     "/finviz/news/:ticker": [
         "HenryQW"
     ],
