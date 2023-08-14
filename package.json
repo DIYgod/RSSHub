@@ -84,7 +84,7 @@
   },
   "dependencies": {
     "@koa/router": "12.0.0",
-    "@notionhq/client": "2.2.10",
+    "@notionhq/client": "2.2.11",
     "@postlight/parser": "2.2.3",
     "@sentry/node": "7.63.0",
     "aes-js": "3.1.2",
