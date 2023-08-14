@@ -31,7 +31,7 @@
     "remark-preset-prettier": "0.5.1",
     "remark-stringify": "9.0.1",
     "string-width": "4.2.3",
-    "vuepress": "1.9.9",
+    "vuepress": "1.9.10",
     "vuepress-plugin-meilisearch": "0.13.0",
     "vuepress-plugin-sitemap": "2.3.1"
   }
