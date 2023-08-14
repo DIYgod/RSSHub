@@ -12,8 +12,8 @@ dependencies:
     specifier: 1.9.9
     version: 1.9.9
   '@vuepress/plugin-pwa':
-    specifier: 1.9.9
-    version: 1.9.9
+    specifier: 1.9.10
+    version: 1.9.10
   '@vuepress/shared-utils':
     specifier: 1.9.9
     version: 1.9.9
@@ -1934,11 +1934,11 @@ packages:
       - debug
     dev: false
 
-  /@vuepress/plugin-pwa@1.9.9:
-    resolution: {integrity: sha512-69kTlTl/mdWSD/+odz73oXvi2SuT8GO+e7YlPZFloeZR3kffC6ywYMip6m4MOalKOSUf0XzD3hCqCNVha6vo8Q==}
+  /@vuepress/plugin-pwa@1.9.10:
+    resolution: {integrity: sha512-pP3CUYKyIpnePswZGj9sBHJUzOczSmWSkmdoJftEnsBQT10YycJ81khS9WKEGPbTurbCOCCXsOzaEqCLysyYaA==}
     dependencies:
-      '@vuepress/shared-utils': 1.9.9
-      '@vuepress/types': 1.9.9
+      '@vuepress/shared-utils': 1.9.10
+      '@vuepress/types': 1.9.10
       register-service-worker: 1.7.2
       workbox-build: 4.3.1
     transitivePeerDependencies:
@@ -1962,6 +1962,22 @@ packages:
       '@vuepress/types': 1.9.9
     transitivePeerDependencies:
       - debug
+    dev: false
+
+  /@vuepress/shared-utils@1.9.10:
+    resolution: {integrity: sha512-M9A3DocPih+V8dKK2Zg9FJQ/f3JZrYsdaM/vQ9F48l8bPlzxw5NvqXIYMK4kKcGEyerQNTWCudoCpLL5uiU0hg==}
+    dependencies:
+      chalk: 2.4.2
+      escape-html: 1.0.3
+      fs-extra: 7.0.1
+      globby: 9.2.0
+      gray-matter: 4.0.3
+      hash-sum: 1.0.2
+      semver: 6.3.0
+      toml: 3.0.0
+      upath: 1.2.0
+    transitivePeerDependencies:
+      - supports-color
     dev: false
 
   /@vuepress/shared-utils@1.9.9:
@@ -1996,6 +2012,16 @@ packages:
     transitivePeerDependencies:
       - debug
       - supports-color
+    dev: false
+
+  /@vuepress/types@1.9.10:
+    resolution: {integrity: sha512-TDNQn4og85onmBpLTTXXmncW3rUnYGr2MkuI8OIFJZetDNM49t1WbjNVlrT+kx7C6qXi6okDQgrHGYXajHZWfg==}
+    dependencies:
+      '@types/markdown-it': 10.0.3
+      '@types/webpack-dev-server': 3.11.6
+      webpack-chain: 6.5.1
+    transitivePeerDependencies:
+      - debug
     dev: false
 
   /@vuepress/types@1.9.9:
@@ -2598,6 +2624,7 @@ packages:
   /binary-extensions@2.2.0:
     resolution: {integrity: sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==}
     engines: {node: '>=8'}
+    requiresBuild: true
     dev: false
     optional: true
 
@@ -4959,6 +4986,7 @@ packages:
   /glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
     engines: {node: '>= 6'}
+    requiresBuild: true
     dependencies:
       is-glob: 4.0.3
     dev: false
@@ -5594,6 +5622,7 @@ packages:
   /is-binary-path@2.1.0:
     resolution: {integrity: sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==}
     engines: {node: '>=8'}
+    requiresBuild: true
     dependencies:
       binary-extensions: 2.2.0
     dev: false
@@ -7840,6 +7869,7 @@ packages:
   /readdirp@3.6.0:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
+    requiresBuild: true
     dependencies:
       picomatch: 2.3.1
     dev: false
