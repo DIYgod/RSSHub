@@ -15,8 +15,8 @@ dependencies:
     specifier: 2.2.3
     version: 2.2.3
   '@sentry/node':
-    specifier: 7.63.0
-    version: 7.63.0
+    specifier: 7.64.0
+    version: 7.64.0
   aes-js:
     specifier: 3.1.2
     version: 3.1.2
@@ -1078,7 +1078,7 @@ packages:
       '@babel/runtime-corejs2': 7.22.10
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.29.4
@@ -1153,33 +1153,33 @@ packages:
       selderee: 0.11.0
     dev: false
 
-  /@sentry-internal/tracing@7.63.0:
-    resolution: {integrity: sha512-Fxpc53p6NGvLSURg3iRvZA0k10K9yfeVhtczvJnpX30POBuV41wxpkLHkb68fjksirjEma1K3Ut1iLOEEDpPQg==}
+  /@sentry-internal/tracing@7.64.0:
+    resolution: {integrity: sha512-1XE8W6ki7hHyBvX9hfirnGkKDBKNq3bDJyXS86E0bYVDl94nvbRM9BD9DHsCFetqYkVm1yDGEK+6aUVs4CztoQ==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.63.0
-      '@sentry/types': 7.63.0
-      '@sentry/utils': 7.63.0
+      '@sentry/core': 7.64.0
+      '@sentry/types': 7.64.0
+      '@sentry/utils': 7.64.0
       tslib: 2.6.1
     dev: false
 
-  /@sentry/core@7.63.0:
-    resolution: {integrity: sha512-13Ljiq8hv6ieCkO+Am99/PljYJO5ynKT/hRQrWgGy9IIEgUr8sV3fW+1W6K4/3MCeOJou0HsiGBjOD1mASItVg==}
+  /@sentry/core@7.64.0:
+    resolution: {integrity: sha512-IzmEyl5sNG7NyEFiyFHEHC+sizsZp9MEw1+RJRLX6U5RITvcsEgcajSkHQFafaBPzRrcxZMdm47Cwhl212LXcw==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.63.0
-      '@sentry/utils': 7.63.0
+      '@sentry/types': 7.64.0
+      '@sentry/utils': 7.64.0
       tslib: 2.6.1
     dev: false
 
-  /@sentry/node@7.63.0:
-    resolution: {integrity: sha512-tSMyfQNbfjX1w8vJDZtvWeaD4QQ/Z4zVW/TLXfL/JZFIIksPgDZmqLdF+NJS4bSGTU5JiHiUh4pYhME4mHgNBQ==}
+  /@sentry/node@7.64.0:
+    resolution: {integrity: sha512-wRi0uTnp1WSa83X2yLD49tV9QPzGh5e42IKdIDBiQ7lV9JhLILlyb34BZY1pq6p4dp35yDasDrP3C7ubn7wo6A==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry-internal/tracing': 7.63.0
-      '@sentry/core': 7.63.0
-      '@sentry/types': 7.63.0
-      '@sentry/utils': 7.63.0
+      '@sentry-internal/tracing': 7.64.0
+      '@sentry/core': 7.64.0
+      '@sentry/types': 7.64.0
+      '@sentry/utils': 7.64.0
       cookie: 0.4.2
       https-proxy-agent: 5.0.1
       lru_map: 0.3.3
@@ -1188,16 +1188,16 @@ packages:
       - supports-color
     dev: false
 
-  /@sentry/types@7.63.0:
-    resolution: {integrity: sha512-pZNwJVW7RqNLGuTUAhoygt0c9zmc0js10eANAz0MstygJRhQI1tqPDuiELVdujPrbeL+IFKF+7NvRDAydR2Niw==}
+  /@sentry/types@7.64.0:
+    resolution: {integrity: sha512-LqjQprWXjUFRmzIlUjyA+KL+38elgIYmAeoDrdyNVh8MK5IC1W2Lh1Q87b4yOiZeMiIhIVNBd7Ecoh2rodGrGA==}
     engines: {node: '>=8'}
     dev: false
 
-  /@sentry/utils@7.63.0:
-    resolution: {integrity: sha512-7FQv1RYAwnuTuarruP+1+Jd6YQuN7i/Y7KltwPMVEwU7j5mzYQaexLr/Jz1XIdR2KYVdkbXQyP8jj8BmA6u9Jw==}
+  /@sentry/utils@7.64.0:
+    resolution: {integrity: sha512-HRlM1INzK66Gt+F4vCItiwGKAng4gqzCR4C5marsL3qv6SrKH98dQnCGYgXluSWaaa56h97FRQu7TxCk6jkSvQ==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.63.0
+      '@sentry/types': 7.64.0
       tslib: 2.6.1
     dev: false
 
@@ -7802,8 +7802,8 @@ packages:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
     dev: true
 
-  github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     name: difflib
     version: 0.2.6
     dependencies:
