@@ -574,15 +574,7 @@ Country
 
 ### 文章
 
-<Route author="nczitzk" example="/foresightnews/article" path="/foresightnews/article">
-
-::: tip 提示
-
-**文章** 来自 **首页** 时间流，并筛除 **首页** 时间流中的 **快讯** 获得，所以 `limit` 参数不能按预期返回指定数目的文章。
-
-:::
-
-</Route>
+<Route author="nczitzk" example="/foresightnews/article" path="/foresightnews/article"/>
 
 ### 快讯
 
@@ -590,7 +582,11 @@ Country
 
 ### 专栏
 
-<Route author="nczitzk" example="/foresightnews/column/1" path="/foresightnews/column/:id" :paramsDesc="['专栏 id, 可在专栏页 URL 中找到']"/>
+<Route author="nczitzk" example="/foresightnews/column/1" path="/foresightnews/column/:id" :paramsDesc="['专栏 id, 可在对应专栏页 URL 中找到']"/>
+
+### 标签
+
+<Route author="nczitzk" example="/foresightnews/tag/16" path="/foresightnews/tag/:id" :paramsDesc="['标签 id, 可在对应标签页 URL 中找到']"/>
 
 ## Global Disinformation Index
 
