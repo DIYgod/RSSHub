@@ -28,8 +28,8 @@ const config = {
     // metadata like html lang. For example, if your site is Chinese, you may want
     // to replace "en" with "zh-Hans".
     i18n: {
-        defaultLocale: 'en',
-        locales: ['en', 'zh'],
+        defaultLocale: 'zh',
+        locales: ['zh', 'en'],
     },
 
     presets: [
@@ -38,7 +38,7 @@ const config = {
             /** @type {import('@docusaurus/preset-classic').Options} */
             ({
                 docs: {
-                    path: '../docs',
+                    // path: '../docs',
                     routeBasePath: '/',
                     sidebarPath: require.resolve('./sidebars.js'),
                     // Please change this to your repo.
@@ -57,7 +57,7 @@ const config = {
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
             // Replace with your project's social card
-            image: 'img/docusaurus-social-card.jpg',
+            image: 'img/logo.png',
             navbar: {
                 title: 'RSSHub',
                 logo: {
@@ -66,10 +66,42 @@ const config = {
                 },
                 items: [
                     {
-                        type: 'docSidebar',
-                        sidebarId: 'tutorialSidebar',
+                        to: '/',
                         position: 'left',
-                        label: 'Tutorial',
+                        label: '指南',
+                    },
+                    {
+                        type: 'dropdown',
+                        label: '参与我们',
+                        position: 'left',
+                        items: [
+                            {
+                                to: '/joinus/quick-start',
+                                label: '快速开始',
+                            },
+                            {
+                                to: '/joinus/advanced/script-standard',
+                                label: '路由规范',
+                            },
+                            {
+                                to: '/joinus/advanced/pub-date',
+                                label: '日期处理',
+                            },
+                            {
+                                to: '/joinus/advanced/use-cache',
+                                label: '使用缓存',
+                            },
+                        ],
+                    },
+                    {
+                        to: '/install',
+                        position: 'left',
+                        label: '部署',
+                    },
+                    {
+                        to: '/support',
+                        position: 'left',
+                        label: '支持 RSSHub',
                     },
                     {
                         type: 'localeDropdown',
