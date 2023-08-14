@@ -386,6 +386,14 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 </Route>
 
+### 博客
+
+<Route author="TomHodson" example="/science/blogs/pipeline" path="/science/blogs/:name?" :paramsDesc="['博客简称，可在 URL 找到。默认为 `pipeline`']" anticrawler="1" puppeteer="1" radar="1" rssbud="1">
+
+要订阅 [Derek Lowe 的 IN THE PIPELINE](https://science.org/blogs/pipeline) 或 [科学编辑的博客](https://science.org/blogs/editors-blog)，请使用名称参数 `pipeline` 或 `editors-blog`。
+
+</Route>
+
 ## ScienceDirect
 
 ### Journal

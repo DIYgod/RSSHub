@@ -102,7 +102,7 @@ jobs:
         if: ${{ matrix.chromium.dependency != '' }}
         # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
         # nothing since it calls Snap (disgusting!) to install Chromium, which should be up-to-date.
-        # That's not really a problem since the Chromium-bundled Docker image is based on Debian bookworm,
+        # That's not really a problem since the Chromium-bundled Docker image is based on Debian bullseye,
         # which provides up-to-date native packages.
         run: |
           set -ex

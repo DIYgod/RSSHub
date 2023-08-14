@@ -37,6 +37,85 @@ pageClass: routes
 
 <RouteEn author="HenryQW" example="/cfd/div_gbp" path="/cfd/div_gbp" />
 
+## Finology Insider
+
+### Bullets
+
+<RouteEn author="Rjnishant530" example="/finology/bullets" path="/finology/bullets" radar="1"/>
+
+### Category
+
+<RouteEn author="Rjnishant530" example="/finology/success-stories" path="/finology/:category" :paramDesc="['Refer Table below or find in URL']" radar="1">
+
+::: details Category
+
+| Category           | Link                  |
+|---------------------|-----------------------|
+| **Business**       | business              |
+| Big Shots          | entrepreneurship     |
+| Startups           | startups-india        |
+| Brand Games        | success-stories       |
+| Juicy Scams        | juicy-scams           |
+| **Finance**        | finance               |
+| Macro Moves        | economy               |
+| News Platter       | market-news           |
+| Tax Club           | tax                   |
+| Your Money         | your-money            |
+| **Invest**         | investing             |
+| Stock Market       | stock-market          |
+| Financial Ratios   | stock-ratios          |
+| Investor's Psychology | behavioral-finance  |
+| Mutual Funds       | mutual-fund           |
+
+:::
+
+</RouteEn>
+
+### Most Viewed
+
+<RouteEn author="Rjnishant530" example="/finology/most-viewed/monthly" path="/finology/most-viewed/:time" :paramDesc="['Accepts : `alltime` or `monthly` only']" radar="1"/>
+
+### Trending Topic
+
+<RouteEn author="Rjnishant530" example="/finology/tag/startups" path="/tag/:topic" :paramDesc="['Refer Table below or find in URL']" radar="1">
+
+::: details Topic
+
+| Topic              | Link                  |
+|---------------------|-----------------------|
+| Investment Decisions | investment-decisions |
+| Investing 101       | investing-101         |
+| Stock Markets      | stock-markets         |
+| business news india | business-news-india   |
+| Company Analysis   | company-analysis      |
+| Business and brand tales | business-and-brand-tales |
+| Featured           | featured              |
+| Fundamental Analysis | fundamental-analysis |
+| Business Story     | business-story        |
+| All Biz            | all-biz               |
+| Stock Analysis     | stock-analysis        |
+| Automobile Industry | automobile-industry   |
+| Indian Economy     | indian-economy        |
+| Govt's Words       | govt%27s-words        |
+| Behavioral Finance | behavioral-finance    |
+| Global Economy     | global-economy        |
+| Startups           | startups              |
+| GST                | gst                   |
+| Product Review     | product-review        |
+| My Pocket          | my-pocket             |
+| Business Games     | business-games        |
+| Business Models    | business-models       |
+| Indian Indices     | indian-indices        |
+| Banking System     | banking-system        |
+| Debt               | debt                  |
+| World News         | world-news            |
+| Technology         | technology            |
+| Regulatory Bodies  | regulatory-bodies     |
+
+:::
+
+</RouteEn>
+
 ## finviz
 
 ### News
