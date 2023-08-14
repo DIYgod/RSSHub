@@ -15,8 +15,8 @@ dependencies:
     specifier: 1.9.10
     version: 1.9.10
   '@vuepress/shared-utils':
-    specifier: 1.9.9
-    version: 1.9.9
+    specifier: 1.9.10
+    version: 1.9.10
   markdown-it:
     specifier: 13.0.1
     version: 13.0.1
