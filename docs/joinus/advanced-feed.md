@@ -49,7 +49,7 @@
 | **`media.*`** | *（可选）* 条目相关的媒体。更多详情请参见 [媒体 RSS](https://www.rssboard.org/media-rss) | `undefinded` | R |
 | **`doi`** | *（可选）* 条目的数字对象标识符 (DOI)，应为格式为 `10.xxx/xxxxx.xxxx` 的字符串 | `undefinded` | R |
 
-::: warning 格式考虑
+:::caution 格式考虑
 在指定 RSS 订阅源中的某些字段时，重要的是要注意一些格式考虑因素。具体来说，您应避免在以下字段中包含任何换行符、连续的空格或前导／尾随空格：**`title`**，**`subtitle`**（仅适用于 Atom），**`author`**（仅适用于 Atom），**`item.title`** 和 **`item.author`**。
 
 虽然大多数 RSS 阅读器将自动修剪这些空字符，但有些阅读器可能无法正确处理它们。因此，为确保与所有 RSS 阅读器兼容，我们建议在输出这些字段之前将其修剪。如果您制作的路由无法容忍修剪这些空字符，您应考虑更改它们的格式。
@@ -138,7 +138,7 @@ ctx.state.data = {
 
 通过在 RSS 源中包含这些字段，您将能够制作与播客播放器兼容的播客订阅源。
 
-::: tip 进一步阅读
+:::tip 进一步阅读
 
 -   [A Podcaster’s Guide to RSS](https://help.apple.com/itc/podcasts_connect/#/itcb54353390)
 -   [Google 播客的 RSS Feed 指南](https://support.google.com/podcast-publishers/answer/9889544)

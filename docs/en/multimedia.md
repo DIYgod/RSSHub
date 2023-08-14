@@ -1,9 +1,5 @@
 import RouteEn from '@site/src/components/RouteEn';
 
----
-pageClass: routes
----
-
 # Multimedia
 
 ## 60-Second Science - Scientific American
@@ -87,7 +83,7 @@ When `uncensored_makersr` as **Uncensored** is chosen as **Category**, the avail
 
 ## 91porn
 
-::: tip Tips
+:::tip Tips
 
 91porn has multiple backup domains, routes use the permanent domain <https://91porn.com> by default. If the domain is not accessible, you can add `?domain=<domain>` to specify the domain to be used. If you want to specify the backup domain to <https://0122.91p30.com>, you can add `?domain=0122.91p30.com` to the end of all 91porn routes, then the route will become [`/91porn?domain=0122.91p30.com`](https://rsshub.app/91porn?domain=0122.91p30.com)
 
@@ -139,7 +135,7 @@ When `uncensored_makersr` as **Uncensored** is chosen as **Category**, the avail
 
 ## EZTV
 
-::: tip
+:::tip
 
 Official RSS: <https://eztv.io/ezrss.xml>
 
@@ -165,7 +161,7 @@ Official RSS: <https://eztv.io/ezrss.xml>
 
 <RouteEn author="nczitzk" example="/ibc/radio/maitta" path="/ibc/radio/:id?" paramsDesc={['Radio id, can be found in URL, イヤーマイッタマイッタ by default']} supportPodcast="1">
 
-::: tip Tip
+:::tip Tip
 
 If you subscribe to [イヤーマイッタマイッタ](https://www.ibc.co.jp/radio/maitta/audio), the URL is <https://www.ibc.co.jp/radio/maitta/audio>. Intercept `maitta` between `https://www.ibc.co.jp/radio/` and `/audio/` as an argument, then the route will be [`/ibc/radio/maitta`](https://rsshub.app/ibc/radio/maitta).
 
@@ -177,7 +173,7 @@ If you subscribe to [火曜ワイド「境界トラブル解決ラジオ！] (ht
 
 ## JavBus
 
-::: tip Language
+:::tip Language
 
 You can change the language of each route to the languages listed below.
 
@@ -187,7 +183,7 @@ You can change the language of each route to the languages listed below.
 
 :::
 
-::: tip Tips
+:::tip Tips
 
 JavBus has multiple backup domains, these routes use default domain <https://javbus.com>. If the domain is unreachable, you can add `?domain=<domain>` to the end of the route to specify the domain to visit. Let say you want to use the backup domain <https://javsee.icu>, you can add `?domain=javsee.icu` to the end of the route, then the route will be [`/javbus/en?domain=javsee.icu`](https://rsshub.app/javbus?domain=javsee.icu)
 
@@ -357,7 +353,7 @@ For more actresses [Western AV Idols](https://www.javbus.org/en/actresses)
 | ------------------------------ | -------------------- |
 | 1                              | 2                    |
 
-::: tip Tip
+:::tip Tip
 
 See [Categories](https://www.javlibrary.com/en/genres.php) to view all categories.
 
@@ -373,7 +369,7 @@ See [Categories](https://www.javlibrary.com/en/genres.php) to view all categorie
 | ------------------------------ | -------------------- |
 | 1                              | 2                    |
 
-::: tip Tip
+:::tip Tip
 
 See [Ranking](https://www.javlibrary.com/en/star_mostfav.php) to view stars by ranks.
 
@@ -551,7 +547,7 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 ## The Movie Database
 
-::: tip Tips
+:::tip Tips
 Refer to <https://developers.themoviedb.org/3/getting-started/languages> for the language parameter in the route.
 :::
 

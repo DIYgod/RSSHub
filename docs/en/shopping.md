@@ -1,9 +1,5 @@
 import RouteEn from '@site/src/components/RouteEn';
 
----
-pageClass: routes
----
-
 # Shopping
 
 ## Alter China
@@ -30,7 +26,7 @@ Time
 | ------------------- | --------------- | ------------ |
 | 24h                 | week            | alltime      |
 
-::: tip Tip
+:::tip Tip
 
 Parameter `time` only works when `mostwanted` is chosen as the category.
 
@@ -56,7 +52,7 @@ gender
 | ---- | ------ |
 | mens | womens |
 
-::: tip
+:::tip
 
 Parameter `country` can be found within the url of `Arcteryx` website.
 
@@ -80,7 +76,7 @@ gender
 | ---- | ------ |
 | mens | womens |
 
-::: tip
+:::tip
 
 Parameter `country` can be found within the url of `Arcteryx` website.
 

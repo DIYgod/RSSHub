@@ -1,9 +1,5 @@
 import RouteEn from '@site/src/components/RouteEn';
 
----
-pageClass: routes
----
-
 # Government
 
 ## Australia Department of Home Affairs
@@ -95,7 +91,7 @@ Category
 
 <RouteEn author="nczitzk" example="/ustr/press-releases" path="/ustr/press-releases/:year?/:month?" paramsDesc={['Year, current year by default', 'Month, empty by default, show contents in all year']}>
 
-::: tip Tip
+:::tip Tip
 
 Fill in the English expression for the month in the Month field, eg `December` for the 12th Month。
 

@@ -1,9 +1,5 @@
 import RouteEn from '@site/src/components/RouteEn';
 
----
-pageClass: routes
----
-
 # Programming
 
 ## A List Apart
@@ -184,7 +180,7 @@ Category
 
 ## GitHub
 
-::: tip
+:::tip
 
 GitHub provides some official RSS feeds:
 

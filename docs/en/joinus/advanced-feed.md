@@ -49,7 +49,7 @@ Each item in an RSS feed is represented by an object with a set of fields that d
 | **`media.*`** | *(Optional)* The media associated with the item. See [Media RSS](https://www.rssboard.org/media-rss) for more details | `undefinded` | R |
 | **`doi`** | *(Optional)* The Digital Object Identifier of the item, which should be a string in the format `10.xxxx/xxxxx.xxxx` | `undefinded` | R |
 
-::: warning Formatting Considerations
+:::caution Formatting Considerations
 When specifying certain fields in an RSS feed, it's important to keep in mind some formatting considerations. Specifically, you should avoid including any linebreaks, consecutive whitespace, or leading/trailing whitespace in the following fields: **`title`**, **`subtitle`** (only for Atom), **`author`** (only for Atom), **`item.title`**, and **`item.author`**.
 
 While most RSS readers will automatically trim these fields, some may not process them properly. Therefore, to ensure compatibility with all RSS readers, we recommend trimming these fields before outputting them. If your route cannot tolerate trimming these fields, you should consider changing their format.
@@ -138,7 +138,7 @@ ctx.state.data = {
 
 By including these fields in your RSS feed, you'll be able to create podcast feeds that are compatible with many podcast players.
 
-::: tip Further Reading
+:::tip Further Reading
 
 -   [A Podcaster’s Guide to RSS](https://help.apple.com/itc/podcasts_connect/#/itcb54353390)
 -   [RSS feed guidelines for Google Podcasts](https://support.google.com/podcast-publishers/answer/9889544)

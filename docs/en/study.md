@@ -1,9 +1,5 @@
 import RouteEn from '@site/src/components/RouteEn';
 
----
-pageClass: routes
----
-
 # Study
 
 ## Asian Innovation and Entrepreneurship Association

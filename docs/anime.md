@@ -1,9 +1,5 @@
 import Route from '@site/src/components/Route';
 
----
-pageClass: routes
----
-
 # 二次元
 
 ## 005.tv
@@ -24,7 +20,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/78dm/news" path="/78dm/news/:path+" paramsDesc={['参数，见说明，默认为空']}>
 
-::: tip 提示
+:::tip 提示
 
 若订阅 [新品速递](https://www.78dm.net/news)，网址为 <https://www.78dm.net/news>。截取 `https://www.78dm.net` 到末尾的部分 `/news` 作为参数，此时路由为 [`/78dm/news`](https://rsshub.app/78dm/news)。
 
@@ -38,7 +34,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/78dm/eval_list" path="/78dm/eval_list/:path+" paramsDesc={['参数，见说明，默认为空']}>
 
-::: tip 提示
+:::tip 提示
 
 若订阅 [精彩评测](https://www.78dm.net/eval_list)，网址为 <https://www.78dm.net/eval_list>。截取 `https://www.78dm.net` 到末尾的部分 `/eval_list` 作为参数，此时路由为 [`/78dm/eval_list`](https://rsshub.app/78dm/eval_list)。
 
@@ -52,7 +48,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/78dm/ht_list" path="/78dm/ht_list/:path+" paramsDesc={['参数，见说明，默认为空']}>
 
-::: tip 提示
+:::tip 提示
 
 若订阅 [好帖推荐](https://www.78dm.net/ht_list)，网址为 <https://www.78dm.net/ht_list>。截取 `https://www.78dm.net` 到末尾的部分 `/ht_list` 作为参数，此时路由为 [`/78dm/ht_list`](https://rsshub.app/78dm/ht_list)。
 
@@ -68,7 +64,7 @@ pageClass: routes
 
 <Route author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" paramsDesc={['番剧 id']} radar="1" rssbud="1"/>
 
-::: tip 提示
+:::tip 提示
 
 番剧 id 不包含开头的 aa。
 例如：<http://www.acfun.cn/bangumi/aa5022158> 的番剧 id 是 5022158，不包括开头的 aa。
@@ -215,7 +211,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/dlsite/home/new" path="/dlsite/:path+" paramsDesc={['路径，默认为 `/home/new`，即発売カレンダー']}>
 
-::: tip 提示
+:::tip 提示
 
 订阅该路由可以先访问网站指定过滤器，然后在路由的路径处填写对应页面 URL 中 `https://www.dlsite.com/` 后的字段。下面是两个例子。
 
@@ -313,7 +309,7 @@ pageClass: routes
 
 <Route author="FeCCC" example="/iwara/subscriptions" path="/iwara/subscriptions" radar="1" rssbud="1" selfhost="1">
 
-::: warning 注意
+:::caution 注意
 
 用户动态需要 iwara 用户名和密码，所以只能自建，详情见[部署页面](/install/#route-specific-configurations)的配置模块。
 
@@ -333,7 +329,7 @@ Sources
 | ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |
 | posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |
 
-::: tip 提示
+:::tip 提示
 
 当选择 `posts` 作为参数 **source** 的值时，参数 **id** 不生效。
 
@@ -365,7 +361,7 @@ Sources
 
 <Route author="axojhf" example="/lovelive-anime/schedules" path="/schedules/:serie?/:category?" paramsDesc={['Love Live系列子企划简称，详见下表', '官网列出的分类，详见下表']} radar="1">
 
-::: tip 请注意！！！
+:::tip 请注意！！！
 该路由获取的时间及其他信息以官网公告为准！<br />
 该 RSS 路由没有经过严格的测试，提供的信息不能保证准确性！
 :::
@@ -392,7 +388,7 @@ Sources
 
 <Route author="nczitzk" example="/mox" path="/mox/:category?" paramsDesc={['分类，可在对应分类页 URL 中找到']}>
 
-::: tip 提示
+:::tip 提示
 
 在首页将分类参数选择确定后跳转到的分类页面 URL 中，`/l/` 后的字段即为分类参数。
 
@@ -528,7 +524,7 @@ Sources
 
 ## 俺の 3D エロ動画 (oreno3d)
 
-::: tip 提示
+:::tip 提示
 
 可配合其他 RSS 解析库 (如`Python`的`feedparser`库) 实现视频的更新检测以及自动下载
 
@@ -670,7 +666,7 @@ Sources
 
 ## 禁漫天堂
 
-::: tip 提示
+:::tip 提示
 
 禁漫天堂有多个备用域名，本路由默认使用域名 <https://jmcomic.me>，若该域名无法访问，可以通过在路由最后加上 `?domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://jmcomic1.me>，则在所有禁漫天堂路由最后加上 `?domain=jmcomic1.me` 即可，此时路由为 [`/18comic?domain=jmcomic1.me`](https://rsshub.app/18comic?domain=jmcomic1.me)
 
@@ -709,7 +705,7 @@ Sources
 
 <Route author="nczitzk" example="/18comic/search/photos/all/NTR" path="/18comic/search/:option?/:category?/:keyword?/:time?/:order?" paramsDesc={['选项，可选 `video` 和 `photos`，默认为 `photos`', '分类，同上表，默认为 `all` 即全部', '关键字，同上表，默认为空', '时间范围，同上表，默认为 `a` 即全部', '排列顺序，同上表，默认为 `mr` 即最新']}>
 
-::: tip 提示
+:::tip 提示
 
 关键字必须超过两个字，这是来自网站的限制。
 
@@ -721,7 +717,7 @@ Sources
 
 <Route author="nczitzk" example="/18comic/album/292282" path="/18comic/album/:id" paramsDesc={['专辑 id，可在专辑页 URL 中找到']}>
 
-::: tip 提示
+:::tip 提示
 
 专辑 id 不包括 URL 中标题的部分。
 
@@ -751,7 +747,7 @@ Sources
 
 <Route author="shininome" path="/manhuagui/subscribe" example="/manhuagui/subscribe" radar="1" rssbud="1" selfhost="1">
 
-::: tip 提示
+:::tip 提示
 
 个人订阅需要自建
 环境变量需要添加 MHGUI_COOKIE
@@ -848,7 +844,7 @@ Sources
 | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
 | mt     | rise   | new    | pay    | top    | male   | female |
 
-::: tip 提示
+:::tip 提示
 
 `time` 参数仅在 `type` 参数选为 **月票榜** 的时候生效。
 

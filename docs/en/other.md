@@ -1,9 +1,5 @@
 import RouteEn from '@site/src/components/RouteEn';
 
----
-pageClass: routes
----
-
 # Uncategorized
 
 ## 591 Rental house
@@ -12,7 +8,7 @@ pageClass: routes
 
 <RouteEn author="Yukaii" example="/591/tw/rent/order=posttime&orderType=desc" path="/591/:country/rent/:query?" paramsDesc={['Country code. Only tw is supported now', 'Query Parameters']}>
 
-::: tip Tip
+:::tip Tip
 
 Copy the URL of the 591 filter housing page and remove the front part "<https://rent.591.com.tw/>?", you will get the query parameters.
 
@@ -231,13 +227,13 @@ For example:
 
 ## Notion
 
-::: warning Warning
+:::caution Warning
 
 Need to set up Notion integration, please refer to [Route-specific Configurations](https://docs.rsshub.app/en/install/#Deployment) for details.
 
 :::
 
-::: tip Recommendation
+:::tip Recommendation
 
 It is recommended to use with clipping tools such as Notion Web Clipper.
 
@@ -366,7 +362,7 @@ Specify options (in the format of query string) in parameter `routeParams` param
 | `itemLink`  | The JSON Path as `link` in `item`        | `string`        | None                                       |
 | `itemDesc`  | The JSON Path as `description` in `item` | `string`        | None                                       |
 
-::: tip Note
+:::tip Note
 
 JSON Path only supports format like `a.b.c`. if you need to access arrays, like `a[0].b`, you can write it as `a.0.b`.
 

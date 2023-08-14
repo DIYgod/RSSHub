@@ -1,9 +1,5 @@
 import RouteEn from '@site/src/components/RouteEn';
 
----
-pageClass: routes
----
-
 # Social Media
 
 ## Bluesky (bsky)
@@ -174,7 +170,7 @@ Type
 
 ## Instagram
 
-::: warning
+:::caution
 
 Due to Instagram Private API restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/en/install/) for more.
 
@@ -190,7 +186,7 @@ If you don't want to setup credentials, you can use [Picnob](#picnob) or [Picuki
 | ------------- | ------- |
 | user          | tags    |
 
-::: tip Tips
+:::tip Tips
 It's highly recommended to deploy with Redis cache enabled.
 :::
 
@@ -218,7 +214,7 @@ It's highly recommended to deploy with Redis cache enabled.
 
 ## Mastodon
 
-::: tip
+:::tip
 
 Official user RSS:
 
@@ -289,7 +285,7 @@ If the instance address is not `mastodon.social` or `pawoo.net`, then the route 
 | 1 (default)    | on                                      | off                        |
 | 10             | on                                      | on                         |
 
-::: warning
+:::caution
 
 Instagram Stories do not have a reliable guid. It is possible that your RSS reader show the same story more than once.
 Though, every Story expires after 24 hours, so it may be not so serious.
@@ -340,7 +336,7 @@ Though, every Story expires after 24 hours, so it may be not so serious.
 
 <RouteEn author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1" rssbud="1" selfhost="1">
 
-::: warning
+:::caution
 
 Only for self-hosted
 
@@ -430,7 +426,7 @@ https://rsshub.app/telegram/channel/NewlearnerChannel/showLinkPreview=0&showViaB
 
 generates an RSS without any link previews and annoying metadata, with emoji media tags in the title, without forwarded messages (but with reply messages), and without messages you don't care about (service messages and unsupported messages), for people who prefer pure subscriptions.
 
-::: tip
+:::tip
 
 For backward compatibility reasons, invalid `routeParams` will be treated as `searchQuery` .
 
@@ -481,7 +477,7 @@ https://rsshub.app/threads/zuck/showAuthorInTitle=1&showAuthorInDesc=1&showQuote
 
 ## Twitter
 
-::: warning
+:::caution
 
 Due to restrictions from Twitter, currently only tweets within 7 days are available in some routes.
 
@@ -537,7 +533,7 @@ generates
 
 <RouteEn author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" paramsDesc={['username', 'extra parameters, see the table above']} radar="1" rssbud="1" selfhost="1">
 
-::: warning
+:::caution
 
 This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
 
@@ -565,7 +561,7 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 
 <RouteEn author="TonyRL" example="/twitter/collection/DIYgod/1527857429467172864" path="/twitter/collection/:uid/:collectionId/:routeParams?" paramsDesc={['username, should match the generated token', 'collection ID, can be found in URL', 'extra parameters, see the table above']} radar="1" rssbud="1" selfhost="1">
 
-::: warning
+:::caution
 
 This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
 
@@ -582,7 +578,7 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 ### User Profile
 
 <RouteEn author="MisteryMonster" example="/vimeo/user/filmsupply/picks" path="/vimeo/user/:username/:cat?" paramsDesc={['In this example [https://vimeo.com/filmsupply](https://vimeo.com/filmsupply)  is `filmsupply`', 'deafult for all latest videos, others categories in this example such as `Docmentary`, `Narrative`, `Drama`. Set `picks` for promote orders, just orderd like web page. When `picks` added, published date won\'t show up']}>
-::: tip Special category name attention
+:::tip Special category name attention
 
 Some of the categories contain slash like `3D/CG` , must change the slash `/` to the vertical bar`|`.
 
@@ -600,7 +596,7 @@ Some of the categories contain slash like `3D/CG` , must change the slash `/` to
 
 ## YouTube
 
-::: tip Tiny Tiny RSS users please notice
+:::tip Tiny Tiny RSS users please notice
 
 Tiny Tiny RSS will add `sandbox="allow-scripts"` to all iframe elements, as a result, YouTube embedded videos cannot be loaded. If you need to use embedded videos, please install plugin [remove_iframe_sandbox](https://github.com/DIYgod/ttrss-plugin-remove-iframe-sandbox) for Tiny Tiny RSS.
 
@@ -612,7 +608,7 @@ Tiny Tiny RSS will add `sandbox="allow-scripts"` to all iframe elements, as a re
 
 ### Channel
 
-::: tip
+:::tip
 
 YouTube provides official RSS feeds for channels, for instance <https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ>.
 

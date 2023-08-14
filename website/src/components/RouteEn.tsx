@@ -2,21 +2,35 @@ import React from 'react';
 import MarkdownIt from 'markdown-it';
 import Badge from './Badge';
 
-export default function Route(): JSX.Element {
-    const {
-        author = 'DIYgod',
-        path = '',
-        example = '',
-        paramsDesc = 'N/A',
-        anticrawler = null,
-        supportBT = null,
-        supportPodcast = null,
-        supportScihub = null,
-        radar = null,
-        rssbud = null,
-        selfhost = null,
-        puppeteer = null,
-    } = this.props;
+export default function Route({
+  author = 'DIYgod',
+  path = '',
+  example = '',
+  paramsDesc = 'N/A',
+  anticrawler = null,
+  supportBT = null,
+  supportPodcast = null,
+  supportScihub = null,
+  radar = null,
+  rssbud = null,
+  selfhost = null,
+  puppeteer = null,
+  children = null,
+}: {
+  author?: string;
+  path: string;
+  example?: string;
+  paramsDesc?: string;
+  anticrawler?: boolean;
+  supportBT?: boolean;
+  supportPodcast?: boolean;
+  supportScihub?: boolean;
+  radar?: boolean;
+  rssbud?: boolean;
+  selfhost?: boolean;
+  puppeteer?: boolean;
+  children?: JSX.Element | JSX.Element[];
+}): JSX.Element {
     const demoUrl = 'https://rsshub.app' + example;
     const paramMatch = path.match(/(?<=:).*?(?=\/|$)/g);
 
@@ -29,7 +43,7 @@ export default function Route(): JSX.Element {
 
     return (
         <div className="routeBlock" id={path}>
-            <p className="badge">
+            <p className="badges">
                 {supportBT && <Badge text="Support BT" type="tip" />}
                 {supportPodcast && <Badge text="Support Podcast" type="tip" />}
                 {supportScihub && <Badge text="Support Sci-Hub" type="tip" />}
@@ -93,6 +107,7 @@ export default function Route(): JSX.Element {
             ) : (
                 <p>Parameters: N/A</p>
             )}
+            {children}
         </div>
     );
 }

@@ -1,9 +1,5 @@
 import Route from '@site/src/components/Route';
 
----
-pageClass: routes
----
-
 # 科学期刊
 
 ## Academy of Management
@@ -41,7 +37,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/acs/journal/jacsat" path="/aom/journal/:id" paramsDesc={['期刊 id，可在对应期刊页 URL 中找到']} supportScihub="1">
 
-::: tip 提示
+:::tip 提示
 
 见 [Browse Content](https://pubs.acs.org)
 
@@ -57,7 +53,7 @@ pageClass: routes
 
 期刊 [American Economic Review](https://www.aeaweb.org/journals/aer) 的 URL 是 `https://www.aeaweb.org/journals/aer`，其中 `aer` 即为其期刊 id，故该期刊对应路由为 `/aeaweb/aer`。
 
-::: tip 提示
+:::tip 提示
 
 更多期刊可在 [AEA Journals](https://www.aeaweb.org/journals) 中找到。
 
@@ -73,7 +69,7 @@ pageClass: routes
 
 期刊 [Annual Review of Analytical Chemistry](https://www.annualreviews.org/journal/anchem) 的 URL 是 `https://www.annualreviews.org/journal/anchem`，其中 `anchem` 即为其期刊 id，故该期刊对应路由为 `/annualreviews/anchem`。
 
-::: tip 提示
+:::tip 提示
 
 更多期刊可在 [Browse Journals](https://www.annualreviews.org/action/showPublications) 中找到。
 
@@ -228,7 +224,7 @@ pageClass: routes
 
 ## Nature 系列
 
-::: tip Tips
+:::tip Tips
 
 You can get all short name of a journal from <https://www.nature.com/siteindex> or [期刊列表](#nature-xi-lie-qi-kan-lie-biao).
 
@@ -294,7 +290,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 <Route author="y9c TonyRL" example="/nature/highlight" path="/nature/highlight/:journal?" paramsDesc={['期刊名简写，默认为 `nature`']} supportScihub="1" radar="1" rssbud="1"/>
 
-::: warning 警告
+:::caution 警告
 
 仅支持部分期刊。
 
@@ -328,7 +324,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 <Route author="emdoe HenryQW y9c" example="/pnas/latest" path="/pnas/:topicPath*" paramsDesc={['领域路径，支持 **Featured Topics**、**Articles By Topic** 及 [**Collected Papers**](https://www.pnas.org/about/collected-papers), 预设为 `latest`']} radar="1" anticrawler="1" puppeteer="1" supportScihub="1">
 
-::: tip Tips
+:::tip Tips
 有些领域需要在 `topicPath` 中添加 `topic/`，如 [`/pnas/topic/app-math`](https://rsshub.app/pnas/topic/app-math)，有些则不需要，如 [`/pnas/biophysics-and-computational-biology`](https://rsshub.app/pnas/biophysics-and-computational-biology)
 :::
 
@@ -340,7 +336,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 <Route author="y9c nczitzk" example="/pubmed/trending" path="/pubmed/trending/:filter?" paramsDesc={['过滤条件，可在 URL 中找到']} supportScihub="1">
 
-::: tip 提示
+:::tip 提示
 
 对于参数 **过滤条件**，应将 URL 中的 filter 参数用 `,` 分割成一个字段填入，下面是一个例子。
 
@@ -432,7 +428,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 | -------- | --------- | --------- | ------- | -- | ------------------ |
 | mobile   | internet  | boardcast | general | it | industry-resources |
 
-::: tip 提示
+:::tip 提示
 
 若 `country` 或 `type` 参数包含空格，则用 `-` 替代。如 `United States` 更换为 `United-States`，`White paper` 更换为 `White-paper`
 
@@ -525,7 +521,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### 作者期刊文献
 
-::: tip 注意
+:::tip 注意
 可能仅限中国大陆服务器访问，以实际情况为准。
 :::
 

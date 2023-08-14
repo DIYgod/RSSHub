@@ -1,9 +1,5 @@
 import Route from '@site/src/components/Route';
 
----
-pageClass: routes
----
-
 # 大学通知
 
 ## MIT
@@ -148,7 +144,7 @@ pageClass: routes
 
 <Route author="wooddance" example="/pku/bbs/hot" path="/pku/bbs/hot" radar="1" rssbud="1">
 
-::: warning 注意
+:::caution 注意
 
 论坛部分帖子正文内容的获取需要用户登录后的 Cookie 值，详情见部署页面的配置模块。
 
@@ -170,7 +166,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/pku/hr" path="/pku/hr/:category?" paramsDesc={['分类，见下方说明，默认为首页最新公告']} radar="1" rssbud="1">
 
-::: tip 提示
+:::tip 提示
 
 分类字段处填写的是对应北京大学人事处分类页网址中介于 **<http://hr.pku.edu.cn/>** 和 **/index.htm** 中间的一段，并将其中的 `/` 修改为 `-`。
 
@@ -344,7 +340,7 @@ pageClass: routes
 
 <Route author="TonyRL" example="/bnu/fdy/tzgg/dwjs" path="/bnu/fdy/:path*" paramsDesc={['路径，默认为 `tzgg`']} radar="1">
 
-::: tip 提示
+:::tip 提示
 
 路径处填写对应页面 URL 中 `https://fdy.bnu.edu.cn/` 和 `/index.htm` 之间的字段。下面是一个例子。
 
@@ -360,7 +356,7 @@ pageClass: routes
 
 <Route author="Muxq99" example="/bwu/news" path="/bwu/news" />
 
-::: warning 注意
+:::caution 注意
 由于学校官网对非大陆 IP 的访问存在限制，需自行部署。
 :::
 
@@ -390,7 +386,7 @@ pageClass: routes
 
 <Route author="RicardoMing wzekin" example="/bupt/portal" path="/bupt/portal" />
 
-::: warning 注意
+:::caution 注意
 
 由于需要登陆 `https://webapp.bupt.edu.cn/wap/login.html?redirect=http://` 后的 Cookie 值，所以只能自建，详情见部署页面的配置模块
 
@@ -400,7 +396,7 @@ pageClass: routes
 
 <Route author="wzekin" example="/bupt/news" path="/bupt/news" />
 
-::: warning 注意
+:::caution 注意
 
 由于需要登陆 `https://webapp.bupt.edu.cn/wap/login.html?redirect=http://` 后的 Cookie 值，所以只能自建，详情见部署页面的配置模块
 
@@ -409,7 +405,7 @@ pageClass: routes
 ### BTBYR 趣味盒
 
 <Route author="prnake" example="/bupt/funbox" path="/bupt/funbox" selfhost="1"/>
-::: warning 注意
+:::caution 注意
 
 由于需要登陆 BTBYR 后的 Cookie 值，所以只能自建，并且部署和订阅端均需支持 IPV6 网络或使用镜像站点。
 
@@ -478,13 +474,13 @@ pageClass: routes
 
 </Route>
 
-::: tip 提示
+:::tip 提示
 路径参数的值为相应通知列表页面的地址去除后缀名和域名后的路径。
 
 例如 “通知公告” 列表页面地址为 <http://jwc.cqu.edu.cn/index/tzgg.htm>，相应参数为 `index/tgzz`。
 :::
 
-::: warning 注意
+:::caution 注意
 原重庆大学教务网网站变更为重庆大学本科教学信息网。该路由编写时（2021-07-29）它[正处于试运行阶段](http://jwc.cqu.edu.cn/info/1080/3482.htm)。
 
 通知的分类比较迷，请小心甄别、使用（以免漏掉需要的通知）。
@@ -643,13 +639,13 @@ pageClass: routes
 2.  把 `https://news.dlut.edu.cn/` 与 `.htm` 间 `xwjj01/rcpy` 作为 `category` 参数填入；
 3.  最终可获得 [`/dut/news/xwjj01/rcpy`](https://rsshub.app/dut/news/xwjj01/rcpy)。
 
-::: tip 小提示
+:::tip 小提示
 
 大连理工大学大部分站点支持上述通用规则进行订阅。下方的大连理工大学相关路由基本适用于该规则，在其对应的表格中没有提及的分类栏目，可以使用上方的方法自行扩展。
 
 :::
 
-::: tip 小小提示
+:::tip 小小提示
 
 你会发现 [大连理工大学新闻网](https://news.dlut.edu.cn) 的 [人才培养](https://news.dlut.edu.cn/xwjj01/rcpy.htm) 分类栏目在下方 [**新闻网**](#da-lian-li-gong-da-xue-xin-wen-wang) 参数表格中 `category` 参数为 `rcpy`，并非上面例子中给出的 `xwjj01/rcpy`。这意味着开发者对路由 `/dut/news/xwjj01/rcpy` 指定了快捷方式 `/dut/news/rcpy`。两者的效果是一致的。
 
@@ -679,7 +675,7 @@ pageClass: routes
 | -------- | -------- | -------- |
 | tzgg     | gzdt     | zcfg     |
 
-::: tip 提示
+:::tip 提示
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学人事处](http://perdep.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -695,7 +691,7 @@ pageClass: routes
 | -------- | -------- | -------- |
 | xwkd     | zytg     | bhgs     |
 
-::: tip 提示
+:::tip 提示
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学教务处](http://teach.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -715,7 +711,7 @@ pageClass: routes
 | --------------------- | --------------------- | --------------------- |
 | yjszs/zcwj1           | yjszs/gzdt/gzdt       | yjszs/zlxz/zlxz       |
 
-::: tip 提示
+:::tip 提示
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学研究生院](http://gs.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -731,7 +727,7 @@ pageClass: routes
 | -------- | -------- | -------- | -------- | ---------- | ---------- |
 | jdxw     | zhxw     | xytz     | xsdt     | bkstz      | yjstz      |
 
-::: tip 提示
+:::tip 提示
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学软件学院](http://ssdut.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -747,7 +743,7 @@ pageClass: routes
 | -------- | -------- |
 | tzgg     | xqxw     |
 
-::: tip 提示
+:::tip 提示
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学开发区校区](http://eda.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -763,7 +759,7 @@ pageClass: routes
 | -------- | -------- | -------- | -------- | -------- | ---- |
 | xqxw     | xywh     | xyfc     | xsdt     | mtbd     | gg   |
 
-::: tip 提示
+:::tip 提示
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区](https://panjin.dlut.edu.cn/index.htm)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -779,7 +775,7 @@ pageClass: routes
 | -------- | -------- | --------- |
 | zytz     | xgdt     | gsgonggao |
 
-::: tip 提示
+:::tip 提示
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区学生事务办公室](http://xsgzb.dlut.edu.cn/index.htm)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -795,7 +791,7 @@ pageClass: routes
 | -------- | -------- | -------- | -------- | ---------- |
 | xwkd     | zytz     | jxwj     | cjwt     | xkyks      |
 
-::: tip 提示
+:::tip 提示
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区教务教学事务办公室](http://pjteach.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -811,7 +807,7 @@ pageClass: routes
 | -------- | -------- | -------- | -------- |
 | tzgg     | dzyd     | zwkx     | fgzd     |
 
-::: tip 提示
+:::tip 提示
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区总务部](http://pjxqzwb.dlut.edu.cn/index.htm)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -827,7 +823,7 @@ pageClass: routes
 | -------- | -------- |
 | xyxw     | zxgg     |
 
-::: tip 提示
+:::tip 提示
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学体育与健康学院盘锦分院](http://tjpj.dlut.edu.cn/index.htm)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -843,7 +839,7 @@ pageClass: routes
 | -------- | ---------- | -------- |
 | jstz     | xstong_zhi | xwsd     |
 
-::: tip 提示
+:::tip 提示
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学国际合作与交流处（港澳台办）](http://dutdice.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -859,7 +855,7 @@ pageClass: routes
 | -------- | -------- | -------- | -------- |
 | tzgg     | hdrc     | xwdt     | jkzs     |
 
-::: tip 提示
+:::tip 提示
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学体育场馆中心](http://tycgzx.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -981,11 +977,13 @@ pageClass: routes
 
 <Route author="nczitzk" example="/nenu/sohac" path="/nenu/sohac/:path+" paramsDesc={['路径，默认为通知公告']}>
 
-::: tip 提示
+:::tip 提示
 
 若订阅 [通知公告](https://sohac.nenu.edu.cn/index/tzgg.htm)，网址为 <https://sohac.nenu.edu.cn/index/tzgg.htm>。截取 `https://sohac.nenu.edu.cn/` 到末尾 `.htm` 的部分 `index/tzgg` 作为参数，此时路由为 [`/nenu/sohac/index/tzgg`](https://rsshub.app/nenu/sohac/index/tzgg)。
 
 若订阅 [学院信息](https://sohac.nenu.edu.cn/index/xyxx.htm)，网址为 <https://sohac.nenu.edu.cn/index/xyxx.htm>。截取 `https://sohac.nenu.edu.cn/` 到末尾 `.htm` 的部分 `index/xyxx` 作为参数，此时路由为 [`/nenu/sohac/index/xyxx`](https://rsshub.app/nenu/sohac/index/xyxx)。
+
+:::
 
 </Route>
 
@@ -993,7 +991,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/nenu/yjsy" path="/nenu/yjsy/:path+" paramsDesc={['路径，默认为通知公告']}>
 
-::: tip 提示
+:::tip 提示
 
 若订阅 [通知公告](https://yjsy.nenu.edu.cn/tzgg.htm)，网址为 <https://yjsy.nenu.edu.cn/tzgg.htm>。截取 `https://yjsy.nenu.edu.cn/` 到末尾 `.htm` 的部分 `tzgg` 作为参数，此时路由为 [`/nenu/yjsy/tzgg`](https://rsshub.app/nenu/yjsy/tzgg)。
 
@@ -1101,7 +1099,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/uibe/hr" path="/uibe/hr/:category?/:type?" paramsDesc={['分类，可在对应页 URL 中找到，默认为通知公告', '类型，可在对应页 URL 中找到，默认为空']}>
 
-::: tip 提示
+:::tip 提示
 
 如 [通知公告](http://hr.uibe.edu.cn/tzgg) 的 URL 为 <http://hr.uibe.edu.cn/tzgg>，其路由为 [`/uibe/hr/tzgg`](https://rsshub.app/uibe/hr/tzgg)
 
@@ -1331,7 +1329,7 @@ category 列表：
 
 ## 哈尔滨工业大学
 
-::: warning 注意
+:::caution 注意
 哈工大网站疑似禁止了`rsshub.app`的访问，使用路由需要自行 [部署](https://docs.rsshub.app/install)。
 :::
 
@@ -1343,12 +1341,12 @@ category 列表：
 
 <Route author="ranpox" example="/hit/today/10" path="/hit/today/:category" paramsDesc={['分类编号，`10`为公告公示，`11`为新闻快讯，同时支持详细分类，使用方法见下']} radar="1" rssbud="1">
 
-::: tip 提示
+:::tip 提示
 今日哈工大的文章分为公告公示和新闻快讯，每个页面右侧列出了更详细的分类，其编号为每个 URL 路径的最后一个数字。
 例如会议讲座的路径为`/taxonomy/term/10/25`，则可以通过 [`/hit/today/25`](https://rsshub.app/hit/today/25) 订阅该详细类别。
 :::
 
-::: warning 注意
+:::caution 注意
 部分文章需要经过统一身份认证后才能阅读全文。
 :::
 
@@ -1490,7 +1488,7 @@ category 列表：
 
 </Route>
 
-::: warning 注意
+:::caution 注意
 jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS_REJECT_UNAUTHORIZED = 0
 :::
 
@@ -1657,7 +1655,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="auto-bot-ty" example="/scut/seie/news_center" path="/scut/seie/news_center" radar="1" />
 
-::: warning 注意
+:::caution 注意
 由于学院官网对非大陆 IP 的访问存在限制，需自行部署。
 :::
 
@@ -2214,7 +2212,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 南京信息工程大学
 
-::: tip 提示
+:::tip 提示
 
 路由地址全部按照 **学校官网域名和栏目编号** 设计
 
@@ -2242,7 +2240,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | -------- | -------- | -------- | -------- | -------- | -------- | ---- |
 | 783      | 784      | 785      | 786      | 788      | 789      | qt   |
 
-::: warning 注意
+:::caution 注意
 
 全文内容需使用 校园网或[VPN](http://vpn.nuist.edu.cn) 获取
 
@@ -2274,7 +2272,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="gylidian nczitzk" example="/nuist/yjs/index/tzgg" path="/nuist/yjs/:path+" paramsDesc={['默认为通知公告']}>
 
-::: tip 提示
+:::tip 提示
 
 路径字段处填写的是对应南京信息工程大学研究生院学科建设处分类页网址中介于 **<https://yjs.nuist.edu.cn/>** 和 **.htm** 中间的一段。
 
@@ -2439,7 +2437,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-::: warning 注意
+:::caution 注意
 由于学校通知仅允许校园网访问，需自行部署。
 :::
 
@@ -2747,7 +2745,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 上海立信会计金融学院
 
-::: warning 注意
+:::caution 注意
 
 分区 ID 是`info/iList.jsp?cat_id=`后方数字
 
@@ -2823,7 +2821,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="HyperCherry" example="/stbu/jsjxy" path="/stbu/jsjxy" />
 
-::: warning 注意
+:::caution 注意
 计算机学院通知公告疑似禁止了非大陆 IP 访问，使用路由需要自行 [部署](https://docs.rsshub.app/install)。
 :::
 
@@ -3113,7 +3111,7 @@ paramsDesc={['公告类型，详见表格']}>
 
 <Route author="hoilc" example="/xjtu/dean/jxxx/xytz/ksap" path="/xjtu/dean/:subpath+" paramsDesc={['栏目路径，支持多级，不包括末尾的`.htm`']} >
 
-::: tip 提示
+:::tip 提示
 
 支持`http://dean.xjtu.edu.cn/`下所有**有文章列表**的栏目，
 
@@ -3198,7 +3196,7 @@ paramsDesc={['公告类型，详见表格']}>
 
 <Route author="mocusez" example="/xaut/jwc/tzgg" path="/xaut/jwc/:category?" paramsDesc={['通知类别，默认为通知公告']} radar="1" rssbud="1">
 
-::: warning 注意
+:::caution 注意
 
 有些内容需使用校园网或 VPN 访问知行网获取
 :::
@@ -3213,7 +3211,7 @@ paramsDesc={['公告类型，详见表格']}>
 
 <Route author="light0926 mocusez" example="/xaut/rsc/tzgg" path="/xaut/rsc/:category?" paramsDesc={['通知类别，默认为通知公告']} radar="1" rssbud="1">
 
-::: warning 注意
+:::caution 注意
 
 有些内容指向外部链接，目前只提供这些链接，不提供具体内容，去除 jwc 和 index 的修改
 :::
@@ -3487,7 +3485,7 @@ paramsDesc={['公告类型，详见表格']}>
 
 <Route author="nczitzk" example="/yangtzeu/dongke" path="/yangtzeu/dongke/:path+" paramsDesc={['路径，默认为学院新闻']}>
 
-::: tip 提示
+:::tip 提示
 
 若订阅 [院情总览 - 通知公告](https://dongke.yangtzeu.edu.cn/yqzl/tzgg.htm)，网址为 <https://dongke.yangtzeu.edu.cn/yqzl/tzgg.htm>。截取 `https://dongke.yangtzeu.edu.cn` 到末尾 `.htm` 的部分 `/yqzl/tzgg` 作为参数，此时路由为 [`/yangtzeu/dongke/yqzl/tzgg`](https://rsshub.app/yangtzeu/dongke/yqzl/tzgg)。
 
@@ -3737,7 +3735,7 @@ paramsDesc={['公告类型，详见表格']}>
 ### 选课信息教务通知
 
 <Route author="3401797899" example="/ouc/jwgl" path="/ouc/jwgl" radar="1" selfhost="1"/>
-::: warning 注意
+:::caution 注意
 由于选课通知仅允许校园网访问，需自行部署。
 :::
 
@@ -3875,7 +3873,7 @@ paramsDesc={['公告类型，详见表格']}>
 
 <Route author="nczitzk" example="/ruc/hr" path="/ruc/hr/:category?" paramsDesc={['分类，见下方说明，默认为首页通知公告']}>
 
-::: tip 提示
+:::tip 提示
 
 分类字段处填写的是对应中国人民大学人事处分类页网址中介于 **<http://hr.ruc.edu.cn/>** 和 **/index.htm** 中间的一段，并将其中的 `/` 修改为 `-`。
 

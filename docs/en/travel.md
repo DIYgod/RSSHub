@@ -1,9 +1,5 @@
 import RouteEn from '@site/src/components/RouteEn';
 
----
-pageClass: routes
----
-
 # Travel
 
 ## All the Flight Deals
@@ -14,7 +10,7 @@ pageClass: routes
 
 For ISO 3166-1 country codes please refer to [Wikipedia ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
 
-::: tip
+:::tip
 
 If the city name contains a space like `Mexico City`, replace the space with `%20`, `Mexico%20City`.
 

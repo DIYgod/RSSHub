@@ -1,6 +1,6 @@
 # Parameters
 
-::: tip
+:::tip
 
 Parameters here are actually URI query and can be linked together with `&` to generate a complex feed.
 
@@ -20,13 +20,13 @@ E.g.
 
 ## Filtering
 
-::: warning Warning
+:::caution Warning
 
 Please make sure you've [fully URL-encoded](https://gchq.github.io/CyberChef/#recipe=URL_Encode(true)) the parameters. Do not rely on the browser's automatic URL encoding. Some characters, such as `+`, `&`, will not be automatically encoded, resulting in the final parsing result not being correct.
 
 :::
 
-::: warning Warning
+:::caution Warning
 
 filter supports Regex, and due to the fact that some Regex are vulnerable to DoS (ReDoS), default engine `re2` blocks some of these functionalities available in node `Regexp`. These two engines also behaves a bit different in some corner cases. [Details](https://github.com/uhop/node-re2#limitations-things-re2-does-not-support)
 
@@ -122,7 +122,7 @@ E.g. <https://rsshub.app/dcard/posts/popular?opencc=t2s>
 
 ## Multimedia processing
 
-::: warning Warning
+:::caution Warning
 
 This is an experimental API
 

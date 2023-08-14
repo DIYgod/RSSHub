@@ -89,7 +89,7 @@ Edit `environment` in [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob
 
 ## Docker Deployment
 
-::: tip Tip
+:::tip Tip
 
 To enable puppeteer, replace `diygod/rsshub` with `diygod/rsshub:chromium-bundled` in **EACH** command.
 
@@ -236,7 +236,7 @@ Refer to our [Guide](https://docs.rsshub.app/en/) for usage. Replace `https://rs
 
 ### Configuration
 
-::: tip Tip
+:::tip Tip
 
 On arm/arm64, this deployment method does not include puppeteer dependencies. To enable puppeteer, install Chromium from your distribution repositories first, then set `CHROMIUM_EXECUTABLE_PATH` to its executable path.
 
@@ -307,7 +307,7 @@ Automatic updates are included.
 
 ### Notice
 
-::: warning Update
+:::caution Update
 
 Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product plans.
 
@@ -491,7 +491,7 @@ If you would like to test routes or avoid IP limits, etc., you may build your ow
 
 [![Try in PWD](https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png)](https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml)
 
-::: warning Warning
+:::caution Warning
 
 -   [DockerHub](https://hub.docker.com) account required
 -   [Play with Docker](https://labs.play-with-docker.com/) instance will last for 4 hours at most. It should only be used for testing purpose
@@ -565,7 +565,7 @@ resolved by the SOCKS server, recommanded, prevents DNS poisoning or DNS leak), 
 
 ### Reverse proxy
 
-::: warning
+:::caution
 
 This proxy method cannot proxy requests that contain cookies.
 
@@ -669,7 +669,7 @@ See the relation between access key/code and white/blacklisting.
 
 ### Image Processing
 
-::: tip New Config Format
+:::tip New Config Format
 
 We are currently testing out a new format, providing end-user with more flexibility. For more info, please refer to [Parameters->Multimedia processing](/en/parameter.html#multimedia-processing).
 
@@ -683,7 +683,7 @@ When using our new config, please leave the following environment vairable blank
 
 `HOTLINK_EXCLUDE_PATHS`: exclude routes that do not need to be processed, all matched routes will be ignored. Set multiple values with comma `,` as delimiter. Can be used alone, or to exclude routes that are already included by `HOTLINK_INCLUDE_PATHS`. If not set, no routes will be ignored
 
-::: tip Route matching pattern
+:::tip Route matching pattern
 
 `HOTLINK_INCLUDE_PATHS` and `HOTLINK_EXCLUDE_PATHS` match the root path and all recursive sub-paths of the route, but not substrings. Note that the path must start with `/` and end without `/`.
 
@@ -695,7 +695,7 @@ It is also valid to contain route parameters, e.g. `/weibo/user/2612249974`.
 
 ### Features
 
-::: tip Experimental features
+:::tip Experimental features
 
 Configs in this sections are in beta stage, and **are turn off by default**. Please read corresponded description and turn on if necessary.
 
@@ -725,7 +725,7 @@ Configs in this sections are in beta stage, and **are turn off by default**. Ple
 
 ### Route-specific Configurations
 
-::: tip Notice
+:::tip Notice
 
 Configs here are incomplete.
 

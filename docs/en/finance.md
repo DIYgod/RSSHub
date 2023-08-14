@@ -1,9 +1,5 @@
 import RouteEn from '@site/src/components/RouteEn';
 
----
-pageClass: routes
----
-
 # Finance
 
 ## Bloomberg
@@ -135,7 +131,7 @@ Language
 
 ## TokenInsight
 
-::: tip Tips
+:::tip Tips
 
 TokenInsight also provides official RSS, you can take a look at <https://api.tokeninsight.com/reference/rss>.
 

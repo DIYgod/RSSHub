@@ -1,9 +1,5 @@
 import Route from '@site/src/components/Route';
 
----
-pageClass: routes
----
-
 # 传统媒体
 
 ## 21 财经
@@ -18,7 +14,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/abc" path="/abc/:id?" paramsDesc={['id，可在对应 Channel 或 Topic 页面中找到，也可以填入对应页源代码中的 `documentId`，部分见下表，默认为 Just In']}>
 
-::: tip 提示
+:::tip 提示
 
 支持 [Topic Library](https://abc.net.au/news/topics) 中的所有 Topic，你可以填入其 URL 中 `topic` 后的字段，也可以填入对应的 `documentId`。
 
@@ -75,7 +71,7 @@ pageClass: routes
 | -------- | ------- | ------- |
 | arbric   | chinese | english |
 
-::: tip 提示
+:::tip 提示
 
 若订阅 [Al Jazeera English - Economy](https://www.aljazeera.com/economy)，其语言为 `english`，路径为 `economy`，可得到其路由为 [`/aljazeera/english/economy`](https://rsshub.app/aljazeera/english/economy)
 
@@ -95,7 +91,7 @@ pageClass: routes
 | -------- | ------- | ------- |
 | arbric   | chinese | english |
 
-::: tip 提示
+:::tip 提示
 
 若订阅 [Al Jazeera English - Science and Technology](https://www.aljazeera.com/tag/science-and-technology)，其语言为 `english`，标签 id 为 `science-and-technology`，可得到其路由为 [`/aljazeera/english/tag/science-and-technology`](https://rsshub.app/aljazeera/english/tag/science-and-technology)
 
@@ -113,7 +109,7 @@ pageClass: routes
 | -------- | ------- | ------- |
 | arbric   | chinese | english |
 
-::: tip 提示
+:::tip 提示
 
 半岛电视台中文频道无对应的 RSS，故默认返回首页内容
 
@@ -230,7 +226,7 @@ pageClass: routes
 
 <Route author="HenryQW xyqfer" example="/ft/chinese/hotstoryby7day" path="/ft/:language/:channel?" paramsDesc={['语言，简体`chinese`，繁体`traditional`', '频道，缺省为每日更新']}>
 
-::: tip 提示
+:::tip 提示
 
 -   不支持付费文章。
 
@@ -249,7 +245,7 @@ pageClass: routes
 
 <Route author="HenryQW" example="/ft/myft/rss-key" path="/ft/myft/:key" paramsDesc={['myFT 个人 RSS 地址末尾的字符串']}>
 
-::: tip 提示
+:::tip 提示
 
 -   在 ft.com -> myFT -> Contact Preferences 中开启个人 RSS feed，见 [官方说明](https://help.ft.com/faq/email-alerts-and-contact-preferences/what-is-myft-rss-feed/)
 -   从 RSS 地址结尾的字符串中获取 key，格式为 `12345678-abcd-4036-82db-vdv20db024b8`
@@ -288,7 +284,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/now/news" path="/now/news/:category?/:id?" paramsDesc={['分类，见下表，默认为首页', '编号，可在对应专题/节目页 URL 中找到 topicId']}>
 
-::: tip 提示
+:::tip 提示
 
 **编号** 仅对事件追蹤、評論節目、新聞專題三个分类起作用，例子如下：
 
@@ -347,7 +343,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/sbs/chinese" path="/sbs/chinese/:category?/:id?/:dialect?/:language?" paramsDesc={['分类，可选 `news` 和 `podcast`，默认为 `news`', 'id，见下表，可在对应页地址栏中找到，默认为 `news`', '方言，可选 `mandarin` 和 `cantonese`，默认为 `mandarin`', '语言，可选 `zh-hans` 和 `zh-hant`，默认为 `zh-hans`']}>
 
-::: tip 提示
+:::tip 提示
 
 当订阅播客时，请为 `category` 填入 **podcast**。如 [SBS 普通话电台](https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin) 的 URL 为 <https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin>，其中 `id` 为 **sbs-mandarin**，`dialect` 为 **mandarin**，`language` 为 **zh-hans**，其路由即为 [`/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans)。
 
@@ -385,7 +381,7 @@ SBS 廣東話節目：
 | ------------------ | -------------- | -------------- | ----------- | ---------------- |
 | healthy-happy-life | gardening-tips | global-finance | culture-360 | technology-world |
 
-::: tip 提示
+:::tip 提示
 
 大部分时候你可以省略 `language` 字段，因为默认搭配 madarin 为 zh-hans，cantonese 为 zh-hant。如 [SBS 普通话电台](https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin) 路由为 [`/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans)，你可以省略为 [`/sbs/chinese/podcast/sbs-mandarin/mandarin`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin)。
 
@@ -401,7 +397,7 @@ SBS 廣東話節目：
 
 <Route author="sgqy" example="/solidot/linux" path="/solidot/:type?" paramsDesc={['消息类型。默认为 www. 在网站上方选择后复制子域名即可']}>
 
-::: tip 提示
+:::tip 提示
 
 Solidot 提供的 feed:
 
@@ -609,7 +605,7 @@ Category 列表：
 
 ## 朝日新聞中文網（繁體中文版）
 
-::: tip 提示
+:::tip 提示
 
 朝日新闻中文网已于 2021 年 3 月 31 日关闭。
 
@@ -619,7 +615,7 @@ Category 列表：
 
 <Route author="nczitzk" example="/asahi" path="/asahi/:genre?/:category?" paramsDesc={['类型，见下表，默认为トップ', '分类，见下表，默认为空，即该类型下所有新闻']}>
 
-::: tip 提示
+:::tip 提示
 
 以下小标题即类型 `genre`，标题下表格中为对应类型的分类 `category`，两者需要配合使用。
 
@@ -807,7 +803,7 @@ IT・科学 tech_science
 
 <Route author="nczitzk" example="/yicai/feed/669" path="/yicai/feed/:id?" paramsDesc={['主题 id，可在对应主题页中找到，默认为一财早报']}>
 
-::: tip 提示
+:::tip 提示
 
 全部主题词见 [此处](https://www.yicai.com/feed/alltheme)
 
@@ -1078,7 +1074,7 @@ IT・科学 tech_science
 
 <Route author="TimWu007" example="/gzdaily/app/74" path="/gzdaily/app/:column?" paramsDesc={['栏目 ID，点击对应栏目后在地址栏找到']}>
 
-::: tip 提示
+:::tip 提示
 
 在北京时间深夜可能无法获取内容。
 
@@ -1314,7 +1310,7 @@ zh-cn / zh-tw
 
 <Route author="nczitzk" example="/eeo/yaowen/dashi" path="/eeo/:column?/:category?" paramsDesc={['栏目，见下表，默认为 商业产业', '分类，见下表，默认为该栏目下所有分类']}>
 
-::: tip 提示
+:::tip 提示
 
 以下小标题即栏目 `column`，标题下表格中为对应栏目的分类 `category`，两者需要配合使用。
 
@@ -1342,7 +1338,7 @@ TMT tmt [`/eeo/tmt`](http://rsshub.app/eeo/tmt)
 
 研究院 yanjiuyuan [`/eeo/yanjiuyuan`](http://rsshub.app/eeo/yanjiuyuan)
 
-::: tip 建议
+:::tip 建议
 
 请优先选择订阅以上栏目，下面的栏目大部分已经很久没有更新。
 
@@ -1458,7 +1454,7 @@ category 对应的关键词有
 
 ## 联合早报
 
-::: warning 注意
+:::caution 注意
 
 由于 [RSSHub#10309](https://github.com/DIYgod/RSSHub/issues/10309) 中的问题，使用靠近香港的服务器部署将从 hk 版联合早报爬取内容，造成输出的新闻段落顺序错乱。如有订阅此源的需求，建议寻求部署在远离香港的服务器上的 RSSHub，或者在自建时选择远离香港的服务器。
 
@@ -1527,7 +1523,7 @@ category 对应的关键词有
 
 ## 路透社
 
-::: warning 迁移说明
+:::caution 迁移说明
 
 1.  路透社中文网站 (`cn.reuters.com`) 和英国网站 (`uk.reuters.com`) 已经关闭，并重定向至主站 (`www.reuters.com`)
 2.  旧路由已被废弃，请迁移至下面列出的新路由
@@ -1663,7 +1659,7 @@ category 对应的关键词有
 
 <Route author="TimWu007" example="/southcn/nfapp/column/38" path="/southcn/nfapp/column/:column?" paramsDesc={['栏目或南方号 ID']}>
 
-::: tip 提示
+:::tip 提示
 若此处输入的是栏目 ID（而非南方号 ID），则该接口会返回与输入栏目相关联栏目的文章。例如，输入栏目 ID `38`（广州），则返回的结果还会包含 ID 为 `3547`（市长报道集）的文章。
 :::
 
@@ -1761,7 +1757,7 @@ category 对应的关键词有
 
 <Route author="nczitzk" example="/nmtv/column/877" path="/nmtv/column/:id?" paramsDesc={['栏目 id，可在对应栏目 URL 中找到']}>
 
-::: tip 提示
+:::tip 提示
 
 如 [蒙古语卫视新闻联播](http://www.nmtv.cn/folder292/folder663/folder301/folder830/folder877) 的 URL 为 <http://www.nmtv.cn/folder292/folder663/folder301/folder830/folder877>，其栏目 id 为末尾数字编号，即 `877`。可以得到其对应路由为 [`/nmtv/column/877`](https://rsshub.app/nmtv/column/877)
 
@@ -2027,7 +2023,7 @@ category 对应的关键词有
 2.  把 `http://opinion.people.com.cn/GB/` 与 `/index.html` 间 `427456/434878` 作为 `category` 参数填入；
 3.  最终可获得 [`/people/opinion/427456/434878`](https://rsshub.app/people/opinion/427456/434878)。
 
-::: tip 提示
+:::tip 提示
 
 人民网大部分站点支持上述通用规则进行订阅。
 
@@ -2075,7 +2071,7 @@ category 对应的关键词有
 
 <Route author="nczitzk" example="/nikkei/cn" path="/nikkei/cn/:language?/:path?" paramsDesc={['语言，可选 `zh` 即 繁体中文，`cn` 即 简体中文', '类目路径，默认为空，可在对应类目页 URL 中找到']} radar="1" rssbud="1">
 
-::: tip 提示
+:::tip 提示
 
 如 [中国 经济 日经中文网](https://cn.nikkei.com/china/ceconomy.html) 的 URL 为 <https://cn.nikkei.com/china/ceconomy.html> 对应路由为 [`/nikkei/cn/cn/china/ceconomy`](https://rsshub.app/nikkei/cn/cn/china/ceconomy)
 
@@ -2129,7 +2125,7 @@ category 对应的关键词有
 
 <Route author="nczitzk" example="/sctv/programme/1" path="/sctv/programme/:id?/:limit?/:isFull?" paramsDesc={['节目 id，可在对应节目页中找到，默认为 `1`，即四川新闻联播', '期数，默认为 15，即单次获取最新 15 期', '是否仅获取完整视频，填写 true/yes 表示是、false/no 表示否，默认是']}>
 
-::: tip 提示
+:::tip 提示
 
 参数 **是否仅获取完整视频** 设置为 `true` `yes` `t` `y` 等值后，路由仅返回当期节目的完整视频，而不会返回节目所提供的节选视频。
 
@@ -2472,7 +2468,7 @@ category 对应的关键词有
 | 头条 | 国内 | 国际 | 言路 | 财经 | 地方 | 副刊 | 娱乐 | 体育 | 百格 | 星角攝 | 好运来 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ | ------ |
 
-::: tip 提示
+:::tip 提示
 
 若订阅单级分类 [头条](https://www.sinchew.com.my/category/头条)，其 URL 为 [https://www.sinchew.com.my/category/ 头条](https://www.sinchew.com.my/category/头条)，则路由为 [`/sinchew/category/头条`](https://rsshub.app/sinchew/category/头条)。
 
@@ -2504,7 +2500,7 @@ category 对应的关键词有
 | -------- | ---------- | ------------ |
 | zdzy     | jjbxs      | dydhly       |
 
-::: tip 提示
+:::tip 提示
 
 更多栏目请看 [这里](https://tv.cctv.com/lm)
 
@@ -2516,7 +2512,7 @@ category 对应的关键词有
 
 <Route author="nczitzk" example="/cctv/special/315" path="/cctv/special/:id?" paramsDesc={['专题 id，可在对应专题页 URL 中找到，默认为 `315` 即 3·15 晚会']} radar="1" rssbud="1">
 
-::: tip 提示
+:::tip 提示
 
 如 [2020 年国家网络安全宣传周](https://news.cctv.com/special/2020gjwlaqxcz/index.shtml) 的专题页 URL 为 <https://news.cctv.com/special/2020gjwlaqxcz/index.shtml。其专题> id 即为 `2020gjwlaqxcz`。
 

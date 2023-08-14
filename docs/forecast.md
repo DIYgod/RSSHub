@@ -1,9 +1,5 @@
 import Route from '@site/src/components/Route';
 
----
-pageClass: routes
----
-
 # 预报预警
 
 ## BMKG 印尼气象气候和地球物理局
@@ -208,7 +204,7 @@ pageClass: routes
 | ---- | ---- | ---- | ---- | ---- |
 |      | 红色 | 橙色 | 黄色 | 蓝色 |
 
-::: tip 提示
+:::tip 提示
 
 若订阅全国的全部预警信息，此时路由为 [`/cneb/yjxx`](https://rsshub.app/cneb/yjxx)。
 

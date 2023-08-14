@@ -130,15 +130,15 @@ To add documentation to your route, use Vue components. They work like HTML tags
 If you'd like to provide additional information about a particular route, you can use these custom containers:
 
 ```md
-::: tip Tips title
+:::tip Tips title
 This is a tip.
 :::
 
-::: warning Warning title
+:::caution Warning title
 This is a warning.
 :::
 
-::: danger Danger title
+:::danger Danger title
 This is a dangerous warning.
 :::
 
@@ -149,15 +149,15 @@ This is a details block.
 
 ---
 
-::: tip Tips title
+:::tip Tips title
 This is a tip.
 :::
 
-::: warning Warning title
+:::caution Warning title
 This is a warning.
 :::
 
-::: danger Danger title
+:::danger Danger title
 This is a dangerous warning.
 :::
 

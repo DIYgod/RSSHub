@@ -1,9 +1,5 @@
 import RouteEn from '@site/src/components/RouteEn';
 
----
-pageClass: routes
----
-
 # News
 
 ## ABC News
@@ -12,7 +8,7 @@ pageClass: routes
 
 <RouteEn author="nczitzk" example="/abc" path="/abc/:id?" paramsDesc={['id, can be found in the Channel or Topic page, can also be filled in the `documentId` in the source code of the page, see below, Just In by default']}>
 
-::: tip Tip
+:::tip Tip
 
 All Topics in [Topic Library](https://abc.net.au/news/topics) are supported, you can fill in the field after `topic` in its URL, or fill in the `documentId`.
 
@@ -70,7 +66,7 @@ Language
 | ------ | ------- | ------- |
 | arbric | chinese | english |
 
-::: tip Tip
+:::tip Tip
 
 If you subscribe to [Al Jazeera English - Economy](https://www.aljazeera.com/economy), whose language is `english` and whose path is `economy`, you can get the route as [`/aljazeera/english/economy`](https://rsshub.app/aljazeera/english/economy)
 
@@ -90,7 +86,7 @@ Language
 | ------ | ------- | ------- |
 | arbric | chinese | english |
 
-::: tip Tip
+:::tip Tip
 
 If you subscribe to [Al Jazeera English - Science and Technology](https://www.aljazeera.com/tag/science-and-technology), whose language is `english` and whose path is `science-and-technology`, you can get the route as [`/aljazeera/english/tag/science-and-technology`](https://rsshub.app/aljazeera/english/tag/science-and-technology)
 
@@ -108,7 +104,7 @@ Language
 | ------ | ------- | ------- |
 | arbric | chinese | english |
 
-::: tip Tip
+:::tip Tip
 
 There is no RSS source for Al Jazeera Chinese, returning homepage content by default
 
@@ -268,7 +264,7 @@ Topics:
 |------------|
 |dna-verified|
 
-::: tip Topic
+:::tip Topic
 The URL of the form `https://www.dnaindia.com/topic/dna-verified` demonstrates the utilization of the subdomain `topic`
 :::
 
@@ -280,7 +276,7 @@ The URL of the form `https://www.dnaindia.com/topic/dna-verified` demonstrates t
 
 <RouteEn author="HenryQW" example="/ft/myft/rss-key" path="/ft/myft/:key" paramsDesc={['the last part of myFT personal RSS address']}>
 
-::: tip tips
+:::tip tips
 
 -   Visit ft.com -> myFT -> Contact Preferences to enable personal RSS feed, see [help.ft.com](https://help.ft.com/faq/email-alerts-and-contact-preferences/what-is-myft-rss-feed/)
 -   Obtain the key from the personal RSS address, it looks like `12345678-abcd-4036-82db-vdv20db024b8`
@@ -343,7 +339,7 @@ Provides a way to get an specific rss feed by date and category over the officia
 
 <RouteEn author="TonyRL" example="/mingpao/pns/s00017" path="/mingpao/pns/:category?" paramsDesc={['channel，default to brief']}/>
 
-::: tip tips
+:::tip tips
 Only `s00017` is in English.
 :::
 
@@ -425,7 +421,7 @@ Parameters can be obtained from the official website, for instance:
 
 ## Reuters
 
-::: warning Migration notes
+:::caution Migration notes
 
 1. Reuters Chinese site (`cn.reuters.com`) and British site (`uk.reuters.com`) have been terminated, redirecting to the main site (`www.reuters.com`)
 2. The old routes are deprecated. Please migrate to the new routes documented below
@@ -507,7 +503,7 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 
 <RouteEn author="nczitzk" example="/sbs/chinese" path="/sbs/chinese/:category?/:id?/:dialect?/:language?" paramsDesc={['Category, `news` or `podcast`, `news` by default', 'Id, see below, can be found in URL, `news` by default', 'Dialect, `mandarin` or `cantonese`, `mandarin` by default', 'Language, `zh-hans` or `zh-hant`, `zh-hans` by default']}>
 
-::: tip Tip
+:::tip Tip
 
 When subscribing to podcasts, fill `category` with **podcast**. For example, URL to [SBS 普通话电台](https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin) is <https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin>, with **sbs-mandarin** as `id`, **mandarin** as `dialect`, `language` as **zh-hans**, and the route is [`/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans).
 
@@ -545,7 +541,7 @@ SBS Cantonese Programs:
 | ------------------ | -------------- | -------------- | ----------- | ---------------- |
 | healthy-happy-life | gardening-tips | global-finance | culture-360 | technology-world |
 
-::: tip Tip
+:::tip Tip
 
 Mostly, you can omit `language`, for the reason that **madarin** is with **zh-hans** and **cantonese** is with **zh-hant** by default. For example, the route of [SBS 普通话电台](https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin) is [`/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans), which can also be [`/sbs/chinese/podcast/sbs-mandarin/mandarin`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin).
 

@@ -1,9 +1,5 @@
 import Route from '@site/src/components/Route';
 
----
-pageClass: routes
----
-
 # 金融
 
 ## AI 财经社
@@ -162,7 +158,7 @@ pageClass: routes
 
 ## TokenInsight
 
-::: tip 提示
+:::tip 提示
 
 TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/reference/rss>。
 
@@ -210,7 +206,7 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 <Route author="nczitzk" example="/barronschina" path="/barronschina/:id?" paramsDesc={['栏目 id，默认为快讯']}>
 
-::: tip 提示
+:::tip 提示
 
 栏目 id 留空则返回快讯，在对应页地址栏 `columnId=` 后可以看到。
 

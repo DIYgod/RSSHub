@@ -1,9 +1,5 @@
 import Route from '@site/src/components/Route';
 
----
-pageClass: routes
----
-
 # 购物
 
 ## 0818 团
@@ -42,7 +38,7 @@ pageClass: routes
 | -------- | -------- | -------- |
 | 24h      | week     | alltime  |
 
-::: tip 提示
+:::tip 提示
 
 参数 `time` 仅在选择 `mostwanted` 作为分类的时候有效。
 
@@ -68,7 +64,7 @@ pageClass: routes
 | ---- | ------ |
 | mens | womens |
 
-::: tip 提示
+:::tip 提示
 
 参数 `country` 可以在 `Arcteryx` 官网的 URL 中找到。
 
@@ -92,7 +88,7 @@ pageClass: routes
 | ---- | ------ |
 | mens | womens |
 
-::: tip 提示
+:::tip 提示
 
 参数 `country` 可以在 `Arcteryx` 官网的 URL 中找到。
 
@@ -366,7 +362,7 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 <Route author="nczitzk" example="/jd/price/526835" path="/jd/price/:id" paramsDesc={['商品 id，可在商品详情页 URL 中找到']}>
 
-::: tip 提示
+:::tip 提示
 
 如商品 <https://item.jd.com/526835.html> 中的 id 为 `526835`，所以路由为 [`/jd/price/526835`](https://rsshub.app/jd/price/526835)
 
@@ -453,7 +449,7 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ## 什么值得买
 
-::: tip 提示
+:::tip 提示
 
 网站也提供了部分 RSS: <https://www.smzdm.com/dingyue>
 

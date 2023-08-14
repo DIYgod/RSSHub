@@ -1,9 +1,5 @@
 import RouteEn from '@site/src/components/RouteEn';
 
----
-pageClass: routes
----
-
 # Design
 
 ## Axis Studios
@@ -76,7 +72,7 @@ Behance user's profile URL, like <https://www.behance.net/mishapetrick> the user
 | :----: | :------: | :----------: | :--:  | :--------------: |
 | date   | trending | popularity   | alpha | style            |
 
-::: warning
+:::caution
 
 This route requires API key, therefore it's only available when self-hosting, refer to the [Deploy Guide](https://docs.rsshub.app/en/install/#configuration-route-specific-configurations) for route-specific configurations.
 

@@ -1,9 +1,5 @@
 import RouteEn from '@site/src/components/RouteEn';
 
----
-pageClass: routes
----
-
 # Scientific Journal
 
 ## Academy of Management
@@ -41,7 +37,7 @@ Return results from 2020
 
 <RouteEn author="nczitzk" example="/acs/journal/jacsat" path="/aom/journal/:id" paramsDesc={['Journal id, can be found in URL']} supportScihub="1">
 
-::: tip Tip
+:::tip Tip
 
 See [Browse Content](https://pubs.acs.org)
 
@@ -57,7 +53,7 @@ See [Browse Content](https://pubs.acs.org)
 
 The URL of the journal [American Economic Review](https://www.aeaweb.org/journals/aer) is `https://www.aeaweb.org/journals/aer`, where `aer` is the id of the journal, so the route for this journal is `/aeaweb/aer`.
 
-::: tip Tip
+:::tip Tip
 
 More jounals can be found in [AEA Journals](https://www.aeaweb.org/journals).
 
@@ -73,7 +69,7 @@ More jounals can be found in [AEA Journals](https://www.aeaweb.org/journals).
 
 The URL of the journal [Annual Review of Analytical Chemistry](https://www.annualreviews.org/journal/anchem) is `https://www.annualreviews.org/journal/anchem`, where `anchem` is the id of the journal, so the route for this journal is `/annualreviews/anchem`.
 
-::: tip Tip
+:::tip Tip
 
 More jounals can be found in [Browse Journals](https://www.annualreviews.org/action/showPublications).
 
@@ -162,7 +158,7 @@ Including 'cell', 'cancer-cell', 'cell-chemical-biology', 'cell-host-microbe', '
 
 <RouteEn author="HenryQW" path="/google/scholar/:query" example="/google/scholar/data+visualization" paramsDesc={['query statement which supports「Basic」and「Advanced」modes']} anticrawler="1">
 
-::: warning
+:::caution
 
 Google Scholar has strict anti-crawling mechanism implemented, the demo below doesn't guarantee availability. Please deploy your own instance as it might increase the stability.
 
@@ -256,7 +252,7 @@ Papers that are published in this week.
 
 ## Nature Journal
 
-::: tip Tips
+:::tip Tips
 
 You can get all short name of a journal from <https://www.nature.com/siteindex> or [Journal List](#nature-journal-journal-list).
 
@@ -321,7 +317,7 @@ Subscribe to the cover images of the Nature journals, and get the latest publica
 
 <RouteEn author="y9c TonyRL" example="/nature/highlight" path="/nature/highlight/:journal?" paramsDesc={['short name for a journal, `nature` by default']} supportScihub="1" radar="1" rssbud="1">
 
-::: warning Warning
+:::caution Warning
 
 Only some journals are supported.
 
@@ -357,7 +353,7 @@ Return results from 2020
 
 <RouteEn author="emdoe HenryQW y9c" example="/pnas/latest" path="/pnas/:topicPath*" paramsDesc={['Topic path, support **Featured Topics**, **Articles By Topic** and [**Collected Papers**](https://www.pnas.org/about/collected-papers), `latest` by default']} radar="1" anticrawler="1" puppeteer="1" supportScihub="1">
 
-::: tip Tips
+:::tip Tips
 Some topics require adding `topic/` to `topicPath` like [`/pnas/topic/app-math`](https://rsshub.app/pnas/topic/app-math) and some don't like [`/pnas/biophysics-and-computational-biology`](https://rsshub.app/pnas/biophysics-and-computational-biology)
 :::
 
@@ -369,7 +365,7 @@ Some topics require adding `topic/` to `topicPath` like [`/pnas/topic/app-math`]
 
 <RouteEn author="y9c nczitzk" example="/pubmed/trending" path="/pubmed/trending/:filter?" paramsDesc={['Filters, can be found in URL']} supportScihub="1">
 
-::: tip Tip
+:::tip Tip
 
 For the parameter **filter**, the `filter` parameter in the URL should be split into a string by `,`, here is an example.
 
@@ -451,7 +447,7 @@ Category
 | -------- | --------- | --------- | ------- | -- | ------------------ |
 | mobile   | internet  | boardcast | general | it | industry-resources |
 
-::: tip Tips
+:::tip Tips
 
 If `country` or `type` includes empty space, use `-` instead. For example, `United States` needs to be replaced with `United-States`, `White paper` needs to be replaced with `White-paper`
 

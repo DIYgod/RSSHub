@@ -77,7 +77,7 @@ npm run dev
 
 制作新的 RSS 路由的第一步是创建命名空间。命名空间应该与您制作 RSS 源的主要网站的二级域名**相同**。例如，如果您正在为 <https://github.com/DIYgod/RSSHub/issues> 制作 RSS 源，第二级域名是 `github`。因此，您应该在 `lib/v2` 下创建名为 `github` 的文件夹，作为您的 RSS 路由的命名空间。
 
-::: tip 提示
+:::tip 提示
 在创建命名空间时，避免为同一命名空间的创建多个变体。例如，如果您为 `yahoo.co.jp` 和 `yahoo.com` 制作 RSS 源，则应该使用单个命名空间 `yahoo`，而不是创建多个命名空间如 `yahoo-jp`、`yahoojp`、`yahoo.jp`、`jp.yahoo`、`yahoocojp` 等。
 :::
 
@@ -120,7 +120,7 @@ module.exports = function (router) {
 
 您可以使用 `*` 或 `+` 符号来匹配路径的其余部分，例如 `/some/path/:variable*`。请注意，`*` 和 `+` 分别意味着“零个或多个”和“一个或多个”。您还可以使用模式，例如 `/some/path/:variable(\\d+)?`，甚至是正则表达式。
 
-::: tip 提示
+:::tip 提示
 有关 `router` 的更高级用法，请参阅 [@koa/router API 参考文档](https://github.com/koajs/router/blob/master/API.md)。
 :::
 

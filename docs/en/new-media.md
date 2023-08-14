@@ -1,9 +1,5 @@
 import RouteEn from '@site/src/components/RouteEn';
 
----
-pageClass: routes
----
-
 # New media
 
 ## 9To5
@@ -370,7 +366,7 @@ Country
 | ------ | ------- | -------------- | ------- |
 | Latest | Popular | From the Store | For You |
 
-::: tip Tip
+:::tip Tip
 
 Click here to view [All Topics](https://hbr.org/topics)
 

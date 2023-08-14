@@ -1,9 +1,5 @@
 import Route from '@site/src/components/Route';
 
----
-pageClass: routes
----
-
 # 编程
 
 ## ACM
@@ -216,7 +212,7 @@ Rated 对象
 
 ## GitHub
 
-::: tip 提示
+:::tip 提示
 
 GitHub 官方也提供了一些 RSS:
 
@@ -593,7 +589,7 @@ GitHub 官方也提供了一些 RSS:
 | SUSE             | `SUSE`             |
 | Ubuntu           | `Ubuntu`           |
 
-::: tip 提示
+:::tip 提示
 
 注意标识大小写
 
@@ -826,7 +822,7 @@ GitHub 官方也提供了一些 RSS:
 
 ## 安全客
 
-::: tip 提示
+:::tip 提示
 
 官方提供了混合的主页资讯 RSS: <https://api.anquanke.com/data/v1/rss>
 
@@ -1077,7 +1073,7 @@ GitHub 官方也提供了一些 RSS:
 
 ## 拉勾网
 
-::: tip 提示
+:::tip 提示
 
 拉勾网官方提供职位的[邮件订阅](https://www.lagou.com/s/subscribe.html)，请根据自身需要选择使用。
 
@@ -1302,7 +1298,7 @@ GitHub 官方也提供了一些 RSS:
 
 ## 腾讯游戏开发者社区
 
-::: warning 注意
+:::caution 注意
 
 有部分输出全文带有未进行样式处理的代码内容，显示效果不佳，建议跳转原文阅读
 

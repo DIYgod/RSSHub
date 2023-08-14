@@ -1,9 +1,5 @@
 import Route from '@site/src/components/Route';
 
----
-pageClass: routes
----
-
 # 阅读
 
 ## All Poetry
@@ -182,7 +178,7 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 <Route author="nczitzk" example="/aisixiang/zhuanti/211" path="/aisixiang/zhuanti/:id" paramsDesc={['专题 ID, 可在对应专题 URL 中找到']}>
 
-::: tip 提示
+:::tip 提示
 
 更多专题请见 [关键词](http://www.aisixiang.com/zhuanti/)
 
@@ -217,7 +213,7 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 ## 笔趣阁
 
-::: tip 看我
+:::tip 看我
 
 此处的 **笔趣阁** 指网络上使用和 **笔趣阁** 样式相似模板的小说阅读网站，包括但不限于下方列举的网址。
 
@@ -245,7 +241,7 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 <Route author="nczitzk" example="/biquge/http://www.biqu5200.net/0_7/" path="/biquge/:url" paramsDesc={['小说 Url，即对应小说详情页的 Url，可在地址栏中找到']} anticrawler="1" radar="1" rssbud="1">
 
-::: tip 看我
+:::tip 看我
 
 #### 使用方法
 
@@ -263,7 +259,7 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 :::
 
-::: warning 提示
+:::caution 提示
 
 上方列举的网址可能部分不可用，这取决于该网站的维护者是否持续运营网站。请选择可以正常访问的网址，获取更新的前提是该网站可以正常访问。
 
@@ -283,7 +279,7 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 <Route author="nczitzk" example="/chaoxing/qk/6b5c39b3dd84352be512e29df0297437" path="/chaoxing/qk/:id/:needContent?" paramsDesc={['期刊 id，可在期刊页 URL 中找到', '需要获取文章全文，填写 true/yes 表示需要，默认需要']} anticrawler="1" radar="1" rssbud="1">
 
-::: tip 看我
+:::tip 看我
 
 全部期刊可以在 [这里](http://qk.chaoxing.com/space/index) 找到，你也可以从 [学科分类](https://qikan.chaoxing.com/jourclassify) 和 [期刊导航](https://qikan.chaoxing.com/search/openmag) 中发现更多期刊。
 
@@ -291,7 +287,7 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 :::
 
-::: warning 提示
+:::caution 提示
 
 你可以设置参数 **需要获取文章全文** 为 `true` `yes` `t` `y` 等值（或者忽略这个参数），RSS 的条目会携带期刊中的 **文章全文**，而不仅仅是 **文章概要**。但因为发起访问请求过多会被该网站屏蔽，你可以将其关闭（设置该参数为 `false` `no` `f` `n` 等值），这将会大大减少请求次数从而更难触发网站的反爬机制。
 
@@ -309,7 +305,7 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 <Route author="LogicJake" example="/chuiniu/column/0b1c4cf6e7f24e8da11e37882de73704" path="/chuiniu/column/:id" paramsDesc={['栏目 id, 可在对应栏目页 URL 中找到']}>
 
-::: warning 注意
+:::caution 注意
 
 正文内容需要用户登录后的 x-member 值，详情见部署页面的配置模块。若无相关配置或 x-member 失效，则只显示文章摘要。
 :::
@@ -344,7 +340,7 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 <Route author="JeasonLau" example="/dcrsw/zhongjidouluo/2" path="/dcrsw/:name/:count?" paramsDesc={['小说名，可在对应小说页URL中找到', '显示的章节数，缺省为`3`']}>
 
-::: warning 注意
+:::caution 注意
 
 count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 以下。
 :::
@@ -468,7 +464,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="nczitzk" example="/qidiantu" path="/qidiantu/:category?/:type?/:is_history?" paramsDesc={['分类', '类型', '是否查看历史榜单，填写 true/yes 表示是，默认否']}>
 
-::: tip 提示
+:::tip 提示
 
 参数 **是否查看历史榜单** 设置为 `true` `yes` `t` `y` 等值后，RSS 会返回历史榜单。
 
@@ -504,7 +500,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="Fatpandac" example="/wenku8/lastupdate" path="/wenku8/:categoty?" paramsDesc={['首页分类，见下表，默认为今日更新']} selfhost="1">
 
-::: warning 注意
+:::caution 注意
 
 首页需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 

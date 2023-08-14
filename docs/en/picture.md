@@ -1,9 +1,5 @@
 import RouteEn from '@site/src/components/RouteEn';
 
----
-pageClass: routes
----
-
 # Picture
 
 ## 1X
@@ -241,7 +237,7 @@ Rating
 
 ## Konachan Anime Wallpapers
 
-::: tip
+:::tip
 
 -   Tags can be copied after `tags=` in [konachan](https://konachan.com/post) URL
 -   The route can be / konachan or /konachan.com or /konachan.net, where the first two are the same, and .net is an all-age healthy wallpaper ♡
@@ -322,7 +318,7 @@ For example:
 
 ## wallhaven
 
-::: tip Tip
+:::tip Tip
 
 When parameter **Need Details** is set to `true` `yes` `t` `y`, RSS will add the title, uploader, upload time, and category information of each image, which can support the filtering function of RSS reader.
 
@@ -346,7 +342,7 @@ For example [Latest Wallpapers](https://wallhaven.cc/latest), the route turning 
 
 <RouteEn author="nczitzk Fatpandac" example="/wallhaven/search/categories=110&purity=110&sorting=date_added&order=desc" path="/wallhaven/search/:filter?/:needDetails?" paramsDesc={['Filter, empty by default', 'Need Details, `true`/`yes` as yes, no by default']}>
 
-::: tip Tip
+:::tip Tip
 
 Subscribe pages starting with `https://wallhaven.cc/search`, fill the text after `?` as `filter` in the route. The following is an example:
 
@@ -364,7 +360,7 @@ The text after `?` is `q=id%3A711&sorting=random&ref=fp&seed=8g0dgd` for [Wallpa
 
 ## yande.re
 
-::: tip
+:::tip
 
 -   Official RSS: https://yande.re/post/piclens?tags=[tags]
 

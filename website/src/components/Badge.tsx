@@ -8,6 +8,6 @@ export default function Badge({
   type: string;
 }): JSX.Element {
   return (
-    <div className="badge"></div>
+    <span className={`badge ${type}`}>{text}</span>
   )
 }

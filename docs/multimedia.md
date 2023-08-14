@@ -1,14 +1,10 @@
 import Route from '@site/src/components/Route';
 
----
-pageClass: routes
----
-
 # 音视频
 
 ## 141JAV
 
-::: tip 提示
+:::tip 提示
 
 官方提供的订阅源不支持 BT 下载订阅，地址为 <https://141jav.com/feeds/>
 
@@ -56,7 +52,7 @@ pageClass: routes
 
 ## 141PPV
 
-::: tip 提示
+:::tip 提示
 
 官方提供的订阅源不支持 BT 下载订阅，地址为 <https://141ppv.com/feeds/>
 
@@ -152,7 +148,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/4ksj/forum" path="/4ksj/forum/:id?" paramsDesc={['分类 id，默认为最新4K电影']}>
 
-::: tip 提示
+:::tip 提示
 
 若订阅 [最新 4K 电影](https://www.4ksj.com/forum-2-1.html)，网址为 <https://www.4ksj.com/forum-2-1.html>。截取 `https://www.4ksj.com/forum-` 到末尾 `.html` 的部分 `2-1` 作为参数，此时路由为 [`/4ksj/forum/2-1`](https://rsshub.app/4ksj/forum/2-1)。
 
@@ -253,7 +249,7 @@ pageClass: routes
 
 ## 91porn
 
-::: tip 提示
+:::tip 提示
 
 91porn 有多个备用域名，路由默认使用永久域名 <https://91porn.com>。若该域名无法访问，可以通过在路由最后加上 `?domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://0122.91p30.com>，则在所有 91porn 路由最后加上 `?domain=0122.91p30.com` 即可，此时路由为 [`/91porn?domain=0122.91p30.com`](https://rsshub.app/91porn?domain=0122.91p30.com)
 
@@ -295,7 +291,7 @@ pageClass: routes
 
 ### 演员
 
-::: tip 提示
+:::tip 提示
 当没有给定排序类型时，默认为按上传时间排序及 mr
 
 :::
@@ -350,7 +346,7 @@ pageClass: routes
 
 <Route author="nczitzk" example="/btzj" path="/btzj/:category?" paramsDesc={['分类，可在对应分类页 URL 中找到，默认为首页']}>
 
-::: tip 提示
+:::tip 提示
 
 分类页中域名末尾到 `.htm` 前的字段即为对应分类，如 [电影](https://www.btbtt20.com/forum-index-fid-951.htm) <https://www.btbtt20.com/forum-index-fid-951.htm> 中域名末尾到 `.htm` 前的字段为 `forum-index-fid-951`，所以路由应为 [`/btzj/forum-index-fid-951`](https://rsshub.app/btzj/forum-index-fid-951)
 
@@ -376,7 +372,7 @@ pageClass: routes
 | -------------------- | -------------------- |
 | forum-index-fid-1187 | forum-index-fid-1191 |
 
-::: tip 提示
+:::tip 提示
 
 BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认域名，若该域名无法访问，可以通过在路由后方加上 `?domain=<域名>` 指定路由访问的域名。如指定域名为 <https://www.btbtt15.com>，则在 `/btzj` 后加上 `?domain=btbtt15.com` 即可，此时路由为 [`/btzj?domain=btbtt15.com`](https://rsshub.app/btzj?domain=btbtt15.com)
 
@@ -398,7 +394,7 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 </Route>
 
-::: tip 提示
+:::tip 提示
 
 由于 BT 之家域名有多个。此 feed 对应[`https://www.88btbtt.com`](https://www.88btbtt.com)域名和[`http://www.2btjia.com/`](http://www.2btjia.com/)域名.
 可空，默认为 base
@@ -409,7 +405,7 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 ### 栏目
 
-::: tip 提示
+:::tip 提示
 
 栏目 ID 查找示例:
 打开栏目具体某一期页面，F12 控制台输入`column_id`得到栏目 ID。
@@ -456,7 +452,7 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 <Route author="nczitzk" example="/e-hentai/category/manga" path="/e-hentai/category/:category?/:needTorrents?/:needImages?" paramsDesc={['分类，可在对应分类页中找到，默认为首页', '需要输出种子文件，填写 true/yes 表示需要，默认需要', '需要显示大图，填写 true/yes 表示需要，默认需要']}>
 
-::: tip 提示
+:::tip 提示
 
 参数 **需要输出种子文件** 设置为 `true` `yes` `t` `y` 等值后，RSS 会携带种子文件的路径，以供支持 RSS 的下载工具订阅下载。
 
@@ -484,7 +480,7 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 <Route author="nczitzk" example="/e-hentai/tag/language:chinese" path="/e-hentai/tag/:tag?" paramsDesc={['标签，可在对应标签页中找到，默认为首页']}>
 
-::: tip 提示
+:::tip 提示
 
 参数 **需要输出种子文件**、**需要显示大图** 的说明同上，以下是一个例子：
 
@@ -498,7 +494,7 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 <Route author="nczitzk" example="/e-hentai/search/f_search=haha" path="/e-hentai/search/:keyword?" paramsDesc={['关键字，可以在搜索结果页的 URL 中找到，默认为首页']}>
 
-::: tip 提示
+:::tip 提示
 
 参数 **需要输出种子文件**、**需要显示大图** 的说明同上，以下是一个例子：
 
@@ -510,7 +506,7 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 ## EZTV
 
-::: tip 提示
+:::tip 提示
 
 网站提供了全部种子的 RSS: <https://eztv.io/ezrss.xml>
 
@@ -552,7 +548,7 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 <Route author="nczitzk" example="/ibc/radio/maitta" path="/ibc/radio/:id?" paramsDesc={['节目 id, 可在节目页 URL 中找到，默认为 イヤーマイッタマイッタ']} supportPodcast="1">
 
-::: tip 提示
+:::tip 提示
 
 若订阅 [イヤーマイッタマイッタ](https://www.ibc.co.jp/radio/maitta/audio)，网址为 <https://www.ibc.co.jp/radio/maitta/audio>。截取 `https://www.ibc.co.jp/radio/` 到末尾的部分 `/audio/` 之间的 `maitta` 作为参数，此时路由为 [`/ibc/radio/maitta`](https://rsshub.app/ibc/radio/maitta)。
 
@@ -564,7 +560,7 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 ## JavBus
 
-::: tip 提示
+:::tip 提示
 
 JavBus 有多个备用域名，本路由默认使用永久域名 <https://javbus.com> ，若该域名无法访问，可以通过在路由最后加上 `?domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://javsee.icu>，则在所有 JavBus 路由最后加上 `?domain=javsee.icu` 即可，此时路由为 [`/javbus?domain=javsee.icu`](https://rsshub.app/javbus?domain=javsee.icu)
 
@@ -678,7 +674,7 @@ JavBus 有多个备用域名，本路由默认使用永久域名 <https://javbus
 
 ## JavDB
 
-::: tip 提示
+:::tip 提示
 
 JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.com> ，若该域名无法访问，可以通过在路由最后加上 `?domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://javdb36.com>，则在所有 JavDB 路由最后加上 `?domain=javdb36.com` 即可，此时路由为 [`/javdb?domain=javdb36.com`](https://rsshub.app/javdb?domain=javdb36.com)
 
@@ -688,7 +684,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 :::
 
-::: tip 提示
+:::tip 提示
 
 你可以通过指定 `limit` 参数来获取特定数量的条目，即可以通过在路由后方加上 `?limit=25`，默认为单次获取 20 个条目，即默认 `?limit=20`
 
@@ -724,7 +720,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="nczitzk" example="/javdb/tags/c2=5&c10=1" path="/javdb/tags/:query?/:category?" paramsDesc={['筛选，默认为 `c10=1`', '分类，见下表，默认为 `有碼`']} anticrawler="1">
 
-::: tip 提示
+:::tip 提示
 
 在 [分類](https://javdb.com/tags) 中选定分类后，URL 中 `tags?` 后的字段即为筛选参数。
 
@@ -878,7 +874,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 | ------------------------ | ---------------------- |
 | 1                        | 2                      |
 
-::: tip 提示
+:::tip 提示
 
 全部分类参见 [依分类](https://www.javlibrary.com/cn/genres.php)
 
@@ -894,7 +890,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 | ------------------------ | ---------------------- |
 | 1                        | 2                      |
 
-::: tip 提示
+:::tip 提示
 
 按排行榜查看演员可前往 [排行榜](https://www.javlibrary.com/cn/star_mostfav.php)
 
@@ -1058,7 +1054,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 ## OneJAV
 
-::: tip 提示
+:::tip 提示
 
 官方提供的订阅源不支持 BT 下载订阅，地址为 <https://onejav.com/feeds/>
 
@@ -1249,7 +1245,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 ## The Movie Database
 
-::: tip 提示
+:::tip 提示
 路由中的语言参数可参考 <https://developers.themoviedb.org/3/getting-started/languages>。
 :::
 
@@ -1345,7 +1341,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="TonyRL" example="/iqiyi/album/神武天尊-2020-1b4lufwxd7h" path="/iqiyi/album/:id" paramsDesc={['剧集 id, 可在该主页 URL 中找到']} radar="1">
 
-::: tip 提示
+:::tip 提示
 可抓取內容根据服务器所在地区而定
 :::
 
@@ -1353,7 +1349,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 ## 哔嘀影视
 
-::: tip 提示
+:::tip 提示
 
 哔嘀影视有多个备用域名，路由默认使用域名 <https://bdys01.com>。若该域名无法访问，可以通过在路由最后加上 `?domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://bde4.icu>，则在所有哔嘀影视路由最后加上 `?domain=bde4.icu` 即可，此时路由为 [`/bdys?domain=bde4.icu`](https://rsshub.app/bdys?domain=bde4.icu)
 
@@ -1451,7 +1447,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="cnzgray" example="/t66y/post/3286088" path="/t66y/post/:tid" paramsDesc={['帖子 id, 可在帖子 URL 中找到']} anticrawler="1">
 
-::: tip 提示
+:::tip 提示
 
 帖子 id 查找办法:
 
@@ -1747,7 +1743,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 ## 网易云音乐
 
-::: tip 部分歌单及听歌排行信息为登陆后可见
+:::tip 部分歌单及听歌排行信息为登陆后可见
 
 部分歌单及听歌排行信息为登陆后可见，自建时将环境变量`NCM_COOKIES`设为登陆后的 Cookie 值，即可正常获取。
 :::
@@ -1782,7 +1778,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 ## 西瓜视频
 
-::: tip Tiny Tiny RSS 用户请注意
+:::tip Tiny Tiny RSS 用户请注意
 
 Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性，导致无法加载西瓜视频内嵌视频，如果需要使用内嵌视频请为 Tiny Tiny RSS 安装 [remove_iframe_sandbox](https://github.com/DIYgod/ttrss-plugin-remove-iframe-sandbox) 插件
 
@@ -1800,7 +1796,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 目前喜马拉雅的 API 只能一集一集的获取各节目上的 ShowNote，会极大的占用系统资源，所以默认为不获取节目的 ShowNote。下方有一个新的路径可选获取 ShowNote。
 
-::: warning 注意
+:::caution 注意
 专辑类型即 url 中的分类拼音，使用通用分类 `album` 通常是可行的，专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了
 
 **付费内容需要配置好已购买账户的 token 才能收听，详情见部署页面的配置模块**
@@ -1820,7 +1816,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="prnake" example="/xiaoyuzhou" path="/xiaoyuzhou" selfhost="1">
 
-::: warning 注意
+:::caution 注意
 
 小宇宙的 api 需要验证 `x-jike-device-id`、`x-jike-access-token` 和 `x-jike-refresh-token` 。必要时需要自行配置，具体见部署文档。
 
@@ -1848,7 +1844,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 所以对应路由为 [`/radio/album/15682090498666`](https://rsshub.app/radio/album/15682090498666)
 
-::: tip 提示
+:::tip 提示
 
 部分专辑不适用该路由，此时可以尝试 [节目](#yun-ting-jie-mu) 路由
 
@@ -1864,7 +1860,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 所以对应路由为 [`/radio/1552135`](https://rsshub.app/radio/1552135)
 
-::: tip 提示
+:::tip 提示
 
 该路由仅适用于更新时间较早的电台节目，如 [共和国追梦人](http://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135)
 
@@ -1882,7 +1878,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 所以对应路由为 [`/radio/zhibo/1395528`](https://rsshub.app/radio/zhibo/1395528)
 
-::: tip 提示
+:::tip 提示
 
 查看更多电台直播节目，可前往 [电台直播](http://www.radio.cn/pc-portal/erji/radioStation.html)
 
@@ -1914,7 +1910,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ## 中文播客榜
 
-::: tip 提示
+:::tip 提示
 
 可以通过指定 `limit` 参数确定榜单排名下限，默认为 250。
 
@@ -1970,7 +1966,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 影视
 
-::: tip 提示
+:::tip 提示
 
 跟官方提供的 RSS 相比：官方使用了不规范的 magnet 字段，无法被 BT 客户端识别并自动下载，其他数据相同
 

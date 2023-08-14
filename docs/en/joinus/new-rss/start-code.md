@@ -436,7 +436,7 @@ module.exports = async (ctx) => {
 
 Now the RSS feed will have a similar reading experience to the original website.
 
-::: tip Note
+:::tip Note
 Note that in the previous section, we only needed to send one HTTP request using an API to get all the data we needed. However, in this section, we need to send `1 + n` HTTP requests, where `n` is the number of feed items in the list from the first request.
 
 Some websites may not want to receive too many requests in a short amount of time, which can cause them to return an error message like `429 Too Many Requests`.

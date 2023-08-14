@@ -1,9 +1,5 @@
 import Route from '@site/src/components/Route';
 
----
-pageClass: routes
----
-
 # 图片
 
 ## 1X
@@ -291,7 +287,7 @@ R18 显示
 
 ## Konachan Anime Wallpapers
 
-::: tip 提示
+:::tip 提示
 
 -   tags 在 [konachan](https://konachan.com/post) URL 中 `tags=` 后的参数
 -   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同，`.net` 是全年龄健康的壁纸 ♡
@@ -368,7 +364,7 @@ R18 显示
 
 <Route author="nczitzk" example="/nasa/apod-cn" path="/nasa/apod-cn">
 
-::: tip 提示
+:::tip 提示
 
 [NASA 中文](https://www.nasachina.cn/) 提供了每日天文图的中英双语图文说明，但在更新上偶尔略有一两天的延迟。
 
@@ -399,7 +395,7 @@ R18 显示
 
 ## wallhaven
 
-::: tip 提示
+:::tip 提示
 
 参数 **需要图片信息** 设置为 `true` `yes` `t` `y` 等值后，RSS 会携带各图片的标题、上传者、上传时间、分类信息，可支持 RSS 阅读器的筛选功能。
 
@@ -423,7 +419,7 @@ R18 显示
 
 <Route author="nczitzk Fatpandac" example="/wallhaven/search/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd" path="/wallhaven/search/:filter?/:needDetails?" paramsDesc={['过滤器，默认为空', '需要图片信息，填写 `true`/`yes` 表示需要，默认不需要']}>
 
-::: tip 提示
+:::tip 提示
 
 订阅以 `https://wallhaven.cc/search` 起始的页面，将 `?` 后的字段作为 `filter` 填写入路由。下面是一个例子：
 
@@ -441,7 +437,7 @@ R18 显示
 
 ## yande.re
 
-::: tip 提示
+:::tip 提示
 
 -   网站提供了 Posts 订阅: <https://yande.re/post/piclens?tags=[tags]>
 
@@ -538,7 +534,7 @@ R18 显示
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | bbs      | bbs7     | bbs2     | bbs6     | bbs4     | bj       | bbs5     | bbs3     |
 
-::: tip 提示
+:::tip 提示
 
 留园网文档参见 [此处](https://docs.rsshub.app/new-media.html#liu-yuan-wang)
 

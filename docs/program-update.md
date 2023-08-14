@@ -1,9 +1,5 @@
 import Route from '@site/src/components/Route';
 
----
-pageClass: routes
----
-
 # 程序更新
 
 ## Amazon
@@ -52,7 +48,7 @@ pageClass: routes
 
 <Route author="Rongronggg9" example="/app-center/release/cloudflare/1.1.1.1-windows/beta" path="/app-center/release/:user/:app/:distribution_group" paramsDesc={['用户', 'App 名称', '分发组']} radar="1" rssbud="1">
 
-::: tip 提示
+:::tip 提示
 
 参数可从 Release 页的 URL 中提取: `https://install.appcenter.ms/users/:user/apps/:app/distribution_groups/:distribution_group`
 
@@ -168,7 +164,7 @@ pageClass: routes
 
 ### Model discussions
 
-::: warning 注意
+:::caution 注意
 
 需要配置 `CIVITAI_COOKIE` 才可获取 NSFW 模型的图片信息
 
@@ -220,7 +216,7 @@ pageClass: routes
 
 <Route author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" paramsDesc={['镜像作者', '镜像名称', '镜像标签，默认 latest']} radar="1" rssbud="1">
 
-::: warning 注意
+:::caution 注意
 
 官方镜像的 owner 填写 library, 如: <https://rsshub.app/dockerhub/build/library/mysql>
 
@@ -232,7 +228,7 @@ pageClass: routes
 
 <Route author="outloudvi" example="/dockerhub/tag/library/mariadb" path="/dockerhub/tag/:owner/:image/:limits?" paramsDesc={['镜像作者', '镜像名称', 'tag 数量，默认为 10']} radar="1" rssbud="1">
 
-::: warning 注意
+:::caution 注意
 
 官方镜像的 owner 填写 library, 如: <https://rsshub.app/dockerhub/tag/library/mysql>
 
@@ -326,7 +322,7 @@ pageClass: routes
 
 <Route author="NavePnow" example="/ifi-audio/download/1503007035/44472" path="/ifi-audio/download/:val/:id" paramsDesc={['商品 val', '商品 id']}/>
 
-::: warning 注意
+:::caution 注意
 
 1.  打开网站 <https://ifi-audio.com/download-hub> 并打开 Inspect -> Network 调试面板
 2.  在网站中选择设备以及对应的 serial number，点击搜索
@@ -354,7 +350,7 @@ pageClass: routes
 
 ## Logseq
 
-::: warning
+:::caution
 Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 请使用 <https://github.com/logseq/logseq/releases.atom> 代替。
 :::
@@ -620,7 +616,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 <Route author="NavePnow" example="/sony/downloads/product/nw-wm1am2" path="/sony/downloads/:productType/:productId" paramsDesc={['产品类别', '产品Id']}>
 
-::: tip 提示
+:::tip 提示
 
 打开 `https://www.sony.com/electronics/support` 并搜索对应的产品，比如 `Sony A7M4` 对应的网站是 `https://www.sony.com/electronics/support/e-mount-body-ilce-7-series/ilce-7m4/downloads`，`productType` 为 `e-mount-body-ilce-7-series`, `productId` 为 `ilce-7m4`
 

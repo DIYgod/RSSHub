@@ -1,9 +1,5 @@
 import RouteEn from '@site/src/components/RouteEn';
 
----
-pageClass: routes
----
-
 # Blog
 
 ## Amazon
@@ -86,7 +82,7 @@ pageClass: routes
 
 The List ID is the last part of the URL after `-`, for example, the username in "https://medium.com/@imsingee/list/collection-7e67004f23f9" is `imsingee`, and the ID is `7e67004f23f9`.
 
-::: warning Note
+:::caution Note
 
 To access private lists, only self-hosting is supported.
 
@@ -98,7 +94,7 @@ To access private lists, only self-hosting is supported.
 
 <RouteEn author="ImSingee" example="/medium/for-you/imsingee" path="/medium/for-you/:user" paramsDesc={['Username']} selfhost="1">
 
-::: warning Note
+:::caution Note
 
 Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
 
@@ -110,7 +106,7 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 <RouteEn author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" paramsDesc={['Username']} selfhost="1">
 
-::: warning Note
+:::caution Note
 
 Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
 
@@ -124,7 +120,7 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 There are many tags, which can be obtained by clicking on a tag from the homepage and looking at the URL. For example, if the URL is `https://medium.com/?tag=web3`, then the tag is `web3`.
 
-::: warning Note
+:::caution Note
 
 Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
 
@@ -162,7 +158,7 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 <RouteEn author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest">
 
-::: tip
+:::tip
 
 Limit the number of entries to be retrieved by adding `?limit=x` to the end of the route, default value is `10`.
 

@@ -1,9 +1,5 @@
 import Route from '@site/src/components/Route';
 
----
-pageClass: routes
----
-
 # 社交媒体
 
 ## 755
@@ -14,13 +10,13 @@ pageClass: routes
 
 ## bilibili
 
-::: tip Tiny Tiny RSS 用户请注意
+:::tip Tiny Tiny RSS 用户请注意
 
 Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性，导致无法加载 bilibili 内嵌视频，如果需要使用内嵌视频请为 Tiny Tiny RSS 安装 [remove_iframe_sandbox](https://github.com/DIYgod/ttrss-plugin-remove-iframe-sandbox) 插件
 
 :::
 
-::: tip 关于视频清晰度
+:::tip 关于视频清晰度
 
 内嵌视频的默认清晰度为 480P，如需解锁更高清晰度，请[点此](https://www.bilibili.com/blackboard/html5player.html?cid=253377437\&aid=885203421\&page=\&as_wide=1)在下方登录以设置 Cookie，仅对当前浏览器生效
 
@@ -74,7 +70,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="Qixingchen" example="/bilibili/user/followers/2267573/3" path="/bilibili/user/followers/:uid/:loginUid" paramsDesc={['用户 id, 可在 UP 主主页中找到','用于登入的用户id,需要配置对应的 Cookie 值']} radar="1" rssbud="1" selfhost="1">
 
-::: warning 注意
+:::caution 注意
 
 UP 主粉丝现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -86,7 +82,7 @@ UP 主粉丝现在需要 b 站登录后的 Cookie 值，所以只能自建，详
 
 <Route author="Qixingchen" example="/bilibili/user/followings/2267573/3" path="/bilibili/user/followings/:uid/:loginUid" paramsDesc={['用户 id, 可在 UP 主主页中找到','用于登入的用户id,需要配置对应的 Cookie 值']} radar="1" rssbud="1" selfhost="1">
 
-::: warning 注意
+:::caution 注意
 
 UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -254,7 +250,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 <Route author="TigerCubDen" example="/bilibili/followings/dynamic/109937383" path="/bilibili/followings/dynamic/:uid/:showEmoji?/:disableEmbed?" paramsDesc={['用户 id', '显示或隐藏表情图片，默认值为 0 隐藏，其他值为显示', '默认为开启内嵌视频, 任意值为关闭']} selfhost="1">
 
-::: warning 注意
+:::caution 注意
 
 用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -266,7 +262,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 <Route author="LogicJake" example="/bilibili/followings/video/2267573" path="/bilibili/followings/video/:uid/:disableEmbed?" paramsDesc={['用户 id', '默认为开启内嵌视频, 任意值为关闭']} selfhost="1">
 
-::: warning 注意
+:::caution 注意
 
 用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -278,7 +274,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 <Route author="woshiluo" example="/bilibili/followings/article/99800931" path="/bilibili/followings/article/:uid" paramsDesc={['用户 id']} selfhost="1">
 
-::: warning 注意
+:::caution 注意
 
 用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -358,7 +354,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 <Route author="yindaheng98" example="/bilibili/manga/followings/26009" path="/bilibili/manga/followings/:uid/:limits?" paramsDesc={['用户 id', '抓取最近更新前多少本漫画，默认为10']} selfhost="1">
 
-::: warning 注意
+:::caution 注意
 
 用户追漫需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -518,7 +514,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ## Instagram
 
-::: warning 注意
+:::caution 注意
 
 由于 Instagram Private API 限制，必须在服务器上设置你的用户名和密码。暂不支持两步验证。步骤见[部署指南](https://docs.rsshub.app/install/)。
 
@@ -534,7 +530,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 | ---------- | ---- |
 | user       | tags |
 
-::: tip Tips
+:::tip Tips
 建议在部署时使用 Redis 缓存。
 :::
 
@@ -568,7 +564,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ## Mastodon
 
-::: tip 提示
+:::tip 提示
 
 通常来说，各实例提供用户时间线的订阅源，如下：
 
@@ -635,7 +631,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 | 1 (默认)       | 开                       | 关                     |
 | 10             | 开                       | 开                     |
 
-::: warning 注意
+:::caution 注意
 
 Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 Story 显示多于一次。
 尽管如此，每个 Story 都会在 24 小时后过期，所以问题也许没那么严重。
@@ -686,7 +682,7 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 <Route author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1" rssbud="1" selfhost="1">
 
-::: warning 注意
+:::caution 注意
 
 因为每个人关注的画师不同，所以只能自建。请不要将画师设为 “悄悄关注”，这样子画师的作品就不会出现在订阅里了。
 
@@ -756,7 +752,7 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 <Route author="BugWriter2" example="/soul/posts/hot/NXJiSlM5V21kamJWVlgvZUh1NEExdz09" path="/soul/posts/hot/:pid*" paramsDesc={['瞬间 id, 分享用户瞬间时的 URL 的 postIdEcpt 参数']}/>
 
-::: tip 提示
+:::tip 提示
 
 提供不同内容的 `pid`, 可以得到不同的热门瞬间推荐，如果想看多个种类的热门可以用 `/` 把不同的 `pid` 连起来，例如: `NXJiSlM5V21kamJWVlgvZUh1NEExdz09/MkM0amxSTUNiTEpLcHhzSlRzTEI1dz09`
 
@@ -796,7 +792,7 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 会生成一个没有任何链接预览和烦人的元数据，在标题中显示 emoji 媒体标签，不含转发消息（但含有回复消息），也不含你不关心的消息（服务消息和不支持的消息）的 RSS，适合喜欢纯净订阅的人。
 
-::: tip 提示
+:::tip 提示
 
 为向后兼容，不合法的 `routeParams` 会被视作 `searchQuery` 。
 
@@ -816,7 +812,7 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 ## Twitter
 
-::: warning 注意
+:::caution 注意
 
 由于 Twitter 的限制，部分路由目前仅支持 7 天内推文检索。
 
@@ -870,7 +866,7 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 <Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" paramsDesc={['用户名', '额外参数；请参阅上面的说明和表格']} radar="1" rssbud="1" selfhost="1">
 
-::: warning 注意
+:::caution 注意
 
 用户关注时间线需要对应用户的 Twitter token， 所以只能自建，详情见部署页面的配置模块。
 
@@ -898,7 +894,7 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 <Route author="TonyRL" example="/twitter/collection/DIYgod/1527857429467172864" path="/twitter/collection/:uid/:collectionId/:routeParams?" paramsDesc={['用户名，需与生成的 Twitter token 对应', '推文收集 ID，可从 URL 获得', '额外参数；请参阅上面的说明和表格']} radar="1" rssbud="1" selfhost="1">
 
-::: warning 注意
+:::caution 注意
 
 推文收集需要用户的 Twitter token，所以只能自建，详情见部署页面的配置模块。
 
@@ -916,7 +912,7 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 <Route author="MisteryMonster" example="/vimeo/user/filmsupply/picks" path="/vimeo/user/:username/:cat" paramsDesc={['用户名或者 uid，用户名可从地址栏获得，如 [https://vimeo.com/filmsupply](https://vimeo.com/filmsupply) 中为 `filmsupply`', '分类根据不同的用户页面获得，例子中有`Docmentary`，`Narrative`，`Drama`等。填入 `picks` 为和首页一样的推荐排序，推荐排序下没有发布时间信息']} radar="1">
 
-::: tip 请注意带有斜杠的的标签名
+:::tip 请注意带有斜杠的的标签名
 
 如果分类名带有斜杠符号的如 `3D/CG` 时，必须把斜杠`/`转成 `|`
 
@@ -944,7 +940,7 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 ## YouTube
 
-::: tip Tiny Tiny RSS 用户请注意
+:::tip Tiny Tiny RSS 用户请注意
 
 Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性，导致无法加载 YouTube 内嵌视频，如果需要使用内嵌视频请为 Tiny Tiny RSS 安装 [remove_iframe_sandbox](https://github.com/DIYgod/ttrss-plugin-remove-iframe-sandbox) 插件
 
@@ -956,7 +952,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 频道
 
-::: tip 提示
+:::tip 提示
 
 YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ>。
 
@@ -1080,7 +1076,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 ## 抖音
 
-::: warning 注意
+:::caution 注意
 
 反爬严格，需要启用 puppeteer。\
 抖音的视频 CDN 会验证 Referer，意味着许多阅读器都无法直接播放内嵌视频，以下是一些变通解决方案：
@@ -1207,7 +1203,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 <Route author="alfredcai" example="/douban/people/62759792/status" path="douban/people/:userid/status/:routeParams" paramsDesc={['整数型用户 id', '额外参数；见下']} radar="1">
 
-::: tip 提示
+:::tip 提示
 
 -   **目前只支持整数型 id**
 -   字母型的 id，可以通过头像图片链接来找到其整数型 id，图片命名规则`ul[userid]-*.jpg`或`u[userid]-*.jpg`，即取文件名中间的数字
@@ -1328,7 +1324,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 ## 饭否
 
-::: warning 注意
+:::caution 注意
 部署时需要申请并配置饭否 Consumer Key、Consumer Secret、用户名和密码，具体见部署文档
 :::
 
@@ -1420,7 +1416,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 <Route author="xizeyoupan" example="/coolapk/dyh/1524" path="/coolapk/dyh/:dyhId" paramsDesc={['看看号ID']}>
 
-::: tip
+:::tip
 仅限于采集**站内订阅**的看看号的内容。看看号 ID 可在看看号界面右上分享 - 复制链接得到。
 :::
 
@@ -1446,7 +1442,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 | -------- | ----- | ------ |
 | period   | daily | weekly |
 
-::: tip
+:::tip
 今日热门没有周榜，酷图榜日榜的参数会变成周榜，周榜的参数会变成月榜。
 :::
 
@@ -1532,7 +1528,7 @@ rule
 
 ## 微博
 
-::: warning 注意
+:::caution 注意
 
 微博会针对请求的来源地区返回不同的结果。\
 一个已知的例子为：部分视频因未知原因仅限中国大陆境内访问 (CDN 域名为 `locallimit.us.sinaimg.cn` 而非 `f.video.weibocdn.com`)。若一条微博含有这种视频且 RSSHub 实例部署在境外，抓取到的微博可能不含视频。将 RSSHub 部署在境内有助于抓取这种视频，但阅读器也必须处于境内网络环境以加载视频。
@@ -1603,7 +1599,7 @@ rule
 
 <Route author="zytomorrow DIYgod Rongronggg9" example="/weibo/timeline/3306934123" path="/weibo/timeline/:uid/:feature?/:routeParams?" paramsDesc={['用户的uid', '过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。', '额外参数；请参阅上面的说明和表格']} anticrawler="1" selfhost="1">
 
-::: warning 注意
+:::caution 注意
 
 需要对应用户打开页面进行授权生成 token 才能生成内容
 
@@ -1617,7 +1613,7 @@ rule
 
 <Route author="monologconnor Rongronggg9" example="/weibo/group/4541216424989965/微博分组/:routeParams?" path="/weibo/group/:gid/:gname?/:routeParams?" paramsDesc={['分组id, 在网页版分组地址栏末尾`?gid=`处获取', '分组显示名称; 默认为: `微博分组`', '额外参数；请参阅上面的说明和表格']} anticrawler="1" selfhost="1">
 
-::: warning 注意
+:::caution 注意
 
 由于微博官方未提供自定义分组相关 api, 此方案必须使用用户`Cookie`进行抓取
 
@@ -1641,7 +1637,7 @@ rule
 
 <Route author="nczitzk" example="/wukong/user/5826687196" path="/wukong/user/:id/:type?" paramsDesc={['用户ID，可在用户页 URL 中找到', '类型，可选 `dongtai` 即 动态，`answers` 即 回答，`questions` 即 提问，默认为 `dongtai`']}>
 
-::: tip 注意
+:::tip 注意
 
 用户的动态是一定时间范围内用户提出的问题和作出的回答，距离现在时间较久的问题和回答不会出现，此时选择 `dongtai` 用户动态是会缺失的。
 
@@ -1657,7 +1653,7 @@ rule
 
 <Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/notes" path="/xiaohongshu/user/:user_id/notes/:fulltext?" paramsDesc={['用户 ID', '若为`fulltext`将抓取笔记全文，若为空则只抓取笔记标题']} puppeteer="1" anticrawler="1" radar="1" rssbud="1"/>
 
-::: tip 提示
+:::tip 提示
 笔记全文不支持显示视频
 :::
 
@@ -1671,7 +1667,7 @@ rule
 
 ## 新榜
 
-::: warning 注意
+:::caution 注意
 部署时需要配置 NEWRANK_COOKIE，具体见部署文档
 请勿过高频抓取，新榜疑似对每天调用 token 总次数进行了限制，超限会报错
 :::
@@ -1684,7 +1680,7 @@ rule
 
 <Route author="lessmoe" example="/newrank/douyin/110266463747" path="/newrank/douyin/:dyid" paramsDesc={['抖音ID，可在新榜账号详情 URL 中找到']} anticrawler="1" selfhost="1"/>
 
-::: warning 注意
+:::caution 注意
 免费版账户抖音每天查询次数 20 次，如需增加次数可购买新榜会员或等待未来多账户支持
 :::
 
@@ -1767,7 +1763,7 @@ rule
 ### 用户关注时间线
 
 <Route author="SeanChao" example="/zhihu/timeline" path="/zhihu/timeline" anticrawler="1" selfhost="1">
-::: warning 注意
+:::caution 注意
 
 用户关注动态需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 

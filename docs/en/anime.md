@@ -1,9 +1,5 @@
 import RouteEn from '@site/src/components/RouteEn';
 
----
-pageClass: routes
----
-
 # ACG
 
 ## Bangumi Moe
@@ -32,7 +28,7 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 <RouteEn author="nczitzk" example="/dlsite/home/new" path="/dlsite/:path+" paramsDesc={['Path, `/home/new` by default, as Release Calendar']}>
 
-::: tip Tip
+:::tip Tip
 
 To subscribe to this route, you can first visit the site and specify filters, and then fill in the field after `https://www.dlsite.com/` in the URL of the corresponding page at the path of the route. Here are 2 examples.
 
@@ -90,7 +86,7 @@ If you subscribe to [Discounted works Latest Discounts - Newest to Oldest](https
 
 <RouteEn author="FeCCC" example="/iwara/subscriptions" path="/iwara/subscriptions" radar="1" rssbud="1" selfhost="1">
 
-::: warning
+:::caution
 
 This route requires username and password, therefore it's only available when self-hosting, refer to the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
 
@@ -110,7 +106,7 @@ Sources
 | ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |
 | posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |
 
-::: tip Tip
+:::tip Tip
 
 When `posts` is selected as the value of the parameter **source**, the parameter **id** does not take effect.
 
@@ -143,7 +139,7 @@ When `posts` is selected as the value of the parameter **source**, the parameter
 
 <RouteEn author="axojhf" example="/lovelive-anime/schedules" path="/schedules/:serie?/:category?" paramsDesc={['Love Live! Series sub-projects abbreviation, see the following table', 'The official website lists the categories, see the following table for details']} radar="1">
 
-::: tip Please note!
+:::tip Please note!
 The schedule and other information obtained by this route is subject to the official website announcement!
 The RSS routing has not been rigorously tested and the information provided cannot be guaranteed accurate!
 :::
@@ -288,7 +284,7 @@ For example: <https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_n
 
 ## 俺の3Dエロ動画(oreno3d)
 
-::: tip Tip
+:::tip Tip
 
 You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receive the video update messages and download them automatically
 

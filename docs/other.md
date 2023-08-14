@@ -1,9 +1,5 @@
 import Route from '@site/src/components/Route';
 
----
-pageClass: routes
----
-
 # 其他
 
 ## 4399 论坛
@@ -12,7 +8,7 @@ pageClass: routes
 
 <Route author="DIYgod" example="/forum4399/mtag-83932" path="/forum4399/:mtag" paramsDesc={['mtag,必选-论坛网址最后的mtag字段']} selfhost="1">
 
-::: warning 注意
+:::caution 注意
 
 需要用户 cookie 值，详情见部署页面的配置模块。
 
@@ -26,7 +22,7 @@ pageClass: routes
 
 <Route author="Yukaii" example="/591/tw/rent/order=posttime&orderType=desc" path="/591/:country/rent/:query?" paramsDesc={['網址國碼，目前僅支援 tw', '查詢參數']}>
 
-::: tip 提示
+:::tip 提示
 
 複製 591 篩選房屋頁面的網址，並去掉前段 `https://rent.591.com.tw/?` 部分，即可得到查詢參數。
 
@@ -307,13 +303,13 @@ pageClass: routes
 
 ## Notion
 
-::: warning 注意
+:::caution 注意
 
 需要设置 Notion 集成，详情请见 [部分 RSS 模块配置](/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)
 
 :::
 
-::: tip 建议
+:::tip 建议
 
 建议与 Notion Web Clipper 等剪藏工具搭配使用
 
@@ -547,7 +543,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 习惯打卡
 
-::: warning 注意
+:::caution 注意
 
 需要账号密码，详情见部署文档部分 RSS 模块配置
 
@@ -659,7 +655,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 快递公司代号如果不能确定，可通过下方快递列表获得。
 
-::: warning 注意
+:::caution 注意
 
 1.  构造链接前请确认所有参数正确：错误`快递公司 - 订单号`组合将会缓存信息一小段时间防止产生无用查询
 2.  正常查询的订单在未签收状态下不会被缓存：请控制查询频率
@@ -783,7 +779,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="TonyRL" example="/qiyoujiage/shanghai" path="/qiyoujiage/:path+" paramsDesc={['路径']}>
 
-::: tip 提示
+:::tip 提示
 
 路径处填写对应页面 URL 中 `http://www.qiyoujiage.com/` 和 `.shtml` 之间的字段。下面是一个例子。
 
@@ -1171,7 +1167,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 | `itemLink`  | 在 `item` 中通过 JSON Path 查找作为链接 | `string` | 无                                   |
 | `itemDesc`  | 在 `item` 中通过 JSON Path 查找作为描述 | `string` | 无                                   |
 
-::: tip 注意
+:::tip 注意
 
 JSON Path 目前只支持例如 `a.b.c` 的形式，如果需要从数组中读取，例如 `a[0].b`，可以写成 `a.0.b`
 

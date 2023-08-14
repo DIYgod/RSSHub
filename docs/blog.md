@@ -1,9 +1,5 @@
 import Route from '@site/src/components/Route';
 
----
-pageClass: routes
----
-
 # 博客
 
 ## Amazon
@@ -52,7 +48,7 @@ pageClass: routes
 
 <Route author="trganda" example="/freebuf/articles/web" path="/freebuf/articles/:type" paramsDesc={['文章类别', '文章id号，可选']}>
 
-::: tip 使用说明
+:::tip 使用说明
 Freebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的完整内容。
 :::
 
@@ -86,7 +82,7 @@ Freebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的
 
 <Route author="hnrainll" example="/hashnode/blog/inklings" path="/hashnode/blog/:username" paramsDesc={['博主名称，用户头像 URL 中找到']}>
 
-::: tip 提示
+:::tip 提示
 
 username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 地址。
 
@@ -168,7 +164,7 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 List ID 取的是网址中最后一部分 `-` 后面的内容，例如 `https://medium.com/@imsingee/list/collection-7e67004f23f9` 的用户名为 imsingee、ID 为 `7e67004f23f9`
 
-::: warning 注意
+:::caution 注意
 
 想要获取 Private 的 List 则只支持自建
 
@@ -180,7 +176,7 @@ List ID 取的是网址中最后一部分 `-` 后面的内容，例如 `https://
 
 <Route author="ImSingee" example="/medium/for-you/imsingee" path="/medium/for-you/:user" paramsDesc={['用户名']} selfhost="1">
 
-::: warning 注意
+:::caution 注意
 
 个性推荐需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -192,7 +188,7 @@ List ID 取的是网址中最后一部分 `-` 后面的内容，例如 `https://
 
 <Route author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" paramsDesc={['用户名']} selfhost="1">
 
-::: warning 注意
+:::caution 注意
 
 个性推荐需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -206,7 +202,7 @@ List ID 取的是网址中最后一部分 `-` 后面的内容，例如 `https://
 
 Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://medium.com/?tag=web3` 则 tag 为 `web3`
 
-::: warning 注意
+:::caution 注意
 
 个性推荐需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -246,7 +242,7 @@ Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://me
 
 <Route author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest"/>
 
-::: tip 提示
+:::tip 提示
 
 在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`10`.
 
@@ -391,7 +387,7 @@ Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://me
 
 <Route author="nczitzk" example="/kenshin" path="/kenshin/:category?/:type?" paramsDesc={['分类，见下表，默认为首页', '子分类，见下表，默认为首页']}>
 
-::: tip 提示
+:::tip 提示
 
 如 `藝能新聞` 的 `日劇新聞` 分类，路由为 `/jnews/news_drama`
 
@@ -515,7 +511,7 @@ Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://me
 
 <Route author="naixy28" example="/zhubai/via" path="/zhubai/:id"  paramsDesc={['`id` 为竹白主页 url 中的三级域名，如 via.zhubai.love 的 `id` 为 `via`']}>
 
-::: tip 提示
+:::tip 提示
 
 在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`20`
 

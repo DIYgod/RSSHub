@@ -1,9 +1,5 @@
 import RouteEn from '@site/src/components/RouteEn';
 
----
-pageClass: routes
----
-
 # Gaming
 
 ## Blizzard
@@ -142,7 +138,7 @@ Or
 
 So the route is [`/itch/games/top-rated/tag-singleplayer`](https://rsshub.app/itch/games/top-rated/tag-singleplayer).
 
-::: tip tips
+:::tip tips
 
 You can browse all the tags at [here](https://itch.io/tags).
 
@@ -282,7 +278,7 @@ For instance, in `https://store.steampowered.com/search/?specials=1&term=atelier
 
 ### Steam news
 
-::: tip
+:::tip
 
 Steam provides some official RSS feeds:
 
@@ -300,7 +296,7 @@ Steam provides some official RSS feeds:
 
 ## TapTap International
 
-::: warning Warning
+:::caution Warning
 
 Due to the regional restrictions, an RSSHub deployment in China Mainland may not work on accessing the TapTap International Website.
 
@@ -308,7 +304,7 @@ Due to the regional restrictions, an RSSHub deployment in China Mainland may not
 
 ### Game Topics
 
-::: tip Tips
+:::tip Tips
 
 Unlike TapTap China Mainland Website, the International Website has no BBS.
 

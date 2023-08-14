@@ -89,7 +89,7 @@ $ docker pull diygod/rsshub
 
 ## Docker 部署
 
-::: tip 提示
+:::tip 提示
 
 如需启用 puppeteer，请在**每条**命令中均将 `diygod/rsshub` 替换为 `diygod/rsshub:chromium-bundled`。
 
@@ -238,7 +238,7 @@ $ pm2 start lib/index.js --name rsshub
 
 ### 添加配置
 
-::: tip 提示
+:::tip 提示
 
 在 arm/arm64 上，此部署方式不包含 puppeteer 依赖。要启用 puppeteer，你需要先从发行版安装 Chromium，然后设置 `CHROMIUM_EXECUTABLE_PATH` 为其可执行路径。
 
@@ -309,7 +309,7 @@ in pkgs.stdenv.mkDerivation {
 
 ### 注意
 
-::: warning 更新
+:::caution 更新
 
 Heroku [不再](https://blog.heroku.com/next-chapter) 提供免费服务。
 
@@ -500,7 +500,7 @@ gcloud app deploy
 
 [![Try in PWD](https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png)](https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml)
 
-::: warning 注意
+:::caution 注意
 
 -   需要 [DockerHub](https://hub.docker.com) 账号
 -   [Play with Docker](https://labs.play-with-docker.com/) 一次仅能使用 4 小时，不能作为持久化解决方案，应当用于测试 / 验证路由规则
@@ -585,7 +585,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 ### 反向代理
 
-::: warning 注意
+:::caution 注意
 
 这种代理方式无法代理包含 cookie 的请求。
 
@@ -678,7 +678,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 ### 图片处理
 
-::: tip 新配置方式
+:::tip 新配置方式
 
 我们正在试验新的，更灵活的配置方式。如果有需要，请转到 [通用参数 -> 多媒体处理](/parameter.html#duo-mei-ti-chu-li) 了解更多。
 
@@ -692,7 +692,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 `HOTLINK_EXCLUDE_PATHS`: 排除不需处理的路由，所有匹配成功的路由都不被处理，设置多项时用英文逗号 `,` 隔开。可单独使用，也可用于排除已被前者包含的路由。若不设置，则没有任何路由会被过滤
 
-::: tip 路由匹配模式
+:::tip 路由匹配模式
 
 `HOTLINK_INCLUDE_PATHS` 和 `HOTLINK_EXCLUDE_PATHS` 均匹配路由根路径及其所有递归子路径，但并非子字符串匹配。注意必须以 `/` 开头，且结尾不需要 `/`。
 
@@ -704,7 +704,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 ### 功能特性
 
-::: tip 测试特性
+:::tip 测试特性
 
 这个板块控制的是一些新特性的选项，他们都是**默认关闭**的。如果有需要请阅读对应说明后按需开启
 
@@ -734,7 +734,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 ### 部分 RSS 模块配置
 
-::: tip 提示
+:::tip 提示
 
 此处信息不完整。完整配置请参考路由对应的文档和 `lib/config.js`。
 

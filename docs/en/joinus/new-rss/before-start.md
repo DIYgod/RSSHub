@@ -77,7 +77,7 @@ Before submitting your Pull Request, make sure to carefully review the [Script S
 
 The first step in creating a new RSS route is to create a namespace. The namespace should be the **same** as the second level domain name of the main website for which you are creating the RSS feed. For example, if you are creating an RSS feed for <https://github.com/DIYgod/RSSHub/issues>, the second level domain name is `github`. Therefore, you should create a folder called `github` under `lib/v2` to serve as the namespace for your RSS route.
 
-::: tip Tips
+:::tip Tips
 When creating a namespace, it's important to avoid creating multiple namespaces for variations of the same domain. For example, if you are creating an RSS feed for both `yahoo.co.jp` and `yahoo.com`, you should stick with a single namespace `yahoo`, rather than creating multiple namespaces like `yahoo-jp`, `yahoojp`, `yahoo.jp`, `jp.yahoo`, `yahoocojp`, etc.
 :::
 
@@ -120,7 +120,7 @@ Once you have defined the route path, you can retrieve the value of the paramete
 
 You can use the `*` or `+` symbols to match the rest of the path, like `/some/path/:variable*`. Note that `*` and `+` mean "zero or more" and "one or more", respectively. You can also use patterns like `/some/path/:variable(\\d+)?` or even RegExp.
 
-::: tip Tips
+:::tip Tips
 For more advanced usage of `router`, see the [@koa/router API Reference](https://github.com/koajs/router/blob/master/API.md).
 :::
 

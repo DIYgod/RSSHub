@@ -1,9 +1,5 @@
 import RouteEn from '@site/src/components/RouteEn';
 
----
-pageClass: routes
----
-
 # Forecast and alerts
 
 ## BADAN METEOROLOGI, KLIMATOLOGI, DAN GEOFISIKA(Indonesian)

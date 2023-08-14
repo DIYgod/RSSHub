@@ -1,9 +1,5 @@
 import Route from '@site/src/components/Route';
 
----
-pageClass: routes
----
-
 # 游戏
 
 ## 3DMGame
@@ -243,7 +239,7 @@ pageClass: routes
 
 所以路由为 [`/itch/games/top-rated/tag-singleplayer`](https://rsshub.app/itch/games/top-rated/tag-singleplayer)。
 
-::: tip 提示
+:::tip 提示
 
 你可以在 [这里](https://itch.io/tags)，浏览所有的 tags。
 
@@ -477,7 +473,7 @@ Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的
 
 ### Steam 新闻中心
 
-::: tip
+:::tip
 
 Steam 新闻中心支持官方的 RSS 订阅:
 
@@ -495,7 +491,7 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 ## TapTap
 
-::: warning 注意
+:::caution 注意
 
 由于区域限制，需要在有国内 IP 的机器上自建才能正常获取 RSS。\
 而对于《TapTap 国际版》则需要部署在具有海外出口的 IP 上才可正常获取 RSS。
@@ -785,7 +781,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="nczitzk" example="/keylol" path="/keylol/:path+" paramsDesc={['路径，默认为热点聚焦']}>
 
-::: tip 提示
+:::tip 提示
 
 若订阅 [热点聚焦](https://keylol.com/f161-1)，网址为 <https://keylol.com/f161-1>。截取 `https://keylol.com/` 到末尾的部分 `f161-1` 作为参数，此时路由为 [`/keylol/f161-1`](https://rsshub.app/keylol/f161-1)。
 

@@ -1,9 +1,5 @@
 import RouteEn from '@site/src/components/RouteEn';
 
----
-pageClass: routes
----
-
 # Application Updates
 
 ## Amazon
@@ -42,7 +38,7 @@ pageClass: routes
 
 <RouteEn author="Rongronggg9" example="/app-center/release/cloudflare/1.1.1.1-windows/beta" path="/app-center/release/:user/:app/:distribution_group" paramsDesc={['User', 'App name', 'Distribution group']} radar="1" rssbud="1">
 
-::: tip
+:::tip
 
 The parameters can be extracted from the Release page URL: `https://install.appcenter.ms/users/:user/apps/:app/distribution_groups/:distribution_group`
 
@@ -152,7 +148,7 @@ Language
 
 ### Model discussions
 
-::: warning
+:::caution
 
 Need to configure `CIVITAI_COOKIE` to obtain image information of NSFW models.
 
@@ -194,7 +190,7 @@ For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` t
 
 <RouteEn author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" paramsDesc={['Image owner', 'Image name', 'Image tag，default to latest']}>
 
-::: warning
+:::caution
 
 The owner of the official image fills in the library, for example: <https://rsshub.app/dockerhub/build/library/mysql>
 
@@ -206,7 +202,7 @@ The owner of the official image fills in the library, for example: <https://rssh
 
 <RouteEn author="outloudvi" example="/dockerhub/tag/library/mariadb" path="/dockerhub/tag/:owner/:image/:limits?" paramsDesc={['Image owner', 'Image name', 'Tag count, 10 by default']}>
 
-::: warning
+:::caution
 
 Use `library` as the `owner` for official images, such as <https://rsshub.app/dockerhub/tag/library/mysql>
 
@@ -294,7 +290,7 @@ Language
 
 <RouteEn author="NavePnow" example="/ifi-audio/download/1503007035/44472" path="/ifi-audio/download/:val/:id" paramsDesc={['product val', 'product id']}/>
 
-::: warning
+:::caution
 
 1.  Open <https://ifi-audio.com/download-hub> and the Network panel
 2.  Select the device and the corresponding serial number in the website and click Search
@@ -322,7 +318,7 @@ Language
 
 ## Logseq
 
-::: warning
+:::caution
 Logseq dev team has abandoned the [old website](https://logseq.com/blog).
 Please use <https://github.com/logseq/logseq/releases.atom> instead.
 :::
@@ -537,7 +533,7 @@ See [#nintendo](/game.html#nintendo)
 
 <RouteEn author="NavePnow" example="/sony/downloads/product/nw-wm1am2" path="/sony/downloads/:productType/:productId" paramsDesc={['product type', 'product id']}>
 
-::: tip
+:::tip
 
 Open `https://www.sony.com/electronics/support` and search for the corresponding product, such as `Sony A7M4`, the website corresponding to which is `https://www.sony.com/electronics/support/e-mount-body-ilce-7-series/ilce-7m4/downloads`, where `productType` is `e-mount-body-ilce-7-series` and `productId` is `ilce-7m4`.
 
