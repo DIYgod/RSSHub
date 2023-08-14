@@ -47,6 +47,7 @@ pageClass: routes
 
 <RouteEn author="Rjnishant530" example="/finology/success-stories" path="/finology/:category" :paramDesc="['Refer Table below or find in URL']" radar="1">
 
+::: details Category
 
 | Category           | Link                  |
 |---------------------|-----------------------|
@@ -66,6 +67,8 @@ pageClass: routes
 | Investor's Psychology | behavioral-finance  |
 | Mutual Funds       | mutual-fund           |
 
+:::
+
 </RouteEn>
 
 ### Most Viewed
@@ -75,6 +78,8 @@ pageClass: routes
 ### Trending Topic
 
 <RouteEn author="Rjnishant530" example="/finology/tag/startups" path="/tag/:topic" :paramDesc="['Refer Table below or find in URL']" radar="1">
+
+::: details Topic
 
 | Topic              | Link                  |
 |---------------------|-----------------------|
@@ -107,6 +112,7 @@ pageClass: routes
 | Technology         | technology            |
 | Regulatory Bodies  | regulatory-bodies     |
 
+:::
 
 </RouteEn>
 
