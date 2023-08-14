@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@vuepress/plugin-back-to-top':
-    specifier: 1.9.9
-    version: 1.9.9
+    specifier: 1.9.10
+    version: 1.9.10
   '@vuepress/plugin-google-analytics':
     specifier: 1.9.10
     version: 1.9.10
@@ -1899,10 +1899,10 @@ packages:
       - debug
     dev: false
 
-  /@vuepress/plugin-back-to-top@1.9.9:
-    resolution: {integrity: sha512-8bNsdZ0Dr96OdcoJ67dxCx1ysXpeTHma8w+YSsqBJoWGEOucBr0nW9oaDH85yoOtpiriWBlhUO32/Q0ojJtMfA==}
+  /@vuepress/plugin-back-to-top@1.9.10:
+    resolution: {integrity: sha512-iInIp66wu717CAnT2pyd9Bs/vAgrUBOBIQ7WMnfJo07cW/ZIothpyrSHnpCRSsfJ/jLivMPqW0pviqppt64BzQ==}
     dependencies:
-      '@vuepress/types': 1.9.9
+      '@vuepress/types': 1.9.10
       lodash.debounce: 4.0.8
     transitivePeerDependencies:
       - debug
@@ -2016,16 +2016,6 @@ packages:
 
   /@vuepress/types@1.9.10:
     resolution: {integrity: sha512-TDNQn4og85onmBpLTTXXmncW3rUnYGr2MkuI8OIFJZetDNM49t1WbjNVlrT+kx7C6qXi6okDQgrHGYXajHZWfg==}
-    dependencies:
-      '@types/markdown-it': 10.0.3
-      '@types/webpack-dev-server': 3.11.6
-      webpack-chain: 6.5.1
-    transitivePeerDependencies:
-      - debug
-    dev: false
-
-  /@vuepress/types@1.9.9:
-    resolution: {integrity: sha512-ukGW49ILzLhIc7CltHMr+BeIjWKloJNN1mrvbDz3beycp9b9kgH+DXNdRIK9QCKr4fJsy7x08vNMwZr9Nq/PTQ==}
     dependencies:
       '@types/markdown-it': 10.0.3
       '@types/webpack-dev-server': 3.11.6
