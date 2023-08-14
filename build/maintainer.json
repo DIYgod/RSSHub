@@ -661,7 +661,7 @@
     "/bilibili/followings/article/:uid": [
         "woshiluo"
     ],
-    "/bilibili/followings/dynamic/:uid/:disableEmbed?": [
+    "/bilibili/followings/dynamic/:uid/:showEmoji?/:disableEmbed?": [
         "TigerCubDen"
     ],
     "/bilibili/followings/video/:uid/:disableEmbed?": [
@@ -730,7 +730,7 @@
     "/bilibili/user/collection/:uid/:sid/:disableEmbed?": [
         "shininome"
     ],
-    "/bilibili/user/dynamic/:uid/:disableEmbed?": [
+    "/bilibili/user/dynamic/:uid/:showEmoji?/:disableEmbed?": [
         "DIYgod",
         "zytomorrow"
     ],
