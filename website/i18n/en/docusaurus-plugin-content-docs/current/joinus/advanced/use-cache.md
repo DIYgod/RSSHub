@@ -16,7 +16,7 @@ Here's an example of how you can use the cache to retrieve the data:
             ctx.cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
                 const $ = cheerio.load(response);
-                
+
                 item.description = $('.comment-body').first().html();
 
                 return item;
@@ -25,7 +25,7 @@ Here's an example of how you can use the cache to retrieve the data:
     );
 ```
 
-The above code snippet from [Create Your Own RSSHub Route](/en/joinus/new-rss/start-code.html#via-html-web-page-using-got-better-reading-experience) shows how to use the cache to get the full text of the first comment of each issue. `ctx.cache.tryGet()` is used to determine if the data is already available within the cache. If it's not, the code retrieves the data and stores it in the cache.
+The above code snippet from [Create Your Own RSSHub Route](/en/joinus/new-rss/start-code#better-reading-experience) shows how to use the cache to get the full text of the first comment of each issue. `ctx.cache.tryGet()` is used to determine if the data is already available within the cache. If it's not, the code retrieves the data and stores it in the cache.
 
 The object returned from the previous statement will be reused, and an extra `description` property will be added to it. The returned cache for each `item.link` will be `{ title, link, pubDate, author, category, description }`. The next time the same path is requested, this processed cache will be used instead of making a request to the server and recomputing the data.
 

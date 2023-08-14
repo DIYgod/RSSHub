@@ -353,7 +353,7 @@ Please use <https://github.com/logseq/logseq/releases.atom> instead.
 
 ## Minecraft
 
-Refer to [#minecraft](/en/game.html#minecraft)
+Refer to [#minecraft](/en/routes/game#minecraft)
 
 ## MIUI
 
@@ -376,7 +376,7 @@ Refer to [#minecraft](/en/game.html#minecraft)
 
 ### Update
 
-See [#Monster Hunter World](/en/game.html#monster-hunter-world)
+See [#Monster Hunter World](/en/routes/game#monster-hunter-world)
 
 ## Neat Download Manager
 
@@ -388,7 +388,7 @@ See [#Monster Hunter World](/en/game.html#monster-hunter-world)
 
 ### Switch System Update（Japan）
 
-See [#nintendo](/game.html#nintendo)
+See [#nintendo](/en/routes/game#nintendo)
 
 ## Not a Tesla App
 
@@ -408,7 +408,7 @@ See [#nintendo](/game.html#nintendo)
 
 <RouteEn author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
-## O\&O Software
+## O&O Software
 
 ### Changelog
 
@@ -439,7 +439,7 @@ See [#nintendo](/game.html#nintendo)
 
 ### PlayStation 4 System Update
 
-见 [#playstation](/game.html#playstation)
+见 [#playstation](/en/routes/game#playstation)
 
 ## Postman
 

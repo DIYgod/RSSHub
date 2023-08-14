@@ -11,11 +11,11 @@
 <a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0?brief=100&limit=5">
 https://rsshub.app/twitter/user/durov/
 <span style={{color: "green"}}>
-    <b>readable=1\&includeRts=0</b>
+    <b>readable=1&includeRts=0</b>
 </span>
 ?
 <span style={{color: "violet"}}>
-    <b>brief=100\&limit=5</b>
+    <b>brief=100&limit=5</b>
 </span>
 </a>
 
@@ -26,14 +26,14 @@ https://rsshub.app/twitter/user/durov/
 <a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0.atom?brief=100&limit=5">
 https://rsshub.app/twitter/user/durov/
 <span style={{color: "green"}}>
-    <b>readable=1\&includeRts=0</b>
+    <b>readable=1&includeRts=0</b>
 </span>
 <span style={{color: "magenta"}}>
     <b>.atom</b>
 </span>
 ?
 <span style={{color: "violet"}}>
-    <b>brief=100\&limit=5</b>
+    <b>brief=100&limit=5</b>
 </span>
 </a>
 
@@ -154,7 +154,7 @@ Telegram 即时预览模式需要在官网制作页面处理模板，请前往[�
 -   `multimedia_hotlink_template`: 用法同 `image_hotlink_template`，但应用于音频和视频。注意：该服务必须跟随跳转、允许反代音频和视频，且必须在反代时丢弃 `Referer` 请求头。[这里有一个符合要求的易于自行搭建的项目](https://github.com/Rongronggg9/rsstt-img-relay/blob/main/README_zh-CN.md)，该项目接受直接拼接 URL，即 `https://example.com/${href}`，其中 `example.com` 应替换为自行搭建的服务的域名
 -   `wrap_multimedia_in_iframe`: 将音频和视频包裹在 `<iframe>` 中，以阻止阅读器发送 `Referer` 请求头。支持该变通解决方案的阅读器较少，且可能造成显示错误。有些阅读器，如 RSS Guard、Akregator，可能不支持前一种方法，则可尝试此方法。设置为 `1` 生效
 
-[FAQ](/faq.html) 中有更多信息。
+[FAQ](/faq) 中有更多信息。
 
 ## 输出格式
 

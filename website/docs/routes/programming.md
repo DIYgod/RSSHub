@@ -242,7 +242,7 @@ GitHub 官方也提供了一些 RSS:
 | `o`    | 排序方法 | `asc`（升序）<br />`desc`（降序）                                                           |
 | `s`    | 排序标准 | `stars`（按 star 数量排序）<br />`forks`（按 fork 数量排序）<br />`updated`（按更新日期排序） |
 
-例如 `/github/topics/framework/l=php&o=desc&s=stars` 会生成对应[此页面](https://github.com/topics/framework?l=php\&o=desc\&s=stars)的 RSS。
+例如 `/github/topics/framework/l=php&o=desc&s=stars` 会生成对应[此页面](https://github.com/topics/framework?l=php&o=desc&s=stars)的 RSS。
 
 </Route>
 

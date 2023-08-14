@@ -15,26 +15,6 @@
     "message": "请联系原始链接来源网站的所有者，并告知他们链接已损坏。",
     "description": "The 2nd paragraph of the 404 page"
   },
-  "theme.admonition.note": {
-    "message": "备注",
-    "description": "The default label used for the Note admonition (:::note)"
-  },
-  "theme.admonition.tip": {
-    "message": "提示",
-    "description": "The default label used for the Tip admonition (:::tip)"
-  },
-  "theme.admonition.danger": {
-    "message": "危险",
-    "description": "The default label used for the Danger admonition (:::danger)"
-  },
-  "theme.admonition.info": {
-    "message": "信息",
-    "description": "The default label used for the Info admonition (:::info)"
-  },
-  "theme.admonition.caution": {
-    "message": "警告",
-    "description": "The default label used for the Caution admonition (:::caution)"
-  },
   "theme.BackToTopButton.buttonAriaLabel": {
     "message": "回到顶部",
     "description": "The ARIA label for the back to top button"
@@ -58,6 +38,26 @@
   "theme.blog.paginator.olderEntries": {
     "message": "较旧的博文",
     "description": "The label used to navigate to the older blog posts page (next page)"
+  },
+  "theme.admonition.note": {
+    "message": "备注",
+    "description": "The default label used for the Note admonition (:::note)"
+  },
+  "theme.admonition.tip": {
+    "message": "提示",
+    "description": "The default label used for the Tip admonition (:::tip)"
+  },
+  "theme.admonition.danger": {
+    "message": "危险",
+    "description": "The default label used for the Danger admonition (:::danger)"
+  },
+  "theme.admonition.info": {
+    "message": "信息",
+    "description": "The default label used for the Info admonition (:::info)"
+  },
+  "theme.admonition.caution": {
+    "message": "警告",
+    "description": "The default label used for the Caution admonition (:::caution)"
   },
   "theme.blog.post.paginator.navAriaLabel": {
     "message": "博文分页导航",
@@ -95,13 +95,13 @@
     "message": "浅色模式",
     "description": "The name for the light color mode"
   },
-  "theme.docs.breadcrumbs.navAriaLabel": {
-    "message": "页面路径",
-    "description": "The ARIA label for the breadcrumbs"
-  },
   "theme.docs.DocCard.categoryDescription": {
     "message": "{count} 个项目",
     "description": "The default description for a category card in the generated index about how many items this category includes"
+  },
+  "theme.docs.breadcrumbs.navAriaLabel": {
+    "message": "页面路径",
+    "description": "The ARIA label for the breadcrumbs"
   },
   "theme.docs.paginator.navAriaLabel": {
     "message": "文件选项卡",
@@ -166,13 +166,13 @@
     "message": "选择版本",
     "description": "The label for the navbar versions dropdown on mobile view"
   },
-  "theme.AnnouncementBar.closeButtonAriaLabel": {
-    "message": "关闭",
-    "description": "The ARIA label for close button of announcement bar"
-  },
   "theme.tags.tagsListLabel": {
     "message": "标签：",
     "description": "The label alongside a tag list"
+  },
+  "theme.AnnouncementBar.closeButtonAriaLabel": {
+    "message": "关闭",
+    "description": "The ARIA label for close button of announcement bar"
   },
   "theme.blog.sidebar.navAriaLabel": {
     "message": "最近博文导航",
@@ -202,13 +202,13 @@
     "message": "主导航",
     "description": "The ARIA label for the main navigation"
   },
-  "theme.TOCCollapsible.toggleButtonLabel": {
-    "message": "本页总览",
-    "description": "The label used by the button on the collapsible TOC component"
-  },
   "theme.navbar.mobileLanguageDropdown.label": {
     "message": "选择语言",
     "description": "The label for the mobile language switcher dropdown"
+  },
+  "theme.TOCCollapsible.toggleButtonLabel": {
+    "message": "本页总览",
+    "description": "The label used by the button on the collapsible TOC component"
   },
   "theme.blog.post.readMore": {
     "message": "阅读更多",

@@ -43,7 +43,7 @@ const config = {
                     sidebarPath: require.resolve('./sidebars.js'),
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
-                    editUrl: 'https://github.com/DIYgod/RSSHub/tree/main/docs/',
+                    editUrl: 'https://github.com/DIYgod/RSSHub/tree/main/website/',
                 },
                 blog: false,
                 theme: {
@@ -121,8 +121,20 @@ const config = {
                         title: 'Docs',
                         items: [
                             {
-                                label: 'Tutorial',
-                                to: '/docs/intro',
+                                label: '指南',
+                                to: '/',
+                            },
+                            {
+                                to: '/joinus/quick-start',
+                                label: '参与我们',
+                            },
+                            {
+                                to: '/install',
+                                label: '部署',
+                            },
+                            {
+                                to: '/support',
+                                label: '支持 RSSHub',
                             },
                         ],
                     },
@@ -130,16 +142,16 @@ const config = {
                         title: 'Community',
                         items: [
                             {
-                                label: 'Stack Overflow',
-                                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
+                                label: 'GitHub',
+                                href: 'https://github.com/DIYgod/RSSHub',
                             },
                             {
-                                label: 'Discord',
-                                href: 'https://discordapp.com/invite/docusaurus',
+                                label: 'Telegram Group',
+                                href: 'https://t.me/rsshub',
                             },
                             {
-                                label: 'Twitter',
-                                href: 'https://twitter.com/docusaurus',
+                                label: 'Telegram Channel',
+                                href: 'https://t.me/awesomeRSSHub',
                             },
                         ],
                     },
@@ -147,17 +159,21 @@ const config = {
                         title: 'More',
                         items: [
                             {
-                                label: 'Blog',
-                                to: '/blog',
+                                label: '关于作者 DIYgod',
+                                to: 'https://diygod.cc',
                             },
                             {
-                                label: 'GitHub',
-                                href: 'https://github.com/facebook/docusaurus',
+                                label: 'RSSHub Radar - 快速发现和订阅 RSS',
+                                href: 'https://github.com/DIYgod/RSSHub-Radar',
+                            },
+                            {
+                                label: 'xLog - 书写在区块链上的开源创作社区',
+                                href: 'https://xlog.app',
                             },
                         ],
                     },
                 ],
-                copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+                copyright: `Copyright © ${new Date().getFullYear()} RSSHub.`,
             },
             prism: {
                 theme: lightCodeTheme,

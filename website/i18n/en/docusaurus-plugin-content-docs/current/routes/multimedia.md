@@ -613,4 +613,4 @@ When `mediaType` is `movie`, `sheet` should be:
 
 ## YouTube
 
-Refer to [#youtube](/en/social-media.html#youtube)
+Refer to [#youtube](/en/routes/social-media#youtube)

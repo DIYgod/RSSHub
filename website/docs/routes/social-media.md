@@ -18,7 +18,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 :::tip 关于视频清晰度
 
-内嵌视频的默认清晰度为 480P，如需解锁更高清晰度，请[点此](https://www.bilibili.com/blackboard/html5player.html?cid=253377437\&aid=885203421\&page=\&as_wide=1)在下方登录以设置 Cookie，仅对当前浏览器生效
+内嵌视频的默认清晰度为 480P，如需解锁更高清晰度，请[点此](https://www.bilibili.com/blackboard/html5player.html?cid=253377437&aid=885203421&page=&as_wide=1)在下方登录以设置 Cookie，仅对当前浏览器生效
 
 :::
 
@@ -284,15 +284,15 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ### 直播开播
 
-见 [#哔哩哔哩直播](/live.html#bi-li-bi-li-zhi-bo)
+见 [#哔哩哔哩直播](/routes/live#哔哩哔哩直播)
 
 ### 直播搜索
 
-见 [#哔哩哔哩直播](/live.html#bi-li-bi-li-zhi-bo)
+见 [#哔哩哔哩直播](/routes/live#哔哩哔哩直播)
 
 ### 直播分区
 
-见 [#哔哩哔哩直播](/live.html#bi-li-bi-li-zhi-bo)
+见 [#哔哩哔哩直播](/routes/live#哔哩哔哩直播)
 
 ### 主站话题列表
 
@@ -573,7 +573,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 例如：<https://pawoo.net/users/pawoo_support.rss> 或 <https://pawoo.net/users/pawoo_support.atom>
 
-上述订阅源的内容不包括用户的转嘟。RSSHub 提供基于 Mastodon API 的订阅源，但可能需要您在某个 Mastodon 实例申请 API，并对 RSSHub 实例进行配置。详情见部署页面的[配置模块](/install/#route-specific-configurations)。
+上述订阅源的内容不包括用户的转嘟。RSSHub 提供基于 Mastodon API 的订阅源，但可能需要您在某个 Mastodon 实例申请 API，并对 RSSHub 实例进行配置。详情见部署页面的[配置模块](/install#部分-rss-模块配置)。
 
 :::
 
@@ -1081,7 +1081,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 反爬严格，需要启用 puppeteer。\
 抖音的视频 CDN 会验证 Referer，意味着许多阅读器都无法直接播放内嵌视频，以下是一些变通解决方案：
 
-1.  启用内嵌视频 (`embed=1`), 参考 [通用参数 -> 多媒体处理](/parameter.html#duo-mei-ti-chu-li) 配置 `multimedia_hotlink_template` **或** `wrap_multimedia_in_iframe`。
+1.  启用内嵌视频 (`embed=1`), 参考 [通用参数 -> 多媒体处理](/parameter#多媒体处理) 配置 `multimedia_hotlink_template` **或** `wrap_multimedia_in_iframe`。
 2.  关闭内嵌视频 (`embed=0`)，手动点击 `视频直链` 超链接，一般情况下均可成功播放视频。若仍然出现 HTTP 403，请复制 URL 以后到浏览器打开。
 3.  点击原文链接打开抖音网页版的视频详情页播放视频。
 
@@ -1103,7 +1103,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 ### 直播
 
-见 [#抖音直播](/live.html#dou-yin-zhi-bo)
+见 [#抖音直播](/routes/live#抖音直播)
 
 ## 豆瓣
 

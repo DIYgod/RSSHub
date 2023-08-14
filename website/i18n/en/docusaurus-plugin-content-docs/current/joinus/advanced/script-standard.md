@@ -95,8 +95,8 @@ RSSHub appends the name of all route namespace folders in front of the actual ro
 
 #### Naming Standard
 
--   Use the second-level domain (SLD) as your namespace. You can find more information about URL structure [here](/en/joinus/new-radar.html#top-level-object-key).
--   Do not create variations of the same namespace. For more information, see [this page](/en/joinus/new-rss/before-start.html#create-a-namespace)
+-   Use the second-level domain (SLD) as your namespace. You can find more information about URL structure [here](/en/joinus/new-radar#top-level-object-key).
+-   Do not create variations of the same namespace. For more information, see [this page](/en/joinus/new-rss/before-start#create-a-namespace)
 
 ### Registering a Route
 
@@ -156,6 +156,6 @@ const renderAuthor = (author) => art(path.join(__dirname, 'templates/author.art'
 
 :::danger Warning
 
-The v1 Route Standard is deprecated. All new routes should be following the [v2 Route Standard](/en/joinus/script-standard.html#v2-route-standard).
+The v1 Route Standard is deprecated. All new routes should be following the [v2 Route Standard](/en/joinus/advanced/script-standard#v2-route-standard).
 
 :::

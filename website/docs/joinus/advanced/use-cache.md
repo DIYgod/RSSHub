@@ -16,7 +16,7 @@ sidebar_position: 3
             ctx.cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
                 const $ = cheerio.load(response);
-                
+
                 item.description = $('.comment-body').first().html();
 
                 return item;
@@ -25,7 +25,7 @@ sidebar_position: 3
     );
 ```
 
-以上代码片段来自 [制作自己的 RSSHub 路由](/joinus/new-rss/start-code.html)，展示了如何使用缓存获取每个问题的第一个评论的全文。使用 `ctx.cache.tryGet()` 来确定数据是否已经在缓存中。如果不在，则代码会获取数据并将其存储在缓存中。
+以上代码片段来自 [制作自己的 RSSHub 路由](/joinus/new-rss/start-code)，展示了如何使用缓存获取每个问题的第一个评论的全文。使用 `ctx.cache.tryGet()` 来确定数据是否已经在缓存中。如果不在，则代码会获取数据并将其存储在缓存中。
 
 上一个语句返回的对象将被重复使用，并且会添加一个额外的 `description` 属性。每个 `item.link` 的返回缓存将是`{ title, link, pubDate, author, category, description }`。下一次请求相同路由时，将直接返回处理过后的缓存而不是向服务器发出请求并重新计算数据。
 

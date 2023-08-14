@@ -34,7 +34,7 @@ Here's an example of what an RSS link might look like in the HTML header: `<link
 
 In this guide, you'll learn how to create a new RSS route from scratch. We'll cover everything from setting up your development environment to submitting your code to the RSSHub repository. By the end of this guide, you'll be able to create your own RSS feeds for websites that don't offer them.
 
-[Ready to get started? Click here to dive into the guide!](/en/joinus/new-rss/prerequisites.html)
+[Ready to get started? Click here to dive into the guide!](/en/joinus/new-rss/prerequisites)
 
 ## Submit new RSSHub Radar rules
 
@@ -44,7 +44,7 @@ It's recommended that you download and install RSSHub Radar in your browser befo
 
 Once you have installed RSSHub Radar, open the settings and switch to the "List of rules" tab. Then scroll down to the bottom of the page and you will see a text field. Here, you can replace the old rules with your new rules for debugging.
 
-[Let's start!](/en/joinus/new-radar.html)
+[Let's start!](/en/joinus/new-radar)
 
 <a href="https://chrome.google.com/webstore/detail/rsshub-radar/kefjpfngnndepjbopdmoebkipbgkggaa" target="_blank" rel="noopener noreferrer"><img src="https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/UV4C4ybeBTsZt43U4xis.png" alt="Get RSSHub Radar for Chromium" style={{height: "58px"}} /></a>
 <a href="https://addons.mozilla.org/firefox/addon/rsshub-radar/" target="_blank" rel="noopener noreferrer"><img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" alt="Get Get RSSHub Radar for Firefox" style={{height: "58px"}} /></a>

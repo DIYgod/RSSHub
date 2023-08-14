@@ -9,7 +9,7 @@ sidebar_position: 5
 ## PR 模板
 
 ````md
-<!-- 
+<!--
 如有疑问，请参考 https://docs.rsshub.app/joinus/new-rss/submit-route.html
 Reference: https://docs.rsshub.app/en/joinus/new-rss/submit-route.html
 -->
@@ -39,9 +39,9 @@ If your changes are not related to route, please fill in `routes` with `NOROUTE`
 ```
 
 ## 新 RSS 路由检查列表 / New RSS Route Checklist
-  
+
 - [ ] 新的路由 New Route
-  - [ ] 跟随 [v2 路由规范](https://docs.rsshub.app/joinus/script-standard.html) Follows [v2 Script Standard](https://docs.rsshub.app/en/joinus/script-standard.html)
+  - [ ] 跟随 [v2 路由规范](/joinus/advanced/script-standard.html) Follows [v2 Script Standard](/en/joinus/advanced/script-standard.html)
 - [ ] 文档说明 Documentation
   - [ ] 中文文档 CN
   - [ ] 英文文档 EN
@@ -49,7 +49,7 @@ If your changes are not related to route, please fill in `routes` with `NOROUTE`
   - [ ] 使用缓存 Use Cache
 - [ ] 反爬/频率限制 anti-bot or rate limit?
   - [ ] 如果有, 是否有对应的措施? If yes, do your code reflect this sign?
-- [ ] [日期和时间](https://docs.rsshub.app/joinus/pub-date.html) [date and time](https://docs.rsshub.app/en/joinus/pub-date.html)
+- [ ] [日期和时间](/joinus/advanced/pub-date) [date and time](/en/joinus/advanced/pub-date)
   - [ ] 可以解析 Parsed
   - [ ] 时区调整 Correct TimeZone
 - [ ] 添加了新的包 New package added
@@ -91,7 +91,7 @@ NOROUTE
 
 ### 新 RSS 路由检查表
 
-此检查表将帮助您确保您的 PR 包含所有必要的组件。虽然您不必勾选所有项目，以使您的 PR 合并，但请确保您的新路由遵循 [路由规范](/joinus/script-standard.html)。这是所有新路由的强制性要求。
+此检查表将帮助您确保您的 PR 包含所有必要的组件。虽然您不必勾选所有项目，以使您的 PR 合并，但请确保您的新路由遵循 [路由规范](/joinus/advanced/script-standard)。这是所有新路由的强制性要求。
 
 
 ```md

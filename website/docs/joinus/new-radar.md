@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # 提交新的 RSSHub Radar 规则
 
-如果需要查看新规则的结果，建议您安装浏览器扩展程序。您可以在 [参与我们](/joinus/quick-start.html#ti-jiao-xin-de-rsshub-radar-gui-ze) 页面下载适合您浏览器的扩展程序。
+如果需要查看新规则的结果，建议您安装浏览器扩展程序。您可以在 [参与我们](/joinus/quick-start#提交新的-rsshub-radar-规则) 页面下载适合您浏览器的扩展程序。
 
 ## 编写规则
 
@@ -146,7 +146,7 @@ module.exports = {
         '.': [
             {
                 title: '仓库 Issues',
-                docs: 'https://docs.rsshub.app/en/programming.html#github',
+                docs: 'https://docs.rsshub.app/en/routes/programming#github',
                 source: ['/:user/:repo/issues/:id', '/:user/:repo/issues',  '/:user/:repo'],
                 target: (params) => `/github/issue/${params.user}/${params.repo}`,
             },
@@ -165,7 +165,7 @@ module.exports = {
         '.': [
             {
                 title: '仓库 Issues',
-                docs: 'https://docs.rsshub.app/en/programming.html#github',
+                docs: 'https://docs.rsshub.app/en/routes/programming#github',
                 source: ['/:user/:repo'],
                 target: (_, url) => `/github/issue${new URL(url).pathname}`
             },
@@ -177,7 +177,7 @@ module.exports = {
 </code-block>
 </code-group>
 
-两个示例将返回与 [第一个示例](/joinus/new-radar.html#bian-xie-gui-ze) 相同的 RSSHub 订阅地址。
+两个示例将返回与 [第一个示例](/joinus/new-radar#编写规则) 相同的 RSSHub 订阅地址。
 
 ### RSSBud
 
@@ -188,7 +188,7 @@ module.exports = {
 
 ### 补充文档
 
-[如前所述](/joinus/new-rss/add-docs.html#wen-dang-shi-li-qi-ta-zu-jian)，在 RSSHub 文档添加 radar="1" 将显示“支持浏览器扩展”的徽章。如果规则还与 RSSBud 兼容，则添加 rssbud="1" 将显示“支持 RSSBud”的徽章。
+[如前所述](/joinus/new-rss/add-docs#其他组件)，在 RSSHub 文档添加 radar="1" 将显示“支持浏览器扩展”的徽章。如果规则还与 RSSBud 兼容，则添加 rssbud="1" 将显示“支持 RSSBud”的徽章。
 
 ## 调试 Radar 规则
 
@@ -205,7 +205,7 @@ module.exports = {
         '.': [
             {
                 title: '仓库 Issues',
-                docs: 'https://docs.rsshub.app/en/programming.html#github',
+                docs: 'https://docs.rsshub.app/en/routes/programming#github',
                 source: ['/:user/:repo/issues/:id', '/:user/:repo/issues',  '/:user/:repo'],
                 target: '/github/issue/:user/:repo',
             },

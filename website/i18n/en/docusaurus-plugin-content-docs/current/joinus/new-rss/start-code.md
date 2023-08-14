@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Create Your Own RSSHub Route
 
-As mentioned earlier, we will create an RSS feed for [GitHub Repo Issues](/en/programming.html#github-repo-issues) as an example. We will show all four data collection methods mentioned:
+As mentioned earlier, we will create an RSS feed for [GitHub Repo Issues](/en/routes/programming#github-repo-issues) as an example. We will show all four data collection methods mentioned:
 
 1.  [Via API](#via-api)
 2.  [Via HTML web page using got](#via-html-web-page-using-got)
@@ -91,10 +91,10 @@ module.exports = async (ctx) => {
     const { user, repo = 'RSSHub' } = ctx.params;
     // Send an HTTP GET request to the API
     // and destruct the data object returned by the request
-    const { data } = await got(`https://api.github.com/repos/${user}/${repo}/issues`, { 
+    const { data } = await got(`https://api.github.com/repos/${user}/${repo}/issues`, {
         headers: {
-            // This example uses HTML for simplicity instead of the 
-            // recommended 'application/vnd.github+json', which returns 
+            // This example uses HTML for simplicity instead of the
+            // recommended 'application/vnd.github+json', which returns
             // Markdown and requires additional processing
             accept: 'application/vnd.github.html+json',
         },
@@ -118,7 +118,7 @@ module.exports = async (ctx) => {
     const user = ctx.params.user;
     const repo = ctx.params.repo ?? 'RSSHub';
     // Send an HTTP GET request to the API
-    const response = await got(`https://api.github.com/repos/${user}/${repo}/issues`, { 
+    const response = await got(`https://api.github.com/repos/${user}/${repo}/issues`, {
         headers: {
             accept: 'application/vnd.github.html+json',
         },
@@ -156,7 +156,7 @@ const { parseDate } = require('@/utils/parse-date');
 module.exports = async (ctx) => {
     const { user, repo = 'RSSHub' } = ctx.params;
 
-    const { data } = await got(`https://api.github.com/repos/${user}/${repo}/issues`, { 
+    const { data } = await got(`https://api.github.com/repos/${user}/${repo}/issues`, {
         headers: {
             accept: 'application/vnd.github.html+json',
         },
@@ -202,7 +202,7 @@ const { parseDate } = require('@/utils/parse-date');
 module.exports = async (ctx) => {
     const { user, repo = 'RSSHub' } = ctx.params;
 
-    const { data } = await got(`https://api.github.com/repos/${user}/${repo}/issues`, { 
+    const { data } = await got(`https://api.github.com/repos/${user}/${repo}/issues`, {
         headers: {
             accept: 'application/vnd.github.html+json',
         },
@@ -261,7 +261,7 @@ module.exports = async (ctx) => {
 };
 ```
 
-The `parseDate` function is a utility function provided by RSSHub that we will use to parse dates later in the code. 
+The `parseDate` function is a utility function provided by RSSHub that we will use to parse dates later in the code.
 
 You will add your own code to extract data from the HTML document, process it, and output it in RSS format. We will cover the details of this process in the next steps.
 
@@ -467,7 +467,7 @@ module.exports = async (ctx) => {
         url: '', // The data source link
         // Variables can be used here, such as %xxx% will be parsed into
         // variables with values of the same name under **params**
-        title: '%title%', 
+        title: '%title%',
         params: {
             title: '', // Additional title
         },
@@ -504,7 +504,7 @@ module.exports = async (ctx) => {
 };
 ```
 
-You'll notice that the code is similar to the [Obtaining data from the webpage](#via-html-web-page-using-got-getting-data-from-the-web-page) section above. However, this RSS feed doesn't contain the full article of the issue.
+You'll notice that the code is similar to the [Obtaining data from the webpage](#getting-data-from-the-web-page) section above. However, this RSS feed doesn't contain the full article of the issue.
 
 ### Retrieving full articles
 
@@ -548,7 +548,7 @@ module.exports = async (ctx) => {
 };
 ```
 
-You can see that the above code is very similar to the [previous section](#via-html-web-page-using-got-better-reading-experience) which retrieves full articles by adding a few more lines of code. It is recommended that you use the method in the [previous section](#via-html-web-page-using-got-better-reading-experience) whenever possible, as it is more flexible than using `@/utils/common-config`.
+You can see that the above code is very similar to the [previous section](#better-reading-experience) which retrieves full articles by adding a few more lines of code. It is recommended that you use the method in the [previous section](#better-reading-experience) whenever possible, as it is more flexible than using `@/utils/common-config`.
 
 ## Using puppeteer
 
@@ -654,7 +654,7 @@ module.exports = async (ctx) => {
 
 ### Retrieving full articles
 
-Retrieving the full articles of each issue using a new browser page is similar to the [previous section](via-html-web-page-using-got-better-reading-experience). We can use the following code:
+Retrieving the full articles of each issue using a new browser page is similar to the [previous section](#better-reading-experience). We can use the following code:
 
 ```js{46-60,71-72}
 const cheerio = require('cheerio');

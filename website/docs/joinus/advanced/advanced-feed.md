@@ -4,9 +4,9 @@ sidebar_position: 1
 
 # RSS 基础
 
-本指南面向希望深入了解如何制作 RSS 订阅源的高级用户。如果您是第一次制作 RSS 订阅源，我们建议先阅读 [制作自己的 RSSHub 路由](/joinus/new-rss/start-code.html)。
+本指南面向希望深入了解如何制作 RSS 订阅源的高级用户。如果您是第一次制作 RSS 订阅源，我们建议先阅读 [制作自己的 RSSHub 路由](/joinus/new-rss/start-code)。
 
-一旦您获取了要包含在您的 RSS 订阅源中的数据，就可以将其传递给 `ctx.state.data`。然后RSSHub的中间件 [`template.js`](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/template.js) 将处理数据并以所需的格式呈现 RSS 输出（默认为RSS 2.0）。除了 [制作自己的 RSSHub 路由](/joinus/new-rss/start-code.html) 中提到的字段外，您还可以使用以下字段进一步自定义 RSS 订阅源。
+一旦您获取了要包含在您的 RSS 订阅源中的数据，就可以将其传递给 `ctx.state.data`。然后RSSHub的中间件 [`template.js`](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/template.js) 将处理数据并以所需的格式呈现 RSS 输出（默认为RSS 2.0）。除了 [制作自己的 RSSHub 路由](/joinus/new-rss/start-code) 中提到的字段外，您还可以使用以下字段进一步自定义 RSS 订阅源。
 
 需要注意的是，并非所有字段都适用于所有的输出格式，因为 RSSHub 支持多种输出格式。下表显示了不同输出格式兼容的字段。我们使用以下符号表示兼容性：`A` 表示 Atom，`J` 表示 JSON Feed，`R` 表示 RSS 2.0。
 
@@ -40,7 +40,7 @@ sidebar_position: 1
 | **`author`**      | *（可选）* 条目的作者                         | `undefinded` | A, J, R |
 | **`category`**    | *（可选）* 条目的分类。字符串或字符串数组皆可 | `undefinded` | A, J, R |
 | **`guid`**        | *（可选）* 条目的唯一标识符 | **`link || title`**  | A, J, R |
-| **`pubDate`**     | *（推荐）* 条目的发布日期，应该 [遵从规范](/joinus/pub-date.html) 是 [Date object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) | `undefinded` | A, J, R |
+| **`pubDate`**     | *（推荐）* 条目的发布日期，应该 [遵从规范](/joinus/advanced/pub-date) 是 [Date object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) | `undefinded` | A, J, R |
 | **`updated`**     | *（可选）* 条目的最后修改日期，应该是 [Date object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) | `undefinded` | A, J |
 | **`itunes_item_image`** | *（可选）* 条目相关联的图片的网址 | `undefinded` | R |
 | **`itunes_duration`** | *（可选）* 音频或视频条目的长度，以秒为单位（或格式为 H:mm:ss），应为数字或字符串 | `undefinded` | J, R |
@@ -95,7 +95,7 @@ ctx.state.data = {
 
 ## 制作期刊订阅源
 
-RSSHub支持制作期刊订阅源。如果用户提供 [通用参数](/parameter.html#shu-chu-sci-hub-lian-jie) `scihub`，则可以将 `item.link` 替换为 Sci-hub 链接。要制作期刊订阅源，您需要在您的 RSS 源中包含一个附加字段：
+RSSHub支持制作期刊订阅源。如果用户提供 [通用参数](/parameter#输出-sci-hub-链接) `scihub`，则可以将 `item.link` 替换为 Sci-hub 链接。要制作期刊订阅源，您需要在您的 RSS 源中包含一个附加字段：
 
 ```js
 ctx.state.data = {

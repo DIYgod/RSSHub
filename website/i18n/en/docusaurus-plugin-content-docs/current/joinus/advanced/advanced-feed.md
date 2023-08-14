@@ -4,9 +4,9 @@ sidebar_position: 1
 
 # RSS Feed Fundamentals
 
-This guide is intended for advanced users who want to know how to create an RSS feed in detail.  If you're new to creating RSS feeds, we recommend reading [Create Your Own RSSHub Route](/en/joinus/new-rss/start-code.html) first.
+This guide is intended for advanced users who want to know how to create an RSS feed in detail.  If you're new to creating RSS feeds, we recommend reading [Create Your Own RSSHub Route](/en/joinus/new-rss/start-code) first.
 
-Once you have collected the data you want to include in your RSS feed, you can pass it to `ctx.state.data`. RSSHub's middleware [`template.js`](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/template.js) will then process the data and render the RSS output in the required format (which is RSS 2.0 by default). In addition to the fields mentioned in [Create your own RSSHub route](/en/joinus/new-rss/start-code.html), you can customize your RSS feed further using the following fields.
+Once you have collected the data you want to include in your RSS feed, you can pass it to `ctx.state.data`. RSSHub's middleware [`template.js`](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/template.js) will then process the data and render the RSS output in the required format (which is RSS 2.0 by default). In addition to the fields mentioned in [Create your own RSSHub route](/en/joinus/new-rss/start-code), you can customize your RSS feed further using the following fields.
 
 It's important to note that not all fields are applicable to all output formats since RSSHub supports multiple output formats. The table below shows which fields are compatible with different output formats. We use the following symbols to denote compatibility: `A` for Atom, `J` for JSON Feed, `R` for RSS 2.0.
 
@@ -40,7 +40,7 @@ Each item in an RSS feed is represented by an object with a set of fields that d
 | **`author`**      | *(Optional)* The author of the item                                      | `undefinded`   | A, J, R |
 | **`category`**    | *(Optional)* The category of the item. You can use a plain string or an array of strings | `undefinded` | A, J, R |
 | **`guid`**        | *(Optional)* The unique identifier of the item                           | **`link || title`** | A, J, R |
-| **`pubDate`**     | *(Recommended)* The publication date of the item, which should be a [Date object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) following [the standard](/en/joinus/pub-date.html) | `undefinded` | A, J, R |
+| **`pubDate`**     | *(Recommended)* The publication date of the item, which should be a [Date object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) following [the standard](/en/joinus/advanced/pub-date) | `undefinded` | A, J, R |
 | **`updated`**     | *(Optional)* The date of the last modification of the item, which should be a [Date object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) | `undefinded` | A, J |
 | **`itunes_item_image`** | *(Optional)* The URL of an image associated with the item                           | `undefinded` | R |
 | **`itunes_duration`** | *(Optional)* The length of an audio or video item in seconds (or in the format H:mm:ss), which should be a number or string | `undefinded` | J, R |
@@ -95,7 +95,7 @@ By setting the `supportBT` attribute to `"1"`, you'll be able to update your doc
 
 ## Create a Journal Feed
 
-RSSHub supports creating journal feeds that can replace `item.link` with a Sci-hub link if users provide the [common parameter](/en/parameter.html#sci-hub-link) `scihub`. To create a journal feed, you'll need to include an **additional** field in your RSS feed:
+RSSHub supports creating journal feeds that can replace `item.link` with a Sci-hub link if users provide the [common parameter](/en/parameter#sci-hub-link) `scihub`. To create a journal feed, you'll need to include an **additional** field in your RSS feed:
 
 ```js
 ctx.state.data = {

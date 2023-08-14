@@ -4,11 +4,11 @@ sidebar_position: 3
 
 # New RSSHub Radar Rules
 
-If you want to see the results, we suggest you install the browser extension. You can download it for your browser on the [Join Us](/en/joinus/quick-start.html#submit-new-rsshub-radar-rules-before-you-start) page.
+If you want to see the results, we suggest you install the browser extension. You can download it for your browser on the [Join Us](/en/joinus/quick-start#submit-new-rsshub-radar-rules-before-you-start) page.
 
 ## Code the rule
 
-To create a new RSS feed, create a file called `radar.js` under the corresponding namespace in [/lib/v2/](https://github.com/DIYgod/RSSHub/tree/master/lib/v2). We will continue to use the example of creating an RSS feed for `GitHub Repo Issues`, which is described [here](/en/joinus/new-rss/before-start.html). The resulting code will look like this:
+To create a new RSS feed, create a file called `radar.js` under the corresponding namespace in [/lib/v2/](https://github.com/DIYgod/RSSHub/tree/master/lib/v2). We will continue to use the example of creating an RSS feed for `GitHub Repo Issues`, which is described [here](/en/joinus/new-rss/before-start). The resulting code will look like this:
 
 ```js
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
         '.': [
             {
                 title: 'Repo Issues',
-                docs: 'https://docs.rsshub.app/en/programming.html#github',
+                docs: 'https://docs.rsshub.app/en/routes/programming#github',
                 source: ['/:user/:repo/issues/:id', '/:user/:repo/issues',  '/:user/:repo'],
                 target: '/github/issue/:user/:repo',
             },
@@ -106,9 +106,9 @@ The title is a *required* field and should be the same as the level 3 heading (`
 
 ### `docs`
 
-The documentation link is also a *required* field. In this case, the documentation link for `GitHub Repo Issues` will be `https://docs.rsshub.app/en/programming.html#github`.
+The documentation link is also a *required* field. In this case, the documentation link for `GitHub Repo Issues` will be `https://docs.rsshub.app/en/routes/programming#github`.
 
-Note that the hash should be positioned to the level 2 heading (`##`), and not `https://docs.rsshub.app/en/programming.html#github-repo-issues`.
+Note that the hash should be positioned to the level 2 heading (`##`), and not `https://docs.rsshub.app/en/routes/programming#github-repo-issues`.
 
 ### `source`
 
@@ -150,7 +150,7 @@ module.exports = {
         '.': [
             {
                 title: 'Repo Issues',
-                docs: 'https://docs.rsshub.app/en/programming.html#github',
+                docs: 'https://docs.rsshub.app/en/routes/programming#github',
                 source: ['/:user/:repo/issues/:id', '/:user/:repo/issues',  '/:user/:repo'],
                 target: (params) => `/github/issue/${params.user}/${params.repo}`,
             },
@@ -169,7 +169,7 @@ module.exports = {
         '.': [
             {
                 title: 'Repo Issues',
-                docs: 'https://docs.rsshub.app/en/programming.html#github',
+                docs: 'https://docs.rsshub.app/en/routes/programming#github',
                 source: ['/:user/:repo'],
                 target: (_, url) => `/github/issue${new URL(url).pathname}`
             },
@@ -181,7 +181,7 @@ module.exports = {
 </code-block>
 </code-group>
 
-Both the above examples will return the same RSSHub subscription address as the [first example](/en/joinus/new-radar.html#code-the-rule).
+Both the above examples will return the same RSSHub subscription address as the [first example](/en/joinus/new-radar#code-the-rule).
 
 ### RSSBud
 
@@ -192,7 +192,7 @@ Both the above examples will return the same RSSHub subscription address as the 
 
 ### Update the Documentation
 
-As mentioned earlier in [Other components](/en/joinus/new-rss/add-docs.html#documentation-examples-other-components), adding `radar="1"` in the RSSHub docs will show a `Support browser extension` badge. If the rule is also compatible with RSSBud, adding `rssbud="1"` will show a `Support RSSBud` badge.
+As mentioned earlier in [Other components](/en/joinus/new-rss/add-docs#documentation-examples-other-components), adding `radar="1"` in the RSSHub docs will show a `Support browser extension` badge. If the rule is also compatible with RSSBud, adding `rssbud="1"` will show a `Support RSSBud` badge.
 
 ## Debugging Radar Rules
 
@@ -209,7 +209,7 @@ Here's an example radar rule that you can play with:
         '.': [
             {
                 title: 'Repo Issues',
-                docs: 'https://docs.rsshub.app/en/programming.html#github',
+                docs: 'https://docs.rsshub.app/en/routes/programming#github',
                 source: ['/:user/:repo/issues/:id', '/:user/:repo/issues',  '/:user/:repo'],
                 target: '/github/issue/:user/:repo',
             },

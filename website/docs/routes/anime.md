@@ -181,7 +181,7 @@ import Route from '@site/src/components/Route';
 
 ## bilibili
 
-见 [#bilibili](/social-media.html#bilibili)
+见 [#bilibili](/routes/social-media#bilibili)
 
 ## CCC 創作集
 
@@ -311,7 +311,7 @@ import Route from '@site/src/components/Route';
 
 :::caution 注意
 
-用户动态需要 iwara 用户名和密码，所以只能自建，详情见[部署页面](/install/#route-specific-configurations)的配置模块。
+用户动态需要 iwara 用户名和密码，所以只能自建，详情见[部署页面](/install#配置)的配置模块。
 
 :::
 
@@ -402,11 +402,11 @@ Sources
 
 ### 分类筛选
 
-<Route author="MegrezZhu hoilc" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword/:mode?" paramsDesc={['筛选条件，可选：parody, character, tag, artist, group, language, category','筛选值', '模式，`simple` 为仅封面，`detail` 会包括本子每一页，但对服务器负载大，`torrent` 会包括磁力链接，需要登录，参见 [部分 RSS 模块配置](/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)。默认为 `simple`']} anticrawler="1" supportBT="1" />
+<Route author="MegrezZhu hoilc" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword/:mode?" paramsDesc={['筛选条件，可选：parody, character, tag, artist, group, language, category','筛选值', '模式，`simple` 为仅封面，`detail` 会包括本子每一页，但对服务器负载大，`torrent` 会包括磁力链接，需要登录，参见 [部分 RSS 模块配置](/install#部分-rss-模块配置)。默认为 `simple`']} anticrawler="1" supportBT="1" />
 
 ### 高级搜索
 
-<Route author="MegrezZhu hoilc" example='/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-"mosaic+censorship"' path="/nhentai/search/:keyword/:mode?" paramsDesc={['用于搜索的关键词。可在原网站搜索后复制 `q=` 后面的内容，也可直接输入。用法详见 [官网](https://nhentai.net/info/)', '模式，`simple` 为仅封面，`detail` 会包括本子每一页，但对服务器负载大，`torrent` 会包括磁力链接，需要登录，参见 [部分 RSS 模块配置](/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)。默认为 `simple`']} anticrawler="1" supportBT="1" />
+<Route author="MegrezZhu hoilc" example='/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-"mosaic+censorship"' path="/nhentai/search/:keyword/:mode?" paramsDesc={['用于搜索的关键词。可在原网站搜索后复制 `q=` 后面的内容，也可直接输入。用法详见 [官网](https://nhentai.net/info/)', '模式，`simple` 为仅封面，`detail` 会包括本子每一页，但对服务器负载大，`torrent` 会包括磁力链接，需要登录，参见 [部分 RSS 模块配置](/install#部分-rss-模块配置)。默认为 `simple`']} anticrawler="1" supportBT="1" />
 
 ## QooApp
 

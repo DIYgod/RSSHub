@@ -6,7 +6,7 @@ import RouteEn from '@site/src/components/RouteEn';
 
 # Add documentation
 
-Now that we have completed the code, it's time to add the documentation for your route. Open the appropriate file in the [documentation (/docs/en/)](https://github.com/DIYgod/RSSHub/blob/master/docs/en), which in this example is `docs/en/programming.md`.
+Now that we have completed the code, it's time to add the documentation for your route. Open the appropriate file in the [documentation (/docs/en/)](https://github.com/DIYgod/RSSHub/blob/master/docs/en), which in this example is `docs/en/routes/programming.md`.
 
 In order to preview the documentation in real-time, you need to install the dependencies for the documentation. Run the following command in the **`docs` directory**:
 
@@ -64,9 +64,9 @@ The documentation is written in Markdown and rendered with [VuePress v1](https:/
 
 To add documentation to your route, use Vue components. They work like HTML tags. The following are the most commonly used components:
 
--   `author`: The route maintainer(s), separated by a single space. It should be the same as [`maintainer.js`](/en/joinus/new-rss/before-start.html#understand-the-basics-maintainer-js)
+-   `author`: The route maintainer(s), separated by a single space. It should be the same as [`maintainer.js`](/en/joinus/new-rss/before-start#understand-the-basics-maintainer-js)
 -   `example`: The route example, with a leading `/`
--   `path`: The route path, which should be the same as the key in [`maintainer.js`](/en/joinus/new-rss/before-start.html#understand-the-basics-maintainer-js) with the namespace. In the above example, it is `/github/issue/:user/:repo?`
+-   `path`: The route path, which should be the same as the key in [`maintainer.js`](/en/joinus/new-rss/before-start#understand-the-basics-maintainer-js) with the namespace. In the above example, it is `/github/issue/:user/:repo?`
 -   `:paramsDesc`: The route parameter description, in an array of strings that support Markdown.
     -   The description **must** follow the order in which they appear in the path.
     -   The number of description should match with the number of parameters in `path`. If you miss a description, the build will fail.
@@ -196,7 +196,7 @@ By using these components, you can provide valuable information to users and mak
 
 -   When documenting a route, use a level 3 heading (`###`). If the route documentation doesn't have a main section heading, add a level 2 heading (`##`).
 -   Leave a blank line between each heading and the following content. This will help ensure that your documentation can be built successfully.
--   If the documentation contains a large table, it is suggested to put it inside a [details container](/en/joinus/new-rss/add-docs.html#documentation-examples-custom-containers)
+-   If the documentation contains a large table, it is suggested to put it inside a [details container](/en/joinus/new-rss/add-docs#documentation-examples-custom-containers)
 -   Components can be written in two ways: as a self-closing tag (`<RouteEn .../>`) or as a pair of tags (`<RouteEn>...</RouteEn>`).
 -   **Remember to close the tag!**
 -   Don't forget to run the following command in the **root directory** of the project to check and format your code before committing and submitting a merge request:

@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # 开始之前
 
-在本教程中，我们将通过制作一个 [GitHub 仓库 Issues](/programming.html#github-cang-ku-issues) 的 RSS 源为例，向您展示制作 RSS 源的过程。
+在本教程中，我们将通过制作一个 [GitHub 仓库 Issues](/routes/programming#仓库-issues) 的 RSS 源为例，向您展示制作 RSS 源的过程。
 
 ## 安装依赖
 
@@ -68,11 +68,11 @@ npm run dev
 
 ## 遵循路由规范
 
-确保所有新的 RSS 源路由均遵循 [路由规范](/joinus/script-standard.html) 非常重要。不遵循规范可能导致您的 Pull Request 在合理的时间内无法合并。
+确保所有新的 RSS 源路由均遵循 [路由规范](/joinus/advanced/script-standard) 非常重要。不遵循规范可能导致您的 Pull Request 在合理的时间内无法合并。
 
-[路由规范](/joinus/script-standard.html) 提供了制作高质量和可靠源代码的指导方针。通过遵循这些指南，您可以确保您的 RSS 源按照预期工作，并且易于其他社区维护者阅读。
+[路由规范](/joinus/advanced/script-standard) 提供了制作高质量和可靠源代码的指导方针。通过遵循这些指南，您可以确保您的 RSS 源按照预期工作，并且易于其他社区维护者阅读。
 
-在提交您的 Pull Request 之前，请仔细阅读 [路由规范](/joinus/script-standard.html)，并确保您的代码符合所有要求。这将有助于加快审查过程。
+在提交您的 Pull Request 之前，请仔细阅读 [路由规范](/joinus/advanced/script-standard)，并确保您的代码符合所有要求。这将有助于加快审查过程。
 
 ## 创建命名空间
 
@@ -88,7 +88,7 @@ npm run dev
 
 一旦您为 RSS 路由创建了命名空间，下一步就是在 `router.js` 中注册它。
 
-例如，如果您为 [GitHub 仓库 Issues](/programming.html#github-cang-ku-issues) 制作 RSS 源，并且假设您希望用户输入 GitHub 用户名和仓库名，如果他们没有输入仓库名，则返回到 `RSSHub`，您可以使用以下代码在 `github/router.js` 中注册您的新 RSS 路由：
+例如，如果您为 [GitHub 仓库 Issues](/routes/programming#仓库-issues) 制作 RSS 源，并且假设您希望用户输入 GitHub 用户名和仓库名，如果他们没有输入仓库名，则返回到 `RSSHub`，您可以使用以下代码在 `github/router.js` 中注册您的新 RSS 路由：
 
 <code-group>
 <code-block title="箭头函数" active>
@@ -149,7 +149,7 @@ module.exports = {
 
 ### 您的新 RSS 路由 `issue.js`
 
-现在您可以开始 [编写](/joinus/new-rss/start-code.html) 新的 RSS 路由了。
+现在您可以开始 [编写](/joinus/new-rss/start-code) 新的 RSS 路由了。
 
 ## 获取数据
 

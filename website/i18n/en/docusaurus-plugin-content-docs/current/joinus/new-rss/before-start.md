@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Just before you start
 
-In this tutorial, we will walk you through the process of creating an RSS feed for [GitHub Repo Issues](/en/programming.html#github-repo-issues) as an example.
+In this tutorial, we will walk you through the process of creating an RSS feed for [GitHub Repo Issues](/en/routes/programming#github-repo-issues) as an example.
 
 ## Install dependencies
 
@@ -68,11 +68,11 @@ To view the result of your changes, open `http://localhost:1200` in your browser
 
 ## Follow the Script Standard
 
-It's important to ensure that all new RSS routes adhere to the [Script Standard](/en/joinus/script-standard.html). Failure to comply with this standard may result in your Pull Request not being merged in a reasonable timeframe.
+It's important to ensure that all new RSS routes adhere to the [Script Standard](/en/joinus/advanced/script-standard). Failure to comply with this standard may result in your Pull Request not being merged in a reasonable timeframe.
 
-The [Script Standard](/en/joinus/script-standard.html) provides guidelines for creating high-quality and reliable source code. By following these guidelines, you can ensure that your RSS feed works as intended and is easy for other community maintainers to read.
+The [Script Standard](/en/joinus/advanced/script-standard) provides guidelines for creating high-quality and reliable source code. By following these guidelines, you can ensure that your RSS feed works as intended and is easy for other community maintainers to read.
 
-Before submitting your Pull Request, make sure to carefully review the [Script Standard](/en/joinus/script-standard.html) and ensure that your code meets all of the requirements. This will help to expedite the review process.
+Before submitting your Pull Request, make sure to carefully review the [Script Standard](/en/joinus/advanced/script-standard) and ensure that your code meets all of the requirements. This will help to expedite the review process.
 
 ## Create a namespace
 
@@ -88,7 +88,7 @@ When creating a namespace, it's important to avoid creating multiple namespaces 
 
 Once you have created the namespace for your RSS route, the next step is to register it in the `router.js`
 
-For example, if you are creating an RSS feed for [GitHub Repo Issues](/en/programming.html#github-repo-issues) and suppose you want users to enter a GitHub username and a repository name, and fall back to `RSSHub` if they don't enter the repository name, you can register your new RSS route in `github/router.js` using the following code:
+For example, if you are creating an RSS feed for [GitHub Repo Issues](/en/routes/programming#github-repo-issues) and suppose you want users to enter a GitHub username and a repository name, and fall back to `RSSHub` if they don't enter the repository name, you can register your new RSS route in `github/router.js` using the following code:
 
 <code-group>
 <code-block title="Arrow Functions" active>
@@ -149,7 +149,7 @@ The `radar.js` file helps users subscribe to your new RSS route when they use [R
 
 ### Your new RSS route `issue.js`
 
-Now you can [start writing](/en/joinus/new-rss/start-code.html) your new RSS route.
+Now you can [start writing](/en/joinus/new-rss/start-code) your new RSS route.
 
 ## Acquire Data
 

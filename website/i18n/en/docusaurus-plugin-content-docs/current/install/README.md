@@ -589,8 +589,8 @@ async function handleRequest(request) {
   } else {
     target = decodeURIComponent(target)
     const newRequest = new Request(target, {
-      headers: request.headers, 
-      method: request.method, 
+      headers: request.headers,
+      method: request.method,
       body: request.body
     })
     return await fetch(newRequest)
@@ -671,7 +671,7 @@ See the relation between access key/code and white/blacklisting.
 
 :::tip New Config Format
 
-We are currently testing out a new format, providing end-user with more flexibility. For more info, please refer to [Parameters->Multimedia processing](/en/parameter.html#multimedia-processing).
+We are currently testing out a new format, providing end-user with more flexibility. For more info, please refer to [Parameters->Multimedia processing](/en/parameter#multimedia-processing).
 
 When using our new config, please leave the following environment vairable blank. By default, image hotlink template will be forced when present.
 
@@ -701,9 +701,9 @@ Configs in this sections are in beta stage, and **are turn off by default**. Ple
 
 :::
 
-`ALLOW_USER_HOTLINK_TEMPLATE`: [Parameters->Multimedia processing](/en/parameter.html#multimedia-processing)
+`ALLOW_USER_HOTLINK_TEMPLATE`: [Parameters->Multimedia processing](/en/parameter#multimedia-processing)
 
-`FILTER_REGEX_ENGINE`: Define Regex engine used in [Parameters->filtering](/en/parameter.html#filtering). Valid value are `[re2, regexp]`. Default value is `re2`. We suggest public instance should leave this value to default, and this option right now is mainly for backward compatibility.
+`FILTER_REGEX_ENGINE`: Define Regex engine used in [Parameters->filtering](/en/parameter#filtering). Valid value are `[re2, regexp]`. Default value is `re2`. We suggest public instance should leave this value to default, and this option right now is mainly for backward compatibility.
 
 `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN`: allow users to provide a domain as a parameter to routes that are not in their allow list, respectively. Public instances are suggested to leave this value default, as it may lead to [Server-Side Request Forgery (SSRF)](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)
 

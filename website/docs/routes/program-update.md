@@ -395,7 +395,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ## Minecraft
 
-见 [#minecraft](/game.html#minecraft)
+见 [#minecraft](/routes/game#minecraft)
 
 ## MIUI
 
@@ -425,7 +425,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### Switch 本体更新情报（日本）
 
-见 [#nintendo](/game.html#nintendo)
+见 [#nintendo](/routes/game#nintendo)
 
 ## Not a Tesla App
 
@@ -445,7 +445,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 <Route author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
-## O\&O Software
+## O&O Software
 
 ### Changelog
 
@@ -482,7 +482,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### PlayStation 4 系统更新纪录
 
-见 [#playstation](/game.html#playstation)
+见 [#playstation](/routes/game#playstation)
 
 ## Postman
 
@@ -749,7 +749,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### 更新
 
-见 [#怪物猎人世界](/game.html#guai-wu-lie-ren-shi-jie)
+见 [#怪物猎人世界](/routes/game#怪物猎人世界)
 
 ## 华硕
 

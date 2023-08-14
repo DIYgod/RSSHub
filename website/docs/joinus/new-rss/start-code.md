@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # 制作自己的 RSSHub 路由
 
-如前所述，我们以 [GitHub 仓库 Issues](/programming.html#github-cang-ku-issues) 为例制作 RSS 源。我们将展示前面提到的四种数据获取方法：
+如前所述，我们以 [GitHub 仓库 Issues](/routes/programming#仓库-issues) 为例制作 RSS 源。我们将展示前面提到的四种数据获取方法：
 
 1.  [通过 API](#tong-guo-api)
 2.  [通过 got 从 HTML 获取数据](#tong-guo-got-cong-html-huo-qu-shu-ju)
@@ -90,7 +90,7 @@ module.exports = async (ctx) => {
 module.exports = async (ctx) => {
     const { user, repo = 'RSSHub' } = ctx.params;
     // 发送 HTTP GET 请求到 API 并解构返回的数据对象
-    const { data } = await got(`https://api.github.com/repos/${user}/${repo}/issues`, { 
+    const { data } = await got(`https://api.github.com/repos/${user}/${repo}/issues`, {
         headers: {
             // 为简单起见，此示例使用 HTML 而不是推荐的 'application/vnd.github+json'，
             // 因后者返回 Markdown 并需要进一步处理
@@ -116,7 +116,7 @@ module.exports = async (ctx) => {
     const user = ctx.params.user;
     const repo = ctx.params.repo ?? 'RSSHub';
     // 发送 HTTP GET 请求到 API
-    const response = await got(`https://api.github.com/repos/${user}/${repo}/issues`, { 
+    const response = await got(`https://api.github.com/repos/${user}/${repo}/issues`, {
         headers: {
             accept: 'application/vnd.github.html+json',
         },
@@ -154,7 +154,7 @@ const { parseDate } = require('@/utils/parse-date');
 module.exports = async (ctx) => {
     const { user, repo = 'RSSHub' } = ctx.params;
 
-    const { data } = await got(`https://api.github.com/repos/${user}/${repo}/issues`, { 
+    const { data } = await got(`https://api.github.com/repos/${user}/${repo}/issues`, {
         headers: {
             accept: 'application/vnd.github.html+json',
         },
@@ -200,7 +200,7 @@ const { parseDate } = require('@/utils/parse-date');
 module.exports = async (ctx) => {
     const { user, repo = 'RSSHub' } = ctx.params;
 
-    const { data } = await got(`https://api.github.com/repos/${user}/${repo}/issues`, { 
+    const { data } = await got(`https://api.github.com/repos/${user}/${repo}/issues`, {
         headers: {
             accept: 'application/vnd.github.html+json',
         },
@@ -465,7 +465,7 @@ module.exports = async (ctx) => {
         url: '', // 数据来源链接
         // 此处可以使用变量
         // 如 %xxx% 会被解析为 **params** 中同名变量的值
-        title: '%title%', 
+        title: '%title%',
         params: {
             title: '', // 标题变量
         },

@@ -8,7 +8,7 @@ Parameters here need to be placed after the route path. Some routes may have <sp
 
 E.g.
 
-<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0?brief=100&limit=5">https://rsshub.app/twitter/user/durov/<span style={{green}}><b>readable=1&includeRts=0</b></span>?<span style={{color: "violet"}}><b>brief=100&limit=5</b></span></a>
+<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0?brief=100&limit=5">https://rsshub.app/twitter/user/durov/<span style={{color: "green"}}><b>readable=1&includeRts=0</b></span>?<span style={{color: "violet"}}><b>brief=100&limit=5</b></span></a>
 
 If a <span style={{color: "magenta"}}>**output format**</span> (`.atom`, `.rss`, `.json`, `.debug.json`) is set, it needs to be placed between the route path (including <span style={{color: "green"}}>**custom route parameters**</span>) and <span style={{color: "violet"}}>**other parameters**</span>.
 
@@ -134,7 +134,7 @@ This is an experimental API
 -   `multimedia_hotlink_template`: the same as `image_hotlink_template` but apply to audio and video. Note: the service must follow redirects, allow reverse-proxy for audio and video, and must drop the `Referer` header when reverse-proxying. [Here is an easy-to-deploy project that fits these requirements](https://github.com/Rongronggg9/rsstt-img-relay). The project accepts simple URL concatenation, e.g. `https://example.com/${href}`, in which `example.com` should be replaced with the domain name of the service you've deployed
 -   `wrap_multimedia_in_iframe`: wrap audio and video in `<iframe>` to prevent the reader from sending `Referer` header. This workaround is only compatible with a few readers, such as RSS Guard and Akregator, which may not support the previous method. You can try this method in such a case
 
-There are more details in the [FAQ](/en/faq.html).
+There are more details in the [FAQ](/en/faq).
 
 ## Output Formats
 

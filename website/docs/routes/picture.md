@@ -323,7 +323,8 @@ R18 显示
 ### 标签
 
 <Route author="KotoriK" example="/micmicidol/search/Young%20Jump?limit=50" path="/micmicidol/search/:label" paramsDesc={['标签名']}/>
-获取数量可以通过 [limit](https://docs.rsshub.app/parameter.html#tiao-shu-xian-zhi) 参数控制。默认值为`50`。
+
+获取数量可以通过 [limit](/parameter#条数限制) 参数控制。默认值为`50`。
 
 ## MM 范
 
@@ -423,7 +424,7 @@ R18 显示
 
 订阅以 `https://wallhaven.cc/search` 起始的页面，将 `?` 后的字段作为 `filter` 填写入路由。下面是一个例子：
 
-如 [Wallpaper Search: #landscape - wallhaven.cc](https://wallhaven.cc/search?q=id%3A711\&sorting=random\&ref=fp\&seed=8g0dgd)，中 `?` 后的字段为 `q=id%3A711&sorting=random&ref=fp&seed=8g0dgd`，所以可以得到路由是 [/wallhaven/search/q=id%3A711\&sorting=random\&ref=fp\&seed=8g0dgd](https://rsshub.app/wallhaven/search/q=id%3A711\&sorting=random\&ref=fp\&seed=8g0dgd)
+如 [Wallpaper Search: #landscape - wallhaven.cc](https://wallhaven.cc/search?q=id%3A711&sorting=random&ref=fp&seed=8g0dgd)，中 `?` 后的字段为 `q=id%3A711&sorting=random&ref=fp&seed=8g0dgd`，所以可以得到路由是 [/wallhaven/search/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd](https://rsshub.app/wallhaven/search/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd)
 
 :::
 

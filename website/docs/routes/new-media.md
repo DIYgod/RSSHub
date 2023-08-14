@@ -3406,7 +3406,7 @@ column 为 third 时可选的 category:
 
 下表为科室对应的 sid，若想获得 tid，可以到对应科室页面 URL 中寻找 `t_id` 字段的值，下面是一个例子：
 
-如 [肿瘤 - NSCLC](https://www.medsci.cn/department/details?s_id=5\&t_id=277) 的 URL 为 <https://www.medsci.cn/department/details?s_id=5&t_id=277>，可以看到此时 `s_id` 对应 `sid` 的值为 5， `t_id` 对应 `tid` 的值为 277，所以可以得到路由 [`/medsci/5/277`](https://rsshub.app/medsci/5/277)
+如 [肿瘤 - NSCLC](https://www.medsci.cn/department/details?s_id=5&t_id=277) 的 URL 为 <https://www.medsci.cn/department/details?s_id=5&t_id=277>，可以看到此时 `s_id` 对应 `sid` 的值为 5， `t_id` 对应 `tid` 的值为 277，所以可以得到路由 [`/medsci/5/277`](https://rsshub.app/medsci/5/277)
 
 :::
 
@@ -3808,7 +3808,7 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/ruancan/user/72" path="/ruancan/user/:id?" paramsDesc={['用户 id，可在对应用户页 URL 中找到']}/>
 
-## 上下游 News\&Market
+## 上下游 News&Market
 
 ### 分類
 
@@ -4211,7 +4211,7 @@ column 为 third 时可选的 category:
 
 :::caution 注意
 
-若视频因防盗链而无法播放，请参考 [通用参数 -> 多媒体处理](/parameter.html#duo-mei-ti-chu-li) 配置 `multimedia_hotlink_template` **或** `wrap_multimedia_in_iframe`。
+若视频因防盗链而无法播放，请参考 [通用参数 -> 多媒体处理](/parameter#多媒体处理) 配置 `multimedia_hotlink_template` **或** `wrap_multimedia_in_iframe`。
 
 :::
 
@@ -4339,7 +4339,7 @@ column 为 third 时可选的 category:
 
 只适用拥有首页模板 (分享链接带有 homepage) 的公众号。例如从公众号分享出来的链接为 <https://mp.weixin.qq.com/mp/homepage?__biz=MzA3MDM3NjE5NQ==&hid=4>，`biz` 为 `MzA3MDM3NjE5NQ==`，`hid` 为 `4`。
 
-有些页面里会有分栏， `cid` 可以通过元素选择器选中栏目查看`data-index`。如[链接](https://mp.weixin.qq.com/mp/homepage?\__biz=MzA3MDM3NjE5NQ==\&hid=4)里的 `京都职人` 栏目的 `cid` 为 `0`，`文艺时光` 栏目的 `cid` 为 `2`。如果不清楚的话最左边的栏目为`0`，其右方栏目依次递增 `1`。
+有些页面里会有分栏， `cid` 可以通过元素选择器选中栏目查看`data-index`。如[链接](https://mp.weixin.qq.com/mp/homepage?\__biz=MzA3MDM3NjE5NQ==&hid=4)里的 `京都职人` 栏目的 `cid` 为 `0`，`文艺时光` 栏目的 `cid` 为 `2`。如果不清楚的话最左边的栏目为`0`，其右方栏目依次递增 `1`。
 
 </Route>
 

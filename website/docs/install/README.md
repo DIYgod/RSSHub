@@ -609,8 +609,8 @@ async function handleRequest(request) {
   } else {
     target = decodeURIComponent(target)
     const newRequest = new Request(target, {
-      headers: request.headers, 
-      method: request.method, 
+      headers: request.headers,
+      method: request.method,
       body: request.body
     })
     return await fetch(newRequest)
@@ -680,7 +680,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 :::tip 新配置方式
 
-我们正在试验新的，更灵活的配置方式。如果有需要，请转到 [通用参数 -> 多媒体处理](/parameter.html#duo-mei-ti-chu-li) 了解更多。
+我们正在试验新的，更灵活的配置方式。如果有需要，请转到 [通用参数 -> 多媒体处理](/parameter#多媒体处理) 了解更多。
 
 在使用新配置时，请将下方环境变量留空。否则默认图片模版会继续遵循下方配置。
 
@@ -710,9 +710,9 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 :::
 
-`ALLOW_USER_HOTLINK_TEMPLATE`: [通用参数 -> 多媒体处理](/parameter.html#duo-mei-ti-chu-li)特性控制
+`ALLOW_USER_HOTLINK_TEMPLATE`: [通用参数 -> 多媒体处理](/parameter#多媒体处理)特性控制
 
-`FILTER_REGEX_ENGINE`: 控制 [通用参数 -> 内容过滤](/parameter.html#nei-rong-guo-lu) 使用的正则引擎。可选`[re2, regexp]`，默认`re2`。我们推荐公开实例不要调整这个选项，这个选项目前主要用于向后兼容。
+`FILTER_REGEX_ENGINE`: 控制 [通用参数 -> 内容过滤](/parameter#内容过滤) 使用的正则引擎。可选`[re2, regexp]`，默认`re2`。我们推荐公开实例不要调整这个选项，这个选项目前主要用于向后兼容。
 
 `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN`: 允许用户为路由提供域名作为参数。建议公共实例不要调整此选项，开启后可能会导致 [服务端请求伪造（SSRF）](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)
 
@@ -726,7 +726,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 `NODE_NAME`: 节点名，用于负载均衡，识别当前节点
 
-`PUPPETEER_WS_ENDPOINT`: 用于 puppeteer.connect 的浏览器 websocket 链接，见 [browserWSEndpoint](https://zhaoqize.github.io/puppeteer-api-zh_CN/#?product=Puppeteer\&show=api-browserwsendpoint)
+`PUPPETEER_WS_ENDPOINT`: 用于 puppeteer.connect 的浏览器 websocket 链接，见 [browserWSEndpoint](https://zhaoqize.github.io/puppeteer-api-zh_CN/#?product=Puppeteer&show=api-browserwsendpoint)
 
 `CHROMIUM_EXECUTABLE_PATH`: Chromium（或 Chrome）的可执行路径。若 puppeteer 没有下载捆绑的 Chromium（主动跳过下载或体系架构为 arm/arm64），设置此项可启用 puppeteer。或者，偏好 Chrome 而不是 Chromium 时，此项也很有用。**注意**：`PUPPETEER_WS_ENDPOINT` 被设置时，此项不生效；仅在手动部署时有用，对于 Docker 部署，请改用 `chromium-bundled` 版本镜像。
 
@@ -991,9 +991,9 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   邮箱 邮件列表路由：
 
-    -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 与 `.` 替换为 `_`，例如 `EMAIL_CONFIG_xxx_qq_com`。Linux 内容格式为 `password=密码&host=服务器&port=端口`，docker 内容格式为 `password=密码\&host=服务器\&port=端口`，例如：
+    -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 与 `.` 替换为 `_`，例如 `EMAIL_CONFIG_xxx_qq_com`。Linux 内容格式为 `password=密码&host=服务器&port=端口`，docker 内容格式为 `password=密码&host=服务器&port=端口`，例如：
         -   Linux 环境变量：`EMAIL_CONFIG_xxx_qq_com="password=123456&host=imap.qq.com&port=993"`
-        -   docker 环境变量：`EMAIL_CONFIG_xxx_qq_com=password=123456\&host=imap.qq.com\&port=993`，请勿添加引号 `'`，`"`。
+        -   docker 环境变量：`EMAIL_CONFIG_xxx_qq_com=password=123456&host=imap.qq.com&port=993`，请勿添加引号 `'`，`"`。
 
 -   网易云歌单及听歌排行
 

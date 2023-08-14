@@ -265,7 +265,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 <https://www.zcool.com.cn/discover?cate=0&subCate=617&hasVideo=0&city=0&college=0&recommendLevel=2&sort=9>
 
-此时其查询参数为 `cate=0&subCate=617&hasVideo=0&city=0&college=0&recommendLevel=2&sort=9`。其对应的路由即 [`/zcool/discover/cate=0&subCate=617&hasVideo=0&city=0&college=0&recommendLevel=2&sort=9`](https://rsshub.app/zcool/discover/cate=0\&subCate=617\&hasVideo=0\&city=0\&college=0\&recommendLevel=2\&sort=9)
+此时其查询参数为 `cate=0&subCate=617&hasVideo=0&city=0&college=0&recommendLevel=2&sort=9`。其对应的路由即 [`/zcool/discover/cate=0&subCate=617&hasVideo=0&city=0&college=0&recommendLevel=2&sort=9`](https://rsshub.app/zcool/discover/cate=0&subCate=617&hasVideo=0&city=0&college=0&recommendLevel=2&sort=9)
 
 </Route>
 

@@ -68,11 +68,11 @@ import Route from '@site/src/components/Route';
 
 ### 苹果邮件
 
-见 [#中国邮政速递物流](/other.html#zhong-guo-you-zheng-su-di-wu-liu)
+见 [#中国邮政速递物流](/routes/other#中国邮政速递物流)
 
 ### App Store/Mac App Store
 
-见 [#app-store-mac-app-store](/program-update.html#app-store-mac-app-store)
+见 [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 
 ## Aqara
 
@@ -214,7 +214,7 @@ import Route from '@site/src/components/Route';
 | `period`   | 发布时间                                          | `1/7/30`                                                | 空      |
 
 例如：
-[`/linkedin/cn/jobs/Software?location=shanghai&period=1`](https://rsshub.app/linkedin/cn/jobs/Software?location=shanghai\&period=1): 查找所有在上海的今日发布的所有 Software 工作
+[`/linkedin/cn/jobs/Software?location=shanghai&period=1`](https://rsshub.app/linkedin/cn/jobs/Software?location=shanghai&period=1): 查找所有在上海的今日发布的所有 Software 工作
 
 **为了方便起见，建议您在 [LinkedIn.cn](https://www.linkedin.cn/incareer/jobs/search) 上进行搜索，并使用 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 加载特定的 feed。**
 
@@ -305,7 +305,7 @@ import Route from '@site/src/components/Route';
 
 :::caution 注意
 
-需要设置 Notion 集成，详情请见 [部分 RSS 模块配置](/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)
+需要设置 Notion 集成，详情请见 [部分 RSS 模块配置](/install#部分-rss-模块配置)
 
 :::
 
@@ -993,7 +993,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### 邮件列表
 
-> 仅支持 IMAP 协议，邮件密码等设置见 [邮件设置](/install/#其他应用配置)
+> 仅支持 IMAP 协议，邮件密码等设置见 [邮件设置](/install#其他应用配置)
 
 <Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" paramsDesc={['邮箱账号']} selfhost="1"/>
 

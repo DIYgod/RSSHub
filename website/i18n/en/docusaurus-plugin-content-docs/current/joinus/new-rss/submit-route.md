@@ -9,7 +9,7 @@ Once you have finished your route, you can submit a pull request (hereafter refe
 ## Pull Request Template
 
 ````md
-<!-- 
+<!--
 如有疑问，请参考 https://github.com/DIYgod/RSSHub/discussions/8002
 Reference: https://docs.rsshub.app/en/joinus/new-rss/submit-route.html
 -->
@@ -39,9 +39,9 @@ If your changes are not related to route, please fill in `routes` section with `
 ```
 
 ## 新 RSS 路由检查表 / New RSS Route Checklist
-  
+
 - [ ] 新的路由 New Route
-  - [ ] 跟随 [v2 路由规范](https://docs.rsshub.app/joinus/script-standard.html) Follows [v2 Script Standard](https://docs.rsshub.app/en/joinus/script-standard.html)
+  - [ ] 跟随 [v2 路由规范](/joinus/advanced/script-standard) Follows [v2 Script Standard](/en/joinus/advanced/script-standard)
 - [ ] 文档说明 Documentation
   - [ ] 中文文档 CN
   - [ ] 英文文档 EN
@@ -49,7 +49,7 @@ If your changes are not related to route, please fill in `routes` section with `
   - [ ] 使用缓存 Use Cache
 - [ ] 反爬/频率限制 anti-bot or rate limit?
   - [ ] 如果有, 是否有对应的措施? If yes, do your code reflect this sign?
-- [ ] [日期和时间](https://docs.rsshub.app/joinus/pub-date.html) [date and time](https://docs.rsshub.app/en/joinus/pub-date.html)
+- [ ] [日期和时间](/joinus/advanced/pub-date) [date and time](/en/joinus/advanced/pub-date)
   - [ ] 可以解析 Parsed
   - [ ] 时区调整 Correct TimeZone
 - [ ] 添加了新的包 New package added
@@ -91,7 +91,7 @@ NOROUTE
 
 ### New RSS Route Checklist
 
-This checklist will help you ensure that your pull request includes all necessary components. Although you don't have to check off all items to get your PR merged, please make sure that your new route follows the [v2 Script Standard](https://docs.rsshub.app/en/joinus/script-standard.html). This is a **mandatory** requirement for all new routes.
+This checklist will help you ensure that your pull request includes all necessary components. Although you don't have to check off all items to get your PR merged, please make sure that your new route follows the [v2 Script Standard](/en/joinus/advanced/script-standard). This is a **mandatory** requirement for all new routes.
 
 ```md
 - [ ] 新的路由 New Route

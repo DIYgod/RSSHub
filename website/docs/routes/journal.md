@@ -479,7 +479,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 <Route author="HenryQW" example="/google/scholar/data+visualization" path="/google/scholar/:query" paramsDesc={['查询语句, 支持「简单」和「高级」两种模式:']} anticrawler="1">
 
 1.  简单模式，例如「data visualization」, <https://rsshub.app/google/scholar/data+visualization>.
-2.  高级模式，前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn\&as_sdt=0,5), 点击左上角，选择高级搜索并提交查询。此时 URL 应为: <https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>, 复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数。例子所对应的完整路由为<https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>.
+2.  高级模式，前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn&as_sdt=0,5), 点击左上角，选择高级搜索并提交查询。此时 URL 应为: <https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>, 复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数。例子所对应的完整路由为<https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>.
 
 </Route>
 

@@ -2,19 +2,19 @@
 
 ## Generate an RSS Feed
 
-To subscribe to a Twitter user's timeline, first look at the route document of [Twitter User Timeline](en/social-media.html#twitter-user-timeline).
+To subscribe to a Twitter user's timeline, first look at the route document of [Twitter User Timeline](/en/routes/social-media#twitter-user-timeline).
 
 `/twitter/user/:id` is the route where `:id` is the actual Twitter username you need to replace. For instance, `/twitter/user/DIYgod` with a prefix domain name will give you the timeline of Twitter user DIYgod.
 
 The demo instance will generate an RSS feed at <https://rsshub.app/twitter/user/DIYgod>, use your own domain name when applicable. This feed should work with all RSS readers conforming to the RSS Standard.
 
-You can replace the domain name `https://rsshub.app` with your [self-hosted instance](/en/install/).
+You can replace the domain name `https://rsshub.app` with your [self-hosted instance](/en/install).
 
-RSSHub supports additional parameters such as content filtering and full-text extraction, refer to [Parameters](/en/parameter.html) for details.
+RSSHub supports additional parameters such as content filtering and full-text extraction, refer to [Parameters](/en/parameter) for details.
 
 ## Contribute a New Route
 
-Our thriving community is the key to RSSHub's success, we invite everyone to join us and [contribute new routes](/en/joinus/quick-start.html) for all kinds of interesting sources.
+Our thriving community is the key to RSSHub's success, we invite everyone to join us and [contribute new routes](/en/joinus/quick-start) for all kinds of interesting sources.
 
 ## Use as a npm Package
 
@@ -64,7 +64,7 @@ RSSHub.request('/youtube/user/JFlaMusic')
     });
 ```
 
-For supported configs please refer to the [Configuration Section](/en/install/#configuration-3).
+For supported configs please refer to the [Configuration Section](/en/install#configuration-3).
 
 A short example for disabling caching can be written as:
 

@@ -24,7 +24,7 @@ Copy the URL of the 591 filter housing page and remove the front part "<https://
 
 ### App Store/Mac App Store
 
-See [#app-store-mac-app-store](/en/program-update.html#app-store-mac-app-store)
+See [#app-store-mac-app-store](/en/routes/program-update#app-store-mac-app-store)
 
 ## AutoTrader
 
