@@ -415,6 +415,14 @@ Including 'Science', 'Science Advances', 'Science Immunology', 'Science Robotics
 
 </RouteEn>
 
+### Blogs
+
+<RouteEn author="TomHodson" example="/science/blogs/pipeline" path="/science/blogs/:name?" :paramsDesc="['Short name for the blog, get this from the url. Defaults to pipeline']" anticrawler="1" puppeteer="1" radar="1" rssbud="1">
+
+To subscribe to [IN THE PIPELINE by Derek Lowe’s](https://science.org/blogs/pipeline) or the [science editor's blog](https://science.org/blogs/editors-blog), use the name parameter `pipeline` or `editors-blog`.
+
+</RouteEn>
+
 ## ScienceDirect
 
 ### Journal
