@@ -11,6 +11,10 @@
     "message": "指南",
     "description": "Navbar item with label 指南"
   },
+  "item.label.路由": {
+    "message": "路由",
+    "description": "Navbar item with label 路由"
+  },
   "item.label.参与我们": {
     "message": "参与我们",
     "description": "Navbar item with label 参与我们"
@@ -26,21 +30,5 @@
   "item.label.GitHub": {
     "message": "GitHub",
     "description": "Navbar item with label GitHub"
-  },
-  "item.label.快速开始": {
-    "message": "快速开始",
-    "description": "Navbar item with label 快速开始"
-  },
-  "item.label.路由规范": {
-    "message": "路由规范",
-    "description": "Navbar item with label 路由规范"
-  },
-  "item.label.日期处理": {
-    "message": "日期处理",
-    "description": "Navbar item with label 日期处理"
-  },
-  "item.label.使用缓存": {
-    "message": "使用缓存",
-    "description": "Navbar item with label 使用缓存"
   }
 }
