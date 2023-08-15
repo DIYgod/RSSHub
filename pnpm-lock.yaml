@@ -247,9 +247,6 @@ devDependencies:
   nodemon:
     specifier: 3.0.1
     version: 3.0.1
-  pinyin-pro:
-    specifier: ^3.16.2
-    version: 3.16.2
   prettier:
     specifier: 3.0.1
     version: 3.0.1
@@ -6030,10 +6027,6 @@ packages:
     dependencies:
       safe-buffer: 5.2.1
     dev: false
-
-  /pinyin-pro@3.16.2:
-    resolution: {integrity: sha512-0Q+boRY7u0X7NApcS8ZDLWUw0H8PoopaH4yN/KVqeAFsrRTwhKEbv0bG/ZYwLrQRSfGhWEm5wxl/l4qyVQTrnQ==}
-    dev: true
 
   /pirates@4.0.6:
     resolution: {integrity: sha512-saLsH7WeYYPiD25LDuLRRY/i+6HaPYr6G1OUlN39otzkSTxKnubR9RTxS3/Kk50s1g2JTgFwWQDQyplC5/SHZg==}
