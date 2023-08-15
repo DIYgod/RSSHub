@@ -56,22 +56,15 @@ const config = {
         ],
     ],
 
-    themes: [
-        [
-            require.resolve('@easyops-cn/docusaurus-search-local'),
-            {
-                // ... Your options.
-                // `hashed` is recommended as long-term-cache of index file is possible.
-                hashed: true,
-                indexBlog: false,
-                language: ['en', 'zh'],
-                docsRouteBasePath: '/',
-                highlightSearchTermsOnTargetPage: true,
-                explicitSearchResultPath: true,
-                searchResultLimits: 10,
-            },
-        ],
-    ],
+    customFields: {
+        'meilisearch-docsearch': {
+            host: 'https://meilisearch.rsshub.app',
+            apiKey: 'ee3442a8f8275719ee1a34dd8fcfd032',
+            indexUid: 'rsshub',
+            container: '#docsearch',
+        },
+    },
+
     themeConfig:
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
