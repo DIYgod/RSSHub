@@ -11,7 +11,7 @@ Once you have finished your route, you can submit a pull request (hereafter refe
 ````md
 <!--
 如有疑问，请参考 https://github.com/DIYgod/RSSHub/discussions/8002
-Reference: https://docs.rsshub.app/en/joinus/new-rss/submit-route.html
+Reference: https://docs.rsshub.app/en/joinus/new-rss/submit-route
 -->
 
 ## 该 PR 相关 Issue / Involved Issue

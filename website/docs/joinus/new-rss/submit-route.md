@@ -10,8 +10,8 @@ sidebar_position: 5
 
 ````md
 <!--
-如有疑问，请参考 https://docs.rsshub.app/joinus/new-rss/submit-route.html
-Reference: https://docs.rsshub.app/en/joinus/new-rss/submit-route.html
+如有疑问，请参考 https://docs.rsshub.app/joinus/new-rss/submit-route
+Reference: https://docs.rsshub.app/en/joinus/new-rss/submit-route
 -->
 
 ## 该 PR 相关 Issue / Involved Issue

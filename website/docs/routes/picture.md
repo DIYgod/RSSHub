@@ -540,9 +540,9 @@ R18 显示
 
 :::tip 提示
 
-留园网文档参见 [此处](https://docs.rsshub.app/new-media.html#liu-yuan-wang)
+留园网文档参见 [此处](https://docs.rsshub.app/routes/new-media#liu-yuan-wang)
 
-禁忌书屋文档参见 [此处](https://docs.rsshub.app/reading.html#jin-ji-shu-wu)
+禁忌书屋文档参见 [此处](https://docs.rsshub.app/routes/reading#jin-ji-shu-wu)
 
 :::
 

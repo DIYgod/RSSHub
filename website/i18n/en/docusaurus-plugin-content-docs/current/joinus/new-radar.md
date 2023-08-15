@@ -227,7 +227,7 @@ Here's an example radar rule that you can play with:
         www: [
             {
                 title: '分区视频',
-                docs: 'https://docs.rsshub.app/social-media.html#bilibili',
+                docs: 'https://docs.rsshub.app/social-media#bilibili',
                 source: '/v/*tpath',
                 target: (params) => {
                     let tid;
@@ -249,7 +249,7 @@ Here's an example radar rule that you can play with:
             {
                 // for twitter.com
                 title: '用户时间线',
-                docs: 'https://docs.rsshub.app/social-media.html#twitter',
+                docs: 'https://docs.rsshub.app/social-media#twitter',
                 source: '/:id',
                 target: (params) => {
                     if (params.id !== 'home') {
@@ -264,7 +264,7 @@ Here's an example radar rule that you can play with:
         www: [
             {
                 title: '用户收藏',
-                docs: 'https://docs.rsshub.app/social-media.html#pixiv',
+                docs: 'https://docs.rsshub.app/social-media#pixiv',
                 source: '/bookmark.php',
                 target: (params, url) => `/pixiv/user/bookmarks/${new URL(url).searchParams.get('id')}`,
             },
@@ -275,7 +275,7 @@ Here's an example radar rule that you can play with:
         '.': [
             {
                 title: '博主',
-                docs: 'https://docs.rsshub.app/social-media.html#%E5%BE%AE%E5%8D%9A',
+                docs: 'https://docs.rsshub.app/social-media#%E5%BE%AE%E5%8D%9A',
                 source: ['/u/:id', '/:id'],
                 target: (params, url, document) => {
                     const uid = document && document.documentElement.innerHTML.match(/\$CONFIG\['oid']='(\d+)'/)[1];

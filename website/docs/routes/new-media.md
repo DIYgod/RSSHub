@@ -3221,9 +3221,9 @@ column 为 third 时可选的 category:
 
 :::tip 提示
 
-酷 18 文档参见 [此处](https://docs.rsshub.app/picture.html#ku-18)
+酷 18 文档参见 [此处](https://docs.rsshub.app/picture#ku-18)
 
-禁忌书屋文档参见 [此处](https://docs.rsshub.app/reading.html#jin-ji-shu-wu)
+禁忌书屋文档参见 [此处](https://docs.rsshub.app/routes/reading#jin-ji-shu-wu)
 
 :::
 

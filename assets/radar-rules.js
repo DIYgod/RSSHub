@@ -77,9 +77,9 @@
     'vgtime.com': {
         _name: '游戏时光',
         www: [
-            { title: '新闻', docs: 'https://docs.rsshub.app/routes/game.html#you-xi-shi-guang', source: '/topic/index.', target: '/vgtime/news' },
-            { title: '游戏发售表', docs: 'https://docs.rsshub.app/routes/game.html#you-xi-shi-guang', source: '/game/release.', target: '/vgtime/release' },
-            { title: '关键词资讯', docs: 'https://docs.rsshub.app/routes/game.html#you-xi-shi-guang', source: '/search/list.', target: (params, url) => `/vgtime/keyword/${new URL(url).searchParams.get('keyword')}` },
+            { title: '新闻', docs: 'https://docs.rsshub.app/routes/game#you-xi-shi-guang', source: '/topic/index.', target: '/vgtime/news' },
+            { title: '游戏发售表', docs: 'https://docs.rsshub.app/routes/game#you-xi-shi-guang', source: '/game/release.', target: '/vgtime/release' },
+            { title: '关键词资讯', docs: 'https://docs.rsshub.app/routes/game#you-xi-shi-guang', source: '/search/list.', target: (params, url) => `/vgtime/keyword/${new URL(url).searchParams.get('keyword')}` },
         ],
     },
     'bing.com': { _name: 'Bing', www: [{ title: '每日壁纸', docs: 'https://docs.rsshub.app/routes/picture#bing-bi-zhi', source: '', target: '/bing' }] },
@@ -98,7 +98,7 @@
             { title: '新闻', docs: 'https://docs.rsshub.app/routes/other#xin-tian-hui-hai-guan-fang-wang-zhan', source: '/contents/news', target: '/emi-nitta/news' },
         ],
     },
-    'alter-shanghai.cn': { _name: 'Alter', '.': [{ title: '新闻', docs: 'https://docs.rsshub.app/routes/shopping.html#alter-zhong-guo', source: '/cn/news', target: '/alter-cn/news' }] },
+    'alter-shanghai.cn': { _name: 'Alter', '.': [{ title: '新闻', docs: 'https://docs.rsshub.app/routes/shopping#alter-zhong-guo', source: '/cn/news', target: '/alter-cn/news' }] },
     'itslide.com': { _name: 'ITSlide', www: [{ title: '最新', docs: 'https://docs.rsshub.app/routes/programming#itslide', source: '/*', target: '/itslide/new' }] },
     'leboncoin.fr': { _name: 'leboncoin', www: [{ title: 'ads', docs: 'https://docs.rsshub.app/routes/en/shopping#leboncoin', source: '/recherche', target: (params, url) => '/leboncoin/ad/' + url.split('?')[1] }] },
     'yuancheng.work': {
@@ -121,7 +121,7 @@
     'govopendata.com': { _name: '新闻联播文字版', cn: [{ title: '新闻联播文字版', docs: 'https://docs.rsshub.app/routes/traditional-media#xin-wen-lian-bo-wen-zi-ban', source: '/xinwenlianbo', target: '/xinwenlianbo/index' }] },
     'steampowered.com': { _name: 'Steam', store: [{ title: 'search', docs: 'https://docs.rsshub.app/routes/game#steam', source: '/search/', target: (params, url) => `/steam/search/${new URL(url).searchParams}` }] },
     'xiaomi.cn': { _name: '小米社区', www: [{ title: '圈子', docs: 'https://docs.rsshub.app/routes/bbs#xiao-mi-she-qu', source: '/board/:boardId', target: '/mi/bbs/board/:boardId' }] },
-    'suzhou.gov.cn': { _name: '苏州市政府', www: [{ title: '政府新闻', docs: 'https://docs.rsshub.app/routes/government.html#su-zhou-shi-ren-min-zheng-fu', source: '/szsrmzf/:uid/nav_list.', target: '/gov/suzhou/news/:uid' }] },
+    'suzhou.gov.cn': { _name: '苏州市政府', www: [{ title: '政府新闻', docs: 'https://docs.rsshub.app/routes/government#su-zhou-shi-ren-min-zheng-fu', source: '/szsrmzf/:uid/nav_list.', target: '/gov/suzhou/news/:uid' }] },
     'mqube.net': {
         _name: 'MQube',
         www: [
@@ -324,12 +324,12 @@
     'bjeea.com': {
         _name: '北京考试院',
         www: [
-            { title: '首页 / 通知公告', docs: 'https://docs.rsshub.app/routes/government.html#bei-jing-jiao-yu-kao-shi-yuan', source: ['/bjeeagg'], target: '/gov/beijing/bjeea/bjeeagg' },
-            { title: '首页 / 招考政策', docs: 'https://docs.rsshub.app/routes/government.html#bei-jing-jiao-yu-kao-shi-yuan', source: ['/zkzc'], target: '/gov/beijing/bjeea/zkzc' },
-            { title: '首页 / 自考快递', docs: 'https://docs.rsshub.app/routes/government.html#bei-jing-jiao-yu-kao-shi-yuan', source: ['/zkkd'], target: '/gov/beijing/bjeea/zkkd' },
+            { title: '首页 / 通知公告', docs: 'https://docs.rsshub.app/routes/government#bei-jing-jiao-yu-kao-shi-yuan', source: ['/bjeeagg'], target: '/gov/beijing/bjeea/bjeeagg' },
+            { title: '首页 / 招考政策', docs: 'https://docs.rsshub.app/routes/government#bei-jing-jiao-yu-kao-shi-yuan', source: ['/zkzc'], target: '/gov/beijing/bjeea/zkzc' },
+            { title: '首页 / 自考快递', docs: 'https://docs.rsshub.app/routes/government#bei-jing-jiao-yu-kao-shi-yuan', source: ['/zkkd'], target: '/gov/beijing/bjeea/zkkd' },
         ],
     },
-    'ems.com.cn': { _name: '中国邮政速递物流', www: [{ title: '新闻', docs: 'https://docs.rsshub.app/routes/other.html#zhong-guo-you-zheng-su-di-wu-liu', source: '/aboutus/xin_wen_yu_shi_jian', target: '/ems/news' }] },
+    'ems.com.cn': { _name: '中国邮政速递物流', www: [{ title: '新闻', docs: 'https://docs.rsshub.app/routes/other#zhong-guo-you-zheng-su-di-wu-liu', source: '/aboutus/xin_wen_yu_shi_jian', target: '/ems/news' }] },
     'popiapp.cn': {
         _name: 'Popi 提问箱',
         www: [
@@ -348,7 +348,7 @@
     'nppa.gov.cn': {
         _name: '国家新闻出版署',
         www: [
-            { title: '栏目', docs: 'https://docs.rsshub.app/routes/government.html#guo-jia-xin-wen-chu-ban-shu', source: '/nppa/channels/:channel', target: (params, url) => `/gov/nppa/${/nppa\/channels\/(\d+)\./.exec(url)[1]}` },
+            { title: '栏目', docs: 'https://docs.rsshub.app/routes/government#guo-jia-xin-wen-chu-ban-shu', source: '/nppa/channels/:channel', target: (params, url) => `/gov/nppa/${/nppa\/channels\/(\d+)\./.exec(url)[1]}` },
             {
                 title: '内容',
                 docs: 'https://docs.rsshub.app/routes/government#guo-jia-xin-wen-chu-ban-shu',
