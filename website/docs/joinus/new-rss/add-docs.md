@@ -6,9 +6,9 @@ import Route from '@site/src/components/Route';
 
 # 添加文档
 
-现在我们完成了代码，是时候为您的路由添加文档了。在 [文档 (/docs/)](https://github.com/DIYgod/RSSHub/blob/master/docs) 中打开相应的文件，本例中是 `docs/programming.md`。
+现在我们完成了代码，是时候为您的路由添加文档了。在 [文档 (/website/)](https://github.com/DIYgod/RSSHub/blob/master/website) 中打开相应的文件，本例中是 `website/docs/routes/programming.md`。
 
-为了实时预览文档，您需要在 **`docs` 目录** 下安装文档的依赖项。在终端中输入以下命令：
+为了实时预览文档，您需要在 **`website` 目录** 下安装文档的依赖项。在终端中输入以下命令：
 
 <code-group>
 <code-block title="pnpm" active>
@@ -34,27 +34,27 @@ npm install
 </code-block>
 </code-group>
 
-您现在可以在 **`docs` 目录** 下运行以下命令实时预览文档：
+您现在可以在 **`website` 目录** 下运行以下命令实时预览文档：
 
 <code-group>
 <code-block title="pnpm" active>
 
 ```bash
-pnpm run docs:dev
+pnpm run start
 ```
 
 </code-block>
 <code-block title="yarn">
 
 ```bash
-yarn docs:dev
+yarn start
 ```
 
 </code-block>
 <code-block title="npm">
 
 ```bash
-npm run docs:dev
+npm run start
 ```
 
 </code-block>
@@ -67,7 +67,7 @@ npm run docs:dev
 -   `author`：路由维护者，用单个空格分隔。应与 [`maintainer.js`](/joinus/new-rss/before-start#maintainerjs) 相同
 -   `example`：路由示例，以 `/` 开头
 -   `path`：路由，应与添加命名空间后 [maintainer.js](/joinus/new-rss/before-start#maintainerjs) 中的键相同。在之前的教程中，它为 `/github/issue/:user/:repo?`
--   `:paramsDesc`：路由参数描述，以字符串数组形式，支持 Markdown。
+-   `paramsDesc`：路由参数描述，以字符串数组形式，支持 Markdown。
     -   描述必须按照它们在路由中出现的顺序。
     -   描述的数量**应**与 `path` 中的参数数量匹配。如果漏掉一个描述，则构建过程会失败。
     -   以 `?`，`*` 或 `+` 结尾的路由参数将自动分别标记为`可选`，`零个或多个`或`一个或多个`，无须再次提及。

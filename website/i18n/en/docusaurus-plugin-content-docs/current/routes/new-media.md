@@ -367,11 +367,11 @@ Country
 
 ### Series
 
-<RouteEn author="Rjnishant530" example="/grist/series/best-of-grist" path="/grist/series/:series" :paramsDesc="['Find in the URL which has /series/']" radar="1"/>
+<RouteEn author="Rjnishant530" example="/grist/series/best-of-grist" path="/grist/series/:series" paramsDesc={['Find in the URL which has /series/']} radar="1"/>
 
 ### Topic
 
-<RouteEn author="Rjnishant530" example="/grist/topic/extreme-heat" path="/grist/topic/:topic" :paramsDesc="['Any Topic from Table below']" radar="1">
+<RouteEn author="Rjnishant530" example="/grist/topic/extreme-heat" path="/grist/topic/:topic" paramsDesc={['Any Topic from Table below']} radar="1">
 
 :::note Topics
 

@@ -6,9 +6,9 @@ import RouteEn from '@site/src/components/RouteEn';
 
 # Add documentation
 
-Now that we have completed the code, it's time to add the documentation for your route. Open the appropriate file in the [documentation (/docs/en/)](https://github.com/DIYgod/RSSHub/blob/master/docs/en), which in this example is `docs/en/routes/programming.md`.
+Now that we have completed the code, it's time to add the documentation for your route. Open the appropriate file in the [documentation (/website/i18n/en/docusaurus-plugin-content-docs/current)](https://github.com/DIYgod/RSSHub/blob/master/website/i18n/en/docusaurus-plugin-content-docs/current), which in this example is `/website/i18n/en/docusaurus-plugin-content-docs/current/routes/programming.md`.
 
-In order to preview the documentation in real-time, you need to install the dependencies for the documentation. Run the following command in the **`docs` directory**:
+In order to preview the documentation in real-time, you need to install the dependencies for the documentation. Run the following command in the **`website` directory**:
 
 <code-group>
 <code-block title="pnpm" active>
@@ -34,27 +34,27 @@ npm install
 </code-block>
 </code-group>
 
-You can now preview the documentation in real-time by running the following command in the **`docs` directory**:
+You can now preview the documentation in real-time by running the following command in the **`website` directory**:
 
 <code-group>
 <code-block title="pnpm" active>
 
 ```bash
-pnpm run docs:dev
+pnpm run start -- --locale en
 ```
 
 </code-block>
 <code-block title="yarn">
 
 ```bash
-yarn docs:dev
+yarn start --locale en
 ```
 
 </code-block>
 <code-block title="npm">
 
 ```bash
-npm run docs:dev
+npm run start -- --locale en
 ```
 
 </code-block>
@@ -67,7 +67,7 @@ To add documentation to your route, use Vue components. They work like HTML tags
 -   `author`: The route maintainer(s), separated by a single space. It should be the same as [`maintainer.js`](/en/joinus/new-rss/before-start#understand-the-basics-maintainer-js)
 -   `example`: The route example, with a leading `/`
 -   `path`: The route path, which should be the same as the key in [`maintainer.js`](/en/joinus/new-rss/before-start#understand-the-basics-maintainer-js) with the namespace. In the above example, it is `/github/issue/:user/:repo?`
--   `:paramsDesc`: The route parameter description, in an array of strings that support Markdown.
+-   `paramsDesc`: The route parameter description, in an array of strings that support Markdown.
     -   The description **must** follow the order in which they appear in the path.
     -   The number of description should match with the number of parameters in `path`. If you miss a description, the build will fail.
     -   Route parameters ending with `?`, `*` or `+` will be automatically marked as `optional`, `zero or more` or `one or more`, respectively.
