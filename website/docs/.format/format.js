@@ -16,14 +16,14 @@ const exec = util.promisify(require('child_process').exec);
 const processors = [sortByHeading, slugId];
 
 // Helpers
-const loopSideBar = (children, type, lang, prefix) =>
-    children
-        .filter((e) => e !== '')
-        .map((x) => ({
-            path: path.resolve(__dirname, '..', prefix, `./${x}.md`),
-            type,
-            lang,
-        }));
+// const loopSideBar = (children, type, lang, prefix) =>
+//     children
+//         .filter((e) => e !== '')
+//         .map((x) => ({
+//             path: path.resolve(__dirname, '..', prefix, `./${x}.md`),
+//             type,
+//             lang,
+//         }));
 const loopNav = (nav, lang) =>
     nav.flatMap((e) => {
         if (e.items) {
@@ -43,7 +43,7 @@ const loopNav = (nav, lang) =>
             };
         }
     });
-const loopType = (sidebar, lang, prefix) => loopSideBar(sidebar[0].children, file.GUIDE_TYPE, lang, prefix).concat(loopSideBar(sidebar[1].children, file.ROUTE_TYPE, lang, prefix));
+// const loopType = (sidebar, lang, prefix) => loopSideBar(sidebar[0].children, file.GUIDE_TYPE, lang, prefix).concat(loopSideBar(sidebar[1].children, file.ROUTE_TYPE, lang, prefix));
 
 /**
  * Iterate config and build document object:
@@ -90,20 +90,22 @@ const buildFileList = async () => {
  */
 const buildStagedList = async () => {
     const stagedFiles = await sgf();
-    const stagedFileList = [];
-    stagedFiles.forEach((e) => {
-        if (e.filename.endsWith('.md')) {
-            stagedFileList.push(e.filename);
-        }
-    });
+    // const stagedFileList = [];
+    // stagedFiles.forEach((e) => {
+    //     if (e.filename.endsWith('.md')) {
+    //         stagedFileList.push(e.filename);
+    //     }
+    // });
+    const stagedFileList = stagedFiles.filter((e) => e.filename.endsWith('.md')).map((e) => e.filename);
     const fullFileList = await buildFileList();
-    const result = [];
-    stagedFileList.forEach((e) => {
-        const f = fullFileList.find((x) => x.path.indexOf(e) !== -1);
-        if (f) {
-            result.push(f);
-        }
-    });
+    // const result = [];
+    // stagedFileList.forEach((e) => {
+    //     const f = fullFileList.find((x) => x.path.indexOf(e) !== -1);
+    //     if (f) {
+    //         result.push(f);
+    //     }
+    // });
+    const result = stagedFileList.map((e) => fullFileList.find((x) => x.path.includes(e))).filter((e) => e);
 
     return result;
 };
