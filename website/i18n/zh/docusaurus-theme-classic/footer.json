@@ -31,9 +31,13 @@
     "message": "GitHub",
     "description": "The label of footer link with label=GitHub linking to https://github.com/DIYgod/RSSHub"
   },
-  "link.item.label.Telegram": {
-    "message": "Telegram",
-    "description": "The label of footer link with label=Telegram linking to https://t.me/rsshub"
+  "link.item.label.Telegram Group": {
+    "message": "Telegram Group",
+    "description": "The label of footer link with label=Telegram Group linking to https://t.me/rsshub"
+  },
+  "link.item.label.Telegram Channel": {
+    "message": "Telegram Channel",
+    "description": "The label of footer link with label=Telegram Channel linking to https://t.me/awesomeRSSHub"
   },
   "link.item.label.关于作者 DIYgod": {
     "message": "关于作者 DIYgod",
