@@ -68,7 +68,7 @@ import Route from '@site/src/components/Route';
 
 ### 苹果邮件 {#apple-ping-guo-you-jian}
 
-见 [#中国邮政速递物流](/routes/other#中国邮政速递物流)
+见 [#中国邮政速递物流](/routes/other#zhong-guo-you-zheng-su-di-wu-liu)
 
 ### App Store/Mac App Store {#apple-app-store%2Fmac-app-store}
 

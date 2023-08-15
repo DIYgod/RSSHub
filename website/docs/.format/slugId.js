@@ -1,6 +1,4 @@
 const file = require('./file');
-const pinyinCompare = new Intl.Collator('zh-Hans-CN-u-co-pinyin').compare;
-const isASCII = (str) => /^[\x00-\x7F]*$/.test(str);
 const { pinyin } = require('pinyin-pro');
 
 const slugify = (s) =>

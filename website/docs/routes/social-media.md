@@ -284,15 +284,15 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ### 直播开播 {#bilibili-zhi-bo-kai-bo}
 
-见 [#哔哩哔哩直播](/routes/live#哔哩哔哩直播)
+见 [#哔哩哔哩直播](/routes/live#bi-li-bi-li-zhi-bo)
 
 ### 直播搜索 {#bilibili-zhi-bo-sou-suo}
 
-见 [#哔哩哔哩直播](/routes/live#哔哩哔哩直播)
+见 [#哔哩哔哩直播](/routes/live#bi-li-bi-li-zhi-bo)
 
 ### 直播分区 {#bilibili-zhi-bo-fen-qu}
 
-见 [#哔哩哔哩直播](/routes/live#哔哩哔哩直播)
+见 [#哔哩哔哩直播](/routes/live#bi-li-bi-li-zhi-bo)
 
 ### 主站话题列表 {#bilibili-zhu-zhan-hua-ti-lie-biao}
 
@@ -1103,7 +1103,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 ### 直播 {#dou-yin-zhi-bo}
 
-见 [#抖音直播](/routes/live#抖音直播)
+见 [#抖音直播](/routes/live#dou-yin-zhi-bo)
 
 ## 豆瓣 {#dou-ban}
 

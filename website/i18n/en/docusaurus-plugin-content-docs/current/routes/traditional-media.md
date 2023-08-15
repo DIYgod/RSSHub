@@ -136,7 +136,7 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 
 <RouteEn author="HenryQW" example="/bbc/chinese/business" path="/bbc/:lang/:channel?" paramsDesc={['lang, Simplified or Traditional Chinese','channel, default to `top stories`']}>
 
-See [BBC 中文网](/routes/traditional-media#bbc-中文网).
+See [BBC 中文网](/routes/traditional-media#bbc-bbc-zhong-wen-wang).
 
 </RouteEn>
 

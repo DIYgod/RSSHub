@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # 开始之前
 
-在本教程中，我们将通过制作一个 [GitHub 仓库 Issues](/routes/programming#仓库-issues) 的 RSS 源为例，向您展示制作 RSS 源的过程。
+在本教程中，我们将通过制作一个 [GitHub 仓库 Issues](/routes/programming#github-yong-hu-cang-ku) 的 RSS 源为例，向您展示制作 RSS 源的过程。
 
 ## 安装依赖
 
@@ -88,7 +88,7 @@ npm run dev
 
 一旦您为 RSS 路由创建了命名空间，下一步就是在 `router.js` 中注册它。
 
-例如，如果您为 [GitHub 仓库 Issues](/routes/programming#仓库-issues) 制作 RSS 源，并且假设您希望用户输入 GitHub 用户名和仓库名，如果他们没有输入仓库名，则返回到 `RSSHub`，您可以使用以下代码在 `github/router.js` 中注册您的新 RSS 路由：
+例如，如果您为 [GitHub 仓库 Issues](/routes/programming#github-yong-hu-cang-ku) 制作 RSS 源，并且假设您希望用户输入 GitHub 用户名和仓库名，如果他们没有输入仓库名，则返回到 `RSSHub`，您可以使用以下代码在 `github/router.js` 中注册您的新 RSS 路由：
 
 <code-group>
 <code-block title="箭头函数" active>

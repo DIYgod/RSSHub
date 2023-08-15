@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # 制作自己的 RSSHub 路由
 
-如前所述，我们以 [GitHub 仓库 Issues](/routes/programming#仓库-issues) 为例制作 RSS 源。我们将展示前面提到的四种数据获取方法：
+如前所述，我们以 [GitHub 仓库 Issues](/routes/programming#github-yong-hu-cang-ku) 为例制作 RSS 源。我们将展示前面提到的四种数据获取方法：
 
 1.  [通过 API](#tong-guo-api)
 2.  [通过 got 从 HTML 获取数据](#tong-guo-got-cong-html-huo-qu-shu-ju)
