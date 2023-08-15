@@ -72,7 +72,7 @@ export default function Route({
             <p className="author">
                 作者:{' '}
                 {author.split(' ').map((uid) => (
-                    <a href={`https://github.com/${uid}`} target="_blank">
+                    <a href={`https://github.com/${uid}`} target="_blank" key={uid}>
                         {' '}
                         @ {uid}{' '}
                     </a>
