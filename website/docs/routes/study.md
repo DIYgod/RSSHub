@@ -2,9 +2,9 @@ import Route from '@site/src/components/Route';
 
 # 📖 学习
 
-## 51VOA 美国之音
+## 51VOA 美国之音 {#51voa-mei-guo-zhi-yin}
 
-### 频道
+### 频道 {#51voa-mei-guo-zhi-yin-pin-dao}
 
 <Route author="guhuaijin" example="/51voa/address" path="/51voa/:channel" paramsDesc={['频道名称']}/>
 
@@ -35,9 +35,9 @@ import Route from '@site/src/components/Route';
 | bilingual   | 双语新闻 (Bilingual News)                    |
 | address     | 总统演讲 (President Address)                 |
 
-## Asian Innovation and Entrepreneurship Association
+## Asian Innovation and Entrepreneurship Association {#asian-innovation-and-entrepreneurship-association}
 
-### Seminar Series
+### Seminar Series {#asian-innovation-and-entrepreneurship-association-seminar-series}
 
 <Route author="zxx-457" example="/aiea/seminars/upcoming" path="/aiea/seminars/:period" paramsDesc={['时间段']}>
 
@@ -49,9 +49,9 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-## CTFHub Calendar
+## CTFHub Calendar {#ctfhub-calendar}
 
-### 查询国内外 CTF 赛事信息
+### 查询国内外 CTF 赛事信息 {#ctfhub-calendar-cha-xun-guo-nei-wai-ctf-sai-shi-xin-xi}
 
 <Route author="frankli0324" example="/ctfhub/search"
 path="/ctfhub/search/:limit?/:form?/:class?/:title?"
@@ -75,7 +75,7 @@ paramsDesc={['一个整数，筛选最新的limit场比赛，默认为10', '比�
 
 </Route>
 
-### 查询近期赛事
+### 查询近期赛事 {#ctfhub-calendar-cha-xun-jin-qi-sai-shi}
 
 <Route author="frankli0324" example="/ctfhub/upcoming"
 path="/ctfhub/upcoming/:limit?"
@@ -83,31 +83,31 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## DBLP
+## DBLP {#dblp}
 
-### 关键字搜索
+### 关键字搜索 {#dblp-guan-jian-zi-sou-suo}
 
 <Route author="ytno1" example="/dblp/knowledge%20tracing" path="/dblp/:field" paramsDesc={['研究领域']} radar="1" />
 
-## gradCafe
+## gradCafe {#gradcafe}
 
-### gradCafe result
+### gradCafe result {#gradcafe-gradcafe-result}
 
 <Route author="liecn" example="/gradcafe/result" path="/gradcafe/result" />
 
-### gradCafe result by key words
+### gradCafe result by key words {#gradcafe-gradcafe-result-by-key-words}
 
 <Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" paramsDesc={['按关键词进行搜索，如 computer']}/>
 
-## IELTS 雅思
+## IELTS 雅思 {#ielts-ya-si}
 
-### 最新消息
+### 最新消息 {#ielts-ya-si-zui-xin-xiao-xi}
 
 <Route author="zenxds" example="/ielts" path="/ielts" puppeteer="1"/>
 
-## MarginNote
+## MarginNote {#marginnote}
 
-### 标签
+### 标签 {#marginnote-biao-qian}
 
 <Route author="nczitzk" example="/marginnote/tag/经验分享" path="/marginnote/tag/:id?" paramsDesc={['标签名，见下表，默认为 经验分享']}>
 
@@ -116,9 +116,9 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## Mind42
+## Mind42 {#mind42}
 
-### 分类
+### 分类 {#mind42-fen-lei}
 
 <Route author="nczitzk" example="/mind42" path="/mind42/:caty?" paramsDesc={['分类，见下表，默认为 Overview']}>
 
@@ -128,7 +128,7 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-### 标签
+### 标签 {#mind42-biao-qian}
 
 <Route author="nczitzk" example="/mind42/tag/online" path="/mind42/tag/:id" paramsDesc={['标签，见下表']}>
 
@@ -137,13 +137,13 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-### 搜索
+### 搜索 {#mind42-sou-suo}
 
 <Route author="nczitzk" example="/mind42/search/online" path="/mind42/search/:keyword" paramsDesc={['关键字']}/>
 
-## MindMeister
+## MindMeister {#mindmeister}
 
-### 公开思维导图
+### 公开思维导图 {#mindmeister-gong-kai-si-wei-dao-tu}
 
 <Route author="TonyRL" example="/mindmeister/mind-map-examples" path="/mindmeister/:category?/:language?" paramsDesc={['分类，见下表，默认为 `mind-map-examples`', '语言，见下表，默认为 `en`']} radar="1" rssbud="1">
 
@@ -179,9 +179,9 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## NEEA 中国教育考试网
+## NEEA 中国教育考试网 {#neea-zhong-guo-jiao-yu-kao-shi-wang}
 
-### 国家教育考试
+### 国家教育考试 {#neea-zhong-guo-jiao-yu-kao-shi-wang-guo-jia-jiao-yu-kao-shi}
 
 <Route author="SunShinenny" example="/neea/gaokao" path="/neea/:type" paramsDesc={['类别，如 gaokao']}/>
 
@@ -193,7 +193,7 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 | zikao    | 自学考试           |
 | ntce     | 中小学教师资格考试 |
 
-### 社会证书考试
+### 社会证书考试 {#neea-zhong-guo-jiao-yu-kao-shi-wang-she-hui-zheng-shu-kao-shi}
 
 <Route author="SunShinenny" example="/neea/cet" path="/neea/:type" paramsDesc={['类别，如 cet']}/>
 
@@ -208,19 +208,19 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 | wsk     | 全国外语水平考试 (WSK)        |
 | mets    | 医护英语水平考试 (METS)       |
 
-### 教育部考试中心日本语能力测试重要通知
+### 教育部考试中心日本语能力测试重要通知 {#neea-zhong-guo-jiao-yu-kao-shi-wang-jiao-yu-bu-kao-shi-zhong-xin-ri-ben-yu-neng-li-ce-shi-zhong-yao-tong-zhi}
 
 <Route author="nczitzk" example="/neea/jlpt" path="/neea/jlpt"/>
 
-## ORCID
+## ORCID {#orcid}
 
-### 作品列表
+### 作品列表 {#orcid-zuo-pin-lie-biao}
 
 <Route author="OrangeEd1t" example="/orcid/0000-0002-4731-9700" path="/orcid/:id" paramsDesc={['学术识别号']}/>
 
-## ProcessOn
+## ProcessOn {#processon}
 
-### 推荐
+### 推荐 {#processon-tui-jian}
 
 <Route author="nczitzk" example="/processon/popular" path="/processon/popular/:cate?/:sort?" paramsDesc={['分类，见下表，默认为所有类型', '排序，见下表，默认为人气']}>
 
@@ -238,21 +238,21 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## ResearchGate
+## ResearchGate {#researchgate}
 
-### Publications
+### Publications {#researchgate-publications}
 
 <Route author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" paramsDesc={['用户名，可在用户页地址栏中找到']} puppeteer="1" anticrawler="1"/>
 
-## X-MOL 平台
+## X-MOL 平台 {#x-mol-ping-tai}
 
-### 新闻
+### 新闻 {#x-mol-ping-tai-xin-wen}
 
 <Route author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" paramsDesc={['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']} />
 
-## XMind
+## XMind {#xmind}
 
-### Mindmap Gallery
+### Mindmap Gallery {#xmind-mindmap-gallery}
 
 <Route author="nczitzk" example="/xmind/mindmap" path="/xmind/mindmap/:lang?" paramsDesc={['语言代码，见下表，默认为所有语言']}>
 
@@ -262,7 +262,7 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## zhimap 思维导图社区
+## zhimap 思维导图社区 {#zhimap-si-wei-dao-tu-she-qu}
 
 <Route author="laampui" example="/zhimap/820156a42e9a490796c7fd56916aa95b/1" path="/zhimap/:categoryUuid?/:recommend?" paramsDesc={['分类 uuid，见下表，默认为33b67d1bad1d4e37812f71d42764af34', '1 为按推荐排序，0 为按最新排序，默认为 0']}>
 
@@ -272,9 +272,9 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## 德阳考试中心
+## 德阳考试中心 {#de-yang-kao-shi-zhong-xin}
 
-### 考试新闻
+### 考试新闻 {#de-yang-kao-shi-zhong-xin-kao-shi-xin-wen}
 
 <Route author="zytomorrow" example="/dykszx/news" path="/dykszx/news/:type?" paramsDesc={['考试类型']}>
 
@@ -284,9 +284,9 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## 东莞教研网
+## 东莞教研网 {#dong-guan-jiao-yan-wang}
 
-### 分类
+### 分类 {#dong-guan-jiao-yan-wang-fen-lei}
 
 <Route author="nczitzk" example="/dgjyw/tz" path="/dgjyw/:category?" paramsDesc={['分类，见下表，默认为通知']}>
 
@@ -306,9 +306,9 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## 福建考试报名网
+## 福建考试报名网 {#fu-jian-kao-shi-bao-ming-wang}
 
-### 分类
+### 分类 {#fu-jian-kao-shi-bao-ming-wang-fen-lei}
 
 <Route author="nczitzk" example="/fjksbm" path="/fjksbm/:category?" paramsDesc={['分类，见下表，默认为网络报名进行中']} radar="1">
 
@@ -318,37 +318,37 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## 韓國海事法學會
+## 韓國海事法學會 {#han-guo-hai-shi-fa-xue-hui}
 
-### 学术论文
+### 学术论文 {#han-guo-hai-shi-fa-xue-hui-xue-shu-lun-wen}
 
 <Route author="TonyRL" example="/kimlaw/thesis" path="/kimlaw/thesis" radar="1"/>
 
-## 杭州市国家普通话测试网报信息
+## 杭州市国家普通话测试网报信息 {#hang-zhou-shi-guo-jia-pu-tong-hua-ce-shi-wang-bao-xin-xi}
 
-### 考试信息
+### 考试信息 {#hang-zhou-shi-guo-jia-pu-tong-hua-ce-shi-wang-bao-xin-xi-kao-shi-xin-xi}
 
 <Route author="ChaosTong" example="/putonghua" path="/putonghua" />
 
-## 湖南人事考试网
+## 湖南人事考试网 {#hu-nan-ren-shi-kao-shi-wang}
 
-### 公告
+### 公告 {#hu-nan-ren-shi-kao-shi-wang-gong-gao}
 
 <Route author="TonyRL" example="/hunanpea/rsks/2f1a6239-b4dc-491b-92af-7d95e0f0543e" path="/hunanpea/rsks/:guid" paramsDesc={['分类 id，可在 URL 中找到']} radar="1"/>
 
-## 唧唧堂
+## 唧唧堂 {#ji-ji-tang}
 
-### 论文
+### 论文 {#ji-ji-tang-lun-wen}
 
 <Route author="xfangbao" example="/jijitang/publication" path="/jijitang/publication/" />
 
-### 文档
+### 文档 {#ji-ji-tang-wen-dang}
 
 <Route author="xfangbao" example="/jijitang/article/latest" path="/jijitang/article/:id" paramsDesc={['类别，latest 或者 recommand']}/>
 
-## 金山词霸
+## 金山词霸 {#jin-shan-ci-ba}
 
-### 每日一句
+### 每日一句 {#jin-shan-ci-ba-mei-ri-yi-ju}
 
 <Route author="mashirozx" example="/iciba/7/poster" path="/iciba/:days?/:img_type?" paramsDesc={['展示的条目数（最小1，最大7，默认1，只展示当天的条目）', '图片格式']}>
 
@@ -361,15 +361,15 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## 经济 50 人论坛
+## 经济 50 人论坛 {#jing-ji-50-ren-lun-tan}
 
-### 专家文章
+### 专家文章 {#jing-ji-50-ren-lun-tan-zhuan-jia-wen-zhang}
 
 <Route author="sddiky" example="/50forum" path="/50forum" radar="1"/>
 
-## 领研
+## 领研 {#ling-yan}
 
-### 论文
+### 论文 {#ling-yan-lun-wen}
 
 <Route author="y9c" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" paramsDesc={['参数，如 subject=生物']} radar="1" rssbud="1">
 
@@ -382,19 +382,19 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## 码农周刊
+## 码农周刊 {#ma-nong-zhou-kan}
 
-### issues
+### issues {#ma-nong-zhou-kan-issues}
 
 <Route author="tonghs" example="/manong-weekly" path="/manong-weekly" />
 
-## 幕布精选
+## 幕布精选 {#mu-bu-jing-xuan}
 
 <Route author="laampui nczitzk" example="/mubu/explore/16/读书笔记" path="/mubu/explore/:category?/:title?" paramsDesc={['分类 id', '显示标题']} />
 
-## 山东省教育招生考试院
+## 山东省教育招生考试院 {#shan-dong-sheng-jiao-yu-zhao-sheng-kao-shi-yuan}
 
-### 新闻
+### 新闻 {#shan-dong-sheng-jiao-yu-zhao-sheng-kao-shi-yuan-xin-wen}
 
 <Route author="nczitzk" example="/sdzk" path="/sdzk/:bcid?/:cid?" paramsDesc={['板块 id，可在对应板块页 URL 中找到，默认为 `1`，即信息与政策', '栏目 id，可在对应板块页 URL 中找到，默认为 `16`，即通知公告']}>
 
@@ -408,13 +408,13 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## 扇贝
+## 扇贝 {#shan-bei}
 
-### 用户打卡
+### 用户打卡 {#shan-bei-yong-hu-da-ka}
 
 <Route author="DIYgod" example="/shanbay/checkin/ddwej" path="/shanbay/checkin/:id" paramsDesc={['用户 id']} />
 
-### 精选文章
+### 精选文章 {#shan-bei-jing-xuan-wen-zhang}
 
 <Route author="qiwihui" example="/shanbay/footprints" path="/shanbay/footprints/:category?" paramsDesc={['分类 id']}>
 
@@ -428,21 +428,21 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## 上海市教育考试院
+## 上海市教育考试院 {#shang-hai-shi-jiao-yu-kao-shi-yuan}
 
-### 消息速递
+### 消息速递 {#shang-hai-shi-jiao-yu-kao-shi-yuan-xiao-xi-su-di}
 
 官方网址：<http://www.shmeea.edu.cn>
 
 <Route author="jialinghui" example="/shmeea" path="/shmeea" radar="1" rssbud="1"/>
 
-### 自学考试通知公告
+### 自学考试通知公告 {#shang-hai-shi-jiao-yu-kao-shi-yuan-zi-xue-kao-shi-tong-zhi-gong-gao}
 
 <Route author="h2ws" example="/shmeea/self-study" path="/shmeea/self-study" radar="1" rssbud="1"/>
 
-## 思维导图社区
+## 思维导图社区 {#si-wei-dao-tu-she-qu}
 
-### 热门导图
+### 热门导图 {#si-wei-dao-tu-she-qu-re-men-dao-tu}
 
 <Route author="nczitzk" example="/edrawsoft/mindmap/1/PV/DESC/CN/1" path="/edrawsoft/mindmap/:classId?/:order?/:sort?/:lang?/:price?/:search?" paramsDesc={['分类编号，见下表，默认为全部分类', '排序参数，`PV` 指 最多浏览，`TIME` 指 最新发布，`LIKE` 指 最多点赞，默认为 `PV` 即 最多浏览', '排序方式，`DESC` 指 降序，`ASC` 指 升序，默认为 `DESC` 即 降序', '模板语言，默认为 `CN`', '是否免费，`1` 指 全部，`2` 指 免费，`3` 指 付费，`4` 指 会员免费，默认为 `1` 即 全部', '搜索关键词，默认为空']}>
 
@@ -480,29 +480,29 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## 搜韵网
+## 搜韵网 {#sou-yun-wang}
 
-### 诗词日历
+### 诗词日历 {#sou-yun-wang-shi-ci-ri-li}
 
 <Route author="nczitzk" example="/souyun/today" path="/souyun/today"/>
 
-## 网易公开课
+## 网易公开课 {#wang-yi-gong-kai-ke}
 
-### 精品课程
+### 精品课程 {#wang-yi-gong-kai-ke-jing-pin-ke-cheng}
 
 <Route author="hoilc" example="/163/open/vip" path="/163/open/vip" radar="1" rssbud="1"/>
 
-## 下厨房
+## 下厨房 {#xia-chu-fang}
 
-### 用户作品
+### 用户作品 {#xia-chu-fang-yong-hu-zuo-pin}
 
 <Route author="xyqfer" example="/xiachufang/user/cooked/103309404" path="/xiachufang/user/cooked/:id" paramsDesc={['用户 id, 可在用户主页 URL 中找到']}/>
 
-### 用户菜谱
+### 用户菜谱 {#xia-chu-fang-yong-hu-cai-pu}
 
 <Route author="xyqfer" example="/xiachufang/user/created/103309404" path="/xiachufang/user/created/:id" paramsDesc={['用户 id, 可在用户主页 URL 中找到']}/>
 
-### 作品动态
+### 作品动态 {#xia-chu-fang-zuo-pin-dong-tai}
 
 <Route author="xyqfer" example="/xiachufang/popular/hot" path="/xiachufang/popular/:timeframe?" paramsDesc={['默认最新上传']}>
 
@@ -512,9 +512,9 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## 学堂在线
+## 学堂在线 {#xue-tang-zai-xian}
 
-### 课程信息
+### 课程信息 {#xue-tang-zai-xian-ke-cheng-xin-xi}
 
 <Route author="sanmmm" example="/xuetangx/course/course-v1:TsinghuaX+20240103X+2019_T1/status" path="/xuetangx/course/:cid/:type" paramsDesc={['课程id, 从课程页URL中可得到', '课程信息类型']}>
 
@@ -526,7 +526,7 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-### 课程列表
+### 课程列表 {#xue-tang-zai-xian-ke-cheng-lie-biao}
 
 <Route author="sanmmm" example="/xuetangx/course/list/0/1/0" path="/xuetangx/course/list/:mode/:status/:credential/:type?" paramsDesc={['课程模式', '课程状态', '课程认证类型', '学科分类 默认为`全部`']}>
 
@@ -556,9 +556,9 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## 阳光高考
+## 阳光高考 {#yang-guang-gao-kao}
 
-### 教育部阳光高考信息公开平台招生政策规定
+### 教育部阳光高考信息公开平台招生政策规定 {#yang-guang-gao-kao-jiao-yu-bu-yang-guang-gao-kao-xin-xi-gong-kai-ping-tai-zhao-sheng-zheng-ce-gui-ding}
 
 <Route author="nczitzk" example="/chsi/zszcgd" path="/chsi/zszcgd/:category?" paramsDesc={['分类，默认为招生政策']}>
 
@@ -568,13 +568,13 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## 印象识堂
+## 印象识堂 {#yin-xiang-shi-tang}
 
-### 印象剪藏
+### 印象剪藏 {#yin-xiang-shi-tang-yin-xiang-jian-cang}
 
 <Route author="nczitzk" example="/yinxiang/note" path="/yinxiang/note" />
 
-### 卡片清单
+### 卡片清单 {#yin-xiang-shi-tang-ka-pian-qing-dan}
 
 <Route author="nczitzk" example="/yinxiang/card/32" path="/yinxiang/card/:id?" paramsDesc={['卡片 id，见下表，默认为每周收藏排行榜・TOP5']}>
 
@@ -590,37 +590,37 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-### 用户公开笔记
+### 用户公开笔记 {#yin-xiang-shi-tang-yong-hu-gong-kai-bi-ji}
 
 <Route author="nczitzk" example="/yinxiang/personal/ZUhuRTmW5SKE7vvHPqI7cg" path="/yinxiang/personal/:id" paramsDesc={['用户 id，可在用户页 URL 中找到']} />
 
-### 笔记分类
+### 笔记分类 {#yin-xiang-shi-tang-bi-ji-fen-lei}
 
 <Route author="nczitzk" example="/yinxiang/category/28" path="/yinxiang/category/:id" paramsDesc={['分类 id，可在分类页 URL 中找到']} />
 
-### 笔记标签
+### 笔记标签 {#yin-xiang-shi-tang-bi-ji-biao-qian}
 
 <Route author="nczitzk" example="/yinxiang/tag/人生算法" path="/yinxiang/tag/:id" paramsDesc={['标签名，可在标签页中找到']} />
 
-## 英中协会
+## 英中协会 {#ying-zhong-xie-hui}
 
-### 奖学金
+### 奖学金 {#ying-zhong-xie-hui-jiang-xue-jin}
 
 <Route author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
 
-## 有道云笔记
+## 有道云笔记 {#you-dao-yun-bi-ji}
 
-### 学霸感悟
+### 学霸感悟 {#you-dao-yun-bi-ji-xue-ba-gan-wu}
 
 <Route author="nczitzk" example="/youdao/xueba" path="/youdao/xueba" />
 
-### 笔记最新动态
+### 笔记最新动态 {#you-dao-yun-bi-ji-bi-ji-zui-xin-dong-tai}
 
 <Route author="nczitzk" example="/youdao/latest" path="/youdao/latest" />
 
-## 语雀
+## 语雀 {#yu-que}
 
-### 知识库
+### 知识库 {#yu-que-zhi-shi-ku}
 
 <Route author="aha2mao ltaoo" example="/yuque/ruanyf/weekly" path="/yuque/:name/:book" paramsDesc={['用戶名', '知识库 ID']} radar="1">
 
@@ -630,9 +630,9 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## 知識分子
+## 知識分子 {#zhi-shi-fen-zi}
 
-### 新聞
+### 新聞 {#zhi-shi-fen-zi-xin-wen}
 
 <Route author="y9c" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" paramsDesc={['类别，如 ai']}/>
 
@@ -648,11 +648,11 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 > 参数置空（`/zhishifenzi/news`）获取所有类别
 
-### 深度
+### 深度 {#zhi-shi-fen-zi-shen-du}
 
 <Route author="y9c" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
 
-### 创新
+### 创新 {#zhi-shi-fen-zi-chuang-xin}
 
 <Route author="y9c" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" paramsDesc={['类别，如 company']}/>
 
@@ -667,15 +667,15 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 > 参数置空（`/zhishifenzi/innovation`）获取所有类别
 
-## 中国大学 MOOC (慕课)
+## 中国大学 MOOC (慕课) {#zhong-guo-da-xue-mooc-(-mu-ke-)}
 
-### 最新
+### 最新 {#zhong-guo-da-xue-mooc-(-mu-ke-)-zui-xin}
 
 <Route author="xyqfer" example="/icourse163/newest" path="/icourse163/newest" />
 
-## 中国管理现代化研究会
+## 中国管理现代化研究会 {#zhong-guo-guan-li-xian-dai-hua-yan-jiu-hui}
 
-### 栏目
+### 栏目 {#zhong-guo-guan-li-xian-dai-hua-yan-jiu-hui-lan-mu}
 
 <Route author="nczitzk" example="/camchina" path="/camchina/:id?" paramsDesc={['分类，见下表，默认为 1，即新闻']}>
 
@@ -685,9 +685,9 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## 中国计算机学会
+## 中国计算机学会 {#zhong-guo-ji-suan-ji-xue-hui}
 
-### 新闻
+### 新闻 {#zhong-guo-ji-suan-ji-xue-hui-xin-wen}
 
 <Route author="nczitzk" example="/ccf/news" path="/ccf/news/:category?" paramsDesc={['分类，见下表，默认为 CCF 新闻']}>
 
@@ -697,7 +697,7 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-### 计算机视觉专委会 - 学术动态 - 分类
+### 计算机视觉专委会 - 学术动态 - 分类 {#zhong-guo-ji-suan-ji-xue-hui-ji-suan-ji-shi-jue-zhuan-wei-hui---xue-shu-dong-tai---fen-lei}
 
 <Route author="elxy" example="/ccf/ccfcv/xsdt/xsqy" path="/ccf/ccfcv/:channel/:category" paramsDesc={['频道，仅支持 `xsdt`', '分类，见下表，亦可在网站 url 里找到']}>
 
@@ -707,13 +707,13 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-### 大数据专家委员会
+### 大数据专家委员会 {#zhong-guo-ji-suan-ji-xue-hui-da-shu-ju-zhuan-jia-wei-yuan-hui}
 
 <Route author="tudou027" example="/ccf/tfbd/xwdt/tzgg" path="/ccf/tfbd/:caty/:id" paramsDesc={['主分类，可在 URL 找到', '子分类，可在 URL 找到']} radar="1"/>
 
-## 中国技术经济学会
+## 中国技术经济学会 {#zhong-guo-ji-shu-jing-ji-xue-hui}
 
-### 栏目
+### 栏目 {#zhong-guo-ji-shu-jing-ji-xue-hui-lan-mu}
 
 <Route author="nczitzk" example="/cste" path="/cste/:id?" paramsDesc={['分类，见下表，默认为 16，即通知公告']}>
 
@@ -723,41 +723,41 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## 中国留学网
+## 中国留学网 {#zhong-guo-liu-xue-wang}
 
-### 通知公告
+### 通知公告 {#zhong-guo-liu-xue-wang-tong-zhi-gong-gao}
 
 <Route author="nczitzk" example="/cscse/tzgg" path="/cscse/tzgg"/>
 
-## 中国人工智能学会
+## 中国人工智能学会 {#zhong-guo-ren-gong-zhi-neng-xue-hui}
 
-### 学会动态
+### 学会动态 {#zhong-guo-ren-gong-zhi-neng-xue-hui-xue-hui-dong-tai}
 
 <Route author="tudou027" example="/caai/45" path="/caai/:caty" paramsDesc={['分类 ID，可在 URL 找到']} radar="1"/>
 
-## 中国人事考试网
+## 中国人事考试网 {#zhong-guo-ren-shi-kao-shi-wang}
 
-### 通知公告
+### 通知公告 {#zhong-guo-ren-shi-kao-shi-wang-tong-zhi-gong-gao}
 
 <Route author="nczitzk" example="/cpta/notice" path="/cpta/notice" />
 
-## 中国社会科学网
+## 中国社会科学网 {#zhong-guo-she-hui-ke-xue-wang}
 
-### 中国法学网
+### 中国法学网 {#zhong-guo-she-hui-ke-xue-wang-zhong-guo-fa-xue-wang}
 
 <Route author="HankChow" example="/cssn/iolaw/zxzp" path="/cssn/iolaw/:section?" paramsDesc={['板块 ID，可在 URL 找到。例如页面 URL 为 `http://iolaw.cssn.cn/zxzp/`，则板块 ID 为 `zxzp`。若不填该参数，默认为 `zxzp`']}/>
 
-## 中国研究生招生信息网
+## 中国研究生招生信息网 {#zhong-guo-yan-jiu-sheng-zhao-sheng-xin-xi-wang}
 
-### 考研热点新闻
+### 考研热点新闻 {#zhong-guo-yan-jiu-sheng-zhao-sheng-xin-xi-wang-kao-yan-re-dian-xin-wen}
 
 <Route author="yanbot-team" example="/chsi/hotnews" path="/chsi/hotnews" radar="1" />
 
-### 考研动态
+### 考研动态 {#zhong-guo-yan-jiu-sheng-zhao-sheng-xin-xi-wang-kao-yan-dong-tai}
 
 <Route author="SunBK201" example="/chsi/kydt" path="/chsi/kydt" radar="1" />
 
-### 考研资讯
+### 考研资讯 {#zhong-guo-yan-jiu-sheng-zhao-sheng-xin-xi-wang-kao-yan-zi-xun}
 
 <Route author="yanbot-team" example="/chsi/kyzx/fstj" path="/chsi/kyzx/:type" radar="1" paramsDesc={[' type 见下表，亦可在网站 URL 找到']} >
 
@@ -771,9 +771,9 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## 中国智库网
+## 中国智库网 {#zhong-guo-zhi-ku-wang}
 
-### 观点与实践
+### 观点与实践 {#zhong-guo-zhi-ku-wang-guan-dian-yu-shi-jian}
 
 <Route author="AEliu" example="/chinathinktanks/57" path="/chinathinktanks/:id" radar="1" paramsDesc={['见下表，亦可在网站 url 里找到']} >
 
@@ -827,9 +827,9 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## 中华人民共和国学位证书查询
+## 中华人民共和国学位证书查询 {#zhong-hua-ren-min-gong-he-guo-xue-wei-zheng-shu-cha-xun}
 
-### 各学位授予单位学位证书上网进度
+### 各学位授予单位学位证书上网进度 {#zhong-hua-ren-min-gong-he-guo-xue-wei-zheng-shu-cha-xun-ge-xue-wei-shou-yu-dan-wei-xue-wei-zheng-shu-shang-wang-jin-du}
 
 <Route author="TonyRL" example="/chinadegrees/11" path="/chinadegrees/:province?" paramsDesc={['省市代号，见下表，亦可在 [这里](http://www.chinadegrees.com.cn/help/provinceSwqk.html) 找到，默认为 `11`']} radar="1" rssbud="1" puppeteer="1" >
 

@@ -2,9 +2,9 @@ import Route from '@site/src/components/Route';
 
 # 🛍️ 购物
 
-## 0818 团
+## 0818 团 {#0818-tuan}
 
-### 分类
+### 分类 {#0818-tuan-fen-lei}
 
 <Route author="TonyRL" example="/0818tuan" path="/0818tuan/:listId?" paramsDesc={['活动分类，见下表，默认为 `1`']} radar="1">
 
@@ -14,15 +14,15 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-## Alter 中国
+## Alter 中国 {#alter-zhong-guo}
 
-### 新闻
+### 新闻 {#alter-zhong-guo-xin-wen}
 
 <Route author="luyuhuang" example="/alter-cn/news" path="/alter-cn/news"/>
 
-## AppSales
+## AppSales {#appsales}
 
-### Apps
+### Apps {#appsales-apps}
 
 <Route author="nczitzk" example="/appsales/highlights" path="/appsales/:caty?/:time?" paramsDesc={['分类，默认为 `highlights`', '时间，默认为 `24h`']}>
 
@@ -46,9 +46,9 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-## Arcteryx
+## Arcteryx {#arcteryx}
 
-### 新发布
+### 新发布 {#arcteryx-xin-fa-bu}
 
 <Route author="NavePnow" example="/arcteryx/new-arrivals/us/mens" path="/arcteryx/new-arrivals/:country/:gender" paramsDesc={['国家', '性别']}>
 
@@ -72,7 +72,7 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-### Outlet
+### Outlet {#arcteryx-outlet}
 
 <Route author="NavePnow" example="/arcteryx/outlet/us/mens" path="/arcteryx/outlet/:country/:gender" paramsDesc={['国家', '性别']}>
 
@@ -96,25 +96,25 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-### Regear 新发布
+### Regear 新发布 {#arcteryx-regear-xin-fa-bu}
 
 <Route author="NavePnow" example="/arcteryx/regear/new-arrivals" path="/arcteryx/regear/new-arrivals" />
 
-## Bellroy
+## Bellroy {#bellroy}
 
-### 新发布
+### 新发布 {#bellroy-xin-fa-bu}
 
 <Route author="NavePnow" example="/bellroy/new-releases" path="/bellroy/new-releases" />
 
-## booth.pm
+## booth.pm {#booth.pm}
 
-### 店铺
+### 店铺 {#booth.pm-dian-pu}
 
 <Route author="KTachibanaM" example="/booth.pm/shop/annn-boc0123" path="/booth.pm/shop/:subdomain" paramsDesc={['店铺子域名']} />
 
-## Craigslist
+## Craigslist {#craigslist}
 
-### 商品搜索
+### 商品搜索 {#craigslist-shang-pin-sou-suo}
 
 <Route author="lxiange" example="/craigslist/sfbay/sso?query=folding+bike&sort=rel" path="/craigslist/:location/:type?" paramsDesc={['位置，即Craigslist的子域，如sfbay', '搜索类型，如sso']}/>
 
@@ -125,29 +125,29 @@ import Route from '@site/src/components/Route';
 > /search/xxx 后跟的 "xxx" 为搜索类型，直接参考原始请求即可。
 > query string 是实际的搜索内容。
 
-## Furstar
+## Furstar {#furstar}
 
-### 最新售卖角色列表
+### 最新售卖角色列表 {#furstar-zui-xin-shou-mai-jue-se-lie-biao}
 
 <Route author="NeverBehave" example="/furstar/characters/cn" path="/furstar/characters/:lang?" paramsDesc={['语言, 留空为jp, 支持cn, en']}/>
 
-### 已经出售的角色列表
+### 已经出售的角色列表 {#furstar-yi-jing-chu-shou-de-jue-se-lie-biao}
 
 <Route author="NeverBehave" example="/furstar/archive/cn" path="/furstar/archive/:lang?" paramsDesc={['语言, 留空为jp, 支持cn, en']}/>
 
-### 画师列表
+### 画师列表 {#furstar-hua-shi-lie-biao}
 
 <Route author="NeverBehave" example="/furstar/artists/cn" path="/furstar/artists/:lang?" paramsDesc={['语言, 留空为jp, 支持cn, en']}/>
 
-## Guiltfree.pl
+## Guiltfree.pl {#guiltfree.pl}
 
-### Onsale
+### Onsale {#guiltfree.pl-onsale}
 
 <Route author="nczitzk" example="/guiltfree/onsale" path="/guiltfree/onsale"/>
 
-## Gumroad
+## Gumroad {#gumroad}
 
-### 商品
+### 商品 {#gumroad-shang-pin}
 
 <Route author="Fatpandac" example="/gumroad/afkmaster/Eve10" path="/gumroad/:username/:products" paramsDesc={['链接中用户名称，可在链接中获取', '商品名称，可在链接中获取']} radar="1" rssbud="1">
 
@@ -155,47 +155,47 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-## hotukdeals
+## hotukdeals {#hotukdeals}
 
-### thread
+### thread {#hotukdeals-thread}
 
 <Route author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" paramsDesc={['should be one of highlights, hot, new, discussed']} ></Route>
 
-### hottest
+### hottest {#hotukdeals-hottest}
 
 <Route author="DIYgod" example="/hotukdeals/hottest" path="/hotukdeals/hottest"></Route>
 
-## IKEA 宜家
+## IKEA 宜家 {#ikea-yi-jia}
 
-### 英国 - 商品上新
+### 英国 - 商品上新 {#ikea-yi-jia-ying-guo---shang-pin-shang-xin}
 
 <Route author="HenryQW" example="/ikea/gb/new" path="/ikea/gb/new" radar="1"/>
 
-### 英国 - 促销
+### 英国 - 促销 {#ikea-yi-jia-ying-guo---cu-xiao}
 
 <Route author="HenryQW" example="/ikea/gb/offer" path="/ikea/gb/offer" radar="1"/>
 
-### 中国 - 会员特惠
+### 中国 - 会员特惠 {#ikea-yi-jia-zhong-guo---hui-yuan-te-hui}
 
 <Route author="jzhangdev" example="/ikea/cn/family_offers" path="/ikea/cn/family_offers" radar="1"/>
 
-### 中国 - 低价优选
+### 中国 - 低价优选 {#ikea-yi-jia-zhong-guo---di-jia-you-xuan}
 
 <Route author="jzhangdev" example="/ikea/cn/low_price" path="/ikea/cn/low_price" radar="1"/>
 
-### 中国 - 当季新品推荐
+### 中国 - 当季新品推荐 {#ikea-yi-jia-zhong-guo---dang-ji-xin-pin-tui-jian}
 
 <Route author="jzhangdev" example="/ikea/cn/new" path="/ikea/cn/new" radar="1"/>
 
-## lativ
+## lativ {#lativ}
 
-### 订阅价格
+### 订阅价格 {#lativ-ding-yue-jia-ge}
 
 <Route author="Fatpandac" example="/lativ/54220021" path="/lativ/:id" paramsDesc={['商品id，网址上可以直接拿到']}/>
 
-## LeBonCoin
+## LeBonCoin {#leboncoin}
 
-### Ads
+### Ads {#leboncoin-ads}
 
 Transform any search into a feed.
 
@@ -205,9 +205,9 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 </Route>
 
-## Mercari
+## Mercari {#mercari}
 
-### 商品
+### 商品 {#mercari-shang-pin}
 
 <Route author="nczitzk" example="/mercari/category/1" path="/mercari/:type/:id" paramsDesc={['类型，可选 `category` 指按类别浏览，`brand` 指按品牌浏览，`search` 指搜索关键词浏览', 'id，可在对应分类或品牌页 URL 中找到。若选择 `search` 作为 `type` 则此处填写关键词']}>
 
@@ -217,9 +217,9 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 </Route>
 
-## MyFigureCollection
+## MyFigureCollection {#myfigurecollection}
 
-### 活動
+### 活動 {#myfigurecollection-huo-dong}
 
 <Route author="nczitzk" example="/myfigurecollection/activity" path="/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" paramsDesc={['分类，见下表，默认为全部', '语言，见下表，默认为空，即 `en`', '最新加入，默认为开启，即 `1`，可选不开启，即 `0`', '變動，默认为开启，即 `1`，可选不开启，即 `0`', '通知，默认为开启，即 `1`，可选不开启，即 `0`', '圖片，默认为开启，即 `1`，可选不开启，即 `0`']}>
 
@@ -250,7 +250,7 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 </Route>
 
-### 資料庫
+### 資料庫 {#myfigurecollection-zi-liao-ku}
 
 <Route author="nczitzk" example="/myfigurecollection/figure" path="/myfigurecollection/:category?/:language?" paramsDesc={['分类，默认为 Figures一覽', '语言，见上表，默认为空，即 `en`']}>
 
@@ -260,7 +260,7 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 </Route>
 
-### 圖片
+### 圖片 {#myfigurecollection-tu-pian}
 
 <Route author="nczitzk" example="/myfigurecollection/potd" path="/myfigurecollection/:category?/:language?" paramsDesc={['分类，默认为每日圖片', '语言，见上表，默认为空，即 `en`']}>
 
@@ -270,9 +270,9 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 </Route>
 
-## Patagonia
+## Patagonia {#patagonia}
 
-### New Arrivals
+### New Arrivals {#patagonia-new-arrivals}
 
 <Route author="NavePnow" example="/patagonia/new-arrivals/mens" path="/patagonia/new-arrivals/:category" paramsDesc={['分类, 见下表']}>
 
@@ -282,83 +282,83 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 </Route>
 
-## ShopBack
+## ShopBack {#shopback}
 
-### Store
+### Store {#shopback-store}
 
 <Route author="nczitzk" example="/shopback/shopee-mart" path="/shopback/:store" paramsDesc={['店铺名，可在 URL 中找到']}/>
 
-## Snow Peak
+## Snow Peak {#snow-peak}
 
-### New Arrivals(USA)
+### New Arrivals(USA) {#snow-peak-new-arrivals(usa)}
 
 <Route author="NavePnow" example="/snowpeak/us/new-arrivals" path="/snowpeak/us/new-arrivals"/>
 
-## The Independent
+## The Independent {#the-independent}
 
-### PS5 stock UK
+### PS5 stock UK {#the-independent-ps5-stock-uk}
 
 <Route author="DIYgod" example="/independent/ps5-stock-uk" path="/independent/ps5-stock-uk"/>
 
-## Westore
+## Westore {#westore}
 
-### 新品
+### 新品 {#westore-xin-pin}
 
 <Route author="xyqfer" example="/westore/new" path="/westore/new"/>
 
-## Zagg
+## Zagg {#zagg}
 
-### New Arrivals
+### New Arrivals {#zagg-new-arrivals}
 
 <Route author="NavePnow" example="/zagg/new-arrivals/brand=164&cat=3038,3041" path="/zagg/new-arrivals/:query?" paramsDesc={['query，search page querystring']}/>
 
 For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3041>, the query is `brand=164&cat=3038%2C3041`
 
-## 大麦网
+## 大麦网 {#da-mai-wang}
 
-### 票务更新
+### 票务更新 {#da-mai-wang-piao-wu-geng-xin}
 
 <Route author="hoilc" example="/damai/activity/上海/音乐会/全部/柴可夫斯基" path="/damai/activity/:city/:category/:subcategory/:keyword?" paramsDesc={['城市, 如果不需要限制, 请填入`全部`', '分类, 如果不需要限制, 请填入`全部`', '子分类, 如果不需要限制, 请填入`全部`', '搜索关键字, 置空为不限制']}/>
 
 城市、分类名、子分类名，请参见[大麦网搜索页面](https://search.damai.cn/search.htm)
 
-## 多抓鱼
+## 多抓鱼 {#duo-zhua-yu}
 
-### 搜索结果
+### 搜索结果 {#duo-zhua-yu-sou-suo-jie-guo}
 
 <Route author="fengkx" example="/duozhuayu/search/JavaScript" path="/duozhuayu/search/:wd" paramsDesc={['搜索关键词']} radar="1"/>
 
-## 逛丢
+## 逛丢 {#guang-diu}
 
-### 国内折扣
+### 国内折扣 {#guang-diu-guo-nei-zhe-kou}
 
 <Route author="Fatpandac" example="/guangdiu/k=daily" path="/guangdiu/:query?" paramsDesc={['链接参数，对应网址问号后的内容']}/>
 
-### 海外折扣
+### 海外折扣 {#guang-diu-hai-wai-zhe-kou}
 
 <Route author="Fatpandac" example="/guangdiu/k=daily&c=us" path="/guangdiu/:query?" paramsDesc={['链接参数，对应网址问号后的内容']}/>
 
-### 一小时风云榜
+### 一小时风云榜 {#guang-diu-yi-xiao-shi-feng-yun-bang}
 
 <Route author="Fatpandac" example="/guangdiu/rank" path="/guangdiu/rank"/>
 
-### 九块九
+### 九块九 {#guang-diu-jiu-kuai-jiu}
 
 <Route author="Fatpandac" example="/guangdiu/cheaps/k=clothes" path="/guangdiu/cheaps/:query?" paramsDesc={['链接参数，对应网址问号后的内容']}/>
 
-## 好好住
+## 好好住 {#hao-hao-zhu}
 
-### 整屋案例
+### 整屋案例 {#hao-hao-zhu-zheng-wu-an-li}
 
 <Route author="hoilc" example="/haohaozhu/whole-house/日式" path="/haohaozhu/whole-house/:keyword?" paramsDesc={['分类名或关键字，请使用中文']}/>
 
-### 发现
+### 发现 {#hao-hao-zhu-fa-xian}
 
 <Route author="hoilc" example="/haohaozhu/discover/厨房" path="/haohaozhu/discover/:keyword?" paramsDesc={['分类名或关键字，请使用中文']}/>
 
-## 京东
+## 京东 {#jing-dong}
 
-### 商品价格
+### 商品价格 {#jing-dong-shang-pin-jia-ge}
 
 <Route author="nczitzk" example="/jd/price/526835" path="/jd/price/:id" paramsDesc={['商品 id，可在商品详情页 URL 中找到']}>
 
@@ -370,9 +370,9 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 </Route>
 
-## 京东众筹
+## 京东众筹 {#jing-dong-zhong-chou}
 
-### 众筹项目
+### 众筹项目 {#jing-dong-zhong-chou-zhong-chou-xiang-mu}
 
 <Route author="LogicJake" example="/jingdong/zhongchou/all/zcz/zhtj" path="/jingdong/zhongchou/:type/:status/:sort" paramsDesc={['类型','状态','排序方式']}>
 
@@ -396,9 +396,9 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 </Route>
 
-## 酒云网
+## 酒云网 {#jiu-yun-wang}
 
-### 最新商品
+### 最新商品 {#jiu-yun-wang-zui-xin-shang-pin}
 
 <Route author="MeXunco" example="/wineyun/home" path="/wineyun/:category" paramsDesc={['分类名']} >
 | 全部 | 闪购    | 秒发   | 跨境     | 尾货专场 |
@@ -407,15 +407,15 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 </Route>
 
-## 礼物说
+## 礼物说 {#li-wu-shuo}
 
-### 礼物说
+### 礼物说 {#li-wu-shuo-li-wu-shuo}
 
 <Route author="sanmmm" example="/liwushuo/index" path="/liwushuo/index"/>
 
-## 麦当劳
+## 麦当劳 {#mai-dang-lao}
 
-### 麦当劳活动资讯
+### 麦当劳活动资讯 {#mai-dang-lao-mai-dang-lao-huo-dong-zi-xun}
 
 <Route author="huyyi" example="/mcdonalds/sales+event" path="/mcdonalds/:category" paramsDesc={['分类名（可用+连接多个分类）']}>
 
@@ -425,29 +425,29 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 </Route>
 
-## 缺书网
+## 缺书网 {#que-shu-wang}
 
-### 促销
+### 促销 {#que-shu-wang-cu-xiao}
 
 <Route author="kt286" example="/queshu/sale" path="/queshu/sale"/>
 
-### 单品活动信息
+### 单品活动信息 {#que-shu-wang-dan-pin-huo-dong-xin-xi}
 
 <Route author="kt286" example="/queshu/book/34626813" path="/queshu/book/:bookid" paramsDesc={['图书ID，可在链接中获取']}/>
 
-## 人民邮电出版社
+## 人民邮电出版社 {#ren-min-you-dian-chu-ban-she}
 
-### 图书列表
+### 图书列表 {#ren-min-you-dian-chu-ban-she-tu-shu-lie-biao}
 
 <Route author="hoilc" example="/ptpress/book/new" path="/ptpress/book/:type?" paramsDesc={['排序方式，默认`new`为最新图书，可选`hot`为最热图书']}/>
 
-## 上海文化广场
+## 上海文化广场 {#shang-hai-wen-hua-guang-chang}
 
-### 节目列表
+### 节目列表 {#shang-hai-wen-hua-guang-chang-jie-mu-lie-biao}
 
 <Route author="fuzy112" example="/shcstheatre/programs" path="/shcstheatre/programs"/>
 
-## 什么值得买
+## 什么值得买 {#shen-me-zhi-de-mai}
 
 :::tip 提示
 
@@ -455,11 +455,11 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 :::
 
-### 关键词
+### 关键词 {#shen-me-zhi-de-mai-guan-jian-ci}
 
 <Route author="DIYgod" example="/smzdm/keyword/女装" path="/smzdm/keyword/:keyword" paramsDesc={['你想订阅的关键词']} radar="1" rssbud="1"/>
 
-### 排行榜
+### 排行榜 {#shen-me-zhi-de-mai-pai-hang-bang}
 
 <Route author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" paramsDesc={['榜单类型','榜单ID','时间跨度']} radar="1" rssbud="1">
 
@@ -509,11 +509,11 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 </Route>
 
-### 好文
+### 好文 {#shen-me-zhi-de-mai-hao-wen}
 
 <Route author="LogicJake" example="/smzdm/haowen/1" path="/smzdm/haowen/:day?" paramsDesc={['以天为时间跨度，默认为 `all`，其余可以选择 `1`，`7`，`30`，`365`']}/>
 
-### 好文分类
+### 好文分类 {#shen-me-zhi-de-mai-hao-wen-fen-lei}
 
 <Route author="LogicJake" example="/smzdm/haowen/fenlei/shenghuodianqi" path="/smzdm/haowen/fenlei/:name/:sort?" paramsDesc={['分类名，可在 URL 中查看','排序方式，默认为最新']}>
 
@@ -523,23 +523,23 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 </Route>
 
-### 用户文章
+### 用户文章 {#shen-me-zhi-de-mai-yong-hu-wen-zhang}
 
 <Route author="xfangbao" example="/smzdm/article/6902738986" path="/smzdm/article/:uid" paramsDesc={['用户id，网址上直接可以看到']}/>
 
-### 用户爆料
+### 用户爆料 {#shen-me-zhi-de-mai-yong-hu-bao-liao}
 
 <Route author="nczitzk" example="/smzdm/baoliao/7367111021" path="/smzdm/baoliao/:uid" paramsDesc={['用户id，网址上直接可以看到']}/>
 
-## 它惠网
+## 它惠网 {#ta-hui-wang}
 
-### 线报
+### 线报 {#ta-hui-wang-xian-bao}
 
 <Route author="nczitzk" example="/tahui/rptlist" path="/tahui/rptlist"/>
 
-## 淘宝众筹
+## 淘宝众筹 {#tao-bao-zhong-chou}
 
-### 众筹项目
+### 众筹项目 {#tao-bao-zhong-chou-zhong-chou-xiang-mu}
 
 <Route author="xyqfer Fatpandac" example="/taobao/zhongchou/all" path="/taobao/zhongchou/:type?" paramsDesc={['类型, 默认为 `all` 全部']}>
 
@@ -549,55 +549,55 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 </Route>
 
-## 特斯拉中国
+## 特斯拉中国 {#te-si-la-zhong-guo}
 
-### 价格
+### 价格 {#te-si-la-zhong-guo-jia-ge}
 
 <Route author="xiaokyo" example="/tesla/price" path="/tesla/price" radar="1"/>
 
-## 玩物志
+## 玩物志 {#wan-wu-zhi}
 
-### 最新
+### 最新 {#wan-wu-zhi-zui-xin}
 
 <Route author="xyqfer" example="/coolbuy/newest" path="/coolbuy/newest"/>
 
-## 微店
+## 微店 {#wei-dian}
 
-### 商品上新
+### 商品上新 {#wei-dian-shang-pin-shang-xin}
 
 <Route author="LogicJake" example="/weidian/goods/431508863" path="/weidian/goods/:id" paramsDesc={['商铺 id']}/>
 
-## 消费明鉴
+## 消费明鉴 {#xiao-fei-ming-jian}
 
-### 最新新闻
+### 最新新闻 {#xiao-fei-ming-jian-zui-xin-xin-wen}
 
 <Route author="nczitzk" example="/mingjian" path="/mingjian"/>
 
-## 消费者报道
+## 消费者报道 {#xiao-fei-zhe-bao-dao}
 
-### 要闻
+### 要闻 {#xiao-fei-zhe-bao-dao-yao-wen}
 
 <Route author="EsuRt Fatpandac" example="/ccreports/article" path="/ccreports/article"/>
 
-## 小米
+## 小米 {#xiao-mi}
 
-### 小米众筹
+### 小米众筹 {#xiao-mi-xiao-mi-zhong-chou}
 
 <Route author="DIYgod" example="/mi/crowdfunding" path="/mi/crowdfunding"/>
 
-## 小米有品
+## 小米有品 {#xiao-mi-you-pin}
 
-### 小米有品众筹
+### 小米有品众筹 {#xiao-mi-you-pin-xiao-mi-you-pin-zhong-chou}
 
 <Route author="bigfei" example="/xiaomiyoupin/crowdfunding" path="/xiaomiyoupin/crowdfunding"/>
 
-### 小米有品每日上新
+### 小米有品每日上新 {#xiao-mi-you-pin-xiao-mi-you-pin-mei-ri-shang-xin}
 
 <Route author="xyqfer DIYgod bigfei" example="/xiaomiyoupin/latest" path="/xiaomiyoupin/latest" />
 
-## 优衣库
+## 优衣库 {#you-yi-ku}
 
-### Stylingbook
+### Stylingbook {#you-yi-ku-stylingbook}
 
 <Route author="LunaXu" example="/uniqlo/stylingbook/women" path="/uniqlo/stylingbook/:category?" paramsDesc={['类别']}>
 | 女式  | 男式 | 小孩 | 婴儿 |
@@ -605,15 +605,15 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 | women | men  | kids | baby |
 </Route>
 
-## 有赞
+## 有赞 {#you-zan}
 
-### 商品上新
+### 商品上新 {#you-zan-shang-pin-shang-xin}
 
 <Route author="LogicJake" example="/youzan/goods/13328377" path="/youzan/goods/:id" paramsDesc={['商铺id']}/>
 
-## 正版中国
+## 正版中国 {#zheng-ban-zhong-guo}
 
-### 分类
+### 分类 {#zheng-ban-zhong-guo-fen-lei}
 
 <Route author="nczitzk" example="/getitfree" path="/getitfree/:category?" paramsDesc={['分类，见下表，默认为所有类别']}>
 

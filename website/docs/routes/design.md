@@ -2,9 +2,9 @@ import Route from '@site/src/components/Route';
 
 # 🎨️ 设计
 
-## Axis Studios
+## Axis Studios {#axis-studios}
 
-### Work type
+### Work type {#axis-studios-work-type}
 
 <Route author="MisteryMonster" example="/axis-studios/work/full-service-cg-production" path="/axis-studios/:type/:tag?" paramsDesc={['`work`, `blog`','文章内的 Work type URL: `compositing`, `full-service-cg-production`, `vfx-supervision`, `realtime`, `art-direction`, `animation`']}>
 
@@ -14,9 +14,9 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-## Behance
+## Behance {#behance}
 
-### 用户作品
+### 用户作品 {#behance-yong-hu-zuo-pin}
 
 <Route author="MisteryMonster" example="/behance/mishapetrick" path="/behance/:user/:type?" paramsDesc={['用户名', '类型，可选 `projects` 或 `appreciated`，默认为 `projects`']} radar="1">
 
@@ -24,41 +24,41 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 </Route>
 
-## Blow Studio
+## Blow Studio {#blow-studio}
 
-### 主页
+### 主页 {#blow-studio-zhu-ye}
 
 <Route author="MisteryMonster" example="/blow-studio" path="/blow-studio" />
 
-## Blur Studio
+## Blur Studio {#blur-studio}
 
-### Works
+### Works {#blur-studio-works}
 
 <Route author="MisteryMonster" example="/blur-studio" path="/blur-studio" />
 
-## Digic Picture
+## Digic Picture {#digic-picture}
 
-### 作品和新闻
+### 作品和新闻 {#digic-picture-zuo-pin-he-xin-wen}
 
 <Route author="MisteryMonster" example="/digic-pictures/works/real-time-engine" path="/digic-pictures/:menu/:tag?" paramsDesc={['`news`, `works`', 'WORK 下项目类型: `/game-cinematics`, `/feature`, `/making-of`, `/commercials-vfx`, `/real-time-engine`']}/>
 
-## Dribbble
+## Dribbble {#dribbble}
 
-### 流行
+### 流行 {#dribbble-liu-xing}
 
 <Route author="DIYgod" example="/dribbble/popular/week" path="/dribbble/popular/:timeframe?" paramsDesc={['时间维度, 支持 week month year ever']}/>
 
-### 用户（团队）
+### 用户（团队） {#dribbble-yong-hu-%EF%BC%88-tuan-dui-%EF%BC%89}
 
 <Route author="DIYgod" example="/dribbble/user/google" path="/dribbble/user/:name" paramsDesc={['用户名, 可在该用户主页 URL 中找到']}/>
 
-### 关键词
+### 关键词 {#dribbble-guan-jian-ci}
 
 <Route author="DIYgod" example="/dribbble/keyword/player" path="/dribbble/keyword/:keyword" paramsDesc={['想要订阅的关键词']}/>
 
-## Eagle
+## Eagle {#eagle}
 
-### 博客
+### 博客 {#eagle-bo-ke}
 
 <Route author="Fatpandac" example="/eagle/blog" path="/eagle/blog/:cate?/:language?" paramsDesc={['分类，默认为全部，见下表', '语言，`cn`、`tw`、`en` 默认为 `cn`']} radar="1" rsshub="1">
 
@@ -68,9 +68,9 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 </Route>
 
-## Google
+## Google {#google}
 
-### Google Fonts
+### Google Fonts {#google-google-fonts}
 
 <Route author="Fatpandac" example="/google/fonts/date" path="/google/fonts/:sort?" paramsDesc={['排序，见下表，默认为最新']} selfhost="1">
 
@@ -86,20 +86,20 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 </Route>
 
-## Inside Design
+## Inside Design {#inside-design}
 
-### Recent Stories
+### Recent Stories {#inside-design-recent-stories}
 
 <Route author="miaoyafeng" example="/invisionapp/inside-design" path="/invisionapp/inside-design">
 </Route>
 
-## LogoNews 标志情报局
+## LogoNews 标志情报局 {#logonews-biao-zhi-qing-bao-ju}
 
-### 首页
+### 首页 {#logonews-biao-zhi-qing-bao-ju-shou-ye}
 
 <Route author="nczitzk" example="/logonews" path="/logonews"/>
 
-### 文章分类
+### 文章分类 {#logonews-biao-zhi-qing-bao-ju-wen-zhang-fen-lei}
 
 <Route author="nczitzk" example="/logonews/category/news/newsletter" path="/logonews/category/:category/:type" paramsDesc={['分类，可在对应分类页 URL 中找到', '类型，可在对应分类页 URL 中找到']}>
 
@@ -107,7 +107,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 </Route>
 
-### 文章标签
+### 文章标签 {#logonews-biao-zhi-qing-bao-ju-wen-zhang-biao-qian}
 
 <Route author="nczitzk" example="/logonews/tag/china" path="/logonews/tag/:tag" paramsDesc={['标签，可在对应标签页 URL 中找到']}>
 
@@ -115,11 +115,11 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 </Route>
 
-### 作品
+### 作品 {#logonews-biao-zhi-qing-bao-ju-zuo-pin}
 
 <Route author="nczitzk" example="/logonews/work" path="/logonews/work"/>
 
-### 作品分类
+### 作品分类 {#logonews-biao-zhi-qing-bao-ju-zuo-pin-fen-lei}
 
 <Route author="nczitzk" example="/logonews/work/categorys/hotel-catering" path="/logonews/work/categorys/:category" paramsDesc={['分类，可在对应分类页 URL 中找到']}>
 
@@ -127,7 +127,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 </Route>
 
-### 作品标签
+### 作品标签 {#logonews-biao-zhi-qing-bao-ju-zuo-pin-biao-qian}
 
 <Route author="nczitzk" example="/logonews/work/tags/旅游" path="/logonews/work/tags/:tag?" paramsDesc={['标签，可在对应标签页 URL 中找到']}>
 
@@ -135,9 +135,9 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 </Route>
 
-## Method Studios
+## Method Studios {#method-studios}
 
-### 菜单
+### 菜单 {#method-studios-cai-dan}
 
 <Route author="MisteryMonster" example="/method-studios/games" path="/method-studios/:menu?" paramsDesc={['地址栏下 /en 后的栏目: `features`, `advertising`, `episodic`, `games`, `methodmade`']}>
 
@@ -147,15 +147,15 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 </Route>
 
-## Monotype
+## Monotype {#monotype}
 
-### Featured Article
+### Featured Article {#monotype-featured-article}
 
 <Route author="nczitzk" example="/monotype/article" path="/monotype/article" />
 
-## Notefolio
+## Notefolio {#notefolio}
 
-### Works
+### Works {#notefolio-works}
 
 <Route author="BianTan" example="/notefolio/search/1/pick/all/life" path="/notefolio/search/:category?/:order?/:time?/:query?" paramsDesc={['分类，见下表，默认为 `all`', '排序，可选 `pick` 指 Notefolio 精选，`published` 指 最新，`like` 指 推荐，默认为 `pick`', '时间，可选 `all` 指 全部，`one-day` 指 最近24小时，`week` 指 最近一周，`month` 指 最近一个月，`three-month` 指 最近三个月，默认为`all`', '关键词，默认为空']}>
 
@@ -177,37 +177,37 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 </Route>
 
-## Shopping Design
+## Shopping Design {#shopping-design}
 
-### 文章列表
+### 文章列表 {#shopping-design-wen-zhang-lie-biao}
 
 <Route author="miles170" example="/shoppingdesign/posts" path="/shoppingdesign/posts"/>
 
-## UI 中国
+## UI 中国 {#ui-zhong-guo}
 
-### 推荐文章
+### 推荐文章 {#ui-zhong-guo-tui-jian-wen-zhang}
 
 <Route author="WenryXu" example="/ui-cn/article" path="/ui-cn/article"/>
 
-### 个人作品
+### 个人作品 {#ui-zhong-guo-ge-ren-zuo-pin}
 
 <Route author="WenryXu" example="/ui-cn/user/85974" path="/ui-cn/user/:id" paramsDesc={['用户id']}/>
 
-## Unit Image
+## Unit Image {#unit-image}
 
-### Films
+### Films {#unit-image-films}
 
 <Route author="MisteryMonster" example="/unit-image/films/vfx" path="/unit-image/films/:type?" paramsDesc={['Films 下分类，`vfx`, `game-trailer`, `animation`, `commercials`, `making-of`']}/>
 
-## 爱果果
+## 爱果果 {#ai-guo-guo}
 
-### 最新 H5
+### 最新 H5 {#ai-guo-guo-zui-xin-h5}
 
 <Route author="yuxinliu-alex" example="/iguoguo/html5" path="/iguoguo/html5" />
 
-## 优设网
+## 优设网 {#you-she-wang}
 
-### 设计专题
+### 设计专题 {#you-she-wang-she-ji-zhuan-ti}
 
 <Route author="nczitzk" example="/uisdc/zt/design-history" path="/uisdc/zt/:title?" paramsDesc={['专题名称，可在标签页的 URL 中找到，如 `design-history`；也可填入 `hot` 展示最热门专题，默认展示最新鲜专题']}>
 
@@ -215,7 +215,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 </Route>
 
-### 细节猎人
+### 细节猎人 {#you-she-wang-xi-jie-lie-ren}
 
 <Route author="nczitzk" example="/uisdc/topic/all" path="/uisdc/topic/:title?/:sort?" paramsDesc={['标签名称，可在标签页的 URL 中找到', '排序方式，`hot` 指最热门，默认为最新鲜']}>
 
@@ -223,11 +223,11 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 </Route>
 
-### 设计话题
+### 设计话题 {#you-she-wang-she-ji-hua-ti}
 
 <Route author="nczitzk" example="/uisdc/talk" path="/uisdc/talk/:sort?" paramsDesc={['排序方式，`hot` 指最热门，默认为最新鲜']}/>
 
-### 行业新闻
+### 行业新闻 {#you-she-wang-hang-ye-xin-wen}
 
 <Route author="nczitzk" example="/uisdc/hangye" path="/uisdc/hangye/:caty?" paramsDesc={['分类，见下表，默认为全部新闻']}>
 
@@ -237,13 +237,13 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 </Route>
 
-### 优设读报
+### 优设读报 {#you-she-wang-you-she-du-bao}
 
 <Route author="nczitzk" example="/uisdc/news" path="/uisdc/news"/>
 
-## 站酷
+## 站酷 {#zhan-ku}
 
-### 发现（+ 推荐预设）
+### 发现（+ 推荐预设） {#zhan-ku-fa-xian-%EF%BC%88%2B-tui-jian-yu-she-%EF%BC%89}
 
 <Route author="junbaor nczitzk" example="/zcool/discover/all" path="/zcool/discover/:type?" paramsDesc={['预设参数，见下表']} radar="1" rssbud="1">
 
@@ -255,7 +255,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 </Route>
 
-### 发现（+ 查询参数）
+### 发现（+ 查询参数） {#zhan-ku-fa-xian-%EF%BC%88%2B-cha-xun-can-shu-%EF%BC%89}
 
 <Route author="nczitzk" example="/zcool/discover/cate=0&subCate=0" path="/zcool/discover/:query?" paramsDesc={['查询参数']} radar="1" rssbud="1">
 
@@ -269,7 +269,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 </Route>
 
-### 发现
+### 发现 {#zhan-ku-fa-xian}
 
 <Route author="nczitzk" example="/zcool/discover" path="/zcool/discover/:query?/:subCate?/:hasVideo?/:city?/:college?/:recommendLevel?/:sort?" paramsDesc={['查询参数或分类，若填写分类见下表，默认为空 或 `0` 即精选', '子分类，见下表，默认为 `0` 即该父分类下全部', '是否含视频，默认为 `0` 即全部，亦可选 `1` 即含视频', '地区代码，填入发现页中 `选择城市` 中的各级地名，如 `亚洲`、`中国`、`北京`、`纽约`、`巴黎`等', '学校，默认为 `0` 即全部', '推荐等级，见下表，默认为 `2` 即编辑精选', '排序方式，可选 `0` 即最新发布 或 `9` 即默认排序，默认为 `9`']} radar="1" rssbud="1">
 
@@ -393,7 +393,7 @@ UI 17
 
 </Route>
 
-### 作品总榜单
+### 作品总榜单 {#zhan-ku-zuo-pin-zong-bang-dan}
 
 <Route author="mexunco" example="/zcool/top/design" path="/zcool/top/:type" paramsDesc={['推荐类型,详见下面的表格']} radar="1" rssbud="1">
 
@@ -405,7 +405,7 @@ UI 17
 
 </Route>
 
-### 用户作品
+### 用户作品 {#zhan-ku-yong-hu-zuo-pin}
 
 <Route author="junbaor" example="/zcool/user/baiyong" path="/zcool/user/:uid" paramsDesc={['个性域名前缀或者用户ID']} radar="1" rssbud="1">
 

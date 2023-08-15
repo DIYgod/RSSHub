@@ -2,21 +2,21 @@ import Route from '@site/src/components/Route';
 
 # 💻 编程
 
-## ACM
+## ACM {#acm}
 
-### 图灵奖获得者
+### 图灵奖获得者 {#acm-tu-ling-jiang-huo-de-zhe}
 
 <Route author="nczitzk" example="/acm/amturingaward" path="/acm/amturingaward"/>
 
-## AI 研习社
+## AI 研习社 {#ai-yan-xi-she}
 
-### 首页
+### 首页 {#ai-yan-xi-she-shou-ye}
 
 <Route author="kt286" example="/aiyanxishe/109/hot" path="/aiyanxishe/:id/:sort?" paramsDesc={['领域 id，全部领域为 `all`，单独领域 id 抓包可得','排序方式，默认为 `new`（最新），也可选择 `hot`（最热）或 `recommend`（推荐）']}/>
 
-## AlgoCasts
+## AlgoCasts {#algocasts}
 
-### 视频更新
+### 视频更新 {#algocasts-shi-pin-geng-xin}
 
 <Route author="ImSingee" example="/algocasts" path="/algocasts" radar="1" rssbud="1">
 
@@ -24,9 +24,9 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-## AtCoder
+## AtCoder {#atcoder}
 
-### Present Contests
+### Present Contests {#atcoder-present-contests}
 
 <Route author="nczitzk" example="/atcoder/contest/en/upcoming" path="/atcoder/contest/:language?/:status?" paramsDesc={['语言，可选 `jp` 即日语 或 `en` 即英语，默认为英语', '状态，见下表，默认为 Recent Contests']}>
 
@@ -38,7 +38,7 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-### Contests Archive
+### Contests Archive {#atcoder-contests-archive}
 
 <Route author="nczitzk" example="/atcoder/contest" path="/atcoder/contest/:language?/:rated?/:category?/:keyword?" paramsDesc={['语言，可选 `jp` 即日语 或 `en` 即英语，默认为英语', 'Rated 对象，见下表，默认为全部', '分类，见下表，默认为全部', '关键字，默认为空']}>
 
@@ -64,35 +64,35 @@ Rated 对象
 
 </Route>
 
-### Posts
+### Posts {#atcoder-posts}
 
 <Route author="nczitzk" example="/atcoder/post" path="/atcoder/post/:language?/:keyword?" paramsDesc={['语言，可选 `jp` 即日语 或 `en` 即英语，默认为英语', '关键字，默认为空']}/>
 
-## BBC News Labs
+## BBC News Labs {#bbc-news-labs}
 
-### News
+### News {#bbc-news-labs-news}
 
 <Route author="elxy" example="/bbcnewslabs/news" path="/bbcnewslabs/news"/>
 
-## Bitbucket
+## Bitbucket {#bitbucket}
 
-### Commits
+### Commits {#bitbucket-commits}
 
 <Route author="AuroraDysis" example="/bitbucket/commits/blaze-lib/blaze" path="/bitbucket/commits/:workspace/:repo_slug" paramsDesc={['Workspace', 'Repository']} radar="1" rssbud="1" />
 
-### Tags
+### Tags {#bitbucket-tags}
 
 <Route author="AuroraDysis" example="/bitbucket/tags/blaze-lib/blaze" path="/bitbucket/tags/:workspace/:repo_slug" paramsDesc={['Workspace', 'Repository']} radar="1" rssbud="1" />
 
-## Bitmovin
+## Bitmovin {#bitmovin}
 
-### Blog
+### Blog {#bitmovin-blog}
 
 <Route author="elxy" example="/bitmovin/blog" path="/bitmovin/blog"/>
 
-## CNCF
+## CNCF {#cncf}
 
-### 栏目
+### 栏目 {#cncf-lan-mu}
 
 <Route author="Fatpandac" example="/cncf" path="/cncf/:cate?" paramsDesc={['默认为 `blog`']}>
 
@@ -102,21 +102,21 @@ Rated 对象
 
 </Route>
 
-## Codeforces
+## Codeforces {#codeforces}
 
-### 最新比赛
+### 最新比赛 {#codeforces-zui-xin-bi-sai}
 
 <Route author="Fatpandac" example="/codeforces/contests" path="/codeforces/contests"/>
 
-## cve.mitre.org
+## cve.mitre.org {#cve.mitre.org}
 
-### 搜索结果
+### 搜索结果 {#cve.mitre.org-sou-suo-jie-guo}
 
 <Route author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" paramsDesc={['关键词']} />
 
-## dbaplus 社群
+## dbaplus 社群 {#dbaplus-she-qun}
 
-### 栏目
+### 栏目 {#dbaplus-she-qun-lan-mu}
 
 <Route author="nczitzk" example="/dbaplus" path="/dbaplus/:tab?" paramsDesc={['栏目，见下表，默认为全部']}>
 
@@ -126,7 +126,7 @@ Rated 对象
 
 </Route>
 
-### 活动
+### 活动 {#dbaplus-she-qun-huo-dong}
 
 <Route author="nczitzk" example="/dbaplus/activity" path="/dbaplus/activity/:type?" paramsDesc={['分类，见下表，默认为线上分享']}>
 
@@ -136,33 +136,33 @@ Rated 对象
 
 </Route>
 
-## deeplearning.ai
+## deeplearning.ai {#deeplearning.ai}
 
-### TheBatch 周报
+### TheBatch 周报 {#deeplearning.ai-thebatch-zhou-bao}
 
 <Route author="nczitzk" example="/deeplearningai/thebatch" path="/deeplearningai/thebatch"/>
 
-## Distill
+## Distill {#distill}
 
-### Latest
+### Latest {#distill-latest}
 
 <Route author="nczitzk" example="/distill" path="/distill"/>
 
-## Dockone
+## Dockone {#dockone}
 
-### 周报
+### 周报 {#dockone-zhou-bao}
 
 <Route author="csi0n" example="/dockone/weekly" path="/dockone/weekly"/>
 
-## gihyo.jp
+## gihyo.jp {#gihyo.jp}
 
-### 記事一覧
+### 記事一覧 {#gihyo.jp-ji-shi-yi-lan}
 
 <Route author="masakichi" example="/gihyo/list/group/Ubuntu-Weekly-Recipe" path="/gihyo/list/group/:id" paramsDesc={['連載']}/>
 
-## GitChat
+## GitChat {#gitchat}
 
-### 最新文章
+### 最新文章 {#gitchat-zui-xin-wen-zhang}
 
 <Route author="hoilc" example="/gitchat/newest" path="/gitchat/newest/:category?/:selected?" paramsDesc={['分类 ID, 置空或`all`代表全部, 具体值需要抓取前端请求, 以下列出可能有变动, 仅供参考', '是否只显示严选文章, 任意值为是, 置空为否']} >
 
@@ -182,9 +182,9 @@ Rated 对象
 
 </Route>
 
-## Gitea
+## Gitea {#gitea}
 
-### 博客
+### 博客 {#gitea-bo-ke}
 
 <Route author="cnzgray" example="/gitea/blog" path="/gitea/blog">
 
@@ -192,25 +192,25 @@ Rated 对象
 
 </Route>
 
-## Gitee
+## Gitee {#gitee}
 
-### 仓库 Releases
+### 仓库 Releases {#gitee-cang-ku-releases}
 
 <Route author="TonyRL" example="/gitee/releases/y_project/RuoYi" path="/gitee/releases/:owner/:repo" paramsDesc={['用户名', '仓库名']} radar="1" rssbud="1"/>
 
-### 仓库提交
+### 仓库提交 {#gitee-cang-ku-ti-jiao}
 
 <Route author="TonyRL" example="/gitee/commits/y_project/RuoYi" path="/gitee/commits/:owner/:repo" paramsDesc={['用户名', '仓库名']} radar="1" rssbud="1"/>
 
-### 用户公开动态
+### 用户公开动态 {#gitee-yong-hu-gong-kai-dong-tai}
 
 <Route author="TonyRL" example="/gitee/events/y_project" path="/gitee/events/:username" paramsDesc={['用户名']} radar="1" rssbud="1"/>
 
-### 仓库动态
+### 仓库动态 {#gitee-cang-ku-dong-tai}
 
 <Route author="TonyRL" example="/gitee/events/y_project/RuoYi" path="/gitee/events/:owner/:repo" paramsDesc={['用户名', '仓库名']} radar="1" rssbud="1"/>
 
-## GitHub
+## GitHub {#github}
 
 :::tip 提示
 
@@ -224,15 +224,15 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-### 用户仓库
+### 用户仓库 {#github-yong-hu-cang-ku}
 
 <Route author="DIYgod" example="/github/repos/DIYgod" path="/github/repos/:user" paramsDesc={['用户名']} radar="1" rssbud="1"/>
 
-### Trending
+### Trending {#github-trending}
 
 <Route author="DIYgod" example="/github/trending/daily/javascript/zh" path="/github/trending/:since/:language/:spoken_language?" paramsDesc={['时间跨度，可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到，可选 `daily` `weekly` `monthly`', '语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到，`any`表示不设语言限制', '自然语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到']} radar="1" rssbud="1" selfhost="1"/>
 
-### Topics
+### Topics {#github-topics}
 
 <Route author="queensferryme" example="/github/topics/framework" path="/github/topics/:name/:qs?" paramsDesc={['名称，可以在相关 [Topics 页](https://github.com/topics/framework) URL 中找到', '过滤规则，形如 `l=php&o=desc&s=stars`，详见下表']} radar="1" rssbud="1">
 
@@ -246,27 +246,27 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 仓库 Issues
+### 仓库 Issues {#github-cang-ku-issues}
 
 <Route author="HenryQW AndreyMZ" example="/github/issue/DIYgod/RSSHub/open/RSS%20proposal" path="/github/issue/:user/:repo/:state?/:labels?" paramsDesc={['用户名', '仓库名', 'issue 状态，可选`open`,`closed`或`all`，默认为`open`', '标签列表，以逗号分隔']} radar="1" rssbud="1"/>
 
-### 仓库 Pull Requests
+### 仓库 Pull Requests {#github-cang-ku-pull-requests}
 
 <Route author="hashman TonyRL" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo/:state?/:labels?" paramsDesc={['用户名', '仓库名', 'pull request 状态，`open`,`closed`或`all`，默认为`open`', '标签列表，以逗号分隔']} radar="1" rssbud="1"/>
 
-### 用户 Followers
+### 用户 Followers {#github-yong-hu-followers}
 
 <Route author="HenryQW" example="/github/user/followers/HenryQW" path="/github/user/followers/:user" paramsDesc={['用户名']} radar="1" rssbud="1"/>
 
-### 仓库 Stars
+### 仓库 Stars {#github-cang-ku-stars}
 
 <Route author="HenryQW" example="/github/stars/DIYgod/RSSHub" path="/github/stars/:user/:repo" paramsDesc={['用户名', '仓库名']} radar="1" rssbud="1"/>
 
-### 仓库 Branches
+### 仓库 Branches {#github-cang-ku-branches}
 
 <Route author="max-arnold" example="/github/branches/DIYgod/RSSHub" path="/github/branches/:user/:repo" paramsDesc={['用户名', '仓库名']} radar="1" rssbud="1"/>
 
-### 文件 Commits
+### 文件 Commits {#github-wen-jian-commits}
 
 <Route author="zengxs" example="/github/file/DIYgod/RSSHub/master/lib/router.js" path="/github/file/:user/:repo/:branch/:filepath+" paramsDesc={['用户名', '仓库名', '分支名', '文件路径']} radar="1" rssbud="1">
 
@@ -283,7 +283,7 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 搜索结果
+### 搜索结果 {#github-sou-suo-jie-guo}
 
 <Route author="LogicJake" example="/github/search/RSSHub/bestmatch/desc" path="/github/search/:query/:sort?/:order?" paramsDesc={['搜索关键词', '排序选项（默认为bestmatch）', '排序顺序，desc和asc（默认desc降序）']}>
 
@@ -296,33 +296,33 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 用户 Star 的仓库
+### 用户 Star 的仓库 {#github-yong-hu-star-de-cang-ku}
 
 <Route author="LanceZhu" example="/github/starred_repos/DIYgod" path="/github/starred_repos/:user" paramsDesc={['用户名']} radar="1" rssbud="1"/>
 
-### 仓库 Contributors
+### 仓库 Contributors {#github-cang-ku-contributors}
 
 <Route author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:order?/:anon?" paramsDesc={['用户名', '仓库名', 'Commit 数量排序顺序，desc和asc（默认desc降序）', '是否包括匿名用户，默认不包含，任意值包含匿名用户']} radar="1" rssbud="1"/>
 
-### Issue / Pull Request 评论
+### Issue / Pull Request 评论 {#github-issue-%2F-pull-request-ping-lun}
 
 <Route author="TonyRL FliegendeWurst" example="/github/comments/DIYgod/RSSHub/8116" path="/github/comments/:user/:repo/:number?" paramsDesc={['用户名', '仓库名', 'Issue 或 pull 编号']} radar="1" rssbud="1"/>
 
-### Wiki 历史
+### Wiki 历史 {#github-wiki-li-shi}
 
 <Route author="TonyRL" example="/github/wiki/flutter/flutter/Roadmap" path="/github/wiki/:user/:repo/:page?" paramsDesc={['用户名', '仓库名', '页面 Slug，可在 URL 中找到，留空表示主页']} radar="1" rssbud="1"/>
 
-### 通知
+### 通知 {#github-tong-zhi}
 
 <Route author="zhzy0077" example="/github/notifications" path="/github/notifications" radar="1" rssbud="1" selfhost="1"/>
 
-### Gist Commits
+### Gist Commits {#github-gist-commits}
 
 <Route author="TonyRL" example="/github/gist/d2c152bb7179d07015f336b1a0582679" path="/github/gist/:gistId" paramsDesc={['Gist ID']} radar="1" rssbud="1"/>
 
-## GitLab
+## GitLab {#gitlab}
 
-### Explore
+### Explore {#gitlab-explore}
 
 <Route author="imlonghao zoenglinghou" example="/gitlab/explore/trending" path="/gitlab/explore/:type/:host?" paramsDesc={['分类', '服务器地址，缺省为 gitlab.com']}>
 
@@ -332,51 +332,51 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### Releases
+### Releases {#gitlab-releases}
 
 <Route author="zoenglinghou" example="/gitlab/release/pleroma/pleroma/git.pleroma.social" path="/gitlab/release/:namespace/:project/:host?" paramsDesc={['项目所有者或命名空间。斜杠`/`需要替代为`%2F`', '项目名称', '服务器地址，缺省为 gitlab.com']} />
 
-### Tags
+### Tags {#gitlab-tags}
 
 <Route author="zoenglinghou" example="/gitlab/tag/rluna-open-source%2Ffile-management%2Fowncloud/core/gitlab.com" path="/gitlab/tag/:namespace/:project/:host?" paramsDesc={['项目所有者或命名空间。斜杠`/`需要替代为`%2F`', '项目名称', '服务器地址，缺省为 gitlab.com']} />
 
-## Gitpod
+## Gitpod {#gitpod}
 
-### 博客
+### 博客 {#gitpod-bo-ke}
 
 <Route author="TonyRL" example="/gitpod/blog" path="/gitpod/blog" />
 
-### 更新日志
+### 更新日志 {#gitpod-geng-xin-ri-zhi}
 
 <Route author="TonyRL" example="/gitpod/changelog" path="/gitpod/changelog" />
 
-## Go 语言中文网
+## Go 语言中文网 {#go-yu-yan-zhong-wen-wang}
 
-### 板块
+### 板块 {#go-yu-yan-zhong-wen-wang-ban-kuai}
 
 <Route author="nczitzk" example="/studygolang/go/daily" path="/studygolang/go/:id?" paramsDesc={['板块 id，默认为周刊']} radar="1"/>
 
-### 周刊
+### 周刊 {#go-yu-yan-zhong-wen-wang-zhou-kan}
 
 <Route author="Weilet nczitzk" example="/studygolang/weekly" path="/studygolang/weekly" radar="1"/>
 
-### 招聘
+### 招聘 {#go-yu-yan-zhong-wen-wang-zhao-pin}
 
 <Route author="CcccFz nczitzk" example="/studygolang/jobs" path="/studygolang/jobs" radar="1" rssbud="1"/>
 
-## GoCN
+## GoCN {#gocn}
 
-### 文章
+### 文章 {#gocn-wen-zhang}
 
 <Route author="AtlanCI CcccFz" example="/gocn" path="/gocn" radar="1" rssbud="1"/>
 
-### 招聘
+### 招聘 {#gocn-zhao-pin}
 
 <Route author="CcccFz" example="/gocn/jobs" path="/gocn/jobs" radar="1" rssbud="1"/>
 
-## Hacker News
+## Hacker News {#hacker-news}
 
-### 分区
+### 分区 {#hacker-news-fen-qu}
 
 <Route author="cf020031308 nczitzk" example="/hackernews" path="/hackernews/:section?/:type?/:user?" paramsDesc={['内容分区，见下表，默认为 `index`', '链接类型，见下表，默认为 `sources`', '设定用户，只在 `threads` 和 `submitted` 分区有效。斜当选择`over`分区，`User`的含义是帖子点数的阈值']}>
 
@@ -398,15 +398,15 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 用户
+### 用户 {#hacker-news-yong-hu}
 
 订阅特定用户的内容
 
 <Route author="cf020031308 nczitzk xie-dongping" example="/hackernews/threads/comments_list/dang" path="/hackernews/:section?/:type?/:user?" paramsDesc={['内容分区，见上表，默认为 `index`', '链接类型，见上表，默认为 `sources`', '设定用户，只在 `threads` 和 `submitted` 分区有效']} />
 
-## Hacking8
+## Hacking8 {#hacking8}
 
-### 信息流
+### 信息流 {#hacking8-xin-xi-liu}
 
 <Route author="nczitzk" example="/hacking8" path="/hacking8/:category?" paramsDesc={['分类，见下表，默认为最近更新']}>
 
@@ -416,19 +416,19 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 搜索
+### 搜索 {#hacking8-sou-suo}
 
 <Route author="nczitzk" example="/hacking8/search/+node%3Ahackernews.cc" path="/hacking8/search/:keyword?" paramsDesc={['关键字，默认为空']}/>
 
-## HackMD
+## HackMD {#hackmd}
 
-### Profile
+### Profile {#hackmd-profile}
 
 <Route author="Yukaii kaiix" example="/hackmd/profile/hackmd" path="/hackmd/profile/:path" paramsDesc={['個人名稱路徑，或團隊網址']} radar="1"/>
 
-## HelloGitHub
+## HelloGitHub {#hellogithub}
 
-### 热门
+### 热门 {#hellogithub-re-men}
 
 <Route author="nczitzk" example="/hellogithub/hot" path="/hellogithub/hot/:id?" paramsDesc={['标签 id，可在对应标签页 URL 中找到，默认为全部标签']}>
 
@@ -449,7 +449,7 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 最近
+### 最近 {#hellogithub-zui-jin}
 
 <Route author="nczitzk" example="/hellogithub/last" path="/hellogithub/last/:id?" paramsDesc={['标签 id，可在对应标签页 URL 中找到，默认为全部标签']}>
 
@@ -457,7 +457,7 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 文章
+### 文章 {#hellogithub-wen-zhang}
 
 <Route author="moke8 nczitzk" example="/hellogithub/article" path="/hellogithub/article/:sort?/:id?" paramsDesc={['排序方式，见下表，默认为 `hot`，即热门', '标签 id，可在对应标签页 URL 中找到，默认为全部标签']}>
 
@@ -467,7 +467,7 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 排行榜
+### 排行榜 {#hellogithub-pai-hang-bang}
 
 <Route author="moke8 nczitzk" example="/hellogithub/report" path="/hellogithub/report/:type?" paramsDesc={['分类，见下表，默认为编程语言排行榜']}>
 
@@ -477,37 +477,37 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 月刊
+### 月刊 {#hellogithub-yue-kan}
 
 <Route author="moke8 nczitzk CaoMeiYouRen" example="/hellogithub/volume" path="/hellogithub/volume"/>
 
-## Hex-Rays
+## Hex-Rays {#hex-rays}
 
-### Hex-Rays News
+### Hex-Rays News {#hex-rays-hex-rays-news}
 
 <Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news"/>
 
-## Huggingface
+## Huggingface {#huggingface}
 
-### Daily Papers
+### Daily Papers {#huggingface-daily-papers}
 
 <Route author="zeyugao" example="/huggingface/daily-papers" path="/huggingface/daily-papers" />
 
-## Issue Hunt
+## Issue Hunt {#issue-hunt}
 
-### 项目悬赏
+### 项目悬赏 {#issue-hunt-xiang-mu-xuan-shang}
 
 <Route author="running-grass" radar="1" example="/issuehunt/funded/DIYgod/RSSHub" path="/issuehunt/funded/:username/:repo" paramsDesc={['Github用户/组织','仓库名称']} />
 
-## ITSlide
+## ITSlide {#itslide}
 
-### 最新
+### 最新 {#itslide-zui-xin}
 
 <Route author="Yangshuqing" example="/itslide/new" path="/itslide/new" radar="1" rssbud="1"/>
 
-## Kaggle
+## Kaggle {#kaggle}
 
-### Discussion
+### Discussion {#kaggle-discussion}
 
 <Route author="LogicJake" example="/kaggle/discussion/387811/active" path="/kaggle/discussion/:forumId/:sort?" paramsDesc={['讨论区 id, 打开网页请求, 搜索 forumId；填 all 可以订阅全站讨论区', '排序方式见下表, 默认为 hot']}>
 
@@ -517,7 +517,7 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### Competitions
+### Competitions {#kaggle-competitions}
 
 <Route author="LogicJake" example="/kaggle/competitions" path="/kaggle/competitions/:category?" paramsDesc={['类别, 默认为空']}>
 
@@ -527,49 +527,49 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### User Discussion
+### User Discussion {#kaggle-user-discussion}
 
 <Route author="nczitzk" example="/kaggle/user/antgoldbloom" path="/kaggle/user/:user" paramsDesc={['用户名']}/>
 
-## Layer3
+## Layer3 {#layer3}
 
-### Quest
+### Quest {#layer3-quest}
 
 <Route author="nczitzk" example="/layer3/quests" path="/layer3/quests" radar="1"/>
 
-## LeetCode
+## LeetCode {#leetcode}
 
-### 文章
+### 文章 {#leetcode-wen-zhang}
 
 <Route author="LogicJake" example="/leetcode/articles" path="/leetcode/articles"/>
 
-### 打卡
+### 打卡 {#leetcode-da-ka}
 
 <Route author="NathanDai" example="/leetcode/submission/us/nathandai" path="/leetcode/submission/:country/:user" paramsDesc={['国家 country, 中国(cn)和美国(us)', '用户名 user, 可在LeetCode用户主页的 URL 中找到']}/>
 
-### 每日一题
+### 每日一题 {#leetcode-mei-ri-yi-ti}
 
 <Route author="NavePnow" example="/leetcode/dailyquestion/en" path="/leetcode/dailyquestion/:lang" paramsDesc={['站点,中文(cn)和英文(en)']}/>
 
-### 每日一题题解
+### 每日一题题解 {#leetcode-mei-ri-yi-ti-ti-jie}
 
 <Route author="woaidouya123" example="/leetcode/dailyquestion/solution/cn" path="/leetcode/dailyquestion/solution/:lang" paramsDesc={['站点,中文(cn)和英文(en)']}/>
 
-## LinkedKeeper
+## LinkedKeeper {#linkedkeeper}
 
-### 博文
+### 博文 {#linkedkeeper-bo-wen}
 
 <Route author="imlonghao" example="/linkedkeeper/sub/1" path="/linkedkeeper/:type/:id?" paramsDesc={['博文分类, 为 URL 中 `.action` 的文件名', '分区或标签的 ID, 对应 URL 中的 `sid` 或 `tid`']}/>
 
-## Linux Patchwork
+## Linux Patchwork {#linux-patchwork}
 
-### Patch Comments
+### Patch Comments {#linux-patchwork-patch-comments}
 
 <Route author="ysc3839" example="/patchwork.kernel.org/comments/10723629" path="/patchwork.kernel.org/comments/:id" paramsDesc={['Patch ID']}/>
 
-## LWN.net
+## LWN.net {#lwn.net}
 
-### Security alerts
+### Security alerts {#lwn.net-security-alerts}
 
 <Route author="zengxs" example="/lwn/alerts/CentOS" path="/lwn/alerts/:distributor" paramsDesc={['对应发行版标识']}>
 
@@ -597,27 +597,27 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## ModelScope 魔搭社区
+## ModelScope 魔搭社区 {#modelscope-mo-da-she-qu}
 
-### 数据集
+### 数据集 {#modelscope-mo-da-she-qu-shu-ju-ji}
 
 <Route author="TonyRL" example="/modelscope/datasets" path="/modelscope/datasets" radar="1" />
 
-### 模型库
+### 模型库 {#modelscope-mo-da-she-qu-mo-xing-ku}
 
 <Route author="TonyRL" example="/modelscope/models" path="/modelscope/models" radar="1" />
 
-### 创空间
+### 创空间 {#modelscope-mo-da-she-qu-chuang-kong-jian}
 
 <Route author="TonyRL" example="/modelscope/studios" path="/modelscope/studios" radar="1" />
 
-### DevPress 官方社区
+### DevPress 官方社区 {#modelscope-mo-da-she-qu-devpress-guan-fang-she-qu}
 
 <Route author="TonyRL" example="/modelscope/community" path="/modelscope/community" radar="1" />
 
-## MySQL
+## MySQL {#mysql}
 
-### Release Notes
+### Release Notes {#mysql-release-notes}
 
 <Route author="nczitzk" example="/mysql/release/8.0" path="/mysql/release/:version?" paramsDesc={['版本，见下表，默认为 8.0']}>
 
@@ -626,9 +626,9 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## Node.js
+## Node.js {#node.js}
 
-### News
+### News {#node.js-news}
 
 <Route author="nczitzk" example="/nodejs/blog" path="/nodejs/blog/:language?" paramsDesc={['语言，见下表，默认为 en']}>
 
@@ -650,9 +650,9 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## NOSEC.org
+## NOSEC.org {#nosec.org}
 
-### Posts
+### Posts {#nosec.org-posts}
 
 <Route author="hellodword" example="/nosec/hole" path="/nosec/:keykind?" paramsDesc={['对应文章分类']}>
 
@@ -668,15 +668,15 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## project-zero issues
+## project-zero issues {#project-zero-issues}
 
-### issues
+### issues {#project-zero-issues-issues}
 
 <Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
 
-## Quicker
+## Quicker {#quicker}
 
-### 动作分享
+### 动作分享 {#quicker-dong-zuo-fen-xiang}
 
 <Route author="nczitzk" example="/quicker/share/Recent" path="/quicker/share/:category?" paramsDesc={['分类，见下表，默认为动作库最新更新']}>
 
@@ -690,7 +690,7 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 讨论区
+### 讨论区 {#quicker-tao-lun-qu}
 
 <Route author="Cesaryuan nczitzk" example="/quicker/qa" path="/quicker/qa/:category?/:state?" paramsDesc={['分类，见下表，默认为全部', '状态，见下表，默认为全部']}>
 
@@ -716,7 +716,7 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 用户更新
+### 用户更新 {#quicker-yong-hu-geng-xin}
 
 <Route author="Cesaryuan nczitzk" example="/quicker/user/Actions/3-CL" path="/quicker/user/:category/:id" paramsDesc={['分类，见下表', '用户 id，可在对应用户页 URL 中找到']}>
 
@@ -726,53 +726,53 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## react
+## react {#react}
 
-### react-native
+### react-native {#react-react-native}
 
 <Route author="xixi" example="/react/react-native-weekly" path="/react/react-native-weekly" />
 
-## Rust 语言中文社区
+## Rust 语言中文社区 {#rust-yu-yan-zhong-wen-she-qu}
 
-### 招聘
+### 招聘 {#rust-yu-yan-zhong-wen-she-qu-zhao-pin}
 
 <Route author="CcccFz" example="/rustcc/jobs" path="/rustcc/jobs" radar="1" rssbud="1"/>
 
-## Scala
+## Scala {#scala}
 
-### Scala Blog
+### Scala Blog {#scala-scala-blog}
 
 <Route author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" paramsDesc={['部分，默认为 All，part 参数可在 url 中获得']} />
 
-## SecWiki - 安全维基
+## SecWiki - 安全维基 {#secwiki---an-quan-wei-ji}
 
-### 最新周刊
+### 最新周刊 {#secwiki---an-quan-wei-ji-zui-xin-zhou-kan}
 
 <Route author="p7e4" example="/sec-wiki/weekly" path="/sec-wiki/weekly" />
 
-## segmentfault
+## segmentfault {#segmentfault}
 
-### 频道
+### 频道 {#segmentfault-pin-dao}
 
 <Route author="LogicJake Fatpandac" example="/segmentfault/channel/frontend" path="/segmentfault/channel/:name" paramsDesc={['频道名称，在频道 URL 可以找到']} radar="1"/>
 
-### 用户
+### 用户 {#segmentfault-yong-hu}
 
 <Route author="leyuuu Fatpandac" example="/segmentfault/user/minnanitkong" path="/segmentfault/user/:name" paramsDesc={['用户 Id，用户详情页 URL 可以找到']} radar="1"/>
 
-### 博客
+### 博客 {#segmentfault-bo-ke}
 
 <Route author="shiluanzzz" example="/segmentfault/blogs/go" path="/segmentfault/blogs/:tag" paramsDesc={['标签名称, 在 https://segmentfault.com/tags 中可以找到']} radar="1"/>
 
-## TesterHome
+## TesterHome {#testerhome}
 
-### 最新发布
+### 最新发布 {#testerhome-zui-xin-fa-bu}
 
 <Route author="xyqfer" example="/testerhome/newest" path="/testerhome/newest"/>
 
-## Visual Studio Code Marketplace
+## Visual Studio Code Marketplace {#visual-studio-code-marketplace}
 
-### Visual Studio Code 插件
+### Visual Studio Code 插件 {#visual-studio-code-marketplace-visual-studio-code-cha-jian}
 
 <Route author="SeanChao" example="/vscode/marketplace" path="/vscode/marketplace/:category?" paramsDesc={['分类']}>
 
@@ -782,27 +782,27 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## wolley
+## wolley {#wolley}
 
-### posts
+### posts {#wolley-posts}
 
 <Route author="umm233" example="/wolley" path="/wolley/index"/>
 
-### user post
+### user post {#wolley-user-post}
 
 <Route author="umm233" example="/wolley/user/kyth" path="/wolley/user/:id" paramsDesc={['用户 id']} />
 
-### host
+### host {#wolley-host}
 
 <Route author="umm233" example="/wolley/host/www.youtube.com" path="/wolley/host/:host" paramsDesc={['文章对应 host 分类']} />
 
-## 阿里云
+## 阿里云 {#a-li-yun}
 
-### 数据库内核月报
+### 数据库内核月报 {#a-li-yun-shu-ju-ku-nei-he-yue-bao}
 
 <Route author="junbaor" example="/aliyun/database_month" path="/aliyun/database_month"/>
 
-### 公告
+### 公告 {#a-li-yun-gong-gao}
 
 <Route author="muzea" example="/aliyun/notice" path="/aliyun/notice/:type?">
 
@@ -816,11 +816,11 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 开发者社区 - 主题
+### 开发者社区 - 主题 {#a-li-yun-kai-fa-zhe-she-qu---zhu-ti}
 
 <Route author="umm233" example="/aliyun/developer/group/alitech" path="/aliyun/developer/group/:type" paramsDesc={['对应技术领域分类']} />
 
-## 安全客
+## 安全客 {#an-quan-ke}
 
 :::tip 提示
 
@@ -828,7 +828,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-### 分类订阅
+### 分类订阅 {#an-quan-ke-fen-lei-ding-yue}
 
 <Route author="qwertyuiop6" example="/anquanke/week" path="/anquanke/:category/:fulltext?" paramsDesc={['分类订阅', '是否获取全文，如需获取全文参数传入 `quanwen` 或 `fulltext`']} radar="1" rssbud="1">
 
@@ -838,25 +838,25 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## 安全内参
+## 安全内参 {#an-quan-nei-can}
 
-### 分类
+### 分类 {#an-quan-nei-can-fen-lei}
 
 <Route author="XinRoom" example="/secrss/category/产业趋势" path="/secrss/category/:category?" radar="1" rssbud="1"/>
 
-### 作者
+### 作者 {#an-quan-nei-can-zuo-zhe}
 
 <Route author="XinRoom" example="/secrss/author/网络安全威胁和漏洞信息共享平台" path="/secrss/author/:author" radar="1" rssbud="1"/>
 
-## 安全文摘
+## 安全文摘 {#an-quan-wen-zhai}
 
-### 首页
+### 首页 {#an-quan-wen-zhai-shou-ye}
 
 <Route author="kaiili" example="/secnews" path="/secnews" />
 
-## 北京智源人工智能研究院
+## 北京智源人工智能研究院 {#bei-jing-zhi-yuan-ren-gong-zhi-neng-yan-jiu-yuan}
 
-### 智源社区
+### 智源社区 {#bei-jing-zhi-yuan-ren-gong-zhi-neng-yan-jiu-yuan-zhi-yuan-she-qu}
 
 <Route author="TonyRL" example="/baai/hub" path="/baai/hub/:tagId?/:sort?/:range?" paramsDesc={['社群 ID，可在 [社群页](https://hub.baai.ac.cn/taglist) 或 URL 中找到', '分类，见下表，默认为 `new`', '时间跨度，仅在分类 `readCnt` 时有效']} radar="1">
 
@@ -874,17 +874,17 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 智源社区 - 活动
+### 智源社区 - 活动 {#bei-jing-zhi-yuan-ren-gong-zhi-neng-yan-jiu-yuan-zhi-yuan-she-qu---huo-dong}
 
 <Route author="TonyRL" example="/baai/hub/events" path="/baai/hub/events" radar="1"/>
 
-### 智源社区 - 评论
+### 智源社区 - 评论 {#bei-jing-zhi-yuan-ren-gong-zhi-neng-yan-jiu-yuan-zhi-yuan-she-qu---ping-lun}
 
 <Route author="TonyRL" example="/baai/hub/comments" path="/baai/hub/comments" radar="1"/>
 
-## 登链社区
+## 登链社区 {#deng-lian-she-qu}
 
-### 文章
+### 文章 {#deng-lian-she-qu-wen-zhang}
 
 <Route author="running-grass" example="/learnblockchain/posts/DApp/newest" path="/learnblockchain/posts/:cid/:sort?" paramsDesc={['分类id,更多分类可以论坛的URL找到', '排序方式，默认精选']} radar="1">
 
@@ -910,32 +910,32 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## 饿了么开放平台
+## 饿了么开放平台 {#e-le-me-kai-fang-ping-tai}
 
-### 商家开放平台公告
+### 商家开放平台公告 {#e-le-me-kai-fang-ping-tai-shang-jia-kai-fang-ping-tai-gong-gao}
 
 <Route author="phantomk" example="/eleme/open/announce" path="/eleme/open/announce"/>
 
-### 饿百零售开放平台公告
+### 饿百零售开放平台公告 {#e-le-me-kai-fang-ping-tai-e-bai-ling-shou-kai-fang-ping-tai-gong-gao}
 
 <Route author="phantomk" example="/eleme/open-be/announce" path="/eleme/open-be/announce"/>
 
-## 极客时间
+## 极客时间 {#ji-ke-shi-jian}
 
-### 专栏文章
+### 专栏文章 {#ji-ke-shi-jian-zhuan-lan-wen-zhang}
 
 <Route author="fengchang" example="/geektime/column/48" path="/geektime/column/:cid" paramsDesc={['专栏 id，可从[全部专栏](https://time.geekbang.org/paid-content)进入专栏介绍页，在 URL 中找到']}/>
 
-### 极客新闻
+### 极客新闻 {#ji-ke-shi-jian-ji-ke-xin-wen}
 
 <Route author="zhangzhxb520" example="/geektime/news" path="/geektime/news"/>
 
 > -   极客时间专栏需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 > -   极客新闻不需要付费，可通过 RSS 订阅.
 
-## 极术社区
+## 极术社区 {#ji-shu-she-qu}
 
-### 频道、专栏、用户
+### 频道、专栏、用户 {#ji-shu-she-qu-pin-dao-%E3%80%81-zhuan-lan-%E3%80%81-yong-hu}
 
 <Route author="bigfei" example="/aijishu/channel/ai" path="/aijishu/:type/:name?" paramsDesc={['文章类型，可以取值如下', '名字，取自URL']} radar="1" rssbud="1">
 
@@ -947,15 +947,15 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## 技术头条
+## 技术头条 {#ji-shu-tou-tiao}
 
-### 最新分享
+### 最新分享 {#ji-shu-tou-tiao-zui-xin-fen-xiang}
 
 <Route author="xyqfer" example="/blogread/newest" path="/blogread/newest"/>
 
-## 掘金
+## 掘金 {#jue-jin}
 
-### 分类
+### 分类 {#jue-jin-fen-lei}
 
 <Route author="DIYgod" example="/juejin/category/frontend" path="/juejin/category/:category" paramsDesc={['分类名']} radar="1" rssbud="1">
 
@@ -965,11 +965,11 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 标签
+### 标签 {#jue-jin-biao-qian}
 
 <Route author="isheng5" example="/juejin/tag/架构" path="/juejin/tag/:tag" paramsDesc={['标签名，可在标签 URL 中找到']} radar="1" rssbud="1"/>
 
-### 热门
+### 热门 {#jue-jin-re-men}
 
 <Route author="moaix" example="/juejin/trending/ios/monthly" path="/juejin/trending/:category/:type" paramsDesc={['分类名', '类型']} radar="1" rssbud="1">
 
@@ -995,13 +995,13 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 小册
+### 小册 {#jue-jin-xiao-ce}
 
 <Route author="xyqfer" example="/juejin/books" path="/juejin/books" radar="1" rssbud="1"/>
 
 > 掘金小册需要付费订阅，RSS 仅做更新提醒，不含付费内容.
 
-### 沸点
+### 沸点 {#jue-jin-fei-dian}
 
 <Route author="xyqfer laampui" example="/juejin/pins/6824710202487472141" path="/juejin/pins/:type?" paramsDesc={['默认为 recommend，见下表']} radar="1" rssbud="1">
 
@@ -1011,33 +1011,33 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 用户专栏
+### 用户专栏 {#jue-jin-yong-hu-zhuan-lan}
 
 <Route author="Maecenas" example="/juejin/posts/3051900006845944" path="/juejin/posts/:id" paramsDesc={['用户 id, 可在用户页 URL 中找到']} radar="1" rssbud="1"/>
 
-### 收藏集
+### 收藏集 {#jue-jin-shou-cang-ji}
 
 <Route author="isQ" example="/juejin/collections/1697301682482439" path="/juejin/collections/:userId" paramsDesc={['用户唯一标志符, 在浏览器地址栏URL中能够找到']} radar="1" rssbud="1"/>
 
-### 单个收藏夹
+### 单个收藏夹 {#jue-jin-dan-ge-shou-cang-jia}
 
 <Route author="isQ" example="/juejin/collection/6845243180586123271" path="/juejin/collection/:collectionId" paramsDesc={['收藏夹唯一标志符, 在浏览器地址栏URL中能够找到']} radar="1" rssbud="1"/>
 
-### 分享
+### 分享 {#jue-jin-fen-xiang}
 
 <Route author="qiwihui" example="/juejin/shares/56852b2460b2a099cdc1d133" path="/juejin/shares/:userId" paramsDesc={['用户 id, 可在用户页 URL 中找到']} radar="1" rssbud="1"/>
 
-### 专栏
+### 专栏 {#jue-jin-zhuan-lan}
 
 <Route author="xiangzy1" example="/juejin/column/6960559453037199391" path="/juejin/column/:id" paramsDesc={['专栏 id, 可在专栏页 URL 中找到']} radar="1" rssbud="1"/>
 
-### 资讯
+### 资讯 {#jue-jin-zi-xun}
 
 <Route author="cancergary" example="/juejin/news/739332228916791" path="/juejin/news/:userId" paramsDesc={['用户 id, 可在用户页 URL 中找到']} radar="1" rssbud="1"/>
 
-## 开源中国
+## 开源中国 {#kai-yuan-zhong-guo}
 
-### 资讯
+### 资讯 {#kai-yuan-zhong-guo-zi-xun}
 
 <Route author="tgly307 zengxs" example="/oschina/news/project" path="/oschina/news/:category?" paramsDesc={['板块名']} radar="1" rssbud="1">
 
@@ -1059,19 +1059,19 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 用户博客
+### 用户博客 {#kai-yuan-zhong-guo-yong-hu-bo-ke}
 
 <Route author="dxmpalb" example="/oschina/user/lenve" path="/oschina/user/:id" paramsDesc={['用户 id，可通过查看用户博客网址得到，如果博客以 u/数字结尾，使用下一条路由']} radar="1" rssbud="1"/>
 
-### 数字型账号用户博客
+### 数字型账号用户博客 {#kai-yuan-zhong-guo-shu-zi-xing-zhang-hao-yong-hu-bo-ke}
 
 <Route author="dxmpalb" example="/oschina/u/3920392" path="/oschina/u/:uid" paramsDesc={['用户 id，可通过查看用户博客网址得到，以 u/数字结尾，数字即为 id']} radar="1" rssbud="1"/>
 
-### 问答主题
+### 问答主题 {#kai-yuan-zhong-guo-wen-da-zhu-ti}
 
 <Route author="loveely7" example="/oschina/topic/weekly-news" path="/oschina/topic/:topic" paramsDesc={['主题名，可从 [全部主题](https://www.oschina.net/question/topics) 进入主题页，在 URL 中找到']} radar="1" rssbud="1"/>
 
-## 拉勾网
+## 拉勾网 {#la-gou-wang}
 
 :::tip 提示
 
@@ -1079,27 +1079,27 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-### 职位招聘
+### 职位招聘 {#la-gou-wang-zhi-wei-zhao-pin}
 
 <Route author="hoilc" example="/lagou/jobs/JavaScript/上海" path="/lagou/jobs/:position/:city" paramsDesc={['职位名，可以参考[拉勾网首页](https://www.lagou.com)的职位列表', '城市名，请参考[拉勾网支持的全部城市](https://www.lagou.com/jobs/allCity.html)']} anticrawler="1"/>
 
-## 蓝桥云课
+## 蓝桥云课 {#lan-qiao-yun-ke}
 
-### 全站发布的课程
+### 全站发布的课程 {#lan-qiao-yun-ke-quan-zhan-fa-bu-de-ke-cheng}
 
 <Route author="huhuhang" example="/lanqiao/courses/latest/all" path="/lanqiao/courses/:sort/:tag"  paramsDesc={['排序规则 sort, 默认(`default`)、最新(`latest`)、最热(`hotest`)', '课程标签 `tag`，可在该页面找到：https://www.lanqiao.cn/courses/']} radar="1" rssbud="1"/>
 
-### 作者发布的课程
+### 作者发布的课程 {#lan-qiao-yun-ke-zuo-zhe-fa-bu-de-ke-cheng}
 
 <Route author="huhuhang" example="/lanqiao/author/1701267" path="/lanqiao/author/:uid"  paramsDesc={['作者 `uid` 可在作者主页 URL 中找到']} radar="1" rssbud="1"/>
 
-### 技术社区
+### 技术社区 {#lan-qiao-yun-ke-ji-shu-she-qu}
 
 <Route author="huhuhang" example="/lanqiao/questions/2" path="/lanqiao/questions/:id" paramsDesc={['topic_id 主题 `id` 可在社区板块 URL 中找到']} radar="1" rssbud="1"/>
 
-## 连享会
+## 连享会 {#lian-xiang-hui}
 
-### 精彩资讯
+### 精彩资讯 {#lian-xiang-hui-jing-cai-zi-xun}
 
 <Route author="nczitzk" example="/lianxh" path="/lianxh/:category?" paramsDesc={['分类 id，可在对应分类页 URL 中找到，默认为空，即全部']}>
 
@@ -1148,27 +1148,27 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## 洛谷
+## 洛谷 {#luo-gu}
 
-### 日报
+### 日报 {#luo-gu-ri-bao}
 
 <Route author="LogicJake prnake nczitzk" example="/luogu/daily" path="/luogu/daily/:id?" paramsDesc={['年度日报所在帖子 id，可在 URL 中找到，不填默认为 `47327`']} radar="1" rssbud="1"/>
 
-### 比赛列表
+### 比赛列表 {#luo-gu-bi-sai-lie-biao}
 
 <Route author="prnake" example="/luogu/contest" path="/luogu/contest" radar="1" rssbud="1"/>
 
-### 用户动态
+### 用户动态 {#luo-gu-yong-hu-dong-tai}
 
 <Route author="solstice23" example="/luogu/user/feed/1" path="/luogu/user/feed/:uid" paramsDesc={['用户 UID']} radar="1" rssbud="1"/>
 
-### 用户博客
+### 用户博客 {#luo-gu-yong-hu-bo-ke}
 
 <Route author="ftiasch" example="/luogu/user/blog/ftiasch" path="/luogu/user/blog/:name" paramsDesc={['博客名称']} radar="1" rssbud="1"/>
 
-## 码农俱乐部
+## 码农俱乐部 {#ma-nong-ju-le-bu}
 
-### 话题
+### 话题 {#ma-nong-ju-le-bu-hua-ti}
 
 <Route author="mlogclub" example="/mlog-club/topics/newest" path="/mlog-club/topics/:node" paramsDesc={['node']}>
 
@@ -1182,17 +1182,17 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 开源项目
+### 开源项目 {#ma-nong-ju-le-bu-kai-yuan-xiang-mu}
 
 <Route author="mlogclub" example="/mlog-club/projects" path="/mlog-club/projects" />
 
-## 码农网
+## 码农网 {#ma-nong-wang}
 
-### 最新
+### 最新 {#ma-nong-wang-zui-xin}
 
 <Route author="kt286" example="/codeceo/home" path="/codeceo/home"/>
 
-### 分类
+### 分类 {#ma-nong-wang-fen-lei}
 
 <Route author="kt286" example="/codeceo/category/java" path="/codeceo/category/:category?" paramsDesc={['category']}>
 
@@ -1217,7 +1217,7 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 标签
+### 标签 {#ma-nong-wang-biao-qian}
 
 <Route author="kt286" example="/codeceo/tag/node.js" path="/codeceo/tag/:category?" paramsDesc={['tag']}>
 
@@ -1238,27 +1238,27 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## 码农周刊
+## 码农周刊 {#ma-nong-zhou-kan}
 
-### issues
+### issues {#ma-nong-zhou-kan-issues}
 
 <Route author="tonghs" example="/manong-weekly" path="/manong-weekly" />
 
-## 美团开放平台
+## 美团开放平台 {#mei-tuan-kai-fang-ping-tai}
 
-### 美团开放平台公告
+### 美团开放平台公告 {#mei-tuan-kai-fang-ping-tai-mei-tuan-kai-fang-ping-tai-gong-gao}
 
 <Route author="youzipi" example="/meituan/open/announce" path="/meituan/open/announce"/>
 
-## 平安银河实验室
+## 平安银河实验室 {#ping-an-yin-he-shi-yan-shi}
 
-### posts
+### posts {#ping-an-yin-he-shi-yan-shi-posts}
 
 <Route author="hellodword" example="/galaxylab" path="/galaxylab" />
 
-## 前端艺术家 && 飞冰早报
+## 前端艺术家 && 飞冰早报 {#qian-duan-yi-shu-jia-%26%26-fei-bing-zao-bao}
 
-### 列表
+### 列表 {#qian-duan-yi-shu-jia-%26%26-fei-bing-zao-bao-lie-biao}
 
 <Route author="kouchao" example="/jskou/0" path="/jskou/:type?" paramsDesc={['分类']}>
 
@@ -1268,9 +1268,9 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## 前端早早聊
+## 前端早早聊 {#qian-duan-zao-zao-liao}
 
-### 文章
+### 文章 {#qian-duan-zao-zao-liao-wen-zhang}
 
 <Route author="shaomingbo" example="/zaozao/article/quality"  path="/zaozao/article/:type?" paramsDesc={['文章分类']} radar="1">
 
@@ -1280,23 +1280,23 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## 日报 | D2 资源库
+## 日报 | D2 资源库 {#ri-bao-%7C-d2-zi-yuan-ku}
 
-### 日报 | D2 资源库
+### 日报 | D2 资源库 {#ri-bao-%7C-d2-zi-yuan-ku-ri-bao-%7C-d2-zi-yuan-ku}
 
 <Route author="Andiedie" example="/d2/daily" path="/d2/daily"/>
 
-## 顺丰
+## 顺丰 {#shun-feng}
 
-### 顺丰丰桥开放平台公告
+### 顺丰丰桥开放平台公告 {#shun-feng-shun-feng-feng-qiao-kai-fang-ping-tai-gong-gao}
 
 <Route author="phantomk" example="/sf/sffq-announce" path="/sf/sffq-announce"/>
 
-## 腾讯大数据
+## 腾讯大数据 {#teng-xun-da-shu-ju}
 
 <Route author="nczitzk" example="/tencent/bigdata" path="/tencent/bigdata"/>
 
-## 腾讯游戏开发者社区
+## 腾讯游戏开发者社区 {#teng-xun-you-xi-kai-fa-zhe-she-qu}
 
 :::caution 注意
 
@@ -1304,7 +1304,7 @@ GitHub 官方也提供了一些 RSS:
 
 :::
 
-### 分类
+### 分类 {#teng-xun-you-xi-kai-fa-zhe-she-qu-fen-lei}
 
 <Route author="xyqfer" example="/gameinstitute/community/hot" path="/gameinstitute/community/:tag?" paramsDesc={['标签名称，默认为热门']}>
 
@@ -1314,27 +1314,27 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## 腾讯云
+## 腾讯云 {#teng-xun-yun}
 
-### 云 + 社区专栏
+### 云 + 社区专栏 {#teng-xun-yun-yun-%2B-she-qu-zhuan-lan}
 
 <Route author="nczitzk" example="/tencent/cloud/column/86410" path="/tencent/cloud/column/:id?/:tag?" paramsDesc={['专栏 id，可在对应专栏页中找到，默认为 86410（腾讯云数据库专家服务）', '标签 id，可在对应专栏页中找到，默认为空']}/>
 
-## 微信开放平台
+## 微信开放平台 {#wei-xin-kai-fang-ping-tai}
 
-### 微信开放社区 - 小程序公告
+### 微信开放社区 - 小程序公告 {#wei-xin-kai-fang-ping-tai-wei-xin-kai-fang-she-qu---xiao-cheng-xu-gong-gao}
 
 <Route author="phantomk" example="/wechat-open/community/xcx-announce" path="/wechat-open/community/xcx-announce"/>
 
-### 微信开放社区 - 小游戏公告
+### 微信开放社区 - 小游戏公告 {#wei-xin-kai-fang-ping-tai-wei-xin-kai-fang-she-qu---xiao-you-xi-gong-gao}
 
 <Route author="phantomk" example="/wechat-open/community/xyx-announce" path="/wechat-open/community/xyx-announce"/>
 
-### 微信开放社区 - 微信支付公告
+### 微信开放社区 - 微信支付公告 {#wei-xin-kai-fang-ping-tai-wei-xin-kai-fang-she-qu---wei-xin-zhi-fu-gong-gao}
 
 <Route author="phantomk" example="/wechat-open/community/pay-announce" path="/wechat-open/community/pay-announce"/>
 
-### 微信开放社区 - 小游戏问答
+### 微信开放社区 - 小游戏问答 {#wei-xin-kai-fang-ping-tai-wei-xin-kai-fang-she-qu---xiao-you-xi-wen-da}
 
 <Route author="bestony" example="/wechat-open/community/xyx-question/0" path="/wechat-open/community/xyx-question/:category" paramsDesc={['0', 'hot', 'topic']}>
 
@@ -1344,7 +1344,7 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 微信开放社区 - 小程序问答
+### 微信开放社区 - 小程序问答 {#wei-xin-kai-fang-ping-tai-wei-xin-kai-fang-she-qu---xiao-cheng-xu-wen-da}
 
 <Route author="bestony" example="/wechat-open/community/xcx-question/new" path="/wechat-open/community/xcx-question/:tag" paramsDesc={['new', 'hot', 'topic']}>
 
@@ -1354,29 +1354,29 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 微信支付 - 商户平台公告
+### 微信支付 - 商户平台公告 {#wei-xin-kai-fang-ping-tai-wei-xin-zhi-fu---shang-hu-ping-tai-gong-gao}
 
 <Route author="phantomk" example="/wechat-open/pay/announce" path="/wechat-open/pay/announce"/>
 
-## 微信小程序
+## 微信小程序 {#wei-xin-xiao-cheng-xu}
 
-### 公众平台系统公告栏目
+### 公众平台系统公告栏目 {#wei-xin-xiao-cheng-xu-gong-zhong-ping-tai-xi-tong-gong-gao-lan-mu}
 
 <Route author="xyqfer" example="/wechat/announce" path="/wechat/announce" />
 
-### 基础库更新日志
+### 基础库更新日志 {#wei-xin-xiao-cheng-xu-ji-chu-ku-geng-xin-ri-zhi}
 
 <Route author="magicLaLa nczitzk" example="/weixin/miniprogram/framework" path="/weixin/miniprogram/framework"/>
 
-### 开发者工具更新日志
+### 开发者工具更新日志 {#wei-xin-xiao-cheng-xu-kai-fa-zhe-gong-ju-geng-xin-ri-zhi}
 
 <Route author="nczitzk" example="/weixin/miniprogram/devtools" path="/weixin/miniprogram/devtools"/>
 
-### 小程序插件
+### 小程序插件 {#wei-xin-xiao-cheng-xu-xiao-cheng-xu-cha-jian}
 
 <Route author="xyqfer" example="/wechat/miniprogram/plugins" path="/wechat/miniprogram/plugins" />
 
-### 云开发更新日志
+### 云开发更新日志 {#wei-xin-xiao-cheng-xu-yun-kai-fa-geng-xin-ri-zhi}
 
 <Route author="nczitzk" example="/weixin/miniprogram/wxcloud/cloud-sdk" path="/weixin/miniprogram/wxcloud/:caty?" paramsDesc={['日志分类']}>
 
@@ -1386,25 +1386,25 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-## 印记中文
+## 印记中文 {#yin-ji-zhong-wen}
 
-### 周刊 - JavaScript
+### 周刊 - JavaScript {#yin-ji-zhong-wen-zhou-kan---javascript}
 
 <Route author="daijinru" example="/docschina/jsweekly" path="/docschina/jsweekly" radar="1" rssbud="1"/>
 
-## 政采云前端技术团队
+## 政采云前端技术团队 {#zheng-cai-yun-qian-duan-ji-shu-tuan-dui}
 
-### 博客
+### 博客 {#zheng-cai-yun-qian-duan-ji-shu-tuan-dui-bo-ke}
 
 <Route author="Pulset" example="/zooTeam/blog" path="/zooTeam/blog" radar="1" rssbud="1"/>
 
-### 小报
+### 小报 {#zheng-cai-yun-qian-duan-ji-shu-tuan-dui-xiao-bao}
 
 <Route author="Pulset" example="/zooTeam/weekly" path="/zooTeam/weekly" radar="1" rssbud="1"/>
 
-## 知晓程序
+## 知晓程序 {#zhi-xiao-cheng-xu}
 
-### 文章
+### 文章 {#zhi-xiao-cheng-xu-wen-zhang}
 
 <Route author="HenryQW" example="/miniapp/article/cloud" path="/miniapp/article/:category" paramsDesc={['分类名称']}>
 
@@ -1414,16 +1414,16 @@ GitHub 官方也提供了一些 RSS:
 
 </Route>
 
-### 小程序商店 - 最新
+### 小程序商店 - 最新 {#zhi-xiao-cheng-xu-xiao-cheng-xu-shang-dian---zui-xin}
 
 <Route author="xyqfer" example="/miniapp/store/newest" path="/miniapp/store/newest"/>
 
-## 众成翻译
+## 众成翻译 {#zhong-cheng-fan-yi}
 
-### 首页
+### 首页 {#zhong-cheng-fan-yi-shou-ye}
 
 <Route author="SirM2z" example="/zcfy" path="/zcfy/index"/>
 
-### 热门
+### 热门 {#zhong-cheng-fan-yi-re-men}
 
 <Route author="SirM2z" example="/zcfy/hot" path="/zcfy/hot"/>

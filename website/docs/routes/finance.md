@@ -2,21 +2,21 @@ import Route from '@site/src/components/Route';
 
 # 💰 金融
 
-## AI 财经社
+## AI 财经社 {#ai-cai-jing-she}
 
-### 最新文章
+### 最新文章 {#ai-cai-jing-she-zui-xin-wen-zhang}
 
 <Route author="nczitzk" example="/aicaijing/latest" path="/aicaijing/latest"/>
 
-### 封面文章
+### 封面文章 {#ai-cai-jing-she-feng-mian-wen-zhang}
 
 <Route author="nczitzk" example="/aicaijing/cover" path="/aicaijing/cover"/>
 
-### 推荐资讯
+### 推荐资讯 {#ai-cai-jing-she-tui-jian-zi-xun}
 
 <Route author="nczitzk" example="/aicaijing/recommend" path="/aicaijing/recommend"/>
 
-### 热点 & 深度
+### 热点 & 深度 {#ai-cai-jing-she-re-dian-%26-shen-du}
 
 <Route author="nczitzk" example="/aicaijing/information/14" path="/aicaijing/information/:id?" paramsDesc={['栏目 id，可在对应栏目页 URL 中找到，默认为 14，即热点最新']}>
 
@@ -40,21 +40,21 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-## BigQuant
+## BigQuant {#bigquant}
 
-### 专题报告
+### 专题报告 {#bigquant-zhuan-ti-bao-gao}
 
 <Route author="nczitzk" example="/bigquant/collections" path="/bigquant/collections"/>
 
-## CFD
+## CFD {#cfd}
 
-### 每周股指派息调整 (GBP)
+### 每周股指派息调整 (GBP) {#cfd-mei-zhou-gu-zhi-pai-xi-tiao-zheng-(gbp)}
 
 <Route author="HenryQW" example="/cfd/div_gbp" path="/cfd/div_gbp" />
 
-## DT 财经
+## DT 财经 {#dt-cai-jing}
 
-### 数据洞察
+### 数据洞察 {#dt-cai-jing-shu-ju-dong-cha}
 
 <Route author="nczitzk" example="/dtcj/datainsight" path="/dtcj/datainsight/:id?" paramsDesc={['分类，见下表，默认为全部']}>
 
@@ -64,7 +64,7 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-### 数据侠专栏
+### 数据侠专栏 {#dt-cai-jing-shu-ju-xia-zhuan-lan}
 
 <Route author="nczitzk" example="/dtcj/datahero" path="/dtcj/datahero/:category?" paramsDesc={['分类，见下表，默认为全部']}>
 
@@ -74,9 +74,9 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-## finviz
+## finviz {#finviz}
 
-### News
+### News {#finviz-news}
 
 <Route author="nczitzk" example="/finviz" path="/finviz/:category?" paramsDesc={['分类，见下表，默认为 News']}>
 
@@ -86,13 +86,13 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-### 美股股票新闻
+### 美股股票新闻 {#finviz-mei-gu-gu-piao-xin-wen}
 
 <Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" paramsDesc={['股票代码']}/>
 
-## Followin
+## Followin {#followin}
 
-### 首页
+### 首页 {#followin-shou-ye}
 
 <Route author="TonyRL" example="/followin" path="/followin/:categoryId?/:lang?" paramsDesc={['分类 ID，见下表，默认为 `1`', '语言，见下表，默认为 `en`']} radar="1">
 
@@ -110,25 +110,25 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-### 快讯
+### 快讯 {#followin-kuai-xun}
 
 <Route author="TonyRL" example="/followin/news" path="/followin/news/:lang?" paramsDesc={['语言，见上表，默认为 `en`']} radar="1" />
 
-### KOL
+### KOL {#followin-kol}
 
 <Route author="TonyRL" example="/followin/kol/4075592991" path="/followin/kol/:kolId/:lang?" paramsDesc={['KOL ID，可在 URL 找到', '语言，见上表，默认为 `en`']} radar="1" />
 
-### 话题
+### 话题 {#followin-hua-ti}
 
 <Route author="TonyRL" example="/followin/topic/40" path="/followin/topic/:topicId/:lang?" paramsDesc={['话题 ID，可在 URL 找到', '语言，见上表，默认为 `en`']} radar="1" />
 
-### 标签
+### 标签 {#followin-biao-qian}
 
 <Route author="TonyRL" example="/followin/tag/177008" path="/followin/tag/:tagId/:lang?" paramsDesc={['标签 ID，可在 URL 找到', '语言，见上表，默认为 `en`']} radar="1" />
 
-## FX Markets
+## FX Markets {#fx-markets}
 
-### 分类
+### 分类 {#fx-markets-fen-lei}
 
 <Route author="mikkkee" example="/fx-markets/trading" path="/fx-markets/:channel" paramsDesc={['分类代码，可在首页导航栏的目标网址 URL 中找到']}>
 
@@ -138,15 +138,15 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-## Paradigm
+## Paradigm {#paradigm}
 
-### Writing
+### Writing {#paradigm-writing}
 
 <Route author="Fatpandac" example="/paradigm/writing" path="/paradigm/writing" />
 
-## Seeking Alpha
+## Seeking Alpha {#seeking-alpha}
 
-### Summary
+### Summary {#seeking-alpha-summary}
 
 <Route author="TonyRL" example="/seekingalpha/TSM/transcripts" path="/seekingalpha/:symbol/:category?" paramsDesc={['股票代号', '分类，见下表，默认为 `news`']}  radar="1" rssbud="1">
 
@@ -156,7 +156,7 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-## TokenInsight
+## TokenInsight {#tokeninsight}
 
 :::tip 提示
 
@@ -164,15 +164,15 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 :::
 
-### 博客
+### 博客 {#tokeninsight-bo-ke}
 
 <Route author="fuergaosi233" example="/tokeninsight/blog" path="/tokeninsight/blog/:lang?" paramsDesc={['语言，见下表，默认为简体中文']} />
 
-### 快讯
+### 快讯 {#tokeninsight-kuai-xun}
 
 <Route author="fuergaosi233" example="/tokeninsight/bulletin" path="/tokeninsight/bulletin/:lang?" paramsDesc={['语言，见下表，默认为简体中文']} />
 
-### 报告
+### 报告 {#tokeninsight-bao-gao}
 
 <Route author="fuergaosi233" example="/tokeninsight/report" path="/tokeninsight/report/:lang?" paramsDesc={['语言，见下表，默认为简体中文']}>
 
@@ -184,15 +184,15 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-## Unusual Whales
+## Unusual Whales {#unusual-whales}
 
-### News Flow
+### News Flow {#unusual-whales-news-flow}
 
 <Route author="TonyRL" example="/unusualwhales/news" path="/unusualwhales/news" radar="1" rssbud="1" />
 
-## WEEX 华尔街见闻旗下全球投资线上品牌
+## WEEX 华尔街见闻旗下全球投资线上品牌 {#weex-hua-er-jie-jian-wen-qi-xia-quan-qiu-tou-zi-xian-shang-pin-pai}
 
-### 资讯
+### 资讯 {#weex-hua-er-jie-jian-wen-qi-xia-quan-qiu-tou-zi-xian-shang-pin-pai-zi-xun}
 
 <Route author="SChen1024" example="/weexcn/news/1" path="/weexcn/news/:typeid" paramsDesc={['栏目代码, 按照表列出']} />
 
@@ -200,9 +200,9 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
 | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8          |
 
-## 巴伦周刊中文版
+## 巴伦周刊中文版 {#ba-lun-zhou-kan-zhong-wen-ban}
 
-### 栏目
+### 栏目 {#ba-lun-zhou-kan-zhong-wen-ban-lan-mu}
 
 <Route author="nczitzk" example="/barronschina" path="/barronschina/:id?" paramsDesc={['栏目 id，默认为快讯']}>
 
@@ -214,15 +214,15 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-## 百度股市通
+## 百度股市通 {#bai-du-gu-shi-tong}
 
-### 首页指数
+### 首页指数 {#bai-du-gu-shi-tong-shou-ye-zhi-shu}
 
 <Route author="CaoMeiYouRen" example="/baidu/gushitong/index" path="/baidu/gushitong/index"></Route>
 
-## 北京证券交易所
+## 北京证券交易所 {#bei-jing-zheng-quan-jiao-yi-suo}
 
-### 栏目
+### 栏目 {#bei-jing-zheng-quan-jiao-yi-suo-lan-mu}
 
 <Route author="nczitzk" example="/bse" path="/bse/:category?/:keyword?" paramsDesc={['分类，见下表，默认为本所要闻', '关键字，默认为空']}>
 
@@ -248,15 +248,15 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-## 财经网
+## 财经网 {#cai-jing-wang}
 
-### 滚动新闻
+### 滚动新闻 {#cai-jing-wang-gun-dong-xin-wen}
 
 <Route author="TonyRL" example="/caijing/roll" path="/caijing/roll" rardr="1" rssbud="1"/>
 
-## 财联社
+## 财联社 {#cai-lian-she}
 
-### 电报
+### 电报 {#cai-lian-she-dian-bao}
 
 <Route author="nczitzk" example="/cls/telegraph" path="/cls/telegraph/:category?" paramsDesc={['分类，见下表，默认为全部']} radar="1">
 
@@ -266,7 +266,7 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-### 深度
+### 深度 {#cai-lian-she-shen-du}
 
 <Route author="nczitzk" example="/cls/depth/1000" path="/cls/depth/:category?" paramsDesc={['分类代码，可在首页导航栏的目标网址 URL 中找到']} radar="1">
 
@@ -276,27 +276,27 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-### 热门文章排行榜
+### 热门文章排行榜 {#cai-lian-she-re-men-wen-zhang-pai-hang-bang}
 
 <Route author="5upernova-heng nczitzk" example="/cls/hot" path="/cls/hot" radar="1"/>
 
-## 第一财经杂志
+## 第一财经杂志 {#di-yi-cai-jing-za-zhi}
 
-### 首页
+### 首页 {#di-yi-cai-jing-za-zhi-shou-ye}
 
 <Route author="nczitzk" example="/cbnweek" path="/cbnweek"/>
 
-## 东方财富
+## 东方财富 {#dong-fang-cai-fu}
 
-### 天天基金用户动态
+### 天天基金用户动态 {#dong-fang-cai-fu-tian-tian-ji-jin-yong-hu-dong-tai}
 
 <Route author="zidekuls" example="/eastmoney/ttjj/user/6551094298949188" path="/eastmoney/ttjj/user/:uid" paramsDesc={['用户id, 可以通过天天基金App分享用户主页到浏览器，在相应的URL中找到']}/>
 
-### 搜索
+### 搜索 {#dong-fang-cai-fu-sou-suo}
 
 <Route author="drgnchan" example="/eastmoney/search/web3" path="/eastmoney/search/:keyword" paramsDesc={['关键词，可以设置为自己需要检索的关键词']} radar="1"/>
 
-### 研究报告
+### 研究报告 {#dong-fang-cai-fu-yan-jiu-bao-gao}
 
 <Route author="syzq" example="/eastmoney/report/strategyreport" path="/eastmoney/report/:category" paramsDesc={['研报类型']}>
 
@@ -306,25 +306,25 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-## 法布财经
+## 法布财经 {#fa-bu-cai-jing}
 
-### 新闻
+### 新闻 {#fa-bu-cai-jing-xin-wen}
 
 <Route author="nczitzk" example="/fastbull/news" path="/fastbull/news"/>
 
-### 快讯
+### 快讯 {#fa-bu-cai-jing-kuai-xun}
 
 <Route author="nczitzk" example="/fastbull/express-news" path="/fastbull/express-news"/>
 
-## 富途牛牛
+## 富途牛牛 {#fu-tu-niu-niu}
 
-### 要闻
+### 要闻 {#fu-tu-niu-niu-yao-wen}
 
 <Route author="Wsine nczitzk" example="/futunn/main" path="/futunn/main" />
 
-## 格隆汇
+## 格隆汇 {#ge-long-hui}
 
-### 首页
+### 首页 {#ge-long-hui-shou-ye}
 
 <Route author="TonyRL" example="/gelonghui/home" path="/gelonghui/home/:tag?" paramsDesc={['分类标签，见下表，默认为 `web_home_page`']} radar="1" rssbud="1">
 
@@ -334,29 +334,29 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-### 用户文章
+### 用户文章 {#ge-long-hui-yong-hu-wen-zhang}
 
 <Route author="nczitzk" example="/gelonghui/user/5273" path="/gelonghui/user/:id" paramsDesc={['用户编号，可在用户页 URL 中找到']} radar="1" rssbud="1"/>
 
-### 主题文章
+### 主题文章 {#ge-long-hui-zhu-ti-wen-zhang}
 
 <Route author="nczitzk" example="/gelonghui/subject/4" path="/gelonghui/subject/:id"  paramsDesc={['主题编号，可在主题页 URL 中找到']} radar="1" rssbud="1"/>
 
-### 搜索关键字
+### 搜索关键字 {#ge-long-hui-sou-suo-guan-jian-zi}
 
 <Route author="nczitzk" example="/gelonghui/keyword/早报" path="/gelonghui/keyword/:keyword" paramsDesc={['搜索关键字']} radar="1" rssbud="1"/>
 
-### 最热文章
+### 最热文章 {#ge-long-hui-zui-re-wen-zhang}
 
 <Route author="TonyRL" example="/gelonghui/hot-article" path="/gelonghui/hot-article/:type?" paramsDesc={['`day` 为日排行，`week` 为周排行，默认为 `day`']} radar="1" rssbud="1"/>
 
-### 实时快讯
+### 实时快讯 {#ge-long-hui-shi-shi-kuai-xun}
 
 <Route author="TonyRL" example="/gelonghui/live" path="/gelonghui/live" radar="1" rssbud="1"/>
 
-## 国家金融与发展实验室
+## 国家金融与发展实验室 {#guo-jia-jin-rong-yu-fa-zhan-shi-yan-shi}
 
-### 研究
+### 研究 {#guo-jia-jin-rong-yu-fa-zhan-shi-yan-shi-yan-jiu}
 
 <Route author="Fatpandac" example="/nifd/research/3333d2af-91d6-429b-be83-28b92f31b6d7" path="/nifd/research/:categoryGuid?" paramsDesc={['资讯类型，默认为周报']}>
 
@@ -366,31 +366,31 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-## 汇通网
+## 汇通网 {#hui-tong-wang}
 
-### 7x24 小时快讯
+### 7x24 小时快讯 {#hui-tong-wang-7x24-xiao-shi-kuai-xun}
 
 <Route author="occupy5 dousha" example="/fx678/kx" path="/fx678/kx" radar="1"/>
 
-## 金十数据
+## 金十数据 {#jin-shi-shu-ju}
 
-### 市场快讯
+### 市场快讯 {#jin-shi-shu-ju-shi-chang-kuai-xun}
 
 <Route author="laampui" example="/jin10" path="/jin10/:important?" paramsDesc={['只看重要，任意值开启，留空关闭']} radar="1"/>
 
-### 主题文章
+### 主题文章 {#jin-shi-shu-ju-zhu-ti-wen-zhang}
 
 <Route author="miles170" example="/jin10/topic/396" path="/jin10/topic/:id" radar="1"/>
 
-## 老虎社区
+## 老虎社区 {#lao-hu-she-qu}
 
-### 个人主页
+### 个人主页 {#lao-hu-she-qu-ge-ren-zhu-ye}
 
 <Route author="Fatpandac" example="/laohu8/personal/3527667596890271" path="/laohu8/personal/:id" paramsDesc={['用户 ID，见网址链接']} rssbud="1" radar="1"/>
 
-## 麦肯锡
+## 麦肯锡 {#mai-ken-xi}
 
-### 洞见
+### 洞见 {#mai-ken-xi-dong-jian}
 
 <Route author="laampui" example="/mckinsey/cn" path="/mckinsey/cn/:category?" paramsDesc={['分类，见下表，默认为全部']} radar="1" rssbud="1">
 
@@ -417,9 +417,9 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-## 每经网
+## 每经网 {#mei-jing-wang}
 
-### 分类
+### 分类 {#mei-jing-wang-fen-lei}
 
 <Route author="nczitzk" example="/nbd" path="/nbd/:id?" paramsDesc={['分类 id，见下表，默认为要闻']}>
 
@@ -429,13 +429,13 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-### 重磅原创
+### 重磅原创 {#mei-jing-wang-zhong-bang-yuan-chuang}
 
 <Route author="MeXunco" example="/nbd/daily" path="/nbd/daily"/>
 
-## 前瞻网
+## 前瞻网 {#qian-zhan-wang}
 
-### 文章列表
+### 文章列表 {#qian-zhan-wang-wen-zhang-lie-biao}
 
 <Route author="moke8" example="/qianzhan/analyst/column/all" path="/qianzhan/analyst/column/:type?" paramsDesc={['分类，见下表']}>
 
@@ -445,7 +445,7 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-### 排行榜
+### 排行榜 {#qian-zhan-wang-pai-hang-bang}
 
 <Route author="moke8" example="/qianzhan/analyst/rank/week" path="/qianzhan/analyst/rank/:type?" paramsDesc={['分类，见下表']}>
 
@@ -455,9 +455,9 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-## 上海证券交易所
+## 上海证券交易所 {#shang-hai-zheng-quan-jiao-yi-suo}
 
-### 本所业务指南与流程
+### 本所业务指南与流程 {#shang-hai-zheng-quan-jiao-yi-suo-ben-suo-ye-wu-zhi-nan-yu-liu-cheng}
 
 <Route author="nczitzk" example="/sse/lawandrules" path="/sse/lawandrules/:slug?" paramsDesc={['见下文，默认为 `latest`']} radar="1" rssbud="1">
 
@@ -469,29 +469,29 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-### 上市公司信息最新公告披露
+### 上市公司信息最新公告披露 {#shang-hai-zheng-quan-jiao-yi-suo-shang-shi-gong-si-xin-xi-zui-xin-gong-gao-pi-lu}
 
 <Route author="harveyqiu" example="/sse/disclosure/beginDate=2018-08-18&endDate=2020-08-25&productId=600696" path="/sse/disclosure/:query?"  paramsDesc={['筛选条件，见示例']} radar="1" rssbud="1"/>
 
-### 可转换公司债券公告
+### 可转换公司债券公告 {#shang-hai-zheng-quan-jiao-yi-suo-ke-zhuan-huan-gong-si-zhai-quan-gong-gao}
 
 <Route author="kt286" example="/sse/convert/beginDate=2018-08-18&endDate=2019-08-18&companyCode=603283&title=股份" path="/sse/convert/:query?" paramsDesc={['筛选条件，见示例']} radar="1" rssbud="1"/>
 
-### 科创板项目动态
+### 科创板项目动态 {#shang-hai-zheng-quan-jiao-yi-suo-ke-chuang-ban-xiang-mu-dong-tai}
 
 <Route author="Jeason0228" example="/sse/renewal" path="/sse/renewal" radar="1" rssbud="1"/>
 
-### 监管问询
+### 监管问询 {#shang-hai-zheng-quan-jiao-yi-suo-jian-guan-wen-xun}
 
 <Route author="Jeason0228" example="/sse/inquire" path="/sse/inquire" radar="1" rssbud="1"/>
 
-## 深圳证券交易所
+## 深圳证券交易所 {#shen-zhen-zheng-quan-jiao-yi-suo}
 
-### 上市公告 - 可转换债券
+### 上市公告 - 可转换债券 {#shen-zhen-zheng-quan-jiao-yi-suo-shang-shi-gong-gao---ke-zhuan-huan-zhai-quan}
 
 <Route author="Jeason0228 nczitzk" example="/szse/notice" path="/szse/notice"/>
 
-### 问询函件
+### 问询函件 {#shen-zhen-zheng-quan-jiao-yi-suo-wen-xun-han-jian}
 
 <Route author="Jeason0228 nczitzk" example="/szse/inquire" path="/szse/inquire/:category?/:select?/:keyword?" paramsDesc={['类型，见下表，默认为 `0` 即 主板', '函件类别, 见下表，默认为全部函件类别', '公司代码或简称，默认为空']}>
 
@@ -508,11 +508,11 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-### 最新规则
+### 最新规则 {#shen-zhen-zheng-quan-jiao-yi-suo-zui-xin-gui-ze}
 
 <Route author="nczitzk" example="/szse/rule" path="/szse/rule"/>
 
-### 创业板项目动态
+### 创业板项目动态 {#shen-zhen-zheng-quan-jiao-yi-suo-chuang-ye-ban-xiang-mu-dong-tai}
 
 <Route author="nczitzk" example="/szse/projectdynamic" path="/szse/projectdynamic/:type?/:stage?/:status?" paramsDesc={['类型，见下表，默认为IPO', '阶段，见下表，默认为全部', '状态，见下表，默认为全部']}>
 
@@ -552,9 +552,9 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-## 世界经济论坛
+## 世界经济论坛 {#shi-jie-jing-ji-lun-tan}
 
-### 报告
+### 报告 {#shi-jie-jing-ji-lun-tan-bao-gao}
 
 <Route author="nczitzk" example="/weforum/report" path="/weforum/report/:lang?/:year?/:platform?" paramsDesc={['语言，见下表，默认为 `en`', '年份，对应年份过滤条件，默认为 `所有`', '平台，对应平台过滤条件，默认为 `所有`']}>
 
@@ -568,13 +568,13 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-## 首席经济学家论坛
+## 首席经济学家论坛 {#shou-xi-jing-ji-xue-jia-lun-tan}
 
-### 最新更新
+### 最新更新 {#shou-xi-jing-ji-xue-jia-lun-tan-zui-xin-geng-xin}
 
 <Route author="FledgeXu" example="/chinacef" path="/chinacef"/>
 
-### 专家
+### 专家 {#shou-xi-jing-ji-xue-jia-lun-tan-zhuan-jia}
 
 <Route author="kdanfly" example="/chinacef/17/" path="/chinacef/:experts_id/" paramsDesc={['专家编号']} radar="1" rssbud="1">
 
@@ -584,13 +584,13 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-### 金融热点
+### 金融热点 {#shou-xi-jing-ji-xue-jia-lun-tan-jin-rong-re-dian}
 
 <Route author="kdanfly" example="/chinacef/portal/hot" path="/chinacef/portal/hot" radar="1" rssbud="1" />
 
-## 淘股吧
+## 淘股吧 {#tao-gu-ba}
 
-### 淘股论坛
+### 淘股论坛 {#tao-gu-ba-tao-gu-lun-tan}
 
 <Route author="emdoe nczitzk" example="/taoguba" path="/taoguba/:category?" paramsDesc={['分类，见下表，默认为社区总版']}>
 
@@ -600,17 +600,17 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-### 用户博客
+### 用户博客 {#tao-gu-ba-yong-hu-bo-ke}
 
 <Route author="emdoe nczitzk" example="/taoguba/blog/252069" path="/taoguba/blog/:id" paramsDesc={['博客 id，可在对应博客页中找到']} />
 
-## 乌拉邦
+## 乌拉邦 {#wu-la-bang}
 
-### 最新研报
+### 最新研报 {#wu-la-bang-zui-xin-yan-bao}
 
 <Route author="Fatpandac" example="/ulapia/research/latest" path="/ulapia/research/latest"/>
 
-### 频道
+### 频道 {#wu-la-bang-pin-dao}
 
 <Route author="Fatpandac" example="/ulapia/reports/stock_research" path="/ulapia/reports/:category?" paramsDesc={['频道类型，默认为券商晨报（今日晨报）']}>
 
@@ -620,13 +620,13 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-## 雪球
+## 雪球 {#xue-qiu}
 
-### 今日话题
+### 今日话题 {#xue-qiu-jin-ri-hua-ti}
 
 <Route author="nczitzk" example="/xueqiu/today" path="/xueqiu/today"/>
 
-### 用户动态
+### 用户动态 {#xue-qiu-yong-hu-dong-tai}
 
 <Route author="imlonghao" example="/xueqiu/user/8152922548" path="/xueqiu/user/:id/:type?" paramsDesc={['用户 id, 可在用户主页 URL 中找到', '动态的类型, 不填则默认全部']}>
 
@@ -636,27 +636,27 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-### 用户收藏动态
+### 用户收藏动态 {#xue-qiu-yong-hu-shou-cang-dong-tai}
 
 <Route author="imlonghao" example="/xueqiu/favorite/8152922548" path="/xueqiu/favorite/:id" paramsDesc={['用户 id, 可在用户主页 URL 中找到']}/>
 
-### 用户自选动态
+### 用户自选动态 {#xue-qiu-yong-hu-zi-xuan-dong-tai}
 
 <Route author="hillerliao" example="/xueqiu/user_stock/1247347556" path="/xueqiu/user_stock/:id" paramsDesc={['用户 id, 可在用户主页 URL 中找到']}/>
 
-### 用户专栏
+### 用户专栏 {#xue-qiu-yong-hu-zhuan-lan}
 
 <Route author="TonyRL" example="/xueqiu/column/9962554712" path="/xueqiu/column/:id" paramsDesc={['用户 id, 可在用户主页 URL 中找到']} radar="1" rssbud="1"/>
 
-### 蛋卷基金净值更新
+### 蛋卷基金净值更新 {#xue-qiu-dan-juan-ji-jin-jing-zhi-geng-xin}
 
 <Route author="HenryQW NathanDai" example="/xueqiu/fund/040008" path="/xueqiu/fund/:id" paramsDesc={['基金代码, 可在基金主页 URL 中找到. 此路由的数据为场外基金 (`F`开头)']}/>
 
-### 组合最新调仓信息
+### 组合最新调仓信息 {#xue-qiu-zu-he-zui-xin-tiao-cang-xin-xi}
 
 <Route author="ZhishanZhang" example="/xueqiu/snb/ZH1288184" path="/xueqiu/snb/:id" paramsDesc={['组合代码, 可在组合主页 URL 中找到.']}/>
 
-### 股票信息
+### 股票信息 {#xue-qiu-gu-piao-xin-xi}
 
 <Route author="YuYang" example="/xueqiu/stock_info/SZ000002" path="/xueqiu/stock_info/:id/:type?" paramsDesc={['股票代码（需要带上交易所）', '动态的类型, 不填则为股票公告']}>
 
@@ -666,17 +666,17 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-### 股票评论
+### 股票评论 {#xue-qiu-gu-piao-ping-lun}
 
 <Route author="zytomorrow" example="/xueqiu/stock_comments/SZ002626" path="/xueqiu/stock_comments/:id/:titleLength?" paramsDesc={['股票代码（需要带上交易所）', '标题长度']}/>
 
-### 热帖
+### 热帖 {#xue-qiu-re-tie}
 
 <Route author="hillerliao" example="/xueqiu/hots" path="/xueqiu/hots"/>
 
-## 有知有行
+## 有知有行 {#you-zhi-you-xing}
 
-### 有知文章
+### 有知文章 {#you-zhi-you-xing-you-zhi-wen-zhang}
 
 <Route author="broven Fatpandac nczitzk" example="/youzhiyouxing/materials" path="/youzhiyouxing/materials/:id?" paramsDesc={['分类，见下表，默认为全部']}>
 
@@ -686,9 +686,9 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-## 证券时报网
+## 证券时报网 {#zheng-quan-shi-bao-wang}
 
-### 栏目
+### 栏目 {#zheng-quan-shi-bao-wang-lan-mu}
 
 <Route author="nczitzk" example="/stcn/yw" path="/stcn/:id?" paramsDesc={['栏目 id，见下表，默认为要闻']}>
 
@@ -730,9 +730,9 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-## 智通财经网
+## 智通财经网 {#zhi-tong-cai-jing-wang}
 
-### 推荐
+### 推荐 {#zhi-tong-cai-jing-wang-tui-jian}
 
 <Route author="nczitzk" example="/zhitongcaijing" path="/zhitongcaijing/:id?/:category?" paramsDesc={['栏目 id，可在对应栏目页 URL 中找到，默认为 recommend，即推荐', '分类 id，可在对应栏目子分类页 URL 中找到，默认为全部']}>
 
@@ -755,27 +755,27 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-## 中国人民银行
+## 中国人民银行 {#zhong-guo-ren-min-yin-hang}
 
-### 沟通交流
+### 沟通交流 {#zhong-guo-ren-min-yin-hang-gou-tong-jiao-liu}
 
 <Route author="nczitzk" example="/gov/pbc/goutongjiaoliu" path="/gov/pbc/goutongjiaoliu" puppeteer="1"/>
 
-### 货币政策司公开市场交易公告
+### 货币政策司公开市场交易公告 {#zhong-guo-ren-min-yin-hang-huo-bi-zheng-ce-si-gong-kai-shi-chang-jiao-yi-gong-gao}
 
 <Route author="nczitzk" example="/gov/pbc/tradeAnnouncement" path="/gov/pbc/tradeAnnouncement" puppeteer="1"/>
 
-### 政策研究
+### 政策研究 {#zhong-guo-ren-min-yin-hang-zheng-ce-yan-jiu}
 
 <Route author="Fatpandac" example="/gov/pbc/zcjl" path="/gov/pbc/zcjl"/>
 
-### 工作论文
+### 工作论文 {#zhong-guo-ren-min-yin-hang-gong-zuo-lun-wen}
 
 <Route author="Fatpandac" example="/gov/pbc/gzlw" path="/gov/pbc/gzlw"/>
 
-## 中证网
+## 中证网 {#zhong-zheng-wang}
 
-### 资讯
+### 资讯 {#zhong-zheng-wang-zi-xun}
 
 <Route author="nczitzk" example="/cs/news/zzkx" path="/cs/news/:caty" paramsDesc={['资讯类型']}>
 
