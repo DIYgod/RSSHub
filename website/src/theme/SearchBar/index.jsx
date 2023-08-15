@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 import 'meilisearch-docsearch/css';
