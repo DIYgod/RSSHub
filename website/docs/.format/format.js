@@ -2,7 +2,8 @@ const file = require('./file');
 const sgf = require('staged-git-files');
 const path = require('path');
 const sortByHeading = require('./sortByHeading');
-const chineseFormat = require('./chineseFormat');
+const slugId = require('./slugId');
+// const chineseFormat = require('./chineseFormat');
 const util = require('util');
 const exec = util.promisify(require('child_process').exec);
 
@@ -12,7 +13,7 @@ const exec = util.promisify(require('child_process').exec);
  * rules filters required file document object
  * and handler get document string and return formatted document
  */
-const processors = [sortByHeading, chineseFormat];
+const processors = [sortByHeading, slugId];
 
 // Helpers
 const loopSideBar = (children, type, lang, prefix) =>
@@ -54,18 +55,31 @@ const loopType = (sidebar, lang, prefix) => loopSideBar(sidebar[0].children, fil
     }
  */
 const buildFileList = async () => {
-    const config = require(`../.vuepress/config`);
-    let fileList = [];
-    Object.keys(config.themeConfig.locales).forEach((key) => {
-        const locale = config.themeConfig.locales[key];
-        const key_path = key.slice(1);
-        if (locale.hasOwnProperty('sidebar')) {
-            fileList = fileList.concat(loopType(locale.sidebar[key], locale.lang, key_path));
-        }
-        if (locale.hasOwnProperty('nav')) {
-            fileList = fileList.concat(loopNav(locale.nav, locale.lang));
-        }
-    });
+    const config = require(`../../sidebars.js`);
+    const fileList = config.guideSidebar[2].items
+        .map((item) => ({
+            type: file.ROUTE_TYPE,
+            path: path.resolve(__dirname, '..', `./${item}.md`),
+            lang: 'zh-CN',
+        }))
+        .concat(
+            config.guideSidebar[2].items.map((item) => ({
+                type: file.ROUTE_TYPE,
+                path: path.resolve(__dirname, '../../i18n/en/docusaurus-plugin-content-docs/current', `./${item}.md`),
+                lang: 'en-US',
+            }))
+        );
+    // let fileList = [];
+    // Object.keys(config.themeConfig.locales).forEach((key) => {
+    //     const locale = config.themeConfig.locales[key];
+    //     const key_path = key.slice(1);
+    //     if (locale.hasOwnProperty('sidebar')) {
+    //         fileList = fileList.concat(loopType(locale.sidebar[key], locale.lang, key_path));
+    //     }
+    //     if (locale.hasOwnProperty('nav')) {
+    //         fileList = fileList.concat(loopNav(locale.nav, locale.lang));
+    //     }
+    // });
 
     return fileList;
 };

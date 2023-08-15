@@ -49,3 +49,7 @@
 .container .card > h2 + p {
   display: none;
 }
+
+.table-of-contents > li > a {
+  font-weight: 700;
+}
