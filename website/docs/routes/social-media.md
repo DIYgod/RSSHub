@@ -980,7 +980,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 <Route author="TonyRL" path="/youtube/charts/:category?/:country?/:embed?" example="/youtube/charts" paramsDesc={['排行榜，见下表，默认为 `TopVideos`', '国家代码，见下表，默认为全球', '默认为开启内嵌视频，任意值为关闭']} radar="1" rssbud="1">
 
-::: details 排行榜
+:::note 排行榜
 
 | 热门音乐人 | 热门歌曲 | 热门音乐视频 | 时下流行       |
 | ---------- | -------- | ------------ | -------------- |
@@ -988,7 +988,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 :::
 
-::: details 国家代码
+:::note 国家代码
 
 | Argentina | Australia | Austria | Belgium | Bolivia | Brazil | Canada |
 | --------- | --------- | ------- | ------- | ------- | ------ | ------ |

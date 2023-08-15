@@ -218,7 +218,7 @@ Here's an example radar rule that you can play with:
 })
 ```
 
-::: details Extra examples
+:::note Extra examples
 
 ```js
 ({

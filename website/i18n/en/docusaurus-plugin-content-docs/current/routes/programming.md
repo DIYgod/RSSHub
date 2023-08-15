@@ -14,7 +14,7 @@ import RouteEn from '@site/src/components/RouteEn';
 
 You have the option to utilize the main heading or use individual categories as topics for the path.
 
-::: details Topics
+:::note Topics
 
 | **Code**                | _code_                  |
 |-------------------------|-------------------------|
@@ -514,7 +514,7 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <RouteEn author="Rjnishant530" example="/smashingmagazine/react" path="/smashingmagazine/:category?" paramsDesc={['Find in URL or Table below']} radar="1">
 
-::: details Category
+:::note Category
 
 | **Category**         |                       |
 |----------------------|-----------------------|

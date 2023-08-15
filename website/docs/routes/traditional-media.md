@@ -583,7 +583,7 @@ Category 列表：
 
 <Route author="yuxinliu-alex nczitzk" example="/cankaoxiaoxi/column/diyi" path="/cankaoxiaoxi/column/:id?" paramsDesc={['栏目 id，默认为 `diyi`，即第一关注']}>
 
-::: details 栏目
+:::note 栏目
 
 | 栏目           | id       |
 | -------------- | -------- |

@@ -205,7 +205,7 @@ Category of news
 
 <RouteEn author="nczitzk" example="/europapress" path="/europapress/:category?" paramsDesc={['Category, see below, Home by default']}>
 
-::: details Categories
+:::note Categories
 
 | España   | Internacional | Economía | Deportes |
 | -------- | ------------- | -------- | -------- |
@@ -373,7 +373,7 @@ Country
 
 <RouteEn author="Rjnishant530" example="/grist/topic/extreme-heat" path="/grist/topic/:topic" :paramsDesc="['Any Topic from Table below']" radar="1">
 
-::: details Topics
+:::note Topics
 
 | Topic Name          | Topic Link          |
 |---------------------|---------------------|
@@ -702,7 +702,7 @@ Compared to the official one, this feed:
 
 <RouteEn author="Kasper4649 akashigakki" example="/nogizaka46/blog" path="/nogizaka46/blog/:id?" paramsDesc={['Member ID, see below, `all` by default']}>
 
-::: details Member ID
+:::note Member ID
 
 | Member ID | Name                  |
 | --------- | --------------------- |
@@ -767,7 +767,7 @@ Compared to the official one, this feed:
 
 <RouteEn author="victor21813 nczitzk akashigakki" example="/sakurazaka46/blog" path="/sakurazaka46/blog/:id?/:page?" paramsDesc={['Member ID, see below, `all` by default', 'Page, `0` by default']}>
 
-::: details Member ID
+:::note Member ID
 
 | Member ID | Name         |
 | --------- | ------------ |
@@ -818,7 +818,7 @@ Compared to the official one, this feed:
 
 <RouteEn author="nwindz akashigakki" example="/hinatazaka46/blog" path="/hinatazaka46/blog/:id?/:page?" paramsDesc={['Member ID, see below, `all` by default', 'Page, `0` by default']}>
 
-::: details Member ID
+:::note Member ID
 
 | Member ID | Name         |
 | --------- | ------------ |

@@ -142,7 +142,7 @@ This is a warning.
 This is a dangerous warning.
 :::
 
-::: details Details title
+:::note Details title
 This is a details block.
 :::
 ```
@@ -161,7 +161,7 @@ This is a warning.
 This is a dangerous warning.
 :::
 
-::: details Details title
+:::note Details title
 This is a details block.
 :::
 

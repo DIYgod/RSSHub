@@ -636,13 +636,13 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 
 <RouteEn author="TonyRL" path="/youtube/charts/:category?/:country?/:embed?" example="/youtube/charts" paramsDesc={['Chart, see table below, default to `TopVideos`', 'Country Code, see table below, default to global', 'Default to embed the video, set to any value to disable embedding']} radar="1" rssbud="1">
 
-::: details Chart
+:::note Chart
 | Top artists | Top songs | Top music videos | Trending |
 | ----------- | --------- | ---------------- | -------- |
 | TopArtists | TopSongs | TopVideos | TrendingVideos |
 :::
 
-::: details Country Code
+:::note Country Code
 | Argentina | Australia | Austria | Belgium | Bolivia | Brazil | Canada |
 | --------- | --------- | ------- | ------- | ------- | ------ | ------ |
 | ar | au | at | be | bo | br | ca |

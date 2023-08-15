@@ -43,9 +43,9 @@ import RouteEn from '@site/src/components/RouteEn';
 
 ### Category
 
-<RouteEn author="Rjnishant530" example="/finology/success-stories" path="/finology/:category" :paramDesc="['Refer Table below or find in URL']" radar="1">
+<RouteEn author="Rjnishant530" example="/finology/success-stories" path="/finology/:category" paramDesc={['Refer Table below or find in URL']} radar="1">
 
-::: details Category
+:::note Category
 
 | Category           | Link                  |
 |---------------------|-----------------------|
@@ -71,13 +71,13 @@ import RouteEn from '@site/src/components/RouteEn';
 
 ### Most Viewed
 
-<RouteEn author="Rjnishant530" example="/finology/most-viewed/monthly" path="/finology/most-viewed/:time" :paramDesc="['Accepts : `alltime` or `monthly` only']" radar="1"/>
+<RouteEn author="Rjnishant530" example="/finology/most-viewed/monthly" path="/finology/most-viewed/:time" paramDesc={['Accepts : `alltime` or `monthly` only']} radar="1"/>
 
 ### Trending Topic
 
-<RouteEn author="Rjnishant530" example="/finology/tag/startups" path="/tag/:topic" :paramDesc="['Refer Table below or find in URL']" radar="1">
+<RouteEn author="Rjnishant530" example="/finology/tag/startups" path="/tag/:topic" paramDesc={['Refer Table below or find in URL']} radar="1">
 
-::: details Topic
+:::note Topic
 
 | Topic              | Link                  |
 |---------------------|-----------------------|

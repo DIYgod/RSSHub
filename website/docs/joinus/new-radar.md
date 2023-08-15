@@ -214,7 +214,7 @@ module.exports = {
 })
 ```
 
-::: details 其他示例
+:::note 其他示例
 
 ```js
 ({
