@@ -43,7 +43,7 @@ const config = {
                     sidebarPath: require.resolve('./sidebars.js'),
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
-                    editUrl: 'https://github.com/DIYgod/RSSHub/tree/main/website/',
+                    editUrl: 'https://github.com/DIYgod/RSSHub/blob/master/website/',
                 },
                 blog: false,
                 theme: {
