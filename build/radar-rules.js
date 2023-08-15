@@ -11628,7 +11628,7 @@
         source:[ "/realtime/*category" ],
         target:(params) => `/stdheadline/std/realtime/${params.category}` } ] },
   "stockedge.com":{ _name:"Stock Edge",
-    ".":[ { title:"Daily Updates News",
+    web:[ { title:"Daily Updates News",
         docs:"https://docs.rsshub.app/routes/en/finance#stock-edge",
         source:[ "/daily-updates/news" ],
         target:"/stockedge/daily-updates/news" } ] },
