@@ -102,7 +102,7 @@ jobs:
         if: ${{ matrix.chromium.dependency != '' }}
         # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
         # nothing since it calls Snap (disgusting!) to install Chromium, which should be up-to-date.
-        # That's not really a problem since the Chromium-bundled Docker image is based on Debian bookworm,
+        # That's not really a problem since the Chromium-bundled Docker image is based on Debian bullseye,
         # which provides up-to-date native packages.
         run: |
           set -ex
@@ -125,7 +125,7 @@ jobs:
         node-version: [ 18, 20 ]
     defaults:
       run:
-        working-directory: docs
+        working-directory: website
     name: Build docs on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v3
@@ -136,14 +136,14 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-          cache-dependency-path: docs/pnpm-lock.yaml
+          cache-dependency-path: website/pnpm-lock.yaml
       - run: pnpm i
       - name: Set environment variable for Node v16 above
         if: ${{ matrix.node-version > '16' }}
         run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
       - name: Build docs
-        run: npm run docs:build
-        working-directory: docs
+        run: npm run build
+        working-directory: website
       - name: Unset environment variable for Node v16 above
         if: ${{ matrix.node-version > '16' }}
         run: echo "NODE_OPTIONS=''" >> $GITHUB_ENV

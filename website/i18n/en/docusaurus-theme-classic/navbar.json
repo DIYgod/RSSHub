@@ -1,0 +1,46 @@
+{
+  "title": {
+    "message": "RSSHub",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "RSSHub",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.指南": {
+    "message": "Guide",
+    "description": "Navbar item with label 指南"
+  },
+  "item.label.参与我们": {
+    "message": "Join us",
+    "description": "Navbar item with label 参与我们"
+  },
+  "item.label.部署": {
+    "message": "Install",
+    "description": "Navbar item with label 部署"
+  },
+  "item.label.支持 RSSHub": {
+    "message": "Support RSSHub",
+    "description": "Navbar item with label 支持 RSSHub"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  },
+  "item.label.快速开始": {
+    "message": "Quick Start",
+    "description": "Navbar item with label 快速开始"
+  },
+  "item.label.路由规范": {
+    "message": "Script Standard",
+    "description": "Navbar item with label 路由规范"
+  },
+  "item.label.日期处理": {
+    "message": "Date Handling",
+    "description": "Navbar item with label 日期处理"
+  },
+  "item.label.使用缓存": {
+    "message": "Using Cache",
+    "description": "Navbar item with label 使用缓存"
+  }
+}
