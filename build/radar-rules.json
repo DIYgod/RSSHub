@@ -7874,7 +7874,6 @@
         "title": "首页",
         "docs": "https://docs.rsshub.app/routes/new-media#foresight-news-shou-ye",
         "source": [
-          "/article",
           "/"
         ],
         "target": "/foresightnews"
@@ -7883,7 +7882,6 @@
         "title": "文章",
         "docs": "https://docs.rsshub.app/routes/new-media#foresight-news-wen-zhang",
         "source": [
-          "/article",
           "/"
         ],
         "target": "/foresightnews/article"

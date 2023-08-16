@@ -1941,6 +1941,9 @@
     "/followin/:categoryId?/:lang?": [
         "TonyRL"
     ],
+    "/foresightnews": [
+        "nczitzk"
+    ],
     "/foresightnews/": [
         "nczitzk"
     ],
