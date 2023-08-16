@@ -41,17 +41,17 @@ If your changes are not related to route, please fill in `routes` with `NOROUTE`
 ## 新 RSS 路由检查列表 / New RSS Route Checklist
 
 - [ ] 新的路由 New Route
-  - [ ] 跟随 [v2 路由规范](/joinus/advanced/script-standard.html) Follows [v2 Script Standard](/en/joinus/advanced/script-standard.html)
+  - [ ] 跟随 [v2 路由规范](https://docs.rsshub.app/joinus/advanced/script-standard) Follows [v2 Script Standard](https://docs.rsshub.app/en/joinus/advanced/script-standard)
 - [ ] 文档说明 Documentation
   - [ ] 中文文档 CN
   - [ ] 英文文档 EN
 - [ ] 全文获取 fulltext
-  - [ ] 使用缓存 Use Cache
+  - [ ] 使用缓存 Use cache
 - [ ] 反爬/频率限制 anti-bot or rate limit?
   - [ ] 如果有, 是否有对应的措施? If yes, do your code reflect this sign?
-- [ ] [日期和时间](/joinus/advanced/pub-date) [date and time](/en/joinus/advanced/pub-date)
+- [ ] [日期和时间](https://docs.rsshub.app/joinus/advanced/pub-date) [Date and time](https://docs.rsshub.app/en/joinus/advanced/pub-date)
   - [ ] 可以解析 Parsed
-  - [ ] 时区调整 Correct TimeZone
+  - [ ] 时区正确 Correct time zone
 - [ ] 添加了新的包 New package added
 - [ ] `Puppeteer`
 
