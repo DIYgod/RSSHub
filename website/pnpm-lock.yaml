@@ -27,8 +27,8 @@ dependencies:
     specifier: ^0.4.7
     version: 0.4.7
   pinyin-pro:
-    specifier: 3.16.2
-    version: 3.16.2
+    specifier: 3.16.3
+    version: 3.16.3
   prism-react-renderer:
     specifier: ^1.3.5
     version: 1.3.5(react@17.0.2)
@@ -44,8 +44,8 @@ devDependencies:
     specifier: 2.4.1
     version: 2.4.1(react-dom@17.0.2)(react@17.0.2)
   '@tsconfig/docusaurus':
-    specifier: ^1.0.5
-    version: 1.0.5
+    specifier: ^2.0.0
+    version: 2.0.0
   typescript:
     specifier: ^4.7.4
     version: 4.7.4
@@ -2712,8 +2712,8 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: false
 
-  /@tsconfig/docusaurus@1.0.5:
-    resolution: {integrity: sha512-KM/TuJa9fugo67dTGx+ktIqf3fVc077J6jwHu845Hex4EQf7LABlNonP/mohDKT0cmncdtlYVHHF74xR/YpThg==}
+  /@tsconfig/docusaurus@2.0.0:
+    resolution: {integrity: sha512-X5wptT7pXA/46/IRFTW76oR5GNjoy9qjNM/1JGhFV4QAsmLh3YUpJJA+Vpx7Ds6eEBxSxz1QrgoNEBy6rLVs8w==}
     dev: true
 
   /@types/body-parser@1.19.2:
@@ -6260,8 +6260,8 @@ packages:
     engines: {node: '>=8.6'}
     dev: false
 
-  /pinyin-pro@3.16.2:
-    resolution: {integrity: sha512-0Q+boRY7u0X7NApcS8ZDLWUw0H8PoopaH4yN/KVqeAFsrRTwhKEbv0bG/ZYwLrQRSfGhWEm5wxl/l4qyVQTrnQ==}
+  /pinyin-pro@3.16.3:
+    resolution: {integrity: sha512-nb+E3pcs9jbgmN9gKe5ku8p7OofmEMM+9vXmW0aGdODsLI4OyMZ3RK7IwPpA4DD2BYXw9gvLDDgFYBvcNIVVDA==}
     dev: false
 
   /pkg-dir@4.2.0:
