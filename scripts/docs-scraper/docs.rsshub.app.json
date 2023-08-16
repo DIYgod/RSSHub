@@ -4,16 +4,16 @@
     "start_urls": ["https://docs.rsshub.app"],
     "selectors": {
         "lvl0": {
-            "selector": ".sidebar-heading.open",
+            "selector": ".menu__link.menu__link--active",
             "global": true,
             "default_value": "路由"
         },
-        "lvl1": ".theme-default-content h1",
-        "lvl2": ".theme-default-content h2",
-        "lvl3": ".theme-default-content h3",
-        "lvl4": ".theme-default-content h4",
-        "lvl5": ".theme-default-content h5",
-        "text": ".theme-default-content p, .theme-default-content table"
+        "lvl1": ".theme-doc-markdown h1",
+        "lvl2": ".theme-doc-markdown h2",
+        "lvl3": ".theme-doc-markdown h3",
+        "lvl4": ".theme-doc-markdown h4",
+        "lvl5": ".theme-doc-markdown h5",
+        "text": ".theme-doc-markdown p.path, .theme-doc-markdown div.routeBlock div, .theme-doc-markdown table"
     },
     "strip_chars": " .,;:#",
     "scrap_start_urls": false,
@@ -54,5 +54,5 @@
         ],
         "sortableAttributes": ["anchor"]
     },
-    "selectors_exclude": [".badge", ".author"]
+    "selectors_exclude": [".badge", ".author", ".alert"]
 }
