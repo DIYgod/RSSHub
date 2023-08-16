@@ -3836,7 +3836,7 @@
     "weekly": [
       {
         "title": "财新周刊",
-        "docs": "https://docs.rsshub.app/traditional-media.html#cai-xin-wang",
+        "docs": "https://docs.rsshub.app/routes/traditional-media#cai-xin-wang",
         "source": [
           "/",
           "/*"
@@ -7669,7 +7669,7 @@
     "insider": [
       {
         "title": "Bullets",
-        "docs": "https://docs.rsshub.app/en/finance.html#finology-insider",
+        "docs": "https://docs.rsshub.app/en/routes/finance#finology-insider",
         "source": [
           "/bullets"
         ],
@@ -7677,19 +7677,19 @@
       },
       {
         "title": "Category",
-        "docs": "https://docs.rsshub.app/en/finance.html#finology-insider",
+        "docs": "https://docs.rsshub.app/en/routes/finance#finology-insider",
         "source": "/:category",
         "target": "/finology/:category"
       },
       {
         "title": "Most Viewed",
-        "docs": "https://docs.rsshub.app/en/finance.html#finology-insider",
+        "docs": "https://docs.rsshub.app/en/routes/finance#finology-insider",
         "source": "/most-viewed",
         "target": "/finology/most-viewed/monthly"
       },
       {
         "title": "Trending Topic",
-        "docs": "https://docs.rsshub.app/en/finance.html#finology-insider",
+        "docs": "https://docs.rsshub.app/en/routes/finance#finology-insider",
         "source": [
           "/tag/:topic"
         ],
@@ -9857,7 +9857,7 @@
     ".": [
       {
         "title": "Articles",
-        "docs": "https://docs.rsshub.app/en/new-media.html#grist",
+        "docs": "https://docs.rsshub.app/en/routes/new-media#grist",
         "source": [
           "/articles/"
         ],
@@ -9865,19 +9865,19 @@
       },
       {
         "title": "Featured",
-        "docs": "https://docs.rsshub.app/en/new-media.html#grist",
+        "docs": "https://docs.rsshub.app/en/routes/new-media#grist",
         "source": "/",
         "target": "/grist/featured"
       },
       {
         "title": "Series",
-        "docs": "https://docs.rsshub.app/en/new-media.html#grist",
+        "docs": "https://docs.rsshub.app/en/routes/new-media#grist",
         "source": "/series/:series",
         "target": "/grist/series/:series"
       },
       {
         "title": "Topic",
-        "docs": "https://docs.rsshub.app/en/new-media.html#grist",
+        "docs": "https://docs.rsshub.app/en/routes/new-media#grist",
         "source": [
           "/:topic"
         ],
@@ -19305,8 +19305,8 @@
         "target": "/science/early/:journal"
       },
       {
-        "title": "Science Blogs",
-        "docs": "https://docs.rsshub.app/journal.html#science-xi-lie",
+        "title": "博客",
+        "docs": "https://docs.rsshub.app/routes/journal#science-xi-lie",
         "source": [
           "/blogs/:name"
         ],
@@ -27020,38 +27020,38 @@
     "www": [
       {
         "title": "新闻中心",
-        "docs": "http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue",
+        "docs": "http://docs.rsshub.app/university#hu-bei-gong-ye-da-xue",
         "source": "/xwzx/:name"
       }
     ],
     "jsjxy": [
       {
         "title": "新闻动态",
-        "docs": "http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue",
+        "docs": "http://docs.rsshub.app/routes/university#hu-bei-gong-ye-da-xue",
         "source": "/index/xwdt.htm",
         "target": "/hbut/cs/xwdt"
       },
       {
         "title": "通知公告",
-        "docs": "http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue",
+        "docs": "http://docs.rsshub.app/routes/university#hu-bei-gong-ye-da-xue",
         "source": "/index/tzgg.htm",
         "target": "/hbut/cs/tzgg"
       },
       {
         "title": "教学信息",
-        "docs": "http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue",
+        "docs": "http://docs.rsshub.app/routes/university#hu-bei-gong-ye-da-xue",
         "source": "/jxxx.htm",
         "target": "/hbut/cs/jxxx"
       },
       {
         "title": "科研动态",
-        "docs": "http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue",
+        "docs": "http://docs.rsshub.app/routes/university#hu-bei-gong-ye-da-xue",
         "source": "/kxyj/kydt.htm",
         "target": "/hbut/cs/kydt"
       },
       {
         "title": "党建活动",
-        "docs": "http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue",
+        "docs": "http://docs.rsshub.app/routes/university#hu-bei-gong-ye-da-xue",
         "source": "/djhd/djhd.htm",
         "target": "/hbut/cs/djhd"
       }
@@ -27132,13 +27132,13 @@
     "ece": [
       {
         "title": "ECE News",
-        "docs": "http://docs.rsshub.app/en/university.html#umass-amherst",
+        "docs": "http://docs.rsshub.app/en/routes/university#umass-amherst",
         "source": "/news",
         "target": "/umass/amherst/ecenews"
       },
       {
         "title": "ECE Seminar",
-        "docs": "http://docs.rsshub.app/en/university.html#umass-amherst",
+        "docs": "http://docs.rsshub.app/en/routes/university#umass-amherst",
         "source": "/seminars",
         "target": "/umass/amherst/eceseminar"
       }
@@ -27146,7 +27146,7 @@
     "www.cics": [
       {
         "title": "CICS News",
-        "docs": "http://docs.rsshub.app/en/university.html#umass-amherst",
+        "docs": "http://docs.rsshub.app/en/routes/university#umass-amherst",
         "source": "/news",
         "target": "/umass/amherst/csnews"
       }
@@ -27154,13 +27154,13 @@
     "www": [
       {
         "title": "IPO Events",
-        "docs": "http://docs.rsshub.app/en/university.html#umass-amherst",
+        "docs": "http://docs.rsshub.app/en/routes/university#umass-amherst",
         "source": "/ipo/iss/events",
         "target": "/umass/amherst/ipoevents"
       },
       {
         "title": "IPO Featured Stories",
-        "docs": "http://docs.rsshub.app/en/university.html#umass-amherst",
+        "docs": "http://docs.rsshub.app/en/routes/university#umass-amherst",
         "source": "/ipo/iss/featured-stories",
         "target": "/umass/amherst/ipostories"
       }
@@ -27272,7 +27272,7 @@
     ".": [
       {
         "title": "不安全资讯",
-        "docs": "http://docs.rsshub.app/new-media.html#bu-an-quan",
+        "docs": "http://docs.rsshub.app/routes/new-media#bu-an-quan",
         "source": "/",
         "target": "/buaq"
       }

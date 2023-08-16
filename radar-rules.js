@@ -212,7 +212,7 @@
         www: [
             {
                 title: '新闻中心',
-                docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue',
+                docs: 'http://docs.rsshub.app/routes/university#hu-bei-gong-ye-da-xue',
                 source: '/xwzx/:name',
                 target: (params) => {
                     const type = params.name.replace('.htm', '');
@@ -221,11 +221,11 @@
             },
         ],
         jsjxy: [
-            { title: '新闻动态', docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue', source: '/index/xwdt.htm', target: '/hbut/cs/xwdt' },
-            { title: '通知公告', docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue', source: '/index/tzgg.htm', target: '/hbut/cs/tzgg' },
-            { title: '教学信息', docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue', source: '/jxxx.htm', target: '/hbut/cs/jxxx' },
-            { title: '科研动态', docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue', source: '/kxyj/kydt.htm', target: '/hbut/cs/kydt' },
-            { title: '党建活动', docs: 'http://docs.rsshub.app/university.html#hu-bei-gong-ye-da-xue', source: '/djhd/djhd.htm', target: '/hbut/cs/djhd' },
+            { title: '新闻动态', docs: 'http://docs.rsshub.app/routes/university#hu-bei-gong-ye-da-xue', source: '/index/xwdt.htm', target: '/hbut/cs/xwdt' },
+            { title: '通知公告', docs: 'http://docs.rsshub.app/routes/university#hu-bei-gong-ye-da-xue', source: '/index/tzgg.htm', target: '/hbut/cs/tzgg' },
+            { title: '教学信息', docs: 'http://docs.rsshub.app/routes/university#hu-bei-gong-ye-da-xue', source: '/jxxx.htm', target: '/hbut/cs/jxxx' },
+            { title: '科研动态', docs: 'http://docs.rsshub.app/routes/university#hu-bei-gong-ye-da-xue', source: '/kxyj/kydt.htm', target: '/hbut/cs/kydt' },
+            { title: '党建活动', docs: 'http://docs.rsshub.app/routes/university#hu-bei-gong-ye-da-xue', source: '/djhd/djhd.htm', target: '/hbut/cs/djhd' },
         ],
     },
     'zhuixinfan.com': { _name: '追新番日剧站', '.': [{ title: '更新列表', docs: 'https://docs.rsshub.app/routes/multimedia#zhui-xin-fan-ri-ju-zhan', source: ['/main.php'], target: '/zhuixinfan/list' }] },
@@ -312,13 +312,13 @@
     'umass.edu': {
         _name: 'UMASS Amherst',
         ece: [
-            { title: 'ECE News', docs: 'http://docs.rsshub.app/en/university.html#umass-amherst', source: '/news', target: '/umass/amherst/ecenews' },
-            { title: 'ECE Seminar', docs: 'http://docs.rsshub.app/en/university.html#umass-amherst', source: '/seminars', target: '/umass/amherst/eceseminar' },
+            { title: 'ECE News', docs: 'http://docs.rsshub.app/en/routes/university#umass-amherst', source: '/news', target: '/umass/amherst/ecenews' },
+            { title: 'ECE Seminar', docs: 'http://docs.rsshub.app/en/routes/university#umass-amherst', source: '/seminars', target: '/umass/amherst/eceseminar' },
         ],
-        'www.cics': [{ title: 'CICS News', docs: 'http://docs.rsshub.app/en/university.html#umass-amherst', source: '/news', target: '/umass/amherst/csnews' }],
+        'www.cics': [{ title: 'CICS News', docs: 'http://docs.rsshub.app/en/routes/university#umass-amherst', source: '/news', target: '/umass/amherst/csnews' }],
         www: [
-            { title: 'IPO Events', docs: 'http://docs.rsshub.app/en/university.html#umass-amherst', source: '/ipo/iss/events', target: '/umass/amherst/ipoevents' },
-            { title: 'IPO Featured Stories', docs: 'http://docs.rsshub.app/en/university.html#umass-amherst', source: '/ipo/iss/featured-stories', target: '/umass/amherst/ipostories' },
+            { title: 'IPO Events', docs: 'http://docs.rsshub.app/en/routes/university#umass-amherst', source: '/ipo/iss/events', target: '/umass/amherst/ipoevents' },
+            { title: 'IPO Featured Stories', docs: 'http://docs.rsshub.app/en/routes/university#umass-amherst', source: '/ipo/iss/featured-stories', target: '/umass/amherst/ipostories' },
         ],
     },
     'bjeea.com': {
@@ -378,7 +378,7 @@
             },
         ],
     },
-    'buaq.net': { _name: '不安全资讯', '.': [{ title: '不安全资讯', docs: 'http://docs.rsshub.app/new-media.html#bu-an-quan', source: '/', target: '/buaq' }] },
+    'buaq.net': { _name: '不安全资讯', '.': [{ title: '不安全资讯', docs: 'http://docs.rsshub.app/routes/new-media#bu-an-quan', source: '/', target: '/buaq' }] },
     'jian-ning.com': { _name: '建宁闲谈', '.': [{ title: '文章', docs: 'https://docs.rsshub.app/routes/blog#jian-ning-xian-tan', source: '/*', target: '/blogs/jianning' }] },
     'matataki.io': {
         _name: 'matataki',
