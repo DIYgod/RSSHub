@@ -623,8 +623,8 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 </Route>
 
-## 数码荔枝
+## 数码荔枝  {#shu-ma-li-zhi}
 
-### 软件上新
+### 软件上新 {#shu-ma-li-zhi-ruan-jian-shang-xin}
 
 <Route author="Beurling" example="/lizhi/new" path="/lizhi/new" />
