@@ -63,6 +63,8 @@ jobs:
             --name rsshub \
             -e NODE_ENV=dev \
             -e LOGGER_LEVEL=debug \
+            -e ALLOW_USER_HOTLINK_TEMPLATE=true \
+            -e ALLOW_USER_SUPPLY_UNSAFE_DOMAIN=true \
             -p 1200:1200 \
             rsshub:latest
 

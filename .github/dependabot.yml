@@ -38,7 +38,7 @@ updates:
         versions: ['>=10.0.0']
 
   - package-ecosystem: npm
-    directory: '/docs'
+    directory: '/website'
     schedule:
       interval: daily
       time: '21:00'
