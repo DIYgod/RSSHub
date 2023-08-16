@@ -185,7 +185,7 @@ Category of news
 
 ### Topic
 
-<RouteEn author="Rjnishant530" example="/dlnews/fintech" path="/dlnews/:category" :paramsDesc="['Find in Table. Defaults to All articles']" radar="1">
+<RouteEn author="Rjnishant530" example="/dlnews/fintech" path="/dlnews/:category" paramsDesc={['Find in Table. Defaults to All articles']} radar="1">
 
 | Topic              | Link                |
 |--------------------|---------------------|
@@ -198,7 +198,7 @@ Category of news
 | Snapshot           | snapshot |
 | Web3               | web3     |
 
-
+</RouteEn>
 
 ## Engadget
 
