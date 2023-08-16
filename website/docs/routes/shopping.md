@@ -622,3 +622,9 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 |          | android | ios | mac | pc | uwp | notification | free     | giveaway | discount |
 
 </Route>
+
+## 数码荔枝
+
+### 软件上新
+
+<Route author="Beurling" example="/lizhi/new" path="/lizhi/new" />
