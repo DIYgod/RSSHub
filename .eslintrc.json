@@ -44,7 +44,6 @@
         "no-multi-str": 2,
         "no-new-func": 2,
         "no-restricted-imports": 2,
-        "no-return-await": 2,
         "no-unneeded-ternary": 2,
         "no-useless-computed-key": 2,
         "no-useless-concat": 1,
