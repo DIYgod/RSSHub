@@ -24,7 +24,7 @@
     "build:maintainer": "node scripts/workflow/build-maintainer.js",
     "build:radar": "node scripts/workflow/build-radar.js",
     "dev": "cross-env NODE_ENV=dev nodemon --inspect lib/index.js",
-    "format": "eslint --cache --fix \"**/*.{js,yml}\" && node docs/.format/format.js && prettier \"**/*.{js,json}\" --write",
+    "format": "eslint --cache --fix \"**/*.{js,yml}\" && node website/docs/.format/format.js && prettier \"**/*.{js,json}\" --write",
     "format:check": "eslint --cache \"**/*.{js,yml}\" && prettier \"**/*.{js,json}\" --check",
     "format:staged": "lint-staged",
     "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit --detectOpenHandles",
@@ -41,7 +41,7 @@
       "eslint --cache --fix",
       "prettier --ignore-unknown --ignore-path ./.gitignore --write"
     ],
-    "*.md": "node docs/.format/format.js --staged",
+    "*.md": "node website/docs/.format/format.js --staged",
     "*.yml": "eslint --cache --fix"
   },
   "nodemonConfig": {
@@ -127,7 +127,7 @@
     "pidusage": "3.0.2",
     "plist": "3.1.0",
     "proxy-chain": "2.3.0",
-    "puppeteer": "21.0.2",
+    "puppeteer": "21.0.3",
     "puppeteer-extra": "3.3.6",
     "puppeteer-extra-plugin-stealth": "2.11.2",
     "puppeteer-extra-plugin-user-data-dir": "2.4.1",
