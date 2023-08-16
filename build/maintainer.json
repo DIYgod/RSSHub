@@ -474,7 +474,16 @@
     "/aqara/community/:id?/:keyword?": [
         "nczitzk"
     ],
-    "/aqara/news": [
+    "/aqara/:region/news": [
+        "nczitzk"
+    ],
+    "/aqara/:region/blog": [
+        "nczitzk"
+    ],
+    "/aqara/:region/category/:id": [
+        "nczitzk"
+    ],
+    "/aqara/:region/tag/:id": [
         "nczitzk"
     ],
     "/arcteryx/new-arrivals/:country/:gender": [
