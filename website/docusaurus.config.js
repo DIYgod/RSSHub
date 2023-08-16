@@ -43,7 +43,7 @@ const config = {
                     sidebarPath: require.resolve('./sidebars.js'),
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
-                    editUrl: 'https://github.com/DIYgod/RSSHub/tree/main/website/',
+                    editUrl: 'https://github.com/DIYgod/RSSHub/blob/master/website/',
                 },
                 blog: false,
                 theme: {
@@ -56,22 +56,26 @@ const config = {
         ],
     ],
 
-    themes: [
+    customFields: {
+        'meilisearch-docsearch': {
+            host: 'https://meilisearch.rsshub.app',
+            apiKey: '375c36cd9573a2c1d1e536214158c37120fdd0ba6cd8829f7a848e940cc22245',
+            indexUid: 'rsshub',
+            container: '#docsearch',
+        },
+    },
+
+    plugins: [
         [
-            require.resolve('@easyops-cn/docusaurus-search-local'),
-            {
-                // ... Your options.
-                // `hashed` is recommended as long-term-cache of index file is possible.
-                hashed: true,
-                indexBlog: false,
-                language: ['en', 'zh'],
-                docsRouteBasePath: '/',
-                highlightSearchTermsOnTargetPage: true,
-                explicitSearchResultPath: true,
-                searchResultLimits: 10,
-            },
+            '@dipakparmar/docusaurus-plugin-umami',
+            /** @type {import('@dipakparmar/docusaurus-plugin-umami').Options} */
+            ({
+                websiteID: 'be1761be-7547-49d5-91b8-5c97c8f7cec7', // Required
+                analyticsDomain: 'umami.diygod.dev', // Required
+            }),
         ],
     ],
+
     themeConfig:
         /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
         ({
