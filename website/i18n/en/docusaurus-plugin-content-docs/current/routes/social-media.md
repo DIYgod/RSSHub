@@ -519,7 +519,7 @@ https://rsshub.app/twitter/user/durov/readable=1&authorNameBold=1&showAuthorInTi
 
 generates
 
-<img src="/readable-twitter.png" alt="Readable Twitter RSS of Durov" />
+<img src="/img/readable-twitter.png" alt="Readable Twitter RSS of Durov" />
 
 ### User timeline
 
