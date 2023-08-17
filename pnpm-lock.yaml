@@ -203,8 +203,8 @@ devDependencies:
     specifier: 2.13.8
     version: 2.13.8
   '@vercel/nft':
-    specifier: 0.23.0
-    version: 0.23.0
+    specifier: 0.23.1
+    version: 0.23.1
   cross-env:
     specifier: 7.0.3
     version: 7.0.3
@@ -1519,8 +1519,8 @@ packages:
     dev: false
     optional: true
 
-  /@vercel/nft@0.23.0:
-    resolution: {integrity: sha512-1iuPjyltiPqyZrvc/bW1CyICRdng8bVhpJT8MsIXV7Wj+mRFyJs9krsHbVy2pZwu7BMAgforQsT5TCY1JoBDxw==}
+  /@vercel/nft@0.23.1:
+    resolution: {integrity: sha512-NE0xSmGWVhgHF1OIoir71XAd0W0C1UE3nzFyhpFiMr3rVhetww7NvM1kc41trBsPG37Bh+dE5FYCTMzM/gBu0w==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:

@@ -150,7 +150,7 @@
   "devDependencies": {
     "@microsoft/eslint-formatter-sarif": "3.0.0",
     "@types/koa": "2.13.8",
-    "@vercel/nft": "0.23.0",
+    "@vercel/nft": "0.23.1",
     "cross-env": "7.0.3",
     "eslint": "8.47.0",
     "eslint-config-prettier": "9.0.0",
