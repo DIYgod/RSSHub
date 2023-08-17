@@ -3241,8 +3241,10 @@ paramsDesc={['公告类型，详见表格']}>
 
 ### 校园要闻 {#xi-bei-nong-lin-ke-ji-da-xue-xiao-yuan-yao-wen}
 
-<Route author="dingyx99 karinido" example="/nwafu/lib" path="/nwafu/:type?" paramsDesc={['默认为 `jiaowu`']}/>
+<Route author="dingyx99 karinido" example="/nwafu/lib" path="/nwafu/:type?" paramsDesc={['默认为 `jiaowu`']}>
+
 通知类别
+
 
 | 图书馆 | 共青团团委 | 信工学院 | 后勤管理处 | 计划财务处 | 教务处 | 新闻网 | 信息化管理处 | 研究生院 |
 | -------- | -------- | -------- | -------- | ------------ | -------- | -------- | -------- | -------- |
