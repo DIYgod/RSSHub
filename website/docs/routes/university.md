@@ -3248,6 +3248,8 @@ paramsDesc={['公告类型，详见表格']}>
 | -------- | -------- | -------- | -------- | ------------ | -------- | -------- | -------- | -------- |
 | lib    | youth | cie    | gs    | jcc        | jiaowu    | news    | nic    | yjshy    |
 
+</Route>
+
 
 ## 西南财经大学 {#xi-nan-cai-jing-da-xue}
 
