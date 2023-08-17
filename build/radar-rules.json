@@ -3919,6 +3919,17 @@
         "target": "/cas/cg/:caty?"
       }
     ],
+    "www.genetics": [
+      {
+        "title": "遗传与生物学研究所 - 学术活动",
+        "docs": "https://docs.rsshub.app/university.html#zhong-guo-ke-xue-yuan",
+        "source": [
+          "/jixs/yg",
+          "/"
+        ],
+        "target": "/cas/genetics/xshd"
+      }
+    ],
     "www.ia": [
       {
         "title": "自动化所",
@@ -3928,6 +3939,17 @@
           "/"
         ],
         "target": "/cas/ia/yjs"
+      }
+    ],
+    "www.iee": [
+      {
+        "title": "电工研究所 科研动态",
+        "docs": "https://docs.rsshub.app/routes/university#zhong-guo-ke-xue-yuan",
+        "source": [
+          "/xwzx/kydt",
+          "/"
+        ],
+        "target": "/cas/iee/kydt"
       }
     ],
     "www.is": [
@@ -3948,17 +3970,6 @@
           "/"
         ],
         "target": "/cas/sim/kyjz"
-      }
-    ],
-    "www.iee": [
-      {
-        "title": "电工研究所 科研动态",
-        "docs": "https://docs.rsshub.app/routes/university#zhong-guo-ke-xue-yuan",
-        "source": [
-          "/xwzx/kydt",
-          "/"
-        ],
-        "target": "/cas/iee/kydt"
       }
     ]
   },
