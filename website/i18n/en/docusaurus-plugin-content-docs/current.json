@@ -8,11 +8,11 @@
     "description": "The label for category joinus in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.提交新的 RSSHub 规则": {
-    "message": "New RSSHub rules",
+    "message": "Submit new RSSHub rule",
     "description": "The label for category 提交新的 RSSHub 规则 in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.高级用法": {
-    "message": "Advanced",
+    "message": "Advanced usage",
     "description": "The label for category 高级用法 in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.routes": {
@@ -27,12 +27,16 @@
     "message": "Routes",
     "description": "The label for category 路由 in sidebar guideSidebar"
   },
+  "sidebar.guideSidebar.category.路由.link.generated-index.description": {
+    "message": "Routes are the access paths of RSSHub. Each route contains a RSSHub rule, which tells RSSHub how to extract content from the website and generate RSS subscription.",
+    "description": "The generated-index page description for category 路由 in sidebar guideSidebar"
+  },
   "sidebar.joinusSidebar.category.提交新的 RSSHub 规则": {
-    "message": "New RSSHub rules",
+    "message": "Submit new RSSHub rule",
     "description": "The label for category 提交新的 RSSHub 规则 in sidebar joinusSidebar"
   },
   "sidebar.joinusSidebar.category.高级用法": {
-    "message": "Advanced",
+    "message": "Advanced usage",
     "description": "The label for category 高级用法 in sidebar joinusSidebar"
   }
 }
