@@ -852,7 +852,7 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 的效果为
 
-<img src="/readable-twitter.png" alt="Durov 的可读推特 RSS" />
+<img src="/img/readable-twitter.png" alt="Durov 的可读推特 RSS" />
 
 ### 用户时间线 {#twitter-yong-hu-shi-jian-xian}
 
@@ -1235,7 +1235,7 @@ YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/vid
 
 的效果为
 
-<img src="/readable-douban.png" alt="豆瓣读书的可读豆瓣广播 RSS" />
+<img src="/img/readable-douban.png" alt="豆瓣读书的可读豆瓣广播 RSS" />
 
 </Route>
 
@@ -1564,7 +1564,7 @@ rule
 
 的效果为
 
-<img src="/readable-weibo.png" alt="微博小秘书的可读微博 RSS" />
+<img src="/img/readable-weibo.png" alt="微博小秘书的可读微博 RSS" />
 
 ### 博主 {#wei-bo-bo-zhu}
 

@@ -60,6 +60,23 @@ const config = {
                 ],
             }),
         ],
+        [
+            '@docusaurus/plugin-pwa',
+            /** @type {import('@docusaurus/plugin-pwa').Options} */
+            ({
+                pwaHead: [
+                    { tagName: 'link', rel: 'icon', href: '/img/logo.png' },
+                    { tagName: 'link', rel: 'manifest', href: '/manifest.json' },
+                    { tagName: 'meta', name: 'theme-color', content: '#ffffff' },
+                    { tagName: 'meta', name: 'apple-mobile-web-app-capable', content: 'yes' },
+                    { tagName: 'meta', name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+                    { tagName: 'link', rel: 'apple-touch-icon', href: '/img/apple-touch-icon.png' },
+                    { tagName: 'link', rel: 'mask-icon', href: '/img/safari-pinned-tab.svg', color: '#F5712C' },
+                    { tagName: 'meta', name: 'msapplication-TileImage', content: '/img/logo.png' },
+                    { tagName: 'meta', name: 'msapplication-TileColor', content: '#ffffff' },
+                ],
+            }),
+        ],
     ],
 
     presets: [
@@ -102,6 +119,7 @@ const config = {
         ({
             // Replace with your project's social card
             image: 'img/logo.png',
+            metadata: [{ name: 'description', content: '🍰 Everything is RSSible' }],
             navbar: {
                 title: 'RSSHub',
                 logo: {
