@@ -150,7 +150,7 @@
   "devDependencies": {
     "@microsoft/eslint-formatter-sarif": "3.0.0",
     "@types/koa": "2.13.8",
-    "@vercel/nft": "0.23.0",
+    "@vercel/nft": "0.23.1",
     "cross-env": "7.0.3",
     "eslint": "8.47.0",
     "eslint-config-prettier": "9.0.0",
@@ -163,7 +163,7 @@
     "jest-junit": "16.0.0",
     "lint-staged": "14.0.0",
     "mockdate": "3.0.5",
-    "nock": "13.3.2",
+    "nock": "13.3.3",
     "nodemon": "3.0.1",
     "prettier": "3.0.2",
     "remark": "13.0.0",

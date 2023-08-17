@@ -203,8 +203,8 @@ devDependencies:
     specifier: 2.13.8
     version: 2.13.8
   '@vercel/nft':
-    specifier: 0.23.0
-    version: 0.23.0
+    specifier: 0.23.1
+    version: 0.23.1
   cross-env:
     specifier: 7.0.3
     version: 7.0.3
@@ -242,8 +242,8 @@ devDependencies:
     specifier: 3.0.5
     version: 3.0.5
   nock:
-    specifier: 13.3.2
-    version: 13.3.2
+    specifier: 13.3.3
+    version: 13.3.3
   nodemon:
     specifier: 3.0.1
     version: 3.0.1
@@ -1519,8 +1519,8 @@ packages:
     dev: false
     optional: true
 
-  /@vercel/nft@0.23.0:
-    resolution: {integrity: sha512-1iuPjyltiPqyZrvc/bW1CyICRdng8bVhpJT8MsIXV7Wj+mRFyJs9krsHbVy2pZwu7BMAgforQsT5TCY1JoBDxw==}
+  /@vercel/nft@0.23.1:
+    resolution: {integrity: sha512-NE0xSmGWVhgHF1OIoir71XAd0W0C1UE3nzFyhpFiMr3rVhetww7NvM1kc41trBsPG37Bh+dE5FYCTMzM/gBu0w==}
     engines: {node: '>=14'}
     hasBin: true
     dependencies:
@@ -5565,8 +5565,8 @@ packages:
       lower-case: 1.1.4
     dev: false
 
-  /nock@13.3.2:
-    resolution: {integrity: sha512-CwbljitiWJhF1gL83NbanhoKs1l23TDlRioNraPTZrzZIEooPemrHRj5m0FZCPkB1ecdYCSWWGcHysJgX/ngnQ==}
+  /nock@13.3.3:
+    resolution: {integrity: sha512-z+KUlILy9SK/RjpeXDiDUEAq4T94ADPHE3qaRkf66mpEhzc/ytOMm3Bwdrbq6k1tMWkbdujiKim3G2tfQARuJw==}
     engines: {node: '>= 10.13'}
     dependencies:
       debug: 4.3.4
