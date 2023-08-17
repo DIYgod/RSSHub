@@ -1087,9 +1087,9 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-## 小特论坛 {#xiao-te-lun-tan}
+## 小特社区 {#xiao-te-she-qu}
 
-### 首页帖子 {#xiao-te-lun-tan-shou-ye-tie-zi}
+### 首页帖子 {#xiao-te-she-qu-shou-ye-tie-zi}
 
 <Route author="wxsimon" example="/xiaote/news" path="/xiaote/news" paramsDesc={['无']}></Route>
 
