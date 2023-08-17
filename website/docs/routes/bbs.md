@@ -1087,6 +1087,12 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
+## 小特论坛 {#xiao-te-lun-tan}
+
+### 首页帖子 {#xiao-te-lun-tan-shou-ye-tie-zi}
+
+<Route author="wxsimon" example="/xiaote/news" path="/xiaote/news" paramsDesc={['无']}></Route>
+
 ## 一亩三分地 {#yi-mu-san-fen-di}
 
 ### 帖子 {#yi-mu-san-fen-di-tie-zi}
@@ -1238,3 +1244,4 @@ import Route from '@site/src/components/Route';
 | lingyishijain | lingyitupian | minjianqitan |
 
 </Route>
+
