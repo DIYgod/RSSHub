@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://docs.rsshub.app/logo.png" alt="RSSHub" width="100">
+<img src="https://docs.rsshub.app/img/logo.png" alt="RSSHub" width="100">
 </p>
 <h1 align="center">RSSHub</h1>
 
@@ -33,6 +33,14 @@ RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以�
 
 ## Special Thanks
 
+### Special Sponsors
+
+<p>
+<a href="https://xlog.app/" target="_blank"><img height="100px" src="https://i.imgur.com/JuhHTKD.png"></a>
+</p>
+
+[![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/en/support/)
+
 ### Contributors
 
 [![](https://opencollective.com/RSSHub/contributors.svg?width=890)](https://github.com/DIYgod/RSSHub/graphs/contributors)
@@ -54,9 +62,9 @@ Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 We welcome all pull requests. Suggestions and feedback are also welcomed [here](https://github.com/DIYgod/RSSHub/issues).
 
-Refer to [Join Us](https://docs.rsshub.app/en/joinus/quick-start.html)
+Refer to [Join Us](https://docs.rsshub.app/en/joinus/quick-start)
 
-见 [参与我们](https://docs.rsshub.app/joinus/quick-start.html)
+见 [参与我们](https://docs.rsshub.app/joinus/quick-start)
 
 ## Deployment
 
@@ -97,4 +105,4 @@ We accept donations via the following ways:
 **RSSHub** © [DIYgod](https://github.com/DIYgod), Released under the [MIT](./LICENSE) License.<br>
 Authored and maintained by DIYgod with help from contributors ([list](https://github.com/DIYgod/RSSHub/contributors)).
 
-> Blog [@DIYgod](https://diygod.me) · GitHub [@DIYgod](https://github.com/DIYgod) · Twitter [@DIYgod](https://twitter.com/DIYgod) · Telegram Channel [@awesomeDIYgod](https://t.me/awesomeDIYgod)
+> Blog [@DIYgod](https://diygod.cc) · GitHub [@DIYgod](https://github.com/DIYgod) · Twitter [@DIYgod](https://twitter.com/DIYgod) · Telegram Channel [@awesomeDIYgod](https://t.me/awesomeDIYgod)
