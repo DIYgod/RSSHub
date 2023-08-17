@@ -142,6 +142,19 @@ import Route from '@site/src/components/Route';
 
 <Route author="HenryQW" example="/dcard/funny/popular" path="/dcard/:section/:type?" paramsDesc={['板塊名稱，URL 中獲得', '排序，popular 熱門；latest 最新，默認為 latest']} radar="1" rssbud="1" anticrawler="1" puppeteer="1"/>
 
+## Discourse
+
+使用前需设置环境变量`DISCOURSE_CONFIG_{id}`为
+```
+{
+    "link": link,
+    "key": key
+}
+```
+的JSON序列化字符串.
+### 最新帖子
+
+<Route author="dzx-dzx" example="/discourse/0/posts" path="/discuz/:configId/posts" paramsDesc={['环境变量配置名, 见上']}/>
 ## Discuz {#discuz}
 
 ### 通用子版块 - 自动检测 {#discuz-tong-yong-zi-ban-kuai---zi-dong-jian-ce}
