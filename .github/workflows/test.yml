@@ -138,15 +138,9 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: website/pnpm-lock.yaml
       - run: pnpm i
-      - name: Set environment variable for Node v16 above
-        if: ${{ matrix.node-version > '16' }}
-        run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
       - name: Build docs
-        run: npm run build
+        run: pnpm run build
         working-directory: website
-      - name: Unset environment variable for Node v16 above
-        if: ${{ matrix.node-version > '16' }}
-        run: echo "NODE_OPTIONS=''" >> $GITHUB_ENV
 
   all:
     runs-on: ubuntu-latest

@@ -3842,6 +3842,10 @@ paramsDesc={['公告类型，详见表格']}>
 
 </Route>
 
+### 遗传与发育生物学研究所 学术活动 {#zhong-guo-ke-xue-yuan-yi-chuan-yu-fa-yu-sheng-wu-xue-yan-jiu-suo-xue-shu-huo-dong}
+
+<Route author="panyq357" example="/cas/genetics/xshd" path="/cas/genetics/xshd" radar="1"/>
+
 ## 中国科学院大学 {#zhong-guo-ke-xue-yuan-da-xue}
 
 ### 招聘信息 {#zhong-guo-ke-xue-yuan-da-xue-zhao-pin-xin-xi}
