@@ -1,26 +1,26 @@
-# 开始食用
+# Getting Started
 
-## 生成订阅源
+## Generate an RSS Feed
 
-比如我希望订阅 Twitter 上一个名为 DIYgod 的用户的时间线
+To subscribe to a Twitter user's timeline, first look at the route document of [Twitter User Timeline](/routes/social-media#twitter-user-timeline).
 
-根据 [Twitter 用户时间线路由](/routes/social-media#twitter)的文档，路由为 `/twitter/user/:id`，把 `:id` 替换为用户名，得到路径为 `/twitter/user/DIYgod`，再加上域名 `https://rsshub.app`，一个订阅源就生成了：<https://rsshub.app/twitter/user/DIYgod>
+`/twitter/user/:id` is the route where `:id` is the actual Twitter username you need to replace. For instance, `/twitter/user/DIYgod` with a prefix domain name will give you the timeline of Twitter user DIYgod.
 
-然后我们可以把 <https://rsshub.app/twitter/user/DIYgod> 添加到任意 RSS 阅读器里来使用
+The demo instance will generate an RSS feed at <https://rsshub.app/twitter/user/DIYgod>, use your own domain name when applicable. This feed should work with all RSS readers conforming to the RSS Standard.
 
-其中域名 `https://rsshub.app` 可以替换为你[自部署](/install)的域名
+You can replace the domain name `https://rsshub.app` with your [self-hosted instance](/install).
 
-另外 RSSHub 支持很多实用的参数，比如内容过滤、全文输出等，可以在 [通用参数](/parameter) 文档了解具体使用方法
+RSSHub supports additional parameters such as content filtering and full-text extraction, refer to [Parameters](/parameter) for details.
 
-## 编写订阅源
+## Contribute a New Route
 
-RSSHub 的发展离不开社区的力量，欢迎编写你感兴趣的订阅源[参与我们](/joinus/quick-start)
+Our thriving community is the key to RSSHub's success, we invite everyone to join us and [contribute new routes](/joinus/quick-start) for all kinds of interesting sources.
 
-## 作为 npm 包使用
+## Use as a npm Package
 
-除了作为订阅源，RSSHub 还支持作为 npm 包在你的 Node.js 项目中使用
+Apart from serving as an information source hub, RSSHub is also made compatible with all Node.js projects as an npm Package.
 
-### 安装
+### Install
 
 <code-group>
 <code-block title="pnpm" active>
@@ -46,7 +46,7 @@ npm install rsshub --save
 </code-block>
 </code-group>
 
-### 使用
+### Usage
 
 ```js
 const RSSHub = require('rsshub');
@@ -55,7 +55,7 @@ RSSHub.init({
     // config
 });
 
-RSSHub.request('/bilibili/bangumi/media/9192')
+RSSHub.request('/youtube/user/JFlaMusic')
     .then((data) => {
         console.log(data);
     })
@@ -64,7 +64,9 @@ RSSHub.request('/bilibili/bangumi/media/9192')
     });
 ```
 
-支持的 config 见 [配置](/install#配置) 文档，比如想禁用缓存，config 可以这样写：
+For supported configs please refer to the [Configuration Section](/install#configuration-3).
+
+A short example for disabling caching can be written as:
 
 ```js
 {

@@ -542,7 +542,7 @@ Type
 
 :::caution
 
-Due to Instagram Private API restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/en/install/) for more.
+Due to Instagram Private API restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/install/) for more.
 
 If you don't want to setup credentials, you can use [Picnob](#picnob) or [Picuki](#picuki).
 
@@ -597,7 +597,7 @@ Official user RSS:
 -   RSS: `https://**:instance**/users/**:username**.rss` ([Example](https://pawoo.net/users/pawoo_support.rss))
 -   Atom: ~~`https://**:instance**/users/**:username**.atom`~~ (Only for pawoo.net, [example](https://pawoo.net/users/pawoo_support.atom))
 
-These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for user timeline based on the Mastodon API, but to use that, you may need to create application on a Mastodon instance, and configure your RSSHub instance. Check the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
+These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for user timeline based on the Mastodon API, but to use that, you may need to create application on a Mastodon instance, and configure your RSSHub instance. Check the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
 
 :::
 
@@ -852,7 +852,7 @@ Due to Telegram restrictions, some channels involving pornography, copyright, an
 
 ### User timeline {#threads-user-timeline}
 
-<Route author="ninboy" path="/threads/:user/:routeParams?" example="/threads/zuck" radar="1" rssbud="1" puppeteer="1">
+<Route author="ninboy" path="/threads/:user/:routeParams?" example="/threads/zuck" radar="1" rssbud="1" puppeteer="1" paramsDesc={['', '']}>
 
 Specify options (in the format of query string) in parameter `routeParams` to control some extra features for threads
 
@@ -940,7 +940,7 @@ generates
 
 :::caution
 
-This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
+This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
 
 :::
 
@@ -968,7 +968,7 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 
 :::caution
 
-This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
+This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
 
 :::
 

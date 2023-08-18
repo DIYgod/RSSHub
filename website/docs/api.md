@@ -1,62 +1,42 @@
 # API
 
-:::caution 注意
-API 仍处于开发状态中， 并可能会有改动。欢迎提供建议！
+:::caution Warning
+The API is under active development and is subject to change. All suggestions are welcome!
 :::
 
-RSSHub 提供下列 API:
+RSSHub provides the following APIs:
 
-## 可用公共路由列表
+## List of Public Routes
 
-:::tip 提示
-`protected_router.js`下的路由**不会被**包含在此 API 返回的结果当中.
+:::tip Tip
+This API **will not** return any routes under `lib/protected_router.js`.
 :::
 
-举例: <https://rsshub.app/api/routes/bilibili>
+Eg: <https://rsshub.app/api/routes/github>
 
-路由: `/api/routes/:name?`
+Route: `/api/routes/:name?`
 
-参数:
+Parameters:
 
--   `name`, 路由一级名称，对应 <https://github.com/DIYgod/RSSHub/tree/master/lib/routes> 中的文件夹名称。可选，**缺省则返回所有可用路由**.
+-   `name`, route's top level name as in [https://github.com/DIYgod/RSSHub/tree/master/lib/routes](https://github.com/DIYgod/RSSHub/tree/master/lib/routes). Optional, **returns all public routes if not specified**.
 
-成功请求将会返回 HTTP 状态码 `200 OK` 与 JSON 结果，格式如下:
+A successful request returns an HTTP status code `200 OK` with the result in JSON:
 
 ```js
 {
     "status": "success",
     "data": {
-        "bilibili": {
+        "github": {
             "routes": [
-                "/bilibili/user/video/:uid",
-                "/bilibili/user/article/:uid",
-                "/bilibili/user/fav/:uid",
-                "/bilibili/user/coin/:uid",
-                "/bilibili/user/dynamic/:uid",
-                "/bilibili/user/followers/:uid",
-                "/bilibili/user/followings/:uid",
-                "/bilibili/user/channel/collections/:uid/:sid",
-                "/bilibili/user/channel/series/:uid/:sid",
-                "/bilibili/partion/:tid",
-                "/bilibili/partion/ranking/:tid/:days?",
-                "/bilibili/bangumi/:seasonid",
-                "/bilibili/video/page/:aid",
-                "/bilibili/video/reply/:aid",
-                "/bilibili/link/news/:product",
-                "/bilibili/live/room/:roomID",
-                "/bilibili/live/search/:key/:order",
-                "/bilibili/live/area/:areaID/:order",
-                "/bilibili/fav/:uid/:fid",
-                "/bilibili/blackboard",
-                "/bilibili/mall/new",
-                "/bilibili/mall/ip/:id",
-                "/bilibili/ranking/:rid?/:day?",
-                "/bilibili/topic/:topic"
+                "/github/trending/:since/:language?",
+                "/github/issue/:user/:repo",
+                "/github/user/followers/:user",
+                "/github/stars/:user/:repo"
             ]
         }
     },
-    "message": "request returned 22 routes"
+    "message": "request returned 4 routes"
 }
 ```
 
-若无符合请求路由，请求将会返回 HTTP 状态码 `204 No Content`.
+If no matching results were found, the server returns only an HTTP status code `204 No Content`.

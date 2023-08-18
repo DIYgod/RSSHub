@@ -333,7 +333,7 @@ If you subscribe to [Discounted works Latest Discounts - Newest to Oldest](https
 
 :::caution
 
-This route requires username and password, therefore it's only available when self-hosting, refer to the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
+This route requires username and password, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
 
 :::
 
@@ -425,11 +425,11 @@ The RSS routing has not been rigorously tested and the information provided cann
 
 ### Filter {#nhentai-filter}
 
-<Route author="MegrezZhu hoilc" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword/:mode?" paramsDesc={['Filter term, can be: `parody`, `character`, `tag`, `artist`, `group`, `language` or `category`','Filter value', 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/en/install/#configuration-route-specific-configurations), default to `simple`']} anticrawler="1" supportBT="1" radar="1"/>
+<Route author="MegrezZhu hoilc" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword/:mode?" paramsDesc={['Filter term, can be: `parody`, `character`, `tag`, `artist`, `group`, `language` or `category`','Filter value', 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/install/#configuration-route-specific-configurations), default to `simple`']} anticrawler="1" supportBT="1" radar="1"/>
 
 ### Advanced Search {#nhentai-advanced-search}
 
-<Route author="MegrezZhu hoilc" example='/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-"mosaic+censorship"' path="/nhentai/search/:keyword/:mode?" paramsDesc={['Keywords for search. You can copy the content after `q=` after searching on the original website, or you can enter it directly. See the [official website](https://nhentai.net/info/) for details', 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/en/install/#configuration-route-specific-configurations), default to `simple`']} anticrawler="1" supportBT="1" radar="1"/>
+<Route author="MegrezZhu hoilc" example='/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-"mosaic+censorship"' path="/nhentai/search/:keyword/:mode?" paramsDesc={['Keywords for search. You can copy the content after `q=` after searching on the original website, or you can enter it directly. See the [official website](https://nhentai.net/info/) for details', 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/install/#configuration-route-specific-configurations), default to `simple`']} anticrawler="1" supportBT="1" radar="1"/>
 
 ## QooApp {#qooapp}
 

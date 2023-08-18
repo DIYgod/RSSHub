@@ -2,42 +2,42 @@
 sidebar_position: 1
 ---
 
-# 准备工作
+# Prerequisites
 
-在开始编写新的 RSS 规则之前，确保您的开发环境已正确配置很重要。
+Before you begin, it is important that your development environment set up properly.
 
-## 安装 Node.js
+## Install Node.js
 
-为了能够编写新的 RSS 规则，您必须首先安装 Node.js。RSSHub 使用 Node.js 运行其代码以及制作 RSS 订阅源，需要 Node v16 或更高版本。您可以从 [这里](https://nodejs.org/en/download) 下载最新的 Node.js LTS 版本。
+To be able to write new RSS rules, you must first install Node.js first. RSSHub uses Node.js to run its code and create RSS feeds and requires Node v16 or above. You can download the latest LTS version of Node.js from [here](https://nodejs.org/en/download).
 
-在 Windows 系统下，您可以下载安装程序并按照安装程序的步骤进行操作。记得勾选安装 **原生模块的工具（Tools for Native Modules）** 选项。
+On Windows, you can simply download the installer and follow the steps from the installer. Remember to check the option to install **Tools for Native Modules** as well.
 
-在 macOS 系统下，您可以从 Node.js 网站下载安装程序，或者使用 [Homebrew](https://brew.sh) 命令 `brew install node` 安装 Node.js。
+On macOS, you can either download the installer from the Node.js website or use [Homebrew](https://brew.sh) to install Node.js with the command `brew install node`.
 
-在 Linux 系统下，您可以参考 [这个页面](https://nodejs.org/en/download/package-manager) 决定如何安装 Node.js。
+On Linux, you can refer to [this page](https://nodejs.org/en/download/package-manager) to decide how to install Node.js.
 
-## 安装代码编辑器
+## Install a code editor
 
-编写代码需要一个代码编辑器。如果您已经有一个，您可以跳过这一部分。如果您还没有一个编辑器，可以从以下列表中选择一个：
+To write code, you need a code editor. If you already have one, you can skip this section. If you don't have one, you can choose one from the following list:
 
 -   [Visual Studio Code](https://code.visualstudio.com)
 -   [WebStorm](https://www.jetbrains.com/webstorm)
 -   [Neovim](https://neovim.io)
 -   [Sublime Text](https://www.sublimetext.com)
 
-为了加速开发过程并更容易维护代码风格的一致性，可以为您选择的代码编辑器安装一些适当的扩展。在本指南的后半部分，我们将使用 Visual Studio Code 作为示例，您可以安装以下扩展：
+To speed up the development process and make it easier to keep your code clean, you can install some appropriate extensions to the code editor of your choice. In the latter part of this guide, we will use Visual Studio Code as an example, you can install the following extensions:
 
--   [Art Template Helper](https://marketplace.visualstudio.com/items?itemName=ZihanLi.at-helper)（为 RSSHub 使用的一种模板引擎提供语法高亮）
--   [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)（保持在不同的 IDE 中的一致的代码风格）
--   [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)（识别并修复代码中的常见错误）
--   [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)（使您的代码更易读和更一致地格式化）
+-   [Art Template Helper](https://marketplace.visualstudio.com/items?itemName=ZihanLi.at-helper)(provides syntax highlighting for a template engine used by RSSHub)
+-   [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig)(maintain consistent coding styles across different editors and IDEs)
+-   [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)(identify and fix common errors in your code)
+-   [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)(formats your code to make it more readable and consistent)
 
-### 云托管的开发环境
+### Cloud hosted development environment
 
-如果您不想在计算机上安装 Node.js 和代码编辑器，您可以使用云托管的开发环境。您可以使用 [GitHub Codespaces](https://codespace.new) 或 [Gitpod](https://www.gitpod.io)。只需点击以下按钮即可启动新的工作区：
+If you don't want to install Node.js and a code editor on your computer, you can use a cloud-hosted development environment. You may use [GitHub Codespaces](https://codespace.new/) or [Gitpod](https://www.gitpod.io). Just click one of the buttons below to start a new workspace:
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/DIYgod/RSSHub?quickstart=1)
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/DIYgod/RSSHub)
 
-有关如何使用 [GitHub Codespaces](https://codespace.new) 或 [Gitpod](https://www.gitpod.io) 的更多信息，请参见 [GitHub 文档](https://docs.github.com/codespaces) 和 [Gitpod 文档](https://www.gitpod.io/docs)。
+For more information about how to use [GitHub Codespaces](https://codespace.new/) or [Gitpod](https://www.gitpod.io/) , see [GitHub's documentation](https://docs.github.com/codespaces) and [Gitpod's documentation](https://www.gitpod.io/docs/).

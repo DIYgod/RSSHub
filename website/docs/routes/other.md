@@ -480,7 +480,7 @@ For example:
 
 :::caution Warning
 
-Need to set up Notion integration, please refer to [Route-specific Configurations](https://docs.rsshub.app/en/install/#Deployment) for details.
+Need to set up Notion integration, please refer to [Route-specific Configurations](https://docs.rsshub.app/install/#Deployment) for details.
 
 :::
 
