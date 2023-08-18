@@ -4122,6 +4122,9 @@
         "gylidian",
         "nczitzk"
     ],
+    "/nwafu/:type?": [
+        "karinido"
+    ],
     "/nyaa/search/:query?": [
         "Lava-Swimmer",
         "noname1776"
@@ -6687,15 +6690,6 @@
     "/sctu/xgxy/:id": [],
     "/sctu/jwc/:type?": [],
     "/sctu/jwc/:type/:id": [],
-    "/nwafu/news": [],
-    "/nwafu/jiaowu": [],
-    "/nwafu/gs": [],
-    "/nwafu/lib": [],
-    "/nwafu/nic": [],
-    "/nwafu/54youth": [],
-    "/nwafu/jcc": [],
-    "/nwafu/yjshy": [],
-    "/nwafu/cie": [],
     "/ynu/grs/zytz": [],
     "/ynu/grs/qttz/:category": [],
     "/ynu/jwc/:category": [],
