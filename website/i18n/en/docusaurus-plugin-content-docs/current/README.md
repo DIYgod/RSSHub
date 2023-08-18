@@ -23,6 +23,8 @@ RSSHub delivers millions of contents aggregated from all kinds of sources, our v
 
 RSSHub can be used with browser extension [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) and mobile auxiliary app [RSSBud](https://github.com/Cay-Zhang/RSSBud) (iOS) and [RSSAid](https://github.com/LeetaoGoooo/RSSAid) (Android)
 
+[Telegram Group](https://t.me/rsshub) | [Telegram Channel](https://t.me/awesomeRSSHub)
+
 ## Special Thanks
 
 ### Special Sponsors
@@ -45,7 +47,7 @@ Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 ## Related Projects
 
--   [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) | 一个可以帮助你快速发现和订阅当前网站 RSS 和 RSSHub 的浏览器扩展
--   [RSSBud](https://github.com/Cay-Zhang/RSSBud) ([TestFlight 公测](https://testflight.apple.com/join/rjCVzzHP)) | iOS 平台的 RSSHub Radar，专为移动生态优化
--   [RSSAid](https://github.com/LeetaoGoooo/RSSAid) | 基于 Flutter 构建的 Android 平台的 RSSHub Radar
+-   [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) | A browser extension that can help you quickly discover and subscribe to the RSS and RSSHub of current websites.
+-   [RSSBud](https://github.com/Cay-Zhang/RSSBud) ([TestFlight](https://testflight.apple.com/join/rjCVzzHP)) | RSSHub Radar for iOS platform, designed specifically for mobile ecosystem optimization.
+-   [RSSAid](https://github.com/LeetaoGoooo/RSSAid) | RSSHub Radar for Android platform built with Flutter.
 -   [DocSearch](https://github.com/Fatpandac/DocSearch) | Link RSSHub DocSearch into Raycast

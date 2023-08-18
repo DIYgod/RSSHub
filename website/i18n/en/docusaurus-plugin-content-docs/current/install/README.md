@@ -733,10 +733,43 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 :::
 
+-   4399 论坛
+
+    -   `GAME_4399`: 对应登录后的 cookie 值，获取方式：
+        1.  在 4399 首页登录。
+        2.  打开开发者工具，切换到 Network 面板，刷新
+        3.  查找`www.4399.com`的访问请求，点击请求，在右侧 Headers 中找到 Cookie.
+
+-   bilibili 用户关注动态系列路由
+
+    -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：
+        1.  打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8>
+        2.  打开控制台，切换到 Network 面板，刷新
+        3.  点击 dynamic_new 请求，找到 Cookie
+        4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie
+
 -   Bitbucket: [Basic auth with App passwords](https://developer.atlassian.com/cloud/bitbucket/rest/intro/#basic-auth)
 
     -   `BITBUCKET_USERNAME`: Your Bitbucket username
     -   `BITBUCKET_PASSWORD`: Your Bitbucket app password
+
+-   BTBYR
+
+    -   `BTBYR_HOST`: 支持 ipv4 访问的 BTBYR 镜像，默认为原站 `https://bt.byr.cn/`。
+    -   `BTBYR_COOKIE`: 注册用户登录后的 Cookie 值，获取方式：
+        1.  登录后打开网站首页
+        2.  打开控制台，刷新
+        3.  找到 <https://bt.byr.cn/index.php> 请求
+        4.  找到请求头中的 Cookie
+
+-   BUPT
+
+    -   `BUPT_PORTAL_COOKIE`: 登录后获得的 Cookie 值，获取方式
+        1.  打开<https://webapp.bupt.edu.cn/wap/login.html?redirect=https://>并登录
+        2.  无视掉报错，并打开 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw>
+        3.  打开控制台，刷新
+        4.  找到 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw> 请求
+        5.  找到请求头中的 Cookie
 
 -   Civitai
     -   `CIVITAI_COOKIE`: Cookie of Civitai
@@ -749,7 +782,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
     -   `DISCUZ_COOKIE_{cid}`: Cookie of a forum powered by Discuz, cid can be anything from 00 to 99. When visiting a Discuz route, use cid to specify this cookie.
 
--   disqus: [API Key application](https://disqus.com/api/applications/)
+-   Disqus: [API Key application](https://disqus.com/api/applications/)
 
     -   `DISQUS_API_KEY`: Disqus API
 
@@ -769,6 +802,10 @@ See docs of the specified route and `lib/config.js` for detailed information.
 -   Fantia
 
     -   `FANTIA_COOKIE`: The `cookie` after login can be obtained by viewing the request header in the console, If not filled in will cause some posts that require login to read to get exceptions
+
+-   Gitee 全部路由：[申请地址](https://gitee.com/api/v5/swagger)
+
+    -   `GITEE_ACCESS_TOKEN`: Gitee 私人令牌
 
 -   GitHub: [Access Token application](https://github.com/settings/tokens)
 
@@ -796,7 +833,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
     -   `LASTFM_API_KEY`: Last.fm API Key
 
--   mail:
+-   Email:
 
     -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with the email account, replace `@` and `.` in email account with `_`, e.g. `EMAIL_CONFIG_xxx_gmail_com`. The value is in the format of `password=password&host=server&port=port`, eg:
         -   Linux env: `EMAIL_CONFIG_xxx_qq_com="password=123456&host=imap.qq.com&port=993"`
@@ -813,6 +850,11 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `MEDIUM_ARTICLE_COOKIE`: Cookie used when requesting the full article, can access the full text of paid content when there is an active Member subscription.
     -   `MEDIUM_COOKIE_{username}`: Cookie of the user corresponding to the username, required for personalized recommendation related routes.
 
+-   MiniFlux:
+
+    -   `MINIFLUX_INSTANCE`: The instance used by the user, by default, is the official MiniFlux [paid service address](https://reader.miniflux.app)
+    -   `MINIFLUX_TOKEN`: User's API key, please log in to the instance used and go to `Settings` -> `API Key` -> `Create a new API key` to obtain.
+
 -   nhentai torrent: [Registration](https://nhentai.net/register/)
 
     -   `NHENTAI_USERNAME`: nhentai username or email
@@ -820,6 +862,10 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   Notion
     -   `NOTION_TOKEN`: Notion Internal Integration Token, Refer to [Notion Official Set Up Flow](https://developers.notion.com/docs/authorization#internal-integration-auth-flow-set-up) to create Token
+
+-   pianyuan 全部路由：[注册地址](https://pianyuan.org)
+
+    -   `PIANYUAN_COOKIE`: 对应 cookie 中的 `py_loginauth`, 例: PIANYUAN_COOKIE='py_loginauth=xxxxxxxxxx'
 
 -   Pixabay: [Documentation](https://pixabay.com/api/docs/)
 
@@ -836,6 +882,10 @@ See docs of the specified route and `lib/config.js` for detailed information.
 -   pixiv fanbox: Get paid content
 
     -   `FANBOX_SESSION_ID`: equals to `FANBOXSESSID` in site cookies.
+
+-   Saraba1st 用于获取帖子里的图片
+
+    -   `SARABA1ST_COOKIE`: 对应网页端的 Cookie。
 
 -   Sci-hub for scientific journal routes:
 
@@ -885,3 +935,101 @@ See docs of the specified route and `lib/config.js` for detailed information.
 -   ZodGame:
 
     -   `ZODGAME_COOKIE`: Cookie of ZodGame User
+
+-   北大未名 BBS 全站十大
+
+    -   `PKUBBS_COOKIE`: BBS 注册用户登录后的 Cookie 值，获取方式：
+        1.  登录后打开论坛首页
+        2.  打开控制台， 刷新
+        3.  找到 <https://bbs.pku.edu.cn/v2/home.php> 请求
+        4.  找到请求头中的 Cookie
+
+-   吹牛部落 栏目更新
+
+    -   `CHUINIU_MEMBER`: 吹牛部落登录后的 x-member，获取方式
+        1.  登陆后点开文章正文
+        2.  打开控制台，刷新
+        3.  找到 <http://api.duanshu.com/h5/content/detail/> 开头的请求
+        4.  找到请求头中的 x-member
+
+-   滴答清单
+
+    -   `DIDA365_USERNAME`: 滴答清单用户名
+    -   `DIDA365_PASSWORD`: 滴答清单密码
+
+-   端传媒设置，用于获取付费内容全文：
+
+    -   `INITIUM_BEARER_TOKEN`: 端传媒 Web 版认证 token。获取方式：登陆后打开端传媒站内任意页面，打开浏览器开发者工具中 “网络”(Network) 选项卡，筛选 URL 找到任一个地址为`api.initium.com`开头的请求，点击检查其 “消息头”，在 “请求头” 中找到`Authorization`字段，将其值复制填入配置即可。你的配置应该形如`INITIUM_BEARER_TOKEN: 'Bearer eyJxxxx......xx_U8'`。使用 token 部署的好处是避免占据登陆设备数的额度，但这个 token 一般有效期为两周，因此只可作临时测试使用。
+
+    -   `INITIUM_IAP_RECEIPT`: 端传媒 iOS 版内购回执认证 token。获取方式：登陆后打开端传媒 iOS app 内任意页面，打开抓包工具，筛选 URL 找到任一个地址为`api.initium.com`开头的请求，点击检查其 “消息头”，在 “请求头” 中找到`X-IAP-Receipt`字段，将其值复制填入配置即可。你的配置应该形如`INITIUM_IAP_RECEIPT: 'ef81dee9e4e2fe084a0af1ea82da2f7b16e75f756db321618a119fa62b52550e'`。
+
+    Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即可。你也可选择直接在环境设置中填写明文的用户名和密码：
+
+    -   `INITIUM_USERNAME`: 端传媒用户名 （邮箱）
+    -   `INITIUM_PASSWORD`: 端传媒密码
+
+-   豆瓣想看
+
+    -   `DOUBAN_COOKIE`: 豆瓣登陆后的 Cookie 值
+
+-   饭否 全部路由：[申请地址](https://github.com/FanfouAPI/FanFouAPIDoc/wiki/Oauth)
+
+    -   `FANFOU_CONSUMER_KEY`: 饭否 Consumer Key
+    -   `FANFOU_CONSUMER_SECRET`: 饭否 Consumer Secret
+    -   `FANFOU_USERNAME`: 饭否登录用户名、邮箱、手机号
+    -   `FANFOU_PASSWORD`: 饭否密码
+
+-   和风天气：[申请地址](https://id.qweather.com/#/register?redirect=https%3A%2F%2Fconsole.qweather.com)
+
+    -   `HEFENG_KEY`:API key
+
+-   南方周末付费全文
+
+    -   `INFZM_COOKIE`: infzm 账户登陆后的 cookie，目前只需要 `passport_session=...` 即可获取全文
+
+-   轻小说文库
+
+    -   `WENKU8_COOKIE`: 登陆轻小说文库后的 cookie
+
+-   色花堂
+
+    -   `SEHUATANG_COOKIE`: 登陆色花堂后的 cookie 值。
+
+-   网易云歌单及听歌排行
+
+    -   `NCM_COOKIES`: 网易云音乐登陆后的 cookie 值.
+
+-   微博 个人时间线路由：[申请地址](https://open.weibo.com/connect)
+
+    -   `WEIBO_APP_KEY`: 微博 App Key
+    -   `WEIBO_APP_SECRET`: 微博 App Secret
+    -   `WEIBO_REDIRECT_URL`: 微博登录授权回调地址，默认为 `RSSHub 地址/weibo/timeline/0`，自定义回调地址请确保最后可以转跳到 `RSSHub 地址/weibo/timeline/0?code=xxx`
+
+-   微博 自定义分组
+
+    -   `WEIBO_COOKIES`: 用户访问网页微博时所使用的 cookie, 获取方式:
+        1.  打开并登录 <https://m.weibo.cn> (确保打开页面为手机版，如果强制跳转电脑端可尝试使用可更改 UserAgent 的浏览器插件)
+        2.  按下`F12`打开控制台，切换至`Network(网络)`面板
+        3.  在该网页切换至任意关注分组，并在面板打开最先捕获到的请求 (该情形下捕获到的请求路径应包含`/feed/group`)
+        4.  查看该请求的`Headers(请求头)`, 找到`Cookie`字段并复制内容
+
+-   小宇宙：需要 App 登陆后抓包获取相应数据。
+
+    -   `XIAOYUZHOU_ID`: 即数据包中的 `x-jike-device-id`。
+    -   `XIAOYUZHOU_TOKEN`: 即数据包中的 `x-jike-refresh-token`。
+
+-   新榜
+
+    -   `NEWRANK_COOKIE`: 登陆后的 COOKIE 值，其中 token 是必要的，其他可删除
+
+-   喜马拉雅
+
+    -   `XIMALAYA_TOKEN`: 对应 cookie 中的 `1&_token`，获取方式：
+        1.  登陆喜马拉雅网页版
+        2.  打开控制台，刷新
+        3.  查找名称为`1&_token`的`cookie`，其内容即为`XIMALAYA_TOKEN`的值（即在`cookie` 中查找 `1&_token=***;`，并设置 `XIMALAYA_TOKEN = ***`）
+
+-   知乎用户关注时间线
+
+    -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值.
+        1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值.
