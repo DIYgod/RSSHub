@@ -2,15 +2,15 @@ import Route from '@site/src/components/Route';
 
 # 🎥 Live
 
-## LiSA
+## LiSA {#lisa}
 
-### News
+### News {#lisa-news}
 
-<RouteEn author="Kiotlin" example="/lxixsxa/info" path="/lxixsxa/info" radar="1" rssbud="1" />
+<Route author="Kiotlin" example="/lxixsxa/info" path="/lxixsxa/info" radar="1" rssbud="1" />
 
-### Latest Discography
+### Latest Discography {#lisa-latest-discography}
 
-<RouteEn author="Kiotlin" example="/lxixsxa/disco" path="/lxixsxa/disco" radar="1" rssbud="1" />
+<Route author="Kiotlin" example="/lxixsxa/disco" path="/lxixsxa/disco" radar="1" rssbud="1" />
 
 ## SHOWROOM 直播 {#showroom-zhi-bo}
 
@@ -18,25 +18,25 @@ import Route from '@site/src/components/Route';
 
 <Route author="nwindz" example="/showroom/room/93401" path="/showroom/room/:id" paramsDesc={['直播间 id, 打开浏览器控制台，刷新页面，找到请求中的room_id参数']}/>
 
-## V LIVE
+## V LIVE {#v-live}
 
-### Board
+### Board {#v-live-board}
 
-<RouteEn author="TonyRL" example="/vlive/channel/FD53B/board/3530" path="/vlive/channel/:channel/board/:board" paramsDesc={['Channel ID, can be found in the URL', 'Board ID, can be found in the URL']} radar="1" rssbud="1" />
+<Route author="TonyRL" example="/vlive/channel/FD53B/board/3530" path="/vlive/channel/:channel/board/:board" paramsDesc={['Channel ID, can be found in the URL', 'Board ID, can be found in the URL']} radar="1" rssbud="1" />
 
-## Yoasobi Official
+## Yoasobi Official {#yoasobi-official}
 
-### News & Biography
+### News & Biography {#yoasobi-official-news-%26-biography}
 
-<RouteEn author="Kiotlin" example="/yoasobi-music/info/news" path="/yoasobi-music/info/:category?" paramsDesc={['`news`, `biography`']} radar="1" rssbud="1" />
+<Route author="Kiotlin" example="/yoasobi-music/info/news" path="/yoasobi-music/info/:category?" paramsDesc={['`news`, `biography`']} radar="1" rssbud="1" />
 
-### Live
+### Live {#yoasobi-official-live}
 
-<RouteEn author="Kiotlin" example="/yoasobi-music/live" path="/yoasobi-music/live" radar="1" rssbud="1" />
+<Route author="Kiotlin" example="/yoasobi-music/live" path="/yoasobi-music/live" radar="1" rssbud="1" />
 
-### Media
+### Media {#yoasobi-official-media}
 
-<RouteEn author="Kiotlin" example="/yoasobi-music/media" path="/yoasobi-music/media" radar="1" rssbud="1" />
+<Route author="Kiotlin" example="/yoasobi-music/media" path="/yoasobi-music/media" radar="1" rssbud="1" />
 
 ## 哔哩哔哩直播 {#bi-li-bi-li-zhi-bo}
 
@@ -113,3 +113,4 @@ import Route from '@site/src/components/Route';
 ### 直播间开播 {#zhan-qi-zhi-bo-zhi-bo-jian-kai-bo}
 
 <Route author="cssxsh" example="/zhanqi/room/anime" path="/zhanqi/room/:id" paramsDesc={['直播间 id, 可在主播直播间页 URL 中找到']}/>
+

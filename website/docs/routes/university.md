@@ -2,68 +2,68 @@ import Route from '@site/src/components/Route';
 
 # 🎓 University
 
-## Beijing Jiaotong University 北京交通大学
+## Beijing Jiaotong University 北京交通大学 {#beijing-jiaotong-university-bei-jing-jiao-tong-da-xue}
 
-### BJTU Graduate School
+### BJTU Graduate School {#beijing-jiaotong-university-bei-jing-jiao-tong-da-xue-bjtu-graduate-school}
 
-<RouteEn author="E1nzbern" example="/bjtu/gs/all" path="/bjtu/gs/:type" paramsDesc={['Type of articles']}>
+<Route author="E1nzbern" example="/bjtu/gs/all" path="/bjtu/gs/:type" paramsDesc={['Type of articles']}>
 
 | All articles | Notification | News | Admissions Promotion | Training | Degrees | Admissions | Master Admissions | PhD Admissions | Admissions Brochure | Admissions Policies and Regulations | Notice from Graduate Student Work Department | News from Graduate Student Work Department |
 | ---- | -------- | -------- | ------------ | ------------ | -------- | -------- | ------ | ---------- | ------ | ------ | ------ | ------ |
 | all  | noti     | news    | zsxc       | py       | xw      | zs     | sszs    | bszs      | zsjz    | zcfg    | ygbtzgg    | ygbnews    |
 
-</RouteEn>
+</Route>
 
 Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chinese.
 
-## East China Normal University 华东师范大学
+## East China Normal University 华东师范大学 {#east-china-normal-university-hua-dong-shi-fan-da-xue}
 
-### ACM Online-Judge contests list
+### ACM Online-Judge contests list {#east-china-normal-university-hua-dong-shi-fan-da-xue-acm-online-judge-contests-list}
 
-<RouteEn author="a180285" example="/ecnu/acm/contest/public" path="/ecnu/acm/contest/:category?" radar="1" rssbud="1" paramsDesc={['category is optional, default is all, use `public` for public only contests']} />
+<Route author="a180285" example="/ecnu/acm/contest/public" path="/ecnu/acm/contest/:category?" radar="1" rssbud="1" paramsDesc={['category is optional, default is all, use `public` for public only contests']} />
 
-### 研究生院 {#hua-dong-shi-fan-da-xue-yan-jiu-sheng-yuan}
+### 研究生院 {#east-china-normal-university-hua-dong-shi-fan-da-xue-yan-jiu-sheng-yuan}
 
 <Route author="shengmaosu" example="/ecnu/yjs" path="/ecnu/yjs" radar="1" />
 
-## MIT
+## MIT {#mit}
 
-### MIT OCW Most popular courses of the month
+### MIT OCW Most popular courses of the month {#mit-mit-ocw-most-popular-courses-of-the-month}
 
-<RouteEn author="dwemerx" example="/mit/ocw-top" path="/mit/ocw-top"/>
+<Route author="dwemerx" example="/mit/ocw-top" path="/mit/ocw-top"/>
 
-### MIT graduateadmissions's all blogs
+### MIT graduateadmissions's all blogs {#mit-mit-graduateadmissions's-all-blogs}
 
-<RouteEn author="LogicJake" example="/mit/graduateadmissions/index/all" path="/mit/graduateadmissions/index/all"/>
+<Route author="LogicJake" example="/mit/graduateadmissions/index/all" path="/mit/graduateadmissions/index/all"/>
 
-### MIT graduateadmissions's blogs by department
+### MIT graduateadmissions's blogs by department {#mit-mit-graduateadmissions's-blogs-by-department}
 
-<RouteEn author="LogicJake" example="/mit/graduateadmissions/department/eecs" path="/mit/graduateadmissions/department/:name" paramsDesc={['department name which can be found in url']}/>
+<Route author="LogicJake" example="/mit/graduateadmissions/department/eecs" path="/mit/graduateadmissions/department/:name" paramsDesc={['department name which can be found in url']}/>
 
-### MIT graduateadmissions's blogs by category
+### MIT graduateadmissions's blogs by category {#mit-mit-graduateadmissions's-blogs-by-category}
 
-<RouteEn author="LogicJake" example="/mit/graduateadmissions/category/beyond-the-lab" path="/mit/graduateadmissions/category/:name" paramsDesc={['category name which can be found in url']}/>
+<Route author="LogicJake" example="/mit/graduateadmissions/category/beyond-the-lab" path="/mit/graduateadmissions/category/:name" paramsDesc={['category name which can be found in url']}/>
 
-### MIT CSAIL
+### MIT CSAIL {#mit-mit-csail}
 
-<RouteEn author="nczitzk" example="/mit/csail/news" path="/mit/csail/news"/>
+<Route author="nczitzk" example="/mit/csail/news" path="/mit/csail/news"/>
 
-## Nanjing University of the Arts 南京艺术学院
+## Nanjing University of the Arts 南京艺术学院 {#nanjing-university-of-the-arts-nan-jing-yi-shu-xue-yuan}
 
-### Official Information
+### Official Information {#nanjing-university-of-the-arts-nan-jing-yi-shu-xue-yuan-official-information}
 
-<RouteEn author="evnydd0sf" example="/nua/index/346" path="/nua/index/:type" paramsDesc={['News Type']} radar="1">
+<Route author="evnydd0sf" example="/nua/index/346" path="/nua/index/:type" paramsDesc={['News Type']} radar="1">
 
 | News Type | Parameters  |
 | ---- | --- |
 | 公告   | 346 |
 | 南艺要闻 | 332 |
 
-</RouteEn>
+</Route>
 
-### Shuangxing Information
+### Shuangxing Information {#nanjing-university-of-the-arts-nan-jing-yi-shu-xue-yuan-shuangxing-information}
 
-<RouteEn author="evnydd0sf" example="/nua/sxw/230" path="/nua/sxw/:type" paramsDesc={['News Type']} radar="1">
+<Route author="evnydd0sf" example="/nua/sxw/230" path="/nua/sxw/:type" paramsDesc={['News Type']} radar="1">
 
 | News Type | Parameters  |
 | ---- | --- |
@@ -73,11 +73,11 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 | 招就指南 | 234 |
 | 南艺院报 | 236 |
 
-</RouteEn>
+</Route>
 
-### School of Design
+### School of Design {#nanjing-university-of-the-arts-nan-jing-yi-shu-xue-yuan-school-of-design}
 
-<RouteEn author="evnydd0sf" example="/nua/dc/news" path="/nua/dc/:type" paramsDesc={['News Type']} radar="1">
+<Route author="evnydd0sf" example="/nua/dc/news" path="/nua/dc/:type" paramsDesc={['News Type']} radar="1">
 
 | News Type                   | Parameters         |
 | ---------------------- | ---------- |
@@ -88,11 +88,11 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 | 党团 PARTY               | party      |
 | 后浪 YOUTH               | youth      |
 
-</RouteEn>
+</Route>
 
-### Graduate Institute
+### Graduate Institute {#nanjing-university-of-the-arts-nan-jing-yi-shu-xue-yuan-graduate-institute}
 
-<RouteEn author="evnydd0sf" example="/nua/gra/1959" path="/nua/gra/:type" paramsDesc={['News Type']} radar="1">
+<Route author="evnydd0sf" example="/nua/gra/1959" path="/nua/gra/:type" paramsDesc={['News Type']} radar="1">
 
 | News Type | Parameters   |
 | ---- | ---- |
@@ -100,11 +100,11 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 | 培养工作 | 1962 |
 | 学位工作 | 1958 |
 
-</RouteEn>
+</Route>
 
-### Library
+### Library {#nanjing-university-of-the-arts-nan-jing-yi-shu-xue-yuan-library}
 
-<RouteEn author="evnydd0sf" example="/nua/lib/xwdt" path="/nua/lib/:type" paramsDesc={['News Type']} radar="1">
+<Route author="evnydd0sf" example="/nua/lib/xwdt" path="/nua/lib/:type" paramsDesc={['News Type']} radar="1">
 
 | News Type | Parameters   |
 | ---- | ---- |
@@ -113,101 +113,101 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 | 资源动态 | zydt |
 | 服务动态 | fwdt |
 
-</RouteEn>
+</Route>
 
-## Polimi
+## Polimi {#polimi}
 
-### News
+### News {#polimi-news}
 
-<RouteEn author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" paramsDesc={['English language code en']} />
+<Route author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" paramsDesc={['English language code en']} />
 
-## Tianjin University 天津大学
+## Tianjin University 天津大学 {#tianjin-university-tian-jin-da-xue}
 
-### News
+### News {#tianjin-university-tian-jin-da-xue-news}
 
-<RouteEn author="SuperPung" example="/tju/news/focus" path="/tju/news/:type?" paramsDesc={['default `focus`']}>
+<Route author="SuperPung" example="/tju/news/focus" path="/tju/news/:type?" paramsDesc={['default `focus`']}>
 
 | Focus on TJU | General News | Internal News | Media Report | Pictures of TJU |
 | :----------: | :----------: | :-----------: | :----------: | :-------------: |
 |    focus     |   general    |    internal   |    media     |     picture     |
 
-</RouteEn>
+</Route>
 
-### College of Intelligence and Computing
+### College of Intelligence and Computing {#tianjin-university-tian-jin-da-xue-college-of-intelligence-and-computing}
 
-<RouteEn author="SuperPung" example="/tju/cic/news" path="/tju/cic/:type?" paramsDesc={['default `news`']}>
+<Route author="SuperPung" example="/tju/cic/news" path="/tju/cic/:type?" paramsDesc={['default `news`']}>
 
 | College News | Notification | TJU Forum for CIC |
 | :----------: | :----------: | :---------------: |
 |     news     | notification |       forum       |
 
-</RouteEn>
+</Route>
 
-### The Office of Academic Affairs
+### The Office of Academic Affairs {#tianjin-university-tian-jin-da-xue-the-office-of-academic-affairs}
 
-<RouteEn author="AmosChenYQ SuperPung" example="/tju/oaa/news" path="/tju/oaa/:type?" paramsDesc={['default `news`']}>
+<Route author="AmosChenYQ SuperPung" example="/tju/oaa/news" path="/tju/oaa/:type?" paramsDesc={['default `news`']}>
 
 | News | Notification |
 | :--: | :----------: |
 | news | notification |
 
-</RouteEn>
+</Route>
 
-### Admission Office of Graduate
+### Admission Office of Graduate {#tianjin-university-tian-jin-da-xue-admission-office-of-graduate}
 
-<RouteEn author="SuperPung" example="/tju/yzb/notice" path="/tju/yzb/:type?" paramsDesc={['default `notice`']}>
+<Route author="SuperPung" example="/tju/yzb/notice" path="/tju/yzb/:type?" paramsDesc={['default `notice`']}>
 
 | School-level Notice | Master | Doctor | On-the-job Degree |
 | :-----------------: | :----: | :----: |:-----------------:|
 |       notice        | master | doctor |        job        |
 
-</RouteEn>
+</Route>
 
-## University of Massachusetts Amherst
+## University of Massachusetts Amherst {#university-of-massachusetts-amherst}
 
-### College of Electrical and Computer Engineering
+### College of Electrical and Computer Engineering {#university-of-massachusetts-amherst-college-of-electrical-and-computer-engineering}
 
 #### News
 
-<RouteEn author="gammapi" example="/umass/amherst/ecenews" path="/umass/amherst/ecenews" radar="1" rssbud="1"/>
+<Route author="gammapi" example="/umass/amherst/ecenews" path="/umass/amherst/ecenews" radar="1" rssbud="1"/>
 
 #### Seminar
 
-<RouteEn author="gammapi" example="/umass/amherst/eceseminar" path="/umass/amherst/eceseminar" radar="1" rssbud="1"/>
+<Route author="gammapi" example="/umass/amherst/eceseminar" path="/umass/amherst/eceseminar" radar="1" rssbud="1"/>
 
 Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's no upcoming seminars. This is normal and will cause rsshub fail to fetch this feed.
 
-### College of Information & Computer Sciences News
+### College of Information & Computer Sciences News {#university-of-massachusetts-amherst-college-of-information-%26-computer-sciences-news}
 
-<RouteEn author="gammapi" example="/umass/amherst/csnews" path="/umass/amherst/csnews" radar="1" rssbud="1"/>
+<Route author="gammapi" example="/umass/amherst/csnews" path="/umass/amherst/csnews" radar="1" rssbud="1"/>
 
-### International Programs Office
+### International Programs Office {#university-of-massachusetts-amherst-international-programs-office}
 
 #### Events
 
-<RouteEn author="gammapi" example="/umass/amherst/ipostories" path="/umass/amherst/ipostories" radar="1" rssbud="1"/>
+<Route author="gammapi" example="/umass/amherst/ipostories" path="/umass/amherst/ipostories" radar="1" rssbud="1"/>
 
 #### Featured Stories
 
-<RouteEn author="gammapi" example="/umass/amherst/ipoevents" path="/umass/amherst/ipoevents" radar="1" rssbud="1"/>
+<Route author="gammapi" example="/umass/amherst/ipoevents" path="/umass/amherst/ipoevents" radar="1" rssbud="1"/>
 
-## University of Texas at Dallas
+## University of Texas at Dallas {#university-of-texas-at-dallas}
 
-### International Student Services
+### International Student Services {#university-of-texas-at-dallas-international-student-services}
 
 <Route author="Chang4Tech" example="/utdallas/isso" path="/utdallas/isso" />
 
-## University of Washington
+## University of Washington {#university-of-washington}
 
-### Global Innovation Exchange News
+### Global Innovation Exchange News {#university-of-washington-global-innovation-exchange-news}
 
-<RouteEn author="dykderrick" example="/uw/gix/news/blog" path="/uw/gix/news/:category" paramsDesc={['Blog Type']}>
+<Route author="dykderrick" example="/uw/gix/news/blog" path="/uw/gix/news/:category" paramsDesc={['Blog Type']}>
 
 | Blog | In The News |
 | ---- | ----------- |
 | blog | inthenews   |
 
-</RouteEn>
+</Route>
 
 ## 安徽工业大学 {#an-hui-gong-ye-da-xue}
 

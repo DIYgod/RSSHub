@@ -2,15 +2,15 @@ import Route from '@site/src/components/Route';
 
 # 💻 Programming
 
-## A List Apart
+## A List Apart {#a-list-apart}
 
-### Articles
+### Articles {#a-list-apart-articles}
 
-<RouteEn author="Rjnishant530" example="/alistapart" path="/alistapart" radar="1"/>
+<Route author="Rjnishant530" example="/alistapart" path="/alistapart" radar="1"/>
 
-### Topics
+### Topics {#a-list-apart-topics}
 
-<RouteEn author="Rjnishant530" example="/alistapart/application-development" path="/alistapart/:topic" paramsDesc={['Any Topic or from the table below. Defaults to All Articles']} radar="1">
+<Route author="Rjnishant530" example="/alistapart/application-development" path="/alistapart/:topic" paramsDesc={['Any Topic or from the table below. Defaults to All Articles']} radar="1">
 
 You have the option to utilize the main heading or use individual categories as topics for the path.
 
@@ -64,13 +64,13 @@ You have the option to utilize the main heading or use individual categories as 
 
 :::
 
-</RouteEn>
+</Route>
 
-## ACM
+## ACM {#acm}
 
-### A.M.Turing Award Winners
+### A.M.Turing Award Winners {#acm-a.m.turing-award-winners}
 
-<RouteEn author="nczitzk" example="/acm/amturingaward" path="/acm/amturingaward"/>
+<Route author="nczitzk" example="/acm/amturingaward" path="/acm/amturingaward"/>
 
 ## AI 研习社 {#ai-yan-xi-she}
 
@@ -88,11 +88,11 @@ You have the option to utilize the main heading or use individual categories as 
 
 </Route>
 
-## AtCoder
+## AtCoder {#atcoder}
 
-### Present Contests
+### Present Contests {#atcoder-present-contests}
 
-<RouteEn author="nczitzk" example="/atcoder/contest/en/upcoming" path="/atcoder/contest/:language?/:status?" paramsDesc={['Language, `jp` as Japanese or `en` as English, English by default', 'Status, see below, Recent Contests by default']}>
+<Route author="nczitzk" example="/atcoder/contest/en/upcoming" path="/atcoder/contest/:language?/:status?" paramsDesc={['Language, `jp` as Japanese or `en` as English, English by default', 'Status, see below, Recent Contests by default']}>
 
 Status
 
@@ -100,11 +100,11 @@ Status
 | --------------- | ----------------- | --------------- |
 | active          | upcoming          | recent          |
 
-</RouteEn>
+</Route>
 
-### Contests Archive
+### Contests Archive {#atcoder-contests-archive}
 
-<RouteEn author="nczitzk" example="/atcoder/contest" path="/atcoder/contest/:language?/:rated?/:category?/:keyword?" paramsDesc={['Language, `jp` as Japanese or `en` as English, English by default', 'Rated Range, see below, all by default', 'Category, see below, all by default', 'Keyword']}>
+<Route author="nczitzk" example="/atcoder/contest" path="/atcoder/contest/:language?/:rated?/:category?/:keyword?" paramsDesc={['Language, `jp` as Japanese or `en` as English, English by default', 'Rated Range, see below, all by default', 'Category, see below, all by default', 'Keyword']}>
 
 Rated Range
 
@@ -126,61 +126,61 @@ Category
 | --------------------------- | -------------------- |
 | 1002                        | 1200                 |
 
-</RouteEn>
+</Route>
 
-### Posts
+### Posts {#atcoder-posts}
 
-<RouteEn author="nczitzk" example="/atcoder/post" path="/atcoder/post/:language?/:keyword?" paramsDesc={['Language, `jp` as Japanese or `en` as English, English by default', 'Keyword']}/>
+<Route author="nczitzk" example="/atcoder/post" path="/atcoder/post/:language?/:keyword?" paramsDesc={['Language, `jp` as Japanese or `en` as English, English by default', 'Keyword']}/>
 
-## BBC News Labs
+## BBC News Labs {#bbc-news-labs}
 
-### News
+### News {#bbc-news-labs-news}
 
-<RouteEn author="elxy" example="/bbcnewslabs/news" path="/bbcnewslabs/news"/>
+<Route author="elxy" example="/bbcnewslabs/news" path="/bbcnewslabs/news"/>
 
-## Bitbucket
+## Bitbucket {#bitbucket}
 
-### Commits
+### Commits {#bitbucket-commits}
 
-<RouteEn author="AuroraDysis" example="/bitbucket/commits/blaze-lib/blaze" path="/bitbucket/commits/:workspace/:repo_slug" paramsDesc={['Workspace', 'Repository']} radar="1" rssbud="1" />
+<Route author="AuroraDysis" example="/bitbucket/commits/blaze-lib/blaze" path="/bitbucket/commits/:workspace/:repo_slug" paramsDesc={['Workspace', 'Repository']} radar="1" rssbud="1" />
 
-### Tags
+### Tags {#bitbucket-tags}
 
-<RouteEn author="AuroraDysis" example="/bitbucket/tags/blaze-lib/blaze" path="/bitbucket/tags/:workspace/:repo_slug" paramsDesc={['Workspace', 'Repository']} radar="1" rssbud="1" />
+<Route author="AuroraDysis" example="/bitbucket/tags/blaze-lib/blaze" path="/bitbucket/tags/:workspace/:repo_slug" paramsDesc={['Workspace', 'Repository']} radar="1" rssbud="1" />
 
-## Bitmovin
+## Bitmovin {#bitmovin}
 
-### Blog
+### Blog {#bitmovin-blog}
 
-<RouteEn author="elxy" example="/bitmovin/blog" path="/bitmovin/blog"/>
+<Route author="elxy" example="/bitmovin/blog" path="/bitmovin/blog"/>
 
-## CNCF
+## CNCF {#cncf}
 
-### Category
+### Category {#cncf-category}
 
-<RouteEn author="Fatpandac" example="/cncf" path="/cncf/:cate?" radar="1" rssbud="1" paramsDesc={['blog by default']}>
+<Route author="Fatpandac" example="/cncf" path="/cncf/:cate?" radar="1" rssbud="1" paramsDesc={['blog by default']}>
 
 | Blog | News | Announcements | Reports |
 |------|------|---------------|---------|
 | blog | news | announcements | reports |
 
-</RouteEn>
+</Route>
 
-## Codeforces
+## Codeforces {#codeforces}
 
-### Latest contests
+### Latest contests {#codeforces-latest-contests}
 
-<RouteEn author="Fatpandac" example="/codeforces/contests" path="/codeforces/contests"/>
+<Route author="Fatpandac" example="/codeforces/contests" path="/codeforces/contests"/>
 
-### Recent actions
+### Recent actions {#codeforces-recent-actions}
 
-<RouteEn author="ftiasch" example="/codeforces/recent-actions" path="/codeforces/recent-actions/:minrating?" paramsDesc={['The minimum blog/comment rating required. Default: 1']}/>
+<Route author="ftiasch" example="/codeforces/recent-actions" path="/codeforces/recent-actions/:minrating?" paramsDesc={['The minimum blog/comment rating required. Default: 1']}/>
 
-## cve.mitre.org
+## cve.mitre.org {#cve.mitre.org}
 
-### Search Result
+### Search Result {#cve.mitre.org-search-result}
 
-<RouteEn author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" paramsDesc={['keyword']} />
+<Route author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" paramsDesc={['keyword']} />
 
 ## dbaplus 社群 {#dbaplus-she-qun}
 
@@ -210,11 +210,11 @@ Category
 
 <Route author="nczitzk" example="/deeplearningai/thebatch" path="/deeplearningai/thebatch"/>
 
-## Distill
+## Distill {#distill}
 
-### Latest
+### Latest {#distill-latest}
 
-<RouteEn author="nczitzk" example="/distill" path="/distill"/>
+<Route author="nczitzk" example="/distill" path="/distill"/>
 
 ## Dockone {#dockone}
 
@@ -222,9 +222,9 @@ Category
 
 <Route author="csi0n" example="/dockone/weekly" path="/dockone/weekly"/>
 
-## gihyo.jp
+## gihyo.jp {#gihyo.jp}
 
-### Series
+### Series {#gihyo.jp-series}
 
 <Route author="masakichi" example="/gihyo/list/group/Ubuntu-Weekly-Recipe" path="/gihyo/list/group/:id" paramsDesc={['Series']}/>
 
@@ -278,7 +278,7 @@ Category
 
 <Route author="TonyRL" example="/gitee/events/y_project/RuoYi" path="/gitee/events/:owner/:repo" paramsDesc={['用户名', '仓库名']} radar="1" rssbud="1"/>
 
-## GitHub
+## GitHub {#github}
 
 :::tip
 
@@ -292,17 +292,17 @@ GitHub provides some official RSS feeds:
 
 :::
 
-### User Repo
+### User Repo {#github-user-repo}
 
-<RouteEn author="dragon-yuan" path="/github/repos/:user" example="/github/repos/DIYgod" paramsDesc={['GitHub username']} radar="1" rssbud="1"/>
+<Route author="dragon-yuan" path="/github/repos/:user" example="/github/repos/DIYgod" paramsDesc={['GitHub username']} radar="1" rssbud="1"/>
 
-### Trending
+### Trending {#github-trending}
 
-<RouteEn author="DIYgod" path="/github/trending/:since/:language/:spoken_language?" example="/github/trending/daily/javascript/en" paramsDesc={['time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL, possible values are: `daily`, `weekly` or `monthly`', 'the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL, don\'t filter option is `any`', 'natural language, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL']} radar="1" rssbud="1" selfhost="1"/>
+<Route author="DIYgod" path="/github/trending/:since/:language/:spoken_language?" example="/github/trending/daily/javascript/en" paramsDesc={['time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL, possible values are: `daily`, `weekly` or `monthly`', 'the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL, don\'t filter option is `any`', 'natural language, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL']} radar="1" rssbud="1" selfhost="1"/>
 
-### Topics
+### Topics {#github-topics}
 
-<RouteEn author="queensferryme" example="/github/topics/framework" path="/github/topics/:name/:qs?" paramsDesc={['Topic name, which can be found in the URL of the corresponding [Topics Page](https://github.com/topics/framework)', 'Query string, like `l=php&o=desc&s=stars`. Details listed as follows:']} radar="1" rssbud="1">
+<Route author="queensferryme" example="/github/topics/framework" path="/github/topics/:name/:qs?" paramsDesc={['Topic name, which can be found in the URL of the corresponding [Topics Page](https://github.com/topics/framework)', 'Query string, like `l=php&o=desc&s=stars`. Details listed as follows:']} radar="1" rssbud="1">
 
 | Parameter | Description      | Values                                                                                                                          |
 | --------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
@@ -312,31 +312,31 @@ GitHub provides some official RSS feeds:
 
 For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will generate the RSS feed corresponding to this [page](https://github.com/topics/framework?l=php&o=desc&s=stars).
 
-</RouteEn>
+</Route>
 
-### Repo Issues
+### Repo Issues {#github-repo-issues}
 
-<RouteEn author="HenryQW AndreyMZ" path="/github/issue/:user/:repo/:state?/:labels?" example="/github/issue/DIYgod/RSSHub/all/RSS%20proposal" paramsDesc={['GitHub username', 'GitHub repo name', 'the state of the issues. Can be either `open`, `closed`, or `all`. Default: `open`.', 'a list of comma separated label names']} radar="1" rssbud="1"/>
+<Route author="HenryQW AndreyMZ" path="/github/issue/:user/:repo/:state?/:labels?" example="/github/issue/DIYgod/RSSHub/all/RSS%20proposal" paramsDesc={['GitHub username', 'GitHub repo name', 'the state of the issues. Can be either `open`, `closed`, or `all`. Default: `open`.', 'a list of comma separated label names']} radar="1" rssbud="1"/>
 
-### Repo Pull Requests
+### Repo Pull Requests {#github-repo-pull-requests}
 
-<RouteEn author="hashman TonyRL" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo/:state?/:labels?" paramsDesc={['User name', 'Repo name', 'the state of pull requests. Can be either `open`, `closed`, or `all`. Default: `open`.', 'a list of comma separated label names']} radar="1" rssbud="1"/>
+<Route author="hashman TonyRL" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo/:state?/:labels?" paramsDesc={['User name', 'Repo name', 'the state of pull requests. Can be either `open`, `closed`, or `all`. Default: `open`.', 'a list of comma separated label names']} radar="1" rssbud="1"/>
 
-### User Followers
+### User Followers {#github-user-followers}
 
-<RouteEn author="HenryQW" path="/github/user/followers/:user" example="/github/user/followers/HenryQW" paramsDesc={['GitHub username']} radar="1" rssbud="1"/>
+<Route author="HenryQW" path="/github/user/followers/:user" example="/github/user/followers/HenryQW" paramsDesc={['GitHub username']} radar="1" rssbud="1"/>
 
-### Repo Stars
+### Repo Stars {#github-repo-stars}
 
-<RouteEn author="HenryQW" path="/github/stars/:user/:repo" example="/github/stars/DIYGod/RSSHub" paramsDesc={['GitHub username', 'GitHub repo name']} radar="1" rssbud="1"/>
+<Route author="HenryQW" path="/github/stars/:user/:repo" example="/github/stars/DIYGod/RSSHub" paramsDesc={['GitHub username', 'GitHub repo name']} radar="1" rssbud="1"/>
 
-### Repo Branches
+### Repo Branches {#github-repo-branches}
 
-<RouteEn author="max-arnold" example="/github/branches/DIYgod/RSSHub" path="/github/branches/:user/:repo" paramsDesc={['User name', 'Repo name']} radar="1" rssbud="1"/>
+<Route author="max-arnold" example="/github/branches/DIYgod/RSSHub" path="/github/branches/:user/:repo" paramsDesc={['User name', 'Repo name']} radar="1" rssbud="1"/>
 
-### Files Commits
+### Files Commits {#github-files-commits}
 
-<RouteEn author="zengxs" example="/github/file/DIYgod/RSSHub/master/lib/router.js" path="/github/file/:user/:repo/:branch/:filepath+" paramsDesc={['User name', 'Repo name', 'Branch name', 'File path']} radar="1" rssbud="1">
+<Route author="zengxs" example="/github/file/DIYgod/RSSHub/master/lib/router.js" path="/github/file/:user/:repo/:branch/:filepath+" paramsDesc={['User name', 'Repo name', 'Branch name', 'File path']} radar="1" rssbud="1">
 
 | User name | Repo name | Branch name | File path       |
 | --------- | --------- | ----------- | --------------- |
@@ -350,11 +350,11 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 > >
 > > Such as: replace `https://rsshub.app/github/file/DIYgod/RSSHub/master/lib/router%2ejs` to `https://rsshub.app/github/file/DIYgod/RSSHub/master/lib/router%2ejs.rss`
 
-</RouteEn>
+</Route>
 
-### Search Result
+### Search Result {#github-search-result}
 
-<RouteEn author="LogicJake" example="/github/search/RSSHub/bestmatch/desc" path="/github/search/:query/:sort?/:order?" paramsDesc={['search keyword', 'Sort options (default to bestmatch)','Sort order, desc and asc (desc descending by default)']}>
+<Route author="LogicJake" example="/github/search/RSSHub/bestmatch/desc" path="/github/search/:query/:sort?/:order?" paramsDesc={['search keyword', 'Sort options (default to bestmatch)','Sort order, desc and asc (desc descending by default)']}>
 
 | Sort options     | sort      |
 | ---------------- | --------- |
@@ -363,61 +363,61 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 | Most forks       | forks     |
 | Recently updated | updated   |
 
-</RouteEn>
+</Route>
 
-### User Starred Repositories
+### User Starred Repositories {#github-user-starred-repositories}
 
-<RouteEn author="LanceZhu" example="/github/starred_repos/DIYgod" path="/github/starred_repos/:user" paramsDesc={['User name']} radar="1" rssbud="1"/>
+<Route author="LanceZhu" example="/github/starred_repos/DIYgod" path="/github/starred_repos/:user" paramsDesc={['User name']} radar="1" rssbud="1"/>
 
-### Repo Contributors
+### Repo Contributors {#github-repo-contributors}
 
-<RouteEn author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:order?/:anon?" paramsDesc={['User name','Repo name','Sort order by commit numbers, desc and asc (descending by default)','Show anonymous users. Defaults to no, use any values for yes.']} radar="1" rssbud="1"/>
+<Route author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:order?/:anon?" paramsDesc={['User name','Repo name','Sort order by commit numbers, desc and asc (descending by default)','Show anonymous users. Defaults to no, use any values for yes.']} radar="1" rssbud="1"/>
 
-### Issue / Pull Request comments
+### Issue / Pull Request comments {#github-issue-%2F-pull-request-comments}
 
-<RouteEn author="TonyRL FliegendeWurst" example="/github/comments/DIYgod/RSSHub/8116" path="/github/comments/:user/:repo/:number?" paramsDesc={['User / Org name', 'Repo name', 'Issue or pull number (if omitted: all)']} radar="1" rssbud="1"/>
+<Route author="TonyRL FliegendeWurst" example="/github/comments/DIYgod/RSSHub/8116" path="/github/comments/:user/:repo/:number?" paramsDesc={['User / Org name', 'Repo name', 'Issue or pull number (if omitted: all)']} radar="1" rssbud="1"/>
 
-### Wiki History
+### Wiki History {#github-wiki-history}
 
-<RouteEn author="TonyRL" example="/github/wiki/flutter/flutter/Roadmap" path="/github/wiki/:user/:repo/:page?" paramsDesc={['User / Org name', 'Repo name', 'Page slug, can be found in URL, empty means Home']} radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/github/wiki/flutter/flutter/Roadmap" path="/github/wiki/:user/:repo/:page?" paramsDesc={['User / Org name', 'Repo name', 'Page slug, can be found in URL, empty means Home']} radar="1" rssbud="1"/>
 
-### Notifications
+### Notifications {#github-notifications}
 
-<RouteEn author="zhzy0077" example="/github/notifications" path="/github/notifications" radar="1" rssbud="1" selfhost="1"/>
+<Route author="zhzy0077" example="/github/notifications" path="/github/notifications" radar="1" rssbud="1" selfhost="1"/>
 
-### Gist Commits
+### Gist Commits {#github-gist-commits}
 
-<RouteEn author="TonyRL" example="/github/gist/d2c152bb7179d07015f336b1a0582679" path="/github/gist/:gistId" paramsDesc={['Gist ID']} radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/github/gist/d2c152bb7179d07015f336b1a0582679" path="/github/gist/:gistId" paramsDesc={['Gist ID']} radar="1" rssbud="1"/>
 
-## GitLab
+## GitLab {#gitlab}
 
-### Explore
+### Explore {#gitlab-explore}
 
-<RouteEn author="imlonghao zoenglinghou" example="/gitlab/explore/trending" path="/gitlab/explore/:type/:host?" paramsDesc={['type', 'Gitlab instance hostname, default to gitlab.com']}>
+<Route author="imlonghao zoenglinghou" example="/gitlab/explore/trending" path="/gitlab/explore/:type/:host?" paramsDesc={['type', 'Gitlab instance hostname, default to gitlab.com']}>
 
 | Trending | Most stars | All |
 | -------- | ---------- | --- |
 | trending | starred    | all |
 
-</RouteEn>
+</Route>
 
-### Releases
+### Releases {#gitlab-releases}
 
-<RouteEn author="zoenglinghou" example="/gitlab/release/pleroma/pleroma/git.pleroma.social" path="/gitlab/release/:namespace/:project/:host?" paramsDesc={['owner or namespace. `/` needs to be replaced with `%2F`', 'project name', 'Gitlab instance hostname, default to gitlab.com']} />
+<Route author="zoenglinghou" example="/gitlab/release/pleroma/pleroma/git.pleroma.social" path="/gitlab/release/:namespace/:project/:host?" paramsDesc={['owner or namespace. `/` needs to be replaced with `%2F`', 'project name', 'Gitlab instance hostname, default to gitlab.com']} />
 
-### Tags
+### Tags {#gitlab-tags}
 
-<RouteEn author="zoenglinghou" example="/gitlab/tag/rluna-open-source%2Ffile-management%2Fowncloud/core/gitlab.com" path="/gitlab/tag/:namespace/:project/:host?" paramsDesc={['owner or namespace. `/` needs to be replaced with `%2F`', 'project name', 'Gitlab instance hostname, default to gitlab.com']} />
+<Route author="zoenglinghou" example="/gitlab/tag/rluna-open-source%2Ffile-management%2Fowncloud/core/gitlab.com" path="/gitlab/tag/:namespace/:project/:host?" paramsDesc={['owner or namespace. `/` needs to be replaced with `%2F`', 'project name', 'Gitlab instance hostname, default to gitlab.com']} />
 
-## Gitpod
+## Gitpod {#gitpod}
 
-### Blog
+### Blog {#gitpod-blog}
 
-<RouteEn author="TonyRL" example="/gitpod/blog" path="/gitpod/blog" />
+<Route author="TonyRL" example="/gitpod/blog" path="/gitpod/blog" />
 
-### Changelog
+### Changelog {#gitpod-changelog}
 
-<RouteEn author="TonyRL" example="/gitpod/changelog" path="/gitpod/changelog" />
+<Route author="TonyRL" example="/gitpod/changelog" path="/gitpod/changelog" />
 
 ## Go 语言中文网 {#go-yu-yan-zhong-wen-wang}
 
@@ -443,13 +443,13 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 <Route author="CcccFz" example="/gocn/jobs" path="/gocn/jobs" radar="1" rssbud="1"/>
 
-## Hacker News
+## Hacker News {#hacker-news}
 
-### Follow User
+### Follow User {#hacker-news-follow-user}
 
 Subscribe to the updates (threads and submission) from a paritcular Hacker News user
 
-<RouteEn author="cf020031308 nczitzk xie-dongping" example="/hackernews/threads/comments_list/dang" path="/hackernews/:section?/:type?/:user?" paramsDesc={['Section, see above, `index` by default', 'Link, see above, `sources` by default', 'User, only valid for section `threads` and `submitted`']} />
+<Route author="cf020031308 nczitzk xie-dongping" example="/hackernews/threads/comments_list/dang" path="/hackernews/:section?/:type?/:user?" paramsDesc={['Section, see above, `index` by default', 'Link, see above, `sources` by default', 'User, only valid for section `threads` and `submitted`']} />
 
 ### 用户 {#hacker-news-yong-hu}
 
@@ -473,11 +473,11 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <Route author="nczitzk" example="/hacking8/search/+node%3Ahackernews.cc" path="/hacking8/search/:keyword?" paramsDesc={['关键字，默认为空']}/>
 
-## HackMD
+## HackMD {#hackmd}
 
-### Profile
+### Profile {#hackmd-profile}
 
-<RouteEn author="Yukaii kaiix" example="/hackmd/profile/hackmd" path="/hackmd/profile/:path" paramsDesc={['userpath or teampath']} radar="1"/>
+<Route author="Yukaii kaiix" example="/hackmd/profile/hackmd" path="/hackmd/profile/:path" paramsDesc={['userpath or teampath']} radar="1"/>
 
 ## HelloGitHub {#hellogithub}
 
@@ -534,23 +534,23 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <Route author="moke8 nczitzk CaoMeiYouRen" example="/hellogithub/volume" path="/hellogithub/volume"/>
 
-## Hex-Rays
+## Hex-Rays {#hex-rays}
 
-### Hex-Rays News
+### Hex-Rays News {#hex-rays-hex-rays-news}
 
-<RouteEn author="hellodword" example="/hex-rays/news" path="/hex-rays/news" />
+<Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news" />
 
-## Huggingface
+## Huggingface {#huggingface}
 
-### Daily Papers
+### Daily Papers {#huggingface-daily-papers}
 
-<RouteEn author="zeyugao" example="/huggingface/daily-papers" path="/huggingface/daily-papers" />
+<Route author="zeyugao" example="/huggingface/daily-papers" path="/huggingface/daily-papers" />
 
-## Issue Hunt
+## Issue Hunt {#issue-hunt}
 
-### Project Funded
+### Project Funded {#issue-hunt-project-funded}
 
-<RouteEn author="running-grass" radar="1" example="/issuehunt/funded/DIYgod/RSSHub" path="/issuehunt/funded/:username/:repo" paramsDesc={['Github user/org','Repository name']} />
+<Route author="running-grass" radar="1" example="/issuehunt/funded/DIYgod/RSSHub" path="/issuehunt/funded/:username/:repo" paramsDesc={['Github user/org','Repository name']} />
 
 ## ITSlide {#itslide}
 
@@ -558,55 +558,55 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <Route author="Yangshuqing" example="/itslide/new" path="/itslide/new" radar="1" rssbud="1"/>
 
-## Kaggle
+## Kaggle {#kaggle}
 
-### Discussion
+### Discussion {#kaggle-discussion}
 
-<RouteEn author="LogicJake" example="/kaggle/discussion/387811/active" path="/kaggle/discussion/:forumId/:sort?" paramsDesc={['Forum ID, open web request, search forumId; fill in all to subscribe to the whole site discussion forum', 'See the table below for sorting methods, default to hot']}>
+<Route author="LogicJake" example="/kaggle/discussion/387811/active" path="/kaggle/discussion/:forumId/:sort?" paramsDesc={['Forum ID, open web request, search forumId; fill in all to subscribe to the whole site discussion forum', 'See the table below for sorting methods, default to hot']}>
 
 | hot     | recent          | new             | top        | active        |
 | ------- | --------------- | --------------- | ---------- | ------------- |
 | Hotness | Recent Comments | Recently Posted | Most Votes | Most Comments |
 
-</RouteEn>
+</Route>
 
-### Competitions
+### Competitions {#kaggle-competitions}
 
-<RouteEn author="LogicJake" example="/kaggle/competitions" path="/kaggle/competitions/:category?" paramsDesc={['category, default to all']}>
+<Route author="LogicJake" example="/kaggle/competitions" path="/kaggle/competitions/:category?" paramsDesc={['category, default to all']}>
 
 | 空             | featured | research | recruitment | gettingStarted  | masters | playground | analytics |
 | -------------- | -------- | -------- | ----------- | --------------- | ------- | ---------- | --------- |
 | All Categories | Featured | Research | Recruitment | Getting started | Masters | Playground | Analytics |
 
-</RouteEn>
+</Route>
 
 ### User Discussion {#kaggle-user-discussion}
 
 <Route author="nczitzk" example="/kaggle/user/antgoldbloom" path="/kaggle/user/:user" paramsDesc={['用户名']}/>
 
-## Layer3
+## Layer3 {#layer3}
 
-### Quest
+### Quest {#layer3-quest}
 
-<RouteEn author="nczitzk" example="/layer3/quests" path="/layer3/quests" radar="1"/>
+<Route author="nczitzk" example="/layer3/quests" path="/layer3/quests" radar="1"/>
 
-## LeetCode
+## LeetCode {#leetcode}
 
-### Articles
+### Articles {#leetcode-articles}
 
-<RouteEn author="LogicJake" example="/leetcode/articles" path="/leetcode/articles"/>
+<Route author="LogicJake" example="/leetcode/articles" path="/leetcode/articles"/>
 
-### Submission
+### Submission {#leetcode-submission}
 
-<RouteEn author="NathanDai" example="/leetcode/submission/us/nathandai" path="/leetcode/submission/:country/:user" paramsDesc={['country, Chines(cn) and US(us)', 'Username, available at the URL of the LeetCode user homepage']}/>
+<Route author="NathanDai" example="/leetcode/submission/us/nathandai" path="/leetcode/submission/:country/:user" paramsDesc={['country, Chines(cn) and US(us)', 'Username, available at the URL of the LeetCode user homepage']}/>
 
-### Daily Question
+### Daily Question {#leetcode-daily-question}
 
-<RouteEn author="NavePnow" example="/leetcode/dailyquestion/en" path="/leetcode/dailyquestion/:lang" paramsDesc={['site, Chines(cn) and Engligh(en)']}/>
+<Route author="NavePnow" example="/leetcode/dailyquestion/en" path="/leetcode/dailyquestion/:lang" paramsDesc={['site, Chines(cn) and Engligh(en)']}/>
 
-### Daily Question Solution
+### Daily Question Solution {#leetcode-daily-question-solution}
 
-<RouteEn author="woaidouya123" example="/leetcode/dailyquestion/solution/en" path="/leetcode/dailyquestion/solution/:lang" paramsDesc={['site, Chines(cn) and Engligh(en)']}/>
+<Route author="woaidouya123" example="/leetcode/dailyquestion/solution/en" path="/leetcode/dailyquestion/solution/:lang" paramsDesc={['site, Chines(cn) and Engligh(en)']}/>
 
 ## LinkedKeeper {#linkedkeeper}
 
@@ -614,17 +614,17 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <Route author="imlonghao" example="/linkedkeeper/sub/1" path="/linkedkeeper/:type/:id?" paramsDesc={['博文分类, 为 URL 中 `.action` 的文件名', '分区或标签的 ID, 对应 URL 中的 `sid` 或 `tid`']}/>
 
-## Linux Patchwork
+## Linux Patchwork {#linux-patchwork}
 
-### Patch Comments
+### Patch Comments {#linux-patchwork-patch-comments}
 
-<RouteEn author="ysc3839" example="/patchwork.kernel.org/comments/10723629" path="/patchwork.kernel.org/comments/:id" paramsDesc={['Patch ID']}/>
+<Route author="ysc3839" example="/patchwork.kernel.org/comments/10723629" path="/patchwork.kernel.org/comments/:id" paramsDesc={['Patch ID']}/>
 
-## LWN.net
+## LWN.net {#lwn.net}
 
-### Security alerts
+### Security alerts {#lwn.net-security-alerts}
 
-<RouteEn author="zengxs" example="/lwn/alerts/CentOS" path="/lwn/alerts/:distributor" paramsDesc={['Distribution identification']}>
+<Route author="zengxs" example="/lwn/alerts/CentOS" path="/lwn/alerts/:distributor" paramsDesc={['Distribution identification']}>
 
 | Distribution     | Identification     |
 | :--------------- | :----------------- |
@@ -642,7 +642,7 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 | SUSE             | `SUSE`             |
 | Ubuntu           | `Ubuntu`           |
 
-</RouteEn>
+</Route>
 
 ## ModelScope 魔搭社区 {#modelscope-mo-da-she-qu}
 
@@ -662,22 +662,22 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <Route author="TonyRL" example="/modelscope/community" path="/modelscope/community" radar="1" />
 
-## MySQL
+## MySQL {#mysql}
 
-### Release Notes
+### Release Notes {#mysql-release-notes}
 
-<RouteEn author="nczitzk" example="/mysql/release/8.0" path="/mysql/release/:version?" paramsDesc={['Version, see below, 8.0 by default']}>
+<Route author="nczitzk" example="/mysql/release/8.0" path="/mysql/release/:version?" paramsDesc={['Version, see below, 8.0 by default']}>
 
 | 8.0 | 5.7 | 5.6 |
 | --- | --- | --- |
 
-</RouteEn>
+</Route>
 
-## Node.js
+## Node.js {#node.js}
 
-### News
+### News {#node.js-news}
 
-<RouteEn author="nczitzk" example="/nodejs/blog" path="/nodejs/blog/:language?" paramsDesc={['Language, see below, en by default']}>
+<Route author="nczitzk" example="/nodejs/blog" path="/nodejs/blog/:language?" paramsDesc={['Language, see below, en by default']}>
 
 | العربية | Catalan | Deutsch | Español | زبان فارسی |
 | ------- | ------- | ------- | ------- | ---------- |
@@ -695,7 +695,7 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 | -------- | -------- |
 | zh-cn    | zh-tw    |
 
-</RouteEn>
+</Route>
 
 ## NOSEC.org {#nosec.org}
 
@@ -715,11 +715,11 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 </Route>
 
-## project-zero issues
+## project-zero issues {#project-zero-issues}
 
-### issues
+### issues {#project-zero-issues-issues}
 
-<RouteEn author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
+<Route author="hellodword" example="/project-zero-issues" path="/project-zero-issues" />
 
 ## Quicker {#quicker}
 
@@ -773,11 +773,11 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 </Route>
 
-## react
+## react {#react}
 
-### react-native
+### react-native {#react-react-native}
 
-<RouteEn author="xixi" example="/react/react-native-weekly" path="/react/react-native-weekly" />
+<Route author="xixi" example="/react/react-native-weekly" path="/react/react-native-weekly" />
 
 ## Rust 语言中文社区 {#rust-yu-yan-zhong-wen-she-qu}
 
@@ -785,12 +785,12 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <Route author="CcccFz" example="/rustcc/jobs" path="/rustcc/jobs" radar="1" rssbud="1"/>
 
-## Scala
+## Scala {#scala}
 
-### Scala Blog
+### Scala Blog {#scala-scala-blog}
 
-<RouteEn author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" paramsDesc={['part parmater can be found in the url of blog']} >
-</RouteEn>
+<Route author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" paramsDesc={['part parmater can be found in the url of blog']} >
+</Route>
 
 ## SecWiki - 安全维基 {#secwiki---an-quan-wei-ji}
 
@@ -812,15 +812,15 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <Route author="shiluanzzz" example="/segmentfault/blogs/go" path="/segmentfault/blogs/:tag" paramsDesc={['标签名称, 在 https://segmentfault.com/tags 中可以找到']} radar="1"/>
 
-## Smashing Magazine
+## Smashing Magazine {#smashing-magazine}
 
-### Articles
+### Articles {#smashing-magazine-articles}
 
-<RouteEn author="Rjnishant530" example="/smashingmagazine" path="/smashingmagazine" radar="1"/>
+<Route author="Rjnishant530" example="/smashingmagazine" path="/smashingmagazine" radar="1"/>
 
-### Category
+### Category {#smashing-magazine-category}
 
-<RouteEn author="Rjnishant530" example="/smashingmagazine/react" path="/smashingmagazine/:category?" paramsDesc={['Find in URL or Table below']} radar="1">
+<Route author="Rjnishant530" example="/smashingmagazine/react" path="/smashingmagazine/:category?" paramsDesc={['Find in URL or Table below']} radar="1">
 
 :::note Category
 
@@ -862,7 +862,7 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 :::
 
-</RouteEn>
+</Route>
 
 ## TesterHome {#testerhome}
 
@@ -870,32 +870,31 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <Route author="xyqfer" example="/testerhome/newest" path="/testerhome/newest"/>
 
-## ui.dev
+## ui.dev {#ui.dev}
 
-### BYTES - Your weekly dose of JS
+### BYTES - Your weekly dose of JS {#ui.dev-bytes---your-weekly-dose-of-js}
 
 Staying informed on the JavaScript ecosystem has never been so entertaining. Delivered every Monday and Thursday, for free. https://bytes.dev/
 
-<RouteEn author="meixger" example="/bytes" path="/bytes"/>
+<Route author="meixger" example="/bytes" path="/bytes"/>
 
-### React Newsletter
+### React Newsletter {#ui.dev-react-newsletter}
 
 Stay up to date on the latest React news, tutorials, resources, and more. Delivered every Tuesday, for free. https://reactnewsletter.com/
 
-<RouteEn author="meixger" example="/reactnewsletter" path="/reactnewsletter"/>
+<Route author="meixger" example="/reactnewsletter" path="/reactnewsletter"/>
 
+## Visual Studio Code Marketplace {#visual-studio-code-marketplace}
 
-## Visual Studio Code Marketplace
+### Visual Studio Code Plugins Marketplace {#visual-studio-code-marketplace-visual-studio-code-plugins-marketplace}
 
-### Visual Studio Code Plugins Marketplace
-
-<RouteEn author="SeanChao" example="/vscode/marketplace" path="/vscode/marketplace/:category?" paramsDesc={['Category']} >
+<Route author="SeanChao" example="/vscode/marketplace" path="/vscode/marketplace/:category?" paramsDesc={['Category']} >
 
 | Featured | Trending Weekly | Trending Monthly | Trending Daily | Most Popular | Recently Added |
 | -------- | --------------- | ---------------- | -------------- | ------------ | -------------- |
 | featured | trending        | trending_m       | trending_d     | popular      | new            |
 
-</RouteEn>
+</Route>
 
 ## wolley {#wolley}
 
@@ -911,15 +910,15 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 <Route author="umm233" example="/wolley/host/www.youtube.com" path="/wolley/host/:host" paramsDesc={['文章对应 host 分类']} />
 
-## zooTeam 政采云前端技术团队
+## zooTeam 政采云前端技术团队 {#zooteam-zheng-cai-yun-qian-duan-ji-shu-tuan-dui}
 
-### blog
+### blog {#zooteam-zheng-cai-yun-qian-duan-ji-shu-tuan-dui-blog}
 
-<RouteEn author="Pulset" example="/zooTeam/blog" path="/zooTeam/blog" radar="1" rssbud="1"/>
+<Route author="Pulset" example="/zooTeam/blog" path="/zooTeam/blog" radar="1" rssbud="1"/>
 
-### weekly
+### weekly {#zooteam-zheng-cai-yun-qian-duan-ji-shu-tuan-dui-weekly}
 
-<RouteEn author="Pulset" example="/zooTeam/weekly" path="/zooTeam/weekly" radar="1" rssbud="1"/>
+<Route author="Pulset" example="/zooTeam/weekly" path="/zooTeam/weekly" radar="1" rssbud="1"/>
 
 ## 阿里云 {#a-li-yun}
 
@@ -1542,3 +1541,4 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 ### 热门 {#zhong-cheng-fan-yi-re-men}
 
 <Route author="SirM2z" example="/zcfy/hot" path="/zcfy/hot"/>
+

@@ -2,29 +2,29 @@ import Route from '@site/src/components/Route';
 
 # 📢 Government
 
-## Australia Department of Home Affairs {#ao-da-li-ya-nei-zheng-bu}
+## Australia Department of Home Affairs {#australia-department-of-home-affairs}
 
-### Immigration and Citizenship - News {#ao-da-li-ya-nei-zheng-bu-yi-min-ju-xin-wen}
+### Immigration and Citizenship - News {#australia-department-of-home-affairs-immigration-and-citizenship---news}
 
 <Route author="liu233w" example="/gov/immiau/news" path="/gov/immiau/news"/>
 
-## Central Intelligence Agency CIA {#mei-guo-zhong-yang-qing-bao-ju}
+## Central Intelligence Agency CIA {#central-intelligence-agency-cia}
 
-### Annual FOIA Reports {#mei-guo-zhong-yang-qing-bao-ju-nian-du-xin-xi-zi-you-fa-bao-gao}
+### Annual FOIA Reports {#central-intelligence-agency-cia-annual-foia-reports}
 
 <Route author="nczitzk" example="/cia/foia-annual-report" path="/cia/foia-annual-report"/>
 
-## Constitutional Court of Baden-Württemberg (Germany)
+## Constitutional Court of Baden-Württemberg (Germany) {#constitutional-court-of-baden-w%C3%BCrttemberg-(germany)}
 
-### Press releases
+### Press releases {#constitutional-court-of-baden-w%C3%BCrttemberg-(germany)-press-releases}
 
-<RouteEn author="quinn-dev" example="/verfghbw/press" path="/verfghbw/press/:keyword?" paramsDesc={['Keyword']}/>
+<Route author="quinn-dev" example="/verfghbw/press" path="/verfghbw/press/:keyword?" paramsDesc={['Keyword']}/>
 
-## Hong Kong Centre for Health Protection
+## Hong Kong Centre for Health Protection {#hong-kong-centre-for-health-protection}
 
-### Category
+### Category {#hong-kong-centre-for-health-protection-category}
 
-<RouteEn author="nczitzk" example="/chp" path="/chp/:category?/:language?" paramsDesc={['Category, see below, Important Topics by default', 'Language, see below, zh_tw by default']}>
+<Route author="nczitzk" example="/chp" path="/chp/:category?/:language?" paramsDesc={['Category, see below, Important Topics by default', 'Language, see below, zh_tw by default']}>
 
 Category
 
@@ -38,13 +38,13 @@ Language
 | ------- | -------- | -------- |
 | en      | zh_cn    | zh_tw    |
 
-</RouteEn>
+</Route>
 
-## Hong Kong Department of Health 香港卫生署 {#xiang-gang-wei-sheng-shu}
+## Hong Kong Department of Health 香港卫生署 {#hong-kong-department-of-health-xiang-gang-wei-sheng-shu}
 
-### Press Release {#xiang-gang-wei-sheng-shu-xin-wen-gong-bao}
+### Press Release {#hong-kong-department-of-health-xiang-gang-wei-sheng-shu-press-release}
 
-<RouteEn author="nczitzk" example="/hongkong/dh" path="/hongkong/dh/:language?" paramsDesc={['Language, see below, tc_chi by default']}>
+<Route author="nczitzk" example="/hongkong/dh" path="/hongkong/dh/:language?" paramsDesc={['Language, see below, tc_chi by default']}>
 
 Language
 
@@ -52,44 +52,44 @@ Language
 | ------- | -------- | -------- |
 | english | chs | tc_chi |
 
-</RouteEn>
+</Route>
 
-## Hong Kong Independent Commission Against Corruption 香港廉政公署 {#xiang-gang-lian-zheng-gong-shu}
+## Hong Kong Independent Commission Against Corruption 香港廉政公署 {#hong-kong-independent-commission-against-corruption-xiang-gang-lian-zheng-gong-shu}
 
-### Press Releases {#xiang-gang-lian-zheng-gong-shu-xin-wen-gong-bu}
+### Press Releases {#hong-kong-independent-commission-against-corruption-xiang-gang-lian-zheng-gong-shu-press-releases}
 
-<RouteEn author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" paramsDesc={['Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese) and `tc`(Traditional Chinese)']}/>
+<Route author="linbuxiao" example="/icac/news/sc" path="/icac/news/:lang?" paramsDesc={['Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese) and `tc`(Traditional Chinese)']}/>
 
-## Macau Independent Commission Against Corruption 澳门廉政公署 {#ao-men-lian-zheng-gong-shu}
+## Macau Independent Commission Against Corruption 澳门廉政公署 {#macau-independent-commission-against-corruption-ao-men-lian-zheng-gong-shu}
 
-### Latest News {#ao-men-lian-zheng-gong-shu-zui-xin-xiao-xi}
+### Latest News {#macau-independent-commission-against-corruption-ao-men-lian-zheng-gong-shu-latest-news}
 
-<RouteEn author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" paramsDesc={['Category', 'Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese), `tc`(Traditional Chinese) and `pt`(Portuguese)']} puppeteer="1">
+<Route author="linbuxiao" example="/ccac/news/all" path="/ccac/news/:type/:lang?" paramsDesc={['Category', 'Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese), `tc`(Traditional Chinese) and `pt`(Portuguese)']} puppeteer="1">
 Category
 
 | All  | Detected Cases | Investigation Reports or Recommendations  | Annual Reports | CCAC's Updates |
 | ---- | -------------- | ----------------------------------------- | -------------- | -------------- |
 | all  | case           | Persuasion                                | AnnualReport   | PCANews        |
 
-</RouteEn>
+</Route>
 
-## Ministry of Foreign Affairs of Japan 日本国外務省 {#ri-ben-guo-wai-wu-sheng}
+## Ministry of Foreign Affairs of Japan 日本国外務省 {#ministry-of-foreign-affairs-of-japan-ri-ben-guo-wai-wu-sheng}
 
-### Press conference {#ri-ben-guo-wai-wu-sheng-ji-zhe-hui-jian}
+### Press conference {#ministry-of-foreign-affairs-of-japan-ri-ben-guo-wai-wu-sheng-press-conference}
 
 <Route author="sgqy" example="/go.jp/mofa" path="/go.jp/mofa"/>
 
-## Supreme Court of the United States {#mei-guo-lian-bang-zui-gao-fa-yuan}
+## Supreme Court of the United States {#supreme-court-of-the-united-states}
 
-### Arguments Audios {#mei-guo-lian-bang-zui-gao-fa-yuan-bian-lun-yin-pin}
+### Arguments Audios {#supreme-court-of-the-united-states-arguments-audios}
 
-<RouteEn author="nczitzk" example="/us/supremecourt/argument_audio" path="/us/supremecourt/argument_audio/:year?" paramsDesc={['Year, current year by default']}/>
+<Route author="nczitzk" example="/us/supremecourt/argument_audio" path="/us/supremecourt/argument_audio/:year?" paramsDesc={['Year, current year by default']}/>
 
-## The United States Trade Representative {#mei-guo-mao-yi-dai-biao-ban-gong-shi}
+## The United States Trade Representative {#the-united-states-trade-representative}
 
-### Press Releases {#mei-guo-mao-yi-dai-biao-ban-gong-shi-xin-wen-gao}
+### Press Releases {#the-united-states-trade-representative-press-releases}
 
-<RouteEn author="nczitzk" example="/ustr/press-releases" path="/ustr/press-releases/:year?/:month?" paramsDesc={['Year, current year by default', 'Month, empty by default, show contents in all year']}>
+<Route author="nczitzk" example="/ustr/press-releases" path="/ustr/press-releases/:year?/:month?" paramsDesc={['Year, current year by default', 'Month, empty by default, show contents in all year']}>
 
 :::tip Tip
 
@@ -97,29 +97,29 @@ Fill in the English expression for the month in the Month field, eg `December` f
 
 :::
 
-</RouteEn>
+</Route>
 
-## The White House {#mei-guo-bai-gong-ban-gong-ting}
+## The White House {#the-white-house}
 
-### Briefing Room
+### Briefing Room {#the-white-house-briefing-room}
 
-<RouteEn author="nczitzk" example="/whitehouse/briefing-room" path="/whitehouse/briefing-room/:category?" paramsDesc={['Category, see below, all by default']}>
+<Route author="nczitzk" example="/whitehouse/briefing-room" path="/whitehouse/briefing-room/:category?" paramsDesc={['Category, see below, all by default']}>
 
 | All | Blog | Legislation | Presidential Actions | Press Briefings | Speeches and Remarks | Statements and Releases |
 | - | - | - | - | - | - | - |
 | | blog | legislation | presidential-actions | press-briefings | speeches-remarks | statements-releases |
 
-</RouteEn>
+</Route>
 
-### Office of Science and Technology Policy
+### Office of Science and Technology Policy {#the-white-house-office-of-science-and-technology-policy}
 
-<RouteEn author="LyleLee" example="/whitehouse/ostp" path="/whitehouse/ostp"/>
+<Route author="LyleLee" example="/whitehouse/ostp" path="/whitehouse/ostp"/>
 
-## U.S. Department of the Treasury
+## U.S. Department of the Treasury {#u.s.-department-of-the-treasury}
 
-### Press Releases
+### Press Releases {#u.s.-department-of-the-treasury-press-releases}
 
-<RouteEn author="nczitzk" example="/treasury/press-releases" path="/treasury/press-releases/:category?/:title?" paramsDesc={['Category, see below, all by default', 'Title keywords, empty by default']}>
+<Route author="nczitzk" example="/treasury/press-releases" path="/treasury/press-releases/:category?/:title?" paramsDesc={['Category, see below, all by default', 'Title keywords, empty by default']}>
 
 Category
 
@@ -127,25 +127,25 @@ Category
 | -------------- | -------------------- | -------- | ----------- |
 | all            | statements-remarks   | readouts | testimonies |
 
-</RouteEn>
+</Route>
 
-## U.S. Food and Drug Administration
+## U.S. Food and Drug Administration {#u.s.-food-and-drug-administration}
 
-### CDRHNew
+### CDRHNew {#u.s.-food-and-drug-administration-cdrhnew}
 
-<RouteEn author="nczitzk" example="/fda/cdrh" path="/fda/cdrh" />
+<Route author="nczitzk" example="/fda/cdrh" path="/fda/cdrh" />
 
-## United Nations
+## United Nations {#united-nations}
 
-### Security Council Vetoed a Resolution
+### Security Council Vetoed a Resolution {#united-nations-security-council-vetoed-a-resolution}
 
-<RouteEn author="HenryQW" example="/un/scveto" path="/un/scveto"/>
+<Route author="HenryQW" example="/un/scveto" path="/un/scveto"/>
 
-## World Health Organization | WHO
+## World Health Organization | WHO {#world-health-organization-%7C-who}
 
-### News
+### News {#world-health-organization-%7C-who-news}
 
-<RouteEn author="nczitzk" example="/who/news" path="/who/news/:language?" paramsDesc={['Language, see below, English by default']}>
+<Route author="nczitzk" example="/who/news" path="/who/news/:language?" paramsDesc={['Language, see below, English by default']}>
 
 Language
 
@@ -153,11 +153,11 @@ Language
 | ------- | ------- | ---- | -------- | ------- | ------- | --------- |
 | en      | ar      | zh   | fr       | ru      | es      | pt        |
 
-</RouteEn>
+</Route>
 
-### Newsroom
+### Newsroom {#world-health-organization-%7C-who-newsroom}
 
-<RouteEn author="LogicJake nczitzk" example="/who/news-room/feature-stories" path="/who/news-room/:category?/:language?" paramsDesc={['Category, see below, Feature stories by default', 'Language, see below, English by default']}>
+<Route author="LogicJake nczitzk" example="/who/news-room/feature-stories" path="/who/news-room/:category?/:language?" paramsDesc={['Category, see below, Feature stories by default', 'Language, see below, English by default']}>
 
 Category
 
@@ -171,11 +171,11 @@ Language
 | ------- | ------- | ---- | -------- | ------- | ------- | --------- |
 | en      | ar      | zh   | fr       | ru      | es      | pt        |
 
-</RouteEn>
+</Route>
 
-### Speeches
+### Speeches {#world-health-organization-%7C-who-speeches}
 
-<RouteEn author="nczitzk" example="/who/speeches" path="/who/speeches/:language?" paramsDesc={['Language, see below, English by default']}>
+<Route author="nczitzk" example="/who/speeches" path="/who/speeches/:language?" paramsDesc={['Language, see below, English by default']}>
 
 Language
 
@@ -183,13 +183,13 @@ Language
 | ------- | ------- | ---- | -------- | ------- | ------- | --------- |
 | en      | ar      | zh   | fr       | ru      | es      | pt        |
 
-</RouteEn>
+</Route>
 
-## World Trade Organization
+## World Trade Organization {#world-trade-organization}
 
-### Dispute settlement news
+### Dispute settlement news {#world-trade-organization-dispute-settlement-news}
 
-<RouteEn author="nczitzk" example="/wto/dispute-settlement" path="/wto/dispute-settlement/:year?" paramsDesc={['Year, current year by default']}/>
+<Route author="nczitzk" example="/wto/dispute-settlement" path="/wto/dispute-settlement/:year?" paramsDesc={['Year, current year by default']}/>
 
 ## 安徽省科技厅 {#an-hui-sheng-ke-ji-ting}
 
@@ -1739,3 +1739,4 @@ Language
 :::
 
 </Route>
+

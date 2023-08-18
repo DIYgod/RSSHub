@@ -2,11 +2,11 @@ import Route from '@site/src/components/Route';
 
 # 🔄 Application Updates
 
-## Amazon
+## Amazon {#amazon}
 
-### Kindle Software Updates
+### Kindle Software Updates {#amazon-kindle-software-updates}
 
-<RouteEn author="NavePnow" example="/amazon/kindle/software-updates" path="/amazon/kindle/software-updates" radar="1"/>
+<Route author="NavePnow" example="/amazon/kindle/software-updates" path="/amazon/kindle/software-updates" radar="1"/>
 
 ## AMD {#amd}
 
@@ -18,35 +18,35 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-## Android
+## Android {#android}
 
-### SDK Platform Tools release notes
+### SDK Platform Tools release notes {#android-sdk-platform-tools-release-notes}
 
-<RouteEn author="nczitzk" example="/android/platform-tools-releases" path="/android/platform-tools-releases"/>
+<Route author="nczitzk" example="/android/platform-tools-releases" path="/android/platform-tools-releases"/>
 
-## Anki
+## Anki {#anki}
 
-### Changes
+### Changes {#anki-changes}
 
-<RouteEn author="nczitzk" example="/anki/changes" path="/anki/changes"/>
+<Route author="nczitzk" example="/anki/changes" path="/anki/changes"/>
 
-## AnyTXT
+## AnyTXT {#anytxt}
 
-### Release Notes
+### Release Notes {#anytxt-release-notes}
 
-<RouteEn author="nczitzk" example="/anytxt/release-notes" path="/anytxt/release-notes"/>
+<Route author="nczitzk" example="/anytxt/release-notes" path="/anytxt/release-notes"/>
 
-## APKPure
+## APKPure {#apkpure}
 
-### Versions
+### Versions {#apkpure-versions}
 
-<RouteEn author="maple3142" example="/apkpure/versions/jp.co.craftegg.band/jp" path="/apkpure/versions/:pkg/:region?" paramsDesc={['Package name', 'Region code, `en` by default']} radar="1" anticrawler="1" puppeteer="1"/>
+<Route author="maple3142" example="/apkpure/versions/jp.co.craftegg.band/jp" path="/apkpure/versions/:pkg/:region?" paramsDesc={['Package name', 'Region code, `en` by default']} radar="1" anticrawler="1" puppeteer="1"/>
 
-## App Center
+## App Center {#app-center}
 
-### Release
+### Release {#app-center-release}
 
-<RouteEn author="Rongronggg9" example="/app-center/release/cloudflare/1.1.1.1-windows/beta" path="/app-center/release/:user/:app/:distribution_group" paramsDesc={['User', 'App name', 'Distribution group']} radar="1" rssbud="1">
+<Route author="Rongronggg9" example="/app-center/release/cloudflare/1.1.1.1-windows/beta" path="/app-center/release/:user/:app/:distribution_group" paramsDesc={['User', 'App name', 'Distribution group']} radar="1" rssbud="1">
 
 :::tip
 
@@ -54,21 +54,21 @@ The parameters can be extracted from the Release page URL: `https://install.appc
 
 :::
 
-</RouteEn>
+</Route>
 
-## App Store/Mac App Store
+## App Store/Mac App Store {#app-store%2Fmac-app-store}
 
-### App Update
+### App Update {#app-store%2Fmac-app-store-app-update}
 
-<RouteEn author="cielpy" example="/appstore/update/us/id697846300" path="/appstore/update/:country/:id" paramsDesc={['App Store Country, obtain from the app URL `https://apps.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `us`', 'App Store app id, obtain from the app URL `https://apps.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `id697846300`']} />
+<Route author="cielpy" example="/appstore/update/us/id697846300" path="/appstore/update/:country/:id" paramsDesc={['App Store Country, obtain from the app URL `https://apps.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `us`', 'App Store app id, obtain from the app URL `https://apps.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `id697846300`']} />
 
-### Price Drop
+### Price Drop {#app-store%2Fmac-app-store-price-drop}
 
-<RouteEn author="HenryQW" example="/appstore/price/us/mac/id1152443474" path="/appstore/price/:country/:type/:id" paramsDesc={['App Store Country, obtain from the app URL https://apps.apple.com/us/app/id1152443474, in this case, `us`', 'App type，either `iOS` or `mac`', 'App Store app id, obtain from the app URL https://apps.apple.com/us/app/id1152443474, in this case, `id1152443474`']} />
+<Route author="HenryQW" example="/appstore/price/us/mac/id1152443474" path="/appstore/price/:country/:type/:id" paramsDesc={['App Store Country, obtain from the app URL https://apps.apple.com/us/app/id1152443474, in this case, `us`', 'App type，either `iOS` or `mac`', 'App Store app id, obtain from the app URL https://apps.apple.com/us/app/id1152443474, in this case, `id1152443474`']} />
 
-### In-App-Purchase Price Drop Alert
+### In-App-Purchase Price Drop Alert {#app-store%2Fmac-app-store-in-app-purchase-price-drop-alert}
 
-<RouteEn author="HenryQW" example="/appstore/iap/us/id953286746" path="/appstore/iap/:country/:id" paramsDesc={['App Store Country, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `us`', 'App Store app id, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `id953286746`']} />
+<Route author="HenryQW" example="/appstore/iap/us/id953286746" path="/appstore/iap/:country/:id" paramsDesc={['App Store Country, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `us`', 'App Store app id, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `id953286746`']} />
 
 ### 每日精品限免 / 促销应用（鲜面连线 by AppSo） {#app-store%2Fmac-app-store-mei-ri-jing-pin-xian-mian-%2F-cu-xiao-ying-yong-%EF%BC%88-xian-mian-lian-xian-by-appso%EF%BC%89}
 
@@ -78,27 +78,27 @@ The parameters can be extracted from the Release page URL: `https://install.appc
 
 <Route author="HenryQW" example="/appstore/gofans" path="/appstore/gofans"/>
 
-## aptonic
+## aptonic {#aptonic}
 
-### New Dropzone Actions
+### New Dropzone Actions {#aptonic-new-dropzone-actions}
 
-<RouteEn author="HenryQW" example="/aptonic/action" path="/aptonic/action/:untested?" paramsDesc={['Set any value to include untested actions.']}/>
+<Route author="HenryQW" example="/aptonic/action" path="/aptonic/action/:untested?" paramsDesc={['Set any value to include untested actions.']}/>
 
-## ASUS
+## ASUS {#asus}
 
-### BIOS
+### BIOS {#asus-bios}
 
-<RouteEn author="Fatpandac" example="/asus/bios/RT-AX88U" path="/asus/bios/:model" paramsDesc={['Model, can be found in product page']}/>
+<Route author="Fatpandac" example="/asus/bios/RT-AX88U" path="/asus/bios/:model" paramsDesc={['Model, can be found in product page']}/>
 
-### GPU Tweak
+### GPU Tweak {#asus-gpu-tweak}
 
-<RouteEn author="TonyRL" example="/asus/gpu-tweak" path="/asus/gpu-tweak" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/asus/gpu-tweak" path="/asus/gpu-tweak" radar="1" rssbud="1"/>
 
-## Bandisoft
+## Bandisoft {#bandisoft}
 
-### History
+### History {#bandisoft-history}
 
-<RouteEn author="nczitzk" example="/bandisoft/bandizip" path="/bandisoft/:id?/:lang?" paramsDesc={['Software id, see below, Bandizip by default', 'Language, see below, English by default']}>
+<Route author="nczitzk" example="/bandisoft/bandizip" path="/bandisoft/:id?/:lang?" paramsDesc={['Software id, see below, Bandizip by default', 'Language, see below, English by default']}>
 
 Software id
 
@@ -132,7 +132,7 @@ Language
 | ภาษาไทย              | th  |
 | 한국어               | kr  |
 
-</RouteEn>
+</Route>
 
 ## Bilibili {#bilibili}
 
@@ -144,15 +144,15 @@ Language
 | ------- | --------- | ---------- | ------ | -------------- |
 | android | iphone    | ipad       | win    | android_tv_yst |
 
-## BlueStacks
+## BlueStacks {#bluestacks}
 
-### BlueStacks 5 Release Notes
+### BlueStacks 5 Release Notes {#bluestacks-bluestacks-5-release-notes}
 
-<RouteEn author="TonyRL" example="/bluestacks/release/5" path="/bluestacks/release/5" radar="1" anticrawler="1" puppeteer="1"/>
+<Route author="TonyRL" example="/bluestacks/release/5" path="/bluestacks/release/5" radar="1" anticrawler="1" puppeteer="1"/>
 
-## Brave
+## Brave {#brave}
 
-### Release Notes
+### Release Notes {#brave-release-notes}
 
 <Route author="nczitzk" example="/brave/latest" path="/brave/latest"/>
 
@@ -174,25 +174,25 @@ Language
 
 <Route author="ntzyz" example="/checkra1n/releases" path="/checkra1n/releases"/>
 
-## Chocolatey
+## Chocolatey {#chocolatey}
 
-### Software Update
+### Software Update {#chocolatey-software-update}
 
-<RouteEn author="woodgear" example="/chocolatey/software/GoogleChrome" path="/chocolatey/software"/>
+<Route author="woodgear" example="/chocolatey/software/GoogleChrome" path="/chocolatey/software"/>
 
-## Chrome Web Store
+## Chrome Web Store {#chrome-web-store}
 
-### Extensions Update
+### Extensions Update {#chrome-web-store-extensions-update}
 
-<RouteEn author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" paramsDesc={['Extension id, can be found in extension url']}/>
+<Route author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" paramsDesc={['Extension id, can be found in extension url']}/>
 
-## Civitai
+## Civitai {#civitai}
 
-### Latest models
+### Latest models {#civitai-latest-models}
 
-<RouteEn author="DIYgod" example="/civitai/models" path="/civitai/models"/>
+<Route author="DIYgod" example="/civitai/models" path="/civitai/models"/>
 
-### Model discussions
+### Model discussions {#civitai-model-discussions}
 
 :::caution
 
@@ -200,19 +200,19 @@ Need to configure `CIVITAI_COOKIE` to obtain image information of NSFW models.
 
 :::
 
-<RouteEn author="DIYgod" example="/civitai/discussions/4384" path="/civitai/discussions/:modelId"/>
+<Route author="DIYgod" example="/civitai/discussions/4384" path="/civitai/discussions/:modelId"/>
 
-## Clash
+## Clash {#clash}
 
-### Premium Releases
+### Premium Releases {#clash-premium-releases}
 
-<RouteEn author="ttttmr" example="/clash/premium" path="/clash/premium" radar="1" />
+<Route author="ttttmr" example="/clash/premium" path="/clash/premium" radar="1" />
 
-## CPUID
+## CPUID {#cpuid}
 
-### News
+### News {#cpuid-news}
 
-<RouteEn author="TonyRL" example="/cpuid/news" path="/cpuid/news" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/cpuid/news" path="/cpuid/news" radar="1" rssbud="1"/>
 
 ## cpython {#cpython}
 
@@ -224,27 +224,27 @@ Need to configure `CIVITAI_COOKIE` to obtain image information of NSFW models.
 
 <Route author="trim21" example="/cpython/pre" path="/cpython/pre" />
 
-## CurseForge
+## CurseForge {#curseforge}
 
-### File Update
+### File Update {#curseforge-file-update}
 
-<RouteEn author="junfengP" example="/curseforge/sc2/assets/taylor-mouses-stuff/files" path="/curseforge/:gameid/:catalogid/:projectid/files" paramsDesc={['Game name', 'Catalog name', 'Progect name']}>
+<Route author="junfengP" example="/curseforge/sc2/assets/taylor-mouses-stuff/files" path="/curseforge/:gameid/:catalogid/:projectid/files" paramsDesc={['Game name', 'Catalog name', 'Progect name']}>
 
 For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` to `/curseforge/sc2/assets/taylor-mouses-stuff/files`
 
-</RouteEn>
+</Route>
 
-## Ditto clipboard manager
+## Ditto clipboard manager {#ditto-clipboard-manager}
 
-### Changes
+### Changes {#ditto-clipboard-manager-changes}
 
-<RouteEn author="nczitzk" example="/ditto/changes" path="/ditto/changes/:type?" paramsDesc={['Type, `beta` is an option']}/>
+<Route author="nczitzk" example="/ditto/changes" path="/ditto/changes/:type?" paramsDesc={['Type, `beta` is an option']}/>
 
-## Docker Hub
+## Docker Hub {#docker-hub}
 
-### Image New Build
+### Image New Build {#docker-hub-image-new-build}
 
-<RouteEn author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" paramsDesc={['Image owner', 'Image name', 'Image tag，default to latest']}>
+<Route author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" paramsDesc={['Image owner', 'Image name', 'Image tag，default to latest']}>
 
 :::caution
 
@@ -252,11 +252,11 @@ The owner of the official image fills in the library, for example: <https://rssh
 
 :::
 
-</RouteEn>
+</Route>
 
-### Image New Tag
+### Image New Tag {#docker-hub-image-new-tag}
 
-<RouteEn author="outloudvi" example="/dockerhub/tag/library/mariadb" path="/dockerhub/tag/:owner/:image/:limits?" paramsDesc={['Image owner', 'Image name', 'Tag count, 10 by default']}>
+<Route author="outloudvi" example="/dockerhub/tag/library/mariadb" path="/dockerhub/tag/:owner/:image/:limits?" paramsDesc={['Image owner', 'Image name', 'Tag count, 10 by default']}>
 
 :::caution
 
@@ -264,13 +264,13 @@ Use `library` as the `owner` for official images, such as <https://rsshub.app/do
 
 :::
 
-</RouteEn>
+</Route>
 
-## Eagle
+## Eagle {#eagle}
 
-### Changelog
+### Changelog {#eagle-changelog}
 
-<RouteEn author="tigercubden" example="/eagle/changelog/en" path="/eagle/changelog/:language?" paramsDesc={['Language, see list, default to be `cn`']} radar="1">
+<Route author="tigercubden" example="/eagle/changelog/en" path="/eagle/changelog/:language?" paramsDesc={['Language, see list, default to be `cn`']} radar="1">
 
 Language
 
@@ -278,19 +278,19 @@ Language
 | ------------------ | ------------------- | ------- |
 | cn                 | tw                  | en      |
 
-</RouteEn>
+</Route>
 
-## Everything
+## Everything {#everything}
 
-### Changes
+### Changes {#everything-changes}
 
-<RouteEn author="nczitzk" example="/everything/changes" path="/everything/changes"/>
+<Route author="nczitzk" example="/everything/changes" path="/everything/changes"/>
 
-## F-Droid
+## F-Droid {#f-droid}
 
-### App Update
+### App Update {#f-droid-app-update}
 
-<RouteEn author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" paramsDesc={['App\'s package name']} />
+<Route author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" paramsDesc={['App\'s package name']} />
 
 ## fir.im 应用 {#fir.im-ying-yong}
 
@@ -298,59 +298,59 @@ Language
 
 <Route author="cielpy" example="/fir/update/xcz" path="/fir/update/:id" paramsDesc={['fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`']}/>
 
-## Firefox
+## Firefox {#firefox}
 
-### New Release
+### New Release {#firefox-new-release}
 
-<RouteEn author="fengkx" example="/firefox/release/desktop" path="/firefox/release/:platform" paramsDesc={['the platform']} >
+<Route author="fengkx" example="/firefox/release/desktop" path="/firefox/release/:platform" paramsDesc={['the platform']} >
 
 | Desktop | Android | Beta | Nightly | Android Beta | ESR           |
 | ------- | ------- | ---- | ------- | ------------ | ------------- |
 | desktop | android | beta | nightly | android-beta | organizations |
 
-</RouteEn>
+</Route>
 
-### Add-ons Update
+### Add-ons Update {#firefox-add-ons-update}
 
-<RouteEn author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" paramsDesc={['Add-ons id, can be found in add-ons url']}/>
+<Route author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" paramsDesc={['Add-ons id, can be found in add-ons url']}/>
 
-## fish shell
+## fish shell {#fish-shell}
 
-### Release Notes
+### Release Notes {#fish-shell-release-notes}
 
-<RouteEn author="x2cf" example="/fishshell" path="/fishshell" radar="1" />
+<Route author="x2cf" example="/fishshell" path="/fishshell" radar="1" />
 
-## FossHub
+## FossHub {#fosshub}
 
-### Software Update
+### Software Update {#fosshub-software-update}
 
-<RouteEn author="nczitzk" example="/fosshub/qBittorrent" path="/fosshub/:id" paramsDesc={['Software id, can be found in URL']}/>
+<Route author="nczitzk" example="/fosshub/qBittorrent" path="/fosshub/:id" paramsDesc={['Software id, can be found in URL']}/>
 
-## Greasy Fork
+## Greasy Fork {#greasy-fork}
 
-### Script Update
+### Script Update {#greasy-fork-script-update}
 
-<RouteEn author="imlonghao" path="/greasyfork/:language/:domain?" example="/greasyfork/en/google.com" paramsDesc={['language, located on the top right corner of Greasy Fork\'s search page, set to `all` for including all languages', 'the script\'s target domain']} radar="1" />
+<Route author="imlonghao" path="/greasyfork/:language/:domain?" example="/greasyfork/en/google.com" paramsDesc={['language, located on the top right corner of Greasy Fork\'s search page, set to `all` for including all languages', 'the script\'s target domain']} radar="1" />
 
-### Script Version History
+### Script Version History {#greasy-fork-script-version-history}
 
-<RouteEn author="miles170" example="/greasyfork/scripts/431691-bypass-all-shortlinks/versions" path="/greasyfork/scripts/:script/versions" paramsDesc={['Script id, can be found in URL']} radar="1" />
+<Route author="miles170" example="/greasyfork/scripts/431691-bypass-all-shortlinks/versions" path="/greasyfork/scripts/:script/versions" paramsDesc={['Script id, can be found in URL']} radar="1" />
 
-### Script Feedback
+### Script Feedback {#greasy-fork-script-feedback}
 
-<RouteEn author="miles170" example="/greasyfork/scripts/431691-bypass-all-shortlinks/feedback" path="/greasyfork/scripts/:script/feedback" paramsDesc={['Script id, can be found in URL']} radar="1" />
+<Route author="miles170" example="/greasyfork/scripts/431691-bypass-all-shortlinks/feedback" path="/greasyfork/scripts/:script/feedback" paramsDesc={['Script id, can be found in URL']} radar="1" />
 
-## Hugo
+## Hugo {#hugo}
 
-### Release News
+### Release News {#hugo-release-news}
 
-<RouteEn author="maokwen" example="/hugo/releases" path="/hugo/releases"/>
+<Route author="maokwen" example="/hugo/releases" path="/hugo/releases"/>
 
-## iFi audio
+## iFi audio {#ifi-audio}
 
-### Download Hub
+### Download Hub {#ifi-audio-download-hub}
 
-<RouteEn author="NavePnow" example="/ifi-audio/download/1503007035/44472" path="/ifi-audio/download/:val/:id" paramsDesc={['product val', 'product id']}/>
+<Route author="NavePnow" example="/ifi-audio/download/1503007035/44472" path="/ifi-audio/download/:val/:id" paramsDesc={['product val', 'product id']}/>
 
 :::caution
 
@@ -360,23 +360,23 @@ Language
 
 :::
 
-## ImageMagick
+## ImageMagick {#imagemagick}
 
-### Changelog
+### Changelog {#imagemagick-changelog}
 
-<RouteEn author="nczitzk" example="/imagemagick/changelog" path="/imagemagick/changelog"/>
+<Route author="nczitzk" example="/imagemagick/changelog" path="/imagemagick/changelog"/>
 
-## Infuse
+## Infuse {#infuse}
 
-### Release Notes
+### Release Notes {#infuse-release-notes}
 
-<RouteEn author="NathanDai" example="/firecore/ios" path="/firecore/:os" paramsDesc={['`ios`,`tvos`,`macos`']}/>
+<Route author="NathanDai" example="/firecore/ios" path="/firecore/:os" paramsDesc={['`ios`,`tvos`,`macos`']}/>
 
-## IPSW.me
+## IPSW.me {#ipsw.me}
 
-### Apple Firmware Update-IPSWs/OTAs version
+### Apple Firmware Update-IPSWs/OTAs version {#ipsw.me-apple-firmware-update-ipsws%2Fotas-version}
 
-<RouteEn author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" paramsDesc={['Fill in ipsws or otas to get different versions of firmware','Product name, `http://rsshub.app/ipsw/index/ipsws/iPod`, if you fill in the iPad, follow the entire iPad series(ptype default to ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`, if you fill in the specific iPhone11,8, submit to the ipsws firmware information of this model']}/>
+<Route author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" paramsDesc={['Fill in ipsws or otas to get different versions of firmware','Product name, `http://rsshub.app/ipsw/index/ipsws/iPod`, if you fill in the iPad, follow the entire iPad series(ptype default to ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`, if you fill in the specific iPhone11,8, submit to the ipsws firmware information of this model']}/>
 
 ## Logseq {#logseq}
 
@@ -385,17 +385,17 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 请使用 <https://github.com/logseq/logseq/releases.atom> 代替。
 :::
 
-## MacKed
+## MacKed {#macked}
 
-### APP Update
+### APP Update {#macked-app-update}
 
-<RouteEn author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" paramsDesc={['app name, can be found in URL']}/>
+<Route author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" paramsDesc={['app name, can be found in URL']}/>
 
-## MacUpdate
+## MacUpdate {#macupdate}
 
-### Update
+### Update {#macupdate-update}
 
-<RouteEn author="TonyRL" example="/macupdate/app/11942" path="/macupdate/app/:appId/:appSlug?" paramsDesc={['Application unique ID, can be found in URL', 'Application slug, can be found in URL']} radar="1"/>
+<Route author="TonyRL" example="/macupdate/app/11942" path="/macupdate/app/:appId/:appSlug?" paramsDesc={['Application unique ID, can be found in URL', 'Application slug, can be found in URL']} radar="1"/>
 
 ## MacWk {#macwk}
 
@@ -411,23 +411,23 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 <Route author="nczitzk" example="/mathpix/blog" path="/mathpix/blog"/>
 
-## Microsoft Edge
+## Microsoft Edge {#microsoft-edge}
 
-### Addons Update
+### Addons Update {#microsoft-edge-addons-update}
 
-<RouteEn author="hoilc" example="/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln" path="/edge/addon/:crxid" paramsDesc={['Addon id, can be found in addon url']}/>
+<Route author="hoilc" example="/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln" path="/edge/addon/:crxid" paramsDesc={['Addon id, can be found in addon url']}/>
 
-## Microsoft Store
+## Microsoft Store {#microsoft-store}
 
-### Updates
+### Updates {#microsoft-store-updates}
 
-<RouteEn author="hellodword" example="/microsoft-store/updates/9WZDNCRFHVN5/CN" path="/microsoft-store/updates/:productid/:market?" paramsDesc={['`Share` - `Copy Link` in the Store', '`CN` as default']} />
+<Route author="hellodword" example="/microsoft-store/updates/9WZDNCRFHVN5/CN" path="/microsoft-store/updates/:productid/:market?" paramsDesc={['`Share` - `Copy Link` in the Store', '`CN` as default']} />
 
-## MIUI
+## MIUI {#miui}
 
-### New firmware
+### New firmware {#miui-new-firmware}
 
-<RouteEn author="Indexyz" example="/miui/aries/" path="/miui/:device/:type?/:region?" paramsDesc={['the device `codename` eg. `aries` for Mi 2S','type', 'Region, default to `cn`']} >
+<Route author="Indexyz" example="/miui/aries/" path="/miui/:device/:type?/:region?" paramsDesc={['the device `codename` eg. `aries` for Mi 2S','type', 'Region, default to `cn`']} >
 
 | stable  | development |
 | ------- | ----------- |
@@ -438,37 +438,37 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 | China  | cn     |
 | Global | global |
 
-</RouteEn>
+</Route>
 
-## Neat Download Manager
+## Neat Download Manager {#neat-download-manager}
 
-### Download
+### Download {#neat-download-manager-download}
 
-<RouteEn author="nczitzk" example="/neatdownloadmanager/download" path="/neatdownloadmanager/download/:os?" paramsDesc={['Operating system, windows or macos, all by default']}/>
+<Route author="nczitzk" example="/neatdownloadmanager/download" path="/neatdownloadmanager/download/:os?" paramsDesc={['Operating system, windows or macos, all by default']}/>
 
-## Not a Tesla App
+## Not a Tesla App {#not-a-tesla-app}
 
-### Tesla Software Updates
+### Tesla Software Updates {#not-a-tesla-app-tesla-software-updates}
 
-<RouteEn author="mrbruce516" example="/notateslaapp/ota" path="/notateslaapp/ota" radar="1"/>
+<Route author="mrbruce516" example="/notateslaapp/ota" path="/notateslaapp/ota" radar="1"/>
 
-## NPM
+## NPM {#npm}
 
-### Package
+### Package {#npm-package}
 
-<RouteEn author="Fatpandac" example="/npm/package/rsshub" path="/npm/package/:name" paramsDesc={['Package name']}/>
+<Route author="Fatpandac" example="/npm/package/rsshub" path="/npm/package/:name" paramsDesc={['Package name']}/>
 
-## Nvidia Web Driver
+## Nvidia Web Driver {#nvidia-web-driver}
 
-### Changelog
+### Changelog {#nvidia-web-driver-changelog}
 
-<RouteEn author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
+<Route author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
-## O&O Software
+## O&O Software {#o%26o-software}
 
-### Changelog
+### Changelog {#o%26o-software-changelog}
 
-<RouteEn author="nczitzk" example="/oo-software/changelog/shutup10" path="/oo-software/changelog/:id" paramsDesc={['Software id, see below, shutup10 by default, can be found in URL']}>
+<Route author="nczitzk" example="/oo-software/changelog/shutup10" path="/oo-software/changelog/:id" paramsDesc={['Software id, see below, shutup10 by default, can be found in URL']}>
 
 | Software       | Id          |
 | -------------- | ----------- |
@@ -477,13 +477,13 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 | O&O Lanytix    | oolanytix   |
 | O&O DeskInfo   | oodeskinfo  |
 
-</RouteEn>
+</Route>
 
-## Obsidian
+## Obsidian {#obsidian}
 
-### Announcements
+### Announcements {#obsidian-announcements}
 
-<RouteEn author="nczitzk" example="/obsidian/announcements" path="/obsidian/announcements"/>
+<Route author="nczitzk" example="/obsidian/announcements" path="/obsidian/announcements"/>
 
 ## OneNote Gem Add-Ins {#onenote-gem-add-ins}
 
@@ -491,53 +491,53 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 <Route author="nczitzk" example="/onenotegem/release" path="/onenotegem/release"/>
 
-## OpenWrt
+## OpenWrt {#openwrt}
 
-### Releases
+### Releases {#openwrt-releases}
 
-<RouteEn author="DIYgod" example="/openwrt/releases/xiaomi/xiaomi_redmi_router_ac2100" path="/releases/:brand/:model" paramsDesc={['Device Model, can be found in url of `Table of Hardware` -> `Device Page`', 'Same as above']}/>
+<Route author="DIYgod" example="/openwrt/releases/xiaomi/xiaomi_redmi_router_ac2100" path="/releases/:brand/:model" paramsDesc={['Device Model, can be found in url of `Table of Hardware` -> `Device Page`', 'Same as above']}/>
 
-## Postman
+## Postman {#postman}
 
-### Release Notes
+### Release Notes {#postman-release-notes}
 
-<RouteEn author="nczitzk" example="/postman/release-notes" path="/postman/release-notes"/>
+<Route author="nczitzk" example="/postman/release-notes" path="/postman/release-notes"/>
 
-## Potplayer
+## Potplayer {#potplayer}
 
-### Version History
+### Version History {#potplayer-version-history}
 
-<RouteEn author="nczitzk" example="/potplayer/update" path="/potplayer/update/:language?" paramsDesc={['Language, see below, English by default']}>
+<Route author="nczitzk" example="/potplayer/update" path="/potplayer/update/:language?" paramsDesc={['Language, see below, English by default']}>
 
 | 한국어 | 中文 (简体) | 中文 (繁体) | ENGLISH | Українська | РУССКИЙ | Polski |
 | ------ | ----------- | ----------- | ------- | ---------- | ------- | ------ |
 | ko     | zh_CN       | zh_TW       | en      | uk         | ru      | pl     |
 
-</RouteEn>
+</Route>
 
-## PuTTY
+## PuTTY {#putty}
 
-### Change Log
+### Change Log {#putty-change-log}
 
-<RouteEn author="nczitzk" example="/putty/changes" path="/putty/changes"/>
+<Route author="nczitzk" example="/putty/changes" path="/putty/changes"/>
 
-## qBittorrent
+## qBittorrent {#qbittorrent}
 
-### News
+### News {#qbittorrent-news}
 
-<RouteEn author="TonyRL" example="/qbittorrent/news" path="/qbittorrent/news" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/qbittorrent/news" path="/qbittorrent/news" radar="1" rssbud="1"/>
 
-## QNAP
+## QNAP {#qnap}
 
-### Release Notes
+### Release Notes {#qnap-release-notes}
 
-<RouteEn author="nczitzk" example="/qnap/release-notes/qts" path="/qnap/release-notes/:id" paramsDesc={['OS id, see below']}>
+<Route author="nczitzk" example="/qnap/release-notes/qts" path="/qnap/release-notes/:id" paramsDesc={['OS id, see below']}>
 
 | QTS | QuTS hero | QuTScloud | QuWAN Orchestrator | QES | TAS | AfoBot |
 | --- | --------- | --------- | ------------------ | --- | --- | ------ |
 | qts | quts_hero | qutscloud | quwan_orchestrator | qes | tas | afobot |
 
-</RouteEn>
+</Route>
 
 ## QQ 互联 SDK {#qq-hu-lian-sdk}
 
@@ -545,11 +545,11 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 <Route author="nuomi1" example="/tencent/qq/sdk/changelog/iOS" path="/tencent/qq/sdk/changelog/:platform" paramsDesc={['平台，iOS / Android']}/>
 
-## QTTabBar
+## QTTabBar {#qttabbar}
 
-### Change Log
+### Change Log {#qttabbar-change-log}
 
-<RouteEn author="nczitzk" example="/qttabbar/change-log" path="/qttabbar/change-log"/>
+<Route author="nczitzk" example="/qttabbar/change-log" path="/qttabbar/change-log"/>
 
 ## Quicker {#quicker}
 
@@ -557,33 +557,33 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 <Route author="Cesaryuan nczitzk" example="/quicker/versions" path="/quicker/versions"/>
 
-## RemNote
+## RemNote {#remnote}
 
-### Changelog
+### Changelog {#remnote-changelog}
 
-<RouteEn author="TonyRL" example="/remnote/changelog" path="/remnote/changelog" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/remnote/changelog" path="/remnote/changelog" radar="1" rssbud="1"/>
 
-## RescueTime
+## RescueTime {#rescuetime}
 
-### Release Notes
+### Release Notes {#rescuetime-release-notes}
 
-<RouteEn author="nczitzk" example="/rescuetime/release-notes" path="/rescuetime/release-notes/:os?" paramsDesc={['OS id, see below']}>
+<Route author="nczitzk" example="/rescuetime/release-notes" path="/rescuetime/release-notes/:os?" paramsDesc={['OS id, see below']}>
 
 | Mac OS | Windows |
 | ------ | ------- |
 | mac    | windows |
 
-</RouteEn>
+</Route>
 
-## RSSHub
+## RSSHub {#rsshub}
 
-### New routes
+### New routes {#rsshub-new-routes}
 
-<RouteEn author="DIYgod" path="/rsshub/routes/:lang?" example="/rsshub/routes/en" paramsDesc={['Language, `en` means English routes, other values or null means Chinese routes']}/>
+<Route author="DIYgod" path="/rsshub/routes/:lang?" example="/rsshub/routes/en" paramsDesc={['Language, `en` means English routes, other values or null means Chinese routes']}/>
 
-### New sponsors
+### New sponsors {#rsshub-new-sponsors}
 
-<RouteEn author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1" rssbud="1"/>
 
 ## Sesame {#sesame}
 
@@ -613,21 +613,21 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 <Route author="zytomorrow" example="/simpread/changelog" path="/simpread/changelog"/>
 
-## sketch.com
+## sketch.com {#sketch.com}
 
-### Beta update
+### Beta update {#sketch.com-beta-update}
 
-<RouteEn author="Jeason0228" example="/sketch/beta" path="/sketch/beta"  />
+<Route author="Jeason0228" example="/sketch/beta" path="/sketch/beta"  />
 
-### Release update
+### Release update {#sketch.com-release-update}
 
-<RouteEn author="Jeason0228" example="/sketch/updates" path="/sketch/updates"  />
+<Route author="Jeason0228" example="/sketch/updates" path="/sketch/updates"  />
 
-## Sony
+## Sony {#sony}
 
-### Software Downloads
+### Software Downloads {#sony-software-downloads}
 
-<RouteEn author="NavePnow" example="/sony/downloads/product/nw-wm1am2" path="/sony/downloads/:productType/:productId" paramsDesc={['product type', 'product id']}>
+<Route author="NavePnow" example="/sony/downloads/product/nw-wm1am2" path="/sony/downloads/:productType/:productId" paramsDesc={['product type', 'product id']}>
 
 :::tip
 
@@ -635,25 +635,25 @@ Open `https://www.sony.com/electronics/support` and search for the corresponding
 
 :::
 
-</RouteEn>
+</Route>
 
-## Thunderbird
+## Thunderbird {#thunderbird}
 
-### Changelog
+### Changelog {#thunderbird-changelog}
 
-<RouteEn author="garywill" example="/thunderbird/release" path="/thunderbird/release"/>
+<Route author="garywill" example="/thunderbird/release" path="/thunderbird/release"/>
 
-## Total Commander
+## Total Commander {#total-commander}
 
-### What's New
+### What's New {#total-commander-what's-new}
 
-<RouteEn author="nczitzk" example="/totalcommander/whatsnew" path="/totalcommander/whatsnew"/>
+<Route author="nczitzk" example="/totalcommander/whatsnew" path="/totalcommander/whatsnew"/>
 
-## TradingView
+## TradingView {#tradingview}
 
-### Blog
+### Blog {#tradingview-blog}
 
-<RouteEn author="nczitzk" example="/tradingview/blog/en" path="/tradingview/blog/:language?" paramsDesc={['Language, see below, `en` as English by default']}>
+<Route author="nczitzk" example="/tradingview/blog/en" path="/tradingview/blog/:language?" paramsDesc={['Language, see below, `en` as English by default']}>
 
 Language
 
@@ -680,53 +680,53 @@ Language
 | ar  | العربية             |
 | il  | Hebrew              |
 
-</RouteEn>
+</Route>
 
-## Typora
+## Typora {#typora}
 
-### Changelog
+### Changelog {#typora-changelog}
 
-<RouteEn author="cnzgray" example="/typora/changelog" path="/typora/changelog" radar="1"/>
+<Route author="cnzgray" example="/typora/changelog" path="/typora/changelog" radar="1"/>
 
-### Dev Release Changelog
+### Dev Release Changelog {#typora-dev-release-changelog}
 
-<RouteEn author="nczitzk" example="/typora/changelog/dev" path="/typora/changelog/dev" radar="1"/>
+<Route author="nczitzk" example="/typora/changelog/dev" path="/typora/changelog/dev" radar="1"/>
 
-## VMware
+## VMware {#vmware}
 
-### Flings
+### Flings {#vmware-flings}
 
-<RouteEn author="nczitzk" example="/vmware/flings" path="/vmware/flings"/>
+<Route author="nczitzk" example="/vmware/flings" path="/vmware/flings"/>
 
-## Western Digital
+## Western Digital {#western-digital}
 
-### Download
+### Download {#western-digital-download}
 
-<RouteEn author="nczitzk" example="/wdc/download/279" path="/wdc/download/:id?" paramsDesc={['Software id, can be found in URL, 279 as Western Digital Dashboard by default']}/>
+<Route author="nczitzk" example="/wdc/download/279" path="/wdc/download/:id?" paramsDesc={['Software id, can be found in URL, 279 as Western Digital Dashboard by default']}/>
 
-## winstall
+## winstall {#winstall}
 
-### Apps Update
+### Apps Update {#winstall-apps-update}
 
-<RouteEn author="TonyRL" example="/winstall/Mozilla.Firefox" path="/winstall/:appId" paramsDesc={['Application ID']} radar="1"/>
+<Route author="TonyRL" example="/winstall/Mozilla.Firefox" path="/winstall/:appId" paramsDesc={['Application ID']} radar="1"/>
 
-## WizTree
+## WizTree {#wiztree}
 
-### What's New
+### What's New {#wiztree-what's-new}
 
-<RouteEn author="nczitzk" example="/diskanalyzer/whats-new" path="/diskanalyzer/whats-new"/>
+<Route author="nczitzk" example="/diskanalyzer/whats-new" path="/diskanalyzer/whats-new"/>
 
-## WziFile
+## WziFile {#wzifile}
 
-### Version History
+### Version History {#wzifile-version-history}
 
-<RouteEn author="Fatpandac" example="/wizfile/updates" path="/wizfile/updates"/>
+<Route author="Fatpandac" example="/wizfile/updates" path="/wizfile/updates"/>
 
-## X410
+## X410 {#x410}
 
-### News
+### News {#x410-news}
 
-<RouteEn author="nczitzk" example="/x410/news" path="/x410/news"/>
+<Route author="nczitzk" example="/x410/news" path="/x410/news"/>
 
 ## xclient.info {#xclient.info}
 
@@ -734,29 +734,29 @@ Language
 
 <Route author="DIYgod" example="/xclient/app/sketch" path="/xclient/app/:name" paramsDesc={['应用名, 可在应用页 URL 中找到']}/>
 
-## Xiaomi.eu
+## Xiaomi.eu {#xiaomi.eu}
 
-### ROM Releases
+### ROM Releases {#xiaomi.eu-rom-releases}
 
-<RouteEn author="maple3142" example="/xiaomieu/releases" path="/xiaomieu/releases"/>
+<Route author="maple3142" example="/xiaomieu/releases" path="/xiaomieu/releases"/>
 
-## Xposed Module Repository
+## Xposed Module Repository {#xposed-module-repository}
 
-### Module Update
+### Module Update {#xposed-module-repository-module-update}
 
-<RouteEn author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" paramsDesc={['module package name']}/>
+<Route author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" paramsDesc={['module package name']}/>
 
-## XYplorer
+## XYplorer {#xyplorer}
 
-### What's New
+### What's New {#xyplorer-what's-new}
 
-<RouteEn author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
+<Route author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
 
-## Zotero
+## Zotero {#zotero}
 
-### Version History
+### Version History {#zotero-version-history}
 
-<RouteEn author="jasongzy" example="/zotero/versions" path="/zotero/versions"/>
+<Route author="jasongzy" example="/zotero/versions" path="/zotero/versions"/>
 
 ## 蒲公英应用分发 {#pu-gong-ying-ying-yong-fen-fa}
 

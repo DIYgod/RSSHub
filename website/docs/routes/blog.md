@@ -4,7 +4,7 @@ import Route from '@site/src/components/Route';
 
 ## Amazon {#amazon}
 
-### AWS Blogs {#amazon-aws-bo-ke}
+### AWS Blogs {#amazon-aws-blogs}
 
 <Route author="HankChow" example="/amazon/awsblogs" path="/awsblogs/:locale?" paramsDesc={['Blog postes in a specified language, only the following options are supported. Default `zh_CN`']}>
 
@@ -22,7 +22,7 @@ import Route from '@site/src/components/Route';
 
 ## archdaily {#archdaily}
 
-### Home {#archdaily-shou-ye}
+### Home {#archdaily-home}
 
 <Route author="kt286" example="/archdaily" path="/archdaily"/>
 
@@ -32,13 +32,13 @@ import Route from '@site/src/components/Route';
 
 ## CSDN {#csdn}
 
-### User Feed {#csdn-yong-hu-bo-ke}
+### User Feed {#csdn-user-feed}
 
 <Route author="Jkker" example="/csdn/blog/csdngeeknews" path="/csdn/blog/:user" radar="1" paramsDesc={['`user` is the username of a CSDN blog which can be found in the url of the home page']} />
 
 ## DevolverDigital {#devolverdigital}
 
-### Official Blogs {#devolverdigital-guan-fang-bo-ke}
+### Official Blogs {#devolverdigital-official-blogs}
 
 <Route author="XXY233" example="/devolverdigital/blog" path="/devolverdigital/blog" radar="1" />
 
@@ -56,17 +56,17 @@ Freebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的
 
 ## Geocaching {#geocaching}
 
-### Official Blogs {#geocaching-guan-fang-bo-ke}
+### Official Blogs {#geocaching-official-blogs}
 
 <Route author="HankChow" example="/geocaching/blogs" path="/geocaching/blogs" radar="1"/>
 
 ## Google Sites {#google-sites}
 
-### Articles {#google-sites-wen-zhang-geng-xin}
+### Articles {#google-sites-articles}
 
 <Route author="hoilc" example="/google/sites/outlierseconomics" path="/google/sites/:id" paramsDesc={['Site ID, can be found in URL']} />
 
-### Recent Changes {#google-sites-wen-zhang-zui-jin-gai-dong}
+### Recent Changes {#google-sites-recent-changes}
 
 <Route author="nczitzk" example="/google/sites/recentChanges/outlierseconomics" path="/google/sites/recentChanges/:id" paramsDesc={['Site ID, can be found in URL']}/>
 
@@ -104,15 +104,15 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 ## Hexo {#hexo}
 
-### Blog using Next theme
+### Blog using Next theme {#hexo-blog-using-next-theme}
 
 <Route author="fengkx" path="/hexo/next/:url" example="/hexo/next/archive.diygod.me" paramsDesc={['the blog URL without the protocol (http:// and https://)']} selfhost="1"/>
 
-### Blog using Yilia theme
+### Blog using Yilia theme {#hexo-blog-using-yilia-theme}
 
 <Route author="aha2mao" path="/hexo/yilia/:url" example="/hexo/yilia/cloudstone.xin" paramsDesc={['the blog URL without the protocol (http:// and https://)']} selfhost="1"/>
 
-### Blog using Fluid theme
+### Blog using Fluid theme {#hexo-blog-using-fluid-theme}
 
 <Route author="gkkeys" path="/hexo/fluid/:url" example="/hexo/fluid/blog.tonyzhao.xyz" paramsDesc={['the blog URL without the protocol (http:// and https://)']} selfhost="1"/>
 
@@ -150,9 +150,9 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 <Route author="xyqfer" example="/leemeng" path="/leemeng"/>
 
-## Love the Problem
+## Love the Problem {#love-the-problem}
 
-### Ash Maurya's blog
+### Ash Maurya's blog {#love-the-problem-ash-maurya's-blog}
 
 <Route author="james-tindal" example="/ash-maurya" path="/ash-maurya"/>
 
@@ -178,7 +178,7 @@ To access private lists, only self-hosting is supported.
 
 </Route>
 
-### Personalized Recommendations - For You
+### Personalized Recommendations - For You {#medium-personalized-recommendations---for-you}
 
 <Route author="ImSingee" example="/medium/for-you/imsingee" path="/medium/for-you/:user" paramsDesc={['Username']} selfhost="1">
 
@@ -190,7 +190,7 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 </Route>
 
-### Personalized Recommendations - Following
+### Personalized Recommendations - Following {#medium-personalized-recommendations---following}
 
 <Route author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" paramsDesc={['Username']} selfhost="1">
 
@@ -202,7 +202,7 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 </Route>
 
-### Personalized Recommendations - Tag
+### Personalized Recommendations - Tag {#medium-personalized-recommendations---tag}
 
 <Route author="ImSingee" example="/medium/tag/imsingee/cybersecurity" path="/medium/tag/:user/:tag" paramsDesc={['Username', 'Subscribed Tag']} selfhost="1">
 
@@ -218,31 +218,31 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 ## Miris Whispers {#miris-whispers}
 
-### Blog {#miris-whispers-bo-ke}
+### Blog {#miris-whispers-blog}
 
 <Route author="chazeon" example="/miris/blog" path="/miris/blog" />
 
-## Paul Graham {#paul-graham-bo-ke}
+## Paul Graham {#paul-graham}
 
-### Essays {#paul-graham-bo-ke-essays}
+### Essays {#paul-graham-essays}
 
 <Route author="Maecenas" example="/blogs/paulgraham" path="/blogs/paulgraham"/>
 
 ## Phrack Magazine {#phrack-magazine}
 
-### Article {#phrack-magazine-wen-zhang}
+### Article {#phrack-magazine-article}
 
 <Route author="CitrusIce" example="/phrack" path="/phrack" />
 
 ## Polkadot {#polkadot}
 
-### Blog {#polkadot-bo-ke}
+### Blog {#polkadot-blog}
 
 <Route author="iceqing" example="/polkadot/blog" path="/polkadot/blog"/>
 
 ## PolkaWorld {#polkaworld}
 
-### Newest Articles {#polkaworld-zui-xin-zi-xun}
+### Newest Articles {#polkaworld-newest-articles}
 
 <Route author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest"/>
 
@@ -254,13 +254,13 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ## Stratechery by Ben Thompson {#stratechery-by-ben-thompson}
 
-### Blog {#stratechery-by-ben-thompson-bo-ke}
+### Blog {#stratechery-by-ben-thompson-blog}
 
 <Route author="chazeon" example="/stratechery" path="/stratechery" />
 
-## Uber 优步 {#you-bu}
+## Uber 优步 {#uber-you-bu}
 
-### Engineering {#you-bu-gong-cheng-ji-shu}
+### Engineering {#uber-you-bu-engineering}
 
 <Route author="hulb" example="/uber/blog" path="/uber/blog/:maxPage?" paramsDesc={['max number of pages to retrieve, default to 1 page at most']} />
 
@@ -297,7 +297,7 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ## WordPress {#wordpress}
 
-### Blog {#wordpress-bo-ke}
+### Blog {#wordpress-blog}
 
 <Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" paramsDesc={['WordPress blog domain', 'use https by default. options: `http` or `https`']}/>
 
@@ -526,3 +526,4 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 ### TOP 20 {#zhu-bai-top-20}
 
 <Route author="nczitzk" example="/zhubai/top20" path="/zhubai/top20"/>
+

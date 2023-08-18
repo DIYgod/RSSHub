@@ -366,91 +366,91 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 <Route author="3401797899" example="/bilibili/channel/5417/hot" path="/bilibili/channel/:channelid/hot/:disableEmbed?" paramsDesc={['频道id，可在频道链接中找到', '默认为开启内嵌视频, 任意值为关闭']}/>
 
-## Bluesky (bsky)
+## Bluesky (bsky) {#bluesky-(bsky)}
 
-### Keywords
+### Keywords {#bluesky-(bsky)-keywords}
 
-<RouteEn author="untitaker" example="/bsky/keyword/hello" path="/bsky/keyword/:keyword" radar="1" rssbud="1" />
+<Route author="untitaker" example="/bsky/keyword/hello" path="/bsky/keyword/:keyword" radar="1" rssbud="1" />
 
-## Crossbell
+## Crossbell {#crossbell}
 
-### Notes
+### Notes {#crossbell-notes}
 
-<RouteEn author="DIYgod" example="/crossbell/notes" path="/crossbell/notes" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/crossbell/notes" path="/crossbell/notes" radar="1" rssbud="1"/>
 
-### Notes of character
+### Notes of character {#crossbell-notes-of-character}
 
-<RouteEn author="DIYgod" example="/crossbell/notes/character/10" path="/crossbell/notes/character/:characterId" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/crossbell/notes/character/10" path="/crossbell/notes/character/:characterId" radar="1" rssbud="1"/>
 
-### Notes of source
+### Notes of source {#crossbell-notes-of-source}
 
-<RouteEn author="DIYgod" example="/crossbell/notes/source/xlog" path="/crossbell/notes/source/:source" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/crossbell/notes/source/xlog" path="/crossbell/notes/source/:source" radar="1" rssbud="1"/>
 
-### Feeds of following
+### Feeds of following {#crossbell-feeds-of-following}
 
-<RouteEn author="DIYgod" example="/crossbell/feeds/following/10" path="/crossbell/feeds/following/:characterId" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/crossbell/feeds/following/10" path="/crossbell/feeds/following/:characterId" radar="1" rssbud="1"/>
 
-## CuriousCat
+## CuriousCat {#curiouscat}
 
-### User
+### User {#curiouscat-user}
 
-<RouteEn author="lucasew" path="/curiouscat/user/:name" example="/curiouscat/user/kretyn" paramsDesc={['name, username that is in the URL']} />
+<Route author="lucasew" path="/curiouscat/user/:name" example="/curiouscat/user/kretyn" paramsDesc={['name, username that is in the URL']} />
 
-## Curius
+## Curius {#curius}
 
-### User
+### User {#curius-user}
 
-<RouteEn author="Ovler-Young" example="/curius/links/yuu-yuu" path="/curius/links/:name" paramsDesc={['Username, can be found in URL']}/>
+<Route author="Ovler-Young" example="/curius/links/yuu-yuu" path="/curius/links/:name" paramsDesc={['Username, can be found in URL']}/>
 
-## Daily.dev
+## Daily.dev {#daily.dev}
 
-### Popular
+### Popular {#daily.dev-popular}
 
-<RouteEn author="Rjnishant530" example="/daily" path="/daily" />
+<Route author="Rjnishant530" example="/daily" path="/daily" />
 
-### Most Discussed
+### Most Discussed {#daily.dev-most-discussed}
 
-<RouteEn author="Rjnishant530" example="/daily/discussed" path="/daily/discussed" />
+<Route author="Rjnishant530" example="/daily/discussed" path="/daily/discussed" />
 
-### Most upvoted
+### Most upvoted {#daily.dev-most-upvoted}
 
-<RouteEn author="Rjnishant530" example="/daily/upvoted" path="/daily/upvoted" />
+<Route author="Rjnishant530" example="/daily/upvoted" path="/daily/upvoted" />
 
-## Dev.to
+## Dev.to {#dev.to}
 
-### Top Posts
+### Top Posts {#dev.to-top-posts}
 
-<RouteEn author="dwemerx" example="/dev.to/top/month" path="/dev.to/top/:period" paramsDesc={['period']}>
+<Route author="dwemerx" example="/dev.to/top/month" path="/dev.to/top/:period" paramsDesc={['period']}>
 
 | dev.to weekly top | dev.to monthly top | dev.to yearly top | dev.to top posts of all time |
 | ----------------- | ------------------ | ----------------- | ---------------------------- |
 | week              | month              | year              | infinity                     |
 
-</RouteEn>
+</Route>
 
-## Discord
+## Discord {#discord}
 
-### Channel Messages
+### Channel Messages {#discord-channel-messages}
 
-<RouteEn author="TonyRL" path="/discord/channel/:channelId" example="/discord/channel/950465850056536084" paramsDesc={['Channel ID']} radar="1" selfhost="1"/>
+<Route author="TonyRL" path="/discord/channel/:channelId" example="/discord/channel/950465850056536084" paramsDesc={['Channel ID']} radar="1" selfhost="1"/>
 
-## Disqus
+## Disqus {#disqus}
 
-### Comment
+### Comment {#disqus-comment}
 
-<RouteEn author="DIYgod" path="/disqus/posts/:forum" example="/disqus/posts/diygod-me" paramsDesc={['forum, disqus name of the target website']} />
+<Route author="DIYgod" path="/disqus/posts/:forum" example="/disqus/posts/diygod-me" paramsDesc={['forum, disqus name of the target website']} />
 
-## Facebook
+## Facebook {#facebook}
 
-### Page
+### Page {#facebook-page}
 
-<RouteEn author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" paramsDesc={['page id']} anticrawler="1"/>
+<Route author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" paramsDesc={['page id']} anticrawler="1"/>
 
-## Fur Affinity
+## Fur Affinity {#fur-affinity}
 
-### Home
+### Home {#fur-affinity-home}
 
-<RouteEn author="TigerCubDen" example="/furaffinity/home" path="/furaffinity/home/:type?/:nsfw?" paramsDesc={['Art Type, default to be `artwork`', 'NSFW Mode, do not filter NSFW contents when value set to `1`']} radar="1">
+<Route author="TigerCubDen" example="/furaffinity/home" path="/furaffinity/home/:type?/:nsfw?" paramsDesc={['Art Type, default to be `artwork`', 'NSFW Mode, do not filter NSFW contents when value set to `1`']} radar="1">
 
 Type
 
@@ -458,79 +458,79 @@ Type
 | ------- | ------ | ----- | ------- |
 | artwork | crafts | music | writing |
 
-</RouteEn>
+</Route>
 
-### Browse
+### Browse {#fur-affinity-browse}
 
-<RouteEn author="TigerCubDen" example="/furaffinity/browse" path="/furaffinity/browse/:nsfw?" paramsDesc={['NSFW Mode, do not filter NSFW contents when value set to `1`']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/browse" path="/furaffinity/browse/:nsfw?" paramsDesc={['NSFW Mode, do not filter NSFW contents when value set to `1`']} radar="1"/>
 
-### Website Status
+### Website Status {#fur-affinity-website-status}
 
-<RouteEn author="TigerCubDen" example="/furaffinity/status" path="/furaffinity/status" radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/status" path="/furaffinity/status" radar="1"/>
 
-### Search
+### Search {#fur-affinity-search}
 
-<RouteEn author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/search/:keyword/:nsfw?" paramsDesc={['Search keyword, enter any words you want to search, require English', 'NSFW Mode，do not filter NSFW contents when value set to `1`']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/search/:keyword/:nsfw?" paramsDesc={['Search keyword, enter any words you want to search, require English', 'NSFW Mode，do not filter NSFW contents when value set to `1`']} radar="1"/>
 
-### Userpage Profile
+### Userpage Profile {#fur-affinity-userpage-profile}
 
-<RouteEn author="TigerCubDen" example="/furaffinity/user/tiger-jungle" path="/furaffinity/user/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/user/tiger-jungle" path="/furaffinity/user/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
 
-### User's Watching List
+### User's Watching List {#fur-affinity-user's-watching-list}
 
-<RouteEn author="TigerCubDen" example="/furaffinity/watching/okami9312" path="/furaffinity/watching/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/watching/okami9312" path="/furaffinity/watching/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
 
-### User's Watcher List
+### User's Watcher List {#fur-affinity-user's-watcher-list}
 
-<RouteEn author="TigerCubDen" example="/furaffinity/watchers/malikshadowclaw" path="/furaffinity/watchers/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/watchers/malikshadowclaw" path="/furaffinity/watchers/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
 
-### User's Commission Information
+### User's Commission Information {#fur-affinity-user's-commission-information}
 
-<RouteEn author="TigerCubDen" example="/furaffinity/commissions/flashlioness" path="/furaffinity/commissions/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/commissions/flashlioness" path="/furaffinity/commissions/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
 
-### User's Shouts
+### User's Shouts {#fur-affinity-user's-shouts}
 
-<RouteEn author="TigerCubDen" example="/furaffinity/shouts/redodgft" path="/furaffinity/shouts/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/shouts/redodgft" path="/furaffinity/shouts/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
 
-### User's Journals
+### User's Journals {#fur-affinity-user's-journals}
 
-<RouteEn author="TigerCubDen" example="/furaffinity/journals/rukis" path="/furaffinity/journals/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/journals/rukis" path="/furaffinity/journals/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
 
-### User's Gallery
+### User's Gallery {#fur-affinity-user's-gallery}
 
-<RouteEn author="TigerCubDen" example="/furaffinity/gallery/flashlioness" path="/furaffinity/gallery/:username/:nsfw?" paramsDesc={['Username, can find in userpage', 'NSFW Mode, do not filter NSFW contents when value set to `1`']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/gallery/flashlioness" path="/furaffinity/gallery/:username/:nsfw?" paramsDesc={['Username, can find in userpage', 'NSFW Mode, do not filter NSFW contents when value set to `1`']} radar="1"/>
 
-### User's Scraps
+### User's Scraps {#fur-affinity-user's-scraps}
 
-<RouteEn author="TigerCubDen" example="/furaffinity/scraps/flashlioness" path="/furaffinity/scraps/:username/:nsfw?" paramsDesc={['Username, can find in userpage', 'NSFW Mode, do not filter NSFW contents when value set to `1`']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/scraps/flashlioness" path="/furaffinity/scraps/:username/:nsfw?" paramsDesc={['Username, can find in userpage', 'NSFW Mode, do not filter NSFW contents when value set to `1`']} radar="1"/>
 
-### User's Favorites
+### User's Favorites {#fur-affinity-user's-favorites}
 
-<RouteEn author="TigerCubDen" example="/furaffinity/favorites/tiger-jungle" path="/furaffinity/favorites/:username/:nsfw?" paramsDesc={['Username, can find in userpage', 'NSFW Mode, do not filter NSFW contents when value set to `1`']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/favorites/tiger-jungle" path="/furaffinity/favorites/:username/:nsfw?" paramsDesc={['Username, can find in userpage', 'NSFW Mode, do not filter NSFW contents when value set to `1`']} radar="1"/>
 
-### Submission Comments
+### Submission Comments {#fur-affinity-submission-comments}
 
-<RouteEn author="TigerCubDen" example="/furaffinity/submission_comments/34909983" path="/furaffinity/submission_comments/:id" paramsDesc={['Submission id, can find in URL of submission page']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/submission_comments/34909983" path="/furaffinity/submission_comments/:id" paramsDesc={['Submission id, can find in URL of submission page']} radar="1"/>
 
-### Journal Comments
+### Journal Comments {#fur-affinity-journal-comments}
 
-<RouteEn author="TigerCubDen" example="/furaffinity/journal_comments/9750669" path="/furaffinity/journal_comments/:id" paramsDesc={['Journal id, can find in URL of journal page']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/journal_comments/9750669" path="/furaffinity/journal_comments/:id" paramsDesc={['Journal id, can find in URL of journal page']} radar="1"/>
 
-## Gab
+## Gab {#gab}
 
-### User's Posts
+### User's Posts {#gab-user's-posts}
 
-<RouteEn author="zphw" example="/gab/user/realdonaldtrump" path="/gab/user/:username" paramsDesc={['Username']} />
+<Route author="zphw" example="/gab/user/realdonaldtrump" path="/gab/user/:username" paramsDesc={['Username']} />
 
-### Popular Posts
+### Popular Posts {#gab-popular-posts}
 
-<RouteEn author="zphw" example="/gab/popular/hot" path="/gab/popular/:sort?" paramsDesc={['Sort by, `hot` to be Hot Posts and `top` to be Top Posts. Default: hot']} />
+<Route author="zphw" example="/gab/popular/hot" path="/gab/popular/:sort?" paramsDesc={['Sort by, `hot` to be Hot Posts and `top` to be Top Posts. Default: hot']} />
 
-## GETTR
+## GETTR {#gettr}
 
-### User timeline
+### User timeline {#gettr-user-timeline}
 
-<RouteEn author="TonyRL" example="/gettr/user/jasonmillerindc" path="/gettr/user/:id" paramsDesc={['User id']} radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/gettr/user/jasonmillerindc" path="/gettr/user/:id" paramsDesc={['User id']} radar="1" rssbud="1"/>
 
 ## iCity {#icity}
 
@@ -538,7 +538,7 @@ Type
 
 <Route author="nczitzk" example="/icity/sai" path="/icity/:id" paramsDesc={['用户 id']}/>
 
-## Instagram
+## Instagram {#instagram}
 
 :::caution
 
@@ -548,9 +548,9 @@ If you don't want to setup credentials, you can use [Picnob](#picnob) or [Picuki
 
 :::
 
-### User Profile / Hashtag - Private API
+### User Profile / Hashtag - Private API {#instagram-user-profile-%2F-hashtag---private-api}
 
-<RouteEn author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" paramsDesc={['Feed category, see table below','Username / Hashtag name']} radar="1" anticrawler="1" selfhost="1">
+<Route author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" paramsDesc={['Feed category, see table below','Username / Hashtag name']} radar="1" anticrawler="1" selfhost="1">
 
 | User timeline | Hashtag |
 | ------------- | ------- |
@@ -560,11 +560,11 @@ If you don't want to setup credentials, you can use [Picnob](#picnob) or [Picuki
 It's highly recommended to deploy with Redis cache enabled.
 :::
 
-</RouteEn>
+</Route>
 
-### User Profile / Hashtag - Cookie
+### User Profile / Hashtag - Cookie {#instagram-user-profile-%2F-hashtag---cookie}
 
-<RouteEn author="TonyRL" example="/instagram/2/user/stefaniejoosten" path="/instagram/2/:category/:key" paramsDesc={['Feed category, see table above','Username / Hashtag name']} radar="1" anticrawler="1" selfhost="1" />
+<Route author="TonyRL" example="/instagram/2/user/stefaniejoosten" path="/instagram/2/:category/:key" paramsDesc={['Feed category, see table above','Username / Hashtag name']} radar="1" anticrawler="1" selfhost="1" />
 
 ## Keep {#keep}
 
@@ -572,23 +572,23 @@ It's highly recommended to deploy with Redis cache enabled.
 
 <Route author="Dectinc DIYgod" example="/keep/user/556b02c1ab59390afea671ea" path="/keep/user/:id" paramsDesc={['Keep 用户 id']}/>
 
-## Lofter
+## Lofter {#lofter}
 
-### User
+### User {#lofter-user}
 
-<RouteEn author="hoilc nczitzk" example="/lofter/user/i" path="/lofter/user/:name?" paramsDesc={['Lofter user name, can be found in the URL']}/>
+<Route author="hoilc nczitzk" example="/lofter/user/i" path="/lofter/user/:name?" paramsDesc={['Lofter user name, can be found in the URL']}/>
 
-### Tag
+### Tag {#lofter-tag}
 
-<RouteEn author="hoilc nczitzk" example="/lofter/tag/摄影/date" path="/lofter/tag/:name?/:type?" paramsDesc={['tag name, such as `名侦探柯南`, `摄影` by default', 'ranking type, see below, new by default']}>
+<Route author="hoilc nczitzk" example="/lofter/tag/摄影/date" path="/lofter/tag/:name?/:type?" paramsDesc={['tag name, such as `名侦探柯南`, `摄影` by default', 'ranking type, see below, new by default']}>
 
 | new  | date | week | month | total |
 | ---- | ---- | ---- | ----- | ----- |
 | 最新 | 日榜 | 周榜 | 月榜  | 总榜  |
 
-</RouteEn>
+</Route>
 
-## Mastodon
+## Mastodon {#mastodon}
 
 :::tip
 
@@ -601,59 +601,59 @@ These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for us
 
 :::
 
-### User timeline
+### User timeline {#mastodon-user-timeline}
 
-<RouteEn author="notofoe" example="/mastodon/acct/CatWhitney@mastodon.social/statuses" path="/mastodon/acct/:acct/statuses/:only_media?" paramsDesc={['Webfinger account URI, like `user@host`', 'whether only display media content, default to false, any value to true']}/>
+<Route author="notofoe" example="/mastodon/acct/CatWhitney@mastodon.social/statuses" path="/mastodon/acct/:acct/statuses/:only_media?" paramsDesc={['Webfinger account URI, like `user@host`', 'whether only display media content, default to false, any value to true']}/>
 
 Started from Mastodon v4.0.0, the use of the `search` API in the route no longer requires a user token.
 If the domain of your Webfinger account URI is the same as the API host of the instance (i.e., no delegation called in some other protocols), then no configuration is required and the route is available out of the box.
 However, you can still specify these route-specific configurations if you need to override them.
 
-### Instance timeline (local)
+### Instance timeline (local) {#mastodon-instance-timeline-(local)}
 
-<RouteEn author="hoilc" example="/mastodon/timeline/pawoo.net/true" path="/mastodon/timeline/:site/:only_media?" paramsDesc={['instance address, only domain, no `http://` or `https://` protocol header', 'whether only display media content, default to false, any value to true']}/>
-
-If the instance address is not `mastodon.social` or `pawoo.net`, then the route requires `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` to be `true`.
-
-### Instance timeline (federated)
-
-<RouteEn author="hoilc" example="/mastodon/remote/pawoo.net/true" path="/mastodon/remote/:site/:only_media?" paramsDesc={['instance address, only domain, no `http://` or `https://` protocol header', 'whether only display media content, default to false, any value to true']}/>
+<Route author="hoilc" example="/mastodon/timeline/pawoo.net/true" path="/mastodon/timeline/:site/:only_media?" paramsDesc={['instance address, only domain, no `http://` or `https://` protocol header', 'whether only display media content, default to false, any value to true']}/>
 
 If the instance address is not `mastodon.social` or `pawoo.net`, then the route requires `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` to be `true`.
 
-### User timeline (backup)
+### Instance timeline (federated) {#mastodon-instance-timeline-(federated)}
 
-<RouteEn author="notofoe" example="/mastodon/account_id/mastodon.social/23634/statuses/only_media" path="/mastodon/account/:site/:account_id/statuses/:only_media?" paramsDesc={['instance address, only domain, no `http://` or `https://` protocol header', 'account id. login your instance, then search for the user profile; the account id is in the url', 'whether only display media content, default to false, any value to true']}/>
+<Route author="hoilc" example="/mastodon/remote/pawoo.net/true" path="/mastodon/remote/:site/:only_media?" paramsDesc={['instance address, only domain, no `http://` or `https://` protocol header', 'whether only display media content, default to false, any value to true']}/>
 
 If the instance address is not `mastodon.social` or `pawoo.net`, then the route requires `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` to be `true`.
 
-## Misskey
+### User timeline (backup) {#mastodon-user-timeline-(backup)}
 
-### Featured Notes
+<Route author="notofoe" example="/mastodon/account_id/mastodon.social/23634/statuses/only_media" path="/mastodon/account/:site/:account_id/statuses/:only_media?" paramsDesc={['instance address, only domain, no `http://` or `https://` protocol header', 'account id. login your instance, then search for the user profile; the account id is in the url', 'whether only display media content, default to false, any value to true']}/>
 
-<RouteEn author="Misaka13514" example="/misskey/notes/featured/misskey.io" path="/misskey/notes/featured/:site" paramsDesc={['instance address, domain only, without `http://` or `https://` protocol header']} radar="1" rssbud="1"/>
+If the instance address is not `mastodon.social` or `pawoo.net`, then the route requires `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` to be `true`.
 
-## piapro
+## Misskey {#misskey}
 
-### User latest works
+### Featured Notes {#misskey-featured-notes}
 
-<RouteEn author="hoilc" example="/piapro/user/shine_longer" path="/piapro/user/:pid" paramsDesc={['User ID, can be found in url']}/>
+<Route author="Misaka13514" example="/misskey/notes/featured/misskey.io" path="/misskey/notes/featured/:site" paramsDesc={['instance address, domain only, without `http://` or `https://` protocol header']} radar="1" rssbud="1"/>
 
-### Website latest works
+## piapro {#piapro}
 
-<RouteEn author="hoilc" example="/piapro/public/music/miku/2" path="/piapro/public/:type/:tag?/:category?" paramsDesc={['work type, can be `music`,`illust`,`text`','`tag` parameter in url','category ID, `categoryId` parameter in url']}/>
+### User latest works {#piapro-user-latest-works}
 
-## Picnob
+<Route author="hoilc" example="/piapro/user/shine_longer" path="/piapro/user/:pid" paramsDesc={['User ID, can be found in url']}/>
 
-### User Profile
+### Website latest works {#piapro-website-latest-works}
 
-<RouteEn author="TonyRL" example="/picnob/user/stefaniejoosten" path="/picnob/profile/:id" paramsDesc={['Instagram id']} radar="1" rssbud="1" />
+<Route author="hoilc" example="/piapro/public/music/miku/2" path="/piapro/public/:type/:tag?/:category?" paramsDesc={['work type, can be `music`,`illust`,`text`','`tag` parameter in url','category ID, `categoryId` parameter in url']}/>
 
-## Picuki
+## Picnob {#picnob}
 
-### User Profile
+### User Profile {#picnob-user-profile}
 
-<RouteEn author="hoilc Rongronggg9" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:functionalFlag?" paramsDesc={['Instagram id','functional flag, see the table below']} radar="1" rssbud="1">
+<Route author="TonyRL" example="/picnob/user/stefaniejoosten" path="/picnob/profile/:id" paramsDesc={['Instagram id']} radar="1" rssbud="1" />
+
+## Picuki {#picuki}
+
+### User Profile {#picuki-user-profile}
+
+<Route author="hoilc Rongronggg9" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:functionalFlag?" paramsDesc={['Instagram id','functional flag, see the table below']} radar="1" rssbud="1">
 
 | functionalFlag | Video embedding                         | Fetching Instagram Stories |
 | -------------- | --------------------------------------- | -------------------------- |
@@ -668,25 +668,25 @@ Though, every Story expires after 24 hours, so it may be not so serious.
 
 :::
 
-</RouteEn>
+</Route>
 
-## pixiv
+## pixiv {#pixiv}
 
-### User Bookmark
+### User Bookmark {#pixiv-user-bookmark}
 
-<RouteEn author="EYHN" path="/pixiv/user/bookmarks/:id" example="/pixiv/user/bookmarks/15288095" paramsDesc={['user id, available in user\'s homepage URL']} radar="1" rssbud="1"/>
+<Route author="EYHN" path="/pixiv/user/bookmarks/:id" example="/pixiv/user/bookmarks/15288095" paramsDesc={['user id, available in user\'s homepage URL']} radar="1" rssbud="1"/>
 
-### User Activity
+### User Activity {#pixiv-user-activity}
 
-<RouteEn author="EYHN" path="/pixiv/user/:id" example="/pixiv/user/15288095" paramsDesc={['user id, available in user\'s homepage URL']} radar="1" rssbud="1"/>
+<Route author="EYHN" path="/pixiv/user/:id" example="/pixiv/user/15288095" paramsDesc={['user id, available in user\'s homepage URL']} radar="1" rssbud="1"/>
 
-### User Novels
+### User Novels {#pixiv-user-novels}
 
-<RouteEn author="TonyRL" example="/pixiv/user/novels/27104704" path="/pixiv/user/novels/:id" paramsDesc={['User id, available in user\'s homepage URL']} radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/pixiv/user/novels/27104704" path="/pixiv/user/novels/:id" paramsDesc={['User id, available in user\'s homepage URL']} radar="1" rssbud="1"/>
 
-### Rankings
+### Rankings {#pixiv-rankings}
 
-<RouteEn author="EYHN" path="/pixiv/ranking/:mode/:date?" example="/pixiv/ranking/week" paramsDesc={['rank type', 'format: `2018-4-25`']} radar="1" rssbud="1">
+<Route author="EYHN" path="/pixiv/ranking/:mode/:date?" example="/pixiv/ranking/week" paramsDesc={['rank type', 'format: `2018-4-25`']} radar="1" rssbud="1">
 
 | daily rank | weekly rank | monthly rank | male rank | female rank | AI-generated work Rankings | original rank | rookie user rank |
 | ---------- | ----------- | ------------ | --------- | ----------- | -------------------------- | ------------- | ---------------- |
@@ -696,21 +696,21 @@ Though, every Story expires after 24 hours, so it may be not so serious.
 | --------------- | ---------------------- | -------------- | ---------------- | ---------------- | ---------- |
 | day_r18         | day_r18_ai             | day_male_r18   | day_female_r18   | week_r18         | week_r18g  |
 
-</RouteEn>
+</Route>
 
-### Keyword
+### Keyword {#pixiv-keyword}
 
-<RouteEn author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" paramsDesc={['keyword', 'rank mode, empty or other for time order, popular for popular order', 'filte R18 content']} radar="1" rssbud="1">
+<Route author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" paramsDesc={['keyword', 'rank mode, empty or other for time order, popular for popular order', 'filte R18 content']} radar="1" rssbud="1">
 
 | only not R18 | only R18 | no filter      |
 | ------------ | -------- | -------------- |
 | safe         | r18      | empty or other |
 
-</RouteEn>
+</Route>
 
-### Following timeline
+### Following timeline {#pixiv-following-timeline}
 
-<RouteEn author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1" rssbud="1" selfhost="1">
+<Route author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1" rssbud="1" selfhost="1">
 
 :::caution
 
@@ -718,23 +718,23 @@ Only for self-hosted
 
 :::
 
-</RouteEn>
+</Route>
 
-## pixivFANBOX
+## pixivFANBOX {#pixivfanbox}
 
-### User
+### User {#pixivfanbox-user}
 
-<RouteEn author="sgqy" example="/fanbox/otomeoto" path="/fanbox/:user?" paramsDesc={['User name. Can be found in URL. Default is official news']}/>
+<Route author="sgqy" example="/fanbox/otomeoto" path="/fanbox/:user?" paramsDesc={['User name. Can be found in URL. Default is official news']}/>
 
-## Plurk
+## Plurk {#plurk}
 
-### Topic
+### Topic {#plurk-topic}
 
-<RouteEn author="TonyRL" path="/plurk/topic/:topic" example="/plurk/topic/standwithukraine" paramsDesc={['Topic ID, can be found in URL']} radar="1" rssbud="1"/>
+<Route author="TonyRL" path="/plurk/topic/:topic" example="/plurk/topic/standwithukraine" paramsDesc={['Topic ID, can be found in URL']} radar="1" rssbud="1"/>
 
-### Top
+### Top {#plurk-top}
 
-<RouteEn author="TonyRL" path="/plurk/top/:category?/:lang?" example="/plurk/top/topReplurks" paramsDesc={['Category, see the table below, `topReplurks` by default', 'Language, see the table below, `en` by default']} radar="1" rssbud="1">
+<Route author="TonyRL" path="/plurk/top/:category?/:lang?" example="/plurk/top/topReplurks" paramsDesc={['Category, see the table below, `topReplurks` by default', 'Language, see the table below, `en` by default']} radar="1" rssbud="1">
 
 | Top Replurks | Top Favorites | Top Responded |
 | ------------ | ------------- | ------------- |
@@ -744,27 +744,27 @@ Only for self-hosted
 | ------- | ------------ |
 | en      | zh           |
 
-</RouteEn>
+</Route>
 
-### Anonymous
+### Anonymous {#plurk-anonymous}
 
-<RouteEn author="TonyRL" path="/plurk/anonymous" example="/plurk/anonymous" radar="1" rssbud="1"/>
+<Route author="TonyRL" path="/plurk/anonymous" example="/plurk/anonymous" radar="1" rssbud="1"/>
 
-### Search
+### Search {#plurk-search}
 
-<RouteEn author="TonyRL" path="/plurk/search/:keyword" example="/plurk/search/FGO" paramsDesc={['Search keyword']} radar="1" rssbud="1"/>
+<Route author="TonyRL" path="/plurk/search/:keyword" example="/plurk/search/FGO" paramsDesc={['Search keyword']} radar="1" rssbud="1"/>
 
-### Hotlinks
+### Hotlinks {#plurk-hotlinks}
 
-<RouteEn author="TonyRL" path="/plurk/hotlinks" example="/plurk/hotlinks" radar="1" rssbud="1"/>
+<Route author="TonyRL" path="/plurk/hotlinks" example="/plurk/hotlinks" radar="1" rssbud="1"/>
 
-### Plurk News
+### Plurk News {#plurk-plurk-news}
 
-<RouteEn author="TonyRL" path="/plurk/news/:lang?" example="/plurk/news/:lang?" paramsDesc={['Language, see the table above, `en` by default']} radar="1" rssbud="1"/>
+<Route author="TonyRL" path="/plurk/news/:lang?" example="/plurk/news/:lang?" paramsDesc={['Language, see the table above, `en` by default']} radar="1" rssbud="1"/>
 
-### User
+### User {#plurk-user}
 
-<RouteEn author="TonyRL" path="/plurk/user/:user" example="/plurk/user/plurkoffice" paramsDesc={['User ID, can be found in URL']} radar="1" rssbud="1"/>
+<Route author="TonyRL" path="/plurk/user/:user" example="/plurk/user/plurkoffice" paramsDesc={['User ID, can be found in URL']} radar="1" rssbud="1"/>
 
 ## Popi 提问箱 {#popi-ti-wen-xiang}
 
@@ -772,11 +772,11 @@ Only for self-hosted
 
 <Route author="AgFlore" example="/popiask/popi6666" path="/popiask/:sharecode/:pagesize?" paramsDesc={['提问箱 ID', '查看条数（默认为 20）']} radar="1" rssbud="1"/>
 
-## Rattibha
+## Rattibha {#rattibha}
 
-### User Threads
+### User Threads {#rattibha-user-threads}
 
-<RouteEn author="yshalsager" example="/rattibha/user/elonmusk" path="/rattibha/user/:user" paramsDesc={['Twitter username, without @']} radar="1" rssbud="1"/>
+<Route author="yshalsager" example="/rattibha/user/elonmusk" path="/rattibha/user/:user" paramsDesc={['Twitter username, without @']} radar="1" rssbud="1"/>
 
 ## Soul {#soul}
 
@@ -800,11 +800,11 @@ Only for self-hosted
 
 <Route author="AgFlore" example="/tapechat/questionbox/TOAH7BBH" path="/tapechat/questionbox/:sharecode/:pagesize?" paramsDesc={['提问箱 ID', '查看条数（默认为 20）']} />
 
-## Telegram
+## Telegram {#telegram}
 
-### Channel
+### Channel {#telegram-channel}
 
-<RouteEn author="DIYgod Rongronggg9" path="/telegram/channel/:username/:routeParams?" example="/telegram/channel/awesomeDIYgod/searchQuery=%23DIYgod的豆瓣动态" paramsDesc={['channel username', 'extra parameters, see the table below']} radar="1" rssbud="1">
+<Route author="DIYgod Rongronggg9" path="/telegram/channel/:username/:routeParams?" example="/telegram/channel/awesomeDIYgod/searchQuery=%23DIYgod的豆瓣动态" paramsDesc={['channel username', 'extra parameters, see the table below']} radar="1" rssbud="1">
 
 | Key                   | Description                                                           | Accepts                                              | Defaults to       |
 | --------------------- | --------------------------------------------------------------------- | ---------------------------------------------------- | ----------------- |
@@ -838,21 +838,21 @@ Due to Telegram restrictions, some channels involving pornography, copyright, an
 
 :::
 
-</RouteEn>
+</Route>
 
-### Sticker Pack
+### Sticker Pack {#telegram-sticker-pack}
 
-<RouteEn author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" paramsDesc={['Sticker Pack name, available in the sharing URL']}/>
+<Route author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" paramsDesc={['Sticker Pack name, available in the sharing URL']}/>
 
-### Telegram Blog
+### Telegram Blog {#telegram-telegram-blog}
 
-<RouteEn author="fengkx" example="/telegram/blog" path="/telegram/blog" />
+<Route author="fengkx" example="/telegram/blog" path="/telegram/blog" />
 
-## Threads
+## Threads {#threads}
 
-### User timeline
+### User timeline {#threads-user-timeline}
 
-<RouteEn author="ninboy" path="/threads/:user/:routeParams?" example="/threads/zuck" radar="1" rssbud="1" puppeteer="1">
+<Route author="ninboy" path="/threads/:user/:routeParams?" example="/threads/zuck" radar="1" rssbud="1" puppeteer="1">
 
 Specify options (in the format of query string) in parameter `routeParams` to control some extra features for threads
 
@@ -872,15 +872,15 @@ Specify different option values than default values to improve readability. The 
 https://rsshub.app/threads/zuck/showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForQuotesAndReply=1&showQuotedInTitle=1
 ```
 
-</RouteEn>
+</Route>
 
-## TikTok
+## TikTok {#tiktok}
 
-### User
+### User {#tiktok-user}
 
-<RouteEn author="TonyRL" example="/tiktok/user/@linustech/true" path="/tiktok/user/:user/:iframe?" paramsDesc={['User ID, including @', 'Use the official iframe to embed the video, which allows you to view the video if the default option does not work. Default to `false`']} anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/tiktok/user/@linustech/true" path="/tiktok/user/:user/:iframe?" paramsDesc={['User ID, including @', 'Use the official iframe to embed the video, which allows you to view the video if the default option does not work. Default to `false`']} anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
 
-## Twitter
+## Twitter {#twitter}
 
 :::caution
 
@@ -926,45 +926,17 @@ generates
 
 <img src="/img/readable-twitter.png" alt="Readable Twitter RSS of Durov" />
 
-### User timeline
+### User timeline {#twitter-user-timeline}
 
-<RouteEn author="DIYgod yindaheng98 Rongronggg9" path="/twitter/user/:id/:routeParams?" example="/twitter/user/DIYgod" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all.']} radar="1" rssbud="1"/>
+<Route author="DIYgod yindaheng98 Rongronggg9" path="/twitter/user/:id/:routeParams?" example="/twitter/user/DIYgod" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all.']} radar="1" rssbud="1"/>
 
-### User media
+### User media {#twitter-user-media}
 
-<RouteEn author="yindaheng98 Rongronggg9" path="/twitter/media/:id/:routeParams?" example="/twitter/media/DIYgod" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'extra parameters, see the table above.']} radar="1" rssbud="1"/>
+<Route author="yindaheng98 Rongronggg9" path="/twitter/media/:id/:routeParams?" example="/twitter/media/DIYgod" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'extra parameters, see the table above.']} radar="1" rssbud="1"/>
 
-### User following timeline
+### User following timeline {#twitter-user-following-timeline}
 
-<RouteEn author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" paramsDesc={['username', 'extra parameters, see the table above']} radar="1" rssbud="1" selfhost="1">
-
-:::caution
-
-This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
-
-:::
-
-</RouteEn>
-
-### List timeline
-
-<RouteEn author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name/:routeParams?" paramsDesc={['username', 'list name', 'extra parameters, see the table above']} radar="1" rssbud="1"/>
-
-### User likes
-
-<RouteEn author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id/:routeParams?" paramsDesc={['username', 'extra parameters, see the table above']} radar="1" rssbud="1"/>
-
-### Keyword
-
-<RouteEn author="DIYgod yindaheng98 Rongronggg9" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword/:routeParams?" paramsDesc={['keyword', 'extra parameters, see the table above']} radar="1" rssbud="1"/>
-
-### Trends
-
-<RouteEn author="sakamossan" example="/twitter/trends/23424856" path="/twitter/trends/:woeid?" paramsDesc={['Yahoo! Where On Earth ID. default to woeid=1 (World Wide)']} radar="1" rssbud="1"/>
-
-### Collection
-
-<RouteEn author="TonyRL" example="/twitter/collection/DIYgod/1527857429467172864" path="/twitter/collection/:uid/:collectionId/:routeParams?" paramsDesc={['username, should match the generated token', 'collection ID, can be found in URL', 'extra parameters, see the table above']} radar="1" rssbud="1" selfhost="1">
+<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" paramsDesc={['username', 'extra parameters, see the table above']} radar="1" rssbud="1" selfhost="1">
 
 :::caution
 
@@ -972,32 +944,60 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 
 :::
 
-</RouteEn>
+</Route>
 
-### Tweet Details
+### List timeline {#twitter-list-timeline}
+
+<Route author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name/:routeParams?" paramsDesc={['username', 'list name', 'extra parameters, see the table above']} radar="1" rssbud="1"/>
+
+### User likes {#twitter-user-likes}
+
+<Route author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id/:routeParams?" paramsDesc={['username', 'extra parameters, see the table above']} radar="1" rssbud="1"/>
+
+### Keyword {#twitter-keyword}
+
+<Route author="DIYgod yindaheng98 Rongronggg9" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword/:routeParams?" paramsDesc={['keyword', 'extra parameters, see the table above']} radar="1" rssbud="1"/>
+
+### Trends {#twitter-trends}
+
+<Route author="sakamossan" example="/twitter/trends/23424856" path="/twitter/trends/:woeid?" paramsDesc={['Yahoo! Where On Earth ID. default to woeid=1 (World Wide)']} radar="1" rssbud="1"/>
+
+### Collection {#twitter-collection}
+
+<Route author="TonyRL" example="/twitter/collection/DIYgod/1527857429467172864" path="/twitter/collection/:uid/:collectionId/:routeParams?" paramsDesc={['username, should match the generated token', 'collection ID, can be found in URL', 'extra parameters, see the table above']} radar="1" rssbud="1" selfhost="1">
+
+:::caution
+
+This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/en/install/#route-specific-configurations) for route-specific configurations.
+
+:::
+
+</Route>
+
+### Tweet Details {#twitter-tweet-details}
 
 <Route author="LarchLiu Rongronggg9" example="/twitter/tweet/DIYgod/status/1650844643997646852" path="/twitter/tweet/:id/status/:status/:original?" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'tweet ID', 'extra parameters, data type of return, if the value is not `0`/`false` and `config.isPackage` is `true`, return the original data of twitter']} radar="1" rssbud="1"/>
 
-## Vimeo
+## Vimeo {#vimeo}
 
-### User Profile
+### User Profile {#vimeo-user-profile}
 
-<RouteEn author="MisteryMonster" example="/vimeo/user/filmsupply/picks" path="/vimeo/user/:username/:cat?" paramsDesc={['In this example [https://vimeo.com/filmsupply](https://vimeo.com/filmsupply)  is `filmsupply`', 'deafult for all latest videos, others categories in this example such as `Docmentary`, `Narrative`, `Drama`. Set `picks` for promote orders, just orderd like web page. When `picks` added, published date won\'t show up']}>
+<Route author="MisteryMonster" example="/vimeo/user/filmsupply/picks" path="/vimeo/user/:username/:cat?" paramsDesc={['In this example [https://vimeo.com/filmsupply](https://vimeo.com/filmsupply)  is `filmsupply`', 'deafult for all latest videos, others categories in this example such as `Docmentary`, `Narrative`, `Drama`. Set `picks` for promote orders, just orderd like web page. When `picks` added, published date won\'t show up']}>
 :::tip Special category name attention
 
 Some of the categories contain slash like `3D/CG` , must change the slash `/` to the vertical bar`|`.
 
 :::
 
-</RouteEn>
+</Route>
 
-### Channel
+### Channel {#vimeo-channel}
 
-<RouteEn author="MisteryMonster" example="/vimeo/channel/bestoftheyear" path="/vimeo/channel/:channel" paramsDesc={['channel name can get from url like `bestoftheyear` in  [https://vimeo.com/channels/bestoftheyear/videos](https://vimeo.com/channels/bestoftheyear/videos) .']} radar="1"/>
+<Route author="MisteryMonster" example="/vimeo/channel/bestoftheyear" path="/vimeo/channel/:channel" paramsDesc={['channel name can get from url like `bestoftheyear` in  [https://vimeo.com/channels/bestoftheyear/videos](https://vimeo.com/channels/bestoftheyear/videos) .']} radar="1"/>
 
-### Category
+### Category {#vimeo-category}
 
-<RouteEn author="MisteryMonster" example="/vimeo/category/documentary/staffpicks" path="/vimeo/category/:category/:staffpicks?" paramsDesc={['Category name can get from url like `documentary` in [https://vimeo.com/categories/documentary/videos](https://vimeo.com/categories/documentary/videos) ', 'type `staffpicks` to sort with staffpicks']} radar="1"/>
+<Route author="MisteryMonster" example="/vimeo/category/documentary/staffpicks" path="/vimeo/category/:category/:staffpicks?" paramsDesc={['Category name can get from url like `documentary` in [https://vimeo.com/categories/documentary/videos](https://vimeo.com/categories/documentary/videos) ', 'type `staffpicks` to sort with staffpicks']} radar="1"/>
 
 ## VueVlog {#vuevlog}
 
@@ -1005,7 +1005,7 @@ Some of the categories contain slash like `3D/CG` , must change the slash `/` to
 
 <Route author="kt286" example="/vuevideo/971924215514" path="/vuevideo/:userid" paramsDesc={['用户ID, 可在对应页面的 URL 中找到']}/>
 
-## YouTube
+## YouTube {#youtube}
 
 :::tip Tiny Tiny RSS users please notice
 
@@ -1013,11 +1013,11 @@ Tiny Tiny RSS will add `sandbox="allow-scripts"` to all iframe elements, as a re
 
 :::
 
-### User
+### User {#youtube-user}
 
-<RouteEn author="DIYgod" path="/youtube/user/:username/:embed?" example="/youtube/user/JFlaMusic" paramsDesc={['YouTuber id', 'Default to embed the video, set to any value to disable embedding']} radar="1" rssbud="1"/>
+<Route author="DIYgod" path="/youtube/user/:username/:embed?" example="/youtube/user/JFlaMusic" paramsDesc={['YouTuber id', 'Default to embed the video, set to any value to disable embedding']} radar="1" rssbud="1"/>
 
-### Channel
+### Channel {#youtube-channel}
 
 :::tip
 
@@ -1025,27 +1025,27 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 
 :::
 
-<RouteEn author="DIYgod" path="/youtube/channel/:id/:embed?" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" paramsDesc={['YouTube channel id', 'Default to embed the video, set to any value to disable embedding']} radar="1" rssbud="1"/>
+<Route author="DIYgod" path="/youtube/channel/:id/:embed?" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" paramsDesc={['YouTube channel id', 'Default to embed the video, set to any value to disable embedding']} radar="1" rssbud="1"/>
 
-### Custom URL
+### Custom URL {#youtube-custom-url}
 
-<RouteEn author="TonyRL" path="/youtube/c/:id/:embed?" example="/youtube/c/YouTubeCreators" paramsDesc={['YouTube custom URL', 'Default to embed the video, set to any value to disable embedding']} radar="1" rssbud="1"/>
+<Route author="TonyRL" path="/youtube/c/:id/:embed?" example="/youtube/c/YouTubeCreators" paramsDesc={['YouTube custom URL', 'Default to embed the video, set to any value to disable embedding']} radar="1" rssbud="1"/>
 
-### Playlist
+### Playlist {#youtube-playlist}
 
-<RouteEn author="HenryQW" path="/youtube/playlist/:id/:embed?" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" paramsDesc={['YouTube playlist id', 'Default to embed the video, set to any value to disable embedding']} radar="1" rssbud="1"/>
+<Route author="HenryQW" path="/youtube/playlist/:id/:embed?" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" paramsDesc={['YouTube playlist id', 'Default to embed the video, set to any value to disable embedding']} radar="1" rssbud="1"/>
 
-### Community
+### Community {#youtube-community}
 
-<RouteEn author="TonyRL" path="/youtube/community/:handle" example="/youtube/community/@JFlaMusic" paramsDesc={['YouTube handles or channel id']} radar="1" rssbud="1"/>
+<Route author="TonyRL" path="/youtube/community/:handle" example="/youtube/community/@JFlaMusic" paramsDesc={['YouTube handles or channel id']} radar="1" rssbud="1"/>
 
-### Subscriptions
+### Subscriptions {#youtube-subscriptions}
 
-<RouteEn author="TonyRL" path="/youtube/subscriptions/:embed?" example="/youtube/subscriptions" paramsDesc={['Default to embed the video, set to any value to disable embedding']} selfhost="1" radar="1" rssbud="1"/>
+<Route author="TonyRL" path="/youtube/subscriptions/:embed?" example="/youtube/subscriptions" paramsDesc={['Default to embed the video, set to any value to disable embedding']} selfhost="1" radar="1" rssbud="1"/>
 
-### Music Charts
+### Music Charts {#youtube-music-charts}
 
-<RouteEn author="TonyRL" path="/youtube/charts/:category?/:country?/:embed?" example="/youtube/charts" paramsDesc={['Chart, see table below, default to `TopVideos`', 'Country Code, see table below, default to global', 'Default to embed the video, set to any value to disable embedding']} radar="1" rssbud="1">
+<Route author="TonyRL" path="/youtube/charts/:category?/:country?/:embed?" example="/youtube/charts" paramsDesc={['Chart, see table below, default to `TopVideos`', 'Country Code, see table below, default to global', 'Default to embed the video, set to any value to disable embedding']} radar="1" rssbud="1">
 
 :::note Chart
 | Top artists | Top songs | Top music videos | Trending |
@@ -1092,8 +1092,7 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 
 :::
 
-</RouteEn>
-
+</Route>
 
 ## 巴哈姆特 {#ba-ha-mu-te}
 
@@ -1835,3 +1834,4 @@ rule
 :::
 
 </Route>
+

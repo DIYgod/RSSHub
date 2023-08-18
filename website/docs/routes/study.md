@@ -35,11 +35,11 @@ import Route from '@site/src/components/Route';
 | bilingual   | 双语新闻 (Bilingual News)                    |
 | address     | 总统演讲 (President Address)                 |
 
-## Asian Innovation and Entrepreneurship Association
+## Asian Innovation and Entrepreneurship Association {#asian-innovation-and-entrepreneurship-association}
 
-### Seminar Series
+### Seminar Series {#asian-innovation-and-entrepreneurship-association-seminar-series}
 
-<RouteEn author="zxx-457" example="/aiea/seminars/upcoming" path="/aiea/seminars/:period" paramsDesc={['Time frame']}>
+<Route author="zxx-457" example="/aiea/seminars/upcoming" path="/aiea/seminars/:period" paramsDesc={['Time frame']}>
 
 | Time frame |
 | ----- |
@@ -47,13 +47,13 @@ import Route from '@site/src/components/Route';
 | past |
 | both|
 
-</RouteEn>
+</Route>
 
-## Chinese Social Science Net
+## Chinese Social Science Net {#chinese-social-science-net}
 
-### Institute of Law
+### Institute of Law {#chinese-social-science-net-institute-of-law}
 
-<RouteEn author="HankChow" example="/cssn/iolaw/zxzp" path="/cssn/iolaw/:section?" paramsDesc={['Section ID, can be found in the URL. For example, the Section ID of URL `http://iolaw.cssn.cn/zxzp/` is `zxzp`. The default value is `zxzp`']}/>
+<Route author="HankChow" example="/cssn/iolaw/zxzp" path="/cssn/iolaw/:section?" paramsDesc={['Section ID, can be found in the URL. For example, the Section ID of URL `http://iolaw.cssn.cn/zxzp/` is `zxzp`. The default value is `zxzp`']}/>
 
 ## CTFHub Calendar {#ctfhub-calendar}
 
@@ -89,33 +89,33 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## DBLP
+## DBLP {#dblp}
 
-### Keyword Search
+### Keyword Search {#dblp-keyword-search}
 
-<RouteEn author="ytno1" example="/dblp/knowledge%20tracing" path="/dblp/:field" paramsDesc={['Research field']} radar="1" />
+<Route author="ytno1" example="/dblp/knowledge%20tracing" path="/dblp/:field" paramsDesc={['Research field']} radar="1" />
 
-## gradCafe
+## gradCafe {#gradcafe}
 
-### gradCafe result
+### gradCafe result {#gradcafe-gradcafe-result}
 
-<RouteEn author="liecn" example="/gradcafe/result" path="/gradcafe/result" />
+<Route author="liecn" example="/gradcafe/result" path="/gradcafe/result" />
 
-### gradCafe result by key words
+### gradCafe result by key words {#gradcafe-gradcafe-result-by-key-words}
 
-<RouteEn author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" paramsDesc={['Keyword']}/>
+<Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" paramsDesc={['Keyword']}/>
 
-## Great Britain China Centre
+## Great Britain China Centre {#great-britain-china-centre}
 
-### Educational Trust
+### Educational Trust {#great-britain-china-centre-educational-trust}
 
-<RouteEn author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
+<Route author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
 
-## iciba
+## iciba {#iciba}
 
-### Daily English Sentence
+### Daily English Sentence {#iciba-daily-english-sentence}
 
-<RouteEn author="mashirozx" example="/iciba/7/poster" path="/iciba/:days?/:img_type?" paramsDesc={['number of items to show (min = 1, max = 7, default = 1)', 'image style']}>
+<Route author="mashirozx" example="/iciba/7/poster" path="/iciba/:days?/:img_type?" paramsDesc={['number of items to show (min = 1, max = 7, default = 1)', 'image style']}>
 
 | `:img_type` | image style    |
 | ----------- | -------------- |
@@ -124,7 +124,7 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 | thumbnail   | Thumbnail size |
 | poster      | Art poster     |
 
-</RouteEn>
+</Route>
 
 ## IELTS 雅思 {#ielts-ya-si}
 
@@ -132,11 +132,11 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 <Route author="zenxds" example="/ielts" path="/ielts" puppeteer="1"/>
 
-## Link Research
+## Link Research {#link-research}
 
-### Theses
+### Theses {#link-research-theses}
 
-<RouteEn author="y9c" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" paramsDesc={['key=value，eg. subject=生物']} radar="1" rssbud="1">
+<Route author="y9c" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" paramsDesc={['key=value，eg. subject=生物']} radar="1" rssbud="1">
 
 | `:param` | example         | definition                             |
 | -------- | --------------- | -------------------------------------- |
@@ -145,7 +145,7 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 | columns  | columns=健康    | string / undefined                     |
 | columns  | columns=virus   | string / undefined                     |
 
-</RouteEn>
+</Route>
 
 ## MarginNote {#marginnote}
 
@@ -183,11 +183,11 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 <Route author="nczitzk" example="/mind42/search/online" path="/mind42/search/:keyword" paramsDesc={['关键字']}/>
 
-## MindMeister
+## MindMeister {#mindmeister}
 
-### Public Maps
+### Public Maps {#mindmeister-public-maps}
 
-<RouteEn author="TonyRL" example="/mindmeister/mind-map-examples" path="/mindmeister/:category?/:language?" paramsDesc={['Categories, see the table below, `mind-map-examples` by default', 'Languages, see the table below, `en` by default']} radar="1" rssbud="1">
+<Route author="TonyRL" example="/mindmeister/mind-map-examples" path="/mindmeister/:category?/:language?" paramsDesc={['Categories, see the table below, `mind-map-examples` by default', 'Languages, see the table below, `en` by default']} radar="1" rssbud="1">
 
 | Categories | parameter |
 | -------- | --------------- |
@@ -219,7 +219,7 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 | 한국어 | ko |
 | Other | other |
 
-</RouteEn>
+</Route>
 
 ## NEEA 中国教育考试网 {#neea-zhong-guo-jiao-yu-kao-shi-wang}
 
@@ -254,11 +254,11 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 <Route author="nczitzk" example="/neea/jlpt" path="/neea/jlpt"/>
 
-## ORCID
+## ORCID {#orcid}
 
-### Works List
+### Works List {#orcid-works-list}
 
-<RouteEn author="OrangeEd1t" example="/orcid/0000-0002-4731-9700" path="/orcid/:id" paramsDesc={['Open Researcher and Contributor ID']}/>
+<Route author="OrangeEd1t" example="/orcid/0000-0002-4731-9700" path="/orcid/:id" paramsDesc={['Open Researcher and Contributor ID']}/>
 
 ## ProcessOn {#processon}
 
@@ -280,35 +280,35 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## ResearchGate
+## ResearchGate {#researchgate}
 
-### Publications
+### Publications {#researchgate-publications}
 
-<RouteEn author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" paramsDesc={['Username, can be found in URL']} puppeteer="1" anticrawler="1"/>
+<Route author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" paramsDesc={['Username, can be found in URL']} puppeteer="1" anticrawler="1"/>
 
-## The Korea Institute of Marine Law
+## The Korea Institute of Marine Law {#the-korea-institute-of-marine-law}
 
-### Thesis
+### Thesis {#the-korea-institute-of-marine-law-thesis}
 
-<RouteEn author="TonyRL" example="/kimlaw/thesis" path="/kimlaw/thesis" radar="1"/>
+<Route author="TonyRL" example="/kimlaw/thesis" path="/kimlaw/thesis" radar="1"/>
 
-## X-MOL
+## X-MOL {#x-mol}
 
-### News
+### News {#x-mol-news}
 
-<RouteEn author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" paramsDesc={['Tag number, can be obtained from news list URL. Empty value means news index.']} />
+<Route author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" paramsDesc={['Tag number, can be obtained from news list URL. Empty value means news index.']} />
 
-## XMind
+## XMind {#xmind}
 
-### Mindmap Gallery
+### Mindmap Gallery {#xmind-mindmap-gallery}
 
-<RouteEn author="nczitzk" example="/xmind/mindmap" path="/xmind/mindmap/:lang?" paramsDesc={['language code, all languages by default']}>
+<Route author="nczitzk" example="/xmind/mindmap" path="/xmind/mindmap/:lang?" paramsDesc={['language code, all languages by default']}>
 
 | English | Español | Deutsch | Français | 中文 | 日本語 |
 | ------- | ------- | ------- | -------- | ---- | ------ |
 | en      | es      | de      | fr       | zh   | jp     |
 
-</RouteEn>
+</Route>
 
 ## zhimap 思维导图社区 {#zhimap-si-wei-dao-tu-she-qu}
 
@@ -320,11 +320,11 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## ZhiShiFenZi
+## ZhiShiFenZi {#zhishifenzi}
 
-### News
+### News {#zhishifenzi-news}
 
-<RouteEn author="y9c" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" paramsDesc={['type，eg. ai']}>
+<Route author="y9c" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" paramsDesc={['type，eg. ai']}>
 
 | `:type`   | type name |
 | --------- | --------- |
@@ -338,15 +338,15 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 > leave it blank（`/zhishifenzi/news`）to get all
 
-</RouteEn>
+</Route>
 
-### depth
+### depth {#zhishifenzi-depth}
 
-<RouteEn author="y9c" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
+<Route author="y9c" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
 
-### innovation
+### innovation {#zhishifenzi-innovation}
 
-<RouteEn author="y9c" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" paramsDesc={['type，eg. company']}>
+<Route author="y9c" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" paramsDesc={['type，eg. company']}>
 
 | `:type`       | type name     |
 | ------------- | ------------- |
@@ -359,7 +359,7 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 > leave it blank（`/zhishifenzi/innovation`）to get all
 
-</RouteEn>
+</Route>
 
 ## 德阳考试中心 {#de-yang-kao-shi-zhong-xin}
 

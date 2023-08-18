@@ -6,27 +6,27 @@ import Route from '@site/src/components/Route';
 
 ### Work type {#axis-studios-work-type}
 
-<RouteEn author="MisteryMonster" example="/axis-studios/work/full-service-cg-production" path="/axis-studios/:type/:tag?" paramsDesc={['`work`, `blog`', 'Work type URL: `compositing`, `full-service-cg-production`, `vfx-supervision`, `realtime`, `art-direction`, `animation`']}>
+<Route author="MisteryMonster" example="/axis-studios/work/full-service-cg-production" path="/axis-studios/:type/:tag?" paramsDesc={['`work`, `blog`', 'Work type URL: `compositing`, `full-service-cg-production`, `vfx-supervision`, `realtime`, `art-direction`, `animation`']}>
 
 Work type URL in articles. Such as： 'https://axisstudiosgroup.com/work/full-service-cg-production' the tag will be `full-service-cg-production`.
 
 Some tags are rarely used： `Script`, `direction`, `production`, `design-concept` etc。
 
-</RouteEn>
+</Route>
 
 ## Behance {#behance}
 
-### User Works {#behance-yong-hu-zuo-pin}
+### User Works {#behance-user-works}
 
-<RouteEn author="MisteryMonster" example="/behance/mishapetrick" path="/behance/:user/:type?" paramsDesc={['username', 'type, `projects` or `appreciated`, `projects` by default']} radar="1">
+<Route author="MisteryMonster" example="/behance/mishapetrick" path="/behance/:user/:type?" paramsDesc={['username', 'type, `projects` or `appreciated`, `projects` by default']} radar="1">
 
 Behance user's profile URL, like <https://www.behance.net/mishapetrick> the username will be `mishapetrick`。
 
-</RouteEn>
+</Route>
 
 ## Blow Studio {#blow-studio}
 
-### Home {#blow-studio-zhu-ye}
+### Home {#blow-studio-home}
 
 <Route author="MisteryMonster" example="/blow-studio" path="/blow-studio" />
 
@@ -38,35 +38,35 @@ Behance user's profile URL, like <https://www.behance.net/mishapetrick> the user
 
 ## Digic Picture {#digic-picture}
 
-### Works & News {#digic-picture-zuo-pin-he-xin-wen}
+### Works & News {#digic-picture-works-%26-news}
 
-<RouteEn author="MisteryMonster" example="/digic-pictures/works/real-time-engine" path="/digic-pictures/:menu/:tag?" paramsDesc={['`news`, `works`', 'Under WORK types: `/game-cinematics`, `/feature`, `/making-of`, `/commercials-vfx`, `/real-time-engine`']} />
+<Route author="MisteryMonster" example="/digic-pictures/works/real-time-engine" path="/digic-pictures/:menu/:tag?" paramsDesc={['`news`, `works`', 'Under WORK types: `/game-cinematics`, `/feature`, `/making-of`, `/commercials-vfx`, `/real-time-engine`']} />
 
 ## Dribbble {#dribbble}
 
-### Popular
+### Popular {#dribbble-popular}
 
-<RouteEn path="/dribbble/popular/:timeframe?" example="/dribbble/popular" paramsDesc={['support the following values: week, month, year and ever']} />
+<Route path="/dribbble/popular/:timeframe?" example="/dribbble/popular" paramsDesc={['support the following values: week, month, year and ever']} />
 
-### User (or team)
+### User (or team) {#dribbble-user-(or-team)}
 
-<RouteEn path="/dribbble/user/:name" example="/dribbble/user/google" paramsDesc={['username, available in user\'s homepage URL']} />
+<Route path="/dribbble/user/:name" example="/dribbble/user/google" paramsDesc={['username, available in user\'s homepage URL']} />
 
-### Keyword
+### Keyword {#dribbble-keyword}
 
-<RouteEn path="/dribbble/keyword/:keyword" example="/dribbble/keyword/player" paramsDesc={['desired keyword']} />
+<Route path="/dribbble/keyword/:keyword" example="/dribbble/keyword/player" paramsDesc={['desired keyword']} />
 
 ## Eagle {#eagle}
 
-### Blog {#eagle-bo-ke}
+### Blog {#eagle-blog}
 
-<RouteEn author="Fatpandac" example="/eagle/blog/en" path="/eagle/blog/:cate?/:language?" paramsDesc={['Category, get by URL, `all` by default', 'Language, `cn`, `tw`, `en`, `en` by default']} radar="1" rsshub="1"/>
+<Route author="Fatpandac" example="/eagle/blog/en" path="/eagle/blog/:cate?/:language?" paramsDesc={['Category, get by URL, `all` by default', 'Language, `cn`, `tw`, `en`, `en` by default']} radar="1" rsshub="1"/>
 
 ## Google {#google}
 
 ### Google Fonts {#google-google-fonts}
 
-<RouteEn author="Fatpandac" example="/google/fonts/date" path="/google/fonts/:sort?" paramsDesc={['Sorting type, see below, default to `date`']} selfhost="1">
+<Route author="Fatpandac" example="/google/fonts/date" path="/google/fonts/:sort?" paramsDesc={['Sorting type, see below, default to `date`']} selfhost="1">
 
 | Newest | Trending | Most popular | Name  | Number of styles |
 | :----: | :------: | :----------: | :--:  | :--------------: |
@@ -78,7 +78,7 @@ This route requires API key, therefore it's only available when self-hosting, re
 
 :::
 
-</RouteEn>
+</Route>
 
 ## Inside Design {#inside-design}
 
@@ -131,15 +131,15 @@ This route requires API key, therefore it's only available when self-hosting, re
 
 ## Method Studios {#method-studios}
 
-### Menus {#method-studios-cai-dan}
+### Menus {#method-studios-menus}
 
-<RouteEn author="MisteryMonster" path="/method-studios/:menu?" example="/method-studios/games" paramsDesc={['URL behind /en: `features`, `advertising`, `episodic`, `games`, `methodmade`']}>
+<Route author="MisteryMonster" path="/method-studios/:menu?" example="/method-studios/games" paramsDesc={['URL behind /en: `features`, `advertising`, `episodic`, `games`, `methodmade`']}>
 
 Not support `main`, `news`.
 
 Default is under 'https://www.methodstudios.com/en/features'.
 
-</RouteEn>
+</Route>
 
 ## Monotype {#monotype}
 
@@ -151,7 +151,7 @@ Default is under 'https://www.methodstudios.com/en/features'.
 
 ### Works {#notefolio-works}
 
-<RouteEn author="BianTan" example="/notefolio/search/1/pick/all/life" path="/notefolio/search/:category?/:order?/:time?/:query?" paramsDesc={['Category, see below, `all` by default', 'Order, `pick` as Notefolio Pick, `published` as Newest, `like` as like, `pick` by default', 'Time, `all` as All the time, `one-day` as Latest 24 hours, `week` as Latest week, `month` as Latest month, `three-month` as Latest 3 months, `all` by default', 'Keyword, empty by default']}>
+<Route author="BianTan" example="/notefolio/search/1/pick/all/life" path="/notefolio/search/:category?/:order?/:time?/:query?" paramsDesc={['Category, see below, `all` by default', 'Order, `pick` as Notefolio Pick, `published` as Newest, `like` as like, `pick` by default', 'Time, `all` as All the time, `one-day` as Latest 24 hours, `week` as Latest week, `month` as Latest month, `three-month` as Latest 3 months, `all` by default', 'Keyword, empty by default']}>
 
 | Category | Name in Korean | Name in English |
 | ---- | --------------- | --------------- |
@@ -169,7 +169,7 @@ Default is under 'https://www.methodstudios.com/en/features'.
 | 11   | 공예            | Crafts |
 | 12   | 파인아트        | Fine Art|
 
-</RouteEn>
+</Route>
 
 ## Shopping Design {#shopping-design}
 
@@ -191,7 +191,7 @@ Default is under 'https://www.methodstudios.com/en/features'.
 
 ### Films {#unit-image-films}
 
-<RouteEn author="MisteryMonster" example="/unit-image/films/vfx" path="/unit-image/films/:type?" paramsDesc={['Films type，`vfx`, `game-trailer`, `animation`, `commercials`, `making-of`']}/>
+<Route author="MisteryMonster" example="/unit-image/films/vfx" path="/unit-image/films/:type?" paramsDesc={['Films type，`vfx`, `game-trailer`, `animation`, `commercials`, `making-of`']}/>
 
 ## 爱果果 {#ai-guo-guo}
 
@@ -410,3 +410,4 @@ UI 17
 站酷的个人主页 `https://www.zcool.com.cn/u/568339` 对应 rss 路径 `/zcool/user/568339`
 
 </Route>
+

@@ -6,7 +6,7 @@ import Route from '@site/src/components/Route';
 
 ### Photos {#1x-photos}
 
-<RouteEn author="nczitzk" example="/1x" path="/1x/:category?" paramsDesc={['Category, Latest awarded by default, see below']}>
+<Route author="nczitzk" example="/1x" path="/1x/:category?" paramsDesc={['Category, Latest awarded by default, see below']}>
 
 | Category         | Title         |
 | ---------------- | ------------- |
@@ -34,7 +34,7 @@ import Route from '@site/src/components/Route';
 | Underwater       | underwater    |
 | Wildlife         | wildlife      |
 
-</RouteEn>
+</Route>
 
 ## 35PHOTO {#35photo}
 
@@ -54,13 +54,13 @@ import Route from '@site/src/components/Route';
 
 <Route author="nczitzk" example="/35photo/map" path="/35photo/map"/>
 
-### Genre
+### Genre {#35photo-genre}
 
-<RouteEn author="nczitzk" example="/35photo/genre/99"  path="/35photo/genre/:id" paramsDesc={['id, can be found in URL']}/>
+<Route author="nczitzk" example="/35photo/genre/99"  path="/35photo/genre/:id" paramsDesc={['id, can be found in URL']}/>
 
-### Author
+### Author {#35photo-author}
 
-<RouteEn author="nczitzk" example="/35photo/author/mariuszsix"  path="/35photo/author/:id" paramsDesc={['id, can be found in URL']}/>
+<Route author="nczitzk" example="/35photo/author/mariuszsix"  path="/35photo/author/:id" paramsDesc={['id, can be found in URL']}/>
 
 ## 500px 摄影社区 {#500px-she-ying-she-qu}
 
@@ -88,43 +88,43 @@ import Route from '@site/src/components/Route';
 
 ## Asian to lick {#asian-to-lick}
 
-### Home
+### Home {#asian-to-lick-home}
 
-<RouteEn author="nczitzk" example="/asiantolick" path="/asiantolick"/>
+<Route author="nczitzk" example="/asiantolick" path="/asiantolick"/>
 
-### Category
+### Category {#asian-to-lick-category}
 
-<RouteEn author="nczitzk" example="/asiantolick/category/90" path="/asiantolick/category/:category?" paramsDesc={['Category, the id can be found in URL, homepage by default']}/>
+<Route author="nczitzk" example="/asiantolick/category/90" path="/asiantolick/category/:category?" paramsDesc={['Category, the id can be found in URL, homepage by default']}/>
 
-### Tag
+### Tag {#asian-to-lick-tag}
 
-<RouteEn author="nczitzk" example="/asiantolick/tag/1045" path="/asiantolick/tag/:tag?" paramsDesc={['Tag, the id can be found in URL, homepage by default']}/>
+<Route author="nczitzk" example="/asiantolick/tag/1045" path="/asiantolick/tag/:tag?" paramsDesc={['Tag, the id can be found in URL, homepage by default']}/>
 
-### Search
+### Search {#asian-to-lick-search}
 
-<RouteEn author="nczitzk" example="/asiantolick/search/lolita" path="/asiantolick/search/:keyword?" paramsDesc={['Keyword, empty by default']}/>
+<Route author="nczitzk" example="/asiantolick/search/lolita" path="/asiantolick/search/:keyword?" paramsDesc={['Keyword, empty by default']}/>
 
 ## BabeHub {#babehub}
 
-### Category
+### Category {#babehub-category}
 
-<RouteEn author="nczitzk" example="/babehub" path="/babehub/:category?" paramsDesc={['Category, see below, Home by default']}>
+<Route author="nczitzk" example="/babehub" path="/babehub/:category?" paramsDesc={['Category, see below, Home by default']}>
 
 | Home | Most Viewed | Picture Archive | Video Archive |
 | - | - | - | - |
 | | most-viewed | picture | video |
 
-</RouteEn>
+</Route>
 
-### Search
+### Search {#babehub-search}
 
-<RouteEn author="nczitzk" example="/babehub/search/babe" path="/babehub/search/:keyword?" paramsDesc={['关键字']}/>
+<Route author="nczitzk" example="/babehub/search/babe" path="/babehub/search/:keyword?" paramsDesc={['关键字']}/>
 
-## Bing Wallpaper
+## Bing Wallpaper {#bing-wallpaper}
 
-### Daily Wallpaper
+### Daily Wallpaper {#bing-wallpaper-daily-wallpaper}
 
-<RouteEn author="FHYunCai" example="/bing" path="/bing" radar="1" rssbud="1"/>
+<Route author="FHYunCai" example="/bing" path="/bing" radar="1" rssbud="1"/>
 
 ## CNU 视觉联盟 {#cnu-shi-jue-lian-meng}
 
@@ -142,13 +142,13 @@ import Route from '@site/src/components/Route';
 
 ## DailyArt 每日艺术 {#dailyart-mei-ri-yi-shu}
 
-### DailyArt
+### DailyArt {#dailyart-mei-ri-yi-shu-dailyart}
 
-<RouteEn author="zphw" example="/dailyart/en" path="/dailyart/:language?" paramsDesc={['Support en, es, fr, de, it, zh, jp, etc. English by default.']} />
+<Route author="zphw" example="/dailyart/en" path="/dailyart/:language?" paramsDesc={['Support en, es, fr, de, it, zh, jp, etc. English by default.']} />
 
 ## Dilbert Comic Strip {#dilbert-comic-strip}
 
-### Dilbert Comic Strip
+### Dilbert Comic Strip {#dilbert-comic-strip-dilbert-comic-strip}
 
 <Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip">
 
@@ -165,49 +165,49 @@ For RSS content, specify options in the `routeParams` parameter in query string 
 | bittorrent  | Whether include a link to the latest torrent                                     | 0/1/true/false | false         |
 | embed_thumb | Whether the cover image is embedded in the RSS feed rather than given as a link  | 0/1/true/false | false         |
 
-### Favorites
+### Favorites {#e-hentai-favorites}
 
-<RouteEn author="yindaheng98" example="/ehentai/favorites/0/posted/1" path="/ehentai/favorites/:favcat?/:order?/:page?/:routeParams?" paramsDesc={['Favorites folder number','`posted`(Sort by gallery release time) , `favorited`(Sort by time added to favorites)', 'Page number', 'Additional parameters, see the table above']} anticrawler="1" supportBT="1" />
+<Route author="yindaheng98" example="/ehentai/favorites/0/posted/1" path="/ehentai/favorites/:favcat?/:order?/:page?/:routeParams?" paramsDesc={['Favorites folder number','`posted`(Sort by gallery release time) , `favorited`(Sort by time added to favorites)', 'Page number', 'Additional parameters, see the table above']} anticrawler="1" supportBT="1" />
 
-### Tag
+### Tag {#e-hentai-tag}
 
-<RouteEn author="yindaheng98" example="/ehentai/tag/language:chinese/1" path="/ehentai/tag/:tag/:page?/:routeParams?" paramsDesc={['Tag', 'Page number', 'Additional parameters, see the table above']} anticrawler="1" supportBT="1" />
+<Route author="yindaheng98" example="/ehentai/tag/language:chinese/1" path="/ehentai/tag/:tag/:page?/:routeParams?" paramsDesc={['Tag', 'Page number', 'Additional parameters, see the table above']} anticrawler="1" supportBT="1" />
 
-### Search
+### Search {#e-hentai-search}
 
-<RouteEn author="yindaheng98" example="/ehentai/search/f_search=artist%3Amana%24/1" path="/ehentai/search/:params?/:page?/:routeParams?" paramsDesc={['Search parameters. You can copy the content after `https://e-hentai.org/?`', 'Page number', 'Additional parameters, see the table above']} anticrawler="1" supportBT="1" />
+<Route author="yindaheng98" example="/ehentai/search/f_search=artist%3Amana%24/1" path="/ehentai/search/:params?/:page?/:routeParams?" paramsDesc={['Search parameters. You can copy the content after `https://e-hentai.org/?`', 'Page number', 'Additional parameters, see the table above']} anticrawler="1" supportBT="1" />
 
 ## Elite Babes {#elite-babes}
 
-### Home
+### Home {#elite-babes-home}
 
-<RouteEn author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" paramsDesc={['Category, see below, Home by default']}>
+<Route author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" paramsDesc={['Category, see below, Home by default']}>
 
 | Home | Hot | Popular | Recent |
 | ---- | --- | ------- | ------ |
 |      | hot | popular | recent |
 
-</RouteEn>
+</Route>
 
-### Videos
+### Videos {#elite-babes-videos}
 
-<RouteEn author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" paramsDesc={['Sort, see below, Popular by default']}>
+<Route author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" paramsDesc={['Sort, see below, Popular by default']}>
 
 | Popular | Recent |
 | ------- | ------ |
 | popular | recent |
 
-</RouteEn>
+</Route>
 
-### Search
+### Search {#elite-babes-search}
 
-<RouteEn author="nczitzk" example="/elitebabes/search/pose" path="/elitebabes/search/:keyword?" paramsDesc={['Keyword']}/>
+<Route author="nczitzk" example="/elitebabes/search/pose" path="/elitebabes/search/:keyword?" paramsDesc={['Keyword']}/>
 
 ## Fantia {#fantia}
 
-### Search
+### Search {#fantia-search}
 
-<RouteEn author="nczitzk" example="/fantia/search/posts/all/daily" path="/fantia/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?" paramsDesc={['Type, see the table below, `posts` by default', 'Category, see the table below, can also be found in search page URL, `すべてのクリエイター` by default', 'Ranking period, see the table below, empty by default' ,'Sorting, see the table below, `更新の新しい順` by default', 'Rating, see the table below, `すべて` by default', 'Keyword, empty by default']}>
+<Route author="nczitzk" example="/fantia/search/posts/all/daily" path="/fantia/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?" paramsDesc={['Type, see the table below, `posts` by default', 'Category, see the table below, can also be found in search page URL, `すべてのクリエイター` by default', 'Ranking period, see the table below, empty by default' ,'Sorting, see the table below, `更新の新しい順` by default', 'Rating, see the table below, `すべて` by default', 'Keyword, empty by default']}>
 
 Type
 
@@ -259,11 +259,11 @@ Rating
 | --- | ------- | ------ |
 | all | general | adult  |
 
-</RouteEn>
+</Route>
 
-### User Posts
+### User Posts {#fantia-user-posts}
 
-<RouteEn author="nczitzk" example="/fantia/user/3498" path="/fantia/user/:id" paramsDesc={['User id, can be found in user profile URL']} />
+<Route author="nczitzk" example="/fantia/user/3498" path="/fantia/user/:id" paramsDesc={['User id, can be found in user profile URL']} />
 
 ## GirlImg {#girlimg}
 
@@ -271,21 +271,21 @@ Rating
 
 <Route author="junfengP" example="/girlimg/album" path="/girlimg/album/:tag?/:mode?" paramsDesc={['过滤标签，在链接参数中&tab=部分，如：中国,BoLoLi','加载模式，留空为简单模式，获取20篇文章标题与封面；非空为详细模式，加载10篇文章内容']} />
 
-## GoComics Comic Strips
+## GoComics Comic Strips {#gocomics-comic-strips}
 
-<RouteEn author="stjohnjohnson" example="/gocomics/foxtrot" path="/gocomics/:strip" paramsDesc={['URL path of the strip on gocomics.com']} />
+<Route author="stjohnjohnson" example="/gocomics/foxtrot" path="/gocomics/:strip" paramsDesc={['URL path of the strip on gocomics.com']} />
 
 ## Google Doodles {#google-doodles}
 
-### Update
+### Update {#google-doodles-update}
 
-<RouteEn author="xyqfer" example="/google/doodles/zh-CN" path="/google/doodles/:language?" paramsDesc={['Language, default to `zh-CN`, for other language values, you can get it from [Google Doodles official website](https://www.google.com/doodles)']} />
+<Route author="xyqfer" example="/google/doodles/zh-CN" path="/google/doodles/:language?" paramsDesc={['Language, default to `zh-CN`, for other language values, you can get it from [Google Doodles official website](https://www.google.com/doodles)']} />
 
-## Google Photos
+## Google Photos {#google-photos}
 
-### Public Albums
+### Public Albums {#google-photos-public-albums}
 
-<RouteEn author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" paramsDesc={['album ID, can be found in URL, for example, `https://photos.app.goo.gl/msFFnAzKmQmWj76EA` to `msFFnAzKmQmWj76EA`']} radar="1"/>
+<Route author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" paramsDesc={['album ID, can be found in URL, for example, `https://photos.app.goo.gl/msFFnAzKmQmWj76EA` to `msFFnAzKmQmWj76EA`']} radar="1"/>
 
 ## Hentai Cosplay {#hentai-cosplay}
 
@@ -303,9 +303,9 @@ Rating
 
 :::
 
-### Popular Recent Posts
+### Popular Recent Posts {#konachan-anime-wallpapers-popular-recent-posts}
 
-<RouteEn author="magic-akari" example="/konachan/post/popular_recent" path="/konachan/post/popular_recent/:period?" paramsDesc={['Default to 24 hours']}>
+<Route author="magic-akari" example="/konachan/post/popular_recent" path="/konachan/post/popular_recent/:period?" paramsDesc={['Default to 24 hours']}>
 
 For example:
 
@@ -314,17 +314,17 @@ For example:
 -   1 month:<https://rsshub.app/konachan/post/popular_recent/1m>
 -   1 year:<https://rsshub.app/konachan/post/popular_recent/1y>
 
-</RouteEn>
+</Route>
 
 ## LoveHeaven {#loveheaven}
 
-### Manga Updates
+### Manga Updates {#loveheaven-manga-updates}
 
-<RouteEn author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" paramsDesc={['Manga slug, can be found in URL, including neither `manga-` nor `.html`']} />
+<Route author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" paramsDesc={['Manga slug, can be found in URL, including neither `manga-` nor `.html`']} />
 
 ## Mic Mic Idol {#mic-mic-idol}
 
-### Latest {#mic-mic-idol-zui-xin}
+### Latest {#mic-mic-idol-latest}
 
 <Route author="KotoriK" example="/micmicidol" path="/micmicidol"/>
 
@@ -359,17 +359,17 @@ For example:
 
 </Route>
 
-## NASA Astronomy Picture of the Day
+## NASA Astronomy Picture of the Day {#nasa-astronomy-picture-of-the-day}
 
-### NASA
+### NASA {#nasa-astronomy-picture-of-the-day-nasa}
 
-<RouteEn author="nczitzk" example="/nasa/apod" path="/nasa/apod" />
+<Route author="nczitzk" example="/nasa/apod" path="/nasa/apod" />
 
-### Cheng Kung University Mirror
+### Cheng Kung University Mirror {#nasa-astronomy-picture-of-the-day-cheng-kung-university-mirror}
 
-<RouteEn author="nczitzk" example="/nasa/apod-ncku" path="/nasa/apod-ncku" />
+<Route author="nczitzk" example="/nasa/apod-ncku" path="/nasa/apod-ncku" />
 
-### NASA 中文 {#nasa-mei-ri-tian-wen-tu-pian-nasa-zhong-wen}
+### NASA 中文 {#nasa-astronomy-picture-of-the-day-nasa-zhong-wen}
 
 <Route author="nczitzk" example="/nasa/apod-cn" path="/nasa/apod-cn">
 
@@ -381,21 +381,21 @@ For example:
 
 </Route>
 
-## National Geographic
+## National Geographic {#national-geographic}
 
-### Photo of the Day
-
-<RouteEn author="LogicJake OrangeEd1t TonyRL" example="/natgeo/dailyphoto" path="/natgeo/dailyphoto"/>
-
-### 每日一图 {#guo-jia-di-li-mei-ri-yi-tu}
+### Photo of the Day {#national-geographic-photo-of-the-day}
 
 <Route author="LogicJake OrangeEd1t TonyRL" example="/natgeo/dailyphoto" path="/natgeo/dailyphoto"/>
 
-## Pixabay
+### 每日一图 {#national-geographic-mei-ri-yi-tu}
 
-### Search
+<Route author="LogicJake OrangeEd1t TonyRL" example="/natgeo/dailyphoto" path="/natgeo/dailyphoto"/>
 
-<RouteEn author="TonyRL" example="/pixabay/search/cat" path="/pixabay/search/:q/:order?" paramsDesc={['Search term', 'Order, `popular` or `latest`, `latest` by default']} radar="1" selfhost="1"/>
+## Pixabay {#pixabay}
+
+### Search {#pixabay-search}
+
+<Route author="TonyRL" example="/pixabay/search/cat" path="/pixabay/search/:q/:order?" paramsDesc={['Search term', 'Order, `popular` or `latest`, `latest` by default']} radar="1" selfhost="1"/>
 
 ## Porn Image XXX {#porn-image-xxx}
 
@@ -403,29 +403,29 @@ For example:
 
 <Route author="hoilc" example="/porn-images-xxx/tag/jk" path="/porn-images-xxx/:type?/:name?" paramsDesc={['搜索类型, `tag`为标签, `keyword`为关键字, 默认留空为全部','搜索内容, 可在 URL 中找到，默认留空为全部']} />
 
-## Rare Historical Photos
+## Rare Historical Photos {#rare-historical-photos}
 
-### Home
+### Home {#rare-historical-photos-home}
 
-<RouteEn author="TonyRL" example="/rarehistoricalphotos" path="/rarehistoricalphotos" radar="1"/>
+<Route author="TonyRL" example="/rarehistoricalphotos" path="/rarehistoricalphotos" radar="1"/>
 
 ## Tits Guru {#tits-guru}
 
-### Home
+### Home {#tits-guru-home}
 
-<RouteEn author="MegrezZhu" example="/tits-guru/home" path="/tits-guru/home"/>
+<Route author="MegrezZhu" example="/tits-guru/home" path="/tits-guru/home"/>
 
-### Daily Best
+### Daily Best {#tits-guru-daily-best}
 
-<RouteEn author="MegrezZhu" example="/tits-guru/daily" path="/tits-guru/daily"/>
+<Route author="MegrezZhu" example="/tits-guru/daily" path="/tits-guru/daily"/>
 
-### Models
+### Models {#tits-guru-models}
 
-<RouteEn author="MegrezZhu" example="/tits-guru/model/mila-azul" path="/tits-guru/model/:name" paramsDesc={['Module name, see [here](https://tits-guru.com/models) for details']}/>
+<Route author="MegrezZhu" example="/tits-guru/model/mila-azul" path="/tits-guru/model/:name" paramsDesc={['Module name, see [here](https://tits-guru.com/models) for details']}/>
 
-### Categories
+### Categories {#tits-guru-categories}
 
-<RouteEn author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" paramsDesc={['Category, see [here](https://tits-guru.com/categories) for details']}/>
+<Route author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" paramsDesc={['Category, see [here](https://tits-guru.com/categories) for details']}/>
 
 ## wallhaven {#wallhaven}
 
@@ -439,19 +439,19 @@ For example [Latest Wallpapers](https://wallhaven.cc/latest), the route turning 
 
 :::
 
-### Category
+### Category {#wallhaven-category}
 
-<RouteEn author="nczitzk Fatpandac" example="/wallhaven/latest" path="/wallhaven/:category?/:needDetails?" paramsDesc={['Category, see below, Latest by default', 'Need Details, `true/yes` as yes, no by default']}>
+<Route author="nczitzk Fatpandac" example="/wallhaven/latest" path="/wallhaven/:category?/:needDetails?" paramsDesc={['Category, see below, Latest by default', 'Need Details, `true/yes` as yes, no by default']}>
 
 | Latest | Hot | Toplist | Random |
 | ------ | --- | ------- | ------ |
 | latest | hot | toplist | random |
 
-</RouteEn>
+</Route>
 
-### Search
+### Search {#wallhaven-search}
 
-<RouteEn author="nczitzk Fatpandac" example="/wallhaven/search/categories=110&purity=110&sorting=date_added&order=desc" path="/wallhaven/search/:filter?/:needDetails?" paramsDesc={['Filter, empty by default', 'Need Details, `true`/`yes` as yes, no by default']}>
+<Route author="nczitzk Fatpandac" example="/wallhaven/search/categories=110&purity=110&sorting=date_added&order=desc" path="/wallhaven/search/:filter?/:needDetails?" paramsDesc={['Filter, empty by default', 'Need Details, `true`/`yes` as yes, no by default']}>
 
 :::tip Tip
 
@@ -461,11 +461,11 @@ The text after `?` is `q=id%3A711&sorting=random&ref=fp&seed=8g0dgd` for [Wallpa
 
 :::
 
-</RouteEn>
+</Route>
 
 ## WallpaperHub {#wallpaperhub}
 
-### Wallpapers {#wallpaperhub-bi-zhi}
+### Wallpapers {#wallpaperhub-wallpapers}
 
 <Route author="nczitzk" example="/wallpaperhub" path="/wallpaperhub" radar="1" rssbud="1"/>
 
@@ -477,9 +477,9 @@ The text after `?` is `q=id%3A711&sorting=random&ref=fp&seed=8g0dgd` for [Wallpa
 
 :::
 
-### Popular Recent Posts
+### Popular Recent Posts {#yande.re-popular-recent-posts}
 
-<RouteEn author="magic-akari SettingDust" example="/yande.re/post/popular_recent" path="/yande.re/post/popular_recent/:period?" paramsDesc={['Default to 24 hours']}>
+<Route author="magic-akari SettingDust" example="/yande.re/post/popular_recent" path="/yande.re/post/popular_recent/:period?" paramsDesc={['Default to 24 hours']}>
 
 For example:
 
@@ -488,7 +488,7 @@ For example:
 -   1 month:<https://rsshub.app/yande.re/post/popular_recent/1m>
 -   1 year:<https://rsshub.app/yande.re/post/popular_recent/1y>
 
-</RouteEn>
+</Route>
 
 ## 百度趣画 {#bai-du-qu-hua}
 
@@ -637,3 +637,4 @@ For example:
 ### 最新主题 {#zhi-mei-hua-zui-xin-zhu-ti}
 
 <Route author="nczitzk" example="/zhutix/latest" path="/zhutix/latest"/>
+

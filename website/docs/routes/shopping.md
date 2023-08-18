@@ -20,11 +20,11 @@ import Route from '@site/src/components/Route';
 
 <Route author="luyuhuang" example="/alter-cn/news" path="/alter-cn/news"/>
 
-## AppSales
+## AppSales {#appsales}
 
-### Apps
+### Apps {#appsales-apps}
 
-<RouteEn author="nczitzk" example="/appsales/highlights" path="/appsales/:caty?/:time?" paramsDesc={['Category, `highlights` by default', 'Time, `24h` by default']}>
+<Route author="nczitzk" example="/appsales/highlights" path="/appsales/:caty?/:time?" paramsDesc={['Category, `highlights` by default', 'Time, `24h` by default']}>
 
 Category
 
@@ -44,37 +44,13 @@ Parameter `time` only works when `mostwanted` is chosen as the category.
 
 :::
 
-</RouteEn>
+</Route>
 
-## Arcteryx
+## Arcteryx {#arcteryx}
 
-### New Arrivals
+### New Arrivals {#arcteryx-new-arrivals}
 
-<RouteEn author="NavePnow" example="/arcteryx/new-arrivals/us/mens" path="/arcteryx/new-arrivals/:country/:gender" paramsDesc={['country', 'gender']}>
-
-Country
-
-| United States | Canada | United Kingdom |
-| ------------- | ------ | -------------- |
-| us            | ca     | gb             |
-
-gender
-
-| male | female |
-| ---- | ------ |
-| mens | womens |
-
-:::tip
-
-Parameter `country` can be found within the url of `Arcteryx` website.
-
-:::
-
-</RouteEn>
-
-### Outlet
-
-<RouteEn author="NavePnow" example="/arcteryx/outlet/us/mens" path="/arcteryx/outlet/:country/:gender" paramsDesc={['country', 'gender']}>
+<Route author="NavePnow" example="/arcteryx/new-arrivals/us/mens" path="/arcteryx/new-arrivals/:country/:gender" paramsDesc={['country', 'gender']}>
 
 Country
 
@@ -94,29 +70,53 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 :::
 
-</RouteEn>
+</Route>
 
-### Regear New Arrivals
+### Outlet {#arcteryx-outlet}
 
-<RouteEn author="NavePnow" example="/arcteryx/regear/new-arrivals" path="/arcteryx/regear/new-arrivals" />
+<Route author="NavePnow" example="/arcteryx/outlet/us/mens" path="/arcteryx/outlet/:country/:gender" paramsDesc={['country', 'gender']}>
 
-## Bellroy
+Country
 
-### New Releases
+| United States | Canada | United Kingdom |
+| ------------- | ------ | -------------- |
+| us            | ca     | gb             |
 
-<RouteEn author="NavePnow" example="/bellroy/new-releases" path="/bellroy/new-releases" />
+gender
 
-## booth.pm
+| male | female |
+| ---- | ------ |
+| mens | womens |
 
-### Shop
+:::tip
 
-<RouteEn author="KTachibanaM" example="/booth.pm/shop/annn-boc0123" path="/booth.pm/shop/:subdomain" paramsDesc={['Shop subdomain']} />
+Parameter `country` can be found within the url of `Arcteryx` website.
 
-## Craigslist
+:::
 
-### Shop
+</Route>
 
-<RouteEn author="lxiange" example="/craigslist/sfbay/sso?query=folding+bike&sort=rel" path="/craigslist/:location/:type?" paramsDesc={['location, Craigslist subdomain, e.g., `sfbay`', 'search type, e.g., `sso`']}/>
+### Regear New Arrivals {#arcteryx-regear-new-arrivals}
+
+<Route author="NavePnow" example="/arcteryx/regear/new-arrivals" path="/arcteryx/regear/new-arrivals" />
+
+## Bellroy {#bellroy}
+
+### New Releases {#bellroy-new-releases}
+
+<Route author="NavePnow" example="/bellroy/new-releases" path="/bellroy/new-releases" />
+
+## booth.pm {#booth.pm}
+
+### Shop {#booth.pm-shop}
+
+<Route author="KTachibanaM" example="/booth.pm/shop/annn-boc0123" path="/booth.pm/shop/:subdomain" paramsDesc={['Shop subdomain']} />
+
+## Craigslist {#craigslist}
+
+### Shop {#craigslist-shop}
+
+<Route author="lxiange" example="/craigslist/sfbay/sso?query=folding+bike&sort=rel" path="/craigslist/:location/:type?" paramsDesc={['location, Craigslist subdomain, e.g., `sfbay`', 'search type, e.g., `sso`']}/>
 
 > We use RSSHub to implement the searching of Craigslist
 > An example of a full original search url:
@@ -139,51 +139,51 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 <Route author="NeverBehave" example="/furstar/artists/cn" path="/furstar/artists/:lang?" paramsDesc={['语言, 留空为jp, 支持cn, en']}/>
 
-## Guiltfree.pl
+## Guiltfree.pl {#guiltfree.pl}
 
-### Onsale
+### Onsale {#guiltfree.pl-onsale}
 
-<RouteEn author="nczitzk" example="/guiltfree/onsale" path="/guiltfree/onsale"/>
+<Route author="nczitzk" example="/guiltfree/onsale" path="/guiltfree/onsale"/>
 
-## Gumroad
+## Gumroad {#gumroad}
 
-### Products
+### Products {#gumroad-products}
 
-<RouteEn author="Fatpandac" example="/gumroad/afkmaster/Eve10" path="/gumroad/:username/:products" paramsDesc={['username, can be found in URL', 'products name, can be found in URL']} radar="1" rssbud="1">
+<Route author="Fatpandac" example="/gumroad/afkmaster/Eve10" path="/gumroad/:username/:products" paramsDesc={['username, can be found in URL', 'products name, can be found in URL']} radar="1" rssbud="1">
 
 `https://afkmaster.gumroad.com/l/Eve10` -> `/gumroad/afkmaster/Eve10`
 
-</RouteEn>
+</Route>
 
-## hotukdeals
+## hotukdeals {#hotukdeals}
 
-### thread
+### thread {#hotukdeals-thread}
 
-<RouteEn author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" paramsDesc={['should be one of highlights, hot, new, discussed']}/>
+<Route author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" paramsDesc={['should be one of highlights, hot, new, discussed']}/>
 
-### hottest
+### hottest {#hotukdeals-hottest}
 
-<RouteEn author="DIYgod" example="/hotukdeals/hottest" path="/hotukdeals/hottest"></RouteEn>
+<Route author="DIYgod" example="/hotukdeals/hottest" path="/hotukdeals/hottest"></Route>
 
-## IKEA
+## IKEA {#ikea}
 
-### UK - New Product Release
+### UK - New Product Release {#ikea-uk---new-product-release}
 
-<RouteEn author="HenryQW" example="/ikea/gb/new" path="/ikea/gb/new"/>
+<Route author="HenryQW" example="/ikea/gb/new" path="/ikea/gb/new"/>
 
-### UK - Offers
+### UK - Offers {#ikea-uk---offers}
 
-<RouteEn author="HenryQW" example="/ikea/gb/offer" path="/ikea/gb/offer"/>
+<Route author="HenryQW" example="/ikea/gb/offer" path="/ikea/gb/offer"/>
 
-### 中国 - 会员特惠 {#ikea-yi-jia-zhong-guo---hui-yuan-te-hui}
+### 中国 - 会员特惠 {#ikea-zhong-guo---hui-yuan-te-hui}
 
 <Route author="jzhangdev" example="/ikea/cn/family_offers" path="/ikea/cn/family_offers" radar="1"/>
 
-### 中国 - 低价优选 {#ikea-yi-jia-zhong-guo---di-jia-you-xuan}
+### 中国 - 低价优选 {#ikea-zhong-guo---di-jia-you-xuan}
 
 <Route author="jzhangdev" example="/ikea/cn/low_price" path="/ikea/cn/low_price" radar="1"/>
 
-### 中国 - 当季新品推荐 {#ikea-yi-jia-zhong-guo---dang-ji-xin-pin-tui-jian}
+### 中国 - 当季新品推荐 {#ikea-zhong-guo---dang-ji-xin-pin-tui-jian}
 
 <Route author="jzhangdev" example="/ikea/cn/new" path="/ikea/cn/new" radar="1"/>
 
@@ -193,35 +193,35 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 <Route author="Fatpandac" example="/lativ/54220021" path="/lativ/:id" paramsDesc={['商品id，网址上可以直接拿到']}/>
 
-## LeBonCoin
+## LeBonCoin {#leboncoin}
 
-### Ads
+### Ads {#leboncoin-ads}
 
 Transform any search into a feed.
 
-<RouteEn author="Platane" example="/leboncoin/ad/category=10&locations=Paris_75015" path="/leboncoin/ad/:query" paramsDesc={['search page querystring']}>
+<Route author="Platane" example="/leboncoin/ad/category=10&locations=Paris_75015" path="/leboncoin/ad/:query" paramsDesc={['search page querystring']}>
 
 For instance, in <https://www.leboncoin.fr/recherche/?category=10&locations=Paris_75015>, the query is **category=10&locations=Paris_75015**
 
-</RouteEn>
+</Route>
 
-## Mercari
+## Mercari {#mercari}
 
-### Goods
+### Goods {#mercari-goods}
 
-<RouteEn author="nczitzk" example="/mercari/category/1" path="/mercari/:type/:id" paramsDesc={['`category` as seaching by category, `brand` as searching by brand, `search` as searching for keyword', 'can be found in URL of the category or brand page. If you choose `search` as `type`, then put keyword here']}>
+<Route author="nczitzk" example="/mercari/category/1" path="/mercari/:type/:id" paramsDesc={['`category` as seaching by category, `brand` as searching by brand, `search` as searching for keyword', 'can be found in URL of the category or brand page. If you choose `search` as `type`, then put keyword here']}>
 
 All categories, see [Category list](https://www.mercari.com/jp/category/)
 
 All brands, see [Brand list](https://www.mercari.com/jp/brand/)
 
-</RouteEn>
+</Route>
 
-## MyFigureCollection
+## MyFigureCollection {#myfigurecollection}
 
-### Activity
+### Activity {#myfigurecollection-activity}
 
-<RouteEn author="nczitzk" example="/myfigurecollection/activity" path="/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" paramsDesc={['Category, Figures by default', 'Language, as above, `en` by default', 'Latest Additions, on as `1` by default, off as `0`', 'Changes, on as `1` by default, off as `0`', 'Alerts, on as `1` by default, off as `0`', 'Pictures, on as `1` by default, off as `0`']}>
+<Route author="nczitzk" example="/myfigurecollection/activity" path="/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" paramsDesc={['Category, Figures by default', 'Language, as above, `en` by default', 'Latest Additions, on as `1` by default, off as `0`', 'Changes, on as `1` by default, off as `0`', 'Alerts, on as `1` by default, off as `0`', 'Pictures, on as `1` by default, off as `0`']}>
 
 Category
 
@@ -248,17 +248,17 @@ Language
 | sv  | Svenska    |
 | zh  | 中文       |
 
-</RouteEn>
+</Route>
 
-### Pictures
+### Pictures {#myfigurecollection-pictures}
 
-<RouteEn author="nczitzk" example="/myfigurecollection/potd" path="/myfigurecollection/:category?/:language?" paramsDesc={['Category, Pictures OTD by default', 'Language, as above, `en` by default']}>
+<Route author="nczitzk" example="/myfigurecollection/potd" path="/myfigurecollection/:category?/:language?" paramsDesc={['Category, Pictures OTD by default', 'Language, as above, `en` by default']}>
 
 | Pictures OTD | Pictures OTW | Pictures OTM |
 | ------------ | ------------ | ------------ |
 | potd         | potw         | potm         |
 
-</RouteEn>
+</Route>
 
 ### 圖片 {#myfigurecollection-tu-pian}
 
@@ -270,35 +270,35 @@ Language
 
 </Route>
 
-## Patagonia
+## Patagonia {#patagonia}
 
-### New Arrivals
+### New Arrivals {#patagonia-new-arrivals}
 
-<RouteEn author="NavePnow" example="/patagonia/new-arrivals/mens" path="/patagonia/new-arrivals/:category" paramsDesc={['category, see below']}>
+<Route author="NavePnow" example="/patagonia/new-arrivals/mens" path="/patagonia/new-arrivals/:category" paramsDesc={['category, see below']}>
 
 | Men's | Women's | Kids' & Baby | Packs & Gear |
 | ----- | ------- | ------------ | ------------ |
 | mens  | womens  | kids         | luggage      |
 
-</RouteEn>
+</Route>
 
-## ShopBack
+## ShopBack {#shopback}
 
-### Store
+### Store {#shopback-store}
 
-<RouteEn author="nczitzk" example="/shopback/shopee-mart" path="/shopback/:store" paramsDesc={['Store, can be found in URL']}/>
+<Route author="nczitzk" example="/shopback/shopee-mart" path="/shopback/:store" paramsDesc={['Store, can be found in URL']}/>
 
-## Snow Peak
+## Snow Peak {#snow-peak}
 
-### New Arrivals(USA)
+### New Arrivals(USA) {#snow-peak-new-arrivals(usa)}
 
-<RouteEn author="NavePnow" example="/snowpeak/us/new-arrivals" path="/snowpeak/us/new-arrivals"/>
+<Route author="NavePnow" example="/snowpeak/us/new-arrivals" path="/snowpeak/us/new-arrivals"/>
 
-## The Independent
+## The Independent {#the-independent}
 
-### PS5 stock UK
+### PS5 stock UK {#the-independent-ps5-stock-uk}
 
-<RouteEn author="DIYgod" example="/independent/ps5-stock-uk" path="/independent/ps5-stock-uk"/>
+<Route author="DIYgod" example="/independent/ps5-stock-uk" path="/independent/ps5-stock-uk"/>
 
 ## Westore {#westore}
 
@@ -306,11 +306,11 @@ Language
 
 <Route author="xyqfer" example="/westore/new" path="/westore/new"/>
 
-## Zagg
+## Zagg {#zagg}
 
-### New Arrivals
+### New Arrivals {#zagg-new-arrivals}
 
-<RouteEn author="NavePnow" example="/zagg/new-arrivals/brand=164&cat=3038,3041" path="/zagg/new-arrivals/:query?" paramsDesc={['query, search page querystring']}/>
+<Route author="NavePnow" example="/zagg/new-arrivals/brand=164&cat=3038,3041" path="/zagg/new-arrivals/:query?" paramsDesc={['query, search page querystring']}/>
 
 For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3041>, the query is `brand=164&cat=3038%2C3041`
 

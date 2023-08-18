@@ -46,11 +46,11 @@ import Route from '@site/src/components/Route';
 
 <Route author="nczitzk" example="/bigquant/collections" path="/bigquant/collections"/>
 
-## Bloomberg
+## Bloomberg {#bloomberg}
 
-### News
+### News {#bloomberg-news}
 
-<RouteEn author="bigfei" example="/bloomberg" path="/bloomberg/:site?" paramsDesc={['Site, see below, News by default']} anticrawler="1">
+<Route author="bigfei" example="/bloomberg" path="/bloomberg/:site?" paramsDesc={['Site, see below, News by default']} anticrawler="1">
 
 | Site | Name |
 | ---- | ---- |
@@ -67,15 +67,15 @@ import Route from '@site/src/components/Route';
 | businessweek | Businessweek |
 | citylab | CityLab |
 
-</RouteEn>
+</Route>
 
-### Authors
+### Authors {#bloomberg-authors}
 
-<RouteEn author="josh" example="/bloomberg/authors/ARbTQlRLRjE/matthew-s-levine" path="/bloomberg/authors/:id/:slug/:source?" paramsDesc={['Author ID, can be found in URL', 'Author Slug, can be found in URL', 'Data source, either `api` or `rss`,`api` by default']} anticrawler="1" radar="1"/>
+<Route author="josh" example="/bloomberg/authors/ARbTQlRLRjE/matthew-s-levine" path="/bloomberg/authors/:id/:slug/:source?" paramsDesc={['Author ID, can be found in URL', 'Author Slug, can be found in URL', 'Data source, either `api` or `rss`,`api` by default']} anticrawler="1" radar="1"/>
 
 ## CFD {#cfd}
 
-### Indices Dividend Adjustment {#cfd-mei-zhou-gu-zhi-pai-xi-tiao-zheng-(gbp)}
+### Indices Dividend Adjustment {#cfd-indices-dividend-adjustment}
 
 <Route author="HenryQW" example="/cfd/div_gbp" path="/cfd/div_gbp" />
 
@@ -101,15 +101,15 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-## Finology Insider
+## Finology Insider {#finology-insider}
 
-### Bullets
+### Bullets {#finology-insider-bullets}
 
-<RouteEn author="Rjnishant530" example="/finology/bullets" path="/finology/bullets" radar="1"/>
+<Route author="Rjnishant530" example="/finology/bullets" path="/finology/bullets" radar="1"/>
 
-### Category
+### Category {#finology-insider-category}
 
-<RouteEn author="Rjnishant530" example="/finology/success-stories" path="/finology/:category" paramDesc={['Refer Table below or find in URL']} radar="1">
+<Route author="Rjnishant530" example="/finology/success-stories" path="/finology/:category" paramDesc={['Refer Table below or find in URL']} radar="1">
 
 :::note Category
 
@@ -133,15 +133,15 @@ import Route from '@site/src/components/Route';
 
 :::
 
-</RouteEn>
+</Route>
 
-### Most Viewed
+### Most Viewed {#finology-insider-most-viewed}
 
-<RouteEn author="Rjnishant530" example="/finology/most-viewed/monthly" path="/finology/most-viewed/:time" paramDesc={['Accepts : `alltime` or `monthly` only']} radar="1"/>
+<Route author="Rjnishant530" example="/finology/most-viewed/monthly" path="/finology/most-viewed/:time" paramDesc={['Accepts : `alltime` or `monthly` only']} radar="1"/>
 
-### Trending Topic
+### Trending Topic {#finology-insider-trending-topic}
 
-<RouteEn author="Rjnishant530" example="/finology/tag/startups" path="/tag/:topic" paramDesc={['Refer Table below or find in URL']} radar="1">
+<Route author="Rjnishant530" example="/finology/tag/startups" path="/tag/:topic" paramDesc={['Refer Table below or find in URL']} radar="1">
 
 :::note Topic
 
@@ -178,29 +178,29 @@ import Route from '@site/src/components/Route';
 
 :::
 
-</RouteEn>
+</Route>
 
 ## finviz {#finviz}
 
 ### News {#finviz-news}
 
-<RouteEn author="nczitzk" example="/finviz" path="/finviz/:category?" paramsDesc={['Category, see below, News by default']}>
+<Route author="nczitzk" example="/finviz" path="/finviz/:category?" paramsDesc={['Category, see below, News by default']}>
 
 | News | Blog |
 | ---- | ---- |
 | news | blog |
 
-</RouteEn>
+</Route>
 
-### US Stock News {#finviz-mei-gu-gu-piao-xin-wen}
+### US Stock News {#finviz-us-stock-news}
 
-<RouteEn author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" paramsDesc={['The stock ticker']}/>
+<Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" paramsDesc={['The stock ticker']}/>
 
 ## Followin {#followin}
 
-### Home {#followin-shou-ye}
+### Home {#followin-home}
 
-<RouteEn author="TonyRL" example="/followin" path="/followin/:categoryId?/:lang?" paramsDesc={['Category ID, see table below, `1` by default', 'Language, see table below, `en` by default']} radar="1">
+<Route author="TonyRL" example="/followin" path="/followin/:categoryId?/:lang?" paramsDesc={['Category ID, see table below, `1` by default', 'Language, see table below, `en` by default']} radar="1">
 
 Category ID
 
@@ -214,41 +214,41 @@ Language
 | ------- | ------- | -------- | ---------- |
 | en      | zh-Hans | zh-Hant  | vi      |
 
-</RouteEn>
+</Route>
 
-### News
+### News {#followin-news}
 
-<RouteEn author="TonyRL" example="/followin/news" path="/followin/news/:lang?" paramsDesc={['Language, see table above, `en` by default']} radar="1" />
+<Route author="TonyRL" example="/followin/news" path="/followin/news/:lang?" paramsDesc={['Language, see table above, `en` by default']} radar="1" />
 
-### KOL
+### KOL {#followin-kol}
 
-<RouteEn author="TonyRL" example="/followin/kol/4075592991" path="/followin/kol/:kolId/:lang?" paramsDesc={['KOL ID, can be found in URL', 'Language, see table above, `en` by default']} radar="1" />
+<Route author="TonyRL" example="/followin/kol/4075592991" path="/followin/kol/:kolId/:lang?" paramsDesc={['KOL ID, can be found in URL', 'Language, see table above, `en` by default']} radar="1" />
 
-### Topic
+### Topic {#followin-topic}
 
-<RouteEn author="TonyRL" example="/followin/topic/40" path="/followin/topic/:topicId/:lang?" paramsDesc={['Topic ID, can be found in URL', 'Language, see table above, `en` by default']} radar="1" />
+<Route author="TonyRL" example="/followin/topic/40" path="/followin/topic/:topicId/:lang?" paramsDesc={['Topic ID, can be found in URL', 'Language, see table above, `en` by default']} radar="1" />
 
-### Tag
+### Tag {#followin-tag}
 
-<RouteEn author="TonyRL" example="/followin/tag/177008" path="/followin/tag/:tagId/:lang?" paramsDesc={['Tag ID, can be found in URL', 'Language, see table above, `en` by default']} radar="1" />
+<Route author="TonyRL" example="/followin/tag/177008" path="/followin/tag/:tagId/:lang?" paramsDesc={['Tag ID, can be found in URL', 'Language, see table above, `en` by default']} radar="1" />
 
-## Futubull 富途牛牛 {#fu-tu-niu-niu}
+## Futubull 富途牛牛 {#futubull-fu-tu-niu-niu}
 
-### Headlines {#fu-tu-niu-niu-yao-wen}
+### Headlines {#futubull-fu-tu-niu-niu-headlines}
 
 <Route author="Wsine nczitzk" example="/futunn/main" path="/futunn/main" />
 
 ## FX Markets {#fx-markets}
 
-### Channel {#fx-markets-fen-lei}
+### Channel {#fx-markets-channel}
 
-<RouteEn author="mikkkee" example="/fx-markets/trading" path="/fx-markets/:channel" paramsDesc={['channel, can be found in the navi bar links at the home page']}>
+<Route author="mikkkee" example="/fx-markets/trading" path="/fx-markets/:channel" paramsDesc={['channel, can be found in the navi bar links at the home page']}>
 
 | Trading | Infrastructure | Tech and Data | Regulation |
 | ------- | -------------- | ------------- | ---------- |
 | trading | infrastructure | tech-and-data | regulation |
 
-</RouteEn>
+</Route>
 
 ## Paradigm {#paradigm}
 
@@ -260,19 +260,19 @@ Language
 
 ### Summary {#seeking-alpha-summary}
 
-<RouteEn author="TonyRL" example="/seekingalpha/TSM/transcripts" path="/seekingalpha/:symbol/:category?" paramsDesc={['Stock symbol', 'Category, see below, `news` by default']} radar="1" rssbud="1">
+<Route author="TonyRL" example="/seekingalpha/TSM/transcripts" path="/seekingalpha/:symbol/:category?" paramsDesc={['Stock symbol', 'Category, see below, `news` by default']} radar="1" rssbud="1">
 
 | Analysis | News | Transcripts | Press Releases | Related Analysis |
 | ------- | ------- | -------- | ---- | ------ |
 | analysis | news | transcripts | press-releases | related-analysis |
 
-</RouteEn>
+</Route>
 
-## Stock Edge
+## Stock Edge {#stock-edge}
 
-### Daily Updates News
+### Daily Updates News {#stock-edge-daily-updates-news}
 
-<RouteEn author="Rjnishant530" example="/stockedge/daily-updates/news" path="/stockedge/daily-updates/news" radar="1"/>
+<Route author="Rjnishant530" example="/stockedge/daily-updates/news" path="/stockedge/daily-updates/news" radar="1"/>
 
 ## TokenInsight {#tokeninsight}
 
@@ -282,17 +282,17 @@ TokenInsight also provides official RSS, you can take a look at <https://api.tok
 
 :::
 
-### Blogs
+### Blogs {#tokeninsight-blogs}
 
-<RouteEn author="fuergaosi233" example="/tokeninsight/blog/en" path="/tokeninsight/blog/:lang?" paramsDesc={['Language, see below, Chinese by default']} />
+<Route author="fuergaosi233" example="/tokeninsight/blog/en" path="/tokeninsight/blog/:lang?" paramsDesc={['Language, see below, Chinese by default']} />
 
-### Latest
+### Latest {#tokeninsight-latest}
 
-<RouteEn author="fuergaosi233" example="/tokeninsight/bulletin/en" path="/tokeninsight/bulletin/:lang?" paramsDesc={['Language, see below, Chinese by default']} />
+<Route author="fuergaosi233" example="/tokeninsight/bulletin/en" path="/tokeninsight/bulletin/:lang?" paramsDesc={['Language, see below, Chinese by default']} />
 
-### Research
+### Research {#tokeninsight-research}
 
-<RouteEn author="fuergaosi233" example="/tokeninsight/report/en" path="/tokeninsight/report/:lang?" paramsDesc={['Language, see below, Chinese by default']}>
+<Route author="fuergaosi233" example="/tokeninsight/report/en" path="/tokeninsight/report/:lang?" paramsDesc={['Language, see below, Chinese by default']}>
 
 Language:
 
@@ -300,7 +300,7 @@ Language:
 | ------- | ------- |
 | zh      | en      |
 
-</RouteEn>
+</Route>
 
 ## Unusual Whales {#unusual-whales}
 
@@ -318,11 +318,11 @@ Language:
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
 | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8          |
 
-## World Economic Forum 世界经济论坛 {#shi-jie-jing-ji-lun-tan}
+## World Economic Forum 世界经济论坛 {#world-economic-forum-shi-jie-jing-ji-lun-tan}
 
-### Report
+### Report {#world-economic-forum-shi-jie-jing-ji-lun-tan-report}
 
-<RouteEn author="nczitzk" example="/weforum/report" path="/weforum/report/:lang?/:year?/:platform?" paramsDesc={['Language, see below, `en` by default', 'Year, filter by year, all by default', 'Platform, filter by platform, all by default']}>
+<Route author="nczitzk" example="/weforum/report" path="/weforum/report/:lang?/:year?/:platform?" paramsDesc={['Language, see below, `en` by default', 'Year, filter by year, all by default', 'Platform, filter by platform, all by default']}>
 
 Languages
 
@@ -332,7 +332,7 @@ Languages
 
 See filters in [Report](https://www.weforum.org/reports) for Year and Platform these two parameters.
 
-</RouteEn>
+</Route>
 
 ## 巴伦周刊中文版 {#ba-lun-zhou-kan-zhong-wen-ban}
 
@@ -896,3 +896,4 @@ See filters in [Report](https://www.weforum.org/reports) for Year and Platform t
 | zzkx     | hyzx     |
 
 </Route>
+

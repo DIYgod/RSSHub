@@ -8,11 +8,11 @@ import Route from '@site/src/components/Route';
 
 <Route author="brilon" example="/21caijing/channel/readnumber" path="/21caijing/channel/:name" paramsDesc={['频道名称，可在 [https://m.21jingji.com/](https://m.21jingji.com/) 页面 URL 中找到']}/>
 
-## ABC News
+## ABC News {#abc-news}
 
-### Channel & Topic
+### Channel & Topic {#abc-news-channel-%26-topic}
 
-<RouteEn author="nczitzk" example="/abc" path="/abc/:id?" paramsDesc={['id, can be found in the Channel or Topic page, can also be filled in the `documentId` in the source code of the page, see below, Just In by default']}>
+<Route author="nczitzk" example="/abc" path="/abc/:id?" paramsDesc={['id, can be found in the Channel or Topic page, can also be filled in the `documentId` in the source code of the page, see below, Just In by default']}>
 
 :::tip Tip
 
@@ -58,13 +58,13 @@ The following are some of the supported Channel and Topic ids.
 | ----------------------- | -------------------- | ----------------- | ----------------------------- | --------- |
 | analysis-and-opinion-zh | chinese-in-australia | curious-australia | indonesian                    | tok-pisin |
 
-</RouteEn>
+</Route>
 
-## Aljazeera 半岛电视台
+## Aljazeera 半岛电视台 {#aljazeera-ban-dao-dian-shi-tai}
 
-### News
+### News {#aljazeera-ban-dao-dian-shi-tai-news}
 
-<RouteEn author="nczitzk" example="/aljazeera/english/news" path="/aljazeera/:language?/:category?" paramsDesc={['Language, see below, arbric by default, as Arbric', 'Category, can be found in URL, homepage by default']}>
+<Route author="nczitzk" example="/aljazeera/english/news" path="/aljazeera/:language?/:category?" paramsDesc={['Language, see below, arbric by default, as Arbric', 'Category, can be found in URL, homepage by default']}>
 
 Language
 
@@ -80,11 +80,11 @@ If you subscribe to [Al Jazeera Chinese - Political](https://chinese.aljazeera.n
 
 :::
 
-</RouteEn>
+</Route>
 
-### Tag
+### Tag {#aljazeera-ban-dao-dian-shi-tai-tag}
 
-<RouteEn author="nczitzk" example="/aljazeera/english/tag/science-and-technology" path="/aljazeera/:language?/tag/:id" paramsDesc={['Language, see below, arbric by default, as Arbric', 'Tag id, can be found in URL']}>
+<Route author="nczitzk" example="/aljazeera/english/tag/science-and-technology" path="/aljazeera/:language?/tag/:id" paramsDesc={['Language, see below, arbric by default, as Arbric', 'Tag id, can be found in URL']}>
 
 Language
 
@@ -98,11 +98,11 @@ If you subscribe to [Al Jazeera English - Science and Technology](https://www.al
 
 :::
 
-</RouteEn>
+</Route>
 
-### Official RSS
+### Official RSS {#aljazeera-ban-dao-dian-shi-tai-official-rss}
 
-<RouteEn author="nczitzk" example="/aljazeera/english/rss" path="/aljazeera/:language?/rss" paramsDesc={['Language, see below, arbric by default, as Arbric']}>
+<Route author="nczitzk" example="/aljazeera/english/rss" path="/aljazeera/:language?/rss" paramsDesc={['Language, see below, arbric by default, as Arbric']}>
 
 Language
 
@@ -116,19 +116,19 @@ There is no RSS source for Al Jazeera Chinese, returning homepage content by def
 
 :::
 
-</RouteEn>
+</Route>
 
-## AP News
+## AP News {#ap-news}
 
-### Topics
+### Topics {#ap-news-topics}
 
-<RouteEn author="zoenglinghou mjysci TonyRL" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic?" paramsDesc={['Topic name, can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`, `trending-news` by default']} radar="1" rssbud="1" />
+<Route author="zoenglinghou mjysci TonyRL" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic?" paramsDesc={['Topic name, can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`, `trending-news` by default']} radar="1" rssbud="1" />
 
-## BBC
+## BBC {#bbc}
 
-### BBC
+### BBC {#bbc-bbc}
 
-<RouteEn author="HenryQW DIYgod" example="/bbc/world-asia" path="/bbc/:channel?" paramsDesc={['channel, default to `top stories`']}>
+<Route author="HenryQW DIYgod" example="/bbc/world-asia" path="/bbc/:channel?" paramsDesc={['channel, default to `top stories`']}>
 
 Provides a better reading experience (full text articles) over the official ones.
 
@@ -136,26 +136,26 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 
 -   Channel contains sub-directories, such as `https://feeds.bbci.co.uk/news/world/asia/rss.xml`, replace `/` with `-`, `/bbc/world-asia`.
 
-</RouteEn>
+</Route>
 
-### BBC Chinese
+### BBC Chinese {#bbc-bbc-chinese}
 
-<RouteEn author="HenryQW" example="/bbc/chinese/business" path="/bbc/:lang/:channel?" paramsDesc={['lang, Simplified or Traditional Chinese','channel, default to `top stories`']}>
+<Route author="HenryQW" example="/bbc/chinese/business" path="/bbc/:lang/:channel?" paramsDesc={['lang, Simplified or Traditional Chinese','channel, default to `top stories`']}>
 
 See [BBC 中文网](/routes/traditional-media#bbc-bbc-zhong-wen-wang).
 
-</RouteEn>
+</Route>
 
-## Boston.com
+## Boston.com {#boston.com}
 
-### News
+### News {#boston.com-news}
 
-<RouteEn author="oppilate" example="/boston/technology" path="/boston/:tag?" paramsDesc={['Tag']}>
+<Route author="oppilate" example="/boston/technology" path="/boston/:tag?" paramsDesc={['Tag']}>
 
 Generates full-text feeds that the official feed doesn't provide.
 Refer to [Boston.com's feed page](https://www.boston.com/rss-feeds) for tags. For instance, `https://www.boston.com/tag/local-news/?feed=rss` corresponds to `/boston/local-news`.
 
-</RouteEn>
+</Route>
 
 ## CBC {#cbc}
 
@@ -163,68 +163,68 @@ Refer to [Boston.com's feed page](https://www.boston.com/rss-feeds) for tags. Fo
 
 <Route author="wb14123" example="/cbc/topics" path="/cbc/topics/:topic?" paramsDesc={['CBC 频道。默认为 Top Stories。二级话题如 canada/toronto，需要用 `-` 替换掉 `/`。']}/>
 
-## Chicago Tribune
+## Chicago Tribune {#chicago-tribune}
 
-### News
+### News {#chicago-tribune-news}
 
-<RouteEn author="oppilate" example="/chicagotribune/nation-world" path="/chicagotribune/:category/:subcategory?" paramsDesc={['Category', 'Subcategory']}>
+<Route author="oppilate" example="/chicagotribune/nation-world" path="/chicagotribune/:category/:subcategory?" paramsDesc={['Category', 'Subcategory']}>
 
 Generates full-text that the official feed doesn't provide.
 Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-chicago-tribune-rss-feeds-htmlstory.html) for categories. For instance, `https://www.chicagotribune.com/arcio/rss/category/nation-world/` corresponds to `/chicagotribune/nation-world`.
 
-</RouteEn>
+</Route>
 
-## China Dialogue 中外对话
+## China Dialogue 中外对话 {#china-dialogue-zhong-wai-dui-hua}
 
-### Topics
+### Topics {#china-dialogue-zhong-wai-dui-hua-topics}
 
-<RouteEn author="zoenglinghou" example="/chinadialogue/topics/cities" path="/chinadialogue/topics/:topic" paramsDesc={['Topics']}>
+<Route author="zoenglinghou" example="/chinadialogue/topics/cities" path="/chinadialogue/topics/:topic" paramsDesc={['Topics']}>
 
 | Business | Cities | Climate Change            | Conservation | Governance & Law   | Health and Food | Natural Disasters | Pollution | Science & Tech   | Security | Water |
 | -------- | ------ | ------------------------- | ------------ | ------------------ | --------------- | ----------------- | --------- | ---------------- | -------- | ----- |
 | business | cities | climate-change-and-energy | conservation | governance-and-law | health-and-food | natural-disasters | pollution | science-and-tech | security | water |
 
-</RouteEn>
+</Route>
 
-### Columns
+### Columns {#china-dialogue-zhong-wai-dui-hua-columns}
 
-<RouteEn author="zoenglinghou" example="/chinadialogue/article" path="/chinadialogue/:column" paramsDesc={['栏目分类']}>
+<Route author="zoenglinghou" example="/chinadialogue/article" path="/chinadialogue/:column" paramsDesc={['栏目分类']}>
 
 | Articles | Blogs | Culture | Reports |
 | -------- | ----- | ------- | ------- |
 | article  | blog  | culture | reports |
 
-</RouteEn>
+</Route>
 
-### 福建新闻 {#zhong-wai-dui-hua-fu-jian-xin-wen}
+### 福建新闻 {#china-dialogue-zhong-wai-dui-hua-fu-jian-xin-wen}
 
 <Route author="jjlzg" example="/fjnews/fj/30" path="/fjnews/fznews"/>
 
-### 福州新闻 {#zhong-wai-dui-hua-fu-zhou-xin-wen}
+### 福州新闻 {#china-dialogue-zhong-wai-dui-hua-fu-zhou-xin-wen}
 
 <Route author="jjlzg" example="/fjnews/fz/30" path="/fjnews/fznews"/>
 
-### 九江新闻 {#zhong-wai-dui-hua-jiu-jiang-xin-wen}
+### 九江新闻 {#china-dialogue-zhong-wai-dui-hua-jiu-jiang-xin-wen}
 
 <Route author="jjlzg" example="/fjnews/jjnews" path="/fjnews/jjnews"/>
 
-## China Times 中時電子報
+## China Times 中時電子報 {#china-times-zhong-shi-dian-zi-bao}
 
-### News
+### News {#china-times-zhong-shi-dian-zi-bao-news}
 
-<RouteEn author="luyuhuang" example="/chinatimes/realtimenews" path="/chinatimes/:caty" paramsDesc={['category']} radar="1" rssbud="1">
+<Route author="luyuhuang" example="/chinatimes/realtimenews" path="/chinatimes/:caty" paramsDesc={['category']} radar="1" rssbud="1">
 
 | realtimenews   | politic | opinion | life | star    | money   | society | hottopic   | tube   | world | armament | chinese           | fashion | sports | technologynews  | travel | album   |
 | -------------- | ------- | ------- | ---- | ------- | ------- | ------- | ---------- | ------ | ----- | -------- | ----------------- | ------- | ------ | --------------- | ------ | ------- |
 | Real Time News | Politic | Opinion | Life | Showbiz | Finance | Society | Hot Topics | Videos | World | Military | Mainland & Taiwan | Fashion | Sports | Technology News | Travel | Columns |
 
-</RouteEn>
+</Route>
 
-## ChinaFile
+## ChinaFile {#chinafile}
 
-### Reporting & Opinion
+### Reporting & Opinion {#chinafile-reporting-%26-opinion}
 
-<RouteEn author="oppilate" example="/chinafile/all" path="/chinafile/:category?" paramsDesc={['Category, by default `all`']}>
+<Route author="oppilate" example="/chinafile/all" path="/chinafile/:category?" paramsDesc={['Category, by default `all`']}>
 
 Generates full-text feeds that the official feed doesn't provide.
 
@@ -232,37 +232,37 @@ Generates full-text feeds that the official feed doesn't provide.
 | --- | --------------------- |
 | all | ngo                   |
 
-</RouteEn>
+</Route>
 
-## CNBC
+## CNBC {#cnbc}
 
-### Full article RSS
+### Full article RSS {#cnbc-full-article-rss}
 
-<RouteEn author="TonyRL" example="/cnbc/rss" path="/cnbc/rss/:id?" paramsDesc={['Channel ID, can be found in Official RSS URL, `100003114` (Top News) by default']}>
+<Route author="TonyRL" example="/cnbc/rss" path="/cnbc/rss/:id?" paramsDesc={['Channel ID, can be found in Official RSS URL, `100003114` (Top News) by default']}>
 
 Provides a better reading experience (full articles) over the official ones.
 
 Support all channels, refer to [CNBC RSS feeds](https://www.cnbc.com/rss-feeds/).
 
-</RouteEn>
+</Route>
 
-## Deutsche Welle
+## Deutsche Welle {#deutsche-welle}
 
-### News
+### News {#deutsche-welle-news}
 
-<RouteEn author="nczitzk" example="/dw/en" path="/dw/:lang?/:caty?" paramsDesc={['Language, can be found in the URL of the corresponding language version page, German by default', 'Category, all by default']}>
+<Route author="nczitzk" example="/dw/en" path="/dw/:lang?/:caty?" paramsDesc={['Language, can be found in the URL of the corresponding language version page, German by default', 'Category, all by default']}>
 
 | All | German Press | Culture | Economy | Science & Nature |
 | --- | ------------ | ------- | ------- | ---------------- |
 | all | press        | cul     | eco     | sci              |
 
-</RouteEn>
+</Route>
 
-## DNA India
+## DNA India {#dna-india}
 
-### News
+### News {#dna-india-news}
 
-<RouteEn author="Rjnishant530" example="/dnaindia/headlines" path="/dnaindia/:category" paramsDesc={['Find it in the URL, or tables below']} radar="1">
+<Route author="Rjnishant530" example="/dnaindia/headlines" path="/dnaindia/:category" paramsDesc={['Find it in the URL, or tables below']} radar="1">
 
 Categories:
 
@@ -270,11 +270,11 @@ Categories:
 | --------- | --------- | ----- | ------------- | ------ | ----- | --------- | --------- | -------- | ----- |
 | headlines | explainer | india | entertainment | sports | viral | lifestyle | education | business | world |
 
-</RouteEn>
+</Route>
 
-### Topic
+### Topic {#dna-india-topic}
 
-<RouteEn author="Rjnishant530" example="/dnaindia/topic/dna-verified" path="/dnaindia/topic/:topic" paramsDesc={['Find it in the URL']} radar="1">
+<Route author="Rjnishant530" example="/dnaindia/topic/dna-verified" path="/dnaindia/topic/:topic" paramsDesc={['Find it in the URL']} radar="1">
 
 Topics:
 
@@ -286,9 +286,9 @@ Topics:
 The URL of the form `https://www.dnaindia.com/topic/dna-verified` demonstrates the utilization of the subdomain `topic`
 :::
 
-</RouteEn>
+</Route>
 
-## Financial Times
+## Financial Times {#financial-times}
 
 ### FT 中文网 {#financial-times-ft-zhong-wen-wang}
 
@@ -309,9 +309,9 @@ The URL of the form `https://www.dnaindia.com/topic/dna-verified` demonstrates t
 
 </Route>
 
-### myFT personal RSS
+### myFT personal RSS {#financial-times-myft-personal-rss}
 
-<RouteEn author="HenryQW" example="/ft/myft/rss-key" path="/ft/myft/:key" paramsDesc={['the last part of myFT personal RSS address']}>
+<Route author="HenryQW" example="/ft/myft/rss-key" path="/ft/myft/:key" paramsDesc={['the last part of myFT personal RSS address']}>
 
 :::tip tips
 
@@ -320,13 +320,13 @@ The URL of the form `https://www.dnaindia.com/topic/dna-verified` demonstrates t
 
 :::
 
-</RouteEn>
+</Route>
 
-## Korean Central News Agency (KCNA) 朝鲜中央通讯社
+## Korean Central News Agency (KCNA) 朝鲜中央通讯社 {#korean-central-news-agency-(kcna)-chao-xian-zhong-yang-tong-xun-she}
 
-### News
+### News {#korean-central-news-agency-(kcna)-chao-xian-zhong-yang-tong-xun-she-news}
 
-<RouteEn author="Rongronggg9" example="/kcna/en" path="/kcna/:lang/:category?" paramsDesc={['Language, refer to the table below', 'Category, refer to the table below']} anticrawler="1" radar="1" rssbud="1">
+<Route author="Rongronggg9" example="/kcna/en" path="/kcna/:lang/:category?" paramsDesc={['Language, refer to the table below', 'Category, refer to the table below']} anticrawler="1" radar="1" rssbud="1">
 
 | Language | 조선어 | English | 中国语 | Русский | Español | 日本語 |
 | -------- | ------ | ------- | ------ | ------- | ------- | ------ |
@@ -344,13 +344,13 @@ The URL of the form `https://www.dnaindia.com/topic/dna-verified` demonstrates t
 | External                                                         | `0f98b4623a3ef82aeea78df45c423fd0` |
 | News Commentary                                                  | `12c03a49f7dbe829bceea8ac77088c21` |
 
-</RouteEn>
+</Route>
 
-## La Jornada
+## La Jornada {#la-jornada}
 
-### News
+### News {#la-jornada-news}
 
-<RouteEn author="Thealf154" example="/jornada/2022-10-12/capital" path="/jornada/:date?/:category?" paramsDesc={['Date string, must be in format of `YYYY-MM-DD`. You can get today\'s news using `today`', 'Category, refer to the table below']} radar="1">
+<Route author="Thealf154" example="/jornada/2022-10-12/capital" path="/jornada/:date?/:category?" paramsDesc={['Date string, must be in format of `YYYY-MM-DD`. You can get today\'s news using `today`', 'Category, refer to the table below']} radar="1">
 
 Provides a way to get an specific rss feed by date and category over the official one.
 
@@ -368,11 +368,11 @@ Provides a way to get an specific rss feed by date and category over the officia
 | Política             | politica    |
 | Sociedad             | sociedad    |
 
-</RouteEn>
+</Route>
 
-## Ming Pao 明报
+## Ming Pao 明报 {#ming-pao-ming-bao}
 
-### 即时新闻 {#ming-bao-ji-shi-xin-wen}
+### 即时新闻 {#ming-pao-ming-bao-ji-shi-xin-wen}
 
 <Route author="TonyRL" example="/mingpao/ins/all" path="/mingpao/ins/:category?" paramsDesc={['频道，预设为总目录']}>
 
@@ -391,9 +391,9 @@ Provides a way to get an specific rss feed by date and category over the officia
 
 </Route>
 
-### Ming Pao Daily 每日明报
+### Ming Pao Daily 每日明报 {#ming-pao-ming-bao-ming-pao-daily-mei-ri-ming-bao}
 
-<RouteEn author="TonyRL" example="/mingpao/pns/s00017" path="/mingpao/pns/:category?" paramsDesc={['channel，default to brief']}/>
+<Route author="TonyRL" example="/mingpao/pns/s00017" path="/mingpao/pns/:category?" paramsDesc={['channel，default to brief']}/>
 
 :::tip tips
 Only `s00017` is in English.
@@ -415,15 +415,15 @@ Only `s00017` is in English.
 | s00017   | English       |
 | s00018   | Columnist     |
 
-## NHK
+## NHK {#nhk}
 
-### News Web Easy
+### News Web Easy {#nhk-news-web-easy}
 
-<RouteEn author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
+<Route author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
 
-### WORLD-JAPAN - Top Stories
+### WORLD-JAPAN - Top Stories {#nhk-world-japan---top-stories}
 
-<RouteEn author="TonyRL" example="/nhk/news/en" path="/nhk/news/:lang?" paramsDesc={['Language, see below, `en` by default']} radar="1" rssbud="1">
+<Route author="TonyRL" example="/nhk/news/en" path="/nhk/news/:lang?" paramsDesc={['Language, see below, `en` by default']} radar="1" rssbud="1">
 
 | العربية | বাংলা | မြန်မာဘာသာစကား | 中文（简体） | 中文（繁體） | English | Français |
 | ------- | ----- | -------------- | ------------ | ------------ | ------- | -------- |
@@ -437,7 +437,7 @@ Only `s00017` is in English.
 | --------- | ------- | ------ | ---------- | ---- | ---------- |
 | sw        | th      | tr     | uk         | ur   | vi         |
 
-</RouteEn>
+</Route>
 
 ## Now 新聞 {#now-xin-wen}
 
@@ -471,31 +471,31 @@ Only `s00017` is in English.
 
 <Route author="nczitzk" example="/now/news/rank" path="/now/news/rank"/>
 
-## NPR
+## NPR {#npr}
 
-### News
+### News {#npr-news}
 
-<RouteEn author="bennyyip" example="/npr/1001" path="/npr/:endpoint?" paramsDesc={['Channel ID, can be found in Official RSS URL, `1001` by default']}>
+<Route author="bennyyip" example="/npr/1001" path="/npr/:endpoint?" paramsDesc={['Channel ID, can be found in Official RSS URL, `1001` by default']}>
 
 Provide full article RSS for CBC topics.
 
-</RouteEn>
+</Route>
 
-## Radio France 法国广播电台
+## Radio France 法国广播电台 {#radio-france-fa-guo-guang-bo-dian-tai}
 
-### Géopolitique
+### Géopolitique {#radio-france-fa-guo-guang-bo-dian-tai-geopolitique}
 
-<RouteEn author="xdu" example="/radiofrance/geopolitique" path="/radiofrance/geopolitique">
+<Route author="xdu" example="/radiofrance/geopolitique" path="/radiofrance/geopolitique">
 
 French podcast on the international politics. This feed provides a better reading experience (full text) for the 3 latest articles.
 
-</RouteEn>
+</Route>
 
-## Radio Free Asia (RFA) 自由亚洲电台
+## Radio Free Asia (RFA) 自由亚洲电台 {#radio-free-asia-(rfa)-zi-you-ya-zhou-dian-tai}
 
-### News
+### News {#radio-free-asia-(rfa)-zi-you-ya-zhou-dian-tai-news}
 
-<RouteEn author="zphw" example="/rfa/english" path="/rfa/:language?/:channel?/:subChannel?" paramsDesc={['language, English by default', 'channel', 'subchannel, where applicable']} />
+<Route author="zphw" example="/rfa/english" path="/rfa/:language?/:channel?/:subChannel?" paramsDesc={['language, English by default', 'channel', 'subchannel, where applicable']} />
 
 Delivers a better experience by supporting parameter specification.
 
@@ -505,7 +505,7 @@ Parameters can be obtained from the official website, for instance:
 
 `https://www.rfa.org/cantonese/news/htm` corresponds to `/rfa/cantonese/news/htm`
 
-## Reuters 路透社
+## Reuters 路透社 {#reuters-lu-tou-she}
 
 :::caution Migration notes
 
@@ -514,9 +514,9 @@ Parameters can be obtained from the official website, for instance:
 
 :::
 
-### Category/Topic/Author
+### Category/Topic/Author {#reuters-lu-tou-she-category%2Ftopic%2Fauthor}
 
-<RouteEn author="HenryQW proletarius101 LyleLee nczitzk" example="/reuters/world/us" path="/reuters/:category/:topic?" paramsDesc={['find it in the URL, or tables below', 'find it in the URL, or tables below']}>
+<Route author="HenryQW proletarius101 LyleLee nczitzk" example="/reuters/world/us" path="/reuters/:category/:topic?" paramsDesc={['find it in the URL, or tables below', 'find it in the URL, or tables below']}>
 
 -   `:category`:
     | World | Business | Legal | Markets | Breakingviews | Technology | Graphics |
@@ -549,23 +549,23 @@ Parameters can be obtained from the official website, for instance:
 
 More could be found in the URL of the category/topic page.
 
-</RouteEn>
+</Route>
 
-### Inverstigates
+### Inverstigates {#reuters-lu-tou-she-inverstigates}
 
-<RouteEn author="LyleLee" example="/reuters/investigates" path="/reuters/investigates" />
+<Route author="LyleLee" example="/reuters/investigates" path="/reuters/investigates" />
 
-## Rodong Sinmun 劳动新闻
+## Rodong Sinmun 劳动新闻 {#rodong-sinmun-lao-dong-xin-wen}
 
-### News
+### News {#rodong-sinmun-lao-dong-xin-wen-news}
 
-<RouteEn author="TonyRL" example="/rodong/news" path="/rodong/news/:language?" paramsDesc={['Language, see below, `ko` by default']} radar="1">
+<Route author="TonyRL" example="/rodong/news" path="/rodong/news/:language?" paramsDesc={['Language, see below, `ko` by default']} radar="1">
 
 | 조선어 | English | 中文 |
 | ------ | ------- | ---- |
 | ko     | en      | cn   |
 
-</RouteEn>
+</Route>
 
 ## RTHK 傳媒透視 {#rthk-chuan-mei-tou-shi}
 
@@ -584,27 +584,27 @@ More could be found in the URL of the category/topic page.
 
 </Route>
 
-## RTHK 香港電台
+## RTHK 香港電台 {#rthk-xiang-gang-dian-tai}
 
-### News
+### News {#rthk-xiang-gang-dian-tai-news}
 
 RTHK offical provides full text RSS, check the offical website for detail information: <https://news.rthk.hk/rthk/en/rss.htm>
 
 This route adds the missing photo and Link element. (Offical RSS doesn't have Link element may cause issue on some RSS client)
 
-<RouteEn author="KeiLongW" example="/rthk-news/hk/international" path="/rthk-news/:lang/:category" paramsDesc={['Language，Traditional Chinese`hk`，English`en`','Category']}>
+<Route author="KeiLongW" example="/rthk-news/hk/international" path="/rthk-news/:lang/:category" paramsDesc={['Language，Traditional Chinese`hk`，English`en`','Category']}>
 
 | local      | greaterchina       | international | finance      | sport      |
 | ---------- | ------------------ | ------------- | ------------ | ---------- |
 | Local News | Greater China News | World News    | Finance News | Sport News |
 
-</RouteEn>
+</Route>
 
-## SBS
+## SBS {#sbs}
 
-### Chinese
+### Chinese {#sbs-chinese}
 
-<RouteEn author="nczitzk" example="/sbs/chinese" path="/sbs/chinese/:category?/:id?/:dialect?/:language?" paramsDesc={['Category, `news` or `podcast`, `news` by default', 'Id, see below, can be found in URL, `news` by default', 'Dialect, `mandarin` or `cantonese`, `mandarin` by default', 'Language, `zh-hans` or `zh-hant`, `zh-hans` by default']}>
+<Route author="nczitzk" example="/sbs/chinese" path="/sbs/chinese/:category?/:id?/:dialect?/:language?" paramsDesc={['Category, `news` or `podcast`, `news` by default', 'Id, see below, can be found in URL, `news` by default', 'Dialect, `mandarin` or `cantonese`, `mandarin` by default', 'Language, `zh-hans` or `zh-hant`, `zh-hans` by default']}>
 
 :::tip Tip
 
@@ -652,7 +652,7 @@ You still can customize `language`, however, it is important to note that not al
 
 :::
 
-</RouteEn>
+</Route>
 
 ## Solidot {#solidot}
 
@@ -674,21 +674,21 @@ Solidot 提供的 feed:
 
 </Route>
 
-## South China Morning Post 南华早报
+## South China Morning Post 南华早报 {#south-china-morning-post-nan-hua-zao-bao}
 
-### News
+### News {#south-china-morning-post-nan-hua-zao-bao-news}
 
-<RouteEn author="proletarius101" example="/scmp/3" path="/scmp/:category_id" paramsDesc={['Category']}>
+<Route author="proletarius101" example="/scmp/3" path="/scmp/:category_id" paramsDesc={['Category']}>
 
 See the [official RSS page](https://www.scmp.com/rss) to get the ID of each category. This route provides fulltext that the offical feed doesn't.
 
-</RouteEn>
+</Route>
 
-## Sputnik News 俄罗斯卫星通讯社
+## Sputnik News 俄罗斯卫星通讯社 {#sputnik-news-e-luo-si-wei-xing-tong-xun-she}
 
-### Category
+### Category {#sputnik-news-e-luo-si-wei-xing-tong-xun-she-category}
 
-<RouteEn author="nczitzk" example="/sputniknews" path="/sputniknews/:category?/:language?" paramsDesc={['Categort, can be found in URL, `news` by default', 'Language, see below, English by default']}>
+<Route author="nczitzk" example="/sputniknews" path="/sputniknews/:category?/:language?" paramsDesc={['Categort, can be found in URL, `news` by default', 'Language, see below, English by default']}>
 
 Categories for International site:
 
@@ -737,19 +737,19 @@ Language
 | Chinese     | chinese     |
 | Portuguese  | portuguese  |
 
-</RouteEn>
+</Route>
 
-## Taiwan News 台灣英文新聞
+## Taiwan News 台灣英文新聞 {#taiwan-news-tai-wan-ying-wen-xin-wen}
 
-### Hot News
+### Hot News {#taiwan-news-tai-wan-ying-wen-xin-wen-hot-news}
 
-<RouteEn author="TonyRL" example="/taiwannews/hot" path="/taiwannews/hot/:lang?" paramsDesc={['Language, `en` or `zh`, `en` by default']} radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/taiwannews/hot" path="/taiwannews/hot/:lang?" paramsDesc={['Language, `en` or `zh`, `en` by default']} radar="1" rssbud="1"/>
 
-## The Atlantic
+## The Atlantic {#the-atlantic}
 
-### News
+### News {#the-atlantic-news}
 
-<RouteEn author="NavePnow" example="/theatlantic/latest" path="/theatlantic/:category" paramsDesc={['category, see below']}>
+<Route author="NavePnow" example="/theatlantic/latest" path="/theatlantic/:category" paramsDesc={['category, see below']}>
 
 | Popular      | Latest | Politics | Technology | Business |
 | ------------ | ------ | -------- | ---------- | -------- |
@@ -757,60 +757,59 @@ Language
 
 More categories (except photo) can be found within the navigation bar at <https://www.theatlantic.com/>
 
-</RouteEn>
+</Route>
 
-## The Economist
+## The Economist {#the-economist}
 
-### Category
+### Category {#the-economist-category}
 
-<RouteEn author="ImSingee" example="/economist/latest" path="/economist/:endpoint" paramsDesc={['Category name, can be found on the [official page](https://www.economist.com/rss). For example, https://www.economist.com/china/rss.xml to china']} radar="1" rssbud="1"/>
+<Route author="ImSingee" example="/economist/latest" path="/economist/:endpoint" paramsDesc={['Category name, can be found on the [official page](https://www.economist.com/rss). For example, https://www.economist.com/china/rss.xml to china']} radar="1" rssbud="1"/>
 
-### Espresso
+### Espresso {#the-economist-espresso}
 
-<RouteEn author="TonyRL" example="/economist/espresso" path="/economist/espresso" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/economist/espresso" path="/economist/espresso" radar="1" rssbud="1"/>
 
-### GRE Vocabulary
+### GRE Vocabulary {#the-economist-gre-vocabulary}
 
-<RouteEn author="xyqfer" example="/economist/gre-vocabulary" path="/economist/gre-vocabulary" />
+<Route author="xyqfer" example="/economist/gre-vocabulary" path="/economist/gre-vocabulary" />
 
-### Global Business Review
+### Global Business Review {#the-economist-global-business-review}
 
 <Route author="prnake" example="/economist/global-business-review/cn-en" path="/economist/global-business-review/:language?" paramsDesc={['Language, `en`, `cn`, `tw` are supported, support multiple options, default to cn-en']}  radar="1" rssbud="1"/>
 
-### Download
+### Download {#the-economist-download}
 
-<RouteEn author="nczitzk" example="/economist/download" path="/economist/download" >
+<Route author="nczitzk" example="/economist/download" path="/economist/download" >
 
 The download site: <http://www.cgx02.xyz/index.php?dir=/te>
 
-</RouteEn>
+</Route>
 
-## The Guardian 卫报
+## The Guardian 卫报 {#the-guardian-wei-bao}
 
-### Editorial
+### Editorial {#the-guardian-wei-bao-editorial}
 
-<RouteEn author="HenryQW" example="/guardian/editorial" path="/guardian/editorial">
+<Route author="HenryQW" example="/guardian/editorial" path="/guardian/editorial">
 
 Provides a better reading experience (full text articles) over the official one.
 
-</RouteEn>
+</Route>
 
-### China
+### China {#the-guardian-wei-bao-china}
 
-<RouteEn author="Polynomia" example="/guardian/china" path="/guardian/china"/>
+<Route author="Polynomia" example="/guardian/china" path="/guardian/china"/>
 
-## The Hindu
+## The Hindu {#the-hindu}
 
-### Topic
+### Topic {#the-hindu-topic}
 
-<RouteEn author="TonyRL" example="/thehindu/topic/rains" path="/thehindu/topic/:topic" paramsDesc={['Topic slug, can be found in URL.']} radar="1" rssbud="1" />
+<Route author="TonyRL" example="/thehindu/topic/rains" path="/thehindu/topic/:topic" paramsDesc={['Topic slug, can be found in URL.']} radar="1" rssbud="1" />
 
+## The New York Times 纽约时报 {#the-new-york-times-niu-yue-shi-bao}
 
-## The New York Times 纽约时报
+### News {#the-new-york-times-niu-yue-shi-bao-news}
 
-### News
-
-<RouteEn author="HenryQW" example="/nytimes/dual" path="/nytimes/:lang?" paramsDesc={['language, default to Chinese']}>
+<Route author="HenryQW" example="/nytimes/dual" path="/nytimes/:lang?" paramsDesc={['language, default to Chinese']}>
 
 By extracting the full text of articles, we provide a better reading experience (full text articles) over the official one.
 
@@ -818,17 +817,17 @@ By extracting the full text of articles, we provide a better reading experience 
 | ------------------ | --------------- | ------- | ------------------------------------- | ------------------- |
 | (empty)            | dual            | en      | dual-traditionalchinese               | traditionalchinese  |
 
-</RouteEn>
+</Route>
 
-### News by author
+### News by author {#the-new-york-times-niu-yue-shi-bao-news-by-author}
 
-<RouteEn author="kevinschaul" example="/nytimes/author/farhad-manjoo" path="/nytimes/author/:byline" paramsDesc={['Author’s name in New York Times’ URL format']}>
+<Route author="kevinschaul" example="/nytimes/author/farhad-manjoo" path="/nytimes/author/:byline" paramsDesc={['Author’s name in New York Times’ URL format']}>
 
 Provides all of the articles by the specified New York Times author.
 
-</RouteEn>
+</Route>
 
-### 新闻简报 {#niu-yue-shi-bao-xin-wen-jian-bao}
+### 新闻简报 {#the-new-york-times-niu-yue-shi-bao-xin-wen-jian-bao}
 
 <Route author="yueyericardo nczitzk" example="/nytimes/daily_briefing_chinese" path="/nytimes/daily_briefing_chinese">
 
@@ -836,9 +835,9 @@ Provides all of the articles by the specified New York Times author.
 
 </Route>
 
-### Best Seller Books
+### Best Seller Books {#the-new-york-times-niu-yue-shi-bao-best-seller-books}
 
-<RouteEn author="melvinto" example="/nytimes/book/combined-print-and-e-book-nonfiction" path="/nytimes/book/:category?"/>
+<Route author="melvinto" example="/nytimes/book/combined-print-and-e-book-nonfiction" path="/nytimes/book/:category?"/>
 
 | Category                             |
 | ------------------------------------ |
@@ -854,23 +853,23 @@ Provides all of the articles by the specified New York Times author.
 | series-books                         |
 | young-adult-hardcover                |
 
-## The Nikkei 日本経済新聞
+## The Nikkei 日本経済新聞 {#the-nikkei-ri-ben-jing-ji-xin-wen}
 
-### Home
+### Home {#the-nikkei-ri-ben-jing-ji-xin-wen-home}
 
-<RouteEn author="zjysdhr" example="/nikkei/index" path="/nikkei/index" radar="1" rssbud="1" />
+<Route author="zjysdhr" example="/nikkei/index" path="/nikkei/index" radar="1" rssbud="1" />
 
-### News
+### News {#the-nikkei-ri-ben-jing-ji-xin-wen-news}
 
-<RouteEn author="Arracc" example="/nikkei/news" path="/nikkei/:category/:article_type?" paramsDesc={['Category, see table below','Only includes free articles, set `free` to enable, disabled by default']}>
+<Route author="Arracc" example="/nikkei/news" path="/nikkei/:category/:article_type?" paramsDesc={['Category, see table below','Only includes free articles, set `free` to enable, disabled by default']}>
 
 | 総合 | オピニオン | 経済    | 政治     | 金融      | マーケット | ビジネス | マネーのまなび | テック     | 国際          | スポーツ | 社会・調査 | 地域  | 文化    | ライフスタイル |
 | ---- | ---------- | ------- | -------- | --------- | ---------- | -------- | -------------- | ---------- | ------------- | -------- | ---------- | ----- | ------- | -------------- |
 | news | opinion    | economy | politics | financial | business   | 不支持   | 不支持         | technology | international | sports   | society    | local | culture | lifestyle      |
 
-</RouteEn>
+</Route>
 
-### 中文版新闻 {#ri-ben-jing-ji-xin-wen-zhong-wen-ban-xin-wen}
+### 中文版新闻 {#the-nikkei-ri-ben-jing-ji-xin-wen-zhong-wen-ban-xin-wen}
 
 <Route author="nczitzk" example="/nikkei/cn" path="/nikkei/cn/:language?/:path?" paramsDesc={['语言，可选 `zh` 即 繁体中文，`cn` 即 简体中文', '类目路径，默认为空，可在对应类目页 URL 中找到']} radar="1" rssbud="1">
 
@@ -886,15 +885,15 @@ Provides all of the articles by the specified New York Times author.
 
 </Route>
 
-### Nikkei Asia Latest News
+### Nikkei Asia Latest News {#the-nikkei-ri-ben-jing-ji-xin-wen-nikkei-asia-latest-news}
 
-<RouteEn author="rainrdx" example="/nikkei/asia" path="/nikkei/asia" radar="1"/>
+<Route author="rainrdx" example="/nikkei/asia" path="/nikkei/asia" radar="1"/>
 
-## The Wall Street Journal (WSJ) 华尔街日报
+## The Wall Street Journal (WSJ) 华尔街日报 {#the-wall-street-journal-(wsj)-hua-er-jie-ri-bao}
 
-### News
+### News {#the-wall-street-journal-(wsj)-hua-er-jie-ri-bao-news}
 
-<RouteEn author="oppilate NavePnow" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" paramsDesc={['Language, `en-us`, `zh-cn`, `zh-tw`', 'Category. See below']}>
+<Route author="oppilate NavePnow" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" paramsDesc={['Language, `en-us`, `zh-cn`, `zh-tw`', 'Category. See below']}>
 
 en_us
 | World | U.S. | Politics | Economy | Business | Tech | Markets | Opinion | Books & Arts | Real Estate | Life & Work | Sytle | Sports |
@@ -908,7 +907,7 @@ zh-cn / zh-tw
 
 Provide full article RSS for WSJ topics.
 
-</RouteEn>
+</Route>
 
 ## Voice of America (VOA) {#voice-of-america-(voa)}
 
@@ -930,23 +929,23 @@ Provide full article RSS for WSJ topics.
 
 </Route>
 
-## Voice of Mongolia 蒙古之声
+## Voice of Mongolia 蒙古之声 {#voice-of-mongolia-meng-gu-zhi-sheng}
 
-### News
+### News {#voice-of-mongolia-meng-gu-zhi-sheng-news}
 
-<RouteEn author="zphw" example="/vom/featured" path="/vom/featured/:lang?" paramsDesc={['Language, see the table below, `mn` by default']}>
+<Route author="zphw" example="/vom/featured" path="/vom/featured/:lang?" paramsDesc={['Language, see the table below, `mn` by default']}>
 
 | English | 日本語 | Монгол | Русский | 简体中文 |
 | ------- | ------ | ------ | ------- | -------- |
 | en      | ja     | mn     | ru      | zh       |
 
-</RouteEn>
+</Route>
 
-## Yahoo
+## Yahoo {#yahoo}
 
-### News
+### News {#yahoo-news}
 
-<RouteEn author="KeiLongW" example="/yahoo/news/hk/world" path="/yahoo/news/:region/:category?" paramsDesc={['Region','Category']}>
+<Route author="KeiLongW" example="/yahoo/news/hk/world" path="/yahoo/news/:region/:category?" paramsDesc={['Region','Category']}>
 
 `Region`
 | Hong Kong | Taiwan | US |
@@ -958,23 +957,23 @@ Provide full article RSS for WSJ topics.
 | ------- | ----- | -------- | ------------- | ------ | ------ |
 | (Empty) | world | business | entertainment | sports | health |
 
-</RouteEn>
+</Route>
 
-## Yahoo! by Author
+## Yahoo! by Author {#yahoo!-by-author}
 
-### News
+### News {#yahoo!-by-author-news}
 
-<RouteEn author="loganrockmore" example="/yahoo-author/hannah-keyser" path="/yahoo-news/:author" paramsDesc={['Author']}>
+<Route author="loganrockmore" example="/yahoo-author/hannah-keyser" path="/yahoo-news/:author" paramsDesc={['Author']}>
 
 Provides all of the articles by the specified Yahoo! author.
 
-</RouteEn>
+</Route>
 
-## Yomiuri Shimbun 読売新聞
+## Yomiuri Shimbun 読売新聞 {#yomiuri-shimbun-du-mai-xin-wen}
 
-### News
+### News {#yomiuri-shimbun-du-mai-xin-wen-news}
 
-<RouteEn author="Arracc" example="/yomiuri/news" path="/yomiuri/:category?" paramsDesc={['Category, `news` by default']}>
+<Route author="Arracc" example="/yomiuri/news" path="/yomiuri/:category?" paramsDesc={['Category, `news` by default']}>
 
 Free articles only.
 
@@ -997,7 +996,7 @@ Free articles only.
 | 社説           | editorial |
 | 皇室           | koushitsu |
 
-</RouteEn>
+</Route>
 
 ## 半月谈 {#ban-yue-tan}
 
@@ -2779,3 +2778,4 @@ category 对应的关键词有
 | 1           | 2           | 3           | 4               | 5               | 6               | 7               | 8           |
 
 </Route>
+

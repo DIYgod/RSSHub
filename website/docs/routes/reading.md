@@ -2,57 +2,57 @@ import Route from '@site/src/components/Route';
 
 # 📚 Reading
 
-## All Poetry
+## All Poetry {#all-poetry}
 
-### Poems
+### Poems {#all-poetry-poems}
 
-<RouteEn author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" paramsDesc={['Ordering, `best` or `newest`, `best` by default']}/>
+<Route author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" paramsDesc={['Ordering, `best` or `newest`, `best` by default']}/>
 
-## Free Computer Books
+## Free Computer Books {#free-computer-books}
 
-### Selected New Books
+### Selected New Books {#free-computer-books-selected-new-books}
 
-<RouteEn author="cubroe" example="/freecomputerbooks" path="/freecomputerbooks" radar="1" />
+<Route author="cubroe" example="/freecomputerbooks" path="/freecomputerbooks" radar="1" />
 
-### Current Book List
+### Current Book List {#free-computer-books-current-book-list}
 
-<RouteEn author="cubroe" example="/freecomputerbooks/compscAlgorithmBooks" path="/freecomputerbooks/:category" paramsDesc={['A category id., which should be the HTML file name (but **without** the `.html` suffix) in the URL path of a book list page.']} radar="1" />
+<Route author="cubroe" example="/freecomputerbooks/compscAlgorithmBooks" path="/freecomputerbooks/:category" paramsDesc={['A category id., which should be the HTML file name (but **without** the `.html` suffix) in the URL path of a book list page.']} radar="1" />
 
-## hameln
+## hameln {#hameln}
 
-### chapter
+### chapter {#hameln-chapter}
 
-<RouteEn author="huangliangshusheng" example="/hameln/chapter/264928" path="/hameln/chapter/:id" paramsDesc={['Novel id, can be found in URL']}>
+<Route author="huangliangshusheng" example="/hameln/chapter/264928" path="/hameln/chapter/:id" paramsDesc={['Novel id, can be found in URL']}>
 
 Eg:<https://syosetu.org/novel/264928/>
 
-</RouteEn>
+</Route>
 
-## Inoreader
+## Inoreader {#inoreader}
 
-### HTML Clip
+### HTML Clip {#inoreader-html-clip}
 
-<RouteEn author="BeautyyuYanli" example="/inoreader/html_clip/1006346356/News?limit=3" path="/html_clip/:user/:tag" paramsDesc={['user id, the interger after user/ in the example URL','tag, the string after tag/ in the example URL']}>
+<Route author="BeautyyuYanli" example="/inoreader/html_clip/1006346356/News?limit=3" path="/html_clip/:user/:tag" paramsDesc={['user id, the interger after user/ in the example URL','tag, the string after tag/ in the example URL']}>
 
 Use query parameter `limit=n` to limit the number of articles, default to 20
 
 Eg: <https://www.inoreader.com/stream/user/1006346356/tag/News/view/html?n=3>
 
-</RouteEn>
+</Route>
 
-### RSS
+### RSS {#inoreader-rss}
 
-<RouteEn author="NavePnow" example="/inoreader/rss/1005137674/user-favorites" path="/inoreader/rss/:user/:tag" paramsDesc={['user id, the interger after user/ in the example URL','tag, the string after tag/ in the example URL']}>
+<Route author="NavePnow" example="/inoreader/rss/1005137674/user-favorites" path="/inoreader/rss/:user/:tag" paramsDesc={['user id, the interger after user/ in the example URL','tag, the string after tag/ in the example URL']}>
 
-## kakuyomu
+## kakuyomu {#kakuyomu}
 
-### episode
+### episode {#kakuyomu-episode}
 
-<RouteEn author="huangliangshusheng" example="/kakuyomu/episode/1177354054883783581" path="/kakuyomu/episode/:id" paramsDesc={['Novel id, can be found in URL']}>
+<Route author="huangliangshusheng" example="/kakuyomu/episode/1177354054883783581" path="/kakuyomu/episode/:id" paramsDesc={['Novel id, can be found in URL']}>
 
 Eg:<https://kakuyomu.jp/works/1177354054883783581>
 
-</RouteEn>
+</Route>
 
 ## Kindle Unlimited {#kindle-unlimited}
 
@@ -66,31 +66,31 @@ Eg:<https://kakuyomu.jp/works/1177354054883783581>
 
 </Route>
 
-## Literotica
+## Literotica {#literotica}
 
-### New Stories
+### New Stories {#literotica-new-stories}
 
-<RouteEn author="nczitzk" example="/literotica/new" path="/literotica/new"/>
+<Route author="nczitzk" example="/literotica/new" path="/literotica/new"/>
 
-### Category
+### Category {#literotica-category}
 
-<RouteEn author="nczitzk" example="/literotica/category/anal-sex-stories" path="/literotica/category/:category?" paramsDesc={['Category, can be found in URL']}/>
+<Route author="nczitzk" example="/literotica/category/anal-sex-stories" path="/literotica/category/:category?" paramsDesc={['Category, can be found in URL']}/>
 
-## MagazineLib
+## MagazineLib {#magazinelib}
 
-### Latest Magazine
+### Latest Magazine {#magazinelib-latest-magazine}
 
-<RouteEn author="NavePnow" example="/magazinelib/latest-magazine/new+yorker" path="/magazinelib/latest-magazine/:query?" paramsDesc={['query, search page querystring']}/>
+<Route author="NavePnow" example="/magazinelib/latest-magazine/new+yorker" path="/magazinelib/latest-magazine/:query?" paramsDesc={['query, search page querystring']}/>
 
 For instance, when doing search at <https://magazinelib.com/> and you get url <https://magazinelib.com/?s=new+yorker>, the query is `new+yorker`
 
-</RouteEn>
+</Route>
 
-## Mobilism
+## Mobilism {#mobilism}
 
-### eBook Releases
+### eBook Releases {#mobilism-ebook-releases}
 
-<RouteEn author="nitezs" example="/mobilism/forums/books/romance" path="/mobilism/forums/books/:type/:fulltext?" paramsDesc={['Category', 'Retrieve fulltext, specify `y` to enable']}>
+<Route author="nitezs" example="/mobilism/forums/books/romance" path="/mobilism/forums/books/:type/:fulltext?" paramsDesc={['Category', 'Retrieve fulltext, specify `y` to enable']}>
 
 | Category                 | Parameter  |
 | ------------------------ | ---------- |
@@ -101,17 +101,17 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 | Audiobooks               | audioBooks |
 | Comics                   | comics     |
 
-</RouteEn>
+</Route>
 
-## Penguin Random House
+## Penguin Random House {#penguin-random-house}
 
-### Book Lists
+### Book Lists {#penguin-random-house-book-lists}
 
-<RouteEn author="StevenRCE0" example="/penguin-random-house/the-read-down" path="/penguin-random-house/the-read-down" />
+<Route author="StevenRCE0" example="/penguin-random-house/the-read-down" path="/penguin-random-house/the-read-down" />
 
-### Articles
+### Articles {#penguin-random-house-articles}
 
-<RouteEn author="StevenRCE0" example="/penguin-random-house/articles" path="/penguin-random-house/articles" />
+<Route author="StevenRCE0" example="/penguin-random-house/articles" path="/penguin-random-house/articles" />
 
 ## SoBooks {#sobooks}
 
@@ -152,15 +152,15 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 <Route author="nczitzk" example="/sobooks/date/2020-11" path="/sobooks/date/:date?" paramsDesc={['日期，见例子，默认为当前年月']}/>
 
-## syosetu
+## syosetu {#syosetu}
 
-### chapter
+### chapter {#syosetu-chapter}
 
-<RouteEn author="huangliangshusheng" example="/syosetu/chapter/n1976ey" path="/syosetu/chapter/:id" paramsDesc={['Novel id, can be found in URL']}>
+<Route author="huangliangshusheng" example="/syosetu/chapter/n1976ey" path="/syosetu/chapter/:id" paramsDesc={['Novel id, can be found in URL']}>
 
 Eg:<https://ncode.syosetu.com/n1976ey/>
 
-</RouteEn>
+</Route>
 
 ## UU 看书 {#uu-kan-shu}
 

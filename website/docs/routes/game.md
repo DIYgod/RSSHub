@@ -52,9 +52,9 @@ import Route from '@site/src/components/Route';
 
 ## Blizzard {#blizzard}
 
-### News
+### News {#blizzard-news}
 
-<RouteEn author="nczitzk" example="/blizzard/news" path="/blizzard/news/:language?/:category?" paramsDesc={['Language code, see below, en-US by default', 'Category, see below, All News by default']}>
+<Route author="nczitzk" example="/blizzard/news" path="/blizzard/news/:language?/:category?" paramsDesc={['Language code, see below, en-US by default', 'Category, see below, All News by default']}>
 
 Categories
 
@@ -95,13 +95,13 @@ Language codes
 | 日本語          | ja-jp    |
 | 繁體中文        | zh-tw    |
 
-</RouteEn>
+</Route>
 
 ## dekudeals {#dekudeals}
 
-### Category {#dekudeals-fen-lei}
+### Category {#dekudeals-category}
 
-<RouteEn author="LogicJake" example="/dekudeals/most-wanted" path="/dekudeals/:type" paramsDesc={['Category name']}/>
+<Route author="LogicJake" example="/dekudeals/most-wanted" path="/dekudeals/:type" paramsDesc={['Category name']}/>
 
 ## Dorohedoro {#dorohedoro}
 
@@ -111,9 +111,9 @@ Language codes
 
 ## Epic Games Store {#epic-games-store}
 
-### Free games {#epic-games-store-mian-fei-you-xi}
+### Free games {#epic-games-store-free-games}
 
-<RouteEn author="Zyx-A nczitzk  KotaHv" example="/epicgames/freegames" path="/epicgames/freegames/:locale?/:country?" paramsDesc={['Locale, en_US by default', 'Country, en_US by default']}/>
+<Route author="Zyx-A nczitzk  KotaHv" example="/epicgames/freegames" path="/epicgames/freegames/:locale?/:country?" paramsDesc={['Locale, en_US by default', 'Country, en_US by default']}/>
 
 ## Fate Grand Order {#fate-grand-order}
 
@@ -121,9 +121,9 @@ Language codes
 
 <Route author="nczitzk" example="/fgo/news" path="/fgo/news"/>
 
-## FINAL FANTASY XIV 最终幻想 14 {#zui-zhong-huan-xiang-14}
+## FINAL FANTASY XIV 最终幻想 14 {#final-fantasy-xiv-zui-zhong-huan-xiang-14}
 
-### 最终幻想 14 国服 {#zui-zhong-huan-xiang-14-zui-zhong-huan-xiang-14-guo-fu}
+### 最终幻想 14 国服 {#final-fantasy-xiv-zui-zhong-huan-xiang-14-zui-zhong-huan-xiang-14-guo-fu}
 
 <Route author="Kiotlin" example="/ff14/zh/news" path="/ff14/zh/:type?" paramsDesc={['分类名，预设为 `all`']}>
 
@@ -133,9 +133,9 @@ Language codes
 
 </Route>
 
-### FINAL FANTASY XIV (The Lodestone) {#zui-zhong-huan-xiang-14-zui-zhong-huan-xiang-14-guo-ji-fu-%EF%BC%88lodestone%EF%BC%89}
+### FINAL FANTASY XIV (The Lodestone) {#final-fantasy-xiv-zui-zhong-huan-xiang-14-final-fantasy-xiv-(the-lodestone)}
 
-<RouteEn author="chengyuhui" example="/ff14/global/na/all" path="/ff14/global/:lang/:type?" paramsDesc={['Region', 'Category, `all` by default']}>
+<Route author="chengyuhui" example="/ff14/global/na/all" path="/ff14/global/:lang/:type?" paramsDesc={['Region', 'Category, `all` by default']}>
 
 Region
 
@@ -148,13 +148,13 @@ Category
 | all | topics | notices | maintenance | updates | status   | developers |
 | --- | ------ | ------- | ----------- | ------- | -------- | ---------- |
 
-</RouteEn>
+</Route>
 
 ## Fortnite {#fortnite}
 
 ### News {#fortnite-news}
 
-<RouteEn author="lyqluis" example="/fortnite/news" path="/fortnite/news/:options?" paramsDesc={['Params']} radar="1" puppeteer="1">
+<Route author="lyqluis" example="/fortnite/news" path="/fortnite/news/:options?" paramsDesc={['Params']} radar="1" puppeteer="1">
 
 -   `options.lang`, optional, language, eg. `/fortnite/news/lang=en-US`, common languages are listed below, more languages are available one the [official website](https://www.fortnite.com/news)
 
@@ -162,7 +162,7 @@ Category
 | ----------------- | ------- | -------- | ------ | ------ | ------ |
 | en-US             | es-ES   | ja       | fr     | ko     | pl     |
 
-</RouteEn>
+</Route>
 
 ## GameApps.hk 香港手机游戏网 {#gameapps.hk-xiang-gang-shou-ji-you-xi-wang}
 
@@ -172,13 +172,13 @@ Category
 
 ## Gamer Secret {#gamer-secret}
 
-### Latest News
+### Latest News {#gamer-secret-latest-news}
 
-<RouteEn author="nczitzk" example="/gamersecret" path="/gamersecret"/>
+<Route author="nczitzk" example="/gamersecret" path="/gamersecret"/>
 
-### Category
+### Category {#gamer-secret-category}
 
-<RouteEn author="nczitzk" example="/gamersecret" path="/gamersecret/:type?/:category?" paramsDesc={['Type, see below, Latest News by default', 'Category, see below']}>
+<Route author="nczitzk" example="/gamersecret" path="/gamersecret/:type?/:category?" paramsDesc={['Type, see below, Latest News by default', 'Category, see below']}>
 
 | Latest News | PC | Playstation | Nintendo | Xbox | Moblie |
 | ----------- | -- | ----------- | -------- | ---- | ------ |
@@ -202,7 +202,7 @@ Or
 | ------------- | --------------- |
 | category/xbox | category/xboxen |
 
-</RouteEn>
+</Route>
 
 ## GameRes 游资网 {#gameres-you-zi-wang}
 
@@ -260,9 +260,9 @@ Or
 
 ## itch.io {#itch.io}
 
-### Browse
+### Browse {#itch.io-browse}
 
-<RouteEn author="nczitzk" example="/itch/games/new-and-popular/featured" path="/itch/:params?" paramsDesc={['Params']}>
+<Route author="nczitzk" example="/itch/games/new-and-popular/featured" path="/itch/:params?" paramsDesc={['Params']}>
 
 `params` is the field after `itch.io` in the URL of the corresponding page, e.g. the URL of [Top Rated Games tagged Singleplayer](https://itch.io/games/top-rated/tag-singleplayer) is <https://itch.io/games/top-rated/tag-singleplayer>, where the field after `itch.io` is `/games/top-rated/tag-singleplayer`.
 
@@ -274,11 +274,11 @@ You can browse all the tags at [here](https://itch.io/tags).
 
 :::
 
-</RouteEn>
+</Route>
 
-### Developer Logs
+### Developer Logs {#itch.io-developer-logs}
 
-<RouteEn author="nczitzk" example="/itch/devlog/teamterrible/the-baby-in-yellow" path="/itch/devlog/:user/:id" paramsDesc={['User id, can be found in URL', 'Item id, can be found in URL']}>
+<Route author="nczitzk" example="/itch/devlog/teamterrible/the-baby-in-yellow" path="/itch/devlog/:user/:id" paramsDesc={['User id, can be found in URL', 'Item id, can be found in URL']}>
 
 `User id` is the field before `.itch.io` in the URL of the corresponding page, e.g. the URL of [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is <https://teamterrible.itch.io/the-baby-in-yellow/devlog>, where the field before `.itch.io` is `teamterrible`.
 
@@ -286,11 +286,11 @@ You can browse all the tags at [here](https://itch.io/tags).
 
 So the route is [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub.app/itch/devlogs/teamterrible/the-baby-in-yellow).
 
-</RouteEn>
+</Route>
 
-### Posts
+### Posts {#itch.io-posts}
 
-<RouteEn author="nczitzk" example="/itch/posts/9539/introduce-yourself" path="/itch/posts/:topic/:id" paramsDesc={['Topic id, can be found in URL', 'Topic name, can be found in URL']}/>
+<Route author="nczitzk" example="/itch/posts/9539/introduce-yourself" path="/itch/posts/:topic/:id" paramsDesc={['Topic id, can be found in URL', 'Topic name, can be found in URL']}/>
 
 ## JUMP {#jump}
 
@@ -317,9 +317,9 @@ So the route is [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub
 
 ## Konami {#konami}
 
-### PES Mobile Announcement
+### PES Mobile Announcement {#konami-pes-mobile-announcement}
 
-<RouteEn author="HenryQW" example="/konami/pesmobile/en/ios" path="/konami/pesmobile/:lang?/:os?" paramsDesc={['language, obtained from the URL, eg. zh-cn, zh-tw, en', 'operating system，iOS or Android']}/>
+<Route author="HenryQW" example="/konami/pesmobile/en/ios" path="/konami/pesmobile/:lang?/:os?" paramsDesc={['language, obtained from the URL, eg. zh-cn, zh-tw, en', 'operating system，iOS or Android']}/>
 
 ## Liquipedia {#liquipedia}
 
@@ -335,9 +335,9 @@ So the route is [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub
 
 ## Metacritic {#metacritic}
 
-### Game Releases
+### Game Releases {#metacritic-game-releases}
 
-<RouteEn author="HenryQW" example="/metacritic/release/switch/coming" path="/metacritic/release/:platform/:type?/:sort?" paramsDesc={['console platform', 'release type, default to `new`', 'sorting type, default to `date`']}>
+<Route author="HenryQW" example="/metacritic/release/switch/coming" path="/metacritic/release/:platform/:type?/:sort?" paramsDesc={['console platform', 'release type, default to `new`', 'sorting type, default to `date`']}>
 
 Platforms supported:
 
@@ -357,75 +357,75 @@ Sorting types, default to `date`:
 | ---- | ---------------- | ---------- |
 | date | metascore        | userscore  |
 
-</RouteEn>
+</Route>
 
 ## Minecraft {#minecraft}
 
-### Java Game Update
+### Java Game Update {#minecraft-java-game-update}
 
-<RouteEn author="TheresaQWQ" example="/minecraft/version" path="/minecraft/version" />
+<Route author="TheresaQWQ" example="/minecraft/version" path="/minecraft/version" />
 
-### CurseForge Mod Update
+### CurseForge Mod Update {#minecraft-curseforge-mod-update}
 
-<RouteEn author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" paramsDesc={['Progect shortname or `Project ID`. The short name of the project can be found in the address bar, for example `https://minecraft.curseforge.com/projects/non-update` to `non-update`. `Project ID` can be found in `About This Project` in `Overview`']}/>
+<Route author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" paramsDesc={['Progect shortname or `Project ID`. The short name of the project can be found in the address bar, for example `https://minecraft.curseforge.com/projects/non-update` to `non-update`. `Project ID` can be found in `About This Project` in `Overview`']}/>
 
-### Feed The Beast Modpack Updates
+### Feed The Beast Modpack Updates {#minecraft-feed-the-beast-modpack-updates}
 
-<RouteEn author="gucheen" example="/feed-the-beast/modpack/ftb_presents_direwolf20_1_16" path="/feed-the-beast/modpack/:modpackEntry" paramsDesc={['entry name of modpack.']}>
+<Route author="gucheen" example="/feed-the-beast/modpack/ftb_presents_direwolf20_1_16" path="/feed-the-beast/modpack/:modpackEntry" paramsDesc={['entry name of modpack.']}>
 | param | description |
 | ------| ------------ |
 | modpackEntry | The entry name of modpack, can be found in modpack\'s page link, for `https://www.feed-the-beast.com/modpack/ftb_presents_direwolf20_1_16`, use `ftb_presents_direwolf20_1_16`. |
-</RouteEn>
+</Route>
 
 ## Nintendo {#nintendo}
 
-### eShop New Game Releases {#nintendo-eshop-xin-fa-shou-you-xi}
+### eShop New Game Releases {#nintendo-eshop-new-game-releases}
 
-<RouteEn author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" paramsDesc={['Region, currently supports `hk`(Hong Kong), `jp`(Japan) and `us`(USA)']}/>
+<Route author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" paramsDesc={['Region, currently supports `hk`(Hong Kong), `jp`(Japan) and `us`(USA)']}/>
 
-### News（Hong Kong only） {#nintendo-shou-ye-zi-xun-%EF%BC%88-xiang-gang-%EF%BC%89}
+### News（Hong Kong only） {#nintendo-news%EF%BC%88hong-kong-only%EF%BC%89}
 
-<RouteEn author="HFO4" example="/nintendo/news" path="/nintendo/news"/>
+<Route author="HFO4" example="/nintendo/news" path="/nintendo/news"/>
 
 ### 首页资讯（中国） {#nintendo-shou-ye-zi-xun-%EF%BC%88-zhong-guo-%EF%BC%89}
 
 <Route author="NeverBehave" example="/nintendo/news/china" path="/nintendo/news/china"/>
 
-### Nintendo Direct {#nintendo-zhi-mian-hui}
+### Nintendo Direct {#nintendo-nintendo-direct}
 
-<RouteEn author="HFO4" example="/nintendo/direct" path="/nintendo/direct"/>
+<Route author="HFO4" example="/nintendo/direct" path="/nintendo/direct"/>
 
-### Switch System Update（Japan） {#nintendo-switch-ben-ti-geng-xin-qing-bao-%EF%BC%88-ri-ben-%EF%BC%89}
+### Switch System Update（Japan） {#nintendo-switch-system-update%EF%BC%88japan%EF%BC%89}
 
-<RouteEn author="hoilc" example="/nintendo/system-update" path="/nintendo/system-update"/>
+<Route author="hoilc" example="/nintendo/system-update" path="/nintendo/system-update"/>
 
-## PlayStation Store {#playstation}
+## PlayStation Store {#playstation-store}
 
-### Game List（Hong Kong）
+### Game List（Hong Kong） {#playstation-store-game-list%EF%BC%88hong-kong%EF%BC%89}
 
-<RouteEn author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" paramsDesc={['gridName from the list']}>
+<Route author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" paramsDesc={['gridName from the list']}>
 
 Compatible with lists with an URL like <https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT>. For instance [PSN Free to Play](https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT), the gridName is STORE-MSF86012-PLUS_FTT_CONTENT
 
-</RouteEn>
+</Route>
 
-### Game Product Price
+### Game Product Price {#playstation-store-game-product-price}
 
-<RouteEn author="MisteryMonster" example="/ps/product/UP9000-CUSA00552_00-THELASTOFUS00000" path="/ps/:lang/product/:gridName" paramsDesc={['region','gridName from the product']} radar="1" rssbud="1">
+<Route author="MisteryMonster" example="/ps/product/UP9000-CUSA00552_00-THELASTOFUS00000" path="/ps/:lang/product/:gridName" paramsDesc={['region','gridName from the product']} radar="1" rssbud="1">
 
 Tested some countries, it should be work for most.
 
 Compatible with Product with an URL like <https://store.playstation.com/en-us/product/HP4497-CUSA16570_00-ASIAFULLGAME0000>. For instance ['Cyberpunk 2077'](https://store.playstation.com/en-us/product/HP4497-CUSA16570_00-ASIAFULLGAME0000) the region is `en-us`, the gridName is `HP4497-CUSA16570_00-ASIAFULLGAME0000`
 
-</RouteEn>
+</Route>
 
-### PlayStation Network user trophy
+### PlayStation Network user trophy {#playstation-store-playstation-network-user-trophy}
 
-<RouteEn author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" paramsDesc={['User ID']} radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" paramsDesc={['User ID']} radar="1" rssbud="1"/>
 
-### PlayStation 4 System Update
+### PlayStation 4 System Update {#playstation-store-playstation-4-system-update}
 
-<RouteEn author="Jeason0228" example="/ps/ps4updates/" path="/ps/ps4updates/" radar="1" rssbud="1"/>
+<Route author="Jeason0228" example="/ps/ps4updates/" path="/ps/ps4updates/" radar="1" rssbud="1"/>
 
 ## psnine {#psnine}
 
@@ -490,21 +490,21 @@ Compatible with Product with an URL like <https://store.playstation.com/en-us/pr
 
 ### Steam search {#steam-steam-search}
 
-<RouteEn author="maple3142" example="/steam/search/specials=1" path="/steam/search/:params" paramsDesc={['search parameters']} radar="1" rssbud="1">
+<Route author="maple3142" example="/steam/search/specials=1" path="/steam/search/:params" paramsDesc={['search parameters']} radar="1" rssbud="1">
 
 Get serach parameters from the URL.
 
 For instance, in `https://store.steampowered.com/search/?specials=1&term=atelier`, the parameters are `specials=1&term=atelier`.
 
-</RouteEn>
+</Route>
 
 ## SteamGifts {#steamgifts}
 
 ### Discussions {#steamgifts-discussions}
 
-<RouteEn author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" paramsDesc={['category name, default to All']}/>
+<Route author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" paramsDesc={['category name, default to All']}/>
 
-## TapTap International
+## TapTap International {#taptap-international}
 
 :::caution Warning
 
@@ -512,9 +512,9 @@ Due to the regional restrictions, an RSSHub deployment in China Mainland may not
 
 :::
 
-### Game's Changelog
+### Game's Changelog {#taptap-international-game's-changelog}
 
-<RouteEn author="hoilc ETiV" example="/taptap/intl/changelog/191001/zh_TW" path="/taptap/intl/changelog/:id/:lang?" paramsDesc={['Game\'s App ID, you may find it from the URL of the Game', 'Language, checkout the table below for possible values, default is `en_US`']}>
+<Route author="hoilc ETiV" example="/taptap/intl/changelog/191001/zh_TW" path="/taptap/intl/changelog/:id/:lang?" paramsDesc={['Game\'s App ID, you may find it from the URL of the Game', 'Language, checkout the table below for possible values, default is `en_US`']}>
 
 Language Code
 
@@ -522,11 +522,11 @@ Language Code
 | ----- | ----- | ----- | ----- |
 | en_US | zh_TW | ko_KR | ja_JP |
 
-</RouteEn>
+</Route>
 
-### Ratings & Reviews
+### Ratings & Reviews {#taptap-international-ratings-%26-reviews}
 
-<RouteEn author="hoilc TonyRL ETiV" example="/taptap/intl/review/82354/new/zh_TW" path="/taptap/intl/review/:id/:order?/:lang?" paramsDesc={['Game\'s App ID, you may find it from the URL of the Game', 'Sort Method, you may use `new` as the **Most Recent**, use `default` or leave it empty for the **Most Relevant**', 'Language, checkout the table below for possible values, default is `en_US`']}>
+<Route author="hoilc TonyRL ETiV" example="/taptap/intl/review/82354/new/zh_TW" path="/taptap/intl/review/:id/:order?/:lang?" paramsDesc={['Game\'s App ID, you may find it from the URL of the Game', 'Sort Method, you may use `new` as the **Most Recent**, use `default` or leave it empty for the **Most Relevant**', 'Language, checkout the table below for possible values, default is `en_US`']}>
 
 Sort Method
 
@@ -540,9 +540,9 @@ Language Code
 | ----- | ----- | ----- | ----- |
 | en_US | zh_TW | ko_KR | ja_JP |
 
-</RouteEn>
+</Route>
 
-## TapTap 中国 {#taptap}
+## TapTap 中国 {#taptap-zhong-guo}
 
 :::caution 注意
 
@@ -551,7 +551,7 @@ Language Code
 
 :::
 
-### 游戏论坛 {#taptap-you-xi-lun-tan}
+### 游戏论坛 {#taptap-zhong-guo-you-xi-lun-tan}
 
 <Route author="hoilc TonyRL" example="/taptap/topic/142793/official" path="/taptap/topic/:id/:type?/:sort?/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '论坛版块，默认显示所有帖子，论坛版块 URL 中 `type` 参数，见下表，默认为 `feed `', '排序，见下表，默认为 `created `', '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`']}>
 
@@ -565,11 +565,11 @@ Language Code
 
 </Route>
 
-### 游戏更新 {#taptap-you-xi-geng-xin}
+### 游戏更新 {#taptap-zhong-guo-you-xi-geng-xin}
 
 <Route author="hoilc ETiV" example="/taptap/changelog/60809/en_US" path="/taptap/changelog/:id/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '语言，默认使用 `zh_CN`，亦可使用 `en_US`']}/>
 
-### 游戏更新 - 国际版 {#taptap-you-xi-geng-xin---guo-ji-ban}
+### 游戏更新 - 国际版 {#taptap-zhong-guo-you-xi-geng-xin---guo-ji-ban}
 
 <Route author="hoilc ETiV" example="/taptap/intl/changelog/191001/zh_TW" path="/taptap/intl/changelog/:id/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '语言代码，默认使用 `en_US`，可选项目见下表']}>
 
@@ -581,7 +581,7 @@ Language Code
 
 </Route>
 
-### 游戏评价 {#taptap-you-xi-ping-jia}
+### 游戏评价 {#taptap-zhong-guo-you-xi-ping-jia}
 
 <Route author="hoilc TonyRL" example="/taptap/review/142793/hot" path="/taptap/review/:id/:order?/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '排序方式，空为默认排序，可选如下', '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`']}>
 
@@ -591,7 +591,7 @@ Language Code
 
 </Route>
 
-### 游戏评价 - 国际版 {#taptap-you-xi-ping-jia---guo-ji-ban}
+### 游戏评价 - 国际版 {#taptap-zhong-guo-you-xi-ping-jia---guo-ji-ban}
 
 <Route author="hoilc TonyRL ETiV" example="/taptap/intl/review/82354/new" path="/taptap/intl/review/:id/:order?/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '排序方式，空为默认排序，可选如下', '语言代码，默认使用 `en_US`，可选项目见下表']}>
 
@@ -611,14 +611,14 @@ Language Code
 
 ## War Thunder {#war-thunder}
 
-### News {#war-thunder-ying-wen-news}
+### News {#war-thunder-news}
 
-<RouteEn author="axojhf" example="/warthunder/news" path="/warthunder/news">
+<Route author="axojhf" example="/warthunder/news" path="/warthunder/news">
 
 News data from <https://warthunder.com/en/news/>
 The year, month and day provided under UTC time zone are the same as the official website, so please ignore the specific time!!!
 
-</RouteEn>
+</Route>
 
 ## 巴哈姆特 {#ba-ha-mu-te}
 
@@ -858,7 +858,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ## 世界计划 多彩舞台 ｜ ProjectSekai ｜ プロセカ {#shi-jie-ji-hua-duo-cai-wu-tai-%EF%BD%9C-projectsekai-%EF%BD%9C-%E3%83%97%E3%83%AD%E3%82%BB%E3%82%AB}
 
-### News {#shi-jie-ji-hua-duo-cai-wu-tai-%EF%BD%9C-projectsekai-%EF%BD%9C-%E3%83%97%E3%83%AD%E3%82%BB%E3%82%AB-gong-gao}
+### News {#shi-jie-ji-hua-duo-cai-wu-tai-%EF%BD%9C-projectsekai-%EF%BD%9C-%E3%83%97%E3%83%AD%E3%82%BB%E3%82%AB-news}
 
 <Route author="15x15G" example="/pjsk/news" path="/pjsk/news"/>
 
@@ -1075,15 +1075,15 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ## ファミ通 {#%E3%83%95%E3%82%A1%E3%83%9F-tong}
 
-### Category {#%E3%83%95%E3%82%A1%E3%83%9F-tong-fen-lei}
+### Category {#%E3%83%95%E3%82%A1%E3%83%9F-tong-category}
 
-<RouteEn author="TonyRL" example="/famitsu/category/new-article" path="/famitsu/category/:category?" paramsDesc={['Category, see table below, `new-article` by default']} radar="1">
+<Route author="TonyRL" example="/famitsu/category/new-article" path="/famitsu/category/:category?" paramsDesc={['Category, see table below, `new-article` by default']} radar="1">
 
 | 新着          | PS5 | Switch | PS4 | ニュース | ゲームニュース   | PR TIMES | 動画     | 特集・企画記事         | インタビュー    | 取材・リポート      | レビュー   | インディーゲーム   |
 | ----------- | --- | ------ | --- | ---- | --------- | -------- | ------ | --------------- | --------- | ------------ | ------ | ---------- |
 | new-article | ps5 | switch | ps4 | news | news-game | prtimes  | videos | special-article | interview | event-report | review | indie-game |
 
-</RouteEn>
+</Route>
 
 ## マギアレコード（Magia Record, 魔法纪录） {#%E3%83%9E%E3%82%AE%E3%82%A2%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89%EF%BC%88magia-record%2C-mo-fa-ji-lu-%EF%BC%89}
 
@@ -1094,3 +1094,4 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 ### 游戏横幅 {#%E3%83%9E%E3%82%AE%E3%82%A2%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89%EF%BC%88magia-record%2C-mo-fa-ji-lu-%EF%BC%89-you-xi-heng-fu}
 
 <Route author="y2361547758" example="/magireco/event_banner" path="/magireco/event_banner"/>
+

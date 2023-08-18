@@ -144,11 +144,11 @@ import Route from '@site/src/components/Route';
 
 ## Discuz {#discuz}
 
-### General Subforum - Auto detection
+### General Subforum - Auto detection {#discuz-general-subforum---auto-detection}
 
 <Route author="junfengP" example="/discuz/http%3a%2f%2fwww.u-share.cn%2fforum.php%3fmod%3dforumdisplay%26fid%3d56" path="/discuz/:link" paramsDesc={['link of subforum, require url encoded ']}/>
 
-### General Subforum - Manual version
+### General Subforum - Manual version {#discuz-general-subforum---manual-version}
 
 <Route author="junfengP" example="/discuz/x/https%3a%2f%2fwww.52pojie.cn%2fforum-16-1.html" path="/discuz/:ver/:link" paramsDesc={['discuz version，see below table','link of subforum, require url encoded']} >
 
@@ -158,7 +158,7 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-### General Subforum - Support cookie
+### General Subforum - Support cookie {#discuz-general-subforum---support-cookie}
 
 <Route author="junfengP" example="/discuz/x/00/https%3a%2f%2fbbs.zdfx.net%2fforum-2-1.html" path="/discuz/:ver/:cid/:link" paramsDesc={['discuz version，see below table', 'Cookie id，require self hosted and set environment parameters, see Deploy - Configuration pages for detail','link of subforum, require url encoded']} >
 
@@ -230,7 +230,7 @@ import Route from '@site/src/components/Route';
 
 ## Mobilism {#mobilism}
 
-### Forums
+### Forums {#mobilism-forums}
 
 <Route author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type/:fulltext?" paramsDesc={['Category', 'subcategory','Retrieve fulltext, specify `y` to enable']}>
 
@@ -244,7 +244,7 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-### Portal
+### Portal {#mobilism-portal}
 
 <Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type/:fulltext?" paramsDesc={['Sections', 'Retrieve fulltext, specify `y` to enable']}>
 
@@ -264,17 +264,17 @@ import Route from '@site/src/components/Route';
 
 <Route author="xyqfer syrinka" example="/nga/post/18449558" path="/nga/post/:tid/:authorId?"  paramsDesc={['帖子 id, 可在帖子 URL 找到', '作者 id']} radar="1" rssbud="1"/>
 
-## Pikabu
+## Pikabu {#pikabu}
 
-### Community
+### Community {#pikabu-community}
 
 <Route author="TonyRL" example="/pikabu/community/real_true_story" path="/pikabu/community/:name" paramsDesc={['Community name']} radar="1" rssbud="1"/>
 
-### Tag
+### Tag {#pikabu-tag}
 
 <Route author="TonyRL" example="/pikabu/tag/Metallica" path="/pikabu/tag/:name" paramsDesc={['Tag name']} radar="1" rssbud="1"/>
 
-### User
+### User {#pikabu-user}
 
 <Route author="TonyRL" example="/pikabu/user/@Eujenu" path="/pikabu/user/:name" paramsDesc={['User name']} radar="1" rssbud="1"/>
 
@@ -350,9 +350,9 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-## SCBOY forum {#scboy-lun-tan}
+## SCBOY forum {#scboy-forum}
 
-### Thread {#scboy-lun-tan-tie-zi}
+### Thread {#scboy-forum-thread}
 
 <Route author="totorowechat" example="/scboy/thread/188673" path="/scboy/thread/:tid" paramsDesc={['thread tid']} radar="1">
 
@@ -414,7 +414,7 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 ## ZodGame {#zodgame}
 
-### forum {#zodgame-lun-tan-ban-kuai}
+### forum {#zodgame-forum}
 
 <Route author="FeCCC" example="/zodgame/forum/13" path="/zodgame/forum/:fid?" paramsDesc={['forum id, can be found in URL']} radar="1" rssbud="1" selfhost="1"/>
 
