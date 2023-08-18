@@ -1091,7 +1091,7 @@ import Route from '@site/src/components/Route';
 
 ### 首页帖子 {#xiao-te-she-qu-shou-ye-tie-zi}
 
-<Route author="wxsimon" example="/xiaote/news" path="/xiaote/news" paramsDesc={['无']}></Route>
+<Route author="wxsimon" example="/xiaote/news" path="/xiaote/news"></Route>
 
 ## 一亩三分地 {#yi-mu-san-fen-di}
 
