@@ -1457,17 +1457,9 @@ Language
 
 ## 中国驻外使领馆 {#zhong-guo-zhu-wai-shi-ling-guan}
 
-### 大使馆重要通知 {#zhong-guo-zhu-wai-shi-ling-guan-da-shi-guan-zhong-yao-tong-zhi}
+支持国家列表
 
-<Route author="HenryQW" example="/embassy/us" path="/embassy/:country" paramsDesc={['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']} />
-
-### 领事馆重要通知 {#zhong-guo-zhu-wai-shi-ling-guan-ling-shi-guan-zhong-yao-tong-zhi}
-
-<Route author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" paramsDesc={['国家短代码, 见[支持国家列表](#支持国家列表)', '城市, 对应国家列表下的`领事馆城市列表`']} >
-
-### 支持国家列表 {#zhong-guo-zhu-wai-shi-ling-guan-zhi-chi-guo-jia-lie-biao}
-
-#### 加拿大 `CA`
+加拿大 `CA`
 
 -   大使馆: `/embassy/ca`
 
@@ -1479,7 +1471,7 @@ Language
 
 * * *
 
-#### 德国 `DE`
+德国 `DE`
 
 -   大使馆: `/embassy/de`
 
@@ -1491,7 +1483,7 @@ Language
 
 * * *
 
-#### 法国 `FR`
+法国 `FR`
 
 -   大使馆: `/embassy/fr`
 
@@ -1505,7 +1497,7 @@ Language
 
 * * *
 
-#### 日本 `JP`
+日本 `JP`
 
 -   大使馆: `/embassy/jp`
 
@@ -1522,7 +1514,7 @@ Language
 
 * * *
 
-#### 韩国 `KR`
+韩国 `KR`
 
 -   大使馆: `/embassy/kr`
 
@@ -1536,19 +1528,19 @@ Language
 
 * * *
 
-#### 马来西亚 `MY`
+马来西亚 `MY`
 
 -   大使馆: `/embassy/my`
 
 * * *
 
-#### 新加坡 `SG`
+新加坡 `SG`
 
 -   大使馆: `/embassy/sg`
 
 * * *
 
-#### 美国 `US`
+美国 `US`
 
 -   大使馆: `/embassy/us`
 
@@ -1562,7 +1554,7 @@ Language
 
 * * *
 
-#### 英国 `UK`
+英国 `UK`
 
 -   大使馆: `/embassy/uk`
 
@@ -1574,7 +1566,13 @@ Language
 | 贝尔法斯特 | `/embassy/uk/belfast`    |
 | 曼彻斯特   | `/embassy/uk/manchester` |
 
-</Route>
+### 大使馆重要通知 {#zhong-guo-zhu-wai-shi-ling-guan-da-shi-guan-zhong-yao-tong-zhi}
+
+<Route author="HenryQW" example="/embassy/us" path="/embassy/:country" paramsDesc={['国家短代码, 见支持国家列表', '城市, 对应国家列表下的`领事馆城市列表`']} />
+
+### 领事馆重要通知 {#zhong-guo-zhu-wai-shi-ling-guan-ling-shi-guan-zhong-yao-tong-zhi}
+
+<Route author="HenryQW" example="/embassy/us/chicago" path="/embassy/:country/:city" paramsDesc={['国家短代码, 见支持国家列表', '城市, 对应国家列表下的`领事馆城市列表`']} />
 
 ## 中华人民共和国国家发展和改革委员会 {#zhong-hua-ren-min-gong-he-guo-guo-jia-fa-zhan-he-gai-ge-wei-yuan-hui}
 
