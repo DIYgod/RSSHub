@@ -145,15 +145,15 @@ import Route from '@site/src/components/Route';
 
 ### Latest
 
-<RouteEn author="nczitzk" example="/bangumi/moe" path="/bangumi/moe"/>
+<Route author="nczitzk" example="/bangumi/moe" path="/bangumi/moe"/>
 
 ### Tags
 
-<RouteEn author="nczitzk" example="/bangumi/moe/chs/1080p" path="/bangumi/moe/:tags?" paramsDesc={['Tags, empty by default, multiple tags separated by `/`']}>
+<Route author="nczitzk" example="/bangumi/moe/chs/1080p" path="/bangumi/moe/:tags?" paramsDesc={['Tags, empty by default, multiple tags separated by `/`']}>
 
 For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
-</RouteEn>
+</Route>
 
 ## Bangumi 番组计划 {#bangumi-fan-zu-ji-hua}
 
@@ -219,13 +219,13 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 ### Archive
 
-<RouteEn author="stjohnjohnson" example="/comicskingdom/pardon-my-planet" path="/comicskingdom/:name" paramsDesc={['URL path of the strip on comicskingdom.com']} />
+<Route author="stjohnjohnson" example="/comicskingdom/pardon-my-planet" path="/comicskingdom/:name" paramsDesc={['URL path of the strip on comicskingdom.com']} />
 
 ## DLsite
 
 ### General
 
-<RouteEn author="nczitzk" example="/dlsite/home/new" path="/dlsite/:path+" paramsDesc={['Path, `/home/new` by default, as Release Calendar']}>
+<Route author="nczitzk" example="/dlsite/home/new" path="/dlsite/:path+" paramsDesc={['Path, `/home/new` by default, as Release Calendar']}>
 
 :::tip Tip
 
@@ -237,25 +237,25 @@ If you subscribe to [Discounted works Latest Discounts - Newest to Oldest](https
 
 :::
 
-</RouteEn>
+</Route>
 
 ### Current Release
 
-<RouteEn author="cssxsh" example="/dlsite/new/home" path="/dlsite/new/:type" paramsDesc={['Type, see table below']}>
+<Route author="cssxsh" example="/dlsite/new/home" path="/dlsite/new/:type" paramsDesc={['Type, see table below']}>
 
 | Doujin   | Comics    | PC Games   | Doujin (R18) | Adult Comics | H Games | Otome    | BL |
 | ---- | ----- | ---- | -------- | -------- | ----- | ----- | -- |
 | home | comic | soft | maniax   | books    | pro   | girls | bl |
 
-</RouteEn>
+</Route>
 
 ### Discounted Works
 
-<RouteEn author="cssxsh" example="/dlsite/campaign/home" path="/dlsite/campaign/:type/:free?" paramsDesc={['Type, see table above', 'Free only, empty means false, other value means true']}/>
+<Route author="cssxsh" example="/dlsite/campaign/home" path="/dlsite/campaign/:type/:free?" paramsDesc={['Type, see table above', 'Free only, empty means false, other value means true']}/>
 
 ### Ci-en Creators' Article
 
-<RouteEn author="nczitzk" example="/dlsite/ci-en/:id/article" path="/dlsite/ci-en/7400/article" paramsDesc={['Creator id, can be found in URL']}/>
+<Route author="nczitzk" example="/dlsite/ci-en/:id/article" path="/dlsite/ci-en/7400/article" paramsDesc={['Creator id, can be found in URL']}/>
 
 ## ebb.io {#ebb.io}
 
@@ -319,17 +319,17 @@ If you subscribe to [Discounted works Latest Discounts - Newest to Oldest](https
 
 ### User {#iwara-yong-hu}
 
-<RouteEn author="Fatpandac" example="/iwara/users/kelpie/video" path="/iwara/users/:username/:type?" paramsDesc={['username, can find in userpage', 'video by default']} radar="1" rssbud="1">
+<Route author="Fatpandac" example="/iwara/users/kelpie/video" path="/iwara/users/:username/:type?" paramsDesc={['username, can find in userpage', 'video by default']} radar="1" rssbud="1">
 
 | type | video | image |
 | :--: | :---: | :---: |
 |      | video | image |
 
-</RouteEn>
+</Route>
 
 ### User Subscriptions {#iwara-yong-hu-ding-yue-lie-biao}
 
-<RouteEn author="FeCCC" example="/iwara/subscriptions" path="/iwara/subscriptions" radar="1" rssbud="1" selfhost="1">
+<Route author="FeCCC" example="/iwara/subscriptions" path="/iwara/subscriptions" radar="1" rssbud="1" selfhost="1">
 
 :::caution
 
@@ -337,13 +337,13 @@ This route requires username and password, therefore it's only available when se
 
 :::
 
-</RouteEn>
+</Route>
 
 ## Kemono {#kemono}
 
 ### Posts {#kemono-posts}
 
-<RouteEn author="nczitzk" example="/kemono" path="/kemono/:source?/:id?" paramsDesc={['Source, see below, Posts by default', 'User id, can be found in URL']}>
+<Route author="nczitzk" example="/kemono" path="/kemono/:source?/:id?" paramsDesc={['Source, see below, Posts by default', 'User id, can be found in URL']}>
 
 Sources
 
@@ -357,17 +357,17 @@ When `posts` is selected as the value of the parameter **source**, the parameter
 
 :::
 
-</RouteEn>
+</Route>
 
 ## lovelive-anime {#lovelive-anime}
 
 ### Love Live! Official Website Latest NEWS {#lovelive-anime-love-live-guan-wang-zui-xin-news}
 
-<RouteEn author="axojhf" example="/lovelive-anime/news" path="/lovelive-anime/news/:option?" paramsDesc={['Crawl full text when `option` is `detail`.']} radar="1"/>
+<Route author="axojhf" example="/lovelive-anime/news" path="/lovelive-anime/news/:option?" paramsDesc={['Crawl full text when `option` is `detail`.']} radar="1"/>
 
 ### Love Live Official Website Categories Topics {#lovelive-anime-love-live-guan-wang-fen-lei-topics}
 
-<RouteEn author="axojhf" example="/lovelive-anime/topics/otonokizaka" path="/lovelive-anime/topics/:abbr/:category?/:option?" paramsDesc={['The path to the Love Live series of sub-projects on the official website is detailed in the table below', 'The official website lists the Topics category, `category` is `detail` when crawling the full text, other categories see the following table for details', 'Crawl full text when `option` is `detail`.']} radar="1">
+<Route author="axojhf" example="/lovelive-anime/topics/otonokizaka" path="/lovelive-anime/topics/:abbr/:category?/:option?" paramsDesc={['The path to the Love Live series of sub-projects on the official website is detailed in the table below', 'The official website lists the Topics category, `category` is `detail` when crawling the full text, other categories see the following table for details', 'Crawl full text when `option` is `detail`.']} radar="1">
 
 | Sub-project Name (not full name) | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | 幻日のヨハネ | ラブライブ！スクールアイドルミュージカル |
 |----------------------------------|-------------|----------------------|--------------------------------------------|-----------------------|--------|----------------------|
@@ -378,11 +378,11 @@ When `posts` is selected as the value of the parameter **source**, the parameter
 |---------------------|-----------------------|-------|-------------|------------|---------|----------|------------|----------|-------|-------|------|-------|-------|-------|----------|
 | `category`parameter | <u>*No parameter*</u> | music | anime_movie | cast_movie | theater | onair    | radio      | event    | books | goods | game | media | local | other | campaign |
 
-</RouteEn>
+</Route>
 
 ### Love Live Official Website Schedule {#lovelive-anime-love-live-guan-wang-schedule}
 
-<RouteEn author="axojhf" example="/lovelive-anime/schedules" path="/schedules/:serie?/:category?" paramsDesc={['Love Live! Series sub-projects abbreviation, see the following table', 'The official website lists the categories, see the following table for details']} radar="1">
+<Route author="axojhf" example="/lovelive-anime/schedules" path="/schedules/:serie?/:category?" paramsDesc={['Love Live! Series sub-projects abbreviation, see the following table', 'The official website lists the categories, see the following table for details']} radar="1">
 
 :::tip Please note!
 The schedule and other information obtained by this route is subject to the official website announcement!
@@ -397,13 +397,13 @@ The RSS routing has not been rigorously tested and the information provided cann
 |---------------------|------------------------------|--------|---------|-----------|
 | `category`parameter | <u>*No parameter*</u>or`all` | `live` | `event` | `haishin` |
 
-</RouteEn>
+</Route>
 
 ## MangaDex {#mangadex}
 
 ### Manga Update {#mangadex-man-hua-geng-xin}
 
-<RouteEn author="vzz64" example="/mangadex/58be6aa6-06cb-4ca5-bd20-f1392ce451fb/en" path="/:id/:lang?" paramsDesc={['manga ID', 'language code']} radar="1" />
+<Route author="vzz64" example="/mangadex/58be6aa6-06cb-4ca5-bd20-f1392ce451fb/en" path="/:id/:lang?" paramsDesc={['manga ID', 'language code']} radar="1" />
 
 ## Mox.moe {#mox.moe}
 
@@ -425,67 +425,67 @@ The RSS routing has not been rigorously tested and the information provided cann
 
 ### Filter {#nhentai-fen-lei-shai-xuan}
 
-<RouteEn author="MegrezZhu hoilc" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword/:mode?" paramsDesc={['Filter term, can be: `parody`, `character`, `tag`, `artist`, `group`, `language` or `category`','Filter value', 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/en/install/#configuration-route-specific-configurations), default to `simple`']} anticrawler="1" supportBT="1" radar="1"/>
+<Route author="MegrezZhu hoilc" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword/:mode?" paramsDesc={['Filter term, can be: `parody`, `character`, `tag`, `artist`, `group`, `language` or `category`','Filter value', 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/en/install/#configuration-route-specific-configurations), default to `simple`']} anticrawler="1" supportBT="1" radar="1"/>
 
 ### Advanced Search {#nhentai-gao-ji-sou-suo}
 
-<RouteEn author="MegrezZhu hoilc" example='/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-"mosaic+censorship"' path="/nhentai/search/:keyword/:mode?" paramsDesc={['Keywords for search. You can copy the content after `q=` after searching on the original website, or you can enter it directly. See the [official website](https://nhentai.net/info/) for details', 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/en/install/#configuration-route-specific-configurations), default to `simple`']} anticrawler="1" supportBT="1" radar="1"/>
+<Route author="MegrezZhu hoilc" example='/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-"mosaic+censorship"' path="/nhentai/search/:keyword/:mode?" paramsDesc={['Keywords for search. You can copy the content after `q=` after searching on the original website, or you can enter it directly. See the [official website](https://nhentai.net/info/) for details', 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/en/install/#configuration-route-specific-configurations), default to `simple`']} anticrawler="1" supportBT="1" radar="1"/>
 
 ## QooApp {#qooapp}
 
 ### Game Store - Review {#qooapp-you-xi-ku---ping-lun}
 
-<RouteEn author="TonyRL" example="/qoo-app/apps/en/comment/7675" path="/qoo-app/apps/:lang?/comment/:id" paramsDesc={['Language, see the table below, empty means `中文`', 'Game ID, can be found in URL']}  radar="1">
+<Route author="TonyRL" example="/qoo-app/apps/en/comment/7675" path="/qoo-app/apps/:lang?/comment/:id" paramsDesc={['Language, see the table below, empty means `中文`', 'Game ID, can be found in URL']}  radar="1">
 
 | 中文 | English | 한국어 | Español | 日本語 | ไทย | Tiếng Việt |
 | -- | ------- | --- | ------- | --- | --- | ---------- |
 |    | en      | ko  | es      | ja  | th  | vi         |
 
-</RouteEn>
+</Route>
 
 ### Game Store - Article {#qooapp-you-xi-ku---qing-bao}
 
-<RouteEn author="TonyRL" example="/qoo-app/apps/en/post/7675" path="/qoo-app/apps/:lang?/post/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Game ID, can be found in URL']}  radar="1"/>
+<Route author="TonyRL" example="/qoo-app/apps/en/post/7675" path="/qoo-app/apps/:lang?/post/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Game ID, can be found in URL']}  radar="1"/>
 
 ### Game Store - Notes {#qooapp-you-xi-ku---bi-ji}
 
-<RouteEn author="TonyRL" example="/qoo-app/apps/en/note/7675" path="/qoo-app/apps/:lang?/note/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Game ID, can be found in URL']}  radar="1"/>
+<Route author="TonyRL" example="/qoo-app/apps/en/note/7675" path="/qoo-app/apps/:lang?/note/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Game ID, can be found in URL']}  radar="1"/>
 
 ### Game Store - Cards {#qooapp-you-xi-ku---shai-ka}
 
-<RouteEn author="TonyRL" example="/qoo-app/apps/en/card/7675" path="/qoo-app/apps/:lang?/card/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Game ID, can be found in URL']}  radar="1"/>
+<Route author="TonyRL" example="/qoo-app/apps/en/card/7675" path="/qoo-app/apps/:lang?/card/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Game ID, can be found in URL']}  radar="1"/>
 
 ### News {#qooapp-zi-xun}
 
-<RouteEn author="TonyRL" example="/qoo-app/news/en" path="/qoo-app/news/:lang?" paramsDesc={['Language, see the table below, empty means `中文`']}  radar="1">
+<Route author="TonyRL" example="/qoo-app/news/en" path="/qoo-app/news/:lang?" paramsDesc={['Language, see the table below, empty means `中文`']}  radar="1">
 
 | 中文 | English |
 | -- | ------- |
 |    | en      |
 
-</RouteEn>
+</Route>
 
 ### Note Comments {#qooapp-bi-ji-liu-yan}
 
-<RouteEn author="TonyRL" example="/qoo-app/notes/en/note/2329113" path="/qoo-app/notes/:lang?/note/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Note ID, can be found in URL']}  radar="1"/>
+<Route author="TonyRL" example="/qoo-app/notes/en/note/2329113" path="/qoo-app/notes/:lang?/note/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Note ID, can be found in URL']}  radar="1"/>
 
 ### Hot Hashtags {#qooapp-re-men-hua-ti}
 
-<RouteEn author="TonyRL" example="/qoo-app/notes/en/topic/QooAppGacha" path="/qoo-app/notes/:lang?/topic/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Hashtag name without `#`']}  radar="1"/>
+<Route author="TonyRL" example="/qoo-app/notes/en/topic/QooAppGacha" path="/qoo-app/notes/:lang?/topic/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Hashtag name without `#`']}  radar="1"/>
 
 ### User Game Comments {#qooapp-yong-hu-you-xi-ping-lun}
 
-<RouteEn author="TonyRL" example="/qoo-app/user/en/appComment/35399143" path="/qoo-app/user/:lang?/appComment/:uid" paramsDesc={['Language, see the table above, empty means `中文`', 'User ID, can be found in URL']}  radar="1"/>
+<Route author="TonyRL" example="/qoo-app/user/en/appComment/35399143" path="/qoo-app/user/:lang?/appComment/:uid" paramsDesc={['Language, see the table above, empty means `中文`', 'User ID, can be found in URL']}  radar="1"/>
 
 ### User Notes {#qooapp-yong-hu-bi-ji}
 
-<RouteEn author="TonyRL" example="/qoo-app/notes/en/user/35399143" path="/qoo-app/notes/:lang?/user/:uid" paramsDesc={['Language, see the table above, empty means `中文`', 'User ID, can be found in URL']}  radar="1"/>
+<Route author="TonyRL" example="/qoo-app/notes/en/user/35399143" path="/qoo-app/notes/:lang?/user/:uid" paramsDesc={['Language, see the table above, empty means `中文`', 'User ID, can be found in URL']}  radar="1"/>
 
 ## Rawkuma {#rawkuma}
 
 ### Manga {#rawkuma-manga}
 
-<RouteEn author="nczitzk" example="/rawkuma/manga/tensei-shitara-dai-nana-ouji-dattanode-kimamani-majutsu-o-kiwamemasu" path="/rawkuma/manga/:id" paramsDesc={['Manga ID, can be found in URL']} radar="1"/>
+<Route author="nczitzk" example="/rawkuma/manga/tensei-shitara-dai-nana-ouji-dattanode-kimamani-majutsu-o-kiwamemasu" path="/rawkuma/manga/:id" paramsDesc={['Manga ID, can be found in URL']} radar="1"/>
 
 ## say 花火 {#say-hua-huo}
 
@@ -497,13 +497,13 @@ The RSS routing has not been rigorously tested and the information provided cann
 
 ### Calendar {#thbwiki-ri-li}
 
-<RouteEn author="aether17" path="/thwiki/calendar/:before?/:after?" example="/thwiki/calendar" paramsDesc={['From how many days ago (default 30)', 'To how many days after (default 30)']} radar="1" rssbud="1"/>
+<Route author="aether17" path="/thwiki/calendar/:before?/:after?" example="/thwiki/calendar" paramsDesc={['From how many days ago (default 30)', 'To how many days after (default 30)']} radar="1" rssbud="1"/>
 
 ## Touhougarakuta 东方我乐多丛志 {#dong-fang-wo-le-duo-cong-zhi}
 
 ### Articles {#dong-fang-wo-le-duo-cong-zhi-wen-zhang}
 
-<RouteEn author="ttyfly" path="/touhougarakuta/:language/:type" example="/touhougarakuta/ja/news" paramsDesc={['language', 'article type']}>
+<Route author="ttyfly" path="/touhougarakuta/:language/:type" example="/touhougarakuta/ja/news" paramsDesc={['language', 'article type']}>
 
 Languages:
 
@@ -523,7 +523,7 @@ Article types:
 
 **Note:** The index type includes all types of articles. Think twice before using it.
 
-</RouteEn>
+</Route>
 
 ## VCB-Studio {#vcb-studio}
 
@@ -545,25 +545,25 @@ Article types:
 
 ### vol {#vol.moe-vol}
 
-<RouteEn author="CoderTonyChan" example="/vol/finish" path="/vol/:mode?" paramsDesc={['mode type']}>
+<Route author="CoderTonyChan" example="/vol/finish" path="/vol/:mode?" paramsDesc={['mode type']}>
 
 | Comics are serialized | Comics is finshed |
 | --------------------- | ----------------- |
 | serial                | finish            |
 
-</RouteEn>
+</Route>
 
 ## Webtoons {#webtoons}
 
 ### Comic updates {#webtoons-man-hua-geng-xin}
 
-<RouteEn author="machsix" path="/webtoons/:lang/:category/:name/:id" example="/webtoons/zh-hant/drama/gongzhuweimian/894" paramsDesc={['Language','Category','Name','ID']}/>
+<Route author="machsix" path="/webtoons/:lang/:category/:name/:id" example="/webtoons/zh-hant/drama/gongzhuweimian/894" paramsDesc={['Language','Category','Name','ID']}/>
 
 For example: <https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no=894>, `lang=zh-hant`,`category=drama`,`name=gongzhucheyeweimian`,`id=894`.
 
 ### Naver {#webtoons-%5Bnaver}
 
-<RouteEn author="zfanta" example="/webtoons/naver/651673" path="/webtoons/naver/:titleId" paramsDesc={['titleId of naver webtoon']} />
+<Route author="zfanta" example="/webtoons/naver/651673" path="/webtoons/naver/:titleId" paramsDesc={['titleId of naver webtoon']} />
 
 ## X 漫画 {#x-man-hua}
 
@@ -581,29 +581,29 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 ### Keyword Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-guan-jian-ci-sou-suo}
 
-<RouteEn author="xueli-sherryli" example="/oreno3d/search/bronya/latest/1" path="/oreno3d/search/:keyword/:sort/:pagelimit?" paramsDesc={['Search keyword', 'Sort method, see the table below', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1">
+<Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest/1" path="/oreno3d/search/:keyword/:sort/:pagelimit?" paramsDesc={['Search keyword', 'Sort method, see the table below', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1">
 
 | favorites | hot  | latest | popularity |
 | --------- | ---- | ------ | ---------- |
 | favorites | hot  | latest | popularity |
 
-</RouteEn>
+</Route>
 
 ### Character Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-jue-se-sou-suo}
 
-<RouteEn author="xueli-sherryli" example="/oreno3d/characters/283/latest/1" path="/oreno3d/characters/:characterid/:sort/:pagelimit?" paramsDesc={['Character id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
+<Route author="xueli-sherryli" example="/oreno3d/characters/283/latest/1" path="/oreno3d/characters/:characterid/:sort/:pagelimit?" paramsDesc={['Character id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
 
 ### Author Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-zuo-zhe-sou-suo}
 
-<RouteEn author="xueli-sherryli" example="/oreno3d/authors/3189/latest/1" path="/oreno3d/authors/:authorid/:sort/:pagelimit?" paramsDesc={['Author id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
+<Route author="xueli-sherryli" example="/oreno3d/authors/3189/latest/1" path="/oreno3d/authors/:authorid/:sort/:pagelimit?" paramsDesc={['Author id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
 
 ### Tags Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-biao-qian-sou-suo}
 
-<RouteEn author="xueli-sherryli" example="/oreno3d/tags/177/latest/1" path="/oreno3d/tags/:tagid/:sort/:pagelimit?" paramsDesc={['Tag id, can be found in URL', 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
+<Route author="xueli-sherryli" example="/oreno3d/tags/177/latest/1" path="/oreno3d/tags/:tagid/:sort/:pagelimit?" paramsDesc={['Tag id, can be found in URL', 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
 
 ### Origins Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-yuan-zuo-sou-suo}
 
-<RouteEn author="xueli-sherryli" example="/oreno3d/origins/3/latest/1" path="/oreno3d/origins/:originid/:sort/:pagelimit?" paramsDesc={['Origin id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
+<Route author="xueli-sherryli" example="/oreno3d/origins/3/latest/1" path="/oreno3d/origins/:originid/:sort/:pagelimit?" paramsDesc={['Origin id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
 
 ## 包子漫画 {#bao-zi-man-hua}
 

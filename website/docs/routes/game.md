@@ -1,6 +1,6 @@
 import Route from '@site/src/components/Route';
 
-# 🎮 游戏
+# 🎮 Gaming
 
 ## 3DMGame {#3dmgame}
 
@@ -52,56 +52,56 @@ import Route from '@site/src/components/Route';
 
 ## Blizzard {#blizzard}
 
-### News {#blizzard-news}
+### News
 
-<Route author="nczitzk" example="/blizzard/news" path="/blizzard/news/:language?/:category?" paramsDesc={['语言代码，见下表，默认为 en-US', '分类，见下表，默认为全部新闻']}>
+<RouteEn author="nczitzk" example="/blizzard/news" path="/blizzard/news/:language?/:category?" paramsDesc={['Language code, see below, en-US by default', 'Category, see below, All News by default']}>
 
-分类
+Categories
 
-| 分类                   | 分类名              |
+| Category               | Slug                |
 | ---------------------- | ------------------- |
-| 所有新闻               |                     |
+| All News               |                     |
 | Diablo II: Resurrected | diablo2             |
-| 暗黑破坏神 III         | diablo3             |
-| 暗黑破坏神 IV          | diablo4             |
-| 暗黑破坏神：不朽       | diablo-immortal     |
-| 炉石传说               | hearthstone         |
-| 风暴英雄               | heroes-of-the-storm |
-| 守望先锋 2             | overwatch           |
-| 星际争霸：重制版       | starcraft           |
-| 星际争霸 II            | starcraft2          |
-| 魔兽世界               | world-of-warcraft   |
-| 魔兽争霸 III：重制版   | warcraft3           |
+| Diablo III             | diablo3             |
+| Diablo IV              | diablo4             |
+| Diablo: Immortal       | diablo-immortal     |
+| Hearthstone            | hearthstone         |
+| Heroes of the Storm    | heroes-of-the-storm |
+| Overwatch 2            | overwatch           |
+| StarCraft: Remastered  | starcraft           |
+| StarCraft II           | starcraft2          |
+| World of Warcraft      | world-of-warcraft   |
+| Warcraft III: Reforged | warcraft3           |
 | Battle.net             | battlenet           |
-| 暴雪嘉年华             | blizzcon            |
-| 走进暴雪               | blizzard            |
+| BlizzCon               | blizzcon            |
+| Inside Blizzard        | blizzard            |
 
-语言代码
+Language codes
 
-| 语言               | 语言代码 |
-| ------------------ | -------- |
-| Deutsch            | de-de    |
-| English (US)       | en-us    |
-| English (EU)       | en-gb    |
-| Español (EU)       | es-es    |
+| Language       | Code  |
+| -------------- | ----- |
+| Deutsch        | de-de    |
+| English (US)   | en-us    |
+| English (EU)   | en-gb    |
+| Español (EU)   | es-es    |
 | Español (Latino)   | es-mx    |
-| Français           | fr-fr    |
-| Italiano           | it-it    |
+| Français       | fr-fr    |
+| Italiano       | it-it    |
 | Português (Brasil) | pt-br    |
-| Polski             | pl-pl    |
-| Русский            | ru-ru    |
-| 한국어             | ko-kr    |
-| ภาษาไทย            | th-th    |
-| 日本語             | ja-jp    |
-| 繁體中文           | zh-tw    |
+| Polski         | pl-pl    |
+| Русский        | ru-ru    |
+| 한국어          | ko-kr    |
+| ภาษาไทย        | th-th    |
+| 日本語          | ja-jp    |
+| 繁體中文        | zh-tw    |
 
-</Route>
+</RouteEn>
 
 ## dekudeals {#dekudeals}
 
-### 分类 {#dekudeals-fen-lei}
+### Category {#dekudeals-fen-lei}
 
-<Route author="LogicJake" example="/dekudeals/most-wanted" path="/dekudeals/:type" paramsDesc={['分类名称，可在 URL 中查看']}/>
+<RouteEn author="LogicJake" example="/dekudeals/most-wanted" path="/dekudeals/:type" paramsDesc={['Category name']}/>
 
 ## Dorohedoro {#dorohedoro}
 
@@ -111,9 +111,9 @@ import Route from '@site/src/components/Route';
 
 ## Epic Games Store {#epic-games-store}
 
-### 免费游戏 {#epic-games-store-mian-fei-you-xi}
+### Free games {#epic-games-store-mian-fei-you-xi}
 
-<Route author="Zyx-A nczitzk KotaHv" example="/epicgames/freegames" path="/epicgames/freegames/:locale?/:country?" paramsDesc={['地区，默认为 en_US', '国家，默认为 en_US']}/>
+<RouteEn author="Zyx-A nczitzk  KotaHv" example="/epicgames/freegames" path="/epicgames/freegames/:locale?/:country?" paramsDesc={['Locale, en_US by default', 'Country, en_US by default']}/>
 
 ## Fate Grand Order {#fate-grand-order}
 
@@ -121,19 +121,48 @@ import Route from '@site/src/components/Route';
 
 <Route author="nczitzk" example="/fgo/news" path="/fgo/news"/>
 
+## FINAL FANTASY XIV 最终幻想 14 {#zui-zhong-huan-xiang-14}
+
+### 最终幻想 14 国服 {#zui-zhong-huan-xiang-14-zui-zhong-huan-xiang-14-guo-fu}
+
+<Route author="Kiotlin" example="/ff14/zh/news" path="/ff14/zh/:type?" paramsDesc={['分类名，预设为 `all`']}>
+
+| 新闻 | 公告     | 活动   | 广告      | 所有 |
+| ---- | -------- | ------ | --------- | ---- |
+| news | announce | events | advertise | all  |
+
+</Route>
+
+### FINAL FANTASY XIV (The Lodestone) {#zui-zhong-huan-xiang-14-zui-zhong-huan-xiang-14-guo-ji-fu-%EF%BC%88lodestone%EF%BC%89}
+
+<RouteEn author="chengyuhui" example="/ff14/global/na/all" path="/ff14/global/:lang/:type?" paramsDesc={['Region', 'Category, `all` by default']}>
+
+Region
+
+| North Ameria | Europe | France | Germany | Japan |
+| ------------ | ------ | ------ | ------- | ----- |
+| na           | eu     | fr     | de      | jp    |
+
+Category
+
+| all | topics | notices | maintenance | updates | status   | developers |
+| --- | ------ | ------- | ----------- | ------- | -------- | ---------- |
+
+</RouteEn>
+
 ## Fortnite {#fortnite}
 
 ### News {#fortnite-news}
 
-<Route author="lyqluis" example="/fortnite/news" path="/fortnite/news/:options?" paramsDesc={['参数']} radar="1" puppeteer="1">
+<RouteEn author="lyqluis" example="/fortnite/news" path="/fortnite/news/:options?" paramsDesc={['Params']} radar="1" puppeteer="1">
 
--   `options.lang`，可选，语言，实例：`/fortnite/news/lang=en-US`，常见语言见下表，更多语言参考 [官网](https://www.fortnite.com/news)
+-   `options.lang`, optional, language, eg. `/fortnite/news/lang=en-US`, common languages are listed below, more languages are available one the [official website](https://www.fortnite.com/news)
 
-| 英语（默认） | 日语 | 法语 | 韩语 |
-| ------------ | ---- | ---- | ---- |
-| en-US        | ja   | fr   | ko   |
+| English (default) | Spanish | Japanese | French | Korean | Polish |
+| ----------------- | ------- | -------- | ------ | ------ | ------ |
+| en-US             | es-ES   | ja       | fr     | ko     | pl     |
 
-</Route>
+</RouteEn>
 
 ## GameApps.hk 香港手机游戏网 {#gameapps.hk-xiang-gang-shou-ji-you-xi-wang}
 
@@ -143,19 +172,19 @@ import Route from '@site/src/components/Route';
 
 ## Gamer Secret {#gamer-secret}
 
-### 最新資訊 {#gamer-secret-zui-xin-zi-xun}
+### Latest News
 
-<Route author="nczitzk" example="/gamersecret" path="/gamersecret"/>
+<RouteEn author="nczitzk" example="/gamersecret" path="/gamersecret"/>
 
-### 分類 {#gamer-secret-fen-lei}
+### Category
 
-<Route author="nczitzk" example="/gamersecret/pc" path="/gamersecret/:type?/:category?" paramsDesc={['类型，见下表，默认为 Latest News', '分类，见下表，默认为空']}>
+<RouteEn author="nczitzk" example="/gamersecret" path="/gamersecret/:type?/:category?" paramsDesc={['Type, see below, Latest News by default', 'Category, see below']}>
 
 | Latest News | PC | Playstation | Nintendo | Xbox | Moblie |
 | ----------- | -- | ----------- | -------- | ---- | ------ |
 | latest-news | pc | playstation | nintendo | xbox | moblie |
 
-或者
+Or
 
 | GENERAL          | GENERAL EN         | MOBILE          | MOBILE EN         |
 | ---------------- | ------------------ | --------------- | ----------------- |
@@ -173,7 +202,7 @@ import Route from '@site/src/components/Route';
 | ------------- | --------------- |
 | category/xbox | category/xboxen |
 
-</Route>
+</RouteEn>
 
 ## GameRes 游资网 {#gameres-you-zi-wang}
 
@@ -231,37 +260,37 @@ import Route from '@site/src/components/Route';
 
 ## itch.io {#itch.io}
 
-### Browse {#itch.io-browse}
+### Browse
 
-<Route author="nczitzk" example="/itch/games/new-and-popular/featured" path="/itch/:params?" paramsDesc={['参数']}>
+<RouteEn author="nczitzk" example="/itch/games/new-and-popular/featured" path="/itch/:params?" paramsDesc={['Params']}>
 
-参数为对应页面 URL 中 `itch.io` 后的字段，如 [Top rated Games tagged Singleplayer](https://itch.io/games/top-rated/tag-singleplayer) 的 URL 是 <https://itch.io/games/top-rated/tag-singleplayer>，其中 `itch.io` 后的字段为 `/games/top-rated/tag-singleplayer`。
+`params` is the field after `itch.io` in the URL of the corresponding page, e.g. the URL of [Top Rated Games tagged Singleplayer](https://itch.io/games/top-rated/tag-singleplayer) is <https://itch.io/games/top-rated/tag-singleplayer>, where the field after `itch.io` is `/games/top-rated/tag-singleplayer`.
 
-所以路由为 [`/itch/games/top-rated/tag-singleplayer`](https://rsshub.app/itch/games/top-rated/tag-singleplayer)。
+So the route is [`/itch/games/top-rated/tag-singleplayer`](https://rsshub.app/itch/games/top-rated/tag-singleplayer).
 
-:::tip 提示
+:::tip tips
 
-你可以在 [这里](https://itch.io/tags)，浏览所有的 tags。
+You can browse all the tags at [here](https://itch.io/tags).
 
 :::
 
-</Route>
+</RouteEn>
 
-### Developer Logs {#itch.io-developer-logs}
+### Developer Logs
 
-<Route author="nczitzk" example="/itch/devlog/teamterrible/the-baby-in-yellow" path="/itch/devlog/:user/:id" paramsDesc={['用户 id，可在对应页面地址栏中找到', '项目 id，可在对应页面地址栏中找到']}>
+<RouteEn author="nczitzk" example="/itch/devlog/teamterrible/the-baby-in-yellow" path="/itch/devlog/:user/:id" paramsDesc={['User id, can be found in URL', 'Item id, can be found in URL']}>
 
-用户 id 为对应页面 URL 中 `.itch.io` 前的字段，如 [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) 的 URL 是 <https://teamterrible.itch.io/the-baby-in-yellow/devlog>，其中 `.itch.io` 前的字段为 `teamterrible`；
+`User id` is the field before `.itch.io` in the URL of the corresponding page, e.g. the URL of [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is <https://teamterrible.itch.io/the-baby-in-yellow/devlog>, where the field before `.itch.io` is `teamterrible`.
 
-项目 id 为对应页面 URL 中 `itch.io` 与 `/devlog` 之间的字段，如 [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) 的 URL 是 <https://teamterrible.itch.io/the-baby-in-yellow/devlog>，其中 `itch.io` 与 `/devlog` 之间的字段为 `the-baby-in-yellow`。
+`Item id` is the field between `itch.io` and `/devlog` in the URL of the corresponding page, e.g. the URL for [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is <https://teamterrible.itch.io/the-baby-in-yellow/devlog>, where the field between `itch.io` and `/devlog` is `the-baby-in-yellow`.
 
-所以路由为 [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub.app/itch/devlogs/teamterrible/the-baby-in-yellow)。
+So the route is [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub.app/itch/devlogs/teamterrible/the-baby-in-yellow).
 
-</Route>
+</RouteEn>
 
-### Posts {#itch.io-posts}
+### Posts
 
-<Route author="nczitzk" example="/itch/posts/9539/introduce-yourself" path="/itch/posts/:topic/:id" paramsDesc={['话题 id，可在对应页面地址栏中找到', '话题名，可在对应页面地址栏中找到']}/>
+<RouteEn author="nczitzk" example="/itch/posts/9539/introduce-yourself" path="/itch/posts/:topic/:id" paramsDesc={['Topic id, can be found in URL', 'Topic name, can be found in URL']}/>
 
 ## JUMP {#jump}
 
@@ -288,9 +317,9 @@ import Route from '@site/src/components/Route';
 
 ## Konami {#konami}
 
-### PES Mobile 公告 {#konami-pes-mobile-gong-gao}
+### PES Mobile Announcement
 
-<Route author="HenryQW" example="/konami/pesmobile/zh-cn/ios" path="/konami/pesmobile/:lang?/:os?" paramsDesc={['语言，在URL中获得，如zh-cn, zh-tw, en', '操作系统，iOS 或 Android']}/>
+<RouteEn author="HenryQW" example="/konami/pesmobile/en/ios" path="/konami/pesmobile/:lang?/:os?" paramsDesc={['language, obtained from the URL, eg. zh-cn, zh-tw, en', 'operating system，iOS or Android']}/>
 
 ## Liquipedia {#liquipedia}
 
@@ -306,99 +335,97 @@ import Route from '@site/src/components/Route';
 
 ## Metacritic {#metacritic}
 
-### 新游发行 {#metacritic-xin-you-fa-xing}
+### Game Releases
 
-<Route author="HenryQW" example="/metacritic/release/switch/coming" path="/metacritic/release/:platform/:type?/:sort?" paramsDesc={['主机平台', '发行类型，默认为 `new`', '排序类型，默认为`date`']}>
+<RouteEn author="HenryQW" example="/metacritic/release/switch/coming" path="/metacritic/release/:platform/:type?/:sort?" paramsDesc={['console platform', 'release type, default to `new`', 'sorting type, default to `date`']}>
 
-支持的主机平台:
+Platforms supported:
 
-| PS 4 | Xbox One | Switch | PC | Wii U | 3DS | PS Vita | iOS |
-| ---- | -------- | ------ | -- | ----- | --- | ------- | --- |
-| ps4  | xboxone  | switch | pc | wii-u | 3ds | vita    | ios |
+| PS 4 | Xbox One | Switch | PC  | Wii U | 3DS | PS Vita | iOS |
+| ---- | -------- | ------ | --- | ----- | --- | ------- | --- |
+| ps4  | xboxone  | switch | pc  | wii-u | 3ds | vita    | ios |
 
-发行类型，默认为 `new`:
+Release types, default to `new`:
 
-| 新游发行 | 即将发行 | 全部 |
-| -------- | -------- | ---- |
-| new      | coming   | all  |
+| New | Coming Soon | All |
+| --- | ----------- | --- |
+| new | coming      | all |
 
-排序类型，默认为`date`:
+Sorting types, default to `date`:
 
-| 日期 | Metacritic 评分 | 用户评分  |
-| ---- | --------------- | --------- |
-| date | metascore       | userscore |
+| Date | Metacritic Score | User Score |
+| ---- | ---------------- | ---------- |
+| date | metascore        | userscore  |
 
-</Route>
+</RouteEn>
 
 ## Minecraft {#minecraft}
 
-### Java 版游戏更新 {#minecraft-java-ban-you-xi-geng-xin}
+### Java Game Update
 
-<Route author="TheresaQWQ" example="/minecraft/version" path="/minecraft/version" />
+<RouteEn author="TheresaQWQ" example="/minecraft/version" path="/minecraft/version" />
 
-### CurseForge Mod 更新 {#minecraft-curseforge-mod-geng-xin}
+### CurseForge Mod Update
 
-<Route author="Indexyz Discreater" example="/curseforge/files/jei" path="/curseforge/files/:project" paramsDesc={['项目的 ID， 可在 mod 主页的 `About This Project` 中找到']}/>
+<RouteEn author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" paramsDesc={['Progect shortname or `Project ID`. The short name of the project can be found in the address bar, for example `https://minecraft.curseforge.com/projects/non-update` to `non-update`. `Project ID` can be found in `About This Project` in `Overview`']}/>
 
-### Feed The Beast (FTB) 模组包更新 {#minecraft-feed-the-beast-(ftb)-mo-zu-bao-geng-xin}
+### Feed The Beast Modpack Updates
 
-<Route author="gucheen" example="/feed-the-beast/modpack/ftb_presents_direwolf20_1_16" path="/feed-the-beast/modpack/:modpackEntry" paramsDesc={['模组包的短名.']}>
-| 参数         | 说明                                                                                                                                                        |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| modpackEntry | 模组包的短名从模组包的页面链接中找到，例如 `https://www.feed-the-beast.com/modpack/ftb_presents_direwolf20_1_16`，短名就是 `ftb_presents_direwolf20_1_16`。 |
-</Route>
+<RouteEn author="gucheen" example="/feed-the-beast/modpack/ftb_presents_direwolf20_1_16" path="/feed-the-beast/modpack/:modpackEntry" paramsDesc={['entry name of modpack.']}>
+| param | description |
+| ------| ------------ |
+| modpackEntry | The entry name of modpack, can be found in modpack\'s page link, for `https://www.feed-the-beast.com/modpack/ftb_presents_direwolf20_1_16`, use `ftb_presents_direwolf20_1_16`. |
+</RouteEn>
 
 ## Nintendo {#nintendo}
 
-### eShop 新发售游戏 {#nintendo-eshop-xin-fa-shou-you-xi}
+### eShop New Game Releases {#nintendo-eshop-xin-fa-shou-you-xi}
 
-<Route author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" paramsDesc={['地区标识，可为`hk`(港服),`jp`(日服),`us`(美服), `cn`(国服)']}/>
+<RouteEn author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" paramsDesc={['Region, currently supports `hk`(Hong Kong), `jp`(Japan) and `us`(USA)']}/>
 
-### 首页资讯（香港） {#nintendo-shou-ye-zi-xun-%EF%BC%88-xiang-gang-%EF%BC%89}
+### News（Hong Kong only） {#nintendo-shou-ye-zi-xun-%EF%BC%88-xiang-gang-%EF%BC%89}
 
-<Route author="HFO4" example="/nintendo/news" path="/nintendo/news"/>
+<RouteEn author="HFO4" example="/nintendo/news" path="/nintendo/news"/>
 
 ### 首页资讯（中国） {#nintendo-shou-ye-zi-xun-%EF%BC%88-zhong-guo-%EF%BC%89}
 
 <Route author="NeverBehave" example="/nintendo/news/china" path="/nintendo/news/china"/>
 
-### 直面会 {#nintendo-zhi-mian-hui}
+### Nintendo Direct {#nintendo-zhi-mian-hui}
 
-<Route author="HFO4" example="/nintendo/direct" path="/nintendo/direct"/>
+<RouteEn author="HFO4" example="/nintendo/direct" path="/nintendo/direct"/>
 
-### Switch 本体更新情报（日本） {#nintendo-switch-ben-ti-geng-xin-qing-bao-%EF%BC%88-ri-ben-%EF%BC%89}
+### Switch System Update（Japan） {#nintendo-switch-ben-ti-geng-xin-qing-bao-%EF%BC%88-ri-ben-%EF%BC%89}
 
-<Route author="hoilc" example="/nintendo/system-update" path="/nintendo/system-update"/>
+<RouteEn author="hoilc" example="/nintendo/system-update" path="/nintendo/system-update"/>
 
-## PlayStation {#playstation}
+## PlayStation Store {#playstation}
 
-### PlayStation Store 游戏列表 {#playstation-playstation-store-you-xi-lie-biao}
+### Game List（Hong Kong）
 
-<Route author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" paramsDesc={['列表的 grid 名']} radar="1" rssbud="1">
+<RouteEn author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" paramsDesc={['gridName from the list']}>
 
-适用于 URL 如 <https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT> 的列表页，比如 [PSN 每月免费游戏](https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT) 的 gridName 为 STORE-MSF86012-PLUS_FTT_CONTENT
+Compatible with lists with an URL like <https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT>. For instance [PSN Free to Play](https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT), the gridName is STORE-MSF86012-PLUS_FTT_CONTENT
 
-</Route>
+</RouteEn>
 
-### PlayStation Store 游戏折扣 | 价格 {#playstation-playstation-store-you-xi-zhe-kou-%7C-jia-ge}
+### Game Product Price
 
-<Route author="MisteryMonster" example="/ps/product/UP9000-CUSA00552_00-THELASTOFUS00000" path="/ps/:lang/product/:gridName" paramsDesc={['地区语言','游戏的 grid 名']} radar="1" rssbud="1">
+<RouteEn author="MisteryMonster" example="/ps/product/UP9000-CUSA00552_00-THELASTOFUS00000" path="/ps/:lang/product/:gridName" paramsDesc={['region','gridName from the product']} radar="1" rssbud="1">
 
-地区语言如 `zh-hans-hk` 代表香港区简体中文， `zh-hant-tw` 为台湾繁体中文。不同地区游戏 gridName 不同，非中文地区使用英文提示。
+Tested some countries, it should be work for most.
 
-适用于 URL 如 <https://store.playstation.com/zh-hans-hk/product/HP4497-CUSA16570_00-ASIAFULLGAME0000> 的游戏。
+Compatible with Product with an URL like <https://store.playstation.com/en-us/product/HP4497-CUSA16570_00-ASIAFULLGAME0000>. For instance ['Cyberpunk 2077'](https://store.playstation.com/en-us/product/HP4497-CUSA16570_00-ASIAFULLGAME0000) the region is `en-us`, the gridName is `HP4497-CUSA16570_00-ASIAFULLGAME0000`
 
-比如 PlayStation Store 香港简体中文区的 [《赛博朋克 2077》](https://store.playstation.com/zh-hans-hk/product/HP4497-CUSA16570\_00-ASIAFULLGAME0000) 的 lang 为 `zh-hans-hk`， gridName 为 `HP4497-CUSA16570_00-ASIAFULLGAME0000`
+</RouteEn>
 
-</Route>
+### PlayStation Network user trophy
 
-### PlayStation Network 用户奖杯 {#playstation-playstation-network-yong-hu-jiang-bei}
+<RouteEn author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" paramsDesc={['User ID']} radar="1" rssbud="1"/>
 
-<Route author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" paramsDesc={['用户 ID']} radar="1" rssbud="1"/>
+### PlayStation 4 System Update
 
-### PlayStation 4 系统更新纪录 {#playstation-playstation-4-xi-tong-geng-xin-ji-lu}
-
-<Route author="Jeason0228" example="/ps/ps4updates/" path="/ps/ps4updates/" radar="1" rssbud="1"/>
+<RouteEn author="Jeason0228" example="/ps/ps4updates/" path="/ps/ps4updates/" radar="1" rssbud="1"/>
 
 ## psnine {#psnine}
 
@@ -463,23 +490,23 @@ import Route from '@site/src/components/Route';
 
 ### Steam search {#steam-steam-search}
 
-<Route author="maple3142" example="/steam/search/specials=1" path="/steam/search/:params" paramsDesc={['搜寻参数']} radar="1" rssbud="1">
+<RouteEn author="maple3142" example="/steam/search/specials=1" path="/steam/search/:params" paramsDesc={['search parameters']} radar="1" rssbud="1">
 
-参数 params 请从 Steam 的 URL 取得
+Get serach parameters from the URL.
 
-Example: `https://store.steampowered.com/search/?specials=1&term=atelier` 中的 params 是 `specials=1&term=atelier`，将它填入 RSSHub 的路由就好
+For instance, in `https://store.steampowered.com/search/?specials=1&term=atelier`, the parameters are `specials=1&term=atelier`.
 
-</Route>
+</RouteEn>
 
-### Steam 新闻中心 {#steam-steam-xin-wen-zhong-xin}
+### Steam news
 
 :::tip
 
-Steam 新闻中心支持官方的 RSS 订阅:
+Steam provides some official RSS feeds:
 
--   新闻中心首页订阅地址为：<https://store.steampowered.com/feeds/news/?l=schinese> 其中参数 `l=english` 指定语言，`l=schinese` 为简体中文。
--   Steam 游戏新闻可以在该游戏的 RSS 按钮订阅: <https://store.steampowered.com/news/app/648800/> ，获取的订阅链接类似为： <https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english>
--   STEAM 组可以在 Steam 社区链接尾部添加 `/rss` 订阅: <https://steamcommunity.com/groups/SteamLabs/rss> 或者在 Steam 新闻中心的 URL 里添加 `/feeds` 订阅 <https://store.steampowered.com/feeds/news/group/35143931/>
+-   News home page: [https://store.steampowered.com/feeds/news/?l=english](https://store.steampowered.com/feeds/news/?l=english) the parameter `l=english` specifiy the language.
+-   Game news rss can get from the rss buttom in page like this: [https://store.steampowered.com/news/app/648800/](https://store.steampowered.com/news/app/648800/), rss link will looks like： [https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english](https://store.steampowered.com/feeds/news/app/648800/?cc=US&l=english)
+-   Steam group can add `/rss` behind Steam community URL to subscribe: [https://steamcommunity.com/groups/SteamLabs/rss](https://steamcommunity.com/groups/SteamLabs/rss) or add the `/feeds` in Steam News : [https://store.steampowered.com/feeds/news/group/35143931/](https://store.steampowered.com/feeds/news/group/35143931/)
 
 :::
 
@@ -487,9 +514,47 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 ### Discussions {#steamgifts-discussions}
 
-<Route author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" paramsDesc={['分类名称，默认为All']}/>
+<RouteEn author="whtsky" example="/steamgifts/discussions" path="/steamgifts/discussions/:category?" paramsDesc={['category name, default to All']}/>
 
-## TapTap {#taptap}
+## TapTap International
+
+:::caution Warning
+
+Due to the regional restrictions, an RSSHub deployment in China Mainland may not work on accessing the TapTap International Website.
+
+:::
+
+### Game's Changelog
+
+<RouteEn author="hoilc ETiV" example="/taptap/intl/changelog/191001/zh_TW" path="/taptap/intl/changelog/:id/:lang?" paramsDesc={['Game\'s App ID, you may find it from the URL of the Game', 'Language, checkout the table below for possible values, default is `en_US`']}>
+
+Language Code
+
+| English (US) | 繁體中文 | 한국어 | 日本語 |
+| ----- | ----- | ----- | ----- |
+| en_US | zh_TW | ko_KR | ja_JP |
+
+</RouteEn>
+
+### Ratings & Reviews
+
+<RouteEn author="hoilc TonyRL ETiV" example="/taptap/intl/review/82354/new/zh_TW" path="/taptap/intl/review/:id/:order?/:lang?" paramsDesc={['Game\'s App ID, you may find it from the URL of the Game', 'Sort Method, you may use `new` as the **Most Recent**, use `default` or leave it empty for the **Most Relevant**', 'Language, checkout the table below for possible values, default is `en_US`']}>
+
+Sort Method
+
+| Most Relevant  | Most Recent |
+| -------------- | ---- |
+| default        | new  |
+
+Language Code
+
+| English (US) | 繁體中文 | 한국어 | 日本語 |
+| ----- | ----- | ----- | ----- |
+| en_US | zh_TW | ko_KR | ja_JP |
+
+</RouteEn>
+
+## TapTap 中国 {#taptap}
 
 :::caution 注意
 
@@ -558,14 +623,14 @@ Steam 新闻中心支持官方的 RSS 订阅:
 
 ## War Thunder {#war-thunder}
 
-### 英文 News {#war-thunder-ying-wen-news}
+### News {#war-thunder-ying-wen-news}
 
-<Route author="axojhf" example="/warthunder/news" path="/warthunder/news">
+<RouteEn author="axojhf" example="/warthunder/news" path="/warthunder/news">
 
-News 的数据来自 <https://warthunder.com/en/news/>
-在 UTC 时区下提供的年月日与官网上一致，请忽略具体的时间！！！
+News data from <https://warthunder.com/en/news/>
+The year, month and day provided under UTC time zone are the same as the official website, so please ignore the specific time!!!
 
-</Route>
+</RouteEn>
 
 ## 巴哈姆特 {#ba-ha-mu-te}
 
@@ -805,7 +870,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ## 世界计划 多彩舞台 ｜ ProjectSekai ｜ プロセカ {#shi-jie-ji-hua-duo-cai-wu-tai-%EF%BD%9C-projectsekai-%EF%BD%9C-%E3%83%97%E3%83%AD%E3%82%BB%E3%82%AB}
 
-### 公告 {#shi-jie-ji-hua-duo-cai-wu-tai-%EF%BD%9C-projectsekai-%EF%BD%9C-%E3%83%97%E3%83%AD%E3%82%BB%E3%82%AB-gong-gao}
+### News {#shi-jie-ji-hua-duo-cai-wu-tai-%EF%BD%9C-projectsekai-%EF%BD%9C-%E3%83%97%E3%83%AD%E3%82%BB%E3%82%AB-gong-gao}
 
 <Route author="15x15G" example="/pjsk/news" path="/pjsk/news"/>
 
@@ -1014,32 +1079,6 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 </Route>
 
-## 最终幻想 14 {#zui-zhong-huan-xiang-14}
-
-### 最终幻想 14 国服 {#zui-zhong-huan-xiang-14-zui-zhong-huan-xiang-14-guo-fu}
-
-<Route author="Kiotlin" example="/ff14/zh/news" path="/ff14/zh/:type?" paramsDesc={['分类名，预设为 `all`']}>
-
-| 新闻 | 公告     | 活动   | 广告      | 所有 |
-| ---- | -------- | ------ | --------- | ---- |
-| news | announce | events | advertise | all  |
-
-</Route>
-
-### 最终幻想 14 国际服 （Lodestone） {#zui-zhong-huan-xiang-14-zui-zhong-huan-xiang-14-guo-ji-fu-%EF%BC%88lodestone%EF%BC%89}
-
-<Route author="chengyuhui" example="/ff14/global/na/all" path="/ff14/global/:lang/:type?" paramsDesc={['地区', '分类名，预设为 `all`']}>
-
-| 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
-| ---- | ------------ | ---- | ---- | ---- |
-| na   | eu           | fr   | de   | jp   |
-
-| 所有 | 话题   | 公告    | 维护        | 更新    | 服务状态 | 开发者博客 |
-| ---- | ------ | ------- | ----------- | ------- | -------- | ---------- |
-| all  | topics | notices | maintenance | updates | status   | developers |
-
-</Route>
-
 ## きららファンタジア｜奇拉拉幻想曲 {#%E3%81%8D%E3%82%89%E3%82%89%E3%83%95%E3%82%A1%E3%83%B3%E3%82%BF%E3%82%B8%E3%82%A2%EF%BD%9C-qi-la-la-huan-xiang-qu}
 
 ### 公告 {#%E3%81%8D%E3%82%89%E3%82%89%E3%83%95%E3%82%A1%E3%83%B3%E3%82%BF%E3%82%B8%E3%82%A2%EF%BD%9C-qi-la-la-huan-xiang-qu-gong-gao}
@@ -1048,15 +1087,15 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ## ファミ通 {#%E3%83%95%E3%82%A1%E3%83%9F-tong}
 
-### 分类 {#%E3%83%95%E3%82%A1%E3%83%9F-tong-fen-lei}
+### Category {#%E3%83%95%E3%82%A1%E3%83%9F-tong-fen-lei}
 
-<Route author="TonyRL" example="/famitsu/category/new-article" path="/famitsu/category/:category?" paramsDesc={['分类，见下表，预设为 `new-article`']} radar="1">
+<RouteEn author="TonyRL" example="/famitsu/category/new-article" path="/famitsu/category/:category?" paramsDesc={['Category, see table below, `new-article` by default']} radar="1">
 
-| 新着        | PS5 | Switch | PS4 | ニュース | ゲームニュース | PR TIMES | 動画   | 特集・企画記事  | インタビュー | 取材・リポート | レビュー | インディーゲーム |
-| ----------- | --- | ------ | --- | -------- | -------------- | -------- | ------ | --------------- | ------------ | -------------- | -------- | ---------------- |
-| new-article | ps5 | switch | ps4 | news     | news-game      | prtimes  | videos | special-article | interview    | event-report   | review   | indie-game       |
+| 新着          | PS5 | Switch | PS4 | ニュース | ゲームニュース   | PR TIMES | 動画     | 特集・企画記事         | インタビュー    | 取材・リポート      | レビュー   | インディーゲーム   |
+| ----------- | --- | ------ | --- | ---- | --------- | -------- | ------ | --------------- | --------- | ------------ | ------ | ---------- |
+| new-article | ps5 | switch | ps4 | news | news-game | prtimes  | videos | special-article | interview | event-report | review | indie-game |
 
-</Route>
+</RouteEn>
 
 ## マギアレコード（Magia Record, 魔法纪录） {#%E3%83%9E%E3%82%AE%E3%82%A2%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89%EF%BC%88magia-record%2C-mo-fa-ji-lu-%EF%BC%89}
 

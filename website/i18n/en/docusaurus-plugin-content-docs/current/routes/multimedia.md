@@ -483,7 +483,7 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 -   `jp` (Japanese), for Pornhub in Japan <https://jp.pornhub.com/> etc.
 
-## PRESTIGE(プレステージ)
+## PRESTIGE(プレステージ 蚊香社)
 
 ### シリーズ
 
