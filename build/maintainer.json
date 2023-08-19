@@ -6470,6 +6470,9 @@
     "/zhihu/weekly": [
         "LogicJake"
     ],
+    "/zhihu/xhu/topic/:topicId": [
+        "JimenezLi"
+    ],
     "/zhihu/zhuanlan/:id": [
         "DIYgod"
     ],

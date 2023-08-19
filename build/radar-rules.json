@@ -23242,6 +23242,12 @@
         "docs": "https://docs.rsshub.app/routes/social-media#zhi-hu",
         "source": "/column/:id",
         "target": "/zhihu/zhuanlan/:id"
+      },
+      {
+        "title": "xhu - 话题",
+        "docs": "https://docs.rsshub.app/routes/social-media#zhi-hu",
+        "source": "/topic/:topicId/:type",
+        "target": "/zhihu/xhu/topic/:topicId"
       }
     ],
     "zhuanlan": [
