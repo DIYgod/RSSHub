@@ -410,6 +410,8 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ## ScienceDirect {#sciencedirect}
 
+### Journal {#sciencedirect-journal}
+
 <Route author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" paramsDesc={['期刊 id，可在对应期刊页 URL 中找到']}/>
 
 ## Springer {#springer}
