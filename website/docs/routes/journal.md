@@ -61,6 +61,22 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
+## American Institute of Physics {#american-institute-of-physics}
+
+### Journal {#american-institute-of-physics-journal}
+
+<Route author="Derekmini auto-bot-ty" example="/aip/aapt/ajp" path="/aip/:pub/:jrn" paramsDesc={['出版社 id','期刊 id']} radar="1" rssbud="1" supportScihub="1">
+
+参考 URL 格式 `pubs.aip.org/:pub/:jrn`
+
+:::tip 提示
+
+更多期刊可在 [AIP Publications](https://publishing.aip.org/publications/find-the-right-journal) 中找到。
+
+:::
+
+</Route>
+
 ## Annual Reviews {#annual-reviews}
 
 ### Journal {#annual-reviews-journal}
@@ -397,16 +413,6 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 ### Journal {#sciencedirect-journal}
 
 <Route author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" paramsDesc={['期刊 id，可在对应期刊页 URL 中找到']}/>
-
-## Scitation {#scitation}
-
-### 期刊 {#scitation-qi-kan}
-
-<Route author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp" path="/scitation/:pub/:jrn" paramsDesc={['出版社，URL 中 `scitation.org` 前部分','期刊，URL 中 `/toc/` 后部分']} radar="1" rssbud="1" puppeteer="1"/>
-
-### 专栏 {#scitation-zhuan-lan}
-
-<Route author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp/COMPUTATIONAL+PHYSICS" path="/scitation/:pub/:jrn/:sec" paramsDesc={['出版社，URL 中 `scitation.org` 前部分','期刊，URL 中 `/toc/` 后部分','专栏，URL 中 `tocSection` 部分']} radar="1" rssbud="1" puppeteer="1"/>
 
 ## Springer {#springer}
 
