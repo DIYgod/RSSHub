@@ -1763,6 +1763,7 @@ rule
 ### 用户关注时间线 {#zhi-hu-yong-hu-guan-zhu-shi-jian-xian}
 
 <Route author="SeanChao" example="/zhihu/timeline" path="/zhihu/timeline" anticrawler="1" selfhost="1">
+
 :::caution 注意
 
 用户关注动态需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
@@ -1770,3 +1771,7 @@ rule
 :::
 
 </Route>
+
+### [xhu](https://github.com/REToys/xhu) - 话题 {#zhi-hu-%5Bxhu%5D(https%3A%2F%2Fgithub.com%2Fretoys%2Fxhu)---hua-ti}
+
+<Route author="JimenezLi" example="/zhihu/xhu/topic/19566035" path="/zhihu/xhu/topic/:topicId" paramsDesc={['话题ID']} anticrawler="1"/>
