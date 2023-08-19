@@ -65,7 +65,7 @@ More jounals can be found in [AEA Journals](https://www.aeaweb.org/journals).
 
 ### Journal
 
-<RouteEn author="Derekmini auto-bot-ty" example="/aip/aapt/ajp" path="/aip/:pub/:jrn" paramsDesc={['Publisher id','Journal id']} radar="1" rssbud="1" supportScihub="1"/>
+<RouteEn author="Derekmini auto-bot-ty" example="/aip/aapt/ajp" path="/aip/:pub/:jrn" paramsDesc={['Publisher id','Journal id']} radar="1" rssbud="1" supportScihub="1">
 
 Refer to the URL format `pubs.aip.org/:pub/:jrn`
 
