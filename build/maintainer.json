@@ -347,6 +347,10 @@
     "/aijishu/u/:name": [
         "bigfei"
     ],
+    "/aip/:pub/:jrn": [
+        "Derekmini",
+        "auto-bot-ty"
+    ],
     "/airchina/announcement": [
         "LandonLi"
     ],
@@ -4790,14 +4794,6 @@
     ],
     "/sciencenet/user/:id": [
         "nczitzk"
-    ],
-    "/scitation/:pub/:jrn": [
-        "Derekmini",
-        "auto-bot-ty"
-    ],
-    "/scitation/:pub/:jrn/:sec": [
-        "Derekmini",
-        "auto-bot-ty"
     ],
     "/scmp/:category_id": [
         "proletarius101"

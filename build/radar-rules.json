@@ -1660,6 +1660,17 @@
       }
     ]
   },
+  "aip.org": {
+    "_name": "American Institute of Physics",
+    "pubs": [
+      {
+        "title": "Journal",
+        "docs": "https://docs.rsshub.app/routes/journal#american-institute-of-physics",
+        "source": "/:pub/:jrn",
+        "target": "/aip/:pub/:jrn"
+      }
+    ]
+  },
   "airchina.com.cn": {
     "_name": "中国国际航空公司",
     "www": [
@@ -19380,22 +19391,6 @@
           "/"
         ],
         "target": "/sciencenet/user/:id"
-      }
-    ]
-  },
-  "scitation.org": {
-    "_name": "scitation",
-    ".": [
-      {
-        "title": "journal",
-        "docs": "https://docs.rsshub.app/routes/journal#scitation",
-        "source": ":pub.scitation.org/toc/:jrn",
-        "target": "/scitation/:pub/:jrn"
-      },
-      {
-        "title": "section",
-        "docs": "https://docs.rsshub.app/routes/journal#scitation",
-        "source": ":pub.scitation.org/toc/:jrn"
       }
     ]
   },
