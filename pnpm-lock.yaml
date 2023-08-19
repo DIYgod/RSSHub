@@ -158,9 +158,9 @@ dependencies:
   rand-user-agent:
     specifier: 1.0.109
     version: 1.0.109
-  re2-wasm:
-    specifier: 1.0.2
-    version: 1.0.2
+  re2js:
+    specifier: 0.3.2
+    version: 0.3.2
   require-all:
     specifier: 3.0.0
     version: 3.0.0
@@ -6341,9 +6341,8 @@ packages:
     resolution: {integrity: sha512-mnAH0jDJQ0SJtEXjoW5aQILEc+33RwtKzKxwK9JG1a06M6nn8WDWheD+kmc5ucs+ux4FEWX3+PZuEB8r3x15yQ==}
     dev: false
 
-  /re2-wasm@1.0.2:
-    resolution: {integrity: sha512-VXUdgSiUrE/WZXn6gUIVVIsg0+Hp6VPZPOaHCay+OuFKy6u/8ktmeNEf+U5qSA8jzGGFsg8jrDNu1BeHpz2pJA==}
-    engines: {node: '>=10'}
+  /re2js@0.3.2:
+    resolution: {integrity: sha512-N++IGnIi5bCcNxtQHEpmPJ1AwKnfStk7NNjZj51ewNDtmCPTG4CyGN+mv8zphaSB8FlelVGRGcWz4fnqU+Be0A==}
     dev: false
 
   /react-is@18.2.0:
