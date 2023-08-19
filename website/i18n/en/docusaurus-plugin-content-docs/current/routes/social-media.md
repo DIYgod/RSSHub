@@ -467,13 +467,14 @@ Specify different option values than default values to improve readability. The 
 ```
 https://rsshub.app/threads/zuck/showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForQuotesAndReply=1&showQuotedInTitle=1
 ```
+
 </RouteEn>
 
 ## TikTok
 
 ### User
 
-<RouteEn author="TonyRL" example="/tiktok/user/@linustech" path="/tiktok/user/:user" paramsDesc={['User ID, including @']} anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
+<RouteEn author="TonyRL" example="/tiktok/user/@linustech/true" path="/tiktok/user/:user/:iframe?" paramsDesc={['User ID, including @', 'Use the official iframe to embed the video, which allows you to view the video if the default option does not work. Default to `false`']} anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
 
 ## Twitter
 
@@ -519,7 +520,7 @@ https://rsshub.app/twitter/user/durov/readable=1&authorNameBold=1&showAuthorInTi
 
 generates
 
-<img src="/readable-twitter.png" alt="Readable Twitter RSS of Durov" />
+<img src="/img/readable-twitter.png" alt="Readable Twitter RSS of Durov" />
 
 ### User timeline
 
