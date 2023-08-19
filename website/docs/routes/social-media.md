@@ -1772,6 +1772,6 @@ rule
 
 </Route>
 
-### [xhu](https://github.com/REToys/xhu) - 话题 {#zhi-hu-xhu-hua-ti}
+### [xhu](https://github.com/REToys/xhu) - 话题 {#zhi-hu-%5Bxhu%5D(https%3A%2F%2Fgithub.com%2Fretoys%2Fxhu)---hua-ti}
 
 <Route author="JimenezLi" example="/zhihu/xhu/topic/19566035" path="/zhihu/xhu/topic/:topicId" paramsDesc={['话题ID']} anticrawler="1"/>
