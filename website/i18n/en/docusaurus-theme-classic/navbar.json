@@ -7,25 +7,25 @@
     "message": "RSSHub",
     "description": "The alt text of navbar logo"
   },
-  "item.label.指南": {
+  "item.label.Guide": {
     "message": "Guide",
-    "description": "Navbar item with label 指南"
+    "description": "Navbar item with label Guide"
   },
-  "item.label.路由": {
+  "item.label.Routes": {
     "message": "Routes",
-    "description": "Navbar item with label 路由"
+    "description": "Navbar item with label Routes"
   },
-  "item.label.参与我们": {
-    "message": "Join us",
-    "description": "Navbar item with label 参与我们"
+  "item.label.Join Us": {
+    "message": "Join Us",
+    "description": "Navbar item with label Join Us"
   },
-  "item.label.部署": {
+  "item.label.Deploy": {
     "message": "Deploy",
-    "description": "Navbar item with label 部署"
+    "description": "Navbar item with label Deploy"
   },
-  "item.label.支持 RSSHub": {
+  "item.label.Support RSSHub": {
     "message": "Support RSSHub",
-    "description": "Navbar item with label 支持 RSSHub"
+    "description": "Navbar item with label Support RSSHub"
   },
   "item.label.GitHub": {
     "message": "GitHub",

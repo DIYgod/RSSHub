@@ -4,39 +4,39 @@
     "description": "The label for version current"
   },
   "sidebar.tutorialSidebar.category.joinus": {
-    "message": "joinus",
+    "message": "参与我们",
     "description": "The label for category joinus in sidebar tutorialSidebar"
   },
-  "sidebar.tutorialSidebar.category.提交新的 RSSHub 规则": {
+  "sidebar.tutorialSidebar.category.New RSSHub Rules": {
     "message": "提交新的 RSSHub 规则",
-    "description": "The label for category 提交新的 RSSHub 规则 in sidebar tutorialSidebar"
+    "description": "The label for category New RSSHub Rules in sidebar tutorialSidebar"
   },
-  "sidebar.tutorialSidebar.category.高级用法": {
+  "sidebar.tutorialSidebar.category.Advanced": {
     "message": "高级用法",
-    "description": "The label for category 高级用法 in sidebar tutorialSidebar"
+    "description": "The label for category Advanced in sidebar tutorialSidebar"
   },
   "sidebar.tutorialSidebar.category.routes": {
-    "message": "routes",
+    "message": "路由",
     "description": "The label for category routes in sidebar tutorialSidebar"
   },
-  "sidebar.guideSidebar.category.指南": {
+  "sidebar.guideSidebar.category.Guide": {
     "message": "指南",
-    "description": "The label for category 指南 in sidebar guideSidebar"
+    "description": "The label for category Guide in sidebar guideSidebar"
   },
-  "sidebar.guideSidebar.category.路由": {
+  "sidebar.guideSidebar.category.Routes": {
     "message": "路由",
-    "description": "The label for category 路由 in sidebar guideSidebar"
+    "description": "The label for category Routes in sidebar guideSidebar"
   },
-  "sidebar.guideSidebar.category.路由.link.generated-index.description": {
+  "sidebar.guideSidebar.category.Routes.link.generated-index.description": {
     "message": "路由是 RSSHub 访问路径，每个路由后面包含一段 RSSHub 规则，它告诉 RSSHub 如何从网站中提取内容并生成 RSS 订阅。",
-    "description": "The generated-index page description for category 路由 in sidebar guideSidebar"
+    "description": "The generated-index page description for category Routes in sidebar guideSidebar"
   },
-  "sidebar.joinusSidebar.category.提交新的 RSSHub 规则": {
+  "sidebar.joinusSidebar.category.New RSSHub Rules": {
     "message": "提交新的 RSSHub 规则",
-    "description": "The label for category 提交新的 RSSHub 规则 in sidebar joinusSidebar"
+    "description": "The label for category New RSSHub Rules in sidebar joinusSidebar"
   },
-  "sidebar.joinusSidebar.category.高级用法": {
+  "sidebar.joinusSidebar.category.Advanced": {
     "message": "高级用法",
-    "description": "The label for category 高级用法 in sidebar joinusSidebar"
+    "description": "The label for category Advanced in sidebar joinusSidebar"
   }
 }
