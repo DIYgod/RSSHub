@@ -26780,7 +26780,7 @@
     "www": [
       {
         "title": "ads",
-        "docs": "https://docs.rsshub.app/routes/en/shopping#leboncoin",
+        "docs": "https://docs.rsshub.app/routes/shopping#leboncoin",
         "source": "/recherche"
       }
     ]
@@ -27193,13 +27193,13 @@
     "ece": [
       {
         "title": "ECE News",
-        "docs": "http://docs.rsshub.app/en/routes/university#umass-amherst",
+        "docs": "http://docs.rsshub.app/routes/university#umass-amherst",
         "source": "/news",
         "target": "/umass/amherst/ecenews"
       },
       {
         "title": "ECE Seminar",
-        "docs": "http://docs.rsshub.app/en/routes/university#umass-amherst",
+        "docs": "http://docs.rsshub.app/routes/university#umass-amherst",
         "source": "/seminars",
         "target": "/umass/amherst/eceseminar"
       }
@@ -27207,7 +27207,7 @@
     "www.cics": [
       {
         "title": "CICS News",
-        "docs": "http://docs.rsshub.app/en/routes/university#umass-amherst",
+        "docs": "http://docs.rsshub.app/routes/university#umass-amherst",
         "source": "/news",
         "target": "/umass/amherst/csnews"
       }
@@ -27215,13 +27215,13 @@
     "www": [
       {
         "title": "IPO Events",
-        "docs": "http://docs.rsshub.app/en/routes/university#umass-amherst",
+        "docs": "http://docs.rsshub.app/routes/university#umass-amherst",
         "source": "/ipo/iss/events",
         "target": "/umass/amherst/ipoevents"
       },
       {
         "title": "IPO Featured Stories",
-        "docs": "http://docs.rsshub.app/en/routes/university#umass-amherst",
+        "docs": "http://docs.rsshub.app/routes/university#umass-amherst",
         "source": "/ipo/iss/featured-stories",
         "target": "/umass/amherst/ipostories"
       }
