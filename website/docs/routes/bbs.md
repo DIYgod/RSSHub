@@ -154,7 +154,8 @@ import Route from '@site/src/components/Route';
 的JSON序列化字符串.
 ### 最新帖子
 
-<Route author="dzx-dzx" example="/discourse/0/posts" path="/discuz/:configId/posts" paramsDesc={['环境变量配置名, 见上']}/>
+<Route author="dzx-dzx" example="/discourse/0/posts" path="/discuz/:configId/posts" paramsDesc={['环境变量配置名, 见上']} selfhost="1"/>
+
 ## Discuz {#discuz}
 
 ### 通用子版块 - 自动检测 {#discuz-tong-yong-zi-ban-kuai---zi-dong-jian-ce}
