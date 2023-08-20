@@ -113,7 +113,7 @@ ctx.state.data = {
 
 ### 更新文档
 
-要显示您制作的期刊订阅源支持 Sui-hub 功能，您需要将 `Route` 组件的 `supportScihub` 属性设置为 `"1"`。以下是一个示例：
+要显示您制作的期刊订阅源支持 Sci-hub 功能，您需要将 `Route` 组件的 `supportScihub` 属性设置为 `"1"`。以下是一个示例：
 
 ```vue
 <Route author="..." example="..." path="..." supportScihub="1" />

@@ -113,7 +113,7 @@ By including this `doi` field in your RSS feed, you'll be able to create journal
 
 ### Update the documentation
 
-To update the documentation for your route with support for journal feeds, you'll need to set the `supportScihub` attribute of the Route component to `"1"`. Here's an example:
+To update the documentation for your route with support for Sci-hub, you'll need to set the `supportScihub` attribute of the Route component to `"1"`. Here's an example:
 
 ```vue
 <Route author="..." example="..." path="..." supportScihub="1" />
