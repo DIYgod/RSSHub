@@ -4,11 +4,11 @@ sidebar_position: 4
 
 import Route from '@site/src/components/Route';
 
-# 添加文档
+# Add documentation
 
-现在我们完成了代码，是时候为您的路由添加文档了。在 [文档 (/website/)](https://github.com/DIYgod/RSSHub/blob/master/website) 中打开相应的文件，本例中是 `website/docs/routes/programming.md`。
+Now that we have completed the code, it's time to add the documentation for your route. Open the appropriate file in the [document (/website/docs)](https://github.com/DIYgod/RSSHub/blob/master/website/docs), which in this example is `/website/i18n/en/docusaurus-plugin-content-docs/current/routes/programming.md`.
 
-为了实时预览文档，您需要在 **`website` 目录** 下安装文档的依赖项。在终端中输入以下命令：
+In order to preview the documentation in real-time, you need to install the dependencies for the documentation. Run the following command in the **`website` directory**:
 
 <code-group>
 <code-block title="pnpm" active>
@@ -34,49 +34,50 @@ npm install
 </code-block>
 </code-group>
 
-您现在可以在 **`website` 目录** 下运行以下命令实时预览文档：
+You can now preview the documentation in real-time by running the following command in the **`website` directory**:
 
 <code-group>
 <code-block title="pnpm" active>
 
 ```bash
-pnpm run start
+pnpm run start -- --locale en
 ```
 
 </code-block>
 <code-block title="yarn">
 
 ```bash
-yarn start
+yarn start --locale en
 ```
 
 </code-block>
 <code-block title="npm">
 
 ```bash
-npm run start
+npm run start -- --locale en
 ```
 
 </code-block>
 </code-group>
 
-文档使用 Markdown 编写，并使用 [VuePress v1](https://v1.vuepress.vuejs.org) 渲染。
+The documentation is written in Markdown and rendered with [VuePress v1](https://v1.vuepress.vuejs.org).
 
-要为您的路由添加文档，请使用 Vue 组件。它们类似于 HTML 标签。以下是最常用的组件：
+To add documentation to your route, use Vue components. They work like HTML tags. The following are the most commonly used components:
 
--   `author`：路由维护者，用单个空格分隔。应与 [`maintainer.js`](/joinus/new-rss/before-start#maintainerjs) 相同
--   `example`：路由示例，以 `/` 开头
--   `path`：路由，应与添加命名空间后 [maintainer.js](/joinus/new-rss/before-start#maintainerjs) 中的键相同。在之前的教程中，它为 `/github/issue/:user/:repo?`
--   `paramsDesc`：路由参数描述，以字符串数组形式，支持 Markdown。
-    -   描述必须按照它们在路由中出现的顺序。
-    -   描述的数量**应**与 `path` 中的参数数量匹配。如果漏掉一个描述，则构建过程会失败。
-    -   以 `?`，`*` 或 `+` 结尾的路由参数将自动分别标记为`可选`，`零个或多个`或`一个或多个`，无须再次提及。
-    -   没有符号后缀的路由参数将自动标记为`必选`
-    -   如果参数是可选的，请提及其默认值。
+-   `author`: The route maintainer(s), separated by a single space. It should be the same as [`maintainer.js`](/joinus/new-rss/before-start#understand-the-basics-maintainer-js)
+-   `example`: The route example, with a leading `/`
+-   `path`: The route path, which should be the same as the key in [`maintainer.js`](/joinus/new-rss/before-start#understand-the-basics-maintainer-js) with the namespace. In the above example, it is `/github/issue/:user/:repo?`
+-   `paramsDesc`: The route parameter description, in an array of strings that support Markdown.
+    -   The description **must** follow the order in which they appear in the path.
+    -   The number of description should match with the number of parameters in `path`. If you miss a description, the build will fail.
+    -   Route parameters ending with `?`, `*` or `+` will be automatically marked as `optional`, `zero or more` or `one or more`, respectively.
+    -   Route parameters without a suffix are marked as `required`
+    -   There's no need to explicitly mention the necessity of path parameters again.
+    -   If a parameter is optional, make sure to mention the default value.
 
-## 文档示例
+## Documentation examples
 
-### 仓库 Issues（无参数）
+### Repo Issues (No parameter)
 
 ```vue
 <Route author="HenryQW" example="/sspai/series" path="/sspai/series" />
@@ -88,117 +89,117 @@ npm run start
 
 ---
 
-### 仓库 Issues（多个参数）
+### Repo Issues (Multiple parameters)
 
 ```vue
-<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub 用户名', 'GitHub 仓库名称，默认为 `RSSHub`']} />
+<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub username', 'GitHub repo name, `RSSHub` by default']} />
 ```
 
 ---
 
-<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub 用户名', 'GitHub 仓库名称，默认为 `RSSHub`']} />
+<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub username', 'GitHub repo name, `RSSHub` by default']} />
 
 ---
 
-### 关键词（带表格的说明）
+### Keyword (Description with table)
 
 ```vue
-<Route author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" paramsDesc={['关键词', '排序方式，`popular` 按热门度排序，空或其他任意值按时间排，默认为 `date`', '过滤方式，见下表 默认为空']}>
+<Route author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" paramsDesc={['keyword', 'rank mode, empty or other for time order, `popular` for popular order, `date` by default', 'filte R18 content, see table below, empty by default']}>
 
-| 只看非 R18 内容 | 只看 R18 内容 | 不过滤   |
-| ------------ | -------- | ------------ |
-| safe         | r18      | 空或其他任意值 |
+| only not R18 | only R18 | no filter      |
+| ------------ | -------- | -------------- |
+| safe         | r18      | empty or other |
 
 </Route>
 ```
 
 ---
 
-<Route author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" paramsDesc={['关键词', '排序方式，`popular` 按热门度排序，空或其他任意值按时间排，默认为 `date`', '过滤方式，见下表 默认为空']}>
+<Route author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" paramsDesc={['keyword', 'rank mode, empty or other for time order, `popular` for popular order, `date` by default', 'filte R18 content, see table below, empty by default']}>
 
-| 只看非 R18 内容 | 只看 R18 内容 | 不过滤   |
-| ------------ | -------- | ------------ |
-| safe         | r18      | 空或其他任意值 |
+| only not R18 | only R18 | no filter      |
+| ------------ | -------- | -------------- |
+| safe         | r18      | empty or other |
 
 </Route>
 
 ---
 
-### 自定义容器
+### Custom containers
 
-如果您想提供关于路由的更多信息，可以使用这些自定义容器：
+If you'd like to provide additional information about a particular route, you can use these custom containers:
 
 ```md
-:::tip 提示标题
-这是一个提示。
+:::tip Tips title
+This is a tip.
 :::
 
-:::caution 警告标题
-这是一个警告。
+:::caution Warning title
+This is a warning.
 :::
 
-:::danger 危险标题
-这是一条危险的警告。
+:::danger Danger title
+This is a dangerous warning.
 :::
 
-:::note 详细标题
-这是一个详细块。
+:::note Details title
+This is a details block.
 :::
 ```
 
 ---
 
-:::tip 提示标题
-这是一个提示。
+:::tip Tips title
+This is a tip.
 :::
 
-:::caution 警告标题
-这是一个警告。
+:::caution Warning title
+This is a warning.
 :::
 
-:::danger 危险标题
-这是一条危险的警告。
+:::danger Danger title
+This is a dangerous warning.
 :::
 
-:::note 详细标题
-这是一个详细块。
+:::note Details title
+This is a details block.
 :::
 
 ---
 
-### 其他组件
+### Other components
 
-除了路由组件之外，还有几个组件可用于提供有关路径的更多信息：
+In addition to the route components, there are several other components you can use to provide more information about your route:
 
--   `anticrawler`：如果目标网站有反爬机制，则设置为 `1`。
--   `puppeteer`：如果源使用 puppeteer 抓取，则设置为 `1`。
--   `radar`：如果此源有相应的 Radar 规则，则设置为 `1`。
--   `rssbud`：如果 Radar 规则与 RSSBud 兼容，则设置为 `1`。
--   `selfhost`：如果 RSS 源需要通过环境变量进行额外配置，则设置为 `1`。
--   `supportBT`：如果支持被 BitTorrent 客户端识别，则设置为 `1`。
--   `supportPodcast`：如果源支持播客，则设置为 `1`。
--   `supportScihub`：如果源支持 Sci-Hub，则设置为 `1`。
+-   `anticrawler`: set to `1` if the target website has an anti-crawler mechanism.
+-   `puppeteer`: set to `1` if the feed uses puppeteer.
+-   `radar`: set to `1` if the feed has a radar rule.
+-   `rssbud`: set to `1` if the radar rule is also compatible with RSSBud
+-   `selfhost`: set to `1` if the feed requires extra configuration through environment variables.
+-   `supportBT`: set to `1` if the feed supports BitTorrent.
+-   `supportPodcast`: set to `1` if the feed supports podcasts.
+-   `supportScihub`: set to `1` if the feed supports Sci-Hub.
 
-通过添加这些组件，您可以向用户提供有用的信息，并使其更易于理解和使用您的路由。将这些组件添加到路由文档中将在其前面添加一个徽章。
+By using these components, you can provide valuable information to users and make it easier for them to understand and use your route. Adding these components to your route documentation will add a badge in front of it.
 
 ```vue
-<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub 用户名', 'GitHub 仓库名称，默认为 `RSSHub`']} anticrawler="1" puppeteer="1" radar="1" rssbud="1" selfhost="1" supportBT="1" supportPodcast="1" supportScihub="1" />
+<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub username', 'GitHub repo name, `RSSHub` by default']} anticrawler="1" puppeteer="1" radar="1" rssbud="1" selfhost="1" supportBT="1" supportPodcast="1" supportScihub="1" />
 ```
 
 ---
 
-<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub 用户名', 'GitHub 仓库名称，默认为 `RSSHub`']} anticrawler="1" puppeteer="1" radar="1" rssbud="1" selfhost="1" supportBT="1" supportPodcast="1" supportScihub="1" />
+<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub username', 'GitHub repo name, `RSSHub` by default']} anticrawler="1" puppeteer="1" radar="1" rssbud="1" selfhost="1" supportBT="1" supportPodcast="1" supportScihub="1" />
 
 ---
 
-## 其他事项
+## Other things to keep in mind
 
--   为路由添加文档时，请使用三级标题（`###`）。如果路由文档没有二级标题，则添加二级标题（`##`）。
--   在每个标题和内容之间留一个空行。这有助于确保文档可以成功构建。
--   如果文档包含大型表格，建议将其放入 [details 容器](#wen-dang-shi-li-zi-ding-yi-rong-qi) 中。
--   组件可以有两种写法：自闭合标签形式（`<Route .../>`）或成对标签形式（`<Route>...</Route>`）。
--   **别忘了关闭标签！**
--   在提交 Pull Request 之前，请务必运行在 RSSHub 的根目录运行以下命令检查和格式化您的代码：
+-   When documenting a route, use a level 3 heading (`###`). If the route documentation doesn't have a main section heading, add a level 2 heading (`##`).
+-   Leave a blank line between each heading and the following content. This will help ensure that your documentation can be built successfully.
+-   If the documentation contains a large table, it is suggested to put it inside a [details container](/joinus/new-rss/add-docs#documentation-examples-custom-containers)
+-   Components can be written in two ways: as a self-closing tag (`<Route .../>`) or as a pair of tags (`<Route>...</Route>`).
+-   **Remember to close the tag!**
+-   Don't forget to run the following command in the **root directory** of the project to check and format your code before committing and submitting a merge request:
 
 <code-group>
 <code-block title="pnpm" active>

@@ -1,6 +1,6 @@
 import Route from '@site/src/components/Route';
 
-# 🛫 出行旅游
+# 🛫 Travel
 
 ## 12306 {#12306}
 
@@ -14,30 +14,29 @@ import Route from '@site/src/components/Route';
 
 ## All the Flight Deals {#all-the-flight-deals}
 
-### 特价机票 {#all-the-flight-deals-te-jia-ji-piao}
+### Flight Deals {#all-the-flight-deals-flight-deals}
 
-<Route author="HenryQW" example="/atfd/us+new%20york,gb+london/1" path="/atfd/:locations/:nearby?" paramsDesc={['始发地, 由「国家, 参见 ISO 3166-1 国家代码」和「城市」两部分组成', '可选 0 或 1, 默认 0 为不包括, 是否包括临近机场']}>
+<Route author="HenryQW" path="/atfd/:locations/:nearby?" example="/atfd/us+new%20york,gb+london/1" paramsDesc={['the departing city, consists of an 「ISO 3166-1 country code」 and a 「city name」.  Origin\'s ISO 3166-1 country code + city name, eg. `us+new york`, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york). Multiple origins are supported via a comma separated string, eg. `us+new york,gb+london`, [https://rsshub.app/atfd/us+new york,gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/).', 'whether includes nearby airports, optional value of 0 or 1, default to 0 (exclude nearby airports)']} >
 
-举例: [https://rsshub.app/atfd/us+new york, gb+london/1](https://rsshub.app/atfd/us+new%20york,gb+london/1)
+For ISO 3166-1 country codes please refer to [Wikipedia ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
 
-1.  单个始发地，例如 「us+new york」, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york)
-2.  逗号分隔多个始发地，例如 「us+new york, gb+london」, [https://rsshub.app/atfd/us+new york, gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/)
+:::tip
 
-ISO 3166-1 国家代码列表请参见 [维基百科 ISO\_3166-1](https://zh.wikipedia.org/wiki/ISO\_3166-1)
+If the city name contains a space like `Mexico City`, replace the space with `%20`, `Mexico%20City`.
+
+:::
 
 </Route>
 
-## Hopper Flight Deals {#hopper-flight-deals}
+## Hopper {#hopper}
 
-### Hopper 特价机票 {#hopper-flight-deals-hopper-te-jia-ji-piao}
+### Flight Deals {#hopper-flight-deals}
 
-<Route author="HenryQW" example="/hopper/1/LHR/PEK" path="/hopper/:lowestOnly/:from/:to?" paramsDesc={['是否只返回最低价机票, `1`: 是, 其他任意值: 否', '始发地, IATA 国际航空运输协会机场代码', '目的地, IATA 国际航空运输协会机场代码, 可选, 缺省则目的地为`任意城市`']}>
+<Route author="HenryQW" path="/hopper/:lowestOnly/:from/:to?" example="/hopper/1/LHR/PEK" paramsDesc={['set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed', 'origin airport IATA code', 'destination airport IATA code, if unset the destination will be set to `anywhere`']} >
 
-本路由返回由 Hopper 算法给出的现在可购入最便宜的折扣机票，通常包含 6 个结果。出行日期将由 Hopper 算法定义，可能是明天也可能是 10 个月后.
+This route returns a list of flight deals (in most cases, 6 flight deals) for a period defined by Hopper's algorithm, which means the travel date will be totally random (could be tomorrow or 10 months from now).
 
-伦敦希思罗 ✈ 北京首都国际 <https://rsshub.app/hopper/1/LHR/PEK>
-
-IATA 国际航空运输协会机场代码，参见[维基百科 国际航空运输协会机场代码](https://zh.wikipedia.org/wiki/%E5%9B%BD%E9%99%85%E8%88%AA%E7%A9%BA%E8%BF%90%E8%BE%93%E5%8D%8F%E4%BC%9A%E6%9C%BA%E5%9C%BA%E4%BB%A3%E7%A0%81\_\(A\))
+For airport IATA code please refer to [Wikipedia List of airports by IATA code](https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_A)
 
 </Route>
 
@@ -52,6 +51,14 @@ IATA 国际航空运输协会机场代码，参见[维基百科 国际航空运�
 | all  | latest | hot  | end_soon | coming   | outdated |
 
 </Route>
+
+## National Geographic {#national-geographic}
+
+### Latest Stories {#national-geographic-latest-stories}
+
+<Route author="miles170"
+    example="/nationalgeographic/latest-stories"
+    path="/nationalgeographic/latest-stories" />
 
 ## 飞客茶馆 {#fei-ke-cha-guan}
 
@@ -184,3 +191,4 @@ paramsDesc={['展览进行的状态：`current` 对应展览当前正在进行�
 | Politics | Economy | Society | Culture  | Science,Technology | In-depth | japan-topics | japan-data | japan-glances | People   | Announcements |
 
 </Route>
+
