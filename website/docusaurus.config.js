@@ -29,7 +29,7 @@ const config = {
     // metadata like html lang. For example, if your site is Chinese, you may want
     // to replace "en" with "zh-Hans".
     i18n: {
-        defaultLocale: 'zh',
+        defaultLocale: 'en',
         locales: ['zh', 'en'],
     },
 
@@ -53,7 +53,7 @@ const config = {
                     { from: '/joinus/pub-date', to: '/joinus/advanced/pub-date' },
                     { from: '/joinus/use-cache', to: '/joinus/advanced/use-cache' },
                     ...Object.values(require('./sidebars').guideSidebar)
-                        .find((s) => s.label === '路由')
+                        .find((s) => s.label === 'Routes')
                         .items.map((category) => ({
                             from: `/${category.split('/')[1]}`,
                             to: `/routes/${category.split('/')[1]}`,
@@ -131,30 +131,30 @@ const config = {
                     {
                         to: '/',
                         position: 'left',
-                        label: '指南',
+                        label: 'Guide',
                         activeBaseRegex: '^/(usage|faq|parameter|api)?$',
                     },
                     {
                         to: '/routes',
                         position: 'left',
-                        label: '路由',
+                        label: 'Routes',
                         activeBaseRegex: '^/routes/',
                     },
                     {
                         to: '/joinus/quick-start',
-                        label: '参与我们',
+                        label: 'Join Us',
                         position: 'left',
                         activeBaseRegex: '^/joinus/',
                     },
                     {
                         to: '/install',
                         position: 'left',
-                        label: '部署',
+                        label: 'Deploy',
                     },
                     {
                         to: '/support',
                         position: 'left',
-                        label: '支持 RSSHub',
+                        label: 'Support RSSHub',
                     },
                     {
                         type: 'search',
@@ -178,20 +178,20 @@ const config = {
                         title: 'Docs',
                         items: [
                             {
-                                label: '指南',
+                                label: 'Guide',
                                 to: '/',
                             },
                             {
                                 to: '/joinus/quick-start',
-                                label: '参与我们',
+                                label: 'Join Us',
                             },
                             {
                                 to: '/install',
-                                label: '部署',
+                                label: 'Deploy',
                             },
                             {
                                 to: '/support',
-                                label: '支持 RSSHub',
+                                label: 'Support RSSHub',
                             },
                         ],
                     },
@@ -216,15 +216,15 @@ const config = {
                         title: 'More',
                         items: [
                             {
-                                label: '关于作者 DIYgod',
+                                label: 'About DIYgod',
                                 to: 'https://diygod.cc',
                             },
                             {
-                                label: 'RSSHub Radar - 快速发现和订阅 RSS',
+                                label: 'RSSHub Radar - Discover and subscribe to RSS quickly',
                                 href: 'https://github.com/DIYgod/RSSHub-Radar',
                             },
                             {
-                                label: 'xLog - 书写在区块链上的开源创作社区',
+                                label: 'xLog - Open source creation community written on the blockchain',
                                 href: 'https://xlog.app',
                             },
                         ],

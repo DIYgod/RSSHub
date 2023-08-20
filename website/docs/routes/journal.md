@@ -1,14 +1,14 @@
 import Route from '@site/src/components/Route';
 
-# 🔬 科学期刊
+# 🔬 Scientific Journal
 
 ## Academy of Management {#academy-of-management}
 
 ### Journal {#academy-of-management-journal}
 
-<Route author="nczitzk" example="/aom/journal/amr" path="/aom/journal/:id" paramsDesc={['期刊 id，见下表']} supportScihub="1">
+<Route author="nczitzk" example="/aom/journal/amr" path="/aom/journal/:id" paramsDesc={['journal id, see below']}>
 
-| Id        | 名称                                       |
+| Id        | Title                                     |
 | --------- | ------------------------------------------ |
 | annals    | Academy of Management Annals               |
 | amd       | Academy of Management Discoveries          |
@@ -27,7 +27,7 @@ import Route from '@site/src/components/Route';
 
 <Route author="ZeddYu" example="/sigsac/ccs" path="/sigsac/ccs">
 
-抓取的 Papers 从 2020 年开始
+Return results from 2020
 
 </Route>
 
@@ -35,11 +35,11 @@ import Route from '@site/src/components/Route';
 
 ### Journal {#american-chemistry-society-journal}
 
-<Route author="nczitzk" example="/acs/journal/jacsat" path="/aom/journal/:id" paramsDesc={['期刊 id，可在对应期刊页 URL 中找到']} supportScihub="1">
+<Route author="nczitzk" example="/acs/journal/jacsat" path="/aom/journal/:id" paramsDesc={['Journal id, can be found in URL']} supportScihub="1">
 
-:::tip 提示
+:::tip Tip
 
-见 [Browse Content](https://pubs.acs.org)
+See [Browse Content](https://pubs.acs.org)
 
 :::
 
@@ -49,13 +49,13 @@ import Route from '@site/src/components/Route';
 
 ### Journal {#american-economic-association-journal}
 
-<Route author="nczitzk" example="/aeaweb/aer" path="/aeaweb/:id" paramsDesc={['期刊 id，可在对应期刊页 URL 中找到']} supportScihub="1">
+<Route author="nczitzk" example="/aeaweb/aer" path="/aeaweb/:id" paramsDesc={['Journal id, can be found in URL']} supportScihub="1">
 
-期刊 [American Economic Review](https://www.aeaweb.org/journals/aer) 的 URL 是 `https://www.aeaweb.org/journals/aer`，其中 `aer` 即为其期刊 id，故该期刊对应路由为 `/aeaweb/aer`。
+The URL of the journal [American Economic Review](https://www.aeaweb.org/journals/aer) is `https://www.aeaweb.org/journals/aer`, where `aer` is the id of the journal, so the route for this journal is `/aeaweb/aer`.
 
-:::tip 提示
+:::tip Tip
 
-更多期刊可在 [AEA Journals](https://www.aeaweb.org/journals) 中找到。
+More jounals can be found in [AEA Journals](https://www.aeaweb.org/journals).
 
 :::
 
@@ -65,13 +65,13 @@ import Route from '@site/src/components/Route';
 
 ### Journal {#american-institute-of-physics-journal}
 
-<Route author="Derekmini auto-bot-ty" example="/aip/aapt/ajp" path="/aip/:pub/:jrn" paramsDesc={['出版社 id','期刊 id']} radar="1" rssbud="1" supportScihub="1">
+<Route author="Derekmini auto-bot-ty" example="/aip/aapt/ajp" path="/aip/:pub/:jrn" paramsDesc={['Publisher id','Journal id']} radar="1" rssbud="1" supportScihub="1">
 
-参考 URL 格式 `pubs.aip.org/:pub/:jrn`
+Refer to the URL format `pubs.aip.org/:pub/:jrn`
 
-:::tip 提示
+:::tip Tip
 
-更多期刊可在 [AIP Publications](https://publishing.aip.org/publications/find-the-right-journal) 中找到。
+More jounals can be found in [AIP Publications](https://publishing.aip.org/publications/find-the-right-journal).
 
 :::
 
@@ -81,13 +81,13 @@ import Route from '@site/src/components/Route';
 
 ### Journal {#annual-reviews-journal}
 
-<Route author="nczitzk" example="/annualreviews/anchem" path="/annualreviews/:id" paramsDesc={['期刊 id，可在对应期刊页 URL 中找到']} supportScihub="1">
+<Route author="nczitzk" example="/annualreviews/anchem" path="/annualreviews/:id" paramsDesc={['Journal id, can be found in URL']} supportScihub="1">
 
-期刊 [Annual Review of Analytical Chemistry](https://www.annualreviews.org/journal/anchem) 的 URL 是 `https://www.annualreviews.org/journal/anchem`，其中 `anchem` 即为其期刊 id，故该期刊对应路由为 `/annualreviews/anchem`。
+The URL of the journal [Annual Review of Analytical Chemistry](https://www.annualreviews.org/journal/anchem) is `https://www.annualreviews.org/journal/anchem`, where `anchem` is the id of the journal, so the route for this journal is `/annualreviews/anchem`.
 
-:::tip 提示
+:::tip Tip
 
-更多期刊可在 [Browse Journals](https://www.annualreviews.org/action/showPublications) 中找到。
+More jounals can be found in [Browse Journals](https://www.annualreviews.org/action/showPublications).
 
 :::
 
@@ -95,13 +95,13 @@ import Route from '@site/src/components/Route';
 
 ## arXiv {#arxiv}
 
-### 搜索关键字 {#arxiv-sou-suo-guan-jian-zi}
+### Search Keyword {#arxiv-search-keyword}
 
-<Route author="nczitzk" example="/arxiv/search_query=all:electron&start=0&max_results=10" path="/arxiv/:query" paramsDesc={['查询语句']} anticrawler="1">
+<Route author="nczitzk" example="/arxiv/search_query=all:electron&start=0&max_results=10" path="/arxiv/:query" paramsDesc={['query statement']} anticrawler="1">
 
-参见 [arXiv API 用户手册](https://arxiv.org/help/api/user-manual) 查看所有查询参数。
+See [arXiv API User Manual](https://arxiv.org/help/api/user-manual) to find out all query statements.
 
-路由中的参数 query 处填写 `http://export.arxiv.org/api/query?` 后的内容。
+Fill in parameter `query` with content after `http://export.arxiv.org/api/query?`.
 
 </Route>
 
@@ -113,7 +113,7 @@ import Route from '@site/src/components/Route';
 
 ### Journals {#bioone-journals}
 
-<Route author="nczitzk" example="/bioone/journals/acta-chiropterologica" path="/bioone/journals/:journal?" paramsDesc={['期刊名，可在期刊页地址栏中找到']}/>
+<Route author="nczitzk" example="/bioone/journals/acta-chiropterologica" path="/bioone/journals/:journal?" paramsDesc={['Journals, can be found in URL']}/>
 
 ## caa.reviews {#caa.reviews}
 
@@ -131,24 +131,24 @@ import Route from '@site/src/components/Route';
 
 ## Cell {#cell}
 
-### 主刊 {#cell-zhu-kan}
+### Current Issue {#cell-current-issue}
 
-<Route author="y9c" example="/cell/cell/current" path="/journals/cell/cell/:category" supportScihub="1">
+<Route author="y9c" example="/cell/cell/current" path="/cell/cell/:category" supportScihub="1">
 
-| `:category` |       类型说明      | 路由                                                       |
-| :---------: | :-----------------: | ---------------------------------------------------------- |
-|   current   | 本期刊物 (默认选项) | [/cell/cell/current](https://rsshub.app/cell/cell/current) |
-|   inpress   |       在线发表      | [/cell/cell/inpress](https://rsshub.app/cell/cell/inpress) |
+| `:category` |       Query Type        | Route                                                      |
+| :---------: | :---------------------: | ---------------------------------------------------------- |
+|   current   | Current Issue (default) | [/cell/cell/current](https://rsshub.app/cell/cell/current) |
+|   inpress   |    Articles in press    | [/cell/cell/inpress](https://rsshub.app/cell/cell/inpress) |
 
 </Route>
 
-### 封面故事 {#cell-feng-mian-gu-shi}
+### Cover Story {#cell-cover-story}
 
 <Route author="y9c" example="/cell/cover" path="/cell/cover">
 
-订阅 Cell 系列杂志的封面图片，并及时获取刊物更新状态。
+Subscribe to the cover images of the Cell journals, and get the latest publication updates in time.
 
-包含了： 'cell'、 'cancer-cell'、 'cell-chemical-biology'、 'cell-host-microbe'、 'cell-metabolism'、 'cell-reports'、 'cell-reports-physical-science'、 'cell-stem-cell'、 'cell-systems'、 'chem'、 'current-biology'、 'developmental-cell'、 'immunity'、 'joule'、 'matter'、 'molecular-cell'、 'neuron'、 'one-earth' 和'structure'。
+Including 'cell', 'cancer-cell', 'cell-chemical-biology', 'cell-host-microbe', 'cell-metabolism', 'cell-reports', 'cell-reports-physical-science', 'cell-stem-cell', 'cell-systems', 'chem', 'current-biology', 'developmental-cell', 'immunity', 'joule', 'matter', 'molecular-cell', 'neuron', 'one-earth' and 'structure'.
 
 </Route>
 
@@ -164,19 +164,45 @@ import Route from '@site/src/components/Route';
 
 ## elife {#elife}
 
-### 最新成果 {#elife-zui-xin-cheng-guo}
+### Latest Research - Research by Subject {#elife-latest-research---research-by-subject}
 
-<Route author="emdoe HenryQW" example="/elife/cell-biology" path="/elife/:subject" paramsDesc={['方向名称', '请在主页获取。`latest` 则为全部。']} supportScihub="1"/>
+<Route author="emdoe" example="/elife/cell-biology" path="/elife/:subject" paramsDesc={['topic name', 'obtain it from the homepage. `latest` will include all topics.']} supportScihub="1"/>
 
 ## ELSEVIER {#elsevier}
 
-### 期刊 {#elsevier-qi-kan}
+### Journal {#elsevier-journal}
 
-<Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing" path="/elsevier/:journal" paramsDesc={['期刊名称，URL 中 `/journal/` 后部分']} radar="1" rssbud="1"/>
+<Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing" path="/elsevier/:journal" paramsDesc={['Journal Name, the part of the URL after `/journal/`']} radar="1" rssbud="1"/>
 
-### 期刊指定卷 {#elsevier-qi-kan-zhi-ding-juan}
+### Special Issue {#elsevier-special-issue}
 
-<Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing/192" path="/elsevier/:journal/:issue" paramsDesc={['期刊名称，URL 中 `/journal/` 后部分','发行号 (如果 Volume 与 Issue 同时存在，采用 `Volume-Issue` 形式, e.g., `/elsevier/aace-clinical-case-reports/7-6`)']} radar="1" rssbud="1"/>
+<Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing/192" path="/elsevier/:journal/:issue" paramsDesc={['Journal Name, the part of the URL after `/journal/`','Release Number, the number in the URL after `/vol/` (If both Volume and Issue exist, must use the `Volume-Issue` form, e.g., `/elsevier/aace-clinical-case-reports/7-6`)']} radar="1" rssbud="1"/>
+
+## Google Scholar {#google-scholar}
+
+### Keywords Monitoring {#google-scholar-keywords-monitoring}
+
+<Route author="HenryQW" path="/google/scholar/:query" example="/google/scholar/data+visualization" paramsDesc={['query statement which supports「Basic」and「Advanced」modes']} anticrawler="1">
+
+:::caution
+
+Google Scholar has strict anti-crawling mechanism implemented, the demo below doesn't guarantee availability. Please deploy your own instance as it might increase the stability.
+
+:::
+
+1.  Basic mode, sample query is the keywords desired, eg.「data visualization」, [https://rsshub.app/google/scholar/data+visualization](https://rsshub.app/google/scholar/data+visualization).
+
+2.  Advanced mode, visit [Google Scholar](https://scholar.google.com/schhp?hl=en&as_sdt=0,5), click the top left corner and select「Advanced Search」, fill in your conditions and submit the search. The URL should look like this: [https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5), copy everything after `https://scholar.google.com/scholar?` from the URL and use it as the query for this route. The complete URL for the above example should look like this: [https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5](https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=en&as_sdt=0%2C5).
+
+</Route>
+
+### Author Citations {#google-scholar-author-citations}
+
+<Route author="KellyHwong" example="/google/citations/mlmE4JMAAAAJ" path="/google/citations/:id" anticrawler="1">
+
+The parameter id in the route is the id in the URL of the user's Google Scholar reference page, for example `https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ` to `mlmE4JMAAAAJ`
+
+</Route>
 
 ## IEEE Computer Society {#ieee-computer-society}
 
@@ -184,13 +210,13 @@ import Route from '@site/src/components/Route';
 
 <Route author="ZeddYu" example="/ieee-security/security-privacy" path="/ieee-security/security-privacy">
 
-抓取的 Papers 从 2020 年开始
+Return results from 2020
 
 </Route>
 
 ## IEEE Xplore {#ieee-xplore}
 
-### 作者 {#ieee-xplore-zuo-zhe}
+### Author {#ieee-xplore-author}
 
 <Route author="queensferryme" example="/ieee/author/37283006000/newest/10" path="/ieee/author/:aid/:sortType/:count?" paramsDesc={['作者 ID，可以在 URL 中找到，例如 [https://ieeexplore.ieee.org/author/37283006000](https://ieeexplore.ieee.org/author/37283006000)', '排序方式，详细见下', '数量限制，默认为 10 篇']}>
 
@@ -200,119 +226,142 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-### 期刊 {#ieee-xplore-qi-kan}
+### Journal {#ieee-xplore-journal}
 
-<Route author="Derekmini auto-bot-ty" example="/ieee/journal/70" path="/ieee/journal/:journal/:sortType?" paramsDesc={['期刊代码，URL 中 `punumber` 部分','排序方式，默认`vol-only-seq`，URL 中 `sortType` 部分']} radar="1" rssbud="1"/>
+<Route author="Derekmini auto-bot-ty" example="/ieee/journal/70" path="/ieee/journal/:journal/:sortType?" paramsDesc={['Journal code, the number of the `punumber` in the URL','Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`']} radar="1" rssbud="1"/>
 
-### 期刊（近两个月内文章） {#ieee-xplore-qi-kan-%EF%BC%88-jin-liang-ge-yue-nei-wen-zhang-%EF%BC%89}
+### Journal (Papers within the recent 2 months) {#ieee-xplore-journal-(papers-within-the-recent-2-months)}
 
-<Route author="Derekmini auto-bot-ty" example="/ieee/journal/78/recent" path="/ieee/journal/:journal/recent/:sortType?" paramsDesc={['期刊代码，URL 中 `punumber` 部分','排序方式，默认`vol-only-seq`，URL 中 `sortType` 部分']} radar="1" rssbud="1"/>
+<Route author="Derekmini auto-bot-ty" example="/ieee/journal/78/recent" path="/ieee/journal/:journal/recent/:sortType?" paramsDesc={['Journal code, the number of the `punumber` in the URL','Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`']} radar="1" rssbud="1"/>
 
-### 预印版 {#ieee-xplore-yu-yin-ban}
+### Early Access Journal {#ieee-xplore-early-access-journal}
 
-<Route author="5upernova-heng" example="/ieee/journal/5306045/earlyaccess" path="/ieee/journal/:journal/earlyaccess/:sortType?" paramsDesc={['发布代码，URL 中 `isnumber` 部分','排序方式，默认`vol-only-seq`，URL 中 `sortType` 部分']} radar="1" rssbud="1"/>
+<Route author="5upernova-heng" example="/ieee/journal/5306045/earlyaccess" path="/ieee/journal/:journal/earlyaccess/:sortType?" paramsDesc={['Issue code, the number of the `isnumber` in the URL','Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`']} radar="1" rssbud="1"/>
 
 ## INFORMS {#informs}
 
-### 类型 {#informs-lei-xing}
+### Category {#informs-category}
 
-<Route author="Fatpandac" example="/informs/mnsc" path="/informs/:category?" paramsDesc={['类型, 可以在 url 中得到，默认为 `orsc`']}/>
+<Route author="Fatpandac" example="/informs/mnsc" path="/informs/:category?" paramsDesc={['Category, can be found in the url of the page, `orsc` by default']}/>
 
 ## MDPI {#mdpi}
 
-### 期刊 {#mdpi-qi-kan}
+### Journal {#mdpi-journal}
 
-<Route author="Derekmini" example="/mdpi/analytica" path="/mdpi/:journal" paramsDesc={['期刊名称，从期刊主页 URL 中获得']} radar="1" rssbud="1"/>
+<Route author="Derekmini" example="/mdpi/analytica" path="/mdpi/:journal" paramsDesc={['Journal Name, get it from the journal homepage']} radar="1" rssbud="1"/>
+
+## MIT Technology Review {#mit-technology-review}
+
+<Route author="zphw" example="/technologyreview" path="/technologyreview" />
+
+### Topics {#mit-technology-review-topics}
+
+<Route author="laampui" example="/technologyreview/humans-and-technology" path="/technologyreview/:category_name" paramsDesc={['see below']} />
+
+| `:category_name` | Route |
+| -------- | ----- |
+| humans-and-technology | /technologyreview/humans-and-technology |
+| election-2020 | /technologyreview/election-2020 |
+| artificial-intelligence | /technologyreview/artificial-intelligence |
+| biotechnology | /technologyreview/biotechnology |
+| blockchain | /technologyreview/blockchain |
+| climate-change | /technologyreview/climate-change |
+| computing |/technologyreview/computing  |
+| tech-policy | /technologyreview/tech-policy |
+| silicon-valley |  /technologyreview/silicon-valley|
+| smart-cities | /technologyreview/smart-cities|
+| space | /technologyreview/space |
 
 ## National Bureau of Economic Research {#national-bureau-of-economic-research}
 
-### 全部论文 {#national-bureau-of-economic-research-quan-bu-lun-wen}
+### All Papers {#national-bureau-of-economic-research-all-papers}
 
 <Route author="5upernova-heng" example="/nber/papers" path="/nber/papers" radar="1" supportScihub="1"/>
 
-### 新论文 {#national-bureau-of-economic-research-xin-lun-wen}
+### New Papers {#national-bureau-of-economic-research-new-papers}
 
 <Route author="5upernova-heng" example="/nber/news" path="/nber/news" radar="1" supportScihub="1">
 
-在网站上被标记为 "new" 的论文
+Papers that are published in this week.
 
 </Route>
 
-## Nature 系列 {#nature-xi-lie}
+## Nature Journal {#nature-journal}
 
 :::tip Tips
 
-You can get all short name of a journal from <https://www.nature.com/siteindex> or [期刊列表](#nature-xi-lie-qi-kan-lie-biao).
+You can get all short name of a journal from <https://www.nature.com/siteindex> or [Journal List](#nature-journal-journal-list).
 
 :::
 
-### 最新成果 {#nature-xi-lie-zui-xin-cheng-guo}
+### Latest Research {#nature-journal-latest-research}
 
-<Route author="y9c TonyRL" example="/nature/research/ng" path="/nature/research/:journal?" paramsDesc={['期刊名简写，默认为 `nature`']} supportScihub="1" radar="1" rssbud="1">
+<Route author="y9c TonyRL" example="/nature/research/ng" path="/nature/research/:journal?" paramsDesc={['short name for a journal, `nature` by default']} supportScihub="1" radar="1" rssbud="1">
 
-|   `:journal`  |            期刊名           | 路由                                                                               |
+|  `:journal`   |  Full Name of the Journal   | Route                                                                              |
 | :-----------: | :-------------------------: | ---------------------------------------------------------------------------------- |
-|     nature    |            Nature           | [/nature/research/nature](https://rsshub.app/nature/research/nature)               |
-|      nbt      |     Nature Biotechnology    | [/nature/research/nbt](https://rsshub.app/nature/research/nbt)                     |
+|    nature     |           Nature            | [/nature/research/nature](https://rsshub.app/nature/research/nature)               |
+|      nbt      |    Nature Biotechnology     | [/nature/research/nbt](https://rsshub.app/nature/research/nbt)                     |
 |     neuro     |     Nature Neuroscience     | [/nature/research/neuro](https://rsshub.app/nature/research/neuro)                 |
-|       ng      |       Nature Genetics       | [/nature/research/ng](https://rsshub.app/nature/research/ng)                       |
-|       ni      |      Nature Immunology      | [/nature/research/ni](https://rsshub.app/nature/research/ni)                       |
+|      ng       |       Nature Genetics       | [/nature/research/ng](https://rsshub.app/nature/research/ng)                       |
+|      ni       |      Nature Immunology      | [/nature/research/ni](https://rsshub.app/nature/research/ni)                       |
 |     nmeth     |        Nature Method        | [/nature/research/nmeth](https://rsshub.app/nature/research/nmeth)                 |
-|     nchem     |       Nature Chemistry      | [/nature/research/nchem](https://rsshub.app/nature/research/nchem)                 |
-|      nmat     |       Nature Materials      | [/nature/research/nmat](https://rsshub.app/nature/research/nmat)                   |
+|     nchem     |      Nature Chemistry       | [/nature/research/nchem](https://rsshub.app/nature/research/nchem)                 |
+|     nmat      |      Nature Materials       | [/nature/research/nmat](https://rsshub.app/nature/research/nmat)                   |
 | natmachintell | Nature Machine Intelligence | [/nature/research/natmachintell](https://rsshub.app/nature/research/natmachintell) |
 
--   通过 `/nature/research/` + “杂志简写” 来获取对应杂志的最新文章 (Latest Research)。
-    若参数置空 (`/nature/research`)，则默认获取主刊 (Nature) 的最新文章。
--   由于 Nature 系列的刊物是分别由不同的编辑来独立运营，所以页面格式上有些差异。目前**仅**对以上杂志进行了测试。
--   由于权限的限制，目前部分论文仅获取摘要进行展示。
+-   Using router (`/nature/research/` + "short name for a journal") to query latest research paper for a certain journal of Nature Publishing Group.
+    If the `:journal` parameter is blank, then latest research of Nature will return.
+-   The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals
+-   Only abstract is rendered in some researches
 
 </Route>
 
-### 新闻及评论 {#nature-xi-lie-xin-wen-ji-ping-lun}
+### News & Comment {#nature-journal-news-%26-comment}
 
-<Route author="y9c TonyRL" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" paramsDesc={['期刊名简写']} supportScihub="1" radar="1" rssbud="1">
+<Route author="y9c TonyRL" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" paramsDesc={['short name for a journal']} supportScihub="1" radar="1" rssbud="1">
 
-|   `:journal`  |            期刊名           | 路由                                                                                               |
-| :-----------: | :-------------------------: | -------------------------------------------------------------------------------------------------- |
-|      nbt      |     Nature Biotechnology    | [/nature/news-and-comment/nbt](https://rsshub.app/nature/news-and-comment/nbt)                     |
-|     neuro     |     Nature Neuroscience     | [/nature/news-and-comment/neuro](https://rsshub.app/nature/news-and-comment/neuro)                 |
-|       ng      |       Nature Genetics       | [/nature/news-and-comment/ng](https://rsshub.app/nature/news-and-comment/ng)                       |
-|       ni      |      Nature Immunology      | [/nature/news-and-comment/ni](https://rsshub.app/nature/news-and-comment/ni)                       |
-|     nmeth     |        Nature Method        | [/nature/news-and-comment/nmeth](https://rsshub.app/nature/news-and-comment/nmeth)                 |
-|     nchem     |       Nature Chemistry      | [/nature/news-and-comment/nchem](https://rsshub.app/nature/news-and-comment/nchem)                 |
-|      nmat     |       Nature Materials      | [/nature/news-and-comment/nmat](https://rsshub.app/nature/news-and-comment/nmat)                   |
-| natmachintell | Nature Machine Intelligence | [/nature/news-and-comment/natmachintell](https://rsshub.app/nature/news-and-comment/natmachintell) |
+|  `:journal`   |  Full Name of the Journal   | Route                                                                                                                 |
+| :-----------: | :-------------------------: | --------------------------------------------------------------------------------------------------------------------- |
+|      nbt      |    Nature Biotechnology     | [/nature/news-and-comment/nbt](https://rsshub.app/nature/news-and-comment/nbt)                                        |
+|     neuro     |     Nature Neuroscience     | [/nature/news-and-comment/neuro](https://rsshub.app/nature/news-and-comment/neuro)                                    |
+|      ng       |       Nature Genetics       | [/nature/news-and-comment/ng](https://rsshub.app/nature/news-and-comment/ng)                                          |
+|      ni       |      Nature Immunology      | [/nature/news-and-comment/ni](https://rsshub.app/nature/news-and-comment/ni)                                          |
+|     nmeth     |        Nature Method        | [/nature/news-and-comment/nmeth](https://rsshub.app/nature/news-and-comment/nmeth)                                    |
+|     nchem     |      Nature Chemistry       | [/nature/news-and-comment/nchem](https://rsshub.app/nature/news-and-comment/nchem)                                    |
+|     nmat      |      Nature Materials       | [/nature/news-and-comment/nmat](https://rsshub.app/nature/news-and-comment/nmat)                                      |
+| natmachintell | Nature Machine Intelligence | [/nature/news-and-https://rsshub.app/comment/natmachintell](https://rsshub.app/nature/news-and-comment/natmachintell) |
 
--   通过 `/nature/research/` + “杂志简写” 来获取对应杂志的最新文章 (Latest Research)。
-    主刊由于格式不同，该 router 并未支持，采用 `/nature/news` 来获取新闻。
--   由于 Nature 系列的刊物是分别由不同的编辑来独立运营，所以页面格式上有些差异。目前**仅**对以上杂志进行了测试。
+-   Using router (`/nature/research/` + "short name for a journal") to query latest research paper for a certain journal of Nature Publishing Group.
+-   The journals from NPG are run by different group of people, and the website of may not be consitent for all the journals
 
 </Route>
 
-### 封面故事 {#nature-xi-lie-feng-mian-gu-shi}
+### Cover Story {#nature-journal-cover-story}
 
 <Route author="y9c" example="/nature/cover" path="/nature/cover">
 
-订阅 Nature 系列杂志的封面图片，并及时获取刊物更新状态。
+Subscribe to the cover images of the Nature journals, and get the latest publication updates in time.
 
 </Route>
 
-### 主刊 - 新闻动态 {#nature-xi-lie-zhu-kan---xin-wen-dong-tai}
+### Nature News {#nature-journal-nature-news}
 
 <Route author="y9c TonyRL" example="/nature/news" path="/nature/news" supportScihub="1" radar="1" rssbud="1"/>
 
-### 精彩研究 {#nature-xi-lie-jing-cai-yan-jiu}
+### Research Highlight {#nature-journal-research-highlight}
 
-<Route author="y9c TonyRL" example="/nature/highlight" path="/nature/highlight/:journal?" paramsDesc={['期刊名简写，默认为 `nature`']} supportScihub="1" radar="1" rssbud="1"/>
+<Route author="y9c TonyRL" example="/nature/highlight" path="/nature/highlight/:journal?" paramsDesc={['short name for a journal, `nature` by default']} supportScihub="1" radar="1" rssbud="1">
 
-:::caution 警告
+:::caution Warning
 
-仅支持部分期刊。
+Only some journals are supported.
 
 :::
 
-### 期刊列表 {#nature-xi-lie-qi-kan-lie-biao}
+</Route>
+
+### Journal List {#nature-journal-journal-list}
 
 <Route author="TonyRL" example="/nature/siteindex" path="/nature/siteindex"/>
 
@@ -322,7 +371,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 <Route author="ZeddYu" example="/ndss-symposium/ndss" path="/ndss-symposium/ndss">
 
-抓取的 Papers 从 2020 年开始
+Return results from 2020
 
 </Route>
 
@@ -330,18 +379,18 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### Oxford Academic {#oxford-university-press-oxford-academic}
 
-#### 期刊
+#### Journal
 
-<Route author="Fatpandac" example="/oup/journals/adaptation" path="/oup/journals/:name" paramsDesc={['期刊名称缩写，可以在网址中得到']} anticrawler="1"/>
+<Route author="Fatpandac" example="/oup/journals/adaptation" path="/oup/journals/:name" paramsDesc={['short name for a journal, can be found in URL']} anticrawler="1"/>
 
 ## Proceedings of The National Academy of Sciences {#proceedings-of-the-national-academy-of-sciences}
 
-### 期刊 {#proceedings-of-the-national-academy-of-sciences-qi-kan}
+### Journal {#proceedings-of-the-national-academy-of-sciences-journal}
 
-<Route author="emdoe HenryQW y9c" example="/pnas/latest" path="/pnas/:topicPath*" paramsDesc={['领域路径，支持 **Featured Topics**、**Articles By Topic** 及 [**Collected Papers**](https://www.pnas.org/about/collected-papers), 预设为 `latest`']} radar="1" anticrawler="1" puppeteer="1" supportScihub="1">
+<Route author="emdoe HenryQW y9c" example="/pnas/latest" path="/pnas/:topicPath*" paramsDesc={['Topic path, support **Featured Topics**, **Articles By Topic** and [**Collected Papers**](https://www.pnas.org/about/collected-papers), `latest` by default']} radar="1" anticrawler="1" puppeteer="1" supportScihub="1">
 
 :::tip Tips
-有些领域需要在 `topicPath` 中添加 `topic/`，如 [`/pnas/topic/app-math`](https://rsshub.app/pnas/topic/app-math)，有些则不需要，如 [`/pnas/biophysics-and-computational-biology`](https://rsshub.app/pnas/biophysics-and-computational-biology)
+Some topics require adding `topic/` to `topicPath` like [`/pnas/topic/app-math`](https://rsshub.app/pnas/topic/app-math) and some don't like [`/pnas/biophysics-and-computational-biology`](https://rsshub.app/pnas/biophysics-and-computational-biology)
 :::
 
 </Route>
@@ -350,26 +399,26 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### Trending articles {#pubmed-trending-articles}
 
-<Route author="y9c nczitzk" example="/pubmed/trending" path="/pubmed/trending/:filter?" paramsDesc={['过滤条件，可在 URL 中找到']} supportScihub="1">
+<Route author="y9c nczitzk" example="/pubmed/trending" path="/pubmed/trending/:filter?" paramsDesc={['Filters, can be found in URL']} supportScihub="1">
 
-:::tip 提示
+:::tip Tip
 
-对于参数 **过滤条件**，应将 URL 中的 filter 参数用 `,` 分割成一个字段填入，下面是一个例子。
+For the parameter **filter**, the `filter` parameter in the URL should be split into a string by `,`, here is an example.
 
-<https://pubmed.ncbi.nlm.nih.gov/trending/?filter=simsearch1.fha&filter=pubt.clinicaltrial&filter=pubt.randomizedcontrolledtrial> 中 filter 参数有 `simsearch1.fha` `pubt.clinicaltrial` `pubt.randomizedcontrolledtrial` 三者。所以，对应到路由的 filter 应填入 `simsearch1.fha,pubt.clinicaltrial,pubt.randomizedcontrolledtrial`，于是可获得路由 [`/pubmed/trending/simsearch1.fha,pubt.clinicaltrial,pubt.randomizedcontrolledtrial`](https://rsshub.app/pubmed/trending/simsearch1.fha,pubt.clinicaltrial,pubt.randomizedcontrolledtrial)
+In <https://pubmed.ncbi.nlm.nih.gov/trending/?filter=simsearch1.fha&filter=pubt.clinicaltrial&filter=pubt.randomizedcontrolledtrial>, the filter parameters are `simsearch1.fha`, `pubt.clinicaltrial`, and `pubt.randomizedcontrolledtrial`. Therefore, the filter corresponding to the route should be filled with `simsearch1.fha,pubt.clinicaltrial,pubt.randomizedcontrolledtrial`, and the route is [`/pubmed/trending/simsearch1.fha,pubt .clinicaltrial,pubt.randomizedcontrolledtrial`](https://rsshub.app/pubmed/trending/simsearch1.fha,pubt.clinicaltrial,pubt.randomizedcontrolledtrial)
 
 :::
 
 </Route>
 
-## Science 系列 {#science-xi-lie}
+## Science Magazine {#science-magazine}
 
-### 本期刊物 {#science-xi-lie-ben-qi-kan-wu}
+### Current Issue {#science-magazine-current-issue}
 
-<Route author="y9c TonyRL" example="/science/current/science" path="/science/current/:journal" paramsDesc={['期刊名简写']} supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1">
+<Route author="y9c TonyRL" example="/science/current/science" path="/science/current/:journal?" paramsDesc={['Short name for a journal']} supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1">
 
-|     简写    |             期刊名             | 路由                                                                           |
-| :---------: | :----------------------------: | ------------------------------------------------------------------------------ |
+| Short name |    Full name of the journal    | Route                                                                              |
+| :--------: | :----------------------------: | ---------------------------------------------------------------------------------- |
 |   science   |             Science            | [/science/current/science](https://rsshub.app/science/current/science)         |
 |    sciadv   |        Science Advances        | [/science/current/sciadv](https://rsshub.app/science/current/sciadv)           |
 |  sciimmunol |       Science Immunology       | [/science/current/sciimmunol](https://rsshub.app/science/current/sciimmunol)   |
@@ -377,34 +426,34 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 |  signaling  |        Science Signaling       | [/science/current/signaling](https://rsshub.app/science/current/signaling)     |
 |     stm     | Science Translational Medicine | [/science/current/stm](https://rsshub.app/science/current/stm)                 |
 
--   通过 `/science/current/` + "期刊名简写" 来获取对应杂志最新一期的文章（Current Issue）。
-    若参数置空（`/science/current`），则默认获取主刊（Science）的最新文章。
+-   Using route (`/science/current/` + "short name for a journal") to get current issue of a journal from AAAS.
+-   Leaving it empty (`/science/current`) to get update from Science.
 
 </Route>
 
-### 封面故事 {#science-xi-lie-feng-mian-gu-shi}
+### Cover Story {#science-magazine-cover-story}
 
 <Route author="y9c TonyRL" example="/science/cover" path="/science/cover" anticrawler="1" radar="1" rssbud="1">
 
-订阅 Science 系列杂志的封面图片，并及时获取刊物更新状态。
+Subscribe to the cover images of Science journals, and get the latest publication updates in time.
 
-包含了： 'Science', 'Science Advances', 'Science Immunology', 'Science Robotics', 'Science Signaling' 和 'Science Translational Medicine'。
-
-</Route>
-
-### 在线发表 {#science-xi-lie-zai-xian-fa-biao}
-
-<Route author="y9c TonyRL" example="/science/early" path="/science/early/:journal?" paramsDesc={['期刊名简写']} supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1">
-
-*仅 Science, Science Immunology 和 Science Translational Medicine 提供在线发表*
+Including 'Science', 'Science Advances', 'Science Immunology', 'Science Robotics', 'Science Signaling' and 'Science Translational Medicine'.
 
 </Route>
 
-### 博客 {#science-xi-lie-bo-ke}
+### First Release {#science-magazine-first-release}
 
-<Route author="TomHodson" example="/science/blogs/pipeline" path="/science/blogs/:name?" paramsDesc={['博客简称，可在 URL 找到。默认为 `pipeline`']} anticrawler="1" puppeteer="1" radar="1" rssbud="1">
+<Route author="y9c TonyRL" example="/science/early" path="/science/early/:journal?" paramsDesc={['Short name for a journal']} supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1">
 
-要订阅 [Derek Lowe 的 IN THE PIPELINE](https://science.org/blogs/pipeline) 或 [科学编辑的博客](https://science.org/blogs/editors-blog)，请使用名称参数 `pipeline` 或 `editors-blog`。
+*only Science, Science Immunology and Science Translational Medicine have first release*
+
+</Route>
+
+### Blogs {#science-magazine-blogs}
+
+<Route author="TomHodson" example="/science/blogs/pipeline" path="/science/blogs/:name?" paramsDesc={['Short name for the blog, get this from the url. Defaults to pipeline']} anticrawler="1" puppeteer="1" radar="1" rssbud="1">
+
+To subscribe to [IN THE PIPELINE by Derek Lowe’s](https://science.org/blogs/pipeline) or the [science editor's blog](https://science.org/blogs/editors-blog), use the name parameter `pipeline` or `editors-blog`.
 
 </Route>
 
@@ -412,13 +461,13 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### Journal {#sciencedirect-journal}
 
-<Route author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" paramsDesc={['期刊 id，可在对应期刊页 URL 中找到']}/>
+<Route author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" paramsDesc={['Journal id, can be found in URL']}/>
 
 ## Springer {#springer}
 
-### 期刊 {#springer-qi-kan}
+### Journal {#springer-journal}
 
-<Route author="Derekmini TonyRL" example="/springer/journal/10450" path="/springer/journal/:journal" paramsDesc={['期刊代码，期刊主页 URL 中的数字']} radar="1" rssbud="1"/>
+<Route author="Derekmini TonyRL" example="/springer/journal/10450" path="/springer/journal/:journal" paramsDesc={['Journal Code, the number in the URL from the journal homepage']} radar="1" rssbud="1"/>
 
 ## Stork 文献鸟订阅 {#stork-wen-xian-niao-ding-yue}
 
@@ -434,19 +483,19 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### News {#telecompaper-news}
 
-<Route author="nczitzk" example="/telecompaper/news/mobile/2020/China/News" path="/telecompaper/news/:caty/:year?/:country?/:type?" paramsDesc={['分类，见下表', '年份，可在所选分类页中 Filter 的 `Years` 选择器中选择相应年份，不限年份则填入 `all`，默认为不限', '国家或大洲，可在所选分类页中 Filter 的 `Countries` 选择器中选择相应国家或大洲，不限国家或大洲则填入 `all`，默认为不限', '类型，可在所选分类页中 Filter 的 `Types` 选择器中选择相应类型，不限类型则填入 `all`，默认为不限']}>
+<Route author="nczitzk" example="/telecompaper/news/mobile/2020/China/News" path="/telecompaper/news/:caty/:year?/:country?/:type?" paramsDesc={['Category, see table below', 'Year. The year in respective category page filter, `all` for unlimited year, empty by default', 'Country or continent, `all` for unlimited country or continent, empty by default', 'Type, can be found in the `Types` filter, `all` for unlimited type, unlimited by default']}>
 
-可选分类如下
+Category
 
 | WIRELESS | BROADBAND | VIDEO     | GENERAL | IT | INDUSTRY RESOURCES |
 | -------- | --------- | --------- | ------- | -- | ------------------ |
 | mobile   | internet  | boardcast | general | it | industry-resources |
 
-:::tip 提示
+:::tip Tips
 
-若 `country` 或 `type` 参数包含空格，则用 `-` 替代。如 `United States` 更换为 `United-States`，`White paper` 更换为 `White-paper`
+If `country` or `type` includes empty space, use `-` instead. For example, `United States` needs to be replaced with `United-States`, `White paper` needs to be replaced with `White-paper`
 
-[INDUSTRY RESOURCES](https://www.telecompaper.com/industry-resources) 分类页的 Filter 仅提供了 `Content Type` 选择器，对应路由中 `type` 参数。`year` 和 `country` 参数则对该分类无效。
+Filters in [INDUSTRY RESOURCES](https://www.telecompaper.com/industry-resources) only provides `Content Type` which corresponds to `type`. `year` and `country` are not supported.
 
 :::
 
@@ -454,15 +503,15 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 ### Search {#telecompaper-search}
 
-<Route author="nczitzk" example="/telecompaper/search/Nokia" path="/telecompaper/search/:keyword?/:company?/:sort?/:period?" paramsDesc={['关键词', '公司名，默认为不限', '排序，见下表，默认为 Date Descending', '发表在时间段内，默认为 12 months']}>
+<Route author="nczitzk" example="/telecompaper/search/Nokia" path="/telecompaper/search/:keyword?/:company?/:sort?/:period?" paramsDesc={['Keyword', 'Company name, empty by default', 'Sorting, see table below, `Date Descending` by default', 'Date selection, Last 12 months by default']}>
 
-排序
+Sorting
 
 | Date Ascending | Date Descending |
 | -------------- | --------------- |
 | 1              | 2               |
 
-发表在时间段内
+Date selection
 
 | 1 month | 3 months | 6 months | 12 months | 24 months |
 | ------- | -------- | -------- | --------- | --------- |
@@ -470,40 +519,27 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 </Route>
 
+## The University of Chicago Press: Journals {#the-university-of-chicago-press%3A-journals}
+
+### Current Issue {#the-university-of-chicago-press%3A-journals-current-issue}
+
+<Route author="TonyRL" example="/uchicago/journals/current/jpe" path="/uchicago/journals/current/:journal" paramsDesc={['Journal id, can be found in URL. [Browse journals by title](https://www.journals.uchicago.edu/action/showPublications)']} radar="1"/>
+
 ## USENIX {#usenix}
 
 ### Security Symposia {#usenix-security-symposia}
 
 <Route author="ZeddYu" example="/usenix/usenix-security-sympoium" path="/usenix/usenix-security-sympoium">
 
-抓取的 Papers 从 2020 年开始
+Return results from 2020
 
 </Route>
 
-## X-MOL 平台 {#x-mol-ping-tai}
+## X-MOL Platform {#x-mol-platform}
 
-### 期刊 {#x-mol-ping-tai-qi-kan}
+### Journal {#x-mol-platform-journal}
 
-<Route author="cssxsh" example="/x-mol/paper/0/9" path="/x-mol/paper/:type/:magazine" paramsDesc={['类别','机构，两个参数都可从期刊URL获取。']} />
-
-## 谷歌学术 {#gu-ge-xue-shu}
-
-### 关键词更新 {#gu-ge-xue-shu-guan-jian-ci-geng-xin}
-
-<Route author="HenryQW" example="/google/scholar/data+visualization" path="/google/scholar/:query" paramsDesc={['查询语句, 支持「简单」和「高级」两种模式:']} anticrawler="1">
-
-1.  简单模式，例如「data visualization」, <https://rsshub.app/google/scholar/data+visualization>.
-2.  高级模式，前往 [Google Scholar](https://scholar.google.com/schhp?hl=zh-cn&as_sdt=0,5), 点击左上角，选择高级搜索并提交查询。此时 URL 应为: <https://scholar.google.com/scholar?as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>, 复制`https://scholar.google.com/scholar?`后的所有语句作为本路由的查询参数。例子所对应的完整路由为<https://rsshub.app/google/scholar/as_q=data+visualization&as_epq=&as_oq=&as_eq=&as_occt=any&as_sauthors=&as_publication=&as_ylo=2018&as_yhi=&hl=zh-CN&as_sdt=0%2C5>.
-
-</Route>
-
-### 作者引用更新 {#gu-ge-xue-shu-zuo-zhe-yin-yong-geng-xin}
-
-<Route author="KellyHwong" example="/google/citations/mlmE4JMAAAAJ" path="/google/citations/:id" anticrawler="1">
-
-路由中的参数 id，即用户谷歌学术引用页面 url 中的 id，如 <https://scholar.google.com/citations?hl=zh-CN&user=mlmE4JMAAAAJ> 中 user= 后的 mlmE4JMAAAAJ。
-
-</Route>
+<Route author="cssxsh" example="/x-mol/paper/0/9" path="/x-mol/paper/:type/:magazine" paramsDesc={['type','magazine']} />
 
 ## 管理世界 {#guan-li-shi-jie}
 
@@ -540,3 +576,4 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 :::
 
 <Route author="harveyqiu Derekmini" example="/cnki/author/000042423923" path="/cnki/author/:code" paramsDesc={['作者对应code，可以在网址中得到']}/>
+

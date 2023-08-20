@@ -1,10 +1,34 @@
 import Route from '@site/src/components/Route';
 
-# 🎓 大学通知
+# 🎓 University
+
+## Beijing Jiaotong University 北京交通大学 {#beijing-jiaotong-university-bei-jing-jiao-tong-da-xue}
+
+### BJTU Graduate School {#beijing-jiaotong-university-bei-jing-jiao-tong-da-xue-bjtu-graduate-school}
+
+<Route author="E1nzbern" example="/bjtu/gs/all" path="/bjtu/gs/:type" paramsDesc={['Type of articles']}>
+
+| All articles | Notification | News | Admissions Promotion | Training | Degrees | Admissions | Master Admissions | PhD Admissions | Admissions Brochure | Admissions Policies and Regulations | Notice from Graduate Student Work Department | News from Graduate Student Work Department |
+| ---- | -------- | -------- | ------------ | ------------ | -------- | -------- | ------ | ---------- | ------ | ------ | ------ | ------ |
+| all  | noti     | news    | zsxc       | py       | xw      | zs     | sszs    | bszs      | zsjz    | zcfg    | ygbtzgg    | ygbnews    |
+
+</Route>
+
+Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chinese.
+
+## East China Normal University 华东师范大学 {#east-china-normal-university-hua-dong-shi-fan-da-xue}
+
+### ACM Online-Judge contests list {#east-china-normal-university-hua-dong-shi-fan-da-xue-acm-online-judge-contests-list}
+
+<Route author="a180285" example="/ecnu/acm/contest/public" path="/ecnu/acm/contest/:category?" radar="1" rssbud="1" paramsDesc={['category is optional, default is all, use `public` for public only contests']} />
+
+### 研究生院 {#east-china-normal-university-hua-dong-shi-fan-da-xue-yan-jiu-sheng-yuan}
+
+<Route author="shengmaosu" example="/ecnu/yjs" path="/ecnu/yjs" radar="1" />
 
 ## MIT {#mit}
 
-### MIT OCW 每月热门课程 {#mit-mit-ocw-mei-yue-re-men-ke-cheng}
+### MIT OCW Most popular courses of the month {#mit-mit-ocw-most-popular-courses-of-the-month}
 
 <Route author="dwemerx" example="/mit/ocw-top" path="/mit/ocw-top"/>
 
@@ -24,11 +48,148 @@ import Route from '@site/src/components/Route';
 
 <Route author="nczitzk" example="/mit/csail/news" path="/mit/csail/news"/>
 
+## Nanjing University of the Arts 南京艺术学院 {#nanjing-university-of-the-arts-nan-jing-yi-shu-xue-yuan}
+
+### Official Information {#nanjing-university-of-the-arts-nan-jing-yi-shu-xue-yuan-official-information}
+
+<Route author="evnydd0sf" example="/nua/index/346" path="/nua/index/:type" paramsDesc={['News Type']} radar="1">
+
+| News Type | Parameters  |
+| ---- | --- |
+| 公告   | 346 |
+| 南艺要闻 | 332 |
+
+</Route>
+
+### Shuangxing Information {#nanjing-university-of-the-arts-nan-jing-yi-shu-xue-yuan-shuangxing-information}
+
+<Route author="evnydd0sf" example="/nua/sxw/230" path="/nua/sxw/:type" paramsDesc={['News Type']} radar="1">
+
+| News Type | Parameters  |
+| ---- | --- |
+| 校园电视 | 230 |
+| 院部动态 | 232 |
+| 动感校园 | 233 |
+| 招就指南 | 234 |
+| 南艺院报 | 236 |
+
+</Route>
+
+### School of Design {#nanjing-university-of-the-arts-nan-jing-yi-shu-xue-yuan-school-of-design}
+
+<Route author="evnydd0sf" example="/nua/dc/news" path="/nua/dc/:type" paramsDesc={['News Type']} radar="1">
+
+| News Type                   | Parameters         |
+| ---------------------- | ---------- |
+| 学院新闻 NEWS              | news       |
+| 展览 EXHIBITION          | exhibition |
+| 研创 RESEARCH & CREATION | rc         |
+| 项目 PROJECT             | project    |
+| 党团 PARTY               | party      |
+| 后浪 YOUTH               | youth      |
+
+</Route>
+
+### Graduate Institute {#nanjing-university-of-the-arts-nan-jing-yi-shu-xue-yuan-graduate-institute}
+
+<Route author="evnydd0sf" example="/nua/gra/1959" path="/nua/gra/:type" paramsDesc={['News Type']} radar="1">
+
+| News Type | Parameters   |
+| ---- | ---- |
+| 招生工作 | 1959 |
+| 培养工作 | 1962 |
+| 学位工作 | 1958 |
+
+</Route>
+
+### Library {#nanjing-university-of-the-arts-nan-jing-yi-shu-xue-yuan-library}
+
+<Route author="evnydd0sf" example="/nua/lib/xwdt" path="/nua/lib/:type" paramsDesc={['News Type']} radar="1">
+
+| News Type | Parameters   |
+| ---- | ---- |
+| 新闻动态 | xwdt |
+| 党建动态 | djdt |
+| 资源动态 | zydt |
+| 服务动态 | fwdt |
+
+</Route>
+
 ## Polimi {#polimi}
 
 ### News {#polimi-news}
 
 <Route author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" paramsDesc={['English language code en']} />
+
+## Tianjin University 天津大学 {#tianjin-university-tian-jin-da-xue}
+
+### News {#tianjin-university-tian-jin-da-xue-news}
+
+<Route author="SuperPung" example="/tju/news/focus" path="/tju/news/:type?" paramsDesc={['default `focus`']}>
+
+| Focus on TJU | General News | Internal News | Media Report | Pictures of TJU |
+| :----------: | :----------: | :-----------: | :----------: | :-------------: |
+|    focus     |   general    |    internal   |    media     |     picture     |
+
+</Route>
+
+### College of Intelligence and Computing {#tianjin-university-tian-jin-da-xue-college-of-intelligence-and-computing}
+
+<Route author="SuperPung" example="/tju/cic/news" path="/tju/cic/:type?" paramsDesc={['default `news`']}>
+
+| College News | Notification | TJU Forum for CIC |
+| :----------: | :----------: | :---------------: |
+|     news     | notification |       forum       |
+
+</Route>
+
+### The Office of Academic Affairs {#tianjin-university-tian-jin-da-xue-the-office-of-academic-affairs}
+
+<Route author="AmosChenYQ SuperPung" example="/tju/oaa/news" path="/tju/oaa/:type?" paramsDesc={['default `news`']}>
+
+| News | Notification |
+| :--: | :----------: |
+| news | notification |
+
+</Route>
+
+### Admission Office of Graduate {#tianjin-university-tian-jin-da-xue-admission-office-of-graduate}
+
+<Route author="SuperPung" example="/tju/yzb/notice" path="/tju/yzb/:type?" paramsDesc={['default `notice`']}>
+
+| School-level Notice | Master | Doctor | On-the-job Degree |
+| :-----------------: | :----: | :----: |:-----------------:|
+|       notice        | master | doctor |        job        |
+
+</Route>
+
+## University of Massachusetts Amherst {#university-of-massachusetts-amherst}
+
+### College of Electrical and Computer Engineering {#university-of-massachusetts-amherst-college-of-electrical-and-computer-engineering}
+
+#### News
+
+<Route author="gammapi" example="/umass/amherst/ecenews" path="/umass/amherst/ecenews" radar="1" rssbud="1"/>
+
+#### Seminar
+
+<Route author="gammapi" example="/umass/amherst/eceseminar" path="/umass/amherst/eceseminar" radar="1" rssbud="1"/>
+
+Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's no upcoming seminars. This is normal and will cause rsshub fail to fetch this feed.
+
+### College of Information & Computer Sciences News {#university-of-massachusetts-amherst-college-of-information-%26-computer-sciences-news}
+
+<Route author="gammapi" example="/umass/amherst/csnews" path="/umass/amherst/csnews" radar="1" rssbud="1"/>
+
+### International Programs Office {#university-of-massachusetts-amherst-international-programs-office}
+
+#### Events
+
+<Route author="gammapi" example="/umass/amherst/ipostories" path="/umass/amherst/ipostories" radar="1" rssbud="1"/>
+
+#### Featured Stories
+
+<Route author="gammapi" example="/umass/amherst/ipoevents" path="/umass/amherst/ipoevents" radar="1" rssbud="1"/>
 
 ## University of Texas at Dallas {#university-of-texas-at-dallas}
 
@@ -205,18 +366,6 @@ import Route from '@site/src/components/Route';
 | 综合新闻 | 信息公告 | 学术文化     | 校园风采 | 科教在线 | 媒体北航 | 专题新闻 | 北航人物 |
 | -------- | -------- | ------------ | -------- | -------- | -------- | -------- | -------- |
 | zonghe   | gonggao  | xueshuwenhua | fengcai  | kejiao   | meiti    | zhuanti  | renwu    |
-
-</Route>
-
-## 北京交通大学 {#bei-jing-jiao-tong-da-xue}
-
-### 研究生院 {#bei-jing-jiao-tong-da-xue-yan-jiu-sheng-yuan}
-
-<Route author="E1nzbern" example="/bjtu/gs/all" path="/bjtu/gs/:type" paramsDesc={['文章类别']}>
-
-| 所有文章 | 通知公告 | 新闻动态 | 招生宣传 | 培养 | 学位 | 招生 | 硕士招生 | 博士招生 | 招生简章 | 招生政策法规 | 研工部通知公告 | 研工部新闻动态 |
-| -------- | -------- | -------- | -------- | ---- | ---- | ---- | -------- | -------- | -------- | ------------ | -------------- | -------------- |
-| all      | noti     | news     | zsxc     | py   | xw   | zs   | sszs     | bszs     | zsjz     | zcfg         | ygbtzgg        | ygbnews        |
 
 </Route>
 
@@ -1607,16 +1756,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-## 华东师范大学 {#hua-dong-shi-fan-da-xue}
-
-### ACM OJ 比赛列表 {#hua-dong-shi-fan-da-xue-acm-oj-bi-sai-lie-biao}
-
-<Route author="a180285" example="/ecnu/acm/contest/public" path="/ecnu/acm/contest/:category?" radar="1" rssbud="1" paramsDesc={['分类可选，不写代表全部，`public` 代表仅订阅公开比赛']} />
-
-### 研究生院 {#hua-dong-shi-fan-da-xue-yan-jiu-sheng-yuan}
-
-<Route author="shengmaosu" example="/ecnu/yjs" path="/ecnu/yjs" radar="1" />
-
 ## 华南理工大学 {#hua-nan-li-gong-da-xue}
 
 ### 研究生院通知公告 {#hua-nan-li-gong-da-xue-yan-jiu-sheng-yuan-tong-zhi-gong-gao}
@@ -1898,34 +2037,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | all  | tntz     | qnkx     |
 
 </Route>
-
-## 马萨诸塞大学 阿默斯特分校 (UMASS Amherst) {#ma-sa-zhu-sai-da-xue-a-mo-si-te-fen-xiao-(umass-amherst)}
-
-### 电子与计算机工程系 {#ma-sa-zhu-sai-da-xue-a-mo-si-te-fen-xiao-(umass-amherst)-dian-zi-yu-ji-suan-ji-gong-cheng-xi}
-
-#### 新闻
-
-<Route author="gammapi" example="/umass/amherst/ecenews" path="/umass/amherst/ecenews" radar="1" rssbud="1"/>
-
-#### 研讨会
-
-<Route author="gammapi" example="/umass/amherst/eceseminar" path="/umass/amherst/eceseminar" radar="1" rssbud="1"/>
-
-注：[源站](https://ece.umass.edu/seminar)在未公布研讨会计划时会清空页面导致 Rsshub 抓取不到内容，此属正常现象。
-
-### 信息与计算机科学系新闻 {#ma-sa-zhu-sai-da-xue-a-mo-si-te-fen-xiao-(umass-amherst)-xin-xi-yu-ji-suan-ji-ke-xue-xi-xin-wen}
-
-<Route author="gammapi" example="/umass/amherst/csnews" path="/umass/amherst/csnews" radar="1" rssbud="1"/>
-
-### 国际项目办公室 {#ma-sa-zhu-sai-da-xue-a-mo-si-te-fen-xiao-(umass-amherst)-guo-ji-xiang-mu-ban-gong-shi}
-
-#### 活动
-
-<Route author="gammapi" example="/umass/amherst/ipostories" path="/umass/amherst/ipostories" radar="1" rssbud="1"/>
-
-#### 新闻
-
-<Route author="gammapi" example="/umass/amherst/ipoevents" path="/umass/amherst/ipoevents" radar="1" rssbud="1"/>
 
 ## 南昌航空大学 {#nan-chang-hang-kong-da-xue}
 
@@ -2316,73 +2427,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 南京信息工程大学图书馆 {#nan-jing-xin-xi-gong-cheng-da-xue-nan-jing-xin-xi-gong-cheng-da-xue-tu-shu-guan}
 
 <Route author="gylidian" example="/nuist/lib" path="/nuist/library/lib" />
-
-## 南京艺术学院 {#nan-jing-yi-shu-xue-yuan}
-
-### 官网信息 {#nan-jing-yi-shu-xue-yuan-guan-wang-xin-xi}
-
-<Route author="evnydd0sf" example="/nua/index/346" path="/nua/index/:type" paramsDesc={['新闻模块，见下表']} radar="1">
-
-| 新闻模块 | 参数 |
-| -------- | ---- |
-| 公告     | 346  |
-| 南艺要闻 | 332  |
-
-</Route>
-
-### 双馨网 {#nan-jing-yi-shu-xue-yuan-shuang-xin-wang}
-
-<Route author="evnydd0sf" example="/nua/sxw/230" path="/nua/sxw/:type" paramsDesc={['新闻模块，见下表']} radar="1">
-
-| 新闻模块 | 参数 |
-| -------- | ---- |
-| 校园电视 | 230  |
-| 院部动态 | 232  |
-| 动感校园 | 233  |
-| 招就指南 | 234  |
-| 南艺院报 | 236  |
-
-</Route>
-
-### 设计学院 {#nan-jing-yi-shu-xue-yuan-she-ji-xue-yuan}
-
-<Route author="evnydd0sf" example="/nua/dc/news" path="/nua/dc/:type" paramsDesc={['新闻模块，见下表']} radar="1">
-
-| 新闻模块                 | 参数       |
-| ------------------------ | ---------- |
-| 学院新闻 NEWS            | news       |
-| 展览 EXHIBITION          | exhibition |
-| 研创 RESEARCH & CREATION | rc         |
-| 项目 PROJECT             | project    |
-| 党团 PARTY               | party      |
-| 后浪 YOUTH               | youth      |
-
-</Route>
-
-### 研究生处 {#nan-jing-yi-shu-xue-yuan-yan-jiu-sheng-chu}
-
-<Route author="evnydd0sf" example="/nua/gra/1959" path="/nua/gra/:type" paramsDesc={['新闻模块，见下表']} radar="1">
-
-| 新闻模块 | 参数 |
-| -------- | ---- |
-| 招生工作 | 1959 |
-| 培养工作 | 1962 |
-| 学位工作 | 1958 |
-
-</Route>
-
-### 图书馆 {#nan-jing-yi-shu-xue-yuan-tu-shu-guan}
-
-<Route author="evnydd0sf" example="/nua/lib/xwdt" path="/nua/lib/:type" paramsDesc={['新闻模块，见下表']} radar="1">
-
-| 新闻模块 | 参数 |
-| -------- | ---- |
-| 新闻动态 | xwdt |
-| 党建动态 | djdt |
-| 资源动态 | zydt |
-| 服务动态 | fwdt |
-
-</Route>
 
 ## 南京邮电大学 {#nan-jing-you-dian-da-xue}
 
@@ -2906,48 +2950,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="2PoL" example="/tynu" path="/tynu" rssbud="1" radar="1"/>
 
-## 天津大学 {#tian-jin-da-xue}
-
-### 新闻网 {#tian-jin-da-xue-xin-wen-wang}
-
-<Route author="SuperPung" example="/tju/news/focus" path="/tju/news/:type?" paramsDesc={['默认为 `focus`']}>
-
-| 聚焦天大 | 综合新闻 | 校内新闻 | 媒体报道 | 图说天大 |
-| :------: | :------: | :------: | :------: | :------: |
-|   focus  |  general | internal |   media  |  picture |
-
-</Route>
-
-### 智能与计算学部 {#tian-jin-da-xue-zhi-neng-yu-ji-suan-xue-bu}
-
-<Route author="SuperPung" example="/tju/cic/news" path="/tju/cic/:type?" paramsDesc={['默认为 `news`']}>
-
-| 学部新闻 |   通知公告   | 北洋智算论坛 |
-| :------: | :----------: | :----------: |
-|   news   | notification |     forum    |
-
-</Route>
-
-### 教务处 {#tian-jin-da-xue-jiao-wu-chu}
-
-<Route author="AmosChenYQ SuperPung" example="/tju/oaa/news" path="/tju/oaa/:type?" paramsDesc={['默认为 `news`']}>
-
-| 新闻动态 |   通知公告   |
-| :------: | :----------: |
-|   news   | notification |
-
-</Route>
-
-### 研究生招生网 {#tian-jin-da-xue-yan-jiu-sheng-zhao-sheng-wang}
-
-<Route author="SuperPung" example="/tju/yzb/notice" path="/tju/yzb/:type?" paramsDesc={['默认为 `notice`']}>
-
-| 校级公告 | 统考硕士 | 统考博士 | 在职学位 |
-| :------: | :------: | :------: | :------: |
-|  notice  |  master  |  doctor  |    job   |
-
-</Route>
-
 ## 同济大学 {#tong-ji-da-xue}
 
 ### 研究生院通知公告 {#tong-ji-da-xue-yan-jiu-sheng-yuan-tong-zhi-gong-gao}
@@ -3246,12 +3248,11 @@ paramsDesc={['公告类型，详见表格']}>
 通知类别
 
 
-| 图书馆 | 共青团团委 | 信工学院 | 后勤管理处 | 计划财务处 | 教务处 | 新闻网 | 信息化管理处 | 研究生院 |
-| -------- | -------- | -------- | -------- | ------------ | -------- | -------- | -------- | -------- |
-| lib    | youth | cie    | gs    | jcc        | jiaowu    | news    | nic    | yjshy    |
+| 图书馆 | 共青团团委 | 信工学院 | 后勤管理处 | 计划财务处 | 教务处 | 新闻网 | 信息化管理处 | 研究生院 | 农业科学院 | 机械与电子工程学院 | 学术活动 | 生命科学学院 |
+| -------- | -------- | -------- | -------- | ------------ | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| lib    | youth | cie    | gs    | jcc        | jiaowu    | news    | nic    | yjshy    | nxy | cmee | xshd | sm |
 
 </Route>
-
 
 ## 西南财经大学 {#xi-nan-cai-jing-da-xue}
 
@@ -3955,3 +3956,4 @@ paramsDesc={['公告类型，详见表格']}>
 | results  | papers   | writings | policy   |
 
 </Route>
+
