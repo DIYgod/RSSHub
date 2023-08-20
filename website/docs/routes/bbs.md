@@ -126,7 +126,7 @@
 
 ## Dcard {#dcard}
 
-:::caution 注意
+:::caution
 
 僅能透過台灣 IP 抓取。
 
@@ -280,7 +280,7 @@
 
 ### AV {#playno.1-wan-le-da-ren-av}
 
-:::caution 注意
+:::caution
 
 目前观测到该博客可能禁止日本 IP 访问。建议部署在日本区以外的服务器上。
 
@@ -635,7 +635,7 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 | --- | --- | ------ |
 | nba | cba | soccer |
 
-:::tip 提示
+:::tip
 
 电竞分类参见 [游戏热帖](https://bbs.hupu.com/all-gg) 的对应路由 [`/hupu/all/all-gg`](https://rsshub.app/hupu/all/all-gg)。
 
@@ -647,7 +647,7 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 <Route author="LogicJake nczitzk" example="/hupu/bbs/topic-daily" path="/hupu/bbs/:id?/:order?" paramsDesc={['编号，可在对应社区 URL 中找到，默认为#步行街主干道', '排序方式，可选 `0` 即 最新回复 或 `1` 即 最新发布，默认为最新回复']}>
 
-:::tip 提示
+:::tip
 
 更多社区参见 [社区](https://bbs.hupu.com)
 
@@ -659,7 +659,7 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 <Route author="nczitzk" example="/hupu/all/topic-daily" path="/hupu/all/:id?" paramsDesc={['编号，可在对应热帖版面 URL 中找到，默认为步行街每日话题']}>
 
-:::tip 提示
+:::tip
 
 更多热帖版面参见 [论坛](https://bbs.hupu.com)
 
@@ -995,7 +995,7 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 <Route author="nczitzk" example="/muchong/290" path="/muchong/:id/:type?/:sort?" paramsDesc={['板块 id，可在板块页 URL 中找到', '子类别 id，可在板块页导航栏中找到，默认为 `all` 即 全部', '排序，可选 `order-tid` 即 发表排序，默认为 回帖排序']}>
 
-:::tip 提示
+:::tip
 
 尚不支持需要登录访问的版块
 
@@ -1192,7 +1192,7 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 <Route author="NavePnow" example="/1point3acres/offer/12/null/CMU" path="/1point3acres/offer/:year?/:major?/:school?" paramsDesc={['录取年份  id，空为null', '录取专业 id，空为null', '录取学校 id，空为null']}>
 
-:::caution 三个 id 获取方式
+:::tip 三个 id 获取方式
 
 1.  打开 <https://offer.1point3acres.com>
 2.  打开控制台

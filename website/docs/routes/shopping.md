@@ -36,7 +36,7 @@ Time
 | ------------------- | --------------- | ------------ |
 | 24h                 | week            | alltime      |
 
-:::tip Tip
+:::tip
 
 Parameter `time` only works when `mostwanted` is chosen as the category.
 
@@ -360,7 +360,7 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 <Route author="nczitzk" example="/jd/price/526835" path="/jd/price/:id" paramsDesc={['商品 id，可在商品详情页 URL 中找到']}>
 
-:::tip 提示
+:::tip
 
 如商品 <https://item.jd.com/526835.html> 中的 id 为 `526835`，所以路由为 [`/jd/price/526835`](https://rsshub.app/jd/price/526835)
 
@@ -447,7 +447,7 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ## 什么值得买 {#shen-me-zhi-de-mai}
 
-:::tip 提示
+:::tip
 
 网站也提供了部分 RSS: <https://www.smzdm.com/dingyue>
 

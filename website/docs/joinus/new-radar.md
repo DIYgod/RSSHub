@@ -119,8 +119,10 @@ The source field is *optional* and should specifies the URL path. Leave it blank
 
 The source should be an array of strings. For example, if the source for `GitHub Repo Issues` is `/:user/:repo`, it means that when you visit `https://github.com/DIYgod/RSSHub`, which matches the `github.com/:user/:repo` pattern, the parameters for this URL will be: `{user: 'DIYgod', repo: 'RSSHub'}`. The browser extension uses these parameters to create an RSSHub subscription address based on the `target` field.
 
-:::caution Warning
+:::caution
+
 If the value you want to extract is in the URL search parameters or URL hash, use target as a function instead of the `source` field. Also, remember that the `source` field only matches the URL path and not any other parts of the URL.
+
 :::
 
 You can use the `*` symbol to perform wildcard matching. Note that the syntax here is not the same as the [path-to-regexp](https://github.com/pillarjs/path-to-regexp). For instance, `/:user/:repo/*` will match both `https://github.com/DIYgod/RSSHub/issues` and `https://github.com/DIYgod/RSSHub/issues/1234`. If you want to name the matching result, you can place the variable name after the `*` symbol. For example, `/user/:repo/*path`, whereby path will be `issues` and `issues/1234` in the above scenario.

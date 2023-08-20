@@ -89,7 +89,7 @@ Category
 
 <Route author="nczitzk" example="/ustr/press-releases" path="/ustr/press-releases/:year?/:month?" paramsDesc={['Year, current year by default', 'Month, empty by default, show contents in all year']}>
 
-:::tip Tip
+:::tip
 
 Fill in the English expression for the month in the Month field, eg `December` for the 12th Month。
 
@@ -195,7 +195,7 @@ Language
 
 <Route author="nczitzk" example="/gov/anhui/kjt/kjzx/tzgg" path="/gov/anhui/kjt/:path?" paramsDesc={['路径，默认为通知公告']}>
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中 `http://kjt.ah.gov.cn/` 和 `/index.html` 之间的字段。下面是一个例子。
 
@@ -217,7 +217,7 @@ Language
 
 <Route author="TonyRL" example="/bjsk/newslist-1394-1474-0" path="/bjsk/:path?" paramsDesc={['路径，默认为 `newslist-1486-0-0`']} radar="1">
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中 `https://www.bjsk.org.cn/` 和 `.html` 之间的字段。下面是一个例子。
 
@@ -463,7 +463,7 @@ Language
 
 <Route author="bigfei nczitzk" example="/gov/stats/sj/zxfb" path="/gov/stats/:path+" paramsDesc={['路径，默认为数据最新发布']}>
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中 `http://www.stats.gov.cn/` 后的字段。下面是一个例子。
 
@@ -512,7 +512,7 @@ Language
 
 <Route author="TonyRL" example="/gov/nmpa/xxgk/ggtg" path="/gov/nmpa/:path+" paramsDesc={['路径，默认为公告通告']} radar="1" rssbud="1">
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中 `https://www.nmpa.gov.cn/` 与 `/index.html` 之间的字段，下面是一个例子。
 
@@ -528,7 +528,7 @@ Language
 
 <Route author="nczitzk" example="/gov/nifdc/bshff/ylqxbzhgl/qxggtzh" path="/gov/nifdc/:path+" paramsDesc={['路径，默认为公告通告']} radar="1" rssbud="1">
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中 `https://www.nifdc.gov.cn/nifdc/` 与 `/index.html` 之间的字段，下面是一个例子。
 
@@ -544,7 +544,7 @@ Language
 
 <Route author="run-ze" example="/cmde/xwdt/zxyw" path="/cmde/:cate*" paramsDesc={['路径，默认为最新要闻']} radar="1" puppeteer="1">
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中 `https://www.cmde.org.cn/` 与 `/index.html` 之间的字段，下面是一个例子。
 
@@ -604,7 +604,7 @@ Language
 
 <Route author="Derekmini nczitzk" example="/gov/nsfc" path="/gov/nsfc/path+" paramsDesc={['路径，默认为基金要闻']} radar="1" rssbud="1">
 
-:::tip 提示
+:::tip
 
 若订阅 [基金要闻 - 通知公告](https://www.nsfc.gov.cn/publish/portal0/tab442)，网址为 <https://www.nsfc.gov.cn/publish/portal0/tab442>。截取 `https://www.nsfc.gov.cn` 到末尾的部分 `/publish/portal0/tab442` 作为参数，此时路由为 [`/gov/nsfc/publish/portal0/tab442`](https://rsshub.app/gov/nsfc/publish/portal0/tab442)。
 
@@ -648,7 +648,7 @@ Language
 
 <Route author="TonyRL" example="/gov/sasac/n2588030/n16436141" path="/gov/sasac/:path+" paramsDesc={['路径，可在 URL 找到']} radar="1" rssbud="1" >
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中 `http://www.sasac.gov.cn/` 与 `/index.html` 之间的字段，下面是一个例子。
 
@@ -757,7 +757,7 @@ Language
 
 <Route author="ShuiHuo" example="/gov/maoming/www/zwgk/zcjd/jd" path="/gov/maoming/:path+" paramsDesc={['路径']}>
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中茂名有关政府网站的域名最前面的部分和域名后的字段。下面是一个例子。
 
@@ -783,7 +783,7 @@ Language
 
 <Route author="ShuiHuo" example="/gov/dianbai/www/zwgk/zcjd" path="/gov/dianbai/:path+" paramsDesc={['路径，只填写 `www` 默认为 政务公开 > 政策解读']}>
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中最前面的部分和域名后的字段。下面是一个例子。
 
@@ -797,7 +797,7 @@ Language
 
 <Route author="ShuiHuo" example="/gov/xinyi/www/zwgk/zcjd" path="/gov/xinyi/:path+" paramsDesc={['路径，只填写 `www` 默认为 政务公开 > 政策解读']}>
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中最前面的部分和域名后的字段。下面是一个例子。
 
@@ -811,7 +811,7 @@ Language
 
 <Route author="ShuiHuo" example="/gov/gaozhou/www/zwgk/zcjd" path="/gov/gaozhou/:path+" paramsDesc={['路径，只填写 `www` 默认为 政策解读']}>
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中最前面的部分和域名后的字段。下面是一个例子。
 
@@ -825,7 +825,7 @@ Language
 
 <Route author="ShuiHuo" example="/gov/huazhou/www/zwgk/zcjd" path="/gov/huazhou/:path+" paramsDesc={['路径，只填写 `www` 默认为 政策解读']}>
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中最前面的部分和域名后的字段。下面是一个例子。
 
@@ -839,7 +839,7 @@ Language
 
 <Route author="ShuiHuo" example="/gov/mgs/www/zwgk/zcjd" path="/gov/mgs/:path+" paramsDesc={['路径，只填写 `www` 默认为 政务公开 > 政策解读']}>
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中最前面的部分和域名后的字段。下面是一个例子。
 
@@ -853,7 +853,7 @@ Language
 
 <Route author="ShuiHuo" example="/gov/mmht/www/xwzx/zcjd" path="/gov/mmht/:path+" paramsDesc={['路径，只填写 `www` 默认为 政务公开 > 政策解读']}>
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中最前面的部分和域名后的字段。下面是一个例子。
 
@@ -867,7 +867,7 @@ Language
 
 <Route author="ShuiHuo" example="/gov/sdb/www/zwgk/zcjd" path="/gov/sdb/:path+" paramsDesc={['路径，只填写 `www` 默认为 政务公开 > 政策解读']}>
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中最前面的部分和域名后的字段。下面是一个例子。
 
@@ -901,7 +901,7 @@ Language
 
 <Route author="nczitzk" example="/gov/nopss/GB/219469" path="/gov/nopss/:path+" paramsDesc={['路径，默认为通知公告']}>
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中 `http://www.nopss.gov.cn/` 后的字段。下面是一个例子。
 
@@ -961,7 +961,7 @@ Language
 
 <Route author="nczitzk" example="/gov/shanghai/yjj/zh" path="/gov/shanghai/yjj/:path+" paramsDesc={['路径参数']} radar="1" rssbud="1">
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中 `https://yjj.sh.gov.cn/` 与 `/index.html` 之间的字段，下面是一个例子。
 
@@ -1000,7 +1000,7 @@ Language
 |    往期专题    |  wqzt  |
 |    区县专题    |  qxzt  |
 
-:::tip 提示
+:::tip
 
 **热点专题**栏目包含**市本级专题**和**区县专题**
 
@@ -1174,7 +1174,7 @@ Language
 
 <Route author="nczitzk" example="/gov/cnnic/gywm/xwzx/xwzxtzgg/" path="/gov/cnnic/:path+" paramsDesc={['路径，默认为热点信息']}>
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中 `http://www.cnnic.net.cn/` 后的字段。下面是一个例子。
 
@@ -1190,7 +1190,7 @@ Language
 
 <Route author="nczitzk" example="/81/81rc" path="/81/81rc/:path+" paramsDesc={['路径，默认为工作动态']}>
 
-:::tip 提示
+:::tip
 
 若订阅 [文职人员 - 工作动态](https://81rc.81.cn/wzry/gzdt)，网址为 <https://81rc.81.cn/wzry/gzdt>。截取 `https://81rc.81.cn` 到末尾的部分 `/wzry/gzdt` 作为参数，此时路由为 [`/81/81rc/wzry/gzdt`](https://rsshub.app/81/81rc/wzry/gzdt)。
 
@@ -1292,7 +1292,7 @@ Language
 
 <Route author="nczitzk" example="/gov/cmse/fxrw/wtfx/rwdt" path="/gov/cmse/fxrw/:id/:category" paramsDesc={['任务 id，可在对应任务页 URL 中找到', '分类 id，见下表，可在对应任务页 URL 中找到']}>
 
-:::tip 提示
+:::tip
 
 下表分类可能并不完整。请查看各飞行任务详情页获得完整分类。
 
@@ -1354,10 +1354,12 @@ Language
 
 <Route author="chinobing LogicJake" example="/gov/csrc/news/c101975/zfxxgk_zdgk.shtml" path="/gov/csrc/news/:suffix*" paramsDesc={['路径，预设为 `c100028/common_xq_list.shtml`']} radar="1">
 
-:::tip 提示
+:::tip
+
 路径处填写对应页面 URL 中 `http://www.csrc.gov.cn/csrc/` 后的字段。下面是一个例子。
 
 若订阅 [证监会要闻](http://www.csrc.gov.cn/csrc/c100028/common_xq_list.shtml) 则将对应页面 URL <http://www.csrc.gov.cn/csrc/c100028/common_xq_list.shtml> 中 `http://www.csrc.gov.cn/csrc/` 后的字段 `c100028/common_xq_list.shtml` 作为路径填入。此时路由为 [`/gov/csrc/news/c100028/common_xq_list.shtml`](https://rsshub.app/gov/csrc/news/c100028/common_xq_list.shtml)
+
 :::
 
 </Route>
@@ -1590,7 +1592,7 @@ Language
 
 <Route author="Jeason0228 TonyRL" example="/gov/customs/list/paimai" path="/gov/customs/list/:gchannel?" paramsDesc={['支持 `paimai` 及 `fagui` 2个频道，默认为 `paimai`']} anticrawler="1" puppeteer="1" radar="1" rssbud="1">
 
-:::caution 注意
+:::caution
 
 由于区域限制，建议在国内 IP 的机器上自建
 
@@ -1711,7 +1713,7 @@ Language
 
 <Route author="bigfei" example="/gov/ccdi/yaowenn" path="/gov/ccdi/:path+" paramsDesc={['路径，默认为 要闻']}>
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中 `http://www.ccdi.gov.cn/` 后的字段。下面是一个例子。
 
@@ -1727,7 +1729,7 @@ Language
 
 <Route author="drgnchan" example="/gov/cac/xxh" path="/gov/cac/:path+" paramsDesc={['路径，比如xxh表示信息化']} radar='1'>
 
-:::tip 提示
+:::tip
 
 路径填写对应页面 URL 中间部分。例如：
 

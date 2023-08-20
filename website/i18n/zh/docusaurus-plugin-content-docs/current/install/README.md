@@ -89,7 +89,7 @@ $ docker pull diygod/rsshub
 
 ## Docker 部署
 
-:::tip 提示
+:::tip
 
 如需启用 puppeteer，请在**每条**命令中均将 `diygod/rsshub` 替换为 `diygod/rsshub:chromium-bundled`。
 
@@ -238,7 +238,7 @@ $ pm2 start lib/index.js --name rsshub
 
 ### 添加配置
 
-:::tip 提示
+:::tip
 
 在 arm/arm64 上，此部署方式不包含 puppeteer 依赖。要启用 puppeteer，你需要先从发行版安装 Chromium，然后设置 `CHROMIUM_EXECUTABLE_PATH` 为其可执行路径。
 
@@ -309,7 +309,7 @@ in pkgs.stdenv.mkDerivation {
 
 ### 注意
 
-:::caution 更新
+:::caution
 
 Heroku [不再](https://blog.heroku.com/next-chapter) 提供免费服务。
 
@@ -500,7 +500,7 @@ gcloud app deploy
 
 [![Try in PWD](https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png)](https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml)
 
-:::caution 注意
+:::caution
 
 -   需要 [DockerHub](https://hub.docker.com) 账号
 -   [Play with Docker](https://labs.play-with-docker.com/) 一次仅能使用 4 小时，不能作为持久化解决方案，应当用于测试 / 验证路由规则
@@ -585,7 +585,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 ### 反向代理
 
-:::caution 注意
+:::caution
 
 这种代理方式无法代理包含 cookie 的请求。
 
@@ -734,7 +734,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 ### 部分 RSS 模块配置
 
-:::tip 提示
+:::tip
 
 此处信息不完整。完整配置请参考路由对应的文档和 `lib/config.js`。
 

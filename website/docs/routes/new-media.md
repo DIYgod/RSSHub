@@ -94,7 +94,7 @@
 
 访问 “邱毅看平潭” 专题，会跳转到 <https://www.52hrtt.com/global/n/w/symposium/F1626082387819>。其中 `F1626082387819` 即为 **专题 id** 对应的地区代码。
 
-:::tip 提示
+:::tip
 
 更多的专题可以点击 [这里](https://www.52hrtt.com/global/n/w/symposium)
 
@@ -207,7 +207,7 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 <Route author="nczitzk" example="/bad" path="/bad/:path+" paramsDesc={['路径，默认为首页热门']}>
 
-:::tip 提示
+:::tip
 
 若订阅 [每日热点 - 最新](https://bad.news/tag/每日热点/sort-new)，网址为 [https://bad.news/tag/ 每日热点 /sort-new](https://bad.news/tag/每日热点/sort-new)。截取 `https://bad.news` 到末尾的部分 `/tag/每日热点/sort-new` 作为参数，此时路由为 [`/bad/tag/每日热点/sort-new`](https://rsshub.app/bad/tag/每日热点/sort-new)。
 
@@ -346,7 +346,7 @@ Category of news
 
 <Route author="cczhong11 nczitzk" example="/cnbeta/topics/453" path="/cnbeta/topics/:id" paramsDesc={['主题 id，可在对应主题页的 URL 中找到']}>
 
-:::tip 提示
+:::tip
 
 完整的主题列表参见 [主题列表](https://www.cnbeta.com.tw/topics.htm)
 
@@ -818,7 +818,7 @@ Tag
 | ------ | ------- | -------------- | ------- |
 | Latest | Popular | From the Store | For You |
 
-:::tip Tip
+:::tip
 
 Click here to view [All Topics](https://hbr.org/topics)
 
@@ -1084,7 +1084,7 @@ Edition
 
 ## Matataki {#matataki}
 
-:::tip 提示
+:::tip
 
 在 Matataki 发表的文章会上传到星际文件系统（IPFS），永久保存。即使站内文章因为各种原因消失，用 RSS 获取过带 IPFS 连接的 Feed Item 的话，还是可以从 RSS 阅读器找回文章的。
 IPFS 网关有可能失效，那时候换成其他网关。
@@ -1993,7 +1993,7 @@ Supported sub-sites:
 
 <Route author="nczitzk" example="/web3caff" path="/web3caff/:path?" paramsDesc={['路径，默认为首页']}>
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中 `https://web3caff.com/` 后的字段。下面是一个例子。
 
@@ -2029,7 +2029,7 @@ Supported sub-sites:
 
 <Route author="nczitzk" example="/zyw/hot" path="/zyw/hot/:site?" paramsDesc={['站点，见下表，默认为空，即全部']}>
 
-:::tip 提示
+:::tip
 
 全部站点请见 [此处](https://hot.zyw.asia/#/list)
 
@@ -2057,7 +2057,7 @@ Supported sub-sites:
 
 <Route author="Rongronggg9" example="/ally/rail/hyzix/chengguijiaotong/" path="/ally/rail/:category?/:topic?" paramsDesc={['分类，可在 URL 中找到；略去则抓取首页', '话题，可在 URL 中找到；并非所有页面均有此字段']} radar="1" rssbud="1">
 
-:::tip 提示
+:::tip
 
 默认抓取前 20 条，可通过 `?limit=` 改变。
 
@@ -2180,7 +2180,7 @@ Supported sub-sites:
 
 <Route author="nczitzk" example="/bast/col/col31266" path="/bast/:path+" paramsDesc={['路径，默认为通知公告']}>
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中 `https://www.bast.net.cn/` 后的字段。下面是两个例子。
 
@@ -2500,7 +2500,7 @@ area 分区选项
 
 查看湖北省武汉市武昌区的新冠疫苗接种点，路由为 `/dxy/vaccine/湖北/武汉/武昌区`。
 
-:::tip 提示
+:::tip
 
 若参数为空，则返回全国所有新冠疫苗接种点。
 
@@ -2573,7 +2573,7 @@ area 分区选项
 
 ## 懂球帝 {#dong-qiu-di}
 
-:::tip 提示
+:::tip
 
 -   可以通过头条新闻 + 参数过滤的形式获得早报、专题等内容。
 
@@ -2603,7 +2603,7 @@ area 分区选项
 
 <Route author="HenryQW" example="/dongqiudi/daily" path="/dongqiudi/daily"/>
 
-:::tip 提示
+:::tip
 
 部分球队和球员可能会有两个 id, 正确 id 应该由 `5000` 开头.
 
@@ -2625,7 +2625,7 @@ area 分区选项
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
-:::caution 注意
+:::caution
 
 付费内容全文可能需要登陆获取，详情见部署页面的配置模块。
 
@@ -2657,7 +2657,7 @@ Type 栏目：
 
 <Route author="AgFlore" example="/theinitium/follow/articles/zh-hans" path="/theinitium/follow/articles/:language?" paramsDesc={['语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']}>
 
-:::caution 注意
+:::caution
 
 需要自建，详情见部署页面的配置模块。
 
@@ -2715,7 +2715,7 @@ Type 栏目：
 | -------- | ------------- | -------- | ----------- |
 | articles | localarticles | history  | all-comment |
 
-:::tip 提示
+:::tip
 
 支持形如 <https://www.storm.mg/category/118> 的路由，即 [`/storm/category/118`](https://rsshub.app/storm/category/118)
 
@@ -2731,7 +2731,7 @@ Type 栏目：
 
 <Route author="nczitzk" example="/ifeng/news" path="/ifeng/news/:path?" paramsDesc={['路径，对应分类资讯页 URL 路径，默认为空']}>
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中 `https://news.ifeng.com/` 后的字段。下面是一个例子。
 
@@ -2813,7 +2813,7 @@ home = 评论 & 研究 + 要闻 + 风闻
 
 others = 热点新闻 + 滚动新闻
 
-:::tip 提示
+:::tip
 
 观察者网首页左中右的三个 column 分别对应 **评论 & 研究**、**要闻**、**风闻** 三个部分。
 
@@ -2839,7 +2839,7 @@ others = 热点新闻 + 滚动新闻
 | -------- | -------- | ----------- | -------- | -------- | ---------- | -------- |
 | 1        | 2        | 3           | 6        | 7        | 8          | 5        |
 
-:::tip 提示
+:::tip
 
 仅在话题 id 为 0，即选择 全部 时，**3 个月最热**、**24 小时最热**、**3 天最热**、**7 天最热** 和 **专栏文章** 参数生效。
 
@@ -3007,7 +3007,7 @@ others = 热点新闻 + 滚动新闻
 
 <Route author="nczitzk" example="/cbaigui" path="/cbaigui/:path+" paramsDesc={['路径，默认为首页']}>
 
-:::tip 提示
+:::tip
 
 若订阅 [标签：妖](https://www.cbaigui.com/post-tag/妖)，网址为 [https://www.cbaigui.com/post-tag/ 妖](https://www.cbaigui.com/post-tag/妖)。截取 `https://www.cbaigui.com` 到末尾的部分 `/post-tag/妖` 作为参数，此时路由为 [`/cbaigui/post-tag/妖`](https://rsshub.app/cbaigui/post-tag/妖)。
 
@@ -3131,7 +3131,7 @@ column 为 third 时可选的 category:
 | ---- | ------------- | ------------- | ------------- | ------------- | ------------- |
 | all  | category_lsgg | category_dqgg | category_zjjg | category_cxpl | category_scpl |
 
-:::tip 提示
+:::tip
 
 需要筛选多个 category 时，应使用 `;` 将多个字段连接起来。
 
@@ -3213,7 +3213,7 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/mydrivers" path="/mydrivers/:type?/:id?" paramsDesc={['类型，见下表，默认为最新', '编号，可在对应页面地址栏中找到']}>
 
-:::tip 提示
+:::tip
 
 使用 **类型** 表中的两个参数时，编号应留空，如：**最新** 为 [`/mydrivers/new`](https://rsshub.app/mydrivers/new)
 
@@ -3428,7 +3428,7 @@ column 为 third 时可选的 category:
 | -------- | -------- |
 | enter4   | life3    |
 
-:::tip 提示
+:::tip
 
 酷 18 文档参见 [此处](https://docs.rsshub.app/picture#ku-18)
 
@@ -3455,7 +3455,7 @@ column 为 third 时可选的 category:
 | newspark | local |
 | -------- | ----- |
 
-:::tip 提示
+:::tip
 
 若订阅 [时政](https://www.6parknews.com/newspark/index.php?type=1)，其网址为 <https://www.6parknews.com/newspark/index.php?type=1>，其中 `newspark` 为分站，`1` 为栏目 id。
 
@@ -3511,7 +3511,7 @@ column 为 third 时可选的 category:
 | ------------ | ----------- | ---------- | -------- | -------- | -------- |
 | breakingnews | weeklytopic | culture    | press    | case     | special  |
 
-:::tip 提示
+:::tip
 
 除了直接订阅分类全部文章（如 [每週專題](https://aamacau.com/topics/weeklytopic) 的对应路由为 [/aamacau/weeklytopic](https://rsshub.app/aamacau/weeklytopic)），你也可以订阅特定的专题，如 [【9-12】2021 澳門立法會選舉](https://aamacau.com/topics/【9-12】2021澳門立法會選舉) 的对应路由为 [/【9-12】2021 澳門立法會選舉](https://rsshub.app/aamacau/【9-12】2021澳門立法會選舉)。
 
@@ -3599,7 +3599,7 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/medsci" path="/medsci/:sid?/:tid?" paramsDesc={['科室，见下表，默认为推荐', '亚专业，可在对应科室页 URL 中找到，默认为该科室的全部']}>
 
-:::tip 提示
+:::tip
 
 下表为科室对应的 sid，若想获得 tid，可以到对应科室页面 URL 中寻找 `t_id` 字段的值，下面是一个例子：
 
@@ -3785,8 +3785,10 @@ column 为 third 时可选的 category:
 
 -   `fulltext`，全文输出，例如：`/pingwest/tag/ChinaJoy/1/fulltext`
 
-:::tip 提示
+:::tip
+
 该路由一次最多显示 30 条文章
+
 :::
 
 </Route>
@@ -4370,7 +4372,7 @@ column 为 third 时可选的 category:
 
 ## 网易新闻 {#wang-yi-xin-wen}
 
-:::caution 注意
+:::caution
 
 若视频因防盗链而无法播放，请参考 [通用参数 -> 多媒体处理](/parameter#多媒体处理) 配置 `multimedia_hotlink_template` **或** `wrap_multimedia_in_iframe`。
 
@@ -4380,7 +4382,7 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/163/today" path="/163/today/:need_content?" paramsDesc={['需要获取全文，填写 true/yes 表示需要，默认需要']}>
 
-:::tip 提示
+:::tip
 
 参数 **需要获取全文** 设置为 `true` `yes` `t` `y` 等值后，RSS 会携带该新闻条目的对应全文。
 
@@ -4392,7 +4394,7 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/163/news/rank/whole/click/day" path="/163/news/rank/:category?/:type?/:time?" paramsDesc={['新闻分类，参见下表，默认为“全站”','排行榜类型，“点击榜”对应`click`，“跟贴榜”对应`follow`，默认为“点击榜”','统计时间，“1小时”对应`hour`，“24小时”对应`day`，“本周”对应`week`，“本月”对应`month`，默认为“24小时”']}>
 
-:::tip 提示
+:::tip
 
 全站新闻 **点击榜** 的统计时间仅包含 “24 小时”、“本周”、“本月”，不包含 “1 小时”。即可用的`time`参数为`day`、`week`、`month`。
 
@@ -4444,7 +4446,7 @@ column 为 third 时可选的 category:
 
 ## 微信 {#wei-xin}
 
-:::tip 提示
+:::tip
 
 公众号直接抓取困难，故目前提供几种间接抓取方案，请自行选择
 
@@ -4468,13 +4470,13 @@ column 为 third 时可选的 category:
 |      `1`     |     公众号全名     | 未启用 efb-patch-middleware |
 |      `2`     |     #公众号全名    | 已启用 efb-patch-middleware |
 
-:::tip 提示
+:::tip
 
 启用搜索有助于在订阅了过多公众号的频道里有效筛选，不易因为大量公众号同时推送导致一些公众号消息被遗漏，但必须正确选择搜索查询类型，否则会搜索失败。
 
 :::
 
-:::caution 注意
+:::cautio
 
 该方法需要通过 efb 进行频道绑定，具体操作见<https://github.com/DIYgod/RSSHub/issues/2172>
 
@@ -4524,7 +4526,7 @@ column 为 third 时可选的 category:
 
 <Route author="Rongronggg9" example="/wechat/data258/gh_cbbad4c1d33c" path="/data258/:id?" paramsDesc={['公众号 id 或分类 id，可在公众号页或分类页 URL 中找到；若略去，则抓取首页']} anticrawler="1" radar="1" rssbud="1" selfhost="1">
 
-:::caution 注意
+:::caution
 
 由于使用了一些针对反爬的缓解措施，本路由响应较慢。默认只抓取前 5 条，可通过 `?limit=` 改变（不推荐，容易被反爬）。\
 该网站使用 IP 甄别访客，且应用严格的每日阅读量限额（约 15 次），请自建并确保正确配置缓存；如使用内存缓存而非 Redis 缓存，请增大缓存容量。该限额足够订阅至少 3 个公众号 (假设公众号每日仅更新一次)；首页 / 分类页更新相当频繁，不推荐订阅。
@@ -4637,7 +4639,7 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/proletar" path="/proletar/tags/:id?" paramsDesc={['标签，默认为全部文章']}>
 
-:::tip 提示
+:::tip
 
 标签名参见 [所有标签](https://review.proletar.ink/tags)
 

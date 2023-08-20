@@ -944,7 +944,7 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 ## 安全客 {#an-quan-ke}
 
-:::tip 提示
+:::tip
 
 官方提供了混合的主页资讯 RSS: <https://api.anquanke.com/data/v1/rss>
 
@@ -1195,7 +1195,7 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 ## 拉勾网 {#la-gou-wang}
 
-:::tip 提示
+:::tip
 
 拉勾网官方提供职位的[邮件订阅](https://www.lagou.com/s/subscribe.html)，请根据自身需要选择使用。
 
@@ -1420,7 +1420,7 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 ## 腾讯游戏开发者社区 {#teng-xun-you-xi-kai-fa-zhe-she-qu}
 
-:::caution 注意
+:::caution
 
 有部分输出全文带有未进行样式处理的代码内容，显示效果不佳，建议跳转原文阅读
 

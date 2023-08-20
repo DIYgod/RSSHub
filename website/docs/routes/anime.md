@@ -18,7 +18,7 @@
 
 <Route author="nczitzk" example="/78dm/news" path="/78dm/news/:path+" paramsDesc={['参数，见说明，默认为空']}>
 
-:::tip 提示
+:::tip
 
 若订阅 [新品速递](https://www.78dm.net/news)，网址为 <https://www.78dm.net/news>。截取 `https://www.78dm.net` 到末尾的部分 `/news` 作为参数，此时路由为 [`/78dm/news`](https://rsshub.app/78dm/news)。
 
@@ -32,7 +32,7 @@
 
 <Route author="nczitzk" example="/78dm/eval_list" path="/78dm/eval_list/:path+" paramsDesc={['参数，见说明，默认为空']}>
 
-:::tip 提示
+:::tip
 
 若订阅 [精彩评测](https://www.78dm.net/eval_list)，网址为 <https://www.78dm.net/eval_list>。截取 `https://www.78dm.net` 到末尾的部分 `/eval_list` 作为参数，此时路由为 [`/78dm/eval_list`](https://rsshub.app/78dm/eval_list)。
 
@@ -46,7 +46,7 @@
 
 <Route author="nczitzk" example="/78dm/ht_list" path="/78dm/ht_list/:path+" paramsDesc={['参数，见说明，默认为空']}>
 
-:::tip 提示
+:::tip
 
 若订阅 [好帖推荐](https://www.78dm.net/ht_list)，网址为 <https://www.78dm.net/ht_list>。截取 `https://www.78dm.net` 到末尾的部分 `/ht_list` 作为参数，此时路由为 [`/78dm/ht_list`](https://rsshub.app/78dm/ht_list)。
 
@@ -62,7 +62,7 @@
 
 <Route author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" paramsDesc={['番剧 id']} radar="1" rssbud="1"/>
 
-:::tip 提示
+:::tip
 
 番剧 id 不包含开头的 aa。
 例如：<http://www.acfun.cn/bangumi/aa5022158> 的番剧 id 是 5022158，不包括开头的 aa。
@@ -225,7 +225,7 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 <Route author="nczitzk" example="/dlsite/home/new" path="/dlsite/:path+" paramsDesc={['Path, `/home/new` by default, as Release Calendar']}>
 
-:::tip Tip
+:::tip
 
 To subscribe to this route, you can first visit the site and specify filters, and then fill in the field after `https://www.dlsite.com/` in the URL of the corresponding page at the path of the route. Here are 2 examples.
 
@@ -349,7 +349,7 @@ Sources
 | ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |
 | posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |
 
-:::tip Tip
+:::tip
 
 When `posts` is selected as the value of the parameter **source**, the parameter **id** does not take effect.
 
@@ -383,8 +383,10 @@ When `posts` is selected as the value of the parameter **source**, the parameter
 <Route author="axojhf" example="/lovelive-anime/schedules" path="/schedules/:serie?/:category?" paramsDesc={['Love Live! Series sub-projects abbreviation, see the following table', 'The official website lists the categories, see the following table for details']} radar="1">
 
 :::tip Please note!
+
 The schedule and other information obtained by this route is subject to the official website announcement!
 The RSS routing has not been rigorously tested and the information provided cannot be guaranteed accurate!
+
 :::
 
 | Sub-project Name (not full name) | 全シリーズ                        | Lovelive!  | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | ラブライブ！スクールアイドルミュージカル |
@@ -409,7 +411,7 @@ The RSS routing has not been rigorously tested and the information provided cann
 
 <Route author="nczitzk" example="/mox" path="/mox/:category?" paramsDesc={['分类，可在对应分类页 URL 中找到']}>
 
-:::tip 提示
+:::tip
 
 在首页将分类参数选择确定后跳转到的分类页面 URL 中，`/l/` 后的字段即为分类参数。
 
@@ -571,7 +573,7 @@ For example: <https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_n
 
 ## 俺の 3D エロ動画 (oreno3d) {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)}
 
-:::tip Tip
+:::tip
 
 You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receive the video update messages and download them automatically
 
@@ -687,7 +689,7 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 ## 禁漫天堂 {#jin-man-tian-tang}
 
-:::tip 提示
+:::tip
 
 禁漫天堂有多个备用域名，本路由默认使用域名 <https://jmcomic.me>，若该域名无法访问，可以通过在路由最后加上 `?domain=<域名>` 指定路由访问的域名。如指定备用域名为 <https://jmcomic1.me>，则在所有禁漫天堂路由最后加上 `?domain=jmcomic1.me` 即可，此时路由为 [`/18comic?domain=jmcomic1.me`](https://rsshub.app/18comic?domain=jmcomic1.me)
 
@@ -726,7 +728,7 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 <Route author="nczitzk" example="/18comic/search/photos/all/NTR" path="/18comic/search/:option?/:category?/:keyword?/:time?/:order?" paramsDesc={['选项，可选 `video` 和 `photos`，默认为 `photos`', '分类，同上表，默认为 `all` 即全部', '关键字，同上表，默认为空', '时间范围，同上表，默认为 `a` 即全部', '排列顺序，同上表，默认为 `mr` 即最新']}>
 
-:::tip 提示
+:::tip
 
 关键字必须超过两个字，这是来自网站的限制。
 
@@ -738,7 +740,7 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 <Route author="nczitzk" example="/18comic/album/292282" path="/18comic/album/:id" paramsDesc={['专辑 id，可在专辑页 URL 中找到']}>
 
-:::tip 提示
+:::tip
 
 专辑 id 不包括 URL 中标题的部分。
 
@@ -768,7 +770,7 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 <Route author="shininome" path="/manhuagui/subscribe" example="/manhuagui/subscribe" radar="1" rssbud="1" selfhost="1">
 
-:::tip 提示
+:::tip
 
 个人订阅需要自建
 环境变量需要添加 MHGUI_COOKIE
@@ -845,7 +847,7 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
 | mt     | rise   | new    | pay    | top    | male   | female |
 
-:::tip 提示
+:::tip
 
 `time` 参数仅在 `type` 参数选为 **月票榜** 的时候生效。
 

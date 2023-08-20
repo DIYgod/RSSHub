@@ -89,7 +89,7 @@ Edit `environment` in [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob
 
 ## Docker Deployment
 
-:::tip Tip
+:::tip
 
 To enable puppeteer, replace `diygod/rsshub` with `diygod/rsshub:chromium-bundled` in **EACH** command.
 
@@ -250,7 +250,7 @@ Refer to our [Guide](https://docs.rsshub.app/) for usage. Replace `https://rsshu
 
 ### Configuration
 
-:::tip Tip
+:::tip
 
 On arm/arm64, this deployment method does not include puppeteer dependencies. To enable puppeteer, install Chromium from your distribution repositories first, then set `CHROMIUM_EXECUTABLE_PATH` to its executable path.
 
@@ -505,7 +505,7 @@ If you would like to test routes or avoid IP limits, etc., you may build your ow
 
 [![Try in PWD](https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png)](https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml)
 
-:::caution Warning
+:::caution
 
 -   [DockerHub](https://hub.docker.com) account required
 -   [Play with Docker](https://labs.play-with-docker.com/) instance will last for 4 hours at most. It should only be used for testing purpose
@@ -739,7 +739,7 @@ Configs in this sections are in beta stage, and **are turn off by default**. Ple
 
 ### Route-specific Configurations
 
-:::tip Notice
+:::tip
 
 Configs here are incomplete.
 

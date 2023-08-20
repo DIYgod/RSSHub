@@ -117,8 +117,10 @@ source 是*可选*字段，应指定 URL 路径。如果不想匹配任何 URL �
 
 source 应为一个字符串数组。例如，如果 `GitHub 仓库 Issues` 的 source 是 `/:user/:repo`，则意味着当您访问 `https://github.com/DIYgod/RSSHub` 时将匹配 `/:user/:repo`，此时返回的结果 params 将是：`{user: 'DIYgod', repo: 'RSSHub'}`。浏览器扩展程序使用这些参数根据 target 字段建立 RSSHub 订阅地址。
 
-:::caution 注意
+:::caution
+
 如果要提取的值在 URL 参数或 URL hash 中，请使用 target 函数而不是 source 字段。 此外，请记住，source 字段仅匹配 URL 路径，而不匹配 URL 的任何其他部分。
+
 :::
 
 您也可以使用 `*` 符号执行通配符匹配。请注意，此处的语法与 [path-to-regexp](https://github.com/pillarjs/path-to-regexp) 不同。例如，`/:user/:repo/*` 将匹配 `https://github.com/DIYgod/RSSHub/issues` 和 `https://github.com/DIYgod/RSSHub/issues/1234`。如果要对匹配结果进行命名，可以在 `*` 符号后放置变量名。例如，`/user/:repo/*path`，在此情况下，`path` 将是 `issues` 和 `issues/1234`。
