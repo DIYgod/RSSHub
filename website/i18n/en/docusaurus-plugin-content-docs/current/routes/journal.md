@@ -61,6 +61,22 @@ More jounals can be found in [AEA Journals](https://www.aeaweb.org/journals).
 
 </RouteEn>
 
+## American Institute of Physics
+
+### Journal
+
+<RouteEn author="Derekmini auto-bot-ty" example="/aip/aapt/ajp" path="/aip/:pub/:jrn" paramsDesc={['Publisher id','Journal id']} radar="1" rssbud="1" supportScihub="1">
+
+Refer to the URL format `pubs.aip.org/:pub/:jrn`
+
+:::tip Tip
+
+More jounals can be found in [AIP Publications](https://publishing.aip.org/publications/find-the-right-journal).
+
+:::
+
+</RouteEn>
+
 ## Annual Reviews
 
 ### Journal
@@ -426,16 +442,6 @@ To subscribe to [IN THE PIPELINE by Derek Lowe’s](https://science.org/blogs/pi
 ### Journal
 
 <RouteEn author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" paramsDesc={['Journal id, can be found in URL']}/>
-
-## Scitation
-
-### Journal
-
-<RouteEn author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp" path="/scitation/:pub/:jrn" paramsDesc={['Publisher, the part of the URL before `scitation.org`','Journal, the part of the URL after `/toc/`']} radar="1" rssbud="1" puppeteer="1"/>
-
-### Section
-
-<RouteEn author="Derekmini auto-bot-ty" example="/scitation/aapt/ajp/COMPUTATIONAL+PHYSICS" path="/scitation/:pub/:jrn/:sec" paramsDesc={['Publisher, the part of the URL before `scitation.org`','Journal, the part of the URL after `/toc/`','Section, the `tocSection` part of the URL']} radar="1" rssbud="1" puppeteer="1"/>
 
 ## Springer
 
