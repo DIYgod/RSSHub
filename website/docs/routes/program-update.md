@@ -1,10 +1,10 @@
 import Route from '@site/src/components/Route';
 
-# 🔄 程序更新
+# 🔄 Application Updates
 
 ## Amazon {#amazon}
 
-### Kindle 软件更新 {#amazon-kindle-ruan-jian-geng-xin}
+### Kindle Software Updates {#amazon-kindle-software-updates}
 
 <Route author="NavePnow" example="/amazon/kindle/software-updates" path="/amazon/kindle/software-updates" radar="1"/>
 
@@ -38,19 +38,19 @@ import Route from '@site/src/components/Route';
 
 ## APKPure {#apkpure}
 
-### 所有版本 {#apkpure-suo-you-ban-ben}
+### Versions {#apkpure-versions}
 
-<Route author="maple3142" example="/apkpure/versions/jp.co.craftegg.band/jp" path="/apkpure/versions/:pkg/:region?" paramsDesc={['包名稱', '區域代號，預設為 `en`']} radar="1" anticrawler="1" puppeteer="1"/>
+<Route author="maple3142" example="/apkpure/versions/jp.co.craftegg.band/jp" path="/apkpure/versions/:pkg/:region?" paramsDesc={['Package name', 'Region code, `en` by default']} radar="1" anticrawler="1" puppeteer="1"/>
 
 ## App Center {#app-center}
 
 ### Release {#app-center-release}
 
-<Route author="Rongronggg9" example="/app-center/release/cloudflare/1.1.1.1-windows/beta" path="/app-center/release/:user/:app/:distribution_group" paramsDesc={['用户', 'App 名称', '分发组']} radar="1" rssbud="1">
+<Route author="Rongronggg9" example="/app-center/release/cloudflare/1.1.1.1-windows/beta" path="/app-center/release/:user/:app/:distribution_group" paramsDesc={['User', 'App name', 'Distribution group']} radar="1" rssbud="1">
 
-:::tip 提示
+:::tip
 
-参数可从 Release 页的 URL 中提取: `https://install.appcenter.ms/users/:user/apps/:app/distribution_groups/:distribution_group`
+The parameters can be extracted from the Release page URL: `https://install.appcenter.ms/users/:user/apps/:app/distribution_groups/:distribution_group`
 
 :::
 
@@ -58,17 +58,17 @@ import Route from '@site/src/components/Route';
 
 ## App Store/Mac App Store {#app-store%2Fmac-app-store}
 
-### 应用更新 {#app-store%2Fmac-app-store-ying-yong-geng-xin}
+### App Update {#app-store%2Fmac-app-store-app-update}
 
-<Route author="HenryQW" example="/appstore/update/cn/id444934666" path="/appstore/update/:country/:id" paramsDesc={['App Store 国家, 如 QQ 的链接为 https://apps.apple.com/cn/app/qq/id444934666?mt=8, 则 country 为 `cn`', 'App Store app id, 如 QQ 的链接为 https://apps.apple.com/cn/app/qq/id444934666?mt=8, 则 id 为 `id444934666`']}/>
+<Route author="cielpy" example="/appstore/update/us/id697846300" path="/appstore/update/:country/:id" paramsDesc={['App Store Country, obtain from the app URL `https://apps.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `us`', 'App Store app id, obtain from the app URL `https://apps.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `id697846300`']} />
 
-### 价格更新（限免） {#app-store%2Fmac-app-store-jia-ge-geng-xin-%EF%BC%88-xian-mian-%EF%BC%89}
+### Price Drop {#app-store%2Fmac-app-store-price-drop}
 
-<Route author="HenryQW" example="/appstore/price/cn/mac/id1152443474" path="/appstore/price/:country/:type/:id" paramsDesc={['App Store 国家, 如 Squash 的链接为 https://apps.apple.com/cn/app/id1152443474, 则 country 为 `cn`', 'App 类型, `iOS` 或 `mac`', 'App Store app id, 必选, 如 Squash 的链接为 https://apps.apple.com/cn/app/id1152443474, 则 id 为 `id115244347`']}/>
+<Route author="HenryQW" example="/appstore/price/us/mac/id1152443474" path="/appstore/price/:country/:type/:id" paramsDesc={['App Store Country, obtain from the app URL https://apps.apple.com/us/app/id1152443474, in this case, `us`', 'App type，either `iOS` or `mac`', 'App Store app id, obtain from the app URL https://apps.apple.com/us/app/id1152443474, in this case, `id1152443474`']} />
 
-### 内购价格更新（限免） {#app-store%2Fmac-app-store-nei-gou-jia-ge-geng-xin-%EF%BC%88-xian-mian-%EF%BC%89}
+### In-App-Purchase Price Drop Alert {#app-store%2Fmac-app-store-in-app-purchase-price-drop-alert}
 
-<Route author="HenryQW" example="/appstore/iap/cn/id953286746" path="/appstore/iap/:country/:id" paramsDesc={['App Store 国家, 必选, 如 Darkroom – Photo Editor 的链接为 https://apps.apple.com/cn/app/id953286746, 则 country 为 `cn`', 'App Store app id, 必选, 如 Darkroom – Photo Editor 的链接为 https://apps.apple.com/cn/app/id953286746, 则 id 为 `id953286746`']}/>
+<Route author="HenryQW" example="/appstore/iap/us/id953286746" path="/appstore/iap/:country/:id" paramsDesc={['App Store Country, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `us`', 'App Store app id, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `id953286746`']} />
 
 ### 每日精品限免 / 促销应用（鲜面连线 by AppSo） {#app-store%2Fmac-app-store-mei-ri-jing-pin-xian-mian-%2F-cu-xiao-ying-yong-%EF%BC%88-xian-mian-lian-xian-by-appso%EF%BC%89}
 
@@ -80,27 +80,57 @@ import Route from '@site/src/components/Route';
 
 ## aptonic {#aptonic}
 
-### 新的 Dropzone 动作 {#aptonic-xin-de-dropzone-dong-zuo}
+### New Dropzone Actions {#aptonic-new-dropzone-actions}
 
-<Route author="HenryQW" example="/aptonic/action" path="/aptonic/action/:untested?" paramsDesc={['填写任意值，将会同时包括非官方的 Dropzone 动作']}/>
+<Route author="HenryQW" example="/aptonic/action" path="/aptonic/action/:untested?" paramsDesc={['Set any value to include untested actions.']}/>
+
+## ASUS {#asus}
+
+### BIOS {#asus-bios}
+
+<Route author="Fatpandac" example="/asus/bios/RT-AX88U" path="/asus/bios/:model" paramsDesc={['Model, can be found in product page']}/>
+
+### GPU Tweak {#asus-gpu-tweak}
+
+<Route author="TonyRL" example="/asus/gpu-tweak" path="/asus/gpu-tweak" radar="1" rssbud="1"/>
 
 ## Bandisoft {#bandisoft}
 
-### 更新记录 {#bandisoft-geng-xin-ji-lu}
+### History {#bandisoft-history}
 
-<Route author="nczitzk" example="/bandisoft/bandizip" path="/bandisoft/:id?/:lang?" paramsDesc={['软件 id，见下表，默认为 Bandizip', '语言，见下表，默认为英语']}>
+<Route author="nczitzk" example="/bandisoft/bandizip" path="/bandisoft/:id?/:lang?" paramsDesc={['Software id, see below, Bandizip by default', 'Language, see below, English by default']}>
 
-软件 id
+Software id
 
 | Bandizip (Win) | Bandizip (Mac) | Honeycam | Honeyview |
 | -------------- | -------------- | -------- | --------- |
 | bandizip       | bandizip.mac   | honeycam | honeyview |
 
-语言
+Language
 
-| English | 中文 (简体) | 中文 (繁體) | 日本語 | Русский | Español | Français | Deutsch | Italiano | Slovenčina | Українська | Беларуская | Dansk | Polski | Português Brasileiro | Čeština | Nederlands | Slovenščina | Türkçe | ภาษาไทย | 한국어 |
-| ------- | ----------- | ----------- | ------ | ------- | ------- | -------- | ------- | -------- | ---------- | ---------- | ---------- | ----- | ------ | -------------------- | ------- | ---------- | ----------- | ------ | ------- | ------ |
-| en      | cn          | tw          | jp     | ru      | es      | fr       | de      | it       | sk         | uk         | be         | da    | pl     | br                   | cs      | nl         | sl          | tr     | th      | kr     |
+| Language             | key |
+| -------------------- | --- |
+| English              | en  |
+| 中文 (简体)          | cn  |
+| 中文 (繁體)          | tw  |
+| 日本語               | jp  |
+| Русский              | ru  |
+| Español              | es  |
+| Français             | fr  |
+| Deutsch              | de  |
+| Italiano             | it  |
+| Slovenčina           | sk  |
+| Українська           | uk  |
+| Беларуская           | be  |
+| Dansk                | da  |
+| Polski               | pl  |
+| Português Brasileiro | br  |
+| Čeština              | cs  |
+| Nederlands           | nl  |
+| Slovenščina          | sl  |
+| Türkçe               | tr  |
+| ภาษาไทย              | th  |
+| 한국어               | kr  |
 
 </Route>
 
@@ -108,7 +138,7 @@ import Route from '@site/src/components/Route';
 
 ### 更新情报 {#bilibili-geng-xin-qing-bao}
 
-<Route author="nczitzk" example="/bilibili/app/android" path="/bilibili/app/:id?" paramsDesc={['客户端 id，见下表，默认为安卓版']}>
+<Route author="nczitzk" example="/bilibili/app/android" path="/bilibili/app/:id?" paramsDesc={['客户端 id，见下表，默认为安卓版']} />
 
 | 安卓版  | iPhone 版 | iPad HD 版 | UWP 版 | TV 版          |
 | ------- | --------- | ---------- | ------ | -------------- |
@@ -116,7 +146,7 @@ import Route from '@site/src/components/Route';
 
 ## BlueStacks {#bluestacks}
 
-### BlueStacks 5 版本日誌 {#bluestacks-bluestacks-5-ban-ben-ri-zhi}
+### BlueStacks 5 Release Notes {#bluestacks-bluestacks-5-release-notes}
 
 <Route author="TonyRL" example="/bluestacks/release/5" path="/bluestacks/release/5" radar="1" anticrawler="1" puppeteer="1"/>
 
@@ -146,15 +176,15 @@ import Route from '@site/src/components/Route';
 
 ## Chocolatey {#chocolatey}
 
-### 软件更新 {#chocolatey-ruan-jian-geng-xin}
+### Software Update {#chocolatey-software-update}
 
 <Route author="woodgear" example="/chocolatey/software/GoogleChrome" path="/chocolatey/software"/>
 
-## Chrome 网上应用店 {#chrome-wang-shang-ying-yong-dian}
+## Chrome Web Store {#chrome-web-store}
 
-### 扩展程序更新 {#chrome-wang-shang-ying-yong-dian-kuo-zhan-cheng-xu-geng-xin}
+### Extensions Update {#chrome-web-store-extensions-update}
 
-<Route author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" paramsDesc={['扩展程序 id, 可在应用页 URL 中找到']} />
+<Route author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" paramsDesc={['Extension id, can be found in extension url']}/>
 
 ## Civitai {#civitai}
 
@@ -164,9 +194,9 @@ import Route from '@site/src/components/Route';
 
 ### Model discussions {#civitai-model-discussions}
 
-:::caution 注意
+:::caution
 
-需要配置 `CIVITAI_COOKIE` 才可获取 NSFW 模型的图片信息
+Need to configure `CIVITAI_COOKIE` to obtain image information of NSFW models.
 
 :::
 
@@ -180,7 +210,7 @@ import Route from '@site/src/components/Route';
 
 ## CPUID {#cpuid}
 
-### 新闻 {#cpuid-xin-wen}
+### News {#cpuid-news}
 
 <Route author="TonyRL" example="/cpuid/news" path="/cpuid/news" radar="1" rssbud="1"/>
 
@@ -196,11 +226,11 @@ import Route from '@site/src/components/Route';
 
 ## CurseForge {#curseforge}
 
-### 文件更新 {#curseforge-wen-jian-geng-xin}
+### File Update {#curseforge-file-update}
 
-<Route author="junfengP" example="/curseforge/sc2/assets/taylor-mouses-stuff/files" path="/curseforge/:gameid/:catalogid/:projectid/files" paramsDesc={['游戏名，以`https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files`为例，`sc2`代表星际2', '分类名，紧跟在游戏名后，如示例中`assets`', '项目名，紧跟在分类名后，如示例中`taylor-mouses-stuff`']}/>
+<Route author="junfengP" example="/curseforge/sc2/assets/taylor-mouses-stuff/files" path="/curseforge/:gameid/:catalogid/:projectid/files" paramsDesc={['Game name', 'Catalog name', 'Progect name']}>
 
-例如：`https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` 对应 `/curseforge/sc2/assets/taylor-mouses-stuff/files`
+For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` to `/curseforge/sc2/assets/taylor-mouses-stuff/files`
 
 </Route>
 
@@ -208,29 +238,29 @@ import Route from '@site/src/components/Route';
 
 ### Changes {#ditto-clipboard-manager-changes}
 
-<Route author="nczitzk" example="/ditto/changes" path="/ditto/changes/:type?" paramsDesc={['类型，可选 `beta`']}/>
+<Route author="nczitzk" example="/ditto/changes" path="/ditto/changes/:type?" paramsDesc={['Type, `beta` is an option']}/>
 
 ## Docker Hub {#docker-hub}
 
-### 镜像有新 Build {#docker-hub-jing-xiang-you-xin-build}
+### Image New Build {#docker-hub-image-new-build}
 
-<Route author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" paramsDesc={['镜像作者', '镜像名称', '镜像标签，默认 latest']} radar="1" rssbud="1">
+<Route author="HenryQW" example="/dockerhub/build/wangqiru/ttrss" path="/dockerhub/build/:owner/:image/:tag?" paramsDesc={['Image owner', 'Image name', 'Image tag，default to latest']}>
 
-:::caution 注意
+:::caution
 
-官方镜像的 owner 填写 library, 如: <https://rsshub.app/dockerhub/build/library/mysql>
+The owner of the official image fills in the library, for example: <https://rsshub.app/dockerhub/build/library/mysql>
 
 :::
 
 </Route>
 
-### 镜像有新 Tag {#docker-hub-jing-xiang-you-xin-tag}
+### Image New Tag {#docker-hub-image-new-tag}
 
-<Route author="outloudvi" example="/dockerhub/tag/library/mariadb" path="/dockerhub/tag/:owner/:image/:limits?" paramsDesc={['镜像作者', '镜像名称', 'tag 数量，默认为 10']} radar="1" rssbud="1">
+<Route author="outloudvi" example="/dockerhub/tag/library/mariadb" path="/dockerhub/tag/:owner/:image/:limits?" paramsDesc={['Image owner', 'Image name', 'Tag count, 10 by default']}>
 
-:::caution 注意
+:::caution
 
-官方镜像的 owner 填写 library, 如: <https://rsshub.app/dockerhub/tag/library/mysql>
+Use `library` as the `owner` for official images, such as <https://rsshub.app/dockerhub/tag/library/mysql>
 
 :::
 
@@ -238,15 +268,15 @@ import Route from '@site/src/components/Route';
 
 ## Eagle {#eagle}
 
-### 更新日志 {#eagle-geng-xin-ri-zhi}
+### Changelog {#eagle-changelog}
 
-<Route author="tigercubden" example="/eagle/changelog" path="/eagle/changelog/:language?" paramsDesc={['语言，选项见下表，默认为 `cn`']} radar="1">
+<Route author="tigercubden" example="/eagle/changelog/en" path="/eagle/changelog/:language?" paramsDesc={['Language, see list, default to be `cn`']} radar="1">
 
-语言
+Language
 
-| 简体中文 | 繁体中文 | 英文 |
-| -------- | -------- | ---- |
-| cn       | tw       | en   |
+| Simplified Chinese | Traditional Chinese | English |
+| ------------------ | ------------------- | ------- |
+| cn                 | tw                  | en      |
 
 </Route>
 
@@ -258,9 +288,9 @@ import Route from '@site/src/components/Route';
 
 ## F-Droid {#f-droid}
 
-### App 更新 {#f-droid-app-geng-xin}
+### App Update {#f-droid-app-update}
 
-<Route author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" paramsDesc={['App包名']} />
+<Route author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" paramsDesc={['App\'s package name']} />
 
 ## fir.im 应用 {#fir.im-ying-yong}
 
@@ -270,19 +300,19 @@ import Route from '@site/src/components/Route';
 
 ## Firefox {#firefox}
 
-### 新版本发布 {#firefox-xin-ban-ben-fa-bu}
+### New Release {#firefox-new-release}
 
-<Route author="fengkx" example="/firefox/release/desktop" path="/firefox/release/:platform" paramsDesc={['操作平台']}>
+<Route author="fengkx" example="/firefox/release/desktop" path="/firefox/release/:platform" paramsDesc={['the platform']} >
 
-| 桌面    | Android | Beta | Nightly | Android Beta | ESR           |
+| Desktop | Android | Beta | Nightly | Android Beta | ESR           |
 | ------- | ------- | ---- | ------- | ------------ | ------------- |
 | desktop | android | beta | nightly | android-beta | organizations |
 
 </Route>
 
-### 附加组件 (Add-ons) 更新 {#firefox-fu-jia-zu-jian-(add-ons)-geng-xin}
+### Add-ons Update {#firefox-add-ons-update}
 
-<Route author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" paramsDesc={['附加组件 id, 可在应用页 URL 中找到']} />
+<Route author="DIYgod" example="/firefox/addons/rsshub-radar" path="/firefox/addons/:id" paramsDesc={['Add-ons id, can be found in add-ons url']}/>
 
 ## fish shell {#fish-shell}
 
@@ -294,25 +324,25 @@ import Route from '@site/src/components/Route';
 
 ### Software Update {#fosshub-software-update}
 
-<Route author="nczitzk" example="/fosshub/qBittorrent" path="/fosshub/:id" paramsDesc={['软件 id，可在对应软件页 URL 中找到']}/>
+<Route author="nczitzk" example="/fosshub/qBittorrent" path="/fosshub/:id" paramsDesc={['Software id, can be found in URL']}/>
 
 ## Greasy Fork {#greasy-fork}
 
-### 脚本更新 {#greasy-fork-jiao-ben-geng-xin}
+### Script Update {#greasy-fork-script-update}
 
-<Route author="imlonghao" example="/greasyfork/zh-CN/bilibili.com" path="/greasyfork/:language/:domain?" paramsDesc={['语言, 可在网站右上角找到, `all` 为所有语言', '按脚本生效域名过滤, 可选']} radar="1"/>
+<Route author="imlonghao" path="/greasyfork/:language/:domain?" example="/greasyfork/en/google.com" paramsDesc={['language, located on the top right corner of Greasy Fork\'s search page, set to `all` for including all languages', 'the script\'s target domain']} radar="1" />
 
-### 脚本版本历史 {#greasy-fork-jiao-ben-ban-ben-li-shi}
+### Script Version History {#greasy-fork-script-version-history}
 
-<Route author="miles170" example="/greasyfork/scripts/14178-ac-baidu-重定向优化百度搜狗谷歌必应搜索-favicon-双列/versions" path="/greasyfork/scripts/:script/versions" paramsDesc={['脚本 id，可在对应脚本页 URL 中找到']} radar="1" />
+<Route author="miles170" example="/greasyfork/scripts/431691-bypass-all-shortlinks/versions" path="/greasyfork/scripts/:script/versions" paramsDesc={['Script id, can be found in URL']} radar="1" />
 
-### 脚本反馈 {#greasy-fork-jiao-ben-fan-kui}
+### Script Feedback {#greasy-fork-script-feedback}
 
-<Route author="miles170" example="/greasyfork/scripts/14178-ac-baidu-重定向优化百度搜狗谷歌必应搜索-favicon-双列/feedback" path="/greasyfork/scripts/:script/feedback" paramsDesc={['脚本 id，可在对应脚本页 URL 中找到']} radar="1" />
+<Route author="miles170" example="/greasyfork/scripts/431691-bypass-all-shortlinks/feedback" path="/greasyfork/scripts/:script/feedback" paramsDesc={['Script id, can be found in URL']} radar="1" />
 
 ## Hugo {#hugo}
 
-### 更新日志 {#hugo-geng-xin-ri-zhi}
+### Release News {#hugo-release-news}
 
 <Route author="maokwen" example="/hugo/releases" path="/hugo/releases"/>
 
@@ -320,13 +350,13 @@ import Route from '@site/src/components/Route';
 
 ### Download Hub {#ifi-audio-download-hub}
 
-<Route author="NavePnow" example="/ifi-audio/download/1503007035/44472" path="/ifi-audio/download/:val/:id" paramsDesc={['商品 val', '商品 id']}/>
+<Route author="NavePnow" example="/ifi-audio/download/1503007035/44472" path="/ifi-audio/download/:val/:id" paramsDesc={['product val', 'product id']}/>
 
-:::caution 注意
+:::caution
 
-1.  打开网站 <https://ifi-audio.com/download-hub> 并打开 Inspect -> Network 调试面板
-2.  在网站中选择设备以及对应的 serial number，点击搜索
-3.  在 Network 面板中找到最后一个 <https://ifi-audio.com/wp-admin/admin-ajax.php> 请求，查看 Payload 中的 val 和 id，填写在 url 中
+1.  Open <https://ifi-audio.com/download-hub> and the Network panel
+2.  Select the device and the corresponding serial number in the website and click Search
+3.  Find the last request named <https://ifi-audio.com/wp-admin/admin-ajax.php> in the Network panel, find out the val and id in the Payload panel, and fill in the url
 
 :::
 
@@ -342,11 +372,11 @@ import Route from '@site/src/components/Route';
 
 <Route author="NathanDai" example="/firecore/ios" path="/firecore/:os" paramsDesc={['`ios`,`tvos`,`macos`']}/>
 
-## IPSW\.me {#ipsw%5C.me}
+## IPSW.me {#ipsw.me}
 
-### 苹果固件更新 - IPSWs/OTAs 版本 {#ipsw%5C.me-ping-guo-gu-jian-geng-xin---ipsws%2Fotas-ban-ben}
+### Apple Firmware Update-IPSWs/OTAs version {#ipsw.me-apple-firmware-update-ipsws%2Fotas-version}
 
-<Route author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" paramsDesc={['填写ipsws或otas，得到不同版本的固件','产品名，`http://rsshub.app/ipsw/index/ipsws/iPod`如填写iPad则关注iPad整个系列(ptype选填为ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`如果填写具体的iPhone11,8则关注这个机型的ipsws固件信息']}/>
+<Route author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" paramsDesc={['Fill in ipsws or otas to get different versions of firmware','Product name, `http://rsshub.app/ipsw/index/ipsws/iPod`, if you fill in the iPad, follow the entire iPad series(ptype default to ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`, if you fill in the specific iPhone11,8, submit to the ipsws firmware information of this model']}/>
 
 ## Logseq {#logseq}
 
@@ -357,15 +387,15 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ## MacKed {#macked}
 
-### 应用更新 {#macked-ying-yong-geng-xin}
+### APP Update {#macked-app-update}
 
-<Route author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" paramsDesc={['应用名, 可在应用页 URL 中找到']}/>
+<Route author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" paramsDesc={['app name, can be found in URL']}/>
 
 ## MacUpdate {#macupdate}
 
-### 更新 {#macupdate-geng-xin}
+### Update {#macupdate-update}
 
-<Route author="TonyRL" example="/macupdate/app/11942" path="/macupdate/app/:appId/:appSlug?" paramsDesc={['应用 ID，可在 URL 找到', '应用名，可在 URL 找到']} radar="1"/>
+<Route author="TonyRL" example="/macupdate/app/11942" path="/macupdate/app/:appId/:appSlug?" paramsDesc={['Application unique ID, can be found in URL', 'Application slug, can be found in URL']} radar="1"/>
 
 ## MacWk {#macwk}
 
@@ -383,31 +413,30 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ## Microsoft Edge {#microsoft-edge}
 
-### 外接程序更新 {#microsoft-edge-wai-jie-cheng-xu-geng-xin}
+### Addons Update {#microsoft-edge-addons-update}
 
-<Route author="hoilc" example="/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln" path="/edge/addon/:crxid" paramsDesc={['扩展 id，可在扩展页 URL 中找到']} />
+<Route author="hoilc" example="/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln" path="/edge/addon/:crxid" paramsDesc={['Addon id, can be found in addon url']}/>
 
 ## Microsoft Store {#microsoft-store}
 
 ### Updates {#microsoft-store-updates}
 
-<Route author="hellodword" example="/microsoft-store/updates/9WZDNCRFHVN5/CN" path="/microsoft-store/updates/:productid/:market?" paramsDesc={['在 Store 中点击 `分享` - `复制链接` 即可获得', '默认为 `CN`']} />
+<Route author="hellodword" example="/microsoft-store/updates/9WZDNCRFHVN5/CN" path="/microsoft-store/updates/:productid/:market?" paramsDesc={['`Share` - `Copy Link` in the Store', '`CN` as default']} />
 
 ## MIUI {#miui}
 
-### MIUI 新版本发布 {#miui-miui-xin-ban-ben-fa-bu}
+### New firmware {#miui-new-firmware}
 
-<Route author="Indexyz" example="/miui/aries" path="/miui/:device/:type?/:region?" paramsDesc={['设备的 `codename` 例如 小米 2s 为 `aries`. 国际版的 `codename` 一般以 `_global` 结尾. 可查阅 MIUI 线刷包下载页面', '类型', '地区, 默认为 `cn`']}>
+<Route author="Indexyz" example="/miui/aries/" path="/miui/:device/:type?/:region?" paramsDesc={['the device `codename` eg. `aries` for Mi 2S','type', 'Region, default to `cn`']} >
 
-| 类型   | type    |
-| ------ | ------- |
-| 稳定版 | release |
-| 开发版 | dev     |
+| stable  | development |
+| ------- | ----------- |
+| release | dev         |
 
-| 地区   | region |
+| region | region |
 | ------ | ------ |
-| 国内版 | cn     |
-| 国际版 | global |
+| China  | cn     |
+| Global | global |
 
 </Route>
 
@@ -415,23 +444,23 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### Download {#neat-download-manager-download}
 
-<Route author="nczitzk" example="/neatdownloadmanager/download" path="/neatdownloadmanager/download/:os?" paramsDesc={['操作系统，可选 windows 或 macos，默认为全部']}/>
+<Route author="nczitzk" example="/neatdownloadmanager/download" path="/neatdownloadmanager/download/:os?" paramsDesc={['Operating system, windows or macos, all by default']}/>
 
 ## Not a Tesla App {#not-a-tesla-app}
 
-### 特斯拉系统更新 {#not-a-tesla-app-te-si-la-xi-tong-geng-xin}
+### Tesla Software Updates {#not-a-tesla-app-tesla-software-updates}
 
 <Route author="mrbruce516" example="/notateslaapp/ota" path="/notateslaapp/ota" radar="1"/>
 
 ## NPM {#npm}
 
-### 包 {#npm-bao}
+### Package {#npm-package}
 
-<Route author="Fatpandac" example="/npm/package/rsshub" path="/npm/package/:name" paramsDesc={['包名']}/>
+<Route author="Fatpandac" example="/npm/package/rsshub" path="/npm/package/:name" paramsDesc={['Package name']}/>
 
 ## Nvidia Web Driver {#nvidia-web-driver}
 
-### 更新日志 {#nvidia-web-driver-geng-xin-ri-zhi}
+### Changelog {#nvidia-web-driver-changelog}
 
 <Route author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
@@ -439,7 +468,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### Changelog {#o%26o-software-changelog}
 
-<Route author="nczitzk" example="/oo-software/changelog/shutup10" path="/oo-software/changelog/:id" paramsDesc={['软件 id，见下表，默认为 shutup10，可在对应软件页中找到']}>
+<Route author="nczitzk" example="/oo-software/changelog/shutup10" path="/oo-software/changelog/:id" paramsDesc={['Software id, see below, shutup10 by default, can be found in URL']}>
 
 | Software       | Id          |
 | -------------- | ----------- |
@@ -466,7 +495,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### Releases {#openwrt-releases}
 
-<Route author="DIYgod" example="/openwrt/releases/xiaomi/xiaomi_redmi_router_ac2100" path="/releases/:brand/:model" paramsDesc={['产品型号，可在 `Table of Hardware` -> `Device Page` 的 URL 中找到', '同上']}/>
+<Route author="DIYgod" example="/openwrt/releases/xiaomi/xiaomi_redmi_router_ac2100" path="/releases/:brand/:model" paramsDesc={['Device Model, can be found in url of `Table of Hardware` -> `Device Page`', 'Same as above']}/>
 
 ## Postman {#postman}
 
@@ -476,9 +505,9 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ## Potplayer {#potplayer}
 
-### 版本历史 {#potplayer-ban-ben-li-shi}
+### Version History {#potplayer-version-history}
 
-<Route author="nczitzk" example="/potplayer/update" path="/potplayer/update/:language?" paramsDesc={['语言，见下表，默认为英语']}>
+<Route author="nczitzk" example="/potplayer/update" path="/potplayer/update/:language?" paramsDesc={['Language, see below, English by default']}>
 
 | 한국어 | 中文 (简体) | 中文 (繁体) | ENGLISH | Українська | РУССКИЙ | Polski |
 | ------ | ----------- | ----------- | ------- | ---------- | ------- | ------ |
@@ -494,7 +523,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ## qBittorrent {#qbittorrent}
 
-### 消息 {#qbittorrent-xiao-xi}
+### News {#qbittorrent-news}
 
 <Route author="TonyRL" example="/qbittorrent/news" path="/qbittorrent/news" radar="1" rssbud="1"/>
 
@@ -502,7 +531,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### Release Notes {#qnap-release-notes}
 
-<Route author="nczitzk" example="/qnap/release-notes/qts" path="/qnap/release-notes/:id" paramsDesc={['OS id，见下表']}>
+<Route author="nczitzk" example="/qnap/release-notes/qts" path="/qnap/release-notes/:id" paramsDesc={['OS id, see below']}>
 
 | QTS | QuTS hero | QuTScloud | QuWAN Orchestrator | QES | TAS | AfoBot |
 | --- | --------- | --------- | ------------------ | --- | --- | ------ |
@@ -530,7 +559,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ## RemNote {#remnote}
 
-### 变更日志 {#remnote-bian-geng-ri-zhi}
+### Changelog {#remnote-changelog}
 
 <Route author="TonyRL" example="/remnote/changelog" path="/remnote/changelog" radar="1" rssbud="1"/>
 
@@ -538,7 +567,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### Release Notes {#rescuetime-release-notes}
 
-<Route author="nczitzk" example="/rescuetime/release-notes" path="/rescuetime/release-notes/:os?" paramsDesc={['OS id，见下表']}>
+<Route author="nczitzk" example="/rescuetime/release-notes" path="/rescuetime/release-notes/:os?" paramsDesc={['OS id, see below']}>
 
 | Mac OS | Windows |
 | ------ | ------- |
@@ -548,11 +577,11 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ## RSSHub {#rsshub}
 
-### 有新路由啦 {#rsshub-you-xin-lu-you-la}
+### New routes {#rsshub-new-routes}
 
-<Route author="DIYgod" example="/rsshub/routes" path="/rsshub/routes/:lang?" radar="1" rssbud="1" paramsDesc={['语言，`en` 为英文路由，其他值或留空则为中文路由，预设为中文路由']}/>
+<Route author="DIYgod" path="/rsshub/routes/:lang?" example="/rsshub/routes/en" paramsDesc={['Language, `en` means English routes, other values or null means Chinese routes']}/>
 
-### 有新赞助商啦 {#rsshub-you-xin-zan-zhu-shang-la}
+### New sponsors {#rsshub-new-sponsors}
 
 <Route author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1" rssbud="1"/>
 
@@ -586,11 +615,11 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ## sketch.com {#sketch.com}
 
-### beta 更新 {#sketch.com-beta-geng-xin}
+### Beta update {#sketch.com-beta-update}
 
 <Route author="Jeason0228" example="/sketch/beta" path="/sketch/beta"  />
 
-### Release 更新 {#sketch.com-release-geng-xin}
+### Release update {#sketch.com-release-update}
 
 <Route author="Jeason0228" example="/sketch/updates" path="/sketch/updates"  />
 
@@ -598,11 +627,11 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### Software Downloads {#sony-software-downloads}
 
-<Route author="NavePnow" example="/sony/downloads/product/nw-wm1am2" path="/sony/downloads/:productType/:productId" paramsDesc={['产品类别', '产品Id']}>
+<Route author="NavePnow" example="/sony/downloads/product/nw-wm1am2" path="/sony/downloads/:productType/:productId" paramsDesc={['product type', 'product id']}>
 
-:::tip 提示
+:::tip
 
-打开 `https://www.sony.com/electronics/support` 并搜索对应的产品，比如 `Sony A7M4` 对应的网站是 `https://www.sony.com/electronics/support/e-mount-body-ilce-7-series/ilce-7m4/downloads`，`productType` 为 `e-mount-body-ilce-7-series`, `productId` 为 `ilce-7m4`
+Open `https://www.sony.com/electronics/support` and search for the corresponding product, such as `Sony A7M4`, the website corresponding to which is `https://www.sony.com/electronics/support/e-mount-body-ilce-7-series/ilce-7m4/downloads`, where `productType` is `e-mount-body-ilce-7-series` and `productId` is `ilce-7m4`.
 
 :::
 
@@ -610,7 +639,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ## Thunderbird {#thunderbird}
 
-### 更新日志 {#thunderbird-geng-xin-ri-zhi}
+### Changelog {#thunderbird-changelog}
 
 <Route author="garywill" example="/thunderbird/release" path="/thunderbird/release"/>
 
@@ -624,32 +653,32 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### Blog {#tradingview-blog}
 
-<Route author="nczitzk" example="/tradingview/blog/en" path="/tradingview/blog/:language?" paramsDesc={['语言，见下表，默认为 en 即英语']}>
+<Route author="nczitzk" example="/tradingview/blog/en" path="/tradingview/blog/:language?" paramsDesc={['Language, see below, `en` as English by default']}>
 
-语言
+Language
 
-| 编号 | 语言                |
-| ---- | ------------------- |
-| en   | English             |
-| ru   | Русский             |
-| ja   | 日本語              |
-| es   | Español             |
-| tr   | Türkçe              |
-| ko   | 한국어              |
-| it   | Italiano            |
-| pt   | Português do Brasil |
-| de   | Deutsch             |
-| fr   | Français            |
-| pl   | Polski              |
-| id   | Bahasa Indonesia    |
-| my   | Bahasa Malaysia     |
-| tw   | 繁體                |
-| cn   | 简体                |
-| vi   | Tiếng Việt          |
-| th   | ภาษาไทย             |
-| sv   | Svenska             |
-| ar   | العربية             |
-| il   | Hebrew              |
+| Id  | Language            |
+| --- | ------------------- |
+| en  | English             |
+| ru  | Русский             |
+| ja  | 日本語              |
+| es  | Español             |
+| tr  | Türkçe              |
+| ko  | 한국어              |
+| it  | Italiano            |
+| pt  | Português do Brasil |
+| de  | Deutsch             |
+| fr  | Français            |
+| pl  | Polski              |
+| id  | Bahasa Indonesia    |
+| my  | Bahasa Malaysia     |
+| tw  | 繁體                |
+| cn  | 简体                |
+| vi  | Tiếng Việt          |
+| th  | ภาษาไทย             |
+| sv  | Svenska             |
+| ar  | العربية             |
+| il  | Hebrew              |
 
 </Route>
 
@@ -673,25 +702,25 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### Download {#western-digital-download}
 
-<Route author="nczitzk" example="/wdc/download/279" path="/wdc/download/:id?" paramsDesc={['软件 id，可在对应软件页 URL 中找到，默认为 279，即 Western Digital Dashboard']}/>
+<Route author="nczitzk" example="/wdc/download/279" path="/wdc/download/:id?" paramsDesc={['Software id, can be found in URL, 279 as Western Digital Dashboard by default']}/>
 
 ## winstall {#winstall}
 
-### 应用更新 {#winstall-ying-yong-geng-xin}
+### Apps Update {#winstall-apps-update}
 
-<Route author="TonyRL" example="/winstall/Mozilla.Firefox" path="/winstall/:appId" paramsDesc={['应用名']} radar="1"/>
-
-## WizFile {#wizfile}
-
-### 更新日志 {#wizfile-geng-xin-ri-zhi}
-
-<Route author="Fatpandac" example="/wizfile/updates" path="/wizfile/updates"/>
+<Route author="TonyRL" example="/winstall/Mozilla.Firefox" path="/winstall/:appId" paramsDesc={['Application ID']} radar="1"/>
 
 ## WizTree {#wiztree}
 
 ### What's New {#wiztree-what's-new}
 
 <Route author="nczitzk" example="/diskanalyzer/whats-new" path="/diskanalyzer/whats-new"/>
+
+## WziFile {#wzifile}
+
+### Version History {#wzifile-version-history}
+
+<Route author="Fatpandac" example="/wizfile/updates" path="/wizfile/updates"/>
 
 ## X410 {#x410}
 
@@ -713,9 +742,9 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ## Xposed Module Repository {#xposed-module-repository}
 
-### Module 更新 {#xposed-module-repository-module-geng-xin}
+### Module Update {#xposed-module-repository-module-update}
 
-<Route author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" paramsDesc={['模块包名, 模块页中的 Package 字段']}/>
+<Route author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" paramsDesc={['module package name']}/>
 
 ## XYplorer {#xyplorer}
 
@@ -725,19 +754,9 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ## Zotero {#zotero}
 
-### 版本历史 {#zotero-ban-ben-li-shi}
+### Version History {#zotero-version-history}
 
 <Route author="jasongzy" example="/zotero/versions" path="/zotero/versions"/>
-
-## 华硕 {#hua-shuo}
-
-### 固件 {#hua-shuo-gu-jian}
-
-<Route author="Fatpandac" example="/asus/bios/RT-AX88U" path="/asus/bios/:model" paramsDesc={['产品型号，可在产品页面找到']}/>
-
-### GPU Tweak {#hua-shuo-gpu-tweak}
-
-<Route author="TonyRL" example="/asus/gpu-tweak" path="/asus/gpu-tweak" radar="1" rssbud="1"/>
 
 ## 蒲公英应用分发 {#pu-gong-ying-ying-yong-fen-fa}
 
@@ -776,3 +795,4 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 |          | -commentCount | -createdAt | createdAt |
 
 </Route>
+

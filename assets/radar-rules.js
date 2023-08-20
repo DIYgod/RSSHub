@@ -100,7 +100,7 @@
     },
     'alter-shanghai.cn': { _name: 'Alter', '.': [{ title: '新闻', docs: 'https://docs.rsshub.app/routes/shopping#alter-zhong-guo', source: '/cn/news', target: '/alter-cn/news' }] },
     'itslide.com': { _name: 'ITSlide', www: [{ title: '最新', docs: 'https://docs.rsshub.app/routes/programming#itslide', source: '/*', target: '/itslide/new' }] },
-    'leboncoin.fr': { _name: 'leboncoin', www: [{ title: 'ads', docs: 'https://docs.rsshub.app/routes/en/shopping#leboncoin', source: '/recherche', target: (params, url) => '/leboncoin/ad/' + url.split('?')[1] }] },
+    'leboncoin.fr': { _name: 'leboncoin', www: [{ title: 'ads', docs: 'https://docs.rsshub.app/routes/shopping#leboncoin', source: '/recherche', target: (params, url) => '/leboncoin/ad/' + url.split('?')[1] }] },
     'yuancheng.work': {
         _name: '远程.work',
         '.': [
@@ -312,13 +312,13 @@
     'umass.edu': {
         _name: 'UMASS Amherst',
         ece: [
-            { title: 'ECE News', docs: 'http://docs.rsshub.app/en/routes/university#umass-amherst', source: '/news', target: '/umass/amherst/ecenews' },
-            { title: 'ECE Seminar', docs: 'http://docs.rsshub.app/en/routes/university#umass-amherst', source: '/seminars', target: '/umass/amherst/eceseminar' },
+            { title: 'ECE News', docs: 'http://docs.rsshub.app/routes/university#umass-amherst', source: '/news', target: '/umass/amherst/ecenews' },
+            { title: 'ECE Seminar', docs: 'http://docs.rsshub.app/routes/university#umass-amherst', source: '/seminars', target: '/umass/amherst/eceseminar' },
         ],
-        'www.cics': [{ title: 'CICS News', docs: 'http://docs.rsshub.app/en/routes/university#umass-amherst', source: '/news', target: '/umass/amherst/csnews' }],
+        'www.cics': [{ title: 'CICS News', docs: 'http://docs.rsshub.app/routes/university#umass-amherst', source: '/news', target: '/umass/amherst/csnews' }],
         www: [
-            { title: 'IPO Events', docs: 'http://docs.rsshub.app/en/routes/university#umass-amherst', source: '/ipo/iss/events', target: '/umass/amherst/ipoevents' },
-            { title: 'IPO Featured Stories', docs: 'http://docs.rsshub.app/en/routes/university#umass-amherst', source: '/ipo/iss/featured-stories', target: '/umass/amherst/ipostories' },
+            { title: 'IPO Events', docs: 'http://docs.rsshub.app/routes/university#umass-amherst', source: '/ipo/iss/events', target: '/umass/amherst/ipoevents' },
+            { title: 'IPO Featured Stories', docs: 'http://docs.rsshub.app/routes/university#umass-amherst', source: '/ipo/iss/featured-stories', target: '/umass/amherst/ipostories' },
         ],
     },
     'bjeea.com': {

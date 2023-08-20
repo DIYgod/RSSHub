@@ -49,26 +49,18 @@ const loopNav = (nav, lang) =>
  * Iterate config and build document object:
  * E.g.
  * {
-        path: 'docs/en/other.md', <-- full path here
+        path: 'docs/other.md', <-- full path here
         type: 'route', <--- Defined in file.js
         lang: 'en' <-- Defined in file.js
     }
  */
 const buildFileList = async () => {
     const config = require(`../../sidebars.js`);
-    const fileList = config.guideSidebar[2].items
-        .map((item) => ({
-            type: file.ROUTE_TYPE,
-            path: path.resolve(__dirname, '..', `./${item}.md`),
-            lang: 'zh-CN',
-        }))
-        .concat(
-            config.guideSidebar[2].items.map((item) => ({
-                type: file.ROUTE_TYPE,
-                path: path.resolve(__dirname, '../../i18n/en/docusaurus-plugin-content-docs/current', `./${item}.md`),
-                lang: 'en-US',
-            }))
-        );
+    const fileList = config.guideSidebar[2].items.map((item) => ({
+        type: file.ROUTE_TYPE,
+        path: path.resolve(__dirname, '..', `./${item}.md`),
+        lang: 'zh-CN',
+    }));
     // let fileList = [];
     // Object.keys(config.themeConfig.locales).forEach((key) => {
     //     const locale = config.themeConfig.locales[key];
