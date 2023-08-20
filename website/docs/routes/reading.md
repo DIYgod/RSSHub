@@ -1,30 +1,30 @@
 import Route from '@site/src/components/Route';
 
-# 📚 阅读
+# 📚 Reading
 
 ## All Poetry {#all-poetry}
 
 ### Poems {#all-poetry-poems}
 
-<Route author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" paramsDesc={['排序方式, `best` 或 `newest`, 缺省 `best`']}/>
+<Route author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" paramsDesc={['Ordering, `best` or `newest`, `best` by default']}/>
 
 ## Free Computer Books {#free-computer-books}
 
-### 精选上新 {#free-computer-books-jing-xuan-shang-xin}
+### Selected New Books {#free-computer-books-selected-new-books}
 
 <Route author="cubroe" example="/freecomputerbooks" path="/freecomputerbooks" radar="1" />
 
-### 当前书单 {#free-computer-books-dang-qian-shu-dan}
+### Current Book List {#free-computer-books-current-book-list}
 
-<Route author="cubroe" example="/freecomputerbooks/compscAlgorithmBooks" path="/freecomputerbooks/:category" paramsDesc={['分类标识符，为源站URL路径中的HTML文件名（去除`.html`后缀）']} radar="1" />
+<Route author="cubroe" example="/freecomputerbooks/compscAlgorithmBooks" path="/freecomputerbooks/:category" paramsDesc={['A category id., which should be the HTML file name (but **without** the `.html` suffix) in the URL path of a book list page.']} radar="1" />
 
 ## hameln {#hameln}
 
-### 章节更新 {#hameln-zhang-jie-geng-xin}
+### chapter {#hameln-chapter}
 
-<Route author="huangliangshusheng" example="/hameln/chapter/264928" path="/hameln/chapter/:id" paramsDesc={['小说 id, 可在对应小说页 URL 中找到']}>
+<Route author="huangliangshusheng" example="/hameln/chapter/264928" path="/hameln/chapter/:id" paramsDesc={['Novel id, can be found in URL']}>
 
-举例网址：<https://syosetu.org/novel/264928/>
+Eg:<https://syosetu.org/novel/264928/>
 
 </Route>
 
@@ -32,25 +32,25 @@ import Route from '@site/src/components/Route';
 
 ### HTML Clip {#inoreader-html-clip}
 
-<Route author="BeautyyuYanli" example="/inoreader/html_clip/1006346356/News?limit=3" path="/html_clip/:user/:tag" paramsDesc={['用户 id, 即举例网址 URL 中的 user/ 后的数字', '标签名, 即举例网址 URL 中的 tag/ 后的内容']}>
+<Route author="BeautyyuYanli" example="/inoreader/html_clip/1006346356/News?limit=3" path="/html_clip/:user/:tag" paramsDesc={['user id, the interger after user/ in the example URL','tag, the string after tag/ in the example URL']}>
 
-可携带 query 参数 `limit=n`, 用于限制获取的文章数量，缺省为 20
+Use query parameter `limit=n` to limit the number of articles, default to 20
 
-举例网址: <https://www.inoreader.com/stream/user/1006346356/tag/News/view/html?n=3>
+Eg: <https://www.inoreader.com/stream/user/1006346356/tag/News/view/html?n=3>
 
 </Route>
 
 ### RSS {#inoreader-rss}
 
-<Route author="NavePnow" example="/inoreader/rss/1005137674/user-favorites" path="/inoreader/rss/:user/:tag" paramsDesc={['用户 id, 即举例网址 URL 中的 user/ 后的数字', '标签名, 即举例网址 URL 中的 tag/ 后的内容']}>
+<Route author="NavePnow" example="/inoreader/rss/1005137674/user-favorites" path="/inoreader/rss/:user/:tag" paramsDesc={['user id, the interger after user/ in the example URL','tag, the string after tag/ in the example URL']}>
 
 ## kakuyomu {#kakuyomu}
 
-### 章节更新 {#kakuyomu-zhang-jie-geng-xin}
+### episode {#kakuyomu-episode}
 
-<Route author="huangliangshusheng" example="/kakuyomu/episode/1177354054883783581" path="/kakuyomu/episode/:id" paramsDesc={['小说 id, 可在对应小说页 URL 中找到']}>
+<Route author="huangliangshusheng" example="/kakuyomu/episode/1177354054883783581" path="/kakuyomu/episode/:id" paramsDesc={['Novel id, can be found in URL']}>
 
-举例网址：<https://kakuyomu.jp/works/1177354054883783581>
+Eg:<https://kakuyomu.jp/works/1177354054883783581>
 
 </Route>
 
@@ -74,13 +74,13 @@ import Route from '@site/src/components/Route';
 
 ### Category {#literotica-category}
 
-<Route author="nczitzk" example="/literotica/category/anal-sex-stories" path="/literotica/category/:category?" paramsDesc={['分类，可在对应分类页地址栏中找到']}/>
+<Route author="nczitzk" example="/literotica/category/anal-sex-stories" path="/literotica/category/:category?" paramsDesc={['Category, can be found in URL']}/>
 
 ## MagazineLib {#magazinelib}
 
 ### Latest Magazine {#magazinelib-latest-magazine}
 
-<Route author="NavePnow" example="/magazinelib/latest-magazine/new+yorker" path="/magazinelib/latest-magazine/:query?" paramsDesc={['query，search page querystring']}/>
+<Route author="NavePnow" example="/magazinelib/latest-magazine/new+yorker" path="/magazinelib/latest-magazine/:query?" paramsDesc={['query, search page querystring']}/>
 
 For instance, when doing search at <https://magazinelib.com/> and you get url <https://magazinelib.com/?s=new+yorker>, the query is `new+yorker`
 
@@ -88,18 +88,18 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 ## Mobilism {#mobilism}
 
-### 电子书 {#mobilism-dian-zi-shu}
+### eBook Releases {#mobilism-ebook-releases}
 
-<Route author="nitezs" example="/mobilism/forums/books/romance" path="/mobilism/forums/books/:type/:fulltext?" paramsDesc={['分类','是否获取全文，如需获取全文参数传入 `y`']}>
+<Route author="nitezs" example="/mobilism/forums/books/romance" path="/mobilism/forums/books/:type/:fulltext?" paramsDesc={['Category', 'Retrieve fulltext, specify `y` to enable']}>
 
-| 分类名           | 参数       |
-| ---------------- | ---------- |
-| 浪漫             | romance    |
-| 科幻、幻想、恐怖 | scifi      |
-| 普通小说、经典   | classics   |
-| 杂志、报纸       | magazines  |
-| 有声读物         | audioBooks |
-| 漫画             | comics     |
+| Category                 | Parameter  |
+| ------------------------ | ---------- |
+| Romance                  | romance    |
+| Sci-Fi/Fantasy/Horror    | scifi      |
+| General Fiction/Classics | classics   |
+| Magazines & Newspapers   | magazines  |
+| Audiobooks               | audioBooks |
+| Comics                   | comics     |
 
 </Route>
 
@@ -154,11 +154,11 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 ## syosetu {#syosetu}
 
-### 章节更新 {#syosetu-zhang-jie-geng-xin}
+### chapter {#syosetu-chapter}
 
-<Route author="huangliangshusheng" example="/syosetu/chapter/n1976ey" path="/syosetu/chapter/:id" paramsDesc={['小说 id, 可在对应小说页 URL 中找到']}>
+<Route author="huangliangshusheng" example="/syosetu/chapter/n1976ey" path="/syosetu/chapter/:id" paramsDesc={['Novel id, can be found in URL']}>
 
-举例网址：<https://ncode.syosetu.com/n1976ey/>
+Eg:<https://ncode.syosetu.com/n1976ey/>
 
 </Route>
 
@@ -590,3 +590,4 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 ### 主页 {#zuo-an-du-shu-zhu-ye}
 
 <Route author="kt286" example="/zreading" path="/zreading" />
+

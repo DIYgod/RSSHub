@@ -1,32 +1,32 @@
 import Route from '@site/src/components/Route';
 
-# 🎨️ 设计
+# 🎨️ Design
 
 ## Axis Studios {#axis-studios}
 
 ### Work type {#axis-studios-work-type}
 
-<Route author="MisteryMonster" example="/axis-studios/work/full-service-cg-production" path="/axis-studios/:type/:tag?" paramsDesc={['`work`, `blog`','文章内的 Work type URL: `compositing`, `full-service-cg-production`, `vfx-supervision`, `realtime`, `art-direction`, `animation`']}>
+<Route author="MisteryMonster" example="/axis-studios/work/full-service-cg-production" path="/axis-studios/:type/:tag?" paramsDesc={['`work`, `blog`', 'Work type URL: `compositing`, `full-service-cg-production`, `vfx-supervision`, `realtime`, `art-direction`, `animation`']}>
 
-文章内 Work type 指向的栏目地址，比如： <https://axisstudiosgroup.com/work/full-service-cg-production> 的 tag 为 `full-service-cg-production`，要注意的是 tag 和文章的目录是一样的。
+Work type URL in articles. Such as： 'https://axisstudiosgroup.com/work/full-service-cg-production' the tag will be `full-service-cg-production`.
 
-有一些 tag 并不经常使用： `Script`, `direction`, `production`, `design-concept` 等等。
+Some tags are rarely used： `Script`, `direction`, `production`, `design-concept` etc。
 
 </Route>
 
 ## Behance {#behance}
 
-### 用户作品 {#behance-yong-hu-zuo-pin}
+### User Works {#behance-user-works}
 
-<Route author="MisteryMonster" example="/behance/mishapetrick" path="/behance/:user/:type?" paramsDesc={['用户名', '类型，可选 `projects` 或 `appreciated`，默认为 `projects`']} radar="1">
+<Route author="MisteryMonster" example="/behance/mishapetrick" path="/behance/:user/:type?" paramsDesc={['username', 'type, `projects` or `appreciated`, `projects` by default']} radar="1">
 
-Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapetrick> 的用户名为 `mishapetrick`。
+Behance user's profile URL, like <https://www.behance.net/mishapetrick> the username will be `mishapetrick`。
 
 </Route>
 
 ## Blow Studio {#blow-studio}
 
-### 主页 {#blow-studio-zhu-ye}
+### Home {#blow-studio-home}
 
 <Route author="MisteryMonster" example="/blow-studio" path="/blow-studio" />
 
@@ -38,49 +38,43 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ## Digic Picture {#digic-picture}
 
-### 作品和新闻 {#digic-picture-zuo-pin-he-xin-wen}
+### Works & News {#digic-picture-works-%26-news}
 
-<Route author="MisteryMonster" example="/digic-pictures/works/real-time-engine" path="/digic-pictures/:menu/:tag?" paramsDesc={['`news`, `works`', 'WORK 下项目类型: `/game-cinematics`, `/feature`, `/making-of`, `/commercials-vfx`, `/real-time-engine`']}/>
+<Route author="MisteryMonster" example="/digic-pictures/works/real-time-engine" path="/digic-pictures/:menu/:tag?" paramsDesc={['`news`, `works`', 'Under WORK types: `/game-cinematics`, `/feature`, `/making-of`, `/commercials-vfx`, `/real-time-engine`']} />
 
 ## Dribbble {#dribbble}
 
-### 流行 {#dribbble-liu-xing}
+### Popular {#dribbble-popular}
 
-<Route author="DIYgod" example="/dribbble/popular/week" path="/dribbble/popular/:timeframe?" paramsDesc={['时间维度, 支持 week month year ever']}/>
+<Route path="/dribbble/popular/:timeframe?" example="/dribbble/popular" paramsDesc={['support the following values: week, month, year and ever']} />
 
-### 用户（团队） {#dribbble-yong-hu-%EF%BC%88-tuan-dui-%EF%BC%89}
+### User (or team) {#dribbble-user-(or-team)}
 
-<Route author="DIYgod" example="/dribbble/user/google" path="/dribbble/user/:name" paramsDesc={['用户名, 可在该用户主页 URL 中找到']}/>
+<Route path="/dribbble/user/:name" example="/dribbble/user/google" paramsDesc={['username, available in user\'s homepage URL']} />
 
-### 关键词 {#dribbble-guan-jian-ci}
+### Keyword {#dribbble-keyword}
 
-<Route author="DIYgod" example="/dribbble/keyword/player" path="/dribbble/keyword/:keyword" paramsDesc={['想要订阅的关键词']}/>
+<Route path="/dribbble/keyword/:keyword" example="/dribbble/keyword/player" paramsDesc={['desired keyword']} />
 
 ## Eagle {#eagle}
 
-### 博客 {#eagle-bo-ke}
+### Blog {#eagle-blog}
 
-<Route author="Fatpandac" example="/eagle/blog" path="/eagle/blog/:cate?/:language?" paramsDesc={['分类，默认为全部，见下表', '语言，`cn`、`tw`、`en` 默认为 `cn`']} radar="1" rsshub="1">
-
-| 全部 | 设计资源         | 设计技巧     | 最新消息     |
-| ---- | ---------------- | ------------ | ------------ |
-| all  | design-resources | learn-design | inside-eagle |
-
-</Route>
+<Route author="Fatpandac" example="/eagle/blog/en" path="/eagle/blog/:cate?/:language?" paramsDesc={['Category, get by URL, `all` by default', 'Language, `cn`, `tw`, `en`, `en` by default']} radar="1" rsshub="1"/>
 
 ## Google {#google}
 
 ### Google Fonts {#google-google-fonts}
 
-<Route author="Fatpandac" example="/google/fonts/date" path="/google/fonts/:sort?" paramsDesc={['排序，见下表，默认为最新']} selfhost="1">
+<Route author="Fatpandac" example="/google/fonts/date" path="/google/fonts/:sort?" paramsDesc={['Sorting type, see below, default to `date`']} selfhost="1">
 
-| 最新 |   趋势   |  最受欢迎  |  名字 | 风格数量 |
-| :--: | :------: | :--------: | :---: | :------: |
-| date | trending | popularity | alpha |   style  |
+| Newest | Trending | Most popular | Name  | Number of styles |
+| :----: | :------: | :----------: | :--:  | :--------------: |
+| date   | trending | popularity   | alpha | style            |
 
-:::caution 注意
+:::caution
 
-需要设置 API key，所以只能自建，详情见[部署页面](https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi)的配置模块。
+This route requires API key, therefore it's only available when self-hosting, refer to the [Deploy Guide](https://docs.rsshub.app/install/#configuration-route-specific-configurations) for route-specific configurations.
 
 :::
 
@@ -137,13 +131,13 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ## Method Studios {#method-studios}
 
-### 菜单 {#method-studios-cai-dan}
+### Menus {#method-studios-menus}
 
-<Route author="MisteryMonster" example="/method-studios/games" path="/method-studios/:menu?" paramsDesc={['地址栏下 /en 后的栏目: `features`, `advertising`, `episodic`, `games`, `methodmade`']}>
+<Route author="MisteryMonster" path="/method-studios/:menu?" example="/method-studios/games" paramsDesc={['URL behind /en: `features`, `advertising`, `episodic`, `games`, `methodmade`']}>
 
-不支持`news`和`main`。
+Not support `main`, `news`.
 
-默认为 <https://www.methodstudios.com/en/features> 下的栏目。
+Default is under 'https://www.methodstudios.com/en/features'.
 
 </Route>
 
@@ -157,23 +151,23 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### Works {#notefolio-works}
 
-<Route author="BianTan" example="/notefolio/search/1/pick/all/life" path="/notefolio/search/:category?/:order?/:time?/:query?" paramsDesc={['分类，见下表，默认为 `all`', '排序，可选 `pick` 指 Notefolio 精选，`published` 指 最新，`like` 指 推荐，默认为 `pick`', '时间，可选 `all` 指 全部，`one-day` 指 最近24小时，`week` 指 最近一周，`month` 指 最近一个月，`three-month` 指 最近三个月，默认为`all`', '关键词，默认为空']}>
+<Route author="BianTan" example="/notefolio/search/1/pick/all/life" path="/notefolio/search/:category?/:order?/:time?/:query?" paramsDesc={['Category, see below, `all` by default', 'Order, `pick` as Notefolio Pick, `published` as Newest, `like` as like, `pick` by default', 'Time, `all` as All the time, `one-day` as Latest 24 hours, `week` as Latest week, `month` as Latest month, `three-month` as Latest 3 months, `all` by default', 'Keyword, empty by default']}>
 
-| 分类 | 韩文分类名       | 中文分类名      |
-| ---- | ---------------- | --------------- |
-| all  | 전체             | 全部            |
-| 1    | 영상/모션그래픽  | 视频 / 动态图像 |
-| 2    | 그래픽 디자인    | 平面设计        |
-| 3    | 브랜딩/편집      | 品牌创建 / 编辑 |
-| 4    | UI/UX            | UI/UX           |
-| 5    | 일러스트레이션   | 插画            |
-| 6    | 디지털 아트      | 数字艺术        |
-| 7    | 캐릭터 디자인    | 角色设计        |
-| 8    | 품/패키지 디자인 | 产品 / 包装设计 |
-| 9    | 포토그래피       | 摄影            |
-| 10   | 타이포그래피     | 字体设计        |
-| 11   | 공예             | 工艺品          |
-| 12   | 파인아트         | 纯艺术          |
+| Category | Name in Korean | Name in English |
+| ---- | --------------- | --------------- |
+| all  | 전체            | All        |
+| 1   | 영상/모션그래픽 | Video / Motion Graphics |
+| 2   | 그래픽 디자인   | Graphic Design |
+| 3   |  브랜딩/편집    | Branding / Editing |
+| 4   | UI/UX       | UI/UX |
+| 5   | 일러스트레이션  | Illustration |
+| 6   | 디지털 아트     | Digital Art |
+| 7   | 캐릭터 디자인   | Character Design |
+| 8   | 제품/패키지 디자인 | Product Package Design |
+| 9   | 포토그래피      | Photography |
+| 10   | 타이포그래피    | Typography |
+| 11   | 공예            | Crafts |
+| 12   | 파인아트        | Fine Art|
 
 </Route>
 
@@ -197,7 +191,7 @@ Behance 用户主页 URL 获取用户名，如 <https://www.behance.net/mishapet
 
 ### Films {#unit-image-films}
 
-<Route author="MisteryMonster" example="/unit-image/films/vfx" path="/unit-image/films/:type?" paramsDesc={['Films 下分类，`vfx`, `game-trailer`, `animation`, `commercials`, `making-of`']}/>
+<Route author="MisteryMonster" example="/unit-image/films/vfx" path="/unit-image/films/:type?" paramsDesc={['Films type，`vfx`, `game-trailer`, `animation`, `commercials`, `making-of`']}/>
 
 ## 爱果果 {#ai-guo-guo}
 
@@ -416,3 +410,4 @@ UI 17
 站酷的个人主页 `https://www.zcool.com.cn/u/568339` 对应 rss 路径 `/zcool/user/568339`
 
 </Route>
+

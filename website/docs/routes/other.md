@@ -1,6 +1,6 @@
 import Route from '@site/src/components/Route';
 
-# 🔍 其他
+# 🔍 Uncategorized
 
 ## 4399 论坛 {#4399-lun-tan}
 
@@ -16,15 +16,15 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-## 591 租屋網 {#591-zu-wu-wang}
+## 591 Rental house {#591-rental-house}
 
-### 租屋 {#591-zu-wu-wang-zu-wu}
+### Rental house {#591-rental-house-rental-house}
 
-<Route author="Yukaii" example="/591/tw/rent/order=posttime&orderType=desc" path="/591/:country/rent/:query?" paramsDesc={['網址國碼，目前僅支援 tw', '查詢參數']}>
+<Route author="Yukaii" example="/591/tw/rent/order=posttime&orderType=desc" path="/591/:country/rent/:query?" paramsDesc={['Country code. Only tw is supported now', 'Query Parameters']}>
 
-:::tip 提示
+:::tip Tip
 
-複製 591 篩選房屋頁面的網址，並去掉前段 `https://rent.591.com.tw/?` 部分，即可得到查詢參數。
+Copy the URL of the 591 filter housing page and remove the front part "<https://rent.591.com.tw/>?", you will get the query parameters.
 
 :::
 
@@ -62,17 +62,13 @@ import Route from '@site/src/components/Route';
 
 ## Apple {#apple}
 
-### 更换和维修扩展计划 {#apple-geng-huan-he-wei-xiu-kuo-zhan-ji-hua}
+### Exchange and Repair Extension Programs {#apple-exchange-and-repair-extension-programs}
 
-<Route author="metowolf HenryQW kt286" example="/apple/exchange_repair/zh-cn" path="/apple/exchange_repair/:country?" paramsDesc={['苹果官网 URL 中的国家代码, 默认美国 ，中国 `zh-cn`']}/>
-
-### 苹果邮件 {#apple-ping-guo-you-jian}
-
-见 [#中国邮政速递物流](/routes/other#zhong-guo-you-zheng-su-di-wu-liu)
+<Route author="metowolf HenryQW" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" paramsDesc={['country code in apple.com URL (exception: for `United States` please use `us`), default to China `cn`']} />
 
 ### App Store/Mac App Store {#apple-app-store%2Fmac-app-store}
 
-见 [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
+See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 
 ## Aqara {#aqara}
 
@@ -110,12 +106,12 @@ import Route from '@site/src/components/Route';
 
 ## AutoTrader {#autotrader}
 
-### 搜索结果 {#autotrader-sou-suo-jie-guo}
+### Search {#autotrader-search}
 
-<Route author="HenryQW" example="/autotrader/radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on" path="/autotrader/:query" paramsDesc={['查询语句']}>
+<Route author="HenryQW" example="/autotrader/radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on" path="/autotrader/:query" paramsDesc={['the search query']}>
 
-1.  在 AutoTrader 选择筛选条件进行搜索
-2.  复制查询结果 URL 中`?`后的部分，例如 `https://www.autotrader.co.uk/car-search?radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on` 则为 `radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on`
+1.  Conduct a search with desired filters on AutoTrader
+1.  Copy everything in the URL after `?`, for example: `https://www.autotrader.co.uk/car-search?radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on` will produce `radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on`
 
 </Route>
 
@@ -133,15 +129,73 @@ import Route from '@site/src/components/Route';
 
 ## checkee.info {#checkee.info}
 
-### 美国签证 check 动态 {#checkee.info-mei-guo-qian-zheng-check-dong-tai}
+### US Visa check status {#checkee.info-us-visa-check-status}
 
-<Route author="lalxyy" example="/checkee/2019-03" path="/checkee/:month" paramsDesc={['签证被 check 的年份-月份，如 2019-03']} />
+<Route author="lalxyy" example="/checkee/2019-03" path="/checkee/:month" paramsDesc={['Year-month of visa check，for example 2019-03']} />
 
 ## ClickMe {#clickme}
 
 ### 文章 {#clickme-wen-zhang}
 
 <Route author="hoilc" example="/clickme/default/category/beauty" path="/clickme/:site/:grouping/:name" paramsDesc={['站点，`default`为普通站，`r18`为成人站，其它值默认为普通站','分组方式，`category`为分类，`tag`为标签，其他值默认为分类','分类名或标签名，分类名为英文，可以在分类 URL 中找到']} radar="1"/>
+
+## Corona Virus Disease 2019 {#corona-virus-disease-2019}
+
+### 国家卫健委 - 疫情通报 {#corona-virus-disease-2019-guo-jia-wei-jian-wei---yi-qing-tong-bao}
+
+<Route author="Cielpy DIYgod" example="/coronavirus/nhc" path="/coronavirus/nhc"/>
+
+### 财新网 - 新冠肺炎防疫全纪录 {#corona-virus-disease-2019-cai-xin-wang---xin-guan-fei-yan-fang-yi-quan-ji-lu}
+
+<Route author="DIYgod" example="/coronavirus/caixin" path="/coronavirus/caixin"/>
+
+### 丁香园 - 新冠病毒疫情实时播报 {#corona-virus-disease-2019-ding-xiang-yuan---xin-guan-bing-du-yi-qing-shi-shi-bo-bao}
+
+<Route author="DIYgod" example="/coronavirus/dxy" path="/coronavirus/dxy"/>
+
+### 丁香园 - 新冠病毒疫情数据统计 {#corona-virus-disease-2019-ding-xiang-yuan---xin-guan-bing-du-yi-qing-shu-ju-tong-ji}
+
+<Route author="DIYgod HenryQW" example="/coronavirus/dxy/data/湖北/武汉" path="/coronavirus/dxy/data/:province?/:city?" paramsDesc={['省/直辖市名，缺省或错误则返回国内数据','城市名，缺省或错误则返回全省数据。直辖市请使用区/县名。']}/>
+
+### 腾讯新闻 - 新型冠状病毒肺炎实时辟谣 {#corona-virus-disease-2019-teng-xun-xin-wen---xin-xing-guan-zhuang-bing-du-fei-yan-shi-shi-pi-yao}
+
+<Route author="DIYgod" example="/coronavirus/qq/fact" path="/coronavirus/qq/fact"/>
+
+### 腾讯新闻 - 新型冠状病毒肺炎疫情实时追踪 {#corona-virus-disease-2019-teng-xun-xin-wen---xin-xing-guan-zhuang-bing-du-fei-yan-yi-qing-shi-shi-zhui-zong}
+
+数据来源：<https://news.qq.com/zt2020/page/feiyan.htm#/>
+
+#### 中国本土数据统计
+
+<Route author="CaoMeiYouRen" example="/tencent/news/coronavirus/total" path="/tencent/news/coronavirus/total"/>
+
+#### 省市疫情数据
+
+<Route author="CaoMeiYouRen" example="/tencent/news/coronavirus/data/湖北/武汉" path="/tencent/news/coronavirus/data/:province?/:city?" paramsDesc={['省/直辖市名，缺省则返回国内数据','城市名，缺省则返回全省数据。直辖市请使用区/县名。']}/>
+
+### South China Morning Post - China coronavirus outbreak {#corona-virus-disease-2019-south-china-morning-post---china-coronavirus-outbreak}
+
+<Route author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
+
+### Macao Pagina Electrónica Especial Contra Epidemias: What’s New {#corona-virus-disease-2019-macao-pagina-electronica-especial-contra-epidemias%3A-what%E2%80%99s-new}
+
+Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx)
+
+<Route author="KeiLongW" example="/coronavirus/mogov-2019ncov/ch" path="/coronavirus/mogov-2019ncov/:lang" paramsDesc={['Language']} />
+
+| Chinese | English | Portuguese |
+| ------- | ------- | ---------- |
+| ch      | en      | pt         |
+
+### Singapore Ministry of Health - Past Updates on 2019-nCov Local Situation in Singapore {#corona-virus-disease-2019-singapore-ministry-of-health---past-updates-on-2019-ncov-local-situation-in-singapore}
+
+<Route author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>
+
+### Yahoo Japan 新型コロナウイルス感染症まとめ {#corona-virus-disease-2019-yahoo-japan-xin-xing-%E3%82%B3%E3%83%AD%E3%83%8A%E3%82%A6%E3%82%A4%E3%83%AB%E3%82%B9-gan-ran-zheng-%E3%81%BE%E3%81%A8%E3%82%81}
+
+Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
+
+<Route author="sgqy" example="/coronavirus/yahoo-japan" path="/coronavirus/yahoo-japan/:tdfk?" paramsDesc={['都道府県的拼音，可从地图详情页的链接中获取。例如：京都府 = kyoto']}/>
 
 ## Darwin Awards {#darwin-awards}
 
@@ -157,15 +211,39 @@ import Route from '@site/src/components/Route';
 
 ## DHL {#dhl}
 
-### DHL 国际快递包裹追踪 {#dhl-dhl-guo-ji-kuai-di-bao-guo-zhui-zong}
+### DHL express {#dhl-dhl-express}
 
-<Route author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" paramsDesc={['运单号']}/>
+<Route author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" paramsDesc={['Waybill number']}/>
+
+## Email {#email}
+
+### Email list {#email-email-list}
+
+> Only support IMAP protocol, email password and other settings refer to [Email setting](/install)
+
+<Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" paramsDesc={['Email account']} selfhost="1"/>
+
+## Emi Nitta official website 新田惠海官方网站 {#emi-nitta-official-website-xin-tian-hui-hai-guan-fang-wang-zhan}
+
+### Recent update {#emi-nitta-official-website-xin-tian-hui-hai-guan-fang-wang-zhan-recent-update}
+
+<Route author="luyuhuang" example="/emi-nitta/updates" path="/emi-nitta/updates"/>
+
+### News {#emi-nitta-official-website-xin-tian-hui-hai-guan-fang-wang-zhan-news}
+
+<Route author="luyuhuang" example="/emi-nitta/news" path="/emi-nitta/news"/>
 
 ## Etherscan {#etherscan}
 
 ### Etherscan 转账追踪 {#etherscan-etherscan-zhuan-zhang-zhui-zong}
 
 <Route author="Pretty9" example="/etherscan/transactions/0x283af0b28c62c092c9727f1ee09c02ca627eb7f5" path="/etherscan/transactions/:address" paramsDesc={['地址']}/>
+
+## Fisher Spb {#fisher-spb}
+
+### News {#fisher-spb-news}
+
+<Route author="denis-ya" example="/fisher-spb/news" path="/fisher-spb/news" />
 
 ## Grand-Challenge {#grand-challenge}
 
@@ -183,9 +261,13 @@ import Route from '@site/src/components/Route';
 
 <Route author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1" rssbud="1"/>
 
+### Search {#hackerone-search}
+
+<Route author="imlonghao" example="/hackerone/search/rocket_chat" path="/hackerone/search/:search" paramsDesc={['Search string']} radar="1" rssbud="1"/>
+
 ## Instapaper {#instapaper}
 
-### 个人分享 {#instapaper-ge-ren-fen-xiang}
+### Personal sharing {#instapaper-personal-sharing}
 
 <Route author="LogicJake" example="/instapaper/person/viridiano" path="/instapaper/person"/>
 
@@ -193,7 +275,7 @@ import Route from '@site/src/components/Route';
 
 ### Projects {#instructables-projects}
 
-<Route author="wolfg1969" example="/instructables/projects/circuits" path="/instructables/projects/:category?" paramsDesc={['项目类别。默认空值为全部，从网页地址中得知，见下表']} radar="1">
+<Route author="wolfg1969" example="/instructables/projects/circuits" path="/instructables/projects/:category?" paramsDesc={['Category, empty by default, can be found in URL or see the table below']} radar="1">
 
 | All | Circuits | Workshop | Craft | Cooking | Living | Outside | Teachers |
 | --- | -------- | -------- | ----- | ------- | ------ | ------- | -------- |
@@ -213,13 +295,70 @@ import Route from '@site/src/components/Route';
 
 <Route author="proletarius101" example="/iyouport/osint" path="/iyouport/:category?"/>
 
+## Japanpost 日本郵便 {#japanpost-ri-ben-you-bian}
+
+### Track & Trace Service 郵便追跡サービス {#japanpost-ri-ben-you-bian-track-%26-trace-service-you-bian-zhui-ji-%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9}
+
+<Route author="tuzi3040" example="/japanpost/track/EJ123456789JP/en" path="/japanpost/track/:reqCode/:locale?" paramsDesc={['Package Number', 'Language, default to japanese `ja`']} radar="1" rssbud="1">
+
+| Japanese | English |
+| -------- | ------- |
+| ja       | en      |
+
+</Route>
+
+## King Arthur {#king-arthur}
+
+### Baking {#king-arthur-baking}
+
+<Route author="loganrockmore" example="/kingarthur/story" path="/instapaper/:category">
+
+| Story | Recipes | Tips and Techniques |
+| ----- | ------- | ------------------- |
+| story | recipes | tips-and-techniques |
+
+</Route>
+
 ## Layoffs.fyi {#layoffs.fyi}
 
-### 裁员数据跟踪 {#layoffs.fyi-cai-yuan-shu-ju-gen-zong}
+### Layoff Data Tracker {#layoffs.fyi-layoff-data-tracker}
 
 <Route author="BrandNewLifeJackie26" example="/layoffs" path="/layoffs" radar="1"/>
 
-该网站原始 RSS 数据源无人维护，故重新抓取数据并生成数据源。
+RSS source in the original site is outdated.
+
+## Lever {#lever}
+
+### Recruitment {#lever-recruitment}
+
+<Route author="tsarlewey" example="/lever/lever" path="/lever/:domain" paramsDesc={['Company with Lever Board']}/>
+
+## LinkedIn {#linkedin}
+
+### Jobs {#linkedin-jobs}
+
+<Route author="BrandNewLifeJackie26" example="/linkedin/jobs/C-P/1/software engineer" path="/linkedin/jobs/:job_types/:exp_levels/:keywords?" paramsDesc={['See the following table for details, use \'-\' as delimiter', 'See the following table for details, use \'-\' as delimiter', 'keywords']} radar="1">
+
+#### `job_types` list
+
+| Full Time | Part Time | Contractor | All |
+| --------- | --------- | ---------- | --- |
+| F         | P         | C          | all |
+
+#### `exp_levels` list
+
+| Intership | Entry Level | Associate | Mid-Senior Level | Director | All |
+| --------- | ----------- | --------- | ---------------- | -------- | --- |
+| 1         | 2           | 3         | 4                | 5        | all |
+
+For example:
+
+1.  If we want to search software engineer jobs of all levels and all job types, use `/linkedin/jobs/all/all/software engineer`
+2.  If we want to search all entry level contractor/part time software engineer jobs, use `/linkedin/jobs/P-C/2/software engineer`
+
+**To make it easier, the recommended way is to start a search on <a href="https://www.linkedin.com/jobs/search">LinkedIn</a> and use <a href="https://github.com/DIYgod/RSSHub-Radar">RSSHub Radar</a> to load the specific feed.**
+
+</Route>
 
 ## LinkedIn 领英中国 {#linkedin-ling-ying-zhong-guo}
 
@@ -291,7 +430,7 @@ import Route from '@site/src/components/Route';
 
 ## MITRE {#mitre}
 
-### 全部出版物 {#mitre-quan-bu-chu-ban-wu}
+### All Publications {#mitre-all-publications}
 
 <Route author="sbilly" example="/mitre/publications" path="/mitre/publications" />
 
@@ -306,6 +445,18 @@ import Route from '@site/src/components/Route';
 ### Firefox Monitor {#mozilla-firefox-monitor}
 
 <Route author="TonyRL" example="/firefox/breaches" path="/firefox/breaches"/>
+
+## Nobel Prize {#nobel-prize}
+
+### List {#nobel-prize-list}
+
+<Route author="nczitzk" example="/nobelprize" path="/nobelprize/:caty" paramsDesc={['Category, see below, all by default']}>
+
+| Physics | Chemistry | Physiology or Medicine | Literature | Peace | Economic Science  |
+| ------- | --------- | ---------------------- | ---------- | ----- | ----------------- |
+| physics | chemistry | physiology-or-medicine | literature | peace | economic-sciences |
+
+</Route>
 
 ## NOI 全国青少年信息学奥林匹克竞赛 {#noi-quan-guo-qing-shao-nian-xin-xi-xue-ao-lin-pi-ke-jing-sai}
 
@@ -327,15 +478,15 @@ import Route from '@site/src/components/Route';
 
 ## Notion {#notion}
 
-:::caution 注意
+:::caution Warning
 
-需要设置 Notion 集成，详情请见 [部分 RSS 模块配置](/install#部分-rss-模块配置)
+Need to set up Notion integration, please refer to [Route-specific Configurations](https://docs.rsshub.app/install/#Deployment) for details.
 
 :::
 
-:::tip 建议
+:::tip Recommendation
 
-建议与 Notion Web Clipper 等剪藏工具搭配使用
+It is recommended to use with clipping tools such as Notion Web Clipper.
 
 :::
 
@@ -343,17 +494,17 @@ import Route from '@site/src/components/Route';
 
 <Route author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" paramsDesc={['Database ID']} selfhost="1" radar="1">
 
-可选 query 参数 `properties=`，用来自定义字段对应关系；内置有 author、link、pubTime 三个字段用于增加辅助信息。
+There is an optional query parameter called `properties=` that can be used to customize field mapping. There are three built-in fields: author, pubTime and link, which can be used to add additional information.
 
-例如，在 Database 中设置了 "作者"、"文章原链接"、"发布时间"" 三个 property，将下述 JS 代码的执行结果给 `properties` 参数。
+For example, if you have set up three properties in your database - "Publish Time", "Author", and "Original Article Link" - then execute the following JavaScript code to get the result for the properties parameter.
 
 ```js
-encodeURIComponent(JSON.stringify({"author": "作者", "link": "文章原链接", "pubTime": "发布时间"}))
+encodeURIComponent(JSON.stringify({"pubTime": "Publish Time", "author": "Author", "link": "Original Article Link"}))
 ```
 
-可选 query 参数 `query=`，用来自定义 Database 的查询规则，例如自定义排序和筛选规则。
+There is an optional query parameter called `query=` that can be used to customize the search rules for your database, such as custom sorting and filtering rules.
 
-书写结构请查阅 [Notion 文档](https://developers.notion.com/reference/post-database-query)，将 `encodeURIComponent(JSON.stringify(自定义规则))` 的执行给 `query` 参数。
+please refer to the [Notion API documentation](https://developers.notion.com/reference/post-database-query) and execute `encodeURIComponent(JSON.stringify(custom rules))` to provide the query parameter.
 
 </Route>
 
@@ -363,15 +514,21 @@ encodeURIComponent(JSON.stringify({"author": "作者", "link": "文章原链接"
 
 <Route author="fengkx" example="/one" path="/one"/>
 
+## oshwhub 立创开源硬件平台 {#oshwhub-li-chuang-kai-yuan-ying-jian-ping-tai}
+
+### OpenSource Square {#oshwhub-li-chuang-kai-yuan-ying-jian-ping-tai-opensource-square}
+
+<Route author="tylinux" example="/oshwhub" path="/oshwhub/:sortType?" paramsDesc={['sortType']} radar="1" rssbud="1"/>
+
 ## Panda {#panda}
 
 ### Feeds {#panda-feeds}
 
-<Route author="lyrl" example="/usepanda/feeds/5718e53e7a84fb1901e059cc" path="/usepanda/feeds/:id" paramsDesc={['频道id/feedId']}>
+<Route author="lyrl" example="/usepanda/feeds/5718e53e7a84fb1901e059cc" path="/usepanda/feeds/:id" paramsDesc={['Feed ID']}>
 
-| 频道            | feedId                   |
-| --------------- | ------------------------ |
-| Github 热门推荐 | 5718e53e7a84fb1901e059cc |
+| Channel | feedId                   |
+| ------- | ------------------------ |
+| Github  | 5718e53e7a84fb1901e059cc |
 
 </Route>
 
@@ -396,21 +553,113 @@ encodeURIComponent(JSON.stringify({"author": "作者", "link": "文章原链接"
 <Route author="miaoyafeng Fatpandac" example="/producthunt/today" path="/producthunt/today">
 </Route>
 
+## Remote.work {#remote.work}
+
+### Remote.work Job Information {#remote.work-remote.work-job-information}
+
+<Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" paramsDesc={['Job category, default to all']} radar="1" rssbud="1">
+
+| All Jobs | Development | Design | Operation | Product | Other | Marketing | Sales |
+| :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
+|   all    | development | design | operation | product | other | marketing | sales |
+
+</Route>
+
 ## SANS Institute {#sans-institute}
 
-### 最新会议材料 {#sans-institute-zui-xin-hui-yi-cai-liao}
+### Latest conference materials {#sans-institute-latest-conference-materials}
 
 <Route author="sbilly" example="/sans/summit_archive" path="/sans/summit_archive" />
 
-## TSSstatus（iOS 降级通道） {#tssstatus%EF%BC%88ios-jiang-ji-tong-dao-%EF%BC%89}
+## Transformation {#transformation}
 
-### Status {#tssstatus%EF%BC%88ios-jiang-ji-tong-dao-%EF%BC%89-status}
+Pass URL and transformation rules to convert HTML/JSON into RSS.
 
-<Route author="xyqfer" example="/tssstatus/j42dap/14W585a" path="/tssstatus/:board/:build" paramsDesc={['平台 id', '版本 id']}>
+### HTML {#transformation-html}
 
-board 和 build 可在[这里](http://api.ineal.me/tss/status)查看
+Specify options (in the format of query string) in parameter `routeParams` parameter to extract data from HTML.
+
+| Key            | Meaning                                            | Accepted Values | Default                 |
+| -------------- | -------------------------------------------------- | --------------- | ----------------------- |
+| `title`        | The title of the RSS                               | `string`        | Extract from `<title>`  |
+| `item`         | The HTML elements as `item` using CSS selector     | `string`        | html                    |
+| `itemTitle`    | The HTML elements as `title` in `item` using CSS selector | `string` | `item` element          |
+| `itemTitleAttr` | The attributes of `title` element as title        | `string`        | Element text            |
+| `itemLink`     | The HTML elements as `link` in `item` using CSS selector | `string`  | `item` element          |
+| `itemLinkAttr` | The attributes of `link` element as link           | `string`        | `href`                  |
+| `itemDesc`     | The HTML elements as `descrption` in `item` using CSS selector | `string` | `item` element     |
+| `itemDescAttr` | The attributes of `descrption` element as description | `string`     | Element html            |
+
+<Route author="ttttmr" example="/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a" path="/rsshub/transform/html/:url/:routeParams" paramsDesc={['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']} selfhost="1">
+
+Parameters parsing in the above example:
+
+| Parameter    | Value                                     |
+| ------------ | ----------------------------------------- |
+| `url`        | `https://wechat2rss.xlab.app/posts/list/` |
+| `routeParams`| `item=div[class='post-content'] p a`      |
+
+Parsing of `routeParams` parameter:
+
+| Parameter | Value                           |
+| --------- | ------------------------------- |
+| `item`    | `div[class='post-content'] p a` |
 
 </Route>
+
+### JSON {#transformation-json}
+
+Specify options (in the format of query string) in parameter `routeParams` parameter to extract data from JSON.
+
+| Key         | Meaning                                  | Accepted Values | Default                                    |
+| ----------  | ---------------------------------------- | --------------- | ------------------------------------------ |
+| `title`     | The title of the RSS                     | `string`        | Extracted from home page of current domain |
+| `item`      | The JSON Path as `item` element          | `string`        | Entire JSON response                       |
+| `itemTitle` | The JSON Path as `title` in `item`       | `string`        | None                                       |
+| `itemLink`  | The JSON Path as `link` in `item`        | `string`        | None                                       |
+| `itemDesc`  | The JSON Path as `description` in `item` | `string`        | None                                       |
+
+:::tip Note
+
+JSON Path only supports format like `a.b.c`. if you need to access arrays, like `a[0].b`, you can write it as `a.0.b`.
+
+:::
+
+<Route author="ttttmr" example="/rsshub/transform/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body" path="/rsshub/transform/json/:url/:routeParams" paramsDesc={['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']} selfhost="1">
+
+Parameters parsing in the above example:
+
+| Parameter     | Value                                           |
+| ------------- | ----------------------------------------------- |
+| `url`         | `https://api.github.com/repos/ginuerzh/gost/releases` |
+| `routeParams` | `title=Gost releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body` |
+
+Parsing of `routeParams` parameter:
+
+| Parameter    | Value            |
+| ------------ | ---------------- |
+| `title`      | `Gost releases`  |
+| `itemTitle`  | `tag_name`       |
+| `itemLink`   | `html_url`       |
+| `itemDesc`   | `body`           |
+
+</Route>
+
+## TSSstatus (iOS downgrade channel) {#tssstatus-(ios-downgrade-channel)}
+
+### Status {#tssstatus-(ios-downgrade-channel)-status}
+
+<Route author="xyqfer" example="/tssstatus/j42dap/14W585a" path="/tssstatus/:board/:build" paramsDesc={['Board id', 'Build id']}>
+
+Board and Build can be found in [here](http://api.ineal.me/tss/status)
+
+</Route>
+
+## Urban Dictionary {#urban-dictionary}
+
+### Random words {#urban-dictionary-random-words}
+
+<Route author="TonyRL" example="/urbandictionary/random" path="/urbandictionary/random" radar="1" rssbud="1"/>
 
 ## V2rayShare {#v2rayshare}
 
@@ -444,37 +693,37 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ## WFDF {#wfdf}
 
-### 新闻 {#wfdf-xin-wen}
+### News {#wfdf-news}
 
 <Route author="HankChow" example="/wfdf/news" path="/wfdf/news" radar="1"/>
 
 ## wikiHow {#wikihow}
 
-### 首页 {#wikihow-shou-ye}
+### Home {#wikihow-home}
 
 <Route author="sanmmm" example="/wikihow/index" path="/wikihow/index"/>
 
-### 分类目录 {#wikihow-fen-lei-mu-lu}
+### Category {#wikihow-category}
 
-<Route author="sanmmm" example="/wikihow/category/饮食与休闲/all" path="/wikihow/category/:category/:type?" paramsDesc={['目录分类', '类型, 默认为`all`']}>
+<Route author="sanmmm" example="/wikihow/category/饮食与休闲/all" path="/wikihow/category/:category/:type?" paramsDesc={['Category', 'Type, default to `all`']}>
 
-顶级目录分类可在目录分类页[查看](https://zh.wikihow.com/Special:CategoryListing), 支持二级目录
+Top category can be found in [category Page](https://zh.wikihow.com/Special:CategoryListing), support secondary directories
 
-类型
+Type
 
-| 所有 | 推荐 |
-| ---- | ---- |
-| all  | rec  |
+| All | Recommend |
+| --- | --------- |
+| all | rec       |
 
 </Route>
 
 ## Wise {#wise}
 
-### 昨日汇率变动 {#wise-zuo-ri-hui-l%C3%BC-bian-dong}
+### FX Pair Yesterday {#wise-fx-pair-yesterday}
 
-<Route author="HenryQW" example="/wise/pair/GBP/USD" path="/wise/pair/:source/:target" paramsDesc={['本币缩写','外币缩写']} radar="1">
+<Route author="HenryQW" example="/wise/pair/GBP/USD" path="/wise/pair/:source/:target" paramsDesc={['Base currency abbreviation','Quote currency abbreviation']} radar="1">
 
-参见支持的 [货币列表](https://wise.com/tools/exchange-rate-alerts/)。
+Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate-alerts/).
 
 </Route>
 
@@ -696,19 +945,13 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ## 裏垢女子まとめ {#li-gou-n%C3%BC-zi-%E3%81%BE%E3%81%A8%E3%82%81}
 
-### 主页 {#li-gou-n%C3%BC-zi-%E3%81%BE%E3%81%A8%E3%82%81-zhu-ye}
+### Homepage {#li-gou-n%C3%BC-zi-%E3%81%BE%E3%81%A8%E3%82%81-homepage}
 
 <Route author="SettingDust Halcao" example="/uraaka-joshi" path="/uraaka-joshi" radar="1" rssbud="1" puppeteer="1"/>
 
-### 用户 {#li-gou-n%C3%BC-zi-%E3%81%BE%E3%81%A8%E3%82%81-yong-hu}
+### User {#li-gou-n%C3%BC-zi-%E3%81%BE%E3%81%A8%E3%82%81-user}
 
-<Route author="SettingDust Halcao" example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" paramsDesc={['用户名']} radar="1" rssbud="1" puppeteer="1"/>
-
-## 立创开源硬件平台 {#li-chuang-kai-yuan-ying-jian-ping-tai}
-
-### 开源广场 {#li-chuang-kai-yuan-ying-jian-ping-tai-kai-yuan-guang-chang}
-
-<Route author="tylinux" example="/oshwhub" path="/oshwhub/:sortType?" paramsDesc={['排序类型']} radar="1" rssbud="1"/>
+<Route author="SettingDust Halcao" example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" paramsDesc={['User ID']} radar="1" rssbud="1" puppeteer="1"/>
 
 ## 律师事务所文章 {#l%C3%BC-shi-shi-wu-suo-wen-zhang}
 
@@ -786,18 +1029,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="cc798461" example="/moxingnet" path="/moxingnet"/>
 
-## 诺贝尔奖 {#nuo-bei-er-jiang}
-
-### 获奖名单 {#nuo-bei-er-jiang-huo-jiang-ming-dan}
-
-<Route author="nczitzk" example="/nobelprize" path="/nobelprize/:caty" paramsDesc={['类别，见下表，默认为全部']}>
-
-| 物理学  | 化学      | 生理学或医学           | 文学       | 和平  | 经济学            |
-| ------- | --------- | ---------------------- | ---------- | ----- | ----------------- |
-| physics | chemistry | physiology-or-medicine | literature | peace | economic-sciences |
-
-</Route>
-
 ## 汽油价格网 {#qi-you-jia-ge-wang}
 
 ### 今日油价查询 {#qi-you-jia-ge-wang-jin-ri-you-jia-cha-xun}
@@ -857,18 +1088,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 数据源: [trending-in-one](https://github.com/huqi-pr/trending-in-one)
 
 <Route author="Jkker" example="/trending/唐山,打人/3" path="/trending/:keywords/:numberOfDays?" radar="1" paramsDesc={['通过逗号区隔的关键词列表', '向前追溯的天数，默认为3天']}/>
-
-## 日本郵便 {#ri-ben-you-bian}
-
-### 郵便追跡サービス {#ri-ben-you-bian-you-bian-zhui-ji-%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9}
-
-<Route author="tuzi3040" example="/japanpost/track/EJ123456789JP/ja" path="/japanpost/track/:reqCode/:locale?" paramsDesc={['运单号', '语言，默认为`ja`']} radar="1" rssbud="1">
-
-| 日语 | 英语 |
-| ---- | ---- |
-| ja   | en   |
-
-</Route>
 
 ## 守望先锋 {#shou-wang-xian-feng}
 
@@ -932,64 +1151,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="alienmao" example="/itslaw/judgements/regulation+1121495748+13+中华人民共和国公司法（2018）第二十一条" path="/itslaw/judgements/:conditions" paramsDesc={['筛选条件，见示例']}/>
 
-## 新冠肺炎疫情新闻动态 {#xin-guan-fei-yan-yi-qing-xin-wen-dong-tai}
-
-### 国家卫健委 - 疫情通报 {#xin-guan-fei-yan-yi-qing-xin-wen-dong-tai-guo-jia-wei-jian-wei---yi-qing-tong-bao}
-
-<Route author="Cielpy DIYgod" example="/coronavirus/nhc" path="/coronavirus/nhc"/>
-
-### 财新网 - 新冠肺炎防疫全纪录 {#xin-guan-fei-yan-yi-qing-xin-wen-dong-tai-cai-xin-wang---xin-guan-fei-yan-fang-yi-quan-ji-lu}
-
-<Route author="DIYgod" example="/coronavirus/caixin" path="/coronavirus/caixin"/>
-
-### 丁香园 - 新冠病毒疫情实时播报 {#xin-guan-fei-yan-yi-qing-xin-wen-dong-tai-ding-xiang-yuan---xin-guan-bing-du-yi-qing-shi-shi-bo-bao}
-
-<Route author="DIYgod" example="/coronavirus/dxy" path="/coronavirus/dxy"/>
-
-### 丁香园 - 新冠病毒疫情数据统计 {#xin-guan-fei-yan-yi-qing-xin-wen-dong-tai-ding-xiang-yuan---xin-guan-bing-du-yi-qing-shu-ju-tong-ji}
-
-<Route author="DIYgod HenryQW" example="/coronavirus/dxy/data/湖北/武汉" path="/coronavirus/dxy/data/:province?/:city?" paramsDesc={['省/直辖市名，缺省或错误则返回国内数据','城市名，缺省或错误则返回全省数据。直辖市请使用区/县名。']}/>
-
-### 腾讯新闻 - 新型冠状病毒肺炎实时辟谣 {#xin-guan-fei-yan-yi-qing-xin-wen-dong-tai-teng-xun-xin-wen---xin-xing-guan-zhuang-bing-du-fei-yan-shi-shi-pi-yao}
-
-<Route author="DIYgod" example="/coronavirus/qq/fact" path="/coronavirus/qq/fact"/>
-
-### 腾讯新闻 - 新型冠状病毒肺炎疫情实时追踪 {#xin-guan-fei-yan-yi-qing-xin-wen-dong-tai-teng-xun-xin-wen---xin-xing-guan-zhuang-bing-du-fei-yan-yi-qing-shi-shi-zhui-zong}
-
-数据来源：<https://news.qq.com/zt2020/page/feiyan.htm#/>
-
-#### 中国本土数据统计
-
-<Route author="CaoMeiYouRen" example="/tencent/news/coronavirus/total" path="/tencent/news/coronavirus/total"/>
-
-#### 省市疫情数据
-
-<Route author="CaoMeiYouRen" example="/tencent/news/coronavirus/data/湖北/武汉" path="/tencent/news/coronavirus/data/:province?/:city?" paramsDesc={['省/直辖市名，缺省则返回国内数据','城市名，缺省则返回全省数据。直辖市请使用区/县名。']}/>
-
-### South China Morning Post - China coronavirus outbreak {#xin-guan-fei-yan-yi-qing-xin-wen-dong-tai-south-china-morning-post---china-coronavirus-outbreak}
-
-<Route author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
-
-### 澳門特別行政區政府 抗疫專頁：最新消息 {#xin-guan-fei-yan-yi-qing-xin-wen-dong-tai-ao-men-te-bie-xing-zheng-qu-zheng-fu-kang-yi-zhuan-ye-%EF%BC%9A-zui-xin-xiao-xi}
-
-官方網址：<https://www.ssm.gov.mo/apps1/PreventWuhanInfection/ch.aspx>
-
-<Route author="KeiLongW" example="/coronavirus/mogov-2019ncov/ch" path="/coronavirus/mogov-2019ncov/:lang" paramsDesc={['語言']}/>
-
-| 中文 | 英文 | 葡文 |
-| ---- | ---- | ---- |
-| ch   | en   | pt   |
-
-### Singapore Ministry of Health - Past Updates on 2019-nCov Local Situation in Singapore {#xin-guan-fei-yan-yi-qing-xin-wen-dong-tai-singapore-ministry-of-health---past-updates-on-2019-ncov-local-situation-in-singapore}
-
-<Route author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>
-
-### Yahoo Japan 新型コロナウイルス感染症まとめ {#xin-guan-fei-yan-yi-qing-xin-wen-dong-tai-yahoo-japan-xin-xing-%E3%82%B3%E3%83%AD%E3%83%8A%E3%82%A6%E3%82%A4%E3%83%AB%E3%82%B9-gan-ran-zheng-%E3%81%BE%E3%81%A8%E3%82%81}
-
-新闻主页：<https://news.yahoo.co.jp/pages/article/20200207>
-
-<Route author="sgqy" example="/coronavirus/yahoo-japan" path="/coronavirus/yahoo-japan/:tdfk?" paramsDesc={['都道府県的拼音，可从地图详情页的链接中获取。例如：京都府 = kyoto']}/>
-
 ## 新趣集 {#xin-qu-ji}
 
 > 官方 Feed 地址为: <https://xinquji.com/rss>
@@ -1003,24 +1164,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="kiddyuchina" example="/xinquji/today/internal" path="/xinquji/today/internal">
 </Route>
-
-## 新田惠海官方网站 {#xin-tian-hui-hai-guan-fang-wang-zhan}
-
-### 最近的更新 {#xin-tian-hui-hai-guan-fang-wang-zhan-zui-jin-de-geng-xin}
-
-<Route author="luyuhuang" example="/emi-nitta/updates" path="/emi-nitta/updates"/>
-
-### 新闻 {#xin-tian-hui-hai-guan-fang-wang-zhan-xin-wen}
-
-<Route author="luyuhuang" example="/emi-nitta/news" path="/emi-nitta/news"/>
-
-## 邮箱 {#you-xiang}
-
-### 邮件列表 {#you-xiang-you-jian-lie-biao}
-
-> 仅支持 IMAP 协议，邮件密码等设置见 [邮件设置](/install#其他应用配置)
-
-<Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" paramsDesc={['邮箱账号']} selfhost="1"/>
 
 ## 有据 {#you-ju}
 
@@ -1036,18 +1179,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 | 阅读  | 异次元   | 海阔   |
 | ----- | -------- | ------ |
 | yuedu | yiciyuan | haikuo |
-
-</Route>
-
-## 远程 work {#yuan-cheng-work}
-
-### 远程 work 招聘信息 {#yuan-cheng-work-yuan-cheng-work-zhao-pin-xin-xi}
-
-<Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" paramsDesc={['职位类型, 默认为全部职位']} radar="1" rssbud="1">
-
-| 所有职位 |     技术    |  设计  |    运营   |   产品  |  其他 |    市场   |  销售 |
-| :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
-|    all   | development | design | operation | product | other | marketing | sales |
 
 </Route>
 
@@ -1144,80 +1275,6 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 <Route author="Fatpandac" example="/ems/apple/EZ319397281CN" path="/ems/apple/:id" paramsDesc={['苹果邮件编号']}/>
 
-## 转换 {#zhuan-huan}
-
-传递 URL 和转化规则，将 HTML/JSON 转换为 RSS
-
-### HTML {#zhuan-huan-html}
-
-在 `routeParams` 参数中以 query string 格式指定选项，可以控制提取数据
-
-| 键              | 含义                                                            | 接受的值 | 默认值                   |
-| --------------- | --------------------------------------------------------------- | -------- | ------------------------ |
-| `title`         | 指定 RSS 的标题                                                 | `string` | 从当前网页中取 `<title>` |
-| `item`          | 通过 CSS 选择器查找 HTML 元素作为 `item` 元素                   | `string` | html                     |
-| `itemTitle`     | 在 `item` 中通过 CSS 选择器查找 HTML 元素作为 `title` 元素      | `string` | `item` 元素              |
-| `itemTitleAttr` | 获取 `title` 元素属性作为标题                                   | `string` | 元素 text                |
-| `itemLink`      | 在 `item` 中通过 CSS 选择器查找 HTML 元素作为 `link` 元素       | `string` | `item` 元素              |
-| `itemLinkAttr`  | 获取 `link` 元素属性作为链接                                    | `string` | `href`                   |
-| `itemDesc`      | 在 `item` 中通过 CSS 选择器查找 HTML 元素作为 `descrption` 元素 | `string` | `item` 元素              |
-| `itemDescAttr`  | 获取 `descrption` 元素属性作为描述                              | `string` | 元素 html                |
-
-<Route author="ttttmr" example="/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a" path="/rsshub/transform/html/:url/:routeParams" paramsDesc={['URL地址，需经 URL 编码', '转换规则，需经 URL 编码']} selfhost="1">
-
-上述例子中参数解析如下
-
-| 参数           | 值                                        |
-| -------------- | ----------------------------------------- |
-| `:url`         | `https://wechat2rss.xlab.app/posts/list/` |
-| `:routeParams` | `item=div[class='post-content'] p a`      |
-
-`routeParams`参数解析如下
-
-| 参数   | 值                              |
-| ------ | ------------------------------- |
-| `item` | `div[class='post-content'] p a` |
-
-</Route>
-
-### JSON {#zhuan-huan-json}
-
-在 `routeParams` 参数中以 query string 格式指定选项，可以控制提取数据
-
-| 键          | 含义                                    | 接受的值 | 默认值                               |
-| ----------- | --------------------------------------- | -------- | ------------------------------------ |
-| `title`     | 指定 RSS 的标题                         | `string` | 从当前域名的根路径网页中取 `<title>` |
-| `item`      | 通过 JSON Path 查找作为 `item` 元素     | `string` | 整个响应 JSON                        |
-| `itemTitle` | 在 `item` 中通过 JSON Path 查找作为标题 | `string` | 无                                   |
-| `itemLink`  | 在 `item` 中通过 JSON Path 查找作为链接 | `string` | 无                                   |
-| `itemDesc`  | 在 `item` 中通过 JSON Path 查找作为描述 | `string` | 无                                   |
-
-:::tip 注意
-
-JSON Path 目前只支持例如 `a.b.c` 的形式，如果需要从数组中读取，例如 `a[0].b`，可以写成 `a.0.b`
-
-:::
-
-<Route author="ttttmr" example="/rsshub/transform/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body" path="/rsshub/transform/json/:url/:routeParams" paramsDesc={['URL地址，需经 URL 编码', '转换规则，需经 URL 编码']} selfhost="1">
-
-上述例子中参数解析如下
-
-| 参数           | 值                                                                       |
-| -------------- | ------------------------------------------------------------------------ |
-| `:url`         | `https://api.github.com/repos/ginuerzh/gost/releases`                    |
-| `:routeParams` | `title=Gost releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body` |
-
-`routeParams` 参数解析如下
-
-| 参数        | 值              |
-| ----------- | --------------- |
-| `title`     | `Gost releases` |
-| `itemTitle` | `tag_name`      |
-| `itemLink`  | `html_url`      |
-| `itemDesc`  | `body`          |
-
-</Route>
-
 ## 自如 {#zi-ru}
 
 ### 房源 {#zi-ru-fang-yuan}
@@ -1235,3 +1292,4 @@ JSON Path 目前只支持例如 `a.b.c` 的形式，如果需要从数组中读�
 ### はてな匿名ダイアリー - 人気記事アーカイブ {#%E3%81%AF%E3%81%A6%E3%81%AA-%E3%81%AF%E3%81%A6%E3%81%AA-ni-ming-%E3%83%80%E3%82%A4%E3%82%A2%E3%83%AA%E3%83%BC---ren-qi-ji-shi-%E3%82%A2%E3%83%BC%E3%82%AB%E3%82%A4%E3%83%96}
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
+
