@@ -31,18 +31,18 @@ const sidebars = {
         },
         {
             type: 'category',
-            label: '指南',
+            label: 'Guide',
             items: ['README', 'usage', 'faq', 'parameter', 'api'],
             collapsible: true,
             collapsed: true,
         },
         {
             type: 'category',
-            label: '路由',
+            label: 'Routes',
             link: {
                 type: 'generated-index',
                 slug: '/routes',
-                description: '路由是 RSSHub 访问路径，每个路由后面包含一段 RSSHub 规则，它告诉 RSSHub 如何从网站中提取内容并生成 RSS 订阅。',
+                description: 'Routes are the access paths of RSSHub. Each route contains a RSSHub rule, which tells RSSHub how to extract content from the website and generate RSS subscription.',
             },
             items: [
                 'routes/social-media',
