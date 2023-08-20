@@ -1,12 +1,12 @@
 import Route from '@site/src/components/Route';
 
-# 🖼️ 图片
+# 🖼️ Picture
 
 ## 1X {#1x}
 
 ### Photos {#1x-photos}
 
-<Route author="nczitzk" example="/1x" path="/1x/:category?" paramsDesc={['类别，默认为 Latest awarded，见下表']}>
+<Route author="nczitzk" example="/1x" path="/1x/:category?" paramsDesc={['Category, Latest awarded by default, see below']}>
 
 | Category         | Title         |
 | ---------------- | ------------- |
@@ -56,11 +56,11 @@ import Route from '@site/src/components/Route';
 
 ### Genre {#35photo-genre}
 
-<Route author="nczitzk" example="/35photo/genre/99"  path="/35photo/genre/:id" paramsDesc={['id，可在对应分类页 URL 中找到']}/>
+<Route author="nczitzk" example="/35photo/genre/99"  path="/35photo/genre/:id" paramsDesc={['id, can be found in URL']}/>
 
 ### Author {#35photo-author}
 
-<Route author="nczitzk" example="/35photo/author/mariuszsix"  path="/35photo/author/:id" paramsDesc={['id，可在对应作者页 URL 中找到']}/>
+<Route author="nczitzk" example="/35photo/author/mariuszsix"  path="/35photo/author/:id" paramsDesc={['id, can be found in URL']}/>
 
 ## 500px 摄影社区 {#500px-she-ying-she-qu}
 
@@ -88,41 +88,41 @@ import Route from '@site/src/components/Route';
 
 ## Asian to lick {#asian-to-lick}
 
-### 首页 {#asian-to-lick-shou-ye}
+### Home {#asian-to-lick-home}
 
 <Route author="nczitzk" example="/asiantolick" path="/asiantolick"/>
 
-### 分类 {#asian-to-lick-fen-lei}
+### Category {#asian-to-lick-category}
 
-<Route author="nczitzk" example="/asiantolick/category/90" path="/asiantolick/category/:category?" paramsDesc={['分类，可在对应分类页 URL 中找到分类编号，默认为首页']}/>
+<Route author="nczitzk" example="/asiantolick/category/90" path="/asiantolick/category/:category?" paramsDesc={['Category, the id can be found in URL, homepage by default']}/>
 
-### 标签 {#asian-to-lick-biao-qian}
+### Tag {#asian-to-lick-tag}
 
-<Route author="nczitzk" example="/asiantolick/tag/90" path="/asiantolick/tag/:tag?" paramsDesc={['标签，可在对应标签页 URL 中找到标签编号，默认为首页']}/>
+<Route author="nczitzk" example="/asiantolick/tag/1045" path="/asiantolick/tag/:tag?" paramsDesc={['Tag, the id can be found in URL, homepage by default']}/>
 
-### 搜索 {#asian-to-lick-sou-suo}
+### Search {#asian-to-lick-search}
 
-<Route author="nczitzk" example="/asiantolick/search/lolita" path="/asiantolick/search/:keyword?" paramsDesc={['关键词，默认为空']}/>
+<Route author="nczitzk" example="/asiantolick/search/lolita" path="/asiantolick/search/:keyword?" paramsDesc={['Keyword, empty by default']}/>
 
 ## BabeHub {#babehub}
 
-### 分类 {#babehub-fen-lei}
+### Category {#babehub-category}
 
-<Route author="nczitzk" example="/babehub" path="/babehub/:category?" paramsDesc={['分类，见下表，默认为首页']}>
+<Route author="nczitzk" example="/babehub" path="/babehub/:category?" paramsDesc={['Category, see below, Home by default']}>
 
 | Home | Most Viewed | Picture Archive | Video Archive |
-| ---- | ----------- | --------------- | ------------- |
-|      | most-viewed | picture         | video         |
+| - | - | - | - |
+| | most-viewed | picture | video |
 
 </Route>
 
-### 搜索关键字 {#babehub-sou-suo-guan-jian-zi}
+### Search {#babehub-search}
 
 <Route author="nczitzk" example="/babehub/search/babe" path="/babehub/search/:keyword?" paramsDesc={['关键字']}/>
 
-## Bing 壁纸 {#bing-bi-zhi}
+## Bing Wallpaper {#bing-wallpaper}
 
-### 每日壁纸 {#bing-bi-zhi-mei-ri-bi-zhi}
+### Daily Wallpaper {#bing-wallpaper-daily-wallpaper}
 
 <Route author="FHYunCai" example="/bing" path="/bing" radar="1" rssbud="1"/>
 
@@ -142,9 +142,13 @@ import Route from '@site/src/components/Route';
 
 ## DailyArt 每日艺术 {#dailyart-mei-ri-yi-shu}
 
-<Route author="zphw" example="/dailyart/zh" path="/dailyart/:language?" paramsDesc={['语言，支持 en, zh, jp 等，默认为 en']} />
+### DailyArt {#dailyart-mei-ri-yi-shu-dailyart}
+
+<Route author="zphw" example="/dailyart/en" path="/dailyart/:language?" paramsDesc={['Support en, es, fr, de, it, zh, jp, etc. English by default.']} />
 
 ## Dilbert Comic Strip {#dilbert-comic-strip}
+
+### Dilbert Comic Strip {#dilbert-comic-strip-dilbert-comic-strip}
 
 <Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip">
 
@@ -154,30 +158,30 @@ import Route from '@site/src/components/Route';
 
 ## E-Hentai {#e-hentai}
 
-对于 RSS 内容，在 `routeParams` 参数中以 query string 格式指定选项，可以控制额外的功能
+For RSS content, specify options in the `routeParams` parameter in query string format to control additional functionality
 
-| 键          | 含义                                            | 接受的值       | 默认值 |
-| ----------- | ----------------------------------------------- | -------------- | ------ |
-| bittorrent  | 是否包含最新种子的链接                          | 0/1/true/false | false  |
-| embed_thumb | 是否将封面图片嵌入 RSS 中而不是以链接的形式给出 | 0/1/true/false | false  |
+| Key         | Meaning                                                                          | Accepted keys  | Default value |
+| ----------- | -------------------------------------------------------------------------------- | -------------- | ------------- |
+| bittorrent  | Whether include a link to the latest torrent                                     | 0/1/true/false | false         |
+| embed_thumb | Whether the cover image is embedded in the RSS feed rather than given as a link  | 0/1/true/false | false         |
 
-### 收藏 {#e-hentai-shou-cang}
+### Favorites {#e-hentai-favorites}
 
-<Route author="yindaheng98" example="/ehentai/favorites/0/posted" path="/ehentai/favorites/:favcat?/:order?/:page?/:routeParams?" paramsDesc={['收藏夹编号','顺序：posted-按画廊发布时间排序，favorited-按添加收藏的时间排序', '翻页参数，对应E站地址中的next参数', '额外参数；请参阅上面的说明和表格']} anticrawler="1" supportBT="1" />
+<Route author="yindaheng98" example="/ehentai/favorites/0/posted/1" path="/ehentai/favorites/:favcat?/:order?/:page?/:routeParams?" paramsDesc={['Favorites folder number','`posted`(Sort by gallery release time) , `favorited`(Sort by time added to favorites)', 'Page number', 'Additional parameters, see the table above']} anticrawler="1" supportBT="1" />
 
-### 标签 {#e-hentai-biao-qian}
+### Tag {#e-hentai-tag}
 
-<Route author="yindaheng98" example="/ehentai/tag/language:chinese" path="/ehentai/tag/:tag/:page?/:routeParams?" paramsDesc={['标签', '翻页参数，对应E站地址中的next参数', '额外参数；请参阅上面的说明和表格']} anticrawler="1" supportBT="1" />
+<Route author="yindaheng98" example="/ehentai/tag/language:chinese/1" path="/ehentai/tag/:tag/:page?/:routeParams?" paramsDesc={['Tag', 'Page number', 'Additional parameters, see the table above']} anticrawler="1" supportBT="1" />
 
-### 搜索 {#e-hentai-sou-suo}
+### Search {#e-hentai-search}
 
-<Route author="yindaheng98" example="/ehentai/search/f_search=artist%3Amama%24" path="/ehentai/search/:params?/:page?/:routeParams?" paramsDesc={['用于搜索的关键词。可在原网站搜索后复制 `https://e-hentai.org/?` 后面的内容', '翻页参数，对应E站地址中的next参数', '额外参数；请参阅上面的说明和表格']} anticrawler="1" supportBT="1" />
+<Route author="yindaheng98" example="/ehentai/search/f_search=artist%3Amana%24/1" path="/ehentai/search/:params?/:page?/:routeParams?" paramsDesc={['Search parameters. You can copy the content after `https://e-hentai.org/?`', 'Page number', 'Additional parameters, see the table above']} anticrawler="1" supportBT="1" />
 
 ## Elite Babes {#elite-babes}
 
 ### Home {#elite-babes-home}
 
-<Route author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" paramsDesc={['分类，见下表，默认为 Home']}>
+<Route author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" paramsDesc={['Category, see below, Home by default']}>
 
 | Home | Hot | Popular | Recent |
 | ---- | --- | ------- | ------ |
@@ -187,7 +191,7 @@ import Route from '@site/src/components/Route';
 
 ### Videos {#elite-babes-videos}
 
-<Route author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" paramsDesc={['排序，见下表，默认为 Popular']}>
+<Route author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" paramsDesc={['Sort, see below, Popular by default']}>
 
 | Popular | Recent |
 | ------- | ------ |
@@ -197,69 +201,69 @@ import Route from '@site/src/components/Route';
 
 ### Search {#elite-babes-search}
 
-<Route author="nczitzk" example="/elitebabes/search/pose" path="/elitebabes/search/:keyword?" paramsDesc={['关键字']} />
+<Route author="nczitzk" example="/elitebabes/search/pose" path="/elitebabes/search/:keyword?" paramsDesc={['Keyword']}/>
 
 ## Fantia {#fantia}
 
-### 搜索 {#fantia-sou-suo}
+### Search {#fantia-search}
 
-<Route author="nczitzk" example="/fantia/search/posts/all/daily" path="/fantia/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?" paramsDesc={['类型，见下表，默认为 posts','分类，见下表，也可在搜索页的 URL 中找到，默认为 すべてのクリエイター', '排行时段，见下表，填写该字段即返回排行榜，默认为空，即不排名' ,'排序，见下表，默认为 更新の新しい順', 'R18显示，见下表，默认为 すべて', '关键字，默认为空']}>
+<Route author="nczitzk" example="/fantia/search/posts/all/daily" path="/fantia/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?" paramsDesc={['Type, see the table below, `posts` by default', 'Category, see the table below, can also be found in search page URL, `すべてのクリエイター` by default', 'Ranking period, see the table below, empty by default' ,'Sorting, see the table below, `更新の新しい順` by default', 'Rating, see the table below, `すべて` by default', 'Keyword, empty by default']}>
 
-类型
+Type
 
-| クリエイター | 投稿  | 商品     | コミッション |
-| ------------ | ----- | -------- | ------------ |
-| fanclubs     | posts | products | commissions  |
+| クリエイター   | 投稿    | 商品       | コミッション      |
+| -------- | ----- | -------- | ----------- |
+| fanclubs | posts | products | commissions |
 
-分类
+Category
 
-| 分类                   | 分类名     |
-| ---------------------- | ---------- |
-| イラスト               | illust     |
-| 漫画                   | comic      |
-| コスプレ               | cosplay    |
-| YouTuber・配信者       | youtuber   |
-| Vtuber                 | vtuber     |
-| 音声作品・ASMR         | voice      |
-| 声優・歌い手           | voiceactor |
-| アイドル               | idol       |
-| アニメ・映像・写真     | anime      |
-| 3D                     | 3d         |
-| ゲーム制作             | game       |
-| 音楽                   | music      |
-| 小説                   | novel      |
-| ドール                 | doll       |
-| アート・デザイン       | art        |
-| プログラム             | program    |
-| 創作・ハンドメイド     | handmade   |
-| 歴史・評論・情報       | history    |
-| 鉄道・旅行・ミリタリー | railroad   |
-| ショップ               | shop       |
-| その他                 | other      |
+| 分类           | 分类名        |
+| ------------ | ---------- |
+| イラスト         | illust     |
+| 漫画           | comic      |
+| コスプレ         | cosplay    |
+| YouTuber・配信者 | youtuber   |
+| Vtuber       | vtuber     |
+| 音声作品・ASMR    | voice      |
+| 声優・歌い手       | voiceactor |
+| アイドル         | idol       |
+| アニメ・映像・写真    | anime      |
+| 3D           | 3d         |
+| ゲーム制作        | game       |
+| 音楽           | music      |
+| 小説           | novel      |
+| ドール          | doll       |
+| アート・デザイン     | art        |
+| プログラム        | program    |
+| 創作・ハンドメイド    | handmade   |
+| 歴史・評論・情報     | history    |
+| 鉄道・旅行・ミリタリー  | railroad   |
+| ショップ         | shop       |
+| その他          | other      |
 
-排行时段
+Ranking period
 
-| デイリー | ウィークリー | マンスリー | 全期間 |
-| -------- | ------------ | ---------- | ------ |
-| daily    | weekly       | monthly    | all    |
+| デイリー  | ウィークリー | マンスリー   | 全期間 |
+| ----- | ------ | ------- | --- |
+| daily | weekly | monthly | all |
 
-排序
+Sorting
 
-| 更新の新しい順 | 更新の古い順 | 投稿の新しい順 | 投稿の古い順 | お気に入り数順 |
-| -------------- | ------------ | -------------- | ------------ | -------------- |
-| updater        | update_old   | newer          | create_old   | popular        |
+| 更新の新しい順 | 更新の古い順     | 投稿の新しい順 | 投稿の古い順     | お気に入り数順 |
+| ------- | ---------- | ------- | ---------- | ------- |
+| updater | update_old | newer   | create_old | popular |
 
-R18 显示
+Rating
 
-| すべて | 一般のみ | R18 のみ |
-| ------ | -------- | -------- |
-| all    | general  | adult    |
+| すべて | 一般のみ    | R18 のみ |
+| --- | ------- | ------ |
+| all | general | adult  |
 
 </Route>
 
-### 用户投稿 {#fantia-yong-hu-tou-gao}
+### User Posts {#fantia-user-posts}
 
-<Route author="nczitzk" example="/fantia/user/3498" path="/fantia/user/:id" paramsDesc={['用户 id，可在用户页 URL 中找到']} />
+<Route author="nczitzk" example="/fantia/user/3498" path="/fantia/user/:id" paramsDesc={['User id, can be found in user profile URL']} />
 
 ## GirlImg {#girlimg}
 
@@ -267,17 +271,21 @@ R18 显示
 
 <Route author="junfengP" example="/girlimg/album" path="/girlimg/album/:tag?/:mode?" paramsDesc={['过滤标签，在链接参数中&tab=部分，如：中国,BoLoLi','加载模式，留空为简单模式，获取20篇文章标题与封面；非空为详细模式，加载10篇文章内容']} />
 
+## GoComics Comic Strips {#gocomics-comic-strips}
+
+<Route author="stjohnjohnson" example="/gocomics/foxtrot" path="/gocomics/:strip" paramsDesc={['URL path of the strip on gocomics.com']} />
+
 ## Google Doodles {#google-doodles}
 
-### 更新 {#google-doodles-geng-xin}
+### Update {#google-doodles-update}
 
-<Route author="xyqfer" example="/google/doodles/zh-CN" path="/google/doodles/:language?" paramsDesc={['语言，默认为`zh-CN`简体中文，如需其他语言值可从[Google Doodles 官网](https://www.google.com/doodles)获取']} />
+<Route author="xyqfer" example="/google/doodles/zh-CN" path="/google/doodles/:language?" paramsDesc={['Language, default to `zh-CN`, for other language values, you can get it from [Google Doodles official website](https://www.google.com/doodles)']} />
 
-## Google 相册 {#google-xiang-ce}
+## Google Photos {#google-photos}
 
-### 公开影集 {#google-xiang-ce-gong-kai-ying-ji}
+### Public Albums {#google-photos-public-albums}
 
-<Route author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" paramsDesc={['影集 ID, 可在 URL 中找到, 例如, 分享链接为`https://photos.app.goo.gl/msFFnAzKmQmWj76EA`, 则 ID 为`msFFnAzKmQmWj76EA`']} radar="1"/>
+<Route author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" paramsDesc={['album ID, can be found in URL, for example, `https://photos.app.goo.gl/msFFnAzKmQmWj76EA` to `msFFnAzKmQmWj76EA`']} radar="1"/>
 
 ## Hentai Cosplay {#hentai-cosplay}
 
@@ -287,36 +295,36 @@ R18 显示
 
 ## Konachan Anime Wallpapers {#konachan-anime-wallpapers}
 
-:::tip 提示
+:::tip
 
--   tags 在 [konachan](https://konachan.com/post) URL 中 `tags=` 后的参数
--   路由可选 `/konachan` 或 `/konachan.com` 或 `/konachan.net`, 其中前两者相同，`.net` 是全年龄健康的壁纸 ♡
--   网站提供了 Posts 订阅: <https://konachan.com/post/piclens?tags=[tags]>
+-   Tags can be copied after `tags=` in [konachan](https://konachan.com/post) URL
+-   The route can be / konachan or /konachan.com or /konachan.net, where the first two are the same, and .net is an all-age healthy wallpaper ♡
+-   Official Posts RSS: https://konachan.com/post/piclens?tags=[tags]
 
 :::
 
 ### Popular Recent Posts {#konachan-anime-wallpapers-popular-recent-posts}
 
-<Route author="magic-akari" example="/konachan/post/popular_recent" path="/konachan/post/popular_recent/:period?" paramsDesc={['默认过去 24 小时']}>
+<Route author="magic-akari" example="/konachan/post/popular_recent" path="/konachan/post/popular_recent/:period?" paramsDesc={['Default to 24 hours']}>
 
-举例:
+For example:
 
--   过去 24 小时:<https://rsshub.app/konachan/post/popular_recent/1d>
--   过去一周:<https://rsshub.app/konachan/post/popular_recent/1w>
--   过去一月:<https://rsshub.app/konachan/post/popular_recent/1m>
--   过去一年:<https://rsshub.app/konachan/post/popular_recent/1y>
+-   24 hours:<https://rsshub.app/konachan/post/popular_recent/1d>
+-   1 week:<https://rsshub.app/konachan/post/popular_recent/1w>
+-   1 month:<https://rsshub.app/konachan/post/popular_recent/1m>
+-   1 year:<https://rsshub.app/konachan/post/popular_recent/1y>
 
 </Route>
 
 ## LoveHeaven {#loveheaven}
 
-### 漫画更新 {#loveheaven-man-hua-geng-xin}
+### Manga Updates {#loveheaven-manga-updates}
 
-<Route author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" paramsDesc={['漫画 slug，可在漫画页面URL中找到，不包括开头的`manga-`，也不包括末尾的`.html`']} />
+<Route author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" paramsDesc={['Manga slug, can be found in URL, including neither `manga-` nor `.html`']} />
 
 ## Mic Mic Idol {#mic-mic-idol}
 
-### 最新 {#mic-mic-idol-zui-xin}
+### Latest {#mic-mic-idol-latest}
 
 <Route author="KotoriK" example="/micmicidol" path="/micmicidol"/>
 
@@ -351,17 +359,17 @@ R18 显示
 
 </Route>
 
-## NASA 每日天文图片 {#nasa-mei-ri-tian-wen-tu-pian}
+## NASA Astronomy Picture of the Day {#nasa-astronomy-picture-of-the-day}
 
-### NASA {#nasa-mei-ri-tian-wen-tu-pian-nasa}
+### NASA {#nasa-astronomy-picture-of-the-day-nasa}
 
 <Route author="nczitzk" example="/nasa/apod" path="/nasa/apod" />
 
-### 台湾成功大学镜像 {#nasa-mei-ri-tian-wen-tu-pian-tai-wan-cheng-gong-da-xue-jing-xiang}
+### Cheng Kung University Mirror {#nasa-astronomy-picture-of-the-day-cheng-kung-university-mirror}
 
 <Route author="nczitzk" example="/nasa/apod-ncku" path="/nasa/apod-ncku" />
 
-### NASA 中文 {#nasa-mei-ri-tian-wen-tu-pian-nasa-zhong-wen}
+### NASA 中文 {#nasa-astronomy-picture-of-the-day-nasa-zhong-wen}
 
 <Route author="nczitzk" example="/nasa/apod-cn" path="/nasa/apod-cn">
 
@@ -373,11 +381,33 @@ R18 显示
 
 </Route>
 
+## National Geographic {#national-geographic}
+
+### Photo of the Day {#national-geographic-photo-of-the-day}
+
+<Route author="LogicJake OrangeEd1t TonyRL" example="/natgeo/dailyphoto" path="/natgeo/dailyphoto"/>
+
+### 每日一图 {#national-geographic-mei-ri-yi-tu}
+
+<Route author="LogicJake OrangeEd1t TonyRL" example="/natgeo/dailyphoto" path="/natgeo/dailyphoto"/>
+
+## Pixabay {#pixabay}
+
+### Search {#pixabay-search}
+
+<Route author="TonyRL" example="/pixabay/search/cat" path="/pixabay/search/:q/:order?" paramsDesc={['Search term', 'Order, `popular` or `latest`, `latest` by default']} radar="1" selfhost="1"/>
+
 ## Porn Image XXX {#porn-image-xxx}
 
 ### 最新图片 {#porn-image-xxx-zui-xin-tu-pian}
 
 <Route author="hoilc" example="/porn-images-xxx/tag/jk" path="/porn-images-xxx/:type?/:name?" paramsDesc={['搜索类型, `tag`为标签, `keyword`为关键字, 默认留空为全部','搜索内容, 可在 URL 中找到，默认留空为全部']} />
+
+## Rare Historical Photos {#rare-historical-photos}
+
+### Home {#rare-historical-photos-home}
+
+<Route author="TonyRL" example="/rarehistoricalphotos" path="/rarehistoricalphotos" radar="1"/>
 
 ## Tits Guru {#tits-guru}
 
@@ -391,27 +421,27 @@ R18 显示
 
 ### Models {#tits-guru-models}
 
-<Route author="MegrezZhu" example="/tits-guru/model/mila-azul" path="/tits-guru/model/:name" paramsDesc={['指定模特名字，详见[这里](https://tits-guru.com/models)']}/>
+<Route author="MegrezZhu" example="/tits-guru/model/mila-azul" path="/tits-guru/model/:name" paramsDesc={['Module name, see [here](https://tits-guru.com/models) for details']}/>
 
 ### Categories {#tits-guru-categories}
 
-<Route author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" paramsDesc={['指定类别，详见[这里](https://tits-guru.com/categories)']}/>
+<Route author="MegrezZhu" example="/tits-guru/category/bikini" path="/tits-guru/category/:type" paramsDesc={['Category, see [here](https://tits-guru.com/categories) for details']}/>
 
 ## wallhaven {#wallhaven}
 
-:::tip 提示
+:::tip Tip
 
-参数 **需要图片信息** 设置为 `true` `yes` `t` `y` 等值后，RSS 会携带各图片的标题、上传者、上传时间、分类信息，可支持 RSS 阅读器的筛选功能。
+When parameter **Need Details** is set to `true` `yes` `t` `y`, RSS will add the title, uploader, upload time, and category information of each image, which can support the filtering function of RSS reader.
 
-但开启后对该网站请求次数大量增多，从而导致网站返回 `Response code 429 (Too Many Requests)`。所以需要指定更小的 `limit` 参数值，即在路由后添加 `?limit=<单次请求获取数目>`，下面是一个例子：
+However, the number of requests to the site increases a lot when it is turned on, which causes the site to return `Response code 429 (Too Many Requests)`. So you need to specify a smaller `limit` parameter, i.e. add `?limit=<the number of posts for a request>` after the route, here is an example.
 
-如 [Latest Wallpapers](https://wallhaven.cc/latest)，开启 **需要图片信息** 后的路由为 [/wallhaven/latest/true](https://rsshub.app/wallhaven/latest/true)，此时再指定更小的 `limit` 参数值，即 [/wallhaven/latest/true?limit=5](https://rsshub.app/wallhaven/latest/true?limit=5)
+For example [Latest Wallpapers](https://wallhaven.cc/latest), the route turning on **Need Details** is [/wallhaven/latest/true](https://rsshub.app/wallhaven/latest/true), and then specify a smaller `limit`. We can get [/wallhaven/latest/true?limit=5](https://rsshub.app/wallhaven/latest/true?limit=5).
 
 :::
 
-### 分类 {#wallhaven-fen-lei}
+### Category {#wallhaven-category}
 
-<Route author="nczitzk Fatpandac" example="/wallhaven/latest" path="/wallhaven/:category?/:needDetails?" paramsDesc={['分类，见下表，默认为 Latest', '需要图片信息，填写 true/yes 表示需要，默认不需要']}>
+<Route author="nczitzk Fatpandac" example="/wallhaven/latest" path="/wallhaven/:category?/:needDetails?" paramsDesc={['Category, see below, Latest by default', 'Need Details, `true/yes` as yes, no by default']}>
 
 | Latest | Hot | Toplist | Random |
 | ------ | --- | ------- | ------ |
@@ -419,15 +449,15 @@ R18 显示
 
 </Route>
 
-### 搜索 {#wallhaven-sou-suo}
+### Search {#wallhaven-search}
 
-<Route author="nczitzk Fatpandac" example="/wallhaven/search/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd" path="/wallhaven/search/:filter?/:needDetails?" paramsDesc={['过滤器，默认为空', '需要图片信息，填写 `true`/`yes` 表示需要，默认不需要']}>
+<Route author="nczitzk Fatpandac" example="/wallhaven/search/categories=110&purity=110&sorting=date_added&order=desc" path="/wallhaven/search/:filter?/:needDetails?" paramsDesc={['Filter, empty by default', 'Need Details, `true`/`yes` as yes, no by default']}>
 
-:::tip 提示
+:::tip Tip
 
-订阅以 `https://wallhaven.cc/search` 起始的页面，将 `?` 后的字段作为 `filter` 填写入路由。下面是一个例子：
+Subscribe pages starting with `https://wallhaven.cc/search`, fill the text after `?` as `filter` in the route. The following is an example:
 
-如 [Wallpaper Search: #landscape - wallhaven.cc](https://wallhaven.cc/search?q=id%3A711&sorting=random&ref=fp&seed=8g0dgd)，中 `?` 后的字段为 `q=id%3A711&sorting=random&ref=fp&seed=8g0dgd`，所以可以得到路由是 [/wallhaven/search/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd](https://rsshub.app/wallhaven/search/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd)
+The text after `?` is `q=id%3A711&sorting=random&ref=fp&seed=8g0dgd` for [Wallpaper Search: #landscape - wallhaven.cc](https://wallhaven.cc/search?q=id%3A711&sorting=random&ref=fp&seed=8g0dgd), so the route is [/wallhaven/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd](https://rsshub.app/wallhaven/q=id%3A711&sorting=random&ref=fp&seed=8g0dgd)
 
 :::
 
@@ -435,28 +465,28 @@ R18 显示
 
 ## WallpaperHub {#wallpaperhub}
 
-### 壁纸 {#wallpaperhub-bi-zhi}
+### Wallpapers {#wallpaperhub-wallpapers}
 
 <Route author="nczitzk" example="/wallpaperhub" path="/wallpaperhub" radar="1" rssbud="1"/>
 
 ## yande.re {#yande.re}
 
-:::tip 提示
+:::tip
 
--   网站提供了 Posts 订阅: <https://yande.re/post/piclens?tags=[tags]>
+-   Official RSS: https://yande.re/post/piclens?tags=[tags]
 
 :::
 
 ### Popular Recent Posts {#yande.re-popular-recent-posts}
 
-<Route author="magic-akari SettingDust" example="/yande.re/post/popular_recent" path="/yande.re/post/popular_recent/:period?" paramsDesc={['默认过去 24 小时']}>
+<Route author="magic-akari SettingDust" example="/yande.re/post/popular_recent" path="/yande.re/post/popular_recent/:period?" paramsDesc={['Default to 24 hours']}>
 
-举例:
+For example:
 
--   过去 24 小时:<https://rsshub.app/yande.re/post/popular_recent/1d>
--   过去一周:<https://rsshub.app/yande.re/post/popular_recent/1w>
--   过去一月:<https://rsshub.app/yande.re/post/popular_recent/1m>
--   过去一年:<https://rsshub.app/yande.re/post/popular_recent/1y>
+-   24 hours:<https://rsshub.app/yande.re/post/popular_recent/1d>
+-   1 week:<https://rsshub.app/yande.re/post/popular_recent/1w>
+-   1 month:<https://rsshub.app/yande.re/post/popular_recent/1m>
+-   1 year:<https://rsshub.app/yande.re/post/popular_recent/1y>
 
 </Route>
 
@@ -483,16 +513,6 @@ R18 显示
 | 2      | 6      | 7      | 3      | 4      | 5      |
 
 </Route>
-
-## 国家地理 {#guo-jia-di-li}
-
-### 每日精选 {#guo-jia-di-li-mei-ri-jing-xuan}
-
-<Route author="OrangeEd1t" example="/natgeo/dailyselection" path="/natgeo/dailyselection"/>
-
-### 每日一图 {#guo-jia-di-li-mei-ri-yi-tu}
-
-<Route author="LogicJake OrangeEd1t TonyRL" example="/natgeo/dailyphoto" path="/natgeo/dailyphoto"/>
 
 ## 煎蛋 {#jian-dan}
 
@@ -617,3 +637,4 @@ R18 显示
 ### 最新主题 {#zhi-mei-hua-zui-xin-zhu-ti}
 
 <Route author="nczitzk" example="/zhutix/latest" path="/zhutix/latest"/>
+

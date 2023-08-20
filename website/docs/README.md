@@ -1,15 +1,13 @@
----
-displayed_sidebar: guideSidebar
----
 
-# 介绍
+
+# Introduction
 
 <p align="center" class="logo-img">
     <img src="img/logo.png" alt="RSSHub" width="100" />
 </p>
 <h1 align="center" class="logo-text">RSSHub</h1>
 
-> 🍰 万物皆可 RSS
+> 🍰 Everything is RSSible
 
 [![telegram](https://img.shields.io/badge/chat-telegram-brightgreen.svg?logo=telegram&style=flat-square)](https://t.me/rsshub)
 [![npm publish](https://img.shields.io/github/actions/workflow/status/DIYgod/RSSHub/npm-publish.yml?branch=master&label=npm%20publish&logo=npm&style=flat-square)](https://www.npmjs.com/package/rsshub)
@@ -19,18 +17,20 @@ displayed_sidebar: guideSidebar
 [![CodeFactor](https://www.codefactor.io/repository/github/diygod/rsshub/badge)](https://www.codefactor.io/repository/github/diygod/rsshub)
 [![DeepScan grade](https://deepscan.io/api/teams/6244/projects/8135/branches/92448/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=6244&pid=8135&bid=92448)
 
-RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以给任何奇奇怪怪的内容生成 RSS 订阅源。RSSHub 借助于开源社区的力量快速发展中，目前已适配数百家网站的上千项内容
+RSSHub is an open source, easy to use, and extensible RSS feed aggregator, it's capable of generating RSS feeds from pretty much everything.
 
-可以配合浏览器扩展 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 和 移动端辅助 App [RSSBud](https://github.com/Cay-Zhang/RSSBud) (iOS) 与 [RSSAid](https://github.com/LeetaoGoooo/RSSAid) (Android) 食用
+RSSHub delivers millions of contents aggregated from all kinds of sources, our vibrant open source community is ensuring the deliver of RSSHub's new routes, new features and bug fixes.
 
-[Telegram 群](https://t.me/rsshub) | [Telegram 频道](https://t.me/awesomeRSSHub)
+RSSHub can be used with browser extension [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) and mobile auxiliary app [RSSBud](https://github.com/Cay-Zhang/RSSBud) (iOS) and [RSSAid](https://github.com/LeetaoGoooo/RSSAid) (Android)
 
-## 鸣谢
+[Telegram Group](https://t.me/rsshub) | [Telegram Channel](https://t.me/awesomeRSSHub)
 
-### 赞助商
+## Special Thanks
+
+### Special Sponsors
 
 <p>
-<a href="https://xlog.app/" target="_blank"><img style={{height: "100px"}} src="https://i.imgur.com/2B9pXBg.png" /></a>
+<a href="https://xlog.app/" target="_blank"><img style={{height: "100px"}} src="https://i.imgur.com/JuhHTKD.png" /></a>
 </p>
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
@@ -43,11 +43,11 @@ Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 ### Backers
 
-<a href="https://www.cloudflare.com" target="_blank"><img style={{height: "50px"}} src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/cloudflare.png" /></a><a href="https://www.netlify.com" target="_blank" style={{marginLeft: "60px"}}><img style={{height: "40px"}} src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/netlify.png" /></a>
+<a href="https://www.cloudflare.com" target="_blank"><img style={{height: "50px"}} src="https://i.imgur.com/7Ph27Fq.png" /></a><a href="https://www.netlify.com" target="_blank" style={{marginLeft: "60px"}}><img style={{height: "40px"}} src="https://i.imgur.com/cU01915.png" /></a>
 
-## 相关项目
+## Related Projects
 
--   [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) | 一个可以帮助你快速发现和订阅当前网站 RSS 和 RSSHub 的浏览器扩展
--   [RSSBud](https://github.com/Cay-Zhang/RSSBud) ([TestFlight 公测](https://testflight.apple.com/join/rjCVzzHP)) | iOS 平台的 RSSHub Radar，专为移动生态优化
--   [RSSAid](https://github.com/LeetaoGoooo/RSSAid) | 基于 Flutter 构建的 Android 平台的 RSSHub Radar
+-   [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) | A browser extension that can help you quickly discover and subscribe to the RSS and RSSHub of current websites.
+-   [RSSBud](https://github.com/Cay-Zhang/RSSBud) ([TestFlight](https://testflight.apple.com/join/rjCVzzHP)) | RSSHub Radar for iOS platform, designed specifically for mobile ecosystem optimization.
+-   [RSSAid](https://github.com/LeetaoGoooo/RSSAid) | RSSHub Radar for Android platform built with Flutter.
 -   [DocSearch](https://github.com/Fatpandac/DocSearch) | Link RSSHub DocSearch into Raycast
