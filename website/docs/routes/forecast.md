@@ -1,14 +1,14 @@
 import Route from '@site/src/components/Route';
 
-# ❗️ 预报预警
+# ❗️ Forecast and alerts
 
-## BMKG 印尼气象气候和地球物理局 {#bmkg-yin-ni-qi-xiang-qi-hou-he-di-qiu-wu-li-ju}
+## BADAN METEOROLOGI, KLIMATOLOGI, DAN GEOFISIKA(Indonesian) {#badan-meteorologi%2C-klimatologi%2C-dan-geofisika(indonesian)}
 
-### 最近的地震 {#bmkg-yin-ni-qi-xiang-qi-hou-he-di-qiu-wu-li-ju-zui-jin-de-di-zhen}
+### Recent Earthquakes {#badan-meteorologi%2C-klimatologi%2C-dan-geofisika(indonesian)-recent-earthquakes}
 
 <Route author="Shinanory" example="/bmkg/earthquake" path="/bmkg/earthquake" />
 
-### 新闻 {#bmkg-yin-ni-qi-xiang-qi-hou-he-di-qiu-wu-li-ju-xin-wen}
+### News {#badan-meteorologi%2C-klimatologi%2C-dan-geofisika(indonesian)-news}
 
 <Route author="Shinanory" example="/bmkg/news" path="/bmkg/news" />
 
@@ -16,9 +16,9 @@ import Route from '@site/src/components/Route';
 
 ### Report {#outage.report-report}
 
-<Route author="cxumol nczitzk" example="/outagereport/ubisoft/5" path="/outagereport/:name/:count?" paramsDesc={['服务名称｡ 拼写格式须与 URL 保持一致', '计数门槛｡ 仅当报告停服的人不低于此数量时, 才会写进 RSS']}>
+<Route author="cxumol nczitzk" example="/outagereport/ubisoft/5" path="/outagereport/:name/:count?" paramsDesc={['Service name, spelling format must be consistent with URL', 'Counting threshold, will only be written in RSS if the number of people who report to stop serving is not less than this number']}>
 
-其中 name 参数，请略过本地服务的区域码，例如 `https://outage.report/us/verizon-wireless` 填入 `verizon-wireless` 即可｡
+Please skip the local service area code for `name`, for example `https://outage.report/us/verizon-wireless` to `verizon-wireless`.
 
 </Route>
 
@@ -26,11 +26,11 @@ import Route from '@site/src/components/Route';
 
 ### RSS {#uptime-robot-rss}
 
-<Route author="Rongronggg9" example="/uptimerobot/rss/u358785-e4323652448755805d668f1a66506f2f" path="/uptimerobot/rss/:id/:routeParams?" paramsDesc={['RSS URL 的最后一部分 (e.g. 对于 `https://rss.uptimerobot.com/u358785-e4323652448755805d668f1a66506f2f`，为 `u358785-e4323652448755805d668f1a66506f2f`)', '额外参数，请参阅下面的表格']}>
+<Route author="Rongronggg9" example="/uptimerobot/rss/u358785-e4323652448755805d668f1a66506f2f" path="/uptimerobot/rss/:id/:routeParams?" paramsDesc={['the last part of your RSS URL (e.g. `u358785-e4323652448755805d668f1a66506f2f` for `https://rss.uptimerobot.com/u358785-e4323652448755805d668f1a66506f2f`)', 'extra parameters, see the table below']}>
 
-| 键     | 含义                                                            | 接受的值       | 默认值 |
-| ------ | --------------------------------------------------------------- | -------------- | ------ |
-| showID | 是否包含 monitor ID (关闭此项同时也会使得各个 RSS 条目不附链接) | 0/1/true/false | true   |
+| Key    | Description                                                              | Accepts        | Defaults to |
+|--------|--------------------------------------------------------------------------|----------------|-------------|
+| showID | Show monitor ID (disabling it will also disable link for each RSS entry) | 0/1/true/false | true        |
 
 </Route>
 
@@ -243,3 +243,4 @@ import Route from '@site/src/components/Route';
 可通过全局过滤参数订阅您感兴趣的地区.
 
 </Route>
+
