@@ -3735,7 +3735,7 @@ paramsDesc={['公告类型，详见表格']}>
 
 ### 选课信息教务通知 {#zhong-guo-hai-yang-da-xue-xuan-ke-xin-xi-jiao-wu-tong-zhi}
 
-<Route author="3401797899" example="/ouc/jwgl" path="/ouc/jwgl" radar="1" selfhost="1"/>
+<Route author="3401797899" example="/ouc/jwgl" path="/ouc/jwgl" radar="1" selfhost="1">
 
 :::caution
 
