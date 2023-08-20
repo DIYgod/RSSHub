@@ -1,6 +1,6 @@
 import Route from '@site/src/components/Route';
 
-# 💰 金融
+# 💰 Finance
 
 ## AI 财经社 {#ai-cai-jing-she}
 
@@ -46,9 +46,36 @@ import Route from '@site/src/components/Route';
 
 <Route author="nczitzk" example="/bigquant/collections" path="/bigquant/collections"/>
 
+## Bloomberg {#bloomberg}
+
+### News {#bloomberg-news}
+
+<Route author="bigfei" example="/bloomberg" path="/bloomberg/:site?" paramsDesc={['Site, see below, News by default']} anticrawler="1">
+
+| Site | Name |
+| ---- | ---- |
+| / | News |
+| bpol | Politics |
+| bbiz | Business |
+| markets | Markets |
+| technology | Technology |
+| green | Green |
+| wealth | Wealth |
+| pursuits | Pursuits |
+| bview | Opinion |
+| equality | Equality |
+| businessweek | Businessweek |
+| citylab | CityLab |
+
+</Route>
+
+### Authors {#bloomberg-authors}
+
+<Route author="josh" example="/bloomberg/authors/ARbTQlRLRjE/matthew-s-levine" path="/bloomberg/authors/:id/:slug/:source?" paramsDesc={['Author ID, can be found in URL', 'Author Slug, can be found in URL', 'Data source, either `api` or `rss`,`api` by default']} anticrawler="1" radar="1"/>
+
 ## CFD {#cfd}
 
-### 每周股指派息调整 (GBP) {#cfd-mei-zhou-gu-zhi-pai-xi-tiao-zheng-(gbp)}
+### Indices Dividend Adjustment {#cfd-indices-dividend-adjustment}
 
 <Route author="HenryQW" example="/cfd/div_gbp" path="/cfd/div_gbp" />
 
@@ -74,11 +101,90 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
+## Finology Insider {#finology-insider}
+
+### Bullets {#finology-insider-bullets}
+
+<Route author="Rjnishant530" example="/finology/bullets" path="/finology/bullets" radar="1"/>
+
+### Category {#finology-insider-category}
+
+<Route author="Rjnishant530" example="/finology/success-stories" path="/finology/:category" paramDesc={['Refer Table below or find in URL']} radar="1">
+
+:::note Category
+
+| Category           | Link                  |
+|---------------------|-----------------------|
+| **Business**       | business              |
+| Big Shots          | entrepreneurship     |
+| Startups           | startups-india        |
+| Brand Games        | success-stories       |
+| Juicy Scams        | juicy-scams           |
+| **Finance**        | finance               |
+| Macro Moves        | economy               |
+| News Platter       | market-news           |
+| Tax Club           | tax                   |
+| Your Money         | your-money            |
+| **Invest**         | investing             |
+| Stock Market       | stock-market          |
+| Financial Ratios   | stock-ratios          |
+| Investor's Psychology | behavioral-finance  |
+| Mutual Funds       | mutual-fund           |
+
+:::
+
+</Route>
+
+### Most Viewed {#finology-insider-most-viewed}
+
+<Route author="Rjnishant530" example="/finology/most-viewed/monthly" path="/finology/most-viewed/:time" paramDesc={['Accepts : `alltime` or `monthly` only']} radar="1"/>
+
+### Trending Topic {#finology-insider-trending-topic}
+
+<Route author="Rjnishant530" example="/finology/tag/startups" path="/tag/:topic" paramDesc={['Refer Table below or find in URL']} radar="1">
+
+:::note Topic
+
+| Topic              | Link                  |
+|---------------------|-----------------------|
+| Investment Decisions | investment-decisions |
+| Investing 101       | investing-101         |
+| Stock Markets      | stock-markets         |
+| business news india | business-news-india   |
+| Company Analysis   | company-analysis      |
+| Business and brand tales | business-and-brand-tales |
+| Featured           | featured              |
+| Fundamental Analysis | fundamental-analysis |
+| Business Story     | business-story        |
+| All Biz            | all-biz               |
+| Stock Analysis     | stock-analysis        |
+| Automobile Industry | automobile-industry   |
+| Indian Economy     | indian-economy        |
+| Govt's Words       | govt%27s-words        |
+| Behavioral Finance | behavioral-finance    |
+| Global Economy     | global-economy        |
+| Startups           | startups              |
+| GST                | gst                   |
+| Product Review     | product-review        |
+| My Pocket          | my-pocket             |
+| Business Games     | business-games        |
+| Business Models    | business-models       |
+| Indian Indices     | indian-indices        |
+| Banking System     | banking-system        |
+| Debt               | debt                  |
+| World News         | world-news            |
+| Technology         | technology            |
+| Regulatory Bodies  | regulatory-bodies     |
+
+:::
+
+</Route>
+
 ## finviz {#finviz}
 
 ### News {#finviz-news}
 
-<Route author="nczitzk" example="/finviz" path="/finviz/:category?" paramsDesc={['分类，见下表，默认为 News']}>
+<Route author="nczitzk" example="/finviz" path="/finviz/:category?" paramsDesc={['Category, see below, News by default']}>
 
 | News | Blog |
 | ---- | ---- |
@@ -86,51 +192,57 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-### 美股股票新闻 {#finviz-mei-gu-gu-piao-xin-wen}
+### US Stock News {#finviz-us-stock-news}
 
-<Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" paramsDesc={['股票代码']}/>
+<Route author="HenryQW" example="/finviz/news/AAPL" path="/finviz/news/:ticker" paramsDesc={['The stock ticker']}/>
 
 ## Followin {#followin}
 
-### 首页 {#followin-shou-ye}
+### Home {#followin-home}
 
-<Route author="TonyRL" example="/followin" path="/followin/:categoryId?/:lang?" paramsDesc={['分类 ID，见下表，默认为 `1`', '语言，见下表，默认为 `en`']} radar="1">
+<Route author="TonyRL" example="/followin" path="/followin/:categoryId?/:lang?" paramsDesc={['Category ID, see table below, `1` by default', 'Language, see table below, `en` by default']} radar="1">
 
-分类 ID
+Category ID
 
-| 推荐 | 行情 | Meme | BRC20 | NFT | 长推 | 深度 | 入门 | 视频 |
-| ---- | ---- | ---- | ----- | --- | ---- | ---- | ---- | ---- |
-| 1    | 9    | 13   | 14    | 3   | 5    | 6    | 8    | 11   |
+| For You | Market | Meme | BRC20 | NFT | Thread | In-depth | Tutorials | Videos |
+| ------- | ------ | ---- | ----- | --- | ------ | -------- | --------- | ------ |
+| 1       | 9      | 13   | 14    | 3   | 5      | 6        | 8         | 11     |
 
-语言
+Language
 
 | English | 简体中文 | 繁體中文 | Tiếng Việt |
-| ------- | -------- | -------- | ---------- |
-| en      | zh-Hans  | zh-Hant  | vi         |
+| ------- | ------- | -------- | ---------- |
+| en      | zh-Hans | zh-Hant  | vi      |
 
 </Route>
 
-### 快讯 {#followin-kuai-xun}
+### News {#followin-news}
 
-<Route author="TonyRL" example="/followin/news" path="/followin/news/:lang?" paramsDesc={['语言，见上表，默认为 `en`']} radar="1" />
+<Route author="TonyRL" example="/followin/news" path="/followin/news/:lang?" paramsDesc={['Language, see table above, `en` by default']} radar="1" />
 
 ### KOL {#followin-kol}
 
-<Route author="TonyRL" example="/followin/kol/4075592991" path="/followin/kol/:kolId/:lang?" paramsDesc={['KOL ID，可在 URL 找到', '语言，见上表，默认为 `en`']} radar="1" />
+<Route author="TonyRL" example="/followin/kol/4075592991" path="/followin/kol/:kolId/:lang?" paramsDesc={['KOL ID, can be found in URL', 'Language, see table above, `en` by default']} radar="1" />
 
-### 话题 {#followin-hua-ti}
+### Topic {#followin-topic}
 
-<Route author="TonyRL" example="/followin/topic/40" path="/followin/topic/:topicId/:lang?" paramsDesc={['话题 ID，可在 URL 找到', '语言，见上表，默认为 `en`']} radar="1" />
+<Route author="TonyRL" example="/followin/topic/40" path="/followin/topic/:topicId/:lang?" paramsDesc={['Topic ID, can be found in URL', 'Language, see table above, `en` by default']} radar="1" />
 
-### 标签 {#followin-biao-qian}
+### Tag {#followin-tag}
 
-<Route author="TonyRL" example="/followin/tag/177008" path="/followin/tag/:tagId/:lang?" paramsDesc={['标签 ID，可在 URL 找到', '语言，见上表，默认为 `en`']} radar="1" />
+<Route author="TonyRL" example="/followin/tag/177008" path="/followin/tag/:tagId/:lang?" paramsDesc={['Tag ID, can be found in URL', 'Language, see table above, `en` by default']} radar="1" />
+
+## Futubull 富途牛牛 {#futubull-fu-tu-niu-niu}
+
+### Headlines {#futubull-fu-tu-niu-niu-headlines}
+
+<Route author="Wsine nczitzk" example="/futunn/main" path="/futunn/main" />
 
 ## FX Markets {#fx-markets}
 
-### 分类 {#fx-markets-fen-lei}
+### Channel {#fx-markets-channel}
 
-<Route author="mikkkee" example="/fx-markets/trading" path="/fx-markets/:channel" paramsDesc={['分类代码，可在首页导航栏的目标网址 URL 中找到']}>
+<Route author="mikkkee" example="/fx-markets/trading" path="/fx-markets/:channel" paramsDesc={['channel, can be found in the navi bar links at the home page']}>
 
 | Trading | Infrastructure | Tech and Data | Regulation |
 | ------- | -------------- | ------------- | ---------- |
@@ -148,39 +260,45 @@ import Route from '@site/src/components/Route';
 
 ### Summary {#seeking-alpha-summary}
 
-<Route author="TonyRL" example="/seekingalpha/TSM/transcripts" path="/seekingalpha/:symbol/:category?" paramsDesc={['股票代号', '分类，见下表，默认为 `news`']}  radar="1" rssbud="1">
+<Route author="TonyRL" example="/seekingalpha/TSM/transcripts" path="/seekingalpha/:symbol/:category?" paramsDesc={['Stock symbol', 'Category, see below, `news` by default']} radar="1" rssbud="1">
 
 | Analysis | News | Transcripts | Press Releases | Related Analysis |
-| -------- | ---- | ----------- | -------------- | ---------------- |
+| ------- | ------- | -------- | ---- | ------ |
 | analysis | news | transcripts | press-releases | related-analysis |
 
 </Route>
 
+## Stock Edge {#stock-edge}
+
+### Daily Updates News {#stock-edge-daily-updates-news}
+
+<Route author="Rjnishant530" example="/stockedge/daily-updates/news" path="/stockedge/daily-updates/news" radar="1"/>
+
 ## TokenInsight {#tokeninsight}
 
-:::tip 提示
+:::tip Tips
 
-TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/reference/rss>。
+TokenInsight also provides official RSS, you can take a look at <https://api.tokeninsight.com/reference/rss>.
 
 :::
 
-### 博客 {#tokeninsight-bo-ke}
+### Blogs {#tokeninsight-blogs}
 
-<Route author="fuergaosi233" example="/tokeninsight/blog" path="/tokeninsight/blog/:lang?" paramsDesc={['语言，见下表，默认为简体中文']} />
+<Route author="fuergaosi233" example="/tokeninsight/blog/en" path="/tokeninsight/blog/:lang?" paramsDesc={['Language, see below, Chinese by default']} />
 
-### 快讯 {#tokeninsight-kuai-xun}
+### Latest {#tokeninsight-latest}
 
-<Route author="fuergaosi233" example="/tokeninsight/bulletin" path="/tokeninsight/bulletin/:lang?" paramsDesc={['语言，见下表，默认为简体中文']} />
+<Route author="fuergaosi233" example="/tokeninsight/bulletin/en" path="/tokeninsight/bulletin/:lang?" paramsDesc={['Language, see below, Chinese by default']} />
 
-### 报告 {#tokeninsight-bao-gao}
+### Research {#tokeninsight-research}
 
-<Route author="fuergaosi233" example="/tokeninsight/report" path="/tokeninsight/report/:lang?" paramsDesc={['语言，见下表，默认为简体中文']}>
+<Route author="fuergaosi233" example="/tokeninsight/report/en" path="/tokeninsight/report/:lang?" paramsDesc={['Language, see below, Chinese by default']}>
 
-语言
+Language:
 
-| 中文 | 英文 |
-| ---- | ---- |
-| zh   | en   |
+| Chinese | English |
+| ------- | ------- |
+| zh      | en      |
 
 </Route>
 
@@ -199,6 +317,22 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 | 最新文章 | 市场要闻 | 交易策略 | 机构观点 | 投资学堂 | 行业观察 | 基金理财 | 分析师投稿 |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
 | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8          |
+
+## World Economic Forum 世界经济论坛 {#world-economic-forum-shi-jie-jing-ji-lun-tan}
+
+### Report {#world-economic-forum-shi-jie-jing-ji-lun-tan-report}
+
+<Route author="nczitzk" example="/weforum/report" path="/weforum/report/:lang?/:year?/:platform?" paramsDesc={['Language, see below, `en` by default', 'Year, filter by year, all by default', 'Platform, filter by platform, all by default']}>
+
+Languages
+
+| English | Español | Français | 中文 | 日本語 |
+| ------- | ------- | -------- | ---- | ------ |
+| en      | es      | fr       | cn   | jp     |
+
+See filters in [Report](https://www.weforum.org/reports) for Year and Platform these two parameters.
+
+</Route>
 
 ## 巴伦周刊中文版 {#ba-lun-zhou-kan-zhong-wen-ban}
 
@@ -315,12 +449,6 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 ### 快讯 {#fa-bu-cai-jing-kuai-xun}
 
 <Route author="nczitzk" example="/fastbull/express-news" path="/fastbull/express-news"/>
-
-## 富途牛牛 {#fu-tu-niu-niu}
-
-### 要闻 {#fu-tu-niu-niu-yao-wen}
-
-<Route author="Wsine nczitzk" example="/futunn/main" path="/futunn/main" />
 
 ## 格隆汇 {#ge-long-hui}
 
@@ -552,22 +680,6 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 
 </Route>
 
-## 世界经济论坛 {#shi-jie-jing-ji-lun-tan}
-
-### 报告 {#shi-jie-jing-ji-lun-tan-bao-gao}
-
-<Route author="nczitzk" example="/weforum/report" path="/weforum/report/:lang?/:year?/:platform?" paramsDesc={['语言，见下表，默认为 `en`', '年份，对应年份过滤条件，默认为 `所有`', '平台，对应平台过滤条件，默认为 `所有`']}>
-
-语言
-
-| English | Español | Français | 中文 | 日本語 |
-| ------- | ------- | -------- | ---- | ------ |
-| en      | es      | fr       | cn   | jp     |
-
-年份 和 平台 这两个参数请参见 [报告页](https://www.weforum.org/reports) 过滤条件处。
-
-</Route>
-
 ## 首席经济学家论坛 {#shou-xi-jing-ji-xue-jia-lun-tan}
 
 ### 最新更新 {#shou-xi-jing-ji-xue-jia-lun-tan-zui-xin-geng-xin}
@@ -784,3 +896,4 @@ TokenInsight 官方亦有提供 RSS，可参考 <https://api.tokeninsight.com/re
 | zzkx     | hyzx     |
 
 </Route>
+

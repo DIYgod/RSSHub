@@ -1,6 +1,6 @@
 import Route from '@site/src/components/Route';
 
-# 🛍️ 购物
+# 🛍️ Shopping
 
 ## 0818 团 {#0818-tuan}
 
@@ -24,23 +24,23 @@ import Route from '@site/src/components/Route';
 
 ### Apps {#appsales-apps}
 
-<Route author="nczitzk" example="/appsales/highlights" path="/appsales/:caty?/:time?" paramsDesc={['分类，默认为 `highlights`', '时间，默认为 `24h`']}>
+<Route author="nczitzk" example="/appsales/highlights" path="/appsales/:caty?/:time?" paramsDesc={['Category, `highlights` by default', 'Time, `24h` by default']}>
 
-分类
+Category
 
 | Highlights | Active Sales | Now Free | Watchlist Charts |
 | ---------- | ------------ | -------- | ---------------- |
 | highlights | activesales  | nowfree  | mostwanted       |
 
-时间
+Time
 
-| 最近一天 | 最近一周 | 所有时间 |
-| -------- | -------- | -------- |
-| 24h      | week     | alltime  |
+| the latest 24 hours | the latest week | all the time |
+| ------------------- | --------------- | ------------ |
+| 24h                 | week            | alltime      |
 
-:::tip 提示
+:::tip Tip
 
-参数 `time` 仅在选择 `mostwanted` 作为分类的时候有效。
+Parameter `time` only works when `mostwanted` is chosen as the category.
 
 :::
 
@@ -48,25 +48,25 @@ import Route from '@site/src/components/Route';
 
 ## Arcteryx {#arcteryx}
 
-### 新发布 {#arcteryx-xin-fa-bu}
+### New Arrivals {#arcteryx-new-arrivals}
 
-<Route author="NavePnow" example="/arcteryx/new-arrivals/us/mens" path="/arcteryx/new-arrivals/:country/:gender" paramsDesc={['国家', '性别']}>
+<Route author="NavePnow" example="/arcteryx/new-arrivals/us/mens" path="/arcteryx/new-arrivals/:country/:gender" paramsDesc={['country', 'gender']}>
 
-国家
+Country
 
-| 美国 | 加拿大 | 英国 |
-| ---- | ------ | ---- |
-| us   | ca     | gb   |
+| United States | Canada | United Kingdom |
+| ------------- | ------ | -------------- |
+| us            | ca     | gb             |
 
-性别
+gender
 
-| 男   | 女     |
+| male | female |
 | ---- | ------ |
 | mens | womens |
 
-:::tip 提示
+:::tip
 
-参数 `country` 可以在 `Arcteryx` 官网的 URL 中找到。
+Parameter `country` can be found within the url of `Arcteryx` website.
 
 :::
 
@@ -74,56 +74,56 @@ import Route from '@site/src/components/Route';
 
 ### Outlet {#arcteryx-outlet}
 
-<Route author="NavePnow" example="/arcteryx/outlet/us/mens" path="/arcteryx/outlet/:country/:gender" paramsDesc={['国家', '性别']}>
+<Route author="NavePnow" example="/arcteryx/outlet/us/mens" path="/arcteryx/outlet/:country/:gender" paramsDesc={['country', 'gender']}>
 
-国家
+Country
 
-| 美国 | 加拿大 | 英国 |
-| ---- | ------ | ---- |
-| us   | ca     | gb   |
+| United States | Canada | United Kingdom |
+| ------------- | ------ | -------------- |
+| us            | ca     | gb             |
 
-性别
+gender
 
-| 男   | 女     |
+| male | female |
 | ---- | ------ |
 | mens | womens |
 
-:::tip 提示
+:::tip
 
-参数 `country` 可以在 `Arcteryx` 官网的 URL 中找到。
+Parameter `country` can be found within the url of `Arcteryx` website.
 
 :::
 
 </Route>
 
-### Regear 新发布 {#arcteryx-regear-xin-fa-bu}
+### Regear New Arrivals {#arcteryx-regear-new-arrivals}
 
 <Route author="NavePnow" example="/arcteryx/regear/new-arrivals" path="/arcteryx/regear/new-arrivals" />
 
 ## Bellroy {#bellroy}
 
-### 新发布 {#bellroy-xin-fa-bu}
+### New Releases {#bellroy-new-releases}
 
 <Route author="NavePnow" example="/bellroy/new-releases" path="/bellroy/new-releases" />
 
 ## booth.pm {#booth.pm}
 
-### 店铺 {#booth.pm-dian-pu}
+### Shop {#booth.pm-shop}
 
-<Route author="KTachibanaM" example="/booth.pm/shop/annn-boc0123" path="/booth.pm/shop/:subdomain" paramsDesc={['店铺子域名']} />
+<Route author="KTachibanaM" example="/booth.pm/shop/annn-boc0123" path="/booth.pm/shop/:subdomain" paramsDesc={['Shop subdomain']} />
 
 ## Craigslist {#craigslist}
 
-### 商品搜索 {#craigslist-shang-pin-sou-suo}
+### Shop {#craigslist-shop}
 
-<Route author="lxiange" example="/craigslist/sfbay/sso?query=folding+bike&sort=rel" path="/craigslist/:location/:type?" paramsDesc={['位置，即Craigslist的子域，如sfbay', '搜索类型，如sso']}/>
+<Route author="lxiange" example="/craigslist/sfbay/sso?query=folding+bike&sort=rel" path="/craigslist/:location/:type?" paramsDesc={['location, Craigslist subdomain, e.g., `sfbay`', 'search type, e.g., `sso`']}/>
 
-> 由于 Craigslist 取消了 RSS 订阅搜索功能，因此用 RSSHub 来实现了类似效果。
-> 一个完整原始搜索会像这样：
+> We use RSSHub to implement the searching of Craigslist
+> An example of a full original search url:
 > <https://sfbay.craigslist.org/search/sso?query=folding+bike&sort=rel>
 >
-> /search/xxx 后跟的 "xxx" 为搜索类型，直接参考原始请求即可。
-> query string 是实际的搜索内容。
+> the `xxx` in `/search/xxx` is the search type, just refer to the original search url.
+> The query string is the actual name of query, in this case is folding bike
 
 ## Furstar {#furstar}
 
@@ -147,11 +147,11 @@ import Route from '@site/src/components/Route';
 
 ## Gumroad {#gumroad}
 
-### 商品 {#gumroad-shang-pin}
+### Products {#gumroad-products}
 
-<Route author="Fatpandac" example="/gumroad/afkmaster/Eve10" path="/gumroad/:username/:products" paramsDesc={['链接中用户名称，可在链接中获取', '商品名称，可在链接中获取']} radar="1" rssbud="1">
+<Route author="Fatpandac" example="/gumroad/afkmaster/Eve10" path="/gumroad/:username/:products" paramsDesc={['username, can be found in URL', 'products name, can be found in URL']} radar="1" rssbud="1">
 
-如：`https://afkmaster.gumroad.com/l/Eve10` 则为 `/gumroad/afkmaster/Eve10`
+`https://afkmaster.gumroad.com/l/Eve10` -> `/gumroad/afkmaster/Eve10`
 
 </Route>
 
@@ -159,31 +159,31 @@ import Route from '@site/src/components/Route';
 
 ### thread {#hotukdeals-thread}
 
-<Route author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" paramsDesc={['should be one of highlights, hot, new, discussed']} ></Route>
+<Route author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" paramsDesc={['should be one of highlights, hot, new, discussed']}/>
 
 ### hottest {#hotukdeals-hottest}
 
 <Route author="DIYgod" example="/hotukdeals/hottest" path="/hotukdeals/hottest"></Route>
 
-## IKEA 宜家 {#ikea-yi-jia}
+## IKEA {#ikea}
 
-### 英国 - 商品上新 {#ikea-yi-jia-ying-guo---shang-pin-shang-xin}
+### UK - New Product Release {#ikea-uk---new-product-release}
 
-<Route author="HenryQW" example="/ikea/gb/new" path="/ikea/gb/new" radar="1"/>
+<Route author="HenryQW" example="/ikea/gb/new" path="/ikea/gb/new"/>
 
-### 英国 - 促销 {#ikea-yi-jia-ying-guo---cu-xiao}
+### UK - Offers {#ikea-uk---offers}
 
-<Route author="HenryQW" example="/ikea/gb/offer" path="/ikea/gb/offer" radar="1"/>
+<Route author="HenryQW" example="/ikea/gb/offer" path="/ikea/gb/offer"/>
 
-### 中国 - 会员特惠 {#ikea-yi-jia-zhong-guo---hui-yuan-te-hui}
+### 中国 - 会员特惠 {#ikea-zhong-guo---hui-yuan-te-hui}
 
 <Route author="jzhangdev" example="/ikea/cn/family_offers" path="/ikea/cn/family_offers" radar="1"/>
 
-### 中国 - 低价优选 {#ikea-yi-jia-zhong-guo---di-jia-you-xuan}
+### 中国 - 低价优选 {#ikea-zhong-guo---di-jia-you-xuan}
 
 <Route author="jzhangdev" example="/ikea/cn/low_price" path="/ikea/cn/low_price" radar="1"/>
 
-### 中国 - 当季新品推荐 {#ikea-yi-jia-zhong-guo---dang-ji-xin-pin-tui-jian}
+### 中国 - 当季新品推荐 {#ikea-zhong-guo---dang-ji-xin-pin-tui-jian}
 
 <Route author="jzhangdev" example="/ikea/cn/new" path="/ikea/cn/new" radar="1"/>
 
@@ -201,62 +201,62 @@ Transform any search into a feed.
 
 <Route author="Platane" example="/leboncoin/ad/category=10&locations=Paris_75015" path="/leboncoin/ad/:query" paramsDesc={['search page querystring']}>
 
-For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Paris_75015>, the query is `category=10&locations=Paris_75015`
+For instance, in <https://www.leboncoin.fr/recherche/?category=10&locations=Paris_75015>, the query is **category=10&locations=Paris_75015**
 
 </Route>
 
 ## Mercari {#mercari}
 
-### 商品 {#mercari-shang-pin}
+### Goods {#mercari-goods}
 
-<Route author="nczitzk" example="/mercari/category/1" path="/mercari/:type/:id" paramsDesc={['类型，可选 `category` 指按类别浏览，`brand` 指按品牌浏览，`search` 指搜索关键词浏览', 'id，可在对应分类或品牌页 URL 中找到。若选择 `search` 作为 `type` 则此处填写关键词']}>
+<Route author="nczitzk" example="/mercari/category/1" path="/mercari/:type/:id" paramsDesc={['`category` as seaching by category, `brand` as searching by brand, `search` as searching for keyword', 'can be found in URL of the category or brand page. If you choose `search` as `type`, then put keyword here']}>
 
-所有分类参见 [分类清单](https://www.mercari.com/jp/category/)
+All categories, see [Category list](https://www.mercari.com/jp/category/)
 
-所有品牌参见 [品牌清单](https://www.mercari.com/jp/brand/)
+All brands, see [Brand list](https://www.mercari.com/jp/brand/)
 
 </Route>
 
 ## MyFigureCollection {#myfigurecollection}
 
-### 活動 {#myfigurecollection-huo-dong}
+### Activity {#myfigurecollection-activity}
 
-<Route author="nczitzk" example="/myfigurecollection/activity" path="/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" paramsDesc={['分类，见下表，默认为全部', '语言，见下表，默认为空，即 `en`', '最新加入，默认为开启，即 `1`，可选不开启，即 `0`', '變動，默认为开启，即 `1`，可选不开启，即 `0`', '通知，默认为开启，即 `1`，可选不开启，即 `0`', '圖片，默认为开启，即 `1`，可选不开启，即 `0`']}>
+<Route author="nczitzk" example="/myfigurecollection/activity" path="/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" paramsDesc={['Category, Figures by default', 'Language, as above, `en` by default', 'Latest Additions, on as `1` by default, off as `0`', 'Changes, on as `1` by default, off as `0`', 'Alerts, on as `1` by default, off as `0`', 'Pictures, on as `1` by default, off as `0`']}>
 
-分类
+Category
 
-| Figures 一覽 | 物品 | 媒体 |
-| ------------ | ---- | ---- |
-| 0            | 1    | 2    |
+| Figures | Goods | Media |
+| ------- | ----- | ----- |
+| 0       | 1     | 2     |
 
-语言
+Language
 
-| id | 语言       |
-| -- | ---------- |
-|    | en         |
-| de | Deutsch    |
-| es | Español    |
-| fi | Suomeksi   |
-| fr | Français   |
-| it | Italiano   |
-| ja | 日本語     |
-| nl | Nederlands |
-| no | Norsk      |
-| pl | Polski     |
-| pt | Português  |
-| ru | Русский    |
-| sv | Svenska    |
-| zh | 中文       |
+| Id  | Language   |
+| --- | ---------- |
+|     | en         |
+| de  | Deutsch    |
+| es  | Español    |
+| fi  | Suomeksi   |
+| fr  | Français   |
+| it  | Italiano   |
+| ja  | 日本語     |
+| nl  | Nederlands |
+| no  | Norsk      |
+| pl  | Polski     |
+| pt  | Português  |
+| ru  | Русский    |
+| sv  | Svenska    |
+| zh  | 中文       |
 
 </Route>
 
-### 資料庫 {#myfigurecollection-zi-liao-ku}
+### Pictures {#myfigurecollection-pictures}
 
-<Route author="nczitzk" example="/myfigurecollection/figure" path="/myfigurecollection/:category?/:language?" paramsDesc={['分类，默认为 Figures一覽', '语言，见上表，默认为空，即 `en`']}>
+<Route author="nczitzk" example="/myfigurecollection/potd" path="/myfigurecollection/:category?/:language?" paramsDesc={['Category, Pictures OTD by default', 'Language, as above, `en` by default']}>
 
-| Figures 一覽 | 物品  | 媒体  |
-| ------------ | ----- | ----- |
-| figures      | goods | media |
+| Pictures OTD | Pictures OTW | Pictures OTM |
+| ------------ | ------------ | ------------ |
+| potd         | potw         | potm         |
 
 </Route>
 
@@ -274,7 +274,7 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 ### New Arrivals {#patagonia-new-arrivals}
 
-<Route author="NavePnow" example="/patagonia/new-arrivals/mens" path="/patagonia/new-arrivals/:category" paramsDesc={['分类, 见下表']}>
+<Route author="NavePnow" example="/patagonia/new-arrivals/mens" path="/patagonia/new-arrivals/:category" paramsDesc={['category, see below']}>
 
 | Men's | Women's | Kids' & Baby | Packs & Gear |
 | ----- | ------- | ------------ | ------------ |
@@ -286,7 +286,7 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 ### Store {#shopback-store}
 
-<Route author="nczitzk" example="/shopback/shopee-mart" path="/shopback/:store" paramsDesc={['店铺名，可在 URL 中找到']}/>
+<Route author="nczitzk" example="/shopback/shopee-mart" path="/shopback/:store" paramsDesc={['Store, can be found in URL']}/>
 
 ## Snow Peak {#snow-peak}
 
@@ -310,7 +310,7 @@ For instance, in <https://www.leboncoin.fr/recherche/?**category=10&locations=Pa
 
 ### New Arrivals {#zagg-new-arrivals}
 
-<Route author="NavePnow" example="/zagg/new-arrivals/brand=164&cat=3038,3041" path="/zagg/new-arrivals/:query?" paramsDesc={['query，search page querystring']}/>
+<Route author="NavePnow" example="/zagg/new-arrivals/brand=164&cat=3038,3041" path="/zagg/new-arrivals/:query?" paramsDesc={['query, search page querystring']}/>
 
 For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3041>, the query is `brand=164&cat=3038%2C3041`
 
@@ -622,3 +622,4 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 |          | android | ios | mac | pc | uwp | notification | free     | giveaway | discount |
 
 </Route>
+

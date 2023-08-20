@@ -1,16 +1,16 @@
 import Route from '@site/src/components/Route';
 
-# 🖊️️ 博客
+# 🖊️️ Blog
 
 ## Amazon {#amazon}
 
-### AWS 博客 {#amazon-aws-bo-ke}
+### AWS Blogs {#amazon-aws-blogs}
 
-<Route author="HankChow" example="/amazon/awsblogs" path="/awsblogs/:locale?" paramsDesc={['指定语言的博客文章，仅支持以下选项，默认为 `zh_CN`']}>
+<Route author="HankChow" example="/amazon/awsblogs" path="/awsblogs/:locale?" paramsDesc={['Blog postes in a specified language, only the following options are supported. Default `zh_CN`']}>
 
-| zh_CN | en_US | fr_FR | de_DE | ja_JP | ko_KR | pt_BR    | es_ES    | ru_RU | id_ID  | tr_TR    |
-| ----- | ----- | ----- | ----- | ----- | ----- | -------- | -------- | ----- | ------ | -------- |
-| 汉语  | 英语  | 法语  | 德语  | 日语  | 韩语  | 葡萄牙语 | 西班牙语 | 俄语  | 印尼语 | 土耳其语 |
+| zh_CN | en_US | fr_FR | de_DE | ja_JP | ko_KR | pt_BR | es_ES | ru_RU | id_ID | tr_TR |
+| ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
+| Chinese    | English    | French    | German    | Japanese    | Korean    | Portuguese  | Spainish  | Russian    | Indonesian   | Turkish  |
 
 </Route>
 
@@ -22,7 +22,7 @@ import Route from '@site/src/components/Route';
 
 ## archdaily {#archdaily}
 
-### 首页 {#archdaily-shou-ye}
+### Home {#archdaily-home}
 
 <Route author="kt286" example="/archdaily" path="/archdaily"/>
 
@@ -32,13 +32,13 @@ import Route from '@site/src/components/Route';
 
 ## CSDN {#csdn}
 
-### 用户博客 {#csdn-yong-hu-bo-ke}
+### User Feed {#csdn-user-feed}
 
-<Route author="Jkker" example="/csdn/blog/csdngeeknews" path="/csdn/blog/:user" radar="1" paramsDesc={['`user` 为 CSDN 用户名，可以在主页 url 中找到']} />
+<Route author="Jkker" example="/csdn/blog/csdngeeknews" path="/csdn/blog/:user" radar="1" paramsDesc={['`user` is the username of a CSDN blog which can be found in the url of the home page']} />
 
 ## DevolverDigital {#devolverdigital}
 
-### 官方博客 {#devolverdigital-guan-fang-bo-ke}
+### Official Blogs {#devolverdigital-official-blogs}
 
 <Route author="XXY233" example="/devolverdigital/blog" path="/devolverdigital/blog" radar="1" />
 
@@ -56,19 +56,19 @@ Freebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的
 
 ## Geocaching {#geocaching}
 
-### 官方博客 {#geocaching-guan-fang-bo-ke}
+### Official Blogs {#geocaching-official-blogs}
 
 <Route author="HankChow" example="/geocaching/blogs" path="/geocaching/blogs" radar="1"/>
 
 ## Google Sites {#google-sites}
 
-### 文章更新 {#google-sites-wen-zhang-geng-xin}
+### Articles {#google-sites-articles}
 
-<Route author="hoilc" example="/google/sites/outlierseconomics" path="/google/sites/:id" paramsDesc={['Site ID, 可在 URL 中找到']} radar="1" rssbud="1"/>
+<Route author="hoilc" example="/google/sites/outlierseconomics" path="/google/sites/:id" paramsDesc={['Site ID, can be found in URL']} />
 
-### 文章最近改动 {#google-sites-wen-zhang-zui-jin-gai-dong}
+### Recent Changes {#google-sites-recent-changes}
 
-<Route author="nczitzk" example="/google/sites/recentChanges/outlierseconomics" path="/google/sites/recentChanges/:id" paramsDesc={['Site ID, 可在 URL 中找到']}/>
+<Route author="nczitzk" example="/google/sites/recentChanges/outlierseconomics" path="/google/sites/recentChanges/:id" paramsDesc={['Site ID, can be found in URL']}/>
 
 ## Gwern Branwen {#gwern-branwen}
 
@@ -104,17 +104,17 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 ## Hexo {#hexo}
 
-### Next 主题博客 {#hexo-next-zhu-ti-bo-ke}
+### Blog using Next theme {#hexo-blog-using-next-theme}
 
-<Route author="fengkx" example="/hexo/next/archive.diygod.me" path="/hexo/next/:url" paramsDesc={['博客 Url 不带协议头']} selfhost="1"/>
+<Route author="fengkx" path="/hexo/next/:url" example="/hexo/next/archive.diygod.me" paramsDesc={['the blog URL without the protocol (http:// and https://)']} selfhost="1"/>
 
-### Yilia 主题博客 {#hexo-yilia-zhu-ti-bo-ke}
+### Blog using Yilia theme {#hexo-blog-using-yilia-theme}
 
-<Route author="aha2mao" example="/hexo/yilia/cloudstone.xin" path="/hexo/yilia/:url" paramsDesc={['博客 Url 不带协议头']} selfhost="1"/>
+<Route author="aha2mao" path="/hexo/yilia/:url" example="/hexo/yilia/cloudstone.xin" paramsDesc={['the blog URL without the protocol (http:// and https://)']} selfhost="1"/>
 
-### Fluid 主题博客 {#hexo-fluid-zhu-ti-bo-ke}
+### Blog using Fluid theme {#hexo-blog-using-fluid-theme}
 
-<Route author="gkkeys" example="/hexo/fluid/blog.tonyzhao.xyz" path="/hexo/fluid/:url" paramsDesc={['博客 Url 不带协议头']} selfhost="1"/>
+<Route author="gkkeys" path="/hexo/fluid/:url" example="/hexo/fluid/blog.tonyzhao.xyz" paramsDesc={['the blog URL without the protocol (http:// and https://)']} selfhost="1"/>
 
 ## Hi, DIYgod {#hi%2C-diygod}
 
@@ -150,61 +150,67 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 <Route author="xyqfer" example="/leemeng" path="/leemeng"/>
 
+## Love the Problem {#love-the-problem}
+
+### Ash Maurya's blog {#love-the-problem-ash-maurya's-blog}
+
+<Route author="james-tindal" example="/ash-maurya" path="/ash-maurya"/>
+
 ## MacMenuBar {#macmenubar}
 
 ### Recently {#macmenubar-recently}
 
-<Route author="5upernova-heng" example="/macmenubar/recently/developer-apps,system-tools" path="/macmenubar/recently/:category?" paramsDesc={['分类名，多个使用逗号隔开，留空则为全部。分类名可在 URL 中找到']} radar="1" />
+<Route author="5upernova-heng" example="/macmenubar/recently/developer-apps,system-tools" path="/macmenubar/recently/:category?" paramsDesc={['Category path name, seperate by comma, default is all categories. Category path name can be found in url']} radar="1" />
 
 ## Medium {#medium}
 
 ### List {#medium-list}
 
-<Route author="ImSingee" example="/medium/list/imsingee/f2d8d48096a9" path="/medium/list/:user/:catalogId" paramsDesc={['用户名', 'List 的 ID']}>
+<Route author="ImSingee" example="/medium/list/imsingee/f2d8d48096a9" path="/medium/list/:user/:catalogId" paramsDesc={['Username', 'List ID']}>
 
-List ID 取的是网址中最后一部分 `-` 后面的内容，例如 `https://medium.com/@imsingee/list/collection-7e67004f23f9` 的用户名为 imsingee、ID 为 `7e67004f23f9`
+The List ID is the last part of the URL after `-`, for example, the username in "https://medium.com/@imsingee/list/collection-7e67004f23f9" is `imsingee`, and the ID is `7e67004f23f9`.
 
-:::caution 注意
+:::caution Note
 
-想要获取 Private 的 List 则只支持自建
-
-:::
-
-</Route>
-
-### 个性推荐 - For You {#medium-ge-xing-tui-jian---for-you}
-
-<Route author="ImSingee" example="/medium/for-you/imsingee" path="/medium/for-you/:user" paramsDesc={['用户名']} selfhost="1">
-
-:::caution 注意
-
-个性推荐需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+To access private lists, only self-hosting is supported.
 
 :::
 
 </Route>
 
-### 个性推荐 - Following {#medium-ge-xing-tui-jian---following}
+### Personalized Recommendations - For You {#medium-personalized-recommendations---for-you}
 
-<Route author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" paramsDesc={['用户名']} selfhost="1">
+<Route author="ImSingee" example="/medium/for-you/imsingee" path="/medium/for-you/:user" paramsDesc={['Username']} selfhost="1">
 
-:::caution 注意
+:::caution Note
 
-个性推荐需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
 
 :::
 
 </Route>
 
-### 个性推荐 - Tag {#medium-ge-xing-tui-jian---tag}
+### Personalized Recommendations - Following {#medium-personalized-recommendations---following}
 
-<Route author="ImSingee" example="/medium/tag/imsingee/cybersecurity" path="/medium/tag/:user/:tag" paramsDesc={['用户名', '订阅的 Tag']} selfhost="1">
+<Route author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" paramsDesc={['Username']} selfhost="1">
 
-Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://medium.com/?tag=web3` 则 tag 为 `web3`
+:::caution Note
 
-:::caution 注意
+Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
 
-个性推荐需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+:::
+
+</Route>
+
+### Personalized Recommendations - Tag {#medium-personalized-recommendations---tag}
+
+<Route author="ImSingee" example="/medium/tag/imsingee/cybersecurity" path="/medium/tag/:user/:tag" paramsDesc={['Username', 'Subscribed Tag']} selfhost="1">
+
+There are many tags, which can be obtained by clicking on a tag from the homepage and looking at the URL. For example, if the URL is `https://medium.com/?tag=web3`, then the tag is `web3`.
+
+:::caution Note
+
+Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
 
 :::
 
@@ -212,47 +218,51 @@ Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://me
 
 ## Miris Whispers {#miris-whispers}
 
-### 博客 {#miris-whispers-bo-ke}
+### Blog {#miris-whispers-blog}
 
 <Route author="chazeon" example="/miris/blog" path="/miris/blog" />
 
-## Paul Graham 博客 {#paul-graham-bo-ke}
+## Paul Graham {#paul-graham}
 
-通过提取文章全文，提供比官方源更佳的阅读体验。
-
-### Essays {#paul-graham-bo-ke-essays}
+### Essays {#paul-graham-essays}
 
 <Route author="Maecenas" example="/blogs/paulgraham" path="/blogs/paulgraham"/>
 
 ## Phrack Magazine {#phrack-magazine}
 
-### 文章 {#phrack-magazine-wen-zhang}
+### Article {#phrack-magazine-article}
 
 <Route author="CitrusIce" example="/phrack" path="/phrack" />
 
 ## Polkadot {#polkadot}
 
-### 博客 {#polkadot-bo-ke}
+### Blog {#polkadot-blog}
 
 <Route author="iceqing" example="/polkadot/blog" path="/polkadot/blog"/>
 
 ## PolkaWorld {#polkaworld}
 
-### 最新资讯 {#polkaworld-zui-xin-zi-xun}
+### Newest Articles {#polkaworld-newest-articles}
 
 <Route author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest"/>
 
-:::tip 提示
+:::tip
 
-在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`10`.
+Limit the number of entries to be retrieved by adding `?limit=x` to the end of the route, default value is `10`.
 
 :::
 
 ## Stratechery by Ben Thompson {#stratechery-by-ben-thompson}
 
-### 博客 {#stratechery-by-ben-thompson-bo-ke}
+### Blog {#stratechery-by-ben-thompson-blog}
 
 <Route author="chazeon" example="/stratechery" path="/stratechery" />
+
+## Uber 优步 {#uber-you-bu}
+
+### Engineering {#uber-you-bu-engineering}
+
+<Route author="hulb" example="/uber/blog" path="/uber/blog/:maxPage?" paramsDesc={['max number of pages to retrieve, default to 1 page at most']} />
 
 ## v1tx {#v1tx}
 
@@ -287,9 +297,9 @@ Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://me
 
 ## WordPress {#wordpress}
 
-### 博客 {#wordpress-bo-ke}
+### Blog {#wordpress-blog}
 
-<Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" paramsDesc={['WordPress 博客域名', '默认 https 协议。填写 `http`或`https`']}/>
+<Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" paramsDesc={['WordPress blog domain', 'use https by default. options: `http` or `https`']}/>
 
 ## yuzu emulator {#yuzu-emulator}
 
@@ -477,12 +487,6 @@ Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://me
 
 <Route author="wenzhenl" example="/xys/new" path="/xys/new" radar="1" />
 
-## 优步 {#you-bu}
-
-### 工程技术 {#you-bu-gong-cheng-ji-shu}
-
-<Route author="hulb" example="/uber/blog" path="/uber/blog/:maxPage?" paramsDesc={['获取的最多页数，默认最多获取第一页']} />
-
 ## 雨苁博客 {#yu-cong-bo-ke}
 
 ### 首页 {#yu-cong-bo-ke-shou-ye}
@@ -522,3 +526,4 @@ Tag 有很多，可从首页点进 Tag 以后的 URL 获取，例如 `https://me
 ### TOP 20 {#zhu-bai-top-20}
 
 <Route author="nczitzk" example="/zhubai/top20" path="/zhubai/top20"/>
+
