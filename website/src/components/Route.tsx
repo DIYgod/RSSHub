@@ -1,6 +1,7 @@
 import React from 'react';
 import MarkdownIt from 'markdown-it';
 import Badge from './Badge';
+import Translate from '@docusaurus/Translate';
 
 export default function Route({
   author = 'DIYgod',
@@ -44,68 +45,67 @@ export default function Route({
     return (
         <div className="routeBlock" id={path}>
             <p className="badges">
-                {supportBT && <Badge text="Support BT" type="tip" />}
-                {supportPodcast && <Badge text="Support Podcast" type="tip" />}
-                {supportScihub && <Badge text="Support Sci-Hub" type="tip" />}
-                {puppeteer && <Badge text="Rely on Puppeteer" type="warn" />}
+                {supportBT && <Badge type="tip"><Translate id="badge.supportBT" /></Badge>}
+                {supportPodcast && <Badge type="tip"><Translate id="badge.supportPodcast" /></Badge>}
+                {supportScihub && <Badge type="tip"><Translate id="badge.supportSciHub" /></Badge>}
+                {puppeteer && <Badge type="warn"><Translate id="badge.puppeteer" /></Badge>}
                 {anticrawler && (
                     <a target="_blank" href="/faq.html">
-                        <Badge text="Strict anti-crawler policy" type="warn" />
+                        <Badge type="warn"><Translate id="badge.anticrawler" /></Badge>
                     </a>
                 )}
                 {selfhost && (
                     <a target="_blank" href="/install/">
-                        <Badge text="Self-host only" type="warn" />
+                        <Badge type="warn"><Translate id="badge.selfhost" /></Badge>
                     </a>
                 )}
                 {radar && (
                     <a target="_blank" href="https://github.com/DIYgod/RSSHub-Radar">
-                        <Badge text="Support browser extension" type="tip" />
+                        <Badge type="tip"><Translate id="badge.radar" /></Badge>
                     </a>
                 )}
                 {rssbud && (
                     <a target="_blank" href="https://github.com/Cay-Zhang/RSSBud">
-                        <Badge text="Support RSSBud" type="tip" />
+                        <Badge type="tip"><Translate id="badge.rssbud" /></Badge>
                     </a>
                 )}
             </p>
             <p className="author">
-                Author:{' '}
+                <Translate id="route.author" />
                 {author.split(' ').map((uid) => (
                     <a href={`https://github.com/${uid}`} target="_blank" key={uid}>
-                        {' '}
-                        @ {uid}{' '}
+                        @{uid}{' '}
                     </a>
                 ))}
             </p>
             <p className="example">
-                <span>Example:</span>{' '}
+                <span><Translate id="route.example" /></span>
                 <a href={demoUrl} target="_blank">
                     {demoUrl}
                 </a>
             </p>
             <p className="path">
-                Route: <code>{path}</code>
+                <Translate id="route.path" /><code>{path}</code>
             </p>
             {paramMatch ? (
                 <div>
-                    <p>Parameters:</p>
+                    <p><Translate id="route.parameter" /></p>
                     <ul>
                         {paramMatch.map((item, index) => (
                             <li className="params" key={index}>
-                                <code>{item.replace(/:|\?|\+|\*/g, '')}</code>,
+                                <code>{item.replace(/:|\?|\+|\*/g, '')}</code><Translate id="route.comma" />
                                 {{
-                                    '?': 'optional',
-                                    '*': 'zero or more',
-                                    '+': 'one or more',
-                                }[item[item.length - 1]] || 'required'}
-                                -<span dangerouslySetInnerHTML={{ __html: renderMarkdown(paramsDesc[index]) }}></span>
+                                    '?': <Translate id="route.parameter.optional" />,
+                                    '*': <Translate id="route.parameter.zeroOrMore" />,
+                                    '+': <Translate id="route.parameter.oneOrMore" />,
+                                }[item[item.length - 1]] || <Translate id="route.parameter.required" /> }
+                                <Translate id="route.dash" /><span dangerouslySetInnerHTML={{ __html: renderMarkdown(paramsDesc[index]) }}></span>
                             </li>
                         ))}
                     </ul>
                 </div>
             ) : (
-                <p>Parameters: N/A</p>
+                <p><Translate id="route.parameter.na" /></p>
             )}
             {children}
         </div>
