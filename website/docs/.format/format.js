@@ -49,7 +49,7 @@ const loopNav = (nav, lang) =>
  * Iterate config and build document object:
  * E.g.
  * {
-        path: 'docs/en/other.md', <-- full path here
+        path: 'docs/other.md', <-- full path here
         type: 'route', <--- Defined in file.js
         lang: 'en' <-- Defined in file.js
     }
@@ -65,7 +65,7 @@ const buildFileList = async () => {
         .concat(
             config.guideSidebar[2].items.map((item) => ({
                 type: file.ROUTE_TYPE,
-                path: path.resolve(__dirname, '../../i18n/en/docusaurus-plugin-content-docs/current', `./${item}.md`),
+                path: path.resolve(__dirname, '../../i18n/docusaurus-plugin-content-docs/current', `./${item}.md`),
                 lang: 'en-US',
             }))
         );

@@ -1,10 +1,74 @@
 import Route from '@site/src/components/Route';
 
-# 💻 编程
+# 💻 Programming
+
+## A List Apart {#a-list-apart}
+
+### Articles {#a-list-apart-articles}
+
+<Route author="Rjnishant530" example="/alistapart" path="/alistapart" radar="1"/>
+
+### Topics {#a-list-apart-topics}
+
+<Route author="Rjnishant530" example="/alistapart/application-development" path="/alistapart/:topic" paramsDesc={['Any Topic or from the table below. Defaults to All Articles']} radar="1">
+
+You have the option to utilize the main heading or use individual categories as topics for the path.
+
+:::note Topics
+
+| **Code**                | _code_                  |
+|-------------------------|-------------------------|
+| **Application Development** | _application-development_ |
+| **Browsers**             | _browsers_              |
+| **CSS**                  | _css_                   |
+| **HTML**                 | _html_                  |
+| **JavaScript**           | _javascript_            |
+| **The Server Side**      | _the-server-side_       |
+
+| **Content**             | _content_               |
+|-------------------------|-------------------------|
+| **Community**           | _community_             |
+| **Content Strategy**    | _content-strategy_      |
+| **Writing**             | _writing_               |
+
+| **Design**              | _design_                |
+|-------------------------|-------------------------|
+| **Brand Identity**      | _brand-identity_        |
+| **Graphic Design**      | _graphic-design_        |
+| **Layout & Grids**      | _layout-grids_          |
+| **Mobile/Multidevice**  | _mobile-multidevice_    |
+| **Responsive Design**   | _responsive-design_     |
+| **Typography & Web Fonts** | _typography-web-fonts_ |
+
+| **Industry & Business** | _industry-business_     |
+|-------------------------|-------------------------|
+| **Business**            | _business_              |
+| **Career**              | _career_                |
+| **Industry**            | _industry_              |
+| **State of the Web**    | _state-of-the-web_      |
+
+| **Process**             | _process_               |
+|-------------------------|-------------------------|
+| **Creativity**          | _creativity_            |
+| **Project Management**  | _project-management_    |
+| **Web Strategy**        | _web-strategy_          |
+| **Workflow & Tools**    | _workflow-tools_        |
+
+| **User Experience**     | _user-experience_       |
+|-------------------------|-------------------------|
+| **Accessibility**       | _accessibility_         |
+| **Information Architecture** | _information-architecture_ |
+| **Interaction Design**  | _interaction-design_    |
+| **Usability**           | _usability_             |
+| **User Research**       | _user-research_         |
+
+:::
+
+</Route>
 
 ## ACM {#acm}
 
-### 图灵奖获得者 {#acm-tu-ling-jiang-huo-de-zhe}
+### A.M.Turing Award Winners {#acm-a.m.turing-award-winners}
 
 <Route author="nczitzk" example="/acm/amturingaward" path="/acm/amturingaward"/>
 
@@ -28,9 +92,9 @@ import Route from '@site/src/components/Route';
 
 ### Present Contests {#atcoder-present-contests}
 
-<Route author="nczitzk" example="/atcoder/contest/en/upcoming" path="/atcoder/contest/:language?/:status?" paramsDesc={['语言，可选 `jp` 即日语 或 `en` 即英语，默认为英语', '状态，见下表，默认为 Recent Contests']}>
+<Route author="nczitzk" example="/atcoder/contest/en/upcoming" path="/atcoder/contest/:language?/:status?" paramsDesc={['Language, `jp` as Japanese or `en` as English, English by default', 'Status, see below, Recent Contests by default']}>
 
-状态
+Status
 
 | Active Contests | Upcoming Contests | Recent Contests |
 | --------------- | ----------------- | --------------- |
@@ -40,15 +104,15 @@ import Route from '@site/src/components/Route';
 
 ### Contests Archive {#atcoder-contests-archive}
 
-<Route author="nczitzk" example="/atcoder/contest" path="/atcoder/contest/:language?/:rated?/:category?/:keyword?" paramsDesc={['语言，可选 `jp` 即日语 或 `en` 即英语，默认为英语', 'Rated 对象，见下表，默认为全部', '分类，见下表，默认为全部', '关键字，默认为空']}>
+<Route author="nczitzk" example="/atcoder/contest" path="/atcoder/contest/:language?/:rated?/:category?/:keyword?" paramsDesc={['Language, `jp` as Japanese or `en` as English, English by default', 'Rated Range, see below, all by default', 'Category, see below, all by default', 'Keyword']}>
 
-Rated 对象
+Rated Range
 
 | ABC Class (Rated for ~1999) | ARC Class (Rated for ~2799) | AGC Class (Rated for ~9999) |
 | --------------------------- | --------------------------- | --------------------------- |
 | 1                           | 2                           | 3                           |
 
-分类
+Category
 
 | All | AtCoder Typical Contest | PAST Archive | Unofficial(unrated) |
 | --- | ----------------------- | ------------ | ------------------- |
@@ -66,7 +130,7 @@ Rated 对象
 
 ### Posts {#atcoder-posts}
 
-<Route author="nczitzk" example="/atcoder/post" path="/atcoder/post/:language?/:keyword?" paramsDesc={['语言，可选 `jp` 即日语 或 `en` 即英语，默认为英语', '关键字，默认为空']}/>
+<Route author="nczitzk" example="/atcoder/post" path="/atcoder/post/:language?/:keyword?" paramsDesc={['Language, `jp` as Japanese or `en` as English, English by default', 'Keyword']}/>
 
 ## BBC News Labs {#bbc-news-labs}
 
@@ -92,27 +156,31 @@ Rated 对象
 
 ## CNCF {#cncf}
 
-### 栏目 {#cncf-lan-mu}
+### Category {#cncf-category}
 
-<Route author="Fatpandac" example="/cncf" path="/cncf/:cate?" paramsDesc={['默认为 `blog`']}>
+<Route author="Fatpandac" example="/cncf" path="/cncf/:cate?" radar="1" rssbud="1" paramsDesc={['blog by default']}>
 
 | Blog | News | Announcements | Reports |
-| ---- | ---- | ------------- | ------- |
+|------|------|---------------|---------|
 | blog | news | announcements | reports |
 
 </Route>
 
 ## Codeforces {#codeforces}
 
-### 最新比赛 {#codeforces-zui-xin-bi-sai}
+### Latest contests {#codeforces-latest-contests}
 
 <Route author="Fatpandac" example="/codeforces/contests" path="/codeforces/contests"/>
 
+### Recent actions {#codeforces-recent-actions}
+
+<Route author="ftiasch" example="/codeforces/recent-actions" path="/codeforces/recent-actions/:minrating?" paramsDesc={['The minimum blog/comment rating required. Default: 1']}/>
+
 ## cve.mitre.org {#cve.mitre.org}
 
-### 搜索结果 {#cve.mitre.org-sou-suo-jie-guo}
+### Search Result {#cve.mitre.org-search-result}
 
-<Route author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" paramsDesc={['关键词']} />
+<Route author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" paramsDesc={['keyword']} />
 
 ## dbaplus 社群 {#dbaplus-she-qun}
 
@@ -156,9 +224,9 @@ Rated 对象
 
 ## gihyo.jp {#gihyo.jp}
 
-### 記事一覧 {#gihyo.jp-ji-shi-yi-lan}
+### Series {#gihyo.jp-series}
 
-<Route author="masakichi" example="/gihyo/list/group/Ubuntu-Weekly-Recipe" path="/gihyo/list/group/:id" paramsDesc={['連載']}/>
+<Route author="masakichi" example="/gihyo/list/group/Ubuntu-Weekly-Recipe" path="/gihyo/list/group/:id" paramsDesc={['Series']}/>
 
 ## GitChat {#gitchat}
 
@@ -212,107 +280,108 @@ Rated 对象
 
 ## GitHub {#github}
 
-:::tip 提示
+:::tip
 
-GitHub 官方也提供了一些 RSS:
+GitHub provides some official RSS feeds:
 
--   仓库 releases: `https://github.com/:owner/:repo/releases.atom`
--   仓库 commits: `https://github.com/:owner/:repo/commits.atom`
--   用户动态: `https://github.com/:user.atom`
--   专属动态: `https://github.com/:user.private.atom?token=:secret` (登录后在[仪表盘页面](https://github.com)找到 **Subscribe to your news feed** 字样即可)
--   Wiki 历史: `https://github.com/:owner/:repo/wiki.atom`
+-   Repo releases: `https://github.com/:owner/:repo/releases.atom`
+-   Repo commits: `https://github.com/:owner/:repo/commits.atom`
+-   User activities: `https://github.com/:user.atom`
+-   Private feed: `https://github.com/:user.private.atom?token=:secret` (You can find **Subscribe to your news feed** in [dashboard](https://github.com) page after login)
+-   Wiki history: `https://github.com/:owner/:repo/wiki.atom`
 
 :::
 
-### 用户仓库 {#github-yong-hu-cang-ku}
+### User Repo {#github-user-repo}
 
-<Route author="DIYgod" example="/github/repos/DIYgod" path="/github/repos/:user" paramsDesc={['用户名']} radar="1" rssbud="1"/>
+<Route author="dragon-yuan" path="/github/repos/:user" example="/github/repos/DIYgod" paramsDesc={['GitHub username']} radar="1" rssbud="1"/>
 
 ### Trending {#github-trending}
 
-<Route author="DIYgod" example="/github/trending/daily/javascript/zh" path="/github/trending/:since/:language/:spoken_language?" paramsDesc={['时间跨度，可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到，可选 `daily` `weekly` `monthly`', '语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到，`any`表示不设语言限制', '自然语言，可在 [Trending 页](https://github.com/trending/javascript?since=monthly&spoken_language_code=zh) URL 中找到']} radar="1" rssbud="1" selfhost="1"/>
+<Route author="DIYgod" path="/github/trending/:since/:language/:spoken_language?" example="/github/trending/daily/javascript/en" paramsDesc={['time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL, possible values are: `daily`, `weekly` or `monthly`', 'the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL, don\'t filter option is `any`', 'natural language, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL']} radar="1" rssbud="1" selfhost="1"/>
 
 ### Topics {#github-topics}
 
-<Route author="queensferryme" example="/github/topics/framework" path="/github/topics/:name/:qs?" paramsDesc={['名称，可以在相关 [Topics 页](https://github.com/topics/framework) URL 中找到', '过滤规则，形如 `l=php&o=desc&s=stars`，详见下表']} radar="1" rssbud="1">
+<Route author="queensferryme" example="/github/topics/framework" path="/github/topics/:name/:qs?" paramsDesc={['Topic name, which can be found in the URL of the corresponding [Topics Page](https://github.com/topics/framework)', 'Query string, like `l=php&o=desc&s=stars`. Details listed as follows:']} radar="1" rssbud="1">
 
-| 参数名 | 描述     | 可选值                                                                                    |
-| ------ | -------- | ----------------------------------------------------------------------------------------- |
-| `l`    | 编程语言 | 例如 `php`，可以在相关 [Topics 页](https://github.com/topics/framework?l=php) URL 中找到  |
-| `o`    | 排序方法 | `asc`（升序）<br />`desc`（降序）                                                           |
-| `s`    | 排序标准 | `stars`（按 star 数量排序）<br />`forks`（按 fork 数量排序）<br />`updated`（按更新日期排序） |
+| Parameter | Description      | Values                                                                                                                          |
+| --------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `l`       | Language         | For instance `php`, which can be found in the URL of the corresponding [Topics page](https://github.com/topics/framework?l=php) |
+| `o`       | Sorting Order    | `asc`, `desc`                                                                                                                   |
+| `s`       | Sorting Criteria | `stars`, `forks`, `updated`                                                                                                     |
 
-例如 `/github/topics/framework/l=php&o=desc&s=stars` 会生成对应[此页面](https://github.com/topics/framework?l=php&o=desc&s=stars)的 RSS。
-
-</Route>
-
-### 仓库 Issues {#github-cang-ku-issues}
-
-<Route author="HenryQW AndreyMZ" example="/github/issue/DIYgod/RSSHub/open/RSS%20proposal" path="/github/issue/:user/:repo/:state?/:labels?" paramsDesc={['用户名', '仓库名', 'issue 状态，可选`open`,`closed`或`all`，默认为`open`', '标签列表，以逗号分隔']} radar="1" rssbud="1"/>
-
-### 仓库 Pull Requests {#github-cang-ku-pull-requests}
-
-<Route author="hashman TonyRL" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo/:state?/:labels?" paramsDesc={['用户名', '仓库名', 'pull request 状态，`open`,`closed`或`all`，默认为`open`', '标签列表，以逗号分隔']} radar="1" rssbud="1"/>
-
-### 用户 Followers {#github-yong-hu-followers}
-
-<Route author="HenryQW" example="/github/user/followers/HenryQW" path="/github/user/followers/:user" paramsDesc={['用户名']} radar="1" rssbud="1"/>
-
-### 仓库 Stars {#github-cang-ku-stars}
-
-<Route author="HenryQW" example="/github/stars/DIYgod/RSSHub" path="/github/stars/:user/:repo" paramsDesc={['用户名', '仓库名']} radar="1" rssbud="1"/>
-
-### 仓库 Branches {#github-cang-ku-branches}
-
-<Route author="max-arnold" example="/github/branches/DIYgod/RSSHub" path="/github/branches/:user/:repo" paramsDesc={['用户名', '仓库名']} radar="1" rssbud="1"/>
-
-### 文件 Commits {#github-wen-jian-commits}
-
-<Route author="zengxs" example="/github/file/DIYgod/RSSHub/master/lib/router.js" path="/github/file/:user/:repo/:branch/:filepath+" paramsDesc={['用户名', '仓库名', '分支名', '文件路径']} radar="1" rssbud="1">
-
-| 用户名   | 仓库名   | 分支名   | 文件路径        |
-| -------- | -------- | -------- | --------------- |
-| `DIYgod` | `RSSHub` | `master` | `lib/router.js` |
-
-> -   **分支名**中如果有 `/` 等特殊字符需使用 urlencode 进行编码，通常 `/` 需要被替换成 `%2f`
-> -   **文件路径**中如果有特殊字符同样需使用 urlencode 进行编码，但文件路径可以正常识别 `/` 字符
-> -   **文件路径**如果以 `.rss`, `.atom`, `.json` 结尾，需要将后缀中的 `.` 替换成 `%2e`
->     > Reeder 订阅 `%2erss` 或类似后缀的时候会出错，此时再在路由后面加上 `.rss` 即可正常订阅
->     >
->     > 如： `https://rsshub.app/github/file/DIYgod/RSSHub/master/lib/router%2ejs` 替换成 `https://rsshub.app/github/file/DIYgod/RSSHub/master/lib/router%2ejs.rss` 即可
+For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will generate the RSS feed corresponding to this [page](https://github.com/topics/framework?l=php&o=desc&s=stars).
 
 </Route>
 
-### 搜索结果 {#github-sou-suo-jie-guo}
+### Repo Issues {#github-repo-issues}
 
-<Route author="LogicJake" example="/github/search/RSSHub/bestmatch/desc" path="/github/search/:query/:sort?/:order?" paramsDesc={['搜索关键词', '排序选项（默认为bestmatch）', '排序顺序，desc和asc（默认desc降序）']}>
+<Route author="HenryQW AndreyMZ" path="/github/issue/:user/:repo/:state?/:labels?" example="/github/issue/DIYgod/RSSHub/all/RSS%20proposal" paramsDesc={['GitHub username', 'GitHub repo name', 'the state of the issues. Can be either `open`, `closed`, or `all`. Default: `open`.', 'a list of comma separated label names']} radar="1" rssbud="1"/>
 
-| 排序选项           | sort      |
-| ------------------ | --------- |
-| 最佳匹配           | bestmatch |
-| 根据 star 数量排序 | stars     |
-| 根据 fork 数量排序 | forks     |
-| 根据更新时间排序   | updated   |
+### Repo Pull Requests {#github-repo-pull-requests}
+
+<Route author="hashman TonyRL" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo/:state?/:labels?" paramsDesc={['User name', 'Repo name', 'the state of pull requests. Can be either `open`, `closed`, or `all`. Default: `open`.', 'a list of comma separated label names']} radar="1" rssbud="1"/>
+
+### User Followers {#github-user-followers}
+
+<Route author="HenryQW" path="/github/user/followers/:user" example="/github/user/followers/HenryQW" paramsDesc={['GitHub username']} radar="1" rssbud="1"/>
+
+### Repo Stars {#github-repo-stars}
+
+<Route author="HenryQW" path="/github/stars/:user/:repo" example="/github/stars/DIYGod/RSSHub" paramsDesc={['GitHub username', 'GitHub repo name']} radar="1" rssbud="1"/>
+
+### Repo Branches {#github-repo-branches}
+
+<Route author="max-arnold" example="/github/branches/DIYgod/RSSHub" path="/github/branches/:user/:repo" paramsDesc={['User name', 'Repo name']} radar="1" rssbud="1"/>
+
+### Files Commits {#github-files-commits}
+
+<Route author="zengxs" example="/github/file/DIYgod/RSSHub/master/lib/router.js" path="/github/file/:user/:repo/:branch/:filepath+" paramsDesc={['User name', 'Repo name', 'Branch name', 'File path']} radar="1" rssbud="1">
+
+| User name | Repo name | Branch name | File path       |
+| --------- | --------- | ----------- | --------------- |
+| `DIYgod`  | `RSSHub`  | `master`    | `lib/router.js` |
+
+> -   If there are special characters such as `/` in the **branch name**, they need to be encoded with urlencode, usually `/` needs to be replaced with `%2f`
+> -   If there are special characters in the **file path**, you need to use urlencode to encode them, but the file path can be recognized normally `/` characters
+> -   If the **file path** ends with `.rss`, `.atom`, `.json`, you need to replace the `.` in the suffix with `%2e`
+>
+> > Reeder will make an error when subscribing to `% 2erss` or similar suffixes. At this time, add`.rss` after the route to subscribe
+> >
+> > Such as: replace `https://rsshub.app/github/file/DIYgod/RSSHub/master/lib/router%2ejs` to `https://rsshub.app/github/file/DIYgod/RSSHub/master/lib/router%2ejs.rss`
 
 </Route>
 
-### 用户 Star 的仓库 {#github-yong-hu-star-de-cang-ku}
+### Search Result {#github-search-result}
 
-<Route author="LanceZhu" example="/github/starred_repos/DIYgod" path="/github/starred_repos/:user" paramsDesc={['用户名']} radar="1" rssbud="1"/>
+<Route author="LogicJake" example="/github/search/RSSHub/bestmatch/desc" path="/github/search/:query/:sort?/:order?" paramsDesc={['search keyword', 'Sort options (default to bestmatch)','Sort order, desc and asc (desc descending by default)']}>
 
-### 仓库 Contributors {#github-cang-ku-contributors}
+| Sort options     | sort      |
+| ---------------- | --------- |
+| Best match       | bestmatch |
+| Most stars       | stars     |
+| Most forks       | forks     |
+| Recently updated | updated   |
 
-<Route author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:order?/:anon?" paramsDesc={['用户名', '仓库名', 'Commit 数量排序顺序，desc和asc（默认desc降序）', '是否包括匿名用户，默认不包含，任意值包含匿名用户']} radar="1" rssbud="1"/>
+</Route>
 
-### Issue / Pull Request 评论 {#github-issue-%2F-pull-request-ping-lun}
+### User Starred Repositories {#github-user-starred-repositories}
 
-<Route author="TonyRL FliegendeWurst" example="/github/comments/DIYgod/RSSHub/8116" path="/github/comments/:user/:repo/:number?" paramsDesc={['用户名', '仓库名', 'Issue 或 pull 编号']} radar="1" rssbud="1"/>
+<Route author="LanceZhu" example="/github/starred_repos/DIYgod" path="/github/starred_repos/:user" paramsDesc={['User name']} radar="1" rssbud="1"/>
 
-### Wiki 历史 {#github-wiki-li-shi}
+### Repo Contributors {#github-repo-contributors}
 
-<Route author="TonyRL" example="/github/wiki/flutter/flutter/Roadmap" path="/github/wiki/:user/:repo/:page?" paramsDesc={['用户名', '仓库名', '页面 Slug，可在 URL 中找到，留空表示主页']} radar="1" rssbud="1"/>
+<Route author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:order?/:anon?" paramsDesc={['User name','Repo name','Sort order by commit numbers, desc and asc (descending by default)','Show anonymous users. Defaults to no, use any values for yes.']} radar="1" rssbud="1"/>
 
-### 通知 {#github-tong-zhi}
+### Issue / Pull Request comments {#github-issue-%2F-pull-request-comments}
+
+<Route author="TonyRL FliegendeWurst" example="/github/comments/DIYgod/RSSHub/8116" path="/github/comments/:user/:repo/:number?" paramsDesc={['User / Org name', 'Repo name', 'Issue or pull number (if omitted: all)']} radar="1" rssbud="1"/>
+
+### Wiki History {#github-wiki-history}
+
+<Route author="TonyRL" example="/github/wiki/flutter/flutter/Roadmap" path="/github/wiki/:user/:repo/:page?" paramsDesc={['User / Org name', 'Repo name', 'Page slug, can be found in URL, empty means Home']} radar="1" rssbud="1"/>
+
+### Notifications {#github-notifications}
 
 <Route author="zhzy0077" example="/github/notifications" path="/github/notifications" radar="1" rssbud="1" selfhost="1"/>
 
@@ -324,7 +393,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Explore {#gitlab-explore}
 
-<Route author="imlonghao zoenglinghou" example="/gitlab/explore/trending" path="/gitlab/explore/:type/:host?" paramsDesc={['分类', '服务器地址，缺省为 gitlab.com']}>
+<Route author="imlonghao zoenglinghou" example="/gitlab/explore/trending" path="/gitlab/explore/:type/:host?" paramsDesc={['type', 'Gitlab instance hostname, default to gitlab.com']}>
 
 | Trending | Most stars | All |
 | -------- | ---------- | --- |
@@ -334,19 +403,19 @@ GitHub 官方也提供了一些 RSS:
 
 ### Releases {#gitlab-releases}
 
-<Route author="zoenglinghou" example="/gitlab/release/pleroma/pleroma/git.pleroma.social" path="/gitlab/release/:namespace/:project/:host?" paramsDesc={['项目所有者或命名空间。斜杠`/`需要替代为`%2F`', '项目名称', '服务器地址，缺省为 gitlab.com']} />
+<Route author="zoenglinghou" example="/gitlab/release/pleroma/pleroma/git.pleroma.social" path="/gitlab/release/:namespace/:project/:host?" paramsDesc={['owner or namespace. `/` needs to be replaced with `%2F`', 'project name', 'Gitlab instance hostname, default to gitlab.com']} />
 
 ### Tags {#gitlab-tags}
 
-<Route author="zoenglinghou" example="/gitlab/tag/rluna-open-source%2Ffile-management%2Fowncloud/core/gitlab.com" path="/gitlab/tag/:namespace/:project/:host?" paramsDesc={['项目所有者或命名空间。斜杠`/`需要替代为`%2F`', '项目名称', '服务器地址，缺省为 gitlab.com']} />
+<Route author="zoenglinghou" example="/gitlab/tag/rluna-open-source%2Ffile-management%2Fowncloud/core/gitlab.com" path="/gitlab/tag/:namespace/:project/:host?" paramsDesc={['owner or namespace. `/` needs to be replaced with `%2F`', 'project name', 'Gitlab instance hostname, default to gitlab.com']} />
 
 ## Gitpod {#gitpod}
 
-### 博客 {#gitpod-bo-ke}
+### Blog {#gitpod-blog}
 
 <Route author="TonyRL" example="/gitpod/blog" path="/gitpod/blog" />
 
-### 更新日志 {#gitpod-geng-xin-ri-zhi}
+### Changelog {#gitpod-changelog}
 
 <Route author="TonyRL" example="/gitpod/changelog" path="/gitpod/changelog" />
 
@@ -376,27 +445,11 @@ GitHub 官方也提供了一些 RSS:
 
 ## Hacker News {#hacker-news}
 
-### 分区 {#hacker-news-fen-qu}
+### Follow User {#hacker-news-follow-user}
 
-<Route author="cf020031308 nczitzk" example="/hackernews" path="/hackernews/:section?/:type?/:user?" paramsDesc={['内容分区，见下表，默认为 `index`', '链接类型，见下表，默认为 `sources`', '设定用户，只在 `threads` 和 `submitted` 分区有效。斜当选择`over`分区，`User`的含义是帖子点数的阈值']}>
+Subscribe to the updates (threads and submission) from a paritcular Hacker News user
 
-内容分区
-
-| homepage                              | new                                           | past                                        | comments                                                | ask                                     | show                                      | jobs                                      | best                                      | threads                                                 | submitted                                                   | over                                                 |
-| ------------------------------------- | --------------------------------------------- | ------------------------------------------- | ------------------------------------------------------- | --------------------------------------- | ----------------------------------------- | ----------------------------------------- | ----------------------------------------- | ------------------------------------------------------- | ----------------------------------------------------------- | ---------------------------------------------------- |
-| [index](https://news.ycombinator.com) | [newest](https://news.ycombinator.com/newest) | [front](https://news.ycombinator.com/front) | [newcomments](https://news.ycombinator.com/newcomments) | [ask](https://news.ycombinator.com/ask) | [show](https://news.ycombinator.com/show) | [jobs](https://news.ycombinator.com/jobs) | [best](https://news.ycombinator.com/best) | [threads](https://news.ycombinator.com/threads?id=dang) | [submitted](https://news.ycombinator.com/submitted?id=dang) | [over](https://news.ycombinator.com/over?points=100) |
-
-> `Over` 分区只显示过去几天内超过固定阈值的帖子。
-
-条目指向链接类型
-
-| 用户分享的来源地址 | Hacker News 上的讨论页面 | 读取回复列表  |
-| ------------------ | ------------------------ | ------------- |
-| sources            | comments                 | comments_list |
-
-> 网站有默认的 RSS：<https://news.ycombinator.com/rss> 内容同 homepage，应优先考虑。
-
-</Route>
+<Route author="cf020031308 nczitzk xie-dongping" example="/hackernews/threads/comments_list/dang" path="/hackernews/:section?/:type?/:user?" paramsDesc={['Section, see above, `index` by default', 'Link, see above, `sources` by default', 'User, only valid for section `threads` and `submitted`']} />
 
 ### 用户 {#hacker-news-yong-hu}
 
@@ -424,7 +477,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Profile {#hackmd-profile}
 
-<Route author="Yukaii kaiix" example="/hackmd/profile/hackmd" path="/hackmd/profile/:path" paramsDesc={['個人名稱路徑，或團隊網址']} radar="1"/>
+<Route author="Yukaii kaiix" example="/hackmd/profile/hackmd" path="/hackmd/profile/:path" paramsDesc={['userpath or teampath']} radar="1"/>
 
 ## HelloGitHub {#hellogithub}
 
@@ -485,7 +538,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Hex-Rays News {#hex-rays-hex-rays-news}
 
-<Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news"/>
+<Route author="hellodword" example="/hex-rays/news" path="/hex-rays/news" />
 
 ## Huggingface {#huggingface}
 
@@ -495,9 +548,9 @@ GitHub 官方也提供了一些 RSS:
 
 ## Issue Hunt {#issue-hunt}
 
-### 项目悬赏 {#issue-hunt-xiang-mu-xuan-shang}
+### Project Funded {#issue-hunt-project-funded}
 
-<Route author="running-grass" radar="1" example="/issuehunt/funded/DIYgod/RSSHub" path="/issuehunt/funded/:username/:repo" paramsDesc={['Github用户/组织','仓库名称']} />
+<Route author="running-grass" radar="1" example="/issuehunt/funded/DIYgod/RSSHub" path="/issuehunt/funded/:username/:repo" paramsDesc={['Github user/org','Repository name']} />
 
 ## ITSlide {#itslide}
 
@@ -509,7 +562,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Discussion {#kaggle-discussion}
 
-<Route author="LogicJake" example="/kaggle/discussion/387811/active" path="/kaggle/discussion/:forumId/:sort?" paramsDesc={['讨论区 id, 打开网页请求, 搜索 forumId；填 all 可以订阅全站讨论区', '排序方式见下表, 默认为 hot']}>
+<Route author="LogicJake" example="/kaggle/discussion/387811/active" path="/kaggle/discussion/:forumId/:sort?" paramsDesc={['Forum ID, open web request, search forumId; fill in all to subscribe to the whole site discussion forum', 'See the table below for sorting methods, default to hot']}>
 
 | hot     | recent          | new             | top        | active        |
 | ------- | --------------- | --------------- | ---------- | ------------- |
@@ -519,7 +572,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Competitions {#kaggle-competitions}
 
-<Route author="LogicJake" example="/kaggle/competitions" path="/kaggle/competitions/:category?" paramsDesc={['类别, 默认为空']}>
+<Route author="LogicJake" example="/kaggle/competitions" path="/kaggle/competitions/:category?" paramsDesc={['category, default to all']}>
 
 | 空             | featured | research | recruitment | gettingStarted  | masters | playground | analytics |
 | -------------- | -------- | -------- | ----------- | --------------- | ------- | ---------- | --------- |
@@ -539,21 +592,21 @@ GitHub 官方也提供了一些 RSS:
 
 ## LeetCode {#leetcode}
 
-### 文章 {#leetcode-wen-zhang}
+### Articles {#leetcode-articles}
 
 <Route author="LogicJake" example="/leetcode/articles" path="/leetcode/articles"/>
 
-### 打卡 {#leetcode-da-ka}
+### Submission {#leetcode-submission}
 
-<Route author="NathanDai" example="/leetcode/submission/us/nathandai" path="/leetcode/submission/:country/:user" paramsDesc={['国家 country, 中国(cn)和美国(us)', '用户名 user, 可在LeetCode用户主页的 URL 中找到']}/>
+<Route author="NathanDai" example="/leetcode/submission/us/nathandai" path="/leetcode/submission/:country/:user" paramsDesc={['country, Chines(cn) and US(us)', 'Username, available at the URL of the LeetCode user homepage']}/>
 
-### 每日一题 {#leetcode-mei-ri-yi-ti}
+### Daily Question {#leetcode-daily-question}
 
-<Route author="NavePnow" example="/leetcode/dailyquestion/en" path="/leetcode/dailyquestion/:lang" paramsDesc={['站点,中文(cn)和英文(en)']}/>
+<Route author="NavePnow" example="/leetcode/dailyquestion/en" path="/leetcode/dailyquestion/:lang" paramsDesc={['site, Chines(cn) and Engligh(en)']}/>
 
-### 每日一题题解 {#leetcode-mei-ri-yi-ti-ti-jie}
+### Daily Question Solution {#leetcode-daily-question-solution}
 
-<Route author="woaidouya123" example="/leetcode/dailyquestion/solution/cn" path="/leetcode/dailyquestion/solution/:lang" paramsDesc={['站点,中文(cn)和英文(en)']}/>
+<Route author="woaidouya123" example="/leetcode/dailyquestion/solution/en" path="/leetcode/dailyquestion/solution/:lang" paramsDesc={['site, Chines(cn) and Engligh(en)']}/>
 
 ## LinkedKeeper {#linkedkeeper}
 
@@ -571,9 +624,9 @@ GitHub 官方也提供了一些 RSS:
 
 ### Security alerts {#lwn.net-security-alerts}
 
-<Route author="zengxs" example="/lwn/alerts/CentOS" path="/lwn/alerts/:distributor" paramsDesc={['对应发行版标识']}>
+<Route author="zengxs" example="/lwn/alerts/CentOS" path="/lwn/alerts/:distributor" paramsDesc={['Distribution identification']}>
 
-| 发行版           | 标识               |
+| Distribution     | Identification     |
 | :--------------- | :----------------- |
 | Arch Linux       | `Arch_Linux`       |
 | CentOS           | `CentOS`           |
@@ -588,12 +641,6 @@ GitHub 官方也提供了一些 RSS:
 | Slackware        | `Slackware`        |
 | SUSE             | `SUSE`             |
 | Ubuntu           | `Ubuntu`           |
-
-:::tip 提示
-
-注意标识大小写
-
-:::
 
 </Route>
 
@@ -619,7 +666,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### Release Notes {#mysql-release-notes}
 
-<Route author="nczitzk" example="/mysql/release/8.0" path="/mysql/release/:version?" paramsDesc={['版本，见下表，默认为 8.0']}>
+<Route author="nczitzk" example="/mysql/release/8.0" path="/mysql/release/:version?" paramsDesc={['Version, see below, 8.0 by default']}>
 
 | 8.0 | 5.7 | 5.6 |
 | --- | --- | --- |
@@ -630,7 +677,7 @@ GitHub 官方也提供了一些 RSS:
 
 ### News {#node.js-news}
 
-<Route author="nczitzk" example="/nodejs/blog" path="/nodejs/blog/:language?" paramsDesc={['语言，见下表，默认为 en']}>
+<Route author="nczitzk" example="/nodejs/blog" path="/nodejs/blog/:language?" paramsDesc={['Language, see below, en by default']}>
 
 | العربية | Catalan | Deutsch | Español | زبان فارسی |
 | ------- | ------- | ------- | ------- | ---------- |
@@ -742,7 +789,8 @@ GitHub 官方也提供了一些 RSS:
 
 ### Scala Blog {#scala-scala-blog}
 
-<Route author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" paramsDesc={['部分，默认为 All，part 参数可在 url 中获得']} />
+<Route author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" paramsDesc={['part parmater can be found in the url of blog']} >
+</Route>
 
 ## SecWiki - 安全维基 {#secwiki---an-quan-wei-ji}
 
@@ -764,17 +812,83 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="shiluanzzz" example="/segmentfault/blogs/go" path="/segmentfault/blogs/:tag" paramsDesc={['标签名称, 在 https://segmentfault.com/tags 中可以找到']} radar="1"/>
 
+## Smashing Magazine {#smashing-magazine}
+
+### Articles {#smashing-magazine-articles}
+
+<Route author="Rjnishant530" example="/smashingmagazine" path="/smashingmagazine" radar="1"/>
+
+### Category {#smashing-magazine-category}
+
+<Route author="Rjnishant530" example="/smashingmagazine/react" path="/smashingmagazine/:category?" paramsDesc={['Find in URL or Table below']} radar="1">
+
+:::note Category
+
+| **Category**         |                       |
+|----------------------|-----------------------|
+| Accessibility        | accessibility         |
+| Best practices       | best-practices       |
+| Business             | business              |
+| Career               | career                |
+| Checklists           | checklists            |
+| CSS                  | css                   |
+| Data Visualization   | data-visualization   |
+| Design               | design                |
+| Design Patterns      | design-patterns      |
+| Design Systems       | design-systems       |
+| E-Commerce           | e-commerce           |
+| Figma                | figma                 |
+| Freebies             | freebies              |
+| HTML                 | html                  |
+| Illustrator          | illustrator           |
+| Inspiration          | inspiration           |
+| JavaScript           | javascript           |
+| Mobile               | mobile                |
+| Performance          | performance           |
+| Privacy              | privacy               |
+| React                | react                 |
+| Responsive Design    | responsive-design    |
+| Round-Ups            | round-ups            |
+| SEO                  | seo                   |
+| Typography           | typography            |
+| Tools                | tools                 |
+| UI                   | ui                    |
+| Usability            | usability             |
+| UX                   | ux                    |
+| Vue                  | vue                   |
+| Wallpapers           | wallpapers            |
+| Web Design           | web-design            |
+| Workflow             | workflow              |
+
+:::
+
+</Route>
+
 ## TesterHome {#testerhome}
 
 ### 最新发布 {#testerhome-zui-xin-fa-bu}
 
 <Route author="xyqfer" example="/testerhome/newest" path="/testerhome/newest"/>
 
+## ui.dev {#ui.dev}
+
+### BYTES - Your weekly dose of JS {#ui.dev-bytes---your-weekly-dose-of-js}
+
+Staying informed on the JavaScript ecosystem has never been so entertaining. Delivered every Monday and Thursday, for free. https://bytes.dev/
+
+<Route author="meixger" example="/bytes" path="/bytes"/>
+
+### React Newsletter {#ui.dev-react-newsletter}
+
+Stay up to date on the latest React news, tutorials, resources, and more. Delivered every Tuesday, for free. https://reactnewsletter.com/
+
+<Route author="meixger" example="/reactnewsletter" path="/reactnewsletter"/>
+
 ## Visual Studio Code Marketplace {#visual-studio-code-marketplace}
 
-### Visual Studio Code 插件 {#visual-studio-code-marketplace-visual-studio-code-cha-jian}
+### Visual Studio Code Plugins Marketplace {#visual-studio-code-marketplace-visual-studio-code-plugins-marketplace}
 
-<Route author="SeanChao" example="/vscode/marketplace" path="/vscode/marketplace/:category?" paramsDesc={['分类']}>
+<Route author="SeanChao" example="/vscode/marketplace" path="/vscode/marketplace/:category?" paramsDesc={['Category']} >
 
 | Featured | Trending Weekly | Trending Monthly | Trending Daily | Most Popular | Recently Added |
 | -------- | --------------- | ---------------- | -------------- | ------------ | -------------- |
@@ -795,6 +909,16 @@ GitHub 官方也提供了一些 RSS:
 ### host {#wolley-host}
 
 <Route author="umm233" example="/wolley/host/www.youtube.com" path="/wolley/host/:host" paramsDesc={['文章对应 host 分类']} />
+
+## zooTeam 政采云前端技术团队 {#zooteam-zheng-cai-yun-qian-duan-ji-shu-tuan-dui}
+
+### blog {#zooteam-zheng-cai-yun-qian-duan-ji-shu-tuan-dui-blog}
+
+<Route author="Pulset" example="/zooTeam/blog" path="/zooTeam/blog" radar="1" rssbud="1"/>
+
+### weekly {#zooteam-zheng-cai-yun-qian-duan-ji-shu-tuan-dui-weekly}
+
+<Route author="Pulset" example="/zooTeam/weekly" path="/zooTeam/weekly" radar="1" rssbud="1"/>
 
 ## 阿里云 {#a-li-yun}
 
@@ -1392,16 +1516,6 @@ GitHub 官方也提供了一些 RSS:
 
 <Route author="daijinru" example="/docschina/jsweekly" path="/docschina/jsweekly" radar="1" rssbud="1"/>
 
-## 政采云前端技术团队 {#zheng-cai-yun-qian-duan-ji-shu-tuan-dui}
-
-### 博客 {#zheng-cai-yun-qian-duan-ji-shu-tuan-dui-bo-ke}
-
-<Route author="Pulset" example="/zooTeam/blog" path="/zooTeam/blog" radar="1" rssbud="1"/>
-
-### 小报 {#zheng-cai-yun-qian-duan-ji-shu-tuan-dui-xiao-bao}
-
-<Route author="Pulset" example="/zooTeam/weekly" path="/zooTeam/weekly" radar="1" rssbud="1"/>
-
 ## 知晓程序 {#zhi-xiao-cheng-xu}
 
 ### 文章 {#zhi-xiao-cheng-xu-wen-zhang}
@@ -1427,3 +1541,4 @@ GitHub 官方也提供了一些 RSS:
 ### 热门 {#zhong-cheng-fan-yi-re-men}
 
 <Route author="SirM2z" example="/zcfy/hot" path="/zcfy/hot"/>
+

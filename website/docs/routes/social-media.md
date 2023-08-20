@@ -1,6 +1,6 @@
 import Route from '@site/src/components/Route';
 
-# 💬 社交媒体
+# 💬 Social Media
 
 ## 755 {#755}
 
@@ -368,7 +368,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ## Bluesky (bsky) {#bluesky-(bsky)}
 
-### 关键词 {#bluesky-(bsky)-guan-jian-ci}
+### Keywords {#bluesky-(bsky)-keywords}
 
 <Route author="untitaker" example="/bsky/keyword/hello" path="/bsky/keyword/:keyword" radar="1" rssbud="1" />
 
@@ -390,121 +390,147 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 <Route author="DIYgod" example="/crossbell/feeds/following/10" path="/crossbell/feeds/following/:characterId" radar="1" rssbud="1"/>
 
+## CuriousCat {#curiouscat}
+
+### User {#curiouscat-user}
+
+<Route author="lucasew" path="/curiouscat/user/:name" example="/curiouscat/user/kretyn" paramsDesc={['name, username that is in the URL']} />
+
 ## Curius {#curius}
 
-### 用户 {#curius-yong-hu}
+### User {#curius-user}
 
-<Route author="Ovler-Young" example="/curius/links/yuu-yuu" path="/curius/links/:name" paramsDesc={['用户名称，可在url中找到']}/>
+<Route author="Ovler-Young" example="/curius/links/yuu-yuu" path="/curius/links/:name" paramsDesc={['Username, can be found in URL']}/>
+
+## Daily.dev {#daily.dev}
+
+### Popular {#daily.dev-popular}
+
+<Route author="Rjnishant530" example="/daily" path="/daily" />
+
+### Most Discussed {#daily.dev-most-discussed}
+
+<Route author="Rjnishant530" example="/daily/discussed" path="/daily/discussed" />
+
+### Most upvoted {#daily.dev-most-upvoted}
+
+<Route author="Rjnishant530" example="/daily/upvoted" path="/daily/upvoted" />
 
 ## Dev.to {#dev.to}
 
-### 最高职位 {#dev.to-zui-gao-zhi-wei}
+### Top Posts {#dev.to-top-posts}
 
 <Route author="dwemerx" example="/dev.to/top/month" path="/dev.to/top/:period" paramsDesc={['period']}>
 
-| 开发到每周最高 | 开发至每月最高 | 开发年度最高 | 开发到有史以来最高职位 |
-| -------------- | -------------- | ------------ | ---------------------- |
-| week           | month          | year         | infinity               |
+| dev.to weekly top | dev.to monthly top | dev.to yearly top | dev.to top posts of all time |
+| ----------------- | ------------------ | ----------------- | ---------------------------- |
+| week              | month              | year              | infinity                     |
 
 </Route>
 
+## Discord {#discord}
+
+### Channel Messages {#discord-channel-messages}
+
+<Route author="TonyRL" path="/discord/channel/:channelId" example="/discord/channel/950465850056536084" paramsDesc={['Channel ID']} radar="1" selfhost="1"/>
+
 ## Disqus {#disqus}
 
-### 评论 {#disqus-ping-lun}
+### Comment {#disqus-comment}
 
-<Route author="DIYgod" example="/disqus/posts/diygod-me" path="/disqus/posts/:forum" paramsDesc={['网站的 disqus name']}/>
+<Route author="DIYgod" path="/disqus/posts/:forum" example="/disqus/posts/diygod-me" paramsDesc={['forum, disqus name of the target website']} />
 
 ## Facebook {#facebook}
 
-### 粉絲專頁 {#facebook-fen-si-zhuan-ye}
+### Page {#facebook-page}
 
-<Route author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" paramsDesc={['專頁 id']} anticrawler="1"/>
+<Route author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" paramsDesc={['page id']} anticrawler="1"/>
 
 ## Fur Affinity {#fur-affinity}
 
-### 主页 {#fur-affinity-zhu-ye}
+### Home {#fur-affinity-home}
 
-<Route author="TigerCubDen" example="/furaffinity/home" path="/furaffinity/home/:type?/:nsfw?" paramsDesc={['类型，默认为 `artwork`', 'NSFW开关, 当值为 `1` 时不过滤NSFW内容']} radar="1">
+<Route author="TigerCubDen" example="/furaffinity/home" path="/furaffinity/home/:type?/:nsfw?" paramsDesc={['Art Type, default to be `artwork`', 'NSFW Mode, do not filter NSFW contents when value set to `1`']} radar="1">
 
-类型 type
+Type
 
-| 艺术品  | 手工   | 音乐  | 写作    |
+| artwork | crafts | music | writing |
 | ------- | ------ | ----- | ------- |
 | artwork | crafts | music | writing |
 
 </Route>
 
-### 浏览 {#fur-affinity-liu-lan}
+### Browse {#fur-affinity-browse}
 
-<Route author="TigerCubDen" example="/furaffinity/browse" path="/furaffinity/browse/:nsfw?" paramsDesc={['NSFW开关, 当值为 `1` 时不过滤NSFW内容']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/browse" path="/furaffinity/browse/:nsfw?" paramsDesc={['NSFW Mode, do not filter NSFW contents when value set to `1`']} radar="1"/>
 
-### 站点状态 {#fur-affinity-zhan-dian-zhuang-tai}
+### Website Status {#fur-affinity-website-status}
 
 <Route author="TigerCubDen" example="/furaffinity/status" path="/furaffinity/status" radar="1"/>
 
-### 搜索 {#fur-affinity-sou-suo}
+### Search {#fur-affinity-search}
 
-<Route author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/search/:keyword/:nsfw?" paramsDesc={['搜索关键词，仅限英文搜索', 'NSFW开关, 当值为 `1` 时不过滤NSFW内容']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/search/tiger" path="/furaffinity/search/:keyword/:nsfw?" paramsDesc={['Search keyword, enter any words you want to search, require English', 'NSFW Mode，do not filter NSFW contents when value set to `1`']} radar="1"/>
 
-### 用户主页简介 {#fur-affinity-yong-hu-zhu-ye-jian-jie}
+### Userpage Profile {#fur-affinity-userpage-profile}
 
-<Route author="TigerCubDen" example="/furaffinity/user/tiger-jungle" path="/furaffinity/user/:username" paramsDesc={['用户名, 可在用户主页的链接处找到']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/user/tiger-jungle" path="/furaffinity/user/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
 
-### 用户关注列表 {#fur-affinity-yong-hu-guan-zhu-lie-biao}
+### User's Watching List {#fur-affinity-user's-watching-list}
 
-<Route author="TigerCubDen" example="/furaffinity/watching/okami9312" path="/furaffinity/watching/:username" paramsDesc={['用户名, 可在用户主页的链接处找到']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/watching/okami9312" path="/furaffinity/watching/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
 
-### 用户被关注列表 {#fur-affinity-yong-hu-bei-guan-zhu-lie-biao}
+### User's Watcher List {#fur-affinity-user's-watcher-list}
 
-<Route author="TigerCubDen" example="/furaffinity/watchers/malikshadowclaw" path="/furaffinity/watchers/:username" paramsDesc={['用户名, 可在用户主页的链接处找到']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/watchers/malikshadowclaw" path="/furaffinity/watchers/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
 
-### 用户接受委托信息 {#fur-affinity-yong-hu-jie-shou-wei-tuo-xin-xi}
+### User's Commission Information {#fur-affinity-user's-commission-information}
 
-<Route author="TigerCubDen" example="/furaffinity/commissions/flashlioness" path="/furaffinity/commissions/:username" paramsDesc={['用户名, 可在用户主页的链接处找到']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/commissions/flashlioness" path="/furaffinity/commissions/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
 
-### 用户的 Shouts 留言 {#fur-affinity-yong-hu-de-shouts-liu-yan}
+### User's Shouts {#fur-affinity-user's-shouts}
 
-<Route author="TigerCubDen" example="/furaffinity/shouts/redodgft" path="/furaffinity/shouts/:username" paramsDesc={['用户名, 可在用户主页的链接处找到']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/shouts/redodgft" path="/furaffinity/shouts/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
 
-### 用户的日记 {#fur-affinity-yong-hu-de-ri-ji}
+### User's Journals {#fur-affinity-user's-journals}
 
-<Route author="TigerCubDen" example="/furaffinity/journals/rukis" path="/furaffinity/journals/:username" paramsDesc={['用户名, 可在用户主页的链接处找到']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/journals/rukis" path="/furaffinity/journals/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
 
-### 用户的创作画廊 {#fur-affinity-yong-hu-de-chuang-zuo-hua-lang}
+### User's Gallery {#fur-affinity-user's-gallery}
 
-<Route author="TigerCubDen" example="/furaffinity/gallery/flashlioness" path="/furaffinity/gallery/:username/:nsfw?" paramsDesc={['用户名, 可在用户主页的链接处找到', 'NSFW开关，当值为 `1` 时不过滤NSFW内容']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/gallery/flashlioness" path="/furaffinity/gallery/:username/:nsfw?" paramsDesc={['Username, can find in userpage', 'NSFW Mode, do not filter NSFW contents when value set to `1`']} radar="1"/>
 
-### 用户的零碎 (非正式) 作品 {#fur-affinity-yong-hu-de-ling-sui-(-fei-zheng-shi-)-zuo-pin}
+### User's Scraps {#fur-affinity-user's-scraps}
 
-<Route author="TigerCubDen" example="/furaffinity/scraps/flashlioness" path="/furaffinity/scraps/:username/:nsfw?" paramsDesc={['用户名, 可在用户主页的链接处找到', 'NSFW开关，当值为 `1` 时不过滤NSFW内容']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/scraps/flashlioness" path="/furaffinity/scraps/:username/:nsfw?" paramsDesc={['Username, can find in userpage', 'NSFW Mode, do not filter NSFW contents when value set to `1`']} radar="1"/>
 
-### 用户的喜爱列表 {#fur-affinity-yong-hu-de-xi-ai-lie-biao}
+### User's Favorites {#fur-affinity-user's-favorites}
 
-<Route author="TigerCubDen" example="/furaffinity/favorites/tiger-jungle" path="/furaffinity/favorites/:username/:nsfw?" paramsDesc={['用户名, 可在用户主页的链接处找到', 'NSFW开关，当值为 `1` 时不过滤NSFW内容']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/favorites/tiger-jungle" path="/furaffinity/favorites/:username/:nsfw?" paramsDesc={['Username, can find in userpage', 'NSFW Mode, do not filter NSFW contents when value set to `1`']} radar="1"/>
 
-### 作品评论区 {#fur-affinity-zuo-pin-ping-lun-qu}
+### Submission Comments {#fur-affinity-submission-comments}
 
-<Route author="TigerCubDen" example="/furaffinity/submission_comments/34909983" path="/furaffinity/submission_comments/:id" paramsDesc={['作品id, 可在作品所在页面对应的链接处找到']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/submission_comments/34909983" path="/furaffinity/submission_comments/:id" paramsDesc={['Submission id, can find in URL of submission page']} radar="1"/>
 
-### 日记评论区 {#fur-affinity-ri-ji-ping-lun-qu}
+### Journal Comments {#fur-affinity-journal-comments}
 
-<Route author="TigerCubDen" example="/furaffinity/journal_comments/9750669" path="/furaffinity/journal_comments/:id" paramsDesc={['日记id, 可在日记所在页面对应的链接处找到']} radar="1"/>
+<Route author="TigerCubDen" example="/furaffinity/journal_comments/9750669" path="/furaffinity/journal_comments/:id" paramsDesc={['Journal id, can find in URL of journal page']} radar="1"/>
 
 ## Gab {#gab}
 
-### 用戶時間線 {#gab-yong-hu-shi-jian-xian}
+### User's Posts {#gab-user's-posts}
 
-<Route author="zphw" example="/gab/user/realdonaldtrump" path="/gab/user/:username" paramsDesc={['用戶名']} />
+<Route author="zphw" example="/gab/user/realdonaldtrump" path="/gab/user/:username" paramsDesc={['Username']} />
 
-### 熱門 {#gab-re-men}
+### Popular Posts {#gab-popular-posts}
 
-<Route author="zphw" example="/gab/popular/hot" path="/gab/popular/:sort?" paramsDesc={['排序方式, `hot` 為 Hot Posts, `top` 為 Top Posts。默認為 hot']} />
+<Route author="zphw" example="/gab/popular/hot" path="/gab/popular/:sort?" paramsDesc={['Sort by, `hot` to be Hot Posts and `top` to be Top Posts. Default: hot']} />
 
 ## GETTR {#gettr}
 
-### 个人时间线 {#gettr-ge-ren-shi-jian-xian}
+### User timeline {#gettr-user-timeline}
 
-<Route author="TonyRL" example="/gettr/user/jasonmillerindc" path="/gettr/user/:id" paramsDesc={['用户 id']} radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/gettr/user/jasonmillerindc" path="/gettr/user/:id" paramsDesc={['User id']} radar="1" rssbud="1"/>
 
 ## iCity {#icity}
 
@@ -514,31 +540,31 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ## Instagram {#instagram}
 
-:::caution 注意
+:::caution
 
-由于 Instagram Private API 限制，必须在服务器上设置你的用户名和密码。暂不支持两步验证。步骤见[部署指南](https://docs.rsshub.app/install/)。
+Due to Instagram Private API restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/install/) for more.
 
-如需无登录的 feed，请用 [Picuki](#picuki)。
+If you don't want to setup credentials, you can use [Picnob](#picnob) or [Picuki](#picuki).
 
 :::
 
-### 用户 / 标签 - Private API {#instagram-yong-hu-%2F-biao-qian---private-api}
+### User Profile / Hashtag - Private API {#instagram-user-profile-%2F-hashtag---private-api}
 
-<Route author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" paramsDesc={['类别，见下表', '用户名／标签名']} radar="1" anticrawler="1" selfhost="1">
+<Route author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" paramsDesc={['Feed category, see table below','Username / Hashtag name']} radar="1" anticrawler="1" selfhost="1">
 
-| 用户时间线 | 标签 |
-| ---------- | ---- |
-| user       | tags |
+| User timeline | Hashtag |
+| ------------- | ------- |
+| user          | tags    |
 
 :::tip Tips
-建议在部署时使用 Redis 缓存。
+It's highly recommended to deploy with Redis cache enabled.
 :::
 
 </Route>
 
-### 用户 / 标签 - Cookie {#instagram-yong-hu-%2F-biao-qian---cookie}
+### User Profile / Hashtag - Cookie {#instagram-user-profile-%2F-hashtag---cookie}
 
-<Route author="TonyRL" example="/instagram/2/user/stefaniejoosten" path="/instagram/2/:category/:key" paramsDesc={['类别，见上表', '用户名／标签名']} radar="1" anticrawler="1" selfhost="1" />
+<Route author="TonyRL" example="/instagram/2/user/stefaniejoosten" path="/instagram/2/:category/:key" paramsDesc={['Feed category, see table above','Username / Hashtag name']} radar="1" anticrawler="1" selfhost="1" />
 
 ## Keep {#keep}
 
@@ -548,13 +574,13 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ## Lofter {#lofter}
 
-### 用户 {#lofter-yong-hu}
+### User {#lofter-user}
 
-<Route author="hondajojo nczitzk" example="/lofter/user/i" path="/lofter/user/:name?" paramsDesc={['Lofter 用户名, 可以在用户页 URL 中找到']}/>
+<Route author="hoilc nczitzk" example="/lofter/user/i" path="/lofter/user/:name?" paramsDesc={['Lofter user name, can be found in the URL']}/>
 
-### 话题 (标签) {#lofter-hua-ti-(-biao-qian-)}
+### Tag {#lofter-tag}
 
-<Route author="hoilc nczitzk" example="/lofter/tag/摄影/date" path="/lofter/tag/:name?/:type?" paramsDesc={['话题(标签)名 例如 `名侦探柯南`，默认为 `摄影`', '排行类型, 见下表，默认显示最新']}>
+<Route author="hoilc nczitzk" example="/lofter/tag/摄影/date" path="/lofter/tag/:name?/:type?" paramsDesc={['tag name, such as `名侦探柯南`, `摄影` by default', 'ranking type, see below, new by default']}>
 
 | new  | date | week | month | total |
 | ---- | ---- | ---- | ----- | ----- |
@@ -564,77 +590,81 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ## Mastodon {#mastodon}
 
-:::tip 提示
+:::tip
 
-通常来说，各实例提供用户时间线的订阅源，如下：
+Official user RSS:
 
--   RSS: `https://**:instance**/users/**:username**.rss`
--   Atom: ~~`https://**:instance**/users/**:username**.atom`~~ (仅 pawoo.net)
+-   RSS: `https://**:instance**/users/**:username**.rss` ([Example](https://pawoo.net/users/pawoo_support.rss))
+-   Atom: ~~`https://**:instance**/users/**:username**.atom`~~ (Only for pawoo.net, [example](https://pawoo.net/users/pawoo_support.atom))
 
-例如：<https://pawoo.net/users/pawoo_support.rss> 或 <https://pawoo.net/users/pawoo_support.atom>
-
-上述订阅源的内容不包括用户的转嘟。RSSHub 提供基于 Mastodon API 的订阅源，但可能需要您在某个 Mastodon 实例申请 API，并对 RSSHub 实例进行配置。详情见部署页面的[配置模块](/install#部分-rss-模块配置)。
+These feed do not include boosts (a.k.a. reblogs). RSSHub provides a feed for user timeline based on the Mastodon API, but to use that, you may need to create application on a Mastodon instance, and configure your RSSHub instance. Check the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
 
 :::
 
-### 用户公共时间线 {#mastodon-yong-hu-gong-gong-shi-jian-xian}
+### User timeline {#mastodon-user-timeline}
 
-<Route author="notofoe" example="/mastodon/acct/CatWhitney@mastodon.social/statuses" path="/mastodon/acct/:acct/statuses/:only_media?" paramsDesc={['Webfinger account URI, 形如 `user@host`', '是否只显示包含媒体（图片或视频）的推文, 默认置空为否, 任意值为是']}/>
+<Route author="notofoe" example="/mastodon/acct/CatWhitney@mastodon.social/statuses" path="/mastodon/acct/:acct/statuses/:only_media?" paramsDesc={['Webfinger account URI, like `user@host`', 'whether only display media content, default to false, any value to true']}/>
 
-自 Mastodon v4.0.0 起，本路由中对于 `search` API 的使用不再需要访问令牌。
-如果你的 Webfinger account URI 域和实例的 API 服务器域名是一样的（即没有一些其他协议称呼的 deletation），那么此路由不需要额外配置且开箱即用。
-不过，你依然可以提供这些路由特定的配置来覆盖它们。
+Started from Mastodon v4.0.0, the use of the `search` API in the route no longer requires a user token.
+If the domain of your Webfinger account URI is the same as the API host of the instance (i.e., no delegation called in some other protocols), then no configuration is required and the route is available out of the box.
+However, you can still specify these route-specific configurations if you need to override them.
 
-### 实例公共时间线（本站） {#mastodon-shi-li-gong-gong-shi-jian-xian-%EF%BC%88-ben-zhan-%EF%BC%89}
+### Instance timeline (local) {#mastodon-instance-timeline-(local)}
 
-<Route author="hoilc" example="/mastodon/timeline/pawoo.net/true" path="/mastodon/timeline/:site/:only_media?" paramsDesc={['实例地址, 仅域名, 不包括`http://`或`https://`协议头', '是否只显示包含媒体（图片或视频）的推文, 默认置空为否, 任意值为是']}/>
+<Route author="hoilc" example="/mastodon/timeline/pawoo.net/true" path="/mastodon/timeline/:site/:only_media?" paramsDesc={['instance address, only domain, no `http://` or `https://` protocol header', 'whether only display media content, default to false, any value to true']}/>
 
-实例地址不为 `mastodon.social` 或 `pawoo.net` 的情况下均需要 `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` 为 `true`。
+If the instance address is not `mastodon.social` or `pawoo.net`, then the route requires `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` to be `true`.
 
-### 实例公共时间线（跨站） {#mastodon-shi-li-gong-gong-shi-jian-xian-%EF%BC%88-kua-zhan-%EF%BC%89}
+### Instance timeline (federated) {#mastodon-instance-timeline-(federated)}
 
-<Route author="hoilc" example="/mastodon/remote/pawoo.net/true" path="/mastodon/remote/:site/:only_media?" paramsDesc={['实例地址, 仅域名, 不包括`http://`或`https://`协议头', '是否只显示包含媒体（图片或视频）的推文, 默认置空为否, 任意值为是']}/>
+<Route author="hoilc" example="/mastodon/remote/pawoo.net/true" path="/mastodon/remote/:site/:only_media?" paramsDesc={['instance address, only domain, no `http://` or `https://` protocol header', 'whether only display media content, default to false, any value to true']}/>
 
-实例地址不为 `mastodon.social` 或 `pawoo.net` 的情况下均需要 `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` 为 `true`。
+If the instance address is not `mastodon.social` or `pawoo.net`, then the route requires `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` to be `true`.
 
-### 用户公共时间线（备用） {#mastodon-yong-hu-gong-gong-shi-jian-xian-%EF%BC%88-bei-yong-%EF%BC%89}
+### User timeline (backup) {#mastodon-user-timeline-(backup)}
 
-<Route author="notofoe" example="/mastodon/account_id/mastodon.social/23634/statuses/only_media" path="/mastodon/account/:site/:account_id/statuses/:only_media?" paramsDesc={['实例地址, 仅域名, 不包括`http://`或`https://`协议头', '用户 ID. 登录实例后, 搜索用户并进入用户页, 在地址中可以找到这串数字', '是否只显示包含媒体（图片或视频）的推文, 默认置空为否, 任意值为是']}/>
+<Route author="notofoe" example="/mastodon/account_id/mastodon.social/23634/statuses/only_media" path="/mastodon/account/:site/:account_id/statuses/:only_media?" paramsDesc={['instance address, only domain, no `http://` or `https://` protocol header', 'account id. login your instance, then search for the user profile; the account id is in the url', 'whether only display media content, default to false, any value to true']}/>
 
-实例地址不为 `mastodon.social` 或 `pawoo.net` 的情况下均需要 `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` 为 `true`。
+If the instance address is not `mastodon.social` or `pawoo.net`, then the route requires `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` to be `true`.
 
 ## Misskey {#misskey}
 
-### 精选笔记 {#misskey-jing-xuan-bi-ji}
+### Featured Notes {#misskey-featured-notes}
 
-<Route author="Misaka13514" example="/misskey/notes/featured/misskey.io" path="/misskey/notes/featured/:site" paramsDesc={['实例地址, 仅域名, 不包括`http://`或`https://`协议头']} radar="1" rssbud="1"/>
+<Route author="Misaka13514" example="/misskey/notes/featured/misskey.io" path="/misskey/notes/featured/:site" paramsDesc={['instance address, domain only, without `http://` or `https://` protocol header']} radar="1" rssbud="1"/>
 
 ## piapro {#piapro}
 
-### 用户最新作品 {#piapro-yong-hu-zui-xin-zuo-pin}
+### User latest works {#piapro-user-latest-works}
 
-<Route author="hoilc" example="/piapro/user/shine_longer" path="/piapro/user/:pid" paramsDesc={['用户 ID, 可在 URL 中找到']}/>
+<Route author="hoilc" example="/piapro/user/shine_longer" path="/piapro/user/:pid" paramsDesc={['User ID, can be found in url']}/>
 
-### 全站最新作品 {#piapro-quan-zhan-zui-xin-zuo-pin}
+### Website latest works {#piapro-website-latest-works}
 
-<Route author="hoilc" example="/piapro/public/music/miku/2" path="/piapro/public/:type/:tag?/:category?" paramsDesc={['作品类别, 可选`music`,`illust`,`text`','标签, 即 URL 中`tag`参数','分类 ID, 即 URL 中 `categoryId` 参数']}/>
+<Route author="hoilc" example="/piapro/public/music/miku/2" path="/piapro/public/:type/:tag?/:category?" paramsDesc={['work type, can be `music`,`illust`,`text`','`tag` parameter in url','category ID, `categoryId` parameter in url']}/>
+
+## Picnob {#picnob}
+
+### User Profile {#picnob-user-profile}
+
+<Route author="TonyRL" example="/picnob/user/stefaniejoosten" path="/picnob/profile/:id" paramsDesc={['Instagram id']} radar="1" rssbud="1" />
 
 ## Picuki {#picuki}
 
-### 用户 {#picuki-yong-hu}
+### User Profile {#picuki-user-profile}
 
-<Route author="hoilc Rongronggg9" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:functionalFlag?" paramsDesc={['Instagram 用户 id','功能标记，见下表']} radar="1" rssbud="1">
+<Route author="hoilc Rongronggg9" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:functionalFlag?" paramsDesc={['Instagram id','functional flag, see the table below']} radar="1" rssbud="1">
 
-| functionalFlag | 嵌入视频                 | 获取 Instagram Stories |
-| -------------- | ------------------------ | ---------------------- |
-| 0              | 关，只用图片显示视频封面 | 关                     |
-| 1 (默认)       | 开                       | 关                     |
-| 10             | 开                       | 开                     |
+| functionalFlag | Video embedding                         | Fetching Instagram Stories |
+| -------------- | --------------------------------------- | -------------------------- |
+| 0              | off, only show video poster as an image | off                        |
+| 1 (default)    | on                                      | off                        |
+| 10             | on                                      | on                         |
 
-:::caution 注意
+:::caution
 
-Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 Story 显示多于一次。
-尽管如此，每个 Story 都会在 24 小时后过期，所以问题也许没那么严重。
+Instagram Stories do not have a reliable guid. It is possible that your RSS reader show the same story more than once.
+Though, every Story expires after 24 hours, so it may be not so serious.
 
 :::
 
@@ -642,49 +672,49 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 ## pixiv {#pixiv}
 
-### 用户收藏 {#pixiv-yong-hu-shou-cang}
+### User Bookmark {#pixiv-user-bookmark}
 
-<Route author="EYHN" example="/pixiv/user/bookmarks/15288095" path="/pixiv/user/bookmarks/:id" paramsDesc={['用户 id, 可在用户主页 URL 中找到']} radar="1" rssbud="1"/>
+<Route author="EYHN" path="/pixiv/user/bookmarks/:id" example="/pixiv/user/bookmarks/15288095" paramsDesc={['user id, available in user\'s homepage URL']} radar="1" rssbud="1"/>
 
-### 用户动态 {#pixiv-yong-hu-dong-tai}
+### User Activity {#pixiv-user-activity}
 
-<Route author="DIYgod" example="/pixiv/user/11" path="/pixiv/user/:id" paramsDesc={['用户 id, 可在用户主页 URL 中找到']} radar="1" rssbud="1"/>
+<Route author="EYHN" path="/pixiv/user/:id" example="/pixiv/user/15288095" paramsDesc={['user id, available in user\'s homepage URL']} radar="1" rssbud="1"/>
 
-### 用户小说 {#pixiv-yong-hu-xiao-shuo}
+### User Novels {#pixiv-user-novels}
 
-<Route author="TonyRL" example="/pixiv/user/novels/27104704" path="/pixiv/user/novels/:id" paramsDesc={['用户 id, 可在用户主页 URL 中找到']} radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/pixiv/user/novels/27104704" path="/pixiv/user/novels/:id" paramsDesc={['User id, available in user\'s homepage URL']} radar="1" rssbud="1"/>
 
-### 排行榜 {#pixiv-pai-hang-bang}
+### Rankings {#pixiv-rankings}
 
-<Route author="EYHN" example="/pixiv/ranking/week" path="/pixiv/ranking/:mode/:date?" paramsDesc={['排行榜类型' ,'日期, 取值形如 `2018-4-25`']} radar="1" rssbud="1">
+<Route author="EYHN" path="/pixiv/ranking/:mode/:date?" example="/pixiv/ranking/week" paramsDesc={['rank type', 'format: `2018-4-25`']} radar="1" rssbud="1">
 
-| 日排行 | 周排行 | 月排行 | 受男性欢迎排行 | 受女性欢迎排行 | AI 生成作品排行榜 | 原创作品排行  | 新人排行    |
-| ------ | ------ | ------ | -------------- | -------------- | ----------------- | ------------- | ----------- |
-| day    | week   | month  | day_male       | day_female     | day_ai            | week_original | week_rookie |
+| daily rank | weekly rank | monthly rank | male rank | female rank | AI-generated work Rankings | original rank | rookie user rank |
+| ---------- | ----------- | ------------ | --------- | ----------- | -------------------------- | ------------- | ---------------- |
+| day        | week        | month        | day_male  | day_female  | day_ai                     | week_original | week_rookie      |
 
-| pixiv R-18 日排行 | R-18 AI 生成作品排行 | R-18 受男性欢迎排行 | R-18 受女性欢迎排行 | R-18 周排行 | R-18G 排行 |
-| ----------------- | -------------------- | ------------------- | ------------------- | ----------- | ---------- |
-| day_r18           | day_r18_ai           | day_male_r18        | day_female_r18      | week_r18    | week_r18g  |
-
-</Route>
-
-### 关键词 {#pixiv-guan-jian-ci}
-
-<Route author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" paramsDesc={['关键词', '排序方式，popular 按热门度排序，空或其他任意值按时间排序', '过滤方式']} radar="1" rssbud="1">
-
-| 只看非 R18 内容 | 只看 R18 内容 | 不过滤         |
-| --------------- | ------------- | -------------- |
-| safe            | r18           | 空或其他任意值 |
+| R-18 daily rank | R-18 AI-generated work | R-18 male rank | R-18 female rank | R-18 weekly rank | R-18G rank |
+| --------------- | ---------------------- | -------------- | ---------------- | ---------------- | ---------- |
+| day_r18         | day_r18_ai             | day_male_r18   | day_female_r18   | week_r18         | week_r18g  |
 
 </Route>
 
-### 关注的新作品 {#pixiv-guan-zhu-de-xin-zuo-pin}
+### Keyword {#pixiv-keyword}
+
+<Route author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" paramsDesc={['keyword', 'rank mode, empty or other for time order, popular for popular order', 'filte R18 content']} radar="1" rssbud="1">
+
+| only not R18 | only R18 | no filter      |
+| ------------ | -------- | -------------- |
+| safe         | r18      | empty or other |
+
+</Route>
+
+### Following timeline {#pixiv-following-timeline}
 
 <Route author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1" rssbud="1" selfhost="1">
 
-:::caution 注意
+:::caution
 
-因为每个人关注的画师不同，所以只能自建。请不要将画师设为 “悄悄关注”，这样子画师的作品就不会出现在订阅里了。
+Only for self-hosted
 
 :::
 
@@ -694,21 +724,21 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 ### User {#pixivfanbox-user}
 
-<Route author="sgqy" example="/fanbox/otomeoto" path="/fanbox/:user?" paramsDesc={['用户名，可在用户主页 URL 中找到，默认为官方资讯']}/>
+<Route author="sgqy" example="/fanbox/otomeoto" path="/fanbox/:user?" paramsDesc={['User name. Can be found in URL. Default is official news']}/>
 
 ## Plurk {#plurk}
 
-### 話題 {#plurk-hua-ti}
+### Topic {#plurk-topic}
 
-<Route author="TonyRL" path="/plurk/topic/:topic" example="/plurk/topic/standwithukraine" paramsDesc={['話題 ID，可在 URL 找到']} radar="1" rssbud="1"/>
+<Route author="TonyRL" path="/plurk/topic/:topic" example="/plurk/topic/standwithukraine" paramsDesc={['Topic ID, can be found in URL']} radar="1" rssbud="1"/>
 
-### 話題排行榜 {#plurk-hua-ti-pai-hang-bang}
+### Top {#plurk-top}
 
-<Route author="TonyRL" path="/plurk/top/:category?/:lang?" example="/plurk/top/topReplurks" paramsDesc={['排行榜分類，見下表，默認為 `topReplurks`', '語言，見下表，默認為 `en`']} radar="1" rssbud="1">
+<Route author="TonyRL" path="/plurk/top/:category?/:lang?" example="/plurk/top/topReplurks" paramsDesc={['Category, see the table below, `topReplurks` by default', 'Language, see the table below, `en` by default']} radar="1" rssbud="1">
 
-| 最多人轉噗  | 最多人喜歡   | 最多人回應   |
-| ----------- | ------------ | ------------ |
-| topReplurks | topFavorites | topResponded |
+| Top Replurks | Top Favorites | Top Responded |
+| ------------ | ------------- | ------------- |
+| topReplurks  | topFavorites  | topResponded  |
 
 | English | 中文（繁體） |
 | ------- | ------------ |
@@ -716,31 +746,37 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 </Route>
 
-### 偷偷說 {#plurk-tou-tou-shuo}
+### Anonymous {#plurk-anonymous}
 
 <Route author="TonyRL" path="/plurk/anonymous" example="/plurk/anonymous" radar="1" rssbud="1"/>
 
-### 搜尋 {#plurk-sou-xun}
+### Search {#plurk-search}
 
-<Route author="TonyRL" path="/plurk/search/:keyword" example="/plurk/search/FGO" paramsDesc={['關鍵詞']} radar="1" rssbud="1"/>
+<Route author="TonyRL" path="/plurk/search/:keyword" example="/plurk/search/FGO" paramsDesc={['Search keyword']} radar="1" rssbud="1"/>
 
-### 最近分享 {#plurk-zui-jin-fen-xiang}
+### Hotlinks {#plurk-hotlinks}
 
 <Route author="TonyRL" path="/plurk/hotlinks" example="/plurk/hotlinks" radar="1" rssbud="1"/>
 
-### 噗浪消息 {#plurk-pu-lang-xiao-xi}
+### Plurk News {#plurk-plurk-news}
 
-<Route author="TonyRL" path="/plurk/news/:lang?" example="/plurk/news/zh" paramsDesc={['語言，見上表，默認為 `en`']} radar="1" rssbud="1"/>
+<Route author="TonyRL" path="/plurk/news/:lang?" example="/plurk/news/:lang?" paramsDesc={['Language, see the table above, `en` by default']} radar="1" rssbud="1"/>
 
-### 用戶 {#plurk-yong-hu}
+### User {#plurk-user}
 
-<Route author="TonyRL" path="/plurk/user/:user" example="/plurk/user/plurkoffice" paramsDesc={['用戶 ID，可在 URL 找到']} radar="1" rssbud="1"/>
+<Route author="TonyRL" path="/plurk/user/:user" example="/plurk/user/plurkoffice" paramsDesc={['User ID, can be found in URL']} radar="1" rssbud="1"/>
 
 ## Popi 提问箱 {#popi-ti-wen-xiang}
 
 ### 提问箱新回答 {#popi-ti-wen-xiang-ti-wen-xiang-xin-hui-da}
 
 <Route author="AgFlore" example="/popiask/popi6666" path="/popiask/:sharecode/:pagesize?" paramsDesc={['提问箱 ID', '查看条数（默认为 20）']} radar="1" rssbud="1"/>
+
+## Rattibha {#rattibha}
+
+### User Threads {#rattibha-user-threads}
+
+<Route author="yshalsager" example="/rattibha/user/elonmusk" path="/rattibha/user/:user" paramsDesc={['Twitter username, without @']} radar="1" rssbud="1"/>
 
 ## Soul {#soul}
 
@@ -766,171 +802,202 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 ## Telegram {#telegram}
 
-### 频道 {#telegram-pin-dao}
+### Channel {#telegram-channel}
 
-<Route author="DIYgod Rongronggg9" example="/telegram/channel/awesomeDIYgod/searchQuery=%23DIYgod的豆瓣动态" path="/telegram/channel/:username/:routeParams?" paramsDesc={['频道 username', '额外参数，请参阅下面的表格']} radar="1" rssbud="1">
+<Route author="DIYgod Rongronggg9" path="/telegram/channel/:username/:routeParams?" example="/telegram/channel/awesomeDIYgod/searchQuery=%23DIYgod的豆瓣动态" paramsDesc={['channel username', 'extra parameters, see the table below']} radar="1" rssbud="1">
 
-| 键                    | 含义                                           | 接受的值                                     | 默认值     |
-| --------------------- | ---------------------------------------------- | -------------------------------------------- | ---------- |
-| showLinkPreview       | 是否显示 Telegram 的链接预览                   | 0/1/true/false                               | true       |
-| showViaBot            | 对于经 bot 发出的消息，是否显示该 bot          | 0/1/true/false                               | true       |
-| showReplyTo           | 对于回复消息，是否显示回复的目标               | 0/1/true/false                               | true       |
-| showFwdFrom           | 对于转发消息，是否显示消息的转发来源           | 0/1/true/false                               | true       |
-| showFwdFromAuthor     | 对于转发消息，是否显示消息的转发来源的原始作者 | 0/1/true/false                               | true       |
-| showInlineButtons     | 是否显示消息的按钮                             | 0/1/true/false                               | false      |
-| showMediaTagInTitle   | 是否在标题中显示媒体标签                       | 0/1/true/false                               | true       |
-| showMediaTagAsEmoji   | 将媒体标签显示为 emoji                         | 0/1/true/false                               | true       |
-| includeFwd            | 包含转发消息                                   | 0/1/true/false                               | true       |
-| includeReply          | 包含回复消息                                   | 0/1/true/false                               | true       |
-| includeServiceMsg     | 包含服务消息 (如：置顶了消息，更换了头像)      | 0/1/true/false                               | true       |
-| includeUnsupportedMsg | 包含 t.me 不支持的消息                         | 0/1/true/false                               | false      |
-| searchQuery           | 搜索关键词                                     | 关键词；如需搜索 hashtag 请用 `%23` 替代 `#` | (禁用搜索) |
+| Key                   | Description                                                           | Accepts                                              | Defaults to       |
+| --------------------- | --------------------------------------------------------------------- | ---------------------------------------------------- | ----------------- |
+| showLinkPreview       | Show the link preview from Telegram                                   | 0/1/true/false                                       | true              |
+| showViaBot            | For messages sent via bot, show the bot                               | 0/1/true/false                                       | true              |
+| showReplyTo           | For reply messages, show the target of the reply                      | 0/1/true/false                                       | true              |
+| showFwdFrom           | For forwarded messages, show the forwarding source                    | 0/1/true/false                                       | true              |
+| showFwdFromAuthor     | For forwarded messages, show the author of the forwarding source      | 0/1/true/false                                       | true              |
+| showInlineButtons     | Show inline buttons                                                   | 0/1/true/false                                       | false             |
+| showMediaTagInTitle   | Show media tags in the title                                          | 0/1/true/false                                       | true              |
+| showMediaTagAsEmoji   | Show media tags as emoji                                              | 0/1/true/false                                       | true              |
+| includeFwd            | Include forwarded messages                                            | 0/1/true/false                                       | true              |
+| includeReply          | Include reply messages                                                | 0/1/true/false                                       | true              |
+| includeServiceMsg     | Include service messages (e.g. message pinned, channel photo updated) | 0/1/true/false                                       | true              |
+| includeUnsupportedMsg | Include messages unsupported by t.me                                  | 0/1/true/false                                       | false             |
+| searchQuery           | search query                                                          | keywords; replace `#` by `%23` for hashtag searching | (search disabled) |
 
-指定更多与默认值不同的参数选项可以满足不同的需求，如
+Specify different option values than default values can meet different needs, URL
 
-    https://rsshub.app/telegram/channel/NewlearnerChannel/showLinkPreview=0&showViaBot=0&showReplyTo=0&showFwdFrom=0&showFwdFromAuthor=0&showInlineButtons=0&showMediaTagInTitle=1&showMediaTagAsEmoji=1&includeFwd=0&includeReply=1&includeServiceMsg=0&includeUnsupportedMsg=0
+```
+https://rsshub.app/telegram/channel/NewlearnerChannel/showLinkPreview=0&showViaBot=0&showReplyTo=0&showFwdFrom=0&showFwdFromAuthor=0&showInlineButtons=0&showMediaTagInTitle=1&showMediaTagAsEmoji=1&includeFwd=0&includeReply=1&includeServiceMsg=0&includeUnsupportedMsg=0
+```
 
-会生成一个没有任何链接预览和烦人的元数据，在标题中显示 emoji 媒体标签，不含转发消息（但含有回复消息），也不含你不关心的消息（服务消息和不支持的消息）的 RSS，适合喜欢纯净订阅的人。
+generates an RSS without any link previews and annoying metadata, with emoji media tags in the title, without forwarded messages (but with reply messages), and without messages you don't care about (service messages and unsupported messages), for people who prefer pure subscriptions.
 
-:::tip 提示
+:::tip
 
-为向后兼容，不合法的 `routeParams` 会被视作 `searchQuery` 。
+For backward compatibility reasons, invalid `routeParams` will be treated as `searchQuery` .
 
-由于 Telegram 限制，部分涉及色情、版权、政治的频道无法订阅，可通过访问 <https://t.me/s/:username> 确认。
+Due to Telegram restrictions, some channels involving pornography, copyright, and politics cannot be subscribed. You can confirm by visiting `https://t.me/s/:username`.
 
 :::
 
 </Route>
 
-### 贴纸包 {#telegram-tie-zhi-bao}
+### Sticker Pack {#telegram-sticker-pack}
 
-<Route author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" paramsDesc={['贴纸包 id, 可在分享贴纸获得的 URL 中找到']}/>
+<Route author="DIYgod" example="/telegram/stickerpack/DIYgod" path="/telegram/stickerpack/:name" paramsDesc={['Sticker Pack name, available in the sharing URL']}/>
 
 ### Telegram Blog {#telegram-telegram-blog}
 
 <Route author="fengkx" example="/telegram/blog" path="/telegram/blog" />
 
+## Threads {#threads}
+
+### User timeline {#threads-user-timeline}
+
+<Route author="ninboy" path="/threads/:user/:routeParams?" example="/threads/zuck" radar="1" rssbud="1" puppeteer="1" paramsDesc={['', '']}>
+
+Specify options (in the format of query string) in parameter `routeParams` to control some extra features for threads
+
+| Key                             | Description                                                                                                                    | Accepts                | Defaults to |
+|---------------------------------|--------------------------------------------------------------------------------------------------------------------------------| ---------------------- |-------------|
+| `showAuthorInTitle`             | Show author name in title                                                                                                      | `0`/`1`/`true`/`false` | `true`      |
+| `showAuthorInDesc`              | Show author name in description (RSS body)                                                                                     | `0`/`1`/`true`/`false` | `true`      |
+| `showQuotedAuthorAvatarInDesc`  | Show avatar of quoted author in description (RSS body) (Not recommended if your RSS reader extracts images from description)   | `0`/`1`/`true`/`false` | `false`     |
+| `showAuthorAvatarInDesc`        | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)          | `0`/`1`/`true`/`false` | `falseP`    |
+| `showEmojiForQuotesAndReply`    | Use "🔁" instead of "QT", "↩️" instead of "Re"                                                                                 | `0`/`1`/`true`/`false` | `true`      |
+| `showQuotedInTitle`             | Show quoted tweet in title                                                                                                     | `0`/`1`/`true`/`false` | `true`      |
+| `replies`                       | Show replies                                                                                                                   | `0`/`1`/`true`/`false` | `true`      |
+
+Specify different option values than default values to improve readability. The URL
+
+```
+https://rsshub.app/threads/zuck/showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForQuotesAndReply=1&showQuotedInTitle=1
+```
+
+</Route>
+
+## TikTok {#tiktok}
+
+### User {#tiktok-user}
+
+<Route author="TonyRL" example="/tiktok/user/@linustech/true" path="/tiktok/user/:user/:iframe?" paramsDesc={['User ID, including @', 'Use the official iframe to embed the video, which allows you to view the video if the default option does not work. Default to `false`']} anticrawler="1" puppeteer="1" radar="1" rssbud="1"/>
+
 ## Twitter {#twitter}
 
-:::caution 注意
+:::caution
 
-由于 Twitter 的限制，部分路由目前仅支持 7 天内推文检索。
+Due to restrictions from Twitter, currently only tweets within 7 days are available in some routes.
 
-部分路由的实现依赖 Twitter Developer API，需要特别配置以启用。\
-`/twitter/user` 及 `/twitter/keyword` 两个路由除 Developer API 外，尚有不需特别配置以启用的 Web API 实现。默认情况下，Developer API 优先级更高，只有当其未配置或出错时才会使用 Web API。然而，两个 API 在某些方面存在不同特性，如，`excludeReplies` 在 Developer API 中会将推文串（[Thread](https://blog.twitter.com/official/en_us/topics/product/2017/nicethreads.html)，回复自己推文的推文）视作回复一并排除，而在 Web API 中则不会。如有需要在 `/twitter/user` 中排除回复但包含推文串，请启用 `forceWebApi`。
+Some routes rely on the Twitter Developer API, which requires to be specially configured to enable.\
+There are two routes (`/twitter/user` and `/twitter/keyword`) comes with Web API implementation which does not require to be specially configured to enable along with the Developer API implementation. By default, the Developer API is prioritized, but if it is not configured or errors, the Web API will be used. However, there are some differences between the two APIs, e.g. `excludeReplies` in the Developer API will treat [threads](https://blog.twitter.com/official/en_us/topics/product/2017/nicethreads.html) (self-replied tweets) as replies and exclude them, while in the Web API it will not. If you would like to exclude replies but include threads, enable `forceWebApi` in the `/twitter/user` route.
 
 :::
 
-对于推文内容，在 `routeParams` 参数中以 query string 格式指定选项，可以控制额外的功能
+Specify options (in the format of query string) in parameter `routeParams` to control some extra features for Tweets
 
-| 键                             | 含义                                                                                           | 接受的值               | 默认值                                      |
-| ------------------------------ | ---------------------------------------------------------------------------------------------- | ---------------------- | ------------------------------------------- |
-| `readable`                     | 是否开启细节排版可读性优化                                                                     | `0`/`1`/`true`/`false` | `false`                                     |
-| `authorNameBold`               | 是否加粗作者名字                                                                               | `0`/`1`/`true`/`false` | `false`                                     |
-| `showAuthorInTitle`            | 是否在标题处显示作者                                                                           | `0`/`1`/`true`/`false` | `false` (`/twitter/followings` 中为 `true`) |
-| `showAuthorInDesc`             | 是否在正文处显示作者                                                                           | `0`/`1`/`true`/`false` | `false` (`/twitter/followings` 中为 `true`) |
-| `showQuotedAuthorAvatarInDesc` | 是否在正文处显示被转推的推文的作者头像（若阅读器会提取正文图片，不建议开启）                   | `0`/`1`/`true`/`false` | `false`                                     |
-| `showAuthorAvatarInDesc`       | 是否在正文处显示作者头像（若阅读器会提取正文图片，不建议开启）                                 | `0`/`1`/`true`/`false` | `false`                                     |
-| `showEmojiForRetweetAndReply`  | 显示 “🔁” 取代 “Rt”、“↩️” 取代 “Re”                                                            | `0`/`1`/`true`/`false` | `false`                                     |
-| `showSymbolForRetweetAndReply` | 显示 “RT” 取代 “”、“ Re ” 取代 “”                                                              | `0`/`1`/`true`/`false` | `true`                                      |
-| `showRetweetTextInTitle`       | 在标题处显示转推评论（置为 `false` 则在标题只显示被转推推文）                                  | `0`/`1`/`true`/`false` | `true`                                      |
-| `addLinkForPics`               | 为图片添加可点击的链接                                                                         | `0`/`1`/`true`/`false` | `false`                                     |
-| `showTimestampInDescription`   | 在正文处显示推特的时间戳                                                                       | `0`/`1`/`true`/`false` | `false`                                     |
-| `showQuotedInTitle`            | 在标题处显示被引用的推文                                                                       | `0`/`1`/`true`/`false` | `false`                                     |
-| `widthOfPics`                  | 推文配图宽（生效取决于阅读器）                                                                 | 不指定 / 数字          | 不指定                                      |
-| `heightOfPics`                 | 推文配图高（生效取决于阅读器）                                                                 | 不指定 / 数字          | 不指定                                      |
-| `sizeOfAuthorAvatar`           | 作者头像大小                                                                                   | 数字                   | `48`                                        |
-| `sizeOfQuotedAuthorAvatar`     | 被转推推文作者头像大小                                                                         | 数字                   | `24`                                        |
-| `excludeReplies`               | 排除回复，只在 `/twitter/user` 中有效                                                          | `0`/`1`/`true`/`false` | `false`                                     |
-| `includeRts`                   | 包括转推，只在 `/twitter/user` 中有效                                                          | `0`/`1`/`true`/`false` | `true`                                      |
-| `forceWebApi`                  | 强制使用 Web API，即使 Developer API 已配置，只在 `/twitter/user` 和 `/twitter/keyword` 中有效 | `0`/`1`/`true`/`false` | `false`                                     |
-| `count`                        | 传递给 Twitter API 的 `count` 参数，只在 `/twitter/user` 中有效                                | 不指定 / 数字          | 不指定                                      |
+| Key                            | Description                                                                                                                          | Accepts                | Defaults to                               |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ | ---------------------- | ----------------------------------------- |
+| `readable`                     | Enable readable layout                                                                                                               | `0`/`1`/`true`/`false` | `false`                                   |
+| `authorNameBold`               | Display author name in bold                                                                                                          | `0`/`1`/`true`/`false` | `false`                                   |
+| `showAuthorInTitle`            | Show author name in title                                                                                                            | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |
+| `showAuthorInDesc`             | Show author name in description (RSS body)                                                                                           | `0`/`1`/`true`/`false` | `false` (`true` in `/twitter/followings`) |
+| `showQuotedAuthorAvatarInDesc` | Show avatar of quoted Tweet's author in description (RSS body) (Not recommended if your RSS reader extracts images from description) | `0`/`1`/`true`/`false` | `false`                                   |
+| `showAuthorAvatarInDesc`       | Show avatar of author in description (RSS body) (Not recommended if your RSS reader extracts images from description)                | `0`/`1`/`true`/`false` | `false`                                   |
+| `showEmojiForRetweetAndReply`  | Use "🔁" instead of "RT", "↩️" & "💬" instead of "Re"                                                                                | `0`/`1`/`true`/`false` | `false`                                   |
+| `showSymbolForRetweetAndReply` | Use " RT " instead of "", " Re " instead of ""                                                                                       | `0`/`1`/`true`/`false` | `true`                                    |
+| `showRetweetTextInTitle`       | Show quote comments in title (if `false`, only the retweeted tweet will be shown in the title)                                       | `0`/`1`/`true`/`false` | `true`                                    |
+| `addLinkForPics`               | Add clickable links for Tweet pictures                                                                                               | `0`/`1`/`true`/`false` | `false`                                   |
+| `showTimestampInDescription`   | Show timestamp in description                                                                                                        | `0`/`1`/`true`/`false` | `false`                                   |
+| `showQuotedInTitle`            | Show quoted tweet in title                                                                                                           | `0`/`1`/`true`/`false` | `false`                                   |
+| `widthOfPics`                  | Width of Tweet pictures                                                                                                              | Unspecified/Integer    | Unspecified                               |
+| `heightOfPics`                 | Height of Tweet pictures                                                                                                             | Unspecified/Integer    | Unspecified                               |
+| `sizeOfAuthorAvatar`           | Size of author's avatar                                                                                                              | Integer                | `48`                                      |
+| `sizeOfQuotedAuthorAvatar`     | Size of quoted tweet's author's avatar                                                                                               | Integer                | `24`                                      |
+| `excludeReplies`               | Exclude replies, only available in `/twitter/user`                                                                                   | `0`/`1`/`true`/`false` | `false`                                   |
+| `includeRts`                   | Include retweets, only available in `/twitter/user`                                                                                  | `0`/`1`/`true`/`false` | `true`                                    |
+| `forceWebApi`                  | Force using Web API even if Developer API is configured, only available in `/twitter/user` and `/twitter/keyword`                    | `0`/`1`/`true`/`false` | `false`                                   |
+| `count`                        | `count` parameter passed to Twitter API, only available in `/twitter/user`                                                           | Unspecified/Integer    | Unspecified                               |
 
-指定更多与默认值不同的参数选项可以改善 RSS 的可读性，如
+Specify different option values than default values to improve readability. The URL
 
-    https://rsshub.app/twitter/user/durov/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweetAndReply=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showQuotedInTitle=1&heightOfPics=150
+```
+https://rsshub.app/twitter/user/durov/readable=1&authorNameBold=1&showAuthorInTitle=1&showAuthorInDesc=1&showQuotedAuthorAvatarInDesc=1&showAuthorAvatarInDesc=1&showEmojiForRetweetAndReply=1&showRetweetTextInTitle=0&addLinkForPics=1&showTimestampInDescription=1&showQuotedInTitle=1&heightOfPics=150
+```
 
-的效果为
+generates
 
-<img src="/img/readable-twitter.png" alt="Durov 的可读推特 RSS" />
+<img src="/img/readable-twitter.png" alt="Readable Twitter RSS of Durov" />
 
-### 用户时间线 {#twitter-yong-hu-shi-jian-xian}
+### User timeline {#twitter-user-timeline}
 
-<Route author="DIYgod yindaheng98 Rongronggg9" example="/twitter/user/DIYgod" path="/twitter/user/:id/:routeParams?" paramsDesc={['用户名；特别地，以 `+` 开头则代表[唯一 ID](https://github.com/DIYgod/RSSHub/issues/12221)，如 `+44196397`', '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=exclude_replies`时去除回复，`routeParams=exclude_rts`去除转推，`routeParams=exclude_rts_replies`去除回复和转推，默认包含全部回复和转推。']} radar="1" rssbud="1"/>
+<Route author="DIYgod yindaheng98 Rongronggg9" path="/twitter/user/:id/:routeParams?" example="/twitter/user/DIYgod" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all.']} radar="1" rssbud="1"/>
 
-### 用户媒体时间线 {#twitter-yong-hu-mei-ti-shi-jian-xian}
+### User media {#twitter-user-media}
 
-<Route author="yindaheng98 Rongronggg9" example="/twitter/media/DIYgod" path="/twitter/media/:id/:routeParams?" paramsDesc={['用户名；特别地，以 `+` 开头则代表[唯一 ID](https://github.com/DIYgod/RSSHub/issues/12221)，如 `+44196397`', '额外参数；请参阅上面的说明和表格。']} radar="1" rssbud="1"/>
+<Route author="yindaheng98 Rongronggg9" path="/twitter/media/:id/:routeParams?" example="/twitter/media/DIYgod" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'extra parameters, see the table above.']} radar="1" rssbud="1"/>
 
-### 用户关注时间线 {#twitter-yong-hu-guan-zhu-shi-jian-xian}
+### User following timeline {#twitter-user-following-timeline}
 
-<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" paramsDesc={['用户名', '额外参数；请参阅上面的说明和表格']} radar="1" rssbud="1" selfhost="1">
+<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" paramsDesc={['username', 'extra parameters, see the table above']} radar="1" rssbud="1" selfhost="1">
 
-:::caution 注意
+:::caution
 
-用户关注时间线需要对应用户的 Twitter token， 所以只能自建，详情见部署页面的配置模块。
+This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
 
 :::
 
 </Route>
 
-### 列表时间线 {#twitter-lie-biao-shi-jian-xian}
+### List timeline {#twitter-list-timeline}
 
-<Route author="xyqfer" example="/twitter/list/ladyleet/Javascript" path="/twitter/list/:id/:name/:routeParams?" paramsDesc={['用户名', 'list 名称', '额外参数；请参阅上面的说明和表格']} radar="1" rssbud="1"/>
+<Route author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name/:routeParams?" paramsDesc={['username', 'list name', 'extra parameters, see the table above']} radar="1" rssbud="1"/>
 
-### 用户喜欢列表 {#twitter-yong-hu-xi-huan-lie-biao}
+### User likes {#twitter-user-likes}
 
-<Route author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id/:routeParams?" paramsDesc={['用户名', '额外参数；请参阅上面的说明和表格']} radar="1" rssbud="1"/>
+<Route author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id/:routeParams?" paramsDesc={['username', 'extra parameters, see the table above']} radar="1" rssbud="1"/>
 
-### 关键词 {#twitter-guan-jian-ci}
+### Keyword {#twitter-keyword}
 
-<Route author="DIYgod yindaheng98 Rongronggg9" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword/:routeParams?" paramsDesc={['关键词', '额外参数；请参阅上面的说明和表格']} radar="1" rssbud="1"/>
+<Route author="DIYgod yindaheng98 Rongronggg9" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword/:routeParams?" paramsDesc={['keyword', 'extra parameters, see the table above']} radar="1" rssbud="1"/>
 
 ### Trends {#twitter-trends}
 
-<Route author="sakamossan" example="/twitter/trends/23424856" path="/twitter/trends/:woeid?" paramsDesc={['Where On Earth ID. 默认 `1` (World Wide)']} radar="1" rssbud="1"/>
+<Route author="sakamossan" example="/twitter/trends/23424856" path="/twitter/trends/:woeid?" paramsDesc={['Yahoo! Where On Earth ID. default to woeid=1 (World Wide)']} radar="1" rssbud="1"/>
 
-### 推文收集 {#twitter-tui-wen-shou-ji}
+### Collection {#twitter-collection}
 
-<Route author="TonyRL" example="/twitter/collection/DIYgod/1527857429467172864" path="/twitter/collection/:uid/:collectionId/:routeParams?" paramsDesc={['用户名，需与生成的 Twitter token 对应', '推文收集 ID，可从 URL 获得', '额外参数；请参阅上面的说明和表格']} radar="1" rssbud="1" selfhost="1">
+<Route author="TonyRL" example="/twitter/collection/DIYgod/1527857429467172864" path="/twitter/collection/:uid/:collectionId/:routeParams?" paramsDesc={['username, should match the generated token', 'collection ID, can be found in URL', 'extra parameters, see the table above']} radar="1" rssbud="1" selfhost="1">
 
-:::caution 注意
+:::caution
 
-推文收集需要用户的 Twitter token，所以只能自建，详情见部署页面的配置模块。
+This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
 
 :::
 
 </Route>
 
-### 推文详情 {#twitter-tui-wen-xiang-qing}
+### Tweet Details {#twitter-tweet-details}
 
-<Route author="LarchLiu Rongronggg9" example="/twitter/tweet/DIYgod/status/1650844643997646852" path="/twitter/tweet/:id/status/:status/:original?" paramsDesc={['用户名；特别地，以 `+` 开头则代表[唯一 ID](https://github.com/DIYgod/RSSHub/issues/12221)，如 `+44196397`', '推文 ID', '额外参数；返回数据类型，当非 `0`/`false` 且 `config.isPackage` 为 `true`时，返回 twitter 原始数据']} radar="1" rssbud="1"/>
+<Route author="LarchLiu Rongronggg9" example="/twitter/tweet/DIYgod/status/1650844643997646852" path="/twitter/tweet/:id/status/:status/:original?" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'tweet ID', 'extra parameters, data type of return, if the value is not `0`/`false` and `config.isPackage` is `true`, return the original data of twitter']} radar="1" rssbud="1"/>
 
 ## Vimeo {#vimeo}
 
-### 用户页面 {#vimeo-yong-hu-ye-mian}
+### User Profile {#vimeo-user-profile}
 
-<Route author="MisteryMonster" example="/vimeo/user/filmsupply/picks" path="/vimeo/user/:username/:cat" paramsDesc={['用户名或者 uid，用户名可从地址栏获得，如 [https://vimeo.com/filmsupply](https://vimeo.com/filmsupply) 中为 `filmsupply`', '分类根据不同的用户页面获得，例子中有`Docmentary`，`Narrative`，`Drama`等。填入 `picks` 为和首页一样的推荐排序，推荐排序下没有发布时间信息']} radar="1">
+<Route author="MisteryMonster" example="/vimeo/user/filmsupply/picks" path="/vimeo/user/:username/:cat?" paramsDesc={['In this example [https://vimeo.com/filmsupply](https://vimeo.com/filmsupply)  is `filmsupply`', 'deafult for all latest videos, others categories in this example such as `Docmentary`, `Narrative`, `Drama`. Set `picks` for promote orders, just orderd like web page. When `picks` added, published date won\'t show up']}>
+:::tip Special category name attention
 
-:::tip 请注意带有斜杠的的标签名
-
-如果分类名带有斜杠符号的如 `3D/CG` 时，必须把斜杠`/`转成 `|`
+Some of the categories contain slash like `3D/CG` , must change the slash `/` to the vertical bar`|`.
 
 :::
 
 </Route>
 
-### 频道页面 {#vimeo-pin-dao-ye-mian}
+### Channel {#vimeo-channel}
 
-<Route author="MisteryMonster" example="/vimeo/channel/bestoftheyear" path="/vimeo/channel/:channel" paramsDesc={['channel 名可从 url 获得,如 [https://vimeo.com/channels/bestoftheyear/videos](https://vimeo.com/channels/bestoftheyear/videos) 中的 `bestoftheyear`']} radar="1">
+<Route author="MisteryMonster" example="/vimeo/channel/bestoftheyear" path="/vimeo/channel/:channel" paramsDesc={['channel name can get from url like `bestoftheyear` in  [https://vimeo.com/channels/bestoftheyear/videos](https://vimeo.com/channels/bestoftheyear/videos) .']} radar="1"/>
 
-</Route>
+### Category {#vimeo-category}
 
-### 分类页面 {#vimeo-fen-lei-ye-mian}
-
-<Route author="MisteryMonster" example="/vimeo/category/documentary/staffpicks" path="/vimeo/category/:category/:staffpicks?" paramsDesc={['主分类名可从 url 获得，如 [https://vimeo.com/categories/documentary/videos](https://vimeo.com/categories/documentary/videos) 中的 `documentary`', '填入 `staffpicks` 则按 staffpicks 排序']} radar="1">
-
-</Route>
+<Route author="MisteryMonster" example="/vimeo/category/documentary/staffpicks" path="/vimeo/category/:category/:staffpicks?" paramsDesc={['Category name can get from url like `documentary` in [https://vimeo.com/categories/documentary/videos](https://vimeo.com/categories/documentary/videos) ', 'type `staffpicks` to sort with staffpicks']} radar="1"/>
 
 ## VueVlog {#vuevlog}
 
@@ -940,59 +1007,56 @@ Instagram Stories 没有可靠的 guid，你的 RSS 阅读器可能将同一条 
 
 ## YouTube {#youtube}
 
-:::tip Tiny Tiny RSS 用户请注意
+:::tip Tiny Tiny RSS users please notice
 
-Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性，导致无法加载 YouTube 内嵌视频，如果需要使用内嵌视频请为 Tiny Tiny RSS 安装 [remove_iframe_sandbox](https://github.com/DIYgod/ttrss-plugin-remove-iframe-sandbox) 插件
-
-:::
-
-### 用户 {#youtube-yong-hu}
-
-<Route author="DIYgod" example="/youtube/user/JFlaMusic/" path="/youtube/user/:username/:disableEmbed?" paramsDesc={['用户名', '默认为开启内嵌视频, 任意值为关闭']} radar="1" rssbud="1"/>
-
-### 频道 {#youtube-pin-dao}
-
-:::tip 提示
-
-YouTube 官方亦有提供频道 RSS，形如 <https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ>。
+Tiny Tiny RSS will add `sandbox="allow-scripts"` to all iframe elements, as a result, YouTube embedded videos cannot be loaded. If you need to use embedded videos, please install plugin [remove_iframe_sandbox](https://github.com/DIYgod/ttrss-plugin-remove-iframe-sandbox) for Tiny Tiny RSS.
 
 :::
 
-<Route author="DIYgod" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" path="/youtube/channel/:id/:disableEmbed?" paramsDesc={['频道 id', '默认为开启内嵌视频，任意值为关闭']} radar="1" rssbud="1"/>
+### User {#youtube-user}
 
-### 自定义网址 {#youtube-zi-ding-yi-wang-zhi}
+<Route author="DIYgod" path="/youtube/user/:username/:embed?" example="/youtube/user/JFlaMusic" paramsDesc={['YouTuber id', 'Default to embed the video, set to any value to disable embedding']} radar="1" rssbud="1"/>
 
-<Route author="TonyRL" path="/youtube/c/:id/:embed?" example="/youtube/c/YouTubeCreators" paramsDesc={['YouTube 自定义网址', '默认为开启内嵌视频，任意值为关闭']} radar="1" rssbud="1"/>
+### Channel {#youtube-channel}
 
-### 播放列表 {#youtube-bo-fang-lie-biao}
+:::tip
 
-<Route author="HenryQW" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" path="/youtube/playlist/:id/:disableEmbed?" paramsDesc={['播放列表 id', '默认为开启内嵌视频，任意值为关闭']} radar="1" rssbud="1"/>
-
-### 社群 {#youtube-she-qun}
-
-<Route author="TonyRL" path="/youtube/community/:handle" example="/youtube/community/@JFlaMusic" paramsDesc={['YouTube 帐号代码或频道 id']} radar="1" rssbud="1"/>
-
-### 订阅列表 {#youtube-ding-yue-lie-biao}
-
-<Route author="TonyRL" path="/youtube/subscriptions/:embed?" example="/youtube/subscriptions" paramsDesc={['默认为开启内嵌视频，任意值为关闭']} selfhost="1" radar="1" rssbud="1"/>
-
-### 音乐排行榜 {#youtube-yin-yue-pai-hang-bang}
-
-<Route author="TonyRL" path="/youtube/charts/:category?/:country?/:embed?" example="/youtube/charts" paramsDesc={['排行榜，见下表，默认为 `TopVideos`', '国家代码，见下表，默认为全球', '默认为开启内嵌视频，任意值为关闭']} radar="1" rssbud="1">
-
-:::note 排行榜
-
-| 热门音乐人 | 热门歌曲 | 热门音乐视频 | 时下流行       |
-| ---------- | -------- | ------------ | -------------- |
-| TopArtists | TopSongs | TopVideos    | TrendingVideos |
+YouTube provides official RSS feeds for channels, for instance <https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ>.
 
 :::
 
-:::note 国家代码
+<Route author="DIYgod" path="/youtube/channel/:id/:embed?" example="/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ" paramsDesc={['YouTube channel id', 'Default to embed the video, set to any value to disable embedding']} radar="1" rssbud="1"/>
 
+### Custom URL {#youtube-custom-url}
+
+<Route author="TonyRL" path="/youtube/c/:id/:embed?" example="/youtube/c/YouTubeCreators" paramsDesc={['YouTube custom URL', 'Default to embed the video, set to any value to disable embedding']} radar="1" rssbud="1"/>
+
+### Playlist {#youtube-playlist}
+
+<Route author="HenryQW" path="/youtube/playlist/:id/:embed?" example="/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z" paramsDesc={['YouTube playlist id', 'Default to embed the video, set to any value to disable embedding']} radar="1" rssbud="1"/>
+
+### Community {#youtube-community}
+
+<Route author="TonyRL" path="/youtube/community/:handle" example="/youtube/community/@JFlaMusic" paramsDesc={['YouTube handles or channel id']} radar="1" rssbud="1"/>
+
+### Subscriptions {#youtube-subscriptions}
+
+<Route author="TonyRL" path="/youtube/subscriptions/:embed?" example="/youtube/subscriptions" paramsDesc={['Default to embed the video, set to any value to disable embedding']} selfhost="1" radar="1" rssbud="1"/>
+
+### Music Charts {#youtube-music-charts}
+
+<Route author="TonyRL" path="/youtube/charts/:category?/:country?/:embed?" example="/youtube/charts" paramsDesc={['Chart, see table below, default to `TopVideos`', 'Country Code, see table below, default to global', 'Default to embed the video, set to any value to disable embedding']} radar="1" rssbud="1">
+
+:::note Chart
+| Top artists | Top songs | Top music videos | Trending |
+| ----------- | --------- | ---------------- | -------- |
+| TopArtists | TopSongs | TopVideos | TrendingVideos |
+:::
+
+:::note Country Code
 | Argentina | Australia | Austria | Belgium | Bolivia | Brazil | Canada |
 | --------- | --------- | ------- | ------- | ------- | ------ | ------ |
-| ar        | au        | at      | be      | bo      | br     | ca     |
+| ar | au | at | be | bo | br | ca |
 
 | Chile | Colombia | Costa Rica | Czechia | Denmark | Dominican Republic | Ecuador |
 | ----- | -------- | ---------- | ------- | ------- | ------------------ | ------- |

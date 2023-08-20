@@ -6,7 +6,7 @@ export default function Route({
   author = 'DIYgod',
   path = '',
   example = '',
-  paramsDesc = '无',
+  paramsDesc = 'N/A',
   anticrawler = null,
   supportBT = null,
   supportPodcast = null,
@@ -44,33 +44,33 @@ export default function Route({
     return (
         <div className="routeBlock" id={path}>
             <p className="badges">
-                {supportBT && <Badge text="支持 BT" type="tip" />}
-                {supportPodcast && <Badge text="支持播客" type="tip" />}
-                {supportScihub && <Badge text="支持 Sci-Hub" type="tip" />}
-                {puppeteer && <Badge text="依赖 Puppeteer" type="warn" />}
+                {supportBT && <Badge text="Support BT" type="tip" />}
+                {supportPodcast && <Badge text="Support Podcast" type="tip" />}
+                {supportScihub && <Badge text="Support Sci-Hub" type="tip" />}
+                {puppeteer && <Badge text="Rely on Puppeteer" type="warn" />}
                 {anticrawler && (
                     <a target="_blank" href="/faq.html">
-                        <Badge text="反爬严格" type="warn" />
+                        <Badge text="Strict anti-crawler policy" type="warn" />
                     </a>
                 )}
                 {selfhost && (
                     <a target="_blank" href="/install/">
-                        <Badge text="仅支持自建" type="warn" />
+                        <Badge text="Self-host only" type="warn" />
                     </a>
                 )}
                 {radar && (
                     <a target="_blank" href="https://github.com/DIYgod/RSSHub-Radar">
-                        <Badge text="支持浏览器扩展" type="tip" />
+                        <Badge text="Support browser extension" type="tip" />
                     </a>
                 )}
                 {rssbud && (
                     <a target="_blank" href="https://github.com/Cay-Zhang/RSSBud">
-                        <Badge text="支持 RSSBud" type="tip" />
+                        <Badge text="Support RSSBud" type="tip" />
                     </a>
                 )}
             </p>
             <p className="author">
-                作者:{' '}
+                Author:{' '}
                 {author.split(' ').map((uid) => (
                     <a href={`https://github.com/${uid}`} target="_blank" key={uid}>
                         {' '}
@@ -79,33 +79,33 @@ export default function Route({
                 ))}
             </p>
             <p className="example">
-                <span>举例:</span>{' '}
+                <span>Example:</span>{' '}
                 <a href={demoUrl} target="_blank">
                     {demoUrl}
                 </a>
             </p>
             <p className="path">
-                路由: <code>{path}</code>
+                Route: <code>{path}</code>
             </p>
             {paramMatch ? (
                 <div>
-                    <p>参数:</p>
+                    <p>Parameters:</p>
                     <ul>
                         {paramMatch.map((item, index) => (
                             <li className="params" key={index}>
                                 <code>{item.replace(/:|\?|\+|\*/g, '')}</code>,
                                 {{
-                                    '?': '可选',
-                                    '*': '零个或多个',
-                                    '+': '单个或多个',
-                                }[item[item.length - 1]] || '必选'}
+                                    '?': 'optional',
+                                    '*': 'zero or more',
+                                    '+': 'one or more',
+                                }[item[item.length - 1]] || 'required'}
                                 -<span dangerouslySetInnerHTML={{ __html: renderMarkdown(paramsDesc[index]) }}></span>
                             </li>
                         ))}
                     </ul>
                 </div>
             ) : (
-                <p>参数: 无</p>
+                <p>Parameters: N/A</p>
             )}
             {children}
         </div>
