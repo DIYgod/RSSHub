@@ -186,43 +186,57 @@ $ cd RSSHub
 
 Execute the following commands to install dependencies (Do not add the `--production` parameter for development).
 
-<code-group>
-<code-block title="pnpm" active>
+<Tabs groupId="package-manager">
+<TabItem value="pnpm" label="pnpm" default>
 
 ```bash
 pnpm install --prod
 ```
 
-</code-block>
-<code-block title="yarnv1">
+</TabItem>
+<TabItem value="yarn" label="yarnv1">
 
 ```bash
 yarn --production
 ```
 
-</code-block>
-<code-block title="npm">
+</TabItem>
+<TabItem value="npm" label="npm">
 
 ```bash
 npm install --omit=dev
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 ### Launch
 
 Under `RSSHub`'s root directory, execute the following commands to launch
 
+<Tabs groupId="package-manager">
+<TabItem value="pnpm" label="pnpm" default>
+
+```bash
+pnpm start
+```
+
+</TabItem>
+<TabItem value="yarn" label="yarnv1">
+
 ```bash
 $ yarn start
 ```
 
-Or
+</TabItem>
+<TabItem value="npm" label="npm">
 
 ```bash
 $ npm start
 ```
+
+</TabItem>
+</Tabs>
 
 Or use [PM2](https://pm2.io/docs/plus/quick-start/)
 

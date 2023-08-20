@@ -8,59 +8,59 @@ sidebar_position: 4
 
 为了实时预览文档，您需要在 **`website` 目录** 下安装文档的依赖项。在终端中输入以下命令：
 
-<code-group>
-<code-block title="pnpm" active>
+<Tabs groupId="package-manager">
+<TabItem value="pnpm" label="pnpm" active>
 
 ```bash
 pnpm i
 ```
 
-</code-block>
-<code-block title="yarn">
+</TabItem>
+<TabItem value="yarn" label="yarn">
 
 ```bash
 yarn
 ```
 
-</code-block>
-<code-block title="npm">
+</TabItem>
+<TabItem value="npm" label="npm">
 
 ```bash
 npm install
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 您现在可以在 **`website` 目录** 下运行以下命令实时预览文档：
 
-<code-group>
-<code-block title="pnpm" active>
+<Tabs groupId="package-manager">
+<TabItem value="pnpm" label="pnpm" active>
 
 ```bash
 pnpm run start
 ```
 
-</code-block>
-<code-block title="yarn">
+</TabItem>
+<TabItem value="yarn" label="yarn">
 
 ```bash
 yarn start
 ```
 
-</code-block>
-<code-block title="npm">
+</TabItem>
+<TabItem value="npm" label="npm">
 
 ```bash
 npm run start
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
-文档使用 Markdown 编写，并使用 [VuePress v1](https://v1.vuepress.vuejs.org) 渲染。
+文档使用 Markdown 编写，并使用 [Docusaurus v2](https://docusaurus.io/docs) 渲染。
 
-要为您的路由添加文档，请使用 Vue 组件。它们类似于 HTML 标签。以下是最常用的组件：
+要为您的路由添加文档，请使用 `Route` React 组件。它类似于 HTML 标签。以下是最常用的组件属性：
 
 -   `author`：路由维护者，用单个空格分隔。应与 [`maintainer.js`](/zh/joinus/new-rss/before-start#maintainerjs) 相同
 -   `example`：路由示例，以 `/` 开头
@@ -76,7 +76,7 @@ npm run start
 
 ### 仓库 Issues（无参数）
 
-```vue
+```tsx
 <Route author="HenryQW" example="/sspai/series" path="/sspai/series" />
 ```
 
@@ -88,7 +88,7 @@ npm run start
 
 ### 仓库 Issues（多个参数）
 
-```vue
+```tsx
 <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub 用户名', 'GitHub 仓库名称，默认为 `RSSHub`']} />
 ```
 
@@ -100,7 +100,7 @@ npm run start
 
 ### 关键词（带表格的说明）
 
-```vue
+```tsx
 <Route author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" paramsDesc={['关键词', '排序方式，`popular` 按热门度排序，空或其他任意值按时间排，默认为 `date`', '过滤方式，见下表 默认为空']}>
 
 | 只看非 R18 内容 | 只看 R18 内容 | 不过滤   |
@@ -179,7 +179,7 @@ npm run start
 
 通过添加这些组件，您可以向用户提供有用的信息，并使其更易于理解和使用您的路由。将这些组件添加到路由文档中将在其前面添加一个徽章。
 
-```vue
+```tsx
 <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub 用户名', 'GitHub 仓库名称，默认为 `RSSHub`']} anticrawler="1" puppeteer="1" radar="1" rssbud="1" selfhost="1" supportBT="1" supportPodcast="1" supportScihub="1" />
 ```
 
@@ -198,26 +198,26 @@ npm run start
 -   **别忘了关闭标签！**
 -   在提交 Pull Request 之前，请务必运行在 RSSHub 的根目录运行以下命令检查和格式化您的代码：
 
-<code-group>
-<code-block title="pnpm" active>
+<Tabs groupId="package-manager">
+<TabItem value="pnpm" label="pnpm" active>
 
 ```bash
 pnpm run format
 ```
 
-</code-block>
-<code-block title="yarn">
+</TabItem>
+<TabItem value="yarn" label="yarn">
 
 ```bash
 yarn format
 ```
 
-</code-block>
-<code-block title="npm">
+</TabItem>
+<TabItem value="npm" label="npm">
 
 ```bash
 npm run format
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>

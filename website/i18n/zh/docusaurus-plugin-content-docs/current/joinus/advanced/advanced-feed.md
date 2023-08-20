@@ -87,7 +87,7 @@ ctx.state.data = {
 
 如果您要在 RSSHub 路由中添加对 BitTorrent／磁力订阅支持，最重要的是在文档以反映此功能。要做到这一点，您需要将 `Route` 组件的 `supportBT` 属性设置为 `"1"`。 以下是一个示例：
 
-```vue
+```tsx
 <Route author="..." example="..." path="..." supportBT="1" />
 ```
 
@@ -113,7 +113,7 @@ ctx.state.data = {
 
 要显示您制作的期刊订阅源支持 Sci-hub 功能，您需要将 `Route` 组件的 `supportScihub` 属性设置为 `"1"`。以下是一个示例：
 
-```vue
+```tsx
 <Route author="..." example="..." path="..." supportScihub="1" />
 ```
 
@@ -153,7 +153,7 @@ ctx.state.data = {
 
 要显示您制作的订阅源与播客播放器兼容，您需要将 `Route` 组件的 `supportPodcast` 属性设置为 `"1"`。以下是一个示例：
 
-```vue
+```tsx
 <Route author="..." example="..." path="..." supportPodcast="1" />
 ```
 

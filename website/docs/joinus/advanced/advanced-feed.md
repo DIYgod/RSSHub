@@ -87,7 +87,7 @@ By including these fields in your RSS feed, you'll be able to create BitTorrent/
 
 If you're adding support for BitTorrent/Magnet feeds in your RSSHub route, it's important to update the documentation to reflect this change. To do this, you'll need to set the `supportBT` attribute of the `Route` component to `"1"`. Here's an example:
 
-```vue
+```tsx
 <Route author="..." example="..." path="..." supportBT="1" />
 ```
 
@@ -113,7 +113,7 @@ By including this `doi` field in your RSS feed, you'll be able to create journal
 
 To update the documentation for your route with support for Sci-hub, you'll need to set the `supportScihub` attribute of the Route component to `"1"`. Here's an example:
 
-```vue
+```tsx
 <Route author="..." example="..." path="..." supportScihub="1" />
 ```
 
@@ -153,7 +153,7 @@ By including these fields in your RSS feed, you'll be able to create podcast fee
 
 To update the documentation for your route with support for podcast feeds, you'll need to set the `supportPodcast` attribute of the `Route` component to `"1"`. Here's an example:
 
-```vue
+```tsx
 <Route author="..." example="..." path="..." supportPodcast="1" />
 ```
 

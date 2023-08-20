@@ -40,13 +40,14 @@ module.exports = {
 
 其余的内部对象键是网站的子域名。如果要匹配的网站没有子域名，或者想同时匹配 `www.example.com` 和 `example.com`，则应使用 `'.'`。在此示例中，我们将使用 `'.'`，因为我们希望匹配 `github.com`。请注意，每个子域名键应返回**一个对象数组**。
 
-<code-group>
-<code-block title="github.com 和 www.github.com">
+<Tabs>
+<TabItem value="github.com" label="github.com 和 www.github.com">
 
-```js{4}
+```js
 module.exports = {
     'github.com': {
         _name: 'GitHub',
+        // highlight-next-line
         '.': [
             {
                 title: '...',
@@ -59,13 +60,14 @@ module.exports = {
 };
 ```
 
-</code-block>
-<code-block title="abc.github.com">
+</TabItem>
+<TabItem value="abc.github.com" label="abc.github.com">
 
-```js{4}
+```js
 module.exports = {
     'github.com': {
         _name: 'GitHub',
+        // highlight-next-line
         abc: [
             {
                 title: '...',
@@ -78,13 +80,14 @@ module.exports = {
 };
 ```
 
-</code-block>
-<code-block title="abc.def.github.com">
+</TabItem>
+<TabItem value="abc.def.github.com" label="abc.def.github.com">
 
-```js{4}
+```js
 module.exports = {
     'github.com': {
         _name: 'GitHub',
+        // highlight-next-line
         'abc.def': [
             {
                 title: '...',
@@ -97,8 +100,8 @@ module.exports = {
 };
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 ### `title`
 
@@ -136,10 +139,10 @@ source 应为一个字符串数组。例如，如果 `GitHub 仓库 Issues` 的 
 
 下面是使用 `target` 字段作为函数的两个示例：
 
-<code-group>
-<code-block title="使用 params 匹配">
+<Tabs>
+<TabItem value="params" label="使用 params 匹配">
 
-```js{9}
+```js
 module.exports = {
     'github.com': {
         _name: 'GitHub',
@@ -148,6 +151,7 @@ module.exports = {
                 title: '仓库 Issues',
                 docs: 'https://docs.rsshub.app/routes/programming#github',
                 source: ['/:user/:repo/issues/:id', '/:user/:repo/issues',  '/:user/:repo'],
+                // highlight-next-line
                 target: (params) => `/github/issue/${params.user}/${params.repo}`,
             },
         ],
@@ -155,10 +159,10 @@ module.exports = {
 };
 ```
 
-</code-block>
-<code-block title="使用 URL 匹配">
+</TabItem>
+<TabItem value="url" label="使用 URL 匹配">
 
-```js{9}
+```js
 module.exports = {
     'github.com': {
         _name: 'GitHub',
@@ -167,6 +171,7 @@ module.exports = {
                 title: '仓库 Issues',
                 docs: 'https://docs.rsshub.app/routes/programming#github',
                 source: ['/:user/:repo'],
+                // highlight-next-line
                 target: (_, url) => `/github/issue${new URL(url).pathname}`
             },
         ],
@@ -174,8 +179,8 @@ module.exports = {
 };
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 两个示例将返回与 [第一个示例](/zh/joinus/new-radar#编写规则) 相同的 RSSHub 订阅地址。
 
