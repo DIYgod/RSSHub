@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 📱 New media
 
 ## 199IT {#199it}

@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 📰 News
 
 ## 21 财经 {#21-cai-jing}

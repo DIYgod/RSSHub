@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 💻 Programming
 
 ## A List Apart {#a-list-apart}

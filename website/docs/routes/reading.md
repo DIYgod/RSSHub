@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 📚 Reading
 
 ## All Poetry {#all-poetry}

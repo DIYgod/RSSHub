@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 💰 Finance
 
 ## AI 财经社 {#ai-cai-jing-she}

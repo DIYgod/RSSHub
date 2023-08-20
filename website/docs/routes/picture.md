@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 🖼️ Picture
 
 ## 1X {#1x}

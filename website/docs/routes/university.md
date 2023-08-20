@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 🎓 University
 
 ## Beijing Jiaotong University 北京交通大学 {#beijing-jiaotong-university-bei-jing-jiao-tong-da-xue}

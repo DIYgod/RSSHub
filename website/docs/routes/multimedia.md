@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 🔊 Multimedia
 
 ## 141JAV {#141jav}

@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 💬️ BBS
 
 ## 19 楼 {#19-lou}

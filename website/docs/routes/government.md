@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 📢 Government
 
 ## Australia Department of Home Affairs {#australia-department-of-home-affairs}

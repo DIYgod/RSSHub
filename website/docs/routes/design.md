@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 🎨️ Design
 
 ## Axis Studios {#axis-studios}

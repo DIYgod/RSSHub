@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 🔍 Uncategorized
 
 ## 4399 论坛 {#4399-lun-tan}

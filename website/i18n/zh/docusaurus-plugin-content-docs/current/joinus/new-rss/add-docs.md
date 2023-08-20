@@ -2,8 +2,6 @@
 sidebar_position: 4
 ---
 
-import Route from '@site/src/components/Route';
-
 # 添加文档
 
 现在我们完成了代码，是时候为您的路由添加文档了。在 [文档 (/website/docs)](https://github.com/DIYgod/RSSHub/blob/master/website/docs) 中打开相应的文件，本例中是 `website/docs/routes/programming.md`。

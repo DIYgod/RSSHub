@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 🎮 Gaming
 
 ## 3DMGame {#3dmgame}

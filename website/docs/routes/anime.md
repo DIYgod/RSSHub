@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 🎨️ ACG
 
 ## 005.tv {#005.tv}

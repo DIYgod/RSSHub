@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 🛍️ Shopping
 
 ## 0818 团 {#0818-tuan}

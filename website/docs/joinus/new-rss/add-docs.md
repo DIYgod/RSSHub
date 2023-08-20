@@ -2,8 +2,6 @@
 sidebar_position: 4
 ---
 
-import Route from '@site/src/components/Route';
-
 # Add documentation
 
 Now that we have completed the code, it's time to add the documentation for your route. Open the appropriate file in the [document (/website/docs)](https://github.com/DIYgod/RSSHub/blob/master/website/docs), which in this example is `/website/i18n/en/docusaurus-plugin-content-docs/current/routes/programming.md`.

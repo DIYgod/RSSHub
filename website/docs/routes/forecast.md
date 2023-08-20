@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # ❗️ Forecast and alerts
 
 ## BADAN METEOROLOGI, KLIMATOLOGI, DAN GEOFISIKA(Indonesian) {#badan-meteorologi%2C-klimatologi%2C-dan-geofisika(indonesian)}

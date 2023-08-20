@@ -2,8 +2,6 @@
 sidebar_position: 1
 ---
 
-import Route from '@site/src/components/Route';
-
 # RSS Feed Fundamentals
 
 This guide is intended for advanced users who want to know how to create an RSS feed in detail.  If you're new to creating RSS feeds, we recommend reading [Create Your Own RSSHub Route](/joinus/new-rss/start-code) first.

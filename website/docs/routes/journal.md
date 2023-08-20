@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 🔬 Scientific Journal
 
 ## Academy of Management {#academy-of-management}

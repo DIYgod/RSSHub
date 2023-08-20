@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 📖 Study
 
 ## 51VOA 美国之音 {#51voa-mei-guo-zhi-yin}

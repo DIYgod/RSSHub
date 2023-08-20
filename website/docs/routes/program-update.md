@@ -1,4 +1,3 @@
-import Route from '@site/src/components/Route';
 
 # 🔄 Application Updates
 

@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 💬 Social Media
 
 ## 755 {#755}
