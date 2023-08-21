@@ -2,8 +2,6 @@
 sidebar_position: 1
 ---
 
-import Route from '@site/src/components/Route';
-
 # RSS Feed Fundamentals
 
 This guide is intended for advanced users who want to know how to create an RSS feed in detail.  If you're new to creating RSS feeds, we recommend reading [Create Your Own RSSHub Route](/joinus/new-rss/start-code) first.
@@ -56,6 +54,7 @@ Each item in an RSS feed is represented by an object with a set of fields that d
 | **`doi`** | *(Optional)* The Digital Object Identifier of the item, which should be a string in the format `10.xxxx/xxxxx.xxxx` | `undefinded` | R |
 
 :::caution Formatting Considerations
+
 When specifying certain fields in an RSS feed, it's important to keep in mind some formatting considerations. Specifically, you should avoid including any linebreaks, consecutive whitespace, or leading/trailing whitespace in the following fields: **`title`**, **`subtitle`** (only for Atom), **`author`** (only for Atom), **`item.title`**, and **`item.author`**.
 
 While most RSS readers will automatically trim these fields, some may not process them properly. Therefore, to ensure compatibility with all RSS readers, we recommend trimming these fields before outputting them. If your route cannot tolerate trimming these fields, you should consider changing their format.
@@ -63,6 +62,7 @@ While most RSS readers will automatically trim these fields, some may not proces
 Additionally, while other fields will not be forced to be trimmed, we suggest avoiding violations of the above formatting rules as much as possible. If you are using Cheerio to extract content from web pages, be aware that Cheerio will retain line breaks and indentation. For the **`item.description`** field, in particular, any intended linebreaks should be converted to `<br>` tags to prevent them from being trimmed by the RSS reader. If you're extracting an RSS feed from JSON data, be aware that the JSON may contain linebreaks that need to be displayed, so you should convert them to `<br>` tags in this case.
 
 It's important to keep these formatting considerations in mind to ensure your RSS feed is compatible with all RSS readers.
+
 :::
 
 ## Create a BitTorrent/Magnet Feed
@@ -89,7 +89,7 @@ By including these fields in your RSS feed, you'll be able to create BitTorrent/
 
 If you're adding support for BitTorrent/Magnet feeds in your RSSHub route, it's important to update the documentation to reflect this change. To do this, you'll need to set the `supportBT` attribute of the `Route` component to `"1"`. Here's an example:
 
-```vue
+```tsx
 <Route author="..." example="..." path="..." supportBT="1" />
 ```
 
@@ -115,7 +115,7 @@ By including this `doi` field in your RSS feed, you'll be able to create journal
 
 To update the documentation for your route with support for Sci-hub, you'll need to set the `supportScihub` attribute of the Route component to `"1"`. Here's an example:
 
-```vue
+```tsx
 <Route author="..." example="..." path="..." supportScihub="1" />
 ```
 
@@ -155,7 +155,7 @@ By including these fields in your RSS feed, you'll be able to create podcast fee
 
 To update the documentation for your route with support for podcast feeds, you'll need to set the `supportPodcast` attribute of the `Route` component to `"1"`. Here's an example:
 
-```vue
+```tsx
 <Route author="..." example="..." path="..." supportPodcast="1" />
 ```
 

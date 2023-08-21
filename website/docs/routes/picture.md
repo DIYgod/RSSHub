@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 🖼️ Picture
 
 ## 1X {#1x}
@@ -373,7 +371,7 @@ For example:
 
 <Route author="nczitzk" example="/nasa/apod-cn" path="/nasa/apod-cn">
 
-:::tip 提示
+:::tip
 
 [NASA 中文](https://www.nasachina.cn/) 提供了每日天文图的中英双语图文说明，但在更新上偶尔略有一两天的延迟。
 
@@ -429,7 +427,7 @@ For example:
 
 ## wallhaven {#wallhaven}
 
-:::tip Tip
+:::tip
 
 When parameter **Need Details** is set to `true` `yes` `t` `y`, RSS will add the title, uploader, upload time, and category information of each image, which can support the filtering function of RSS reader.
 
@@ -453,7 +451,7 @@ For example [Latest Wallpapers](https://wallhaven.cc/latest), the route turning 
 
 <Route author="nczitzk Fatpandac" example="/wallhaven/search/categories=110&purity=110&sorting=date_added&order=desc" path="/wallhaven/search/:filter?/:needDetails?" paramsDesc={['Filter, empty by default', 'Need Details, `true`/`yes` as yes, no by default']}>
 
-:::tip Tip
+:::tip
 
 Subscribe pages starting with `https://wallhaven.cc/search`, fill the text after `?` as `filter` in the route. The following is an example:
 
@@ -558,7 +556,7 @@ For example:
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | bbs      | bbs7     | bbs2     | bbs6     | bbs4     | bj       | bbs5     | bbs3     |
 
-:::tip 提示
+:::tip
 
 留园网文档参见 [此处](https://docs.rsshub.app/routes/new-media#liu-yuan-wang)
 

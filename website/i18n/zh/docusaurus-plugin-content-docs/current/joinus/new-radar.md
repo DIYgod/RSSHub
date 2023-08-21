@@ -40,13 +40,14 @@ module.exports = {
 
 其余的内部对象键是网站的子域名。如果要匹配的网站没有子域名，或者想同时匹配 `www.example.com` 和 `example.com`，则应使用 `'.'`。在此示例中，我们将使用 `'.'`，因为我们希望匹配 `github.com`。请注意，每个子域名键应返回**一个对象数组**。
 
-<code-group>
-<code-block title="github.com 和 www.github.com">
+<Tabs>
+<TabItem value="github.com" label="github.com 和 www.github.com">
 
-```js{4}
+```js
 module.exports = {
     'github.com': {
         _name: 'GitHub',
+        // highlight-next-line
         '.': [
             {
                 title: '...',
@@ -59,13 +60,14 @@ module.exports = {
 };
 ```
 
-</code-block>
-<code-block title="abc.github.com">
+</TabItem>
+<TabItem value="abc.github.com" label="abc.github.com">
 
-```js{4}
+```js
 module.exports = {
     'github.com': {
         _name: 'GitHub',
+        // highlight-next-line
         abc: [
             {
                 title: '...',
@@ -78,13 +80,14 @@ module.exports = {
 };
 ```
 
-</code-block>
-<code-block title="abc.def.github.com">
+</TabItem>
+<TabItem value="abc.def.github.com" label="abc.def.github.com">
 
-```js{4}
+```js
 module.exports = {
     'github.com': {
         _name: 'GitHub',
+        // highlight-next-line
         'abc.def': [
             {
                 title: '...',
@@ -97,8 +100,8 @@ module.exports = {
 };
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 ### `title`
 
@@ -114,8 +117,10 @@ source 是*可选*字段，应指定 URL 路径。如果不想匹配任何 URL �
 
 source 应为一个字符串数组。例如，如果 `GitHub 仓库 Issues` 的 source 是 `/:user/:repo`，则意味着当您访问 `https://github.com/DIYgod/RSSHub` 时将匹配 `/:user/:repo`，此时返回的结果 params 将是：`{user: 'DIYgod', repo: 'RSSHub'}`。浏览器扩展程序使用这些参数根据 target 字段建立 RSSHub 订阅地址。
 
-:::caution 注意
+:::caution
+
 如果要提取的值在 URL 参数或 URL hash 中，请使用 target 函数而不是 source 字段。 此外，请记住，source 字段仅匹配 URL 路径，而不匹配 URL 的任何其他部分。
+
 :::
 
 您也可以使用 `*` 符号执行通配符匹配。请注意，此处的语法与 [path-to-regexp](https://github.com/pillarjs/path-to-regexp) 不同。例如，`/:user/:repo/*` 将匹配 `https://github.com/DIYgod/RSSHub/issues` 和 `https://github.com/DIYgod/RSSHub/issues/1234`。如果要对匹配结果进行命名，可以在 `*` 符号后放置变量名。例如，`/user/:repo/*path`，在此情况下，`path` 将是 `issues` 和 `issues/1234`。
@@ -136,10 +141,10 @@ source 应为一个字符串数组。例如，如果 `GitHub 仓库 Issues` 的 
 
 下面是使用 `target` 字段作为函数的两个示例：
 
-<code-group>
-<code-block title="使用 params 匹配">
+<Tabs>
+<TabItem value="params" label="使用 params 匹配">
 
-```js{9}
+```js
 module.exports = {
     'github.com': {
         _name: 'GitHub',
@@ -148,6 +153,7 @@ module.exports = {
                 title: '仓库 Issues',
                 docs: 'https://docs.rsshub.app/routes/programming#github',
                 source: ['/:user/:repo/issues/:id', '/:user/:repo/issues',  '/:user/:repo'],
+                // highlight-next-line
                 target: (params) => `/github/issue/${params.user}/${params.repo}`,
             },
         ],
@@ -155,10 +161,10 @@ module.exports = {
 };
 ```
 
-</code-block>
-<code-block title="使用 URL 匹配">
+</TabItem>
+<TabItem value="url" label="使用 URL 匹配">
 
-```js{9}
+```js
 module.exports = {
     'github.com': {
         _name: 'GitHub',
@@ -167,6 +173,7 @@ module.exports = {
                 title: '仓库 Issues',
                 docs: 'https://docs.rsshub.app/routes/programming#github',
                 source: ['/:user/:repo'],
+                // highlight-next-line
                 target: (_, url) => `/github/issue${new URL(url).pathname}`
             },
         ],
@@ -174,8 +181,8 @@ module.exports = {
 };
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 两个示例将返回与 [第一个示例](/zh/joinus/new-radar#编写规则) 相同的 RSSHub 订阅地址。
 
