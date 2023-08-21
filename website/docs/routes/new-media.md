@@ -4466,7 +4466,7 @@ column 为 third 时可选的 category:
 
 :::
 
-:::cautio
+:::caution
 
 该方法需要通过 efb 进行频道绑定，具体操作见<https://github.com/DIYgod/RSSHub/issues/2172>
 
