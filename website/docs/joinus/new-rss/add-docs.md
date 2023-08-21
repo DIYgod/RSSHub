@@ -58,7 +58,7 @@ npm run start
 </TabItem>
 </Tabs>
 
-The documentation is written in Markdown and rendered with [Docusaurus v2](https://docusaurus.io/docs).
+The documentation is written in MDX and rendered with [Docusaurus v2](https://docusaurus.io/docs).
 
 To add documentation to your route, use the `Route` React component. It works like HTML tag. The following are the most commonly used component properties:
 
@@ -128,54 +128,76 @@ To add documentation to your route, use the `Route` React component. It works li
 If you'd like to provide additional information about a particular route, you can use these custom containers:
 
 ```md
-:::note Tips title
+<details>
+  <summary>Click to expand</summary>
+  This is a detail block. Title is optional and does not support Markdown.
+</details>
 
-This is a tip.
+:::note
+
+This is a note.
 
 :::
 
 :::tip Tips title
 
-This is a tip.
+Title is optional.
 
 :::
 
-:::caution Warning title
+:::info
 
-This is a warning.
+Supprts Markdown.
 
 :::
 
-:::danger Danger title
+:::caution
 
-This is a dangerous warning.
+Add a empty line around the starting and ending directive `:::`
+
+:::
+
+:::danger
+
+Otherwise the content may not be rendered properly.
 
 :::
 ```
 
 ---
 
+<details>
+  <summary>Click to expand</summary>
+  This is a detail block. Title is optional and does not support Markdown.
+</details>
+
+:::note
+
+This is a note.
+
+:::
+
 :::tip Tips title
 
-This is a tip.
+Title is optional.
 
 :::
 
-:::caution Warning title
+:::info
 
-This is a warning.
-
-:::
-
-:::danger Danger title
-
-This is a dangerous warning.
+Supprts Markdown.
 
 :::
 
-:::note Details title
+:::caution
 
-This is a details block.
+Add a empty line around the starting and ending directive `:::`
+
+:::
+
+:::danger
+
+Otherwise the content may not be rendered properly.
 
 :::
 
@@ -183,7 +205,7 @@ This is a details block.
 
 ### Other components
 
-In addition to the route components, there are several other components you can use to provide more information about your route:
+In addition to the aforementioned component properties, there are several other properties you can use to provide more information about your route:
 
 -   `anticrawler`: set to `1` if the target website has an anti-crawler mechanism.
 -   `puppeteer`: set to `1` if the feed uses puppeteer.
@@ -194,7 +216,7 @@ In addition to the route components, there are several other components you can 
 -   `supportPodcast`: set to `1` if the feed supports podcasts.
 -   `supportScihub`: set to `1` if the feed supports Sci-Hub.
 
-By using these components, you can provide valuable information to users and make it easier for them to understand and use your route. Adding these components to your route documentation will add a badge in front of it.
+By using these properties, you can provide valuable information to users and make it easier for them to understand and use your route. Adding these properties to your route documentation will add a badge in front of it.
 
 ```tsx
 <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub username', 'GitHub repo name, `RSSHub` by default']} anticrawler="1" puppeteer="1" radar="1" rssbud="1" selfhost="1" supportBT="1" supportPodcast="1" supportScihub="1" />

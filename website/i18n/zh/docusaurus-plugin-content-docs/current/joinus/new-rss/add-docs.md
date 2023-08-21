@@ -58,7 +58,7 @@ npm run start
 </TabItem>
 </Tabs>
 
-文档使用 Markdown 编写，并使用 [Docusaurus v2](https://docusaurus.io/docs) 渲染。
+文档使用 MDX 编写，并使用 [Docusaurus v2](https://docusaurus.io/docs) 渲染。
 
 要为您的路由添加文档，请使用 `Route` React 组件。它类似于 HTML 标签。以下是最常用的组件属性：
 
@@ -127,54 +127,76 @@ npm run start
 如果您想提供关于路由的更多信息，可以使用这些自定义容器：
 
 ```md
-:::tip 标题
+<details>
+  <summary>点击展开全文</summary>
+  这是一个详细块，标题 (summary) 是可选的，不支持 Markdown。
+</details>
 
-这是一个提示。
+:::note
 
-:::
-
-:::caution 警告标题
-
-这是一个警告。
-
-:::
-
-:::danger 危险标题
-
-这是一条危险的警告。
+这是一个备注。
 
 :::
 
-:::note 详细标题
+:::tip 提示标题
 
-这是一个详细块。
+标题是可选的。
+
+:::
+
+:::info
+
+内容支持 Markdown。
+
+:::
+
+:::caution
+
+开始和结束的 `:::` 周围需要空出一行
+
+:::
+
+:::danger
+
+否则内容可能无法正常渲染。
 
 :::
 ```
 
 ---
 
-:::tip 标题
+<details>
+  <summary>点击展开全文</summary>
+  这是一个详细块，标题 (summary) 是可选的，不支持 Markdown。
+</details>
 
-这是一个提示。
+:::note
 
-:::
-
-:::caution 警告标题
-
-这是一个警告。
-
-:::
-
-:::danger 危险标题
-
-这是一条危险的警告。
+这是一个备注。
 
 :::
 
-:::note 详细标题
+:::tip 提示标题
 
-这是一个详细块。
+标题是可选的。
+
+:::
+
+:::info
+
+内容支持 Markdown。
+
+:::
+
+:::caution
+
+开始和结束的 `:::` 周围需要空出一行
+
+:::
+
+:::danger
+
+否则内容可能无法正常渲染。
 
 :::
 
@@ -182,7 +204,7 @@ npm run start
 
 ### 其他组件
 
-除了路由组件之外，还有几个组件可用于提供有关路径的更多信息：
+除了上述组件属性之外，还有几个组件属性可用于提供有关路径的更多信息：
 
 -   `anticrawler`：如果目标网站有反爬机制，则设置为 `1`。
 -   `puppeteer`：如果源使用 puppeteer 抓取，则设置为 `1`。
@@ -193,7 +215,7 @@ npm run start
 -   `supportPodcast`：如果源支持播客，则设置为 `1`。
 -   `supportScihub`：如果源支持 Sci-Hub，则设置为 `1`。
 
-通过添加这些组件，您可以向用户提供有用的信息，并使其更易于理解和使用您的路由。将这些组件添加到路由文档中将在其前面添加一个徽章。
+通过添加这些属性，您可以向用户提供有用的信息，并使其更易于理解和使用您的路由。将这些属性添加到路由文档中将在其前面添加一个徽章。
 
 ```tsx
 <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub 用户名', 'GitHub 仓库名称，默认为 `RSSHub`']} anticrawler="1" puppeteer="1" radar="1" rssbud="1" selfhost="1" supportBT="1" supportPodcast="1" supportScihub="1" />
