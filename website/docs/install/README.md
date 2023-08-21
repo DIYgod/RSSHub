@@ -89,7 +89,7 @@ Edit `environment` in [docker-compose.yml](https://github.com/DIYgod/RSSHub/blob
 
 ## Docker Deployment
 
-:::tip Tip
+:::tip
 
 To enable puppeteer, replace `diygod/rsshub` with `diygod/rsshub:chromium-bundled` in **EACH** command.
 
@@ -186,43 +186,57 @@ $ cd RSSHub
 
 Execute the following commands to install dependencies (Do not add the `--production` parameter for development).
 
-<code-group>
-<code-block title="pnpm" active>
+<Tabs groupId="package-manager">
+<TabItem value="pnpm" label="pnpm" default>
 
 ```bash
 pnpm install --prod
 ```
 
-</code-block>
-<code-block title="yarnv1">
+</TabItem>
+<TabItem value="yarn" label="yarnv1">
 
 ```bash
 yarn --production
 ```
 
-</code-block>
-<code-block title="npm">
+</TabItem>
+<TabItem value="npm" label="npm">
 
 ```bash
 npm install --omit=dev
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 ### Launch
 
 Under `RSSHub`'s root directory, execute the following commands to launch
 
+<Tabs groupId="package-manager">
+<TabItem value="pnpm" label="pnpm" default>
+
+```bash
+pnpm start
+```
+
+</TabItem>
+<TabItem value="yarn" label="yarnv1">
+
 ```bash
 $ yarn start
 ```
 
-Or
+</TabItem>
+<TabItem value="npm" label="npm">
 
 ```bash
 $ npm start
 ```
+
+</TabItem>
+</Tabs>
 
 Or use [PM2](https://pm2.io/docs/plus/quick-start/)
 
@@ -236,7 +250,7 @@ Refer to our [Guide](https://docs.rsshub.app/) for usage. Replace `https://rsshu
 
 ### Configuration
 
-:::tip Tip
+:::tip
 
 On arm/arm64, this deployment method does not include puppeteer dependencies. To enable puppeteer, install Chromium from your distribution repositories first, then set `CHROMIUM_EXECUTABLE_PATH` to its executable path.
 
@@ -491,7 +505,7 @@ If you would like to test routes or avoid IP limits, etc., you may build your ow
 
 [![Try in PWD](https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png)](https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml)
 
-:::caution Warning
+:::caution
 
 -   [DockerHub](https://hub.docker.com) account required
 -   [Play with Docker](https://labs.play-with-docker.com/) instance will last for 4 hours at most. It should only be used for testing purpose
@@ -725,7 +739,7 @@ Configs in this sections are in beta stage, and **are turn off by default**. Ple
 
 ### Route-specific Configurations
 
-:::tip Notice
+:::tip
 
 Configs here are incomplete.
 
