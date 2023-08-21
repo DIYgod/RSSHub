@@ -492,7 +492,7 @@ Category of news
 
 <Route author="nczitzk" example="/europapress" path="/europapress/:category?" paramsDesc={['Category, see below, Home by default']}>
 
-:::note Categories
+Categories
 
 | España   | Internacional | Economía | Deportes |
 | -------- | ------------- | -------- | -------- |
@@ -525,8 +525,6 @@ Category of news
 | Murcia | Ceuta y Melilla |
 | ------ | --------------- |
 | murcia | ceuta-y-melilla |
-
-:::
 
 </Route>
 
@@ -752,7 +750,7 @@ Tag
 
 <Route author="Rjnishant530" example="/grist/topic/extreme-heat" path="/grist/topic/:topic" paramsDesc={['Any Topic from Table below']} radar="1">
 
-:::note Topics
+Topics
 
 | Topic Name          | Topic Link          |
 |---------------------|---------------------|
@@ -797,8 +795,6 @@ Tag
 | Uncategorized     | article            |
 | Updates            | updates            |
 | Video              | video              |
-
-:::
 
 </Route>
 
@@ -1510,7 +1506,7 @@ Compared to the official one, this feed:
 
 <Route author="Kasper4649 akashigakki" example="/nogizaka46/blog" path="/nogizaka46/blog/:id?" paramsDesc={['Member ID, see below, `all` by default']}>
 
-:::note Member ID
+Member ID
 
 | Member ID | Name                  |
 | --------- | --------------------- |
@@ -1555,8 +1551,6 @@ Compared to the official one, this feed:
 | 36749     | 伊藤 理々杏           |
 | 264       | 齋藤 飛鳥             |
 
-:::
-
 </Route>
 
 ### Keyakizaka46 News 欅坂 46 新闻 {#sakamichi-series-ban-dao-xi-lie-guan-wang-zi-xun-keyakizaka46-news-ju-ban-46-xin-wen}
@@ -1575,7 +1569,7 @@ Compared to the official one, this feed:
 
 <Route author="victor21813 nczitzk akashigakki" example="/sakurazaka46/blog" path="/sakurazaka46/blog/:id?/:page?" paramsDesc={['Member ID, see below, `all` by default', 'Page, `0` by default']}>
 
-:::note Member ID
+Member ID
 
 | Member ID | Name         |
 | --------- | ------------ |
@@ -1614,8 +1608,6 @@ Compared to the official one, this feed:
 | 04        | 尾関 梨香    |
 | 03        | 上村 莉菜    |
 
-:::
-
 </Route>
 
 ### Hinatazaka46 News 日向坂 46 新闻 {#sakamichi-series-ban-dao-xi-lie-guan-wang-zi-xun-hinatazaka46-news-ri-xiang-ban-46-xin-wen}
@@ -1626,7 +1618,7 @@ Compared to the official one, this feed:
 
 <Route author="nwindz akashigakki" example="/hinatazaka46/blog" path="/hinatazaka46/blog/:id?/:page?" paramsDesc={['Member ID, see below, `all` by default', 'Page, `0` by default']}>
 
-:::note Member ID
+Member ID
 
 | Member ID | Name         |
 | --------- | ------------ |
@@ -1665,8 +1657,6 @@ Compared to the official one, this feed:
 | 2         | 潮 紗理菜    |
 
 > Note: The personal blogs of the fourth-generation members have not been opened yet. The unified blog number is `2000`.
-
-:::
 
 </Route>
 

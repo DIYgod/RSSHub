@@ -141,7 +141,7 @@
 
 <Route author="Rjnishant530" example="/finology/tag/startups" path="/tag/:topic" paramDesc={['Refer Table below or find in URL']} radar="1">
 
-:::note Topic
+Topic
 
 | Topic              | Link                  |
 |---------------------|-----------------------|
@@ -173,8 +173,6 @@
 | World News         | world-news            |
 | Technology         | technology            |
 | Regulatory Bodies  | regulatory-bodies     |
-
-:::
 
 </Route>
 

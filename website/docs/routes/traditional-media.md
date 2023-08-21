@@ -1082,8 +1082,6 @@ Category 列表：
 
 <Route author="yuxinliu-alex nczitzk" example="/cankaoxiaoxi/column/diyi" path="/cankaoxiaoxi/column/:id?" paramsDesc={['栏目 id，默认为 `diyi`，即第一关注']}>
 
-:::note
-
 | 栏目           | id       |
 | -------------- | -------- |
 | 第一关注       | diyi     |
@@ -1105,8 +1103,6 @@ Category 列表：
 | 参考视频       | video    |
 | 军事           | junshi   |
 | 参考人物       | cankaorw |
-
-:::
 
 </Route>
 

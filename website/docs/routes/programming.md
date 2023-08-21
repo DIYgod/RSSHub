@@ -12,8 +12,6 @@
 
 You have the option to utilize the main heading or use individual categories as topics for the path.
 
-:::note Topics
-
 | **Code**                | _code_                  |
 |-------------------------|-------------------------|
 | **Application Development** | _application-development_ |
@@ -59,8 +57,6 @@ You have the option to utilize the main heading or use individual categories as 
 | **Interaction Design**  | _interaction-design_    |
 | **Usability**           | _usability_             |
 | **User Research**       | _user-research_         |
-
-:::
 
 </Route>
 
@@ -820,8 +816,6 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <Route author="Rjnishant530" example="/smashingmagazine/react" path="/smashingmagazine/:category?" paramsDesc={['Find in URL or Table below']} radar="1">
 
-:::note Category
-
 | **Category**         |                       |
 |----------------------|-----------------------|
 | Accessibility        | accessibility         |
@@ -857,8 +851,6 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 | Wallpapers           | wallpapers            |
 | Web Design           | web-design            |
 | Workflow             | workflow              |
-
-:::
 
 </Route>
 
