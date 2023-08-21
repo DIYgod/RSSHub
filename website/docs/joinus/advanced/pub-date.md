@@ -36,8 +36,10 @@ const pubDate = parseDate('2020/12/30');
 const pubDate = parseDate('2020/12/30', 'YYYY/MM/DD');
 ```
 
-:::tip Tips
+:::tip
+
 You can refer to the [day.js documentation](https://day.js.org/docs/en/parse/string-format#list-of-all-available-parsing-tokens) for all available date formats.
+
 :::
 
 If you need to parse a relative date, use `parseRelativeDate`.

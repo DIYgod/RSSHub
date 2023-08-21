@@ -2,67 +2,71 @@
 sidebar_position: 4
 ---
 
-import Route from '@site/src/components/Route';
-
 # Add documentation
 
 Now that we have completed the code, it's time to add the documentation for your route. Open the appropriate file in the [document (/website/docs)](https://github.com/DIYgod/RSSHub/blob/master/website/docs), which in this example is `/website/i18n/en/docusaurus-plugin-content-docs/current/routes/programming.md`.
 
 In order to preview the documentation in real-time, you need to install the dependencies for the documentation. Run the following command in the **`website` directory**:
 
-<code-group>
-<code-block title="pnpm" active>
+<Tabs groupId="package-manager">
+<TabItem value="pnpm" label="pnpm" default>
 
 ```bash
 pnpm i
 ```
 
-</code-block>
-<code-block title="yarn">
+</TabItem>
+<TabItem value="yarn" label="yarn">
 
 ```bash
 yarn
 ```
 
-</code-block>
-<code-block title="npm">
+</TabItem>
+<TabItem value="npm" label="npm">
 
 ```bash
 npm install
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 You can now preview the documentation in real-time by running the following command in the **`website` directory**:
 
-<code-group>
-<code-block title="pnpm" active>
+<Tabs groupId="package-manager">
+<TabItem value="pnpm" label="pnpm" default>
 
 ```bash
-pnpm run start -- --locale en
+pnpm run start
 ```
 
-</code-block>
-<code-block title="yarn">
+</TabItem>
+<TabItem value="yarn" label="yarn">
 
 ```bash
-yarn start --locale en
+yarn start
 ```
 
-</code-block>
-<code-block title="npm">
+</TabItem>
+<TabItem value="npm" label="npm">
 
 ```bash
-npm run start -- --locale en
+npm run start
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
-The documentation is written in Markdown and rendered with [VuePress v1](https://v1.vuepress.vuejs.org).
+:::caution
 
-To add documentation to your route, use Vue components. They work like HTML tags. The following are the most commonly used components:
+You cannot switch to other languages in development mode. This is a [technical limitation](https://docusaurus.io/docs/i18n/tutorial#start-your-site) from Docusaurus.
+
+:::
+
+The documentation is written in MDX and rendered with [Docusaurus v2](https://docusaurus.io/docs).
+
+To add documentation to your route, use the `Route` React component. It works like HTML tag. The following are the most commonly used component properties:
 
 -   `author`: The route maintainer(s), separated by a single space. It should be the same as [`maintainer.js`](/joinus/new-rss/before-start#understand-the-basics-maintainer-js)
 -   `example`: The route example, with a leading `/`
@@ -79,7 +83,7 @@ To add documentation to your route, use Vue components. They work like HTML tags
 
 ### Repo Issues (No parameter)
 
-```vue
+```tsx
 <Route author="HenryQW" example="/sspai/series" path="/sspai/series" />
 ```
 
@@ -91,7 +95,7 @@ To add documentation to your route, use Vue components. They work like HTML tags
 
 ### Repo Issues (Multiple parameters)
 
-```vue
+```tsx
 <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub username', 'GitHub repo name, `RSSHub` by default']} />
 ```
 
@@ -103,7 +107,7 @@ To add documentation to your route, use Vue components. They work like HTML tags
 
 ### Keyword (Description with table)
 
-```vue
+```tsx
 <Route author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" paramsDesc={['keyword', 'rank mode, empty or other for time order, `popular` for popular order, `date` by default', 'filte R18 content, see table below, empty by default']}>
 
 | only not R18 | only R18 | no filter      |
@@ -130,46 +134,84 @@ To add documentation to your route, use Vue components. They work like HTML tags
 If you'd like to provide additional information about a particular route, you can use these custom containers:
 
 ```md
+<details>
+  <summary>Click to expand</summary>
+  This is a detail block. Title is optional and does not support Markdown.
+</details>
+
+:::note
+
+This is a note.
+
+:::
+
 :::tip Tips title
-This is a tip.
+
+Title is optional.
+
 :::
 
-:::caution Warning title
-This is a warning.
+:::info
+
+Supprts Markdown.
+
 :::
 
-:::danger Danger title
-This is a dangerous warning.
+:::caution
+
+Add a empty line around the starting and ending directive `:::`
+
 :::
 
-:::note Details title
-This is a details block.
+:::danger
+
+Otherwise the content may not be rendered properly.
+
 :::
 ```
 
 ---
 
+<details>
+  <summary>Click to expand</summary>
+  This is a detail block. Title is optional and does not support Markdown.
+</details>
+
+:::note
+
+This is a note.
+
+:::
+
 :::tip Tips title
-This is a tip.
+
+Title is optional.
+
 :::
 
-:::caution Warning title
-This is a warning.
+:::info
+
+Supprts Markdown.
+
 :::
 
-:::danger Danger title
-This is a dangerous warning.
+:::caution
+
+Add a empty line around the starting and ending directive `:::`
+
 :::
 
-:::note Details title
-This is a details block.
+:::danger
+
+Otherwise the content may not be rendered properly.
+
 :::
 
 ---
 
 ### Other components
 
-In addition to the route components, there are several other components you can use to provide more information about your route:
+In addition to the aforementioned component properties, there are several other properties you can use to provide more information about your route:
 
 -   `anticrawler`: set to `1` if the target website has an anti-crawler mechanism.
 -   `puppeteer`: set to `1` if the feed uses puppeteer.
@@ -180,9 +222,9 @@ In addition to the route components, there are several other components you can 
 -   `supportPodcast`: set to `1` if the feed supports podcasts.
 -   `supportScihub`: set to `1` if the feed supports Sci-Hub.
 
-By using these components, you can provide valuable information to users and make it easier for them to understand and use your route. Adding these components to your route documentation will add a badge in front of it.
+By using these properties, you can provide valuable information to users and make it easier for them to understand and use your route. Adding these properties to your route documentation will add a badge in front of it.
 
-```vue
+```tsx
 <Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub username', 'GitHub repo name, `RSSHub` by default']} anticrawler="1" puppeteer="1" radar="1" rssbud="1" selfhost="1" supportBT="1" supportPodcast="1" supportScihub="1" />
 ```
 
@@ -201,26 +243,26 @@ By using these components, you can provide valuable information to users and mak
 -   **Remember to close the tag!**
 -   Don't forget to run the following command in the **root directory** of the project to check and format your code before committing and submitting a merge request:
 
-<code-group>
-<code-block title="pnpm" active>
+<Tabs groupId="package-manager">
+<TabItem value="pnpm" label="pnpm" default>
 
 ```bash
 pnpm run format
 ```
 
-</code-block>
-<code-block title="yarn">
+</TabItem>
+<TabItem value="yarn" label="yarn">
 
 ```bash
 yarn format
 ```
 
-</code-block>
-<code-block title="npm">
+</TabItem>
+<TabItem value="npm" label="npm">
 
 ```bash
 npm run format
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
