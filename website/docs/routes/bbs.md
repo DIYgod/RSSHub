@@ -1,6 +1,4 @@
-import Route from '@site/src/components/Route';
-
-# 💬️ 论坛
+# 💬️ BBS
 
 ## 19 楼 {#19-lou}
 
@@ -128,7 +126,7 @@ import Route from '@site/src/components/Route';
 
 ## Dcard {#dcard}
 
-:::caution 注意
+:::caution
 
 僅能透過台灣 IP 抓取。
 
@@ -144,27 +142,27 @@ import Route from '@site/src/components/Route';
 
 ## Discuz {#discuz}
 
-### 通用子版块 - 自动检测 {#discuz-tong-yong-zi-ban-kuai---zi-dong-jian-ce}
+### General Subforum - Auto detection {#discuz-general-subforum---auto-detection}
 
-<Route author="junfengP" example="/discuz/http%3a%2f%2fwww.u-share.cn%2fforum.php%3fmod%3dforumdisplay%26fid%3d56" path="/discuz/:link" paramsDesc={['子版块链接， 需要手动Url编码']}/>
+<Route author="junfengP" example="/discuz/http%3a%2f%2fwww.u-share.cn%2fforum.php%3fmod%3dforumdisplay%26fid%3d56" path="/discuz/:link" paramsDesc={['link of subforum, require url encoded ']}/>
 
-### 通用子版块 - 指定版本 {#discuz-tong-yong-zi-ban-kuai---zhi-ding-ban-ben}
+### General Subforum - Manual version {#discuz-general-subforum---manual-version}
 
-<Route author="junfengP" example="/discuz/x/https%3a%2f%2fwww.52pojie.cn%2fforum-16-1.html" path="/discuz/:ver/:link" paramsDesc={['discuz版本类型，见下表','子版块链接， 需要手动Url编码']} >
+<Route author="junfengP" example="/discuz/x/https%3a%2f%2fwww.52pojie.cn%2fforum-16-1.html" path="/discuz/:ver/:link" paramsDesc={['discuz version，see below table','link of subforum, require url encoded']} >
 
-| Discuz X 系列 | Discuz 7.x 系列 |
-| ------------- | --------------- |
-| x             | 7               |
+| Discuz X Series | Discuz 7.x Series |
+| --------------- | ----------------- |
+| x               | 7                 |
 
 </Route>
 
-### 通用子版块 - 支持 Cookie {#discuz-tong-yong-zi-ban-kuai---zhi-chi-cookie}
+### General Subforum - Support cookie {#discuz-general-subforum---support-cookie}
 
-<Route author="junfengP" example="/discuz/x/00/https%3a%2f%2fbbs.zdfx.net%2fforum-2-1.html" path="/discuz/:ver/:cid/:link" paramsDesc={['discuz版本类型，见下表', 'Cookie id，需自建并配置环境变量，详情见部署页面的配置模块','子版块链接， 需要手动Url编码']} >
+<Route author="junfengP" example="/discuz/x/00/https%3a%2f%2fbbs.zdfx.net%2fforum-2-1.html" path="/discuz/:ver/:cid/:link" paramsDesc={['discuz version，see below table', 'Cookie id，require self hosted and set environment parameters, see Deploy - Configuration pages for detail','link of subforum, require url encoded']} >
 
-| Discuz X 系列 | Discuz 7.x 系列 |
-| ------------- | --------------- |
-| x             | 7               |
+| Discuz X Series | Discuz 7.x Series |
+| --------------- | ----------------- |
+| x               | 7                 |
 
 </Route>
 
@@ -206,7 +204,7 @@ import Route from '@site/src/components/Route';
 
 ### Discussion {#lowendtalk-discussion}
 
-<Route author="nczitzk" example="/lowendtalk/discussion/168480" path="/lowendtalk/discussion/:id?" paramsDesc={['讨论 id']}/>
+<Route author="nczitzk" example="/lowendtalk/discussion/168480" path="/lowendtalk/discussion/:id?" paramsDesc={['Discussion id']}/>
 
 ## MCBBS {#mcbbs}
 
@@ -230,27 +228,27 @@ import Route from '@site/src/components/Route';
 
 ## Mobilism {#mobilism}
 
-### 论坛 {#mobilism-lun-tan}
+### Forums {#mobilism-forums}
 
-<Route author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type/:fulltext?" paramsDesc={['分类', '种类', '是否获取全文，如需获取全文参数传入 `y`']}>
+<Route author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type/:fulltext?" paramsDesc={['Category', 'subcategory','Retrieve fulltext, specify `y` to enable']}>
 
-| 安卓    | iPhone | iPad |
+| Android | iPhone | iPad |
 | ------- | ------ | ---- |
 | android | iphone | ipad |
 
-| 应用 | 游戏  |
+| Apps | games |
 | ---- | ----- |
 | apps | games |
 
 </Route>
 
-### 门户 {#mobilism-men-hu}
+### Portal {#mobilism-portal}
 
-<Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type/:fulltext?" paramsDesc={['种类', '是否获取全文，如需获取全文参数传入 `y`']}>
+<Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type/:fulltext?" paramsDesc={['Sections', 'Retrieve fulltext, specify `y` to enable']}>
 
-| 安卓应用 | 安卓游戏 | 图书  | iPad 应用 | iPad 游戏 | iPhone 应用 | iPhone 游戏 |
-| -------- | -------- | ----- | --------- | --------- | ----------- | ----------- |
-| aapp     | agame    | ebook | ipapp     | ipgame    | iapp        | igame       |
+| Android Apps | Android Games | ebook | iPad Apps | iPad Games | iPhone Apps | iPhone Games |
+| ------------ | ------------- | ----- | --------- | ---------- | ----------- | ------------ |
+| aapp         | agame         | ebook | ipapp     | ipgame     | iapp        | igame        |
 
 </Route>
 
@@ -264,11 +262,25 @@ import Route from '@site/src/components/Route';
 
 <Route author="xyqfer syrinka" example="/nga/post/18449558" path="/nga/post/:tid/:authorId?"  paramsDesc={['帖子 id, 可在帖子 URL 找到', '作者 id']} radar="1" rssbud="1"/>
 
+## Pikabu {#pikabu}
+
+### Community {#pikabu-community}
+
+<Route author="TonyRL" example="/pikabu/community/real_true_story" path="/pikabu/community/:name" paramsDesc={['Community name']} radar="1" rssbud="1"/>
+
+### Tag {#pikabu-tag}
+
+<Route author="TonyRL" example="/pikabu/tag/Metallica" path="/pikabu/tag/:name" paramsDesc={['Tag name']} radar="1" rssbud="1"/>
+
+### User {#pikabu-user}
+
+<Route author="TonyRL" example="/pikabu/user/@Eujenu" path="/pikabu/user/:name" paramsDesc={['User name']} radar="1" rssbud="1"/>
+
 ## PLAYNO.1 玩樂達人 {#playno.1-wan-le-da-ren}
 
 ### AV {#playno.1-wan-le-da-ren-av}
 
-:::caution 注意
+:::caution
 
 目前观测到该博客可能禁止日本 IP 访问。建议部署在日本区以外的服务器上。
 
@@ -336,15 +348,15 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-## SCBOY 论坛 {#scboy-lun-tan}
+## SCBOY forum {#scboy-forum}
 
-### 帖子 {#scboy-lun-tan-tie-zi}
+### Thread {#scboy-forum-thread}
 
-<Route author="totorowechat" example="/scboy/thread/188673" path="/scboy/thread/:tid" paramsDesc={['帖子 tid']} radar="1">
+<Route author="totorowechat" example="/scboy/thread/188673" path="/scboy/thread/:tid" paramsDesc={['thread tid']} radar="1">
 
-帖子网址如果为 <https://www.scboy.com/?thread-188673.htm> 那么帖子 tid 就是 `1789863`。
+If the url of the thread is <https://www.scboy.com/?thread-188673.htm> then tid would be `1789863`.
 
-访问水区需要添加环境变量 `SCBOY_BBS_TOKEN`, 详情见部署页面的配置模块。 `SCBOY_BBS_TOKEN`在 cookies 的`bbs_token`中。
+When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environment`. See <https://docs.rsshub.app/install/#Deployment> for details. `SCBOY_BBS_TOKEN` is included in cookies with `bbs_token`.
 
 </Route>
 
@@ -400,9 +412,9 @@ import Route from '@site/src/components/Route';
 
 ## ZodGame {#zodgame}
 
-### 论坛版块 {#zodgame-lun-tan-ban-kuai}
+### forum {#zodgame-forum}
 
-<Route author="FeCCC" example="/zodgame/forum/13" path="/zodgame/forum/:fid?" paramsDesc={['版块 id，在 URL 可以找到']} radar="1" rssbud="1" selfhost="1"/>
+<Route author="FeCCC" example="/zodgame/forum/13" path="/zodgame/forum/:fid?" paramsDesc={['forum id, can be found in URL']} radar="1" rssbud="1" selfhost="1"/>
 
 ## Zuvio {#zuvio}
 
@@ -623,7 +635,7 @@ import Route from '@site/src/components/Route';
 | --- | --- | ------ |
 | nba | cba | soccer |
 
-:::tip 提示
+:::tip
 
 电竞分类参见 [游戏热帖](https://bbs.hupu.com/all-gg) 的对应路由 [`/hupu/all/all-gg`](https://rsshub.app/hupu/all/all-gg)。
 
@@ -635,7 +647,7 @@ import Route from '@site/src/components/Route';
 
 <Route author="LogicJake nczitzk" example="/hupu/bbs/topic-daily" path="/hupu/bbs/:id?/:order?" paramsDesc={['编号，可在对应社区 URL 中找到，默认为#步行街主干道', '排序方式，可选 `0` 即 最新回复 或 `1` 即 最新发布，默认为最新回复']}>
 
-:::tip 提示
+:::tip
 
 更多社区参见 [社区](https://bbs.hupu.com)
 
@@ -647,7 +659,7 @@ import Route from '@site/src/components/Route';
 
 <Route author="nczitzk" example="/hupu/all/topic-daily" path="/hupu/all/:id?" paramsDesc={['编号，可在对应热帖版面 URL 中找到，默认为步行街每日话题']}>
 
-:::tip 提示
+:::tip
 
 更多热帖版面参见 [论坛](https://bbs.hupu.com)
 
@@ -983,7 +995,7 @@ import Route from '@site/src/components/Route';
 
 <Route author="nczitzk" example="/muchong/290" path="/muchong/:id/:type?/:sort?" paramsDesc={['板块 id，可在板块页 URL 中找到', '子类别 id，可在板块页导航栏中找到，默认为 `all` 即 全部', '排序，可选 `order-tid` 即 发表排序，默认为 回帖排序']}>
 
-:::tip 提示
+:::tip
 
 尚不支持需要登录访问的版块
 
@@ -1087,6 +1099,12 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
+## 小特社区 {#xiao-te-she-qu}
+
+### 首页帖子 {#xiao-te-she-qu-shou-ye-tie-zi}
+
+<Route author="wxsimon" example="/xiaote/news" path="/xiaote/news"></Route>
+
 ## 一亩三分地 {#yi-mu-san-fen-di}
 
 ### 帖子 {#yi-mu-san-fen-di-tie-zi}
@@ -1174,7 +1192,7 @@ import Route from '@site/src/components/Route';
 
 <Route author="NavePnow" example="/1point3acres/offer/12/null/CMU" path="/1point3acres/offer/:year?/:major?/:school?" paramsDesc={['录取年份  id，空为null', '录取专业 id，空为null', '录取学校 id，空为null']}>
 
-:::caution 三个 id 获取方式
+:::tip 三个 id 获取方式
 
 1.  打开 <https://offer.1point3acres.com>
 2.  打开控制台
@@ -1238,3 +1256,4 @@ import Route from '@site/src/components/Route';
 | lingyishijain | lingyitupian | minjianqitan |
 
 </Route>
+
