@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 💻 Programming
 
 ## A List Apart {#a-list-apart}
@@ -13,8 +11,6 @@ import Route from '@site/src/components/Route';
 <Route author="Rjnishant530" example="/alistapart/application-development" path="/alistapart/:topic" paramsDesc={['Any Topic or from the table below. Defaults to All Articles']} radar="1">
 
 You have the option to utilize the main heading or use individual categories as topics for the path.
-
-:::note Topics
 
 | **Code**                | _code_                  |
 |-------------------------|-------------------------|
@@ -61,8 +57,6 @@ You have the option to utilize the main heading or use individual categories as 
 | **Interaction Design**  | _interaction-design_    |
 | **Usability**           | _usability_             |
 | **User Research**       | _user-research_         |
-
-:::
 
 </Route>
 
@@ -822,8 +816,6 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <Route author="Rjnishant530" example="/smashingmagazine/react" path="/smashingmagazine/:category?" paramsDesc={['Find in URL or Table below']} radar="1">
 
-:::note Category
-
 | **Category**         |                       |
 |----------------------|-----------------------|
 | Accessibility        | accessibility         |
@@ -859,8 +851,6 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 | Wallpapers           | wallpapers            |
 | Web Design           | web-design            |
 | Workflow             | workflow              |
-
-:::
 
 </Route>
 
@@ -946,7 +936,7 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 ## 安全客 {#an-quan-ke}
 
-:::tip 提示
+:::tip
 
 官方提供了混合的主页资讯 RSS: <https://api.anquanke.com/data/v1/rss>
 
@@ -1197,7 +1187,7 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 ## 拉勾网 {#la-gou-wang}
 
-:::tip 提示
+:::tip
 
 拉勾网官方提供职位的[邮件订阅](https://www.lagou.com/s/subscribe.html)，请根据自身需要选择使用。
 
@@ -1422,7 +1412,7 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 ## 腾讯游戏开发者社区 {#teng-xun-you-xi-kai-fa-zhe-she-qu}
 
-:::caution 注意
+:::caution
 
 有部分输出全文带有未进行样式处理的代码内容，显示效果不佳，建议跳转原文阅读
 

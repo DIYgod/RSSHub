@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 🎮 Gaming
 
 ## 3DMGame {#3dmgame}
@@ -268,7 +266,7 @@ Or
 
 So the route is [`/itch/games/top-rated/tag-singleplayer`](https://rsshub.app/itch/games/top-rated/tag-singleplayer).
 
-:::tip tips
+:::tip
 
 You can browse all the tags at [here](https://itch.io/tags).
 
@@ -506,7 +504,7 @@ For instance, in `https://store.steampowered.com/search/?specials=1&term=atelier
 
 ## TapTap International {#taptap-international}
 
-:::caution Warning
+:::caution
 
 Due to the regional restrictions, an RSSHub deployment in China Mainland may not work on accessing the TapTap International Website.
 
@@ -544,7 +542,7 @@ Language Code
 
 ## TapTap 中国 {#taptap-zhong-guo}
 
-:::caution 注意
+:::caution
 
 由于区域限制，需要在有国内 IP 的机器上自建才能正常获取 RSS。\
 而对于《TapTap 国际版》则需要部署在具有海外出口的 IP 上才可正常获取 RSS。
@@ -834,7 +832,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="nczitzk" example="/keylol" path="/keylol/:path+" paramsDesc={['路径，默认为热点聚焦']}>
 
-:::tip 提示
+:::tip
 
 若订阅 [热点聚焦](https://keylol.com/f161-1)，网址为 <https://keylol.com/f161-1>。截取 `https://keylol.com/` 到末尾的部分 `f161-1` 作为参数，此时路由为 [`/keylol/f161-1`](https://rsshub.app/keylol/f161-1)。
 

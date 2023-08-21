@@ -111,8 +111,10 @@ The `maintainer.js` file should export an object that provides maintainer inform
 
 To generate a list of maintainers, use the following command: `pnpm run build:maintainer`, which will create the list under `assets/build/`.
 
-:::danger Warning
+:::danger
+
 The path in the `@koa/router` object should be the same as the `path` in the corresponding documentation before the namespace appended in front of it.
+
 :::
 
 ### Radar Rules
@@ -121,8 +123,10 @@ All routes are required to include the `radar.js` file, which includes the corre
 
 To generate a complete `radar-rules.js` file, use the following command: `yarn build:radar`, which will create the file under `assets/build/`.
 
-:::tip Tips
+:::tip
+
 Remember to remove all build artifacts in `assets/build/` before committing.
+
 :::
 
 ### Rendering Templates
@@ -154,7 +158,7 @@ const renderAuthor = (author) => art(path.join(__dirname, 'templates/author.art'
 
 ### v1 Route Standard
 
-:::danger Warning
+:::danger
 
 The v1 Route Standard is deprecated. All new routes should be following the [v2 Route Standard](/joinus/advanced/script-standard#v2-route-standard).
 

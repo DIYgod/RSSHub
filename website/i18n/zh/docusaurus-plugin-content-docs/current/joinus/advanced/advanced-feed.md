@@ -2,8 +2,6 @@
 sidebar_position: 1
 ---
 
-import Route from '@site/src/components/Route';
-
 # RSS 基础
 
 本指南面向希望深入了解如何制作 RSS 订阅源的高级用户。如果您是第一次制作 RSS 订阅源，我们建议先阅读 [制作自己的 RSSHub 路由](/zh/joinus/new-rss/start-code)。
@@ -56,6 +54,7 @@ import Route from '@site/src/components/Route';
 | **`doi`** | *（可选）* 条目的数字对象标识符 (DOI)，应为格式为 `10.xxx/xxxxx.xxxx` 的字符串 | `undefinded` | R |
 
 :::caution 格式考虑
+
 在指定 RSS 订阅源中的某些字段时，重要的是要注意一些格式考虑因素。具体来说，您应避免在以下字段中包含任何换行符、连续的空格或前导／尾随空格：**`title`**，**`subtitle`**（仅适用于 Atom），**`author`**（仅适用于 Atom），**`item.title`** 和 **`item.author`**。
 
 虽然大多数 RSS 阅读器将自动修剪这些空字符，但有些阅读器可能无法正确处理它们。因此，为确保与所有 RSS 阅读器兼容，我们建议在输出这些字段之前将其修剪。如果您制作的路由无法容忍修剪这些空字符，您应考虑更改它们的格式。
@@ -63,6 +62,7 @@ import Route from '@site/src/components/Route';
 另外，虽然其他字段不会被强制修剪，但我们建议尽可能避免违反上述格式规则。如果您正在使用 Cheerio 从网页中提取内容，时刻谨记 Cheerio 会保留换行和缩进。特别是对于 **`item.description`** 字段，任何预期之内的换行都应转换为 `<br>` 标签，以防止其被 RSS 阅读器修剪。尤其是您从 JSON 数据中制作 RSS 订阅时，目标网站返回的 JSON 很有可能含有需要显示的换行符，在这种情况下，应将它们转换为 `<br>` 标签。
 
 请牢记这些格式考虑因素，以确保您的 RSS 订阅源与所有 RSS 阅读器兼容。
+
 :::
 
 ## 制作 BitTorrent／磁力订阅源
@@ -89,7 +89,7 @@ ctx.state.data = {
 
 如果您要在 RSSHub 路由中添加对 BitTorrent／磁力订阅支持，最重要的是在文档以反映此功能。要做到这一点，您需要将 `Route` 组件的 `supportBT` 属性设置为 `"1"`。 以下是一个示例：
 
-```vue
+```tsx
 <Route author="..." example="..." path="..." supportBT="1" />
 ```
 
@@ -115,7 +115,7 @@ ctx.state.data = {
 
 要显示您制作的期刊订阅源支持 Sci-hub 功能，您需要将 `Route` 组件的 `supportScihub` 属性设置为 `"1"`。以下是一个示例：
 
-```vue
+```tsx
 <Route author="..." example="..." path="..." supportScihub="1" />
 ```
 
@@ -155,7 +155,7 @@ ctx.state.data = {
 
 要显示您制作的订阅源与播客播放器兼容，您需要将 `Route` 组件的 `supportPodcast` 属性设置为 `"1"`。以下是一个示例：
 
-```vue
+```tsx
 <Route author="..." example="..." path="..." supportPodcast="1" />
 ```
 
