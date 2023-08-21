@@ -58,6 +58,12 @@ npm run start
 </TabItem>
 </Tabs>
 
+:::caution
+
+You cannot switch to other languages in development mode. This is a [technical limitation](https://docusaurus.io/docs/i18n/tutorial#start-your-site) from Docusaurus.
+
+::
+
 The documentation is written in MDX and rendered with [Docusaurus v2](https://docusaurus.io/docs).
 
 To add documentation to your route, use the `Route` React component. It works like HTML tag. The following are the most commonly used component properties:

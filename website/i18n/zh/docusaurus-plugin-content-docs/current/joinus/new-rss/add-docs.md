@@ -32,31 +32,47 @@ npm install
 </TabItem>
 </Tabs>
 
-您现在可以在 **`website` 目录** 下运行以下命令实时预览文档：
+您现在可以在 **`website` 目录** 下运行以下命令实时预览中文文档：
 
 <Tabs groupId="package-manager">
 <TabItem value="pnpm" label="pnpm" active>
 
 ```bash
-pnpm run start
+pnpm run start:zh
 ```
 
 </TabItem>
 <TabItem value="yarn" label="yarn">
 
 ```bash
-yarn start
+yarn start:zh
 ```
 
 </TabItem>
 <TabItem value="npm" label="npm">
 
 ```bash
-npm run start
+npm run start:zh
 ```
 
 </TabItem>
 </Tabs>
+
+:::tip 英文文档
+
+运行以下命令实时预览英文文档
+
+```bash
+pnpm run start
+```
+
+:::
+
+:::caution
+
+在开发模式下，您无法切换到其他语言。这是 Docusaurus 的[技术限制](https://docusaurus.io/docs/i18n/tutorial#start-your-site)。
+
+::
 
 文档使用 MDX 编写，并使用 [Docusaurus v2](https://docusaurus.io/docs) 渲染。
 
