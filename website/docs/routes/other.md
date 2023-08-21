@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 🔍 Uncategorized
 
 ## 4399 论坛 {#4399-lun-tan}
@@ -8,7 +6,7 @@ import Route from '@site/src/components/Route';
 
 <Route author="DIYgod" example="/forum4399/mtag-83932" path="/forum4399/:mtag" paramsDesc={['mtag,必选-论坛网址最后的mtag字段']} selfhost="1">
 
-:::caution 注意
+:::caution
 
 需要用户 cookie 值，详情见部署页面的配置模块。
 
@@ -22,7 +20,7 @@ import Route from '@site/src/components/Route';
 
 <Route author="Yukaii" example="/591/tw/rent/order=posttime&orderType=desc" path="/591/:country/rent/:query?" paramsDesc={['Country code. Only tw is supported now', 'Query Parameters']}>
 
-:::tip Tip
+:::tip
 
 Copy the URL of the 591 filter housing page and remove the front part "<https://rent.591.com.tw/>?", you will get the query parameters.
 
@@ -478,7 +476,7 @@ For example:
 
 ## Notion {#notion}
 
-:::caution Warning
+:::caution
 
 Need to set up Notion integration, please refer to [Route-specific Configurations](https://docs.rsshub.app/install/#Deployment) for details.
 
@@ -619,7 +617,7 @@ Specify options (in the format of query string) in parameter `routeParams` param
 | `itemLink`  | The JSON Path as `link` in `item`        | `string`        | None                                       |
 | `itemDesc`  | The JSON Path as `description` in `item` | `string`        | None                                       |
 
-:::tip Note
+:::tip
 
 JSON Path only supports format like `a.b.c`. if you need to access arrays, like `a[0].b`, you can write it as `a.0.b`.
 
@@ -681,8 +679,10 @@ Board and Build can be found in [here](http://api.ineal.me/tss/status)
 
 <Route author="LogicJake" example="/wegene/column/all/all" path="/wegene/column/:type/:category" paramsDesc={['栏目类型，all（全部项目） 或 weapp（专业版）','栏目分类']} radar="1" rssbud="1">
 
-:::
+:::tip
+
 type 为 all 时，category 参数不支持 cost 和 free
+
 :::
 
 | 全部 | 祖源分析 | 付费 | 遗传性疾病 | 药物指南 | 免费 | 运动基因 | 营养代谢   | 心理特质   | 健康风险 | 皮肤特性 | 遗传特征 |
@@ -817,7 +817,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 习惯打卡 {#di-da-qing-dan-xi-guan-da-ka}
 
-:::caution 注意
+:::caution
 
 需要账号密码，详情见部署文档部分 RSS 模块配置
 
@@ -929,7 +929,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 快递公司代号如果不能确定，可通过下方快递列表获得。
 
-:::caution 注意
+:::caution
 
 1.  构造链接前请确认所有参数正确：错误`快递公司 - 订单号`组合将会缓存信息一小段时间防止产生无用查询
 2.  正常查询的订单在未签收状态下不会被缓存：请控制查询频率
@@ -1035,7 +1035,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route author="TonyRL" example="/qiyoujiage/shanghai" path="/qiyoujiage/:path+" paramsDesc={['路径']}>
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中 `http://www.qiyoujiage.com/` 和 `.shtml` 之间的字段。下面是一个例子。
 

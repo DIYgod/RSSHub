@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 📖 Study
 
 ## 51VOA 美国之音 {#51voa-mei-guo-zhi-yin}
@@ -383,7 +381,7 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 | ---- | ---- | ---- |
 | tz   | dt   | gs   |
 
-:::tip 提示
+:::tip
 
 分类字段处填写的是对应东莞教研网网址中中介于 **<https://www.dgjyw.com/>** 和 **.htm** 中间的一段。
 
@@ -451,7 +449,7 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 <Route author="nczitzk" example="/sdzk" path="/sdzk/:bcid?/:cid?" paramsDesc={['板块 id，可在对应板块页 URL 中找到，默认为 `1`，即信息与政策', '栏目 id，可在对应板块页 URL 中找到，默认为 `16`，即通知公告']}>
 
-:::tip 提示
+:::tip
 
 若订阅 [信息与政策](https://www.sdzk.cn/NewsList.aspx?BCID=1)，网址为 <https://www.sdzk.cn/NewsList.aspx?BCID=1>。截取 `BCID=1` 作为参数，此时路由为 [`/sdzk/1`](https://rsshub.app/sdzk/1)。
 
@@ -499,7 +497,7 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 <Route author="nczitzk" example="/edrawsoft/mindmap/1/PV/DESC/CN/1" path="/edrawsoft/mindmap/:classId?/:order?/:sort?/:lang?/:price?/:search?" paramsDesc={['分类编号，见下表，默认为全部分类', '排序参数，`PV` 指 最多浏览，`TIME` 指 最新发布，`LIKE` 指 最多点赞，默认为 `PV` 即 最多浏览', '排序方式，`DESC` 指 降序，`ASC` 指 升序，默认为 `DESC` 即 降序', '模板语言，默认为 `CN`', '是否免费，`1` 指 全部，`2` 指 免费，`3` 指 付费，`4` 指 会员免费，默认为 `1` 即 全部', '搜索关键词，默认为空']}>
 
-:::tip 提示
+:::tip
 
 不支持分类搜索和自定义搜索排序，即 `search` 参数不为空时，其他参数不起作用。
 
@@ -631,7 +629,7 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 <Route author="nczitzk" example="/yinxiang/card/32" path="/yinxiang/card/:id?" paramsDesc={['卡片 id，见下表，默认为每周收藏排行榜・TOP5']}>
 
-:::tip 提示
+:::tip
 
 卡片对应的话题、专题等内容过期后，该卡片 id 也会失效，此时填入该卡片 id 将会报错。
 

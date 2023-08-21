@@ -54,9 +54,9 @@ const config = {
                     { from: '/joinus/use-cache', to: '/joinus/advanced/use-cache' },
                     ...Object.values(require('./sidebars').guideSidebar)
                         .find((s) => s.label === 'Routes')
-                        .items.map((category) => ({
-                            from: `/${category.split('/')[1]}`,
-                            to: `/routes/${category.split('/')[1]}`,
+                        .items.map(({ id }) => ({
+                            from: `/${id.split('/')[1]}`,
+                            to: `/routes/${id.split('/')[1]}`,
                         })),
                 ],
             }),
@@ -235,6 +235,7 @@ const config = {
             prism: {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
+                additionalLanguages: ['bash'],
             },
         }),
 };

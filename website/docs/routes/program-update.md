@@ -1,4 +1,3 @@
-import Route from '@site/src/components/Route';
 
 # 🔄 Application Updates
 
@@ -381,8 +380,10 @@ Language
 ## Logseq {#logseq}
 
 :::caution
+
 Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 请使用 <https://github.com/logseq/logseq/releases.atom> 代替。
+
 :::
 
 ## MacKed {#macked}

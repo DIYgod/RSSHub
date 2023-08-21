@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 💰 Finance
 
 ## AI 财经社 {#ai-cai-jing-she}
@@ -143,7 +141,7 @@ import Route from '@site/src/components/Route';
 
 <Route author="Rjnishant530" example="/finology/tag/startups" path="/tag/:topic" paramDesc={['Refer Table below or find in URL']} radar="1">
 
-:::note Topic
+Topic
 
 | Topic              | Link                  |
 |---------------------|-----------------------|
@@ -175,8 +173,6 @@ import Route from '@site/src/components/Route';
 | World News         | world-news            |
 | Technology         | technology            |
 | Regulatory Bodies  | regulatory-bodies     |
-
-:::
 
 </Route>
 
@@ -276,7 +272,7 @@ Language
 
 ## TokenInsight {#tokeninsight}
 
-:::tip Tips
+:::tip
 
 TokenInsight also provides official RSS, you can take a look at <https://api.tokeninsight.com/reference/rss>.
 
@@ -340,7 +336,7 @@ See filters in [Report](https://www.weforum.org/reports) for Year and Platform t
 
 <Route author="nczitzk" example="/barronschina" path="/barronschina/:id?" paramsDesc={['栏目 id，默认为快讯']}>
 
-:::tip 提示
+:::tip
 
 栏目 id 留空则返回快讯，在对应页地址栏 `columnId=` 后可以看到。
 
