@@ -1851,6 +1851,18 @@ rule
 
 </Route>
 
+### [xhu](https://github.com/REToys/xhu) - 收藏夹 {#zhi-hu-%5Bxhu%5D(https%3A%2F%2Fgithub.com%2Fretoys%2Fxhu)---shou-cang-jia}
+
+<Route author="JimenezLi" example="/zhihu/xhu/collection/26444956" path="/zhihu/xhu/collection/:id" paramsDesc={['收藏夹 id, 可在收藏夹页面 URL 中找到']} anticrawler="1"/>
+
+### [xhu](https://github.com/REToys/xhu) - 专栏 {#zhi-hu-%5Bxhu%5D(https%3A%2F%2Fgithub.com%2Fretoys%2Fxhu)---zhuan-lan}
+
+<Route author="JimenezLi" example="/zhihu/xhu/zhuanlan/githubdaily" path="/zhihu/xhu/zhuanlan/:id" paramsDesc={['专栏 id, 可在专栏主页 URL 中找到']} anticrawler="1"/>
+
+### [xhu](https://github.com/REToys/xhu) - 问题 {#zhi-hu-%5Bxhu%5D(https%3A%2F%2Fgithub.com%2Fretoys%2Fxhu)---wen-ti}
+
+<Route author="JimenezLi" example="/zhihu/xhu/question/264051433" path="/zhihu/xhu/question/:questionId/:sortBy?" paramsDesc={['问题 id', '排序方式：`default`, `created`, `updated`。默认为 `default`']} anticrawler="1"/>
+
 ### [xhu](https://github.com/REToys/xhu) - 话题 {#zhi-hu-%5Bxhu%5D(https%3A%2F%2Fgithub.com%2Fretoys%2Fxhu)---hua-ti}
 
 <Route author="JimenezLi" example="/zhihu/xhu/topic/19566035" path="/zhihu/xhu/topic/:topicId" paramsDesc={['话题ID']} anticrawler="1"/>
