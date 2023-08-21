@@ -70,9 +70,9 @@ pnpm run start
 
 :::caution
 
-在开发模式下，您无法切换到其他语言。这是 Docusaurus 的[技术限制](https://docusaurus.io/docs/i18n/tutorial#start-your-site)。
+在开发模式下，您无法切换到其他语言。这是 Docusaurus 的 [技术限制](https://docusaurus.io/docs/i18n/tutorial#start-your-site)。
 
-::
+:::
 
 文档使用 MDX 编写，并使用 [Docusaurus v2](https://docusaurus.io/docs) 渲染。
 
