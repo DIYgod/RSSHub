@@ -264,6 +264,22 @@ import Route from '@site/src/components/Route';
 
 <Route author="xyqfer syrinka" example="/nga/post/18449558" path="/nga/post/:tid/:authorId?"  paramsDesc={['帖子 id, 可在帖子 URL 找到', '作者 id']} radar="1" rssbud="1"/>
 
+## NodeSeek {#nodeseek}
+
+### 新帖子 {#nodeseek-xin-tie-zi}
+
+<Route author="bmqy" example="/post/new" path="/post/new" radar="1" puppeteer="1"></Route>
+
+### 版块 {#nodeseek-ban-kuai}
+
+<Route author="bmqy" example="/categories/daily" path="/categories/:category" paramsDesc={['分类', '全部分类，见下表']} radar="1" puppeteer="1">
+
+| 日常 |  技术 | 情报   | 测评   | 交易   | 拼车   | 树洞   | 贴图   | 推广   | 内板   | Dev   |
+| ------------ | -------- | ------------ | ------------ | -------- | ------------ | ------------ | -------- | ------------ | ------------ | -------- |
+| daily         | tech      | info | review         | trade      | carpool | emotion         | photo-share      | promotion | inside         | dev      |
+
+</Route>
+
 ## PLAYNO.1 玩樂達人 {#playno.1-wan-le-da-ren}
 
 ### AV {#playno.1-wan-le-da-ren-av}
@@ -1238,3 +1254,4 @@ import Route from '@site/src/components/Route';
 | lingyishijain | lingyitupian | minjianqitan |
 
 </Route>
+
