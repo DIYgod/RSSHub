@@ -5220,4 +5220,3 @@ QueryString:
 ### 公众号 {#zi-you-wei-xin-gong-zhong-hao}
 
 <Route author="TonyRL" example="/freewechat/profile/MzI5NTUxNzk3OA==" path="/freewechat/profile/:id" paramsDesc={['公众号 ID，可在URL中找到']} radar="1" rssbud="1" anticrawler="1"/>
-
