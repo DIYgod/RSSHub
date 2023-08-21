@@ -1,6 +1,6 @@
 import Route from '@site/src/components/Route';
 
-# 💬️ 论坛
+# 💬️ BBS
 
 ## 19 楼 {#19-lou}
 
@@ -144,27 +144,27 @@ import Route from '@site/src/components/Route';
 
 ## Discuz {#discuz}
 
-### 通用子版块 - 自动检测 {#discuz-tong-yong-zi-ban-kuai---zi-dong-jian-ce}
+### General Subforum - Auto detection {#discuz-general-subforum---auto-detection}
 
-<Route author="junfengP" example="/discuz/http%3a%2f%2fwww.u-share.cn%2fforum.php%3fmod%3dforumdisplay%26fid%3d56" path="/discuz/:link" paramsDesc={['子版块链接， 需要手动Url编码']}/>
+<Route author="junfengP" example="/discuz/http%3a%2f%2fwww.u-share.cn%2fforum.php%3fmod%3dforumdisplay%26fid%3d56" path="/discuz/:link" paramsDesc={['link of subforum, require url encoded ']}/>
 
-### 通用子版块 - 指定版本 {#discuz-tong-yong-zi-ban-kuai---zhi-ding-ban-ben}
+### General Subforum - Manual version {#discuz-general-subforum---manual-version}
 
-<Route author="junfengP" example="/discuz/x/https%3a%2f%2fwww.52pojie.cn%2fforum-16-1.html" path="/discuz/:ver/:link" paramsDesc={['discuz版本类型，见下表','子版块链接， 需要手动Url编码']} >
+<Route author="junfengP" example="/discuz/x/https%3a%2f%2fwww.52pojie.cn%2fforum-16-1.html" path="/discuz/:ver/:link" paramsDesc={['discuz version，see below table','link of subforum, require url encoded']} >
 
-| Discuz X 系列 | Discuz 7.x 系列 |
-| ------------- | --------------- |
-| x             | 7               |
+| Discuz X Series | Discuz 7.x Series |
+| --------------- | ----------------- |
+| x               | 7                 |
 
 </Route>
 
-### 通用子版块 - 支持 Cookie {#discuz-tong-yong-zi-ban-kuai---zhi-chi-cookie}
+### General Subforum - Support cookie {#discuz-general-subforum---support-cookie}
 
-<Route author="junfengP" example="/discuz/x/00/https%3a%2f%2fbbs.zdfx.net%2fforum-2-1.html" path="/discuz/:ver/:cid/:link" paramsDesc={['discuz版本类型，见下表', 'Cookie id，需自建并配置环境变量，详情见部署页面的配置模块','子版块链接， 需要手动Url编码']} >
+<Route author="junfengP" example="/discuz/x/00/https%3a%2f%2fbbs.zdfx.net%2fforum-2-1.html" path="/discuz/:ver/:cid/:link" paramsDesc={['discuz version，see below table', 'Cookie id，require self hosted and set environment parameters, see Deploy - Configuration pages for detail','link of subforum, require url encoded']} >
 
-| Discuz X 系列 | Discuz 7.x 系列 |
-| ------------- | --------------- |
-| x             | 7               |
+| Discuz X Series | Discuz 7.x Series |
+| --------------- | ----------------- |
+| x               | 7                 |
 
 </Route>
 
@@ -206,7 +206,7 @@ import Route from '@site/src/components/Route';
 
 ### Discussion {#lowendtalk-discussion}
 
-<Route author="nczitzk" example="/lowendtalk/discussion/168480" path="/lowendtalk/discussion/:id?" paramsDesc={['讨论 id']}/>
+<Route author="nczitzk" example="/lowendtalk/discussion/168480" path="/lowendtalk/discussion/:id?" paramsDesc={['Discussion id']}/>
 
 ## MCBBS {#mcbbs}
 
@@ -230,27 +230,27 @@ import Route from '@site/src/components/Route';
 
 ## Mobilism {#mobilism}
 
-### 论坛 {#mobilism-lun-tan}
+### Forums {#mobilism-forums}
 
-<Route author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type/:fulltext?" paramsDesc={['分类', '种类', '是否获取全文，如需获取全文参数传入 `y`']}>
+<Route author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type/:fulltext?" paramsDesc={['Category', 'subcategory','Retrieve fulltext, specify `y` to enable']}>
 
-| 安卓    | iPhone | iPad |
+| Android | iPhone | iPad |
 | ------- | ------ | ---- |
 | android | iphone | ipad |
 
-| 应用 | 游戏  |
+| Apps | games |
 | ---- | ----- |
 | apps | games |
 
 </Route>
 
-### 门户 {#mobilism-men-hu}
+### Portal {#mobilism-portal}
 
-<Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type/:fulltext?" paramsDesc={['种类', '是否获取全文，如需获取全文参数传入 `y`']}>
+<Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type/:fulltext?" paramsDesc={['Sections', 'Retrieve fulltext, specify `y` to enable']}>
 
-| 安卓应用 | 安卓游戏 | 图书  | iPad 应用 | iPad 游戏 | iPhone 应用 | iPhone 游戏 |
-| -------- | -------- | ----- | --------- | --------- | ----------- | ----------- |
-| aapp     | agame    | ebook | ipapp     | ipgame    | iapp        | igame       |
+| Android Apps | Android Games | ebook | iPad Apps | iPad Games | iPhone Apps | iPhone Games |
+| ------------ | ------------- | ----- | --------- | ---------- | ----------- | ------------ |
+| aapp         | agame         | ebook | ipapp     | ipgame     | iapp        | igame        |
 
 </Route>
 
@@ -263,6 +263,20 @@ import Route from '@site/src/components/Route';
 ### 帖子 {#nga-tie-zi}
 
 <Route author="xyqfer syrinka" example="/nga/post/18449558" path="/nga/post/:tid/:authorId?"  paramsDesc={['帖子 id, 可在帖子 URL 找到', '作者 id']} radar="1" rssbud="1"/>
+
+## Pikabu {#pikabu}
+
+### Community {#pikabu-community}
+
+<Route author="TonyRL" example="/pikabu/community/real_true_story" path="/pikabu/community/:name" paramsDesc={['Community name']} radar="1" rssbud="1"/>
+
+### Tag {#pikabu-tag}
+
+<Route author="TonyRL" example="/pikabu/tag/Metallica" path="/pikabu/tag/:name" paramsDesc={['Tag name']} radar="1" rssbud="1"/>
+
+### User {#pikabu-user}
+
+<Route author="TonyRL" example="/pikabu/user/@Eujenu" path="/pikabu/user/:name" paramsDesc={['User name']} radar="1" rssbud="1"/>
 
 ## PLAYNO.1 玩樂達人 {#playno.1-wan-le-da-ren}
 
@@ -336,15 +350,15 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-## SCBOY 论坛 {#scboy-lun-tan}
+## SCBOY forum {#scboy-forum}
 
-### 帖子 {#scboy-lun-tan-tie-zi}
+### Thread {#scboy-forum-thread}
 
-<Route author="totorowechat" example="/scboy/thread/188673" path="/scboy/thread/:tid" paramsDesc={['帖子 tid']} radar="1">
+<Route author="totorowechat" example="/scboy/thread/188673" path="/scboy/thread/:tid" paramsDesc={['thread tid']} radar="1">
 
-帖子网址如果为 <https://www.scboy.com/?thread-188673.htm> 那么帖子 tid 就是 `1789863`。
+If the url of the thread is <https://www.scboy.com/?thread-188673.htm> then tid would be `1789863`.
 
-访问水区需要添加环境变量 `SCBOY_BBS_TOKEN`, 详情见部署页面的配置模块。 `SCBOY_BBS_TOKEN`在 cookies 的`bbs_token`中。
+When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environment`. See <https://docs.rsshub.app/install/#Deployment> for details. `SCBOY_BBS_TOKEN` is included in cookies with `bbs_token`.
 
 </Route>
 
@@ -400,9 +414,9 @@ import Route from '@site/src/components/Route';
 
 ## ZodGame {#zodgame}
 
-### 论坛版块 {#zodgame-lun-tan-ban-kuai}
+### forum {#zodgame-forum}
 
-<Route author="FeCCC" example="/zodgame/forum/13" path="/zodgame/forum/:fid?" paramsDesc={['版块 id，在 URL 可以找到']} radar="1" rssbud="1" selfhost="1"/>
+<Route author="FeCCC" example="/zodgame/forum/13" path="/zodgame/forum/:fid?" paramsDesc={['forum id, can be found in URL']} radar="1" rssbud="1" selfhost="1"/>
 
 ## Zuvio {#zuvio}
 

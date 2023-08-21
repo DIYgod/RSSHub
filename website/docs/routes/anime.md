@@ -1,6 +1,6 @@
 import Route from '@site/src/components/Route';
 
-# 🎨️ 二次元
+# 🎨️ ACG
 
 ## 005.tv {#005.tv}
 
@@ -141,6 +141,20 @@ import Route from '@site/src/components/Route';
 
 <Route author="ranpox" path="/anitama/:channel?" example="/anitama" paramsDesc={['频道id，从频道的地址栏中查看']}/>
 
+## Bangumi Moe 萌番组 {#bangumi-moe-meng-fan-zu}
+
+### Latest {#bangumi-moe-meng-fan-zu-latest}
+
+<Route author="nczitzk" example="/bangumi/moe" path="/bangumi/moe"/>
+
+### Tags {#bangumi-moe-meng-fan-zu-tags}
+
+<Route author="nczitzk" example="/bangumi/moe/chs/1080p" path="/bangumi/moe/:tags?" paramsDesc={['Tags, empty by default, multiple tags separated by `/`']}>
+
+For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
+
+</Route>
+
 ## Bangumi 番组计划 {#bangumi-fan-zu-ji-hua}
 
 ### 放送列表 {#bangumi-fan-zu-ji-hua-fang-song-lie-biao}
@@ -201,41 +215,47 @@ import Route from '@site/src/components/Route';
 
 <Route author="Cyang39" example="/comicat/search/喵萌奶茶屋+跃动青春+720P+简日" path="/comicat/search/:keyword" paramsDesc={['关键词，请用`+`号连接']} supportBT="1" />
 
+## Comics Kingdom {#comics-kingdom}
+
+### Archive {#comics-kingdom-archive}
+
+<Route author="stjohnjohnson" example="/comicskingdom/pardon-my-planet" path="/comicskingdom/:name" paramsDesc={['URL path of the strip on comicskingdom.com']} />
+
 ## DLsite {#dlsite}
 
-### 通用 {#dlsite-tong-yong}
+### General {#dlsite-general}
 
-<Route author="nczitzk" example="/dlsite/home/new" path="/dlsite/:path+" paramsDesc={['路径，默认为 `/home/new`，即発売カレンダー']}>
+<Route author="nczitzk" example="/dlsite/home/new" path="/dlsite/:path+" paramsDesc={['Path, `/home/new` by default, as Release Calendar']}>
 
-:::tip 提示
+:::tip Tip
 
-订阅该路由可以先访问网站指定过滤器，然后在路由的路径处填写对应页面 URL 中 `https://www.dlsite.com/` 后的字段。下面是两个例子。
+To subscribe to this route, you can first visit the site and specify filters, and then fill in the field after `https://www.dlsite.com/` in the URL of the corresponding page at the path of the route. Here are 2 examples.
 
-若订阅 [「ボイス・ASMR」の作品一覧 発売日が新しい順](https://www.dlsite.com/home/works/type/=/work_type_category/audio/order/release_d)，则将对应页面 URL <https://www.dlsite.com/home/works/type/=/work_type_category/audio/order/release_d> 中 `https://www.dlsite.com/` 后的字段 `home/works/type/=/work_type_category/audio/order/release_d` 作为路径填入。此时路由为 [`/dlsite/home/works/type/=/work_type_category/audio/order/release_d`](https://rsshub.app/dlsite/home/works/type/=/work_type_category/audio/order/release_d)
+If you subscribe to [Voice / ASMR works Release date - New to Old](https://www.dlsite.com/home/works/type/=/work_type_category/audio/order/release_d), at the URL of the corresponding page <https://www.dlsite.com/home/works/type/=/work_type_category/audio/order/release_d> and after `https://www.dlsite.com/` is `home/works/type/=/work_ type_category/audio/order/release_d`, which can be seen as the path. In this case the route is [`/dlsite/home/works/type/=/work_type_category/audio/order/release_d`](https://rsshub.app/dlsite/home/works/type/=/work_type_category/audio/order/release_d)
 
-若订阅 [割引中作品 割引開始日が新しい順](https://www.dlsite.com/home/works/discount/=/order/cstart_d)，则将对应页面 URL <https://www.dlsite.com/home/works/discount/=/order/cstart_d> 中 `https://www.dlsite.com/` 后的字段 `home/works/discount/=/order/cstart_d` 作为路径填入。此时路由为 [`/dlsite/home/works/discount/=/order/cstart_d`](https://rsshub.app/dlsite/home/works/discount/=/order/cstart_d)
+If you subscribe to [Discounted works Latest Discounts - Newest to Oldest](https://www.dlsite.com/home/works/discount/=/order/cstart_d), at the URL of the corresponding page <https://www.dlsite.com/home/works/discount/=/order/cstart_d> and after `https://www.dlsite.com/` is `home/works/discount/=/order/cstart_d`, which can be seen as the path. In this case the route is [`/dlsite/home/works/discount/=/order/cstart_d`](https://rsshub.app/dlsite/home/works/discount/=/order/cstart_d)
 
 :::
 
 </Route>
 
-### 当前日期发售的新产品 {#dlsite-dang-qian-ri-qi-fa-shou-de-xin-chan-pin}
+### Current Release {#dlsite-current-release}
 
-<Route author="cssxsh" example="/dlsite/new/home" path="/dlsite/new/:type" paramsDesc={['类型，如下表']}>
+<Route author="cssxsh" example="/dlsite/new/home" path="/dlsite/new/:type" paramsDesc={['Type, see table below']}>
 
-| 同人 | 漫画  | 软件 | 同人 (R18) | 漫画 (R18) | 美少女游戏 | 乙女  | BL |
-| ---- | ----- | ---- | ---------- | ---------- | ---------- | ----- | -- |
-| home | comic | soft | maniax     | books      | pro        | girls | bl |
+| Doujin   | Comics    | PC Games   | Doujin (R18) | Adult Comics | H Games | Otome    | BL |
+| ---- | ----- | ---- | -------- | -------- | ----- | ----- | -- |
+| home | comic | soft | maniax   | books    | pro   | girls | bl |
 
 </Route>
 
-### 产品打折信息 {#dlsite-chan-pin-da-zhe-xin-xi}
+### Discounted Works {#dlsite-discounted-works}
 
-<Route author="cssxsh" example="/dlsite/campaign/home" path="/dlsite/campaign/:type/:free?" paramsDesc={['类型，同上表', '只看免费，任意值开启，为空关闭']}/>
+<Route author="cssxsh" example="/dlsite/campaign/home" path="/dlsite/campaign/:type/:free?" paramsDesc={['Type, see table above', 'Free only, empty means false, other value means true']}/>
 
-### Ci-en 创作者文章 {#dlsite-ci-en-chuang-zuo-zhe-wen-zhang}
+### Ci-en Creators' Article {#dlsite-ci-en-creators'-article}
 
-<Route author="nczitzk" example="/dlsite/ci-en/:id/article" path="/dlsite/ci-en/7400/article" paramsDesc={['创作者 id，可在对应创作者页 URL 中找到']}/>
+<Route author="nczitzk" example="/dlsite/ci-en/:id/article" path="/dlsite/ci-en/7400/article" paramsDesc={['Creator id, can be found in URL']}/>
 
 ## ebb.io {#ebb.io}
 
@@ -251,7 +271,7 @@ import Route from '@site/src/components/Route';
 
 ## Hanime.tv {#hanime.tv}
 
-### 最近更新 {#hanime.tv-zui-jin-geng-xin}
+### Recently updated {#hanime.tv-recently-updated}
 
 <Route author="EsuRt" example="/hanime/video" path="/hanime/video"/>
 
@@ -289,25 +309,31 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
+## IDOLY PRIDE 偶像荣耀 {#idoly-pride-ou-xiang-rong-yao}
+
+### News {#idoly-pride-ou-xiang-rong-yao-news}
+
+<Route author="Mingxia1" example="/idolypride/news" path="/idolypride/news" radar="1" rssbud="1"/>
+
 ## iwara {#iwara}
 
-### 用户 {#iwara-yong-hu}
+### User {#iwara-user}
 
-<Route author="Fatpandac" example="/iwara/users/kelpie/video" path="/iwara/users/:username/:type?" paramsDesc={['用户昵称', 'type 默认为 video']} radar="1" rssbud="1">
+<Route author="Fatpandac" example="/iwara/users/kelpie/video" path="/iwara/users/:username/:type?" paramsDesc={['username, can find in userpage', 'video by default']} radar="1" rssbud="1">
 
-| type |  视频 |  图片 |
+| type | video | image |
 | :--: | :---: | :---: |
-| 参数 | video | image |
+|      | video | image |
 
 </Route>
 
-### 用户订阅列表 {#iwara-yong-hu-ding-yue-lie-biao}
+### User Subscriptions {#iwara-user-subscriptions}
 
 <Route author="FeCCC" example="/iwara/subscriptions" path="/iwara/subscriptions" radar="1" rssbud="1" selfhost="1">
 
-:::caution 注意
+:::caution
 
-用户动态需要 iwara 用户名和密码，所以只能自建，详情见[部署页面](/install#配置)的配置模块。
+This route requires username and password, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
 
 :::
 
@@ -317,7 +343,7 @@ import Route from '@site/src/components/Route';
 
 ### Posts {#kemono-posts}
 
-<Route author="nczitzk" example="/kemono" path="/kemono/:source?/:id?" paramsDesc={['来源，见下表，默认为 Posts', '用户 Id，可在对应页 URL 中找到']}>
+<Route author="nczitzk" example="/kemono" path="/kemono/:source?/:id?" paramsDesc={['Source, see below, Posts by default', 'User id, can be found in URL']}>
 
 Sources
 
@@ -325,9 +351,9 @@ Sources
 | ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |
 | posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |
 
-:::tip 提示
+:::tip Tip
 
-当选择 `posts` 作为参数 **source** 的值时，参数 **id** 不生效。
+When `posts` is selected as the value of the parameter **source**, the parameter **id** does not take effect.
 
 :::
 
@@ -335,48 +361,49 @@ Sources
 
 ## lovelive-anime {#lovelive-anime}
 
-### Love Live 官网最新 News {#lovelive-anime-love-live-guan-wang-zui-xin-news}
+### Love Live! Official Website Latest NEWS {#lovelive-anime-love-live!-official-website-latest-news}
 
-<Route author="axojhf" example="/lovelive-anime/news" path="/lovelive-anime/news/:option?" paramsDesc={['`option` 为 `detail` 时抓取全文']} radar="1"/>
+<Route author="axojhf" example="/lovelive-anime/news" path="/lovelive-anime/news/:option?" paramsDesc={['Crawl full text when `option` is `detail`.']} radar="1"/>
 
-### Love Live 官网分类 Topics {#lovelive-anime-love-live-guan-wang-fen-lei-topics}
+### Love Live Official Website Categories Topics {#lovelive-anime-love-live-official-website-categories-topics}
 
-<Route author="axojhf" example="/lovelive-anime/topics/otonokizaka" path="/lovelive-anime/topics/:abbr/:category?/:option?" paramsDesc={['Love Live系列子企划在官网的路径，详见下表', '官网列出的Topics分类，`category` 为 `detail` 时抓取全文，其他分类详见下表', '`option` 为 `detail` 时抓取全文']} radar="1">
+<Route author="axojhf" example="/lovelive-anime/topics/otonokizaka" path="/lovelive-anime/topics/:abbr/:category?/:option?" paramsDesc={['The path to the Love Live series of sub-projects on the official website is detailed in the table below', 'The official website lists the Topics category, `category` is `detail` when crawling the full text, other categories see the following table for details', 'Crawl full text when `option` is `detail`.']} radar="1">
 
-| 子企划名（非全称） | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | 幻日のヨハネ | ラブライブ！スクールアイドルミュージカル |
-| ------------------ | ----------- | -------------------- | ------------------------------------------ | --------------------- | ------------ | ---------------------------------------- |
-| `abbr`参数         | otonokizaka | uranohoshi           | nijigasaki                                 | yuigaoka              | yohane       | musical                                  |
+| Sub-project Name (not full name) | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | 幻日のヨハネ | ラブライブ！スクールアイドルミュージカル |
+|----------------------------------|-------------|----------------------|--------------------------------------------|-----------------------|--------|----------------------|
+| `abbr`parameter                  | otonokizaka | uranohoshi           | nijigasaki                                 | yuigaoka              | yohane | musical              |
 
-| 分类名         | 全てのニュース  | 音楽商品 | アニメ映像商品 | キャスト映像商品 | 劇場    | アニメ放送 / 配信 | キャスト配信 / ラジオ | ライブ / イベント | ブック | グッズ | ゲーム | メディア | ご当地情報 | その他 | キャンペーン |
-| -------------- | --------------- | -------- | -------------- | ---------------- | ------- | ----------------- | --------------------- | ----------------- | ------ | ------ | ------ | -------- | ---------- | ------ | ------------ |
-| `category`参数 | <u>*无参数*</u> | music    | anime_movie    | cast_movie       | theater | onair             | radio                 | event             | books  | goods  | game   | media    | local      | other  | campaign     |
+
+| Category Name       | 全てのニュース               | 音楽商品  | アニメ映像商品     | キャスト映像商品   | 劇場      | アニメ放送/配信 | キャスト配信/ラジオ | ライブ/イベント | ブック   | グッズ   | ゲーム  | メディア  | ご当地情報 | その他   | キャンペーン   |
+|---------------------|-----------------------|-------|-------------|------------|---------|----------|------------|----------|-------|-------|------|-------|-------|-------|----------|
+| `category`parameter | <u>*No parameter*</u> | music | anime_movie | cast_movie | theater | onair    | radio      | event    | books | goods | game | media | local | other | campaign |
 
 </Route>
 
-### Love Live 官网 Schedule {#lovelive-anime-love-live-guan-wang-schedule}
+### Love Live Official Website Schedule {#lovelive-anime-love-live-official-website-schedule}
 
-<Route author="axojhf" example="/lovelive-anime/schedules" path="/schedules/:serie?/:category?" paramsDesc={['Love Live系列子企划简称，详见下表', '官网列出的分类，详见下表']} radar="1">
+<Route author="axojhf" example="/lovelive-anime/schedules" path="/schedules/:serie?/:category?" paramsDesc={['Love Live! Series sub-projects abbreviation, see the following table', 'The official website lists the categories, see the following table for details']} radar="1">
 
-:::tip 请注意！！！
-该路由获取的时间及其他信息以官网公告为准！<br />
-该 RSS 路由没有经过严格的测试，提供的信息不能保证准确性！
+:::tip Please note!
+The schedule and other information obtained by this route is subject to the official website announcement!
+The RSS routing has not been rigorously tested and the information provided cannot be guaranteed accurate!
 :::
 
-| 子企划名（非全称） | 全シリーズ             | Lovelive!  | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | ラブライブ！スクールアイドルミュージカル |
-| ------------------ | ---------------------- | ---------- | -------------------- | ------------------------------------------ | --------------------- | ---------------------------------------- |
-| `serie`参数        | <u>*无参数*</u>或`all` | `lovelive` | `sunshine`           | `nijigasaki`                               | `superstar`           | `musical`                                |
+| Sub-project Name (not full name) | 全シリーズ                        | Lovelive!  | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | ラブライブ！スクールアイドルミュージカル |
+|----------------------------------|------------------------------|------------|----------------------|--------------------------------------------|-----------------------|----------------------|
+| `serie`parameter                 | <u>*No parameter*</u>or`all` | `lovelive` | `sunshine`           | `nijigasaki`                               | `superstar`           | `musical`            |
 
-| 分类名         | 全て                   | ライブ | イベント | 生配信    |
-| -------------- | ---------------------- | ------ | -------- | --------- |
-| `category`参数 | <u>*无参数*</u>或`all` | `live` | `event`  | `haishin` |
+| Category Name       | 全て                           | ライブ    | イベント    | 生配信       |
+|---------------------|------------------------------|--------|---------|-----------|
+| `category`parameter | <u>*No parameter*</u>or`all` | `live` | `event` | `haishin` |
 
 </Route>
 
 ## MangaDex {#mangadex}
 
-### 漫画更新 {#mangadex-man-hua-geng-xin}
+### Manga Update {#mangadex-manga-update}
 
-<Route author="vzz64" example="/mangadex/58be6aa6-06cb-4ca5-bd20-f1392ce451fb/zh-hk" path="/:id/:lang?" paramsDesc={['漫画ID', '语言代码']} radar="1" />
+<Route author="vzz64" example="/mangadex/58be6aa6-06cb-4ca5-bd20-f1392ce451fb/en" path="/:id/:lang?" paramsDesc={['manga ID', 'language code']} radar="1" />
 
 ## Mox.moe {#mox.moe}
 
@@ -396,69 +423,69 @@ Sources
 
 ## nhentai {#nhentai}
 
-### 分类筛选 {#nhentai-fen-lei-shai-xuan}
+### Filter {#nhentai-filter}
 
-<Route author="MegrezZhu hoilc" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword/:mode?" paramsDesc={['筛选条件，可选：parody, character, tag, artist, group, language, category','筛选值', '模式，`simple` 为仅封面，`detail` 会包括本子每一页，但对服务器负载大，`torrent` 会包括磁力链接，需要登录，参见 [部分 RSS 模块配置](/install#部分-rss-模块配置)。默认为 `simple`']} anticrawler="1" supportBT="1" />
+<Route author="MegrezZhu hoilc" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword/:mode?" paramsDesc={['Filter term, can be: `parody`, `character`, `tag`, `artist`, `group`, `language` or `category`','Filter value', 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/install/#configuration-route-specific-configurations), default to `simple`']} anticrawler="1" supportBT="1" radar="1"/>
 
-### 高级搜索 {#nhentai-gao-ji-sou-suo}
+### Advanced Search {#nhentai-advanced-search}
 
-<Route author="MegrezZhu hoilc" example='/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-"mosaic+censorship"' path="/nhentai/search/:keyword/:mode?" paramsDesc={['用于搜索的关键词。可在原网站搜索后复制 `q=` 后面的内容，也可直接输入。用法详见 [官网](https://nhentai.net/info/)', '模式，`simple` 为仅封面，`detail` 会包括本子每一页，但对服务器负载大，`torrent` 会包括磁力链接，需要登录，参见 [部分 RSS 模块配置](/install#部分-rss-模块配置)。默认为 `simple`']} anticrawler="1" supportBT="1" />
+<Route author="MegrezZhu hoilc" example='/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-"mosaic+censorship"' path="/nhentai/search/:keyword/:mode?" paramsDesc={['Keywords for search. You can copy the content after `q=` after searching on the original website, or you can enter it directly. See the [official website](https://nhentai.net/info/) for details', 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/install/#configuration-route-specific-configurations), default to `simple`']} anticrawler="1" supportBT="1" radar="1"/>
 
 ## QooApp {#qooapp}
 
-### 遊戲庫 - 評論 {#qooapp-you-xi-ku---ping-lun}
+### Game Store - Review {#qooapp-game-store---review}
 
-<Route author="TonyRL" example="/qoo-app/apps/comment/7675" path="/qoo-app/apps/:lang?/comment/:id" paramsDesc={['語言，見下表，留空為中文', '遊戲 ID，可在 URL 找到']}  radar="1">
+<Route author="TonyRL" example="/qoo-app/apps/en/comment/7675" path="/qoo-app/apps/:lang?/comment/:id" paramsDesc={['Language, see the table below, empty means `中文`', 'Game ID, can be found in URL']}  radar="1">
 
 | 中文 | English | 한국어 | Español | 日本語 | ไทย | Tiếng Việt |
-| ---- | ------- | ------ | ------- | ------ | --- | ---------- |
-|      | en      | ko     | es      | ja     | th  | vi         |
+| -- | ------- | --- | ------- | --- | --- | ---------- |
+|    | en      | ko  | es      | ja  | th  | vi         |
 
 </Route>
 
-### 遊戲庫 - 情報 {#qooapp-you-xi-ku---qing-bao}
+### Game Store - Article {#qooapp-game-store---article}
 
-<Route author="TonyRL" example="/qoo-app/apps/post/7675" path="/qoo-app/apps/:lang?/post/:id" paramsDesc={['語言，見上表，留空為中文', '遊戲 ID，可在 URL 找到']}  radar="1"/>
+<Route author="TonyRL" example="/qoo-app/apps/en/post/7675" path="/qoo-app/apps/:lang?/post/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Game ID, can be found in URL']}  radar="1"/>
 
-### 遊戲庫 - 筆記 {#qooapp-you-xi-ku---bi-ji}
+### Game Store - Notes {#qooapp-game-store---notes}
 
-<Route author="TonyRL" example="/qoo-app/apps/note/7675" path="/qoo-app/apps/:lang?/note/:id" paramsDesc={['語言，見上表，留空為中文', '遊戲 ID，可在 URL 找到']}  radar="1"/>
+<Route author="TonyRL" example="/qoo-app/apps/en/note/7675" path="/qoo-app/apps/:lang?/note/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Game ID, can be found in URL']}  radar="1"/>
 
-### 遊戲庫 - 曬卡 {#qooapp-you-xi-ku---shai-ka}
+### Game Store - Cards {#qooapp-game-store---cards}
 
-<Route author="TonyRL" example="/qoo-app/apps/card/7675" path="/qoo-app/apps/:lang?/card/:id" paramsDesc={['語言，見上表，留空為中文', '遊戲 ID，可在 URL 找到']}  radar="1"/>
+<Route author="TonyRL" example="/qoo-app/apps/en/card/7675" path="/qoo-app/apps/:lang?/card/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Game ID, can be found in URL']}  radar="1"/>
 
-### 資訊 {#qooapp-zi-xun}
+### News {#qooapp-news}
 
-<Route author="TonyRL" example="/qoo-app/news" path="/qoo-app/news/:lang?" paramsDesc={['語言，見下表，留空為中文']}  radar="1">
+<Route author="TonyRL" example="/qoo-app/news/en" path="/qoo-app/news/:lang?" paramsDesc={['Language, see the table below, empty means `中文`']}  radar="1">
 
 | 中文 | English |
-| ---- | ------- |
-|      | en      |
+| -- | ------- |
+|    | en      |
 
 </Route>
 
-### 筆記留言 {#qooapp-bi-ji-liu-yan}
+### Note Comments {#qooapp-note-comments}
 
-<Route author="TonyRL" example="/qoo-app/notes/note/2320205" path="/qoo-app/notes/:lang?/note/:id" paramsDesc={['語言，見上表，留空為中文', '遊戲 ID，可在 URL 找到']}  radar="1"/>
+<Route author="TonyRL" example="/qoo-app/notes/en/note/2329113" path="/qoo-app/notes/:lang?/note/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Note ID, can be found in URL']}  radar="1"/>
 
-### 熱門話題 {#qooapp-re-men-hua-ti}
+### Hot Hashtags {#qooapp-hot-hashtags}
 
-<Route author="TonyRL" example="/qoo-app/notes/topic/QooApp轉蛋" path="/qoo-app/notes/:lang?/topic/:id" paramsDesc={['語言，見上表，留空為中文', '話題名，不需要 `#`']}  radar="1"/>
+<Route author="TonyRL" example="/qoo-app/notes/en/topic/QooAppGacha" path="/qoo-app/notes/:lang?/topic/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Hashtag name without `#`']}  radar="1"/>
 
-### 用户遊戲評論 {#qooapp-yong-hu-you-xi-ping-lun}
+### User Game Comments {#qooapp-user-game-comments}
 
-<Route author="TonyRL" example="/qoo-app/user/appComment/23266114" path="/qoo-app/user/:lang?/appComment/:uid" paramsDesc={['語言，見上表，留空為中文', '用户 ID，可在 URL 找到']}  radar="1"/>
+<Route author="TonyRL" example="/qoo-app/user/en/appComment/35399143" path="/qoo-app/user/:lang?/appComment/:uid" paramsDesc={['Language, see the table above, empty means `中文`', 'User ID, can be found in URL']}  radar="1"/>
 
-### 用户筆記 {#qooapp-yong-hu-bi-ji}
+### User Notes {#qooapp-user-notes}
 
-<Route author="TonyRL" example="/qoo-app/notes/user/23266114" path="/qoo-app/notes/:lang?/user/:uid" paramsDesc={['語言，見上表，留空為中文', '用户 ID，可在 URL 找到']}  radar="1"/>
+<Route author="TonyRL" example="/qoo-app/notes/en/user/35399143" path="/qoo-app/notes/:lang?/user/:uid" paramsDesc={['Language, see the table above, empty means `中文`', 'User ID, can be found in URL']}  radar="1"/>
 
 ## Rawkuma {#rawkuma}
 
 ### Manga {#rawkuma-manga}
 
-<Route author="nczitzk" example="/rawkuma/manga/tensei-shitara-dai-nana-ouji-dattanode-kimamani-majutsu-o-kiwamemasu" path="/rawkuma/manga/:id" paramsDesc={['Manga ID，可在 URL 找到']} radar="1"/>
+<Route author="nczitzk" example="/rawkuma/manga/tensei-shitara-dai-nana-ouji-dattanode-kimamani-majutsu-o-kiwamemasu" path="/rawkuma/manga/:id" paramsDesc={['Manga ID, can be found in URL']} radar="1"/>
 
 ## say 花火 {#say-hua-huo}
 
@@ -468,9 +495,35 @@ Sources
 
 ## THBWiki {#thbwiki}
 
-### 日历 {#thbwiki-ri-li}
+### Calendar {#thbwiki-calendar}
 
-<Route author="aether17" path="/thwiki/calendar/:before?/:after?" example="/thwiki/calendar" paramsDesc={['从多少天前（默认30）', '到多少天后（默认30）']} radar="1" rssbud="1"/>
+<Route author="aether17" path="/thwiki/calendar/:before?/:after?" example="/thwiki/calendar" paramsDesc={['From how many days ago (default 30)', 'To how many days after (default 30)']} radar="1" rssbud="1"/>
+
+## Touhougarakuta 东方我乐多丛志 {#touhougarakuta-dong-fang-wo-le-duo-cong-zhi}
+
+### Articles {#touhougarakuta-dong-fang-wo-le-duo-cong-zhi-articles}
+
+<Route author="ttyfly" path="/touhougarakuta/:language/:type" example="/touhougarakuta/ja/news" paramsDesc={['language', 'article type']}>
+
+Languages:
+
+| Chinese | Japanese | Korean |
+| ---- | ---- | ---- |
+|  cn  |  ja  |  ko  |
+
+Article types:
+
+|  Index   | Series | Interviews | Novels | Comics | News |
+| -------- | ------ | ---------- | ------ | ------ | ---- |
+|  index   | series | interviews | novels | comics | news |
+
+| Music review | Game review | Book review  | Where are you |
+| ------------ | ----------- | ------------ | ------------- |
+| music_review | game_review | book_review  | where_are_you |
+
+**Note:** The index type includes all types of articles. Think twice before using it.
+
+</Route>
 
 ## VCB-Studio {#vcb-studio}
 
@@ -492,25 +545,25 @@ Sources
 
 ### vol {#vol.moe-vol}
 
-<Route author="CoderTonyChan" example="/vol/finish" path="/vol/:mode?" paramsDesc={['模式']}>
+<Route author="CoderTonyChan" example="/vol/finish" path="/vol/:mode?" paramsDesc={['mode type']}>
 
-| 连载   | 完结   |
-| ------ | ------ |
-| serial | finish |
+| Comics are serialized | Comics is finshed |
+| --------------------- | ----------------- |
+| serial                | finish            |
 
 </Route>
 
 ## Webtoons {#webtoons}
 
-### 漫画更新 {#webtoons-man-hua-geng-xin}
+### Comic updates {#webtoons-comic-updates}
 
-<Route author="machsix" path="/webtoons/:lang/:category/:name/:id" example="/webtoons/zh-hant/drama/gongzhuweimian/894" paramsDesc={['语言','类别','名称','ID']}/>
+<Route author="machsix" path="/webtoons/:lang/:category/:name/:id" example="/webtoons/zh-hant/drama/gongzhuweimian/894" paramsDesc={['Language','Category','Name','ID']}/>
 
-比如漫画公主彻夜未眠的网址为<https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no=894>, 则`lang=zh-hant`,`category=drama`,`name=gongzhucheyeweimian`,`id=894`.
+For example: <https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no=894>, `lang=zh-hant`,`category=drama`,`name=gongzhucheyeweimian`,`id=894`.
 
-### [Naver](https://comic.naver.com) {#webtoons-%5Bnaver%5D(https%3A%2F%2Fcomic.naver.com)}
+### Naver {#webtoons-naver}
 
-<Route author="zfanta" example="/webtoons/naver/651673" path="/webtoons/naver/:titleId" paramsDesc={['titleId']} />
+<Route author="zfanta" example="/webtoons/naver/651673" path="/webtoons/naver/:titleId" paramsDesc={['titleId of naver webtoon']} />
 
 ## X 漫画 {#x-man-hua}
 
@@ -520,37 +573,37 @@ Sources
 
 ## 俺の 3D エロ動画 (oreno3d) {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)}
 
-:::tip 提示
+:::tip Tip
 
-可配合其他 RSS 解析库 (如`Python`的`feedparser`库) 实现视频的更新检测以及自动下载
+You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receive the video update messages and download them automatically
 
 :::
 
-### 关键词搜索 {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-guan-jian-ci-sou-suo}
+### Keyword Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-keyword-search}
 
-<Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest/1" path="/oreno3d/search/:keyword/:sort/:pagelimit?" paramsDesc={['关键词', '排序方法，见下表', '最大爬取页面数量，默认为 1']} radar="1" rssbud="1">
+<Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest/1" path="/oreno3d/search/:keyword/:sort/:pagelimit?" paramsDesc={['Search keyword', 'Sort method, see the table below', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1">
 
-| 高評価    | 急上昇 | 新着   | 人気       |
-| --------- | ------ | ------ | ---------- |
-| favorites | hot    | latest | popularity |
+| favorites | hot  | latest | popularity |
+| --------- | ---- | ------ | ---------- |
+| favorites | hot  | latest | popularity |
 
 </Route>
 
-### 角色搜索 {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-jue-se-sou-suo}
+### Character Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-character-search}
 
-<Route author="xueli-sherryli" example="/oreno3d/characters/283/latest/1" path="/oreno3d/characters/:characterid/:sort/:pagelimit?" paramsDesc={['角色id, 可在浏览器地址栏找到','排序方法，见上表','最大爬取页面数量, 默认为1, 超出则为最大值']} />
+<Route author="xueli-sherryli" example="/oreno3d/characters/283/latest/1" path="/oreno3d/characters/:characterid/:sort/:pagelimit?" paramsDesc={['Character id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
 
-### 作者搜索 {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-zuo-zhe-sou-suo}
+### Author Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-author-search}
 
-<Route author="xueli-sherryli" example="/oreno3d/authors/3189/latest/1" path="/oreno3d/authors/:authorid/:sort/:pagelimit?" paramsDesc={['作者id，可在浏览器地址栏找到','排序方法，见上表','最大爬取页面数量,默认为1,超出则为最大值']} radar="1" rssbud="1" />
+<Route author="xueli-sherryli" example="/oreno3d/authors/3189/latest/1" path="/oreno3d/authors/:authorid/:sort/:pagelimit?" paramsDesc={['Author id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
 
-### 标签搜索 {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-biao-qian-sou-suo}
+### Tags Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-tags-search}
 
-<Route author="xueli-sherryli" example="/oreno3d/tags/177/latest/1" path="/oreno3d/tags/:tagid/:sort/:pagelimit?" paramsDesc={['标签 id，可在浏览器地址栏找到','排序方法，见上表','最大爬取页面数量,默认为1,超出则为最大值']} radar="1" rssbud="1" />
+<Route author="xueli-sherryli" example="/oreno3d/tags/177/latest/1" path="/oreno3d/tags/:tagid/:sort/:pagelimit?" paramsDesc={['Tag id, can be found in URL', 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
 
-### 原作搜索 {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-yuan-zuo-sou-suo}
+### Origins Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-origins-search}
 
-<Route author="xueli-sherryli" example="/oreno3d/origins/3/latest/1" path="/oreno3d/origins/:originid/:sort/:pagelimit?" paramsDesc={['原作 id，可在浏览器地址栏找到','排序方法，见上表','最大爬取页面数量,默认为1，超出则为最大值']} radar="1" rssbud="1" />
+<Route author="xueli-sherryli" example="/oreno3d/origins/3/latest/1" path="/oreno3d/origins/:originid/:sort/:pagelimit?" paramsDesc={['Origin id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
 
 ## 包子漫画 {#bao-zi-man-hua}
 
@@ -579,32 +632,6 @@ Sources
 | All | PlayStation | Nintendo | Xbox      | PC  | Girl’sStyle | Arcade Web | App | Anime | Review | Rank |
 | --- | ----------- | -------- | --------- | --- | ----------- | ---------- | --- | ----- | ------ | ---- |
 |     | dps         | nintendo | microsoft | dpc | gstyle      | arcade     | app | anime | review | rank |
-
-</Route>
-
-## 东方我乐多丛志 {#dong-fang-wo-le-duo-cong-zhi}
-
-### 文章 {#dong-fang-wo-le-duo-cong-zhi-wen-zhang}
-
-<Route author="ttyfly" path="/touhougarakuta/:language/:type" example="/touhougarakuta/cn/index" paramsDesc={['语言', '类型']}>
-
-语言
-
-| 中文 | 日文 | 韩文 |
-| ---- | ---- | ---- |
-| cn   | ja   | ko   |
-
-类型
-
-| 最新情报 | 连载   | 特辑       | 小说   | 漫画   | 新闻 |
-| -------- | ------ | ---------- | ------ | ------ | ---- |
-| index    | series | interviews | novels | comics | news |
-
-| 音乐点评     | 游戏测评    | 同人作品感想 | 关于本站      |
-| ------------ | ----------- | ------------ | ------------- |
-| music_review | game_review | book_review  | where_are_you |
-
-**注：** 最新情报包括后面所有类型的文章，内容较多，谨慎使用。
 
 </Route>
 
@@ -784,26 +811,6 @@ Sources
 
 <Route author="junfengP" path="/manxiaosi/book/:id" example="/manxiaosi/book/90" paramsDesc={['漫画id，漫画主页的地址栏中']} radar="1" rssbud="1"/>
 
-## 萌番组 {#meng-fan-zu}
-
-### 最新 {#meng-fan-zu-zui-xin}
-
-<Route author="nczitzk" example="/bangumi/moe" path="/bangumi/moe"/>
-
-### 标签 {#meng-fan-zu-biao-qian}
-
-<Route author="nczitzk" example="/bangumi/moe/简体中文/1080p" path="/bangumi/moe/:tags?" paramsDesc={['标签，默认为空，多个标签用 `/` 分隔']}>
-
-更多标签请前往 [搜索种子](https://bangumi.moe/search/index)
-
-</Route>
-
-## 偶像荣耀 {#ou-xiang-rong-yao}
-
-### 新闻推送 {#ou-xiang-rong-yao-xin-wen-tui-song}
-
-<Route author="Mingxia1" example="/idolypride/news" path="/idolypride/news" radar="1" rssbud="1"/>
-
 ## 三界异次元 {#san-jie-yi-ci-yuan}
 
 ### 三界异次元 {#san-jie-yi-ci-yuan-san-jie-yi-ci-yuan}
@@ -885,3 +892,4 @@ Sources
 ### 當季新番 {#%E3%82%A2%E3%83%8B%E3%83%A1-xin-fan-zu-dang-ji-xin-fan}
 
 <Route author="devinmugen" example="/bangumi/online" path="/bangumi/online"/>
+

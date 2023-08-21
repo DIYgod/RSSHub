@@ -2,138 +2,138 @@
 sidebar_position: 2
 ---
 
-# 路由规范
+# Script Standard
 
-## 代码规范
+## Code Style
 
-### 通用准则
+### General Guidelines
 
--   **保持一致！**
--   避免使用已经被废弃的特性。
--   避免修改 `yarn.lock` 和 `package.json`，除非您添加了新的依赖。
--   将重复的代码合并为函数。
--   优先使用更高版本的 ECMAScript 标准特性，而不是使用低版本特性。
--   按字母顺序排序（大写字母优先），以便更容易找到条目。
--   尽量使用 HTTPS 而非 HTTP 传输数据。
--   尽量使用 WebP 格式而非 JPG 格式，因为前者支持更好的压缩。
+-   **Be consistent!**
+-   Avoid using deprecated features.
+-   Avoid modifying `yarn.lock` and `package.json`, unless you are adding a new dependency.
+-   Conbine repetitive code into functions.
+-   Prefer higher ECMAScript Standard features over lower ones.
+-   Sort the entries alphabetically (uppercase first) to make it easier to find an entry.
+-   Use HTTPS instead of HTTP whenever possible.
+-   Use WebP format instead of JPG whenever possible since it offers better compression.
 
-### 代码格式
+### Formatting
 
-#### 缩进
+#### Indentation
 
--   使用 4 个空格缩进。
+-   Use 4 spaces for indentation for consistent and easy-to-read code.
 
-#### 分号
+#### Semicolons
 
--   在每条语句结尾添加分号。
+-   Add a semicolon at the end of each statement for improved readability and consistency.
 
-#### 字符串
+#### String
 
--   使用单引号而不是双引号。
--   使用 [模板字符串](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Template_literals) 而非复杂的字符串拼接。
--   对于 GraphQL 查询，使用 [模板字符串](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Template_literals)。
+-   Use single quotes instead of double quotes whenever possible for consistency and readability.
+-   Use [template literals](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Template_literals) over complex string concatenation.
+-   Use [template literals](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Template_literals) for GraphQL queries as they make the code more concise and easy to read.
 
-#### 空格
+#### Whitespace
 
--   在每个文件末尾添加一个空行。
--   避免尾随空格，代码应整洁易读。
+-   Add an empty line at the end of each file.
+-   Avoid trailing whitespace for a clean and readable codebase.
 
-### 语言特性
+### Language Features
 
-#### 类型转换
+#### Casting
 
--   避免重复转换同一类型。
+-   Avoid re-casting the same type.
 
-#### 函数
+#### Functions
 
--   优先使用 [箭头函数](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Functions/Arrow_functions)，而不是使用 `function` 关键字定义函数。
+-   Prefer [arrow functions](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Functions/Arrow_functions) over the `function` keyword.
 
-#### 循环
+#### Loops
 
--   对于数组，使用 `for-of`，而不是使用 `for`。([javascript:S4138](https://rules.sonarsource.com/javascript/RSPEC-4138))
+-   Use `for-of` instead of `for` for arrays ([javascript:S4138](https://rules.sonarsource.com/javascript/RSPEC-4138)).
 
-#### 变量
+#### Variables
 
--   使用 `const` 和 `let` 而不是 `var`。
--   每次声明一个变量。
+-   Use `const` and `let` instead of `var`.
+-   Declare one variable per declaration.
 
-### 命名
+### Naming
 
--   使用 `lowerCamelCase` 命名变量和函数
--   使用 `kebab-case` 命名文件和文件夹，也可以使用 `snake_case`。
--   使用 `CONSTANT_CASE` 命名常量。
+-   Use `lowerCamelCase` for variables and functions to adhere to standard naming conventions.
+-   Use `kebab-case` for files and folders. `snake_case` is also acceptable.
+-   Use `CONSTANT_CASE` for constants.
 
-## v2 路由规范
+## v2 Route Standard
 
-当在 RSSHub 中编写新的路由时，需要按特定方式组织文件。命名空间文件夹应该存储在 `lib/v2` 目录下，并且应包括三个必需文件：
+When creating a new route in RSSHub, you need to organize your files in a specific way. Your namespace folder should be stored in the `lib/v2` directory and should include three mandatory files:
 
--   `router.js` 注册路由
--   `maintainer.js` 提供路由维护者信息
--   `radar.js` 为每个路由提供对应 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 规则
+-   `router.js` Registers the routes
+-   `maintainer.js` Provides information about the route maintainer
+-   `radar.js` Provide a [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) rule for each route
 
-命名空间文件夹结构应该像这样：
+Your namespace folder structure should look like this:
 
-    ├───lib/v2
-    │   ├───furstar
-    │       ├─── templates
-    │           ├─── description.art
-    │       ├─── router.js
-    │       ├─── maintainer.js
-    │       ├─── radar.js
-    │       ├─── someOtherJs.js
-    │   └───test
-    │   └───someOtherNamespaces
-    ...
+```
+├───lib/v2
+│   ├───furstar
+│       ├─── templates
+│           ├─── description.art
+│       ├─── router.js
+│       ├─── maintainer.js
+│       ├─── radar.js
+│       ├─── someOtherJs.js
+│   └───test
+│   └───someOtherNamespaces
+...
+```
 
-**所有符合条件的，在 `lib/v2` 路径下的路由将会被自动载入，无需更新 `lib/router.js`**
+**All eligible routes under the `lib/v2` path will be automatically loaded without the need for updating the `lib/router.js`.**
 
-### 命名空间
+### Namespace
 
-RSSHub 会将所有路由命名空间的文件夹名附加到路由前面。路由维护者可命名空间视为根目录。
+RSSHub appends the name of all route namespace folders in front of the actual route. Route maintainers should think of the namespace as the root.
 
-#### 命名规范
+#### Naming Standard
 
--   使用二级域名 (second-level domain, SLD) 作为命名空间。有关 URL 结构的更多信息，请参阅 [此页面](/joinus/new-radar#顶层对象键)。
--   不要创建相同命名空间的变体。有关更多信息，请参阅 [此页面](/joinus/new-rss/before-start#创建命名空间)
+-   Use the second-level domain (SLD) as your namespace. You can find more information about URL structure [here](/joinus/new-radar#top-level-object-key).
+-   Do not create variations of the same namespace. For more information, see [this page](/joinus/new-rss/before-start#create-a-namespace)
 
-### 注册路由
+### Registering a Route
 
-`router.js` 文件应导出一个方法，提供在初始化路由时使用的 `@koa/router` 对象。
+To register a route, the `router.js` file should export a method that provides a `@koa/router` object when initializing the route.
 
-### 维护者列表
+### Maintainer List
 
-`maintainer.js` 文件应导出一个对象，提供与路由相关的维护者信息，包括：
+The `maintainer.js` file should export an object that provides maintainer information related to the route, including:
 
--   键: `@koa/router` 对象中对应的路由
--   值：一个字符串数组，包括所有维护者的 GitHub ID。
+-   Key: Corresponding path in the `@koa/router` object
+-   Value: Array of string, including all maintainers' GitHub ID.
 
-要生成维护者列表，可使用以下命令：`pnpm run build:maintainer`，它将在 `assets/build/` 目录下一份维护者列表。
+To generate a list of maintainers, use the following command: `pnpm run build:maintainer`, which will create the list under `assets/build/`.
 
-:::danger 警告
-在 `@koa/router` 对象中的路由应该与相应的文档中添加命名空间前的 `path` 一致。
+:::danger Warning
+The path in the `@koa/router` object should be the same as the `path` in the corresponding documentation before the namespace appended in front of it.
 :::
 
-### Radar 规则
+### Radar Rules
 
-所有路由都需要包含 `radar.js` 文件，其中包括相应的域名。最低要求是规则出现在相应的站点上，即需要填写 `title` 和 `docs` 字段。
+All routes are required to include the `radar.js` file, which includes the corresponding domain name. The minimum requirement for a successful match is for the rule to show up on the corresponding site which requires filling in the `title` and `docs` fields.
 
-要生成完整的 `radar-rules.js` 文件，可使用以下命令：`yarn build:radar`，它将在 `assets/build/` 目录下创建文件。
+To generate a complete `radar-rules.js` file, use the following command: `yarn build:radar`, which will create the file under `assets/build/`.
 
-:::tip 提示
-在提交代码之前，请记得删除所有在 `assets/build/` 中的生成的资源。
+:::tip Tips
+Remember to remove all build artifacts in `assets/build/` before committing.
 :::
 
-### 渲染模板
+### Rendering Templates
 
-当渲染自定义 HTML 内容（例如 `item.description`）时，**必须**使用 [art-template](https://aui.github.io/art-template/) 进行排版。
+When rendering custom content with HTML, such as `item.description`, using [art-template](https://aui.github.io/art-template/) for layout is mandatory.
 
-所有模板都应放置在路由命名空间下的 `templates` 文件夹中，并使用 `.art` 文件扩展名命名。
+All templates should be placed in the namespace's `templates` folder with the `.art` file extension.
 
-#### 示例
+#### Example
 
-下面是在 [furstar](https://github.com/DIYgod/RSSHub/blob/master/lib/v2/furstar) 命名空间中示例：
-
-<!-- markdownlint-disable MD046 -->
+Here's an example taken from the [furstar](https://github.com/DIYgod/RSSHub/blob/master/lib/v2/furstar) namespace:
 
 ```html
 <div>
@@ -152,12 +152,10 @@ const { art } = require('@/utils/render');
 const renderAuthor = (author) => art(path.join(__dirname, 'templates/author.art'), author);
 ```
 
-<!-- markdownlint-enable MD046 -->
+### v1 Route Standard
 
-### v1 路由规范
+:::danger Warning
 
-:::danger 警告
-
-v1 路由规范已被弃用。所有新路由都应遵循 [v2 路由规范](#v2-lu-you-gui-fan)。
+The v1 Route Standard is deprecated. All new routes should be following the [v2 Route Standard](/joinus/advanced/script-standard#v2-route-standard).
 
 :::
