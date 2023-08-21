@@ -609,7 +609,7 @@ module.exports = async (ctx) => {
 现在，我们将使用 `puppeteer` 代替 `got` 来从网页获取数据。
 
 <Tabs>
-<TabItem value="apple" label="puppeteer">
+<TabItem value="puppeteer" label="puppeteer">
 
 ```js
 const cheerio = require('cheerio');
@@ -664,7 +664,7 @@ module.exports = async (ctx) => {
 ```
 
 </TabItem>
-<TabItem value="apple" label="got">
+<TabItem value="got" label="got">
 
 ```js
 const got = require('@/utils/got');
