@@ -23,8 +23,8 @@ Open your code editor and create a new file. Since we are going to create an RSS
 
 Here's the basic code to get you started:
 
-<code-group>
-<code-block title="issue.js">
+<Tabs>
+<TabItem value="issue.js" label="issue.js">
 
 ```js
 // Import the necessary modules
@@ -40,18 +40,19 @@ module.exports = async (ctx) => {
 };
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 ### Retrieving user input
 
 As mentioned earlier, we need to retrieve the GitHub username and repository name from user input. The repository name should default to `RSSHub` if it is not provided in the request URL. Here's how you can do it:
 
-<code-group>
-<code-block title="Object destructuring" active>
+<Tabs groupId="jsStyle">
+<TabItem value="Object destructuring" label="Object destructuring" default>
 
-```js{2}
+```js
 module.exports = async (ctx) => {
+    // highlight-next-line
     const { user, repo = 'RSSHub' } = ctx.params;
 
     ctx.state.data = {
@@ -60,13 +61,15 @@ module.exports = async (ctx) => {
 };
 ```
 
-</code-block>
-<code-block title="Traditional assignment">
+</TabItem>
+<TabItem value="Traditional assignment" label="Traditional assignment">
 
-```js{2,3}
+```js
 module.exports = async (ctx) => {
+    // highlight-start
     const user = ctx.params.user;
     const repo = ctx.params.repo ?? 'RSSHub';
+    // highlight-end
 
     ctx.state.data = {
         // Your RSS output here
@@ -74,8 +77,8 @@ module.exports = async (ctx) => {
 };
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 Both of these code snippets do the same thing. The first one uses object destructuring to assign the `user` and `repo` variables, while the second one uses traditional assignment with a nullish coalescing operator to assign the `repo` variable a default value of `RSSHub` if it is not provided in the request URL.
 
@@ -83,12 +86,13 @@ Both of these code snippets do the same thing. The first one uses object destruc
 
 After we have the user input, we can use it to make a request to the API. In most cases, you will need to use `got` from `@/utils/got` (a customized got wrapper) to make HTTP requests. For more information, please refer to the [got documentation](https://github.com/sindresorhus/got/tree/v11#usage).
 
-<code-group>
-<code-block title="Object destructuring" active>
+<Tabs groupId="jsStyle">
+<TabItem value="Object destructuring" label="Object destructuring" default>
 
-```js{3-16}
+```js
 module.exports = async (ctx) => {
     const { user, repo = 'RSSHub' } = ctx.params;
+    // highlight-start
     // Send an HTTP GET request to the API
     // and destruct the data object returned by the request
     const { data } = await got(`https://api.github.com/repos/${user}/${repo}/issues`, {
@@ -103,6 +107,7 @@ module.exports = async (ctx) => {
             per_page: ctx.query.limit ? parseInt(ctx.query.limit, 10) : 30,
         },
     });
+    // highlight-end
 
     ctx.state.data = {
         // Your RSS output here
@@ -110,13 +115,14 @@ module.exports = async (ctx) => {
 };
 ```
 
-</code-block>
-<code-block title="Traditional assignment">
+</TabItem>
+<TabItem value="Traditional assignment" label="Traditional assignment">
 
-```js{4-14}
+```js
 module.exports = async (ctx) => {
     const user = ctx.params.user;
     const repo = ctx.params.repo ?? 'RSSHub';
+    // highlight-start
     // Send an HTTP GET request to the API
     const response = await got(`https://api.github.com/repos/${user}/${repo}/issues`, {
         headers: {
@@ -128,6 +134,7 @@ module.exports = async (ctx) => {
     });
     // response.data is the data object returned by the above request
     const data = response.data;
+    // highlight-end
 
     ctx.state.data = {
         // Your RSS output here
@@ -135,8 +142,8 @@ module.exports = async (ctx) => {
 };
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 ### Outputting the RSS
 
@@ -146,10 +153,10 @@ To do this, we can assign the relevant data to the `ctx.state.data` object, and 
 
 Here is the final code that you should have:
 
-<code-group>
-<code-block title="Final code" active>
+<Tabs>
+<TabItem value="Final code" label="Final code" default>
 
-```js{16-30,32-39}
+```js
 const got = require('@/utils/got');
 const { parseDate } = require('@/utils/parse-date');
 
@@ -165,6 +172,7 @@ module.exports = async (ctx) => {
         },
     });
 
+    // highlight-start
     // extract the relevant data from the API response
     const items = data.map((item) => ({
         // item title
@@ -180,7 +188,9 @@ module.exports = async (ctx) => {
         // item category, if available
         category: item.labels.map((label) => label.name),
     }));
+    // highlight-end
 
+    // highlight-start
     ctx.state.data = {
         // channel title
         title: `${user}/${repo} issues`,
@@ -189,13 +199,14 @@ module.exports = async (ctx) => {
         // each feed item
         item: items,
     };
+    // highlight-end
 };
 ```
 
-</code-block>
-<code-block title="Alternative">
+</TabItem>
+<TabItem value="Alternative" label="Alternative">
 
-```js{16-36}
+```js
 const got = require('@/utils/got');
 const { parseDate } = require('@/utils/parse-date');
 
@@ -211,6 +222,7 @@ module.exports = async (ctx) => {
         },
     });
 
+    // highlight-start
     ctx.state.data = {
         // channel title
         title: `${user}/${repo} issues`,
@@ -232,11 +244,12 @@ module.exports = async (ctx) => {
             category: item.labels.map((label) => label.name),
         }));
     };
+    // highlight-end
 };
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 ## Via HTML web page using got
 
@@ -269,10 +282,12 @@ You will add your own code to extract data from the HTML document, process it, a
 
 As mentioned before, we want users to enter a GitHub username and a repository name, and fall back to `RSSHub` if they don't enter the repository name in the request URL.
 
-```js{2-3}
+```js
 module.exports = async (ctx) => {
+    // highlight-start
     // Retrieve user and repository name from the URL parameters
     const { user, repo = 'RSSHub' } = ctx.params;
+    // highlight-end
 
     ctx.state.data = {
         // Your RSS output here
@@ -288,20 +303,23 @@ After receiving the user input, we need to make a request to the web page to ret
 
 To begin, we'll make an HTTP GET request to the API and load the HTML response into Cheerio, a library that helps us parse and manipulate HTML.
 
-```js{5-6}
+```js
     const baseUrl = 'https://github.com';
     const { user, repo = 'RSSHub' } = ctx.params;
 
     // Note that the ".data" property contains the full HTML source of the target page returned by the request
+    // highlight-start
     const { data: response } = await got(`${baseUrl}/${user}/${repo}/issues`);
     const $ = cheerio.load(response);
+    // highlight-end
 ```
 
 Next, we'll use Cheerio selectors to select the relevant HTML elements, parse the data we need, and convert it into an array.
 
-```js{3-21}
+```js
     // We use a Cheerio selector to select all 'div' elements with the class name 'js-navigation-container'
     // that contain child elements with the class name 'flex-auto'.
+    // highlight-start
     const item = $('div.js-navigation-container .flex-auto')
         // We use the `toArray()` method to retrieve all the DOM elements selected as an array.
         .toArray()
@@ -321,6 +339,7 @@ Next, we'll use Cheerio selectors to select the relevant HTML elements, parse th
                     .map((item) => $(item).text()),
             };
         });
+    // highlight-end
 
     ctx.state.data = {
         // Your RSS output here
@@ -335,7 +354,7 @@ Assign them to the `ctx.state.data` object, and RSSHub's middleware will take ca
 
 Here's an example code:
 
-```js{29-36}
+```js
 const got = require('@/utils/got');
 const cheerio = require('cheerio');
 const { parseDate } = require('@/utils/parse-date');
@@ -364,6 +383,7 @@ module.exports = async (ctx) => {
             };
         });
 
+    // highlight-start
     ctx.state.data = {
         // channel title
         title: `${user}/${repo} issues`,
@@ -372,6 +392,7 @@ module.exports = async (ctx) => {
         // each feed item
         item: items,
     };
+    // highlight-end
 };
 ```
 
@@ -381,7 +402,7 @@ The previous code provides only part of the information for each feed item. To p
 
 Here's the updated code:
 
-```js{12,29-43,48}
+```js
 const got = require('@/utils/got');
 const cheerio = require('cheerio');
 const { parseDate } = require('@/utils/parse-date');
@@ -393,6 +414,7 @@ module.exports = async (ctx) => {
     const { data: response } = await got(`${baseUrl}/${user}/${repo}/issues`);
     const $ = cheerio.load(response);
 
+    // highlight-next-line
     const list = $('div.js-navigation-container .flex-auto')
         .toArray()
         .map((item) => {
@@ -410,6 +432,7 @@ module.exports = async (ctx) => {
             };
         });
 
+    // highlight-start
     const items = await Promise.all(
         list.map((item) =>
             ctx.cache.tryGet(item.link, async () => {
@@ -425,10 +448,12 @@ module.exports = async (ctx) => {
             })
         )
     );
+    // highlight-end
 
     ctx.state.data = {
         title: `${user}/${repo} issues`,
         link: `https://github.com/${user}/${repo}/issues`,
+        // highlight-next-line
         item: items,
     };
 };
@@ -437,10 +462,12 @@ module.exports = async (ctx) => {
 
 Now the RSS feed will have a similar reading experience to the original website.
 
-:::tip Note
+:::tip
+
 Note that in the previous section, we only needed to send one HTTP request using an API to get all the data we needed. However, in this section, we need to send `1 + n` HTTP requests, where `n` is the number of feed items in the list from the first request.
 
 Some websites may not want to receive too many requests in a short amount of time, which can cause them to return an error message like `429 Too Many Requests`.
+
 :::
 
 ## Using the common configured route
@@ -477,7 +504,7 @@ module.exports = async (ctx) => {
 
 Our RSS feed currently lacks content. The `item` must be set to add the content. Here's an example:
 
-```js{15-22}
+```js
 const buildData = require('@/utils/common-config');
 
 module.exports = async (ctx) => {
@@ -492,6 +519,7 @@ module.exports = async (ctx) => {
             title: `${user}/${repo} issues`,
             baseUrl: 'https://github.com',
         },
+        // highlight-start
         item: {
             item: 'div.js-navigation-container .flex-auto',
             // You need to use template literals if you want to use variables
@@ -500,6 +528,7 @@ module.exports = async (ctx) => {
             // description: ..., we don't have description for now
             pubDate: `parseDate($('relative-time').attr('datetime'))`,
         },
+        // highlight-end
     });
 };
 ```
@@ -510,10 +539,12 @@ You'll notice that the code is similar to the [Obtaining data from the webpage](
 
 To get the full article of each issue, you need to add a few more lines of code. Here is an example:
 
-```js{2-3,25-34}
+```js
 const buildData = require('@/utils/common-config');
+// highlight-start
 const got = require('@/utils/got');
 const cheerio = require('cheerio');
+// highlight-end
 
 module.exports = async (ctx) => {
     const { user, repo = 'RSSHub' } = ctx.params;
@@ -535,6 +566,7 @@ module.exports = async (ctx) => {
         },
     });
 
+    // highlight-start
     await Promise.all(
         ctx.state.data.item.map((item) =>
             ctx.cache.tryGet(item.link, async () => {
@@ -545,6 +577,7 @@ module.exports = async (ctx) => {
             })
         )
     );
+    // highlight-end
 };
 ```
 
@@ -577,10 +610,10 @@ module.exports = async (ctx) => {
 
 Now, we will be using `puppeteer` instead of `got` to retrieve data from the web page.
 
-<code-group>
-<code-block title="puppeteer">
+<Tabs>
+<TabItem value="puppeteer" label="puppeteer">
 
-```js{9-33,39-40}
+```js
 const cheerio = require('cheerio');
 const { parseDate } = require('@/utils/parse-date');
 const logger = require('@/utils/logger');
@@ -589,6 +622,7 @@ module.exports = async (ctx) => {
     const baseUrl = 'https://github.com';
     const { user, repo = 'RSSHub' } = ctx.params;
 
+    // highlight-start
     // require puppeteer utility class and initialise a browser instance
     const browser = await require('@/utils/puppeteer')();
     // open a new tab
@@ -614,13 +648,16 @@ module.exports = async (ctx) => {
     const response = await page.content();
     // close the tab
     page.close();
+    // highlight-end
 
     const $ = cheerio.load(response);
 
     // const item = ...;
 
+    // highlight-start
     // don't forget to close the browser instance at the end of the function
     browser.close();
+    // highlight-end
 
     ctx.state.data = {
         // Your RSS output here
@@ -628,10 +665,10 @@ module.exports = async (ctx) => {
 }
 ```
 
-</code-block>
-<code-block title="got">
+</TabItem>
+<TabItem value="got" label="got">
 
-```js{9}
+```js
 const got = require('@/utils/got');
 const cheerio = require('cheerio');
 const { parseDate } = require('@/utils/parse-date');
@@ -640,6 +677,7 @@ module.exports = async (ctx) => {
     const baseUrl = 'https://github.com';
     const { user, repo = 'RSSHub' } = ctx.params;
 
+    // highlight-next-line
     const { data: response } = await got(`${baseUrl}/${user}/${repo}/issues`);
     const $ = cheerio.load(response);
 
@@ -649,14 +687,14 @@ module.exports = async (ctx) => {
 }
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 ### Retrieving full articles
 
 Retrieving the full articles of each issue using a new browser page is similar to the [previous section](#better-reading-experience). We can use the following code:
 
-```js{46-60,71-72}
+```js
 const cheerio = require('cheerio');
 const { parseDate } = require('@/utils/parse-date');
 const logger = require('@/utils/logger');
@@ -702,6 +740,7 @@ module.exports = async (ctx) => {
     const items = await Promise.all(
         list.map((item) =>
             ctx.cache.tryGet(item.link, async () => {
+                // highlight-start
                 // reuse the browser instance and open a new tab
                 const page = await browser.newPage();
                 // set up request interception to only allow document requests
@@ -717,6 +756,7 @@ module.exports = async (ctx) => {
                 const response = await page.content();
                 // close the tab after retrieving the HTML content
                 page.close();
+                // highlight-end
 
                 const $ = cheerio.load(response);
 
@@ -727,8 +767,10 @@ module.exports = async (ctx) => {
         )
     );
 
+    // highlight-start
     // close the browser instance after all requests are done
     browser.close();
+    // highlight-end
 
     ctx.state.data = {
         title: `${user}/${repo} issues`,

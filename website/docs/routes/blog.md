@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 🖊️️ Blog
 
 ## Amazon {#amazon}
@@ -48,8 +46,10 @@ import Route from '@site/src/components/Route';
 
 <Route author="trganda" example="/freebuf/articles/web" path="/freebuf/articles/:type" paramsDesc={['文章类别', '文章id号，可选']}>
 
-:::tip 使用说明
+:::tip
+
 Freebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的完整内容。
+
 :::
 
 </Route>
@@ -82,7 +82,7 @@ Freebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的
 
 <Route author="hnrainll" example="/hashnode/blog/inklings" path="/hashnode/blog/:username" paramsDesc={['博主名称，用户头像 URL 中找到']}>
 
-:::tip 提示
+:::tip
 
 username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 地址。
 
@@ -170,7 +170,7 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 The List ID is the last part of the URL after `-`, for example, the username in "https://medium.com/@imsingee/list/collection-7e67004f23f9" is `imsingee`, and the ID is `7e67004f23f9`.
 
-:::caution Note
+:::caution
 
 To access private lists, only self-hosting is supported.
 
@@ -182,7 +182,7 @@ To access private lists, only self-hosting is supported.
 
 <Route author="ImSingee" example="/medium/for-you/imsingee" path="/medium/for-you/:user" paramsDesc={['Username']} selfhost="1">
 
-:::caution Note
+:::caution
 
 Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
 
@@ -194,7 +194,7 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 <Route author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" paramsDesc={['Username']} selfhost="1">
 
-:::caution Note
+:::caution
 
 Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
 
@@ -208,7 +208,7 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 There are many tags, which can be obtained by clicking on a tag from the homepage and looking at the URL. For example, if the URL is `https://medium.com/?tag=web3`, then the tag is `web3`.
 
-:::caution Note
+:::caution
 
 Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
 
@@ -397,7 +397,7 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 <Route author="nczitzk" example="/kenshin" path="/kenshin/:category?/:type?" paramsDesc={['分类，见下表，默认为首页', '子分类，见下表，默认为首页']}>
 
-:::tip 提示
+:::tip
 
 如 `藝能新聞` 的 `日劇新聞` 分类，路由为 `/jnews/news_drama`
 
@@ -515,7 +515,7 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 <Route author="naixy28" example="/zhubai/via" path="/zhubai/:id"  paramsDesc={['`id` 为竹白主页 url 中的三级域名，如 via.zhubai.love 的 `id` 为 `via`']}>
 
-:::tip 提示
+:::tip
 
 在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`20`
 

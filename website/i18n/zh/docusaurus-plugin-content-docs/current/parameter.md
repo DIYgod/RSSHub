@@ -1,6 +1,6 @@
 # 通用参数
 
-:::tip 提示
+:::tip
 
 通用参数实际上是 URI 中的 query，可以使用 `&` 连接组合使用，效果叠加。
 
@@ -41,13 +41,13 @@ https://rsshub.app/twitter/user/durov/
 
 ## 内容过滤
 
-:::caution 注意
+:::caution
 
 请务必显式进行[彻底的 URL 编码](https://gchq.github.io/CyberChef/#recipe=URL_Encode\(true\))。切勿依赖浏览器的自动 URL 编码，某些字符，如 `+`, `&`，将不会被自动编码，进而导致最终解析结果不正确。
 
 :::
 
-:::caution 注意
+:::caution
 
 filter 支持正则表达式。由于正则部分特性可被利用于 DoS (ReDOS)，默认引擎`re2`屏蔽了部分`Regexp`功能，且在部分情况下表现不一致。具体差异可以[查看文档](https://github.com/uhop/node-re2#limitations-things-re2-does-not-support)
 
@@ -142,7 +142,7 @@ Telegram 即时预览模式需要在官网制作页面处理模板，请前往[�
 
 ## 多媒体处理
 
-:::caution 注意
+:::caution
 
 这是个测试中的 API
 

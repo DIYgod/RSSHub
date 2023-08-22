@@ -29,7 +29,8 @@ sidebar_position: 3
 
 上一个语句返回的对象将被重复使用，并且会添加一个额外的 `description` 属性。每个 `item.link` 的返回缓存将是`{ title, link, pubDate, author, category, description }`。下一次请求相同路由时，将直接返回处理过后的缓存而不是向服务器发出请求并重新计算数据。
 
-:::caution 注意
+:::caution
+
 在 `tryGet()` 函数之外声明的变量的任何赋值都不会在缓存命中的情况下被处理。例如，以下代码将无法按预期工作：
 
 ```js
@@ -62,10 +63,12 @@ sidebar_position: 3
 
 [lib/middleware/cache/index.js](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/cache/index.js#L58)
 
-:::tip 提示
+:::tip
+
 以下是使用缓存的高级方法。大多数情况下，您应使用 `ctx.cache.tryGet()`。
 
 请注意，当使用 `ctx.cache.get()` 获取缓存时，您需要使用 `JSON.parse()`。
+
 :::
 
 ### ctx.cache.get(key \[, refresh ])

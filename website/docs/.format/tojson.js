@@ -84,7 +84,7 @@ function parseMd(name) {
     //     })
     // })
 
-    let newContent = `import Route from '@site/src/components/Route';\n\n` + `# ${cnParsed.h1}\n\n`;
+    let newContent = `# ${cnParsed.h1}\n\n`;
     cnParsed.h2.forEach((item) => {
         newContent += `## ${item.h2}\n\n`;
         if (item.content) {
