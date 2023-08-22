@@ -428,7 +428,7 @@ import Route from '@site/src/components/Route';
 
 ### 精品帖子 {#bai-du-tie-ba-jing-pin-tie-zi}
 
-<Route author="u3u" example="/baidu/tieba/forum-good/女图" path="/baidu/tieba/forum-good/:kw/:cid?/:sortBy?" paramsDesc={['吧名', '精品分类，默认为 `0`（全部分类），如果不传 `cid` 则获取全部分类', '排序方式：`created`, `replied`。默认为 `created`']} radar="1"/>
+<Route author="u3u" example="/baidu/tieba/forum/good/女图" path="/baidu/tieba/forum/good/:kw/:cid?/:sortBy?" paramsDesc={['吧名', '精品分类，默认为 `0`（全部分类），如果不传 `cid` 则获取全部分类', '排序方式：`created`, `replied`。默认为 `created`']} radar="1"/>
 
 ### 帖子动态 {#bai-du-tie-ba-tie-zi-dong-tai}
 
