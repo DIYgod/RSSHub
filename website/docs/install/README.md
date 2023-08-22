@@ -784,7 +784,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 -   Discourse
     -   `DISCOURSE_CONFIG_{id}`: 一个 Discourse 驱动的论坛的配置信息， `id` 可自由设定为任意数字或字符串。值应形如`{"link":link,"key":key}`。其中:
         -   `link`：论坛的链接。
-        -   `key`访问论坛API的密钥。需要确保有足够权限访问对应资源。
+        -   `key`访问论坛API的密钥，可参考[此处代码](https://pastebin.com/YbLCgdWW)以获取。需要确保有足够权限访问对应资源。
 
 -   discuz cookies 设定
 
