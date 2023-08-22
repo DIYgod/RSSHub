@@ -553,10 +553,10 @@
     "/baidu/gushitong/index": [
         "CaoMeiYouRen"
     ],
-    "/baidu/tieba/forum/:kw": [
+    "/baidu/tieba/forum/good/:kw/:cid?/:sortBy?": [
         "u3u"
     ],
-    "/baidu/tieba/forum/good/:kw/:cid?": [
+    "/baidu/tieba/forum/:kw/:sortBy?": [
         "u3u"
     ],
     "/baidu/tieba/post/:id": [
