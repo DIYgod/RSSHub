@@ -20,21 +20,19 @@ E.g.
 
 ## Filtering
 
-:::caution Warning
+:::caution
 
 Please make sure you've [fully URL-encoded](https://gchq.github.io/CyberChef/#recipe=URL_Encode(true)) the parameters. Do not rely on the browser's automatic URL encoding. Some characters, such as `+`, `&`, will not be automatically encoded, resulting in the final parsing result not being correct.
 
 :::
 
-:::caution Warning
+:::caution
 
 filter supports Regex, and due to the fact that some Regex are vulnerable to DoS (ReDoS), default engine `re2` blocks some of these functionalities available in node `Regexp`. These two engines also behaves a bit different in some corner cases. [Details](https://github.com/uhop/node-re2#limitations-things-re2-does-not-support)
-
 
 If you need to use a different engine, please refer to [Deploy->Features->FILTER_REGEX_ENGINE](/install/#configuration-features).
 
 :::
-
 
 The following URL query parameters are supported, Regex support is built-in.
 
@@ -122,7 +120,7 @@ E.g. <https://rsshub.app/dcard/posts/popular?opencc=t2s>
 
 ## Multimedia processing
 
-:::caution Warning
+:::caution
 
 This is an experimental API
 

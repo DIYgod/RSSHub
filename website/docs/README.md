@@ -1,5 +1,3 @@
-
-
 # Introduction
 
 <p align="center" class="logo-img">
