@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # ❗️ Forecast and alerts
 
 ## BADAN METEOROLOGI, KLIMATOLOGI, DAN GEOFISIKA(Indonesian) {#badan-meteorologi%2C-klimatologi%2C-dan-geofisika(indonesian)}
@@ -204,7 +202,7 @@ Please skip the local service area code for `name`, for example `https://outage.
 | ---- | ---- | ---- | ---- | ---- |
 |      | 红色 | 橙色 | 黄色 | 蓝色 |
 
-:::tip 提示
+:::tip
 
 若订阅全国的全部预警信息，此时路由为 [`/cneb/yjxx`](https://rsshub.app/cneb/yjxx)。
 

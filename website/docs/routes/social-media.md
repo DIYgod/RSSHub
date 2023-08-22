@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 💬 Social Media
 
 ## 755 {#755}
@@ -70,7 +68,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="Qixingchen" example="/bilibili/user/followers/2267573/3" path="/bilibili/user/followers/:uid/:loginUid" paramsDesc={['用户 id, 可在 UP 主主页中找到','用于登入的用户id,需要配置对应的 Cookie 值']} radar="1" rssbud="1" selfhost="1">
 
-:::caution 注意
+:::caution
 
 UP 主粉丝现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -82,7 +80,7 @@ UP 主粉丝现在需要 b 站登录后的 Cookie 值，所以只能自建，详
 
 <Route author="Qixingchen" example="/bilibili/user/followings/2267573/3" path="/bilibili/user/followings/:uid/:loginUid" paramsDesc={['用户 id, 可在 UP 主主页中找到','用于登入的用户id,需要配置对应的 Cookie 值']} radar="1" rssbud="1" selfhost="1">
 
-:::caution 注意
+:::caution
 
 UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -250,7 +248,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 <Route author="TigerCubDen" example="/bilibili/followings/dynamic/109937383" path="/bilibili/followings/dynamic/:uid/:showEmoji?/:disableEmbed?" paramsDesc={['用户 id', '显示或隐藏表情图片，默认值为 0 隐藏，其他值为显示', '默认为开启内嵌视频, 任意值为关闭']} selfhost="1">
 
-:::caution 注意
+:::caution
 
 用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -262,7 +260,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 <Route author="LogicJake" example="/bilibili/followings/video/2267573" path="/bilibili/followings/video/:uid/:disableEmbed?" paramsDesc={['用户 id', '默认为开启内嵌视频, 任意值为关闭']} selfhost="1">
 
-:::caution 注意
+:::caution
 
 用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -274,7 +272,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 <Route author="woshiluo" example="/bilibili/followings/article/99800931" path="/bilibili/followings/article/:uid" paramsDesc={['用户 id']} selfhost="1">
 
-:::caution 注意
+:::caution
 
 用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -354,7 +352,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 <Route author="yindaheng98" example="/bilibili/manga/followings/26009" path="/bilibili/manga/followings/:uid/:limits?" paramsDesc={['用户 id', '抓取最近更新前多少本漫画，默认为10']} selfhost="1">
 
-:::caution 注意
+:::caution
 
 用户追漫需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -556,8 +554,10 @@ If you don't want to setup credentials, you can use [Picnob](#picnob) or [Picuki
 | ------------- | ------- |
 | user          | tags    |
 
-:::tip Tips
+:::tip
+
 It's highly recommended to deploy with Redis cache enabled.
+
 :::
 
 </Route>
@@ -788,7 +788,7 @@ Only for self-hosted
 
 <Route author="BugWriter2" example="/soul/posts/hot/NXJiSlM5V21kamJWVlgvZUh1NEExdz09" path="/soul/posts/hot/:pid*" paramsDesc={['瞬间 id, 分享用户瞬间时的 URL 的 postIdEcpt 参数']}/>
 
-:::tip 提示
+:::tip
 
 提供不同内容的 `pid`, 可以得到不同的热门瞬间推荐，如果想看多个种类的热门可以用 `/` 把不同的 `pid` 连起来，例如: `NXJiSlM5V21kamJWVlgvZUh1NEExdz09/MkM0amxSTUNiTEpLcHhzSlRzTEI1dz09`
 
@@ -983,6 +983,7 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 ### User Profile {#vimeo-user-profile}
 
 <Route author="MisteryMonster" example="/vimeo/user/filmsupply/picks" path="/vimeo/user/:username/:cat?" paramsDesc={['In this example [https://vimeo.com/filmsupply](https://vimeo.com/filmsupply)  is `filmsupply`', 'deafult for all latest videos, others categories in this example such as `Docmentary`, `Narrative`, `Drama`. Set `picks` for promote orders, just orderd like web page. When `picks` added, published date won\'t show up']}>
+
 :::tip Special category name attention
 
 Some of the categories contain slash like `3D/CG` , must change the slash `/` to the vertical bar`|`.
@@ -1047,13 +1048,15 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 
 <Route author="TonyRL" path="/youtube/charts/:category?/:country?/:embed?" example="/youtube/charts" paramsDesc={['Chart, see table below, default to `TopVideos`', 'Country Code, see table below, default to global', 'Default to embed the video, set to any value to disable embedding']} radar="1" rssbud="1">
 
-:::note Chart
+Chart
+
 | Top artists | Top songs | Top music videos | Trending |
 | ----------- | --------- | ---------------- | -------- |
 | TopArtists | TopSongs | TopVideos | TrendingVideos |
-:::
 
-:::note Country Code
+
+Country Code
+
 | Argentina | Australia | Austria | Belgium | Bolivia | Brazil | Canada |
 | --------- | --------- | ------- | ------- | ------- | ------ | ------ |
 | ar | au | at | be | bo | br | ca |
@@ -1090,7 +1093,7 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 | ------- | -------- |
 | uy      | zw       |
 
-:::
+
 
 </Route>
 
@@ -1140,7 +1143,7 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 
 ## 抖音 {#dou-yin}
 
-:::caution 注意
+:::caution
 
 反爬严格，需要启用 puppeteer。\
 抖音的视频 CDN 会验证 Referer，意味着许多阅读器都无法直接播放内嵌视频，以下是一些变通解决方案：
@@ -1267,7 +1270,7 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 
 <Route author="alfredcai" example="/douban/people/62759792/status" path="douban/people/:userid/status/:routeParams" paramsDesc={['整数型用户 id', '额外参数；见下']} radar="1">
 
-:::tip 提示
+:::tip
 
 -   **目前只支持整数型 id**
 -   字母型的 id，可以通过头像图片链接来找到其整数型 id，图片命名规则`ul[userid]-*.jpg`或`u[userid]-*.jpg`，即取文件名中间的数字
@@ -1388,8 +1391,10 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 
 ## 饭否 {#fan-fou}
 
-:::caution 注意
+:::caution
+
 部署时需要申请并配置饭否 Consumer Key、Consumer Secret、用户名和密码，具体见部署文档
+
 :::
 
 ### 用户动态 {#fan-fou-yong-hu-dong-tai}
@@ -1481,7 +1486,9 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 <Route author="xizeyoupan" example="/coolapk/dyh/1524" path="/coolapk/dyh/:dyhId" paramsDesc={['看看号ID']}>
 
 :::tip
+
 仅限于采集**站内订阅**的看看号的内容。看看号 ID 可在看看号界面右上分享 - 复制链接得到。
+
 :::
 
 </Route>
@@ -1507,7 +1514,9 @@ YouTube provides official RSS feeds for channels, for instance <https://www.yout
 | period   | daily | weekly |
 
 :::tip
+
 今日热门没有周榜，酷图榜日榜的参数会变成周榜，周榜的参数会变成月榜。
+
 :::
 
 </Route>
@@ -1592,7 +1601,7 @@ rule
 
 ## 微博 {#wei-bo}
 
-:::caution 注意
+:::caution
 
 微博会针对请求的来源地区返回不同的结果。\
 一个已知的例子为：部分视频因未知原因仅限中国大陆境内访问 (CDN 域名为 `locallimit.us.sinaimg.cn` 而非 `f.video.weibocdn.com`)。若一条微博含有这种视频且 RSSHub 实例部署在境外，抓取到的微博可能不含视频。将 RSSHub 部署在境内有助于抓取这种视频，但阅读器也必须处于境内网络环境以加载视频。
@@ -1663,7 +1672,7 @@ rule
 
 <Route author="zytomorrow DIYgod Rongronggg9" example="/weibo/timeline/3306934123" path="/weibo/timeline/:uid/:feature?/:routeParams?" paramsDesc={['用户的uid', '过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。', '额外参数；请参阅上面的说明和表格']} anticrawler="1" selfhost="1">
 
-:::caution 注意
+:::caution
 
 需要对应用户打开页面进行授权生成 token 才能生成内容
 
@@ -1677,7 +1686,7 @@ rule
 
 <Route author="monologconnor Rongronggg9" example="/weibo/group/4541216424989965/微博分组/:routeParams?" path="/weibo/group/:gid/:gname?/:routeParams?" paramsDesc={['分组id, 在网页版分组地址栏末尾`?gid=`处获取', '分组显示名称; 默认为: `微博分组`', '额外参数；请参阅上面的说明和表格']} anticrawler="1" selfhost="1">
 
-:::caution 注意
+:::caution
 
 由于微博官方未提供自定义分组相关 api, 此方案必须使用用户`Cookie`进行抓取
 
@@ -1701,7 +1710,7 @@ rule
 
 <Route author="nczitzk" example="/wukong/user/5826687196" path="/wukong/user/:id/:type?" paramsDesc={['用户ID，可在用户页 URL 中找到', '类型，可选 `dongtai` 即 动态，`answers` 即 回答，`questions` 即 提问，默认为 `dongtai`']}>
 
-:::tip 注意
+:::tip
 
 用户的动态是一定时间范围内用户提出的问题和作出的回答，距离现在时间较久的问题和回答不会出现，此时选择 `dongtai` 用户动态是会缺失的。
 
@@ -1717,8 +1726,10 @@ rule
 
 <Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/notes" path="/xiaohongshu/user/:user_id/notes/:fulltext?" paramsDesc={['用户 ID', '若为`fulltext`将抓取笔记全文，若为空则只抓取笔记标题']} puppeteer="1" anticrawler="1" radar="1" rssbud="1"/>
 
-:::tip 提示
+:::tip
+
 笔记全文不支持显示视频
+
 :::
 
 ### 用户收藏 {#xiao-hong-shu-yong-hu-shou-cang}
@@ -1731,9 +1742,11 @@ rule
 
 ## 新榜 {#xin-bang}
 
-:::caution 注意
+:::caution
+
 部署时需要配置 NEWRANK_COOKIE，具体见部署文档
 请勿过高频抓取，新榜疑似对每天调用 token 总次数进行了限制，超限会报错
+
 :::
 
 ### 微信公众号 {#xin-bang-wei-xin-gong-zhong-hao}
@@ -1744,8 +1757,10 @@ rule
 
 <Route author="lessmoe" example="/newrank/douyin/110266463747" path="/newrank/douyin/:dyid" paramsDesc={['抖音ID，可在新榜账号详情 URL 中找到']} anticrawler="1" selfhost="1"/>
 
-:::caution 注意
+:::caution
+
 免费版账户抖音每天查询次数 20 次，如需增加次数可购买新榜会员或等待未来多账户支持
+
 :::
 
 ## 知乎 {#zhi-hu}
@@ -1828,13 +1843,25 @@ rule
 
 <Route author="SeanChao" example="/zhihu/timeline" path="/zhihu/timeline" anticrawler="1" selfhost="1">
 
-:::caution 注意
+:::caution
 
 用户关注动态需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
 :::
 
 </Route>
+
+### [xhu](https://github.com/REToys/xhu) - 收藏夹 {#zhi-hu-%5Bxhu%5D(https%3A%2F%2Fgithub.com%2Fretoys%2Fxhu)---shou-cang-jia}
+
+<Route author="JimenezLi" example="/zhihu/xhu/collection/26444956" path="/zhihu/xhu/collection/:id" paramsDesc={['收藏夹 id, 可在收藏夹页面 URL 中找到']} anticrawler="1"/>
+
+### [xhu](https://github.com/REToys/xhu) - 专栏 {#zhi-hu-%5Bxhu%5D(https%3A%2F%2Fgithub.com%2Fretoys%2Fxhu)---zhuan-lan}
+
+<Route author="JimenezLi" example="/zhihu/xhu/zhuanlan/githubdaily" path="/zhihu/xhu/zhuanlan/:id" paramsDesc={['专栏 id, 可在专栏主页 URL 中找到']} anticrawler="1"/>
+
+### [xhu](https://github.com/REToys/xhu) - 问题 {#zhi-hu-%5Bxhu%5D(https%3A%2F%2Fgithub.com%2Fretoys%2Fxhu)---wen-ti}
+
+<Route author="JimenezLi" example="/zhihu/xhu/question/264051433" path="/zhihu/xhu/question/:questionId/:sortBy?" paramsDesc={['问题 id', '排序方式：`default`, `created`, `updated`。默认为 `default`']} anticrawler="1"/>
 
 ### [xhu](https://github.com/REToys/xhu) - 话题 {#zhi-hu-%5Bxhu%5D(https%3A%2F%2Fgithub.com%2Fretoys%2Fxhu)---hua-ti}
 

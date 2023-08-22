@@ -10,57 +10,57 @@ In this tutorial, we will walk you through the process of creating an RSS feed f
 
 Before you start, you need to install the dependencies for RSSHub. You can do this by running the following command in the root directory of RSSHub:
 
-<code-group>
-<code-block title="pnpm" active>
+<Tabs groupId="package-manager">
+<TabItem value="pnpm" label="pnpm" default>
 
 ```bash
 pnpm i
 ```
 
-</code-block>
-<code-block title="yarn">
+</TabItem>
+<TabItem value="yarn" label="yarn">
 
 ```bash
 yarn
 ```
 
-</code-block>
-<code-block title="npm">
+</TabItem>
+<TabItem value="npm" label="npm">
 
 ```bash
 npm install
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 ## Start debugging
 
 Once you have successfully installed the dependencies, you can start debugging RSSHub by running the following command:
 
-<code-group>
-<code-block title="pnpm" active>
+<Tabs groupId="package-manager">
+<TabItem value="pnpm" label="pnpm" default>
 
 ```bash
 pnpm run dev
 ```
 
-</code-block>
-<code-block title="yarn">
+</TabItem>
+<TabItem value="yarn" label="yarn">
 
 ```bash
 yarn dev
 ```
 
-</code-block>
-<code-block title="npm">
+</TabItem>
+<TabItem value="npm" label="npm">
 
 ```bash
 npm run dev
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 Make sure to keep an eye on the console output for any error messages or other useful information that can help you diagnose and resolve issues. Additionally, don't hesitate to consult the RSSHub documentation or seek help from the community if you encounter any difficulties.
 
@@ -78,8 +78,10 @@ Before submitting your Pull Request, make sure to carefully review the [Script S
 
 The first step in creating a new RSS route is to create a namespace. The namespace should be the **same** as the second level domain name of the main website for which you are creating the RSS feed. For example, if you are creating an RSS feed for <https://github.com/DIYgod/RSSHub/issues>, the second level domain name is `github`. Therefore, you should create a folder called `github` under `lib/v2` to serve as the namespace for your RSS route.
 
-:::tip Tips
+:::tip
+
 When creating a namespace, it's important to avoid creating multiple namespaces for variations of the same domain. For example, if you are creating an RSS feed for both `yahoo.co.jp` and `yahoo.com`, you should stick with a single namespace `yahoo`, rather than creating multiple namespaces like `yahoo-jp`, `yahoojp`, `yahoo.jp`, `jp.yahoo`, `yahoocojp`, etc.
+
 :::
 
 ## Understand the Basics
@@ -90,26 +92,28 @@ Once you have created the namespace for your RSS route, the next step is to regi
 
 For example, if you are creating an RSS feed for [GitHub Repo Issues](/routes/programming#github-repo-issues) and suppose you want users to enter a GitHub username and a repository name, and fall back to `RSSHub` if they don't enter the repository name, you can register your new RSS route in `github/router.js` using the following code:
 
-<code-group>
-<code-block title="Arrow Functions" active>
+<Tabs>
+<TabItem value="Arrow Functions" label="Arrow Functions" default>
 
-```js{2}
+```js
 module.exports = (router) => {
+    // highlight-next-line
     router.get('/issue/:user/:repo?', require('./issue'));
 };
 ```
 
-</code-block>
-<code-block title="Regular Functions">
+</TabItem>
+<TabItem value="Regular Functions" label="Regular Functions">
 
-```js{2}
+```js
 module.exports = function (router) {
+    // highlight-next-line
     router.get('/issue/:user/:repo?', require('./issue'));
 };
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 When registering your new RSS route in `router.js`, you can define the route path and specify the corresponding function to be executed. In the code above, the `router.get()` method is used to specify the HTTP method and the path of the new RSS route. The first parameter of `router.get()` is the route path using [path-to-regexp](https://github.com/pillarjs/path-to-regexp) syntax. The second parameter is the exported function from your new RSS rule, `issue.js`. Note that you can omit the `.js` extension.
 
@@ -121,16 +125,19 @@ Once you have defined the route path, you can retrieve the value of the paramete
 
 You can use the `*` or `+` symbols to match the rest of the path, like `/some/path/:variable*`. Note that `*` and `+` mean "zero or more" and "one or more", respectively. You can also use patterns like `/some/path/:variable(\\d+)?` or even RegExp.
 
-:::tip Tips
+:::tip
+
 For more advanced usage of `router`, see the [@koa/router API Reference](https://github.com/koajs/router/blob/master/API.md).
+
 :::
 
 ### maintainer.js
 
 This file is used to store information about the maintainer of the RSS routes. You can add your GitHub username to the value array. Note that the key here should exactly match the path in `router.js` :
 
-```js{2}
+```js
 module.exports = {
+    // highlight-next-line
     '/issue/:user/:repo?': ['DIYgod'],
 };
 ```

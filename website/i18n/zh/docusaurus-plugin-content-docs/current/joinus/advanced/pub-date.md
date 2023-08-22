@@ -36,8 +36,10 @@ const pubDate = parseDate('2020/12/30');
 const pubDate = parseDate('2020/12/30', 'YYYY/MM/DD');
 ```
 
-:::tip 提示
+:::tip
+
 你可以参考 [day.js 文档](https://day.js.org/docs/zh-CN/parse/string-format#支持的解析占位符列表) 查看所有可用日期格式。
+
 :::
 
 如果你需要解析相对日期，请使用 `parseRelativeDate`。

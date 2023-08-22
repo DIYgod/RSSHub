@@ -10,57 +10,57 @@ sidebar_position: 2
 
 开始之前，您需要安装 RSSHub 的依赖项。您可以在 RSSHub 的根目录下运行以下命令来完成安装：
 
-<code-group>
-<code-block title="pnpm" active>
+<Tabs groupId="package-manager">
+<TabItem value="pnpm" label="pnpm" default>
 
 ```bash
 pnpm i
 ```
 
-</code-block>
-<code-block title="yarn">
+</TabItem>
+<TabItem value="yarn" label="yarn">
 
 ```bash
 yarn
 ```
 
-</code-block>
-<code-block title="npm">
+</TabItem>
+<TabItem value="npm" label="npm">
 
 ```bash
 npm install
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 ## 开始调试
 
 一旦您成功安装了依赖，您可以通过运行以下命令来开始调试 RSSHub：
 
-<code-group>
-<code-block title="pnpm" active>
+<Tabs groupId="package-manager">
+<TabItem value="pnpm" label="pnpm" default>
 
 ```bash
 pnpm run dev
 ```
 
-</code-block>
-<code-block title="yarn">
+</TabItem>
+<TabItem value="yarn" label="yarn">
 
 ```bash
 yarn dev
 ```
 
-</code-block>
-<code-block title="npm">
+</TabItem>
+<TabItem value="npm" label="npm">
 
 ```bash
 npm run dev
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 请务必密切关注控制台输出的任何错误消息或其他有用的信息，这些信息可以帮助您诊断和解决问题。另外，如果您遇到任何困难，不要犹豫向 RSSHub 文档或社区寻求帮助。
 
@@ -78,8 +78,10 @@ npm run dev
 
 制作新的 RSS 路由的第一步是创建命名空间。命名空间应该与您制作 RSS 源的主要网站的二级域名**相同**。例如，如果您正在为 <https://github.com/DIYgod/RSSHub/issues> 制作 RSS 源，第二级域名是 `github`。因此，您应该在 `lib/v2` 下创建名为 `github` 的文件夹，作为您的 RSS 路由的命名空间。
 
-:::tip 提示
+:::tip
+
 在创建命名空间时，避免为同一命名空间的创建多个变体。例如，如果您为 `yahoo.co.jp` 和 `yahoo.com` 制作 RSS 源，则应该使用单个命名空间 `yahoo`，而不是创建多个命名空间如 `yahoo-jp`、`yahoojp`、`yahoo.jp`、`jp.yahoo`、`yahoocojp` 等。
+
 :::
 
 ## 理解基础知识
@@ -90,26 +92,28 @@ npm run dev
 
 例如，如果您为 [GitHub 仓库 Issues](/zh/routes/programming#github-yong-hu-cang-ku) 制作 RSS 源，并且假设您希望用户输入 GitHub 用户名和仓库名，如果他们没有输入仓库名，则返回到 `RSSHub`，您可以使用以下代码在 `github/router.js` 中注册您的新 RSS 路由：
 
-<code-group>
-<code-block title="箭头函数" active>
+<Tabs>
+<TabItem value="Arrow Functions" label="箭头函数" active>
 
-```js{2}
+```js
 module.exports = (router) => {
+    // highlight-next-line
     router.get('/issue/:user/:repo?', require('./issue'));
 };
 ```
 
-</code-block>
-<code-block title="传统函数">
+</TabItem>
+<TabItem value="Regular Functions" label="传统函数">
 
-```js{2}
+```js
 module.exports = function (router) {
+    // highlight-next-line
     router.get('/issue/:user/:repo?', require('./issue'));
 };
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 在 `router.js` 中注册您的新 RSS 路由时，您可以定义路由路径并指定要执行的相应函数。在上面的代码中，`router.get()` 方法用于指定新的 RSS 路由的 HTTP 方法和路径。`router.get()` 的第一个参数是使用 [path-to-regexp](https://github.com/pillarjs/path-to-regexp) 语法的路由路径。第二个参数是您新的 RSS 规则 `issue.js` 中导出的函数。您可以省略 `.js` 扩展名。
 
@@ -121,16 +125,19 @@ module.exports = function (router) {
 
 您可以使用 `*` 或 `+` 符号来匹配路径的其余部分，例如 `/some/path/:variable*`。请注意，`*` 和 `+` 分别意味着“零个或多个”和“一个或多个”。您还可以使用模式，例如 `/some/path/:variable(\\d+)?`，甚至是正则表达式。
 
-:::tip 提示
+:::tip
+
 有关 `router` 的更高级用法，请参阅 [@koa/router API 参考文档](https://github.com/koajs/router/blob/master/API.md)。
+
 :::
 
 ### maintainer.js
 
 该文件用于存储 RSS 路由的维护者信息。您可以将您的 GitHub 用户名添加到该值数组中。请注意，此处的键应与 `router.js` 中的路径完全匹配：
 
-```js{2}
+```js
 module.exports = {
+    // highlight-next-line
     '/issue/:user/:repo?': ['DIYgod'],
 };
 ```
