@@ -1013,19 +1013,31 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 ### 分类 {#new-zi-mu-zu-fen-lei}
 
-<Route author="nczitzk" example="/newzmz" path="/newzmz/:category?" paramsDesc={['分类，见下表，默认为最近更新']}>
+<Route author="nczitzk" example="/newzmz" path="/newzmz/:category?/:downLinkType?" paramsDesc={['分类，见下表，默认为最近更新', '下载链接类型，默认为磁力链']}>
 
-| 最近更新 | 剧集推荐 | 电影推荐 | 纪录片推荐 | 动画推荐 | 真人秀推荐 |
-| -------- | -------- | -------- | ---------- | -------- | ---------- |
-| 1        | 2        | 3        | 4          | 5        | 6          |
+:::tip
+
+`downLinkType` 参数指下载链接类型，默认为 **磁力链**。网站提供的下载链接类型包括但不限于 **磁力链**、**百度网盘**、**阿里云盘**、**夸克网盘**、**UC网盘** 等。若无法找到指定类型的下载链接，将会返回第 1 条下载链接。
+
+与其他路由不同的是，本路由的 `limit` 参数作用于获取剧集数量，所以返回的总条目数根据每次获取的剧集所包含的条目变更而不同。
+
+:::
+
+| 制作中 | 最近更新 | 剧集推荐 | 电影推荐 | 纪录片推荐 | 动画推荐 | 真人秀推荐 |
+| ------ | -------- | -------- | -------- | ---------- | -------- | ---------- |
+| 0      | 1        | 2        | 3        | 4          | 5        | 6          |
 
 </Route>
 
 ### 指定剧集 {#new-zi-mu-zu-zhi-ding-ju-ji}
 
-<Route author="nczitzk" example="/newzmz/qEzRyY3v" path="/newzmz/:id?" paramsDesc={['剧集 id，可在剧集下载页 URL 中找到']}>
+<Route author="nczitzk" example="/newzmz/qEzRyY3v" path="/newzmz/:id?/:downLinkType?" paramsDesc={['剧集 id，可在剧集下载页 URL 中找到', '下载链接类型，默认为磁力链']}>
 
-如：雪国列车（剧版）的下载页 URL 为 `https://ysfx.tv/view/qEzRyY3v.html`，即剧集 id 为 `qEzRyY3v`。
+:::tip
+
+[雪国列车(剧版)](https://nzmz.xyz/details-qEzRyY3v.html) 的下载页 URL 为 <https://v.ys99.xyz/view/qEzRyY3v.html>，即剧集 id 为 `qEzRyY3v`
+
+:::
 
 </Route>
 
