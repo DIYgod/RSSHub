@@ -3860,10 +3860,10 @@
     "/newsmarket/:category?": [
         "nczitzk"
     ],
-    "/newzmz/:category?": [
+    "/newzmz/:category?/:downLinkType?": [
         "nczitzk"
     ],
-    "/newzmz/:id?": [
+    "/newzmz/:id?/:downLinkType?": [
         "nczitzk"
     ],
     "/nextapple/realtime/:category?": [
