@@ -144,14 +144,8 @@ import Route from '@site/src/components/Route';
 
 ## Discourse
 
-使用前需设置环境变量`DISCOURSE_CONFIG_{id}`为
-```
-{
-    "link": link,
-    "key": key
-}
-```
-的JSON序列化字符串.
+使用前需设置环境变量`DISCOURSE_CONFIG_{id}`，请参考部署页面的配置模块。
+
 ### 最新帖子
 
 <Route author="dzx-dzx" example="/discourse/0/posts" path="/discuz/:configId/posts" paramsDesc={['环境变量配置名, 见上']} selfhost="1"/>
