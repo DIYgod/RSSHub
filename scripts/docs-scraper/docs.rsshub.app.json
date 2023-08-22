@@ -13,7 +13,7 @@
         "lvl3": ".theme-doc-markdown h3",
         "lvl4": ".theme-doc-markdown h4",
         "lvl5": ".theme-doc-markdown h5",
-        "text": ".theme-doc-markdown p.path, .theme-doc-markdown div.routeBlock div, .theme-doc-markdown table"
+        "text": ".theme-doc-markdown p, .theme-doc-markdown .params, .theme-doc-markdown table, .theme-doc-markdown li ul li code"
     },
     "strip_chars": " .,;:#",
     "scrap_start_urls": false,
