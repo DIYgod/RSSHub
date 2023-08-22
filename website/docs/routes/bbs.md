@@ -436,11 +436,11 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 ### 帖子列表 {#bai-du-tie-ba-tie-zi-lie-biao}
 
-<Route author="u3u" example="/baidu/tieba/forum/女图" path="/baidu/tieba/forum/:kw" paramsDesc={['吧名']} radar="1"/>
+<Route author="u3u" example="/baidu/tieba/forum/女图" path="/baidu/tieba/forum/:kw/:sortBy?" paramsDesc={['吧名', '排序方式：`created`, `replied`。默认为 `created`']} radar="1"/>
 
 ### 精品帖子 {#bai-du-tie-ba-jing-pin-tie-zi}
 
-<Route author="u3u" example="/baidu/tieba/forum/good/女图" path="/baidu/tieba/forum/good/:kw/:cid?" paramsDesc={['吧名', '精品分类, 如果不传 `cid` 则获取全部分类']} radar="1"/>
+<Route author="u3u" example="/baidu/tieba/forum/good/女图" path="/baidu/tieba/forum/good/:kw/:cid?/:sortBy?" paramsDesc={['吧名', '精品分类，默认为 `0`（全部分类），如果不传 `cid` 则获取全部分类', '排序方式：`created`, `replied`。默认为 `created`']} radar="1"/>
 
 ### 帖子动态 {#bai-du-tie-ba-tie-zi-dong-tai}
 
