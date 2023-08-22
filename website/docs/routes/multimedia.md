@@ -1000,7 +1000,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="nczitzk" example="/newzmz" path="/newzmz/:category?/:downLinkType?" paramsDesc={['分类，见下表，默认为最近更新', '下载链接类型，默认为磁力链']}>
 
-:::tip 提示
+:::tip
 
 `downLinkType` 参数指下载链接类型，默认为 **磁力链**。网站提供的下载链接类型包括但不限于 **磁力链**、**百度网盘**、**阿里云盘**、**夸克网盘**、**UC网盘** 等。若无法找到指定类型的下载链接，将会返回第 1 条下载链接。
 
@@ -1018,7 +1018,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 <https://javdb.c
 
 <Route author="nczitzk" example="/newzmz/qEzRyY3v" path="/newzmz/:id?/:downLinkType?" paramsDesc={['剧集 id，可在剧集下载页 URL 中找到', '下载链接类型，默认为磁力链']}>
 
-:::tip 提示
+:::tip
 
 [雪国列车(剧版)](https://nzmz.xyz/details-qEzRyY3v.html) 的下载页 URL 为 <https://v.ys99.xyz/view/qEzRyY3v.html>，即剧集 id 为 `qEzRyY3v`
 
