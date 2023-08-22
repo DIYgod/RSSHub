@@ -40,13 +40,14 @@ The first inner object key is `_name`, which is the name of the website. This sh
 
 The rest of the inner object keys are the subdomains of a website. If a website you want to match does not have any subdomains, or you want to match both `www.example.com` and `example.com`, use `'.'` instead. In this case, we will use `'.'` since we want to match `github.com`. Note that each subdomain should return **an array of objects**.
 
-<code-group>
-<code-block title="github.com and www.github.com">
+<Tabs>
+<TabItem value="github.com" label="github.com and www.github.com">
 
-```js{4}
+```js
 module.exports = {
     'github.com': {
         _name: 'GitHub',
+        // highlight-next-line
         '.': [
             {
                 title: '...',
@@ -59,13 +60,14 @@ module.exports = {
 };
 ```
 
-</code-block>
-<code-block title="abc.github.com">
+</TabItem>
+<TabItem value="abc.github.com" label="abc.github.com">
 
-```js{4}
+```js
 module.exports = {
     'github.com': {
         _name: 'GitHub',
+        // highlight-next-line
         abc: [
             {
                 title: '...',
@@ -78,13 +80,14 @@ module.exports = {
 };
 ```
 
-</code-block>
-<code-block title="abc.def.github.com">
+</TabItem>
+<TabItem value="abc.def.github.com" label="abc.def.github.com">
 
-```js{4}
+```js
 module.exports = {
     'github.com': {
         _name: 'GitHub',
+        // highlight-next-line
         'abc.def': [
             {
                 title: '...',
@@ -97,8 +100,8 @@ module.exports = {
 };
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 ### `title`
 
@@ -116,8 +119,10 @@ The source field is *optional* and should specifies the URL path. Leave it blank
 
 The source should be an array of strings. For example, if the source for `GitHub Repo Issues` is `/:user/:repo`, it means that when you visit `https://github.com/DIYgod/RSSHub`, which matches the `github.com/:user/:repo` pattern, the parameters for this URL will be: `{user: 'DIYgod', repo: 'RSSHub'}`. The browser extension uses these parameters to create an RSSHub subscription address based on the `target` field.
 
-:::caution Warning
+:::caution
+
 If the value you want to extract is in the URL search parameters or URL hash, use target as a function instead of the `source` field. Also, remember that the `source` field only matches the URL path and not any other parts of the URL.
+
 :::
 
 You can use the `*` symbol to perform wildcard matching. Note that the syntax here is not the same as the [path-to-regexp](https://github.com/pillarjs/path-to-regexp). For instance, `/:user/:repo/*` will match both `https://github.com/DIYgod/RSSHub/issues` and `https://github.com/DIYgod/RSSHub/issues/1234`. If you want to name the matching result, you can place the variable name after the `*` symbol. For example, `/user/:repo/*path`, whereby path will be `issues` and `issues/1234` in the above scenario.
@@ -140,10 +145,10 @@ It is essential to note that the `target` method runs in a sandbox, and any chan
 
 Here are two examples of how to use the `target` field as a function:
 
-<code-group>
-<code-block title="Match using params">
+<Tabs>
+<TabItem value="params" label="Match using params">
 
-```js{9}
+```js
 module.exports = {
     'github.com': {
         _name: 'GitHub',
@@ -152,6 +157,7 @@ module.exports = {
                 title: 'Repo Issues',
                 docs: 'https://docs.rsshub.app/routes/programming#github',
                 source: ['/:user/:repo/issues/:id', '/:user/:repo/issues',  '/:user/:repo'],
+                // highlight-next-line
                 target: (params) => `/github/issue/${params.user}/${params.repo}`,
             },
         ],
@@ -159,10 +165,10 @@ module.exports = {
 };
 ```
 
-</code-block>
-<code-block title="Match using URL">
+</TabItem>
+<TabItem value="url" label="Match using URL">
 
-```js{9}
+```js
 module.exports = {
     'github.com': {
         _name: 'GitHub',
@@ -171,6 +177,7 @@ module.exports = {
                 title: 'Repo Issues',
                 docs: 'https://docs.rsshub.app/routes/programming#github',
                 source: ['/:user/:repo'],
+                // highlight-next-line
                 target: (_, url) => `/github/issue${new URL(url).pathname}`
             },
         ],
@@ -178,8 +185,8 @@ module.exports = {
 };
 ```
 
-</code-block>
-</code-group>
+</TabItem>
+</Tabs>
 
 Both the above examples will return the same RSSHub subscription address as the [first example](/joinus/new-radar#code-the-rule).
 

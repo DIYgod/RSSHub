@@ -1,5 +1,3 @@
-import Route from '@site/src/components/Route';
-
 # 🛫 Travel
 
 ## 12306 {#12306}

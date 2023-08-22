@@ -56,9 +56,9 @@ const loopNav = (nav, lang) =>
  */
 const buildFileList = async () => {
     const config = require(`../../sidebars.js`);
-    const fileList = config.guideSidebar[2].items.map((item) => ({
+    const fileList = config.guideSidebar[2].items.map(({ id }) => ({
         type: file.ROUTE_TYPE,
-        path: path.resolve(__dirname, '..', `./${item}.md`),
+        path: path.resolve(__dirname, '..', `./${id}.md`),
         lang: 'zh-CN',
     }));
     // let fileList = [];
