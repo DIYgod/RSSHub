@@ -48,8 +48,9 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 | -- | ---- | ------- | ------ |
 | showEmoji | 显示或隐藏表情图片 | 0/1/true/false | false |
 | disableEmbed | 关闭内嵌视频 | 0/1/true/false | false |
+| displayArticle | 专栏显示全文 | 0/1/true/false | false |
 
-用例：`/bilibili/user/dynamic/2267573/showEmoji=1&disableEmbed=1`
+用例：`/bilibili/user/dynamic/2267573/showEmoji=1&disableEmbed=1&displayArticle=1`
 
 </Route>
 
