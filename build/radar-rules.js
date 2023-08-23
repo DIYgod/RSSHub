@@ -7414,7 +7414,12 @@
     ".":[ { title:"报道",
         docs:"https://docs.rsshub.app/routes/new-media#wan-dian-latepost-bao-dao",
         source:"/",
-        target:(params, url) => `/latepost/${new URL(url).searchParams.get('proma')}` } ] },
+        target:(params, url) => {
+                    url = new URL(url);
+                    const proma = url.searchParams.get('proma');
+
+                    return `/latepost${proma ? `/${proma}` : ''}`;
+                } } ] },
   "lativ.com.tw":{ _name:"lativ",
     www:[ { title:"订阅商品价格",
         docs:"https://docs.rsshub.app/routes/shopping#lativ",
