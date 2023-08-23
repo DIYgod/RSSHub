@@ -5603,6 +5603,9 @@
     "/tongji/yjs": [
         "shengmaosu"
     ],
+    "/tophub/:id": [
+        "LogicJake"
+    ],
     "/topys/:keyword?": [
         "nczitzk"
     ],
@@ -6885,7 +6888,6 @@
     "/blogs/wang54/:id?": [],
     "/blogs/wordpress/:domain/:https?": [],
     "/xici/:id?": [],
-    "/tophub/:id": [],
     "/vgtime/news": [],
     "/vgtime/release": [],
     "/vgtime/keyword/:keyword": [],
