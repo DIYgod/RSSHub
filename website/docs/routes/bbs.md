@@ -262,6 +262,22 @@
 
 <Route author="xyqfer syrinka" example="/nga/post/18449558" path="/nga/post/:tid/:authorId?"  paramsDesc={['帖子 id, 可在帖子 URL 找到', '作者 id']} radar="1" rssbud="1"/>
 
+## NodeSeek {#nodeseek}
+
+### 新帖子 {#nodeseek-xin-tie-zi}
+
+<Route author="bmqy" example="/nodeseek/post/new" path="/nodeseek/post/new" radar="1" puppeteer="1"></Route>
+
+### 版块 {#nodeseek-ban-kuai}
+
+<Route author="bmqy" example="/nodeseek/categories/daily" path="/nodeseek/categories/:category" paramsDesc={['版块', '全部版块，见下表']} radar="1" puppeteer="1">
+
+| 日常 |  技术 | 情报   | 测评   | 交易   | 拼车   | 树洞   | 贴图   | 推广   | 内板   | Dev   |
+| ------------ | -------- | ------------ | ------------ | -------- | ------------ | ------------ | -------- | ------------ | ------------ | -------- |
+| daily         | tech      | info | review         | trade      | carpool | emotion         | photo-share      | promotion | inside         | dev      |
+
+</Route>
+
 ## Pikabu {#pikabu}
 
 ### Community {#pikabu-community}
