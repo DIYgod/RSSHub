@@ -3053,6 +3053,12 @@ others = 热点新闻 + 滚动新闻
 
 ## 今日热榜 {#jin-ri-re-bang}
 
+:::caution
+
+由于需要登录后的 Cookie 值才能获取原始链接，所以需要自建，需要在环境变量中配置 `TOPHUB_COOKIE`，详情见部署页面的配置模块。
+
+:::
+
 ### 榜单 {#jin-ri-re-bang-bang-dan}
 
 <Route author="LogicJake"  example="/tophub/Om4ejxvxEN" path="/tophub/:id" paramsDesc={['榜单id，可在 URL 中找到']}/>
