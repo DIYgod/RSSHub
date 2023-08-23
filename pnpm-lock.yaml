@@ -215,8 +215,8 @@ devDependencies:
     specifier: 9.0.0
     version: 9.0.0(eslint@8.47.0)
   eslint-plugin-n:
-    specifier: 16.0.1
-    version: 16.0.1(eslint@8.47.0)
+    specifier: 16.0.2
+    version: 16.0.2(eslint@8.47.0)
   eslint-plugin-prettier:
     specifier: 5.0.0
     version: 5.0.0(eslint-config-prettier@9.0.0)(eslint@8.47.0)(prettier@3.0.2)
@@ -2910,8 +2910,8 @@ packages:
       eslint: 8.47.0
     dev: true
 
-  /eslint-plugin-n@16.0.1(eslint@8.47.0):
-    resolution: {integrity: sha512-CDmHegJN0OF3L5cz5tATH84RPQm9kG+Yx39wIqIwPR2C0uhBGMWfbbOtetR83PQjjidA5aXMu+LEFw1jaSwvTA==}
+  /eslint-plugin-n@16.0.2(eslint@8.47.0):
+    resolution: {integrity: sha512-Y66uDfUNbBzypsr0kELWrIz+5skicECrLUqlWuXawNSLUq3ltGlCwu6phboYYOTSnoTdHgTLrc+5Ydo6KjzZog==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       eslint: '>=7.0.0'
