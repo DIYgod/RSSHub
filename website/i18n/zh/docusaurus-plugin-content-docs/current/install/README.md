@@ -981,6 +981,10 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `INFZM_COOKIE`: infzm 账户登陆后的 cookie，目前只需要 `passport_session=...` 即可获取全文
 
+-   今日热榜
+
+    -   `TOPHUB_COOKIE`: 今日热榜登录后的 cookie，目前只需要 `itc_center_user=...` 以获取原始链接
+
 -   轻小说文库
 
     -   `WENKU8_COOKIE`: 登陆轻小说文库后的 cookie
