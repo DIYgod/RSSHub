@@ -1497,6 +1497,9 @@
     "/discord/channel/:channelId": [
         "TonyRL"
     ],
+    "/discourse/:configId/posts": [
+        "dzx-dzx"
+    ],
     "/disinfo/publications": [
         "nczitzk"
     ],
