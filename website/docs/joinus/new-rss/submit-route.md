@@ -2,23 +2,23 @@
 sidebar_position: 5
 ---
 
-# 提交路由
+# Submit your route
 
-当您完成您的路由后，您可以提交一个 Pull Request（下称 PR）到 [RSSHub](https://github.com/DIYgod/RSSHub)。我们将使用 squash merge 策略，这意味着您分支中的所有提交将合并成 RSSHub 仓库上的一个提交。然而，保持您的提交历史干净整洁仍然很重要。我们还提供了一个直观的模板供您填写。
+Once you have finished your route, you can submit a pull request (hereafter referred to as PR) to [RSSHub](https://github.com/DIYgod/RSSHub). We use a squash merge strategy, meaning all commits in your branch will be merged into one commit on RSSHub's repository. However, keeping your commit history clean and tidy is still important. We've also provided an intuitive template for you to fill out.
 
-## PR 模板
+## Pull Request Template
 
 ````md
 <!--
-如有疑问，请参考 https://docs.rsshub.app/joinus/new-rss/submit-route
-Reference: https://docs.rsshub.app/en/joinus/new-rss/submit-route
+如有疑问，请参考 https://github.com/DIYgod/RSSHub/discussions/8002
+Reference: https://docs.rsshub.app/joinus/new-rss/submit-route
 -->
 
 ## 该 PR 相关 Issue / Involved Issue
 
 Close #
 
-## 路由地址示例 / Example for the Proposed Route(s)
+## 完整路由地址 / Example for the Proposed Route(s)
 
 <!--
 请在 `routes` 区域填写以 / 开头的完整路由地址，否则你的 PR 将会被无条件关闭。
@@ -31,25 +31,25 @@ Please include route starts with /, with all required and optional parameters in
 /dont/use/this/or/modify/it
 /use/the/fenced/code/block/below
 ```
-如果你的 PR 与路由无关, 请在 `routes` 区域填写 `NOROUTE`，而不是直接删除 `routes` 区域。否则你的 PR 将会被无条件关闭。
-If your changes are not related to route, please fill in `routes` with `NOROUTE`. Fail to comply will result in your PR being closed.
+如果你的 PR 与路由无关, 请在 `routes` 区域 填写 `NOROUTE`，而不是直接删除 `routes` 区域。否则你的 PR 将会被无条件关闭。
+If your changes are not related to route, please fill in `routes` section with `NOROUTE`. Fail to comply will result in your PR being closed.
 -->
 
 ```routes
 ```
 
-## 新 RSS 路由检查列表 / New RSS Route Checklist
+## 新 RSS 路由检查表 / New RSS Route Checklist
 
 - [ ] 新的路由 New Route
-  - [ ] 跟随 [v2 路由规范](https://docs.rsshub.app/joinus/advanced/script-standard) Follows [v2 Script Standard](https://docs.rsshub.app/en/joinus/advanced/script-standard)
+  - [ ] 跟随 [v2 路由规范](https://docs.rsshub.app/joinus/advanced/script-standard) Follows [v2 Script Standard](https://docs.rsshub.app/joinus/advanced/script-standard)
 - [ ] 文档说明 Documentation
   - [ ] 中文文档 CN
   - [ ] 英文文档 EN
-- [ ] 全文获取 fulltext
+- [ ] 全文获取 full article
   - [ ] 使用缓存 Use cache
 - [ ] 反爬/频率限制 anti-bot or rate limit?
   - [ ] 如果有, 是否有对应的措施? If yes, do your code reflect this sign?
-- [ ] [日期和时间](https://docs.rsshub.app/joinus/advanced/pub-date) [Date and time](https://docs.rsshub.app/en/joinus/advanced/pub-date)
+- [ ] [日期和时间](https://docs.rsshub.app/joinus/advanced/pub-date) [Date and time](https://docs.rsshub.app/joinus/advanced/pub-date)
   - [ ] 可以解析 Parsed
   - [ ] 时区正确 Correct time zone
 - [ ] 添加了新的包 New package added
@@ -58,13 +58,13 @@ If your changes are not related to route, please fill in `routes` with `NOROUTE`
 ## 说明 / Note
 ````
 
-### 相关的 Issue
+### Involved Issue
 
-您可以在此处填写此 PR 相关的 Issue 编号。如果没有相关的 Issue，请将其留空。如果您的 PR 被合并，相关的 Issue 将自动关闭。如果您想关闭多个 Issue，请添加另一个以空格或逗号分隔的 `Close #`。例如，`Close #123, Close #456, Close #789` 或 `Close #123 Close #456 Close #789`。
+You can fill in the issue number that this PR is related to here. If there's no related issue, leave it blank. If your pull request gets merged, the related issue will be automatically closed. If you want to close multiple issues, add another `Close #` separated by a space or comma. For example, `Close #123, Close #456, Close #789` or `Close #123 Close #456 Close #789`.
 
-### 路由地址示例
+### Example for the Proposed Route(s)
 
-在这里，您可以添加您添加的路由以及所有必需和可选参数。如果您想添加多条路由，请在新行中添加每条路由。例如：
+Here you can add the route(s) you're proposing to add, along with all required and optional parameters. If you want to add multiple routes, add each one in a new line. For example:
 
 ````md
 ```routes
@@ -75,9 +75,9 @@ If your changes are not related to route, please fill in `routes` with `NOROUTE`
 ```
 ````
 
-**不要**填写`/github/issue/:user/:repo?` 或 `/issue/:user/:repo?`。
+**Do not** fill in `/github/issue/:user/:repo?` or `/issue/:user/:repo?`.
 
-如果您的更改与路由无关，例如文档，请在 `routes` 区域中填写 `NOROUTE`。
+If your changes are not related to a route, such as documentation, you can fill in `routes` section with `NOROUTE`.
 
 ````md
 ```routes
@@ -85,39 +85,39 @@ NOROUTE
 ```
 ````
 
-**不要**删除或不理会 `routes` 区域，否则您的 PR 将自动关闭。
+**Do not** delete or leave the `routes` section untouched, or your pull request will be automatically closed.
 
-对于路由相关的 PR，**不要**使用 `NOROUTE`，否则它们也将被自动关闭。
+**Do not** use `NOROUTE` for route-related pull requests, or they will be automatically closed as well.
 
-### 新 RSS 路由检查表
+### New RSS Route Checklist
 
-此检查表将帮助您确保您的 PR 包含所有必要的组件。虽然您不必勾选所有项目，以使您的 PR 合并，但请确保您的新路由遵循 [路由规范](/joinus/advanced/script-standard)。这是所有新路由的强制性要求。
-
+This checklist will help you ensure that your pull request includes all necessary components. Although you don't have to check off all items to get your PR merged, please make sure that your new route follows the [v2 Script Standard](/joinus/advanced/script-standard). This is a **mandatory** requirement for all new routes.
 
 ```md
 - [ ] 新的路由 New Route
 ```
 
-要勾选项目，请将 `[ ]` 修改为 `[x]`.
+To check off an item, replace `[ ]` with `[x]`.
 
 ```md
 - [x] 新的路由 New Route
 ```
 
-### 说明
+### Note
 
-此部分包含您想要分享的任何附加信息或评论。
+Use this section to include any additional information or comments you'd like to share.
 
-## PR 标题
+## Pull Request Title
 
-当您的拉取请求被合并时，拉取请求标题将用作提交信息。请遵循 [约定式提交](https://www.conventionalcommits.org/zh-hans/v1.0.0/#概述) 规范。
+The pull request title will be used as the commit message when your pull request is merged. Please follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary) specification.
 
-如果您正在添加新的路由，包括所有必需的文档和 `radar.js`，请以 `route` 作为范围。如果仅添加新的 Radar 规则，则请以 `radar` 作为范围。
+If you are adding a new route, including all required documentation and `radar.js`, use `route` as the scope. If you are adding new radar rules only, use `radar` as the scope.
 
-## 回复代码审查
+## Response to Code Review
 
-您的拉取请求将由 RSSHub 维护者和机器人审核。您可以点击检查名称旁边的“Details”来检查自动检查的详细信息。如果 RSSHub 维护者要求更改，您可以提交并将更改推送到您的分支。PR 将自动更新以反映您的更改。您也可以使用 [“添加建议到批次 (Add suggestion to batch)”](https://docs.github.com/zh/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/incorporating-feedback-in-your-pull-request#applying-suggested-changes) 批量整合维护者的反馈。
+Your pull request will be reviewed by both bots and RSSHub maintainers. You can check the details of the automated checks by clicking on the `Details` link next to the check name.
+If an RSSHub maintainer requests changes, you can commit and push your changes to your branch. The pull request will automatically update to reflect your changes. You can also incorporate feedback from the maintainer in batch by using the [suggested changes feature](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/incorporating-feedback-in-your-pull-request#applying-suggested-changes).
 
-## 接下来怎么做
+## What's Next
 
-当您的 PR 被合并后，将会构建一个新的 Docker 镜像。由于我们需要构建多个平台（包括 `linux/arm/v7`、`linux/arm64` 和 `linux/amd64`）以及包含和不包含 Chromium，该过程可能需要长达一个小时。
+After your pull request is merged, a new docker image will be built. This process can take up to an hour since we are building for multiple platforms, including `linux/arm/v7`, `linux/arm64`, and `linux/amd64`, with and without bundled Chromium.

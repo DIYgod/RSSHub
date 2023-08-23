@@ -1,8 +1,9 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+const { themes } = require('prism-react-renderer');
+const lightCodeTheme = themes.github;
+const darkCodeTheme = themes.dracula;
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -28,7 +29,7 @@ const config = {
     // metadata like html lang. For example, if your site is Chinese, you may want
     // to replace "en" with "zh-Hans".
     i18n: {
-        defaultLocale: 'zh',
+        defaultLocale: 'en',
         locales: ['zh', 'en'],
     },
 
@@ -52,11 +53,28 @@ const config = {
                     { from: '/joinus/pub-date', to: '/joinus/advanced/pub-date' },
                     { from: '/joinus/use-cache', to: '/joinus/advanced/use-cache' },
                     ...Object.values(require('./sidebars').guideSidebar)
-                        .find((s) => s.label === '路由')
-                        .items.map((category) => ({
-                            from: `/${category.split('/')[1]}`,
-                            to: `/routes/${category.split('/')[1]}`,
+                        .find((s) => s.label === 'Routes')
+                        .items.map(({ id }) => ({
+                            from: `/${id.split('/')[1]}`,
+                            to: `/routes/${id.split('/')[1]}`,
                         })),
+                ],
+            }),
+        ],
+        [
+            '@docusaurus/plugin-pwa',
+            /** @type {import('@docusaurus/plugin-pwa').Options} */
+            ({
+                pwaHead: [
+                    { tagName: 'link', rel: 'icon', href: '/img/logo.png' },
+                    { tagName: 'link', rel: 'manifest', href: '/manifest.json' },
+                    { tagName: 'meta', name: 'theme-color', content: '#ffffff' },
+                    { tagName: 'meta', name: 'apple-mobile-web-app-capable', content: 'yes' },
+                    { tagName: 'meta', name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+                    { tagName: 'link', rel: 'apple-touch-icon', href: '/img/apple-touch-icon.png' },
+                    { tagName: 'link', rel: 'mask-icon', href: '/img/safari-pinned-tab.svg', color: '#F5712C' },
+                    { tagName: 'meta', name: 'msapplication-TileImage', content: '/img/logo.png' },
+                    { tagName: 'meta', name: 'msapplication-TileColor', content: '#ffffff' },
                 ],
             }),
         ],
@@ -102,6 +120,7 @@ const config = {
         ({
             // Replace with your project's social card
             image: 'img/logo.png',
+            metadata: [{ name: 'description', content: '🍰 Everything is RSSible' }],
             navbar: {
                 title: 'RSSHub',
                 logo: {
@@ -112,30 +131,30 @@ const config = {
                     {
                         to: '/',
                         position: 'left',
-                        label: '指南',
+                        label: 'Guide',
                         activeBaseRegex: '^/(usage|faq|parameter|api)?$',
                     },
                     {
                         to: '/routes',
                         position: 'left',
-                        label: '路由',
+                        label: 'Routes',
                         activeBaseRegex: '^/routes/',
                     },
                     {
                         to: '/joinus/quick-start',
-                        label: '参与我们',
+                        label: 'Join Us',
                         position: 'left',
                         activeBaseRegex: '^/joinus/',
                     },
                     {
                         to: '/install',
                         position: 'left',
-                        label: '部署',
+                        label: 'Deploy',
                     },
                     {
                         to: '/support',
                         position: 'left',
-                        label: '支持 RSSHub',
+                        label: 'Support RSSHub',
                     },
                     {
                         type: 'search',
@@ -159,20 +178,20 @@ const config = {
                         title: 'Docs',
                         items: [
                             {
-                                label: '指南',
+                                label: 'Guide',
                                 to: '/',
                             },
                             {
                                 to: '/joinus/quick-start',
-                                label: '参与我们',
+                                label: 'Join Us',
                             },
                             {
                                 to: '/install',
-                                label: '部署',
+                                label: 'Deploy',
                             },
                             {
                                 to: '/support',
-                                label: '支持 RSSHub',
+                                label: 'Support RSSHub',
                             },
                         ],
                     },
@@ -197,15 +216,15 @@ const config = {
                         title: 'More',
                         items: [
                             {
-                                label: '关于作者 DIYgod',
+                                label: 'About DIYgod',
                                 to: 'https://diygod.cc',
                             },
                             {
-                                label: 'RSSHub Radar - 快速发现和订阅 RSS',
+                                label: 'RSSHub Radar - Discover and subscribe to RSS quickly',
                                 href: 'https://github.com/DIYgod/RSSHub-Radar',
                             },
                             {
-                                label: 'xLog - 书写在区块链上的开源创作社区',
+                                label: 'xLog - Open source creation community written on the blockchain',
                                 href: 'https://xlog.app',
                             },
                         ],
@@ -216,6 +235,7 @@ const config = {
             prism: {
                 theme: lightCodeTheme,
                 darkTheme: darkCodeTheme,
+                additionalLanguages: ['bash'],
             },
         }),
 };

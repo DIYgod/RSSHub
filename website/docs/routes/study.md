@@ -1,6 +1,4 @@
-import Route from '@site/src/components/Route';
-
-# 📖 学习
+# 📖 Study
 
 ## 51VOA 美国之音 {#51voa-mei-guo-zhi-yin}
 
@@ -39,15 +37,21 @@ import Route from '@site/src/components/Route';
 
 ### Seminar Series {#asian-innovation-and-entrepreneurship-association-seminar-series}
 
-<Route author="zxx-457" example="/aiea/seminars/upcoming" path="/aiea/seminars/:period" paramsDesc={['时间段']}>
+<Route author="zxx-457" example="/aiea/seminars/upcoming" path="/aiea/seminars/:period" paramsDesc={['Time frame']}>
 
-| 时间段   |
-| -------- |
+| Time frame |
+| ----- |
 | upcoming |
-| past     |
-| both     |
+| past |
+| both|
 
 </Route>
+
+## Chinese Social Science Net {#chinese-social-science-net}
+
+### Institute of Law {#chinese-social-science-net-institute-of-law}
+
+<Route author="HankChow" example="/cssn/iolaw/zxzp" path="/cssn/iolaw/:section?" paramsDesc={['Section ID, can be found in the URL. For example, the Section ID of URL `http://iolaw.cssn.cn/zxzp/` is `zxzp`. The default value is `zxzp`']}/>
 
 ## CTFHub Calendar {#ctfhub-calendar}
 
@@ -85,9 +89,9 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 ## DBLP {#dblp}
 
-### 关键字搜索 {#dblp-guan-jian-zi-sou-suo}
+### Keyword Search {#dblp-keyword-search}
 
-<Route author="ytno1" example="/dblp/knowledge%20tracing" path="/dblp/:field" paramsDesc={['研究领域']} radar="1" />
+<Route author="ytno1" example="/dblp/knowledge%20tracing" path="/dblp/:field" paramsDesc={['Research field']} radar="1" />
 
 ## gradCafe {#gradcafe}
 
@@ -97,13 +101,49 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 ### gradCafe result by key words {#gradcafe-gradcafe-result-by-key-words}
 
-<Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" paramsDesc={['按关键词进行搜索，如 computer']}/>
+<Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" paramsDesc={['Keyword']}/>
+
+## Great Britain China Centre {#great-britain-china-centre}
+
+### Educational Trust {#great-britain-china-centre-educational-trust}
+
+<Route author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
+
+## iciba {#iciba}
+
+### Daily English Sentence {#iciba-daily-english-sentence}
+
+<Route author="mashirozx" example="/iciba/7/poster" path="/iciba/:days?/:img_type?" paramsDesc={['number of items to show (min = 1, max = 7, default = 1)', 'image style']}>
+
+| `:img_type` | image style    |
+| ----------- | -------------- |
+| original    | Original size  |
+| medium      | Medium size    |
+| thumbnail   | Thumbnail size |
+| poster      | Art poster     |
+
+</Route>
 
 ## IELTS 雅思 {#ielts-ya-si}
 
 ### 最新消息 {#ielts-ya-si-zui-xin-xiao-xi}
 
 <Route author="zenxds" example="/ielts" path="/ielts" puppeteer="1"/>
+
+## Link Research {#link-research}
+
+### Theses {#link-research-theses}
+
+<Route author="y9c" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" paramsDesc={['key=value，eg. subject=生物']} radar="1" rssbud="1">
+
+| `:param` | example         | definition                             |
+| -------- | --------------- | -------------------------------------- |
+| category | category=thesis | **one of** theses/information/careers |
+| subject  | subject=生物    | string / undefined                     |
+| columns  | columns=健康    | string / undefined                     |
+| columns  | columns=virus   | string / undefined                     |
+
+</Route>
 
 ## MarginNote {#marginnote}
 
@@ -143,39 +183,39 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 ## MindMeister {#mindmeister}
 
-### 公开思维导图 {#mindmeister-gong-kai-si-wei-dao-tu}
+### Public Maps {#mindmeister-public-maps}
 
-<Route author="TonyRL" example="/mindmeister/mind-map-examples" path="/mindmeister/:category?/:language?" paramsDesc={['分类，见下表，默认为 `mind-map-examples`', '语言，见下表，默认为 `en`']} radar="1" rssbud="1">
+<Route author="TonyRL" example="/mindmeister/mind-map-examples" path="/mindmeister/:category?/:language?" paramsDesc={['Categories, see the table below, `mind-map-examples` by default', 'Languages, see the table below, `en` by default']} radar="1" rssbud="1">
 
-| 分类         | 参数              |
-| ------------ | ----------------- |
-| 精选思维导图 | mind-map-examples |
-| 商务         | business          |
-| 设计         | design            |
-| 教育         | education         |
-| 娱乐         | entertainment     |
-| 生活         | life              |
-| 营销         | marketing         |
-| 生产力       | productivity      |
-| 概要         | summaries         |
-| 科技         | technology        |
-| 其他         | other             |
+| Categories | parameter |
+| -------- | --------------- |
+| Featured Map | mind-map-examples |
+| Business | business |
+| Design | design |
+| Education | education |
+| Entertainment | entertainment |
+| Life | life |
+| Marketing | marketing |
+| Productivity | productivity |
+| Summaries | summaries |
+| Technology | technology |
+| Other | other |
 
-| 语言       | 参数  |
-| ---------- | ----- |
-| English    | en    |
-| Deutsch    | de    |
-| Français   | fr    |
-| Español    | es    |
-| Português  | pt    |
-| Nederlands | nl    |
-| Dansk      | da    |
-| Русский    | ru    |
-| 日本語     | ja    |
-| Italiano   | it    |
-| 简体中文   | zh    |
-| 한국어     | ko    |
-| Other      | other |
+| Languages | parameter |
+| -------- | --------------- |
+| English | en |
+| Deutsch | de |
+| Français | fr |
+| Español | es |
+| Português | pt |
+| Nederlands | nl |
+| Dansk | da |
+| Русский | ru |
+| 日本語 | ja |
+| Italiano | it |
+| 简体中文 | zh |
+| 한국어 | ko |
+| Other | other |
 
 </Route>
 
@@ -214,9 +254,9 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 ## ORCID {#orcid}
 
-### 作品列表 {#orcid-zuo-pin-lie-biao}
+### Works List {#orcid-works-list}
 
-<Route author="OrangeEd1t" example="/orcid/0000-0002-4731-9700" path="/orcid/:id" paramsDesc={['学术识别号']}/>
+<Route author="OrangeEd1t" example="/orcid/0000-0002-4731-9700" path="/orcid/:id" paramsDesc={['Open Researcher and Contributor ID']}/>
 
 ## ProcessOn {#processon}
 
@@ -242,19 +282,25 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 ### Publications {#researchgate-publications}
 
-<Route author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" paramsDesc={['用户名，可在用户页地址栏中找到']} puppeteer="1" anticrawler="1"/>
+<Route author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" paramsDesc={['Username, can be found in URL']} puppeteer="1" anticrawler="1"/>
 
-## X-MOL 平台 {#x-mol-ping-tai}
+## The Korea Institute of Marine Law {#the-korea-institute-of-marine-law}
 
-### 新闻 {#x-mol-ping-tai-xin-wen}
+### Thesis {#the-korea-institute-of-marine-law-thesis}
 
-<Route author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" paramsDesc={['数字编号，可从新闻列表URL得到。为空时从新闻主页获取新闻。']} />
+<Route author="TonyRL" example="/kimlaw/thesis" path="/kimlaw/thesis" radar="1"/>
+
+## X-MOL {#x-mol}
+
+### News {#x-mol-news}
+
+<Route author="cssxsh" example="/x-mol/news/3" path="/x-mol/news/:tag?" paramsDesc={['Tag number, can be obtained from news list URL. Empty value means news index.']} />
 
 ## XMind {#xmind}
 
 ### Mindmap Gallery {#xmind-mindmap-gallery}
 
-<Route author="nczitzk" example="/xmind/mindmap" path="/xmind/mindmap/:lang?" paramsDesc={['语言代码，见下表，默认为所有语言']}>
+<Route author="nczitzk" example="/xmind/mindmap" path="/xmind/mindmap/:lang?" paramsDesc={['language code, all languages by default']}>
 
 | English | Español | Deutsch | Français | 中文 | 日本語 |
 | ------- | ------- | ------- | -------- | ---- | ------ |
@@ -269,6 +315,47 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 | 热门                             | 学科                             | 学习                             | 语言                             | 工作                             | 提升                             | 生活                             | 互联网                           | 教育                             | 其他                             | 行业                             | 服务发布                         | 医疗                             |
 | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- | -------------------------------- |
 | 33b67d1bad1d4e37812f71d42764af34 | 9434268e893a46aa9a1a231059849984 | 820156a42e9a490796c7fd56916aa95b | 959c81f606ca495c882c7e461429eb2a | 5af4bca5496e4733a2d582690627e25f | 5300988dff564756b5d462cea8a865b7 | 02fdcc2ab6374bc6b9b9717e70c87723 | 437d434fe9eb410a94dcefb889994e2b | 9747cbf78f96492c973aa6ab23925eee | d4c3a92a9cf64da7b187763211dc6ff6 | 58231ab9cef34af7819c3f6e2160c007 | 73d89972bee0457997c983d7fca19f9f | 853ce8b3a4c24b87a03f66af95c5e06c |
+
+</Route>
+
+## ZhiShiFenZi {#zhishifenzi}
+
+### News {#zhishifenzi-news}
+
+<Route author="y9c" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" paramsDesc={['type，eg. ai']}>
+
+| `:type`   | type name |
+| --------- | --------- |
+| biology   | Biology   |
+| medicine  | Medicine  |
+| ai        | AI        |
+| physics   | physics   |
+| chymistry | Chymistry |
+| astronomy | Astronomy |
+| others    | Others    |
+
+> leave it blank（`/zhishifenzi/news`）to get all
+
+</Route>
+
+### depth {#zhishifenzi-depth}
+
+<Route author="y9c" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
+
+### innovation {#zhishifenzi-innovation}
+
+<Route author="y9c" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" paramsDesc={['type，eg. company']}>
+
+| `:type`       | type name     |
+| ------------- | ------------- |
+| ~~multiple~~  | ~~Multiple~~  |
+| company       | Company       |
+| product       | Product       |
+| technology    | Technology    |
+| ~~character~~ | ~~Character~~ |
+| policy        | Policy        |
+
+> leave it blank（`/zhishifenzi/innovation`）to get all
 
 </Route>
 
@@ -294,7 +381,7 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 | ---- | ---- | ---- |
 | tz   | dt   | gs   |
 
-:::tip 提示
+:::tip
 
 分类字段处填写的是对应东莞教研网网址中中介于 **<https://www.dgjyw.com/>** 和 **.htm** 中间的一段。
 
@@ -318,12 +405,6 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## 韓國海事法學會 {#han-guo-hai-shi-fa-xue-hui}
-
-### 学术论文 {#han-guo-hai-shi-fa-xue-hui-xue-shu-lun-wen}
-
-<Route author="TonyRL" example="/kimlaw/thesis" path="/kimlaw/thesis" radar="1"/>
-
 ## 杭州市国家普通话测试网报信息 {#hang-zhou-shi-guo-jia-pu-tong-hua-ce-shi-wang-bao-xin-xi}
 
 ### 考试信息 {#hang-zhou-shi-guo-jia-pu-tong-hua-ce-shi-wang-bao-xin-xi-kao-shi-xin-xi}
@@ -346,41 +427,11 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 <Route author="xfangbao" example="/jijitang/article/latest" path="/jijitang/article/:id" paramsDesc={['类别，latest 或者 recommand']}/>
 
-## 金山词霸 {#jin-shan-ci-ba}
-
-### 每日一句 {#jin-shan-ci-ba-mei-ri-yi-ju}
-
-<Route author="mashirozx" example="/iciba/7/poster" path="/iciba/:days?/:img_type?" paramsDesc={['展示的条目数（最小1，最大7，默认1，只展示当天的条目）', '图片格式']}>
-
-| `:img_type` | 图片格式 |
-| ----------- | -------- |
-| original    | 原图     |
-| medium      | 尺寸优化 |
-| thumbnail   | 缩略图   |
-| poster      | 文艺海报 |
-
-</Route>
-
 ## 经济 50 人论坛 {#jing-ji-50-ren-lun-tan}
 
 ### 专家文章 {#jing-ji-50-ren-lun-tan-zhuan-jia-wen-zhang}
 
 <Route author="sddiky" example="/50forum" path="/50forum" radar="1"/>
-
-## 领研 {#ling-yan}
-
-### 论文 {#ling-yan-lun-wen}
-
-<Route author="y9c" example="/linkresearcher/category=theses&subject=生物" path="/linkresearcher/theses/:param" supportScihub="1" paramsDesc={['参数，如 subject=生物']} radar="1" rssbud="1">
-
-| `:param` | 举例            | 定义                                 |
-| -------- | --------------- | ------------------------------------ |
-| category | category=thesis | **必填**，theses/information/careers |
-| subject  | subject = 生物  | 可置空                               |
-| columns  | columns = 健康  | 可置空                               |
-| query    | query = 病毒    | 可置空                               |
-
-</Route>
 
 ## 码农周刊 {#ma-nong-zhou-kan}
 
@@ -398,7 +449,7 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 <Route author="nczitzk" example="/sdzk" path="/sdzk/:bcid?/:cid?" paramsDesc={['板块 id，可在对应板块页 URL 中找到，默认为 `1`，即信息与政策', '栏目 id，可在对应板块页 URL 中找到，默认为 `16`，即通知公告']}>
 
-:::tip 提示
+:::tip
 
 若订阅 [信息与政策](https://www.sdzk.cn/NewsList.aspx?BCID=1)，网址为 <https://www.sdzk.cn/NewsList.aspx?BCID=1>。截取 `BCID=1` 作为参数，此时路由为 [`/sdzk/1`](https://rsshub.app/sdzk/1)。
 
@@ -446,7 +497,7 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 <Route author="nczitzk" example="/edrawsoft/mindmap/1/PV/DESC/CN/1" path="/edrawsoft/mindmap/:classId?/:order?/:sort?/:lang?/:price?/:search?" paramsDesc={['分类编号，见下表，默认为全部分类', '排序参数，`PV` 指 最多浏览，`TIME` 指 最新发布，`LIKE` 指 最多点赞，默认为 `PV` 即 最多浏览', '排序方式，`DESC` 指 降序，`ASC` 指 升序，默认为 `DESC` 即 降序', '模板语言，默认为 `CN`', '是否免费，`1` 指 全部，`2` 指 免费，`3` 指 付费，`4` 指 会员免费，默认为 `1` 即 全部', '搜索关键词，默认为空']}>
 
-:::tip 提示
+:::tip
 
 不支持分类搜索和自定义搜索排序，即 `search` 参数不为空时，其他参数不起作用。
 
@@ -578,7 +629,7 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 <Route author="nczitzk" example="/yinxiang/card/32" path="/yinxiang/card/:id?" paramsDesc={['卡片 id，见下表，默认为每周收藏排行榜・TOP5']}>
 
-:::tip 提示
+:::tip
 
 卡片对应的话题、专题等内容过期后，该卡片 id 也会失效，此时填入该卡片 id 将会报错。
 
@@ -602,12 +653,6 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 <Route author="nczitzk" example="/yinxiang/tag/人生算法" path="/yinxiang/tag/:id" paramsDesc={['标签名，可在标签页中找到']} />
 
-## 英中协会 {#ying-zhong-xie-hui}
-
-### 奖学金 {#ying-zhong-xie-hui-jiang-xue-jin}
-
-<Route author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" />
-
 ## 有道云笔记 {#you-dao-yun-bi-ji}
 
 ### 学霸感悟 {#you-dao-yun-bi-ji-xue-ba-gan-wu}
@@ -629,43 +674,6 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 | [/yuque/egg/nodejs](https://rsshub.app/yuque/egg/nodejs) | [/yuque/ruanyf/weekly](https://rsshub.app/yuque/ruanyf/weekly) | [/yuque/yuque/help](https://rsshub.app/yuque/yuque/help) |
 
 </Route>
-
-## 知識分子 {#zhi-shi-fen-zi}
-
-### 新聞 {#zhi-shi-fen-zi-xin-wen}
-
-<Route author="y9c" example="/zhishifenzi/news/ai" path="/zhishifenzi/news/:type" paramsDesc={['类别，如 ai']}/>
-
-| `:type`   | 类别名称 |
-| --------- | -------- |
-| biology   | 生物     |
-| medicine  | 医药     |
-| ai        | 人工智能 |
-| physics   | 物理     |
-| chymistry | 化学     |
-| astronomy | 天文     |
-| others    | 其他     |
-
-> 参数置空（`/zhishifenzi/news`）获取所有类别
-
-### 深度 {#zhi-shi-fen-zi-shen-du}
-
-<Route author="y9c" example="/zhishifenzi/depth" path="/zhishifenzi/depth" />
-
-### 创新 {#zhi-shi-fen-zi-chuang-xin}
-
-<Route author="y9c" example="/zhishifenzi/innovation/company" path="/zhishifenzi/innovation/:type" paramsDesc={['类别，如 company']}/>
-
-| `:type`       | 类别名称 |
-| ------------- | -------- |
-| ~~multiple~~  | ~~综合~~ |
-| company       | 公司     |
-| product       | 产品     |
-| technology    | 技术     |
-| ~~character~~ | ~~人物~~ |
-| policy        | 政策     |
-
-> 参数置空（`/zhishifenzi/innovation`）获取所有类别
 
 ## 中国大学 MOOC (慕课) {#zhong-guo-da-xue-mooc-(-mu-ke-)}
 
@@ -740,12 +748,6 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 ### 通知公告 {#zhong-guo-ren-shi-kao-shi-wang-tong-zhi-gong-gao}
 
 <Route author="nczitzk" example="/cpta/notice" path="/cpta/notice" />
-
-## 中国社会科学网 {#zhong-guo-she-hui-ke-xue-wang}
-
-### 中国法学网 {#zhong-guo-she-hui-ke-xue-wang-zhong-guo-fa-xue-wang}
-
-<Route author="HankChow" example="/cssn/iolaw/zxzp" path="/cssn/iolaw/:section?" paramsDesc={['板块 ID，可在 URL 找到。例如页面 URL 为 `http://iolaw.cssn.cn/zxzp/`，则板块 ID 为 `zxzp`。若不填该参数，默认为 `zxzp`']}/>
 
 ## 中国研究生招生信息网 {#zhong-guo-yan-jiu-sheng-zhao-sheng-xin-xi-wang}
 
@@ -869,3 +871,4 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 | 台湾             | 71   |
 
 </Route>
+

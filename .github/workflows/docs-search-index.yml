@@ -6,6 +6,7 @@ on:
       - master
     paths:
       - '.github/workflows/docs-search-index.yml'
+      - 'scripts/docs-scraper/docs.rsshub.app.json'
       - 'website/**'
   workflow_dispatch: ~
   schedule:

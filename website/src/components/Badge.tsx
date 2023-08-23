@@ -1,13 +1,13 @@
 import React from 'react';
 
 export default function Badge({
-  text = '',
   type = 'tip',
+  children = '',
 }: {
-  text: string;
   type: string;
+  children: React.ReactNode;
 }): JSX.Element {
   return (
-    <span className={`badge ${type}`}>{text}</span>
-  )
+    <span className={`badge ${type}`}>{children}</span>
+  );
 }

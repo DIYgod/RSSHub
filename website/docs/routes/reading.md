@@ -1,30 +1,28 @@
-import Route from '@site/src/components/Route';
-
-# 📚 阅读
+# 📚 Reading
 
 ## All Poetry {#all-poetry}
 
 ### Poems {#all-poetry-poems}
 
-<Route author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" paramsDesc={['排序方式, `best` 或 `newest`, 缺省 `best`']}/>
+<Route author="HenryQW" example="/allpoetry/newest" path="/allpoetry/:order?" paramsDesc={['Ordering, `best` or `newest`, `best` by default']}/>
 
 ## Free Computer Books {#free-computer-books}
 
-### 精选上新 {#free-computer-books-jing-xuan-shang-xin}
+### Selected New Books {#free-computer-books-selected-new-books}
 
 <Route author="cubroe" example="/freecomputerbooks" path="/freecomputerbooks" radar="1" />
 
-### 当前书单 {#free-computer-books-dang-qian-shu-dan}
+### Current Book List {#free-computer-books-current-book-list}
 
-<Route author="cubroe" example="/freecomputerbooks/compscAlgorithmBooks" path="/freecomputerbooks/:category" paramsDesc={['分类标识符，为源站URL路径中的HTML文件名（去除`.html`后缀）']} radar="1" />
+<Route author="cubroe" example="/freecomputerbooks/compscAlgorithmBooks" path="/freecomputerbooks/:category" paramsDesc={['A category id., which should be the HTML file name (but **without** the `.html` suffix) in the URL path of a book list page.']} radar="1" />
 
 ## hameln {#hameln}
 
-### 章节更新 {#hameln-zhang-jie-geng-xin}
+### chapter {#hameln-chapter}
 
-<Route author="huangliangshusheng" example="/hameln/chapter/264928" path="/hameln/chapter/:id" paramsDesc={['小说 id, 可在对应小说页 URL 中找到']}>
+<Route author="huangliangshusheng" example="/hameln/chapter/264928" path="/hameln/chapter/:id" paramsDesc={['Novel id, can be found in URL']}>
 
-举例网址：<https://syosetu.org/novel/264928/>
+Eg:<https://syosetu.org/novel/264928/>
 
 </Route>
 
@@ -32,25 +30,25 @@ import Route from '@site/src/components/Route';
 
 ### HTML Clip {#inoreader-html-clip}
 
-<Route author="BeautyyuYanli" example="/inoreader/html_clip/1006346356/News?limit=3" path="/html_clip/:user/:tag" paramsDesc={['用户 id, 即举例网址 URL 中的 user/ 后的数字', '标签名, 即举例网址 URL 中的 tag/ 后的内容']}>
+<Route author="BeautyyuYanli" example="/inoreader/html_clip/1006346356/News?limit=3" path="/html_clip/:user/:tag" paramsDesc={['user id, the interger after user/ in the example URL','tag, the string after tag/ in the example URL']}>
 
-可携带 query 参数 `limit=n`, 用于限制获取的文章数量，缺省为 20
+Use query parameter `limit=n` to limit the number of articles, default to 20
 
-举例网址: <https://www.inoreader.com/stream/user/1006346356/tag/News/view/html?n=3>
+Eg: <https://www.inoreader.com/stream/user/1006346356/tag/News/view/html?n=3>
 
 </Route>
 
 ### RSS {#inoreader-rss}
 
-<Route author="NavePnow" example="/inoreader/rss/1005137674/user-favorites" path="/inoreader/rss/:user/:tag" paramsDesc={['用户 id, 即举例网址 URL 中的 user/ 后的数字', '标签名, 即举例网址 URL 中的 tag/ 后的内容']}>
+<Route author="NavePnow" example="/inoreader/rss/1005137674/user-favorites" path="/inoreader/rss/:user/:tag" paramsDesc={['user id, the interger after user/ in the example URL','tag, the string after tag/ in the example URL']}>
 
 ## kakuyomu {#kakuyomu}
 
-### 章节更新 {#kakuyomu-zhang-jie-geng-xin}
+### episode {#kakuyomu-episode}
 
-<Route author="huangliangshusheng" example="/kakuyomu/episode/1177354054883783581" path="/kakuyomu/episode/:id" paramsDesc={['小说 id, 可在对应小说页 URL 中找到']}>
+<Route author="huangliangshusheng" example="/kakuyomu/episode/1177354054883783581" path="/kakuyomu/episode/:id" paramsDesc={['Novel id, can be found in URL']}>
 
-举例网址：<https://kakuyomu.jp/works/1177354054883783581>
+Eg:<https://kakuyomu.jp/works/1177354054883783581>
 
 </Route>
 
@@ -74,13 +72,13 @@ import Route from '@site/src/components/Route';
 
 ### Category {#literotica-category}
 
-<Route author="nczitzk" example="/literotica/category/anal-sex-stories" path="/literotica/category/:category?" paramsDesc={['分类，可在对应分类页地址栏中找到']}/>
+<Route author="nczitzk" example="/literotica/category/anal-sex-stories" path="/literotica/category/:category?" paramsDesc={['Category, can be found in URL']}/>
 
 ## MagazineLib {#magazinelib}
 
 ### Latest Magazine {#magazinelib-latest-magazine}
 
-<Route author="NavePnow" example="/magazinelib/latest-magazine/new+yorker" path="/magazinelib/latest-magazine/:query?" paramsDesc={['query，search page querystring']}/>
+<Route author="NavePnow" example="/magazinelib/latest-magazine/new+yorker" path="/magazinelib/latest-magazine/:query?" paramsDesc={['query, search page querystring']}/>
 
 For instance, when doing search at <https://magazinelib.com/> and you get url <https://magazinelib.com/?s=new+yorker>, the query is `new+yorker`
 
@@ -88,18 +86,18 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 ## Mobilism {#mobilism}
 
-### 电子书 {#mobilism-dian-zi-shu}
+### eBook Releases {#mobilism-ebook-releases}
 
-<Route author="nitezs" example="/mobilism/forums/books/romance" path="/mobilism/forums/books/:type/:fulltext?" paramsDesc={['分类','是否获取全文，如需获取全文参数传入 `y`']}>
+<Route author="nitezs" example="/mobilism/forums/books/romance" path="/mobilism/forums/books/:type/:fulltext?" paramsDesc={['Category', 'Retrieve fulltext, specify `y` to enable']}>
 
-| 分类名           | 参数       |
-| ---------------- | ---------- |
-| 浪漫             | romance    |
-| 科幻、幻想、恐怖 | scifi      |
-| 普通小说、经典   | classics   |
-| 杂志、报纸       | magazines  |
-| 有声读物         | audioBooks |
-| 漫画             | comics     |
+| Category                 | Parameter  |
+| ------------------------ | ---------- |
+| Romance                  | romance    |
+| Sci-Fi/Fantasy/Horror    | scifi      |
+| General Fiction/Classics | classics   |
+| Magazines & Newspapers   | magazines  |
+| Audiobooks               | audioBooks |
+| Comics                   | comics     |
 
 </Route>
 
@@ -154,11 +152,11 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 ## syosetu {#syosetu}
 
-### 章节更新 {#syosetu-zhang-jie-geng-xin}
+### chapter {#syosetu-chapter}
 
-<Route author="huangliangshusheng" example="/syosetu/chapter/n1976ey" path="/syosetu/chapter/:id" paramsDesc={['小说 id, 可在对应小说页 URL 中找到']}>
+<Route author="huangliangshusheng" example="/syosetu/chapter/n1976ey" path="/syosetu/chapter/:id" paramsDesc={['Novel id, can be found in URL']}>
 
-举例网址：<https://ncode.syosetu.com/n1976ey/>
+Eg:<https://ncode.syosetu.com/n1976ey/>
 
 </Route>
 
@@ -178,7 +176,7 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 <Route author="nczitzk" example="/aisixiang/zhuanti/211" path="/aisixiang/zhuanti/:id" paramsDesc={['专题 ID, 可在对应专题 URL 中找到']}>
 
-:::tip 提示
+:::tip
 
 更多专题请见 [关键词](http://www.aisixiang.com/zhuanti/)
 
@@ -213,7 +211,7 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 ## 笔趣阁 {#bi-qu-ge}
 
-:::tip 看我
+:::tip
 
 此处的 **笔趣阁** 指网络上使用和 **笔趣阁** 样式相似模板的小说阅读网站，包括但不限于下方列举的网址。
 
@@ -241,7 +239,7 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 <Route author="nczitzk" example="/biquge/http://www.biqu5200.net/0_7/" path="/biquge/:url" paramsDesc={['小说 Url，即对应小说详情页的 Url，可在地址栏中找到']} anticrawler="1" radar="1" rssbud="1">
 
-:::tip 看我
+:::tip
 
 #### 使用方法
 
@@ -259,7 +257,7 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 :::
 
-:::caution 提示
+:::caution
 
 上方列举的网址可能部分不可用，这取决于该网站的维护者是否持续运营网站。请选择可以正常访问的网址，获取更新的前提是该网站可以正常访问。
 
@@ -279,7 +277,7 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 <Route author="nczitzk" example="/chaoxing/qk/6b5c39b3dd84352be512e29df0297437" path="/chaoxing/qk/:id/:needContent?" paramsDesc={['期刊 id，可在期刊页 URL 中找到', '需要获取文章全文，填写 true/yes 表示需要，默认需要']} anticrawler="1" radar="1" rssbud="1">
 
-:::tip 看我
+:::tip
 
 全部期刊可以在 [这里](http://qk.chaoxing.com/space/index) 找到，你也可以从 [学科分类](https://qikan.chaoxing.com/jourclassify) 和 [期刊导航](https://qikan.chaoxing.com/search/openmag) 中发现更多期刊。
 
@@ -287,7 +285,7 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 :::
 
-:::caution 提示
+:::caution
 
 你可以设置参数 **需要获取文章全文** 为 `true` `yes` `t` `y` 等值（或者忽略这个参数），RSS 的条目会携带期刊中的 **文章全文**，而不仅仅是 **文章概要**。但因为发起访问请求过多会被该网站屏蔽，你可以将其关闭（设置该参数为 `false` `no` `f` `n` 等值），这将会大大减少请求次数从而更难触发网站的反爬机制。
 
@@ -305,9 +303,10 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 <Route author="LogicJake" example="/chuiniu/column/0b1c4cf6e7f24e8da11e37882de73704" path="/chuiniu/column/:id" paramsDesc={['栏目 id, 可在对应栏目页 URL 中找到']}>
 
-:::caution 注意
+:::caution
 
 正文内容需要用户登录后的 x-member 值，详情见部署页面的配置模块。若无相关配置或 x-member 失效，则只显示文章摘要。
+
 :::
 
 </Route>
@@ -340,7 +339,7 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 <Route author="JeasonLau" example="/dcrsw/zhongjidouluo/2" path="/dcrsw/:name/:count?" paramsDesc={['小说名，可在对应小说页URL中找到', '显示的章节数，缺省为`3`']}>
 
-:::caution 注意
+:::caution
 
 count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 以下。
 :::
@@ -464,7 +463,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="nczitzk" example="/qidiantu" path="/qidiantu/:category?/:type?/:is_history?" paramsDesc={['分类', '类型', '是否查看历史榜单，填写 true/yes 表示是，默认否']}>
 
-:::tip 提示
+:::tip
 
 参数 **是否查看历史榜单** 设置为 `true` `yes` `t` `y` 等值后，RSS 会返回历史榜单。
 
@@ -500,7 +499,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="Fatpandac" example="/wenku8/lastupdate" path="/wenku8/:categoty?" paramsDesc={['首页分类，见下表，默认为今日更新']} selfhost="1">
 
-:::caution 注意
+:::caution
 
 首页需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -590,3 +589,4 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 ### 主页 {#zuo-an-du-shu-zhu-ye}
 
 <Route author="kt286" example="/zreading" path="/zreading" />
+

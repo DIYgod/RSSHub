@@ -1,10 +1,32 @@
-import Route from '@site/src/components/Route';
+# 🎓 University
 
-# 🎓 大学通知
+## Beijing Jiaotong University 北京交通大学 {#beijing-jiaotong-university-bei-jing-jiao-tong-da-xue}
+
+### BJTU Graduate School {#beijing-jiaotong-university-bei-jing-jiao-tong-da-xue-bjtu-graduate-school}
+
+<Route author="E1nzbern" example="/bjtu/gs/all" path="/bjtu/gs/:type" paramsDesc={['Type of articles']}>
+
+| All articles | Notification | News | Admissions Promotion | Training | Degrees | Admissions | Master Admissions | PhD Admissions | Admissions Brochure | Admissions Policies and Regulations | Notice from Graduate Student Work Department | News from Graduate Student Work Department |
+| ---- | -------- | -------- | ------------ | ------------ | -------- | -------- | ------ | ---------- | ------ | ------ | ------ | ------ |
+| all  | noti     | news    | zsxc       | py       | xw      | zs     | sszs    | bszs      | zsjz    | zcfg    | ygbtzgg    | ygbnews    |
+
+</Route>
+
+Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chinese.
+
+## East China Normal University 华东师范大学 {#east-china-normal-university-hua-dong-shi-fan-da-xue}
+
+### ACM Online-Judge contests list {#east-china-normal-university-hua-dong-shi-fan-da-xue-acm-online-judge-contests-list}
+
+<Route author="a180285" example="/ecnu/acm/contest/public" path="/ecnu/acm/contest/:category?" radar="1" rssbud="1" paramsDesc={['category is optional, default is all, use `public` for public only contests']} />
+
+### 研究生院 {#east-china-normal-university-hua-dong-shi-fan-da-xue-yan-jiu-sheng-yuan}
+
+<Route author="shengmaosu" example="/ecnu/yjs" path="/ecnu/yjs" radar="1" />
 
 ## MIT {#mit}
 
-### MIT OCW 每月热门课程 {#mit-mit-ocw-mei-yue-re-men-ke-cheng}
+### MIT OCW Most popular courses of the month {#mit-mit-ocw-most-popular-courses-of-the-month}
 
 <Route author="dwemerx" example="/mit/ocw-top" path="/mit/ocw-top"/>
 
@@ -24,11 +46,148 @@ import Route from '@site/src/components/Route';
 
 <Route author="nczitzk" example="/mit/csail/news" path="/mit/csail/news"/>
 
+## Nanjing University of the Arts 南京艺术学院 {#nanjing-university-of-the-arts-nan-jing-yi-shu-xue-yuan}
+
+### Official Information {#nanjing-university-of-the-arts-nan-jing-yi-shu-xue-yuan-official-information}
+
+<Route author="evnydd0sf" example="/nua/index/346" path="/nua/index/:type" paramsDesc={['News Type']} radar="1">
+
+| News Type | Parameters  |
+| ---- | --- |
+| 公告   | 346 |
+| 南艺要闻 | 332 |
+
+</Route>
+
+### Shuangxing Information {#nanjing-university-of-the-arts-nan-jing-yi-shu-xue-yuan-shuangxing-information}
+
+<Route author="evnydd0sf" example="/nua/sxw/230" path="/nua/sxw/:type" paramsDesc={['News Type']} radar="1">
+
+| News Type | Parameters  |
+| ---- | --- |
+| 校园电视 | 230 |
+| 院部动态 | 232 |
+| 动感校园 | 233 |
+| 招就指南 | 234 |
+| 南艺院报 | 236 |
+
+</Route>
+
+### School of Design {#nanjing-university-of-the-arts-nan-jing-yi-shu-xue-yuan-school-of-design}
+
+<Route author="evnydd0sf" example="/nua/dc/news" path="/nua/dc/:type" paramsDesc={['News Type']} radar="1">
+
+| News Type                   | Parameters         |
+| ---------------------- | ---------- |
+| 学院新闻 NEWS              | news       |
+| 展览 EXHIBITION          | exhibition |
+| 研创 RESEARCH & CREATION | rc         |
+| 项目 PROJECT             | project    |
+| 党团 PARTY               | party      |
+| 后浪 YOUTH               | youth      |
+
+</Route>
+
+### Graduate Institute {#nanjing-university-of-the-arts-nan-jing-yi-shu-xue-yuan-graduate-institute}
+
+<Route author="evnydd0sf" example="/nua/gra/1959" path="/nua/gra/:type" paramsDesc={['News Type']} radar="1">
+
+| News Type | Parameters   |
+| ---- | ---- |
+| 招生工作 | 1959 |
+| 培养工作 | 1962 |
+| 学位工作 | 1958 |
+
+</Route>
+
+### Library {#nanjing-university-of-the-arts-nan-jing-yi-shu-xue-yuan-library}
+
+<Route author="evnydd0sf" example="/nua/lib/xwdt" path="/nua/lib/:type" paramsDesc={['News Type']} radar="1">
+
+| News Type | Parameters   |
+| ---- | ---- |
+| 新闻动态 | xwdt |
+| 党建动态 | djdt |
+| 资源动态 | zydt |
+| 服务动态 | fwdt |
+
+</Route>
+
 ## Polimi {#polimi}
 
 ### News {#polimi-news}
 
 <Route author="exuanbo" example="/polimi/news" path="/polimi/news/:language?" paramsDesc={['English language code en']} />
+
+## Tianjin University 天津大学 {#tianjin-university-tian-jin-da-xue}
+
+### News {#tianjin-university-tian-jin-da-xue-news}
+
+<Route author="SuperPung" example="/tju/news/focus" path="/tju/news/:type?" paramsDesc={['default `focus`']}>
+
+| Focus on TJU | General News | Internal News | Media Report | Pictures of TJU |
+| :----------: | :----------: | :-----------: | :----------: | :-------------: |
+|    focus     |   general    |    internal   |    media     |     picture     |
+
+</Route>
+
+### College of Intelligence and Computing {#tianjin-university-tian-jin-da-xue-college-of-intelligence-and-computing}
+
+<Route author="SuperPung" example="/tju/cic/news" path="/tju/cic/:type?" paramsDesc={['default `news`']}>
+
+| College News | Notification | TJU Forum for CIC |
+| :----------: | :----------: | :---------------: |
+|     news     | notification |       forum       |
+
+</Route>
+
+### The Office of Academic Affairs {#tianjin-university-tian-jin-da-xue-the-office-of-academic-affairs}
+
+<Route author="AmosChenYQ SuperPung" example="/tju/oaa/news" path="/tju/oaa/:type?" paramsDesc={['default `news`']}>
+
+| News | Notification |
+| :--: | :----------: |
+| news | notification |
+
+</Route>
+
+### Admission Office of Graduate {#tianjin-university-tian-jin-da-xue-admission-office-of-graduate}
+
+<Route author="SuperPung" example="/tju/yzb/notice" path="/tju/yzb/:type?" paramsDesc={['default `notice`']}>
+
+| School-level Notice | Master | Doctor | On-the-job Degree |
+| :-----------------: | :----: | :----: |:-----------------:|
+|       notice        | master | doctor |        job        |
+
+</Route>
+
+## University of Massachusetts Amherst {#university-of-massachusetts-amherst}
+
+### College of Electrical and Computer Engineering {#university-of-massachusetts-amherst-college-of-electrical-and-computer-engineering}
+
+#### News
+
+<Route author="gammapi" example="/umass/amherst/ecenews" path="/umass/amherst/ecenews" radar="1" rssbud="1"/>
+
+#### Seminar
+
+<Route author="gammapi" example="/umass/amherst/eceseminar" path="/umass/amherst/eceseminar" radar="1" rssbud="1"/>
+
+Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's no upcoming seminars. This is normal and will cause rsshub fail to fetch this feed.
+
+### College of Information & Computer Sciences News {#university-of-massachusetts-amherst-college-of-information-%26-computer-sciences-news}
+
+<Route author="gammapi" example="/umass/amherst/csnews" path="/umass/amherst/csnews" radar="1" rssbud="1"/>
+
+### International Programs Office {#university-of-massachusetts-amherst-international-programs-office}
+
+#### Events
+
+<Route author="gammapi" example="/umass/amherst/ipostories" path="/umass/amherst/ipostories" radar="1" rssbud="1"/>
+
+#### Featured Stories
+
+<Route author="gammapi" example="/umass/amherst/ipoevents" path="/umass/amherst/ipoevents" radar="1" rssbud="1"/>
 
 ## University of Texas at Dallas {#university-of-texas-at-dallas}
 
@@ -144,7 +303,7 @@ import Route from '@site/src/components/Route';
 
 <Route author="wooddance" example="/pku/bbs/hot" path="/pku/bbs/hot" radar="1" rssbud="1">
 
-:::caution 注意
+:::caution
 
 论坛部分帖子正文内容的获取需要用户登录后的 Cookie 值，详情见部署页面的配置模块。
 
@@ -166,7 +325,7 @@ import Route from '@site/src/components/Route';
 
 <Route author="nczitzk" example="/pku/hr" path="/pku/hr/:category?" paramsDesc={['分类，见下方说明，默认为首页最新公告']} radar="1" rssbud="1">
 
-:::tip 提示
+:::tip
 
 分类字段处填写的是对应北京大学人事处分类页网址中介于 **<http://hr.pku.edu.cn/>** 和 **/index.htm** 中间的一段，并将其中的 `/` 修改为 `-`。
 
@@ -205,18 +364,6 @@ import Route from '@site/src/components/Route';
 | 综合新闻 | 信息公告 | 学术文化     | 校园风采 | 科教在线 | 媒体北航 | 专题新闻 | 北航人物 |
 | -------- | -------- | ------------ | -------- | -------- | -------- | -------- | -------- |
 | zonghe   | gonggao  | xueshuwenhua | fengcai  | kejiao   | meiti    | zhuanti  | renwu    |
-
-</Route>
-
-## 北京交通大学 {#bei-jing-jiao-tong-da-xue}
-
-### 研究生院 {#bei-jing-jiao-tong-da-xue-yan-jiu-sheng-yuan}
-
-<Route author="E1nzbern" example="/bjtu/gs/all" path="/bjtu/gs/:type" paramsDesc={['文章类别']}>
-
-| 所有文章 | 通知公告 | 新闻动态 | 招生宣传 | 培养 | 学位 | 招生 | 硕士招生 | 博士招生 | 招生简章 | 招生政策法规 | 研工部通知公告 | 研工部新闻动态 |
-| -------- | -------- | -------- | -------- | ---- | ---- | ---- | -------- | -------- | -------- | ------------ | -------------- | -------------- |
-| all      | noti     | news     | zsxc     | py   | xw   | zs   | sszs     | bszs     | zsjz     | zcfg         | ygbtzgg        | ygbnews        |
 
 </Route>
 
@@ -340,7 +487,7 @@ import Route from '@site/src/components/Route';
 
 <Route author="TonyRL" example="/bnu/fdy/tzgg/dwjs" path="/bnu/fdy/:path*" paramsDesc={['路径，默认为 `tzgg`']} radar="1">
 
-:::tip 提示
+:::tip
 
 路径处填写对应页面 URL 中 `https://fdy.bnu.edu.cn/` 和 `/index.htm` 之间的字段。下面是一个例子。
 
@@ -356,8 +503,10 @@ import Route from '@site/src/components/Route';
 
 <Route author="Muxq99" example="/bwu/news" path="/bwu/news" />
 
-:::caution 注意
+:::caution
+
 由于学校官网对非大陆 IP 的访问存在限制，需自行部署。
+
 :::
 
 ## 北京协和医学院 {#bei-jing-xie-he-yi-xue-yuan}
@@ -386,7 +535,7 @@ import Route from '@site/src/components/Route';
 
 <Route author="RicardoMing wzekin" example="/bupt/portal" path="/bupt/portal" />
 
-:::caution 注意
+:::caution
 
 由于需要登陆 `https://webapp.bupt.edu.cn/wap/login.html?redirect=http://` 后的 Cookie 值，所以只能自建，详情见部署页面的配置模块
 
@@ -396,7 +545,7 @@ import Route from '@site/src/components/Route';
 
 <Route author="wzekin" example="/bupt/news" path="/bupt/news" />
 
-:::caution 注意
+:::caution
 
 由于需要登陆 `https://webapp.bupt.edu.cn/wap/login.html?redirect=http://` 后的 Cookie 值，所以只能自建，详情见部署页面的配置模块
 
@@ -405,7 +554,8 @@ import Route from '@site/src/components/Route';
 ### BTBYR 趣味盒 {#bei-jing-you-dian-da-xue-btbyr-qu-wei-he}
 
 <Route author="prnake" example="/bupt/funbox" path="/bupt/funbox" selfhost="1"/>
-:::caution 注意
+
+:::caution
 
 由于需要登陆 BTBYR 后的 Cookie 值，所以只能自建，并且部署和订阅端均需支持 IPV6 网络或使用镜像站点。
 
@@ -474,16 +624,20 @@ import Route from '@site/src/components/Route';
 
 </Route>
 
-:::tip 提示
+:::tip
+
 路径参数的值为相应通知列表页面的地址去除后缀名和域名后的路径。
 
 例如 “通知公告” 列表页面地址为 <http://jwc.cqu.edu.cn/index/tzgg.htm>，相应参数为 `index/tgzz`。
+
 :::
 
-:::caution 注意
+:::caution
+
 原重庆大学教务网网站变更为重庆大学本科教学信息网。该路由编写时（2021-07-29）它[正处于试运行阶段](http://jwc.cqu.edu.cn/info/1080/3482.htm)。
 
 通知的分类比较迷，请小心甄别、使用（以免漏掉需要的通知）。
+
 :::
 
 ### 新闻网讲座预告 {#chong-qing-da-xue-xin-wen-wang-jiang-zuo-yu-gao}
@@ -675,7 +829,7 @@ import Route from '@site/src/components/Route';
 | -------- | -------- | -------- |
 | tzgg     | gzdt     | zcfg     |
 
-:::tip 提示
+:::tip
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学人事处](http://perdep.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -691,7 +845,7 @@ import Route from '@site/src/components/Route';
 | -------- | -------- | -------- |
 | xwkd     | zytg     | bhgs     |
 
-:::tip 提示
+:::tip
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学教务处](http://teach.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -711,7 +865,7 @@ import Route from '@site/src/components/Route';
 | --------------------- | --------------------- | --------------------- |
 | yjszs/zcwj1           | yjszs/gzdt/gzdt       | yjszs/zlxz/zlxz       |
 
-:::tip 提示
+:::tip
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学研究生院](http://gs.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -727,7 +881,7 @@ import Route from '@site/src/components/Route';
 | -------- | -------- | -------- | -------- | ---------- | ---------- |
 | jdxw     | zhxw     | xytz     | xsdt     | bkstz      | yjstz      |
 
-:::tip 提示
+:::tip
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学软件学院](http://ssdut.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -743,7 +897,7 @@ import Route from '@site/src/components/Route';
 | -------- | -------- |
 | tzgg     | xqxw     |
 
-:::tip 提示
+:::tip
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学开发区校区](http://eda.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -759,7 +913,7 @@ import Route from '@site/src/components/Route';
 | -------- | -------- | -------- | -------- | -------- | ---- |
 | xqxw     | xywh     | xyfc     | xsdt     | mtbd     | gg   |
 
-:::tip 提示
+:::tip
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区](https://panjin.dlut.edu.cn/index.htm)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -775,7 +929,7 @@ import Route from '@site/src/components/Route';
 | -------- | -------- | --------- |
 | zytz     | xgdt     | gsgonggao |
 
-:::tip 提示
+:::tip
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区学生事务办公室](http://xsgzb.dlut.edu.cn/index.htm)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -791,7 +945,7 @@ import Route from '@site/src/components/Route';
 | -------- | -------- | -------- | -------- | ---------- |
 | xwkd     | zytz     | jxwj     | cjwt     | xkyks      |
 
-:::tip 提示
+:::tip
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区教务教学事务办公室](http://pjteach.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -807,7 +961,7 @@ import Route from '@site/src/components/Route';
 | -------- | -------- | -------- | -------- |
 | tzgg     | dzyd     | zwkx     | fgzd     |
 
-:::tip 提示
+:::tip
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学盘锦校区总务部](http://pjxqzwb.dlut.edu.cn/index.htm)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -823,7 +977,7 @@ import Route from '@site/src/components/Route';
 | -------- | -------- |
 | xyxw     | zxgg     |
 
-:::tip 提示
+:::tip
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学体育与健康学院盘锦分院](http://tjpj.dlut.edu.cn/index.htm)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -839,7 +993,7 @@ import Route from '@site/src/components/Route';
 | -------- | ---------- | -------- |
 | jstz     | xstong_zhi | xwsd     |
 
-:::tip 提示
+:::tip
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学国际合作与交流处（港澳台办）](http://dutdice.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -855,7 +1009,7 @@ import Route from '@site/src/components/Route';
 | -------- | -------- | -------- | -------- |
 | tzgg     | hdrc     | xwdt     | jkzs     |
 
-:::tip 提示
+:::tip
 
 表格仅呈现了部分分类栏目，更多分类栏目参见 [大连理工大学体育场馆中心](http://tycgzx.dlut.edu.cn)，并按照上方 [**通用**](#da-lian-li-gong-da-xue-tong-yong) 规则订阅。
 
@@ -977,7 +1131,7 @@ import Route from '@site/src/components/Route';
 
 <Route author="nczitzk" example="/nenu/sohac" path="/nenu/sohac/:path+" paramsDesc={['路径，默认为通知公告']}>
 
-:::tip 提示
+:::tip
 
 若订阅 [通知公告](https://sohac.nenu.edu.cn/index/tzgg.htm)，网址为 <https://sohac.nenu.edu.cn/index/tzgg.htm>。截取 `https://sohac.nenu.edu.cn/` 到末尾 `.htm` 的部分 `index/tzgg` 作为参数，此时路由为 [`/nenu/sohac/index/tzgg`](https://rsshub.app/nenu/sohac/index/tzgg)。
 
@@ -991,7 +1145,7 @@ import Route from '@site/src/components/Route';
 
 <Route author="nczitzk" example="/nenu/yjsy" path="/nenu/yjsy/:path+" paramsDesc={['路径，默认为通知公告']}>
 
-:::tip 提示
+:::tip
 
 若订阅 [通知公告](https://yjsy.nenu.edu.cn/tzgg.htm)，网址为 <https://yjsy.nenu.edu.cn/tzgg.htm>。截取 `https://yjsy.nenu.edu.cn/` 到末尾 `.htm` 的部分 `tzgg` 作为参数，此时路由为 [`/nenu/yjsy/tzgg`](https://rsshub.app/nenu/yjsy/tzgg)。
 
@@ -1099,7 +1253,7 @@ import Route from '@site/src/components/Route';
 
 <Route author="nczitzk" example="/uibe/hr" path="/uibe/hr/:category?/:type?" paramsDesc={['分类，可在对应页 URL 中找到，默认为通知公告', '类型，可在对应页 URL 中找到，默认为空']}>
 
-:::tip 提示
+:::tip
 
 如 [通知公告](http://hr.uibe.edu.cn/tzgg) 的 URL 为 <http://hr.uibe.edu.cn/tzgg>，其路由为 [`/uibe/hr/tzgg`](https://rsshub.app/uibe/hr/tzgg)
 
@@ -1329,8 +1483,10 @@ category 列表：
 
 ## 哈尔滨工业大学 {#ha-er-bin-gong-ye-da-xue}
 
-:::caution 注意
+:::caution
+
 哈工大网站疑似禁止了`rsshub.app`的访问，使用路由需要自行 [部署](https://docs.rsshub.app/install)。
+
 :::
 
 ### 教务处通知公告 {#ha-er-bin-gong-ye-da-xue-jiao-wu-chu-tong-zhi-gong-gao}
@@ -1341,13 +1497,17 @@ category 列表：
 
 <Route author="ranpox" example="/hit/today/10" path="/hit/today/:category" paramsDesc={['分类编号，`10`为公告公示，`11`为新闻快讯，同时支持详细分类，使用方法见下']} radar="1" rssbud="1">
 
-:::tip 提示
+:::tip
+
 今日哈工大的文章分为公告公示和新闻快讯，每个页面右侧列出了更详细的分类，其编号为每个 URL 路径的最后一个数字。
 例如会议讲座的路径为`/taxonomy/term/10/25`，则可以通过 [`/hit/today/25`](https://rsshub.app/hit/today/25) 订阅该详细类别。
+
 :::
 
-:::caution 注意
+:::caution
+
 部分文章需要经过统一身份认证后才能阅读全文。
+
 :::
 
 </Route>
@@ -1488,8 +1648,10 @@ category 列表：
 
 </Route>
 
-:::caution 注意
+:::caution
+
 jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS_REJECT_UNAUTHORIZED = 0
+
 :::
 
 ## 湖南大学 {#hu-nan-da-xue}
@@ -1607,16 +1769,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-## 华东师范大学 {#hua-dong-shi-fan-da-xue}
-
-### ACM OJ 比赛列表 {#hua-dong-shi-fan-da-xue-acm-oj-bi-sai-lie-biao}
-
-<Route author="a180285" example="/ecnu/acm/contest/public" path="/ecnu/acm/contest/:category?" radar="1" rssbud="1" paramsDesc={['分类可选，不写代表全部，`public` 代表仅订阅公开比赛']} />
-
-### 研究生院 {#hua-dong-shi-fan-da-xue-yan-jiu-sheng-yuan}
-
-<Route author="shengmaosu" example="/ecnu/yjs" path="/ecnu/yjs" radar="1" />
-
 ## 华南理工大学 {#hua-nan-li-gong-da-xue}
 
 ### 研究生院通知公告 {#hua-nan-li-gong-da-xue-yan-jiu-sheng-yuan-tong-zhi-gong-gao}
@@ -1655,8 +1807,10 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="auto-bot-ty" example="/scut/seie/news_center" path="/scut/seie/news_center" radar="1" />
 
-:::caution 注意
+:::caution
+
 由于学院官网对非大陆 IP 的访问存在限制，需自行部署。
+
 :::
 
 ## 华南农业大学 {#hua-nan-nong-ye-da-xue}
@@ -1898,34 +2052,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | all  | tntz     | qnkx     |
 
 </Route>
-
-## 马萨诸塞大学 阿默斯特分校 (UMASS Amherst) {#ma-sa-zhu-sai-da-xue-a-mo-si-te-fen-xiao-(umass-amherst)}
-
-### 电子与计算机工程系 {#ma-sa-zhu-sai-da-xue-a-mo-si-te-fen-xiao-(umass-amherst)-dian-zi-yu-ji-suan-ji-gong-cheng-xi}
-
-#### 新闻
-
-<Route author="gammapi" example="/umass/amherst/ecenews" path="/umass/amherst/ecenews" radar="1" rssbud="1"/>
-
-#### 研讨会
-
-<Route author="gammapi" example="/umass/amherst/eceseminar" path="/umass/amherst/eceseminar" radar="1" rssbud="1"/>
-
-注：[源站](https://ece.umass.edu/seminar)在未公布研讨会计划时会清空页面导致 Rsshub 抓取不到内容，此属正常现象。
-
-### 信息与计算机科学系新闻 {#ma-sa-zhu-sai-da-xue-a-mo-si-te-fen-xiao-(umass-amherst)-xin-xi-yu-ji-suan-ji-ke-xue-xi-xin-wen}
-
-<Route author="gammapi" example="/umass/amherst/csnews" path="/umass/amherst/csnews" radar="1" rssbud="1"/>
-
-### 国际项目办公室 {#ma-sa-zhu-sai-da-xue-a-mo-si-te-fen-xiao-(umass-amherst)-guo-ji-xiang-mu-ban-gong-shi}
-
-#### 活动
-
-<Route author="gammapi" example="/umass/amherst/ipostories" path="/umass/amherst/ipostories" radar="1" rssbud="1"/>
-
-#### 新闻
-
-<Route author="gammapi" example="/umass/amherst/ipoevents" path="/umass/amherst/ipoevents" radar="1" rssbud="1"/>
 
 ## 南昌航空大学 {#nan-chang-hang-kong-da-xue}
 
@@ -2213,7 +2339,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 南京信息工程大学 {#nan-jing-xin-xi-gong-cheng-da-xue}
 
-:::tip 提示
+:::tip
 
 路由地址全部按照 **学校官网域名和栏目编号** 设计
 
@@ -2241,7 +2367,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | -------- | -------- | -------- | -------- | -------- | -------- | ---- |
 | 783      | 784      | 785      | 786      | 788      | 789      | qt   |
 
-:::caution 注意
+:::caution
 
 全文内容需使用 校园网或[VPN](http://vpn.nuist.edu.cn) 获取
 
@@ -2273,7 +2399,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="gylidian nczitzk" example="/nuist/yjs/index/tzgg" path="/nuist/yjs/:path+" paramsDesc={['默认为通知公告']}>
 
-:::tip 提示
+:::tip
 
 路径字段处填写的是对应南京信息工程大学研究生院学科建设处分类页网址中介于 **<https://yjs.nuist.edu.cn/>** 和 **.htm** 中间的一段。
 
@@ -2316,73 +2442,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 南京信息工程大学图书馆 {#nan-jing-xin-xi-gong-cheng-da-xue-nan-jing-xin-xi-gong-cheng-da-xue-tu-shu-guan}
 
 <Route author="gylidian" example="/nuist/lib" path="/nuist/library/lib" />
-
-## 南京艺术学院 {#nan-jing-yi-shu-xue-yuan}
-
-### 官网信息 {#nan-jing-yi-shu-xue-yuan-guan-wang-xin-xi}
-
-<Route author="evnydd0sf" example="/nua/index/346" path="/nua/index/:type" paramsDesc={['新闻模块，见下表']} radar="1">
-
-| 新闻模块 | 参数 |
-| -------- | ---- |
-| 公告     | 346  |
-| 南艺要闻 | 332  |
-
-</Route>
-
-### 双馨网 {#nan-jing-yi-shu-xue-yuan-shuang-xin-wang}
-
-<Route author="evnydd0sf" example="/nua/sxw/230" path="/nua/sxw/:type" paramsDesc={['新闻模块，见下表']} radar="1">
-
-| 新闻模块 | 参数 |
-| -------- | ---- |
-| 校园电视 | 230  |
-| 院部动态 | 232  |
-| 动感校园 | 233  |
-| 招就指南 | 234  |
-| 南艺院报 | 236  |
-
-</Route>
-
-### 设计学院 {#nan-jing-yi-shu-xue-yuan-she-ji-xue-yuan}
-
-<Route author="evnydd0sf" example="/nua/dc/news" path="/nua/dc/:type" paramsDesc={['新闻模块，见下表']} radar="1">
-
-| 新闻模块                 | 参数       |
-| ------------------------ | ---------- |
-| 学院新闻 NEWS            | news       |
-| 展览 EXHIBITION          | exhibition |
-| 研创 RESEARCH & CREATION | rc         |
-| 项目 PROJECT             | project    |
-| 党团 PARTY               | party      |
-| 后浪 YOUTH               | youth      |
-
-</Route>
-
-### 研究生处 {#nan-jing-yi-shu-xue-yuan-yan-jiu-sheng-chu}
-
-<Route author="evnydd0sf" example="/nua/gra/1959" path="/nua/gra/:type" paramsDesc={['新闻模块，见下表']} radar="1">
-
-| 新闻模块 | 参数 |
-| -------- | ---- |
-| 招生工作 | 1959 |
-| 培养工作 | 1962 |
-| 学位工作 | 1958 |
-
-</Route>
-
-### 图书馆 {#nan-jing-yi-shu-xue-yuan-tu-shu-guan}
-
-<Route author="evnydd0sf" example="/nua/lib/xwdt" path="/nua/lib/:type" paramsDesc={['新闻模块，见下表']} radar="1">
-
-| 新闻模块 | 参数 |
-| -------- | ---- |
-| 新闻动态 | xwdt |
-| 党建动态 | djdt |
-| 资源动态 | zydt |
-| 服务动态 | fwdt |
-
-</Route>
 
 ## 南京邮电大学 {#nan-jing-you-dian-da-xue}
 
@@ -2438,8 +2497,10 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-:::caution 注意
+:::caution
+
 由于学校通知仅允许校园网访问，需自行部署。
+
 :::
 
 ### 清华大学招聘信息 {#qing-hua-da-xue-qing-hua-da-xue-zhao-pin-xin-xi}
@@ -2746,7 +2807,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 上海立信会计金融学院 {#shang-hai-li-xin-kuai-ji-jin-rong-xue-yuan}
 
-:::caution 注意
+:::caution
 
 分区 ID 是`info/iList.jsp?cat_id=`后方数字
 
@@ -2822,8 +2883,10 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="HyperCherry" example="/stbu/jsjxy" path="/stbu/jsjxy" />
 
-:::caution 注意
+:::caution
+
 计算机学院通知公告疑似禁止了非大陆 IP 访问，使用路由需要自行 [部署](https://docs.rsshub.app/install)。
+
 :::
 
 ## 四川旅游学院 {#si-chuan-l%C3%BC-you-xue-yuan}
@@ -2905,48 +2968,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 ### 通知公告 {#tai-yuan-shi-fan-xue-yuan-tong-zhi-gong-gao}
 
 <Route author="2PoL" example="/tynu" path="/tynu" rssbud="1" radar="1"/>
-
-## 天津大学 {#tian-jin-da-xue}
-
-### 新闻网 {#tian-jin-da-xue-xin-wen-wang}
-
-<Route author="SuperPung" example="/tju/news/focus" path="/tju/news/:type?" paramsDesc={['默认为 `focus`']}>
-
-| 聚焦天大 | 综合新闻 | 校内新闻 | 媒体报道 | 图说天大 |
-| :------: | :------: | :------: | :------: | :------: |
-|   focus  |  general | internal |   media  |  picture |
-
-</Route>
-
-### 智能与计算学部 {#tian-jin-da-xue-zhi-neng-yu-ji-suan-xue-bu}
-
-<Route author="SuperPung" example="/tju/cic/news" path="/tju/cic/:type?" paramsDesc={['默认为 `news`']}>
-
-| 学部新闻 |   通知公告   | 北洋智算论坛 |
-| :------: | :----------: | :----------: |
-|   news   | notification |     forum    |
-
-</Route>
-
-### 教务处 {#tian-jin-da-xue-jiao-wu-chu}
-
-<Route author="AmosChenYQ SuperPung" example="/tju/oaa/news" path="/tju/oaa/:type?" paramsDesc={['默认为 `news`']}>
-
-| 新闻动态 |   通知公告   |
-| :------: | :----------: |
-|   news   | notification |
-
-</Route>
-
-### 研究生招生网 {#tian-jin-da-xue-yan-jiu-sheng-zhao-sheng-wang}
-
-<Route author="SuperPung" example="/tju/yzb/notice" path="/tju/yzb/:type?" paramsDesc={['默认为 `notice`']}>
-
-| 校级公告 | 统考硕士 | 统考博士 | 在职学位 |
-| :------: | :------: | :------: | :------: |
-|  notice  |  master  |  doctor  |    job   |
-
-</Route>
 
 ## 同济大学 {#tong-ji-da-xue}
 
@@ -3112,7 +3133,7 @@ paramsDesc={['公告类型，详见表格']}>
 
 <Route author="hoilc" example="/xjtu/dean/jxxx/xytz/ksap" path="/xjtu/dean/:subpath+" paramsDesc={['栏目路径，支持多级，不包括末尾的`.htm`']} >
 
-:::tip 提示
+:::tip
 
 支持`http://dean.xjtu.edu.cn/`下所有**有文章列表**的栏目，
 
@@ -3197,9 +3218,10 @@ paramsDesc={['公告类型，详见表格']}>
 
 <Route author="mocusez" example="/xaut/jwc/tzgg" path="/xaut/jwc/:category?" paramsDesc={['通知类别，默认为通知公告']} radar="1" rssbud="1">
 
-:::caution 注意
+:::caution
 
 有些内容需使用校园网或 VPN 访问知行网获取
+
 :::
 
 | 通知公告 | 新闻动态 | 规章制度 | 竞赛结果公示 | 竞赛获奖通知 | 竞赛信息 | 公开公示 |
@@ -3212,9 +3234,10 @@ paramsDesc={['公告类型，详见表格']}>
 
 <Route author="light0926 mocusez" example="/xaut/rsc/tzgg" path="/xaut/rsc/:category?" paramsDesc={['通知类别，默认为通知公告']} radar="1" rssbud="1">
 
-:::caution 注意
+:::caution
 
 有些内容指向外部链接，目前只提供这些链接，不提供具体内容，去除 jwc 和 index 的修改
+
 :::
 
 | 通知公告 | 工作动态 |
@@ -3241,39 +3264,16 @@ paramsDesc={['公告类型，详见表格']}>
 
 ### 校园要闻 {#xi-bei-nong-lin-ke-ji-da-xue-xiao-yuan-yao-wen}
 
-<Route author="dingyx99" example="/nwafu/news" path="/nwafu/news" />
+<Route author="dingyx99 karinido" example="/nwafu/lib" path="/nwafu/:type?" paramsDesc={['默认为 `jiaowu`']}>
 
-### 教务公告 {#xi-bei-nong-lin-ke-ji-da-xue-jiao-wu-gong-gao}
+通知类别
 
-<Route author="dingyx99" example="/nwafu/jiaowu" path="/nwafu/jiaowu" />
 
-### 后勤公告 {#xi-bei-nong-lin-ke-ji-da-xue-hou-qin-gong-gao}
+| 图书馆 | 共青团团委 | 信工学院 | 后勤管理处 | 计划财务处 | 教务处 | 新闻网 | 信息化管理处 | 研究生院 | 农业科学院 | 机械与电子工程学院 | 学术活动 | 生命科学学院 |
+| -------- | -------- | -------- | -------- | ------------ | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| lib    | youth | cie    | gs    | jcc        | jiaowu    | news    | nic    | yjshy    | nxy | cmee | xshd | sm |
 
-<Route author="dingyx99" example="/nwafu/gs" path="/nwafu/gs" />
-
-### 图书馆公告 {#xi-bei-nong-lin-ke-ji-da-xue-tu-shu-guan-gong-gao}
-
-<Route author="dingyx99" example="/nwafu/lib" path="/nwafu/lib" />
-
-### 网教中心公告 {#xi-bei-nong-lin-ke-ji-da-xue-wang-jiao-zhong-xin-gong-gao}
-
-<Route author="dingyx99" example="/nwafu/nic" path="/nwafu/nic" />
-
-### 团委公告 {#xi-bei-nong-lin-ke-ji-da-xue-tuan-wei-gong-gao}
-
-<Route author="dingyx99" example="/nwafu/54youth" path="/nwafu/54youth" />
-
-### 计财处公告 {#xi-bei-nong-lin-ke-ji-da-xue-ji-cai-chu-gong-gao}
-
-<Route author="dingyx99" example="/nwafu/jcc" path="/nwafu/jcc" />
-
-### 研究生院公告 {#xi-bei-nong-lin-ke-ji-da-xue-yan-jiu-sheng-yuan-gong-gao}
-
-<Route author="dingyx99" example="/nwafu/yjshy" path="/nwafu/yjshy" />
-
-### 信息工程学院公告 {#xi-bei-nong-lin-ke-ji-da-xue-xin-xi-gong-cheng-xue-yuan-gong-gao}
-
-<Route author="dingyx99" example="/nwafu/cie" path="/nwafu/cie" />
+</Route>
 
 ## 西南财经大学 {#xi-nan-cai-jing-da-xue}
 
@@ -3486,7 +3486,7 @@ paramsDesc={['公告类型，详见表格']}>
 
 <Route author="nczitzk" example="/yangtzeu/dongke" path="/yangtzeu/dongke/:path+" paramsDesc={['路径，默认为学院新闻']}>
 
-:::tip 提示
+:::tip
 
 若订阅 [院情总览 - 通知公告](https://dongke.yangtzeu.edu.cn/yqzl/tzgg.htm)，网址为 <https://dongke.yangtzeu.edu.cn/yqzl/tzgg.htm>。截取 `https://dongke.yangtzeu.edu.cn` 到末尾 `.htm` 的部分 `/yqzl/tzgg` 作为参数，此时路由为 [`/yangtzeu/dongke/yqzl/tzgg`](https://rsshub.app/yangtzeu/dongke/yqzl/tzgg)。
 
@@ -3735,10 +3735,15 @@ paramsDesc={['公告类型，详见表格']}>
 
 ### 选课信息教务通知 {#zhong-guo-hai-yang-da-xue-xuan-ke-xin-xi-jiao-wu-tong-zhi}
 
-<Route author="3401797899" example="/ouc/jwgl" path="/ouc/jwgl" radar="1" selfhost="1"/>
-:::caution 注意
+<Route author="3401797899" example="/ouc/jwgl" path="/ouc/jwgl" radar="1" selfhost="1">
+
+:::caution
+
 由于选课通知仅允许校园网访问，需自行部署。
+
 :::
+
+</Route>
 
 ## 中国科学技术大学 {#zhong-guo-ke-xue-ji-shu-da-xue}
 
@@ -3878,7 +3883,7 @@ paramsDesc={['公告类型，详见表格']}>
 
 <Route author="nczitzk" example="/ruc/hr" path="/ruc/hr/:category?" paramsDesc={['分类，见下方说明，默认为首页通知公告']}>
 
-:::tip 提示
+:::tip
 
 分类字段处填写的是对应中国人民大学人事处分类页网址中介于 **<http://hr.ruc.edu.cn/>** 和 **/index.htm** 中间的一段，并将其中的 `/` 修改为 `-`。
 
@@ -3977,3 +3982,4 @@ paramsDesc={['公告类型，详见表格']}>
 | results  | papers   | writings | policy   |
 
 </Route>
+

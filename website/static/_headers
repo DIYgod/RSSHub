@@ -1,0 +1,11 @@
+/*
+  cache-control: public, max-age=60
+
+/img/*
+  cache-control: public, max-age=31536000
+
+/logo.png
+  cache-control: public, max-age=31536000
+
+/manifest.json
+  cache-control: public, max-age=31536000
