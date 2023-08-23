@@ -140,6 +140,18 @@
 
 <Route author="HenryQW" example="/dcard/funny/popular" path="/dcard/:section/:type?" paramsDesc={['板塊名稱，URL 中獲得', '排序，popular 熱門；latest 最新，默認為 latest']} radar="1" rssbud="1" anticrawler="1" puppeteer="1"/>
 
+## Discourse {#discourse}
+
+:::caution
+
+You need to set the environment variable `DISCOURSE_CONFIG_{id}` before using it. Please refer to Configuration section in the Deploy page of the documentation.
+
+:::
+
+### Latest posts {#discourse-latest-posts}
+
+<Route author="dzx-dzx" example="/discourse/0/posts" path="/discuz/:configId/posts" paramsDesc={['Environment variable configuration id, see above']} selfhost="1"/>
+
 ## Discuz {#discuz}
 
 ### General Subforum - Auto detection {#discuz-general-subforum---auto-detection}
