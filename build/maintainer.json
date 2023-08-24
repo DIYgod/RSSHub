@@ -1500,6 +1500,9 @@
     "/discourse/:configId/posts": [
         "dzx-dzx"
     ],
+    "/discourse/:configId/notification": [
+        "dzx-dzx"
+    ],
     "/disinfo/publications": [
         "nczitzk"
     ],
