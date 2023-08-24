@@ -25688,6 +25688,11 @@
           "/feed/channels"
         ],
         "target": "/youtube/subscriptions"
+      },
+      {
+        "title": "Live",
+        "docs": "https://docs.rsshub.app/routes/live#youtube-live",
+        "source": "/:handle"
       }
     ]
   },

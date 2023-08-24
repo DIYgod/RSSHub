@@ -6318,6 +6318,9 @@
     "/youtube/community/:handle": [
         "TonyRL"
     ],
+    "/youtube/live/:username/:embed?": [
+        "sussurr127"
+    ],
     "/youtube/playlist/:id/:embed?": [
         "HenryQW"
     ],
