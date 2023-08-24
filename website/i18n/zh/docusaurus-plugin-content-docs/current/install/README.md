@@ -781,11 +781,17 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 -   Civitai
     -   `CIVITAI_COOKIE`: Civitai 登录后的 cookie 值
 
--   discuz cookies 设定
+-   Discourse
+
+    -   `DISCOURSE_CONFIG_{id}`: 一个 Discourse 驱动的论坛的配置信息， `id` 可自由设定为任意数字或字符串。值应形如`{"link":link,"key":key}`。其中:
+        -   `link`：论坛的链接。
+        -   `key`访问论坛API的密钥，可参考[此处代码](https://pastebin.com/YbLCgdWW)以获取。需要确保有足够权限访问对应资源。
+
+-   Discuz cookies 设定
 
     -   `DISCUZ_COOKIE_{cid}`: 某 Discuz 驱动的论坛，用户注册后的 Cookie 值，cid 可自由设定，取值范围 \[00, 99], 使用 discuz 通用路由时，通过指定 cid 来调用该 cookie
 
--   disqus 全部路由：[申请地址](https://disqus.com/api/applications/)
+-   Disqus 全部路由：[申请地址](https://disqus.com/api/applications/)
 
     -   `DISQUS_API_KEY`: Disqus API
 
