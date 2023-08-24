@@ -792,6 +792,11 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
     -   `DISCORD_AUTHORIZATION`: Discord authorization token, can be found in the header of XHR requests after logging in Discord web client
 
+-   Discourse
+    -   `DISCOURSE_CONFIG_{id}`: `id` could be arbitrary number or string, while the value should be the format of `{"link":link,"key":key}`, where:
+        -   `link` is the link to the forum.
+        -   `key` is the access key for the forum API, which you can refer to [this snippet](https://pastebin.com/YbLCgdWW) to obtain one. Ensure that this key is granted sufficient permission.
+
 -   Discuz cookie
 
     -   `DISCUZ_COOKIE_{cid}`: Cookie of a forum powered by Discuz, cid can be anything from 00 to 99. When visiting a Discuz route, use cid to specify this cookie.
