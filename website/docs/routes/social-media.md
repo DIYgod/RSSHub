@@ -40,14 +40,6 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="lengthmin" example="/bilibili/user/article/334958638" path="/bilibili/user/article/:uid" paramsDesc={['用户 id, 可在 UP 主主页中找到']} anticrawler="1" radar="1" rssbud="1"/>
 
-:::tip 专栏显示全文
-
-专栏显示全文请使用通用参数里的 `mode=fulltext `
-
-举例: bilibili 专栏全文输出 /bilibili/user/article/334958638?mode=fulltext
-
-:::
-
 ### UP 主动态 {#bilibili-up-zhu-dong-tai}
 
 <Route author="DIYgod zytomorrow JimenezLi" example="/bilibili/user/dynamic/2267573" path="/bilibili/user/dynamic/:uid/:routeParams?" paramsDesc={['用户 id, 可在 UP 主主页中找到', '额外参数；请参阅以下说明和表格']} radar="1" rssbud="1">
