@@ -42,7 +42,25 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### UP 主动态 {#bilibili-up-zhu-dong-tai}
 
-<Route author="DIYgod zytomorrow" example="/bilibili/user/dynamic/2267573" path="/bilibili/user/dynamic/:uid/:showEmoji?/:disableEmbed?" paramsDesc={['用户 id, 可在 UP 主主页中找到', '显示或隐藏表情图片，默认值为 0 隐藏，其他值为显示', '默认为开启内嵌视频, 任意值为关闭']} radar="1" rssbud="1"/>
+<Route author="DIYgod zytomorrow JimenezLi" example="/bilibili/user/dynamic/2267573" path="/bilibili/user/dynamic/:uid/:routeParams?" paramsDesc={['用户 id, 可在 UP 主主页中找到', '额外参数；请参阅以下说明和表格']} radar="1" rssbud="1">
+
+| 键 | 含义 | 接受的值 | 默认值 |
+| -- | ---- | ------- | ------ |
+| showEmoji | 显示或隐藏表情图片 | 0/1/true/false | false |
+| disableEmbed | 关闭内嵌视频 | 0/1/true/false | false |
+| useAvid | 视频链接使用AV号(默认为BV号) | 0/1/true/false | false |
+
+用例：`/bilibili/user/dynamic/2267573/showEmoji=1&disableEmbed=1&useAvid=1`
+
+:::tip 动态的专栏显示全文
+
+动态的专栏显示全文请使用通用参数里的 `mode=fulltext `
+
+举例: bilibili 专栏全文输出 /bilibili/user/dynamic/2267573/?mode=fulltext
+
+:::
+
+</Route>
 
 ### UP 主频道的合集 {#bilibili-up-zhu-pin-dao-de-he-ji}
 
@@ -246,7 +264,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ### 用户关注动态 {#bilibili-yong-hu-guan-zhu-dong-tai}
 
-<Route author="TigerCubDen" example="/bilibili/followings/dynamic/109937383" path="/bilibili/followings/dynamic/:uid/:showEmoji?/:disableEmbed?" paramsDesc={['用户 id', '显示或隐藏表情图片，默认值为 0 隐藏，其他值为显示', '默认为开启内嵌视频, 任意值为关闭']} selfhost="1">
+<Route author="TigerCubDen JimenezLi" example="/bilibili/followings/dynamic/109937383" path="/bilibili/followings/dynamic/:uid/:routeParams?" paramsDesc={['用户 id', '额外参数；请参阅 [#UP 主动态](#bilibili-up-zhu-dong-tai) 的说明和表格']} selfhost="1">
 
 :::caution
 
