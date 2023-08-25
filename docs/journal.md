@@ -348,6 +348,24 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 </Route>
 
+## Royal Society of Chemistry
+
+### Journal
+
+<Route author="nczitzk" example="/rsc/journal/ta" path="/rsc/journal/:id/:category?" :paramsDesc="['期刊 id，可在对应期刊页 URL 中找到', '分类，见下表，默认为 All Recent Articles']" radar="1" rssbud="1">
+
+::: tip 提示
+
+所有期刊见 [Current journals](https://pubs.rsc.org/en/journals)
+
+:::
+
+| All Recent Articles | Advance Articles |
+| ------------------- | ---------------- |
+| allrecentarticles   | advancearticles  |
+
+</Route>
+
 ## Science 系列
 
 ### 本期刊物

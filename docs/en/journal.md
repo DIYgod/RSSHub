@@ -377,6 +377,24 @@ In <https://pubmed.ncbi.nlm.nih.gov/trending/?filter=simsearch1.fha&filter=pubt.
 
 </RouteEn>
 
+## Royal Society of Chemistry
+
+### Journal
+
+<RouteEn author="nczitzk" example="/rsc/journal/ta" path="/rsc/journal/:id/:category?" :paramsDesc="['Journal id, can be found in URL', 'Category, see below, All Recent Articles by default']" radar="1" rssbud="1">
+
+::: tip Tip
+
+All journals at [Current journals](https://pubs.rsc.org/en/journals)
+
+:::
+
+| All Recent Articles | Advance Articles |
+| ------------------- | ---------------- |
+| allrecentarticles   | advancearticles  |
+
+</RouteEn>
+
 ## Science Magazine
 
 ### Current Issue
