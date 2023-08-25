@@ -38,7 +38,7 @@ updates:
         versions: ['>=10.0.0']
 
   - package-ecosystem: npm
-    directory: '/docs'
+    directory: '/website'
     schedule:
       interval: daily
       time: '21:00'
@@ -61,6 +61,10 @@ updates:
         versions: ['>=10.0.0']
       - dependency-name: string-width
         versions: ['>=5.0.0']
+    groups:
+      docs:
+        patterns:
+          - '@docusaurus/*'
 
   - package-ecosystem: 'github-actions'
     directory: '/'

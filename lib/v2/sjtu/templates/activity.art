@@ -1,0 +1,6 @@
+{{ e.name }}<br>
+开始时间: {{ e.sign_start_time }}<br>
+结束时间: {{ e.sign_end_time }}<br>
+地点: {{ e.location }}<br>
+报名人数: {{ e.member_count }}/{{ e.max_member }}<br>
+来自{{ e.source }}
