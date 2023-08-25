@@ -674,8 +674,9 @@
     "/bilibili/followings/article/:uid": [
         "woshiluo"
     ],
-    "/bilibili/followings/dynamic/:uid/:showEmoji?/:disableEmbed?": [
-        "TigerCubDen"
+    "/bilibili/followings/dynamic/:uid/:routeParams?": [
+        "TigerCubDen",
+        "JimenezLi"
     ],
     "/bilibili/followings/video/:uid/:disableEmbed?": [
         "LogicJake"
@@ -743,9 +744,10 @@
     "/bilibili/user/collection/:uid/:sid/:disableEmbed?": [
         "shininome"
     ],
-    "/bilibili/user/dynamic/:uid/:showEmoji?/:disableEmbed?": [
+    "/bilibili/user/dynamic/:uid/:routeParams?": [
         "DIYgod",
-        "zytomorrow"
+        "zytomorrow",
+        "JimenezLi"
     ],
     "/bilibili/user/fav/:uid/:disableEmbed?": [
         "DIYgod"
