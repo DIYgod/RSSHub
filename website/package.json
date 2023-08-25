@@ -38,7 +38,7 @@
     "@types/mdx-js__react": "^1.5.5",
     "@types/react": "^17.0.64",
     "@types/react-dom": "^17.0.20",
-    "typescript": "^5.1.6"
+    "typescript": "^5.2.2"
   },
   "browserslist": {
     "production": [
