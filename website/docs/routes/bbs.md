@@ -150,7 +150,11 @@ You need to set the environment variable `DISCOURSE_CONFIG_{id}` before using it
 
 ### Latest posts {#discourse-latest-posts}
 
-<Route author="dzx-dzx" example="/discourse/0/posts" path="/discuz/:configId/posts" paramsDesc={['Environment variable configuration id, see above']} selfhost="1"/>
+<Route author="dzx-dzx" example="/discourse/0/posts" path="/discourse/:configId/posts" paramsDesc={['Environment variable configuration id, see above']} selfhost="1"/>
+
+### Notifications {#discourse-notifications}
+
+<Route author="dzx-dzx" example="/discourse/0/notifications" path="/discourse/:configId/notifications" paramsDesc={['Environment variable configuration id, see above']} selfhost="1"/>
 
 ## Discuz {#discuz}
 
