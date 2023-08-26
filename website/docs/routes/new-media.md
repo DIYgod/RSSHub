@@ -2314,7 +2314,7 @@ Supported sub-sites:
 
 ### 资讯 {#chuang-ye-bang-zi-xun}
 
-<Route author="nczitzk" example="/cyzone" path="/cyzone/:id?" paramsDesc={['频道 id，可在对应频道页 URL 中找到，默认为 news，即最新资讯']} />
+<Route author="nczitzk" example="/cyzone" path="/cyzone/:id?" paramsDesc={['频道 id，可在对应频道页 URL 中找到，默认为 news，即最新资讯']}>
 
 | 最新 | 快鲤鱼 | 创投 | 科创板 | 汽车 |
 | ---- | ------ | ---- | ------ | ---- |
