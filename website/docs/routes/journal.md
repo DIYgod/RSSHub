@@ -412,6 +412,7 @@ In <https://pubmed.ncbi.nlm.nih.gov/trending/?filter=simsearch1.fha&filter=pubt.
 </Route>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< HEAD:docs/journal.md
 ## Royal Society of Chemistry
 
@@ -438,6 +439,9 @@ In <https://pubmed.ncbi.nlm.nih.gov/trending/?filter=simsearch1.fha&filter=pubt.
 =======
 ## Science Magazine {#science-magazine}
 >>>>>>> 8a58d7492 (docs: documentation prioritizes English and maintains only one route list (#13075))
+=======
+## Science Magazine {#science-magazine}
+>>>>>>> upstream/master
 
 ### Current Issue {#science-magazine-current-issue}
 
