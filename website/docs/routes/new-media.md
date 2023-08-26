@@ -2312,8 +2312,7 @@ Supported sub-sites:
 
 ## 创业邦 {#chuang-ye-bang}
 
-<<<<<<< HEAD:docs/new-media.md
-### 资讯
+### 资讯 {#chuang-ye-bang-zi-xun}
 
 <Route author="nczitzk" example="/cyzone" path="/cyzone/:id?" :paramsDesc="['频道 id，可在对应频道页 URL 中找到，默认为 news，即最新资讯']"/>
 
@@ -2331,22 +2330,13 @@ Supported sub-sites:
 
 </Route>
 
-### 作者
-
-<Route author="xyqfer nczitzk" example="/cyzone/author/1225562" path="/cyzone/author/:id" :paramsDesc="['作者 id，可在对应作者页 URL 中找到']"/>
-=======
 ### 作者 {#chuang-ye-bang-zuo-zhe}
 
-<Route author="xyqfer" example="/cyzone/author/1225562" path="/cyzone/author/:id" paramsDesc={['作者 id']}/>
->>>>>>> upstream/master:website/docs/routes/new-media.md
+<Route author="xyqfer nczitzk" example="/cyzone/author/1225562" path="/cyzone/author/:id" :paramsDesc="['作者 id，可在对应作者页 URL 中找到']"/>
 
 ### 标签 {#chuang-ye-bang-biao-qian}
 
-<<<<<<< HEAD:docs/new-media.md
 <Route author="LogicJake nczitzk" example="/cyzone/label/创业邦周报" path="/cyzone/label/:name" :paramsDesc="['标签名称，可在对应标签页 URL 中找到']"/>
-=======
-<Route author="LogicJake" example="/cyzone/label/创业邦周报" path="/cyzone/label/:name" paramsDesc={['标签名称']}/>
->>>>>>> upstream/master:website/docs/routes/new-media.md
 
 ## 創新拿鐵 {#chuang-xin-na-tie}
 
