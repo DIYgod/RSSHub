@@ -2332,11 +2332,11 @@ Supported sub-sites:
 
 ### 作者 {#chuang-ye-bang-zuo-zhe}
 
-<Route author="xyqfer nczitzk" example="/cyzone/author/1225562" path="/cyzone/author/:id" :paramsDesc="['作者 id，可在对应作者页 URL 中找到']"/>
+<Route author="xyqfer nczitzk" example="/cyzone/author/1225562" path="/cyzone/author/:id" paramsDesc={['作者 id，可在对应作者页 URL 中找到']}/>
 
 ### 标签 {#chuang-ye-bang-biao-qian}
 
-<Route author="LogicJake nczitzk" example="/cyzone/label/创业邦周报" path="/cyzone/label/:name" :paramsDesc="['标签名称，可在对应标签页 URL 中找到']"/>
+<Route author="LogicJake nczitzk" example="/cyzone/label/创业邦周报" path="/cyzone/label/:name" paramsDesc={['标签名称，可在对应标签页 URL 中找到']}/>
 
 ## 創新拿鐵 {#chuang-xin-na-tie}
 
