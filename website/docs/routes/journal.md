@@ -411,14 +411,11 @@ In <https://pubmed.ncbi.nlm.nih.gov/trending/?filter=simsearch1.fha&filter=pubt.
 
 </Route>
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD:docs/journal.md
-## Royal Society of Chemistry
+## Royal Society of Chemistry {#royal-society-of-chemistry}
 
-### Journal
+### Journal {#royal-society-of-chemistry-journal}
 
-<Route author="nczitzk" example="/rsc/journal/ta" path="/rsc/journal/:id/:category?" :paramsDesc="['期刊 id，可在对应期刊页 URL 中找到', '分类，见下表，默认为 All Recent Articles']" radar="1" rssbud="1">
+<Route author="nczitzk" example="/rsc/journal/ta" path="/rsc/journal/:id/:category?" paramsDesc={['期刊 id，可在对应期刊页 URL 中找到', '分类，见下表，默认为 All Recent Articles']} radar="1" rssbud="1" supportScihub="1">
 
 ::: tip 提示
 
@@ -432,16 +429,7 @@ In <https://pubmed.ncbi.nlm.nih.gov/trending/?filter=simsearch1.fha&filter=pubt.
 
 </Route>
 
-## Science 系列
-=======
-## Science 系列 {#science-xi-lie}
->>>>>>> 7b65ba69b (feat: add docusaurus website (#13039)):website/docs/routes/journal.md
-=======
 ## Science Magazine {#science-magazine}
->>>>>>> 8a58d7492 (docs: documentation prioritizes English and maintains only one route list (#13075))
-=======
-## Science Magazine {#science-magazine}
->>>>>>> upstream/master
 
 ### Current Issue {#science-magazine-current-issue}
 
