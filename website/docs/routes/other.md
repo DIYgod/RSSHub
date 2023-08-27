@@ -1231,7 +1231,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ## 中国工商银行 {#zhong-guo-gong-shang-yin-hang}
 
-### 中国工商银行外汇牌价 {#zhong-guo-gong-shang-yin-hang-zhong-guo-gong-shang-yin-hang-wai-hui-pai-jia}
+### 外汇牌价 {#zhong-guo-gong-shang-yin-hang-wai-hui-pai-jia}
 
 <Route author="leoleoasd" example="/icbc/whpj/zs?filter_title=%E8%8B%B1%E9%95%91" path="/icbc/whpj/:format?" paramsDesc={['输出的标题格式，默认为标题 + 所有价格。短格式仅包含货币名称。']}>
 
