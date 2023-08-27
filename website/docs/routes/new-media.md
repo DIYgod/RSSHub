@@ -3011,11 +3011,13 @@ others = 热点新闻 + 滚动新闻
 
 ## 加美财经 {#jia-mei-cai-jing}
 
-<Route author="nczitzk" example="/caus" path="/caus/:category?" paramsDesc={['分类，见下表，默认为全部']}>
+### 分类 {#jia-mei-cai-jing-fen-lei}
 
-| 全部 | 要闻 | 商业 | 快讯 | 投资理财 | 生活 |
+<Route author="nczitzk" example="/caus" path="/caus/:category?" paramsDesc={['分类，见下表，默认为全部']} radar="1">
+
+| 全部 | 要闻 | 商业 | 快讯 | 财富 | 生活 |
 | ---- | ---- | ---- | ---- | -------- | ---- |
-| 0    | 1    | 2    | 3    | 4        | 6    |
+| 0    | 1    | 2    | 3    | 8        | 6    |
 
 </Route>
 
