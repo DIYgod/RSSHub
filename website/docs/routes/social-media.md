@@ -298,6 +298,18 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 </Route>
 
+### 用户稍后再看 {#bilibili-yong-hu-shao-hou-zai-kan}
+
+<Route author="JimenezLi" example="/bilibili/watchlater/2267573" path="/bilibili/watchlater/:uid/:disableEmbed?" paramsDesc={['用户 id', '默认为开启内嵌视频, 任意值为关闭']} selfhost="1">
+
+:::caution
+
+用户稍后再看需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+
+:::
+
+</Route>
+
 ### 直播开播 {#bilibili-zhi-bo-kai-bo}
 
 见 [#哔哩哔哩直播](/routes/live#bi-li-bi-li-zhi-bo)
