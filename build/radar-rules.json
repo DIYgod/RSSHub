@@ -4035,6 +4035,22 @@
       }
     ]
   },
+  "caus.com": {
+    "_name": "加美财经",
+    ".": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/new-media#jia-mei-cai-jing",
+        "source": [
+          "/home",
+          "/focus_news",
+          "/hours",
+          "/fortune",
+          "/life"
+        ]
+      }
+    ]
+  },
   "cbaigui.com": {
     "_name": "纪妖",
     ".": [

@@ -1001,6 +1001,9 @@
     "/cau/yjs": [
         "shengmaosu"
     ],
+    "/caus/:category?": [
+        "nczitzk"
+    ],
     "/cbaigui/:path+": [
         "nczitzk"
     ],
@@ -7648,7 +7651,6 @@
     "/bibgame/:category?/:type?": [],
     "/macau-bolsas/:lang?": [],
     "/potplayer/update/:language?": [],
-    "/caus/:category?": [],
     "/modian/zhongchou/:category?/:sort?/:status?": [],
     "/macwk/soft/:name": [],
     "/pjsk/news": [],
