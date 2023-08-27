@@ -776,6 +776,9 @@
     "/bilibili/vsearch/:kw/:order?/:disableEmbed?/:tid?": [
         "Symty"
     ],
+    "/bilibili/watchlater/:uid/:disableEmbed?": [
+        "JimenezLi"
+    ],
     "/bilibili/weekly/:disableEmbed?": [
         "ttttmr"
     ],
