@@ -521,6 +521,7 @@ Parameters can be obtained from the official website, for instance:
 <Route author="HenryQW proletarius101 LyleLee nczitzk" example="/reuters/world/us" path="/reuters/:category/:topic?" paramsDesc={['find it in the URL, or tables below', 'find it in the URL, or tables below']}>
 
 -   `:category`:
+
     | World | Business | Legal | Markets | Breakingviews | Technology | Graphics |
     | ----- | -------- | ----- | ------- | ------------- | ---------- | -------- |
     | world | business | legal | markets | breakingviews | technology | graphics |
@@ -898,11 +899,13 @@ Provides all of the articles by the specified New York Times author.
 <Route author="oppilate NavePnow" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" paramsDesc={['Language, `en-us`, `zh-cn`, `zh-tw`', 'Category. See below']}>
 
 en_us
+
 | World | U.S. | Politics | Economy | Business | Tech | Markets | Opinion | Books & Arts | Real Estate | Life & Work | Sytle | Sports |
 | ------ | ------- | -------- | -------- | ----- | --------- | --------- | --------- | --------- | --------- |--------- | --------- | --------- |
 | world | us | politics | economy | business | technology | markets | opinion | books-arts | realestate | life-work | style-entertainment | sports |
 
 zh-cn / zh-tw
+
 | 国际 | 中国 | 金融市场 | 经济 | 商业 | 科技 | 派 | 专栏与观点 |
 | ------ | ------- | -------- | -------- | ----- | --------- | --------- | --------- |
 | world | china | markets | economy | business | technology | life-arts | opinion |
@@ -950,11 +953,13 @@ Provide full article RSS for WSJ topics.
 <Route author="KeiLongW" example="/yahoo/news/hk/world" path="/yahoo/news/:region/:category?" paramsDesc={['Region','Category']}>
 
 `Region`
+
 | Hong Kong | Taiwan | US |
 | --------- | ------ | --- |
 | hk | tw | en |
 
 `Category`
+
 | All | World | Business | Entertainment | Sports | Health |
 | ------- | ----- | -------- | ------------- | ------ | ------ |
 | (Empty) | world | business | entertainment | sports | health |
