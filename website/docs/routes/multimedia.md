@@ -1535,7 +1535,7 @@ When `mediaType` is `movie`, `sheet` should be:
 
 ### 滚动新闻 {#fa-guo-guo-ji-guang-bo-dian-tai-gun-dong-xin-wen}
 
-<Route author="nczitzk" example="/rfi/news" path="/rfi/news"/>
+<Route author="nczitzk" example="/rfi/news/cn" path="/rfi/news/:lang?" paramsDesc={['语言']}/>
 
 ## 高清电台 {#gao-qing-dian-tai}
 
