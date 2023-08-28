@@ -295,6 +295,7 @@ So the route is [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub
 ### 游戏折扣 {#jump-you-xi-zhe-kou}
 
 <Route author="zytomorrow" path="/jump/discount/:platform/:filter?/:countries?" example="/jump/discount/ps5/all" paramsDesc={['平台:switch,ps4,ps5,xbox,steam,epic', '过滤参数,all-全部，jx-精选，sd-史低，dl-独立，vip-会员', '地区，具体支持较多，可自信查看地区简写']}>
+
 | switch | ps4  | ps5  | xbox   | steam | epic   |
 | ------ | ---- | ---- | ------ | ----- | ------ |
 | 可用   | 可用 | 可用 | 不可用 | 可用  | 不可用 |
