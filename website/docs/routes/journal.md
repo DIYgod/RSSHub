@@ -417,7 +417,7 @@ In <https://pubmed.ncbi.nlm.nih.gov/trending/?filter=simsearch1.fha&filter=pubt.
 
 <Route author="nczitzk" example="/rsc/journal/ta" path="/rsc/journal/:id/:category?" paramsDesc={['期刊 id，可在对应期刊页 URL 中找到', '分类，见下表，默认为 All Recent Articles']} radar="1" rssbud="1" supportScihub="1">
 
-::: tip 提示
+:::tip
 
 所有期刊见 [Current journals](https://pubs.rsc.org/en/journals)
 
