@@ -1473,11 +1473,11 @@ category 列表：
 
 ### 水声工程学院 {#ha-er-bin-gong-cheng-da-xue-shui-sheng-gong-cheng-xue-yuan}
 
-<Route author="Derekmini" example="/hrbeu/uae/list/3751" path="/hrbeu/uae/list/:id" paramsDesc={['栏目编号，由 `URL` 中获取。']} radar="1" rssbud="1">
+<Route author="Derekmini" example="/hrbeu/uae/xwdt" path="/hrbeu/uae/:id" paramsDesc={['栏目编号，在 `URL` 中获取，如果有多级编号，将 `/` 替换为 `-`。']} radar="1" rssbud="1">
 
-| 新闻动态 | 通知公告 | 其他 |
-| :------: | :------: | :--: |
-|   3751   |   3752   |  ... |
+| 新闻动态 | 通知公告 | 科学研究/科研动态 |
+| :------: | :------: | :------------: |
+|   xwdt   |   tzgg   |  kxyj-kydt |
 
 </Route>
 
