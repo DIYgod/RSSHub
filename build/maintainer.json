@@ -614,6 +614,9 @@
     "/bangumi/tv/subject/:id/topics": [
         "ylc395"
     ],
+    "/bangumi/tv/subject/:id/:type?/:showOriginalName?": [
+        "JimenezLi"
+    ],
     "/bangumi/tv/topic/:id": [
         "ylc395"
     ],
