@@ -55,7 +55,7 @@ const config = {
                     ...Object.values(require('./sidebars').guideSidebar)
                         .find((s) => s.label === 'Routes')
                         .items.map(({ id }) => ({
-                            from: `/${id.split('/')[1]}`,
+                            from: [`/${id.split('/')[1]}`, `/en/${id.split('/')[1]}`],
                             to: `/routes/${id.split('/')[1]}`,
                         })),
                 ],
