@@ -747,6 +747,45 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 </Route>
 
+### 米游社 - 同人榜 {#mi-ha-you-mi-you-she---tong-ren-bang}
+
+<Route author="CaoMeiYouRen" example="/mihoyo/bbs/img-ranking/ys/tongren/illustration" path="/bbs/img-ranking/:game/:forum_type?/:cate_type?/:ranking_type?/:page_size?/:last_id?" paramsDesc={['游戏缩写','主榜类型，默认为 tongren，即 同人榜','子榜类型，默认为 illustration，即 插画榜。无子榜的留空即可 ','排行榜类型，默认为 daily，即 日榜','分页大小，默认为 20 ','当前页id，用于分页，默认为1']} radar="1">
+
+游戏缩写（目前绝区零还没有同人榜）
+
+| 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 | 大别野 |
+| ------ | ---- | ------ | ---------- | -------- | ------ |
+| bh3    | ys   | bh2    | wd         | sr       | dby    |
+
+主榜类型（仅原神、大别野有cos主榜）
+
+| 同人榜  | COS榜 |
+| ------- | ----- |
+| tongren | cos   |
+
+子榜类型（仅崩坏三、原神有子榜）
+
+崩坏三 子榜
+
+| 插画         | 漫画  | COS  |
+| ------------ | ----- | ---- |
+| illustration | comic | cos  |
+
+
+原神 子榜
+
+| 插画         | 漫画  | Q版  | 手工   |
+| ------------ | ----- | ---- | ------ |
+| illustration | comic | qute | manual |
+
+排行榜类型（注意：崩坏二没有日榜）
+
+| 日榜  | 周榜   | 月榜    |
+| ----- | ------ | ------- |
+| daily | weekly | monthly |
+
+</Route>
+
 ### 米游社 - 官方公告 {#mi-ha-you-mi-you-she---guan-fang-gong-gao}
 
 <Route author="CaoMeiYouRen" example="/mihoyo/bbs/official/2/3/20/" path="/bbs/official/:gids/:type?/:page_size?/:last_id?" paramsDesc={['游戏id','公告类型，默认为 2(即 活动)','分页大小，默认为 20 ','跳过的公告数，例如指定为 40 就是从第 40 条公告开始，可用于分页']} radar="1">
