@@ -1176,6 +1176,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 ### 源仓库更新 {#yuan-cang-ku-yuan-cang-ku-geng-xin}
 
 <Route author="vhxubo" example="/ku" path="/ku/:name?" paramsDesc={['默认为 `yuedu`']}>
+
 | 阅读  | 异次元   | 海阔   |
 | ----- | -------- | ------ |
 | yuedu | yiciyuan | haikuo |

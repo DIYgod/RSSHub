@@ -90,7 +90,7 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
         if (res.length && res[0] === 'NOROUTE') {
             core.info('PR stated no route, passing');
             await removeLabel();
-            await addLabels(['Auto: No Route Needed']);
+            await addLabels(['Auto: Route Test Skipped']);
 
             return;
         } else if (res.length && !res.some((e) => e.includes('/:'))) {

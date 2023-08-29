@@ -2312,13 +2312,31 @@ Supported sub-sites:
 
 ## 创业邦 {#chuang-ye-bang}
 
+### 资讯 {#chuang-ye-bang-zi-xun}
+
+<Route author="nczitzk" example="/cyzone" path="/cyzone/:id?" paramsDesc={['频道 id，可在对应频道页 URL 中找到，默认为 news，即最新资讯']}>
+
+| 最新 | 快鲤鱼 | 创投 | 科创板 | 汽车 |
+| ---- | ------ | ---- | ------ | ---- |
+| news | 5      | 14   | 13     | 8    |
+
+| 海外 | 消费 | 科技 | 医疗 | 文娱 |
+| ---- | ---- | ---- | ---- | ---- |
+| 10   | 9    | 7    | 27   | 11   |
+
+| 城市 | 政策 | 特写 | 干货 | 科技股 |
+| ---- | ---- | ---- | ---- | ------ |
+| 16   | 15   | 6    | 12   | 33     |
+
+</Route>
+
 ### 作者 {#chuang-ye-bang-zuo-zhe}
 
-<Route author="xyqfer" example="/cyzone/author/1225562" path="/cyzone/author/:id" paramsDesc={['作者 id']}/>
+<Route author="xyqfer nczitzk" example="/cyzone/author/1225562" path="/cyzone/author/:id" paramsDesc={['作者 id，可在对应作者页 URL 中找到']}/>
 
 ### 标签 {#chuang-ye-bang-biao-qian}
 
-<Route author="LogicJake" example="/cyzone/label/创业邦周报" path="/cyzone/label/:name" paramsDesc={['标签名称']}/>
+<Route author="LogicJake nczitzk" example="/cyzone/label/创业邦周报" path="/cyzone/label/:name" paramsDesc={['标签名称，可在对应标签页 URL 中找到']}/>
 
 ## 創新拿鐵 {#chuang-xin-na-tie}
 
@@ -3316,53 +3334,53 @@ column 为 third 时可选的 category:
 
 -   子栏目
 
-    -   人工智能
+-   人工智能
 
-                        | 学术     | 开发者   |
-                        | -------- | -------- |
-                        | academic | yanxishe |
+| 学术     | 开发者   |
+| -------- | -------- |
+| academic | yanxishe |
 
-    -   数智化
+-   数智化
 
-                        | 零售数智化 | 金融数智化 | 工业数智化 | 医疗数智化 | 城市数智化  |
-                        | ---------- | ---------- | ---------- | ---------- | ----------- |
-                        | redigital  | findigital | mandigital | medigital  | citydigital |
+| 零售数智化 | 金融数智化 | 工业数智化 | 医疗数智化 | 城市数智化  |
+| ---------- | ---------- | ---------- | ---------- | ----------- |
+| redigital  | findigital | mandigital | medigital  | citydigital |
 
-    -   金融科技
+-   金融科技
 
-                        | 科技巨头 | 银行 AI | 金融云       | 风控与安全   |
-                        | -------- | ------- | ------------ | ------------ |
-                        | BigTech  | bank    | FinanceCloud | DataSecurity |
+| 科技巨头 | 银行 AI | 金融云       | 风控与安全   |
+| -------- | ------- | ------------ | ------------ |
+| BigTech  | bank    | FinanceCloud | DataSecurity |
 
-    -   医疗科技
+-   医疗科技
 
-                        | 医疗 AI  | 投融资 | 医疗器械 | 互联网医疗       | 生物医药     | 健康险       |
-                        | -------- | ------ | -------- | ---------------- | ------------ | ------------ |
-                        | healthai | touzi  | qixie    | hulianwangyiliao | shengwuyiyao | jiankangxian |
+| 医疗 AI  | 投融资 | 医疗器械 | 互联网医疗       | 生物医药     | 健康险       |
+| -------- | ------ | -------- | ---------------- | ------------ | ------------ |
+| healthai | touzi  | qixie    | hulianwangyiliao | shengwuyiyao | jiankangxian |
 
-    -   芯片
+-   芯片
 
-                        | 材料设备  | 芯片设计   | 晶圆代工      | 封装测试  |
-                        | --------- | ---------- | ------------- | --------- |
-                        | materials | chipdesign | manufacturing | packaging |
+| 材料设备  | 芯片设计   | 晶圆代工      | 封装测试  |
+| --------- | ---------- | ------------- | --------- |
+| materials | chipdesign | manufacturing | packaging |
 
-    -   智慧城市
+-   智慧城市
 
-                        | 智慧安防      | 智慧教育       | 智慧交通            | 智慧社区       | 智慧零售       | 智慧政务        | 智慧地产 |
-                        | ------------- | -------------- | ------------------- | -------------- | -------------- | --------------- | -------- |
-                        | smartsecurity | smarteducation | smarttransportation | smartcommunity | smartretailing | smartgovernment | proptech |
+| 智慧安防      | 智慧教育       | 智慧交通            | 智慧社区       | 智慧零售       | 智慧政务        | 智慧地产 |
+| ------------- | -------------- | ------------------- | -------------- | -------------- | --------------- | -------- |
+| smartsecurity | smarteducation | smarttransportation | smartcommunity | smartretailing | smartgovernment | proptech |
 
-    -   工业互联网
+-   工业互联网
 
-                        | 工业软件   | 工业安全 | 5G 工业互联网 | 工业转型实践 |
-                        | ---------- | -------- | ------------- | ------------ |
-                        | gysoftware | gysafety | 5ggy          | gypratice    |
+| 工业软件   | 工业安全 | 5G 工业互联网 | 工业转型实践 |
+| ---------- | -------- | ------------- | ------------ |
+| gysoftware | gysafety | 5ggy          | gypratice    |
 
-    -   AIoT
+-   AIoT
 
-                        | 物联网 | 智能硬件 | 机器人 | 智能家居  |
-                        | ------ | -------- | ------ | --------- |
-                        | 5G     | arvr     | robot  | smarthome |
+| 物联网 | 智能硬件 | 机器人 | 智能家居  |
+| ------ | -------- | ------ | --------- |
+| 5G     | arvr     | robot  | smarthome |
 
 </Route>
 
