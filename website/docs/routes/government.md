@@ -401,6 +401,16 @@ Language
 
 </Route>
 
+### 深圳市住房和建设局 {#guang-dong-sheng-ren-min-zheng-fu-shen-zhen-shi-zhu-fang-he-jian-she-ju}
+
+<Route author="lonn" example="/gov/shenzhen/zjj/xxgk/tzgg" path="/gov/shenzhen/zjj/xxgk/:caty" paramsDesc={['信息类别']}>
+
+| 通知公告 |
+| :------: |
+|   tzgg   |
+
+</Route>
+
 ### 惠州市人民政府 {#guang-dong-sheng-ren-min-zheng-fu-hui-zhou-shi-ren-min-zheng-fu}
 
 #### 政务公开
