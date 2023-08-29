@@ -2478,6 +2478,9 @@
     "/gov/shenzhen/xxgk/zfxxgj/:caty": [
         "laoxua"
     ],
+    "/gov/shenzhen/zjj/xxgk/:caty": [
+        "lonn"
+    ],
     "/gov/shenzhen/zzb/:caty/:page?": [
         "zlasd"
     ],
