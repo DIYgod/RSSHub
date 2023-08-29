@@ -159,6 +159,18 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 <Route author="magic-akari" example="/bangumi/tv/calendar/today" path="/bangumi/tv/calendar/today" radar="1"/>
 
+### 条目的通用路由格式 {#bangumi-fan-zu-ji-hua-tiao-mu-di-tong-yong-lu-you-ge-shi}
+
+<Route author="JimenezLi" example="/bangumi/tv/subject/328609/ep/true" path="/bangumi/tv/subject/:id/:type?/:showOriginalName?" paramsDesc={['条目 id, 在条目页面的地址栏查看', '条目类型，可选值为 `ep`, `comments`, `blogs`, `topics`，默认为 `ep`', '显示番剧标题原名，可选值 0/1/false/true，默认为 false']}>
+
+:::caution
+
+此通用路由仅用于对路由参数的描述，具体信息请查看下方与条目相关的路由
+
+:::
+
+</Route>
+
 ### 条目的章节 {#bangumi-fan-zu-ji-hua-tiao-mu-di-zhang-jie}
 
 <Route author="SettingDust" example="/bangumi/tv/subject/240038" path="/bangumi/tv/subject/:id" paramsDesc={['条目 id, 在条目页面的地址栏查看']} radar="1"/>
