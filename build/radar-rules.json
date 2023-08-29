@@ -24153,6 +24153,33 @@
       }
     ]
   },
+  "v2ex.com": {
+    "_name": "V2EX",
+    ".": [
+      {
+        "title": "最热 / 最新主题",
+        "docs": "https://docs.rsshub.app/routes/v2ex",
+        "source": [
+          "/"
+        ]
+      },
+      {
+        "title": "帖子",
+        "docs": "https://docs.rsshub.app/routes/v2ex",
+        "source": [
+          "/t/:postid"
+        ],
+        "target": "/v2ex/post/:postid"
+      },
+      {
+        "title": "标签",
+        "docs": "https://docs.rsshub.app/routes/v2ex",
+        "source": [
+          "/"
+        ]
+      }
+    ]
+  },
   "v2rayshare.com": {
     "_name": "V2rayShare",
     ".": [
