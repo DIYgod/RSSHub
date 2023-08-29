@@ -2312,13 +2312,31 @@ Supported sub-sites:
 
 ## 创业邦 {#chuang-ye-bang}
 
+### 资讯 {#chuang-ye-bang-zi-xun}
+
+<Route author="nczitzk" example="/cyzone" path="/cyzone/:id?" paramsDesc={['频道 id，可在对应频道页 URL 中找到，默认为 news，即最新资讯']}>
+
+| 最新 | 快鲤鱼 | 创投 | 科创板 | 汽车 |
+| ---- | ------ | ---- | ------ | ---- |
+| news | 5      | 14   | 13     | 8    |
+
+| 海外 | 消费 | 科技 | 医疗 | 文娱 |
+| ---- | ---- | ---- | ---- | ---- |
+| 10   | 9    | 7    | 27   | 11   |
+
+| 城市 | 政策 | 特写 | 干货 | 科技股 |
+| ---- | ---- | ---- | ---- | ------ |
+| 16   | 15   | 6    | 12   | 33     |
+
+</Route>
+
 ### 作者 {#chuang-ye-bang-zuo-zhe}
 
-<Route author="xyqfer" example="/cyzone/author/1225562" path="/cyzone/author/:id" paramsDesc={['作者 id']}/>
+<Route author="xyqfer nczitzk" example="/cyzone/author/1225562" path="/cyzone/author/:id" paramsDesc={['作者 id，可在对应作者页 URL 中找到']}/>
 
 ### 标签 {#chuang-ye-bang-biao-qian}
 
-<Route author="LogicJake" example="/cyzone/label/创业邦周报" path="/cyzone/label/:name" paramsDesc={['标签名称']}/>
+<Route author="LogicJake nczitzk" example="/cyzone/label/创业邦周报" path="/cyzone/label/:name" paramsDesc={['标签名称，可在对应标签页 URL 中找到']}/>
 
 ## 創新拿鐵 {#chuang-xin-na-tie}
 
