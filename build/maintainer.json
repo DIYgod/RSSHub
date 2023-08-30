@@ -1189,6 +1189,9 @@
     "/cn-healthcare/index": [
         "qnloft"
     ],
+    "/cna/:id?": [
+        "nczitzk"
+    ],
     "/cnbc/rss/:id?": [
         "TonyRL"
     ],
@@ -7469,7 +7472,6 @@
     "/icity/:id": [],
     "/anki/changes": [],
     "/abc/:id?": [],
-    "/cna/:id?": [],
     "/huawei/xinsheng/:caty?/:order?/:keyword?": [],
     "/ow/patch": [],
     "/cktest/app/:ctgroup?/:domain?": [],
