@@ -749,14 +749,14 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 米游社 - 同人榜 {#mi-ha-you-mi-you-she---tong-ren-bang}
 
-<Route author="CaoMeiYouRen" example="/mihoyo/bbs/img-ranking/ys/forum_type=tongren&cate_type=illustration&ranking_type=daily" path="/bbs/img-ranking/:game/:routeParams?" paramsDesc={['游戏缩写','额外参数；请参阅以下说明和表格']} radar="1">
+<Route author="CaoMeiYouRen" example="/mihoyo/bbs/img-ranking/ys/forumType=tongren&cateType=illustration&rankingType=daily" path="/bbs/img-ranking/:game/:routeParams?" paramsDesc={['游戏缩写','额外参数；请参阅以下说明和表格']} radar="1">
 
-| 键           | 含义                                | 接受的值                                                     | 默认值       |
-| ------------ | ----------------------------------- | ------------------------------------------------------------ | ------------ |
-| forum_type   | 主榜类型（仅原神、大别野有cos主榜） | tongren/cos                                                  | tongren      |
-| cate_type    | 子榜类型（仅崩坏三、原神有子榜）    | 崩坏三：illustration/comic/cos；原神：illustration/comic/qute/manual | illustration |
-| ranking_type | 排行榜类型（崩坏二没有日榜）        | daily/weekly/monthly                                         | daily        |
-| last_id      | 当前页id（用于分页）                | 数字                                                         | 1            |
+| 键          | 含义                                | 接受的值                                                     | 默认值       |
+| ----------- | ----------------------------------- | ------------------------------------------------------------ | ------------ |
+| forumType   | 主榜类型（仅原神、大别野有cos主榜） | tongren/cos                                                  | tongren      |
+| cateType    | 子榜类型（仅崩坏三、原神有子榜）    | 崩坏三：illustration/comic/cos；原神：illustration/comic/qute/manual | illustration |
+| rankingType | 排行榜类型（崩坏二没有日榜）        | daily/weekly/monthly                                         | daily        |
+| lastId      | 当前页id（用于分页）                | 数字                                                         | 1            |
 
 游戏缩写（目前绝区零还没有同人榜
 
@@ -795,7 +795,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 米游社 - 官方公告 {#mi-ha-you-mi-you-she---guan-fang-gong-gao}
 
-<Route author="CaoMeiYouRen" example="/mihoyo/bbs/official/2/3/20/" path="/bbs/official/:gids/:type?/:page_size?/:last_id?" paramsDesc={['游戏id','公告类型，默认为 2(即 活动)','分页大小，默认为 20 ','跳过的公告数，例如指定为 40 就是从第 40 条公告开始，可用于分页']} radar="1">
+<Route author="CaoMeiYouRen" example="/mihoyo/bbs/official/2/3/20/" path="/bbs/official/:gids/:type?/:page_size?/:lastId?" paramsDesc={['游戏id','公告类型，默认为 2(即 活动)','分页大小，默认为 20 ','跳过的公告数，例如指定为 40 就是从第 40 条公告开始，可用于分页']} radar="1">
 
 游戏 id
 
