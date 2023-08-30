@@ -421,6 +421,18 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 ## DoMP4 影视 {#domp4-ying-shi}
 
+:::tip
+
+由于网站有多个备用域名，默认使用 `mp4us.com`，可以通过在路由最后加上 `?domain=<域名>` 切换域名。
+
+目前可用域名有：
+
+```javascript
+['domp4.cc', 'mp4kan.com', 'mp4us.com', 'wemp4.com', 'dbmp4.com']
+```
+
+:::
+
 ### 最近更新 {#domp4-ying-shi-zui-jin-geng-xin}
 
 <Route author="savokiss" example="/domp4/latest/vod" path="/domp4/latest/:type?" paramsDesc={['`vod` 代表电影，`tv` 代表电视剧，默认 vod']}  radar="1"/>
