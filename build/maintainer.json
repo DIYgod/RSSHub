@@ -888,6 +888,10 @@
     "/bnu/lib/:category?": [
         "TonyRL"
     ],
+    "/boc/whpj/:format?": [
+        "LogicJake",
+        "HenryQW"
+    ],
     "/bookfere/:category": [
         "OdinZhang"
     ],
@@ -2934,6 +2938,9 @@
     ],
     "/icac/news/:lang?": [
         "linbuxiao, TonyRL"
+    ],
+    "/icbc/whpj/:format?": [
+        "leoleoasd"
     ],
     "/idolypride/news": [
         "Mingxia1"
@@ -6991,7 +6998,6 @@
     "/paidai": [],
     "/paidai/bbs": [],
     "/paidai/news": [],
-    "/boc/whpj/:format?": [],
     "/manhuadb/comics/:id": [],
     "/zfrontier/postlist/:type": [],
     "/zfrontier/board/:boardId": [],
