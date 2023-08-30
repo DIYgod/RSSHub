@@ -672,6 +672,8 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 `NO_LOGFILES`: 是否禁用日志文件输出，默认 `false`
 
+`SHOW_LOGGER_TIMESTAMP`: 在控制台输出中显示日志时间戳，默认 `false`
+
 `SENTRY`: [Sentry](https://sentry.io) dsn，用于错误追踪
 
 `SENTRY_ROUTE_TIMEOUT`: 路由耗时超过此毫秒值上报 Sentry，默认 `3000`
