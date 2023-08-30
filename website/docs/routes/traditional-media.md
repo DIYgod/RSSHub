@@ -2339,18 +2339,6 @@ category 对应的关键词有
 
 </Route>
 
-## 台湾中央通讯社 {#tai-wan-zhong-yang-tong-xun-she}
-
-### 分类 {#tai-wan-zhong-yang-tong-xun-she-fen-lei}
-
-<Route author="nczitzk" example="/cna/aall" path="/cna/:id?" paramsDesc={['分类 id 或新闻专题 id。分类 id 见下表，新闻专题 id 為 https://www.cna.com.tw/list/newstopic.aspx 中，連結的數字部份。此參數默认为 aall']}>
-
-| 即時 | 政治 | 國際 | 兩岸 | 產經 | 證券 | 科技 | 生活 | 社會 | 地方 | 文化 | 運動 | 娛樂 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-| aall | aipl | aopl | acn  | aie  | asc  | ait  | ahel | asoc | aloc | acul | aspt | amov |
-
-</Route>
-
 ## 天下雜誌 {#tian-xia-za-zhi}
 
 ### 最新上線 {#tian-xia-za-zhi-zui-xin-shang-xian}
@@ -2769,6 +2757,18 @@ category 对应的关键词有
 | 35   | 36   | 37   | 38   | 39   |
 | ---- | ---- | ---- | ---- | ---- |
 | 本地 | 镇区 | 热点 | 社会 | 综合 |
+
+</Route>
+
+## 中央通讯社 {#zhong-yang-tong-xun-she}
+
+### 分类 {#zhong-yang-tong-xun-she-fen-lei}
+
+<Route author="nczitzk" example="/cna/aall" path="/cna/:id?" paramsDesc={['分类 id 或新闻专题 id。分类 id 见下表，新闻专题 id 為 https://www.cna.com.tw/list/newstopic.aspx 中，連結的數字部份。此參數默认为 aall']}>
+
+| 即時 | 政治 | 國際 | 兩岸 | 產經 | 證券 | 科技 | 生活 | 社會 | 地方 | 文化 | 運動 | 娛樂 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| aall | aipl | aopl | acn  | aie  | asc  | ait  | ahel | asoc | aloc | acul | aspt | amov |
 
 </Route>
 
