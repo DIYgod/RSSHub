@@ -3721,7 +3721,7 @@ column 为 third 时可选的 category:
 
 ### 频道 {#mu-mu-bo-ke-pin-dao}
 
-<Route author="nczitzk" example="/liulinblog" path="/liulinblog/:channel?" :paramsDesc="['频道 id，可在对应频道页 URL 中找到，见下表，默认为最新']" radar="1" rssbud="1">
+<Route author="nczitzk" example="/liulinblog" path="/liulinblog/:channel?" paramsDesc={['频道 id，可在对应频道页 URL 中找到，见下表，默认为最新']} radar="1" rssbud="1">
 
 | 最新 | 60秒读懂世界 | 精品资源 | 视频资源 | 音频资源 |
 | ---- | ------------ | -------- | -------- | -------- |
@@ -3751,7 +3751,7 @@ column 为 third 时可选的 category:
 
 ### 标签 {#mu-mu-bo-ke-biao-qian}
 
-<Route author="nczitzk" example="/liulinblog/tag/qukuailian" path="/liulinblog/tag/:id" :paramsDesc="['标签 id，可在对应标签页 URL 中找到，见下表']" radar="1" rssbud="1">
+<Route author="nczitzk" example="/liulinblog/tag/qukuailian" path="/liulinblog/tag/:id" paramsDesc={['标签 id，可在对应标签页 URL 中找到，见下表']} radar="1" rssbud="1">
 
 | 区块链     | 小红书      | 小说项目 | 微信公众号 | 微信营销 |
 | ---------- | ----------- | -------- | ---------- | -------- |
@@ -3781,7 +3781,7 @@ column 为 third 时可选的 category:
 
 ### 专题 {#mu-mu-bo-ke-zhuan-ti}
 
-<Route author="nczitzk" example="/liulinblog/series/xunlei" path="/liulinblog/series/:id" :paramsDesc="['专题 id，可在对应标签页 URL 中找到，见下表']" radar="1" rssbud="1">
+<Route author="nczitzk" example="/liulinblog/series/xunlei" path="/liulinblog/series/:id" paramsDesc={['专题 id，可在对应标签页 URL 中找到，见下表']} radar="1" rssbud="1">
 
 | 【免费速存】迅雷资源合集 | 直播带货教程 | 电商培训课程    | 拼多多运营培训 | 小红书运营  | 抖音运营      | 闲鱼运营      | 短视频运营        |
 | ------------------------ | ------------ | --------------- | -------------- | ----------- | ------------- | ------------- | ----------------- |
@@ -3791,7 +3791,7 @@ column 为 third 时可选的 category:
 
 ### 搜索 {#mu-mu-bo-ke-sou-suo}
 
-<Route author="nczitzk" example="/liulinblog/search/单机游戏" path="/liulinblog/search/:keyword" :paramsDesc="['关键字']" radar="1" rssbud="1"/>
+<Route author="nczitzk" example="/liulinblog/search/单机游戏" path="/liulinblog/search/:keyword" paramsDesc={['关键字']} radar="1" rssbud="1"/>
 
 ### 60秒读懂世界 {#mu-mu-bo-ke-60-miao-du-dong-shi-jie}
 
@@ -3799,7 +3799,7 @@ column 为 third 时可选的 category:
 
 ### 网络营销 {#mu-mu-bo-ke-wang-luo-ying-xiao}
 
-<Route author="Fatpandac nczitzk" example="/liulinblog/itnews" path="/liulinblog/itnews/:channel?" :paramsDesc="['频道，默认为网络营销']">
+<Route author="Fatpandac nczitzk" example="/liulinblog/itnews" path="/liulinblog/itnews/:channel?" paramsDesc={['频道，默认为网络营销']}>
 
 | 网络营销 | 电商运营  | 互联网早报 | 站长圈 |
 | -------- | --------- | ---------- | ------ |
