@@ -19281,6 +19281,20 @@
       }
     ]
   },
+  "rsc.org": {
+    "_name": "The Royal Society of Chemistry",
+    "pubs": [
+      {
+        "title": "Journal",
+        "docs": "https://docs.rsshub.app/routes/journal#royal-society-of-chemistry",
+        "source": [
+          "/en/journals/journalissues/:id",
+          "/en/content/articlelanding",
+          "/en/content/articlehtml"
+        ]
+      }
+    ]
+  },
   "rsshub.app": {
     "_name": "RSSHub",
     "docs": [

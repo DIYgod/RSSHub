@@ -4760,6 +4760,9 @@
     "/rodong/news/:language?": [
         "TonyRL"
     ],
+    "/rsc/journal/:id/:category?": [
+        "nczitzk"
+    ],
     "/rsshub/routes/:lang?": [
         "DIYgod"
     ],
