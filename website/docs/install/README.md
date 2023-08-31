@@ -677,6 +677,8 @@ See the relation between access key/code and white/blacklisting.
 
 `NO_LOGFILES`: disable logging to log files, default to `false`
 
+`SHOW_LOGGER_TIMESTAMP`: Show timestamp in log, default to `false`
+
 `SENTRY`: [Sentry](https://sentry.io) dsn, used for error tracking
 
 `SENTRY_ROUTE_TIMEOUT`: Report Sentry if route execution takes more than this milliseconds, default to `3000`
