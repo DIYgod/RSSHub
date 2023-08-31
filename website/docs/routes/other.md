@@ -39,7 +39,7 @@ Copy the URL of the 591 filter housing page and remove the front part "<https://
 手表型号可在网站中选择后到地址栏查看
 
 | Amazfit Bip | Amazfit Cor | Amazfit GTR | Amazfit GTS | Amazfit Stratos | Amazfit T-Rex | Amazfit Verge | Amazfit Verge Lite | Honor Band 5 | Honor Watch Magic | Huawei Watch GT | Xiaomi Mi Band 4 |
-| ----------- | ----------- | ----------- | ----------- | --------------- | ------------- | ------------- | ------------------ | ------------ | ----------------- | --------------- | ---------------- |
+|-------------|-------------|-------------|-------------|-----------------|---------------|---------------|--------------------|--------------|-------------------|-----------------|------------------|
 | bip         | cor         | gtr         | gts         | pace            | t-rex         | verge         | verge-lite         | honor-band-5 | honor-watch-magic | huawei-watch-gt | mi-band-4        |
 
 ### 新品上架 {#amazfit-watch-faces-xin-pin-shang-jia}
@@ -79,8 +79,8 @@ See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 <Route author="nczitzk" example="/aqara/:region/news" path="/aqara/news" paramsDesc={['地区 id，可在对应新闻页 URL 中找到，默认为 en，即 Global']}>
 
 | 中国/大陆 | 대한민국 | Europe | United States | Russia | Global |
-| --------- | -------- | ------ | ------------- | ------ | ------ |
-| cn        | kr       | eu     | us            | ru     | en     |
+|-----------|------|--------|---------------|--------|--------|
+| cn        | kr   | eu     | us            | ru     | en     |
 
 </Route>
 
@@ -89,8 +89,8 @@ See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 <Route author="nczitzk" example="/aqara/:region/news" path="/aqara/news" paramsDesc={['地区 id，可在对应博客页 URL 中找到，默认为 en，即 Global']}>
 
 | 대한민국 | Europe | United States | Russia | Global |
-| -------- | ------ | ------------- | ------ | ------ |
-| kr       | eu     | us            | ru     | en     |
+|------|--------|---------------|--------|--------|
+| kr   | eu     | us            | ru     | en     |
 
 </Route>
 
@@ -182,7 +182,7 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 <Route author="KeiLongW" example="/coronavirus/mogov-2019ncov/ch" path="/coronavirus/mogov-2019ncov/:lang" paramsDesc={['Language']} />
 
 | Chinese | English | Portuguese |
-| ------- | ------- | ---------- |
+|---------|---------|------------|
 | ch      | en      | pt         |
 
 ### Singapore Ministry of Health - Past Updates on 2019-nCov Local Situation in Singapore {#corona-virus-disease-2019-singapore-ministry-of-health---past-updates-on-2019-ncov-local-situation-in-singapore}
@@ -276,7 +276,7 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 <Route author="wolfg1969" example="/instructables/projects/circuits" path="/instructables/projects/:category?" paramsDesc={['Category, empty by default, can be found in URL or see the table below']} radar="1">
 
 | All | Circuits | Workshop | Craft | Cooking | Living | Outside | Teachers |
-| --- | -------- | -------- | ----- | ------- | ------ | ------- | -------- |
+|-----|----------|----------|-------|---------|--------|---------|----------|
 |     | circuits | workshop | craft | cooking | living | outside | teachers |
 
 </Route>
@@ -300,7 +300,7 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 <Route author="tuzi3040" example="/japanpost/track/EJ123456789JP/en" path="/japanpost/track/:reqCode/:locale?" paramsDesc={['Package Number', 'Language, default to japanese `ja`']} radar="1" rssbud="1">
 
 | Japanese | English |
-| -------- | ------- |
+|----------|---------|
 | ja       | en      |
 
 </Route>
@@ -312,7 +312,7 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 <Route author="loganrockmore" example="/kingarthur/story" path="/instapaper/:category">
 
 | Story | Recipes | Tips and Techniques |
-| ----- | ------- | ------------------- |
+|-------|---------|---------------------|
 | story | recipes | tips-and-techniques |
 
 </Route>
@@ -340,13 +340,13 @@ RSS source in the original site is outdated.
 #### `job_types` list
 
 | Full Time | Part Time | Contractor | All |
-| --------- | --------- | ---------- | --- |
+|-----------|-----------|------------|-----|
 | F         | P         | C          | all |
 
 #### `exp_levels` list
 
 | Intership | Entry Level | Associate | Mid-Senior Level | Director | All |
-| --------- | ----------- | --------- | ---------------- | -------- | --- |
+|-----------|-------------|-----------|------------------|----------|-----|
 | 1         | 2           | 3         | 4                | 5        | all |
 
 For example:
@@ -366,13 +366,13 @@ For example:
 
 另外，可以通过添加额外的以下 query 参数来输出满足特定要求的工作职位：
 
-| 参数       | 描述                                              | 举例                                                    | 默认值  |
-| ---------- | ------------------------------------------------- | ------------------------------------------------------- | ------- |
-| `geo`      | geo 编码                                          | 102890883（中国）、102772228（上海）、103873152（北京） | 空      |
-| `remote`   | 是否只显示远程工作                                | `true/false`                                            | `false` |
-| `location` | 工作地点                                          | `china/shanghai/beijing`                                | 空      |
-| `relevant` | 排序方式 (true: 按相关性排序，false： 按日期排序) | `true/false`                                            | `false` |
-| `period`   | 发布时间                                          | `1/7/30`                                                | 空      |
+| 参数       | 描述                                            | 举例                                            | 默认值  |
+|------------|-----------------------------------------------|-------------------------------------------------|---------|
+| `geo`      | geo 编码                                        | 102890883（中国）、102772228（上海）、103873152（北京） | 空      |
+| `remote`   | 是否只显示远程工作                              | `true/false`                                    | `false` |
+| `location` | 工作地点                                        | `china/shanghai/beijing`                        | 空      |
+| `relevant` | 排序方式 (true: 按相关性排序，false： 按日期排序) | `true/false`                                    | `false` |
+| `period`   | 发布时间                                        | `1/7/30`                                        | 空      |
 
 例如：
 [`/linkedin/cn/jobs/Software?location=shanghai&period=1`](https://rsshub.app/linkedin/cn/jobs/Software?location=shanghai&period=1): 查找所有在上海的今日发布的所有 Software 工作
@@ -451,7 +451,7 @@ For example:
 <Route author="nczitzk" example="/nobelprize" path="/nobelprize/:caty" paramsDesc={['Category, see below, all by default']}>
 
 | Physics | Chemistry | Physiology or Medicine | Literature | Peace | Economic Science  |
-| ------- | --------- | ---------------------- | ---------- | ----- | ----------------- |
+|---------|-----------|------------------------|------------|-------|-------------------|
 | physics | chemistry | physiology-or-medicine | literature | peace | economic-sciences |
 
 </Route>
@@ -525,7 +525,7 @@ please refer to the [Notion API documentation](https://developers.notion.com/ref
 <Route author="lyrl" example="/usepanda/feeds/5718e53e7a84fb1901e059cc" path="/usepanda/feeds/:id" paramsDesc={['Feed ID']}>
 
 | Channel | feedId                   |
-| ------- | ------------------------ |
+|---------|--------------------------|
 | Github  | 5718e53e7a84fb1901e059cc |
 
 </Route>
@@ -558,7 +558,7 @@ please refer to the [Notion API documentation](https://developers.notion.com/ref
 <Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" paramsDesc={['Job category, default to all']} radar="1" rssbud="1">
 
 | All Jobs | Development | Design | Operation | Product | Other | Marketing | Sales |
-| :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
+|:--------:|:-----------:|:------:|:---------:|:-------:|:-----:|:---------:|:-----:|
 |   all    | development | design | operation | product | other | marketing | sales |
 
 </Route>
@@ -577,30 +577,30 @@ Pass URL and transformation rules to convert HTML/JSON into RSS.
 
 Specify options (in the format of query string) in parameter `routeParams` parameter to extract data from HTML.
 
-| Key            | Meaning                                            | Accepted Values | Default                 |
-| -------------- | -------------------------------------------------- | --------------- | ----------------------- |
-| `title`        | The title of the RSS                               | `string`        | Extract from `<title>`  |
-| `item`         | The HTML elements as `item` using CSS selector     | `string`        | html                    |
-| `itemTitle`    | The HTML elements as `title` in `item` using CSS selector | `string` | `item` element          |
-| `itemTitleAttr` | The attributes of `title` element as title        | `string`        | Element text            |
-| `itemLink`     | The HTML elements as `link` in `item` using CSS selector | `string`  | `item` element          |
-| `itemLinkAttr` | The attributes of `link` element as link           | `string`        | `href`                  |
-| `itemDesc`     | The HTML elements as `descrption` in `item` using CSS selector | `string` | `item` element     |
-| `itemDescAttr` | The attributes of `descrption` element as description | `string`     | Element html            |
+| Key             | Meaning                                                        | Accepted Values | Default                |
+|-----------------|----------------------------------------------------------------|-----------------|------------------------|
+| `title`         | The title of the RSS                                           | `string`        | Extract from `<title>` |
+| `item`          | The HTML elements as `item` using CSS selector                 | `string`        | html                   |
+| `itemTitle`     | The HTML elements as `title` in `item` using CSS selector      | `string`        | `item` element         |
+| `itemTitleAttr` | The attributes of `title` element as title                     | `string`        | Element text           |
+| `itemLink`      | The HTML elements as `link` in `item` using CSS selector       | `string`        | `item` element         |
+| `itemLinkAttr`  | The attributes of `link` element as link                       | `string`        | `href`                 |
+| `itemDesc`      | The HTML elements as `descrption` in `item` using CSS selector | `string`        | `item` element         |
+| `itemDescAttr`  | The attributes of `descrption` element as description          | `string`        | Element html           |
 
 <Route author="ttttmr" example="/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a" path="/rsshub/transform/html/:url/:routeParams" paramsDesc={['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']} selfhost="1">
 
 Parameters parsing in the above example:
 
-| Parameter    | Value                                     |
-| ------------ | ----------------------------------------- |
-| `url`        | `https://wechat2rss.xlab.app/posts/list/` |
-| `routeParams`| `item=div[class='post-content'] p a`      |
+| Parameter     | Value                                     |
+|---------------|-------------------------------------------|
+| `url`         | `https://wechat2rss.xlab.app/posts/list/` |
+| `routeParams` | `item=div[class='post-content'] p a`      |
 
 Parsing of `routeParams` parameter:
 
 | Parameter | Value                           |
-| --------- | ------------------------------- |
+|-----------|---------------------------------|
 | `item`    | `div[class='post-content'] p a` |
 
 </Route>
@@ -610,7 +610,7 @@ Parsing of `routeParams` parameter:
 Specify options (in the format of query string) in parameter `routeParams` parameter to extract data from JSON.
 
 | Key         | Meaning                                  | Accepted Values | Default                                    |
-| ----------  | ---------------------------------------- | --------------- | ------------------------------------------ |
+|-------------|------------------------------------------|-----------------|--------------------------------------------|
 | `title`     | The title of the RSS                     | `string`        | Extracted from home page of current domain |
 | `item`      | The JSON Path as `item` element          | `string`        | Entire JSON response                       |
 | `itemTitle` | The JSON Path as `title` in `item`       | `string`        | None                                       |
@@ -627,19 +627,19 @@ JSON Path only supports format like `a.b.c`. if you need to access arrays, like 
 
 Parameters parsing in the above example:
 
-| Parameter     | Value                                           |
-| ------------- | ----------------------------------------------- |
-| `url`         | `https://api.github.com/repos/ginuerzh/gost/releases` |
+| Parameter     | Value                                                                    |
+|---------------|--------------------------------------------------------------------------|
+| `url`         | `https://api.github.com/repos/ginuerzh/gost/releases`                    |
 | `routeParams` | `title=Gost releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body` |
 
 Parsing of `routeParams` parameter:
 
-| Parameter    | Value            |
-| ------------ | ---------------- |
-| `title`      | `Gost releases`  |
-| `itemTitle`  | `tag_name`       |
-| `itemLink`   | `html_url`       |
-| `itemDesc`   | `body`           |
+| Parameter   | Value           |
+|-------------|-----------------|
+| `title`     | `Gost releases` |
+| `itemTitle` | `tag_name`      |
+| `itemLink`  | `html_url`      |
+| `itemDesc`  | `body`          |
 
 </Route>
 
@@ -686,7 +686,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 :::
 
 | 全部 | 祖源分析 | 付费 | 遗传性疾病 | 药物指南 | 免费 | 运动基因 | 营养代谢   | 心理特质   | 健康风险 | 皮肤特性 | 遗传特征 |
-| ---- | -------- | ---- | ---------- | -------- | ---- | -------- | ---------- | ---------- | -------- | -------- | -------- |
+|------|----------|------|------------|----------|------|----------|------------|------------|----------|----------|----------|
 | all  | ancestry | cost | disease    | drug     | free | genefit  | metabolism | psychology | risk     | skin     | traits   |
 
 </Route>
@@ -712,7 +712,7 @@ Top category can be found in [category Page](https://zh.wikihow.com/Special:Cate
 Type
 
 | All | Recommend |
-| --- | --------- |
+|-----|-----------|
 | all | rec       |
 
 </Route>
@@ -756,13 +756,13 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 分类
 
 | 推荐 | 最热 |
-| ---- | ---- |
+|------|------|
 | rec  | hot  |
 
 目录类型
 
 | 所有 | 绘画 | 视频 | 写作 | 游戏 | 音乐 | 播客 | 摄影 | 技术 | Vtuber | 舞蹈 | 体育 | 旅游 | 美食 | 时尚 | 数码 | 动画 | 其他 |
-| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+|----|----|----|----|----|----|----|----|----|--------|----|----|----|----|----|----|----|----|
 | 所有 | 绘画 | 视频 | 写作 | 游戏 | 音乐 | 播客 | 摄影 | 技术 | Vtuber | 舞蹈 | 体育 | 旅游 | 美食 | 时尚 | 数码 | 动画 | 其他 |
 
 </Route>
@@ -778,7 +778,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 <Route author="KeiLongW" example="/macau-bolsas" path="/macau-bolsas/:lang?" paramsDesc={['語言']} >
 
 | 中文 | 葡文 |
-| ---- | ---- |
+|------|------|
 | ch   | pt   |
 
 </Route>
@@ -790,7 +790,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 <Route author="xyqfer" example="/baidu/top" path="/baidu/top/:board?" paramsDesc={['榜单，默认为 `realtime`']} radar="1">
 
 | 热搜榜   | 小说榜 | 电影榜 | 电视剧榜 | 汽车榜 | 游戏榜 |
-| -------- | ------ | ------ | -------- | ------ | ------ |
+|----------|--------|--------|----------|--------|--------|
 | realtime | novel  | movie  | teleplay | car    | game   |
 
 </Route>
@@ -840,7 +840,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 `annotation` 字段为添加哪些附加信息。可从以下表格中选择值后按顺序拼接。例如如果需要注释和赏析，则为`zhushang`。
 
 | 翻译 | 注释 | 赏析  |
-| ---- | ---- | ----- |
+|------|------|-------|
 | yi   | zhu  | shang |
 
 </Route>
@@ -858,7 +858,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 <Route author="Derekmini markmingjie" example="/csc/notice/lxtz" path="/csc/notice/:type?" paramsDesc={['分类, 默认为 `lxtz`']} radar="1" rssbud="1">
 
 | 遴选通知 | 综合项目专栏 | 常见问题解答 | 录取公告 | 新闻资讯 | 新闻公告 |
-| -------- | ------------ | ------------ | -------- | -------- | -------- |
+|----------|--------------|--------------|----------|----------|----------|
 | lxtz     | xmzl         | wtjd         | lqgg     | xwzx     | xwgg     |
 
 </Route>
@@ -908,7 +908,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 <Route author="xapool" example="/aqicn/beijing/pm25,pm10" path="/aqicn/:city/:pollution?" paramsDesc={['城市拼音或地区 ID，详见[aqicn.org](http://aqicn.org/city/)', '可选择显示更详细的空气污染成分']}/>
 
 | 参数 | 污染成分 |
-| ---- | -------- |
+|------|----------|
 | pm25 | PM2.5    |
 | pm10 | PM10     |
 | o3   | O3       |
@@ -1012,13 +1012,13 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 表盘型号
 
 | 小米手环 4 | 华米 GTR 47mm | 华米智能手表青春版 |
-| ---------- | ------------- | ------------------ |
+|------------|---------------|--------------------|
 | mi4        | gtr47         | gvlite             |
 
 列表类型
 
 | 最新上传 | 最多下载 | 编辑推荐   |
-| -------- | -------- | ---------- |
+|----------|----------|------------|
 | 0        | 1        | recommends |
 
 </Route>
@@ -1052,15 +1052,15 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 <Route author="qiwihui" example="/qtfyfl/guoji" path="/qtfyfl/:category" paramsDesc={['分类，可在 URL 中找到']}>
 
 | 最新文章 | 福利社  | 求出处    | 套图集  | 门事件     | 内涵图   | 电影下载       | 影视资讯 |
-| -------- | ------- | --------- | ------- | ---------- | -------- | -------------- | -------- |
+|----------|---------|-----------|---------|------------|----------|----------------|----------|
 | latest   | fulishe | qiuchuchu | taotuji | menshijian | neihantu | dianyingxiazai | yingshi  |
 
 | 电视剧下载 | 动漫下载 | 电影彩蛋 | 影视剧情 | 涨姿势     | 娱乐 | 明星八卦 | 音乐歌曲 |
-| ---------- | -------- | -------- | -------- | ---------- | ---- | -------- | -------- |
+|------------|----------|----------|----------|------------|------|----------|----------|
 | dianshiju  | dongman  | caidan   | juqing   | zhangzishi | yule | mingxing | music    |
 
 | 游戏  | 电脑软件 | 实时热点     | 心灵鸡汤 | 符号大全 | 国际新闻 | 科技苑 | 其他  |
-| ----- | -------- | ------------ | -------- | -------- | -------- | ------ | ----- |
+|-------|----------|--------------|----------|----------|----------|--------|-------|
 | games | software | shishiredian | xljt     | fhdq     | xljt     | tech   | other |
 
 </Route>
@@ -1072,7 +1072,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 <Route author="LogicJake"  example="/babykingdom/19/view" path="/babykingdom/:id/:order?" paramsDesc={['板块id，可在 URL 中找到', '排序方式']}>
 
 | 发帖时间 | 回复 / 查看 | 查看 | 最后发表 | 热门 |
-| -------- | ----------- | ---- | -------- | ---- |
+|----------|-------------|------|----------|------|
 | dateline | reply       | view | lastpost | heat |
 
 </Route>
@@ -1102,7 +1102,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 <Route author="Cubernet" example="/sckjt/news" path="/sckjt/news/:type?" paramsDesc={['默认为`tz`']}>
 
 | 通知 | 公示公告 |
-| ---- | -------- |
+|------|----------|
 | tz   | gs       |
 
 </Route>
@@ -1178,7 +1178,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 <Route author="vhxubo" example="/ku" path="/ku/:name?" paramsDesc={['默认为 `yuedu`']}>
 
 | 阅读  | 异次元   | 海阔   |
-| ----- | -------- | ------ |
+|-------|----------|--------|
 | yuedu | yiciyuan | haikuo |
 
 </Route>
@@ -1192,7 +1192,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 类型
 
 | 全部文章 | 永久免费 | 限时折扣 | 限时免费 | PC | Mac | Android | UWP |
-| -------- | -------- | -------- | -------- | -- | --- | ------- | --- |
+|----------|----------|----------|----------|----|-----|---------|-----|
 | all      | 311      | 309      | 310      | 8  | 50  | 17      | 312 |
 
 </Route>
@@ -1216,7 +1216,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 所属类别
 
 | 专题知识服务 | 知识分析 | 知识工具 | 综合性知识服务 | 全部类别 |
-| ------------ | -------- | -------- | -------------- | -------- |
+|--------------|----------|----------|----------------|----------|
 | 2            | 3        | 4        | 1              | 0        |
 
 领域
@@ -1229,6 +1229,18 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 ### 产业政策 {#zhong-guo-gong-cheng-ke-ji-zhi-shi-zhong-xin-chan-ye-zheng-ce}
 
 <Route author="nczitzk" example="/cktest/policy" path="/cktest/policy"/>
+
+## 中国工商银行 {#zhong-guo-gong-shang-yin-hang}
+
+### 外汇牌价 {#zhong-guo-gong-shang-yin-hang-wai-hui-pai-jia}
+
+<Route author="leoleoasd" example="/icbc/whpj/zs?filter_title=%E8%8B%B1%E9%95%91" path="/icbc/whpj/:format?" paramsDesc={['输出的标题格式，默认为标题 + 所有价格。短格式仅包含货币名称。']}>
+
+| 短格式 | 参考价 | 现汇买卖 | 现钞买卖 | 现汇买入 | 现汇卖出 | 现钞买入 | 现钞卖出 |
+|--------|--------|----------|----------|----------|----------|----------|----------|
+| short  | zs     | xh       | xc       | xhmr     | xhmc     | xcmr     | xcmc     |
+
+</Route>
 
 ## 中国光大银行 {#zhong-guo-guang-da-yin-hang}
 
@@ -1243,7 +1255,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 <Route author="linbuxiao" example="/cebbank/quotation/history/usd" path="/cebbank/quotation/history/:type" paramsDesc={['货币的缩写，见下表']}>
 
 | 美元 | 英镑 | 港币 | 瑞士法郎 | 瑞典克郎 | 丹麦克郎 | 挪威克郎 | 日元 | 加拿大元 | 澳大利亚元 | 新加坡元 | 欧元 | 澳门元 | 泰国铢 | 新西兰元 | 韩圆 |
-| ---- | ---- | ---- | -------- | -------- | -------- | -------- | ---- | -------- | ---------- | -------- | ---- | ------ | ------ | -------- | ---- |
+|------|------|------|----------|----------|----------|----------|------|----------|------------|----------|------|--------|--------|----------|------|
 | usd  | gbp  | hkd  | chf      | sek      | dkk      | nok      | jpy  | cad      | aud        | sgd      | eur  | mop    | thb    | nzd      | krw  |
 
 </Route>
@@ -1256,12 +1268,12 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ## 中国银行 {#zhong-guo-yin-hang}
 
-### 中国银行外汇牌价 {#zhong-guo-yin-hang-zhong-guo-yin-hang-wai-hui-pai-jia}
+### 外汇牌价 {#zhong-guo-yin-hang-wai-hui-pai-jia}
 
 <Route author="LogicJake HenryQW" example="/boc/whpj/zs?filter_title=%E8%8B%B1%E9%95%91" path="/boc/whpj/:format?" paramsDesc={['输出的标题格式，默认为标题 + 所有价格。短格式仅包含货币名称。']}>
 
 | 短格式 | 中行折算价 | 现汇买卖 | 现钞买卖 | 现汇买入 | 现汇卖出 | 现钞买入 | 现钞卖出 |
-| ------ | ---------- | -------- | -------- | -------- | -------- | -------- | -------- |
+|--------|------------|----------|----------|----------|----------|----------|----------|
 | short  | zs         | xh       | xc       | xhmr     | xhmc     | xcmr     | xcmc     |
 
 </Route>
