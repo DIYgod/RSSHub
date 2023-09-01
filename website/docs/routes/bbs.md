@@ -154,7 +154,13 @@ You need to set the environment variable `DISCOURSE_CONFIG_{id}` before using it
 
 ### Notifications {#discourse-notifications}
 
-<Route author="dzx-dzx" example="/discourse/0/notifications" path="/discourse/:configId/notifications" paramsDesc={['Environment variable configuration id, see above']} selfhost="1"/>
+<Route author="dzx-dzx" example="/discourse/0/notifications" path="/discourse/:configId/notifications/:fulltext?" paramsDesc={['Environment variable configuration id, see above','Fetch the content if the notification points to a post. This is disabled by default, set it to `1` to enable it.']} selfhost="1"/>
+
+:::caution
+
+If you opt to enable `fulltext` feature, consider adding `limit` parameter to your query to avoid sending too many request.
+
+:::
 
 ## Discuz {#discuz}
 
