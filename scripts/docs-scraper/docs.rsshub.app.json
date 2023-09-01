@@ -1,5 +1,5 @@
 {
-    "index_uid": "rsshub",
+    "index_uid": "rsshub-tmp",
     "sitemap_urls": ["https://docs.rsshub.app/sitemap.xml"],
     "start_urls": ["https://docs.rsshub.app"],
     "selectors": {

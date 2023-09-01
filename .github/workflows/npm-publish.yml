@@ -7,6 +7,9 @@ on:
     paths:
       - '.github/workflows/npm-publish.yml'
       - 'lib/**'
+      - '!**/maintainer.js'
+      - '!**/radar.js'
+      - '!**/radar-rules.js'
 
 permissions:
   contents: read
