@@ -18453,6 +18453,54 @@
       }
     ]
   },
+  "pornhub.com": {
+    "_name": "PornHub",
+    ".": [
+      {
+        "title": "Category",
+        "docs": "https://docs.rsshub.app/routes/multimedia#pornhub",
+        "source": [
+          "/categories/:caty",
+          "/video"
+        ]
+      },
+      {
+        "title": "Keyword Search",
+        "docs": "https://docs.rsshub.app/routes/multimedia#pornhub",
+        "source": [
+          "/video/search"
+        ]
+      },
+      {
+        "title": "Users",
+        "docs": "https://docs.rsshub.app/routes/multimedia#pornhub",
+        "source": [
+          "/users/:username/*"
+        ],
+        "target": "/pornhub/users/:username"
+      },
+      {
+        "title": "Verified amateur / Model",
+        "docs": "https://docs.rsshub.app/routes/multimedia#pornhub",
+        "source": [
+          "/model/:username/*"
+        ],
+        "target": "/pornhub/model/:username"
+      },
+      {
+        "title": "Verified model / Pornstar",
+        "docs": "https://docs.rsshub.app/routes/multimedia#pornhub",
+        "source": [
+          "/pornstar/:username/*"
+        ],
+        "target": "/pornhub/pornstar/:username"
+      },
+      {
+        "title": "Video List",
+        "docs": "https://docs.rsshub.app/routes/multimedia#pornhub"
+      }
+    ]
+  },
   "postman.com": {
     "_name": "Postman",
     ".": [
