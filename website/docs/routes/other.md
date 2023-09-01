@@ -618,6 +618,7 @@ Specify options (in the format of query string) in parameter `routeParams` param
 | `itemTitle` | The JSON Path as `title` in `item`       | `string`        | None                                       |
 | `itemLink`  | The JSON Path as `link` in `item`        | `string`        | None                                       |
 | `itemDesc`  | The JSON Path as `description` in `item` | `string`        | None                                       |
+| `itemPubDate`  | The JSON Path as `pubDate` in `item` | `string`        | None                                       |
 
 :::tip
 
