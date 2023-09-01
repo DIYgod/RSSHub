@@ -6324,6 +6324,17 @@
         source:[ "/:category",
           "/" ],
         target:"/jandan/:category?" } ] },
+  "japanpost.jp":{ _name:"日本郵便",
+    "trackings.post":[ { title:"郵便・荷物の追跡",
+        docs:"https://docs.rsshub.app/routes/other#japanpost-ri-ben-you-bian",
+        source:"/services/srv/search/direct",
+        target:(params, url) => {
+                    const reqCode = new URL(url).searchParams.get('reqCodeNo1').toUpperCase();
+                    const locale = new URL(url).searchParams.get('locale').toLowerCase();
+                    if ((reqCode.search(/^(?:\d{11,12}|[A-Z]{2}\d{9}[A-Z]{2})$/) === 0 && locale === 'ja') || locale === 'en') {
+                        return `/japanpost/track/${reqCode}/${locale}`;
+                    }
+                } } ] },
   "javbus.com":{ _name:"JavBus",
     www:[ { title:"有码 - 首页",
         docs:"https://docs.rsshub.app/routes/multimedia#javbus",
@@ -14715,17 +14726,6 @@
         docs:"https://docs.rsshub.app/routes/university#ha-er-bin-gong-cheng-da-xue",
         source:"/*",
         target:"/heu/gongxue/sx" } ] },
-  "japanpost.jp":{ _name:"日本郵便",
-    "trackings.post":[ { title:"郵便・荷物の追跡",
-        docs:"https://docs.rsshub.app/routes/other#ri-ben-you-bian-you-bian-zhui-ji-サービス",
-        source:"/services/srv/search/direct",
-        target:(params, url) => {
-                    const reqCode = new URL(url).searchParams.get('reqCodeNo1').toUpperCase();
-                    const locale = new URL(url).searchParams.get('locale').toLowerCase();
-                    if ((reqCode.search(/^(?:\d{11,12}|[A-Z]{2}\d{9}[A-Z]{2})$/) === 0 && locale === 'ja') || locale === 'en') {
-                        return `/japanpost/track/${reqCode}/${locale}`;
-                    }
-                } } ] },
   "matters.news":{ _name:"Matters",
     ".":[ { title:"最新排序",
         docs:"https://docs.rsshub.app/routes/new-media#matters",

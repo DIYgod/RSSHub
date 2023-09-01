@@ -12276,6 +12276,16 @@
       }
     ]
   },
+  "japanpost.jp": {
+    "_name": "日本郵便",
+    "trackings.post": [
+      {
+        "title": "郵便・荷物の追跡",
+        "docs": "https://docs.rsshub.app/routes/other#japanpost-ri-ben-you-bian",
+        "source": "/services/srv/search/direct"
+      }
+    ]
+  },
   "javbus.com": {
     "_name": "JavBus",
     "www": [
@@ -27303,16 +27313,6 @@
         "docs": "https://docs.rsshub.app/routes/university#ha-er-bin-gong-cheng-da-xue",
         "source": "/*",
         "target": "/heu/gongxue/sx"
-      }
-    ]
-  },
-  "japanpost.jp": {
-    "_name": "日本郵便",
-    "trackings.post": [
-      {
-        "title": "郵便・荷物の追跡",
-        "docs": "https://docs.rsshub.app/routes/other#ri-ben-you-bian-you-bian-zhui-ji-サービス",
-        "source": "/services/srv/search/direct"
       }
     ]
   },

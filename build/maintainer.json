@@ -3101,6 +3101,9 @@
         "nczitzk",
         "bigfei"
     ],
+    "/japanpost/track/:reqCode/:locale?": [
+        "tuzi3040"
+    ],
     "/javbus/": [
         "MegrezZhu",
         "CoderTonyChan",
@@ -7133,7 +7136,6 @@
     "/chinadaily/english/:category": [],
     "/leboncoin/ad/:query": [],
     "/dhl/:id": [],
-    "/japanpost/track/:reqCode/:locale?": [],
     "/hanime/video": [],
     "/soul/:id": [],
     "/soul/posts/hot/:pid*": [],
