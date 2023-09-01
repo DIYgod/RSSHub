@@ -42,7 +42,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### UP 主动态 {#bilibili-up-zhu-dong-tai}
 
-<Route author="DIYgod zytomorrow JimenezLi" example="/bilibili/user/dynamic/2267573" path="/bilibili/user/dynamic/:uid/:routeParams?" paramsDesc={['用户 id, 可在 UP 主主页中找到', '额外参数；请参阅以下说明和表格']} radar="1" rssbud="1">
+<Route author="DIYgod zytomorrow CaoMeiYouRen JimenezLi" example="/bilibili/user/dynamic/2267573" path="/bilibili/user/dynamic/:uid/:routeParams?" paramsDesc={['用户 id, 可在 UP 主主页中找到', '额外参数；请参阅以下说明和表格']} radar="1" rssbud="1">
 
 | 键 | 含义 | 接受的值 | 默认值 |
 | -- | ---- | ------- | ------ |
