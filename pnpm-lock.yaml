@@ -159,8 +159,8 @@ dependencies:
     specifier: 1.0.109
     version: 1.0.109
   re2js:
-    specifier: 0.3.3
-    version: 0.3.3
+    specifier: 0.4.0
+    version: 0.4.0
   require-all:
     specifier: 3.0.0
     version: 3.0.0
@@ -6353,8 +6353,8 @@ packages:
     resolution: {integrity: sha512-mnAH0jDJQ0SJtEXjoW5aQILEc+33RwtKzKxwK9JG1a06M6nn8WDWheD+kmc5ucs+ux4FEWX3+PZuEB8r3x15yQ==}
     dev: false
 
-  /re2js@0.3.3:
-    resolution: {integrity: sha512-zjGPsQN4Zaw7ijseQBmUYn+ncMus+arFSJOHQA3wMu9xuzh73kPPdPrRg6+UmNq2HAexdBXPr2Fnde5CELmA4A==}
+  /re2js@0.4.0:
+    resolution: {integrity: sha512-W6t5XWgedRUsSw3lcJCjejDwybz7xaBfDDpySQEgSdO6AYWbrFFHHOsunE6rcmkiPhyLMonlJNVtbcy9/+GBbQ==}
     dev: false
 
   /react-is@18.2.0:
