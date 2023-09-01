@@ -750,6 +750,7 @@
     "/bilibili/user/dynamic/:uid/:routeParams?": [
         "DIYgod",
         "zytomorrow",
+        "CaoMeiYouRen",
         "JimenezLi"
     ],
     "/bilibili/user/fav/:uid/:disableEmbed?": [
@@ -3709,6 +3710,9 @@
     ],
     "/metmuseum/exhibitions": [
         "chazeon"
+    ],
+    "/mihoyo/bbs/img-ranking/:game/:routeParams?": [
+        "CaoMeiYouRen"
     ],
     "/mihoyo/bbs/official/:gids/:type?/:page_size?/:last_id?": [
         "CaoMeiYouRen"

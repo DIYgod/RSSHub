@@ -15287,8 +15287,14 @@
     "_name": "米哈游",
     "bbs": [
       {
+        "title": "米游社 - 同人榜",
+        "docs": "https://docs.rsshub.app/routes/game#mi-ha-you",
+        "source": "/:game/imgRanking/:forum_id/:ranking_id/:cate_id",
+        "target": "/mihoyo/bbs/img-ranking/:game"
+      },
+      {
         "title": "米游社 - 官方公告",
-        "docs": "https://docs.rsshub.app/routes/game#mi-ha-you-mi-you-she-guan-fang-gong-gao",
+        "docs": "https://docs.rsshub.app/routes/game#mi-ha-you",
         "source": [
           "/:game/home/28",
           "/:game/home/6",
