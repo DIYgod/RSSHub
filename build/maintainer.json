@@ -1534,7 +1534,7 @@
     "/discourse/:configId/posts": [
         "dzx-dzx"
     ],
-    "/discourse/:configId/notification": [
+    "/discourse/:configId/notification/:fulltext?": [
         "dzx-dzx"
     ],
     "/disinfo/publications": [
