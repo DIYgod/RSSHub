@@ -1125,7 +1125,7 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 </Route>
 
-### 用户专栏 {#jue-jin-yong-hu-zhuan-lan}
+### 用户文章 {#jue-jin-yong-hu-wen-zhang}
 
 <Route author="Maecenas" example="/juejin/posts/3051900006845944" path="/juejin/posts/:id" paramsDesc={['用户 id, 可在用户页 URL 中找到']} radar="1" rssbud="1"/>
 

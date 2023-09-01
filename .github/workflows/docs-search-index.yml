@@ -12,6 +12,9 @@ on:
   schedule:
   - cron: '44 1 * * 1'
 
+concurrency:
+  group: docs-search-index
+
 jobs:
   scrape-docs:
     runs-on: ubuntu-latest
@@ -35,3 +38,21 @@ jobs:
             -e MEILISEARCH_API_KEY=$API_KEY \
             -v $CONFIG_FILE_PATH:/docs-scraper/config.json \
             getmeili/docs-scraper pipenv run ./docs_scraper config.json
+      - name: Swap index
+        env:
+          HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
+          API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}
+        run: |
+          curl \
+            -X POST $HOST_URL/swap-indexes \
+            -H "Authorization: Bearer $API_KEY" \
+            -H 'Content-Type: application/json' \
+            -d '[{"indexes":["rsshub","rsshub-tmp"]}]'
+      - name: Delete old index
+        env:
+          HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
+          API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}
+        run: |
+          curl \
+            -X DELETE $HOST_URL/indexes/rsshub-tmp \
+            -H "Authorization: Bearer $API_KEY"

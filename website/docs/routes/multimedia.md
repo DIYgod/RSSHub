@@ -421,6 +421,18 @@ BT 之家的域名会变更，本路由以 <https://www.btbtt20.com> 为默认�
 
 ## DoMP4 影视 {#domp4-ying-shi}
 
+:::tip
+
+由于网站有多个备用域名，默认使用 `mp4us.com`，可以通过在路由最后加上 `?domain=<域名>` 切换域名。
+
+目前可用域名有：
+
+```javascript
+['domp4.cc', 'mp4kan.com', 'mp4us.com', 'wemp4.com', 'dbmp4.com']
+```
+
+:::
+
 ### 最近更新 {#domp4-ying-shi-zui-jin-geng-xin}
 
 <Route author="savokiss" example="/domp4/latest/vod" path="/domp4/latest/:type?" paramsDesc={['`vod` 代表电影，`tv` 代表电视剧，默认 vod']}  radar="1"/>
@@ -1119,41 +1131,45 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 ### Category {#pornhub-category}
 
-<Route author="nczitzk" example="/pornhub/category/popular-with-women" path="/pornhub/category/:caty" paramsDesc={['category，see [categories](https://cn.pornhub.com/webmasters/categories)']}/>
+<Route author="nczitzk" example="/pornhub/category/popular-with-women" path="/pornhub/category/:caty" paramsDesc={['category, see [categories](https://www.pornhub.com/webmasters/categories)']} radar="1"/>
 
 ### Keyword Search {#pornhub-keyword-search}
 
-<Route author="nczitzk" example="/pornhub/search/stepsister" path="/pornhub/search/:keyword" paramsDesc={['keyword']}/>
+<Route author="nczitzk" example="/pornhub/search/stepsister" path="/pornhub/search/:keyword" paramsDesc={['keyword']} radar="1"/>
 
 ### Users {#pornhub-users}
 
-<Route author="I2IMk queensferryme" example="/pornhub/users/pornhubmodels" path="/pornhub/:language?/users/:username" paramsDesc={['language, see below', 'username, part of the url e.g. `pornhub.com/users/pornhubmodels`']} />
+<Route author="I2IMk queensferryme" example="/pornhub/users/pornhubmodels" path="/pornhub/:language?/users/:username" paramsDesc={['language, see below', 'username, part of the url e.g. `pornhub.com/users/pornhubmodels`']} radar="1"/>
 
 ### Verified amateur / Model {#pornhub-verified-amateur-%2F-model}
 
-<Route author="I2IMk queensferryme" example="/pornhub/model/stacy-starando" path="/pornhub/:language?/model/:username/:sort?" paramsDesc={['language, see below', 'username, part of the url e.g. `pornhub.com/model/stacy-starando`', 'sorting method, see below']} />
+<Route author="I2IMk queensferryme" example="/pornhub/model/stacy-starando" path="/pornhub/:language?/model/:username/:sort?" paramsDesc={['language, see below', 'username, part of the url e.g. `pornhub.com/model/stacy-starando`', 'sorting method, see below']} radar="1"/>
 
 ### Verified model / Pornstar {#pornhub-verified-model-%2F-pornstar}
 
-<Route author="I2IMk queensferryme" example="/pornhub/pornstar/june-liu" path="/pornhub/:language?/pornstar/:username/:sort?" paramsDesc={['language, see below', 'username, part of the url e.g. `pornhub.com/pornstar/june-liu`', 'sorting method, see below']} />
+<Route author="I2IMk queensferryme" example="/pornhub/pornstar/june-liu" path="/pornhub/:language?/pornstar/:username/:sort?" paramsDesc={['language, see below', 'username, part of the url e.g. `pornhub.com/pornstar/june-liu`', 'sorting method, see below']} radar="1">
 
 **`sort`**
 
-| mr          | mv          | tr        | lg      | cm     |
-| ----------- | ----------- | --------- | ------- | ------ |
-| Most Recent | Most Viewed | Top Rated | Longest | Newest |
+| Most Recent | Most Viewed | Top Rated | Longest | Best |
+| ----------- | ----------- | --------- | ------- | ---- |
+| mr          | mv          | tr        | lg      |      |
+
+</Route>
 
 ### Video List {#pornhub-video-list}
 
-<Route author="I2IMk queensferryme" example="/pornhub/category_url/video%3Fc%3D15%26o%3Dmv%26t%3Dw%26cc%3Djp" path="/pornhub/:language?/category_url/:url?" paramsDesc={['language, see below', 'relative path after `pornhub.com/`, need to be URL encoded']}/>
+<Route author="I2IMk queensferryme" example="/pornhub/category_url/video%3Fc%3D15%26o%3Dmv%26t%3Dw%26cc%3Djp" path="/pornhub/:language?/category_url/:url?" paramsDesc={['language, see below', 'relative path after `pornhub.com/`, need to be URL encoded']}>
 
 **`language`**
 
 Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/360044327034-How-do-I-change-the-language-), English by default. For example:
 
--   `cn` (Chinese), for Pornhub in China <https://cn.pornhub.com/>；
+-   `cn` (Chinese), for Pornhub in China <https://cn.pornhub.com>；
 
--   `jp` (Japanese), for Pornhub in Japan <https://jp.pornhub.com/> etc.
+-   `jp` (Japanese), for Pornhub in Japan <https://jp.pornhub.com> etc.
+
+</Route>
 
 ## PRESTIGE(プレステージ 蚊香社) {#prestige(%E3%83%97%E3%83%AC%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8-wen-xiang-she-)}
 
