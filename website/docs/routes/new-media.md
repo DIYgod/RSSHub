@@ -3719,17 +3719,91 @@ column 为 third 时可选的 category:
 
 ## 木木博客 {#mu-mu-bo-ke}
 
-### 每天六十秒（60 秒）读懂世界 {#mu-mu-bo-ke-mei-tian-liu-shi-miao-%EF%BC%8860-miao-%EF%BC%89-du-dong-shi-jie}
+### 频道 {#mu-mu-bo-ke-pin-dao}
 
-<Route author="Fatpandac" example="/liulinblog/kuaixun" path="/liulinblog/kuaixun"/>
+<Route author="nczitzk" example="/liulinblog" path="/liulinblog/:channel?" paramsDesc={['频道 id，可在对应频道页 URL 中找到，见下表，默认为最新']} radar="1" rssbud="1">
 
-### 科技新闻 {#mu-mu-bo-ke-ke-ji-xin-wen}
+| 最新 | 60秒读懂世界 | 精品资源 | 视频资源 | 音频资源 |
+| ---- | ------------ | -------- | -------- | -------- |
+|      | kuaixun      | ziyuan   | video    | yinpin   |
 
-<Route author="Fatpandac" example="/liulinblog/itnews/seo" path="/liulinblog/itnews/:channel?" paramsDesc={['频道，默认为互联网早报']}>
+| 绝版资源 | 实用文档 | PPT素材   | 后期素材 | 技能教程  |
+| -------- | -------- | --------- | -------- | --------- |
+| jueban   | wendang  | ppt-sucai | sucai    | jiaocheng |
 
-| 互联网早报 | 站长圈 |
-| :--------: | :----: |
-|  internet  |   seo  |
+| 创业副业 | 单机游戏 | 冒险解谜 | 竞技格斗    | 赛车竞技 |
+| -------- | -------- | -------- | ----------- | -------- |
+| money    | game     | mxjm     | jingjigedou | saiche   |
+
+| 模拟经营 | 角色扮演 | 飞行游戏 | 塔防策略 | 射击游戏 |
+| -------- | -------- | -------- | -------- | -------- |
+| moni     | jiaose   | feixing  | tafang   | sheji    |
+
+| 恐怖冒险 | 策略生存 | 动作冒险 | 电商运营  | 互联网早报 |
+| -------- | -------- | -------- | --------- | ---------- |
+| kongbu   | celve    | dongzuo  | dianshang | internet   |
+
+| 站长圈 | 自媒体运营 | 短视频      |
+| ------ | ---------- | ----------- |
+| seo    | zimeiti    | duan-shipin |
+
+</Route>
+
+### 标签 {#mu-mu-bo-ke-biao-qian}
+
+<Route author="nczitzk" example="/liulinblog/tag/qukuailian" path="/liulinblog/tag/:id" paramsDesc={['标签 id，可在对应标签页 URL 中找到，见下表']} radar="1" rssbud="1">
+
+| 区块链     | 小红书      | 小说项目 | 微信公众号 | 微信营销 |
+| ---------- | ----------- | -------- | ---------- | -------- |
+| qukuailian | xiaohongshu | xiaoshuo | 微信公众号 | we-chat  |
+
+| 抖音 | 抖音直播 | 拼多多    | 支付宝 | 教育 |
+| ---- | -------- | --------- | ------ | ---- |
+| 抖音 | 抖音直播 | pinduoduo | alipay | 教育 |
+
+| chrome插件 | galgame汉化游戏 | honeyselect 汉化游戏 | PSD笔刷素材 | ps插件     |
+| ---------- | --------------- | -------------------- | ----------- | ---------- |
+| chrome插件 | galgame         | honey-select         | psd-bishua  | ps-chajian |
+
+| vip视频    | windows实用技巧 | 下载软件 | 丝袜玉足 | 免费字体下载 |
+| ---------- | --------------- | -------- | -------- | ------------ |
+| vip-shipin | computer        | download | siwa     | ziti         |
+
+| 二战游戏下载 | 冒险解谜游戏 | 动作游戏下载 | 安卓游戏     | 策略游戏   |
+| ------------ | ------------ | ------------ | ------------ | ---------- |
+| war-games    | 冒险解谜游戏 | 动作游戏下载 | android-game | game-celve |
+
+| Pr插件 | Python | seo优化 | VLOG | wordpress | word技巧 |
+| ------ | ------ | ------- | ---- | --------- | -------- |
+| pr插件 | python | seo     | vlog | wordpress | word     |
+
+</Route>
+
+### 专题 {#mu-mu-bo-ke-zhuan-ti}
+
+<Route author="nczitzk" example="/liulinblog/series/xunlei" path="/liulinblog/series/:id" paramsDesc={['专题 id，可在对应标签页 URL 中找到，见下表']} radar="1" rssbud="1">
+
+| 【免费速存】迅雷资源合集 | 直播带货教程 | 电商培训课程    | 拼多多运营培训 | 小红书运营  | 抖音运营      | 闲鱼运营      | 短视频运营        |
+| ------------------------ | ------------ | --------------- | -------------- | ----------- | ------------- | ------------- | ----------------- |
+| xunlei                   | zhibodaihuo  | dianshangpeixun | pinduoduo      | xiaohongshu | douyinyunying | xianyuyunying | duanshipinyunying |
+
+</Route>
+
+### 搜索 {#mu-mu-bo-ke-sou-suo}
+
+<Route author="nczitzk" example="/liulinblog/search/单机游戏" path="/liulinblog/search/:keyword" paramsDesc={['关键字']} radar="1" rssbud="1"/>
+
+### 60秒读懂世界 {#mu-mu-bo-ke-60-miao-du-dong-shi-jie}
+
+<Route author="Fatpandac nczitzk" example="/liulinblog/kuaixun" path="/liulinblog/kuaixun"/>
+
+### 网络营销 {#mu-mu-bo-ke-wang-luo-ying-xiao}
+
+<Route author="Fatpandac nczitzk" example="/liulinblog/itnews" path="/liulinblog/itnews/:channel?" paramsDesc={['频道，默认为网络营销']}>
+
+| 网络营销 | 电商运营  | 互联网早报 | 站长圈 |
+| -------- | --------- | ---------- | ------ |
+|          | dianshang | internet   | seo    |
 
 </Route>
 
