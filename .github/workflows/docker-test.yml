@@ -23,7 +23,7 @@ permissions:
   pull-requests: write
 
 concurrency:
-  group: ${{ github.head_ref }}
+  group: docker-test-${{ github.ref_name }}
   cancel-in-progress: true
 
 jobs:
