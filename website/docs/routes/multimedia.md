@@ -1540,7 +1540,7 @@ When `mediaType` is `movie`, `sheet` should be:
 **lang**
 
 | en | cn | fr |
-| --- | ---- | --- |
+| --- | --- | --- |
 | 英文 | 中文 | 法文 |
 
 </Route>
