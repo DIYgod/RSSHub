@@ -55,17 +55,6 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos as documented, but seems broken
-      - name: Analyze Test and/or Coverage Results
-        uses: runforesight/foresight-test-kit-action@v1
-        if: success() || failure()
-        with:
-          api_key: ${{ secrets.FORESIGHT_KEY }}
-          test_format: JUNIT
-          test_framework: JEST
-          test_path: ./coverage/junit.xml
-          coverage_format: LCOV/TXT
-          coverage_path: ./coverage/lcov.info
-
 
   puppeteer:
     runs-on: ubuntu-latest

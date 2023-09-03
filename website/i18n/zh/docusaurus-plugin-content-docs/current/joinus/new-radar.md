@@ -17,7 +17,7 @@ module.exports = {
         '.': [
             {
                 title: '仓库 Issues',
-                docs: 'https://docs.rsshub.app/programming#github',
+                docs: 'https://docs.rsshub.app/routes/programming#github',
                 source: ['/:user/:repo/issues/:id', '/:user/:repo/issues',  '/:user/:repo'],
                 target: '/github/issue/:user/:repo',
             },
@@ -109,7 +109,7 @@ module.exports = {
 
 ### `docs`
 
-文档链接也是*必填*字段。在这种情况下，`GitHub 仓库 Issues` 的文档链接将是 `https://docs.rsshub.app/programming#github`。请注意，URL hash 应位于二级标题 (`##`) 处，而不是三级标题 (`###`) `https://docs.rsshub.app/programming#github-cang-ku-issues`。
+文档链接也是*必填*字段。在这种情况下，`GitHub 仓库 Issues` 的文档链接将是 `https://docs.rsshub.app/routes/programming#github`。请注意，URL hash 应位于二级标题 (`##`) 处，而不是三级标题 (`###`) `https://docs.rsshub.app/routes/programming#github-cang-ku-issues`。
 
 ### `source`
 
