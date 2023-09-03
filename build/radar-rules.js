@@ -3188,6 +3188,11 @@
         source:[ "/blog",
           "/" ],
         target:"/blog" } ] },
+  "delta.io":{ _name:"Delta Lake",
+    ".":[ { title:"Blogs",
+        docs:"https://docs.rsshub.app/routes/blog#deltalake",
+        source:"/blog",
+        target:"/deltaio/blog" } ] },
   "devolverdigital.com":{ _name:"DevolverDigital",
     ".":[ { title:"官方博客",
         docs:"https://docs.rsshub.app/routes/blog#devolverdigital",
@@ -6329,7 +6334,10 @@
         docs:"https://docs.rsshub.app/routes/other#japanpost-ri-ben-you-bian",
         source:"/services/srv/search/direct",
         target:(params, url) => {
-                    const reqCode = new URL(url).searchParams.get('reqCodeNo1').replace(/[^0-9a-zA-Z]/g, '').toUpperCase();
+                    const reqCode = new URL(url).searchParams
+                        .get('reqCodeNo1')
+                        .replace(/[^0-9a-zA-Z]/g, '')
+                        .toUpperCase();
                     const locale = new URL(url).searchParams.get('locale').toLowerCase();
                     if ((reqCode.search(/^(?:\d{11,12}|[A-Z]{2}\d{9}[A-Z]{2})$/) === 0 && locale === 'ja') || locale === 'en') {
                         return `/japanpost/track/${reqCode}/${locale}`;
