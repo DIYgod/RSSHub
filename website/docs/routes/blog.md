@@ -40,6 +40,12 @@
 
 <Route author="XXY233" example="/devolverdigital/blog" path="/devolverdigital/blog" radar="1" />
 
+## Delta Lake {#deltalake}
+
+### Blogs {#deltalake-blogs}
+
+<Route author="RengarLee" example="/deltaio/blog" path="/deltaio/blog" radar="1"/>
+
 ## FreeBuf {#freebuf}
 
 ### 文章 {#freebuf-wen-zhang}
