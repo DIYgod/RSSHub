@@ -587,6 +587,8 @@ Specify options (in the format of query string) in parameter `routeParams` param
 | `itemLinkAttr`  | The attributes of `link` element as link                       | `string`        | `href`                 |
 | `itemDesc`      | The HTML elements as `descrption` in `item` using CSS selector | `string`        | `item` element         |
 | `itemDescAttr`  | The attributes of `descrption` element as description          | `string`        | Element html           |
+| `itemPubDate`      | The HTML elements as `pubDate` in `item` using CSS selector | `string`        | `item` element         |
+| `itemPubDateAttr`  | The attributes of `pubDate` element as pubDate          | `string`        | Element html           |
 
 <Route author="ttttmr" example="/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a" path="/rsshub/transform/html/:url/:routeParams" paramsDesc={['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']} selfhost="1">
 
@@ -616,6 +618,7 @@ Specify options (in the format of query string) in parameter `routeParams` param
 | `itemTitle` | The JSON Path as `title` in `item`       | `string`        | None                                       |
 | `itemLink`  | The JSON Path as `link` in `item`        | `string`        | None                                       |
 | `itemDesc`  | The JSON Path as `description` in `item` | `string`        | None                                       |
+| `itemPubDate`  | The JSON Path as `pubDate` in `item` | `string`        | None                                       |
 
 :::tip
 
