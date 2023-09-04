@@ -14207,7 +14207,7 @@
       {
         "title": "报道",
         "docs": "https://docs.rsshub.app/routes/new-media#wan-dian-latepost-bao-dao",
-        "source": "/"
+        "source": "*"
       }
     ]
   },
