@@ -24,7 +24,7 @@ jobs:
     env:
       HUSKY: 0
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
