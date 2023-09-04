@@ -3406,7 +3406,7 @@ column 为 third 时可选的 category:
 
 ### 领域 {#li-xiang-sheng-huo-shi-yan-shi-ling-yu}
 
-<Route author="nczitzk" example="/toodaylab/field/299" path="/toodaylab/field/:id" paramsDesc={['领域 id，见下表，可在对应领域页 URL 中找到']} radar="1" rssbud="1">
+<Route author="nczitzk" example="/toodaylab/field/308" path="/toodaylab/field/:id" paramsDesc={['领域 id，见下表，可在对应领域页 URL 中找到']} radar="1" rssbud="1">
 
 | 快消 | 时尚 | 智能 | 娱乐 | 运动 | 生活 | 设计 | 出行 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -3416,7 +3416,7 @@ column 为 third 时可选的 category:
 
 ### 话题 {#li-xiang-sheng-huo-shi-yan-shi-hua-ti}
 
-<Route author="nczitzk" example="/toodaylab/topic/299" path="/toodaylab/topic/:id" paramsDesc={['话题 id，见下表，可在对应话题页 URL 中找到']} radar="1" rssbud="1">
+<Route author="nczitzk" example="/toodaylab/topic/309" path="/toodaylab/topic/:id" paramsDesc={['话题 id，见下表，可在对应话题页 URL 中找到']} radar="1" rssbud="1">
 
 | 今日消费资讯 | 实验室带你过周末 | 实验室带你过假期 | 每日一图 | 每周一书 | 实验室数字 | 新鲜社会人 | 实验室TV |
 | ------------ | ---------------- | ---------------- | -------- | -------- | ---------- | ---------- | -------- |
