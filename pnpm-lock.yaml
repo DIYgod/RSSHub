@@ -30,8 +30,8 @@ dependencies:
     specifier: 1.0.0-rc.12
     version: 1.0.0-rc.12
   chrono-node:
-    specifier: 2.6.5
-    version: 2.6.5
+    specifier: 2.6.6
+    version: 2.6.6
   city-timezones:
     specifier: 1.2.1
     version: 1.2.1
@@ -2147,8 +2147,8 @@ packages:
       mitt: 3.0.1
     dev: false
 
-  /chrono-node@2.6.5:
-    resolution: {integrity: sha512-1B4iFd8xJ235PAprvRbs7zaEvmepOrN7dQ5UWjsXoDnlRP1vriGUwmcYw+KeQGKtz+YkgMo7bglf/q/l2VhoxQ==}
+  /chrono-node@2.6.6:
+    resolution: {integrity: sha512-RObSvo49wRL/ek6U4lMuZjmCi//gLM2GsHBMauIw/50fBbP6To3F99vn88IRL9w4qC39tFRnJZc6uiGrOi1oGw==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       dayjs: 1.11.8
