@@ -9,8 +9,8 @@ dependencies:
     specifier: 12.0.0
     version: 12.0.0
   '@notionhq/client':
-    specifier: 2.2.12
-    version: 2.2.12
+    specifier: 2.2.13
+    version: 2.2.13
   '@postlight/parser':
     specifier: 2.2.3
     version: 2.2.3
@@ -1038,8 +1038,8 @@ packages:
       fastq: 1.15.0
     dev: true
 
-  /@notionhq/client@2.2.12:
-    resolution: {integrity: sha512-LCzbOyVjVtui9GQPFEuvFd8JIWZbY/tgyCqrmxzGSjpGCwqjsEldeNC4qYjsMzVB4MIbP5y1vlWzLsUw/M9QAQ==}
+  /@notionhq/client@2.2.13:
+    resolution: {integrity: sha512-wJpEl30QUSy2K3/Q2c2knNiZlLXJ17JnQgaIiFbN68IMJy+2TE9fXLxvV1N/cMVs2+SpteAa6PlyrUgfGdlmDg==}
     engines: {node: '>=12'}
     dependencies:
       '@types/node-fetch': 2.6.4
