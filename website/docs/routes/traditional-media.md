@@ -124,7 +124,7 @@ There is no RSS source for Al Jazeera Chinese, returning homepage content by def
 
 ## BBC {#bbc}
 
-### BBC {#bbc-bbc}
+### News {#bbc-news}
 
 <Route author="HenryQW DIYgod" example="/bbc/world-asia" path="/bbc/:channel?" paramsDesc={['channel, default to `top stories`']}>
 
@@ -136,11 +136,19 @@ Support major channels, refer to [BBC RSS feeds](https://www.bbc.co.uk/news/1062
 
 </Route>
 
-### BBC Chinese {#bbc-bbc-chinese}
+### BBC 中文网 {#bbc-bbc-zhong-wen-wang}
 
-<Route author="HenryQW" example="/bbc/chinese/business" path="/bbc/:lang/:channel?" paramsDesc={['lang, Simplified or Traditional Chinese','channel, default to `top stories`']}>
+<Route author="HenryQW" example="/bbc/chinese/business" path="/bbc/:lang/:channel?" paramsDesc={['语言，简体或繁体中文','频道，默认为主页']}>
 
-See [BBC 中文网](/routes/traditional-media#bbc-bbc-zhong-wen-wang).
+支持大部分频道，频道名称见 [BBC 中文网 RSS 服务](https://www.bbc.com/zhongwen/simp/services/2009/09/000000_rss)。
+
+简体版：
+
+-   频道，如金融财经 `https://www.bbc.co.uk/zhongwen/simp/business/index.xml` 则为 `/bbc/chinese/business`.
+
+繁體版：
+
+-   频道，如金融財經 `https://www.bbc.co.uk/zhongwen/trad/business/index.xml` 则为 `/bbc/traditionalchinese/business`.
 
 </Route>
 
@@ -536,13 +544,13 @@ Parameters can be obtained from the official website, for instance:
 
     | All | Aerospace & Defense | Autos & Transportation | Energy | Environment | Finance | Healthcare & Pharmaceuticals | Media & Telecom | Retail & Consumer | Sustainable Business | Charged | Future of Health | Future of Money | Take Five | Reuters Impact |
     | --- | ------------------- | ---------------------- | ------ | ----------- | ------- | ---------------------------- | --------------- | ----------------- | -------------------- | ------- | ---------------- | --------------- | --------- | -------------- |
-    |     | aerospace-defense   | autos-transportation   | energy | environment | finance | healthcare-pharmaceuticals   | media-telecom   | retail-consumer   | sustainable-business | charged | future-of-health | futrue-of-money | take-five | reuters-impact |
+    |     | aerospace-defense   | autos-transportation   | energy | environment | finance | healthcare-pharmaceuticals   | media-telecom   | retail-consumer   | sustainable-business | charged | future-of-health | future-of-money | take-five | reuters-impact |
 
 -   `legal/:topic`:
 
-    | All | Goverment | Legal Industry | Litigation | Transaction |
+    | All | Government | Legal Industry | Litigation | Transactional |
     | --- | --------- | -------------- | ---------- | ----------- |
-    |     | goverment | legalindustry  | litigation | transaction |
+    |     | government | legalindustry  | litigation | transactional |
 
 -   `authors/:topic`:
 
