@@ -42,7 +42,7 @@ jobs:
       id-token: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install cosign
         if: github.event_name != 'pull_request'
@@ -135,7 +135,7 @@ jobs:
     if: needs.check-env.outputs.check-docker == 'true'
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Docker Hub Description
         uses: peter-evans/dockerhub-description@v3

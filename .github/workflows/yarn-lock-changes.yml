@@ -15,8 +15,8 @@ jobs:
       pull-requests: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Yarn Lock Changes
-        uses: Simek/yarn-lock-changes@v0.11.1
+        uses: Simek/yarn-lock-changes@v0.11.2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
