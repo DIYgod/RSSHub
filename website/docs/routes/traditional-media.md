@@ -544,13 +544,13 @@ Parameters can be obtained from the official website, for instance:
 
     | All | Aerospace & Defense | Autos & Transportation | Energy | Environment | Finance | Healthcare & Pharmaceuticals | Media & Telecom | Retail & Consumer | Sustainable Business | Charged | Future of Health | Future of Money | Take Five | Reuters Impact |
     | --- | ------------------- | ---------------------- | ------ | ----------- | ------- | ---------------------------- | --------------- | ----------------- | -------------------- | ------- | ---------------- | --------------- | --------- | -------------- |
-    |     | aerospace-defense   | autos-transportation   | energy | environment | finance | healthcare-pharmaceuticals   | media-telecom   | retail-consumer   | sustainable-business | charged | future-of-health | futrue-of-money | take-five | reuters-impact |
+    |     | aerospace-defense   | autos-transportation   | energy | environment | finance | healthcare-pharmaceuticals   | media-telecom   | retail-consumer   | sustainable-business | charged | future-of-health | future-of-money | take-five | reuters-impact |
 
 -   `legal/:topic`:
 
-    | All | Goverment | Legal Industry | Litigation | Transaction |
+    | All | Government | Legal Industry | Litigation | Transactional |
     | --- | --------- | -------------- | ---------- | ----------- |
-    |     | goverment | legalindustry  | litigation | transaction |
+    |     | government | legalindustry  | litigation | transactional |
 
 -   `authors/:topic`:
 
