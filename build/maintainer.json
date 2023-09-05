@@ -632,6 +632,13 @@
     "/bast/:path+": [
         "nczitzk"
     ],
+    "/bbc/:channel": [
+        "HenryQW",
+        "DIYgod"
+    ],
+    "/bbc/:lang/:channel?": [
+        "HenryQW"
+    ],
     "/bbcnewslabs/news": [
         "elxy"
     ],
@@ -6847,7 +6854,6 @@
     "/dytt/index": [],
     "/rs05/rs05": [],
     "/qutoutiao/category/:cid": [],
-    "/bbc/:site?/:channel?": [],
     "/pediy/topic/:category?/:type?": [],
     "/miniapp/article/:category": [],
     "/miniapp/store/newest": [],
