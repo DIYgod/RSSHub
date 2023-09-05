@@ -34,7 +34,7 @@ jobs:
         node-version: [ 18, 20 ]
     name: Jest on Node ${{ matrix.node-version }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -75,7 +75,7 @@ jobs:
             environment: '{ "CHROMIUM_EXECUTABLE_PATH": "google-chrome-stable" }'
     name: Jest puppeteer on Node ${{ matrix.node-version }} with ${{ matrix.chromium.name }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -117,7 +117,7 @@ jobs:
         working-directory: website
     name: Build docs on Node ${{ matrix.node-version }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -140,7 +140,7 @@ jobs:
         node-version: [ 18, 20 ]
     name: Build radar and maintainer on Node ${{ matrix.node-version }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
