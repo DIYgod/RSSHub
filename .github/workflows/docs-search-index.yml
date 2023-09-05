@@ -21,7 +21,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Pull image
         run: docker pull getmeili/docs-scraper
       - name: Wait for Netlify to finish
