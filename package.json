@@ -140,7 +140,7 @@
     "rss-parser": "3.13.0",
     "showdown": "2.1.0",
     "simplecc-wasm": "0.1.5",
-    "socks-proxy-agent": "8.0.1",
+    "socks-proxy-agent": "8.0.2",
     "source-map": "0.7.4",
     "tiny-async-pool": "2.1.0",
     "tough-cookie": "4.1.3",
