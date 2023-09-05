@@ -33,7 +33,7 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Docker Buildx  # needed by `cache-from`
         uses: docker/setup-buildx-action@v2
