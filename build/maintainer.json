@@ -5702,6 +5702,21 @@
     "/tongji/yjs": [
         "shengmaosu"
     ],
+    "/toodaylab/column/:id": [
+        "nczitzk"
+    ],
+    "/toodaylab/field/:id": [
+        "nczitzk"
+    ],
+    "/toodaylab/hot": [
+        "nczitzk"
+    ],
+    "/toodaylab/posts": [
+        "nczitzk"
+    ],
+    "/toodaylab/topic/:id": [
+        "nczitzk"
+    ],
     "/tophub/:id": [
         "LogicJake"
     ],
