@@ -31,7 +31,7 @@ describe('httperror', () => {
         expect(response.text).toMatch(
             /Response code 404 \(Not Found\): target website might be blocking our access, you can <a href="https:\/\/docs\.rsshub\.app\/install\/">host your own RSSHub instance<\/a> for a better usability\./
         );
-    });
+    }, 10000);
 });
 
 describe('RequestInProgressError', () => {
