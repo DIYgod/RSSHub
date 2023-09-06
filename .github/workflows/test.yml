@@ -34,7 +34,7 @@ jobs:
         node-version: [ 18, 20 ]
     name: Jest on Node ${{ matrix.node-version }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -55,17 +55,6 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos as documented, but seems broken
-      - name: Analyze Test and/or Coverage Results
-        uses: runforesight/foresight-test-kit-action@v1
-        if: success() || failure()
-        with:
-          api_key: ${{ secrets.FORESIGHT_KEY }}
-          test_format: JUNIT
-          test_framework: JEST
-          test_path: ./coverage/junit.xml
-          coverage_format: LCOV/TXT
-          coverage_path: ./coverage/lcov.info
-
 
   puppeteer:
     runs-on: ubuntu-latest
@@ -86,7 +75,7 @@ jobs:
             environment: '{ "CHROMIUM_EXECUTABLE_PATH": "google-chrome-stable" }'
     name: Jest puppeteer on Node ${{ matrix.node-version }} with ${{ matrix.chromium.name }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -128,7 +117,7 @@ jobs:
         working-directory: website
     name: Build docs on Node ${{ matrix.node-version }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -151,7 +140,7 @@ jobs:
         node-version: [ 18, 20 ]
     name: Build radar and maintainer on Node ${{ matrix.node-version }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
