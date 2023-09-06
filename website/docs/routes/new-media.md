@@ -3384,6 +3384,46 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 理想生活实验室 {#li-xiang-sheng-huo-shi-yan-shi}
+
+### 滚动 {#li-xiang-sheng-huo-shi-yan-shi-gun-dong}
+
+<Route author="nczitzk" example="/toodaylab/posts" path="/toodaylab/posts" radar="1" rssbud="1"/>
+
+### 最热 {#li-xiang-sheng-huo-shi-yan-shi-zui-re}
+
+<Route author="nczitzk" example="/toodaylab/hot" path="/toodaylab/hot" radar="1" rssbud="1"/>
+
+### 专栏 {#li-xiang-sheng-huo-shi-yan-shi-zhuan-lan}
+
+<Route author="nczitzk" example="/toodaylab/column/299" path="/toodaylab/column/:id" paramsDesc={['专栏 id，见下表，可在对应专栏页 URL 中找到']} radar="1" rssbud="1">
+
+| 专题 | 攻略 |
+| ---- | ---- |
+| 299  | 300  |
+
+</Route>
+
+### 领域 {#li-xiang-sheng-huo-shi-yan-shi-ling-yu}
+
+<Route author="nczitzk" example="/toodaylab/field/308" path="/toodaylab/field/:id" paramsDesc={['领域 id，见下表，可在对应领域页 URL 中找到']} radar="1" rssbud="1">
+
+| 快消 | 时尚 | 智能 | 娱乐 | 运动 | 生活 | 设计 | 出行 |
+| ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| 308  | 307  | 306  | 305  | 304  | 303  | 302  | 301  |
+
+</Route>
+
+### 话题 {#li-xiang-sheng-huo-shi-yan-shi-hua-ti}
+
+<Route author="nczitzk" example="/toodaylab/topic/309" path="/toodaylab/topic/:id" paramsDesc={['话题 id，见下表，可在对应话题页 URL 中找到']} radar="1" rssbud="1">
+
+| 今日消费资讯 | 实验室带你过周末 | 实验室带你过假期 | 每日一图 | 每周一书 | 实验室数字 | 新鲜社会人 | 实验室TV |
+| ------------ | ---------------- | ---------------- | -------- | -------- | ---------- | ---------- | -------- |
+| 309          | 37               | 40               | 32       | 33       | 310        | 316        | 476      |
+
+</Route>
+
 ## 链捕手 ChainCatcher {#lian-bu-shou-chaincatcher}
 
 ### 首页 {#lian-bu-shou-chaincatcher-shou-ye}
