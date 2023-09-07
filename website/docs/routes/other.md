@@ -1130,7 +1130,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 專題 / 重點專區 {#tai-wan-shi-shi-cha-he-zhong-xin-zhuan-ti-%2F-zhong-dian-zhuan-qu}
 
-<Route author="TonyRL" example="/tfc-taiwan" path="/tfc-taiwan/:type/:id+" paramsDesc={['專題 / 重點專區，見下表', '專題 / 重點專區 ID']} radar="1" rssbud="1">
+<Route author="TonyRL" example="/tfc-taiwan/category/242" path="/tfc-taiwan/:type/:id+" paramsDesc={['專題 / 重點專區，見下表', '專題 / 重點專區 ID']} radar="1" rssbud="1">
 
 | 專題      | 重點專區 |
 | -------- | ------- |
