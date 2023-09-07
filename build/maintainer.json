@@ -3649,6 +3649,9 @@
     "/luogu/user/blog/:username": [
         "ftiasch"
     ],
+    "/luxiangdong/archive": [
+        "Levix"
+    ],
     "/lvv2/news/:channel/:sort?": [
         "Fatpandac"
     ],
