@@ -21,9 +21,9 @@ RSSHub delivers millions of contents aggregated from all kinds of sources, our v
 
 RSSHub can be used with browser extension [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) and mobile auxiliary app [RSSBud](https://github.com/Cay-Zhang/RSSBud) (iOS) and [RSSAid](https://github.com/LeetaoGoooo/RSSAid) (Android)
 
-[English docs](https://docs.rsshub.app/en) | [Telegram Group](https://t.me/rsshub) | [Telegram Channel](https://t.me/awesomeRSSHub)
+[English docs](https://docs.rsshub.app) | [Telegram Group](https://t.me/rsshub) | [Telegram Channel](https://t.me/awesomeRSSHub)
 
-[中文文档](https://docs.rsshub.app) | [Telegram 群](https://t.me/rsshub) | [Telegram 频道](https://t.me/awesomeRSSHub)
+[中文文档](https://docs.rsshub.app/zh/) | [Telegram 群](https://t.me/rsshub) | [Telegram 频道](https://t.me/awesomeRSSHub)
 
 ## Special Thanks
 
