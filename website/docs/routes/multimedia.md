@@ -275,7 +275,9 @@ When `uncensored_makersr` as **Uncensored** is chosen as **Category**, the avail
 
 ## A 姐分享 {#a-jie-fen-xiang}
 
-<Route author="zhenhappy" example="/abskoop/nsfw" path="/abskoop/:type?" paramsDesc={['为空, 订阅主站点, `nsfw`订阅nsfw子站点']}>
+### 存档列表 {#a-jie-fen-xiang-cun-dang-lie-biao}
+
+<Route author="zhenhappy" example="/abskoop/nsfw" path="/abskoop/:type?" paramsDesc={['为空, 订阅主站点, `nsfw`订阅nsfw子站点']} radar="1"/>
 
 ## AV01（av01.tv） {#av01%EF%BC%88av01.tv%EF%BC%89}
 
@@ -981,7 +983,7 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 ### 影视分类 {#mp4ba-ying-shi-fen-lei}
 
-<Route author="SettingDust wolfyu1991"  example="/mp4ba/6" path="/mp4ba/:param" paramsDesc={['类型']} supportBT="1"/>
+<Route author="SettingDust wolfyu1991"  example="/mp4ba/6" path="/mp4ba/:param" paramsDesc={['类型']} supportBT="1">
 
 **类型参考这里**
 
