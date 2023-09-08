@@ -1116,6 +1116,28 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route author="xyqfer" example="/sogou/doodles" path="/sogou/doodles"/>
 
+## 台灣事實查核中心 {#tai-wan-shi-shi-cha-he-zhong-xin}
+
+### 最新相關資訊 / 最新查核報告 {#tai-wan-shi-shi-cha-he-zhong-xin-zui-xin-xiang-guan-zi-xun-%2F-zui-xin-cha-he-bao-gao}
+
+<Route author="TonyRL" example="/tfc-taiwan" path="/tfc-taiwan/:type?" paramsDesc={['分類，見下表，預設為 `report`']} radar="1" rssbud="1">
+
+| 最新相關資訊 | 最新查核報告 |
+| ---------- | ---------- |
+| info       | report     |
+
+</Route>
+
+### 專題 / 重點專區 {#tai-wan-shi-shi-cha-he-zhong-xin-zhuan-ti-%2F-zhong-dian-zhuan-qu}
+
+<Route author="TonyRL" example="/tfc-taiwan/category/242" path="/tfc-taiwan/:type/:id+" paramsDesc={['專題 / 重點專區，見下表', '專題 / 重點專區 ID']} radar="1" rssbud="1">
+
+| 專題      | 重點專區 |
+| -------- | ------- |
+| category | topic   |
+
+</Route>
+
 ## 腾讯吐个槽 {#teng-xun-tu-ge-cao}
 
 ### 吐槽新帖 {#teng-xun-tu-ge-cao-tu-cao-xin-tie}
