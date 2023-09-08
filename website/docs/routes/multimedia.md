@@ -971,7 +971,7 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 ### 影视分类 {#mp4ba-ying-shi-fen-lei}
 
-<Route author="SettingDust wolfyu1991"  example="/mp4ba/6" path="/mp4ba/:param" paramsDesc={['类型']} supportBT="1"/>
+<Route author="SettingDust wolfyu1991"  example="/mp4ba/6" path="/mp4ba/:param" paramsDesc={['类型']} supportBT="1">
 
 **类型参考这里**
 
