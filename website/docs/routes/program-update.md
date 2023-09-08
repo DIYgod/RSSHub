@@ -580,7 +580,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### New routes {#rsshub-new-routes}
 
-<Route author="DIYgod" path="/rsshub/routes/:lang?" example="/rsshub/routes/en" paramsDesc={['Language, `en` means English routes, other values or null means Chinese routes']}/>
+<Route author="DIYgod" path="/rsshub/routes/:lang?" example="/rsshub/routes/en" paramsDesc={['Language, `zh` means Chinese docs, other values or null means English docs, `en` by default']}/>
 
 ### New sponsors {#rsshub-new-sponsors}
 
