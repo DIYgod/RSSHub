@@ -1547,6 +1547,15 @@
     "/discourse/:configId/notification/:fulltext?": [
         "dzx-dzx"
     ],
+    "/discuz/:link": [
+        "junfengP"
+    ],
+    "/discuz/:ver/:link": [
+        "junfengP"
+    ],
+    "/discuz/:ver/:cid/:link": [
+        "junfengP"
+    ],
     "/disinfo/publications": [
         "nczitzk"
     ],
@@ -7314,9 +7323,6 @@
     "/xinquji/today/internal": [],
     "/gbcc/trust": [],
     "/cbc/topics/:topic?": [],
-    "/discuz/:ver([7|x])/:cid([0-9]{2})/:link(.*)": [],
-    "/discuz/:ver([7|x])/:link(.*)": [],
-    "/discuz/:link(.*)": [],
     "/chinadialogue/topics/:topic": [],
     "/chinadialogue/:column": [],
     "/ifnews/:cid": [],
