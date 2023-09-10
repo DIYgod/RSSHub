@@ -1595,6 +1595,9 @@
     "/dmzj/news/:category?": [
         "vzz64"
     ],
+    "/dn/:language/news/:category?": [
+        "nczitzk"
+    ],
     "/dnaindia/:category": [
         "Rjnishant530"
     ],
