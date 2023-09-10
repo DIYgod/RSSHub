@@ -122,13 +122,13 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 <Route author="gkkeys" path="/hexo/fluid/:url" example="/hexo/fluid/blog.tonyzhao.xyz" paramsDesc={['the blog URL without the protocol (http:// and https://)']} selfhost="1"/>
 
-## Hi, DIYgod {#hi%2C-diygod}
+## Hi, DIYgod {#hi-diygod}
 
-### DIYgod 的动森日记 {#hi%2C-diygod-diygod-de-dong-sen-ri-ji}
+### DIYgod 的动森日记 {#hi-diygod-diygod-de-dong-sen-ri-ji}
 
 <Route author="DIYgod" example="/blogs/diygod/animal-crossing" path="/blogs/diygod/animal-crossing"/>
 
-### DIYgod 的可爱的手办们 {#hi%2C-diygod-diygod-de-ke-ai-de-shou-ban-men}
+### DIYgod 的可爱的手办们 {#hi-diygod-diygod-de-ke-ai-de-shou-ban-men}
 
 <Route author="DIYgod" example="/blogs/diygod/gk" path="/blogs/diygod/gk"/>
 
@@ -158,7 +158,7 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 ## Love the Problem {#love-the-problem}
 
-### Ash Maurya's blog {#love-the-problem-ash-maurya's-blog}
+### Ash Maurya's blog {#love-the-problem-ash-maurya-s-blog}
 
 <Route author="james-tindal" example="/ash-maurya" path="/ash-maurya"/>
 
@@ -184,7 +184,7 @@ To access private lists, only self-hosting is supported.
 
 </Route>
 
-### Personalized Recommendations - For You {#medium-personalized-recommendations---for-you}
+### Personalized Recommendations - For You {#medium-personalized-recommendations-for-you}
 
 <Route author="ImSingee" example="/medium/for-you/imsingee" path="/medium/for-you/:user" paramsDesc={['Username']} selfhost="1">
 
@@ -196,7 +196,7 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 </Route>
 
-### Personalized Recommendations - Following {#medium-personalized-recommendations---following}
+### Personalized Recommendations - Following {#medium-personalized-recommendations-following}
 
 <Route author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" paramsDesc={['Username']} selfhost="1">
 
@@ -208,7 +208,7 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 </Route>
 
-### Personalized Recommendations - Tag {#medium-personalized-recommendations---tag}
+### Personalized Recommendations - Tag {#medium-personalized-recommendations-tag}
 
 <Route author="ImSingee" example="/medium/tag/imsingee/cybersecurity" path="/medium/tag/:user/:tag" paramsDesc={['Username', 'Subscribed Tag']} selfhost="1">
 
@@ -397,9 +397,9 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 <Route author="changlan" example="/blogs/jianning" path="/blogs/jianning" radar="1" rssbud="1"/>
 
-## 劍心．回憶 {#jian-xin-%EF%BC%8E-hui-yi}
+## 劍心．回憶 {#jian-xin-hui-yi}
 
-### 分类 {#jian-xin-%EF%BC%8E-hui-yi-fen-lei}
+### 分类 {#jian-xin-hui-yi-fen-lei}
 
 <Route author="nczitzk" example="/kenshin" path="/kenshin/:category?/:type?" paramsDesc={['分类，见下表，默认为首页', '子分类，见下表，默认为首页']}>
 
@@ -471,7 +471,7 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ## 十年之约 {#shi-nian-zhi-yue}
 
-### 专题展示 - 文章 {#shi-nian-zhi-yue-zhuan-ti-zhan-shi---wen-zhang}
+### 专题展示 - 文章 {#shi-nian-zhi-yue-zhuan-ti-zhan-shi-wen-zhang}
 
 <Route author="7Wate a180285" example="/foreverblog/feeds" path="/foreverblog/feeds" radar="1" rssbud="1" />
 

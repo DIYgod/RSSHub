@@ -30,15 +30,15 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 <Route author="dwemerx" example="/mit/ocw-top" path="/mit/ocw-top"/>
 
-### MIT graduateadmissions's all blogs {#mit-mit-graduateadmissions's-all-blogs}
+### MIT graduateadmissions's all blogs {#mit-mit-graduateadmissions-s-all-blogs}
 
 <Route author="LogicJake" example="/mit/graduateadmissions/index/all" path="/mit/graduateadmissions/index/all"/>
 
-### MIT graduateadmissions's blogs by department {#mit-mit-graduateadmissions's-blogs-by-department}
+### MIT graduateadmissions's blogs by department {#mit-mit-graduateadmissions-s-blogs-by-department}
 
 <Route author="LogicJake" example="/mit/graduateadmissions/department/eecs" path="/mit/graduateadmissions/department/:name" paramsDesc={['department name which can be found in url']}/>
 
-### MIT graduateadmissions's blogs by category {#mit-mit-graduateadmissions's-blogs-by-category}
+### MIT graduateadmissions's blogs by category {#mit-mit-graduateadmissions-s-blogs-by-category}
 
 <Route author="LogicJake" example="/mit/graduateadmissions/category/beyond-the-lab" path="/mit/graduateadmissions/category/:name" paramsDesc={['category name which can be found in url']}/>
 
@@ -165,27 +165,27 @@ Note: [Source website](https://gs.bjtu.edu.cn/) only provides articles in Chines
 
 ### College of Electrical and Computer Engineering {#university-of-massachusetts-amherst-college-of-electrical-and-computer-engineering}
 
-#### News
+#### News {#university-of-massachusetts-amherst-college-of-electrical-and-computer-engineering-news}
 
 <Route author="gammapi" example="/umass/amherst/ecenews" path="/umass/amherst/ecenews" radar="1" rssbud="1"/>
 
-#### Seminar
+#### Seminar {#university-of-massachusetts-amherst-college-of-electrical-and-computer-engineering-seminar}
 
 <Route author="gammapi" example="/umass/amherst/eceseminar" path="/umass/amherst/eceseminar" radar="1" rssbud="1"/>
 
 Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's no upcoming seminars. This is normal and will cause rsshub fail to fetch this feed.
 
-### College of Information & Computer Sciences News {#university-of-massachusetts-amherst-college-of-information-%26-computer-sciences-news}
+### College of Information & Computer Sciences News {#university-of-massachusetts-amherst-college-of-information-computer-sciences-news}
 
 <Route author="gammapi" example="/umass/amherst/csnews" path="/umass/amherst/csnews" radar="1" rssbud="1"/>
 
 ### International Programs Office {#university-of-massachusetts-amherst-international-programs-office}
 
-#### Events
+#### Events {#university-of-massachusetts-amherst-international-programs-office-events}
 
 <Route author="gammapi" example="/umass/amherst/ipostories" path="/umass/amherst/ipostories" radar="1" rssbud="1"/>
 
-#### Featured Stories
+#### Featured Stories {#university-of-massachusetts-amherst-international-programs-office-featured-stories}
 
 <Route author="gammapi" example="/umass/amherst/ipoevents" path="/umass/amherst/ipoevents" radar="1" rssbud="1"/>
 
@@ -291,7 +291,7 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 
 </Route>
 
-### 每周一推 - 中国政治学研究中心 {#bei-jing-da-xue-mei-zhou-yi-tui---zhong-guo-zheng-zhi-xue-yan-jiu-zhong-xin}
+### 每周一推 - 中国政治学研究中心 {#bei-jing-da-xue-mei-zhou-yi-tui-zhong-guo-zheng-zhi-xue-yan-jiu-zhong-xin}
 
 <Route author="vhxubo" example="/pku/rccp/mzyt" path="/pku/rccp/mzyt" radar="1" rssbud="1"/>
 
@@ -339,19 +339,19 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 
 <Route author="shengmaosu" example="/pku/admission/sszs" path="/pku/admission/sszs" radar="1" rssbud="1"/>
 
-### 观点 - 国家发展研究院 {#bei-jing-da-xue-guan-dian---guo-jia-fa-zhan-yan-jiu-yuan}
+### 观点 - 国家发展研究院 {#bei-jing-da-xue-guan-dian-guo-jia-fa-zhan-yan-jiu-yuan}
 
 <Route author="MisLink" example="/pku/nsd/gd" path="/pku/nsd/gd" radar="1" rssbud="1"/>
 
-### 软件与微电子学院 - 通知公告 {#bei-jing-da-xue-ruan-jian-yu-wei-dian-zi-xue-yuan---tong-zhi-gong-gao}
+### 软件与微电子学院 - 通知公告 {#bei-jing-da-xue-ruan-jian-yu-wei-dian-zi-xue-yuan-tong-zhi-gong-gao}
 
 <Route author="legr4ndk" example="/pku/ss/notices" path="/pku/ss/notices" radar="1" rssbud="1"/>
 
-### 软件与微电子学院 - 招生通知 {#bei-jing-da-xue-ruan-jian-yu-wei-dian-zi-xue-yuan---zhao-sheng-tong-zhi}
+### 软件与微电子学院 - 招生通知 {#bei-jing-da-xue-ruan-jian-yu-wei-dian-zi-xue-yuan-zhao-sheng-tong-zhi}
 
 <Route author="legr4ndk" example="/pku/ss/admission" path="/pku/ss/admission" radar="1" rssbud="1"/>
 
-### 软件与微电子学院 - 硕士统考招生通知 {#bei-jing-da-xue-ruan-jian-yu-wei-dian-zi-xue-yuan---shuo-shi-tong-kao-zhao-sheng-tong-zhi}
+### 软件与微电子学院 - 硕士统考招生通知 {#bei-jing-da-xue-ruan-jian-yu-wei-dian-zi-xue-yuan-shuo-shi-tong-kao-zhao-sheng-tong-zhi}
 
 <Route author="legr4ndk" example="/pku/ss/pgadmin" path="/pku/ss/pgadmin" radar="1" rssbud="1"/>
 
@@ -413,7 +413,7 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 
 ## 北京林业大学 {#bei-jing-lin-ye-da-xue}
 
-### 绿色新闻网 {#bei-jing-lin-ye-da-xue-l%C3%BC-se-xin-wen-wang}
+### 绿色新闻网 {#bei-jing-lin-ye-da-xue-lv-se-xin-wen-wang}
 
 <Route author="markmingjie" example="/bjfu/news/lsyw" path="/bjfu/news/:type" paramsDesc={['新闻栏目']}>
 
@@ -511,7 +511,7 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 
 ## 北京协和医学院 {#bei-jing-xie-he-yi-xue-yuan}
 
-### “4+4” 试点班招生网通知公告 {#bei-jing-xie-he-yi-xue-yuan-%E2%80%9C4%2B4%E2%80%9D-shi-dian-ban-zhao-sheng-wang-tong-zhi-gong-gao}
+### “4+4” 试点班招生网通知公告 {#bei-jing-xie-he-yi-xue-yuan-4-4-shi-dian-ban-zhao-sheng-wang-tong-zhi-gong-gao}
 
 <Route author="nczitzk" example="/pumc/mdadmission" path="/pumc/mdadmission"/>
 
@@ -765,7 +765,7 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 
 ### 研究生院 {#da-lian-hai-shi-da-xue-yan-jiu-sheng-yuan}
 
-#### 招生工作
+#### 招生工作 {#da-lian-hai-shi-da-xue-yan-jiu-sheng-yuan-zhao-sheng-gong-zuo}
 
 <Route author="nczitzk" example="/dlmu/grs/zsgz/ssyjs" path="/dlmu/grs/zsgz/:type" paramsDesc={['招生类别']}>
 
@@ -985,7 +985,7 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 
 </Route>
 
-### 国际合作与交流处（港澳台办） {#da-lian-li-gong-da-xue-guo-ji-he-zuo-yu-jiao-liu-chu-%EF%BC%88-gang-ao-tai-ban-%EF%BC%89}
+### 国际合作与交流处（港澳台办） {#da-lian-li-gong-da-xue-guo-ji-he-zuo-yu-jiao-liu-chu-gang-ao-tai-ban}
 
 <Route author="beautyyuyanli nczitzk" example="/dut/dutdice" path="/dut/dutdice/:category?" paramsDesc={['分类，见下表，默认为 [**新闻速递**](http://dutdice.dlut.edu.cn/xwsd/xxxw.htm)']}>
 
@@ -1273,7 +1273,7 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 | -------- | -------- |
 | jxtz     | zjjz     |
 
-### 教务处通知（无文章内容） {#fu-zhou-da-xue-jiao-wu-chu-tong-zhi-%EF%BC%88-wu-wen-zhang-nei-rong-%EF%BC%89}
+### 教务处通知（无文章内容） {#fu-zhou-da-xue-jiao-wu-chu-tong-zhi-wu-wen-zhang-nei-rong}
 
 <Route author="Lao-Liu233" example="/fzu_min/jxtz" path="/fzu_min/:type" paramsDesc={['分类见下表']}/>
 
@@ -1449,13 +1449,13 @@ category 列表：
 
 </Route>
 
-#### 大型招聘会
+#### 大型招聘会 {#ha-er-bin-gong-cheng-da-xue-jiu-ye-fu-wu-ping-tai-da-xing-zhao-pin-hui}
 
 <Route author="Derekmini" example="/hrbeu/job/bigemploy" path="/hrbeu/job/bigemploy" radar="1" rssbud="1">
 
 </Route>
 
-#### 今日招聘会
+#### 今日招聘会 {#ha-er-bin-gong-cheng-da-xue-jiu-ye-fu-wu-ping-tai-jin-ri-zhao-pin-hui}
 
 <Route author="Derekmini" example="/hrbeu/job/calendar" path="/hrbeu/job/calendar" radar="1" rssbud="1">
 
@@ -1516,9 +1516,9 @@ category 列表：
 
 <Route author="hlmu" example="/hit/hitgs" path="/hit/hitgs" radar="1" rssbud="1"/>
 
-## 哈尔滨工业大学（深圳） {#ha-er-bin-gong-ye-da-xue-%EF%BC%88-shen-zhen-%EF%BC%89}
+## 哈尔滨工业大学（深圳） {#ha-er-bin-gong-ye-da-xue-shen-zhen}
 
-### 新闻中心 {#ha-er-bin-gong-ye-da-xue-%EF%BC%88-shen-zhen-%EF%BC%89-xin-wen-zhong-xin}
+### 新闻中心 {#ha-er-bin-gong-ye-da-xue-shen-zhen-xin-wen-zhong-xin}
 
 <Route author="xandery-geek" example="/hitsz/article/id-74" path="/hitsz/article/:category?" paramsDesc={['分类名，默认为校园动态']} radar="1">
 
@@ -1528,9 +1528,9 @@ category 列表：
 
 </Route>
 
-## 哈尔滨工业大学（威海） {#ha-er-bin-gong-ye-da-xue-%EF%BC%88-wei-hai-%EF%BC%89}
+## 哈尔滨工业大学（威海） {#ha-er-bin-gong-ye-da-xue-wei-hai}
 
-### 今日工大 - 通知公告 {#ha-er-bin-gong-ye-da-xue-%EF%BC%88-wei-hai-%EF%BC%89-jin-ri-gong-da---tong-zhi-gong-gao}
+### 今日工大 - 通知公告 {#ha-er-bin-gong-ye-da-xue-wei-hai-jin-ri-gong-da-tong-zhi-gong-gao}
 
 <Route author="raptazure" example="/hitwh/today" path="/hitwh/today" radar="1" rssbud="1"/>
 
@@ -1554,11 +1554,11 @@ category 列表：
 
 ## 杭州电子科技大学 {#hang-zhou-dian-zi-ke-ji-da-xue}
 
-### 计算机学院 - 通知公告 {#hang-zhou-dian-zi-ke-ji-da-xue-ji-suan-ji-xue-yuan---tong-zhi-gong-gao}
+### 计算机学院 - 通知公告 {#hang-zhou-dian-zi-ke-ji-da-xue-ji-suan-ji-xue-yuan-tong-zhi-gong-gao}
 
 <Route author="legr4ndk" example="/hdu/cs" path="/hdu/cs" radar="1" rssbud="1"/>
 
-### 计算机学院 - 研究生通知 {#hang-zhou-dian-zi-ke-ji-da-xue-ji-suan-ji-xue-yuan---yan-jiu-sheng-tong-zhi}
+### 计算机学院 - 研究生通知 {#hang-zhou-dian-zi-ke-ji-da-xue-ji-suan-ji-xue-yuan-yan-jiu-sheng-tong-zhi}
 
 <Route author="legr4ndk" example="/hdu/cs/pg" path="/hdu/cs/pg" radar="1" rssbud="1"/>
 
@@ -1570,11 +1570,11 @@ category 列表：
 
 ## 河海大学 {#he-hai-da-xue}
 
-### 河海大学图书馆 - 新闻动态 {#he-hai-da-xue-he-hai-da-xue-tu-shu-guan---xin-wen-dong-tai}
+### 河海大学图书馆 - 新闻动态 {#he-hai-da-xue-he-hai-da-xue-tu-shu-guan-xin-wen-dong-tai}
 
 <Route author="plusmultiply0" example="/hhu/libNews" path="/hhu/libNews"/>
 
-### 常州校区图书馆 - 新闻动态 {#he-hai-da-xue-chang-zhou-xiao-qu-tu-shu-guan---xin-wen-dong-tai}
+### 常州校区图书馆 - 新闻动态 {#he-hai-da-xue-chang-zhou-xiao-qu-tu-shu-guan-xin-wen-dong-tai}
 
 <Route author="plusmultiply0" example="/hhu/libNewsc" path="/hhu/libNewsc"/>
 
@@ -1700,7 +1700,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-### 国际交流与合作处、国际教育学院、港澳台事务办公室 {#hu-nan-nong-ye-da-xue-guo-ji-jiao-liu-yu-he-zuo-chu-%E3%80%81-guo-ji-jiao-yu-xue-yuan-%E3%80%81-gang-ao-tai-shi-wu-ban-gong-shi}
+### 国际交流与合作处、国际教育学院、港澳台事务办公室 {#hu-nan-nong-ye-da-xue-guo-ji-jiao-liu-yu-he-zuo-chu-guo-ji-jiao-yu-xue-yuan-gang-ao-tai-shi-wu-ban-gong-shi}
 
 <Route author="lcandy2" example="/hunau/ied" path="/hunau/ied/:type?/:category?/:page?" paramsDesc={['页面归属，默认为 `xwzx`','页面分类，默认为 `ggtz`', '页码，默认为 `1`']}>
 
@@ -1755,7 +1755,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="shengmaosu" example="/ecust/yjs" path="/ecust/yjs" radar="1"/>
 
-### 继续教育学院 - 学院公告 {#hua-dong-li-gong-da-xue-ji-xu-jiao-yu-xue-yuan---xue-yuan-gong-gao}
+### 继续教育学院 - 学院公告 {#hua-dong-li-gong-da-xue-ji-xu-jiao-yu-xue-yuan-xue-yuan-gong-gao}
 
 <Route author="jialinghui" example="/ecust/jxjy/news" path="/ecust/jxjy/news" radar="1" rssbud="1" />
 
@@ -1799,11 +1799,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="imkero" example="/scut/jwc/news" path="/scut/jwc/news" />
 
-### 土木与交通学院 - 学工通知 {#hua-nan-li-gong-da-xue-tu-mu-yu-jiao-tong-xue-yuan---xue-gong-tong-zhi}
+### 土木与交通学院 - 学工通知 {#hua-nan-li-gong-da-xue-tu-mu-yu-jiao-tong-xue-yuan-xue-gong-tong-zhi}
 
 <Route author="railzy" example="/scut/scet/notice" path="/scut/scet/notice" radar="1" />
 
-### 电子与信息学院 - 新闻速递 {#hua-nan-li-gong-da-xue-dian-zi-yu-xin-xi-xue-yuan---xin-wen-su-di}
+### 电子与信息学院 - 新闻速递 {#hua-nan-li-gong-da-xue-dian-zi-yu-xin-xi-xue-yuan-xin-wen-su-di}
 
 <Route author="auto-bot-ty" example="/scut/seie/news_center" path="/scut/seie/news_center" radar="1" />
 
@@ -2071,7 +2071,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="shengmaosu" example="/sustech/yjs" path="/sustech/yjs" radar="1"/>
 
-### 新闻网（中文） {#nan-fang-ke-ji-da-xue-xin-wen-wang-%EF%BC%88-zhong-wen-%EF%BC%89}
+### 新闻网（中文） {#nan-fang-ke-ji-da-xue-xin-wen-wang-zhong-wen}
 
 <Route author="sparkcyf" example="/sustech/newshub-zh" path="/sustech/newshub-zh" radar="1"/>
 
@@ -2317,7 +2317,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-### 计算机与电子信息学院 - 人工智能学院 {#nan-jing-shi-fan-da-xue-ji-suan-ji-yu-dian-zi-xin-xi-xue-yuan---ren-gong-zhi-neng-xue-yuan}
+### 计算机与电子信息学院 - 人工智能学院 {#nan-jing-shi-fan-da-xue-ji-suan-ji-yu-dian-zi-xin-xi-xue-yuan-ren-gong-zhi-neng-xue-yuan}
 
 <Route author="Shujakuinkuraudo" example="/njnu/ceai/xszx" path="/njnu/ceai/:type" paramsDesc={['分类名']}>
 
@@ -2375,7 +2375,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-### NUIST CS（南信大计软院） {#nan-jing-xin-xi-gong-cheng-da-xue-nuist-cs%EF%BC%88-nan-xin-da-ji-ruan-yuan-%EF%BC%89}
+### NUIST CS（南信大计软院） {#nan-jing-xin-xi-gong-cheng-da-xue-nuist-cs-nan-xin-da-ji-ruan-yuan}
 
 <Route author="gylidian" example="/nuist/scs/xwkx" path="/nuist/scs/:category?" paramsDesc={['默认为新闻快讯']} radar="1" rssbud="1">
 
@@ -2419,7 +2419,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="gylidian" example="/nuist/xgc" path="/nuist/xgc"/>
 
-### NUIST ESE（南信大环科院） {#nan-jing-xin-xi-gong-cheng-da-xue-nuist-ese%EF%BC%88-nan-xin-da-huan-ke-yuan-%EF%BC%89}
+### NUIST ESE（南信大环科院） {#nan-jing-xin-xi-gong-cheng-da-xue-nuist-ese-nan-xin-da-huan-ke-yuan}
 
 <Route author="gylidian" example="/nuist/sese/tzgg1" path="/nuist/sese/:category?" paramsDesc={['默认为通知公告']} radar="1" rssbud="1">
 
@@ -2429,7 +2429,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-### NUIST AS（南信大大气科学学院） {#nan-jing-xin-xi-gong-cheng-da-xue-nuist-as%EF%BC%88-nan-xin-da-da-qi-ke-xue-xue-yuan-%EF%BC%89}
+### NUIST AS（南信大大气科学学院） {#nan-jing-xin-xi-gong-cheng-da-xue-nuist-as-nan-xin-da-da-qi-ke-xue-xue-yuan}
 
 <Route author="gylidian" example="/nuist/cas/xxgg" path="/nuist/cas/:category?" paramsDesc={['默认为信息公告']} radar="1" rssbud="1">
 
@@ -2571,9 +2571,9 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-## 山东大学（威海） {#shan-dong-da-xue-%EF%BC%88-wei-hai-%EF%BC%89}
+## 山东大学（威海） {#shan-dong-da-xue-wei-hai}
 
-### 新闻网 {#shan-dong-da-xue-%EF%BC%88-wei-hai-%EF%BC%89-xin-wen-wang}
+### 新闻网 {#shan-dong-da-xue-wei-hai-xin-wen-wang}
 
 <Route author="kxxt" example="/sdu/wh/news/xyyw" path="/sdu/wh/news/:column?" paramsDesc={['专栏名称，默认为校园要闻（`xyyw`）']} radar="1" rssbud="1">
 
@@ -2583,7 +2583,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-### 教务处 {#shan-dong-da-xue-%EF%BC%88-wei-hai-%EF%BC%89-jiao-wu-chu}
+### 教务处 {#shan-dong-da-xue-wei-hai-jiao-wu-chu}
 
 <Route author="kxxt" example="/sdu/wh/jwc/gztz" path="/sdu/wh/jwc/:column?" paramsDesc={['专栏名称，默认为工作通知（`gztz`）']} radar="1" rssbud="1">
 
@@ -2889,17 +2889,17 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 :::
 
-## 四川旅游学院 {#si-chuan-l%C3%BC-you-xue-yuan}
+## 四川旅游学院 {#si-chuan-lv-you-xue-yuan}
 
-### 信息与工程学院动态公告列表 {#si-chuan-l%C3%BC-you-xue-yuan-xin-xi-yu-gong-cheng-xue-yuan-dong-tai-gong-gao-lie-biao}
+### 信息与工程学院动态公告列表 {#si-chuan-lv-you-xue-yuan-xin-xi-yu-gong-cheng-xue-yuan-dong-tai-gong-gao-lie-biao}
 
 <Route author="talenHuang" example="/sctu/xgxy" path="/sctu/information-engineer-faculty/index"/>
 
-### 信息与工程学院公告详情 {#si-chuan-l%C3%BC-you-xue-yuan-xin-xi-yu-gong-cheng-xue-yuan-gong-gao-xiang-qing}
+### 信息与工程学院公告详情 {#si-chuan-lv-you-xue-yuan-xin-xi-yu-gong-cheng-xue-yuan-gong-gao-xiang-qing}
 
 <Route author="talenHuang" example="/sctu/xgxy/652" path="/sctu/information-engineer-faculty/context/:id" paramsDesc={['文章id']}/>
 
-### 教务处 {#si-chuan-l%C3%BC-you-xue-yuan-jiao-wu-chu}
+### 教务处 {#si-chuan-lv-you-xue-yuan-jiao-wu-chu}
 
 <Route author="talenHuang" example="/sctu/jwc/13" path="/sctu/jwc/index:type?" paramsDesc={['可选参数，默认为 `13`']}>
 
@@ -2909,7 +2909,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-### 教务处通告详情 {#si-chuan-l%C3%BC-you-xue-yuan-jiao-wu-chu-tong-gao-xiang-qing}
+### 教务处通告详情 {#si-chuan-lv-you-xue-yuan-jiao-wu-chu-tong-gao-xiang-qing}
 
 <Route author="talenHuang" example="/sctu/jwc/13/645" path="/sctu/jwc/context/:type/:id" paramsDesc={['通知类型','文章id']}/>
 
@@ -3311,7 +3311,7 @@ paramsDesc={['公告类型，详见表格']}>
 
 ### 交通运输与物流学院 {#xi-nan-jiao-tong-da-xue-jiao-tong-yun-shu-yu-wu-liu-xue-yuan}
 
-#### 研究生通知
+#### 研究生通知 {#xi-nan-jiao-tong-da-xue-jiao-tong-yun-shu-yu-wu-liu-xue-yuan-yan-jiu-sheng-tong-zhi}
 
 <Route author="zoenglinghou qizidog" example="/swjtu/jtys/yjs" path="/swjtu/jtys/yjs"/>
 
@@ -3456,7 +3456,7 @@ paramsDesc={['公告类型，详见表格']}>
 
 </Route>
 
-### 研究生院重要通知（置顶消息） {#yun-nan-da-xue-yan-jiu-sheng-yuan-zhong-yao-tong-zhi-%EF%BC%88-zhi-ding-xiao-xi-%EF%BC%89}
+### 研究生院重要通知（置顶消息） {#yun-nan-da-xue-yan-jiu-sheng-yuan-zhong-yao-tong-zhi-zhi-ding-xiao-xi}
 
 <Route author="hzcheney" example="/ynu/grs/zytz" path="/ynu/grs/zytz" >
 </Route>
@@ -3475,7 +3475,7 @@ paramsDesc={['公告类型，详见表格']}>
 
 ### 继续教育学院 {#yun-nan-shi-fan-da-xue-ji-xu-jiao-yu-xue-yuan}
 
-#### 新闻
+#### 新闻 {#yun-nan-shi-fan-da-xue-ji-xu-jiao-yu-xue-yuan-xin-wen}
 
 <Route author="SettingDust" example="/ynnu/edu/news" path="/ynnu/edu/news" >
 </Route>
@@ -3498,7 +3498,7 @@ paramsDesc={['公告类型，详见表格']}>
 
 ## 浙江大学 {#zhe-jiang-da-xue}
 
-### 普通栏目 如学术 / 图片 / 新闻等 {#zhe-jiang-da-xue-pu-tong-lan-mu-ru-xue-shu-%2F-tu-pian-%2F-xin-wen-deng}
+### 普通栏目 如学术 / 图片 / 新闻等 {#zhe-jiang-da-xue-pu-tong-lan-mu-ru-xue-shu-tu-pian-xin-wen-deng}
 
 <Route author="Jeason0228" example="/zju/list/xs" path="/zju/list/:type" paramsDesc={['`xs`为学术，`xw`为新闻，`5461`是图片新闻，`578`是浙大报道，具体参数参考左侧的菜单']}/>
 
@@ -3542,7 +3542,7 @@ paramsDesc={['公告类型，详见表格']}>
 
 </Route>
 
-#### 自定义聚合通知
+#### 自定义聚合通知 {#zhe-jiang-da-xue-ruan-jian-xue-yuan-zi-ding-yi-ju-he-tong-zhi}
 
 <Route author="zwithz" example="/zju/cst/custom/36194+36241+36246" path="/zju/cst/custom/:id" paramsDesc={['提取出通知页面中的 `ID`，如 `http://www.cst.zju.edu.cn/36246/list.htm` 中的 `36246`，可将你想获取通知的多个页面，通过 `+` 符号来聚合。']}>
 
@@ -3683,25 +3683,25 @@ paramsDesc={['公告类型，详见表格']}>
 
 <Route author="YunYouJun niuyi1017" example="/cuc/yz" path="/cuc/yz" />
 
-## 中国地质大学（武汉） {#zhong-guo-di-zhi-da-xue-%EF%BC%88-wu-han-%EF%BC%89}
+## 中国地质大学（武汉） {#zhong-guo-di-zhi-da-xue-wu-han}
 
-### 今日文章 - 包含全校网站最新通知 {#zhong-guo-di-zhi-da-xue-%EF%BC%88-wu-han-%EF%BC%89-jin-ri-wen-zhang---bao-han-quan-xiao-wang-zhan-zui-xin-tong-zhi}
+### 今日文章 - 包含全校网站最新通知 {#zhong-guo-di-zhi-da-xue-wu-han-jin-ri-wen-zhang-bao-han-quan-xiao-wang-zhan-zui-xin-tong-zhi}
 
 <Route author="Dorad" example="/cug/news" path="/cug/news" />
 
-### 研究生院综合通知公告 {#zhong-guo-di-zhi-da-xue-%EF%BC%88-wu-han-%EF%BC%89-yan-jiu-sheng-yuan-zong-he-tong-zhi-gong-gao}
+### 研究生院综合通知公告 {#zhong-guo-di-zhi-da-xue-wu-han-yan-jiu-sheng-yuan-zong-he-tong-zhi-gong-gao}
 
 <Route author="sanmmm" example="/cug/graduate" path="/cug/graduate" />
 
-### 中国地质大学通知公告 {#zhong-guo-di-zhi-da-xue-%EF%BC%88-wu-han-%EF%BC%89-zhong-guo-di-zhi-da-xue-tong-zhi-gong-gao}
+### 中国地质大学通知公告 {#zhong-guo-di-zhi-da-xue-wu-han-zhong-guo-di-zhi-da-xue-tong-zhi-gong-gao}
 
 <Route author="chunibyo-wly" example="/cug/undergraduate" path="/cug/undergraduate" />
 
-### 地理与信息工程学院综合通知公告 {#zhong-guo-di-zhi-da-xue-%EF%BC%88-wu-han-%EF%BC%89-di-li-yu-xin-xi-gong-cheng-xue-yuan-zong-he-tong-zhi-gong-gao}
+### 地理与信息工程学院综合通知公告 {#zhong-guo-di-zhi-da-xue-wu-han-di-li-yu-xin-xi-gong-cheng-xue-yuan-zong-he-tong-zhi-gong-gao}
 
 <Route author="chunibyo-wly" example="/cug/xgxy" path="/cug/xgxy" />
 
-### 工程学院 {#zhong-guo-di-zhi-da-xue-%EF%BC%88-wu-han-%EF%BC%89-gong-cheng-xue-yuan}
+### 工程学院 {#zhong-guo-di-zhi-da-xue-wu-han-gong-cheng-xue-yuan}
 
 <Route author="Dorad" example="/cug/gcxy/1" path="/cug/gcxy/:type" />
 
@@ -3873,7 +3873,7 @@ paramsDesc={['公告类型，详见表格']}>
 
 <Route author="shengmaosu" example="/cau/yjs" path="/cau/yjs" radar="1"/>
 
-#### 信电学院
+#### 信电学院 {#zhong-guo-nong-ye-da-xue-yan-zhao-wang-tong-zhi-gong-gao-xin-dian-xue-yuan}
 
 <Route author="shengmaosu" example="/cau/ele" path="/cau/ele" radar="1"/>
 
@@ -3893,13 +3893,13 @@ paramsDesc={['公告类型，详见表格']}>
 
 </Route>
 
-## 中国石油大学（华东） {#zhong-guo-shi-you-da-xue-%EF%BC%88-hua-dong-%EF%BC%89}
+## 中国石油大学（华东） {#zhong-guo-shi-you-da-xue-hua-dong}
 
-### 研究生院通知公告 {#zhong-guo-shi-you-da-xue-%EF%BC%88-hua-dong-%EF%BC%89-yan-jiu-sheng-yuan-tong-zhi-gong-gao}
+### 研究生院通知公告 {#zhong-guo-shi-you-da-xue-hua-dong-yan-jiu-sheng-yuan-tong-zhi-gong-gao}
 
 <Route author="shengmaosu" example="/upc/yjs" path="/upc/yjs" radar="1"/>
 
-### 主页 {#zhong-guo-shi-you-da-xue-%EF%BC%88-hua-dong-%EF%BC%89-zhu-ye}
+### 主页 {#zhong-guo-shi-you-da-xue-hua-dong-zhu-ye}
 
 <Route author="Veagau" example="/upc/main/notice" path="/upc/main/:type" paramsDesc={['分类，见下表']} radar="1">
 
@@ -3909,7 +3909,7 @@ paramsDesc={['公告类型，详见表格']}>
 
 </Route>
 
-### 计算机科学与技术学院 {#zhong-guo-shi-you-da-xue-%EF%BC%88-hua-dong-%EF%BC%89-ji-suan-ji-ke-xue-yu-ji-shu-xue-yuan}
+### 计算机科学与技术学院 {#zhong-guo-shi-you-da-xue-hua-dong-ji-suan-ji-ke-xue-yu-ji-shu-xue-yuan}
 
 <Route author="Veagau" example="/upc/jsj/news" path="/upc/jsj/:type" paramsDesc={['分类，见下表']} radar="1">
 

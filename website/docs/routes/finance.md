@@ -14,7 +14,7 @@
 
 <Route author="nczitzk" example="/aicaijing/recommend" path="/aicaijing/recommend"/>
 
-### 热点 & 深度 {#ai-cai-jing-she-re-dian-%26-shen-du}
+### 热点 & 深度 {#ai-cai-jing-she-re-dian-shen-du}
 
 <Route author="nczitzk" example="/aicaijing/information/14" path="/aicaijing/information/:id?" paramsDesc={['栏目 id，可在对应栏目页 URL 中找到，默认为 14，即热点最新']}>
 
@@ -635,7 +635,7 @@ See filters in [Report](https://www.weforum.org/reports) for Year and Platform t
 
 ## 深圳证券交易所 {#shen-zhen-zheng-quan-jiao-yi-suo}
 
-### 上市公告 - 可转换债券 {#shen-zhen-zheng-quan-jiao-yi-suo-shang-shi-gong-gao---ke-zhuan-huan-zhai-quan}
+### 上市公告 - 可转换债券 {#shen-zhen-zheng-quan-jiao-yi-suo-shang-shi-gong-gao-ke-zhuan-huan-zhai-quan}
 
 <Route author="Jeason0228 nczitzk" example="/szse/notice" path="/szse/notice"/>
 

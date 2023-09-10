@@ -121,13 +121,13 @@
 <details>
   <summary>更多列表</summary>
 
-#### 热门推荐
+#### 热门推荐 {#8264-lie-biao-re-men-tui-jian}
 
   | 业界 | 国际 | 专访 | 图说 | 户外 | 登山 | 攀岩 |
   | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
   | 489  | 733  | 746  | 902  | 914  | 934  | 935  |
 
-#### 户外知识
+#### 户外知识 {#8264-lie-biao-hu-wai-zhi-shi}
 
   | 徒步 | 露营 | 安全急救 | 领队 | 登雪山 |
   | ---- | ---- | -------- | ---- | ------ |
@@ -149,7 +149,7 @@
   | ---- | ---- | ---- | ---- |
   | 974  | 975  | 976  | 977  |
 
-#### 户外装备
+#### 户外装备 {#8264-lie-biao-hu-wai-zhuang-bei}
 
   | 服装 | 冲锋衣 | 抓绒衣 | 皮肤衣 | 速干衣 |
   | ---- | ------ | ------ | ------ | ------ |
@@ -231,11 +231,11 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ## Discuz {#discuz}
 
-### General Subforum - Auto detection {#discuz-general-subforum---auto-detection}
+### General Subforum - Auto detection {#discuz-general-subforum-auto-detection}
 
 <Route author="junfengP" example="/discuz/http%3a%2f%2fwww.u-share.cn%2fforum.php%3fmod%3dforumdisplay%26fid%3d56" path="/discuz/:link" paramsDesc={['link of subforum, require url encoded ']}/>
 
-### General Subforum - Manual version {#discuz-general-subforum---manual-version}
+### General Subforum - Manual version {#discuz-general-subforum-manual-version}
 
 <Route author="junfengP" example="/discuz/x/https%3a%2f%2fwww.52pojie.cn%2fforum-16-1.html" path="/discuz/:ver/:link" paramsDesc={['discuz version，see below table','link of subforum, require url encoded']} >
 
@@ -245,7 +245,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 </Route>
 
-### General Subforum - Support cookie {#discuz-general-subforum---support-cookie}
+### General Subforum - Support cookie {#discuz-general-subforum-support-cookie}
 
 <Route author="junfengP" example="/discuz/x/00/https%3a%2f%2fbbs.zdfx.net%2fforum-2-1.html" path="/discuz/:ver/:cid/:link" paramsDesc={['discuz version，see below table', 'Cookie id，require self hosted and set environment parameters, see Deploy - Configuration pages for detail','link of subforum, require url encoded']} >
 
@@ -463,7 +463,7 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 ## V2EX {#v2ex}
 
-### 最热 / 最新主题 {#v2ex-zui-re-%2F-zui-xin-zhu-ti}
+### 最热 / 最新主题 {#v2ex-zui-re-zui-xin-zhu-ti}
 
 <Route author="WhiteWorld" example="/v2ex/topics/latest" path="/v2ex/topics/:type" paramsDesc={['hot 或 latest']}/>
 
@@ -861,19 +861,19 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 ## 梨园 {#li-yuan}
 
-### 主题帖（全站） {#li-yuan-zhu-ti-tie-%EF%BC%88-quan-zhan-%EF%BC%89}
+### 主题帖（全站） {#li-yuan-zhu-ti-tie-quan-zhan}
 
 <Route author="WooMai" example="/liyuan-forums/threads" path="/liyuan-forums/threads" />
 
-### 主题帖（板块） {#li-yuan-zhu-ti-tie-%EF%BC%88-ban-kuai-%EF%BC%89}
+### 主题帖（板块） {#li-yuan-zhu-ti-tie-ban-kuai}
 
 <Route author="WooMai" example="/liyuan-forums/threads/forum/1" path="/liyuan-forums/threads/forum/:forum_id" paramsDesc={['板块 ID, 支持多个, 使用英文逗号分隔']} />
 
-### 主题帖（专题） {#li-yuan-zhu-ti-tie-%EF%BC%88-zhuan-ti-%EF%BC%89}
+### 主题帖（专题） {#li-yuan-zhu-ti-tie-zhuan-ti}
 
 <Route author="WooMai" example="/liyuan-forums/threads/topic/1" path="/liyuan-forums/threads/topic/:topic_id" paramsDesc={['专题 ID, 支持多个, 使用英文逗号分隔']} />
 
-### 主题帖（用户） {#li-yuan-zhu-ti-tie-%EF%BC%88-yong-hu-%EF%BC%89}
+### 主题帖（用户） {#li-yuan-zhu-ti-tie-yong-hu}
 
 <Route author="WooMai" example="/liyuan-forums/threads/user/1" path="/liyuan-forums/threads/user/:user_id" paramsDesc={['用户 ID (仅支持数字 ID), 支持多个, 使用英文逗号分隔']} />
 
@@ -931,7 +931,7 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 <Route author="junfengP" example="/nowcoder/recommend" path="/nowcoder/recommend"/>
 
-### 实习广场 & 社招广场 {#niu-ke-wang-shi-xi-guang-chang-%26-she-zhao-guang-chang}
+### 实习广场 & 社招广场 {#niu-ke-wang-shi-xi-guang-chang-she-zhao-guang-chang}
 
 <Route author="nczitzk" example="/nowcoder/jobcenter/1/北京/1/1/true" path="/nowcoder/jobcenter/:recruitType?/:city?/:type?/:order?/:latest?" paramsDesc={['招聘分类，`1` 指 实习广场，`2` 指 社招广场，默认为 `1`', '所在城市，可选城市见下表，若空则为 `全国`', '职位类型，可选职位代码见下表，若空则为 `全部`', '排序参数，可选排序参数代码见下表，若空则为 `默认`', '是否仅查看最近一周，可选 `true` 和 `false`，默认为 `false`']}>
 
