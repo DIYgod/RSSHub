@@ -435,13 +435,13 @@ Category of news
 
 <Route author="nczitzk" example="/dn/en-us/news" path="/dn/:language/news/:category?" paramsDesc={['Language, see below', 'Category, see below, The Latest by default']} radar="1" rssbud="1">
 
-#### Language
+#### Language {#dn.com-news-language}
 
 | English | 中文  |
 | ------- | ----- |
 | en-us   | zh-cn |
 
-#### Category
+#### Category {#dn.com-news-category}
 
 | English Category     | 中文分类 | Category id |
 | -------------------- | -------- | ----------- |
