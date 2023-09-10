@@ -17,7 +17,7 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -27,7 +27,7 @@ jobs:
           cache: 'pnpm'
       - run: pnpm i
       - run: pnpm i
-        working-directory: docs
+        working-directory: website
       - run: npm run format
       - name: Commit files
         run: |

@@ -11,7 +11,7 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}  # skip if unsuccessful
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       # https://github.com/orgs/community/discussions/25220
       - name: Search the PR that triggered this workflow
@@ -63,6 +63,8 @@ jobs:
             --name rsshub \
             -e NODE_ENV=dev \
             -e LOGGER_LEVEL=debug \
+            -e ALLOW_USER_HOTLINK_TEMPLATE=true \
+            -e ALLOW_USER_SUPPLY_UNSAFE_DOMAIN=true \
             -p 1200:1200 \
             rsshub:latest
 

@@ -34,12 +34,7 @@ jobs:
         node-version: [ 18, 20 ]
     name: Jest on Node ${{ matrix.node-version }}
     steps:
-      - name: Collect Workflow Telemetry
-        uses: runforesight/foresight-workflow-kit-action@v1
-        if: success() || failure()
-        with:
-          api_key: ${{ secrets.FORESIGHT_KEY }}
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -60,17 +55,6 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos as documented, but seems broken
-      - name: Analyze Test and/or Coverage Results
-        uses: runforesight/foresight-test-kit-action@v1
-        if: success() || failure()
-        with:
-          api_key: ${{ secrets.FORESIGHT_KEY }}
-          test_format: JUNIT
-          test_framework: JEST
-          test_path: ./coverage/junit.xml
-          coverage_format: LCOV/TXT
-          coverage_path: ./coverage/lcov.info
-
 
   puppeteer:
     runs-on: ubuntu-latest
@@ -91,7 +75,7 @@ jobs:
             environment: '{ "CHROMIUM_EXECUTABLE_PATH": "google-chrome-stable" }'
     name: Jest puppeteer on Node ${{ matrix.node-version }} with ${{ matrix.chromium.name }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -123,17 +107,17 @@ jobs:
 
   docs:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     strategy:
       fail-fast: false
       matrix:
         node-version: [ 18, 20 ]
     defaults:
       run:
-        working-directory: docs
+        working-directory: website
     name: Build docs on Node ${{ matrix.node-version }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
@@ -141,17 +125,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-          cache-dependency-path: docs/pnpm-lock.yaml
+          cache-dependency-path: website/pnpm-lock.yaml
       - run: pnpm i
-      - name: Set environment variable for Node v16 above
-        if: ${{ matrix.node-version > '16' }}
-        run: echo "NODE_OPTIONS=--openssl-legacy-provider" >> $GITHUB_ENV
       - name: Build docs
-        run: npm run docs:build
-        working-directory: docs
-      - name: Unset environment variable for Node v16 above
-        if: ${{ matrix.node-version > '16' }}
-        run: echo "NODE_OPTIONS=''" >> $GITHUB_ENV
+        run: pnpm run build
+        working-directory: website
 
   all:
     runs-on: ubuntu-latest
@@ -162,7 +140,7 @@ jobs:
         node-version: [ 18, 20 ]
     name: Build radar and maintainer on Node ${{ matrix.node-version }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
