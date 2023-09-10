@@ -125,6 +125,7 @@
 
 <Route author="nczitzk" example="/8world/topic/xianggang-3" path="/8world/topic/:id" paramsDesc={['标签 id，可在对应标签页中找到']} />
 
+
 ## 9To5 {#9to5}
 
 ### 9To5 Sub-site {#9to5-9to5-sub-site}
@@ -955,6 +956,85 @@ Provides a better reading experience (full text articles) over the official one.
 | 新聞 | AI       | Cloud | DevOps | 資安     |
 | ---- | -------- | ----- | ------ | -------- |
 | news | big-data | cloud | devops | security |
+
+</Route>
+
+## Kantar Worldpanel {#kantar-worldpanel}
+
+### News Centre {#kantar-worldpanel-news-centre}
+
+<Route author="nczitzk" example="/kantarworldpanel/cn-en/news" path="/kantarworldpanel/:region/:category?" paramsDesc={['Region id, see below, Chinese Mainland English by default', 'Category, can be found in URL, News by default']} radar="1" rssbud="1">
+
+| Region      | id    |
+| ----------- | ----- |
+| China Eng   | cn-en |
+| China 中文  | cn    |
+| Indonesia   | id    |
+| Korea       | kr    |
+| Malaysia    | my    |
+| Philippines | ph    |
+| Taiwan      | tw    |
+| Thailand    | th    |
+| Vietnam     | vn    |
+
+<details>
+  <summary>More categories</summary>
+
+#### China Eng {#kantar-worldpanel-news-centre-china-eng}
+
+  | News | Retail Snapshot | Publications         | In the media |
+  | ---- | --------------- | -------------------- | ------------ |
+  | news | publications    | publications/Reports | In-the-media |
+
+#### China 中文 {#kantar-worldpanel-news-centre-china-zhong-wen}
+
+  | 新闻发布 | 零售市场快报 | 市场报告                    | 媒体报道       |
+  | -------- | ------------ | --------------------------- | -------------- |
+  | news     | publications | publications/China-Insights | press-releases |
+
+#### Indonesia {#kantar-worldpanel-news-centre-indonesia}
+
+  | News | Kantar Scoop                  | Video Series      | Podcast      | Ready, Steady, Shop!     | Asia Pulse      |
+  | ---- | ----------------------------- | ----------------- | ------------ | ------------------------ | --------------- |
+  | News | News/Kantar-Worldpanel-Series | News/video-series | News/podcast | News/asia-shopper-series | News/Asia-Pulse |
+
+#### Korea {#kantar-worldpanel-news-centre-korea}
+
+  | News | Insight Reports | In the Media   |
+  | ---- | --------------- | -------------- |
+  | news | publications    | press-releases |
+
+#### Malaysia {#kantar-worldpanel-news-centre-malaysia}
+
+  | News |
+  | ---- |
+  | news |
+
+#### Philippines {#kantar-worldpanel-news-centre-philippines}
+
+  | Latest Insights | In the Media | Events |
+  | --------------- | ------------ | ------ |
+  | Latest-Insights | In-the-Media | events |
+
+#### Taiwan {#kantar-worldpanel-news-centre-taiwan}
+
+  | 聚焦台灣                 | WOW SPOT     | 市場報告     | 媒體報導       | 活動   |
+  | ------------------------ | ------------ | ------------ | -------------- | ------ |
+  | news/spotlight-on-taiwan | news/wowspot | publications | press-releases | events |
+
+#### Thailand {#kantar-worldpanel-news-centre-thailand}
+
+  | News |
+  | ---- |
+  | news |
+
+#### Vietnam {#kantar-worldpanel-news-centre-vietnam}
+
+  | Insights | FMCG Monitor      | Ready, Steady, Shop!   | Asia Pulse      | IN THE MEDIA |
+  | -------- | ----------------- | ---------------------- | --------------- | ------------ |
+  | news     | news/FMCG-Monitor | news/ready-steady-shop | news/asia-pulse | In-the-media |
+
+</details>
 
 </Route>
 
