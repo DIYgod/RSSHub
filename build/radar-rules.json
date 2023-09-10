@@ -2587,8 +2587,13 @@
       },
       {
         "title": "用户帖子",
-        "docs": "https://docs.rsshub.app/routes/bbs#tie-ba",
+        "docs": "https://docs.rsshub.app/routes/bbs#bai-du-tie-ba",
         "source": "/home/main"
+      },
+      {
+        "title": "贴吧搜索",
+        "docs": "https://docs.rsshub.app/routes/bbs#bai-du-tie-ba",
+        "source": "/f/search/res"
       }
     ],
     "top": [
