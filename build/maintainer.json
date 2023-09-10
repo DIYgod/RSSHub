@@ -59,6 +59,9 @@
     "/2048/:id?": [
         "nczitzk"
     ],
+    "/8264/list/:id?": [
+        "nczitzk"
+    ],
     "/12306/:date/:from/:to/:type?": [
         "Fatpandac"
     ],
