@@ -979,55 +979,53 @@ Provides a better reading experience (full text articles) over the official one.
 <details>
   <summary>More categories</summary>
 
-  #### China Eng
+#### China Eng
 
   | News | Retail Snapshot | Publications         | In the media |
   | ---- | --------------- | -------------------- | ------------ |
   | news | publications    | publications/Reports | In-the-media |
 
-  #### China 中文
+#### China 中文
 
   | 新闻发布 | 零售市场快报 | 市场报告                    | 媒体报道       |
   | -------- | ------------ | --------------------------- | -------------- |
   | news     | publications | publications/China-Insights | press-releases |
 
-  #### Indonesia
+#### Indonesia
 
   | News | Kantar Scoop                  | Video Series      | Podcast      | Ready, Steady, Shop!     | Asia Pulse      |
   | ---- | ----------------------------- | ----------------- | ------------ | ------------------------ | --------------- |
   | News | News/Kantar-Worldpanel-Series | News/video-series | News/podcast | News/asia-shopper-series | News/Asia-Pulse |
 
-  #### Korea
+#### Korea
 
   | News | Insight Reports | In the Media   |
   | ---- | --------------- | -------------- |
   | news | publications    | press-releases |
 
-  #### Malaysia
+#### Malaysia
 
   | News |
   | ---- |
   | news |
-
-  #### Philippines
+#### Philippines
 
   | Latest Insights | In the Media | Events |
   | --------------- | ------------ | ------ |
   | Latest-Insights | In-the-Media | events |
 
-  #### Taiwan
+#### Taiwan
 
   | 聚焦台灣                 | WOW SPOT     | 市場報告     | 媒體報導       | 活動   |
   | ------------------------ | ------------ | ------------ | -------------- | ------ |
   | news/spotlight-on-taiwan | news/wowspot | publications | press-releases | events |
 
-  #### Thailand
+#### Thailand
 
   | News |
   | ---- |
   | news |
-
-  #### Vietnam
+#### Vietnam
 
   | Insights | FMCG Monitor      | Ready, Steady, Shop!   | Asia Pulse      | IN THE MEDIA |
   | -------- | ----------------- | ---------------------- | --------------- | ------------ |
