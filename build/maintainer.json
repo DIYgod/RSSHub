@@ -1734,6 +1734,18 @@
     "/douyu/room/:id": [
         "DIYgod"
     ],
+    "/dribbble/keyword/:keyword": [
+        "DIYgod",
+        "loganrockmore"
+    ],
+    "/dribbble/popular/:timeframe?": [
+        "DIYgod",
+        "loganrockmore"
+    ],
+    "/dribbble/user/:name": [
+        "DIYgod",
+        "loganrockmore"
+    ],
     "/dtcj/datahero/:category?": [
         "nczitzk"
     ],
@@ -6748,9 +6760,6 @@
     "/geektime/column/:cid": [],
     "/geektime/news": [],
     "/infzm/:id": [],
-    "/dribbble/popular/:timeframe?": [],
-    "/dribbble/user/:name": [],
-    "/dribbble/keyword/:keyword": [],
     "/huya/live/:id": [],
     "/showroom/room/:id": [],
     "/fdroid/apprelease/:app": [],

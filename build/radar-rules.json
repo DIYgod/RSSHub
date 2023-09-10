@@ -6544,6 +6544,34 @@
       }
     ]
   },
+  "dribbble.com": {
+    "_name": "Dribbble",
+    ".": [
+      {
+        "title": "Keyword",
+        "docs": "https://docs.rsshub.app/routes/design#dribbble",
+        "source": [
+          "/search/shots/recent"
+        ]
+      },
+      {
+        "title": "Popular",
+        "docs": "https://docs.rsshub.app/routes/design#dribbble",
+        "source": [
+          "/"
+        ],
+        "target": "/dribbble/popular"
+      },
+      {
+        "title": "User (or team)",
+        "docs": "https://docs.rsshub.app/routes/design#dribbble",
+        "source": [
+          "/:name"
+        ],
+        "target": "/dribbble/user/:name"
+      }
+    ]
+  },
   "dtcj.com": {
     "_name": "DT 财经",
     ".": [
