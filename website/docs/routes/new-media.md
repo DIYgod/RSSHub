@@ -429,6 +429,29 @@ Category of news
 
 <Route author="nczitzk" example="/deepmind/blog" path="/deepmind/blog" radar="1" rssbud="1"/>
 
+## DN.com {#dn.com}
+
+### News {#dn.com-news}
+
+<Route author="nczitzk" example="/dn/en-us/news" path="/dn/:language/news/:category?" paramsDesc={['Language, see below', 'Category, see below, The Latest by default']} radar="1" rssbud="1">
+
+#### Language
+
+| English | 中文  |
+| ------- | ----- |
+| en-us   | zh-cn |
+
+#### Category
+
+| English Category     | 中文分类 | Category id |
+| -------------------- | -------- | ----------- |
+| The Latest           | 最新     |             |
+| Industry Information | 行业资讯 | category-1  |
+| Knowledge            | 域名知识 | category-2  |
+| Investment           | 域名投资 | category-3  |
+
+</Route>
+
 ## DoNews {#donews}
 
 ### 栏目 {#donews-lan-mu}
