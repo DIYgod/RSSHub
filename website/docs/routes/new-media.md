@@ -979,55 +979,55 @@ Provides a better reading experience (full text articles) over the official one.
 <details>
   <summary>More categories</summary>
 
-### China Eng {#kantar-worldpanel-news-centre-china-eng}
+#### China Eng {#kantar-worldpanel-news-centre-china-eng}
 
   | News | Retail Snapshot | Publications         | In the media |
   | ---- | --------------- | -------------------- | ------------ |
   | news | publications    | publications/Reports | In-the-media |
 
-### China 中文 {#kantar-worldpanel-news-centre-china-zhong-wen}
+#### China 中文 {#kantar-worldpanel-news-centre-china-zhong-wen}
 
   | 新闻发布 | 零售市场快报 | 市场报告                    | 媒体报道       |
   | -------- | ------------ | --------------------------- | -------------- |
   | news     | publications | publications/China-Insights | press-releases |
 
-### Indonesia {#kantar-worldpanel-news-centre-indonesia}
+#### Indonesia {#kantar-worldpanel-news-centre-indonesia}
 
   | News | Kantar Scoop                  | Video Series      | Podcast      | Ready, Steady, Shop!     | Asia Pulse      |
   | ---- | ----------------------------- | ----------------- | ------------ | ------------------------ | --------------- |
   | News | News/Kantar-Worldpanel-Series | News/video-series | News/podcast | News/asia-shopper-series | News/Asia-Pulse |
 
-### Korea {#kantar-worldpanel-news-centre-korea}
+#### Korea {#kantar-worldpanel-news-centre-korea}
 
   | News | Insight Reports | In the Media   |
   | ---- | --------------- | -------------- |
   | news | publications    | press-releases |
 
-### Malaysia {#kantar-worldpanel-news-centre-malaysia}
+#### Malaysia {#kantar-worldpanel-news-centre-malaysia}
 
   | News |
   | ---- |
   | news |
 
-### Philippines {#kantar-worldpanel-news-centre-philippines}
+#### Philippines {#kantar-worldpanel-news-centre-philippines}
 
   | Latest Insights | In the Media | Events |
   | --------------- | ------------ | ------ |
   | Latest-Insights | In-the-Media | events |
 
-### Taiwan {#kantar-worldpanel-news-centre-taiwan}
+#### Taiwan {#kantar-worldpanel-news-centre-taiwan}
 
   | 聚焦台灣                 | WOW SPOT     | 市場報告     | 媒體報導       | 活動   |
   | ------------------------ | ------------ | ------------ | -------------- | ------ |
   | news/spotlight-on-taiwan | news/wowspot | publications | press-releases | events |
 
-### Thailand {#kantar-worldpanel-news-centre-thailand}
+#### Thailand {#kantar-worldpanel-news-centre-thailand}
 
   | News |
   | ---- |
   | news |
 
-### Vietnam {#kantar-worldpanel-news-centre-vietnam}
+#### Vietnam {#kantar-worldpanel-news-centre-vietnam}
 
   | Insights | FMCG Monitor      | Ready, Steady, Shop!   | Asia Pulse      | IN THE MEDIA |
   | -------- | ----------------- | ---------------------- | --------------- | ------------ |
