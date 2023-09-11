@@ -6,9 +6,9 @@
 
 <Route author="junfengP" example="/005tv/zx/latest" path="/005tv/zx/latest"/>
 
-## 1draw #深夜の真剣お絵描き 60 分一本勝負 {#1draw-%23-shen-ye-%E3%81%AE-zhen-jian-%E3%81%8A-hui-miao-%E3%81%8D-60-fen-yi-ben-sheng-fu}
+## 1draw #深夜の真剣お絵描き 60 分一本勝負 {#1draw-shen-ye-%E3%81%AE-zhen-jian-%E3%81%8A-hui-miao-%E3%81%8D-60-fen-yi-ben-sheng-fu}
 
-### 投稿一览 {#1draw-%23-shen-ye-%E3%81%AE-zhen-jian-%E3%81%8A-hui-miao-%E3%81%8D-60-fen-yi-ben-sheng-fu-tou-gao-yi-lan}
+### 投稿一览 {#1draw-shen-ye-%E3%81%AE-zhen-jian-%E3%81%8A-hui-miao-%E3%81%8D-60-fen-yi-ben-sheng-fu-tou-gao-yi-lan}
 
 <Route author="jackyu1996" path="/1draw/" example="/1draw/" />
 
@@ -215,7 +215,7 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 <Route author="chengyuhui" example="/cngal/weekly" path="/cngal/weekly" radar="1" rssbud="1"/>
 
-### 制作者 / 游戏新闻 {#cngal-zhi-zuo-zhe-%2F-you-xi-xin-wen}
+### 制作者 / 游戏新闻 {#cngal-zhi-zuo-zhe-you-xi-xin-wen}
 
 <Route author="chengyuhui" example="/cngal/entry/2693" path="/cngal/entry/:id" paramsDesc={['词条ID，游戏或制作者页面URL的最后一串数字']} radar="1" rssbud="1"/>
 
@@ -263,7 +263,7 @@ If you subscribe to [Discounted works Latest Discounts - Newest to Oldest](https
 
 <Route author="cssxsh" example="/dlsite/campaign/home" path="/dlsite/campaign/:type/:free?" paramsDesc={['Type, see table above', 'Free only, empty means false, other value means true']}/>
 
-### Ci-en Creators' Article {#dlsite-ci-en-creators'-article}
+### Ci-en Creators' Article {#dlsite-ci-en-creators-article}
 
 <Route author="nczitzk" example="/dlsite/ci-en/:id/article" path="/dlsite/ci-en/7400/article" paramsDesc={['Creator id, can be found in URL']}/>
 
@@ -445,7 +445,7 @@ The RSS routing has not been rigorously tested and the information provided cann
 
 ## QooApp {#qooapp}
 
-### Game Store - Review {#qooapp-game-store---review}
+### Game Store - Review {#qooapp-game-store-review}
 
 <Route author="TonyRL" example="/qoo-app/apps/en/comment/7675" path="/qoo-app/apps/:lang?/comment/:id" paramsDesc={['Language, see the table below, empty means `中文`', 'Game ID, can be found in URL']}  radar="1">
 
@@ -455,15 +455,15 @@ The RSS routing has not been rigorously tested and the information provided cann
 
 </Route>
 
-### Game Store - Article {#qooapp-game-store---article}
+### Game Store - Article {#qooapp-game-store-article}
 
 <Route author="TonyRL" example="/qoo-app/apps/en/post/7675" path="/qoo-app/apps/:lang?/post/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Game ID, can be found in URL']}  radar="1"/>
 
-### Game Store - Notes {#qooapp-game-store---notes}
+### Game Store - Notes {#qooapp-game-store-notes}
 
 <Route author="TonyRL" example="/qoo-app/apps/en/note/7675" path="/qoo-app/apps/:lang?/note/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Game ID, can be found in URL']}  radar="1"/>
 
-### Game Store - Cards {#qooapp-game-store---cards}
+### Game Store - Cards {#qooapp-game-store-cards}
 
 <Route author="TonyRL" example="/qoo-app/apps/en/card/7675" path="/qoo-app/apps/:lang?/card/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Game ID, can be found in URL']}  radar="1"/>
 
@@ -583,7 +583,7 @@ For example: <https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_n
 
 <Route author="Ye11" example="/xmanhua/73xm" path="/xmanhua/:uid" paramsDesc={['漫画 id,在浏览器中可见，例如鬼灭之刃对应的 id 为 `73xm`']}/>
 
-## 俺の 3D エロ動画 (oreno3d) {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)}
+## 俺の 3D エロ動画 (oreno3d) {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d}
 
 :::tip
 
@@ -591,7 +591,7 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 :::
 
-### Keyword Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-keyword-search}
+### Keyword Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d-keyword-search}
 
 <Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest/1" path="/oreno3d/search/:keyword/:sort/:pagelimit?" paramsDesc={['Search keyword', 'Sort method, see the table below', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1">
 
@@ -601,19 +601,19 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 </Route>
 
-### Character Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-character-search}
+### Character Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d-character-search}
 
 <Route author="xueli-sherryli" example="/oreno3d/characters/283/latest/1" path="/oreno3d/characters/:characterid/:sort/:pagelimit?" paramsDesc={['Character id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
 
-### Author Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-author-search}
+### Author Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d-author-search}
 
 <Route author="xueli-sherryli" example="/oreno3d/authors/3189/latest/1" path="/oreno3d/authors/:authorid/:sort/:pagelimit?" paramsDesc={['Author id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
 
-### Tags Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-tags-search}
+### Tags Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d-tags-search}
 
 <Route author="xueli-sherryli" example="/oreno3d/tags/177/latest/1" path="/oreno3d/tags/:tagid/:sort/:pagelimit?" paramsDesc={['Tag id, can be found in URL', 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
 
-### Origins Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-(oreno3d)-origins-search}
+### Origins Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d-origins-search}
 
 <Route author="xueli-sherryli" example="/oreno3d/origins/3/latest/1" path="/oreno3d/origins/:originid/:sort/:pagelimit?" paramsDesc={['Origin id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
 
@@ -623,9 +623,9 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 <Route author="Fatpandac" example="/baozimh/comic/guowangpaiming-shiricaofu" path="/baozimh/comic/:name" paramsDesc={['漫画名称，在漫画链接可以得到(`comic/` 后的那段)']}/>
 
-## 嘀哩嘀哩 - dilidili {#di-li-di-li---dilidili}
+## 嘀哩嘀哩 - dilidili {#di-li-di-li-dilidili}
 
-### 嘀哩嘀哩番剧更新 {#di-li-di-li---dilidili-di-li-di-li-fan-ju-geng-xin}
+### 嘀哩嘀哩番剧更新 {#di-li-di-li-dilidili-di-li-di-li-fan-ju-geng-xin}
 
 <Route author="SunShinenny" path="/dilidili/fanju/:id" example="/dilidili/fanju/onepunchman2" paramsDesc={['番剧id']}>
 
@@ -791,11 +791,11 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 </Route>
 
-### 镜像站 - 漫画更新 {#kan-man-hua-jing-xiang-zhan---man-hua-geng-xin}
+### 镜像站 - 漫画更新 {#kan-man-hua-jing-xiang-zhan-man-hua-geng-xin}
 
 <Route author="btdwv" path="/manhuagui/mhgui/comic/:id/:chapterCnt?" example="/manhuagui/mhgui/comic/13317/5" paramsDesc={['漫画ID','返回章节的数量，默认为0，返回所有章节']} radar="1" rssbud="1"/>
 
-### 台湾站 - 漫画更新 {#kan-man-hua-tai-wan-zhan---man-hua-geng-xin}
+### 台湾站 - 漫画更新 {#kan-man-hua-tai-wan-zhan-man-hua-geng-xin}
 
 <Route author="btdwv" path="/manhuagui/twmanhuagui/comic/:id/:chapterCnt?" example="/manhuagui/twmanhuagui/comic/13317/5" paramsDesc={['漫画ID','返回章节的数量，默认为0，返回所有章节']} radar="1" rssbud="1"/>
 

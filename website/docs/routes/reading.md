@@ -194,7 +194,7 @@ Eg:<https://ncode.syosetu.com/n1976ey/>
 
 </Route>
 
-### 思想库（专栏） {#ai-si-xiang-si-xiang-ku-%EF%BC%88-zhuan-lan-%EF%BC%89}
+### 思想库（专栏） {#ai-si-xiang-si-xiang-ku-zhuan-lan}
 
 <Route author="hoilc nczitzk" example="/aisixiang/thinktank/WuQine/论文" path="/aisixiang/thinktank/:id/:type?" paramsDesc={['专栏 ID，一般为作者拼音，可在URL中找到', '栏目类型，参考下表，默认为全部']}>
 
@@ -241,13 +241,13 @@ Eg:<https://ncode.syosetu.com/n1976ey/>
 
 :::tip
 
-#### 使用方法
+#### 使用方法 {#bi-qu-ge-xiao-shuo-shi-yong-fang-fa}
 
 如订阅 [《大主宰》](http://www.biqu5200.net/0\_7/)，此时在 [biqu5200.net](http://www.biqu5200.net) 中查询得到对应小说详情页 URL 为 <http://www.biqu5200.net/0_7/>。此时，路由为 [`/biquge/http://www.biqu5200.net/0_7/`](https://rsshub.app/biquge/http://www.biqu5200.net/0\_7/)
 
 又如同样订阅 [《大主宰》](https://www.shuquge.com/txt/70/index.html)，此时在 [shuquge.com](https://www.shuquge.com) 中查询得到对应小说详情页 URL 为 <https://www.shuquge.com/txt/70/index.html>。此时，把末尾的 `index.html` 去掉，路由为 [`/biquge/https://www.shuquge.com/txt/70/`](https://rsshub.app/biquge/https://www.shuquge.com/txt/70/)
 
-#### 关于章节数
+#### 关于章节数 {#bi-qu-ge-xiao-shuo-guan-yu-zhang-jie-shu}
 
 路由默认返回最新 **1** 个章节，如有需要一次性获取多个章节，可在路由后指定 `limit` 参数。如上面的例子：订阅 [《大主宰》](http://www.biqu5200.net/0\_7/) 并获取最新的 **10** 个章节。此时，路由为 [`/biquge/http://www.biqu5200.net/0_7/?limit=10`](https://rsshub.app/biquge/http://www.biqu5200.net/0\_7/?limit=10)
 

@@ -165,23 +165,23 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 ## IKEA {#ikea}
 
-### UK - New Product Release {#ikea-uk---new-product-release}
+### UK - New Product Release {#ikea-uk-new-product-release}
 
 <Route author="HenryQW" example="/ikea/gb/new" path="/ikea/gb/new"/>
 
-### UK - Offers {#ikea-uk---offers}
+### UK - Offers {#ikea-uk-offers}
 
 <Route author="HenryQW" example="/ikea/gb/offer" path="/ikea/gb/offer"/>
 
-### 中国 - 会员特惠 {#ikea-zhong-guo---hui-yuan-te-hui}
+### 中国 - 会员特惠 {#ikea-zhong-guo-hui-yuan-te-hui}
 
 <Route author="jzhangdev" example="/ikea/cn/family_offers" path="/ikea/cn/family_offers" radar="1"/>
 
-### 中国 - 低价优选 {#ikea-zhong-guo---di-jia-you-xuan}
+### 中国 - 低价优选 {#ikea-zhong-guo-di-jia-you-xuan}
 
 <Route author="jzhangdev" example="/ikea/cn/low_price" path="/ikea/cn/low_price" radar="1"/>
 
-### 中国 - 当季新品推荐 {#ikea-zhong-guo---dang-ji-xin-pin-tui-jian}
+### 中国 - 当季新品推荐 {#ikea-zhong-guo-dang-ji-xin-pin-tui-jian}
 
 <Route author="jzhangdev" example="/ikea/cn/new" path="/ikea/cn/new" radar="1"/>
 
@@ -288,7 +288,7 @@ Language
 
 ## Snow Peak {#snow-peak}
 
-### New Arrivals(USA) {#snow-peak-new-arrivals(usa)}
+### New Arrivals(USA) {#snow-peak-new-arrivals-usa}
 
 <Route author="NavePnow" example="/snowpeak/us/new-arrivals" path="/snowpeak/us/new-arrivals"/>
 
