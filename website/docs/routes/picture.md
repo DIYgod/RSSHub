@@ -582,7 +582,7 @@ For example:
 
 ## 妹子图 {#mei-zi-tu}
 
-### 首页（最新） {#mei-zi-tu-shou-ye-%EF%BC%88-zui-xin-%EF%BC%89}
+### 首页（最新） {#mei-zi-tu-shou-ye-zui-xin}
 
 <Route author="gee1k xyqfer LogicJake" example="/mzitu/home" path="/mzitu/home/:type?" paramsDesc={['类型，默认最新，可选`hot`最热或`best`推荐']} anticrawler="1"/>
 

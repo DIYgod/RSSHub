@@ -2,7 +2,7 @@
 
 ## Australia Department of Home Affairs {#australia-department-of-home-affairs}
 
-### Immigration and Citizenship - News {#australia-department-of-home-affairs-immigration-and-citizenship---news}
+### Immigration and Citizenship - News {#australia-department-of-home-affairs-immigration-and-citizenship-news}
 
 <Route author="liu233w" example="/gov/immiau/news" path="/gov/immiau/news"/>
 
@@ -12,9 +12,9 @@
 
 <Route author="nczitzk" example="/cia/foia-annual-report" path="/cia/foia-annual-report"/>
 
-## Constitutional Court of Baden-Württemberg (Germany) {#constitutional-court-of-baden-w%C3%BCrttemberg-(germany)}
+## Constitutional Court of Baden-Württemberg (Germany) {#constitutional-court-of-baden-wvrttemberg-germany}
 
-### Press releases {#constitutional-court-of-baden-w%C3%BCrttemberg-(germany)-press-releases}
+### Press releases {#constitutional-court-of-baden-wvrttemberg-germany-press-releases}
 
 <Route author="quinn-dev" example="/verfghbw/press" path="/verfghbw/press/:keyword?" paramsDesc={['Keyword']}/>
 
@@ -139,9 +139,9 @@ Category
 
 <Route author="HenryQW" example="/un/scveto" path="/un/scveto"/>
 
-## World Health Organization | WHO {#world-health-organization-%7C-who}
+## World Health Organization | WHO {#world-health-organization-who}
 
-### News {#world-health-organization-%7C-who-news}
+### News {#world-health-organization-who-news}
 
 <Route author="nczitzk" example="/who/news" path="/who/news/:language?" paramsDesc={['Language, see below, English by default']}>
 
@@ -153,7 +153,7 @@ Language
 
 </Route>
 
-### Newsroom {#world-health-organization-%7C-who-newsroom}
+### Newsroom {#world-health-organization-who-newsroom}
 
 <Route author="LogicJake nczitzk" example="/who/news-room/feature-stories" path="/who/news-room/:category?/:language?" paramsDesc={['Category, see below, Feature stories by default', 'Language, see below, English by default']}>
 
@@ -171,7 +171,7 @@ Language
 
 </Route>
 
-### Speeches {#world-health-organization-%7C-who-speeches}
+### Speeches {#world-health-organization-who-speeches}
 
 <Route author="nczitzk" example="/who/speeches" path="/who/speeches/:language?" paramsDesc={['Language, see below, English by default']}>
 
@@ -191,7 +191,7 @@ Language
 
 ## 安徽省科技厅 {#an-hui-sheng-ke-ji-ting}
 
-### 科技资讯 & 科技资源 {#an-hui-sheng-ke-ji-ting-ke-ji-zi-xun-%26-ke-ji-zi-yuan}
+### 科技资讯 & 科技资源 {#an-hui-sheng-ke-ji-ting-ke-ji-zi-xun-ke-ji-zi-yuan}
 
 <Route author="nczitzk" example="/gov/anhui/kjt/kjzx/tzgg" path="/gov/anhui/kjt/:path?" paramsDesc={['路径，默认为通知公告']}>
 
@@ -255,9 +255,9 @@ Language
 
 <Route author="nczitzk" example="/gov/beijing/jw/tzgg" path="/gov/beijing/jw/tzgg" />
 
-## 北京市科学技术委员会、中关村科技园区管理委员会 {#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-%E3%80%81-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui}
+## 北京市科学技术委员会、中关村科技园区管理委员会 {#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui}
 
-### 频道 {#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-%E3%80%81-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui-pin-dao}
+### 频道 {#bei-jing-shi-ke-xue-ji-shu-wei-yuan-hui-zhong-guan-cun-ke-ji-yuan-qu-guan-li-wei-yuan-hui-pin-dao}
 
 <Route author="Fatpandac" example="/kwbeijing/col736" path="/kwbeijing/:channel" paramsDesc={['频道']}>
 
@@ -307,11 +307,11 @@ Language
 
 ### 两江新区信息公开网 {#chong-qing-shi-ren-min-zheng-fu-liang-jiang-xin-qu-xin-xi-gong-kai-wang}
 
-#### 党务公开
+#### 党务公开 {#chong-qing-shi-ren-min-zheng-fu-liang-jiang-xin-qu-xin-xi-gong-kai-wang-dang-wu-gong-kai}
 
 <Route author="nczitzk" example="/gov/chongqing/ljxq/dwgk" path="/gov/chongqing/ljxq/dwgk"/>
 
-#### 政务公开
+#### 政务公开 {#chong-qing-shi-ren-min-zheng-fu-liang-jiang-xin-qu-xin-xi-gong-kai-wang-zheng-wu-gong-kai}
 
 <Route author="nczitzk" example="/gov/chongqing/ljxq/zwgk/lzyj" path="/gov/chongqing/ljxq/zwgk/:caty" paramsDesc={['分类名']}>
 
@@ -323,7 +323,7 @@ Language
 
 ### 人力社保局 {#chong-qing-shi-ren-min-zheng-fu-ren-li-she-bao-ju}
 
-#### 人事考试通知
+#### 人事考试通知 {#chong-qing-shi-ren-min-zheng-fu-ren-li-she-bao-ju-ren-shi-kao-shi-tong-zhi}
 
 <Route author="Mai19930513" example="/gov/chongqing/rsks" path="/gov/chongqing/rsks" radar="1"/>
 
@@ -413,7 +413,7 @@ Language
 
 ### 惠州市人民政府 {#guang-dong-sheng-ren-min-zheng-fu-hui-zhou-shi-ren-min-zheng-fu}
 
-#### 政务公开
+#### 政务公开 {#guang-dong-sheng-ren-min-zheng-fu-hui-zhou-shi-ren-min-zheng-fu-zheng-wu-gong-kai}
 
 <Route author="Fatpandac" example="/gov/huizhou/zwgk/jgdt" path="/gov/huizhou/zwgk/:category?" paramsDesc={['资讯类别，可以从网址中得到，默认为政务要闻']}/>
 
@@ -485,9 +485,9 @@ Language
 
 </Route>
 
-## 国家新闻出版广电总局（弃用） {#guo-jia-xin-wen-chu-ban-guang-dian-zong-ju-%EF%BC%88-qi-yong-%EF%BC%89}
+## 国家新闻出版广电总局（弃用） {#guo-jia-xin-wen-chu-ban-guang-dian-zong-ju-qi-yong}
 
-### 游戏审批结果 {#guo-jia-xin-wen-chu-ban-guang-dian-zong-ju-%EF%BC%88-qi-yong-%EF%BC%89-you-xi-shen-pi-jie-guo}
+### 游戏审批结果 {#guo-jia-xin-wen-chu-ban-guang-dian-zong-ju-qi-yong-you-xi-shen-pi-jie-guo}
 
 <Route author="y2361547758" example="/gov/sapprft/approval/domesticnetgame/2020年1月" path="/gov/sapprft/approval/:channel/:detail?" paramsDesc={['栏目名', '标题关键字']}>
 
@@ -713,7 +713,7 @@ Language
 
 ### 长沙市人民政府 {#hu-nan-sheng-ren-min-zheng-fu-chang-sha-shi-ren-min-zheng-fu}
 
-#### 市长信箱
+#### 市长信箱 {#hu-nan-sheng-ren-min-zheng-fu-chang-sha-shi-ren-min-zheng-fu-shi-zhang-xin-xiang}
 
 <Route author="shansing" example="/gov/hunan/changsha/major-email" path="/gov/hunan/changsha/major-email" />
 
@@ -751,7 +751,7 @@ Language
 
 </Route>
 
-### 省教育考试院 - 新闻中心 {#jiang-su-sheng-ren-min-zheng-fu-sheng-jiao-yu-kao-shi-yuan---xin-wen-zhong-xin}
+### 省教育考试院 - 新闻中心 {#jiang-su-sheng-ren-min-zheng-fu-sheng-jiao-yu-kao-shi-yuan-xin-wen-zhong-xin}
 
 <Route author="schen1024" example="/jseea/news/zkyw" path="/gov/jiangsu/eea/:type?" paramsDesc={['分类，默认为 `zkyw`，具体参数见下表']} radar="1" rssbud="1">
 
@@ -981,7 +981,7 @@ Language
 
 </Route>
 
-### 上海市文旅局审批公告 {#shang-hai-shi-ren-min-zheng-fu-shang-hai-shi-wen-l%C3%BC-ju-shen-pi-gong-gao}
+### 上海市文旅局审批公告 {#shang-hai-shi-ren-min-zheng-fu-shang-hai-shi-wen-lv-ju-shen-pi-gong-gao}
 
 <Route author="gideonsenku" example="/gov/shanghai/wgj" path="/gov/shanghai/wgj/:page?" paramsDesc={['页数，默认第 1 页']} radar="1">
 </Route>
@@ -1598,7 +1598,7 @@ Language
 
 ## 中华人民共和国海关总署 {#zhong-hua-ren-min-gong-he-guo-hai-guan-zong-shu}
 
-### 拍卖信息 / 海关法规 {#zhong-hua-ren-min-gong-he-guo-hai-guan-zong-shu-pai-mai-xin-xi-%2F-hai-guan-fa-gui}
+### 拍卖信息 / 海关法规 {#zhong-hua-ren-min-gong-he-guo-hai-guan-zong-shu-pai-mai-xin-xi-hai-guan-fa-gui}
 
 <Route author="Jeason0228 TonyRL" example="/gov/customs/list/paimai" path="/gov/customs/list/:gchannel?" paramsDesc={['支持 `paimai` 及 `fagui` 2个频道，默认为 `paimai`']} anticrawler="1" puppeteer="1" radar="1" rssbud="1">
 
@@ -1641,7 +1641,7 @@ Language
 
 </Route>
 
-### 数据 - 最新发布 {#zhong-hua-ren-min-gong-he-guo-nong-ye-nong-cun-bu-shu-ju---zui-xin-fa-bu}
+### 数据 - 最新发布 {#zhong-hua-ren-min-gong-he-guo-nong-ye-nong-cun-bu-shu-ju-zui-xin-fa-bu}
 
 <Route author="MisteryMonster" example="/gov/moa/sjzxfb" path="/gov/moa/sjzxfb"/>
 

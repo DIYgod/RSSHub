@@ -162,7 +162,7 @@ Including 'cell', 'cancer-cell', 'cell-chemical-biology', 'cell-host-microbe', '
 
 ## elife {#elife}
 
-### Latest Research - Research by Subject {#elife-latest-research---research-by-subject}
+### Latest Research - Research by Subject {#elife-latest-research-research-by-subject}
 
 <Route author="emdoe" example="/elife/cell-biology" path="/elife/:subject" paramsDesc={['topic name', 'obtain it from the homepage. `latest` will include all topics.']} supportScihub="1"/>
 
@@ -228,7 +228,7 @@ Return results from 2020
 
 <Route author="Derekmini auto-bot-ty" example="/ieee/journal/70" path="/ieee/journal/:journal/:sortType?" paramsDesc={['Journal code, the number of the `punumber` in the URL','Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`']} radar="1" rssbud="1"/>
 
-### Journal (Papers within the recent 2 months) {#ieee-xplore-journal-(papers-within-the-recent-2-months)}
+### Journal (Papers within the recent 2 months) {#ieee-xplore-journal-papers-within-the-recent-2-months}
 
 <Route author="Derekmini auto-bot-ty" example="/ieee/journal/78/recent" path="/ieee/journal/:journal/recent/:sortType?" paramsDesc={['Journal code, the number of the `punumber` in the URL','Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`']} radar="1" rssbud="1"/>
 
@@ -315,7 +315,7 @@ You can get all short name of a journal from <https://www.nature.com/siteindex> 
 
 </Route>
 
-### News & Comment {#nature-journal-news-%26-comment}
+### News & Comment {#nature-journal-news-comment}
 
 <Route author="y9c TonyRL" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" paramsDesc={['short name for a journal']} supportScihub="1" radar="1" rssbud="1">
 
@@ -363,9 +363,9 @@ Only some journals are supported.
 
 <Route author="TonyRL" example="/nature/siteindex" path="/nature/siteindex"/>
 
-## Network and Distributed System Security (NDSS) Symposium {#network-and-distributed-system-security-(ndss)-symposium}
+## Network and Distributed System Security (NDSS) Symposium {#network-and-distributed-system-security-ndss-symposium}
 
-### Accepted papers {#network-and-distributed-system-security-(ndss)-symposium-accepted-papers}
+### Accepted papers {#network-and-distributed-system-security-ndss-symposium-accepted-papers}
 
 <Route author="ZeddYu" example="/ndss-symposium/ndss" path="/ndss-symposium/ndss">
 
@@ -377,7 +377,7 @@ Return results from 2020
 
 ### Oxford Academic {#oxford-university-press-oxford-academic}
 
-#### Journal
+#### Journal {#oxford-university-press-oxford-academic-journal}
 
 <Route author="Fatpandac" example="/oup/journals/adaptation" path="/oup/journals/:name" paramsDesc={['short name for a journal, can be found in URL']} anticrawler="1"/>
 
@@ -537,9 +537,9 @@ Date selection
 
 </Route>
 
-## The University of Chicago Press: Journals {#the-university-of-chicago-press%3A-journals}
+## The University of Chicago Press: Journals {#the-university-of-chicago-press-journals}
 
-### Current Issue {#the-university-of-chicago-press%3A-journals-current-issue}
+### Current Issue {#the-university-of-chicago-press-journals-current-issue}
 
 <Route author="TonyRL" example="/uchicago/journals/current/jpe" path="/uchicago/journals/current/:journal" paramsDesc={['Journal id, can be found in URL. [Browse journals by title](https://www.journals.uchicago.edu/action/showPublications)']} radar="1"/>
 
@@ -571,9 +571,9 @@ Return results from 2020
 
 </Route>
 
-## 环球法律评论 {#huan-qiu-fa-l%C3%BC-ping-lun}
+## 环球法律评论 {#huan-qiu-fa-lv-ping-lun}
 
-### 期刊 {#huan-qiu-fa-l%C3%BC-ping-lun-qi-kan}
+### 期刊 {#huan-qiu-fa-lv-ping-lun-qi-kan}
 
 <Route author="nczitzk" example="/globallawreview" path="/globallawreview"/>
 
