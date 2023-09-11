@@ -1,4 +1,4 @@
-FROM node:18-bullseye as dep-builder
+FROM node:18-bullseye AS dep-builder
 # Here we use the non-slim image to provide build-time deps (compilers and python), thus no need to install later.
 # This effectively speeds up qemu-based cross-build.
 
@@ -28,7 +28,7 @@ RUN \
 
 # ---------------------------------------------------------------------------------------------------------------------
 
-FROM debian:bullseye-slim as dep-version-parser
+FROM debian:bullseye-slim AS dep-version-parser
 # This stage is necessary to limit the cache miss scope.
 # With this stage, any modification to package.json won't break the build cache of the next two stages as long as the
 # version unchanged.
@@ -44,7 +44,7 @@ RUN \
 
 # ---------------------------------------------------------------------------------------------------------------------
 
-FROM node:18-bullseye-slim as docker-minifier
+FROM node:18-bullseye-slim AS docker-minifier
 # The stage is used to further reduce the image size by removing unused files.
 
 WORKDIR /minifier
@@ -77,7 +77,7 @@ RUN \
 
 # ---------------------------------------------------------------------------------------------------------------------
 
-FROM node:18-bullseye-slim as chromium-downloader
+FROM node:18-bullseye-slim AS chromium-downloader
 # This stage is necessary to improve build concurrency and minimize the image size.
 # Yeah, downloading Chromium never needs those dependencies below.
 
@@ -109,7 +109,7 @@ RUN \
 
 # ---------------------------------------------------------------------------------------------------------------------
 
-FROM node:18-bullseye-slim as app
+FROM node:18-bullseye-slim AS app
 
 LABEL org.opencontainers.image.authors="https://github.com/DIYgod/RSSHub"
 
