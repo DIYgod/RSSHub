@@ -2226,6 +2226,9 @@
         "hashman",
         "TonyRL"
     ],
+    "/github/pulse/:user/:repo/:period?": [
+        "jameschensmith"
+    ],
     "/github/repos/:user": [
         "DIYgod"
     ],
