@@ -316,6 +316,10 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 <Route author="hashman TonyRL" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo/:state?/:labels?" paramsDesc={['User name', 'Repo name', 'the state of pull requests. Can be either `open`, `closed`, or `all`. Default: `open`.', 'a list of comma separated label names']} radar="1" rssbud="1"/>
 
+### Repo Pulse {#github-repo-pulse}
+
+<Route author="jameschensmith" example="/github/pulse/DIYgod/RSSHub" path="/github/pulse/:user/:repo/:period?" paramsDesc={['User name', 'Repo name', 'Time frame, selected from a repository\'s Pulse/Insights page. Possible values are: `daily`, `halfweekly`, `weekly`, or `monthly`. Default: `weekly`. If your RSS client supports it, consider aligning the polling frequency of the feed to the period.']} radar="1" rssbud="1"/>
+
 ### User Followers {#github-user-followers}
 
 <Route author="HenryQW" path="/github/user/followers/:user" example="/github/user/followers/HenryQW" paramsDesc={['GitHub username']} radar="1" rssbud="1"/>
