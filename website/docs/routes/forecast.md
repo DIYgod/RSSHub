@@ -1,12 +1,12 @@
 # ❗️ Forecast and alerts
 
-## BADAN METEOROLOGI, KLIMATOLOGI, DAN GEOFISIKA(Indonesian) {#badan-meteorologi%2C-klimatologi%2C-dan-geofisika(indonesian)}
+## BADAN METEOROLOGI, KLIMATOLOGI, DAN GEOFISIKA(Indonesian) {#badan-meteorologi-klimatologi-dan-geofisika-indonesian}
 
-### Recent Earthquakes {#badan-meteorologi%2C-klimatologi%2C-dan-geofisika(indonesian)-recent-earthquakes}
+### Recent Earthquakes {#badan-meteorologi-klimatologi-dan-geofisika-indonesian-recent-earthquakes}
 
 <Route author="Shinanory" example="/bmkg/earthquake" path="/bmkg/earthquake" />
 
-### News {#badan-meteorologi%2C-klimatologi%2C-dan-geofisika(indonesian)-news}
+### News {#badan-meteorologi-klimatologi-dan-geofisika-indonesian-news}
 
 <Route author="Shinanory" example="/bmkg/news" path="/bmkg/news" />
 

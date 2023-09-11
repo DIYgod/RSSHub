@@ -8,7 +8,7 @@
 
 ## ABC News {#abc-news}
 
-### Channel & Topic {#abc-news-channel-%26-topic}
+### Channel & Topic {#abc-news-channel-topic}
 
 <Route author="nczitzk" example="/abc" path="/abc/:id?" paramsDesc={['id, can be found in the Channel or Topic page, can also be filled in the `documentId` in the source code of the page, see below, Just In by default']}>
 
@@ -228,7 +228,7 @@ Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-c
 
 ## ChinaFile {#chinafile}
 
-### Reporting & Opinion {#chinafile-reporting-%26-opinion}
+### Reporting & Opinion {#chinafile-reporting-opinion}
 
 <Route author="oppilate" example="/chinafile/all" path="/chinafile/:category?" paramsDesc={['Category, by default `all`']}>
 
@@ -330,9 +330,9 @@ The URL of the form `https://www.dnaindia.com/topic/dna-verified` demonstrates t
 
 </Route>
 
-## Korean Central News Agency (KCNA) 朝鲜中央通讯社 {#korean-central-news-agency-(kcna)-chao-xian-zhong-yang-tong-xun-she}
+## Korean Central News Agency (KCNA) 朝鲜中央通讯社 {#korean-central-news-agency-kcna-chao-xian-zhong-yang-tong-xun-she}
 
-### News {#korean-central-news-agency-(kcna)-chao-xian-zhong-yang-tong-xun-she-news}
+### News {#korean-central-news-agency-kcna-chao-xian-zhong-yang-tong-xun-she-news}
 
 <Route author="Rongronggg9" example="/kcna/en" path="/kcna/:lang/:category?" paramsDesc={['Language, refer to the table below', 'Category, refer to the table below']} anticrawler="1" radar="1" rssbud="1">
 
@@ -431,7 +431,7 @@ Only `s00017` is in English.
 
 <Route author="Andiedie" example="/nhk/news_web_easy" path="/nhk/news_web_easy"/>
 
-### WORLD-JAPAN - Top Stories {#nhk-world-japan---top-stories}
+### WORLD-JAPAN - Top Stories {#nhk-world-japan-top-stories}
 
 <Route author="TonyRL" example="/nhk/news/en" path="/nhk/news/:lang?" paramsDesc={['Language, see below, `en` by default']} radar="1" rssbud="1">
 
@@ -501,9 +501,9 @@ French podcast on the international politics. This feed provides a better readin
 
 </Route>
 
-## Radio Free Asia (RFA) 自由亚洲电台 {#radio-free-asia-(rfa)-zi-you-ya-zhou-dian-tai}
+## Radio Free Asia (RFA) 自由亚洲电台 {#radio-free-asia-rfa-zi-you-ya-zhou-dian-tai}
 
-### News {#radio-free-asia-(rfa)-zi-you-ya-zhou-dian-tai-news}
+### News {#radio-free-asia-rfa-zi-you-ya-zhou-dian-tai-news}
 
 <Route author="zphw" example="/rfa/english" path="/rfa/:language?/:channel?/:subChannel?" paramsDesc={['language, English by default', 'channel', 'subchannel, where applicable']} />
 
@@ -524,7 +524,7 @@ Parameters can be obtained from the official website, for instance:
 
 :::
 
-### Category/Topic/Author {#reuters-lu-tou-she-category%2Ftopic%2Fauthor}
+### Category/Topic/Author {#reuters-lu-tou-she-category-topic-author}
 
 <Route author="HenryQW proletarius101 LyleLee nczitzk" example="/reuters/world/us" path="/reuters/:category/:topic?" paramsDesc={['find it in the URL, or tables below', 'find it in the URL, or tables below']}>
 
@@ -900,9 +900,9 @@ Provides all of the articles by the specified New York Times author.
 
 <Route author="rainrdx" example="/nikkei/asia" path="/nikkei/asia" radar="1"/>
 
-## The Wall Street Journal (WSJ) 华尔街日报 {#the-wall-street-journal-(wsj)-hua-er-jie-ri-bao}
+## The Wall Street Journal (WSJ) 华尔街日报 {#the-wall-street-journal-wsj-hua-er-jie-ri-bao}
 
-### News {#the-wall-street-journal-(wsj)-hua-er-jie-ri-bao-news}
+### News {#the-wall-street-journal-wsj-hua-er-jie-ri-bao-news}
 
 <Route author="oppilate NavePnow" example="/wsj/en-us/opinion" path="/wsj/:lang/:category?" paramsDesc={['Language, `en-us`, `zh-cn`, `zh-tw`', 'Category. See below']}>
 
@@ -922,7 +922,7 @@ Provide full article RSS for WSJ topics.
 
 </Route>
 
-## Voice of America (VOA) {#voice-of-america-(voa)}
+## Voice of America (VOA) {#voice-of-america-voa}
 
 透過提取全文，以獲得更好的閱讀體驗
 
@@ -1119,7 +1119,7 @@ Category 列表：
 
 </Route>
 
-## 朝日新聞中文網（繁體中文版） {#chao-ri-xin-wen-zhong-wen-wang-%EF%BC%88-fan-ti-zhong-wen-ban-%EF%BC%89}
+## 朝日新聞中文網（繁體中文版） {#chao-ri-xin-wen-zhong-wen-wang-fan-ti-zhong-wen-ban}
 
 :::tip
 
@@ -1127,7 +1127,7 @@ Category 列表：
 
 :::
 
-### 新聞 {#chao-ri-xin-wen-zhong-wen-wang-%EF%BC%88-fan-ti-zhong-wen-ban-%EF%BC%89-xin-wen}
+### 新聞 {#chao-ri-xin-wen-zhong-wen-wang-fan-ti-zhong-wen-ban-xin-wen}
 
 <Route author="nczitzk" example="/asahi" path="/asahi/:genre?/:category?" paramsDesc={['类型，见下表，默认为トップ', '分类，见下表，默认为空，即该类型下所有新闻']}>
 
@@ -1867,7 +1867,7 @@ category 对应的关键词有
 
 </Route>
 
-### 轉角國際 - 首頁 {#lian-he-xin-wen-wang-zhuan-jiao-guo-ji---shou-ye}
+### 轉角國際 - 首頁 {#lian-he-xin-wen-wang-zhuan-jiao-guo-ji-shou-ye}
 
 <Route author="emdoe nczitzk" example="/udn/global" path="/udn/global/:category?" paramsDesc={['分类，见下表，默认为首頁']}>
 
@@ -1877,7 +1877,7 @@ category 对应的关键词有
 
 </Route>
 
-### 轉角國際 - 標籤 {#lian-he-xin-wen-wang-zhuan-jiao-guo-ji---biao-qian}
+### 轉角國際 - 標籤 {#lian-he-xin-wen-wang-zhuan-jiao-guo-ji-biao-qian}
 
 <Route author="nczitzk" example="/udn/global/tag/過去24小時" path="/udn/global/tag/:tag?" paramsDesc={['标签，可在对应标签页 URL 中找到']}>
 
@@ -1897,7 +1897,7 @@ category 对应的关键词有
 
 </Route>
 
-### 南都客户端（按南都号 ID） {#nan-fang-dou-shi-bao-nan-dou-ke-hu-duan-%EF%BC%88-an-nan-dou-hao-id%EF%BC%89}
+### 南都客户端（按南都号 ID） {#nan-fang-dou-shi-bao-nan-dou-ke-hu-duan-an-nan-dou-hao-id}
 
 <Route author="TimWu007" example="/oeeee/app/channel/50" path="/oeeee/app/channel/:id?" paramsDesc={['南都号 ID']}>
 
@@ -1905,7 +1905,7 @@ category 对应的关键词有
 
 </Route>
 
-### 南都客户端（按记者） {#nan-fang-dou-shi-bao-nan-dou-ke-hu-duan-%EF%BC%88-an-ji-zhe-%EF%BC%89}
+### 南都客户端（按记者） {#nan-fang-dou-shi-bao-nan-dou-ke-hu-duan-an-ji-zhe}
 
 <Route author="TimWu007" example="/oeeee/app/reporter/249" path="/oeeee/app/reporter/:id" paramsDesc={['记者 UID']}>
 
@@ -1915,7 +1915,7 @@ category 对应的关键词有
 
 ## 南方网 {#nan-fang-wang}
 
-### 南方 +（按栏目 ID） {#nan-fang-wang-nan-fang-%2B%EF%BC%88-an-lan-mu-id%EF%BC%89}
+### 南方 +（按栏目 ID） {#nan-fang-wang-nan-fang-an-lan-mu-id}
 
 <Route author="TimWu007" example="/southcn/nfapp/column/38" path="/southcn/nfapp/column/:column?" paramsDesc={['栏目或南方号 ID']}>
 
@@ -1931,7 +1931,7 @@ category 对应的关键词有
 
 </Route>
 
-### 南方 +（按作者） {#nan-fang-wang-nan-fang-%2B%EF%BC%88-an-zuo-zhe-%EF%BC%89}
+### 南方 +（按作者） {#nan-fang-wang-nan-fang-an-zuo-zhe}
 
 <Route author="TimWu007" example="/southcn/nfapp/reporter/969927791" path="/southcn/nfapp/reporter/:reporter" paramsDesc={['作者 UUID']}>
 
@@ -2529,13 +2529,13 @@ category 对应的关键词有
 
 </Route>
 
-## 新蓝网（浙江广播电视集团） {#xin-lan-wang-%EF%BC%88-zhe-jiang-guang-bo-dian-shi-ji-tuan-%EF%BC%89}
+## 新蓝网（浙江广播电视集团） {#xin-lan-wang-zhe-jiang-guang-bo-dian-shi-ji-tuan}
 
-### 浙江新闻联播 {#xin-lan-wang-%EF%BC%88-zhe-jiang-guang-bo-dian-shi-ji-tuan-%EF%BC%89-zhe-jiang-xin-wen-lian-bo}
+### 浙江新闻联播 {#xin-lan-wang-zhe-jiang-guang-bo-dian-shi-ji-tuan-zhe-jiang-xin-wen-lian-bo}
 
 <Route author="yhkang" example="/cztv/zjxwlb" path="/cztv/zjxwlb" />
 
-### 浙江新闻联播 - 每日合集 {#xin-lan-wang-%EF%BC%88-zhe-jiang-guang-bo-dian-shi-ji-tuan-%EF%BC%89-zhe-jiang-xin-wen-lian-bo---mei-ri-he-ji}
+### 浙江新闻联播 - 每日合集 {#xin-lan-wang-zhe-jiang-guang-bo-dian-shi-ji-tuan-zhe-jiang-xin-wen-lian-bo-mei-ri-he-ji}
 
 <Route author="yhkang" example="/cztv/zjxwlb/daily" path="/cztv/zjxwlb/daily" />
 
@@ -2684,7 +2684,7 @@ category 对应的关键词有
 
 ## 有線寬頻 i-CABLE {#you-xian-kuan-bin-i-cable}
 
-### 有線新聞 | Cable News {#you-xian-kuan-bin-i-cable-you-xian-xin-wen-%7C-cable-news}
+### 有線新聞 | Cable News {#you-xian-kuan-bin-i-cable-you-xian-xin-wen-cable-news}
 
 <Route author="tpnonthealps" example="/i-cable" path="/i-cable/:category?" paramsDesc={['分類，頁面內紅色標籤，下表僅列出部分，留空為全部']} radar="1">
 

@@ -675,9 +675,9 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-## 中国大学 MOOC (慕课) {#zhong-guo-da-xue-mooc-(-mu-ke-)}
+## 中国大学 MOOC (慕课) {#zhong-guo-da-xue-mooc-mu-ke}
 
-### 最新 {#zhong-guo-da-xue-mooc-(-mu-ke-)-zui-xin}
+### 最新 {#zhong-guo-da-xue-mooc-mu-ke-zui-xin}
 
 <Route author="xyqfer" example="/icourse163/newest" path="/icourse163/newest" />
 
@@ -705,7 +705,7 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
-### 计算机视觉专委会 - 学术动态 - 分类 {#zhong-guo-ji-suan-ji-xue-hui-ji-suan-ji-shi-jue-zhuan-wei-hui---xue-shu-dong-tai---fen-lei}
+### 计算机视觉专委会 - 学术动态 - 分类 {#zhong-guo-ji-suan-ji-xue-hui-ji-suan-ji-shi-jue-zhuan-wei-hui-xue-shu-dong-tai-fen-lei}
 
 <Route author="elxy" example="/ccf/ccfcv/xsdt/xsqy" path="/ccf/ccfcv/:channel/:category" paramsDesc={['频道，仅支持 `xsdt`', '分类，见下表，亦可在网站 url 里找到']}>
 

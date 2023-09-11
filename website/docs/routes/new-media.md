@@ -125,6 +125,7 @@
 
 <Route author="nczitzk" example="/8world/topic/xianggang-3" path="/8world/topic/:id" paramsDesc={['标签 id，可在对应标签页中找到']} />
 
+
 ## 9To5 {#9to5}
 
 ### 9To5 Sub-site {#9to5-9to5-sub-site}
@@ -197,7 +198,7 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 ## ASML Holding N.V {#asml-holding-n.v}
 
-### Press releases & announcements {#asml-holding-n.v-press-releases-%26-announcements}
+### Press releases & announcements {#asml-holding-n.v-press-releases-announcements}
 
 <Route author="nczitzk" example="/asml/press-releases" path="/asml/press-releases"/>
 
@@ -277,7 +278,7 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 <Route author="nczitzk" example="/cgtn/opinions" path="/cgtn/opinions"/>
 
-### Most Read & Most Share {#cgtn-most-read-%26-most-share}
+### Most Read & Most Share {#cgtn-most-read-most-share}
 
 <Route author="nczitzk" example="/cgtn/most/read/day" path="/cgtn/most/:type?/:time?" paramsDesc={['Type, `read` as most read, `share` as most share, `read` by default', 'Time range, `all` as all the time, `day` as today, `week` as this week, `month` as this month, `year` as this year, `all` by default']}/>
 
@@ -285,7 +286,7 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 <Route author="nczitzk" example="/cgtn/top" path="/cgtn/top"/>
 
-### Editors' Pick {#cgtn-editors'-pick}
+### Editors' Pick {#cgtn-editors-pick}
 
 <Route author="nczitzk" example="/cgtn/pick" path="/cgtn/pick"/>
 
@@ -309,7 +310,7 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 ## China.com 中华网 {#china.com-zhong-hua-wang}
 
-### Military - Military News 军事 - 军事新闻 {#china.com-zhong-hua-wang-military---military-news-jun-shi---jun-shi-xin-wen}
+### Military - Military News 军事 - 军事新闻 {#china.com-zhong-hua-wang-military-military-news-jun-shi-jun-shi-xin-wen}
 
 <Route author="jiaaoMario" example="/china/news/military" path="/china/news/military">
 </Route>
@@ -406,7 +407,7 @@ Category of news
 
 </Route>
 
-### 二手市集 - 物品搜尋 {#dcfever-er-shou-shi-ji---wu-pin-sou-xun}
+### 二手市集 - 物品搜尋 {#dcfever-er-shou-shi-ji-wu-pin-sou-xun}
 
 <Route author="TonyRL" example="/dcfever/trading/search/Sony" path="/dcfever/trading/search/:keyword/:mainCat?" paramsDesc={['關鍵字', '主要分類 ID，見上表']} radar="1" />
 
@@ -427,6 +428,29 @@ Category of news
 ### Blog {#deepmind-blog}
 
 <Route author="nczitzk" example="/deepmind/blog" path="/deepmind/blog" radar="1" rssbud="1"/>
+
+## DN.com {#dn.com}
+
+### News {#dn.com-news}
+
+<Route author="nczitzk" example="/dn/en-us/news" path="/dn/:language/news/:category?" paramsDesc={['Language, see below', 'Category, see below, The Latest by default']} radar="1" rssbud="1">
+
+#### Language {#dn.com-news-language}
+
+| English | 中文  |
+| ------- | ----- |
+| en-us   | zh-cn |
+
+#### Category {#dn.com-news-category}
+
+| English Category     | 中文分类 | Category id |
+| -------------------- | -------- | ----------- |
+| The Latest           | 最新     |             |
+| Industry Information | 行业资讯 | category-1  |
+| Knowledge            | 域名知识 | category-2  |
+| Investment           | 域名投资 | category-3  |
+
+</Route>
 
 ## DoNews {#donews}
 
@@ -958,6 +982,85 @@ Provides a better reading experience (full text articles) over the official one.
 
 </Route>
 
+## Kantar Worldpanel {#kantar-worldpanel}
+
+### News Centre {#kantar-worldpanel-news-centre}
+
+<Route author="nczitzk" example="/kantarworldpanel/cn-en/news" path="/kantarworldpanel/:region/:category?" paramsDesc={['Region id, see below, Chinese Mainland English by default', 'Category, can be found in URL, News by default']} radar="1" rssbud="1">
+
+| Region      | id    |
+| ----------- | ----- |
+| China Eng   | cn-en |
+| China 中文  | cn    |
+| Indonesia   | id    |
+| Korea       | kr    |
+| Malaysia    | my    |
+| Philippines | ph    |
+| Taiwan      | tw    |
+| Thailand    | th    |
+| Vietnam     | vn    |
+
+<details>
+  <summary>More categories</summary>
+
+#### China Eng {#kantar-worldpanel-news-centre-china-eng}
+
+  | News | Retail Snapshot | Publications         | In the media |
+  | ---- | --------------- | -------------------- | ------------ |
+  | news | publications    | publications/Reports | In-the-media |
+
+#### China 中文 {#kantar-worldpanel-news-centre-china-zhong-wen}
+
+  | 新闻发布 | 零售市场快报 | 市场报告                    | 媒体报道       |
+  | -------- | ------------ | --------------------------- | -------------- |
+  | news     | publications | publications/China-Insights | press-releases |
+
+#### Indonesia {#kantar-worldpanel-news-centre-indonesia}
+
+  | News | Kantar Scoop                  | Video Series      | Podcast      | Ready, Steady, Shop!     | Asia Pulse      |
+  | ---- | ----------------------------- | ----------------- | ------------ | ------------------------ | --------------- |
+  | News | News/Kantar-Worldpanel-Series | News/video-series | News/podcast | News/asia-shopper-series | News/Asia-Pulse |
+
+#### Korea {#kantar-worldpanel-news-centre-korea}
+
+  | News | Insight Reports | In the Media   |
+  | ---- | --------------- | -------------- |
+  | news | publications    | press-releases |
+
+#### Malaysia {#kantar-worldpanel-news-centre-malaysia}
+
+  | News |
+  | ---- |
+  | news |
+
+#### Philippines {#kantar-worldpanel-news-centre-philippines}
+
+  | Latest Insights | In the Media | Events |
+  | --------------- | ------------ | ------ |
+  | Latest-Insights | In-the-Media | events |
+
+#### Taiwan {#kantar-worldpanel-news-centre-taiwan}
+
+  | 聚焦台灣                 | WOW SPOT     | 市場報告     | 媒體報導       | 活動   |
+  | ------------------------ | ------------ | ------------ | -------------- | ------ |
+  | news/spotlight-on-taiwan | news/wowspot | publications | press-releases | events |
+
+#### Thailand {#kantar-worldpanel-news-centre-thailand}
+
+  | News |
+  | ---- |
+  | news |
+
+#### Vietnam {#kantar-worldpanel-news-centre-vietnam}
+
+  | Insights | FMCG Monitor      | Ready, Steady, Shop!   | Asia Pulse      | IN THE MEDIA |
+  | -------- | ----------------- | ---------------------- | --------------- | ------------ |
+  | news     | news/FMCG-Monitor | news/ready-steady-shop | news/asia-pulse | In-the-media |
+
+</details>
+
+</Route>
+
 ## KBS {#kbs}
 
 ### News {#kbs-news}
@@ -1034,7 +1137,7 @@ Edition
 
 </Route>
 
-### TODAY - Channel {#line-today---channel}
+### TODAY - Channel {#line-today-channel}
 
 <Route author="TonyRL" example="/line/today/th/publisher/101048" path="/line/today/:edition/publisher/:id" paramsDesc={['Edition, see table above', 'Channel ID, can be found in URL']} radar="1" />
 
@@ -1119,7 +1222,7 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ## Matters {#matters}
 
-### Latest, heat, essence {#matters-latest%2C-heat%2C-essence}
+### Latest, heat, essence {#matters-latest-heat-essence}
 
 <Route author="xyqfer Cerebrater xosdy" example="/matters/latest/heat" path="/matters/latest/:type?" paramsDesc={['Defaults to latest, see table below']} radar="1" rssbud="1">
 
@@ -1278,7 +1381,7 @@ This route provides a flexible plan with full text content to subscribe specific
 
 </Route>
 
-### ChatGPT - Release Notes {#openai-chatgpt---release-notes}
+### ChatGPT - Release Notes {#openai-chatgpt-release-notes}
 
 <Route author="ETiV" example="/openai/chatgpt/release-notes" path="/openai/chatgpt/release-notes" />
 
@@ -1351,13 +1454,13 @@ This route provides a flexible plan with full text content to subscribe specific
 
 ## Phoronix {#phoronix}
 
-### News & Reviews {#phoronix-news-%26-reviews}
+### News & Reviews {#phoronix-news-reviews}
 
 <Route author="oppliate" example="/phoronix/news_topic/Intel" path="/phoronix/:page/:queryOrItem?" paramsDesc={['Page name', 'For `category` it corresponds to `item`, for other pages it\'s `q`. You may find available parameters from their navigator links. E.g. to subscribe to the category page `https://www.phoronix.com/scan.php?page=category&item=Computers`, fill in the path `/phoronix/category/Computers`']} radar="1"/>
 
 ## PMCAFF {#pmcaff}
 
-### 今日推荐 / 精选 {#pmcaff-jin-ri-tui-jian-%2F-jing-xuan}
+### 今日推荐 / 精选 {#pmcaff-jin-ri-tui-jian-jing-xuan}
 
 <Route author="Jeason0228" example="/pmcaff/list/2" path="/pmcaff/list/:typeid" paramsDesc={['分类 id,1=今天推荐,2=精选']}/>
 
@@ -1690,7 +1793,7 @@ Member ID
 
 <Route author="emdoe" example="/simonsfoundation/articles" path="/simonsfoundation/articles"/>
 
-### What We’re Reading {#simons-foundation-what-we%E2%80%99re-reading}
+### What We’re Reading {#simons-foundation-what-we-re-reading}
 
 <Route author="emdoe" example="/simonsfoundation/recommend" path="/simonsfoundation/recommend"/>
 
@@ -2270,9 +2373,9 @@ Supported sub-sites:
 
 <Route author="nczitzk" example="/pmthinking" path="/pmthinking" />
 
-## 城农 Growin' City {#cheng-nong-growin'-city}
+## 城农 Growin' City {#cheng-nong-growin-city}
 
-### 城农资讯观点 {#cheng-nong-growin'-city-cheng-nong-zi-xun-guan-dian}
+### 城农资讯观点 {#cheng-nong-growin-city-cheng-nong-zi-xun-guan-dian}
 
 <Route author="nczitzk" example="/growincity/news" path="/growincity/news/:id?" anticrawler="1" paramsDesc={['分类 id，见下表，默认为原创内容']}>
 
@@ -2450,9 +2553,9 @@ area 分区选项
 
 <Route author="LogicJake" example="/imaijia/category/xls" path="/imaijia/category/:category" paramsDesc={['类别id，可在 URL 中找到']} />
 
-## 电獭少女 {#dian-ta-shao-n%C3%BC}
+## 电獭少女 {#dian-ta-shao-nv}
 
-### 分类 {#dian-ta-shao-n%C3%BC-fen-lei}
+### 分类 {#dian-ta-shao-nv-fen-lei}
 
 <Route author="TonyRL" example="/agirls/app" path="/agirls/:category?" paramsDesc={['分类，默认为最新文章，可在对应主题页的 URL 中找到，下表仅列出部分']} radar="1" rssbud="1">
 
@@ -2462,11 +2565,11 @@ area 分区选项
 
 </Route>
 
-### 精选主题 {#dian-ta-shao-n%C3%BC-jing-xuan-zhu-ti}
+### 精选主题 {#dian-ta-shao-nv-jing-xuan-zhu-ti}
 
 <Route author="TonyRL" example="/agirls/topic/iphone13" path="/agirls/topic/:topic" paramsDesc={['精选主题，可通过下方精选主题列表获得']} radar="1" rssbud="1"/>
 
-### 当前精选主题列表 {#dian-ta-shao-n%C3%BC-dang-qian-jing-xuan-zhu-ti-lie-biao}
+### 当前精选主题列表 {#dian-ta-shao-nv-dang-qian-jing-xuan-zhu-ti-lie-biao}
 
 <Route author="TonyRL" example="/agirls/topic_list" path="/agirls/topic_list" radar="1" rssbud="1"/>
 
@@ -2639,7 +2742,7 @@ area 分区选项
 
 :::
 
-### 专题・栏目 {#duan-chuan-mei-zhuan-ti-%E3%83%BB-lan-mu}
+### 专题・栏目 {#duan-chuan-mei-zhuan-ti-lan-mu}
 
 <Route author="prnake" example="/theinitium/channel/latest/zh-hans" path="/theinitium/channel/:type?/:language?" paramsDesc={['栏目，缺省为最新', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']}>
 
@@ -2653,7 +2756,7 @@ Type 栏目：
 
 </Route>
 
-### 话题・标签 {#duan-chuan-mei-hua-ti-%E3%83%BB-biao-qian}
+### 话题・标签 {#duan-chuan-mei-hua-ti-biao-qian}
 
 <Route author="AgFlore" example="/theinitium/tags/2019_10/zh-hans" path="/theinitium/tags/:type/:language?" paramsDesc={['话题 ID，可从话题页 URL 中获取，如 <https://theinitium.com/tags/2019_10/>', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']}/>
 
@@ -2679,9 +2782,9 @@ Type 栏目：
 
 <Route author="WenryXu" example="/duozhi" path="/duozhi"/>
 
-## 法律白話文運動 {#fa-l%C3%BC-bai-hua-wen-yun-dong}
+## 法律白話文運動 {#fa-lv-bai-hua-wen-yun-dong}
 
-### 最新文章 {#fa-l%C3%BC-bai-hua-wen-yun-dong-zui-xin-wen-zhang}
+### 最新文章 {#fa-lv-bai-hua-wen-yun-dong-zui-xin-wen-zhang}
 
 <Route author="emdoe" example="/plainlaw/archives" path="/plainlaw/archives"/>
 
@@ -2883,9 +2986,9 @@ others = 热点新闻 + 滚动新闻
 
 </Route>
 
-## 国家高端智库 / 综合开发研究院 {#guo-jia-gao-duan-zhi-ku-%2F-zong-he-kai-fa-yan-jiu-yuan}
+## 国家高端智库 / 综合开发研究院 {#guo-jia-gao-duan-zhi-ku-zong-he-kai-fa-yan-jiu-yuan}
 
-### 栏目 {#guo-jia-gao-duan-zhi-ku-%2F-zong-he-kai-fa-yan-jiu-yuan-lan-mu}
+### 栏目 {#guo-jia-gao-duan-zhi-ku-zong-he-kai-fa-yan-jiu-yuan-lan-mu}
 
 <Route author="nczitzk" example="/cdi" path="/cdi/:id?" paramsDesc={['分类，见下表，默认为综研国策']}>
 
@@ -3041,7 +3144,7 @@ others = 热点新闻 + 滚动新闻
 
 ## 贾真的电商 108 将 {#jia-zhen-de-dian-shang-108-jiang}
 
-### 「108 将」实战分享 {#jia-zhen-de-dian-shang-108-jiang-%E3%80%8C108-jiang-%E3%80%8D-shi-zhan-fen-xiang}
+### 「108 将」实战分享 {#jia-zhen-de-dian-shang-108-jiang-108-jiang-shi-zhan-fen-xiang}
 
 <Route author="nczitzk" example="/jiazhen108" path="/jiazhen108" />
 
@@ -3165,19 +3268,19 @@ column 为 third 时可选的 category:
 
 ## 卡卡洛普 {#ka-ka-luo-pu}
 
-### 宅宅新聞 - 分類 {#ka-ka-luo-pu-zhai-zhai-xin-wen---fen-lei}
+### 宅宅新聞 - 分類 {#ka-ka-luo-pu-zhai-zhai-xin-wen-fen-lei}
 
 <Route author="TonyRL" example="/gamme/news" path="/gamme/news/:category?" paramsDesc={['分類名，可在 URL 找到，預設為 `all`']} radar="1" rssbud="1"/>
 
-### 宅宅新聞 - 標籤 {#ka-ka-luo-pu-zhai-zhai-xin-wen---biao-qian}
+### 宅宅新聞 - 標籤 {#ka-ka-luo-pu-zhai-zhai-xin-wen-biao-qian}
 
 <Route author="TonyRL" example="/gamme/news/tag/歐派" path="/gamme/news/tag/:tag" paramsDesc={['標籤，可在 URL 找到']} radar="1" rssbud="1"/>
 
-### 西斯新聞 - 分類 {#ka-ka-luo-pu-xi-si-xin-wen---fen-lei}
+### 西斯新聞 - 分類 {#ka-ka-luo-pu-xi-si-xin-wen-fen-lei}
 
 <Route author="TonyRL" example="/gamme/sexynews" path="/gamme/sexynews/:category?" paramsDesc={['分類名，可在 URL 找到，預設為 `all`']} radar="1" rssbud="1"/>
 
-### 西斯新聞 - 標籤 {#ka-ka-luo-pu-xi-si-xin-wen---biao-qian}
+### 西斯新聞 - 標籤 {#ka-ka-luo-pu-xi-si-xin-wen-biao-qian}
 
 <Route author="TonyRL" example="/gamme/sexynews/tag/歐派" path="/gamme/sexynews/tag/:tag" paramsDesc={['標籤，可在 URL 找到']} radar="1" rssbud="1"/>
 
@@ -3545,9 +3648,9 @@ column 为 third 时可选的 category:
 
 </Route>
 
-## 律动 {#l%C3%BC-dong}
+## 律动 {#lv-dong}
 
-### 新闻快讯 {#l%C3%BC-dong-xin-wen-kuai-xun}
+### 新闻快讯 {#lv-dong-xin-wen-kuai-xun}
 
 <Route author="Fatpandac jameshih" example="/blockbeats/newsflash" path="/blockbeats/:channel?" paramsDesc={['类型，见下表，默认为快讯']}>
 
@@ -4113,9 +4216,9 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/ruancan/user/72" path="/ruancan/user/:id?" paramsDesc={['用户 id，可在对应用户页 URL 中找到']}/>
 
-## 上下游 News&Market {#shang-xia-you-news%26market}
+## 上下游 News&Market {#shang-xia-you-news-market}
 
-### 分類 {#shang-xia-you-news%26market-fen-lei}
+### 分類 {#shang-xia-you-news-market-fen-lei}
 
 <Route author="nczitzk" example="/newsmarket" path="/newsmarket/:category?" paramsDesc={['分类，见下表，默认为首页']}>
 
@@ -4382,9 +4485,9 @@ column 为 third 时可选的 category:
 
 <Route author="Fatpandac" example="/tisi/latest" path="/tisi/latest"/>
 
-## 通識・現代中國 {#tong-shi-%E3%83%BB-xian-dai-zhong-guo}
+## 通識・現代中國 {#tong-shi-xian-dai-zhong-guo}
 
-### 議題熱話 {#tong-shi-%E3%83%BB-xian-dai-zhong-guo-yi-ti-re-hua}
+### 議題熱話 {#tong-shi-xian-dai-zhong-guo-yi-ti-re-hua}
 
 <Route author="nczitzk" example="/chiculture/topic" path="/chiculture/topic/:category?" paramsDesc={['分类，见下表，默认为全部']}>
 
@@ -4493,7 +4596,7 @@ column 为 third 时可选的 category:
 
 </Route>
 
-### 网易号（通用） {#wang-yi-hao-wang-yi-hao-%EF%BC%88-tong-yong-%EF%BC%89}
+### 网易号（通用） {#wang-yi-hao-wang-yi-hao-tong-yong}
 
 <Route author="mjysci" example="/163/dy2/T1555591616739" path="/163/dy2/:id" paramsDesc={['id，该网易号主页网址最后一项html的文件名']} anticrawler="1"/>
 
@@ -4582,15 +4685,15 @@ column 为 third 时可选的 category:
 
 :::
 
-### 公众号（CareerEngine 来源） {#wei-xin-gong-zhong-hao-%EF%BC%88careerengine-lai-yuan-%EF%BC%89}
+### 公众号（CareerEngine 来源） {#wei-xin-gong-zhong-hao-careerengine-lai-yuan}
 
 <Route author="HenryQW" example="/wechat/ce/595a5b14d7164e53908f1606" path="/wechat/ce/:id" paramsDesc={['公众号 id，在 [CareerEngine](https://search.careerengine.us/) 搜索公众号，通过 URL 中找到对应的公众号 id']} anticrawler="1"/>
 
-### 公众号（二十次幂来源） {#wei-xin-gong-zhong-hao-%EF%BC%88-er-shi-ci-mi-lai-yuan-%EF%BC%89}
+### 公众号（二十次幂来源） {#wei-xin-gong-zhong-hao-er-shi-ci-mi-lai-yuan}
 
 <Route author="sanmmm" example="/wechat/ershicimi/813oxJOl" path="/wechat/ershicimi/:id" paramsDesc={['公众号id，打开公众号页，在 URL 中找到 id']} anticrawler="1"/>
 
-### 公众号（Telegram 频道来源） {#wei-xin-gong-zhong-hao-%EF%BC%88telegram-pin-dao-lai-yuan-%EF%BC%89}
+### 公众号（Telegram 频道来源） {#wei-xin-gong-zhong-hao-telegram-pin-dao-lai-yuan}
 
 <Route author="LogicJake Rongronggg9" example="/wechat/tgchannel/lifeweek" path="/wechat/tgchannel/:id/:mpName?/:searchQueryType?" paramsDesc={['公众号绑定频道 id', '欲筛选的公众号全名（URL-encoded，精确匹配），在频道订阅了多个公众号时可选用', '搜索查询类型，见下表']}>
 
@@ -4614,19 +4717,19 @@ column 为 third 时可选的 category:
 
 </Route>
 
-### 公众号（自由微信来源） {#wei-xin-gong-zhong-hao-%EF%BC%88-zi-you-wei-xin-lai-yuan-%EF%BC%89}
+### 公众号（自由微信来源） {#wei-xin-gong-zhong-hao-zi-you-wei-xin-lai-yuan}
 
 见 [#自由微信](#zi-you-wei-xin)
 
-### 公众号（Wechat2RSS 来源） {#wei-xin-gong-zhong-hao-%EF%BC%88wechat2rss-lai-yuan-%EF%BC%89}
+### 公众号（Wechat2RSS 来源） {#wei-xin-gong-zhong-hao-wechat2rss-lai-yuan}
 
 <Route author="TonyRL" example="/wechat/wechat2rss/5b925323244e9737c39285596c53e3a2f4a30774" path="/wechat/wechat2rss/:id" paramsDesc={['公众号 id，打开 `https://wechat2rss.xlab.app/posts/list/`，在 URL 中找到 id；注意不是公众号页的 id，而是订阅的 id']} radar="1"/>
 
-### 公众号（微小领来源） {#wei-xin-gong-zhong-hao-%EF%BC%88-wei-xiao-ling-lai-yuan-%EF%BC%89}
+### 公众号（微小领来源） {#wei-xin-gong-zhong-hao-wei-xiao-ling-lai-yuan}
 
 见 [#微小领](#wei-xiao-ling)
 
-### 公众号栏目 (非推送 & 历史消息) {#wei-xin-gong-zhong-hao-lan-mu-(-fei-tui-song-%26-li-shi-xiao-xi-)}
+### 公众号栏目 (非推送 & 历史消息) {#wei-xin-gong-zhong-hao-lan-mu-fei-tui-song-li-shi-xiao-xi}
 
 <Route author="MisteryMonster" example="/wechat/mp/homepage/MzA3MDM3NjE5NQ==/16" path="/wechat/mp/homepage/:biz/:hid/:cid?" paramsDesc={['公众号id', '分页id', '页内栏目']} radar="1" rssbud="1" anticrawler="1">
 
@@ -4644,15 +4747,15 @@ column 为 third 时可选的 category:
 
 </Route>
 
-### 公众号（优读来源） {#wei-xin-gong-zhong-hao-%EF%BC%88-you-du-lai-yuan-%EF%BC%89}
+### 公众号（优读来源） {#wei-xin-gong-zhong-hao-you-du-lai-yuan}
 
 <Route author="kt286" example="/wechat/uread/shensing" path="/wechat/uread/:userid" paramsDesc={['公众号的微信号, 可在 微信-公众号-更多资料 中找到。并不是所有的都支持，能不能用随缘']}/>
 
-### 公众号（公众号 360 来源） {#wei-xin-gong-zhong-hao-%EF%BC%88-gong-zhong-hao-360-lai-yuan-%EF%BC%89}
+### 公众号（公众号 360 来源） {#wei-xin-gong-zhong-hao-gong-zhong-hao-360-lai-yuan}
 
 见 [#公众号 360](#gong-zhong-hao-360)
 
-### 公众号（微阅读来源） {#wei-xin-gong-zhong-hao-%EF%BC%88-wei-yue-du-lai-yuan-%EF%BC%89}
+### 公众号（微阅读来源） {#wei-xin-gong-zhong-hao-wei-yue-du-lai-yuan}
 
 <Route author="Rongronggg9" example="/wechat/data258/gh_cbbad4c1d33c" path="/data258/:id?" paramsDesc={['公众号 id 或分类 id，可在公众号页或分类页 URL 中找到；若略去，则抓取首页']} anticrawler="1" radar="1" rssbud="1" selfhost="1">
 
@@ -4665,7 +4768,7 @@ column 为 third 时可选的 category:
 
 </Route>
 
-### 公众号（搜狗来源） {#wei-xin-gong-zhong-hao-%EF%BC%88-sou-gou-lai-yuan-%EF%BC%89}
+### 公众号（搜狗来源） {#wei-xin-gong-zhong-hao-sou-gou-lai-yuan}
 
 <Route author="NavePnow" example="/wechat/sogou/qimao0908" path="/wechat/sogou/:id" paramsDesc={['公众号 id, 打开 weixin.sogou.com 并搜索相应公众号， 在 URL 中找到 id']}/>
 
@@ -4973,7 +5076,7 @@ column 为 third 时可选的 category:
 
 ## 新浪 {#xin-lang}
 
-### 科技 - 科学探索 {#xin-lang-ke-ji---ke-xue-tan-suo}
+### 科技 - 科学探索 {#xin-lang-ke-ji-ke-xue-tan-suo}
 
 <Route author="LogicJake" example="/sina/discovery/zx" path="/sina/discovery/:type" paramsDesc={['订阅分区类型，见下表']} radar="1">
 
@@ -4993,7 +5096,7 @@ column 为 third 时可选的 category:
 
 </Route>
 
-### 体育 - 综合 {#xin-lang-ti-yu---zong-he}
+### 体育 - 综合 {#xin-lang-ti-yu-zong-he}
 
 <Route author="nczitzk" example="/sina/sports/volley" path="/sina/sports/:type" paramsDesc={['运动类型，见下表']} radar="1">
 
@@ -5023,7 +5126,7 @@ column 为 third 时可选的 category:
 
 </Route>
 
-### 专栏 - 创事记 {#xin-lang-zhuan-lan---chuang-shi-ji}
+### 专栏 - 创事记 {#xin-lang-zhuan-lan-chuang-shi-ji}
 
 <Route author="xapool" example="/sina/csj" path="/sina/csj" radar="1"/>
 
@@ -5119,7 +5222,7 @@ column 为 third 时可选的 category:
 
 <Route author="nczitzk" example="/interesting-sky" path="/interesting-sky"/>
 
-### 年度天象（天文年历） {#you-qu-tian-wen-qi-guan-nian-du-tian-xiang-%EF%BC%88-tian-wen-nian-li-%EF%BC%89}
+### 年度天象（天文年历） {#you-qu-tian-wen-qi-guan-nian-du-tian-xiang-tian-wen-nian-li}
 
 <Route author="nczitzk" example="/interesting-sky/astronomical_events" path="/interesting-sky/astronomical_events/:year?" paramsDesc={['年份，默认为当前年份']}/>
 

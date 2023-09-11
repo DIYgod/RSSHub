@@ -24,25 +24,25 @@ const processors = [sortByHeading, slugId];
 //             type,
 //             lang,
 //         }));
-const loopNav = (nav, lang) =>
-    nav.flatMap((e) => {
-        if (e.items) {
-            return loopNav(e.items, lang);
-        }
-        if (e.link.endsWith('/')) {
-            return {
-                path: path.resolve(__dirname, '..', e.link.slice(1), 'README.md'),
-                type: file.NAV_TYPE,
-                lang,
-            };
-        } else {
-            return {
-                path: path.resolve(__dirname, '..', `${e.link.replace(/^\//, '')}.md`),
-                type: file.NAV_TYPE,
-                lang,
-            };
-        }
-    });
+// const loopNav = (nav, lang) =>
+//     nav.flatMap((e) => {
+//         if (e.items) {
+//             return loopNav(e.items, lang);
+//         }
+//         if (e.link.endsWith('/')) {
+//             return {
+//                 path: path.resolve(__dirname, '..', e.link.slice(1), 'README.md'),
+//                 type: file.NAV_TYPE,
+//                 lang,
+//             };
+//         } else {
+//             return {
+//                 path: path.resolve(__dirname, '..', `${e.link.replace(/^\//, '')}.md`),
+//                 type: file.NAV_TYPE,
+//                 lang,
+//             };
+//         }
+//     });
 // const loopType = (sidebar, lang, prefix) => loopSideBar(sidebar[0].children, file.GUIDE_TYPE, lang, prefix).concat(loopSideBar(sidebar[1].children, file.ROUTE_TYPE, lang, prefix));
 
 /**
@@ -59,7 +59,7 @@ const buildFileList = async () => {
     const fileList = config.guideSidebar[2].items.map(({ id }) => ({
         type: file.ROUTE_TYPE,
         path: path.resolve(__dirname, '..', `./${id}.md`),
-        lang: 'zh-CN',
+        lang: file.LANG_EN,
     }));
     // let fileList = [];
     // Object.keys(config.themeConfig.locales).forEach((key) => {
