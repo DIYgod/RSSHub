@@ -904,6 +904,10 @@ https://rsshub.app/threads/zuck/showAuthorInTitle=1&showAuthorInDesc=1&showQuote
 
 </Route>
 
+### Channel with long videos and file support {#tg-channel}
+
+<Route author="synchrone" example="/tg/channel/telegram" path="/tg/channel/:name" paramsDesc={['Channel name, without @']}/>
+
 ## TikTok {#tiktok}
 
 ### User {#tiktok-user}
