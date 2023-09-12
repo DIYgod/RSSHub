@@ -3081,6 +3081,16 @@ paramsDesc={['公告类型，详见表格']}>
 
 </Route>
 
+### 研究生院 {#wu-han-da-xue-yan-jiu-sheng-yuan}
+
+<Route author="Delreyaa" example="/whu/gs/0" path="/whu/gs/:type?" paramsDesc={['分类，默认为 `0`，具体参数见下表']}>
+
+| 公告类型 | 新闻动态 | 学术探索 | 院系风采 | 通知(全部) | 通知(招生) | 通知(培养) | 通知(学位) | 通知(质量与专业学位) | 通知(综合) |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 参数     | 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8        |
+
+</Route>
+
 ## 武汉纺织大学 {#wu-han-fang-zhi-da-xue}
 
 ### 信息门户公告 {#wu-han-fang-zhi-da-xue-xin-xi-men-hu-gong-gao}
