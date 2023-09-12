@@ -219,7 +219,7 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 > Only support IMAP protocol, email password and other settings refer to [Email setting](/install)
 
-<Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" paramsDesc={['Email account']} selfhost="1"/>
+<Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email/:folder*" paramsDesc={['Email account', 'Inbox name, `INBOX` by default']} selfhost="1"/>
 
 ## Emi Nitta official website 新田惠海官方网站 {#emi-nitta-official-website-xin-tian-hui-hai-guan-fang-wang-zhan}
 
