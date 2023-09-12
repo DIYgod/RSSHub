@@ -2009,6 +2009,12 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="geekrainy" example="/kmust/job/jobfairs" path="/kmust/job/jobfairs" />
 
+## 乐山师范学院 {#le-shan-shi-fan-xue-yuan}
+
+### 教学部通知公告 {#le-shan-shi-fan-xue-yuan-jiao-xue-bu-tong-zhi-gong-gao}
+
+<Route author="nyaShine" example="/lsnu/jiaowc/tzgg" path="/lsnu/jiaowc/tzgg" radar="1" />
+
 ## 辽宁工程技术大学 {#liao-ning-gong-cheng-ji-shu-da-xue}
 
 ### 教务公告 {#liao-ning-gong-cheng-ji-shu-da-xue-jiao-wu-gong-gao}
