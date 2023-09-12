@@ -3054,30 +3054,30 @@ paramsDesc={['公告类型，详见表格']}>
 
 </Route>
 
-### 武汉大学新闻网 {#wu-han-da-xue-wu-han-da-xue-xin-wen-wang}
+### 新闻网 {#wu-han-da-xue-xin-wen-wang}
 
-<Route author="SChen1024" example="/whu/news/wdyw" path="/whu/news/:type?" paramsDesc={['分类，默认为 `wdyw`，具体参数见下表']}>
+<Route author="SChen1024" example="/whu/news/wdzx/wdyw" path="/whu/news/:type*" paramsDesc={['分类，默认为 `wdyw`，具体参数见下表']} radar="1">
 
 注意：除了 `kydt` 代表学术动态，其余页面均是拼音首字母小写.
 
-| **内容** | **参数** |
-| :------: | :------: |
-| 武大要闻 |   wdyw   |
-| 媒体武大 |   mtwd   |
-| 专题报道 |   ztbd   |
-| 珞珈人物 |   ljrw   |
-| 国际交流 |   gjjl   |
-| 缤纷校园 |   bfxy   |
-| 校友之声 |   xyzs   |
-| 珞珈论坛 |   ljlt   |
-| 新闻热线 |   xwrx   |
-| 头条新闻 |   ttxw   |
-| 综合新闻 |   zhxw   |
-| 珞珈影像 |   ljyx   |
-| 学术动态 |   kydt   |
-| 珞珈副刊 |   ljfk   |
-| 校史钩沉 |   xsgc   |
-| 来稿选登 |   lgxd   |
+|  内容   | 参数    |
+| :-----: | :-----:   |
+| 武大要闻 | wdzx/wdyw |
+| 媒体武大 | mtwd      |
+| 专题报道 | ztbd      |
+| 珞珈人物 | ljrw      |
+| 合作交流 | wdzx/hzjl |
+| 缤纷校园 | xywh/bfxy |
+| 校友之声 | xywh/xyzs |
+| 珞珈论坛 | ljlt      |
+| 新闻热线 | xwrx      |
+| 头条新闻 | ttxw      |
+| 综合新闻 | wdzx/zhxw |
+| 珞珈影像 | stkj/ljyx |
+| 学术动态 | kydt      |
+| 珞珈副刊 | xywh/ljfk |
+| 校史钩沉 | xywh/xsgc |
+| 来稿选登 | lgxd      |
 
 </Route>
 
