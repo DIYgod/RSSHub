@@ -179,7 +179,7 @@
     "@types/string-width": "4.0.1",
     "@types/supertest": "2.0.12",
     "@types/tiny-async-pool": "2.0.0",
-    "@types/tough-cookie": "4.0.2",
+    "@types/tough-cookie": "4.0.3",
     "@vercel/nft": "0.23.1",
     "cross-env": "7.0.3",
     "eslint": "8.49.0",
