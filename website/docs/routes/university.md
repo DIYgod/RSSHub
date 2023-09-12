@@ -3045,8 +3045,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 计算机学院公告 {#wu-han-da-xue-ji-suan-ji-xue-yuan-gong-gao}
 
-<Route author="SweetDumpling" example="/whu/cs/2" path="/whu/cs/:type"
-paramsDesc={['公告类型，详见表格']}>
+<Route author="ttyfly" example="/whu/cs/2" path="/whu/cs/:type" paramsDesc={['公告类型，详见表格']}>
 
 | 公告类型 | 新闻动态 | 学术讲座 | 学院通知 | 公示公告 |
 | -------- | -------- | -------- | -------- | -------- |
