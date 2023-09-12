@@ -25,7 +25,7 @@
 
 ## Yoasobi Official {#yoasobi-official}
 
-### News & Biography {#yoasobi-official-news-%26-biography}
+### News & Biography {#yoasobi-official-news-biography}
 
 <Route author="Kiotlin" example="/yoasobi-music/info/news" path="/yoasobi-music/info/:category?" paramsDesc={['`news`, `biography`']} radar="1" rssbud="1" />
 

@@ -156,7 +156,7 @@
 
 </Route>
 
-## 60-Second Science - Scientific American {#60-second-science---scientific-american}
+## 60-Second Science - Scientific American {#60-second-science-scientific-american}
 
 <Route author="emdoe" example="/60s-science" path="/60s-science"/>
 
@@ -275,11 +275,13 @@ When `uncensored_makersr` as **Uncensored** is chosen as **Category**, the avail
 
 ## A 姐分享 {#a-jie-fen-xiang}
 
-<Route author="zhenhappy" example="/abskoop/nsfw" path="/abskoop/:type?" paramsDesc={['为空, 订阅主站点, `nsfw`订阅nsfw子站点']}>
+### 存档列表 {#a-jie-fen-xiang-cun-dang-lie-biao}
 
-## AV01（av01.tv） {#av01%EF%BC%88av01.tv%EF%BC%89}
+<Route author="zhenhappy" example="/abskoop/nsfw" path="/abskoop/:type?" paramsDesc={['为空, 订阅主站点, `nsfw`订阅nsfw子站点']} radar="1"/>
 
-### 演员 {#av01%EF%BC%88av01.tv%EF%BC%89-yan-yuan}
+## AV01（av01.tv） {#av01-av01.tv}
+
+### 演员 {#av01-av01.tv-yan-yuan}
 
 :::tip
 
@@ -295,7 +297,7 @@ When `uncensored_makersr` as **Uncensored** is chosen as **Category**, the avail
 
 </Route>
 
-### 分类 {#av01%EF%BC%88av01.tv%EF%BC%89-fen-lei}
+### 分类 {#av01-av01.tv-fen-lei}
 
 <Route author="HXHL" example="/av01/tag/中出し" path="/av01/tag/:name/:type?" paramsDesc={['分类名,必选-仅限日语,可直接在网站上找到','排序顺序,可选-可以是`mr` `rd` `bw` `tr` `lg`']}>
 
@@ -583,11 +585,11 @@ JavBus has multiple backup domains, these routes use default domain <https://jav
 
 :::
 
-### Censored - Home {#javbus-censored---home}
+### Censored - Home {#javbus-censored-home}
 
 <Route author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en" path="/javbus/en"/>
 
-### Censored - Genre {#javbus-censored---genre}
+### Censored - Genre {#javbus-censored-genre}
 
 <Route author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/genre/7g" path="/javbus/en/genre/:id" paramsDesc={['Genre id, can be found in URL']}>
 
@@ -595,7 +597,7 @@ For more genre, please visit [Censored - Genre](https://www.javbus.com/en/genre)
 
 </Route>
 
-### Censored - Actresses {#javbus-censored---actresses}
+### Censored - Actresses {#javbus-censored-actresses}
 
 <Route author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/star/2jv" path="/javbus/en/star/:id" paramsDesc={['Actresses id, can be found in URL']}>
 
@@ -603,31 +605,31 @@ For more actresses, please visit [Censored JAV Idols](https://www.javbus.com/en/
 
 </Route>
 
-### Censored - Series {#javbus-censored---series}
+### Censored - Series {#javbus-censored-series}
 
 <Route author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/series/44q" path="/javbus/en/series/:id" paramsDesc={['Series id, can be found in URL']} />
 
-### Censored - Studio {#javbus-censored---studio}
+### Censored - Studio {#javbus-censored-studio}
 
 <Route author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/studio/ej" path="/javbus/en/studio/:id" paramsDesc={['Studio id, can be found in URL']} />
 
-### Censored - Label {#javbus-censored---label}
+### Censored - Label {#javbus-censored-label}
 
 <Route author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/label/x8" path="/javbus/en/label/:id" paramsDesc={['Label id, can be found in URL']} />
 
-### Censored - Director {#javbus-censored---director}
+### Censored - Director {#javbus-censored-director}
 
 <Route author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/director/4gv" path="/javbus/en/director/:id" paramsDesc={['Director id, can be found in URL']} />
 
-### Censored - Search {#javbus-censored---search}
+### Censored - Search {#javbus-censored-search}
 
 <Route author="nczitzk" example="/javbus/en/search/REBD" path="/javbus/en/search/:keyword" paramsDesc={['Keyword, empty by default']} />
 
-### Uncensored - Home {#javbus-uncensored---home}
+### Uncensored - Home {#javbus-uncensored-home}
 
 <Route author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/uncensored" path="/javbus/en/uncensored"/>
 
-### Uncensored - Genre {#javbus-uncensored---genre}
+### Uncensored - Genre {#javbus-uncensored-genre}
 
 <Route author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/uncensored/genre/1bc" path="/javbus/en/uncensored/genre/:id" paramsDesc={['Genre id, can be found in URL']}>
 
@@ -635,7 +637,7 @@ For more genre, please visit [Uncensored - Genre](https://www.javbus.com/en/unce
 
 </Route>
 
-### Uncensored - Actresses {#javbus-uncensored---actresses}
+### Uncensored - Actresses {#javbus-uncensored-actresses}
 
 <Route author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/uncensored/star/b5b" path="/javbus/en/uncensored/star/:id" paramsDesc={['Actresses id, can be found in URL']}>
 
@@ -643,23 +645,23 @@ For more actresses, please visit [Uncensored JAV Idols](https://www.javbus.com/e
 
 </Route>
 
-### Uncensored - Series {#javbus-uncensored---series}
+### Uncensored - Series {#javbus-uncensored-series}
 
 <Route author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/uncensored/series/1ft" path="/javbus/en/uncensored/series/:id" paramsDesc={['系列 id, can be found in URL']} />
 
-### Uncensored - Studio {#javbus-uncensored---studio}
+### Uncensored - Studio {#javbus-uncensored-studio}
 
 <Route author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/uncensored/studio/3n" path="/javbus/en/uncensored/studio/:id" paramsDesc={[', can be found in URL']} />
 
-### Uncensored - Search {#javbus-uncensored---search}
+### Uncensored - Search {#javbus-uncensored-search}
 
 <Route author="nczitzk" example="/javbus/en/uncensored/search/HEYZO" path="/javbus/en/uncensored/search/:keyword" paramsDesc={['Keyword, empty by default']} />
 
-### Western - Home {#javbus-western---home}
+### Western - Home {#javbus-western-home}
 
 <Route author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/western" path="/javbus/en/western"/>
 
-### Western - Genre {#javbus-western---genre}
+### Western - Genre {#javbus-western-genre}
 
 <Route author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/western/genre/86" path="/javbus/en/western/genre/:id" paramsDesc={['Genre id, can be found in URL']}>
 
@@ -667,7 +669,7 @@ For more genre, please visit [Genre - Video](https://www.javbus.org/en/genre)
 
 </Route>
 
-### Western - Actresses {#javbus-western---actresses}
+### Western - Actresses {#javbus-western-actresses}
 
 <Route author="MegrezZhu CoderTonyChan nczitzk" example="/javbus/en/western/star/4hv" path="/javbus/en/western/star/:id" paramsDesc={['Actresses id, can be found in URL']}>
 
@@ -675,15 +677,15 @@ For more actresses [Western AV Idols](https://www.javbus.org/en/actresses)
 
 </Route>
 
-### Western - Series {#javbus-western---series}
+### Western - Series {#javbus-western-series}
 
 <Route author="MegrezZhu CoderTonyChan Felix2yu nczitzk" example="/javbus/en/western/series/20" path="/javbus/en/western/series/:id" paramsDesc={['Series id, can be found in URL']} />
 
-### Western - Studio {#javbus-western---studio}
+### Western - Studio {#javbus-western-studio}
 
 <Route author="nczitzk" example="/javbus/en/western/studio/4" path="/javbus/en/western/studio/:id" paramsDesc={['Studio id, can be found in URLL']} />
 
-### Western - Search {#javbus-western---search}
+### Western - Search {#javbus-western-search}
 
 <Route author="nczitzk" example="/javbus/en/western/search/Brazzers" path="/javbus/en/western/search/:keyword" paramsDesc={['Keyword, empty by default']} />
 
@@ -981,7 +983,7 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 ### 影视分类 {#mp4ba-ying-shi-fen-lei}
 
-<Route author="SettingDust wolfyu1991"  example="/mp4ba/6" path="/mp4ba/:param" paramsDesc={['类型']} supportBT="1"/>
+<Route author="SettingDust wolfyu1991"  example="/mp4ba/6" path="/mp4ba/:param" paramsDesc={['类型']} supportBT="1">
 
 **类型参考这里**
 
@@ -1141,11 +1143,11 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 <Route author="I2IMk queensferryme" example="/pornhub/users/pornhubmodels" path="/pornhub/:language?/users/:username" paramsDesc={['language, see below', 'username, part of the url e.g. `pornhub.com/users/pornhubmodels`']} radar="1"/>
 
-### Verified amateur / Model {#pornhub-verified-amateur-%2F-model}
+### Verified amateur / Model {#pornhub-verified-amateur-model}
 
 <Route author="I2IMk queensferryme" example="/pornhub/model/stacy-starando" path="/pornhub/:language?/model/:username/:sort?" paramsDesc={['language, see below', 'username, part of the url e.g. `pornhub.com/model/stacy-starando`', 'sorting method, see below']} radar="1"/>
 
-### Verified model / Pornstar {#pornhub-verified-model-%2F-pornstar}
+### Verified model / Pornstar {#pornhub-verified-model-pornstar}
 
 <Route author="I2IMk queensferryme" example="/pornhub/pornstar/june-liu" path="/pornhub/:language?/pornstar/:username/:sort?" paramsDesc={['language, see below', 'username, part of the url e.g. `pornhub.com/pornstar/june-liu`', 'sorting method, see below']} radar="1">
 
@@ -1171,9 +1173,9 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 </Route>
 
-## PRESTIGE(プレステージ 蚊香社) {#prestige(%E3%83%97%E3%83%AC%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8-wen-xiang-she-)}
+## PRESTIGE(プレステージ 蚊香社) {#prestige-%E3%83%97%E3%83%AC%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8-wen-xiang-she}
 
-### シリーズ {#prestige(%E3%83%97%E3%83%AC%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8-wen-xiang-she-)-%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA}
+### シリーズ {#prestige-%E3%83%97%E3%83%AC%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8-wen-xiang-she-%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA}
 
 <Route author="minimalistrojan" example="/prestige-av/series/847" path="/prestige-av/series/:mid/:sort?" paramsDesc={['Series number', 'Sorting, `near` by default']} puppeteer="1">
 
@@ -1391,13 +1393,13 @@ When `mediaType` is `movie`, `sheet` should be:
 
 <Route author="nczitzk" example="/bdys" path="/bdys/:caty?/:type?/:area?/:year?/:order?" paramsDesc={['影视类型，见下表，默认为 `all` 即不限','资源分类，见下表，默认为 `all` 即不限', '制片地区，见下表，默认为 `all` 即不限','上映时间，此处填写年份不小于2000，默认为 `all` 即不限','影视排序，见下表，默认为更新时间']} anticrawler="1" radar="1">
 
-#### 资源分类
+#### 资源分类 {#bi-di-ying-shi-shou-ye-zi-yuan-fen-lei}
 
 | 不限 | 电影 | 电视剧 |
 | ---- | ---- | ------ |
 | all  | 0    | 1      |
 
-#### 影视类型
+#### 影视类型 {#bi-di-ying-shi-shou-ye-ying-shi-lei-xing}
 
 | 不限 | 动作    | 爱情   | 喜剧 | 科幻   | 恐怖   |
 | ---- | ------- | ------ | ---- | ------ | ------ |
@@ -1431,7 +1433,7 @@ When `mediaType` is `movie`, `sheet` should be:
 | --------- | ---- | ---- |
 | gangtaiju | faju | aoju |
 
-#### 制片地区
+#### 制片地区 {#bi-di-ying-shi-shou-ye-zhi-pian-di-qu}
 
 | 大陆 | 中国香港 | 中国台湾 |
 | ---- | -------- | -------- |
@@ -1445,7 +1447,7 @@ When `mediaType` is `movie`, `sheet` should be:
 | 比利时 | 瑞典 | 荷兰 | 丹麦 | 加拿大 | 俄罗斯 |
 | ------ | ---- | ---- | ---- | ------ | ------ |
 
-#### 影视排序
+#### 影视排序 {#bi-di-ying-shi-shou-ye-ying-shi-pai-xu}
 
 | 更新时间 | 豆瓣评分 |
 | -------- | -------- |
@@ -1591,7 +1593,7 @@ When `mediaType` is `movie`, `sheet` should be:
 
 ## 猫耳 FM {#mao-er-fm}
 
-### 广播剧 / 有声漫画 {#mao-er-fm-guang-bo-ju-%2F-you-sheng-man-hua}
+### 广播剧 / 有声漫画 {#mao-er-fm-guang-bo-ju-you-sheng-man-hua}
 
 <Route author="FlashWingShadow" example="/missevan/drama/28499" path="/missevan/drama/:id" paramsDesc={['剧集 id，在剧集主页 URL 中可以找到']}/>
 
@@ -1609,7 +1611,7 @@ When `mediaType` is `movie`, `sheet` should be:
 
 <Route author="HenryQW" example="/maoyan/upcoming" path="/maoyan/upcoming" />
 
-### 正在热映 - 完整版 {#mao-yan-dian-ying-zheng-zai-re-ying---wan-zheng-ban}
+### 正在热映 - 完整版 {#mao-yan-dian-ying-zheng-zai-re-ying-wan-zheng-ban}
 
 <Route author="song-zhou" example="/maoyan/hotComplete" path="/maoyan/hotComplete/:orderby?/:ascOrDesc?/:top?" paramsDesc={['排序条件，(score: 评分,pubDate: 发布时间),', '正序或倒序 (asc: 正序, desc: 倒序) 默认倒序', '取前多少条，默认取所有']}/>
 
@@ -1625,9 +1627,9 @@ When `mediaType` is `movie`, `sheet` should be:
 
 </Route>
 
-## 柠檬 私房歌 (ningmeng.name) {#ning-meng-si-fang-ge-(ningmeng.name)}
+## 柠檬 私房歌 (ningmeng.name) {#ning-meng-si-fang-ge-ningmeng.name}
 
-### 私房歌 {#ning-meng-si-fang-ge-(ningmeng.name)-si-fang-ge}
+### 私房歌 {#ning-meng-si-fang-ge-ningmeng.name-si-fang-ge}
 
 <Route author="dearrrfish" example="/ningmeng/song" path="/ningmeng/song" />
 
@@ -1827,7 +1829,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ## 喜马拉雅 {#xi-ma-la-ya}
 
-### 专辑（不输出 ShowNote） {#xi-ma-la-ya-zhuan-ji-%EF%BC%88-bu-shu-chu-shownote%EF%BC%89}
+### 专辑（不输出 ShowNote） {#xi-ma-la-ya-zhuan-ji-bu-shu-chu-shownote}
 
 <Route author="lengthmin jjeejj prnake" example="/ximalaya/album/299146" path="/ximalaya/:type/:id/:all?" paramsDesc={['专辑类型, 通常可以使用 `album`，可在对应专辑页面的 URL 中找到','专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。']} supportPodcast="1" radar="1" rssbud="1" selfhost="1">
 
@@ -1843,7 +1845,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 </Route>
 
-### 专辑（输出 ShowNote） {#xi-ma-la-ya-zhuan-ji-%EF%BC%88-shu-chu-shownote%EF%BC%89}
+### 专辑（输出 ShowNote） {#xi-ma-la-ya-zhuan-ji-shu-chu-shownote}
 
 <Route author="lengthmin jjeejj prnake" example="/ximalaya/album/39488639/0/shownote" path="/ximalaya/:type/:id/:all/:shownote?" paramsDesc={['专辑类型, 通常可以使用 `album`，可在对应专辑页面的 URL 中找到','专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。', '是否需要获取节目的 ShowNote，填入 `1`、`true`,`shownote` 视为获取，填入其他则不获取。']} supportPodcast="1" selfhost="1">
 
@@ -2001,9 +2003,9 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 </Route>
 
-## 字幕组（ZiMuZu.tv） {#zi-mu-zu-%EF%BC%88zimuzu.tv%EF%BC%89}
+## 字幕组（ZiMuZu.tv） {#zi-mu-zu-zimuzu.tv}
 
-### 影视 {#zi-mu-zu-%EF%BC%88zimuzu.tv%EF%BC%89-ying-shi}
+### 影视 {#zi-mu-zu-zimuzu.tv-ying-shi}
 
 :::tip
 
@@ -2013,7 +2015,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id?" paramsDesc={['影视 id，对应影视的 URL 中找到，为空时输出最近更新']} supportBT="1"/>
 
-### 排行榜 {#zi-mu-zu-%EF%BC%88zimuzu.tv%EF%BC%89-pai-hang-bang}
+### 排行榜 {#zi-mu-zu-zimuzu.tv-pai-hang-bang}
 
 <Route author="queensferryme DIYgod" example="/zimuzu/top/week/movie" path="/zimuzu/top/:range/:type" paramsDesc={['时间范围, 可以是 `week` `month` `year` `total`', '排行类型, 可以是 `fav` `tv` `movie`']}>
 

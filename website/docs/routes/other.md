@@ -64,7 +64,7 @@ Copy the URL of the 591 filter housing page and remove the front part "<https://
 
 <Route author="metowolf HenryQW" example="/apple/exchange_repair" path="/apple/exchange_repair/:country?" paramsDesc={['country code in apple.com URL (exception: for `United States` please use `us`), default to China `cn`']} />
 
-### App Store/Mac App Store {#apple-app-store%2Fmac-app-store}
+### App Store/Mac App Store {#apple-app-store-mac-app-store}
 
 See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 
@@ -139,43 +139,43 @@ See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 
 ## Corona Virus Disease 2019 {#corona-virus-disease-2019}
 
-### 国家卫健委 - 疫情通报 {#corona-virus-disease-2019-guo-jia-wei-jian-wei---yi-qing-tong-bao}
+### 国家卫健委 - 疫情通报 {#corona-virus-disease-2019-guo-jia-wei-jian-wei-yi-qing-tong-bao}
 
 <Route author="Cielpy DIYgod" example="/coronavirus/nhc" path="/coronavirus/nhc"/>
 
-### 财新网 - 新冠肺炎防疫全纪录 {#corona-virus-disease-2019-cai-xin-wang---xin-guan-fei-yan-fang-yi-quan-ji-lu}
+### 财新网 - 新冠肺炎防疫全纪录 {#corona-virus-disease-2019-cai-xin-wang-xin-guan-fei-yan-fang-yi-quan-ji-lu}
 
 <Route author="DIYgod" example="/coronavirus/caixin" path="/coronavirus/caixin"/>
 
-### 丁香园 - 新冠病毒疫情实时播报 {#corona-virus-disease-2019-ding-xiang-yuan---xin-guan-bing-du-yi-qing-shi-shi-bo-bao}
+### 丁香园 - 新冠病毒疫情实时播报 {#corona-virus-disease-2019-ding-xiang-yuan-xin-guan-bing-du-yi-qing-shi-shi-bo-bao}
 
 <Route author="DIYgod" example="/coronavirus/dxy" path="/coronavirus/dxy"/>
 
-### 丁香园 - 新冠病毒疫情数据统计 {#corona-virus-disease-2019-ding-xiang-yuan---xin-guan-bing-du-yi-qing-shu-ju-tong-ji}
+### 丁香园 - 新冠病毒疫情数据统计 {#corona-virus-disease-2019-ding-xiang-yuan-xin-guan-bing-du-yi-qing-shu-ju-tong-ji}
 
 <Route author="DIYgod HenryQW" example="/coronavirus/dxy/data/湖北/武汉" path="/coronavirus/dxy/data/:province?/:city?" paramsDesc={['省/直辖市名，缺省或错误则返回国内数据','城市名，缺省或错误则返回全省数据。直辖市请使用区/县名。']}/>
 
-### 腾讯新闻 - 新型冠状病毒肺炎实时辟谣 {#corona-virus-disease-2019-teng-xun-xin-wen---xin-xing-guan-zhuang-bing-du-fei-yan-shi-shi-pi-yao}
+### 腾讯新闻 - 新型冠状病毒肺炎实时辟谣 {#corona-virus-disease-2019-teng-xun-xin-wen-xin-xing-guan-zhuang-bing-du-fei-yan-shi-shi-pi-yao}
 
 <Route author="DIYgod" example="/coronavirus/qq/fact" path="/coronavirus/qq/fact"/>
 
-### 腾讯新闻 - 新型冠状病毒肺炎疫情实时追踪 {#corona-virus-disease-2019-teng-xun-xin-wen---xin-xing-guan-zhuang-bing-du-fei-yan-yi-qing-shi-shi-zhui-zong}
+### 腾讯新闻 - 新型冠状病毒肺炎疫情实时追踪 {#corona-virus-disease-2019-teng-xun-xin-wen-xin-xing-guan-zhuang-bing-du-fei-yan-yi-qing-shi-shi-zhui-zong}
 
 数据来源：<https://news.qq.com/zt2020/page/feiyan.htm#/>
 
-#### 中国本土数据统计
+#### 中国本土数据统计 {#corona-virus-disease-2019-teng-xun-xin-wen-xin-xing-guan-zhuang-bing-du-fei-yan-yi-qing-shi-shi-zhui-zong-zhong-guo-ben-tu-shu-ju-tong-ji}
 
 <Route author="CaoMeiYouRen" example="/tencent/news/coronavirus/total" path="/tencent/news/coronavirus/total"/>
 
-#### 省市疫情数据
+#### 省市疫情数据 {#corona-virus-disease-2019-teng-xun-xin-wen-xin-xing-guan-zhuang-bing-du-fei-yan-yi-qing-shi-shi-zhui-zong-sheng-shi-yi-qing-shu-ju}
 
 <Route author="CaoMeiYouRen" example="/tencent/news/coronavirus/data/湖北/武汉" path="/tencent/news/coronavirus/data/:province?/:city?" paramsDesc={['省/直辖市名，缺省则返回国内数据','城市名，缺省则返回全省数据。直辖市请使用区/县名。']}/>
 
-### South China Morning Post - China coronavirus outbreak {#corona-virus-disease-2019-south-china-morning-post---china-coronavirus-outbreak}
+### South China Morning Post - China coronavirus outbreak {#corona-virus-disease-2019-south-china-morning-post-china-coronavirus-outbreak}
 
 <Route author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
 
-### Macao Pagina Electrónica Especial Contra Epidemias: What’s New {#corona-virus-disease-2019-macao-pagina-electronica-especial-contra-epidemias%3A-what%E2%80%99s-new}
+### Macao Pagina Electrónica Especial Contra Epidemias: What’s New {#corona-virus-disease-2019-macao-pagina-electronica-especial-contra-epidemias-what-s-new}
 
 Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx)
 
@@ -185,7 +185,7 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 |---------|---------|------------|
 | ch      | en      | pt         |
 
-### Singapore Ministry of Health - Past Updates on 2019-nCov Local Situation in Singapore {#corona-virus-disease-2019-singapore-ministry-of-health---past-updates-on-2019-ncov-local-situation-in-singapore}
+### Singapore Ministry of Health - Past Updates on 2019-nCov Local Situation in Singapore {#corona-virus-disease-2019-singapore-ministry-of-health-past-updates-on-2019-ncov-local-situation-in-singapore}
 
 <Route author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>
 
@@ -283,7 +283,7 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 ## iYouport {#iyouport}
 
-### 首页（旧版） {#iyouport-shou-ye-%EF%BC%88-jiu-ban-%EF%BC%89}
+### 首页（旧版） {#iyouport-shou-ye-jiu-ban}
 
 <Route author="EsuRt" example="/iyouport/article" path="/iyouport/article"/>
 
@@ -295,7 +295,7 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 ## Japanpost 日本郵便 {#japanpost-ri-ben-you-bian}
 
-### Track & Trace Service 郵便追跡サービス {#japanpost-ri-ben-you-bian-track-%26-trace-service-you-bian-zhui-ji-%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9}
+### Track & Trace Service 郵便追跡サービス {#japanpost-ri-ben-you-bian-track-trace-service-you-bian-zhui-ji-%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9}
 
 <Route author="tuzi3040" example="/japanpost/track/EJ123456789JP/en" path="/japanpost/track/:reqCode/:locale?" paramsDesc={['Package Number', 'Language, default to japanese `ja`']} radar="1" rssbud="1">
 
@@ -337,13 +337,13 @@ RSS source in the original site is outdated.
 
 <Route author="BrandNewLifeJackie26" example="/linkedin/jobs/C-P/1/software engineer" path="/linkedin/jobs/:job_types/:exp_levels/:keywords?" paramsDesc={['See the following table for details, use \'-\' as delimiter', 'See the following table for details, use \'-\' as delimiter', 'keywords']} radar="1">
 
-#### `job_types` list
+#### `job_types` list {#linkedin-jobs-%60job_types%60-list}
 
 | Full Time | Part Time | Contractor | All |
 |-----------|-----------|------------|-----|
 | F         | P         | C          | all |
 
-#### `exp_levels` list
+#### `exp_levels` list {#linkedin-jobs-%60exp_levels%60-list}
 
 | Intership | Entry Level | Associate | Mid-Senior Level | Director | All |
 |-----------|-------------|-----------|------------------|----------|-----|
@@ -506,9 +506,9 @@ please refer to the [Notion API documentation](https://developers.notion.com/ref
 
 </Route>
 
-## ONE・一个 {#one%E3%83%BB-yi-ge}
+## ONE・一个 {#one-yi-ge}
 
-### 图片文字问答 {#one%E3%83%BB-yi-ge-tu-pian-wen-zi-wen-da}
+### 图片文字问答 {#one-yi-ge-tu-pian-wen-zi-wen-da}
 
 <Route author="fengkx" example="/one" path="/one"/>
 
@@ -646,9 +646,9 @@ Parsing of `routeParams` parameter:
 
 </Route>
 
-## TSSstatus (iOS downgrade channel) {#tssstatus-(ios-downgrade-channel)}
+## TSSstatus (iOS downgrade channel) {#tssstatus-ios-downgrade-channel}
 
-### Status {#tssstatus-(ios-downgrade-channel)-status}
+### Status {#tssstatus-ios-downgrade-channel-status}
 
 <Route author="xyqfer" example="/tssstatus/j42dap/14W585a" path="/tssstatus/:board/:build" paramsDesc={['Board id', 'Build id']}>
 
@@ -828,9 +828,9 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route author="DIYgod" example="/dida365/habit/checkins" path="/dida365/habit/checkins" selfhost="1"/>
 
-## 福利资源 - met.red {#fu-li-zi-yuan---met.red}
+## 福利资源 - met.red {#fu-li-zi-yuan-met.red}
 
-### 福利资源 - met.red {#fu-li-zi-yuan---met.red-fu-li-zi-yuan---met.red}
+### 福利资源 - met.red {#fu-li-zi-yuan-met.red-fu-li-zi-yuan-met.red}
 
 <Route author="junfengP queensferryme" example="/metred/fuli" path="/metred/fuli" />
 
@@ -884,15 +884,15 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route author="cc798461" example="/moxingfans" path="/moxingfans"/>
 
-## 巨量算数 - 算数指数 {#ju-liang-suan-shu---suan-shu-zhi-shu}
+## 巨量算数 - 算数指数 {#ju-liang-suan-shu-suan-shu-zhi-shu}
 
-### 抖音指数波峰 {#ju-liang-suan-shu---suan-shu-zhi-shu-dou-yin-zhi-shu-bo-feng}
+### 抖音指数波峰 {#ju-liang-suan-shu-suan-shu-zhi-shu-dou-yin-zhi-shu-bo-feng}
 
 <Route author="Jkker" example="/oceanengine/index/教材" path="/oceanengine/index/:keyword" paramsDesc={['热点关键词']} anticrawler="1" puppeteer="1"/>
 
 爬取巨量算数近 6 个月的抖音指数，解密后提取指数波峰当日的热门搜索关键词，生成为 RSS。可用于追踪新闻热点事件。
 
-### 头条指数波峰 {#ju-liang-suan-shu---suan-shu-zhi-shu-tou-tiao-zhi-shu-bo-feng}
+### 头条指数波峰 {#ju-liang-suan-shu-suan-shu-zhi-shu-tou-tiao-zhi-shu-bo-feng}
 
 <Route author="Jkker" example="/oceanengine/index/教材/toutiao" path="/oceanengine/index/:keyword/toutiao" paramsDesc={['热点关键词']} anticrawler="1" puppeteer="1"/>
 
@@ -946,51 +946,51 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route author="NeverBehave" example="/kuaidi100/company" path="/kuaidi100/company" radar="1" rssbud="1"/>
 
-## 裏垢女子まとめ {#li-gou-n%C3%BC-zi-%E3%81%BE%E3%81%A8%E3%82%81}
+## 裏垢女子まとめ {#li-gou-nv-zi-%E3%81%BE%E3%81%A8%E3%82%81}
 
-### Homepage {#li-gou-n%C3%BC-zi-%E3%81%BE%E3%81%A8%E3%82%81-homepage}
+### Homepage {#li-gou-nv-zi-%E3%81%BE%E3%81%A8%E3%82%81-homepage}
 
 <Route author="SettingDust Halcao" example="/uraaka-joshi" path="/uraaka-joshi" radar="1" rssbud="1" puppeteer="1"/>
 
-### User {#li-gou-n%C3%BC-zi-%E3%81%BE%E3%81%A8%E3%82%81-user}
+### User {#li-gou-nv-zi-%E3%81%BE%E3%81%A8%E3%82%81-user}
 
 <Route author="SettingDust Halcao" example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" paramsDesc={['User ID']} radar="1" rssbud="1" puppeteer="1"/>
 
-## 律师事务所文章 {#l%C3%BC-shi-shi-wu-suo-wen-zhang}
+## 律师事务所文章 {#lv-shi-shi-wu-suo-wen-zhang}
 
-### 君合 {#l%C3%BC-shi-shi-wu-suo-wen-zhang-jun-he}
+### 君合 {#lv-shi-shi-wu-suo-wen-zhang-jun-he}
 
 <Route author="snipersteve" example="/law/jh" path="/law/jh" />
 
-### 通商 {#l%C3%BC-shi-shi-wu-suo-wen-zhang-tong-shang}
+### 通商 {#lv-shi-shi-wu-suo-wen-zhang-tong-shang}
 
 <Route author="snipersteve" example="/law/ts" path="/law/ts" />
 
-### 海问 {#l%C3%BC-shi-shi-wu-suo-wen-zhang-hai-wen}
+### 海问 {#lv-shi-shi-wu-suo-wen-zhang-hai-wen}
 
 <Route author="snipersteve" example="/law/hw" path="/law/hw" />
 
-### 环球 {#l%C3%BC-shi-shi-wu-suo-wen-zhang-huan-qiu}
+### 环球 {#lv-shi-shi-wu-suo-wen-zhang-huan-qiu}
 
 <Route author="snipersteve" example="/law/hq" path="/law/hq" />
 
-### 国枫 {#l%C3%BC-shi-shi-wu-suo-wen-zhang-guo-feng}
+### 国枫 {#lv-shi-shi-wu-suo-wen-zhang-guo-feng}
 
 <Route author="snipersteve" example="/law/gf" path="/law/gf" />
 
-### 中伦 {#l%C3%BC-shi-shi-wu-suo-wen-zhang-zhong-lun}
+### 中伦 {#lv-shi-shi-wu-suo-wen-zhang-zhong-lun}
 
 <Route author="snipersteve" example="/law/zl" path="/law/zl" />
 
-### 锦天城 {#l%C3%BC-shi-shi-wu-suo-wen-zhang-jin-tian-cheng}
+### 锦天城 {#lv-shi-shi-wu-suo-wen-zhang-jin-tian-cheng}
 
 <Route author="snipersteve" example="/law/jtc" path="/law/jtc" />
 
-### 德恒 {#l%C3%BC-shi-shi-wu-suo-wen-zhang-de-heng}
+### 德恒 {#lv-shi-shi-wu-suo-wen-zhang-de-heng}
 
 <Route author="snipersteve" example="/law/dh" path="/law/dh" />
 
-### 金诚同达 {#l%C3%BC-shi-shi-wu-suo-wen-zhang-jin-cheng-tong-da}
+### 金诚同达 {#lv-shi-shi-wu-suo-wen-zhang-jin-cheng-tong-da}
 
 <Route author="snipersteve" example="/law/jctd" path="/law/jctd" />
 
@@ -1100,7 +1100,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ## 四川省科学技术厅 {#si-chuan-sheng-ke-xue-ji-shu-ting}
 
-### 四川省科学技术厅 - 公示公告 {#si-chuan-sheng-ke-xue-ji-shu-ting-si-chuan-sheng-ke-xue-ji-shu-ting---gong-shi-gong-gao}
+### 四川省科学技术厅 - 公示公告 {#si-chuan-sheng-ke-xue-ji-shu-ting-si-chuan-sheng-ke-xue-ji-shu-ting-gong-shi-gong-gao}
 
 <Route author="Cubernet" example="/sckjt/news" path="/sckjt/news/:type?" paramsDesc={['默认为`tz`']}>
 
@@ -1115,6 +1115,28 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 ### 搜狗特色 LOGO {#sou-gou-sou-gou-te-se-logo}
 
 <Route author="xyqfer" example="/sogou/doodles" path="/sogou/doodles"/>
+
+## 台灣事實查核中心 {#tai-wan-shi-shi-cha-he-zhong-xin}
+
+### 最新相關資訊 / 最新查核報告 {#tai-wan-shi-shi-cha-he-zhong-xin-zui-xin-xiang-guan-zi-xun-zui-xin-cha-he-bao-gao}
+
+<Route author="TonyRL" example="/tfc-taiwan" path="/tfc-taiwan/:type?" paramsDesc={['分類，見下表，預設為 `report`']} radar="1" rssbud="1">
+
+| 最新相關資訊 | 最新查核報告 |
+| ---------- | ---------- |
+| info       | report     |
+
+</Route>
+
+### 專題 / 重點專區 {#tai-wan-shi-shi-cha-he-zhong-xin-zhuan-ti-zhong-dian-zhuan-qu}
+
+<Route author="TonyRL" example="/tfc-taiwan/category/242" path="/tfc-taiwan/:type/:id+" paramsDesc={['專題 / 重點專區，見下表', '專題 / 重點專區 ID']} radar="1" rssbud="1">
+
+| 專題      | 重點專區 |
+| -------- | ------- |
+| category | topic   |
+
+</Route>
 
 ## 腾讯吐个槽 {#teng-xun-tu-ge-cao}
 
@@ -1249,11 +1271,11 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 外汇牌价 {#zhong-guo-guang-da-yin-hang-wai-hui-pai-jia}
 
-#### 总览
+#### 总览 {#zhong-guo-guang-da-yin-hang-wai-hui-pai-jia-zong-lan}
 
 <Route author="linbuxiao" example="/cebbank/quotation/all" path="/cebbank/quotation/all" />
 
-#### 历史牌价
+#### 历史牌价 {#zhong-guo-guang-da-yin-hang-wai-hui-pai-jia-li-shi-pai-jia}
 
 <Route author="linbuxiao" example="/cebbank/quotation/history/usd" path="/cebbank/quotation/history/:type" paramsDesc={['货币的缩写，见下表']}>
 
@@ -1305,7 +1327,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ## はてな {#%E3%81%AF%E3%81%A6%E3%81%AA}
 
-### はてな匿名ダイアリー - 人気記事アーカイブ {#%E3%81%AF%E3%81%A6%E3%81%AA-%E3%81%AF%E3%81%A6%E3%81%AA-ni-ming-%E3%83%80%E3%82%A4%E3%82%A2%E3%83%AA%E3%83%BC---ren-qi-ji-shi-%E3%82%A2%E3%83%BC%E3%82%AB%E3%82%A4%E3%83%96}
+### はてな匿名ダイアリー - 人気記事アーカイブ {#%E3%81%AF%E3%81%A6%E3%81%AA-%E3%81%AF%E3%81%A6%E3%81%AA-ni-ming-%E3%83%80%E3%82%A4%E3%82%A2%E3%83%AA%E3%83%BC-ren-qi-ji-shi-%E3%82%A2%E3%83%BC%E3%82%AB%E3%82%A4%E3%83%96}
 
 <Route author="masakichi" example="/hatena/anonymous_diary/archive" path="/hatena/anonymous_diary/archive"/>
 
