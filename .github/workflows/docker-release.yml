@@ -81,7 +81,7 @@ jobs:
 
       - name: Build and push Docker image (ordinary version)
         id: build-and-push
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           context: .
           push: true
@@ -111,7 +111,7 @@ jobs:
 
       - name: Build and push Docker image (Chromium-bundled version)
         id: build-and-push-chromium
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           context: .
           build-args: PUPPETEER_SKIP_DOWNLOAD=0
