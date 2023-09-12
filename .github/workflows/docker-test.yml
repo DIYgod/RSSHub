@@ -36,7 +36,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Docker Buildx  # needed by `cache-from`
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Extract Docker metadata
         id: meta
