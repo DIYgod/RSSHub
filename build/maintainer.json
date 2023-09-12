@@ -6215,6 +6215,15 @@
     "/whoscall/categories/:category?": [
         "nczitzk"
     ],
+    "/whu/cs/:type": [
+        "ttyfly"
+    ],
+    "/whu/gs/:type?": [
+        "Delreyaa"
+    ],
+    "/whu/news/:type*": [
+        "SChen1024"
+    ],
     "/wikinews/latest": [
         "KotoriK"
     ],
@@ -6895,8 +6904,6 @@
     "/kmust/jwc/:type?": [],
     "/kmust/job/careers/:type?": [],
     "/kmust/job/jobfairs": [],
-    "/whu/cs/:type": [],
-    "/whu/news/:type?": [],
     "/jgsu/jwc": [],
     "/dlu/jiaowu/news": [],
     "/dgut/jwc/:type?": [],
