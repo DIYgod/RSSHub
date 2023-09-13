@@ -2013,7 +2013,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 教学部通知公告 {#le-shan-shi-fan-xue-yuan-jiao-xue-bu-tong-zhi-gong-gao}
 
-<Route author="nyaShine" example="/lsnu/jiaowc/tzgg" path="/lsnu/jiaowc/tzgg/:category?" paramsDesc={['分类名']} radar="1" />
+<Route author="nyaShine" example="/lsnu/jiaowc/tzgg" path="/lsnu/jiaowc/tzgg/:category?" paramsDesc={['分类名']} radar="1">
 
 | 实践教学科 | 教育运行科 | 教研教改科 | 学籍管理科 | 考试科 | 教材建设管理科 |
 | -------- | -------- | -------- | -------- | -------- | -------- |
