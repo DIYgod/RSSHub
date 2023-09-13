@@ -2015,8 +2015,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="nyaShine" example="/lsnu/jiaowc/tzgg" path="/lsnu/jiaowc/tzgg/:category?" paramsDesc={['分类名']} radar="1" />
 
-category 列表：
-
 | 实践教学科 | 教育运行科 | 教研教改科 | 学籍管理科 | 考试科 | 教材建设管理科 |
 | -------- | -------- | -------- | -------- | -------- | -------- |
 | sjjxk     | jxyxk     | jyjgk     | xjglk     | ksk     | jcjsglk     |
