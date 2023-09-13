@@ -320,8 +320,8 @@ devDependencies:
     specifier: 8.0.3
     version: 8.0.3
   jest:
-    specifier: 29.6.4
-    version: 29.6.4
+    specifier: 29.7.0
+    version: 29.7.0
   jest-junit:
     specifier: 16.0.0
     version: 16.0.0
@@ -4958,8 +4958,8 @@ packages:
       supports-color: 8.1.1
     dev: true
 
-  /jest@29.6.4:
-    resolution: {integrity: sha512-tEFhVQFF/bzoYV1YuGyzLPZ6vlPrdfvDmmAxudA1dLEuiztqg2Rkx20vkKY32xiDROcD2KXlgZ7Cu8RPeEHRKw==}
+  /jest@29.7.0:
+    resolution: {integrity: sha512-NIy3oAFp9shda19hy4HK0HRTWKtPJmGdnvywu01nOqNC2vZg+Z+fvJDxpMQA88eb2I9EcafcdjYgsDthnYTvGw==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     hasBin: true
     peerDependencies:
