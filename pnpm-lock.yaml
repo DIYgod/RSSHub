@@ -203,8 +203,8 @@ devDependencies:
     specifier: 3.1.1
     version: 3.1.1
   '@types/crypto-js':
-    specifier: 4.1.1
-    version: 4.1.1
+    specifier: 4.1.2
+    version: 4.1.2
   '@types/eslint':
     specifier: 8.44.2
     version: 8.44.2
@@ -230,8 +230,8 @@ devDependencies:
     specifier: 21.1.2
     version: 21.1.2
   '@types/json-bigint':
-    specifier: 1.0.0
-    version: 1.0.0
+    specifier: 1.0.1
+    version: 1.0.1
   '@types/koa':
     specifier: 2.13.8
     version: 2.13.8
@@ -242,8 +242,8 @@ devDependencies:
     specifier: 2.0.21
     version: 2.0.21
   '@types/koa-mount':
-    specifier: 4.0.0
-    version: 4.0.0
+    specifier: 4.0.2
+    version: 4.0.2
   '@types/koa-static':
     specifier: 4.0.2
     version: 4.0.2
@@ -272,8 +272,8 @@ devDependencies:
     specifier: 3.0.2
     version: 3.0.2
   '@types/request-promise-native':
-    specifier: 1.0.9
-    version: 1.0.9
+    specifier: 1.0.18
+    version: 1.0.18
   '@types/require-all':
     specifier: 3.0.0
     version: 3.0.0
@@ -290,8 +290,8 @@ devDependencies:
     specifier: 2.0.0
     version: 2.0.0
   '@types/tough-cookie':
-    specifier: 4.0.2
-    version: 4.0.2
+    specifier: 4.0.3
+    version: 4.0.3
   '@vercel/nft':
     specifier: 0.23.1
     version: 0.23.1
@@ -1422,8 +1422,8 @@ packages:
       '@types/node': 20.5.6
     dev: true
 
-  /@types/crypto-js@4.1.1:
-    resolution: {integrity: sha512-BG7fQKZ689HIoc5h+6D2Dgq1fABRa0RbBWKBd9SP/MVRVXROflpm5fhwyATX5duFmbStzyzyycPB8qUYKDH3NA==}
+  /@types/crypto-js@4.1.2:
+    resolution: {integrity: sha512-t33RNmTu5ufG/sorROIafiCVJMx3jz95bXUMoPAZcUD14fxMXnuTzqzXZoxpR0tNx2xpw11Dlmem9vGCsrSOfA==}
     dev: true
 
   /@types/debug@4.1.8:
@@ -1533,12 +1533,12 @@ packages:
     resolution: {integrity: sha512-bGj+7TaCkOwkJfx7HtS9p22Ij0A2aKMuz8a1+owpkxa1wU/HUBy/WAXhdv90uDdVI9rSjGvUrXmLSeA9VP3JeA==}
     dependencies:
       '@types/node': 20.5.6
-      '@types/tough-cookie': 4.0.2
+      '@types/tough-cookie': 4.0.3
       parse5: 7.1.2
     dev: true
 
-  /@types/json-bigint@1.0.0:
-    resolution: {integrity: sha512-WW+0cfH3ovFN6ROV+p/Xfw36dT6s16hbXBYIG49PYw6+j6e+AkpqYccctgxwyicBmC8CZDBnPhOH94shFhXgHQ==}
+  /@types/json-bigint@1.0.1:
+    resolution: {integrity: sha512-zpchZLNsNuzJHi6v64UBoFWAvQlPhch7XAi36FkH6tL1bbbmimIF+cS7vwkzY4u5RaSWMoflQfu+TshMPPw8uw==}
     dev: true
 
   /@types/json-schema@7.0.12:
@@ -1579,8 +1579,8 @@ packages:
       '@types/koa': 2.13.8
     dev: true
 
-  /@types/koa-mount@4.0.0:
-    resolution: {integrity: sha512-56iBULArwY3uKLl28eRFchZ2v0diEoJzJbDaHH/ehgruF/s2/KMHyWsKcIhvDJ3tGdKu9oZNQvxaMg++1IKFdA==}
+  /@types/koa-mount@4.0.2:
+    resolution: {integrity: sha512-XnuGwV8bzw22nv2WqOs5a8wCHR2VgSnLLLuBQPzNTmhyiAvH0O6c+994rQVbMaBuwQJKefUInkvKoKuk+21uew==}
     dependencies:
       '@types/koa': 2.13.8
     dev: true
@@ -1700,8 +1700,8 @@ packages:
     resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}
     dev: true
 
-  /@types/request-promise-native@1.0.9:
-    resolution: {integrity: sha512-3/pSG5/qGyutmSwxTGvHSzh6Dgqa505Czy7JC+MXEgi5zmgaCgUQwGvDEjhytuKgfLldQrKWnd4tEqtDYKvGDw==}
+  /@types/request-promise-native@1.0.18:
+    resolution: {integrity: sha512-tPnODeISFc/c1LjWyLuZUY+Z0uLB3+IMfNoQyDEi395+j6kTFTTRAqjENjoPJUid4vHRGEozoTrcTrfZM+AcbA==}
     dependencies:
       '@types/request': 2.48.8
     dev: true
@@ -1718,7 +1718,7 @@ packages:
     dependencies:
       '@types/caseless': 0.12.2
       '@types/node': 20.5.6
-      '@types/tough-cookie': 4.0.2
+      '@types/tough-cookie': 4.0.3
       form-data: 2.5.1
 
   /@types/require-all@3.0.0:
@@ -1778,8 +1778,8 @@ packages:
     resolution: {integrity: sha512-GB+FG7JF6SPX9yuGmfmDTRYFMdS2Za+YiYvh6RJPfTMa0LaTDEtQ6ncw6NYrHnf9cloVJxgXd6WGRdRp54O1cQ==}
     dev: true
 
-  /@types/tough-cookie@4.0.2:
-    resolution: {integrity: sha512-Q5vtl1W5ue16D+nIaW8JWebSSraJVlK+EthKn7e7UcD4KWsaSJ8BqGPXNaPghgtcn/fhvrN17Tv8ksUsQpiplw==}
+  /@types/tough-cookie@4.0.3:
+    resolution: {integrity: sha512-THo502dA5PzG/sfQH+42Lw3fvmYkceefOspdCwpHRul8ik2Jv1K8I5OZz1AT3/rs46kwgMCe9bSBmDLYkkOMGg==}
 
   /@types/triple-beam@1.3.2:
     resolution: {integrity: sha512-txGIh+0eDFzKGC25zORnswy+br1Ha7hj5cMVwKIU7+s0U2AxxJru/jZSMU6OC9MJWP6+pc/hc6ZjyZShpsyY2g==}
