@@ -223,9 +223,6 @@ devDependencies:
   '@types/imapflow':
     specifier: 1.0.13
     version: 1.0.13
-  '@types/ip-regex':
-    specifier: 4.1.1
-    version: 4.1.1
   '@types/jsdom':
     specifier: 21.1.2
     version: 21.1.2
@@ -280,9 +277,6 @@ devDependencies:
   '@types/showdown':
     specifier: 2.0.1
     version: 2.0.1
-  '@types/string-width':
-    specifier: 4.0.1
-    version: 4.0.1
   '@types/supertest':
     specifier: 2.0.12
     version: 2.0.12
@@ -1506,13 +1500,6 @@ packages:
       '@types/node': 20.5.6
     dev: true
 
-  /@types/ip-regex@4.1.1:
-    resolution: {integrity: sha512-RUEV39p+XoK1rO4nDQYXb1TATpyVKzfIr75HgR0074G/uA9RzjPsIK4TMlxh7KZ4WxcM512j03esP06tHMZNLA==}
-    deprecated: This is a stub types definition. ip-regex provides its own type definitions, so you do not need this installed.
-    dependencies:
-      ip-regex: 4.3.0
-    dev: true
-
   /@types/istanbul-lib-coverage@2.0.4:
     resolution: {integrity: sha512-z/QT1XN4K4KYuslS23k62yDIDLwLFkzxOuMplDtObz0+y7VqJCaO2o+SPwHCvLFZh7xazvvoor2tA/hPz9ee7g==}
     dev: true
@@ -1752,13 +1739,6 @@ packages:
 
   /@types/stack-utils@2.0.1:
     resolution: {integrity: sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==}
-    dev: true
-
-  /@types/string-width@4.0.1:
-    resolution: {integrity: sha512-zsZXP4RSmw3TOXf2eut1xxb7Gto7I+BrB0WxwdRaEdCBnUbAQa57yZf/OWcAfop9m7t6Zd0pw9tV2ghpJXJPZg==}
-    deprecated: This is a stub types definition. string-width provides its own type definitions, so you do not need this installed.
-    dependencies:
-      string-width: 4.2.3
     dev: true
 
   /@types/superagent@4.1.18:
@@ -4319,6 +4299,7 @@ packages:
   /ip-regex@4.3.0:
     resolution: {integrity: sha512-B9ZWJxHHOHUhUjCPrMpLD4xEq35bUTClHM1S6CBU5ixQnkZmwipwgc96vAd7AAGM9TGHvJR+Uss+/Ak6UphK+Q==}
     engines: {node: '>=8'}
+    dev: false
 
   /ip@1.1.8:
     resolution: {integrity: sha512-PuExPYUiu6qMBQb4l06ecm6T6ujzhmh+MeJcW9wa89PoAz5pvd4zPgN5WJV104mb6S2T1AwNIAaB70JNrLQWhg==}
