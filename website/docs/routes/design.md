@@ -36,7 +36,7 @@ Behance user's profile URL, like <https://www.behance.net/mishapetrick> the user
 
 ## Digic Picture {#digic-picture}
 
-### Works & News {#digic-picture-works-%26-news}
+### Works & News {#digic-picture-works-news}
 
 <Route author="MisteryMonster" example="/digic-pictures/works/real-time-engine" path="/digic-pictures/:menu/:tag?" paramsDesc={['`news`, `works`', 'Under WORK types: `/game-cinematics`, `/feature`, `/making-of`, `/commercials-vfx`, `/real-time-engine`']} />
 
@@ -46,7 +46,7 @@ Behance user's profile URL, like <https://www.behance.net/mishapetrick> the user
 
 <Route path="/dribbble/popular/:timeframe?" example="/dribbble/popular" paramsDesc={['support the following values: week, month, year and ever']} />
 
-### User (or team) {#dribbble-user-(or-team)}
+### User (or team) {#dribbble-user-or-team}
 
 <Route path="/dribbble/user/:name" example="/dribbble/user/google" paramsDesc={['username, available in user\'s homepage URL']} />
 
@@ -235,7 +235,7 @@ Default is under 'https://www.methodstudios.com/en/features'.
 
 ## 站酷 {#zhan-ku}
 
-### 发现（+ 推荐预设） {#zhan-ku-fa-xian-%EF%BC%88%2B-tui-jian-yu-she-%EF%BC%89}
+### 发现（+ 推荐预设） {#zhan-ku-fa-xian-tui-jian-yu-she}
 
 <Route author="junbaor nczitzk" example="/zcool/discover/all" path="/zcool/discover/:type?" paramsDesc={['预设参数，见下表']} radar="1" rssbud="1">
 
@@ -247,7 +247,7 @@ Default is under 'https://www.methodstudios.com/en/features'.
 
 </Route>
 
-### 发现（+ 查询参数） {#zhan-ku-fa-xian-%EF%BC%88%2B-cha-xun-can-shu-%EF%BC%89}
+### 发现（+ 查询参数） {#zhan-ku-fa-xian-cha-xun-can-shu}
 
 <Route author="nczitzk" example="/zcool/discover/cate=0&subCate=0" path="/zcool/discover/:query?" paramsDesc={['查询参数']} radar="1" rssbud="1">
 

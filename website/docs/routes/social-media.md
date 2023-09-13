@@ -49,6 +49,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 | showEmoji | 显示或隐藏表情图片 | 0/1/true/false | false |
 | disableEmbed | 关闭内嵌视频 | 0/1/true/false | false |
 | useAvid | 视频链接使用AV号(默认为BV号) | 0/1/true/false | false |
+| directLink | 使用内容直链 | 0/1/true/false | false |
 
 用例：`/bilibili/user/dynamic/2267573/showEmoji=1&disableEmbed=1&useAvid=1`
 
@@ -358,7 +359,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 </Route>
 
-### 话题 (频道 / 标签) {#bilibili-hua-ti-(-pin-dao-%2F-biao-qian-)}
+### 话题 (频道 / 标签) {#bilibili-hua-ti-pin-dao-biao-qian}
 
 <Route author="Qixingchen" example="/bilibili/topic/2233" path="/bilibili/topic/:topic" paramsDesc={['话题名(又称频道名或标签) 例如 2233 或 COSPLAY']}/>
 
@@ -394,9 +395,9 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 <Route author="3401797899" example="/bilibili/channel/5417/hot" path="/bilibili/channel/:channelid/hot/:disableEmbed?" paramsDesc={['频道id，可在频道链接中找到', '默认为开启内嵌视频, 任意值为关闭']}/>
 
-## Bluesky (bsky) {#bluesky-(bsky)}
+## Bluesky (bsky) {#bluesky-bsky}
 
-### Keywords {#bluesky-(bsky)-keywords}
+### Keywords {#bluesky-bsky-keywords}
 
 <Route author="untitaker" example="/bsky/keyword/hello" path="/bsky/keyword/:keyword" radar="1" rssbud="1" />
 
@@ -504,35 +505,35 @@ Type
 
 <Route author="TigerCubDen" example="/furaffinity/user/tiger-jungle" path="/furaffinity/user/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
 
-### User's Watching List {#fur-affinity-user's-watching-list}
+### User's Watching List {#fur-affinity-user-s-watching-list}
 
 <Route author="TigerCubDen" example="/furaffinity/watching/okami9312" path="/furaffinity/watching/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
 
-### User's Watcher List {#fur-affinity-user's-watcher-list}
+### User's Watcher List {#fur-affinity-user-s-watcher-list}
 
 <Route author="TigerCubDen" example="/furaffinity/watchers/malikshadowclaw" path="/furaffinity/watchers/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
 
-### User's Commission Information {#fur-affinity-user's-commission-information}
+### User's Commission Information {#fur-affinity-user-s-commission-information}
 
 <Route author="TigerCubDen" example="/furaffinity/commissions/flashlioness" path="/furaffinity/commissions/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
 
-### User's Shouts {#fur-affinity-user's-shouts}
+### User's Shouts {#fur-affinity-user-s-shouts}
 
 <Route author="TigerCubDen" example="/furaffinity/shouts/redodgft" path="/furaffinity/shouts/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
 
-### User's Journals {#fur-affinity-user's-journals}
+### User's Journals {#fur-affinity-user-s-journals}
 
 <Route author="TigerCubDen" example="/furaffinity/journals/rukis" path="/furaffinity/journals/:username" paramsDesc={['Username, can find in userpage']} radar="1"/>
 
-### User's Gallery {#fur-affinity-user's-gallery}
+### User's Gallery {#fur-affinity-user-s-gallery}
 
 <Route author="TigerCubDen" example="/furaffinity/gallery/flashlioness" path="/furaffinity/gallery/:username/:nsfw?" paramsDesc={['Username, can find in userpage', 'NSFW Mode, do not filter NSFW contents when value set to `1`']} radar="1"/>
 
-### User's Scraps {#fur-affinity-user's-scraps}
+### User's Scraps {#fur-affinity-user-s-scraps}
 
 <Route author="TigerCubDen" example="/furaffinity/scraps/flashlioness" path="/furaffinity/scraps/:username/:nsfw?" paramsDesc={['Username, can find in userpage', 'NSFW Mode, do not filter NSFW contents when value set to `1`']} radar="1"/>
 
-### User's Favorites {#fur-affinity-user's-favorites}
+### User's Favorites {#fur-affinity-user-s-favorites}
 
 <Route author="TigerCubDen" example="/furaffinity/favorites/tiger-jungle" path="/furaffinity/favorites/:username/:nsfw?" paramsDesc={['Username, can find in userpage', 'NSFW Mode, do not filter NSFW contents when value set to `1`']} radar="1"/>
 
@@ -546,7 +547,7 @@ Type
 
 ## Gab {#gab}
 
-### User's Posts {#gab-user's-posts}
+### User's Posts {#gab-user-s-posts}
 
 <Route author="zphw" example="/gab/user/realdonaldtrump" path="/gab/user/:username" paramsDesc={['Username']} />
 
@@ -576,7 +577,7 @@ If you don't want to setup credentials, you can use [Picnob](#picnob) or [Picuki
 
 :::
 
-### User Profile / Hashtag - Private API {#instagram-user-profile-%2F-hashtag---private-api}
+### User Profile / Hashtag - Private API {#instagram-user-profile-hashtag-private-api}
 
 <Route author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" paramsDesc={['Feed category, see table below','Username / Hashtag name']} radar="1" anticrawler="1" selfhost="1">
 
@@ -592,7 +593,7 @@ It's highly recommended to deploy with Redis cache enabled.
 
 </Route>
 
-### User Profile / Hashtag - Cookie {#instagram-user-profile-%2F-hashtag---cookie}
+### User Profile / Hashtag - Cookie {#instagram-user-profile-hashtag-cookie}
 
 <Route author="TonyRL" example="/instagram/2/user/stefaniejoosten" path="/instagram/2/:category/:key" paramsDesc={['Feed category, see table above','Username / Hashtag name']} radar="1" anticrawler="1" selfhost="1" />
 
@@ -639,19 +640,19 @@ Started from Mastodon v4.0.0, the use of the `search` API in the route no longer
 If the domain of your Webfinger account URI is the same as the API host of the instance (i.e., no delegation called in some other protocols), then no configuration is required and the route is available out of the box.
 However, you can still specify these route-specific configurations if you need to override them.
 
-### Instance timeline (local) {#mastodon-instance-timeline-(local)}
+### Instance timeline (local) {#mastodon-instance-timeline-local}
 
 <Route author="hoilc" example="/mastodon/timeline/pawoo.net/true" path="/mastodon/timeline/:site/:only_media?" paramsDesc={['instance address, only domain, no `http://` or `https://` protocol header', 'whether only display media content, default to false, any value to true']}/>
 
 If the instance address is not `mastodon.social` or `pawoo.net`, then the route requires `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` to be `true`.
 
-### Instance timeline (federated) {#mastodon-instance-timeline-(federated)}
+### Instance timeline (federated) {#mastodon-instance-timeline-federated}
 
 <Route author="hoilc" example="/mastodon/remote/pawoo.net/true" path="/mastodon/remote/:site/:only_media?" paramsDesc={['instance address, only domain, no `http://` or `https://` protocol header', 'whether only display media content, default to false, any value to true']}/>
 
 If the instance address is not `mastodon.social` or `pawoo.net`, then the route requires `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN` to be `true`.
 
-### User timeline (backup) {#mastodon-user-timeline-(backup)}
+### User timeline (backup) {#mastodon-user-timeline-backup}
 
 <Route author="notofoe" example="/mastodon/account_id/mastodon.social/23634/statuses/only_media" path="/mastodon/account/:site/:account_id/statuses/:only_media?" paramsDesc={['instance address, only domain, no `http://` or `https://` protocol header', 'account id. login your instance, then search for the user profile; the account id is in the url', 'whether only display media content, default to false, any value to true']}/>
 
@@ -1467,7 +1468,7 @@ Country Code
 
 <Route author="DIYgod prnake" example="/jike/topic/556688fae4b00c57d9dd46ee" path="/jike/topic/:id/:showUid?" paramsDesc={['圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到', '是否在内容中显示用户信息，设置为 1 则开启']} radar="1" rssbud="1"/>
 
-### 圈子 - 纯文字 {#ji-ke-quan-zi---chun-wen-zi}
+### 圈子 - 纯文字 {#ji-ke-quan-zi-chun-wen-zi}
 
 <Route author="HenryQW" example="/jike/topic/text/553870e8e4b0cafb0a1bef68" path="/jike/topic/text/:id" paramsDesc={['圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到']} radar="1" rssbud="1"/>
 
@@ -1573,7 +1574,7 @@ Country Code
 
 <Route author="Erriy" example="/dgtle" path="/dgtle" />
 
-### 闲置（分类） {#shu-zi-wei-ba-xian-zhi-%EF%BC%88-fen-lei-%EF%BC%89}
+### 闲置（分类） {#shu-zi-wei-ba-xian-zhi-fen-lei}
 
 <Route author="xyqfer hoilc" example="/dgtle/trade/111" path="/dgtle/trade/:typeId?" paramsDesc={['分类 id，默认为全部']}>
 
@@ -1583,11 +1584,11 @@ Country Code
 
 </Route>
 
-### 闲置（关键词） {#shu-zi-wei-ba-xian-zhi-%EF%BC%88-guan-jian-ci-%EF%BC%89}
+### 闲置（关键词） {#shu-zi-wei-ba-xian-zhi-guan-jian-ci}
 
 <Route author="gaoliang hoilc" example="/dgtle/trade/search/ipad" path="/dgtle/trade/search/:keyword" paramsDesc={['搜索关键词']}/>
 
-### 鲸图（分类） {#shu-zi-wei-ba-jing-tu-%EF%BC%88-fen-lei-%EF%BC%89}
+### 鲸图（分类） {#shu-zi-wei-ba-jing-tu-fen-lei}
 
 <Route author="Erriy" example="/dgtle/whale/category/0" path="/dgtle/whale/category/:category" paramsDesc={['分类 id']}>
 
@@ -1597,7 +1598,7 @@ Country Code
 
 </Route>
 
-### 鲸图（排行榜） {#shu-zi-wei-ba-jing-tu-%EF%BC%88-pai-hang-bang-%EF%BC%89}
+### 鲸图（排行榜） {#shu-zi-wei-ba-jing-tu-pai-hang-bang}
 
 <Route author="Erriy" example="/dgtle/whale/rank/download/day" path="/dgtle/whale/rank/:type/:rule" paramsDesc={['排行榜类型', '排行榜周期']}>
 
@@ -1621,7 +1622,7 @@ rule
 
 <Route author="xyqfer" example="/weseepro/newest" path="/weseepro/newest"/>
 
-### 最新（无中间页） {#shua-ping-zui-xin-%EF%BC%88-wu-zhong-jian-ye-%EF%BC%89}
+### 最新（无中间页） {#shua-ping-zui-xin-wu-zhong-jian-ye}
 
 <Route author="xyqfer yefoenix" example="/weseepro/newest-direct" path="/weseepro/newest-direct"/>
 
@@ -1728,9 +1729,9 @@ rule
 
 </Route>
 
-## 微博绿洲 {#wei-bo-l%C3%BC-zhou}
+## 微博绿洲 {#wei-bo-lv-zhou}
 
-### 用户 {#wei-bo-l%C3%BC-zhou-yong-hu}
+### 用户 {#wei-bo-lv-zhou-yong-hu}
 
 <Route author="kt286" example="/weibo/oasis/user/1990895721" path="/weibo/oasis/user/:userid" paramsDesc={['用户 id, 可在用户主页 URL 中找到']} anticrawler="1"/>
 
@@ -1823,7 +1824,7 @@ rule
 
 <Route author="DHPO" example="/zhihu/daily" path="/zhihu/daily" anticrawler="1" radar="1" rssbud="1"/>
 
-### 知乎日报 - 合集 {#zhi-hu-zhi-hu-ri-bao---he-ji}
+### 知乎日报 - 合集 {#zhi-hu-zhi-hu-ri-bao-he-ji}
 
 <Route author="ccbikai" example="/zhihu/daily/section/2" path="/zhihu/daily/section/:sectionId" paramsDesc={['合集 id, 可在 https://news-at.zhihu.com/api/7/sections 找到']} anticrawler="1"/>
 
@@ -1857,15 +1858,15 @@ rule
 
 <Route author="xyqfer" example="/zhihu/people/pins/kan-dan-45" path="/zhihu/people/pins/:id" paramsDesc={['作者 id, 可在用户主页 URL 中找到']} anticrawler="1" radar="1" rssbud="1"/>
 
-### 知乎书店 - 新书 {#zhi-hu-zhi-hu-shu-dian---xin-shu}
+### 知乎书店 - 新书 {#zhi-hu-zhi-hu-shu-dian-xin-shu}
 
 <Route author="xyqfer" example="/zhihu/bookstore/newest" path="/zhihu/bookstore/newest" anticrawler="1" radar="1" rssbud="1"/>
 
-### 知乎想法 - 24 小时新闻汇总 {#zhi-hu-zhi-hu-xiang-fa---24-xiao-shi-xin-wen-hui-zong}
+### 知乎想法 - 24 小时新闻汇总 {#zhi-hu-zhi-hu-xiang-fa-24-xiao-shi-xin-wen-hui-zong}
 
 <Route author="xyqfer" example="/zhihu/pin/daily" path="/zhihu/pin/daily" anticrawler="1" radar="1" rssbud="1"/>
 
-### 知乎书店 - 知乎周刊 {#zhi-hu-zhi-hu-shu-dian---zhi-hu-zhou-kan}
+### 知乎书店 - 知乎周刊 {#zhi-hu-zhi-hu-shu-dian-zhi-hu-zhou-kan}
 
 <Route author="LogicJake" example="/zhihu/weekly" path="/zhihu/weekly" anticrawler="1" radar="1" rssbud="1"/>
 
@@ -1881,18 +1882,18 @@ rule
 
 </Route>
 
-### [xhu](https://github.com/REToys/xhu) - 收藏夹 {#zhi-hu-%5Bxhu%5D(https%3A%2F%2Fgithub.com%2Fretoys%2Fxhu)---shou-cang-jia}
+### [xhu](https://github.com/REToys/xhu) - 收藏夹 {#zhi-hu-xhu-https-github.com-retoys-xhu-shou-cang-jia}
 
 <Route author="JimenezLi" example="/zhihu/xhu/collection/26444956" path="/zhihu/xhu/collection/:id" paramsDesc={['收藏夹 id, 可在收藏夹页面 URL 中找到']} anticrawler="1"/>
 
-### [xhu](https://github.com/REToys/xhu) - 专栏 {#zhi-hu-%5Bxhu%5D(https%3A%2F%2Fgithub.com%2Fretoys%2Fxhu)---zhuan-lan}
+### [xhu](https://github.com/REToys/xhu) - 专栏 {#zhi-hu-xhu-https-github.com-retoys-xhu-zhuan-lan}
 
 <Route author="JimenezLi" example="/zhihu/xhu/zhuanlan/githubdaily" path="/zhihu/xhu/zhuanlan/:id" paramsDesc={['专栏 id, 可在专栏主页 URL 中找到']} anticrawler="1"/>
 
-### [xhu](https://github.com/REToys/xhu) - 问题 {#zhi-hu-%5Bxhu%5D(https%3A%2F%2Fgithub.com%2Fretoys%2Fxhu)---wen-ti}
+### [xhu](https://github.com/REToys/xhu) - 问题 {#zhi-hu-xhu-https-github.com-retoys-xhu-wen-ti}
 
 <Route author="JimenezLi" example="/zhihu/xhu/question/264051433" path="/zhihu/xhu/question/:questionId/:sortBy?" paramsDesc={['问题 id', '排序方式：`default`, `created`, `updated`。默认为 `default`']} anticrawler="1"/>
 
-### [xhu](https://github.com/REToys/xhu) - 话题 {#zhi-hu-%5Bxhu%5D(https%3A%2F%2Fgithub.com%2Fretoys%2Fxhu)---hua-ti}
+### [xhu](https://github.com/REToys/xhu) - 话题 {#zhi-hu-xhu-https-github.com-retoys-xhu-hua-ti}
 
 <Route author="JimenezLi" example="/zhihu/xhu/topic/19566035" path="/zhihu/xhu/topic/:topicId" paramsDesc={['话题ID']} anticrawler="1"/>

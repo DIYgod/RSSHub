@@ -79,7 +79,7 @@
 <body>
     <div class="content">
         <p>
-            <img src="/logo.png" alt="RSSHub" width="100" />
+            <img src="./logo.png" alt="RSSHub" width="100" />
         </p>
 
         <h1>Welcome to
