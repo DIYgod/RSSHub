@@ -311,8 +311,8 @@ devDependencies:
     specifier: 5.0.0
     version: 5.0.0(@types/eslint@8.44.2)(eslint-config-prettier@9.0.0)(eslint@8.49.0)(prettier@3.0.3)
   eslint-plugin-yml:
-    specifier: 1.8.0
-    version: 1.8.0(eslint@8.49.0)
+    specifier: 1.9.0
+    version: 1.9.0(eslint@8.49.0)
   fs-extra:
     specifier: 11.1.1
     version: 11.1.1
@@ -3209,8 +3209,8 @@ packages:
       synckit: 0.8.5
     dev: true
 
-  /eslint-plugin-yml@1.8.0(eslint@8.49.0):
-    resolution: {integrity: sha512-fgBiJvXD0P2IN7SARDJ2J7mx8t0bLdG6Zcig4ufOqW5hOvSiFxeUyc2g5I1uIm8AExbo26NNYCcTGZT0MXTsyg==}
+  /eslint-plugin-yml@1.9.0(eslint@8.49.0):
+    resolution: {integrity: sha512-ayuC57WyVQ5+QZ02y62GiB//5+zsiyzUGxUX/mrhLni+jfsKA4KoITjkbR65iUdjjhWpyTJHPcAIFLKQIOwgsw==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: '>=6.0.0'
