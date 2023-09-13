@@ -36,17 +36,17 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Docker Buildx  # needed by `cache-from`
-        uses: docker/setup-buildx-action@v2
+        uses: docker/setup-buildx-action@v3
 
       - name: Extract Docker metadata
         id: meta
-        uses: docker/metadata-action@v4
+        uses: docker/metadata-action@v5
         with:
           images: rsshub
           flavor: latest=true
 
       - name: Build Docker image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           context: .
           build-args: PUPPETEER_SKIP_DOWNLOAD=0  # also test bundling Chromium
