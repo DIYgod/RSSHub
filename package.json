@@ -154,7 +154,7 @@
     "@types/eslint": "8.44.2",
     "@types/eslint-config-prettier": "6.11.0",
     "@types/etag": "1.8.1",
-    "@types/fs-extra": "11.0.1",
+    "@types/fs-extra": "11.0.2",
     "@types/git-rev-sync": "2.0.0",
     "@types/imapflow": "1.0.13",
     "@types/jsdom": "21.1.2",
