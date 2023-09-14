@@ -1160,6 +1160,9 @@
     "/chinaventure/news/:id?": [
         "yuxinliu-alex"
     ],
+    "/chinawriter/:id?": [
+        "nczitzk"
+    ],
     "/chsi/hotnews": [
         "yanbot-team"
     ],
