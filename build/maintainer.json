@@ -4880,6 +4880,9 @@
     "/rsshub/transform/json/:url/:routeParams": [
         "ttttmr"
     ],
+    "/rsshub/transform/sitemap/:url/:routeParams?": [
+        "flrngel"
+    ],
     "/ruancan/ruancan/category/:category?": [
         "nczitzk"
     ],
