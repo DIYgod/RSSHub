@@ -55,25 +55,25 @@ The parameters can be extracted from the Release page URL: `https://install.appc
 
 </Route>
 
-## App Store/Mac App Store {#app-store%2Fmac-app-store}
+## App Store/Mac App Store {#app-store-mac-app-store}
 
-### App Update {#app-store%2Fmac-app-store-app-update}
+### App Update {#app-store-mac-app-store-app-update}
 
 <Route author="cielpy" example="/appstore/update/us/id697846300" path="/appstore/update/:country/:id" paramsDesc={['App Store Country, obtain from the app URL `https://apps.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `us`', 'App Store app id, obtain from the app URL `https://apps.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `id697846300`']} />
 
-### Price Drop {#app-store%2Fmac-app-store-price-drop}
+### Price Drop {#app-store-mac-app-store-price-drop}
 
 <Route author="HenryQW" example="/appstore/price/us/mac/id1152443474" path="/appstore/price/:country/:type/:id" paramsDesc={['App Store Country, obtain from the app URL https://apps.apple.com/us/app/id1152443474, in this case, `us`', 'App type，either `iOS` or `mac`', 'App Store app id, obtain from the app URL https://apps.apple.com/us/app/id1152443474, in this case, `id1152443474`']} />
 
-### In-App-Purchase Price Drop Alert {#app-store%2Fmac-app-store-in-app-purchase-price-drop-alert}
+### In-App-Purchase Price Drop Alert {#app-store-mac-app-store-in-app-purchase-price-drop-alert}
 
 <Route author="HenryQW" example="/appstore/iap/us/id953286746" path="/appstore/iap/:country/:id" paramsDesc={['App Store Country, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `us`', 'App Store app id, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `id953286746`']} />
 
-### 每日精品限免 / 促销应用（鲜面连线 by AppSo） {#app-store%2Fmac-app-store-mei-ri-jing-pin-xian-mian-%2F-cu-xiao-ying-yong-%EF%BC%88-xian-mian-lian-xian-by-appso%EF%BC%89}
+### 每日精品限免 / 促销应用（鲜面连线 by AppSo） {#app-store-mac-app-store-mei-ri-jing-pin-xian-mian-cu-xiao-ying-yong-xian-mian-lian-xian-by-appso}
 
 <Route author="Andiedie" example="/appstore/xianmian" path="/appstore/xianmian"/>
 
-### 最新限免（GoFans） {#app-store%2Fmac-app-store-zui-xin-xian-mian-%EF%BC%88gofans%EF%BC%89}
+### 最新限免（GoFans） {#app-store-mac-app-store-zui-xin-xian-mian-gofans}
 
 <Route author="HenryQW" example="/appstore/gofans" path="/appstore/gofans"/>
 
@@ -373,7 +373,7 @@ Language
 
 ## IPSW.me {#ipsw.me}
 
-### Apple Firmware Update-IPSWs/OTAs version {#ipsw.me-apple-firmware-update-ipsws%2Fotas-version}
+### Apple Firmware Update-IPSWs/OTAs version {#ipsw.me-apple-firmware-update-ipsws-otas-version}
 
 <Route author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" paramsDesc={['Fill in ipsws or otas to get different versions of firmware','Product name, `http://rsshub.app/ipsw/index/ipsws/iPod`, if you fill in the iPad, follow the entire iPad series(ptype default to ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`, if you fill in the specific iPhone11,8, submit to the ipsws firmware information of this model']}/>
 
@@ -465,9 +465,9 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 <Route author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
-## O&O Software {#o%26o-software}
+## O&O Software {#o-o-software}
 
-### Changelog {#o%26o-software-changelog}
+### Changelog {#o-o-software-changelog}
 
 <Route author="nczitzk" example="/oo-software/changelog/shutup10" path="/oo-software/changelog/:id" paramsDesc={['Software id, see below, shutup10 by default, can be found in URL']}>
 
@@ -580,7 +580,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### New routes {#rsshub-new-routes}
 
-<Route author="DIYgod" path="/rsshub/routes/:lang?" example="/rsshub/routes/en" paramsDesc={['Language, `en` means English routes, other values or null means Chinese routes']}/>
+<Route author="DIYgod" path="/rsshub/routes/:lang?" example="/rsshub/routes/en" paramsDesc={['Language, `zh` means Chinese docs, other values or null means English docs, `en` by default']}/>
 
 ### New sponsors {#rsshub-new-sponsors}
 
@@ -646,7 +646,7 @@ Open `https://www.sony.com/electronics/support` and search for the corresponding
 
 ## Total Commander {#total-commander}
 
-### What's New {#total-commander-what's-new}
+### What's New {#total-commander-what-s-new}
 
 <Route author="nczitzk" example="/totalcommander/whatsnew" path="/totalcommander/whatsnew"/>
 
@@ -713,7 +713,7 @@ Language
 
 ## WizTree {#wiztree}
 
-### What's New {#wiztree-what's-new}
+### What's New {#wiztree-what-s-new}
 
 <Route author="nczitzk" example="/diskanalyzer/whats-new" path="/diskanalyzer/whats-new"/>
 
@@ -749,7 +749,7 @@ Language
 
 ## XYplorer {#xyplorer}
 
-### What's New {#xyplorer-what's-new}
+### What's New {#xyplorer-what-s-new}
 
 <Route author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
 

@@ -316,6 +316,10 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 <Route author="hashman TonyRL" example="/github/pull/DIYgod/RSSHub" path="/github/pull/:user/:repo/:state?/:labels?" paramsDesc={['User name', 'Repo name', 'the state of pull requests. Can be either `open`, `closed`, or `all`. Default: `open`.', 'a list of comma separated label names']} radar="1" rssbud="1"/>
 
+### Repo Pulse {#github-repo-pulse}
+
+<Route author="jameschensmith" example="/github/pulse/DIYgod/RSSHub" path="/github/pulse/:user/:repo/:period?" paramsDesc={['User name', 'Repo name', 'Time frame, selected from a repository\'s Pulse/Insights page. Possible values are: `daily`, `halfweekly`, `weekly`, or `monthly`. Default: `weekly`. If your RSS client supports it, consider aligning the polling frequency of the feed to the period.']} radar="1" rssbud="1"/>
+
 ### User Followers {#github-user-followers}
 
 <Route author="HenryQW" path="/github/user/followers/:user" example="/github/user/followers/HenryQW" paramsDesc={['GitHub username']} radar="1" rssbud="1"/>
@@ -367,7 +371,7 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 <Route author="zoenglinghou" example="/github/contributors/DIYgod/RSSHub" path="/github/contributors/:user/:repo/:order?/:anon?" paramsDesc={['User name','Repo name','Sort order by commit numbers, desc and asc (descending by default)','Show anonymous users. Defaults to no, use any values for yes.']} radar="1" rssbud="1"/>
 
-### Issue / Pull Request comments {#github-issue-%2F-pull-request-comments}
+### Issue / Pull Request comments {#github-issue-pull-request-comments}
 
 <Route author="TonyRL FliegendeWurst" example="/github/comments/DIYgod/RSSHub/8116" path="/github/comments/:user/:repo/:number?" paramsDesc={['User / Org name', 'Repo name', 'Issue or pull number (if omitted: all)']} radar="1" rssbud="1"/>
 
@@ -786,9 +790,9 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 <Route author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" paramsDesc={['part parmater can be found in the url of blog']} >
 </Route>
 
-## SecWiki - 安全维基 {#secwiki---an-quan-wei-ji}
+## SecWiki - 安全维基 {#secwiki-an-quan-wei-ji}
 
-### 最新周刊 {#secwiki---an-quan-wei-ji-zui-xin-zhou-kan}
+### 最新周刊 {#secwiki-an-quan-wei-ji-zui-xin-zhou-kan}
 
 <Route author="p7e4" example="/sec-wiki/weekly" path="/sec-wiki/weekly" />
 
@@ -862,7 +866,7 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 ## ui.dev {#ui.dev}
 
-### BYTES - Your weekly dose of JS {#ui.dev-bytes---your-weekly-dose-of-js}
+### BYTES - Your weekly dose of JS {#ui.dev-bytes-your-weekly-dose-of-js}
 
 Staying informed on the JavaScript ecosystem has never been so entertaining. Delivered every Monday and Thursday, for free. https://bytes.dev/
 
@@ -930,7 +934,7 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 </Route>
 
-### 开发者社区 - 主题 {#a-li-yun-kai-fa-zhe-she-qu---zhu-ti}
+### 开发者社区 - 主题 {#a-li-yun-kai-fa-zhe-she-qu-zhu-ti}
 
 <Route author="umm233" example="/aliyun/developer/group/alitech" path="/aliyun/developer/group/:type" paramsDesc={['对应技术领域分类']} />
 
@@ -988,11 +992,11 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 </Route>
 
-### 智源社区 - 活动 {#bei-jing-zhi-yuan-ren-gong-zhi-neng-yan-jiu-yuan-zhi-yuan-she-qu---huo-dong}
+### 智源社区 - 活动 {#bei-jing-zhi-yuan-ren-gong-zhi-neng-yan-jiu-yuan-zhi-yuan-she-qu-huo-dong}
 
 <Route author="TonyRL" example="/baai/hub/events" path="/baai/hub/events" radar="1"/>
 
-### 智源社区 - 评论 {#bei-jing-zhi-yuan-ren-gong-zhi-neng-yan-jiu-yuan-zhi-yuan-she-qu---ping-lun}
+### 智源社区 - 评论 {#bei-jing-zhi-yuan-ren-gong-zhi-neng-yan-jiu-yuan-zhi-yuan-she-qu-ping-lun}
 
 <Route author="TonyRL" example="/baai/hub/comments" path="/baai/hub/comments" radar="1"/>
 
@@ -1049,7 +1053,7 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 ## 极术社区 {#ji-shu-she-qu}
 
-### 频道、专栏、用户 {#ji-shu-she-qu-pin-dao-%E3%80%81-zhuan-lan-%E3%80%81-yong-hu}
+### 频道、专栏、用户 {#ji-shu-she-qu-pin-dao-zhuan-lan-yong-hu}
 
 <Route author="bigfei" example="/aijishu/channel/ai" path="/aijishu/:type/:name?" paramsDesc={['文章类型，可以取值如下', '名字，取自URL']} radar="1" rssbud="1">
 
@@ -1370,9 +1374,9 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 <Route author="hellodword" example="/galaxylab" path="/galaxylab" />
 
-## 前端艺术家 && 飞冰早报 {#qian-duan-yi-shu-jia-%26%26-fei-bing-zao-bao}
+## 前端艺术家 && 飞冰早报 {#qian-duan-yi-shu-jia-fei-bing-zao-bao}
 
-### 列表 {#qian-duan-yi-shu-jia-%26%26-fei-bing-zao-bao-lie-biao}
+### 列表 {#qian-duan-yi-shu-jia-fei-bing-zao-bao-lie-biao}
 
 <Route author="kouchao" example="/jskou/0" path="/jskou/:type?" paramsDesc={['分类']}>
 
@@ -1394,9 +1398,9 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 </Route>
 
-## 日报 | D2 资源库 {#ri-bao-%7C-d2-zi-yuan-ku}
+## 日报 | D2 资源库 {#ri-bao-d2-zi-yuan-ku}
 
-### 日报 | D2 资源库 {#ri-bao-%7C-d2-zi-yuan-ku-ri-bao-%7C-d2-zi-yuan-ku}
+### 日报 | D2 资源库 {#ri-bao-d2-zi-yuan-ku-ri-bao-d2-zi-yuan-ku}
 
 <Route author="Andiedie" example="/d2/daily" path="/d2/daily"/>
 
@@ -1430,25 +1434,25 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 ## 腾讯云 {#teng-xun-yun}
 
-### 云 + 社区专栏 {#teng-xun-yun-yun-%2B-she-qu-zhuan-lan}
+### 云 + 社区专栏 {#teng-xun-yun-yun-she-qu-zhuan-lan}
 
 <Route author="nczitzk" example="/tencent/cloud/column/86410" path="/tencent/cloud/column/:id?/:tag?" paramsDesc={['专栏 id，可在对应专栏页中找到，默认为 86410（腾讯云数据库专家服务）', '标签 id，可在对应专栏页中找到，默认为空']}/>
 
 ## 微信开放平台 {#wei-xin-kai-fang-ping-tai}
 
-### 微信开放社区 - 小程序公告 {#wei-xin-kai-fang-ping-tai-wei-xin-kai-fang-she-qu---xiao-cheng-xu-gong-gao}
+### 微信开放社区 - 小程序公告 {#wei-xin-kai-fang-ping-tai-wei-xin-kai-fang-she-qu-xiao-cheng-xu-gong-gao}
 
 <Route author="phantomk" example="/wechat-open/community/xcx-announce" path="/wechat-open/community/xcx-announce"/>
 
-### 微信开放社区 - 小游戏公告 {#wei-xin-kai-fang-ping-tai-wei-xin-kai-fang-she-qu---xiao-you-xi-gong-gao}
+### 微信开放社区 - 小游戏公告 {#wei-xin-kai-fang-ping-tai-wei-xin-kai-fang-she-qu-xiao-you-xi-gong-gao}
 
 <Route author="phantomk" example="/wechat-open/community/xyx-announce" path="/wechat-open/community/xyx-announce"/>
 
-### 微信开放社区 - 微信支付公告 {#wei-xin-kai-fang-ping-tai-wei-xin-kai-fang-she-qu---wei-xin-zhi-fu-gong-gao}
+### 微信开放社区 - 微信支付公告 {#wei-xin-kai-fang-ping-tai-wei-xin-kai-fang-she-qu-wei-xin-zhi-fu-gong-gao}
 
 <Route author="phantomk" example="/wechat-open/community/pay-announce" path="/wechat-open/community/pay-announce"/>
 
-### 微信开放社区 - 小游戏问答 {#wei-xin-kai-fang-ping-tai-wei-xin-kai-fang-she-qu---xiao-you-xi-wen-da}
+### 微信开放社区 - 小游戏问答 {#wei-xin-kai-fang-ping-tai-wei-xin-kai-fang-she-qu-xiao-you-xi-wen-da}
 
 <Route author="bestony" example="/wechat-open/community/xyx-question/0" path="/wechat-open/community/xyx-question/:category" paramsDesc={['0', 'hot', 'topic']}>
 
@@ -1458,7 +1462,7 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 </Route>
 
-### 微信开放社区 - 小程序问答 {#wei-xin-kai-fang-ping-tai-wei-xin-kai-fang-she-qu---xiao-cheng-xu-wen-da}
+### 微信开放社区 - 小程序问答 {#wei-xin-kai-fang-ping-tai-wei-xin-kai-fang-she-qu-xiao-cheng-xu-wen-da}
 
 <Route author="bestony" example="/wechat-open/community/xcx-question/new" path="/wechat-open/community/xcx-question/:tag" paramsDesc={['new', 'hot', 'topic']}>
 
@@ -1468,7 +1472,7 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 </Route>
 
-### 微信支付 - 商户平台公告 {#wei-xin-kai-fang-ping-tai-wei-xin-zhi-fu---shang-hu-ping-tai-gong-gao}
+### 微信支付 - 商户平台公告 {#wei-xin-kai-fang-ping-tai-wei-xin-zhi-fu-shang-hu-ping-tai-gong-gao}
 
 <Route author="phantomk" example="/wechat-open/pay/announce" path="/wechat-open/pay/announce"/>
 
@@ -1502,7 +1506,7 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 ## 印记中文 {#yin-ji-zhong-wen}
 
-### 周刊 - JavaScript {#yin-ji-zhong-wen-zhou-kan---javascript}
+### 周刊 - JavaScript {#yin-ji-zhong-wen-zhou-kan-javascript}
 
 <Route author="daijinru" example="/docschina/jsweekly" path="/docschina/jsweekly" radar="1" rssbud="1"/>
 
@@ -1518,7 +1522,7 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 </Route>
 
-### 小程序商店 - 最新 {#zhi-xiao-cheng-xu-xiao-cheng-xu-shang-dian---zui-xin}
+### 小程序商店 - 最新 {#zhi-xiao-cheng-xu-xiao-cheng-xu-shang-dian-zui-xin}
 
 <Route author="xyqfer" example="/miniapp/store/newest" path="/miniapp/store/newest"/>
 
