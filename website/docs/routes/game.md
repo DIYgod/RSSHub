@@ -76,22 +76,22 @@ Categories
 
 Language codes
 
-| Language       | Code  |
-| -------------- | ----- |
-| Deutsch        | de-de    |
-| English (US)   | en-us    |
-| English (EU)   | en-gb    |
-| Español (EU)   | es-es    |
-| Español (Latino)   | es-mx    |
-| Français       | fr-fr    |
-| Italiano       | it-it    |
-| Português (Brasil) | pt-br    |
-| Polski         | pl-pl    |
-| Русский        | ru-ru    |
-| 한국어          | ko-kr    |
-| ภาษาไทย        | th-th    |
-| 日本語          | ja-jp    |
-| 繁體中文        | zh-tw    |
+| Language           | Code  |
+| ------------------ | ----- |
+| Deutsch            | de-de |
+| English (US)       | en-us |
+| English (EU)       | en-gb |
+| Español (EU)       | es-es |
+| Español (Latino)   | es-mx |
+| Français           | fr-fr |
+| Italiano           | it-it |
+| Português (Brasil) | pt-br |
+| Polski             | pl-pl |
+| Русский            | ru-ru |
+| 한국어             | ko-kr |
+| ภาษาไทย            | th-th |
+| 日本語             | ja-jp |
+| 繁體中文           | zh-tw |
 
 </Route>
 
@@ -143,8 +143,8 @@ Region
 
 Category
 
-| all | topics | notices | maintenance | updates | status   | developers |
-| --- | ------ | ------- | ----------- | ------- | -------- | ---------- |
+| all | topics | notices | maintenance | updates | status | developers |
+| --- | ------ | ------- | ----------- | ------- | ------ | ---------- |
 
 </Route>
 
@@ -178,9 +178,9 @@ Category
 
 <Route author="nczitzk" example="/gamersecret" path="/gamersecret/:type?/:category?" paramsDesc={['Type, see below, Latest News by default', 'Category, see below']}>
 
-| Latest News | PC | Playstation | Nintendo | Xbox | Moblie |
-| ----------- | -- | ----------- | -------- | ---- | ------ |
-| latest-news | pc | playstation | nintendo | xbox | moblie |
+| Latest News | PC  | Playstation | Nintendo | Xbox | Moblie |
+| ----------- | --- | ----------- | -------- | ---- | ------ |
+| latest-news | pc  | playstation | nintendo | xbox | moblie |
 
 Or
 
@@ -303,10 +303,10 @@ So the route is [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub
 | filter | switch | ps4 | ps5 | steam |
 | ------ | ------ | --- | --- | ----- |
 | all    | ✔      | ✔   | ✔   | ✔     |
-| jx     | ✔      | ✔   | ❌  | ✔     |
+| jx     | ✔      | ✔   | ❌   | ✔     |
 | sd     | ✔      | ✔   | ✔   | ✔     |
-| dl     | ❌     | ✔   | ❌  | ✔     |
-| vip    | ❌     | ❌  | ✔   | ❌    |
+| dl     | ❌      | ✔   | ❌   | ✔     |
+| vip    | ❌      | ❌   | ✔   | ❌     |
 
 | 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
 | ---- | ------------ | ---- | ---- | ---- |
@@ -371,8 +371,8 @@ Sorting types, default to `date`:
 ### Feed The Beast Modpack Updates {#minecraft-feed-the-beast-modpack-updates}
 
 <Route author="gucheen" example="/feed-the-beast/modpack/ftb_presents_direwolf20_1_16" path="/feed-the-beast/modpack/:modpackEntry" paramsDesc={['entry name of modpack.']}>
-| param | description |
-| ------| ------------ |
+| param        | description                                                                                                                                                                     |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | modpackEntry | The entry name of modpack, can be found in modpack\'s page link, for `https://www.feed-the-beast.com/modpack/ftb_presents_direwolf20_1_16`, use `ftb_presents_direwolf20_1_16`. |
 </Route>
 
@@ -518,8 +518,8 @@ Due to the regional restrictions, an RSSHub deployment in China Mainland may not
 Language Code
 
 | English (US) | 繁體中文 | 한국어 | 日本語 |
-| ----- | ----- | ----- | ----- |
-| en_US | zh_TW | ko_KR | ja_JP |
+| ------------ | -------- | ------ | ------ |
+| en_US        | zh_TW    | ko_KR  | ja_JP  |
 
 </Route>
 
@@ -529,15 +529,15 @@ Language Code
 
 Sort Method
 
-| Most Relevant  | Most Recent |
-| -------------- | ---- |
-| default        | new  |
+| Most Relevant | Most Recent |
+| ------------- | ----------- |
+| default       | new         |
 
 Language Code
 
 | English (US) | 繁體中文 | 한국어 | 日本語 |
-| ----- | ----- | ----- | ----- |
-| en_US | zh_TW | ko_KR | ja_JP |
+| ------------ | -------- | ------ | ------ |
+| en_US        | zh_TW    | ko_KR  | ja_JP  |
 
 </Route>
 
@@ -625,9 +625,9 @@ The year, month and day provided under UTC time zone are the same as the officia
 
 <Route author="Arracc" example="/gamer/gnn/1" path="/gamer/gnn/:category?"  paramsDesc={['版块']}>
 
-| 首頁 | PC | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
-| ---- | -- | ------- | -------- | ------ | -------- | -------- | ---- |
-| 缺省 | 1  | 3       | 4        | 5      | 9        | 11       | 13   |
+| 首頁 | PC  | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
+| ---- | --- | ------- | -------- | ------ | -------- | -------- | ---- |
+| 缺省 | 1   | 3       | 4        | 5      | 9        | 11       | 13   |
 
 | Switch | PS5 | PS4 | XboxOne | XboxSX | PC 單機 | PC 線上 | iOS | Android | Web | 漫畫  | 動畫  |
 | ------ | --- | --- | ------- | ------ | ------- | ------- | --- | ------- | --- | ----- | ----- |
@@ -709,11 +709,11 @@ The year, month and day provided under UTC time zone are the same as the officia
 
 | 炉石传说 | 万智牌 | 游戏王 | 昆特牌 | 影之诗 | 符文之地传奇 | 阴阳师百闻牌 |
 | :------: | :----: | :----: | :----: | :----: | :----------: | :----------: |
-|    17    |   18   |   16   |   19   |   20   |      329     |      221     |
+|    17    |   18   |   16   |   19   |   20   |     329      |     221      |
 
 | 英雄联盟 | 电子游戏 | 桌面游戏 | 卡牌游戏 | 玩家杂谈 | 二次元 |
 | :------: | :------: | :------: | :------: | :------: | :----: |
-|    112   |    389   |    24    |    102   |    23    |   117  |
+|   112    |   389    |    24    |   102    |    23    |  117   |
 
 </Route>
 
@@ -751,12 +751,12 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="CaoMeiYouRen" example="/mihoyo/bbs/img-ranking/ys/forumType=tongren&cateType=illustration&rankingType=daily" path="/bbs/img-ranking/:game/:routeParams?" paramsDesc={['游戏缩写','额外参数；请参阅以下说明和表格']} radar="1">
 
-| 键          | 含义                                | 接受的值                                                     | 默认值       |
-| ----------- | ----------------------------------- | ------------------------------------------------------------ | ------------ |
-| forumType   | 主榜类型（仅原神、大别野有cos主榜） | tongren/cos                                                  | tongren      |
+| 键          | 含义                                | 接受的值                                                             | 默认值       |
+| ----------- | ----------------------------------- | -------------------------------------------------------------------- | ------------ |
+| forumType   | 主榜类型（仅原神、大别野有cos主榜） | tongren/cos                                                          | tongren      |
 | cateType    | 子榜类型（仅崩坏三、原神有子榜）    | 崩坏三：illustration/comic/cos；原神：illustration/comic/qute/manual | illustration |
-| rankingType | 排行榜类型（崩坏二没有日榜）        | daily/weekly/monthly                                         | daily        |
-| lastId      | 当前页id（用于分页）                | 数字                                                         | 1            |
+| rankingType | 排行榜类型（崩坏二没有日榜）        | daily/weekly/monthly                                                 | daily        |
+| lastId      | 当前页id（用于分页）                | 数字                                                                 | 1            |
 
 游戏缩写（目前绝区零还没有同人榜
 
@@ -774,9 +774,9 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 崩坏三 子榜
 
-| 插画         | 漫画  | COS  |
-| ------------ | ----- | ---- |
-| illustration | comic | cos  |
+| 插画         | 漫画  | COS |
+| ------------ | ----- | --- |
+| illustration | comic | cos |
 
 
 原神 子榜
@@ -847,15 +847,15 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 平台
 
-|  安卓服 | iOS 服 |   B 服   |
+| 安卓服  | iOS 服 |   B 服   |
 | :-----: | :----: | :------: |
-| Android |   IOS  | Bilibili |
+| Android |  IOS   | Bilibili |
 
 分组
 
-| 全部 | 系统公告 | 活动公告 |
-| :--: | :------: | :------: |
-|  ALL |  SYSTEM  | ACTIVITY |
+| 全部  | 系统公告 | 活动公告 |
+| :---: | :------: | :------: |
+|  ALL  |  SYSTEM  | ACTIVITY |
 
 </Route>
 
@@ -1001,11 +1001,17 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="wy916787036" example="/vgn" path="/vgn/:platform?" paramsDesc={['平台，见下表，默认为全部']}>
 
-| Switch | PS4 | PC | Xbox |
-| ------ | --- | -- | ---- |
-| 1      | 2   | 3  | 4    |
+| Switch | PS4 | PC  | Xbox |
+| ------ | --- | --- | ---- |
+| 1      | 2   | 3   | 4    |
 
 </Route>
+
+## 游戏基因 {#you-xi-ji-yin}
+
+### 资讯 {#you-xi-ji-yin-zi-xun}
+
+<Route author="lone1y-51" example="/gamegene/news" path="/gamegene/news"/>
 
 ## 游戏年轮 {#you-xi-nian-lun}
 
@@ -1124,9 +1130,9 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 <Route author="TonyRL" example="/famitsu/category/new-article" path="/famitsu/category/:category?" paramsDesc={['Category, see table below, `new-article` by default']} radar="1">
 
-| 新着          | PS5 | Switch | PS4 | ニュース | ゲームニュース   | PR TIMES | 動画     | 特集・企画記事         | インタビュー    | 取材・リポート      | レビュー   | インディーゲーム   |
-| ----------- | --- | ------ | --- | ---- | --------- | -------- | ------ | --------------- | --------- | ------------ | ------ | ---------- |
-| new-article | ps5 | switch | ps4 | news | news-game | prtimes  | videos | special-article | interview | event-report | review | indie-game |
+| 新着        | PS5 | Switch | PS4 | ニュース | ゲームニュース | PR TIMES | 動画   | 特集・企画記事  | インタビュー | 取材・リポート | レビュー | インディーゲーム |
+| ----------- | --- | ------ | --- | -------- | -------------- | -------- | ------ | --------------- | ------------ | -------------- | -------- | ---------------- |
+| new-article | ps5 | switch | ps4 | news     | news-game      | prtimes  | videos | special-article | interview    | event-report   | review   | indie-game       |
 
 </Route>
 
@@ -1139,4 +1145,3 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 ### 游戏横幅 {#%E3%83%9E%E3%82%AE%E3%82%A2%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89-magia-record-mo-fa-ji-lu-you-xi-heng-fu}
 
 <Route author="y2361547758" example="/magireco/event_banner" path="/magireco/event_banner"/>
-
