@@ -239,8 +239,8 @@ devDependencies:
     specifier: 2.0.22
     version: 2.0.22
   '@types/koa-mount':
-    specifier: 4.0.2
-    version: 4.0.2
+    specifier: 4.0.3
+    version: 4.0.3
   '@types/koa-static':
     specifier: 4.0.2
     version: 4.0.2
@@ -1566,8 +1566,8 @@ packages:
       '@types/koa': 2.13.9
     dev: true
 
-  /@types/koa-mount@4.0.2:
-    resolution: {integrity: sha512-XnuGwV8bzw22nv2WqOs5a8wCHR2VgSnLLLuBQPzNTmhyiAvH0O6c+994rQVbMaBuwQJKefUInkvKoKuk+21uew==}
+  /@types/koa-mount@4.0.3:
+    resolution: {integrity: sha512-WXhyitlW5B6zW31cKZO+RBl38afLmO9847M8PaKmcnO5tqGJy/+XcH5N/69Nsp+vKvFXhDOY9GM5uF34HrWgrw==}
     dependencies:
       '@types/koa': 2.13.9
     dev: true
