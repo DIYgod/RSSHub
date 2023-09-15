@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ title || 'RSSHub' }}</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-size: 16px;
+            color: #2c3e50;
+            background-color: #f0f0f0;
+            word-wrap: break-word;
+        }
+
+        .container {
+            width: 60%;
+            margin: 0 auto 30px auto;
+        }
+
+        .rsshub {
+            text-align: center;
+        }
+
+        a {
+            color: #F5712C;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        section {
+            margin-bottom: 10px;
+            background-color: #FFFFFF;
+            padding: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.09);
+            border-radius: 4px;
+        }
+
+        h1, h2 {
+            font-size: 200%;
+            font-weight: bold;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        * {
+            max-width: 100%;
+        }
+
+        img {
+            height: auto;
+        }
+
+        .pagetitle {
+            margin: 40px 0 20px;
+            font-size: 300%;
+        }
+
+        time, .feeditem-author {
+            color: #888;
+            font-size: 80%;
+            padding: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="pagetitle"><a href={{ link || 'https://docs.rsshub.app' }} target="_blank">{{@ title || 'RSSHub' }}</a></h1>
+        <p class="rsshub">Made with love by RSSHub (<a href="https://github.com/DIYgod/RSSHub">https://github.com/DIYgod/RSSHub</a>)</p>
+        {{ each item }}
+        <section class="feeditem">
+            <h2 class="feeditem-title"><a href={{ $value.link }} target="_blank">{{ $value.title }}</a></h2>
+            {{ if $value.pubDate }}<time class="feeditem-time" datetime={{ $value.pubDate }}>{{ $value.pubDate }}</time>{{ /if }}
+            {{ if $value.author }}<p class="feeditem-author">by: {{ $value.author }}</p>{{ /if }}
+            <p class="feeditem-content">{{@ $value.description }}</p>
+        </section>
+        {{ /each }}
+    </div>
+</body>
+
+</html>

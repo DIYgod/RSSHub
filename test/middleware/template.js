@@ -4,6 +4,7 @@ const server = require('../../lib/index');
 const request = supertest(server);
 const Parser = require('rss-parser');
 const parser = new Parser();
+const cheerio = require('cheerio');
 
 afterAll(() => {
     server.close();
@@ -60,6 +61,21 @@ describe('template', () => {
         expect(parsed.items[0].author).toEqual(expect.any(String));
         expect(parsed.items[0].content).toEqual(expect.any(String));
         expect(parsed.items[0].id).toEqual(expect.any(String));
+    });
+
+    it('.html', async () => {
+        const htmlResponse = await request.get('/test/1.html');
+        const rssResponse = await request.get('/test/1.rss');
+        const htmlParsed = cheerio.load(htmlResponse.text);
+        const rssParsed = await parser.parseString(rssResponse.text);
+
+        expect(htmlResponse.headers['content-type']).toBe('text/html; charset=UTF-8');
+
+        expect(htmlParsed('.feeditem-title').first().text().trim()).toEqual(rssParsed.items[0].title);
+        expect(htmlParsed('.feeditem-title a').first().attr('href')).toEqual(rssParsed.items[0].link);
+        expect(htmlParsed('.feeditem-time').first().text().trim()).toEqual(expectPubDate.toUTCString());
+        expect(htmlParsed('.feeditem-author').first().text().trim()).toEqual(`by: ${rssParsed.items[0].author}`);
+        expect(htmlParsed('.feeditem-content').first().text().trim()).toEqual(rssParsed.items[0].content);
     });
 
     it(`.json`, async () => {
