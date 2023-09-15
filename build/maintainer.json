@@ -2119,6 +2119,9 @@
     "/gamebase/news/:type?/:category?": [
         "nczitzk"
     ],
+    "/gamegene/news": [
+        "lone1y-51"
+    ],
     "/gamer/gnn/:category?": [
         "Arracc"
     ],
