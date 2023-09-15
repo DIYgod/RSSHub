@@ -1012,6 +1012,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 ### 资讯 {#you-xi-ji-yin-zi-xun}
 
 <Route author="lone1y" example="/gamegene/news" path="/gamegene/news"/>
+
 ## 游戏年轮 {#you-xi-nian-lun}
 
 ### 分类 {#you-xi-nian-lun-fen-lei}
