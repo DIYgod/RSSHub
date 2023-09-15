@@ -215,8 +215,8 @@ devDependencies:
     specifier: 1.8.1
     version: 1.8.1
   '@types/fs-extra':
-    specifier: 11.0.1
-    version: 11.0.1
+    specifier: 11.0.2
+    version: 11.0.2
   '@types/git-rev-sync':
     specifier: 2.0.0
     version: 2.0.0
@@ -230,23 +230,23 @@ devDependencies:
     specifier: 1.0.1
     version: 1.0.1
   '@types/koa':
-    specifier: 2.13.8
-    version: 2.13.8
+    specifier: 2.13.9
+    version: 2.13.9
   '@types/koa-basic-auth':
     specifier: 2.0.4
     version: 2.0.4
   '@types/koa-favicon':
-    specifier: 2.0.21
-    version: 2.0.21
+    specifier: 2.0.22
+    version: 2.0.22
   '@types/koa-mount':
-    specifier: 4.0.2
-    version: 4.0.2
+    specifier: 4.0.3
+    version: 4.0.3
   '@types/koa-static':
     specifier: 4.0.2
     version: 4.0.2
   '@types/koa__router':
-    specifier: 12.0.0
-    version: 12.0.0
+    specifier: 12.0.1
+    version: 12.0.1
   '@types/lint-staged':
     specifier: 13.2.0
     version: 13.2.0
@@ -1465,8 +1465,8 @@ packages:
       '@types/serve-static': 1.15.2
     dev: true
 
-  /@types/fs-extra@11.0.1:
-    resolution: {integrity: sha512-MxObHvNl4A69ofaTRU8DFqvgzzv8s9yRtaPPm5gud9HDNvpB3GPQFvNuTWAI59B9huVGV5jXYJwbCsmBsOGYWA==}
+  /@types/fs-extra@11.0.2:
+    resolution: {integrity: sha512-c0hrgAOVYr21EX8J0jBMXGLMgJqVf/v6yxi0dLaJboW9aQPh16Id+z6w2Tx1hm+piJOLv8xPfVKZCLfjPw/IMQ==}
     dependencies:
       '@types/jsonfile': 6.1.1
       '@types/node': 20.5.6
@@ -1551,42 +1551,42 @@ packages:
   /@types/koa-basic-auth@2.0.4:
     resolution: {integrity: sha512-PJKvoF5OMGlEEzUnctZDGRQVqV12xB0V4KplDJvHQDX9egh9ADFa456zGXRNnhNr43t3Fe4/VzD6ziM61uM5RQ==}
     dependencies:
-      '@types/koa': 2.13.8
+      '@types/koa': 2.13.9
     dev: true
 
   /@types/koa-compose@3.2.5:
     resolution: {integrity: sha512-B8nG/OoE1ORZqCkBVsup/AKcvjdgoHnfi4pZMn5UwAPCbhk/96xyv284eBYW8JlQbQ7zDmnpFr68I/40mFoIBQ==}
     dependencies:
-      '@types/koa': 2.13.8
+      '@types/koa': 2.13.9
     dev: true
 
-  /@types/koa-favicon@2.0.21:
-    resolution: {integrity: sha512-paH1nheVhijx/VduoR/RCD/qTCiX+OI/6fHLi3mZae053Ts+gUBOrKtzl3pMTDbdEBqdLolfLje3PZbb6jW0jQ==}
+  /@types/koa-favicon@2.0.22:
+    resolution: {integrity: sha512-oyLEtX7JgJ6Fm3luqcuKi6qjTBHWMwS9dQblxkIPgtQiHEyfYm99ow6igqI440yV+k61S+ubnbmv1q0kZWyV/A==}
     dependencies:
-      '@types/koa': 2.13.8
+      '@types/koa': 2.13.9
     dev: true
 
-  /@types/koa-mount@4.0.2:
-    resolution: {integrity: sha512-XnuGwV8bzw22nv2WqOs5a8wCHR2VgSnLLLuBQPzNTmhyiAvH0O6c+994rQVbMaBuwQJKefUInkvKoKuk+21uew==}
+  /@types/koa-mount@4.0.3:
+    resolution: {integrity: sha512-WXhyitlW5B6zW31cKZO+RBl38afLmO9847M8PaKmcnO5tqGJy/+XcH5N/69Nsp+vKvFXhDOY9GM5uF34HrWgrw==}
     dependencies:
-      '@types/koa': 2.13.8
+      '@types/koa': 2.13.9
     dev: true
 
   /@types/koa-send@4.1.3:
     resolution: {integrity: sha512-daaTqPZlgjIJycSTNjKpHYuKhXYP30atFc1pBcy6HHqB9+vcymDgYTguPdx9tO4HMOqNyz6bz/zqpxt5eLR+VA==}
     dependencies:
-      '@types/koa': 2.13.8
+      '@types/koa': 2.13.9
     dev: true
 
   /@types/koa-static@4.0.2:
     resolution: {integrity: sha512-ns/zHg+K6XVPMuohjpOlpkR1WLa4VJ9czgUP9bxkCDn0JZBtUWbD/wKDZzPGDclkQK1bpAEScufCHOy8cbfL0w==}
     dependencies:
-      '@types/koa': 2.13.8
+      '@types/koa': 2.13.9
       '@types/koa-send': 4.1.3
     dev: true
 
-  /@types/koa@2.13.8:
-    resolution: {integrity: sha512-Ugmxmgk/yPRW3ptBTh9VjOLwsKWJuGbymo1uGX0qdaqqL18uJiiG1ZoV0rxCOYSaDGhvEp5Ece02Amx0iwaxQQ==}
+  /@types/koa@2.13.9:
+    resolution: {integrity: sha512-tPX3cN1dGrMn+sjCDEiQqXH2AqlPoPd594S/8zxwUm/ZbPsQXKqHPUypr2gjCPhHUc+nDJLduhh5lXI/1olnGQ==}
     dependencies:
       '@types/accepts': 1.3.5
       '@types/content-disposition': 0.5.5
@@ -1598,10 +1598,10 @@ packages:
       '@types/node': 20.5.6
     dev: true
 
-  /@types/koa__router@12.0.0:
-    resolution: {integrity: sha512-S6eHyZyoWCZLNHyy8j0sMW85cPrpByCbGGU2/BO4IzGiI87aHJ92lZh4E9xfsM9DcbCT469/OIqyC0sSJXSIBQ==}
+  /@types/koa__router@12.0.1:
+    resolution: {integrity: sha512-uqV+v6pCsfLZwK+Ar6XavKSZ6Cbsgw12bCEX9L0IKHj81LTWXcrayxJWkLtez5vOMQlq+ax+lZcuCyh9CgxYGw==}
     dependencies:
-      '@types/koa': 2.13.8
+      '@types/koa': 2.13.9
     dev: true
 
   /@types/linkify-it@3.0.3:
