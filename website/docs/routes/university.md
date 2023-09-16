@@ -1813,6 +1813,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 :::
 
+### 机械与汽车工程学院 - 通知公告 {#hua-nan-li-gong-da-xue-ji-xie-yu-qi-che-gong-cheng-xue-yuan-tong-zhi-gong-gao}
+
+<Route author="Ermaotie" example="/scut/smae/yjsjw" path="/scut/smae/:category?" radar="1" paramsDesc={['通知分类，默认为 `yjsjw`']}>
+
+| 公务信息 | 党建工作 | 人事工作 | 学生工作 | 科研实验室 | 本科生教务 | 研究生教务 |
+| ------- | ------- | -------- | ------- | --------- | --------- | --------- |
+| gwxx    | djgz    | rsgz     | xsgz    | kysys     | bksjw     | yjsjw     |
+
+</Route>
+
 ## 华南农业大学 {#hua-nan-nong-ye-da-xue}
 
 ### 华农研讯 {#hua-nan-nong-ye-da-xue-hua-nong-yan-xun}
