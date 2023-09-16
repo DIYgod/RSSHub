@@ -1743,6 +1743,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 华北理工大学 {#hua-bei-li-gong-da-xue}
+
+### 教务处 {#hua-bei-li-gong-da-xue-jiao-wu-chu-jiao-wu-chu}
+
+<Route author="nyaShine" example="/ncst/jwc/1423964976016" path="/ncst/jwc/:category?" paramsDesc={['分类ID，默认为`1423964976016`']} radar="1">
+
+| 分类 | 教务通知 | 教学运行 | 教室管理 | 教学进度 | 校历安排 | 公共课程改革 | 培养方案 | 课程管理 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 分类ID | 1423964976016 | 1423961950339 | 1423961975184 | 1423962015313 | 1423961918634 | 1423961986909 | 1423961869861 | 1423961998145 |
+
+</Route>
+
 ## 华北水利水电大学 {#hua-bei-shui-li-shui-dian-da-xue}
 
 ### 学校通知 {#hua-bei-shui-li-shui-dian-da-xue-xue-xiao-tong-zhi}
