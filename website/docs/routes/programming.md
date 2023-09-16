@@ -86,7 +86,7 @@ You have the option to utilize the main heading or use individual categories as 
 
 ### Software Alternatives {#alternativeto-software-alternatives}
 
-<Route author="JimenezLi" example="/alternativeto/software/cpp" path="/alternativeto/software/:name/:routeParams?" paramsDesc={['Software name', 'Filters of software type']} radar="1">
+<Route author="JimenezLi" example="/alternativeto/software/cpp" path="/alternativeto/software/:name/:routeParams?" paramsDesc={['Software name', 'Filters of software type']} puppeteer="1" radar="1">
 
 > routeParms can be copied from original site URL, example: `/alternativeto/software/cpp/license=opensource&platform=windows`
 
