@@ -227,8 +227,8 @@ devDependencies:
     specifier: 21.1.3
     version: 21.1.3
   '@types/json-bigint':
-    specifier: 1.0.1
-    version: 1.0.1
+    specifier: 1.0.2
+    version: 1.0.2
   '@types/koa':
     specifier: 2.13.9
     version: 2.13.9
@@ -1524,8 +1524,8 @@ packages:
       parse5: 7.1.2
     dev: true
 
-  /@types/json-bigint@1.0.1:
-    resolution: {integrity: sha512-zpchZLNsNuzJHi6v64UBoFWAvQlPhch7XAi36FkH6tL1bbbmimIF+cS7vwkzY4u5RaSWMoflQfu+TshMPPw8uw==}
+  /@types/json-bigint@1.0.2:
+    resolution: {integrity: sha512-ZXqZc1YeBj1B2my/a/f5PWpNemgIb1r5s3cALPvsMqoGEZ0NOEo1UxrSRUEZr0EtChy1BH/CuORiYuvYr4/4Fw==}
     dev: true
 
   /@types/json-schema@7.0.12:
