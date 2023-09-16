@@ -3415,6 +3415,18 @@ paramsDesc={['公告类型，详见表格']}>
 
 </Route>
 
+## 新乡医学院三全学院 {#xin-xiang-yi-xue-yuan-san-quan-xue-yuan}
+
+### 官网信息 {#xin-xiang-yi-xue-yuan-san-quan-xue-yuan-guan-wang-xin-xi}
+
+<Route author="nyaShine" example="/sqmc/www/3157" path="/sqmc/www/:category?" paramsDesc={['分类ID，默认为`3157`']} radar="1">
+
+| 学校要闻 | 通知 | 学术讲座 | 基层风采书院 | 基层风采院系 | 外媒报道 | 三全学院报 |
+| -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+| 3157     | 3187     | 3188     | 3185     | 3186     | 3199     | 3200     |
+
+</Route>
+
 ## 信阳师范学院 {#xin-yang-shi-fan-xue-yuan}
 
 ### 高等教育自学考试办公室 {#xin-yang-shi-fan-xue-yuan-gao-deng-jiao-yu-zi-xue-kao-shi-ban-gong-shi}
