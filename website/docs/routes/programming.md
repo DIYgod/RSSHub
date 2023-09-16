@@ -94,7 +94,7 @@ You have the option to utilize the main heading or use individual categories as 
 
 ### Platform Software {#alternativeto-platform-software}
 
-<Route author="JimenezLi" example="/alternativeto/platform/firefox" path="/alternativeto/platform/:name/:routeParams?" paramsDesc={['Platform name', 'Filters of software type']} radar="1">
+<Route author="JimenezLi" example="/alternativeto/platform/firefox" path="/alternativeto/platform/:name/:routeParams?" paramsDesc={['Platform name', 'Filters of software type']} puppeteer="1" radar="1">
 
 > routeParms can be copied from original site URL, example: `/alternativeto/platform/firefox/license=free`
 
