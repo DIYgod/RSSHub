@@ -5302,6 +5302,9 @@
     "/sputniknews/:category?/:language?": [
         "nczitzk"
     ],
+    "/sqmc/www/:category?": [
+        "nyaShine"
+    ],
     "/sse/convert/:query?": [
         "kt286"
     ],
