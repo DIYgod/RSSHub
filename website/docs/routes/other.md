@@ -219,7 +219,7 @@ Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
 
 > Only support IMAP protocol, email password and other settings refer to [Email setting](/install)
 
-<Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email" paramsDesc={['Email account']} selfhost="1"/>
+<Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email/:folder*" paramsDesc={['Email account', 'Inbox name, `INBOX` by default']} selfhost="1"/>
 
 ## Emi Nitta official website 新田惠海官方网站 {#emi-nitta-official-website-xin-tian-hui-hai-guan-fang-wang-zhan}
 
@@ -643,6 +643,25 @@ Parsing of `routeParams` parameter:
 | `itemTitle` | `tag_name`      |
 | `itemLink`  | `html_url`      |
 | `itemDesc`  | `body`          |
+
+</Route>
+
+### Sitemap {#transformation-sitemap}
+
+Specify options (in the format of query string) in parameter `routeParams` parameter to extract data from Sitemap. (Follows Sitemap Protocol 0.9)
+
+| Key             | Meaning                                                        | Accepted Values | Default                |
+|-----------------|----------------------------------------------------------------|-----------------|------------------------|
+| `title`         | The title of the RSS                                           | `string`        | Extract from `<title>` |
+
+<Route author="flrngel" example="/rsshub/transform/xml/https%3A%2F%2Fwww.sitemaps.org%2Fsitemap.xml/" path="/rsshub/transform/html/:url/:routeParams?" paramsDesc={['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']} selfhost="1">
+
+Parameters parsing in the above example:
+
+| Parameter     | Value                                     |
+|---------------|-------------------------------------------|
+| `url`         | `https://www.sitemaps.org/sitemap.xml` |
+| `routeParams` | `title=Example`      |
 
 </Route>
 
