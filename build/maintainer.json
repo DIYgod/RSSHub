@@ -5000,6 +5000,9 @@
     "/scut/seie/news_center": [
         "auto-bot-ty"
     ],
+    "/scut/smae/:category?": [
+        "Ermaotie"
+    ],
     "/scut/yjs": [
         "shengmaosu"
     ],

@@ -21664,6 +21664,13 @@
         "target": "/scut/seie/news_center"
       },
       {
+        "title": "机械与汽车工程学院 - 通知公告",
+        "docs": "https://docs.rsshub.app/routes/university#hua-nan-li-gong-da-xue",
+        "source": [
+          "/smae/:category/list.htm"
+        ]
+      },
+      {
         "title": "研究生院通知公告",
         "docs": "https://docs.rsshub.app/routes/university#hua-nan-li-gong-da-xue",
         "source": [
