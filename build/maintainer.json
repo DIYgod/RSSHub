@@ -3871,7 +3871,20 @@
     "/mvm/:category?": [
         "nczitzk"
     ],
-    "/mydrivers/:type?/:id?": [
+    "/mydrivers/hot": [
+        "nczitzk"
+    ],
+    "/mydrivers/new": [
+        "kt286",
+        "nczitzk"
+    ],
+    "/mydrivers/rank/:range?": [
+        "nczitzk"
+    ],
+    "/mydrivers/zhibo": [
+        "nczitzk"
+    ],
+    "/mydrivers/:category?": [
         "nczitzk"
     ],
     "/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?": [
@@ -7194,7 +7207,6 @@
     "/polimi/news/:language?": [],
     "/dekudeals/:type": [],
     "/metacritic/release/:platform/:type/:sort?": [],
-    "/kkj/news": [],
     "/sixthtone/news": [],
     "/aiyanxishe/:id/:sort?": [],
     "/huodongxing/explore": [],
