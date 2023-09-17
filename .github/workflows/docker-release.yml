@@ -13,8 +13,6 @@ on:
       - '!lib/v2/test/**'
       - '!test/**'
       - 'Dockerfile'
-      - 'package.json'
-      - 'pnpm-lock.yaml'
   workflow_dispatch: ~
 
 jobs:
