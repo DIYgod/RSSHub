@@ -1037,6 +1037,9 @@
     "/cbaigui/:path+": [
         "nczitzk"
     ],
+    "/cbc/topics/:topic?": [
+        "wb14123"
+    ],
     "/cbirc/:category?": [
         "JkCheung"
     ],
@@ -7391,7 +7394,6 @@
     "/xinquji/today": [],
     "/xinquji/today/internal": [],
     "/gbcc/trust": [],
-    "/cbc/topics/:topic?": [],
     "/chinadialogue/topics/:topic": [],
     "/chinadialogue/:column": [],
     "/ifnews/:cid": [],
