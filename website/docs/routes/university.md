@@ -1757,7 +1757,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 招生就业处 {#hua-bei-li-gong-da-xue-zhao-sheng-jiu-ye-chu}
 
-<Route author="nyaShine" example="/ncst/zsjyc" path="/ncst/zsjyc" radar="1">
+<Route author="nyaShine" example="/ncst/zsjyc" path="/ncst/zsjyc" radar="1" />
 
 ## 华北水利水电大学 {#hua-bei-shui-li-shui-dian-da-xue}
 
