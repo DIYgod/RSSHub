@@ -82,6 +82,24 @@ You have the option to utilize the main heading or use individual categories as 
 
 </Route>
 
+## AlternativeTo {#alternativeto}
+
+### Software Alternatives {#alternativeto-software-alternatives}
+
+<Route author="JimenezLi" example="/alternativeto/software/cpp" path="/alternativeto/software/:name/:routeParams?" paramsDesc={['Software name', 'Filters of software type']} puppeteer="1" radar="1">
+
+> routeParms can be copied from original site URL, example: `/alternativeto/software/cpp/license=opensource&platform=windows`
+
+</Route>
+
+### Platform Software {#alternativeto-platform-software}
+
+<Route author="JimenezLi" example="/alternativeto/platform/firefox" path="/alternativeto/platform/:name/:routeParams?" paramsDesc={['Platform name', 'Filters of software type']} puppeteer="1" radar="1">
+
+> routeParms can be copied from original site URL, example: `/alternativeto/platform/firefox/license=free`
+
+</Route>
+
 ## AtCoder {#atcoder}
 
 ### Present Contests {#atcoder-present-contests}
