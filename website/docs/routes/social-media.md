@@ -607,7 +607,7 @@ It's highly recommended to deploy with Redis cache enabled.
 
 ### Community {#lemmy-community}
 
-<Route author="wb14123" example="/lemmy/technology@lemmy.world/Hot" path="/lemmy/:community/:sort?" paramsDesc={['Lemmmy community, for example technology@lemmy,workd', 'Sort by, defaut to Active']} anticrawler="0"/>
+<Route author="wb14123" example="/lemmy/technology@lemmy.world/Hot" path="/lemmy/:community/:sort?" paramsDesc={['Lemmmy community, for example technology@lemmy.world', 'Sort by, defaut to Active']} selfhost="1"/>
 
 ## Lofter {#lofter}
 
