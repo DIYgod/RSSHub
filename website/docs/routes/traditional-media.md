@@ -163,11 +163,11 @@ Refer to [Boston.com's feed page](https://www.boston.com/rss-feeds) for tags. Fo
 
 </Route>
 
-## CBC {#cbc}
+## Canadian Broadcasting Corporation {#canadian-broadcasting-corporation}
 
-通过提取文章全文，以提供比官方源更佳的阅读体验。
+### News {#canadian-broadcasting-corporation-news}
 
-<Route author="wb14123" example="/cbc/topics" path="/cbc/topics/:topic?" paramsDesc={['CBC 频道。默认为 Top Stories。二级话题如 canada/toronto，需要用 `-` 替换掉 `/`。']}/>
+<Route author="wb14123" example="/cbc/topics" path="/cbc/topics/:topic?" paramsDesc={['Channel,`Top Stories` by default. For secondary channel like `canada/toronto`, use `-` to replace `/`']} radar="1"/>
 
 ## Chicago Tribune {#chicago-tribune}
 
