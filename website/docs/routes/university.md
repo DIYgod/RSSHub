@@ -2521,6 +2521,8 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 |   sjjx   |    实践教学   |    yjsjw   | 工作简讯   |
 |   jyjg   |    教研教改   |       |    |
 
+</Route>
+
 ## 清华大学 {#qing-hua-da-xue}
 
 ### 清华大学校内信息发布平台 {#qing-hua-da-xue-qing-hua-da-xue-xiao-nei-xin-xi-fa-bu-ping-tai}
