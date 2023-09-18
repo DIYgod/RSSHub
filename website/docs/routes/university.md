@@ -2511,7 +2511,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 教务处  {#xia-men-li-gong-da-xue-jiao-wu-chu}
 
-<Route author="IceCliffs" example="/xmut/jwc/bkjw/jxyx" path="/xmut/jwc/:type/:method" paramsDesc={['系统类型，分为 `bkjw` 本科生教务处， `yjjw` 研究生处', '分类如下表']} />
+<Route author="icecliffs" example="/xmut/jwc/bkjw/jxyx" path="/xmut/jwc/:type/:method" paramsDesc={['系统类型，分为 `bkjw` 本科生教务处， `yjjw` 研究生处', '分类如下表']} >
 
 | 本科生教务处 | 系统说明 | 研究生处 |  系统说明 |
 | :------: | :--------: | :--------: | :-------: |
