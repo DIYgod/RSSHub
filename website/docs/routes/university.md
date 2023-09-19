@@ -1614,6 +1614,18 @@ category 列表：
 
 </Route>
 
+## 河南牧业经济学院 {#he-nan-mu-ye-jing-ji-xue-yuan}
+
+### 官网 {#he-nan-mu-ye-jing-ji-xue-yuan-guan-wang}
+
+<Route author="nyaShine" example="/hnuahe/xxxw" path="/hnuahe/:category" paramsDesc={['分类ID']} radar="1">
+
+| 分类 | 学校新闻 | 通知公告 | 学术动态 | 院部风采 |
+| -------- | -------- | -------- | -------- | -------- |
+| 分类ID | xxxw | tzgg | xsdt | ybfc |
+
+</Route>
+
 ## 黑龙江中医药大学 {#hei-long-jiang-zhong-yi-yao-da-xue}
 
 ### 研究生院 {#hei-long-jiang-zhong-yi-yao-da-xue-yan-jiu-sheng-yuan}
