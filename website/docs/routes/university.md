@@ -1574,6 +1574,24 @@ category 列表：
 
 <Route author="legr4ndk" example="/hdu/cs/pg" path="/hdu/cs/pg" radar="1" rssbud="1"/>
 
+## 河北工程大学 {#he-bei-gong-cheng-da-xue}
+
+### 科信学院 {#he-bei-gong-cheng-da-xue-ke-xin-xue-yuan}
+
+<Route author="nyaShine" example="/hebeu/kexin/tpxw" path="/hebeu/kexin/:category?" paramsDesc={['分类ID']} radar="1">
+
+| 分类 | 图片新闻 | 文化建设 | 通知公告 | 创新创业 | 学院新闻 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 分类ID | tpxw | tzgg | xyxw | xsyd | zxdt |
+
+</Route>
+
+:::caution
+
+tzgg（通知公告）确实对应文化建设，xyxw（学院新闻）确实对应通知公告，因为原网站链接就是这样。
+
+:::
+
 ## 合肥工业大学 {#he-fei-gong-ye-da-xue}
 
 ### 通知公告 {#he-fei-gong-ye-da-xue-tong-zhi-gong-gao}
