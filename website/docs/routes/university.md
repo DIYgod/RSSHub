@@ -2541,6 +2541,22 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 厦门理工大学 {#xia-men-li-gong-da-xue}
+
+### 教务处 {#xia-men-li-gong-da-xue-jiao-wu-chu}
+
+<Route author="icecliffs" example="/xmut/jwc/bkjw/jxyx" path="/xmut/jwc/:type/:method" paramsDesc={['系统类型，分为 `bkjw` 本科生教务处， `yjjw` 研究生处', '分类如下表']} >
+
+| 本科生教务处 | 系统说明 | 研究生处 |  系统说明 |
+| :------: | :--------: | :--------: | :-------: |
+|   jxyx   |    教学运行   |    tzgg   | 通知公告   |
+|   zhsw   |    综合事务   |    xwdt   | 新闻动态   |
+|   xwgl   |    学务管理   |    xstj   | 学术研究   |
+|   sjjx   |    实践教学   |    yjsjw   | 工作简讯   |
+|   jyjg   |    教研教改   |       |    |
+
+</Route>
+
 ## 山东大学 {#shan-dong-da-xue}
 
 ### 软件学院通知 {#shan-dong-da-xue-ruan-jian-xue-yuan-tong-zhi}

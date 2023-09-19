@@ -603,6 +603,12 @@ It's highly recommended to deploy with Redis cache enabled.
 
 <Route author="Dectinc DIYgod" example="/keep/user/556b02c1ab59390afea671ea" path="/keep/user/:id" paramsDesc={['Keep 用户 id']}/>
 
+## Lemmy {#lemmy}
+
+### Community {#lemmy-community}
+
+<Route author="wb14123" example="/lemmy/technology@lemmy.world/Hot" path="/lemmy/:community/:sort?" paramsDesc={['Lemmmy community, for example technology@lemmy.world', 'Sort by, defaut to Active']} selfhost="1"/>
+
 ## Lofter {#lofter}
 
 ### User {#lofter-user}
