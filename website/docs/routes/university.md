@@ -587,6 +587,18 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 
 </Route>
 
+## 成都锦城学院 {#cheng-du-jin-cheng-xue-yuan}
+
+### 教务处 {#cheng-du-jin-cheng-xue-yuan-jiao-wu-chu}
+
+<Route author="nyaShine" example="/scujcc/jwb/tzgg" path="/scujcc/jwb/:category?" paramsDesc={['分类ID']} radar="1">
+
+| 分类 | 通知公告 | 服务指南 | 政策文件 | 文件下载 | 学院动态 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 分类ID | tzgg | fwzn | zcwj | wjxz | xydt |
+
+</Route>
+
 ## 成都信息工程大学 {#cheng-dou-xin-xi-gong-cheng-da-xue}
 
 ### 成信新闻网 {#cheng-dou-xin-xi-gong-cheng-da-xue-cheng-xin-xin-wen-wang}
