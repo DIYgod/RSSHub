@@ -2814,9 +2814,15 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 华中师范大学
 
-### 华中师范大学研究生通知公告
+### 华中师范大学研究生院
 
-<Route author="shengmaosu" example="/ccnuyjs" path="/ccnuyjs" />
+<Route author="yanbot-team" example="/ccnu/gs/zsgz-ssyjs" path="/ccnu/gs/:type" :paramsDesc="['分区 type，见下表 可在网页 HTML中找到']">
+
+| 招生工作-硕士研究生 |
+| ------------------- |
+| zsgz-ssyjs          |
+
+</Route>
 
 ### 华中师范大学计算机学院
 
