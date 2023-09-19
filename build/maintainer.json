@@ -3578,6 +3578,9 @@
     "/leiphone/leiphone/newsflash": [
         "vlcheng"
     ],
+    "/lemmy/:community/:sort?": [
+        "wb14123"
+    ],
     "/lever/:domain": [
         "tsarlewey"
     ],
