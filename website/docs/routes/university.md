@@ -3324,6 +3324,26 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 西南财经大学 {#xi-nan-cai-jing-da-xue}
 
+### 官网 {#xi-nan-cai-jing-da-xue-guan-wang}
+
+<Route author="nyaShine" example="/swufe/www/tzgg" path="/swufe/www/:category" paramsDesc={['分类ID']} radar="1">
+
+| 分类 | 通知公告 | 校园时讯 | 学术讲座 |
+| -------- | -------- | -------- | -------- |
+| 分类ID | tzgg | xysx | xsjz |
+
+</Route>
+
+### 教务处 {#xi-nan-cai-jing-da-xue-jiao-wu-chu}
+
+<Route author="nyaShine" example="/swufe/jwc/tzgg" path="/swufe/jwc/:category" paramsDesc={['分类ID']} radar="1">
+
+| 分类 | 通知公告 | 教学动态 |
+| -------- | -------- | -------- |
+| 分类ID | tzgg | jxdt |
+
+</Route>
+
 ### 经济信息工程学院 {#xi-nan-cai-jing-da-xue-jing-ji-xin-xi-gong-cheng-xue-yuan}
 
 <Route author="Hivol" example="/swufe/seie/tzgg" path="/swufe/seie/:type?" paramsDesc={['分类名(默认为tzgg)']} >
@@ -3331,6 +3351,16 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 学院新闻 | 通知公告 |
 | -------- | -------- |
 | xyxw     | tzgg     |
+
+</Route>
+
+### 研究生招生网 {#xi-nan-cai-jing-da-xue-yan-jiu-sheng-zhao-sheng-wang}
+
+<Route author="nyaShine" example="/swufe/yz/xwdt" path="/swufe/yz/:category" paramsDesc={['分类ID']} radar="1">
+
+| 分类 | 新闻动态 | 博士研究生招生通知 | 硕士研究生招生通知 | 在职攻读硕士招生通知 |
+| -------- | -------- | -------- | -------- | -------- |
+| 分类ID | xwdt | bsyjszstz | ssyjszstz | zzgdsszstz |
 
 </Route>
 
