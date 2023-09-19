@@ -33,7 +33,7 @@
   "devDependencies": {
     "@docusaurus/module-type-aliases": "2.4.1",
     "@docusaurus/types": "2.4.1",
-    "@tsconfig/docusaurus": "^2.0.0",
+    "@tsconfig/docusaurus": "^2.0.1",
     "@types/markdown-it": "^13.0.1",
     "@types/mdx-js__react": "^1.5.5",
     "@types/react": "^17.0.64",

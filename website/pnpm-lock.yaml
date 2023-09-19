@@ -53,8 +53,8 @@ devDependencies:
     specifier: 2.4.1
     version: 2.4.1(react-dom@17.0.2)(react@17.0.2)
   '@tsconfig/docusaurus':
-    specifier: ^2.0.0
-    version: 2.0.0
+    specifier: ^2.0.1
+    version: 2.0.1
   '@types/markdown-it':
     specifier: ^13.0.1
     version: 13.0.1
@@ -2895,8 +2895,8 @@ packages:
     engines: {node: '>=10.13.0'}
     dev: false
 
-  /@tsconfig/docusaurus@2.0.0:
-    resolution: {integrity: sha512-X5wptT7pXA/46/IRFTW76oR5GNjoy9qjNM/1JGhFV4QAsmLh3YUpJJA+Vpx7Ds6eEBxSxz1QrgoNEBy6rLVs8w==}
+  /@tsconfig/docusaurus@2.0.1:
+    resolution: {integrity: sha512-7JrI61bTZ37DWrHx1qhOW+kPxSG95+/q+EiDCMIahh8Aqbk03+nVu+Z6YGOj3O5e6lXHJuf/LHJ/lc6j8IEQyA==}
     dev: true
 
   /@types/body-parser@1.19.2:
