@@ -3037,6 +3037,18 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+## 四川师范大学 {#si-chuan-shi-fan-da-xue}
+
+### 官网 {#si-chuan-shi-fan-da-xue-guan-wang}
+
+<Route author="nyaShine" example="/sicnu/www/23" path="/sicnu/www/:category?" paramsDesc={['分类ID']} radar="1">
+
+| 分类 | 实用信息 | 学术讲座 | 通知公告 |
+| -------- | -------- | -------- | -------- |
+| 分类ID | 46 | 24 | 23 |
+
+</Route>
+
 ## 四川职业技术学院 {#si-chuan-zhi-ye-ji-shu-xue-yuan}
 
 ### 学院公告 {#si-chuan-zhi-ye-ji-shu-xue-yuan-xue-yuan-gong-gao}
