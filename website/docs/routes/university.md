@@ -599,6 +599,18 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 
 </Route>
 
+## 成都中医药大学 {#cheng-du-zhong-yi-yao-da-xue}
+
+### 教务处 {#cheng-du-zhong-yi-yao-da-xue-jiao-wu-chu}
+
+<Route author="nyaShine" example="/cdutcm/jwc/jwgg" path="/cdutcm/jwc/:category" paramsDesc={['分类ID']} radar="1">
+
+| 分类 | 教务公告 | 公示专栏 | 学生办事指南 | 教师办事指南 | 教务资讯 |
+| -------- | -------- | -------- | -------- | -------- | -------- |
+| 分类ID | jwgg | gszl | xsbszn | jsbszn | jwzx |
+
+</Route>
+
 ## 重庆大学 {#chong-qing-da-xue}
 
 ### 本科教学信息网通知公告 {#chong-qing-da-xue-ben-ke-jiao-xue-xin-xi-wang-tong-zhi-gong-gao}
