@@ -6424,6 +6424,9 @@
     "/xmnn/epaper/:id?": [
         "nczitzk"
     ],
+    "/xmut/jwc/:type/:method": [
+        "icecliffs"
+    ],
     "/xsijishe/forum/:fid": [
         "akynazh"
     ],
