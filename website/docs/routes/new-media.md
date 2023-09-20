@@ -2794,6 +2794,47 @@ Type 栏目：
 
 <Route author="Fatpandac" example="/dushu/fuzhou" path="/dushu/fuzhou" />
 
+## 仮面ライダ {#fan-mian-%E3%83%A9%E3%82%A4%E3%83%80}
+
+### 最新情報 {#fan-mian-%E3%83%A9%E3%82%A4%E3%83%80-zui-xin-qing-bao}
+
+<Route author="nczitzk" example="/kamen-rider-official/news" path="/kamen-rider-official/news/:category?" paramsDesc={['Category, see below, すべて by default']} radar="1" rssbud="1">
+
+| Category                               |
+| -------------------------------------- |
+| すべて                                 |
+| テレビ                                 |
+| 映画・Vシネマ等                        |
+| Blu-ray・DVD、配信等                   |
+| 20作記念グッズ・東映EC商品             |
+| 石ノ森章太郎生誕80周年記念商品         |
+| 玩具・カード                           |
+| 食品・飲料・菓子                       |
+| 子供生活雑貨                           |
+| アパレル・大人向け雑貨                 |
+| フィギュア・ホビー・一番くじ・プライズ |
+| ゲーム・デジタル                       |
+| 雑誌・書籍・漫画                       |
+| 音楽                                   |
+| 映像                                   |
+| イベント                               |
+| ホテル・レストラン等                   |
+| キャンペーン・タイアップ等             |
+| その他                                 |
+| KAMEN RIDER STORE                      |
+| THE鎧武祭り                            |
+| 鎧武外伝                               |
+| 仮面ライダーリバイス                   |
+| ファイナルステージ                     |
+| THE50周年展                            |
+| 風都探偵                               |
+| 仮面ライダーギーツ                     |
+| 仮面ライダーアウトサイダーズ           |
+| 仮面ライダーガッチャード               |
+| 仮面ライダーBLACK SUN                  |
+
+</Route>
+
 ## 飞雪娱乐网 {#fei-xue-yu-le-wang}
 
 <Route author="nczitzk" example="/feixuew/rj" path="/feixuew/:id?" paramsDesc={['分类 id，可在对应分类页面的 URL 中找到，默认为首页最近更新']}>
