@@ -6394,6 +6394,12 @@
         "jjeejj",
         "prnake"
     ],
+    "/xinpianchang/discover/:params?": [
+        "nczitzk"
+    ],
+    "/xinpianchang/rank/:category?": [
+        "nczitzk"
+    ],
     "/xjtu/2yuan/news/:id?": [
         "nczitzk"
     ],

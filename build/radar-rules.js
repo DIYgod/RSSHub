@@ -14909,6 +14909,24 @@
                         return '/ximalaya/:type/:id';
                     }
                 } } ] },
+  "xinpianchang.com":{ _name:"新片场",
+    ".":[ { title:"发现",
+        docs:"https://docs.rsshub.app/routes/new-media#xin-pian-chang-fa-xian",
+        source:[ "/discover/:params" ],
+        target:(params, url) => {
+                    url = new URL(url);
+                    const path = params.params ?? url.href.match(/discover\/(article.*?)/)[1];
+
+                    return `/xinpianchang/discover${path ? `/${path}` : ''}`;
+                } },
+      { title:"排行榜",
+        docs:"https://docs.rsshub.app/routes/new-media#xin-pian-chang-pai-hang-bang",
+        source:[ "/rank/:params" ],
+        target:(params, url) => {
+                    const path = params.params.match(/article-(\w+)-\d+-\d+/)[1] ?? url.href.match(/rank\/article-(\w+)-\d+-\d+/)[1];
+
+                    return `/xinpianchang/rank${path ? `/${path}` : ''}`;
+                } } ] },
   "xjtu.edu.cn":{ _name:"西安交通大学",
     "2yuan":[ { title:"第二附属医院新闻",
         docs:"https://docs.rsshub.app/routes/university#xi-an-jiao-tong-da-xue-di-er-fu-shu-yi-yuan-xin-wen",

@@ -27676,6 +27676,25 @@
       }
     ]
   },
+  "xinpianchang.com": {
+    "_name": "新片场",
+    ".": [
+      {
+        "title": "发现",
+        "docs": "https://docs.rsshub.app/routes/new-media#xin-pian-chang-fa-xian",
+        "source": [
+          "/discover/:params"
+        ]
+      },
+      {
+        "title": "排行榜",
+        "docs": "https://docs.rsshub.app/routes/new-media#xin-pian-chang-pai-hang-bang",
+        "source": [
+          "/rank/:params"
+        ]
+      }
+    ]
+  },
   "xjtu.edu.cn": {
     "_name": "西安交通大学",
     "2yuan": [
