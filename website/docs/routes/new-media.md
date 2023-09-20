@@ -5317,6 +5317,37 @@ column 为 third 时可选的 category:
 
 <Route author="xapool" example="/sina/csj" path="/sina/csj" radar="1"/>
 
+## 新片场 {#xin-pian-chang}
+
+### 发现 {#xin-pian-chang-fa-xian}
+
+<Route author="nczitzk" example="/xinpianchang/discover" path="/xinpianchang/discover/:params?" paramsDesc={['参数，可在对应分类页 URL 中找到，默认为 `article-0-0-all-all-0-0-score` ，即全部']} radar="1" rssbud="1">
+
+:::tip
+
+跳转到欲订阅的分类页，将 URL 的 `/discover` 到末尾的部分填入 `params` 参数。
+
+如 [全部原创视频作品](https://www.xinpianchang.com/discover/article-0-0-all-all-0-0-score) 的 URL 为 <https://www.xinpianchang.com/discover/article-0-0-all-all-0-0-score>，其 `/discover` 到末尾的部分为 `article-0-0-all-all-0-0-score`，所以对应的路由为 [/xinpianchang/discover/article-0-0-all-all-0-0-score](https://rsshub.app/xinpianchang/discover/article-0-0-all-all-0-0-score)。
+
+:::
+
+</Route>
+
+### 排行榜 {#xin-pian-chang-pai-hang-bang}
+
+<Route author="nczitzk" example="/xinpianchang/rank" path="/xinpianchang/rank/:category?" paramsDesc={['分类 id，可在对应排行榜页 URL 中找到，见下表，默认为 `all` ，即总榜']} radar="1" rssbud="1">
+
+| 分类     | id         |
+| -------- | ---------- |
+| 总榜     | all        |
+| 精选榜   | staffPicks |
+| 广告     | ad         |
+| 宣传片   | publicity  |
+| 创意     | creative   |
+| 干货教程 | backstage  |
+
+</Route>
+
 ## 选股宝 {#xuan-gu-bao}
 
 ### 主题 {#xuan-gu-bao-zhu-ti}
