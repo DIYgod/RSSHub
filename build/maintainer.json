@@ -3472,6 +3472,9 @@
     "/kakuyomu/episode/:id": [
         "huangliangshusheng"
     ],
+    "/kamen-rider-official/news/:category?": [
+        "nczitzk"
+    ],
     "/kantarworldpanel/:region/:category?": [
         "nczitzk"
     ],
