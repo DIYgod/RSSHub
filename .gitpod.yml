@@ -46,7 +46,8 @@ tasks:
 
 vscode:
   extensions:
-    - cweijan.vscode-database-client2@5.3.1 # you may need to rollback to v5.3.1 or below in **VS Code Desktop**
+    #- cweijan.vscode-database-client2@5.3.1 # you may need to rollback to v5.3.1 or below in **VS Code Desktop**
+    - cweijan.vscode-database-client2 # It no longer blocks gitpod
     - DavidAnson.vscode-markdownlint
     - dbaeumer.vscode-eslint
     - eamodio.gitlens
