@@ -59,7 +59,7 @@ The parameters can be extracted from the Release page URL: `https://install.appc
 
 ### App Update {#app-store-mac-app-store-app-update}
 
-<Route author="cielpy" example="/appstore/update/us/id697846300" path="/appstore/update/:country/:id" paramsDesc={['App Store Country, obtain from the app URL `https://apps.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `us`', 'App Store app id, obtain from the app URL `https://apps.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `id697846300`']} />
+<Route author="EkkoG" example="/apple/apps/update/us/id1529445840" path="/apple/apps/update/:country/:id" paramsDesc={['App Store Country, obtain from the app URL `https://apps.apple.com/us/app/apple-store/id375380948`, in this case, `us`', 'App Store app id, obtain from the app URL `https://apps.apple.com/us/app/apple-store/id375380948`, in this case, `id375380948`']} radar="1"/>
 
 ### Price Drop {#app-store-mac-app-store-price-drop}
 
@@ -159,7 +159,7 @@ Language
 
 ### 更新日志 {#bugly-sdk-geng-xin-ri-zhi}
 
-<Route author="cielpy" example="/bugly/changelog/1" path="/bugly/changelog/:platform" paramsDesc={['平台类型, 必选, 1 为 Android, 2 为 iOS']}/>
+<Route author="EkkoG" example="/bugly/changelog/1" path="/bugly/changelog/:platform" paramsDesc={['平台类型, 必选, 1 为 Android, 2 为 iOS']}/>
 
 ## Cent Browser {#cent-browser}
 
@@ -295,7 +295,7 @@ Language
 
 ### 更新 {#fir.im-ying-yong-geng-xin}
 
-<Route author="cielpy" example="/fir/update/xcz" path="/fir/update/:id" paramsDesc={['fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`']}/>
+<Route author="EkkoG" example="/fir/update/xcz" path="/fir/update/:id" paramsDesc={['fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`']}/>
 
 ## Firefox {#firefox}
 
@@ -463,7 +463,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### Changelog {#nvidia-web-driver-changelog}
 
-<Route author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
+<Route author="EkkoG" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
 ## O&O Software {#o-o-software}
 
@@ -769,7 +769,7 @@ Language
 
 ### 更新日志 {#teng-xun-yun-yi-dong-zhi-bo-sdk-geng-xin-ri-zhi}
 
-<Route author="cielpy" example="/qcloud/mlvb/changelog" path="/qcloud/mlvb/changelog"/>
+<Route author="EkkoG" example="/qcloud/mlvb/changelog" path="/qcloud/mlvb/changelog"/>
 
 ## 小米应用商店 {#xiao-mi-ying-yong-shang-dian}
 
