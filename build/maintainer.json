@@ -350,6 +350,12 @@
     "/aijishu/u/:name": [
         "bigfei"
     ],
+    "/ainvest/article": [
+        "TonyRL"
+    ],
+    "/ainvest/news": [
+        "TonyRL"
+    ],
     "/aip/:pub/:jrn": [
         "Derekmini",
         "auto-bot-ty"
