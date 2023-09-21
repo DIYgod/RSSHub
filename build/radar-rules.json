@@ -2607,14 +2607,6 @@
     "_name": "Apple",
     "apps": [
       {
-        "title": "应用更新",
-        "docs": "https://docs.rsshub.app/routes/program-update#app-store-mac-app-store",
-        "source": [
-          "/:contry/app/:id"
-        ],
-        "target": "/appstore/update/:country/:id"
-      },
-      {
         "title": "价格更新",
         "docs": "https://docs.rsshub.app/routes/program-update#app-store-mac-app-store",
         "source": [
