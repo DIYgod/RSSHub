@@ -141,7 +141,7 @@ See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 
 ### 国家卫健委 - 疫情通报 {#corona-virus-disease-2019-guo-jia-wei-jian-wei-yi-qing-tong-bao}
 
-<Route author="Cielpy DIYgod" example="/coronavirus/nhc" path="/coronavirus/nhc"/>
+<Route author="EkkoG DIYgod" example="/coronavirus/nhc" path="/coronavirus/nhc"/>
 
 ### 财新网 - 新冠肺炎防疫全纪录 {#corona-virus-disease-2019-cai-xin-wang-xin-guan-fei-yan-fang-yi-quan-ji-lu}
 
