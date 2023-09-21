@@ -2794,6 +2794,47 @@ Type 栏目：
 
 <Route author="Fatpandac" example="/dushu/fuzhou" path="/dushu/fuzhou" />
 
+## 仮面ライダ {#fan-mian-%E3%83%A9%E3%82%A4%E3%83%80}
+
+### 最新情報 {#fan-mian-%E3%83%A9%E3%82%A4%E3%83%80-zui-xin-qing-bao}
+
+<Route author="nczitzk" example="/kamen-rider-official/news" path="/kamen-rider-official/news/:category?" paramsDesc={['Category, see below, すべて by default']} radar="1" rssbud="1">
+
+| Category                               |
+| -------------------------------------- |
+| すべて                                 |
+| テレビ                                 |
+| 映画・Vシネマ等                        |
+| Blu-ray・DVD、配信等                   |
+| 20作記念グッズ・東映EC商品             |
+| 石ノ森章太郎生誕80周年記念商品         |
+| 玩具・カード                           |
+| 食品・飲料・菓子                       |
+| 子供生活雑貨                           |
+| アパレル・大人向け雑貨                 |
+| フィギュア・ホビー・一番くじ・プライズ |
+| ゲーム・デジタル                       |
+| 雑誌・書籍・漫画                       |
+| 音楽                                   |
+| 映像                                   |
+| イベント                               |
+| ホテル・レストラン等                   |
+| キャンペーン・タイアップ等             |
+| その他                                 |
+| KAMEN RIDER STORE                      |
+| THE鎧武祭り                            |
+| 鎧武外伝                               |
+| 仮面ライダーリバイス                   |
+| ファイナルステージ                     |
+| THE50周年展                            |
+| 風都探偵                               |
+| 仮面ライダーギーツ                     |
+| 仮面ライダーアウトサイダーズ           |
+| 仮面ライダーガッチャード               |
+| 仮面ライダーBLACK SUN                  |
+
+</Route>
+
 ## 飞雪娱乐网 {#fei-xue-yu-le-wang}
 
 <Route author="nczitzk" example="/feixuew/rj" path="/feixuew/:id?" paramsDesc={['分类 id，可在对应分类页面的 URL 中找到，默认为首页最近更新']}>
@@ -5316,6 +5357,37 @@ column 为 third 时可选的 category:
 ### 专栏 - 创事记 {#xin-lang-zhuan-lan-chuang-shi-ji}
 
 <Route author="xapool" example="/sina/csj" path="/sina/csj" radar="1"/>
+
+## 新片场 {#xin-pian-chang}
+
+### 发现 {#xin-pian-chang-fa-xian}
+
+<Route author="nczitzk" example="/xinpianchang/discover" path="/xinpianchang/discover/:params?" paramsDesc={['参数，可在对应分类页 URL 中找到，默认为 `article-0-0-all-all-0-0-score` ，即全部']} radar="1" rssbud="1">
+
+:::tip
+
+跳转到欲订阅的分类页，将 URL 的 `/discover` 到末尾的部分填入 `params` 参数。
+
+如 [全部原创视频作品](https://www.xinpianchang.com/discover/article-0-0-all-all-0-0-score) 的 URL 为 <https://www.xinpianchang.com/discover/article-0-0-all-all-0-0-score>，其 `/discover` 到末尾的部分为 `article-0-0-all-all-0-0-score`，所以对应的路由为 [/xinpianchang/discover/article-0-0-all-all-0-0-score](https://rsshub.app/xinpianchang/discover/article-0-0-all-all-0-0-score)。
+
+:::
+
+</Route>
+
+### 排行榜 {#xin-pian-chang-pai-hang-bang}
+
+<Route author="nczitzk" example="/xinpianchang/rank" path="/xinpianchang/rank/:category?" paramsDesc={['分类 id，可在对应排行榜页 URL 中找到，见下表，默认为 `all` ，即总榜']} radar="1" rssbud="1">
+
+| 分类     | id         |
+| -------- | ---------- |
+| 总榜     | all        |
+| 精选榜   | staffPicks |
+| 广告     | ad         |
+| 宣传片   | publicity  |
+| 创意     | creative   |
+| 干货教程 | backstage  |
+
+</Route>
 
 ## 选股宝 {#xuan-gu-bao}
 
