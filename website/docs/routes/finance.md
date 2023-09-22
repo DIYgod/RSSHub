@@ -38,6 +38,16 @@
 
 </Route>
 
+## AInvest {#ainvest}
+
+### Latest Article {#ainvest-latest-article}
+
+<Route author="TonyRL" example="/ainvest/article" path="/ainvest/article" radar="1"/>
+
+### Latest News {#ainvest-latest-news}
+
+<Route author="TonyRL" example="/ainvest/news" path="/ainvest/news" radar="1"/>
+
 ## BigQuant {#bigquant}
 
 ### 专题报告 {#bigquant-zhuan-ti-bao-gao}
