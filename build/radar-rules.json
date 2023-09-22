@@ -2148,7 +2148,7 @@
     ".": [
       {
         "title": "Latest Article",
-        "docs": "https://docs.rsshub.app/finance#ainvest",
+        "docs": "https://docs.rsshub.app/routes/finance#ainvest",
         "source": [
           "/news"
         ],
@@ -2156,7 +2156,7 @@
       },
       {
         "title": "Latest News",
-        "docs": "https://docs.rsshub.app/finance#ainvest",
+        "docs": "https://docs.rsshub.app/routes/finance#ainvest",
         "source": [
           "/news"
         ],
@@ -4474,7 +4474,7 @@
     "www.genetics": [
       {
         "title": "遗传与生物学研究所 - 学术活动",
-        "docs": "https://docs.rsshub.app/university.html#zhong-guo-ke-xue-yuan",
+        "docs": "https://docs.rsshub.app/routes/university#zhong-guo-ke-xue-yuan",
         "source": [
           "/jixs/yg",
           "/"
@@ -9461,7 +9461,7 @@
     "insider": [
       {
         "title": "Bullets",
-        "docs": "https://docs.rsshub.app/en/routes/finance#finology-insider",
+        "docs": "https://docs.rsshub.app/routes/finance#finology-insider",
         "source": [
           "/bullets"
         ],
@@ -9469,19 +9469,19 @@
       },
       {
         "title": "Category",
-        "docs": "https://docs.rsshub.app/en/routes/finance#finology-insider",
+        "docs": "https://docs.rsshub.app/routes/finance#finology-insider",
         "source": "/:category",
         "target": "/finology/:category"
       },
       {
         "title": "Most Viewed",
-        "docs": "https://docs.rsshub.app/en/routes/finance#finology-insider",
+        "docs": "https://docs.rsshub.app/routes/finance#finology-insider",
         "source": "/most-viewed",
         "target": "/finology/most-viewed/monthly"
       },
       {
         "title": "Trending Topic",
-        "docs": "https://docs.rsshub.app/en/routes/finance#finology-insider",
+        "docs": "https://docs.rsshub.app/routes/finance#finology-insider",
         "source": [
           "/tag/:topic"
         ],
@@ -11678,7 +11678,7 @@
     ".": [
       {
         "title": "Articles",
-        "docs": "https://docs.rsshub.app/en/routes/new-media#grist",
+        "docs": "https://docs.rsshub.app/routes/new-media#grist",
         "source": [
           "/articles/"
         ],
@@ -11686,19 +11686,19 @@
       },
       {
         "title": "Featured",
-        "docs": "https://docs.rsshub.app/en/routes/new-media#grist",
+        "docs": "https://docs.rsshub.app/routes/new-media#grist",
         "source": "/",
         "target": "/grist/featured"
       },
       {
         "title": "Series",
-        "docs": "https://docs.rsshub.app/en/routes/new-media#grist",
+        "docs": "https://docs.rsshub.app/routes/new-media#grist",
         "source": "/series/:series",
         "target": "/grist/series/:series"
       },
       {
         "title": "Topic",
-        "docs": "https://docs.rsshub.app/en/routes/new-media#grist",
+        "docs": "https://docs.rsshub.app/routes/new-media#grist",
         "source": [
           "/:topic"
         ],
@@ -13164,7 +13164,7 @@
     ".": [
       {
         "title": "外汇牌价",
-        "docs": "https://docs.rsshub.app/other#zhong-guo-gong-shang-yin-hang",
+        "docs": "https://docs.rsshub.app/routes/other#zhong-guo-gong-shang-yin-hang",
         "source": [
           "/column/1438058341489590354.html"
         ],
@@ -16471,7 +16471,7 @@
     ".": [
       {
         "title": "频道",
-        "docs": "https://docs.rsshub.app/new-media.html#mu-mu-bo-ke",
+        "docs": "https://docs.rsshub.app/routes/new-media#mu-mu-bo-ke",
         "source": [
           "/:channel",
           "/"
@@ -16479,7 +16479,7 @@
       },
       {
         "title": "标签",
-        "docs": "https://docs.rsshub.app/new-media.html#mu-mu-bo-ke",
+        "docs": "https://docs.rsshub.app/routes/new-media#mu-mu-bo-ke",
         "source": [
           "/tag/:id",
           "/"
@@ -16488,7 +16488,7 @@
       },
       {
         "title": "专题",
-        "docs": "https://docs.rsshub.app/new-media.html#mu-mu-bo-ke",
+        "docs": "https://docs.rsshub.app/routes/new-media#mu-mu-bo-ke",
         "source": [
           "/series/:id",
           "/"
@@ -16497,7 +16497,7 @@
       },
       {
         "title": "搜索",
-        "docs": "https://docs.rsshub.app/new-media.html#mu-mu-bo-ke",
+        "docs": "https://docs.rsshub.app/routes/new-media#mu-mu-bo-ke",
         "source": [
           "/search/:keyword",
           "/"
@@ -16506,7 +16506,7 @@
       },
       {
         "title": "60秒读懂世界",
-        "docs": "https://docs.rsshub.app/new-media.html#mu-mu-bo-ke",
+        "docs": "https://docs.rsshub.app/routes/new-media#mu-mu-bo-ke",
         "source": [
           "/kuaixun",
           "/"
@@ -16515,7 +16515,7 @@
       },
       {
         "title": "网络营销",
-        "docs": "https://docs.rsshub.app/new-media.html#mu-mu-bo-ke",
+        "docs": "https://docs.rsshub.app/routes/new-media#mu-mu-bo-ke",
         "source": [
           "/:channel",
           "/"
@@ -16663,7 +16663,7 @@
     ".": [
       {
         "title": "教学部通知公告",
-        "docs": "https://docs.rsshub.app/university.html#le-shan-shi-fan-xue-yuan",
+        "docs": "https://docs.rsshub.app/routes/university#le-shan-shi-fan-xue-yuan",
         "source": [
           "/"
         ],
@@ -18784,7 +18784,7 @@
     ".": [
       {
         "title": "首页",
-        "docs": "https://docs.rsshub.app/new-media#niao-ge-bi-ji",
+        "docs": "https://docs.rsshub.app/routes/new-media#niao-ge-bi-ji",
         "source": [
           "/"
         ],
@@ -18792,7 +18792,7 @@
       },
       {
         "title": "今日事",
-        "docs": "https://docs.rsshub.app/new-media#niao-ge-bi-ji",
+        "docs": "https://docs.rsshub.app/routes/new-media#niao-ge-bi-ji",
         "source": [
           "/",
           "/bulletin"
@@ -18801,7 +18801,7 @@
       },
       {
         "title": "分类目录",
-        "docs": "https://docs.rsshub.app/new-media#niao-ge-bi-ji",
+        "docs": "https://docs.rsshub.app/routes/new-media#niao-ge-bi-ji",
         "source": [
           "/cat/:cat"
         ],
@@ -20025,7 +20025,7 @@
     ".": [
       {
         "title": "关键词搜索",
-        "docs": "https://docs.rsshub.app/anime.htm#an-の3dエロ-dong-hua-oreno3d-guan-jian-ci-sou-suo",
+        "docs": "https://docs.rsshub.app/routes/anime#an-の3dエロ-dong-hua-oreno3d-guan-jian-ci-sou-suo",
         "source": [
           "/search"
         ]
@@ -23941,7 +23941,7 @@
     ".": [
       {
         "title": "官网信息",
-        "docs": "https://docs.rsshub.app/university.html#xin-xiang-yi-xue-yuan-san-quan-xue-yuan",
+        "docs": "https://docs.rsshub.app/routes/university#xin-xiang-yi-xue-yuan-san-quan-xue-yuan",
         "source": [
           "/:category/list.htm"
         ],
@@ -25389,7 +25389,7 @@
     ".": [
       {
         "title": "日历",
-        "docs": "https://docs.rsshub.app/#thbwiki",
+        "docs": "https://docs.rsshub.app/routes/anime#thbwiki",
         "source": [
           "/",
           "/日程表"
@@ -27802,7 +27802,7 @@
     ".": [
       {
         "title": "首页帖子",
-        "docs": "https://docs.rsshub.app/bbs#xiao-te-she-qu",
+        "docs": "https://docs.rsshub.app/routes/bbs#xiao-te-she-qu",
         "source": [
           "/"
         ],
@@ -28602,12 +28602,12 @@
     ".": [
       {
         "title": "影视资讯",
-        "docs": "https://docs.rsshub.app/multimedia#ren-ren-ying-shi",
+        "docs": "https://docs.rsshub.app/routes/multimedia#ren-ren-ying-shi",
         "source": "/article"
       },
       {
         "title": "今日播出",
-        "docs": "https://docs.rsshub.app/multimedia#ren-ren-ying-shi",
+        "docs": "https://docs.rsshub.app/routes/multimedia#ren-ren-ying-shi",
         "source": [
           "/tv/schedule",
           "/"
