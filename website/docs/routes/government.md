@@ -329,7 +329,7 @@ Language
 
 #### 事业单位公开招聘 {#chong-qing-shi-ren-min-zheng-fu-ren-li-she-bao-ju-shi-ye-dan-wei-gong-kai-zhao-pin}
 
-<Route author="MajexH" example="/chongqing/sydwgkzp" path="/chongqing/sydwgkzp" radar="1"/>
+<Route author="MajexH" example="/gov/chongqing/sydwgkzp" path="/gov/chongqing/sydwgkzp" radar="1"/>
 
 ## 德阳市人民政府 {#de-yang-shi-ren-min-zheng-fu}
 
