@@ -10824,6 +10824,14 @@
           "/"
         ],
         "target": "/gov/chongqing/rsks"
+      },
+      {
+        "title": "重庆事业单位公开招聘",
+        "docs": "https://docs.rsshub.app/routes/government#chong-qing-shi-ren-min-zheng-fu",
+        "source": [
+          "/"
+        ],
+        "target": "/gov/chongqing/sydwgkzp"
       }
     ]
   },
