@@ -5468,6 +5468,9 @@
     "/supchina/": [
         "nczitzk"
     ],
+    "/surfshark/blog/:category?": [
+        "nczitzk"
+    ],
     "/sustech/bidding": [
         "sparkcyf"
     ],
