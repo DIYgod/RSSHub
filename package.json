@@ -181,7 +181,7 @@
     "@types/tough-cookie": "4.0.3",
     "@vercel/nft": "0.24.1",
     "cross-env": "7.0.3",
-    "eslint": "8.49.0",
+    "eslint": "8.50.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-n": "16.1.0",
     "eslint-plugin-prettier": "5.0.0",
