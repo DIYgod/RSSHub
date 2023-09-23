@@ -398,9 +398,9 @@ Sorting types, default to `date`:
 
 <Route author="hoilc" example="/nintendo/system-update" path="/nintendo/system-update"/>
 
-## osu! {#osu}
+## osu! {#osu!}
 
-### Beatmap Packs {#osu-beatmap-packs}
+### Beatmap Packs {#osu!-beatmap-packs}
 
 <Route author="JimenezLi" example="/osu/packs" path="/osu/packs/:type?" paramsDesc={['pack type, default to `standard`, can choose from `featured`, `tournament`, `loved`, `chart`, `theme` and `artist`']} radar="1"/>
 
