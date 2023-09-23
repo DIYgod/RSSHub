@@ -327,6 +327,10 @@ Language
 
 <Route author="Mai19930513" example="/gov/chongqing/rsks" path="/gov/chongqing/rsks" radar="1"/>
 
+#### 事业单位公开招聘 {#chong-qing-shi-ren-min-zheng-fu-ren-li-she-bao-ju-shi-ye-dan-wei-gong-kai-zhao-pin}
+
+<Route author="MajexH" example="/gov/chongqing/sydwgkzp" path="/gov/chongqing/sydwgkzp" radar="1"/>
+
 ## 德阳市人民政府 {#de-yang-shi-ren-min-zheng-fu}
 
 ### 政府公开信息 {#de-yang-shi-ren-min-zheng-fu-zheng-fu-gong-kai-xin-xi}

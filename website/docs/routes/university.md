@@ -1315,6 +1315,10 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 
 <Route author="real-jiakai" example="/gxmzu/aitzgg" path="/gxmzu/aitzgg" radar="1" />
 
+### 图书馆最新消息 {#guang-xi-min-zu-da-xue-tu-shu-guan-zui-xin-xiao-xi}
+
+<Route author="real-jiakai" example="/gxmzu/libzxxx" path="/gxmzu/libzxxx" radar="1" />
+
 ## 广州大学 {#guang-zhou-da-xue}
 
 ### 研究生院招生动态 {#guang-zhou-da-xue-yan-jiu-sheng-yuan-zhao-sheng-dong-tai}

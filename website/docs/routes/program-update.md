@@ -638,6 +638,16 @@ Open `https://www.sony.com/electronics/support` and search for the corresponding
 
 </Route>
 
+## SourceForge {#sourceforge}
+
+<Route author="JimenezLi" example="/sourceforge/topic=artificial-intelligence&os=windows" path="/sourceforge/:routeParams?" paramsDesc={['route params, see below']}>
+
+For some URL like [https://sourceforge.net/directory/artificial-intelligence/windows/](https://sourceforge.net/directory/artificial-intelligence/windows/), it is equal to [https://sourceforge.net/directory/?topic=artificial-intelligence&os=windows"](https://sourceforge.net/directory/?topic=artificial-intelligence&os=windows), thus subscribing to `/sourceforge/topic=artificial-intelligence&os=windows`.
+
+URL params can duplicate, such as `/sourceforge/topic=artificial-intelligence&os=windows&os=linux`.
+
+</Route>
+
 ## Thunderbird {#thunderbird}
 
 ### Changelog {#thunderbird-changelog}
