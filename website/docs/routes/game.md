@@ -398,6 +398,12 @@ Sorting types, default to `date`:
 
 <Route author="hoilc" example="/nintendo/system-update" path="/nintendo/system-update"/>
 
+## osu! {#osu!}
+
+### Beatmap Packs {#osu!-beatmap-packs}
+
+<Route author="JimenezLi" example="/osu/packs" path="/osu/packs/:type?" paramsDesc={['pack type, default to `standard`, can choose from `featured`, `tournament`, `loved`, `chart`, `theme` and `artist`']} radar="1"/>
+
 ## PlayStation Store {#playstation-store}
 
 ### Game List（Hong Kong） {#playstation-store-game-list-hong-kong}
