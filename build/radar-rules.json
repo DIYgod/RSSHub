@@ -20122,6 +20122,16 @@
       }
     ]
   },
+  "ppy.sh": {
+    "_name": "osu!",
+    "osu": [
+      {
+        "title": "Beatmap Pack",
+        "docs": "https://docs.rsshub.app/routes/game#osu-beatmap-packs",
+        "source": "/beatmaps/packs"
+      }
+    ]
+  },
   "ouc.edu.cn": {
     "_name": "中国海洋大学",
     "it": [
