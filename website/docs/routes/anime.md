@@ -905,3 +905,9 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 <Route author="devinmugen" example="/bangumi/online" path="/bangumi/online"/>
 
+## Gogoanimehd {#gogoanimehd}
+
+### Recent Releases {#gogoanimehd-recent-releases}
+
+<Route author="user4302" example="/gogoanimehd/recent-releases" path="/gogoanimehd/recent-releases" />
+
