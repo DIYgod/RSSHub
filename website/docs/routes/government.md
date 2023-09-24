@@ -307,7 +307,7 @@ Language
 
 ### 国有资产监督管理委员会 {#chong-qing-shi-ren-min-zheng-fu-guo-you-zi-chan-jian-du-guan-li-wei-yuan-hui}
 
-<Route author="nczitzk" example="/chongqing/gzw" path="/chongqing/gzw/:category?" paramsDesc={['分类，见下表，默认为通知公告']} radar="1" rssbud="1">
+<Route author="nczitzk" example="/gov/chongqing/gzw" path="/gov/chongqing/gzw/:category?" paramsDesc={['分类，见下表，默认为通知公告']} radar="1" rssbud="1">
 
 | 通知公告 | 国企资讯 | 国企简介 | 国企招聘 |
 | -------- | -------- | -------- | -------- |
