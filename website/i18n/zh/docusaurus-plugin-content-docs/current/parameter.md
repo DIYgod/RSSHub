@@ -1,5 +1,7 @@
 # 通用参数
 
+import Link from '@docusaurus/Link';
+
 :::tip
 
 通用参数实际上是 URI 中的 query，可以使用 `&` 连接组合使用，效果叠加。
@@ -8,7 +10,7 @@
 
 举例:
 
-<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0?brief=100&limit=5">
+<Link to="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0?brief=100&limit=5">
 https://rsshub.app/twitter/user/durov/
 <span style={{color: "green"}}>
     <b>readable=1&includeRts=0</b>
@@ -17,13 +19,13 @@ https://rsshub.app/twitter/user/durov/
 <span style={{color: "violet"}}>
     <b>brief=100&limit=5</b>
 </span>
-</a>
+</Link>
 
 如果设置了<b><span style={{color: "magenta"}}>输出格式</span></b>（`.atom`, `.rss`, `.json`, `.debug.json`），则需要置于路由路径（含<b><span style={{color: "green"}}>自定义参数</span></b>）与<b><span style={{color: "violet"}}>其它通用参数</span></b>之间。
 
 举例:
 
-<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0.atom?brief=100&limit=5">
+<Link to="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0.atom?brief=100&limit=5">
 https://rsshub.app/twitter/user/durov/
 <span style={{color: "green"}}>
     <b>readable=1&includeRts=0</b>
@@ -35,7 +37,7 @@ https://rsshub.app/twitter/user/durov/
 <span style={{color: "violet"}}>
     <b>brief=100&limit=5</b>
 </span>
-</a>
+</Link>
 
 :::
 

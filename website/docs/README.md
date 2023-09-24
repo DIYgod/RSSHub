@@ -43,7 +43,7 @@ Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 ### Backers
 
-<a href="https://www.cloudflare.com" target="_blank" rel="noopener noreferrer"><img style={{height: "50px"}} src="https://i.imgur.com/7Ph27Fq.png" /></a><a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer" style={{marginLeft: "60px"}}><img style={{height: "40px"}} src="https://i.imgur.com/cU01915.png" /></a>
+<Link to="https://www.cloudflare.com"><img style={{height: "50px"}} src="https://i.imgur.com/7Ph27Fq.png" /></Link><Link to="https://www.netlify.com" style={{marginLeft: "60px"}}><img style={{height: "40px"}} src="https://i.imgur.com/cU01915.png" /></Link>
 
 ## Related Projects
 
