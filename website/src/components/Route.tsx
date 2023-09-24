@@ -81,7 +81,7 @@ export default function Route({
             </p>
             <p className="example">
                 <span><Translate id="route.example" /></span>
-                <Link to={demoUrl} target="_blank">
+                <Link to={demoUrl}>
                     {demoUrl}
                 </Link>
             </p>
