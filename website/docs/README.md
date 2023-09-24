@@ -1,7 +1,5 @@
 # Introduction
 
-import Link from '@docusaurus/Link';
-
 <p align="center" class="logo-img">
     <img src="img/logo.png" alt="RSSHub" width="100" />
 </p>

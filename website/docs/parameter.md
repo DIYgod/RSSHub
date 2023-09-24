@@ -1,7 +1,5 @@
 # Parameters
 
-import Link from '@docusaurus/Link';
-
 :::tip
 
 Parameters here are actually URI query and can be linked together with `&` to generate a complex feed.

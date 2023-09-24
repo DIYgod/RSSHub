@@ -1,7 +1,5 @@
 # 通用参数
 
-import Link from '@docusaurus/Link';
-
 :::tip
 
 通用参数实际上是 URI 中的 query，可以使用 `&` 连接组合使用，效果叠加。

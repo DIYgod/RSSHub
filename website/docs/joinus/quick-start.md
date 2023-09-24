@@ -4,8 +4,6 @@ sidebar_position: 1
 
 # Quick Start
 
-import Link from '@docusaurus/Link';
-
 If you've found a bug or have a suggestion for improving RSSHub, we'd love to hear from you! You can submit your changes by creating a pull request. Don't worry if you're new to pull requests - we welcome contributions from developers of all experience levels. Don't know how to code? You can also help by [reporting bugs](https://github.com/DIYgod/RSSHub/issues).
 
 ## Join the discussion

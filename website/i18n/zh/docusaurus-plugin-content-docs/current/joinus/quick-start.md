@@ -4,8 +4,6 @@ sidebar_position: 1
 
 # 快速开始
 
-import Link from '@docusaurus/Link';
-
 如果您在使用 RSSHub 过程中遇到了问题或者有建议改进，我们很乐意听取您的意见！您可以通过 Pull Request 来提交您的修改。无论您对 Pull Request 的使用是否熟悉，我们都欢迎不同经验水平的开发者参与贡献。如果您不懂编程，也可以通过 [报告错误](https://github.com/DIYgod/RSSHub/issues) 的方式来帮助我们。
 
 ## 参与讨论
