@@ -30,7 +30,7 @@ RSSHub can be used with browser extension [RSSHub Radar](https://github.com/DIYg
 ### Special Sponsors
 
 <p>
-<Link to="https://xlog.app/" target="_blank"><img style={{height: "100px"}} src="https://i.imgur.com/JuhHTKD.png" /></Link>
+<Link to="https://xlog.app/"><img style={{height: "100px"}} src="https://i.imgur.com/JuhHTKD.png" /></Link>
 </p>
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
