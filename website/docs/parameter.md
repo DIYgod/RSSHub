@@ -4,17 +4,17 @@
 
 Parameters here are actually URI query and can be linked together with `&` to generate a complex feed.
 
-Parameters here need to be placed after the route path. Some routes may have <span style={{color: "green"}}>**custom route parameters**</span> and <span style={{color: "violet"}}>**parameters here**</span> need to be placed after them.
+Parameters here need to be placed after the route path. Some routes may have <b><span style={{color: "green"}}>custom route parameters</span></b> and <b><span style={{color: "violet"}}>parameters here</span></b> need to be placed after them.
 
 E.g.
 
-<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0?brief=100&limit=5">https://rsshub.app/twitter/user/durov/<span style={{color: "green"}}><b>readable=1&includeRts=0</b></span>?<span style={{color: "violet"}}><b>brief=100&limit=5</b></span></a>
+<Link to="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0?brief=100&limit=5">https://rsshub.app/twitter/user/durov/<span style={{color: "green"}}><b>readable=1&includeRts=0</b></span>?<span style={{color: "violet"}}><b>brief=100&limit=5</b></span></Link>
 
-If a <span style={{color: "magenta"}}>**output format**</span> (`.atom`, `.rss`, `.json`, `.debug.json`) is set, it needs to be placed between the route path (including <span style={{color: "green"}}>**custom route parameters**</span>) and <span style={{color: "violet"}}>**other parameters**</span>.
+If a <b><span style={{color: "magenta"}}>output format</span></b> (`.atom`, `.rss`, `.json`, `.debug.json`) is set, it needs to be placed between the route path (including <b><span style={{color: "green"}}>custom route parameters</span></b>) and <b><span style={{color: "violet"}}>other parameters</span></b>.
 
 E.g.
 
-<a href="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0.atom?brief=100&limit=5">https://rsshub.app/twitter/user/durov/<span style={{color: "green"}}><b>readable=1&includeRts=0</b></span><span style={{color: "magenta"}}><b>.atom</b></span>?<span style={{color: "violet"}}><b>brief=100&limit=5</b></span></a>
+<Link to="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0.atom?brief=100&limit=5">https://rsshub.app/twitter/user/durov/<span style={{color: "green"}}><b>readable=1&includeRts=0</b></span><span style={{color: "magenta"}}><b>.atom</b></span>?<span style={{color: "violet"}}><b>brief=100&limit=5</b></span></Link>
 
 :::
 
