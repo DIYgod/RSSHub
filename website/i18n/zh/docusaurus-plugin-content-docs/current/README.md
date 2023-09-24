@@ -30,7 +30,7 @@ RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以�
 ### 赞助商
 
 <p>
-<a href="https://xlog.app/" target="_blank"><img style={{height: "100px"}} src="https://i.imgur.com/2B9pXBg.png" /></a>
+<Link to="https://xlog.app/"><img style={{height: "100px"}} src="https://i.imgur.com/2B9pXBg.png" /></Link>
 </p>
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](/zh/support/)
@@ -43,7 +43,7 @@ Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 ### Backers
 
-<a href="https://www.cloudflare.com" target="_blank"><img style={{height: "50px"}} src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/cloudflare.png" /></a><a href="https://www.netlify.com" target="_blank" style={{marginLeft: "60px"}}><img style={{height: "40px"}} src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/netlify.png" /></a>
+<Link to="https://www.cloudflare.com"><img style={{height: "50px"}} src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/cloudflare.png" /></Link><Link to="https://www.netlify.com" style={{marginLeft: "60px"}}><img style={{height: "40px"}} src="https://cn-south-17-rsshub-16857749.oss.dogecdn.com/netlify.png" /></Link>
 
 ## 相关项目
 

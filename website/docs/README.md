@@ -28,7 +28,7 @@ RSSHub can be used with browser extension [RSSHub Radar](https://github.com/DIYg
 ### Special Sponsors
 
 <p>
-<a href="https://xlog.app/" target="_blank"><img style={{height: "100px"}} src="https://i.imgur.com/JuhHTKD.png" /></a>
+<Link to="https://xlog.app/"><img style={{height: "100px"}} src="https://i.imgur.com/JuhHTKD.png" /></Link>
 </p>
 
 [![](https://opencollective.com/static/images/become_sponsor.svg)](https://docs.rsshub.app/support/)
@@ -41,7 +41,7 @@ Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
 
 ### Backers
 
-<a href="https://www.cloudflare.com" target="_blank"><img style={{height: "50px"}} src="https://i.imgur.com/7Ph27Fq.png" /></a><a href="https://www.netlify.com" target="_blank" style={{marginLeft: "60px"}}><img style={{height: "40px"}} src="https://i.imgur.com/cU01915.png" /></a>
+<Link to="https://www.cloudflare.com"><img style={{height: "50px"}} src="https://i.imgur.com/7Ph27Fq.png" /></Link><Link to="https://www.netlify.com" style={{marginLeft: "60px"}}><img style={{height: "40px"}} src="https://i.imgur.com/cU01915.png" /></Link>
 
 ## Related Projects
 
