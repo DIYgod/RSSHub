@@ -2484,6 +2484,9 @@
     "/gov/beijing/kw/:channel": [
         "Fatpandac"
     ],
+    "/gov/chongqing/gzw/:category?": [
+        "nczitzk"
+    ],
     "/gov/chongqing/rsks": [
         "Mai19930513"
     ],

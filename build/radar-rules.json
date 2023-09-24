@@ -10846,6 +10846,15 @@
         ],
         "target": "/gov/chongqing/sydwgkzp"
       }
+    ],
+    "gzw": [
+      {
+        "title": "国有资产监督管理委员会",
+        "docs": "https://docs.rsshub.app/routes/government#chong-qing-shi-ren-min-zheng-fu-guo-you-zi-chan-jian-du-guan-li-wei-yuan-hui",
+        "source": [
+          "/:category*"
+        ]
+      }
     ]
   },
   "csrc.gov.cn": {
