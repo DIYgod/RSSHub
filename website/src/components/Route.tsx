@@ -2,6 +2,7 @@ import React from 'react';
 import MarkdownIt from 'markdown-it';
 import Badge from './Badge';
 import Translate from '@docusaurus/Translate';
+import Link from '@docusaurus/Link';
 
 export default function Route({
   author = 'DIYgod',
@@ -50,39 +51,39 @@ export default function Route({
                 {supportScihub && <Badge type="tip"><Translate id="badge.supportSciHub" /></Badge>}
                 {puppeteer && <Badge type="warn"><Translate id="badge.puppeteer" /></Badge>}
                 {anticrawler && (
-                    <a target="_blank" href="/faq.html">
+                    <Link to="/faq">
                         <Badge type="warn"><Translate id="badge.anticrawler" /></Badge>
-                    </a>
+                    </Link>
                 )}
                 {selfhost && (
-                    <a target="_blank" href="/install/">
+                    <Link to="/install">
                         <Badge type="warn"><Translate id="badge.selfhost" /></Badge>
-                    </a>
+                    </Link>
                 )}
                 {radar && (
-                    <a target="_blank" href="https://github.com/DIYgod/RSSHub-Radar">
+                    <Link to="https://github.com/DIYgod/RSSHub-Radar">
                         <Badge type="tip"><Translate id="badge.radar" /></Badge>
-                    </a>
+                    </Link>
                 )}
                 {rssbud && (
-                    <a target="_blank" href="https://github.com/Cay-Zhang/RSSBud">
+                    <Link to="https://github.com/Cay-Zhang/RSSBud">
                         <Badge type="tip"><Translate id="badge.rssbud" /></Badge>
-                    </a>
+                    </Link>
                 )}
             </p>
             <p className="author">
                 <Translate id="route.author" />
                 {author.split(' ').map((uid) => (
-                    <a href={`https://github.com/${uid}`} target="_blank" key={uid}>
+                    <Link to={`https://github.com/${uid}`} key={uid}>
                         @{uid}{' '}
-                    </a>
+                    </Link>
                 ))}
             </p>
             <p className="example">
                 <span><Translate id="route.example" /></span>
-                <a href={demoUrl} target="_blank">
+                <Link to={demoUrl}>
                     {demoUrl}
-                </a>
+                </Link>
             </p>
             <p className="path">
                 <Translate id="route.path" /><code>{path}</code>

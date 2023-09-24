@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Add documentation
 
-Now that we have completed the code, it's time to add the documentation for your route. Open the appropriate file in the [document (/website/docs)](https://github.com/DIYgod/RSSHub/blob/master/website/docs), which in this example is `/website/i18n/en/docusaurus-plugin-content-docs/current/routes/programming.md`.
+Now that we have completed the code, it's time to add the documentation for your route. Open the appropriate file in the [document (/website/docs)](https://github.com/DIYgod/RSSHub/blob/master/website/docs), which in this example is `website/docs/routes/programming.md`.
 
 In order to preview the documentation in real-time, you need to install the dependencies for the documentation. Run the following command in the **`website` directory**:
 
