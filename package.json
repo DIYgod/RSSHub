@@ -176,7 +176,7 @@
     "@types/request-promise-native": "1.0.18",
     "@types/require-all": "3.0.3",
     "@types/showdown": "2.0.2",
-    "@types/supertest": "2.0.12",
+    "@types/supertest": "2.0.13",
     "@types/tiny-async-pool": "2.0.0",
     "@types/tough-cookie": "4.0.3",
     "@vercel/nft": "0.24.1",
