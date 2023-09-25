@@ -170,7 +170,7 @@
     "@types/mailparser": "3.4.0",
     "@types/markdown-it": "13.0.1",
     "@types/module-alias": "2.0.2",
-    "@types/nodemon": "1.19.2",
+    "@types/nodemon": "1.19.3",
     "@types/pidusage": "2.0.2",
     "@types/plist": "3.0.2",
     "@types/request-promise-native": "1.0.18",
