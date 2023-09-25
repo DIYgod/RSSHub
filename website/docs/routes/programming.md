@@ -495,6 +495,13 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <Route author="Yukaii kaiix" example="/hackmd/profile/hackmd" path="/hackmd/profile/:path" paramsDesc={['userpath or teampath']} radar="1"/>
 
+
+## HackYourNews {#hackyournews}
+
+### Index {#hackyournews-index}
+
+<Route author="ftiasch" example="/hackyournews" path="/hackyournews" />
+
 ## HelloGitHub {#hellogithub}
 
 ### 热门 {#hellogithub-re-men}

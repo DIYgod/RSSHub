@@ -279,6 +279,13 @@ If you subscribe to [Discounted works Latest Discounts - Newest to Oldest](https
 
 <Route author="KTachibanaM" path="/eventernote/actors/:name/:id" example="/eventernote/actors/三森すずこ/2634" paramsDesc={['声优姓名', '声优 ID']} radar="1" rssbud="1"/>
 
+## Gogoanimehd {#gogoanimehd}
+
+### Recent Releases {#gogoanimehd-recent-releases}
+
+<Route author="user4302" example="/gogoanimehd/recent-releases" path="/gogoanimehd/recent-releases" />
+
+
 ## Hanime.tv {#hanime.tv}
 
 ### Recently updated {#hanime.tv-recently-updated}
@@ -904,4 +911,3 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 ### 當季新番 {#%E3%82%A2%E3%83%8B%E3%83%A1-xin-fan-zu-dang-ji-xin-fan}
 
 <Route author="devinmugen" example="/bangumi/online" path="/bangumi/online"/>
-
