@@ -4689,6 +4689,16 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 特斯拉中国 {#te-si-la-zhong-guo}
+
+### 权益中心 {#te-si-la-zhong-guo-quan-yi-zhong-xin}
+
+<Route author="simonsmh" example="/tesla/cx" path="/tesla/cx/:category?" radar="1" paramsDesc={['Category, see below, unset by default']}/>
+
+| 酒店 | 美食 | 生活方式 |
+| ---- | ---- | --------- |
+| 酒店 | 美食 | 生活方式 |
+
 ## 腾讯 NBA {#teng-xun-nba}
 
 ### 头条新闻 {#teng-xun-nba-tou-tiao-xin-wen}
