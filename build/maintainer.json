@@ -5656,6 +5656,10 @@
     "/tesla/price": [
         "xiaokyo"
     ],
+    "/tesla/cx/:category?/:city?": [
+        "simonsmh",
+        "nczitzk"
+    ],
     "/test/:id": [
         "DIYgod",
         "NeverBehave"

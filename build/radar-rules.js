@@ -13492,10 +13492,18 @@
         target:(params, url) => `/tencent/cloud/column/${url.match(/column\/(\d+)/)[1]}${/\/tag-\d+/.test(url) ? `/${url.match(/\/tag-(\d+)/)[1]}` : ''}` } ] },
   "tesla.cn":{ _name:"特斯拉中国",
     ".":[ { title:"价格",
-        docs:"https://docs.rsshub.app/routes/shopping#te-si-la-zhong-guo",
+        docs:"https://docs.rsshub.app/routes/shopping#te-si-la-zhong-guo-jia-ge",
         source:[ "/model3/design",
           "/" ],
-        target:"/tesla/price" } ] },
+        target:"/tesla/price" } ],
+    cx:[ { title:"权益中心",
+        docs:"https://docs.rsshub.app/routes/shopping#te-si-la-zhong-guo-quan-yi-zhong-xin",
+        source:[ "/user-right/list/:category" ],
+        target:(params) => {
+                    const category = params.category;
+
+                    return `/tesla/cx${category ? `/${category}` : ''}`;
+                } } ] },
   "tfc-taiwan.org.tw":{ _name:"台灣事實查核中心",
     ".":[ { title:"專題",
         docs:"https://docs.rsshub.app/routes/other#tai-wan-shi-shi-cha-he-zhong-xin",
