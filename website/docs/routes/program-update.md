@@ -59,7 +59,15 @@ The parameters can be extracted from the Release page URL: `https://install.appc
 
 ### App Update {#app-store-mac-app-store-app-update}
 
-<Route author="EkkoG" example="/apple/apps/update/us/id1529445840" path="/apple/apps/update/:country/:id" paramsDesc={['App Store Country, obtain from the app URL `https://apps.apple.com/us/app/apple-store/id375380948`, in this case, `us`', 'App Store app id, obtain from the app URL `https://apps.apple.com/us/app/apple-store/id375380948`, in this case, `id375380948`']} radar="1"/>
+<Route author="EkkoG nczitzk" example="/apple/apps/update/us/id408709785" path="/apple/apps/update/:country/:id" paramsDesc={['App Store Country, obtain from the app URL, see below', 'App id, obtain from the app URL']} radar="1" rssbud="1">
+
+:::tip
+
+For example, the URL of [GarageBand](https://apps.apple.com/us/app/messages/id408709785) in the App Store is <https://apps.apple.com/us/app/messages/id408709785>. In this case, the `App Store Country` parameter for the route is `us`, and the `App id` parameter is `id1146560473`. So the route should be [`/apple/apps/update/us/id408709785`](https://rsshub.app/apple/apps/update/us/id408709785).
+
+:::
+
+</Route>
 
 ### Price Drop {#app-store-mac-app-store-price-drop}
 
