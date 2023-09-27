@@ -2609,6 +2609,12 @@
     "/grist/topic/:topic": [
         "Rjnishant530"
     ],
+    "/grubstreet": [
+        "loganrockmore"
+    ],
+    "/grubstreet/": [
+        "loganrockmore"
+    ],
     "/guancha/:category?": [
         "nczitzk",
         "Jeason0228"
@@ -7586,7 +7592,6 @@
     "/199it/tag/:tag": [],
     "/jijitang/article/:id": [],
     "/jijitang/publication": [],
-    "/grubstreet": [],
     "/manhuadui/manhua/:name/:serial?": [],
     "/cfd/gbp_div": [],
     "/monotype/article": [],
