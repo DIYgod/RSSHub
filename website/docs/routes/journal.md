@@ -553,11 +553,11 @@ Return results from 2020
 
 </Route>
 
-## X-MOL Platform {#x-mol-platform}
+## X-MOL {#x-mol}
 
-### Journal {#x-mol-platform-journal}
+### Journal {#x-mol-journal}
 
-<Route author="cssxsh" example="/x-mol/paper/0/9" path="/x-mol/paper/:type/:magazine" paramsDesc={['type','magazine']} />
+<Route author="cssxsh" example="/x-mol/paper/0/9" path="/x-mol/paper/:type/:magazine" paramsDesc={['type','magazine']} anticrawler="1"/>
 
 ## 管理世界 {#guan-li-shi-jie}
 
