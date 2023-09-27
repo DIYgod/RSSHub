@@ -4693,11 +4693,13 @@ column 为 third 时可选的 category:
 
 ### 权益中心 {#te-si-la-zhong-guo-quan-yi-zhong-xin}
 
-<Route author="simonsmh" example="/tesla/cx" path="/tesla/cx/:category?" radar="1" paramsDesc={['Category, see below, unset by default']}/>
+<Route author="simonsmh" example="/tesla/cx" path="/tesla/cx/:category?" radar="1" paramsDesc={['Category, see below, unset by default']}>
 
 | 酒店 | 美食 | 生活方式 |
 | ---- | ---- | --------- |
 | 酒店 | 美食 | 生活方式 |
+
+</Route>
 
 ## 腾讯 NBA {#teng-xun-nba}
 
