@@ -6392,6 +6392,12 @@
     "/wzu/news/:type?": [
         "Chandler-Lu"
     ],
+    "/x-mol/news/:tag?": [
+        "cssxsh"
+    ],
+    "/x-mol/paper/:type/:magazine": [
+        "cssxsh"
+    ],
     "/x6d/:id?": [
         "nczitzk"
     ],
@@ -7393,8 +7399,6 @@
     "/zhanqi/room/:id": [],
     "/wineyun/:category": [],
     "/kzfeed/topic/:id": [],
-    "/x-mol/news/:tag?": [],
-    "/x-mol/paper/:type/:magazine": [],
     "/zhishifenzi/news/:type?": [],
     "/zhishifenzi/depth": [],
     "/zhishifenzi/innovation/:type?": [],
