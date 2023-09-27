@@ -15,8 +15,8 @@ dependencies:
     specifier: 2.2.3
     version: 2.2.3
   '@sentry/node':
-    specifier: 7.71.0
-    version: 7.71.0
+    specifier: 7.72.0
+    version: 7.72.0
   aes-js:
     specifier: 3.1.2
     version: 3.1.2
@@ -123,8 +123,8 @@ dependencies:
     specifier: 3.6.5
     version: 3.6.5
   markdown-it:
-    specifier: 13.0.1
-    version: 13.0.1
+    specifier: 13.0.2
+    version: 13.0.2
   module-alias:
     specifier: 2.2.3
     version: 2.2.3
@@ -141,11 +141,11 @@ dependencies:
     specifier: 2.3.0
     version: 2.3.0
   puppeteer:
-    specifier: 21.3.4
-    version: 21.3.4
+    specifier: 21.3.5
+    version: 21.3.5
   puppeteer-extra:
     specifier: 3.3.6
-    version: 3.3.6(puppeteer@21.3.4)
+    version: 3.3.6(puppeteer@21.3.5)
   puppeteer-extra-plugin-stealth:
     specifier: 2.11.2
     version: 2.11.2(puppeteer-extra@3.3.6)
@@ -224,8 +224,8 @@ devDependencies:
     specifier: 2.0.0
     version: 2.0.0
   '@types/imapflow':
-    specifier: 1.0.13
-    version: 1.0.13
+    specifier: 1.0.14
+    version: 1.0.14
   '@types/jsdom':
     specifier: 21.1.3
     version: 21.1.3
@@ -1240,33 +1240,33 @@ packages:
       selderee: 0.11.0
     dev: false
 
-  /@sentry-internal/tracing@7.71.0:
-    resolution: {integrity: sha512-HRGsQOrA2Y3Ga+NTgCkTWO+qtU2SFTJ7t9pt/LR8Har9cvVcjLIlHNwPoDx6bVkICK3cGOF8ZtXVmLizVbXoAg==}
+  /@sentry-internal/tracing@7.72.0:
+    resolution: {integrity: sha512-DToryaRSHk9R5RLgN4ktYEXZjQdqncOAWPqyyIurji8lIobXFRfmLtGL1wjoCK6sQNgWsjhSM9kXxwGnva1DNw==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.71.0
-      '@sentry/types': 7.71.0
-      '@sentry/utils': 7.71.0
+      '@sentry/core': 7.72.0
+      '@sentry/types': 7.72.0
+      '@sentry/utils': 7.72.0
       tslib: 2.6.2
     dev: false
 
-  /@sentry/core@7.71.0:
-    resolution: {integrity: sha512-kZcWnzxzMxyNuCwq65owu0yGbY+C9QJhWFMDBsqmKK1/dSt0bdhNjf3VQW1dJLnWaQTk7rUTHEHGH8JSdV5EAg==}
+  /@sentry/core@7.72.0:
+    resolution: {integrity: sha512-G03JdQ5ZsFNRjcNNi+QvCjqOuBvYqU92Gs1T2iK3GE8dSBTu2khThydMpG4xrKZQLIpHOyiIhlFZiuPtZ66W8w==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.71.0
-      '@sentry/utils': 7.71.0
+      '@sentry/types': 7.72.0
+      '@sentry/utils': 7.72.0
       tslib: 2.6.2
     dev: false
 
-  /@sentry/node@7.71.0:
-    resolution: {integrity: sha512-rvCzfLWAeX+16mOJeb08xDlpBdn/H/G8dj9mENQAom8O0SgMkkRyfYc9pnvsmU5gjuS7C9u+e4ZlOLLr1xZ+zQ==}
+  /@sentry/node@7.72.0:
+    resolution: {integrity: sha512-R5kNCIdaDa92EN6oCLiGJehw5wxayOM53WF60Ap6EJHZb5U8dM2BnODmQ6SCRLNB677p+620oSV6CCU286IleQ==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry-internal/tracing': 7.71.0
-      '@sentry/core': 7.71.0
-      '@sentry/types': 7.71.0
-      '@sentry/utils': 7.71.0
+      '@sentry-internal/tracing': 7.72.0
+      '@sentry/core': 7.72.0
+      '@sentry/types': 7.72.0
+      '@sentry/utils': 7.72.0
       cookie: 0.5.0
       https-proxy-agent: 5.0.1
       lru_map: 0.3.3
@@ -1275,16 +1275,16 @@ packages:
       - supports-color
     dev: false
 
-  /@sentry/types@7.71.0:
-    resolution: {integrity: sha512-30PRLZI1RoeWbLE9K7AHsRPWDH22CqC4WcLNeVmRfLC5m1vE1FHb53r98QSKFhLoONMPMVzDhZZgl4ZcC5mptQ==}
+  /@sentry/types@7.72.0:
+    resolution: {integrity: sha512-g6u0mk62yGshx02rfFADIfyR/S9VXcf3RG2qQPuvykrWtOfN/BOTrZypF7I+MiqKwRW76r3Pcu2C/AB+6z9XQA==}
     engines: {node: '>=8'}
     dev: false
 
-  /@sentry/utils@7.71.0:
-    resolution: {integrity: sha512-aS53l/E/5XsSJMOXHKvS0GlX4gZHBgNAMfhEB3f8rUIn5iLF2uu8lCA1uEvX6VB8b7q/Cg4WFTi6BiJ0hvJHQg==}
+  /@sentry/utils@7.72.0:
+    resolution: {integrity: sha512-o/MtqI7WJXuswidH0bSgBP40KN2lrnyQEIx5uoyJUJi/QEaboIsqbxU62vaFJpde8SYrbA+rTnP3J3ujF2gUag==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.71.0
+      '@sentry/types': 7.72.0
       tslib: 2.6.2
     dev: false
 
@@ -1497,8 +1497,8 @@ packages:
     resolution: {integrity: sha512-/K3ds8TRAfBvi5vfjuz8y6+GiAYBZ0x4tXv1Av6CWBWn0IlADc+ZX9pMq7oU0fNQPnBwIZl3rmeLp6SBApbxSQ==}
     dev: true
 
-  /@types/imapflow@1.0.13:
-    resolution: {integrity: sha512-TD8h02jSTDsXTE79HL0cSkjrU/ufXmSIsZv96O2sNBDA1VluqzKkjV2LrXSPIuXE1tn7JhND7o0iyP4r7haNFw==}
+  /@types/imapflow@1.0.14:
+    resolution: {integrity: sha512-ZAy/IJwppElFQUorlVd/t9ndngDI/LNZPbqlFHXoxpA2yEq/E7RtI22TOD/9v/Xufg1SjrfrQf6ieZNgEXN6DA==}
     dependencies:
       '@types/node': 20.5.6
     dev: true
@@ -5537,8 +5537,8 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /markdown-it@13.0.1:
-    resolution: {integrity: sha512-lTlxriVoy2criHP0JKRhO2VDG9c2ypWCsT237eDiLqi09rmbKoUetyGHq2uOIRoRS//kfoJckS0eUzzkDR+k2Q==}
+  /markdown-it@13.0.2:
+    resolution: {integrity: sha512-FtwnEuuK+2yVU7goGn/MJ0WBZMM9ZPgU9spqlFs7/A/pDIUNSOQZhUgOqYCficIuR2QaFnrt8LHqBWsbTAoI5w==}
     hasBin: true
     dependencies:
       argparse: 2.0.1
@@ -6495,8 +6495,8 @@ packages:
     resolution: {integrity: sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==}
     engines: {node: '>=6'}
 
-  /puppeteer-core@21.3.4:
-    resolution: {integrity: sha512-iaG7ScTXOm9hlsBTBGGtr5dAAsA8IiWTx8E0Ghr0b5Ntl42bdcPS8EXjcERKocDhua2YqdlnFGs/cBxHY+VNyA==}
+  /puppeteer-core@21.3.5:
+    resolution: {integrity: sha512-C/yVgvob/HbUVTedhnURDruFkJYHEqJWlb6YltJGj/T7yzWdG4ouQ0JER8aX5g2RS4DMQ0xMNuhUVYMqC2QfnQ==}
     engines: {node: '>=16.3.0'}
     dependencies:
       '@puppeteer/browsers': 1.7.1
@@ -6525,7 +6525,7 @@ packages:
         optional: true
     dependencies:
       debug: 4.3.4
-      puppeteer-extra: 3.3.6(puppeteer@21.3.4)
+      puppeteer-extra: 3.3.6(puppeteer@21.3.5)
       puppeteer-extra-plugin: 3.2.3(puppeteer-extra@3.3.6)
       puppeteer-extra-plugin-user-preferences: 2.4.1(puppeteer-extra@3.3.6)
     transitivePeerDependencies:
@@ -6546,7 +6546,7 @@ packages:
     dependencies:
       debug: 4.3.4
       fs-extra: 10.1.0
-      puppeteer-extra: 3.3.6(puppeteer@21.3.4)
+      puppeteer-extra: 3.3.6(puppeteer@21.3.5)
       puppeteer-extra-plugin: 3.2.3(puppeteer-extra@3.3.6)
       rimraf: 3.0.2
     transitivePeerDependencies:
@@ -6567,7 +6567,7 @@ packages:
     dependencies:
       debug: 4.3.4
       deepmerge: 4.3.1
-      puppeteer-extra: 3.3.6(puppeteer@21.3.4)
+      puppeteer-extra: 3.3.6(puppeteer@21.3.5)
       puppeteer-extra-plugin: 3.2.3(puppeteer-extra@3.3.6)
       puppeteer-extra-plugin-user-data-dir: 2.4.1(puppeteer-extra@3.3.6)
     transitivePeerDependencies:
@@ -6589,12 +6589,12 @@ packages:
       '@types/debug': 4.1.8
       debug: 4.3.4
       merge-deep: 3.0.3
-      puppeteer-extra: 3.3.6(puppeteer@21.3.4)
+      puppeteer-extra: 3.3.6(puppeteer@21.3.5)
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /puppeteer-extra@3.3.6(puppeteer@21.3.4):
+  /puppeteer-extra@3.3.6(puppeteer@21.3.5):
     resolution: {integrity: sha512-rsLBE/6mMxAjlLd06LuGacrukP2bqbzKCLzV1vrhHFavqQE/taQ2UXv3H5P0Ls7nsrASa+6x3bDbXHpqMwq+7A==}
     engines: {node: '>=8'}
     peerDependencies:
@@ -6612,19 +6612,19 @@ packages:
       '@types/debug': 4.1.8
       debug: 4.3.4
       deepmerge: 4.3.1
-      puppeteer: 21.3.4
+      puppeteer: 21.3.5
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /puppeteer@21.3.4:
-    resolution: {integrity: sha512-kE67k1KR6hQs3g0Yf/i3GYOhTU8zC2dtcpHhtcSC9bGoVxRgqDo/hwVkDqlNKxJsJHuVX+qviWC7F0FdSjcFTA==}
+  /puppeteer@21.3.5:
+    resolution: {integrity: sha512-Lff7dgN7D1AHnPBgceZiZpcXVpKOcnSCtBy+TZlwqYBumGapOky3/rUPScd6I6poh5XpPNzya6gbipBasAs7xA==}
     engines: {node: '>=16.3.0'}
     requiresBuild: true
     dependencies:
       '@puppeteer/browsers': 1.7.1
       cosmiconfig: 8.3.6
-      puppeteer-core: 21.3.4
+      puppeteer-core: 21.3.5
     transitivePeerDependencies:
       - bufferutil
       - encoding
