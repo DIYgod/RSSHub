@@ -1023,6 +1023,12 @@ See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
 
 <Route author="hoilc" example="/mqube/tag/UTAU" path="/mqube/tag/:tag" paramsDesc={['标签名称, 可参考`https://mqube.net/search/tag`']} radar="1" rssbud="1"/>
 
+## Netflav {#netflav}
+
+### Index {#netflav-index}
+
+<Route author="TonyRL" example="/netflav" path="/netflav" radar="1"/>
+
 ## NEW 字幕组 {#new-zi-mu-zu}
 
 ### 分类 {#new-zi-mu-zu-fen-lei}
