@@ -257,8 +257,8 @@ devDependencies:
     specifier: 3.4.0
     version: 3.4.0
   '@types/markdown-it':
-    specifier: 13.0.1
-    version: 13.0.1
+    specifier: 13.0.2
+    version: 13.0.2
   '@types/module-alias':
     specifier: 2.0.2
     version: 2.0.2
@@ -272,8 +272,8 @@ devDependencies:
     specifier: 3.0.3
     version: 3.0.3
   '@types/request-promise-native':
-    specifier: 1.0.18
-    version: 1.0.18
+    specifier: 1.0.19
+    version: 1.0.19
   '@types/require-all':
     specifier: 3.0.3
     version: 3.0.3
@@ -1622,8 +1622,8 @@ packages:
       iconv-lite: 0.6.3
     dev: true
 
-  /@types/markdown-it@13.0.1:
-    resolution: {integrity: sha512-SUEb8Frsxs3D5Gg9xek6i6EG6XQ5s+O+ZdQzIPESZVZw3Pv3CPQfjCJBI+RgqZd1IBeu18S0Rn600qpPnEK37w==}
+  /@types/markdown-it@13.0.2:
+    resolution: {integrity: sha512-Tla7hH9oeXHOlJyBFdoqV61xWE9FZf/y2g+gFVwQ2vE1/eBzjUno5JCd3Hdb5oATve5OF6xNjZ/4VIZhVVx+hA==}
     dependencies:
       '@types/linkify-it': 3.0.3
       '@types/mdurl': 1.0.2
@@ -1690,8 +1690,8 @@ packages:
     resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}
     dev: true
 
-  /@types/request-promise-native@1.0.18:
-    resolution: {integrity: sha512-tPnODeISFc/c1LjWyLuZUY+Z0uLB3+IMfNoQyDEi395+j6kTFTTRAqjENjoPJUid4vHRGEozoTrcTrfZM+AcbA==}
+  /@types/request-promise-native@1.0.19:
+    resolution: {integrity: sha512-i17J9k5KP2PAMEhoYnoDpHzJHS91aIV1lG0gOqNX1G5mm/48Qm01sIb8gCJMQpddwapXM9KpxdWGSggZNMLKDw==}
     dependencies:
       '@types/request': 2.48.8
     dev: true
