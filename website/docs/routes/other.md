@@ -829,9 +829,9 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 <Route author="LogicJake" example="/kpmg/insights" path="/kpmg/insights" />
 
-## 成都住建蓉 e 办 {#cheng-dou-zhu-jian-rong-e-ban}
+## 成都住建蓉 e 办 {#cheng-du-zhu-jian-rong-e-ban}
 
-### 商品住房购房登记 {#cheng-dou-zhu-jian-rong-e-ban-shang-pin-zhu-fang-gou-fang-deng-ji}
+### 商品住房购房登记 {#cheng-du-zhu-jian-rong-e-ban-shang-pin-zhu-fang-gou-fang-deng-ji}
 
 <Route author="TonyRL" example="/cdzjryb/zw/projectList" path="/cdzjryb/zw/projectList" radar="1"/>
 

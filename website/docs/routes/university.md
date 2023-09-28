@@ -587,9 +587,9 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 
 </Route>
 
-## 成都信息工程大学 {#cheng-dou-xin-xi-gong-cheng-da-xue}
+## 成都信息工程大学 {#cheng-du-xin-xi-gong-cheng-da-xue}
 
-### 成信新闻网 {#cheng-dou-xin-xi-gong-cheng-da-xue-cheng-xin-xin-wen-wang}
+### 成信新闻网 {#cheng-du-xin-xi-gong-cheng-da-xue-cheng-xin-xin-wen-wang}
 
 <Route author="kimika" example="/cuit/cxxww/1" path="/cuit/cxxww/:type?" paramsDesc={['默认为 `1`']}>
 
