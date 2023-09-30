@@ -17,6 +17,9 @@ dependencies:
   '@sentry/node':
     specifier: 7.72.0
     version: 7.72.0
+  '@tonyrl/rand-user-agent':
+    specifier: 2.0.32
+    version: 2.0.32
   aes-js:
     specifier: 3.1.2
     version: 3.1.2
@@ -158,9 +161,6 @@ dependencies:
   query-string:
     specifier: 7.1.3
     version: 7.1.3
-  rand-user-agent:
-    specifier: 1.0.109
-    version: 1.0.109
   re2js:
     specifier: 0.4.0
     version: 0.4.0
@@ -1319,6 +1319,11 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       defer-to-connect: 2.0.1
+    dev: false
+
+  /@tonyrl/rand-user-agent@2.0.32:
+    resolution: {integrity: sha512-WhYSJoQfT0AVRIQQ27y0v3JqTBHDHaClORGl8NuoO41h7D/p/pfpw4DPIG3wZ7TmfTevOAfr07a/TVdwoh0/rw==}
+    engines: {node: '>=14.16'}
     dev: false
 
   /@tootallnate/once@2.0.0:
@@ -6686,10 +6691,6 @@ packages:
   /quick-lru@5.1.1:
     resolution: {integrity: sha512-WuyALRjWPDGtt/wzJiadO5AXY+8hZ80hVpe6MyivgraREW751X3SbhRvG3eLKOYN+8VEvqLcf3wdnt44Z4S4SA==}
     engines: {node: '>=10'}
-    dev: false
-
-  /rand-user-agent@1.0.109:
-    resolution: {integrity: sha512-mnAH0jDJQ0SJtEXjoW5aQILEc+33RwtKzKxwK9JG1a06M6nn8WDWheD+kmc5ucs+ux4FEWX3+PZuEB8r3x15yQ==}
     dev: false
 
   /re2js@0.4.0:
