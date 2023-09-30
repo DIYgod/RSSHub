@@ -271,7 +271,7 @@ Language
 ## MyMusicSheet {#mymusicsheet}
 
 ### User Sheets {#mymusicsheet-user-sheets}
-<Route author="Freddd13" example="/mymusicsheet/HalcyonMusic" path="mymusicsheet/:user" paramsDesc={['用户名，可在URL中找到']} radar="1" rssbud="1">
+<Route author="Freddd13" example="/mymusicsheet/HalcyonMusic" path="/mymusicsheet/user/sheets/:username/:iso?" paramsDesc={['用户名，可在URL中找到', '用于显示价格的ISO 4217货币代码, 支持常见代码, 默认为人民币, 即`CNY`']} radar="1" rssbud="1">
 
 </Route>
 
