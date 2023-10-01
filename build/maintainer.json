@@ -3933,6 +3933,9 @@
     "/mygopen/:label?": [
         "nczitzk"
     ],
+    "/mymusicsheet/user/sheets/:username/:iso?": [
+        "Freddd13"
+    ],
     "/mysql/release/:version?": [
         "nczitzk"
     ],
