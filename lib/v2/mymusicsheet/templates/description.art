@@ -1,7 +1,7 @@
 <div class="item-description">
     {{if youtubeId}}
         <iframe 
-            src="https://www.youtube.com/embed/{{youtubeId}}?autoplay=0" 
+            src="https://www.youtube-nocookie.com/embed/{{youtubeId}}?autoplay=0" 
             style="width:100%; height:100%;" 
             frameborder="0" 
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
