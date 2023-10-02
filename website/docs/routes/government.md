@@ -1244,7 +1244,9 @@ Language
 
 ## 中国人大网 {#zhong-guo-ren-da-wang}
 
-<Route author="233yeee" example="/npc/c183" path="/npc/:caty" paramsDesc={['分类名，支持形如 `http://www.npc.gov.cn/npc/*/list.shtml` 的网站，传入 npc 之后的参数']}>
+### 通用 {#zhong-guo-ren-da-wang-tong-yong}
+
+<Route author="233yeee" example="/gov/npc/c183" path="/gov/npc/:caty" paramsDesc={['分类名，支持形如 `http://www.npc.gov.cn/npc/c2/*/` 的网站，传入 npc 之后的参数']}>
 
 | 立法 | 监督 | 代表 | 理论 | 权威发布 | 滚动新闻 |
 | ---- | ---- | ---- | ---- | -------- | -------- |
