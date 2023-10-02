@@ -124,6 +124,21 @@
 
 <Route author="FHYunCai" example="/bing" path="/bing" radar="1" rssbud="1"/>
 
+## Booru {#booru}
+
+### MMDArchive 标签查询 {#booru-mmdarchive-biao-qian-cha-xun}
+
+<Route author="N78Wy" example="/booru/mmda/tags/full_body+blue_eyes" path="/booru/mmda/tags/:tags?" paramsDesc={['标签，多个标签使用空格` `或者`%20`连接，如需根据作者查询则在`user:`后接上作者名，如：`user:xxxx`']}>
+
+For example:
+
+-   默认查询(什么tag都不加)：`/booru/mmda/tags`
+-   默认查询单个tag：`/booru/mmda/tags/full_body`
+-   默认查询多个tag：`/booru/mmda/tags/full_body%20blue_eyes`
+-   默认查询根据作者查询：`/booru/mmda/tags/user:xxxx`
+
+</Route>
+
 ## CNU 视觉联盟 {#cnu-shi-jue-lian-meng}
 
 ### 每日精选 {#cnu-shi-jue-lian-meng-mei-ri-jing-xuan}
