@@ -572,7 +572,7 @@ Categories
 
 ### Exclusive {#farmatters-exclusive}
 
-<Route author="nczitzk" example="/farmatters/exclusive" path="/farmatters/exclusive/:locale/:locale?" paramsDesc={['Locale, `zh-CN` or `en-US`, `zh-CN` by default']} radar="1" rssbud="1"/>
+<Route author="nczitzk" example="/farmatters/exclusive" path="/farmatters/exclusive/:locale?" paramsDesc={['Locale, `zh-CN` or `en-US`, `zh-CN` by default']} radar="1" rssbud="1"/>
 
 ### Tag {#farmatters-tag}
 
