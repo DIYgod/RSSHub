@@ -1976,6 +1976,21 @@
     "/fantia/user/:id": [
         "nczitzk"
     ],
+    "/farmatters/exclusive/:locale?": [
+        "nczitzk"
+    ],
+    "/farmatters/news/:locale?": [
+        "nczitzk"
+    ],
+    "/farmatters/tag/:id/:locale?": [
+        "nczitzk"
+    ],
+    "/farmatters/wiki/:id/:locale?": [
+        "nczitzk"
+    ],
+    "/farmatters/:locale?": [
+        "nczitzk"
+    ],
     "/fastbull/express-news": [
         "nczitzk"
     ],
