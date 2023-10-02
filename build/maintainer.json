@@ -2450,6 +2450,9 @@
     "/gov/nopss/:path+": [
         "nczitzk"
     ],
+    "/gov/npc/:caty": [
+        "233yeee"
+    ],
     "/gov/nrta/news/:category?": [
         "yuxinliu-alex"
     ],
@@ -7744,7 +7747,6 @@
     "/weforum/report/:lang?/:year?/:platform?": [],
     "/nobelprize/:caty?": [],
     "/gov/taiwan/mnd": [],
-    "/npc/:caty": [],
     "/ofweek/news": [],
     "/popyard/:caty?": [],
     "/wto/dispute-settlement/:year?": [],
