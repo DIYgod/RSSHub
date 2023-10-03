@@ -272,7 +272,8 @@ Language
 
 ### User Sheets {#mymusicsheet-user-sheets}
 
-<Route author="Freddd13" example="/mymusicsheet/HalcyonMusic" path="/mymusicsheet/user/sheets/:username/:iso?" paramsDesc={['用户名，可在URL中找到', '用于显示价格的ISO 4217货币代码, 支持常见代码, 默认为人民币, 即`CNY`']} radar="1" rssbud="1"/>
+
+<Route author="Freddd13" example="/mymusicsheet/user/sheets/HalcyonMusic/USD/1" path="/mymusicsheet/user/sheets/:username/:iso?/:freeOnly?" paramsDesc={['用户名，可在URL中找到', '用于显示价格的ISO 4217货币代码, 支持常见代码, 默认为人民币, 即`CNY`', '只返回免费谱, 任意值为开启']} radar="1" rssbud="1"/>
 
 关于ISO 4217，请参考[维基百科](https://zh.wikipedia.org/zh-cn/ISO_4217#%E7%8E%B0%E8%A1%8C%E4%BB%A3%E7%A0%81)
 

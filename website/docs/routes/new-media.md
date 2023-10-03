@@ -564,6 +564,52 @@ Categories
 
 </Route>
 
+## Farmatters {#farmatters}
+
+### Viewpoint {#farmatters-viewpoint}
+
+<Route author="nczitzk" example="/farmatters/news" path="/farmatters/news/:locale?" paramsDesc={['Locale, `zh-CN` or `en-US`, `zh-CN` by default']} radar="1" rssbud="1"/>
+
+### Exclusive {#farmatters-exclusive}
+
+<Route author="nczitzk" example="/farmatters/exclusive" path="/farmatters/exclusive/:locale?" paramsDesc={['Locale, `zh-CN` or `en-US`, `zh-CN` by default']} radar="1" rssbud="1"/>
+
+### Tag {#farmatters-tag}
+
+<Route author="nczitzk" example="/farmatters/tag/1" path="/farmatters/tag/:id/:locale?" paramsDesc={['Tag id, see below', 'Locale, `zh-CN` or `en-US`, `zh-CN` by default']} radar="1" rssbud="1">
+
+| id  | Tag                  | 标签     |
+| --- | -------------------- | -------- |
+| 1   | company              | 上市公司 |
+| 2   | original             | 原创     |
+| 3   | business investment  | 商业投资 |
+| 4   | comments             | 评论     |
+| 5   | agtech               | 农业科技 |
+| 12  | cellular agriculture | 细胞农业 |
+| 17  | vertical farming     | 垂直农业 |
+| 19  | urban agriculture    | 城市农业 |
+| 20  | mechinery            | 农机     |
+| 23  | agfood               | 农产食材 |
+| 25  | alternative protein  | 替代蛋白 |
+| 29  | food waste           | 食物浪费 |
+| 31  | CEA                  | 设施农业 |
+| 36  | agronomy             | 农艺     |
+| 41  | synthetic biology    | 合成生物 |
+
+</Route>
+
+### Wiki {#farmatters-wiki}
+
+<Route author="nczitzk" example="/farmatters/wiki/1" path="/farmatters/wiki/:id/:locale?" paramsDesc={['Category id, see below', 'Locale, `zh-CN` or `en-US`, `zh-CN` by default']} radar="1" rssbud="1">
+
+| id  | Category    | 分类     |
+| --- | ----------- | -------- |
+| 1   | Agriculture | 农业知识 |
+| 2   | Others      | 其他     |
+| 3   | Food        | 食物贴士 |
+
+</Route>
+
 ## Fashion Network {#fashion-network}
 
 ### Headline {#fashion-network-headline}
@@ -2372,30 +2418,6 @@ Supported sub-sites:
 ### 首页 {#chan-pin-chen-si-lu-shou-ye}
 
 <Route author="nczitzk" example="/pmthinking" path="/pmthinking" />
-
-## 城农 Growin' City {#cheng-nong-growin-city}
-
-### 城农资讯观点 {#cheng-nong-growin-city-cheng-nong-zi-xun-guan-dian}
-
-<Route author="nczitzk" example="/growincity/news" path="/growincity/news/:id?" anticrawler="1" paramsDesc={['分类 id，见下表，默认为原创内容']}>
-
-| 原创内容 | 商业投资 | 观点评论 | 农业科技 |
-| -------- | -------- | -------- | -------- |
-| 48       | 55       | 88       | 98       |
-
-| 农艺管理 | 农业机械 | 设施农业 | 畜牧水产 |
-| -------- | -------- | -------- | -------- |
-| 101      | 83       | 85       | 87       |
-
-| 食品科技 | 科技产品 | 食品创新 | 研究报告 |
-| -------- | -------- | -------- | -------- |
-| 86       | 100      | 99       | 76       |
-
-| 教育拓展 | 展会培训 | 业界访谈 |
-| -------- | -------- | -------- |
-| 61       | 77       | 72       |
-
-</Route>
 
 ## 抽屉新热榜 {#chou-ti-xin-re-bang}
 
