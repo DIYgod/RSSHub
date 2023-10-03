@@ -1833,6 +1833,10 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="shengmaosu" example="/scau/yzb" path="/scau/yzb" radar="1"/>
 
+### 研究生院通知 {#hua-nan-nong-ye-da-xue-yan-jiu-sheng-yuan-tong-zhi}
+
+<Route author="Chunssu" example="/scau/yjsy" path="/scau/yjsy" radar="1"/>
+
 ## 华南师范大学 {#hua-nan-shi-fan-da-xue}
 
 ### 软件学院通知公告 {#hua-nan-shi-fan-da-xue-ruan-jian-xue-yuan-tong-zhi-gong-gao}
