@@ -281,8 +281,8 @@ devDependencies:
     specifier: 2.0.2
     version: 2.0.2
   '@types/supertest':
-    specifier: 2.0.13
-    version: 2.0.13
+    specifier: 2.0.14
+    version: 2.0.14
   '@types/tiny-async-pool':
     specifier: 2.0.0
     version: 2.0.0
@@ -1165,7 +1165,7 @@ packages:
       '@babel/runtime-corejs2': 7.22.11
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.29.4
@@ -1756,8 +1756,8 @@ packages:
       '@types/node': 20.5.6
     dev: true
 
-  /@types/supertest@2.0.13:
-    resolution: {integrity: sha512-Vc/5/pRwSC055fU7Wu8erTj4gLpID9SdG2zRMuqaHLni3GTsrJ8gyB6MbFZZGLW6vQaGPhiUWRB6uWglv87MEg==}
+  /@types/supertest@2.0.14:
+    resolution: {integrity: sha512-Q900DeeHNFF3ZYYepf/EyJfZDA2JrnWLaSQ0YNV7+2GTo8IlJzauEnDGhya+hauncpBYTYGpVHwGdssJeAQ7eA==}
     dependencies:
       '@types/superagent': 4.1.18
     dev: true
@@ -8152,8 +8152,8 @@ packages:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
     dev: true
 
-  github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     name: difflib
     version: 0.2.6
     dependencies:
