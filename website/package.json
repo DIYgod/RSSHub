@@ -16,7 +16,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@dipakparmar/docusaurus-plugin-umami": "^2.1.0",
+    "@dipakparmar/docusaurus-plugin-umami": "^2.1.1",
     "@docusaurus/core": "2.4.3",
     "@docusaurus/plugin-client-redirects": "2.4.3",
     "@docusaurus/plugin-pwa": "2.4.3",

@@ -281,8 +281,8 @@ devDependencies:
     specifier: 2.0.2
     version: 2.0.2
   '@types/supertest':
-    specifier: 2.0.13
-    version: 2.0.13
+    specifier: 2.0.14
+    version: 2.0.14
   '@types/tiny-async-pool':
     specifier: 2.0.0
     version: 2.0.0
@@ -290,8 +290,8 @@ devDependencies:
     specifier: 4.0.3
     version: 4.0.3
   '@vercel/nft':
-    specifier: 0.24.1
-    version: 0.24.1
+    specifier: 0.24.2
+    version: 0.24.2
   cross-env:
     specifier: 7.0.3
     version: 7.0.3
@@ -1756,8 +1756,8 @@ packages:
       '@types/node': 20.5.6
     dev: true
 
-  /@types/supertest@2.0.13:
-    resolution: {integrity: sha512-Vc/5/pRwSC055fU7Wu8erTj4gLpID9SdG2zRMuqaHLni3GTsrJ8gyB6MbFZZGLW6vQaGPhiUWRB6uWglv87MEg==}
+  /@types/supertest@2.0.14:
+    resolution: {integrity: sha512-Q900DeeHNFF3ZYYepf/EyJfZDA2JrnWLaSQ0YNV7+2GTo8IlJzauEnDGhya+hauncpBYTYGpVHwGdssJeAQ7eA==}
     dependencies:
       '@types/superagent': 4.1.18
     dev: true
@@ -1795,8 +1795,8 @@ packages:
     dev: false
     optional: true
 
-  /@vercel/nft@0.24.1:
-    resolution: {integrity: sha512-bGYrA/w98LNl9edxXcAezKs+Ixa2a+RkAvxXK38gH3815v+WkNa2AGY+wQv59vu2f9il9+zIKj6YrnlYIbh+jA==}
+  /@vercel/nft@0.24.2:
+    resolution: {integrity: sha512-KhY3Ky/lCqE+fHpOXiKOLnXYJ49PZh1dyDSfVtZhmYtmica0NQgyO6kPOAGDNWqD9IOBx8hb65upxxjfnfa1JA==}
     engines: {node: '>=16'}
     hasBin: true
     dependencies:
