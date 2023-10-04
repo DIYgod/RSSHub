@@ -1298,6 +1298,62 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 </Route>
 
+## Metacritic {#metacritic}
+
+### Games {#metacritic-games}
+
+<Route author="HenryQW nczitzk" example="/metacritic/game" path="/metacritic/game/:sort?/:filter?" paramsDesc={['Sort, see below, `new` for Newest Releases by default', 'Filter']} radar="1" rssbud="1">
+
+| Metascore | User Score | Most Popular | Newest Releases |
+| --------- | ---------- | ------------ | --------------- |
+| metascore | userscore  | popular      | new             |
+
+:::tip
+
+The Filter parameter comes from the corresponding page URL. The following is an example:
+
+The URL of [Action Games to Play on PS5](https://www.metacritic.com/browse/game/all/all/all-time/new/?platform=ps5&genre=action) is <https://www.metacritic.com/browse/game/all/all/all-time/new/?platform=ps5&genre=action>. The Filter parameter is `platform=ps5&genre=action` and the route is [`/metacritic/game/new/platform=ps5&genre=action`](https://rsshub.app/metacritic/game/new/platform=ps5&genre=action)
+
+:::
+
+</Route>
+
+### Movies {#metacritic-movies}
+
+<Route author="nczitzk" example="/metacritic/movie" path="/metacritic/movie/:sort?/:filter?" paramsDesc={['Sort, see below, `new` for Newest Releases by default', 'Filter']} radar="1" rssbud="1">
+
+| Metascore | User Score | Most Popular | Newest Releases |
+| --------- | ---------- | ------------ | --------------- |
+| metascore | userscore  | popular      | new             |
+
+:::tip
+
+The Filter parameter comes from the corresponding page URL. The following is an example:
+
+The URL of [Action Movies to Watch on Netflix](https://www.metacritic.com/browse/movie/all/all/all-time/new/?network=netflix&genre=action) is <https://www.metacritic.com/browse/movie/all/all/all-time/new/?network=netflix&genre=action>. The Filter parameter is `network=netflix&genre=action` and the route is [`/metacritic/movie/new/network=netflix&genre=action`](https://rsshub.app/metacritic/movie/new/network=netflix&genre=action)
+
+:::
+
+</Route>
+
+### TV Shows {#metacritic-tv-shows}
+
+<Route author="nczitzk" example="/metacritic/tv" path="/metacritic/tv/:sort?/:filter?" paramsDesc={['Sort, see below, `new` for Newest Releases by default', 'Filter']} radar="1" rssbud="1">
+
+| Metascore | User Score | Most Popular | Newest Releases |
+| --------- | ---------- | ------------ | --------------- |
+| metascore | userscore  | popular      | new             |
+
+:::tip
+
+The Filter parameter comes from the corresponding page URL. The following is an example:
+
+The URL of [Documentary TV Shows to Watch on Prime Video](https://www.metacritic.com/browse/tv/all/all/all-time/new/?network=prime-video&genre=documentary) is <https://www.metacritic.com/browse/tv/all/all/all-time/new/?network=prime-video&genre=documentary>. The Filter parameter is `network=prime-video&genre=documentary` and the route is [`/metacritic/tv/new/network=prime-video&genre=documentary`](https://rsshub.app/metacritic/tv/new/network=prime-video&genre=documentary)
+
+:::
+
+</Route>
+
 ## Mirror {#mirror}
 
 ### User {#mirror-user}
