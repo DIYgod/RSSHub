@@ -55,25 +55,33 @@ The parameters can be extracted from the Release page URL: `https://install.appc
 
 </Route>
 
-## App Store/Mac App Store {#app-store%2Fmac-app-store}
+## App Store/Mac App Store {#app-store-mac-app-store}
 
-### App Update {#app-store%2Fmac-app-store-app-update}
+### App Update {#app-store-mac-app-store-app-update}
 
-<Route author="cielpy" example="/appstore/update/us/id697846300" path="/appstore/update/:country/:id" paramsDesc={['App Store Country, obtain from the app URL `https://apps.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `us`', 'App Store app id, obtain from the app URL `https://apps.apple.com/us/app/reeder-3/id697846300?mt=8`, in this case, `id697846300`']} />
+<Route author="EkkoG nczitzk" example="/apple/apps/update/us/id408709785" path="/apple/apps/update/:country/:id" paramsDesc={['App Store Country, obtain from the app URL, see below', 'App id, obtain from the app URL']} radar="1" rssbud="1">
 
-### Price Drop {#app-store%2Fmac-app-store-price-drop}
+:::tip
+
+For example, the URL of [GarageBand](https://apps.apple.com/us/app/messages/id408709785) in the App Store is <https://apps.apple.com/us/app/messages/id408709785>. In this case, the `App Store Country` parameter for the route is `us`, and the `App id` parameter is `id1146560473`. So the route should be [`/apple/apps/update/us/id408709785`](https://rsshub.app/apple/apps/update/us/id408709785).
+
+:::
+
+</Route>
+
+### Price Drop {#app-store-mac-app-store-price-drop}
 
 <Route author="HenryQW" example="/appstore/price/us/mac/id1152443474" path="/appstore/price/:country/:type/:id" paramsDesc={['App Store Country, obtain from the app URL https://apps.apple.com/us/app/id1152443474, in this case, `us`', 'App type，either `iOS` or `mac`', 'App Store app id, obtain from the app URL https://apps.apple.com/us/app/id1152443474, in this case, `id1152443474`']} />
 
-### In-App-Purchase Price Drop Alert {#app-store%2Fmac-app-store-in-app-purchase-price-drop-alert}
+### In-App-Purchase Price Drop Alert {#app-store-mac-app-store-in-app-purchase-price-drop-alert}
 
 <Route author="HenryQW" example="/appstore/iap/us/id953286746" path="/appstore/iap/:country/:id" paramsDesc={['App Store Country, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `us`', 'App Store app id, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `id953286746`']} />
 
-### 每日精品限免 / 促销应用（鲜面连线 by AppSo） {#app-store%2Fmac-app-store-mei-ri-jing-pin-xian-mian-%2F-cu-xiao-ying-yong-%EF%BC%88-xian-mian-lian-xian-by-appso%EF%BC%89}
+### 每日精品限免 / 促销应用（鲜面连线 by AppSo） {#app-store-mac-app-store-mei-ri-jing-pin-xian-mian-cu-xiao-ying-yong-xian-mian-lian-xian-by-appso}
 
 <Route author="Andiedie" example="/appstore/xianmian" path="/appstore/xianmian"/>
 
-### 最新限免（GoFans） {#app-store%2Fmac-app-store-zui-xin-xian-mian-%EF%BC%88gofans%EF%BC%89}
+### 最新限免（GoFans） {#app-store-mac-app-store-zui-xin-xian-mian-gofans}
 
 <Route author="HenryQW" example="/appstore/gofans" path="/appstore/gofans"/>
 
@@ -159,7 +167,7 @@ Language
 
 ### 更新日志 {#bugly-sdk-geng-xin-ri-zhi}
 
-<Route author="cielpy" example="/bugly/changelog/1" path="/bugly/changelog/:platform" paramsDesc={['平台类型, 必选, 1 为 Android, 2 为 iOS']}/>
+<Route author="EkkoG" example="/bugly/changelog/1" path="/bugly/changelog/:platform" paramsDesc={['平台类型, 必选, 1 为 Android, 2 为 iOS']}/>
 
 ## Cent Browser {#cent-browser}
 
@@ -295,7 +303,7 @@ Language
 
 ### 更新 {#fir.im-ying-yong-geng-xin}
 
-<Route author="cielpy" example="/fir/update/xcz" path="/fir/update/:id" paramsDesc={['fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`']}/>
+<Route author="EkkoG" example="/fir/update/xcz" path="/fir/update/:id" paramsDesc={['fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`']}/>
 
 ## Firefox {#firefox}
 
@@ -373,7 +381,7 @@ Language
 
 ## IPSW.me {#ipsw.me}
 
-### Apple Firmware Update-IPSWs/OTAs version {#ipsw.me-apple-firmware-update-ipsws%2Fotas-version}
+### Apple Firmware Update-IPSWs/OTAs version {#ipsw.me-apple-firmware-update-ipsws-otas-version}
 
 <Route author="Jeason0228" example="/ipsw/index/ipsws/iPhone11,8" path="/ipsw/index/:ptype/:pname/" paramsDesc={['Fill in ipsws or otas to get different versions of firmware','Product name, `http://rsshub.app/ipsw/index/ipsws/iPod`, if you fill in the iPad, follow the entire iPad series(ptype default to ipsws).`http://rsshub.app/ipsw/index/ipsws/iPhone11,8`, if you fill in the specific iPhone11,8, submit to the ipsws firmware information of this model']}/>
 
@@ -463,11 +471,11 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### Changelog {#nvidia-web-driver-changelog}
 
-<Route author="cielpy" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
+<Route author="EkkoG" example="/nvidia/webdriverupdate" path="/nvidia/webdriverupdate"/>
 
-## O&O Software {#o%26o-software}
+## O&O Software {#o-o-software}
 
-### Changelog {#o%26o-software-changelog}
+### Changelog {#o-o-software-changelog}
 
 <Route author="nczitzk" example="/oo-software/changelog/shutup10" path="/oo-software/changelog/:id" paramsDesc={['Software id, see below, shutup10 by default, can be found in URL']}>
 
@@ -638,6 +646,16 @@ Open `https://www.sony.com/electronics/support` and search for the corresponding
 
 </Route>
 
+## SourceForge {#sourceforge}
+
+<Route author="JimenezLi" example="/sourceforge/topic=artificial-intelligence&os=windows" path="/sourceforge/:routeParams?" paramsDesc={['route params, see below']}>
+
+For some URL like [https://sourceforge.net/directory/artificial-intelligence/windows/](https://sourceforge.net/directory/artificial-intelligence/windows/), it is equal to [https://sourceforge.net/directory/?topic=artificial-intelligence&os=windows"](https://sourceforge.net/directory/?topic=artificial-intelligence&os=windows), thus subscribing to `/sourceforge/topic=artificial-intelligence&os=windows`.
+
+URL params can duplicate, such as `/sourceforge/topic=artificial-intelligence&os=windows&os=linux`.
+
+</Route>
+
 ## Thunderbird {#thunderbird}
 
 ### Changelog {#thunderbird-changelog}
@@ -646,7 +664,7 @@ Open `https://www.sony.com/electronics/support` and search for the corresponding
 
 ## Total Commander {#total-commander}
 
-### What's New {#total-commander-what's-new}
+### What's New {#total-commander-what-s-new}
 
 <Route author="nczitzk" example="/totalcommander/whatsnew" path="/totalcommander/whatsnew"/>
 
@@ -713,7 +731,7 @@ Language
 
 ## WizTree {#wiztree}
 
-### What's New {#wiztree-what's-new}
+### What's New {#wiztree-what-s-new}
 
 <Route author="nczitzk" example="/diskanalyzer/whats-new" path="/diskanalyzer/whats-new"/>
 
@@ -749,7 +767,7 @@ Language
 
 ## XYplorer {#xyplorer}
 
-### What's New {#xyplorer-what's-new}
+### What's New {#xyplorer-what-s-new}
 
 <Route author="nczitzk" example="/xyplorer/whatsnew" path="/xyplorer/whatsnew"/>
 
@@ -769,7 +787,7 @@ Language
 
 ### 更新日志 {#teng-xun-yun-yi-dong-zhi-bo-sdk-geng-xin-ri-zhi}
 
-<Route author="cielpy" example="/qcloud/mlvb/changelog" path="/qcloud/mlvb/changelog"/>
+<Route author="EkkoG" example="/qcloud/mlvb/changelog" path="/qcloud/mlvb/changelog"/>
 
 ## 小米应用商店 {#xiao-mi-ying-yong-shang-dian}
 
