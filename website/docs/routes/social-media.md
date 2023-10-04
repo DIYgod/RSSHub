@@ -906,7 +906,9 @@ https://rsshub.app/threads/zuck/showAuthorInTitle=1&showAuthorInDesc=1&showQuote
 
 ### Channel with long videos and file support {#tg-channel}
 
-<Route author="synchrone" example="/tg/channel/telegram" path="/tg/channel/:name" paramsDesc={['Channel name, without @']}/>
+<Route author="synchrone" example="/telegram/channel/telegram" path="/telegram/channel/:name" paramsDesc={['Channel name, without @']}/>
+
+:::caution This route requires user-based `TELEGRAM_SESSION` which can be acquired
 
 ## TikTok {#tiktok}
 

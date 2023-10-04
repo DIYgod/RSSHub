@@ -923,7 +923,8 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   Telegram: [Bot application](https://telegram.org/blog/bot-revolution)
 
-    -   `TELEGRAM_TOKEN`: Telegram bot token
+    -   `TELEGRAM_TOKEN`: Telegram bot token for stickerpack feeds
+    -   `TELEGRAM_SESSION`: for video and file streaming, can be acquired by running `node lib/v2/telegram/tglib/client.js`
 
 -   Twitter: [Application creation](https://apps.twitter.com)
 
