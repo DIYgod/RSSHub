@@ -17361,6 +17361,32 @@
       }
     ]
   },
+  "metacritic.com": {
+    "_name": "Metacritic",
+    ".": [
+      {
+        "title": "Games",
+        "docs": "https://docs.rsshub.app/routes/new-media#metacritic-games",
+        "source": [
+          "/browse/game/:params*"
+        ]
+      },
+      {
+        "title": "Movies",
+        "docs": "https://docs.rsshub.app/routes/new-media#metacritic-movies",
+        "source": [
+          "/browse/movie/:params*"
+        ]
+      },
+      {
+        "title": "TV Shows",
+        "docs": "https://docs.rsshub.app/routes/new-media#metacritic-tv-shows",
+        "source": [
+          "/browse/tv/:params*"
+        ]
+      }
+    ]
+  },
   "meteor.today": {
     "_name": "Meteor",
     ".": [
