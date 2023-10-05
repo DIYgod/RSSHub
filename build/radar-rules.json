@@ -21994,6 +21994,17 @@
         ],
         "target": "/scau/yzb"
       }
+    ],
+    "yjsy": [
+      {
+        "title": "研究生院通知",
+        "docs": "https://docs.rsshub.app/routes/university#hua-nan-nong-ye-da-xue",
+        "source": [
+          "/208/list.htm",
+          "/"
+        ],
+        "target": "/scau/yjsy"
+      }
     ]
   },
   "science.org": {
