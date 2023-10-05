@@ -17,6 +17,12 @@
 
 <Route author="nwindz" example="/showroom/room/93401" path="/showroom/room/:id" paramsDesc={['直播间 id, 打开浏览器控制台，刷新页面，找到请求中的room_id参数']}/>
 
+## Twitch {#twitch}
+
+### Channel {#twitch-channel}
+
+<Route author="hoilc" path="/twitch/channel/:login" example="/twitch/channel/riotgames" paramsDesc={['Twitch Channel ID']} radar="1"/>
+
 ## V LIVE {#v-live}
 
 ### Board {#v-live-board}
