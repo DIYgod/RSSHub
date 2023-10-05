@@ -1,0 +1,19 @@
+{{ if image }}
+  <figure>
+    <img
+      src="{{ image.src }}"
+      {{ if image.alt }}
+        alt="{{ image.alt }}"
+      {{ /if }}
+    >
+  </figure>
+{{ /if }}
+
+{{ if description }}
+  <p>{{ description }}</p>
+{{ /if }}
+
+{{ if score }}
+  <span>Metascore:</span>
+  {{ score }}
+{{ /if }}

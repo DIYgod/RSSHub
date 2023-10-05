@@ -332,32 +332,6 @@ So the route is [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub
 
 <Route author="dearrrfish" example="/maxnews/dota2" path="maxnews/dota2" />
 
-## Metacritic {#metacritic}
-
-### Game Releases {#metacritic-game-releases}
-
-<Route author="HenryQW" example="/metacritic/release/switch/coming" path="/metacritic/release/:platform/:type?/:sort?" paramsDesc={['console platform', 'release type, default to `new`', 'sorting type, default to `date`']}>
-
-Platforms supported:
-
-| PS 4 | Xbox One | Switch | PC  | Wii U | 3DS | PS Vita | iOS |
-| ---- | -------- | ------ | --- | ----- | --- | ------- | --- |
-| ps4  | xboxone  | switch | pc  | wii-u | 3ds | vita    | ios |
-
-Release types, default to `new`:
-
-| New | Coming Soon | All |
-| --- | ----------- | --- |
-| new | coming      | all |
-
-Sorting types, default to `date`:
-
-| Date | Metacritic Score | User Score |
-| ---- | ---------------- | ---------- |
-| date | metascore        | userscore  |
-
-</Route>
-
 ## Minecraft {#minecraft}
 
 ### Java Game Update {#minecraft-java-game-update}
