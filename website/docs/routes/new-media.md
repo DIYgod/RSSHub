@@ -327,6 +327,17 @@ Category of news
 
 </Route>
 
+
+### Military - Finance News 财经 - 财经新闻 {#china.com-zhong-hua-wang-military-finance-news-cai-jing-cai-jing-xin-wen}
+
+<Route author="KingJem" example="/china/finance/" path="/china/finance/:category?/:limit?" paramsDesc={['Category of news. See the form below for details, default is suggest news.','limit default is 30']}>
+
+| 推荐      | TMT | 金融    | 地产    | 消费     | 医药  | 酒业  | IPO观察|
+| -------  | --- | ------- | ------ | ------- | ----- | ---- | ------|
+| tuijian  | TMT | jinrong | dichan | xiaofei | yiyao | wine | IPO |
+
+</Route>
+
 ## cnBeta.COM {#cnbeta.com}
 
 ### 头条资讯 {#cnbeta.com-tou-tiao-zi-xun}
