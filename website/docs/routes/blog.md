@@ -232,7 +232,7 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 ### Essays {#paul-graham-essays}
 
-<Route author="Maecenas" example="/blogs/paulgraham" path="/blogs/paulgraham"/>
+<Route author="Maecenas nczitzk" example="/paulgraham/articles" path="/paulgraham/articles" radar="1" rssbud="1"/>
 
 ## Phrack Magazine {#phrack-magazine}
 
