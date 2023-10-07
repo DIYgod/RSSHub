@@ -10987,6 +10987,11 @@
                         return `/patagonia/new-arrivals/${param}`;
                     }
                 } } ] },
+  "paulgraham.com":{ _name:"Paul Graham",
+    ".":[ { title:"Essays",
+        docs:"https://docs.rsshub.app/routes/blog#paulgraham-essays",
+        source:[ "/articles.html" ],
+        target:"/paulgraham/articles" } ] },
   "penguinrandomhouse.com":{ _name:"Penguin Random House",
     ".":[ { title:"Penguin Random House Book Lists",
         docs:"https://docs.rsshub.app/routes/reading#penguin-random-house",

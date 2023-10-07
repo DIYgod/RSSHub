@@ -4537,6 +4537,10 @@
     "/patagonia/patagonia/new-arrivals/:category": [
         "NavePnow"
     ],
+    "/paulgraham/articles": [
+        "Maecenas",
+        "nczitzk"
+    ],
     "/penguin-random-house/the-read-down": [
         "StevenRCE0"
     ],
@@ -7485,7 +7489,6 @@
     "/aliyun-kernel/index": [],
     "/vulture/:tag/:excludetags?": [],
     "/xinwenlianbo/index": [],
-    "/blogs/paulgraham": [],
     "/invisionapp/inside-design": [],
     "/mlog-club/topics/:node": [],
     "/mlog-club/projects": [],
