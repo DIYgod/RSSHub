@@ -464,7 +464,7 @@
     "/app-center/release/:user/:app/:distribution_group": [
         "Rongronggg9"
     ],
-    "/apple/apps/update/:country/:id": [
+    "/apple/apps/update/:country/:id/:platform?": [
         "EkkoG",
         "nczitzk"
     ],
