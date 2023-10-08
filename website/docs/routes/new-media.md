@@ -1861,8 +1861,6 @@ Member ID
 | 4         | 影山 優佳    |
 | 2         | 潮 紗理菜    |
 
-> Note: The personal blogs of the fourth-generation members have not been opened yet. The unified blog number is `2000`.
-
 </Route>
 
 ## Samsung {#samsung}
