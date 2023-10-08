@@ -15,7 +15,7 @@ jobs:
     timeout-minutes: 5
     steps:
       - name: Checkout the latest code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Automatic Rebase
@@ -47,7 +47,7 @@ jobs:
       issues: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2

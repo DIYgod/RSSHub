@@ -1,0 +1,9 @@
+{{ if image }}
+  <figure>
+    <img src="{{ image.src }}" alt="{{ image.alt }}">
+  </figure>
+{{ /if }}
+
+{{ if description }}
+  {{@ description }}
+{{ /if }}

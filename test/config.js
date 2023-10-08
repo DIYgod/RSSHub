@@ -73,6 +73,20 @@ describe('config', () => {
         delete process.env.MEDIUM_COOKIE_34;
     });
 
+    it('discourse config', () => {
+        process.env.DISCOURSE_CONFIG_12 = JSON.stringify({ a: 1 });
+        process.env.DISCOURSE_CONFIG_34 = JSON.stringify({ b: 2 });
+
+        const config = require('../lib/config').value;
+        expect(config.discourse.config).toMatchObject({
+            12: { a: 1 },
+            34: { b: 2 },
+        });
+
+        delete process.env.DISCOURSE_CONFIG_12;
+        delete process.env.DISCOURSE_CONFIG_34;
+    });
+
     it('no random ua', () => {
         process.env.NO_RANDOM_UA = true;
 
