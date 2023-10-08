@@ -330,17 +330,17 @@ Category of news
 
 ### Finance News 财经 - 财经新闻 {#china.com-zhong-hua-wang-finance-news-cai-jing-cai-jing-xin-wen}
 
-<Route author="KingJem" example="/china/finance/" path="/china/finance/:category?" paramsDesc={['Category of news. See the form below for details, default is suggest news.'] } radar="1">
+<Route author="KingJem" example="/china/finance" path="/china/finance/:category?" paramsDesc={['Category of news. See the form below for details, default is suggest news.']} radar="1">
 
 | 推荐      | TMT | 金融    | 地产    | 消费     | 医药  | 酒业  | IPO观察 |
 | -------  | --- | ------- | ------ | ------- | ----- | ---- | -------|
 | tuijian  | TMT | jinrong | dichan | xiaofei | yiyao | wine | IPO |
 
-</Route>
-
 > Note: The default news num is  `30`.
 
 > 注意:  默认新闻条数是 `30`。
+
+</Route>
 
 ## cnBeta.COM {#cnbeta.com}
 
