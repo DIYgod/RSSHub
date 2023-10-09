@@ -327,6 +327,21 @@ Category of news
 
 </Route>
 
+
+### Finance News 财经 - 财经新闻 {#china.com-zhong-hua-wang-finance-news-cai-jing-cai-jing-xin-wen}
+
+<Route author="KingJem" example="/china/finance" path="/china/finance/:category?" paramsDesc={['Category of news. See the form below for details, default is suggest news.']} radar="1">
+
+| 推荐      | TMT | 金融    | 地产    | 消费     | 医药  | 酒业  | IPO观察 |
+| -------  | --- | ------- | ------ | ------- | ----- | ---- | -------|
+| tuijian  | TMT | jinrong | dichan | xiaofei | yiyao | wine | IPO |
+
+> Note: The default news num is  `30`.
+
+> 注意:  默认新闻条数是 `30`。
+
+</Route>
+
 ## cnBeta.COM {#cnbeta.com}
 
 ### 头条资讯 {#cnbeta.com-tou-tiao-zi-xun}
@@ -1860,8 +1875,6 @@ Member ID
 | 5         | 加藤 史帆    |
 | 4         | 影山 優佳    |
 | 2         | 潮 紗理菜    |
-
-> Note: The personal blogs of the fourth-generation members have not been opened yet. The unified blog number is `2000`.
 
 </Route>
 
