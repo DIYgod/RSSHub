@@ -214,15 +214,16 @@ Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-c
 
 <Route author="jjlzg" example="/fjnews/jjnews" path="/fjnews/jjnews"/>
 
-## China Times 中時電子報 {#china-times-zhong-shi-dian-zi-bao}
+## China Times 中時新聞網 {#china-times-zhong-shi-xin-wen-wang}
 
-### News {#china-times-zhong-shi-dian-zi-bao-news}
+### News {#china-times-zhong-shi-xin-wen-wang-news}
 
-<Route author="luyuhuang" example="/chinatimes/realtimenews" path="/chinatimes/:caty" paramsDesc={['category']} radar="1" rssbud="1">
+<Route author="KingJem" example="/chinatimes/realtimenews" path="/chinatimes/:category" paramsDesc={['category']} radar="1" rssbud="1">
 
-| realtimenews   | politic | opinion | life | star    | money   | society | hottopic   | tube   | world | armament | chinese           | fashion | sports | technologynews  | travel | album   |
-| -------------- | ------- | ------- | ---- | ------- | ------- | ------- | ---------- | ------ | ----- | -------- | ----------------- | ------- | ------ | --------------- | ------ | ------- |
-| Real Time News | Politic | Opinion | Life | Showbiz | Finance | Society | Hot Topics | Videos | World | Military | Mainland & Taiwan | Fashion | Sports | Technology News | Travel | Columns |
+| realtimenews | politic | opinion | life | star | money  | society | hottopic | health | world | armament | chinese | sports | technologynews | fortune | tube | taiwan |
+| :----------: | :-----: | :-----: | :--: | :--: | :----: | :-----: | :------: | :----: | :---: | :------: | :-----: | :----: | :------------: | :-----: | :--: | :----: |
+|     即時      |  政治   |  言論    | 生活  | 娛樂  | 財經   |   社會   |   網推   |   健康  |  國際  |   軍事   |   兩岸   |   體育  |      科技      |   運勢   |  有影 |  寶島  |
+
 
 </Route>
 
