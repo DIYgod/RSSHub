@@ -239,8 +239,8 @@ devDependencies:
     specifier: 2.0.4
     version: 2.0.4
   '@types/koa-favicon':
-    specifier: 2.0.22
-    version: 2.0.22
+    specifier: 2.1.1
+    version: 2.1.1
   '@types/koa-mount':
     specifier: 4.0.3
     version: 4.0.3
@@ -1165,7 +1165,7 @@ packages:
       '@babel/runtime-corejs2': 7.22.11
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.29.4
@@ -1568,8 +1568,8 @@ packages:
       '@types/koa': 2.13.9
     dev: true
 
-  /@types/koa-favicon@2.0.22:
-    resolution: {integrity: sha512-oyLEtX7JgJ6Fm3luqcuKi6qjTBHWMwS9dQblxkIPgtQiHEyfYm99ow6igqI440yV+k61S+ubnbmv1q0kZWyV/A==}
+  /@types/koa-favicon@2.1.1:
+    resolution: {integrity: sha512-6+Ex6H8CJKH/hAwPHugkJgFtiGfoN7lfj7znPZ6ov0T0WPtgYT0mn3q6B/BYlA3WlN0OpHxnpd3gDI+9xeAJAA==}
     dependencies:
       '@types/koa': 2.13.9
     dev: true
@@ -8152,8 +8152,8 @@ packages:
     resolution: {integrity: sha512-V50KMwwzqJV0NpZIZFwfOD5/lyny3WlSzRiXgA0G7VUnRlqttta1L6UQIHzd6EuBY/cHGfwTIck7w1yH6Q5zUw==}
     dev: true
 
-  github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     name: difflib
     version: 0.2.6
     dependencies:

@@ -162,7 +162,7 @@
     "@types/json-bigint": "1.0.2",
     "@types/koa": "2.13.9",
     "@types/koa-basic-auth": "2.0.4",
-    "@types/koa-favicon": "2.0.22",
+    "@types/koa-favicon": "2.1.1",
     "@types/koa-mount": "4.0.3",
     "@types/koa-static": "4.0.2",
     "@types/koa__router": "12.0.1",
