@@ -25,7 +25,7 @@
     "clsx": "^2.0.0",
     "markdown-it": "^13.0.2",
     "meilisearch-docsearch": "^0.4.7",
-    "pinyin-pro": "3.16.7",
+    "pinyin-pro": "3.17.0",
     "prism-react-renderer": "^2.1.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
