@@ -2827,11 +2827,8 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生招生网招考信息 {#shang-hai-jiao-tong-da-xue-yan-jiu-sheng-zhao-sheng-wang-zhao-kao-xin-xi}
 
-<Route author="stdrc" example="/sjtu/yzb/zkxx/sszs" path="/sjtu/yzb/zkxx/:type" paramsDesc={['无默认选项']} radar="1">
+<Route author="stdrc" example="/sjtu/yzb/index/zkxx/sszs" path="/sjtu/yzb/:type*" paramsDesc={['无默认选项']} radar="1">
 
-| 博士招生 | 硕士招生 | 港澳台招生 | 考点信息 | 院系动态 |
-| -------- | -------- | ---------- | -------- | -------- |
-| bszs     | sszs     | gatzs      | kdxx     | yxdt     |
 
 </Route>
 
