@@ -10,51 +10,17 @@
 
 ### Channel & Topic {#abc-news-channel-topic}
 
-<Route author="nczitzk" example="/abc" path="/abc/:id?" paramsDesc={['id, can be found in the Channel or Topic page, can also be filled in the `documentId` in the source code of the page, see below, Just In by default']}>
+<Route author="nczitzk" example="/abc" path="/abc/:category?" paramsDesc={['Category, can be found in the URL, can also be filled in with the `documentId` in the source code of the page, `news/justin` as **Just In** by default']}>
 
 :::tip
 
 All Topics in [Topic Library](https://abc.net.au/news/topics) are supported, you can fill in the field after `topic` in its URL, or fill in the `documentId`.
 
-For example, the URL for [Computers and Technology](https://www.abc.net.au/news/topic/computers-and-technology) is <https://www.abc.net.au/news/topic/computers-and-technology>, the field after `topic` is `computers-and-technology`, and the `documentId` of the Topic is `2302`, so the route is [/abc/computers-and-technology](https://rsshub.app/abc/computers-and-technology) and [/abc/2302](https://rsshub.app/abc/2302).
+For example, the URL for [Computer Science](https://www.abc.net.au/news/topic/computer-science) is <https://www.abc.net.au/news/topic/computer-science>, the `category` is `news/topic/computer-science`, and the `documentId` of the Topic is `2302`, so the route is [/abc/news/topic/computer-science](https://rsshub.app/abc/news/topic/computer-science) and [/abc/2302](https://rsshub.app/abc/2302).
 
 The supported channels are all listed in the table below. For other channels, please find the `documentId` in the source code of the channel page and fill it in as above.
 
 :::
-
-The following are some of the supported Channel and Topic ids.
-
-| Just In | Coronavirus | Politics | World |
-| ------- | ----------- | -------- | ----- |
-| justin  | coronavirus | politics | world |
-
-| Asia Pacific | Business | Analysis & Opinion   | Sport |
-| ------------ | -------- | -------------------- | ----- |
-| asia-pacific | business | analysis-and-opinion | sport |
-
-| AFL | Rugby League | Rugby Union | Football |
-| --- | ------------ | ----------- | -------- |
-| afl | rugbyleague  | rugbyunion  | football |
-
-| Cricket | Science | Astronomy (Space) | Computers and Technology |
-| ------- | ------- | ----------------- | ------------------------ |
-| cricket | science | astronomy-space   | computers-and-technology |
-
-| Environment | Archaeology | Health | Exercise and Fitness |
-| ----------- | ----------- | ------ | -------------------- |
-| environment | archaeology | health | exercise-and-fitness |
-
-| Pharmaceuticals | Mental Health | Diet and Nutrition | Arts & Culture |
-| --------------- | ------------- | ------------------ | -------------- |
-| pharmaceuticals | mental-health | diet-and-nutrition | arts-culture   |
-
-| Fact Check | ABC 中文 | 澳洲时政           | 聚焦中港台     |
-| ---------- | -------- | ------------------ | -------------- |
-| factcheck  | chinese  | australia-politics | focus-on-china |
-
-| 观点与分析              | 澳洲华人             | 解读澳洲          | Berita dalam Bahasa Indonesia | Tok Pisin |
-| ----------------------- | -------------------- | ----------------- | ----------------------------- | --------- |
-| analysis-and-opinion-zh | chinese-in-australia | curious-australia | indonesian                    | tok-pisin |
 
 </Route>
 

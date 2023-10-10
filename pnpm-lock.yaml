@@ -18,8 +18,8 @@ dependencies:
     specifier: 7.73.0
     version: 7.73.0
   '@tonyrl/rand-user-agent':
-    specifier: 2.0.33
-    version: 2.0.33
+    specifier: 2.0.34
+    version: 2.0.34
   aes-js:
     specifier: 3.1.2
     version: 3.1.2
@@ -195,8 +195,8 @@ dependencies:
     specifier: 1.15.1
     version: 1.15.1
   winston:
-    specifier: 3.10.0
-    version: 3.10.0
+    specifier: 3.11.0
+    version: 3.11.0
 
 devDependencies:
   '@microsoft/eslint-formatter-sarif':
@@ -239,8 +239,8 @@ devDependencies:
     specifier: 2.0.4
     version: 2.0.4
   '@types/koa-favicon':
-    specifier: 2.0.22
-    version: 2.0.22
+    specifier: 2.1.1
+    version: 2.1.1
   '@types/koa-mount':
     specifier: 4.0.3
     version: 4.0.3
@@ -308,8 +308,8 @@ devDependencies:
     specifier: 5.0.0
     version: 5.0.0(@types/eslint@8.44.3)(eslint-config-prettier@9.0.0)(eslint@8.51.0)(prettier@3.0.3)
   eslint-plugin-yml:
-    specifier: 1.9.0
-    version: 1.9.0(eslint@8.51.0)
+    specifier: 1.10.0
+    version: 1.10.0(eslint@8.51.0)
   fs-extra:
     specifier: 11.1.1
     version: 11.1.1
@@ -728,6 +728,11 @@ packages:
 
   /@colors/colors@1.5.0:
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
+    engines: {node: '>=0.1.90'}
+    dev: false
+
+  /@colors/colors@1.6.0:
+    resolution: {integrity: sha512-Ir+AOibqzrIsL6ajt3Rz3LskB7OiMVHqltZmspbW/TJuTVuyOMirVqAkjfY6JISiLHgyNqicAC8AyHHGzNd/dA==}
     engines: {node: '>=0.1.90'}
     dev: false
 
@@ -1321,8 +1326,8 @@ packages:
       defer-to-connect: 2.0.1
     dev: false
 
-  /@tonyrl/rand-user-agent@2.0.33:
-    resolution: {integrity: sha512-jtOGOYyfvbpQvI5StCa3Q0niqYcIfwZcsop57ihLP0skJltxL9kZaoI9IjYvs9mKiVmsHn0Yn8Sb7/mGDKSMfQ==}
+  /@tonyrl/rand-user-agent@2.0.34:
+    resolution: {integrity: sha512-AgxzBO9wCnrb2ev9qoJfNyd2VOKeRSAgF8onqP6UZNLNjjoIB07LSw2XnlJgoUFJw4KpOjCR+pTKAgE/lj7YlA==}
     engines: {node: '>=14.16'}
     dev: false
 
@@ -1568,8 +1573,8 @@ packages:
       '@types/koa': 2.13.9
     dev: true
 
-  /@types/koa-favicon@2.0.22:
-    resolution: {integrity: sha512-oyLEtX7JgJ6Fm3luqcuKi6qjTBHWMwS9dQblxkIPgtQiHEyfYm99ow6igqI440yV+k61S+ubnbmv1q0kZWyV/A==}
+  /@types/koa-favicon@2.1.1:
+    resolution: {integrity: sha512-6+Ex6H8CJKH/hAwPHugkJgFtiGfoN7lfj7znPZ6ov0T0WPtgYT0mn3q6B/BYlA3WlN0OpHxnpd3gDI+9xeAJAA==}
     dependencies:
       '@types/koa': 2.13.9
     dev: true
@@ -3162,6 +3167,15 @@ packages:
       source-map: 0.6.1
     dev: false
 
+  /eslint-compat-utils@0.1.2(eslint@8.51.0):
+    resolution: {integrity: sha512-Jia4JDldWnFNIru1Ehx1H5s9/yxiRHY/TimCuUc0jNexew3cF1gI6CYZil1ociakfWO3rRqFjl1mskBblB3RYg==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      eslint: '>=6.0.0'
+    dependencies:
+      eslint: 8.51.0
+    dev: true
+
   /eslint-config-prettier@9.0.0(eslint@8.51.0):
     resolution: {integrity: sha512-IcJsTkJae2S35pRsRAwoCE+925rJJStOdkKnLVgtE+tEpqU0EVVM7OqrwxqgptKdX29NUwC82I5pXsGFIgSevw==}
     hasBin: true
@@ -3222,14 +3236,15 @@ packages:
       synckit: 0.8.5
     dev: true
 
-  /eslint-plugin-yml@1.9.0(eslint@8.51.0):
-    resolution: {integrity: sha512-ayuC57WyVQ5+QZ02y62GiB//5+zsiyzUGxUX/mrhLni+jfsKA4KoITjkbR65iUdjjhWpyTJHPcAIFLKQIOwgsw==}
+  /eslint-plugin-yml@1.10.0(eslint@8.51.0):
+    resolution: {integrity: sha512-53SUwuNDna97lVk38hL/5++WXDuugPM9SUQ1T645R0EHMRCdBIIxGye/oOX2qO3FQ7aImxaUZJU/ju+NMUBrLQ==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: '>=6.0.0'
     dependencies:
       debug: 4.3.4
       eslint: 8.51.0
+      eslint-compat-utils: 0.1.2(eslint@8.51.0)
       lodash: 4.17.21
       natural-compare: 1.4.0
       yaml-eslint-parser: 1.2.2
@@ -7957,11 +7972,11 @@ packages:
       triple-beam: 1.4.1
     dev: false
 
-  /winston@3.10.0:
-    resolution: {integrity: sha512-nT6SIDaE9B7ZRO0u3UvdrimG0HkB7dSTAgInQnNR2SOPJ4bvq5q79+pXLftKmP52lJGW15+H5MCK0nM9D3KB/g==}
+  /winston@3.11.0:
+    resolution: {integrity: sha512-L3yR6/MzZAOl0DsysUXHVjOwv8mKZ71TrA/41EIduGpOOV5LQVodqN+QdQ6BS6PJ/RdIshZhq84P/fStEZkk7g==}
     engines: {node: '>= 12.0.0'}
     dependencies:
-      '@colors/colors': 1.5.0
+      '@colors/colors': 1.6.0
       '@dabh/diagnostics': 2.0.3
       async: 3.2.4
       is-stream: 2.0.1
