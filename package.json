@@ -152,7 +152,7 @@
     "@microsoft/eslint-formatter-sarif": "3.0.0",
     "@types/aes-js": "3.1.2",
     "@types/crypto-js": "4.1.2",
-    "@types/eslint": "8.44.3",
+    "@types/eslint": "8.44.4",
     "@types/eslint-config-prettier": "6.11.1",
     "@types/etag": "1.8.1",
     "@types/fs-extra": "11.0.2",
