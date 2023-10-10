@@ -188,7 +188,7 @@ Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-c
 
 | realtimenews | politic | opinion | life | star | money  | society | hottopic | health | world | armament | chinese | sports | technologynews | fortune | tube | taiwan |
 | :----------: | :-----: | :-----: | :--: | :--: | :----: | :-----: | :------: | :----: | :---: | :------: | :-----: | :----: | :------------: | :-----: | :--: | :----: |
-|     即時      |  政治   |  言論    | 生活  | 娛樂  | 財經   |   社會   |   網推   |   健康  |  國際  |   軍事   |   兩岸   |   體育  |      科技      |   運勢   |  有影 |  寶島  |
+|    即時       |  政治   |  言論    | 生活  | 娛樂  | 財經   |   社會   |   網推   |   健康  |  國際  |   軍事   |   兩岸   |   體育  |      科技      |   運勢   |  有影 |  寶島  |
 
 
 </Route>
