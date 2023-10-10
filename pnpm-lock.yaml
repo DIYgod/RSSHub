@@ -239,8 +239,8 @@ devDependencies:
     specifier: 2.0.4
     version: 2.0.4
   '@types/koa-favicon':
-    specifier: 2.0.22
-    version: 2.0.22
+    specifier: 2.1.1
+    version: 2.1.1
   '@types/koa-mount':
     specifier: 4.0.3
     version: 4.0.3
@@ -1568,8 +1568,8 @@ packages:
       '@types/koa': 2.13.9
     dev: true
 
-  /@types/koa-favicon@2.0.22:
-    resolution: {integrity: sha512-oyLEtX7JgJ6Fm3luqcuKi6qjTBHWMwS9dQblxkIPgtQiHEyfYm99ow6igqI440yV+k61S+ubnbmv1q0kZWyV/A==}
+  /@types/koa-favicon@2.1.1:
+    resolution: {integrity: sha512-6+Ex6H8CJKH/hAwPHugkJgFtiGfoN7lfj7znPZ6ov0T0WPtgYT0mn3q6B/BYlA3WlN0OpHxnpd3gDI+9xeAJAA==}
     dependencies:
       '@types/koa': 2.13.9
     dev: true
