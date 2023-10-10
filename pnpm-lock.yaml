@@ -18,8 +18,8 @@ dependencies:
     specifier: 7.73.0
     version: 7.73.0
   '@tonyrl/rand-user-agent':
-    specifier: 2.0.33
-    version: 2.0.33
+    specifier: 2.0.34
+    version: 2.0.34
   aes-js:
     specifier: 3.1.2
     version: 3.1.2
@@ -308,8 +308,8 @@ devDependencies:
     specifier: 5.0.0
     version: 5.0.0(@types/eslint@8.44.3)(eslint-config-prettier@9.0.0)(eslint@8.51.0)(prettier@3.0.3)
   eslint-plugin-yml:
-    specifier: 1.9.0
-    version: 1.9.0(eslint@8.51.0)
+    specifier: 1.10.0
+    version: 1.10.0(eslint@8.51.0)
   fs-extra:
     specifier: 11.1.1
     version: 11.1.1
@@ -1321,8 +1321,8 @@ packages:
       defer-to-connect: 2.0.1
     dev: false
 
-  /@tonyrl/rand-user-agent@2.0.33:
-    resolution: {integrity: sha512-jtOGOYyfvbpQvI5StCa3Q0niqYcIfwZcsop57ihLP0skJltxL9kZaoI9IjYvs9mKiVmsHn0Yn8Sb7/mGDKSMfQ==}
+  /@tonyrl/rand-user-agent@2.0.34:
+    resolution: {integrity: sha512-AgxzBO9wCnrb2ev9qoJfNyd2VOKeRSAgF8onqP6UZNLNjjoIB07LSw2XnlJgoUFJw4KpOjCR+pTKAgE/lj7YlA==}
     engines: {node: '>=14.16'}
     dev: false
 
@@ -3162,6 +3162,15 @@ packages:
       source-map: 0.6.1
     dev: false
 
+  /eslint-compat-utils@0.1.2(eslint@8.51.0):
+    resolution: {integrity: sha512-Jia4JDldWnFNIru1Ehx1H5s9/yxiRHY/TimCuUc0jNexew3cF1gI6CYZil1ociakfWO3rRqFjl1mskBblB3RYg==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      eslint: '>=6.0.0'
+    dependencies:
+      eslint: 8.51.0
+    dev: true
+
   /eslint-config-prettier@9.0.0(eslint@8.51.0):
     resolution: {integrity: sha512-IcJsTkJae2S35pRsRAwoCE+925rJJStOdkKnLVgtE+tEpqU0EVVM7OqrwxqgptKdX29NUwC82I5pXsGFIgSevw==}
     hasBin: true
@@ -3222,14 +3231,15 @@ packages:
       synckit: 0.8.5
     dev: true
 
-  /eslint-plugin-yml@1.9.0(eslint@8.51.0):
-    resolution: {integrity: sha512-ayuC57WyVQ5+QZ02y62GiB//5+zsiyzUGxUX/mrhLni+jfsKA4KoITjkbR65iUdjjhWpyTJHPcAIFLKQIOwgsw==}
+  /eslint-plugin-yml@1.10.0(eslint@8.51.0):
+    resolution: {integrity: sha512-53SUwuNDna97lVk38hL/5++WXDuugPM9SUQ1T645R0EHMRCdBIIxGye/oOX2qO3FQ7aImxaUZJU/ju+NMUBrLQ==}
     engines: {node: ^14.17.0 || >=16.0.0}
     peerDependencies:
       eslint: '>=6.0.0'
     dependencies:
       debug: 4.3.4
       eslint: 8.51.0
+      eslint-compat-utils: 0.1.2(eslint@8.51.0)
       lodash: 4.17.21
       natural-compare: 1.4.0
       yaml-eslint-parser: 1.2.2
