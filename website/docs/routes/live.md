@@ -19,9 +19,21 @@
 
 ## Twitch {#twitch}
 
-### Channel {#twitch-channel}
+### Live {#twitch-live}
 
-<Route author="hoilc" path="/twitch/channel/:login" example="/twitch/channel/riotgames" paramsDesc={['Twitch Channel ID']} radar="1"/>
+<Route author="hoilc" path="/twitch/live/:login" example="/twitch/live/riotgames" paramsDesc={['Twitch username']} radar="1"/>
+
+### Video {#twitch-video}
+
+<Route author="hoilc" path="/video/:login/:filter?" example="/twitch/video/riotgames/highlights" paramsDesc={['Twitch username', 'Video type, Default to all']} radar="1"/>
+
+| archive | highlights | all     |
+| ---- | ---- | -------- |
+| Recent broadcasts | Recent highlights and uploads   | All videos |
+
+### Schedule {#twitch-schedule}
+
+<Route author="hoilc" path="/twitch/schedule/:login" example="/twitch/schedule/riotgames" paramsDesc={['Twitch username']} radar="1"/>
 
 ## V LIVE {#v-live}
 
