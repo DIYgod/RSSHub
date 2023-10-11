@@ -23,7 +23,7 @@
 
 <Route author="hoilc" path="/twitch/live/:login" example="/twitch/live/riotgames" paramsDesc={['Twitch username']} radar="1"/>
 
-### Video {#twitch-video}
+### Channel Video {#twitch-channel-video}
 
 <Route author="hoilc" path="/video/:login/:filter?" example="/twitch/video/riotgames/highlights" paramsDesc={['Twitch username', 'Video type, Default to all']} radar="1"/>
 
@@ -31,7 +31,7 @@
 | ---- | ---- | -------- |
 | Recent broadcasts | Recent highlights and uploads   | All videos |
 
-### Schedule {#twitch-schedule}
+### Stream Schedule {#twitch-stream-schedule}
 
 <Route author="hoilc" path="/twitch/schedule/:login" example="/twitch/schedule/riotgames" paramsDesc={['Twitch username']} radar="1"/>
 
