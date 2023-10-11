@@ -184,7 +184,7 @@
     "eslint": "8.51.0",
     "eslint-config-prettier": "9.0.0",
     "eslint-plugin-n": "16.1.0",
-    "eslint-plugin-prettier": "5.0.0",
+    "eslint-plugin-prettier": "5.0.1",
     "eslint-plugin-yml": "1.10.0",
     "fs-extra": "11.1.1",
     "husky": "8.0.3",
