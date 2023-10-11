@@ -3101,28 +3101,52 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 新闻网 {#wu-han-da-xue-xin-wen-wang}
 
-<Route author="SChen1024" example="/whu/news/wdzx/wdyw" path="/whu/news/:type*" paramsDesc={['分类，默认为 `wdyw`，具体参数见下表']} radar="1">
+<Route author="SChen1024 nczitzk" example="/whu/news" path="/whu/hyxt/:category?" paramsDesc={['分类，见下表，默认为 `wdzx/wdyw`， 即 **武大要闻**']} radar="1" rssbud="1">
 
-注意：除了 `kydt` 代表学术动态，其余页面均是拼音首字母小写.
+| 武大资讯  | 武大要闻  | 综合新闻  | 合作交流  | 一线传真  |
+| --------- | --------- | --------- | --------- | --------- |
+| wdzx/wdyw | wdzx/wdyw | wdzx/zhxw | wdzx/hzjl | wdzx/yxcz |
 
-|  内容   | 参数    |
-| :-----: | :-----:   |
-| 武大要闻 | wdzx/wdyw |
-| 媒体武大 | mtwd      |
-| 专题报道 | ztbd      |
-| 珞珈人物 | ljrw      |
-| 合作交流 | wdzx/hzjl |
-| 缤纷校园 | xywh/bfxy |
-| 校友之声 | xywh/xyzs |
-| 珞珈论坛 | ljlt      |
-| 新闻热线 | xwrx      |
-| 头条新闻 | ttxw      |
-| 综合新闻 | wdzx/zhxw |
-| 珞珈影像 | stkj/ljyx |
-| 学术动态 | kydt      |
-| 珞珈副刊 | xywh/ljfk |
-| 校史钩沉 | xywh/xsgc |
-| 来稿选登 | lgxd      |
+<details>
+  <summary>更多分类</summary>
+
+  #### 学术动态
+
+  | 学术动态 |
+  | -------- |
+  | kydt     |
+
+  #### 校园文化
+
+  | 缤纷校园  | 校友之声  | 珞珈副刊  | 校史钩沉  |
+  | --------- | --------- | --------- | --------- |
+  | xywh/bfxy | xywh/xyzs | xywh/ljfk | xywh/xsgc |
+
+  #### 专题报道
+
+  | 专题报道 | 主题教育  | 顶天立地建学科 | 学习在线  | 记者调查  | 校庆征文 我与武大 |
+  | -------- | --------- | -------------- | --------- | --------- | ----------------- |
+  | ztbd     | ztbd/ztjy | ztbd/dtldjxk   | ztbd/xxzx | ztbd/jzdc | ztbd/xqzw_wywd    |
+
+  #### 媒体武大
+
+  | 媒体武大 |
+  | -------- |
+  | mtwd     |
+
+  #### 珞珈人物
+
+  | 珞珈人物 |
+  | -------- |
+  | ljrw     |
+
+  #### 视听空间
+
+  | 视听空间  | 珞珈影像  | 武大视频  |
+  | --------- | --------- | --------- |
+  | stkj/ljyx | stkj/ljyx | stkj/wdsp |
+
+</details>
 
 </Route>
 
