@@ -3101,7 +3101,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 新闻网 {#wu-han-da-xue-xin-wen-wang}
 
-<Route author="SChen1024 nczitzk" example="/whu/news" path="/whu/hyxt/:category?" paramsDesc={['分类，见下表，默认为 `wdzx/wdyw`， 即 **武大要闻**']} radar="1" rssbud="1">
+<Route author="SChen1024 nczitzk" example="/whu/news" path="/whu/news/:category?" paramsDesc={['分类，见下表，默认为 `wdzx/wdyw`， 即 **武大要闻**']} radar="1" rssbud="1">
 
 | 武大资讯  | 武大要闻  | 综合新闻  | 合作交流  | 一线传真  |
 | --------- | --------- | --------- | --------- | --------- |
