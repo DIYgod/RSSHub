@@ -3110,41 +3110,41 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 <details>
   <summary>更多分类</summary>
 
-  #### 学术动态
+#### 学术动态 {#wu-han-da-xue-xin-wen-wang-xue-shu-dong-tai}
 
-  | 学术动态 |
-  | -------- |
-  | kydt     |
+| 学术动态 |
+| -------- |
+| kydt     |
 
-  #### 校园文化
+#### 校园文化 {#wu-han-da-xue-xin-wen-wang-xiao-yuan-wen-hua}
 
-  | 缤纷校园  | 校友之声  | 珞珈副刊  | 校史钩沉  |
-  | --------- | --------- | --------- | --------- |
-  | xywh/bfxy | xywh/xyzs | xywh/ljfk | xywh/xsgc |
+| 缤纷校园  | 校友之声  | 珞珈副刊  | 校史钩沉  |
+| --------- | --------- | --------- | --------- |
+| xywh/bfxy | xywh/xyzs | xywh/ljfk | xywh/xsgc |
 
-  #### 专题报道
+#### 专题报道 {#wu-han-da-xue-xin-wen-wang-zhuan-ti-bao-dao}
 
-  | 专题报道 | 主题教育  | 顶天立地建学科 | 学习在线  | 记者调查  | 校庆征文 我与武大 |
-  | -------- | --------- | -------------- | --------- | --------- | ----------------- |
-  | ztbd     | ztbd/ztjy | ztbd/dtldjxk   | ztbd/xxzx | ztbd/jzdc | ztbd/xqzw_wywd    |
+| 专题报道 | 主题教育  | 顶天立地建学科 | 学习在线  | 记者调查  | 校庆征文 我与武大 |
+| -------- | --------- | -------------- | --------- | --------- | ----------------- |
+| ztbd     | ztbd/ztjy | ztbd/dtldjxk   | ztbd/xxzx | ztbd/jzdc | ztbd/xqzw_wywd    |
 
-  #### 媒体武大
+#### 媒体武大 {#wu-han-da-xue-xin-wen-wang-mei-ti-wu-da}
 
-  | 媒体武大 |
-  | -------- |
-  | mtwd     |
+| 媒体武大 |
+| -------- |
+| mtwd     |
 
-  #### 珞珈人物
+#### 珞珈人物 {#wu-han-da-xue-xin-wen-wang-luo-jia-ren-wu}
 
-  | 珞珈人物 |
-  | -------- |
-  | ljrw     |
+| 珞珈人物 |
+| -------- |
+| ljrw     |
 
-  #### 视听空间
+#### 视听空间 {#wu-han-da-xue-xin-wen-wang-shi-ting-kong-jian}
 
-  | 视听空间  | 珞珈影像  | 武大视频  |
-  | --------- | --------- | --------- |
-  | stkj/ljyx | stkj/ljyx | stkj/wdsp |
+| 视听空间  | 珞珈影像  | 武大视频  |
+| --------- | --------- | --------- |
+| stkj/ljyx | stkj/ljyx | stkj/wdsp |
 
 </details>
 
