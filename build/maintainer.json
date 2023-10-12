@@ -6382,8 +6382,9 @@
     "/whu/gs/:type?": [
         "Delreyaa"
     ],
-    "/whu/news/:type*": [
-        "SChen1024"
+    "/whu/news/:category?": [
+        "SChen1024",
+        "nczitzk"
     ],
     "/wikinews/latest": [
         "KotoriK"
