@@ -1555,20 +1555,6 @@ When `mediaType` is `movie`, `sheet` should be:
 
 <Route author="imgss" example="/dytt" path="/dytt" supportBT="1"/>
 
-## 法国国际广播电台 {#fa-guo-guo-ji-guang-bo-dian-tai}
-
-### 滚动新闻 {#fa-guo-guo-ji-guang-bo-dian-tai-gun-dong-xin-wen}
-
-<Route author="nczitzk" example="/rfi/news" path="/rfi/news/:lang?" paramsDesc={['语言，默认为cn']}>
-
-**lang**
-
-| en | cn | fr |
-| --- | --- | --- |
-| 英文 | 中文 | 法文 |
-
-</Route>
-
 ## 高清电台 {#gao-qing-dian-tai}
 
 ### 最新电影 {#gao-qing-dian-tai-zui-xin-dian-ying}
