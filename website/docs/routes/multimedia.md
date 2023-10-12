@@ -567,6 +567,12 @@ If you subscribe to [火曜ワイド「境界トラブル解決ラジオ！] (ht
 
 ## JavBus {#javbus}
 
+:::warning
+
+Requests from non-Asia areas will be redirected to login page.
+
+:::
+
 :::tip Language
 
 You can change the language of each route to the languages listed below.
