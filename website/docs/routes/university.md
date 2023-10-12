@@ -3160,6 +3160,51 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
+### 弘毅学堂 {#wu-han-da-xue-hong-yi-xue-tang}
+
+<Route author="nczitzk" example="/whu/hyxt" path="/whu/hyxt/:category?" paramsDesc={['分类，见下表，默认为 `xwdt`， 即 **新闻动态**']} radar="1" rssbud="1">
+
+| 新闻动态 | 通知公告 | 学子风采 | 学术论坛 |
+| -------- | -------- | -------- | -------- |
+| xwdt     | tzgg     | xzfc     | xslt     |
+
+<details>
+  <summary>更多分类</summary>
+
+#### 学堂简报 {#wu-han-da-xue-hong-yi-xue-tang-xue-tang-jian-bao}
+
+| 学堂简报 |
+| -------- |
+| xtjb     |
+
+#### 人才培养 {#wu-han-da-xue-hong-yi-xue-tang-ren-cai-pei-yang}
+
+| 人才培养 | 招生工作  | 培养方案  | 科研训练  | 毕业去向  | 学习资源  |
+| -------- | --------- | --------- | --------- | --------- | --------- |
+| rcpy     | rcpy/zsgz | rcpy/pyfa | rcpy/kyxl | rcpy/byqx | rcpy/xxzy |
+
+#### 学生工作 {#wu-han-da-xue-hong-yi-xue-tang-xue-sheng-gong-zuo}
+
+| 学生工作 | 党团建设  | 学术交流  | 书院生活  | 奖助体系  | 事务服务  |
+| -------- | --------- | --------- | --------- | --------- | --------- |
+| xsgz     | xsgz/dtjs | xsgz/xsjl | xsgz/sysh | xsgz/jztx | xsgz/swfw |
+
+#### 国际合作 {#wu-han-da-xue-hong-yi-xue-tang-guo-ji-he-zuo}
+
+| 国际合作 | 国际交流  | 交流分享  |
+| -------- | --------- | --------- |
+| gjhz     | gjhz/gjjl | gjhz/jlfx |
+
+#### 校友风采 {#wu-han-da-xue-hong-yi-xue-tang-xiao-you-feng-cai}
+
+| 校友风采 |
+| -------- |
+| xyfc     |
+
+</details>
+
+</Route>
+
 ## 武汉纺织大学 {#wu-han-fang-zhi-da-xue}
 
 ### 信息门户公告 {#wu-han-fang-zhi-da-xue-xin-xi-men-hu-gong-gao}
