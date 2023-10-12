@@ -4977,7 +4977,7 @@
     "/rfa/:language?/:channel?/:subChannel?": [
         "zphw"
     ],
-    "/rfi/news/:lang?": [
+    "/rfi/:path*": [
         "nczitzk"
     ],
     "/right/forum/:id?": [
