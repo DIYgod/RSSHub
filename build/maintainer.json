@@ -5956,6 +5956,15 @@
     "/tvb/news/:category?/:language?": [
         "nczitzk"
     ],
+    "/twitch/live/:login": [
+        "hoilc"
+    ],
+    "/twitch/video/:login/:filter?": [
+        "hoilc"
+    ],
+    "/twitch/schedule/:login": [
+        "hoilc"
+    ],
     "/twitter/collection/:uid/:collectionId/:routeParams?": [
         "TonyRL"
     ],
