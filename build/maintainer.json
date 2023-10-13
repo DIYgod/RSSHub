@@ -1006,6 +1006,9 @@
     "/caixin/:column/:category": [
         "idealclover"
     ],
+    "/caixinglobal/latest": [
+        "TonyRL"
+    ],
     "/camchina/:id?": [
         "nczitzk"
     ],
