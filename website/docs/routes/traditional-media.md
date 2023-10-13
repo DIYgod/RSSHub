@@ -129,6 +129,12 @@ Refer to [Boston.com's feed page](https://www.boston.com/rss-feeds) for tags. Fo
 
 </Route>
 
+## Caixin Global {#caixin-global}
+
+### Latest News {#caixin-global-latest-news}
+
+<Route author="TonyRL" example="/caixinglobal/latest" path="/caixinglobal/latest" radar="1" />
+
 ## Canadian Broadcasting Corporation {#canadian-broadcasting-corporation}
 
 ### News {#canadian-broadcasting-corporation-news}
