@@ -3101,28 +3101,52 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 新闻网 {#wu-han-da-xue-xin-wen-wang}
 
-<Route author="SChen1024" example="/whu/news/wdzx/wdyw" path="/whu/news/:type*" paramsDesc={['分类，默认为 `wdyw`，具体参数见下表']} radar="1">
+<Route author="SChen1024 nczitzk" example="/whu/news" path="/whu/news/:category?" paramsDesc={['分类，见下表，默认为 `wdzx/wdyw`， 即 **武大要闻**']} radar="1" rssbud="1">
 
-注意：除了 `kydt` 代表学术动态，其余页面均是拼音首字母小写.
+| 武大资讯  | 武大要闻  | 综合新闻  | 合作交流  | 一线传真  |
+| --------- | --------- | --------- | --------- | --------- |
+| wdzx/wdyw | wdzx/wdyw | wdzx/zhxw | wdzx/hzjl | wdzx/yxcz |
 
-|  内容   | 参数    |
-| :-----: | :-----:   |
-| 武大要闻 | wdzx/wdyw |
-| 媒体武大 | mtwd      |
-| 专题报道 | ztbd      |
-| 珞珈人物 | ljrw      |
-| 合作交流 | wdzx/hzjl |
-| 缤纷校园 | xywh/bfxy |
-| 校友之声 | xywh/xyzs |
-| 珞珈论坛 | ljlt      |
-| 新闻热线 | xwrx      |
-| 头条新闻 | ttxw      |
-| 综合新闻 | wdzx/zhxw |
-| 珞珈影像 | stkj/ljyx |
-| 学术动态 | kydt      |
-| 珞珈副刊 | xywh/ljfk |
-| 校史钩沉 | xywh/xsgc |
-| 来稿选登 | lgxd      |
+<details>
+  <summary>更多分类</summary>
+
+#### 学术动态 {#wu-han-da-xue-xin-wen-wang-xue-shu-dong-tai}
+
+| 学术动态 |
+| -------- |
+| kydt     |
+
+#### 校园文化 {#wu-han-da-xue-xin-wen-wang-xiao-yuan-wen-hua}
+
+| 缤纷校园  | 校友之声  | 珞珈副刊  | 校史钩沉  |
+| --------- | --------- | --------- | --------- |
+| xywh/bfxy | xywh/xyzs | xywh/ljfk | xywh/xsgc |
+
+#### 专题报道 {#wu-han-da-xue-xin-wen-wang-zhuan-ti-bao-dao}
+
+| 专题报道 | 主题教育  | 顶天立地建学科 | 学习在线  | 记者调查  | 校庆征文 我与武大 |
+| -------- | --------- | -------------- | --------- | --------- | ----------------- |
+| ztbd     | ztbd/ztjy | ztbd/dtldjxk   | ztbd/xxzx | ztbd/jzdc | ztbd/xqzw_wywd    |
+
+#### 媒体武大 {#wu-han-da-xue-xin-wen-wang-mei-ti-wu-da}
+
+| 媒体武大 |
+| -------- |
+| mtwd     |
+
+#### 珞珈人物 {#wu-han-da-xue-xin-wen-wang-luo-jia-ren-wu}
+
+| 珞珈人物 |
+| -------- |
+| ljrw     |
+
+#### 视听空间 {#wu-han-da-xue-xin-wen-wang-shi-ting-kong-jian}
+
+| 视听空间  | 珞珈影像  | 武大视频  |
+| --------- | --------- | --------- |
+| stkj/ljyx | stkj/ljyx | stkj/wdsp |
+
+</details>
 
 </Route>
 
@@ -3133,6 +3157,51 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | 公告类型 | 新闻动态 | 学术探索 | 院系风采 | 通知(全部) | 通知(招生) | 通知(培养) | 通知(学位) | 通知(质量与专业学位) | 通知(综合) |
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
 | 参数     | 0        | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8        |
+
+</Route>
+
+### 弘毅学堂 {#wu-han-da-xue-hong-yi-xue-tang}
+
+<Route author="nczitzk" example="/whu/hyxt" path="/whu/hyxt/:category?" paramsDesc={['分类，见下表，默认为 `xwdt`， 即 **新闻动态**']} radar="1" rssbud="1">
+
+| 新闻动态 | 通知公告 | 学子风采 | 学术论坛 |
+| -------- | -------- | -------- | -------- |
+| xwdt     | tzgg     | xzfc     | xslt     |
+
+<details>
+  <summary>更多分类</summary>
+
+#### 学堂简报 {#wu-han-da-xue-hong-yi-xue-tang-xue-tang-jian-bao}
+
+| 学堂简报 |
+| -------- |
+| xtjb     |
+
+#### 人才培养 {#wu-han-da-xue-hong-yi-xue-tang-ren-cai-pei-yang}
+
+| 人才培养 | 招生工作  | 培养方案  | 科研训练  | 毕业去向  | 学习资源  |
+| -------- | --------- | --------- | --------- | --------- | --------- |
+| rcpy     | rcpy/zsgz | rcpy/pyfa | rcpy/kyxl | rcpy/byqx | rcpy/xxzy |
+
+#### 学生工作 {#wu-han-da-xue-hong-yi-xue-tang-xue-sheng-gong-zuo}
+
+| 学生工作 | 党团建设  | 学术交流  | 书院生活  | 奖助体系  | 事务服务  |
+| -------- | --------- | --------- | --------- | --------- | --------- |
+| xsgz     | xsgz/dtjs | xsgz/xsjl | xsgz/sysh | xsgz/jztx | xsgz/swfw |
+
+#### 国际合作 {#wu-han-da-xue-hong-yi-xue-tang-guo-ji-he-zuo}
+
+| 国际合作 | 国际交流  | 交流分享  |
+| -------- | --------- | --------- |
+| gjhz     | gjhz/gjjl | gjhz/jlfx |
+
+#### 校友风采 {#wu-han-da-xue-hong-yi-xue-tang-xiao-you-feng-cai}
+
+| 校友风采 |
+| -------- |
+| xyfc     |
+
+</details>
 
 </Route>
 

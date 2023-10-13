@@ -83,7 +83,7 @@
     "outputDirectory": "coverage"
   },
   "dependencies": {
-    "@koa/router": "12.0.0",
+    "@koa/router": "12.0.1",
     "@notionhq/client": "2.2.13",
     "@postlight/parser": "2.2.3",
     "@sentry/node": "7.73.0",
@@ -179,11 +179,11 @@
     "@types/supertest": "2.0.14",
     "@types/tiny-async-pool": "2.0.0",
     "@types/tough-cookie": "4.0.3",
-    "@vercel/nft": "0.24.2",
+    "@vercel/nft": "0.24.3",
     "cross-env": "7.0.3",
     "eslint": "8.51.0",
     "eslint-config-prettier": "9.0.0",
-    "eslint-plugin-n": "16.1.0",
+    "eslint-plugin-n": "16.2.0",
     "eslint-plugin-prettier": "5.0.1",
     "eslint-plugin-yml": "1.10.0",
     "fs-extra": "11.1.1",
