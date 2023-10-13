@@ -533,13 +533,19 @@
     "/asiantolick/": [
         "nczitzk"
     ],
-    "/asiantolick/category/:id?": [
+    "/asiantolick/category/:id": [
         "nczitzk"
     ],
-    "/asiantolick/tag/:id?": [
+    "/asiantolick/page/news": [
         "nczitzk"
     ],
-    "/asiantolick/search/:id?": [
+    "/asiantolick/page/:id": [
+        "nczitzk"
+    ],
+    "/asiantolick/search/:keyword": [
+        "nczitzk"
+    ],
+    "/asiantolick/tag/:id": [
         "nczitzk"
     ],
     "/asus/bios/:model": [

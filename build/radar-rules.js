@@ -1665,23 +1665,40 @@
         source:[ "/" ],
         target:"/ash-maurya" } ] },
   "asiantolick.com":{ _name:"Asian to lick",
-    ".":[ { title:"首页",
-        docs:"https://docs.rsshub.app/routes/picture#asian-to-lick-shou-ye",
+    ".":[ { title:"Top rated",
+        docs:"https://docs.rsshub.app/routes/picture#asian-to-lick-top-rated",
         source:[ "/" ],
         target:"/asiantolick" },
-      { title:"分类",
-        docs:"https://docs.rsshub.app/routes/picture#asian-to-lick-fen-lei",
+      { title:"News",
+        docs:"https://docs.rsshub.app/routes/picture#asian-to-lick-news",
+        source:[ "/page/news" ],
+        target:"/asiantolick/page/news" },
+      { title:"Category",
+        docs:"https://docs.rsshub.app/routes/picture#asian-to-lick-category",
         source:[ "/" ],
-        target:(params, url) => `/asiantolick/category/${new URL(url).toString().split('-').pop()}` },
-      { title:"标签",
-        docs:"https://docs.rsshub.app/routes/picture#asian-to-lick-biao-qian",
+        target:(params, url) => {
+                    url = new URL(url);
+                    const id = url.href.match(/\/category\/(\w+)/)[1];
+
+                    return `/asiantolick${id ? `/category/${id}` : ''}`;
+                } },
+      { title:"Tag",
+        docs:"https://docs.rsshub.app/routes/picture#asian-to-lick-tag",
         source:[ "/" ],
-        target:(params, url) => `/asiantolick/tag/${new URL(url).toString().split('-').pop()}` },
-      { title:"搜索",
-        docs:"https://docs.rsshub.app/routes/picture#asian-to-lick-sou-suo",
-        source:[ "/search/:keyword",
-          "/" ],
-        target:"/asiantolick/search/:keyword?" } ] },
+        target:(params, url) => {
+                    url = new URL(url);
+                    const id = url.href.match(/\/tag\/(\w+)/)[1];
+
+                    return `/asiantolick${id ? `/tag/${id}` : ''}`;
+                } },
+      { title:"Search",
+        docs:"https://docs.rsshub.app/routes/picture#asian-to-lick-search",
+        source:[ "/search/:keyword" ],
+        target:"/asiantolick/search/:keyword" },
+      { title:"Page",
+        docs:"https://docs.rsshub.app/routes/picture#asian-to-lick-page",
+        source:[ "/page/:id" ],
+        target:"/asiantolick/page/:id" } ] },
   "asus.com.cn":{ _name:"Asus 华硕",
     ".":[ { title:"固件",
         docs:"https://docs.rsshub.app/routes/program-update#hua-shuo",
