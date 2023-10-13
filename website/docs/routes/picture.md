@@ -86,21 +86,84 @@
 
 ## Asian to lick {#asian-to-lick}
 
-### Home {#asian-to-lick-home}
+### Top rated {#asian-to-lick-top-rated}
 
-<Route author="nczitzk" example="/asiantolick" path="/asiantolick"/>
+<Route author="nczitzk" example="/asiantolick" path="/asiantolick" radar="1" rssbud="1"/>
+
+### News {#asian-to-lick-news}
+
+<Route author="nczitzk" example="/asiantolick/page/news" path="/asiantolick/page/news" radar="1" rssbud="1"/>
 
 ### Category {#asian-to-lick-category}
 
-<Route author="nczitzk" example="/asiantolick/category/90" path="/asiantolick/category/:category?" paramsDesc={['Category, the id can be found in URL, homepage by default']}/>
+<Route author="nczitzk" example="/asiantolick/category/90" path="/asiantolick/category/:id" paramsDesc={['Category id, can be found in URL']} radar="1" rssbud="1">
+
+| Category   | id   |
+| ---------- | ---- |
+| Lolita     | 90   |
+| Hot Sister | 91   |
+| Cosplay    | 1030 |
+| Sexy       | 93   |
+| Others     | 94   |
+| Thailand   | 99   |
+| Magazine   | 100  |
+| Hard Sexy  | 103  |
+
+</Route>
 
 ### Tag {#asian-to-lick-tag}
 
-<Route author="nczitzk" example="/asiantolick/tag/1045" path="/asiantolick/tag/:tag?" paramsDesc={['Tag, the id can be found in URL, homepage by default']}/>
+<Route author="nczitzk" example="/asiantolick/tag/1045" path="/asiantolick/tag/:id" paramsDesc={['Tag id, can be found in URL']} radar="1" rssbud="1">
+
+| Aidol        | Anal         | Babe         | Big Boobs    | Big Pussy    |
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| 2310         | 2233         | 1385         | 1106         | 1722         |
+| 
+| Bikini       | Blonde       | blowjob      | Close Up     | Creamy Pussy |
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| 1206         | 2244         | 2167         | 2267         | 1117         |
+| 
+| cum          | Cute Girl    | Dildo        | Ebony        | Feet         |
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| 2163         | 1090         | 1082         | 2245         | 1323         |
+| 
+| fetish       | fingers      | Fox Tail     | Glasses      | Hairy Pussy  |
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| 2219         | 2197         | 1540         | 1268         | 1099         |
+| 
+| Interracial  | Lesbian      | licked       | Loli         | Maid         |
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| 2284         | 1080         | 2208         | 1045         | 1072         |
+| 
+| Masturbate   | Milf         | non-nude     | Nude         | Nurse        |
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| 1081         | 1705         | 2307         | 1393         | 1552         |
+| 
+| Office       | oiled        | Outdoor      | Pink Pussy   | Pink Tits    |
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| 1724         | 2176         | 2250         | 1161         | 1498         |
+| 
+| Public       | School Girl  | Short Hair   | skirt        | Small Girl   |
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| 1277         | 1046         | 1160         | 2159         | 1103         |
+| 
+| Socks        | sucking      | Tattoo       | Teen         | Tiny Tits    |
+| ------------ | ------------ | ------------ | ------------ | ------------ |
+| 2256         | 2199         | 1593         | 1036         | 2251         |
+| 
+| Underwear    | Uniform      | wet          | Young        |
+| ------------ | ------------ | ------------ | ------------ |
+| 1324         | 1084         | 2179         | 1098         |
+
+</Route>
 
 ### Search {#asian-to-lick-search}
 
-<Route author="nczitzk" example="/asiantolick/search/lolita" path="/asiantolick/search/:keyword?" paramsDesc={['Keyword, empty by default']}/>
+<Route author="nczitzk" example="/asiantolick/search/lolita" path="/asiantolick/search/:keyword" paramsDesc={['Keyword']} radar="1" rssbud="1"/>
+
+### Page {#asian-to-lick-page}
+
+<Route author="nczitzk" example="/asiantolick/page/news" path="/asiantolick/page/:id" paramsDesc={['Page id']} radar="1" rssbud="1"/>
 
 ## BabeHub {#babehub}
 
