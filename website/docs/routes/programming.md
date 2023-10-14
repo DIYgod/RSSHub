@@ -12,51 +12,51 @@
 
 You have the option to utilize the main heading or use individual categories as topics for the path.
 
-| **Code**                | _code_                  |
-|-------------------------|-------------------------|
+| **Code**                    | _code_                    |
+| --------------------------- | ------------------------- |
 | **Application Development** | _application-development_ |
-| **Browsers**             | _browsers_              |
-| **CSS**                  | _css_                   |
-| **HTML**                 | _html_                  |
-| **JavaScript**           | _javascript_            |
-| **The Server Side**      | _the-server-side_       |
+| **Browsers**                | _browsers_                |
+| **CSS**                     | _css_                     |
+| **HTML**                    | _html_                    |
+| **JavaScript**              | _javascript_              |
+| **The Server Side**         | _the-server-side_         |
 
-| **Content**             | _content_               |
-|-------------------------|-------------------------|
-| **Community**           | _community_             |
-| **Content Strategy**    | _content-strategy_      |
-| **Writing**             | _writing_               |
+| **Content**          | _content_          |
+| -------------------- | ------------------ |
+| **Community**        | _community_        |
+| **Content Strategy** | _content-strategy_ |
+| **Writing**          | _writing_          |
 
-| **Design**              | _design_                |
-|-------------------------|-------------------------|
-| **Brand Identity**      | _brand-identity_        |
-| **Graphic Design**      | _graphic-design_        |
-| **Layout & Grids**      | _layout-grids_          |
-| **Mobile/Multidevice**  | _mobile-multidevice_    |
-| **Responsive Design**   | _responsive-design_     |
+| **Design**                 | _design_               |
+| -------------------------- | ---------------------- |
+| **Brand Identity**         | _brand-identity_       |
+| **Graphic Design**         | _graphic-design_       |
+| **Layout & Grids**         | _layout-grids_         |
+| **Mobile/Multidevice**     | _mobile-multidevice_   |
+| **Responsive Design**      | _responsive-design_    |
 | **Typography & Web Fonts** | _typography-web-fonts_ |
 
-| **Industry & Business** | _industry-business_     |
-|-------------------------|-------------------------|
-| **Business**            | _business_              |
-| **Career**              | _career_                |
-| **Industry**            | _industry_              |
-| **State of the Web**    | _state-of-the-web_      |
+| **Industry & Business** | _industry-business_ |
+| ----------------------- | ------------------- |
+| **Business**            | _business_          |
+| **Career**              | _career_            |
+| **Industry**            | _industry_          |
+| **State of the Web**    | _state-of-the-web_  |
 
-| **Process**             | _process_               |
-|-------------------------|-------------------------|
-| **Creativity**          | _creativity_            |
-| **Project Management**  | _project-management_    |
-| **Web Strategy**        | _web-strategy_          |
-| **Workflow & Tools**    | _workflow-tools_        |
+| **Process**            | _process_            |
+| ---------------------- | -------------------- |
+| **Creativity**         | _creativity_         |
+| **Project Management** | _project-management_ |
+| **Web Strategy**       | _web-strategy_       |
+| **Workflow & Tools**   | _workflow-tools_     |
 
-| **User Experience**     | _user-experience_       |
-|-------------------------|-------------------------|
-| **Accessibility**       | _accessibility_         |
+| **User Experience**          | _user-experience_          |
+| ---------------------------- | -------------------------- |
+| **Accessibility**            | _accessibility_            |
 | **Information Architecture** | _information-architecture_ |
-| **Interaction Design**  | _interaction-design_    |
-| **Usability**           | _usability_             |
-| **User Research**       | _user-research_         |
+| **Interaction Design**       | _interaction-design_       |
+| **Usability**                | _usability_                |
+| **User Research**            | _user-research_            |
 
 </Route>
 
@@ -173,7 +173,7 @@ Category
 <Route author="Fatpandac" example="/cncf" path="/cncf/:cate?" radar="1" rssbud="1" paramsDesc={['blog by default']}>
 
 | Blog | News | Announcements | Reports |
-|------|------|---------------|---------|
+| ---- | ---- | ------------- | ------- |
 | blog | news | announcements | reports |
 
 </Route>
@@ -451,13 +451,11 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 ## GoCN {#gocn}
 
-### 文章 {#gocn-wen-zhang}
+### 动态 {#gocn-dong-tai}
 
 <Route author="AtlanCI CcccFz" example="/gocn" path="/gocn" radar="1" rssbud="1"/>
 
-### 招聘 {#gocn-zhao-pin}
 
-<Route author="CcccFz" example="/gocn/jobs" path="/gocn/jobs" radar="1" rssbud="1"/>
 
 ## Hacker News {#hacker-news}
 
@@ -845,41 +843,41 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <Route author="Rjnishant530" example="/smashingmagazine/react" path="/smashingmagazine/:category?" paramsDesc={['Find in URL or Table below']} radar="1">
 
-| **Category**         |                       |
-|----------------------|-----------------------|
-| Accessibility        | accessibility         |
-| Best practices       | best-practices       |
-| Business             | business              |
-| Career               | career                |
-| Checklists           | checklists            |
-| CSS                  | css                   |
-| Data Visualization   | data-visualization   |
-| Design               | design                |
-| Design Patterns      | design-patterns      |
-| Design Systems       | design-systems       |
-| E-Commerce           | e-commerce           |
-| Figma                | figma                 |
-| Freebies             | freebies              |
-| HTML                 | html                  |
-| Illustrator          | illustrator           |
-| Inspiration          | inspiration           |
-| JavaScript           | javascript           |
-| Mobile               | mobile                |
-| Performance          | performance           |
-| Privacy              | privacy               |
-| React                | react                 |
-| Responsive Design    | responsive-design    |
-| Round-Ups            | round-ups            |
-| SEO                  | seo                   |
-| Typography           | typography            |
-| Tools                | tools                 |
-| UI                   | ui                    |
-| Usability            | usability             |
-| UX                   | ux                    |
-| Vue                  | vue                   |
-| Wallpapers           | wallpapers            |
-| Web Design           | web-design            |
-| Workflow             | workflow              |
+| **Category**       |                    |
+| ------------------ | ------------------ |
+| Accessibility      | accessibility      |
+| Best practices     | best-practices     |
+| Business           | business           |
+| Career             | career             |
+| Checklists         | checklists         |
+| CSS                | css                |
+| Data Visualization | data-visualization |
+| Design             | design             |
+| Design Patterns    | design-patterns    |
+| Design Systems     | design-systems     |
+| E-Commerce         | e-commerce         |
+| Figma              | figma              |
+| Freebies           | freebies           |
+| HTML               | html               |
+| Illustrator        | illustrator        |
+| Inspiration        | inspiration        |
+| JavaScript         | javascript         |
+| Mobile             | mobile             |
+| Performance        | performance        |
+| Privacy            | privacy            |
+| React              | react              |
+| Responsive Design  | responsive-design  |
+| Round-Ups          | round-ups          |
+| SEO                | seo                |
+| Typography         | typography         |
+| Tools              | tools              |
+| UI                 | ui                 |
+| Usability          | usability          |
+| UX                 | ux                 |
+| Vue                | vue                |
+| Wallpapers         | wallpapers         |
+| Web Design         | web-design         |
+| Workflow           | workflow           |
 
 </Route>
 
@@ -1246,48 +1244,48 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 <Route author="nczitzk" example="/lianxh" path="/lianxh/:category?" paramsDesc={['分类 id，可在对应分类页 URL 中找到，默认为空，即全部']}>
 
-| 分类                 | id |
-| -------------------- | -- |
-| 全部                 |    |
-| Stata 入门           | 16 |
-| Stata 教程           | 17 |
-| 计量专题             | 18 |
-| 内生性 - 因果推断    | 19 |
-| 面板数据             | 20 |
-| 交乘项 - 调节 - 中介 | 21 |
-| 结果输出             | 22 |
-| 工具软件             | 23 |
-| Stata 绘图           | 24 |
-| 数据处理             | 25 |
-| Stata 程序           | 26 |
-| Probit-Logit         | 27 |
-| 时间序列             | 28 |
-| 空间计量 - 网络分析  | 29 |
-| Markdown-LaTeX       | 30 |
-| 论文写作             | 31 |
-| 回归分析             | 32 |
-| 其它                 | 33 |
-| 数据分享             | 34 |
-| Stata 资源           | 35 |
-| 文本分析 - 爬虫      | 36 |
-| Python-R-Matlab      | 37 |
-| IV-GMM               | 38 |
-| 倍分法 DID           | 39 |
-| 断点回归 RDD         | 40 |
-| PSM-Matching         | 41 |
-| 合成控制法           | 42 |
-| Stata 命令           | 43 |
-| 专题课程             | 44 |
-| 风险管理             | 45 |
-| 生存分析             | 46 |
-| 机器学习             | 47 |
-| 分位数回归           | 48 |
-| SFA-DEA - 效率分析   | 49 |
-| 答疑 - 板书          | 50 |
-| 论文重现             | 51 |
-| 最新课程             | 52 |
-| 公开课               | 53 |
-| Stata33 讲           | 54 |
+| 分类                 | id  |
+| -------------------- | --- |
+| 全部                 |     |
+| Stata 入门           | 16  |
+| Stata 教程           | 17  |
+| 计量专题             | 18  |
+| 内生性 - 因果推断    | 19  |
+| 面板数据             | 20  |
+| 交乘项 - 调节 - 中介 | 21  |
+| 结果输出             | 22  |
+| 工具软件             | 23  |
+| Stata 绘图           | 24  |
+| 数据处理             | 25  |
+| Stata 程序           | 26  |
+| Probit-Logit         | 27  |
+| 时间序列             | 28  |
+| 空间计量 - 网络分析  | 29  |
+| Markdown-LaTeX       | 30  |
+| 论文写作             | 31  |
+| 回归分析             | 32  |
+| 其它                 | 33  |
+| 数据分享             | 34  |
+| Stata 资源           | 35  |
+| 文本分析 - 爬虫      | 36  |
+| Python-R-Matlab      | 37  |
+| IV-GMM               | 38  |
+| 倍分法 DID           | 39  |
+| 断点回归 RDD         | 40  |
+| PSM-Matching         | 41  |
+| 合成控制法           | 42  |
+| Stata 命令           | 43  |
+| 专题课程             | 44  |
+| 风险管理             | 45  |
+| 生存分析             | 46  |
+| 机器学习             | 47  |
+| 分位数回归           | 48  |
+| SFA-DEA - 效率分析   | 49  |
+| 答疑 - 板书          | 50  |
+| 论文重现             | 51  |
+| 最新课程             | 52  |
+| 公开课               | 53  |
+| Stata33 讲           | 54  |
 
 </Route>
 
