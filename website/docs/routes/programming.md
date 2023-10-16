@@ -451,10 +451,16 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 ## GoCN {#gocn}
 
-### 动态 {#gocn-dong-tai}
+### 最新动态 {#gocn-zui-xin-dong-tai}
+<Route author="AtlanCI" example="/gocn/news" path="/gocn/news" radar="1" rssbud="1"/>
 
-<Route author="AtlanCI CcccFz" example="/gocn" path="/gocn" radar="1" rssbud="1"/>
+### 每日新闻 {#gocn-mei-ri-xin-wen}
 
+<Route author="AtlanCI CcccFz" example="/gocn/topics" path="/gocn/topics" radar="1" rssbud="1"/>
+
+### 招聘 {#gocn-zhao-pin}
+
+<Route author="AtlanCI CcccFz" example="/gocn/jobs" path="/gocn/jobs" radar="1" rssbud="1"/>
 
 
 ## Hacker News {#hacker-news}
