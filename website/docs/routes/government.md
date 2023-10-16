@@ -1144,6 +1144,38 @@ Language
 
 </Route>
 
+## 浙江省公务员考试录用网 {#zhe-jiang-sheng-gong-wu-yuan-kao-shi-lu-yong-wang}
+
+### 通知 {#zhe-jiang-sheng-gong-wu-yuan-kao-shi-lu-yong-wang-tong-zhi}
+
+<Route author="nczitzk" example="/gov/zhejiang/gwy/1" path="/gov/zhejiang/gwy/:category?/:column?" paramsDesc={['分类，见下表，默认为全部', '地市专栏，见下表，默认为全部']}>
+
+| 分类         | id  |
+| ------------ | --- |
+| 重要通知     | 1   |
+| 招考公告     | 2   |
+| 招考政策     | 3   |
+| 面试体检考察 | 4   |
+| 录用公示专栏 | 5   |
+
+| 地市         | id    |
+| ------------ | ----- |
+| 浙江省       | 133   |
+| 浙江省杭州市 | 13301 |
+| 浙江省宁波市 | 13302 |
+| 浙江省温州市 | 13303 |
+| 浙江省嘉兴市 | 13304 |
+| 浙江省湖州市 | 13305 |
+| 浙江省绍兴市 | 13306 |
+| 浙江省金华市 | 13307 |
+| 浙江省衢州市 | 13308 |
+| 浙江省舟山市 | 13309 |
+| 浙江省台州市 | 13310 |
+| 浙江省丽水市 | 13311 |
+| 省级单位     | 13317 |
+
+</Route>
+
 ## 浙江省土地使用权网上交易系统 {#zhe-jiang-sheng-tu-di-shi-yong-quan-wang-shang-jiao-yi-xi-tong}
 
 ### 公告信息 {#zhe-jiang-sheng-tu-di-shi-yong-quan-wang-shang-jiao-yi-xi-tong-gong-gao-xin-xi}
