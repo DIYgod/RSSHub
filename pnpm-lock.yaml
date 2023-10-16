@@ -18,8 +18,8 @@ dependencies:
     specifier: 7.74.0
     version: 7.74.0
   '@tonyrl/rand-user-agent':
-    specifier: 2.0.34
-    version: 2.0.34
+    specifier: 2.0.35
+    version: 2.0.35
   aes-js:
     specifier: 3.1.2
     version: 3.1.2
@@ -1329,8 +1329,8 @@ packages:
       defer-to-connect: 2.0.1
     dev: false
 
-  /@tonyrl/rand-user-agent@2.0.34:
-    resolution: {integrity: sha512-AgxzBO9wCnrb2ev9qoJfNyd2VOKeRSAgF8onqP6UZNLNjjoIB07LSw2XnlJgoUFJw4KpOjCR+pTKAgE/lj7YlA==}
+  /@tonyrl/rand-user-agent@2.0.35:
+    resolution: {integrity: sha512-XUuA96FAcLEUWA2Kw5V595VLo1YZIUU8REUt7LtvbU2XBTJhnpphGWZgq5kLmASqgHNfABMFlJJ7yipb/53Tsg==}
     engines: {node: '>=14.16'}
     dev: false
 
@@ -8104,11 +8104,16 @@ packages:
     dependencies:
       eslint-visitor-keys: 3.4.3
       lodash: 4.17.21
-      yaml: 2.3.1
+      yaml: 2.3.2
     dev: true
 
   /yaml@2.3.1:
     resolution: {integrity: sha512-2eHWfjaoXgTBC2jNM1LRef62VQa0umtvRiDSk6HSzW7RvS5YtkabJrwYLLEKWBc8a5U2PTSCs+dJjUTJdlHsWQ==}
+    engines: {node: '>= 14'}
+    dev: true
+
+  /yaml@2.3.2:
+    resolution: {integrity: sha512-N/lyzTPaJasoDmfV7YTrYCI0G/3ivm/9wdG0aHuheKowWQwGTsK0Eoiw6utmzAnI6pkJa0DUVygvp3spqqEKXg==}
     engines: {node: '>= 14'}
     dev: true
 
