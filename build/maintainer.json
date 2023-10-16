@@ -2620,6 +2620,9 @@
     "/gov/xuzhou/hrss/:category?": [
         "nczitzk"
     ],
+    "/gov/zhejiang/gwy/:category?/:column?": [
+        "nczitzk"
+    ],
     "/gq/tw/:caty?/:subcaty?": [
         "nczitzk"
     ],

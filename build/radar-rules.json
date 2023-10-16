@@ -11766,6 +11766,21 @@
       }
     ]
   },
+  "zjks.gov.cn": {
+    "_name": "浙江省公务员考试录用网",
+    ".": [
+      {
+        "title": "地市专栏",
+        "docs": "https://docs.rsshub.app/routes/government#zhe-jiang-sheng-gong-wu-yuan-kao-shi-lu-yong-wang",
+        "source": [
+          "/zjgwy/website/init.htm",
+          "/zjgwy/website/queryDetail.htm",
+          "/zjgwy/website/queryMore.htm"
+        ],
+        "target": "/gov/zhejiang/gwy"
+      }
+    ]
+  },
   "gq.com.tw": {
     "_name": "GQ Taiwan",
     ".": [
