@@ -24948,6 +24948,15 @@
       }
     ]
   },
+  "tableau.com": {
+    "_name": "Tableau",
+    "public": [
+      {
+        "title": "Viz of the day",
+        "docs": "https://docs.rsshub.app/routes/study#tableau"
+      }
+    ]
+  },
   "taiwannews.com.tw": {
     "_name": "台灣英文新聞",
     ".": [

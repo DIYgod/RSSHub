@@ -5628,6 +5628,9 @@
     "/szu/yz/:type?": [
         "NagaruZ"
     ],
+    "/tableau/app/discover/viz-of-the-day": [
+        "KaiyoungYu"
+    ],
     "/taiwannews/hot/:lang?": [
         "TonyRL"
     ],
