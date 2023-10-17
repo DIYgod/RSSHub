@@ -30,8 +30,8 @@ dependencies:
     specifier: ^13.0.2
     version: 13.0.2
   meilisearch-docsearch:
-    specifier: ^0.4.7
-    version: 0.4.7
+    specifier: ^0.5.0
+    version: 0.5.0
   pinyin-pro:
     specifier: 3.17.0
     version: 3.17.0
@@ -6381,17 +6381,17 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /meilisearch-docsearch@0.4.7:
-    resolution: {integrity: sha512-zZWekKibcWIQ+6F/eK4kr2C2seZcQtS4aDrceerqsj+Qh6luzZSnMwjKAUuYm1xO7KZHDlUrHlutq5py+1OAjw==}
+  /meilisearch-docsearch@0.5.0:
+    resolution: {integrity: sha512-r0dg5FSoTt5DUJwAdE5Wwun5pyvrPyGe4SWhL7bzsA3GoWDT2SXNiX14kVaRXC2HnLTU/fBYWC0wSDzQz2A7vQ==}
     dependencies:
-      meilisearch: 0.31.1
-      solid-js: 1.7.11
+      meilisearch: 0.35.0
+      solid-js: 1.8.1
     transitivePeerDependencies:
       - encoding
     dev: false
 
-  /meilisearch@0.31.1:
-    resolution: {integrity: sha512-ajMieU0e25lLkT+05J0snX0Ycow1UofxIy5sag03flERUbjXq8ouVwkrJkW27JsKftIeDeffRRRr89LasU9+0w==}
+  /meilisearch@0.35.0:
+    resolution: {integrity: sha512-gF1I6K5/Wpe7BWfjBnG+o19y/FIpJ9HbN+byON6CB9U3uE7qc6GvwUbjKOllh7LKXQVVxH/kCu7Jn0ODCUwqbQ==}
     dependencies:
       cross-fetch: 3.1.8
     transitivePeerDependencies:
@@ -8077,8 +8077,8 @@ packages:
     dependencies:
       randombytes: 2.1.0
 
-  /seroval@0.5.1:
-    resolution: {integrity: sha512-ZfhQVB59hmIauJG5Ydynupy8KHyr5imGNtdDhbZG68Ufh1Ynkv9KOYOAABf71oVbQxJ8VkWnMHAjEHE7fWkH5g==}
+  /seroval@0.10.4:
+    resolution: {integrity: sha512-TdaE9JkoATjKu+vjwllieX8zWyBTUVxbgWDnOsDJFfmKbM7vLSukuCXuD3pO3kkCtX4daywOW8ps2VCdPhS8/w==}
     engines: {node: '>=10'}
     dev: false
 
@@ -8232,11 +8232,11 @@ packages:
       websocket-driver: 0.7.4
     dev: false
 
-  /solid-js@1.7.11:
-    resolution: {integrity: sha512-JkuvsHt8jqy7USsy9xJtT18aF9r2pFO+GB8JQ2XGTvtF49rGTObB46iebD25sE3qVNvIbwglXOXdALnJq9IHtQ==}
+  /solid-js@1.8.1:
+    resolution: {integrity: sha512-HU4tB/vWY5/0P9GzbvePjK1aucNqUcF1XlAirZBjKkrkWG8XNIN9HSjscTC/nbl3A6JWjrW+OLcPEvWxsMhdng==}
     dependencies:
       csstype: 3.1.2
-      seroval: 0.5.1
+      seroval: 0.10.4
     dev: false
 
   /sort-css-media-queries@2.1.0:
