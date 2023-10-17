@@ -337,12 +337,6 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 <Route author="nczitzk" example="/yuzu-emu/entry" path="/yuzu-emu/entry" />
 
-## 浙江大学可视分析小组
-
-### 博客
-
-<Route author="KaiyoungYu" example="/zjuvag/blog" path="/zjuvag/blog" radar="1"/>
-
 ## 阿里云系统组技术博客 {#a-li-yun-xi-tong-zu-ji-shu-bo-ke}
 
 ### 首页 {#a-li-yun-xi-tong-zu-ji-shu-bo-ke-shou-ye}
@@ -544,6 +538,12 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 ### 博客 {#yun-yuan-sheng-she-qu-bo-ke}
 
 <Route author="aneasystone" example="/cloudnative/blog" path="/cloudnative/blog"/>
+
+## 浙江大学可视分析小组 {#zhe-jiang-da-xue-ke-shi-fen-xi-xiao-zu}
+
+### 博客 {#zhe-jiang-da-xue-ke-shi-fen-xi-xiao-zu-bo-ke}
+
+<Route author="KaiyoungYu" example="/zjuvag/blog" path="/zjuvag/blog" radar="1"/>
 
 ## 支流科技 {#zhi-liu-ke-ji}
 
