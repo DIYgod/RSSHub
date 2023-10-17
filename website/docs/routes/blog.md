@@ -337,6 +337,12 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 <Route author="nczitzk" example="/yuzu-emu/entry" path="/yuzu-emu/entry" />
 
+## 浙江大学可视分析小组
+
+### 博客
+
+<Route author="KaiyoungYu" example="/zjuvag/blog" path="/zjuvag/blog" radar="1"/>
+
 ## 阿里云系统组技术博客 {#a-li-yun-xi-tong-zu-ji-shu-bo-ke}
 
 ### 首页 {#a-li-yun-xi-tong-zu-ji-shu-bo-ke-shou-ye}
