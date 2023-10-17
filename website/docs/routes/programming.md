@@ -452,6 +452,7 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 ## GoCN {#gocn}
 
 ### 最新动态 {#gocn-zui-xin-dong-tai}
+
 <Route author="AtlanCI" example="/gocn/news" path="/gocn/news" radar="1" rssbud="1"/>
 
 ### 每日新闻 {#gocn-mei-ri-xin-wen}
