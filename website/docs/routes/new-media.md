@@ -5638,7 +5638,7 @@ column 为 third 时可选的 category:
 
 ### 栏目 {#zhong-guo-gang-tie-gong-ye-xie-hui-lan-mu}
 
-<Route author="nczitzk" example="/chinaisa" path="/chinaisa/:columnId?" paramsDesc={['栏目，见下表，默认为钢协动态']} radar="1" rssbud="1">
+<Route author="nczitzk" example="/chinaisa" path="/chinaisa/:id?" paramsDesc={['栏目，见下表，默认为钢协动态']} radar="1" rssbud="1">
 
 | 栏目     | id                                                               |
 | -------- | ---------------------------------------------------------------- |
