@@ -284,6 +284,12 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 <Route author="nczitzk" example="/researchgate/publications/Somsak-Panha" path="/researchgate/publications/:username" paramsDesc={['Username, can be found in URL']} puppeteer="1" anticrawler="1"/>
 
+## Tableau {#tableau}
+
+### Viz of the day {#tableau-viz-of-the-day}
+
+<Route author="KaiyoungYu" example="/tableau/viz-of-the-day" path="/tableau/viz-of-the-day" radar="1" />
+
 ## The Korea Institute of Marine Law {#the-korea-institute-of-marine-law}
 
 ### Thesis {#the-korea-institute-of-marine-law-thesis}
