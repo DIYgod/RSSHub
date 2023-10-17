@@ -6926,6 +6926,9 @@
     "/zju/physics/:type": [
         "Caicailiushui"
     ],
+    "/zjuvag/blog": [
+        "KaiyoungYu"
+    ],
     "/zodgame/forum/:fid?": [
         "FeCCC"
     ],
