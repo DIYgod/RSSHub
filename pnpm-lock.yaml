@@ -260,8 +260,8 @@ devDependencies:
     specifier: 13.0.2
     version: 13.0.2
   '@types/module-alias':
-    specifier: 2.0.2
-    version: 2.0.2
+    specifier: 2.0.3
+    version: 2.0.3
   '@types/nodemon':
     specifier: 1.19.3
     version: 1.19.3
@@ -1660,8 +1660,8 @@ packages:
     resolution: {integrity: sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==}
     dev: true
 
-  /@types/module-alias@2.0.2:
-    resolution: {integrity: sha512-Oeo5NEjAceFgN8OzGiLXPswgv2GBmrDGuTnLS0sQ8g4Mq5sB5c97Hu5B+n9Gu/j+5Y+oUb4TSawHXkZ8MENGyw==}
+  /@types/module-alias@2.0.3:
+    resolution: {integrity: sha512-P4nKOHbLwvzpPWA5rqJXEAvkIePPb4fNMaEzVU3qZp53NEg2buF9KaudA7BfduUd0b/M1+cM9w050WJ+sDHktw==}
     dev: true
 
   /@types/ms@0.7.31:
