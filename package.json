@@ -172,7 +172,7 @@
     "@types/module-alias": "2.0.3",
     "@types/nodemon": "1.19.3",
     "@types/pidusage": "2.0.3",
-    "@types/plist": "3.0.3",
+    "@types/plist": "3.0.4",
     "@types/request-promise-native": "1.0.20",
     "@types/require-all": "3.0.5",
     "@types/showdown": "2.0.2",
