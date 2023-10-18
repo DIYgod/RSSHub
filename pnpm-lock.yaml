@@ -275,8 +275,8 @@ devDependencies:
     specifier: 1.0.19
     version: 1.0.19
   '@types/require-all':
-    specifier: 3.0.4
-    version: 3.0.4
+    specifier: 3.0.5
+    version: 3.0.5
   '@types/showdown':
     specifier: 2.0.2
     version: 2.0.2
@@ -1724,8 +1724,8 @@ packages:
       '@types/tough-cookie': 4.0.3
       form-data: 2.5.1
 
-  /@types/require-all@3.0.4:
-    resolution: {integrity: sha512-huqCdyD1zXN7eFJ6Duj3CrSb9Xxqqs8wT6oIKsBlG5x8/sgMUYQq3l9RTAQiHPOkkhKA5N3XPjMavu5sm3WQQQ==}
+  /@types/require-all@3.0.5:
+    resolution: {integrity: sha512-s5UgvpbPfoNGtHb0sCER3Xdi47xrkzT9qNr+uhozmfw/FKnjW5NstnkCgOTbHOhykzzDNceQN9XB3pRNdqyTEA==}
     dev: true
 
   /@types/responselike@1.0.0:
