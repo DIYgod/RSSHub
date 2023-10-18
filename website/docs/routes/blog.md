@@ -539,6 +539,12 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 <Route author="aneasystone" example="/cloudnative/blog" path="/cloudnative/blog"/>
 
+## 浙江大学可视分析小组 {#zhe-jiang-da-xue-ke-shi-fen-xi-xiao-zu}
+
+### 博客 {#zhe-jiang-da-xue-ke-shi-fen-xi-xiao-zu-bo-ke}
+
+<Route author="KaiyoungYu" example="/zjuvag/blog" path="/zjuvag/blog" radar="1"/>
+
 ## 支流科技 {#zhi-liu-ke-ji}
 
 ### 博客 {#zhi-liu-ke-ji-bo-ke}
