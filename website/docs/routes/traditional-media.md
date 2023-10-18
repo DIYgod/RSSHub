@@ -518,6 +518,8 @@ Parameters can be obtained from the official website, for instance:
 
 :::
 
+You can use `sophi=true` query parameter to invoke the **experimental** method, which can, if possible, fetch more articles(between 20 and 100) with `limit` given. But some articles from the old method might not be available.
+
 ### Category/Topic/Author {#reuters-lu-tou-she-category-topic-author}
 
 <Route author="HenryQW proletarius101 LyleLee nczitzk" example="/reuters/world/us" path="/reuters/:category/:topic?" paramsDesc={['find it in the URL, or tables below', 'find it in the URL, or tables below']}>
