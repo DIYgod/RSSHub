@@ -2801,6 +2801,16 @@
         docs:"https://docs.rsshub.app/routes/other#you-ju-zui-xin-wen-zhang-lie-biao",
         source:[ "/" ],
         target:"/chinafactcheck" } ] },
+  "chinaisa.org.cn":{ _name:"中国钢铁工业协会",
+    ".":[ { title:"栏目",
+        docs:"https://docs.rsshub.app/routes/new-media#zhong-guo-gang-tie-gong-ye-xie-hui-lan-mu",
+        source:[ "/gxportal/xfgl/portal/list.html" ],
+        target:(params, url) => {
+                    url = new URL(url);
+                    const columnId = url.searchParams.get('columnId');
+
+                    return `/chinaisa${columnId ? `/${columnId}` : ''}`;
+                } } ] },
   "chinanews.com.cn":{ _name:"中国新闻网",
     ".":[ { title:"最新",
         docs:"https://docs.rsshub.app/routes/traditional-media#zhong-xin-wang",

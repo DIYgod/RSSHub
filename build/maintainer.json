@@ -1185,6 +1185,9 @@
     "/chinafactcheck/": [
         "kdanfly"
     ],
+    "/chinaisa/:id?": [
+        "nczitzk"
+    ],
     "/chinanews/": [
         "yuxinliu-alex"
     ],
