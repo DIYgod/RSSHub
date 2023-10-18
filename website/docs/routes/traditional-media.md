@@ -129,6 +129,12 @@ Refer to [Boston.com's feed page](https://www.boston.com/rss-feeds) for tags. Fo
 
 </Route>
 
+## Caixin Global {#caixin-global}
+
+### Latest News {#caixin-global-latest-news}
+
+<Route author="TonyRL" example="/caixinglobal/latest" path="/caixinglobal/latest" radar="1" />
+
 ## Canadian Broadcasting Corporation {#canadian-broadcasting-corporation}
 
 ### News {#canadian-broadcasting-corporation-news}
@@ -391,6 +397,16 @@ Only `s00017` is in English.
 | s00017   | English       |
 | s00018   | Columnist     |
 
+## National Public Radio {#national-public-radio}
+
+### News {#national-public-radio-news}
+
+<Route author="bennyyip" example="/npr/1001" path="/npr/:endpoint?" paramsDesc={['Channel ID, can be found in Official RSS URL, `1001` by default']}>
+
+Provide full article RSS for CBC topics.
+
+</Route>
+
 ## NHK {#nhk}
 
 ### News Web Easy {#nhk-news-web-easy}
@@ -447,13 +463,25 @@ Only `s00017` is in English.
 
 <Route author="nczitzk" example="/now/news/rank" path="/now/news/rank"/>
 
-## NPR {#npr}
+## Radio France Internationale 法国国际广播电台 {#radio-france-internationale-fa-guo-guo-ji-guang-bo-dian-tai}
 
-### News {#npr-news}
+### Generic News {#radio-france-internationale-fa-guo-guo-ji-guang-bo-dian-tai-generic-news}
 
-<Route author="bennyyip" example="/npr/1001" path="/npr/:endpoint?" paramsDesc={['Channel ID, can be found in Official RSS URL, `1001` by default']}>
+<Route author="nczitzk" example="/rfi" path="/rfi/:path*" paramsDesc={['URL path, can be obtained from the URL of the corresponding page, `en` by default']} radar="1">
 
-Provide full article RSS for CBC topics.
+:::tip
+
+-   To subscribe to [English News](https://www.rfi.fr/en/), whose URL is `https://www.rfi.fr/en`, you can get the route as [`/rfi/en`](https://rsshub.app/rfi/en).
+-   To subscribe to [English Europe News](https://www.rfi.fr/en/europe/), whose URL is `https://www.rfi.fr/en/europe`, you can get the route as [`/rfi/en/europe`](https://rsshub.app/rfi/en/europe).
+-   To subscribe to topic [Paris Olympics 2024](https://www.rfi.fr/en/tag/paris-olympics-2024/), whose URL is `https://www.rfi.fr/en/tag/paris-olympics-2024`, you can get the route as [`/rfi/en/tag/paris-olympics-2024`](https://rsshub.app/rfi/en/tag/paris-olympics-2024).
+
+:::
+
+:::caution
+
+This route does not support podcasts, please use the Offical RSS feed instead.
+
+:::
 
 </Route>
 
@@ -489,6 +517,8 @@ Parameters can be obtained from the official website, for instance:
 2. The old routes are deprecated. Please migrate to the new routes documented below
 
 :::
+
+You can use `sophi=true` query parameter to invoke the **experimental** method, which can, if possible, fetch more articles(between 20 and 100) with `limit` given. But some articles from the old method might not be available.
 
 ### Category/Topic/Author {#reuters-lu-tou-she-category-topic-author}
 

@@ -373,7 +373,7 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ### 用户博客 {#cai-xin-bo-ke-yong-hu-bo-ke}
 
-<Route author="Maecenas" example="/caixin/blog/zhangwuchang" path="/caixin/blog/:column" paramsDesc={['博客名称，可在博客主页的 URL 找到']}>
+<Route author="Maecenas" example="/caixin/blog/zhangwuchang" path="/caixin/blog/:column?" paramsDesc={['博客名称，可在博客主页的 URL 找到']}>
 
 通过提取文章全文，以提供比官方源更佳的阅读体验.
 
@@ -538,6 +538,12 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 ### 博客 {#yun-yuan-sheng-she-qu-bo-ke}
 
 <Route author="aneasystone" example="/cloudnative/blog" path="/cloudnative/blog"/>
+
+## 浙江大学可视分析小组 {#zhe-jiang-da-xue-ke-shi-fen-xi-xiao-zu}
+
+### 博客 {#zhe-jiang-da-xue-ke-shi-fen-xi-xiao-zu-bo-ke}
+
+<Route author="KaiyoungYu" example="/zjuvag/blog" path="/zjuvag/blog" radar="1"/>
 
 ## 支流科技 {#zhi-liu-ke-ji}
 
