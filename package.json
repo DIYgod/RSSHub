@@ -174,7 +174,7 @@
     "@types/pidusage": "2.0.3",
     "@types/plist": "3.0.3",
     "@types/request-promise-native": "1.0.19",
-    "@types/require-all": "3.0.4",
+    "@types/require-all": "3.0.5",
     "@types/showdown": "2.0.2",
     "@types/supertest": "2.0.14",
     "@types/tiny-async-pool": "2.0.0",
