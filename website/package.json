@@ -34,7 +34,7 @@
     "@docusaurus/module-type-aliases": "2.4.3",
     "@docusaurus/types": "2.4.3",
     "@tsconfig/docusaurus": "^2.0.2",
-    "@types/markdown-it": "^13.0.2",
+    "@types/markdown-it": "^13.0.4",
     "@types/mdx-js__react": "^1.5.5",
     "@types/react": "^17.0.64",
     "@types/react-dom": "^17.0.20",
