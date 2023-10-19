@@ -236,8 +236,8 @@ devDependencies:
     specifier: 2.13.9
     version: 2.13.9
   '@types/koa-basic-auth':
-    specifier: 2.0.4
-    version: 2.0.4
+    specifier: 2.0.5
+    version: 2.0.5
   '@types/koa-favicon':
     specifier: 2.1.2
     version: 2.1.2
@@ -1564,8 +1564,8 @@ packages:
       '@types/node': 20.5.6
     dev: false
 
-  /@types/koa-basic-auth@2.0.4:
-    resolution: {integrity: sha512-PJKvoF5OMGlEEzUnctZDGRQVqV12xB0V4KplDJvHQDX9egh9ADFa456zGXRNnhNr43t3Fe4/VzD6ziM61uM5RQ==}
+  /@types/koa-basic-auth@2.0.5:
+    resolution: {integrity: sha512-LSozA0EaEvS+TVn1eVAHU0tUxGiY6ZEjBfqxPupWhmdPP83lBWvyGzQbc0ngSTRy9s29Pd1R4ZOm+7uQvA5wUA==}
     dependencies:
       '@types/koa': 2.13.9
     dev: true
