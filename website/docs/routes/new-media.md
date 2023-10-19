@@ -1712,7 +1712,7 @@ Compared to the official one, this feed:
 
 | 热门话题 | 每日早报 | 科技动态 | 医疗产业 |
 | -------- | -------- | -------- | -------- |
-| topic    | daily    | news     | medical  |
+|          | daily    | news     | medical  |
 
 </Route>
 
