@@ -177,7 +177,7 @@
     "@types/require-all": "3.0.5",
     "@types/showdown": "2.0.3",
     "@types/supertest": "2.0.15",
-    "@types/tiny-async-pool": "2.0.0",
+    "@types/tiny-async-pool": "2.0.1",
     "@types/tough-cookie": "4.0.3",
     "@vercel/nft": "0.24.3",
     "cross-env": "7.0.3",
