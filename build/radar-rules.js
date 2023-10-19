@@ -11762,10 +11762,14 @@
         target:"/rawkuma/manga/:id" } ] },
   "readhub.cn":{ _name:"Readhub",
     ".":[ { title:"分类",
-        docs:"https://docs.rsshub.app/routes/new-media#readhub",
+        docs:"https://docs.rsshub.app/routes/new-media#readhub-fen-lei",
         source:[ "/",
           "/:category" ],
-        target:(params) => `/readhub/${params.category ? params.category : ''}` } ] },
+        target:(params) => {
+                    const category = params.category;
+
+                    return `/readhub${category ? `/${category}` : ''}`;
+                } } ] },
   "remnote.com":{ _name:"RemNote",
     ".":[ { title:"Changelog",
         docs:"https://docs.rsshub.app/routes/program-update#remnote",

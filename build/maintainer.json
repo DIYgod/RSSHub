@@ -4970,7 +4970,7 @@
     "/reactnewsletter/": [
         "meixger"
     ],
-    "/readhub/:category?/:overview?": [
+    "/readhub/:category?": [
         "WhiteWorld",
         "nczitzk",
         "Fatpandac"
