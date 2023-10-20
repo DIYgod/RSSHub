@@ -32,7 +32,7 @@ jobs:
       contents: read
       issues: write
     steps:
-      - uses: bdougie/take-action@v1.5
+      - uses: bdougie/take-action@v1.6
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           trigger: '/wip'
