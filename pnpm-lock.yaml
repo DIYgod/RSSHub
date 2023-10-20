@@ -284,8 +284,8 @@ devDependencies:
     specifier: 2.0.15
     version: 2.0.15
   '@types/tiny-async-pool':
-    specifier: 2.0.0
-    version: 2.0.0
+    specifier: 2.0.1
+    version: 2.0.1
   '@types/tough-cookie':
     specifier: 4.0.3
     version: 4.0.3
@@ -1770,8 +1770,8 @@ packages:
       '@types/superagent': 4.1.18
     dev: true
 
-  /@types/tiny-async-pool@2.0.0:
-    resolution: {integrity: sha512-GB+FG7JF6SPX9yuGmfmDTRYFMdS2Za+YiYvh6RJPfTMa0LaTDEtQ6ncw6NYrHnf9cloVJxgXd6WGRdRp54O1cQ==}
+  /@types/tiny-async-pool@2.0.1:
+    resolution: {integrity: sha512-wMNBLgdLJIujymZW4jGMxqCSMi1Ovr7zHRwUyr+CbDUY+/PagYOmvTkG//5wcea27uDgJO6ITaPxkGiCuvCDTg==}
     dev: true
 
   /@types/tough-cookie@4.0.3:
