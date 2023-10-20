@@ -245,8 +245,8 @@ devDependencies:
     specifier: 4.0.4
     version: 4.0.4
   '@types/koa-static':
-    specifier: 4.0.2
-    version: 4.0.2
+    specifier: 4.0.3
+    version: 4.0.3
   '@types/koa__router':
     specifier: 12.0.1
     version: 12.0.1
@@ -1594,8 +1594,8 @@ packages:
       '@types/koa': 2.13.10
     dev: true
 
-  /@types/koa-static@4.0.2:
-    resolution: {integrity: sha512-ns/zHg+K6XVPMuohjpOlpkR1WLa4VJ9czgUP9bxkCDn0JZBtUWbD/wKDZzPGDclkQK1bpAEScufCHOy8cbfL0w==}
+  /@types/koa-static@4.0.3:
+    resolution: {integrity: sha512-4U9uZwXqYAudDLDVkw1prJM5avn9/lHLVEwoyyI/ITZluWkBdmirkj8EsOLG6kLr0XFZdViR0ZBtQ3oetSsr3g==}
     dependencies:
       '@types/koa': 2.13.10
       '@types/koa-send': 4.1.3
