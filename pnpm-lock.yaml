@@ -287,8 +287,8 @@ devDependencies:
     specifier: 2.0.1
     version: 2.0.1
   '@types/tough-cookie':
-    specifier: 4.0.3
-    version: 4.0.3
+    specifier: 4.0.4
+    version: 4.0.4
   '@vercel/nft':
     specifier: 0.24.3
     version: 0.24.3
@@ -1536,7 +1536,7 @@ packages:
     resolution: {integrity: sha512-1zzqSP+iHJYV4lB3lZhNBa012pubABkj9yG/GuXuf6LZH1cSPIJBqFDrm5JX65HHt6VOnNYdTui/0ySerRbMgA==}
     dependencies:
       '@types/node': 20.5.6
-      '@types/tough-cookie': 4.0.3
+      '@types/tough-cookie': 4.0.4
       parse5: 7.1.2
     dev: true
 
@@ -1721,7 +1721,7 @@ packages:
     dependencies:
       '@types/caseless': 0.12.2
       '@types/node': 20.5.6
-      '@types/tough-cookie': 4.0.3
+      '@types/tough-cookie': 4.0.4
       form-data: 2.5.1
 
   /@types/require-all@3.0.5:
@@ -1774,8 +1774,8 @@ packages:
     resolution: {integrity: sha512-wMNBLgdLJIujymZW4jGMxqCSMi1Ovr7zHRwUyr+CbDUY+/PagYOmvTkG//5wcea27uDgJO6ITaPxkGiCuvCDTg==}
     dev: true
 
-  /@types/tough-cookie@4.0.3:
-    resolution: {integrity: sha512-THo502dA5PzG/sfQH+42Lw3fvmYkceefOspdCwpHRul8ik2Jv1K8I5OZz1AT3/rs46kwgMCe9bSBmDLYkkOMGg==}
+  /@types/tough-cookie@4.0.4:
+    resolution: {integrity: sha512-95Sfz4nvMAb0Nl9DTxN3j64adfwfbBPEYq14VN7zT5J5O2M9V6iZMIIQU1U+pJyl9agHYHNCqhCXgyEtIRRa5A==}
 
   /@types/triple-beam@1.3.2:
     resolution: {integrity: sha512-txGIh+0eDFzKGC25zORnswy+br1Ha7hj5cMVwKIU7+s0U2AxxJru/jZSMU6OC9MJWP6+pc/hc6ZjyZShpsyY2g==}
