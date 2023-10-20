@@ -254,8 +254,8 @@ devDependencies:
     specifier: 13.2.1
     version: 13.2.1
   '@types/mailparser':
-    specifier: 3.4.2
-    version: 3.4.2
+    specifier: 3.4.3
+    version: 3.4.3
   '@types/markdown-it':
     specifier: 13.0.2
     version: 13.0.2
@@ -1628,8 +1628,8 @@ packages:
     resolution: {integrity: sha512-/pIzducFqyJAdXJb2pkQJNTIYBBph/XQdsBgn9oTuNjL1fMRw7AbutYzB0ODTxi8NYqJ9KUk9WyabZvpdNT/kQ==}
     dev: true
 
-  /@types/mailparser@3.4.2:
-    resolution: {integrity: sha512-QxdJdmEdQ3mUiJbK7LHy8H1Hg1lWNPU6RwvMeDvhZeyMX7jnuXao8zVbCTvYYlHJPaHnqebixQwdt4krcaz4jg==}
+  /@types/mailparser@3.4.3:
+    resolution: {integrity: sha512-UpeQxGQaC6tuBPrUg+xK7TqJ/rjzUFGVR3l2xvlo6PuNOaUCKoqmxFKyhdC1qqPlEstczQViljOjuxSRlDbMwA==}
     dependencies:
       '@types/node': 20.5.6
       iconv-lite: 0.6.3
