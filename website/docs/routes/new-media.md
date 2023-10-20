@@ -1708,11 +1708,11 @@ Compared to the official one, this feed:
 
 ### 分类 {#readhub-fen-lei}
 
-<Route author="WhiteWorld nczitzk Fatpandac" example="/readhub" path="/readhub/:category?/:overview?" paramsDesc={['分类，见下表，默认为热门话题', '获取概述，任意值获取概述，默认为不获取']}>
+<Route author="WhiteWorld nczitzk Fatpandac" example="/readhub" path="/readhub/:category?" paramsDesc={['分类，见下表，默认为热门话题']} radar="1" rssbud="1">
 
-| 热门话题 | 科技动态 | 技术资讯 | 区块链快讯 | 每日早报 |
-| -------- | -------- | -------- | ---------- | -------- |
-| topic    | news     | tech     | blockchain | daily    |
+| 热门话题 | 每日早报 | 科技动态 | 医疗产业 |
+| -------- | -------- | -------- | -------- |
+|          | daily    | news     | medical  |
 
 </Route>
 
