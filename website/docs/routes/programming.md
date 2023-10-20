@@ -826,7 +826,7 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <Route author="p7e4" example="/sec-wiki/weekly" path="/sec-wiki/weekly" />
 
-## segmentfault {#segmentfault}
+## SegmentFault {#segmentfault}
 
 ### 频道 {#segmentfault-pin-dao}
 
@@ -838,7 +838,7 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 ### 博客 {#segmentfault-bo-ke}
 
-<Route author="shiluanzzz" example="/segmentfault/blogs/go" path="/segmentfault/blogs/:tag" paramsDesc={['标签名称, 在 https://segmentfault.com/tags 中可以找到']} radar="1"/>
+<Route author="shiluanzzz" example="/segmentfault/blogs/go" path="/segmentfault/blogs/:tag" paramsDesc={['标签名称，在 [标签](https://segmentfault.com/tags) 中可以找到']} radar="1"/>
 
 ## Smashing Magazine {#smashing-magazine}
 
