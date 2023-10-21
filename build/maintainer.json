@@ -1182,6 +1182,9 @@
     "/chinadegrees/:province?": [
         "TonyRL"
     ],
+    "/chinafactcheck": [
+        "kdanfly"
+    ],
     "/chinafactcheck/": [
         "kdanfly"
     ],
