@@ -2,7 +2,9 @@ name: Semgrep
 
 # https://semgrep.dev/docs/semgrep-ci/sample-ci-configs/#sample-github-actions-configuration-file
 on:
-  pull_request: {}
+  pull_request_target:
+    branches:
+      - master
   push:
     branches:
       - master
