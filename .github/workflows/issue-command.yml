@@ -13,6 +13,9 @@ jobs:
     if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && github.event.comment.author_association == 'COLLABORATOR'
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Checkout the latest code
         uses: actions/checkout@v4
@@ -32,7 +35,7 @@ jobs:
       contents: read
       issues: write
     steps:
-      - uses: bdougie/take-action@v1.6
+      - uses: bdougie/take-action@v1.6.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           trigger: '/wip'
@@ -64,7 +67,7 @@ jobs:
         run: pnpm i && pnpm rb
 
       - name: Fetch affected routes
-        id: fetchRoute
+        id: fetch-route
         uses: actions/github-script@v6
         env:
           EVENT: ${{ toJson(github.event) }}
@@ -91,7 +94,7 @@ jobs:
         uses: actions/github-script@v6
         env:
           TEST_BASEURL: http://localhost:1200
-          TEST_ROUTES: ${{ steps.fetchRoute.outputs.result }}
+          TEST_ROUTES: ${{ steps.fetch-route.outputs.result }}
           EVENT: ${{ toJson(github.event) }}
         with:
           script: |

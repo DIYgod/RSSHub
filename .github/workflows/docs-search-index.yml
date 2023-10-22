@@ -8,9 +8,12 @@ on:
       - '.github/workflows/docs-search-index.yml'
       - 'scripts/docs-scraper/docs.rsshub.app.json'
       - 'website/**'
-  workflow_dispatch: ~
+  workflow_dispatch: {}
   schedule:
   - cron: '44 1 * * 1'
+
+permissions:
+  contents: read
 
 concurrency:
   group: docs-search-index
@@ -18,7 +21,6 @@ concurrency:
 jobs:
   scrape-docs:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,6 +30,7 @@ jobs:
         run: sleep 2m
         if: github.event_name == 'push'
       - name: Run docs-scraper
+        timeout-minutes: 15
         env:
           HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
           API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}

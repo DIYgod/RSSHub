@@ -1,18 +1,25 @@
-name: build assets
+name: Build assets
 
 on:
   push:
     branches:
       - master
     paths:
-      - 'lib/**'
-      - 'scripts/workflow/*.js'
+      - 'assets/radar-rules.js'
+      - 'lib/**/maintainer.js'
+      - 'lib/**/radar-rules.js'
+      - 'lib/**/radar.js'
+
+permissions:
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
     name: Build assets
     timeout-minutes: 5
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
