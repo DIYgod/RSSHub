@@ -91,14 +91,14 @@ jobs:
           TEST_ROUTES: ${{ steps.fetch-route.outputs.result }}
           PULL_REQUEST: ${{ steps.pr-data.outputs.data }}
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const PR = JSON.parse(process.env.PULL_REQUEST)
             const link = process.env.TEST_BASEURL
             const routes = JSON.parse(process.env.TEST_ROUTES)
             const number = PR.number
             core.info(`${link}, ${routes}, ${number}`)
-            const got = require("got");
+            const got = require("got")
             const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/test.js`)
             return script({ github, context, core, got }, link, routes, number)
 
