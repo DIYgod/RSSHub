@@ -395,3 +395,19 @@ describe('opencc', () => {
         expect(parsed.items[0].content).toBe('宇宙无敌');
     });
 });
+
+describe('openai', () => {
+    it(`gpt`, async () => {
+        config.openai.openai_key = 'sk-1234567890';
+        const response_with_gpt = await request.get('/test/gpt?gpt=true');
+        const response_normal = await request.get('/test/gpt');
+        expect(response_with_gpt.status).toBe(200);
+        expect(response_normal.status).toBe(200);
+        const parsed_gpt = await parser.parseString(response_with_gpt.text);
+        const parsed_normal = await parser.parseString(response_normal.text);
+        expect(parsed_gpt.items[0].content).not.toBe(undefined);
+        expect(parsed_gpt.items[0].content).toBe(parsed_normal.items[0].content);
+        expect(parsed_gpt.items[1].content).not.toBe(undefined);
+        expect(parsed_gpt.items[1].content).not.toBe(parsed_normal.items[1].content);
+    }, 60000);
+});
