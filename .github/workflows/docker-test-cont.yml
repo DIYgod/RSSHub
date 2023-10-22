@@ -1,4 +1,5 @@
 name: PR - route test
+
 on:
   workflow_run:
     workflows: [ PR - Docker build test ]  # open, reopen, synchronized, edited included
@@ -32,7 +33,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Fetch affected routes
-        id: fetchRoute
+        id: fetch-route
         uses: actions/github-script@v6
         env:
           PULL_REQUEST: ${{ steps.pr-data.outputs.data }}
@@ -87,7 +88,7 @@ jobs:
         uses: actions/github-script@v6
         env:
           TEST_BASEURL: http://localhost:1200
-          TEST_ROUTES: ${{ steps.fetchRoute.outputs.result }}
+          TEST_ROUTES: ${{ steps.fetch-route.outputs.result }}
           PULL_REQUEST: ${{ steps.pr-data.outputs.data }}
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
