@@ -70,7 +70,7 @@ paramsDesc={['一个整数，筛选最新的limit场比赛，默认为10', '比�
 |     4    | King of The Hill [KoH 抢占山头]   |
 |     5    | Mix [混合]                        |
 
-> class 以 <https://api.ctfhub.com/User_API/Event/getType> 的返回结果为准
+> class 以 [https://api.ctfhub.com/User_API/Event/getType](https://api.ctfhub.com/User_API/Event/getType) 的返回结果为准
 
 | `:form` | 形式   |
 | :-----: | ------ |
@@ -81,9 +81,7 @@ paramsDesc={['一个整数，筛选最新的limit场比赛，默认为10', '比�
 
 ### 查询近期赛事 {#ctfhub-calendar-cha-xun-jin-qi-sai-shi}
 
-<Route author="frankli0324" example="/ctfhub/upcoming"
-path="/ctfhub/upcoming/:limit?"
-paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
+<Route author="frankli0324" example="/ctfhub/upcoming" path="/ctfhub/upcoming/:limit?" paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 </Route>
 
@@ -389,11 +387,11 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 :::tip
 
-分类字段处填写的是对应东莞教研网网址中中介于 **<https://www.dgjyw.com/>** 和 **.htm** 中间的一段。
+分类字段处填写的是对应东莞教研网网址中中介于 **`https://www.dgjyw.com/`** 和 **.htm** 中间的一段。
 
-如 [通知](https://www.dgjyw.com/tz.htm) 的网址为 <https://www.dgjyw.com/tz.htm>，其中间字段为 `tz`，所以可得路由为 [`/dgjyw/tz`](https://rsshub.app/dgjyw/tz)；
+如 [通知](https://www.dgjyw.com/tz.htm) 的网址为 `https://www.dgjyw.com/tz.htm`，其中间字段为 `tz`，所以可得路由为 [`/dgjyw/tz`](https://rsshub.app/dgjyw/tz)；
 
-同理，[教育科研 - 科研文件](https://www.dgjyw.com/jyky/kywj.htm) 的网址为 <https://www.dgjyw.com/jyky/kywj.htm>，其中间字段为 `jyky/kywj`，所以可得路由为 [`/dgjyw/jyky/kywj`](https://rsshub.app/dgjyw/jyky/kywj)。
+同理，[教育科研 - 科研文件](https://www.dgjyw.com/jyky/kywj.htm) 的网址为 `https://www.dgjyw.com/jyky/kywj.htm`，其中间字段为 `jyky/kywj`，所以可得路由为 [`/dgjyw/jyky/kywj`](https://rsshub.app/dgjyw/jyky/kywj)。
 
 :::
 
@@ -457,9 +455,9 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 :::tip
 
-若订阅 [信息与政策](https://www.sdzk.cn/NewsList.aspx?BCID=1)，网址为 <https://www.sdzk.cn/NewsList.aspx?BCID=1>。截取 `BCID=1` 作为参数，此时路由为 [`/sdzk/1`](https://rsshub.app/sdzk/1)。
+若订阅 [信息与政策](https://www.sdzk.cn/NewsList.aspx?BCID=1)，网址为 `https://www.sdzk.cn/NewsList.aspx?BCID=1`。截取 `BCID=1` 作为参数，此时路由为 [`/sdzk/1`](https://rsshub.app/sdzk/1)。
 
-若订阅 [通知公告](https://www.sdzk.cn/NewsList.aspx?BCID=1&CID=16)，网址为 <https://www.sdzk.cn/NewsList.aspx?BCID=1&CID=16>。截取 `BCID=1` 与 `CID=16` 作为参数，此时路由为 [`/sdzk/1/16`](https://rsshub.app/sdzk/1/16)。
+若订阅 [通知公告](https://www.sdzk.cn/NewsList.aspx?BCID=1&CID=16)，网址为 `https://www.sdzk.cn/NewsList.aspx?BCID=1&CID=16`。截取 `BCID=1` 与 `CID=16` 作为参数，此时路由为 [`/sdzk/1/16`](https://rsshub.app/sdzk/1/16)。
 
 :::
 
@@ -489,7 +487,7 @@ paramsDesc={['一个整数，筛选最近的limit场比赛，默认为5']}>
 
 ### 消息速递 {#shang-hai-shi-jiao-yu-kao-shi-yuan-xiao-xi-su-di}
 
-官方网址：<http://www.shmeea.edu.cn>
+官方网址：[http://www.shmeea.edu.cn](http://www.shmeea.edu.cn)
 
 <Route author="jialinghui" example="/shmeea" path="/shmeea" radar="1" rssbud="1"/>
 

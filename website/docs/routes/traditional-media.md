@@ -16,7 +16,7 @@
 
 All Topics in [Topic Library](https://abc.net.au/news/topics) are supported, you can fill in the field after `topic` in its URL, or fill in the `documentId`.
 
-For example, the URL for [Computer Science](https://www.abc.net.au/news/topic/computer-science) is <https://www.abc.net.au/news/topic/computer-science>, the `category` is `news/topic/computer-science`, and the `documentId` of the Topic is `2302`, so the route is [/abc/news/topic/computer-science](https://rsshub.app/abc/news/topic/computer-science) and [/abc/2302](https://rsshub.app/abc/2302).
+For example, the URL for [Computer Science](https://www.abc.net.au/news/topic/computer-science) is `https://www.abc.net.au/news/topic/computer-science`, the `category` is `news/topic/computer-science`, and the `documentId` of the Topic is `2302`, so the route is [/abc/news/topic/computer-science](https://rsshub.app/abc/news/topic/computer-science) and [/abc/2302](https://rsshub.app/abc/2302).
 
 The supported channels are all listed in the table below. For other channels, please find the `documentId` in the source code of the channel page and fill it in as above.
 
@@ -441,7 +441,7 @@ Provide full article RSS for CBC topics.
 
 **编号** 仅对事件追蹤、評論節目、新聞專題三个分类起作用，例子如下：
 
-对于 [事件追蹤](https://news.now.com/home/tracker) 中的 [塔利班奪權](https://news.now.com/home/tracker/detail?catCode=123&topicId=1056) 话题，其网址为<https://news.now.com/home/tracker/detail?catCode=123&topicId=1056>，其中 `topicId` 为 1056，则对应路由为 [`/now/news/tracker/1056`](https://rsshub.app/now/news/tracker/1056)
+对于 [事件追蹤](https://news.now.com/home/tracker) 中的 [塔利班奪權](https://news.now.com/home/tracker/detail?catCode=123&topicId=1056) 话题，其网址为 `https://news.now.com/home/tracker/detail?catCode=123&topicId=1056`，其中 `topicId` 为 1056，则对应路由为 [`/now/news/tracker/1056`](https://rsshub.app/now/news/tracker/1056)
 
 :::
 
@@ -595,7 +595,7 @@ More could be found in the URL of the category/topic page.
 
 ### News {#rthk-xiang-gang-dian-tai-news}
 
-RTHK offical provides full text RSS, check the offical website for detail information: <https://news.rthk.hk/rthk/en/rss.htm>
+RTHK offical provides full text RSS, check the offical website for detail information: [https://news.rthk.hk/rthk/en/rss.htm](https://news.rthk.hk/rthk/en/rss.htm)
 
 This route adds the missing photo and Link element. (Offical RSS doesn't have Link element may cause issue on some RSS client)
 
@@ -615,7 +615,7 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 
 :::tip
 
-When subscribing to podcasts, fill `category` with **podcast**. For example, URL to [SBS 普通话电台](https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin) is <https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin>, with **sbs-mandarin** as `id`, **mandarin** as `dialect`, `language` as **zh-hans**, and the route is [`/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans).
+When subscribing to podcasts, fill `category` with **podcast**. For example, URL to [SBS 普通话电台](https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin) is `https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin`, with **sbs-mandarin** as `id`, **mandarin** as `dialect`, `language` as **zh-hans**, and the route is [`/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans).
 
 :::
 
@@ -671,7 +671,7 @@ You still can customize `language`, however, it is important to note that not al
 
 Solidot 提供的 feed:
 
--   <https://www.solidot.org/index.rss>
+-   [https://www.solidot.org/index.rss](https://www.solidot.org/index.rss)
 
 :::
 
@@ -762,7 +762,7 @@ Language
 | ------------ | ------ | -------- | ---------- | -------- |
 | most-popular | latest | politics | technology | business |
 
-More categories (except photo) can be found within the navigation bar at <https://www.theatlantic.com/>
+More categories (except photo) can be found within the navigation bar at [https://www.theatlantic.com](https://www.theatlantic.com)
 
 </Route>
 
@@ -788,7 +788,7 @@ More categories (except photo) can be found within the navigation bar at <https:
 
 <Route author="nczitzk" example="/economist/download" path="/economist/download" >
 
-The download site: <http://www.cgx02.xyz/index.php?dir=/te>
+The download site: [http://www.cgx02.xyz/index.php?dir=/te](http://www.cgx02.xyz/index.php?dir=/te)
 
 </Route>
 
@@ -838,7 +838,7 @@ Provides all of the articles by the specified New York Times author.
 
 <Route author="yueyericardo nczitzk" example="/nytimes/daily_briefing_chinese" path="/nytimes/daily_briefing_chinese">
 
-网站地址：<https://www.nytimes.com/zh-hans/series/daily-briefing-chinese>
+网站地址：[https://www.nytimes.com/zh-hans/series/daily-briefing-chinese](https://www.nytimes.com/zh-hans/series/daily-briefing-chinese)
 
 </Route>
 
@@ -882,9 +882,9 @@ Provides all of the articles by the specified New York Times author.
 
 :::tip
 
-如 [中国 经济 日经中文网](https://cn.nikkei.com/china/ceconomy.html) 的 URL 为 <https://cn.nikkei.com/china/ceconomy.html> 对应路由为 [`/nikkei/cn/cn/china/ceconomy`](https://rsshub.app/nikkei/cn/cn/china/ceconomy)
+如 [中国 经济 日经中文网](https://cn.nikkei.com/china/ceconomy.html) 的 URL 为 `https://cn.nikkei.com/china/ceconomy.html` 对应路由为 [`/nikkei/cn/cn/china/ceconomy`](https://rsshub.app/nikkei/cn/cn/china/ceconomy)
 
-如 [中國 經濟 日經中文網](https://zh.cn.nikkei.com/china/ceconomy.html) 的 URL 为 <https://zh.cn.nikkei.com/china/ceconomy.html> 对应路由为 [`/nikkei/cn/zh/china/ceconomy`](https://rsshub.app/nikkei/cn/zh/china/ceconomy)
+如 [中國 經濟 日經中文網](https://zh.cn.nikkei.com/china/ceconomy.html) 的 URL 为 `https://zh.cn.nikkei.com/china/ceconomy.html` 对应路由为 [`/nikkei/cn/zh/china/ceconomy`](https://rsshub.app/nikkei/cn/zh/china/ceconomy)
 
 特别地，当 `path` 填入 `rss` 后（如路由为 [`/nikkei/cn/cn/rss`](https://rsshub.app/nikkei/cn/cn/rss)），此时返回的是 [官方 RSS 的内容](https://cn.nikkei.com/rss.html)
 
@@ -932,7 +932,7 @@ Provide full article RSS for WSJ topics.
 
 `频道`
 
-可於各語言官網聚合新聞處 (如 <https://www.voacantonese.com/rssfeeds>) 獲取
+可於各語言官網聚合新聞處 (如 [https://www.voacantonese.com/rssfeeds](https://www.voacantonese.com/rssfeeds)) 獲取
 
 例如 `https://www.voacantonese.com/api/zyrtyequty` 將對應 `/voa/cantonese/zyrtyequty`
 
@@ -1843,7 +1843,7 @@ category 对应的关键词有
 
 ### 其他栏目 {#lian-he-zao-bao-qi-ta-lan-mu}
 
-除了上面两个兼容规则之外，联合早报网站里所有页面形如 <https://www.zaobao.com/wencui/politic> 这样的栏目都能被这个规则解析到，早报的大部分栏目都是这个样式的。你可以测试之后再订阅。
+除了上面两个兼容规则之外，联合早报网站里所有页面形如 [https://www.zaobao.com/wencui/politic](https://www.zaobao.com/wencui/politic) 这样的栏目都能被这个规则解析到，早报的大部分栏目都是这个样式的。你可以测试之后再订阅。
 
 <Route author="lengthmin" example="/zaobao/wencui/politic" path="/zaobao/:type?/:section?" paramsDesc={['https://www.zaobao.com/**wencui**/politic 中的 **wencui**', 'https://www.zaobao.com/wencui/**politic** 中的 **politic**']} />
 
@@ -1888,8 +1888,8 @@ category 对应的关键词有
 
 <Route author="TimWu007" example="/oeeee/web/170" path="/oeeee/web/:channel" paramsDesc={['频道 ID']}>
 
--   若在桌面端打开奥一网栏目页（如 <https://www.oeeee.com/api/channel.php?s=/index/index/channel/gz），可查看该页源代码，搜索> `OECID`。
--   若在移动端打开奥一网栏目页（格式例：<https://m.oeeee.com/m.php?s=/m2/channel&channel_id=169），即可从> url 中获取。需注意的是，如果该栏目页的 url 格式为 <https://m.oeeee.com/detailChannel_indexData.html?channel_id=266> ，则 `266` 并非为本路由可用的频道 ID，建议从桌面端获取。
+-   若在桌面端打开奥一网栏目页（如 `https://www.oeeee.com/api/channel.php?s=/index/index/channel/gz`），可查看该页源代码，搜索 `OECID`。
+-   若在移动端打开奥一网栏目页（格式例：`https://m.oeeee.com/m.php?s=/m2/channel&channel_id=169`），即可从 url 中获取。需注意的是，如果该栏目页的 url 格式为 `https://m.oeeee.com/detailChannel_indexData.html?channel_id=266` ，则 `266` 并非为本路由可用的频道 ID，建议从桌面端获取。
 
 </Route>
 
@@ -1921,9 +1921,9 @@ category 对应的关键词有
 
 :::
 
-1.  `pc.nfapp.southcn.com` 下的文章页面，可通过 url 查看，例：<http://pc.nfapp.southcn.com/13707/7491109.html> 的栏目 ID 为 `13707`。
+1.  `pc.nfapp.southcn.com` 下的文章页面，可通过 url 查看，例：`http://pc.nfapp.southcn.com/13707/7491109.html` 的栏目 ID 为 `13707`。
 2.  `static.nfapp.southcn.com` 下的文章页面，可查看网页源代码，搜索 `columnid`。
-3.  <https://m.nfapp.southcn.com/column/all> 列出了部分栏目，`id` 即为栏目 ID。
+3.  [https://m.nfapp.southcn.com/column/all](https://m.nfapp.southcn.com/column/all) 列出了部分栏目，`id` 即为栏目 ID。
 
 </Route>
 
@@ -2007,7 +2007,7 @@ category 对应的关键词有
 
 :::tip
 
-如 [蒙古语卫视新闻联播](http://www.nmtv.cn/folder292/folder663/folder301/folder830/folder877) 的 URL 为 <http://www.nmtv.cn/folder292/folder663/folder301/folder830/folder877>，其栏目 id 为末尾数字编号，即 `877`。可以得到其对应路由为 [`/nmtv/column/877`](https://rsshub.app/nmtv/column/877)
+如 [蒙古语卫视新闻联播](http://www.nmtv.cn/folder292/folder663/folder301/folder830/folder877) 的 URL 为 `http://www.nmtv.cn/folder292/folder663/folder301/folder830/folder877`，其栏目 id 为末尾数字编号，即 `877`。可以得到其对应路由为 [`/nmtv/column/877`](https://rsshub.app/nmtv/column/877)
 
 :::
 
@@ -2213,13 +2213,13 @@ category 对应的关键词有
 
 订阅 **单级** 栏目如 [滚动 -- 生态 -- 人民网](http://env.people.com.cn/GB/74877/index.html) 分类栏目，分为 3 步：
 
-1.  将 URL <http://env.people.com.cn/GB/74877/index.html> 中 `http://` 与 `.people.com.cn/` 中间的 `env` 作为 `site` 参数填入；
+1.  将 URL `http://env.people.com.cn/GB/74877/index.html` 中 `http://` 与 `.people.com.cn/` 中间的 `env` 作为 `site` 参数填入；
 2.  将 `http://env.people.com.cn/GB/` 与 `/index.html` 间的 `74877` 作为 `category` 参数填入；
 3.  最终可获得 [`/people/env/74877`](https://rsshub.app/people/env/74877)。
 
 订阅 **多级** 栏目如 [经济观察 -- 观点 -- 人民网](http://opinion.people.com.cn/GB/427456/434878/index.html) 分类栏目，同样分为 3 步：
 
-1.  将 URL <http://opinion.people.com.cn/GB/427456/434878/index.html> 中 `http://` 与 `.people.com.cn/` 中间的 `opinion` 作为 `site` 参数填入；
+1.  将 URL `http://opinion.people.com.cn/GB/427456/434878/index.html` 中 `http://` 与 `.people.com.cn/` 中间的 `opinion` 作为 `site` 参数填入；
 2.  把 `http://opinion.people.com.cn/GB/` 与 `/index.html` 间 `427456/434878` 作为 `category` 参数填入；
 3.  最终可获得 [`/people/opinion/427456/434878`](https://rsshub.app/people/opinion/427456/434878)。
 
@@ -2421,11 +2421,15 @@ category 对应的关键词有
 
 ### 新闻 {#xiang-gang-jing-ji-ri-bao-xin-wen}
 
-香港经济日报已有提供简单 RSS，详细可前往官方网站： <https://www.hket.com/rss>
+香港经济日报已有提供简单 RSS，详细可前往官方网站： [https://www.hket.com/rss](https://www.hket.com/rss)
 
 此路由主要补全官方 RSS 全文输出及完善分类输出。
 
 <Route author="TonyRL" example="/hket/sran001" path="/hket/:category?" paramsDesc={['分类，默认为全部新闻，可在 URL 中找到，部分见下表']} radar="1" rssbud="1">
+
+<details>
+
+<summary>分类</summary>
 
 | sran001  | sran008  | sran010  | sran011  | sran012  | srat006  |
 | -------- | -------- | -------- | -------- | -------- | -------- |
@@ -2478,6 +2482,8 @@ category 对应的关键词有
 | sraw020  | sraw020-1    | sraw020-2 | sraw020-3 | sraw020-4 |
 | -------- | ------------ | --------- | --------- | --------- |
 | ESG 主页 | ESG 趋势政策 | ESG 投资  | ESG 企业  | ESG 社会  |
+
+</details>
 
 </Route>
 
@@ -2630,7 +2636,7 @@ category 对应的关键词有
 
 :::tip
 
-如 [2020 年国家网络安全宣传周](https://news.cctv.com/special/2020gjwlaqxcz/index.shtml) 的专题页 URL 为 <https://news.cctv.com/special/2020gjwlaqxcz/index.shtml。其专题> id 即为 `2020gjwlaqxcz`。
+如 [2020 年国家网络安全宣传周](https://news.cctv.com/special/2020gjwlaqxcz/index.shtml) 的专题页 URL 为 `https://news.cctv.com/special/2020gjwlaqxcz/index.shtml`。其专题 id 即为 `2020gjwlaqxcz`。
 
 :::
 

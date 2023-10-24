@@ -6,7 +6,7 @@ To subscribe to a Twitter user's timeline, first look at the route document of [
 
 `/twitter/user/:id` is the route where `:id` is the actual Twitter username you need to replace. For instance, `/twitter/user/DIYgod` with a prefix domain name will give you the timeline of Twitter user DIYgod.
 
-The demo instance will generate an RSS feed at <https://rsshub.app/twitter/user/DIYgod>, use your own domain name when applicable. This feed should work with all RSS readers conforming to the RSS Standard.
+The demo instance will generate an RSS feed at `https://rsshub.app/twitter/user/DIYgod`, use your own domain name when applicable. This feed should work with all RSS readers conforming to the RSS Standard.
 
 You can replace the domain name `https://rsshub.app` with your [self-hosted instance](/install).
 

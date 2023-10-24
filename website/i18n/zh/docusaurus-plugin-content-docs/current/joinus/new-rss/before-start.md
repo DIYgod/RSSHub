@@ -76,7 +76,7 @@ npm run dev
 
 ## 创建命名空间
 
-制作新的 RSS 路由的第一步是创建命名空间。命名空间应该与您制作 RSS 源的主要网站的二级域名**相同**。例如，如果您正在为 <https://github.com/DIYgod/RSSHub/issues> 制作 RSS 源，第二级域名是 `github`。因此，您应该在 `lib/v2` 下创建名为 `github` 的文件夹，作为您的 RSS 路由的命名空间。
+制作新的 RSS 路由的第一步是创建命名空间。命名空间应该与您制作 RSS 源的主要网站的二级域名**相同**。例如，如果您正在为 [https://github.com/DIYgod/RSSHub/issues](https://github.com/DIYgod/RSSHub/issues) 制作 RSS 源，第二级域名是 `github`。因此，您应该在 `lib/v2` 下创建名为 `github` 的文件夹，作为您的 RSS 路由的命名空间。
 
 :::tip
 

@@ -106,7 +106,7 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 | ----------------- | ------------------- | -------- | -------- | --------------- | -------- | -------------- |
 | hirasawayui       | se7en               | walnut   | themez   | comeet          | sunskyxh | zmd            |
 
-> 原则上只要是 {type}.hedwig.pub 都可以匹配。
+> 原则上只要是 `type`.hedwig.pub 都可以匹配。
 
 ## Hexo {#hexo}
 
@@ -174,7 +174,7 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 <Route author="ImSingee" example="/medium/list/imsingee/f2d8d48096a9" path="/medium/list/:user/:catalogId" paramsDesc={['Username', 'List ID']}>
 
-The List ID is the last part of the URL after `-`, for example, the username in <https://medium.com/@imsingee/list/collection-7e67004f23f9> is `imsingee`, and the ID is `7e67004f23f9`.
+The List ID is the last part of the URL after `-`, for example, the username in [https://medium.com/@imsingee/list/collection-7e67004f23f9](https://medium.com/@imsingee/list/collection-7e67004f23f9) is `imsingee`, and the ID is `7e67004f23f9`.
 
 :::caution
 

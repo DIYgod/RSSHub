@@ -67,7 +67,7 @@ The parameters can be extracted from the Release page URL: `https://install.appc
 
 :::tip
 
-For example, the URL of [GarageBand](https://apps.apple.com/us/app/messages/id408709785) in the App Store is <https://apps.apple.com/us/app/messages/id408709785>. In this case, the `App Store Country` parameter for the route is `us`, and the `App id` parameter is `id1146560473`. So the route should be [`/apple/apps/update/us/id408709785`](https://rsshub.app/apple/apps/update/us/id408709785).
+For example, the URL of [GarageBand](https://apps.apple.com/us/app/messages/id408709785) in the App Store is `https://apps.apple.com/us/app/messages/id408709785`. In this case, the `App Store Country` parameter for the route is `us`, and the `App id` parameter is `id1146560473`. So the route should be [`/apple/apps/update/us/id408709785`](https://rsshub.app/apple/apps/update/us/id408709785).
 
 :::
 
@@ -259,7 +259,7 @@ For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` t
 
 :::caution
 
-The owner of the official image fills in the library, for example: <https://rsshub.app/dockerhub/build/library/mysql>
+The owner of the official image fills in the library, for example: [https://rsshub.app/dockerhub/build/library/mysql](https://rsshub.app/dockerhub/build/library/mysql)
 
 :::
 
@@ -271,7 +271,7 @@ The owner of the official image fills in the library, for example: <https://rssh
 
 :::caution
 
-Use `library` as the `owner` for official images, such as <https://rsshub.app/dockerhub/tag/library/mysql>
+Use `library` as the `owner` for official images, such as [https://rsshub.app/dockerhub/tag/library/mysql](https://rsshub.app/dockerhub/tag/library/mysql)
 
 :::
 
@@ -365,9 +365,9 @@ Language
 
 :::caution
 
-1.  Open <https://ifi-audio.com/download-hub> and the Network panel
+1.  Open [https://ifi-audio.com/download-hub](https://ifi-audio.com/download-hub) and the Network panel
 2.  Select the device and the corresponding serial number in the website and click Search
-3.  Find the last request named <https://ifi-audio.com/wp-admin/admin-ajax.php> in the Network panel, find out the val and id in the Payload panel, and fill in the url
+3.  Find the last request named `https://ifi-audio.com/wp-admin/admin-ajax.php` in the Network panel, find out the val and id in the Payload panel, and fill in the url
 
 :::
 
@@ -394,7 +394,7 @@ Language
 :::caution
 
 Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
-请使用 <https://github.com/logseq/logseq/releases.atom> 代替。
+请使用 `https://github.com/logseq/logseq/releases.atom` 代替。
 
 :::
 
