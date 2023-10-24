@@ -44,6 +44,9 @@ async function parseBodyRoutes(body, core) {
 }
 
 async function getMaintainersByRoutes(routes, core) {
+    // TODO: change me when https://github.com/actions/github-script is run on node20
+    // const response = await fetch(maintainerURL);
+    // const maintainers = await response.json();
     const maintainers = await got(maintainerURL).json();
 
     return routes.map((e) => {

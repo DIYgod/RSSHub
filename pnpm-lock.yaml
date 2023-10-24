@@ -18,8 +18,8 @@ dependencies:
     specifier: 7.74.1
     version: 7.74.1
   '@tonyrl/rand-user-agent':
-    specifier: 2.0.35
-    version: 2.0.35
+    specifier: 2.0.36
+    version: 2.0.36
   aes-js:
     specifier: 3.1.2
     version: 3.1.2
@@ -257,8 +257,8 @@ devDependencies:
     specifier: 3.4.3
     version: 3.4.3
   '@types/markdown-it':
-    specifier: 13.0.4
-    version: 13.0.4
+    specifier: 13.0.5
+    version: 13.0.5
   '@types/module-alias':
     specifier: 2.0.3
     version: 2.0.3
@@ -1329,8 +1329,8 @@ packages:
       defer-to-connect: 2.0.1
     dev: false
 
-  /@tonyrl/rand-user-agent@2.0.35:
-    resolution: {integrity: sha512-XUuA96FAcLEUWA2Kw5V595VLo1YZIUU8REUt7LtvbU2XBTJhnpphGWZgq5kLmASqgHNfABMFlJJ7yipb/53Tsg==}
+  /@tonyrl/rand-user-agent@2.0.36:
+    resolution: {integrity: sha512-YFTtCs0y4GfyXjWaldAxM0GcdOcHxL0Evg0NxvjyJOI4IH3Baxl3k6JMTpedvX9jgICnS8jRNhOaxBgV0NXhiA==}
     engines: {node: '>=14.16'}
     dev: false
 
@@ -1635,8 +1635,8 @@ packages:
       iconv-lite: 0.6.3
     dev: true
 
-  /@types/markdown-it@13.0.4:
-    resolution: {integrity: sha512-FAIUdEXrCDnQmAAmJC+UeW/3p0eCI4QZ/+W0lX/h83VD3v78IgTFYftjnAeXS8H0g4PFQCgipc51cQDA8tjgLw==}
+  /@types/markdown-it@13.0.5:
+    resolution: {integrity: sha512-QhJP7hkq3FCrFNx0szMNCT/79CXfcEgUIA3jc5GBfeXqoKsk3R8JZm2wRXJ2DiyjbPE4VMFOSDemLFcUTZmHEQ==}
     dependencies:
       '@types/linkify-it': 3.0.3
       '@types/mdurl': 1.0.2
