@@ -6729,6 +6729,9 @@
         "HenryQW",
         "vbali"
     ],
+    "/thoughtco/:category?": [
+        "nczitzk"
+    ],
     "/threads/:user/:routeParams?": [
         "ninboy"
     ],
