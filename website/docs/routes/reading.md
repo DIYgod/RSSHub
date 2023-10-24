@@ -22,7 +22,7 @@
 
 <Route author="huangliangshusheng" example="/hameln/chapter/264928" path="/hameln/chapter/:id" paramsDesc={['Novel id, can be found in URL']}>
 
-Eg:<https://syosetu.org/novel/264928/>
+Eg: [https://syosetu.org/novel/264928](https://syosetu.org/novel/264928)
 
 </Route>
 
@@ -32,9 +32,9 @@ Eg:<https://syosetu.org/novel/264928/>
 
 <Route author="BeautyyuYanli" example="/inoreader/html_clip/1006346356/News?limit=3" path="/html_clip/:user/:tag" paramsDesc={['user id, the interger after user/ in the example URL','tag, the string after tag/ in the example URL']}>
 
-Use query parameter `limit=n` to limit the number of articles, default to 20
+Use common query parameter `limit=n` to limit the number of articles, default to 20
 
-Eg: <https://www.inoreader.com/stream/user/1006346356/tag/News/view/html?n=3>
+Eg: [https://www.inoreader.com/stream/user/1006346356/tag/News/view/html?limit=3](https://www.inoreader.com/stream/user/1006346356/tag/News/view/html?limit=3)
 
 </Route>
 
@@ -48,7 +48,7 @@ Eg: <https://www.inoreader.com/stream/user/1006346356/tag/News/view/html?n=3>
 
 <Route author="huangliangshusheng" example="/kakuyomu/episode/1177354054883783581" path="/kakuyomu/episode/:id" paramsDesc={['Novel id, can be found in URL']}>
 
-Eg:<https://kakuyomu.jp/works/1177354054883783581>
+Eg: [https://kakuyomu.jp/works/1177354054883783581](https://kakuyomu.jp/works/1177354054883783581)
 
 </Route>
 
@@ -80,7 +80,7 @@ Eg:<https://kakuyomu.jp/works/1177354054883783581>
 
 <Route author="NavePnow" example="/magazinelib/latest-magazine/new+yorker" path="/magazinelib/latest-magazine/:query?" paramsDesc={['query, search page querystring']}/>
 
-For instance, when doing search at <https://magazinelib.com/> and you get url <https://magazinelib.com/?s=new+yorker>, the query is `new+yorker`
+For instance, when doing search at [https://magazinelib.com](https://magazinelib.com) and you get url `https://magazinelib.com/?s=new+yorker`, the query is `new+yorker`
 
 </Route>
 
@@ -156,7 +156,7 @@ For instance, when doing search at <https://magazinelib.com/> and you get url <h
 
 <Route author="huangliangshusheng" example="/syosetu/chapter/n1976ey" path="/syosetu/chapter/:id" paramsDesc={['Novel id, can be found in URL']}>
 
-Eg:<https://ncode.syosetu.com/n1976ey/>
+Eg: `https://ncode.syosetu.com/n1976ey/`
 
 </Route>
 
@@ -217,23 +217,23 @@ Eg:<https://ncode.syosetu.com/n1976ey/>
 
 :::
 
-| 网址                       | 名称       |
-| -------------------------- | ---------- |
-| <https://www.xbiquwx.la>   | 笔尖中文   |
-| <http://www.biqu5200.net>  | 笔趣阁     |
-| <https://www.xbiquge.so>   | 笔趣阁     |
-| <https://www.biqugeu.net>  | 顶点小说网 |
-| <http://www.b520.cc>       | 笔趣阁     |
-| <https://www.ahfgb.com>    | 笔趣鸽     |
-| <https://www.ibiquge.la>   | 香书小说   |
-| <https://www.biquge.tv>    | 笔趣阁     |
-| <https://www.bswtan.com>   | 笔书网     |
-| <https://www.biquge.co>    | 笔趣阁     |
-| <https://www.bqzhh.com>    | 笔趣阁     |
-| <http://www.biqugse.com>   | 笔趣阁     |
-| <https://www.ibiquge.info> | 爱笔楼     |
-| <https://www.ishuquge.com> | 书趣阁     |
-| <https://www.mayiwxw.com>  | 蚂蚁文学   |
+| 网址                                                | 名称       |
+| -------------------------------------------------- | ---------- |
+| [https://www.xbiquwx.la](https://www.xbiquwx.la)   | 笔尖中文   |
+| [http://www.biqu5200.net](http://www.biqu5200.net)  | 笔趣阁     |
+| [https://www.xbiquge.so](https://www.xbiquge.so)   | 笔趣阁     |
+| [https://www.biqugeu.net](https://www.biqugeu.net)  | 顶点小说网 |
+| [http://www.b520.cc](http://www.b520.cc)       | 笔趣阁     |
+| [https://www.ahfgb.com](https://www.ahfgb.com)    | 笔趣鸽     |
+| [https://www.ibiquge.la](https://www.ibiquge.la)   | 香书小说   |
+| [https://www.biquge.tv](https://www.biquge.tv)    | 笔趣阁     |
+| [https://www.bswtan.com](https://www.bswtan.com)   | 笔书网     |
+| [https://www.biquge.co](https://www.biquge.co)    | 笔趣阁     |
+| [https://www.bqzhh.com](https://www.bqzhh.com)    | 笔趣阁     |
+| [http://www.biqugse.com](http://www.biqugse.com)   | 笔趣阁     |
+| [https://www.ibiquge.info](https://www.ibiquge.info) | 爱笔楼     |
+| [https://www.ishuquge.com](https://www.ishuquge.com) | 书趣阁     |
+| [https://www.mayiwxw.com](https://www.mayiwxw.com)  | 蚂蚁文学   |
 
 ### 小说 {#bi-qu-ge-xiao-shuo}
 
@@ -243,13 +243,13 @@ Eg:<https://ncode.syosetu.com/n1976ey/>
 
 #### 使用方法 {#bi-qu-ge-xiao-shuo-shi-yong-fang-fa}
 
-如订阅 [《大主宰》](http://www.biqu5200.net/0\_7/)，此时在 [biqu5200.net](http://www.biqu5200.net) 中查询得到对应小说详情页 URL 为 <http://www.biqu5200.net/0_7/>。此时，路由为 [`/biquge/http://www.biqu5200.net/0_7/`](https://rsshub.app/biquge/http://www.biqu5200.net/0\_7/)
+如订阅 [《大主宰》](http://www.biqu5200.net/0\_7/)，此时在 [biqu5200.net](http://www.biqu5200.net) 中查询得到对应小说详情页 URL 为 `http://www.biqu5200.net/0_7/`。此时，路由为 [`/biquge/http://www.biqu5200.net/0_7/`](https://rsshub.app/biquge/http://www.biqu5200.net/0_7/)
 
-又如同样订阅 [《大主宰》](https://www.shuquge.com/txt/70/index.html)，此时在 [shuquge.com](https://www.shuquge.com) 中查询得到对应小说详情页 URL 为 <https://www.shuquge.com/txt/70/index.html>。此时，把末尾的 `index.html` 去掉，路由为 [`/biquge/https://www.shuquge.com/txt/70/`](https://rsshub.app/biquge/https://www.shuquge.com/txt/70/)
+又如同样订阅 [《大主宰》](https://www.shuquge.com/txt/70/index.html)，此时在 [shuquge.com](https://www.shuquge.com) 中查询得到对应小说详情页 URL 为 `https://www.shuquge.com/txt/70/index.html`。此时，把末尾的 `index.html` 去掉，路由为 [`/biquge/https://www.shuquge.com/txt/70/`](https://rsshub.app/biquge/https://www.shuquge.com/txt/70/)
 
 #### 关于章节数 {#bi-qu-ge-xiao-shuo-guan-yu-zhang-jie-shu}
 
-路由默认返回最新 **1** 个章节，如有需要一次性获取多个章节，可在路由后指定 `limit` 参数。如上面的例子：订阅 [《大主宰》](http://www.biqu5200.net/0\_7/) 并获取最新的 **10** 个章节。此时，路由为 [`/biquge/http://www.biqu5200.net/0_7/?limit=10`](https://rsshub.app/biquge/http://www.biqu5200.net/0\_7/?limit=10)
+路由默认返回最新 **1** 个章节，如有需要一次性获取多个章节，可在路由后指定 `limit` 参数。如上面的例子：订阅 [《大主宰》](http://www.biqu5200.net/0\_7/) 并获取最新的 **10** 个章节。此时，路由为 [`/biquge/http://www.biqu5200.net/0_7/?limit=10`](https://rsshub.app/biquge/http://www.biqu5200.net/0_7/?limit=10)
 
 需要注意的是，单次获取的所有章节更新时间统一设定为最新章节的更新时间。也就是说，获取最新的 **10** 个章节时，除了最新 **1** 个章节的更新时间是准确的（和网站一致的），其他 **9** 个章节的更新时间是不准确的。
 
@@ -281,7 +281,7 @@ Eg:<https://ncode.syosetu.com/n1976ey/>
 
 全部期刊可以在 [这里](http://qk.chaoxing.com/space/index) 找到，你也可以从 [学科分类](https://qikan.chaoxing.com/jourclassify) 和 [期刊导航](https://qikan.chaoxing.com/search/openmag) 中发现更多期刊。
 
-如订阅 [**上海文艺**](http://m.chaoxing.com/mqk/list?sw=&mags=6b5c39b3dd84352be512e29df0297437&isort=20&from=space)，其 URL 为 <http://m.chaoxing.com/mqk/list?mags=6b5c39b3dd84352be512e29df0297437>。`6b5c39b3dd84352be512e29df0297437` 即为期刊 id，所得路由为 [`/chaoxing/qk/6b5c39b3dd84352be512e29df0297437`](https://rsshub.app/chaoxing/qk/6b5c39b3dd84352be512e29df0297437)
+如订阅 [**上海文艺**](http://m.chaoxing.com/mqk/list?sw=&mags=6b5c39b3dd84352be512e29df0297437&isort=20&from=space)，其 URL 为 `http://m.chaoxing.com/mqk/list?mags=6b5c39b3dd84352be512e29df0297437`。`6b5c39b3dd84352be512e29df0297437` 即为期刊 id，所得路由为 [`/chaoxing/qk/6b5c39b3dd84352be512e29df0297437`](https://rsshub.app/chaoxing/qk/6b5c39b3dd84352be512e29df0297437)
 
 :::
 
@@ -411,7 +411,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="squkw" example="/novel/booksky/98619" path="/novel/booksky/:id" paramsDesc={['小说 id, 可在对应小说页 URL 中找到, 例如 `98619`']}>
 
-举例网址：<http://booksky.so/BookDetail.aspx?Level=1&bid=98619>
+举例网址：`http://booksky.so/BookDetail.aspx?Level=1&bid=98619`
 
 </Route>
 
@@ -427,7 +427,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="LJason77" example="/novel/ptwxz/10/10272" path="/novel/ptwxz/:id1/:id2" paramsDesc={['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `10`', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `10272`']} >
 
-举例网址：<https://www.ptwxz.com/bookinfo/10/10272.html>
+举例网址：`https://www.ptwxz.com/bookinfo/10/10272.html`
 
 </Route>
 
@@ -521,8 +521,8 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 | 网址                                             | 对应路由                            |
 | ------------------------------------------------ | ----------------------------------- |
-| <http://science.bio1000.com/ecology-environment> | /biobio/science/ecology-environment |
-| <http://www.bio1000.com/gnjz>                    | /biobio/gnjz                        |
+| `http://science.bio1000.com/ecology-environment` | /biobio/science/ecology-environment |
+| `http://www.bio1000.com/gnjz`                    | /biobio/gnjz                        |
 
 ## 生物谷 {#sheng-wu-gu}
 
@@ -534,7 +534,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 | 网址                            | 对应路由           |
 | ------------------------------- | ------------------ |
-| <http://news.bioon.com/biology> | /shengwugu/biology |
+| `http://news.bioon.com/biology` | /shengwugu/biology |
 
 ## 书伴 {#shu-ban}
 
@@ -554,7 +554,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="lengthmin" example="/novel/wenxuemi/6/6144" path="/novel/wenxuemi/:id1/:id2" paramsDesc={['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `6`', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `6144`']}>
 
-举例网址：<https://www.wenxuemi.com/files/article/html/6/6144/>
+举例网址：`https://www.wenxuemi.com/files/article/html/6/6144/`
 
 </Route>
 
@@ -574,7 +574,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="suiyuran" example="/novel/zhaishuyuan/17858" path="/novel/zhaishuyuan/:id" paramsDesc={['小说 id, 可在对应小说页 URL 中找到, 例如 `17858`']} radar="1" rssbud="1">
 
-举例网址：<https://www.zhaishuyuan.com/book/17858>
+举例网址：`https://www.zhaishuyuan.com/book/17858`
 
 </Route>
 
@@ -589,4 +589,3 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 ### 主页 {#zuo-an-du-shu-zhu-ye}
 
 <Route author="kt286" example="/zreading" path="/zreading" />
-

@@ -109,7 +109,7 @@ $ docker pull diygod/rsshub
 $ docker run -d --name rsshub -p 1200:1200 diygod/rsshub
 ```
 
-在浏览器中打开 <http://127.0.0.1:1200/>，enjoy it! ✅
+在浏览器中打开 [http://127.0.0.1:1200](http://127.0.0.1:1200)，enjoy it! ✅
 
 您可以使用下面的命令来关闭 RSSHub
 
@@ -232,7 +232,7 @@ $ npm start
 $ pm2 start lib/index.js --name rsshub
 ```
 
-在浏览器中打开 <http://127.0.0.1:1200/>，enjoy it! ✅
+在浏览器中打开 [http://127.0.0.1:1200](http://127.0.0.1:1200)，enjoy it! ✅
 
 详细使用说明参照 [指南](/zh/)，替换所有路由例子中的 `https://rsshub.app/` 为 `http://localhost:1200` 即可正常使用
 
@@ -652,9 +652,9 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 | ----------- | ----------------- | ---------------------------------------- | -------------------------------- |
 | ILoveRSSHub | /qdaily/column/59 | md5('/qdaily/column/59' + 'ILoveRSSHub') | 0f820530128805ffc10351f22b5fd121 |
 
--   此时可以通过 `code` 访问路由，例如：<https://rsshub.app/qdaily/column/59?code=0f820530128805ffc10351f22b5fd121>
+-   此时可以通过 `code` 访问路由，例如：`https://rsshub.app/qdaily/column/59?code=0f820530128805ffc10351f22b5fd121`
 
--   或使用访问密钥 `key` 直接访问所有路由，例如：<https://rsshub.app/qdaily/column/59?key=ILoveRSSHub>
+-   或使用访问密钥 `key` 直接访问所有路由，例如：`https://rsshub.app/qdaily/column/59?key=ILoveRSSHub`
 
 访问密钥 / 码与黑白名单的访问控制关系如下：
 
@@ -666,7 +666,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 ### 日志配置
 
-`DEBUG_INFO`: 是否在首页显示路由信息。值为非 `true` `false` 时，在请求中带上参数 `debug` 开启显示，例如：<https://rsshub.app/?debug=value_of_DEBUG_INFO> 。默认 `true`
+`DEBUG_INFO`: 是否在首页显示路由信息。值为非 `true` `false` 时，在请求中带上参数 `debug` 开启显示，例如：`https://rsshub.app/?debug=value_of_DEBUG_INFO` 。默认 `true`
 
 `LOGGER_LEVEL`: 指明输出到 console 和日志文件的日志的最大 [等级](https://github.com/winstonjs/winston#logging-levels)，默认 `info`
 
@@ -752,7 +752,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 -   bilibili 用户关注动态系列路由
 
     -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：
-        1.  打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8>
+        1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)
         2.  打开控制台，切换到 Network 面板，刷新
         3.  点击 dynamic_new 请求，找到 Cookie
         4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie
@@ -768,16 +768,16 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `BTBYR_COOKIE`: 注册用户登录后的 Cookie 值，获取方式：
         1.  登录后打开网站首页
         2.  打开控制台，刷新
-        3.  找到 <https://bt.byr.cn/index.php> 请求
+        3.  找到 `https://bt.byr.cn/index.php` 请求
         4.  找到请求头中的 Cookie
 
 -   BUPT
 
     -   `BUPT_PORTAL_COOKIE`: 登录后获得的 Cookie 值，获取方式
-        1.  打开<https://webapp.bupt.edu.cn/wap/login.html?redirect=https://>并登录
-        2.  无视掉报错，并打开 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw>
+        1.  打开 [https://webapp.bupt.edu.cn/wap/login.html?redirect=https://](https://webapp.bupt.edu.cn/wap/login.html?redirect=https://)>并登录
+        2.  无视掉报错，并打开 [https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw](https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw)
         3.  打开控制台，刷新
-        4.  找到 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw> 请求
+        4.  找到 `https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw` 请求
         5.  找到请求头中的 Cookie
 
 -   Civitai
@@ -917,13 +917,13 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
     -   `WORDPRESS_CDN`: 用于中转 http 图片链接。可供考虑的服务见下表：
 
-        | url                                      | backbone     |
-        | ---------------------------------------- | ------------ |
-        | <https://imageproxy.pimg.tw/resize?url=> | akamai       |
-        | <https://images.weserv.nl/?url=>         | cloudflare   |
-        | <https://pic1.xuehuaimg.com/proxy/>      | cloudflare   |
-        | <https://cors.netnr.workers.dev/>        | cloudflare   |
-        | <https://netnr-proxy.openode.io/>        | digitalocean |
+        | url                                                                              | backbone     |
+        | -------------------------------------------------------------------------------- | ------------ |
+        | [https://imageproxy.pimg.tw/resize?url=](https://imageproxy.pimg.tw/resize?url=) | akamai       |
+        | [https://images.weserv.nl/?url=](https://images.weserv.nl/?url=)         | cloudflare   |
+        | [https://pic1.xuehuaimg.com/proxy](https://pic1.xuehuaimg.com/proxy)      | cloudflare   |
+        | [https://cors.netnr.workers.dev](https://cors.netnr.workers.dev)       | cloudflare   |
+        | [https://netnr-proxy.openode.io](https://netnr-proxy.openode.io)        | digitalocean |
 
 -   YouTube：[申请地址](https://console.developers.google.com/)
 
@@ -943,7 +943,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `PKUBBS_COOKIE`: BBS 注册用户登录后的 Cookie 值，获取方式：
         1.  登录后打开论坛首页
         2.  打开控制台， 刷新
-        3.  找到 <https://bbs.pku.edu.cn/v2/home.php> 请求
+        3.  找到 `https://bbs.pku.edu.cn/v2/home.php` 请求
         4.  找到请求头中的 Cookie
 
 -   吹牛部落 栏目更新
@@ -951,7 +951,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `CHUINIU_MEMBER`: 吹牛部落登录后的 x-member，获取方式
         1.  登陆后点开文章正文
         2.  打开控制台，刷新
-        3.  找到 <http://api.duanshu.com/h5/content/detail/> 开头的请求
+        3.  找到 `http://api.duanshu.com/h5/content/detail` 开头的请求
         4.  找到请求头中的 x-member
 
 -   滴答清单
@@ -1020,7 +1020,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 -   微博 自定义分组
 
     -   `WEIBO_COOKIES`: 用户访问网页微博时所使用的 cookie, 获取方式:
-        1.  打开并登录 <https://m.weibo.cn> (确保打开页面为手机版，如果强制跳转电脑端可尝试使用可更改 UserAgent 的浏览器插件)
+        1.  打开并登录 [https://m.weibo.cn](https://m.weibo.cn) (确保打开页面为手机版，如果强制跳转电脑端可尝试使用可更改 UserAgent 的浏览器插件)
         2.  按下`F12`打开控制台，切换至`Network(网络)`面板
         3.  在该网页切换至任意关注分组，并在面板打开最先捕获到的请求 (该情形下捕获到的请求路径应包含`/feed/group`)
         4.  查看该请求的`Headers(请求头)`, 找到`Cookie`字段并复制内容

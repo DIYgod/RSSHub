@@ -109,7 +109,7 @@ Start an RSSHub container
 $ docker run -d --name rsshub -p 1200:1200 diygod/rsshub
 ```
 
-Visit [http://127.0.0.1:1200/](http://127.0.0.1:1200/), and enjoy it! ✅
+Visit [http://127.0.0.1:1200](http://127.0.0.1:1200), and enjoy it! ✅
 
 Execute the following command to stop `RSSHub`.
 
@@ -628,7 +628,7 @@ async function handleRequest(request) {
 
 Routes in `protected_route.js` will be protected using HTTP Basic Authentication.
 
-When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg: <https://usernam3:passw0rd@rsshub.app/protected/rsshub/routes>.
+When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg: `https://usernam3:passw0rd@rsshub.app/protected/rsshub/routes`.
 
 For readers that do not support HTTP Basic authentication, please refer to [Access Control Configuration](#access-control-configuration).
 
@@ -658,9 +658,9 @@ Access code is the md5 generated based on the access key + route, eg:
 | ----------- | ----------------- | ---------------------------------------- | -------------------------------- |
 | ILoveRSSHub | /qdaily/column/59 | md5('/qdaily/column/59' + 'ILoveRSSHub') | 0f820530128805ffc10351f22b5fd121 |
 
--   Routes are accessible via `code`, eg: <https://rsshub.app/qdaily/column/59?code=0f820530128805ffc10351f22b5fd121>
+-   Routes are accessible via `code`, eg: `https://rsshub.app/qdaily/column/59?code=0f820530128805ffc10351f22b5fd121`
 
--   Or using `key` directly, eg: <https://rsshub.app/qdaily/column/59?key=ILoveRSSHub>
+-   Or using `key` directly, eg: `https://rsshub.app/qdaily/column/59?key=ILoveRSSHub`
 
 See the relation between access key/code and white/blacklisting.
 
@@ -671,7 +671,7 @@ See the relation between access key/code and white/blacklisting.
 
 ### Logging Configurations
 
-`DEBUG_INFO`: display route information on the homepage for debugging purposes. When set to neither `true` nor `false`, use parameter `debug` to enable display, eg: <https://rsshub.app/?debug=value_of_DEBUG_INFO> . Default to `true`
+`DEBUG_INFO`: display route information on the homepage for debugging purposes. When set to neither `true` nor `false`, use parameter `debug` to enable display, eg: `https://rsshub.app/?debug=value_of_DEBUG_INFO` . Default to `true`
 
 `LOGGER_LEVEL`: specifies the maximum [level](https://github.com/winstonjs/winston#logging-levels) of messages to the console and log file, default to `info`
 
@@ -759,7 +759,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
 -   bilibili 用户关注动态系列路由
 
     -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：
-        1.  打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8>
+        1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)
         2.  打开控制台，切换到 Network 面板，刷新
         3.  点击 dynamic_new 请求，找到 Cookie
         4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie
@@ -775,16 +775,16 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `BTBYR_COOKIE`: 注册用户登录后的 Cookie 值，获取方式：
         1.  登录后打开网站首页
         2.  打开控制台，刷新
-        3.  找到 <https://bt.byr.cn/index.php> 请求
+        3.  找到 `https://bt.byr.cn/index.php` 请求
         4.  找到请求头中的 Cookie
 
 -   BUPT
 
     -   `BUPT_PORTAL_COOKIE`: 登录后获得的 Cookie 值，获取方式
-        1.  打开<https://webapp.bupt.edu.cn/wap/login.html?redirect=https://>并登录
-        2.  无视掉报错，并打开 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw>
+        1.  打开 [https://webapp.bupt.edu.cn/wap/login.html?redirect=https://](https://webapp.bupt.edu.cn/wap/login.html?redirect=https://)并登录
+        2.  无视掉报错，并打开 [https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw](https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw)
         3.  打开控制台，刷新
-        4.  找到 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw> 请求
+        4.  找到 `https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw` 请求
         5.  找到请求头中的 Cookie
 
 -   Civitai
@@ -938,11 +938,11 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
         | url                                    | backbone     |
         | -------------------------------------- | ------------ |
-        | <https://imageproxy.pimg.tw/resize?url=> | akamai       |
-        | <https://images.weserv.nl/?url=>         | cloudflare   |
-        | <https://pic1.xuehuaimg.com/proxy/>      | cloudflare   |
-        | <https://cors.netnr.workers.dev/>        | cloudflare   |
-        | <https://netnr-proxy.openode.io/>        | digitalocean |
+        | [https://imageproxy.pimg.tw/resize?url=](https://imageproxy.pimg.tw/resize?url=) | akamai       |
+        | [https://images.weserv.nl/?url=](https://images.weserv.nl/?url=)         | cloudflare   |
+        | [https://pic1.xuehuaimg.com/proxy](https://pic1.xuehuaimg.com/proxy)      | cloudflare   |
+        | [https://cors.netnr.workers.dev](https://cors.netnr.workers.dev)       | cloudflare   |
+        | [https://netnr-proxy.openode.io](https://netnr-proxy.openode.io)        | digitalocean |
 
 -   YouTube: [API Key application](https://console.developers.google.com/)
 
@@ -962,7 +962,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `PKUBBS_COOKIE`: BBS 注册用户登录后的 Cookie 值，获取方式：
         1.  登录后打开论坛首页
         2.  打开控制台， 刷新
-        3.  找到 <https://bbs.pku.edu.cn/v2/home.php> 请求
+        3.  找到 `https://bbs.pku.edu.cn/v2/home.php` 请求
         4.  找到请求头中的 Cookie
 
 -   吹牛部落 栏目更新
@@ -970,7 +970,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `CHUINIU_MEMBER`: 吹牛部落登录后的 x-member，获取方式
         1.  登陆后点开文章正文
         2.  打开控制台，刷新
-        3.  找到 <http://api.duanshu.com/h5/content/detail/> 开头的请求
+        3.  找到 `http://api.duanshu.com/h5/content/detail` 开头的请求
         4.  找到请求头中的 x-member
 
 -   滴答清单
@@ -1029,7 +1029,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
 -   微博 自定义分组
 
     -   `WEIBO_COOKIES`: 用户访问网页微博时所使用的 cookie, 获取方式:
-        1.  打开并登录 <https://m.weibo.cn> (确保打开页面为手机版，如果强制跳转电脑端可尝试使用可更改 UserAgent 的浏览器插件)
+        1.  打开并登录 [https://m.weibo.cn](https://m.weibo.cn) (确保打开页面为手机版，如果强制跳转电脑端可尝试使用可更改 UserAgent 的浏览器插件)
         2.  按下`F12`打开控制台，切换至`Network(网络)`面板
         3.  在该网页切换至任意关注分组，并在面板打开最先捕获到的请求 (该情形下捕获到的请求路径应包含`/feed/group`)
         4.  查看该请求的`Headers(请求头)`, 找到`Cookie`字段并复制内容
