@@ -261,9 +261,9 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 <Route author="nczitzk" example="/elasticsearch-cn" path="/elasticsearch-cn/:params?" paramsDesc={['分类，可在对应分类页 URL 中找到']}>
 
-如 [Elasticsearch 最新](https://elasticsearch.cn/category-2) 的 URL 为 <https://elasticsearch.cn/category-2>，则分类参数处填写 `category-2`，最后得到路由地址 [`/elasticsearch-cn/category-2`](https://rsshub.app/elasticsearch-cn/category-2)。
+如 [Elasticsearch 最新](https://elasticsearch.cn/category-2) 的 URL 为 `https://elasticsearch.cn/category-2`，则分类参数处填写 `category-2`，最后得到路由地址 [`/elasticsearch-cn/category-2`](https://rsshub.app/elasticsearch-cn/category-2)。
 
-又如 [求职招聘 30 天热门](https://elasticsearch.cn/sort_type-hot\_\_\_\_category-12\__day-30) 的 URL 为 <https://elasticsearch.cn/sort_type-hot____category-12__day-30>，则分类参数处填写 `sort_type-hot____category-12__day-30`，最后得到路由地址 [`/elasticsearch-cn/sort_type-hot____category-12__day-30`](https://rsshub.app/elasticsearch-cn/sort_type-hot\_\_\_\_category-12\__day-30)。
+又如 [求职招聘 30 天热门](https://elasticsearch.cn/sort_type-hot____category-12__day-30) 的 URL 为 `https://elasticsearch.cn/sort_type-hot____category-12__day-30`，则分类参数处填写 `sort_type-hot____category-12__day-30`，最后得到路由地址 [`/elasticsearch-cn/sort_type-hot____category-12__day-30`](https://rsshub.app/elasticsearch-cn/sort_type-hot____category-12__day-30)。
 
 </Route>
 
@@ -425,7 +425,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 <Route author="zengxs" example="/saraba1st/thread/1842868" path="/saraba1st/thread/:tid" paramsDesc={['帖子 id']} radar="1">
 
-帖子网址如果为 <https://bbs.saraba1st.com/2b/thread-1842868-1-1.html> 那么帖子 id 就是 `1789863`。
+帖子网址如果为 `https://bbs.saraba1st.com/2b/thread-1842868-1-1.html` 那么帖子 id 就是 `1789863`。
 
 </Route>
 
@@ -433,7 +433,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 <Route author="shinemoon" example="/saraba1st/digest/forum-75-1" path="/saraba1st/digest/:tid" paramsDesc={['论坛 id']} radar="1">
 
-版面网址如果为 <https://bbs.saraba1st.com/2b/forum-75-1.html> 那么论坛 id 就是 `forum-75-1`。
+版面网址如果为 `https://bbs.saraba1st.com/2b/forum-75-1.html` 那么论坛 id 就是 `forum-75-1`。
 
 </Route>
 
@@ -443,9 +443,9 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 <Route author="totorowechat" example="/scboy/thread/188673" path="/scboy/thread/:tid" paramsDesc={['thread tid']} radar="1">
 
-If the url of the thread is <https://www.scboy.com/?thread-188673.htm> then tid would be `1789863`.
+If the url of the thread is `https://www.scboy.com/?thread-188673.htm` then tid would be `1789863`.
 
-When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environment`. See <https://docs.rsshub.app/install/#Deployment> for details. `SCBOY_BBS_TOKEN` is included in cookies with `bbs_token`.
+When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environment`. See [/install](/install) for details. `SCBOY_BBS_TOKEN` is included in cookies with `bbs_token`.
 
 </Route>
 
@@ -1011,7 +1011,7 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 :::tip 关于子论坛 id 的获取方法
 
-`/xsijishe/forum/51` 对应于论坛 <https://xsijishe.com/forum-51-1.html>，这个论坛的 fid 为 51，也就是 `forum-{fid}-1` 中的 fid。
+`/xsijishe/forum/51` 对应于论坛 `https://xsijishe.com/forum-51-1.html`，这个论坛的 fid 为 51，也就是 `forum-{fid}-1` 中的 fid。
 
 :::
 
@@ -1021,15 +1021,15 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 ### 子版块 {#tian-ya-lun-tan-zi-ban-kuai}
 
-<Route author="a14907" example="/tianya/index/lookout" path="/tianya/index/:type" paramsDesc={['板块类型 type，可在 URL 找到 例如，天涯杂谈板块的地址是http://bbs.tianya.cn/list-free-1.shtml， 这个板块的type就是free; 同理，我的大学板块地址为http://bbs.tianya.cn/list-university-1.shtml，类型是university']}/>
+<Route author="a14907" example="/tianya/index/lookout" path="/tianya/index/:type" paramsDesc={['板块类型 type，可在 URL 找到 例如，天涯杂谈板块的地址是 http://bbs.tianya.cn/list-free-1.shtml， 这个板块的type就是free; 同理，我的大学板块地址为http://bbs.tianya.cn/list-university-1.shtml，类型是university']}/>
 
 ### 用户帖子 {#tian-ya-lun-tan-yong-hu-tie-zi}
 
-<Route author="a14907" example="/tianya/user/11488997" path="/tianya/user/:userid" paramsDesc={['用户id userid，可在 URL 找到 例如，用户苕木匠的地址是http://www.tianya.cn/11488997/bbs， 苕木匠的userid就是11488997']}/>
+<Route author="a14907" example="/tianya/user/11488997" path="/tianya/user/:userid" paramsDesc={['用户id userid，可在 URL 找到 例如，用户苕木匠的地址是 http://www.tianya.cn/11488997/bbs， 苕木匠的userid就是11488997']}/>
 
 ### 用户的回帖 {#tian-ya-lun-tan-yong-hu-de-hui-tie}
 
-<Route author="a14907" example="/tianya/comments/11488997" path="/tianya/comments/:userid" paramsDesc={['用户id userid，可在 URL 找到 例如，用户苕木匠的地址是http://www.tianya.cn/11488997/bbs， 苕木匠的userid就是11488997']}/>
+<Route author="a14907" example="/tianya/comments/11488997" path="/tianya/comments/:userid" paramsDesc={['用户id userid，可在 URL 找到 例如，用户苕木匠的地址是 http://www.tianya.cn/11488997/bbs， 苕木匠的userid就是11488997']}/>
 
 ## 通信人家园 {#tong-xin-ren-jia-yuan}
 
@@ -1298,12 +1298,12 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 :::tip 三个 id 获取方式
 
-1.  打开 <https://offer.1point3acres.com>
+1.  打开 [https://offer.1point3acres.com](https://offer.1point3acres.com)
 2.  打开控制台
 3.  切换到 Network 面板
 4.  点击 搜索 按钮
 5.  点击 results?ps=15&pg=1 POST 请求
-6.  找到 Request Payload 请求参数，例如 filters: {planyr: "13", planmajor: "1", outname_w: "ACADIAU"} ，则三个 id 分别为: 13,1,ACADIAU
+6.  找到 Request Payload 请求参数，例如 `filters: {planyr: "13", planmajor: "1", outname_w: "ACADIAU"}` ，则三个 id 分别为: 13,1,ACADIAU
 
 :::
 
@@ -1360,4 +1360,3 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 | lingyishijain | lingyitupian | minjianqitan |
 
 </Route>
-
