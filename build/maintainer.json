@@ -2368,11 +2368,15 @@
     "/firecore/:os": [
         "NathanDai"
     ],
-    "/firefox/addons/:id": [],
+    "/firefox/addons/:id": [
+        "DIYgod"
+    ],
     "/firefox/breaches": [
         "TonyRL"
     ],
-    "/firefox/release/:platform": [],
+    "/firefox/release/:platform": [
+        "fengkx"
+    ],
     "/fisher-spb/news": [
         "denis-ya"
     ],
