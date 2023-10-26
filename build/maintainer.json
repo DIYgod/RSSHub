@@ -2868,8 +2868,11 @@
     "/gov/maonan/:category": [
         "ShuiHuo"
     ],
-    "/gov/mee/ywdt?": [
+    "/gov/mee/ywdt/:category?": [
         "liuxsdev"
+    ],
+    "/gov/mem/gk/sgcc/:category?": [
+        "nczitzk"
     ],
     "/gov/mfa/wjdt/:category?": [
         "nczitzk"
