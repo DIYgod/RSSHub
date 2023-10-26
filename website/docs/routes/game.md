@@ -262,7 +262,7 @@ Or
 
 <Route author="nczitzk" example="/itch/games/new-and-popular/featured" path="/itch/:params?" paramsDesc={['Params']}>
 
-`params` is the field after `itch.io` in the URL of the corresponding page, e.g. the URL of [Top Rated Games tagged Singleplayer](https://itch.io/games/top-rated/tag-singleplayer) is <https://itch.io/games/top-rated/tag-singleplayer>, where the field after `itch.io` is `/games/top-rated/tag-singleplayer`.
+`params` is the field after `itch.io` in the URL of the corresponding page, e.g. the URL of [Top Rated Games tagged Singleplayer](https://itch.io/games/top-rated/tag-singleplayer) is `https://itch.io/games/top-rated/tag-singleplayer`, where the field after `itch.io` is `/games/top-rated/tag-singleplayer`.
 
 So the route is [`/itch/games/top-rated/tag-singleplayer`](https://rsshub.app/itch/games/top-rated/tag-singleplayer).
 
@@ -278,9 +278,9 @@ You can browse all the tags at [here](https://itch.io/tags).
 
 <Route author="nczitzk" example="/itch/devlog/teamterrible/the-baby-in-yellow" path="/itch/devlog/:user/:id" paramsDesc={['User id, can be found in URL', 'Item id, can be found in URL']}>
 
-`User id` is the field before `.itch.io` in the URL of the corresponding page, e.g. the URL of [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is <https://teamterrible.itch.io/the-baby-in-yellow/devlog>, where the field before `.itch.io` is `teamterrible`.
+`User id` is the field before `.itch.io` in the URL of the corresponding page, e.g. the URL of [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is `https://teamterrible.itch.io/the-baby-in-yellow/devlog`, where the field before `.itch.io` is `teamterrible`.
 
-`Item id` is the field between `itch.io` and `/devlog` in the URL of the corresponding page, e.g. the URL for [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is <https://teamterrible.itch.io/the-baby-in-yellow/devlog>, where the field between `itch.io` and `/devlog` is `the-baby-in-yellow`.
+`Item id` is the field between `itch.io` and `/devlog` in the URL of the corresponding page, e.g. the URL for [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is `https://teamterrible.itch.io/the-baby-in-yellow/devlog`, where the field between `itch.io` and `/devlog` is `the-baby-in-yellow`.
 
 So the route is [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub.app/itch/devlogs/teamterrible/the-baby-in-yellow).
 
@@ -384,7 +384,7 @@ So the route is [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub
 
 <Route author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" paramsDesc={['gridName from the list']}>
 
-Compatible with lists with an URL like <https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT>. For instance [PSN Free to Play](https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT), the gridName is STORE-MSF86012-PLUS_FTT_CONTENT
+Compatible with lists with an URL like `https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT`. For instance [PSN Free to Play](https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT), the gridName is `STORE-MSF86012-PLUS_FTT_CONTENT`
 
 </Route>
 
@@ -394,7 +394,7 @@ Compatible with lists with an URL like <https://store.playstation.com/zh-hans-hk
 
 Tested some countries, it should be work for most.
 
-Compatible with Product with an URL like <https://store.playstation.com/en-us/product/HP4497-CUSA16570_00-ASIAFULLGAME0000>. For instance ['Cyberpunk 2077'](https://store.playstation.com/en-us/product/HP4497-CUSA16570_00-ASIAFULLGAME0000) the region is `en-us`, the gridName is `HP4497-CUSA16570_00-ASIAFULLGAME0000`
+Compatible with Product with an URL like `https://store.playstation.com/en-us/product/HP4497-CUSA16570_00-ASIAFULLGAME0000`. For instance ['Cyberpunk 2077'](https://store.playstation.com/en-us/product/HP4497-CUSA16570_00-ASIAFULLGAME0000) the region is `en-us`, the gridName is `HP4497-CUSA16570_00-ASIAFULLGAME0000`
 
 </Route>
 
@@ -594,7 +594,7 @@ Language Code
 
 <Route author="axojhf" example="/warthunder/news" path="/warthunder/news">
 
-News data from <https://warthunder.com/en/news/>
+News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/)
 The year, month and day provided under UTC time zone are the same as the official website, so please ignore the specific time!!!
 
 </Route>
@@ -861,9 +861,9 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 :::tip
 
-若订阅 [热点聚焦](https://keylol.com/f161-1)，网址为 <https://keylol.com/f161-1>。截取 `https://keylol.com/` 到末尾的部分 `f161-1` 作为参数，此时路由为 [`/keylol/f161-1`](https://rsshub.app/keylol/f161-1)。
+若订阅 [热点聚焦](https://keylol.com/f161-1)，网址为 `https://keylol.com/f161-1`。截取 `https://keylol.com/` 到末尾的部分 `f161-1` 作为参数，此时路由为 [`/keylol/f161-1`](https://rsshub.app/keylol/f161-1)。
 
-若订阅子分类 [试玩免费 - 热点聚焦](https://keylol.com/forum.php?mod=forumdisplay&fid=161&filter=typeid&typeid=459)，网址为 <https://keylol.com/forum.php?mod=forumdisplay&fid=161&filter=typeid&typeid=459>。截取 `https://keylol.com/forum.php?mod=forumdisplay&` 到末尾的部分 `fid=161&filter=typeid&typeid=459` 作为参数，此时路由为 [`/keylol/fid=161&filter=typeid&typeid=459`](https://rsshub.app/keylol/fid=161&filter=typeid&typeid=459)。
+若订阅子分类 [试玩免费 - 热点聚焦](https://keylol.com/forum.php?mod=forumdisplay&fid=161&filter=typeid&typeid=459)，网址为 `https://keylol.com/forum.php?mod=forumdisplay&fid=161&filter=typeid&typeid=459`。截取 `https://keylol.com/forum.php?mod=forumdisplay&` 到末尾的部分 `fid=161&filter=typeid&typeid=459` 作为参数，此时路由为 [`/keylol/fid=161&filter=typeid&typeid=459`](https://rsshub.app/keylol/fid=161&filter=typeid&typeid=459)。
 
 :::
 
