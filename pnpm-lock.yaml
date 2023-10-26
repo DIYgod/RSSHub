@@ -248,8 +248,8 @@ devDependencies:
     specifier: 4.0.3
     version: 4.0.3
   '@types/koa__router':
-    specifier: 12.0.2
-    version: 12.0.2
+    specifier: 12.0.3
+    version: 12.0.3
   '@types/lint-staged':
     specifier: 13.2.1
     version: 13.2.1
@@ -1608,8 +1608,8 @@ packages:
       '@types/node': 20.5.6
     dev: true
 
-  /@types/koa__router@12.0.2:
-    resolution: {integrity: sha512-xoiDqyIggk1hPOhD980SMhPYqUssvHkIh6CV/j00WemrYqqNM1jMellWJofEKm0ZbgJUyWunFvCHil20dQEhMg==}
+  /@types/koa__router@12.0.3:
+    resolution: {integrity: sha512-5YUJVv6NwM1z7m6FuYpKfNLTZ932Z6EF6xy2BbtpJSyn13DKNQEkXVffFVSnJHxvwwWh2SAeumpjAYUELqgjyw==}
     dependencies:
       '@types/koa': 2.13.10
     dev: true
