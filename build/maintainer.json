@@ -6573,14 +6573,14 @@
     "/telecompaper/search/:keyword?/:company?/:sort?/:period?": [
         "nczitzk"
     ],
-    "/telegram/telegram/blog": [
+    "/telegram/blog": [
         "fengkx"
     ],
-    "/telegram/telegram/channel/:username/:routeParams?": [
+    "/telegram/channel/:username/:routeParams?": [
         "DIYgod",
         "Rongronggg9"
     ],
-    "/telegram/telegram/stickerpack/:name": [
+    "/telegram/stickerpack/:name": [
         "DIYgod"
     ],
     "/tencent/bigdata": [],
