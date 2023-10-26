@@ -1721,6 +1721,18 @@ Language
 
 </Route>
 
+## 中华人民共和国应急管理部 {#zhong-hua-ren-min-gong-he-guo-ying-ji-guan-li-bu}
+
+### 事故及灾害查处 {#zhong-hua-ren-min-gong-he-guo-ying-ji-guan-li-bu-shi-gu-ji-zai-hai-cha-chu}
+
+<Route author="nczitzk" example="/gov/mem/gk/sgcc/tbzdsgdcbg" path="/gov/mem/gk/sgcc/:category?" paramsDesc={['分类，见下表，默认为挂牌督办']} radar="1" rssbud="1">
+
+| 挂牌督办 | 调查报告   |
+| -------- | ---------- |
+| sggpdbqk | tbzdsgdcbg |
+
+</Route>
+
 ## 中华人民共和国住房和城乡建设部 {#zhong-hua-ren-min-gong-he-guo-zhu-fang-he-cheng-xiang-jian-she-bu}
 
 ### 政策发布 {#zhong-hua-ren-min-gong-he-guo-zhu-fang-he-cheng-xiang-jian-she-bu-zheng-ce-fa-bu}
