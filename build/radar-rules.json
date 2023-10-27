@@ -20843,6 +20843,15 @@
           "/"
         ],
         "target": "/pku/cls/lecture"
+      },
+      {
+        "title": "生命科学学院通知公告",
+        "docs": "https://docs.rsshub.app/routes/university#bei-jing-da-xue",
+        "source": [
+          "/homes/Index/news/21/21.html",
+          "/"
+        ],
+        "target": "/pku/cls/announcement"
       }
     ],
     "eecs": [
