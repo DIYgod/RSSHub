@@ -299,6 +299,10 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 
 <Route author="TPOB" example="/pku/cls/lecture" path="/pku/cls/lecture" radar="1" rssbud="1"/>
 
+### 生命科学学院通知公告 {#bei-jing-da-xue-sheng-ming-ke-xue-xue-yuan-tong-zhi-gong-gao}
+
+<Route author="william-swl" example="/pku/cls/announcement" path="/pku/cls/announcement" radar="1" rssbud="1"/>
+
 ### 北大未名 BBS 全站十大 {#bei-jing-da-xue-bei-da-wei-ming-bbs-quan-zhan-shi-da}
 
 <Route author="wooddance" example="/pku/bbs/hot" path="/pku/bbs/hot" radar="1" rssbud="1">
