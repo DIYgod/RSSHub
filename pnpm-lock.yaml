@@ -15,8 +15,8 @@ dependencies:
     specifier: 2.2.3
     version: 2.2.3
   '@sentry/node':
-    specifier: 7.75.1
-    version: 7.75.1
+    specifier: 7.76.0
+    version: 7.76.0
   '@tonyrl/rand-user-agent':
     specifier: 2.0.36
     version: 2.0.36
@@ -1248,46 +1248,46 @@ packages:
       selderee: 0.11.0
     dev: false
 
-  /@sentry-internal/tracing@7.75.1:
-    resolution: {integrity: sha512-nynV+7iVcF8k3CqhvI2K7iA8h4ovJhgYHKnXR8RDDevQOqNG2AEX9+hjCj9fZM4MhKHYFqf1od2oO9lTr38kwg==}
+  /@sentry-internal/tracing@7.76.0:
+    resolution: {integrity: sha512-QQVIv+LS2sbGf/e5P2dRisHzXpy02dAcLqENLPG4sZ9otRaFNjdFYEqnlJ4qko+ORpJGQEQp/BX7Q/qzZQHlAg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.75.1
-      '@sentry/types': 7.75.1
-      '@sentry/utils': 7.75.1
+      '@sentry/core': 7.76.0
+      '@sentry/types': 7.76.0
+      '@sentry/utils': 7.76.0
     dev: false
 
-  /@sentry/core@7.75.1:
-    resolution: {integrity: sha512-Kw4KyKBxbxbh8OKO0S11Tm0gWP+6AaXXYrsq3hp8H338l/wOmIzyckmCbUrc/XJeoRqaFLJbdcCrcUEDZUvsVQ==}
+  /@sentry/core@7.76.0:
+    resolution: {integrity: sha512-M+ptkCTeCNf6fn7p2MmEb1Wd9/JXUWxIT/0QEc+t11DNR4FYy1ZP2O9Zb3Zp2XacO7ORrlL3Yc+VIfl5JTgjfw==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.75.1
-      '@sentry/utils': 7.75.1
+      '@sentry/types': 7.76.0
+      '@sentry/utils': 7.76.0
     dev: false
 
-  /@sentry/node@7.75.1:
-    resolution: {integrity: sha512-E174NbP3j7OIqQQYPtpMGz1FfL/KE5PeGnhoACyMIk0D5MGB7Ia7Y9+nYfHB7+EOJPV2Ob6BYlhemX/MxPrYWg==}
+  /@sentry/node@7.76.0:
+    resolution: {integrity: sha512-C+YZ5S5W9oTphdWTBgV+3nDdcV1ldnupIHylHzf2Co+xNtJ76V06N5NjdJ/l9+qvQjMn0DdSp7Uu7KCEeNBT/g==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry-internal/tracing': 7.75.1
-      '@sentry/core': 7.75.1
-      '@sentry/types': 7.75.1
-      '@sentry/utils': 7.75.1
+      '@sentry-internal/tracing': 7.76.0
+      '@sentry/core': 7.76.0
+      '@sentry/types': 7.76.0
+      '@sentry/utils': 7.76.0
       https-proxy-agent: 5.0.1
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@sentry/types@7.75.1:
-    resolution: {integrity: sha512-km+ygqgMDaFfTrbQwdhrptFqx0Oq15jZABqIoIpbaOCkCAMm+tyCqrFS8dTfaq5wpCktqWOy2qU/DOpppO99Cg==}
+  /@sentry/types@7.76.0:
+    resolution: {integrity: sha512-vj6z+EAbVrKAXmJPxSv/clpwS9QjPqzkraMFk2hIdE/kii8s8kwnkBwTSpIrNc8GnzV3qYC4r3qD+BXDxAGPaw==}
     engines: {node: '>=8'}
     dev: false
 
-  /@sentry/utils@7.75.1:
-    resolution: {integrity: sha512-QzW2eRjY20epD//9/tQ0FTNwdAL6XZi+LyJNUQIeK3NMnc5NgHrgpxId87gmFq8cNx47utH1Blub8RuMbKqiwQ==}
+  /@sentry/utils@7.76.0:
+    resolution: {integrity: sha512-40jFD+yfQaKpFYINghdhovzec4IEpB7aAuyH/GtE7E0gLpcqnC72r55krEIVILfqIR2Mlr5OKUzyeoCyWAU/yw==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.75.1
+      '@sentry/types': 7.76.0
     dev: false
 
   /@sinclair/typebox@0.27.8:
