@@ -7714,6 +7714,9 @@
     "/yomiuri/:category?": [
         "Arracc"
     ],
+    "/yomujp/:level?": [
+        "eternasuno"
+    ],
     "/youdao/latest": [],
     "/youdao/xueba": [],
     "/youku/channel/:channelId/:embed?": [
