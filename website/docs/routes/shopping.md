@@ -118,7 +118,7 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 > We use RSSHub to implement the searching of Craigslist
 > An example of a full original search url:
-> <https://sfbay.craigslist.org/search/sso?query=folding+bike&sort=rel>
+> [https://sfbay.craigslist.org/search/sso?query=folding+bike&sort=rel](https://sfbay.craigslist.org/search/sso?query=folding+bike&sort=rel)
 >
 > the `xxx` in `/search/xxx` is the search type, just refer to the original search url.
 > The query string is the actual name of query, in this case is folding bike
@@ -199,7 +199,7 @@ Transform any search into a feed.
 
 <Route author="Platane" example="/leboncoin/ad/category=10&locations=Paris_75015" path="/leboncoin/ad/:query" paramsDesc={['search page querystring']}>
 
-For instance, in <https://www.leboncoin.fr/recherche/?category=10&locations=Paris_75015>, the query is **category=10&locations=Paris_75015**
+For instance, in `https://www.leboncoin.fr/recherche/?category=10&locations=Paris_75015`, the query is **category=10&locations=Paris_75015**
 
 </Route>
 
@@ -319,7 +319,7 @@ Language
 
 <Route author="NavePnow" example="/zagg/new-arrivals/brand=164&cat=3038,3041" path="/zagg/new-arrivals/:query?" paramsDesc={['query, search page querystring']}/>
 
-For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3041>, the query is `brand=164&cat=3038%2C3041`
+For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3041`, the query is `brand=164&cat=3038%2C3041`
 
 ## 大麦网 {#da-mai-wang}
 
@@ -371,7 +371,7 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 :::tip
 
-如商品 <https://item.jd.com/526835.html> 中的 id 为 `526835`，所以路由为 [`/jd/price/526835`](https://rsshub.app/jd/price/526835)
+如商品 `https://item.jd.com/526835.html` 中的 id 为 `526835`，所以路由为 [`/jd/price/526835`](https://rsshub.app/jd/price/526835)
 
 :::
 
@@ -459,7 +459,7 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 :::tip
 
-网站也提供了部分 RSS: <https://www.smzdm.com/dingyue>
+网站也提供了部分 RSS: [https://www.smzdm.com/dingyue](https://www.smzdm.com/dingyue)
 
 :::
 
@@ -602,7 +602,7 @@ For instance, in <https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
   | 三河 | 安顺 | 莆田 | 阳江 | 南宁 | 台州 |
   | ---- | ---- | ---- | ---- | ---- | ---- |
-  
+
   | 余姚 | 淄博 | 三明 | 中山 | 宁波 | 厦门 |
   | ---- | ---- | ---- | ---- | ---- | ---- |
 
