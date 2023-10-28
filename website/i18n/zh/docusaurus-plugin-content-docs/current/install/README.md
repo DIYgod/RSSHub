@@ -736,9 +736,11 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 `OPENAI_KEY`: OpenAI API Key，用于使用 ChatGPT 总结文章
 
-`OPENAI_MODEL`: OpenAI 模型名称，用于使用 ChatGPT 总结文章，默认`gpt-3.5-turbo-16k-0613`，详见 [OpenAI API 文档](https://platform.openai.com/docs/api-reference/chat)
+`OPENAI_MODEL`: OpenAI 模型名称，用于使用 ChatGPT 总结文章，默认`gpt-3.5-turbo-16k`
+，详见 [OpenAI API 文档](https://platform.openai.com/docs/api-reference/chat)
 
-`OPENAI_TEMPERATURE`: OpenAI 温度参数，用于使用 ChatGPT 总结文章，默认`0.2`，详见 [OpenAI API 文档](https://platform.openai.com/docs/api-reference/chat)
+`OPENAI_TEMPERATURE`: OpenAI 温度参数，用于使用 ChatGPT 总结文章，默认`0.2`
+，详见 [OpenAI API 文档](https://platform.openai.com/docs/api-reference/chat)
 
 `OPENAI_MAX_TOKENS`: OpenAI 最大 token 数，用于使用 ChatGPT 总结文章，默认`null`，详见 [OpenAI API 文档](https://platform.openai.com/docs/api-reference/chat)
 

@@ -398,7 +398,7 @@ describe('opencc', () => {
 
 describe('openai', () => {
     it(`gpt`, async () => {
-        config.openai.openai_key = 'sk-1234567890';
+        config.openai.openaiKey = 'sk-1234567890';
         const response_with_gpt = await request.get('/test/gpt?gpt=true');
         const response_normal = await request.get('/test/gpt');
         expect(response_with_gpt.status).toBe(200);

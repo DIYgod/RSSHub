@@ -741,9 +741,11 @@ Configs in this sections are in beta stage, and **are turn off by default**. Ple
 
 `OPENAI_KEY`: OpenAI API Key, used for using ChatGPT to summarize articles
 
-`OPENAI_MODEL`: OpenAI model name, used for using ChatGPT to summarize articles, default to `gpt-3.5-turbo-16k-0613`, see [OpenAI API reference](https://platform.openai.com/docs/api-reference/chat) for details
+`OPENAI_MODEL`: OpenAI model name, used for using ChatGPT to summarize articles, default to `gpt-3.5-turbo-16k`,
+see [OpenAI API reference](https://platform.openai.com/docs/api-reference/chat) for details
 
-`OPENAI_TEMPERATURE`: OpenAI temperature parameter, used for using ChatGPT to summarize articles, default to `0.2`, see [OpenAI API reference](https://platform.openai.com/docs/api-reference/chat) for details
+`OPENAI_TEMPERATURE`: OpenAI temperature parameter, used for using ChatGPT to summarize articles, default to `0.2`,
+see [OpenAI API reference](https://platform.openai.com/docs/api-reference/chat) for details
 
 `OPENAI_MAX_TOKENS`: OpenAI maximum token number, used for using ChatGPT to summarize articles, default to `null`, see [OpenAI API reference](https://platform.openai.com/docs/api-reference/chat) for details
 
