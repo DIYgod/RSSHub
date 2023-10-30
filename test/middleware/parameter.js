@@ -112,6 +112,14 @@ describe('filter', () => {
         expect(parsed.items[0].title).toBe('Filter Title3');
     });
 
+    it(`filter_category illegal_category`, async () => {
+        const response = await request.get('/test/filter-illegal-category?filter_category=CategoryIllegal');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(1);
+        expect(parsed.items[0].categories.length).toBe(1);
+        expect(parsed.items[0].categories[0]).toBe('CategoryIllegal');
+    });
+
     it(`filter_time`, async () => {
         const response = await request.get('/test/current_time?filter_time=25');
         const parsed = await parser.parseString(response.text);

@@ -82,13 +82,13 @@ E.g. Dribbble Popular Top 10 [https://rsshub.app/dribbble/popular?limit=10](http
 
 Set `sorted` to control whether to sort the output by the publish date (`pubDate`). This is useful for some feeds that pin some entries at the top. Default to `true` i.e. the output is sorted.
 
-E.g. NJU Undergraduate Bulletin Board <https://rsshub.app/nju/jw/ggtz?sorted=false>
+E.g. NJU Undergraduate Bulletin Board [https://rsshub.app/nju/jw/ggtz?sorted=false](https://rsshub.app/nju/jw/ggtz?sorted=false)
 
 ## Fulltext
 
 Enable fulltext via `mode` parameter.
 
-E.g. Bilibili article <https://rsshub.app/bilibili/user/article/334958638?mode=fulltext>
+E.g. Bilibili article [https://rsshub.app/bilibili/user/article/334958638?mode=fulltext](https://rsshub.app/bilibili/user/article/334958638?mode=fulltext)
 
 ## Access Control
 
@@ -102,7 +102,7 @@ Enable Telegram Instant View requires a page template, it can be obtained from T
 
 -   `tgiv`: template hash, obtained from the link of template page generated（the string after `&rhash=`）
 
-E.g. <https://rsshub.app/novel/biquge/94_94525?tgiv=bd3c42818a7f7e>
+E.g. [https://rsshub.app/novel/biquge/94_94525?tgiv=bd3c42818a7f7e](https://rsshub.app/novel/biquge/94_94525?tgiv=bd3c42818a7f7e)
 
 ## Sci-hub link
 
@@ -110,13 +110,13 @@ Output Sci-hub link in scientific journal routes, this supports major journals o
 
 -   `scihub`: set to any value
 
-E.g. <https://rsshub.app/pnas/latest?scihub=1>
+E.g. [https://rsshub.app/pnas/latest?scihub=1](https://rsshub.app/pnas/latest?scihub=1)
 
 ## Conversion between Traditional and Simplified Chinese
 
 -   `opencc`: `s2t` (Simplified Chinese to Traditional Chinese)、`t2s` (Traditional Chinese to Simplified Chinese), other optional values refer to [simplecc-wasm - Configurations](https://github.com/fengkx/simplecc-wasm#%E9%85%8D%E7%BD%AE-configurations)
 
-E.g. <https://rsshub.app/dcard/posts/popular?opencc=t2s>
+E.g. [https://rsshub.app/theinitium/channel/latest/zh-hans?opencc=t2s](https://rsshub.app/theinitium/channel/latest/zh-hans?opencc=t2s)
 
 ## Multimedia processing
 
@@ -162,8 +162,7 @@ By adding `.{index}.debug.html` (where `{index}` is a number starting from 0) at
 
 Example:
 
--  `/furstar/characters/cn.0.debug.html`
-
+-   `/furstar/characters/cn.0.debug.html`
 
 ## Brief introduction
 

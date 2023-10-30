@@ -4,9 +4,9 @@
 
 比如我希望订阅 Twitter 上一个名为 DIYgod 的用户的时间线
 
-根据 [Twitter 用户时间线路由](/zh/routes/social-media#twitter)的文档，路由为 `/twitter/user/:id`，把 `:id` 替换为用户名，得到路径为 `/twitter/user/DIYgod`，再加上域名 `https://rsshub.app`，一个订阅源就生成了：<https://rsshub.app/twitter/user/DIYgod>
+根据 [Twitter 用户时间线路由](/zh/routes/social-media#twitter)的文档，路由为 `/twitter/user/:id`，把 `:id` 替换为用户名，得到路径为 `/twitter/user/DIYgod`，再加上域名 `https://rsshub.app`，一个订阅源就生成了：`https://rsshub.app/twitter/user/DIYgod`
 
-然后我们可以把 <https://rsshub.app/twitter/user/DIYgod> 添加到任意 RSS 阅读器里来使用
+然后我们可以把 `https://rsshub.app/twitter/user/DIYgod` 添加到任意 RSS 阅读器里来使用
 
 其中域名 `https://rsshub.app` 可以替换为你[自部署](/zh/install)的域名
 

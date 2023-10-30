@@ -82,7 +82,7 @@
 
 地区和分类皆可在浏览器地址栏中找到，下面是一个例子。
 
-访问华人头条全球站的国际分类，会跳转到 <https://www.52hrtt.com/global/n/w?infoTypeId=A1459145516533>。其中 `global` 即为 **全球** 对应的地区代码，`A1459145516533` 即为 **国际** 对应的分类代码。
+访问华人头条全球站的国际分类，会跳转到 `https://www.52hrtt.com/global/n/w?infoTypeId=A1459145516533`。其中 `global` 即为 **全球** 对应的地区代码，`A1459145516533` 即为 **国际** 对应的分类代码。
 
 </Route>
 
@@ -92,7 +92,7 @@
 
 专题 id 和 子分类 id 皆可在浏览器地址栏中找到，下面是一个例子。
 
-访问 “邱毅看平潭” 专题，会跳转到 <https://www.52hrtt.com/global/n/w/symposium/F1626082387819>。其中 `F1626082387819` 即为 **专题 id** 对应的地区代码。
+访问 “邱毅看平潭” 专题，会跳转到 `https://www.52hrtt.com/global/n/w/symposium/F1626082387819`。其中 `F1626082387819` 即为 **专题 id** 对应的地区代码。
 
 :::tip
 
@@ -1327,7 +1327,7 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 The Filter parameter comes from the corresponding page URL. The following is an example:
 
-The URL of [Action Games to Play on PS5](https://www.metacritic.com/browse/game/all/all/all-time/new/?platform=ps5&genre=action) is <https://www.metacritic.com/browse/game/all/all/all-time/new/?platform=ps5&genre=action>. The Filter parameter is `platform=ps5&genre=action` and the route is [`/metacritic/game/new/platform=ps5&genre=action`](https://rsshub.app/metacritic/game/new/platform=ps5&genre=action)
+The URL of [Action Games to Play on PS5](https://www.metacritic.com/browse/game/all/all/all-time/new/?platform=ps5&genre=action) is `https://www.metacritic.com/browse/game/all/all/all-time/new/?platform=ps5&genre=action`. The Filter parameter is `platform=ps5&genre=action` and the route is [`/metacritic/game/new/platform=ps5&genre=action`](https://rsshub.app/metacritic/game/new/platform=ps5&genre=action)
 
 :::
 
@@ -1345,7 +1345,7 @@ The URL of [Action Games to Play on PS5](https://www.metacritic.com/browse/game/
 
 The Filter parameter comes from the corresponding page URL. The following is an example:
 
-The URL of [Action Movies to Watch on Netflix](https://www.metacritic.com/browse/movie/all/all/all-time/new/?network=netflix&genre=action) is <https://www.metacritic.com/browse/movie/all/all/all-time/new/?network=netflix&genre=action>. The Filter parameter is `network=netflix&genre=action` and the route is [`/metacritic/movie/new/network=netflix&genre=action`](https://rsshub.app/metacritic/movie/new/network=netflix&genre=action)
+The URL of [Action Movies to Watch on Netflix](https://www.metacritic.com/browse/movie/all/all/all-time/new/?network=netflix&genre=action) is `https://www.metacritic.com/browse/movie/all/all/all-time/new/?network=netflix&genre=action`. The Filter parameter is `network=netflix&genre=action` and the route is [`/metacritic/movie/new/network=netflix&genre=action`](https://rsshub.app/metacritic/movie/new/network=netflix&genre=action)
 
 :::
 
@@ -1363,7 +1363,7 @@ The URL of [Action Movies to Watch on Netflix](https://www.metacritic.com/browse
 
 The Filter parameter comes from the corresponding page URL. The following is an example:
 
-The URL of [Documentary TV Shows to Watch on Prime Video](https://www.metacritic.com/browse/tv/all/all/all-time/new/?network=prime-video&genre=documentary) is <https://www.metacritic.com/browse/tv/all/all/all-time/new/?network=prime-video&genre=documentary>. The Filter parameter is `network=prime-video&genre=documentary` and the route is [`/metacritic/tv/new/network=prime-video&genre=documentary`](https://rsshub.app/metacritic/tv/new/network=prime-video&genre=documentary)
+The URL of [Documentary TV Shows to Watch on Prime Video](https://www.metacritic.com/browse/tv/all/all/all-time/new/?network=prime-video&genre=documentary) is `https://www.metacritic.com/browse/tv/all/all/all-time/new/?network=prime-video&genre=documentary`. The Filter parameter is `network=prime-video&genre=documentary` and the route is [`/metacritic/tv/new/network=prime-video&genre=documentary`](https://rsshub.app/metacritic/tv/new/network=prime-video&genre=documentary)
 
 :::
 
@@ -2097,6 +2097,311 @@ Provides a better reading experience (full text articles) over the official one.
 
 </Route>
 
+## ThoughtCo {#thoughtco}
+
+### Category {#thoughtco-category}
+
+<Route author="nczitzk" example="/thoughtco" path="/thoughtco/:category?" paramsDesc={['Category id, see below']} radar="1" rssbud="1">
+
+#### Science, Tech, Math {#thoughtco-category-science-tech-math}
+
+| category         | id                         |
+| ---------------- | -------------------------- |
+| Science          | science-4132464            |
+| Math             | math-4133545               |
+| Social Sciences  | social-sciences-4133522    |
+| Computer Science | computer-science-4133486   |
+| Animals & Nature | animals-and-nature-4133421 |
+
+#### Humanities {#thoughtco-category-humanities}
+
+| category          | id                          |
+| ----------------- | --------------------------- |
+| History & Culture | history-and-culture-4133356 |
+| Visual Arts       | visual-arts-4132957         |
+| Literature        | literature-4133251          |
+| English           | english-4688281             |
+| Geography         | geography-4133035           |
+| Philosophy        | philosophy-4133025          |
+| Issues            | issues-4133022              |
+
+#### Languages {#thoughtco-category-languages}
+
+| category                     | id               |
+| ---------------------------- | ---------------- |
+| English as a Second Language | esl-4133095      |
+| Spanish                      | spanish-4133085  |
+| French                       | french-4133079   |
+| German                       | german-4133073   |
+| Italian                      | italian-4133069  |
+| Japanese                     | japanese-4133062 |
+| Mandarin                     | mandarin-4133057 |
+| Russian                      | russian-4175265  |
+
+#### Resources {#thoughtco-category-resources}
+
+| category               | id                           |
+| ---------------------- | ---------------------------- |
+| For Students & Parents | for-students-parents-4132588 |
+| For Educators          | for-educators-4132509        |
+| For Adult Learners     | for-adult-learners-4132469   |
+
+<details>
+  <summary>More categories</summary>
+
+#### Science {#thoughtco-category-science}
+
+  | category          | id                          |
+  | ----------------- | --------------------------- |
+  | Chemistry         | chemistry-4133594           |
+  | Biology           | biology-4133580             |
+  | Physics           | physics-4133571             |
+  | Geology           | geology-4133564             |
+  | Astronomy         | astronomy-4133558           |
+  | Weather & Climate | weather-and-climate-4133550 |
+
+#### Math {#thoughtco-category-math}
+
+  | category              | id                              |
+  | --------------------- | ------------------------------- |
+  | Math Tutorials        | math-tutorials-4133543          |
+  | Geometry              | geometry-4133540                |
+  | Arithmetic            | arithmetic-4133542              |
+  | Pre Algebra & Algebra | pre-algebra-and-algebra-4133541 |
+  | Statistics            | statistics-4133539              |
+  | Exponential Decay     | exponential-decay-4133528       |
+  | Worksheets By Grade   | worksheets-by-grade-4133526     |
+  | Resources             | math-resources-4133523          |
+
+#### Social Sciences {#thoughtco-category-social-sciences}
+
+  | category    | id                  |
+  | ----------- | ------------------- |
+  | Psychology  | psychology-4160512  |
+  | Sociology   | sociology-4133515   |
+  | Archaeology | archaeology-4133504 |
+  | Economics   | economics-4133521   |
+  | Ergonomics  | ergonomics-4133492  |
+
+#### Computer Science {#thoughtco-category-computer-science}
+
+  | category               | id                               |
+  | ---------------------- | -------------------------------- |
+  | PHP Programming        | php-4133485                      |
+  | Perl                   | perl-4133481                     |
+  | Python                 | python-4133477                   |
+  | Java Programming       | java-programming-4133478         |
+  | Javascript Programming | javascript-programming-4133476   |
+  | Delphi Programming     | delphi-programming-4133475       |
+  | C & C++ Programming    | c-and-c-plus-programming-4133470 |
+  | Ruby Programming       | ruby-programming-4133469         |
+  | Visual Basic           | visual-basic-4133468             |
+
+#### Animals and Nature {#thoughtco-category-animals-and-nature}
+
+  | category         | id                       |
+  | ---------------- | ------------------------ |
+  | Amphibians       | amphibians-4133418       |
+  | Birds            | birds-4133416            |
+  | Habitat Profiles | habitat-profiles-4133412 |
+  | Mammals          | mammals-4133411          |
+  | Reptiles         | reptiles-4133408         |
+  | Insects          | insects-4133406          |
+  | Marine Life      | marine-life-4133393      |
+  | Forestry         | forestry-4133386         |
+  | Dinosaurs        | dinosaurs-4133376        |
+  | Evolution        | evolution-4133366        |
+
+#### History and Culture {#thoughtco-category-history-and-culture}
+
+  | category                       | id                                       |
+  | ------------------------------ | ---------------------------------------- |
+  | American History               | american-history-4133354                 |
+  | African American History       | african-american-history-4133344         |
+  | African History                | african-history-4133338                  |
+  | Ancient History and Culture    | ancient-history-4133336                  |
+  | Asian History                  | asian-history-4133325                    |
+  | European History               | european-history-4133316                 |
+  | Genealogy                      | genealogy-4133308                        |
+  | Inventions                     | inventions-4133303                       |
+  | Latin American History         | latin-american-history-4133296           |
+  | Medieval & Renaissance History | medieval-and-renaissance-history-4133289 |
+  | Military History               | military-history-4133285                 |
+  | The 20th Century               | 20th-century-4133273                     |
+  | Women's History                | womens-history-4133260                   |
+
+#### Visual Arts {#thoughtco-category-visual-arts}
+
+  | category      | id                   |
+  | ------------- | -------------------- |
+  | Art & Artists | art-4132956          |
+  | Architecture  | architecture-4132953 |
+
+#### Literature {#thoughtco-category-literature}
+
+  | category           | id                         |
+  | ------------------ | -------------------------- |
+  | Best Sellers       | best-sellers-4133250       |
+  | Classic Literature | classic-literature-4133245 |
+  | Plays & Drama      | plays-and-drama-4133239    |
+  | Poetry             | poetry-4133232             |
+  | Quotations         | quotations-4133229         |
+  | Shakespeare        | shakespeare-4133223        |
+  | Short Stories      | short-stories-4133217      |
+  | Children's Books   | childrens-books-4133216    |
+
+#### English {#thoughtco-category-english}
+
+  | category        | id                      |
+  | --------------- | ----------------------- |
+  | English Grammar | english-grammar-4133049 |
+  | Writing         | writing-4133048         |
+
+#### Geography {#thoughtco-category-geography}
+
+  | category                 | id                                 |
+  | ------------------------ | ---------------------------------- |
+  | Basics                   | geography-basics-4133034           |
+  | Physical Geography       | physical-geography-4133032         |
+  | Political Geography      | political-geography-4133033        |
+  | Population               | population-4133031                 |
+  | Country Information      | country-information-4133030        |
+  | Key Figures & Milestones | key-figures-and-milestones-4133029 |
+  | Maps                     | maps-4133027                       |
+  | Urban Geography          | urban-geography-4133026            |
+
+#### Philosophy {#thoughtco-category-philosophy}
+
+  | category                       | id                                       |
+  | ------------------------------ | ---------------------------------------- |
+  | Philosophical Theories & Ideas | philosophical-theories-and-ideas-4133024 |
+  | Major Philosophers             | major-philosophers-4133023               |
+
+#### Issues {#thoughtco-category-issues}
+
+  | category                          | id                               |
+  | --------------------------------- | -------------------------------- |
+  | The U. S. Government              | us-government-4133021            |
+  | U.S. Foreign Policy               | us-foreign-policy-4133010        |
+  | U.S. Liberal Politics             | us-liberal-politics-4133009      |
+  | U.S. Conservative Politics        | us-conservative-politics-4133006 |
+  | Women's Issues                    | womens-issues-4133002            |
+  | Civil Liberties                   | civil-liberties-4132996          |
+  | The Middle East                   | middle-east-4132989              |
+  | Race Relations                    | race-relations-4132982           |
+  | Immigration                       | immigration-4132977              |
+  | Crime & Punishment                | crime-and-punishment-4132972     |
+  | Canadian Government               | canadian-government-4132959      |
+  | Understanding Types of Government | types-of-government-5179107      |
+
+#### English as a Second Language {#thoughtco-category-english-as-a-second-language}
+
+  | category                     | id                                         |
+  | ---------------------------- | ------------------------------------------ |
+  | Pronunciation & Conversation | esl-pronunciation-and-conversation-4133093 |
+  | Vocabulary                   | esl-vocabulary-4133092                     |
+  | Writing Skills               | esl-writing-skills-4133091                 |
+  | Reading Comprehension        | esl-reading-comprehension-4133090          |
+  | Grammar                      | esl-grammar-4133089                        |
+  | Business English             | esl-business-english-4133088               |
+  | Resources for Teachers       | resources-for-esl-teachers-4133087         |
+
+#### Spanish {#thoughtco-category-spanish}
+
+  | category          | id                                  |
+  | ----------------- | ----------------------------------- |
+  | History & Culture | spanish-history-and-culture-4133084 |
+  | Pronunciation     | spanish-pronunciation-4133083       |
+  | Vocabulary        | spanish-vocabulary-4133082          |
+  | Writing Skills    | spanish-writing-skills-4133081      |
+  | Grammar           | spanish-grammar-4133080             |
+
+#### French {#thoughtco-category-french}
+
+  | category                     | id                                           |
+  | ---------------------------- | -------------------------------------------- |
+  | Pronunciation & Conversation | french-pronunciation-4133075                 |
+  | Vocabulary                   | french-vocabulary-4133076                    |
+  | Grammar                      | french-grammar-4133074                       |
+  | Resources For Teachers       | french-resources-for-french-teachers-4133077 |
+
+#### German {#thoughtco-category-german}
+
+  | category                     | id                                 |
+  | ---------------------------- | ---------------------------------- |
+  | History & Culture            | german-history-and-culture-4133071 |
+  | Pronunciation & Conversation | german-pronunciation-4133070       |
+  | Vocabulary                   | german-vocabulary-4133068          |
+  | Grammar                      | german-grammar-4133067             |
+
+#### Italian {#thoughtco-category-italian}
+
+  | category          | id                                  |
+  | ----------------- | ----------------------------------- |
+  | History & Culture | italian-history-and-culture-4133065 |
+  | Vocabulary        | italian-vocabulary-4133061          |
+  | Grammar           | italian-grammar-4133063             |
+
+#### Japanese {#thoughtco-category-japanese}
+
+  | category                      | id                                   |
+  | ----------------------------- | ------------------------------------ |
+  | History & Culture             | japanese-history-and-culture-4133058 |
+  | Essential Japanese Vocabulary | japanese-vocabulary-4133060          |
+  | Japanese Grammar              | japanese-grammar-4133056             |
+
+#### Mandarin {#thoughtco-category-mandarin}
+
+  | category                         | id                                       |
+  | -------------------------------- | ---------------------------------------- |
+  | Mandarin History and Culture     | mandarin-history-and-culture-4133054     |
+  | Pronunciation                    | mandarin-pronunciation-4133053           |
+  | Vocabulary                       | mandarin-vocabulary-4133052              |
+  | Understanding Chinese Characters | understanding-chinese-characters-4133051 |
+
+#### Russian {#thoughtco-category-russian}
+
+  | category | id              |
+  | -------- | --------------- |
+  | Russian  | russian-4175265 |
+
+#### For Students & Parents {#thoughtco-category-for-students-parents}
+
+  | category           | id                         |
+  | ------------------ | -------------------------- |
+  | Homework Help      | homework-help-4132587      |
+  | Private School     | private-school-4132514     |
+  | Test Prep          | test-prep-4132578          |
+  | College Admissions | college-admissions-4132565 |
+  | College Life       | college-life-4132553       |
+  | Graduate School    | graduate-school-4132543    |
+  | Business School    | business-school-4132536    |
+  | Law School         | law-school-4132527         |
+  | Distance Learning  | distance-learning-4132521  |
+
+#### For Educators {#thoughtco-category-for-educators}
+
+  | category             | id                            |
+  | -------------------- | ----------------------------- |
+  | Becoming A Teacher   | becoming-a-teacher-4132510    |
+  | Assessments & Tests  | assessments-and-tests-4132508 |
+  | Elementary Education | elementary-education-4132507  |
+  | Secondary Education  | secondary-education-4132504   |
+  | Special Education    | special-education-4132499     |
+  | Teaching             | teaching-4132488              |
+  | Homeschooling        | homeschooling-4132480         |
+
+#### For Adult Learners {#thoughtco-category-for-adult-learners}
+
+  | category                | id                              |
+  | ----------------------- | ------------------------------- |
+  | Tips For Adult Students | tips-for-adult-students-4132468 |
+  | Getting Your Ged        | getting-your-ged-4132466        |
+
+</details>
+
+</Route>
+
 ## Thrillist {#thrillist}
 
 <Route author="loganrockmore" example="/thrillist/food-and-drink" path="/vulture/:tag" paramsDesc={['Tag']}>
@@ -2205,7 +2510,7 @@ Supported sub-sites:
 
 路径处填写对应页面 URL 中 `https://web3caff.com/` 后的字段。下面是一个例子。
 
-若订阅 [叙事 - Web3Caff](https://web3caff.com/zh/archives/category/news_zh) 则将对应页面 URL <https://web3caff.com/zh/archives/category/news_zh> 中 `https://web3caff.com/` 后的字段 `zh/archives/category/news_zh` 作为路径填入。此时路由为 [`/web3caff/zh/archives/category/news_zh`](https://rsshub.app/web3caff/zh/archives/category/news_zh)
+若订阅 [叙事 - Web3Caff](https://web3caff.com/zh/archives/category/news_zh) 则将对应页面 URL `https://web3caff.com/zh/archives/category/news_zh` 中 `https://web3caff.com/` 后的字段 `zh/archives/category/news_zh` 作为路径填入。此时路由为 [`/web3caff/zh/archives/category/news_zh`](https://rsshub.app/web3caff/zh/archives/category/news_zh)
 
 :::
 
@@ -2279,8 +2584,8 @@ Supported sub-sites:
 
 <Route author="HenryQW" example="/ifanr/app" path="/ifanr/:channel?" paramsDesc={['默认 app，部分频道如下']}>
 
--   频道为单一路径，如 <https://www.ifanr.com/`coolbuy`> 则为 `/ifanr/coolbuy`.
--   频道包含多重路径，如 <https://www.ifanr.com/`category/intelligentcar`> 则替换 `/` 为 `-` `/ifanr/category-intelligentcar`.
+-   频道为单一路径，如 `https://www.ifanr.com/coolbuy` 则为 `/ifanr/coolbuy`.
+-   频道包含多重路径，如 `https://www.ifanr.com/category/intelligentcar` 则替换 `/` 为 `-` `/ifanr/category-intelligentcar`.
 
 | AppSolution | 玩物志  | 董车会                  |
 | ----------- | ------- | ----------------------- |
@@ -2392,9 +2697,9 @@ Supported sub-sites:
 
 路径处填写对应页面 URL 中 `https://www.bast.net.cn/` 后的字段。下面是两个例子。
 
-若订阅 [通知公告](https://www.bast.net.cn/col/col31266) 则将对应页面 URL <https://www.bast.net.cn/col/col31266> 中 `https://www.bast.net.cn/` 后的字段 `col/col31266` 作为路径填入。此时路由为 [`/bast/col/col31266`](https://rsshub.app/bast/col/col31266)
+若订阅 [通知公告](https://www.bast.net.cn/col/col31266) 则将对应页面 URL `https://www.bast.net.cn/col/col31266` 中 `https://www.bast.net.cn/` 后的字段 `col/col31266` 作为路径填入。此时路由为 [`/bast/col/col31266`](https://rsshub.app/bast/col/col31266)
 
-若订阅 [学术动态](https://www.bast.net.cn/col/col31530) 则将对应页面 URL <https://www.bast.net.cn/col/col31530> 中 `https://www.bast.net.cn/` 后的字段 `col/col31530` 作为路径填入。此时路由为 [`/bast/col/col31530`](https://rsshub.app/bast/col/col31530)
+若订阅 [学术动态](https://www.bast.net.cn/col/col31530) 则将对应页面 URL `https://www.bast.net.cn/col/col31530` 中 `https://www.bast.net.cn/` 后的字段 `col/col31530` 作为路径填入。此时路由为 [`/bast/col/col31530`](https://rsshub.app/bast/col/col31530)
 
 如果路由符合 `/col/colXXXXX` 的格式，可以由 [`/bast/col/col31266`](https://rsshub.app/bast/col/col31266) 精简为 [`/bast/31266`](https://rsshub.app/bast/31266)
 
@@ -2843,17 +3148,17 @@ Type 栏目：
 | ------ | ------- | ---------- | ----------------- | ---------- | ------- | ------- | --- |
 | latest | feature | news-brief | notes-and-letters | technology | culture | pick_up | ... |
 
-更多栏目名称可通过 <https://theinitium.com/section/special/> 及 <https://theinitium.com/section/hot_channel/> 获取。
+更多栏目名称可通过 [https://theinitium.com/section/special/](https://theinitium.com/section/special/) 及 [https://theinitium.com/section/hot_channel/](https://theinitium.com/section/hot_channel/) 获取。
 
 </Route>
 
 ### 话题・标签 {#duan-chuan-mei-hua-ti-biao-qian}
 
-<Route author="AgFlore" example="/theinitium/tags/2019_10/zh-hans" path="/theinitium/tags/:type/:language?" paramsDesc={['话题 ID，可从话题页 URL 中获取，如 <https://theinitium.com/tags/2019_10/>', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']}/>
+<Route author="AgFlore" example="/theinitium/tags/2019_10/zh-hans" path="/theinitium/tags/:type/:language?" paramsDesc={['话题 ID，可从话题页 URL 中获取，如 `https://theinitium.com/tags/2019_10/`', '语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']}/>
 
 ### 作者 {#duan-chuan-mei-zuo-zhe}
 
-<Route author="AgFlore" example="/theinitium/author/ninghuilulu/zh-hans" path="/theinitium/author/:type/:language?" paramsDesc={['作者 ID，可从作者主页 URL 中获取，如<https://theinitium.com/author/ninghuilulu/>','语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']}/>
+<Route author="AgFlore" example="/theinitium/author/ninghuilulu/zh-hans" path="/theinitium/author/:type/:language?" paramsDesc={['作者 ID，可从作者主页 URL 中获取，如`https://theinitium.com/author/ninghuilulu/`','语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']}/>
 
 ### 个人订阅追踪动态 {#duan-chuan-mei-ge-ren-ding-yue-zhui-zong-dong-tai}
 
@@ -2960,9 +3265,9 @@ Type 栏目：
 
 :::tip
 
-支持形如 <https://www.storm.mg/category/118> 的路由，即 [`/storm/category/118`](https://rsshub.app/storm/category/118)
+支持形如 `https://www.storm.mg/category/118` 的路由，即 [`/storm/category/118`](https://rsshub.app/storm/category/118)
 
-支持形如 <https://www.storm.mg/localarticle-category/s149845> 的路由，即 [`/storm/localarticle-category/s149845`](https://rsshub.app/storm/localarticle-category/s149845)
+支持形如 `https://www.storm.mg/localarticle-category/s149845` 的路由，即 [`/storm/localarticle-category/s149845`](https://rsshub.app/storm/localarticle-category/s149845)
 
 :::
 
@@ -2978,7 +3283,7 @@ Type 栏目：
 
 路径处填写对应页面 URL 中 `https://news.ifeng.com/` 后的字段。下面是一个例子。
 
-若订阅 [大湾区\_资讯\_凤凰网](https://news.ifeng.com/shanklist/3-305565-) 则将对应页面 URL <https://news.ifeng.com/shanklist/3-305565-> 中 `https://news.ifeng.com/` 后的字段 `shanklist/3-305565-` 作为路径填入。此时路由为 [`/ifeng/news/shanklist/3-305565-`](https://rsshub.app/ifeng/news/shanklist/3-305565-)
+若订阅 [大湾区\_资讯\_凤凰网](https://news.ifeng.com/shanklist/3-305565-) 则将对应页面 URL `https://news.ifeng.com/shanklist/3-305565-` 中 `https://news.ifeng.com/` 后的字段 `shanklist/3-305565-` 作为路径填入。此时路由为 [`/ifeng/news/shanklist/3-305565-`](https://rsshub.app/ifeng/news/shanklist/3-305565-)
 
 :::
 
@@ -3935,9 +4240,9 @@ column 为 third 时可选的 category:
 
 :::tip
 
-若订阅 [时政](https://www.6parknews.com/newspark/index.php?type=1)，其网址为 <https://www.6parknews.com/newspark/index.php?type=1>，其中 `newspark` 为分站，`1` 为栏目 id。
+若订阅 [时政](https://www.6parknews.com/newspark/index.php?type=1)，其网址为 `https://www.6parknews.com/newspark/index.php?type=1`，其中 `newspark` 为分站，`1` 为栏目 id。
 
-若订阅 [美国](https://local.6parknews.com/index.php?type_id=1)，其网址为 <https://local.6parknews.com/index.php?type_id=1>，其中 `local` 为分站，`1` 为栏目 id。
+若订阅 [美国](https://local.6parknews.com/index.php?type_id=1)，其网址为 `https://local.6parknews.com/index.php?type_id=1`，其中 `local` 为分站，`1` 为栏目 id。
 
 :::
 
@@ -3959,11 +4264,11 @@ column 为 third 时可选的 category:
 
 以下是几个例子：
 
-[**化工**](https://chem.oilchem.net) <https://chem.oilchem.net> 中，类别 id 为 `chem`，分类 id 为空，子分类 id 为空，对应路由即为 [`/oilchem/chem`](https://rsshub.app/oilchem/list/140/18263)
+[**化工**](https://chem.oilchem.net) `https://chem.oilchem.net` 中，类别 id 为 `chem`，分类 id 为空，子分类 id 为空，对应路由即为 [`/oilchem/chem`](https://rsshub.app/oilchem/list/140/18263)
 
-[**甲醇**](https://chem.oilchem.net/chemical/methanol.shtml) 的相关资讯有两个页面入口：其一 <https://chem.oilchem.net/chemical/methanol.shtml> 中，类别 id 为 `chem`，分类 id 为 `chemical`，子分类 id 为 `methanol`，对应路由即为 [`/oilchem/chem/chemical/methanol`](https://rsshub.app/oilchem/chem/chemical/methanol) 或其二 <https://list.oilchem.net/140> 中，类别 id 为 `list`，分类 id 为 `140`，子分类 id 为空，对应路由即为 [`/oilchem/list/140`](https://rsshub.app/oilchem/list/140)；
+[**甲醇**](https://chem.oilchem.net/chemical/methanol.shtml) 的相关资讯有两个页面入口：其一 `https://chem.oilchem.net/chemical/methanol.shtml` 中，类别 id 为 `chem`，分类 id 为 `chemical`，子分类 id 为 `methanol`，对应路由即为 [`/oilchem/chem/chemical/methanol`](https://rsshub.app/oilchem/chem/chemical/methanol) 或其二 `https://list.oilchem.net/140` 中，类别 id 为 `list`，分类 id 为 `140`，子分类 id 为空，对应路由即为 [`/oilchem/list/140`](https://rsshub.app/oilchem/list/140)；
 
-[**甲醇热点聚焦**](https://list.oilchem.net/140/18263) <https://list.oilchem.net/140/18263> 中，类别 id 为 `list`，分类 id 为 `140`，子分类 id 为 `18263`，对应路由即为 [`/oilchem/list/140/18263`](https://rsshub.app/oilchem/list/140/18263)
+[**甲醇热点聚焦**](https://list.oilchem.net/140/18263) `https://list.oilchem.net/140/18263` 中，类别 id 为 `list`，分类 id 为 `140`，子分类 id 为 `18263`，对应路由即为 [`/oilchem/list/140/18263`](https://rsshub.app/oilchem/list/140/18263)
 
 </Route>
 
@@ -4081,7 +4386,7 @@ column 为 third 时可选的 category:
 
 下表为科室对应的 sid，若想获得 tid，可以到对应科室页面 URL 中寻找 `t_id` 字段的值，下面是一个例子：
 
-如 [肿瘤 - NSCLC](https://www.medsci.cn/department/details?s_id=5&t_id=277) 的 URL 为 <https://www.medsci.cn/department/details?s_id=5&t_id=277>，可以看到此时 `s_id` 对应 `sid` 的值为 5， `t_id` 对应 `tid` 的值为 277，所以可以得到路由 [`/medsci/5/277`](https://rsshub.app/medsci/5/277)
+如 [肿瘤 - NSCLC](https://www.medsci.cn/department/details?s_id=5&t_id=277) 的 URL 为 `https://www.medsci.cn/department/details?s_id=5&t_id=277`，可以看到此时 `s_id` 对应 `sid` 的值为 5， `t_id` 对应 `tid` 的值为 277，所以可以得到路由 [`/medsci/5/277`](https://rsshub.app/medsci/5/277)
 
 :::
 
@@ -5030,7 +5335,7 @@ column 为 third 时可选的 category:
 
 :::caution
 
-该方法需要通过 efb 进行频道绑定，具体操作见<https://github.com/DIYgod/RSSHub/issues/2172>
+该方法需要通过 efb 进行频道绑定，具体操作见 [https://github.com/DIYgod/RSSHub/issues/2172](https://github.com/DIYgod/RSSHub/issues/2172)
 
 :::
 
@@ -5052,7 +5357,7 @@ column 为 third 时可选的 category:
 
 <Route author="MisteryMonster" example="/wechat/mp/homepage/MzA3MDM3NjE5NQ==/16" path="/wechat/mp/homepage/:biz/:hid/:cid?" paramsDesc={['公众号id', '分页id', '页内栏目']} radar="1" rssbud="1" anticrawler="1">
 
-只适用拥有首页模板 (分享链接带有 homepage) 的公众号。例如从公众号分享出来的链接为 <https://mp.weixin.qq.com/mp/homepage?__biz=MzA3MDM3NjE5NQ==&hid=4>，`biz` 为 `MzA3MDM3NjE5NQ==`，`hid` 为 `4`。
+只适用拥有首页模板 (分享链接带有 homepage) 的公众号。例如从公众号分享出来的链接为 `https://mp.weixin.qq.com/mp/homepage?__biz=MzA3MDM3NjE5NQ==&hid=4`，`biz` 为 `MzA3MDM3NjE5NQ==`，`hid` 为 `4`。
 
 有些页面里会有分栏， `cid` 可以通过元素选择器选中栏目查看`data-index`。如[链接](https://mp.weixin.qq.com/mp/homepage?\__biz=MzA3MDM3NjE5NQ==&hid=4)里的 `京都职人` 栏目的 `cid` 为 `0`，`文艺时光` 栏目的 `cid` 为 `2`。如果不清楚的话最左边的栏目为`0`，其右方栏目依次递增 `1`。
 
@@ -5062,7 +5367,7 @@ column 为 third 时可选的 category:
 
 <Route author="MisteryMonster" example="/wechat/mp/msgalbum/MzA3MDM3NjE5NQ==/1375870284640911361" path="/wechat/mp/msgalbum/:biz/:aid" paramsDesc={['公众号id', 'Tag id', ]} radar="1" rssbud="1" anticrawler="1">
 
-一些公众号（如看理想）会在微信文章里添加 Tag ，点入 Tag 的链接如 <https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzA3MDM3NjE5NQ==&action=getalbum&album_id=1375870284640911361>，其中`biz` 为 `MzA3MDM3NjE5NQ==`，`aid` 为 `1375870284640911361`。
+一些公众号（如看理想）会在微信文章里添加 Tag ，点入 Tag 的链接如 `https://mp.weixin.qq.com/mp/appmsgalbum?__biz=MzA3MDM3NjE5NQ==&action=getalbum&album_id=1375870284640911361`，其中`biz` 为 `MzA3MDM3NjE5NQ==`，`aid` 为 `1375870284640911361`。
 
 </Route>
 
@@ -5459,7 +5764,7 @@ column 为 third 时可选的 category:
 
 跳转到欲订阅的分类页，将 URL 的 `/discover` 到末尾的部分填入 `params` 参数。
 
-如 [全部原创视频作品](https://www.xinpianchang.com/discover/article-0-0-all-all-0-0-score) 的 URL 为 <https://www.xinpianchang.com/discover/article-0-0-all-all-0-0-score>，其 `/discover` 到末尾的部分为 `article-0-0-all-all-0-0-score`，所以对应的路由为 [/xinpianchang/discover/article-0-0-all-all-0-0-score](https://rsshub.app/xinpianchang/discover/article-0-0-all-all-0-0-score)。
+如 [全部原创视频作品](https://www.xinpianchang.com/discover/article-0-0-all-all-0-0-score) 的 URL 为 `https://www.xinpianchang.com/discover/article-0-0-all-all-0-0-score`，其 `/discover` 到末尾的部分为 `article-0-0-all-all-0-0-score`，所以对应的路由为 [/xinpianchang/discover/article-0-0-all-all-0-0-score](https://rsshub.app/xinpianchang/discover/article-0-0-all-all-0-0-score)。
 
 :::
 
@@ -5735,7 +6040,6 @@ column 为 third 时可选的 category:
   | 节能减排                                   | 08895f1681c198fdf297ab38e33e1f428f6ccf2add382f3844a52e410f10e5a0 |
   | 先进节能环保技术                           | 6e639343a517fd08e5860fba581d41940da523753956ada973b6952fc05ef94f |
   | 钢铁企业超低排放改造和评估监测进展情况公示 | 50d99531d5dee68346653ca9548f308764ad38410a091e662834a5ed66770174 |
-
 
 #### 国际交流 {#zhong-guo-gang-tie-gong-ye-xie-hui-lan-mu-guo-ji-jiao-liu}
 
