@@ -5,8 +5,8 @@ const request = supertest(server);
 const Parser = require('rss-parser');
 const parser = new Parser();
 const config = require('../../lib/config').value;
-const got = require('got');
-jest.mock('got');
+const got = require('../../lib/utils/got');
+jest.mock('../../lib/utils/got');
 
 afterAll(() => {
     server.close();
@@ -421,6 +421,7 @@ describe('openai', () => {
                 ],
             },
         };
+
         got.post.mockResolvedValue(openaiResponse);
         const response_with_gpt = await request.get('/test/gpt?gpt=true');
         const response_normal = await request.get('/test/gpt');
@@ -435,5 +436,5 @@ describe('openai', () => {
         expect(parsed_gpt.items[0].content).toBe(parsed_normal.items[0].content);
         expect(parsed_gpt.items[1].content).not.toBe(undefined);
         expect(parsed_gpt.items[1].content).not.toBe(parsed_normal.items[1].content);
-    }, 60000);
+    });
 });
