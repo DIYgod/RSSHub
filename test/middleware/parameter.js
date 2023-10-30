@@ -5,6 +5,8 @@ const request = supertest(server);
 const Parser = require('rss-parser');
 const parser = new Parser();
 const config = require('../../lib/config').value;
+const got = require('got');
+jest.mock('got');
 
 afterAll(() => {
     server.close();
@@ -407,12 +409,28 @@ describe('opencc', () => {
 describe('openai', () => {
     it(`gpt`, async () => {
         config.openai.openaiKey = 'sk-1234567890';
+        // 模拟 openai 请求的响应
+        const openaiResponse = {
+            data: {
+                choices: [
+                    {
+                        message: {
+                            content: 'Summary of the article.',
+                        },
+                    },
+                ],
+            },
+        };
+        got.post.mockResolvedValue(openaiResponse);
         const response_with_gpt = await request.get('/test/gpt?gpt=true');
         const response_normal = await request.get('/test/gpt');
+
         expect(response_with_gpt.status).toBe(200);
         expect(response_normal.status).toBe(200);
+
         const parsed_gpt = await parser.parseString(response_with_gpt.text);
         const parsed_normal = await parser.parseString(response_normal.text);
+
         expect(parsed_gpt.items[0].content).not.toBe(undefined);
         expect(parsed_gpt.items[0].content).toBe(parsed_normal.items[0].content);
         expect(parsed_gpt.items[1].content).not.toBe(undefined);
