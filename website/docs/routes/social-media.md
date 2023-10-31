@@ -1397,7 +1397,7 @@ Country Code
 
 </Route>
 
-### 豆瓣榜单与集合 {#dou-ban-bang-dan-yu-ji-he}
+### 豆瓣榜单与集合 {#dou-ban-dou-ban-bang-dan-yu-ji-he}
 
 <Route author="5upernova-heng honue" example="/douban/list/subject_real_time_hotest" path="/douban/list/:type?/:routeParams?" paramsDesc={['榜单类型，见下表。默认为实时热门书影音','额外参数；请参阅以下说明和表格']}>
 
