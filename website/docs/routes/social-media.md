@@ -1059,7 +1059,7 @@ Tiny Tiny RSS will add `sandbox="allow-scripts"` to all iframe elements, as a re
 
 :::tip
 
-YouTube provides official RSS feeds for channels, for instance <https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ>.
+YouTube provides official RSS feeds for channels, for instance [https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ](https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ).
 
 :::
 
@@ -1412,6 +1412,11 @@ Country Code
 | 全球口碑剧集榜     | tv_global_best_weekly      |
 | 国内口碑综艺榜     | show_chinese_best_weekly   |
 | 国外口碑综艺榜     | show_global_best_weekly    |
+| 热播新剧国产剧   | tv_domestic    |
+| 热播新剧欧美剧   | tv_american    |
+| 热播新剧日剧    | tv_japanese    |
+| 热播新剧韩剧    | tv_korean    |
+| 热播新剧动画    | tv_animation    |
 | 虚构类小说热门榜   | book_fiction_hot_weekly    |
 | 非虚构类小说热门榜 | book_nonfiction_hot_weekly |
 | 热门单曲榜         | music_single               |

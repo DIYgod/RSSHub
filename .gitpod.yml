@@ -35,12 +35,3 @@ vscode:
     - rangav.vscode-thunder-client
     - sonarsource.sonarlint-vscode
     # - ZihanLi.at-helper not available on Open VSX
-
-github:
-  prebuilds:
-    master: true
-    branches: true
-    pullRequests: false
-    pullRequestsFromForks: false
-    addCheck: false
-    addComment: false
