@@ -2958,6 +2958,9 @@
         "Fatpandac"
     ],
     "/gov/province/:name/:category": [],
+    "/gov/samr/xgzlyhd/:category?/:department?": [
+        "nczitzk"
+    ],
     "/gov/sapprft/approval/:channel/:detail?": [],
     "/gov/sasac/:path+": [
         "TonyRL"

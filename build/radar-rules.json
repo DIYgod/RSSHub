@@ -11585,6 +11585,19 @@
       }
     ]
   },
+  "samr.gov.cn": {
+    "_name": "国家市场监督管理总局",
+    "xgzlyhd": [
+      {
+        "title": "留言咨询",
+        "docs": "https://docs.rsshub.app/routes/government#guo-jia-shi-chang-jian-du-guan-li-zong-ju",
+        "source": [
+          "/gjjly/index"
+        ],
+        "target": "/gov/samr/xgzlyhd/:category?/:department?"
+      }
+    ]
+  },
   "sasac.gov.cn": {
     "_name": "国务院国有资产监督管理委员会",
     ".": [
