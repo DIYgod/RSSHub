@@ -18,7 +18,7 @@ Some tags are rarely used： `Script`, `direction`, `production`, `design-concep
 
 <Route author="MisteryMonster" example="/behance/mishapetrick" path="/behance/:user/:type?" paramsDesc={['username', 'type, `projects` or `appreciated`, `projects` by default']} radar="1">
 
-Behance user's profile URL, like <https://www.behance.net/mishapetrick> the username will be `mishapetrick`。
+Behance user's profile URL, like [https://www.behance.net/mishapetrick](https://www.behance.net/mishapetrick) the username will be `mishapetrick`。
 
 </Route>
 
@@ -95,7 +95,7 @@ This route requires API key, therefore it's only available when self-hosting, re
 
 <Route author="nczitzk" example="/logonews/category/news/newsletter" path="/logonews/category/:category/:type" paramsDesc={['分类，可在对应分类页 URL 中找到', '类型，可在对应分类页 URL 中找到']}>
 
-如 [简讯 - 标志情报局](https://www.logonews.cn/category/news/newsletter) 的 URL 为 <https://www.logonews.cn/category/news/newsletter>，可得路由为 [`/logonews/category/news/newsletter`](https://rsshub.app/logonews/category/news/newsletter)。
+如 [简讯 - 标志情报局](https://www.logonews.cn/category/news/newsletter) 的 URL 为 `https://www.logonews.cn/category/news/newsletter`，可得路由为 [`/logonews/category/news/newsletter`](https://rsshub.app/logonews/category/news/newsletter)。
 
 </Route>
 
@@ -103,7 +103,7 @@ This route requires API key, therefore it's only available when self-hosting, re
 
 <Route author="nczitzk" example="/logonews/tag/china" path="/logonews/tag/:tag" paramsDesc={['标签，可在对应标签页 URL 中找到']}>
 
-如 [中国 - 标志情报局](https://www.logonews.cn/tag/china) 的 URL 为 <https://www.logonews.cn/tag/china>，可得路由为 [`/logonews/tag/china`](https://rsshub.app/logonews/tag/china)。
+如 [中国 - 标志情报局](https://www.logonews.cn/tag/china) 的 URL 为 `https://www.logonews.cn/tag/china`，可得路由为 [`/logonews/tag/china`](https://rsshub.app/logonews/tag/china)。
 
 </Route>
 
@@ -115,7 +115,7 @@ This route requires API key, therefore it's only available when self-hosting, re
 
 <Route author="nczitzk" example="/logonews/work/categorys/hotel-catering" path="/logonews/work/categorys/:category" paramsDesc={['分类，可在对应分类页 URL 中找到']}>
 
-如 [LOGO 作品分类：酒店餐饮 - 标志情报局](https://www.logonews.cn/work/categorys/hotel-catering) 的 URL 为 <https://www.logonews.cn/work/categorys/hotel-catering>，可得路由为 [`/logonews/work/categorys/hotel-catering`](https://rsshub.app/logonews/work/categorys/hotel-catering)。
+如 [LOGO 作品分类：酒店餐饮 - 标志情报局](https://www.logonews.cn/work/categorys/hotel-catering) 的 URL 为 `https://www.logonews.cn/work/categorys/hotel-catering`，可得路由为 [`/logonews/work/categorys/hotel-catering`](https://rsshub.app/logonews/work/categorys/hotel-catering)。
 
 </Route>
 
@@ -255,7 +255,7 @@ Default is under 'https://www.methodstudios.com/en/features'.
 
 如：选择 **精选** 分类下的 **运营设计** 子分类后，选择 **编辑精选**，默认 **视频** 取消勾选，默认 **城市** 和 **学校** 留空即全部，就会跳转到链接：
 
-<https://www.zcool.com.cn/discover?cate=0&subCate=617&hasVideo=0&city=0&college=0&recommendLevel=2&sort=9>
+`https://www.zcool.com.cn/discover?cate=0&subCate=617&hasVideo=0&city=0&college=0&recommendLevel=2&sort=9`
 
 此时其查询参数为 `cate=0&subCate=617&hasVideo=0&city=0&college=0&recommendLevel=2&sort=9`。其对应的路由即 [`/zcool/discover/cate=0&subCate=617&hasVideo=0&city=0&college=0&recommendLevel=2&sort=9`](https://rsshub.app/zcool/discover/cate=0&subCate=617&hasVideo=0&city=0&college=0&recommendLevel=2&sort=9)
 
@@ -273,7 +273,7 @@ Default is under 'https://www.methodstudios.com/en/features'.
 
 在 **精选** 分类下的 **运营设计** 子分类全部内容基础上，筛选出有 **视频**，且城市选择 **北京**，可直接使用路由 [`/zcool/discover/0/617/1/北京`](https://rsshub.app/zcool/discover/0/617/1/北京)
 
-:::tip 
+:::tip
 
 下方仅提供 **分类及其子分类** 参数的代码。**学校** 参数的代码可以在 [站酷发现页](https://www.zcool.com.cn/discover) 中选择跳转后，从浏览器地址栏中找到。
 

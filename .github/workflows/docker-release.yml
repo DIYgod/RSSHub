@@ -1,4 +1,4 @@
-name: '[docker] CI for releases'
+name: 'Docker Release'
 
 on:
   push:
@@ -13,7 +13,7 @@ on:
       - '!lib/v2/test/**'
       - '!test/**'
       - 'Dockerfile'
-  workflow_dispatch: ~
+  workflow_dispatch: {}
 
 jobs:
   check-env:
