@@ -475,6 +475,23 @@ Language
 
 </Route>
 
+## 国家林业和草原局 {#guo-jia-lin-ye-he-cao-yuan-ju}
+
+### 国家林草科技大讲堂 {#guo-jia-lin-ye-he-cao-yuan-ju-guo-jia-lin-cao-ke-ji-da-jiang-tang}
+
+<Route author="nczitzk" example="/gov/forestry/gjlckjdjt" path="/gov/forestry/gjlckjdjt/:category?" paramsDesc={['分类，见下表，默认为全部']} radar="1" rssbud="1">
+
+| 分类     | id   |
+| -------- | ---- |
+| 经济林   | jjl  |
+| 林木良种 | lmlz |
+| 林下经济 | lxjj |
+| 生态修复 | stxf |
+| 用材林   | ycl  |
+| 其他     | qt   |
+
+</Route>
+
 ## 国家税务总局 {#guo-jia-shui-wu-zong-ju}
 
 ### 最新文件 {#guo-jia-shui-wu-zong-ju-zui-xin-wen-jian}
@@ -1750,6 +1767,18 @@ Language
 | 大使任免   | dsrm     |
 | 驻外报道   | zwbd     |
 | 政策解读   | zcjd     |
+
+</Route>
+
+## 中华人民共和国应急管理部 {#zhong-hua-ren-min-gong-he-guo-ying-ji-guan-li-bu}
+
+### 事故及灾害查处 {#zhong-hua-ren-min-gong-he-guo-ying-ji-guan-li-bu-shi-gu-ji-zai-hai-cha-chu}
+
+<Route author="nczitzk" example="/gov/mem/gk/sgcc/tbzdsgdcbg" path="/gov/mem/gk/sgcc/:category?" paramsDesc={['分类，见下表，默认为挂牌督办']} radar="1" rssbud="1">
+
+| 挂牌督办 | 调查报告   |
+| -------- | ---------- |
+| sggpdbqk | tbzdsgdcbg |
 
 </Route>
 

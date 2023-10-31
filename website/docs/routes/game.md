@@ -111,7 +111,7 @@ Language codes
 
 ### Free games {#epic-games-store-free-games}
 
-<Route author="Zyx-A nczitzk  KotaHv" example="/epicgames/freegames" path="/epicgames/freegames/:locale?/:country?" paramsDesc={['Locale, en_US by default', 'Country, en_US by default']}/>
+<Route author="Zyx-A nczitzk  KotaHv" example="/epicgames/freegames" path="/epicgames/freegames/:locale?/:country?" paramsDesc={['Locale, en_US by default', 'Country, US by default']}/>
 
 ## Fate Grand Order {#fate-grand-order}
 

@@ -62,13 +62,3 @@ vscode:
     - WakaTime.vscode-wakatime
     - yzhang.markdown-all-in-one
     # - ZihanLi.at-helper not available on Open VSX
-
-github:
-  prebuilds:
-    master: true
-    branches: true
-    pullRequests: false
-    pullRequestsFromForks: false
-    addCheck: false
-    addComment: false
-    addBadge: false

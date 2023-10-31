@@ -511,6 +511,12 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 </Route>
 
+## 日本語多読道場 {#ri-ben-yu-duo-du-dao-chang}
+
+### 等级 {#ri-ben-yu-duo-du-dao-chang-deng-ji}
+
+<Route author="eternasuno" example="/yomujp/n1" path="/yomujp/:level?" paramsDesc={['等级，n1~n6，为空默认全部']} />
+
 ## 生物帮 {#sheng-wu-bang}
 
 ### 所有栏目 {#sheng-wu-bang-suo-you-lan-mu}
