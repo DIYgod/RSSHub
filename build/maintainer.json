@@ -1979,8 +1979,9 @@
     "/douban/jobs/:type": [
         "Fatpandac"
     ],
-    "/douban/list/:type?": [
-        "5upernova-heng"
+    "/douban/list/:type?/:routeParams?": [
+        "5upernova-heng",
+        "honue"
     ],
     "/douban/movie/classification/:sort?/:score?/:tags?": [
         "zzwab"
