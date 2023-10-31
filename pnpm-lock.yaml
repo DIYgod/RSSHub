@@ -18,8 +18,8 @@ dependencies:
     specifier: 7.76.0
     version: 7.76.0
   '@tonyrl/rand-user-agent':
-    specifier: 2.0.36
-    version: 2.0.36
+    specifier: 2.0.37
+    version: 2.0.37
   aes-js:
     specifier: 3.1.2
     version: 3.1.2
@@ -329,8 +329,8 @@ devDependencies:
     specifier: 3.0.5
     version: 3.0.5
   nock:
-    specifier: 13.3.6
-    version: 13.3.6
+    specifier: 13.3.7
+    version: 13.3.7
   nodemon:
     specifier: 3.0.1
     version: 3.0.1
@@ -1323,8 +1323,8 @@ packages:
       defer-to-connect: 2.0.1
     dev: false
 
-  /@tonyrl/rand-user-agent@2.0.36:
-    resolution: {integrity: sha512-YFTtCs0y4GfyXjWaldAxM0GcdOcHxL0Evg0NxvjyJOI4IH3Baxl3k6JMTpedvX9jgICnS8jRNhOaxBgV0NXhiA==}
+  /@tonyrl/rand-user-agent@2.0.37:
+    resolution: {integrity: sha512-gl+ZYhfowl5IeRvtleUIGLC8MoaynhWC4vgIkTdlJky/XmnU4KKXvgIlaPcsG1znLHEthUHBchygK4Hl5/CEYg==}
     engines: {node: '>=14.16'}
     dev: false
 
@@ -5914,8 +5914,8 @@ packages:
       lower-case: 1.1.4
     dev: false
 
-  /nock@13.3.6:
-    resolution: {integrity: sha512-lT6YuktKroUFM+27mubf2uqQZVy2Jf+pfGzuh9N6VwdHlFoZqvi4zyxFTVR1w/ChPqGY6yxGehHp6C3wqCASCw==}
+  /nock@13.3.7:
+    resolution: {integrity: sha512-z3voRxo6G0JxqCsjuzERh1ReFC4Vp2b7JpSgcMJB6jnJbUszf88awAeQLIID2UNMwbMh9/Zm5sFscagj0QYHEg==}
     engines: {node: '>= 10.13'}
     dependencies:
       debug: 4.3.4
