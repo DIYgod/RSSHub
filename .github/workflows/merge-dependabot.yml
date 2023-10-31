@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: ['14', '16']
+        node: ['18', '20']
     services:
       redis:
         image: redis
@@ -16,11 +16,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-          cache: 'yarn'
-      - run: yarn
+          cache: 'pnpm'
+      - run: pnpm i
       - run: npm run jest
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
