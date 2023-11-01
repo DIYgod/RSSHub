@@ -6,7 +6,7 @@
 
 <Route author="DIYgod" example="/forum4399/mtag-83932" path="/forum4399/:mtag" paramsDesc={['mtag,必选-论坛网址最后的mtag字段']} selfhost="1">
 
-:::caution
+:::warning
 
 需要用户 cookie 值，详情见部署页面的配置模块。
 
@@ -22,7 +22,7 @@
 
 :::tip
 
-Copy the URL of the 591 filter housing page and remove the front part "<https://rent.591.com.tw/>?", you will get the query parameters.
+Copy the URL of the 591 filter housing page and remove the front part `https://rent.591.com.tw/?`, you will get the query parameters.
 
 :::
 
@@ -161,7 +161,7 @@ See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 
 ### 腾讯新闻 - 新型冠状病毒肺炎疫情实时追踪 {#corona-virus-disease-2019-teng-xun-xin-wen-xin-xing-guan-zhuang-bing-du-fei-yan-yi-qing-shi-shi-zhui-zong}
 
-数据来源：<https://news.qq.com/zt2020/page/feiyan.htm#/>
+数据来源：[https://news.qq.com/zt2020/page/feiyan.htm#/](https://news.qq.com/zt2020/page/feiyan.htm#/)
 
 #### 中国本土数据统计 {#corona-virus-disease-2019-teng-xun-xin-wen-xin-xing-guan-zhuang-bing-du-fei-yan-yi-qing-shi-shi-zhui-zong-zhong-guo-ben-tu-shu-ju-tong-ji}
 
@@ -191,7 +191,7 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 ### Yahoo Japan 新型コロナウイルス感染症まとめ {#corona-virus-disease-2019-yahoo-japan-xin-xing-%E3%82%B3%E3%83%AD%E3%83%8A%E3%82%A6%E3%82%A4%E3%83%AB%E3%82%B9-gan-ran-zheng-%E3%81%BE%E3%81%A8%E3%82%81}
 
-Official Website: <https://news.yahoo.co.jp/pages/article/20200207>
+Official Website: [https://news.yahoo.co.jp/pages/article/20200207](https://news.yahoo.co.jp/pages/article/20200207)
 
 <Route author="sgqy" example="/coronavirus/yahoo-japan" path="/coronavirus/yahoo-japan/:tdfk?" paramsDesc={['都道府県的拼音，可从地图详情页的链接中获取。例如：京都府 = kyoto']}/>
 
@@ -476,7 +476,7 @@ For example:
 
 ## Notion {#notion}
 
-:::caution
+:::warning
 
 Need to set up Notion integration, please refer to [Route-specific Configurations](https://docs.rsshub.app/install/#Deployment) for details.
 
@@ -544,7 +544,7 @@ please refer to the [Notion API documentation](https://developers.notion.com/ref
 
 ## Product Hunt {#product-hunt}
 
-> 官方 Feed 地址为: <https://www.producthunt.com/feed>
+> 官方 Feed 地址为: [https://www.producthunt.com/feed](https://www.producthunt.com/feed)
 
 ### Today Popular {#product-hunt-today-popular}
 
@@ -795,7 +795,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ## 澳門特別行政區政府各公共部門獎助貸學金服務平台 {#ao-men-te-bie-xing-zheng-qu-zheng-fu-ge-gong-gong-bu-men-jiang-zhu-dai-xue-jin-fu-wu-ping-tai}
 
-官方網址：<https://www.bolsas.gov.mo/>
+官方網址：[https://www.bolsas.gov.mo/](https://www.bolsas.gov.mo/)
 
 <Route author="KeiLongW" example="/macau-bolsas" path="/macau-bolsas/:lang?" paramsDesc={['語言']} >
 
@@ -839,7 +839,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 习惯打卡 {#di-da-qing-dan-xi-guan-da-ka}
 
-:::caution
+:::warning
 
 需要账号密码，详情见部署文档部分 RSS 模块配置
 
@@ -940,7 +940,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 举例: [https://rsshub.app/aqicn/beijing/pm25,pm10](https://rsshub.app/aqicn/beijing/pm25.pm10)
 
-1.  显示单个污染成分，例如「pm25」, <https://rsshub.app/aqicn/beijing/pm25>
+1.  显示单个污染成分，例如「pm25」, [https://rsshub.app/aqicn/beijing/pm25](https://rsshub.app/aqicn/beijing/pm25)
 2.  逗号分隔显示多个污染成分，例如「pm25,pm10」，[https://rsshub.app/aqicn/beijing/pm25,pm10](https://rsshub.app/aqicn/beijing/pm25.pm10)
 
 ## 快递 100 {#kuai-di-100}
@@ -951,7 +951,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 快递公司代号如果不能确定，可通过下方快递列表获得。
 
-:::caution
+:::warning
 
 1.  构造链接前请确认所有参数正确：错误`快递公司 - 订单号`组合将会缓存信息一小段时间防止产生无用查询
 2.  正常查询的订单在未签收状态下不会被缓存：请控制查询频率
@@ -1061,7 +1061,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 路径处填写对应页面 URL 中 `http://www.qiyoujiage.com/` 和 `.shtml` 之间的字段。下面是一个例子。
 
-若订阅 [福建漳州龙海今日油价](http://www.qiyoujiage.com/fujian/zhangzhou/longhai.shtml) 则将对应页面 URL <http://www.qiyoujiage.com/fujian/zhangzhou/longhai.shtml> 中 `http://www.qiyoujiage.com/` 和 `.shtml` 之间的字段 `fujian/zhangzhou/longhai` 作为路径填入。此时路由为 [`/qiyoujiage/fujian/zhangzhou/longhai`](https://rsshub.app/qiyoujiage/fujian/zhangzhou/longhai)
+若订阅 [福建漳州龙海今日油价](http://www.qiyoujiage.com/fujian/zhangzhou/longhai.shtml) 则将对应页面 URL `http://www.qiyoujiage.com/fujian/zhangzhou/longhai.shtml` 中 `http://www.qiyoujiage.com/` 和 `.shtml` 之间的字段 `fujian/zhangzhou/longhai` 作为路径填入。此时路由为 [`/qiyoujiage/fujian/zhangzhou/longhai`](https://rsshub.app/qiyoujiage/fujian/zhangzhou/longhai)
 
 :::
 
@@ -1197,7 +1197,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ## 新趣集 {#xin-qu-ji}
 
-> 官方 Feed 地址为: <https://xinquji.com/rss>
+> 官方 Feed 地址为: [https://xinquji.com/rss](https://xinquji.com/rss)
 
 ### 今日最佳 {#xin-qu-ji-jin-ri-zui-jia}
 

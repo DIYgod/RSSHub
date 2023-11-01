@@ -58,7 +58,7 @@ npm run start
 </TabItem>
 </Tabs>
 
-:::caution
+:::warning
 
 You cannot switch to other languages in development mode. This is a [technical limitation](https://docusaurus.io/docs/i18n/tutorial#start-your-site) from Docusaurus.
 
@@ -157,7 +157,7 @@ Supprts Markdown.
 
 :::
 
-:::caution
+:::warning
 
 Add a empty line around the starting and ending directive `:::`
 
@@ -195,7 +195,7 @@ Supprts Markdown.
 
 :::
 
-:::caution
+:::warning
 
 Add a empty line around the starting and ending directive `:::`
 
