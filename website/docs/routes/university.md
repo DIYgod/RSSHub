@@ -307,7 +307,7 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 
 <Route author="wooddance" example="/pku/bbs/hot" path="/pku/bbs/hot" radar="1" rssbud="1">
 
-:::caution
+:::warning
 
 论坛部分帖子正文内容的获取需要用户登录后的 Cookie 值，详情见部署页面的配置模块。
 
@@ -505,7 +505,7 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 
 <Route author="Muxq99" example="/bwu/news" path="/bwu/news" />
 
-:::caution
+:::warning
 
 由于学校官网对非大陆 IP 的访问存在限制，需自行部署。
 
@@ -537,7 +537,7 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 
 <Route author="RicardoMing wzekin" example="/bupt/portal" path="/bupt/portal" />
 
-:::caution
+:::warning
 
 由于需要登陆 `https://webapp.bupt.edu.cn/wap/login.html?redirect=http://` 后的 Cookie 值，所以只能自建，详情见部署页面的配置模块
 
@@ -547,7 +547,7 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 
 <Route author="wzekin" example="/bupt/news" path="/bupt/news" />
 
-:::caution
+:::warning
 
 由于需要登陆 `https://webapp.bupt.edu.cn/wap/login.html?redirect=http://` 后的 Cookie 值，所以只能自建，详情见部署页面的配置模块
 
@@ -557,7 +557,7 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 
 <Route author="prnake" example="/bupt/funbox" path="/bupt/funbox" selfhost="1"/>
 
-:::caution
+:::warning
 
 由于需要登陆 BTBYR 后的 Cookie 值，所以只能自建，并且部署和订阅端均需支持 IPV6 网络或使用镜像站点。
 
@@ -634,7 +634,7 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 
 :::
 
-:::caution
+:::warning
 
 原重庆大学教务网网站变更为重庆大学本科教学信息网。该路由编写时（2021-07-29）它[正处于试运行阶段](http://jwc.cqu.edu.cn/info/1080/3482.htm)。
 
@@ -1489,7 +1489,7 @@ category 列表：
 
 ## 哈尔滨工业大学 {#ha-er-bin-gong-ye-da-xue}
 
-:::caution
+:::warning
 
 哈工大网站疑似禁止了`rsshub.app`的访问，使用路由需要自行 [部署](https://docs.rsshub.app/install)。
 
@@ -1510,7 +1510,7 @@ category 列表：
 
 :::
 
-:::caution
+:::warning
 
 部分文章需要经过统一身份认证后才能阅读全文。
 
@@ -1654,7 +1654,7 @@ category 列表：
 
 </Route>
 
-:::caution
+:::warning
 
 jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS_REJECT_UNAUTHORIZED = 0
 
@@ -1813,7 +1813,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="auto-bot-ty" example="/scut/seie/news_center" path="/scut/seie/news_center" radar="1" />
 
-:::caution
+:::warning
 
 由于学院官网对非大陆 IP 的访问存在限制，需自行部署。
 
@@ -2399,7 +2399,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | -------- | -------- | -------- | -------- | -------- | -------- | ---- |
 | 783      | 784      | 785      | 786      | 788      | 789      | qt   |
 
-:::caution
+:::warning
 
 全文内容需使用 校园网或[VPN](http://vpn.nuist.edu.cn) 获取
 
@@ -2529,7 +2529,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-:::caution
+:::warning
 
 由于学校通知仅允许校园网访问，需自行部署。
 
@@ -2855,7 +2855,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 上海立信会计金融学院 {#shang-hai-li-xin-kuai-ji-jin-rong-xue-yuan}
 
-:::caution
+:::warning
 
 分区 ID 是`info/iList.jsp?cat_id=`后方数字
 
@@ -2931,7 +2931,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="HyperCherry" example="/stbu/jsjxy" path="/stbu/jsjxy" />
 
-:::caution
+:::warning
 
 计算机学院通知公告疑似禁止了非大陆 IP 访问，使用路由需要自行 [部署](https://docs.rsshub.app/install)。
 
@@ -3344,7 +3344,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="mocusez" example="/xaut/jwc/tzgg" path="/xaut/jwc/:category?" paramsDesc={['通知类别，默认为通知公告']} radar="1" rssbud="1">
 
-:::caution
+:::warning
 
 有些内容需使用校园网或 VPN 访问知行网获取
 
@@ -3360,7 +3360,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="light0926 mocusez" example="/xaut/rsc/tzgg" path="/xaut/rsc/:category?" paramsDesc={['通知类别，默认为通知公告']} radar="1" rssbud="1">
 
-:::caution
+:::warning
 
 有些内容指向外部链接，目前只提供这些链接，不提供具体内容，去除 jwc 和 index 的修改
 
@@ -3875,7 +3875,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 <Route author="3401797899" example="/ouc/jwgl" path="/ouc/jwgl" radar="1" selfhost="1">
 
-:::caution
+:::warning
 
 由于选课通知仅允许校园网访问，需自行部署。
 

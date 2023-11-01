@@ -1,6 +1,6 @@
 # API
 
-:::caution
+:::warning
 
 The API is under active development and is subject to change. All suggestions are welcome!
 

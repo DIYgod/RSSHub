@@ -176,7 +176,7 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 The List ID is the last part of the URL after `-`, for example, the username in [https://medium.com/@imsingee/list/collection-7e67004f23f9](https://medium.com/@imsingee/list/collection-7e67004f23f9) is `imsingee`, and the ID is `7e67004f23f9`.
 
-:::caution
+:::warning
 
 To access private lists, only self-hosting is supported.
 
@@ -188,7 +188,7 @@ To access private lists, only self-hosting is supported.
 
 <Route author="ImSingee" example="/medium/for-you/imsingee" path="/medium/for-you/:user" paramsDesc={['Username']} selfhost="1">
 
-:::caution
+:::warning
 
 Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
 
@@ -200,7 +200,7 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 <Route author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" paramsDesc={['Username']} selfhost="1">
 
-:::caution
+:::warning
 
 Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
 
@@ -214,7 +214,7 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 There are many tags, which can be obtained by clicking on a tag from the homepage and looking at the URL. For example, if the URL is `https://medium.com/?tag=web3`, then the tag is `web3`.
 
-:::caution
+:::warning
 
 Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
 

@@ -257,7 +257,7 @@ Eg: `https://ncode.syosetu.com/n1976ey/`
 
 :::
 
-:::caution
+:::warning
 
 上方列举的网址可能部分不可用，这取决于该网站的维护者是否持续运营网站。请选择可以正常访问的网址，获取更新的前提是该网站可以正常访问。
 
@@ -285,7 +285,7 @@ Eg: `https://ncode.syosetu.com/n1976ey/`
 
 :::
 
-:::caution
+:::warning
 
 你可以设置参数 **需要获取文章全文** 为 `true` `yes` `t` `y` 等值（或者忽略这个参数），RSS 的条目会携带期刊中的 **文章全文**，而不仅仅是 **文章概要**。但因为发起访问请求过多会被该网站屏蔽，你可以将其关闭（设置该参数为 `false` `no` `f` `n` 等值），这将会大大减少请求次数从而更难触发网站的反爬机制。
 
@@ -303,7 +303,7 @@ Eg: `https://ncode.syosetu.com/n1976ey/`
 
 <Route author="LogicJake" example="/chuiniu/column/0b1c4cf6e7f24e8da11e37882de73704" path="/chuiniu/column/:id" paramsDesc={['栏目 id, 可在对应栏目页 URL 中找到']}>
 
-:::caution
+:::warning
 
 正文内容需要用户登录后的 x-member 值，详情见部署页面的配置模块。若无相关配置或 x-member 失效，则只显示文章摘要。
 
@@ -339,7 +339,7 @@ Eg: `https://ncode.syosetu.com/n1976ey/`
 
 <Route author="JeasonLau" example="/dcrsw/zhongjidouluo/2" path="/dcrsw/:name/:count?" paramsDesc={['小说名，可在对应小说页URL中找到', '显示的章节数，缺省为`3`']}>
 
-:::caution
+:::warning
 
 count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 以下。
 :::
@@ -499,7 +499,7 @@ count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 
 
 <Route author="Fatpandac" example="/wenku8/lastupdate" path="/wenku8/:categoty?" paramsDesc={['首页分类，见下表，默认为今日更新']} selfhost="1">
 
-:::caution
+:::warning
 
 首页需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
