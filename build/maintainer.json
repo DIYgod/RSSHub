@@ -1962,7 +1962,8 @@
         "xyqfer"
     ],
     "/douban/doulist/:id": [
-        "LogicJake"
+        "LogicJake",
+        "honue"
     ],
     "/douban/event/hot/:locationId": [
         "xyqfer"
