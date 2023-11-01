@@ -309,7 +309,7 @@ in pkgs.stdenv.mkDerivation {
 
 ### 注意
 
-:::caution
+:::warning
 
 Heroku [不再](https://blog.heroku.com/next-chapter) 提供免费服务。
 
@@ -500,7 +500,7 @@ gcloud app deploy
 
 [![Try in PWD](https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png)](https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml)
 
-:::caution
+:::warning
 
 -   需要 [DockerHub](https://hub.docker.com) 账号
 -   [Play with Docker](https://labs.play-with-docker.com/) 一次仅能使用 4 小时，不能作为持久化解决方案，应当用于测试 / 验证路由规则
@@ -585,7 +585,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 ### 反向代理
 
-:::caution
+:::warning
 
 这种代理方式无法代理包含 cookie 的请求。
 
@@ -1006,7 +1006,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 与 `.` 替换为 `_`，例如 `EMAIL_CONFIG_xxx_qq_com`。Linux 内容格式为 `password=密码&host=服务器&port=端口`，docker 内容格式为 `password=密码&host=服务器&port=端口`，例如：
         -   Linux 环境变量：`EMAIL_CONFIG_xxx_qq_com="password=123456&host=imap.qq.com&port=993"`
         -   docker 环境变量：`EMAIL_CONFIG_xxx_qq_com=password=123456&host=imap.qq.com&port=993`，请勿添加引号 `'`，`"`。
-     
+
     -  注意：邮箱的路由不支持使用 socks5h 的代理，主要是受 `ImapFlow` 这个第三方库的限制，使用的时候需要注意。
 
 -   网易云歌单及听歌排行

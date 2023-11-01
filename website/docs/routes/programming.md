@@ -1446,7 +1446,7 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 ## 腾讯游戏开发者社区 {#teng-xun-you-xi-kai-fa-zhe-she-qu}
 
-:::caution
+:::warning
 
 有部分输出全文带有未进行样式处理的代码内容，显示效果不佳，建议跳转原文阅读
 

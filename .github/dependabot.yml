@@ -62,7 +62,7 @@ updates:
       - dependency-name: string-width
         versions: ['>=5.0.0']
     groups:
-      docs:
+      docusaurus:
         patterns:
           - '@docusaurus/*'
 

@@ -17,27 +17,27 @@
   },
   "dependencies": {
     "@dipakparmar/docusaurus-plugin-umami": "^2.1.1",
-    "@docusaurus/core": "2.4.3",
-    "@docusaurus/plugin-client-redirects": "2.4.3",
-    "@docusaurus/plugin-pwa": "2.4.3",
-    "@docusaurus/preset-classic": "2.4.3",
-    "@mdx-js/react": "^1.6.22",
+    "@docusaurus/core": "3.0.0",
+    "@docusaurus/plugin-client-redirects": "3.0.0",
+    "@docusaurus/plugin-pwa": "3.0.0",
+    "@docusaurus/preset-classic": "3.0.0",
+    "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
     "markdown-it": "^13.0.2",
     "meilisearch-docsearch": "^0.5.0",
     "pinyin-pro": "3.17.0",
     "prism-react-renderer": "^2.1.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "2.4.3",
-    "@docusaurus/types": "2.4.3",
-    "@tsconfig/docusaurus": "^2.0.2",
+    "@docusaurus/module-type-aliases": "3.0.0",
+    "@docusaurus/tsconfig": "^3.0.0",
+    "@docusaurus/types": "3.0.0",
     "@types/markdown-it": "^13.0.5",
-    "@types/mdx-js__react": "^1.5.5",
-    "@types/react": "^17.0.64",
-    "@types/react-dom": "^17.0.20",
+    "@types/mdx-js__react": "^1.5.7",
+    "@types/react": "^18.2.33",
+    "@types/react-dom": "^18.2.14",
     "typescript": "^5.2.2"
   },
   "browserslist": {
@@ -53,6 +53,6 @@
     ]
   },
   "engines": {
-    "node": ">=16.14"
+    "node": ">=18.0"
   }
 }

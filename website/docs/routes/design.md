@@ -70,7 +70,7 @@ Behance user's profile URL, like [https://www.behance.net/mishapetrick](https://
 | :----: | :------: | :----------: | :--:  | :--------------: |
 | date   | trending | popularity   | alpha | style            |
 
-:::caution
+:::warning
 
 This route requires API key, therefore it's only available when self-hosting, refer to the [Deploy Guide](https://docs.rsshub.app/install/#configuration-route-specific-configurations) for route-specific configurations.
 
