@@ -1299,7 +1299,7 @@ Country Code
 
 </Route>
 
-### 豆列 {#dou-ban-dou-lie}
+### 豆瓣豆列 {#dou-ban-dou-ban-dou-lie}
 
 <Route author="LogicJake" example="/douban/doulist/37716774" path="douban/doulist/:id" paramsDesc={['豆列id']}/>
 
