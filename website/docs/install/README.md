@@ -662,7 +662,7 @@ Access code is the md5 generated based on the access key + route, eg:
 
 -   Or using `key` directly, eg: `https://rsshub.app/qdaily/column/59?key=ILoveRSSHub`
 
-See the relation between access key/code and white/denylisting.
+See the relation between access key/code and allowlist/denylisting.
 
 |             | Allowlist | Denylist | Correct access key/code | Wrong access key/code | No access key/code |
 | ----------- | ----------- | ----------- | ----------------------- | --------------------- | ------------------ |
