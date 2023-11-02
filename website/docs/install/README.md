@@ -642,7 +642,7 @@ RSSHub supports access control via access key/code, allowlisting and denylisting
 
 #### White/denylisting
 
--   `ALLOWLIST`: the denylist. When set, values in `DENYLIST` are disregarded
+-   `ALLOWLIST`: the allowlist. When set, values in `DENYLIST` are disregarded
 
 -   `DENYLIST`: the denylist
 
