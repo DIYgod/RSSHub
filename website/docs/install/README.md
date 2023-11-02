@@ -321,7 +321,7 @@ Automatic updates are included.
 
 ### Notice
 
-:::caution Update
+:::warning Update
 
 Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product plans.
 
@@ -505,7 +505,7 @@ If you would like to test routes or avoid IP limits, etc., you may build your ow
 
 [![Try in PWD](https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png)](https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml)
 
-:::caution
+:::warning
 
 -   [DockerHub](https://hub.docker.com) account required
 -   [Play with Docker](https://labs.play-with-docker.com/) instance will last for 4 hours at most. It should only be used for testing purpose
@@ -579,7 +579,7 @@ resolved by the SOCKS server, recommanded, prevents DNS poisoning or DNS leak), 
 
 ### Reverse proxy
 
-:::caution
+:::warning
 
 This proxy method cannot proxy requests that contain cookies.
 
@@ -859,7 +859,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with the email account, replace `@` and `.` in email account with `_`, e.g. `EMAIL_CONFIG_xxx_gmail_com`. The value is in the format of `password=password&host=server&port=port`, eg:
         -   Linux env: `EMAIL_CONFIG_xxx_qq_com="password=123456&host=imap.qq.com&port=993"`
         -   docker env: `EMAIL_CONFIG_xxx_qq_com=password=123456&host=imap.qq.com&port=993`, please do not include quotations `'`,`"`
-     
+
     -   Note: socks5h proxy is not supported due to the limit of email lib `ImapFlow`
 
 -   Mastodon user timeline: apply API here `https://mastodon.example/settings/applications`(repalce `mastodon.example`), please check scope `read:search`

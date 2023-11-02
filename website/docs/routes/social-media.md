@@ -87,7 +87,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 <Route author="Qixingchen" example="/bilibili/user/followers/2267573/3" path="/bilibili/user/followers/:uid/:loginUid" paramsDesc={['用户 id, 可在 UP 主主页中找到','用于登入的用户id,需要配置对应的 Cookie 值']} radar="1" rssbud="1" selfhost="1">
 
-:::caution
+:::warning
 
 UP 主粉丝现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -99,7 +99,7 @@ UP 主粉丝现在需要 b 站登录后的 Cookie 值，所以只能自建，详
 
 <Route author="Qixingchen" example="/bilibili/user/followings/2267573/3" path="/bilibili/user/followings/:uid/:loginUid" paramsDesc={['用户 id, 可在 UP 主主页中找到','用于登入的用户id,需要配置对应的 Cookie 值']} radar="1" rssbud="1" selfhost="1">
 
-:::caution
+:::warning
 
 UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -267,7 +267,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 <Route author="TigerCubDen JimenezLi" example="/bilibili/followings/dynamic/109937383" path="/bilibili/followings/dynamic/:uid/:routeParams?" paramsDesc={['用户 id', '额外参数；请参阅 [#UP 主动态](#bilibili-up-zhu-dong-tai) 的说明和表格']} selfhost="1">
 
-:::caution
+:::warning
 
 用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -279,7 +279,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 <Route author="LogicJake" example="/bilibili/followings/video/2267573" path="/bilibili/followings/video/:uid/:disableEmbed?" paramsDesc={['用户 id', '默认为开启内嵌视频, 任意值为关闭']} selfhost="1">
 
-:::caution
+:::warning
 
 用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -291,7 +291,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 <Route author="woshiluo" example="/bilibili/followings/article/99800931" path="/bilibili/followings/article/:uid" paramsDesc={['用户 id']} selfhost="1">
 
-:::caution
+:::warning
 
 用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -303,7 +303,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 <Route author="JimenezLi" example="/bilibili/watchlater/2267573" path="/bilibili/watchlater/:uid/:disableEmbed?" paramsDesc={['用户 id', '默认为开启内嵌视频, 任意值为关闭']} selfhost="1">
 
-:::caution
+:::warning
 
 用户稍后再看需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -383,7 +383,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 <Route author="yindaheng98" example="/bilibili/manga/followings/26009" path="/bilibili/manga/followings/:uid/:limits?" paramsDesc={['用户 id', '抓取最近更新前多少本漫画，默认为10']} selfhost="1">
 
-:::caution
+:::warning
 
 用户追漫需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 
@@ -569,7 +569,7 @@ Type
 
 ## Instagram {#instagram}
 
-:::caution
+:::warning
 
 Due to Instagram Private API restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/install/) for more.
 
@@ -698,7 +698,7 @@ If the instance address is not `mastodon.social` or `pawoo.net`, then the route 
 | 1 (default)    | on                                      | off                        |
 | 10             | on                                      | on                         |
 
-:::caution
+:::warning
 
 Instagram Stories do not have a reliable guid. It is possible that your RSS reader show the same story more than once.
 Though, every Story expires after 24 hours, so it may be not so serious.
@@ -749,7 +749,7 @@ Though, every Story expires after 24 hours, so it may be not so serious.
 
 <Route author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1" rssbud="1" selfhost="1">
 
-:::caution
+:::warning
 
 Only for self-hosted
 
@@ -919,7 +919,7 @@ https://rsshub.app/threads/zuck/showAuthorInTitle=1&showAuthorInDesc=1&showQuote
 
 ## Twitter {#twitter}
 
-:::caution
+:::warning
 
 Due to restrictions from Twitter, currently only tweets within 7 days are available in some routes.
 
@@ -975,7 +975,7 @@ generates
 
 <Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" paramsDesc={['username', 'extra parameters, see the table above']} radar="1" rssbud="1" selfhost="1">
 
-:::caution
+:::warning
 
 This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
 
@@ -1003,7 +1003,7 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 
 <Route author="TonyRL" example="/twitter/collection/DIYgod/1527857429467172864" path="/twitter/collection/:uid/:collectionId/:routeParams?" paramsDesc={['username, should match the generated token', 'collection ID, can be found in URL', 'extra parameters, see the table above']} radar="1" rssbud="1" selfhost="1">
 
-:::caution
+:::warning
 
 This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
 
@@ -1180,7 +1180,7 @@ Country Code
 
 ## 抖音 {#dou-yin}
 
-:::caution
+:::warning
 
 反爬严格，需要启用 puppeteer。\
 抖音的视频 CDN 会验证 Referer，意味着许多阅读器都无法直接播放内嵌视频，以下是一些变通解决方案：
@@ -1299,7 +1299,7 @@ Country Code
 
 </Route>
 
-### 豆列 {#dou-ban-dou-lie}
+### 豆瓣豆列 {#dou-ban-dou-ban-dou-lie}
 
 <Route author="LogicJake" example="/douban/doulist/37716774" path="douban/doulist/:id" paramsDesc={['豆列id']}/>
 
@@ -1440,7 +1440,7 @@ Country Code
 
 ## 饭否 {#fan-fou}
 
-:::caution
+:::warning
 
 部署时需要申请并配置饭否 Consumer Key、Consumer Secret、用户名和密码，具体见部署文档
 
@@ -1650,7 +1650,7 @@ rule
 
 ## 微博 {#wei-bo}
 
-:::caution
+:::warning
 
 微博会针对请求的来源地区返回不同的结果。\
 一个已知的例子为：部分视频因未知原因仅限中国大陆境内访问 (CDN 域名为 `locallimit.us.sinaimg.cn` 而非 `f.video.weibocdn.com`)。若一条微博含有这种视频且 RSSHub 实例部署在境外，抓取到的微博可能不含视频。将 RSSHub 部署在境内有助于抓取这种视频，但阅读器也必须处于境内网络环境以加载视频。
@@ -1721,7 +1721,7 @@ rule
 
 <Route author="zytomorrow DIYgod Rongronggg9" example="/weibo/timeline/3306934123" path="/weibo/timeline/:uid/:feature?/:routeParams?" paramsDesc={['用户的uid', '过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。', '额外参数；请参阅上面的说明和表格']} anticrawler="1" selfhost="1">
 
-:::caution
+:::warning
 
 需要对应用户打开页面进行授权生成 token 才能生成内容
 
@@ -1735,7 +1735,7 @@ rule
 
 <Route author="monologconnor Rongronggg9" example="/weibo/group/4541216424989965/微博分组/:routeParams?" path="/weibo/group/:gid/:gname?/:routeParams?" paramsDesc={['分组id, 在网页版分组地址栏末尾`?gid=`处获取', '分组显示名称; 默认为: `微博分组`', '额外参数；请参阅上面的说明和表格']} anticrawler="1" selfhost="1">
 
-:::caution
+:::warning
 
 由于微博官方未提供自定义分组相关 api, 此方案必须使用用户`Cookie`进行抓取
 
@@ -1791,7 +1791,7 @@ rule
 
 ## 新榜 {#xin-bang}
 
-:::caution
+:::warning
 
 部署时需要配置 NEWRANK_COOKIE，具体见部署文档
 请勿过高频抓取，新榜疑似对每天调用 token 总次数进行了限制，超限会报错
@@ -1806,7 +1806,7 @@ rule
 
 <Route author="lessmoe" example="/newrank/douyin/110266463747" path="/newrank/douyin/:dyid" paramsDesc={['抖音ID，可在新榜账号详情 URL 中找到']} anticrawler="1" selfhost="1"/>
 
-:::caution
+:::warning
 
 免费版账户抖音每天查询次数 20 次，如需增加次数可购买新榜会员或等待未来多账户支持
 
@@ -1892,7 +1892,7 @@ rule
 
 <Route author="SeanChao" example="/zhihu/timeline" path="/zhihu/timeline" anticrawler="1" selfhost="1">
 
-:::caution
+:::warning
 
 用户关注动态需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
 

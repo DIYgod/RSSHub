@@ -68,7 +68,7 @@ pnpm run start
 
 :::
 
-:::caution
+:::warning
 
 在开发模式下，您无法切换到其他语言。这是 Docusaurus 的 [技术限制](https://docusaurus.io/docs/i18n/tutorial#start-your-site)。
 
@@ -166,7 +166,7 @@ pnpm run start
 
 :::
 
-:::caution
+:::warning
 
 开始和结束的 `:::` 周围需要空出一行
 
@@ -204,7 +204,7 @@ pnpm run start
 
 :::
 
-:::caution
+:::warning
 
 开始和结束的 `:::` 周围需要空出一行
 

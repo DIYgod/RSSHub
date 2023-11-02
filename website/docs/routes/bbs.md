@@ -193,7 +193,7 @@
 
 ## Dcard {#dcard}
 
-:::caution
+:::warning
 
 僅能透過台灣 IP 抓取。
 
@@ -209,7 +209,7 @@
 
 ## Discourse {#discourse}
 
-:::caution
+:::warning
 
 You need to set the environment variable `DISCOURSE_CONFIG_{id}` before using it. Please refer to Configuration section in the Deploy page of the documentation.
 
@@ -223,7 +223,7 @@ You need to set the environment variable `DISCOURSE_CONFIG_{id}` before using it
 
 <Route author="dzx-dzx" example="/discourse/0/notifications" path="/discourse/:configId/notifications/:fulltext?" paramsDesc={['Environment variable configuration id, see above','Fetch the content if the notification points to a post. This is disabled by default, set it to `1` to enable it.']} selfhost="1"/>
 
-:::caution
+:::warning
 
 If you opt to enable `fulltext` feature, consider adding `limit` parameter to your query to avoid sending too many request.
 
@@ -369,7 +369,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### AV {#playno.1-wan-le-da-ren-av}
 
-:::caution
+:::warning
 
 目前观测到该博客可能禁止日本 IP 访问。建议部署在日本区以外的服务器上。
 
