@@ -646,7 +646,7 @@ RSSHub supports access control via access key/code, allowlisting and denylisting
 
 -   `DENYLIST`: the denylist
 
-White/denylisting support IP, route and UA as values, fuzzy matching. Use `,` as the delimiter to separate multiple values, eg: `ALLOWLIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
+Allowlisting/denylisting support IP, route and UA as values, fuzzy matching. Use `,` as the delimiter to separate multiple values, eg: `ALLOWLIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
 
 #### Access Key/Code
 
