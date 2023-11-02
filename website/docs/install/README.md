@@ -640,7 +640,7 @@ For readers that do not support HTTP Basic authentication, please refer to [Acce
 
 RSSHub supports access control via access key/code, allowlisting and denylisting, enabling any will activate access control for all routes. `ALLOW_LOCALHOST: true` will grant access to all localhost IP addresses.
 
-#### White/denylisting
+#### Allowlisting/denylisting
 
 -   `ALLOWLIST`: the allowlist. When set, values in `DENYLIST` are disregarded
 
