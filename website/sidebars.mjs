@@ -1,5 +1,3 @@
-import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
-
 /**
  * Creating a sidebar enables you to:
  - create an ordered group of docs
@@ -11,7 +9,10 @@ import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
  Create as many sidebars as you want.
  */
 
-const sidebars: SidebarsConfig = {
+// @ts-check
+
+/** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
+const sidebars = {
     // By default, Docusaurus generates a sidebar from the docs folder structure
     tutorialSidebar: [
         {

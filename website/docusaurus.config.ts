@@ -1,5 +1,5 @@
 import { themes as prismThemes } from 'prism-react-renderer';
-import sidebars from './sidebars';
+import sidebars from './sidebars.mjs';
 
 import type { Config } from '@docusaurus/types';
 import type { Options as PresetOptions, ThemeConfig } from '@docusaurus/preset-classic';
@@ -86,8 +86,7 @@ const config: Config = {
                 docs: {
                     // path: '../docs',
                     routeBasePath: '/',
-                    // sidebarPath: require.resolve('./sidebars.js'),
-                    sidebarPath: './sidebars.ts',
+                    sidebarPath: './sidebars.mjs',
                     // Please change this to your repo.
                     // Remove this to remove the "edit this page" links.
                     editUrl: 'https://github.com/DIYgod/RSSHub/blob/master/website/',

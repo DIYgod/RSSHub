@@ -1,11 +1,15 @@
-const file = require('./file');
-const sgf = require('staged-git-files');
-const path = require('path');
-const sortByHeading = require('./sortByHeading');
-const slugId = require('./slugId');
+import file from './file.mjs';
+import sgf from 'staged-git-files';
+import sortByHeading from './sortByHeading.mjs';
+import slugId from './slugId.mjs';
 // const chineseFormat = require('./chineseFormat');
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
+import { exec } from 'child_process';
+
+// const util = require('util');
+// const exec = util.promisify(require('child_process').exec);
+
+// const __filename = new URL('', import.meta.url).pathname;
+// const __dirname = new URL('.', import.meta.url).pathname;
 
 /**
  * Processors are objects contains two methods:
@@ -55,10 +59,10 @@ const processors = [sortByHeading, slugId];
     }
  */
 const buildFileList = async () => {
-    const config = require(`../../sidebars.js`);
+    const { default: config } = await import('../../sidebars.mjs');
     const fileList = config.guideSidebar[2].items.map(({ id }) => ({
         type: file.ROUTE_TYPE,
-        path: path.resolve(__dirname, '..', `./${id}.md`),
+        path: new URL(`../${id}.md`, import.meta.url).pathname,
         lang: file.LANG_EN,
     }));
     // let fileList = [];
@@ -103,7 +107,7 @@ const buildStagedList = async () => {
 };
 
 /** Entry
- * Usage: node format.js --full/--staged
+ * Usage: node format.mjs --full/--staged
  */
 (async () => {
     // Mode
