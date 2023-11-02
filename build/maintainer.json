@@ -3654,6 +3654,9 @@
     "/invisionapp/inside-design": [],
     "/iplay/home": [],
     "/ipsw/index/:ptype/:pname": [],
+    "/iqilu/v/category?": [
+        "nczitzk"
+    ],
     "/iqiyi/album/:id": [
         "TonyRL"
     ],
