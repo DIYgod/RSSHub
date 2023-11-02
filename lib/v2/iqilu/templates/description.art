@@ -1,4 +1,4 @@
-{{ if image && !video.src }}
+{{ if image && !video }}
   <figure>
     <img src="{{ image.src }}" alt="{{ image.alt }}">
   </figure>
