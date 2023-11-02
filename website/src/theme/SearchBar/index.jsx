@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { docsearch } from 'meilisearch-docsearch';
 
 import 'meilisearch-docsearch/css';
 import './variables.css';
@@ -7,10 +8,8 @@ import './variables.css';
 export default function SearchBarWrapper() {
   const { siteConfig } = useDocusaurusContext();
   useEffect(() => {
-    const { docsearch } = require('meilisearch-docsearch');
     const docSearchOptions = siteConfig.customFields['meilisearch-docsearch'];
-
-    return docsearch(docSearchOptions)
+    docsearch(docSearchOptions)
   }, [])
 
   return (

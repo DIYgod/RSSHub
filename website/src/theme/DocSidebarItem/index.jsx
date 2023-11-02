@@ -1,4 +1,3 @@
-import React from 'react';
 import DocSidebarItem from '@theme-original/DocSidebarItem';
 import CarbonAds from '@site/src/components/CarbonAds';
 
