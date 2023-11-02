@@ -2,7 +2,8 @@ import file from './file.mjs';
 import sgf from 'staged-git-files';
 import sortByHeading from './sortByHeading.mjs';
 import slugId from './slugId.mjs';
-// const chineseFormat = require('./chineseFormat');
+import removeHeadingId from './removeHeadingId.mjs';
+import chineseFormat from './chineseFormat.mjs';
 import { exec } from 'child_process';
 
 // const util = require('util');
@@ -17,7 +18,9 @@ import { exec } from 'child_process';
  * rules filters required file document object
  * and handler get document string and return formatted document
  */
-const processors = [sortByHeading, slugId];
+// const processors = [sortByHeading, slugId];
+const processors = [removeHeadingId, chineseFormat, slugId];
+// const processors = [chineseFormat];
 
 // Helpers
 // const loopSideBar = (children, type, lang, prefix) =>
@@ -128,6 +131,7 @@ const buildStagedList = async () => {
     for (const processor of processors) {
         for (const e of processor.rules(fileList)) {
             let formatted = await file.readFile(e.path);
+            console.log(`Formatting ${e.path}`)
             formatted = await processor.handler(formatted);
             await file.writeFile(e.path, formatted);
             if (stagedFiles.find((x) => e.path.indexOf(x.filename) !== -1)) {
