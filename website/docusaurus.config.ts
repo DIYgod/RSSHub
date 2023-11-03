@@ -34,6 +34,13 @@ const config: Config = {
         locales: ['zh', 'en'],
     },
 
+    markdown: {
+        format: 'mdx',
+        mdx1Compat: {
+            // comments: false,
+        },
+    },
+
     plugins: [
         [
             '@dipakparmar/docusaurus-plugin-umami',

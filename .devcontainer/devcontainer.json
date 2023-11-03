@@ -18,6 +18,7 @@
                 "deepscan.vscode-deepscan",
                 "rangav.vscode-thunder-client",
                 "SonarSource.sonarlint-vscode",
+                "unifiedjs.vscode-mdx",
                 "ZihanLi.at-helper"
             ]
         }

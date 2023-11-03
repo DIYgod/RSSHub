@@ -5,6 +5,8 @@ import slugId from './slugId.mjs';
 import removeHeadingId from './removeHeadingId.mjs';
 // import chineseFormat from './chineseFormat.mjs';
 import { exec } from 'child_process';
+import { fileURLToPath } from 'url';
+import sidebars from '../../sidebars.mjs';
 
 /**
  * Processors are objects contains two methods:
@@ -54,10 +56,9 @@ const processors = [sortByHeading, slugId];
     }
  */
 const buildFileList = async () => {
-    const { default: config } = await import('../../sidebars.mjs');
-    const fileList = config.guideSidebar[2].items.map(({ id }) => ({
+    const fileList = sidebars.guideSidebar[2].items.map(({ id }) => ({
         type: file.ROUTE_TYPE,
-        path: new URL(`../${id}.md`, import.meta.url).pathname,
+        path: fileURLToPath(new URL(`../${id}.mdx`, import.meta.url)),
         lang: file.LANG_EN,
     }));
     // let fileList = [];
@@ -87,7 +88,7 @@ const buildStagedList = async () => {
     //         stagedFileList.push(e.filename);
     //     }
     // });
-    const stagedFileList = stagedFiles.filter((e) => e.filename.endsWith('.md')).map((e) => e.filename);
+    const stagedFileList = stagedFiles.filter((e) => e.filename.endsWith('.md') || e.filename.endsWith('.mdx')).map((e) => e.filename);
     const fullFileList = await buildFileList();
     // const result = [];
     // stagedFileList.forEach((e) => {
