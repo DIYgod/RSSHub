@@ -477,7 +477,7 @@ Provide full article RSS for CBC topics.
 
 :::
 
-:::caution
+:::warning
 
 This route does not support podcasts, please use the Offical RSS feed instead.
 
@@ -511,7 +511,7 @@ Parameters can be obtained from the official website, for instance:
 
 ## Reuters 路透社 {#reuters-lu-tou-she}
 
-:::caution Migration notes
+:::warning Migration notes
 
 1. Reuters Chinese site (`cn.reuters.com`) and British site (`uk.reuters.com`) have been terminated, redirecting to the main site (`www.reuters.com`)
 2. The old routes are deprecated. Please migrate to the new routes documented below
@@ -1815,7 +1815,7 @@ category 对应的关键词有
 
 ## 联合早报 {#lian-he-zao-bao}
 
-:::caution
+:::warning
 
 由于 [RSSHub#10309](https://github.com/DIYgod/RSSHub/issues/10309) 中的问题，使用靠近香港的服务器部署将从 hk 版联合早报爬取内容，造成输出的新闻段落顺序错乱。如有订阅此源的需求，建议寻求部署在远离香港的服务器上的 RSSHub，或者在自建时选择远离香港的服务器。
 
@@ -2202,6 +2202,32 @@ category 对应的关键词有
 | 今日临沂 | 今日德州 | 今日威海 | 今日枣庄  | 今日淄博 | 今日烟台 | 今日潍坊 | 今日菏泽 | 今日日照 | 今日泰山 | 今日聊城  | 今日济宁 |
 | -------- | -------- | -------- | --------- | -------- | -------- | -------- | -------- | -------- | -------- | --------- | -------- |
 | linyi    | dezhou   | weihai   | zaozhuang | zibo     | yantai   | weifang  | heze     | rizhao   | taishan  | liaocheng | jining   |
+
+</Route>
+
+## 齐鲁网 {#qi-lu-wang}
+
+### 电视节目 {#qi-lu-wang-dian-shi-jie-mu}
+
+<Route author="nczitzk" example="/iqilu/v/sdws/sdxwlb" path="/iqilu/v/:category?" paramsDesc={['节目 id，可在对应节目页 URL 中找到，见下表，默认为 `sdws/sdxwlb`，即山东新闻联播']} radar="1" rssbud="1" supportPodcast="1">
+
+| 节目名称         | 节目 id        |
+| ---------------- | -------------- |
+| 山东新闻联播     | sdws/sdxwlb    |
+| 闪电大视野       | ggpd/sddsy     |
+| 山东三农新闻联播 | nkpd/snxw      |
+| 每日新闻         | qlpd/mrxw      |
+| 新闻午班车       | ggpd/xwwbc     |
+| 戏宇宙           | sdws/xyz/      |
+| 中国礼 中国乐    | qlpd/zglzgy    |
+| 超级语文课       | sdws/cjywk     |
+| 文物里的山东     | yspd/wwldsd    |
+| 拉呱             | qlpd/l0        |
+| 生活帮           | shpd/shb       |
+| 快乐大赢家       | zypd/kldyj     |
+| 乡村季风         | nkpd/xcjf      |
+| 健康是1          | ggpd/jks1      |
+| 此时此刻         | sdws/cishicike |
 
 </Route>
 

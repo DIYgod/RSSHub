@@ -6,7 +6,7 @@
 
 <Route author="DIYgod" example="/forum4399/mtag-83932" path="/forum4399/:mtag" paramsDesc={['mtag,必选-论坛网址最后的mtag字段']} selfhost="1">
 
-:::caution
+:::warning
 
 需要用户 cookie 值，详情见部署页面的配置模块。
 
@@ -476,7 +476,7 @@ For example:
 
 ## Notion {#notion}
 
-:::caution
+:::warning
 
 Need to set up Notion integration, please refer to [Route-specific Configurations](https://docs.rsshub.app/install/#Deployment) for details.
 
@@ -839,7 +839,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 习惯打卡 {#di-da-qing-dan-xi-guan-da-ka}
 
-:::caution
+:::warning
 
 需要账号密码，详情见部署文档部分 RSS 模块配置
 
@@ -951,7 +951,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 快递公司代号如果不能确定，可通过下方快递列表获得。
 
-:::caution
+:::warning
 
 1.  构造链接前请确认所有参数正确：错误`快递公司 - 订单号`组合将会缓存信息一小段时间防止产生无用查询
 2.  正常查询的订单在未签收状态下不会被缓存：请控制查询频率

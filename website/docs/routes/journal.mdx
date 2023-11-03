@@ -182,7 +182,7 @@ Including 'cell', 'cancer-cell', 'cell-chemical-biology', 'cell-host-microbe', '
 
 <Route author="HenryQW" path="/google/scholar/:query" example="/google/scholar/data+visualization" paramsDesc={['query statement which supports「Basic」and「Advanced」modes']} anticrawler="1">
 
-:::caution
+:::warning
 
 Google Scholar has strict anti-crawling mechanism implemented, the demo below doesn't guarantee availability. Please deploy your own instance as it might increase the stability.
 
@@ -351,7 +351,7 @@ Subscribe to the cover images of the Nature journals, and get the latest publica
 
 <Route author="y9c TonyRL" example="/nature/highlight" path="/nature/highlight/:journal?" paramsDesc={['short name for a journal, `nature` by default']} supportScihub="1" radar="1" rssbud="1">
 
-:::caution
+:::warning
 
 Only some journals are supported.
 
