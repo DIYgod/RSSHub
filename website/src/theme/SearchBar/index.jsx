@@ -10,7 +10,7 @@ export default function SearchBarWrapper() {
     const { docsearch } = require('meilisearch-docsearch');
     const docSearchOptions = siteConfig.customFields['meilisearch-docsearch'];
 
-    return () => docsearch(docSearchOptions)
+    return docsearch(docSearchOptions)
   }, [])
 
   return (
