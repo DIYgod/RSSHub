@@ -2,7 +2,6 @@ import file from './file.mjs';
 import sgf from 'staged-git-files';
 import sortByHeading from './sortByHeading.mjs';
 import slugId from './slugId.mjs';
-import removeHeadingId from './removeHeadingId.mjs';
 // import chineseFormat from './chineseFormat.mjs';
 import { exec } from 'child_process';
 import { fileURLToPath } from 'url';
