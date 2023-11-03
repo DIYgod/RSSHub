@@ -1,4 +1,4 @@
-const { pinyin } = require('pinyin-pro');
+import { pinyin } from 'pinyin-pro';
 
 const slugify = (s) => {
     s = s?.replace(/[#&'()+,/:[\]|’“”、「」・（）．：｜]/g, '-');
@@ -18,7 +18,7 @@ const slugify = (s) => {
     );
 };
 
-module.exports = {
+export default {
     rules: (list) => list.filter((e) => e),
     handler: async (data) => {
         const content = data.split('\n');
