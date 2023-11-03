@@ -2245,6 +2245,8 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 | -------- | -------- | ----------- | ---------- | ---------- | -------- | -------- | -------- | -------- |
 | zhxw     | dwxz     | rshz        | yjs        | bks        | xsgz     | tzgg     | xsxx     | dbgg     |
 
+</Route>
+
 ### 计算机科学与技术学院 {#nan-jing-hang-kong-hang-tian-da-xue-ji-suan-ji-ke-xue-yu-ji-shu-xue-yuan}
 
 <Route author="LogicJake Seiry qrzbing Xm798" example="/nuaa/cs/jxdt" path="/nuaa/cs/:type/:getDescription?" paramsDesc={['分类名，见下表', '是否获取全文']} puppeteer="1" radar="1">
@@ -2543,7 +2545,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 航空航天学院 {#xia-men-da-xue-hang-kong-hang-tian-xue-yuan}
 
-<Route author="jch12138" example="/xmu/aero/yjsjw" path="/xmu/aero/:type" paramsDesc={['分类见下表']}/>
+<Route author="jch12138" example="/xmu/aero/yjsjw" path="/xmu/aero/:type" paramsDesc={['分类见下表']}>
 
 | 通知公告 | 本科生教务 | 研究生教务 |
 | :------: | :--------: | :--------: |
