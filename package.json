@@ -24,7 +24,7 @@
     "build:maintainer": "node scripts/workflow/build-maintainer.js",
     "build:radar": "node scripts/workflow/build-radar.js",
     "dev": "cross-env NODE_ENV=dev nodemon --inspect lib/index.js",
-    "format": "eslint --cache --fix \"**/*.{js,yml}\" && node website/docs/.format/format.js && prettier \"**/*.{js,json}\" --write",
+    "format": "eslint --cache --fix \"**/*.{js,yml}\" && node website/docs/.format/format.mjs && prettier \"**/*.{js,json}\" --write",
     "format:check": "eslint --cache \"**/*.{js,yml}\" && prettier \"**/*.{js,json}\" --check",
     "format:staged": "lint-staged",
     "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit --detectOpenHandles",
@@ -41,7 +41,7 @@
       "eslint --cache --fix",
       "prettier --ignore-unknown --ignore-path ./.gitignore --write"
     ],
-    "*.md": "node website/docs/.format/format.js --staged",
+    "*.md": "node website/docs/.format/format.mjs --staged",
     "*.yml": "eslint --cache --fix"
   },
   "nodemonConfig": {
@@ -192,7 +192,7 @@
     "jest-junit": "16.0.0",
     "lint-staged": "15.0.2",
     "mockdate": "3.0.5",
-    "nock": "13.3.7",
+    "nock": "13.3.8",
     "nodemon": "3.0.1",
     "prettier": "3.0.3",
     "remark": "13.0.0",
