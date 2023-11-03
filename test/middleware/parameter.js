@@ -405,7 +405,7 @@ describe('opencc', () => {
 });
 
 describe('multi parameter', () => {
-    it(`filter limit`, async () => {
+    it(`filter before limit`, async () => {
         const response = await request.get('/test/filter-limit?filterout_title=2&limit=2');
         const parsed = await parser.parseString(response.text);
         expect(parsed.items.length).toBe(2);
