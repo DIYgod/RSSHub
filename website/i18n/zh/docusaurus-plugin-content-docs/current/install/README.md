@@ -27,7 +27,7 @@ sidebar: auto
 
 默认推荐使用 `diygod/rsshub` 即 `diygod/rsshub:latest` 最新版镜像以获取最新路由。
 
-当 `diygod/rsshub:latest` 存在问题时，可以使用以日期为标签的近期镜像临时使用，例如:
+当 `diygod/rsshub:latest` 存在问题时，可以使用以日期为标签的近期镜像临时使用，例如：
 
 ```bash
 $ docker pull diygod/rsshub:2021-06-18
@@ -144,7 +144,7 @@ $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS
 
 ## Ansible 部署
 
-这个 Ansible playbook 包括了 RSSHub, Redis, browserless (依赖 Docker) 以及 Caddy 2
+这个 Ansible playbook 包括了 RSSHub, Redis, browserless （依赖 Docker） 以及 Caddy 2
 
 目前只支持 Ubuntu 20.04
 
@@ -337,7 +337,7 @@ Heroku [不再](https://blog.heroku.com/next-chapter) 提供免费服务。
 ### 自动更新部署
 
 1.  将 RSSHub [分叉（fork）](https://github.com/DIYgod/RSSHub/fork) 到自己的账户下
-2.  去 Vercel 部署一个新项目：使用 GitHub 账户登录 Vercel，进入[项目创建页面](https://vercel.com/new/) 选择导入 RSSHub 仓库进行部署
+2.  去 Vercel 部署一个新项目：使用 GitHub 账户登录 Vercel，进入 [项目创建页面](https://vercel.com/new/) 选择导入 RSSHub 仓库进行部署
 3.  安装 [Pull](https://github.com/apps/pull) 应用，定期将 RSSHub 改动自动同步至你的仓库
 
 ## 部署到 Fly.io
@@ -393,7 +393,7 @@ $ fly redis create
 
 来创建一个新的 Redis 数据库，地域选择与你上面创建 RSSHub app 时相同的地域，建议选择开启 [eviction](https://redis.io/docs/reference/eviction/)。创建完成后会输出类似于 `redis://default:<password>@<domain>.upstash.io` 的字符串。
 
-因目前[上游依赖的一个 bug](https://github.com/luin/ioredis/issues/1576)，你暂时需要在 Fly.io 给你的连接 URL 后追加 `family=6` 的参数，即使用 `redis://default:<password>@<domain>.upstash.io/?family=6` 作为连接 URL。
+因目前 [上游依赖的一个 bug](https://github.com/luin/ioredis/issues/1576)，你暂时需要在 Fly.io 给你的连接 URL 后追加 `family=6` 的参数，即使用 `redis://default:<password>@<domain>.upstash.io/?family=6` 作为连接 URL。
 
 再配置 fly.toml 中的 `[env]` 段或运行
 
@@ -551,11 +551,11 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 部分路由反爬严格，可以配置使用代理抓取。
 
-可通过**代理 URI**或**代理选项**或**反向代理**三种方式来配置代理。
+可通过**代理 URI **或**代理选项**或**反向代理**三种方式来配置代理。
 
 #### 代理 URI
 
-`PROXY_URI`: 代理 URI，支持 socks4, socks5（本地查询域名的 SOCKS5，不推荐使用）, socks5h（传域名的 SOCKS5，推荐使用，以防止 DNS 污染或 DNS 泄露）, http, https，具体以 [socks-proxy-agent](https://www.npmjs.com/package/socks-proxy-agent) NPM 包的支持为准，也可参考[curl 中 SOCKS 代理协议的用法](https://daniel.haxx.se/blog/2020/05/26/curl-ootw-socks5/)。
+`PROXY_URI`: 代理 URI，支持 socks4, socks5（本地查询域名的 SOCKS5，不推荐使用）, socks5h（传域名的 SOCKS5，推荐使用，以防止 DNS 污染或 DNS 泄露）, http, https，具体以 [socks-proxy-agent](https://www.npmjs.com/package/socks-proxy-agent) NPM 包的支持为准，也可参考 [curl 中 SOCKS 代理协议的用法](https://daniel.haxx.se/blog/2020/05/26/curl-ootw-socks5/)。
 
 > 代理 URI 的格式为：
 >
@@ -632,15 +632,15 @@ async function handleRequest(request) {
 
 ### 访问控制配置
 
-RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行访问控制。开启任意选项将会激活全局访问控制，没有访问权限将会导致访问被拒绝。同时可以通过 `ALLOW_LOCALHOST: true` 赋予所有本地 IP 访问权限。
+RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式进行访问控制。开启任意选项将会激活全局访问控制，没有访问权限将会导致访问被拒绝。同时可以通过 `ALLOW_LOCALHOST: true` 赋予所有本地 IP 访问权限。
 
-#### 黑白名单
+#### 允许清单/拒绝清单
 
--   `WHITELIST`: 白名单，设置白名单后黑名单无效
+-   `ALLOWLIST`: 允许清单，设置允许清单后拒绝清单无效
 
--   `BLACKLIST`: 黑名单
+-   `DENYLIST`: 拒绝清单
 
-黑白名单支持 IP、路由和 UA，模糊匹配，设置多项时用英文逗号 `,` 隔开，例如 `WHITELIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
+允许清单/拒绝清单支持 IP、路由和 UA，模糊匹配，设置多项时用英文逗号 `,` 隔开，例如 `ALLOWLIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
 
 #### 访问密钥 / 码
 
@@ -656,13 +656,13 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   或使用访问密钥 `key` 直接访问所有路由，例如：`https://rsshub.app/qdaily/column/59?key=ILoveRSSHub`
 
-访问密钥 / 码与黑白名单的访问控制关系如下：
+访问密钥 / 码与允许清单/拒绝清单的访问控制关系如下：
 
 |            | 正确访问密钥 / 码 | 错误访问密钥 / 码 | 无访问密钥 / 码 |
 | ---------- | ----------------- | ----------------- | --------------- |
-| 在白名单中 | ✅                | ✅                | ✅              |
-| 在黑名单中 | ✅                | ❌                | ❌              |
-| 无黑白名单 | ✅                | ❌                | ❌              |
+| 在允许清单中 | ✅                | ✅                | ✅              |
+| 在拒绝清单中 | ✅                | ❌                | ❌              |
+| 无允许清单/拒绝清单 | ✅                | ❌                | ❌              |
 
 ### 日志配置
 
@@ -785,9 +785,9 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   Discourse
 
-    -   `DISCOURSE_CONFIG_{id}`: 一个 Discourse 驱动的论坛的配置信息， `id` 可自由设定为任意数字或字符串。值应形如`{"link":link,"key":key}`。其中:
+    -   `DISCOURSE_CONFIG_{id}`: 一个 Discourse 驱动的论坛的配置信息， `id` 可自由设定为任意数字或字符串。值应形如`{"link":link,"key":key}`。其中：
         -   `link`：论坛的链接。
-        -   `key`访问论坛API的密钥，可参考[此处代码](https://pastebin.com/YbLCgdWW)以获取。需要确保有足够权限访问对应资源。
+        -   `key`访问论坛 API 的密钥，可参考 [此处代码](https://pastebin.com/YbLCgdWW) 以获取。需要确保有足够权限访问对应资源。
 
 -   Discuz cookies 设定
 
@@ -867,11 +867,11 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   `NHENTAI_PASSWORD`: nhentai 密码
 
 -   Notion
-    -   `NOTION_TOKEN`: Notion 内部集成 Token，请按照[Notion 官方指引](https://developers.notion.com/docs/authorization#internal-integration-auth-flow-set-up)申请 Token
+    -   `NOTION_TOKEN`: Notion 内部集成 Token，请按照 [Notion 官方指引](https://developers.notion.com/docs/authorization#internal-integration-auth-flow-set-up) 申请 Token
 
 -   pianyuan 全部路由：[注册地址](https://pianyuan.org)
 
-    -   `PIANYUAN_COOKIE`: 对应 cookie 中的 `py_loginauth`, 例: PIANYUAN_COOKIE='py_loginauth=xxxxxxxxxx'
+    -   `PIANYUAN_COOKIE`: 对应 cookie 中的 `py_loginauth`, 例：PIANYUAN_COOKIE='py_loginauth=xxxxxxxxxx'
 
 -   pixiv 全部路由：[注册地址](https://accounts.pixiv.net/signup)
 
@@ -932,7 +932,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
     -   订阅列表路由额外设置
         -   `YOUTUBE_CLIENT_ID`: YouTube API 的 OAuth 2.0 客户端 ID
         -   `YOUTUBE_CLIENT_SECRET`: YouTube API 的 OAuth 2.0 客户端 Secret
-        -   `YOUTUBE_REFRESH_TOKEN`: YouTube API 的 OAuth 2.0 客户端 Refresh Token。可以按照[此 gist](https://gist.github.com/Kurukshetran/5904e8cb2361623498481f4a9a1338aa) 获取。
+        -   `YOUTUBE_REFRESH_TOKEN`: YouTube API 的 OAuth 2.0 客户端 Refresh Token。可以按照 [此 gist](https://gist.github.com/Kurukshetran/5904e8cb2361623498481f4a9a1338aa) 获取。
 
 -   ZodGame:
 
@@ -1011,7 +1011,7 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   网易云歌单及听歌排行
 
-    -   `NCM_COOKIES`: 网易云音乐登陆后的 cookie 值.
+    -   `NCM_COOKIES`: 网易云音乐登陆后的 cookie 值。
 
 -   微博 个人时间线路由：[申请地址](https://open.weibo.com/connect)
 
@@ -1021,11 +1021,11 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   微博 自定义分组
 
-    -   `WEIBO_COOKIES`: 用户访问网页微博时所使用的 cookie, 获取方式:
-        1.  打开并登录 [https://m.weibo.cn](https://m.weibo.cn) (确保打开页面为手机版，如果强制跳转电脑端可尝试使用可更改 UserAgent 的浏览器插件)
-        2.  按下`F12`打开控制台，切换至`Network(网络)`面板
-        3.  在该网页切换至任意关注分组，并在面板打开最先捕获到的请求 (该情形下捕获到的请求路径应包含`/feed/group`)
-        4.  查看该请求的`Headers(请求头)`, 找到`Cookie`字段并复制内容
+    -   `WEIBO_COOKIES`: 用户访问网页微博时所使用的 cookie, 获取方式：
+        1.  打开并登录 [https://m.weibo.cn](https://m.weibo.cn) （确保打开页面为手机版，如果强制跳转电脑端可尝试使用可更改 UserAgent 的浏览器插件）
+        2.  按下`F12`打开控制台，切换至`Network（网络）`面板
+        3.  在该网页切换至任意关注分组，并在面板打开最先捕获到的请求 （该情形下捕获到的请求路径应包含`/feed/group`）
+        4.  查看该请求的`Headers（请求头）`, 找到`Cookie`字段并复制内容
 
 -   小宇宙：需要 App 登陆后抓包获取相应数据。
 
@@ -1045,5 +1045,5 @@ RSSHub 支持使用访问密钥 / 码，白名单和黑名单三种方式进行�
 
 -   知乎用户关注时间线
 
-    -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值.
-        1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值.
+    -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值。
+        1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值。

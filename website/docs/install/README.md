@@ -638,15 +638,15 @@ For readers that do not support HTTP Basic authentication, please refer to [Acce
 
 ### Access Control Configuration
 
-RSSHub supports access control via access key/code, whitelisting and blacklisting, enabling any will activate access control for all routes. `ALLOW_LOCALHOST: true` will grant access to all localhost IP addresses.
+RSSHub supports access control via access key/code, allowlisting and denylisting, enabling any will activate access control for all routes. `ALLOW_LOCALHOST: true` will grant access to all localhost IP addresses.
 
-#### White/blacklisting
+#### Allowlisting/denylisting
 
--   `WHITELIST`: the blacklist. When set, values in `BLACKLIST` are disregarded
+-   `ALLOWLIST`: the allowlist. When set, values in `DENYLIST` are disregarded
 
--   `BLACKLIST`: the blacklist
+-   `DENYLIST`: the denylist
 
-White/blacklisting support IP, route and UA as values, fuzzy matching. Use `,` as the delimiter to separate multiple values, eg: `WHITELIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
+Allowlisting/denylisting support IP, route and UA as values, fuzzy matching. Use `,` as the delimiter to separate multiple values, eg: `ALLOWLIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
 
 #### Access Key/Code
 
@@ -662,12 +662,12 @@ Access code is the md5 generated based on the access key + route, eg:
 
 -   Or using `key` directly, eg: `https://rsshub.app/qdaily/column/59?key=ILoveRSSHub`
 
-See the relation between access key/code and white/blacklisting.
+See the relation between access key/code and allowlist/denylisting.
 
-|             | Whitelisted | Blacklisted | Correct access key/code | Wrong access key/code | No access key/code |
+|             | Allowlist | Denylist | Correct access key/code | Wrong access key/code | No access key/code |
 | ----------- | ----------- | ----------- | ----------------------- | --------------------- | ------------------ |
-| Whitelisted | ✅          | ✅          | ✅                      | ✅                    | ✅                 |
-| Blacklisted | ✅          | ❌          | ✅                      | ❌                    | ❌                 |
+| Allowlist | ✅          | ✅          | ✅                      | ✅                    | ✅                 |
+| Denylist | ✅          | ❌          | ✅                      | ❌                    | ❌                 |
 
 ### Logging Configurations
 
@@ -781,7 +781,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
 -   BUPT
 
     -   `BUPT_PORTAL_COOKIE`: 登录后获得的 Cookie 值，获取方式
-        1.  打开 [https://webapp.bupt.edu.cn/wap/login.html?redirect=https://](https://webapp.bupt.edu.cn/wap/login.html?redirect=https://)并登录
+        1.  打开 [https://webapp.bupt.edu.cn/wap/login.html?redirect=https://](https://webapp.bupt.edu.cn/wap/login.html?redirect=https://) 并登录
         2.  无视掉报错，并打开 [https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw](https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw)
         3.  打开控制台，刷新
         4.  找到 `https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw` 请求
@@ -888,7 +888,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   pianyuan 全部路由：[注册地址](https://pianyuan.org)
 
-    -   `PIANYUAN_COOKIE`: 对应 cookie 中的 `py_loginauth`, 例: PIANYUAN_COOKIE='py_loginauth=xxxxxxxxxx'
+    -   `PIANYUAN_COOKIE`: 对应 cookie 中的 `py_loginauth`, 例：PIANYUAN_COOKIE='py_loginauth=xxxxxxxxxx'
 
 -   Pixabay: [Documentation](https://pixabay.com/api/docs/)
 
@@ -1020,7 +1020,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   网易云歌单及听歌排行
 
-    -   `NCM_COOKIES`: 网易云音乐登陆后的 cookie 值.
+    -   `NCM_COOKIES`: 网易云音乐登陆后的 cookie 值。
 
 -   微博 个人时间线路由：[申请地址](https://open.weibo.com/connect)
 
@@ -1030,11 +1030,11 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   微博 自定义分组
 
-    -   `WEIBO_COOKIES`: 用户访问网页微博时所使用的 cookie, 获取方式:
-        1.  打开并登录 [https://m.weibo.cn](https://m.weibo.cn) (确保打开页面为手机版，如果强制跳转电脑端可尝试使用可更改 UserAgent 的浏览器插件)
-        2.  按下`F12`打开控制台，切换至`Network(网络)`面板
-        3.  在该网页切换至任意关注分组，并在面板打开最先捕获到的请求 (该情形下捕获到的请求路径应包含`/feed/group`)
-        4.  查看该请求的`Headers(请求头)`, 找到`Cookie`字段并复制内容
+    -   `WEIBO_COOKIES`: 用户访问网页微博时所使用的 cookie, 获取方式：
+        1.  打开并登录 [https://m.weibo.cn](https://m.weibo.cn) （确保打开页面为手机版，如果强制跳转电脑端可尝试使用可更改 UserAgent 的浏览器插件）
+        2.  按下`F12`打开控制台，切换至`Network（网络）`面板
+        3.  在该网页切换至任意关注分组，并在面板打开最先捕获到的请求 （该情形下捕获到的请求路径应包含`/feed/group`）
+        4.  查看该请求的`Headers（请求头）`, 找到`Cookie`字段并复制内容
 
 -   小宇宙：需要 App 登陆后抓包获取相应数据。
 
@@ -1054,5 +1054,5 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   知乎用户关注时间线
 
-    -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值.
-        1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值.
+    -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值。
+        1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值。
