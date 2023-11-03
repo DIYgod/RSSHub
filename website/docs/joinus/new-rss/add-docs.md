@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Add documentation
 
-Now that we have completed the code, it's time to add the documentation for your route. Open the appropriate file in the [document (/website/docs)](https://github.com/DIYgod/RSSHub/blob/master/website/docs), which in this example is `website/docs/routes/programming.md`.
+Now that we have completed the code, it's time to add the documentation for your route. Open the appropriate file in the [document (/website/docs)](https://github.com/DIYgod/RSSHub/blob/master/website/docs), which in this example is `website/docs/routes/programming.mdx`.
 
 In order to preview the documentation in real-time, you need to install the dependencies for the documentation. Run the following command in the **`website` directory**:
 
@@ -58,13 +58,13 @@ npm run start
 </TabItem>
 </Tabs>
 
-:::caution
+:::warning
 
 You cannot switch to other languages in development mode. This is a [technical limitation](https://docusaurus.io/docs/i18n/tutorial#start-your-site) from Docusaurus.
 
 :::
 
-The documentation is written in MDX and rendered with [Docusaurus v2](https://docusaurus.io/docs).
+The documentation is written in MDX v3 and rendered with [Docusaurus v3](https://docusaurus.io/docs).
 
 To add documentation to your route, use the `Route` React component. It works like HTML tag. The following are the most commonly used component properties:
 
@@ -157,7 +157,7 @@ Supprts Markdown.
 
 :::
 
-:::caution
+:::warning
 
 Add a empty line around the starting and ending directive `:::`
 
@@ -195,7 +195,7 @@ Supprts Markdown.
 
 :::
 
-:::caution
+:::warning
 
 Add a empty line around the starting and ending directive `:::`
 
