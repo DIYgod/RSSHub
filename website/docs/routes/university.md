@@ -2545,7 +2545,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 航空航天学院 {#xia-men-da-xue-hang-kong-hang-tian-xue-yuan}
 
-<Route author="jch12138" example="/xmu/aero/yjsjw" path="/xmu/aero/:type" paramsDesc={['分类见下表']}/>
+<Route author="jch12138" example="/xmu/aero/yjsjw" path="/xmu/aero/:type" paramsDesc={['分类见下表']}>
 
 | 通知公告 | 本科生教务 | 研究生教务 |
 | :------: | :--------: | :--------: |
