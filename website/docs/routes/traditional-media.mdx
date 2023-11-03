@@ -1538,6 +1538,12 @@ IT・科学 tech_science
 
 </Route>
 
+## 河北网络广播电视台 {#he-bei-wang-luo-guang-bo-dian-shi-tai}
+
+### 农博士在行动 {#he-bei-wang-luo-guang-bo-dian-shi-tai-nong-bo-shi-zai-xing-dong}
+
+<Route author="iamqiz" example="/hebtv/nbszxd" path="/hebtv/nbszxd"/>
+
 ## 衡阳全搜索 {#heng-yang-quan-sou-suo}
 
 ### 衡阳日报 {#heng-yang-quan-sou-suo-heng-yang-ri-bao}
