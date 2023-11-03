@@ -192,7 +192,7 @@
     "jest-junit": "16.0.0",
     "lint-staged": "15.0.2",
     "mockdate": "3.0.5",
-    "nock": "13.3.7",
+    "nock": "13.3.8",
     "nodemon": "3.0.1",
     "prettier": "3.0.3",
     "remark": "13.0.0",
