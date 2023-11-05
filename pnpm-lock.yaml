@@ -141,8 +141,8 @@ dependencies:
     specifier: 3.1.0
     version: 3.1.0
   proxy-chain:
-    specifier: 2.3.0
-    version: 2.3.0
+    specifier: 2.4.0
+    version: 2.4.0
   puppeteer:
     specifier: 21.5.0
     version: 21.5.0
@@ -6497,8 +6497,8 @@ packages:
       - supports-color
     dev: false
 
-  /proxy-chain@2.3.0:
-    resolution: {integrity: sha512-S1m0Ao0IGoXfy14dKXAaJCUkCBCnleYzElzoATj42Iq4d8EYqOZq4jS4G/D94AzrU6QaPOzzoEDjbm7VJQGq9g==}
+  /proxy-chain@2.4.0:
+    resolution: {integrity: sha512-fbFfzJDxWcLYYvI+yx0VXjTgJPfXsGdhFnCJN4rq/5GZSgn9CQpRgm1KC2iEJfhL8gkeZCWJYBAllmGMT356cg==}
     engines: {node: '>=14'}
     dependencies:
       tslib: 2.6.2
