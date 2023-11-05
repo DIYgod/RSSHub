@@ -1,4 +1,4 @@
-name: publish
+name: npm Publish
 
 on:
   push:
@@ -28,9 +28,9 @@ jobs:
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: lts/*
+          node-version: 18
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies (pnpm)

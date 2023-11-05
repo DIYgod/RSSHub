@@ -112,6 +112,14 @@ describe('filter', () => {
         expect(parsed.items[0].title).toBe('Filter Title3');
     });
 
+    it(`filter_category illegal_category`, async () => {
+        const response = await request.get('/test/filter-illegal-category?filter_category=CategoryIllegal');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(1);
+        expect(parsed.items[0].categories.length).toBe(1);
+        expect(parsed.items[0].categories[0]).toBe('CategoryIllegal');
+    });
+
     it(`filter_time`, async () => {
         const response = await request.get('/test/current_time?filter_time=25');
         const parsed = await parser.parseString(response.text);
@@ -393,5 +401,15 @@ describe('opencc', () => {
         const parsed = await parser.parseString(response.text);
         expect(parsed.items[0].title).toBe('小可爱');
         expect(parsed.items[0].content).toBe('宇宙无敌');
+    });
+});
+
+describe('multi parameter', () => {
+    it(`filter before limit`, async () => {
+        const response = await request.get('/test/filter-limit?filterout_title=2&limit=2');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(2);
+        expect(parsed.items[0].title).toBe('Title1');
+        expect(parsed.items[1].title).toBe('Title3');
     });
 });

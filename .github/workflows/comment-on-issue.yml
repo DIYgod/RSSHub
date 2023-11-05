@@ -9,12 +9,13 @@ jobs:
     name: Call maintainers
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    if: github.event.sender.login != 'issuehunt-oss[bot]'
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      - uses: actions/setup-node@v3 # just need its cache
+      - uses: actions/setup-node@v4 # just need its cache
         with:
           node-version: lts/*
           cache: 'pnpm'
