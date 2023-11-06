@@ -417,8 +417,8 @@ describe('multi parameter', () => {
 });
 
 describe('openai', () => {
-    it(`gpt`, async () => {
-        config.openai.openaiKey = 'sk-1234567890';
+    it(`chatgpt`, async () => {
+        config.openai.apiKey = 'sk-1234567890';
         // 模拟 openai 请求的响应
         const openaiResponse = {
             data: {
@@ -433,18 +433,18 @@ describe('openai', () => {
         };
 
         got.post.mockResolvedValue(openaiResponse);
-        const response_with_gpt = await request.get('/test/gpt?gpt=true');
-        const response_normal = await request.get('/test/gpt');
+        const responseWithGpt = await request.get('/test/gpt?chatgpt=true');
+        const responseNormal = await request.get('/test/gpt');
 
-        expect(response_with_gpt.status).toBe(200);
-        expect(response_normal.status).toBe(200);
+        expect(responseWithGpt.status).toBe(200);
+        expect(responseNormal.status).toBe(200);
 
-        const parsed_gpt = await parser.parseString(response_with_gpt.text);
-        const parsed_normal = await parser.parseString(response_normal.text);
+        const parsedGpt = await parser.parseString(responseWithGpt.text);
+        const parsedNormal = await parser.parseString(responseNormal.text);
 
-        expect(parsed_gpt.items[0].content).not.toBe(undefined);
-        expect(parsed_gpt.items[0].content).toBe(parsed_normal.items[0].content);
-        expect(parsed_gpt.items[1].content).not.toBe(undefined);
-        expect(parsed_gpt.items[1].content).not.toBe(parsed_normal.items[1].content);
+        expect(parsedGpt.items[0].content).not.toBe(undefined);
+        expect(parsedGpt.items[0].content).toBe(parsedNormal.items[0].content);
+        expect(parsedGpt.items[1].content).not.toBe(undefined);
+        expect(parsedGpt.items[1].content).not.toBe(parsedNormal.items[1].content);
     });
 });

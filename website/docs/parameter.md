@@ -174,14 +174,14 @@ For example：
 
 ## Summarized by ChatGPT (Self-hosted)
 
-Set the parameter `gpt` to generate a summary by ChatGPT. See [Install](https://docs.rsshub.app/install#other-application-configurations) for details. Please consider the necessity of this feature, because it will consume some tokens.
+Set the parameter `chatgpt` to generate a summary by ChatGPT. See [Install](/install#other-application-configurations) for details. Please consider the necessity of this feature, because it will consume some tokens.
 
--   `gpt`: set to any value
+-   `chatgpt`: set to any value
 
 Requirements：
 
--   `OPENAI_KEY` environment variable has been set
+-   `OPENAI_API_KEY` environment variable has been set
 
 For example：
 
--   https://rsshub.app/meituan/tech/home?gpt=true
+-   `/meituan/tech/home?chatgpt=true`
