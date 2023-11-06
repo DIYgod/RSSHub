@@ -20647,6 +20647,14 @@
           "/"
         ],
         "target": "/ouc/it/postgraduate"
+      },
+      {
+        "title": "信息科学与工程学部团学工作",
+        "docs": "https://docs.rsshub.app/routes/university#zhong-guo-hai-yang-da-xue-xin-xi-ke-xue-yu-gong-cheng-xue-yuan-tuan-xue-gong-zuo",
+        "source": [
+          "/tx/:id/list.htm"
+        ],
+        "target": "/ouc/it/tx/:id"
       }
     ],
     "jwc": [

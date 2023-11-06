@@ -5270,6 +5270,9 @@
     "/ouc/it/postgraduate": [
         "shengmaosu"
     ],
+    "/ouc/it/tx/:id?": [
+        "3401797899"
+    ],
     "/ouc/jwc": [
         "3401797899"
     ],
