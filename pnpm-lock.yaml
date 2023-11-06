@@ -68,6 +68,9 @@ dependencies:
   got:
     specifier: 11.8.6
     version: 11.8.6
+  html-to-text:
+    specifier: 9.0.5
+    version: 9.0.5
   https-proxy-agent:
     specifier: 7.0.2
     version: 7.0.2
