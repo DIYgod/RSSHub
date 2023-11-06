@@ -1375,12 +1375,6 @@ The URL of [Documentary TV Shows to Watch on Prime Video](https://www.metacritic
 
 <Route author="fifteen42 rde9 nczitzk" example="/mirror/tingfei.eth" path="/mirror/:id" paramsDesc={['user id']} />
 
-## MIT 科技评论 {#mit-ke-ji-ping-lun}
-
-### 首页 {#mit-ke-ji-ping-lun-shou-ye}
-
-<Route author="EsuRt queensferryme" example="/mittrchina/hot" path="/mittrchina/:type" paramsDesc={['类型 type，可以是 index（首页资讯）或 hot（本周热榜）']}/>
-
 ## MyGoPen {#mygopen}
 
 ### 分類 {#mygopen-fen-lei}
@@ -4327,6 +4321,18 @@ column 为 third 时可选的 category:
 | 最新 | 推薦 | 熱門 |
 | ---- | ---- | ---- |
 | 1    | 2    | 3    |
+
+</Route>
+
+## 麻省理工科技评论 {#ma-sheng-li-gong-ke-ji-ping-lun}
+
+### 首页 {#ma-sheng-li-gong-ke-ji-ping-lun-shou-ye}
+
+<Route author="EsuRt queensferryme" example="/mittrchina/index" path="/mittrchina/:type?" paramsDesc={['类型，见下表，默认为首页资讯']} radar="1">
+
+| 快讯      | 本周热文 | 首页资讯 | 视频  |
+| -------- | ------- | ------ | ----- |
+| breaking | hot     | index  | video |
 
 </Route>
 
