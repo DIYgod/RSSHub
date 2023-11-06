@@ -4598,7 +4598,10 @@
     "/mit/ocw-top": [],
     "/mitbbs/:caty?": [],
     "/mitre/publications": [],
-    "/mittrchina/:type": [],
+    "/mittrchina/:type?": [
+        "EsuRt",
+        "queensferryme"
+    ],
     "/miui/:device/:type?/:region?": [],
     "/mixcloud/:username/:type?": [
         "Misaka13514"
