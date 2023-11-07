@@ -209,8 +209,8 @@ devDependencies:
     specifier: 3.1.3
     version: 3.1.3
   '@types/crypto-js':
-    specifier: 4.1.3
-    version: 4.1.3
+    specifier: 4.2.0
+    version: 4.2.0
   '@types/eslint':
     specifier: 8.44.6
     version: 8.44.6
@@ -762,8 +762,8 @@ packages:
     engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
     dev: true
 
-  /@eslint/eslintrc@2.1.2:
-    resolution: {integrity: sha512-+wvgpDsrB1YqAMdEUCcnTlpfVBH7Vqn6A/NT3D8WVXFIaKMlErPIZT3oCIAVCOtarRpMtelZLqJeU3t7WY6X6g==}
+  /@eslint/eslintrc@2.1.3:
+    resolution: {integrity: sha512-yZzuIG+jnVu6hNSzFEN07e8BxF3uAzYtQb6uDkaYZLo6oYZDCq454c5kB8zxnzfCYyP4MIuyBn10L0DqwujTmA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dependencies:
       ajv: 6.12.6
@@ -1429,8 +1429,8 @@ packages:
       '@types/node': 20.5.6
     dev: true
 
-  /@types/crypto-js@4.1.3:
-    resolution: {integrity: sha512-YP1sYYayLe7Eg5oXyLLvOLfxBfZ5Fgpz6sVWkpB18wDMywCLPWmqzRz+9gyuOoLF0fzDTTFwlyNbx7koONUwqA==}
+  /@types/crypto-js@4.2.0:
+    resolution: {integrity: sha512-LW9TlhpMeoQKOu6I6HvOp7eInNNnvd7B+ndAfZb826HUl7eHJJApofbHnlAxrIVS/uiCjkkHGNEaKHoGxB5IHw==}
     dev: true
 
   /@types/debug@4.1.8:
@@ -3271,7 +3271,7 @@ packages:
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.52.0)
       '@eslint-community/regexpp': 4.8.0
-      '@eslint/eslintrc': 2.1.2
+      '@eslint/eslintrc': 2.1.3
       '@eslint/js': 8.52.0
       '@humanwhocodes/config-array': 0.11.13
       '@humanwhocodes/module-importer': 1.0.1
