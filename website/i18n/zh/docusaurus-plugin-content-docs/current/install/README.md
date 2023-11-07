@@ -734,6 +734,18 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 
 `TITLE_LENGTH_LIMIT`: 限制输出标题的字节长度，一个英文字符的长度为 1 字节，部分语言如中文，日文，韩文或阿拉伯文等，统一算作 2 字节，默认 `150`
 
+`OPENAI_API_KEY`: OpenAI API Key，用于使用 ChatGPT 总结文章
+
+`OPENAI_MODEL`: OpenAI 模型名称，用于使用 ChatGPT 总结文章，默认`gpt-3.5-turbo-16k`，详见 [OpenAI API 文档](https://platform.openai.com/docs/models/overview)
+
+`OPENAI_TEMPERATURE`: OpenAI 温度参数，用于使用 ChatGPT 总结文章，默认`0.2`，详见 [OpenAI API 文档](https://platform.openai.com/docs/api-reference/chat/create#chat-create-temperature)
+
+`OPENAI_MAX_TOKENS`: OpenAI 最大 token 数，用于使用 ChatGPT 总结文章，默认`null`，详见 [OpenAI API 文档](https://platform.openai.com/docs/api-reference/chat/create#chat-create-max_tokens)
+
+`OPENAI_API_ENDPOINT`: OpenAI API 地址，用于使用 ChatGPT 总结文章，默认`https://api.openai.com/v1`，详见 [OpenAI API 文档](https://platform.openai.com/docs/api-reference/chat)
+
+`OPENAI_PROMPT`: OpenAI 提示语，用于使用 ChatGPT 总结文章，详见 [OpenAI API 文档](https://platform.openai.com/docs/api-reference/chat)
+
 ### 部分 RSS 模块配置
 
 :::tip
