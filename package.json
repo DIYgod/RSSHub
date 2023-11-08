@@ -156,7 +156,7 @@
     "@types/eslint-config-prettier": "6.11.2",
     "@types/etag": "1.8.2",
     "@types/fs-extra": "11.0.4",
-    "@types/git-rev-sync": "2.0.1",
+    "@types/git-rev-sync": "2.0.2",
     "@types/imapflow": "1.0.15",
     "@types/jsdom": "21.1.5",
     "@types/json-bigint": "1.0.3",
