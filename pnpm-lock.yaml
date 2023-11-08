@@ -275,8 +275,8 @@ devDependencies:
     specifier: 3.0.4
     version: 3.0.4
   '@types/request-promise-native':
-    specifier: 1.0.20
-    version: 1.0.20
+    specifier: 1.0.21
+    version: 1.0.21
   '@types/require-all':
     specifier: 3.0.6
     version: 3.0.6
@@ -1700,8 +1700,8 @@ packages:
     resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}
     dev: true
 
-  /@types/request-promise-native@1.0.20:
-    resolution: {integrity: sha512-1dfdWY0u6mNkAheZ5UqBGY/ARpDXE5xJ+npN3COoTfrQTt4FmHrwp8548zU6F1LniUK75qk06HoOvCG+hS/8Zw==}
+  /@types/request-promise-native@1.0.21:
+    resolution: {integrity: sha512-NJ1M6iqWTEUT+qdP+OmXsRZ6tSdkoBdblHKatIWTVP1HdYpHU3IkfpLPf4MWb0+CC4Nl3TtLpYhDlhjZxytDIA==}
     dependencies:
       '@types/request': 2.48.8
     dev: true
