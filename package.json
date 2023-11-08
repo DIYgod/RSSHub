@@ -176,7 +176,7 @@
     "@types/plist": "3.0.4",
     "@types/request-promise-native": "1.0.21",
     "@types/require-all": "3.0.6",
-    "@types/showdown": "2.0.3",
+    "@types/showdown": "2.0.4",
     "@types/supertest": "2.0.15",
     "@types/tiny-async-pool": "2.0.1",
     "@types/tough-cookie": "4.0.4",

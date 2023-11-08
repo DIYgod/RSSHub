@@ -281,8 +281,8 @@ devDependencies:
     specifier: 3.0.6
     version: 3.0.6
   '@types/showdown':
-    specifier: 2.0.3
-    version: 2.0.3
+    specifier: 2.0.4
+    version: 2.0.4
   '@types/supertest':
     specifier: 2.0.15
     version: 2.0.15
@@ -1746,8 +1746,8 @@ packages:
       '@types/node': 20.5.6
     dev: true
 
-  /@types/showdown@2.0.3:
-    resolution: {integrity: sha512-cFuAcA3p2YPq8HR8KxvDXnOdccOZ74ypANB3kb3AL5Srji0QnteVw6vf4o7GJ8hMyz+uZ+nSQHVgXSgjYD1a5g==}
+  /@types/showdown@2.0.4:
+    resolution: {integrity: sha512-cSXSKOpTSr2HTdlGq8WskyZwNyxKhM7M/zJeLVdWjlUQmQ4d8TdtPrwz4JejglZdzIzSgU5loi5QUaEJF9JD8w==}
     dev: true
 
   /@types/stack-utils@2.0.1:
