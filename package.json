@@ -157,7 +157,7 @@
     "@types/etag": "1.8.2",
     "@types/fs-extra": "11.0.4",
     "@types/git-rev-sync": "2.0.2",
-    "@types/imapflow": "1.0.15",
+    "@types/imapflow": "1.0.16",
     "@types/jsdom": "21.1.5",
     "@types/json-bigint": "1.0.4",
     "@types/koa": "2.13.10",
