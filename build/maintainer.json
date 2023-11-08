@@ -5829,12 +5829,6 @@
     "/reuters/investigates": [
         "LyleLee"
     ],
-    "/reuters/reuters/channel/:site/:channel": [
-        "LyleLee"
-    ],
-    "/reuters/reuters/theWire": [
-        "LyleLee"
-    ],
     "/rf/article": [],
     "/rfa/:language?/:channel?/:subChannel?": [
         "zphw"
