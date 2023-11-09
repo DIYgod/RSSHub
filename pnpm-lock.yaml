@@ -269,8 +269,8 @@ devDependencies:
     specifier: 2.0.4
     version: 2.0.4
   '@types/plist':
-    specifier: 3.0.4
-    version: 3.0.4
+    specifier: 3.0.5
+    version: 3.0.5
   '@types/request-promise-native':
     specifier: 1.0.21
     version: 1.0.21
@@ -1679,8 +1679,8 @@ packages:
     resolution: {integrity: sha512-yku7awugpbqBz+MjVFzDkJIW8eaN9jySnotHxYfOY5dqnsjRgvG4HQFMQ7wtEaGjk+WjJ8R3Ll3iaaZtVKY3JA==}
     dev: true
 
-  /@types/plist@3.0.4:
-    resolution: {integrity: sha512-pTa9xUFQFM9WJGSWHajYNljD+DbVylE1q9IweK1LBhUYJdJ28YNU8j3KZ4Q1Qw+cSl4+QLLLOVmqNjhhvVO8fA==}
+  /@types/plist@3.0.5:
+    resolution: {integrity: sha512-E6OCaRmAe4WDmWNsL/9RMqdkkzDCY1etutkflWk4c+AcjDU07Pcz1fQwTX0TQz+Pxqn9i4L1TU3UFpjnrcDgxA==}
     dependencies:
       '@types/node': 20.5.6
       xmlbuilder: 15.1.1
