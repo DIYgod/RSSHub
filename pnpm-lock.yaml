@@ -224,8 +224,8 @@ devDependencies:
     specifier: 2.0.2
     version: 2.0.2
   '@types/imapflow':
-    specifier: 1.0.15
-    version: 1.0.15
+    specifier: 1.0.16
+    version: 1.0.16
   '@types/jsdom':
     specifier: 21.1.5
     version: 21.1.5
@@ -1501,8 +1501,8 @@ packages:
     resolution: {integrity: sha512-/K3ds8TRAfBvi5vfjuz8y6+GiAYBZ0x4tXv1Av6CWBWn0IlADc+ZX9pMq7oU0fNQPnBwIZl3rmeLp6SBApbxSQ==}
     dev: true
 
-  /@types/imapflow@1.0.15:
-    resolution: {integrity: sha512-BJFu0sILJkS9o5lJaPFI8JEHo+QNsNuAX2HG5EsEBOyXdUIn9v5NnNIMdHNmNSnkSoNmBa9MJUk5nfnc5D4bRQ==}
+  /@types/imapflow@1.0.16:
+    resolution: {integrity: sha512-4bWf+MPhut/WpuyQnn60J6EaX1PP5e0QrYf4wIi8p6Cr1XT7eCpNzIFQDdalaELZnzDJPyLkILHkTvjacu6hsQ==}
     dependencies:
       '@types/node': 20.5.6
     dev: true
