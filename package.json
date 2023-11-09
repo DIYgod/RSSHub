@@ -160,7 +160,7 @@
     "@types/imapflow": "1.0.15",
     "@types/jsdom": "21.1.5",
     "@types/json-bigint": "1.0.4",
-    "@types/koa": "2.13.10",
+    "@types/koa": "2.13.11",
     "@types/koa-basic-auth": "2.0.6",
     "@types/koa-favicon": "2.1.3",
     "@types/koa-mount": "4.0.4",
