@@ -177,7 +177,7 @@
     "@types/require-all": "3.0.6",
     "@types/supertest": "2.0.16",
     "@types/tiny-async-pool": "2.0.2",
-    "@types/tough-cookie": "4.0.4",
+    "@types/tough-cookie": "4.0.5",
     "@vercel/nft": "0.24.3",
     "cross-env": "7.0.3",
     "eslint": "8.52.0",
