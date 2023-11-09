@@ -1,4 +1,3 @@
-import React from 'react';
 import MarkdownIt from 'markdown-it';
 import Badge from './Badge';
 import Translate from '@docusaurus/Translate';

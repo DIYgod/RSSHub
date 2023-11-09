@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # 添加文档
 
-现在我们完成了代码，是时候为您的路由添加文档了。在 [文档 (/website/docs)](https://github.com/DIYgod/RSSHub/blob/master/website/docs) 中打开相应的文件，本例中是 `website/docs/routes/programming.md`。
+现在我们完成了代码，是时候为您的路由添加文档了。在 [文档 (/website/docs)](https://github.com/DIYgod/RSSHub/blob/master/website/docs) 中打开相应的文件，本例中是 `website/docs/routes/programming.mdx`。
 
 为了实时预览文档，您需要在 **`website` 目录** 下安装文档的依赖项。在终端中输入以下命令：
 
@@ -68,13 +68,13 @@ pnpm run start
 
 :::
 
-:::caution
+:::warning
 
 在开发模式下，您无法切换到其他语言。这是 Docusaurus 的 [技术限制](https://docusaurus.io/docs/i18n/tutorial#start-your-site)。
 
 :::
 
-文档使用 MDX 编写，并使用 [Docusaurus v2](https://docusaurus.io/docs) 渲染。
+文档使用 MDX v3 编写，并使用 [Docusaurus v3](https://docusaurus.io/docs) 渲染。
 
 要为您的路由添加文档，请使用 `Route` React 组件。它类似于 HTML 标签。以下是最常用的组件属性：
 
@@ -166,7 +166,7 @@ pnpm run start
 
 :::
 
-:::caution
+:::warning
 
 开始和结束的 `:::` 周围需要空出一行
 
@@ -204,7 +204,7 @@ pnpm run start
 
 :::
 
-:::caution
+:::warning
 
 开始和结束的 `:::` 周围需要空出一行
 

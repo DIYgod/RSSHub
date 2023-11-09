@@ -20,13 +20,13 @@ E.g.
 
 ## Filtering
 
-:::caution
+:::warning
 
 Please make sure you've [fully URL-encoded](https://gchq.github.io/CyberChef/#recipe=URL_Encode(true)) the parameters. Do not rely on the browser's automatic URL encoding. Some characters, such as `+`, `&`, will not be automatically encoded, resulting in the final parsing result not being correct.
 
 :::
 
-:::caution
+:::warning
 
 filter supports Regex, and due to the fact that some Regex are vulnerable to DoS (ReDoS), default engine `re2` blocks some of these functionalities available in node `Regexp`. These two engines also behaves a bit different in some corner cases. [Details](https://github.com/uhop/node-re2#limitations-things-re2-does-not-support)
 
@@ -120,7 +120,7 @@ E.g. [https://rsshub.app/theinitium/channel/latest/zh-hans?opencc=t2s](https://r
 
 ## Multimedia processing
 
-:::caution
+:::warning
 
 This is an experimental API
 
@@ -171,3 +171,17 @@ Set the parameter `brief` to generate a brief pure-text introduction with a limi
 For example：
 
 -   Brief introduction with 100 characters: `?brief=100`
+
+## Summarized by ChatGPT (Self-hosted)
+
+Set the parameter `chatgpt` to generate a summary by ChatGPT. See [Install](/install#other-application-configurations) for details. Please consider the necessity of this feature, because it will consume some tokens.
+
+-   `chatgpt`: set to any value
+
+Requirements：
+
+-   `OPENAI_API_KEY` environment variable has been set
+
+For example：
+
+-   `/meituan/tech/home?chatgpt=true`
