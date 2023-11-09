@@ -3293,6 +3293,12 @@ Type 栏目：
 
 </Route>
 
+## 福利吧 {#fu-li-ba}
+
+### 最新 {#fu-li-ba-zui-xin}
+
+<Route author="shinemoon" example="/fuliba/latest" path="/fuliba/latest"/>
+
 ## 福利年 {#fu-li-nian}
 
 ### 文章 {#fu-li-nian-wen-zhang}
@@ -4297,6 +4303,268 @@ column 为 third 时可选的 category:
 同理，其他分类同上例子也可以订阅特定的单独专题。
 
 :::
+
+</Route>
+
+## 罗戈网 {#luo-ge-wang}
+
+### 资讯 {#luo-ge-wang-zi-xun}
+
+<Route author="nczitzk" example="/logclub/news" path="/logclub/news/:id?" paramsDesc={['资讯 id，见下表，可在对应资讯页 URL 中找到，默认为全部']} radar="1" rssbud="1">
+
+| 供应链 | 快递 | 快运/运输 | 仓储/地产 | 物流综合 | 国际与跨境物流 | 科技创新 |
+| ------ | ---- | --------- | --------- | -------- | -------------- | -------- |
+| 10-16  | 11   | 30        | 9         | 32       | 114            | 107      |
+
+| 绿色供应链 | 低碳物流 | 碳中和碳达峰 |
+| ---------- | -------- | ------------ |
+| 213        | 214      | 215          |
+
+</Route>
+
+### 招聘 {#luo-ge-wang-zhao-pin}
+
+<Route author="nczitzk" example="/logclub/recruit" path="/logclub/recruit" radar="1" rssbud="1" />
+
+### 报告 {#luo-ge-wang-bao-gao}
+
+<Route author="nczitzk" example="/logclub/lc_report" path="/logclub/lc_report/:id?" paramsDesc={['报告 id，见下表，默认为罗戈研究出品']} radar="1" rssbud="1">
+
+| 罗戈研究出品 | 物流报告       | 绿色双碳报告          |
+| ------------ | -------------- | --------------------- |
+| Report       | IndustryReport | GreenDualCarbonReport |
+
+</Route>
+
+### 招投标 {#luo-ge-wang-zhao-tou-biao}
+
+<Route author="nczitzk" example="/logclub/tender" path="/logclub/tender" radar="1" rssbud="1" />
+
+### 原创 {#luo-ge-wang-yuan-chuang}
+
+<Route author="nczitzk" example="/logclub/original" path="/logclub/original" radar="1" rssbud="1" />
+
+### 大企业 {#luo-ge-wang-da-qi-ye}
+
+<Route author="nczitzk" example="/logclub/company/14" path="/logclub/company/:id" paramsDesc={['企业 id，见下表，可在对应企业页 URL 中找到']} radar="1" rssbud="1">
+
+#### 明星企业 {#luo-ge-wang-da-qi-ye-ming-xing-qi-ye}
+
+| 顺丰 | 菜鸟 | 京东物流 | 德邦快递/德邦股份 |
+| ---- | ---- | -------- | ----------------- |
+| 14   | 56   | 453      | 145               |
+
+| 百世集团 | 中国物流集团 | 极兔速递 | 中通快递 |
+| -------- | ------------ | -------- | -------- |
+| 116      | 6807         | 3246     | 132      |
+
+前往 [更多](https://www.logclub.com/columnist/more/star) 查看更多企业
+
+#### 综合物流/供应链企业 {#luo-ge-wang-da-qi-ye-zong-he-wu-liu-gong-ying-lian-qi-ye}
+
+| 锐特信息 | 中国物流与采购网 | 则一 | 普路通 |
+| -------- | ---------------- | ---- | ------ |
+| 716      | 525              | 524  | 464    |
+
+| 安得智联 | 集保中国 | 上汽安吉物流 | 苏宁物流 |
+| -------- | -------- | ------------ | -------- |
+| 215      | 147      | 15           | 12       |
+
+| 准时达 | 深国际 | 益邦控股 | 卓志跨境供应链 |
+| ------ | ------ | -------- | -------------- |
+| 158    | 167    | 758      | 130            |
+
+| 日日顺 | 传化智联 | CJ荣庆物流 | 江苏飞力达 |
+| ------ | -------- | ---------- | ---------- |
+| 179    | 166      | 770        | 548        |
+
+前往 [更多](https://www.logclub.com/columnist/more/integrated_logistics) 查看更多企业
+
+#### 快递/快运企业 {#luo-ge-wang-da-qi-ye-kuai-di-kuai-yun-qi-ye}
+
+| 盛丰物流 | 跨越速运 | 顺心捷达 | 中国邮政 |
+| -------- | -------- | -------- | -------- |
+| 819      | 372      | 327      | 134      |
+
+| 韵达 | 申通快递 | 圆通 | 壹米滴答集团 |
+| ---- | -------- | ---- | ------------ |
+| 113  | 137      | 143  | 97           |
+
+| 安能物流 | 联邦快递FedEx | UPS | DHL |
+| -------- | ------------- | --- | --- |
+| 151      | 104           | 388 | 219 |
+
+| 优速快递 | 中铁快运 | 德坤物流 | 商桥物流 |
+| -------- | -------- | -------- | -------- |
+| 1243     | 1015     | 2254     | 99       |
+
+前往 [更多](https://www.logclub.com/columnist/more/express) 查看更多企业
+
+#### 系统/智能平台/智能硬件/设施企业 {#luo-ge-wang-da-qi-ye-xi-tong-zhi-neng-ping-tai-zhi-neng-ying-jian-she-shi-qi-ye}
+
+| 甲子光年 | 炬星科技 | 斑马智行 | 智行者 |
+| -------- | -------- | -------- | ------ |
+| 700      | 665      | 540      | 510    |
+
+| 纵行科技 | 行深智能 | 地上铁 | 图森未来 |
+| -------- | -------- | ------ | -------- |
+| 509      | 508      | 500    | 445      |
+
+| oTMS运输管理云平台 | 聚龄供应链 | 博科资讯 | 富勒FLUX |
+| ------------------ | ---------- | -------- | -------- |
+| 53                 | 5806       | 6870     | 122      |
+
+| 科箭软件 | 通天晓软件 | 嬴彻科技 | 货车宝 |
+| -------- | ---------- | -------- | ------ |
+| 180      | 503        | 462      | 129    |
+
+前往 [更多](https://www.logclub.com/columnist/more/intellectualization) 查看更多企业
+
+#### 货运/配送平台/仓储/地产企业 {#luo-ge-wang-da-qi-ye-huo-yun-pei-song-ping-tai-cang-chu-di-chan-qi-ye}
+
+| 卡力互联 | 想乐送 | 宝湾物流 | 卡车之家 |
+| -------- | ------ | -------- | -------- |
+| 1660     | 1558   | 1031     | 365      |
+
+| 罗宾升 | 好多车 | 饿了么 | 闪送 |
+| ------ | ------ | ------ | ---- |
+| 308    | 269    | 172    | 80   |
+
+| 宏昌物流园 | 路歌互联网物流平台 | 福佑卡车 | 普洛斯 |
+| ---------- | ------------------ | -------- | ------ |
+| 6816       | 182                | 18       | 150    |
+
+| 菜鸟速递 | 达达集团 | 满帮集团 | 货拉拉 |
+| -------- | -------- | -------- | ------ |
+| 1972     | 748      | 193      | 79     |
+
+前往 [更多](https://www.logclub.com/columnist/more/freight_transport) 查看更多企业
+
+#### 证券交运/咨询机构 {#luo-ge-wang-da-qi-ye-zheng-quan-jiao-yun-zi-xun-ji-gou}
+
+| 罗戈网 | 物流沙龙 | 罗戈研究 | 招商证券 |
+| ------ | -------- | -------- | -------- |
+| 17     | 21       | 26       | 51       |
+
+| 兴业证券 | 环球物流咨询规划 | 华创证券 | 艾瑞咨询 |
+| -------- | ---------------- | -------- | -------- |
+| 161      | 29               | 1287     | 58       |
+
+| 安信证券 | 天风证券 | 方正证券 | 中信证券 |
+| -------- | -------- | -------- | -------- |
+| 1295     | 1136     | 1169     | 469      |
+
+| 申万宏源证券 | 国海证券 | 华泰证券 | 东方证券 |
+| ------------ | -------- | -------- | -------- |
+| 1296         | 6381     | 2119     | 1772     |
+
+前往 [更多](https://www.logclub.com/columnist/more/securities_delivery) 查看更多企业
+
+#### 资本 {#luo-ge-wang-da-qi-ye-zi-ben}
+
+| 源码资本 | 华兴资本 | IDG资本 | 元赋资本 |
+| -------- | -------- | ------- | -------- |
+| 1037     | 931      | 787     | 393      |
+
+| 钟鼎资本 | 红杉资本 |
+| -------- | -------- |  |  |
+| 159      | 5265     |
+
+前往 [更多](https://www.logclub.com/columnist/more/capital) 查看更多企业
+
+</Route>
+
+### 专家说 {#luo-ge-wang-zhuan-jia-shuo}
+
+<Route author="nczitzk" example="/logclub/columnist/articleList/27" path="/logclub/columnist/articleList/:id?" paramsDesc={['专家 id，见下表，可在对应企业页 URL 中找到']} radar="1" rssbud="1">
+
+#### 精选专家 {#luo-ge-wang-zhuan-jia-shuo-jing-xuan-zhuan-jia}
+
+| 潘永刚 | Tracy | 唐隆基 | 褚建新 |
+| ------ | ----- | ------ | ------ |
+| 27     | 157   | 91     | 9749   |
+
+前往 [更多](https://www.logclub.com/columnist/authorMore/experts) 查看更多专家
+
+#### 资深作者 {#luo-ge-wang-zhuan-jia-shuo-zi-shen-zuo-zhe}
+
+| 物流麻将胡 | 小周伯通 | 郭嘉 | 周艳青 |
+| ---------- | -------- | ---- | ------ |
+| 10         | 19       | 7    | 559    |
+
+前往 [更多](https://www.logclub.com/columnist/authorMore/author) 查看更多专家
+
+#### 综合物流 {#luo-ge-wang-zhuan-jia-shuo-zong-he-wu-liu}
+
+| 韩雪峰 | 李赛赛 | 陈晓曦 | 李长宏 |
+| ------ | ------ | ------ | ------ |
+| 41     | 12378  | 1495   | 110    |
+
+前往 [更多](https://www.logclub.com/columnist/authorMore/integrated_logistics) 查看更多专家
+
+#### 数字化 {#luo-ge-wang-zhuan-jia-shuo-shu-zi-hua}
+
+| 秦愉 | 冯雷 | 卢立新 | 段琰 |
+| ---- | ---- | ------ | ---- |
+| 160  | 147  | 95     | 284  |
+
+前往 [更多](https://www.logclub.com/columnist/authorMore/digitization) 查看更多专家
+
+#### 智能化 {#luo-ge-wang-zhuan-jia-shuo-zhi-neng-hua}
+
+| 曾志宏 | 亦橙 | 马荣 | 陈晓春 |
+| ------ | ---- | ---- | ------ |
+| 34     | 201  | 130  | 123    |
+
+前往 [更多](https://www.logclub.com/columnist/authorMore/intellectualization) 查看更多专家
+
+#### 快运 {#luo-ge-wang-zhuan-jia-shuo-kuai-yun}
+
+| 王坚 | 王拥军 | 靖晟 | 廖文明 |
+| ---- | ------ | ---- | ------ |
+| 172  | 252    | 84   | 50     |
+
+前往 [更多](https://www.logclub.com/columnist/authorMore/express_transportation) 查看更多专家
+
+#### 合同物流 {#luo-ge-wang-zhuan-jia-shuo-he-tong-wu-liu}
+
+| 非红 | 王鹏飞 | 周海 | 王伟 |
+| ---- | ------ | ---- | ---- |
+| 40   | 2274   | 168  | 158  |
+
+前往 [更多](https://www.logclub.com/columnist/authorMore/contract_logistics) 查看更多专家
+
+#### 供应链 {#luo-ge-wang-zhuan-jia-shuo-gong-ying-lian}
+
+| 黄尧笛 | 卓弘毅 | 胡珉 | 雷文军Jason |
+| ------ | ------ | ---- | ----------- |
+| 26     | 35     | 188  | 303         |
+
+前往 [更多](https://www.logclub.com/columnist/authorMore/supply_chain) 查看更多专家
+
+#### 快递 {#luo-ge-wang-zhuan-jia-shuo-kuai-di}
+
+| 致快递 | 中通之声 | 科技中通 | 明兴 |
+| ------ | -------- | -------- | ---- |
+| 9633   | 618      | 385      | 265  |
+
+前往 [更多](https://www.logclub.com/columnist/authorMore/express) 查看更多专家
+
+#### 城配 {#luo-ge-wang-zhuan-jia-shuo-cheng-pei}
+
+| 张春鑫(荡漾哥) | 梁佳 | 赵波 | 王行广 |
+| -------------- | ---- | ---- | ------ |
+| 1527           | 3374 | 49   | 75     |
+
+前往 [更多](https://www.logclub.com/columnist/authorMore/urban_distribution) 查看更多专家
+
+#### 仓储 {#luo-ge-wang-zhuan-jia-shuo-cang-chu}
+
+| 叶剑 | 木棉 | 陈艺 | 冯银川 |
+| ---- | ---- | ---- | ------ |
+| 1881 | 59   | 1637 | 215    |
+
+前往 [更多](https://www.logclub.com/columnist/authorMore/storage) 查看更多专家
 
 </Route>
 
