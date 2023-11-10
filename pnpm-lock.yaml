@@ -215,8 +215,8 @@ devDependencies:
     specifier: 6.11.3
     version: 6.11.3
   '@types/etag':
-    specifier: 1.8.2
-    version: 1.8.2
+    specifier: 1.8.3
+    version: 1.8.3
   '@types/fs-extra':
     specifier: 11.0.4
     version: 11.0.4
@@ -1448,8 +1448,8 @@ packages:
     resolution: {integrity: sha512-LG4opVs2ANWZ1TJoKc937iMmNstM/d0ae1vNbnBvBhqCSezgVUOzcLCqbI5elV8Vy6WKwKjaqR+zO9VKirBBCA==}
     dev: true
 
-  /@types/etag@1.8.2:
-    resolution: {integrity: sha512-z8Pbo2e+EZWMpuRPYSjhSivp2OEkqrMZBUfEAWlJC31WUCKveZ8ioWXHAC5BXRZfwxCBfYRhPij1YJHK1W6oDA==}
+  /@types/etag@1.8.3:
+    resolution: {integrity: sha512-QYHv9Yeh1ZYSMPQOoxY4XC4F1r+xRUiAriB303F4G6uBsT3KKX60DjiogvVv+2VISVDuJhcIzMdbjT+Bm938QQ==}
     dependencies:
       '@types/node': 20.5.6
     dev: true
