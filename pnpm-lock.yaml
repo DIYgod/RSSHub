@@ -15,8 +15,8 @@ dependencies:
     specifier: 2.2.3
     version: 2.2.3
   '@sentry/node':
-    specifier: 7.77.0
-    version: 7.77.0
+    specifier: 7.80.0
+    version: 7.80.0
   '@tonyrl/rand-user-agent':
     specifier: 2.0.38
     version: 2.0.38
@@ -203,8 +203,8 @@ devDependencies:
     specifier: 3.0.0
     version: 3.0.0
   '@types/aes-js':
-    specifier: 3.1.3
-    version: 3.1.3
+    specifier: 3.1.4
+    version: 3.1.4
   '@types/crypto-js':
     specifier: 4.2.1
     version: 4.2.1
@@ -212,8 +212,8 @@ devDependencies:
     specifier: 8.44.6
     version: 8.44.6
   '@types/eslint-config-prettier':
-    specifier: 6.11.2
-    version: 6.11.2
+    specifier: 6.11.3
+    version: 6.11.3
   '@types/etag':
     specifier: 1.8.2
     version: 1.8.2
@@ -242,17 +242,17 @@ devDependencies:
     specifier: 2.1.3
     version: 2.1.3
   '@types/koa-mount':
+    specifier: 4.0.5
+    version: 4.0.5
+  '@types/koa-static':
     specifier: 4.0.4
     version: 4.0.4
-  '@types/koa-static':
-    specifier: 4.0.3
-    version: 4.0.3
   '@types/koa__router':
     specifier: 12.0.3
     version: 12.0.3
   '@types/lint-staged':
-    specifier: 13.2.1
-    version: 13.2.1
+    specifier: 13.2.2
+    version: 13.2.2
   '@types/mailparser':
     specifier: 3.4.4
     version: 3.4.4
@@ -284,8 +284,8 @@ devDependencies:
     specifier: 2.0.2
     version: 2.0.2
   '@types/tough-cookie':
-    specifier: 4.0.4
-    version: 4.0.4
+    specifier: 4.0.5
+    version: 4.0.5
   '@vercel/nft':
     specifier: 0.24.3
     version: 0.24.3
@@ -299,8 +299,8 @@ devDependencies:
     specifier: 9.0.0
     version: 9.0.0(eslint@8.52.0)
   eslint-plugin-n:
-    specifier: 16.2.0
-    version: 16.2.0(eslint@8.52.0)
+    specifier: 16.3.0
+    version: 16.3.0(eslint@8.52.0)
   eslint-plugin-prettier:
     specifier: 5.0.1
     version: 5.0.1(@types/eslint@8.44.6)(eslint-config-prettier@9.0.0)(eslint@8.52.0)(prettier@3.0.3)
@@ -1245,46 +1245,46 @@ packages:
       selderee: 0.11.0
     dev: false
 
-  /@sentry-internal/tracing@7.77.0:
-    resolution: {integrity: sha512-8HRF1rdqWwtINqGEdx8Iqs9UOP/n8E0vXUu3Nmbqj4p5sQPA7vvCfq+4Y4rTqZFc7sNdFpDsRION5iQEh8zfZw==}
+  /@sentry-internal/tracing@7.80.0:
+    resolution: {integrity: sha512-P1Ab9gamHLsbH9D82i1HY8xfq9dP8runvc4g50AAd6OXRKaJ45f2KGRZUmnMEVqBQ7YoPYp2LFMkrhNYbcZEoQ==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.77.0
-      '@sentry/types': 7.77.0
-      '@sentry/utils': 7.77.0
+      '@sentry/core': 7.80.0
+      '@sentry/types': 7.80.0
+      '@sentry/utils': 7.80.0
     dev: false
 
-  /@sentry/core@7.77.0:
-    resolution: {integrity: sha512-Tj8oTYFZ/ZD+xW8IGIsU6gcFXD/gfE+FUxUaeSosd9KHwBQNOLhZSsYo/tTVf/rnQI/dQnsd4onPZLiL+27aTg==}
+  /@sentry/core@7.80.0:
+    resolution: {integrity: sha512-nJiiymdTSEyI035/rdD3VOq6FlOZ2wWLR5bit9LK8a3rzHU3UXkwScvEo6zYgs0Xp1sC0yu1S9+0BEiYkmi29A==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.77.0
-      '@sentry/utils': 7.77.0
+      '@sentry/types': 7.80.0
+      '@sentry/utils': 7.80.0
     dev: false
 
-  /@sentry/node@7.77.0:
-    resolution: {integrity: sha512-Ob5tgaJOj0OYMwnocc6G/CDLWC7hXfVvKX/ofkF98+BbN/tQa5poL+OwgFn9BA8ud8xKzyGPxGU6LdZ8Oh3z/g==}
+  /@sentry/node@7.80.0:
+    resolution: {integrity: sha512-J35fqe8J5ac/17ZXT0ML3opYGTOclqYNE9Sybs1y9n6BqacHyzH8By72YrdI03F7JJDHwrcGw+/H8hGpkCwi0Q==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry-internal/tracing': 7.77.0
-      '@sentry/core': 7.77.0
-      '@sentry/types': 7.77.0
-      '@sentry/utils': 7.77.0
+      '@sentry-internal/tracing': 7.80.0
+      '@sentry/core': 7.80.0
+      '@sentry/types': 7.80.0
+      '@sentry/utils': 7.80.0
       https-proxy-agent: 5.0.1
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /@sentry/types@7.77.0:
-    resolution: {integrity: sha512-nfb00XRJVi0QpDHg+JkqrmEBHsqBnxJu191Ded+Cs1OJ5oPXEW6F59LVcBScGvMqe+WEk1a73eH8XezwfgrTsA==}
+  /@sentry/types@7.80.0:
+    resolution: {integrity: sha512-4bpMO+2jWiWLDa8zbTASWWNLWe6yhjfPsa7/6VH5y9x1NGtL8oRbqUsTgsvjF3nmeHEMkHQsC8NHPaQ/ibFmZQ==}
     engines: {node: '>=8'}
     dev: false
 
-  /@sentry/utils@7.77.0:
-    resolution: {integrity: sha512-NmM2kDOqVchrey3N5WSzdQoCsyDkQkiRxExPaNI2oKQ/jMWHs9yt0tSy7otPBcXs0AP59ihl75Bvm1tDRcsp5g==}
+  /@sentry/utils@7.80.0:
+    resolution: {integrity: sha512-XbBCEl6uLvE50ftKwrEo6XWdDaZXHXu+kkHXTPWQEcnbvfZKLuG9V0Hxtxxq3xQgyWmuF05OH1GcqYqiO+v5Yg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.77.0
+      '@sentry/types': 7.80.0
     dev: false
 
   /@sinclair/typebox@0.27.8:
@@ -1340,8 +1340,8 @@ packages:
       '@types/node': 20.5.6
     dev: true
 
-  /@types/aes-js@3.1.3:
-    resolution: {integrity: sha512-VqCfy688tI0TTIhJyd785KJqgfE1J+8bfXrzi+mV+jBPyEv5iqUkj6gLgvjJdX5EuJwtYvZ4elsF4b+fJjw8MQ==}
+  /@types/aes-js@3.1.4:
+    resolution: {integrity: sha512-v3D66IptpUqh+pHKVNRxY8yvp2ESSZXe0rTzsGdzUhEwag7ljVfgCllkWv2YgiYXDhWFBrEywll4A5JToyTNFA==}
     dev: true
 
   /@types/babel__core@7.20.1:
@@ -1433,8 +1433,8 @@ packages:
       '@types/ms': 0.7.31
     dev: false
 
-  /@types/eslint-config-prettier@6.11.2:
-    resolution: {integrity: sha512-H9aSpNEGTyL1fJ65CIuqHMAH741pKg7jZ/Y2cdFAmqtD90PsRrmp8Cpj76PgSffSTkRLGihe1X6QlM4ec639ZA==}
+  /@types/eslint-config-prettier@6.11.3:
+    resolution: {integrity: sha512-3wXCiM8croUnhg9LdtZUJQwNcQYGWxxdOWDjPe1ykCqJFPVpzAKfs/2dgSoCtAvdPeaponcWPI7mPcGGp9dkKQ==}
     dev: true
 
   /@types/eslint@8.44.6:
@@ -1527,7 +1527,7 @@ packages:
     resolution: {integrity: sha512-sBK/3YjS3uuPj+HzZyhB4GGTnFmk0mdyQfhzZ/sqs9ciyG41QJdZZdwcPa6OfW97OTNTwl5tBAsfEOm/dui9pQ==}
     dependencies:
       '@types/node': 20.5.6
-      '@types/tough-cookie': 4.0.4
+      '@types/tough-cookie': 4.0.5
       parse5: 7.1.2
     dev: true
 
@@ -1573,8 +1573,8 @@ packages:
       '@types/koa': 2.13.11
     dev: true
 
-  /@types/koa-mount@4.0.4:
-    resolution: {integrity: sha512-n9P/yyZHcm+C9mcHoQAX9ovNyAeK4o2x/+JCdrSBWlpCDoI7KNTr9zzgQoSEPvuHcT7FEcsc07LKvH9eicsZOw==}
+  /@types/koa-mount@4.0.5:
+    resolution: {integrity: sha512-pV1njJ7r94iqAFzT9D5sGSYKUHFGudCLAnmr4WFli7V5tJf5MAgRQK9leTPJ4gjvgr+hnTf86fZsKoFN358c7w==}
     dependencies:
       '@types/koa': 2.13.11
     dev: true
@@ -1585,8 +1585,8 @@ packages:
       '@types/koa': 2.13.11
     dev: true
 
-  /@types/koa-static@4.0.3:
-    resolution: {integrity: sha512-4U9uZwXqYAudDLDVkw1prJM5avn9/lHLVEwoyyI/ITZluWkBdmirkj8EsOLG6kLr0XFZdViR0ZBtQ3oetSsr3g==}
+  /@types/koa-static@4.0.4:
+    resolution: {integrity: sha512-j1AUzzl7eJYEk9g01hNTlhmipFh8RFbOQmaMNLvLcNNAkPw0bdTs3XTa3V045XFlrWN0QYnblbDJv2RzawTn6A==}
     dependencies:
       '@types/koa': 2.13.11
       '@types/koa-send': 4.1.3
@@ -1615,8 +1615,8 @@ packages:
     resolution: {integrity: sha512-pTjcqY9E4nOI55Wgpz7eiI8+LzdYnw3qxXCfHyBDdPbYvbyLgWLJGh8EdPvqawwMK1Uo1794AUkkR38Fr0g+2g==}
     dev: true
 
-  /@types/lint-staged@13.2.1:
-    resolution: {integrity: sha512-/pIzducFqyJAdXJb2pkQJNTIYBBph/XQdsBgn9oTuNjL1fMRw7AbutYzB0ODTxi8NYqJ9KUk9WyabZvpdNT/kQ==}
+  /@types/lint-staged@13.2.2:
+    resolution: {integrity: sha512-9c2ffPMJ1geob6yBmLuxzYye11HzKyA/I4dRZ8NfrPgY6SyzXt2SROD8vB3YjdPZJqqcu3WXsRvrY3PZbb720A==}
     dev: true
 
   /@types/mailparser@3.4.4:
@@ -1712,7 +1712,7 @@ packages:
     dependencies:
       '@types/caseless': 0.12.2
       '@types/node': 20.5.6
-      '@types/tough-cookie': 4.0.4
+      '@types/tough-cookie': 4.0.5
       form-data: 2.5.1
 
   /@types/require-all@3.0.6:
@@ -1761,8 +1761,8 @@ packages:
     resolution: {integrity: sha512-0dTO8/Qh4aA77NGROkocUM+kHBYVfqJLY9gAFqbz/fDw2iQCRLr75jZwzRgb7rx2kGHgPzuP2NvyY0FU0+Ja1Q==}
     dev: true
 
-  /@types/tough-cookie@4.0.4:
-    resolution: {integrity: sha512-95Sfz4nvMAb0Nl9DTxN3j64adfwfbBPEYq14VN7zT5J5O2M9V6iZMIIQU1U+pJyl9agHYHNCqhCXgyEtIRRa5A==}
+  /@types/tough-cookie@4.0.5:
+    resolution: {integrity: sha512-/Ad8+nIOV7Rl++6f1BdKxFSMgmoqEoYbHRpPcx3JEfv8VRsQe9Z4mCXeJBzxs7mbHY/XOZZuXlRNfhpVPbs6ZA==}
 
   /@types/triple-beam@1.3.2:
     resolution: {integrity: sha512-txGIh+0eDFzKGC25zORnswy+br1Ha7hj5cMVwKIU7+s0U2AxxJru/jZSMU6OC9MJWP6+pc/hc6ZjyZShpsyY2g==}
@@ -3180,8 +3180,8 @@ packages:
       eslint: 8.52.0
     dev: true
 
-  /eslint-plugin-n@16.2.0(eslint@8.52.0):
-    resolution: {integrity: sha512-AQER2jEyQOt1LG6JkGJCCIFotzmlcCZFur2wdKrp1JX2cNotC7Ae0BcD/4lLv3lUAArM9uNS8z/fsvXTd0L71g==}
+  /eslint-plugin-n@16.3.0(eslint@8.52.0):
+    resolution: {integrity: sha512-/XZLH5CUXGK3laz3xYFNza8ZxLCq8ZNW6MsVw5z3d5hc2AwZzi0fPiySFZHQTdVDOHGs2cGv91aqzWmgBdq2gQ==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       eslint: '>=7.0.0'
