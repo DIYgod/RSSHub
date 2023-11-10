@@ -212,8 +212,8 @@ devDependencies:
     specifier: 8.44.6
     version: 8.44.6
   '@types/eslint-config-prettier':
-    specifier: 6.11.2
-    version: 6.11.2
+    specifier: 6.11.3
+    version: 6.11.3
   '@types/etag':
     specifier: 1.8.2
     version: 1.8.2
@@ -1433,8 +1433,8 @@ packages:
       '@types/ms': 0.7.31
     dev: false
 
-  /@types/eslint-config-prettier@6.11.2:
-    resolution: {integrity: sha512-H9aSpNEGTyL1fJ65CIuqHMAH741pKg7jZ/Y2cdFAmqtD90PsRrmp8Cpj76PgSffSTkRLGihe1X6QlM4ec639ZA==}
+  /@types/eslint-config-prettier@6.11.3:
+    resolution: {integrity: sha512-3wXCiM8croUnhg9LdtZUJQwNcQYGWxxdOWDjPe1ykCqJFPVpzAKfs/2dgSoCtAvdPeaponcWPI7mPcGGp9dkKQ==}
     dev: true
 
   /@types/eslint@8.44.6:
