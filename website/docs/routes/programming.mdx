@@ -150,6 +150,12 @@ Category
 
 <Route author="elxy" example="/bbcnewslabs/news" path="/bbcnewslabs/news"/>
 
+## Biostars {#biostars}
+
+### The Biostar Herald Weekly {#biostars-the-biostar-herald-weekly}
+
+<Route author="william-swl" example="/biostars/herald" path="/biostars/herald"/>
+
 ## Bitbucket {#bitbucket}
 
 ### Commits {#bitbucket-commits}
