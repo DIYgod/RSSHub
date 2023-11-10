@@ -266,8 +266,8 @@ devDependencies:
     specifier: 1.19.5
     version: 1.19.5
   '@types/pidusage':
-    specifier: 2.0.4
-    version: 2.0.4
+    specifier: 2.0.5
+    version: 2.0.5
   '@types/plist':
     specifier: 3.0.5
     version: 3.0.5
@@ -1675,8 +1675,8 @@ packages:
       '@types/node': 20.5.6
     dev: true
 
-  /@types/pidusage@2.0.4:
-    resolution: {integrity: sha512-yku7awugpbqBz+MjVFzDkJIW8eaN9jySnotHxYfOY5dqnsjRgvG4HQFMQ7wtEaGjk+WjJ8R3Ll3iaaZtVKY3JA==}
+  /@types/pidusage@2.0.5:
+    resolution: {integrity: sha512-MIiyZI4/MK9UGUXWt0jJcCZhVw7YdhBuTOuqP/BjuLDLZ2PmmViMIQgZiWxtaMicQfAz/kMrZ5T7PKxFSkTeUA==}
     dev: true
 
   /@types/plist@3.0.5:
