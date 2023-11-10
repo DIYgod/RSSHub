@@ -3391,6 +3391,9 @@
         "nczitzk"
     ],
     "/hopper/:lowestOnly/:from/:to?": [],
+    "/hostmonit/cloudflareyes/:type?": [
+        "nczitzk"
+    ],
     "/hotchina": [
         "nczitzk"
     ],
