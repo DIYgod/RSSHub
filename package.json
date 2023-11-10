@@ -168,7 +168,7 @@
     "@types/koa__router": "12.0.3",
     "@types/lint-staged": "13.2.2",
     "@types/mailparser": "3.4.4",
-    "@types/markdown-it": "13.0.5",
+    "@types/markdown-it": "13.0.6",
     "@types/module-alias": "2.0.3",
     "@types/nodemon": "1.19.4",
     "@types/pidusage": "2.0.4",
