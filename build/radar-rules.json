@@ -30453,6 +30453,26 @@
       }
     ]
   },
+  "zimuxia.cn": {
+    "_name": "FIX 字幕侠",
+    ".": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/multimedia#fix-zi-mu-xia",
+        "source": [
+          "/我们的作品"
+        ]
+      },
+      {
+        "title": "剧集",
+        "docs": "https://docs.rsshub.app/routes/multimedia#fix-zi-mu-xia",
+        "source": [
+          "/portfolio/:id"
+        ],
+        "target": "/zimuxia/portfolio/:id"
+      }
+    ]
+  },
   "zjgtjy.cn": {
     "_name": "浙江省土地使用权网上交易系统",
     ".": [
