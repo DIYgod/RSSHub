@@ -18,8 +18,8 @@ dependencies:
     specifier: 7.80.0
     version: 7.80.0
   '@tonyrl/rand-user-agent':
-    specifier: 2.0.38
-    version: 2.0.38
+    specifier: 2.0.39
+    version: 2.0.39
   aes-js:
     specifier: 3.1.2
     version: 3.1.2
@@ -1336,8 +1336,8 @@ packages:
       defer-to-connect: 2.0.1
     dev: false
 
-  /@tonyrl/rand-user-agent@2.0.38:
-    resolution: {integrity: sha512-gDMXTNKITBvkGweQN/aueLtcz/mmeUbwNAOuovT4jDllSzBq2ob/2eHfc/+yg4h9QDHR0zGcwFQIRC9sTNdIlA==}
+  /@tonyrl/rand-user-agent@2.0.39:
+    resolution: {integrity: sha512-1HBCBR3h6279OqvIHI1XxCbB5AIIHufUaslS+n4vvvDHacDYjsf7Y+TBGYSUFOJUKAOx6d11Rw+NkchWtAaLnQ==}
     engines: {node: '>=14.16'}
     dev: false
 
@@ -1863,12 +1863,12 @@ packages:
       negotiator: 0.6.3
     dev: false
 
-  /acorn-jsx@5.3.2(acorn@8.10.0):
+  /acorn-jsx@5.3.2(acorn@8.11.2):
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
     peerDependencies:
       acorn: ^6.0.0 || ^7.0.0 || ^8.0.0
     dependencies:
-      acorn: 8.10.0
+      acorn: 8.11.2
     dev: true
 
   /acorn@5.7.4:
@@ -3332,8 +3332,8 @@ packages:
     resolution: {integrity: sha512-oruZaFkjorTpF32kDSI5/75ViwGeZginGGy2NoOSg3Q9bnwlnmDm4HLnkl0RE3n+njDXR037aY1+x58Z/zFdwQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dependencies:
-      acorn: 8.10.0
-      acorn-jsx: 5.3.2(acorn@8.10.0)
+      acorn: 8.11.2
+      acorn-jsx: 5.3.2(acorn@8.11.2)
       eslint-visitor-keys: 3.4.3
     dev: true
 
