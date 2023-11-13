@@ -1,6 +1,6 @@
 {
     "extends": ["eslint:recommended", "plugin:n/recommended", "plugin:prettier/recommended", "plugin:yml/recommended"],
-    "plugins": ["prettier"],
+    "plugins": ["prettier", "@stylistic/js"],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
@@ -54,25 +54,26 @@
         "prefer-const": 2,
         "prefer-regex-literals": 1,
         "require-await": 2,
-        "spaced-comment": 2,
-        // layout & formatting
-        "arrow-parens": 2,
-        "arrow-spacing": 2,
-        "comma-spacing": 2,
-        "comma-style": 2,
-        "func-call-spacing": 2,
-        "keyword-spacing": 2,
-        "linebreak-style": 2,
-        "lines-around-comment": 2,
-        "no-multiple-empty-lines": 2,
-        "no-trailing-spaces": 2,
-        "rest-spread-spacing": 2,
-        "semi": 2,
-        "space-before-blocks": 2,
-        "space-in-parens": 2,
-        "space-infix-ops": 2,
-        "space-unary-ops": 2,
         // plugin specific
+        // previous eslint formatting rules
+        "@stylistic/js/arrow-parens": 2,
+        "@stylistic/js/arrow-spacing": 2,
+        "@stylistic/js/comma-spacing": 2,
+        "@stylistic/js/comma-style": 2,
+        "@stylistic/js/function-call-spacing": 2,
+        "@stylistic/js/keyword-spacing": 2,
+        "@stylistic/js/linebreak-style": 2,
+        "@stylistic/js/lines-around-comment": ["error", { "beforeBlockComment": false }],
+        "@stylistic/js/no-multiple-empty-lines": 2,
+        "@stylistic/js/no-trailing-spaces": 2,
+        "@stylistic/js/rest-spread-spacing": 2,
+        "@stylistic/js/semi": 2,
+        "@stylistic/js/space-before-blocks": 2,
+        "@stylistic/js/space-in-parens": 2,
+        "@stylistic/js/space-infix-ops": 2,
+        "@stylistic/js/space-unary-ops": 2,
+        "@stylistic/js/spaced-comment": 2,
+        // https://github.com/eslint-community/eslint-plugin-n
         "n/no-extraneous-require": [
             "error",
             {
