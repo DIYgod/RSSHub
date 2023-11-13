@@ -1,5 +1,5 @@
 {
-    "extends": ["eslint:recommended", "plugin:n/recommended", "plugin:prettier/recommended", "plugin:yml/recommended"],
+    "extends": ["eslint:recommended", "@stylistic/js", "plugin:n/recommended", "plugin:prettier/recommended", "plugin:yml/recommended"],
     "plugins": ["prettier"],
     "parserOptions": {
         "ecmaVersion": "latest",
@@ -63,7 +63,7 @@
         "@stylistic/js/function-call-spacing": 2,
         "@stylistic/js/keyword-spacing": 2,
         "@stylistic/js/linebreak-style": 2,
-        "@stylistic/js/lines-around-comment": 2,
+        "@stylistic/js/lines-around-comment": ["error", { "beforeBlockComment": false }],
         "@stylistic/js/no-multiple-empty-lines": 2,
         "@stylistic/js/no-trailing-spaces": 2,
         "@stylistic/js/rest-spread-spacing": 2,
