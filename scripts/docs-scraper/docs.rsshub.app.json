@@ -38,15 +38,7 @@
             "url",
             "content"
         ],
-        "searchableAttributes": [
-            "hierarchy_lvl2",
-            "hierarchy_lvl3",
-            "hierarchy_lvl4",
-            "anchor",
-            "content",
-            "hierarchy_lvl5",
-            "hierarchy_lvl1"
-        ],
+        "searchableAttributes": ["hierarchy_lvl2", "hierarchy_lvl3", "hierarchy_lvl4", "anchor", "content", "hierarchy_lvl5", "hierarchy_lvl1"],
         "sortableAttributes": ["anchor"]
     },
     "selectors_exclude": [".badge", ".author", ".alert"]
