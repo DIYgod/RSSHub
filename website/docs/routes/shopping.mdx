@@ -711,11 +711,77 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 分类 {#zheng-ban-zhong-guo-fen-lei}
 
-<Route author="nczitzk" example="/getitfree" path="/getitfree/:category?" paramsDesc={['分类，见下表，默认为所有类别']}>
+<Route author="sanmmm nczitzk" example="/getitfree/category/pc" path="/getitfree/category/:id" paramsDesc={['分类，见下表，可在对应分类页中找到，默认为所有类别']} radar="1" rssbud="1">
 
-| 所有类别 | Android | iOS | Mac | PC | UWP | 公告         | 永久免费 | 限时免费 | 限时折扣 |
-| -------- | ------- | --- | --- | -- | --- | ------------ | -------- | -------- | -------- |
-|          | android | ios | mac | pc | uwp | notification | free     | giveaway | discount |
+:::tip
+
+可以叠加使用得到分类结果并集，如 [`/getitfree/category/pc,android`](https://rsshub.app/getitfree/category/pc,android)
+
+:::
+
+| 所有类别 | Android | iOS | Mac | PC  | UWP | 公告         | 永久免费 | 限时免费 | 正版折扣 |
+| -------- | ------- | --- | --- | --- | --- | ------------ | -------- | -------- | -------- |
+|          | android | ios | mac | pc  | uwp | notification | free     | giveaway | discount |
 
 </Route>
 
+### 标签 {#zheng-ban-zhong-guo-biao-qian}
+
+<Route author="nczitzk" example="/getitfree/tag/ai" path="/getitfree/tag/:id" paramsDesc={['标签，见下表，可在对应标签页中找到，默认为所有标签']} radar="1" rssbud="1">
+
+:::tip
+
+可以叠加使用得到标签结果并集，如 [`/getitfree/tag/ai,office`](https://rsshub.app/getitfree/tag/ai,office)
+
+:::
+
+| AI  | Android | DVD | GIF | iCloud |
+| --- | ------- | --- | --- | ------ |
+
+| ICON | iOS | iPhone | Leawo | Mac |
+| ---- | --- | ------ | ----- | --- |
+
+| Markdown | OCR | Office | Office 办公 | PDF |
+| -------- | --- | ------ | ----------- | --- |
+
+| PDF 转换 | Windows | 下载 | 书签管理 | 健康 |
+| -------- | ------- | ---- | -------- | ---- |
+
+| 全平台 | 办公软件 | 加密保护 | 卸载/清理/优化 | 卸载清理 |
+| ------ | -------- | -------- | -------------- | -------- |
+
+| 图像处理 | 图片/编辑/管理 | 壁纸 | 备份/恢复/加密 | 备份恢复 |
+| -------- | -------------- | ---- | -------------- | -------- |
+
+| 字体 | 学习 | 密码管理 | 导航 | 开始菜单 |
+| ---- | ---- | -------- | ---- | -------- |
+
+| 录屏截图 | 影音/刻录/转换 | 投屏镜像 | 提醒 | 摄影 |
+| -------- | -------------- | -------- | ---- | ---- |
+
+| 播放器 | 收藏夹 | 效率工具 | 数据传输 | 数据恢复 |
+| ------ | ------ | -------- | -------- | -------- |
+
+| 数据擦除 | 文件管理 | 文档/转换/压缩 | 文档扫描 | 日历 |
+| -------- | -------- | -------------- | -------- | ---- |
+
+| 杀毒防护 | 查重 | 正版特惠 | 水印 | 清理优化 |
+| -------- | ---- | -------- | ---- | -------- |
+
+| 滤镜 | 硬件外设 | 硬盘/分区/驱动 | 硬盘检测 | 稍后阅读 |
+| ---- | -------- | -------------- | -------- | -------- |
+
+| 笔记 | 系统工具 | 素材 | 网络/安全/传输 | 网络安全 |
+| ---- | -------- | ---- | -------------- | -------- |
+
+| 色彩 | 视频剪辑 | 视频转换 | 记账 | 设计 |
+| ---- | -------- | -------- | ---- | ---- |
+
+| 软件卸载 | 远程控制 | 音乐 | 音频 | 驱动 |
+| -------- | -------- | ---- | ---- | ---- |
+
+</Route>
+
+### 搜索 {#zheng-ban-zhong-guo-sou-suo}
+
+<Route author="sanmmm nczitzk" example="/getitfree/search/windows" path="/getitfree/search/:keyword" paramsDesc={['关键字']} radar="1" rssbud="1"/>
