@@ -1,6 +1,6 @@
 {
-    "extends": ["eslint:recommended", "@stylistic/js", "plugin:n/recommended", "plugin:prettier/recommended", "plugin:yml/recommended"],
-    "plugins": ["prettier"],
+    "extends": ["eslint:recommended", "plugin:n/recommended", "plugin:prettier/recommended", "plugin:yml/recommended"],
+    "plugins": ["prettier", "@stylistic/js"],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
