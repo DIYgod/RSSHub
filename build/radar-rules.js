@@ -7011,6 +7011,15 @@
         source:[ "/category/*path",
           "/" ],
         target:(params) => `/i-cable${params.path ? decodeURIComponent(params.path.slice(params.path.lastIndexOf('/'))) : ''}` } ] },
+  "ianspriggs.com":{ _name:"Ian Spriggs",
+    ".":[ { title:"Category",
+        docs:"https://docs.rsshub.app/routes/blog#ian-spriggs-category",
+        source:[ "/:category" ],
+        target:(params) => {
+                    const category = params.category;
+
+                    return `/ianspriggs${category ? `/${category}` : ''}`;
+                } } ] },
   "ibc.co.jp":{ _name:"IBC 岩手放送",
     ".":[ { title:"イヤーマイッタマイッタ",
         docs:"https://docs.rsshub.app/routes/multimedia#ibc-yan-shou-fang-song",
