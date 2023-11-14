@@ -193,3 +193,17 @@ RSSHub 同时支持 RSS 2.0、Atom 和 JSON Feed 输出格式，在路由末尾�
 举例：
 
 -   输出 100 字简讯: `?brief=100`
+
+## 输出 GPT 总结的内容（仅自建）
+
+可以使用 `chatgpt` 参数输出 GPT 总结的内容，详细配置请见[部署](/zh/install#other-application-configurations)。请考虑是否有必要开启，因为这会消耗一些 tokens
+
+-   `chatgpt`: 任意值开启
+
+要求：
+
+-   已设置 `OPENAI_API_KEY` 环境变量
+
+举例：
+
+-   `/meituan/tech/home?chatgpt=true`

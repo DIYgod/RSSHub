@@ -58,6 +58,7 @@ vscode:
     - octref.vetur
     - rangav.vscode-thunder-client
     - sonarsource.sonarlint-vscode
+    - unifiedjs.vscode-mdx
     - vivaxy.vscode-conventional-commits
     - WakaTime.vscode-wakatime
     - yzhang.markdown-all-in-one
