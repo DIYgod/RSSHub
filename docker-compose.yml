@@ -36,11 +36,12 @@ services:
     warp-socks:
         image: monius/docker-warp-socks:latest
         privileged: true
+        restart: always
         volumes:
             - /lib/modules:/lib/modules
         cap_add:
             - NET_ADMIN
-            - SYS_ADMIN
+            - SYS_MODULE
         sysctls:
             net.ipv6.conf.all.disable_ipv6: 0
             net.ipv4.conf.all.src_valid_mark: 1

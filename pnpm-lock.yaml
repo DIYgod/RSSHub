@@ -18,8 +18,8 @@ dependencies:
     specifier: 7.80.0
     version: 7.80.0
   '@tonyrl/rand-user-agent':
-    specifier: 2.0.38
-    version: 2.0.38
+    specifier: 2.0.39
+    version: 2.0.39
   aes-js:
     specifier: 3.1.2
     version: 3.1.2
@@ -212,8 +212,8 @@ devDependencies:
     specifier: 4.2.1
     version: 4.2.1
   '@types/eslint':
-    specifier: 8.44.6
-    version: 8.44.6
+    specifier: 8.44.7
+    version: 8.44.7
   '@types/eslint-config-prettier':
     specifier: 6.11.3
     version: 6.11.3
@@ -254,8 +254,8 @@ devDependencies:
     specifier: 4.0.4
     version: 4.0.4
   '@types/koa__router':
-    specifier: 12.0.3
-    version: 12.0.3
+    specifier: 12.0.4
+    version: 12.0.4
   '@types/lint-staged':
     specifier: 13.2.2
     version: 13.2.2
@@ -309,7 +309,7 @@ devDependencies:
     version: 16.3.1(eslint@8.53.0)
   eslint-plugin-prettier:
     specifier: 5.0.1
-    version: 5.0.1(@types/eslint@8.44.6)(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.0.3)
+    version: 5.0.1(@types/eslint@8.44.7)(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.0.3)
   eslint-plugin-yml:
     specifier: 1.10.0
     version: 1.10.0(eslint@8.53.0)
@@ -326,8 +326,8 @@ devDependencies:
     specifier: 16.0.0
     version: 16.0.0
   lint-staged:
-    specifier: 15.0.2
-    version: 15.0.2
+    specifier: 15.1.0
+    version: 15.1.0
   mockdate:
     specifier: 3.0.5
     version: 3.0.5
@@ -1336,8 +1336,8 @@ packages:
       defer-to-connect: 2.0.1
     dev: false
 
-  /@tonyrl/rand-user-agent@2.0.38:
-    resolution: {integrity: sha512-gDMXTNKITBvkGweQN/aueLtcz/mmeUbwNAOuovT4jDllSzBq2ob/2eHfc/+yg4h9QDHR0zGcwFQIRC9sTNdIlA==}
+  /@tonyrl/rand-user-agent@2.0.39:
+    resolution: {integrity: sha512-1HBCBR3h6279OqvIHI1XxCbB5AIIHufUaslS+n4vvvDHacDYjsf7Y+TBGYSUFOJUKAOx6d11Rw+NkchWtAaLnQ==}
     engines: {node: '>=14.16'}
     dev: false
 
@@ -1453,8 +1453,8 @@ packages:
     resolution: {integrity: sha512-3wXCiM8croUnhg9LdtZUJQwNcQYGWxxdOWDjPe1ykCqJFPVpzAKfs/2dgSoCtAvdPeaponcWPI7mPcGGp9dkKQ==}
     dev: true
 
-  /@types/eslint@8.44.6:
-    resolution: {integrity: sha512-P6bY56TVmX8y9J87jHNgQh43h6VVU+6H7oN7hgvivV81K2XY8qJZ5vqPy/HdUoVIelii2kChYVzQanlswPWVFw==}
+  /@types/eslint@8.44.7:
+    resolution: {integrity: sha512-f5ORu2hcBbKei97U73mf+l9t4zTGl74IqZ0GQk4oVea/VS8tQZYkUveSYojk+frraAVYId0V2WC9O4PTNru2FQ==}
     dependencies:
       '@types/estree': 1.0.1
       '@types/json-schema': 7.0.12
@@ -1625,8 +1625,8 @@ packages:
       '@types/node': 20.5.6
     dev: true
 
-  /@types/koa__router@12.0.3:
-    resolution: {integrity: sha512-5YUJVv6NwM1z7m6FuYpKfNLTZ932Z6EF6xy2BbtpJSyn13DKNQEkXVffFVSnJHxvwwWh2SAeumpjAYUELqgjyw==}
+  /@types/koa__router@12.0.4:
+    resolution: {integrity: sha512-Y7YBbSmfXZpa/m5UGGzb7XadJIRBRnwNY9cdAojZGp65Cpe5MAP3mOZE7e3bImt8dfKS4UFcR16SLH8L/z7PBw==}
     dependencies:
       '@types/koa': 2.13.11
     dev: true
@@ -1863,12 +1863,12 @@ packages:
       negotiator: 0.6.3
     dev: false
 
-  /acorn-jsx@5.3.2(acorn@8.10.0):
+  /acorn-jsx@5.3.2(acorn@8.11.2):
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
     peerDependencies:
       acorn: ^6.0.0 || ^7.0.0 || ^8.0.0
     dependencies:
-      acorn: 8.10.0
+      acorn: 8.11.2
     dev: true
 
   /acorn@5.7.4:
@@ -3230,7 +3230,7 @@ packages:
       semver: 7.5.4
     dev: true
 
-  /eslint-plugin-prettier@5.0.1(@types/eslint@8.44.6)(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.0.3):
+  /eslint-plugin-prettier@5.0.1(@types/eslint@8.44.7)(eslint-config-prettier@9.0.0)(eslint@8.53.0)(prettier@3.0.3):
     resolution: {integrity: sha512-m3u5RnR56asrwV/lDC4GHorlW75DsFfmUcjfCYylTUs85dBRnB7VM6xG8eCMJdeDRnppzmxZVf1GEPJvl1JmNg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -3244,7 +3244,7 @@ packages:
       eslint-config-prettier:
         optional: true
     dependencies:
-      '@types/eslint': 8.44.6
+      '@types/eslint': 8.44.7
       eslint: 8.53.0
       eslint-config-prettier: 9.0.0(eslint@8.53.0)
       prettier: 3.0.3
@@ -3332,8 +3332,8 @@ packages:
     resolution: {integrity: sha512-oruZaFkjorTpF32kDSI5/75ViwGeZginGGy2NoOSg3Q9bnwlnmDm4HLnkl0RE3n+njDXR037aY1+x58Z/zFdwQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dependencies:
-      acorn: 8.10.0
-      acorn-jsx: 5.3.2(acorn@8.10.0)
+      acorn: 8.11.2
+      acorn-jsx: 5.3.2(acorn@8.11.2)
       eslint-visitor-keys: 3.4.3
     dev: true
 
@@ -5384,8 +5384,8 @@ packages:
       uc.micro: 1.0.6
     dev: false
 
-  /lint-staged@15.0.2:
-    resolution: {integrity: sha512-vnEy7pFTHyVuDmCAIFKR5QDO8XLVlPFQQyujQ/STOxe40ICWqJ6knS2wSJ/ffX/Lw0rz83luRDh+ET7toN+rOw==}
+  /lint-staged@15.1.0:
+    resolution: {integrity: sha512-ZPKXWHVlL7uwVpy8OZ7YQjYDAuO5X4kMh0XgZvPNxLcCCngd0PO5jKQyy3+s4TL2EnHoIXIzP1422f/l3nZKMw==}
     engines: {node: '>=18.12.0'}
     hasBin: true
     dependencies:
@@ -5398,7 +5398,7 @@ packages:
       micromatch: 4.0.5
       pidtree: 0.6.0
       string-argv: 0.3.2
-      yaml: 2.3.3
+      yaml: 2.3.4
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -8138,11 +8138,16 @@ packages:
     dependencies:
       eslint-visitor-keys: 3.4.3
       lodash: 4.17.21
-      yaml: 2.3.3
+      yaml: 2.3.4
     dev: true
 
   /yaml@2.3.3:
     resolution: {integrity: sha512-zw0VAJxgeZ6+++/su5AFoqBbZbrEakwu+X0M5HmcwUiBL7AzcuPKjj5we4xfQLp78LkEMpD0cOnUhmgOVy3KdQ==}
+    engines: {node: '>= 14'}
+    dev: true
+
+  /yaml@2.3.4:
+    resolution: {integrity: sha512-8aAvwVUSHpfEqTQ4w/KMlf3HcRdt50E5ODIQJBw1fQ5RL34xabzxtUlzTXVqc4rkZsPbvrXKWnABCD7kWSmocA==}
     engines: {node: '>= 14'}
     dev: true
 
