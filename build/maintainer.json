@@ -1408,6 +1408,9 @@
         "run-ze"
     ],
     "/cmes/news/:category?": [],
+    "/cmpxchg8b/articles": [
+        "yuguorui"
+    ],
     "/cn-healthcare/index": [
         "qnloft"
     ],
