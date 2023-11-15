@@ -24,7 +24,7 @@
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
     "markdown-it": "^13.0.2",
-    "meilisearch-docsearch": "^0.5.0",
+    "meilisearch-docsearch": "^0.6.0",
     "pinyin-pro": "3.18.1",
     "prism-react-renderer": "^2.2.0",
     "react": "^18.2.0",
