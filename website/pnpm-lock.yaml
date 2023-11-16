@@ -30,8 +30,8 @@ dependencies:
     specifier: ^13.0.2
     version: 13.0.2
   meilisearch-docsearch:
-    specifier: ^0.5.0
-    version: 0.5.0
+    specifier: ^0.6.0
+    version: 0.6.0
   pinyin-pro:
     specifier: 3.18.1
     version: 3.18.1
@@ -7586,8 +7586,8 @@ packages:
     engines: {node: '>= 0.6'}
     dev: false
 
-  /meilisearch-docsearch@0.5.0:
-    resolution: {integrity: sha512-r0dg5FSoTt5DUJwAdE5Wwun5pyvrPyGe4SWhL7bzsA3GoWDT2SXNiX14kVaRXC2HnLTU/fBYWC0wSDzQz2A7vQ==}
+  /meilisearch-docsearch@0.6.0:
+    resolution: {integrity: sha512-Pq61rCNIrwxMZ2vGc7ZkPUJSv92hPz1xPqy/jbDXmmA5GLSje6n98dotiUC9TKGzeRrG7DYCNbCjjdrlyoi8Bg==}
     dependencies:
       meilisearch: 0.35.0
       solid-js: 1.8.5
