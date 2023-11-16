@@ -31,7 +31,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 18, 20 ]
+        node-version: [ 18, 20, 21 ]
     name: Jest on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v4
@@ -51,7 +51,7 @@ jobs:
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
       - name: Upload coverage to Codecov
-        if: ${{ matrix.node-version == '18' }}
+        if: ${{ matrix.node-version == '20' }}
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos as documented, but seems broken
@@ -62,7 +62,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 18, 20 ]
+        node-version: [ 18, 20, 21 ]
         chromium:
           - name: bundled Chromium
             dependency: ''
@@ -91,7 +91,7 @@ jobs:
         if: ${{ matrix.chromium.dependency != '' }}
         # 'chromium-browser' from Ubuntu APT repo is a dummy package. Its version (85.0.4183.83) means
         # nothing since it calls Snap (disgusting!) to install Chromium, which should be up-to-date.
-        # That's not really a problem since the Chromium-bundled Docker image is based on Debian bullseye,
+        # That's not really a problem since the Chromium-bundled Docker image is based on Debian bookworm,
         # which provides up-to-date native packages.
         run: |
           set -ex
@@ -111,7 +111,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 18, 20 ]
+        node-version: [ 18, 20, 21 ]
     defaults:
       run:
         working-directory: website
@@ -137,7 +137,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 18, 20 ]
+        node-version: [ 18, 20, 21 ]
     name: Build radar and maintainer on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v4
@@ -153,7 +153,7 @@ jobs:
         run: npm run build:all
 
   automerge:
-    if: github.actor == 'dependabot[bot]' && github.event_name == 'pull_request'
+    if: github.triggering_actor == 'dependabot[bot]' && github.event_name == 'pull_request'
     needs: [ jest, puppeteer, docs, all ]
     runs-on: ubuntu-latest
     permissions:
