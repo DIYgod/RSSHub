@@ -2016,6 +2016,9 @@
     "/douban/people/:userid/wish/:routeParams?": [
         "exherb"
     ],
+    "/douban/recommended/:type?/:routeParams?": [
+        "honue"
+    ],
     "/douban/replied/:uid": [
         "nczitzk"
     ],
