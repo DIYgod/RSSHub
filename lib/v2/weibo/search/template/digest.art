@@ -5,6 +5,12 @@
 <div class="content">
 {{@ msg }}
 </div>
-<div>
-------
-</div>
+
+{{if picnum > 0 }}
+    <div class='pic-row'>
+    {{each pics}}
+        <a href="{{$value.rurl}}"><img src="{{$value.url}}" ></a>
+    {{/each}}
+    </div>
+{{/if}}
+<hr>
