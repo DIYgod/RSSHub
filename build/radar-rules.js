@@ -3527,6 +3527,16 @@
         docs:"https://docs.rsshub.app/routes/finance#cai-lian-she",
         source:[ "/" ],
         target:"/cls/hot" } ] },
+  "cma.cn":{ _name:"中国气象局",
+    weather:[ { title:"天气预报频道",
+        docs:"https://docs.rsshub.app/routes/forecast#zhong-guo-qi-xiang-ju-tian-qi-yu-bao-pin-dao",
+        source:[ "/web/*" ],
+        target:(_, url) => {
+                    url = new URL(url).href;
+                    const idMatches = url.match(/channel-(\d+)\.html/);
+
+                    return `/cma/channel${idMatches ? `/${idMatches[1]}` : ''}`;
+                } } ] },
   "cmde.org.cn":{ _name:"国家药品监督管理局医疗器械技术审评中心",
     www:[ { title:"通用",
         docs:"https://docs.rsshub.app/routes/government#guo-jia-yao-pin-jian-du-guan-li-ju-yi-liao-qi-xie-ji-shu-shen-ping-zhong-xin",

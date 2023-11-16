@@ -6462,6 +6462,18 @@
       }
     ]
   },
+  "cma.cn": {
+    "_name": "中国气象局",
+    "weather": [
+      {
+        "title": "天气预报频道",
+        "docs": "https://docs.rsshub.app/routes/forecast#zhong-guo-qi-xiang-ju-tian-qi-yu-bao-pin-dao",
+        "source": [
+          "/web/*"
+        ]
+      }
+    ]
+  },
   "cmde.org.cn": {
     "_name": "国家药品监督管理局医疗器械技术审评中心",
     "www": [

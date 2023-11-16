@@ -1404,6 +1404,9 @@
     "/cls/telegraph/:category?": [
         "nczitzk"
     ],
+    "/cma/channel/:id?": [
+        "nczitzk"
+    ],
     "/cmde/:cate*": [
         "run-ze"
     ],
