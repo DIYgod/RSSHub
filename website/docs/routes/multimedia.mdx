@@ -535,6 +535,12 @@ Official RSS: [https://eztv.io/ezrss.xml](https://eztv.io/ezrss.xml)
 
 <Route author="nczitzk" example="/zimuxia/portfolio/我们这一天" path="/zimuxia/portfolio/:id" paramsDesc={['剧集名，可在剧集页 URL 中找到']} />
 
+:::tip
+
+本路由以 `magnet` 为默认linktype，可以通过在路由后方加上 `?linktype=链接类型` 指定导出的链接类型。比如路由为 [`/zimuxia/portfolio/我们这一天?linktype=baidu`](https://rsshub.app/zimuxia/portfolio/我们这一天?linktype=baidu) 来导出百度盘链接. 目前，你可以选择的 `链接类型` 包括: `magnet`(默认), `all`(所有), `ed2k`(电驴), `baidu`(百度盘), `quark`(夸克盘), `115`(115盘), `subhd`(字幕).
+
+:::
+
 ### Lookup Torrents by IMDB ID {#fix-zi-mu-xia-lookup-torrents-by-imdb-id}
 
 <Route author="Songkeys" example="/eztv/torrents/6048596" path="/eztv/torrents/:imdb_id" paramsDesc={['想搜寻的 show 的种子所对应的 IMDB ID, 可在 [IMDB](https://www.imdb.com) 官网找到']} supportBT="1"/>
