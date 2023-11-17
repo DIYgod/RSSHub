@@ -12152,6 +12152,13 @@
         "source": [
           "/cheaps.php"
         ]
+      },
+      {
+        "title": "关键字搜索",
+        "docs": "https://docs.rsshub.app/routes/shopping#guang-diu",
+        "source": [
+          "/search.php"
+        ]
       }
     ]
   },

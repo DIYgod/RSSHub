@@ -3130,6 +3130,9 @@
     "/guangdiu/rank": [
         "fatpandac"
     ],
+    "/guangdiu/search/:query?": [
+        "Huzhixin00"
+    ],
     "/guanggoo/:category?": [],
     "/guangzhoumetro/news": [
         "HankChow"
