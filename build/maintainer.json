@@ -3973,6 +3973,9 @@
     "/javlibrary/genre/:genre?/:language?/:mode?": [
         "nczitzk"
     ],
+    "/javlibrary/maker/:maker?/:language?/:mode?": [
+        "Zhixin Hu"
+    ],
     "/javlibrary/mostwanted/:language?/:mode?": [
         "nczitzk"
     ],
