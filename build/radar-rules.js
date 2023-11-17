@@ -8694,7 +8694,7 @@
         docs:"https://docs.rsshub.app/routes/social-media#keep",
         source:"/users/:id",
         target:"/keep/user/:id" } ] },
-  "kemono.party":{ _name:"Kemono",
+  "kemono.su":{ _name:"Kemono",
     ".":[ { title:"Posts",
         docs:"https://docs.rsshub.app/routes/anime#kemono-posts",
         source:[ "/:source/user/:id",
