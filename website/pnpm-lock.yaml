@@ -33,8 +33,8 @@ dependencies:
     specifier: ^0.6.0
     version: 0.6.0
   pinyin-pro:
-    specifier: 3.18.1
-    version: 3.18.1
+    specifier: 3.18.2
+    version: 3.18.2
   prism-react-renderer:
     specifier: ^2.2.0
     version: 2.2.0(react@18.2.0)
@@ -8528,8 +8528,8 @@ packages:
     engines: {node: '>=8.6'}
     dev: false
 
-  /pinyin-pro@3.18.1:
-    resolution: {integrity: sha512-SnzQYuu72suU1Gtq4xtcSy5YLWHWn+38bJ48fmeN7XQ+P5aCgFS8u48OjUiAR06XzcLOG4OL5cRze34VMDIR7w==}
+  /pinyin-pro@3.18.2:
+    resolution: {integrity: sha512-syJcc1Fc5a6mek365wRNKrU4DSYtnUZSbEHK6LN371mJXwSwTYx6Pmq5YYnkXUNihwWBdxBmfH8uCCKmQeU2VA==}
     dev: false
 
   /pkg-dir@4.2.0:
