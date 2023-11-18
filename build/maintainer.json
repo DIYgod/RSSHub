@@ -1055,6 +1055,9 @@
         "N78Wy"
     ],
     "/booth.pm/shop/:subdomain": [],
+    "/bossdesign/:category?": [
+        "TonyRL"
+    ],
     "/boston/:tag?": [],
     "/brave/latest": [
         "nczitzk"

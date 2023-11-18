@@ -4222,6 +4222,19 @@
       }
     ]
   },
+  "bossdesign.cn": {
+    "_name": "Boss 设计",
+    ".": [
+      {
+        "title": "分类",
+        "docs": "https://docs.rsshub.app/routes/design#boss-she-ji",
+        "source": [
+          "/:category?",
+          "/"
+        ]
+      }
+    ]
+  },
   "brave.com": {
     "_name": "Brave",
     ".": [
