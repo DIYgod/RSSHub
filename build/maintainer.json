@@ -3063,6 +3063,9 @@
     "/gov/zhejiang/gwy/:category?/:column?": [
         "nczitzk"
     ],
+    "/gov/zhengce/:category?": [
+        "nczitzk"
+    ],
     "/gov/zhengce/govall/:advance?": [
         "ciaranchen"
     ],
@@ -3073,7 +3076,8 @@
         "zxx-457"
     ],
     "/gov/zhengce/zuixin": [
-        "SettingDust"
+        "SettingDust",
+        "nczitzk"
     ],
     "/gq/tw/:caty?/:subcaty?": [
         "nczitzk"

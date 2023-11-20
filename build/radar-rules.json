@@ -11929,6 +11929,13 @@
         "target": "/gov/news/gwy"
       },
       {
+        "title": "政策",
+        "docs": "https://docs.rsshub.app/routes/government#zhong-guo-zheng-fu-wang-zheng-ce",
+        "source": [
+          "/zhengce/:category*"
+        ]
+      },
+      {
         "title": "最新政策",
         "docs": "https://docs.rsshub.app/routes/government#zhong-guo-zheng-fu-wang",
         "source": [

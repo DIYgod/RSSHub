@@ -6072,7 +6072,7 @@
     zdscxx:[ { title:"数据",
         docs:"https://docs.rsshub.app/routes/government#zhong-hua-ren-min-gong-he-guo-jiao-yu-bu",
         source:[ "/nyb/pc/messageView.jsp" ],
-        target:(document) => {
+        target:(_params, _url, document) => {
                     if (!document) {
                         return '/gov/moa/zdscxx';
                     }
@@ -6283,6 +6283,14 @@
         source:[ "/pushinfo/v150203",
           "/" ],
         target:"/gov/news/gwy" },
+      { title:"政策",
+        docs:"https://docs.rsshub.app/routes/government#zhong-guo-zheng-fu-wang-zheng-ce",
+        source:[ "/zhengce/:category*" ],
+        target:(params) => {
+                    const category = params.category;
+
+                    return `/gov/zhengce${category ? `/${category}` : ''}`;
+                } },
       { title:"最新政策",
         docs:"https://docs.rsshub.app/routes/government#zhong-guo-zheng-fu-wang",
         source:[ "/zhengce/zuixin.htm",
