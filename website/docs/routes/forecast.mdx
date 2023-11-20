@@ -232,6 +232,43 @@ Please skip the local service area code for `name`, for example `https://outage.
 
 </Route>
 
+## 中国气象局 {#zhong-guo-qi-xiang-ju}
+
+### 天气预报频道 {#zhong-guo-qi-xiang-ju-tian-qi-yu-bao-pin-dao}
+
+<Route author="nczitzk" example="/cma/channel/380" path="/cma/channel/:id?" paramsDesc={['分类，见下表，可在对应频道页 URL 中找到，默认为 380，即每日天气提示']} radar="1" rssbud="1">
+
+#### 天气实况 {#zhong-guo-qi-xiang-ju-tian-qi-yu-bao-pin-dao-tian-qi-shi-kuang}
+
+| 频道名称    | 频道 id                            |
+| ------- | -------------------------------- |
+| 卫星云图    | d3236549863e453aab0ccc4027105bad |
+| 单站雷达    | 103                              |
+| 降水量     | 18                               |
+| 气温      | 32                               |
+| 土壤水分    | 45                               |
+
+#### 气象公报 {#zhong-guo-qi-xiang-ju-tian-qi-yu-bao-pin-dao-qi-xiang-gong-bao}
+
+| 频道名称    | 频道 id                            |
+| ------- | -------------------------------- |
+| 每日天气提示  | 380                              |
+| 重要天气提示  | da5d55817ad5430fb9796a0780178533 |
+| 天气公报    | 3780                             |
+| 强对流天气预报 | 383                              |
+| 交通气象预报  | 423                              |
+| 森林火险预报  | 424                              |
+| 海洋天气公报  | 452                              |
+| 环境气象公报  | 467                              |
+
+:::tip
+
+订阅更多细分频道，请前往对应上级频道页，使用下拉菜单选择项目后跳转到目标频道页，查看其 URL 找到对应频道 id
+
+:::
+
+</Route>
+
 ## 中央气象台 {#zhong-yang-qi-xiang-tai}
 
 ### 全国气象预警 {#zhong-yang-qi-xiang-tai-quan-guo-qi-xiang-yu-jing}
