@@ -2927,8 +2927,13 @@
     "/gov/mmht/:path+": [
         "ShuiHuo"
     ],
-    "/gov/moa/:suburl(.*)": [],
-    "/gov/moa/sjzxfb": [],
+    "/gov/moa/:suburl": [
+        "Origami404"
+    ],
+    "/gov/moa/zdscxx/:channel?/:source?": [
+        "MisteryMonster",
+        "nczitzk"
+    ],
     "/gov/moe/:type": [
         "Crawler995"
     ],

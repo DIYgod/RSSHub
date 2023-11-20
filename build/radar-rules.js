@@ -6064,6 +6064,25 @@
         docs:"https://docs.rsshub.app/routes/government#mao-ming-shi-ren-min-zheng-fu-guang-dong-mao-ming-gao-xin-ji-shu-chan-ye-kai-fa-qu",
         source:[ "/*" ],
         target:(params, url) => `/gov/mmht/${new URL(url).host.split('.mmht.gov.cn')[0] + new URL(url).pathname.replace(/(index.*$)/g, '')}` } ] },
+  "moa.gov.cn":{ _name:"中华人民共和国农业农村部",
+    ".":[ { title:"新闻",
+        docs:"https://docs.rsshub.app/routes/government#zhong-hua-ren-min-gong-he-guo-jiao-yu-bu-xin-wen",
+        source:[ "/" ],
+        target:"/gov/moa/:suburl" } ],
+    zdscxx:[ { title:"数据",
+        docs:"https://docs.rsshub.app/routes/government#zhong-hua-ren-min-gong-he-guo-jiao-yu-bu",
+        source:[ "/nyb/pc/messageView.jsp" ],
+        target:(document) => {
+                    if (!document) {
+                        return '/gov/moa/zdscxx';
+                    }
+                    const selected = document.querySelectorAll('.colorRed');
+                    const categories = Array.from(selected)
+                        .map((s) => s.getAttribute('_key'))
+                        .join('/');
+
+                    return `/gov/moa/zdscxx${categories ? `/${categories}` : ''}`;
+                } } ] },
   "moe.gov.cn":{ _name:"中华人民共和国教育部",
     ".":[ { title:"新闻",
         docs:"https://docs.rsshub.app/routes/government#zhong-hua-ren-min-gong-he-guo-jiao-yu-bu",
