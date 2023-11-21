@@ -269,8 +269,8 @@ devDependencies:
     specifier: 2.0.4
     version: 2.0.4
   '@types/nodemon':
-    specifier: 1.19.5
-    version: 1.19.5
+    specifier: 1.19.6
+    version: 1.19.6
   '@types/pidusage':
     specifier: 2.0.5
     version: 2.0.5
@@ -1689,8 +1689,8 @@ packages:
   /@types/node@20.5.6:
     resolution: {integrity: sha512-Gi5wRGPbbyOTX+4Y2iULQ27oUPrefaB0PxGQJnfyWN3kvEDGM3mIB5M/gQLmitZf7A9FmLeaqxD3L1CXpm3VKQ==}
 
-  /@types/nodemon@1.19.5:
-    resolution: {integrity: sha512-jUKYdrnwLp4jMztMdQEJnF4lBhthCfqE7P6cYCIy0txMJrSFtKqs2HjmyEsyQueLjZjve0IjJ1S+20DtgJpUjA==}
+  /@types/nodemon@1.19.6:
+    resolution: {integrity: sha512-vjKuaQOLUA5EY2zkUmWG1ipXbKt9Wd+H/0SiIuHVeH4cHtt6509iRUGH9ZR0iqgUrtj3BrP9KqoTuV3ZCbQcYA==}
     dependencies:
       '@types/node': 20.5.6
     dev: true
