@@ -65,8 +65,8 @@ devDependencies:
     specifier: ^18.2.37
     version: 18.2.37
   '@types/react-dom':
-    specifier: ^18.2.15
-    version: 18.2.15
+    specifier: ^18.2.16
+    version: 18.2.16
   typescript:
     specifier: ^5.2.2
     version: 5.2.2
@@ -3478,8 +3478,8 @@ packages:
     resolution: {integrity: sha512-+0autS93xyXizIYiyL02FCY8N+KkKPhILhcUSA276HxzreZ16kl+cmwvV2qAM/PuCCwPXzOXOWhiPcw20uSFcA==}
     dev: false
 
-  /@types/react-dom@18.2.15:
-    resolution: {integrity: sha512-HWMdW+7r7MR5+PZqJF6YFNSCtjz1T0dsvo/f1BV6HkV+6erD/nA7wd9NM00KVG83zf2nJ7uATPO9ttdIPvi3gg==}
+  /@types/react-dom@18.2.16:
+    resolution: {integrity: sha512-766c37araZ9vxtYs25gvY2wNdFWsT2ZiUvOd0zMhTaoGj6B911N8CKQWgXXJoPMLF3J82thpRqQA7Rf3rBwyJw==}
     dependencies:
       '@types/react': 18.2.37
     dev: true
