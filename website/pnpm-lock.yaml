@@ -56,8 +56,8 @@ devDependencies:
     specifier: 3.0.0
     version: 3.0.0(react-dom@18.2.0)(react@18.2.0)
   '@types/markdown-it':
-    specifier: ^13.0.6
-    version: 13.0.6
+    specifier: ^13.0.7
+    version: 13.0.7
   '@types/mdx-js__react':
     specifier: ^1.5.8
     version: 1.5.8
@@ -3395,8 +3395,8 @@ packages:
     resolution: {integrity: sha512-hPpIeeHb/2UuCw06kSNAOVWgehBLXEo0/fUs0mw3W2qhqX89PI2yvok83MnuctYGCPrabGIoi0fFso4DQ+sNUQ==}
     dev: true
 
-  /@types/markdown-it@13.0.6:
-    resolution: {integrity: sha512-0VqpvusJn1/lwRegCxcHVdmLfF+wIsprsKMC9xW8UPcTxhFcQtoN/fBU1zMe8pH7D/RuueMh2CaBaNv+GrLqTw==}
+  /@types/markdown-it@13.0.7:
+    resolution: {integrity: sha512-U/CBi2YUUcTHBt5tjO2r5QV/x0Po6nsYwQU4Y04fBS6vfoImaiZ6f8bi3CjTCxBPQSO1LMyUqkByzi8AidyxfA==}
     dependencies:
       '@types/linkify-it': 3.0.4
       '@types/mdurl': 1.0.4
