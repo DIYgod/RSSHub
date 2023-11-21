@@ -1577,9 +1577,19 @@ Language
 
 </Route>
 
+### 政策 {#zhong-guo-zheng-fu-wang-zheng-ce}
+
+<Route author="nczitzk" example="/gov/zhengce" path="/gov/zhengce/:category?" paramsDesc={['分类，见下表，默认为最新']} radar="1" rssbud="1">
+
+| 最新政策 | 政策解读 | 图解政策    |
+| -------- | -------- | ----------- |
+| zuixin   | jiedu    | jiedu/tujie |
+
+</Route>
+
 ### 最新政策 {#zhong-guo-zheng-fu-wang-zui-xin-zheng-ce}
 
-<Route author="SettingDust" example="/gov/zhengce/zuixin" path="/gov/zhengce/zuixin"/>
+<Route author="SettingDust nczitzk" example="/gov/zhengce/zuixin" path="/gov/zhengce/zuixin" radar="1" rssbud="1"/>
 
 ### 最新文件 {#zhong-guo-zheng-fu-wang-zui-xin-wen-jian}
 
@@ -1808,9 +1818,39 @@ Language
 
 </Route>
 
-### 数据 - 最新发布 {#zhong-hua-ren-min-gong-he-guo-nong-ye-nong-cun-bu-shu-ju-zui-xin-fa-bu}
+### 数据 {#zhong-hua-ren-min-gong-he-guo-nong-ye-nong-cun-bu-shu-ju}
 
-<Route author="MisteryMonster" example="/gov/moa/sjzxfb" path="/gov/moa/sjzxfb"/>
+<Route author="MisteryMonster nczitzk" example="/gov/moa/zdscxx" path="/gov/moa/zdscxx/:channel?/:source?" paramsDesc={['报告主题，见下表，默认为全部', '报告来源，见下表，默认为全部']} radar="1" rssbud="1">
+
+#### 报告主题 {#zhong-hua-ren-min-gong-he-guo-nong-ye-nong-cun-bu-shu-ju-bao-gao-zhu-ti}
+
+| 价格指数 | 供需月报 | 日历信息 | 蔬菜生产 |
+| -------- | -------- | -------- | -------- |
+
+#### 报告来源 {#zhong-hua-ren-min-gong-he-guo-nong-ye-nong-cun-bu-shu-ju-bao-gao-lai-yuan}
+
+| 农业农村部市场与信息化司 | 农业农村部畜牧兽医局 | 农业农村部种植业管理司 | 农业农村部信息中心 | 农业农村部农业贸易促进中心 |
+| ------------------------ | -------------------- | ---------------------- | ------------------ | -------------------------- |
+
+| 新华网 | 新闻晨报 | 楚天都市报 | 中国兴农网 | 泉州晚报 |
+| ------ | -------- | ---------- | ---------- | -------- |
+
+| 潇湘晨报 | 澎湃新闻 | 环京津网 | 经济日报 | 腾讯网 |
+| -------- | -------- | -------- | -------- | ------ |
+
+| 贵阳晚报 | 山东广播电视台闪电新闻客户端 | 央视网 | 农产品;平衡表;供需分析 | 农民日报 |
+| -------- | ---------------------------- | ------ | ---------------------- | -------- |
+
+| 重庆市黔江区人民政府 | 农业农村部新闻办公室 | 农业农村部市场预警专家委员会 | 农业农村部市场畜牧兽医局 | 其它来源 |
+| -------------------- | -------------------- | ---------------------------- | ------------------------ | -------- |
+
+| 人民网 | 人民日报 | 中央气象台 | 中国证券报 | 中国网 |
+| ------ | -------- | ---------- | ---------- | ------ |
+
+| 中国新闻网 | 南方日报 | 黑龙江省政府新闻办 |
+| ---------- | -------- | ------------------ |
+
+</Route>
 
 ## 中华人民共和国人力资源和社会保障部 {#zhong-hua-ren-min-gong-he-guo-ren-li-zi-yuan-he-she-hui-bao-zhang-bu}
 
