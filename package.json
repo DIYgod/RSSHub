@@ -160,7 +160,7 @@
     "@types/git-rev-sync": "2.0.2",
     "@types/html-to-text": "9.0.4",
     "@types/imapflow": "1.0.16",
-    "@types/jsdom": "21.1.5",
+    "@types/jsdom": "21.1.6",
     "@types/json-bigint": "1.0.4",
     "@types/koa": "2.13.11",
     "@types/koa-basic-auth": "2.0.6",

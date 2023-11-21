@@ -233,8 +233,8 @@ devDependencies:
     specifier: 1.0.16
     version: 1.0.16
   '@types/jsdom':
-    specifier: 21.1.5
-    version: 21.1.5
+    specifier: 21.1.6
+    version: 21.1.6
   '@types/json-bigint':
     specifier: 1.0.4
     version: 1.0.4
@@ -1543,8 +1543,8 @@ packages:
       '@types/istanbul-lib-report': 3.0.0
     dev: true
 
-  /@types/jsdom@21.1.5:
-    resolution: {integrity: sha512-sBK/3YjS3uuPj+HzZyhB4GGTnFmk0mdyQfhzZ/sqs9ciyG41QJdZZdwcPa6OfW97OTNTwl5tBAsfEOm/dui9pQ==}
+  /@types/jsdom@21.1.6:
+    resolution: {integrity: sha512-/7kkMsC+/kMs7gAYmmBR9P0vGTnOoLhQhyhQJSlXGI5bzTHp6xdo0TtKWQAsz6pmSAeVqKSbqeyP6hytqr9FDw==}
     dependencies:
       '@types/node': 20.5.6
       '@types/tough-cookie': 4.0.5
