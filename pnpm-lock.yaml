@@ -263,8 +263,8 @@ devDependencies:
     specifier: 3.4.4
     version: 3.4.4
   '@types/markdown-it':
-    specifier: 13.0.6
-    version: 13.0.6
+    specifier: 13.0.7
+    version: 13.0.7
   '@types/module-alias':
     specifier: 2.0.4
     version: 2.0.4
@@ -1646,8 +1646,8 @@ packages:
       iconv-lite: 0.6.3
     dev: true
 
-  /@types/markdown-it@13.0.6:
-    resolution: {integrity: sha512-0VqpvusJn1/lwRegCxcHVdmLfF+wIsprsKMC9xW8UPcTxhFcQtoN/fBU1zMe8pH7D/RuueMh2CaBaNv+GrLqTw==}
+  /@types/markdown-it@13.0.7:
+    resolution: {integrity: sha512-U/CBi2YUUcTHBt5tjO2r5QV/x0Po6nsYwQU4Y04fBS6vfoImaiZ6f8bi3CjTCxBPQSO1LMyUqkByzi8AidyxfA==}
     dependencies:
       '@types/linkify-it': 3.0.3
       '@types/mdurl': 1.0.2
