@@ -120,8 +120,8 @@ dependencies:
     specifier: 5.0.0
     version: 5.0.0
   lru-cache:
-    specifier: 10.0.3
-    version: 10.0.3
+    specifier: 10.1.0
+    version: 10.1.0
   lz-string:
     specifier: 1.5.0
     version: 1.5.0
@@ -5518,8 +5518,8 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /lru-cache@10.0.3:
-    resolution: {integrity: sha512-B7gr+F6MkqB3uzINHXNctGieGsRTMwIBgxkp0yq/5BwcuDzD4A8wQpHQW6vDAm1uKSLQghmRdD9sKqf2vJ1cEg==}
+  /lru-cache@10.1.0:
+    resolution: {integrity: sha512-/1clY/ui8CzjKFyjdvwPWJUYKiFVXG2I2cY0ssG7h4+hwk+XOIX7ZSG9Q7TW8TW3Kp3BUSqgFWBLgL4PJ+Blag==}
     engines: {node: 14 || >=16.14}
     dev: false
 
