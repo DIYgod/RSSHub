@@ -1951,6 +1951,9 @@
     "/dorohedoro/news": [
         "nczitzk"
     ],
+    "/douban/:id/discussion": [
+        "nightmare-mio"
+    ],
     "/douban/book/latest": [
         "fengkx"
     ],

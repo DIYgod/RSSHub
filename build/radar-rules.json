@@ -8186,6 +8186,14 @@
         "source": "/jobs/intern",
         "target": "/jobs/intern"
       }
+    ],
+    "book": [
+      {
+        "title": "读书论坛",
+        "docs": "https://docs.rsshub.app/routes/social-media#dou-ban",
+        "source": "/:id/discussion",
+        "target": "/:id/discussion"
+      }
     ]
   },
   "douyin.com": {
