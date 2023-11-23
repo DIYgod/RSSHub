@@ -6207,6 +6207,12 @@
     ],
     "/shou/www/:type": [],
     "/showroom/room/:id": [],
+    "/showstart/event/:cityCode/:showStyle?": [
+        "lchtao26"
+    ],
+    "/showstart/search/:keyword": [
+        "lchtao26"
+    ],
     "/shu/:type?": [
         "lonelyion"
     ],

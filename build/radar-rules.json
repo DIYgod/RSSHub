@@ -24204,6 +24204,25 @@
       }
     ]
   },
+  "showstart.com": {
+    "_name": "秀动网",
+    "www": [
+      {
+        "title": "演出更新",
+        "docs": "https://docs.rsshub.app/routes/shopping#xiu-dong-wang-yan-chu-geng-xin",
+        "source": [
+          "/event/list"
+        ]
+      },
+      {
+        "title": "演出搜索",
+        "docs": "https://docs.rsshub.app/routes/shopping#xiu-dong-wang-yan-chu-sou-suo",
+        "source": [
+          "/event/list"
+        ]
+      }
+    ]
+  },
   "shu.edu.cn": {
     "_name": "上海大学",
     "jwb": [
