@@ -20,13 +20,13 @@ E.g.
 
 ## Filtering
 
-:::caution
+:::warning
 
 Please make sure you've [fully URL-encoded](https://gchq.github.io/CyberChef/#recipe=URL_Encode(true)) the parameters. Do not rely on the browser's automatic URL encoding. Some characters, such as `+`, `&`, will not be automatically encoded, resulting in the final parsing result not being correct.
 
 :::
 
-:::caution
+:::warning
 
 filter supports Regex, and due to the fact that some Regex are vulnerable to DoS (ReDoS), default engine `re2` blocks some of these functionalities available in node `Regexp`. These two engines also behaves a bit different in some corner cases. [Details](https://github.com/uhop/node-re2#limitations-things-re2-does-not-support)
 
@@ -82,13 +82,13 @@ E.g. Dribbble Popular Top 10 [https://rsshub.app/dribbble/popular?limit=10](http
 
 Set `sorted` to control whether to sort the output by the publish date (`pubDate`). This is useful for some feeds that pin some entries at the top. Default to `true` i.e. the output is sorted.
 
-E.g. NJU Undergraduate Bulletin Board <https://rsshub.app/nju/jw/ggtz?sorted=false>
+E.g. NJU Undergraduate Bulletin Board [https://rsshub.app/nju/jw/ggtz?sorted=false](https://rsshub.app/nju/jw/ggtz?sorted=false)
 
 ## Fulltext
 
 Enable fulltext via `mode` parameter.
 
-E.g. Bilibili article <https://rsshub.app/bilibili/user/article/334958638?mode=fulltext>
+E.g. Bilibili article [https://rsshub.app/bilibili/user/article/334958638?mode=fulltext](https://rsshub.app/bilibili/user/article/334958638?mode=fulltext)
 
 ## Access Control
 
@@ -102,7 +102,7 @@ Enable Telegram Instant View requires a page template, it can be obtained from T
 
 -   `tgiv`: template hash, obtained from the link of template page generated（the string after `&rhash=`）
 
-E.g. <https://rsshub.app/novel/biquge/94_94525?tgiv=bd3c42818a7f7e>
+E.g. [https://rsshub.app/novel/biquge/94_94525?tgiv=bd3c42818a7f7e](https://rsshub.app/novel/biquge/94_94525?tgiv=bd3c42818a7f7e)
 
 ## Sci-hub link
 
@@ -110,17 +110,17 @@ Output Sci-hub link in scientific journal routes, this supports major journals o
 
 -   `scihub`: set to any value
 
-E.g. <https://rsshub.app/pnas/latest?scihub=1>
+E.g. [https://rsshub.app/pnas/latest?scihub=1](https://rsshub.app/pnas/latest?scihub=1)
 
 ## Conversion between Traditional and Simplified Chinese
 
 -   `opencc`: `s2t` (Simplified Chinese to Traditional Chinese)、`t2s` (Traditional Chinese to Simplified Chinese), other optional values refer to [simplecc-wasm - Configurations](https://github.com/fengkx/simplecc-wasm#%E9%85%8D%E7%BD%AE-configurations)
 
-E.g. <https://rsshub.app/dcard/posts/popular?opencc=t2s>
+E.g. [https://rsshub.app/theinitium/channel/latest/zh-hans?opencc=t2s](https://rsshub.app/theinitium/channel/latest/zh-hans?opencc=t2s)
 
 ## Multimedia processing
 
-:::caution
+:::warning
 
 This is an experimental API
 
@@ -162,8 +162,7 @@ By adding `.{index}.debug.html` (where `{index}` is a number starting from 0) at
 
 Example:
 
--  `/furstar/characters/cn.0.debug.html`
-
+-   `/furstar/characters/cn.0.debug.html`
 
 ## Brief introduction
 
@@ -172,3 +171,17 @@ Set the parameter `brief` to generate a brief pure-text introduction with a limi
 For example：
 
 -   Brief introduction with 100 characters: `?brief=100`
+
+## Summarized by ChatGPT (Self-hosted)
+
+Set the parameter `chatgpt` to generate a summary by ChatGPT. See [Install](/install#other-application-configurations) for details. Please consider the necessity of this feature, because it will consume some tokens.
+
+-   `chatgpt`: set to any value
+
+Requirements：
+
+-   `OPENAI_API_KEY` environment variable has been set
+
+For example：
+
+-   `/meituan/tech/home?chatgpt=true`

@@ -109,7 +109,7 @@ Start an RSSHub container
 $ docker run -d --name rsshub -p 1200:1200 diygod/rsshub
 ```
 
-Visit [http://127.0.0.1:1200/](http://127.0.0.1:1200/), and enjoy it! ✅
+Visit [http://127.0.0.1:1200](http://127.0.0.1:1200), and enjoy it! ✅
 
 Execute the following command to stop `RSSHub`.
 
@@ -321,7 +321,7 @@ Automatic updates are included.
 
 ### Notice
 
-:::caution Update
+:::warning Update
 
 Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product plans.
 
@@ -505,7 +505,7 @@ If you would like to test routes or avoid IP limits, etc., you may build your ow
 
 [![Try in PWD](https://raw.githubusercontent.com/play-with-docker/stacks/master/assets/images/button.png)](https://labs.play-with-docker.com/?stack=https://raw.githubusercontent.com/DIYgod/RSSHub/master/docker-compose.yml)
 
-:::caution
+:::warning
 
 -   [DockerHub](https://hub.docker.com) account required
 -   [Play with Docker](https://labs.play-with-docker.com/) instance will last for 4 hours at most. It should only be used for testing purpose
@@ -579,7 +579,7 @@ resolved by the SOCKS server, recommanded, prevents DNS poisoning or DNS leak), 
 
 ### Reverse proxy
 
-:::caution
+:::warning
 
 This proxy method cannot proxy requests that contain cookies.
 
@@ -628,7 +628,7 @@ async function handleRequest(request) {
 
 Routes in `protected_route.js` will be protected using HTTP Basic Authentication.
 
-When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg: <https://usernam3:passw0rd@rsshub.app/protected/rsshub/routes>.
+When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg: `https://usernam3:passw0rd@rsshub.app/protected/rsshub/routes`.
 
 For readers that do not support HTTP Basic authentication, please refer to [Access Control Configuration](#access-control-configuration).
 
@@ -638,15 +638,15 @@ For readers that do not support HTTP Basic authentication, please refer to [Acce
 
 ### Access Control Configuration
 
-RSSHub supports access control via access key/code, whitelisting and blacklisting, enabling any will activate access control for all routes. `ALLOW_LOCALHOST: true` will grant access to all localhost IP addresses.
+RSSHub supports access control via access key/code, allowlisting and denylisting, enabling any will activate access control for all routes. `ALLOW_LOCALHOST: true` will grant access to all localhost IP addresses.
 
-#### White/blacklisting
+#### Allowlisting/denylisting
 
--   `WHITELIST`: the blacklist. When set, values in `BLACKLIST` are disregarded
+-   `ALLOWLIST`: the allowlist. When set, values in `DENYLIST` are disregarded
 
--   `BLACKLIST`: the blacklist
+-   `DENYLIST`: the denylist
 
-White/blacklisting support IP, route and UA as values, fuzzy matching. Use `,` as the delimiter to separate multiple values, eg: `WHITELIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
+Allowlisting/denylisting support IP, route and UA as values, fuzzy matching. Use `,` as the delimiter to separate multiple values, eg: `ALLOWLIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
 
 #### Access Key/Code
 
@@ -658,20 +658,20 @@ Access code is the md5 generated based on the access key + route, eg:
 | ----------- | ----------------- | ---------------------------------------- | -------------------------------- |
 | ILoveRSSHub | /qdaily/column/59 | md5('/qdaily/column/59' + 'ILoveRSSHub') | 0f820530128805ffc10351f22b5fd121 |
 
--   Routes are accessible via `code`, eg: <https://rsshub.app/qdaily/column/59?code=0f820530128805ffc10351f22b5fd121>
+-   Routes are accessible via `code`, eg: `https://rsshub.app/qdaily/column/59?code=0f820530128805ffc10351f22b5fd121`
 
--   Or using `key` directly, eg: <https://rsshub.app/qdaily/column/59?key=ILoveRSSHub>
+-   Or using `key` directly, eg: `https://rsshub.app/qdaily/column/59?key=ILoveRSSHub`
 
-See the relation between access key/code and white/blacklisting.
+See the relation between access key/code and allowlist/denylisting.
 
-|             | Whitelisted | Blacklisted | Correct access key/code | Wrong access key/code | No access key/code |
+|             | Allowlist | Denylist | Correct access key/code | Wrong access key/code | No access key/code |
 | ----------- | ----------- | ----------- | ----------------------- | --------------------- | ------------------ |
-| Whitelisted | ✅          | ✅          | ✅                      | ✅                    | ✅                 |
-| Blacklisted | ✅          | ❌          | ✅                      | ❌                    | ❌                 |
+| Allowlist | ✅          | ✅          | ✅                      | ✅                    | ✅                 |
+| Denylist | ✅          | ❌          | ✅                      | ❌                    | ❌                 |
 
 ### Logging Configurations
 
-`DEBUG_INFO`: display route information on the homepage for debugging purposes. When set to neither `true` nor `false`, use parameter `debug` to enable display, eg: <https://rsshub.app/?debug=value_of_DEBUG_INFO> . Default to `true`
+`DEBUG_INFO`: display route information on the homepage for debugging purposes. When set to neither `true` nor `false`, use parameter `debug` to enable display, eg: `https://rsshub.app/?debug=value_of_DEBUG_INFO` . Default to `true`
 
 `LOGGER_LEVEL`: specifies the maximum [level](https://github.com/winstonjs/winston#logging-levels) of messages to the console and log file, default to `info`
 
@@ -739,6 +739,18 @@ Configs in this sections are in beta stage, and **are turn off by default**. Ple
 
 `TITLE_LENGTH_LIMIT`: limit the length of feed title generated in bytes, an English alphabet counts as 1 byte, the rest such as Chinese, Japanese, Korean or Arabic counts as 2 bytes by design, default to `150`
 
+`OPENAI_API_KEY`: OpenAI API Key, used for using ChatGPT to summarize articles
+
+`OPENAI_MODEL`: OpenAI model name, used for using ChatGPT to summarize articles, default to `gpt-3.5-turbo-16k`, see [OpenAI API reference](https://platform.openai.com/docs/models/overview) for details
+
+`OPENAI_TEMPERATURE`: OpenAI temperature parameter, used for using ChatGPT to summarize articles, default to `0.2`, see [OpenAI API reference](https://platform.openai.com/docs/api-reference/chat/create#chat-create-temperature) for details
+
+`OPENAI_MAX_TOKENS`: OpenAI maximum token number, used for using ChatGPT to summarize articles, default to `null`, see [OpenAI API reference](https://platform.openai.com/docs/api-reference/chat/create#chat-create-max_tokens) for details
+
+`OPENAI_API_ENDPOINT`: OpenAI API URL, used for using ChatGPT to summarize articles, default to `https://api.openai.com/v1`, see [OpenAI API reference](https://platform.openai.com/docs/api-reference/chat) for details
+
+`OPENAI_PROMPT`: OpenAI prompt, used for using ChatGPT to summarize articles, see [OpenAI API reference](https://platform.openai.com/docs/api-reference/chat) for details
+
 ### Route-specific Configurations
 
 :::tip
@@ -759,7 +771,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
 -   bilibili 用户关注动态系列路由
 
     -   `BILIBILI_COOKIE_{uid}`: 对应 uid 的 b 站用户登录后的 Cookie 值，`{uid}` 替换为 uid，如 `BILIBILI_COOKIE_2267573`，获取方式：
-        1.  打开 <https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8>
+        1.  打开 [https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8](https://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/dynamic_new?uid=0&type=8)
         2.  打开控制台，切换到 Network 面板，刷新
         3.  点击 dynamic_new 请求，找到 Cookie
         4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie
@@ -775,16 +787,16 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `BTBYR_COOKIE`: 注册用户登录后的 Cookie 值，获取方式：
         1.  登录后打开网站首页
         2.  打开控制台，刷新
-        3.  找到 <https://bt.byr.cn/index.php> 请求
+        3.  找到 `https://bt.byr.cn/index.php` 请求
         4.  找到请求头中的 Cookie
 
 -   BUPT
 
     -   `BUPT_PORTAL_COOKIE`: 登录后获得的 Cookie 值，获取方式
-        1.  打开<https://webapp.bupt.edu.cn/wap/login.html?redirect=https://>并登录
-        2.  无视掉报错，并打开 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw>
+        1.  打开 [https://webapp.bupt.edu.cn/wap/login.html?redirect=https://](https://webapp.bupt.edu.cn/wap/login.html?redirect=https://) 并登录
+        2.  无视掉报错，并打开 [https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw](https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw)
         3.  打开控制台，刷新
-        4.  找到 <https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw> 请求
+        4.  找到 `https://webapp.bupt.edu.cn/extensions/wap/news/list.html?p-1&type=xnxw` 请求
         5.  找到请求头中的 Cookie
 
 -   Civitai
@@ -860,6 +872,8 @@ See docs of the specified route and `lib/config.js` for detailed information.
         -   Linux env: `EMAIL_CONFIG_xxx_qq_com="password=123456&host=imap.qq.com&port=993"`
         -   docker env: `EMAIL_CONFIG_xxx_qq_com=password=123456&host=imap.qq.com&port=993`, please do not include quotations `'`,`"`
 
+    -   Note: socks5h proxy is not supported due to the limit of email lib `ImapFlow`
+
 -   Mastodon user timeline: apply API here `https://mastodon.example/settings/applications`(repalce `mastodon.example`), please check scope `read:search`
 
     -   `MASTODON_API_HOST`: API instance domain, only domain, no `http://` or `https://` protocol header
@@ -886,7 +900,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   pianyuan 全部路由：[注册地址](https://pianyuan.org)
 
-    -   `PIANYUAN_COOKIE`: 对应 cookie 中的 `py_loginauth`, 例: PIANYUAN_COOKIE='py_loginauth=xxxxxxxxxx'
+    -   `PIANYUAN_COOKIE`: 对应 cookie 中的 `py_loginauth`, 例：PIANYUAN_COOKIE='py_loginauth=xxxxxxxxxx'
 
 -   Pixabay: [Documentation](https://pixabay.com/api/docs/)
 
@@ -938,11 +952,11 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
         | url                                    | backbone     |
         | -------------------------------------- | ------------ |
-        | <https://imageproxy.pimg.tw/resize?url=> | akamai       |
-        | <https://images.weserv.nl/?url=>         | cloudflare   |
-        | <https://pic1.xuehuaimg.com/proxy/>      | cloudflare   |
-        | <https://cors.netnr.workers.dev/>        | cloudflare   |
-        | <https://netnr-proxy.openode.io/>        | digitalocean |
+        | [https://imageproxy.pimg.tw/resize?url=](https://imageproxy.pimg.tw/resize?url=) | akamai       |
+        | [https://images.weserv.nl/?url=](https://images.weserv.nl/?url=)         | cloudflare   |
+        | [https://pic1.xuehuaimg.com/proxy](https://pic1.xuehuaimg.com/proxy)      | cloudflare   |
+        | [https://cors.netnr.workers.dev](https://cors.netnr.workers.dev)       | cloudflare   |
+        | [https://netnr-proxy.openode.io](https://netnr-proxy.openode.io)        | digitalocean |
 
 -   YouTube: [API Key application](https://console.developers.google.com/)
 
@@ -962,7 +976,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `PKUBBS_COOKIE`: BBS 注册用户登录后的 Cookie 值，获取方式：
         1.  登录后打开论坛首页
         2.  打开控制台， 刷新
-        3.  找到 <https://bbs.pku.edu.cn/v2/home.php> 请求
+        3.  找到 `https://bbs.pku.edu.cn/v2/home.php` 请求
         4.  找到请求头中的 Cookie
 
 -   吹牛部落 栏目更新
@@ -970,7 +984,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
     -   `CHUINIU_MEMBER`: 吹牛部落登录后的 x-member，获取方式
         1.  登陆后点开文章正文
         2.  打开控制台，刷新
-        3.  找到 <http://api.duanshu.com/h5/content/detail/> 开头的请求
+        3.  找到 `http://api.duanshu.com/h5/content/detail` 开头的请求
         4.  找到请求头中的 x-member
 
 -   滴答清单
@@ -1018,7 +1032,7 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   网易云歌单及听歌排行
 
-    -   `NCM_COOKIES`: 网易云音乐登陆后的 cookie 值.
+    -   `NCM_COOKIES`: 网易云音乐登陆后的 cookie 值。
 
 -   微博 个人时间线路由：[申请地址](https://open.weibo.com/connect)
 
@@ -1028,11 +1042,11 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   微博 自定义分组
 
-    -   `WEIBO_COOKIES`: 用户访问网页微博时所使用的 cookie, 获取方式:
-        1.  打开并登录 <https://m.weibo.cn> (确保打开页面为手机版，如果强制跳转电脑端可尝试使用可更改 UserAgent 的浏览器插件)
-        2.  按下`F12`打开控制台，切换至`Network(网络)`面板
-        3.  在该网页切换至任意关注分组，并在面板打开最先捕获到的请求 (该情形下捕获到的请求路径应包含`/feed/group`)
-        4.  查看该请求的`Headers(请求头)`, 找到`Cookie`字段并复制内容
+    -   `WEIBO_COOKIES`: 用户访问网页微博时所使用的 cookie, 获取方式：
+        1.  打开并登录 [https://m.weibo.cn](https://m.weibo.cn) （确保打开页面为手机版，如果强制跳转电脑端可尝试使用可更改 UserAgent 的浏览器插件）
+        2.  按下`F12`打开控制台，切换至`Network（网络）`面板
+        3.  在该网页切换至任意关注分组，并在面板打开最先捕获到的请求 （该情形下捕获到的请求路径应包含`/feed/group`）
+        4.  查看该请求的`Headers（请求头）`, 找到`Cookie`字段并复制内容
 
 -   小宇宙：需要 App 登陆后抓包获取相应数据。
 
@@ -1052,5 +1066,5 @@ See docs of the specified route and `lib/config.js` for detailed information.
 
 -   知乎用户关注时间线
 
-    -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值.
-        1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值.
+    -   `ZHIHU_COOKIES`: 知乎登录后的 cookie 值。
+        1.  可以在知乎网页版的一些请求的请求头中找到，如 `GET /moments` 请求头中的 `cookie` 值。

@@ -1,5 +1,3 @@
-# name: '[docker] CI for build tests'
-# https://github.community/t/215358
 name: PR - Docker build test
 
 on:
