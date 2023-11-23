@@ -563,17 +563,15 @@ please refer to the [Notion API documentation](https://developers.notion.com/ref
 
 </Route>
 
-## SANS Institute {#sans-institute}
+## RSSHub {#rsshub}
 
-### Latest conference materials {#sans-institute-latest-conference-materials}
+### Internal Image Proxy {#rsshub-internal-image-proxy}
 
-<Route author="sbilly" example="/sans/summit_archive" path="/sans/summit_archive" />
+<Route author="TonyRL" example="/rsshub/i/key/https%3A%2F%2Fdocs.rsshub.app%2Fimg%2Flogo.png" path="/rsshub/i/:key/:url" paramsDesc={['Image Proxy Key', '`encodeURIComponent`ed URL address']} selfhost="1" />
 
-## Transformation {#transformation}
+### Transformation - HTML {#rsshub-transformation-html}
 
 Pass URL and transformation rules to convert HTML/JSON into RSS.
-
-### HTML {#transformation-html}
 
 Specify options (in the format of query string) in parameter `routeParams` parameter to extract data from HTML.
 
@@ -607,7 +605,7 @@ Parsing of `routeParams` parameter:
 
 </Route>
 
-### JSON {#transformation-json}
+### Transformation - JSON {#rsshub-transformation-json}
 
 Specify options (in the format of query string) in parameter `routeParams` parameter to extract data from JSON.
 
@@ -646,7 +644,7 @@ Parsing of `routeParams` parameter:
 
 </Route>
 
-### Sitemap {#transformation-sitemap}
+### Transformation - Sitemap {#rsshub-transformation-sitemap}
 
 Specify options (in the format of query string) in parameter `routeParams` parameter to extract data from Sitemap. (Follows Sitemap Protocol 0.9)
 
@@ -664,6 +662,12 @@ Parameters parsing in the above example:
 | `routeParams` | `title=Example`      |
 
 </Route>
+
+## SANS Institute {#sans-institute}
+
+### Latest conference materials {#sans-institute-latest-conference-materials}
+
+<Route author="sbilly" example="/sans/summit_archive" path="/sans/summit_archive" />
 
 ## TSSstatus (iOS downgrade channel) {#tssstatus-ios-downgrade-channel}
 

@@ -718,6 +718,8 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 
 `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN`: 允许用户为路由提供域名作为参数。建议公共实例不要调整此选项，开启后可能会导致 [服务端请求伪造（SSRF）](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)
 
+`IMAGE_PROXY_KEY`: 内置图片代理的访问密钥
+
 ### 其他应用配置
 
 `DISALLOW_ROBOT`: 阻止搜索引擎收录，默认开启，设置 false 或 0 关闭
