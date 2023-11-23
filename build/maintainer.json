@@ -7662,6 +7662,9 @@
     "/xmnn/epaper/:id?": [
         "nczitzk"
     ],
+    "/xmnn/news/:category?": [
+        "nczitzk"
+    ],
     "/xmu/aero/:type": [],
     "/xmut/jwc/:type/:method": [
         "icecliffs"
