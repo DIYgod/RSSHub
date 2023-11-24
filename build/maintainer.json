@@ -5673,6 +5673,12 @@
     "/putty/changes": [
         "nczitzk"
     ],
+    "/qbitai/category/:category": [
+        "FuryMartin"
+    ],
+    "/qbitai/tag/:tag": [
+        "FuryMartin"
+    ],
     "/qbittorrent/news": [
         "TonyRL"
     ],
