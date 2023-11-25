@@ -851,6 +851,9 @@
     "/bilibili/partion/ranking/:tid/:days?/:disableEmbed?": [
         "lengthmin"
     ],
+    "/bilibili/platform/:area?/:p_type?/:uid?": [
+        "nightmare-mio"
+    ],
     "/bilibili/popular/all": [
         "ziminliu"
     ],
