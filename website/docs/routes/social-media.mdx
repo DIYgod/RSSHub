@@ -889,7 +889,7 @@ Due to Telegram restrictions, some channels involving pornography, copyright, an
 
 ### User timeline {#threads-user-timeline}
 
-<Route author="ninboy" path="/threads/:user/:routeParams?" example="/threads/zuck" radar="1" rssbud="1" puppeteer="1" paramsDesc={['', '']}>
+<Route author="ninboy" path="/threads/:user/:routeParams?" example="/threads/zuck" radar="1" rssbud="1" paramsDesc={['Username', 'Extra parameters, see the table below']}>
 
 Specify options (in the format of query string) in parameter `routeParams` to control some extra features for threads
 
@@ -1456,6 +1456,10 @@ Country Code
 :::
 
 </Route>
+
+### 豆瓣读书论坛 {#dou-ban-dou-ban-du-shu-lun-tan}
+
+<Route author="nightmare-mio" example="/douban/36328704/discussion" path="/douban/:id/discussion" paramsDesc={['书本id;默认论坛文章使用"按回应时间排序",仅第一页文章']}/>
 
 ## 饭否 {#fan-fou}
 

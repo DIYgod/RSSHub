@@ -121,7 +121,7 @@
     "koa-favicon": "2.1.0",
     "koa-mount": "4.0.0",
     "koa-static": "5.0.0",
-    "lru-cache": "10.0.3",
+    "lru-cache": "10.1.0",
     "lz-string": "1.5.0",
     "mailparser": "3.6.5",
     "markdown-it": "13.0.2",
@@ -150,7 +150,7 @@
   },
   "devDependencies": {
     "@microsoft/eslint-formatter-sarif": "3.0.0",
-    "@stylistic/eslint-plugin-js": "1.4.0",
+    "@stylistic/eslint-plugin-js": "1.4.1",
     "@types/aes-js": "3.1.4",
     "@types/crypto-js": "4.2.1",
     "@types/eslint": "8.44.7",
