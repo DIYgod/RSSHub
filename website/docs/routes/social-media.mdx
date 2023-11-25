@@ -341,6 +341,16 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 <Route author="DIYgod" example="/bilibili/mall/ip/0_3000294" path="/bilibili/mall/ip/:id" paramsDesc={['作品 id, 可在作品列表页 URL 中找到']}/>
 
+### 会员购票务 {#bilibili-hui-yuan-gou-piao-wu}
+
+<Route author="nightmare-mio" example="/bilibili/platform/-1/全部类型" path="/bilibili/platform/:area?/:p_type?/:uid?" paramsDesc={['省市-国标码,默认为-1即全国','类型：见下表，默认为全部类型','用户id，可以不填，不过不填不设置cookie，搜索结果与登入账号后搜索结果不一样。可以在url中找到，需要配置cookie值，只需要SESSDATA的值即可']}/>
+
+| 类型 |
+| ---- |
+| 演出 |
+| 展览 |
+| 本地生活 |
+
 ### 综合热门 {#bilibili-zong-he-re-men}
 
 <Route author="ziminliu" example="/bilibili/popular/all" path="/bilibili/popular/all" />
