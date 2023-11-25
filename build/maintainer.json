@@ -2957,6 +2957,9 @@
     "/gov/moj/aac/news/:type?": [
         "TonyRL"
     ],
+    "/gov/mot/:category?": [
+        "nczitzk"
+    ],
     "/gov/ndrc/xwdt/:caty?": [],
     "/gov/news/:uid": [
         "EsuRt"
