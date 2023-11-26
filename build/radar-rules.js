@@ -13198,8 +13198,16 @@
         target:(_, url) => {
                     const search = new URL(url).searchParams;
                     const keyword = search.get('keyword') || '';
-                    return `/showstart/search/${keyword}`;
-                } } ] },
+                    return `/showstart/search/event/${keyword}`;
+                } },
+      { title:"音乐人 - 演出更新",
+        docs:"https://docs.rsshub.app/routes/shopping#yin-yue-ren-yan-chu-geng-xin",
+        source:[ "/artist/:id" ],
+        target:"/showstart/artist/:id" },
+      { title:"厂牌 - 演出更新",
+        docs:"https://docs.rsshub.app/routes/shopping#chang-pai-yan-chu-geng-xin",
+        source:[ "/host/:id" ],
+        target:"/showstart/brand/:id" } ] },
   "shu.edu.cn":{ _name:"上海大学",
     jwb:[ { title:"教务处通知公告",
         docs:"https://docs.rsshub.app/routes/university#shang-hai-da-xue",

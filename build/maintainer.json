@@ -6222,10 +6222,16 @@
     ],
     "/shou/www/:type": [],
     "/showroom/room/:id": [],
+    "/showstart/artist/:id": [
+        "lchtao26"
+    ],
+    "/showstart/brand/:id": [
+        "lchtao26"
+    ],
     "/showstart/event/:cityCode/:showStyle?": [
         "lchtao26"
     ],
-    "/showstart/search/:keyword": [
+    "/showstart/search/:type/:keyword?": [
         "lchtao26"
     ],
     "/shu/:type?": [
