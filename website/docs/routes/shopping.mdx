@@ -307,6 +307,12 @@ Language
 
 <Route author="DIYgod" example="/independent/ps5-stock-uk" path="/independent/ps5-stock-uk"/>
 
+## Uniqlo {#uniqlo}
+
+### New Arrivals {#uniqlo-new-arrivals}
+
+<Route author="DIYgod" example="/uniqlo/new/sg/men" path="/uniqlo/new/:country/:category" paramsDesc={['currently only supports sg, us, jp', 'supports `men` `women`, `kids`, `baby`']} radar="1" rssbud="1"/>
+
 ## Westore {#westore}
 
 ### 新品 {#westore-xin-pin}
@@ -703,7 +709,14 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 <Route author="lchtao26" example="/showstart/event/571/3" path="/showstart/event/:cityCode/:showStyle?" paramsDesc={['演出城市 (编号)', '演出风格 (编号)']}/>
 
-相关路由参数可在 URL 中找到，如：`https://www.showstart.com/event/list?pageNo=1&pageSize=20&cityCode=571&showStyle=26`
+:::tip
+
+路由参数查询
+
+- cityCode: https://rsshub.app/showstart/params/city
+- showStyle: https://rsshub.app/showstart/params/style
+
+:::
 
 ### 演出搜索 {#xiu-dong-wang-yan-chu-sou-suo}
 
