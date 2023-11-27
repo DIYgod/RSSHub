@@ -30,7 +30,7 @@ jobs:
         run: sleep 2m
         if: github.event_name == 'push'
       - name: Run docs-scraper
-        timeout-minutes: 15
+        timeout-minutes: 30
         env:
           HOST_URL: ${{ secrets.MEILISEARCH_HOST_URL }}
           API_KEY: ${{ secrets.MEILISEARCH_API_KEY }}

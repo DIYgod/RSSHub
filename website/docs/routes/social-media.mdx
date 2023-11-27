@@ -341,6 +341,16 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 <Route author="DIYgod" example="/bilibili/mall/ip/0_3000294" path="/bilibili/mall/ip/:id" paramsDesc={['作品 id, 可在作品列表页 URL 中找到']}/>
 
+### 会员购票务 {#bilibili-hui-yuan-gou-piao-wu}
+
+<Route author="nightmare-mio" example="/bilibili/platform/-1/全部类型" path="/bilibili/platform/:area?/:p_type?/:uid?" paramsDesc={['省市-国标码,默认为-1即全国','类型：见下表，默认为全部类型','用户id，可以不填，不过不填不设置cookie，搜索结果与登入账号后搜索结果不一样。可以在url中找到，需要配置cookie值，只需要SESSDATA的值即可']}/>
+
+| 类型 |
+| ---- |
+| 演出 |
+| 展览 |
+| 本地生活 |
+
 ### 综合热门 {#bilibili-zong-he-re-men}
 
 <Route author="ziminliu" example="/bilibili/popular/all" path="/bilibili/popular/all" />
@@ -889,7 +899,7 @@ Due to Telegram restrictions, some channels involving pornography, copyright, an
 
 ### User timeline {#threads-user-timeline}
 
-<Route author="ninboy" path="/threads/:user/:routeParams?" example="/threads/zuck" radar="1" rssbud="1" puppeteer="1" paramsDesc={['', '']}>
+<Route author="ninboy" path="/threads/:user/:routeParams?" example="/threads/zuck" radar="1" rssbud="1" paramsDesc={['Username', 'Extra parameters, see the table below']}>
 
 Specify options (in the format of query string) in parameter `routeParams` to control some extra features for threads
 
@@ -1443,6 +1453,29 @@ Country Code
 > 如：小说热门榜的分享链接为：`https://m.douban.com/subject_collection/ECDIHUN4A`，其对应本 RSS 路由的 `type` 为 `ECDIHUN4A`，对应的订阅链接路由：[`/douban/list/ECDIHUN4A`](https://rsshub.app/douban/list/ECDIHUN4A)
 
 </Route>
+
+### 豆瓣每月推荐片单 {#dou-ban-dou-ban-mei-yue-tui-jian-pian-dan}
+
+<Route author="honue" example="/douban/recommended/tv" path="/douban/recommended/:type?/:routeParams?" paramsDesc={['片单类型剧集/电影，tv或movie，默认为tv','额外参数；请参阅以下说明和表格']}>
+
+| 额外参数   | 含义               | 接受的值 | 默认值 |
+| ---------- | ------------------ | ------- | ------ |
+| playable   | 仅看有可播放片源的影片 | 0/1     | 0      |
+| score      | 筛选评分           | 0-10    | 0      |
+
+用例：`/douban/recommended/tv/playable=0&score=8`
+
+:::tip
+
+整合了/douban/list/路由，省去每月手动更新id参数，因为当月推荐剧集片单中，会有还未播出/开评分剧集、海外平台播出剧集，请自行考虑是否使用额外参数。
+
+:::
+
+</Route>
+
+### 豆瓣读书论坛 {#dou-ban-dou-ban-du-shu-lun-tan}
+
+<Route author="nightmare-mio" example="/douban/36328704/discussion" path="/douban/:id/discussion" paramsDesc={['书本id;默认论坛文章使用"按回应时间排序",仅第一页文章']}/>
 
 ## 饭否 {#fan-fou}
 

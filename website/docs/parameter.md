@@ -171,3 +171,17 @@ Set the parameter `brief` to generate a brief pure-text introduction with a limi
 For example：
 
 -   Brief introduction with 100 characters: `?brief=100`
+
+## Summarized by ChatGPT (Self-hosted)
+
+Set the parameter `chatgpt` to generate a summary by ChatGPT. See [Install](/install#other-application-configurations) for details. Please consider the necessity of this feature, because it will consume some tokens.
+
+-   `chatgpt`: set to any value
+
+Requirements：
+
+-   `OPENAI_API_KEY` environment variable has been set
+
+For example：
+
+-   `/meituan/tech/home?chatgpt=true`

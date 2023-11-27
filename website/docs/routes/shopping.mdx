@@ -307,6 +307,12 @@ Language
 
 <Route author="DIYgod" example="/independent/ps5-stock-uk" path="/independent/ps5-stock-uk"/>
 
+## Uniqlo {#uniqlo}
+
+### New Arrivals {#uniqlo-new-arrivals}
+
+<Route author="DIYgod" example="/uniqlo/new/sg/men" path="/uniqlo/new/:country/:category" paramsDesc={['currently only supports sg, us, jp', 'supports `men` `women`, `kids`, `baby`']} radar="1" rssbud="1"/>
+
 ## Westore {#westore}
 
 ### 新品 {#westore-xin-pin}
@@ -337,13 +343,17 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ## 逛丢 {#guang-diu}
 
-### 国内折扣 {#guang-diu-guo-nei-zhe-kou}
+### 国内折扣 / 海外折扣 {#guang-diu-guo-nei-zhe-kou-hai-wai-zhe-kou}
 
-<Route author="Fatpandac" example="/guangdiu/k=daily" path="/guangdiu/:query?" paramsDesc={['链接参数，对应网址问号后的内容']}/>
+<Route author="Fatpandac" example="/guangdiu/k=daily" path="/guangdiu/:query?" paramsDesc={['链接参数，对应网址问号后的内容']}>
 
-### 海外折扣 {#guang-diu-hai-wai-zhe-kou}
+:::tip
 
-<Route author="Fatpandac" example="/guangdiu/k=daily&c=us" path="/guangdiu/:query?" paramsDesc={['链接参数，对应网址问号后的内容']}/>
+海外折扣: [`/guangdiu/k=daily&c=us`](https://rsshub.app/guangdiu/k=daily&c=us)
+
+:::
+
+</Route>
 
 ### 一小时风云榜 {#guang-diu-yi-xiao-shi-feng-yun-bang}
 
@@ -352,6 +362,10 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 ### 九块九 {#guang-diu-jiu-kuai-jiu}
 
 <Route author="Fatpandac" example="/guangdiu/cheaps/k=clothes" path="/guangdiu/cheaps/:query?" paramsDesc={['链接参数，对应网址问号后的内容']}/>
+
+### 关键字搜索 {#guang-diu-guan-jian-zi-sou-suo}
+
+<Route author="Huzhixin00" example="/guangdiu/search/k=百度网盘" path="/guangdiu/search/:query?" paramsDesc={['链接参数，对应网址问号后的内容']}/>
 
 ## 好好住 {#hao-hao-zhu}
 
@@ -407,7 +421,7 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 最新商品 {#jiu-yun-wang-zui-xin-shang-pin}
 
-<Route author="MeXunco" example="/wineyun/home" path="/wineyun/:category" paramsDesc={['分类名']} >
+<Route author="yuuow" example="/wineyun/home" path="/wineyun/:category" paramsDesc={['分类名']} >
 
 | 全部 | 闪购    | 秒发   | 跨境     | 尾货专场 |
 | ---- | ------- | ------ | -------- | -------- |
@@ -689,6 +703,44 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 <Route author="xyqfer DIYgod bigfei" example="/xiaomiyoupin/latest" path="/xiaomiyoupin/latest" />
 
+## 秀动网 {#xiu-dong-wang}
+
+### 演出更新 {#xiu-dong-wang-yan-chu-geng-xin}
+
+<Route author="lchtao26" example="/showstart/event/571/3" path="/showstart/event/:cityCode/:showStyle?" paramsDesc={['演出城市 (编号)', '演出风格 (编号)']}/>
+
+:::tip
+
+- 演出城市 `cityCode` 查询: `/showstart/search/city/:keyword`, 如: https://rsshub.app/showstart/search/city/杭州
+
+- 演出风格 `showStyle` 查询: `/showstart/search/style/:keyword`，如: https://rsshub.app/showstart/search/style/摇滚
+
+:::
+
+### 演出搜索 {#xiu-dong-wang-yan-chu-sou-suo}
+
+<Route author="lchtao26" example="/showstart/search/live" path="/showstart/search/:keyword" paramsDesc={['搜索关键词']}/>
+
+### 音乐人 - 演出更新 {#xiu-dong-wang-yin-yue-ren-yan-chu-geng-xin}
+
+<Route author="lchtao26" example="/showstart/artist/301783" path="/showstart/artist/:id" paramsDesc={['音乐人 ID']}/>
+
+:::tip
+
+音乐人 ID 查询: `/showstart/search/artist/:keyword`，如: https://rsshub.app/showstart/search/artist/周杰伦
+
+:::
+
+### 厂牌 - 演出更新 {#xiu-dong-wang-chang-pai-yan-chu-geng-xin}
+
+<Route author="lchtao26" example="/showstart/brand/34707" path="/showstart/brand/:id" paramsDesc={['厂牌 ID']}/>
+
+:::tip
+
+厂牌 ID 查询: `/showstart/search/brand/:keyword`，如: https://rsshub.app/showstart/search/brand/声场
+
+:::
+
 ## 优衣库 {#you-yi-ku}
 
 ### Stylingbook {#you-yi-ku-stylingbook}
@@ -711,11 +763,77 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 分类 {#zheng-ban-zhong-guo-fen-lei}
 
-<Route author="nczitzk" example="/getitfree" path="/getitfree/:category?" paramsDesc={['分类，见下表，默认为所有类别']}>
+<Route author="sanmmm nczitzk" example="/getitfree/category/pc" path="/getitfree/category/:id" paramsDesc={['分类，见下表，可在对应分类页中找到，默认为所有类别']} radar="1" rssbud="1">
 
-| 所有类别 | Android | iOS | Mac | PC | UWP | 公告         | 永久免费 | 限时免费 | 限时折扣 |
-| -------- | ------- | --- | --- | -- | --- | ------------ | -------- | -------- | -------- |
-|          | android | ios | mac | pc | uwp | notification | free     | giveaway | discount |
+:::tip
+
+可以叠加使用得到分类结果并集，如 [`/getitfree/category/pc,android`](https://rsshub.app/getitfree/category/pc,android)
+
+:::
+
+| 所有类别 | Android | iOS | Mac | PC  | UWP | 公告         | 永久免费 | 限时免费 | 正版折扣 |
+| -------- | ------- | --- | --- | --- | --- | ------------ | -------- | -------- | -------- |
+|          | android | ios | mac | pc  | uwp | notification | free     | giveaway | discount |
 
 </Route>
 
+### 标签 {#zheng-ban-zhong-guo-biao-qian}
+
+<Route author="nczitzk" example="/getitfree/tag/ai" path="/getitfree/tag/:id" paramsDesc={['标签，见下表，可在对应标签页中找到，默认为所有标签']} radar="1" rssbud="1">
+
+:::tip
+
+可以叠加使用得到标签结果并集，如 [`/getitfree/tag/ai,office`](https://rsshub.app/getitfree/tag/ai,office)
+
+:::
+
+| AI  | Android | DVD | GIF | iCloud |
+| --- | ------- | --- | --- | ------ |
+
+| ICON | iOS | iPhone | Leawo | Mac |
+| ---- | --- | ------ | ----- | --- |
+
+| Markdown | OCR | Office | Office 办公 | PDF |
+| -------- | --- | ------ | ----------- | --- |
+
+| PDF 转换 | Windows | 下载 | 书签管理 | 健康 |
+| -------- | ------- | ---- | -------- | ---- |
+
+| 全平台 | 办公软件 | 加密保护 | 卸载/清理/优化 | 卸载清理 |
+| ------ | -------- | -------- | -------------- | -------- |
+
+| 图像处理 | 图片/编辑/管理 | 壁纸 | 备份/恢复/加密 | 备份恢复 |
+| -------- | -------------- | ---- | -------------- | -------- |
+
+| 字体 | 学习 | 密码管理 | 导航 | 开始菜单 |
+| ---- | ---- | -------- | ---- | -------- |
+
+| 录屏截图 | 影音/刻录/转换 | 投屏镜像 | 提醒 | 摄影 |
+| -------- | -------------- | -------- | ---- | ---- |
+
+| 播放器 | 收藏夹 | 效率工具 | 数据传输 | 数据恢复 |
+| ------ | ------ | -------- | -------- | -------- |
+
+| 数据擦除 | 文件管理 | 文档/转换/压缩 | 文档扫描 | 日历 |
+| -------- | -------- | -------------- | -------- | ---- |
+
+| 杀毒防护 | 查重 | 正版特惠 | 水印 | 清理优化 |
+| -------- | ---- | -------- | ---- | -------- |
+
+| 滤镜 | 硬件外设 | 硬盘/分区/驱动 | 硬盘检测 | 稍后阅读 |
+| ---- | -------- | -------------- | -------- | -------- |
+
+| 笔记 | 系统工具 | 素材 | 网络/安全/传输 | 网络安全 |
+| ---- | -------- | ---- | -------------- | -------- |
+
+| 色彩 | 视频剪辑 | 视频转换 | 记账 | 设计 |
+| ---- | -------- | -------- | ---- | ---- |
+
+| 软件卸载 | 远程控制 | 音乐 | 音频 | 驱动 |
+| -------- | -------- | ---- | ---- | ---- |
+
+</Route>
+
+### 搜索 {#zheng-ban-zhong-guo-sou-suo}
+
+<Route author="sanmmm nczitzk" example="/getitfree/search/windows" path="/getitfree/search/:keyword" paramsDesc={['关键字']} radar="1" rssbud="1"/>

@@ -511,14 +511,11 @@ Parameters can be obtained from the official website, for instance:
 
 ## Reuters 路透社 {#reuters-lu-tou-she}
 
-:::warning Migration notes
-
-1. Reuters Chinese site (`cn.reuters.com`) and British site (`uk.reuters.com`) have been terminated, redirecting to the main site (`www.reuters.com`)
-2. The old routes are deprecated. Please migrate to the new routes documented below
-
-:::
+:::tip
 
 You can use `sophi=true` query parameter to invoke the **experimental** method, which can, if possible, fetch more articles(between 20 and 100) with `limit` given. But some articles from the old method might not be available.
+
+:::
 
 ### Category/Topic/Author {#reuters-lu-tou-she-category-topic-author}
 
@@ -1538,6 +1535,12 @@ IT・科学 tech_science
 
 </Route>
 
+## 河北网络广播电视台 {#he-bei-wang-luo-guang-bo-dian-shi-tai}
+
+### 农博士在行动 {#he-bei-wang-luo-guang-bo-dian-shi-tai-nong-bo-shi-zai-xing-dong}
+
+<Route author="iamqiz nczitzk" example="/hebtv/nbszxd" path="/hebtv/nbszxd" radar="1" rssbud="1" supportBT="1" supportPodcast="1"/>
+
 ## 衡阳全搜索 {#heng-yang-quan-sou-suo}
 
 ### 衡阳日报 {#heng-yang-quan-sou-suo-heng-yang-ri-bao}
@@ -2299,11 +2302,29 @@ category 对应的关键词有
 
 ### 数字媒体 {#xia-men-wang-shu-zi-mei-ti}
 
-<Route author="nczitzk" example="/xmnn/epaper/xmrb" path="/xmnn/epaper/:id?" paramsDesc={['报纸 id，见下表，默认为 `xmrb`，即厦门日报']}>
+<Route author="nczitzk" example="/xmnn/epaper/xmrb" path="/xmnn/epaper/:id?" paramsDesc={['报纸 id，见下表，默认为 `xmrb`，即厦门日报']} radar="1" rssbud="1">
 
 | 厦门日报 | 厦门晚报 | 海西晨报 | 城市捷报 |
 | -------- | -------- | -------- | -------- |
 | xmrb     | xmwb     | hxcb     | csjb     |
+
+</Route>
+
+### 新闻 {#xia-men-wang-xin-wen}
+
+<Route author="nczitzk" example="/xmnn/news/xmxw" path="/xmnn/news/:category?" paramsDesc={['分类 id，见下表，默认为厦门新闻']} radar="1" rssbud="1">
+
+| 分类名       | 分类 id |
+| ------------ | ------- |
+| 厦门新闻发布 | xmxwfb  |
+| 厦门新闻     | xmxw    |
+| 本网快报     | bwkb    |
+| 厦门网眼     | xmwy    |
+| 福建新闻     | fjxw    |
+| 国内新闻     | gnxw    |
+| 国际新闻     | gjxw    |
+| 台海新闻     | thxw    |
+| 社会新闻     | shxw    |
 
 </Route>
 

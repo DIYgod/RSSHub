@@ -5,6 +5,8 @@ const request = supertest(server);
 const Parser = require('rss-parser');
 const parser = new Parser();
 const config = require('../../lib/config').value;
+const got = require('../../lib/utils/got');
+jest.mock('../../lib/utils/got');
 
 afterAll(() => {
     server.close();
@@ -411,5 +413,38 @@ describe('multi parameter', () => {
         expect(parsed.items.length).toBe(2);
         expect(parsed.items[0].title).toBe('Title1');
         expect(parsed.items[1].title).toBe('Title3');
+    });
+});
+
+describe('openai', () => {
+    it(`chatgpt`, async () => {
+        config.openai.apiKey = 'sk-1234567890';
+        // 模拟 openai 请求的响应
+        const openaiResponse = {
+            data: {
+                choices: [
+                    {
+                        message: {
+                            content: 'Summary of the article.',
+                        },
+                    },
+                ],
+            },
+        };
+
+        got.post.mockResolvedValue(openaiResponse);
+        const responseWithGpt = await request.get('/test/gpt?chatgpt=true');
+        const responseNormal = await request.get('/test/gpt');
+
+        expect(responseWithGpt.status).toBe(200);
+        expect(responseNormal.status).toBe(200);
+
+        const parsedGpt = await parser.parseString(responseWithGpt.text);
+        const parsedNormal = await parser.parseString(responseNormal.text);
+
+        expect(parsedGpt.items[0].content).not.toBe(undefined);
+        expect(parsedGpt.items[0].content).toBe(parsedNormal.items[0].content);
+        expect(parsedGpt.items[1].content).not.toBe(undefined);
+        expect(parsedGpt.items[1].content).not.toBe(parsedNormal.items[1].content);
     });
 });
