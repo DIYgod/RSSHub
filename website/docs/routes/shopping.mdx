@@ -711,16 +711,35 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 :::tip
 
-路由参数查询
+- 演出城市 `cityCode` 查询: `/showstart/search/city/:keyword`, 如: https://rsshub.app/showstart/search/city/杭州
 
-- cityCode: https://rsshub.app/showstart/params/city
-- showStyle: https://rsshub.app/showstart/params/style
+- 演出风格 `showStyle` 查询: `/showstart/search/style/:keyword`，如: https://rsshub.app/showstart/search/style/摇滚
 
 :::
 
 ### 演出搜索 {#xiu-dong-wang-yan-chu-sou-suo}
 
 <Route author="lchtao26" example="/showstart/search/live" path="/showstart/search/:keyword" paramsDesc={['搜索关键词']}/>
+
+### 音乐人 - 演出更新 {#xiu-dong-wang-yin-yue-ren-yan-chu-geng-xin}
+
+<Route author="lchtao26" example="/showstart/artist/301783" path="/showstart/artist/:id" paramsDesc={['音乐人 ID']}/>
+
+:::tip
+
+音乐人 ID 查询: `/showstart/search/artist/:keyword`，如: https://rsshub.app/showstart/search/artist/周杰伦
+
+:::
+
+### 厂牌 - 演出更新 {#xiu-dong-wang-chang-pai-yan-chu-geng-xin}
+
+<Route author="lchtao26" example="/showstart/brand/34707" path="/showstart/brand/:id" paramsDesc={['厂牌 ID']}/>
+
+:::tip
+
+厂牌 ID 查询: `/showstart/search/brand/:keyword`，如: https://rsshub.app/showstart/search/brand/声场
+
+:::
 
 ## 优衣库 {#you-yi-ku}
 
