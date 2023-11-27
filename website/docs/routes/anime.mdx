@@ -163,7 +163,7 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 <Route author="JimenezLi" example="/bangumi/tv/subject/328609/ep/true" path="/bangumi/tv/subject/:id/:type?/:showOriginalName?" paramsDesc={['条目 id, 在条目页面的地址栏查看', '条目类型，可选值为 `ep`, `comments`, `blogs`, `topics`，默认为 `ep`', '显示番剧标题原名，可选值 0/1/false/true，默认为 false']}>
 
-:::caution
+:::warning
 
 此通用路由仅用于对路由参数的描述，具体信息请查看下方与条目相关的路由
 
@@ -348,7 +348,7 @@ If you subscribe to [Discounted works Latest Discounts - Newest to Oldest](https
 
 <Route author="FeCCC" example="/iwara/subscriptions" path="/iwara/subscriptions" radar="1" rssbud="1" selfhost="1">
 
-:::caution
+:::warning
 
 This route requires username and password, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
 

@@ -1,11 +1,11 @@
-const file = require('./file');
-const sgf = require('staged-git-files');
-const path = require('path');
-const sortByHeading = require('./sortByHeading');
-const slugId = require('./slugId');
-// const chineseFormat = require('./chineseFormat');
-const util = require('util');
-const exec = util.promisify(require('child_process').exec);
+import file from './file.mjs';
+import sgf from 'staged-git-files';
+import sortByHeading from './sortByHeading.mjs';
+import slugId from './slugId.mjs';
+// import chineseFormat from './chineseFormat.mjs';
+import { exec } from 'child_process';
+import { fileURLToPath } from 'url';
+import sidebars from '../../sidebars.mjs';
 
 /**
  * Processors are objects contains two methods:
@@ -55,10 +55,9 @@ const processors = [sortByHeading, slugId];
     }
  */
 const buildFileList = async () => {
-    const config = require(`../../sidebars.js`);
-    const fileList = config.guideSidebar[2].items.map(({ id }) => ({
+    const fileList = sidebars.guideSidebar[2].items.map(({ id }) => ({
         type: file.ROUTE_TYPE,
-        path: path.resolve(__dirname, '..', `./${id}.md`),
+        path: fileURLToPath(new URL(`../${id}.mdx`, import.meta.url)),
         lang: file.LANG_EN,
     }));
     // let fileList = [];
@@ -88,7 +87,7 @@ const buildStagedList = async () => {
     //         stagedFileList.push(e.filename);
     //     }
     // });
-    const stagedFileList = stagedFiles.filter((e) => e.filename.endsWith('.md')).map((e) => e.filename);
+    const stagedFileList = stagedFiles.filter((e) => e.filename.endsWith('.md') || e.filename.endsWith('.mdx')).map((e) => e.filename);
     const fullFileList = await buildFileList();
     // const result = [];
     // stagedFileList.forEach((e) => {
@@ -103,7 +102,7 @@ const buildStagedList = async () => {
 };
 
 /** Entry
- * Usage: node format.js --full/--staged
+ * Usage: node format.mjs --full/--staged
  */
 (async () => {
     // Mode

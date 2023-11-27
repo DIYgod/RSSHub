@@ -591,7 +591,7 @@ Language
 | 国际司                       | f784499ef24541f5b20de4c24cfc61e7 |
 | 机关党委                     | a49119c6f40045dd994f3910500cedfa |
 | 离退办                       | 6bf265ffd1c94fa4a3f1687b03fa908b |
-    
+
 </Route>
 
 ## 国家税务总局 {#guo-jia-shui-wu-zong-ju}
@@ -1769,7 +1769,7 @@ Language
 
 <Route author="Jeason0228 TonyRL" example="/gov/customs/list/paimai" path="/gov/customs/list/:gchannel?" paramsDesc={['支持 `paimai` 及 `fagui` 2个频道，默认为 `paimai`']} anticrawler="1" puppeteer="1" radar="1" rssbud="1">
 
-:::caution
+:::warning
 
 由于区域限制，建议在国内 IP 的机器上自建
 

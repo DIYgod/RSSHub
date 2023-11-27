@@ -485,7 +485,7 @@ For instance, in `https://store.steampowered.com/search/?specials=1&term=atelier
 
 ## TapTap International {#taptap-international}
 
-:::caution
+:::warning
 
 Due to the regional restrictions, an RSSHub deployment in China Mainland may not work on accessing the TapTap International Website.
 
@@ -523,7 +523,7 @@ Language Code
 
 ## TapTap 中国 {#taptap-zhong-guo}
 
-:::caution
+:::warning
 
 由于区域限制，需要在有国内 IP 的机器上自建才能正常获取 RSS。\
 而对于《TapTap 国际版》则需要部署在具有海外出口的 IP 上才可正常获取 RSS。

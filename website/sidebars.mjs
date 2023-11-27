@@ -196,4 +196,4 @@ const sidebars = {
     ],
 };
 
-module.exports = sidebars;
+export default sidebars;

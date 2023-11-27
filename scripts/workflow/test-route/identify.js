@@ -1,5 +1,5 @@
 const noFound = 'Auto: Route No Found';
-const whiteListedUser = ['dependabot[bot]', 'pull[bot]']; // dependabot and downstream PR requested by pull[bot]
+const allowedUser = ['dependabot[bot]', 'pull[bot]']; // dependabot and downstream PR requested by pull[bot]
 
 module.exports = async ({ github, context, core }, body, number, sender) => {
     core.debug(`sender: ${sender}`);
@@ -82,10 +82,10 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
         await updatePrState('open');
     }
 
-    if (whiteListedUser.includes(sender)) {
-        core.info('PR created by a whitelisted user, passing');
+    if (allowedUser.includes(sender)) {
+        core.info('PR created by a allowed user, passing');
         await removeLabel();
-        await addLabels(['Auto: whitelisted']);
+        await addLabels(['Auto: allowed']);
         return;
     } else {
         core.debug('PR created by ' + sender);

@@ -3132,7 +3132,7 @@ area 分区选项
 
 通过提取文章全文，以提供比官方源更佳的阅读体验。
 
-:::caution
+:::warning
 
 付费内容全文可能需要登陆获取，详情见部署页面的配置模块。
 
@@ -3164,7 +3164,7 @@ Type 栏目：
 
 <Route author="AgFlore" example="/theinitium/follow/articles/zh-hans" path="/theinitium/follow/articles/:language?" paramsDesc={['语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']}>
 
-:::caution
+:::warning
 
 需要自建，详情见部署页面的配置模块。
 
@@ -3613,7 +3613,7 @@ others = 热点新闻 + 滚动新闻
 
 ## 今日热榜 {#jin-ri-re-bang}
 
-:::caution
+:::warning
 
 由于需要登录后的 Cookie 值才能获取原始链接，所以需要自建，需要在环境变量中配置 `TOPHUB_COOKIE`，详情见部署页面的配置模块。
 
@@ -5229,7 +5229,7 @@ column 为 third 时可选的 category:
 
 ## 网易新闻 {#wang-yi-xin-wen}
 
-:::caution
+:::warning
 
 若视频因防盗链而无法播放，请参考 [通用参数 -> 多媒体处理](/parameter#多媒体处理) 配置 `multimedia_hotlink_template` **或** `wrap_multimedia_in_iframe`。
 
@@ -5333,7 +5333,7 @@ column 为 third 时可选的 category:
 
 :::
 
-:::caution
+:::warning
 
 该方法需要通过 efb 进行频道绑定，具体操作见 [https://github.com/DIYgod/RSSHub/issues/2172](https://github.com/DIYgod/RSSHub/issues/2172)
 
@@ -5383,7 +5383,7 @@ column 为 third 时可选的 category:
 
 <Route author="Rongronggg9" example="/wechat/data258/gh_cbbad4c1d33c" path="/data258/:id?" paramsDesc={['公众号 id 或分类 id，可在公众号页或分类页 URL 中找到；若略去，则抓取首页']} anticrawler="1" radar="1" rssbud="1" selfhost="1">
 
-:::caution
+:::warning
 
 由于使用了一些针对反爬的缓解措施，本路由响应较慢。默认只抓取前 5 条，可通过 `?limit=` 改变（不推荐，容易被反爬）。\
 该网站使用 IP 甄别访客，且应用严格的每日阅读量限额（约 15 次），请自建并确保正确配置缓存；如使用内存缓存而非 Redis 缓存，请增大缓存容量。该限额足够订阅至少 3 个公众号 (假设公众号每日仅更新一次)；首页 / 分类页更新相当频繁，不推荐订阅。
