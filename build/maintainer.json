@@ -3250,7 +3250,9 @@
     "/hanime/video": [],
     "/haohaozhu/discover/:keyword?": [],
     "/haohaozhu/whole-house/:keyword?": [],
-    "/harvard/health/blog": [],
+    "/harvard/health/blog": [
+        "nczitzk"
+    ],
     "/hashnode/blog/:username": [
         "hnrainll"
     ],
