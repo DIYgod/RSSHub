@@ -136,7 +136,7 @@ There are more details in the [FAQ](/faq).
 
 ## Output Formats
 
-RSSHub conforms to RSS 2.0, Atom and JSON Feed Standard, simply append `.rss`, `.atom`, `.json`, or `.ums` to the end of the feed address to obtain the feed in corresponding format. The default output format is RSS 2.0.
+RSSHub conforms to RSS 2.0, Atom, JSON Feed and RSS3 UMS Standard, simply append `.rss`, `.atom`, `.json`, or `.ums` to the end of the feed address to obtain the feed in corresponding format. The default output format is RSS 2.0.
 
 E.g.
 
