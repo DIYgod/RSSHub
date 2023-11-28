@@ -158,7 +158,7 @@ Telegram 即时预览模式需要在官网制作页面处理模板，请前往[�
 
 ## 输出格式
 
-RSSHub 同时支持 RSS 2.0、Atom 和 JSON Feed 输出格式，在路由末尾添加 `.rss`、`.atom`、`.json` 或 `.ums` 即可请求对应输出格式，缺省为 RSS 2.0
+RSSHub 同时支持 RSS 2.0、Atom、JSON Feed 和 RSS3 UMS 输出格式，在路由末尾添加 `.rss`、`.atom`、`.json` 或 `.ums` 即可请求对应输出格式，缺省为 RSS 2.0
 
 举例:
 
