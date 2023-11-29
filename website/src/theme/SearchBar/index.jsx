@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 import 'meilisearch-docsearch/css';
-import './variables.css';
+import './style.css';
 
 export default function SearchBarWrapper() {
   const { siteConfig } = useDocusaurusContext();

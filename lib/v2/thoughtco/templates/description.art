@@ -1,0 +1,16 @@
+{{ if image }}
+  <figure>
+    <img
+      {{ if width }}
+        width="{{ image.width }}"
+      {{ /if }}
+      {{ if height }}
+        height="{{ image.height }}"
+      {{ /if }}
+      src="{{ image.src }}">
+  </figure>
+{{ /if }}
+
+{{ if description }}
+  {{@ description }}
+{{ /if }}
