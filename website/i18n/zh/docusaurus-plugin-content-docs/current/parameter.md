@@ -197,7 +197,7 @@ RSSHub 同时支持 RSS 2.0、Atom、JSON Feed 和 RSS3 UMS 输出格式，在�
 
 ## 输出 GPT 总结的内容（仅自建）
 
-可以使用 `chatgpt` 参数输出 GPT 总结的内容，详细配置请见[部署](/zh/install#other-application-configurations)。请考虑是否有必要开启，因为这会消耗一些 tokens
+可以使用 `chatgpt` 参数输出 GPT 总结的内容，详细配置请见[部署](/zh/install/config#other-application-configurations)。请考虑是否有必要开启，因为这会消耗一些 tokens
 
 -   `chatgpt`: 任意值开启
 
