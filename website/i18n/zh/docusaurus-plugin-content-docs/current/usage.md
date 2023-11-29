@@ -8,7 +8,7 @@
 
 然后我们可以把 `https://rsshub.app/twitter/user/DIYgod` 添加到任意 RSS 阅读器里来使用
 
-其中域名 `https://rsshub.app` 可以替换为你[自部署](/zh/install)的域名
+其中域名 `https://rsshub.app` 可以替换为你[自部署](/zh/install)或任意[公共实例](/zh/instances)的域名
 
 另外 RSSHub 支持很多实用的参数，比如内容过滤、全文输出等，可以在 [通用参数](/zh/parameter) 文档了解具体使用方法
 

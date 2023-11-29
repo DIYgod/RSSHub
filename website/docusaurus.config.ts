@@ -135,7 +135,7 @@ const config: Config = {
                     to: '/',
                     position: 'left',
                     label: 'Guide',
-                    activeBaseRegex: '^/(usage|faq|parameter|api)?$',
+                    activeBaseRegex: '^/(usage|instances|faq|parameter|api)?$',
                 },
                 {
                     to: '/routes',
