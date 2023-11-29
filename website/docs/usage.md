@@ -8,7 +8,7 @@ To subscribe to a Twitter user's timeline, first look at the route document of [
 
 The demo instance will generate an RSS feed at `https://rsshub.app/twitter/user/DIYgod`, use your own domain name when applicable. This feed should work with all RSS readers conforming to the RSS Standard.
 
-You can replace the domain name `https://rsshub.app` with your [self-hosted instance](/install).
+You can replace the domain name `https://rsshub.app` with your [self-hosted instance](/install) or any [public instance](/instances).
 
 RSSHub supports additional parameters such as content filtering and full-text extraction, refer to [Parameters](/parameter) for details.
 
