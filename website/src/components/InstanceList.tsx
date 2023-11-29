@@ -29,6 +29,11 @@ export default function InstanceList(): JSX.Element {
     location: '🇺🇸',
     maintainer: 'Fatpandac',
     maintainerUrl: 'https://fatpandac.com',
+  }, {
+    url: 'https://rsshub.pseudoyu.com',
+    location: '🇺🇸',
+    maintainer: 'pseudoyu',
+    maintainerUrl: 'https://www.pseudoyu.com',
   }]
 
   return (
