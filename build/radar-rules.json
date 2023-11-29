@@ -8935,6 +8935,19 @@
       }
     ]
   },
+  "egsea.com": {
+    "_name": "e 公司",
+    ".": [
+      {
+        "title": "快讯",
+        "docs": "https://docs.rsshub.app/routes/new-media#e-gong-si",
+        "source": [
+          "/news/flash"
+        ],
+        "target": "/egsea/flash"
+      }
+    ]
+  },
   "elasticsearch.cn": {
     "_name": "Elastic 中文社区",
     ".": [

@@ -2228,7 +2228,9 @@
         "nczitzk"
     ],
     "/egameqq/room/:id": [],
-    "/egsea/flash": [],
+    "/egsea/flash": [
+        "hillerliao"
+    ],
     "/ehentai/favorites/:favcat?/:order?/:page?/:routeParams?": [
         "yindaheng98",
         "syrinka"
