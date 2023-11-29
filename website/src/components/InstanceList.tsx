@@ -16,9 +16,14 @@ export default function InstanceList(): JSX.Element {
     maintainerUrl: 'https://slarker.me',
   }, {
     url: 'https://rsshub.liumingye.cn',
-    location: '🇭🇰',
+    location: '🇭🇰', 
     maintainer: '刘明野',
     maintainerUrl: 'https://www.liumingye.cn',
+   }, {
+    url: 'https://rss.xiaowuleyi.com',
+    location: '🇺🇸', 
+    maintainer: '小吴乐意',
+    maintainerUrl: 'https://www.xiaowuleyi.com',
   }]
 
   return (
