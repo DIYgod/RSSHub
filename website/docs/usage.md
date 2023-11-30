@@ -64,7 +64,7 @@ RSSHub.request('/youtube/user/JFlaMusic')
     });
 ```
 
-For supported configs please refer to the [Configuration Section](/install#configuration-3).
+For supported configs please refer to the [Configuration Section](/install/config).
 
 A short example for disabling caching can be written as:
 

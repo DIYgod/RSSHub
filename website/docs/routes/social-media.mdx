@@ -579,33 +579,35 @@ Type
 
 ## Instagram {#instagram}
 
-:::warning
-
-Due to Instagram Private API restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/install/) for more.
-
-If you don't want to setup credentials, you can use [Picnob](#picnob) or [Picuki](#picuki).
-
-:::
-
-### User Profile / Hashtag - Private API {#instagram-user-profile-hashtag-private-api}
-
-<Route author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" paramsDesc={['Feed category, see table below','Username / Hashtag name']} radar="1" anticrawler="1" selfhost="1">
-
-| User timeline | Hashtag |
-| ------------- | ------- |
-| user          | tags    |
-
 :::tip
 
 It's highly recommended to deploy with Redis cache enabled.
 
 :::
 
-</Route>
+### User Profile / Hashtag {#instagram-user-profile-hashtag}
 
-### User Profile / Hashtag - Cookie {#instagram-user-profile-hashtag-cookie}
+:::tip
 
-<Route author="TonyRL" example="/instagram/2/user/stefaniejoosten" path="/instagram/2/:category/:key" paramsDesc={['Feed category, see table above','Username / Hashtag name']} radar="1" anticrawler="1" selfhost="1" />
+You may need to setup cookie for a less restrictive rate limit and private profiles.
+
+:::
+
+<Route author="TonyRL" example="/instagram/2/user/stefaniejoosten" path="/instagram/2/:category/:key" paramsDesc={['Feed category, see table below','Username / Hashtag name']} radar="1" anticrawler="1" />
+
+| User timeline | Hashtag |
+| ------------- | ------- |
+| user          | tags    |
+
+### User Profile / Hashtag - Private API {#instagram-user-profile-hashtag-private-api}
+
+:::warning
+
+Due to [Instagram Private API](https://github.com/dilame/instagram-private-api) restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/install/) for more.
+
+:::
+
+<Route author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" paramsDesc={['Feed category, see table above','Username / Hashtag name']} radar="1" anticrawler="1" selfhost="1" />
 
 ## Keep {#keep}
 
@@ -931,10 +933,9 @@ https://rsshub.app/threads/zuck/showAuthorInTitle=1&showAuthorInDesc=1&showQuote
 
 :::warning
 
-Due to restrictions from Twitter, currently only tweets within 7 days are available in some routes.
+Given the recent changes in Twitter and its API access a new method for accessing Twitter anonymously was devised. This method involves using temporary guest accounts created when going through the onboarding process with the Android app.
 
-Some routes rely on the Twitter Developer API, which requires to be specially configured to enable.\
-There are two routes (`/twitter/user` and `/twitter/keyword`) comes with Web API implementation which does not require to be specially configured to enable along with the Developer API implementation. By default, the Developer API is prioritized, but if it is not configured or errors, the Web API will be used. However, there are some differences between the two APIs, e.g. `excludeReplies` in the Developer API will treat [threads](https://blog.twitter.com/official/en_us/topics/product/2017/nicethreads.html) (self-replied tweets) as replies and exclude them, while in the Web API it will not. If you would like to exclude replies but include threads, enable `forceWebApi` in the `/twitter/user` route.
+Please see the details in [Nitter - Guest Account Branch Deployment](https://github.com/zedeus/nitter/wiki/Guest-Account-Branch-Deployment)
 
 :::
 
@@ -975,11 +976,19 @@ generates
 
 ### User timeline {#twitter-user-timeline}
 
-<Route author="DIYgod yindaheng98 Rongronggg9" path="/twitter/user/:id/:routeParams?" example="/twitter/user/DIYgod" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all.']} radar="1" rssbud="1"/>
+<Route author="DIYgod yindaheng98 Rongronggg9" path="/twitter/user/:id/:routeParams?" example="/twitter/user/DIYgod" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all.']} radar="1" rssbud="1" selfhost="1"/>
 
 ### User media {#twitter-user-media}
 
-<Route author="yindaheng98 Rongronggg9" path="/twitter/media/:id/:routeParams?" example="/twitter/media/DIYgod" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'extra parameters, see the table above.']} radar="1" rssbud="1"/>
+<Route author="yindaheng98 Rongronggg9 DIYgod" path="/twitter/media/:id/:routeParams?" example="/twitter/media/DIYgod" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'extra parameters, see the table above.']} radar="1" rssbud="1" selfhost="1"/>
+
+### Keyword {#twitter-keyword}
+
+<Route author="DIYgod yindaheng98 Rongronggg9" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword/:routeParams?" paramsDesc={['keyword', 'extra parameters, see the table above']} radar="1" rssbud="1" selfhost="1"/>
+
+### Tweet Details {#twitter-tweet-details}
+
+<Route author="LarchLiu Rongronggg9 DIYgod" example="/twitter/tweet/DIYgod/status/1650844643997646852" path="/twitter/tweet/:id/status/:status/:original?" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'tweet ID', 'extra parameters, data type of return, if the value is not `0`/`false` and `config.isPackage` is `true`, return the original data of twitter']} radar="1" rssbud="1" selfhost="1"/>
 
 ### User following timeline {#twitter-user-following-timeline}
 
@@ -1001,10 +1010,6 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 
 <Route author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id/:routeParams?" paramsDesc={['username', 'extra parameters, see the table above']} radar="1" rssbud="1"/>
 
-### Keyword {#twitter-keyword}
-
-<Route author="DIYgod yindaheng98 Rongronggg9" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword/:routeParams?" paramsDesc={['keyword', 'extra parameters, see the table above']} radar="1" rssbud="1"/>
-
 ### Trends {#twitter-trends}
 
 <Route author="sakamossan" example="/twitter/trends/23424856" path="/twitter/trends/:woeid?" paramsDesc={['Yahoo! Where On Earth ID. default to woeid=1 (World Wide)']} radar="1" rssbud="1"/>
@@ -1020,10 +1025,6 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 :::
 
 </Route>
-
-### Tweet Details {#twitter-tweet-details}
-
-<Route author="LarchLiu Rongronggg9" example="/twitter/tweet/DIYgod/status/1650844643997646852" path="/twitter/tweet/:id/status/:status/:original?" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'tweet ID', 'extra parameters, data type of return, if the value is not `0`/`false` and `config.isPackage` is `true`, return the original data of twitter']} radar="1" rssbud="1"/>
 
 ## Vimeo {#vimeo}
 

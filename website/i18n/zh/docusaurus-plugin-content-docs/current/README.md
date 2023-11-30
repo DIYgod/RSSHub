@@ -37,7 +37,9 @@ RSSHub 是一个开源、简单易用、易于扩展的 RSS 生成器，可以�
 
 ### Contributors
 
-[![](https://opencollective.com/RSSHub/contributors.svg?width=740)](https://github.com/DIYgod/RSSHub/graphs/contributors)
+<p>
+<object type="image/svg+xml" data="https://opencollective.com/RSSHub/contributors.svg?width=740"></object>
+</p>
 
 Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
 
