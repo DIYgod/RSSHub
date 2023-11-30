@@ -4710,6 +4710,9 @@
     "/mobilism/portal/:type/:fulltext?": [
         "nitezs"
     ],
+    "/modb/topic/:id": [
+        "yueneiqi"
+    ],
     "/modelscope/community": [
         "TonyRL"
     ],
