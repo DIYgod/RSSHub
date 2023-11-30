@@ -72,12 +72,12 @@ To add documentation to your route, use the `Route` React component. It works li
 -   `example`: The route example, with a leading `/`
 -   `path`: The route path, which should be the same as the key in [`maintainer.js`](/joinus/new-rss/before-start#understand-the-basics-maintainer-js) with the namespace. In the above example, it is `/github/issue/:user/:repo?`
 -   `paramsDesc`: The route parameter description, in an array of strings that support Markdown.
-    -   The description **must** follow the order in which they appear in the path.
-    -   The number of description should match with the number of parameters in `path`. If you miss a description, the build will fail.
-    -   Route parameters ending with `?`, `*` or `+` will be automatically marked as `optional`, `zero or more` or `one or more`, respectively.
-    -   Route parameters without a suffix are marked as `required`
-    -   There's no need to explicitly mention the necessity of path parameters again.
-    -   If a parameter is optional, make sure to mention the default value.
+  -   The description **must** follow the order in which they appear in the path.
+  -   The number of description should match with the number of parameters in `path`. If you miss a description, the build will fail.
+  -   Route parameters ending with `?`, `*` or `+` will be automatically marked as `optional`, `zero or more` or `one or more`, respectively.
+  -   Route parameters without a suffix are marked as `required`
+  -   There's no need to explicitly mention the necessity of path parameters again.
+  -   If a parameter is optional, make sure to mention the default value.
 
 ## Documentation examples
 

@@ -294,9 +294,10 @@ See docs of the specified route and `lib/config.js` for detailed information.
 -   `DISCORD_AUTHORIZATION`: Discord authorization token, can be found in the header of XHR requests after logging in Discord web client
 
 ### Discourse
+
 -   `DISCOURSE_CONFIG_{id}`: `id` could be arbitrary number or string, while the value should be the format of `{"link":link,"key":key}`, where:
-    -   `link` is the link to the forum.
-    -   `key` is the access key for the forum API, which you can refer to [this snippet](https://pastebin.com/YbLCgdWW) to obtain one. Ensure that this key is granted sufficient permission.
+  -   `link` is the link to the forum.
+  -   `key` is the access key for the forum API, which you can refer to [this snippet](https://pastebin.com/YbLCgdWW) to obtain one. Ensure that this key is granted sufficient permission.
 
 ### Discuz cookie
 
@@ -364,8 +365,8 @@ Warning: Two Factor Authentication is **not** supported.
 ### Email
 
 -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with the email account, replace `@` and `.` in email account with `_`, e.g. `EMAIL_CONFIG_xxx_gmail_com`. The value is in the format of `password=password&host=server&port=port`, eg:
-    -   Linux env: `EMAIL_CONFIG_xxx_qq_com="password=123456&host=imap.qq.com&port=993"`
-    -   docker env: `EMAIL_CONFIG_xxx_qq_com=password=123456&host=imap.qq.com&port=993`, please do not include quotations `'`,`"`
+  -   Linux env: `EMAIL_CONFIG_xxx_qq_com="password=123456&host=imap.qq.com&port=993"`
+  -   docker env: `EMAIL_CONFIG_xxx_qq_com=password=123456&host=imap.qq.com&port=993`, please do not include quotations `'`,`"`
 
 -   Note: socks5h proxy is not supported due to the limit of email lib `ImapFlow`
 
@@ -449,8 +450,6 @@ For scientific journal routes
 -   `SPOTIFY_CLIENT_ID`: Client ID of the application
 -   `SPOTIFY_CLIENT_SECRET`: Client secret of the application
 
-### Spotify
-
 For user data related routes
 
 -   `SPOTIFY_REFRESHTOKEN`: The refresh token of the user from the Spotify application. Check [this gist](https://gist.github.com/outloudvi/d1bbeb5e989db5385384a223a7263744) for detailed information.
@@ -485,11 +484,11 @@ For user data related routes
 [API Key application](https://console.developers.google.com/)
 
 -   All routes:
-    -   `YOUTUBE_KEY`: YouTube API Key, support multiple keys, split them with `,`
+  -   `YOUTUBE_KEY`: YouTube API Key, support multiple keys, split them with `,`
 -   Extra requirements for subscriptions route:
-    -   `YOUTUBE_CLIENT_ID`: YouTube API OAuth 2.0 client ID
-    -   `YOUTUBE_CLIENT_SECRET`: YouTube API OAuth 2.0 client secret
-    -   `YOUTUBE_REFRESH_TOKEN`: YouTube API OAuth 2.0 refresh token. Check [this gist](https://gist.github.com/Kurukshetran/5904e8cb2361623498481f4a9a1338aa) for detailed instructions.
+  -   `YOUTUBE_CLIENT_ID`: YouTube API OAuth 2.0 client ID
+  -   `YOUTUBE_CLIENT_SECRET`: YouTube API OAuth 2.0 client secret
+  -   `YOUTUBE_REFRESH_TOKEN`: YouTube API OAuth 2.0 refresh token. Check [this gist](https://gist.github.com/Kurukshetran/5904e8cb2361623498481f4a9a1338aa) for detailed instructions.
 
 ### ZodGame
 

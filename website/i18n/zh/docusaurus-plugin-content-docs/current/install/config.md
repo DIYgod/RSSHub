@@ -292,8 +292,8 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 ### Discourse
 
 -   `DISCOURSE_CONFIG_{id}`: 一个 Discourse 驱动的论坛的配置信息， `id` 可自由设定为任意数字或字符串。值应形如`{"link":link,"key":key}`。其中：
-    -   `link`：论坛的链接。
-    -   `key`访问论坛 API 的密钥，可参考 [此处代码](https://pastebin.com/YbLCgdWW) 以获取。需要确保有足够权限访问对应资源。
+  -   `link`：论坛的链接。
+  -   `key`访问论坛 API 的密钥，可参考 [此处代码](https://pastebin.com/YbLCgdWW) 以获取。需要确保有足够权限访问对应资源。
 
 ### Discuz
 
@@ -435,8 +435,6 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 -   `SPOTIFY_CLIENT_ID`: Spotify 应用的 client ID
 -   `SPOTIFY_CLIENT_SECRET`: Spotify 应用的 client secret
 
-### Spotify
-
 用户相关路由
 
 -   `SPOTIFY_REFRESHTOKEN`：用户在此 Spotify 应用的 refresh token。可以利用 [此 gist](https://gist.github.com/outloudvi/d1bbeb5e989db5385384a223a7263744) 获取。
@@ -471,11 +469,11 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 [申请地址](https://console.developers.google.com/)
 
 -   全部路由
-    -   `YOUTUBE_KEY`: YouTube API Key，支持多个 key，用英文逗号 `,` 隔开
+  -   `YOUTUBE_KEY`: YouTube API Key，支持多个 key，用英文逗号 `,` 隔开
 -   订阅列表路由额外设置
-    -   `YOUTUBE_CLIENT_ID`: YouTube API 的 OAuth 2.0 客户端 ID
-    -   `YOUTUBE_CLIENT_SECRET`: YouTube API 的 OAuth 2.0 客户端 Secret
-    -   `YOUTUBE_REFRESH_TOKEN`: YouTube API 的 OAuth 2.0 客户端 Refresh Token。可以按照 [此 gist](https://gist.github.com/Kurukshetran/5904e8cb2361623498481f4a9a1338aa) 获取。
+  -   `YOUTUBE_CLIENT_ID`: YouTube API 的 OAuth 2.0 客户端 ID
+  -   `YOUTUBE_CLIENT_SECRET`: YouTube API 的 OAuth 2.0 客户端 Secret
+  -   `YOUTUBE_REFRESH_TOKEN`: YouTube API 的 OAuth 2.0 客户端 Refresh Token。可以按照 [此 gist](https://gist.github.com/Kurukshetran/5904e8cb2361623498481f4a9a1338aa) 获取。
 
 ### ZodGame
 
@@ -558,13 +556,13 @@ Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即
 
 -   `SEHUATANG_COOKIE`: 登陆色花堂后的 cookie 值。
 
-### 邮箱 邮件列表路由：
+### 邮箱 邮件列表路由
 
 -   `EMAIL_CONFIG_{email}`: 邮箱设置，替换 `{email}` 为 邮箱账号，邮件账户的 `@` 与 `.` 替换为 `_`，例如 `EMAIL_CONFIG_xxx_qq_com`。Linux 内容格式为 `password=密码&host=服务器&port=端口`，docker 内容格式为 `password=密码&host=服务器&port=端口`，例如：
-    -   Linux 环境变量：`EMAIL_CONFIG_xxx_qq_com="password=123456&host=imap.qq.com&port=993"`
-    -   docker 环境变量：`EMAIL_CONFIG_xxx_qq_com=password=123456&host=imap.qq.com&port=993`，请勿添加引号 `'`，`"`。
+  -   Linux 环境变量：`EMAIL_CONFIG_xxx_qq_com="password=123456&host=imap.qq.com&port=993"`
+  -   docker 环境变量：`EMAIL_CONFIG_xxx_qq_com=password=123456&host=imap.qq.com&port=993`，请勿添加引号 `'`，`"`。
 
--  注意：邮箱的路由不支持使用 socks5h 的代理，主要是受 `ImapFlow` 这个第三方库的限制，使用的时候需要注意。
+-   注意：邮箱的路由不支持使用 socks5h 的代理，主要是受 `ImapFlow` 这个第三方库的限制，使用的时候需要注意。
 
 ### 网易云歌单
 
