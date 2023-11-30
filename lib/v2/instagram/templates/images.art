@@ -1,5 +1,11 @@
-{{@ summary.replace(/\n/g, '<br>') }}
+{{ if summary }}
+    {{@ summary.replace(/\n/g, '<br>') }}
+    <br>
+{{ /if }}
 
 {{ each images i }}
-<img src="{{ i.url }}" height="{{ i.height }}" width="{{ i.width }}">
+    <img src="{{ i.url }}"
+        {{ if i.height }} height="{{ i.height }}" {{ /if }}
+        {{ if i.width }} width="{{ i.width }}" {{ /if }}
+    >
 {{ /each }}
