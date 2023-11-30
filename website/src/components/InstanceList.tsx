@@ -34,6 +34,11 @@ export default function InstanceList(): JSX.Element {
     location: '🇺🇸',
     maintainer: 'pseudoyu',
     maintainerUrl: 'https://www.pseudoyu.com',
+  }, {
+    url: 'https://rsshub.friesport.ac.cn',
+    location: '🇺🇸',
+    maintainer: '思维悦动',
+    maintainerUrl: 'https://friesport.ac.cn',
   }]
 
   return (
