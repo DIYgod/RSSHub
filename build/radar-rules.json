@@ -3280,6 +3280,12 @@
         "docs": "https://docs.rsshub.app/routes/anime#bangumi-fan-zu-ji-hua",
         "source": "/anime",
         "target": "/bangumi/tv/followrank"
+      },
+      {
+        "title": "用户想看",
+        "docs": "https://docs.rsshub.app/routes/anime#bangumi-fan-zu-ji-hua",
+        "source": "/anime/list/:id/wish",
+        "target": "/bangumi/tv/user/wish/:id"
       }
     ]
   },
@@ -3345,6 +3351,12 @@
         "docs": "https://docs.rsshub.app/routes/anime#bangumi-fan-zu-ji-hua",
         "source": "/anime",
         "target": "/bangumi/tv/followrank"
+      },
+      {
+        "title": "用户想看",
+        "docs": "https://docs.rsshub.app/routes/anime#bangumi-fan-zu-ji-hua",
+        "source": "/anime/list/:id/wish",
+        "target": "/bangumi/tv/user/wish/:id"
       }
     ]
   },

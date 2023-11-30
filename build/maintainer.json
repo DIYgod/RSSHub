@@ -741,6 +741,9 @@
     "/bangumi/tv/user/blog/:id": [
         "nczitzk"
     ],
+    "/bangumi/tv/user/wish/:id": [
+        "honue"
+    ],
     "/banyuetan/:name": [],
     "/banyuetan/byt/:time?": [],
     "/baozimh/comic/:name": [
