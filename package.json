@@ -41,7 +41,7 @@
       "eslint --cache --fix",
       "prettier --ignore-unknown --ignore-path ./.gitignore --write"
     ],
-    "*.md": "node website/docs/.format/format.mjs --staged",
+    "*.md?(x)": "node website/docs/.format/format.mjs --staged",
     "*.yml": "eslint --cache --fix"
   },
   "nodemonConfig": {
