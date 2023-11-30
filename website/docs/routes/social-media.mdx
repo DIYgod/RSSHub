@@ -55,7 +55,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 :::tip 动态的专栏显示全文
 
-动态的专栏显示全文请使用通用参数里的 `mode=fulltext `
+动态的专栏显示全文请使用通用参数里的 `mode=fulltext`
 
 举例: bilibili 专栏全文输出 /bilibili/user/dynamic/2267573/?mode=fulltext
 
@@ -1102,7 +1102,6 @@ Chart
 | ----------- | --------- | ---------------- | -------- |
 | TopArtists | TopSongs | TopVideos | TrendingVideos |
 
-
 Country Code
 
 | Argentina | Australia | Austria | Belgium | Bolivia | Brazil | Canada |
@@ -1140,8 +1139,6 @@ Country Code
 | Uruguay | Zimbabwe |
 | ------- | -------- |
 | uy      | zw       |
-
-
 
 </Route>
 
@@ -1738,12 +1735,10 @@ rule
 
 <Route author="xyqfer shinemoon" example="/weibo/search/hot" path="/weibo/search/hot/:fulltext?" anticrawler="1" radar="1" rssbud="1"/>
 
-- 使用`/weibo/search/hot`可以获取热搜条目列表；
-- 使用`/weibo/search/hot/fulltext`可以进一步获取热搜条目下的摘要信息（不含图片视频）；
-    - 使用`/weibo/search/hot/fulltext?pic=true`可以获取图片缩略（但需要配合额外的手段，例如浏览器上的Header Editor等来修改referer参数为`https://weibo.com'，以规避微博的外链限制,否则图片无法显示。)
-    - 使用`/weibo/search/hot/fulltext?pic=true&fullpic=true`可以获取Original图片（但需要配合额外的手段，例如浏览器上的Header Editor等来修改referer参数为`https://weibo.com'，以规避微博的外链限制,否则图片无法显示。)
-
-
+-   使用`/weibo/search/hot`可以获取热搜条目列表；
+-   使用`/weibo/search/hot/fulltext`可以进一步获取热搜条目下的摘要信息（不含图片视频）；
+  -   使用`/weibo/search/hot/fulltext?pic=true`可以获取图片缩略（但需要配合额外的手段，例如浏览器上的Header Editor等来修改referer参数为`<https://weibo.com'，以规避微博的外链限制,否则图片无法显示。>)
+  -   使用`/weibo/search/hot/fulltext?pic=true&fullpic=true`可以获取Original图片（但需要配合额外的手段，例如浏览器上的Header Editor等来修改referer参数为`<https://weibo.com'，以规避微博的外链限制,否则图片无法显示。>)
 
 ### 超话 {#wei-bo-chao-hua}
 
