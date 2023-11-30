@@ -1736,7 +1736,14 @@ rule
 
 ### 热搜榜 {#wei-bo-re-sou-bang}
 
-<Route author="xyqfer" example="/weibo/search/hot" path="/weibo/search/hot" anticrawler="1" radar="1" rssbud="1"/>
+<Route author="xyqfer shinemoon" example="/weibo/search/hot" path="/weibo/search/hot/:fulltext?" anticrawler="1" radar="1" rssbud="1"/>
+
+- 使用`/weibo/search/hot`可以获取热搜条目列表；
+- 使用`/weibo/search/hot/fulltext`可以进一步获取热搜条目下的摘要信息（不含图片视频）；
+    - 使用`/weibo/search/hot/fulltext?pic=true`可以获取图片缩略（但需要配合额外的手段，例如浏览器上的Header Editor等来修改referer参数为`https://weibo.com'，以规避微博的外链限制,否则图片无法显示。)
+    - 使用`/weibo/search/hot/fulltext?pic=true&fullpic=true`可以获取Original图片（但需要配合额外的手段，例如浏览器上的Header Editor等来修改referer参数为`https://weibo.com'，以规避微博的外链限制,否则图片无法显示。)
+
+
 
 ### 超话 {#wei-bo-chao-hua}
 
