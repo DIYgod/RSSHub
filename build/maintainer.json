@@ -7414,8 +7414,9 @@
     "/weibo/oasis/user/:userid": [
         "kt286"
     ],
-    "/weibo/search/hot": [
-        "xyqfer"
+    "/weibo/search/hot/:fulltext?": [
+        "xyqfer",
+        "shinemoon"
     ],
     "/weibo/super_index/:id/:type?/:routeParams?": [
         "zengxs",
