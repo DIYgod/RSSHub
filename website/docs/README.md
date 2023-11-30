@@ -35,7 +35,9 @@ RSSHub can be used with browser extension [RSSHub Radar](https://github.com/DIYg
 
 ### Contributors
 
-[![](https://opencollective.com/RSSHub/contributors.svg?width=740)](https://github.com/DIYgod/RSSHub/graphs/contributors)
+<p>
+<object type="image/svg+xml" data="https://opencollective.com/RSSHub/contributors.svg?width=740"></object>
+</p>
 
 Logo designer [sheldonrrr](https://dribbble.com/sheldonrrr)
 
