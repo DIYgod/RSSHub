@@ -14,14 +14,14 @@
   "badge.anticrawler": {
     "message": "反爬严格"
   },
-  "badge.selfhost": {
-    "message": "仅支持自建"
-  },
   "badge.radar": {
     "message": "支持浏览器扩展"
   },
   "badge.rssbud": {
     "message": "支持 RSSBud"
+  },
+  "badge.configRequired": {
+    "message": "需要配置"
   },
   "route.author": {
     "message": "作者："

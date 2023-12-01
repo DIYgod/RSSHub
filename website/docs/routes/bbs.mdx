@@ -217,11 +217,11 @@ You need to set the environment variable `DISCOURSE_CONFIG_{id}` before using it
 
 ### Latest posts {#discourse-latest-posts}
 
-<Route author="dzx-dzx" example="/discourse/0/posts" path="/discourse/:configId/posts" paramsDesc={['Environment variable configuration id, see above']} selfhost="1"/>
+<Route author="dzx-dzx" example="/discourse/0/posts" path="/discourse/:configId/posts" paramsDesc={['Environment variable configuration id, see above']} configRequired="1"/>
 
 ### Notifications {#discourse-notifications}
 
-<Route author="dzx-dzx" example="/discourse/0/notifications" path="/discourse/:configId/notifications/:fulltext?" paramsDesc={['Environment variable configuration id, see above','Fetch the content if the notification points to a post. This is disabled by default, set it to `1` to enable it.']} selfhost="1"/>
+<Route author="dzx-dzx" example="/discourse/0/notifications" path="/discourse/:configId/notifications/:fulltext?" paramsDesc={['Environment variable configuration id, see above','Fetch the content if the notification points to a post. This is disabled by default, set it to `1` to enable it.']} configRequired="1"/>
 
 :::warning
 
@@ -503,7 +503,7 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 ### forum {#zodgame-forum}
 
-<Route author="FeCCC" example="/zodgame/forum/13" path="/zodgame/forum/:fid?" paramsDesc={['forum id, can be found in URL']} radar="1" rssbud="1" selfhost="1"/>
+<Route author="FeCCC" example="/zodgame/forum/13" path="/zodgame/forum/:fid?" paramsDesc={['forum id, can be found in URL']} radar="1" rssbud="1" configRequired="1"/>
 
 ## Zuvio {#zuvio}
 

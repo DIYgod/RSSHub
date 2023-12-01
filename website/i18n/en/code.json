@@ -14,14 +14,14 @@
   "badge.anticrawler": {
     "message": "Strict anti-crawler policy"
   },
-  "badge.selfhost": {
-    "message": "Self-host only"
-  },
   "badge.radar": {
     "message": "Support browser extension"
   },
   "badge.rssbud": {
     "message": "Support RSSBud"
+  },
+  "badge.configRequired": {
+    "message": "Config required"
   },
   "route.author": {
     "message": "Author: "

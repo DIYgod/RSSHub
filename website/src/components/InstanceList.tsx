@@ -1,3 +1,5 @@
+import Link from "@docusaurus/Link";
+
 export default function InstanceList(): JSX.Element {
   const instances = [{
     url: 'https://rsshub.rssforever.com',
@@ -55,12 +57,12 @@ export default function InstanceList(): JSX.Element {
         {instances.map((instance) => (
           <tr key={instance.url}>
             <td>
-              <a href={instance.url}>{new URL(instance.url).host}</a>
+              <Link to={instance.url}>{new URL(instance.url).host}</Link>
             </td>
             <td>{instance.location}</td>
             <td>
               {instance.maintainer ? (
-                <a href={instance.maintainerUrl}>{instance.maintainer}</a>
+                <Link to={instance.maintainerUrl}>{instance.maintainer}</Link>
               ) : 'Anonymous'}
             </td>
             <td>

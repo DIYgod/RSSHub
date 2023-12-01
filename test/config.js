@@ -1,3 +1,5 @@
+const nock = require('nock');
+
 afterEach(() => {
     jest.resetModules();
 });
@@ -85,5 +87,19 @@ describe('config', () => {
     it('random ua', () => {
         const config = require('../lib/config').value;
         expect(config.ua).not.toBe('RSSHub/1.0 (+http://github.com/DIYgod/RSSHub; like FeedFetcher-Google)');
+    });
+
+    it('remote config', async () => {
+        process.env.REMOTE_CONFIG = 'http://rsshub.test/config';
+
+        nock(/rsshub\.test/)
+            .get('/config')
+            .reply(200, {
+                UA: 'test',
+            });
+        let config = require('../lib/config').value;
+        await new Promise((resolve) => setTimeout(resolve, 100));
+        config = require('../lib/config').value;
+        expect(config.ua).toBe('test');
     });
 });

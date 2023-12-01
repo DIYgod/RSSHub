@@ -310,7 +310,7 @@ GitHub provides some official RSS feeds:
 
 ### Trending {#github-trending}
 
-<Route author="DIYgod" path="/github/trending/:since/:language/:spoken_language?" example="/github/trending/daily/javascript/en" paramsDesc={['time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL, possible values are: `daily`, `weekly` or `monthly`', 'the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL, don\'t filter option is `any`', 'natural language, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL']} radar="1" rssbud="1" selfhost="1"/>
+<Route author="DIYgod" path="/github/trending/:since/:language/:spoken_language?" example="/github/trending/daily/javascript/en" paramsDesc={['time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL, possible values are: `daily`, `weekly` or `monthly`', 'the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL, don\'t filter option is `any`', 'natural language, available in [Trending page](https://github.com/trending/javascript?since=monthly) \'s URL']} radar="1" rssbud="1" configRequired="1"/>
 
 ### Topics {#github-topics}
 
@@ -399,7 +399,7 @@ For instance, the `/github/topics/framework/l=php&o=desc&s=stars` route will gen
 
 ### Notifications {#github-notifications}
 
-<Route author="zhzy0077" example="/github/notifications" path="/github/notifications" radar="1" rssbud="1" selfhost="1"/>
+<Route author="zhzy0077" example="/github/notifications" path="/github/notifications" radar="1" rssbud="1" configRequired="1"/>
 
 ### Gist Commits {#github-gist-commits}
 
@@ -1397,6 +1397,12 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 ### 美团开放平台公告 {#mei-tuan-kai-fang-ping-tai-mei-tuan-kai-fang-ping-tai-gong-gao}
 
 <Route author="youzipi" example="/meituan/open/announce" path="/meituan/open/announce"/>
+
+## 墨天轮 {#mo-tian-lun}
+
+### 合辑 {#mo-tian-lun-he-ji}
+
+<Route author="yueneiqi" example="/modb/topic/44158" path="/modb/topic/:id" paramsDesc={['合辑序号']} radar="1" />
 
 ## 平安银河实验室 {#ping-an-yin-he-shi-yan-shi}
 
