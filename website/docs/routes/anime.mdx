@@ -203,6 +203,10 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 <Route author="nczitzk" example="/bangumi/tv/user/blog/sai" path="/bangumi/tv/user/blog/:id" paramsDesc={['用户 id, 在用户页面地址栏查看']} radar="1"/>
 
+### 用户想看 {#bangumi-fan-zu-ji-hua-yong-hu-xiang-kan}
+
+<Route author="honue" example="/bangumi/tv/user/wish/23333" path="/bangumi/tv/user/wish/:id" paramsDesc={['用户 id, 在用户页面地址栏查看']} radar="1"/>
+
 ### 成员关注动画榜 {#bangumi-fan-zu-ji-hua-cheng-yuan-guan-zhu-dong-hua-bang}
 
 <Route author="honue" example="/bangumi/tv/followrank" path="/bangumi/tv/followrank"  radar="1"/>
@@ -350,7 +354,7 @@ If you subscribe to [Discounted works Latest Discounts - Newest to Oldest](https
 
 ### User Subscriptions {#iwara-user-subscriptions}
 
-<Route author="FeCCC" example="/iwara/subscriptions" path="/iwara/subscriptions" radar="1" rssbud="1" selfhost="1">
+<Route author="FeCCC" example="/iwara/subscriptions" path="/iwara/subscriptions" radar="1" rssbud="1" configRequired="1">
 
 :::warning
 
@@ -791,7 +795,7 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 ### 漫画个人订阅 {#kan-man-hua-man-hua-ge-ren-ding-yue}
 
-<Route author="shininome" path="/manhuagui/subscribe" example="/manhuagui/subscribe" radar="1" rssbud="1" selfhost="1">
+<Route author="shininome" path="/manhuagui/subscribe" example="/manhuagui/subscribe" radar="1" rssbud="1" configRequired="1">
 
 :::tip
 

@@ -118,15 +118,15 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 ### Blog using Next theme {#hexo-blog-using-next-theme}
 
-<Route author="fengkx" path="/hexo/next/:url" example="/hexo/next/archive.diygod.me" paramsDesc={['the blog URL without the protocol (http:// and https://)']} selfhost="1"/>
+<Route author="fengkx" path="/hexo/next/:url" example="/hexo/next/archive.diygod.me" paramsDesc={['the blog URL without the protocol (http:// and https://)']} configRequired="1"/>
 
 ### Blog using Yilia theme {#hexo-blog-using-yilia-theme}
 
-<Route author="aha2mao" path="/hexo/yilia/:url" example="/hexo/yilia/cloudstone.xin" paramsDesc={['the blog URL without the protocol (http:// and https://)']} selfhost="1"/>
+<Route author="aha2mao" path="/hexo/yilia/:url" example="/hexo/yilia/cloudstone.xin" paramsDesc={['the blog URL without the protocol (http:// and https://)']} configRequired="1"/>
 
 ### Blog using Fluid theme {#hexo-blog-using-fluid-theme}
 
-<Route author="gkkeys" path="/hexo/fluid/:url" example="/hexo/fluid/blog.tonyzhao.xyz" paramsDesc={['the blog URL without the protocol (http:// and https://)']} selfhost="1"/>
+<Route author="gkkeys" path="/hexo/fluid/:url" example="/hexo/fluid/blog.tonyzhao.xyz" paramsDesc={['the blog URL without the protocol (http:// and https://)']} configRequired="1"/>
 
 ## Hi, DIYgod {#hi-diygod}
 
@@ -204,7 +204,7 @@ To access private lists, only self-hosting is supported.
 
 ### Personalized Recommendations - For You {#medium-personalized-recommendations-for-you}
 
-<Route author="ImSingee" example="/medium/for-you/imsingee" path="/medium/for-you/:user" paramsDesc={['Username']} selfhost="1">
+<Route author="ImSingee" example="/medium/for-you/imsingee" path="/medium/for-you/:user" paramsDesc={['Username']} configRequired="1">
 
 :::warning
 
@@ -216,7 +216,7 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 ### Personalized Recommendations - Following {#medium-personalized-recommendations-following}
 
-<Route author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" paramsDesc={['Username']} selfhost="1">
+<Route author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" paramsDesc={['Username']} configRequired="1">
 
 :::warning
 
@@ -228,7 +228,7 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 ### Personalized Recommendations - Tag {#medium-personalized-recommendations-tag}
 
-<Route author="ImSingee" example="/medium/tag/imsingee/cybersecurity" path="/medium/tag/:user/:tag" paramsDesc={['Username', 'Subscribed Tag']} selfhost="1">
+<Route author="ImSingee" example="/medium/tag/imsingee/cybersecurity" path="/medium/tag/:user/:tag" paramsDesc={['Username', 'Subscribed Tag']} configRequired="1">
 
 There are many tags, which can be obtained by clicking on a tag from the homepage and looking at the URL. For example, if the URL is `https://medium.com/?tag=web3`, then the tag is `web3`.
 

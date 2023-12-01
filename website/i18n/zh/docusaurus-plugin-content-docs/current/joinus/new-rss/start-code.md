@@ -501,7 +501,6 @@ module.exports = async (ctx) => {
 
 我们的 RSS 订阅源目前缺少内容。必须设置 `item` 才能添加内容。以下是一个示例：
 
-
 ```js
 const buildData = require('@/utils/common-config');
 

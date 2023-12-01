@@ -1261,27 +1261,27 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 ### Artist Albums {#spotify-artist-albums}
 
-<Route author="outloudvi" example="/spotify/artist/6k9TBCxyr4bXwZ8Y21Kwn1" path="/spotify/artist/:id" paramsDesc={['Artist ID']} selfhost="1"/>
+<Route author="outloudvi" example="/spotify/artist/6k9TBCxyr4bXwZ8Y21Kwn1" path="/spotify/artist/:id" paramsDesc={['Artist ID']} configRequired="1"/>
 
 ### Playlist {#spotify-playlist}
 
-<Route author="outloudvi" example="/spotify/playlist/4UBVy1LttvodwivPUuwJk2" path="/spotify/playlist/:id" paramsDesc={['Playlist ID']} selfhost="1"/>
+<Route author="outloudvi" example="/spotify/playlist/4UBVy1LttvodwivPUuwJk2" path="/spotify/playlist/:id" paramsDesc={['Playlist ID']} configRequired="1"/>
 
 ### Personal Saved Tracks {#spotify-personal-saved-tracks}
 
-<Route author="outloudvi" example="/spotify/saved/50" path="/spotify/saved/:limit?" paramsDesc={['Track count, 50 by default']} selfhost="1"/>
+<Route author="outloudvi" example="/spotify/saved/50" path="/spotify/saved/:limit?" paramsDesc={['Track count, 50 by default']} configRequired="1"/>
 
 ### Personal Top Tracks {#spotify-personal-top-tracks}
 
-<Route author="outloudvi" example="/spotify/top/tracks" path="/spotify/top/tracks" selfhost="1"/>
+<Route author="outloudvi" example="/spotify/top/tracks" path="/spotify/top/tracks" configRequired="1"/>
 
 ### Personal Top Artists {#spotify-personal-top-artists}
 
-<Route author="outloudvi" example="/spotify/top/artists" path="/spotify/top/artists" selfhost="1"/>
+<Route author="outloudvi" example="/spotify/top/artists" path="/spotify/top/artists" configRequired="1"/>
 
 ### Show {#spotify-show}
 
-<Route author="caiohsramos" example="/spotify/show/38bS44xjbVVZ3No3ByF1dJ" path="/spotify/show/:id" paramsDesc={['Show ID']} selfhost="1"/>
+<Route author="caiohsramos" example="/spotify/show/38bS44xjbVVZ3No3ByF1dJ" path="/spotify/show/:id" paramsDesc={['Show ID']} configRequired="1"/>
 
 ## Sub HD {#sub-hd}
 
@@ -1651,7 +1651,7 @@ When `mediaType` is `movie`, `sheet` should be:
 
 ### 最新资源 {#pian-yuan-wang-zui-xin-zi-yuan}
 
-<Route author="greatcodeeer jerry1119" example="/pianyuan/index" path="/pianyuan/index/:media?" paramsDesc={['类别，见下表，默认为首页']} radar="1" rssbud="1" selfhost="1"/>
+<Route author="greatcodeeer jerry1119" example="/pianyuan/index" path="/pianyuan/index/:media?" paramsDesc={['类别，见下表，默认为首页']} radar="1" rssbud="1" configRequired="1"/>
 
 | 电影 | 剧集 |
 | ---- | ---- |
@@ -1659,7 +1659,7 @@ When `mediaType` is `movie`, `sheet` should be:
 
 ### 搜索 {#pian-yuan-wang-sou-suo}
 
-<Route author="jerry1119" example="/pianyuan/indexers/pianyuan/results/search/api?t=test&q=长津湖" path="/pianyuan/indexers/pianyuan/results/search/" selfhost="1"/>
+<Route author="jerry1119" example="/pianyuan/indexers/pianyuan/results/search/api?t=test&q=长津湖" path="/pianyuan/indexers/pianyuan/results/search/" configRequired="1"/>
 
 搜索路由模仿 jackett 的搜索 api, 以提供给 nastools 使用，填写在 nastools 配置 indexer 中
 
@@ -1733,7 +1733,7 @@ When `mediaType` is `movie`, `sheet` should be:
 
 ### 作者文章 {#se-hua-tang-zuo-zhe-wen-zhang}
 
-<Route author="JamYiz" example="/sehuatang/user/411096" path="/sehuatang/user/:uid" paramsDesc={['用户 uid, 可在用户主页 URL 中找到']} selfhost="1"/>
+<Route author="JamYiz" example="/sehuatang/user/411096" path="/sehuatang/user/:uid" paramsDesc={['用户 uid, 可在用户主页 URL 中找到']} configRequired="1"/>
 
 ## 深影译站 {#shen-ying-yi-zhan}
 
@@ -1845,7 +1845,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 专辑（不输出 ShowNote） {#xi-ma-la-ya-zhuan-ji-bu-shu-chu-shownote}
 
-<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/299146" path="/ximalaya/:type/:id/:all?" paramsDesc={['专辑类型, 通常可以使用 `album`，可在对应专辑页面的 URL 中找到','专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。']} supportPodcast="1" radar="1" rssbud="1" selfhost="1">
+<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/299146" path="/ximalaya/:type/:id/:all?" paramsDesc={['专辑类型, 通常可以使用 `album`，可在对应专辑页面的 URL 中找到','专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。']} supportPodcast="1" radar="1" rssbud="1" configRequired="1">
 
 目前喜马拉雅的 API 只能一集一集的获取各节目上的 ShowNote，会极大的占用系统资源，所以默认为不获取节目的 ShowNote。下方有一个新的路径可选获取 ShowNote。
 
@@ -1861,7 +1861,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 专辑（输出 ShowNote） {#xi-ma-la-ya-zhuan-ji-shu-chu-shownote}
 
-<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/39488639/0/shownote" path="/ximalaya/:type/:id/:all/:shownote?" paramsDesc={['专辑类型, 通常可以使用 `album`，可在对应专辑页面的 URL 中找到','专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。', '是否需要获取节目的 ShowNote，填入 `1`、`true`,`shownote` 视为获取，填入其他则不获取。']} supportPodcast="1" selfhost="1">
+<Route author="lengthmin jjeejj prnake" example="/ximalaya/album/39488639/0/shownote" path="/ximalaya/:type/:id/:all/:shownote?" paramsDesc={['专辑类型, 通常可以使用 `album`，可在对应专辑页面的 URL 中找到','专辑 id, 可在对应专辑页面的 URL 中找到','是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。', '是否需要获取节目的 ShowNote，填入 `1`、`true`,`shownote` 视为获取，填入其他则不获取。']} supportPodcast="1" configRequired="1">
 
 </Route>
 
@@ -1869,7 +1869,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### 发现 {#xiao-yu-zhou-fa-xian}
 
-<Route author="prnake" example="/xiaoyuzhou" path="/xiaoyuzhou" selfhost="1">
+<Route author="prnake" example="/xiaoyuzhou" path="/xiaoyuzhou" configRequired="1">
 
 :::warning
 

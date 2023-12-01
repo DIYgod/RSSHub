@@ -14,7 +14,7 @@ export default function Route({
   supportScihub = null,
   radar = null,
   rssbud = null,
-  selfhost = null,
+  configRequired = null,
   puppeteer = null,
   children = null,
 }: {
@@ -28,7 +28,7 @@ export default function Route({
   supportScihub?: boolean;
   radar?: boolean;
   rssbud?: boolean;
-  selfhost?: boolean;
+  configRequired?: boolean;
   puppeteer?: boolean;
   children?: JSX.Element | JSX.Element[];
 }): JSX.Element {
@@ -54,9 +54,9 @@ export default function Route({
                         <Badge type="warn"><Translate id="badge.anticrawler" /></Badge>
                     </Link>
                 )}
-                {selfhost && (
-                    <Link to="/install">
-                        <Badge type="warn"><Translate id="badge.selfhost" /></Badge>
+                {configRequired && (
+                    <Link to="/install/config#route-specific-configurations">
+                        <Badge type="warn"><Translate id="badge.configRequired" /></Badge>
                     </Link>
                 )}
                 {radar && (
