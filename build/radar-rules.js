@@ -5562,7 +5562,7 @@
         docs:"https://docs.rsshub.app/routes/programming#GoCN",
         source:[ "/" ],
         target:"/gocn/jobs" } ] },
-  "gogoanimehd.io":{ _name:"Gogoanime",
+  "anitaku.to":{ _name:"Gogoanime",
     developer:[ { title:"Recent Releases",
         docs:"https://docs.rsshub.app/routes/anime#gogoanimehd",
         source:[ "/" ],
