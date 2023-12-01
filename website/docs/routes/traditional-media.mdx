@@ -86,7 +86,7 @@ There is no RSS source for Al Jazeera Chinese, returning homepage content by def
 
 ### Topics {#ap-news-topics}
 
-<Route author="zoenglinghou mjysci TonyRL" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic?" paramsDesc={['Topic name, can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`, `trending-news` by default']} radar="1" rssbud="1" />
+<Route author="zoenglinghou mjysci TonyRL" example="/apnews/topics/apf-topnews" path="/apnews/topics/:topic?" paramsDesc={['Topic name, can be found in URL. For example: the topic name of AP Top News [https://apnews.com/apf-topnews](https://apnews.com/apf-topnews) is `apf-topnews`, `trending-news` by default']} radar="1" />
 
 ## BBC {#bbc}
 
@@ -190,7 +190,7 @@ Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-c
 
 ### News {#china-times-zhong-shi-dian-zi-bao-news}
 
-<Route author="luyuhuang" example="/chinatimes/realtimenews" path="/chinatimes/:caty" paramsDesc={['category']} radar="1" rssbud="1">
+<Route author="luyuhuang" example="/chinatimes/realtimenews" path="/chinatimes/:caty" paramsDesc={['category']} radar="1">
 
 | realtimenews   | politic | opinion | life | star    | money   | society | hottopic   | tube   | world | armament | chinese           | fashion | sports | technologynews  | travel | album   |
 | -------------- | ------- | ------- | ---- | ------- | ------- | ------- | ---------- | ------ | ----- | -------- | ----------------- | ------- | ------ | --------------- | ------ | ------- |
@@ -306,7 +306,7 @@ The URL of the form `https://www.dnaindia.com/topic/dna-verified` demonstrates t
 
 ### News {#korean-central-news-agency-kcna-chao-xian-zhong-yang-tong-xun-she-news}
 
-<Route author="Rongronggg9" example="/kcna/en" path="/kcna/:lang/:category?" paramsDesc={['Language, refer to the table below', 'Category, refer to the table below']} anticrawler="1" radar="1" rssbud="1">
+<Route author="Rongronggg9" example="/kcna/en" path="/kcna/:lang/:category?" paramsDesc={['Language, refer to the table below', 'Category, refer to the table below']} anticrawler="1" radar="1">
 
 | Language | 조선어 | English | 中国语 | Русский | Español | 日本語 |
 | -------- | ------ | ------- | ------ | ------- | ------- | ------ |
@@ -415,7 +415,7 @@ Provide full article RSS for CBC topics.
 
 ### WORLD-JAPAN - Top Stories {#nhk-world-japan-top-stories}
 
-<Route author="TonyRL" example="/nhk/news/en" path="/nhk/news/:lang?" paramsDesc={['Language, see below, `en` by default']} radar="1" rssbud="1">
+<Route author="TonyRL" example="/nhk/news/en" path="/nhk/news/:lang?" paramsDesc={['Language, see below, `en` by default']} radar="1">
 
 | العربية | বাংলা | မြန်မာဘာသာစကား | 中文（简体） | 中文（繁體） | English | Français |
 | ------- | ----- | -------------- | ------------ | ------------ | ------- | -------- |
@@ -747,7 +747,7 @@ Language
 
 ### Hot News {#taiwan-news-tai-wan-ying-wen-xin-wen-hot-news}
 
-<Route author="TonyRL" example="/taiwannews/hot" path="/taiwannews/hot/:lang?" paramsDesc={['Language, `en` or `zh`, `en` by default']} radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/taiwannews/hot" path="/taiwannews/hot/:lang?" paramsDesc={['Language, `en` or `zh`, `en` by default']} radar="1"/>
 
 ## The Atlantic {#the-atlantic}
 
@@ -767,11 +767,11 @@ More categories (except photo) can be found within the navigation bar at [https:
 
 ### Category {#the-economist-category}
 
-<Route author="ImSingee" example="/economist/latest" path="/economist/:endpoint" paramsDesc={['Category name, can be found on the [official page](https://www.economist.com/rss). For example, https://www.economist.com/china/rss.xml to china']} radar="1" rssbud="1"/>
+<Route author="ImSingee" example="/economist/latest" path="/economist/:endpoint" paramsDesc={['Category name, can be found on the [official page](https://www.economist.com/rss). For example, https://www.economist.com/china/rss.xml to china']} radar="1"/>
 
 ### Espresso {#the-economist-espresso}
 
-<Route author="TonyRL" example="/economist/espresso" path="/economist/espresso" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/economist/espresso" path="/economist/espresso" radar="1"/>
 
 ### GRE Vocabulary {#the-economist-gre-vocabulary}
 
@@ -779,7 +779,7 @@ More categories (except photo) can be found within the navigation bar at [https:
 
 ### Global Business Review {#the-economist-global-business-review}
 
-<Route author="prnake" example="/economist/global-business-review/cn-en" path="/economist/global-business-review/:language?" paramsDesc={['Language, `en`, `cn`, `tw` are supported, support multiple options, default to cn-en']}  radar="1" rssbud="1"/>
+<Route author="prnake" example="/economist/global-business-review/cn-en" path="/economist/global-business-review/:language?" paramsDesc={['Language, `en`, `cn`, `tw` are supported, support multiple options, default to cn-en']}  radar="1"/>
 
 ### Download {#the-economist-download}
 
@@ -807,7 +807,7 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### Topic {#the-hindu-topic}
 
-<Route author="TonyRL" example="/thehindu/topic/rains" path="/thehindu/topic/:topic" paramsDesc={['Topic slug, can be found in URL.']} radar="1" rssbud="1" />
+<Route author="TonyRL" example="/thehindu/topic/rains" path="/thehindu/topic/:topic" paramsDesc={['Topic slug, can be found in URL.']} radar="1" />
 
 ## The New York Times 纽约时报 {#the-new-york-times-niu-yue-shi-bao}
 
@@ -861,7 +861,7 @@ Provides all of the articles by the specified New York Times author.
 
 ### Home {#the-nikkei-ri-ben-jing-ji-xin-wen-home}
 
-<Route author="zjysdhr" example="/nikkei/index" path="/nikkei/index" radar="1" rssbud="1" />
+<Route author="zjysdhr" example="/nikkei/index" path="/nikkei/index" radar="1" />
 
 ### News {#the-nikkei-ri-ben-jing-ji-xin-wen-news}
 
@@ -875,7 +875,7 @@ Provides all of the articles by the specified New York Times author.
 
 ### 中文版新闻 {#the-nikkei-ri-ben-jing-ji-xin-wen-zhong-wen-ban-xin-wen}
 
-<Route author="nczitzk" example="/nikkei/cn" path="/nikkei/cn/:language?/:path?" paramsDesc={['语言，可选 `zh` 即 繁体中文，`cn` 即 简体中文', '类目路径，默认为空，可在对应类目页 URL 中找到']} radar="1" rssbud="1">
+<Route author="nczitzk" example="/nikkei/cn" path="/nikkei/cn/:language?/:path?" paramsDesc={['语言，可选 `zh` 即 繁体中文，`cn` 即 简体中文', '类目路径，默认为空，可在对应类目页 URL 中找到']} radar="1">
 
 :::tip
 
@@ -1016,11 +1016,11 @@ Free articles only.
 
 ### 环保要闻 {#bei-ji-xing-dian-li-wang-huan-bao-yao-wen}
 
-<Route author="zsimple" example="/bjx/huanbao" path="/bjx/huanbao" radar="1" rssbud="1"/>
+<Route author="zsimple" example="/bjx/huanbao" path="/bjx/huanbao" radar="1"/>
 
 ### 光伏 {#bei-ji-xing-dian-li-wang-guang-fu}
 
-<Route author="Sxuet" example="/bjx/gf/sc" path="/bjx/gf/:type" paramsDesc={['分类，北极星光伏最后的`type`字段']} radar="1" rssbud="1">
+<Route author="Sxuet" example="/bjx/gf/sc" path="/bjx/gf/:type" paramsDesc={['分类，北极星光伏最后的`type`字段']} radar="1">
 
 `:type` 类型可选如下
 
@@ -1080,7 +1080,7 @@ Category 列表：
 
 ### 财新周刊 {#cai-xin-wang-cai-xin-zhou-kan}
 
-<Route author="TonyRL" example="/caixin/weekly" path="/caixin/weekly" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/caixin/weekly" path="/caixin/weekly" radar="1"/>
 
 ## 参考消息 {#can-kao-xiao-xi}
 
@@ -1539,7 +1539,7 @@ IT・科学 tech_science
 
 ### 农博士在行动 {#he-bei-wang-luo-guang-bo-dian-shi-tai-nong-bo-shi-zai-xing-dong}
 
-<Route author="iamqiz nczitzk" example="/hebtv/nbszxd" path="/hebtv/nbszxd" radar="1" rssbud="1" supportBT="1" supportPodcast="1"/>
+<Route author="iamqiz nczitzk" example="/hebtv/nbszxd" path="/hebtv/nbszxd" radar="1" supportBT="1" supportPodcast="1"/>
 
 ## 衡阳全搜索 {#heng-yang-quan-sou-suo}
 
@@ -1790,7 +1790,7 @@ category 对应的关键词有
 
 ### 新聞首頁 {#ke-jia-dian-shi-tai-xin-wen-shou-ye}
 
-<Route author="TonyRL" example="/hakkatv/news" path="/hakkatv/news/:type?" paramsDesc={['新聞，見下表，留空為全部']} radar="1" rssbud="1">
+<Route author="TonyRL" example="/hakkatv/news" path="/hakkatv/news/:type?" paramsDesc={['新聞，見下表，留空為全部']} radar="1">
 
 | 客家焦點 | 政經要聞  | 民生醫療 | 地方風采 | 國際萬象      |
 | -------- | --------- | -------- | -------- | ------------- |
@@ -2212,7 +2212,7 @@ category 对应的关键词有
 
 ### 电视节目 {#qi-lu-wang-dian-shi-jie-mu}
 
-<Route author="nczitzk" example="/iqilu/v/sdws/sdxwlb" path="/iqilu/v/:category?" paramsDesc={['节目 id，可在对应节目页 URL 中找到，见下表，默认为 `sdws/sdxwlb`，即山东新闻联播']} radar="1" rssbud="1" supportPodcast="1">
+<Route author="nczitzk" example="/iqilu/v/sdws/sdxwlb" path="/iqilu/v/:category?" paramsDesc={['节目 id，可在对应节目页 URL 中找到，见下表，默认为 `sdws/sdxwlb`，即山东新闻联播']} radar="1" supportPodcast="1">
 
 | 节目名称         | 节目 id        |
 | ---------------- | -------------- |
@@ -2302,7 +2302,7 @@ category 对应的关键词有
 
 ### 数字媒体 {#xia-men-wang-shu-zi-mei-ti}
 
-<Route author="nczitzk" example="/xmnn/epaper/xmrb" path="/xmnn/epaper/:id?" paramsDesc={['报纸 id，见下表，默认为 `xmrb`，即厦门日报']} radar="1" rssbud="1">
+<Route author="nczitzk" example="/xmnn/epaper/xmrb" path="/xmnn/epaper/:id?" paramsDesc={['报纸 id，见下表，默认为 `xmrb`，即厦门日报']} radar="1">
 
 | 厦门日报 | 厦门晚报 | 海西晨报 | 城市捷报 |
 | -------- | -------- | -------- | -------- |
@@ -2312,7 +2312,7 @@ category 对应的关键词有
 
 ### 新闻 {#xia-men-wang-xin-wen}
 
-<Route author="nczitzk" example="/xmnn/news/xmxw" path="/xmnn/news/:category?" paramsDesc={['分类 id，见下表，默认为厦门新闻']} radar="1" rssbud="1">
+<Route author="nczitzk" example="/xmnn/news/xmxw" path="/xmnn/news/:category?" paramsDesc={['分类 id，见下表，默认为厦门新闻']} radar="1">
 
 | 分类名       | 分类 id |
 | ------------ | ------- |
@@ -2396,11 +2396,11 @@ category 对应的关键词有
 
 ### 最新上線 {#tian-xia-za-zhi-zui-xin-shang-xian}
 
-<Route author="TonyRL" example="/cw/today" path="/cw/today" radar="1" rssbud="1" puppeteer="1"/>
+<Route author="TonyRL" example="/cw/today" path="/cw/today" radar="1" puppeteer="1"/>
 
 ### 主頻道 {#tian-xia-za-zhi-zhu-bin-dao}
 
-<Route author="TonyRL" example="/cw/master/8" path="/cw/master/:channel" paramsDesc={['主頻道 ID，可在 URL 中找到']} radar="1" rssbud="1" puppeteer="1">
+<Route author="TonyRL" example="/cw/master/8" path="/cw/master/:channel" paramsDesc={['主頻道 ID，可在 URL 中找到']} radar="1" puppeteer="1">
 
 | 主頻道名稱 | 主頻道 ID |
 | ---------- | --------- |
@@ -2422,11 +2422,11 @@ category 对应的关键词有
 
 ### 子頻道 {#tian-xia-za-zhi-zi-bin-dao}
 
-<Route author="TonyRL" example="/cw/sub/615" path="/cw/sub/:channel" paramsDesc={['子頻道 ID，可在 URL 中找到']} radar="1" rssbud="1" puppeteer="1"/>
+<Route author="TonyRL" example="/cw/sub/615" path="/cw/sub/:channel" paramsDesc={['子頻道 ID，可在 URL 中找到']} radar="1" puppeteer="1"/>
 
 ### 作者 {#tian-xia-za-zhi-zuo-zhe}
 
-<Route author="TonyRL" example="/cw/author/57" path="/cw/author/:channel" paramsDesc={['作者 ID，可在 URL 中找到']} radar="1" rssbud="1" puppeteer="1"/>
+<Route author="TonyRL" example="/cw/author/57" path="/cw/author/:channel" paramsDesc={['作者 ID，可在 URL 中找到']} radar="1" puppeteer="1"/>
 
 ## 文汇报 {#wen-hui-bao}
 
@@ -2472,7 +2472,7 @@ category 对应的关键词有
 
 此路由主要补全官方 RSS 全文输出及完善分类输出。
 
-<Route author="TonyRL" example="/hket/sran001" path="/hket/:category?" paramsDesc={['分类，默认为全部新闻，可在 URL 中找到，部分见下表']} radar="1" rssbud="1">
+<Route author="TonyRL" example="/hket/sran001" path="/hket/:category?" paramsDesc={['分类，默认为全部新闻，可在 URL 中找到，部分见下表']} radar="1">
 
 <details>
 
@@ -2550,7 +2550,7 @@ category 对应的关键词有
 
 ### 最新文章 {#xin-jia-qi-zhou-kan-zui-xin-wen-zhang}
 
-<Route author="TonyRL" example="/weekendhk" path="/weekendhk" radar="1" rssbud="1" />
+<Route author="TonyRL" example="/weekendhk" path="/weekendhk" radar="1" />
 
 ## 新京报 {#xin-jing-bao}
 
@@ -2618,7 +2618,7 @@ category 对应的关键词有
 
 ### 即時 {#xing-dao-ri-bao-ji-shi}
 
-<Route author="TonyRL" example="/stheadline/std/realtime/即時" path="/stheadline/std/realtime/:category*" paramsDesc={['分類路徑，URL 中 `/realtime/` 後的部分，預設為`即時`']} radar ="1" rssbud="1"/>
+<Route author="TonyRL" example="/stheadline/std/realtime/即時" path="/stheadline/std/realtime/:category*" paramsDesc={['分類路徑，URL 中 `/realtime/` 後的部分，預設為`即時`']} radar ="1"/>
 
 ## 星洲网 {#xing-zhou-wang}
 
@@ -2651,7 +2651,7 @@ category 对应的关键词有
 
 ### 新闻联播 {#yang-shi-xin-wen-xin-wen-lian-bo}
 
-<Route author="zengxs" example="/cctv/xwlb" path="/cctv/xwlb" radar="1" rssbud="1">
+<Route author="zengxs" example="/cctv/xwlb" path="/cctv/xwlb" radar="1">
 
 新闻联播内容摘要。
 
@@ -2659,7 +2659,7 @@ category 对应的关键词有
 
 ### 栏目 {#yang-shi-xin-wen-lan-mu}
 
-<Route author="nczitzk" example="/cctv/lm/xwzk" path="/cctv/lm/:id?" paramsDesc={['栏目 id，可在对应栏目页 URL 中找到，默认为 `xwzk` 即 新闻周刊']} radar="1" rssbud="1">
+<Route author="nczitzk" example="/cctv/lm/xwzk" path="/cctv/lm/:id?" paramsDesc={['栏目 id，可在对应栏目页 URL 中找到，默认为 `xwzk` 即 新闻周刊']} radar="1">
 
 | 焦点访谈 | 等着我 | 今日说法 | 开讲啦 |
 | -------- | ------ | -------- | ------ |
@@ -2679,7 +2679,7 @@ category 对应的关键词有
 
 ### 新闻专题 {#yang-shi-xin-wen-xin-wen-zhuan-ti}
 
-<Route author="nczitzk" example="/cctv/special/315" path="/cctv/special/:id?" paramsDesc={['专题 id，可在对应专题页 URL 中找到，默认为 `315` 即 3·15 晚会']} radar="1" rssbud="1">
+<Route author="nczitzk" example="/cctv/special/315" path="/cctv/special/:id?" paramsDesc={['专题 id，可在对应专题页 URL 中找到，默认为 `315` 即 3·15 晚会']} radar="1">
 
 :::tip
 
@@ -2693,7 +2693,7 @@ category 对应的关键词有
 
 ### 专题 {#yang-shi-xin-wen-zhuan-ti}
 
-<Route author="idealclover xyqfer" example="/cctv/world" path="/cctv/:category" paramsDesc={['分类名']} radar="1" rssbud="1">
+<Route author="idealclover xyqfer" example="/cctv/world" path="/cctv/:category" paramsDesc={['分类名']} radar="1">
 
 | 新闻 | 国内  | 国际  | 社会    | 法治 | 文娱 | 科技 | 生活 | 教育 | 每周质量报告 | 新闻 1+1  |
 | ---- | ----- | ----- | ------- | ---- | ---- | ---- | ---- | ---- | ------------ | --------- |
@@ -2703,15 +2703,15 @@ category 对应的关键词有
 
 ### 新闻联播文字版 {#yang-shi-xin-wen-xin-wen-lian-bo-wen-zi-ban}
 
-<Route author="luyuhuang" example="/xinwenlianbo/index" path="/xinwenlianbo/index" radar="1" rssbud="1"/>
+<Route author="luyuhuang" example="/xinwenlianbo/index" path="/xinwenlianbo/index" radar="1"/>
 
 ### 新闻联播文字版完整版 {#yang-shi-xin-wen-xin-wen-lian-bo-wen-zi-ban-wan-zheng-ban}
 
-<Route author="xfangbao" example="/xwlb" path="/xwlb/index" radar="1" rssbud="1"/>
+<Route author="xfangbao" example="/xwlb" path="/xwlb/index" radar="1"/>
 
 ### 央视网图片《镜象》 {#yang-shi-xin-wen-yang-shi-wang-tu-pian-%E3%80%8A-jing-xiang-%E3%80%8B}
 
-<Route author="nczitzk" example="/cctv/photo/jx" path="/cctv/photo/jx" radar="1" rssbud="1"/>
+<Route author="nczitzk" example="/cctv/photo/jx" path="/cctv/photo/jx" radar="1"/>
 
 ## 羊城晚报金羊网 {#yang-cheng-wan-bao-jin-yang-wang}
 
@@ -2791,7 +2791,7 @@ category 对应的关键词有
 
 ### 最新 {#zhong-guo-xin-wen-wang-zui-xin}
 
-<Route author="yuxinliu-alex" example="/chinanews" path="/chinanews" radar="1" rssbud="1" />
+<Route author="yuxinliu-alex" example="/chinanews" path="/chinanews" radar="1" />
 
 ## 中国新闻周刊 {#zhong-guo-xin-wen-zhou-kan}
 

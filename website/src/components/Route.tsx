@@ -13,7 +13,6 @@ export default function Route({
   supportPodcast = null,
   supportScihub = null,
   radar = null,
-  rssbud = null,
   configRequired = null,
   puppeteer = null,
   children = null,
@@ -27,7 +26,6 @@ export default function Route({
   supportPodcast?: boolean;
   supportScihub?: boolean;
   radar?: boolean;
-  rssbud?: boolean;
   configRequired?: boolean;
   puppeteer?: boolean;
   children?: JSX.Element | JSX.Element[];
@@ -62,11 +60,6 @@ export default function Route({
                 {radar && (
                     <Link to="https://github.com/DIYgod/RSSHub-Radar">
                         <Badge type="tip"><Translate id="badge.radar" /></Badge>
-                    </Link>
-                )}
-                {rssbud && (
-                    <Link to="https://github.com/Cay-Zhang/RSSBud">
-                        <Badge type="tip"><Translate id="badge.rssbud" /></Badge>
                     </Link>
                 )}
             </p>

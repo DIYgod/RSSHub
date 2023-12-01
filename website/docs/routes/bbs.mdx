@@ -112,7 +112,7 @@
 
 ### 列表 {#8264-lie-biao}
 
-<Route author="nczitzk" example="/8264/list/751" path="/8264/list/:id?" paramsDesc={['列表 id，见下表，默认为 751，即热门推荐']} radar="1" rssbud="1">
+<Route author="nczitzk" example="/8264/list/751" path="/8264/list/:id?" paramsDesc={['列表 id，见下表，默认为 751，即热门推荐']} radar="1">
 
 | 热门推荐 | 户外知识 | 户外装备 |
 | -------- | -------- | -------- |
@@ -201,11 +201,11 @@
 
 ### 首頁帖子 {#dcard-shou-ye-tie-zi}
 
-<Route author="DIYgod" example="/dcard/posts/popular" path="/dcard/posts/:type?" paramsDesc={['排序，popular 熱門；latest 最新，默認為 latest']} radar="1" rssbud="1" anticrawler="1" puppeteer="1"/>
+<Route author="DIYgod" example="/dcard/posts/popular" path="/dcard/posts/:type?" paramsDesc={['排序，popular 熱門；latest 最新，默認為 latest']} radar="1" anticrawler="1" puppeteer="1"/>
 
 ### 板塊帖子 {#dcard-ban-kuai-tie-zi}
 
-<Route author="HenryQW" example="/dcard/funny/popular" path="/dcard/:section/:type?" paramsDesc={['板塊名稱，URL 中獲得', '排序，popular 熱門；latest 最新，默認為 latest']} radar="1" rssbud="1" anticrawler="1" puppeteer="1"/>
+<Route author="HenryQW" example="/dcard/funny/popular" path="/dcard/:section/:type?" paramsDesc={['板塊名稱，URL 中獲得', '排序，popular 熱門；latest 最新，默認為 latest']} radar="1" anticrawler="1" puppeteer="1"/>
 
 ## Discourse {#discourse}
 
@@ -271,13 +271,13 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 主题贴 {#etoland-zhu-ti-tie}
 
-<Route author="mengx8" example="/etoland/star01" path="/etoland/:boardId" paramsDesc={['板块 id，可在板块 URL 找到']} radar="1" rssbud="1"/>
+<Route author="mengx8" example="/etoland/star01" path="/etoland/:boardId" paramsDesc={['板块 id，可在板块 URL 找到']} radar="1"/>
 
 ## HACKER TALK 黑客说 {#hacker-talk-hei-ke-shuo}
 
 ### 最新帖子 {#hacker-talk-hei-ke-shuo-zui-xin-tie-zi}
 
-<Route author="hyoban" example="/hackertalk" path="/hackertalk" radar="1" rssbud="1"/>
+<Route author="hyoban" example="/hackertalk" path="/hackertalk" radar="1"/>
 
 ## LearnKu {#learnku}
 
@@ -309,11 +309,11 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 看板 {#meteor-kan-ban}
 
-<Route author="TonyRL" example="/meteor/all" path="/meteor/:board?" paramsDesc={['看板 ID 或簡稱，可在 URL 或下方路由找到，預設為 `all`']} radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/meteor/all" path="/meteor/:board?" paramsDesc={['看板 ID 或簡稱，可在 URL 或下方路由找到，預設為 `all`']} radar="1"/>
 
 ### 看板列表 {#meteor-kan-ban-lie-biao}
 
-<Route author="TonyRL" example="/meteor/boards" path="/meteor/boards" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/meteor/boards" path="/meteor/boards" radar="1"/>
 
 ## Mobilism {#mobilism}
 
@@ -345,25 +345,25 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 分区帖子 {#nga-fen-qu-tie-zi}
 
-<Route author="xyqfer" example="/nga/forum/489" path="/nga/forum/:fid/:recommend?"  paramsDesc={['分区 id, 可在分区主页 URL 找到, 没有 fid 时 stid 同样适用','是否只显示精华主题, 留空为否, 任意值为是']} radar="1" rssbud="1"/>
+<Route author="xyqfer" example="/nga/forum/489" path="/nga/forum/:fid/:recommend?"  paramsDesc={['分区 id, 可在分区主页 URL 找到, 没有 fid 时 stid 同样适用','是否只显示精华主题, 留空为否, 任意值为是']} radar="1"/>
 
 ### 帖子 {#nga-tie-zi}
 
-<Route author="xyqfer syrinka" example="/nga/post/18449558" path="/nga/post/:tid/:authorId?"  paramsDesc={['帖子 id, 可在帖子 URL 找到', '作者 id']} radar="1" rssbud="1"/>
+<Route author="xyqfer syrinka" example="/nga/post/18449558" path="/nga/post/:tid/:authorId?"  paramsDesc={['帖子 id, 可在帖子 URL 找到', '作者 id']} radar="1"/>
 
 ## Pikabu {#pikabu}
 
 ### Community {#pikabu-community}
 
-<Route author="TonyRL" example="/pikabu/community/real_true_story" path="/pikabu/community/:name" paramsDesc={['Community name']} radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/pikabu/community/real_true_story" path="/pikabu/community/:name" paramsDesc={['Community name']} radar="1"/>
 
 ### Tag {#pikabu-tag}
 
-<Route author="TonyRL" example="/pikabu/tag/Metallica" path="/pikabu/tag/:name" paramsDesc={['Tag name']} radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/pikabu/tag/Metallica" path="/pikabu/tag/:name" paramsDesc={['Tag name']} radar="1"/>
 
 ### User {#pikabu-user}
 
-<Route author="TonyRL" example="/pikabu/user/@Eujenu" path="/pikabu/user/:name" paramsDesc={['User name']} radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/pikabu/user/@Eujenu" path="/pikabu/user/:name" paramsDesc={['User name']} radar="1"/>
 
 ## PLAYNO.1 玩樂達人 {#playno.1-wan-le-da-ren}
 
@@ -375,7 +375,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 :::
 
-<Route author="TonyRL" example="/playno1/av" path="/playno1/av/:catid?" paramsDesc={['分类，见下表，默认为全部文章']} radar="1" rssbud="1">
+<Route author="TonyRL" example="/playno1/av" path="/playno1/av/:catid?" paramsDesc={['分类，见下表，默认为全部文章']} radar="1">
 
 | 全部文章 | AV 新聞 | AV 導覽 |
 | -------- | ------- | ------- |
@@ -385,7 +385,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 情趣 {#playno.1-wan-le-da-ren-qing-qu}
 
-<Route author="TonyRL" example="/playno1/st" path="/playno1/st/:catid?" paramsDesc={['分类，见下表，默认为全部文章']} radar="1" rssbud="1">
+<Route author="TonyRL" example="/playno1/st" path="/playno1/st/:catid?" paramsDesc={['分类，见下表，默认为全部文章']} radar="1">
 
 | 全部文章 | 情趣體驗報告 | 情趣新聞 | 情趣研究所 |
 | -------- | ------------ | -------- | ---------- |
@@ -503,13 +503,13 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 ### forum {#zodgame-forum}
 
-<Route author="FeCCC" example="/zodgame/forum/13" path="/zodgame/forum/:fid?" paramsDesc={['forum id, can be found in URL']} radar="1" rssbud="1" configRequired="1"/>
+<Route author="FeCCC" example="/zodgame/forum/13" path="/zodgame/forum/:fid?" paramsDesc={['forum id, can be found in URL']} radar="1" configRequired="1"/>
 
 ## Zuvio {#zuvio}
 
 ### 校園話題 {#zuvio-xiao-yuan-hua-ti}
 
-<Route author="TonyRL" example="/zuvio/student5/34" path="/zuvio/student5/:board?" paramsDesc={['看板 ID，空为全站文章，可在看板 URL 或下方路由找到']} radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/zuvio/student5/34" path="/zuvio/student5/:board?" paramsDesc={['看板 ID，空为全站文章，可在看板 URL 或下方路由找到']} radar="1"/>
 
 ### 看板列表 {#zuvio-kan-ban-lie-biao}
 
@@ -592,7 +592,7 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 ### 子版块 {#di-yi-hui-suo-zi-ban-kuai}
 
-<Route author="TonyRL" example="/sis001/forum/322" path="/sis001/forum/:id?" paramsDesc={['子版块 ID，可在子论坛 URL 找到，默认为 `Funny Jokes | 短篇笑话区`']} radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/sis001/forum/322" path="/sis001/forum/:id?" paramsDesc={['子版块 ID，可在子论坛 URL 找到，默认为 `Funny Jokes | 短篇笑话区`']} radar="1"/>
 
 ## 电鸭社区 {#dian-ya-she-qu}
 
@@ -1053,7 +1053,7 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 ### 社区 {#wei-feng-she-qu}
 
-<Route author="TonyRL" example="/feng/forum/1" path="/feng/forum/:id/:type?" paramsDesc={['版块 ID，可在版块 URL 找到', '排序，见下表，默认为 `all`']} radar="1" rssbud="1">
+<Route author="TonyRL" example="/feng/forum/1" path="/feng/forum/:id/:type?" paramsDesc={['版块 ID，可在版块 URL 找到', '排序，见下表，默认为 `all`']} radar="1">
 
 | 最新回复 | 最新发布 | 热门 | 精华    |
 | -------- | -------- | ---- | ------- |
@@ -1065,7 +1065,7 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 ### 博客 {#wen-xue-cheng-bo-ke}
 
-<Route author="changlan" example="/wenxuecity/blog/43626" path="/wenxuecity/blog/:id" paramsDesc={['博客 ID, 可在 URL 中找到']} radar="1" rssbud="1"/>
+<Route author="changlan" example="/wenxuecity/blog/43626" path="/wenxuecity/blog/:id" paramsDesc={['博客 ID, 可在 URL 中找到']} radar="1"/>
 
 ### 最热主题 {#wen-xue-cheng-zui-re-zhu-ti}
 
@@ -1073,7 +1073,7 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 ### 最新主题 {#wen-xue-cheng-zui-xin-zhu-ti}
 
-<Route author="changlan" example="/wenxuecity/bbs/tzlc" path="/wenxuecity/bbs/:cat/:elite?" paramsDesc={['版面名, 可在 URL 中找到', '是否精华区, 1 为精华区']} radar="1" rssbud="1"/>
+<Route author="changlan" example="/wenxuecity/bbs/tzlc" path="/wenxuecity/bbs/:cat/:elite?" paramsDesc={['版面名, 可在 URL 中找到', '是否精华区, 1 为精华区']} radar="1"/>
 
 ### 焦点新闻 {#wen-xue-cheng-jiao-dian-xin-wen}
 
@@ -1083,7 +1083,7 @@ When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environme
 
 ### 圈子 {#xiao-mi-she-qu-quan-zi}
 
-<Route author="DIYgod" example="/mi/bbs/board/18066617" path="/mi/bbs/board/:boardId" paramsDesc={['圈子 id，可在圈子 URL 找到']} radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/mi/bbs/board/18066617" path="/mi/bbs/board/:boardId" paramsDesc={['圈子 id，可在圈子 URL 找到']} radar="1"/>
 
 ## 小木虫论坛 {#xiao-mu-chong-lun-tan}
 
