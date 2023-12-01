@@ -58,7 +58,7 @@ export default function Route({
                     </Link>
                 )}
                 {radar && (
-                    <Link to="https://github.com/DIYgod/RSSHub-Radar">
+                    <Link to="/usage#radar">
                         <Badge type="tip"><Translate id="badge.radar" /></Badge>
                     </Link>
                 )}

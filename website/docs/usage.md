@@ -73,3 +73,23 @@ A short example for disabling caching can be written as:
     CACHE_TYPE: null,
 }
 ```
+
+## Radar
+
+In addition to the two functions of generating RSS and obtaining data, RSSHub also provides a Radar function, which is used to map website addresses to RSSHub addresses.
+
+### Configuration file
+
+Radar has two types of configuration files, one is a full-featured [js file](https://github.com/DIYgod/RSSHub/blob/gh-pages/build/radar-rules.js), and the other is a simplified [json file]((https://github.com/DIYgod/RSSHub/blob/gh-pages/build/radar-rules.json)).
+
+### Usage
+
+You need to use supported browser extensions, mobile apps, RSS readers, or other tools to use the Radar feature. Please refer to the documentation of the corresponding tool for specific usage instructions.
+
+- Browser extension: [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar)
+
+- iOS app: [RSSBud](https://github.com/Cay-Zhang/RSSBud)
+
+- Android app: [RSSAid](https://github.com/LeetaoGoooo/RSSAid)
+
+- RSS Reader: Coming soon
