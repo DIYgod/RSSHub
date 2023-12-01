@@ -85,7 +85,7 @@ Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性�
 
 ### UP 主粉丝 {#bilibili-up-zhu-fen-si}
 
-<Route author="Qixingchen" example="/bilibili/user/followers/2267573/3" path="/bilibili/user/followers/:uid/:loginUid" paramsDesc={['用户 id, 可在 UP 主主页中找到','用于登入的用户id,需要配置对应的 Cookie 值']} radar="1" rssbud="1" selfhost="1">
+<Route author="Qixingchen" example="/bilibili/user/followers/2267573/3" path="/bilibili/user/followers/:uid/:loginUid" paramsDesc={['用户 id, 可在 UP 主主页中找到','用于登入的用户id,需要配置对应的 Cookie 值']} radar="1" rssbud="1" configRequired="1">
 
 :::warning
 
@@ -97,7 +97,7 @@ UP 主粉丝现在需要 b 站登录后的 Cookie 值，所以只能自建，详
 
 ### UP 主关注用户 {#bilibili-up-zhu-guan-zhu-yong-hu}
 
-<Route author="Qixingchen" example="/bilibili/user/followings/2267573/3" path="/bilibili/user/followings/:uid/:loginUid" paramsDesc={['用户 id, 可在 UP 主主页中找到','用于登入的用户id,需要配置对应的 Cookie 值']} radar="1" rssbud="1" selfhost="1">
+<Route author="Qixingchen" example="/bilibili/user/followings/2267573/3" path="/bilibili/user/followings/:uid/:loginUid" paramsDesc={['用户 id, 可在 UP 主主页中找到','用于登入的用户id,需要配置对应的 Cookie 值']} radar="1" rssbud="1" configRequired="1">
 
 :::warning
 
@@ -265,7 +265,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ### 用户关注动态 {#bilibili-yong-hu-guan-zhu-dong-tai}
 
-<Route author="TigerCubDen JimenezLi" example="/bilibili/followings/dynamic/109937383" path="/bilibili/followings/dynamic/:uid/:routeParams?" paramsDesc={['用户 id', '额外参数；请参阅 [#UP 主动态](#bilibili-up-zhu-dong-tai) 的说明和表格']} selfhost="1">
+<Route author="TigerCubDen JimenezLi" example="/bilibili/followings/dynamic/109937383" path="/bilibili/followings/dynamic/:uid/:routeParams?" paramsDesc={['用户 id', '额外参数；请参阅 [#UP 主动态](#bilibili-up-zhu-dong-tai) 的说明和表格']} configRequired="1">
 
 :::warning
 
@@ -277,7 +277,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ### 用户关注视频动态 {#bilibili-yong-hu-guan-zhu-shi-pin-dong-tai}
 
-<Route author="LogicJake" example="/bilibili/followings/video/2267573" path="/bilibili/followings/video/:uid/:disableEmbed?" paramsDesc={['用户 id', '默认为开启内嵌视频, 任意值为关闭']} selfhost="1">
+<Route author="LogicJake" example="/bilibili/followings/video/2267573" path="/bilibili/followings/video/:uid/:disableEmbed?" paramsDesc={['用户 id', '默认为开启内嵌视频, 任意值为关闭']} configRequired="1">
 
 :::warning
 
@@ -289,7 +289,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ### 用户关注专栏 {#bilibili-yong-hu-guan-zhu-zhuan-lan}
 
-<Route author="woshiluo" example="/bilibili/followings/article/99800931" path="/bilibili/followings/article/:uid" paramsDesc={['用户 id']} selfhost="1">
+<Route author="woshiluo" example="/bilibili/followings/article/99800931" path="/bilibili/followings/article/:uid" paramsDesc={['用户 id']} configRequired="1">
 
 :::warning
 
@@ -301,7 +301,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ### 用户稍后再看 {#bilibili-yong-hu-shao-hou-zai-kan}
 
-<Route author="JimenezLi" example="/bilibili/watchlater/2267573" path="/bilibili/watchlater/:uid/:disableEmbed?" paramsDesc={['用户 id', '默认为开启内嵌视频, 任意值为关闭']} selfhost="1">
+<Route author="JimenezLi" example="/bilibili/watchlater/2267573" path="/bilibili/watchlater/:uid/:disableEmbed?" paramsDesc={['用户 id', '默认为开启内嵌视频, 任意值为关闭']} configRequired="1">
 
 :::warning
 
@@ -391,7 +391,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ### 用户追漫更新 {#bilibili-yong-hu-zhui-man-geng-xin}
 
-<Route author="yindaheng98" example="/bilibili/manga/followings/26009" path="/bilibili/manga/followings/:uid/:limits?" paramsDesc={['用户 id', '抓取最近更新前多少本漫画，默认为10']} selfhost="1">
+<Route author="yindaheng98" example="/bilibili/manga/followings/26009" path="/bilibili/manga/followings/:uid/:limits?" paramsDesc={['用户 id', '抓取最近更新前多少本漫画，默认为10']} configRequired="1">
 
 :::warning
 
@@ -471,7 +471,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ### Channel Messages {#discord-channel-messages}
 
-<Route author="TonyRL" path="/discord/channel/:channelId" example="/discord/channel/950465850056536084" paramsDesc={['Channel ID']} radar="1" selfhost="1"/>
+<Route author="TonyRL" path="/discord/channel/:channelId" example="/discord/channel/950465850056536084" paramsDesc={['Channel ID']} radar="1" configRequired="1"/>
 
 ## Disqus {#disqus}
 
@@ -579,33 +579,35 @@ Type
 
 ## Instagram {#instagram}
 
-:::warning
-
-Due to Instagram Private API restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/install/) for more.
-
-If you don't want to setup credentials, you can use [Picnob](#picnob) or [Picuki](#picuki).
-
-:::
-
-### User Profile / Hashtag - Private API {#instagram-user-profile-hashtag-private-api}
-
-<Route author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" paramsDesc={['Feed category, see table below','Username / Hashtag name']} radar="1" anticrawler="1" selfhost="1">
-
-| User timeline | Hashtag |
-| ------------- | ------- |
-| user          | tags    |
-
 :::tip
 
 It's highly recommended to deploy with Redis cache enabled.
 
 :::
 
-</Route>
+### User Profile / Hashtag {#instagram-user-profile-hashtag}
 
-### User Profile / Hashtag - Cookie {#instagram-user-profile-hashtag-cookie}
+:::tip
 
-<Route author="TonyRL" example="/instagram/2/user/stefaniejoosten" path="/instagram/2/:category/:key" paramsDesc={['Feed category, see table above','Username / Hashtag name']} radar="1" anticrawler="1" selfhost="1" />
+You may need to setup cookie for a less restrictive rate limit and private profiles.
+
+:::
+
+<Route author="TonyRL" example="/instagram/2/user/stefaniejoosten" path="/instagram/2/:category/:key" paramsDesc={['Feed category, see table below','Username / Hashtag name']} radar="1" anticrawler="1" />
+
+| User timeline | Hashtag |
+| ------------- | ------- |
+| user          | tags    |
+
+### User Profile / Hashtag - Private API {#instagram-user-profile-hashtag-private-api}
+
+:::warning
+
+Due to [Instagram Private API](https://github.com/dilame/instagram-private-api) restrictions, you have to setup your credentials on the server. 2FA is not supported. See [deployment guide](https://docs.rsshub.app/install/) for more.
+
+:::
+
+<Route author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" paramsDesc={['Feed category, see table above','Username / Hashtag name']} radar="1" anticrawler="1" configRequired="1" />
 
 ## Keep {#keep}
 
@@ -617,7 +619,7 @@ It's highly recommended to deploy with Redis cache enabled.
 
 ### Community {#lemmy-community}
 
-<Route author="wb14123" example="/lemmy/technology@lemmy.world/Hot" path="/lemmy/:community/:sort?" paramsDesc={['Lemmmy community, for example technology@lemmy.world', 'Sort by, defaut to Active']} selfhost="1"/>
+<Route author="wb14123" example="/lemmy/technology@lemmy.world/Hot" path="/lemmy/:community/:sort?" paramsDesc={['Lemmmy community, for example technology@lemmy.world', 'Sort by, defaut to Active']} configRequired="1"/>
 
 ## Lofter {#lofter}
 
@@ -757,7 +759,7 @@ Though, every Story expires after 24 hours, so it may be not so serious.
 
 ### Following timeline {#pixiv-following-timeline}
 
-<Route author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1" rssbud="1" selfhost="1">
+<Route author="ClarkeCheng" example="/pixiv/user/illustfollows" path="/pixiv/user/illustfollows" radar="1" rssbud="1" configRequired="1">
 
 :::warning
 
@@ -974,23 +976,23 @@ generates
 
 ### User timeline {#twitter-user-timeline}
 
-<Route author="DIYgod yindaheng98 Rongronggg9" path="/twitter/user/:id/:routeParams?" example="/twitter/user/DIYgod" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all.']} radar="1" rssbud="1" selfhost="1"/>
+<Route author="DIYgod yindaheng98 Rongronggg9" path="/twitter/user/:id/:routeParams?" example="/twitter/user/DIYgod" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'extra parameters, see the table above; particularly when `routeParams=exclude_replies`, replies are excluded; `routeParams=exclude_rts` excludes retweets,`routeParams=exclude_rts_replies` exclude replies and retweets; for default include all.']} radar="1" rssbud="1" configRequired="1"/>
 
 ### User media {#twitter-user-media}
 
-<Route author="yindaheng98 Rongronggg9 DIYgod" path="/twitter/media/:id/:routeParams?" example="/twitter/media/DIYgod" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'extra parameters, see the table above.']} radar="1" rssbud="1" selfhost="1"/>
+<Route author="yindaheng98 Rongronggg9 DIYgod" path="/twitter/media/:id/:routeParams?" example="/twitter/media/DIYgod" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'extra parameters, see the table above.']} radar="1" rssbud="1" configRequired="1"/>
 
 ### Keyword {#twitter-keyword}
 
-<Route author="DIYgod yindaheng98 Rongronggg9" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword/:routeParams?" paramsDesc={['keyword', 'extra parameters, see the table above']} radar="1" rssbud="1" selfhost="1"/>
+<Route author="DIYgod yindaheng98 Rongronggg9" example="/twitter/keyword/RSSHub" path="/twitter/keyword/:keyword/:routeParams?" paramsDesc={['keyword', 'extra parameters, see the table above']} radar="1" rssbud="1" configRequired="1"/>
 
 ### Tweet Details {#twitter-tweet-details}
 
-<Route author="LarchLiu Rongronggg9 DIYgod" example="/twitter/tweet/DIYgod/status/1650844643997646852" path="/twitter/tweet/:id/status/:status/:original?" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'tweet ID', 'extra parameters, data type of return, if the value is not `0`/`false` and `config.isPackage` is `true`, return the original data of twitter']} radar="1" rssbud="1" selfhost="1"/>
+<Route author="LarchLiu Rongronggg9 DIYgod" example="/twitter/tweet/DIYgod/status/1650844643997646852" path="/twitter/tweet/:id/status/:status/:original?" paramsDesc={['username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`', 'tweet ID', 'extra parameters, data type of return, if the value is not `0`/`false` and `config.isPackage` is `true`, return the original data of twitter']} radar="1" rssbud="1" configRequired="1"/>
 
 ### User following timeline {#twitter-user-following-timeline}
 
-<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" paramsDesc={['username', 'extra parameters, see the table above']} radar="1" rssbud="1" selfhost="1">
+<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" paramsDesc={['username', 'extra parameters, see the table above']} radar="1" rssbud="1" configRequired="1">
 
 :::warning
 
@@ -1014,7 +1016,7 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 
 ### Collection {#twitter-collection}
 
-<Route author="TonyRL" example="/twitter/collection/DIYgod/1527857429467172864" path="/twitter/collection/:uid/:collectionId/:routeParams?" paramsDesc={['username, should match the generated token', 'collection ID, can be found in URL', 'extra parameters, see the table above']} radar="1" rssbud="1" selfhost="1">
+<Route author="TonyRL" example="/twitter/collection/DIYgod/1527857429467172864" path="/twitter/collection/:uid/:collectionId/:routeParams?" paramsDesc={['username, should match the generated token', 'collection ID, can be found in URL', 'extra parameters, see the table above']} radar="1" rssbud="1" configRequired="1">
 
 :::warning
 
@@ -1088,7 +1090,7 @@ YouTube provides official RSS feeds for channels, for instance [https://www.yout
 
 ### Subscriptions {#youtube-subscriptions}
 
-<Route author="TonyRL" path="/youtube/subscriptions/:embed?" example="/youtube/subscriptions" paramsDesc={['Default to embed the video, set to any value to disable embedding']} selfhost="1" radar="1" rssbud="1"/>
+<Route author="TonyRL" path="/youtube/subscriptions/:embed?" example="/youtube/subscriptions" paramsDesc={['Default to embed the video, set to any value to disable embedding']} configRequired="1" radar="1" rssbud="1"/>
 
 ### Music Charts {#youtube-music-charts}
 
@@ -1734,7 +1736,14 @@ rule
 
 ### 热搜榜 {#wei-bo-re-sou-bang}
 
-<Route author="xyqfer" example="/weibo/search/hot" path="/weibo/search/hot" anticrawler="1" radar="1" rssbud="1"/>
+<Route author="xyqfer shinemoon" example="/weibo/search/hot" path="/weibo/search/hot/:fulltext?" anticrawler="1" radar="1" rssbud="1"/>
+
+- 使用`/weibo/search/hot`可以获取热搜条目列表；
+- 使用`/weibo/search/hot/fulltext`可以进一步获取热搜条目下的摘要信息（不含图片视频）；
+    - 使用`/weibo/search/hot/fulltext?pic=true`可以获取图片缩略（但需要配合额外的手段，例如浏览器上的Header Editor等来修改referer参数为`https://weibo.com'，以规避微博的外链限制,否则图片无法显示。)
+    - 使用`/weibo/search/hot/fulltext?pic=true&fullpic=true`可以获取Original图片（但需要配合额外的手段，例如浏览器上的Header Editor等来修改referer参数为`https://weibo.com'，以规避微博的外链限制,否则图片无法显示。)
+
+
 
 ### 超话 {#wei-bo-chao-hua}
 
@@ -1751,7 +1760,7 @@ rule
 
 ### 个人时间线 {#wei-bo-ge-ren-shi-jian-xian}
 
-<Route author="zytomorrow DIYgod Rongronggg9" example="/weibo/timeline/3306934123" path="/weibo/timeline/:uid/:feature?/:routeParams?" paramsDesc={['用户的uid', '过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。', '额外参数；请参阅上面的说明和表格']} anticrawler="1" selfhost="1">
+<Route author="zytomorrow DIYgod Rongronggg9" example="/weibo/timeline/3306934123" path="/weibo/timeline/:uid/:feature?/:routeParams?" paramsDesc={['用户的uid', '过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。', '额外参数；请参阅上面的说明和表格']} anticrawler="1" configRequired="1">
 
 :::warning
 
@@ -1765,7 +1774,7 @@ rule
 
 ### 自定义分组 {#wei-bo-zi-ding-yi-fen-zu}
 
-<Route author="monologconnor Rongronggg9" example="/weibo/group/4541216424989965/微博分组/:routeParams?" path="/weibo/group/:gid/:gname?/:routeParams?" paramsDesc={['分组id, 在网页版分组地址栏末尾`?gid=`处获取', '分组显示名称; 默认为: `微博分组`', '额外参数；请参阅上面的说明和表格']} anticrawler="1" selfhost="1">
+<Route author="monologconnor Rongronggg9" example="/weibo/group/4541216424989965/微博分组/:routeParams?" path="/weibo/group/:gid/:gname?/:routeParams?" paramsDesc={['分组id, 在网页版分组地址栏末尾`?gid=`处获取', '分组显示名称; 默认为: `微博分组`', '额外参数；请参阅上面的说明和表格']} anticrawler="1" configRequired="1">
 
 :::warning
 
@@ -1832,11 +1841,11 @@ rule
 
 ### 微信公众号 {#xin-bang-wei-xin-gong-zhong-hao}
 
-<Route author="lessmoe" example="/newrank/wechat/chijiread" path="/newrank/wechat/:wxid" paramsDesc={['微信号，若微信号与新榜信息不一致，以新榜为准']} anticrawler="1" selfhost="1"/>
+<Route author="lessmoe" example="/newrank/wechat/chijiread" path="/newrank/wechat/:wxid" paramsDesc={['微信号，若微信号与新榜信息不一致，以新榜为准']} anticrawler="1" configRequired="1"/>
 
 ### 抖音短视频 {#xin-bang-dou-yin-duan-shi-pin}
 
-<Route author="lessmoe" example="/newrank/douyin/110266463747" path="/newrank/douyin/:dyid" paramsDesc={['抖音ID，可在新榜账号详情 URL 中找到']} anticrawler="1" selfhost="1"/>
+<Route author="lessmoe" example="/newrank/douyin/110266463747" path="/newrank/douyin/:dyid" paramsDesc={['抖音ID，可在新榜账号详情 URL 中找到']} anticrawler="1" configRequired="1"/>
 
 :::warning
 
@@ -1922,7 +1931,7 @@ rule
 
 ### 用户关注时间线 {#zhi-hu-yong-hu-guan-zhu-shi-jian-xian}
 
-<Route author="SeanChao" example="/zhihu/timeline" path="/zhihu/timeline" anticrawler="1" selfhost="1">
+<Route author="SeanChao" example="/zhihu/timeline" path="/zhihu/timeline" anticrawler="1" configRequired="1">
 
 :::warning
 

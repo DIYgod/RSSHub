@@ -93,7 +93,6 @@ NOROUTE
 
 此检查表将帮助您确保您的 PR 包含所有必要的组件。虽然您不必勾选所有项目，以使您的 PR 合并，但请确保您的新路由遵循 [路由规范](/zh/joinus/advanced/script-standard)。这是所有新路由的强制性要求。
 
-
 ```md
 - [ ] 新的路由 New Route
 ```

@@ -64,7 +64,7 @@ RSSHub.request('/bilibili/bangumi/media/9192')
     });
 ```
 
-支持的 config 见 [配置](/zh/install#配置) 文档，比如想禁用缓存，config 可以这样写：
+支持的 config 见 [配置](/zh/install/config) 文档，比如想禁用缓存，config 可以这样写：
 
 ```js
 {
