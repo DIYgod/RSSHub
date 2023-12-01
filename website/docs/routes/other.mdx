@@ -113,7 +113,9 @@ See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 
 </Route>
 
-## Bing 搜索
+## Bing {#bing}
+
+### Bing 搜索 {#bing-bing-sou-suo}
 
 <Route author="CaoMeiYouRen" example="/bing/search/rss" path="/bing/search/:keyword" paramsDesc={['搜索关键词']} radar="1" />
 
@@ -815,9 +817,13 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 </Route>
 
-## 百度热搜 {#bai-du-re-sou}
+## 百度 {#bai-du}
 
-### 榜单 {#bai-du-re-sou-bang-dan}
+### 百度搜索 {#bai-du-bai-du-sou-suo}
+
+<Route author="CaoMeiYouRen" example="/baidu/search/rss" path="/baidu/search/:keyword" paramsDesc={['搜索关键词']} radar="1" anticrawler="1"/>
+
+### 百度热搜榜单 {#bai-du-bai-du-re-sou-bang-dan}
 
 <Route author="xyqfer" example="/baidu/top" path="/baidu/top/:board?" paramsDesc={['榜单，默认为 `realtime`']} radar="1">
 
