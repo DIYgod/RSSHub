@@ -3117,6 +3117,9 @@
     "/greasyfork/scripts/:script/versions": [
         "miles170"
     ],
+    "/greasyfork/scripts/sort/:sort/:language?": [
+        "ingjieye"
+    ],
     "/grist": [
         "Rjnishant530"
     ],
