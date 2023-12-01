@@ -235,7 +235,7 @@ Configs in this sections are in beta stage, and **are turn off by default**. Ple
 
 `OPENAI_PROMPT`: OpenAI prompt, used for using ChatGPT to summarize articles, see [OpenAI API reference](https://platform.openai.com/docs/api-reference/chat) for details
 
-## Route-specific Configurations
+## Route-specific Configurations {#route-specific-configurations}
 
 :::tip
 

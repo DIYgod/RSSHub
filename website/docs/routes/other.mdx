@@ -4,7 +4,7 @@
 
 ### 4399 论坛 {#4399-lun-tan-4399-lun-tan}
 
-<Route author="DIYgod" example="/forum4399/mtag-83932" path="/forum4399/:mtag" paramsDesc={['mtag,必选-论坛网址最后的mtag字段']} selfhost="1">
+<Route author="DIYgod" example="/forum4399/mtag-83932" path="/forum4399/:mtag" paramsDesc={['mtag,必选-论坛网址最后的mtag字段']} configRequired="1">
 
 :::warning
 
@@ -219,7 +219,7 @@ Official Website: [https://news.yahoo.co.jp/pages/article/20200207](https://news
 
 > Only support IMAP protocol, email password and other settings refer to [Email setting](/install)
 
-<Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email/:folder*" paramsDesc={['Email account', 'Inbox name, `INBOX` by default']} selfhost="1"/>
+<Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email/:folder*" paramsDesc={['Email account', 'Inbox name, `INBOX` by default']} configRequired="1"/>
 
 ## Emi Nitta official website 新田惠海官方网站 {#emi-nitta-official-website-xin-tian-hui-hai-guan-fang-wang-zhan}
 
@@ -393,7 +393,7 @@ For example:
 
 ### 订阅列表 {#miniflux-ding-yue-lie-biao}
 
-<Route author="emdoe" example="/miniflux/subscription/categories=科技,影音" path="/miniflux/subscription/:parameters?" paramsDesc={['分类名或分类 ID 或/且 订阅源名称或订阅源 ID']} selfhost="1">
+<Route author="emdoe" example="/miniflux/subscription/categories=科技,影音" path="/miniflux/subscription/:parameters?" paramsDesc={['分类名或分类 ID 或/且 订阅源名称或订阅源 ID']} configRequired="1">
 
 1.  如无指定参数，默认输出全部订阅源
 2.  分类 ID 或订阅源 ID 请于`分类`（快捷键 `g` `c`）或`源`（快捷键 `g` `f`）页面获取，每个分类（或订阅源）的网址即显示其 ID 信息。
@@ -405,7 +405,7 @@ For example:
 
 ### 获取订阅源内容 {#miniflux-huo-qu-ding-yue-yuan-nei-rong}
 
-<Route author="emdoe" example="/miniflux/feeds=1&2&3/mark=read&limit=7&status=unread" path="/miniflux/:feeds/:parameters?" paramsDesc={['订阅源 ID 或获取全部', '过滤及设置参数，多个请用 `&` 连接']} selfhost="1">
+<Route author="emdoe" example="/miniflux/feeds=1&2&3/mark=read&limit=7&status=unread" path="/miniflux/:feeds/:parameters?" paramsDesc={['订阅源 ID 或获取全部', '过滤及设置参数，多个请用 `&` 连接']} configRequired="1">
 
 1.  支持获取全部内容：即可通过 `/miniflux/all` 或 `/miniflux/default` 等关键字获取全部订阅源下的内容。
 2.  支持通过订阅源的 ID 获取指定订阅源的订阅内容，订阅源 ID 请于`源`（快捷键 `g` `f`）所在的页面获取，每个分类（或订阅源）的网址即显示其 ID 信息。而格式上有如下选择：
@@ -496,7 +496,7 @@ It is recommended to use with clipping tools such as Notion Web Clipper.
 
 ### Database {#notion-database}
 
-<Route author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" paramsDesc={['Database ID']} selfhost="1" radar="1">
+<Route author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" paramsDesc={['Database ID']} configRequired="1" radar="1">
 
 There is an optional query parameter called `properties=` that can be used to customize field mapping. There are three built-in fields: author, pubTime and link, which can be used to add additional information.
 
@@ -596,7 +596,7 @@ Specify options (in the format of query string) in parameter `routeParams` param
 | `itemPubDate`      | The HTML elements as `pubDate` in `item` using CSS selector | `string`        | `item` element         |
 | `itemPubDateAttr`  | The attributes of `pubDate` element as pubDate          | `string`        | Element html           |
 
-<Route author="ttttmr" example="/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a" path="/rsshub/transform/html/:url/:routeParams" paramsDesc={['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']} selfhost="1">
+<Route author="ttttmr" example="/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a" path="/rsshub/transform/html/:url/:routeParams" paramsDesc={['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']} configRequired="1">
 
 Parameters parsing in the above example:
 
@@ -632,7 +632,7 @@ JSON Path only supports format like `a.b.c`. if you need to access arrays, like 
 
 :::
 
-<Route author="ttttmr" example="/rsshub/transform/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body" path="/rsshub/transform/json/:url/:routeParams" paramsDesc={['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']} selfhost="1">
+<Route author="ttttmr" example="/rsshub/transform/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body" path="/rsshub/transform/json/:url/:routeParams" paramsDesc={['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']} configRequired="1">
 
 Parameters parsing in the above example:
 
@@ -660,7 +660,7 @@ Specify options (in the format of query string) in parameter `routeParams` param
 |-----------------|----------------------------------------------------------------|-----------------|------------------------|
 | `title`         | The title of the RSS                                           | `string`        | Extract from `<title>` |
 
-<Route author="flrngel" example="/rsshub/transform/xml/https%3A%2F%2Fwww.sitemaps.org%2Fsitemap.xml/" path="/rsshub/transform/html/:url/:routeParams?" paramsDesc={['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']} selfhost="1">
+<Route author="flrngel" example="/rsshub/transform/xml/https%3A%2F%2Fwww.sitemaps.org%2Fsitemap.xml/" path="/rsshub/transform/html/:url/:routeParams?" paramsDesc={['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']} configRequired="1">
 
 Parameters parsing in the above example:
 
@@ -851,7 +851,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 :::
 
-<Route author="DIYgod" example="/dida365/habit/checkins" path="/dida365/habit/checkins" selfhost="1"/>
+<Route author="DIYgod" example="/dida365/habit/checkins" path="/dida365/habit/checkins" configRequired="1"/>
 
 ## 福利资源 - met.red {#fu-li-zi-yuan-met.red}
 
