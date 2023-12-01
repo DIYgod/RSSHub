@@ -140,9 +140,6 @@ dependencies:
   oauth-1.0a:
     specifier: 2.2.6
     version: 2.2.6
-  pidusage:
-    specifier: 3.0.2
-    version: 3.0.2
   plist:
     specifier: 3.1.0
     version: 3.1.0
@@ -274,9 +271,6 @@ devDependencies:
   '@types/nodemon':
     specifier: 1.19.6
     version: 1.19.6
-  '@types/pidusage':
-    specifier: 2.0.5
-    version: 2.0.5
   '@types/plist':
     specifier: 3.0.5
     version: 3.0.5
@@ -1695,10 +1689,6 @@ packages:
     resolution: {integrity: sha512-vjKuaQOLUA5EY2zkUmWG1ipXbKt9Wd+H/0SiIuHVeH4cHtt6509iRUGH9ZR0iqgUrtj3BrP9KqoTuV3ZCbQcYA==}
     dependencies:
       '@types/node': 20.5.6
-    dev: true
-
-  /@types/pidusage@2.0.5:
-    resolution: {integrity: sha512-MIiyZI4/MK9UGUXWt0jJcCZhVw7YdhBuTOuqP/BjuLDLZ2PmmViMIQgZiWxtaMicQfAz/kMrZ5T7PKxFSkTeUA==}
     dev: true
 
   /@types/plist@3.0.5:
@@ -6341,13 +6331,6 @@ packages:
     engines: {node: '>=0.10'}
     hasBin: true
     dev: true
-
-  /pidusage@3.0.2:
-    resolution: {integrity: sha512-g0VU+y08pKw5M8EZ2rIGiEBaB8wrQMjYGFfW2QVIfyT8V+fq8YFLkvlz4bz5ljvFDJYNFCWT3PWqcRr2FKO81w==}
-    engines: {node: '>=10'}
-    dependencies:
-      safe-buffer: 5.2.1
-    dev: false
 
   /pino-abstract-transport@1.1.0:
     resolution: {integrity: sha512-lsleG3/2a/JIWUtf9Q5gUNErBqwIu1tUKTT3dUzaf5DySw9ra1wcqKjJjLX1VTY64Wk1eEOYsVGSaGfCK85ekA==}
