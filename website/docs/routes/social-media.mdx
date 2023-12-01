@@ -8,18 +8,6 @@
 
 ## bilibili {#bilibili}
 
-:::tip Tiny Tiny RSS 用户请注意
-
-Tiny Tiny RSS 会给所有 iframe 元素添加 `sandbox="allow-scripts"` 属性，导致无法加载 bilibili 内嵌视频，如果需要使用内嵌视频请为 Tiny Tiny RSS 安装 [remove_iframe_sandbox](https://github.com/DIYgod/ttrss-plugin-remove-iframe-sandbox) 插件
-
-:::
-
-:::tip 关于视频清晰度
-
-内嵌视频的默认清晰度为 480P，如需解锁更高清晰度，请[点此](https://www.bilibili.com/blackboard/html5player.html?cid=253377437&aid=885203421&page=&as_wide=1)在下方登录以设置 Cookie，仅对当前浏览器生效
-
-:::
-
 ### 番剧 {#bilibili-fan-ju}
 
 <Route author="DIYgod" example="/bilibili/bangumi/media/9192" path="/bilibili/bangumi/media/:mediaid" paramsDesc={['番剧媒体 id, 番剧主页 URL 中获取']}/>
@@ -1047,12 +1035,6 @@ Some of the categories contain slash like `3D/CG` , must change the slash `/` to
 <Route author="kt286" example="/vuevideo/971924215514" path="/vuevideo/:userid" paramsDesc={['用户ID, 可在对应页面的 URL 中找到']}/>
 
 ## YouTube {#youtube}
-
-:::tip Tiny Tiny RSS users please notice
-
-Tiny Tiny RSS will add `sandbox="allow-scripts"` to all iframe elements, as a result, YouTube embedded videos cannot be loaded. If you need to use embedded videos, please install plugin [remove_iframe_sandbox](https://github.com/DIYgod/ttrss-plugin-remove-iframe-sandbox) for Tiny Tiny RSS.
-
-:::
 
 ### User {#youtube-user}
 

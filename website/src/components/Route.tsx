@@ -48,15 +48,15 @@ export default function Route({
                 {supportBT && <Badge type="tip"><Translate id="badge.supportBT" /></Badge>}
                 {supportPodcast && <Badge type="tip"><Translate id="badge.supportPodcast" /></Badge>}
                 {supportScihub && <Badge type="tip"><Translate id="badge.supportSciHub" /></Badge>}
-                {puppeteer && <Badge type="warn"><Translate id="badge.puppeteer" /></Badge>}
+                {puppeteer && <Badge type="warning"><Translate id="badge.puppeteer" /></Badge>}
                 {anticrawler && (
                     <Link to="/faq">
-                        <Badge type="warn"><Translate id="badge.anticrawler" /></Badge>
+                        <Badge type="caution"><Translate id="badge.anticrawler" /></Badge>
                     </Link>
                 )}
                 {configRequired && (
                     <Link to="/install/config#route-specific-configurations">
-                        <Badge type="warn"><Translate id="badge.configRequired" /></Badge>
+                        <Badge type="warning"><Translate id="badge.configRequired" /></Badge>
                     </Link>
                 )}
                 {radar && (
@@ -83,6 +83,7 @@ export default function Route({
                 <Link to={demoUrl}>
                     {demoUrl}
                 </Link>
+                <img loading="lazy" src={`https://img.shields.io/website.svg?label=&url=${demoUrl}&cacheSeconds=7200`} />
             </p>
             <p className="path">
                 <Translate id="route.path" /><code>{path}</code>
