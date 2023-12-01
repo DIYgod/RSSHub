@@ -2,7 +2,6 @@
 sidebar_position: 1
 ---
 
-
 # 快速开始
 
 如果您在使用 RSSHub 过程中遇到了问题或者有建议改进，我们很乐意听取您的意见！您可以通过 Pull Request 来提交您的修改。无论您对 Pull Request 的使用是否熟悉，我们都欢迎不同经验水平的开发者参与贡献。如果您不懂编程，也可以通过 [报告错误](https://github.com/DIYgod/RSSHub/issues) 的方式来帮助我们。
@@ -47,4 +46,7 @@ sidebar_position: 1
 
 [开始吧！](/zh/joinus/new-radar)
 
-<a href="https://chrome.google.com/webstore/detail/rsshub-radar/kefjpfngnndepjbopdmoebkipbgkggaa" target="_blank" rel="noopener noreferrer"><img src="https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/UV4C4ybeBTsZt43U4xis.png" alt="为 Chromium 安装 RSSHub Radar" style={{height: "58px"}} /></a> <a href="https://addons.mozilla.org/firefox/addon/rsshub-radar/" target="_blank" rel="noopener noreferrer"><img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" alt="为 Firefox 安装 RSSHub Radar for " style={{height: "58px"}} /></a> <a href="https://microsoftedge.microsoft.com/addons/detail/rsshub-radar/gangkeiaobmjcjokiofpkfpcobpbmnln" target="_blank" rel="noopener noreferrer"><img src="https://wsrv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/f/f7/Get_it_from_Microsoft_Badge.svg" alt="为 Edge 安装 RSSHub Radar" style={{height: "58px"}} /></a> <a href="https://apps.apple.com/us/app/rsshub-radar/id1610744717" target="_blank" rel="noopener noreferrer"><img src="https://developer.apple.com/news/images/download-on-the-app-store-badge.png" alt="为 Safari 安装 RSSHub Radar" style={{height: "58px"}} /></a>
+<Link to="https://chrome.google.com/webstore/detail/rsshub-radar/kefjpfngnndepjbopdmoebkipbgkggaa" target="_blank" rel="noopener noreferrer"><img src="https://storage.googleapis.com/web-dev-uploads/image/WlD8wC6g8khYWPJUsQceQkhXSlv1/UV4C4ybeBTsZt43U4xis.png" alt="为 Chromium 安装 RSSHub Radar" style={{height: "58px"}} /></Link>
+<Link to="https://addons.mozilla.org/firefox/addon/rsshub-radar/" target="_blank" rel="noopener noreferrer"><img src="https://blog.mozilla.org/addons/files/2020/04/get-the-addon-fx-apr-2020.svg" alt="为 Firefox 安装 RSSHub Radar for " style={{height: "58px"}} /></Link>
+<Link to="https://microsoftedge.microsoft.com/addons/detail/rsshub-radar/gangkeiaobmjcjokiofpkfpcobpbmnln" target="_blank" rel="noopener noreferrer"><img src="https://wsrv.nl/?url=https://upload.wikimedia.org/wikipedia/commons/f/f7/Get_it_from_Microsoft_Badge.svg" alt="为 Edge 安装 RSSHub Radar" style={{height: "58px"}} /></Link>
+<Link to="https://apps.apple.com/us/app/rsshub-radar/id1610744717" target="_blank" rel="noopener noreferrer"><img src="https://developer.apple.com/news/images/download-on-the-app-store-badge.png" alt="为 Safari 安装 RSSHub Radar" style={{height: "58px"}} /></Link>

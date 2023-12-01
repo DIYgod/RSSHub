@@ -53,7 +53,7 @@ sidebar_position: 1
 | **`media.*`** | *（可选）* 条目相关的媒体。更多详情请参见 [媒体 RSS](https://www.rssboard.org/media-rss) | `undefinded` | R |
 | **`doi`** | *（可选）* 条目的数字对象标识符 (DOI)，应为格式为 `10.xxx/xxxxx.xxxx` 的字符串 | `undefinded` | R |
 
-:::caution 格式考虑
+:::warning 格式考虑
 
 在指定 RSS 订阅源中的某些字段时，重要的是要注意一些格式考虑因素。具体来说，您应避免在以下字段中包含任何换行符、连续的空格或前导／尾随空格：**`title`**，**`subtitle`**（仅适用于 Atom），**`author`**（仅适用于 Atom），**`item.title`** 和 **`item.author`**。
 

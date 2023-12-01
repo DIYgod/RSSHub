@@ -17,14 +17,25 @@ module.exports = async ({ github, context, core, got }, baseUrl, routes, number)
         core.info(`testing route:  ${lks}`);
         // Intended, one at a time
         let success = false;
-        let detail = 'no detail';
+        let detail;
         try {
+            // TODO: change me when https://github.com/actions/github-script is run on node20
+            // const res = await fetch(lks);
+            // if (!res.ok) {
+            //     throw res;
+            // }
+            // success = true;
+            // detail = (await res.text()).replace(/\s+(\n|$)/g, '\n');
             const res = await got(lks);
             if (res && res.body) {
                 success = true;
                 detail = res.body.replace(/\s+(\n|$)/g, '\n');
             }
         } catch (err) {
+            // TODO: change me when https://github.com/actions/github-script is run on node20
+            // detail = `HTTPError: Response code ${err.status} (${err.statusText})`;
+            // const res = await err.text();
+            // const errInfoList = err.body && res.match(/(?<=<pre class="message">)(.+?)(?=<\/pre>)/gs);
             detail = err.toString();
             const errInfoList = err.response && err.response.body && err.response.body.match(/(?<=<pre class="message">)(.+?)(?=<\/pre>)/gs);
             if (errInfoList) {

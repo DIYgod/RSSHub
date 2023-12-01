@@ -4,7 +4,7 @@ sidebar_position: 4
 
 # Add documentation
 
-Now that we have completed the code, it's time to add the documentation for your route. Open the appropriate file in the [document (/website/docs)](https://github.com/DIYgod/RSSHub/blob/master/website/docs), which in this example is `/website/i18n/en/docusaurus-plugin-content-docs/current/routes/programming.md`.
+Now that we have completed the code, it's time to add the documentation for your route. Open the appropriate file in the [document (/website/docs)](https://github.com/DIYgod/RSSHub/blob/master/website/docs), which in this example is `website/docs/routes/programming.mdx`.
 
 In order to preview the documentation in real-time, you need to install the dependencies for the documentation. Run the following command in the **`website` directory**:
 
@@ -58,13 +58,13 @@ npm run start
 </TabItem>
 </Tabs>
 
-:::caution
+:::warning
 
 You cannot switch to other languages in development mode. This is a [technical limitation](https://docusaurus.io/docs/i18n/tutorial#start-your-site) from Docusaurus.
 
 :::
 
-The documentation is written in MDX and rendered with [Docusaurus v2](https://docusaurus.io/docs).
+The documentation is written in MDX v3 and rendered with [Docusaurus v3](https://docusaurus.io/docs).
 
 To add documentation to your route, use the `Route` React component. It works like HTML tag. The following are the most commonly used component properties:
 
@@ -72,12 +72,12 @@ To add documentation to your route, use the `Route` React component. It works li
 -   `example`: The route example, with a leading `/`
 -   `path`: The route path, which should be the same as the key in [`maintainer.js`](/joinus/new-rss/before-start#understand-the-basics-maintainer-js) with the namespace. In the above example, it is `/github/issue/:user/:repo?`
 -   `paramsDesc`: The route parameter description, in an array of strings that support Markdown.
-    -   The description **must** follow the order in which they appear in the path.
-    -   The number of description should match with the number of parameters in `path`. If you miss a description, the build will fail.
-    -   Route parameters ending with `?`, `*` or `+` will be automatically marked as `optional`, `zero or more` or `one or more`, respectively.
-    -   Route parameters without a suffix are marked as `required`
-    -   There's no need to explicitly mention the necessity of path parameters again.
-    -   If a parameter is optional, make sure to mention the default value.
+  -   The description **must** follow the order in which they appear in the path.
+  -   The number of description should match with the number of parameters in `path`. If you miss a description, the build will fail.
+  -   Route parameters ending with `?`, `*` or `+` will be automatically marked as `optional`, `zero or more` or `one or more`, respectively.
+  -   Route parameters without a suffix are marked as `required`
+  -   There's no need to explicitly mention the necessity of path parameters again.
+  -   If a parameter is optional, make sure to mention the default value.
 
 ## Documentation examples
 
@@ -157,7 +157,7 @@ Supprts Markdown.
 
 :::
 
-:::caution
+:::warning
 
 Add a empty line around the starting and ending directive `:::`
 
@@ -195,7 +195,7 @@ Supprts Markdown.
 
 :::
 
-:::caution
+:::warning
 
 Add a empty line around the starting and ending directive `:::`
 
@@ -217,7 +217,7 @@ In addition to the aforementioned component properties, there are several other 
 -   `puppeteer`: set to `1` if the feed uses puppeteer.
 -   `radar`: set to `1` if the feed has a radar rule.
 -   `rssbud`: set to `1` if the radar rule is also compatible with RSSBud
--   `selfhost`: set to `1` if the feed requires extra configuration through environment variables.
+-   `configRequired`: set to `1` if the feed requires extra configuration through environment variables.
 -   `supportBT`: set to `1` if the feed supports BitTorrent.
 -   `supportPodcast`: set to `1` if the feed supports podcasts.
 -   `supportScihub`: set to `1` if the feed supports Sci-Hub.
@@ -225,12 +225,12 @@ In addition to the aforementioned component properties, there are several other 
 By using these properties, you can provide valuable information to users and make it easier for them to understand and use your route. Adding these properties to your route documentation will add a badge in front of it.
 
 ```tsx
-<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub username', 'GitHub repo name, `RSSHub` by default']} anticrawler="1" puppeteer="1" radar="1" rssbud="1" selfhost="1" supportBT="1" supportPodcast="1" supportScihub="1" />
+<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub username', 'GitHub repo name, `RSSHub` by default']} anticrawler="1" puppeteer="1" radar="1" rssbud="1" configRequired="1" supportBT="1" supportPodcast="1" supportScihub="1" />
 ```
 
 ---
 
-<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub username', 'GitHub repo name, `RSSHub` by default']} anticrawler="1" puppeteer="1" radar="1" rssbud="1" selfhost="1" supportBT="1" supportPodcast="1" supportScihub="1" />
+<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub username', 'GitHub repo name, `RSSHub` by default']} anticrawler="1" puppeteer="1" radar="1" rssbud="1" configRequired="1" supportBT="1" supportPodcast="1" supportScihub="1" />
 
 ---
 
