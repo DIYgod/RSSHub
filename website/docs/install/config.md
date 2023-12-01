@@ -235,6 +235,8 @@ Configs in this sections are in beta stage, and **are turn off by default**. Ple
 
 `OPENAI_PROMPT`: OpenAI prompt, used for using ChatGPT to summarize articles, see [OpenAI API reference](https://platform.openai.com/docs/api-reference/chat) for details
 
+`REMOTE_CONFIG`: Remote configuration URL, used for dynamically updating configurations. The address should return a JSON with an environment variable name as the key. It will be loaded and merged with local configurations when the application starts. In case of conflicts with local configurations, remote configurations will take precedence. But please note that some basic configuration items do not support remote retrieval.
+
 ## Route-specific Configurations {#route-specific-configurations}
 
 :::tip

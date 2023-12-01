@@ -235,6 +235,8 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 
 `OPENAI_PROMPT`: OpenAI 提示语，用于使用 ChatGPT 总结文章，详见 [OpenAI API 文档](https://platform.openai.com/docs/api-reference/chat)
 
+`REMOTE_CONFIG`: 远程配置地址，用于动态更新配置，地址应返回一个环境变量名作为 key 的 JSON，会在应用启动时加载并合并本地配置，与本地配置冲突时以远程配置为准，但请注意部分基础配置项不支持从远程获取
+
 ## 部分 RSS 模块配置 {#route-specific-configurations}
 
 :::tip
