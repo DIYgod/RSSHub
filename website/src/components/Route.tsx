@@ -76,7 +76,7 @@ export default function Route({
                 <Link to={demoUrl}>
                     {demoUrl}
                 </Link>
-                <img loading="lazy" src={`https://img.shields.io/website.svg?label=&url=${demoUrl}&cacheSeconds=7200`} />
+                <img loading="lazy" src={`https://img.shields.io/website.svg?label=&url=${encodeURIComponent(demoUrl)}&cacheSeconds=7200`} />
             </p>
             <p className="path">
                 <Translate id="route.path" /><code>{path}</code>
