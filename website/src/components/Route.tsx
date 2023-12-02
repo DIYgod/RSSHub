@@ -15,6 +15,7 @@ export default function Route({
   radar = null,
   configRequired = null,
   puppeteer = null,
+  notOperational = null,
   children = null,
 }: {
   author?: string;
@@ -28,6 +29,7 @@ export default function Route({
   radar?: boolean;
   configRequired?: boolean;
   puppeteer?: boolean;
+  notOperational?: boolean;
   children?: JSX.Element | JSX.Element[];
 }): JSX.Element {
     const demoUrl = 'https://rsshub.app' + example;
@@ -41,17 +43,22 @@ export default function Route({
     };
 
     return (
-        <div className="routeBlock" id={path}>
+        <div className={`routeBlock ${notOperational ? "notOperational" : ""}`} id={path}>
             <p className="badges">
-                {supportBT && <Badge type="tip"><Translate id="badge.supportBT" /></Badge>}
-                {supportPodcast && <Badge type="tip"><Translate id="badge.supportPodcast" /></Badge>}
-                {supportScihub && <Badge type="tip"><Translate id="badge.supportSciHub" /></Badge>}
-                {puppeteer && <Badge type="warning"><Translate id="badge.puppeteer" /></Badge>}
+                {notOperational && (
+                    <Link to="https://github.com/DIYgod/RSSHub/issues/new?assignees=&labels=RSS+bug&projects=&template=bug_report_en.yml">
+                        <Badge type="caution"><Translate id="badge.notOperational" /></Badge>
+                    </Link>
+                )}
                 {anticrawler && (
                     <Link to="/faq">
                         <Badge type="caution"><Translate id="badge.anticrawler" /></Badge>
                     </Link>
                 )}
+                {supportBT && <Badge type="tip"><Translate id="badge.supportBT" /></Badge>}
+                {supportPodcast && <Badge type="tip"><Translate id="badge.supportPodcast" /></Badge>}
+                {supportScihub && <Badge type="tip"><Translate id="badge.supportSciHub" /></Badge>}
+                {puppeteer && <Badge type="warning"><Translate id="badge.puppeteer" /></Badge>}
                 {configRequired && (
                     <Link to="/install/config#route-specific-configurations">
                         <Badge type="warning"><Translate id="badge.configRequired" /></Badge>
@@ -76,7 +83,7 @@ export default function Route({
                 <Link to={demoUrl}>
                     {demoUrl}
                 </Link>
-                <img loading="lazy" src={`https://img.shields.io/website.svg?label=&url=${demoUrl}&cacheSeconds=7200`} />
+                <img loading="lazy" src={`https://img.shields.io/website.svg?label=&url=${encodeURIComponent(demoUrl)}&cacheSeconds=7200`} />
             </p>
             <p className="path">
                 <Translate id="route.path" /><code>{path}</code>

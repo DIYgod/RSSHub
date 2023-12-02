@@ -76,11 +76,11 @@ Freebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的
 
 ### Articles {#google-sites-articles}
 
-<Route author="hoilc" example="/google/sites/outlierseconomics" path="/google/sites/:id" paramsDesc={['Site ID, can be found in URL']} />
+<Route author="hoilc" example="/google/sites/outlierseconomics" path="/google/sites/:id" paramsDesc={['Site ID, can be found in URL']} notOperational="1" />
 
 ### Recent Changes {#google-sites-recent-changes}
 
-<Route author="nczitzk" example="/google/sites/recentChanges/outlierseconomics" path="/google/sites/recentChanges/:id" paramsDesc={['Site ID, can be found in URL']}/>
+<Route author="nczitzk" example="/google/sites/recentChanges/outlierseconomics" path="/google/sites/recentChanges/:id" paramsDesc={['Site ID, can be found in URL']} notOperational="1"/>
 
 ## Gwern Branwen {#gwern-branwen}
 
@@ -132,11 +132,11 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 ### DIYgod 的动森日记 {#hi-diygod-diygod-de-dong-sen-ri-ji}
 
-<Route author="DIYgod" example="/blogs/diygod/animal-crossing" path="/blogs/diygod/animal-crossing"/>
+<Route author="DIYgod" example="/blogs/diygod/animal-crossing" path="/blogs/diygod/animal-crossing" notOperational="1"/>
 
 ### DIYgod 的可爱的手办们 {#hi-diygod-diygod-de-ke-ai-de-shou-ban-men}
 
-<Route author="DIYgod" example="/blogs/diygod/gk" path="/blogs/diygod/gk"/>
+<Route author="DIYgod" example="/blogs/diygod/gk" path="/blogs/diygod/gk" notOperational="1"/>
 
 ## Ian Spriggss {#ian-spriggss}
 
@@ -154,7 +154,7 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 ### JustRun {#justrun-justrun}
 
-<Route author="nczitzk" example="/justrun" path="/justrun"/>
+<Route author="nczitzk" example="/justrun" path="/justrun" notOperational="1"/>
 
 ## Kun Cheng {#kun-cheng}
 
@@ -178,7 +178,7 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 ### Ash Maurya's blog {#love-the-problem-ash-maurya-s-blog}
 
-<Route author="james-tindal" example="/ash-maurya" path="/ash-maurya"/>
+<Route author="james-tindal" example="/ash-maurya" path="/ash-maurya" notOperational="1"/>
 
 ## MacMenuBar {#macmenubar}
 
@@ -244,7 +244,7 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 ### Blog {#miris-whispers-blog}
 
-<Route author="chazeon" example="/miris/blog" path="/miris/blog" />
+<Route author="chazeon" example="/miris/blog" path="/miris/blog" notOperational="1" />
 
 ## Paul Graham {#paul-graham}
 
@@ -262,13 +262,13 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 ### Blog {#polkadot-blog}
 
-<Route author="iceqing" example="/polkadot/blog" path="/polkadot/blog"/>
+<Route author="iceqing" example="/polkadot/blog" path="/polkadot/blog" notOperational="1"/>
 
 ## PolkaWorld {#polkaworld}
 
 ### Newest Articles {#polkaworld-newest-articles}
 
-<Route author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest"/>
+<Route author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest" notOperational="1"/>
 
 :::tip
 
@@ -322,11 +322,11 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ### 最新文章 {#whoscall-zui-xin-wen-zhang}
 
-<Route author="nczitzk" example="/whoscall" path="/whoscall"/>
+<Route author="nczitzk" example="/whoscall" path="/whoscall" notOperational="1"/>
 
 ### 分類 {#whoscall-fen-lei}
 
-<Route author="nczitzk" example="/whoscall/categories/5-Whoscall 百科" path="/whoscall/categories/:category?" paramsDesc={['分类，见下表，可在对应分類页 URL 中找到，默认为最新文章']}>
+<Route author="nczitzk" example="/whoscall/categories/5-Whoscall 百科" path="/whoscall/categories/:category?" paramsDesc={['分类，见下表，可在对应分類页 URL 中找到，默认为最新文章']} notOperational="1">
 
 | News   | Whoscall 百科   | 防詐小學堂     | Whoscall 日常   |
 | ------ | --------------- | -------------- | --------------- |
@@ -336,7 +336,7 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ### 標籤 {#whoscall-biao-qian}
 
-<Route author="nczitzk" example="/whoscall/tags/whoscall小百科" path="/whoscall/tags/:tag?" paramsDesc={['標籤，见下表，可在对应標籤页 URL 中找到，默认为最新文章']}>
+<Route author="nczitzk" example="/whoscall/tags" path="/whoscall/tags/:tag?" paramsDesc={['標籤，见下表，可在对应標籤页 URL 中找到，默认为最新文章']} notOperational="1">
 
 | 防疫也防詐 | 防詐專家 | 來電辨識 | whoscall 日常 |
 | ---------- | -------- | -------- | ------------- |
@@ -359,7 +359,7 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ### 首页 {#a-li-yun-xi-tong-zu-ji-shu-bo-ke-shou-ye}
 
-<Route author="attenuation" example="/aliyun-kernel/index" path="/aliyun-kernel/index"/>
+<Route author="attenuation" example="/aliyun-kernel/index" path="/aliyun-kernel/index" notOperational="1"/>
 
 ## 博客园 {#bo-ke-yuan}
 
@@ -425,19 +425,19 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ### 博客 {#hua-kang-zi-xing-gu-shi-bo-ke}
 
-<Route author="tpnonthealps" example="/fontstory" path="/fontstory" />
+<Route author="tpnonthealps" example="/fontstory" path="/fontstory" notOperational="1" />
 
 ## 黄健宏博客 {#huang-jian-hong-bo-ke}
 
 ### 文章 {#huang-jian-hong-bo-ke-wen-zhang}
 
-<Route author="stormbuf" example="/huangz" path="/huangz" radar="1"/>
+<Route author="stormbuf" example="/huangz" path="/huangz" radar="1" notOperational="1"/>
 
 ## 建宁闲谈 {#jian-ning-xian-tan}
 
 ### 文章 {#jian-ning-xian-tan-wen-zhang}
 
-<Route author="changlan" example="/blogs/jianning" path="/blogs/jianning" radar="1"/>
+<Route author="changlan" example="/blogs/jianning" path="/blogs/jianning" radar="1" notOperational="1"/>
 
 ## 劍心．回憶 {#jian-xin-hui-yi}
 
@@ -491,7 +491,7 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ### 最新文章 {#jiao-liu-dao-zi-yuan-wang-zui-xin-wen-zhang}
 
-<Route author="TonyRL" example="/jiaoliudao" path="/jiaoliudao" radar="1" />
+<Route author="TonyRL" example="/jiaoliudao" path="/jiaoliudao" radar="1" notOperational="1" />
 
 ## 敬维博客 {#jing-wei-bo-ke}
 
@@ -503,7 +503,7 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ### 推送 {#mei-ri-an-quan-tui-song}
 
-<Route author="LogicJake" example="/security/pulses" path="/security/pulses"/>
+<Route author="LogicJake" example="/security/pulses" path="/security/pulses" anticrawler="1"/>
 
 ## 美团技术团队 {#mei-tuan-ji-shu-tuan-dui}
 
@@ -545,7 +545,7 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ### 首页 {#yu-cong-bo-ke-shou-ye}
 
-<Route author="XinRoom" example="/ddosi" path="/ddosi"/>
+<Route author="XinRoom" example="/ddosi" path="/ddosi" anticrawler="1"/>
 
 ### 分类 {#yu-cong-bo-ke-fen-lei}
 

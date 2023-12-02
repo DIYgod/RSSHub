@@ -14,19 +14,27 @@
 
 ### 用户追番列表 {#bilibili-yong-hu-zhui-fan-lie-biao}
 
-<Route author="wdssmq" example="/bilibili/user/bangumi/208259" path="/bilibili/user/bangumi/:uid/:type?" paramsDesc={['用户 id','1为番，2为剧，留空为1']} anticrawler="1" radar="1"/>
+<Route author="wdssmq" example="/bilibili/user/bangumi/208259" path="/bilibili/user/bangumi/:uid/:type?" paramsDesc={['用户 id','1为番，2为剧，留空为1']} radar="1"/>
 
 ### UP 主投稿 {#bilibili-up-zhu-tou-gao}
 
-<Route author="DIYgod" example="/bilibili/user/video/2267573" path="/bilibili/user/video/:uid/:disableEmbed?" paramsDesc={['用户 id, 可在 UP 主主页中找到', '默认为开启内嵌视频, 任意值为关闭']} anticrawler="1" radar="1"/>
+<Route author="DIYgod" example="/bilibili/user/video/2267573" path="/bilibili/user/video/:uid/:disableEmbed?" paramsDesc={['用户 id, 可在 UP 主主页中找到', '默认为开启内嵌视频, 任意值为关闭']} anticrawler="1" radar="1">
+
+:::tip 动态的专栏显示全文
+
+可以使用 [UP 主动态](#bilibili-up-zhu-dong-tai)路由作为代替绕过反爬限制
+
+:::
+
+</Route>
 
 ### UP 主所有视频 {#bilibili-up-zhu-suo-you-shi-pin}
 
-<Route author="CcccFz" example="/bilibili/user/video-all/436361287" path="/bilibili/user/video-all/:uid/:disableEmbed?" paramsDesc={['用户 id, 可在 UP 主主页中找到', '默认为开启内嵌视频, 任意值为关闭']} anticrawler="1" radar="1"/>
+<Route author="CcccFz" example="/bilibili/user/video-all/436361287" path="/bilibili/user/video-all/:uid/:disableEmbed?" paramsDesc={['用户 id, 可在 UP 主主页中找到', '默认为开启内嵌视频, 任意值为关闭']} anticrawler="1" radar="1" notOperational="1"/>
 
 ### UP 主专栏 {#bilibili-up-zhu-zhuan-lan}
 
-<Route author="lengthmin" example="/bilibili/user/article/334958638" path="/bilibili/user/article/:uid" paramsDesc={['用户 id, 可在 UP 主主页中找到']} anticrawler="1" radar="1"/>
+<Route author="lengthmin" example="/bilibili/user/article/334958638" path="/bilibili/user/article/:uid" paramsDesc={['用户 id, 可在 UP 主主页中找到']} radar="1"/>
 
 ### UP 主动态 {#bilibili-up-zhu-dong-tai}
 
@@ -57,7 +65,7 @@
 
 ### UP 主频道的视频列表 {#bilibili-up-zhu-pin-dao-de-shi-pin-lie-biao}
 
-<Route author="weirongxu" example="/bilibili/user/channel/2267573/396050" path="/bilibili/user/channel/:uid/:sid/:disableEmbed?" paramsDesc={['用户 id, 可在 UP 主主页中找到', '频道 id, 可在频道的 URL 中找到', '默认为开启内嵌视频, 任意值为关闭']} anticrawler="1"/>
+<Route author="weirongxu" example="/bilibili/user/channel/2267573/396050" path="/bilibili/user/channel/:uid/:sid/:disableEmbed?" paramsDesc={['用户 id, 可在 UP 主主页中找到', '频道 id, 可在频道的 URL 中找到', '默认为开启内嵌视频, 任意值为关闭']}/>
 
 ### UP 主默认收藏夹 {#bilibili-up-zhu-mo-ren-shou-cang-jia}
 
@@ -69,7 +77,7 @@
 
 ### UP 主投币视频 {#bilibili-up-zhu-tou-bi-shi-pin}
 
-<Route author="DIYgod" example="/bilibili/user/coin/208259" path="/bilibili/user/coin/:uid/:disableEmbed?" paramsDesc={['用户 id, 可在 UP 主主页中找到', '默认为开启内嵌视频, 任意值为关闭']} anticrawler="1" radar="1"/>
+<Route author="DIYgod" example="/bilibili/user/coin/208259" path="/bilibili/user/coin/:uid/:disableEmbed?" paramsDesc={['用户 id, 可在 UP 主主页中找到', '默认为开启内嵌视频, 任意值为关闭']} radar="1"/>
 
 ### UP 主粉丝 {#bilibili-up-zhu-fen-si}
 
@@ -237,7 +245,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ### 视频搜索 {#bilibili-shi-pin-sou-suo}
 
-<Route author="Symty" example="/bilibili/vsearch/藤原千花" path="/bilibili/vsearch/:kw/:order?/:disableEmbed?/:tid?" paramsDesc={['检索关键字', '排序方式, 综合:totalrank 最多点击:click 最新发布:pubdate(缺省) 最多弹幕:dm 最多收藏:stow', '默认为开启内嵌视频, 任意值为关闭', '分区 id']}>
+<Route author="Symty" example="/bilibili/vsearch/RSSHub" path="/bilibili/vsearch/:kw/:order?/:disableEmbed?/:tid?" paramsDesc={['检索关键字', '排序方式, 综合:totalrank 最多点击:click 最新发布:pubdate(缺省) 最多弹幕:dm 最多收藏:stow', '默认为开启内嵌视频, 任意值为关闭', '分区 id']}>
 
 分区 id 的取值请参考下表：
 
@@ -249,7 +257,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ### 当前在线 {#bilibili-dang-qian-zai-xian}
 
-<Route author="TigerCubDen" example="/bilibili/online" path="/bilibili/online/:disableEmbed?" paramsDesc={['默认为开启内嵌视频, 任意值为关闭']}/>
+<Route author="TigerCubDen" example="/bilibili/online" path="/bilibili/online/:disableEmbed?" paramsDesc={['默认为开启内嵌视频, 任意值为关闭']} notOperational="1"/>
 
 ### 用户关注动态 {#bilibili-yong-hu-guan-zhu-dong-tai}
 
@@ -313,7 +321,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ### 主站话题列表 {#bilibili-zhu-zhan-hua-ti-lie-biao}
 
-<Route author="Qixingchen" example="/bilibili/blackboard" path="/bilibili/blackboard" />
+<Route author="Qixingchen" example="/bilibili/blackboard" path="/bilibili/blackboard" notOperational="1" />
 
 ### 会员购新品上架 {#bilibili-hui-yuan-gou-xin-pin-shang-jia}
 
@@ -331,7 +339,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ### 会员购票务 {#bilibili-hui-yuan-gou-piao-wu}
 
-<Route author="nightmare-mio" example="/bilibili/platform/-1/全部类型" path="/bilibili/platform/:area?/:p_type?/:uid?" paramsDesc={['省市-国标码,默认为-1即全国','类型：见下表，默认为全部类型','用户id，可以不填，不过不填不设置cookie，搜索结果与登入账号后搜索结果不一样。可以在url中找到，需要配置cookie值，只需要SESSDATA的值即可']}/>
+<Route author="nightmare-mio" example="/bilibili/platform/-1" path="/bilibili/platform/:area?/:p_type?/:uid?" paramsDesc={['省市-国标码,默认为-1即全国','类型：见下表，默认为全部类型','用户id，可以不填，不过不填不设置cookie，搜索结果与登入账号后搜索结果不一样。可以在url中找到，需要配置cookie值，只需要SESSDATA的值即可']}/>
 
 | 类型 |
 | ---- |
@@ -359,7 +367,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ### 话题 (频道 / 标签) {#bilibili-hua-ti-pin-dao-biao-qian}
 
-<Route author="Qixingchen" example="/bilibili/topic/2233" path="/bilibili/topic/:topic" paramsDesc={['话题名(又称频道名或标签) 例如 2233 或 COSPLAY']}/>
+<Route author="Qixingchen" example="/bilibili/topic/2233" path="/bilibili/topic/:topic" paramsDesc={['话题名(又称频道名或标签) 例如 2233 或 COSPLAY']} notOperational="1"/>
 
 ### 歌单 {#bilibili-ge-dan}
 
@@ -391,7 +399,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ### 频道排行榜 {#bilibili-pin-dao-pai-hang-bang}
 
-<Route author="3401797899" example="/bilibili/channel/5417/hot" path="/bilibili/channel/:channelid/hot/:disableEmbed?" paramsDesc={['频道id，可在频道链接中找到', '默认为开启内嵌视频, 任意值为关闭']}/>
+<Route author="3401797899" example="/bilibili/channel/5417/hot" path="/bilibili/channel/:channelid/hot/:disableEmbed?" paramsDesc={['频道id，可在频道链接中找到', '默认为开启内嵌视频, 任意值为关闭']} notOperational="1"/>
 
 ## Bluesky (bsky) {#bluesky-bsky}
 
@@ -427,7 +435,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ### User {#curius-user}
 
-<Route author="Ovler-Young" example="/curius/links/yuu-yuu" path="/curius/links/:name" paramsDesc={['Username, can be found in URL']}/>
+<Route author="Ovler-Young" example="/curius/links/yuu-yuu" path="/curius/links/:name" paramsDesc={['Username, can be found in URL']} notOperational="1"/>
 
 ## Daily.dev {#daily.dev}
 
@@ -471,7 +479,7 @@ UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建
 
 ### Page {#facebook-page}
 
-<Route author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" paramsDesc={['page id']} anticrawler="1"/>
+<Route author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" paramsDesc={['page id']} anticrawler="1" notOperational="1"/>
 
 ## Fur Affinity {#fur-affinity}
 
@@ -551,7 +559,7 @@ Type
 
 ### Popular Posts {#gab-popular-posts}
 
-<Route author="zphw" example="/gab/popular/hot" path="/gab/popular/:sort?" paramsDesc={['Sort by, `hot` to be Hot Posts and `top` to be Top Posts. Default: hot']} />
+<Route author="zphw" example="/gab/popular/hot" path="/gab/popular/:sort?" paramsDesc={['Sort by, `hot` to be Hot Posts and `top` to be Top Posts. Default: hot']} notOperational="1" />
 
 ## GETTR {#gettr}
 
@@ -617,7 +625,7 @@ Due to [Instagram Private API](https://github.com/dilame/instagram-private-api) 
 
 ### Tag {#lofter-tag}
 
-<Route author="hoilc nczitzk" example="/lofter/tag/摄影/date" path="/lofter/tag/:name?/:type?" paramsDesc={['tag name, such as `名侦探柯南`, `摄影` by default', 'ranking type, see below, new by default']}>
+<Route author="hoilc nczitzk" example="/lofter/tag/cosplay/date" path="/lofter/tag/:name?/:type?" paramsDesc={['tag name, such as `名侦探柯南`, `摄影` by default', 'ranking type, see below, new by default']}>
 
 | new  | date | week | month | total |
 | ---- | ---- | ---- | ----- | ----- |
@@ -684,13 +692,13 @@ If the instance address is not `mastodon.social` or `pawoo.net`, then the route 
 
 ### User Profile {#picnob-user-profile}
 
-<Route author="TonyRL" example="/picnob/user/stefaniejoosten" path="/picnob/profile/:id" paramsDesc={['Instagram id']} radar="1" />
+<Route author="TonyRL" example="/picnob/user/stefaniejoosten" path="/picnob/profile/:id" paramsDesc={['Instagram id']} radar="1" notOperational="1" />
 
 ## Picuki {#picuki}
 
 ### User Profile {#picuki-user-profile}
 
-<Route author="hoilc Rongronggg9" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:functionalFlag?" paramsDesc={['Instagram id','functional flag, see the table below']} radar="1">
+<Route author="hoilc Rongronggg9" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:functionalFlag?" paramsDesc={['Instagram id','functional flag, see the table below']} radar="1" anticrawler="1">
 
 | functionalFlag | Video embedding                         | Fetching Instagram Stories |
 | -------------- | --------------------------------------- | -------------------------- |
@@ -737,7 +745,7 @@ Though, every Story expires after 24 hours, so it may be not so serious.
 
 ### Keyword {#pixiv-keyword}
 
-<Route author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" paramsDesc={['keyword', 'rank mode, empty or other for time order, popular for popular order', 'filte R18 content']} radar="1">
+<Route author="DIYgod" example="/pixiv/search/Nezuko/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" paramsDesc={['keyword', 'rank mode, empty or other for time order, popular for popular order', 'filte R18 content']} radar="1">
 
 | only not R18 | only R18 | no filter      |
 | ------------ | -------- | -------------- |
@@ -807,7 +815,7 @@ Only for self-hosted
 
 ### 提问箱新回答 {#popi-ti-wen-xiang-ti-wen-xiang-xin-hui-da}
 
-<Route author="AgFlore" example="/popiask/popi6666" path="/popiask/:sharecode/:pagesize?" paramsDesc={['提问箱 ID', '查看条数（默认为 20）']} radar="1"/>
+<Route author="AgFlore" example="/popiask/popi6666" path="/popiask/:sharecode/:pagesize?" paramsDesc={['提问箱 ID', '查看条数（默认为 20）']} radar="1" notOperational="1"/>
 
 ## Rattibha {#rattibha}
 
@@ -819,7 +827,7 @@ Only for self-hosted
 
 ### 瞬间更新 {#soul-shun-jian-geng-xin}
 
-<Route author="ImSingee" example="/soul/Y2w2aTNWQVBLOU09" path="/soul/:id" paramsDesc={['用户 id, 分享用户主页时的 URL 的 userIdEcpt 参数']} radar="1"></Route>
+<Route author="ImSingee" example="/soul/Y2w2aTNWQVBLOU09" path="/soul/:id" paramsDesc={['用户 id, 分享用户主页时的 URL 的 userIdEcpt 参数']} radar="1" notOperational="1"></Route>
 
 ### 热门瞬间 {#soul-re-men-shun-jian}
 
@@ -835,13 +843,13 @@ Only for self-hosted
 
 ### 提问箱新回答 {#tape-xiao-zhi-tiao-ti-wen-xiang-xin-hui-da}
 
-<Route author="AgFlore" example="/tapechat/questionbox/TOAH7BBH" path="/tapechat/questionbox/:sharecode/:pagesize?" paramsDesc={['提问箱 ID', '查看条数（默认为 20）']} />
+<Route author="AgFlore" example="/tapechat/questionbox/TOAH7BBH" path="/tapechat/questionbox/:sharecode/:pagesize?" paramsDesc={['提问箱 ID', '查看条数（默认为 20）']} notOperational="1" />
 
 ## Telegram {#telegram}
 
 ### Channel {#telegram-channel}
 
-<Route author="DIYgod Rongronggg9" path="/telegram/channel/:username/:routeParams?" example="/telegram/channel/awesomeDIYgod/searchQuery=%23DIYgod的豆瓣动态" paramsDesc={['channel username', 'extra parameters, see the table below']} radar="1">
+<Route author="DIYgod Rongronggg9" path="/telegram/channel/:username/:routeParams?" example="/telegram/channel/awesomeDIYgod/searchQuery=twitter" paramsDesc={['channel username', 'extra parameters, see the table below']} radar="1">
 
 | Key                   | Description                                                           | Accepts                                              | Defaults to       |
 | --------------------- | --------------------------------------------------------------------- | ---------------------------------------------------- | ----------------- |
@@ -915,7 +923,7 @@ https://rsshub.app/threads/zuck/showAuthorInTitle=1&showAuthorInDesc=1&showQuote
 
 ### User {#tiktok-user}
 
-<Route author="TonyRL" example="/tiktok/user/@linustech/true" path="/tiktok/user/:user/:iframe?" paramsDesc={['User ID, including @', 'Use the official iframe to embed the video, which allows you to view the video if the default option does not work. Default to `false`']} anticrawler="1" puppeteer="1" radar="1"/>
+<Route author="TonyRL" example="/tiktok/user/@linustech/true" path="/tiktok/user/:user/:iframe?" paramsDesc={['User ID, including @', 'Use the official iframe to embed the video, which allows you to view the video if the default option does not work. Default to `false`']} puppeteer="1" radar="1"/>
 
 ## Twitter {#twitter}
 
@@ -972,7 +980,7 @@ generates
 
 ### User following timeline {#twitter-user-following-timeline}
 
-<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" paramsDesc={['username', 'extra parameters, see the table above']} radar="1" configRequired="1">
+<Route author="DIYgod" example="/twitter/followings/DIYgod" path="/twitter/followings/:id/:routeParams?" paramsDesc={['username', 'extra parameters, see the table above']} radar="1" configRequired="1" notOperational="1">
 
 :::warning
 
@@ -984,19 +992,19 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 
 ### List timeline {#twitter-list-timeline}
 
-<Route author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name/:routeParams?" paramsDesc={['username', 'list name', 'extra parameters, see the table above']} radar="1"/>
+<Route author="xyqfer" example="/twitter/list/ladyleet/javascript" path="/twitter/list/:id/:name/:routeParams?" paramsDesc={['username', 'list name', 'extra parameters, see the table above']} radar="1" notOperational="1"/>
 
 ### User likes {#twitter-user-likes}
 
-<Route author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id/:routeParams?" paramsDesc={['username', 'extra parameters, see the table above']} radar="1"/>
+<Route author="xyqfer" example="/twitter/likes/DIYgod" path="/twitter/likes/:id/:routeParams?" paramsDesc={['username', 'extra parameters, see the table above']} radar="1" notOperational="1"/>
 
 ### Trends {#twitter-trends}
 
-<Route author="sakamossan" example="/twitter/trends/23424856" path="/twitter/trends/:woeid?" paramsDesc={['Yahoo! Where On Earth ID. default to woeid=1 (World Wide)']} radar="1"/>
+<Route author="sakamossan" example="/twitter/trends/23424856" path="/twitter/trends/:woeid?" paramsDesc={['Yahoo! Where On Earth ID. default to woeid=1 (World Wide)']} radar="1" notOperational="1"/>
 
 ### Collection {#twitter-collection}
 
-<Route author="TonyRL" example="/twitter/collection/DIYgod/1527857429467172864" path="/twitter/collection/:uid/:collectionId/:routeParams?" paramsDesc={['username, should match the generated token', 'collection ID, can be found in URL', 'extra parameters, see the table above']} radar="1" configRequired="1">
+<Route author="TonyRL" example="/twitter/collection/DIYgod/1527857429467172864" path="/twitter/collection/:uid/:collectionId/:routeParams?" paramsDesc={['username, should match the generated token', 'collection ID, can be found in URL', 'extra parameters, see the table above']} radar="1" configRequired="1" notOperational="1">
 
 :::warning
 
@@ -1032,7 +1040,7 @@ Some of the categories contain slash like `3D/CG` , must change the slash `/` to
 
 ### 用户 {#vuevlog-yong-hu}
 
-<Route author="kt286" example="/vuevideo/971924215514" path="/vuevideo/:userid" paramsDesc={['用户ID, 可在对应页面的 URL 中找到']}/>
+<Route author="kt286" example="/vuevideo/971924215514" path="/vuevideo/:userid" paramsDesc={['用户ID, 可在对应页面的 URL 中找到']} notOperational="1"/>
 
 ## YouTube {#youtube}
 
@@ -1149,7 +1157,7 @@ Country Code
 
 ### 用户动态 {#bi-hu-yong-hu-dong-tai}
 
-<Route author="LogicJake" example="/bihu/activaties/1478342200" path="/bihu/activaties/:id" paramsDesc={['用户 id']}/>
+<Route author="LogicJake" example="/bihu/activaties/1478342200" path="/bihu/activaties/:id" paramsDesc={['用户 id']} notOperational="1"/>
 
 ## 唱吧 {#chang-ba}
 
@@ -1161,7 +1169,7 @@ Country Code
 
 ### 用户 {#da-zhong-dian-ping-yong-hu}
 
-<Route author="brilon"  example="/dianping/user/35185271" path="/dianping/user/:id" paramsDesc={['用户id，可在 URL 中找到']}/>
+<Route author="brilon"  example="/dianping/user/35185271" path="/dianping/user/:id" paramsDesc={['用户id，可在 URL 中找到']} notOperational="1"/>
 
 ## 抖音 {#dou-yin}
 
@@ -1224,7 +1232,7 @@ Country Code
 
 ### 豆瓣电影分类 {#dou-ban-dou-ban-dian-ying-fen-lei}
 
-<Route author="zzwab" example="/douban/movie/classification/R/7.5/Netflix,剧情,2020" path="/douban/movie/classification/:sort?/:score?/:tags?" paramsDesc={['排序方式，默认为U', '最低评分，默认不限制', '分类标签，多个标签之间用英文逗号分隔，常见的标签到豆瓣电影的分类页面查看，支持自定义标签']} />
+<Route author="zzwab" example="/douban/movie/classification/R/7.5/Netflix,2020" path="/douban/movie/classification/:sort?/:score?/:tags?" paramsDesc={['排序方式，默认为U', '最低评分，默认不限制', '分类标签，多个标签之间用英文逗号分隔，常见的标签到豆瓣电影的分类页面查看，支持自定义标签']} />
 
 排序方式可选值如下
 
@@ -1238,7 +1246,7 @@ Country Code
 
 ### 豆瓣小组 {#dou-ban-dou-ban-xiao-zu}
 
-<Route author="DIYgod" example="/douban/group/648102" path="/douban/group/:groupid/:type?" paramsDesc={['豆瓣小组的 id', '缺省 最新，essence 最热，elite 精华']} anticrawler="1"/>
+<Route author="DIYgod" example="/douban/group/648102" path="/douban/group/:groupid/:type?" paramsDesc={['豆瓣小组的 id', '缺省 最新，essence 最热，elite 精华']}/>
 
 ### 浏览发现 {#dou-ban-liu-lan-fa-xian}
 
@@ -1254,7 +1262,7 @@ Country Code
 
 ### 最新增加的音乐 {#dou-ban-zui-xin-zeng-jia-de-yin-yue}
 
-<Route author="fengkx xyqfer" example="/douban/music/latest/chinese" path="/douban/music/latest/:area?" paramsDesc={['区域类型，默认全部']}>
+<Route author="fengkx xyqfer" example="/douban/music/latest/chinese" path="/douban/music/latest/:area?" paramsDesc={['区域类型，默认全部']} notOperational="1">
 
 | 华语    | 欧美    | 日韩        |
 | ------- | ------- | ----------- |
@@ -1330,11 +1338,11 @@ Country Code
 
 ### 日记最新回应 {#dou-ban-ri-ji-zui-xin-hui-ying}
 
-<Route author="nczitzk" example="/douban/replies/xiaoyaxiaoya" path="/douban/replies/:uid" paramsDesc={['用户id，可在用户日记页 URL 中找到']}/>
+<Route author="nczitzk" example="/douban/replies/xiaoyaxiaoya" path="/douban/replies/:uid" paramsDesc={['用户id，可在用户日记页 URL 中找到']} notOperational="1"/>
 
 ### 最新回应过的日记 {#dou-ban-zui-xin-hui-ying-guo-de-ri-ji}
 
-<Route author="nczitzk" example="/douban/replied/xiaoyaxiaoya" path="/douban/replied/:uid" paramsDesc={['用户id，可在用户日记页 URL 中找到']}/>
+<Route author="nczitzk" example="/douban/replied/xiaoyaxiaoya" path="/douban/replied/:uid" paramsDesc={['用户id，可在用户日记页 URL 中找到']} notOperational="1"/>
 
 ### 话题 {#dou-ban-hua-ti}
 
@@ -1456,23 +1464,23 @@ Country Code
 
 ### 用户动态 {#fan-fou-yong-hu-dong-tai}
 
-<Route author="junbaor" example="/fanfou/user_timeline/wangxing" path="/fanfou/user_timeline/:uid" paramsDesc={['用户的uid']} anticrawler="1"/>
+<Route author="junbaor" example="/fanfou/user_timeline/wangxing" path="/fanfou/user_timeline/:uid" paramsDesc={['用户的uid']} notOperational="1" configRequired="1"/>
 
 ### 当前登录用户的时间线 {#fan-fou-dang-qian-deng-lu-yong-hu-de-shi-jian-xian}
 
-<Route author="junbaor" example="/fanfou/home_timeline" path="/fanfou/home_timeline" anticrawler="1"/>
+<Route author="junbaor" example="/fanfou/home_timeline" path="/fanfou/home_timeline" configRequired="1"/>
 
 ### 用户收藏 {#fan-fou-yong-hu-shou-cang}
 
-<Route author="junbaor" example="/fanfou/favorites/wangxing" path="/fanfou/favorites/:uid" paramsDesc={['用户的uid']} anticrawler="1"/>
+<Route author="junbaor" example="/fanfou/favorites/wangxing" path="/fanfou/favorites/:uid" paramsDesc={['用户的uid']} notOperational="1" configRequired="1"/>
 
 ### 热门话题 {#fan-fou-re-men-hua-ti}
 
-<Route author="junbaor" example="/fanfou/trends" path="/fanfou/trends" anticrawler="1"/>
+<Route author="junbaor" example="/fanfou/trends" path="/fanfou/trends" notOperational="1" configRequired="1"/>
 
 ### 饭否搜索 {#fan-fou-fan-fou-sou-suo}
 
-<Route author="junbaor" example="/fanfou/public_timeline/冬天" path="/fanfou/public_timeline/:keyword" paramsDesc={['关键字']} anticrawler="1"/>
+<Route author="junbaor" example="/fanfou/public_timeline/RSSHub" path="/fanfou/public_timeline/:keyword" paramsDesc={['关键字']} configRequired="1"/>
 
 ## 方格子 {#fang-ge-zi}
 
@@ -1506,7 +1514,7 @@ Country Code
 
 ### 热门 {#jian-shu-re-men}
 
-<Route author="DIYgod HenryQW" example="/jianshu/trending/weekly" path="/jianshu/trending/:timeframe" paramsDesc={['按周 `weekly` 或 按月 `monthly`']}/>
+<Route author="DIYgod HenryQW" example="/jianshu/trending/weekly" path="/jianshu/trending/:timeframe" paramsDesc={['按周 `weekly` 或 按月 `monthly`']} notOperational="1"/>
 
 ### 专题 {#jian-shu-zhuan-ti}
 
@@ -1552,7 +1560,7 @@ Country Code
 
 ### 话题 {#ku-an-hua-ti}
 
-<Route author="xizeyoupan" example="/coolapk/huati/酷安夜话" path="/coolapk/huati/:tag" paramsDesc={['话题名称']}/>
+<Route author="xizeyoupan" example="/coolapk/huati/iPhone" path="/coolapk/huati/:tag" paramsDesc={['话题名称']}/>
 
 ### 用户 {#ku-an-yong-hu}
 
@@ -1646,15 +1654,15 @@ rule
 
 ### 最新 {#shua-ping-zui-xin}
 
-<Route author="xyqfer" example="/weseepro/newest" path="/weseepro/newest"/>
+<Route author="xyqfer" example="/weseepro/newest" path="/weseepro/newest" notOperational="1"/>
 
 ### 最新（无中间页） {#shua-ping-zui-xin-wu-zhong-jian-ye}
 
-<Route author="xyqfer yefoenix" example="/weseepro/newest-direct" path="/weseepro/newest-direct"/>
+<Route author="xyqfer yefoenix" example="/weseepro/newest-direct" path="/weseepro/newest-direct" notOperational="1"/>
 
 ### 朋友圈 {#shua-ping-peng-you-quan}
 
-<Route author="xyqfer" example="/weseepro/circle" path="/weseepro/circle"/>
+<Route author="xyqfer" example="/weseepro/circle" path="/weseepro/circle" notOperational="1"/>
 
 ## 微博 {#wei-bo}
 
@@ -1698,7 +1706,7 @@ rule
 
 ### 博主 {#wei-bo-bo-zhu}
 
-<Route author="DIYgod iplusx Rongronggg9" example="/weibo/user/1195230310" path="/weibo/user/:uid/:routeParams?" paramsDesc={['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=1` 时开启微博视频显示']} anticrawler="1" radar="1">
+<Route author="DIYgod iplusx Rongronggg9" example="/weibo/user/1195230310" path="/weibo/user/:uid/:routeParams?" paramsDesc={['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=1` 时开启微博视频显示']} radar="1">
 
 部分博主仅登录可见，不支持订阅，可以通过打开 `https://m.weibo.cn/u/:uid` 验证
 
@@ -1706,11 +1714,11 @@ rule
 
 ### 关键词 {#wei-bo-guan-jian-ci}
 
-<Route author="DIYgod Rongronggg9" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword/:routeParams?" paramsDesc={['你想订阅的微博关键词', '额外参数；请参阅上面的说明和表格']} anticrawler="1" radar="1"/>
+<Route author="DIYgod Rongronggg9" example="/weibo/keyword/DIYgod" path="/weibo/keyword/:keyword/:routeParams?" paramsDesc={['你想订阅的微博关键词', '额外参数；请参阅上面的说明和表格']} radar="1"/>
 
 ### 热搜榜 {#wei-bo-re-sou-bang}
 
-<Route author="xyqfer shinemoon" example="/weibo/search/hot" path="/weibo/search/hot/:fulltext?" anticrawler="1" radar="1"/>
+<Route author="xyqfer shinemoon" example="/weibo/search/hot" path="/weibo/search/hot/:fulltext?" radar="1"/>
 
 - 使用`/weibo/search/hot`可以获取热搜条目列表；
 - 使用`/weibo/search/hot/fulltext`可以进一步获取热搜条目下的摘要信息（不含图片视频）；
@@ -1721,7 +1729,7 @@ rule
 
 ### 超话 {#wei-bo-chao-hua}
 
-<Route author="zengxs Rongronggg9" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9/sort_time" path="/weibo/super_index/:id/:type?/:routeParams?" paramsDesc={['超话ID', '类型：见下表', '额外参数；请参阅上面的说明和表格']} anticrawler="1" radar="1"/>
+<Route author="zengxs Rongronggg9" example="/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9/sort_time" path="/weibo/super_index/:id/:type?/:routeParams?" paramsDesc={['超话ID', '类型：见下表', '额外参数；请参阅上面的说明和表格']} radar="1"/>
 
 | type      | 备注             |
 | --------- | ---------------- |
@@ -1734,7 +1742,7 @@ rule
 
 ### 个人时间线 {#wei-bo-ge-ren-shi-jian-xian}
 
-<Route author="zytomorrow DIYgod Rongronggg9" example="/weibo/timeline/3306934123" path="/weibo/timeline/:uid/:feature?/:routeParams?" paramsDesc={['用户的uid', '过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。', '额外参数；请参阅上面的说明和表格']} anticrawler="1" configRequired="1">
+<Route author="zytomorrow DIYgod Rongronggg9" example="/weibo/timeline/3306934123" path="/weibo/timeline/:uid/:feature?/:routeParams?" paramsDesc={['用户的uid', '过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。', '额外参数；请参阅上面的说明和表格']} configRequired="1">
 
 :::warning
 
@@ -1748,7 +1756,7 @@ rule
 
 ### 自定义分组 {#wei-bo-zi-ding-yi-fen-zu}
 
-<Route author="monologconnor Rongronggg9" example="/weibo/group/4541216424989965/微博分组/:routeParams?" path="/weibo/group/:gid/:gname?/:routeParams?" paramsDesc={['分组id, 在网页版分组地址栏末尾`?gid=`处获取', '分组显示名称; 默认为: `微博分组`', '额外参数；请参阅上面的说明和表格']} anticrawler="1" configRequired="1">
+<Route author="monologconnor Rongronggg9" example="/weibo/group/4541216424989965" path="/weibo/group/:gid/:gname?/:routeParams?" paramsDesc={['分组id, 在网页版分组地址栏末尾`?gid=`处获取', '分组显示名称; 默认为: `微博分组`', '额外参数；请参阅上面的说明和表格']} configRequired="1">
 
 :::warning
 
@@ -1766,13 +1774,13 @@ rule
 
 ### 用户 {#wei-bo-lv-zhou-yong-hu}
 
-<Route author="kt286" example="/weibo/oasis/user/1990895721" path="/weibo/oasis/user/:userid" paramsDesc={['用户 id, 可在用户主页 URL 中找到']} anticrawler="1"/>
+<Route author="kt286" example="/weibo/oasis/user/1990895721" path="/weibo/oasis/user/:userid" paramsDesc={['用户 id, 可在用户主页 URL 中找到']}/>
 
 ## 悟空问答 {#wu-kong-wen-da}
 
 ### 用户动态 {#wu-kong-wen-da-yong-hu-dong-tai}
 
-<Route author="nczitzk" example="/wukong/user/5826687196" path="/wukong/user/:id/:type?" paramsDesc={['用户ID，可在用户页 URL 中找到', '类型，可选 `dongtai` 即 动态，`answers` 即 回答，`questions` 即 提问，默认为 `dongtai`']}>
+<Route author="nczitzk" example="/wukong/user/5826687196" path="/wukong/user/:id/:type?" paramsDesc={['用户ID，可在用户页 URL 中找到', '类型，可选 `dongtai` 即 动态，`answers` 即 回答，`questions` 即 提问，默认为 `dongtai`']} notOperational="1">
 
 :::tip
 
@@ -1788,7 +1796,7 @@ rule
 
 ### 用户笔记 {#xiao-hong-shu-yong-hu-bi-ji}
 
-<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/notes" path="/xiaohongshu/user/:user_id/notes/:fulltext?" paramsDesc={['用户 ID', '若为`fulltext`将抓取笔记全文，若为空则只抓取笔记标题']} puppeteer="1" anticrawler="1" radar="1"/>
+<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/notes" path="/xiaohongshu/user/:user_id/notes/:fulltext?" paramsDesc={['用户 ID', '若为`fulltext`将抓取笔记全文，若为空则只抓取笔记标题']} puppeteer="1" radar="1"/>
 
 :::tip
 
@@ -1798,11 +1806,11 @@ rule
 
 ### 用户收藏 {#xiao-hong-shu-yong-hu-shou-cang}
 
-<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/collect" path="/xiaohongshu/user/:user_id/collect" paramsDesc={['用户 ID']} puppeteer="1" anticrawler="1" radar="1"/>
+<Route author="lotosbin" example="/xiaohongshu/user/593032945e87e77791e03696/collect" path="/xiaohongshu/user/:user_id/collect" paramsDesc={['用户 ID']} puppeteer="1" radar="1"/>
 
 ### 专辑 {#xiao-hong-shu-zhuan-ji}
 
-<Route author="lotosbin" example="/xiaohongshu/board/5db6f79200000000020032df" path="/xiaohongshu/board/:board_id" paramsDesc={['专辑 ID']} puppeteer="1" anticrawler="1" radar="1"/>
+<Route author="lotosbin" example="/xiaohongshu/board/5db6f79200000000020032df" path="/xiaohongshu/board/:board_id" paramsDesc={['专辑 ID']} puppeteer="1" radar="1"/>
 
 ## 新榜 {#xin-bang}
 
@@ -1863,7 +1871,7 @@ rule
 
 ### 知乎热榜 {#zhi-hu-zhi-hu-re-bang}
 
-<Route author="DIYgod" example="/zhihu/hotlist" path="/zhihu/hotlist" anticrawler="1" radar="1"/>
+<Route author="DIYgod" example="/zhihu/hotlist" path="/zhihu/hotlist" radar="1"/>
 
 ### 知乎分类热榜 {#zhi-hu-zhi-hu-fen-lei-re-bang}
 
@@ -1917,16 +1925,16 @@ rule
 
 ### [xhu](https://github.com/REToys/xhu) - 收藏夹 {#zhi-hu-xhu-https-github.com-retoys-xhu-shou-cang-jia}
 
-<Route author="JimenezLi" example="/zhihu/xhu/collection/26444956" path="/zhihu/xhu/collection/:id" paramsDesc={['收藏夹 id, 可在收藏夹页面 URL 中找到']} anticrawler="1"/>
+<Route author="JimenezLi" example="/zhihu/xhu/collection/26444956" path="/zhihu/xhu/collection/:id" paramsDesc={['收藏夹 id, 可在收藏夹页面 URL 中找到']}/>
 
 ### [xhu](https://github.com/REToys/xhu) - 专栏 {#zhi-hu-xhu-https-github.com-retoys-xhu-zhuan-lan}
 
-<Route author="JimenezLi" example="/zhihu/xhu/zhuanlan/githubdaily" path="/zhihu/xhu/zhuanlan/:id" paramsDesc={['专栏 id, 可在专栏主页 URL 中找到']} anticrawler="1"/>
+<Route author="JimenezLi" example="/zhihu/xhu/zhuanlan/githubdaily" path="/zhihu/xhu/zhuanlan/:id" paramsDesc={['专栏 id, 可在专栏主页 URL 中找到']}/>
 
 ### [xhu](https://github.com/REToys/xhu) - 问题 {#zhi-hu-xhu-https-github.com-retoys-xhu-wen-ti}
 
-<Route author="JimenezLi" example="/zhihu/xhu/question/264051433" path="/zhihu/xhu/question/:questionId/:sortBy?" paramsDesc={['问题 id', '排序方式：`default`, `created`, `updated`。默认为 `default`']} anticrawler="1"/>
+<Route author="JimenezLi" example="/zhihu/xhu/question/264051433" path="/zhihu/xhu/question/:questionId/:sortBy?" paramsDesc={['问题 id', '排序方式：`default`, `created`, `updated`。默认为 `default`']}/>
 
 ### [xhu](https://github.com/REToys/xhu) - 话题 {#zhi-hu-xhu-https-github.com-retoys-xhu-hua-ti}
 
-<Route author="JimenezLi" example="/zhihu/xhu/topic/19566035" path="/zhihu/xhu/topic/:topicId" paramsDesc={['话题ID']} anticrawler="1"/>
+<Route author="JimenezLi" example="/zhihu/xhu/topic/19566035" path="/zhihu/xhu/topic/:topicId" paramsDesc={['话题ID']}/>
