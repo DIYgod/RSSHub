@@ -66,7 +66,7 @@ export default function InstanceList(): JSX.Element {
               ) : 'Anonymous'}
             </td>
             <td>
-              <img src={`https://img.shields.io/website.svg?label=&url=${instance.url}/test/cache`} />
+              <img loading="lazy" src={`https://img.shields.io/website.svg?label=&url=${instance.url}/test/cache`} />
             </td>
           </tr>
         ))}

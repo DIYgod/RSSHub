@@ -13,7 +13,6 @@ export default function Route({
   supportPodcast = null,
   supportScihub = null,
   radar = null,
-  rssbud = null,
   configRequired = null,
   puppeteer = null,
   children = null,
@@ -27,7 +26,6 @@ export default function Route({
   supportPodcast?: boolean;
   supportScihub?: boolean;
   radar?: boolean;
-  rssbud?: boolean;
   configRequired?: boolean;
   puppeteer?: boolean;
   children?: JSX.Element | JSX.Element[];
@@ -48,25 +46,20 @@ export default function Route({
                 {supportBT && <Badge type="tip"><Translate id="badge.supportBT" /></Badge>}
                 {supportPodcast && <Badge type="tip"><Translate id="badge.supportPodcast" /></Badge>}
                 {supportScihub && <Badge type="tip"><Translate id="badge.supportSciHub" /></Badge>}
-                {puppeteer && <Badge type="warn"><Translate id="badge.puppeteer" /></Badge>}
+                {puppeteer && <Badge type="warning"><Translate id="badge.puppeteer" /></Badge>}
                 {anticrawler && (
                     <Link to="/faq">
-                        <Badge type="warn"><Translate id="badge.anticrawler" /></Badge>
+                        <Badge type="caution"><Translate id="badge.anticrawler" /></Badge>
                     </Link>
                 )}
                 {configRequired && (
                     <Link to="/install/config#route-specific-configurations">
-                        <Badge type="warn"><Translate id="badge.configRequired" /></Badge>
+                        <Badge type="warning"><Translate id="badge.configRequired" /></Badge>
                     </Link>
                 )}
                 {radar && (
-                    <Link to="https://github.com/DIYgod/RSSHub-Radar">
+                    <Link to="/usage#radar">
                         <Badge type="tip"><Translate id="badge.radar" /></Badge>
-                    </Link>
-                )}
-                {rssbud && (
-                    <Link to="https://github.com/Cay-Zhang/RSSBud">
-                        <Badge type="tip"><Translate id="badge.rssbud" /></Badge>
                     </Link>
                 )}
             </p>
@@ -83,6 +76,7 @@ export default function Route({
                 <Link to={demoUrl}>
                     {demoUrl}
                 </Link>
+                <img loading="lazy" src={`https://img.shields.io/website.svg?label=&url=${demoUrl}&cacheSeconds=7200`} />
             </p>
             <p className="path">
                 <Translate id="route.path" /><code>{path}</code>
