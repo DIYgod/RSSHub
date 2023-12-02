@@ -8,7 +8,7 @@
 
 ### 分类 {#199it-fen-lei}
 
-<Route author="nczitzk" example="/199it/category/199itdata" path="/199it/category/:caty" paramsDesc={['分类，可在分类页 URL 中找到']}>
+<Route author="nczitzk" example="/199it/category/199itdata" path="/199it/category/:caty" paramsDesc={['分类，可在分类页 URL 中找到']} notOperational="1">
 
 分类为单一路径，如 `http://www.199it.com/archives/category/199itdata` 则路由为 `/199it/category/199itdata`.
 
@@ -18,7 +18,7 @@
 
 ### 标签 {#199it-biao-qian}
 
-<Route author="nczitzk" example="/199it/tag/数据早报" path="/199it/tag/:tag" paramsDesc={['标签，可在标签页 URL 中找到']}/>
+<Route author="nczitzk" example="/199it/tag/iphone" path="/199it/tag/:tag" paramsDesc={['标签，可在标签页 URL 中找到']} notOperational="1"/>
 
 ## 36kr {#36kr}
 
@@ -130,7 +130,7 @@
 
 ### 9To5 Sub-site {#9to5-9to5-sub-site}
 
-<Route author="HenryQW" example="/9to5/mac/aapl" path="/9to5/:subsite/:category?" paramsDesc={['Subsite name', 'Tag name inside the url of the tag page']} radar="1">
+<Route author="HenryQW" example="/9to5/mac/aapl" path="/9to5/:subsite/:category?" paramsDesc={['Subsite name', 'Tag name inside the url of the tag page']} radar="1" notOperational="1">
 
 Supported sub-sites：
 
@@ -144,7 +144,7 @@ Supported sub-sites：
 
 ### Types {#aeon-types}
 
-<Route author="emdoe" example="/aeon/essays" path="/aeon/:type" paramsDesc={['Type']}>
+<Route author="emdoe" example="/aeon/essays" path="/aeon/:type" paramsDesc={['Type']} notOperational="1">
 
 Supported types: Essays, Videos, and Audio.
 
@@ -156,7 +156,7 @@ However, The content generated under `audio` does not contain links to audio fil
 
 ### Categories {#aeon-categories}
 
-<Route author="emdoe" example="/aeon/category/philosophy" path="/aeon/category/:category" paramsDesc={['Category']}>
+<Route author="emdoe" example="/aeon/category/philosophy" path="/aeon/category/:category" paramsDesc={['Category']} notOperational="1">
 
 Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
@@ -206,7 +206,7 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 ### 通用 {#bad.news-tong-yong}
 
-<Route author="nczitzk" example="/bad" path="/bad/:path+" paramsDesc={['路径，默认为首页热门']}>
+<Route author="nczitzk" example="/bad" path="/bad/:path+" paramsDesc={['路径，默认为首页热门']} anticrawler="1">
 
 :::tip
 
@@ -222,7 +222,7 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 ### Event and News {#bell-labs-event-and-news}
 
-<Route author="nczitzk" example="/bell-labs/events-news" path="/bell-labs/events-news/:category?" paramsDesc={['Category, see below, Press releases by default']}>
+<Route author="nczitzk" example="/bell-labs/events-news" path="/bell-labs/events-news/:category?" paramsDesc={['Category, see below, Press releases by default']} notOperational="1">
 
 | Featured events | Latest recognition   | Press releases |
 | --------------- | -------------------- | -------------- |
@@ -234,7 +234,7 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 ### Channel {#biodiscover.com-sheng-wu-tan-suo-channel}
 
-<Route author="aidistan" example="/biodiscover" path="/biodiscover/:channel" paramsDesc={['channel, see below']}>
+<Route author="aidistan" example="/biodiscover" path="/biodiscover/:channel" paramsDesc={['channel, see below']} notOperational="1">
 
 | Research | Interview | Industry | Activity |
 | -------- | --------- | -------- | -------- |
@@ -246,7 +246,7 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 ### Home {#bof-home}
 
-<Route author="kt286" example="/bof/home" path="/bof/home" />
+<Route author="kt286" example="/bof/home" path="/bof/home" notOperational="1" />
 
 ## C114 通信网 {#c114-tong-xin-wang}
 
@@ -270,7 +270,7 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 ### News {#cfan-news}
 
-<Route author="kt286" example="/cfan/news" path="/cfan/news"/>
+<Route author="kt286" example="/cfan/news" path="/cfan/news" notOperational="1"/>
 
 ## CGTN {#cgtn}
 
@@ -284,11 +284,11 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 ### Top News {#cgtn-top-news}
 
-<Route author="nczitzk" example="/cgtn/top" path="/cgtn/top"/>
+<Route author="nczitzk" example="/cgtn/top" path="/cgtn/top" notOperational="1"/>
 
 ### Editors' Pick {#cgtn-editors-pick}
 
-<Route author="nczitzk" example="/cgtn/pick" path="/cgtn/pick"/>
+<Route author="nczitzk" example="/cgtn/pick" path="/cgtn/pick" notOperational="1"/>
 
 ## China Labour Bulletin 中国劳工通讯 {#china-labour-bulletin-zhong-guo-lao-gong-tong-xun}
 
@@ -300,7 +300,7 @@ Supported categories: Philosophy, Science, Psychology, Society, and Culture.
 
 ### Reports {#china-labour-watch-zhong-guo-lao-gong-guan-cha-reports}
 
-<Route author="nczitzk" example="/chinalaborwatch/reports" path="/chinalaborwatch/reports/:lang?/:industry?" paramsDesc={['Language, English by default, or `cn` as Simplified Chinese', 'Industry id, see below, all by default']}>
+<Route author="nczitzk" example="/chinalaborwatch/reports" path="/chinalaborwatch/reports/:lang?/:industry?" paramsDesc={['Language, English by default, or `cn` as Simplified Chinese', 'Industry id, see below, all by default']} notOperational="1">
 
 | All | Automotive | Cookware | Electronics | Footwear | Furniture | Garment | General | Printing | Retail | Toys |
 | --- | ---------- | -------- | ----------- | -------- | --------- | ------- | ------- | -------- | ------ | ---- |
@@ -380,13 +380,13 @@ Category of news
 
 ### Blog {#common-app-blog}
 
-<Route author="nczitzk" example="/commonapp/blog" path="/commonapp/blog"/>
+<Route author="nczitzk" example="/commonapp/blog" path="/commonapp/blog" notOperational="1"/>
 
 ## Day One {#day-one}
 
 ### Blog {#day-one-blog}
 
-<Route author="nczitzk" example="/dayone/blog" path="/dayone/blog"/>
+<Route author="nczitzk" example="/dayone/blog" path="/dayone/blog" notOperational="1"/>
 
 ## DCFever {#dcfever}
 
@@ -471,7 +471,7 @@ Category of news
 
 ### 栏目 {#donews-lan-mu}
 
-<Route author="HenryQW" example="/donews" path="/donews/:column?" paramsDesc={['栏目代码, 默认为首页.']}>
+<Route author="HenryQW" example="/donews" path="/donews/:column?" paramsDesc={['栏目代码, 默认为首页.']} notOperational="1">
 
 | 首页 | 商业    | 创业     | 互娱 | 科技    | 专栏    |
 | ---- | ------- | -------- | ---- | ------- | ------- |
@@ -483,13 +483,13 @@ Category of news
 
 ### 快讯 {#e-gong-si-kuai-xun}
 
-<Route author="hillerliao" example="/egsea/flash" path="/egsea/flash" />
+<Route author="hillerliao" example="/egsea/flash" path="/egsea/flash" notOperational="1" />
 
 ## Engadget 瘾科技 {#engadget-yin-ke-ji}
 
 ### 中文全文 {#engadget-yin-ke-ji-zhong-wen-quan-wen}
 
-<Route author="JamesWDGu" example="/engadget-cn" path="/engadget-cn"/>
+<Route author="JamesWDGu" example="/engadget-cn" path="/engadget-cn" notOperational="1"/>
 
 ### Multi-language {#engadget-yin-ke-ji-multi-language}
 
@@ -517,7 +517,7 @@ Category of news
 
 ### Tag {#esquirehk-tag}
 
-<Route author="nczitzk" example="/esquirehk/tag/Fashion" path="/esquirehk/tag/:id" paramsDesc={['标签，可在对应标签页 URL 中找到']} />
+<Route author="nczitzk" example="/esquirehk/tag/Fashion" path="/esquirehk/tag/:id" paramsDesc={['标签，可在对应标签页 URL 中找到']} notOperational="1"/>
 
 ## EU Disinfo Lab {#eu-disinfo-lab}
 
@@ -571,7 +571,7 @@ Categories
 
 ### Category {#ezone.hk-category}
 
-<Route author="nczitzk" example="/ezone" path="/ezone/:category?" paramsDesc={['Category,see below, latest news by default']}>
+<Route author="nczitzk" example="/ezone" path="/ezone/:category?" paramsDesc={['Category,see below, latest news by default']} notOperational="1">
 
 | 科技焦點 | 網絡生活 | 教學評測 | IT Times |
 | -------- | -------- | -------- | -------- |
@@ -629,7 +629,7 @@ Categories
 
 ### Headline {#fashion-network-headline}
 
-<Route author="nczitzk" example="/fashionnetwork/headline" path="/fashionnetwork/headline/:country?" paramsDesc={['Country, see below, `ww` by default']}/>
+<Route author="nczitzk" example="/fashionnetwork/headline" path="/fashionnetwork/headline/:country?" paramsDesc={['Country, see below, `ww` by default']} notOperational="1"/>
 
 ### News {#fashion-network-news}
 
@@ -747,17 +747,17 @@ Country
 
 ### Research {#global-disinformation-index-research}
 
-<Route author="nczitzk" example="/disinformationindex/research" path="/disinformationindex/research"/>
+<Route author="nczitzk" example="/disinformationindex/research" path="/disinformationindex/research" notOperational="1"/>
 
 ### Blog {#global-disinformation-index-blog}
 
-<Route author="nczitzk" example="/disinformationindex/blog" path="/disinformationindex/blog"/>
+<Route author="nczitzk" example="/disinformationindex/blog" path="/disinformationindex/blog" notOperational="1"/>
 
 ## Good.news {#good.news}
 
 ### 今日要闻 {#good.news-jin-ri-yao-wen}
 
-<Route author="nczitzk" example="/good" path="/good" />
+<Route author="nczitzk" example="/good" path="/good" notOperational="1" />
 
 ## Google News {#google-news}
 
@@ -769,7 +769,7 @@ Country
 
 ### GQ Taiwan {#gq-gq-taiwan}
 
-<Route author="nczitzk" example="/gq/tw/fashion" path="/gq/tw/:caty?/:subcaty?" paramsDesc={['分类，见下表', '子分类，见下表']} radar="1">
+<Route author="nczitzk" example="/gq/tw/fashion" path="/gq/tw/:caty?/:subcaty?" paramsDesc={['分类，见下表', '子分类，见下表']} radar="1" notOperational="1">
 
 分类
 
@@ -917,7 +917,7 @@ Click here to view [All Topics](https://hbr.org/topics)
 
 ### HKEPC 电脑领域 {#hkepc-hkepc-dian-nao-ling-yu}
 
-<Route author="TonyRL" example="/hkepc/news" path="/hkepc/:category?" paramsDesc={['分类，见下表，默认为最新消息']}>
+<Route author="TonyRL" example="/hkepc/news" path="/hkepc/:category?" paramsDesc={['分类，见下表，默认为最新消息']} anticrawler="1">
 
 | 专题报导   | 新闻中心 | 新品快递 | 超频领域 | 流动数码 | 生活娱乐      | 会员消息 | 脑场新闻 | 业界资讯 | 最新消息 |
 | ---------- | -------- | -------- | -------- | -------- | ------------- | -------- | -------- | -------- | -------- |
@@ -929,7 +929,7 @@ Click here to view [All Topics](https://hbr.org/topics)
 
 ### 近期資訊 {#hkjunkcall-zi-xun-zhong-xin-jin-qi-zi-xun}
 
-<Route author="nczitzk" example="/hkjunkcall" path="/hkjunkcall" />
+<Route author="nczitzk" example="/hkjunkcall" path="/hkjunkcall" anticrawler="1"/>
 
 ## iDaily 每日环球视野 {#idaily-mei-ri-huan-qiu-shi-ye}
 
@@ -967,13 +967,13 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### Blog {#institute-of-international-education-blog}
 
-<Route author="nczitzk" example="/iie/blog" path="/iie/blog" />
+<Route author="nczitzk" example="/iie/blog" path="/iie/blog" notOperational="1" />
 
 ## International Energy Agency {#international-energy-agency}
 
 ### News and events {#international-energy-agency-news-and-events}
 
-<Route author="nczitzk" example="/iea/news-and-events" path="/iea/:category?" paramsDesc={['Category, see below, Featured by default']}>
+<Route author="nczitzk" example="/iea/news-and-events" path="/iea/:category?" paramsDesc={['Category, see below, Featured by default']} notOperational="1">
 
 | Featured        | News | Calendar | Past events |
 | --------------- | ---- | -------- | ----------- |
@@ -1025,11 +1025,11 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### 投融资事件 {#it-ju-zi-tou-rong-zi-shi-jian}
 
-<Route author="xyqfer" example="/itjuzi/invest" path="/itjuzi/invest"/>
+<Route author="xyqfer" example="/itjuzi/invest" path="/itjuzi/invest" notOperational="1"/>
 
 ### 并购事件 {#it-ju-zi-bing-gou-shi-jian}
 
-<Route author="xyqfer" example="/itjuzi/merge" path="/itjuzi/merge"/>
+<Route author="xyqfer" example="/itjuzi/merge" path="/itjuzi/merge" notOperational="1"/>
 
 ## iThome 台灣 {#ithome-tai-wan}
 
@@ -1162,17 +1162,17 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### dpa news {#krankenkassen-de-guo-xin-wen-she-wei-jian-xin-wen-dpa-news}
 
-<Route author="howel52" example="/krankenkassen" path="/krankenkassen"/>
+<Route author="howel52" example="/krankenkassen" path="/krankenkassen" notOperational="1"/>
 
 ## Kuwait Local {#kuwait-local}
 
 ### Latest News {#kuwait-local-latest-news}
 
-<Route author="TonyRL" example="/kuwaitlocal" path="/kuwaitlocal" radar="1"/>
+<Route author="TonyRL" example="/kuwaitlocal" path="/kuwaitlocal" radar="1" notOperational="1"/>
 
 ### Categorised News {#kuwait-local-categorised-news}
 
-<Route author="TonyRL" example="/kuwaitlocal/article" path="/kuwaitlocal/:category?" paramsDesc={['Category name, can be found in URL, `latest` by default']} radar="1"/>
+<Route author="TonyRL" example="/kuwaitlocal/article" path="/kuwaitlocal/:category?" paramsDesc={['Category name, can be found in URL, `latest` by default']} radar="1" notOperational="1"/>
 
 ## Letterboxd {#letterboxd}
 
@@ -1206,7 +1206,7 @@ Edition
 
 ### 频道 {#lvv2-pin-dao}
 
-<Route author="Fatpandac" example="/lvv2/news/sort-score" path="/news/:channel/:sort?" paramsDesc={['频道，见下表', '排序方式，仅得分和24小时榜可选填该参数，见下表']}>
+<Route author="Fatpandac" example="/lvv2/news/sort-score" path="/lvv2/news/:channel/:sort?" paramsDesc={['频道，见下表', '排序方式，仅得分和24小时榜可选填该参数，见下表']} anticrawler="1">
 
 |   热门   |   最新   |    得分    |   24 小时榜   |
 | :------: | :------: | :--------: | :-----------: |
@@ -1220,7 +1220,7 @@ Edition
 
 ### 24 小时点击排行 Top 10 {#lvv2-24-xiao-shi-dian-ji-pai-hang-top-10}
 
-<Route author="Fatpandac" example="/lvv2/top/sort-score" path="/top/:channel/:sort?" paramsDesc={['频道，见下表', '排序方式，仅得分和24小时榜可选填该参数，见下表']}>
+<Route author="Fatpandac" example="/lvv2/top/sort-score" path="/lvv2/top/:channel/:sort?" paramsDesc={['频道，见下表', '排序方式，仅得分和24小时榜可选填该参数，见下表']} anticrawler="1">
 
 |   热门   |   最新   |    得分    |   24 小时榜   |
 | :------: | :------: | :--------: | :-----------: |
@@ -1240,7 +1240,7 @@ Edition
 
 ## MakeUseOf {#makeuseof}
 
-<Route author="nczitzk" example="/makeuseof" path="/makeuseof/:category?" paramsDesc={['Category, Trending by default']}/>
+<Route author="nczitzk" example="/makeuseof" path="/makeuseof/:category?" notOperational="1" paramsDesc={['Category, Trending by default']} notOperational="1"/>
 
 ## Matataki {#matataki}
 
@@ -1253,19 +1253,19 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### 最热作品 {#matataki-zui-re-zuo-pin}
 
-<Route author="whyouare111" example="/matataki/posts/hot" path="/matataki/posts/hot/:ipfsFlag?" paramsDesc={['IPFS标识，置空item指向主站，有值item指向IPFS网关']} radar="1"/>
+<Route author="whyouare111" example="/matataki/posts/hot" path="/matataki/posts/hot/:ipfsFlag?" paramsDesc={['IPFS标识，置空item指向主站，有值item指向IPFS网关']} radar="1" notOperational="1"/>
 
 ### 最新作品 {#matataki-zui-xin-zuo-pin}
 
-<Route author="whyouare111" example="/matataki/posts/latest/ipfs" path="/matataki/posts/latest/:ipfsFlag?" paramsDesc={['IPFS标识，置空item指向主站，有值item指向IPFS网关']} radar="1"/>
+<Route author="whyouare111" example="/matataki/posts/latest/ipfs" path="/matataki/posts/latest/:ipfsFlag?" paramsDesc={['IPFS标识，置空item指向主站，有值item指向IPFS网关']} radar="1" notOperational="1"/>
 
 ### 作者创作 {#matataki-zuo-zhe-chuang-zuo}
 
-<Route author="whyouare111" example="/matataki/users/9/posts" path="/matataki/users/:authorId/posts/:ipfsFlag?" paramsDesc={['作者ID', 'IPFS标识，置空item指向主站，有值item指向IPFS网关']}  radar="1"/>
+<Route author="whyouare111" example="/matataki/users/9/posts" path="/matataki/users/:authorId/posts/:ipfsFlag?" paramsDesc={['作者ID', 'IPFS标识，置空item指向主站，有值item指向IPFS网关']}  radar="1" notOperational="1"/>
 
 ### Fan 票关联作品 {#matataki-fan-piao-guan-lian-zuo-pin}
 
-<Route author="whyouare111" example="/matataki/tokens/22/posts/3" path="/matataki/tokens/:tokenId/posts/:filterCode/:ipfsFlag?" paramsDesc={['Fan票ID', '过滤条件,见下表', 'IPFS标识，置空item指向主站，有值item指向IPFS网关']} radar="1">
+<Route author="whyouare111" example="/matataki/tokens/22/posts/3" path="/matataki/tokens/:tokenId/posts/:filterCode/:ipfsFlag?" paramsDesc={['Fan票ID', '过滤条件,见下表', 'IPFS标识，置空item指向主站，有值item指向IPFS网关']} radar="1" notOperational="1">
 
 | 需持票 | 需支付 | 全部 |
 | ------ | ------ | ---- |
@@ -1275,11 +1275,11 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### 标签关联作品 {#matataki-biao-qian-guan-lian-zuo-pin}
 
-<Route author="whyouare111" example="/matataki/tags/150/区块链/posts" path="/matataki/tags/:tagId/:tagName/posts/:ipfsFlag?" paramsDesc={['标签ID', '标签名称','IPFS标识，置空item指向主站，有值item指向IPFS网关']}  radar="1"/>
+<Route author="whyouare111" example="/matataki/tags/150/区块链/posts" path="/matataki/tags/:tagId/:tagName/posts/:ipfsFlag?" paramsDesc={['标签ID', '标签名称','IPFS标识，置空item指向主站，有值item指向IPFS网关']}  radar="1" notOperational="1"/>
 
 ### 收藏夹 {#matataki-shou-cang-jia}
 
-<Route author="whyouare111" example="/matataki/users/3017/favorites/155/posts" path="/matataki/users/:userId/favorites/:favoriteListId/posts/:ipfsFlag?" paramsDesc={['用户ID', '收藏夹ID','IPFS标识，置空item指向主站，有值item指向IPFS网关']}  radar="1"/>
+<Route author="whyouare111" example="/matataki/users/3017/favorites/155/posts" path="/matataki/users/:userId/favorites/:favoriteListId/posts/:ipfsFlag?" paramsDesc={['用户ID', '收藏夹ID','IPFS标识，置空item指向主站，有值item指向IPFS网关']}  radar="1" notOperational="1"/>
 
 ## Matters {#matters}
 
@@ -1299,13 +1299,13 @@ IPFS 网关有可能失效，那时候换成其他网关。
 
 ### Author {#matters-author}
 
-<Route author="Cerebrater xosdy" example="/matters/author/az" path="/matters/author/:uid" paramsDesc={['Author id, can be found at author\'s homepage url']} radar="1"/>
+<Route author="Cerebrater xosdy" example="/matters/author/az" path="/matters/author/:uid" paramsDesc={['Author id, can be found at author\'s homepage url']} radar="1" notOperational="1"/>
 
 ## McLaren Racing {#mclaren-racing}
 
 ### Articles {#mclaren-racing-articles}
 
-<Route author="Bubbu0129" example="/mclaren/en/all" path="/mclaren/:lang/:category?" paramsDesc={['Supports English(en), Simplified Chinese(zh), and Spanish(es).', 'Default to exporting all media (all); See the table below for details']} radar="1">
+<Route author="Bubbu0129" example="/mclaren/en/all" path="/mclaren/:lang/:category?" paramsDesc={['Supports English(en), Simplified Chinese(zh), and Spanish(es).', 'Default to exporting all media (all); See the table below for details']} radar="1" notOperational="1">
 
 | All Media | Article | Report | Gallery | Video | Blog | Photo Essay  |
 | --------- | ------- | ------ | ------- | ----- | ---- | ------------ |
@@ -1412,7 +1412,7 @@ This route provides a flexible plan with full text content to subscribe specific
 
 ### Newsroom {#netflix-newsroom}
 
-<Route author="nczitzk" example="/netflix/newsroom" path="/netflix/newsroom/:category?/:region?" paramsDesc={['分类，见下表，默认为 0 即 全部', '地区，可在地区页 URL 中找到，默认为 en 即 英语地区']}>
+<Route author="nczitzk" example="/netflix/newsroom" path="/netflix/newsroom/:category?/:region?" paramsDesc={['分类，见下表，默认为 0 即 全部', '地区，可在地区页 URL 中找到，默认为 en 即 英语地区']} anticrawler="1">
 
 分类
 
@@ -1460,7 +1460,7 @@ This route provides a flexible plan with full text content to subscribe specific
 
 ### 搜索快讯 {#odaily-xing-qiu-ri-bao-sou-suo-kuai-xun}
 
-<Route author="snowraincloud" example="/odaily/search/news/Lens%20Protocol" path="/odaily/search/news/:keyword" paramsDesc={['搜索关键字']}/>
+<Route author="snowraincloud" example="/odaily/search/news/RSS3" path="/odaily/search/news/:keyword" paramsDesc={['搜索关键字']}/>
 
 ### 文章 {#odaily-xing-qiu-ri-bao-wen-zhang}
 
@@ -1504,7 +1504,7 @@ This route provides a flexible plan with full text content to subscribe specific
 
 ### 频道 {#or-pin-dao}
 
-<Route author="ncziztk" example="/or" path="/or/id?" paramsDesc={['id，见下表，默认为首页']}>
+<Route author="ncziztk" example="/or" path="/or/id?" paramsDesc={['id，见下表，默认为首页']} notOperational="1">
 
 | 首页 | 商业 | 金融  | 政经 | 社会与文化 | 领导力 | 生活时尚 | 视频   |
 | ---- | ---- | ----- | ---- | ---------- | ------ | -------- | ------ |
@@ -1585,13 +1585,13 @@ This route provides a flexible plan with full text content to subscribe specific
 
 ### 用户文章 {#pmcaff-yong-hu-wen-zhang}
 
-<Route author="SChen1024" example="/pmcaff/user/Oak7mqnEQJ" path="/pmcaff/user/:userid" paramsDesc={['用户 id, 用户界面对应的 URL 最后面的字符']}/>
+<Route author="SChen1024" example="/pmcaff/user/Oak7mqnEQJ" path="/pmcaff/user/:userid" paramsDesc={['用户 id, 用户界面对应的 URL 最后面的字符']} notOperational="1"/>
 
 ## Polar {#polar}
 
 ### Blog {#polar-blog}
 
-<Route author="nczitzk" example="/polar/blog" path="/polar/blog"/>
+<Route author="nczitzk" example="/polar/blog" path="/polar/blog" notOperational="1"/>
 
 ## Quanta Magazine {#quanta-magazine}
 
@@ -1910,7 +1910,7 @@ Member ID
 
 ### News {#sixth-tone-news}
 
-<Route author="kt286" example="/sixthtone/news" path="/sixthtone/news"/>
+<Route author="kt286" example="/sixthtone/news" path="/sixthtone/news" notOperational="1"/>
 
 ## Sky Sports {#sky-sports}
 
@@ -1926,13 +1926,13 @@ Member ID
 
 ### 案例 {#socialbeta-an-li}
 
-<Route author="nczitzk" example="/socialbeta/hunt" path="/socialbeta/hunt"/>
+<Route author="nczitzk" example="/socialbeta/hunt" path="/socialbeta/hunt" notOperational="1"/>
 
 ## Soomal {#soomal}
 
 ### 话题 {#soomal-hua-ti}
 
-<Route author="zoenglinghou" example="/soomal/topics/Phone/en" path="/soomal/topics/:category/:language?" paramsDesc={['Topic, found on the top menu bar', 'locale, default to simplified Chinese']}>
+<Route author="zoenglinghou" example="/soomal/topics/Phone/en" path="/soomal/topics/:category/:language?" paramsDesc={['Topic, found on the top menu bar', 'locale, default to simplified Chinese']} notOperational="1">
 
 -   Available languages：
 
@@ -2058,13 +2058,13 @@ Member ID
 
 ### 影音 {#the-news-lens-guan-jian-ping-lun-ying-yin}
 
-<Route author="nczitzk" example="/thenewslens/videos/Projects" path="/thenewslens/videos/Projects/:sort?" paramsDesc={['排序方式，同上表，可在对应排序页 URL 中找到']} />
+<Route author="nczitzk" example="/thenewslens/videos/Projects" path="/thenewslens/videos/Projects/:sort?" paramsDesc={['排序方式，同上表，可在对应排序页 URL 中找到']}  notOperational="1"/>
 
 ## The Partnership on AI {#the-partnership-on-ai}
 
 ### Resources {#the-partnership-on-ai-resources}
 
-<Route author="nczitzk" example="/partnershiponai/resources" path="/partnershiponai/resources"/>
+<Route author="nczitzk" example="/partnershiponai/resources" path="/partnershiponai/resources" notOperational="1"/>
 
 ## The Verge {#the-verge}
 
@@ -2095,7 +2095,7 @@ Provides a better reading experience (full text articles) over the official one.
 
 ### Category {#thoughtco-category}
 
-<Route author="nczitzk" example="/thoughtco" path="/thoughtco/:category?" paramsDesc={['Category id, see below']} radar="1">
+<Route author="nczitzk" example="/thoughtco" path="/thoughtco/:category?" paramsDesc={['Category id, see below']} radar="1" notOperational="1">
 
 #### Science, Tech, Math {#thoughtco-category-science-tech-math}
 
@@ -2398,7 +2398,7 @@ Provides a better reading experience (full text articles) over the official one.
 
 ## Thrillist {#thrillist}
 
-<Route author="loganrockmore" example="/thrillist/food-and-drink" path="/vulture/:tag" paramsDesc={['Tag']}>
+<Route author="loganrockmore" example="/thrillist/food-and-drink" path="/vulture/:tag" paramsDesc={['Tag']} notOperational="1">
 
 Provides all of the Thrillist articles with the specified tag.
 
@@ -2462,13 +2462,13 @@ Provides all of the Thrillist articles with the specified tag.
 
 ### 版塊 {#uwants-ban-kuai}
 
-<Route author="nczitzk" example="/uwants/1520" path="/uwants/:fid" paramsDesc={['fid，可在对应板块页的 URL 中找到']}/>
+<Route author="nczitzk" example="/uwants/1520" path="/uwants/:fid" paramsDesc={['fid，可在对应板块页的 URL 中找到']} anticrawler="1"/>
 
 ## VERSE {#verse}
 
 ### 專文 {#verse-zhuan-wen}
 
-<Route author="miles170" example="/verse/articles" path="/verse/articles/:category?" paramsDesc={['分类，见下表，默认为全部']} radar="1">
+<Route author="miles170" example="/verse/articles" path="/verse/articles/:category?" paramsDesc={['分类，见下表，默认为全部']} radar="1" notOperational="1">
 
 | 新聞       | 人物   | 文化    | 觀念      | 地方  | 飲食   | 專題     |
 | ---------- | ------ | ------- | --------- | ----- | ------ | -------- |
@@ -2480,7 +2480,7 @@ Provides all of the Thrillist articles with the specified tag.
 
 ### Day in Photos {#voa-news-day-in-photos}
 
-<Route author="nczitzk" example="/voa/day-photos" path="/voa/day-photos"/>
+<Route author="nczitzk" example="/voa/day-photos" path="/voa/day-photos" notOperational="1"/>
 
 ## Vulture {#vulture}
 
@@ -2591,7 +2591,7 @@ Supported sub-sites:
 
 ### 广角新闻 {#ba-que-guang-jiao-xin-wen}
 
-<Route author="nczitzk" example="/popyard" path="/popyard/:caty?" paramsDesc={['分类, 默认为全景']}>
+<Route author="nczitzk" example="/popyard" path="/popyard/:caty?" paramsDesc={['分类, 默认为全景']} notOperational="1">
 
 | 全景 | 中国 | 国际 | 科教 | 军事 | 体育 | 娱乐 | 艺术 | 文史 | 观点 | 生活 | 产经 | 其它 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -2603,11 +2603,11 @@ Supported sub-sites:
 
 ### 作者专栏 {#ba-bi-te-zuo-zhe-zhuan-lan}
 
-<Route author="kt286" example="/8btc/45703" path="/8btc/:authorid" paramsDesc={['作者ID，可在对应专辑页面的 URL 中找到']}/>
+<Route author="kt286" example="/8btc/45703" path="/8btc/:authorid" paramsDesc={['作者ID，可在对应专辑页面的 URL 中找到']} notOperational="1"/>
 
 ### 快讯 {#ba-bi-te-kuai-xun}
 
-<Route author="hillerliao" example="/8btc/news/flash" path="/8btc/news/flash"/>
+<Route author="hillerliao" example="/8btc/news/flash" path="/8btc/news/flash" notOperational="1"/>
 
 ## 白话区块链 {#bai-hua-qu-kuai-lian}
 
@@ -2631,17 +2631,17 @@ Supported sub-sites:
 
 ### 专栏 {#bai-hua-qu-kuai-lian-zhuan-lan}
 
-<Route author="Fatpandac" example="/hellobtc/topic/276" path="/hellobtc/topic/:id" paramsDesc={['专栏 ID，可在网址中获取']}/>
+<Route author="Fatpandac" example="/hellobtc/topic/276" path="/hellobtc/topic/:id" paramsDesc={['专栏 ID，可在网址中获取']} notOperational="1"/>
 
 ## 白鲸出海 {#bai-jing-chu-hai}
 
 ### 最新 {#bai-jing-chu-hai-zui-xin}
 
-<Route author="jeffcottLu nczitzk" example="/baijing" path="/baijing" />
+<Route author="jeffcottLu nczitzk" example="/baijing" path="/baijing"  notOperational="1"/>
 
 ### 资讯 {#bai-jing-chu-hai-zi-xun}
 
-<Route author="nczitzk" example="/baijing/1" path="/baijing/:type?" paramsDesc={['分类 id，见下表，默认为最新文章']}>
+<Route author="nczitzk" example="/baijing/1" path="/baijing/:type?" paramsDesc={['分类 id，见下表，默认为最新文章']} notOperational="1">
 
 | 最新文章 | 7×24h | 干货 | 专栏 | 手游 | 跨境电商 | 投融资 | 数据报告 | 智能手机 | 活动 |
 | -------- | ----- | ---- | ---- | ---- | -------- | ------ | -------- | -------- | ---- |
@@ -2653,7 +2653,7 @@ Supported sub-sites:
 
 ### 精选 {#bai-du-zhi-dao-ri-bao-jing-xuan}
 
-<Route author="1813927768" example="/baidu/daily" path="/baidu/daily"/>
+<Route author="1813927768" example="/baidu/daily" path="/baidu/daily" notOperational="1"/>
 
 ## 半月谈 {#ban-yue-tan}
 
@@ -2675,17 +2675,17 @@ Supported sub-sites:
 
 ### 摄影 {#bao-dao-zhe-she-ying}
 
-<Route author="emdoe" example="/twreporter/photography" path="/twreporter/photography"/>
+<Route author="emdoe" example="/twreporter/photography" path="/twreporter/photography" notOperational="1"/>
 
 ### 分类 {#bao-dao-zhe-fen-lei}
 
-<Route author="emdoe" example="/twreporter/category/reviews" path="/twreporter/category/:tid" paramsDesc={['分类（议题）名称，于主页获取']}/>
+<Route author="emdoe" example="/twreporter/category/reviews" path="/twreporter/category/:tid" paramsDesc={['分类（议题）名称，于主页获取']} notOperational="1"/>
 
 ## 北京市科学技术协会 {#bei-jing-shi-ke-xue-ji-shu-xie-hui}
 
 ### 通用 {#bei-jing-shi-ke-xue-ji-shu-xie-hui-tong-yong}
 
-<Route author="nczitzk" example="/bast/col/col31266" path="/bast/:path+" paramsDesc={['路径，默认为通知公告']}>
+<Route author="nczitzk" example="/bast/col/col31266" path="/bast/:path+" paramsDesc={['路径，默认为通知公告']} anticrawler="1">
 
 :::tip
 
@@ -2703,7 +2703,7 @@ Supported sub-sites:
 
 ## 北屋 {#bei-wu}
 
-<Route author="nczitzk" example="/northhouse" path="/northhouse/:category?" paramsDesc={['分类，见下表，默认为首页']}>
+<Route author="nczitzk" example="/northhouse" path="/northhouse/:category?" paramsDesc={['分类，见下表，默认为首页']} notOperational="1">
 
 | 首页 | 最新资讯和灾难信息 | 生存主义 survival | 运动户外 | 玩物尚志 | 分享下载 | 知行生活 | 商务服务 |
 | ---- | ------------------ | ----------------- | -------- | -------- | -------- | -------- | -------- |
@@ -2734,13 +2734,13 @@ Supported sub-sites:
 
 ### 快讯 {#bi-shi-jie-kuai-xun}
 
-<Route author="kt286" example="/bishijie/kuaixun" path="/bishijie/kuaixun"/>
+<Route author="kt286" example="/bishijie/kuaixun" path="/bishijie/kuaixun" notOperational="1"/>
 
 ## 不安全 {#bu-an-quan}
 
 ### 全文 {#bu-an-quan-quan-wen}
 
-<Route author="22k" example="/buaq" path="/buaq/index"/>
+<Route author="22k" example="/buaq" path="/buaq/index" notOperational="1"/>
 
 ## 财富中文网 {#cai-fu-zhong-wen-wang}
 
@@ -2785,7 +2785,7 @@ Supported sub-sites:
 
 ### 首页 {#chan-pin-chen-si-lu-shou-ye}
 
-<Route author="nczitzk" example="/pmthinking" path="/pmthinking" />
+<Route author="nczitzk" example="/pmthinking" path="/pmthinking"  notOperational="1"/>
 
 ## 抽屉新热榜 {#chou-ti-xin-re-bang}
 
@@ -2847,7 +2847,7 @@ Supported sub-sites:
 
 ### 新闻 {#da-he-cai-li-fang-xin-wen}
 
-<Route author="linbuxiao" example="/dahecube" path="/dahecube/:type?" paramsDesc={['板块，见下表，默认为推荐']}>
+<Route author="linbuxiao" example="/dahecube" path="/dahecube/:type?" paramsDesc={['板块，见下表，默认为推荐']} notOperational="1">
 
 | 推荐      | 党史    | 豫股  | 财经     | 投教      | 金融    | 科创    | 投融   | 专栏   |
 | --------- | ------- | ----- | -------- | --------- | ------- | ------- | ------ | ------ |
@@ -2859,11 +2859,11 @@ Supported sub-sites:
 
 ### 事件分析 {#dao-min-wei-xing-islander-shi-jian-fen-xi}
 
-<Route author="TonyRL" example="/islander/search" path="/islander/search" radar="1"/>
+<Route author="TonyRL" example="/islander/search" path="/islander/search" radar="1" notOperational="1"/>
 
 ### 單日焦點 {#dao-min-wei-xing-islander-dan-ri-jiao-dian}
 
-<Route author="TonyRL" example="/islander/top30event" path="/islander/top30event" radar="1"/>
+<Route author="TonyRL" example="/islander/top30event" path="/islander/top30event" radar="1" notOperational="1"/>
 
 ## 得到 {#de-dao}
 
@@ -2913,7 +2913,7 @@ Supported sub-sites:
 
 ### 电动号 {#dian-dong-bang-dian-dong-hao}
 
-<Route author="Fatpandac" example="/diandong/ddh" path="/diandong/ddh/:cate?" paramsDesc={['分类，见下表，默认为全部']}>
+<Route author="Fatpandac" example="/diandong/ddh" path="/diandong/ddh/:cate?" paramsDesc={['分类，见下表，默认为全部']} notOperational="1">
 
 分类
 
@@ -2927,7 +2927,7 @@ Supported sub-sites:
 
 ### 分区 {#dian-shang-bao-fen-qu}
 
-<Route author="FlashWingShadow" example="/dsb/area/lingshou" path="/dsb/area/:area" paramsDesc={['分区']}>
+<Route author="FlashWingShadow" example="/dsb/area/lingshou" path="/dsb/area/:area" paramsDesc={['分区']} notOperational="1">
 
 area 分区选项
 
@@ -2941,7 +2941,7 @@ area 分区选项
 
 ### 电商在线 {#dian-shang-zai-xian-dian-shang-zai-xian}
 
-<Route author="LogicJake" example="/imaijia/category/xls" path="/imaijia/category/:category" paramsDesc={['类别id，可在 URL 中找到']} />
+<Route author="LogicJake" example="/imaijia/category/xls" path="/imaijia/category/:category" paramsDesc={['类别id，可在 URL 中找到']}  notOperational="1"/>
 
 ## 电獭少女 {#dian-ta-shao-nv}
 
@@ -2957,7 +2957,7 @@ area 分区选项
 
 ### 精选主题 {#dian-ta-shao-nv-jing-xuan-zhu-ti}
 
-<Route author="TonyRL" example="/agirls/topic/iphone13" path="/agirls/topic/:topic" paramsDesc={['精选主题，可通过下方精选主题列表获得']} radar="1"/>
+<Route author="TonyRL" example="/agirls/topic/iphone13" path="/agirls/topic/:topic" paramsDesc={['精选主题，可通过下方精选主题列表获得']} radar="1" notOperational="1"/>
 
 ### 当前精选主题列表 {#dian-ta-shao-nv-dang-qian-jing-xuan-zhu-ti-lie-biao}
 
@@ -2967,7 +2967,7 @@ area 分区选项
 
 ### 芯语 {#dian-zi-gong-cheng-zhuan-ji-xin-yu}
 
-<Route author="nczitzk" example="/eet-china/mp" path="/eet-china/mp/:category?" paramsDesc={['分类，见下表，默认为最新']}>
+<Route author="nczitzk" example="/eet-china/mp" path="/eet-china/mp/:category?" paramsDesc={['分类，见下表，默认为最新']} notOperational="1">
 
 | 最新 | 半导体 | 通信网络 | 消费电子 / 手机 | 汽车电子 |
 | ---- | ------ | -------- | --------------- | -------- |
@@ -2985,13 +2985,13 @@ area 分区选项
 
 ### 芯语标签 {#dian-zi-gong-cheng-zhuan-ji-xin-yu-biao-qian}
 
-<Route author="nczitzk" example="/eet-china/mp/tags/36806" path="/eet-china/mp/tags/:id" paramsDesc={['标签 id，可在对应标签页中找到']}/>
+<Route author="nczitzk" example="/eet-china/mp/tags/36806" path="/eet-china/mp/tags/:id" paramsDesc={['标签 id，可在对应标签页中找到']} notOperational="1"/>
 
 ## 丁香园 {#ding-xiang-yuan}
 
 ### 新冠疫苗实时动态 {#ding-xiang-yuan-xin-guan-yi-miao-shi-shi-dong-tai}
 
-<Route author="nczitzk" example="/dxy/vaccine/北京" path="/dxy/vaccine/:province?/:city?/:location?" paramsDesc={['省', '市', '区']}>
+<Route author="nczitzk" example="/dxy/vaccine/北京" path="/dxy/vaccine/:province?/:city?/:location?" paramsDesc={['省', '市', '区']} notOperational="1">
 
 查看北京市的新冠疫苗接种点，路由为 `/dxy/vaccine/北京`；
 
@@ -3042,7 +3042,7 @@ area 分区选项
 
 ### 标签 {#dong-xi-zhi-ku-biao-qian}
 
-<Route author="nczitzk" example="/dx2025/tag/3d_printing" path="/dx2025/tag/:category" paramsDesc={['标签分类，见下表，默认为空']}>
+<Route author="nczitzk" example="/dx2025/tag/3d_printing" path="/dx2025/tag/:category" paramsDesc={['标签分类，见下表，默认为空']} notOperational="1">
 
 | 分类       | 分类名                            | 分类           | 分类名                    |
 | ---------- | --------------------------------- | -------------- | ------------------------- |
@@ -3082,7 +3082,7 @@ area 分区选项
 
 ### 新闻 {#dong-qiu-di-xin-wen}
 
-<Route author="HendricksZheng" example="/dongqiudi/top_news/1" path="/dongqiudi/top_news/:id?" paramsDesc={['类别 id，不填默认头条新闻']}>
+<Route author="HendricksZheng" example="/dongqiudi/top_news/1" path="/dongqiudi/top_news/:id?" paramsDesc={['类别 id，不填默认头条新闻']} anticrawler="1">
 
 | 头条 | 深度 | 闲情 | D 站 | 中超 | 国际 | 英超 | 西甲 | 意甲 | 德甲 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -3092,7 +3092,7 @@ area 分区选项
 
 ### 专题 {#dong-qiu-di-zhuan-ti}
 
-<Route author="dxmpalb" example="/dongqiudi/special/41" path="/dongqiudi/special/:id" paramsDesc={['专题 id, 可自行通过 https://www.dongqiudi.com/special/+数字匹配']}>
+<Route author="dxmpalb" example="/dongqiudi/special/41" path="/dongqiudi/special/:id" paramsDesc={['专题 id, 可自行通过 https://www.dongqiudi.com/special/+数字匹配']} anticrawler="1">
 
 | 新闻大爆炸 | 懂球帝十佳球 | 懂球帝本周 MVP |
 | ---------- | ------------ | -------------- |
@@ -3102,7 +3102,7 @@ area 分区选项
 
 ### 早报 {#dong-qiu-di-zao-bao}
 
-<Route author="HenryQW" example="/dongqiudi/daily" path="/dongqiudi/daily"/>
+<Route author="HenryQW" example="/dongqiudi/daily" path="/dongqiudi/daily" anticrawler="1"/>
 
 :::tip
 
@@ -3112,15 +3112,15 @@ area 分区选项
 
 ### 足球赛果 {#dong-qiu-di-zu-qiu-sai-guo}
 
-<Route author="HenryQW" example="/dongqiudi/result/50001755" path="/dongqiudi/result/:team" paramsDesc={['球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']}/>
+<Route author="HenryQW" example="/dongqiudi/result/50001755" path="/dongqiudi/result/:team" paramsDesc={['球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']} anticrawler="1"/>
 
 ### 球队新闻 {#dong-qiu-di-qiu-dui-xin-wen}
 
-<Route author="HenryQW" example="/dongqiudi/team_news/50001755" path="/dongqiudi/team_news/:team" paramsDesc={['球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']}/>
+<Route author="HenryQW" example="/dongqiudi/team_news/50001755" path="/dongqiudi/team_news/:team" paramsDesc={['球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到']} anticrawler="1"/>
 
 ### 球员新闻 {#dong-qiu-di-qiu-yuan-xin-wen}
 
-<Route author="HenryQW" example="/dongqiudi/player_news/50000339" path="/dongqiudi/player_news/:id" paramsDesc={['球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中通过其队伍找到']}/>
+<Route author="HenryQW" example="/dongqiudi/player_news/50000339" path="/dongqiudi/player_news/:id" paramsDesc={['球员 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中通过其队伍找到']} anticrawler="1"/>
 
 ## 端传媒 {#duan-chuan-mei}
 
@@ -3152,11 +3152,11 @@ Type 栏目：
 
 ### 作者 {#duan-chuan-mei-zuo-zhe}
 
-<Route author="AgFlore" example="/theinitium/author/ninghuilulu/zh-hans" path="/theinitium/author/:type/:language?" paramsDesc={['作者 ID，可从作者主页 URL 中获取，如`https://theinitium.com/author/ninghuilulu/`','语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']}/>
+<Route author="AgFlore" example="/theinitium/author/ninghuilulu/zh-hans" path="/theinitium/author/:type/:language?" paramsDesc={['作者 ID，可从作者主页 URL 中获取，如`https://theinitium.com/author/ninghuilulu/`','语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']} notOperational="1"/>
 
 ### 个人订阅追踪动态 {#duan-chuan-mei-ge-ren-ding-yue-zhui-zong-dong-tai}
 
-<Route author="AgFlore" example="/theinitium/follow/articles/zh-hans" path="/theinitium/follow/articles/:language?" paramsDesc={['语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']}>
+<Route author="AgFlore" example="/theinitium/follow/articles/zh-hans" path="/theinitium/follow/articles/:language?" paramsDesc={['语言，简体`zh-hans`，繁体`zh-hant`，缺省为简体']} notOperational="1">
 
 :::warning
 
@@ -3170,13 +3170,13 @@ Type 栏目：
 
 ### 首页 {#duo-zhi-wang-shou-ye}
 
-<Route author="WenryXu" example="/duozhi" path="/duozhi"/>
+<Route author="WenryXu" example="/duozhi" path="/duozhi" notOperational="1"/>
 
 ## 法律白話文運動 {#fa-lv-bai-hua-wen-yun-dong}
 
 ### 最新文章 {#fa-lv-bai-hua-wen-yun-dong-zui-xin-wen-zhang}
 
-<Route author="emdoe" example="/plainlaw/archives" path="/plainlaw/archives"/>
+<Route author="emdoe" example="/plainlaw/archives" path="/plainlaw/archives" notOperational="1"/>
 
 ## 樊登读书 {#fan-deng-du-shu}
 
@@ -3227,7 +3227,7 @@ Type 栏目：
 
 ## 飞雪娱乐网 {#fei-xue-yu-le-wang}
 
-<Route author="nczitzk" example="/feixuew/rj" path="/feixuew/:id?" paramsDesc={['分类 id，可在对应分类页面的 URL 中找到，默认为首页最近更新']}>
+<Route author="nczitzk" example="/feixuew/rj" path="/feixuew/:id?" paramsDesc={['分类 id，可在对应分类页面的 URL 中找到，默认为首页最近更新']} notOperational="1">
 
 | 实用软件 | 网站源码 | 技术教程 | 游戏助手 | 游戏资源 | 值得一看 |
 | -------- | -------- | -------- | -------- | -------- | -------- |
@@ -3303,7 +3303,7 @@ Type 栏目：
 
 ### 文章 {#fu-li-nian-wen-zhang}
 
-<Route author="nczitzk" example="/fulinian" path="/fulinian/:caty?" paramsDesc={['分类, 默认为首页最新发布']}>
+<Route author="nczitzk" example="/fulinian" path="/fulinian/:caty?" paramsDesc={['分类, 默认为首页最新发布']} notOperational="1">
 
 | 技术教程         | 精品软件         | 网络资源         | 福利年惠 | 创业知识 | 正版教程         |
 | ---------------- | ---------------- | ---------------- | -------- | -------- | ---------------- |
@@ -3325,7 +3325,7 @@ Type 栏目：
 
 ### 分类 {#gong-zhong-hao-360-fen-lei}
 
-<Route author="Rongronggg9" example="/gzh360/category/5d357964e2eb992114a3d588" path="/gzh360/category/:id?" paramsDesc={['分类 id，见下表']} radar="1">
+<Route author="Rongronggg9" example="/gzh360/category/5d357964e2eb992114a3d588" path="/gzh360/category/:id?" paramsDesc={['分类 id，见下表']} radar="1" notOperational="1">
 
 | `id`                       | 分类   |   | `id`                       | 分类 |
 | -------------------------- | ------ | - | -------------------------- | ---- |
@@ -3403,7 +3403,7 @@ others = 热点新闻 + 滚动新闻
 
 ### 资讯 {#guan-dian-wang-zi-xun}
 
-<Route author="drgnchan" example="/guandian/finance" path="/guandian/:category" paramsDesc={['资讯分类，可在URL中找到']} radar="1"/>
+<Route author="drgnchan" example="/guandian/finance" path="/guandian/:category" paramsDesc={['资讯分类，可在URL中找到']} radar="1" notOperational="1"/>
 
 ## 观海新闻 {#guan-hai-xin-wen}
 
@@ -3455,7 +3455,7 @@ others = 热点新闻 + 滚动新闻
 
 ### 标签，栏目，分类 {#hao-qi-xin-ri-bao-biao-qian-%EF%BC%8C-lan-mu-%EF%BC%8C-fen-lei}
 
-<Route author="WenhuWee emdoe SivaGao HenryQW" example="/qdaily/column/59" path="/qdaily/:type/:id" paramsDesc={['类型，见下表', '对应 id，可在 URL 找到']} radar="1">
+<Route author="WenhuWee emdoe SivaGao HenryQW" example="/qdaily/column/59" path="/qdaily/:type/:id" paramsDesc={['类型，见下表', '对应 id，可在 URL 找到']} radar="1" notOperational="1">
 
 | 标签 | 栏目   | 分类     |
 | ---- | ------ | -------- |
@@ -3493,7 +3493,7 @@ others = 热点新闻 + 滚动新闻
 
 ### 标签 {#hu-xiu-biao-qian}
 
-<Route author="xyqfer HenryQW" example="/huxiu/tag/291" path="/huxiu/tag/:id" paramsDesc={['标签 id']} />
+<Route author="xyqfer HenryQW" example="/huxiu/tag/291" path="/huxiu/tag/:id" paramsDesc={['标签 id']} anticrawler="1"/>
 
 ### 搜索 {#hu-xiu-sou-suo}
 
@@ -3501,15 +3501,15 @@ others = 热点新闻 + 滚动新闻
 
 ### 作者 {#hu-xiu-zuo-zhe}
 
-<Route author="HenryQW" example="/huxiu/author/29318" path="/huxiu/author/:id" paramsDesc={['用户 id']} />
+<Route author="HenryQW" example="/huxiu/author/29318" path="/huxiu/author/:id" paramsDesc={['用户 id']} anticrawler="1" />
 
 ### 文集 {#hu-xiu-wen-ji}
 
-<Route author="AlexdanerZe" example="/huxiu/collection/212" path="/huxiu/collection/:id" paramsDesc={['文集 id']} />
+<Route author="AlexdanerZe" example="/huxiu/collection/212" path="/huxiu/collection/:id" paramsDesc={['文集 id']} notOperational="1" />
 
 ### 简报 {#hu-xiu-jian-bao}
 
-<Route author="Fatpandac" example="/huxiu/briefcolumn/1" path="/huxiu/briefcolumn/:id" paramsDesc={['简报 id']} />
+<Route author="Fatpandac" example="/huxiu/briefcolumn/1" path="/huxiu/briefcolumn/:id" paramsDesc={['简报 id']}  anticrawler="1"/>
 
 ## 互动吧 {#hu-dong-ba}
 
@@ -3543,7 +3543,7 @@ others = 热点新闻 + 滚动新闻
 
 ### 专题文章 {#ji-he-wang-zhuan-ti-wen-zhang}
 
-<Route author="kudryavka1013" example="/gcores/collections/64" path="/gcores/collections/:collection" paramsDesc={['专题id，可在专题页面的 URL 中找到，如 游戏开发设计心得分享 -- 64']} radar="1" />
+<Route author="kudryavka1013" example="/gcores/collections/64" path="/gcores/collections/:collection" paramsDesc={['专题id，可在专题页面的 URL 中找到，如 游戏开发设计心得分享 -- 64']} radar="1" anticrawler="1" />
 
 ### 播客 {#ji-he-wang-bo-ke}
 
@@ -3583,7 +3583,7 @@ others = 热点新闻 + 滚动新闻
 
 ### 「108 将」实战分享 {#jia-zhen-de-dian-shang-108-jiang-108-jiang-shi-zhan-fen-xiang}
 
-<Route author="nczitzk" example="/jiazhen108" path="/jiazhen108" />
+<Route author="nczitzk" example="/jiazhen108" path="/jiazhen108" notOperational="1" />
 
 ## 簡訊設計 {#jian-xun-she-ji}
 
@@ -3627,7 +3627,7 @@ others = 热点新闻 + 滚动新闻
 
 ### 关键词 {#jin-ri-tou-tiao-guan-jian-ci}
 
-<Route author="uni-zheng" example="/jinritoutiao/keyword/AI" path="/jinritoutiao/keyword/:keyword" paramsDesc={['关键词']} anticrawler="1"/>
+<Route author="uni-zheng" example="/jinritoutiao/keyword/AI" path="/jinritoutiao/keyword/:keyword" paramsDesc={['关键词']} anticrawler="1" notOperational="1"/>
 
 ## 金色财经 {#jin-se-cai-jing}
 
@@ -3637,7 +3637,7 @@ others = 热点新闻 + 滚动新闻
 
 ### 头条 {#jin-se-cai-jing-tou-tiao}
 
-<Route author="nczitzk" example="/jinse/timeline" path="/jinse/timeline"/>
+<Route author="nczitzk" example="/jinse/timeline" path="/jinse/timeline" notOperational="1"/>
 
 ### 分类 {#jin-se-cai-jing-fen-lei}
 
@@ -3653,11 +3653,11 @@ others = 热点新闻 + 滚动新闻
 
 ### 首页 {#jing-yue-qi-che-shou-ye}
 
-<Route author="LogicJake" example="/whalegogo/home" path="/whalegogo/home"/>
+<Route author="LogicJake" example="/whalegogo/home" path="/whalegogo/home" notOperational="1"/>
 
 ### 其他栏目 {#jing-yue-qi-che-qi-ta-lan-mu}
 
-<Route author="Jeason0228" example="/whalegogo/portal/2" path="/whalegogo/portal/:type_id/:tagid?/" paramsDesc={['type_id,栏目id','tagid,标签id']}>
+<Route author="Jeason0228" example="/whalegogo/portal/2" path="/whalegogo/portal/:type_id/:tagid?/" paramsDesc={['type_id,栏目id','tagid,标签id']} notOperational="1">
 
 | 快讯                 | 文章                 | 活动                 | 评测                 | 视频               | 访谈               |
 | -------------------- | -------------------- | -------------------- | -------------------- | ------------------ | ------------------ |
@@ -3669,7 +3669,7 @@ others = 热点新闻 + 滚动新闻
 
 ### 分类 {#jiu-san-xue-she-fen-lei}
 
-<Route author="nczitzk" example="/93/lxzn-yzjy" path="/93/:category?" paramsDesc={['分类，可在对应分类页的 URL 中找到']}/>
+<Route author="nczitzk" example="/93/lxzn-yzjy" path="/93/:category?" paramsDesc={['分类，可在对应分类页的 URL 中找到']} notOperational="1"/>
 
 ## 巨潮资讯 {#ju-chao-zi-xun}
 
@@ -3701,7 +3701,7 @@ column 为 third 时可选的 category:
 
 ### 最新资讯 {#jue-sheng-wang-zui-xin-zi-xun}
 
-<Route author="WenryXu" example="/juesheng" path="/juesheng"/>
+<Route author="WenryXu" example="/juesheng" path="/juesheng" notOperational="1"/>
 
 ## 卡卡洛普 {#ka-ka-luo-pu}
 
@@ -4010,7 +4010,7 @@ column 为 third 时可选的 category:
 
 ### 具体栏目更新 {#kuai-mei-ti-ju-ti-lan-mu-geng-xin}
 
-<Route author="xfangbao" example="/kuai/1" path="/kuai/:id" />
+<Route author="xfangbao" example="/kuai/1" path="/kuai/:id"  notOperational="1"/>
 
 具体栏目编号，去网站上看标签
 
@@ -4023,7 +4023,7 @@ column 为 third 时可选的 category:
 
 ### 话题 {#kuai-zhi-hua-ti}
 
-<Route author="hoilc" example="/kzfeed/topic/KklZRd9a04OgA" path="/kzfeed/topic/:id" paramsDesc={['话题ID, 可以从话题URL中获得']}/>
+<Route author="hoilc" example="/kzfeed/topic/KklZRd9a04OgA" path="/kzfeed/topic/:id" paramsDesc={['话题ID, 可以从话题URL中获得']} notOperational="1"/>
 
 ## 老司机 {#lao-si-ji}
 
@@ -4143,7 +4143,7 @@ column 为 third 时可选的 category:
 
 ### 话题 {#li-xiang-sheng-huo-shi-yan-shi-hua-ti}
 
-<Route author="nczitzk" example="/toodaylab/topic/309" path="/toodaylab/topic/:id" paramsDesc={['话题 id，见下表，可在对应话题页 URL 中找到']} radar="1">
+<Route author="nczitzk" example="/toodaylab/topic/309" path="/toodaylab/topic/:id" paramsDesc={['话题 id，见下表，可在对应话题页 URL 中找到']} radar="1" anticrawler="1">
 
 | 今日消费资讯 | 实验室带你过周末 | 实验室带你过假期 | 每日一图 | 每周一书 | 实验室数字 | 新鲜社会人 | 实验室TV |
 | ------------ | ---------------- | ---------------- | -------- | -------- | ---------- | ---------- | -------- |
@@ -4155,11 +4155,11 @@ column 为 third 时可选的 category:
 
 ### 首页 {#lian-bu-shou-chaincatcher-shou-ye}
 
-<Route author="TonyRL" example="/chaincatcher" path="/chaincatcher"  radar="1"/>
+<Route author="TonyRL" example="/chaincatcher" path="/chaincatcher" notOperational="1"  radar="1"/>
 
 ### 快讯 {#lian-bu-shou-chaincatcher-kuai-xun}
 
-<Route author="TonyRL" example="/chaincatcher/news" path="/chaincatcher/news"  radar="1"/>
+<Route author="TonyRL" example="/chaincatcher/news" path="/chaincatcher/news" notOperational="1"  radar="1"/>
 
 ## 链新闻 ABMedia {#lian-xin-wen-abmedia}
 
@@ -4290,7 +4290,7 @@ column 为 third 时可选的 category:
 
 ### 新闻快讯 {#lv-dong-xin-wen-kuai-xun}
 
-<Route author="Fatpandac jameshih" example="/blockbeats/newsflash" path="/blockbeats/:channel?" paramsDesc={['类型，见下表，默认为快讯']}>
+<Route author="Fatpandac jameshih" example="/blockbeats/newsflash" path="/blockbeats/:channel?" paramsDesc={['类型，见下表，默认为快讯']} notOperational="1">
 
 |    快讯   |   文章  |
 | :-------: | :-----: |
@@ -4360,7 +4360,7 @@ column 为 third 时可选的 category:
 
 ### 大企业 {#luo-ge-wang-da-qi-ye}
 
-<Route author="nczitzk" example="/logclub/company/14" path="/logclub/company/:id" paramsDesc={['企业 id，见下表，可在对应企业页 URL 中找到']} radar="1">
+<Route author="nczitzk" example="/logclub/company/14" path="/logclub/company/:id" paramsDesc={['企业 id，见下表，可在对应企业页 URL 中找到']} radar="1" anticrawler="1">
 
 #### 明星企业 {#luo-ge-wang-da-qi-ye-ming-xing-qi-ye}
 
@@ -4880,15 +4880,15 @@ column 为 third 时可选的 category:
 
 ### 首页 {#pai-dai-shou-ye}
 
-<Route author="qiwihui" example="/paidai" path="/paidao" />
+<Route author="qiwihui" example="/paidai" path="/paidao" notOperational="1" />
 
 ### 论坛 {#pai-dai-lun-tan}
 
-<Route author="qiwihui" example="/paidai/bbs" path="/paidao/bbs" />
+<Route author="qiwihui" example="/paidai/bbs" path="/paidao/bbs" notOperational="1" />
 
 ### 商道 {#pai-dai-shang-dao}
 
-<Route author="qiwihui" example="/paidai/news" path="/paidao/news" />
+<Route author="qiwihui" example="/paidai/news" path="/paidao/news" notOperational="1" />
 
 ## 跑野大爆炸 {#pao-ye-da-bao-zha}
 
@@ -4900,7 +4900,7 @@ column 为 third 时可选的 category:
 
 ### 文章 {#pin-tu-shang-ye-ping-lun-wen-zhang}
 
-<Route author="DIYgod" example="/pintu360/0" path="/pintu360/:type?" paramsDesc={['类型, 默认为 `0` 推荐']}>
+<Route author="DIYgod" example="/pintu360/0" path="/pintu360/:type?" paramsDesc={['类型, 默认为 `0` 推荐']} notOperational="1">
 
 类型
 
@@ -4958,7 +4958,7 @@ column 为 third 时可选的 category:
 
 ### 知识库／资讯 {#qian-pian-wang-zhi-shi-ku-%EF%BC%8F-zi-xun}
 
-<Route author="TonyRL" example="/qianp/news" path="/qianp/news/:path*" paramsDesc={['路径，可在URL中找到，默认为 `news/recommend`']} radar="1"/>
+<Route author="TonyRL" example="/qianp/news" path="/qianp/news/:path*" paramsDesc={['路径，可在URL中找到，默认为 `news/recommend`']} radar="1" notOperational="1"/>
 
 ## 求是网 {#qiu-shi-wang}
 
@@ -5042,19 +5042,19 @@ column 为 third 时可选的 category:
 
 ### 首页 {#quan-xian-zai-shou-ye}
 
-<Route author="nczitzk" example="/allnow" path="/allnow"/>
+<Route author="nczitzk" example="/allnow" path="/allnow" notOperational="1"/>
 
 ### 专栏 {#quan-xian-zai-zhuan-lan}
 
-<Route author="nczitzk" example="/allnow/column/199" path="/allnow/column/:id" paramsDesc={['专栏 id']}/>
+<Route author="nczitzk" example="/allnow/column/199" path="/allnow/column/:id" paramsDesc={['专栏 id']} notOperational="1"/>
 
 ### 话题 {#quan-xian-zai-hua-ti}
 
-<Route author="nczitzk" example="/allnow/tag/678" path="/allnow/tag/:id" paramsDesc={['话题 id']}/>
+<Route author="nczitzk" example="/allnow/tag/678" path="/allnow/tag/:id" paramsDesc={['话题 id']} notOperational="1"/>
 
 ### 用户 {#quan-xian-zai-yong-hu}
 
-<Route author="nczitzk" example="/allnow/user/1891141" path="/allnow/user/:id" paramsDesc={['用户 id']}/>
+<Route author="nczitzk" example="/allnow/user/1891141" path="/allnow/user/:id" paramsDesc={['用户 id']} notOperational="1"/>
 
 ## 人民论坛网 {#ren-min-lun-tan-wang}
 
@@ -5094,7 +5094,7 @@ column 为 third 时可选的 category:
 
 ### 用户收藏 {#ren-ren-dou-shi-chan-pin-jing-li-yong-hu-shou-cang}
 
-<Route author="LogicJake" example="/woshipm/bookmarks/324696" path="/woshipm/bookmarks/:id" paramsDesc={['用户 id']} radar="1"/>
+<Route author="LogicJake" example="/woshipm/bookmarks/324696" path="/woshipm/bookmarks/:id" paramsDesc={['用户 id']} radar="1" notOperational="1"/>
 
 ### 用户文章 {#ren-ren-dou-shi-chan-pin-jing-li-yong-hu-wen-zhang}
 
@@ -5102,7 +5102,7 @@ column 为 third 时可选的 category:
 
 ### 最新文章 {#ren-ren-dou-shi-chan-pin-jing-li-zui-xin-wen-zhang}
 
-<Route author="Director-0428" example="/woshipm/latest" path="/woshipm/latest" radar="1"/>
+<Route author="Director-0428" example="/woshipm/latest" path="/woshipm/latest" radar="1" notOperational="1"/>
 
 ## 人人都是自媒体 {#ren-ren-dou-shi-zi-mei-ti}
 
@@ -5122,11 +5122,11 @@ column 为 third 时可选的 category:
 
 ### 搜索 {#ruan-can-sou-suo}
 
-<Route author="nczitzk" example="/ruancan/search/Windows" path="/ruancan/search/:keyword?" paramsDesc={['关键字，默认为空']}/>
+<Route author="nczitzk" example="/ruancan/search/Windows" path="/ruancan/search/:keyword?" paramsDesc={['关键字，默认为空']} anticrawler="1"/>
 
 ### 用户文章 {#ruan-can-yong-hu-wen-zhang}
 
-<Route author="nczitzk" example="/ruancan/user/72" path="/ruancan/user/:id?" paramsDesc={['用户 id，可在对应用户页 URL 中找到']}/>
+<Route author="nczitzk" example="/ruancan/user/72" path="/ruancan/user/:id?" paramsDesc={['用户 id，可在对应用户页 URL 中找到']} anticrawler="1"/>
 
 ## 上下游 News&Market {#shang-xia-you-news-market}
 
@@ -5172,7 +5172,7 @@ column 为 third 时可选的 category:
 
 ### 专栏 {#shao-shu-pai-sspai-zhuan-lan}
 
-<Route author="LogicJake" example="/sspai/column/262" path="/sspai/column/:id"  paramsDesc={['专栏 id']} radar="1"/>
+<Route author="LogicJake" example="/sspai/column/262" path="/sspai/column/:id"  paramsDesc={['专栏 id']} radar="1" anticrawler="1"/>
 
 ### 作者 {#shao-shu-pai-sspai-zuo-zhe}
 
@@ -5180,7 +5180,7 @@ column 为 third 时可选的 category:
 
 ### 作者动态 {#shao-shu-pai-sspai-zuo-zhe-dong-tai}
 
-<Route author="umm233" example="/sspai/activity/urfp0d9i" path="/sspai/activity/:slug"  paramsDesc={['作者 slug，可在作者主页URL中找到']} radar="1"/>
+<Route author="umm233" example="/sspai/activity/urfp0d9i" path="/sspai/activity/:slug"  paramsDesc={['作者 slug，可在作者主页URL中找到']} radar="1" anticrawler="1"/>
 
 ### 用户收藏 {#shao-shu-pai-sspai-yong-hu-shou-cang}
 
@@ -5206,17 +5206,17 @@ column 为 third 时可选的 category:
 
 ### 首页 {#shen-chao-techflow-shou-ye}
 
-<Route author="nczitzk" example="/techflowpost" path="/techflowpost" />
+<Route author="nczitzk" example="/techflowpost" path="/techflowpost" notOperational="1" />
 
 ### 快讯 {#shen-chao-techflow-kuai-xun}
 
-<Route author="nczitzk" example="/techflowpost/express" path="/techflowpost/express" />
+<Route author="nczitzk" example="/techflowpost/express" path="/techflowpost/express"  notOperational="1"/>
 
 ## 深焦 {#shen-jiao}
 
 ### 分类 {#shen-jiao-fen-lei}
 
-<Route author="nczitzk" example="/filmdeepfocus" path="/filmdeepfocus/:category?" paramsDesc={['分类，见下表，默认为影评']}>
+<Route author="nczitzk" example="/filmdeepfocus" path="/filmdeepfocus/:category?" paramsDesc={['分类，见下表，默认为影评']} notOperational="1">
 
 | 影评 | 影人       | 特别策划   | 专访       | 书评       |
 | ---- | ---------- | ---------- | ---------- | ---------- |
@@ -5250,7 +5250,7 @@ column 为 third 时可选的 category:
 
 ### 最新资讯 {#sheng-wu-gu-zui-xin-zi-xun}
 
-<Route author="nczitzk" example="/bioon/latest" path="/bioon/latest"/>
+<Route author="nczitzk" example="/bioon/latest" path="/bioon/latest" notOperational="1"/>
 
 ## 时刻新闻 {#shi-ke-xin-wen}
 
@@ -5282,7 +5282,7 @@ column 为 third 时可选的 category:
 
 ### 频道 {#shi-mei-ti-pin-dao}
 
-<Route author="Fatpandac" example="/knowmedia/jqgx" path="/knowmedia/:category?" paramsDesc={['分类，见下表，默认为近期更新']}>
+<Route author="Fatpandac" example="/knowmedia/jqgx" path="/knowmedia/:category?" paramsDesc={['分类，见下表，默认为近期更新']} notOperational="1">
 
 分类
 
@@ -5296,7 +5296,7 @@ column 为 third 时可选的 category:
 
 ### 新聞 {#shi-jie-xin-wen-wang-xin-wen}
 
-<Route author="TonyRL" example="/worldjournal" path="/worldjournal/:path*" paramsDesc={['URL 中 `/wj/` 後的路徑，預設為 `cate/breaking`']} radar="1" />
+<Route author="TonyRL" example="/worldjournal" path="/worldjournal/:path*" paramsDesc={['URL 中 `/wj/` 後的路徑，預設為 `cate/breaking`']} radar="1" notOperational="1" />
 
 ## 数英网 {#shu-ying-wang}
 
@@ -5306,7 +5306,7 @@ column 为 third 时可选的 category:
 
 ### 数英网文章专题 {#shu-ying-wang-shu-ying-wang-wen-zhang-zhuan-ti}
 
-<Route author="occupy5" example="/digitaling/articles/latest" path="/digitaling/articles/:category/:subcate?" paramsDesc={['文章专题分类','hot 分类下的子类']}>
+<Route author="occupy5" example="/digitaling/articles/latest" path="/digitaling/articles/:category/:subcate?" paramsDesc={['文章专题分类','hot 分类下的子类']} notOperational="1">
 
 | 最新文章 | 头条     | 热文 | 精选   |
 | -------- | -------- | ---- | ------ |
@@ -5334,7 +5334,7 @@ column 为 third 时可选的 category:
 
 ### 首页 {#shui-guo-pai-shou-ye}
 
-<Route author="nczitzk" example="/shuiguopai" path="/shuiguopai" />
+<Route author="nczitzk" example="/shuiguopai" path="/shuiguopai" notOperational="1" />
 
 ## 搜狐号 {#sou-hu-hao}
 
@@ -5351,7 +5351,7 @@ column 为 third 时可选的 category:
 
 ### 产品 {#tan-wu-chan-pin}
 
-<Route author="xyqfer" example="/tanwu/products" path="/tanwu/products"/>
+<Route author="xyqfer" example="/tanwu/products" path="/tanwu/products" notOperational="1"/>
 
 ## 唐书房 {#tang-shu-fang}
 
@@ -5377,13 +5377,13 @@ column 为 third 时可选的 category:
 
 ### 头条新闻 {#teng-xun-nba-tou-tiao-xin-wen}
 
-<Route author="alizeegod" example="/nba/app_news" path="/nba/app_news"/>
+<Route author="alizeegod" example="/nba/app_news" path="/nba/app_news" notOperational="1"/>
 
 ## 腾讯谷雨 {#teng-xun-gu-yu}
 
 ### 栏目 {#teng-xun-gu-yu-lan-mu}
 
-<Route author="LogicJake" example="/tencent/guyu/channel/lab" path="/tencent/guyu/channel/:name" paramsDesc={['栏目名称，包括lab，report，story，shalong']}/>
+<Route author="LogicJake" example="/tencent/guyu/channel/lab" path="/tencent/guyu/channel/:name" paramsDesc={['栏目名称，包括lab，report，story，shalong']} notOperational="1"/>
 
 ## 腾讯企鹅号 {#teng-xun-qi-e-hao}
 
@@ -5425,7 +5425,7 @@ column 为 third 时可选的 category:
 
 ### 周刊 {#tui-ku-zhou-kan}
 
-<Route author="zpcc" example="/tuicool/mags/tech" path="/tuicool/mags/:type" paramsDesc={['类型如下']}>
+<Route author="zpcc" example="/tuicool/mags/tech" path="/tuicool/mags/:type" paramsDesc={['类型如下']} notOperational="1">
 
 | 编程狂人 | 设计匠艺 | 创业周刊 | 科技周刊 |
 | -------- | -------- | -------- | -------- |
@@ -5581,13 +5581,13 @@ column 为 third 时可选的 category:
 
 ### 天象預報 {#wang-lu-tian-wen-guan-tian-xiang-yu-bao}
 
-<Route author="nczitzk" example="/tam/forecast" path="/tam/forecast"/>
+<Route author="nczitzk" example="/tam/forecast" path="/tam/forecast" notOperational="1"/>
 
 ## 微小领 {#wei-xiao-ling}
 
 ### 微信公众号 {#wei-xiao-ling-wei-xin-gong-zhong-hao}
 
-<Route author="TonyRL" example="/wxkol/show/3590876722" path="/wxkol/show/:id" paramsDesc={['公众号 id，可在 URL 找到']} radar="1"/>
+<Route author="TonyRL" example="/wxkol/show/3590876722" path="/wxkol/show/:id" paramsDesc={['公众号 id，可在 URL 找到']} radar="1" notOperational="1"/>
 
 ## 微信 {#wei-xin}
 
@@ -5661,7 +5661,7 @@ column 为 third 时可选的 category:
 
 ### 公众号（优读来源） {#wei-xin-gong-zhong-hao-you-du-lai-yuan}
 
-<Route author="kt286" example="/wechat/uread/shensing" path="/wechat/uread/:userid" paramsDesc={['公众号的微信号, 可在 微信-公众号-更多资料 中找到。并不是所有的都支持，能不能用随缘']}/>
+<Route author="kt286" example="/wechat/uread/shensing" path="/wechat/uread/:userid" paramsDesc={['公众号的微信号, 可在 微信-公众号-更多资料 中找到。并不是所有的都支持，能不能用随缘']} notOperational="1"/>
 
 ### 公众号（公众号 360 来源） {#wei-xin-gong-zhong-hao-gong-zhong-hao-360-lai-yuan}
 
@@ -5669,7 +5669,7 @@ column 为 third 时可选的 category:
 
 ### 公众号（微阅读来源） {#wei-xin-gong-zhong-hao-wei-yue-du-lai-yuan}
 
-<Route author="Rongronggg9" example="/wechat/data258/gh_cbbad4c1d33c" path="/data258/:id?" paramsDesc={['公众号 id 或分类 id，可在公众号页或分类页 URL 中找到；若略去，则抓取首页']} anticrawler="1" radar="1" configRequired="1">
+<Route author="Rongronggg9" example="/wechat/data258/gh_cbbad4c1d33c" path="/data258/:id?" paramsDesc={['公众号 id 或分类 id，可在公众号页或分类页 URL 中找到；若略去，则抓取首页']} anticrawler="1" radar="1" notOperational="1">
 
 :::warning
 
@@ -5682,7 +5682,7 @@ column 为 third 时可选的 category:
 
 ### 公众号（搜狗来源） {#wei-xin-gong-zhong-hao-sou-gou-lai-yuan}
 
-<Route author="NavePnow" example="/wechat/sogou/qimao0908" path="/wechat/sogou/:id" paramsDesc={['公众号 id, 打开 weixin.sogou.com 并搜索相应公众号， 在 URL 中找到 id']}/>
+<Route author="NavePnow" example="/wechat/sogou/qimao0908" path="/wechat/sogou/:id" paramsDesc={['公众号 id, 打开 weixin.sogou.com 并搜索相应公众号， 在 URL 中找到 id']} notOperational="1"/>
 
 ## 维基百科 {#wei-ji-bai-ke}
 
@@ -5704,7 +5704,7 @@ column 为 third 时可选的 category:
 
 ### 分类 {#wei-ming-xin-wen-fen-lei}
 
-<Route author="nczitzk" example="/mitbbs" path="/mitbbs/:caty?" paramsDesc={['新闻分类，参见下表，默认为“新闻大杂烩”']}>
+<Route author="nczitzk" example="/mitbbs" path="/mitbbs/:caty?" paramsDesc={['新闻分类，参见下表，默认为“新闻大杂烩”']} notOperational="1">
 
 | 新闻大杂烩 | 军事     | 国际   | 体育 | 娱乐 | 科技 | 财经    |
 | ---------- | -------- | ------ | ---- | ---- | ---- | ------- |
@@ -5716,7 +5716,7 @@ column 为 third 时可选的 category:
 
 ### 文件列表 {#wo-cao-wen-jian-lie-biao}
 
-<Route author="nczitzk" example="/watchout" path="/watchout"/>
+<Route author="nczitzk" example="/watchout" path="/watchout" notOperational="1"/>
 
 ## 乌有之乡 {#wu-you-zhi-xiang}
 
@@ -5796,7 +5796,7 @@ column 为 third 时可选的 category:
 
 ### 频道 {#xi-ci-hu-tong-pin-dao}
 
-<Route author="LogicJake" example="/xici" path="/xici/:id?" paramsDesc={['频道id，默认为首页推荐']}>
+<Route author="LogicJake" example="/xici" path="/xici/:id?" paramsDesc={['频道id，默认为首页推荐']} notOperational="1">
 
 | 首页推荐 | 民生 | 情感 | 亲子 |
 | -------- | ---- | ---- | ---- |
@@ -5834,7 +5834,7 @@ column 为 third 时可选的 category:
 
 ### 頻道 {#xiang-gang-gao-deng-bin-dao}
 
-<Route author="nczitzk" example="/hkgolden/BW" path="/hkgolden/:id?/:limit?/:sort?" paramsDesc={['頻道，见下表，默认为吹水台，可在对应频道页的 URL 中找到', '類型，见下表，默认为全部', '排序，见下表，默认为最後回應時間']}>
+<Route author="nczitzk" example="/hkgolden/BW" path="/hkgolden/:id?/:limit?/:sort?" paramsDesc={['頻道，见下表，默认为吹水台，可在对应频道页的 URL 中找到', '類型，见下表，默认为全部', '排序，见下表，默认为最後回應時間']} notOperational="1">
 
 頻道
 
@@ -5884,7 +5884,7 @@ column 为 third 时可选的 category:
 
 ### 版塊 {#xiang-gang-tao-lun-qu-ban-kuai}
 
-<Route author="nczitzk" example="/discuss/62" path="/discuss/:fid" paramsDesc={['fid，可在对应板块页的 URL 中找到']}/>
+<Route author="nczitzk" example="/discuss/62" path="/discuss/:fid" paramsDesc={['fid，可在对应板块页的 URL 中找到']} anticrawler="1"/>
 
 ## 香水时代 {#xiang-shui-shi-dai}
 
@@ -5894,7 +5894,7 @@ column 为 third 时可选的 category:
 
 ### 香评 {#xiang-shui-shi-dai-xiang-ping}
 
-<Route author="kt286" example="/nosetime/59247733/discuss/new" path="/nosetime/:id/:type/:sort?" paramsDesc={['用户id，可在用户主页 URL 中找到', '类型，short 一句话香评  discuss 香评', '排序， new 最新  agree 最有用']}/>
+<Route author="kt286" example="/nosetime/59247733/discuss/new" path="/nosetime/:id/:type/:sort?" paramsDesc={['用户id，可在用户主页 URL 中找到', '类型，short 一句话香评  discuss 香评', '排序， new 最新  agree 最有用']} anticrawler="1"/>
 
 ## 消费者委员会 {#xiao-fei-zhe-wei-yuan-hui}
 
@@ -5958,11 +5958,11 @@ column 为 third 时可选的 category:
 
 ### 首页 {#xin-hua-she-shou-ye}
 
-<Route author="nczitzk" example="/hotchina" path="/hotchina"/>
+<Route author="nczitzk" example="/hotchina" path="/hotchina" notOperational="1"/>
 
 ### 分类 {#xin-hua-she-fen-lei}
 
-<Route author="nczitzk" example="/hotchina" path="/hotchina/category/:id?" paramsDesc={['分类，见下表，默认为首页']}>
+<Route author="nczitzk" example="/hotchina" path="/hotchina/category/:id?" paramsDesc={['分类，见下表，默认为首页']} notOperational="1">
 
 | 攝徒日記 | 辛華社特約報導 | 小粉紅觀察 | 維權消息 | 讀者投書 | 中國牆內 | 台灣國 | 國際 |
 | -------- | -------------- | ---------- | -------- | -------- | -------- | ------ | ---- |
@@ -5971,7 +5971,7 @@ column 为 third 时可选的 category:
 
 ### 标签 {#xin-hua-she-biao-qian}
 
-<Route author="nczitzk" example="/hotchina" path="/hotchina/tag/:id?" paramsDesc={['标签，可在对应标签页的 URL 中找到，默认为首页']}>
+<Route author="nczitzk" example="/hotchina" path="/hotchina/tag/:id?" paramsDesc={['标签，可在对应标签页的 URL 中找到，默认为首页']} notOperational="1">
 
 以下为 Top Tags：
 
@@ -6010,7 +6010,7 @@ column 为 third 时可选的 category:
 
 ### 体育 - 综合 {#xin-lang-ti-yu-zong-he}
 
-<Route author="nczitzk" example="/sina/sports/volley" path="/sina/sports/:type" paramsDesc={['运动类型，见下表']} radar="1">
+<Route author="nczitzk" example="/sina/sports/volley" path="/sina/sports/:type" paramsDesc={['运动类型，见下表']} radar="1" anticrawler="1">
 
 | 排球   | 游泳 | 乒乓球   | 羽毛球 | 台球    | 田径     | 体操  | 冰雪   | 射击 | 马术  | 拳击搏击 | UFC | 其他   |
 | ------ | ---- | -------- | ------ | ------- | -------- | ----- | ------ | ---- | ----- | -------- | --- | ------ |
@@ -6081,13 +6081,13 @@ column 为 third 时可选的 category:
 
 ## 妖火网 {#yao-huo-wang}
 
-<Route author="nczitzk" example="/yaohuo/new" path="/yaohuo/:type?" paramsDesc={['排序类型，可选 `new` 指最新，`hot` 指最热，默认为 `new`']}/>
+<Route author="nczitzk" example="/yaohuo/new" path="/yaohuo/:type?" paramsDesc={['排序类型，可选 `new` 指最新，`hot` 指最热，默认为 `new`']} notOperational="1"/>
 
 ## 一兜糖 {#yi-dou-tang}
 
 ### 首页精选 {#yi-dou-tang-shou-ye-jing-xuan}
 
-<Route author="sanmmm" example="/yidoutang/index" path="/yidoutang/index"/>
+<Route author="sanmmm" example="/yidoutang/index" path="/yidoutang/index" notOperational="1"/>
 
 ### 文章 {#yi-dou-tang-wen-zhang}
 
@@ -6139,7 +6139,7 @@ column 为 third 时可选的 category:
 
 ### 资讯 {#yi-ou-wang-zi-xun}
 
-<Route author="WenryXu" example="/iyiou" path="/iyiou"/>
+<Route author="WenryXu" example="/iyiou" path="/iyiou" notOperational="1"/>
 
 ## 异次元软件世界 {#yi-ci-yuan-ruan-jian-shi-jie}
 
@@ -6151,7 +6151,7 @@ column 为 third 时可选的 category:
 
 ### 文章 {#you-xi-pu-tao-wen-zhang}
 
-<Route author="KotoriK nczitzk" example="/gamegrape/13" path="/gamegrape/:id?" paramsDesc={['分类 id，见下表，默认为全部']}>
+<Route author="KotoriK nczitzk" example="/gamegrape/13" path="/gamegrape/:id?" paramsDesc={['分类 id，见下表，默认为全部']} notOperational="1">
 
 | 全部 | 深度 | 资讯 | DemoWall | 酷玩 | 海外 | 专栏 | 葡萄观察 |
 | ---- | ---- | ---- | -------- | ---- | ---- | ---- | -------- |
@@ -6179,7 +6179,7 @@ column 为 third 时可选的 category:
 
 ## 遠見 {#yuan-jian}
 
-<Route author="laampui" example="/gvm/index/health" path="/gvm/index/:category?" paramsDesc={['見下表, 默認爲 newest']}>
+<Route author="laampui" example="/gvm/index/health" path="/gvm/index/:category?" paramsDesc={['見下表, 默認爲 newest']} notOperational="1">
 
 | 最新文章 | 你可能會喜歡 | 名家專欄 | 專題  | 時事熱點 | 政治     | 社會    | 人物報導 | 國際  | 全球焦點    | 兩岸                  | 金融理財 | 投資理財   | 保險規劃  | 退休理財 | 金融 Fintech | 房地產      | 總體經濟 | 科技 | 科技趨勢   | 能源   | 產經     | 傳產     | 消費服務 | 生技醫藥 | 傳承轉型                   | 創業新創 | 管理       | 農業        | 教育      | 高教             | 技職          | 親子教育 | 國際文教        | 體育   | 好享生活 | 時尚設計 | 心靈成長    | 藝文影視 | 旅遊   | 環境生態    | 健康   | 美食 | 職場生涯 | 調查   | 縣市   | CSR |
 | -------- | ------------ | -------- | ----- | -------- | -------- | ------- | -------- | ----- | ----------- | --------------------- | -------- | ---------- | --------- | -------- | ------------ | ----------- | -------- | ---- | ---------- | ------ | -------- | -------- | -------- | -------- | -------------------------- | -------- | ---------- | ----------- | --------- | ---------------- | ------------- | -------- | --------------- | ------ | -------- | -------- | ----------- | -------- | ------ | ----------- | ------ | ---- | -------- | ------ | ------ | --- |
@@ -6191,7 +6191,7 @@ column 为 third 时可选的 category:
 
 ### 微语简报 {#yun-qi-wang-wei-yu-jian-bao}
 
-<Route author="x2009again" example="/yunspe/newsflash" path="/yunspe/newsflash" />
+<Route author="x2009again" example="/yunspe/newsflash" path="/yunspe/newsflash" notOperational="1" />
 
 ## 早报网 {#zao-bao-wang}
 
@@ -6379,7 +6379,7 @@ column 为 third 时可选的 category:
 
 ### 新闻中心 {#zhong-guo-gong-ren-chu-ban-she-xin-wen-zhong-xin}
 
-<Route author="nczitzk" example="/wp-china/news" path="/wp-china/news/:category?" paramsDesc={['分类，见下表，默认为最新资讯']}>
+<Route author="nczitzk" example="/wp-china/news" path="/wp-china/news/:category?" paramsDesc={['分类，见下表，默认为最新资讯']} notOperational="1">
 
 | 最新资讯 | 专题报道 |
 | -------- | -------- |
@@ -6391,7 +6391,7 @@ column 为 third 时可选的 category:
 
 ### 学会新闻 {#zhong-guo-ji-xie-gong-cheng-xue-hui-xue-hui-xin-wen}
 
-<Route author="nczitzk" example="/cmes/news" path="/cmes/news/:category?" paramsDesc={['分类，见下表，默认为 学会要闻']}>
+<Route author="nczitzk" example="/cmes/news" path="/cmes/news/:category?" paramsDesc={['分类，见下表，默认为 学会要闻']} notOperational="1">
 
 | 学会要闻    | 学会动态 | 科技新闻 |
 | ----------- | -------- | -------- |
@@ -6403,7 +6403,7 @@ column 为 third 时可选的 category:
 
 ### 最新博文 {#zhong-guo-ke-xue-yuan-qing-nian-chuang-xin-cu-jin-hui-zui-xin-bo-wen}
 
-<Route author="nczitzk" example="/yicas/blog" path="/yicas/blog"/>
+<Route author="nczitzk" example="/yicas/blog" path="/yicas/blog" notOperational="1"/>
 
 ## 中国收入分配研究院 {#zhong-guo-shou-ru-fen-pei-yan-jiu-yuan}
 
@@ -6421,7 +6421,7 @@ column 为 third 时可选的 category:
 
 ### 新闻资讯 {#zhong-guo-xiang-jiao-wang-xin-wen-zi-xun}
 
-<Route author="nczitzk" example="/cria/news/1" path="/cria/news/:id?" paramsDesc={['列表 id，可在列表页的 URL 中找到，默认为首页']}/>
+<Route author="nczitzk" example="/cria/news/1" path="/cria/news/:id?" paramsDesc={['列表 id，可在列表页的 URL 中找到，默认为首页']} notOperational="1"/>
 
 ## 中国作家网 {#zhong-guo-zuo-jia-wang}
 
@@ -6562,15 +6562,15 @@ column 为 third 时可选的 category:
 
 ### 推荐 {#zhong-gou-tui-jian}
 
-<Route author="nczitzk" example="/allrecode/recommends" path="/allrecode/recommends" />
+<Route author="nczitzk" example="/allrecode/recommends" path="/allrecode/recommends" notOperational="1" />
 
 ### 快讯 {#zhong-gou-kuai-xun}
 
-<Route author="nczitzk" example="/allrecode/news" path="/allrecode/news" />
+<Route author="nczitzk" example="/allrecode/news" path="/allrecode/news" notOperational="1" />
 
 ### 资讯 {#zhong-gou-zi-xun}
 
-<Route author="nczitzk" example="/allrecode/posts" path="/allrecode/:category?" paramsDesc={['分类，见下表，默认为全部']}>
+<Route author="nczitzk" example="/allrecode/posts" path="/allrecode/:category?" paramsDesc={['分类，见下表，默认为全部']} notOperational="1">
 
 | 分类     | id                 |
 | -------- | ------------------ |
@@ -6591,7 +6591,7 @@ column 为 third 时可选的 category:
 
 ### 眾聞 {#zhong-xin-wen-zhong-wen}
 
-<Route author="nczitzk" example="/hkcnews/news" path="/hkcnews/news/:category?" paramsDesc={['分类，见下表，默认为全部']}>
+<Route author="nczitzk" example="/hkcnews/news" path="/hkcnews/news/:category?" paramsDesc={['分类，见下表，默认为全部']} notOperational="1">
 
 | 全部 | 經濟 | 社會 | 生活 | 政治 | 國際 | 台灣 | 人物 | 中國 |
 | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
@@ -6603,7 +6603,7 @@ column 为 third 时可选的 category:
 
 ### 栏目 {#zhu-hai-wang-lan-mu}
 
-<Route author="nczitzk" example="/hizu" path="/hizu/:column?" paramsDesc={['栏目，见下表，默认为热点']}>
+<Route author="nczitzk" example="/hizu" path="/hizu/:column?" paramsDesc={['栏目，见下表，默认为热点']} notOperational="1">
 
 | 分类     | 编号                     |
 | -------- | ------------------------ |
@@ -6638,11 +6638,11 @@ column 为 third 时可选的 category:
 
 ### 首页最新帖子 {#zhuang-bei-qian-xian-shou-ye-zui-xin-tie-zi}
 
-<Route author="Jeason0228" example="/zfrontier/postlist/:byReplyTime" path="/zfrontier/postlist" paramsDesc={['内容标签, 点击标签后地址栏有显示']}/>
+<Route author="Jeason0228" example="/zfrontier/postlist/:byReplyTime" path="/zfrontier/postlist" paramsDesc={['内容标签, 点击标签后地址栏有显示']} notOperational="1"/>
 
 ### 子板块帖子 {#zhuang-bei-qian-xian-zi-ban-kuai-tie-zi}
 
-<Route author="c4605" example="/zfrontier/board/56" path="/zfrontier/board/:boardId" paramsDesc={['板块 ID']}>
+<Route author="c4605" example="/zfrontier/board/56" path="/zfrontier/board/:boardId" paramsDesc={['板块 ID']} notOperational="1">
 
 QueryString:
 
@@ -6658,7 +6658,7 @@ QueryString:
 
 ### 全文 {#zi-zhu-zhang-xian-sheng-quan-wen}
 
-<Route author="HenryQW nczitzk" example="/zzz" path="/zzz/:category?/:language?" paramsDesc={['分类，见下表，默认为全部', '语言，见下表，默认为简体中文']}>
+<Route author="HenryQW nczitzk" example="/zzz" path="/zzz/:category?/:language?" paramsDesc={['分类，见下表，默认为全部', '语言，见下表，默认为简体中文']} notOperational="1">
 
 分类
 
