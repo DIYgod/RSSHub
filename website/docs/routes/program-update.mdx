@@ -45,7 +45,7 @@
 
 ### Release {#app-center-release}
 
-<Route author="Rongronggg9" example="/app-center/release/cloudflare/1.1.1.1-windows/beta" path="/app-center/release/:user/:app/:distribution_group" paramsDesc={['User', 'App name', 'Distribution group']} radar="1" rssbud="1">
+<Route author="Rongronggg9" example="/app-center/release/cloudflare/1.1.1.1-windows/beta" path="/app-center/release/:user/:app/:distribution_group" paramsDesc={['User', 'App name', 'Distribution group']} radar="1">
 
 :::tip
 
@@ -59,7 +59,7 @@ The parameters can be extracted from the Release page URL: `https://install.appc
 
 ### App Update {#app-store-mac-app-store-app-update}
 
-<Route author="EkkoG nczitzk" example="/apple/apps/update/us/id408709785" path="/apple/apps/update/:country/:id/:platform?" paramsDesc={['App Store Country, obtain from the app URL, see below', 'App id, obtain from the app URL', 'App Platform, see below, all by default']} radar="1" rssbud="1">
+<Route author="EkkoG nczitzk" example="/apple/apps/update/us/id408709785" path="/apple/apps/update/:country/:id/:platform?" paramsDesc={['App Store Country, obtain from the app URL, see below', 'App id, obtain from the app URL', 'App Platform, see below, all by default']} radar="1">
 
 | All | iOS | macOS | tvOS |
 | --- | --- | ----- | ---- |
@@ -103,7 +103,7 @@ For example, the URL of [GarageBand](https://apps.apple.com/us/app/messages/id40
 
 ### GPU Tweak {#asus-gpu-tweak}
 
-<Route author="TonyRL" example="/asus/gpu-tweak" path="/asus/gpu-tweak" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/asus/gpu-tweak" path="/asus/gpu-tweak" radar="1"/>
 
 ## Bandisoft {#bandisoft}
 
@@ -223,7 +223,7 @@ Need to configure `CIVITAI_COOKIE` to obtain image information of NSFW models.
 
 ### News {#cpuid-news}
 
-<Route author="TonyRL" example="/cpuid/news" path="/cpuid/news" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/cpuid/news" path="/cpuid/news" radar="1"/>
 
 ## cpython {#cpython}
 
@@ -351,6 +351,19 @@ Language
 
 <Route author="miles170" example="/greasyfork/scripts/431691-bypass-all-shortlinks/feedback" path="/greasyfork/scripts/:script/feedback" paramsDesc={['Script id, can be found in URL']} radar="1" />
 
+### Script Ranking {#greasy-fork-script-ranking}
+
+<Route author="ingjieye" example="/greasyfork/scripts/sort/today/all" path="/greasyfork/scripts/sort/:sort/:language?" paramsDesc={['Sort method, see below table', 'Language, located on the top right corner of Greasy Fork\'s search page, set to all for including all languages']} />
+
+| Sort           | Description      |
+| -------------- | ---------------- |
+| today          | Daily installs   |
+| total_installs | Total installs   |
+| ratings        | Ratings          |
+| created        | Created date     |
+| updated        | Updated date     |
+| name           | Name             |
+
 ## Hugo {#hugo}
 
 ### Release News {#hugo-release-news}
@@ -414,7 +427,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### 应用更新 {#macwk-ying-yong-geng-xin}
 
-<Route author="f48vj" example="/macwk/soft/sublime-text" path="/macwk/soft/:name" paramsDesc={['应用名，可在应用页 URL 中找到']} radar="1" rssbud="1"/>
+<Route author="f48vj" example="/macwk/soft/sublime-text" path="/macwk/soft/:name" paramsDesc={['应用名，可在应用页 URL 中找到']} radar="1"/>
 
 ## ManicTime {#manictime}
 
@@ -538,7 +551,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### News {#qbittorrent-news}
 
-<Route author="TonyRL" example="/qbittorrent/news" path="/qbittorrent/news" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/qbittorrent/news" path="/qbittorrent/news" radar="1"/>
 
 ## QNAP {#qnap}
 
@@ -574,7 +587,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### Changelog {#remnote-changelog}
 
-<Route author="TonyRL" example="/remnote/changelog" path="/remnote/changelog" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/remnote/changelog" path="/remnote/changelog" radar="1"/>
 
 ## RescueTime {#rescuetime}
 
@@ -596,7 +609,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### New sponsors {#rsshub-new-sponsors}
 
-<Route author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1"/>
 
 ## Sesame {#sesame}
 
@@ -785,7 +798,7 @@ Language
 
 ### app 更新 {#pu-gong-ying-ying-yong-fen-fa-app-geng-xin}
 
-<Route author="zytomorrow" example="/pgyer/:app" path="/pgyer/kz-test" paramsDesc={['app为下载页最后的路径']} radar="1" rssbud="1"/>
+<Route author="zytomorrow" example="/pgyer/:app" path="/pgyer/kz-test" paramsDesc={['app为下载页最后的路径']} radar="1"/>
 
 ## 腾讯云移动直播 SDK {#teng-xun-yun-yi-dong-zhi-bo-sdk}
 

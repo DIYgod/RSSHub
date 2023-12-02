@@ -1,39 +1,39 @@
 {
   "badge.supportBT": {
-    "message": "支持 BT"
+    "message": "🔄 支持 BT"
   },
   "badge.supportPodcast": {
-    "message": "支持播客"
+    "message": "🎙️ 支持播客"
   },
   "badge.supportSciHub": {
-    "message": "支持 Sci-Hub"
+    "message": "🧪 支持 Sci-Hub"
   },
   "badge.puppeteer": {
-    "message": "依赖 Puppeteer"
+    "message": "🎭 依赖 Puppeteer"
   },
   "badge.anticrawler": {
-    "message": "反爬严格"
-  },
-  "badge.selfhost": {
-    "message": "仅支持自建"
+    "message": "🚨 反爬严格"
   },
   "badge.radar": {
-    "message": "支持浏览器扩展"
+    "message": "🔍 支持 Radar"
   },
   "badge.rssbud": {
-    "message": "支持 RSSBud"
+    "message": "🔍 支持 RSSBud"
+  },
+  "badge.configRequired": {
+    "message": "⚙️ 需要配置"
   },
   "route.author": {
-    "message": "作者："
+    "message": "👨‍💻 作者："
   },
   "route.example": {
-    "message": "举例："
+    "message": "💡 举例："
   },
   "route.path": {
-    "message": "路由："
+    "message": "🚏 路由："
   },
   "route.parameter": {
-    "message": "参数："
+    "message": "⚙️ 参数："
   },
   "route.parameter.optional": {
     "message": "可选"

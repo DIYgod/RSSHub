@@ -199,7 +199,7 @@ Both the above examples will return the same RSSHub subscription address as the 
 
 ### Update the Documentation
 
-As mentioned earlier in [Other components](/joinus/new-rss/add-docs#documentation-examples-other-components), adding `radar="1"` in the RSSHub docs will show a `Support browser extension` badge. If the rule is also compatible with RSSBud, adding `rssbud="1"` will show a `Support RSSBud` badge.
+As mentioned earlier in [Other components](/joinus/new-rss/add-docs#documentation-examples-other-components), adding `radar="1"` in the RSSHub docs will show a `Support Radar` badge.
 
 ## Debugging Radar Rules
 

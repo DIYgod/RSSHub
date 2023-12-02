@@ -195,7 +195,7 @@ module.exports = {
 
 ### 补充文档
 
-[如前所述](/zh/joinus/new-rss/add-docs#其他组件)，在 RSSHub 文档添加 radar="1" 将显示“支持浏览器扩展”的徽章。如果规则还与 RSSBud 兼容，则添加 rssbud="1" 将显示“支持 RSSBud”的徽章。
+[如前所述](/zh/joinus/new-rss/add-docs#其他组件)，在 RSSHub 文档添加 radar="1" 将显示“支持 Radar”的徽章。
 
 ## 调试 Radar 规则
 

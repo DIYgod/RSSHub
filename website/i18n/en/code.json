@@ -1,39 +1,39 @@
 {
   "badge.supportBT": {
-    "message": "Support BT"
+    "message": "🔄 Support BT"
   },
   "badge.supportPodcast": {
-    "message": "Support Podcast"
+    "message": "🎙️ Support Podcast"
   },
   "badge.supportSciHub": {
-    "message": "Support Sci-Hub"
+    "message": "🧪 Support Sci-Hub"
   },
   "badge.puppeteer": {
-    "message": "Rely on Puppeteer"
+    "message": "🎭 Rely on Puppeteer"
   },
   "badge.anticrawler": {
-    "message": "Strict anti-crawler policy"
-  },
-  "badge.selfhost": {
-    "message": "Self-host only"
+    "message": "🚨 Strict anti-crawling"
   },
   "badge.radar": {
-    "message": "Support browser extension"
+    "message": "🔍 Support Radar"
   },
   "badge.rssbud": {
-    "message": "Support RSSBud"
+    "message": "🔍 Support RSSBud"
+  },
+  "badge.configRequired": {
+    "message": "⚙️ Config required"
   },
   "route.author": {
-    "message": "Author: "
+    "message": "👨‍💻 Author: "
   },
   "route.example": {
-    "message": "Example: "
+    "message": "💡 Example: "
   },
   "route.path": {
-    "message": "Route: "
+    "message": "🚏 Route: "
   },
   "route.parameter": {
-    "message": "Parameters: "
+    "message": "⚙️ Parameters: "
   },
   "route.parameter.optional": {
     "message": "optional"
