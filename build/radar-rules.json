@@ -6588,6 +6588,13 @@
           "/list/:id",
           "/topic/newstopic/:id"
         ]
+      },
+      {
+        "title": "分类(网页爬虫方法)",
+        "docs": "https://docs.rsshub.app/routes/traditional-media#zhong-yang-tong-xun-she",
+        "source": [
+          "/list/:id"
+        ]
       }
     ]
   },

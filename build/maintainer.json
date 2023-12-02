@@ -1437,6 +1437,9 @@
     "/cna/:id?": [
         "nczitzk"
     ],
+    "/cna/web/:id?": [
+        "dzx-dzx"
+    ],
     "/cnbc/rss/:id?": [
         "TonyRL"
     ],
