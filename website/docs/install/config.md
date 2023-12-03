@@ -235,7 +235,9 @@ Configs in this sections are in beta stage, and **are turn off by default**. Ple
 
 `OPENAI_PROMPT`: OpenAI prompt, used for using ChatGPT to summarize articles, see [OpenAI API reference](https://platform.openai.com/docs/api-reference/chat) for details
 
-## Route-specific Configurations
+`REMOTE_CONFIG`: Remote configuration URL, used for dynamically updating configurations. The address should return a JSON with an environment variable name as the key. It will be loaded and merged with local configurations when the application starts. In case of conflicts with local configurations, remote configurations will take precedence. But please note that some basic configuration items do not support remote retrieval.
+
+## Route-specific Configurations {#route-specific-configurations}
 
 :::tip
 
@@ -462,7 +464,11 @@ For user data related routes
 
 ### Twitter
 
-[Token generation](https://github.com/zedeus/nitter/wiki/Guest-Account-Branch-Deployment)
+Given the recent changes in Twitter and its API access a new method for accessing Twitter anonymously was devised. This method involves using temporary guest accounts created when going through the onboarding process with the Android app.
+
+Please see the details in [Nitter - Guest Account Branch Deployment](https://github.com/zedeus/nitter/wiki/Guest-Account-Branch-Deployment) and [zedeus/nitter#983](https://github.com/zedeus/nitter/issues/983).
+
+In addition, we have prepared a Node.js script to help you use proxies to create these tokens in batches. [Please click here](https://github.com/DIYgod/RSSHub/tree/master/scripts/twitter-token/generate.js).
 
 -   `TWITTER_OAUTH_TOKEN`: Support multiple keys, split them with `,`
 -   `TWITTER_OAUTH_TOKEN_SECRET`: Support multiple keys, split them with `,`

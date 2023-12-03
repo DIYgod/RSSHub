@@ -235,7 +235,9 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 
 `OPENAI_PROMPT`: OpenAI 提示语，用于使用 ChatGPT 总结文章，详见 [OpenAI API 文档](https://platform.openai.com/docs/api-reference/chat)
 
-## 部分 RSS 模块配置
+`REMOTE_CONFIG`: 远程配置地址，用于动态更新配置，地址应返回一个环境变量名作为 key 的 JSON，会在应用启动时加载并合并本地配置，与本地配置冲突时以远程配置为准，但请注意部分基础配置项不支持从远程获取
+
+## 部分 RSS 模块配置 {#route-specific-configurations}
 
 :::tip
 
@@ -447,7 +449,11 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 
 ### Twitter
 
-[Token 生成](https://github.com/zedeus/nitter/wiki/Guest-Account-Branch-Deployment)
+鉴于 Twitter 和其 API 访问的最新变化，已经设计了一种新的匿名访问 Twitter 的方法。该方法涉及使用在通过 Android 应用程序进行注册流程时创建的临时访客账户。
+
+详细信息请参阅 [Nitter - Guest Account Branch Deployment](https://github.com/zedeus/nitter/wiki/Guest-Account-Branch-Deployment) 和 [zedeus/nitter#983](https://github.com/zedeus/nitter/issues/983)。
+
+另外我们也准备了一个 Node.js 脚本来帮助你使用代理批量创建这些 token，[请点击这里](https://github.com/DIYgod/RSSHub/tree/master/scripts/twitter-token/generate.js)。
 
 -   `TWITTER_OAUTH_TOKEN`: 支持多个 key，用英文逗号 `,` 隔开
 -   `TWITTER_OAUTH_TOKEN_SECRET`: 支持多个 key，用英文逗号 `,` 隔开

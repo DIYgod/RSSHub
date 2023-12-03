@@ -216,8 +216,7 @@ In addition to the aforementioned component properties, there are several other 
 -   `anticrawler`: set to `1` if the target website has an anti-crawler mechanism.
 -   `puppeteer`: set to `1` if the feed uses puppeteer.
 -   `radar`: set to `1` if the feed has a radar rule.
--   `rssbud`: set to `1` if the radar rule is also compatible with RSSBud
--   `selfhost`: set to `1` if the feed requires extra configuration through environment variables.
+-   `configRequired`: set to `1` if the feed requires extra configuration through environment variables.
 -   `supportBT`: set to `1` if the feed supports BitTorrent.
 -   `supportPodcast`: set to `1` if the feed supports podcasts.
 -   `supportScihub`: set to `1` if the feed supports Sci-Hub.
@@ -225,12 +224,12 @@ In addition to the aforementioned component properties, there are several other 
 By using these properties, you can provide valuable information to users and make it easier for them to understand and use your route. Adding these properties to your route documentation will add a badge in front of it.
 
 ```tsx
-<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub username', 'GitHub repo name, `RSSHub` by default']} anticrawler="1" puppeteer="1" radar="1" rssbud="1" selfhost="1" supportBT="1" supportPodcast="1" supportScihub="1" />
+<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub username', 'GitHub repo name, `RSSHub` by default']} anticrawler="1" puppeteer="1" radar="1" configRequired="1" supportBT="1" supportPodcast="1" supportScihub="1" />
 ```
 
 ---
 
-<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub username', 'GitHub repo name, `RSSHub` by default']} anticrawler="1" puppeteer="1" radar="1" rssbud="1" selfhost="1" supportBT="1" supportPodcast="1" supportScihub="1" />
+<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub username', 'GitHub repo name, `RSSHub` by default']} anticrawler="1" puppeteer="1" radar="1" configRequired="1" supportBT="1" supportPodcast="1" supportScihub="1" />
 
 ---
 
