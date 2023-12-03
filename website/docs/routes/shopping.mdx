@@ -16,7 +16,7 @@
 
 ### 新闻 {#alter-zhong-guo-xin-wen}
 
-<Route author="luyuhuang" example="/alter-cn/news" path="/alter-cn/news"/>
+<Route author="luyuhuang" example="/alter-cn/news" path="/alter-cn/news" notOperational="1"/>
 
 ## AppSales {#appsales}
 
@@ -48,7 +48,7 @@ Parameter `time` only works when `mostwanted` is chosen as the category.
 
 ### New Arrivals {#arcteryx-new-arrivals}
 
-<Route author="NavePnow" example="/arcteryx/new-arrivals/us/mens" path="/arcteryx/new-arrivals/:country/:gender" paramsDesc={['country', 'gender']}>
+<Route author="NavePnow" example="/arcteryx/new-arrivals/us/mens" path="/arcteryx/new-arrivals/:country/:gender" paramsDesc={['country', 'gender']} anticrawler="1">
 
 Country
 
@@ -72,7 +72,7 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 ### Outlet {#arcteryx-outlet}
 
-<Route author="NavePnow" example="/arcteryx/outlet/us/mens" path="/arcteryx/outlet/:country/:gender" paramsDesc={['country', 'gender']}>
+<Route author="NavePnow" example="/arcteryx/outlet/us/mens" path="/arcteryx/outlet/:country/:gender" paramsDesc={['country', 'gender']} anticrawler="1">
 
 Country
 
@@ -114,7 +114,7 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 ### Shop {#craigslist-shop}
 
-<Route author="lxiange" example="/craigslist/sfbay/sso?query=folding+bike&sort=rel" path="/craigslist/:location/:type?" paramsDesc={['location, Craigslist subdomain, e.g., `sfbay`', 'search type, e.g., `sso`']}/>
+<Route author="lxiange" example="/craigslist/sfbay/sso?query=folding+bike&sort=rel" path="/craigslist/:location/:type?" paramsDesc={['location, Craigslist subdomain, e.g., `sfbay`', 'search type, e.g., `sso`']} notOperational="1"/>
 
 > We use RSSHub to implement the searching of Craigslist
 > An example of a full original search url:
@@ -141,13 +141,13 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 ### Onsale {#guiltfree.pl-onsale}
 
-<Route author="nczitzk" example="/guiltfree/onsale" path="/guiltfree/onsale"/>
+<Route author="nczitzk" example="/guiltfree/onsale" path="/guiltfree/onsale" notOperational="1"/>
 
 ## Gumroad {#gumroad}
 
 ### Products {#gumroad-products}
 
-<Route author="Fatpandac" example="/gumroad/afkmaster/Eve10" path="/gumroad/:username/:products" paramsDesc={['username, can be found in URL', 'products name, can be found in URL']} radar="1">
+<Route author="Fatpandac" example="/gumroad/afkmaster/Eve10" path="/gumroad/:username/:products" paramsDesc={['username, can be found in URL', 'products name, can be found in URL']} radar="1" notOperational="1">
 
 `https://afkmaster.gumroad.com/l/Eve10` -> `/gumroad/afkmaster/Eve10`
 
@@ -157,25 +157,25 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 ### thread {#hotukdeals-thread}
 
-<Route author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" paramsDesc={['should be one of highlights, hot, new, discussed']}/>
+<Route author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" paramsDesc={['should be one of highlights, hot, new, discussed']} anticrawler="1"/>
 
 ### hottest {#hotukdeals-hottest}
 
-<Route author="DIYgod" example="/hotukdeals/hottest" path="/hotukdeals/hottest"></Route>
+<Route author="DIYgod" example="/hotukdeals/hottest" path="/hotukdeals/hottest" anticrawler="1"></Route>
 
 ## IKEA {#ikea}
 
 ### UK - New Product Release {#ikea-uk-new-product-release}
 
-<Route author="HenryQW" example="/ikea/gb/new" path="/ikea/gb/new"/>
+<Route author="HenryQW" example="/ikea/gb/new" path="/ikea/gb/new" notOperational="1"/>
 
 ### UK - Offers {#ikea-uk-offers}
 
-<Route author="HenryQW" example="/ikea/gb/offer" path="/ikea/gb/offer"/>
+<Route author="HenryQW" example="/ikea/gb/offer" path="/ikea/gb/offer" notOperational="1"/>
 
 ### 中国 - 会员特惠 {#ikea-zhong-guo-hui-yuan-te-hui}
 
-<Route author="jzhangdev" example="/ikea/cn/family_offers" path="/ikea/cn/family_offers" radar="1"/>
+<Route author="jzhangdev" example="/ikea/cn/family_offers" path="/ikea/cn/family_offers" radar="1" notOperational="1"/>
 
 ### 中国 - 低价优选 {#ikea-zhong-guo-di-jia-you-xuan}
 
@@ -189,7 +189,7 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 ### 订阅价格 {#lativ-ding-yue-jia-ge}
 
-<Route author="Fatpandac" example="/lativ/54220021" path="/lativ/:id" paramsDesc={['商品id，网址上可以直接拿到']}/>
+<Route author="Fatpandac" example="/lativ/54220021" path="/lativ/:id" paramsDesc={['商品id，网址上可以直接拿到']} notOperational="1"/>
 
 ## LeBonCoin {#leboncoin}
 
@@ -197,7 +197,7 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 Transform any search into a feed.
 
-<Route author="Platane" example="/leboncoin/ad/category=10&locations=Paris_75015" path="/leboncoin/ad/:query" paramsDesc={['search page querystring']}>
+<Route author="Platane" example="/leboncoin/ad/category=10&locations=Paris_75015" path="/leboncoin/ad/:query" paramsDesc={['search page querystring']} notOperational="1">
 
 For instance, in `https://www.leboncoin.fr/recherche/?category=10&locations=Paris_75015`, the query is **category=10&locations=Paris_75015**
 
@@ -207,7 +207,7 @@ For instance, in `https://www.leboncoin.fr/recherche/?category=10&locations=Pari
 
 ### Goods {#mercari-goods}
 
-<Route author="nczitzk" example="/mercari/category/1" path="/mercari/:type/:id" paramsDesc={['`category` as seaching by category, `brand` as searching by brand, `search` as searching for keyword', 'can be found in URL of the category or brand page. If you choose `search` as `type`, then put keyword here']}>
+<Route author="nczitzk" example="/mercari/category/1" path="/mercari/:type/:id" paramsDesc={['`category` as seaching by category, `brand` as searching by brand, `search` as searching for keyword', 'can be found in URL of the category or brand page. If you choose `search` as `type`, then put keyword here']} notOperational="1">
 
 All categories, see [Category list](https://www.mercari.com/jp/category/)
 
@@ -293,7 +293,7 @@ Language
 
 ### Store {#shopback-store}
 
-<Route author="nczitzk" example="/shopback/shopee-mart" path="/shopback/:store" paramsDesc={['Store, can be found in URL']}/>
+<Route author="nczitzk" example="/shopback/shopee-mart" path="/shopback/:store" paramsDesc={['Store, can be found in URL']} notOperational="1"/>
 
 ## Snow Peak {#snow-peak}
 
@@ -305,7 +305,7 @@ Language
 
 ### PS5 stock UK {#the-independent-ps5-stock-uk}
 
-<Route author="DIYgod" example="/independent/ps5-stock-uk" path="/independent/ps5-stock-uk"/>
+<Route author="DIYgod" example="/independent/ps5-stock-uk" path="/independent/ps5-stock-uk" notOperational="1"/>
 
 ## Uniqlo {#uniqlo}
 
@@ -317,13 +317,13 @@ Language
 
 ### 新品 {#westore-xin-pin}
 
-<Route author="xyqfer" example="/westore/new" path="/westore/new"/>
+<Route author="xyqfer" example="/westore/new" path="/westore/new" notOperational="1"/>
 
 ## Zagg {#zagg}
 
 ### New Arrivals {#zagg-new-arrivals}
 
-<Route author="NavePnow" example="/zagg/new-arrivals/brand=164&cat=3038,3041" path="/zagg/new-arrivals/:query?" paramsDesc={['query, search page querystring']}/>
+<Route author="NavePnow" example="/zagg/new-arrivals/brand=164&cat=3038,3041" path="/zagg/new-arrivals/:query?" paramsDesc={['query, search page querystring']} notOperational="1"/>
 
 For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3041`, the query is `brand=164&cat=3038%2C3041`
 
@@ -381,7 +381,7 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 商品价格 {#jing-dong-shang-pin-jia-ge}
 
-<Route author="nczitzk" example="/jd/price/526835" path="/jd/price/:id" paramsDesc={['商品 id，可在商品详情页 URL 中找到']}>
+<Route author="nczitzk" example="/jd/price/526835" path="/jd/price/:id" paramsDesc={['商品 id，可在商品详情页 URL 中找到']} notOperational="1">
 
 :::tip
 
@@ -395,7 +395,7 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 众筹项目 {#jing-dong-zhong-chou-zhong-chou-xiang-mu}
 
-<Route author="LogicJake" example="/jingdong/zhongchou/all/zcz/zhtj" path="/jingdong/zhongchou/:type/:status/:sort" paramsDesc={['类型','状态','排序方式']}>
+<Route author="LogicJake" example="/jingdong/zhongchou/all/zcz/zhtj" path="/jingdong/zhongchou/:type/:status/:sort" paramsDesc={['类型','状态','排序方式']} notOperational="1">
 
 类型
 
@@ -421,7 +421,7 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 最新商品 {#jiu-yun-wang-zui-xin-shang-pin}
 
-<Route author="yuuow" example="/wineyun/home" path="/wineyun/:category" paramsDesc={['分类名']} >
+<Route author="yuuow" example="/wineyun/home" path="/wineyun/:category" paramsDesc={['分类名']} notOperational="1" >
 
 | 全部 | 闪购    | 秒发   | 跨境     | 尾货专场 |
 | ---- | ------- | ------ | -------- | -------- |
@@ -433,7 +433,7 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 礼物说 {#li-wu-shuo-li-wu-shuo}
 
-<Route author="sanmmm" example="/liwushuo/index" path="/liwushuo/index"/>
+<Route author="sanmmm" example="/liwushuo/index" path="/liwushuo/index" notOperational="1"/>
 
 ## 麦当劳 {#mai-dang-lao}
 
@@ -557,7 +557,7 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 线报 {#ta-hui-wang-xian-bao}
 
-<Route author="nczitzk" example="/tahui/rptlist" path="/tahui/rptlist"/>
+<Route author="nczitzk" example="/tahui/rptlist" path="/tahui/rptlist" notOperational="1"/>
 
 ## 淘宝众筹 {#tao-bao-zhong-chou}
 
@@ -679,13 +679,13 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 最新新闻 {#xiao-fei-ming-jian-zui-xin-xin-wen}
 
-<Route author="nczitzk" example="/mingjian" path="/mingjian"/>
+<Route author="nczitzk" example="/mingjian" path="/mingjian" notOperational="1"/>
 
 ## 消费者报道 {#xiao-fei-zhe-bao-dao}
 
 ### 要闻 {#xiao-fei-zhe-bao-dao-yao-wen}
 
-<Route author="EsuRt Fatpandac" example="/ccreports/article" path="/ccreports/article"/>
+<Route author="EsuRt Fatpandac" example="/ccreports/article" path="/ccreports/article" notOperational="1"/>
 
 ## 小米 {#xiao-mi}
 
@@ -745,7 +745,7 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### Stylingbook {#you-yi-ku-stylingbook}
 
-<Route author="LunaXu" example="/uniqlo/stylingbook/women" path="/uniqlo/stylingbook/:category?" paramsDesc={['类别']}>
+<Route author="LunaXu" example="/uniqlo/stylingbook/women" path="/uniqlo/stylingbook/:category?" paramsDesc={['类别']} notOperational="1">
 
 | 女式  | 男式 | 小孩 | 婴儿 |
 | ----- | ---- | ---- | ---- |

@@ -4,7 +4,7 @@
 
 ### Journal {#academy-of-management-journal}
 
-<Route author="nczitzk" example="/aom/journal/amr" path="/aom/journal/:id" paramsDesc={['journal id, see below']}>
+<Route author="nczitzk" example="/aom/journal/amr" path="/aom/journal/:id" paramsDesc={['journal id, see below']} notOperational="1">
 
 | Id        | Title                                     |
 | --------- | ------------------------------------------ |
@@ -23,7 +23,7 @@
 
 ### The ACM Conference on Computer and Communications Security {#acm-special-interest-group-on-security-audit-and-control-the-acm-conference-on-computer-and-communications-security}
 
-<Route author="ZeddYu" example="/sigsac/ccs" path="/sigsac/ccs">
+<Route author="ZeddYu" example="/sigsac/ccs" path="/sigsac/ccs" notOperational="1">
 
 Return results from 2020
 
@@ -142,7 +142,7 @@ Fill in parameter `query` with content after `http://export.arxiv.org/api/query?
 
 ### Cover Story {#cell-cover-story}
 
-<Route author="y9c" example="/cell/cover" path="/cell/cover">
+<Route author="y9c" example="/cell/cover" path="/cell/cover" notOperational="1">
 
 Subscribe to the cover images of the Cell journals, and get the latest publication updates in time.
 
@@ -164,7 +164,7 @@ Including 'cell', 'cancer-cell', 'cell-chemical-biology', 'cell-host-microbe', '
 
 ### Latest Research - Research by Subject {#elife-latest-research-research-by-subject}
 
-<Route author="emdoe" example="/elife/cell-biology" path="/elife/:subject" paramsDesc={['topic name', 'obtain it from the homepage. `latest` will include all topics.']} supportScihub="1"/>
+<Route author="emdoe" example="/elife/cell-biology" path="/elife/:subject" paramsDesc={['topic name', 'obtain it from the homepage. `latest` will include all topics.']} supportScihub="1" notOperational="1"/>
 
 ## ELSEVIER {#elsevier}
 
@@ -234,13 +234,13 @@ Return results from 2020
 
 ### Early Access Journal {#ieee-xplore-early-access-journal}
 
-<Route author="5upernova-heng" example="/ieee/journal/5306045/earlyaccess" path="/ieee/journal/:journal/earlyaccess/:sortType?" paramsDesc={['Issue code, the number of the `isnumber` in the URL','Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`']} radar="1"/>
+<Route author="5upernova-heng" example="/ieee/journal/5306045/earlyaccess" path="/ieee/journal/:journal/earlyaccess/:sortType?" paramsDesc={['Issue code, the number of the `isnumber` in the URL','Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`']} radar="1" notOperational="1"/>
 
 ## INFORMS {#informs}
 
 ### Category {#informs-category}
 
-<Route author="Fatpandac" example="/informs/mnsc" path="/informs/:category?" paramsDesc={['Category, can be found in the url of the page, `orsc` by default']}/>
+<Route author="Fatpandac" example="/informs/mnsc" path="/informs/:category?" paramsDesc={['Category, can be found in the url of the page, `orsc` by default']} notOperational="1"/>
 
 ## MDPI {#mdpi}
 
@@ -250,7 +250,7 @@ Return results from 2020
 
 ## MIT Technology Review {#mit-technology-review}
 
-<Route author="zphw" example="/technologyreview" path="/technologyreview" />
+<Route author="zphw" example="/technologyreview" path="/technologyreview" notOperational="1" />
 
 ### Topics {#mit-technology-review-topics}
 
@@ -479,7 +479,7 @@ To subscribe to [IN THE PIPELINE by Derek Lowe’s](https://science.org/blogs/pi
 
 ### Journal {#sciencedirect-journal}
 
-<Route author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" paramsDesc={['Journal id, can be found in URL']}/>
+<Route author="nczitzk" example="/sciencedirect/journal/research-policy" path="/sciencedirect/journal/:id" paramsDesc={['Journal id, can be found in URL']} notOperational="1"/>
 
 ## Springer {#springer}
 
@@ -491,7 +491,7 @@ To subscribe to [IN THE PIPELINE by Derek Lowe’s](https://science.org/blogs/pi
 
 ### 关键词 {#stork-wen-xian-niao-ding-yue-guan-jian-ci}
 
-<Route author="xraywu" example="/stork/keyword/409159/R4j3Hbn5ia" path="/stork/keyword/:trackID/:displayKey" paramsDesc={['关键词订阅 URL 上的 trackID 参数','关键词订阅 URL 上的  displayKey 参数']}>
+<Route author="xraywu" example="/stork/keyword/409159/R4j3Hbn5ia" path="/stork/keyword/:trackID/:displayKey" paramsDesc={['关键词订阅 URL 上的 trackID 参数','关键词订阅 URL 上的  displayKey 参数']} notOperational="1">
 
 在 Stork 上注册并订阅关键词后，在 `我的` -> `关键词` 中可找到对应关键词的订阅 URL。URL 后的两个参数即为路由参数。
 
@@ -501,7 +501,7 @@ To subscribe to [IN THE PIPELINE by Derek Lowe’s](https://science.org/blogs/pi
 
 ### News {#telecompaper-news}
 
-<Route author="nczitzk" example="/telecompaper/news/mobile/2020/China/News" path="/telecompaper/news/:caty/:year?/:country?/:type?" paramsDesc={['Category, see table below', 'Year. The year in respective category page filter, `all` for unlimited year, empty by default', 'Country or continent, `all` for unlimited country or continent, empty by default', 'Type, can be found in the `Types` filter, `all` for unlimited type, unlimited by default']}>
+<Route author="nczitzk" example="/telecompaper/news/mobile/2020/China/News" path="/telecompaper/news/:caty/:year?/:country?/:type?" paramsDesc={['Category, see table below', 'Year. The year in respective category page filter, `all` for unlimited year, empty by default', 'Country or continent, `all` for unlimited country or continent, empty by default', 'Type, can be found in the `Types` filter, `all` for unlimited type, unlimited by default']} notOperational="1">
 
 Category
 
@@ -521,7 +521,7 @@ Filters in [INDUSTRY RESOURCES](https://www.telecompaper.com/industry-resources)
 
 ### Search {#telecompaper-search}
 
-<Route author="nczitzk" example="/telecompaper/search/Nokia" path="/telecompaper/search/:keyword?/:company?/:sort?/:period?" paramsDesc={['Keyword', 'Company name, empty by default', 'Sorting, see table below, `Date Descending` by default', 'Date selection, Last 12 months by default']}>
+<Route author="nczitzk" example="/telecompaper/search/Nokia" path="/telecompaper/search/:keyword?/:company?/:sort?/:period?" paramsDesc={['Keyword', 'Company name, empty by default', 'Sorting, see table below, `Date Descending` by default', 'Date selection, Last 12 months by default']} notOperational="1">
 
 Sorting
 
@@ -541,7 +541,7 @@ Date selection
 
 ### Current Issue {#the-university-of-chicago-press-journals-current-issue}
 
-<Route author="TonyRL" example="/uchicago/journals/current/jpe" path="/uchicago/journals/current/:journal" paramsDesc={['Journal id, can be found in URL. [Browse journals by title](https://www.journals.uchicago.edu/action/showPublications)']} radar="1"/>
+<Route author="TonyRL" example="/uchicago/journals/current/jpe" path="/uchicago/journals/current/:journal" paramsDesc={['Journal id, can be found in URL. [Browse journals by title](https://www.journals.uchicago.edu/action/showPublications)']} radar="1" anticrawler="1"/>
 
 ## USENIX {#usenix}
 
@@ -563,7 +563,7 @@ Return results from 2020
 
 ### 分类 {#guan-li-shi-jie-fen-lei}
 
-<Route author="nczitzk" example="/mvm" path="/mvm/:category?" paramsDesc={['分类，见下表，默认为本期要目']}>
+<Route author="nczitzk" example="/mvm" path="/mvm/:category?" paramsDesc={['分类，见下表，默认为本期要目']} notOperational="1">
 
 | 本期要目 | 网络首发 | 学术活动 | 通知公告 |
 | -------- | -------- | -------- | -------- |
@@ -581,7 +581,7 @@ Return results from 2020
 
 ### 期刊 {#zhong-guo-zhi-wang-qi-kan}
 
-<Route author="Fatpandac Derekmini" example="/cnki/journals/LKGP" path="/cnki/journals/:name" paramsDesc={['期刊缩写，可以在网址中得到']}/>
+<Route author="Fatpandac Derekmini" example="/cnki/journals/LKGP" path="/cnki/journals/:name" paramsDesc={['期刊缩写，可以在网址中得到']} notOperational="1"/>
 
 ### 网络首发 {#zhong-guo-zhi-wang-wang-luo-shou-fa}
 
@@ -595,5 +595,5 @@ Return results from 2020
 
 :::
 
-<Route author="harveyqiu Derekmini" example="/cnki/author/000042423923" path="/cnki/author/:code" paramsDesc={['作者对应code，可以在网址中得到']}/>
+<Route author="harveyqiu Derekmini" example="/cnki/author/000042423923" path="/cnki/author/:code" paramsDesc={['作者对应code，可以在网址中得到']} notOperational="1"/>
 
