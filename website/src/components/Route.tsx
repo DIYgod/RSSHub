@@ -46,7 +46,7 @@ export default function Route({
         <div className={`routeBlock ${notOperational ? "notOperational" : ""}`} id={path}>
             <p className="badges">
                 {notOperational && (
-                    <Link to="https://github.com/DIYgod/RSSHub/issues/new?assignees=&labels=RSS+bug&projects=&template=bug_report_en.yml">
+                    <Link to={`https://github.com/search?q=repo:DIYgod/RSSHub+%22${path}%22&type=issues`}>
                         <Badge type="caution"><Translate id="badge.notOperational" /></Badge>
                     </Link>
                 )}
