@@ -52,7 +52,7 @@ Copy the URL of the 591 filter housing page and remove the front part `https://r
 
 ### 排行榜 {#amazfit-watch-faces-pai-hang-bang}
 
-<Route author="nczitzk" example="/amazfitwatchfaces/top/bip/Bip/month/views/zh" path="/amazfitwatchfaces/top/:model/:type?/:time?/:sortBy?/:lang?" paramsDesc={['手表型号', '手表款式，款式代码可在目标网站选择后到地址栏查看，`all` 指 全部款式', '统计时间，`week` 指 上周，`month` 指 上月，`alltime` 指 全部时间', '排序参数，`download` 指 下载量，`views` 指 查看量，`fav` 指 收藏数', '表盘语言，语言代码可在目标网站选择后到地址栏查看，如 `zh` 指 中文']}/>
+<Route author="nczitzk" example="/amazfitwatchfaces/top/bip/Bip/month/views/zh" path="/amazfitwatchfaces/top/:model/:type?/:time?/:sortBy?/:lang?" paramsDesc={['手表型号', '手表款式，款式代码可在目标网站选择后到地址栏查看，`all` 指 全部款式', '统计时间，`week` 指 上周，`month` 指 上月，`alltime` 指 全部时间', '排序参数，`download` 指 下载量，`views` 指 查看量，`fav` 指 收藏数', '表盘语言，语言代码可在目标网站选择后到地址栏查看，如 `zh` 指 中文']} notOperational="1"/>
 
 ### 搜索结果 {#amazfit-watch-faces-sou-suo-jie-guo}
 
@@ -76,21 +76,11 @@ See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 
 ### 新闻 {#aqara-xin-wen}
 
-<Route author="nczitzk" example="/aqara/:region/news" path="/aqara/news" paramsDesc={['地区 id，可在对应新闻页 URL 中找到，默认为 en，即 Global']}>
+<Route author="nczitzk" example="/aqara/:region/news" path="/aqara/news" paramsDesc={['地区 id，可在对应新闻页 URL 中找到，默认为 en，即 Global']} notOperational="1">
 
 | 中国/大陆 | 대한민국 | Europe | United States | Russia | Global |
 |-----------|------|--------|---------------|--------|--------|
 | cn        | kr   | eu     | us            | ru     | en     |
-
-</Route>
-
-### 博客 {#aqara-bo-ke}
-
-<Route author="nczitzk" example="/aqara/:region/news" path="/aqara/news" paramsDesc={['地区 id，可在对应博客页 URL 中找到，默认为 en，即 Global']}>
-
-| 대한민국 | Europe | United States | Russia | Global |
-|------|--------|---------------|--------|--------|
-| kr   | eu     | us            | ru     | en     |
 
 </Route>
 
@@ -106,7 +96,7 @@ See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 
 ### Search {#autotrader-search}
 
-<Route author="HenryQW" example="/autotrader/radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on" path="/autotrader/:query" paramsDesc={['the search query']}>
+<Route author="HenryQW" example="/autotrader/radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on" path="/autotrader/:query" paramsDesc={['the search query']} notOperational="1">
 
 1.  Conduct a search with desired filters on AutoTrader
 1.  Copy everything in the URL after `?`, for example: `https://www.autotrader.co.uk/car-search?radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on` will produce `radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on`
@@ -117,7 +107,7 @@ See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 
 ### 书源仓库更新 {#booksource.store-shu-yuan-cang-ku-geng-xin}
 
-<Route author="vhxubo" example="/booksource" path="/booksource"/>
+<Route author="vhxubo" example="/booksource" path="/booksource" notOperational="1"/>
 
 ## BOOKWALKERTW {#bookwalkertw}
 
@@ -135,13 +125,13 @@ See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 
 ### 文章 {#clickme-wen-zhang}
 
-<Route author="hoilc" example="/clickme/default/category/beauty" path="/clickme/:site/:grouping/:name" paramsDesc={['站点，`default`为普通站，`r18`为成人站，其它值默认为普通站','分组方式，`category`为分类，`tag`为标签，其他值默认为分类','分类名或标签名，分类名为英文，可以在分类 URL 中找到']} radar="1"/>
+<Route author="hoilc" example="/clickme/default/category/beauty" path="/clickme/:site/:grouping/:name" paramsDesc={['站点，`default`为普通站，`r18`为成人站，其它值默认为普通站','分组方式，`category`为分类，`tag`为标签，其他值默认为分类','分类名或标签名，分类名为英文，可以在分类 URL 中找到']} radar="1" anticrawler="1"/>
 
 ## Corona Virus Disease 2019 {#corona-virus-disease-2019}
 
 ### 国家卫健委 - 疫情通报 {#corona-virus-disease-2019-guo-jia-wei-jian-wei-yi-qing-tong-bao}
 
-<Route author="EkkoG DIYgod" example="/coronavirus/nhc" path="/coronavirus/nhc"/>
+<Route author="EkkoG DIYgod" example="/coronavirus/nhc" path="/coronavirus/nhc" notOperational="1"/>
 
 ### 财新网 - 新冠肺炎防疫全纪录 {#corona-virus-disease-2019-cai-xin-wang-xin-guan-fei-yan-fang-yi-quan-ji-lu}
 
@@ -149,7 +139,7 @@ See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 
 ### 丁香园 - 新冠病毒疫情实时播报 {#corona-virus-disease-2019-ding-xiang-yuan-xin-guan-bing-du-yi-qing-shi-shi-bo-bao}
 
-<Route author="DIYgod" example="/coronavirus/dxy" path="/coronavirus/dxy"/>
+<Route author="DIYgod" example="/coronavirus/dxy" path="/coronavirus/dxy" notOperational="1"/>
 
 ### 丁香园 - 新冠病毒疫情数据统计 {#corona-virus-disease-2019-ding-xiang-yuan-xin-guan-bing-du-yi-qing-shu-ju-tong-ji}
 
@@ -157,7 +147,7 @@ See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 
 ### 腾讯新闻 - 新型冠状病毒肺炎实时辟谣 {#corona-virus-disease-2019-teng-xun-xin-wen-xin-xing-guan-zhuang-bing-du-fei-yan-shi-shi-pi-yao}
 
-<Route author="DIYgod" example="/coronavirus/qq/fact" path="/coronavirus/qq/fact"/>
+<Route author="DIYgod" example="/coronavirus/qq/fact" path="/coronavirus/qq/fact" notOperational="1"/>
 
 ### 腾讯新闻 - 新型冠状病毒肺炎疫情实时追踪 {#corona-virus-disease-2019-teng-xun-xin-wen-xin-xing-guan-zhuang-bing-du-fei-yan-yi-qing-shi-shi-zhui-zong}
 
@@ -165,7 +155,7 @@ See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 
 #### 中国本土数据统计 {#corona-virus-disease-2019-teng-xun-xin-wen-xin-xing-guan-zhuang-bing-du-fei-yan-yi-qing-shi-shi-zhui-zong-zhong-guo-ben-tu-shu-ju-tong-ji}
 
-<Route author="CaoMeiYouRen" example="/tencent/news/coronavirus/total" path="/tencent/news/coronavirus/total"/>
+<Route author="CaoMeiYouRen" example="/tencent/news/coronavirus/total" path="/tencent/news/coronavirus/total" notOperational="1"/>
 
 #### 省市疫情数据 {#corona-virus-disease-2019-teng-xun-xin-wen-xin-xing-guan-zhuang-bing-du-fei-yan-yi-qing-shi-shi-zhui-zong-sheng-shi-yi-qing-shu-ju}
 
@@ -173,7 +163,7 @@ See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 
 ### South China Morning Post - China coronavirus outbreak {#corona-virus-disease-2019-south-china-morning-post-china-coronavirus-outbreak}
 
-<Route author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp"/>
+<Route author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp" notOperational="1"/>
 
 ### Macao Pagina Electrónica Especial Contra Epidemias: What’s New {#corona-virus-disease-2019-macao-pagina-electronica-especial-contra-epidemias-what-s-new}
 
@@ -187,13 +177,13 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 
 ### Singapore Ministry of Health - Past Updates on 2019-nCov Local Situation in Singapore {#corona-virus-disease-2019-singapore-ministry-of-health-past-updates-on-2019-ncov-local-situation-in-singapore}
 
-<Route author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh"/>
+<Route author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh" notOperational="1"/>
 
 ### Yahoo Japan 新型コロナウイルス感染症まとめ {#corona-virus-disease-2019-yahoo-japan-xin-xing-%E3%82%B3%E3%83%AD%E3%83%8A%E3%82%A6%E3%82%A4%E3%83%AB%E3%82%B9-gan-ran-zheng-%E3%81%BE%E3%81%A8%E3%82%81}
 
 Official Website: [https://news.yahoo.co.jp/pages/article/20200207](https://news.yahoo.co.jp/pages/article/20200207)
 
-<Route author="sgqy" example="/coronavirus/yahoo-japan" path="/coronavirus/yahoo-japan/:tdfk?" paramsDesc={['都道府県的拼音，可从地图详情页的链接中获取。例如：京都府 = kyoto']}/>
+<Route author="sgqy" example="/coronavirus/yahoo-japan" path="/coronavirus/yahoo-japan/:tdfk?" paramsDesc={['都道府県的拼音，可从地图详情页的链接中获取。例如：京都府 = kyoto']} notOperational="1"/>
 
 ## Darwin Awards {#darwin-awards}
 
@@ -211,7 +201,7 @@ Official Website: [https://news.yahoo.co.jp/pages/article/20200207](https://news
 
 ### DHL express {#dhl-dhl-express}
 
-<Route author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" paramsDesc={['Waybill number']}/>
+<Route author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" paramsDesc={['Waybill number']} notOperational="1"/>
 
 ## Email {#email}
 
@@ -229,7 +219,7 @@ Official Website: [https://news.yahoo.co.jp/pages/article/20200207](https://news
 
 ### News {#emi-nitta-official-website-xin-tian-hui-hai-guan-fang-wang-zhan-news}
 
-<Route author="luyuhuang" example="/emi-nitta/news" path="/emi-nitta/news"/>
+<Route author="luyuhuang" example="/emi-nitta/news" path="/emi-nitta/news" notOperational="1"/>
 
 ## Etherscan {#etherscan}
 
@@ -273,7 +263,7 @@ Official Website: [https://news.yahoo.co.jp/pages/article/20200207](https://news
 
 ### Personal sharing {#instapaper-personal-sharing}
 
-<Route author="LogicJake" example="/instapaper/person/viridiano" path="/instapaper/person"/>
+<Route author="LogicJake" example="/instapaper/person/viridiano" path="/instapaper/person" notOperational="1"/>
 
 ## Instructables {#instructables}
 
@@ -291,19 +281,19 @@ Official Website: [https://news.yahoo.co.jp/pages/article/20200207](https://news
 
 ### 首页（旧版） {#iyouport-shou-ye-jiu-ban}
 
-<Route author="EsuRt" example="/iyouport/article" path="/iyouport/article"/>
+<Route author="EsuRt" example="/iyouport/article" path="/iyouport/article" notOperational="1"/>
 
 ### 分类 {#iyouport-fen-lei}
 
 支持 iyouport.org 页面 Header 全部分类。例如，`https://www.iyouport.org/category/osint` 对应 `/iyouport/osint`。若不填写 `category`，则输出全部文章，但比旧版首页 feed 有更多元数据。
 
-<Route author="proletarius101" example="/iyouport/osint" path="/iyouport/:category?"/>
+<Route author="proletarius101" example="/iyouport/osint" path="/iyouport/:category?" notOperational="1"/>
 
 ## Japanpost 日本郵便 {#japanpost-ri-ben-you-bian}
 
 ### Track & Trace Service 郵便追跡サービス {#japanpost-ri-ben-you-bian-track-trace-service-you-bian-zhui-ji-%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9}
 
-<Route author="tuzi3040" example="/japanpost/track/EJ123456789JP/en" path="/japanpost/track/:reqCode/:locale?" paramsDesc={['Package Number', 'Language, default to japanese `ja`']} radar="1">
+<Route author="tuzi3040" example="/japanpost/track/EJ123456789JP/en" path="/japanpost/track/:reqCode/:locale?" paramsDesc={['Package Number', 'Language, default to japanese `ja`']} radar="1" notOperational="1">
 
 | Japanese | English |
 |----------|---------|
@@ -327,7 +317,7 @@ Official Website: [https://news.yahoo.co.jp/pages/article/20200207](https://news
 
 ### Layoff Data Tracker {#layoffs.fyi-layoff-data-tracker}
 
-<Route author="BrandNewLifeJackie26" example="/layoffs" path="/layoffs" radar="1"/>
+<Route author="BrandNewLifeJackie26" example="/layoffs" path="/layoffs" radar="1" anticrawler="1"/>
 
 RSS source in the original site is outdated.
 
@@ -335,7 +325,7 @@ RSS source in the original site is outdated.
 
 ### Recruitment {#lever-recruitment}
 
-<Route author="tsarlewey" example="/lever/lever" path="/lever/:domain" paramsDesc={['Company with Lever Board']}/>
+<Route author="tsarlewey" example="/lever/lever" path="/lever/:domain" paramsDesc={['Company with Lever Board']} notOperational="1"/>
 
 ## LinkedIn {#linkedin}
 
@@ -368,7 +358,7 @@ For example:
 
 ### Jobs {#linkedin-ling-ying-zhong-guo-jobs}
 
-<Route author="bigfei" example="/linkedin/cn/jobs/Software" path="/linkedin/cn/jobs/:keywords?" paramsDesc={['搜索关键字']} radar="1">
+<Route author="bigfei" example="/linkedin/cn/jobs/Software" path="/linkedin/cn/jobs/:keywords?" paramsDesc={['搜索关键字']} radar="1" notOperational="1">
 
 另外，可以通过添加额外的以下 query 参数来输出满足特定要求的工作职位：
 
@@ -436,13 +426,13 @@ For example:
 
 ### All Publications {#mitre-all-publications}
 
-<Route author="sbilly" example="/mitre/publications" path="/mitre/publications" />
+<Route author="sbilly" example="/mitre/publications" path="/mitre/publications" notOperational="1" />
 
 ## MobData {#mobdata}
 
 ### 分析报告 {#mobdata-fen-xi-bao-gao}
 
-<Route author="brilon" example="/mobdata/report" path="/mobdata/report"/>
+<Route author="brilon" example="/mobdata/report" path="/mobdata/report" notOperational="1"/>
 
 ## Mozilla {#mozilla}
 
@@ -478,7 +468,7 @@ For example:
 
 ### 报名新闻 {#noi-quan-guo-qing-shao-nian-xin-xi-xue-ao-lin-pi-ke-jing-sai-bao-ming-xin-wen}
 
-<Route author="WenryXu" example="/noi/rg-news" path="/noi/rg-news"/>
+<Route author="WenryXu" example="/noi/rg-news" path="/noi/rg-news" notOperational="1"/>
 
 ## Notion {#notion}
 
@@ -522,7 +512,7 @@ please refer to the [Notion API documentation](https://developers.notion.com/ref
 
 ### OpenSource Square {#oshwhub-li-chuang-kai-yuan-ying-jian-ping-tai-opensource-square}
 
-<Route author="tylinux" example="/oshwhub" path="/oshwhub/:sortType?" paramsDesc={['sortType']} radar="1"/>
+<Route author="tylinux" example="/oshwhub" path="/oshwhub/:sortType?" paramsDesc={['sortType']} radar="1" notOperational="1"/>
 
 ## Panda {#panda}
 
@@ -546,7 +536,7 @@ please refer to the [Notion API documentation](https://developers.notion.com/ref
 
 ### Trending {#pocket-trending}
 
-<Route author="hoilc" example="/pocket/trending" path="/pocket/trending"/>
+<Route author="hoilc" example="/pocket/trending" path="/pocket/trending" notOperational="1"/>
 
 ## Product Hunt {#product-hunt}
 
@@ -573,7 +563,7 @@ please refer to the [Notion API documentation](https://developers.notion.com/ref
 
 ### Latest conference materials {#sans-institute-latest-conference-materials}
 
-<Route author="sbilly" example="/sans/summit_archive" path="/sans/summit_archive" />
+<Route author="sbilly" example="/sans/summit_archive" path="/sans/summit_archive" notOperational="1" />
 
 ## Transformation {#transformation}
 
@@ -675,7 +665,7 @@ Parameters parsing in the above example:
 
 ### Status {#tssstatus-ios-downgrade-channel-status}
 
-<Route author="xyqfer" example="/tssstatus/j42dap/14W585a" path="/tssstatus/:board/:build" paramsDesc={['Board id', 'Build id']}>
+<Route author="xyqfer" example="/tssstatus/j42dap/14W585a" path="/tssstatus/:board/:build" paramsDesc={['Board id', 'Build id']} notOperational="1">
 
 Board and Build can be found in [here](http://api.ineal.me/tss/status)
 
@@ -729,7 +719,7 @@ type 为 all 时，category 参数不支持 cost 和 free
 
 ### Home {#wikihow-home}
 
-<Route author="sanmmm" example="/wikihow/index" path="/wikihow/index"/>
+<Route author="sanmmm" example="/wikihow/index" path="/wikihow/index" notOperational="1"/>
 
 ### Category {#wikihow-category}
 
@@ -803,7 +793,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 官方網址：[https://www.bolsas.gov.mo/](https://www.bolsas.gov.mo/)
 
-<Route author="KeiLongW" example="/macau-bolsas" path="/macau-bolsas/:lang?" paramsDesc={['語言']} >
+<Route author="KeiLongW" example="/macau-bolsas" path="/macau-bolsas/:lang?" paramsDesc={['語言']} notOperational="1" >
 
 | 中文 | 葡文 |
 |------|------|
@@ -857,7 +847,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 福利资源 - met.red {#fu-li-zi-yuan-met.red-fu-li-zi-yuan-met.red}
 
-<Route author="junfengP queensferryme" example="/metred/fuli" path="/metred/fuli" />
+<Route author="junfengP queensferryme" example="/metred/fuli" path="/metred/fuli" notOperational="1" />
 
 ## 古诗文网 {#gu-shi-wen-wang}
 
@@ -901,7 +891,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 通知 {#guo-jia-liu-xue-wang-tong-zhi}
 
-<Route author="Derekmini markmingjie" example="/csc/notice/lxtz" path="/csc/notice/:type?" paramsDesc={['分类, 默认为 `lxtz`']} radar="1">
+<Route author="Derekmini markmingjie" example="/csc/notice/lxtz" path="/csc/notice/:type?" paramsDesc={['分类, 默认为 `lxtz`']} radar="1" notOperational="1">
 
 | 遴选通知 | 综合项目专栏 | 常见问题解答 | 录取公告 | 新闻资讯 | 新闻公告 |
 |----------|--------------|--------------|----------|----------|----------|
@@ -913,13 +903,13 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 工作机会 {#hao-dui-you-gong-zuo-ji-hui}
 
-<Route author="lotosbin" example="/network360/jobs" path="/network360/jobs"/>
+<Route author="lotosbin" example="/network360/jobs" path="/network360/jobs" notOperational="1"/>
 
 ## 惠誉评级 {#hui-yu-ping-ji}
 
 ### 板块信息 {#hui-yu-ping-ji-ban-kuai-xin-xi}
 
-<Route author="LogicJake" example="/fitchratings/site/economics" path="/fitchratings/site/:type" paramsDesc={['板块名称，在网址 site 后面']}/>
+<Route author="LogicJake" example="/fitchratings/site/economics" path="/fitchratings/site/:type" paramsDesc={['板块名称，在网址 site 后面']} notOperational="1"/>
 
 ## 静态模型爱好者 {#jing-tai-mo-xing-ai-hao-zhe}
 
@@ -1007,11 +997,11 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 通商 {#lv-shi-shi-wu-suo-wen-zhang-tong-shang}
 
-<Route author="snipersteve" example="/law/ts" path="/law/ts" />
+<Route author="snipersteve" example="/law/ts" path="/law/ts" notOperational="1" />
 
 ### 海问 {#lv-shi-shi-wu-suo-wen-zhang-hai-wen}
 
-<Route author="snipersteve" example="/law/hw" path="/law/hw" />
+<Route author="snipersteve" example="/law/hw" path="/law/hw" notOperational="1" />
 
 ### 环球 {#lv-shi-shi-wu-suo-wen-zhang-huan-qiu}
 
@@ -1019,7 +1009,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 国枫 {#lv-shi-shi-wu-suo-wen-zhang-guo-feng}
 
-<Route author="snipersteve" example="/law/gf" path="/law/gf" />
+<Route author="snipersteve" example="/law/gf" path="/law/gf" notOperational="1" />
 
 ### 中伦 {#lv-shi-shi-wu-suo-wen-zhang-zhong-lun}
 
@@ -1035,13 +1025,13 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 金诚同达 {#lv-shi-shi-wu-suo-wen-zhang-jin-cheng-tong-da}
 
-<Route author="snipersteve" example="/law/jctd" path="/law/jctd" />
+<Route author="snipersteve" example="/law/jctd" path="/law/jctd" notOperational="1" />
 
 ## 马良行 {#ma-liang-xing}
 
 ### 产品更新 {#ma-liang-xing-chan-pin-geng-xin}
 
-<Route author="junfengP" example="/mlhang" path="/mlhang" />
+<Route author="junfengP" example="/mlhang" path="/mlhang" notOperational="1" />
 
 ## 每日生猪价格 {#mei-ri-sheng-zhu-jia-ge}
 
@@ -1073,7 +1063,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 新闻 {#mo-xing-wang-xin-wen}
 
-<Route author="cc798461" example="/moxingnet" path="/moxingnet"/>
+<Route author="cc798461" example="/moxingnet" path="/moxingnet" notOperational="1"/>
 
 ## 汽油价格网 {#qi-you-jia-ge-wang}
 
@@ -1095,7 +1085,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 分类 {#qie-ting-feng-yin-fu-li-fen-lei}
 
-<Route author="qiwihui" example="/qtfyfl/guoji" path="/qtfyfl/:category" paramsDesc={['分类，可在 URL 中找到']}>
+<Route author="qiwihui" example="/qtfyfl/guoji" path="/qtfyfl/:category" paramsDesc={['分类，可在 URL 中找到']} notOperational="1">
 
 | 最新文章 | 福利社  | 求出处    | 套图集  | 门事件     | 内涵图   | 电影下载       | 影视资讯 |
 |----------|---------|-----------|---------|------------|----------|----------------|----------|
@@ -1115,7 +1105,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 板块 {#qin-zi-wang-guo-ban-kuai}
 
-<Route author="LogicJake"  example="/babykingdom/19/view" path="/babykingdom/:id/:order?" paramsDesc={['板块id，可在 URL 中找到', '排序方式']}>
+<Route author="LogicJake"  example="/babykingdom/19/view" path="/babykingdom/:id/:order?" paramsDesc={['板块id，可在 URL 中找到', '排序方式']} anticrawler="1">
 
 | 发帖时间 | 回复 / 查看 | 查看 | 最后发表 | 热门 |
 |----------|-------------|------|----------|------|
@@ -1127,7 +1117,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### CloudFlareYes {#quan-qiu-zhu-ji-jian-kong-cloudflareyes}
 
-<Route author="nczitzk" example="/hostmonit/cloudflareyes" path="/hostmonit/cloudflareyes/:type?" paramsDesc={['类型，见下表，默认为 v4']} radar="1">
+<Route author="nczitzk" example="/hostmonit/cloudflareyes" path="/hostmonit/cloudflareyes/:type?" paramsDesc={['类型，见下表，默认为 v4']} radar="1" anticrawler="1">
 
 | v4  | v6  |
 | --- | --- |
@@ -1151,13 +1141,13 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 补丁说明 {#shou-wang-xian-feng-bu-ding-shuo-ming}
 
-<Route author="nczitzk" example="/ow/patch" path="/ow/patch"/>
+<Route author="nczitzk" example="/ow/patch" path="/ow/patch" notOperational="1"/>
 
 ## 四川省科学技术厅 {#si-chuan-sheng-ke-xue-ji-shu-ting}
 
 ### 四川省科学技术厅 - 公示公告 {#si-chuan-sheng-ke-xue-ji-shu-ting-si-chuan-sheng-ke-xue-ji-shu-ting-gong-shi-gong-gao}
 
-<Route author="Cubernet" example="/sckjt/news" path="/sckjt/news/:type?" paramsDesc={['默认为`tz`']}>
+<Route author="Cubernet" example="/sckjt/news" path="/sckjt/news/:type?" paramsDesc={['默认为`tz`']} notOperational="1">
 
 | 通知 | 公示公告 |
 |------|----------|
@@ -1213,11 +1203,11 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 企业资产转让 {#tian-jin-chan-quan-jiao-yi-zhong-xin-qi-ye-zi-chan-zhuan-rang}
 
-<Route author="kt286" example="/tprtc/qyzc" path="/tprtc/qyzc"/>
+<Route author="kt286" example="/tprtc/qyzc" path="/tprtc/qyzc" anticrawler="1"/>
 
 ### 新闻动态 {#tian-jin-chan-quan-jiao-yi-zhong-xin-xin-wen-dong-tai}
 
-<Route author="kt286" example="/tprtc/news" path="/tprtc/news"/>
+<Route author="kt286" example="/tprtc/news" path="/tprtc/news" notOperational="1"/>
 
 ## 天眼查 {#tian-yan-cha}
 
@@ -1237,12 +1227,12 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 今日最佳 {#xin-qu-ji-jin-ri-zui-jia}
 
-<Route author="kiddyuchina" example="/xinquji/today" path="/xinquji/today">
+<Route author="kiddyuchina" example="/xinquji/today" path="/xinquji/today" notOperational="1">
 </Route>
 
 ### 今日国内 {#xin-qu-ji-jin-ri-guo-nei}
 
-<Route author="kiddyuchina" example="/xinquji/today/internal" path="/xinquji/today/internal">
+<Route author="kiddyuchina" example="/xinquji/today/internal" path="/xinquji/today/internal" notOperational="1">
 </Route>
 
 ## 有据 {#you-ju}
@@ -1255,7 +1245,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 源仓库更新 {#yuan-cang-ku-yuan-cang-ku-geng-xin}
 
-<Route author="vhxubo" example="/ku" path="/ku/:name?" paramsDesc={['默认为 `yuedu`']}>
+<Route author="vhxubo" example="/ku" path="/ku/:name?" paramsDesc={['默认为 `yuedu`']} notOperational="1">
 
 | 阅读  | 异次元   | 海阔   |
 |-------|----------|--------|
@@ -1273,7 +1263,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 知识应用 {#zhong-guo-gong-cheng-ke-ji-zhi-shi-zhong-xin-zhi-shi-ying-yong}
 
-<Route author="nczitzk" example="/cktest/app" path="/cktest/app/:ctgroup?/:domain?" paramsDesc={['所属类别，见下表，默认为全部类别', '领域，见下表，默认为全部列表']}>
+<Route author="nczitzk" example="/cktest/app" path="/cktest/app/:ctgroup?/:domain?" paramsDesc={['所属类别，见下表，默认为全部类别', '领域，见下表，默认为全部列表']} notOperational="1">
 
 所属类别
 
@@ -1290,7 +1280,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 产业政策 {#zhong-guo-gong-cheng-ke-ji-zhi-shi-zhong-xin-chan-ye-zheng-ce}
 
-<Route author="nczitzk" example="/cktest/policy" path="/cktest/policy"/>
+<Route author="nczitzk" example="/cktest/policy" path="/cktest/policy" notOperational="1"/>
 
 ## 中国工商银行 {#zhong-guo-gong-shang-yin-hang}
 
@@ -1344,11 +1334,11 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 新闻 {#zhong-guo-you-zheng-su-di-wu-liu-xin-wen}
 
-<Route author="luyuhuang" example="/ems/news" path="/ems/news" radar="1"/>
+<Route author="luyuhuang" example="/ems/news" path="/ems/news" radar="1" notOperational="1"/>
 
 ### 苹果邮件 {#zhong-guo-you-zheng-su-di-wu-liu-ping-guo-you-jian}
 
-<Route author="Fatpandac" example="/ems/apple/EZ319397281CN" path="/ems/apple/:id" paramsDesc={['苹果邮件编号']}/>
+<Route author="Fatpandac" example="/ems/apple/EZ319397281CN" path="/ems/apple/:id" paramsDesc={['苹果邮件编号']} notOperational="1"/>
 
 ## 自如 {#zi-ru}
 
@@ -1360,7 +1350,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 查询快递 {#zuo-chuan-ji-bian-cha-xun-kuai-di}
 
-<Route author="nczitzk" example="/sagawa/359554419420" path="/sagawa/:id" paramsDesc={['快递编号']}/>
+<Route author="nczitzk" example="/sagawa/359554419420" path="/sagawa/:id" paramsDesc={['快递编号']} notOperational="1"/>
 
 ## はてな {#%E3%81%AF%E3%81%A6%E3%81%AA}
 

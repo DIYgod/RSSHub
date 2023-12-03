@@ -85,7 +85,7 @@
 
 ### Indices Dividend Adjustment {#cfd-indices-dividend-adjustment}
 
-<Route author="HenryQW" example="/cfd/div_gbp" path="/cfd/div_gbp" />
+<Route author="HenryQW" example="/cfd/div_gbp" path="/cfd/div_gbp" notOperational="1" />
 
 ## DL NEWS {#dl-news}
 
@@ -95,7 +95,7 @@
 
 ### Topic {#dl-news-topic}
 
-<Route author="Rjnishant530" example="/dlnews/fintech" path="/dlnews/:category" paramsDesc={['Find in Table. Defaults to All articles']} radar="1">
+<Route author="Rjnishant530" example="/dlnews/fintech" path="/dlnews/:category" paramsDesc={['Find in Table. Defaults to All articles']} radar="1" notOperational="1">
 
 | Topic              | Link                |
 |--------------------|---------------------|
@@ -214,7 +214,7 @@ Topic
 
 ### News {#finviz-news}
 
-<Route author="nczitzk" example="/finviz" path="/finviz/:category?" paramsDesc={['Category, see below, News by default']}>
+<Route author="nczitzk" example="/finviz" path="/finviz/:category?" paramsDesc={['Category, see below, News by default']} notOperational="1">
 
 | News | Blog |
 | ---- | ---- |
@@ -260,7 +260,7 @@ Language
 
 ### Tag {#followin-tag}
 
-<Route author="TonyRL" example="/followin/tag/177008" path="/followin/tag/:tagId/:lang?" paramsDesc={['Tag ID, can be found in URL', 'Language, see table above, `en` by default']} radar="1" />
+<Route author="TonyRL" example="/followin/tag/177008" path="/followin/tag/:tagId/:lang?" paramsDesc={['Tag ID, can be found in URL', 'Language, see table above, `en` by default']} radar="1" notOperational="1" />
 
 ## Futubull 富途牛牛 {#futubull-fu-tu-niu-niu}
 
@@ -290,7 +290,7 @@ Language
 
 ### Summary {#seeking-alpha-summary}
 
-<Route author="TonyRL" example="/seekingalpha/TSM/transcripts" path="/seekingalpha/:symbol/:category?" paramsDesc={['Stock symbol', 'Category, see below, `news` by default']} radar="1">
+<Route author="TonyRL" example="/seekingalpha/TSM/transcripts" path="/seekingalpha/:symbol/:category?" paramsDesc={['Stock symbol', 'Category, see below, `news` by default']} radar="1" notOperational="1">
 
 | Analysis | News | Transcripts | Press Releases | Related Analysis |
 | ------- | ------- | -------- | ---- | ------ |
@@ -352,7 +352,7 @@ Language:
 
 ### Report {#world-economic-forum-shi-jie-jing-ji-lun-tan-report}
 
-<Route author="nczitzk" example="/weforum/report" path="/weforum/report/:lang?/:year?/:platform?" paramsDesc={['Language, see below, `en` by default', 'Year, filter by year, all by default', 'Platform, filter by platform, all by default']}>
+<Route author="nczitzk" example="/weforum/report" path="/weforum/report/:lang?/:year?/:platform?" paramsDesc={['Language, see below, `en` by default', 'Year, filter by year, all by default', 'Platform, filter by platform, all by default']} notOperational="1">
 
 Languages
 
@@ -442,7 +442,7 @@ See filters in [Report](https://www.weforum.org/reports) for Year and Platform t
 
 ### 热门文章排行榜 {#cai-lian-she-re-men-wen-zhang-pai-hang-bang}
 
-<Route author="5upernova-heng nczitzk" example="/cls/hot" path="/cls/hot" radar="1"/>
+<Route author="5upernova-heng nczitzk" example="/cls/hot" path="/cls/hot" radar="1" anticrawler="1"/>
 
 ## 第一财经杂志 {#di-yi-cai-jing-za-zhi}
 
@@ -579,7 +579,7 @@ See filters in [Report](https://www.weforum.org/reports) for Year and Platform t
 
 ### 分类 {#mei-jing-wang-fen-lei}
 
-<Route author="nczitzk" example="/nbd" path="/nbd/:id?" paramsDesc={['分类 id，见下表，默认为要闻']}>
+<Route author="nczitzk" example="/nbd" path="/nbd/:id?" paramsDesc={['分类 id，见下表，默认为要闻']} notOperational="1">
 
 | 头条 | 要闻 | 图片新闻 | 推荐 |
 | ---- | ---- | -------- | ---- |
@@ -617,7 +617,7 @@ See filters in [Report](https://www.weforum.org/reports) for Year and Platform t
 
 ### 本所业务指南与流程 {#shang-hai-zheng-quan-jiao-yi-suo-ben-suo-ye-wu-zhi-nan-yu-liu-cheng}
 
-<Route author="nczitzk" example="/sse/lawandrules" path="/sse/lawandrules/:slug?" paramsDesc={['见下文，默认为 `latest`']} radar="1">
+<Route author="nczitzk" example="/sse/lawandrules" path="/sse/lawandrules/:slug?" paramsDesc={['见下文，默认为 `latest`']} radar="1" notOperational="1">
 
 将目标栏目的网址拆解为 `https://www.sse.com.cn/lawandrules/guide/` 和后面的字段，把后面的字段中的 `/` 替换为 `-`，即为该路由的 slug
 
@@ -714,11 +714,11 @@ See filters in [Report](https://www.weforum.org/reports) for Year and Platform t
 
 ### 最新更新 {#shou-xi-jing-ji-xue-jia-lun-tan-zui-xin-geng-xin}
 
-<Route author="FledgeXu" example="/chinacef" path="/chinacef"/>
+<Route author="FledgeXu" example="/chinacef" path="/chinacef" notOperational="1"/>
 
 ### 专家 {#shou-xi-jing-ji-xue-jia-lun-tan-zhuan-jia}
 
-<Route author="kdanfly" example="/chinacef/17/" path="/chinacef/:experts_id/" paramsDesc={['专家编号']} radar="1">
+<Route author="kdanfly" example="/chinacef/17/" path="/chinacef/:experts_id/" paramsDesc={['专家编号']} radar="1" notOperational="1">
 
 | 李迅雷 | 夏斌 |
 | ------ | ---- |
@@ -728,13 +728,13 @@ See filters in [Report](https://www.weforum.org/reports) for Year and Platform t
 
 ### 金融热点 {#shou-xi-jing-ji-xue-jia-lun-tan-jin-rong-re-dian}
 
-<Route author="kdanfly" example="/chinacef/portal/hot" path="/chinacef/portal/hot" radar="1" />
+<Route author="kdanfly" example="/chinacef/portal/hot" path="/chinacef/portal/hot" radar="1" notOperational="1" />
 
 ## 淘股吧 {#tao-gu-ba}
 
 ### 淘股论坛 {#tao-gu-ba-tao-gu-lun-tan}
 
-<Route author="emdoe nczitzk" example="/taoguba" path="/taoguba/:category?" paramsDesc={['分类，见下表，默认为社区总版']}>
+<Route author="emdoe nczitzk" example="/taoguba" path="/taoguba/:category?" paramsDesc={['分类，见下表，默认为社区总版']} notOperational="1">
 
 | 淘股论坛 | 社区总版 | 精华加油 | 网友点赞 |
 | -------- | -------- | -------- | -------- |
@@ -901,15 +901,15 @@ See filters in [Report](https://www.weforum.org/reports) for Year and Platform t
 
 ### 沟通交流 {#zhong-guo-ren-min-yin-hang-gou-tong-jiao-liu}
 
-<Route author="nczitzk" example="/gov/pbc/goutongjiaoliu" path="/gov/pbc/goutongjiaoliu" puppeteer="1"/>
+<Route author="nczitzk" example="/gov/pbc/goutongjiaoliu" path="/gov/pbc/goutongjiaoliu" puppeteer="1" notOperational="1"/>
 
 ### 货币政策司公开市场交易公告 {#zhong-guo-ren-min-yin-hang-huo-bi-zheng-ce-si-gong-kai-shi-chang-jiao-yi-gong-gao}
 
-<Route author="nczitzk" example="/gov/pbc/tradeAnnouncement" path="/gov/pbc/tradeAnnouncement" puppeteer="1"/>
+<Route author="nczitzk" example="/gov/pbc/tradeAnnouncement" path="/gov/pbc/tradeAnnouncement" puppeteer="1" notOperational="1"/>
 
 ### 政策研究 {#zhong-guo-ren-min-yin-hang-zheng-ce-yan-jiu}
 
-<Route author="Fatpandac" example="/gov/pbc/zcjl" path="/gov/pbc/zcjl"/>
+<Route author="Fatpandac" example="/gov/pbc/zcjl" path="/gov/pbc/zcjl" notOperational="1"/>
 
 ### 工作论文 {#zhong-guo-ren-min-yin-hang-gong-zuo-lun-wen}
 

@@ -38,27 +38,27 @@
 
 ### New photos {#35photo-new-photos}
 
-<Route author="nczitzk" example="/35photo/new" path="/35photo/new"/>
+<Route author="nczitzk" example="/35photo/new" path="/35photo/new" notOperational="1"/>
 
 ### Featured photos {#35photo-featured-photos}
 
-<Route author="nczitzk" example="/35photo/actual" path="/35photo/actual"/>
+<Route author="nczitzk" example="/35photo/actual" path="/35photo/actual" notOperational="1"/>
 
 ### New interesting {#35photo-new-interesting}
 
-<Route author="nczitzk" example="/35photo/interesting" path="/35photo/interesting"/>
+<Route author="nczitzk" example="/35photo/interesting" path="/35photo/interesting" notOperational="1"/>
 
 ### Photos on the world map {#35photo-photos-on-the-world-map}
 
-<Route author="nczitzk" example="/35photo/map" path="/35photo/map"/>
+<Route author="nczitzk" example="/35photo/map" path="/35photo/map" notOperational="1"/>
 
 ### Genre {#35photo-genre}
 
-<Route author="nczitzk" example="/35photo/genre/99"  path="/35photo/genre/:id" paramsDesc={['id, can be found in URL']}/>
+<Route author="nczitzk" example="/35photo/genre/99"  path="/35photo/genre/:id" paramsDesc={['id, can be found in URL']} notOperational="1"/>
 
 ### Author {#35photo-author}
 
-<Route author="nczitzk" example="/35photo/author/mariuszsix"  path="/35photo/author/:id" paramsDesc={['id, can be found in URL']}/>
+<Route author="nczitzk" example="/35photo/author/mariuszsix"  path="/35photo/author/:id" paramsDesc={['id, can be found in URL']} notOperational="1"/>
 
 ## 500px 摄影社区 {#500px-she-ying-she-qu}
 
@@ -68,7 +68,7 @@
 
 ### 摄影师作品 {#500px-she-ying-she-qu-she-ying-shi-zuo-pin}
 
-<Route author="TonyRL" example="/500px/user/works/hujunli"  path="/500px/user/works/:id" paramsDesc={['摄影师 ID']} radar="1"/>
+<Route author="TonyRL" example="/500px/user/works/hujunli"  path="/500px/user/works/:id" paramsDesc={['摄影师 ID']} radar="1" notOperational="1"/>
 
 ## 8KCosplay {#8kcosplay}
 
@@ -169,7 +169,7 @@
 
 ### Category {#babehub-category}
 
-<Route author="nczitzk" example="/babehub" path="/babehub/:category?" paramsDesc={['Category, see below, Home by default']}>
+<Route author="nczitzk" example="/babehub" path="/babehub/:category?" paramsDesc={['Category, see below, Home by default']} notOperational="1">
 
 | Home | Most Viewed | Picture Archive | Video Archive |
 | - | - | - | - |
@@ -179,7 +179,7 @@
 
 ### Search {#babehub-search}
 
-<Route author="nczitzk" example="/babehub/search/babe" path="/babehub/search/:keyword?" paramsDesc={['关键字']}/>
+<Route author="nczitzk" example="/babehub/search/babe" path="/babehub/search/:keyword?" paramsDesc={['关键字']} notOperational="1"/>
 
 ## Bing Wallpaper {#bing-wallpaper}
 
@@ -191,7 +191,7 @@
 
 ### MMDArchive 标签查询 {#booru-mmdarchive-biao-qian-cha-xun}
 
-<Route author="N78Wy" example="/booru/mmda/tags/full_body+blue_eyes" path="/booru/mmda/tags/:tags?" paramsDesc={['标签，多个标签使用空格` `或者`%20`连接，如需根据作者查询则在`user:`后接上作者名，如：`user:xxxx`']}>
+<Route author="N78Wy" example="/booru/mmda/tags/full_body+blue_eyes" path="/booru/mmda/tags/:tags?" paramsDesc={['标签，多个标签使用空格` `或者`%20`连接，如需根据作者查询则在`user:`后接上作者名，如：`user:xxxx`']} notOperational="1">
 
 For example:
 
@@ -220,13 +220,13 @@ For example:
 
 ### DailyArt {#dailyart-mei-ri-yi-shu-dailyart}
 
-<Route author="zphw" example="/dailyart/en" path="/dailyart/:language?" paramsDesc={['Support en, es, fr, de, it, zh, jp, etc. English by default.']} />
+<Route author="zphw" example="/dailyart/en" path="/dailyart/:language?" paramsDesc={['Support en, es, fr, de, it, zh, jp, etc. English by default.']} anticrawler="1" />
 
 ## Dilbert Comic Strip {#dilbert-comic-strip}
 
 ### Dilbert Comic Strip {#dilbert-comic-strip-dilbert-comic-strip}
 
-<Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip">
+<Route name="Daily Strip" author="Maecenas" example="/dilbert/strip" path="/dilbert/strip" notOperational="1">
 
 通过提取漫画，提供比官方源更佳的阅读体验。
 
@@ -257,7 +257,7 @@ For RSS content, specify options in the `routeParams` parameter in query string 
 
 ### Home {#elite-babes-home}
 
-<Route author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" paramsDesc={['Category, see below, Home by default']}>
+<Route author="nczitzk" example="/elitebabes" path="/elitebabes/:category?" paramsDesc={['Category, see below, Home by default']} notOperational="1">
 
 | Home | Hot | Popular | Recent |
 | ---- | --- | ------- | ------ |
@@ -267,7 +267,7 @@ For RSS content, specify options in the `routeParams` parameter in query string 
 
 ### Videos {#elite-babes-videos}
 
-<Route author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" paramsDesc={['Sort, see below, Popular by default']}>
+<Route author="nczitzk" example="/elitebabes/videos" path="/elitebabes/videos/:sort?" paramsDesc={['Sort, see below, Popular by default']} notOperational="1">
 
 | Popular | Recent |
 | ------- | ------ |
@@ -277,7 +277,7 @@ For RSS content, specify options in the `routeParams` parameter in query string 
 
 ### Search {#elite-babes-search}
 
-<Route author="nczitzk" example="/elitebabes/search/pose" path="/elitebabes/search/:keyword?" paramsDesc={['Keyword']}/>
+<Route author="nczitzk" example="/elitebabes/search/pose" path="/elitebabes/search/:keyword?" paramsDesc={['Keyword']} notOperational="1"/>
 
 ## Fantia {#fantia}
 
@@ -345,7 +345,7 @@ Rating
 
 ### album {#girlimg-album}
 
-<Route author="junfengP" example="/girlimg/album" path="/girlimg/album/:tag?/:mode?" paramsDesc={['过滤标签，在链接参数中&tab=部分，如：中国,BoLoLi','加载模式，留空为简单模式，获取20篇文章标题与封面；非空为详细模式，加载10篇文章内容']} />
+<Route author="junfengP" example="/girlimg/album" path="/girlimg/album/:tag?/:mode?" paramsDesc={['过滤标签，在链接参数中&tab=部分，如：中国,BoLoLi','加载模式，留空为简单模式，获取20篇文章标题与封面；非空为详细模式，加载10篇文章内容']} notOperational="1" />
 
 ## GoComics Comic Strips {#gocomics-comic-strips}
 
@@ -361,13 +361,13 @@ Rating
 
 ### Public Albums {#google-photos-public-albums}
 
-<Route author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" paramsDesc={['album ID, can be found in URL, for example, `https://photos.app.goo.gl/msFFnAzKmQmWj76EA` to `msFFnAzKmQmWj76EA`']} radar="1"/>
+<Route author="hoilc" example="/google/album/msFFnAzKmQmWj76EA" path="/google/album/:id" paramsDesc={['album ID, can be found in URL, for example, `https://photos.app.goo.gl/msFFnAzKmQmWj76EA` to `msFFnAzKmQmWj76EA`']} radar="1" notOperational="1"/>
 
 ## Hentai Cosplay {#hentai-cosplay}
 
 ### 最新图片 {#hentai-cosplay-zui-xin-tu-pian}
 
-<Route author="hoilc" example="/hentai-cosplays/tag/swimsuit" path="/hentai-cosplays/:type?/:name?" paramsDesc={['搜索类型, `tag`为标签, `keyword`为关键字, 默认留空为全部','搜索内容, 可在 URL 中找到，默认留空为全部']} />
+<Route author="hoilc" example="/hentai-cosplays/tag/swimsuit" path="/hentai-cosplays/:type?/:name?" paramsDesc={['搜索类型, `tag`为标签, `keyword`为关键字, 默认留空为全部','搜索内容, 可在 URL 中找到，默认留空为全部']} notOperational="1" />
 
 ## Konachan Anime Wallpapers {#konachan-anime-wallpapers}
 
@@ -396,17 +396,17 @@ For example:
 
 ### Manga Updates {#loveheaven-manga-updates}
 
-<Route author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" paramsDesc={['Manga slug, can be found in URL, including neither `manga-` nor `.html`']} />
+<Route author="hoilc" example="/loveheaven/update/kimetsu-no-yaiba" path="/loveheaven/update/:slug" paramsDesc={['Manga slug, can be found in URL, including neither `manga-` nor `.html`']} notOperational="1" />
 
 ## Mic Mic Idol {#mic-mic-idol}
 
 ### Latest {#mic-mic-idol-latest}
 
-<Route author="KotoriK" example="/micmicidol" path="/micmicidol"/>
+<Route author="KotoriK" example="/micmicidol" path="/micmicidol" notOperational="1"/>
 
 ### 标签 {#mic-mic-idol-biao-qian}
 
-<Route author="KotoriK" example="/micmicidol/search/Young%20Jump?limit=50" path="/micmicidol/search/:label" paramsDesc={['标签名']}/>
+<Route author="KotoriK" example="/micmicidol/search/Young%20Jump?limit=50" path="/micmicidol/search/:label" paramsDesc={['标签名']} notOperational="1"/>
 
 获取数量可以通过 [limit](/parameter#条数限制) 参数控制。默认值为`50`。
 
@@ -447,7 +447,7 @@ For example:
 
 ### NASA 中文 {#nasa-astronomy-picture-of-the-day-nasa-zhong-wen}
 
-<Route author="nczitzk" example="/nasa/apod-cn" path="/nasa/apod-cn">
+<Route author="nczitzk" example="/nasa/apod-cn" path="/nasa/apod-cn" notOperational="1">
 
 :::tip
 
@@ -477,7 +477,7 @@ For example:
 
 ### 最新图片 {#porn-image-xxx-zui-xin-tu-pian}
 
-<Route author="hoilc" example="/porn-images-xxx/tag/jk" path="/porn-images-xxx/:type?/:name?" paramsDesc={['搜索类型, `tag`为标签, `keyword`为关键字, 默认留空为全部','搜索内容, 可在 URL 中找到，默认留空为全部']} />
+<Route author="hoilc" example="/porn-images-xxx/tag/jk" path="/porn-images-xxx/:type?/:name?" paramsDesc={['搜索类型, `tag`为标签, `keyword`为关键字, 默认留空为全部','搜索内容, 可在 URL 中找到，默认留空为全部']} anticrawler="1" />
 
 ## Rare Historical Photos {#rare-historical-photos}
 
@@ -570,7 +570,7 @@ For example:
 
 ### 更新 {#bai-du-qu-hua-geng-xin}
 
-<Route author="xyqfer" example="/baidu/doodles" path="/baidu/doodles"/>
+<Route author="xyqfer" example="/baidu/doodles" path="/baidu/doodles" notOperational="1"/>
 
 ## 北京天文馆 {#bei-jing-tian-wen-guan}
 
@@ -582,7 +582,7 @@ For example:
 
 ### 分类 {#bu-xiu-se-fen-lei}
 
-<Route author="kba977" example="/dbmv" path="/dbmv/:category?" paramsDesc={['分类 id - 若不填该参数, 默认所有']}>
+<Route author="kba977" example="/dbmv" path="/dbmv/:category?" paramsDesc={['分类 id - 若不填该参数, 默认所有']} notOperational="1">
 
 | 大胸妹 | 小翘臀 | 黑丝袜 | 美腿控 | 有颜值 | 大杂烩 |
 | ------ | ------ | ------ | ------ | ------ | ------ |
@@ -618,7 +618,7 @@ For example:
 
 ### 图集文章 {#jue-dui-ling-yu-tu-ji-wen-zhang}
 
-<Route author="Kherrisan" example="/jdlingyu/tuji" path="/jdlingyu/:type" paramsDesc={['分区名']}/>
+<Route author="Kherrisan" example="/jdlingyu/tuji" path="/jdlingyu/:type" paramsDesc={['分区名']} notOperational="1"/>
 
 | 图集 | 文章 |
 | ---- | ---- |
@@ -656,7 +656,7 @@ For example:
 
 ### 最新 {#mei-tu-she-zui-xin}
 
-<Route author="ocleo1" example="/meituclub/latest" path="/meituclub/latest" />
+<Route author="ocleo1" example="/meituclub/latest" path="/meituclub/latest" notOperational="1" />
 
 ## 妹子图 {#mei-zi-tu}
 
@@ -706,11 +706,11 @@ For example:
 
 ### 用户上传作品和用户喜欢作品 {#tu-ya-wang-guo-yong-hu-shang-chuan-zuo-pin-he-yong-hu-xi-huan-zuo-pin}
 
-<Route author="LanceZhu" example="/gracg/user11968EIcqS3" path="/gracg/:user/:love?" paramsDesc={['用户访问ID，用户主页URL获取', '是否切换为用户喜欢作品, 不选或为 0 不切换，1则切换']}/>
+<Route author="LanceZhu" example="/gracg/user11968EIcqS3" path="/gracg/:user/:love?" paramsDesc={['用户访问ID，用户主页URL获取', '是否切换为用户喜欢作品, 不选或为 0 不切换，1则切换']} notOperational="1"/>
 
 ## 致美化 {#zhi-mei-hua}
 
 ### 最新主题 {#zhi-mei-hua-zui-xin-zhu-ti}
 
-<Route author="nczitzk" example="/zhutix/latest" path="/zhutix/latest"/>
+<Route author="nczitzk" example="/zhutix/latest" path="/zhutix/latest" notOperational="1"/>
 

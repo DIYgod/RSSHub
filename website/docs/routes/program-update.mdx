@@ -5,7 +5,7 @@
 
 ### Kindle Software Updates {#amazon-kindle-software-updates}
 
-<Route author="NavePnow" example="/amazon/kindle/software-updates" path="/amazon/kindle/software-updates" radar="1"/>
+<Route author="NavePnow" example="/amazon/kindle/software-updates" path="/amazon/kindle/software-updates" radar="1" anticrawler="1"/>
 
 ## AMD {#amd}
 
@@ -27,7 +27,7 @@
 
 ### Changes {#anki-changes}
 
-<Route author="nczitzk" example="/anki/changes" path="/anki/changes"/>
+<Route author="nczitzk" example="/anki/changes" path="/anki/changes" notOperational="1"/>
 
 ## AnyTXT {#anytxt}
 
@@ -79,7 +79,7 @@ For example, the URL of [GarageBand](https://apps.apple.com/us/app/messages/id40
 
 ### In-App-Purchase Price Drop Alert {#app-store-mac-app-store-in-app-purchase-price-drop-alert}
 
-<Route author="HenryQW" example="/appstore/iap/us/id953286746" path="/appstore/iap/:country/:id" paramsDesc={['App Store Country, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `us`', 'App Store app id, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `id953286746`']} />
+<Route author="HenryQW" example="/appstore/iap/us/id953286746" path="/appstore/iap/:country/:id" paramsDesc={['App Store Country, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `us`', 'App Store app id, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `id953286746`']} notOperational="1" />
 
 ### 每日精品限免 / 促销应用（鲜面连线 by AppSo） {#app-store-mac-app-store-mei-ri-jing-pin-xian-mian-cu-xiao-ying-yong-xian-mian-lian-xian-by-appso}
 
@@ -87,13 +87,13 @@ For example, the URL of [GarageBand](https://apps.apple.com/us/app/messages/id40
 
 ### 最新限免（GoFans） {#app-store-mac-app-store-zui-xin-xian-mian-gofans}
 
-<Route author="HenryQW" example="/appstore/gofans" path="/appstore/gofans"/>
+<Route author="HenryQW" example="/appstore/gofans" path="/appstore/gofans" notOperational="1"/>
 
 ## aptonic {#aptonic}
 
 ### New Dropzone Actions {#aptonic-new-dropzone-actions}
 
-<Route author="HenryQW" example="/aptonic/action" path="/aptonic/action/:untested?" paramsDesc={['Set any value to include untested actions.']}/>
+<Route author="HenryQW" example="/aptonic/action" path="/aptonic/action/:untested?" paramsDesc={['Set any value to include untested actions.']} notOperational="1"/>
 
 ## ASUS {#asus}
 
@@ -171,7 +171,7 @@ Language
 
 ### 更新日志 {#bugly-sdk-geng-xin-ri-zhi}
 
-<Route author="EkkoG" example="/bugly/changelog/1" path="/bugly/changelog/:platform" paramsDesc={['平台类型, 必选, 1 为 Android, 2 为 iOS']}/>
+<Route author="EkkoG" example="/bugly/changelog/1" path="/bugly/changelog/:platform" paramsDesc={['平台类型, 必选, 1 为 Android, 2 为 iOS']} notOperational="1"/>
 
 ## Cent Browser {#cent-browser}
 
@@ -211,13 +211,13 @@ Need to configure `CIVITAI_COOKIE` to obtain image information of NSFW models.
 
 :::
 
-<Route author="DIYgod" example="/civitai/discussions/4384" path="/civitai/discussions/:modelId"/>
+<Route author="DIYgod" example="/civitai/discussions/4384" path="/civitai/discussions/:modelId" notOperational="1"/>
 
 ## Clash {#clash}
 
 ### Premium Releases {#clash-premium-releases}
 
-<Route author="ttttmr" example="/clash/premium" path="/clash/premium" radar="1" />
+<Route author="ttttmr" example="/clash/premium" path="/clash/premium" radar="1" notOperational="1" />
 
 ## CPUID {#cpuid}
 
@@ -239,7 +239,7 @@ Need to configure `CIVITAI_COOKIE` to obtain image information of NSFW models.
 
 ### File Update {#curseforge-file-update}
 
-<Route author="junfengP" example="/curseforge/sc2/assets/taylor-mouses-stuff/files" path="/curseforge/:gameid/:catalogid/:projectid/files" paramsDesc={['Game name', 'Catalog name', 'Progect name']}>
+<Route author="junfengP" example="/curseforge/sc2/assets/taylor-mouses-stuff/files" path="/curseforge/:gameid/:catalogid/:projectid/files" paramsDesc={['Game name', 'Catalog name', 'Progect name']} notOperational="1">
 
 For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` to `/curseforge/sc2/assets/taylor-mouses-stuff/files`
 
@@ -307,7 +307,7 @@ Language
 
 ### 更新 {#fir.im-ying-yong-geng-xin}
 
-<Route author="EkkoG" example="/fir/update/xcz" path="/fir/update/:id" paramsDesc={['fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`']}/>
+<Route author="EkkoG" example="/fir/update/xcz" path="/fir/update/:id" paramsDesc={['fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`']} notOperational="1"/>
 
 ## Firefox {#firefox}
 
@@ -368,7 +368,7 @@ Language
 
 ### Release News {#hugo-release-news}
 
-<Route author="maokwen" example="/hugo/releases" path="/hugo/releases"/>
+<Route author="maokwen" example="/hugo/releases" path="/hugo/releases" notOperational="1"/>
 
 ## iFi audio {#ifi-audio}
 
@@ -415,7 +415,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### APP Update {#macked-app-update}
 
-<Route author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" paramsDesc={['app name, can be found in URL']}/>
+<Route author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" paramsDesc={['app name, can be found in URL']} notOperational="1"/>
 
 ## MacUpdate {#macupdate}
 
@@ -427,7 +427,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### 应用更新 {#macwk-ying-yong-geng-xin}
 
-<Route author="f48vj" example="/macwk/soft/sublime-text" path="/macwk/soft/:name" paramsDesc={['应用名，可在应用页 URL 中找到']} radar="1"/>
+<Route author="f48vj" example="/macwk/soft/sublime-text" path="/macwk/soft/:name" paramsDesc={['应用名，可在应用页 URL 中找到']} radar="1" notOperational="1"/>
 
 ## ManicTime {#manictime}
 
@@ -509,7 +509,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### Announcements {#obsidian-announcements}
 
-<Route author="nczitzk" example="/obsidian/announcements" path="/obsidian/announcements"/>
+<Route author="nczitzk" example="/obsidian/announcements" path="/obsidian/announcements" notOperational="1"/>
 
 ## OneNote Gem Add-Ins {#onenote-gem-add-ins}
 
@@ -551,13 +551,13 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### News {#qbittorrent-news}
 
-<Route author="TonyRL" example="/qbittorrent/news" path="/qbittorrent/news" radar="1"/>
+<Route author="TonyRL" example="/qbittorrent/news" path="/qbittorrent/news" radar="1" notOperational="1"/>
 
 ## QNAP {#qnap}
 
 ### Release Notes {#qnap-release-notes}
 
-<Route author="nczitzk" example="/qnap/release-notes/qts" path="/qnap/release-notes/:id" paramsDesc={['OS id, see below']}>
+<Route author="nczitzk" example="/qnap/release-notes/qts" path="/qnap/release-notes/:id" paramsDesc={['OS id, see below']} notOperational="1">
 
 | QTS | QuTS hero | QuTScloud | QuWAN Orchestrator | QES | TAS | AfoBot |
 | --- | --------- | --------- | ------------------ | --- | --- | ------ |
@@ -587,7 +587,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### Changelog {#remnote-changelog}
 
-<Route author="TonyRL" example="/remnote/changelog" path="/remnote/changelog" radar="1"/>
+<Route author="TonyRL" example="/remnote/changelog" path="/remnote/changelog" radar="1" notOperational="1"/>
 
 ## RescueTime {#rescuetime}
 
@@ -609,7 +609,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### New sponsors {#rsshub-new-sponsors}
 
-<Route author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1"/>
+<Route author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1" notOperational="1"/>
 
 ## Sesame {#sesame}
 
@@ -621,7 +621,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### Project {#shuax-project}
 
-<Route author="nczitzk" example="/shuax/project/chrome" path="/shuax/project"  paramsDesc={['项目名，见下表，默认为 MouseInc']}>
+<Route author="nczitzk" example="/shuax/project/chrome" path="/shuax/project"  paramsDesc={['项目名，见下表，默认为 MouseInc']} notOperational="1">
 
 | MouseInc | Chrome | Edge |
 | -------- | ------ | ---- |
@@ -647,7 +647,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### Release update {#sketch.com-release-update}
 
-<Route author="Jeason0228" example="/sketch/updates" path="/sketch/updates"  />
+<Route author="Jeason0228" example="/sketch/updates" path="/sketch/updates" notOperational="1"  />
 
 ## Sony {#sony}
 
@@ -732,7 +732,7 @@ Language
 
 ### Flings {#vmware-flings}
 
-<Route author="nczitzk" example="/vmware/flings" path="/vmware/flings"/>
+<Route author="nczitzk" example="/vmware/flings" path="/vmware/flings" notOperational="1"/>
 
 ## Western Digital {#western-digital}
 
@@ -780,7 +780,7 @@ Language
 
 ### Module Update {#xposed-module-repository-module-update}
 
-<Route author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" paramsDesc={['module package name']}/>
+<Route author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" paramsDesc={['module package name']} notOperational="1"/>
 
 ## XYplorer {#xyplorer}
 
@@ -798,7 +798,7 @@ Language
 
 ### app 更新 {#pu-gong-ying-ying-yong-fen-fa-app-geng-xin}
 
-<Route author="zytomorrow" example="/pgyer/:app" path="/pgyer/kz-test" paramsDesc={['app为下载页最后的路径']} radar="1"/>
+<Route author="zytomorrow" example="/pgyer/:app" path="/pgyer/kz-test" paramsDesc={['app为下载页最后的路径']} radar="1" notOperational="1"/>
 
 ## 腾讯云移动直播 SDK {#teng-xun-yun-yi-dong-zhi-bo-sdk}
 
