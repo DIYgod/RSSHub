@@ -21564,12 +21564,12 @@
     "_name": "Phoronix",
     ".": [
       {
-        "title": "新闻与评测",
+        "title": "News & Reviews",
         "docs": "https://docs.rsshub.app/routes/new-media#phoronix",
         "source": [
-          "/*"
+          "/:category?/:topic?"
         ],
-        "target": "/phoronix/news"
+        "target": "/phoronix/:category?/:topic?"
       }
     ]
   },
