@@ -60,7 +60,7 @@
 
 ### 番剧 {#acfun-fan-ju}
 
-<Route author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" paramsDesc={['番剧 id']} radar="1" rssbud="1"/>
+<Route author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" paramsDesc={['番剧 id']} radar="1"/>
 
 :::tip
 
@@ -71,11 +71,11 @@
 
 ### 用户投稿 {#acfun-yong-hu-tou-gao}
 
-<Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" paramsDesc={['用户 UID']} radar="1" rssbud="1"/>
+<Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" paramsDesc={['用户 UID']} radar="1"/>
 
 ### 文章 {#acfun-wen-zhang}
 
-<Route author="TonyRL" example="/acfun/article/110" path="/acfun/article/:categoryId/:sortType?/:timeRange?" paramsDesc={['分区 ID，见下表', '排序，见下表，默认为 `createTime`', '时间范围，见下表，仅在排序是 `hotScore` 有效，默认为 `all`']} radar="1" rssbud="1">
+<Route author="TonyRL" example="/acfun/article/110" path="/acfun/article/:categoryId/:sortType?/:timeRange?" paramsDesc={['分区 ID，见下表', '排序，见下表，默认为 `createTime`', '时间范围，见下表，仅在排序是 `hotScore` 有效，默认为 `all`']} radar="1">
 
 | 二次元画师 | 综合 | 生活情感 | 游戏 | 动漫文化 | 漫画文学 |
 | ---------- | ---- | -------- | ---- | -------- | -------- |
@@ -111,7 +111,7 @@
 
 ### 動畫 {#anime1-dong-hua}
 
-<Route author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" paramsDesc={['时间', '动画名称']} radar="1" rssbud="1">
+<Route author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" paramsDesc={['时间', '动画名称']} radar="1">
 
 时间和动画名称请自己从网址取得: `https://anime1.me/category/2018年秋季/刀劍神域-alicization`
 
@@ -119,7 +119,7 @@
 
 ### 搜尋 {#anime1-sou-xun}
 
-<Route author="maple3142" example="/anime1/search/兔女郎學姊" path="/anime1/search/:keyword" paramsDesc={['关键字']} radar="1" rssbud="1"/>
+<Route author="maple3142" example="/anime1/search/兔女郎學姊" path="/anime1/search/:keyword" paramsDesc={['关键字']} radar="1"/>
 
 ## Animen 动漫平台 {#animen-dong-man-ping-tai}
 
@@ -203,6 +203,10 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 <Route author="nczitzk" example="/bangumi/tv/user/blog/sai" path="/bangumi/tv/user/blog/:id" paramsDesc={['用户 id, 在用户页面地址栏查看']} radar="1"/>
 
+### 用户想看 {#bangumi-fan-zu-ji-hua-yong-hu-xiang-kan}
+
+<Route author="honue" example="/bangumi/tv/user/wish/23333" path="/bangumi/tv/user/wish/:id" paramsDesc={['用户 id, 在用户页面地址栏查看']} radar="1"/>
+
 ### 成员关注动画榜 {#bangumi-fan-zu-ji-hua-cheng-yuan-guan-zhu-dong-hua-bang}
 
 <Route author="honue" example="/bangumi/tv/followrank" path="/bangumi/tv/followrank"  radar="1"/>
@@ -211,17 +215,17 @@ For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
 
 ### 漫畫 {#ccc-chuang-zuo-ji-man-hua}
 
-<Route author="TonyRL" example="/creative-comic/book/117" path="/creative-comic/book/:id/:coverOnly?/:quality?" paramsDesc={['漫畫 ID，可在 URL 中找到', '僅獲取封面，非 `true` 時將獲取**全部**頁面，預設 `true`', '閱讀品質，標準畫質 `1`，高畫質 `2`，預設 `1`']} radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/creative-comic/book/117" path="/creative-comic/book/:id/:coverOnly?/:quality?" paramsDesc={['漫畫 ID，可在 URL 中找到', '僅獲取封面，非 `true` 時將獲取**全部**頁面，預設 `true`', '閱讀品質，標準畫質 `1`，高畫質 `2`，預設 `1`']} radar="1"/>
 
 ## CnGal {#cngal}
 
 ### 每周速报 {#cngal-mei-zhou-su-bao}
 
-<Route author="chengyuhui" example="/cngal/weekly" path="/cngal/weekly" radar="1" rssbud="1"/>
+<Route author="chengyuhui" example="/cngal/weekly" path="/cngal/weekly" radar="1"/>
 
 ### 制作者 / 游戏新闻 {#cngal-zhi-zuo-zhe-you-xi-xin-wen}
 
-<Route author="chengyuhui" example="/cngal/entry/2693" path="/cngal/entry/:id" paramsDesc={['词条ID，游戏或制作者页面URL的最后一串数字']} radar="1" rssbud="1"/>
+<Route author="chengyuhui" example="/cngal/entry/2693" path="/cngal/entry/:id" paramsDesc={['词条ID，游戏或制作者页面URL的最后一串数字']} radar="1"/>
 
 ## Comicat {#comicat}
 
@@ -281,14 +285,13 @@ If you subscribe to [Discounted works Latest Discounts - Newest to Oldest](https
 
 ### 声优活动及演唱会 {#eventernote-sheng-you-huo-dong-ji-yan-chang-hui}
 
-<Route author="KTachibanaM" path="/eventernote/actors/:name/:id" example="/eventernote/actors/三森すずこ/2634" paramsDesc={['声优姓名', '声优 ID']} radar="1" rssbud="1"/>
+<Route author="KTachibanaM" path="/eventernote/actors/:name/:id" example="/eventernote/actors/三森すずこ/2634" paramsDesc={['声优姓名', '声优 ID']} radar="1"/>
 
 ## Gogoanimehd {#gogoanimehd}
 
 ### Recent Releases {#gogoanimehd-recent-releases}
 
 <Route author="user4302" example="/gogoanimehd/recent-releases" path="/gogoanimehd/recent-releases" />
-
 
 ## Hanime.tv {#hanime.tv}
 
@@ -334,13 +337,13 @@ If you subscribe to [Discounted works Latest Discounts - Newest to Oldest](https
 
 ### News {#idoly-pride-ou-xiang-rong-yao-news}
 
-<Route author="Mingxia1" example="/idolypride/news" path="/idolypride/news" radar="1" rssbud="1"/>
+<Route author="Mingxia1" example="/idolypride/news" path="/idolypride/news" radar="1"/>
 
 ## iwara {#iwara}
 
 ### User {#iwara-user}
 
-<Route author="Fatpandac" example="/iwara/users/kelpie/video" path="/iwara/users/:username/:type?" paramsDesc={['username, can find in userpage', 'video by default']} radar="1" rssbud="1">
+<Route author="Fatpandac" example="/iwara/users/kelpie/video" path="/iwara/users/:username/:type?" paramsDesc={['username, can find in userpage', 'video by default']} radar="1">
 
 | type | video | image |
 | :--: | :---: | :---: |
@@ -350,7 +353,7 @@ If you subscribe to [Discounted works Latest Discounts - Newest to Oldest](https
 
 ### User Subscriptions {#iwara-user-subscriptions}
 
-<Route author="FeCCC" example="/iwara/subscriptions" path="/iwara/subscriptions" radar="1" rssbud="1" selfhost="1">
+<Route author="FeCCC" example="/iwara/subscriptions" path="/iwara/subscriptions" radar="1" configRequired="1">
 
 :::warning
 
@@ -520,7 +523,7 @@ The RSS routing has not been rigorously tested and the information provided cann
 
 ### Calendar {#thbwiki-calendar}
 
-<Route author="aether17" path="/thwiki/calendar/:before?/:after?" example="/thwiki/calendar" paramsDesc={['From how many days ago (default 30)', 'To how many days after (default 30)']} radar="1" rssbud="1"/>
+<Route author="aether17" path="/thwiki/calendar/:before?/:after?" example="/thwiki/calendar" paramsDesc={['From how many days ago (default 30)', 'To how many days after (default 30)']} radar="1"/>
 
 ## Touhougarakuta 东方我乐多丛志 {#touhougarakuta-dong-fang-wo-le-duo-cong-zhi}
 
@@ -604,7 +607,7 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 ### Keyword Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d-keyword-search}
 
-<Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest/1" path="/oreno3d/search/:keyword/:sort/:pagelimit?" paramsDesc={['Search keyword', 'Sort method, see the table below', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1">
+<Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest/1" path="/oreno3d/search/:keyword/:sort/:pagelimit?" paramsDesc={['Search keyword', 'Sort method, see the table below', 'The maximum number of pages to be crawled, the default is 1']} radar="1">
 
 | favorites | hot  | latest | popularity |
 | --------- | ---- | ------ | ---------- |
@@ -614,19 +617,19 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 ### Character Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d-character-search}
 
-<Route author="xueli-sherryli" example="/oreno3d/characters/283/latest/1" path="/oreno3d/characters/:characterid/:sort/:pagelimit?" paramsDesc={['Character id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
+<Route author="xueli-sherryli" example="/oreno3d/characters/283/latest/1" path="/oreno3d/characters/:characterid/:sort/:pagelimit?" paramsDesc={['Character id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1"/>
 
 ### Author Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d-author-search}
 
-<Route author="xueli-sherryli" example="/oreno3d/authors/3189/latest/1" path="/oreno3d/authors/:authorid/:sort/:pagelimit?" paramsDesc={['Author id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
+<Route author="xueli-sherryli" example="/oreno3d/authors/3189/latest/1" path="/oreno3d/authors/:authorid/:sort/:pagelimit?" paramsDesc={['Author id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1"/>
 
 ### Tags Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d-tags-search}
 
-<Route author="xueli-sherryli" example="/oreno3d/tags/177/latest/1" path="/oreno3d/tags/:tagid/:sort/:pagelimit?" paramsDesc={['Tag id, can be found in URL', 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
+<Route author="xueli-sherryli" example="/oreno3d/tags/177/latest/1" path="/oreno3d/tags/:tagid/:sort/:pagelimit?" paramsDesc={['Tag id, can be found in URL', 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1"/>
 
 ### Origins Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d-origins-search}
 
-<Route author="xueli-sherryli" example="/oreno3d/origins/3/latest/1" path="/oreno3d/origins/:originid/:sort/:pagelimit?" paramsDesc={['Origin id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" rssbud="1"/>
+<Route author="xueli-sherryli" example="/oreno3d/origins/3/latest/1" path="/oreno3d/origins/:originid/:sort/:pagelimit?" paramsDesc={['Origin id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1"/>
 
 ## 包子漫画 {#bao-zi-man-hua}
 
@@ -696,19 +699,19 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 ### 开播提醒 {#fan-zu-fang-song-kai-bo-ti-xing}
 
-<Route author="x2cf" example="/bgmlist/onair/zh-Hans" path="/bgmlist/onair/:lang?" paramsDesc={['语言']} radar="1" rssbud="1" />
+<Route author="x2cf" example="/bgmlist/onair/zh-Hans" path="/bgmlist/onair/:lang?" paramsDesc={['语言']} radar="1" />
 
 ## 风之动漫 {#feng-zhi-dong-man}
 
 ### 在线漫画 {#feng-zhi-dong-man-zai-xian-man-hua}
 
-<Route author="geeeeoff zytomorrow" path="/fffdm/manhua/:id/:cdn?" example="/fffdm/manhua/93" paramsDesc={['漫画ID。默认获取全部，建议使用通用参数limit获取指定数量', 'cdn加速器。默认5，当前可选1-5']}  radar="1" rssbud="1"/>
+<Route author="geeeeoff zytomorrow" path="/fffdm/manhua/:id/:cdn?" example="/fffdm/manhua/93" paramsDesc={['漫画ID。默认获取全部，建议使用通用参数limit获取指定数量', 'cdn加速器。默认5，当前可选1-5']}  radar="1"/>
 
 ## 海猫吧 {#hai-mao-ba}
 
 ### 漫画更新 {#hai-mao-ba-man-hua-geng-xin}
 
-<Route author="zytomorrow" path="/haimaoba/:id" example="/haimaoba/4026" paramsDesc={['漫画id，漫画主页的地址栏中最后一位数字']} radar="1" rssbud="1"/>
+<Route author="zytomorrow" path="/haimaoba/:id" example="/haimaoba/4026" paramsDesc={['漫画id，漫画主页的地址栏中最后一位数字']} radar="1"/>
 
 ## 禁漫天堂 {#jin-man-tian-tang}
 
@@ -787,11 +790,11 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 ### 漫画更新 {#kan-man-hua-man-hua-geng-xin}
 
-<Route author="MegrezZhu" path="/manhuagui/comic/:id/:chapterCnt?" example="/manhuagui/comic/22942/5" paramsDesc={['漫画ID','返回章节的数量，默认为0，返回所有章节']} radar="1" rssbud="1"/>
+<Route author="MegrezZhu" path="/manhuagui/comic/:id/:chapterCnt?" example="/manhuagui/comic/22942/5" paramsDesc={['漫画ID','返回章节的数量，默认为0，返回所有章节']} radar="1"/>
 
 ### 漫画个人订阅 {#kan-man-hua-man-hua-ge-ren-ding-yue}
 
-<Route author="shininome" path="/manhuagui/subscribe" example="/manhuagui/subscribe" radar="1" rssbud="1" selfhost="1">
+<Route author="shininome" path="/manhuagui/subscribe" example="/manhuagui/subscribe" radar="1" configRequired="1">
 
 :::tip
 
@@ -804,17 +807,17 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 ### 镜像站 - 漫画更新 {#kan-man-hua-jing-xiang-zhan-man-hua-geng-xin}
 
-<Route author="btdwv" path="/manhuagui/mhgui/comic/:id/:chapterCnt?" example="/manhuagui/mhgui/comic/13317/5" paramsDesc={['漫画ID','返回章节的数量，默认为0，返回所有章节']} radar="1" rssbud="1"/>
+<Route author="btdwv" path="/manhuagui/mhgui/comic/:id/:chapterCnt?" example="/manhuagui/mhgui/comic/13317/5" paramsDesc={['漫画ID','返回章节的数量，默认为0，返回所有章节']} radar="1"/>
 
 ### 台湾站 - 漫画更新 {#kan-man-hua-tai-wan-zhan-man-hua-geng-xin}
 
-<Route author="btdwv" path="/manhuagui/twmanhuagui/comic/:id/:chapterCnt?" example="/manhuagui/twmanhuagui/comic/13317/5" paramsDesc={['漫画ID','返回章节的数量，默认为0，返回所有章节']} radar="1" rssbud="1"/>
+<Route author="btdwv" path="/manhuagui/twmanhuagui/comic/:id/:chapterCnt?" example="/manhuagui/twmanhuagui/comic/13317/5" paramsDesc={['漫画ID','返回章节的数量，默认为0，返回所有章节']} radar="1"/>
 
 ## 拷贝漫画 {#kao-bei-man-hua}
 
 ### 漫画更新 {#kao-bei-man-hua-man-hua-geng-xin}
 
-<Route author="btdwv marvolo666 yan12125" path="/copymanga/comic/:id/:chapterCnt?" example="/copymanga/comic/dianjuren/5" paramsDesc={['漫画ID', '返回章节的数量，默认为 `10`']} radar="1" rssbud="1"/>
+<Route author="btdwv marvolo666 yan12125" path="/copymanga/comic/:id/:chapterCnt?" example="/copymanga/comic/dianjuren/5" paramsDesc={['漫画ID', '返回章节的数量，默认为 `10`']} radar="1"/>
 
 ## 漫画 DB {#man-hua-db}
 
@@ -832,13 +835,13 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 ### 漫画更新 {#man-xiao-si-man-hua-geng-xin}
 
-<Route author="junfengP" path="/manxiaosi/book/:id" example="/manxiaosi/book/90" paramsDesc={['漫画id，漫画主页的地址栏中']} radar="1" rssbud="1"/>
+<Route author="junfengP" path="/manxiaosi/book/:id" example="/manxiaosi/book/90" paramsDesc={['漫画id，漫画主页的地址栏中']} radar="1"/>
 
 ## 三界异次元 {#san-jie-yi-ci-yuan}
 
 ### 三界异次元 {#san-jie-yi-ci-yuan-san-jie-yi-ci-yuan}
 
-<Route author="luyuhuang" example="/3ycy/home" path="/3ycy/home" radar="1" rssbud="1"/>
+<Route author="luyuhuang" example="/3ycy/home" path="/3ycy/home" radar="1"/>
 
 ## 紳士漫畫 {#shen-shi-man-hua}
 
@@ -858,13 +861,13 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 ### 鼠绘漫画 {#shu-hui-man-hua-shu-hui-man-hua}
 
-<Route author="zytomorrow" path="/shuhui/comics/:id" example="/shuhui/comics/1" paramsDesc={['漫画id，漫画主页的地址栏中最后一位数字']} radar="1" rssbud="1"/>
+<Route author="zytomorrow" path="/shuhui/comics/:id" example="/shuhui/comics/1" paramsDesc={['漫画id，漫画主页的地址栏中最后一位数字']} radar="1"/>
 
 ## 腾讯动漫 {#teng-xun-dong-man}
 
 ### 排行榜 {#teng-xun-dong-man-pai-hang-bang}
 
-<Route author="nczitzk" example="/qq/ac/rank" path="/qq/ac/rank/:type?/:time?" paramsDesc={['分类，见下表，默认为月票榜', '时间，`cur` 为当周、`prev` 为上周']} radar="1" rssbud="1">
+<Route author="nczitzk" example="/qq/ac/rank" path="/qq/ac/rank/:type?/:time?" paramsDesc={['分类，见下表，默认为月票榜', '时间，`cur` 为当周、`prev` 为上周']} radar="1">
 
 | 月票榜 | 飙升榜 | 新作榜 | 畅销榜 | TOP100 | 男生榜 | 女生榜 |
 | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
@@ -880,7 +883,7 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 ### 漫画 {#teng-xun-dong-man-man-hua}
 
-<Route author="nczitzk" example="/qq/ac/comic/531490" path="/qq/ac/comic/:id" paramsDesc={['编号，可在对应页 URL 中找到']} radar="1" rssbud="1"/>
+<Route author="nczitzk" example="/qq/ac/comic/531490" path="/qq/ac/comic/:id" paramsDesc={['编号，可在对应页 URL 中找到']} radar="1"/>
 
 ## 忧郁的 loli {#you-yu-de-loli}
 

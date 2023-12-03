@@ -63,7 +63,7 @@ More jounals can be found in [AEA Journals](https://www.aeaweb.org/journals).
 
 ### Journal {#american-institute-of-physics-journal}
 
-<Route author="Derekmini auto-bot-ty" example="/aip/aapt/ajp" path="/aip/:pub/:jrn" paramsDesc={['Publisher id','Journal id']} radar="1" rssbud="1" supportScihub="1">
+<Route author="Derekmini auto-bot-ty" example="/aip/aapt/ajp" path="/aip/:pub/:jrn" paramsDesc={['Publisher id','Journal id']} radar="1" supportScihub="1">
 
 Refer to the URL format `pubs.aip.org/:pub/:jrn`
 
@@ -170,11 +170,11 @@ Including 'cell', 'cancer-cell', 'cell-chemical-biology', 'cell-host-microbe', '
 
 ### Journal {#elsevier-journal}
 
-<Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing" path="/elsevier/:journal" paramsDesc={['Journal Name, the part of the URL after `/journal/`']} radar="1" rssbud="1"/>
+<Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing" path="/elsevier/:journal" paramsDesc={['Journal Name, the part of the URL after `/journal/`']} radar="1"/>
 
 ### Special Issue {#elsevier-special-issue}
 
-<Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing/192" path="/elsevier/:journal/:issue" paramsDesc={['Journal Name, the part of the URL after `/journal/`','Release Number, the number in the URL after `/vol/` (If both Volume and Issue exist, must use the `Volume-Issue` form, e.g., `/elsevier/aace-clinical-case-reports/7-6`)']} radar="1" rssbud="1"/>
+<Route author="Derekmini sunwolf-swb" example="/elsevier/signal-processing/192" path="/elsevier/:journal/:issue" paramsDesc={['Journal Name, the part of the URL after `/journal/`','Release Number, the number in the URL after `/vol/` (If both Volume and Issue exist, must use the `Volume-Issue` form, e.g., `/elsevier/aace-clinical-case-reports/7-6`)']} radar="1"/>
 
 ## Google Scholar {#google-scholar}
 
@@ -226,15 +226,15 @@ Return results from 2020
 
 ### Journal {#ieee-xplore-journal}
 
-<Route author="Derekmini auto-bot-ty" example="/ieee/journal/70" path="/ieee/journal/:journal/:sortType?" paramsDesc={['Journal code, the number of the `punumber` in the URL','Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`']} radar="1" rssbud="1"/>
+<Route author="Derekmini auto-bot-ty" example="/ieee/journal/70" path="/ieee/journal/:journal/:sortType?" paramsDesc={['Journal code, the number of the `punumber` in the URL','Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`']} radar="1"/>
 
 ### Journal (Papers within the recent 2 months) {#ieee-xplore-journal-papers-within-the-recent-2-months}
 
-<Route author="Derekmini auto-bot-ty" example="/ieee/journal/78/recent" path="/ieee/journal/:journal/recent/:sortType?" paramsDesc={['Journal code, the number of the `punumber` in the URL','Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`']} radar="1" rssbud="1"/>
+<Route author="Derekmini auto-bot-ty" example="/ieee/journal/78/recent" path="/ieee/journal/:journal/recent/:sortType?" paramsDesc={['Journal code, the number of the `punumber` in the URL','Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`']} radar="1"/>
 
 ### Early Access Journal {#ieee-xplore-early-access-journal}
 
-<Route author="5upernova-heng" example="/ieee/journal/5306045/earlyaccess" path="/ieee/journal/:journal/earlyaccess/:sortType?" paramsDesc={['Issue code, the number of the `isnumber` in the URL','Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`']} radar="1" rssbud="1"/>
+<Route author="5upernova-heng" example="/ieee/journal/5306045/earlyaccess" path="/ieee/journal/:journal/earlyaccess/:sortType?" paramsDesc={['Issue code, the number of the `isnumber` in the URL','Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`']} radar="1"/>
 
 ## INFORMS {#informs}
 
@@ -246,7 +246,7 @@ Return results from 2020
 
 ### Journal {#mdpi-journal}
 
-<Route author="Derekmini" example="/mdpi/analytica" path="/mdpi/:journal" paramsDesc={['Journal Name, get it from the journal homepage']} radar="1" rssbud="1"/>
+<Route author="Derekmini" example="/mdpi/analytica" path="/mdpi/:journal" paramsDesc={['Journal Name, get it from the journal homepage']} radar="1"/>
 
 ## MIT Technology Review {#mit-technology-review}
 
@@ -294,7 +294,7 @@ You can get all short name of a journal from [https://www.nature.com/siteindex](
 
 ### Latest Research {#nature-journal-latest-research}
 
-<Route author="y9c TonyRL" example="/nature/research/ng" path="/nature/research/:journal?" paramsDesc={['short name for a journal, `nature` by default']} supportScihub="1" radar="1" rssbud="1">
+<Route author="y9c TonyRL" example="/nature/research/ng" path="/nature/research/:journal?" paramsDesc={['short name for a journal, `nature` by default']} supportScihub="1" radar="1">
 
 |  `:journal`   |  Full Name of the Journal   | Route                                                                              |
 | :-----------: | :-------------------------: | ---------------------------------------------------------------------------------- |
@@ -317,7 +317,7 @@ You can get all short name of a journal from [https://www.nature.com/siteindex](
 
 ### News & Comment {#nature-journal-news-comment}
 
-<Route author="y9c TonyRL" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" paramsDesc={['short name for a journal']} supportScihub="1" radar="1" rssbud="1">
+<Route author="y9c TonyRL" example="/nature/news-and-comment/ng" path="/nature/news-and-comment/:journal" paramsDesc={['short name for a journal']} supportScihub="1" radar="1">
 
 |  `:journal`   |  Full Name of the Journal   | Route                                                                                                                 |
 | :-----------: | :-------------------------: | --------------------------------------------------------------------------------------------------------------------- |
@@ -345,11 +345,11 @@ Subscribe to the cover images of the Nature journals, and get the latest publica
 
 ### Nature News {#nature-journal-nature-news}
 
-<Route author="y9c TonyRL" example="/nature/news" path="/nature/news" supportScihub="1" radar="1" rssbud="1"/>
+<Route author="y9c TonyRL" example="/nature/news" path="/nature/news" supportScihub="1" radar="1"/>
 
 ### Research Highlight {#nature-journal-research-highlight}
 
-<Route author="y9c TonyRL" example="/nature/highlight" path="/nature/highlight/:journal?" paramsDesc={['short name for a journal, `nature` by default']} supportScihub="1" radar="1" rssbud="1">
+<Route author="y9c TonyRL" example="/nature/highlight" path="/nature/highlight/:journal?" paramsDesc={['short name for a journal, `nature` by default']} supportScihub="1" radar="1">
 
 :::warning
 
@@ -415,7 +415,7 @@ In `https://pubmed.ncbi.nlm.nih.gov/trending/?filter=simsearch1.fha&filter=pubt.
 
 ### Journal {#royal-society-of-chemistry-journal}
 
-<Route author="nczitzk" example="/rsc/journal/ta" path="/rsc/journal/:id/:category?" paramsDesc={['Journal id, can be found in URL', 'Category, see below, All Recent Articles by default']} radar="1" rssbud="1">
+<Route author="nczitzk" example="/rsc/journal/ta" path="/rsc/journal/:id/:category?" paramsDesc={['Journal id, can be found in URL', 'Category, see below, All Recent Articles by default']} radar="1">
 
 :::tip
 
@@ -433,7 +433,7 @@ All journals at [Current journals](https://pubs.rsc.org/en/journals)
 
 ### Current Issue {#science-magazine-current-issue}
 
-<Route author="y9c TonyRL" example="/science/current/science" path="/science/current/:journal?" paramsDesc={['Short name for a journal']} supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1">
+<Route author="y9c TonyRL" example="/science/current/science" path="/science/current/:journal?" paramsDesc={['Short name for a journal']} supportScihub="1" anticrawler="1" puppeteer="1" radar="1">
 
 | Short name |    Full name of the journal    | Route                                                                              |
 | :--------: | :----------------------------: | ---------------------------------------------------------------------------------- |
@@ -451,7 +451,7 @@ All journals at [Current journals](https://pubs.rsc.org/en/journals)
 
 ### Cover Story {#science-magazine-cover-story}
 
-<Route author="y9c TonyRL" example="/science/cover" path="/science/cover" anticrawler="1" radar="1" rssbud="1">
+<Route author="y9c TonyRL" example="/science/cover" path="/science/cover" anticrawler="1" radar="1">
 
 Subscribe to the cover images of Science journals, and get the latest publication updates in time.
 
@@ -461,7 +461,7 @@ Including 'Science', 'Science Advances', 'Science Immunology', 'Science Robotics
 
 ### First Release {#science-magazine-first-release}
 
-<Route author="y9c TonyRL" example="/science/early" path="/science/early/:journal?" paramsDesc={['Short name for a journal']} supportScihub="1" anticrawler="1" puppeteer="1" radar="1" rssbud="1">
+<Route author="y9c TonyRL" example="/science/early" path="/science/early/:journal?" paramsDesc={['Short name for a journal']} supportScihub="1" anticrawler="1" puppeteer="1" radar="1">
 
 *only Science, Science Immunology and Science Translational Medicine have first release*
 
@@ -469,7 +469,7 @@ Including 'Science', 'Science Advances', 'Science Immunology', 'Science Robotics
 
 ### Blogs {#science-magazine-blogs}
 
-<Route author="TomHodson" example="/science/blogs/pipeline" path="/science/blogs/:name?" paramsDesc={['Short name for the blog, get this from the url. Defaults to pipeline']} anticrawler="1" puppeteer="1" radar="1" rssbud="1">
+<Route author="TomHodson" example="/science/blogs/pipeline" path="/science/blogs/:name?" paramsDesc={['Short name for the blog, get this from the url. Defaults to pipeline']} anticrawler="1" puppeteer="1" radar="1">
 
 To subscribe to [IN THE PIPELINE by Derek Lowe’s](https://science.org/blogs/pipeline) or the [science editor's blog](https://science.org/blogs/editors-blog), use the name parameter `pipeline` or `editors-blog`.
 
@@ -485,7 +485,7 @@ To subscribe to [IN THE PIPELINE by Derek Lowe’s](https://science.org/blogs/pi
 
 ### Journal {#springer-journal}
 
-<Route author="Derekmini TonyRL" example="/springer/journal/10450" path="/springer/journal/:journal" paramsDesc={['Journal Code, the number in the URL from the journal homepage']} radar="1" rssbud="1"/>
+<Route author="Derekmini TonyRL" example="/springer/journal/10450" path="/springer/journal/:journal" paramsDesc={['Journal Code, the number in the URL from the journal homepage']} radar="1"/>
 
 ## Stork 文献鸟订阅 {#stork-wen-xian-niao-ding-yue}
 

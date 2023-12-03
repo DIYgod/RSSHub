@@ -32,7 +32,7 @@ const sidebars = {
         {
             type: 'category',
             label: 'Guide',
-            items: ['README', 'usage', 'faq', 'parameter', 'api'],
+            items: ['README', 'usage', 'instances', 'faq', 'parameter', 'api'],
             collapsible: true,
             collapsed: true,
         },

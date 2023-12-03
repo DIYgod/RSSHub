@@ -147,7 +147,7 @@ Parameter `country` can be found within the url of `Arcteryx` website.
 
 ### Products {#gumroad-products}
 
-<Route author="Fatpandac" example="/gumroad/afkmaster/Eve10" path="/gumroad/:username/:products" paramsDesc={['username, can be found in URL', 'products name, can be found in URL']} radar="1" rssbud="1">
+<Route author="Fatpandac" example="/gumroad/afkmaster/Eve10" path="/gumroad/:username/:products" paramsDesc={['username, can be found in URL', 'products name, can be found in URL']} radar="1">
 
 `https://afkmaster.gumroad.com/l/Eve10` -> `/gumroad/afkmaster/Eve10`
 
@@ -273,7 +273,7 @@ Language
 ### User Sheets {#mymusicsheet-user-sheets}
 
 
-<Route author="Freddd13" example="/mymusicsheet/user/sheets/HalcyonMusic/USD/1" path="/mymusicsheet/user/sheets/:username/:iso?/:freeOnly?" paramsDesc={['用户名，可在URL中找到', '用于显示价格的ISO 4217货币代码, 支持常见代码, 默认为人民币, 即`CNY`', '只返回免费谱, 任意值为开启']} radar="1" rssbud="1"/>
+<Route author="Freddd13" example="/mymusicsheet/user/sheets/HalcyonMusic/USD/1" path="/mymusicsheet/user/sheets/:username/:iso?/:freeOnly?" paramsDesc={['用户名，可在URL中找到', '用于显示价格的ISO 4217货币代码, 支持常见代码, 默认为人民币, 即`CNY`', '只返回免费谱, 任意值为开启']} radar="1"/>
 
 关于ISO 4217，请参考[维基百科](https://zh.wikipedia.org/zh-cn/ISO_4217#%E7%8E%B0%E8%A1%8C%E4%BB%A3%E7%A0%81)
 
@@ -311,7 +311,7 @@ Language
 
 ### New Arrivals {#uniqlo-new-arrivals}
 
-<Route author="DIYgod" example="/uniqlo/new/sg/men" path="/uniqlo/new/:country/:category" paramsDesc={['currently only supports sg, us, jp', 'supports `men` `women`, `kids`, `baby`']} radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/uniqlo/new/sg/men" path="/uniqlo/new/:country/:category" paramsDesc={['currently only supports sg, us, jp', 'supports `men` `women`, `kids`, `baby`']} radar="1"/>
 
 ## Westore {#westore}
 
@@ -479,11 +479,11 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 关键词 {#shen-me-zhi-de-mai-guan-jian-ci}
 
-<Route author="DIYgod" example="/smzdm/keyword/女装" path="/smzdm/keyword/:keyword" paramsDesc={['你想订阅的关键词']} radar="1" rssbud="1"/>
+<Route author="DIYgod" example="/smzdm/keyword/女装" path="/smzdm/keyword/:keyword" paramsDesc={['你想订阅的关键词']} radar="1"/>
 
 ### 排行榜 {#shen-me-zhi-de-mai-pai-hang-bang}
 
-<Route author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" paramsDesc={['榜单类型','榜单ID','时间跨度']} radar="1" rssbud="1">
+<Route author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" paramsDesc={['榜单类型','榜单ID','时间跨度']} radar="1">
 
 -   榜单类型
 
@@ -579,7 +579,7 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 权益中心 {#te-si-la-zhong-guo-quan-yi-zhong-xin}
 
-<Route author="simonsmh nczitzk" example="/tesla/cx/生活方式/北京" path="/tesla/cx/:category?/:city?" paramsDesc={['分类，见下表，默认为空，即全部', '城市，默认为空，即全国']} radar="1" rssbud="1">
+<Route author="simonsmh nczitzk" example="/tesla/cx/生活方式/北京" path="/tesla/cx/:category?/:city?" paramsDesc={['分类，见下表，默认为空，即全部', '城市，默认为空，即全国']} radar="1">
 
 | 充电免停 | 酒店 | 美食 | 生活方式 |
 | -------- | ---- | ---- | -------- |
@@ -763,7 +763,7 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 分类 {#zheng-ban-zhong-guo-fen-lei}
 
-<Route author="sanmmm nczitzk" example="/getitfree/category/pc" path="/getitfree/category/:id" paramsDesc={['分类，见下表，可在对应分类页中找到，默认为所有类别']} radar="1" rssbud="1">
+<Route author="sanmmm nczitzk" example="/getitfree/category/pc" path="/getitfree/category/:id" paramsDesc={['分类，见下表，可在对应分类页中找到，默认为所有类别']} radar="1">
 
 :::tip
 
@@ -779,7 +779,7 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 标签 {#zheng-ban-zhong-guo-biao-qian}
 
-<Route author="nczitzk" example="/getitfree/tag/ai" path="/getitfree/tag/:id" paramsDesc={['标签，见下表，可在对应标签页中找到，默认为所有标签']} radar="1" rssbud="1">
+<Route author="nczitzk" example="/getitfree/tag/ai" path="/getitfree/tag/:id" paramsDesc={['标签，见下表，可在对应标签页中找到，默认为所有标签']} radar="1">
 
 :::tip
 
@@ -836,4 +836,4 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 搜索 {#zheng-ban-zhong-guo-sou-suo}
 
-<Route author="sanmmm nczitzk" example="/getitfree/search/windows" path="/getitfree/search/:keyword" paramsDesc={['关键字']} radar="1" rssbud="1"/>
+<Route author="sanmmm nczitzk" example="/getitfree/search/windows" path="/getitfree/search/:keyword" paramsDesc={['关键字']} radar="1"/>

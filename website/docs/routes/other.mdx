@@ -4,7 +4,7 @@
 
 ### 4399 论坛 {#4399-lun-tan-4399-lun-tan}
 
-<Route author="DIYgod" example="/forum4399/mtag-83932" path="/forum4399/:mtag" paramsDesc={['mtag,必选-论坛网址最后的mtag字段']} selfhost="1">
+<Route author="DIYgod" example="/forum4399/mtag-83932" path="/forum4399/:mtag" paramsDesc={['mtag,必选-论坛网址最后的mtag字段']} configRequired="1">
 
 :::warning
 
@@ -219,7 +219,7 @@ Official Website: [https://news.yahoo.co.jp/pages/article/20200207](https://news
 
 > Only support IMAP protocol, email password and other settings refer to [Email setting](/install)
 
-<Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email/:folder*" paramsDesc={['Email account', 'Inbox name, `INBOX` by default']} selfhost="1"/>
+<Route author="kt286" example="/mail/imap/rss@rsshub.app" path="/mail/imap/:email/:folder*" paramsDesc={['Email account', 'Inbox name, `INBOX` by default']} configRequired="1"/>
 
 ## Emi Nitta official website 新田惠海官方网站 {#emi-nitta-official-website-xin-tian-hui-hai-guan-fang-wang-zhan}
 
@@ -263,11 +263,11 @@ Official Website: [https://news.yahoo.co.jp/pages/article/20200207](https://news
 
 ### HackerOne Hacker Activity {#hackerone-hackerone-hacker-activity}
 
-<Route author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1" rssbud="1"/>
+<Route author="imlonghao" example="/hackerone/hacktivity" path="/hackerone/hacktivity" radar="1"/>
 
 ### Search {#hackerone-search}
 
-<Route author="imlonghao" example="/hackerone/search/rocket_chat" path="/hackerone/search/:search" paramsDesc={['Search string']} radar="1" rssbud="1"/>
+<Route author="imlonghao" example="/hackerone/search/rocket_chat" path="/hackerone/search/:search" paramsDesc={['Search string']} radar="1"/>
 
 ## Instapaper {#instapaper}
 
@@ -303,7 +303,7 @@ Official Website: [https://news.yahoo.co.jp/pages/article/20200207](https://news
 
 ### Track & Trace Service 郵便追跡サービス {#japanpost-ri-ben-you-bian-track-trace-service-you-bian-zhui-ji-%E3%82%B5%E3%83%BC%E3%83%93%E3%82%B9}
 
-<Route author="tuzi3040" example="/japanpost/track/EJ123456789JP/en" path="/japanpost/track/:reqCode/:locale?" paramsDesc={['Package Number', 'Language, default to japanese `ja`']} radar="1" rssbud="1">
+<Route author="tuzi3040" example="/japanpost/track/EJ123456789JP/en" path="/japanpost/track/:reqCode/:locale?" paramsDesc={['Package Number', 'Language, default to japanese `ja`']} radar="1">
 
 | Japanese | English |
 |----------|---------|
@@ -393,7 +393,7 @@ For example:
 
 ### 订阅列表 {#miniflux-ding-yue-lie-biao}
 
-<Route author="emdoe" example="/miniflux/subscription/categories=科技,影音" path="/miniflux/subscription/:parameters?" paramsDesc={['分类名或分类 ID 或/且 订阅源名称或订阅源 ID']} selfhost="1">
+<Route author="emdoe" example="/miniflux/subscription/categories=科技,影音" path="/miniflux/subscription/:parameters?" paramsDesc={['分类名或分类 ID 或/且 订阅源名称或订阅源 ID']} configRequired="1">
 
 1.  如无指定参数，默认输出全部订阅源
 2.  分类 ID 或订阅源 ID 请于`分类`（快捷键 `g` `c`）或`源`（快捷键 `g` `f`）页面获取，每个分类（或订阅源）的网址即显示其 ID 信息。
@@ -405,7 +405,7 @@ For example:
 
 ### 获取订阅源内容 {#miniflux-huo-qu-ding-yue-yuan-nei-rong}
 
-<Route author="emdoe" example="/miniflux/feeds=1&2&3/mark=read&limit=7&status=unread" path="/miniflux/:feeds/:parameters?" paramsDesc={['订阅源 ID 或获取全部', '过滤及设置参数，多个请用 `&` 连接']} selfhost="1">
+<Route author="emdoe" example="/miniflux/feeds=1&2&3/mark=read&limit=7&status=unread" path="/miniflux/:feeds/:parameters?" paramsDesc={['订阅源 ID 或获取全部', '过滤及设置参数，多个请用 `&` 连接']} configRequired="1">
 
 1.  支持获取全部内容：即可通过 `/miniflux/all` 或 `/miniflux/default` 等关键字获取全部订阅源下的内容。
 2.  支持通过订阅源的 ID 获取指定订阅源的订阅内容，订阅源 ID 请于`源`（快捷键 `g` `f`）所在的页面获取，每个分类（或订阅源）的网址即显示其 ID 信息。而格式上有如下选择：
@@ -496,7 +496,7 @@ It is recommended to use with clipping tools such as Notion Web Clipper.
 
 ### Database {#notion-database}
 
-<Route author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" paramsDesc={['Database ID']} selfhost="1" radar="1">
+<Route author="curly210102" example="/notion/database/a7cc133b68454f138011f1530a13531e" path="/notion/database/:databaseId" paramsDesc={['Database ID']} configRequired="1" radar="1">
 
 There is an optional query parameter called `properties=` that can be used to customize field mapping. There are three built-in fields: author, pubTime and link, which can be used to add additional information.
 
@@ -522,7 +522,7 @@ please refer to the [Notion API documentation](https://developers.notion.com/ref
 
 ### OpenSource Square {#oshwhub-li-chuang-kai-yuan-ying-jian-ping-tai-opensource-square}
 
-<Route author="tylinux" example="/oshwhub" path="/oshwhub/:sortType?" paramsDesc={['sortType']} radar="1" rssbud="1"/>
+<Route author="tylinux" example="/oshwhub" path="/oshwhub/:sortType?" paramsDesc={['sortType']} radar="1"/>
 
 ## Panda {#panda}
 
@@ -561,7 +561,7 @@ please refer to the [Notion API documentation](https://developers.notion.com/ref
 
 ### Remote.work Job Information {#remote.work-remote.work-job-information}
 
-<Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" paramsDesc={['Job category, default to all']} radar="1" rssbud="1">
+<Route author="luyuhuang" example="/remote-work/all" path="/remote-work/:caty?" paramsDesc={['Job category, default to all']} radar="1">
 
 | All Jobs | Development | Design | Operation | Product | Other | Marketing | Sales |
 |:--------:|:-----------:|:------:|:---------:|:-------:|:-----:|:---------:|:-----:|
@@ -596,7 +596,7 @@ Specify options (in the format of query string) in parameter `routeParams` param
 | `itemPubDate`      | The HTML elements as `pubDate` in `item` using CSS selector | `string`        | `item` element         |
 | `itemPubDateAttr`  | The attributes of `pubDate` element as pubDate          | `string`        | Element html           |
 
-<Route author="ttttmr" example="/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a" path="/rsshub/transform/html/:url/:routeParams" paramsDesc={['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']} selfhost="1">
+<Route author="ttttmr" example="/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a" path="/rsshub/transform/html/:url/:routeParams" paramsDesc={['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']} configRequired="1">
 
 Parameters parsing in the above example:
 
@@ -632,7 +632,7 @@ JSON Path only supports format like `a.b.c`. if you need to access arrays, like 
 
 :::
 
-<Route author="ttttmr" example="/rsshub/transform/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body" path="/rsshub/transform/json/:url/:routeParams" paramsDesc={['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']} selfhost="1">
+<Route author="ttttmr" example="/rsshub/transform/json/https%3A%2F%2Fapi.github.com%2Frepos%2Fginuerzh%2Fgost%2Freleases/title=Gost%20releases&itemTitle=tag_name&itemLink=html_url&itemDesc=body" path="/rsshub/transform/json/:url/:routeParams" paramsDesc={['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']} configRequired="1">
 
 Parameters parsing in the above example:
 
@@ -660,7 +660,7 @@ Specify options (in the format of query string) in parameter `routeParams` param
 |-----------------|----------------------------------------------------------------|-----------------|------------------------|
 | `title`         | The title of the RSS                                           | `string`        | Extract from `<title>` |
 
-<Route author="flrngel" example="/rsshub/transform/xml/https%3A%2F%2Fwww.sitemaps.org%2Fsitemap.xml/" path="/rsshub/transform/html/:url/:routeParams?" paramsDesc={['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']} selfhost="1">
+<Route author="flrngel" example="/rsshub/transform/xml/https%3A%2F%2Fwww.sitemaps.org%2Fsitemap.xml/" path="/rsshub/transform/html/:url/:routeParams?" paramsDesc={['`encodeURIComponent`ed URL address', 'Transformation rules, requires URL encode']} configRequired="1">
 
 Parameters parsing in the above example:
 
@@ -685,7 +685,7 @@ Board and Build can be found in [here](http://api.ineal.me/tss/status)
 
 ### Random words {#urban-dictionary-random-words}
 
-<Route author="TonyRL" example="/urbandictionary/random" path="/urbandictionary/random" radar="1" rssbud="1"/>
+<Route author="TonyRL" example="/urbandictionary/random" path="/urbandictionary/random" radar="1"/>
 
 ## V2rayShare {#v2rayshare}
 
@@ -701,11 +701,11 @@ Board and Build can be found in [here](http://api.ineal.me/tss/status)
 
 ### 最近更新 {#wegene-zui-jin-geng-xin}
 
-<Route author="LogicJake" example="/wegene/newest" path="/wegene/newest" radar="1" rssbud="1"/>
+<Route author="LogicJake" example="/wegene/newest" path="/wegene/newest" radar="1"/>
 
 ### 栏目 {#wegene-lan-mu}
 
-<Route author="LogicJake" example="/wegene/column/all/all" path="/wegene/column/:type/:category" paramsDesc={['栏目类型，all（全部项目） 或 weapp（专业版）','栏目分类']} radar="1" rssbud="1">
+<Route author="LogicJake" example="/wegene/column/all/all" path="/wegene/column/:type/:category" paramsDesc={['栏目类型，all（全部项目） 或 weapp（专业版）','栏目分类']} radar="1">
 
 :::tip
 
@@ -851,7 +851,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 :::
 
-<Route author="DIYgod" example="/dida365/habit/checkins" path="/dida365/habit/checkins" selfhost="1"/>
+<Route author="DIYgod" example="/dida365/habit/checkins" path="/dida365/habit/checkins" configRequired="1"/>
 
 ## 福利资源 - met.red {#fu-li-zi-yuan-met.red}
 
@@ -883,7 +883,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 栏目 {#guang-dong-sheng-shi-pin-yao-pin-shen-ping-ren-zheng-ji-shu-xie-hui-lan-mu}
 
-<Route author="nczitzk" example="/gdsrx" path="/gdsrx/:id?" paramsDesc={['栏目 id，可在对应栏目页 URL 中找到，见下表，默认为法规文库']} radar="1" rssbud="1">
+<Route author="nczitzk" example="/gdsrx" path="/gdsrx/:id?" paramsDesc={['栏目 id，可在对应栏目页 URL 中找到，见下表，默认为法规文库']} radar="1">
 
 | 栏目名称          | 栏目 id |
 | ----------------- | ------- |
@@ -901,7 +901,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 通知 {#guo-jia-liu-xue-wang-tong-zhi}
 
-<Route author="Derekmini markmingjie" example="/csc/notice/lxtz" path="/csc/notice/:type?" paramsDesc={['分类, 默认为 `lxtz`']} radar="1" rssbud="1">
+<Route author="Derekmini markmingjie" example="/csc/notice/lxtz" path="/csc/notice/:type?" paramsDesc={['分类, 默认为 `lxtz`']} radar="1">
 
 | 遴选通知 | 综合项目专栏 | 常见问题解答 | 录取公告 | 新闻资讯 | 新闻公告 |
 |----------|--------------|--------------|----------|----------|----------|
@@ -987,17 +987,17 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 支持的快递公司列表 {#kuai-di-100-zhi-chi-de-kuai-di-gong-si-lie-biao}
 
-<Route author="NeverBehave" example="/kuaidi100/company" path="/kuaidi100/company" radar="1" rssbud="1"/>
+<Route author="NeverBehave" example="/kuaidi100/company" path="/kuaidi100/company" radar="1"/>
 
 ## 裏垢女子まとめ {#li-gou-nv-zi-%E3%81%BE%E3%81%A8%E3%82%81}
 
 ### Homepage {#li-gou-nv-zi-%E3%81%BE%E3%81%A8%E3%82%81-homepage}
 
-<Route author="SettingDust Halcao" example="/uraaka-joshi" path="/uraaka-joshi" radar="1" rssbud="1" puppeteer="1"/>
+<Route author="SettingDust Halcao" example="/uraaka-joshi" path="/uraaka-joshi" radar="1" puppeteer="1"/>
 
 ### User {#li-gou-nv-zi-%E3%81%BE%E3%81%A8%E3%82%81-user}
 
-<Route author="SettingDust Halcao" example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" paramsDesc={['User ID']} radar="1" rssbud="1" puppeteer="1"/>
+<Route author="SettingDust Halcao" example="/uraaka-joshi/_rrwq" path="/uraaka-joshi/:id" paramsDesc={['User ID']} radar="1" puppeteer="1"/>
 
 ## 律师事务所文章 {#lv-shi-shi-wu-suo-wen-zhang}
 
@@ -1127,7 +1127,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### CloudFlareYes {#quan-qiu-zhu-ji-jian-kong-cloudflareyes}
 
-<Route author="nczitzk" example="/hostmonit/cloudflareyes" path="/hostmonit/cloudflareyes/:type?" paramsDesc={['类型，见下表，默认为 v4']} radar="1" rssbud="1">
+<Route author="nczitzk" example="/hostmonit/cloudflareyes" path="/hostmonit/cloudflareyes/:type?" paramsDesc={['类型，见下表，默认为 v4']} radar="1">
 
 | v4  | v6  |
 | --- | --- |
@@ -1175,7 +1175,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 最新相關資訊 / 最新查核報告 {#tai-wan-shi-shi-cha-he-zhong-xin-zui-xin-xiang-guan-zi-xun-zui-xin-cha-he-bao-gao}
 
-<Route author="TonyRL" example="/tfc-taiwan" path="/tfc-taiwan/:type?" paramsDesc={['分類，見下表，預設為 `report`']} radar="1" rssbud="1">
+<Route author="TonyRL" example="/tfc-taiwan" path="/tfc-taiwan/:type?" paramsDesc={['分類，見下表，預設為 `report`']} radar="1">
 
 | 最新相關資訊 | 最新查核報告 |
 | ---------- | ---------- |
@@ -1185,7 +1185,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 專題 / 重點專區 {#tai-wan-shi-shi-cha-he-zhong-xin-zhuan-ti-zhong-dian-zhuan-qu}
 
-<Route author="TonyRL" example="/tfc-taiwan/category/242" path="/tfc-taiwan/:type/:id+" paramsDesc={['專題 / 重點專區，見下表', '專題 / 重點專區 ID']} radar="1" rssbud="1">
+<Route author="TonyRL" example="/tfc-taiwan/category/242" path="/tfc-taiwan/:type/:id+" paramsDesc={['專題 / 重點專區，見下表', '專題 / 重點專區 ID']} radar="1">
 
 | 專題      | 重點專區 |
 | -------- | ------- |
@@ -1249,7 +1249,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 最新文章列表 {#you-ju-zui-xin-wen-zhang-lie-biao}
 
-<Route author="kdanfly" example="/chinafactcheck" path="/chinafactcheck" radar="1" rssbud="1"/>
+<Route author="kdanfly" example="/chinafactcheck" path="/chinafactcheck" radar="1"/>
 
 ## 源仓库 {#yuan-cang-ku}
 
@@ -1344,7 +1344,7 @@ Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate
 
 ### 新闻 {#zhong-guo-you-zheng-su-di-wu-liu-xin-wen}
 
-<Route author="luyuhuang" example="/ems/news" path="/ems/news" radar="1" rssbud="1"/>
+<Route author="luyuhuang" example="/ems/news" path="/ems/news" radar="1"/>
 
 ### 苹果邮件 {#zhong-guo-you-zheng-su-di-wu-liu-ping-guo-you-jian}
 
