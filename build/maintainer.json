@@ -1283,6 +1283,9 @@
     "/cell/cell/:category": [],
     "/cell/cover": [],
     "/centbrowser/history": [],
+    "/cfachina/servicesupport/analygarden/:program?": [
+        "TonyRL"
+    ],
     "/cfan/news": [],
     "/cfd/gbp_div": [],
     "/cgtn/most/:type?/:time?": [],
