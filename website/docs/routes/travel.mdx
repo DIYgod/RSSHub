@@ -14,7 +14,7 @@
 
 ### Flight Deals {#all-the-flight-deals-flight-deals}
 
-<Route author="HenryQW" path="/atfd/:locations/:nearby?" example="/atfd/us+new%20york,gb+london/1" paramsDesc={['the departing city, consists of an 「ISO 3166-1 country code」 and a 「city name」.  Origin\'s ISO 3166-1 country code + city name, eg. `us+new york`, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york). Multiple origins are supported via a comma separated string, eg. `us+new york,gb+london`, [https://rsshub.app/atfd/us+new york,gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/).', 'whether includes nearby airports, optional value of 0 or 1, default to 0 (exclude nearby airports)']} >
+<Route author="HenryQW" path="/atfd/:locations/:nearby?" example="/atfd/us+new%20york,gb+london/1" paramsDesc={['the departing city, consists of an 「ISO 3166-1 country code」 and a 「city name」.  Origin\'s ISO 3166-1 country code + city name, eg. `us+new york`, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york). Multiple origins are supported via a comma separated string, eg. `us+new york,gb+london`, [https://rsshub.app/atfd/us+new york,gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/).', 'whether includes nearby airports, optional value of 0 or 1, default to 0 (exclude nearby airports)']} notOperational="1" >
 
 For ISO 3166-1 country codes please refer to [Wikipedia ISO_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
 
@@ -30,7 +30,7 @@ If the city name contains a space like `Mexico City`, replace the space with `%2
 
 ### Flight Deals {#hopper-flight-deals}
 
-<Route author="HenryQW" path="/hopper/:lowestOnly/:from/:to?" example="/hopper/1/LHR/PEK" paramsDesc={['set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed', 'origin airport IATA code', 'destination airport IATA code, if unset the destination will be set to `anywhere`']} >
+<Route author="HenryQW" path="/hopper/:lowestOnly/:from/:to?" example="/hopper/1/LHR/PEK" paramsDesc={['set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed', 'origin airport IATA code', 'destination airport IATA code, if unset the destination will be set to `anywhere`']} notOperational="1" >
 
 This route returns a list of flight deals (in most cases, 6 flight deals) for a period defined by Hopper's algorithm, which means the travel date will be totally random (could be tomorrow or 10 months from now).
 
@@ -42,7 +42,7 @@ For airport IATA code please refer to [Wikipedia List of airports by IATA code](
 
 ### 展览信息 {#imuseum-zhan-lan-xin-xi}
 
-<Route author="sinchang" example="/imuseum/shanghai/all" path="/imuseum/:city/:type?" paramsDesc={['如 shanghai, beijing', '不填则默认为 `all`']}>
+<Route author="sinchang" example="/imuseum/shanghai/all" path="/imuseum/:city/:type?" paramsDesc={['如 shanghai, beijing', '不填则默认为 `all`']} notOperational="1">
 
 | 全部 | 最新   | 热门 | 即将结束 | 即将开始 | 已结束   |
 | ---- | ------ | ---- | -------- | -------- | -------- |
@@ -124,7 +124,7 @@ For airport IATA code please refer to [Wikipedia List of airports by IATA code](
 
 ### 自由行 {#ma-feng-wo-zi-you-xing}
 
-<Route author="nczitzk" example="/mafengwo/ziyouxing/10186" path="/mafengwo/ziyouxing/:code" paramsDesc={['目的地代码，可在该目的地页面的 URL 中找到']}>
+<Route author="nczitzk" example="/mafengwo/ziyouxing/10186" path="/mafengwo/ziyouxing/:code" paramsDesc={['目的地代码，可在该目的地页面的 URL 中找到']} notOperational="1">
 
 目的地代码请参见 [这里](http://www.mafengwo.cn/mdd/)
 
@@ -148,7 +148,7 @@ paramsDesc={['展览进行的状态：`current` 对应展览当前正在进行�
 
 ## 纽约古根海姆基金会 {#niu-yue-gu-gen-hai-mu-ji-jin-hui}
 
-<Route author="chazeon" example="/guggenheim/exhibitions" path="/guggenheim/exhibitions" />
+<Route author="chazeon" example="/guggenheim/exhibitions" path="/guggenheim/exhibitions" notOperational="1" />
 
 ## 纽约新美术馆 {#niu-yue-xin-mei-shu-guan}
 
@@ -160,7 +160,7 @@ paramsDesc={['展览进行的状态：`current` 对应展览当前正在进行�
 
 ## 芝加哥当代艺术博物馆 {#zhi-jia-ge-dang-dai-yi-shu-bo-wu-guan}
 
-<Route author="chazeon" example="/mcachicago/exhibitions" path="/mcachicago/exhibitions" />
+<Route author="chazeon" example="/mcachicago/exhibitions" path="/mcachicago/exhibitions" notOperational="1" />
 
 ## 中国国际航空公司 {#zhong-guo-guo-ji-hang-kong-gong-si}
 
@@ -172,7 +172,7 @@ paramsDesc={['展览进行的状态：`current` 对应展览当前正在进行�
 
 ### 美术馆新闻 {#zhong-guo-mei-shu-guan-mei-shu-guan-xin-wen}
 
-<Route author="HenryQW" example="/namoc/announcement" path="/namoc/:type" paramsDesc={['新闻类型， 可选如下']}>
+<Route author="HenryQW" example="/namoc/announcement" path="/namoc/:type" paramsDesc={['新闻类型， 可选如下']} notOperational="1">
 
 | 通知公告     | 新闻 | 媒体联报 | 展览预告   | 焦点专题 |
 | ------------ | ---- | -------- | ---------- | -------- |

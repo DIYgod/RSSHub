@@ -1,6 +1,6 @@
 <!-- 
-Reference: https://docs.rsshub.app/joinus/new-rss/submit-route
-如有疑问，请参考 https://docs.rsshub.app/zh/joinus/new-rss/submit-route
+If you have any difficulties in filling out this form, please refer to https://docs.rsshub.app/joinus/new-rss/submit-route
+如果你在填写此表单时遇到任何困难，请参考 https://docs.rsshub.app/zh/joinus/new-rss/submit-route
 -->
 
 ## Involved Issue / 该 PR 相关 Issue
@@ -31,19 +31,17 @@ If your changes are not related to route, please fill in `routes` section with `
 
 ## New RSS Route Checklist / 新 RSS 路由检查表
   
--   [ ] New Route / 新的路由
-  -   [ ] Follows [v2 Script Standard](https://docs.rsshub.app/joinus/advanced/script-standard) / 跟随 [v2 路由规范](https://docs.rsshub.app/zh/joinus/advanced/script-standard)
--   [ ] Documentation / 文档说明
-  -   [ ] EN / 英文文档
-  -   [ ] CN / 中文文档
--   [ ] Full text / 全文获取
-  -   [ ] Use cache / 使用缓存
--   [ ] Anti-bot or rate limit / 反爬/频率限制
-  -   [ ] If yes, do your code reflect this sign? / 如果有, 是否有对应的措施?
--   [ ] [Date and time](https://docs.rsshub.app/joinus/advanced/pub-date) / [日期和时间](https://docs.rsshub.app/zh/joinus/advanced/pub-date)
-  -   [ ] Parsed / 可以解析
-  -   [ ] Correct time zone / 时区正确
--   [ ] New package added / 添加了新的包
--   [ ] `Puppeteer`
+- [ ] New Route / 新的路由
+  - [ ] Follows [v2 Script Standard](https://docs.rsshub.app/joinus/advanced/script-standard) / 跟随 [v2 路由规范](https://docs.rsshub.app/zh/joinus/advanced/script-standard)
+- [ ] Documentation / 文档说明
+- [ ] Full text / 全文获取
+  - [ ] Use cache / 使用缓存
+- [ ] Anti-bot or rate limit / 反爬/频率限制
+  - [ ] If yes, do your code reflect this sign? / 如果有, 是否有对应的措施?
+- [ ] [Date and time](https://docs.rsshub.app/joinus/advanced/pub-date) / [日期和时间](https://docs.rsshub.app/zh/joinus/advanced/pub-date)
+  - [ ] Parsed / 可以解析
+  - [ ] Correct time zone / 时区正确
+- [ ] New package added / 添加了新的包
+- [ ] `Puppeteer`
 
 ## Note / 说明
