@@ -1,0 +1,42 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.tutorialSidebar.category.joinus": {
+    "message": "Join Us",
+    "description": "The label for category joinus in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.New RSSHub Rules": {
+    "message": "New RSSHub Rules",
+    "description": "The label for category New RSSHub Rules in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.Advanced": {
+    "message": "Advanced",
+    "description": "The label for category Advanced in sidebar tutorialSidebar"
+  },
+  "sidebar.tutorialSidebar.category.routes": {
+    "message": "Routes",
+    "description": "The label for category routes in sidebar tutorialSidebar"
+  },
+  "sidebar.guideSidebar.category.Guide": {
+    "message": "Guide",
+    "description": "The label for category Guide in sidebar guideSidebar"
+  },
+  "sidebar.guideSidebar.category.Routes": {
+    "message": "Routes",
+    "description": "The label for category Routes in sidebar guideSidebar"
+  },
+  "sidebar.guideSidebar.category.Routes.link.generated-index.description": {
+    "message": "Routes are the access paths of RSSHub. Each route contains a RSSHub rule, which tells RSSHub how to extract content from the website and generate RSS subscription.",
+    "description": "The generated-index page description for category Routes in sidebar guideSidebar"
+  },
+  "sidebar.joinusSidebar.category.New RSSHub Rules": {
+    "message": "New RSSHub Rules",
+    "description": "The label for category New RSSHub Rules in sidebar joinusSidebar"
+  },
+  "sidebar.joinusSidebar.category.Advanced": {
+    "message": "Advanced",
+    "description": "The label for category Advanced in sidebar joinusSidebar"
+  }
+}

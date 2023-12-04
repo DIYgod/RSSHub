@@ -1,0 +1,5 @@
+<div>
+    {{ each pic }}
+        <img src='{{cdn}}/{{$value}}'/><br/>
+    {{/each }}
+</div>

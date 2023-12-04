@@ -1,0 +1,6 @@
+<video controls preload="none" poster="{{ poster }}">
+{{ each sources source }}
+    <source src="{{ source.src }}" type="{{ source.contentType }}">
+{{ /each }}
+</video>
+{{@ articleBody }}

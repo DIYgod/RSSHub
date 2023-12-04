@@ -1,0 +1,19 @@
+<div id="description_box">
+    <div id="brief_description">
+        <p>招聘主题：{{ intro.zpzt }}</p>
+        <p>单位名称：{{ intro.dwmc }}</p>
+        <p>单位性质：{{ intro.xzyjmc }}</p>
+        <p>行业名称：{{ intro.hyyjmc }}（{{ intro.hyejmc }}）</p>
+        <p>公司规模：{{ intro.rsgmmc }}</p>
+        <p>工作地点：{{ intro.szxmc }} {{ intro.xxdz }}</p>
+        <p>招聘截止日期：{{ intro.zpjzrq }}</p>
+        <p>简历投递邮箱：{{ intro.jltdyx }}</p>
+        <p>单位网站：{{ intro.dwwz }}</p>
+    </div>
+
+    {{@ job_list }}
+
+    <div id="company_introduction">
+        {{@ intro.zpxxEditor }}
+    </div>
+</div>

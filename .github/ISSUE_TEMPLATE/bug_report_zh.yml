@@ -69,7 +69,7 @@ body:
       label: 部署相关信息
       description: |
         请提供您的操作系统、node 版本和（如果适用） docker 版本。
-        请确保您部署的是[主线 master 分支](https://github.com/DIYgod/RSSHub/tree/master)最新版 RSSHub。
+        请确保您部署的是 [主线 master 分支](https://github.com/DIYgod/RSSHub/tree/master) 最新版 RSSHub。
       placeholder: 'OS: Linux, Node: v10.15.3, Docker: v19.03.13'
 
   - type: textarea
@@ -86,5 +86,5 @@ body:
     attributes:
       label: 这不是重复的 issue
       options:
-        - label: 我已经搜索了[现有 issue](https://github.com/DIYgod/RSSHub/issues)，以确保该错误尚未被报告。
+        - label: 我已经搜索了 [现有 issue](https://github.com/DIYgod/RSSHub/issues)，以确保该错误尚未被报告。
           required: true

@@ -1,33 +1,49 @@
-name: publish
+name: npm Publish
 
 on:
   push:
     branches:
       - master
     paths:
+      - '.github/workflows/npm-publish.yml'
       - 'lib/**'
+      - '!**/maintainer.js'
+      - '!**/radar.js'
+      - '!**/radar-rules.js'
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   build:
     name: npm publish
     if: github.repository == 'DIYgod/RSSHub'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      HUSKY: 0
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
         with:
-          node-version: 16
-          cache: 'yarn'
+          version: 8
+      - uses: actions/setup-node@v4
+        with:
+          # pinned to 18 until https://github.com/compulim/version-from-git/issues/16 is fixed
+          node-version: 18
+          cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
+      - name: Install dependencies (pnpm)
+        run: pnpm i
+      - name: Run postinstall script for dependencies
+        run: pnpm rb
       - name: Release
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           npx version-from-git --allow-same-version --template 'master.short'
       - name: Publish to npmjs
-        run: npm publish
+        run: pnpm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

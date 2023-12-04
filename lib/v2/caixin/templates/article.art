@@ -1,0 +1,38 @@
+{{ if item.audio }}
+    <audio src="{{ item.audio }}" controls></audio><br>
+{{ /if }}
+{{ if $('.article .subhead').length }}
+    <blockquote><p>{{@ $('.article .subhead').html() }}</p></blockquote>
+    <br>
+{{ /if }}
+
+{{ if $('.article .media').length }}
+    {{@ $('.article .media').html() }}
+    <br>
+{{ /if }}
+
+{{ if $('.article .content_video').length }}
+    <% const video = $('script').text().match(/initPlayer\('(.*?)','(.*?)'\)/); %>
+    <% const videoUrl = video[1]; %>
+    <% const poster = video[2]; %>
+    <video controls preload="none" poster="{{ poster }}" src="{{ videoUrl }}"></video>
+    <br>
+{{ /if }}
+
+{{ if $('div#Main_Content_Val.text').length }}
+    {{@ $('div#Main_Content_Val.text').html() }}
+{{ else }}
+    {{ if item.summary }}
+        <blockquote><p>{{ item.summary }}</p></blockquote>
+        <br>
+    {{ /if }}
+    {{ if item.pics?.includes('#') }}
+        {{ each item.pics.split('#') pic }}
+            <img src="{{ pic }}">
+            <br>
+        {{ /each }}
+    {{ else }}
+        <img src="{{ item.pics }}">
+        <br>
+    {{ /if }}
+{{ /if }}

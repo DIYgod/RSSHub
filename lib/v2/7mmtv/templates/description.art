@@ -1,11 +1,15 @@
 {{ if cover }}
 <img src="{{ cover }}">
 {{ /if }}
+
 {{ if video }}
 <br>
 <video mute loop="loop" autoplay="autoplay" poster="{{ poster }}"><source src="{{ video }}"></video>
 <br>
 {{ /if }}
+
+{{ if description }}{{@ description }}{{ /if }}
+
 {{ each images }}
 <img src="{{ $value }}">
 {{ /each }}

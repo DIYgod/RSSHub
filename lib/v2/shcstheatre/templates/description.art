@@ -1,0 +1,65 @@
+<div>
+    {{ if SCS_PC_YMXQ_PIC }}
+        {{ each SCS_PC_YMXQ_PIC.split(';').map(s => s.trim() )}}
+            <img src="https://www.shcstheatre.com{{ $value }}" />
+        {{ /each }}
+    {{ /if }}
+
+    <ul>
+        <li>演出日期：{{ SCS_WEBPERCYCLE }}</li>
+        <li>入场时间：{{ SCS_EINLASSNAME }}</li>
+        <li>演出类型：{{ SCS_PERFORMANCE_TYPENAME }}</li>
+        <li>演出时长：{{ SCS_LENGTH }}分钟</li>
+        <li>演出语言：{{ SCS_PERLANGUAGENAME }}</li>
+    </ul>
+
+    {{ if SCS_PC_LUNBO_YCJS_EDITOR }}
+        <h1>演出介绍</h1>
+        {{ if SCS_PC_LUNBO_YCJS_PIC }}
+            {{ each SCS_PC_LUNBO_YCJS_PIC.split(';').map(s => s.trim()) }}
+                <img src="https://www.shcstheatre.com{{ $value }}" />
+            {{ /each }}
+        {{ /if }}
+        <div> {{@ SCS_PC_LUNBO_YCJS_EDITOR }} </div>
+    {{ /if }}
+
+    {{ if SCS_PC_LUNBO_ZCTD_EDITOR }}
+        <h1>主创团队</h1>
+        {{ if SCS_PC_LUNBO_ZCTD_PIC }}
+            {{ each SCS_PC_LUNBO_ZCTD_PIC.split(';').map(s => s.trim()) }}
+                <img src="https://www.shcstheatre.com{{ $value }}" />
+            {{ /each }}
+        {{ /if }}
+        <div> {{@ SCS_PC_LUNBO_ZCTD_EDITOR }} </div>
+    {{ /if }}
+
+    {{ if SCS_PC_LUNBO_JQGG_EDITOR }}
+        <h1>剧情梗概</h1>
+        {{ if SCS_PC_LUNBO_JQGG_PIC }}
+            {{ each SCS_PC_LUNBO_JQGG_PIC.split(';').map(s => s.trim()) }}
+                <img src="https://www.shcstheatre.com{{ $value }}" />
+            {{ /each }}
+        {{ /if }}
+        <div> {{@ SCS_PC_LUNBO_JQGG_EDITOR }} </div>
+    {{ /if }}
+
+    {{ if SCS_PC_LUNBO_HJJL_EDITOR }}
+        <h1>获奖记录</h1>
+        {{ if SCS_PC_LUNBO_HJJL_PIC }}
+            {{ each SCS_PC_LUNBO_HJJL_PIC.split(';').map(s => s.trim()) }}
+                <img src="https://www.shcstheatre.com{{ $value }}" />
+            {{ /each }}    
+        {{ /if }}
+        <div> {{@ SCS_PC_LUNBO_HJJL_EDITOR }} </div>
+    {{ /if }}
+
+    {{ if SCS_PC_LUNBO_MTPL_EDITOR }}
+        <h1>媒体评论</h1>
+        {{ if SCS_PC_LUNBO_MTPL_PIC }}
+            {{ each SCS_PC_LUNBO_MTPL_PIC.split(';').map(s => s.trim()) }}
+                <img src="https://www.shcstheatre.com{{ $value }}" />
+            {{ /each }}
+        {{ /if }}
+        <div> {{@ SCS_PC_LUNBO_MTPL_EDITOR }} </div>
+    {{ /if }}
+</div>

@@ -63,9 +63,40 @@ describe('template', () => {
     });
 
     it(`.json`, async () => {
-        const response = await request.get('/test/1.json');
-        const responseXML = await request.get('/test/1.rss');
-        expect(response.text.slice(0, 50)).toEqual(responseXML.text.slice(0, 50));
+        const jsonResponse = await request.get('/test/1.json');
+        const rssResponse = await request.get('/test/1.rss');
+        const jsonParsed = JSON.parse(jsonResponse.text);
+        const rssParsed = await parser.parseString(rssResponse.text);
+
+        expect(jsonResponse.headers['content-type']).toBe('application/feed+json; charset=UTF-8');
+
+        expect(jsonParsed.items[0].title).toEqual(rssParsed.items[0].title);
+        expect(jsonParsed.items[0].url).toEqual(rssParsed.items[0].link);
+        expect(jsonParsed.items[0].id).toEqual(rssParsed.items[0].guid);
+        expect(jsonParsed.items[0].date_published).toEqual(expectPubDate.toISOString());
+        expect(jsonParsed.items[0].content_html).toEqual(rssParsed.items[0].content);
+        expect(jsonParsed.items[0].authors[0].name).toEqual(rssParsed.items[0].author);
+        expect(jsonParsed.items.every((item) => item.authors.every((author) => author.name.includes(' ')))).toBe(false);
+    });
+
+    it('.debug.html', async () => {
+        const jsonResponse = await request.get('/test/1.json');
+        const jsonParsed = JSON.parse(jsonResponse.text);
+
+        const debugHTMLResponse0 = await request.get('/test/1.0.debug.html');
+        expect(debugHTMLResponse0.headers['content-type']).toBe('text/html; charset=UTF-8');
+        expect(debugHTMLResponse0.text).toBe(jsonParsed.items[0].content_html);
+
+        const debugHTMLResponseNotExist = await request.get(`/test/1.${jsonParsed.items.length}.debug.html`);
+        expect(debugHTMLResponseNotExist.text).toBe(`ctx.state.data.item[${jsonParsed.items.length}] not found`);
+    });
+
+    it('flatten author object', async () => {
+        const response = await request.get('/test/json');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items[2].author).toBe(['DIYgod1', 'DIYgod2'].map((name) => name).join(', '));
+        expect(parsed.items[3].author).toBe(['DIYgod3', 'DIYgod4', 'DIYgod5'].map((name) => name).join(', '));
+        expect(parsed.items[4].author).toBeUndefined();
     });
 
     it(`long title`, async () => {

@@ -1,1 +1,4 @@
-<img alt="{{ alt }}" src="{{ src }}" title="{{ alt }}">
+<figure>
+  <img src="{{ src }}" alt="{{ alt }}" title="{{ alt }}">
+  <figcaption>{{ alt }}</figcaption>
+</figure>
