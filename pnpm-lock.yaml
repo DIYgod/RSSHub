@@ -18,8 +18,8 @@ dependencies:
     specifier: 7.84.0
     version: 7.84.0
   '@tonyrl/rand-user-agent':
-    specifier: 2.0.41
-    version: 2.0.41
+    specifier: 2.0.42
+    version: 2.0.42
   aes-js:
     specifier: 3.1.2
     version: 3.1.2
@@ -759,8 +759,8 @@ packages:
     engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
     dev: true
 
-  /@eslint/eslintrc@2.1.3:
-    resolution: {integrity: sha512-yZzuIG+jnVu6hNSzFEN07e8BxF3uAzYtQb6uDkaYZLo6oYZDCq454c5kB8zxnzfCYyP4MIuyBn10L0DqwujTmA==}
+  /@eslint/eslintrc@2.1.4:
+    resolution: {integrity: sha512-269Z39MS6wVJtsoUl10L60WdkhJVdPG24Q4eZTH3nnF6lpvSShEK3wQjDX9JRWAUPvPh7COouPpU9IrqaZFvtQ==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dependencies:
       ajv: 6.12.6
@@ -1337,8 +1337,8 @@ packages:
       defer-to-connect: 2.0.1
     dev: false
 
-  /@tonyrl/rand-user-agent@2.0.41:
-    resolution: {integrity: sha512-NUZCaK1Acbte1s1bjDwdYx6saIvW2+lBkTH1xyQZMELsybbxn/MRVcXqO0MlZTJ7K1wHEn47osgUgme8Ezc1dQ==}
+  /@tonyrl/rand-user-agent@2.0.42:
+    resolution: {integrity: sha512-RfpaTLGXqzeK8DIOj6Gx3eiMIWFHt11ueo6XnvLPUV489WfR0ezy2H1UB58QzR3VGMjlB42VEKhK4asK4xOuqw==}
     engines: {node: '>=14.16'}
     dev: false
 
@@ -3269,7 +3269,7 @@ packages:
     dependencies:
       '@eslint-community/eslint-utils': 4.4.0(eslint@8.54.0)
       '@eslint-community/regexpp': 4.8.0
-      '@eslint/eslintrc': 2.1.3
+      '@eslint/eslintrc': 2.1.4
       '@eslint/js': 8.54.0
       '@humanwhocodes/config-array': 0.11.13
       '@humanwhocodes/module-importer': 1.0.1
