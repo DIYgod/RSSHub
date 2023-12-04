@@ -84,7 +84,7 @@
   },
   "dependencies": {
     "@koa/router": "12.0.1",
-    "@notionhq/client": "2.2.13",
+    "@notionhq/client": "2.2.14",
     "@postlight/parser": "2.2.3",
     "@sentry/node": "7.84.0",
     "@tonyrl/rand-user-agent": "2.0.41",
