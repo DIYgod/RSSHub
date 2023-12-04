@@ -13820,54 +13820,60 @@
     "_name": "虎嗅",
     ".": [
       {
-        "title": "首页资讯",
-        "docs": "https://docs.rsshub.app/routes/new-media#hu-xiu",
+        "title": "资讯",
+        "docs": "https://docs.rsshub.app/routes/new-media#hu-xiu-zi-xun",
         "source": [
-          "/article",
-          "/"
+          "/article"
         ],
         "target": "/huxiu/article"
       },
       {
-        "title": "24小时",
-        "docs": "https://docs.rsshub.app/routes/new-media#hu-xiu",
+        "title": "频道",
+        "docs": "https://docs.rsshub.app/routes/new-media#hu-xiu-pin-dao",
         "source": [
-          "/moment",
-          "/"
+          "/channel"
+        ]
+      },
+      {
+        "title": "24小时",
+        "docs": "https://docs.rsshub.app/routes/new-media#hu-xiu-24-xiao-shi",
+        "source": [
+          "/moment"
         ],
         "target": "/huxiu/moment"
       },
       {
         "title": "标签",
-        "docs": "https://docs.rsshub.app/routes/new-media#hu-xiu",
+        "docs": "https://docs.rsshub.app/routes/new-media#hu-xiu-biao-qian",
         "source": [
           "/tags/:id"
         ]
       },
       {
         "title": "搜索",
-        "docs": "https://docs.rsshub.app/routes/new-media#hu-xiu"
+        "docs": "https://docs.rsshub.app/routes/new-media#hu-xiu-sou-suo",
+        "source": [
+          "/"
+        ],
+        "target": "/huxiu/search/:keyword"
       },
       {
         "title": "作者",
-        "docs": "https://docs.rsshub.app/routes/new-media#hu-xiu",
+        "docs": "https://docs.rsshub.app/routes/new-media#hu-xiu-zuo-zhe",
         "source": [
-          "/member/:id/*",
-          "/"
-        ],
-        "target": "/huxiu/author/:id"
+          "/member/:id/:type"
+        ]
       },
       {
         "title": "文集",
-        "docs": "https://docs.rsshub.app/routes/new-media#hu-xiu",
+        "docs": "https://docs.rsshub.app/routes/new-media#hu-xiu-wen-ji",
         "source": [
-          "/collection/:id",
-          "/"
+          "/collection/:id"
         ]
       },
       {
         "title": "简报",
-        "docs": "https://docs.rsshub.app/routes/new-media#hu-xiu",
+        "docs": "https://docs.rsshub.app/routes/new-media#hu-xiu-jian-bao",
         "source": [
           "/briefColumn/:id",
           "/"

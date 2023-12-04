@@ -3582,24 +3582,39 @@
         "shengmaosu"
     ],
     "/huxiu/article": [
-        "HenryQW"
+        "HenryQW",
+        "nczitzk"
     ],
-    "/huxiu/author/:id": [
-        "HenryQW"
+    "/huxiu/briefcolumn/:id": [
+        "Fatpandac",
+        "nczitzk"
+    ],
+    "/huxiu/channel/:id?": [
+        "nczitzk"
+    ],
+    "/huxiu/club/:id": [
+        "nczitzk"
     ],
     "/huxiu/collection/:id": [
-        "AlexdanerZe"
+        "AlexdanerZe",
+        "nczitzk"
+    ],
+    "/huxiu/member/:id/:type?": [
+        "HenryQW",
+        "nczitzk"
     ],
     "/huxiu/moment": [
         "nczitzk"
     ],
     "/huxiu/search/:keyword": [
         "xyqfer",
-        "HenryQW"
+        "HenryQW",
+        "nczitzk"
     ],
     "/huxiu/tag/:id": [
         "xyqfer",
-        "HenryQW"
+        "HenryQW",
+        "nczitzk"
     ],
     "/huya/live/:id": [],
     "/hyqss/hyrb/:id?": [
