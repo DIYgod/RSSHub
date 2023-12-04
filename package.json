@@ -182,7 +182,7 @@
     "@vercel/nft": "0.24.4",
     "cross-env": "7.0.3",
     "eslint": "8.55.0",
-    "eslint-config-prettier": "9.0.0",
+    "eslint-config-prettier": "9.1.0",
     "eslint-plugin-n": "16.3.1",
     "eslint-plugin-prettier": "5.0.1",
     "eslint-plugin-yml": "1.10.0",
