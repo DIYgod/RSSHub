@@ -3483,33 +3483,73 @@ others = 热点新闻 + 滚动新闻
 
 ## 虎嗅 {#hu-xiu}
 
-### 首页资讯 {#hu-xiu-shou-ye-zi-xun}
+### 资讯 {#hu-xiu-zi-xun}
 
-<Route author="HenryQW" example="/huxiu/article" path="/huxiu/article" />
+<Route author="HenryQW nczitzk" example="/huxiu/article" path="/huxiu/article" radar="1" supportBT="1" supportPodcast="1"/>
+
+### 频道 {#hu-xiu-pin-dao}
+
+<Route author="nczitzk" example="/huxiu/channel/10" path="/huxiu/channel/:id?" paramsDesc={['频道 id，可在对应频道页 URL 中找到，见下表，默认为最新']} radar="1" supportBT="1" supportPodcast="1">
+
+| 视频  | 车与出行 | 年轻一代 | 十亿消费者 | 前沿科技 |
+| --- | ---- | ---- | ----- | ---- |
+| 10  | 21   | 106  | 103   | 105  |
+
+| 财经  | 娱乐淘金 | 医疗健康 | 文化教育 | 出海  |
+| --- | ---- | ---- | ---- | --- |
+| 115 | 22   | 111  | 113  | 114 |
+
+| 金融地产 | 企业服务 | 创业维艰 | 社交通讯 | 全球热点 | 生活腔调 |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 102  | 110  | 2    | 112  | 107  | 4    |
+
+</Route>
 
 ### 24 小时 {#hu-xiu-24-xiao-shi}
 
-<Route author="nczitzk" example="/huxiu/moment" path="/huxiu/moment" />
+<Route author="nczitzk" example="/huxiu/moment" path="/huxiu/moment" radar="1" supportBT="1" supportPodcast="1"/>
+
+### 源流 {#hu-xiu-yuan-liu}
+
+<Route author="nczitzk" example="/huxiu/club/1000" path="/huxiu/club/:id?" paramsDesc={['源流 id，可在对应源流页 URL 中找到']} radar="1" supportBT="1" supportPodcast="1">
+
+更多源流请参见 [源流广场](https://www.huxiu.com/club)
+
+</Route>
 
 ### 标签 {#hu-xiu-biao-qian}
 
-<Route author="xyqfer HenryQW" example="/huxiu/tag/291" path="/huxiu/tag/:id" paramsDesc={['标签 id']} anticrawler="1"/>
+<Route author="xyqfer HenryQW nczitzk" example="/huxiu/tag/291" path="/huxiu/tag/:id" paramsDesc={['标签 id，可在对应标签页 URL 中找到']} radar="1" supportBT="1" supportPodcast="1">
+
+更多标签请参见 [标签](https://www.huxiu.com/tags)
+
+</Route>
 
 ### 搜索 {#hu-xiu-sou-suo}
 
-<Route author="xyqfer HenryQW" example="/huxiu/search/%E8%99%8E%E5%97%85%E6%97%A9%E6%8A%A5" path="/huxiu/search/:keyword" paramsDesc={['关键字']} />
+<Route author="xyqfer HenryQW nczitzk" example="/huxiu/search/生活" path="/huxiu/search/:keyword" paramsDesc={['关键字']} radar="1" supportBT="1" supportPodcast="1"/>
 
 ### 作者 {#hu-xiu-zuo-zhe}
 
-<Route author="HenryQW" example="/huxiu/author/29318" path="/huxiu/author/:id" paramsDesc={['用户 id']} anticrawler="1" />
+<Route author="HenryQW nczitzk" example="/huxiu/member/29318" path="/huxiu/member/:id/:type?" paramsDesc={['用户 id，可在对应用户页 URL 中找到', '类型，可在对应用户页 URL 中找到']} radar="1" supportBT="1" supportPodcast="1">
+
+| TA的文章   | TA的24小时 |
+| ------- | ------- |
+| article | moment  |
+
+</Route>
 
 ### 文集 {#hu-xiu-wen-ji}
 
-<Route author="AlexdanerZe" example="/huxiu/collection/212" path="/huxiu/collection/:id" paramsDesc={['文集 id']} notOperational="1" />
+<Route author="AlexdanerZe nczitzk" example="/huxiu/collection/212" path="/huxiu/collection/:id" paramsDesc={['文集 id，可在对应文集页 URL 中找到']} radar="1" supportBT="1" supportPodcast="1">
+
+更多文集请参见 [文集](https://www.huxiu.com/collection)
+
+</Route>
 
 ### 简报 {#hu-xiu-jian-bao}
 
-<Route author="Fatpandac" example="/huxiu/briefcolumn/1" path="/huxiu/briefcolumn/:id" paramsDesc={['简报 id']}  anticrawler="1"/>
+<Route author="Fatpandac nczitzk" example="/huxiu/briefcolumn/1" path="/huxiu/briefcolumn/:id" paramsDesc={['简报 id，可在对应简报页 URL 中找到']} radar="1" supportBT="1" supportPodcast="1"/>
 
 ## 互动吧 {#hu-dong-ba}
 
