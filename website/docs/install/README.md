@@ -142,7 +142,7 @@ This deployment method does not include puppeteer (unless using `diygod/rsshub:c
 
 To configure more options please refer to [Configuration](#configuration).
 
-## Helm Deployment (Kubernetes)
+## Kubernetes Deployment (Helm)
 
 RSSHub can be installed in Kubernetes using the Helm Chart from [RSSHub Helm Chart](https://github.com/NaturalSelectionLabs/helm-charts/tree/main/charts/rsshub)
 
