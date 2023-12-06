@@ -4207,6 +4207,9 @@
         "nczitzk"
     ],
     "/kenshin/:category?/:type?": [],
+    "/kepu/live": [
+        "nczitzk"
+    ],
     "/keyakizaka46/blog": [],
     "/keyakizaka46/news": [],
     "/keylol/:path+": [
