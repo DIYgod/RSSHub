@@ -151,7 +151,7 @@
   },
   "devDependencies": {
     "@microsoft/eslint-formatter-sarif": "3.0.0",
-    "@stylistic/eslint-plugin-js": "1.4.1",
+    "@stylistic/eslint-plugin-js": "1.5.0",
     "@types/aes-js": "3.1.4",
     "@types/crypto-js": "4.2.1",
     "@types/eslint": "8.44.8",
