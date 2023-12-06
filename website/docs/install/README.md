@@ -142,6 +142,118 @@ This deployment method does not include puppeteer (unless using `diygod/rsshub:c
 
 To configure more options please refer to [Configuration](#configuration).
 
+## Kubernetes Deployment (Helm)
+
+RSSHub can be installed in Kubernetes using the Helm Chart from [RSSHub Helm Chart](https://github.com/NaturalSelectionLabs/helm-charts/tree/main/charts/rsshub)
+
+Ensure that the following requirements are met:
+
+-   Kubernetes 1.16+
+-   Helm version 3.9+ is [installed](https://helm.sh/docs/intro/install/)
+
+### Install
+
+Add NaturalSelection Labs chart repository to Helm:
+
+```bash
+helm repo add nsl https://naturalselectionlabs.github.io/helm-charts
+```
+
+You can update the chart repository by running:
+
+```bash
+helm repo update
+```
+
+And install it with the `helm` command line:
+
+```bash
+helm install my-release nsl/rsshub
+```
+
+### Update
+
+To upgrade the my-release RSSHub deployment:
+
+```bash
+helm upgade my-release nsl/rsshub
+```
+
+### Uninstall
+
+To uninstall/delete the my-release RSSHub deployment:
+
+```bash
+helm delete my-release
+```
+
+### Installing with custom values
+
+<Tabs groupId="package-manager">
+<TabItem value="using-helm-cli" label="Using Helm CLI" default>
+
+```bash
+helm install my-release nsl/rsshub \
+  --set="image.tag=2023-12-04" \
+  --set="replicaCount=2"
+```
+
+</TabItem>
+<TabItem value="with-a-custom-values-file" label="With a custom values file">
+
+```yaml
+# File custom-values.yml
+## Install with "helm install my-release nsl/rsshub -f ./custom-values.yml
+image:
+  tag: "2023-12-04"
+replicaCount: 2
+```
+
+</TabItem>
+</Tabs>
+
+### Install with HA mode
+
+<Tabs groupId="package-manager">
+<TabItem value="ha-mode-without-autoscaling" label="HA mode without autoscaling" default>
+
+```yaml
+replicaCount: 3
+
+puppeteer:
+  replicaCount: 2
+```
+
+</TabItem>
+<TabItem value="ha-mode-with-autoscaling" label="HA mode with autoscaling">
+
+```yaml
+autoscaling:
+  enabled: true
+  minReplicas: 3
+
+puppeteer:
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+```
+
+</TabItem>
+</Tabs>
+
+### Install with external Redis
+
+```yaml
+redis:
+  # -- Disable internal redis
+  enabled: false
+env:
+  # -- other env --
+  REDIS_URL: redis://external-redis:6379/
+```
+
+To configure more values please refer to [RSSHub Helm Chart](https://github.com/NaturalSelectionLabs/helm-charts/tree/main/charts/rsshub).
+
 ## Ansible Deployment
 
 This Ansible playbook includes RSSHub, Redis, browserless (uses Docker) and Caddy 2
