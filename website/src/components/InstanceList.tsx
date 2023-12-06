@@ -45,7 +45,7 @@ export default function InstanceList(): JSX.Element {
     url: 'https://rsshub.atgw.io',
     location: '🇺🇸',
     maintainer: 'limfoo',
-    maintainerUrl: 'https://blog.limfoo.io/',
+    maintainerUrl: 'https://blog.limfoo.io',
   }]
 
   return (
