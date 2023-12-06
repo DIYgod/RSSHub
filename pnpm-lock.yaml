@@ -197,6 +197,9 @@ dependencies:
   winston:
     specifier: 3.11.0
     version: 3.11.0
+  xxhash-wasm:
+    specifier: 1.0.2
+    version: 1.0.2
 
 devDependencies:
   '@microsoft/eslint-formatter-sarif':
@@ -8081,6 +8084,10 @@ packages:
 
   /xmlchars@2.2.0:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
+    dev: false
+
+  /xxhash-wasm@1.0.2:
+    resolution: {integrity: sha512-ibF0Or+FivM9lNrg+HGJfVX8WJqgo+kCLDc4vx6xMeTce7Aj+DLttKbxxRR/gNLSAelRc1omAPlJ77N/Jem07A==}
     dev: false
 
   /y18n@5.0.8:
