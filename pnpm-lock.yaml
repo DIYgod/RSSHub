@@ -147,11 +147,11 @@ dependencies:
     specifier: 2.4.0
     version: 2.4.0
   puppeteer:
-    specifier: 21.5.2
-    version: 21.5.2
+    specifier: 21.6.0
+    version: 21.6.0
   puppeteer-extra:
     specifier: 3.3.6
-    version: 3.3.6(puppeteer@21.5.2)
+    version: 3.3.6(puppeteer@21.6.0)
   puppeteer-extra-plugin-stealth:
     specifier: 2.11.2
     version: 2.11.2(puppeteer-extra@3.3.6)
@@ -197,6 +197,9 @@ dependencies:
   winston:
     specifier: 3.11.0
     version: 3.11.0
+  xxhash-wasm:
+    specifier: 1.0.2
+    version: 1.0.2
 
 devDependencies:
   '@microsoft/eslint-formatter-sarif':
@@ -1217,8 +1220,8 @@ packages:
       safe-buffer: 5.2.1
     dev: false
 
-  /@puppeteer/browsers@1.8.0:
-    resolution: {integrity: sha512-TkRHIV6k2D8OlUe8RtG+5jgOF/H98Myx0M6AOafC8DdNVOFiBSFa5cpRDtpm8LXOa9sVwe0+e6Q3FC56X/DZfg==}
+  /@puppeteer/browsers@1.9.0:
+    resolution: {integrity: sha512-QwguOLy44YBGC8vuPP2nmpX4MUN2FzWbsnvZJtiCzecU3lHmVZkaC1tq6rToi9a200m8RzlVtDyxCS0UIDrxUg==}
     engines: {node: '>=16.3.0'}
     hasBin: true
     dependencies:
@@ -2445,8 +2448,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /chromium-bidi@0.4.33(devtools-protocol@0.0.1203626):
-    resolution: {integrity: sha512-IxoFM5WGQOIAd95qrSXzJUv4eXIrh+RvU3rwwqIiwYuvfE7U/Llj4fejbsJnjJMUYCuGtVQsY2gv7oGl4aTNSQ==}
+  /chromium-bidi@0.5.1(devtools-protocol@0.0.1203626):
+    resolution: {integrity: sha512-dcCqOgq9fHKExc2R4JZs/oKbOghWpUNFAJODS8WKRtLhp3avtIH5UDCBrutdqZdh3pARogH8y1ObXm87emwb3g==}
     peerDependencies:
       devtools-protocol: '*'
     dependencies:
@@ -6521,12 +6524,12 @@ packages:
     resolution: {integrity: sha512-vYt7UD1U9Wg6138shLtLOvdAu+8DsC/ilFtEVHcH+wydcSpNE20AfSOduf6MkRFahL5FY7X1oU7nKVZFtfq8Fg==}
     engines: {node: '>=6'}
 
-  /puppeteer-core@21.5.2:
-    resolution: {integrity: sha512-v4T0cWnujSKs+iEfmb8ccd7u4/x8oblEyKqplqKnJ582Kw8PewYAWvkH4qUWhitN3O2q9RF7dzkvjyK5HbzjLA==}
+  /puppeteer-core@21.6.0:
+    resolution: {integrity: sha512-1vrzbp2E1JpBwtIIrriWkN+A0afUxkqRuFTC3uASc5ql6iuK9ppOdIU/CPGKwOyB4YFIQ16mRbK0PK19mbXnaQ==}
     engines: {node: '>=16.13.2'}
     dependencies:
-      '@puppeteer/browsers': 1.8.0
-      chromium-bidi: 0.4.33(devtools-protocol@0.0.1203626)
+      '@puppeteer/browsers': 1.9.0
+      chromium-bidi: 0.5.1(devtools-protocol@0.0.1203626)
       cross-fetch: 4.0.0
       debug: 4.3.4(supports-color@5.5.0)
       devtools-protocol: 0.0.1203626
@@ -6551,7 +6554,7 @@ packages:
         optional: true
     dependencies:
       debug: 4.3.4(supports-color@5.5.0)
-      puppeteer-extra: 3.3.6(puppeteer@21.5.2)
+      puppeteer-extra: 3.3.6(puppeteer@21.6.0)
       puppeteer-extra-plugin: 3.2.3(puppeteer-extra@3.3.6)
       puppeteer-extra-plugin-user-preferences: 2.4.1(puppeteer-extra@3.3.6)
     transitivePeerDependencies:
@@ -6572,7 +6575,7 @@ packages:
     dependencies:
       debug: 4.3.4(supports-color@5.5.0)
       fs-extra: 10.1.0
-      puppeteer-extra: 3.3.6(puppeteer@21.5.2)
+      puppeteer-extra: 3.3.6(puppeteer@21.6.0)
       puppeteer-extra-plugin: 3.2.3(puppeteer-extra@3.3.6)
       rimraf: 3.0.2
     transitivePeerDependencies:
@@ -6593,7 +6596,7 @@ packages:
     dependencies:
       debug: 4.3.4(supports-color@5.5.0)
       deepmerge: 4.3.1
-      puppeteer-extra: 3.3.6(puppeteer@21.5.2)
+      puppeteer-extra: 3.3.6(puppeteer@21.6.0)
       puppeteer-extra-plugin: 3.2.3(puppeteer-extra@3.3.6)
       puppeteer-extra-plugin-user-data-dir: 2.4.1(puppeteer-extra@3.3.6)
     transitivePeerDependencies:
@@ -6615,12 +6618,12 @@ packages:
       '@types/debug': 4.1.8
       debug: 4.3.4(supports-color@5.5.0)
       merge-deep: 3.0.3
-      puppeteer-extra: 3.3.6(puppeteer@21.5.2)
+      puppeteer-extra: 3.3.6(puppeteer@21.6.0)
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /puppeteer-extra@3.3.6(puppeteer@21.5.2):
+  /puppeteer-extra@3.3.6(puppeteer@21.6.0):
     resolution: {integrity: sha512-rsLBE/6mMxAjlLd06LuGacrukP2bqbzKCLzV1vrhHFavqQE/taQ2UXv3H5P0Ls7nsrASa+6x3bDbXHpqMwq+7A==}
     engines: {node: '>=8'}
     peerDependencies:
@@ -6638,19 +6641,20 @@ packages:
       '@types/debug': 4.1.8
       debug: 4.3.4(supports-color@5.5.0)
       deepmerge: 4.3.1
-      puppeteer: 21.5.2
+      puppeteer: 21.6.0
     transitivePeerDependencies:
       - supports-color
     dev: false
 
-  /puppeteer@21.5.2:
-    resolution: {integrity: sha512-BaAGJOq8Fl6/cck6obmwaNLksuY0Bg/lIahCLhJPGXBFUD2mCffypa4A592MaWnDcye7eaHmSK9yot0pxctY8A==}
+  /puppeteer@21.6.0:
+    resolution: {integrity: sha512-u6JhSF7xaPYZ2gd3tvhYI8MwVAjLc3Cazj7UWvMV95A07/y7cIjBwYUiMU9/jm4z0FSUORriLX/RZRaiASNWPw==}
     engines: {node: '>=16.13.2'}
+    hasBin: true
     requiresBuild: true
     dependencies:
-      '@puppeteer/browsers': 1.8.0
+      '@puppeteer/browsers': 1.9.0
       cosmiconfig: 8.3.6
-      puppeteer-core: 21.5.2
+      puppeteer-core: 21.6.0
     transitivePeerDependencies:
       - bufferutil
       - encoding
@@ -8081,6 +8085,10 @@ packages:
 
   /xmlchars@2.2.0:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
+    dev: false
+
+  /xxhash-wasm@1.0.2:
+    resolution: {integrity: sha512-ibF0Or+FivM9lNrg+HGJfVX8WJqgo+kCLDc4vx6xMeTce7Aj+DLttKbxxRR/gNLSAelRc1omAPlJ77N/Jem07A==}
     dev: false
 
   /y18n@5.0.8:
