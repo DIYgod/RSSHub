@@ -7818,6 +7818,12 @@
     "/yahoo/news/:region/:category?": [
         "KeiLongW"
     ],
+    "/yahoo/news/provider/:region/:providerId": [
+        "TonyRL"
+    ],
+    "/yahoo/news/providers/:region": [
+        "TonyRL"
+    ],
     "/yande.re/post/popular_recent": [],
     "/yande.re/post/popular_recent/:period": [],
     "/yangtzeu/dongke/:path+": [
