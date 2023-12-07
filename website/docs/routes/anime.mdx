@@ -838,12 +838,7 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 ### 文章更新阅读 {#wen-zhang-geng-xing-yue-du}
 
-<Route author="nightmare-mio" path="/lightNovel/:type/:keywords/:security_key" example="/lightNovel/articles/歡迎來到實力至上主義的教室/3cfc2dc63f3575ee42e12823188ad1b5:1709125:0" paramsDesc={['类型，见下表，目前只适配了文章类型也最为常用','关键字，可以模糊匹配，但最好精确匹配。','cookie,由于文章有防爬，所以必须携带cookie请求。route中的cookie优先级高于环境变量cookie，取token中的security_key值']} radar="1"  rssbud="1"/>
-
-默认爬取数量2，可以自行更改limit
-| 文章 | 合集 | 游戏 | 用户 |
-| ---- | ---- | ---- | ---- |
-| articles | collections | games | users |
+<Route author="nightmare-mio" path="/lightnovel/:keywords/:security_key" example="/lightnovel/歡迎來到實力至上主義的教室/3cfc2dc63f3575ee42e12823188ad1b5:1709125:0" paramsDesc={['关键字，可以模糊匹配，但最好精确匹配。默认为文章类型','cookie,由于文章有防爬，所以必须携带cookie请求。route中的cookie优先级高于环境变量cookie，取token中的security_key值']} radar="1"  rssbud="1"/>
 
 ## 三界异次元 {#san-jie-yi-ci-yuan}
 
