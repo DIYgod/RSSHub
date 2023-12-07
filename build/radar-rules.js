@@ -9160,7 +9160,7 @@
           "/" ],
         target:"/lianxh/:category?" } ] },
   "line.me":{ _name:"LINE",
-    ".":[ { title:"Today",
+    today:[ { title:"Today",
         docs:"https://docs.rsshub.app/routes/new-media#line-today",
         source:[ "/" ],
         target:"/line/today/:edition?/:tab?" },

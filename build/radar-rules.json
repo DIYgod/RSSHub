@@ -17345,7 +17345,7 @@
   },
   "line.me": {
     "_name": "LINE",
-    ".": [
+    "today": [
       {
         "title": "Today",
         "docs": "https://docs.rsshub.app/routes/new-media#line-today",
