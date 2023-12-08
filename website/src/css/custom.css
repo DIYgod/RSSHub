@@ -88,3 +88,7 @@
 .example * {
   margin-right: 5px;
 }
+
+.routeBlock.notOperational {
+  opacity: 0.6;
+}

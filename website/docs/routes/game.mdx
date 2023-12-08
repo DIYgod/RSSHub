@@ -40,7 +40,7 @@
 
 ### 新闻列表 {#5eplay-xin-wen-lie-biao}
 
-<Route author="Dlouxgit" example="/5eplay/article" path="/5eplay/article"/>
+<Route author="Dlouxgit" example="/5eplay/article" path="/5eplay/article" notOperational="1"/>
 
 ## a9vgNews 游戏新闻 {#a9vgnews-you-xi-xin-wen}
 
@@ -172,11 +172,11 @@ Category
 
 ### Latest News {#gamer-secret-latest-news}
 
-<Route author="nczitzk" example="/gamersecret" path="/gamersecret"/>
+<Route author="nczitzk" example="/gamersecret" path="/gamersecret" notOperational="1"/>
 
 ### Category {#gamer-secret-category}
 
-<Route author="nczitzk" example="/gamersecret" path="/gamersecret/:type?/:category?" paramsDesc={['Type, see below, Latest News by default', 'Category, see below']}>
+<Route author="nczitzk" example="/gamersecret" path="/gamersecret/:type?/:category?" paramsDesc={['Type, see below, Latest News by default', 'Category, see below']} notOperational="1">
 
 | Latest News | PC  | Playstation | Nintendo | Xbox | Moblie |
 | ----------- | --- | ----------- | -------- | ---- | ------ |
@@ -318,7 +318,7 @@ So the route is [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub
 
 ### PES Mobile Announcement {#konami-pes-mobile-announcement}
 
-<Route author="HenryQW" example="/konami/pesmobile/en/ios" path="/konami/pesmobile/:lang?/:os?" paramsDesc={['language, obtained from the URL, eg. zh-cn, zh-tw, en', 'operating system, iOS or Android']}/>
+<Route author="HenryQW" example="/konami/pesmobile/en/ios" path="/konami/pesmobile/:lang?/:os?" paramsDesc={['language, obtained from the URL, eg. zh-cn, zh-tw, en', 'operating system, iOS or Android']} notOperational="1"/>
 
 ## Liquipedia {#liquipedia}
 
@@ -334,7 +334,7 @@ So the route is [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub
 
 ### Dota 2 {#maxjia-news-dota-2}
 
-<Route author="dearrrfish" example="/maxnews/dota2" path="/maxnews/dota2" />
+<Route author="dearrrfish" example="/maxnews/dota2" path="/maxnews/dota2" notOperational="1" />
 
 ## Minecraft {#minecraft}
 
@@ -344,11 +344,11 @@ So the route is [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub
 
 ### CurseForge Mod Update {#minecraft-curseforge-mod-update}
 
-<Route author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" paramsDesc={['Progect shortname or `Project ID`. The short name of the project can be found in the address bar, for example `https://minecraft.curseforge.com/projects/non-update` to `non-update`. `Project ID` can be found in `About This Project` in `Overview`']}/>
+<Route author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" paramsDesc={['Progect shortname or `Project ID`. The short name of the project can be found in the address bar, for example `https://minecraft.curseforge.com/projects/non-update` to `non-update`. `Project ID` can be found in `About This Project` in `Overview`']} notOperational="1"/>
 
 ### Feed The Beast Modpack Updates {#minecraft-feed-the-beast-modpack-updates}
 
-<Route author="gucheen" example="/feed-the-beast/modpack/ftb_presents_direwolf20_1_16" path="/feed-the-beast/modpack/:modpackEntry" paramsDesc={['entry name of modpack.']}>
+<Route author="gucheen" example="/feed-the-beast/modpack/ftb_presents_direwolf20_1_16" path="/feed-the-beast/modpack/:modpackEntry" paramsDesc={['entry name of modpack.']} notOperational="1">
 | param        | description                                                                                                                                                                     |
 | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | modpackEntry | The entry name of modpack, can be found in modpack\'s page link, for `https://www.feed-the-beast.com/modpack/ftb_presents_direwolf20_1_16`, use `ftb_presents_direwolf20_1_16`. |
@@ -358,11 +358,11 @@ So the route is [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub
 
 ### eShop New Game Releases {#nintendo-eshop-new-game-releases}
 
-<Route author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" paramsDesc={['Region, currently supports `hk`(Hong Kong), `jp`(Japan) and `us`(USA)']}/>
+<Route author="HFO4" example="/nintendo/eshop/hk" path="/nintendo/eshop/:region" paramsDesc={['Region, currently supports `hk`(Hong Kong), `jp`(Japan) and `us`(USA)']} notOperational="1"/>
 
 ### News（Hong Kong only） {#nintendo-news-hong-kong-only}
 
-<Route author="HFO4" example="/nintendo/news" path="/nintendo/news"/>
+<Route author="HFO4" example="/nintendo/news" path="/nintendo/news" notOperational="1"/>
 
 ### 首页资讯（中国） {#nintendo-shou-ye-zi-xun-zhong-guo}
 
@@ -386,7 +386,7 @@ So the route is [`/itch/devlogs/teamterrible/the-baby-in-yellow`](https://rsshub
 
 ### Game List（Hong Kong） {#playstation-store-game-list-hong-kong}
 
-<Route author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" paramsDesc={['gridName from the list']}>
+<Route author="DIYgod" example="/ps/list/STORE-MSF86012-PLUS_FTT_CONTENT" path="/ps/list/:gridName" paramsDesc={['gridName from the list']} notOperational="1">
 
 Compatible with lists with an URL like `https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT`. For instance [PSN Free to Play](https://store.playstation.com/zh-hans-hk/grid/STORE-MSF86012-PLUS_FTT_CONTENT), the gridName is `STORE-MSF86012-PLUS_FTT_CONTENT`
 
@@ -394,7 +394,7 @@ Compatible with lists with an URL like `https://store.playstation.com/zh-hans-hk
 
 ### Game Product Price {#playstation-store-game-product-price}
 
-<Route author="MisteryMonster" example="/ps/product/UP9000-CUSA00552_00-THELASTOFUS00000" path="/ps/:lang/product/:gridName" paramsDesc={['region','gridName from the product']} radar="1">
+<Route author="MisteryMonster" example="/ps/product/UP9000-CUSA00552_00-THELASTOFUS00000" path="/ps/:lang/product/:gridName" paramsDesc={['region','gridName from the product']} radar="1" notOperational="1">
 
 Tested some countries, it should be work for most.
 
@@ -404,11 +404,11 @@ Compatible with Product with an URL like `https://store.playstation.com/en-us/pr
 
 ### PlayStation Network user trophy {#playstation-store-playstation-network-user-trophy}
 
-<Route author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" paramsDesc={['User ID']} radar="1"/>
+<Route author="DIYgod" example="/ps/trophy/DIYgod_" path="/ps/trophy/:id" paramsDesc={['User ID']} radar="1" anticrawler="1"/>
 
 ### PlayStation 4 System Update {#playstation-store-playstation-4-system-update}
 
-<Route author="Jeason0228" example="/ps/ps4updates/" path="/ps/ps4updates/" radar="1"/>
+<Route author="Jeason0228" example="/ps/ps4updates/" path="/ps/ps4updates/" radar="1" notOperational="1"/>
 
 ## psnine {#psnine}
 
@@ -467,7 +467,7 @@ Compatible with Product with an URL like `https://store.playstation.com/en-us/pr
 
 ### 用户动态 {#scoresaber-yong-hu-dong-tai}
 
-<Route author="zhangpeng2k" example="/scoresaber/user/76561198400378578" path="/scoresaber/user/:id" paramsDesc={['用户 id, 用户主页URL中获取']}/>
+<Route author="zhangpeng2k" example="/scoresaber/user/76561198400378578" path="/scoresaber/user/:id" paramsDesc={['用户 id, 用户主页URL中获取']} notOperational="1"/>
 
 ## Steam {#steam}
 
@@ -497,7 +497,7 @@ Due to the regional restrictions, an RSSHub deployment in China Mainland may not
 
 ### Game's Changelog {#taptap-international-game-s-changelog}
 
-<Route author="hoilc ETiV" example="/taptap/intl/changelog/191001/zh_TW" path="/taptap/intl/changelog/:id/:lang?" paramsDesc={['Game\'s App ID, you may find it from the URL of the Game', 'Language, checkout the table below for possible values, default is `en_US`']}>
+<Route author="hoilc ETiV" example="/taptap/intl/changelog/191001/zh_TW" path="/taptap/intl/changelog/:id/:lang?" paramsDesc={['Game\'s App ID, you may find it from the URL of the Game', 'Language, checkout the table below for possible values, default is `en_US`']} notOperational="1">
 
 Language Code
 
@@ -536,7 +536,7 @@ Language Code
 
 ### 游戏论坛 {#taptap-zhong-guo-you-xi-lun-tan}
 
-<Route author="hoilc TonyRL" example="/taptap/topic/142793/official" path="/taptap/topic/:id/:type?/:sort?/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '论坛版块，默认显示所有帖子，论坛版块 URL 中 `type` 参数，见下表，默认为 `feed `', '排序，见下表，默认为 `created `', '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`']}>
+<Route author="hoilc TonyRL" example="/taptap/topic/142793/official" path="/taptap/topic/:id/:type?/:sort?/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '论坛版块，默认显示所有帖子，论坛版块 URL 中 `type` 参数，见下表，默认为 `feed `', '排序，见下表，默认为 `created `', '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`']} notOperational="1">
 
 | 全部 | 精华  | 官方     | 影片  |
 | ---- | ----- | -------- | ----- |
@@ -550,11 +550,11 @@ Language Code
 
 ### 游戏更新 {#taptap-zhong-guo-you-xi-geng-xin}
 
-<Route author="hoilc ETiV" example="/taptap/changelog/60809/en_US" path="/taptap/changelog/:id/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '语言，默认使用 `zh_CN`，亦可使用 `en_US`']}/>
+<Route author="hoilc ETiV" example="/taptap/changelog/60809/en_US" path="/taptap/changelog/:id/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '语言，默认使用 `zh_CN`，亦可使用 `en_US`']} notOperational="1"/>
 
 ### 游戏更新 - 国际版 {#taptap-zhong-guo-you-xi-geng-xin-guo-ji-ban}
 
-<Route author="hoilc ETiV" example="/taptap/intl/changelog/191001/zh_TW" path="/taptap/intl/changelog/:id/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '语言代码，默认使用 `en_US`，可选项目见下表']}>
+<Route author="hoilc ETiV" example="/taptap/intl/changelog/191001/zh_TW" path="/taptap/intl/changelog/:id/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '语言代码，默认使用 `en_US`，可选项目见下表']} notOperational="1">
 
 #### 语言代码 {#taptap-zhong-guo-you-xi-geng-xin-guo-ji-ban-yu-yan-dai-ma}
 
@@ -566,7 +566,7 @@ Language Code
 
 ### 游戏评价 {#taptap-zhong-guo-you-xi-ping-jia}
 
-<Route author="hoilc TonyRL" example="/taptap/review/142793/hot" path="/taptap/review/:id/:order?/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '排序方式，空为默认排序，可选如下', '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`']}>
+<Route author="hoilc TonyRL" example="/taptap/review/142793/hot" path="/taptap/review/:id/:order?/:lang?" paramsDesc={['游戏 ID，游戏主页 URL 中获取', '排序方式，空为默认排序，可选如下', '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`']} notOperational="1">
 
 | 最新   | 最热 | 游戏时长 | 默认排序 |
 | ------ | ---- | -------- | -------- |
@@ -607,7 +607,7 @@ The year, month and day provided under UTC time zone are the same as the officia
 
 ### GNN 新聞 {#ba-ha-mu-te-gnn-xin-wen}
 
-<Route author="Arracc" example="/gamer/gnn/1" path="/gamer/gnn/:category?"  paramsDesc={['版块']}>
+<Route author="Arracc" example="/gamer/gnn/1" path="/gamer/gnn/:category?"  paramsDesc={['版块']} notOperational="1">
 
 | 首頁 | PC  | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
 | ---- | --- | ------- | -------- | ------ | -------- | -------- | ---- |
@@ -713,7 +713,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 崩坏 2 - 游戏公告 {#mi-ha-you-beng-huai-2-you-xi-gong-gao}
 
-<Route author="deepred5" example="/mihoyo/bh2/gach" path="/mihoyo/bh2/:type" paramsDesc={['公告种类']}>
+<Route author="deepred5" example="/mihoyo/bh2/gach" path="/mihoyo/bh2/:type" paramsDesc={['公告种类']} notOperational="1">
 
 | 最新公告 | 版本信息 | 祈愿信息 | 活动介绍 |
 | -------- | -------- | -------- | -------- |
@@ -861,7 +861,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 论坛 {#qi-le-lun-tan}
 
-<Route author="nczitzk" example="/keylol" path="/keylol/:path+" paramsDesc={['路径，默认为热点聚焦']}>
+<Route author="nczitzk" example="/keylol" path="/keylol/:path+" paramsDesc={['路径，默认为热点聚焦']} notOperational="1">
 
 :::tip
 
@@ -917,7 +917,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 游戏新闻 {#xiao-hei-he-you-xi-xin-wen}
 
-<Route author="MyFaith" example="/xiaoheihe/news" path="xiaoheihe/news"/>
+<Route author="MyFaith" example="/xiaoheihe/news" path="xiaoheihe/news" notOperational="1"/>
 
 ### 游戏折扣信息 {#xiao-hei-he-you-xi-zhe-kou-xin-xi}
 
@@ -943,7 +943,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 台服新闻 {#ying-xiong-lian-meng-tai-fu-xin-wen}
 
-<Route author="hoilc" example="/loltw/news" path="/loltw/news/:category?" paramsDesc={['新闻分类，置空为全部新闻']} radar="1">
+<Route author="hoilc" example="/loltw/news" path="/loltw/news/:category?" paramsDesc={['新闻分类，置空为全部新闻']} radar="1" notOperational="1">
 
 | 活动  | 资讯 | 系统   | 电竞   | 版本资讯 | 战棋资讯 |
 | ----- | ---- | ------ | ------ | -------- | -------- |
@@ -1001,7 +1001,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 分类 {#you-xi-nian-lun-fen-lei}
 
-<Route author="nczitzk" example="/bibgame/sgame" path="/bibgame/:category?/:type?" paramsDesc={['分类，见下表，默认为 PC 游戏', '类型，可在各分类页中导航栏中找到']}>
+<Route author="nczitzk" example="/bibgame/sgame" path="/bibgame/:category?/:type?" paramsDesc={['分类，见下表，默认为 PC 游戏', '类型，可在各分类页中导航栏中找到']} notOperational="1">
 
 | PC 游戏 | PS4 游戏 | Switch 游戏 | NS 其他板块 | galgame | VR 游戏 | 3DS 游戏 | psv 游戏 | xbox360 游戏 | ps3 游戏 | 其他掌机 |
 | ------- | -------- | ----------- | ----------- | ------- | ------- | -------- | -------- | ------------ | -------- | -------- |
@@ -1084,7 +1084,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 推荐 {#zhang-shang-ying-xiong-lian-meng-tui-jian}
 
-<Route author="alizeegod" example="/lolapp/recommend" path="/lolapp/recommend"/>
+<Route author="alizeegod" example="/lolapp/recommend" path="/lolapp/recommend" notOperational="1"/>
 
 ### 用户文章 {#zhang-shang-ying-xiong-lian-meng-yong-hu-wen-zhang}
 
@@ -1094,7 +1094,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 推荐 {#zhang-you-bao-tui-jian}
 
-<Route author="ztmzzz" example="/zhangyoubao/lol" path="/zhangyoubao/:category" paramsDesc={['分类，见下表']}>
+<Route author="ztmzzz" example="/zhangyoubao/lol" path="/zhangyoubao/:category" paramsDesc={['分类，见下表']} notOperational="1">
 
 | 英雄联盟 | 炉石传说 | DNF | 守望先锋 | 王者荣耀 | 单机综合 | 手游综合 | 云顶之弈 | 部落冲突 | 皇室战争 | DNF 手游 | 荒野乱斗   |
 | -------- | -------- | --- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
@@ -1106,7 +1106,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 公告 {#%E3%81%8D%E3%82%89%E3%82%89%E3%83%95%E3%82%A1%E3%83%B3%E3%82%BF%E3%82%B8%E3%82%A2-qi-la-la-huan-xiang-qu-gong-gao}
 
-<Route author="magic-akari" example="/kirara/news" path="/kirara/news"/>
+<Route author="magic-akari" example="/kirara/news" path="/kirara/news" notOperational="1"/>
 
 ## ファミ通 {#%E3%83%95%E3%82%A1%E3%83%9F-tong}
 

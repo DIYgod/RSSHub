@@ -41,6 +41,11 @@ export default function InstanceList(): JSX.Element {
     location: '🇺🇸',
     maintainer: '思维悦动',
     maintainerUrl: 'https://friesport.ac.cn',
+  }, {
+    url: 'https://rsshub.atgw.io',
+    location: '🇺🇸',
+    maintainer: 'limfoo',
+    maintainerUrl: 'https://blog.limfoo.io',
   }]
 
   return (
@@ -66,7 +71,7 @@ export default function InstanceList(): JSX.Element {
               ) : 'Anonymous'}
             </td>
             <td>
-              <img loading="lazy" src={`https://img.shields.io/website.svg?label=&url=${instance.url}/test/cache`} />
+              <img loading="lazy" src={`https://img.shields.io/website.svg?label=&url=${encodeURIComponent(`${instance.url}/test/cache`)}`} />
             </td>
           </tr>
         ))}

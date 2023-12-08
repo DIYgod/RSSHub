@@ -23,6 +23,9 @@
   "badge.configRequired": {
     "message": "⚙️ Config required"
   },
+  "badge.notOperational": {
+    "message": "😵 Not operational"
+  },
   "route.author": {
     "message": "👨‍💻 Author: "
   },

@@ -14,7 +14,7 @@
 
 ### Report {#outage.report-report}
 
-<Route author="cxumol nczitzk" example="/outagereport/ubisoft/5" path="/outagereport/:name/:count?" paramsDesc={['Service name, spelling format must be consistent with URL', 'Counting threshold, will only be written in RSS if the number of people who report to stop serving is not less than this number']}>
+<Route author="cxumol nczitzk" example="/outagereport/ubisoft/5" path="/outagereport/:name/:count?" paramsDesc={['Service name, spelling format must be consistent with URL', 'Counting threshold, will only be written in RSS if the number of people who report to stop serving is not less than this number']} notOperational="1">
 
 Please skip the local service area code for `name`, for example `https://outage.report/us/verizon-wireless` to `verizon-wireless`.
 
@@ -122,7 +122,7 @@ Please skip the local service area code for `name`, for example `https://outage.
 
 ### 杭州市 {#ting-shui-tong-zhi-hang-zhou-shi}
 
-<Route author="znhocn" example="/tingshuitz/hangzhou" path="/tingshuitz/hangzhou"/>
+<Route author="znhocn" example="/tingshuitz/hangzhou" path="/tingshuitz/hangzhou" notOperational="1"/>
 
 ### 萧山区 {#ting-shui-tong-zhi-xiao-shan-qu}
 
@@ -138,15 +138,15 @@ Please skip the local service area code for `name`, for example `https://outage.
 
 ### 东莞市 {#ting-shui-tong-zhi-dong-guan-shi}
 
-<Route author="victoriqueko" example="/tingshuitz/dongguan" path="/tingshuitz/dongguan"/>
+<Route author="victoriqueko" example="/tingshuitz/dongguan" path="/tingshuitz/dongguan" notOperational="1"/>
 
 ### 西安市 {#ting-shui-tong-zhi-xi-an-shi}
 
-<Route author="ciaranchen" example="/tingshuitz/xian" path="/tingshuitz/xian"/>
+<Route author="ciaranchen" example="/tingshuitz/xian" path="/tingshuitz/xian" notOperational="1"/>
 
 ### 阳江市 {#ting-shui-tong-zhi-yang-jiang-shi}
 
-<Route author="ciaranchen" example="/tingshuitz/yangjiang" path="/tingshuitz/yangjiang"/>
+<Route author="ciaranchen" example="/tingshuitz/yangjiang" path="/tingshuitz/yangjiang" notOperational="1"/>
 
 ### 南京市 {#ting-shui-tong-zhi-nan-jing-shi}
 
@@ -154,7 +154,7 @@ Please skip the local service area code for `name`, for example `https://outage.
 
 ### 武汉市 {#ting-shui-tong-zhi-wu-han-shi}
 
-<Route author="MoonBegonia" example="/tingshuitz/wuhan" path="/tingshuitz/wuhan/:channelId">
+<Route author="MoonBegonia" example="/tingshuitz/wuhan" path="/tingshuitz/wuhan/:channelId" notOperational="1">
 
 | channelId | 分类       |
 | --------- | ---------- |
@@ -165,7 +165,7 @@ Please skip the local service area code for `name`, for example `https://outage.
 
 ### 长沙市 {#ting-shui-tong-zhi-chang-sha-shi}
 
-<Route author="shansing" example="/tingshuitz/changsha/78" path="/tingshuitz/changsha/:channelId?">
+<Route author="shansing" example="/tingshuitz/changsha/78" path="/tingshuitz/changsha/:channelId?" notOperational="1">
 
 可能仅限于中国大陆服务器访问，以实际情况为准。
 
@@ -178,7 +178,7 @@ Please skip the local service area code for `name`, for example `https://outage.
 
 ### 深圳市 {#ting-shui-tong-zhi-shen-zhen-shi}
 
-<Route author="lilPiper" example="/tingshuitz/shenzhen" path="/tingshuitz/shenzhen">
+<Route author="lilPiper" example="/tingshuitz/shenzhen" path="/tingshuitz/shenzhen" notOperational="1">
 
 可能仅限中国大陆服务器访问，以实际情况为准。
 

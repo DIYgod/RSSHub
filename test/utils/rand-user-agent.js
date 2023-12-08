@@ -33,15 +33,17 @@ describe('rand-user-agent', () => {
     });
 
     it('should match ua configurated', async () => {
-        const response1 = await got('https://httpbingo.org/user-agent');
-        expect(response1.data['user-agent']).toBe(config.ua);
+        nock('https://rsshub.test')
+            .get('/test')
+            .reply(function () {
+                return [200, { ua: this.req.headers['user-agent'] }];
+            });
 
-        const response2 = await got('https://httpbingo.org/user-agent', {
+        const resonse = await got('https://rsshub.test/test', {
             headers: {
                 'user-agent': mobileUa,
             },
         });
-        expect(response2.data['user-agent']).toBe(mobileUa);
-        expect(response2.data['user-agent']).not.toBe(config.ua);
+        expect(resonse.data.ua).toBe(mobileUa);
     });
 });

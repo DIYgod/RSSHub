@@ -15,7 +15,7 @@
 
 ### 直播间开播 {#showroom-zhi-bo-zhi-bo-jian-kai-bo}
 
-<Route author="nwindz" example="/showroom/room/93401" path="/showroom/room/:id" paramsDesc={['直播间 id, 打开浏览器控制台，刷新页面，找到请求中的room_id参数']}/>
+<Route author="nwindz" example="/showroom/room/93401" path="/showroom/room/:id" paramsDesc={['直播间 id, 打开浏览器控制台，刷新页面，找到请求中的room_id参数']} notOperational="1"/>
 
 ## Twitch {#twitch}
 
@@ -33,13 +33,13 @@
 
 ### Stream Schedule {#twitch-stream-schedule}
 
-<Route author="hoilc" path="/twitch/schedule/:login" example="/twitch/schedule/riotgames" paramsDesc={['Twitch username']} radar="1"/>
+<Route author="hoilc" path="/twitch/schedule/:login" example="/twitch/schedule/riotgames" paramsDesc={['Twitch username']} radar="1" notOperational="1"/>
 
 ## V LIVE {#v-live}
 
 ### Board {#v-live-board}
 
-<Route author="TonyRL" example="/vlive/channel/FD53B/board/3530" path="/vlive/channel/:channel/board/:board" paramsDesc={['Channel ID, can be found in the URL', 'Board ID, can be found in the URL']} radar="1" />
+<Route author="TonyRL" example="/vlive/channel/FD53B/board/3530" path="/vlive/channel/:channel/board/:board" paramsDesc={['Channel ID, can be found in the URL', 'Board ID, can be found in the URL']} radar="1" notOperational="1" />
 
 ## Yoasobi Official {#yoasobi-official}
 
@@ -69,7 +69,7 @@
 
 ### 直播搜索 {#bi-li-bi-li-zhi-bo-zhi-bo-sou-suo}
 
-<Route author="Qixingchen" example="/bilibili/live/search/编程/online" path="/bilibili/live/search/:key/:order" paramsDesc={['搜索关键字', '排序方式, live_time 开播时间, online 人气']}/>
+<Route author="Qixingchen" example="/bilibili/live/search/dota/online" path="/bilibili/live/search/:key/:order" paramsDesc={['搜索关键字', '排序方式, live_time 开播时间, online 人气']}/>
 
 ### 直播分区 {#bi-li-bi-li-zhi-bo-zhi-bo-fen-qu}
 
@@ -105,13 +105,13 @@
 
 ### 直播间开播 {#lang-play-zhi-bo-zhi-bo-jian-kai-bo}
 
-<Route author="MittWillson" example="/lang/live/room/1352360" path="/lang/live/room/:id" paramsDesc={['直播间 id, 可在主播直播间页 URL 中找到']}/>
+<Route author="MittWillson" example="/lang/live/room/1352360" path="/lang/live/room/:id" paramsDesc={['直播间 id, 可在主播直播间页 URL 中找到']} anticrawler="1"/>
 
 ## 猎趣 TV {#lie-qu-tv}
 
 ### 直播间开播 {#lie-qu-tv-zhi-bo-jian-kai-bo}
 
-<Route author="hoilc" example="/liequtv/room/175435" path="/liequtv/room/:id" paramsDesc={['直播间 id, 可在主播直播间页 URL 中找到']}/>
+<Route author="hoilc" example="/liequtv/room/175435" path="/liequtv/room/:id" paramsDesc={['直播间 id, 可在主播直播间页 URL 中找到']} notOperational="1"/>
 
 ## 企鹅电竞 {#qi-e-dian-jing}
 
@@ -123,17 +123,17 @@
 
 ### 直播间开播 {#qi-e-zhi-bo-zhi-bo-jian-kai-bo}
 
-<Route author="nczitzk" example="/qq/live/10012045" path="/qq/live/:id" paramsDesc={['直播间 id, 可在主播直播间页 URL 中找到']}/>
+<Route author="nczitzk" example="/qq/live/10012045" path="/qq/live/:id" paramsDesc={['直播间 id, 可在主播直播间页 URL 中找到']} notOperational="1"/>
 
 ## 旺球体育 {#wang-qiu-ti-yu}
 
 ### 直播间开播 {#wang-qiu-ti-yu-zhi-bo-jian-kai-bo}
 
-<Route author="nczitzk" example="/wangqiutiyu/anchor/444" path="/wangqiutiyu/anchor/:id" paramsDesc={['直播间 id, 可在主播直播间页 URL 中找到']}/>
+<Route author="nczitzk" example="/wangqiutiyu/anchor/444" path="/wangqiutiyu/anchor/:id" paramsDesc={['直播间 id, 可在主播直播间页 URL 中找到']} notOperational="1"/>
 
 ## 战旗直播 {#zhan-qi-zhi-bo}
 
 ### 直播间开播 {#zhan-qi-zhi-bo-zhi-bo-jian-kai-bo}
 
-<Route author="cssxsh" example="/zhanqi/room/anime" path="/zhanqi/room/:id" paramsDesc={['直播间 id, 可在主播直播间页 URL 中找到']}/>
+<Route author="cssxsh" example="/zhanqi/room/anime" path="/zhanqi/room/:id" paramsDesc={['直播间 id, 可在主播直播间页 URL 中找到']} notOperational="1"/>
 
