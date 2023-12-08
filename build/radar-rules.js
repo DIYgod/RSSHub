@@ -6362,6 +6362,23 @@
         docs:"https://docs.rsshub.app/routes/government#guo-jia-shi-chang-jian-du-guan-li-zong-ju",
         source:[ "/gjjly/index" ],
         target:"/gov/samr/xgzlyhd/:category?/:department?" } ] },
+  "safe.gov.cn":{ _name:"国家外汇管理局",
+    ".":[ { title:"业务咨询",
+        docs:"https://docs.rsshub.app/routes/government#guo-jia-wai-hui-guan-li-ju-ye-wu-zi-xun",
+        source:[ "/:site/ywzx/index.html" ],
+        target:(params) => {
+                    const site = params.site;
+
+                    return `/gov/safe/business/${site}`;
+                } },
+      { title:"投诉建议",
+        docs:"https://docs.rsshub.app/routes/government#guo-jia-wai-hui-guan-li-ju-tou-su-jian-yi",
+        source:[ "/:site/tsjy/index.html" ],
+        target:(params) => {
+                    const site = params.site;
+
+                    return `/gov/safe/complaint/${site}`;
+                } } ] },
   "sasac.gov.cn":{ _name:"国务院国有资产监督管理委员会",
     ".":[ { title:"通用",
         docs:"https://docs.rsshub.app/routes/other#guo-wu-yuan-guo-you-zi-chan-jian-du-guan-li-wei-yuan-hui",
