@@ -22969,6 +22969,19 @@
       }
     ]
   },
+  "routledge.com": {
+    "_name": "Routledge",
+    ".": [
+      {
+        "title": "Book Series",
+        "docs": "https://docs.rsshub.app/routes/journals#routledge",
+        "source": [
+          "/:bookName/book-series/:bookId"
+        ],
+        "target": "/routledge/:bookName/book-series/:bookId"
+      }
+    ]
+  },
   "rsc.org": {
     "_name": "The Royal Society of Chemistry",
     "pubs": [

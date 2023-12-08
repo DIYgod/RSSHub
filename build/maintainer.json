@@ -5957,6 +5957,9 @@
     "/rodong/news/:language?": [
         "TonyRL"
     ],
+    "/routledge/:bookName/book-series/:bookId": [
+        "TonyRL"
+    ],
     "/rs05/rs05": [],
     "/rsc/journal/:id/:category?": [
         "nczitzk"
