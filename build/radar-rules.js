@@ -9904,6 +9904,13 @@
                     const id = matches ? matches[1] : params.id;
                     return `/mirror/${id}`;
                 } } ] },
+  "missav.com":{ _name:"MissAV.com",
+    ".":[ { title:"最近更新",
+        docs:"https://docs.rsshub.app/multimedia#missav-com",
+        source:[ "/dm397/new",
+          "/new",
+          "/" ],
+        target:"/missav/new" } ] },
   "misskey.io":{ _name:"Misskey",
     ".":[ { title:"Featured Notes",
         docs:"https://docs.rsshub.app/routes/social-media#misskey",
