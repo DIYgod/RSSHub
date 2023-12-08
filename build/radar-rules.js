@@ -10536,7 +10536,7 @@
           "/" ],
         target:"/ncepu/master/pyxx" } ] },
   "ncu.edu.cn":{ _name:"南昌大学",
-    ".":[ { title:"教务通知",
+    jwc:[ { title:"教务通知",
         docs:"https://docs.rsshub.app/routes/university#nan-chang-da-xue",
         source:[ "/",
           "/jwtz/index.htm" ],
