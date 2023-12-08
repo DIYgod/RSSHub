@@ -2520,6 +2520,53 @@ Supported sub-sites:
 
 <Route author="nczitzk" example="/worldhappiness/archive" path="/worldhappiness/archive"/>
 
+## Yahoo {#yahoo}
+
+### News {#yahoo-news}
+
+<Route author="KeiLongW" example="/yahoo/news/hk/world" path="/yahoo/news/:region/:category?" paramsDesc={['Region, see the table below','Category, see the table below']}>
+
+`Region`
+
+| Hong Kong | Taiwan | US |
+| --------- | ------ | --- |
+| hk        | tw     | en  |
+
+<details>
+  <summary>`Category` (Hong Kong)</summary>
+  | 全部     | 港聞      | 兩岸國際 | 財經     | 娛樂           | 體育   | 健康    | 親子      | 副刊        |
+  | ------- | --------- | ------ | -------- | ------------- | ------ | ------ | -------- | ----------- |
+  | （留空） | hong-kong | world  | business | entertainment | sports | health | parenting | supplement |
+</details>
+<details>
+  <summary>`Category` (Taiwan)</summary>
+  | 全部     | 政治     | 財經      | 娛樂          | 運動    | 社會地方 | 國際   | 生活      | 健康    | 科技        | 品味  |
+  | ------- | -------- | -------- | ------------- | ------ | ------- | ----- | -------- | ------- | ---------- | ----- |
+  | （留空） | politics | finance  | entertainment | sports | society | world | lifestyle | health | technology | style |
+</details>
+<details>
+  <summary>`Category` (US)</summary>
+  | All | World | Business | Entertainment | Sports | Health |
+  | ------- | ----- | -------- | ------------- | ------ | ------ |
+  | (Empty) | world | business | entertainment | sports | health |
+</details>
+
+</Route>
+
+### 新聞來源 {#yahoo-xin-wen-lai-yuan}
+
+<Route author="TonyRL" example="/yahoo/news/provider/tw/udn.com" path="/yahoo/news/provider/:region/:providerId" paramsDesc={['地區，見下表', '新聞來源 ID，可透過下方新聞來源列表獲得']} radar="1">
+
+| 香港 | 台灣 |
+| ---- | ---- |
+| hk   | tw   |
+
+</Route>
+
+### 新聞來源列表 {#yahoo-xin-wen-lai-yuan-lie-biao}
+
+<Route author="TonyRL" example="/yahoo/news/providers/tw" path="/yahoo/news/providers/:region" paramsDesc={['地區，見上表']} />
+
 ## ZAKER {#zaker}
 
 ### 分类 {#zaker-fen-lei}
