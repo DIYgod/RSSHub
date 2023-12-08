@@ -13,9 +13,9 @@ export default function Route({
   supportPodcast = null,
   supportScihub = null,
   radar = null,
-  rssbud = null,
-  selfhost = null,
+  configRequired = null,
   puppeteer = null,
+  notOperational = null,
   children = null,
 }: {
   author?: string;
@@ -27,9 +27,9 @@ export default function Route({
   supportPodcast?: boolean;
   supportScihub?: boolean;
   radar?: boolean;
-  rssbud?: boolean;
-  selfhost?: boolean;
+  configRequired?: boolean;
   puppeteer?: boolean;
+  notOperational?: boolean;
   children?: JSX.Element | JSX.Element[];
 }): JSX.Element {
     const demoUrl = 'https://rsshub.app' + example;
@@ -43,30 +43,30 @@ export default function Route({
     };
 
     return (
-        <div className="routeBlock" id={path}>
+        <div className={`routeBlock ${notOperational ? "notOperational" : ""}`} id={path}>
             <p className="badges">
+                {notOperational && (
+                    <Link to={`https://github.com/search?q=${encodeURIComponent('repo:DIYgod/RSSHub')}+${encodeURIComponent(`"${path}"`)}&type=issues`}>
+                        <Badge type="caution"><Translate id="badge.notOperational" /></Badge>
+                    </Link>
+                )}
+                {anticrawler && (
+                    <Link to="/faq">
+                        <Badge type="caution"><Translate id="badge.anticrawler" /></Badge>
+                    </Link>
+                )}
                 {supportBT && <Badge type="tip"><Translate id="badge.supportBT" /></Badge>}
                 {supportPodcast && <Badge type="tip"><Translate id="badge.supportPodcast" /></Badge>}
                 {supportScihub && <Badge type="tip"><Translate id="badge.supportSciHub" /></Badge>}
-                {puppeteer && <Badge type="warn"><Translate id="badge.puppeteer" /></Badge>}
-                {anticrawler && (
-                    <Link to="/faq">
-                        <Badge type="warn"><Translate id="badge.anticrawler" /></Badge>
-                    </Link>
-                )}
-                {selfhost && (
-                    <Link to="/install">
-                        <Badge type="warn"><Translate id="badge.selfhost" /></Badge>
+                {puppeteer && <Badge type="warning"><Translate id="badge.puppeteer" /></Badge>}
+                {configRequired && (
+                    <Link to="/install/config#route-specific-configurations">
+                        <Badge type="warning"><Translate id="badge.configRequired" /></Badge>
                     </Link>
                 )}
                 {radar && (
-                    <Link to="https://github.com/DIYgod/RSSHub-Radar">
+                    <Link to="/usage#radar">
                         <Badge type="tip"><Translate id="badge.radar" /></Badge>
-                    </Link>
-                )}
-                {rssbud && (
-                    <Link to="https://github.com/Cay-Zhang/RSSBud">
-                        <Badge type="tip"><Translate id="badge.rssbud" /></Badge>
                     </Link>
                 )}
             </p>
@@ -83,6 +83,7 @@ export default function Route({
                 <Link to={demoUrl}>
                     {demoUrl}
                 </Link>
+                <img loading="lazy" src={`https://img.shields.io/website.svg?label=&url=${encodeURIComponent(demoUrl)}&cacheSeconds=7200`} />
             </p>
             <p className="path">
                 <Translate id="route.path" /><code>{path}</code>

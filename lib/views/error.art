@@ -36,7 +36,7 @@
 <body>
     <div class="content">
         <p>
-            <img src="/logo.png" alt="RSSHub" width="120">
+            <img src="/logo.png" alt="RSSHub" width="120" loading="lazy" />
         </p>
 
         <h1>Looks like something went wrong</h1>

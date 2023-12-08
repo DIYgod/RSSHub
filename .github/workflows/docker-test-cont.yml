@@ -34,7 +34,7 @@ jobs:
 
       - name: Fetch affected routes
         id: fetch-route
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         env:
           PULL_REQUEST: ${{ steps.pr-data.outputs.data }}
         with:
@@ -85,7 +85,7 @@ jobs:
 
       - name: Generate feedback
         if: (env.TEST_CONTINUE)
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         env:
           TEST_BASEURL: http://localhost:1200
           TEST_ROUTES: ${{ steps.fetch-route.outputs.result }}
