@@ -4367,6 +4367,9 @@
     ],
     "/liequtv/room/:id": [],
     "/lifetimes/:category?": [],
+    "/lightnovel/:keywords/:security_key?": [
+        "nightmare-mio"
+    ],
     "/line/today/:edition/publisher/:id": [
         "TonyRL"
     ],
