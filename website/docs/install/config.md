@@ -364,6 +364,11 @@ Warning: Two Factor Authentication is **not** supported.
 
 -   `LASTFM_API_KEY`: Last.fm API Key
 
+
+### LightNovel.us
+
+-   `SECURITY_KEY`: security_key in the token，please remove %22，example `{%22security_key%22:%223cXXXX%22}`,only need 3cXXXX
+
 ### Email
 
 -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with the email account, replace `@` and `.` in email account with `_`, e.g. `EMAIL_CONFIG_xxx_gmail_com`. The value is in the format of `password=password&host=server&port=port`, eg:
