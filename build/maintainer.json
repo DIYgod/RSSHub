@@ -7765,6 +7765,9 @@
     "/xsijishe/forum/:fid": [
         "akynazh"
     ],
+    "/xsijishe/rank/:type": [
+        "akynazh"
+    ],
     "/xuangubao/subject/:subject_id": [],
     "/xueqiu/column/:id": [
         "TonyRL"

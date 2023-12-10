@@ -16281,7 +16281,15 @@
                     if (res) {
                         return `/xsijishe/forum/${res[1]}`;
                     }
-                } } ] },
+                } },
+      { title:"周排行榜",
+        docs:"https://docs.rsshub.app/routes/bbs#si-ji-she",
+        source:[ "/*" ],
+        target:"/xsijishe/rank/weekly" },
+      { title:"月排行榜",
+        docs:"https://docs.rsshub.app/routes/bbs#si-ji-she",
+        source:[ "/*" ],
+        target:"/xsijishe/rank/monthly" } ] },
   "danjuanapp.com":{ _name:"雪球",
     ".":[ { title:"蛋卷基金净值更新",
         docs:"https://docs.rsshub.app/routes/finance#xue-qiu",
