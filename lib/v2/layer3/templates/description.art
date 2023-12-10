@@ -1,0 +1,24 @@
+{{ if image }}
+  <img src="{{ image }}">
+{{ /if }}
+{{ if description }}
+  {{ if description.type == 'doc' }}
+    {{ each description.content d }}
+      {{ if d.type == 'paragraph' }}
+        {{ each d.content p }}
+          <p>{{ p.text }}</p>
+        {{ /each }}
+      {{ /if }}
+    {{ /each }}
+  {{ /if }}
+{{ /if }}
+<table>
+  <tr>
+    <th>Created At</th>
+    <td>{{ createdAt }}</td>
+  </tr>
+  <tr>
+    <th>Expiration Date</th>
+    <td>{{ expirationDate ?? '' }}</td>
+  </tr>
+</table>

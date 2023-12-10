@@ -79,6 +79,18 @@ describe('template', () => {
         expect(jsonParsed.items.every((item) => item.authors.every((author) => author.name.includes(' ')))).toBe(false);
     });
 
+    it('.debug.html', async () => {
+        const jsonResponse = await request.get('/test/1.json');
+        const jsonParsed = JSON.parse(jsonResponse.text);
+
+        const debugHTMLResponse0 = await request.get('/test/1.0.debug.html');
+        expect(debugHTMLResponse0.headers['content-type']).toBe('text/html; charset=UTF-8');
+        expect(debugHTMLResponse0.text).toBe(jsonParsed.items[0].content_html);
+
+        const debugHTMLResponseNotExist = await request.get(`/test/1.${jsonParsed.items.length}.debug.html`);
+        expect(debugHTMLResponseNotExist.text).toBe(`ctx.state.data.item[${jsonParsed.items.length}] not found`);
+    });
+
     it('flatten author object', async () => {
         const response = await request.get('/test/json');
         const parsed = await parser.parseString(response.text);

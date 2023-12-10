@@ -1,0 +1,6 @@
+{{ if description }}
+<p>{{ description }}</p>
+{{ /if }}
+{{ if audio }}
+<audio controls src="{{ audio }}"></audio>
+{{ /if }}

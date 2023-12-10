@@ -1,0 +1,6 @@
+<p>{{ standFirst }}</p>
+{{ each bodyJson }}
+{{ if $value.type === 'text' }}
+<p>{{ $value.children[0].value }}</p>
+{{ /if }}
+{{ /each }}

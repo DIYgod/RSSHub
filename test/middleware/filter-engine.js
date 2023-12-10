@@ -18,7 +18,7 @@ describe('filter-engine', () => {
 
         const response = await request.get('/test/1?filter=abc(%3F%3Ddef)');
         expect(response.status).toBe(404);
-        expect(response.text).toMatch(/SyntaxError/);
+        expect(response.text).toMatch(/RE2JSSyntaxException/);
         server.close();
     });
 

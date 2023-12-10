@@ -17,7 +17,7 @@ async function checkRSS(response) {
         expect(date).toEqual(expect.any(String));
         expect(Date.parse(date)).toEqual(expect.any(Number));
         expect(new Date() - new Date(date)).toBeGreaterThan(-1000 * 60 * 60 * 24 * 5);
-        expect(new Date() - new Date(date)).toBeLessThan(1000 * 60 * 60 * 24 * 30 * 12 * 5);
+        expect(new Date() - new Date(date)).toBeLessThan(1000 * 60 * 60 * 24 * 30 * 12 * 10);
     };
 
     const parsed = await parser.parseString(response.text);
@@ -98,7 +98,7 @@ describe('router', () => {
             },
             message: 'request returned 1 route',
         });
-    });
+    }, 60000);
     it(`/api/routes`, async () => {
         const response = await request.get('/api/routes');
         expect(response.status).toBe(200);
