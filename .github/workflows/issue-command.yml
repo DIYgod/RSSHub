@@ -13,9 +13,12 @@ jobs:
     if: github.event.issue.pull_request != '' && contains(github.event.comment.body, '/rebase') && github.event.comment.author_association == 'COLLABORATOR'
     runs-on: ubuntu-latest
     timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
       - name: Checkout the latest code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Automatic Rebase
@@ -32,12 +35,10 @@ jobs:
       contents: read
       issues: write
     steps:
-      - uses: bhermann/issue-volunteer@v0.1.20
+      - uses: bdougie/take-action@v1.6.1
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          assign_phrase: '/wip'
-          label_phase1: RSS proposal
-          label_phase2: RSS bug
+          token: ${{ secrets.GITHUB_TOKEN }}
+          trigger: '/wip'
 
   test-on-demand:
     name: Test route on demand
@@ -49,25 +50,25 @@ jobs:
       issues: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 8
 
-      - name: Use Node.js v18
-        uses: actions/setup-node@v3
+      - name: Use Node.js Active LTS
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: lts/*
           cache: 'pnpm'
 
       - name: Install dependencies (pnpm)
-        run: pnpm i
+        run: pnpm i && pnpm rb
 
       - name: Fetch affected routes
-        id: fetchRoute
-        uses: actions/github-script@v6
+        id: fetch-route
+        uses: actions/github-script@v7
         env:
           EVENT: ${{ toJson(github.event) }}
         with:
@@ -77,7 +78,7 @@ jobs:
             const number = event.issue.number
             const sender = event.comment.user.login
             const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/identify.js`)
-            return await script({ github, context, core }, body, number, sender)
+            return script({ github, context, core }, body, number, sender)
 
       - name: Start RSSHub
         if: env.TEST_CONTINUE
@@ -90,10 +91,10 @@ jobs:
 
       - name: Generate feedback
         if: env.TEST_CONTINUE
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         env:
           TEST_BASEURL: http://localhost:1200
-          TEST_ROUTES: ${{ steps.fetchRoute.outputs.result }}
+          TEST_ROUTES: ${{ steps.fetch-route.outputs.result }}
           EVENT: ${{ toJson(github.event) }}
         with:
           script: |
@@ -104,7 +105,7 @@ jobs:
             core.info(`${link}, ${routes}, ${number}`)
             const got = require("got")
             const script = require(`${process.env.GITHUB_WORKSPACE}/scripts/workflow/test-route/test.js`)
-            return await script({ github, context, core, got }, link, routes, number)
+            return script({ github, context, core, got }, link, routes, number)
 
       - name: Print logs
         if: (env.TEST_CONTINUE)

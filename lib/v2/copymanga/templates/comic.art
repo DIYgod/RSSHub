@@ -1,4 +1,4 @@
 <h1>{{ size }}p</h1><br>
 {{ each contents img }}
-<img src="{{ img.url }}" alt="{{ img.page }}">
+    <img src="{{ img.url }}">
 {{ /each }}

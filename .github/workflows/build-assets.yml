@@ -1,29 +1,36 @@
-name: build assets
+name: Build assets
 
 on:
   push:
     branches:
       - master
     paths:
-      - 'lib/**'
-      - 'scripts/workflow/*.js'
+      - 'assets/radar-rules.js'
+      - 'lib/**/maintainer.js'
+      - 'lib/**/radar-rules.js'
+      - 'lib/**/radar.js'
+
+permissions:
+  contents: read
 
 jobs:
   build:
     runs-on: ubuntu-latest
     name: Build assets
     timeout-minutes: 5
+    permissions:
+      contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install pnpm
         uses: pnpm/action-setup@v2
         with:
           version: 8
-      - name: Use Node.js v18
-        uses: actions/setup-node@v3
+      - name: Use Node.js Active LTS
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: lts/*
           cache: 'pnpm'
       - name: Install dependencies (yarn)
         run: pnpm i

@@ -1,0 +1,15 @@
+<text>举办单位：{{ hostingUnit }} </text>
+<br>
+<text>许可证号：{{ licenseNumber }} </text>
+<br>
+<text>演出名称：{{ performanceName }} </text>
+<br>
+<text>演出日期：{{ performanceDate }} </text>
+<br>
+<text>演出场所：{{ performanceVenue }} </text>
+<br>
+<text>主要演员：{{ mainActors }} </text>
+<br>
+<text>演员人数：{{ actorCount }} </text>
+<br>
+<text>场次：{{ showCount }} </text>

@@ -1,0 +1,13 @@
+{{@ description }}
+
+{{ if source }}
+<br>
+<a href="{{ source }}">来源链接</a>
+<br>
+{{ /if }}
+
+{{ if image }}
+  <figure>
+    <img src="{{ image }}">
+  </figure>
+{{ /if }}
