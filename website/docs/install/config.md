@@ -364,7 +364,7 @@ Warning: Two Factor Authentication is **not** supported.
 
 ### LightNovel.us
 
--   `SECURITY_KEY`: security_key in the token，please remove %22，example '{%22security_key%22:%223cXXXX%22}',only need 3cXXXX。
+-   `SECURITY_KEY`: security_key in the token，please remove %22，example `{%22security_key%22:%223cXXXX%22}`,only need 3cXXXX
 
 ### Email
 

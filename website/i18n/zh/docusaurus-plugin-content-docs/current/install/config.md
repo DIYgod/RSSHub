@@ -358,7 +358,7 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 
 ### LightNovel.us
 
--   `SECURITY_KEY`: 在token中security_key的值，请去除%22，例如'{%22security_key%22:%223cXXXX%22}',只需要3cXXXX部分。
+-   `SECURITY_KEY`: 在token中security_key的值，请去除%22，例如`{%22security_key%22:%223cXXXX%22}`,只需要3cXXXX部分
 
 ### Mastodon
 
