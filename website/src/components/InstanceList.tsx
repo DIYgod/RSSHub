@@ -41,6 +41,11 @@ export default function InstanceList(): JSX.Element {
     location: '🇺🇸',
     maintainer: '思维悦动',
     maintainerUrl: 'https://friesport.ac.cn',
+  }, {
+    url: 'https://rsshub.atgw.io',
+    location: '🇺🇸',
+    maintainer: 'limfoo',
+    maintainerUrl: 'https://blog.limfoo.io',
   }]
 
   return (

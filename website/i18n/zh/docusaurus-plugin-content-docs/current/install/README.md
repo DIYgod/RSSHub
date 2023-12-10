@@ -142,6 +142,118 @@ $ docker run -d --name rsshub -p 1200:1200 -e CACHE_EXPIRE=3600 -e GITHUB_ACCESS
 
 更多配置项请看 [#配置](#pei-zhi)
 
+## Kubernetes 部署 (Helm)
+
+RSSHub 可以使用来自 [RSSHub Helm Chart](https://github.com/NaturalSelectionLabs/helm-charts/tree/main/charts/rsshub) 的 Helm Chart 在 Kubernetes 中安装
+
+确保满足以下要求：
+
+-   Kubernetes 1.16+
+-   已经 [安装](https://helm.sh/docs/intro/install/) Helm 版本 3.9+
+
+### 安装
+
+将 NaturalSelection Labs Chart 仓库添加到 Helm：
+
+```bash
+helm repo add nsl https://naturalselectionlabs.github.io/helm-charts
+```
+
+你可以通过运行以下命令更新 Chart 仓库：
+
+```bash
+helm repo update
+```
+
+然后使用 `helm` 命令行安装：
+
+```bash
+helm install my-release nsl/rsshub
+```
+
+### 更新
+
+要升级 my-release RSSHub 部署：
+
+```bash
+helm upgade my-release nsl/rsshub
+```
+
+### 移除
+
+如要删除 my-release RSSHub 部署：
+
+```bash
+helm delete my-release
+```
+
+### 使用自定义配置安装
+
+<Tabs groupId="package-manager">
+<TabItem value="using-helm-cli" label="使用 Helm CLI" default>
+
+```bash
+helm install my-release nsl/rsshub \
+  --set="image.tag=2023-12-04" \
+  --set="replicaCount=2"
+```
+
+</TabItem>
+<TabItem value="with-a-custom-values-file" label="使用自定义配置文件">
+
+```yaml
+# custom-values.yml 文件
+## 使用 "helm install my-release nsl/rsshub -f ./custom-values.yml" 安装
+image:
+  tag: "2023-12-04"
+replicaCount: 2
+```
+
+</TabItem>
+</Tabs>
+
+### 使用 HA 模式安装
+
+<Tabs groupId="package-manager">
+<TabItem value="ha-mode-without-autoscaling" label="不使用自动扩缩的 HA 模式" default>
+
+```yaml
+replicaCount: 3
+
+puppeteer:
+  replicaCount: 2
+```
+
+</TabItem>
+<TabItem value="ha-mode-with-autoscaling" label="使用自动扩缩的 HA 模式">
+
+```yaml
+autoscaling:
+  enabled: true
+  minReplicas: 3
+
+puppeteer:
+  autoscaling:
+    enabled: true
+    minReplicas: 2
+```
+
+</TabItem>
+</Tabs>
+
+### 使用外部 Redis 安装
+
+```yaml
+redis:
+  # -- 禁用内部 redis
+  enabled: false
+env:
+  # -- 其他环境变量 --
+  REDIS_URL: redis://external-redis:6379/
+```
+
+要配置更多值，请参阅 [RSSHub Helm Chart](https://github.com/NaturalSelectionLabs/helm-charts/tree/main/charts/rsshub)。
+
 ## Ansible 部署
 
 这个 Ansible playbook 包括了 RSSHub, Redis, browserless （依赖 Docker） 以及 Caddy 2

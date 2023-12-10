@@ -1990,7 +1990,7 @@ Member ID
 
 ### News {#techcrunch-news}
 
-<Route author="NavePnow" example="/techcrunch/news" path="/techcrunch/news"/>
+<Route author="EthanWng97" example="/techcrunch/news" path="/techcrunch/news"/>
 
 ## TechPowerUp {#techpowerup}
 
@@ -2519,6 +2519,53 @@ Supported sub-sites:
 ### Archive {#world-happiness-archive}
 
 <Route author="nczitzk" example="/worldhappiness/archive" path="/worldhappiness/archive"/>
+
+## Yahoo {#yahoo}
+
+### News {#yahoo-news}
+
+<Route author="KeiLongW" example="/yahoo/news/hk/world" path="/yahoo/news/:region/:category?" paramsDesc={['Region, see the table below','Category, see the table below']}>
+
+`Region`
+
+| Hong Kong | Taiwan | US |
+| --------- | ------ | --- |
+| hk        | tw     | en  |
+
+<details>
+  <summary>`Category` (Hong Kong)</summary>
+  | 全部     | 港聞      | 兩岸國際 | 財經     | 娛樂           | 體育   | 健康    | 親子      | 副刊        |
+  | ------- | --------- | ------ | -------- | ------------- | ------ | ------ | -------- | ----------- |
+  | （留空） | hong-kong | world  | business | entertainment | sports | health | parenting | supplement |
+</details>
+<details>
+  <summary>`Category` (Taiwan)</summary>
+  | 全部     | 政治     | 財經      | 娛樂          | 運動    | 社會地方 | 國際   | 生活      | 健康    | 科技        | 品味  |
+  | ------- | -------- | -------- | ------------- | ------ | ------- | ----- | -------- | ------- | ---------- | ----- |
+  | （留空） | politics | finance  | entertainment | sports | society | world | lifestyle | health | technology | style |
+</details>
+<details>
+  <summary>`Category` (US)</summary>
+  | All | World | Business | Entertainment | Sports | Health |
+  | ------- | ----- | -------- | ------------- | ------ | ------ |
+  | (Empty) | world | business | entertainment | sports | health |
+</details>
+
+</Route>
+
+### 新聞來源 {#yahoo-xin-wen-lai-yuan}
+
+<Route author="TonyRL" example="/yahoo/news/provider/tw/udn.com" path="/yahoo/news/provider/:region/:providerId" paramsDesc={['地區，見下表', '新聞來源 ID，可透過下方新聞來源列表獲得']} radar="1">
+
+| 香港 | 台灣 |
+| ---- | ---- |
+| hk   | tw   |
+
+</Route>
+
+### 新聞來源列表 {#yahoo-xin-wen-lai-yuan-lie-biao}
+
+<Route author="TonyRL" example="/yahoo/news/providers/tw" path="/yahoo/news/providers/:region" paramsDesc={['地區，見上表']} />
 
 ## ZAKER {#zaker}
 
@@ -5722,7 +5769,7 @@ column 为 third 时可选的 category:
 
 ### 公众号（搜狗来源） {#wei-xin-gong-zhong-hao-sou-gou-lai-yuan}
 
-<Route author="NavePnow" example="/wechat/sogou/qimao0908" path="/wechat/sogou/:id" paramsDesc={['公众号 id, 打开 weixin.sogou.com 并搜索相应公众号， 在 URL 中找到 id']} notOperational="1"/>
+<Route author="EthanWng97" example="/wechat/sogou/qimao0908" path="/wechat/sogou/:id" paramsDesc={['公众号 id, 打开 weixin.sogou.com 并搜索相应公众号， 在 URL 中找到 id']} notOperational="1"/>
 
 ## 维基百科 {#wei-ji-bai-ke}
 
@@ -6438,6 +6485,12 @@ column 为 third 时可选的 category:
 | Information | Dynamics | TechNews |
 
 </Route>
+
+## 中国科普博览 {#zhong-guo-ke-pu-bo-lan}
+
+### 直播回看 {#zhong-guo-ke-pu-bo-lan-zhi-bo-hui-kan}
+
+<Route author="nczitzk" example="/kepu/live" path="/kepu/live" radar="1" supportBT="1"/>
 
 ## 中国科学院青年创新促进会 {#zhong-guo-ke-xue-yuan-qing-nian-chuang-xin-cu-jin-hui}
 

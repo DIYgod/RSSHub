@@ -13,7 +13,7 @@ beforeAll(() => {
 afterEach(() => {
     delete process.env.CACHE_TYPE;
     jest.resetModules();
-    server.close();
+    server?.close();
 });
 
 afterAll(() => {
@@ -201,6 +201,19 @@ describe('cache', () => {
             expect(response).toThrow(Error);
         } catch (e) {
             expect(e.message).toContain('Cache key must be a string');
+        }
+    });
+
+    it('throws TTL key', async () => {
+        process.env.CACHE_TYPE = 'redis';
+        const app = require('../../lib/app');
+
+        try {
+            await app.context.cache.get('rsshub:cacheTtl:mock');
+        } catch (e) {
+            expect(e.message).toContain('reserved for the internal usage');
+        } finally {
+            await app.context.cache.clients.redisClient.quit();
         }
     });
 });
