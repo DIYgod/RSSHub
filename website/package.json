@@ -23,9 +23,9 @@
     "@docusaurus/preset-classic": "3.0.1",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.0.0",
-    "markdown-it": "^13.0.2",
+    "markdown-it": "^14.0.0",
     "meilisearch-docsearch": "^0.6.0",
-    "pinyin-pro": "3.18.3",
+    "pinyin-pro": "3.18.4",
     "prism-react-renderer": "^2.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
