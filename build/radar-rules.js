@@ -2517,7 +2517,7 @@
         docs:"https://docs.rsshub.app/routes/study#zhong-guo-ji-shu-jing-ji-xue-hui-lan-mu",
         source:[ "/site/term",
           "/" ],
-        target:(params, url) => `/cste/${new URL(url).match(/site\/term\/(\d+)\.html/)[1]}` } ] },
+        target:(params, url) => `/cste/${url.match(/site\/term\/(\d+)\.html/)[1]}` } ] },
   "cankaoxiaoxi.com":{ _name:"参考消息",
     ".":[ { title:"栏目",
         docs:"https://docs.rsshub.app/routes/traditional-media#can-kao-xiao-xi-lan-mu",
@@ -3981,7 +3981,45 @@
         target:(_, url) => {
                     const id = new URL(url).searchParams.get('recid');
                     let type = 'recommend';
-                    Object.entries(utils.TYPE).forEach(([key, value]) => {
+                    const TypeMap = {
+                        recommend: {
+                            name: '推荐',
+                            id: 1,
+                        },
+                        history: {
+                            name: '党史',
+                            id: 37,
+                        },
+                        stock: {
+                            name: '豫股',
+                            id: 2,
+                        },
+                        business: {
+                            name: '财经',
+                            id: 4,
+                        },
+                        education: {
+                            name: '投教',
+                            id: 36,
+                        },
+                        finance: {
+                            name: '金融',
+                            id: 5,
+                        },
+                        science: {
+                            name: '科创',
+                            id: 19,
+                        },
+                        invest: {
+                            name: '投融',
+                            id: 29,
+                        },
+                        column: {
+                            name: '专栏',
+                            id: 33,
+                        },
+                    };
+                    Object.entries(TypeMap).forEach(([key, value]) => {
                         if (value.id === id) {
                             type = key;
                         }
@@ -5234,7 +5272,7 @@
     ".":[ { title:"Software Update",
         docs:"https://docs.rsshub.app/routes/program-update#fosshub-software-update",
         source:[ "/" ],
-        target:(params, url) => `/fosshub/${new URL(url).match(/\/(.*?)\.html$/)[1]}` } ] },
+        target:(params, url) => `/fosshub/${url.match(/\/(.*?)\.html$/)[1]}` } ] },
   "freebuf.com":{ _name:"Freebuf",
     ".":[ { title:"文章",
         docs:"https://docs.rsshub.app/routes/blog#freebuf",
@@ -5924,7 +5962,7 @@
     www:[ { title:"新闻中心",
         docs:"https://docs.rsshub.app/routes/government#zhong-guo-hu-lian-wang-luo-xin-xi-zhong-xin-xin-wen-zhong-xin",
         source:[ "/" ],
-        target:(params, url) => `/gov/cnnic/${new URL(url).match(/cnnic\.net\.cn\/(.*)/)[1]}` } ] },
+        target:(params, url) => `/gov/cnnic/${url.match(/cnnic\.net\.cn\/(.*)/)[1]}` } ] },
   "cq.gov.cn":{ _name:"重庆市人民政府",
     rlsbj:[ { title:"重庆人事考试通知公告",
         docs:"https://docs.rsshub.app/routes/government#zhong-qing-shi-ren-min-zheng-fu",
@@ -6401,7 +6439,7 @@
     yjj:[ { title:"上海市药品监督管理局",
         docs:"https://docs.rsshub.app/routes/government#shang-hai-shi-ren-min-zheng-fu-shang-hai-shi-yao-pin-jian-du-guan-li-ju",
         source:[ "/" ],
-        target:(params, url) => `/gov/shanghai/yjj/${new URL(url).match(/yjj\.sh\.gov\.cn\/(.*)\/index.html/)[1]}` } ],
+        target:(params, url) => `/gov/shanghai/yjj/${url.match(/yjj\.sh\.gov\.cn\/(.*)\/index.html/)[1]}` } ],
     "wsbs.wgj":[ { title:"上海市文旅局审批公告",
         docs:"https://docs.rsshub.app/routes/government#shang-hai-shi-ren-min-zheng-fu-shang-hai-shi-wen-lv-ju-shen-pi-gong-gao",
         source:[ "/" ],
@@ -9858,7 +9896,7 @@
                     if (!gids) {
                         return '';
                     }
-                    const { type = '2' } = new URL(url).searchParams;
+                    const type = new URL(url).searchParams.get('type') || '1';
                     const page_size = '20';
                     const last_id = '';
                     return `/mihoyo/bbs/official/${gids}/${type}/${page_size}/${last_id}`;
@@ -11159,7 +11197,7 @@
     ".":[ { title:"点播",
         docs:"https://docs.rsshub.app/routes/traditional-media#nei-meng-gu-guang-bo-dian-shi-tai-dian-bo",
         source:[ "/" ],
-        target:(params, url) => `/nmtv/column/${new URL(url).toString.split(/\/folder/).pop()}` } ] },
+        target:(params, url) => `/nmtv/column/${url.split(/\/folder/).pop()}` } ] },
   "nodejs.org":{ _name:"Node.js",
     ".":[ { title:"News",
         docs:"https://docs.rsshub.app/routes/programming#nodejs-news",
@@ -11455,7 +11493,7 @@
     ".":[ { title:"Changelog",
         docs:"https://docs.rsshub.app/routes/program-update#oo-software-changelog",
         source:[ "/en/changelog" ],
-        target:(params, url) => `/oo-software/changelog/${new URL(url).match(/\/en\/(.*?)\/changelog/)[1]}` } ] },
+        target:(params, url) => `/oo-software/changelog/${url.match(/\/en\/(.*?)\/changelog/)[1]}` } ] },
   "openai.com":{ _name:"OpenAI",
     ".":[ { title:"Blog",
         docs:"https://docs.rsshub.app/routes/en/new-media#openai",
@@ -14464,11 +14502,11 @@
       { title:"频道",
         docs:"https://docs.rsshub.app/routes/traditional-media#peng-pai-xin-wen-pin-dao",
         source:[ "/" ],
-        target:(params, url) => `/thepaper/channel/${new URL(url).search(/channel_(\d+)/)}` },
+        target:(params, url) => `/thepaper/channel/${url.match(/channel_(\d+)/)?.[1]}` },
       { title:"栏目",
         docs:"https://docs.rsshub.app/routes/traditional-media#peng-pai-xin-wen-lie-biao",
         source:[ "/" ],
-        target:(params, url) => `/thepaper/list/${new URL(url).search(/list_(\d+)/)}` },
+        target:(params, url) => `/thepaper/list/${url.search(/list_(\d+)/)?.[1]}` },
       { title:"澎湃美数组作品集",
         docs:"https://docs.rsshub.app/routes/traditional-media#peng-pai-xin-wen-peng-pai-mei-shu-zuo-pin-ji",
         source:[ "/" ],
