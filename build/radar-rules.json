@@ -22920,6 +22920,14 @@
           "/",
           "/:category"
         ]
+      },
+      {
+        "title": "每日早报",
+        "docs": "https://docs.rsshub.app/routes/new-media#readhub-mei-ri-zao-bao",
+        "source": [
+          "/daily"
+        ],
+        "target": "/readhub/daily"
       }
     ]
   },

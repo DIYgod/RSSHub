@@ -12410,7 +12410,11 @@
                     const category = params.category;
 
                     return `/readhub${category ? `/${category}` : ''}`;
-                } } ] },
+                } },
+      { title:"每日早报",
+        docs:"https://docs.rsshub.app/routes/new-media#readhub-mei-ri-zao-bao",
+        source:[ "/daily" ],
+        target:"/readhub/daily" } ] },
   "remnote.com":{ _name:"RemNote",
     ".":[ { title:"Changelog",
         docs:"https://docs.rsshub.app/routes/program-update#remnote",
