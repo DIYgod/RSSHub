@@ -3979,7 +3979,7 @@
         source:[ "/channel.html",
           "/index.html" ],
         target:(_, url) => {
-                    const id = new URL(url).searchParams.get('recid');
+                    const id = parseInt(new URL(url).searchParams.get('recid'));
                     let type = 'recommend';
                     const TypeMap = {
                         recommend: {
