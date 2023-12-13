@@ -1608,79 +1608,121 @@ Compared to the official one, this feed:
 
 ### 行业研究报告 {#questmobile-hang-ye-yan-jiu-bao-gao}
 
-<Route author="nczitzk" example="/questmobile/report" path="/questmobile/report/:category?/:label?" paramsDesc={['行业，见下表，默认为全部行业', '标签，见下表，默认为全部标签']}>
+<Route author="nczitzk" example="/questmobile/report" path="/questmobile/report/:industry?/:label?" paramsDesc={['行业，见下表，默认为 `-1`，即全部行业', '标签，见下表，默认为 `-1`，即全部标签']} radar="1">
 
-行业
+:::tip
 
-| 全部行业 | 移动视频 | 移动社交 | 移动购物 |
-| -------- | -------- | -------- | -------- |
-| 0        | 10       | 1        | 2        |
+若订阅行业 [互联网行业](https://www.questmobile.com.cn/research/reports/1/-1)，网址为 `https://www.questmobile.com.cn/research/reports/1/-1`
+参数 industry 为 `互联网行业` 或 `1`，此时路由为 [`/questmobile/report/互联网行业`](https://rsshub.app/questmobile/report/互联网行业) 或 [`/questmobile/report/1/-1`](https://rsshub.app/questmobile/report/1/-1)。
 
-| 系统工具 | 新闻资讯 | 移动音乐 | 生活服务 |
-| -------- | -------- | -------- | -------- |
-| 17       | 21       | 11       | 5        |
+若订阅标签 [榜单](https://www.questmobile.com.cn/research/reports/-1/11)，网址为 `https://www.questmobile.com.cn/research/reports/-1/11`
+参数 label 为 `榜单` 或 `11`，此时路由为 [`/questmobile/report/榜单`](https://rsshub.app/questmobile/report/榜单) 或 [`/questmobile/report/-1/11`](https://rsshub.app/questmobile/report/-1/11)。
 
-| 数字阅读 | 汽车服务 | 拍摄美化 | 旅游服务 |
-| -------- | -------- | -------- | -------- |
-| 16       | 4        | 12       | 8        |
+若订阅行业和标签 [品牌领域 - 互联网经济](https://www.questmobile.com.cn/research/reports/2/1)，网址为 `https://www.questmobile.com.cn/research/reports/2/1`
+参数 industry 为 `品牌领域` 或 `2`，参数 label 为 `互联网经济` 或 `1`，此时路由为 [`/questmobile/report/品牌领域/互联网经济`](https://rsshub.app/questmobile/report/品牌领域/互联网经济) 或 [`/questmobile/report/2/1`](https://rsshub.app/questmobile/report/2/1)，甚至 [`/questmobile/report/品牌领域/1`](https://rsshub.app/questmobile/report/品牌领域/1)。
 
-| 健康美容 | 医疗服务 | 教育学习 | 金融理财 |
-| -------- | -------- | -------- | -------- |
-| 22       | 23       | 14       | 3        |
+:::
 
-| 办公商务 | 智能设备 | 手机游戏 | 出行服务 | 内容平台 |
-| -------- | -------- | -------- | -------- | -------- |
-| 9        | 19       | 20       | 26       | 29       |
+<details>
+  <summary>全部行业和标签</summary>
 
-标签
+  #### 行业
 
-| 全部标签 | 5G | 双十一 | 直播带货 | 电商平台 |
-| -------- | -- | ------ | -------- | -------- |
-| 0        | 75 | 74     | 73       | 72       |
+  | 互联网行业 | 移动社交 | 移动视频 | 移动购物 | 系统工具 |
+  | ----- | ---- | ---- | ---- | ---- |
+  | 1     | 1001 | 1002 | 1003 | 1004 |
+  
+  | 出行服务 | 金融理财 | 生活服务 | 移动音乐 | 新闻资讯 |
+  | ---- | ---- | ---- | ---- | ---- |
+  | 1005 | 1006 | 1007 | 1008 | 1009 |
+  
+  | 办公商务 | 手机游戏 | 实用工具 | 数字阅读 | 教育学习 |
+  | ---- | ---- | ---- | ---- | ---- |
+  | 1010 | 1011 | 1012 | 1013 | 1014 |
+  
+  | 汽车服务 | 拍摄美化 | 智能设备 | 旅游服务 | 健康美容 |
+  | ---- | ---- | ---- | ---- | ---- |
+  | 1015 | 1016 | 1017 | 1018 | 1020 |
+  
+  | 育儿母婴 | 主题美化 | 医疗服务 | 品牌领域 | 美妆品牌 |
+  | ---- | ---- | ---- | ---- | ---- |
+  | 1022 | 1023 | 1024 | 2    | 2001 |
+  
+  | 母婴品牌 | 家电品牌 | 食品饮料品牌 | 汽车品牌 | 服饰箱包品牌 |
+  | ---- | ---- | ------ | ---- | ------ |
+  | 2002 | 2003 | 2004   | 2005 | 2006   |
+  
+  #### 标签
+  
+  | 互联网经济 | 圈层经济 | 粉丝经济 | 银发经济 | 儿童经济 |
+  | ----- | ---- | ---- | ---- | ---- |
+  | 1     | 1001 | 1002 | 1004 | 1005 |
+  
+  | 萌宠经济 | 她经济  | 他经济  | 泛娱乐经济 | 下沉市场经济 |
+  | ---- | ---- | ---- | ----- | ------ |
+  | 1007 | 1009 | 1010 | 1011  | 1012   |
+  
+  | 内容经济 | 订阅经济 | 会员经济 | 居家经济 | 到家经济 |
+  | ---- | ---- | ---- | ---- | ---- |
+  | 1013 | 1014 | 1015 | 1016 | 1017 |
+  
+  | 颜值经济 | 闲置经济 | 旅游经济                | 人群洞察 | 00后  |
+  | ---- | ---- | ------------------- | ---- | ---- |
+  | 1018 | 1020 | 1622842051677753346 | 2    | 2002 |
+  
+  | Z世代  | 银发族  | 宝妈宝爸 | 萌宠人群 | 运动达人 |
+  | ---- | ---- | ---- | ---- | ---- |
+  | 2003 | 2004 | 2005 | 2007 | 2008 |
+  
+  | 女性消费 | 男性消费 | 游戏人群 | 二次元  | 新中产  |
+  | ---- | ---- | ---- | ---- | ---- |
+  | 2009 | 2010 | 2012 | 2013 | 2014 |
+  
+  | 下沉市场用户 | 大学生  | 数字化营销 | 广告效果 | 品牌营销 |
+  | ------ | ---- | ----- | ---- | ---- |
+  | 2018   | 2022 | 3     | 3001 | 3002 |
+  
+  | 全域营销 | 私域流量 | 新媒体营销 | KOL生态 | 内容营销 |
+  | ---- | ---- | ----- | ----- | ---- |
+  | 3003 | 3004 | 3005  | 3006  | 3008 |
+  
+  | 直播电商 | 短视频带货 | 娱乐营销                | 营销热点 | 双11电商大促 |
+  | ---- | ----- | ------------------- | ---- | ------- |
+  | 3009 | 3010  | 1630464311158738945 | 4    | 4001    |
+  
+  | 618电商大促 | 春节营销 | 五一假期营销 | 热点事件盘点 | 消费热点 |
+  | ------- | ---- | ------ | ------ | ---- |
+  | 4002    | 4003 | 4004   | 4007   | 5    |
+  
+  | 时尚品牌 | 连锁餐饮 | 新式茶饮 | 智能家电 | 国潮品牌 |
+  | ---- | ---- | ---- | ---- | ---- |
+  | 5001 | 5002 | 5003 | 5004 | 5007 |
+  
+  | 白酒品牌                | 精益运营 | 媒介策略 | 用户争夺 | 精细化运营 |
+  | ------------------- | ---- | ---- | ---- | ----- |
+  | 1622841828310093825 | 6    | 6001 | 6002 | 6003  |
+  
+  | 用户分层 | 增长黑马 | 社交裂变 | 新兴领域 | 新能源汽车 |
+  | ---- | ---- | ---- | ---- | ----- |
+  | 6004 | 6005 | 6007 | 7    | 7001  |
+  
+  | 智能汽车 | 新消费  | AIoT | 产业互联网 | AIGC                |
+  | ---- | ---- | ---- | ----- | ------------------- |
+  | 7002 | 7003 | 7004 | 7005  | 1645677998450511873 |
+  
+  | OTT应用               | 智能电视                | 全景数据 | 全景生态 | 微信小程序 |
+  | ------------------- | ------------------- | ---- | ---- | ----- |
+  | 1676063510499528705 | 1676063630293045249 | 8    | 8001 | 8002  |
+  
+  | 支付宝小程序 | 百度智能小程序 | 企业流量                | 抖音小程序               | 手机终端 |
+  | ------ | ------- | ------------------- | ------------------- | ---- |
+  | 8003   | 8004    | 1671052842096496642 | 1676063017220018177 | 9    |
+  
+  | 智能终端 | 国产终端 | 5G手机 | 盘点  | 季度报告  |
+  | ---- | ---- | ---- | --- | ----- |
+  | 9001 | 9002 | 9003 | 10  | 10001 |
 
-| 新蓝领 | 市场竞争 | KOL | 品牌营销 | 互联网研究 |
-| ------ | -------- | --- | -------- | ---------- |
-| 71     | 70       | 69  | 68       | 67         |
-
-| 广告效果 | 媒介策略 | App 和小程序 | App 增长 |
-| -------- | -------- | ------------ | -------- |
-| 66       | 65       | 64           | 63       |
-
-| 小程序数据 | 移动大数据 | 互联网报告 | 数据报告 |
-| ---------- | ---------- | ---------- | -------- |
-| 62         | 61         | 60         | 59       |
-
-| 互联网数据 | 智能终端 | 小程序 | 私域流量 |
-| ---------- | -------- | ------ | -------- |
-| 58         | 57       | 56     | 55       |
-
-| 运动消费 | 用户争夺 | 运动健身 | 新消费 |
-| -------- | -------- | -------- | ------ |
-| 54       | 53       | 52       | 48     |
-
-| 增长模式 | 下沉 | 新中产 | 银发族 |
-| -------- | ---- | ------ | ------ |
-| 42       | 41   | 36     | 31     |
-
-| 粉丝经济 | 泛娱乐 | 网购少女 | 二次元 |
-| -------- | ------ | -------- | ------ |
-| 30       | 29     | 28       | 27     |
-
-| 兴趣圈层 | 大学生 | 广告营销 | Z 世代 |
-| -------- | ------ | -------- | ------ |
-| 26       | 25     | 23       | 22     |
-
-| 付费用户 | 精细化运营 | 00 后 | 90 后 |
-| -------- | ---------- | ----- | ----- |
-| 18       | 17         | 14    | 11    |
-
-| 春节报告 | 低幼经济 | 季度报告 | 年度报告 |
-| -------- | -------- | -------- | -------- |
-| 10       | 9        | 7        | 6        |
-
-| 全景生态 | 消费者洞察 |
-| -------- | ---------- |
-| 5        | 2          |
+</details>
 
 </Route>
 
@@ -1702,11 +1744,15 @@ Compared to the official one, this feed:
 
 <Route author="WhiteWorld nczitzk Fatpandac" example="/readhub" path="/readhub/:category?" paramsDesc={['分类，见下表，默认为热门话题']} radar="1">
 
-| 热门话题 | 每日早报 | 科技动态 | 医疗产业 |
-| -------- | -------- | -------- | -------- |
-|          | daily    | news     | medical  |
+| 热门话题 | 科技动态 | 医疗产业    | 财经快讯              |
+| ---- | ---- | ------- | ----------------- |
+|      | news | medical | financial_express |
 
 </Route>
+
+### 每日早报 {#readhub-mei-ri-zao-bao}
+
+<Route author="nczitzk" example="/readhub/daily" path="/readhub/daily" radar="1"/>
 
 ## Sakamichi Series 坂道系列官网资讯 {#sakamichi-series-ban-dao-xi-lie-guan-wang-zi-xun}
 
@@ -1988,7 +2034,7 @@ Member ID
 
 ### News {#techcrunch-news}
 
-<Route author="NavePnow" example="/techcrunch/news" path="/techcrunch/news"/>
+<Route author="EthanWng97" example="/techcrunch/news" path="/techcrunch/news"/>
 
 ## TechPowerUp {#techpowerup}
 
@@ -2517,6 +2563,53 @@ Supported sub-sites:
 ### Archive {#world-happiness-archive}
 
 <Route author="nczitzk" example="/worldhappiness/archive" path="/worldhappiness/archive"/>
+
+## Yahoo {#yahoo}
+
+### News {#yahoo-news}
+
+<Route author="KeiLongW" example="/yahoo/news/hk/world" path="/yahoo/news/:region/:category?" paramsDesc={['Region, see the table below','Category, see the table below']}>
+
+`Region`
+
+| Hong Kong | Taiwan | US |
+| --------- | ------ | --- |
+| hk        | tw     | en  |
+
+<details>
+  <summary>`Category` (Hong Kong)</summary>
+  | 全部     | 港聞      | 兩岸國際 | 財經     | 娛樂           | 體育   | 健康    | 親子      | 副刊        |
+  | ------- | --------- | ------ | -------- | ------------- | ------ | ------ | -------- | ----------- |
+  | （留空） | hong-kong | world  | business | entertainment | sports | health | parenting | supplement |
+</details>
+<details>
+  <summary>`Category` (Taiwan)</summary>
+  | 全部     | 政治     | 財經      | 娛樂          | 運動    | 社會地方 | 國際   | 生活      | 健康    | 科技        | 品味  |
+  | ------- | -------- | -------- | ------------- | ------ | ------- | ----- | -------- | ------- | ---------- | ----- |
+  | （留空） | politics | finance  | entertainment | sports | society | world | lifestyle | health | technology | style |
+</details>
+<details>
+  <summary>`Category` (US)</summary>
+  | All | World | Business | Entertainment | Sports | Health |
+  | ------- | ----- | -------- | ------------- | ------ | ------ |
+  | (Empty) | world | business | entertainment | sports | health |
+</details>
+
+</Route>
+
+### 新聞來源 {#yahoo-xin-wen-lai-yuan}
+
+<Route author="TonyRL" example="/yahoo/news/provider/tw/udn.com" path="/yahoo/news/provider/:region/:providerId" paramsDesc={['地區，見下表', '新聞來源 ID，可透過下方新聞來源列表獲得']} radar="1">
+
+| 香港 | 台灣 |
+| ---- | ---- |
+| hk   | tw   |
+
+</Route>
+
+### 新聞來源列表 {#yahoo-xin-wen-lai-yuan-lie-biao}
+
+<Route author="TonyRL" example="/yahoo/news/providers/tw" path="/yahoo/news/providers/:region" paramsDesc={['地區，見上表']} />
 
 ## ZAKER {#zaker}
 
@@ -3481,33 +3574,73 @@ others = 热点新闻 + 滚动新闻
 
 ## 虎嗅 {#hu-xiu}
 
-### 首页资讯 {#hu-xiu-shou-ye-zi-xun}
+### 资讯 {#hu-xiu-zi-xun}
 
-<Route author="HenryQW" example="/huxiu/article" path="/huxiu/article" />
+<Route author="HenryQW nczitzk" example="/huxiu/article" path="/huxiu/article" radar="1" supportBT="1" supportPodcast="1"/>
+
+### 频道 {#hu-xiu-pin-dao}
+
+<Route author="nczitzk" example="/huxiu/channel/10" path="/huxiu/channel/:id?" paramsDesc={['频道 id，可在对应频道页 URL 中找到，见下表，默认为最新']} radar="1" supportBT="1" supportPodcast="1">
+
+| 视频  | 车与出行 | 年轻一代 | 十亿消费者 | 前沿科技 |
+| --- | ---- | ---- | ----- | ---- |
+| 10  | 21   | 106  | 103   | 105  |
+
+| 财经  | 娱乐淘金 | 医疗健康 | 文化教育 | 出海  |
+| --- | ---- | ---- | ---- | --- |
+| 115 | 22   | 111  | 113  | 114 |
+
+| 金融地产 | 企业服务 | 创业维艰 | 社交通讯 | 全球热点 | 生活腔调 |
+| ---- | ---- | ---- | ---- | ---- | ---- |
+| 102  | 110  | 2    | 112  | 107  | 4    |
+
+</Route>
 
 ### 24 小时 {#hu-xiu-24-xiao-shi}
 
-<Route author="nczitzk" example="/huxiu/moment" path="/huxiu/moment" />
+<Route author="nczitzk" example="/huxiu/moment" path="/huxiu/moment" radar="1" supportBT="1" supportPodcast="1"/>
+
+### 源流 {#hu-xiu-yuan-liu}
+
+<Route author="nczitzk" example="/huxiu/club/1000" path="/huxiu/club/:id?" paramsDesc={['源流 id，可在对应源流页 URL 中找到']} radar="1" supportBT="1" supportPodcast="1">
+
+更多源流请参见 [源流广场](https://www.huxiu.com/club)
+
+</Route>
 
 ### 标签 {#hu-xiu-biao-qian}
 
-<Route author="xyqfer HenryQW" example="/huxiu/tag/291" path="/huxiu/tag/:id" paramsDesc={['标签 id']} anticrawler="1"/>
+<Route author="xyqfer HenryQW nczitzk" example="/huxiu/tag/291" path="/huxiu/tag/:id" paramsDesc={['标签 id，可在对应标签页 URL 中找到']} radar="1" supportBT="1" supportPodcast="1">
+
+更多标签请参见 [标签](https://www.huxiu.com/tags)
+
+</Route>
 
 ### 搜索 {#hu-xiu-sou-suo}
 
-<Route author="xyqfer HenryQW" example="/huxiu/search/%E8%99%8E%E5%97%85%E6%97%A9%E6%8A%A5" path="/huxiu/search/:keyword" paramsDesc={['关键字']} />
+<Route author="xyqfer HenryQW nczitzk" example="/huxiu/search/生活" path="/huxiu/search/:keyword" paramsDesc={['关键字']} radar="1" supportBT="1" supportPodcast="1"/>
 
 ### 作者 {#hu-xiu-zuo-zhe}
 
-<Route author="HenryQW" example="/huxiu/author/29318" path="/huxiu/author/:id" paramsDesc={['用户 id']} anticrawler="1" />
+<Route author="HenryQW nczitzk" example="/huxiu/member/29318" path="/huxiu/member/:id/:type?" paramsDesc={['用户 id，可在对应用户页 URL 中找到', '类型，可在对应用户页 URL 中找到']} radar="1" supportBT="1" supportPodcast="1">
+
+| TA的文章   | TA的24小时 |
+| ------- | ------- |
+| article | moment  |
+
+</Route>
 
 ### 文集 {#hu-xiu-wen-ji}
 
-<Route author="AlexdanerZe" example="/huxiu/collection/212" path="/huxiu/collection/:id" paramsDesc={['文集 id']} notOperational="1" />
+<Route author="AlexdanerZe nczitzk" example="/huxiu/collection/212" path="/huxiu/collection/:id" paramsDesc={['文集 id，可在对应文集页 URL 中找到']} radar="1" supportBT="1" supportPodcast="1">
+
+更多文集请参见 [文集](https://www.huxiu.com/collection)
+
+</Route>
 
 ### 简报 {#hu-xiu-jian-bao}
 
-<Route author="Fatpandac" example="/huxiu/briefcolumn/1" path="/huxiu/briefcolumn/:id" paramsDesc={['简报 id']}  anticrawler="1"/>
+<Route author="Fatpandac nczitzk" example="/huxiu/briefcolumn/1" path="/huxiu/briefcolumn/:id" paramsDesc={['简报 id，可在对应简报页 URL 中找到']} radar="1" supportBT="1" supportPodcast="1"/>
 
 ## 互动吧 {#hu-dong-ba}
 
@@ -4724,6 +4857,12 @@ column 为 third 时可选的 category:
 
 </Route>
 
+## 米课 {#mi-ke}
+
+### 米课圈精华 {#mi-ke-mi-ke-quan-jing-hua}
+
+<Route author="nczitzk" example="/imiker/ask/jinghua" path="/imiker/ask/jinghua" radar="1"/>
+
 ## 摩点 {#mo-dian}
 
 ### 众筹 {#mo-dian-zhong-chou}
@@ -5678,7 +5817,7 @@ column 为 third 时可选的 category:
 
 ### 公众号（搜狗来源） {#wei-xin-gong-zhong-hao-sou-gou-lai-yuan}
 
-<Route author="NavePnow" example="/wechat/sogou/qimao0908" path="/wechat/sogou/:id" paramsDesc={['公众号 id, 打开 weixin.sogou.com 并搜索相应公众号， 在 URL 中找到 id']} notOperational="1"/>
+<Route author="EthanWng97" example="/wechat/sogou/qimao0908" path="/wechat/sogou/:id" paramsDesc={['公众号 id, 打开 weixin.sogou.com 并搜索相应公众号， 在 URL 中找到 id']} notOperational="1"/>
 
 ## 维基百科 {#wei-ji-bai-ke}
 
@@ -6394,6 +6533,12 @@ column 为 third 时可选的 category:
 | Information | Dynamics | TechNews |
 
 </Route>
+
+## 中国科普博览 {#zhong-guo-ke-pu-bo-lan}
+
+### 直播回看 {#zhong-guo-ke-pu-bo-lan-zhi-bo-hui-kan}
+
+<Route author="nczitzk" example="/kepu/live" path="/kepu/live" radar="1" supportBT="1"/>
 
 ## 中国科学院青年创新促进会 {#zhong-guo-ke-xue-yuan-qing-nian-chuang-xin-cu-jin-hui}
 
