@@ -175,7 +175,7 @@ For example：
 
 ## Summarized by ChatGPT (Self-hosted)
 
-Set the parameter `chatgpt` to generate a summary by ChatGPT. See [Install](/install#other-application-configurations) for details. Please consider the necessity of this feature, because it will consume some tokens.
+Set the parameter `chatgpt` to generate a summary by ChatGPT. See [Install](/install/config#other-application-configurations) for details. Please consider the necessity of this feature, because it will consume some tokens.
 
 -   `chatgpt`: set to any value
 
