@@ -176,7 +176,7 @@ Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-c
 
 ### 福建新闻 {#china-dialogue-zhong-wai-dui-hua-fu-jian-xin-wen}
 
-<Route author="jjlzg" example="/fjnews/fj/30" path="/fjnews/fznews" notOperational="1" notOperational="1"/>
+<Route author="jjlzg" example="/fjnews/fj/30" path="/fjnews/fznews" notOperational="1"/>
 
 ### 九江新闻 {#china-dialogue-zhong-wai-dui-hua-jiu-jiang-xin-wen}
 
@@ -256,7 +256,7 @@ Topics:
 |------------|
 |dna-verified|
 
-:::tip Topic
+:::tip[Topic]
 
 The URL of the form `https://www.dnaindia.com/topic/dna-verified` demonstrates the utilization of the subdomain `topic`
 
@@ -567,23 +567,6 @@ More could be found in the URL of the category/topic page.
 
 </Route>
 
-## RTHK 傳媒透視 {#rthk-chuan-mei-tou-shi}
-
-<Route author="tpnonthealps" example="/mediadigest/latest" path="/mediadigest/:range" paramsDesc={['时间范围']}>
-
-细则：
-
--   `:range` 时间范围参数
-    (可为 `latest` 或 `四位数字的年份`)
-
-  -   `latest`: 最新的 50 篇文章
-  -   `2020`: 2020 年的所有文章
-
--   全文输出转换为简体字: `?opencc=t2s`
-    (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](/parameter#中文简繁体转换))
-
-</Route>
-
 ## RTHK 香港電台 {#rthk-xiang-gang-dian-tai}
 
 ### News {#rthk-xiang-gang-dian-tai-news}
@@ -597,6 +580,23 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 | local      | greaterchina       | international | finance      | sport      |
 | ---------- | ------------------ | ------------- | ------------ | ---------- |
 | Local News | Greater China News | World News    | Finance News | Sport News |
+
+</Route>
+
+### 傳媒透視 {#rthk-chuan-mei-tou-shi}
+
+<Route author="tpnonthealps" example="/mediadigest/latest" path="/mediadigest/:range" paramsDesc={['时间范围']}>
+
+细则：
+
+-   `:range` 时间范围参数
+    (可为 `latest` 或 `四位数字的年份`)
+
+  -   `latest`: 最新的 50 篇文章
+  -   `2020`: 2020 年的所有文章
+
+-   全文输出转换为简体字: `?opencc=t2s`
+    (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](/parameter#中文简繁体转换))
 
 </Route>
 
@@ -1172,6 +1172,8 @@ IT・科学 tech_science
 
 ## 朝日新聞デジタル {#chao-ri-xin-wen-%E3%83%87%E3%82%B8%E3%82%BF%E3%83%AB}
 
+### 新聞
+
 <Route author="nczitzk" example="/asahi/area/hokkaido" path="/asahi/area/:id" paramsDesc={['地方 id，见下表']} notOperational="1">
 
 北海道・東北
@@ -1690,7 +1692,7 @@ TMT tmt [`/eeo/tmt`](http://rsshub.app/eeo/tmt)
 
 研究院 yanjiuyuan [`/eeo/yanjiuyuan`](http://rsshub.app/eeo/yanjiuyuan)
 
-:::tip 建议
+:::tip[建议]
 
 请优先选择订阅以上栏目，下面的栏目大部分已经很久没有更新。
 
@@ -2431,6 +2433,8 @@ category 对应的关键词有
 </Route>
 
 ## 希望之声 {#xi-wang-zhi-sheng}
+
+### 频道
 
 <Route author="Fatpandac" example="/soundofhope/term/203" path="/soundofhope/:channel/:id" paramsDesc={['频道', '子频道 ID']} anticrawler="1">
 

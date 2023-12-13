@@ -39,9 +39,11 @@ export default {
             .use(remarkGfm, {
                 stringLength: stringWidth,
             })
-            .use(rssHubHeadingId)
-            .use(rssHubNoDupeAttrs)
-            .use(rssHubRouteLevel)
+            .use(rssHubHeadingId, {
+                overwrite: true,
+            })
+            // .use(rssHubNoDupeAttrs)
+            // .use(rssHubRouteLevel)
             .process(doc);
         return String(result);
     },
