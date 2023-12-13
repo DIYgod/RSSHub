@@ -1,8 +1,8 @@
 import file from './file.mjs';
 import sgf from 'staged-git-files';
 import sortByHeading from './sortByHeading.mjs';
-import slugId from './slugId.mjs';
-// import chineseFormat from './chineseFormat.mjs';
+// import slugId from './slugId.mjs';
+import mdxFormat from './mdxFormat.mjs';
 import { exec } from 'child_process';
 import { fileURLToPath } from 'url';
 import sidebars from '../../sidebars.mjs';
@@ -13,7 +13,7 @@ import sidebars from '../../sidebars.mjs';
  * rules filters required file document object
  * and handler get document string and return formatted document
  */
-const processors = [sortByHeading, slugId];
+const processors = [sortByHeading, mdxFormat];
 
 // Helpers
 // const loopSideBar = (children, type, lang, prefix) =>
