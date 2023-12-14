@@ -213,7 +213,7 @@
     "tosource": "2.0.0-alpha.3",
     "unified": "9.2.2",
     "unist-util-visit": "4.1.2",
-    "unist-util-visit-parents": "5.1.3"
+    "unist-util-visit-parents": "6.0.1"
   },
   "engines": {
     "node": ">=16"
