@@ -10,7 +10,11 @@ export default function RssHubNoDupeAttrs() {
                 file.fail(`The attributes of the component "${node.name}" are not unique.`, {
                     ancestors: [node],
                     ruleId: 'rsshub-no-dupe-attrs',
-                    place: node.position.start,
+                    source: 'rsshub-no-dupe-attrs',
+                    place: {
+                        start: node.position.start,
+                        end: node.position.end,
+                    },
                 });
             }
         });

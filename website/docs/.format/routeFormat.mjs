@@ -1,6 +1,7 @@
 import file from './file.mjs';
 import stringWidth from 'string-width';
 import { heading } from './handle/heading.mjs';
+import { read } from 'to-vfile';
 import { remark } from 'remark';
 import { remarkHeadingId } from 'remark-custom-heading-id';
 import remarkDirective from 'remark-directive';
@@ -15,16 +16,14 @@ import rssHubRouteLevel from './rsshub-route-level.mjs';
 
 export default {
     rules: (list) => list.filter((e) => e.lang === file.LANG_EN && e.type === file.ROUTE_TYPE),
-    handler: async (doc) => {
+    handler: async (_doc, path) => {
         const result = await remark()
             // remark-stringify settings
             .data('settings', {
                 bullet: '-',
                 ruleSpaces: true,
                 handlers: {
-                    heading: (node, parent, state, info) => {
-                        return heading(node, parent, state, info);
-                    },
+                    heading: (node, parent, state, info) => heading(node, parent, state, info),
                 },
             })
             .use(remarkMdx)
@@ -42,9 +41,9 @@ export default {
             .use(rssHubHeadingId, {
                 overwrite: true,
             })
-            // .use(rssHubNoDupeAttrs)
-            // .use(rssHubRouteLevel)
-            .process(doc);
+            .use(rssHubNoDupeAttrs)
+            .use(rssHubRouteLevel)
+            .process(await read(path));
         return String(result);
     },
 };

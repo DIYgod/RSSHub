@@ -379,6 +379,9 @@ devDependencies:
   supertest:
     specifier: 6.3.3
     version: 6.3.3
+  to-vfile:
+    specifier: 8.0.0
+    version: 8.0.0
   tosource:
     specifier: 2.0.0-alpha.3
     version: 2.0.0-alpha.3
@@ -8448,6 +8451,12 @@ packages:
     dependencies:
       to-no-case: 1.0.2
     dev: false
+
+  /to-vfile@8.0.0:
+    resolution: {integrity: sha512-IcmH1xB5576MJc9qcfEC/m/nQCFt3fzMHz45sSlgJyTWjRbKW1HAkJpuf3DgE57YzIlZcwcBZA5ENQbBo4aLkg==}
+    dependencies:
+      vfile: 6.0.1
+    dev: true
 
   /toidentifier@1.0.1:
     resolution: {integrity: sha512-o5sSPKEkg/DIQNmH43V0/uerLrpzVedkUh8tGNvaeXpfpuwjKenlSox/2O/BTlZUtEe+JG7s5YhEz608PlAHRA==}

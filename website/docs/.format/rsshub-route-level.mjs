@@ -11,7 +11,11 @@ export default function remarkRssHub() {
                 file.fail('The heading before the Route tag should be a level 3 heading.', {
                     ancestors: [node],
                     ruleId: 'rsshub-route-level',
-                    place: node.position.start,
+                    source: 'rsshub-route-level',
+                    place: {
+                        start: node.position.start,
+                        end: node.position.end,
+                    },
                 });
             }
         });
