@@ -11884,6 +11884,19 @@
       }
     ]
   },
+  "nea.gov.cn": {
+    "_name": "国家能源局",
+    ".": [
+      {
+        "title": "发展规划司",
+        "docs": "https://docs.rsshub.app/routes/government#guo-jia-neng-yuan-ju-fa-zhan-gui-hua-si",
+        "source": [
+          "/sjzz/ghs/"
+        ],
+        "target": "/gov/nea/sjzz/ghs"
+      }
+    ]
+  },
   "nifdc.gov.cn": {
     "_name": "国家药品监督管理局医疗器械标准管理中心",
     ".": [
