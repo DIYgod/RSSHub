@@ -818,13 +818,13 @@ Note：[Source website](https://ece.umass.edu/seminar) may be empty when there's
 2.  把 `https://news.dlut.edu.cn/` 与 `.htm` 间 `xwjj01/rcpy` 作为 `category` 参数填入；
 3.  最终可获得 [`/dut/news/xwjj01/rcpy`](https://rsshub.app/dut/news/xwjj01/rcpy)。
 
-:::tip 小提示
+:::tip[小提示]
 
 大连理工大学大部分站点支持上述通用规则进行订阅。下方的大连理工大学相关路由基本适用于该规则，在其对应的表格中没有提及的分类栏目，可以使用上方的方法自行扩展。
 
 :::
 
-:::tip 小小提示
+:::tip[小小提示]
 
 你会发现 [大连理工大学新闻网](https://news.dlut.edu.cn) 的 [人才培养](https://news.dlut.edu.cn/xwjj01/rcpy.htm) 分类栏目在下方 [**新闻网**](#da-lian-li-gong-da-xue-xin-wen-wang) 参数表格中 `category` 参数为 `rcpy`，并非上面例子中给出的 `xwjj01/rcpy`。这意味着开发者对路由 `/dut/news/xwjj01/rcpy` 指定了快捷方式 `/dut/news/rcpy`。两者的效果是一致的。
 
@@ -1974,7 +1974,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ## 暨南大学 {#ji-nan-da-xue}
 
-## 暨南要闻 {#ji-nan-yao-wen}
+### 暨南要闻 {#ji-nan-yao-wen}
 
 <Route author="hang333" example="/jnu/yw/tt" path="/jnu/yw/:type?" paramsDesc={['暨南要闻类型，默认为 `yw`']}>
 
@@ -1984,7 +1984,7 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 </Route>
 
-### 暨南大学校园时讯 {#ji-nan-yao-wen-ji-nan-da-xue-xiao-yuan-shi-xun}
+### 校园时讯 {#ji-nan-yao-wen-ji-nan-da-xue-xiao-yuan-shi-xun}
 
 <Route author="hang333" example="/jnu/xysx/yxsd" path="/jnu/xysx/:type" paramsDesc={['校园时讯类型']}>
 
@@ -3143,37 +3143,37 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 <details>
   <summary>更多分类</summary>
 
-#### 学术动态 {#wu-han-da-xue-xin-wen-wang-xue-shu-dong-tai}
+#### 学术动态
 
 | 学术动态 |
 | -------- |
 | kydt     |
 
-#### 校园文化 {#wu-han-da-xue-xin-wen-wang-xiao-yuan-wen-hua}
+#### 校园文化
 
 | 缤纷校园  | 校友之声  | 珞珈副刊  | 校史钩沉  |
 | --------- | --------- | --------- | --------- |
 | xywh/bfxy | xywh/xyzs | xywh/ljfk | xywh/xsgc |
 
-#### 专题报道 {#wu-han-da-xue-xin-wen-wang-zhuan-ti-bao-dao}
+#### 专题报道
 
 | 专题报道 | 主题教育  | 顶天立地建学科 | 学习在线  | 记者调查  | 校庆征文 我与武大 |
 | -------- | --------- | -------------- | --------- | --------- | ----------------- |
 | ztbd     | ztbd/ztjy | ztbd/dtldjxk   | ztbd/xxzx | ztbd/jzdc | ztbd/xqzw_wywd    |
 
-#### 媒体武大 {#wu-han-da-xue-xin-wen-wang-mei-ti-wu-da}
+#### 媒体武大
 
 | 媒体武大 |
 | -------- |
 | mtwd     |
 
-#### 珞珈人物 {#wu-han-da-xue-xin-wen-wang-luo-jia-ren-wu}
+#### 珞珈人物
 
 | 珞珈人物 |
 | -------- |
 | ljrw     |
 
-#### 视听空间 {#wu-han-da-xue-xin-wen-wang-shi-ting-kong-jian}
+#### 视听空间
 
 | 视听空间  | 珞珈影像  | 武大视频  |
 | --------- | --------- | --------- |
@@ -3204,31 +3204,31 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 <details>
   <summary>更多分类</summary>
 
-#### 学堂简报 {#wu-han-da-xue-hong-yi-xue-tang-xue-tang-jian-bao}
+#### 学堂简报
 
 | 学堂简报 |
 | -------- |
 | xtjb     |
 
-#### 人才培养 {#wu-han-da-xue-hong-yi-xue-tang-ren-cai-pei-yang}
+#### 人才培养
 
 | 人才培养 | 招生工作  | 培养方案  | 科研训练  | 毕业去向  | 学习资源  |
 | -------- | --------- | --------- | --------- | --------- | --------- |
 | rcpy     | rcpy/zsgz | rcpy/pyfa | rcpy/kyxl | rcpy/byqx | rcpy/xxzy |
 
-#### 学生工作 {#wu-han-da-xue-hong-yi-xue-tang-xue-sheng-gong-zuo}
+#### 学生工作
 
 | 学生工作 | 党团建设  | 学术交流  | 书院生活  | 奖助体系  | 事务服务  |
 | -------- | --------- | --------- | --------- | --------- | --------- |
 | xsgz     | xsgz/dtjs | xsgz/xsjl | xsgz/sysh | xsgz/jztx | xsgz/swfw |
 
-#### 国际合作 {#wu-han-da-xue-hong-yi-xue-tang-guo-ji-he-zuo}
+#### 国际合作
 
 | 国际合作 | 国际交流  | 交流分享  |
 | -------- | --------- | --------- |
 | gjhz     | gjhz/gjjl | gjhz/jlfx |
 
-#### 校友风采 {#wu-han-da-xue-hong-yi-xue-tang-xiao-you-feng-cai}
+#### 校友风采
 
 | 校友风采 |
 | -------- |
@@ -3424,7 +3424,6 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 <Route author="dingyx99 karinido" example="/nwafu/lib" path="/nwafu/:type?" paramsDesc={['默认为 `jiaowu`']} notOperational="1">
 
 通知类别
-
 
 | 图书馆 | 共青团团委 | 信工学院 | 后勤管理处 | 计划财务处 | 教务处 | 新闻网 | 信息化管理处 | 研究生院 | 农业科学院 | 机械与电子工程学院 | 学术活动 | 生命科学学院 |
 | -------- | -------- | -------- | -------- | ------------ | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |

@@ -158,6 +158,8 @@
 
 ## 60-Second Science - Scientific American {#60-second-science-scientific-american}
 
+### Transcript
+
 <Route author="emdoe" example="/60s-science" path="/60s-science"/>
 
 Full transcript support for better user experience.
@@ -561,7 +563,7 @@ Official RSS: [https://eztv.io/ezrss.xml](https://eztv.io/ezrss.xml)
 
 If you subscribe to [イヤーマイッタマイッタ](https://www.ibc.co.jp/radio/maitta/audio), the URL is `https://www.ibc.co.jp/radio/maitta/audio`. Intercept `maitta` between `https://www.ibc.co.jp/radio/` and `/audio/` as an argument, then the route will be [`/ibc/radio/maitta`](https://rsshub.app/ibc/radio/maitta).
 
-If you subscribe to [火曜ワイド「境界トラブル解決ラジオ！] (https://www.ibc.co.jp/radio/TochiKyokai/audio), the URL is `https://www.ibc.co.jp/radio/TochiKyokai/audio`. Intercept `TochiKyokai` between `https://www.ibc.co.jp/radio/` and `/audio/` as an argument, then the route is [`/ibc/radio/TochiKyokai`](https://rsshub.app/ibc/radio/TochiKyokai).
+If you subscribe to [火曜ワイド「境界トラブル解決ラジオ！](https://www.ibc.co.jp/radio/TochiKyokai/audio), the URL is `https://www.ibc.co.jp/radio/TochiKyokai/audio`. Intercept `TochiKyokai` between `https://www.ibc.co.jp/radio/` and `/audio/` as an argument, then the route is [`/ibc/radio/TochiKyokai`](https://rsshub.app/ibc/radio/TochiKyokai).
 
 :::
 
@@ -575,7 +577,7 @@ Requests from non-Asia areas will be redirected to login page.
 
 :::
 
-:::tip Language
+:::tip[Language]
 
 You can change the language of each route to the languages listed below.
 
@@ -631,7 +633,7 @@ For more actresses, please visit [Censored JAV Idols](https://www.javbus.com/en/
 
 ### Censored - Search {#javbus-censored-search}
 
-<Route author="nczitzk" example="/javbus/en/search/REBD" path="/javbus/en/search/:keyword" paramsDesc={['Keyword, empty by default']} anticrawler="1" anticrawler="1" />
+<Route author="nczitzk" example="/javbus/en/search/REBD" path="/javbus/en/search/:keyword" paramsDesc={['Keyword, empty by default']} anticrawler="1" />
 
 ### Uncensored - Home {#javbus-uncensored-home}
 
@@ -1245,7 +1247,7 @@ Refer to [Pornhub F.A.Qs](https://help.pornhub.com/hc/en-us/articles/36004432703
 
 <Route author="cnzgray" example="/sexinsex/230/634" path="/sexinsex/:id/:type?" paramsDesc={['分区 id, 可在分区页 URL 中找到', '类型 id, 可在分区类型过滤后的 URL 中找到']}>
 
-> 注意：并非所有的分区都有子类型，可以参考亚洲成人有码原创区的 \[字幕] 这一子类型。
+> 注意：并非所有的分区都有子类型，可以参考亚洲成人有码原创区的 `字幕` 这一子类型。
 
 | 亚洲成人无码原创区 | 亚洲成人有码原创区 | 欧美无码原创区 | 欧美无码区 | 亚洲有码薄码区 |
 | ------------------ | ------------------ | -------------- | ---------- | -------------- |
@@ -1423,13 +1425,13 @@ When `mediaType` is `movie`, `sheet` should be:
 
 <Route author="nczitzk" example="/bdys" path="/bdys/:caty?/:type?/:area?/:year?/:order?" paramsDesc={['影视类型，见下表，默认为 `all` 即不限','资源分类，见下表，默认为 `all` 即不限', '制片地区，见下表，默认为 `all` 即不限','上映时间，此处填写年份不小于2000，默认为 `all` 即不限','影视排序，见下表，默认为更新时间']} anticrawler="1" radar="1">
 
-#### 资源分类 {#bi-di-ying-shi-shou-ye-zi-yuan-fen-lei}
+#### 资源分类
 
 | 不限 | 电影 | 电视剧 |
 | ---- | ---- | ------ |
 | all  | 0    | 1      |
 
-#### 影视类型 {#bi-di-ying-shi-shou-ye-ying-shi-lei-xing}
+#### 影视类型
 
 | 不限 | 动作    | 爱情   | 喜剧 | 科幻   | 恐怖   |
 | ---- | ------- | ------ | ---- | ------ | ------ |
@@ -1463,7 +1465,7 @@ When `mediaType` is `movie`, `sheet` should be:
 | --------- | ---- | ---- |
 | gangtaiju | faju | aoju |
 
-#### 制片地区 {#bi-di-ying-shi-shou-ye-zhi-pian-di-qu}
+#### 制片地区
 
 | 大陆 | 中国香港 | 中国台湾 |
 | ---- | -------- | -------- |
@@ -1477,7 +1479,7 @@ When `mediaType` is `movie`, `sheet` should be:
 | 比利时 | 瑞典 | 荷兰 | 丹麦 | 加拿大 | 俄罗斯 |
 | ------ | ---- | ---- | ---- | ------ | ------ |
 
-#### 影视排序 {#bi-di-ying-shi-shou-ye-ying-shi-pai-xu}
+#### 影视排序
 
 | 更新时间 | 豆瓣评分 |
 | -------- | -------- |

@@ -20,7 +20,7 @@
 
 <Route author="DIYgod" example="/bilibili/user/video/2267573" path="/bilibili/user/video/:uid/:disableEmbed?" paramsDesc={['用户 id, 可在 UP 主主页中找到', '默认为开启内嵌视频, 任意值为关闭']} anticrawler="1" radar="1">
 
-:::tip 动态的专栏显示全文
+:::tip[动态的专栏显示全文]
 
 可以使用 [UP 主动态](#bilibili-up-zhu-dong-tai)路由作为代替绕过反爬限制
 
@@ -49,9 +49,9 @@
 
 用例：`/bilibili/user/dynamic/2267573/showEmoji=1&disableEmbed=1&useAvid=1`
 
-:::tip 动态的专栏显示全文
+:::tip[动态的专栏显示全文]
 
-动态的专栏显示全文请使用通用参数里的 `mode=fulltext `
+动态的专栏显示全文请使用通用参数里的 `mode=fulltext`
 
 举例: bilibili 专栏全文输出 /bilibili/user/dynamic/2267573/?mode=fulltext
 
@@ -1020,7 +1020,7 @@ This route requires Twitter token's corresponding id, therefore it's only availa
 
 <Route author="MisteryMonster" example="/vimeo/user/filmsupply/picks" path="/vimeo/user/:username/:cat?" paramsDesc={['In this example [https://vimeo.com/filmsupply](https://vimeo.com/filmsupply)  is `filmsupply`', 'deafult for all latest videos, others categories in this example such as `Docmentary`, `Narrative`, `Drama`. Set `picks` for promote orders, just orderd like web page. When `picks` added, published date won\'t show up']}>
 
-:::tip Special category name attention
+:::tip[Special category name attention]
 
 Some of the categories contain slash like `3D/CG` , must change the slash `/` to the vertical bar`|`.
 
@@ -1084,7 +1084,6 @@ Chart
 | ----------- | --------- | ---------------- | -------- |
 | TopArtists | TopSongs | TopVideos | TrendingVideos |
 
-
 Country Code
 
 | Argentina | Australia | Austria | Belgium | Bolivia | Brazil | Canada |
@@ -1122,8 +1121,6 @@ Country Code
 | Uruguay | Zimbabwe |
 | ------- | -------- |
 | uy      | zw       |
-
-
 
 </Route>
 
@@ -1720,12 +1717,10 @@ rule
 
 <Route author="xyqfer shinemoon" example="/weibo/search/hot" path="/weibo/search/hot/:fulltext?" radar="1"/>
 
-- 使用`/weibo/search/hot`可以获取热搜条目列表；
-- 使用`/weibo/search/hot/fulltext`可以进一步获取热搜条目下的摘要信息（不含图片视频）；
-    - 使用`/weibo/search/hot/fulltext?pic=true`可以获取图片缩略（但需要配合额外的手段，例如浏览器上的Header Editor等来修改referer参数为`https://weibo.com'，以规避微博的外链限制,否则图片无法显示。)
-    - 使用`/weibo/search/hot/fulltext?pic=true&fullpic=true`可以获取Original图片（但需要配合额外的手段，例如浏览器上的Header Editor等来修改referer参数为`https://weibo.com'，以规避微博的外链限制,否则图片无法显示。)
-
-
+-   使用`/weibo/search/hot`可以获取热搜条目列表；
+-   使用`/weibo/search/hot/fulltext`可以进一步获取热搜条目下的摘要信息（不含图片视频）；
+  -   使用`/weibo/search/hot/fulltext?pic=true`可以获取图片缩略（但需要配合额外的手段，例如浏览器上的Header Editor等来修改referer参数为`https://weibo.com`，以规避微博的外链限制，否则图片无法显示。）
+  -   使用`/weibo/search/hot/fulltext?pic=true&fullpic=true`可以获取Original图片（但需要配合额外的手段，例如浏览器上的Header Editor等来修改referer参数为`https://weibo.com`，以规避微博的外链限制，否则图片无法显示。）
 
 ### 超话 {#wei-bo-chao-hua}
 

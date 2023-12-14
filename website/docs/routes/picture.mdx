@@ -191,7 +191,7 @@
 
 ### MMDArchive 标签查询 {#booru-mmdarchive-biao-qian-cha-xun}
 
-<Route author="N78Wy" example="/booru/mmda/tags/full_body+blue_eyes" path="/booru/mmda/tags/:tags?" paramsDesc={['标签，多个标签使用空格` `或者`%20`连接，如需根据作者查询则在`user:`后接上作者名，如：`user:xxxx`']} notOperational="1">
+<Route author="N78Wy" example="/booru/mmda/tags/full_body+blue_eyes" path="/booru/mmda/tags/:tags?" paramsDesc={['标签，多个标签使用空格 ` ` 或者 `%20` 连接，如需根据作者查询则在 `user:` 后接上作者名，如：`user:xxxx`']} notOperational="1">
 
 For example:
 
@@ -347,7 +347,9 @@ Rating
 
 <Route author="junfengP" example="/girlimg/album" path="/girlimg/album/:tag?/:mode?" paramsDesc={['过滤标签，在链接参数中&tab=部分，如：中国,BoLoLi','加载模式，留空为简单模式，获取20篇文章标题与封面；非空为详细模式，加载10篇文章内容']} notOperational="1" />
 
-## GoComics Comic Strips {#gocomics-comic-strips}
+## GoComics
+
+### Comic Strips {#gocomics-comic-strips}
 
 <Route author="stjohnjohnson" example="/gocomics/foxtrot" path="/gocomics/:strip" paramsDesc={['URL path of the strip on gocomics.com']} />
 
@@ -375,7 +377,7 @@ Rating
 
 -   Tags can be copied after `tags=` in [konachan](https://konachan.com/post) URL
 -   The route can be / konachan or /konachan.com or /konachan.net, where the first two are the same, and .net is an all-age healthy wallpaper ♡
--   Official Posts RSS: https://konachan.com/post/piclens?tags=[tags]
+-   Official Posts RSS: `https://konachan.com/post/piclens?tags=[tags]`
 
 :::
 
@@ -549,7 +551,7 @@ The text after `?` is `q=id%3A711&sorting=random&ref=fp&seed=8g0dgd` for [Wallpa
 
 :::tip
 
--   Official RSS: https://yande.re/post/piclens?tags=[tags]
+-   Official RSS: `https://yande.re/post/piclens?tags=[tags]`
 
 :::
 
@@ -713,4 +715,3 @@ For example:
 ### 最新主题 {#zhi-mei-hua-zui-xin-zhu-ti}
 
 <Route author="nczitzk" example="/zhutix/latest" path="/zhutix/latest" notOperational="1"/>
-
