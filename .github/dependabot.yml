@@ -37,6 +37,10 @@ updates:
         versions: ['>=4.0.0']
       - dependency-name: remark-mdx
         versions: ['>=3.0.0']
+      - dependency-name: unist-util-visit
+        versions: ['>=5.0.0']
+      - dependency-name: unist-util-visit-parents
+        versions: ['>=6.0.0']
 
   - package-ecosystem: npm
     directory: '/website'
