@@ -112,7 +112,7 @@ jobs:
         run: cat ${{ github.workspace }}/logs/combined.log
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: logs
           path: logs
