@@ -40,7 +40,7 @@ Eg: [https://www.inoreader.com/stream/user/1006346356/tag/News/view/html?limit=3
 
 ### RSS {#inoreader-rss}
 
-<Route author="EthanWng97" example="/inoreader/rss/1005137674/user-favorites" path="/inoreader/rss/:user/:tag" paramsDesc={['user id, the interger after user/ in the example URL','tag, the string after tag/ in the example URL']}>
+<Route author="EthanWng97" example="/inoreader/rss/1005137674/user-favorites" path="/inoreader/rss/:user/:tag" paramsDesc={['user id, the interger after user/ in the example URL','tag, the string after tag/ in the example URL']} />
 
 ## kakuyomu {#kakuyomu}
 
@@ -78,7 +78,7 @@ Eg: [https://kakuyomu.jp/works/1177354054883783581](https://kakuyomu.jp/works/11
 
 ### Latest Magazine {#magazinelib-latest-magazine}
 
-<Route author="EthanWng97" example="/magazinelib/latest-magazine/new+yorker" path="/magazinelib/latest-magazine/:query?" paramsDesc={['query, search page querystring']} notOperational="1"/>
+<Route author="EthanWng97" example="/magazinelib/latest-magazine/new+yorker" path="/magazinelib/latest-magazine/:query?" paramsDesc={['query, search page querystring']} notOperational="1">
 
 For instance, when doing search at [https://magazinelib.com](https://magazinelib.com) and you get url `https://magazinelib.com/?s=new+yorker`, the query is `new+yorker`
 
@@ -241,13 +241,13 @@ Eg: `https://ncode.syosetu.com/n1976ey/`
 
 :::tip
 
-#### 使用方法 {#bi-qu-ge-xiao-shuo-shi-yong-fang-fa}
+#### 使用方法
 
 如订阅 [《大主宰》](http://www.biqu5200.net/0\_7/)，此时在 [biqu5200.net](http://www.biqu5200.net) 中查询得到对应小说详情页 URL 为 `http://www.biqu5200.net/0_7/`。此时，路由为 [`/biquge/http://www.biqu5200.net/0_7/`](https://rsshub.app/biquge/http://www.biqu5200.net/0_7/)
 
 又如同样订阅 [《大主宰》](https://www.shuquge.com/txt/70/index.html)，此时在 [shuquge.com](https://www.shuquge.com) 中查询得到对应小说详情页 URL 为 `https://www.shuquge.com/txt/70/index.html`。此时，把末尾的 `index.html` 去掉，路由为 [`/biquge/https://www.shuquge.com/txt/70/`](https://rsshub.app/biquge/https://www.shuquge.com/txt/70/)
 
-#### 关于章节数 {#bi-qu-ge-xiao-shuo-guan-yu-zhang-jie-shu}
+#### 关于章节数
 
 路由默认返回最新 **1** 个章节，如有需要一次性获取多个章节，可在路由后指定 `limit` 参数。如上面的例子：订阅 [《大主宰》](http://www.biqu5200.net/0\_7/) 并获取最新的 **10** 个章节。此时，路由为 [`/biquge/http://www.biqu5200.net/0_7/?limit=10`](https://rsshub.app/biquge/http://www.biqu5200.net/0_7/?limit=10)
 
