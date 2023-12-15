@@ -145,6 +145,7 @@
     "source-map": "0.7.4",
     "telegram": "2.18.26",
     "tiny-async-pool": "2.1.0",
+    "title": "3.5.3",
     "tough-cookie": "4.1.3",
     "twitter-api-v2": "1.15.2",
     "winston": "3.11.0",
