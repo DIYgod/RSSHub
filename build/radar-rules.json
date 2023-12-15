@@ -8416,46 +8416,10 @@
   },
   "dlut.edu.cn": {
     "_name": "大连理工大学",
-    "news": [
+    "dutdice": [
       {
-        "title": "新闻网",
-        "docs": "https://docs.rsshub.app/routes/university#da-lian-li-gong-da-xue-xin-wen-wang",
-        "source": [
-          "/"
-        ]
-      }
-    ],
-    "perdep": [
-      {
-        "title": "人事处",
-        "docs": "https://docs.rsshub.app/routes/university#da-lian-li-gong-da-xue-ren-shi-chu",
-        "source": [
-          "/"
-        ]
-      }
-    ],
-    "teach": [
-      {
-        "title": "教务处",
-        "docs": "https://docs.rsshub.app/routes/university#da-lian-li-gong-da-xue-jiao-wu-chu",
-        "source": [
-          "/"
-        ]
-      }
-    ],
-    "gs": [
-      {
-        "title": "研究生院",
-        "docs": "https://docs.rsshub.app/routes/university#da-lian-li-gong-da-xue-yan-jiu-sheng-yuan",
-        "source": [
-          "/"
-        ]
-      }
-    ],
-    "ssdut": [
-      {
-        "title": "软件学院",
-        "docs": "https://docs.rsshub.app/routes/university#da-lian-li-gong-da-xue-ruan-jian-xue-yuan",
+        "title": "国际合作与交流处（港澳台办）",
+        "docs": "https://docs.rsshub.app/routes/university#da-lian-li-gong-da-xue-guo-ji-he-zuo-yu-jiao-liu-chu-gang-ao-tai-ban",
         "source": [
           "/"
         ]
@@ -8470,6 +8434,33 @@
         ]
       }
     ],
+    "fldpj": [
+      {
+        "title": "公共基础学院",
+        "docs": "https://docs.rsshub.app/routes/university#da-lian-li-gong-da-xue-gong-gong-ji-chu-xue-yuan",
+        "source": [
+          "/"
+        ]
+      }
+    ],
+    "gs": [
+      {
+        "title": "研究生院",
+        "docs": "https://docs.rsshub.app/routes/university#da-lian-li-gong-da-xue-yan-jiu-sheng-yuan",
+        "source": [
+          "/"
+        ]
+      }
+    ],
+    "news": [
+      {
+        "title": "新闻网",
+        "docs": "https://docs.rsshub.app/routes/university#da-lian-li-gong-da-xue-xin-wen-wang",
+        "source": [
+          "/"
+        ]
+      }
+    ],
     "panjin": [
       {
         "title": "盘锦校区",
@@ -8479,10 +8470,10 @@
         ]
       }
     ],
-    "xsgzb": [
+    "perdep": [
       {
-        "title": "盘锦校区学生事务办公室",
-        "docs": "https://docs.rsshub.app/routes/university#da-lian-li-gong-da-xue-pan-jin-xiao-qu-xue-sheng-shi-wu-ban-gong-shi",
+        "title": "人事处",
+        "docs": "https://docs.rsshub.app/routes/university#da-lian-li-gong-da-xue-ren-shi-chu",
         "source": [
           "/"
         ]
@@ -8506,6 +8497,24 @@
         ]
       }
     ],
+    "ssdut": [
+      {
+        "title": "软件学院",
+        "docs": "https://docs.rsshub.app/routes/university#da-lian-li-gong-da-xue-ruan-jian-xue-yuan",
+        "source": [
+          "/"
+        ]
+      }
+    ],
+    "teach": [
+      {
+        "title": "教务处",
+        "docs": "https://docs.rsshub.app/routes/university#da-lian-li-gong-da-xue-jiao-wu-chu",
+        "source": [
+          "/"
+        ]
+      }
+    ],
     "tjpj": [
       {
         "title": "体育与健康学院盘锦分院",
@@ -8515,19 +8524,19 @@
         ]
       }
     ],
-    "dutdice": [
+    "tycgzx": [
       {
-        "title": "国际合作与交流处（港澳台办）",
-        "docs": "https://docs.rsshub.app/routes/university#da-lian-li-gong-da-xue-guo-ji-he-zuo-yu-jiao-liu-chu-gang-ao-tai-ban",
+        "title": "体育场馆中心",
+        "docs": "https://docs.rsshub.app/routes/university#da-lian-li-gong-da-xue-ti-yu-chang-guan-zhong-xin",
         "source": [
           "/"
         ]
       }
     ],
-    "tycgzx": [
+    "xsgzb": [
       {
-        "title": "体育场馆中心",
-        "docs": "https://docs.rsshub.app/routes/university#da-lian-li-gong-da-xue-ti-yu-chang-guan-zhong-xin",
+        "title": "盘锦校区学生事务办公室",
+        "docs": "https://docs.rsshub.app/routes/university#da-lian-li-gong-da-xue-pan-jin-xiao-qu-xue-sheng-shi-wu-ban-gong-shi",
         "source": [
           "/"
         ]
