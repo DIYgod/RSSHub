@@ -5,34 +5,34 @@
 ### AWS Blogs {#amazon-aws-blogs}
 
 <Route author="HankChow" example="/amazon/awsblogs" path="/awsblogs/:locale?" paramsDesc={['Blog postes in a specified language, only the following options are supported. Default `zh_CN`']}>
-
-| zh_CN | en_US | fr_FR | de_DE | ja_JP | ko_KR | pt_BR | es_ES | ru_RU | id_ID | tr_TR |
-| ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- | ----- |
-| Chinese    | English    | French    | German    | Japanese    | Korean    | Portuguese  | Spainish  | Russian    | Indonesian   | Turkish  |
-
+  | zh\_CN  | en\_US  | fr\_FR | de\_DE | ja\_JP   | ko\_KR | pt\_BR     | es\_ES   | ru\_RU  | id\_ID     | tr\_TR  |
+  | ------- | ------- | ------ | ------ | -------- | ------ | ---------- | -------- | ------- | ---------- | ------- |
+  | Chinese | English | French | German | Japanese | Korean | Portuguese | Spainish | Russian | Indonesian | Turkish |
 </Route>
 
 ## Apache {#apache}
 
 ### APISIX 博客 {#apache-apisix-bo-ke}
 
-<Route author="aneasystone" example="/apache/apisix/blog" path="/apache/apisix/blog"/>
+<Route author="aneasystone" example="/apache/apisix/blog" path="/apache/apisix/blog" />
 
 ## archdaily {#archdaily}
 
 ### Home {#archdaily-home}
 
-<Route author="kt286" example="/archdaily" path="/archdaily"/>
+<Route author="kt286" example="/archdaily" path="/archdaily" />
 
 ## Benedict Evans {#benedict-evans}
 
-<Route author="emdoe" example="/benedictevans" path="/benedictevans"/>
+### Essays {#benedict-evans-essays}
+
+<Route author="emdoe" example="/benedictevans" path="/benedictevans" />
 
 ## cmpxchg8b {#cmpxchg8b}
 
 ### Articles {#cmpxchg8b-articles}
 
-<Route author="yuguorui" example="/cmpxchg8b/articles" path="/cmpxchg8b/articles"/>
+<Route author="yuguorui" example="/cmpxchg8b/articles" path="/cmpxchg8b/articles" />
 
 ## CSDN {#csdn}
 
@@ -44,7 +44,7 @@
 
 ### Blogs {#delta-lake-blogs}
 
-<Route author="RengarLee" example="/deltaio/blog" path="/deltaio/blog" radar="1"/>
+<Route author="RengarLee" example="/deltaio/blog" path="/deltaio/blog" radar="1" />
 
 ## DevolverDigital {#devolverdigital}
 
@@ -57,20 +57,16 @@
 ### 文章 {#freebuf-wen-zhang}
 
 <Route author="trganda" example="/freebuf/articles/web" path="/freebuf/articles/:type" paramsDesc={['文章类别', '文章id号，可选']}>
-
-:::tip
-
-Freebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的完整内容。
-
-:::
-
+  :::tip
+  Freebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的完整内容。
+  :::
 </Route>
 
 ## Geocaching {#geocaching}
 
 ### Official Blogs {#geocaching-official-blogs}
 
-<Route author="HankChow" example="/geocaching/blogs" path="/geocaching/blogs" radar="1"/>
+<Route author="HankChow" example="/geocaching/blogs" path="/geocaching/blogs" radar="1" />
 
 ## Google Sites {#google-sites}
 
@@ -80,33 +76,29 @@ Freebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的
 
 ### Recent Changes {#google-sites-recent-changes}
 
-<Route author="nczitzk" example="/google/sites/recentChanges/outlierseconomics" path="/google/sites/recentChanges/:id" paramsDesc={['Site ID, can be found in URL']} notOperational="1"/>
+<Route author="nczitzk" example="/google/sites/recentChanges/outlierseconomics" path="/google/sites/recentChanges/:id" paramsDesc={['Site ID, can be found in URL']} notOperational="1" />
 
 ## Gwern Branwen {#gwern-branwen}
 
 ### 博客 {#gwern-branwen-bo-ke}
 
-<Route author="cerebrater" example="/gwern/newest" path="/gwern/:category" paramsDesc={['網誌主頁的分類訊息']}/>
+<Route author="cerebrater" example="/gwern/newest" path="/gwern/:category" paramsDesc={['網誌主頁的分類訊息']} />
 
 ## hashnode {#hashnode}
 
 ### 用户博客 {#hashnode-yong-hu-bo-ke}
 
 <Route author="hnrainll" example="/hashnode/blog/inklings" path="/hashnode/blog/:username" paramsDesc={['博主名称，用户头像 URL 中找到']}>
-
-:::tip
-
-username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 地址。
-
-:::
-
+  :::tip
+  username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 地址。
+  :::
 </Route>
 
-## Hedwig.pub {#hedwig.pub}
+## Hedwig.pub {#hedwig-pub}
 
-### 博客 {#hedwig.pub-bo-ke}
+### 博客 {#hedwig-pub-bo-ke}
 
-<Route author="zwithz" example="/blogs/hedwig/zmd" path="/blogs/hedwig/:type" paramsDesc={['分类, 见下表']}/>
+<Route author="zwithz" example="/blogs/hedwig/zmd" path="/blogs/hedwig/:type" paramsDesc={['分类, 见下表']} />
 
 | 呆唯的 Newsletter | 0neSe7en 的技术周刊 | 地心引力 | 宪学宪卖 | Comeet 每周精选 | 无鸡之谈 | 我有一片芝麻地 |
 | ----------------- | ------------------- | -------- | -------- | --------------- | -------- | -------------- |
@@ -118,67 +110,65 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 
 ### Blog using Next theme {#hexo-blog-using-next-theme}
 
-<Route author="fengkx" path="/hexo/next/:url" example="/hexo/next/archive.diygod.me" paramsDesc={['the blog URL without the protocol (http:// and https://)']} configRequired="1"/>
+<Route author="fengkx" path="/hexo/next/:url" example="/hexo/next/archive.diygod.me" paramsDesc={['the blog URL without the protocol (http:// and https://)']} configRequired="1" />
 
 ### Blog using Yilia theme {#hexo-blog-using-yilia-theme}
 
-<Route author="aha2mao" path="/hexo/yilia/:url" example="/hexo/yilia/cloudstone.xin" paramsDesc={['the blog URL without the protocol (http:// and https://)']} configRequired="1"/>
+<Route author="aha2mao" path="/hexo/yilia/:url" example="/hexo/yilia/cloudstone.xin" paramsDesc={['the blog URL without the protocol (http:// and https://)']} configRequired="1" />
 
 ### Blog using Fluid theme {#hexo-blog-using-fluid-theme}
 
-<Route author="gkkeys" path="/hexo/fluid/:url" example="/hexo/fluid/blog.tonyzhao.xyz" paramsDesc={['the blog URL without the protocol (http:// and https://)']} configRequired="1"/>
+<Route author="gkkeys" path="/hexo/fluid/:url" example="/hexo/fluid/blog.tonyzhao.xyz" paramsDesc={['the blog URL without the protocol (http:// and https://)']} configRequired="1" />
 
 ## Hi, DIYgod {#hi-diygod}
 
 ### DIYgod 的动森日记 {#hi-diygod-diygod-de-dong-sen-ri-ji}
 
-<Route author="DIYgod" example="/blogs/diygod/animal-crossing" path="/blogs/diygod/animal-crossing" notOperational="1"/>
+<Route author="DIYgod" example="/blogs/diygod/animal-crossing" path="/blogs/diygod/animal-crossing" notOperational="1" />
 
 ### DIYgod 的可爱的手办们 {#hi-diygod-diygod-de-ke-ai-de-shou-ban-men}
 
-<Route author="DIYgod" example="/blogs/diygod/gk" path="/blogs/diygod/gk" notOperational="1"/>
+<Route author="DIYgod" example="/blogs/diygod/gk" path="/blogs/diygod/gk" notOperational="1" />
 
 ## Ian Spriggss {#ian-spriggss}
 
 ### Category {#ian-spriggss-category}
 
 <Route author="nczitzk" example="/ianspriggs/portraits" path="/ianspriggs/:category?" paramsDesc={['Category, see below, 3D PORTRAITS by default']} radar="1">
-
-| 3D PORTRAITS | CHARACTERS |
-| ------------ | ---------- |
-| portraits    | characters |
-
+  | 3D PORTRAITS | CHARACTERS |
+  | ------------ | ---------- |
+  | portraits    | characters |
 </Route>
 
 ## JustRun {#justrun}
 
 ### JustRun {#justrun-justrun}
 
-<Route author="nczitzk" example="/justrun" path="/justrun" notOperational="1"/>
+<Route author="nczitzk" example="/justrun" path="/justrun" notOperational="1" />
 
 ## Kun Cheng {#kun-cheng}
 
 ### Essay {#kun-cheng-essay}
 
-<Route author="nczitzk" example="/kunchengblog/essay" path="/kunchengblog/essay" radar="1"/>
+<Route author="nczitzk" example="/kunchengblog/essay" path="/kunchengblog/essay" radar="1" />
 
 ## LaTeX 开源小屋 {#latex-kai-yuan-xiao-wu}
 
 ### 首页 {#latex-kai-yuan-xiao-wu-shou-ye}
 
-<Route author="kt286 nczitzk" example="/latexstudio/home" path="/latexstudio/home"/>
+<Route author="kt286 nczitzk" example="/latexstudio/home" path="/latexstudio/home" />
 
 ## LeeMeng {#leemeng}
 
 ### blog {#leemeng-blog}
 
-<Route author="xyqfer" example="/leemeng" path="/leemeng"/>
+<Route author="xyqfer" example="/leemeng" path="/leemeng" />
 
 ## Love the Problem {#love-the-problem}
 
 ### Ash Maurya's blog {#love-the-problem-ash-maurya-s-blog}
 
-<Route author="james-tindal" example="/ash-maurya" path="/ash-maurya" notOperational="1"/>
+<Route author="james-tindal" example="/ash-maurya" path="/ash-maurya" notOperational="1" />
 
 ## MacMenuBar {#macmenubar}
 
@@ -191,53 +181,37 @@ username 为博主用户名，而非`xxx.hashnode.dev`中`xxx`所代表的 blog 
 ### List {#medium-list}
 
 <Route author="ImSingee" example="/medium/list/imsingee/f2d8d48096a9" path="/medium/list/:user/:catalogId" paramsDesc={['Username', 'List ID']}>
+  The List ID is the last part of the URL after `-`, for example, the username in [https://medium.com/@imsingee/list/collection-7e67004f23f9](https://medium.com/@imsingee/list/collection-7e67004f23f9) is `imsingee`, and the ID is `7e67004f23f9`.
 
-The List ID is the last part of the URL after `-`, for example, the username in [https://medium.com/@imsingee/list/collection-7e67004f23f9](https://medium.com/@imsingee/list/collection-7e67004f23f9) is `imsingee`, and the ID is `7e67004f23f9`.
-
-:::warning
-
-To access private lists, only self-hosting is supported.
-
-:::
-
+  :::warning
+  To access private lists, only self-hosting is supported.
+  :::
 </Route>
 
 ### Personalized Recommendations - For You {#medium-personalized-recommendations-for-you}
 
 <Route author="ImSingee" example="/medium/for-you/imsingee" path="/medium/for-you/:user" paramsDesc={['Username']} configRequired="1">
-
-:::warning
-
-Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
-
-:::
-
+  :::warning
+  Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
+  :::
 </Route>
 
 ### Personalized Recommendations - Following {#medium-personalized-recommendations-following}
 
 <Route author="ImSingee" example="/medium/following/imsingee" path="/medium/following/:user" paramsDesc={['Username']} configRequired="1">
-
-:::warning
-
-Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
-
-:::
-
+  :::warning
+  Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
+  :::
 </Route>
 
 ### Personalized Recommendations - Tag {#medium-personalized-recommendations-tag}
 
 <Route author="ImSingee" example="/medium/tag/imsingee/cybersecurity" path="/medium/tag/:user/:tag" paramsDesc={['Username', 'Subscribed Tag']} configRequired="1">
+  There are many tags, which can be obtained by clicking on a tag from the homepage and looking at the URL. For example, if the URL is `https://medium.com/?tag=web3`, then the tag is `web3`.
 
-There are many tags, which can be obtained by clicking on a tag from the homepage and looking at the URL. For example, if the URL is `https://medium.com/?tag=web3`, then the tag is `web3`.
-
-:::warning
-
-Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
-
-:::
-
+  :::warning
+  Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
+  :::
 </Route>
 
 ## Miris Whispers {#miris-whispers}
@@ -250,7 +224,7 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 ### Essays {#paul-graham-essays}
 
-<Route author="Maecenas nczitzk" example="/paulgraham/articles" path="/paulgraham/articles" radar="1"/>
+<Route author="Maecenas nczitzk" example="/paulgraham/articles" path="/paulgraham/articles" radar="1" />
 
 ## Phrack Magazine {#phrack-magazine}
 
@@ -262,18 +236,16 @@ Personalized recommendations require the cookie value after logging in, so only 
 
 ### Blog {#polkadot-blog}
 
-<Route author="iceqing" example="/polkadot/blog" path="/polkadot/blog" notOperational="1"/>
+<Route author="iceqing" example="/polkadot/blog" path="/polkadot/blog" notOperational="1" />
 
 ## PolkaWorld {#polkaworld}
 
 ### Newest Articles {#polkaworld-newest-articles}
 
-<Route author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest" notOperational="1"/>
+<Route author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest" notOperational="1" />
 
 :::tip
-
 Limit the number of entries to be retrieved by adding `?limit=x` to the end of the route, default value is `10`.
-
 :::
 
 ## Stratechery by Ben Thompson {#stratechery-by-ben-thompson}
@@ -287,23 +259,21 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 ### Blog {#surfshark-blog}
 
 <Route author="nczitzk" example="/surfshark/blog" path="/surfshark/blog/:category?" paramsDesc={['Category, can be found in URL ,see below, All by default']} radar="1">
+  | Home | Cybersecurity | All things VPN | Internet censorship | Entertainment | News |
+  | ---- | ------------- | -------------- | ------------------- | ------------- | ---- |
+  |      | cybersecurity | all-things-vpn | internet-censorship | entertainment | news |
 
-| Home | Cybersecurity | All things VPN | Internet censorship | Entertainment | News |
-| ---- | ------------- | -------------- | ------------------- | ------------- | ---- |
-|      | cybersecurity | all-things-vpn | internet-censorship | entertainment | news |
+  #### Cybersecurity
 
-#### Cybersecurity {#surfshark-blog-cybersecurity}
+  | Internet Security               | Mobile Security               | Identity Protection               | Phishing               |
+  | ------------------------------- | ----------------------------- | --------------------------------- | ---------------------- |
+  | cybersecurity/internet-security | cybersecurity/mobile-security | cybersecurity/identity-protection | cybersecurity/phishing |
 
-| Internet Security               | Mobile Security               | Identity Protection               | Phishing               |
-| ------------------------------- | ----------------------------- | --------------------------------- | ---------------------- |
-| cybersecurity/internet-security | cybersecurity/mobile-security | cybersecurity/identity-protection | cybersecurity/phishing |
+  #### All things VPN
 
-#### All things VPN {#surfshark-blog-all-things-vpn}
-
-| Must-knows     | Technology     | Tips & Advice       |
-| -------------- | -------------- | ------------------- |
-| vpn/must-knows | vpn/technology | vpn/tips-and-advice |
-
+  | Must-knows     | Technology     | Tips & Advice       |
+  | -------------- | -------------- | ------------------- |
+  | vpn/must-knows | vpn/technology | vpn/tips-and-advice |
 </Route>
 
 ## Uber 优步 {#uber-you-bu}
@@ -322,32 +292,28 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ### 最新文章 {#whoscall-zui-xin-wen-zhang}
 
-<Route author="nczitzk" example="/whoscall" path="/whoscall" notOperational="1"/>
+<Route author="nczitzk" example="/whoscall" path="/whoscall" notOperational="1" />
 
 ### 分類 {#whoscall-fen-lei}
 
 <Route author="nczitzk" example="/whoscall/categories/5-Whoscall 百科" path="/whoscall/categories/:category?" paramsDesc={['分类，见下表，可在对应分類页 URL 中找到，默认为最新文章']} notOperational="1">
-
-| News   | Whoscall 百科   | 防詐小學堂     | Whoscall 日常   |
-| ------ | --------------- | -------------- | --------------- |
-| 1-News | 5-Whoscall 百科 | 4 - 防詐小學堂 | 6-Whoscall 日常 |
-
+  | News   | Whoscall 百科   | 防詐小學堂     | Whoscall 日常   |
+  | ------ | --------------- | -------------- | --------------- |
+  | 1-News | 5-Whoscall 百科 | 4 - 防詐小學堂 | 6-Whoscall 日常 |
 </Route>
 
 ### 標籤 {#whoscall-biao-qian}
 
 <Route author="nczitzk" example="/whoscall/tags" path="/whoscall/tags/:tag?" paramsDesc={['標籤，见下表，可在对应標籤页 URL 中找到，默认为最新文章']} notOperational="1">
-
-| 防疫也防詐 | 防詐專家 | 來電辨識 | whoscall 日常 |
-| ---------- | -------- | -------- | ------------- |
-
+  | 防疫也防詐 | 防詐專家 | 來電辨識 | whoscall 日常 |
+  | ---------- | -------- | -------- | ------------- |
 </Route>
 
 ## WordPress {#wordpress}
 
 ### Blog {#wordpress-blog}
 
-<Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" paramsDesc={['WordPress blog domain', 'use https by default. options: `http` or `https`']}/>
+<Route author="Lonor" example="/blogs/wordpress/lawrence.code.blog" path="/blogs/wordpress/:domain/:https?" paramsDesc={['WordPress blog domain', 'use https by default. options: `http` or `https`']} />
 
 ## yuzu emulator {#yuzu-emulator}
 
@@ -359,67 +325,61 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ### 首页 {#a-li-yun-xi-tong-zu-ji-shu-bo-ke-shou-ye}
 
-<Route author="attenuation" example="/aliyun-kernel/index" path="/aliyun-kernel/index" notOperational="1"/>
+<Route author="attenuation" example="/aliyun-kernel/index" path="/aliyun-kernel/index" notOperational="1" />
 
 ## 博客园 {#bo-ke-yuan}
 
 ### 10 天推荐排行榜 {#bo-ke-yuan-10-tian-tui-jian-pai-hang-bang}
 
-<Route author="hujingnb" example="/cnblogs/aggsite/topdiggs" path="/cnblogs/aggsite/topdiggs" radar="1"/>
+<Route author="hujingnb" example="/cnblogs/aggsite/topdiggs" path="/cnblogs/aggsite/topdiggs" radar="1" />
 
 ### 48 小时阅读排行 {#bo-ke-yuan-48-xiao-shi-yue-du-pai-hang}
 
-<Route author="hujingnb" example="/cnblogs/aggsite/topviews" path="/cnblogs/aggsite/topviews" radar="1"/>
+<Route author="hujingnb" example="/cnblogs/aggsite/topviews" path="/cnblogs/aggsite/topviews" radar="1" />
 
 ### 编辑推荐 {#bo-ke-yuan-bian-ji-tui-jian}
 
-<Route author="hujingnb" example="/cnblogs/aggsite/headline" path="/cnblogs/aggsite/headline" radar="1"/>
+<Route author="hujingnb" example="/cnblogs/aggsite/headline" path="/cnblogs/aggsite/headline" radar="1" />
 
 ### 分类 {#bo-ke-yuan-fen-lei}
 
 <Route author="hujingnb" example="/cnblogs/cate/go" path="/cnblogs/cate/:type" paramsDesc={['类型']} radar="1">
-
-在博客园主页的分类出可查看所有类型。例如，go 的分类地址为: `https://www.cnblogs.com/cate/go/`, 则: [`/cnblogs/cate/go`](https://rsshub.app/cnblogs/cate/go)
-
+  在博客园主页的分类出可查看所有类型。例如，go 的分类地址为: `https://www.cnblogs.com/cate/go/`, 则: [`/cnblogs/cate/go`](https://rsshub.app/cnblogs/cate/go)
 </Route>
 
 ### 精华区 {#bo-ke-yuan-jing-hua-qu}
 
-<Route author="hujingnb" example="/cnblogs/pick" path="/cnblogs/pick" radar="1"/>
+<Route author="hujingnb" example="/cnblogs/pick" path="/cnblogs/pick" radar="1" />
 
 ## 财新博客 {#cai-xin-bo-ke}
 
 ### 用户博客 {#cai-xin-bo-ke-yong-hu-bo-ke}
 
 <Route author="Maecenas" example="/caixin/blog/zhangwuchang" path="/caixin/blog/:column?" paramsDesc={['博客名称，可在博客主页的 URL 找到']}>
-
-通过提取文章全文，以提供比官方源更佳的阅读体验.
-
+  通过提取文章全文，以提供比官方源更佳的阅读体验.
 </Route>
 
 ## 大侠阿木 {#da-xia-a-mu}
 
 ### 首页 {#da-xia-a-mu-shou-ye}
 
-<Route author="kt286" example="/daxiaamu/home" path="/daxiaamu/home"/>
+<Route author="kt286" example="/daxiaamu/home" path="/daxiaamu/home" />
 
 ## 大眼仔旭 {#da-yan-zai-xu}
 
 ### 分类 {#da-yan-zai-xu-fen-lei}
 
 <Route author="nitezs" example="/dayanzai/windows" path="/dayanzai/:category/:fulltext?" paramsDesc={['分类','是否获取全文，需要获取则传入参数`y`']} radar="1">
-
-| 微软应用 | 安卓应用 | 教程资源 | 其他资源 |
-| -------- | -------- | -------- | -------- |
-| windows  | android  | tutorial | other    |
-
+  | 微软应用 | 安卓应用 | 教程资源 | 其他资源 |
+  | -------- | -------- | -------- | -------- |
+  | windows  | android  | tutorial | other    |
 </Route>
 
 ## 虎皮椒 {#hu-pi-jiao}
 
 ### 文章 {#hu-pi-jiao-wen-zhang}
 
-<Route author="wxluckly" example="/xunhupay/blog" path="/xunhupay/blog" radar="1"/>
+<Route author="wxluckly" example="/xunhupay/blog" path="/xunhupay/blog" radar="1" />
 
 ## 華康字型故事 {#hua-kang-zi-xing-gu-shi}
 
@@ -431,60 +391,56 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ### 文章 {#huang-jian-hong-bo-ke-wen-zhang}
 
-<Route author="stormbuf" example="/huangz" path="/huangz" radar="1" notOperational="1"/>
+<Route author="stormbuf" example="/huangz" path="/huangz" radar="1" notOperational="1" />
 
 ## 建宁闲谈 {#jian-ning-xian-tan}
 
 ### 文章 {#jian-ning-xian-tan-wen-zhang}
 
-<Route author="changlan" example="/blogs/jianning" path="/blogs/jianning" radar="1" notOperational="1"/>
+<Route author="changlan" example="/blogs/jianning" path="/blogs/jianning" radar="1" notOperational="1" />
 
 ## 劍心．回憶 {#jian-xin-hui-yi}
 
 ### 分类 {#jian-xin-hui-yi-fen-lei}
 
 <Route author="nczitzk" example="/kenshin" path="/kenshin/:category?/:type?" paramsDesc={['分类，见下表，默认为首页', '子分类，见下表，默认为首页']}>
+  :::tip
+  如 `藝能新聞` 的 `日劇新聞` 分类，路由为 `/jnews/news_drama`
+  :::
 
-:::tip
+  藝能新聞 jnews
 
-如 `藝能新聞` 的 `日劇新聞` 分类，路由为 `/jnews/news_drama`
+  | 日劇新聞    | 日影新聞    | 日樂新聞    | 日藝新聞            |
+  | ----------- | ----------- | ----------- | ------------------- |
+  | news\_drama | news\_movie | news\_music | news\_entertainment |
 
-:::
+  | 動漫新聞  | 藝人美照     | 清涼寫真   | 日本廣告 | 其他日聞     |
+  | --------- | ------------ | ---------- | -------- | ------------ |
+  | news\_acg | artist-photo | photoalbum | jpcm     | news\_others |
 
-藝能新聞 jnews
+  旅遊情報 jpnews
 
-| 日劇新聞   | 日影新聞   | 日樂新聞   | 日藝新聞           |
-| ---------- | ---------- | ---------- | ------------------ |
-| news_drama | news_movie | news_music | news_entertainment |
+  | 日本美食情報 | 日本甜點情報  | 日本零食情報  | 日本飲品情報  | 日本景點情報       |
+  | ------------ | ------------- | ------------- | ------------- | ------------------ |
+  | jpnews-food  | jpnews-sweets | jpnews-okashi | jpnews-drinks | jpnews-attractions |
 
-| 動漫新聞 | 藝人美照     | 清涼寫真   | 日本廣告 | 其他日聞    |
-| -------- | ------------ | ---------- | -------- | ----------- |
-| news_acg | artist-photo | photoalbum | jpcm     | news_others |
+  | 日本玩樂情報 | 日本住宿情報 | 日本活動情報  | 日本購物情報    | 日本社會情報   |
+  | ------------ | ------------ | ------------- | --------------- | -------------- |
+  | jpnews-play  | jpnews-hotel | jpnews-events | jpnews-shopping | jpnews-society |
 
-旅遊情報 jpnews
+  | 日本交通情報   | 日本天氣情報   |
+  | -------------- | -------------- |
+  | jpnews-traffic | jpnews-weather |
 
-| 日本美食情報 | 日本甜點情報  | 日本零食情報  | 日本飲品情報  | 日本景點情報       |
-| ------------ | ------------- | ------------- | ------------- | ------------------ |
-| jpnews-food  | jpnews-sweets | jpnews-okashi | jpnews-drinks | jpnews-attractions |
+  日劇世界 jdrama
 
-| 日本玩樂情報 | 日本住宿情報 | 日本活動情報  | 日本購物情報    | 日本社會情報   |
-| ------------ | ------------ | ------------- | --------------- | -------------- |
-| jpnews-play  | jpnews-hotel | jpnews-events | jpnews-shopping | jpnews-society |
+  | 每周劇評              | 日劇總評             | 資料情報    |
+  | --------------------- | -------------------- | ----------- |
+  | drama\_review\_weekly | drama\_review\_final | drama\_data |
 
-| 日本交通情報   | 日本天氣情報   |
-| -------------- | -------------- |
-| jpnews-traffic | jpnews-weather |
-
-日劇世界 jdrama
-
-| 每周劇評            | 日劇總評           | 資料情報   |
-| ------------------- | ------------------ | ---------- |
-| drama_review_weekly | drama_review_final | drama_data |
-
-| 深度日劇   | 收視報告     | 日劇專欄     | 劇迷互動          |
-| ---------- | ------------ | ------------ | ----------------- |
-| drama_deep | drama_rating | drama_column | drama_interactive |
-
+  | 深度日劇    | 收視報告      | 日劇專欄      | 劇迷互動           |
+  | ----------- | ------------- | ------------- | ------------------ |
+  | drama\_deep | drama\_rating | drama\_column | drama\_interactive |
 </Route>
 
 ## 交流岛资源网 {#jiao-liu-dao-zi-yuan-wang}
@@ -497,19 +453,19 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ### 文章 {#jing-wei-bo-ke-wen-zhang}
 
-<Route author="a180285" example="/blogs/jingwei.link" path="/blogs/jingwei.link"/>
+<Route author="a180285" example="/blogs/jingwei.link" path="/blogs/jingwei.link" />
 
 ## 每日安全 {#mei-ri-an-quan}
 
 ### 推送 {#mei-ri-an-quan-tui-song}
 
-<Route author="LogicJake" example="/security/pulses" path="/security/pulses" anticrawler="1"/>
+<Route author="LogicJake" example="/security/pulses" path="/security/pulses" anticrawler="1" />
 
 ## 美团技术团队 {#mei-tuan-ji-shu-tuan-dui}
 
 ### 最近更新 {#mei-tuan-ji-shu-tuan-dui-zui-jin-geng-xin}
 
-<Route author="kt286" example="/meituan/tech/home" path="/meituan/tech/home"/>
+<Route author="kt286" example="/meituan/tech/home" path="/meituan/tech/home" />
 
 ## 十年之约 {#shi-nian-zhi-yue}
 
@@ -521,19 +477,19 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ### 文章 {#tu-meng-de-yuan-wai-wen-zhang}
 
-<Route author="Levix" example="/luxiangdong/archive" path="/luxiangdong/archive"/>
+<Route author="Levix" example="/luxiangdong/archive" path="/luxiangdong/archive" />
 
 ## 王五四文集 {#wang-wu-si-wen-ji}
 
 ### 文章 {#wang-wu-si-wen-ji-wen-zhang}
 
-<Route author="prnake" example="/blogs/wang54" path="/blogs/wang54/:id?" paramsDesc={['RSS抓取地址：https://wangwusiwj.blogspot.com/:id?，默认为2020']}/>
+<Route author="prnake" example="/blogs/wang54" path="/blogs/wang54/:id?" paramsDesc={['RSS抓取地址：https://wangwusiwj.blogspot.com/:id?，默认为2020']} />
 
 ## 王垠博客 {#wang-yin-bo-ke}
 
 ### 文章 {#wang-yin-bo-ke-wen-zhang}
 
-<Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin"/>
+<Route author="junbaor SkiTiSu" example="/blogs/wangyin" path="/blogs/wangyin" />
 
 ## 新语丝 {#xin-yu-si}
 
@@ -545,44 +501,40 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 ### 首页 {#yu-cong-bo-ke-shou-ye}
 
-<Route author="XinRoom" example="/ddosi" path="/ddosi" anticrawler="1"/>
+<Route author="XinRoom" example="/ddosi" path="/ddosi" anticrawler="1" />
 
 ### 分类 {#yu-cong-bo-ke-fen-lei}
 
-<Route author="XinRoom" example="/ddosi/category/黑客工具" path="/ddosi/category/:category?"/>
+<Route author="XinRoom" example="/ddosi/category/黑客工具" path="/ddosi/category/:category?" />
 
 ## 云原生社区 {#yun-yuan-sheng-she-qu}
 
 ### 博客 {#yun-yuan-sheng-she-qu-bo-ke}
 
-<Route author="aneasystone" example="/cloudnative/blog" path="/cloudnative/blog"/>
+<Route author="aneasystone" example="/cloudnative/blog" path="/cloudnative/blog" />
 
 ## 浙江大学可视分析小组 {#zhe-jiang-da-xue-ke-shi-fen-xi-xiao-zu}
 
 ### 博客 {#zhe-jiang-da-xue-ke-shi-fen-xi-xiao-zu-bo-ke}
 
-<Route author="KaiyoungYu" example="/zjuvag/blog" path="/zjuvag/blog" radar="1"/>
+<Route author="KaiyoungYu" example="/zjuvag/blog" path="/zjuvag/blog" radar="1" />
 
 ## 支流科技 {#zhi-liu-ke-ji}
 
 ### 博客 {#zhi-liu-ke-ji-bo-ke}
 
-<Route author="aneasystone" example="/apiseven/blog" path="/apiseven/blog"/>
+<Route author="aneasystone" example="/apiseven/blog" path="/apiseven/blog" />
 
 ## 竹白 {#zhu-bai}
 
 ### 文章 {#zhu-bai-wen-zhang}
 
-<Route author="naixy28" example="/zhubai/via" path="/zhubai/:id"  paramsDesc={['`id` 为竹白主页 url 中的三级域名，如 via.zhubai.love 的 `id` 为 `via`']}>
-
-:::tip
-
-在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`20`
-
-:::
-
+<Route author="naixy28" example="/zhubai/via" path="/zhubai/:id" paramsDesc={['`id` 为竹白主页 url 中的三级域名，如 via.zhubai.love 的 `id` 为 `via`']}>
+  :::tip
+  在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`20`
+  :::
 </Route>
 
 ### 上周热门 TOP 20 {#zhu-bai-shang-zhou-re-men-top-20}
 
-<Route author="nczitzk" example="/zhubai/top20" path="/zhubai/top20" radar="1"/>
+<Route author="nczitzk" example="/zhubai/top20" path="/zhubai/top20" radar="1" />
