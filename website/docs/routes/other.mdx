@@ -1212,6 +1212,84 @@ Specify options (in the format of query string) in parameter `routeParams` param
 
 <Route author="Fatpandac" example="/piyao/jrpy" path="/piyao/jrpy" />
 
+## 中国炼焦行业协会 {#zhong-guo-lian-jiao-hang-ye-xie-hui}
+
+### 汇总 {#zhong-guo-lian-jiao-hang-ye-xie-hui-hui-zong}
+
+<Route author="nczitzk" example="/cnljxh/collect" path="/cnljxh/collect/:id?" paramsDesc={['栏目 id，见下表，可在对应栏目页 URL 中找到，默认为 10039，即市场价格 > 价格汇总']} radar="1" supportBT="1">
+  | 价格汇总 |
+  | -------- |
+  | 10039    |
+</Route>
+
+### 价格指数 {#zhong-guo-lian-jiao-hang-ye-xie-hui-jia-ge-zhi-shu}
+
+<Route author="nczitzk" example="/cnljxh/date" path="/cnljxh/date/:id?" paramsDesc={['栏目 id，见下表，可在对应栏目页 URL 中找到，默认为 5575，即价格指数 > 焦炭指数']} radar="1" supportBT="1">
+  | 焦炭指数 | 炼焦煤指数 |
+  | -------- | ---------- |
+  | 5575     | 5907       |
+</Route>
+
+### 分析数据 {#zhong-guo-lian-jiao-hang-ye-xie-hui-fen-xi-shu-ju}
+
+<Route author="nczitzk" example="/cnljxh/info" path="/cnljxh/info/:id?" paramsDesc={['栏目 id，见下表，可在对应栏目页 URL 中找到，默认为 575，即分析数据 > 市场分析']} radar="1" supportBT="1">
+  | 市场分析 | 一周评述 | 核心数据 |
+  | -------- | -------- | -------- |
+  | 575      | 5573     | 5417     |
+</Route>
+
+### 新闻 {#zhong-guo-lian-jiao-hang-ye-xie-hui-xin-wen}
+
+<Route author="nczitzk" example="/cnljxh/news" path="/cnljxh/news/:id?" paramsDesc={['栏目 id，见下表，可在对应栏目页 URL 中找到，默认为 10，即协会公告']} radar="1" supportBT="1">
+  <details>
+    <summary>更多分类</summary>
+
+    #### 协会专区
+
+    | 协会简介 | 协会章程 | 协会领导 | 入会程序 | 组织机构 |
+    | -------- | -------- | -------- | -------- | -------- |
+    | 24       | 25       | 26       | 27       | 28       |
+
+    #### 协会公告
+
+    | 协会公告 |
+    | -------- |
+    | 10       |
+
+    #### 行业新闻
+
+    | 协会动态 | 企业动态 | 行业动态 |
+    | -------- | -------- | -------- |
+    | 8        | 9        | 11       |
+
+    #### 政策法规
+
+    | 政策法规 |
+    | -------- |
+    | 12       |
+
+    #### 行业标准
+
+    | 国家标准 | 行业标准 | 团体标准 |
+    | -------- | -------- | -------- |
+    | 13       | 14       | 15       |
+
+    #### 技术广角
+
+    | 技术广角 |
+    | -------- |
+    | 16       |
+  </details>
+</Route>
+
+### 价格 {#zhong-guo-lian-jiao-hang-ye-xie-hui-jia-ge}
+
+<Route author="nczitzk" example="/cnljxh/price" path="/cnljxh/price/:id?" paramsDesc={['栏目 id，见下表，可在对应栏目页 URL 中找到，默认为 299，即市场价格 > 价格行情']} radar="1" supportBT="1">
+  | 价格行情 | 双焦运费 |
+  | -------- | -------- |
+  | 299      | 2143     |
+</Route>
+
 ## 中国期货业协会 {#zhong-guo-qi-huo-ye-xie-hui}
 
 ### 分析师园地 {#zhong-guo-qi-huo-ye-xie-hui-fen-xi-shi-yuan-di}
