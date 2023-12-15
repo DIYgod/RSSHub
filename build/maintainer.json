@@ -6563,6 +6563,9 @@
     "/sspai/topics": [
         "SunShinenny"
     ],
+    "/sspu/jwc/:listId": [
+        "TonyRL"
+    ],
     "/ssydt/article/:id?": [],
     "/startuplatte/:category?": [
         "nczitzk"
