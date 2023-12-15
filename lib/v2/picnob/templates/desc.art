@@ -3,11 +3,11 @@
         <source src="{{ item.video }}" type="video/mp4">
     </video>
 {{ else if item.type === 'img_multi' }}
-    {{ each images i }}
-        <a href="{{ i.ori }}"><img src="{{ i.url }}"></a>
+    {{ each item.images i }}
+        <img src="{{ i.url }}">
     {{ /each }}
 {{ else if item.type === 'img_sig' }}
-    <a href="{{ item.pic }}"><img src="{{ item.pic }}"></a>
+    <img src="{{ item.pic }}">
 {{ /if }}
 <br>
 {{@ item.sum }}
