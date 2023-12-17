@@ -2813,6 +2813,12 @@
     "/gov/ccdi/:path+": [
         "bigfei"
     ],
+    "/gov/chinamine-safety/xw/:category?": [
+        "nczitzk"
+    ],
+    "/gov/chinamine-safety/zfxxgk/:category?": [
+        "nczitzk"
+    ],
     "/gov/chinatax/latest": [
         "nczitzk",
         "fuzy112"
