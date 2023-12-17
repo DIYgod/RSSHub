@@ -8131,6 +8131,12 @@
     "/zhihu/xhu/collection/:id": [
         "JimenezLi"
     ],
+    "/zhihu/xhu/people/activities/:hexId": [
+        "JimenezLi"
+    ],
+    "/zhihu/xhu/people/answers/:hexId": [
+        "JimenezLi"
+    ],
     "/zhihu/xhu/question/:questionId/:sortBy?": [
         "JimenezLi"
     ],

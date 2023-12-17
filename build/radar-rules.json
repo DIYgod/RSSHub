@@ -27729,6 +27729,16 @@
         "target": "/zhihu/zhuanlan/:id"
       },
       {
+        "title": "xhu - 用户动态",
+        "docs": "https://docs.rsshub.app/routes/social-media#zhi-hu",
+        "source": "/people/:id"
+      },
+      {
+        "title": "xhu - 用户回答",
+        "docs": "https://docs.rsshub.app/routes/social-media#zhi-hu",
+        "source": "/people/:id/answers"
+      },
+      {
         "title": "xhu - 收藏夹",
         "docs": "https://docs.rsshub.app/routes/social-media#zhi-hu",
         "source": "/collection/:id",
