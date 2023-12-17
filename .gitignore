@@ -30,4 +30,4 @@ package-lock.json
 yarn.lock
 yarn-error.log
 
-scripts/twitter-token/accounts.txt
+scripts/twitter-token/accounts.*
