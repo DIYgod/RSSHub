@@ -1805,7 +1805,10 @@
         "nczitzk"
     ],
     "/deepl/blog/:lang?": [],
-    "/deeplearningai/thebatch": [],
+    "/deeplearning/thebatch": [
+        "nczitzk",
+        "juvenn"
+    ],
     "/deepmind/blog": [
         "nczitzk",
         "TonyRL"
