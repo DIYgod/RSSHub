@@ -786,7 +786,6 @@
     "/bigquant/collections": [
         "nczitzk"
     ],
-    "/bihu/activaties/:id": [],
     "/bilibili/app/:id?": [
         "nczitzk"
     ],
@@ -798,12 +797,6 @@
     ],
     "/bilibili/bangumi/media/:mediaid": [
         "DIYgod"
-    ],
-    "/bilibili/blackboard": [
-        "Qixingchen"
-    ],
-    "/bilibili/channel/:channelid/hot/:disableEmbed?": [
-        "3401797899"
     ],
     "/bilibili/fav/:uid/:fid/:disableEmbed?": [
         "Qixingchen"
@@ -845,9 +838,6 @@
     "/bilibili/manga/update/:comicid": [
         "hoilc"
     ],
-    "/bilibili/online/:disableEmbed?": [
-        "TigerCubDen"
-    ],
     "/bilibili/partion/:tid/:disableEmbed?": [
         "DIYgod"
     ],
@@ -865,9 +855,6 @@
     ],
     "/bilibili/readlist/:listid": [
         "hoilc"
-    ],
-    "/bilibili/topic/:topic": [
-        "Qixingchen"
     ],
     "/bilibili/user/article/:uid": [
         "lengthmin"
@@ -898,9 +885,6 @@
     ],
     "/bilibili/user/followings/:uid/:loginUid": [
         "Qixingchen"
-    ],
-    "/bilibili/user/video-all/:uid/:disableEmbed?": [
-        "CcccFz"
     ],
     "/bilibili/user/video/:uid/:disableEmbed?": [
         "DIYgod"
@@ -1855,7 +1839,6 @@
     "/diandong/news/:cate?": [
         "Fatpandac"
     ],
-    "/dianping/user/:id?": [],
     "/dida365/habit/checkins": [],
     "/diershoubing/news": [
         "wushijishan"
@@ -2324,7 +2307,6 @@
         "nczitzk"
     ],
     "/eztv/torrents/:imdb_id": [],
-    "/facebook/page/:id": [],
     "/famitsu/category/:category?": [
         "TonyRL"
     ],
@@ -2553,7 +2535,6 @@
     ],
     "/fzu/:type": [],
     "/fzu_min/:type": [],
-    "/gab/popular/:sort?": [],
     "/gab/user/:username": [],
     "/galaxylab": [],
     "/gameapps": [
@@ -4094,7 +4075,6 @@
     "/jgsu/jwc": [],
     "/jianshu/collection/:id": [],
     "/jianshu/home": [],
-    "/jianshu/trending/:timeframe": [],
     "/jianshu/user/:id": [],
     "/jiaoliudao": [
         "TonyRL"
@@ -5680,7 +5660,6 @@
     "/polkaworld/polkaworld/newest": [
         "iceqing"
     ],
-    "/popiask/:sharecode/:pagesize?": [],
     "/popyard/:caty?": [],
     "/pork-price": [],
     "/porn-images-xxx/:type?/:name?": [],
@@ -6745,7 +6724,6 @@
     "/taoguba/user/:id": [
         "nczitzk"
     ],
-    "/tapechat/questionbox/:sharecode/:pagesize?": [],
     "/taptap/changelog/:id/:lang?": [
         "hoilc",
         "ETiV"
@@ -7385,7 +7363,6 @@
         "TonyRL"
     ],
     "/vscode/marketplace/:type?": [],
-    "/vuevideo/:userid": [],
     "/vulture/:tag/:excludetags?": [],
     "/wainao-reads/all-articles": [],
     "/wallhaven/:filter?/:needDetails?": [
@@ -7534,9 +7511,6 @@
     "/wenxuecity/blog/:id": [],
     "/wenxuecity/hot/:cid": [],
     "/wenxuecity/news": [],
-    "/weseepro/circle": [],
-    "/weseepro/newest": [],
-    "/weseepro/newest-direct": [],
     "/westore/new": [],
     "/wfdf/news": [
         "HankChow"
@@ -7653,7 +7627,6 @@
     "/wtu/job/:type": [
         "ticks-tan"
     ],
-    "/wukong/user/:id/:type?": [],
     "/wxkol/show/:id": [
         "TonyRL"
     ],

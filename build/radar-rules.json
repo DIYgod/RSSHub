@@ -3577,12 +3577,6 @@
         "target": "/bilibili/user/video/:uid"
       },
       {
-        "title": "UP 主所有视频",
-        "docs": "https://docs.rsshub.app/routes/social-media#bilibili",
-        "source": "/:uid",
-        "target": "/bilibili/user/video-all/:uid"
-      },
-      {
         "title": "UP 主频道的合集",
         "docs": "https://docs.rsshub.app/routes/social-media#bilibili",
         "source": "/:uid/channel/collectiondetail"
@@ -14829,7 +14823,7 @@
     "_name": "Instagram",
     "www": [
       {
-        "title": "用户",
+        "title": "User",
         "docs": "https://docs.rsshub.app/routes/social-media#instagram",
         "source": [
           "/:id"
@@ -14837,7 +14831,7 @@
         "target": "/instagram/user/:id"
       },
       {
-        "title": "标签",
+        "title": "Tags",
         "docs": "https://docs.rsshub.app/routes/social-media#instagram",
         "source": [
           "/explore/tags/:key"
@@ -32766,16 +32760,6 @@
           "/html/zkkd"
         ],
         "target": "/gov/beijing/bjeea/zkkd"
-      }
-    ]
-  },
-  "popiapp.cn": {
-    "_name": "Popi 提问箱",
-    "www": [
-      {
-        "title": "提问箱新回答",
-        "docs": "https://docs.rsshub.app/routes/social-media#popi-ti-wen-xiang",
-        "source": "/:id"
       }
     ]
   },
