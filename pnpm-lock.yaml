@@ -263,8 +263,8 @@ devDependencies:
     specifier: 12.0.4
     version: 12.0.4
   '@types/lint-staged':
-    specifier: 13.2.2
-    version: 13.2.2
+    specifier: 13.3.0
+    version: 13.3.0
   '@types/mailparser':
     specifier: 3.4.4
     version: 3.4.4
@@ -1668,8 +1668,8 @@ packages:
     resolution: {integrity: sha512-pTjcqY9E4nOI55Wgpz7eiI8+LzdYnw3qxXCfHyBDdPbYvbyLgWLJGh8EdPvqawwMK1Uo1794AUkkR38Fr0g+2g==}
     dev: true
 
-  /@types/lint-staged@13.2.2:
-    resolution: {integrity: sha512-9c2ffPMJ1geob6yBmLuxzYye11HzKyA/I4dRZ8NfrPgY6SyzXt2SROD8vB3YjdPZJqqcu3WXsRvrY3PZbb720A==}
+  /@types/lint-staged@13.3.0:
+    resolution: {integrity: sha512-WxGjVP+rA4OJlEdbZdT9MS9PFKQ7kVPhLn26gC+2tnBWBEFEj/KW+IbFfz6sxdxY5U6V7BvyF+3BzCGsAMHhNg==}
     dev: true
 
   /@types/mailparser@3.4.4:
@@ -1695,7 +1695,7 @@ packages:
   /@types/mdast@4.0.3:
     resolution: {integrity: sha512-LsjtqsyF+d2/yFOYaN22dHZI1Cpwkrj+g06G8+qtUKlhovPW89YhqSnfKtMbkgmEtYpH2gydRNULd6y8mciAFg==}
     dependencies:
-      '@types/unist': 3.0.2
+      '@types/unist': 2.0.7
     dev: true
 
   /@types/mdurl@1.0.2:
