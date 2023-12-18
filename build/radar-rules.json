@@ -2026,14 +2026,6 @@
           "/topic"
         ],
         "target": "/agirls/topic_list"
-      },
-      {
-        "title": "精选主题",
-        "docs": "https://docs.rsshub.app/routes/new-media##dian-ta-shao-nu",
-        "source": [
-          "/topic/:topic"
-        ],
-        "target": "/agirls/topic/:topic"
       }
     ]
   },
@@ -2415,38 +2407,6 @@
           "/"
         ],
         "target": "/aljazeera/chinese/tag/:id"
-      }
-    ]
-  },
-  "allrecode.com": {
-    "_name": "重构",
-    ".": [
-      {
-        "title": "推荐",
-        "docs": "https://docs.rsshub.app/routes/news-media#chong-gou-tui-jian",
-        "source": [
-          "/recommends",
-          "/"
-        ],
-        "target": "/allrecode/recommends"
-      },
-      {
-        "title": "快讯",
-        "docs": "https://docs.rsshub.app/routes/news-media#chong-gou-kuai-xun",
-        "source": [
-          "/news",
-          "/"
-        ],
-        "target": "/allrecode/news"
-      },
-      {
-        "title": "资讯",
-        "docs": "https://docs.rsshub.app/routes/news-media#chong-gou-zi-xun",
-        "source": [
-          "/:category",
-          "/"
-        ],
-        "target": "/allrecode/:category"
       }
     ]
   },
@@ -3142,28 +3102,6 @@
         "docs": "https://docs.rsshub.app/routes/other#bai-du-re-sou",
         "source": [
           "/board"
-        ]
-      }
-    ]
-  },
-  "baijingapp.com": {
-    "_name": "白鲸出海",
-    ".": [
-      {
-        "title": "最新",
-        "docs": "https://docs.rsshub.app/routes/new-media#bai-jing-chu-hai",
-        "source": [
-          "/article",
-          "/"
-        ],
-        "target": "/baijing"
-      },
-      {
-        "title": "资讯",
-        "docs": "https://docs.rsshub.app/routes/new-media#bai-jing-chu-hai",
-        "source": [
-          "/article",
-          "/"
         ]
       }
     ]
@@ -7777,14 +7715,6 @@
           "/news"
         ],
         "target": "/diandong/news/:cate"
-      },
-      {
-        "title": "电动号",
-        "docs": "https://docs.rsshub.app/routes/new-media#dong-qiu-di",
-        "source": [
-          "/news/ddh"
-        ],
-        "target": "/diandong/ddh/:cate"
       }
     ]
   },
@@ -7825,27 +7755,6 @@
           "/"
         ],
         "target": "/disinfo/publications"
-      }
-    ]
-  },
-  "disinformationindex.org": {
-    "_name": "Global Disinformation Index",
-    ".": [
-      {
-        "title": "Blog",
-        "docs": "https://docs.rsshub.app/routes/new-media#global-disinformation-index",
-        "source": [
-          "/"
-        ],
-        "target": "/disinformationindex/blog"
-      },
-      {
-        "title": "Research",
-        "docs": "https://docs.rsshub.app/routes/new-media#global-disinformation-index",
-        "source": [
-          "/"
-        ],
-        "target": "/disinformationindex/research"
       }
     ]
   },
@@ -8574,14 +8483,6 @@
           "/archives/category/:type/:category?",
           "/archives/category/:type"
         ]
-      },
-      {
-        "title": "标签",
-        "docs": "https://docs.rsshub.app/routes/multimedia#e-hentai-biao-qian",
-        "source": [
-          "/archives/tag/:tag"
-        ],
-        "target": "/dx2025/tag/:tag"
       }
     ]
   },
@@ -8994,28 +8895,6 @@
           "/"
         ],
         "target": "/ecust/jwc/notice/:category?"
-      }
-    ]
-  },
-  "eet-china.com": {
-    "_name": "电子工程专辑",
-    ".": [
-      {
-        "title": "芯语",
-        "docs": "https://docs.rsshub.app/routes/new-media#dian-zi-gong-cheng-zhuan-ji-xin-yu",
-        "source": [
-          "/mp",
-          "/"
-        ]
-      },
-      {
-        "title": "芯语 - 标签",
-        "docs": "https://docs.rsshub.app/routes/new-media#dian-zi-gong-cheng-zhuan-ji-xin-yu-biao-qian",
-        "source": [
-          "/mp/tags/:id",
-          "/"
-        ],
-        "target": "/eet-china/mp/tags/:id"
       }
     ]
   },
@@ -9496,20 +9375,6 @@
       }
     ]
   },
-  "ezone.hk": {
-    "_name": "ezone.hk",
-    ".": [
-      {
-        "title": "分类",
-        "docs": "https://docs.rsshub.app/routes/new-media#ezone-hk-fen-lei",
-        "source": [
-          "/:category",
-          "/"
-        ],
-        "target": "/ezone/:category?"
-      }
-    ]
-  },
   "famitsu.com": {
     "_name": "ファミ通",
     ".": [
@@ -9711,20 +9576,6 @@
           "/:id"
         ],
         "target": "/fffdm/manhua/:id"
-      }
-    ]
-  },
-  "filmdeepfocus.com": {
-    "_name": "深焦",
-    ".": [
-      {
-        "title": "分类",
-        "docs": "https://docs.rsshub.app/routes/new-media#shen-jiao-fen-lei",
-        "source": [
-          "/:category",
-          "/"
-        ],
-        "target": "/filmdeepfocus/:category?"
       }
     ]
   },
@@ -10795,19 +10646,6 @@
           "/"
         ],
         "target": "/gogoanimehd/recent-releases"
-      }
-    ]
-  },
-  "good.news": {
-    "_name": "Good.news",
-    ".": [
-      {
-        "title": "今日要闻",
-        "docs": "https://docs.rsshub.app/routes/new-media#good-news-jin-ri-yao-wen",
-        "source": [
-          "/"
-        ],
-        "target": "/good"
       }
     ]
   },
@@ -12758,19 +12596,6 @@
       }
     ]
   },
-  "gq.com.tw": {
-    "_name": "GQ Taiwan",
-    ".": [
-      {
-        "title": "GQ Taiwan",
-        "docs": "https://docs.rsshub.app/routes/new-media#gq",
-        "source": [
-          "/*path"
-        ],
-        "target": "/gq/tw/:path"
-      }
-    ]
-  },
   "greasyfork.org": {
     "_name": "Greasy Fork",
     ".": [
@@ -12900,19 +12725,6 @@
           "/topic/post-list",
           "/"
         ]
-      }
-    ]
-  },
-  "guandian.cn": {
-    "_name": "观点网",
-    "www": [
-      {
-        "title": "资讯",
-        "docs": "https://docs.rsshub.app/routes/new-media#guan-dian-wang-zi-xun",
-        "source": [
-          "/:category"
-        ],
-        "target": "/guandian/:category"
       }
     ]
   },
@@ -13084,28 +12896,6 @@
         "title": "客户端",
         "docs": "https://docs.rsshub.app/routes/traditional-media#guang-zhou-ri-bao",
         "source": [
-          "/"
-        ]
-      }
-    ]
-  },
-  "gzh360.com": {
-    "_name": "公众号360",
-    "web": [
-      {
-        "title": "公众号",
-        "docs": "https://docs.rsshub.app/routes/new-media#gong-zhong-hao-360",
-        "source": [
-          "/gzh_articles",
-          "/gzh",
-          "/"
-        ]
-      },
-      {
-        "title": "分类",
-        "docs": "https://docs.rsshub.app/routes/new-media#gong-zhong-hao-360",
-        "source": [
-          "/category",
           "/"
         ]
       }
@@ -13397,13 +13187,6 @@
           "/kepu.html"
         ],
         "target": "/hellobtc/kepu/public_blockchain"
-      },
-      {
-        "title": "专栏",
-        "docs": "https://docs.rsshub.app/routes/new-media#bai-hua-qu-kuai-lian",
-        "source": [
-          "/topic/:id"
-        ]
       }
     ]
   },
@@ -13847,37 +13630,6 @@
         "source": [
           "/:type"
         ]
-      }
-    ]
-  },
-  "hotchina.news": {
-    "_name": "辛華社",
-    ".": [
-      {
-        "title": "首页",
-        "docs": "https://docs.rsshub.app/routes/new-media#xin-hua-she-shou-ye",
-        "source": [
-          "/"
-        ],
-        "target": "/hotchina"
-      },
-      {
-        "title": "分类",
-        "docs": "https://docs.rsshub.app/routes/new-media#xin-hua-she-fen-lei",
-        "source": [
-          "/archives/category/:id",
-          "/"
-        ],
-        "target": "/hotchina/category/:id?"
-      },
-      {
-        "title": "标签",
-        "docs": "https://docs.rsshub.app/routes/new-media#xin-hua-she-biao-qian",
-        "source": [
-          "/archives/tag/:id",
-          "/"
-        ],
-        "target": "/hotchina/tag/:id?"
       }
     ]
   },
@@ -15062,28 +14814,6 @@
         "source": [
           "/report.shtml"
         ]
-      }
-    ]
-  },
-  "islander.cc": {
-    "_name": "島民衛星 Islander",
-    ".": [
-      {
-        "title": "事件分析",
-        "docs": "https://docs.rsshub.app/routes/new-media#dao-min-wei-xing-islander",
-        "source": [
-          "/"
-        ],
-        "target": "/islander/search"
-      },
-      {
-        "title": "單日焦點",
-        "docs": "https://docs.rsshub.app/routes/new-media#dao-min-wei-xing-islander",
-        "source": [
-          "/top30event",
-          "/"
-        ],
-        "target": "/islander/top30event"
       }
     ]
   },
@@ -17336,47 +17066,6 @@
       }
     ]
   },
-  "knowmedia.tw": {
-    "_name": "识媒体",
-    ".": [
-      {
-        "title": "近期更新",
-        "docs": "https://docs.rsshub.app/routes/game#jump",
-        "source": [
-          "/",
-          "/topics/近期更新"
-        ],
-        "target": "/knowmedia/jqgx"
-      },
-      {
-        "title": "精选专栏",
-        "docs": "https://docs.rsshub.app/routes/game#jump",
-        "source": [
-          "/",
-          "/topics/精選專欄"
-        ],
-        "target": "/knowmedia/jxzl"
-      },
-      {
-        "title": "活动讯息",
-        "docs": "https://docs.rsshub.app/routes/game#jump",
-        "source": [
-          "/",
-          "/topics/活動訊息"
-        ],
-        "target": "/knowmedia/hdxx"
-      },
-      {
-        "title": "影音专区",
-        "docs": "https://docs.rsshub.app/routes/game#jump",
-        "source": [
-          "/",
-          "/topics/影音專區"
-        ],
-        "target": "/knowmedia/yyzq"
-      }
-    ]
-  },
   "kuaidi100.com": {
     "_name": "快递 100",
     ".": [
@@ -17403,29 +17092,6 @@
           "/essay"
         ],
         "target": "/kunchengblog/essay"
-      }
-    ]
-  },
-  "kuwaitlocal.com": {
-    "_name": "Kuwait Local",
-    ".": [
-      {
-        "title": "Latest News",
-        "docs": "https://docs.rsshub.app/routes/en/new-media#kuwait-local",
-        "source": [
-          "/news/latest",
-          "/news",
-          "/"
-        ],
-        "target": "/kuwaitlocal"
-      },
-      {
-        "title": "Categorised News",
-        "docs": "https://docs.rsshub.app/routes/en/new-media#kuwait-local",
-        "source": [
-          "/news/categories/:category"
-        ],
-        "target": "/kuwaitlocal/:category"
       }
     ]
   },
@@ -18731,33 +18397,6 @@
           "/insights"
         ],
         "target": "/mckinsey/cn/45"
-      }
-    ]
-  },
-  "mclaren.com": {
-    "_name": "Mclaren Racing",
-    "www": [
-      {
-        "title": "Mclaren Racing",
-        "docs": "https://docs.rsshub.app/routes/new-media#mai-kai-lun-sai-che",
-        "source": "/racing/articles/",
-        "target": "/mclaren/en/all"
-      }
-    ],
-    "cn": [
-      {
-        "title": "迈凯伦赛车",
-        "docs": "https://docs.rsshub.app/routes/new-media#mai-kai-lun-sai-che",
-        "source": "/racing/articles/",
-        "target": "/mclaren/zh/all"
-      }
-    ],
-    "es": [
-      {
-        "title": "Mclaren Racing",
-        "docs": "https://docs.rsshub.app/routes/new-media#mai-kai-lun-sai-che",
-        "source": "/racing/articles/",
-        "target": "/mclaren/es/all"
       }
     ]
   },
@@ -22450,19 +22089,6 @@
       }
     ]
   },
-  "pmthinking.com": {
-    "_name": "产品沉思录",
-    ".": [
-      {
-        "title": "首页",
-        "docs": "https://docs.rsshub.app/routes/new-media#chan-pin-chen-si-lu-shou-ye",
-        "source": [
-          "/"
-        ],
-        "target": "/pmthinking"
-      }
-    ]
-  },
   "pnas.org": {
     "_name": "Proceedings of the National Academy of Sciences",
     ".": [
@@ -22745,32 +22371,6 @@
       }
     ]
   },
-  "qdaily.com": {
-    "_name": "好奇心日报",
-    ".": [
-      {
-        "title": "标签",
-        "docs": "https://docs.rsshub.app/routes/new-media#hao-qi-xin-ri-bao",
-        "source": [
-          "/tags/:id"
-        ]
-      },
-      {
-        "title": "栏目",
-        "docs": "https://docs.rsshub.app/routes/new-media#hao-qi-xin-ri-bao",
-        "source": [
-          "/special_columns/:id"
-        ]
-      },
-      {
-        "title": "分类",
-        "docs": "https://docs.rsshub.app/routes/new-media#hao-qi-xin-ri-bao",
-        "source": [
-          "/categories/:id"
-        ]
-      }
-    ]
-  },
   "qdu.edu.cn": {
     "_name": "青岛大学",
     "jwc": [
@@ -22782,18 +22382,6 @@
           "/"
         ],
         "target": "/qdu/jwc"
-      }
-    ]
-  },
-  "qianp.com": {
-    "_name": "千篇网",
-    ".": [
-      {
-        "title": "知识库／资讯",
-        "docs": "https://docs.rsshub.app/routes/new-media#qian-pian-wang",
-        "source": [
-          "/*path"
-        ]
       }
     ]
   },
@@ -25153,19 +24741,6 @@
       }
     ]
   },
-  "shuiguopai.com": {
-    "_name": "水果派",
-    ".": [
-      {
-        "title": "首页",
-        "docs": "https://docs.rsshub.app/routes/new-media#shui-guo-pai-shou-ye",
-        "source": [
-          "/"
-        ],
-        "target": "/shuiguopai"
-      }
-    ]
-  },
   "sicau.edu.cn": {
     "_name": "",
     "dky": [
@@ -27179,15 +26754,6 @@
           "/"
         ],
         "target": "/thenewslens/review/:sort?"
-      },
-      {
-        "title": "影音",
-        "docs": "https://docs.rsshub.app/routes/new-media#the-news-lens-guan-jian-ping-lun",
-        "source": [
-          "/videos/Projects/:sort?",
-          "/"
-        ],
-        "target": "/thenewslens/videos/Projects/:sort?"
       }
     ]
   },
@@ -28225,22 +27791,6 @@
           "/"
         ],
         "target": "/twreporter/newest"
-      },
-      {
-        "title": "摄影",
-        "docs": "https://docs.rsshub.app/routes/new-media#bao-dao-zhe",
-        "source": [
-          "/photography"
-        ],
-        "target": "/twreporter"
-      },
-      {
-        "title": "分类",
-        "docs": "https://docs.rsshub.app/routes/new-media#bao-dao-zhe",
-        "source": [
-          "/categories/:tid"
-        ],
-        "target": "/twreporter/category/:tid"
       }
     ]
   },
@@ -28993,17 +28543,6 @@
       }
     ]
   },
-  "verse.com.tw": {
-    "_name": "VERSE",
-    "www": [
-      {
-        "title": "專文",
-        "docs": "https://docs.rsshub.app/routes/new-media#verse",
-        "source": "/articles/:category?",
-        "target": "/verse/articles/:category?"
-      }
-    ]
-  },
   "vimeo.com": {
     "_name": "Vimeo",
     ".": [
@@ -29226,19 +28765,6 @@
           "/"
         ],
         "target": "/warthunder/news"
-      }
-    ]
-  },
-  "watchout.tw": {
-    "_name": "沃草",
-    ".": [
-      {
-        "title": "文件列表",
-        "docs": "https://docs.rsshub.app/routes/new-media#wo-cao-wen-jian-lie-biao",
-        "source": [
-          "/"
-        ],
-        "target": "/watchout"
       }
     ]
   },
@@ -30066,28 +29592,12 @@
         "target": "/woshipm/popular"
       },
       {
-        "title": "用户收藏",
-        "docs": "https://docs.rsshub.app/routes/new-media#ren-ren-dui-shi-chan-pin-jing-li",
-        "source": [
-          "/u/:id"
-        ],
-        "target": "/woshipm/bookmarks/:id"
-      },
-      {
         "title": "用户文章",
         "docs": "https://docs.rsshub.app/routes/new-media#ren-ren-dui-shi-chan-pin-jing-li",
         "source": [
           "/u/:id"
         ],
         "target": "/woshipm/user_article/:id"
-      },
-      {
-        "title": "最新文章",
-        "docs": "https://docs.rsshub.app/routes/new-media#ren-ren-dui-shi-chan-pin-jing-li",
-        "source": [
-          "/"
-        ],
-        "target": "/woshipm/latest"
       }
     ],
     "wen": [
@@ -30098,19 +29608,6 @@
           "/"
         ],
         "target": "/woshipm/wen"
-      }
-    ]
-  },
-  "wp-china.com": {
-    "_name": "中国工人出版社",
-    ".": [
-      {
-        "title": "新闻中心",
-        "docs": "https://docs.rsshub.app/routes/new-media#zhong-guo-gong-ren-chu-ban-she",
-        "source": [
-          "/"
-        ],
-        "target": "/wp-china/news"
       }
     ]
   },
@@ -30162,18 +29659,6 @@
       {
         "title": "信息门户公告",
         "docs": "https://docs.rsshub.app/routes/university#wu-han-fang-zhi-da-xue"
-      }
-    ]
-  },
-  "wxkol.com": {
-    "_name": "微小领",
-    ".": [
-      {
-        "title": "微信公众号",
-        "docs": "https://docs.rsshub.app/routes/new-media#wei-xiao-ling",
-        "source": [
-          "/show/:id"
-        ]
       }
     ]
   },
@@ -30873,19 +30358,6 @@
       }
     ]
   },
-  "yaohuo.me": {
-    "_name": "妖火",
-    ".": [
-      {
-        "title": "首页",
-        "docs": "https://docs.rsshub.app/routes/new-media#yao-huo-shou-ye",
-        "source": [
-          "/"
-        ],
-        "target": "/yaohuo"
-      }
-    ]
-  },
   "yicai.com": {
     "_name": "第一财经",
     ".": [
@@ -31199,21 +30671,6 @@
         "source": [
           "/materials"
         ]
-      }
-    ]
-  },
-  "yunspe.com": {
-    "_name": "云奇网",
-    ".": [
-      {
-        "title": "微语简报",
-        "docs": "https://docs.rsshub.app/routes/new-media#wei-yu-jian-bao",
-        "source": [
-          "/newsflashes/微语简报",
-          "/newsflashes",
-          "/"
-        ],
-        "target": "/yunspe/newsflashes"
       }
     ]
   },
@@ -32846,17 +32303,6 @@
       }
     ]
   },
-  "buaq.net": {
-    "_name": "不安全资讯",
-    ".": [
-      {
-        "title": "不安全资讯",
-        "docs": "http://docs.rsshub.app/routes/new-media#bu-an-quan",
-        "source": "/",
-        "target": "/buaq"
-      }
-    ]
-  },
   "jian-ning.com": {
     "_name": "建宁闲谈",
     ".": [
@@ -32865,48 +32311,6 @@
         "docs": "https://docs.rsshub.app/routes/blog#jian-ning-xian-tan",
         "source": "/*",
         "target": "/blogs/jianning"
-      }
-    ]
-  },
-  "matataki.io": {
-    "_name": "matataki",
-    "www": [
-      {
-        "title": "最热作品",
-        "docs": "https://docs.rsshub.app/routes/new-media#matataki",
-        "source": "/article/",
-        "target": "/matataki/posts/hot"
-      },
-      {
-        "title": "最新作品",
-        "docs": "https://docs.rsshub.app/routes/new-media#matataki",
-        "source": "/article/latest",
-        "target": "/matataki/posts/latest"
-      },
-      {
-        "title": "作者创作",
-        "docs": "https://docs.rsshub.app/routes/new-media#matataki",
-        "source": "/user/:uid"
-      },
-      {
-        "title": "Fan票关联作品",
-        "docs": "https://docs.rsshub.app/routes/new-media#matataki",
-        "source": [
-          "/token/:tokenId",
-          "/token/:tokenId/circle"
-        ]
-      },
-      {
-        "title": "标签关联作品",
-        "docs": "https://docs.rsshub.app/routes/new-media#matataki",
-        "source": [
-          "/tag/:tagId"
-        ]
-      },
-      {
-        "title": "收藏夹",
-        "docs": "https://docs.rsshub.app/routes/new-media#matataki",
-        "source": "/user/:uid/favlist/:fid"
       }
     ]
   },

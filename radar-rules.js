@@ -346,27 +346,7 @@
             },
         ],
     },
-    'buaq.net': { _name: '不安全资讯', '.': [{ title: '不安全资讯', docs: 'http://docs.rsshub.app/routes/new-media#bu-an-quan', source: '/', target: '/buaq' }] },
     'jian-ning.com': { _name: '建宁闲谈', '.': [{ title: '文章', docs: 'https://docs.rsshub.app/routes/blog#jian-ning-xian-tan', source: '/*', target: '/blogs/jianning' }] },
-    'matataki.io': {
-        _name: 'matataki',
-        www: [
-            { title: '最热作品', docs: 'https://docs.rsshub.app/routes/new-media#matataki', source: '/article/', target: '/matataki/posts/hot' },
-            { title: '最新作品', docs: 'https://docs.rsshub.app/routes/new-media#matataki', source: '/article/latest', target: '/matataki/posts/latest' },
-            { title: '作者创作', docs: 'https://docs.rsshub.app/routes/new-media#matataki', source: '/user/:uid', target: (params) => `/matataki/users/${params.uid}/posts` },
-            { title: 'Fan票关联作品', docs: 'https://docs.rsshub.app/routes/new-media#matataki', source: ['/token/:tokenId', '/token/:tokenId/circle'], target: (params) => `/matataki/tokens/${params.tokenId}/posts` },
-            {
-                title: '标签关联作品',
-                docs: 'https://docs.rsshub.app/routes/new-media#matataki',
-                source: ['/tag/:tagId'],
-                target: (params, url) => {
-                    const tagName = new URL(url).searchParams.get('name');
-                    return `/matataki/tags/${params.tagId}/${tagName}/posts`;
-                },
-            },
-            { title: '收藏夹', docs: 'https://docs.rsshub.app/routes/new-media#matataki', source: '/user/:uid/favlist/:fid', target: (params) => `/matataki/users/${params.uid}/favorites/${params.fid}/posts` },
-        ],
-    },
     'eventernote.com': { _name: 'Eventernote', www: [{ title: '声优活动及演唱会', docs: 'https://docs.rsshub.app/routes/anime#eventernote', source: '/actors/:name/:id/events', target: '/eventernote/actors/:name/:id' }] },
     'huya.com': { _name: '虎牙直播', '.': [{ title: '直播间开播', docs: 'https://docs.rsshub.app/routes/live#hu-ya-zhi-bo-zhi-bo-jian-kai-bo', source: '/:id', target: '/huya/live/:id' }] },
     'craigslist.org': { _name: 'Craigslist', '.': [{ title: '商品搜索列表', docs: 'https://docs.rsshub.app/routes/shopping#craigslist' }] },
