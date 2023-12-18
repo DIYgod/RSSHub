@@ -313,21 +313,6 @@
         ],
     },
     'ems.com.cn': { _name: '中国邮政速递物流', www: [{ title: '新闻', docs: 'https://docs.rsshub.app/routes/other#zhong-guo-you-zheng-su-di-wu-liu', source: '/aboutus/xin_wen_yu_shi_jian', target: '/ems/news' }] },
-    'popiapp.cn': {
-        _name: 'Popi 提问箱',
-        www: [
-            {
-                title: '提问箱新回答',
-                docs: 'https://docs.rsshub.app/routes/social-media#popi-ti-wen-xiang',
-                source: '/:id',
-                target: (params) => {
-                    if (params.id) {
-                        return '/popiask/:id';
-                    }
-                },
-            },
-        ],
-    },
     'nppa.gov.cn': {
         _name: '国家新闻出版署',
         www: [
