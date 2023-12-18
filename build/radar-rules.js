@@ -15184,14 +15184,14 @@
         docs:"https://docs.rsshub.app/routes/social-media#zhi-hu",
         source:"/people/:id",
         target:(params, url, document) => {
-                    const hexId = /"id":"(.*?)"/.exec(document.getElementById('js-initialData').innerHTML)[1];
+                    const hexId = /"id":"([0-9a-f]*?)","urlToken"/.exec(document.getElementById('js-initialData').innerHTML)[1];
                     return `/zhihu/xhu/people/activities/${hexId}`;
                 } },
       { title:"xhu - 用户回答",
         docs:"https://docs.rsshub.app/routes/social-media#zhi-hu",
         source:"/people/:id/answers",
         target:(params, url, document) => {
-                    const hexId = /"id":"(.*?)"/.exec(document.getElementById('js-initialData').innerHTML)[1];
+                    const hexId = /"id":"([0-9a-f]*?)","urlToken"/.exec(document.getElementById('js-initialData').innerHTML)[1];
                     return `/zhihu/xhu/people/answers/${hexId}`;
                 } },
       { title:"xhu - 收藏夹",
