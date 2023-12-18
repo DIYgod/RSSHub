@@ -7046,6 +7046,9 @@
     "/tophub/:id": [
         "LogicJake"
     ],
+    "/tophub/list/:id": [
+        "akynazh"
+    ],
     "/topys/:keyword?": [
         "nczitzk"
     ],
