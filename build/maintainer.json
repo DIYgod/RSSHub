@@ -593,6 +593,9 @@
     "/arknights/news": [
         "Astrian"
     ],
+    "/artstation/:handle": [
+        "TonyRL"
+    ],
     "/arxiv/:query": [],
     "/asahi/:genre?/:category?": [],
     "/asahi/area/:id": [],
