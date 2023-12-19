@@ -3970,9 +3970,21 @@
         "chazeon"
     ],
     "/jgsu/jwc": [],
-    "/jianshu/collection/:id": [],
-    "/jianshu/home": [],
-    "/jianshu/user/:id": [],
+    "/jianshu/collection/:id": [
+        "DIYgod",
+        "HenryQW",
+        "JimenezLi"
+    ],
+    "/jianshu/home": [
+        "DIYgod",
+        "HenryQW",
+        "JimenezLi"
+    ],
+    "/jianshu/user/:id": [
+        "DIYgod",
+        "HenryQW",
+        "JimenezLi"
+    ],
     "/jiaoliudao": [
         "TonyRL"
     ],
