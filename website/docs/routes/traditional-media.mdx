@@ -98,15 +98,6 @@
   -   频道，如金融財經 `https://www.bbc.co.uk/zhongwen/trad/business/index.xml` 则为 `/bbc/traditionalchinese/business`.
 </Route>
 
-## Boston.com {#boston-com}
-
-### News {#boston-com-news}
-
-<Route author="oppilate" example="/boston/technology" path="/boston/:tag?" paramsDesc={['Tag']} notOperational="1">
-  Generates full-text feeds that the official feed doesn't provide.
-  Refer to [Boston.com's feed page](https://www.boston.com/rss-feeds) for tags. For instance, `https://www.boston.com/tag/local-news/?feed=rss` corresponds to `/boston/local-news`.
-</Route>
-
 ## Caixin Global {#caixin-global}
 
 ### Latest News {#caixin-global-latest-news}
@@ -126,42 +117,6 @@
 <Route author="oppilate" example="/chicagotribune/nation-world" path="/chicagotribune/:category/:subcategory?" paramsDesc={['Category', 'Subcategory']}>
   Generates full-text that the official feed doesn't provide.
   Refer to [Chicago Tribune's feed page](https://www.chicagotribune.com/about/ct-chicago-tribune-rss-feeds-htmlstory.html) for categories. For instance, `https://www.chicagotribune.com/arcio/rss/category/nation-world/` corresponds to `/chicagotribune/nation-world`.
-</Route>
-
-## China Dialogue 中外对话 {#china-dialogue-zhong-wai-dui-hua}
-
-### Topics {#china-dialogue-zhong-wai-dui-hua-topics}
-
-<Route author="zoenglinghou" example="/chinadialogue/topics/cities" path="/chinadialogue/topics/:topic" paramsDesc={['Topics']} notOperational="1">
-  | Business | Cities | Climate Change            | Conservation | Governance & Law   | Health and Food | Natural Disasters | Pollution | Science & Tech   | Security | Water |
-  | -------- | ------ | ------------------------- | ------------ | ------------------ | --------------- | ----------------- | --------- | ---------------- | -------- | ----- |
-  | business | cities | climate-change-and-energy | conservation | governance-and-law | health-and-food | natural-disasters | pollution | science-and-tech | security | water |
-</Route>
-
-### Columns {#china-dialogue-zhong-wai-dui-hua-columns}
-
-<Route author="zoenglinghou" example="/chinadialogue/article" path="/chinadialogue/:column" paramsDesc={['栏目分类']} notOperational="1">
-  | Articles | Blogs | Culture | Reports |
-  | -------- | ----- | ------- | ------- |
-  | article  | blog  | culture | reports |
-</Route>
-
-### 福建新闻 {#china-dialogue-zhong-wai-dui-hua-fu-jian-xin-wen}
-
-<Route author="jjlzg" example="/fjnews/fj/30" path="/fjnews/fznews" notOperational="1" />
-
-### 九江新闻 {#china-dialogue-zhong-wai-dui-hua-jiu-jiang-xin-wen}
-
-<Route author="jjlzg" example="/fjnews/jjnews" path="/fjnews/jjnews" notOperational="1" />
-
-## China Times 中時電子報 {#china-times-zhong-shi-dian-zi-bao}
-
-### News {#china-times-zhong-shi-dian-zi-bao-news}
-
-<Route author="luyuhuang" example="/chinatimes/realtimenews" path="/chinatimes/:caty" paramsDesc={['category']} radar="1" notOperational="1">
-  | realtimenews   | politic | opinion | life | star    | money   | society | hottopic   | tube   | world | armament | chinese           | fashion | sports | technologynews  | travel | album   |
-  | -------------- | ------- | ------- | ---- | ------- | ------- | ------- | ---------- | ------ | ----- | -------- | ----------------- | ------- | ------ | --------------- | ------ | ------- |
-  | Real Time News | Politic | Opinion | Life | Showbiz | Finance | Society | Hot Topics | Videos | World | Military | Mainland & Taiwan | Fashion | Sports | Technology News | Travel | Columns |
 </Route>
 
 ## ChinaFile {#chinafile}
@@ -237,15 +192,6 @@
 
   -   频道为单一路径，如 `http://www.ftchinese.com/rss/news` 则为 `/ft/chinese/news`.
   -   频道包含多重路径，如 `http://www.ftchinese.com/rss/column/007000002` 则替换 `/` 为 `-` `/ft/chinese/column-007000002`.
-</Route>
-
-### myFT personal RSS {#financial-times-myft-personal-rss}
-
-<Route author="HenryQW" example="/ft/myft/rss-key" path="/ft/myft/:key" paramsDesc={['the last part of myFT personal RSS address']} notOperational="1">
-  :::tip
-  -   Visit ft.com -> myFT -> Contact Preferences to enable personal RSS feed, see [help.ft.com](https://help.ft.com/faq/email-alerts-and-contact-preferences/what-is-myft-rss-feed/)
-  -   Obtain the key from the personal RSS address, it looks like `12345678-abcd-4036-82db-vdv20db024b8`
-  :::
 </Route>
 
 ## Korean Central News Agency (KCNA) 朝鲜中央通讯社 {#korean-central-news-agency-kcna-chao-xian-zhong-yang-tong-xun-she}
@@ -409,14 +355,6 @@ Only `s00017` is in English.
   :::
 </Route>
 
-## Radio France 法国广播电台 {#radio-france-fa-guo-guang-bo-dian-tai}
-
-### Géopolitique {#radio-france-fa-guo-guang-bo-dian-tai-geopolitique}
-
-<Route author="xdu" example="/radiofrance/geopolitique" path="/radiofrance/geopolitique" notOperational="1">
-  French podcast on the international politics. This feed provides a better reading experience (full text) for the 3 latest articles.
-</Route>
-
 ## Radio Free Asia (RFA) 自由亚洲电台 {#radio-free-asia-rfa-zi-you-ya-zhou-dian-tai}
 
 ### News {#radio-free-asia-rfa-zi-you-ya-zhou-dian-tai-news}
@@ -481,7 +419,7 @@ You can use `sophi=true` query parameter to invoke the **experimental** method, 
 
 ### News {#rodong-sinmun-lao-dong-xin-wen-news}
 
-<Route author="TonyRL" example="/rodong/news" path="/rodong/news/:language?" paramsDesc={['Language, see below, `ko` by default']} radar="1" notOperational="1">
+<Route author="TonyRL" example="/rodong/news" path="/rodong/news/:language?" paramsDesc={['Language, see below, `ko` by default']} radar="1">
   | 조선어 | English | 中文 |
   | ------ | ------- | ---- |
   | ko     | en      | cn   |
@@ -517,54 +455,6 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
       (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](/parameter#中文简繁体转换))
 </Route>
 
-## SBS {#sbs}
-
-### Chinese {#sbs-chinese}
-
-<Route author="nczitzk" example="/sbs/chinese" path="/sbs/chinese/:category?/:id?/:dialect?/:language?" paramsDesc={['Category, `news` or `podcast`, `news` by default', 'Id, see below, can be found in URL, `news` by default', 'Dialect, `mandarin` or `cantonese`, `mandarin` by default', 'Language, `zh-hans` or `zh-hant`, `zh-hans` by default']} notOperational="1">
-  :::tip
-  When subscribing to podcasts, fill `category` with **podcast**. For example, URL to [SBS 普通话电台](https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin) is `https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin`, with **sbs-mandarin** as `id`, **mandarin** as `dialect`, `language` as **zh-hans**, and the route is [`/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans).
-  :::
-
-  | 新闻 | 澳大利亚新闻    | 国际新闻           | ​ 商业与财经     |
-  | ---- | --------------- | ------------------ | ---------------- |
-  | news | australian-news | international-news | business-finance |
-
-  | 澳中关系                  | ​ 移民与签证 | Stories in English |
-  | ------------------------- | ------------ | ------------------ |
-  | australia-china-relations | immigration  | english            |
-
-  | COVID-19 专题报道 | 澳大利亚华人       | 澳大利亚生活      | 教育      |
-  | ----------------- | ------------------ | ----------------- | --------- |
-  | coronavirus       | australian-chinese | life-in-australia | education |
-
-  | 健康   | 吃喝玩乐                  | 艺术人文        | 澳洲定居指南     |
-  | ------ | ------------------------- | --------------- | ---------------- |
-  | health | food-travel-entertainment | cultural-events | settlement-guide |
-
-  SBS Mandarin Programs:
-
-  | SBS 普通话播客 | 解读澳洲            | 疫苗快报                   |
-  | -------------- | ------------------- | -------------------------- |
-  | sbs-mandarin   | australia-explained | covid-vaccine-daily-update |
-
-  SBS Cantonese Programs:
-
-  | SBS 廣東話節目 Podcast | 疫苗快報            | 美食速遞        | 我不是名人          |
-  | ---------------------- | ------------------- | --------------- | ------------------- |
-  | sbs-cantonese          | covid-vaccine-daily | gourmet-express | my-australian-story |
-
-  | 健康快樂人         | 園藝趣談       | 寰宇金融       | 文化 360    | 科技世界         |
-  | ------------------ | -------------- | -------------- | ----------- | ---------------- |
-  | healthy-happy-life | gardening-tips | global-finance | culture-360 | technology-world |
-
-  :::tip
-  Mostly, you can omit `language`, for the reason that **madarin** is with **zh-hans** and **cantonese** is with **zh-hant** by default. For example, the route of [SBS 普通话电台](https://www.sbs.com.au/chinese/mandarin/zh-hans/podcast/sbs-mandarin) is [`/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin/zh-hans), which can also be [`/sbs/chinese/podcast/sbs-mandarin/mandarin`](https://rsshub.app/sbs/chinese/podcast/sbs-mandarin/mandarin).
-
-  You still can customize `language`, however, it is important to note that not all pages are available in bilingual versions.
-  :::
-</Route>
-
 ## Solidot {#solidot}
 
 ### 最新消息 {#solidot-zui-xin-xiao-xi}
@@ -585,7 +475,7 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 
 ### News {#south-china-morning-post-nan-hua-zao-bao-news}
 
-<Route author="proletarius101" example="/scmp/3" path="/scmp/:category_id" paramsDesc={['Category']} notOperational="1">
+<Route author="proletarius101" example="/scmp/3" path="/scmp/:category_id" paramsDesc={['Category']}>
   See the [official RSS page](https://www.scmp.com/rss) to get the ID of each category. This route provides fulltext that the offical feed doesn't.
 </Route>
 
@@ -642,12 +532,6 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
   | Portuguese  | portuguese  |
 </Route>
 
-## Taiwan News 台灣英文新聞 {#taiwan-news-tai-wan-ying-wen-xin-wen}
-
-### Hot News {#taiwan-news-tai-wan-ying-wen-xin-wen-hot-news}
-
-<Route author="TonyRL" example="/taiwannews/hot" path="/taiwannews/hot/:lang?" paramsDesc={['Language, `en` or `zh`, `en` by default']} radar="1" notOperational="1" />
-
 ## The Atlantic {#the-atlantic}
 
 ### News {#the-atlantic-news}
@@ -670,19 +554,9 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 
 <Route author="TonyRL" example="/economist/espresso" path="/economist/espresso" radar="1" />
 
-### GRE Vocabulary {#the-economist-gre-vocabulary}
-
-<Route author="xyqfer" example="/economist/gre-vocabulary" path="/economist/gre-vocabulary" notOperational="1" />
-
 ### Global Business Review {#the-economist-global-business-review}
 
 <Route author="prnake" example="/economist/global-business-review/cn-en" path="/economist/global-business-review/:language?" paramsDesc={['Language, `en`, `cn`, `tw` are supported, support multiple options, default to cn-en']} radar="1" />
-
-### Download {#the-economist-download}
-
-<Route author="nczitzk" example="/economist/download" path="/economist/download" notOperational="1">
-  The download site: [http://www.cgx02.xyz/index.php?dir=/te](http://www.cgx02.xyz/index.php?dir=/te)
-</Route>
 
 ## The Guardian 卫报 {#the-guardian-wei-bao}
 
@@ -712,12 +586,6 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
   | Default to Chinese | Chinese-English | English | Chinese-English (Traditional Chinese) | Traditional Chinese |
   | ------------------ | --------------- | ------- | ------------------------------------- | ------------------- |
   | (empty)            | dual            | en      | dual-traditionalchinese               | traditionalchinese  |
-</Route>
-
-### News by author {#the-new-york-times-niu-yue-shi-bao-news-by-author}
-
-<Route author="kevinschaul" example="/nytimes/author/farhad-manjoo" path="/nytimes/author/:byline" paramsDesc={['Author’s name in New York Times’ URL format']} notOperational="1">
-  Provides all of the articles by the specified New York Times author.
 </Route>
 
 ### 新闻简报 {#the-new-york-times-niu-yue-shi-bao-xin-wen-jian-bao}
@@ -820,14 +688,6 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
   | English | 日本語 | Монгол | Русский | 简体中文 |
   | ------- | ------ | ------ | ------- | -------- |
   | en      | ja     | mn     | ru      | zh       |
-</Route>
-
-## Yahoo! by Author {#yahoo!-by-author}
-
-### News {#yahoo!-by-author-news}
-
-<Route author="loganrockmore" example="/yahoo-author/hannah-keyser" path="/yahoo-news/:author" paramsDesc={['Author']} notOperational="1">
-  Provides all of the articles by the specified Yahoo! author.
 </Route>
 
 ## Yomiuri Shimbun 読売新聞 {#yomiuri-shimbun-du-mai-xin-wen}
@@ -953,82 +813,6 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
   | 参考视频       | video    |
   | 军事           | junshi   |
   | 参考人物       | cankaorw |
-</Route>
-
-## 朝日新聞中文網（繁體中文版） {#chao-ri-xin-wen-zhong-wen-wang-fan-ti-zhong-wen-ban}
-
-:::tip
-朝日新闻中文网已于 2021 年 3 月 31 日关闭。
-:::
-
-### 新聞 {#chao-ri-xin-wen-zhong-wen-wang-fan-ti-zhong-wen-ban-xin-wen}
-
-<Route author="nczitzk" example="/asahi" path="/asahi/:genre?/:category?" paramsDesc={['类型，见下表，默认为トップ', '分类，见下表，默认为空，即该类型下所有新闻']}>
-  :::tip
-  以下小标题即类型 `genre`，标题下表格中为对应类型的分类 `category`，两者需要配合使用。
-
-  如订阅 **社会** 类型中的 **事件・事故・裁判** 分类，填入 [`/asahi/national/incident`](http://rsshub.app/asahi/national/incident)。
-
-  若类型下没有分类，如 **トップ** 类型，直接填入 [`/asahi/top`](http://rsshub.app/asahi/top)。
-
-  或者欲订阅该类型下的所有分类，如订阅 **社会** 中的所有分类，则直接将分类 `category` 留空，即 [`/asahi/national`](http://rsshub.app/asahi/national)。
-  :::
-
-  トップ top
-
-  社会 national
-
-  | 事件・事故・裁判 | 災害・交通情報 | その他・話題 | おくやみ   |
-  | ---------------- | -------------- | ------------ | ---------- |
-  | incident         | calamity       | etc          | obituaries |
-
-  経済 business
-
-  | 産業・商品 | 金融・財政 | 経済政策       | 労働・雇用 | 市況・統計 |
-  | ---------- | ---------- | -------------- | ---------- | ---------- |
-  | industry   | finance    | economicpolicy | work       | statistics |
-
-  政治 politics
-
-  | 国政       | 地方政治 | 発言録       | 世論調査 |
-  | ---------- | -------- | ------------ | -------- |
-  | government | local    | hatsugenroku | yoron    |
-
-  国際 international
-
-  | アジア・太平洋 | 北米     | 中南米   | ヨーロッパ | 中東       | アフリカ | 国連・その他 |
-  | -------------- | -------- | -------- | ---------- | ---------- | -------- | ------------ |
-  | asia           | namerica | samerica | europe     | middleeast | africa   | etc          |
-
-  スポーツ sports
-
-  | 野球     | サッカー | 相撲 | フィギュア          | ゴルフ | 一般スポーツ | 東京オリンピック 2020 | 東京パラリンピック 2020 |
-  | -------- | -------- | ---- | ------------------- | ------ | ------------ | --------------------- | ----------------------- |
-  | baseball | soccer   | sumo | winter\_figureskate | golf   | general      | olympics              | paralympics             |
-
-  IT・科学 tech\_science
-
-  | 環境・エネルギー | 科学    | デジもの | 企業・サービス | 製品ファイル |
-  | ---------------- | ------- | -------- | -------------- | ------------ |
-  | eco              | science | digital  | service        | products     |
-
-  文化・芸能 culture
-
-  | 映画   | 音楽  | アイドル | アート | テレビ・芸能 | 舞台・演芸 | マンガ・アニメ・ゲーム | ひと・歴史 | 囲碁 | 将棋   |
-  | ------ | ----- | -------- | ------ | ------------ | ---------- | ---------------------- | ---------- | ---- | ------ |
-  | movies | music | idol     | art    | showbiz      | stage      | manga                  | history    | igo  | shougi |
-
-  ライフ life
-
-  | 介護      | 働き方・就活 | 食・料理 |
-  | --------- | ------------ | -------- |
-  | eldercare | hataraku     | food     |
-
-  教育・子育て edu
-
-  | 小中高  | 大学       | 教育制度・話題 | 教育問題 | 地域の教育ニュース | 吹奏楽    | 合唱   | 子育て   | ハグスタ |
-  | ------- | ---------- | -------------- | -------- | ------------------ | --------- | ------ | -------- | -------- |
-  | student | university | system         | issue    | chiiki             | suisogaku | gassho | hagukumu | msta     |
 </Route>
 
 ## 朝日新聞デジタル {#chao-ri-xin-wen-%E3%83%87%E3%82%B8%E3%82%BF%E3%83%AB}
@@ -1183,10 +967,6 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 
 <Route author="saury" example="/eastday/sh" path="/eastday/sh" />
 
-### 热点搜索 {#dong-fang-wang-re-dian-sou-suo}
-
-<Route author="nczitzk" example="/eastday/find" path="/eastday/find" notOperational="1" />
-
 ### 原创 {#dong-fang-wang-yuan-chuang}
 
 <Route author="nczitzk" example="/eastday/portrait" path="/eastday/portrait" />
@@ -1299,45 +1079,6 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
   | 城区   | 2980 |
 </Route>
 
-## 广州市融媒体中心 {#guang-zhou-shi-rong-mei-ti-zhong-xin}
-
-### 频道 {#guang-zhou-shi-rong-mei-ti-zhong-xin-pin-dao}
-
-<Route author="TimWu007" example="/gz-cmc/huacheng/shouye" path="/gz-cmc/:site/:channel?" paramsDesc={['站点代码', '频道代码']} notOperational="1">
-  已知支持的站点及对应的`站点代码`如下：
-
-  |                       站点 / 客户端名                      |     营运机构     |                      代码                      |
-  | :--------------------------------------------------------: | :--------------: | :--------------------------------------------: |
-  |          [新花城](https://www.gz-cmc.com "新花城")         |    广州日报社    |                   `huacheng`                   |
-  | [广州白云](https://guangzhoubaiyun.gz-cmc.com/ "广州白云") | 白云区融媒体中心 |                `guangzhoubaiyun`               |
-  |                          到黄埔去                          | 黄埔区融媒体中心 |                 `daohuangpuqu`                 |
-  |                          掌上番禺                          | 番禺区融媒体中心 | `zhangshangfanyu` <br />（注：此处非笔误 = =） |
-  |                           阅增城                           | 增城区融媒体中心 |                 `yuezengcheng`                 |
-
-  如有上表未列出的站点，欢迎补充。
-
-  `频道代码`获取方式：
-
-  1.  在对应频道 url 后的参数中获取，如`首页`的栏目 url 为`https://huacheng.gz-cmc.com/channel/shouye/index.html`, `频道代码`即为`shouye`。
-  2.  进入相应站点的客户端后抓包。
-
-  黄埔、增城、番禺三区的站点无网页，需采用抓包的方式获取频道代码。现列出部分：
-
-  |           频道名           |   代码   |
-  | :------------------------: | :------: |
-  |         黄埔 - 首页        |   `sy`   |
-  | 黄埔 -《湾区时报》最新一期 |  `hpxsd` |
-  |         黄埔 - 民生        |   `ms`   |
-  |        黄埔 - 企明星       |   `qmx`  |
-  |         增城 - 首页        | `shouye` |
-  |         增城 - 身边        |   `sb`   |
-  |         增城 - 本地        |  `zcfb`  |
-  |         番禺 - 首页        | `shouye` |
-  |         番禺 - 身边        |   `yw`   |
-  |         番禺 - 生活        |   `sh`   |
-  |         番禺 - 教育        |   `jy`   |
-</Route>
-
 ## 国际金融报栏目 {#guo-ji-jin-rong-bao-lan-mu}
 
 ### 栏目 {#guo-ji-jin-rong-bao-lan-mu-lan-mu}
@@ -1351,40 +1092,6 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 ### 农博士在行动 {#he-bei-wang-luo-guang-bo-dian-shi-tai-nong-bo-shi-zai-xing-dong}
 
 <Route author="iamqiz nczitzk" example="/hebtv/nbszxd" path="/hebtv/nbszxd" radar="1" supportBT="1" supportPodcast="1" />
-
-## 衡阳全搜索 {#heng-yang-quan-sou-suo}
-
-### 衡阳日报 {#heng-yang-quan-sou-suo-heng-yang-ri-bao}
-
-<Route author="nczitzk" example="/hyqss/hyrb" path="/hyqss/hyrb/:id?" paramsDesc={['编号，见下表，默认为全部']} notOperational="1">
-  | 版                | 编号 |
-  | ----------------- | ---- |
-  | 全部              |      |
-  | 第 A01 版：版面一 | 1    |
-  | 第 A02 版：版面二 | 2    |
-  | 第 A03 版：版面三 | 3    |
-  | 第 A04 版：版面四 | 4    |
-  | 第 A05 版：版面五 | 5    |
-  | 第 A06 版：版面六 | 6    |
-  | 第 A07 版：版面七 | 7    |
-  | 第 A08 版：版面八 | 8    |
-</Route>
-
-### 衡阳晚报 {#heng-yang-quan-sou-suo-heng-yang-wan-bao}
-
-<Route author="nczitzk" example="/hyqss/hywb" path="/hyqss/hywb/:id?" paramsDesc={['编号，见下表，默认为全部']} notOperational="1">
-  | 版                | 编号 |
-  | ----------------- | ---- |
-  | 全部              |      |
-  | 第 A01 版：版面一 | 1    |
-  | 第 A02 版：版面二 | 2    |
-  | 第 A03 版：版面三 | 3    |
-  | 第 A04 版：版面四 | 4    |
-  | 第 A05 版：版面五 | 5    |
-  | 第 A06 版：版面六 | 6    |
-  | 第 A07 版：版面七 | 7    |
-  | 第 A08 版：版面八 | 8    |
-</Route>
 
 ## 湖南日报 {#hu-nan-ri-bao}
 
@@ -1585,22 +1292,6 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
   | hakka    | political | medical  | local    | international |
 </Route>
 
-## 理论网 {#li-lun-wang}
-
-### 学习时报 {#li-lun-wang-xue-xi-shi-bao}
-
-<Route author="nczitzk" example="/cntheory/paper" path="/cntheory/paper/:id?" paramsDesc={['板块，默认为全部']} notOperational="1">
-  如订阅 **第 A1 版：国内大局**，路由为 [`/cntheory/paper/国内大局`](https://rsshub.app/cntheory/paper/国内大局)。
-</Route>
-
-## 连线 Wired {#lian-xian-wired}
-
-非订阅用户每月有阅读全文次数限制。
-
-### 标签 {#lian-xian-wired-biao-qian}
-
-<Route author="Naiqus" example="/wired/tag/bitcoin" path="/wired/tag/:tag" paramsDesc={['标签']} notOperational="1" />
-
 ## 联合早报 {#lian-he-zao-bao}
 
 :::warning
@@ -1625,9 +1316,9 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 
 ### 其他栏目 {#lian-he-zao-bao-qi-ta-lan-mu}
 
-除了上面两个兼容规则之外，联合早报网站里所有页面形如 [https://www.zaobao.com/wencui/politic](https://www.zaobao.com/wencui/politic) 这样的栏目都能被这个规则解析到，早报的大部分栏目都是这个样式的。你可以测试之后再订阅。
+除了上面两个兼容规则之外，联合早报网站里所有页面形如 [https://www.zaobao.com/lifestyle/health](https://www.zaobao.com/lifestyle/health) 这样的栏目都能被这个规则解析到，早报的大部分栏目都是这个样式的。你可以测试之后再订阅。
 
-<Route author="lengthmin" example="/zaobao/wencui/politic" path="/zaobao/:type?/:section?" paramsDesc={['https://www.zaobao.com/**wencui**/politic 中的 **wencui**', 'https://www.zaobao.com/wencui/**politic** 中的 **politic**']} notOperational="1" />
+<Route author="lengthmin" example="/zaobao/lifestyle/health" path="/zaobao/:type?/:section?" paramsDesc={['https://www.zaobao.com/**lifestyle**/health 中的 **lifestyle**', 'https://www.zaobao.com/lifestyle/**health** 中的 **health**']} notOperational="1" />
 
 ### 互动新闻 {#lian-he-zao-bao-hu-dong-xin-wen}
 
@@ -1683,7 +1374,7 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 
 ### 南方 +（按栏目 ID） {#nan-fang-wang-nan-fang-an-lan-mu-id}
 
-<Route author="TimWu007" example="/southcn/nfapp/column/38" path="/southcn/nfapp/column/:column?" paramsDesc={['栏目或南方号 ID']} notOperational="1">
+<Route author="TimWu007" example="/southcn/nfapp/column/38" path="/southcn/nfapp/column/:column?" paramsDesc={['栏目或南方号 ID']}>
   :::tip
   若此处输入的是栏目 ID（而非南方号 ID），则该接口会返回与输入栏目相关联栏目的文章。例如，输入栏目 ID `38`（广州），则返回的结果还会包含 ID 为 `3547`（市长报道集）的文章。
   :::
@@ -1921,32 +1612,6 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
   | 2    | 4    | 3      | 453      |
 </Route>
 
-## 苹果新闻网 {#ping-guo-xin-wen-wang}
-
-### 频道 {#ping-guo-xin-wen-wang-pin-dao}
-
-<Route author="Fatpandac" example="/appledaily/home" path="/appledaily/:channel?" paramsDesc={['频道，默认为主页']} notOperational="1">
-  频道参数均可在官网获取，如：
-
-  `https://tw.appledaily.com/realtime/micromovie/` 对应 `/appledaily/micromovie`
-
-  `https://tw.appledaily.com/home/` 对应 `/appledaily/home`
-</Route>
-
-## 齐鲁晚报 {#qi-lu-wan-bao}
-
-### 新闻 {#qi-lu-wan-bao-xin-wen}
-
-<Route author="nczitzk" example="/qlwb/news" path="/qlwb/news" notOperational="1" />
-
-### 今日城市 {#qi-lu-wan-bao-jin-ri-cheng-shi}
-
-<Route author="nczitzk" example="/qlwb/city/:city" path="/qlwb/city" paramsDesc={['城市代码']} notOperational="1">
-  | 今日临沂 | 今日德州 | 今日威海 | 今日枣庄  | 今日淄博 | 今日烟台 | 今日潍坊 | 今日菏泽 | 今日日照 | 今日泰山 | 今日聊城  | 今日济宁 |
-  | -------- | -------- | -------- | --------- | -------- | -------- | -------- | -------- | -------- | -------- | --------- | -------- |
-  | linyi    | dezhou   | weihai   | zaozhuang | zibo     | yantai   | weifang  | heze     | rizhao   | taishan  | liaocheng | jining   |
-</Route>
-
 ## 齐鲁网 {#qi-lu-wang}
 
 ### 电视节目 {#qi-lu-wang-dian-shi-jie-mu}
@@ -2181,78 +1846,6 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
   `https://www.soundofhope.org/term/203` 对应 `/soundofhope/term/203`
 </Route>
 
-## 香港经济日报 {#xiang-gang-jing-ji-ri-bao}
-
-### 新闻 {#xiang-gang-jing-ji-ri-bao-xin-wen}
-
-香港经济日报已有提供简单 RSS，详细可前往官方网站： [https://www.hket.com/rss](https://www.hket.com/rss)
-
-此路由主要补全官方 RSS 全文输出及完善分类输出。
-
-<Route author="TonyRL" example="/hket/sran001" path="/hket/:category?" paramsDesc={['分类，默认为全部新闻，可在 URL 中找到，部分见下表']} radar="1" notOperational="1">
-  <details>
-    <summary>分类</summary>
-
-    | sran001  | sran008  | sran010  | sran011  | sran012  | srat006  |
-    | -------- | -------- | -------- | -------- | -------- | -------- |
-    | 全部新闻 | 财经地产 | 科技信息 | 国际新闻 | 商业新闻 | 香港新闻 |
-
-    | sran009  | sran009-1 | sran009-2 | sran009-3  | sran009-4 | sran009-5 | sran009-6 |
-    | -------- | --------- | --------- | ---------- | --------- | --------- | --------- |
-    | 即时财经 | 股市      | 新股 IPO  | 新经济追踪 | 当炒股    | 宏观解读  | Hot Talk  |
-
-    | sran011-1 | sran011-2    | sran011-3    |
-    | --------- | ------------ | ------------ |
-    | 环球政治  | 环球经济金融 | 环球社会热点 |
-
-    | sran016    | sran016-1  | sran016-2  | sran016-3  | sran016-4  | sran016-5      |
-    | ---------- | ---------- | ---------- | ---------- | ---------- | -------------- |
-    | 大湾区主页 | 大湾区发展 | 大湾区工作 | 大湾区买楼 | 大湾区消费 | 大湾区投资理财 |
-
-    | srac002  | srac003  | srac004  | srac005  |
-    | -------- | -------- | -------- | -------- |
-    | 即时中国 | 经济脉搏 | 国情动向 | 社会热点 |
-
-    | srat001 | srat008 | srat055  | srat069  | srat070   |
-    | ------- | ------- | -------- | -------- | --------- |
-    | 话题    | 观点    | 休闲消费 | 娱乐新闻 | TOPick TV |
-
-    | srat052  | srat052-1 | srat052-2  | srat052-3 |
-    | -------- | --------- | ---------- | --------- |
-    | 健康主页 | 食用安全  | 医生诊症室 | 保健美颜  |
-
-    | srat053  | srat053-1 | srat053-2 | srat053-3 | srat053-4  |
-    | -------- | --------- | --------- | --------- | ---------- |
-    | 亲子主页 | 儿童健康  | 育儿经    | 教育      | 亲子好去处 |
-
-    | srat053-6   | srat053-61 | srat053-62 | srat053-63 | srat053-64 |
-    | ----------- | ---------- | ---------- | ---------- | ---------- |
-    | Band 1 学堂 | 幼稚园     | 中小学     | 尖子教室   | 海外升学   |
-
-    | srat072-1  | srat072-2  | srat072-3        | srat072-4         |
-    | ---------- | ---------- | ---------------- | ----------------- |
-    | 健康身心活 | 抗癌新方向 | 「糖」「心」解密 | 风湿不再 你我自在 |
-
-    | sraw007  | sraw009  | sraw010  | sraw011  | sraw012  | sraw014  | sraw018  | sraw019  |
-    | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-    | 全部博客 | Bloggers | 收息攻略 | 精明消费 | 退休规划 | 个人增值 | 财富管理 | 绿色金融 |
-
-    | sraw015  | sraw015-07 | sraw015-08 | sraw015-09 | sraw015-10 |
-    | -------- | ---------- | ---------- | ---------- | ---------- |
-    | 移民百科 | 海外置业   | 移民攻略   | 移民点滴   | 海外理财   |
-
-    | sraw020  | sraw020-1    | sraw020-2 | sraw020-3 | sraw020-4 |
-    | -------- | ------------ | --------- | --------- | --------- |
-    | ESG 主页 | ESG 趋势政策 | ESG 投资  | ESG 企业  | ESG 社会  |
-  </details>
-</Route>
-
-## 香港商报 {#xiang-gang-shang-bao}
-
-### PDF 版 {#xiang-gang-shang-bao-pdf-ban}
-
-<Route author="nczitzk" example="/hkcd/pdf" path="/hkcd/pdf" notOperational="1" />
-
 ## 新华每日电讯 {#xin-hua-mei-ri-dian-xun}
 
 ### 今日 {#xin-hua-mei-ri-dian-xun-jin-ri}
@@ -2270,10 +1863,6 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 ### 栏目 {#xin-jing-bao-lan-mu}
 
 <Route author="DIYgod" example="/bjnews/realtime" path="/bjnews/:category" paramsDesc={['新京报的栏目名，点击对应栏目后在地址栏找到']} />
-
-### 电子报 {#xin-jing-bao-dian-zi-bao}
-
-<Route author="MisteryMonster" example="/bjnews/epaper/A" path="/bjnews/epaper/:cat" paramsDesc={['新京报叠名：`A`,`B`,`C`,`D`, 特刊为`special`']} notOperational="1" />
 
 ## 新快报 {#xin-kuai-bao}
 
@@ -2374,16 +1963,6 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
   :::
 </Route>
 
-### 新闻专题 {#yang-shi-xin-wen-xin-wen-zhuan-ti}
-
-<Route author="nczitzk" example="/cctv/special/315" path="/cctv/special/:id?" paramsDesc={['专题 id，可在对应专题页 URL 中找到，默认为 `315` 即 3·15 晚会']} radar="1" notOperational="1">
-  :::tip
-  如 [2020 年国家网络安全宣传周](https://news.cctv.com/special/2020gjwlaqxcz/index.shtml) 的专题页 URL 为 `https://news.cctv.com/special/2020gjwlaqxcz/index.shtml`。其专题 id 即为 `2020gjwlaqxcz`。
-  :::
-
-  此处查看 [所有新闻专题](http://news.cctv.com/special/index.shtml)
-</Route>
-
 ### 专题 {#yang-shi-xin-wen-zhuan-ti}
 
 <Route author="idealclover xyqfer" example="/cctv/world" path="/cctv/:category" paramsDesc={['分类名']} radar="1">
@@ -2395,10 +1974,6 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 ### 新闻联播文字版 {#yang-shi-xin-wen-xin-wen-lian-bo-wen-zi-ban}
 
 <Route author="luyuhuang" example="/xinwenlianbo/index" path="/xinwenlianbo/index" radar="1" anticrawler="1" />
-
-### 新闻联播文字版完整版 {#yang-shi-xin-wen-xin-wen-lian-bo-wen-zi-ban-wan-zheng-ban}
-
-<Route author="xfangbao" example="/xwlb" path="/xwlb/index" radar="1" notOperational="1" />
 
 ### 央视网图片《镜象》 {#yang-shi-xin-wen-yang-shi-wang-tu-pian-%E3%80%8A-jing-xiang-%E3%80%8B}
 
@@ -2420,15 +1995,6 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
   | 广州 | 广州 - 广州要闻 | 广州 - 社会百态 | 广州 - 深读广州 | 广州 - 生活服务 | 今日大湾区 | 广东 - 政经热闻 | 广东 - 民生视点 | 广东 - 滚动新闻 |
   | ---- | --------------- | --------------- | --------------- | --------------- | ---------- | --------------- | --------------- | --------------- |
   | 18   | 5261            | 6030            | 13352           | 83422           | 100418     | 13074           | 12252           | 12212           |
-</Route>
-
-## 有線寬頻 i-CABLE {#you-xian-kuan-bin-i-cable}
-
-### 有線新聞 | Cable News {#you-xian-kuan-bin-i-cable-you-xian-xin-wen-cable-news}
-
-<Route author="tpnonthealps" example="/i-cable" path="/i-cable/:category?" paramsDesc={['分類，頁面內紅色標籤，下表僅列出部分，留空為全部']} radar="1" notOperational="1">
-  | 新聞資訊 | 財經資訊 | 港聞 | 兩岸國際 | 中國在線 | 體育 | 娛樂 |
-  | -------- | -------- | ---- | -------- | -------- | ---- | ---- |
 </Route>
 
 ## 浙江在线 {#zhe-jiang-zai-xian}
@@ -2454,13 +2020,13 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 
 ### 科技日报 {#zhong-guo-ke-ji-wang-ke-ji-ri-bao}
 
-<Route author="lyqluis" example="/stdaily/digitalpaper" path="/stdaily/digitalpaper" notOperational="1" />
+<Route author="lyqluis" example="/stdaily/digitalpaper" path="/stdaily/digitalpaper" />
 
 ## 中国日报 {#zhong-guo-ri-bao}
 
 ### 英语点津 {#zhong-guo-ri-bao-ying-yu-dian-jin}
 
-<Route author="sanmmm" example="/chinadaily/english/thelatest" path="/chinadaily/english/:category" paramsDesc={['目录分类']} notOperational="1">
+<Route author="sanmmm" example="/chinadaily/english/thelatest" path="/chinadaily/english/:category" paramsDesc={['目录分类']}>
   目录分类
 
   | 最新      | 双语            | 热词           | 口语             | 译词           | 视频         | 听力      | 专栏      | 文件                     | 考试         |
@@ -2509,13 +2075,3 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 ### 分类 (网页爬虫方法) {#zhong-yang-tong-xun-she-fen-lei-wang-ye-pa-chong-fang-fa}
 
 <Route author="dzx-dzx" example="/cna/web/aall" path="/cna/web/:id?" paramsDesc={['分类 id，见上表。此參數默认为 aall']} />
-
-## 组织人事报 {#zu-zhi-ren-shi-bao}
-
-### 电子报 {#zu-zhi-ren-shi-bao-dian-zi-bao}
-
-<Route author="5upernove-heng" example="/zuzhirenshi" path="/zuzhirenshi/:id?" paramsDesc={['报纸版号，默认为全部']} radar="1" notOperational="1">
-  | 第一版 要闻 | 第二版 要闻 | 第三版 人才 | 第四版 人社工作 | 第五版 基层党建 | 第六版 理论评论 | 第七版 史事通鉴 | 第八版 关注 |
-  | ----------- | ----------- | ----------- | --------------- | --------------- | --------------- | --------------- | ----------- |
-  | 1           | 2           | 3           | 4               | 5               | 6               | 7               | 8           |
-</Route>
