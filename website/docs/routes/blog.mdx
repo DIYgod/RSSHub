@@ -68,16 +68,6 @@
 
 <Route author="HankChow" example="/geocaching/blogs" path="/geocaching/blogs" radar="1" />
 
-## Google Sites {#google-sites}
-
-### Articles {#google-sites-articles}
-
-<Route author="hoilc" example="/google/sites/outlierseconomics" path="/google/sites/:id" paramsDesc={['Site ID, can be found in URL']} notOperational="1" />
-
-### Recent Changes {#google-sites-recent-changes}
-
-<Route author="nczitzk" example="/google/sites/recentChanges/outlierseconomics" path="/google/sites/recentChanges/:id" paramsDesc={['Site ID, can be found in URL']} notOperational="1" />
-
 ## Gwern Branwen {#gwern-branwen}
 
 ### 博客 {#gwern-branwen-bo-ke}
@@ -120,16 +110,6 @@
 
 <Route author="gkkeys" path="/hexo/fluid/:url" example="/hexo/fluid/blog.tonyzhao.xyz" paramsDesc={['the blog URL without the protocol (http:// and https://)']} configRequired="1" />
 
-## Hi, DIYgod {#hi-diygod}
-
-### DIYgod 的动森日记 {#hi-diygod-diygod-de-dong-sen-ri-ji}
-
-<Route author="DIYgod" example="/blogs/diygod/animal-crossing" path="/blogs/diygod/animal-crossing" notOperational="1" />
-
-### DIYgod 的可爱的手办们 {#hi-diygod-diygod-de-ke-ai-de-shou-ban-men}
-
-<Route author="DIYgod" example="/blogs/diygod/gk" path="/blogs/diygod/gk" notOperational="1" />
-
 ## Ian Spriggss {#ian-spriggss}
 
 ### Category {#ian-spriggss-category}
@@ -139,12 +119,6 @@
   | ------------ | ---------- |
   | portraits    | characters |
 </Route>
-
-## JustRun {#justrun}
-
-### JustRun {#justrun-justrun}
-
-<Route author="nczitzk" example="/justrun" path="/justrun" notOperational="1" />
 
 ## Kun Cheng {#kun-cheng}
 
@@ -163,12 +137,6 @@
 ### blog {#leemeng-blog}
 
 <Route author="xyqfer" example="/leemeng" path="/leemeng" />
-
-## Love the Problem {#love-the-problem}
-
-### Ash Maurya's blog {#love-the-problem-ash-maurya-s-blog}
-
-<Route author="james-tindal" example="/ash-maurya" path="/ash-maurya" notOperational="1" />
 
 ## MacMenuBar {#macmenubar}
 
@@ -214,12 +182,6 @@
   :::
 </Route>
 
-## Miris Whispers {#miris-whispers}
-
-### Blog {#miris-whispers-blog}
-
-<Route author="chazeon" example="/miris/blog" path="/miris/blog" notOperational="1" />
-
 ## Paul Graham {#paul-graham}
 
 ### Essays {#paul-graham-essays}
@@ -231,22 +193,6 @@
 ### Article {#phrack-magazine-article}
 
 <Route author="CitrusIce" example="/phrack" path="/phrack" />
-
-## Polkadot {#polkadot}
-
-### Blog {#polkadot-blog}
-
-<Route author="iceqing" example="/polkadot/blog" path="/polkadot/blog" notOperational="1" />
-
-## PolkaWorld {#polkaworld}
-
-### Newest Articles {#polkaworld-newest-articles}
-
-<Route author="iceqing" example="/polkaworld/newest" path="/polkaworld/newest" notOperational="1" />
-
-:::tip
-Limit the number of entries to be retrieved by adding `?limit=x` to the end of the route, default value is `10`.
-:::
 
 ## Stratechery by Ben Thompson {#stratechery-by-ben-thompson}
 
@@ -288,27 +234,6 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 <Route author="TonyRL" example="/v1tx" path="/v1tx" radar="1" />
 
-## Whoscall {#whoscall}
-
-### 最新文章 {#whoscall-zui-xin-wen-zhang}
-
-<Route author="nczitzk" example="/whoscall" path="/whoscall" notOperational="1" />
-
-### 分類 {#whoscall-fen-lei}
-
-<Route author="nczitzk" example="/whoscall/categories/5-Whoscall 百科" path="/whoscall/categories/:category?" paramsDesc={['分类，见下表，可在对应分類页 URL 中找到，默认为最新文章']} notOperational="1">
-  | News   | Whoscall 百科   | 防詐小學堂     | Whoscall 日常   |
-  | ------ | --------------- | -------------- | --------------- |
-  | 1-News | 5-Whoscall 百科 | 4 - 防詐小學堂 | 6-Whoscall 日常 |
-</Route>
-
-### 標籤 {#whoscall-biao-qian}
-
-<Route author="nczitzk" example="/whoscall/tags" path="/whoscall/tags/:tag?" paramsDesc={['標籤，见下表，可在对应標籤页 URL 中找到，默认为最新文章']} notOperational="1">
-  | 防疫也防詐 | 防詐專家 | 來電辨識 | whoscall 日常 |
-  | ---------- | -------- | -------- | ------------- |
-</Route>
-
 ## WordPress {#wordpress}
 
 ### Blog {#wordpress-blog}
@@ -320,12 +245,6 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 ### Entry {#yuzu-emulator-entry}
 
 <Route author="nczitzk" example="/yuzu-emu/entry" path="/yuzu-emu/entry" />
-
-## 阿里云系统组技术博客 {#a-li-yun-xi-tong-zu-ji-shu-bo-ke}
-
-### 首页 {#a-li-yun-xi-tong-zu-ji-shu-bo-ke-shou-ye}
-
-<Route author="attenuation" example="/aliyun-kernel/index" path="/aliyun-kernel/index" notOperational="1" />
 
 ## 博客园 {#bo-ke-yuan}
 
@@ -391,24 +310,6 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 
 <Route author="wxluckly" example="/xunhupay/blog" path="/xunhupay/blog" radar="1" />
 
-## 華康字型故事 {#hua-kang-zi-xing-gu-shi}
-
-### 博客 {#hua-kang-zi-xing-gu-shi-bo-ke}
-
-<Route author="tpnonthealps" example="/fontstory" path="/fontstory" notOperational="1" />
-
-## 黄健宏博客 {#huang-jian-hong-bo-ke}
-
-### 文章 {#huang-jian-hong-bo-ke-wen-zhang}
-
-<Route author="stormbuf" example="/huangz" path="/huangz" radar="1" notOperational="1" />
-
-## 建宁闲谈 {#jian-ning-xian-tan}
-
-### 文章 {#jian-ning-xian-tan-wen-zhang}
-
-<Route author="changlan" example="/blogs/jianning" path="/blogs/jianning" radar="1" notOperational="1" />
-
 ## 劍心．回憶 {#jian-xin-hui-yi}
 
 ### 分类 {#jian-xin-hui-yi-fen-lei}
@@ -453,12 +354,6 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
   | drama\_deep | drama\_rating | drama\_column | drama\_interactive |
 </Route>
 
-## 交流岛资源网 {#jiao-liu-dao-zi-yuan-wang}
-
-### 最新文章 {#jiao-liu-dao-zi-yuan-wang-zui-xin-wen-zhang}
-
-<Route author="TonyRL" example="/jiaoliudao" path="/jiaoliudao" radar="1" notOperational="1" />
-
 ## 敬维博客 {#jing-wei-bo-ke}
 
 ### 文章 {#jing-wei-bo-ke-wen-zhang}
@@ -470,12 +365,6 @@ Limit the number of entries to be retrieved by adding `?limit=x` to the end of t
 ### 推送 {#mei-ri-an-quan-tui-song}
 
 <Route author="LogicJake" example="/security/pulses" path="/security/pulses" anticrawler="1" />
-
-## 美团技术团队 {#mei-tuan-ji-shu-tuan-dui}
-
-### 最近更新 {#mei-tuan-ji-shu-tuan-dui-zui-jin-geng-xin}
-
-<Route author="kt286" example="/meituan/tech/home" path="/meituan/tech/home" />
 
 ## 十年之约 {#shi-nian-zhi-yue}
 
