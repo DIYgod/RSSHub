@@ -10002,13 +10002,30 @@
     "_name": "Furstar",
     ".": [
       {
-        "title": "安全文摘首頁",
-        "docs": "https://docs.rsshub.app/routes/shopping#an-quan-wen-zhai",
+        "title": "最新售卖角色列表",
+        "docs": "https://docs.rsshub.app/routes/shopping#furstar-zui-xin-shou-mai-jiao-se-lie-biao",
         "source": [
-          "/",
+          "/:lang",
           "/"
         ],
-        "target": "/secnews/index"
+        "target": "/furstar/characters/:lang"
+      },
+      {
+        "title": "已经出售的角色列表",
+        "docs": "https://docs.rsshub.app/routes/shopping#furstar-yi-jing-chu-shou-de-jiao-se-lie-biao",
+        "source": [
+          "/:lang/archive.php",
+          "/archive.php"
+        ],
+        "target": "/furstar/archive/:lang"
+      },
+      {
+        "title": "画师列表",
+        "docs": "https://docs.rsshub.app/routes/shopping#furstar-hua-shi-lie-biao",
+        "source": [
+          "/"
+        ],
+        "target": "/furstar/artists"
       }
     ]
   },
@@ -16408,28 +16425,10 @@
         "target": "/juejin/collection/:collectionId"
       },
       {
-        "title": "分享",
-        "docs": "https://docs.rsshub.app/routes/programming#jue-jin",
-        "source": [
-          "/user/:userId",
-          "/user/:userId/shares"
-        ],
-        "target": "/juejin/shares/:userId"
-      },
-      {
         "title": "专栏",
         "docs": "https://docs.rsshub.app/routes/programming#jue-jin",
         "source": "/column/:id",
         "target": "/juejin/column/:id"
-      },
-      {
-        "title": "资讯",
-        "docs": "https://docs.rsshub.app/routes/programming#jue-jin",
-        "source": [
-          "/user/:id",
-          "/user/:id/news"
-        ],
-        "target": "/juejin/news/:userId"
       }
     ]
   },
@@ -17025,20 +17024,6 @@
       }
     ]
   },
-  "layer3.xyz": {
-    "_name": "Layer3",
-    ".": [
-      {
-        "title": "Quests",
-        "docs": "https://docs.rsshub.app/routes/programming#layer3-quests",
-        "source": [
-          "/quests/new",
-          "/"
-        ],
-        "target": "/layer3/quests"
-      }
-    ]
-  },
   "layoffs.fyi": {
     "_name": "Layoffs",
     ".": [
@@ -17090,13 +17075,6 @@
         "target": "/leetcode/articles"
       },
       {
-        "title": "打卡",
-        "docs": "https://docs.rsshub.app/routes/programming#leetcode",
-        "source": [
-          "/:user"
-        ]
-      },
-      {
         "title": "每日一题",
         "docs": "https://docs.rsshub.app/routes/programming#leetcode",
         "source": [
@@ -17117,13 +17095,6 @@
   "leetcode.cn": {
     "_name": "LeetCode",
     ".": [
-      {
-        "title": "打卡",
-        "docs": "https://docs.rsshub.app/routes/programming#leetcode",
-        "source": [
-          "/:user"
-        ]
-      },
       {
         "title": "每日一题",
         "docs": "https://docs.rsshub.app/routes/programming#leetcode",
@@ -17229,20 +17200,6 @@
           "/fine/:tagId"
         ],
         "target": "/lfsyd/tag/:tagId"
-      }
-    ]
-  },
-  "lianxh.cn": {
-    "_name": "连享会",
-    ".": [
-      {
-        "title": "精彩资讯",
-        "docs": "https://docs.rsshub.app/routes/programming#lian-xiang-hui-jing-cai-zi-xun",
-        "source": [
-          "/blogs.html",
-          "/"
-        ],
-        "target": "/lianxh/:category?"
       }
     ]
   },
@@ -26138,20 +26095,6 @@
       }
     ]
   },
-  "tencent.com": {
-    "_name": "腾讯云",
-    ".": [
-      {
-        "title": "云+社区专栏",
-        "docs": "https://docs.rsshub.app/routes/programming#teng-xun-yun-yun-she-qu-zhuan-lan",
-        "source": [
-          "/developer/column/:id",
-          "/developer/column/:id/:tag",
-          "/"
-        ]
-      }
-    ]
-  },
   "tesla.cn": {
     "_name": "特斯拉中国",
     ".": [
@@ -31108,25 +31051,6 @@
       }
     ]
   },
-  "zoo.team": {
-    "_name": "政采云前端技术团队",
-    "weekly": [
-      {
-        "title": "小报",
-        "docs": "https://docs.rsshub.app/routes/blog#zheng-cai-yun-qian-duan-ji-shu-tuan-dui",
-        "source": "/",
-        "target": "/zooTeam/weekly"
-      }
-    ],
-    "www": [
-      {
-        "title": "博客",
-        "docs": "https://docs.rsshub.app/routes/blog#zheng-cai-yun-qian-duan-ji-shu-tuan-dui",
-        "source": "/",
-        "target": "/zooTeam/blog"
-      }
-    ]
-  },
   "zotero.org": {
     "_name": "Zotero",
     ".": [
@@ -31441,17 +31365,6 @@
         "docs": "https://docs.rsshub.app/routes/shopping#alter-zhong-guo",
         "source": "/cn/news.html",
         "target": "/alter-cn/news"
-      }
-    ]
-  },
-  "itslide.com": {
-    "_name": "ITSlide",
-    "www": [
-      {
-        "title": "最新",
-        "docs": "https://docs.rsshub.app/routes/programming#itslide",
-        "source": "/*",
-        "target": "/itslide/new"
       }
     ]
   },
