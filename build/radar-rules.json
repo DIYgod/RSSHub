@@ -22338,13 +22338,6 @@
   },
   "qq.com": {
     "_name": "腾讯",
-    "egame": [
-      {
-        "title": "企鹅电竞直播间",
-        "docs": "https://docs.rsshub.app/routes/live#qi-e-dian-jing-zhi-bo-jian-kai-bo",
-        "source": "/:id"
-      }
-    ],
     "mp.weixin": [
       {
         "title": "微信公众号栏目",
@@ -28250,17 +28243,6 @@
       }
     ]
   },
-  "vlive.tv": {
-    "_name": "V LIVE",
-    ".": [
-      {
-        "title": "Board",
-        "docs": "https://docs.rsshub.app/routes/en/live#v-live",
-        "source": "/channel/:board/board/:board",
-        "target": "/vlive/channel/:board/board/:board"
-      }
-    ]
-  },
   "vmware.com": {
     "_name": "VMware",
     "flings": [
@@ -28397,20 +28379,6 @@
           "/"
         ],
         "target": "/wallstreetcn/hot/:period?"
-      }
-    ]
-  },
-  "wangqiutiyu.com": {
-    "_name": "旺球体育",
-    ".": [
-      {
-        "title": "直播间开播",
-        "docs": "https://docs.rsshub.app/routes/live#wang-qiu-ti-yu-zhi-bo-jian-kai-bo",
-        "source": [
-          "/anchor/:id",
-          "/"
-        ],
-        "target": "/wangqiutiyu/anchor/:id"
       }
     ]
   },

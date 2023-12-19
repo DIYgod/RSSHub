@@ -1788,7 +1788,6 @@
     "/diershoubing/news": [
         "wushijishan"
     ],
-    "/digic-pictures/:menu/:tags?": [],
     "/digitaling/articles/:category/:subcate?": [],
     "/digitaling/index": [],
     "/digitaling/projects/:category": [],
@@ -2150,7 +2149,6 @@
     "/edge/addon/:crxid": [],
     "/edrawsoft/mindmap/:classId?/:order?/:sort?/:lang?/:price?/:search?": [],
     "/eeo/:column?/:category?": [],
-    "/egameqq/room/:id": [],
     "/egsea/flash": [
         "hillerliao"
     ],
@@ -4153,7 +4151,6 @@
     "/lfsyd/user/:id?": [
         "auto-bot-ty"
     ],
-    "/liequtv/room/:id": [],
     "/lifetimes/:category?": [],
     "/lightnovel/:keywords/:security_key?": [
         "nightmare-mio"
@@ -5581,9 +5578,6 @@
     "/qq/kg/reply/:playId": [
         "zhangxiang012"
     ],
-    "/qq/live/:id": [
-        "nczitzk"
-    ],
     "/qq88/:category?": [
         "nczitzk"
     ],
@@ -6004,7 +5998,6 @@
         "miles170"
     ],
     "/shou/www/:type": [],
-    "/showroom/room/:id": [],
     "/showstart/artist/:id": [
         "lchtao26"
     ],
@@ -6895,10 +6888,6 @@
         "nczitzk"
     ],
     "/uisdc/hangye/:caty?": [],
-    "/uisdc/news": [],
-    "/uisdc/talk/:sort?": [],
-    "/uisdc/topic/:title?/:sort?": [],
-    "/uisdc/zt/:title?": [],
     "/ulapia/reports/:category?": [
         "Fatpandac"
     ],
@@ -7030,9 +7019,6 @@
     "/vimeo/user/:username/:cat?": [
         "MisteryMonster"
     ],
-    "/vlive/channel/:channel/board/:board": [
-        "TonyRL"
-    ],
     "/vmware/flings": [
         "nczitzk"
     ],
@@ -7071,9 +7057,6 @@
         "nczitzk"
     ],
     "/wallstreetcn/news/:category?": [
-        "nczitzk"
-    ],
-    "/wangqiutiyu/anchor/:id": [
         "nczitzk"
     ],
     "/wanqu/news": [
@@ -7679,7 +7662,6 @@
     "/zhangyoubao/:category": [
         "ztmzzz"
     ],
-    "/zhanqi/room/:id": [],
     "/zhibo8/forum/:id": [
         "LogicJake"
     ],
