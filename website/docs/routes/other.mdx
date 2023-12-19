@@ -103,7 +103,7 @@ See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 
 <Route author="CaoMeiYouRen" example="/bing/search/rss" path="/bing/search/:keyword" paramsDesc={['搜索关键词']} radar="1" />
 
-## BOOKSOURCE.STORE {#booksource.store}
+## BOOKSOURCE.STORE {#booksource-store}
 
 ### 书源仓库更新 {#booksource-store-shu-yuan-cang-ku-geng-xin}
 
@@ -241,7 +241,7 @@ Official Website: [https://news.yahoo.co.jp/pages/article/20200207](https://news
 
 ### Search {#google-search}
 
-<Route author="CaoMeiYouRen" example="/google/search/rss/zh-CN,zh" path="/google/search/:keyword/:language?" paramsDesc={['Keyword','Accept-Language. Example: zh-CN,zh;q=0.9,en;q=0.8,ja;q=0.7']}/>
+<Route author="CaoMeiYouRen" example="/google/search/rss/zh-CN,zh" path="/google/search/:keyword/:language?" paramsDesc={['Keyword','Accept-Language. Example: zh-CN,zh;q=0.9,en;q=0.8,ja;q=0.7']} />
 
 ## Grand-Challenge {#grand-challenge}
 
@@ -755,11 +755,11 @@ Specify options (in the format of query string) in parameter `routeParams` param
 
 ## 百度 {#bai-du}
 
-### 百度搜索 {#bai-du-bai-du-sou-suo}
+### 搜索 {#bai-du-sou-suo}
 
-<Route author="CaoMeiYouRen" example="/baidu/search/rss" path="/baidu/search/:keyword" paramsDesc={['搜索关键词']} radar="1" anticrawler="1"/>
+<Route author="CaoMeiYouRen" example="/baidu/search/rss" path="/baidu/search/:keyword" paramsDesc={['搜索关键词']} radar="1" anticrawler="1" />
 
-### 百度热搜榜单 {#bai-du-bai-du-re-sou-bang-dan}
+### 热搜榜单 {#bai-du-re-sou-bang-dan}
 
 <Route author="xyqfer" example="/baidu/top" path="/baidu/top/:board?" paramsDesc={['榜单，默认为 `realtime`']} radar="1">
   | 热搜榜   | 小说榜 | 电影榜 | 电视剧榜 | 汽车榜 | 游戏榜 |
