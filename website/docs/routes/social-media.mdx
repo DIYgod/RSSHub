@@ -24,10 +24,6 @@
   :::
 </Route>
 
-### UP 主所有视频 {#bilibili-up-zhu-suo-you-shi-pin}
-
-<Route author="CcccFz" example="/bilibili/user/video-all/436361287" path="/bilibili/user/video-all/:uid/:disableEmbed?" paramsDesc={['用户 id, 可在 UP 主主页中找到', '默认为开启内嵌视频, 任意值为关闭']} anticrawler="1" radar="1" notOperational="1" />
-
 ### UP 主专栏 {#bilibili-up-zhu-zhuan-lan}
 
 <Route author="lengthmin" example="/bilibili/user/article/334958638" path="/bilibili/user/article/:uid" paramsDesc={['用户 id, 可在 UP 主主页中找到']} radar="1" />
@@ -235,10 +231,6 @@
   | 0        | 1    | 13   | 167  | 3    | 129  | 4    | 36   | 188  | 234  | 223  | 160  | 211  | 217    | 119  | 155  | 202  | 5    | 181  | 177    | 23   | 11     |
 </Route>
 
-### 当前在线 {#bilibili-dang-qian-zai-xian}
-
-<Route author="TigerCubDen" example="/bilibili/online" path="/bilibili/online/:disableEmbed?" paramsDesc={['默认为开启内嵌视频, 任意值为关闭']} notOperational="1" />
-
 ### 用户关注动态 {#bilibili-yong-hu-guan-zhu-dong-tai}
 
 <Route author="TigerCubDen JimenezLi" example="/bilibili/followings/dynamic/109937383" path="/bilibili/followings/dynamic/:uid/:routeParams?" paramsDesc={['用户 id', '额外参数；请参阅 [#UP 主动态](#bilibili-up-zhu-dong-tai) 的说明和表格']} configRequired="1">
@@ -283,10 +275,6 @@
 
 见 [#哔哩哔哩直播](/routes/live#bi-li-bi-li-zhi-bo)
 
-### 主站话题列表 {#bilibili-zhu-zhan-hua-ti-lie-biao}
-
-<Route author="Qixingchen" example="/bilibili/blackboard" path="/bilibili/blackboard" notOperational="1" />
-
 ### 会员购新品上架 {#bilibili-hui-yuan-gou-xin-pin-shang-jia}
 
 <Route author="DIYgod" example="/bilibili/mall/new/1" path="/bilibili/mall/new/:category?" paramsDesc={['分类，默认全部，见下表']}>
@@ -325,10 +313,6 @@
   | 0    | 1    | 168      | 3    | 129  | 4    | 36   | 188  | 160  | 119  | 155  | 5    | 181  |
 </Route>
 
-### 话题 (频道 / 标签) {#bilibili-hua-ti-pin-dao-biao-qian}
-
-<Route author="Qixingchen" example="/bilibili/topic/2233" path="/bilibili/topic/:topic" paramsDesc={['话题名(又称频道名或标签) 例如 2233 或 COSPLAY']} notOperational="1" />
-
 ### 歌单 {#bilibili-ge-dan}
 
 <Route author="LogicJake" example="/bilibili/audio/10624" path="/bilibili/audio/:id" paramsDesc={['歌单 id, 可在歌单页 URL 中找到']} />
@@ -352,10 +336,6 @@
   用户追漫需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
   :::
 </Route>
-
-### 频道排行榜 {#bilibili-pin-dao-pai-hang-bang}
-
-<Route author="3401797899" example="/bilibili/channel/5417/hot" path="/bilibili/channel/:channelid/hot/:disableEmbed?" paramsDesc={['频道id，可在频道链接中找到', '默认为开启内嵌视频, 任意值为关闭']} notOperational="1" />
 
 ## Bluesky (bsky) {#bluesky-bsky}
 
@@ -391,7 +371,7 @@
 
 ### User {#curius-user}
 
-<Route author="Ovler-Young" example="/curius/links/yuu-yuu" path="/curius/links/:name" paramsDesc={['Username, can be found in URL']} notOperational="1" />
+<Route author="Ovler-Young" example="/curius/links/yuu-yuu" path="/curius/links/:name" paramsDesc={['Username, can be found in URL']} />
 
 ## Daily.dev {#daily-dev}
 
@@ -428,12 +408,6 @@
 ### Comment {#disqus-comment}
 
 <Route author="DIYgod" path="/disqus/posts/:forum" example="/disqus/posts/diygod-me" paramsDesc={['forum, disqus name of the target website']} />
-
-## Facebook {#facebook}
-
-### Page {#facebook-page}
-
-<Route author="maple3142" example="/facebook/page/SonetPCR" path="/facebook/page/:id" paramsDesc={['page id']} anticrawler="1" notOperational="1" />
 
 ## Fur Affinity {#fur-affinity}
 
@@ -509,10 +483,6 @@
 
 <Route author="zphw" example="/gab/user/realdonaldtrump" path="/gab/user/:username" paramsDesc={['Username']} />
 
-### Popular Posts {#gab-popular-posts}
-
-<Route author="zphw" example="/gab/popular/hot" path="/gab/popular/:sort?" paramsDesc={['Sort by, `hot` to be Hot Posts and `top` to be Top Posts. Default: hot']} notOperational="1" />
-
 ## GETTR {#gettr}
 
 ### User timeline {#gettr-user-timeline}
@@ -550,6 +520,25 @@ Due to [Instagram Private API](https://github.com/dilame/instagram-private-api) 
 :::
 
 <Route author="oppilate DIYgod" example="/instagram/user/stefaniejoosten" path="/instagram/:category/:key" paramsDesc={['Feed category, see table above','Username / Hashtag name']} radar="1" anticrawler="1" configRequired="1" />
+
+### User Profile - Picnob {#instagram-user-profile-picnob}
+
+<Route author="TonyRL" example="/picnob/user/stefaniejoosten" path="/picnob/profile/:id" paramsDesc={['Instagram id']} radar="1" />
+
+### User Profile - Picuki {#instagram-user-profile-picuki}
+
+<Route author="hoilc Rongronggg9" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:functionalFlag?" paramsDesc={['Instagram id','functional flag, see the table below']} radar="1" anticrawler="1">
+  | functionalFlag | Video embedding                         | Fetching Instagram Stories |
+  | -------------- | --------------------------------------- | -------------------------- |
+  | 0              | off, only show video poster as an image | off                        |
+  | 1 (default)    | on                                      | off                        |
+  | 10             | on                                      | on                         |
+
+  :::warning
+  Instagram Stories do not have a reliable guid. It is possible that your RSS reader show the same story more than once.
+  Though, every Story expires after 24 hours, so it may be not so serious.
+  :::
+</Route>
 
 ## Keep {#keep}
 
@@ -629,29 +618,6 @@ If the instance address is not `mastodon.social` or `pawoo.net`, then the route 
 ### Website latest works {#piapro-website-latest-works}
 
 <Route author="hoilc" example="/piapro/public/music/miku/2" path="/piapro/public/:type/:tag?/:category?" paramsDesc={['work type, can be `music`,`illust`,`text`','`tag` parameter in url','category ID, `categoryId` parameter in url']} />
-
-## Picnob {#picnob}
-
-### User Profile {#picnob-user-profile}
-
-<Route author="TonyRL" example="/picnob/user/stefaniejoosten" path="/picnob/profile/:id" paramsDesc={['Instagram id']} radar="1" notOperational="1" />
-
-## Picuki {#picuki}
-
-### User Profile {#picuki-user-profile}
-
-<Route author="hoilc Rongronggg9" example="/picuki/profile/stefaniejoosten" path="/picuki/profile/:id/:functionalFlag?" paramsDesc={['Instagram id','functional flag, see the table below']} radar="1" anticrawler="1">
-  | functionalFlag | Video embedding                         | Fetching Instagram Stories |
-  | -------------- | --------------------------------------- | -------------------------- |
-  | 0              | off, only show video poster as an image | off                        |
-  | 1 (default)    | on                                      | off                        |
-  | 10             | on                                      | on                         |
-
-  :::warning
-  Instagram Stories do not have a reliable guid. It is possible that your RSS reader show the same story more than once.
-  Though, every Story expires after 24 hours, so it may be not so serious.
-  :::
-</Route>
 
 ## pixiv {#pixiv}
 
@@ -739,12 +705,6 @@ If the instance address is not `mastodon.social` or `pawoo.net`, then the route 
 
 <Route author="TonyRL" path="/plurk/user/:user" example="/plurk/user/plurkoffice" paramsDesc={['User ID, can be found in URL']} radar="1" />
 
-## Popi 提问箱 {#popi-ti-wen-xiang}
-
-### 提问箱新回答 {#popi-ti-wen-xiang-ti-wen-xiang-xin-hui-da}
-
-<Route author="AgFlore" example="/popiask/popi6666" path="/popiask/:sharecode/:pagesize?" paramsDesc={['提问箱 ID', '查看条数（默认为 20）']} radar="1" notOperational="1" />
-
 ## Rattibha {#rattibha}
 
 ### User Threads {#rattibha-user-threads}
@@ -764,12 +724,6 @@ If the instance address is not `mastodon.social` or `pawoo.net`, then the route 
 :::tip
 提供不同内容的 `pid`, 可以得到不同的热门瞬间推荐，如果想看多个种类的热门可以用 `/` 把不同的 `pid` 连起来，例如: `NXJiSlM5V21kamJWVlgvZUh1NEExdz09/MkM0amxSTUNiTEpLcHhzSlRzTEI1dz09`
 :::
-
-## Tape 小纸条 {#tape-xiao-zhi-tiao}
-
-### 提问箱新回答 {#tape-xiao-zhi-tiao-ti-wen-xiang-xin-hui-da}
-
-<Route author="AgFlore" example="/tapechat/questionbox/TOAH7BBH" path="/tapechat/questionbox/:sharecode/:pagesize?" paramsDesc={['提问箱 ID', '查看条数（默认为 20）']} notOperational="1" />
 
 ## Telegram {#telegram}
 
@@ -944,12 +898,6 @@ generates
 
 <Route author="MisteryMonster" example="/vimeo/category/documentary/staffpicks" path="/vimeo/category/:category/:staffpicks?" paramsDesc={['Category name can get from url like `documentary` in [https://vimeo.com/categories/documentary/videos](https://vimeo.com/categories/documentary/videos) ', 'type `staffpicks` to sort with staffpicks']} radar="1" />
 
-## VueVlog {#vuevlog}
-
-### 用户 {#vuevlog-yong-hu}
-
-<Route author="kt286" example="/vuevideo/971924215514" path="/vuevideo/:userid" paramsDesc={['用户ID, 可在对应页面的 URL 中找到']} notOperational="1" />
-
 ## YouTube {#youtube}
 
 ### User {#youtube-user}
@@ -1052,23 +1000,11 @@ YouTube provides official RSS feeds for channels, for instance [https://www.yout
   | 1        | 2        | 3        | 4        | 5        |
 </Route>
 
-## 币乎 {#bi-hu}
-
-### 用户动态 {#bi-hu-yong-hu-dong-tai}
-
-<Route author="LogicJake" example="/bihu/activaties/1478342200" path="/bihu/activaties/:id" paramsDesc={['用户 id']} notOperational="1" />
-
 ## 唱吧 {#chang-ba}
 
 ### 用户 {#chang-ba-yong-hu}
 
 <Route author="kt286 xizeyoupan" example="/changba/skp6hhF59n48R-UpqO3izw" path="/changba/:userid" paramsDesc={['用户ID, 可在对应分享页面的 URL 中找到']} radar="1" supportPodcast="1" />
-
-## 大众点评 {#da-zhong-dian-ping}
-
-### 用户 {#da-zhong-dian-ping-yong-hu}
-
-<Route author="brilon" example="/dianping/user/35185271" path="/dianping/user/:id" paramsDesc={['用户id，可在 URL 中找到']} notOperational="1" />
 
 ## 抖音 {#dou-yin}
 
@@ -1383,10 +1319,6 @@ YouTube provides official RSS feeds for channels, for instance [https://www.yout
 
 <Route author="DIYgod HenryQW" example="/jianshu/home" path="/jianshu/home" />
 
-### 热门 {#jian-shu-re-men}
-
-<Route author="DIYgod HenryQW" example="/jianshu/trending/weekly" path="/jianshu/trending/:timeframe" paramsDesc={['按周 `weekly` 或 按月 `monthly`']} notOperational="1" />
-
 ### 专题 {#jian-shu-zhuan-ti}
 
 <Route author="DIYgod HenryQW" example="/jianshu/collection/xYuZYD" path="/jianshu/collection/:id" paramsDesc={['专题 id, 可在专题页 URL 中找到']} />
@@ -1503,20 +1435,6 @@ YouTube provides official RSS feeds for channels, for instance [https://www.yout
   | day    | week   | month  | amount |
 </Route>
 
-## 刷屏 {#shua-ping}
-
-### 最新 {#shua-ping-zui-xin}
-
-<Route author="xyqfer" example="/weseepro/newest" path="/weseepro/newest" notOperational="1" />
-
-### 最新（无中间页） {#shua-ping-zui-xin-wu-zhong-jian-ye}
-
-<Route author="xyqfer yefoenix" example="/weseepro/newest-direct" path="/weseepro/newest-direct" notOperational="1" />
-
-### 朋友圈 {#shua-ping-peng-you-quan}
-
-<Route author="xyqfer" example="/weseepro/circle" path="/weseepro/circle" notOperational="1" />
-
 ## 微博 {#wei-bo}
 
 :::warning
@@ -1614,18 +1532,6 @@ YouTube provides official RSS feeds for channels, for instance [https://www.yout
 ### 用户 {#wei-bo-lv-zhou-yong-hu}
 
 <Route author="kt286" example="/weibo/oasis/user/1990895721" path="/weibo/oasis/user/:userid" paramsDesc={['用户 id, 可在用户主页 URL 中找到']} />
-
-## 悟空问答 {#wu-kong-wen-da}
-
-### 用户动态 {#wu-kong-wen-da-yong-hu-dong-tai}
-
-<Route author="nczitzk" example="/wukong/user/5826687196" path="/wukong/user/:id/:type?" paramsDesc={['用户ID，可在用户页 URL 中找到', '类型，可选 `dongtai` 即 动态，`answers` 即 回答，`questions` 即 提问，默认为 `dongtai`']} notOperational="1">
-  :::tip
-  用户的动态是一定时间范围内用户提出的问题和作出的回答，距离现在时间较久的问题和回答不会出现，此时选择 `dongtai` 用户动态是会缺失的。
-
-  同理选择 `answers` 和 `questions` 作为参数时，对于没有提出过问题和作出过回答的用户，其内容也会相应缺失。
-  :::
-</Route>
 
 ## 小红书 {#xiao-hong-shu}
 
