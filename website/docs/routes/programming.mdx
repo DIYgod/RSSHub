@@ -174,12 +174,6 @@
 
 <Route author="ftiasch" example="/codeforces/recent-actions" path="/codeforces/recent-actions/:minrating?" paramsDesc={['The minimum blog/comment rating required. Default: 1']} />
 
-## cve.mitre.org {#cve-mitre-org}
-
-### Search Result {#cve-mitre-org-search-result}
-
-<Route author="fengkx" example="/cve/search/PostgreSQL" path="/cve/search/:keyword" paramsDesc={['keyword']} notOperational="1" />
-
 ## dbaplus 社群 {#dbaplus-she-qun}
 
 ### 栏目 {#dbaplus-she-qun-lan-mu}
@@ -210,45 +204,11 @@
 
 <Route author="nczitzk" example="/distill" path="/distill" />
 
-## Dockone {#dockone}
-
-### 周报 {#dockone-zhou-bao}
-
-<Route author="csi0n" example="/dockone/weekly" path="/dockone/weekly" notOperational="1" />
-
 ## gihyo.jp {#gihyo-jp}
 
 ### Series {#gihyo-jp-series}
 
 <Route author="masakichi" example="/gihyo/list/group/Ubuntu-Weekly-Recipe" path="/gihyo/list/group/:id" paramsDesc={['Series']} />
-
-## GitChat {#gitchat}
-
-### 最新文章 {#gitchat-zui-xin-wen-zhang}
-
-<Route author="hoilc" example="/gitchat/newest" path="/gitchat/newest/:category?/:selected?" paramsDesc={['分类 ID, 置空或`all`代表全部, 具体值需要抓取前端请求, 以下列出可能有变动, 仅供参考', '是否只显示严选文章, 任意值为是, 置空为否']} notOperational="1">
-  | 分类名   | 分类 ID                  |
-  | :------- | :----------------------- |
-  | 前端     | 58e84f875295227534aad506 |
-  | 后端     | 5d8b7c3786194a1921979122 |
-  | 移动开发 | 5d8b7c3786194a1921979123 |
-  | 运维     | 5901bd477b61a76bc4016423 |
-  | 测试     | 58e84f425295227534aad502 |
-  | 架构     | 58e84f6bad952d6b3428af9a |
-  | 人工智能 | 58e84f53ec8e9e7b34457809 |
-  | 职场     | 58e84f1584c651693437f27c |
-  | 互联网   | 5d8b7c3786194a1921979124 |
-
-  > GitChat 需要付费订阅，RSS 仅做更新提醒，不含付费内容.
-</Route>
-
-## Gitea {#gitea}
-
-### 博客 {#gitea-bo-ke}
-
-<Route author="cnzgray" example="/gitea/blog" path="/gitea/blog" notOperational="1">
-  > gitea 博客一般发布最新的 release 信息，路由选择用 blog 名称主要因为其地址名为 blog，而非 changlog，慎重起见还是用 blog 命名。
-</Route>
 
 ## Gitee {#gitee}
 
@@ -538,49 +498,11 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <Route author="running-grass" radar="1" example="/issuehunt/funded/DIYgod/RSSHub" path="/issuehunt/funded/:username/:repo" paramsDesc={['Github user/org','Repository name']} />
 
-## ITSlide {#itslide}
-
-### 最新 {#itslide-zui-xin}
-
-<Route author="Yangshuqing" example="/itslide/new" path="/itslide/new" radar="1" notOperational="1" />
-
-## Kaggle {#kaggle}
-
-### Discussion {#kaggle-discussion}
-
-<Route author="LogicJake" example="/kaggle/discussion/387811/active" path="/kaggle/discussion/:forumId/:sort?" paramsDesc={['Forum ID, open web request, search forumId; fill in all to subscribe to the whole site discussion forum', 'See the table below for sorting methods, default to hot']} notOperational="1">
-  | hot     | recent          | new             | top        | active        |
-  | ------- | --------------- | --------------- | ---------- | ------------- |
-  | Hotness | Recent Comments | Recently Posted | Most Votes | Most Comments |
-</Route>
-
-### Competitions {#kaggle-competitions}
-
-<Route author="LogicJake" example="/kaggle/competitions" path="/kaggle/competitions/:category?" paramsDesc={['category, default to all']} notOperational="1">
-  | 空             | featured | research | recruitment | gettingStarted  | masters | playground | analytics |
-  | -------------- | -------- | -------- | ----------- | --------------- | ------- | ---------- | --------- |
-  | All Categories | Featured | Research | Recruitment | Getting started | Masters | Playground | Analytics |
-</Route>
-
-### User Discussion {#kaggle-user-discussion}
-
-<Route author="nczitzk" example="/kaggle/user/antgoldbloom" path="/kaggle/user/:user" paramsDesc={['用户名']} notOperational="1" />
-
-## Layer3 {#layer3}
-
-### Quest {#layer3-quest}
-
-<Route author="nczitzk" example="/layer3/quests" path="/layer3/quests" radar="1" notOperational="1" />
-
 ## LeetCode {#leetcode}
 
 ### Articles {#leetcode-articles}
 
 <Route author="LogicJake" example="/leetcode/articles" path="/leetcode/articles" />
-
-### Submission {#leetcode-submission}
-
-<Route author="NathanDai" example="/leetcode/submission/us/nathandai" path="/leetcode/submission/:country/:user" paramsDesc={['country, Chines(cn) and US(us)', 'Username, available at the URL of the LeetCode user homepage']} notOperational="1" />
 
 ### Daily Question {#leetcode-daily-question}
 
@@ -589,12 +511,6 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 ### Daily Question Solution {#leetcode-daily-question-solution}
 
 <Route author="woaidouya123" example="/leetcode/dailyquestion/solution/en" path="/leetcode/dailyquestion/solution/:lang" paramsDesc={['site, Chines(cn) and Engligh(en)']} />
-
-## LinkedKeeper {#linkedkeeper}
-
-### 博文 {#linkedkeeper-bo-wen}
-
-<Route author="imlonghao" example="/linkedkeeper/sub/1" path="/linkedkeeper/:type/:id?" paramsDesc={['博文分类, 为 URL 中 `.action` 的文件名', '分区或标签的 ID, 对应 URL 中的 `sid` 或 `tid`']} notOperational="1" />
 
 ## Linux Patchwork {#linux-patchwork}
 
@@ -655,7 +571,7 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 ### News {#node-js-news}
 
-<Route author="nczitzk" example="/nodejs/blog" path="/nodejs/blog/:language?" paramsDesc={['Language, see below, en by default']} notOperational="1">
+<Route author="nczitzk" example="/nodejs/blog" path="/nodejs/blog/:language?" paramsDesc={['Language, see below, en by default']}>
   | العربية | Catalan | Deutsch | Español | زبان فارسی |
   | ------- | ------- | ------- | ------- | ---------- |
   | ar      | ca      | de      | es      | fa         |
@@ -753,12 +669,6 @@ Subscribe to the updates (threads and submission) from a paritcular Hacker News 
 
 <Route author="CcccFz" example="/rustcc/jobs" path="/rustcc/jobs" radar="1" />
 
-## Scala {#scala}
-
-### Scala Blog {#scala-scala-blog}
-
-<Route author="fengkx" example="/scala/blog/posts" path="/scala/blog/:part?" paramsDesc={['part parmater can be found in the url of blog']} notOperational="1" />
-
 ## SecWiki - 安全维基 {#secwiki-an-quan-wei-ji}
 
 ### 最新周刊 {#secwiki-an-quan-wei-ji-zui-xin-zhou-kan}
@@ -855,30 +765,6 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
   | featured | trending        | trending\_m      | trending\_d    | popular      | new            |
 </Route>
 
-## wolley {#wolley}
-
-### posts {#wolley-posts}
-
-<Route author="umm233" example="/wolley" path="/wolley/index" notOperational="1" />
-
-### user post {#wolley-user-post}
-
-<Route author="umm233" example="/wolley/user/kyth" path="/wolley/user/:id" paramsDesc={['用户 id']} notOperational="1" />
-
-### host {#wolley-host}
-
-<Route author="umm233" example="/wolley/host/www.youtube.com" path="/wolley/host/:host" paramsDesc={['文章对应 host 分类']} notOperational="1" />
-
-## zooTeam 政采云前端技术团队 {#zooteam-zheng-cai-yun-qian-duan-ji-shu-tuan-dui}
-
-### blog {#zooteam-zheng-cai-yun-qian-duan-ji-shu-tuan-dui-blog}
-
-<Route author="Pulset" example="/zooTeam/blog" path="/zooTeam/blog" radar="1" notOperational="1" />
-
-### weekly {#zooteam-zheng-cai-yun-qian-duan-ji-shu-tuan-dui-weekly}
-
-<Route author="Pulset" example="/zooTeam/weekly" path="/zooTeam/weekly" radar="1" notOperational="1" />
-
 ## 阿里云 {#a-li-yun}
 
 ### 数据库内核月报 {#a-li-yun-shu-ju-ku-nei-he-yue-bao}
@@ -924,12 +810,6 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 ### 作者 {#an-quan-nei-can-zuo-zhe}
 
 <Route author="XinRoom" example="/secrss/author/网络安全威胁和漏洞信息共享平台" path="/secrss/author/:author" radar="1" />
-
-## 安全文摘 {#an-quan-wen-zhai}
-
-### 首页 {#an-quan-wen-zhai-shou-ye}
-
-<Route author="kaiili" example="/secnews" path="/secnews" notOperational="1" />
 
 ## 北京智源人工智能研究院 {#bei-jing-zhi-yuan-ren-gong-zhi-neng-yan-jiu-yuan}
 
@@ -989,22 +869,11 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 <Route author="phantomk" example="/eleme/open/announce" path="/eleme/open/announce" />
 
-### 饿百零售开放平台公告 {#e-le-me-kai-fang-ping-tai-e-bai-ling-shou-kai-fang-ping-tai-gong-gao}
-
-<Route author="phantomk" example="/eleme/open-be/announce" path="/eleme/open-be/announce" notOperational="1" />
-
 ## 极客时间 {#ji-ke-shi-jian}
 
 ### 专栏文章 {#ji-ke-shi-jian-zhuan-lan-wen-zhang}
 
 <Route author="fengchang" example="/geektime/column/48" path="/geektime/column/:cid" paramsDesc={['专栏 id，可从[全部专栏](https://time.geekbang.org/paid-content)进入专栏介绍页，在 URL 中找到']} />
-
-### 极客新闻 {#ji-ke-shi-jian-ji-ke-xin-wen}
-
-<Route author="zhangzhxb520" example="/geektime/news" path="/geektime/news" notOperational="1" />
-
-> -   极客时间专栏需要付费订阅，RSS 仅做更新提醒，不含付费内容.
-> -   极客新闻不需要付费，可通过 RSS 订阅.
 
 ## 极术社区 {#ji-shu-she-qu}
 
@@ -1088,17 +957,9 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 <Route author="isQ" example="/juejin/collection/6845243180586123271" path="/juejin/collection/:collectionId" paramsDesc={['收藏夹唯一标志符, 在浏览器地址栏URL中能够找到']} radar="1" />
 
-### 分享 {#jue-jin-fen-xiang}
-
-<Route author="qiwihui" example="/juejin/shares/56852b2460b2a099cdc1d133" path="/juejin/shares/:userId" paramsDesc={['用户 id, 可在用户页 URL 中找到']} radar="1" notOperational="1" />
-
 ### 专栏 {#jue-jin-zhuan-lan}
 
 <Route author="xiangzy1" example="/juejin/column/6960559453037199391" path="/juejin/column/:id" paramsDesc={['专栏 id, 可在专栏页 URL 中找到']} radar="1" />
-
-### 资讯 {#jue-jin-zi-xun}
-
-<Route author="cancergary" example="/juejin/news/739332228916791" path="/juejin/news/:userId" paramsDesc={['用户 id, 可在用户页 URL 中找到']} radar="1" notOperational="1" />
 
 ## 开源中国 {#kai-yuan-zhong-guo}
 
@@ -1132,7 +993,7 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 ### 问答主题 {#kai-yuan-zhong-guo-wen-da-zhu-ti}
 
-<Route author="loveely7" example="/oschina/topic/weekly-news" path="/oschina/topic/:topic" paramsDesc={['主题名，可从 [全部主题](https://www.oschina.net/question/topics) 进入主题页，在 URL 中找到']} radar="1" notOperational="1" />
+<Route author="loveely7" example="/oschina/topic/weekly-news" path="/oschina/topic/:topic" paramsDesc={['主题名，可从 [全部主题](https://www.oschina.net/question/topics) 进入主题页，在 URL 中找到']} radar="1" />
 
 ## 拉勾网 {#la-gou-wang}
 
@@ -1158,55 +1019,6 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 <Route author="huhuhang" example="/lanqiao/questions/2" path="/lanqiao/questions/:id" paramsDesc={['topic_id 主题 `id` 可在社区板块 URL 中找到']} radar="1" anticrawler="1" />
 
-## 连享会 {#lian-xiang-hui}
-
-### 精彩资讯 {#lian-xiang-hui-jing-cai-zi-xun}
-
-<Route author="nczitzk" example="/lianxh" path="/lianxh/:category?" paramsDesc={['分类 id，可在对应分类页 URL 中找到，默认为空，即全部']} notOperational="1">
-  | 分类                 | id |
-  | -------------------- | -- |
-  | 全部                 |    |
-  | Stata 入门           | 16 |
-  | Stata 教程           | 17 |
-  | 计量专题             | 18 |
-  | 内生性 - 因果推断    | 19 |
-  | 面板数据             | 20 |
-  | 交乘项 - 调节 - 中介 | 21 |
-  | 结果输出             | 22 |
-  | 工具软件             | 23 |
-  | Stata 绘图           | 24 |
-  | 数据处理             | 25 |
-  | Stata 程序           | 26 |
-  | Probit-Logit         | 27 |
-  | 时间序列             | 28 |
-  | 空间计量 - 网络分析  | 29 |
-  | Markdown-LaTeX       | 30 |
-  | 论文写作             | 31 |
-  | 回归分析             | 32 |
-  | 其它                 | 33 |
-  | 数据分享             | 34 |
-  | Stata 资源           | 35 |
-  | 文本分析 - 爬虫      | 36 |
-  | Python-R-Matlab      | 37 |
-  | IV-GMM               | 38 |
-  | 倍分法 DID           | 39 |
-  | 断点回归 RDD         | 40 |
-  | PSM-Matching         | 41 |
-  | 合成控制法           | 42 |
-  | Stata 命令           | 43 |
-  | 专题课程             | 44 |
-  | 风险管理             | 45 |
-  | 生存分析             | 46 |
-  | 机器学习             | 47 |
-  | 分位数回归           | 48 |
-  | SFA-DEA - 效率分析   | 49 |
-  | 答疑 - 板书          | 50 |
-  | 论文重现             | 51 |
-  | 最新课程             | 52 |
-  | 公开课               | 53 |
-  | Stata33 讲           | 54 |
-</Route>
-
 ## 洛谷 {#luo-gu}
 
 ### 日报 {#luo-gu-ri-bao}
@@ -1224,78 +1036,6 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 ### 用户博客 {#luo-gu-yong-hu-bo-ke}
 
 <Route author="ftiasch" example="/luogu/user/blog/ftiasch" path="/luogu/user/blog/:name" paramsDesc={['博客名称']} radar="1" />
-
-## 码农俱乐部 {#ma-nong-ju-le-bu}
-
-### 话题 {#ma-nong-ju-le-bu-hua-ti}
-
-<Route author="mlogclub" example="/mlog-club/topics/newest" path="/mlog-club/topics/:node" paramsDesc={['node']} notOperational="1">
-  | node      | 名称     |
-  | --------- | -------- |
-  | newest    | 最新话题 |
-  | recommend | 热门话题 |
-  | 1         | 交流     |
-  | 2         | 开源     |
-  | 3         | 提问     |
-</Route>
-
-### 开源项目 {#ma-nong-ju-le-bu-kai-yuan-xiang-mu}
-
-<Route author="mlogclub" example="/mlog-club/projects" path="/mlog-club/projects" notOperational="1" />
-
-## 码农网 {#ma-nong-wang}
-
-### 最新 {#ma-nong-wang-zui-xin}
-
-<Route author="kt286" example="/codeceo/home" path="/codeceo/home" notOperational="1" />
-
-### 分类 {#ma-nong-wang-fen-lei}
-
-<Route author="kt286" example="/codeceo/category/java" path="/codeceo/category/:category?" paramsDesc={['category']} notOperational="1">
-  | category        | 名称                |
-  | --------------- | ------------------- |
-  | news            | 资讯                |
-  | java            | JAVA 开发           |
-  | cpp             | C/C++ 开发          |
-  | donet           | .NET 开发           |
-  | web             | WEB 开发            |
-  | android         | Android 开发        |
-  | ios             | iOS 开发            |
-  | cloud           | 云计算 / 大数据     |
-  | os              | 操作系统            |
-  | database        | 数据库              |
-  | machine         | 机器学习 / 人工智能 |
-  | algorithm       | 算法设计            |
-  | design-patterns | 设计模式            |
-  | programmer      | 程序员人生          |
-  | weekly          | 《快乐码农》        |
-  | project         | 开源软件            |
-</Route>
-
-### 标签 {#ma-nong-wang-biao-qian}
-
-<Route author="kt286" example="/codeceo/tag/node.js" path="/codeceo/tag/:category?" paramsDesc={['tag']} notOperational="1">
-  | tag        | 名称       |
-  | ---------- | ---------- |
-  | java       | java       |
-  | javascript | javascript |
-  | php        | php        |
-  | ios        | ios        |
-  | android    | android    |
-  | html5      | html5      |
-  | css3       | css3       |
-  | linux      | linux      |
-  | c          | c++        |
-  | python     | python     |
-  | csharp     | c#         |
-  | nodejs     | nodejs     |
-</Route>
-
-## 码农周刊 {#ma-nong-zhou-kan}
-
-### issues {#ma-nong-zhou-kan-issues}
-
-<Route author="tonghs" example="/manong-weekly" path="/manong-weekly" notOperational="1" />
 
 ## 美团开放平台 {#mei-tuan-kai-fang-ping-tai}
 
@@ -1315,16 +1055,6 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 
 <Route author="hellodword" example="/galaxylab" path="/galaxylab" />
 
-## 前端艺术家 && 飞冰早报 {#qian-duan-yi-shu-jia-fei-bing-zao-bao}
-
-### 列表 {#qian-duan-yi-shu-jia-fei-bing-zao-bao-lie-biao}
-
-<Route author="kouchao" example="/jskou/0" path="/jskou/:type?" paramsDesc={['分类']} notOperational="1">
-  | 前端艺术家 | 飞冰早报 |
-  | ---------- | -------- |
-  | 0          | 1        |
-</Route>
-
 ## 前端早早聊 {#qian-duan-zao-zao-liao}
 
 ### 文章 {#qian-duan-zao-zao-liao-wen-zhang}
@@ -1334,44 +1064,6 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
   | --------- | -------- | -------- | --------- | -------- | -------- |
   | recommend | quality  | growth   | community | material | industry |
 </Route>
-
-## 日报 | D2 资源库 {#ri-bao-d2-zi-yuan-ku}
-
-### 日报 | D2 资源库 {#ri-bao-d2-zi-yuan-ku-ri-bao-d2-zi-yuan-ku}
-
-<Route author="Andiedie" example="/d2/daily" path="/d2/daily" notOperational="1" />
-
-## 顺丰 {#shun-feng}
-
-### 顺丰丰桥开放平台公告 {#shun-feng-shun-feng-feng-qiao-kai-fang-ping-tai-gong-gao}
-
-<Route author="phantomk" example="/sf/sffq-announce" path="/sf/sffq-announce" notOperational="1" />
-
-## 腾讯大数据 {#teng-xun-da-shu-ju}
-
-### 研报 {#teng-xun-da-shu-ju-yan-bao}
-
-<Route author="nczitzk" example="/tencent/bigdata" path="/tencent/bigdata" notOperational="1" />
-
-## 腾讯游戏开发者社区 {#teng-xun-you-xi-kai-fa-zhe-she-qu}
-
-:::warning
-有部分输出全文带有未进行样式处理的代码内容，显示效果不佳，建议跳转原文阅读
-:::
-
-### 分类 {#teng-xun-you-xi-kai-fa-zhe-she-qu-fen-lei}
-
-<Route author="xyqfer" example="/gameinstitute/community/hot" path="/gameinstitute/community/:tag?" paramsDesc={['标签名称，默认为热门']} notOperational="1">
-  | 热门 | 策划 | 程序    | 技术前沿 | 音频  | 项目管理 | 游戏运营 | 游戏测试 |
-  | ---- | ---- | ------- | -------- | ----- | -------- | -------- | -------- |
-  | hot  | plan | program | tech     | audio | project  | yunying  | test     |
-</Route>
-
-## 腾讯云 {#teng-xun-yun}
-
-### 云 + 社区专栏 {#teng-xun-yun-yun-she-qu-zhuan-lan}
-
-<Route author="nczitzk" example="/tencent/cloud/column/86410" path="/tencent/cloud/column/:id?/:tag?" paramsDesc={['专栏 id，可在对应专栏页中找到，默认为 86410（腾讯云数据库专家服务）', '标签 id，可在对应专栏页中找到，默认为空']} notOperational="1" />
 
 ## 微信开放平台 {#wei-xin-kai-fang-ping-tai}
 
@@ -1438,27 +1130,3 @@ Stay up to date on the latest React news, tutorials, resources, and more. Delive
 ### 周刊 - JavaScript {#yin-ji-zhong-wen-zhou-kan-javascript}
 
 <Route author="daijinru" example="/docschina/jsweekly" path="/docschina/jsweekly" radar="1" />
-
-## 知晓程序 {#zhi-xiao-cheng-xu}
-
-### 文章 {#zhi-xiao-cheng-xu-wen-zhang}
-
-<Route author="HenryQW" example="/miniapp/article/cloud" path="/miniapp/article/:category" paramsDesc={['分类名称']} notOperational="1">
-  | 全部 | 小程序资讯 | 知晓云 | 小程序推荐     | 榜单 | 晓组织 | 新能力     | 小程序问答 |
-  | ---- | ---------- | ------ | -------------- | ---- | ------ | ---------- | ---------- |
-  | all  | news       | cloud  | recommendation | rank | group  | capability | qa         |
-</Route>
-
-### 小程序商店 - 最新 {#zhi-xiao-cheng-xu-xiao-cheng-xu-shang-dian-zui-xin}
-
-<Route author="xyqfer" example="/miniapp/store/newest" path="/miniapp/store/newest" notOperational="1" />
-
-## 众成翻译 {#zhong-cheng-fan-yi}
-
-### 首页 {#zhong-cheng-fan-yi-shou-ye}
-
-<Route author="SirM2z" example="/zcfy" path="/zcfy/index" notOperational="1" />
-
-### 热门 {#zhong-cheng-fan-yi-re-men}
-
-<Route author="SirM2z" example="/zcfy/hot" path="/zcfy/hot" notOperational="1" />
