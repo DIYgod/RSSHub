@@ -22,64 +22,6 @@
   | linan | fuyang | tonglu | jiande | chunan |
 </Route>
 
-## 2047 {#2047}
-
-### 分类 {#2047-fen-lei}
-
-<Route author="nczitzk" example="/2047" path="/2047/:category?/:sort?" paramsDesc={['分类，见下表，默认为首页', '排序，见下表，默认为综合']} notOperational="1">
-  分类
-
-  | 首页 | 时政     | 民生  | 科技 | 休闲    |
-  | ---- | -------- | ----- | ---- | ------- |
-  |      | opinions | daily | stem | culture |
-
-  | 欢乐     | 江湖  | 站务   | 水    |
-  | -------- | ----- | ------ | ----- |
-  | tainment | inner | office | water |
-
-  | 时事 | 观点 | 政治 | 人物 | 司法实践 |
-  | ---- | ---- | ---- | ---- | -------- |
-  | 2    | 1    | 31   | 10   | 49       |
-
-  | 香港 | 历史 | 疫情 | 新疆 | 假设 |
-  | ---- | ---- | ---- | ---- | ---- |
-  | 47   | 85   | 44   | 32   | 22   |
-
-  | 经济 | 生活 | 留学移民 | 情感 | 教育 |
-  | ---- | ---- | -------- | ---- | ---- |
-  | 65   | 41   | 14       | 23   | 66   |
-
-  | 技术 | 翻墙 | 加密技术 | 哲学 | 阅读 |
-  | ---- | ---- | -------- | ---- | ---- |
-  | 3    | 18   | 24       | 34   | 6    |
-
-  | 音乐 | 影视 | 炉边诗社 | 博客 | 美食 |
-  | ---- | ---- | -------- | ---- | ---- |
-  | 7    | 11   | 46       | 8    | 43   |
-
-  | 文学 | ACG | 欢乐 | 公告 | 分享发现 |
-  | ---- | --- | ---- | ---- | -------- |
-  | 84   | 30  | 17   | 67   | 5        |
-
-  | 分享原创 | 2049 | 宗教 | 语言 | 人文 |
-  | -------- | ---- | ---- | ---- | ---- |
-  | 12       | 16   | 42   | 56   | 76   |
-
-  | 站务 | 国防 | 工会 | 水 | 江湖 |
-  | ---- | ---- | ---- | -- | ---- |
-  | 13   | 15   | 29   | 4  | 21   |
-
-  | 吐槽 | 树洞 | 标本 |
-  | ---- | ---- | ---- |
-  | 9    | 19   | 20   |
-
-  排序
-
-  | 即时 | 新帖 | 综合  | 精华   | 高赞 | 观看 |
-  | ---- | ---- | ----- | ------ | ---- | ---- |
-  | t\_u | t\_c | t\_hn | t\_hn2 | amv  | vc   |
-</Route>
-
 ## 423Down {#423down}
 
 ### 分类 {#423down-fen-lei}
@@ -230,7 +172,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### General Subforum - Support cookie {#discuz-general-subforum-support-cookie}
 
-<Route author="junfengP" example="/discuz/x/00/https%3a%2f%2fbbs.zdfx.net%2fforum-2-1.html" path="/discuz/:ver/:cid/:link" paramsDesc={['discuz version，see below table', 'Cookie id，require self hosted and set environment parameters, see Deploy - Configuration pages for detail','link of subforum, require url encoded']} notOperational="1">
+<Route author="junfengP" example="/discuz/x/00/https%3a%2f%2fbbs.zdfx.net%2fforum-2-1.html" path="/discuz/:ver/:cid/:link" paramsDesc={['discuz version，see below table', 'Cookie id，require self hosted and set environment parameters, see Deploy - Configuration pages for detail','link of subforum, require url encoded']} configRequired="1">
   | Discuz X Series | Discuz 7.x Series |
   | --------------- | ----------------- |
   | x               | 7                 |
@@ -268,12 +210,6 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 | ---- | ------------ | ---- | ----- |
 | jobs | translations | qa   | links |
 
-## LowEndTalk {#lowendtalk}
-
-### Discussion {#lowendtalk-discussion}
-
-<Route author="nczitzk" example="/lowendtalk/discussion/168480" path="/lowendtalk/discussion/:id?" paramsDesc={['Discussion id']} notOperational="1" />
-
 ## MCBBS {#mcbbs}
 
 ### 版块 {#mcbbs-ban-kuai}
@@ -293,28 +229,6 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 ### 看板列表 {#meteor-kan-ban-lie-biao}
 
 <Route author="TonyRL" example="/meteor/boards" path="/meteor/boards" radar="1" />
-
-## Mobilism {#mobilism}
-
-### Forums {#mobilism-forums}
-
-<Route author="nitezs" example="/mobilism/forums/android/apps" path="/mobilism/forums/:category/:type/:fulltext?" paramsDesc={['Category', 'subcategory','Retrieve fulltext, specify `y` to enable']} notOperational="1">
-  | Android | iPhone | iPad |
-  | ------- | ------ | ---- |
-  | android | iphone | ipad |
-
-  | Apps | games |
-  | ---- | ----- |
-  | apps | games |
-</Route>
-
-### Portal {#mobilism-portal}
-
-<Route author="nitezs" example="/mobilism/portal/androidapps" path="/mobilism/portal/:type/:fulltext?" paramsDesc={['Sections', 'Retrieve fulltext, specify `y` to enable']} notOperational="1">
-  | Android Apps | Android Games | ebook | iPad Apps | iPad Games | iPhone Apps | iPhone Games |
-  | ------------ | ------------- | ----- | --------- | ---------- | ----------- | ------------ |
-  | aapp         | agame         | ebook | ipapp     | ipgame     | iapp        | igame        |
-</Route>
 
 ## NGA {#nga}
 
@@ -406,7 +320,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### Thread {#scboy-forum-thread}
 
-<Route author="totorowechat" example="/scboy/thread/188673" path="/scboy/thread/:tid" paramsDesc={['thread tid']} radar="1" notOperational="1">
+<Route author="totorowechat" example="/scboy/thread/188673" path="/scboy/thread/:tid" paramsDesc={['thread tid']} radar="1" configRequired="1">
   If the url of the thread is `https://www.scboy.com/?thread-188673.htm` then tid would be `1789863`.
 
   When accessing Joeyray's Bar, `SCBOY_BBS_TOKEN` needs to be filled in `environment`. See [/install](/install) for details. `SCBOY_BBS_TOKEN` is included in cookies with `bbs_token`.
@@ -437,28 +351,6 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 ### 标签 {#v2ex-biao-qian}
 
 <Route author="liyefox" example="/v2ex/tab/hot" path="/v2ex/tab/:tabid" paramsDesc={['tab标签ID,在 URL 可以找到']} />
-
-## X 岛匿名版 {#x-dao-ni-ming-ban}
-
-### 串 {#x-dao-ni-ming-ban-chuan}
-
-<Route author="miles170" example="/nmbxd1/1" path="/nmbxd1/:id" paramsDesc={['板块 id 或者板块名称，现有板块请参考下表']} notOperational="1">
-  | 综合线 | 非创作线 | 综合版 1 | 欢乐恶搞 | 买买买 (剁手) | 数码 (装机) | 技术 (码农) | 科学 (干货) | 二创 (画师) | 电影 / 电视 | ROLL 点 |
-  | ------ | -------- | -------- | -------- | ------------- | ----------- | ----------- | ----------- | ----------- | ----------- | ------- |
-  | 1      | 3        | 综合版 1 | 欢乐恶搞 | 买买买        | 数码        | 技术宅      | 科学        | 二创        | 影视        | ROLL 点 |
-
-  | 动画 | 漫画 | 主播 (UP) | 特摄 | 胶佬 (手办) | 小马 (美漫) | 东方 Project | 舰娘 | VOCALOID |
-  | ---- | ---- | --------- | ---- | ----------- | ----------- | ------------ | ---- | -------- |
-  | 动画 | 漫画 | 主播      | 特摄 | 胶佬        | 小马        | 东方 Project | 舰娘 | VOCALOID |
-
-  | 游戏综合版 | 手游 | 卡牌桌游 | 任天堂 NS | LOL | SE(FF14) | DOTA & 自走棋 | 联机 (服务器发布)       | 怪物猎人 | 鹰角游戏 | 米哈游 | 音乐游戏 |
-  | ---------- | ---- | -------- | --------- | --- | -------- | ------------- | ----------------------- | -------- | -------- | ------ | -------- |
-  | 游戏       | 手游 | 卡牌桌游 | 任天堂    | LOL | SE       | DOTA          | 联机 %28 服务器发布 %29 | 怪物猎人 | 鹰角游戏 | 米哈游 | 音游     |
-
-  | 跑团 | 规则怪谈 | 都市怪谈 (灵异) | 脑洞 (推理) | 料理 (美食) | 宠物 | 学业 (校园) | 社畜 | 育儿 | 摄影 (cos)     | 文学 (推书) | 音乐 (推歌) | 技术支持 |
-  | ---- | -------- | --------------- | ----------- | ----------- | ---- | ----------- | ---- | ---- | -------------- | ----------- | ----------- | -------- |
-  | 跑团 | 规则怪谈 | 都市怪谈        | 推理        | 料理        | 宠物 | 考试        | 社畜 | 育儿 | 摄影 %28cos%29 | 文学        | 音乐        | 技术支持 |
-</Route>
 
 ## ZodGame {#zodgame}
 
@@ -519,16 +411,6 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
   用例：`/baidu/tieba/search/neuro/kw=neurosama&only_thread=1&sm=2`
 </Route>
 
-## 才符 {#cai-fu}
-
-### 用户动态 {#cai-fu-yong-hu-dong-tai}
-
-<Route author="nczitzk" example="/91ddcc/user/2377095" path="/91ddcc/user/:user" paramsDesc={['用户ID，在 URL 可以找到']} notOperational="1" />
-
-### 驿站帖子 {#cai-fu-yi-zhan-tie-zi}
-
-<Route author="nczitzk" example="/91ddcc/stage/206" path="/91ddcc/stage/:stage" paramsDesc={['驿站ID，在 URL 可以找到']} notOperational="1" />
-
 ## 超理论坛 {#chao-li-lun-tan}
 
 ### 板块 {#chao-li-lun-tan-ban-kuai}
@@ -586,7 +468,7 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 ### 个人帖子 {#ding-xiang-yuan-ge-ren-tie-zi}
 
-<Route author="TonyRL" example="/dxy/bbs/profile/thread/8335054" path="/dxy/bbs/profile/thread/:userId" paramsDesc={['个人 ID，可在 URL 中找到']} radar="1" notOperational="1" />
+<Route author="TonyRL" example="/dxy/bbs/profile/thread/8335054" path="/dxy/bbs/profile/thread/:userId" paramsDesc={['个人 ID，可在 URL 中找到']} radar="1" />
 
 ## 斗鱼 {#dou-yu}
 
@@ -636,44 +518,6 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
   |      | qna      | lowshine | it      | finance  | startup  | city     |
 </Route>
 
-## 海角社区 {#hai-jiao-she-qu}
-
-### 热门 {#hai-jiao-she-qu-re-men}
-
-<Route author="nczitzk" example="/hjedd/hot" path="/hjedd/hot" notOperational="1" />
-
-### 新闻 {#hai-jiao-she-qu-xin-wen}
-
-<Route author="nczitzk" example="/hjedd/news" path="/hjedd/news" notOperational="1" />
-
-### 大事记 {#hai-jiao-she-qu-da-shi-ji}
-
-<Route author="nczitzk" example="/hjedd/event" path="/hjedd/event" notOperational="1" />
-
-### 原创 {#hai-jiao-she-qu-yuan-chuang}
-
-<Route author="nczitzk" example="/hjedd/original" path="/hjedd/original" notOperational="1" />
-
-### 精华 {#hai-jiao-she-qu-jing-hua}
-
-<Route author="nczitzk" example="/hjedd/top" path="/hjedd/top" notOperational="1" />
-
-### 公告 {#hai-jiao-she-qu-gong-gao}
-
-<Route author="nczitzk" example="/hjedd/notice" path="/hjedd/notice" notOperational="1" />
-
-### 最新 {#hai-jiao-she-qu-zui-xin}
-
-<Route author="nczitzk" example="/hjedd/latest" path="/hjedd/latest" notOperational="1" />
-
-### 文章 {#hai-jiao-she-qu-wen-zhang}
-
-<Route author="nczitzk" example="/hjedd/1288/1" path="/hjedd/:node?/:type?" paramsDesc={['节点 id，可在对应节点页 URL 中找到，默认为 `258`，即 大事记', '类型 id，见下表，默认为 `0`，即 默认']} notOperational="1">
-  | 默认 | 最新 | 热门 | 精华 | 悬赏 | 出售 |
-  | ---- | ---- | ---- | ---- | ---- | ---- |
-  | 0    | 1    | 2    | 3    | 4    | 5    |
-</Route>
-
 ## 虎扑 {#hu-pu}
 
 ### 首页 {#hu-pu-shou-ye}
@@ -702,24 +546,6 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
   :::tip
   更多热帖版面参见 [论坛](https://bbs.hupu.com)
   :::
-</Route>
-
-## 华为心声社区 {#hua-wei-xin-sheng-she-qu}
-
-### 华为家事 {#hua-wei-xin-sheng-she-qu-hua-wei-jia-shi}
-
-<Route author="nczitzk" example="/huawei/xinsheng" path="/huawei/xinsheng/:caty?/:order?/:keyword?" paramsDesc={['分区 ID, 见下表，默认为全部帖子', '排序方式, 见下表，默认为最新回复', '关键词，默认为空']} notOperational="1">
-  分区 ID
-
-  | 全部帖子 | 公司文件 | 管理思考 | 产品改进 | 版务公告 |
-  | -------- | -------- | -------- | -------- | -------- |
-  |          | 155      | 415      | 427      | 419      |
-
-  排序方式
-
-  | 最新发帖 | 最新回复 | 最多回复   | 最多点击  |
-  | -------- | -------- | ---------- | --------- |
-  | cTime    | rTime    | replycount | viewcount |
 </Route>
 
 ## 火线 {#huo-xian}
@@ -896,30 +722,6 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 
 <Route author="nczitzk" example="/samsungmembers/latest" path="/samsungmembers/latest" />
 
-## 书友社区 {#shu-you-she-qu}
-
-### 导读 {#shu-you-she-qu-dao-du}
-
-<Route author="AngUOI" example="/andyt/newthread" path="/andyt/:view?" paramsDesc={['子版块 view, 为空默认最新发表']} notOperational="1">
-  | 最新发表  | 最新热门 | 最新精华 | 最新回复 |
-  | --------- | -------- | -------- | -------- |
-  | newthread | hot      | digest   | new      |
-</Route>
-
-## 水木社区 {#shui-mu-she-qu}
-
-### 分区文章 {#shui-mu-she-qu-fen-qu-wen-zhang}
-
-<Route author="nczitzk" example="/newsmth/section/university" path="/newsmth/section/:section" paramsDesc={['分区名，见下表']} notOperational="1">
-  | 社区管理  | 国内院校   | 休闲娱乐      | 五湖四海 | 游戏运动 | 社会信息 | 知性感性 | 文化人文 | 学术科学 | 电脑技术   |
-  | --------- | ---------- | ------------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
-  | community | university | entertainment | location | game     | society  | romance  | culture  | science  | technology |
-</Route>
-
-### 用户文章 {#shui-mu-she-qu-yong-hu-wen-zhang}
-
-<Route author="nczitzk" example="/newsmth/account/fef705ec94819a5a87941759e33c0982" path="/newsmth/account/:id" paramsDesc={['用户 id，可在用户页的 URL 中找到']} notOperational="1" />
-
 ## 司机社 {#si-ji-she}
 
 ### 排行榜 {#si-ji-she-pai-hang-bang}
@@ -933,20 +735,6 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
   `/xsijishe/forum/51` 对应于论坛 `https://xsijishe.com/forum-51-1.html`，这个论坛的 fid 为 51，也就是 `forum-{fid}-1` 中的 fid。
   :::
 </Route>
-
-## 天涯论坛 {#tian-ya-lun-tan}
-
-### 子版块 {#tian-ya-lun-tan-zi-ban-kuai}
-
-<Route author="a14907" example="/tianya/index/lookout" path="/tianya/index/:type" paramsDesc={['板块类型 type，可在 URL 找到 例如，天涯杂谈板块的地址是 http://bbs.tianya.cn/list-free-1.shtml， 这个板块的type就是free; 同理，我的大学板块地址为http://bbs.tianya.cn/list-university-1.shtml，类型是university']} notOperational="1" />
-
-### 用户帖子 {#tian-ya-lun-tan-yong-hu-tie-zi}
-
-<Route author="a14907" example="/tianya/user/11488997" path="/tianya/user/:userid" paramsDesc={['用户id userid，可在 URL 找到 例如，用户苕木匠的地址是 http://www.tianya.cn/11488997/bbs， 苕木匠的userid就是11488997']} notOperational="1" />
-
-### 用户的回帖 {#tian-ya-lun-tan-yong-hu-de-hui-tie}
-
-<Route author="a14907" example="/tianya/comments/11488997" path="/tianya/comments/:userid" paramsDesc={['用户id userid，可在 URL 找到 例如，用户苕木匠的地址是 http://www.tianya.cn/11488997/bbs， 苕木匠的userid就是11488997']} notOperational="1" />
 
 ## 通信人家园 {#tong-xin-ren-jia-yuan}
 
@@ -991,12 +779,6 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
 ### 焦点新闻 {#wen-xue-cheng-jiao-dian-xin-wen}
 
 <Route author="nczitzk" example="/wenxuecity/news" path="/wenxuecity/news" />
-
-## 小米社区 {#xiao-mi-she-qu}
-
-### 圈子 {#xiao-mi-she-qu-quan-zi}
-
-<Route author="DIYgod" example="/mi/bbs/board/18066617" path="/mi/bbs/board/:boardId" paramsDesc={['圈子 id，可在圈子 URL 找到']} radar="1" notOperational="1" />
 
 ## 小木虫论坛 {#xiao-mu-chong-lun-tan}
 
@@ -1214,12 +996,6 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
   | studyinusa | career   | lifestyle | invest   | visa     | news     |
 </Route>
 
-## 音频应用 {#yin-pin-ying-yong}
-
-### 最新主题 {#yin-pin-ying-yong-zui-xin-zhu-ti}
-
-<Route author="zxzhuty" example="/audiobar/latest" path="/audiobar/latest" notOperational="1" />
-
 ## 直播吧 {#zhi-bo-ba}
 
 ### 子论坛 {#zhi-bo-ba-zi-lun-tan}
@@ -1236,18 +1012,4 @@ If you opt to enable `fulltext` feature, consider adding `limit` parameter to yo
   | NBA | 足球  | 电竞     | 综合   |
   | --- | ----- | -------- | ------ |
   | nba | zuqiu | dianjing | zonghe |
-</Route>
-
-## 中国灵异网 {#zhong-guo-ling-yi-wang}
-
-### 分类 {#zhong-guo-ling-yi-wang-fen-lei}
-
-<Route author="sanmmm" example="/lingyi/qiwenyishi" path="/lingyi/:qiwenyishi" paramsDesc={['分类']} notOperational="1">
-  | 编辑推荐 | 奇闻异事   | 鬼话连篇       |
-  | -------- | ---------- | -------------- |
-  | tuijian  | qiwenyishi | guihualianpian |
-
-  | 灵异事件      | 灵异图片     | 民间奇谈     |
-  | ------------- | ------------ | ------------ |
-  | lingyishijain | lingyitupian | minjianqitan |
 </Route>
