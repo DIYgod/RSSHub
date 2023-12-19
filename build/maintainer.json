@@ -110,9 +110,6 @@
         "Maecenas"
     ],
     "/1x/:category?": [],
-    "/2047/:category?/:sort?": [
-        "nczitzk"
-    ],
     "/2048/:id?": [
         "nczitzk"
     ],
@@ -267,8 +264,6 @@
     "/8world/topic/:id": [
         "nczitzk"
     ],
-    "/91ddcc/stage/:stage": [],
-    "/91ddcc/user/:user": [],
     "/91porn/:lang?": [
         "TonyRL"
     ],
@@ -476,7 +471,6 @@
     "/android/platform-tools-releases": [
         "nczitzk"
     ],
-    "/andyt/:view?": [],
     "/anigamer/anime/:sn": [],
     "/anigamer/new_anime": [],
     "/anime1/anime/:time/:name": [],
@@ -611,9 +605,6 @@
         "nczitzk"
     ],
     "/atfd/:locations/:nearby?": [],
-    "/audiobar/latest": [
-        "zxzhuty"
-    ],
     "/autotrader/:query": [],
     "/av01/actor/:name/:type?": [],
     "/av01/tag/:name/:type?": [],
@@ -3264,30 +3255,6 @@
     "/hizu/:column?": [
         "nczitzk"
     ],
-    "/hjedd/:node?/:type?": [
-        "nczitzk"
-    ],
-    "/hjedd/event": [
-        "nczitzk"
-    ],
-    "/hjedd/hot": [
-        "nczitzk"
-    ],
-    "/hjedd/latest": [
-        "nczitzk"
-    ],
-    "/hjedd/news": [
-        "nczitzk"
-    ],
-    "/hjedd/notice": [
-        "nczitzk"
-    ],
-    "/hjedd/original": [
-        "nczitzk"
-    ],
-    "/hjedd/top": [
-        "nczitzk"
-    ],
     "/hk01/channel/:id": [
         "hoilc",
         "Fatpandac",
@@ -3401,7 +3368,6 @@
     "/huanqiu/news/:category?": [
         "yuxinliu-alex"
     ],
-    "/huawei/xinsheng/:caty?/:order?/:keyword?": [],
     "/hubu/news/:type": [],
     "/hudongba/:city/:id": [],
     "/huggingface/daily-papers": [
@@ -4227,7 +4193,6 @@
     "/line/today/:edition?/:tab?": [
         "nczitzk"
     ],
-    "/lingyi/:category": [],
     "/linkedin/cn/jobs/:keywords?": [
         "bigfei"
     ],
@@ -4354,7 +4319,6 @@
     "/lovelive-anime/topics/:abbr/:category?/:option?": [
         "axojhf"
     ],
-    "/lowendtalk/discussion/:id?": [],
     "/lsnu/jiaowc/tzgg/:category?": [
         "nyaShine"
     ],
@@ -4518,7 +4482,6 @@
     "/metred/fuli": [],
     "/mhw/news": [],
     "/mhw/update": [],
-    "/mi/bbs/board/:boardId": [],
     "/mi/crowdfunding": [],
     "/mi/golden": [],
     "/micmicidol": [],
@@ -4588,12 +4551,6 @@
     "/mlog-club/topics/:node": [],
     "/mmgal": [],
     "/mobdata/report": [],
-    "/mobilism/forums/:category/:type/:fulltext?": [
-        "nitezs"
-    ],
-    "/mobilism/portal/:type/:fulltext?": [
-        "nitezs"
-    ],
     "/modb/topic/:id": [
         "yueneiqi"
     ],
@@ -4809,8 +4766,6 @@
     "/newsmarket/:category?": [
         "nczitzk"
     ],
-    "/newsmth/account/:id": [],
-    "/newsmth/section/:section": [],
     "/newzmz/:category?/:downLinkType?": [
         "nczitzk"
     ],
@@ -4981,9 +4936,6 @@
     "/nku/jwc/:type?": [],
     "/nltimes/news/:category?": [
         "Hivol"
-    ],
-    "/nmbxd1/:id": [
-        "miles170"
     ],
     "/nmtv/column/:id?": [
         "nczitzk"
@@ -5867,7 +5819,6 @@
     "/scau/yzb": [
         "shengmaosu"
     ],
-    "/scboy/thread/:tid": [],
     "/science/blogs/:name?": [
         "TomHodson"
     ],
@@ -6740,9 +6691,6 @@
     "/thwiki/calendar/:before?/:after?": [
         "aether17"
     ],
-    "/tianya/comments/:userid": [],
-    "/tianya/index/:type": [],
-    "/tianya/user/:userid": [],
     "/tianyancha/hot": [],
     "/tiktok/user/:user": [
         "TonyRL"

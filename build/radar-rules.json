@@ -183,19 +183,6 @@
       }
     ]
   },
-  "2047.name": {
-    "_name": "2047",
-    ".": [
-      {
-        "title": "分类",
-        "docs": "https://docs.rsshub.app/routes/bbs#2047-fen-lei",
-        "source": [
-          "/"
-        ],
-        "target": "/2047/:category?/:sort?"
-      }
-    ]
-  },
   "hjd2048.com": {
     "_name": "2048 核基地",
     ".": [
@@ -2882,19 +2869,6 @@
           "/contests/archive",
           "/contests"
         ]
-      }
-    ]
-  },
-  "audiobar.cn": {
-    "_name": "音频应用",
-    ".": [
-      {
-        "title": "最新主题",
-        "docs": "https://docs.rsshub.app/routes/bbs#yin-pin-ying-yong",
-        "source": [
-          "/all.php"
-        ],
-        "target": "/audiobar/latest"
       }
     ]
   },
@@ -13171,76 +13145,6 @@
       }
     ]
   },
-  "hjedd.com": {
-    "_name": "海角社区",
-    ".": [
-      {
-        "title": "热门",
-        "docs": "https://docs.rsshub.app/routes/bbs#hai-jiao-she-qu-re-men",
-        "source": [
-          "/"
-        ],
-        "target": "/hjedd/hot"
-      },
-      {
-        "title": "新闻",
-        "docs": "https://docs.rsshub.app/routes/bbs#hai-jiao-she-qu-xin-wen",
-        "source": [
-          "/"
-        ],
-        "target": "/hjedd/news"
-      },
-      {
-        "title": "大事记",
-        "docs": "https://docs.rsshub.app/routes/bbs#hai-jiao-she-qu-da-shi-ji",
-        "source": [
-          "/article",
-          "/"
-        ],
-        "target": "/hjedd/event"
-      },
-      {
-        "title": "原创",
-        "docs": "https://docs.rsshub.app/routes/bbs#hai-jiao-she-qu-da-yuan-chuang",
-        "source": [
-          "/"
-        ],
-        "target": "/hjedd/original"
-      },
-      {
-        "title": "精华",
-        "docs": "https://docs.rsshub.app/routes/bbs#hai-jiao-she-qu-da-jing-hua",
-        "source": [
-          "/"
-        ],
-        "target": "/hjedd/top"
-      },
-      {
-        "title": "公告",
-        "docs": "https://docs.rsshub.app/routes/bbs#hai-jiao-she-qu-da-gong-gao",
-        "source": [
-          "/"
-        ],
-        "target": "/hjedd/notice"
-      },
-      {
-        "title": "最新",
-        "docs": "https://docs.rsshub.app/routes/bbs#hai-jiao-she-qu-da-zui-xin",
-        "source": [
-          "/"
-        ],
-        "target": "/hjedd/latest"
-      },
-      {
-        "title": "文章",
-        "docs": "https://docs.rsshub.app/routes/bbs#hai-jiao-she-qu-da-wen-zhang",
-        "source": [
-          "/article",
-          "/"
-        ]
-      }
-    ]
-  },
   "hk01.com": {
     "_name": "香港01",
     ".": [
@@ -18533,26 +18437,6 @@
       }
     ]
   },
-  "mobilism.org": {
-    "_name": "Mobilism",
-    ".": [
-      {
-        "title": "论坛",
-        "docs": "https://docs.rsshub.app/routes/bbs#mobilism",
-        "source": "/"
-      },
-      {
-        "title": "门户",
-        "docs": "https://docs.rsshub.app/routes/bbs#mobilism",
-        "source": "/portal.php"
-      },
-      {
-        "title": "电子书",
-        "docs": "https://docs.rsshub.app/routes/reading#mobilism",
-        "source": "/"
-      }
-    ]
-  },
   "modb.pro": {
     "_name": "墨天轮",
     ".": [
@@ -20453,20 +20337,6 @@
         "docs": "https://docs.rsshub.app/routes/new-media#nl-times",
         "source": "/top-stories",
         "target": "/nltimes/news/top-stories"
-      }
-    ]
-  },
-  "nmbxd1.com": {
-    "_name": "X岛匿名版",
-    "www": [
-      {
-        "title": "串",
-        "docs": "https://docs.rsshub.app/routes/bbs#x-dao-ni-ming-ban",
-        "source": [
-          "/Forum/timeline/id/:id",
-          "/f/:id"
-        ],
-        "target": "/nmbxd1/:id"
       }
     ]
   },
@@ -31518,17 +31388,6 @@
         "title": "search",
         "docs": "https://docs.rsshub.app/routes/game#steam",
         "source": "/search/"
-      }
-    ]
-  },
-  "xiaomi.cn": {
-    "_name": "小米社区",
-    "www": [
-      {
-        "title": "圈子",
-        "docs": "https://docs.rsshub.app/routes/bbs#xiao-mi-she-qu",
-        "source": "/board/:boardId",
-        "target": "/mi/bbs/board/:boardId"
       }
     ]
   },
