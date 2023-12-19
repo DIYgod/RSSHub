@@ -1431,6 +1431,21 @@
     "/cnki/journals/debut/:name": [
         "Fatpandac"
     ],
+    "/cnljxh/collect/:id?": [
+        "nczitzk"
+    ],
+    "/cnljxh/date/:id?": [
+        "nczitzk"
+    ],
+    "/cnljxh/info/:id?": [
+        "nczitzk"
+    ],
+    "/cnljxh/news/:id?": [
+        "nczitzk"
+    ],
+    "/cnljxh/price/:id?": [
+        "nczitzk"
+    ],
     "/cntv/:column": [
         "WhoIsSure",
         "Fatpandac"
