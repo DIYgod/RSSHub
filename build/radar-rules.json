@@ -2760,19 +2760,6 @@
       }
     ]
   },
-  "blog.leanstack.com": {
-    "_name": "Ash Maurya's blog",
-    ".": [
-      {
-        "title": "Ash Maurya's blog",
-        "docs": "https://docs.rsshub.app/routes/en/blog#ash-maurya",
-        "source": [
-          "/"
-        ],
-        "target": "/ash-maurya"
-      }
-    ]
-  },
   "asiantolick.com": {
     "_name": "Asian to lick",
     ".": [
@@ -10488,17 +10475,6 @@
         "source": "/share/*"
       }
     ],
-    "sites": [
-      {
-        "title": "Sites",
-        "docs": "https://docs.rsshub.app/routes/blog#google-sites",
-        "source": [
-          "/site/:id/*",
-          "/site/:id"
-        ],
-        "target": "/google/sites/:id"
-      }
-    ],
     "fonts": [
       {
         "title": "Fonts - Sort by Name",
@@ -13466,19 +13442,6 @@
       }
     ]
   },
-  "huangz.me": {
-    "_name": "黄健宏博客",
-    "blog": [
-      {
-        "title": "文章",
-        "docs": "https://docs.rsshub.app/routes/blog#huang-jian-hong-bo-ke",
-        "source": [
-          "/*.html"
-        ],
-        "target": "/huangz"
-      }
-    ]
-  },
   "huanqiu.com": {
     "_name": "环球网",
     ".": [
@@ -16005,19 +15968,6 @@
       }
     ]
   },
-  "jiaoliudao.com": {
-    "_name": "交流岛资源网",
-    ".": [
-      {
-        "title": "最新文章",
-        "docs": "https://docs.rsshub.app/routes/blog#jiao-liu-dao-zi-yuan-wang",
-        "source": [
-          "/"
-        ],
-        "target": "/jiaoliudao"
-      }
-    ]
-  },
   "jiemian.com": {
     "_name": "界面新闻",
     ".": [
@@ -18297,15 +18247,6 @@
           "/"
         ],
         "target": "/mingpao/pns/:type?"
-      }
-    ]
-  },
-  "miris.design": {
-    "_name": "Stratechery by Ben Thompson",
-    "blog": [
-      {
-        "title": "Articles",
-        "docs": "https://docs.rsshub.app/routes/en/blog#stratechery-by-ben-thompson"
       }
     ]
   },
@@ -21717,35 +21658,6 @@
           "/*topicPath"
         ],
         "target": "/pnas/:topicPath"
-      }
-    ]
-  },
-  "polkadot.network": {
-    "_name": "Polkadot",
-    ".": [
-      {
-        "title": "Blog",
-        "docs": "https://docs.rsshub.app/routes/blog#polkadot",
-        "source": [
-          "/",
-          "/blog/",
-          "/blog/*"
-        ],
-        "target": "/polkadot/blog"
-      }
-    ]
-  },
-  "polkaworld.org": {
-    "_name": "PolkaWorld",
-    "www": [
-      {
-        "title": "最新资讯",
-        "docs": "https://docs.rsshub.app/routes/blog#polkaworld",
-        "source": [
-          "/",
-          "/articles/:name"
-        ],
-        "target": "/polkaworld/newest"
       }
     ]
   },
@@ -25271,6 +25183,15 @@
       }
     ]
   },
+  "stratechery.com": {
+    "_name": "Stratechery by Ben Thompson",
+    "blog": [
+      {
+        "title": "Articles",
+        "docs": "https://docs.rsshub.app/routes/en/blog#stratechery-by-ben-thompson"
+      }
+    ]
+  },
   "studygolang.com": {
     "_name": "Go 语言中文网",
     ".": [
@@ -28662,38 +28583,6 @@
       }
     ]
   },
-  "whoscall.com": {
-    "_name": "Whoscall",
-    ".": [
-      {
-        "title": "最新文章",
-        "docs": "https://docs.rsshub.app/routes/blog#whoscall-zui-xin-wen-zhang",
-        "source": [
-          "/zh-hant/blog/articles",
-          "/"
-        ],
-        "target": "/whoscall"
-      },
-      {
-        "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/blog#whoscall-fen-lei",
-        "source": [
-          "/zh-hant/blog/categories/:category",
-          "/"
-        ],
-        "target": "/whoscall/categories/:category?"
-      },
-      {
-        "title": "標籤",
-        "docs": "https://docs.rsshub.app/routes/blog#whoscall-biao-qian",
-        "source": [
-          "/zh-hant/blog/tags/:tag",
-          "/"
-        ],
-        "target": "/whoscall/tags/:tag?"
-      }
-    ]
-  },
   "whu.edu.cn": {
     "_name": "武汉大学",
     "cs": [
@@ -31859,17 +31748,6 @@
         "title": "最热主题",
         "docs": "https://docs.rsshub.app/routes/bbs#wen-xue-cheng-zui-re-zhu-ti",
         "source": "/?cid=*"
-      }
-    ]
-  },
-  "jian-ning.com": {
-    "_name": "建宁闲谈",
-    ".": [
-      {
-        "title": "文章",
-        "docs": "https://docs.rsshub.app/routes/blog#jian-ning-xian-tan",
-        "source": "/*",
-        "target": "/blogs/jianning"
       }
     ]
   },

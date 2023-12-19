@@ -423,7 +423,6 @@
     "/alistapart/:topic": [
         "Rjnishant530"
     ],
-    "/aliyun-kernel/index": [],
     "/aliyun/database_month": [
         "junbaor"
     ],
@@ -570,9 +569,6 @@
     ],
     "/arxiv/:query": [],
     "/asahi/:genre?/:category?": [],
-    "/ash-maurya/ash-maurya": [
-        "james-tindal"
-    ],
     "/asiantolick": [
         "nczitzk"
     ],
@@ -952,11 +948,8 @@
         "jameshih"
     ],
     "/blogread/newest": [],
-    "/blogs/diygod/animal-crossing": [],
-    "/blogs/diygod/gk": [],
     "/blogs/foreverblog": [],
     "/blogs/hedwig/:type": [],
-    "/blogs/jianning": [],
     "/blogs/jingwei.link": [],
     "/blogs/wang54/:id?": [],
     "/blogs/wangyin": [],
@@ -2347,7 +2340,6 @@
     "/followin/topic/:topicId/:lang?": [
         "TonyRL"
     ],
-    "/fontstory": [],
     "/foresightnews": [
         "nczitzk"
     ],
@@ -3362,9 +3354,6 @@
     "/hrbust/jwzx/:type?/:page?": [
         "LenaNouzen"
     ],
-    "/huangz": [
-        "stormbuf"
-    ],
     "/huanqiu/news/:category?": [
         "yuxinliu-alex"
     ],
@@ -3906,9 +3895,6 @@
         "HenryQW",
         "JimenezLi"
     ],
-    "/jiaoliudao": [
-        "TonyRL"
-    ],
     "/jiemian": [
         "nczitzk"
     ],
@@ -4000,7 +3986,6 @@
     "/jump/discount/:platform/:filter?/:countries?": [
         "zytomorrow"
     ],
-    "/justrun": [],
     "/jx3/:caty?": [],
     "/kaggle/competitions/:category?": [],
     "/kaggle/discussion/:forumId/:sort?": [],
@@ -4518,9 +4503,6 @@
     "/miniapp/store/newest": [],
     "/miniflux/:feeds/:parameters?": [],
     "/miniflux/subscription/:parameters?": [],
-    "/miris/blog": [
-        "chazeon"
-    ],
     "/mirror/:id": [
         "fifteen42",
         "rde9",
@@ -5434,12 +5416,6 @@
     ],
     "/pocket/trending": [],
     "/polimi/news/:language?": [],
-    "/polkadot/blog": [
-        "iceqing"
-    ],
-    "/polkaworld/polkaworld/newest": [
-        "iceqing"
-    ],
     "/pork-price": [],
     "/porn-images-xxx/:type?/:name?": [],
     "/pornhub/:language?/category_url/:url?": [
@@ -7272,15 +7248,6 @@
         "nczitzk"
     ],
     "/who/speeches/:language?": [
-        "nczitzk"
-    ],
-    "/whoscall": [
-        "nczitzk"
-    ],
-    "/whoscall/categories/:category?": [
-        "nczitzk"
-    ],
-    "/whoscall/tags/:tag?": [
         "nczitzk"
     ],
     "/whu/cs/:type": [
