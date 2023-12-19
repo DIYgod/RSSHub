@@ -2589,116 +2589,6 @@
       }
     ]
   },
-  "appledaily.com": {
-    "_name": "苹果新闻网",
-    "tw": [
-      {
-        "title": "首頁",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#ping-guo-xin-wen-wang",
-        "source": [
-          "/:channel"
-        ]
-      },
-      {
-        "title": "焦点",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#ping-guo-xin-wen-wang",
-        "source": [
-          "/realtime/:channel"
-        ]
-      },
-      {
-        "title": "最新",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#ping-guo-xin-wen-wang",
-        "source": [
-          "/realtime/:channel"
-        ]
-      },
-      {
-        "title": "热门",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#ping-guo-xin-wen-wang",
-        "source": [
-          "/realtime/:channel"
-        ]
-      },
-      {
-        "title": "生活",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#ping-guo-xin-wen-wang",
-        "source": [
-          "/realtime/:channel"
-        ]
-      },
-      {
-        "title": "娱乐",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#ping-guo-xin-wen-wang",
-        "source": [
-          "/realtime/:channel"
-        ]
-      },
-      {
-        "title": "社会",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#ping-guo-xin-wen-wang",
-        "source": [
-          "/realtime/:channel"
-        ]
-      },
-      {
-        "title": "财经地产",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#ping-guo-xin-wen-wang",
-        "source": [
-          "/realtime/:channel"
-        ]
-      },
-      {
-        "title": "国际",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#ping-guo-xin-wen-wang",
-        "source": [
-          "/realtime/:channel"
-        ]
-      },
-      {
-        "title": "政治",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#ping-guo-xin-wen-wang",
-        "source": [
-          "/realtime/:channel"
-        ]
-      },
-      {
-        "title": "3C车城",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#ping-guo-xin-wen-wang",
-        "source": [
-          "/realtime/:channel"
-        ]
-      },
-      {
-        "title": "吃喝玩乐",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#ping-guo-xin-wen-wang",
-        "source": [
-          "/realtime/:channel"
-        ]
-      },
-      {
-        "title": "体育",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#ping-guo-xin-wen-wang",
-        "source": [
-          "/realtime/:channel"
-        ]
-      },
-      {
-        "title": "苹评理",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#ping-guo-xin-wen-wang",
-        "source": [
-          "/realtime/:channel"
-        ]
-      },
-      {
-        "title": "微视频",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#ping-guo-xin-wen-wang",
-        "source": [
-          "/realtime/:channel"
-        ]
-      }
-    ]
-  },
   "appleinsider.com": {
     "_name": "AppleInsider",
     ".": [
@@ -6789,18 +6679,6 @@
       }
     ]
   },
-  "cntheory.com": {
-    "_name": "理论网",
-    "paper": [
-      {
-        "title": "学习时报",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#li-lun-wang-xue-xi-shi-bao",
-        "source": [
-          "/"
-        ]
-      }
-    ]
-  },
   "codeforces.com": {
     "_name": "Codeforces",
     ".": [
@@ -8736,12 +8614,6 @@
     ],
     "www": [
       {
-        "title": "热点搜索",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#dong-fang-wang-re-dian-sou-suo",
-        "source": "/",
-        "target": "/eastday/find"
-      },
-      {
         "title": "原创",
         "docs": "https://docs.rsshub.app/routes/traditional-media#dong-fang-wang-yuan-chuang",
         "source": "/",
@@ -8836,17 +8708,6 @@
           "/espresso"
         ],
         "target": "/economist/espresso"
-      }
-    ],
-    "gre": [
-      {
-        "title": "GRE Vocabulary",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#the-economist",
-        "source": [
-          "/",
-          "/gre-advice/gre-vocabulary/which-words-study/most-common-gre-vocabulary-list-organized-difficulty"
-        ],
-        "target": "/economist/gre-vocabulary"
       }
     ]
   },
@@ -9946,19 +9807,6 @@
       {
         "title": "FT 中文网",
         "docs": "https://docs.rsshub.app/routes/traditional-media#financial-times"
-      },
-      {
-        "title": "myFT 个人 RSS",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#financial-times"
-      }
-    ]
-  },
-  "ft.com": {
-    "_name": "Financial Times",
-    ".": [
-      {
-        "title": "myFT personal RSS",
-        "docs": "https://docs.rsshub.app/routes/en/traditional-media#financial-times"
       }
     ]
   },
@@ -12877,18 +12725,6 @@
       }
     ]
   },
-  "gz-cmc.com": {
-    "_name": "广州市融媒体中心",
-    ".": [
-      {
-        "title": "频道",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#guang-zhou-shi-rong-mei-ti-zhong-xin",
-        "source": [
-          "/"
-        ]
-      }
-    ]
-  },
   "gzdaily.cn": {
     "_name": "广州日报",
     ".": [
@@ -13498,59 +13334,6 @@
       }
     ]
   },
-  "hket.com": {
-    "_name": "香港经济日报",
-    "china": [
-      {
-        "title": "新闻",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#xiang-gang-jing-ji-ri-bao",
-        "source": [
-          "/:category/*"
-        ],
-        "target": "/hket/:category"
-      }
-    ],
-    "inews": [
-      {
-        "title": "新闻",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#xiang-gang-jing-ji-ri-bao",
-        "source": [
-          "/:category/*"
-        ],
-        "target": "/hket/:category"
-      }
-    ],
-    "topick": [
-      {
-        "title": "新闻",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#xiang-gang-jing-ji-ri-bao",
-        "source": [
-          "/:category/*"
-        ],
-        "target": "/hket/:category"
-      }
-    ],
-    "wealth": [
-      {
-        "title": "新闻",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#xiang-gang-jing-ji-ri-bao",
-        "source": [
-          "/:category/*"
-        ],
-        "target": "/hket/:category"
-      }
-    ],
-    "www": [
-      {
-        "title": "新闻",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#xiang-gang-jing-ji-ri-bao",
-        "source": [
-          "/"
-        ],
-        "target": "/hket"
-      }
-    ]
-  },
   "hkjunkcall.com": {
     "_name": "HKJunkCall資訊中心",
     ".": [
@@ -14028,58 +13811,6 @@
         "docs": "https://docs.rsshub.app/routes/new-media#hu-xiu-jian-bao",
         "source": [
           "/briefColumn/:id",
-          "/"
-        ]
-      }
-    ]
-  },
-  "hyqss.cn": {
-    "_name": "衡阳全搜索",
-    ".": [
-      {
-        "title": "衡阳日报",
-        "docs": "https://docs.rsshub.app/routes/journal#heng-yang-quan-sou-suo-heng-yang-ri-bao",
-        "source": [
-          "/"
-        ],
-        "target": "/hnrb/hyrb/:id?"
-      },
-      {
-        "title": "衡阳晚报",
-        "docs": "https://docs.rsshub.app/routes/journal#heng-yang-quan-sou-suo-heng-yang-wan-bao",
-        "source": [
-          "/"
-        ],
-        "target": "/hnrb/hywb/:id?"
-      }
-    ],
-    "epaper": [
-      {
-        "title": "衡阳日报",
-        "docs": "https://docs.rsshub.app/routes/journal#heng-yang-quan-sou-suo-heng-yang-ri-bao",
-        "source": [
-          "/"
-        ],
-        "target": "/hnrb/hyrb/:id?"
-      },
-      {
-        "title": "衡阳晚报",
-        "docs": "https://docs.rsshub.app/routes/journal#heng-yang-quan-sou-suo-heng-yang-wan-bao",
-        "source": [
-          "/"
-        ],
-        "target": "/hnrb/hywb/:id?"
-      }
-    ]
-  },
-  "i-cable.com": {
-    "_name": "有線寬頻 i-CABLE",
-    ".": [
-      {
-        "title": "有線新聞 | Cable News",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#you-xian-kuan-pin-i-cable",
-        "source": [
-          "/category/*path",
           "/"
         ]
       }
@@ -21138,12 +20869,6 @@
         "target": "/nytimes/book/:category"
       },
       {
-        "title": "作者新闻",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#niu-yue-shi-bao",
-        "source": "/by/:byline",
-        "target": "/nytimes/author/:byline"
-      },
-      {
         "title": "新闻",
         "docs": "https://docs.rsshub.app/routes/traditional-media#niu-yue-shi-bao",
         "source": "/",
@@ -22857,20 +22582,6 @@
           "/"
         ],
         "target": "/radio-canada/latest/:language?"
-      }
-    ]
-  },
-  "radiofrance.fr": {
-    "_name": "Radio France",
-    "www": [
-      {
-        "title": "Géopolitique",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#fa-guo-guang-bo-dian-tai",
-        "source": [
-          "/franceinter/podcasts/geopolitique",
-          "/"
-        ],
-        "target": "/radiofrance/geopolitique"
       }
     ]
   },
@@ -26152,17 +25863,6 @@
       {
         "title": "Viz of the day",
         "docs": "https://docs.rsshub.app/routes/study#tableau"
-      }
-    ]
-  },
-  "taiwannews.com.tw": {
-    "_name": "台灣英文新聞",
-    ".": [
-      {
-        "title": "最新熱門消息",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#tai-wan-ying-wen-xin-wen",
-        "source": "/:lang/index",
-        "target": "/taiwannews/hot/:lang"
       }
     ]
   },
@@ -30255,18 +29955,6 @@
       }
     ]
   },
-  "xwlb.com.cn": {
-    "_name": "羊城晚报金羊网",
-    ".": [
-      {
-        "title": "新闻",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#yang-cheng-wan-bao-jin-yang-wang",
-        "source": [
-          "/"
-        ]
-      }
-    ]
-  },
   "xys.org": {
     "_name": "新语丝",
     ".": [
@@ -30376,6 +30064,18 @@
         "docs": "https://docs.rsshub.app/routes/universities#chang-jiang-da-xue-dong-wu-ke-xue-xue-yuan",
         "source": [
           "/:category",
+          "/"
+        ]
+      }
+    ]
+  },
+  "xwlb.com.cn": {
+    "_name": "羊城晚报金羊网",
+    ".": [
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/traditional-media#yang-cheng-wan-bao-jin-yang-wang",
+        "source": [
           "/"
         ]
       }
@@ -31493,19 +31193,6 @@
       }
     ]
   },
-  "zuzhirenshi.com": {
-    "_name": "组织人事报",
-    ".": [
-      {
-        "title": "日报",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#zu-zhi-ren-shi-bao",
-        "source": [
-          "/dianzibao/*"
-        ],
-        "target": "/zuzhirenshi"
-      }
-    ]
-  },
   "zyshow.net": {
     "_name": "综艺秀",
     ".": [
@@ -31809,16 +31496,6 @@
       {
         "title": "招聘信息",
         "docs": "https://docs.rsshub.app/routes/other#yuan-cheng-work",
-        "source": "/:caty"
-      }
-    ]
-  },
-  "chinatimes.com": {
-    "_name": "中時電子報",
-    "www": [
-      {
-        "title": "新聞",
-        "docs": "https://docs.rsshub.app/routes/traditional-media#zhong-shi-dian-zi-bao",
         "source": "/:caty"
       }
     ]

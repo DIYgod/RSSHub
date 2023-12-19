@@ -519,9 +519,6 @@
         "HenryQW",
         "kt286"
     ],
-    "/appledaily/:channel?": [
-        "Fatpandac"
-    ],
     "/appleinsider/:category?": [
         "nczitzk"
     ],
@@ -579,7 +576,6 @@
     ],
     "/arxiv/:query": [],
     "/asahi/:genre?/:category?": [],
-    "/asahi/area/:id": [],
     "/ash-maurya/ash-maurya": [
         "james-tindal"
     ],
@@ -938,7 +934,6 @@
         "markmingjie"
     ],
     "/bjnews/:cat": [],
-    "/bjnews/epaper/:cat": [],
     "/bjp/apod": [
         "HenryQW"
     ],
@@ -1024,7 +1019,6 @@
     "/bossdesign/:category?": [
         "TonyRL"
     ],
-    "/boston/:tag?": [],
     "/brave/latest": [
         "nczitzk"
     ],
@@ -1210,9 +1204,6 @@
     "/cctv/photo/jx": [
         "nczitzk"
     ],
-    "/cctv/special/:id?": [
-        "nczitzk"
-    ],
     "/cctv/xwlb": [
         "zengxs"
     ],
@@ -1305,8 +1296,6 @@
     "/chinadegrees/:province?": [
         "TonyRL"
     ],
-    "/chinadialogue/:column": [],
-    "/chinadialogue/topics/:topic": [],
     "/chinafactcheck": [
         "kdanfly"
     ],
@@ -1320,7 +1309,6 @@
     "/chinathinktanks/:id": [
         "Aeliu"
     ],
-    "/chinatimes/:caty": [],
     "/chinaventure/news/:id?": [
         "yuxinliu-alex"
     ],
@@ -1458,9 +1446,6 @@
     ],
     "/cnki/journals/debut/:name": [
         "Fatpandac"
-    ],
-    "/cntheory/paper/:id?": [
-        "nczitzk"
     ],
     "/cntv/:column": [
         "WhoIsSure",
@@ -2128,9 +2113,6 @@
     "/eastday/24/:category?": [
         "nczitzk"
     ],
-    "/eastday/find": [
-        "nczitzk"
-    ],
     "/eastday/portrait": [
         "nczitzk"
     ],
@@ -2156,17 +2138,11 @@
     "/economist/:endpoint": [
         "ImSingee"
     ],
-    "/economist/download": [
-        "nczitzk"
-    ],
     "/economist/espresso": [
         "TonyRL"
     ],
     "/economist/global-business-review/:language?": [
         "prnake"
-    ],
-    "/economist/gre-vocabulary": [
-        "xyqfer"
     ],
     "/ecust/jwc/:category?": [
         "lxl66566"
@@ -2355,8 +2331,6 @@
     "/fjksbm/:category?": [
         "nczitzk"
     ],
-    "/fjnews/:city/:limit": [],
-    "/fjnews/jjnews": [],
     "/flyert/creditcard/:bank": [
         "nicolaszf"
     ],
@@ -2424,9 +2398,6 @@
     "/ft/:language/:channel?": [
         "HenryQW",
         "xyqfer"
-    ],
-    "/ft/myft/:key": [
-        "HenryQW"
     ],
     "/fudan/cce": [],
     "/fuliba/latest": [
@@ -3153,9 +3124,6 @@
     "/gxmzu/yjszsgg": [
         "real-jiakai"
     ],
-    "/gz-cmc/:site/:channel?": [
-        "TimWu007"
-    ],
     "/gzdaily/app/:column?": [
         "TimWu007"
     ],
@@ -3348,14 +3316,10 @@
         "Fatpandac",
         "nczitzk"
     ],
-    "/hkcd/pdf": [],
     "/hkej/:category?": [
         "TonyRL"
     ],
     "/hkepc/:category?": [
-        "TonyRL"
-    ],
-    "/hket/:category?": [
         "TonyRL"
     ],
     "/hkjunkcall": [
@@ -3531,15 +3495,6 @@
         "nczitzk"
     ],
     "/huya/live/:id": [],
-    "/hyqss/hyrb/:id?": [
-        "nczitzk"
-    ],
-    "/hyqss/hywb/:id?": [
-        "nczitzk"
-    ],
-    "/i-cable/:category?": [
-        "tpnonthealps"
-    ],
     "/ianspriggs/:category?": [
         "nczitzk"
     ],
@@ -5673,8 +5628,6 @@
     "/qlu/notice": [
         "SunBK201"
     ],
-    "/qlwb/city/:city": [],
-    "/qlwb/news": [],
     "/qm120/news/:category?": [
         "nczitzk"
     ],
@@ -5781,9 +5734,6 @@
     ],
     "/radio/zhibo/:id": [
         "nczitzk"
-    ],
-    "/radiofrance/geopolitique": [
-        "xdu"
     ],
     "/rarehistoricalphotos": [
         "TonyRL"
@@ -5910,7 +5860,6 @@
         "yanbot-team"
     ],
     "/sayhuahuo": [],
-    "/sbs/chinese/:category?/:id?/:dialect?/:language?": [],
     "/scala/blog/:part?": [],
     "/scau/yjsy": [
         "Chunssu"
@@ -6556,9 +6505,6 @@
         "KaiyoungYu"
     ],
     "/tahui/rptlist": [],
-    "/taiwannews/hot/:lang?": [
-        "TonyRL"
-    ],
     "/tanchinese/:category?": [],
     "/tangshufang/:category?": [
         "nczitzk"
@@ -7412,7 +7358,6 @@
     "/winstall/:appId": [
         "TonyRL"
     ],
-    "/wired/tag/:tag": [],
     "/wise/pair/:source/:target": [
         "HenryQW"
     ],
@@ -7637,12 +7582,6 @@
     "/xuetangx/course/list/:mode/:credential/:status/:type?": [],
     "/xunhupay/blog": [
         "Joey"
-    ],
-    "/xwlb": [
-        "xfangbao"
-    ],
-    "/xwlb/index": [
-        "xfangbao"
     ],
     "/xynu/zkb/:category": [],
     "/xyplorer/whatsnew": [],
@@ -8038,9 +7977,6 @@
     ],
     "/zuvio/student5/boards": [
         "TonyRL"
-    ],
-    "/zuzhirenshi/:id?": [
-        "5upernova-heng"
     ],
     "/zyshow/:region?/:id": [
         "nczitzk"
