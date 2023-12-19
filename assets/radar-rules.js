@@ -344,7 +344,6 @@
             },
         ],
     },
-    'jian-ning.com': { _name: '建宁闲谈', '.': [{ title: '文章', docs: 'https://docs.rsshub.app/routes/blog#jian-ning-xian-tan', source: '/*', target: '/blogs/jianning' }] },
     'eventernote.com': { _name: 'Eventernote', www: [{ title: '声优活动及演唱会', docs: 'https://docs.rsshub.app/routes/anime#eventernote', source: '/actors/:name/:id/events', target: '/eventernote/actors/:name/:id' }] },
     'huya.com': { _name: '虎牙直播', '.': [{ title: '直播间开播', docs: 'https://docs.rsshub.app/routes/live#hu-ya-zhi-bo-zhi-bo-jian-kai-bo', source: '/:id', target: '/huya/live/:id' }] },
     'craigslist.org': { _name: 'Craigslist', '.': [{ title: '商品搜索列表', docs: 'https://docs.rsshub.app/routes/shopping#craigslist' }] },
