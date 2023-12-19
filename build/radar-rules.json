@@ -2299,20 +2299,6 @@
       }
     ]
   },
-  "aliyundrive.com": {
-    "_name": "阿里云盘",
-    "www": [
-      {
-        "title": "文件列表",
-        "docs": "https://docs.rsshub.app/routes/programming#a-li-yun-pan",
-        "source": [
-          "/s/:share_id",
-          "/s/:share_id/folder/:parent_file_id"
-        ],
-        "target": "/aliyundrive/files/:share_id/:parent_file_id?"
-      }
-    ]
-  },
   "aljazeera.com": {
     "_name": "Aljazeera 半岛电视台",
     ".": [
@@ -10292,18 +10278,6 @@
       }
     ]
   },
-  "gaze.run": {
-    "_name": "注视影视",
-    ".": [
-      {
-        "title": "更新通知",
-        "docs": "https://docs.rsshub.app/routes//multimedia#gaze-run",
-        "source": [
-          "/play/:mid"
-        ]
-      }
-    ]
-  },
   "gcores.com": {
     "_name": "机核网",
     ".": [
@@ -13925,29 +13899,6 @@
         "source": [
           "/:category"
         ]
-      }
-    ]
-  },
-  "ibc.co.jp": {
-    "_name": "IBC 岩手放送",
-    ".": [
-      {
-        "title": "イヤーマイッタマイッタ",
-        "docs": "https://docs.rsshub.app/routes/multimedia#ibc-yan-shou-fang-song",
-        "source": [
-          "/radio/maitta/audio",
-          "/"
-        ],
-        "target": "/ibc/maitta"
-      },
-      {
-        "title": "ラジオ",
-        "docs": "https://docs.rsshub.app/routes/multimedia#ibc-yan-shou-fang-song",
-        "source": [
-          "/radio/:id/audio",
-          "/"
-        ],
-        "target": "/ibc/radio/:id?"
       }
     ]
   },
@@ -18662,17 +18613,6 @@
       }
     ]
   },
-  "mtime.com": {
-    "_name": "时光网",
-    "news": [
-      {
-        "title": "时光新闻",
-        "docs": "https://docs.rsshub.app/routes/multimedia#shi-guang-wang",
-        "source": "/",
-        "target": "/mtime/news"
-      }
-    ]
-  },
   "mwm.net.cn": {
     "_name": "管理世界",
     ".": [
@@ -21896,18 +21836,6 @@
       }
     ]
   },
-  "prestige-av.com": {
-    "_name": "Prestige 蚊香社",
-    ".": [
-      {
-        "title": "系列作品",
-        "docs": "https://docs.rsshub.app/routes/multimedia#prestige-wen-xiang-she",
-        "source": [
-          "/goods/goods_list.php"
-        ]
-      }
-    ]
-  },
   "producthunt.com": {
     "_name": "Product Hunt",
     "www": [
@@ -22377,19 +22305,6 @@
           "/"
         ],
         "target": "/tencent/pvp/newsindex/all"
-      }
-    ],
-    "v": [
-      {
-        "title": "视频 - 播放列表",
-        "docs": "https://docs.rsshub.app/routes/multimedia#teng-xun-shi-pin",
-        "source": "/x/cover/:id"
-      },
-      {
-        "title": "视频 - 播放列表",
-        "docs": "https://docs.rsshub.app/routes/multimedia#teng-xun-shi-pin",
-        "source": "/x/cover/:id/:detail",
-        "target": "/tencentvideo/playlist/:id"
       }
     ],
     "wiki.connect": [
@@ -31388,35 +31303,6 @@
       }
     ]
   },
-  "mqube.net": {
-    "_name": "MQube",
-    "www": [
-      {
-        "title": "全站最近更新",
-        "docs": "https://docs.rsshub.app/routes/multimedia#mqube",
-        "source": "/",
-        "target": "/mqube/latest"
-      },
-      {
-        "title": "全站每日排行",
-        "docs": "https://docs.rsshub.app/routes/multimedia#mqube",
-        "source": "/",
-        "target": "/mqube/top"
-      },
-      {
-        "title": "个人最近更新",
-        "docs": "https://docs.rsshub.app/routes/multimedia#mqube",
-        "source": "/user/:user",
-        "target": "/mqube/user/:user"
-      },
-      {
-        "title": "标签最近更新",
-        "docs": "https://docs.rsshub.app/routes/multimedia#mqube",
-        "source": "/search/tag/:tag",
-        "target": "/mqube/tag/:tag"
-      }
-    ]
-  },
   "last.fm": {
     "_name": "Last.fm",
     "www": [
@@ -31443,40 +31329,6 @@
         "docs": "https://docs.rsshub.app/routes/multimedia#last-fm",
         "source": "/charts",
         "target": "/lastfm/top"
-      }
-    ]
-  },
-  "ddrk.me": {
-    "_name": "低端影视",
-    "www": [
-      {
-        "title": "首页",
-        "docs": "https://docs.rsshub.app/routes/multimedia#di-duan-ying-shi",
-        "source": "/",
-        "target": "/ddrk/index"
-      },
-      {
-        "title": "标签",
-        "docs": "https://docs.rsshub.app/routes/multimedia#di-duan-ying-shi",
-        "source": "/tag/:tag",
-        "target": "/ddrk/tag/:tag"
-      },
-      {
-        "title": "分类",
-        "docs": "https://docs.rsshub.app/routes/multimedia#di-duan-ying-shi",
-        "source": [
-          "/category/:category",
-          "/category/:uplevel/:category"
-        ],
-        "target": "/ddrk/category/:category"
-      },
-      {
-        "title": "影视剧集更新",
-        "docs": "https://docs.rsshub.app/routes/multimedia#di-duan-ying-shi",
-        "source": [
-          "/:name",
-          "/:name/:season"
-        ]
       }
     ]
   },

@@ -432,9 +432,6 @@
     "/aliyun/notice/:type?": [
         "muzea"
     ],
-    "/aliyundrive/files/:share_id/:parent_file_id?": [
-        "DIYgod"
-    ],
     "/aljazeera/:language?/:category?": [
         "nczitzk"
     ],
@@ -1237,8 +1234,6 @@
         "xizeyoupan",
         "kt286"
     ],
-    "/changku": [],
-    "/changku/cate/:postid": [],
     "/chaoli/:channel?": [],
     "/chaoxing/qk/:id/:needContent?": [
         "nczitzk"
@@ -2078,8 +2073,6 @@
         "TonyRL"
     ],
     "/dykszx/news/:type?": [],
-    "/dysfz": [],
-    "/dysfz/index": [],
     "/dytt": [],
     "/dytt/index": [],
     "/e-hentai/category/:category?/:needTorrents?/:needImages?": [
@@ -2474,10 +2467,6 @@
         "TonyRL"
     ],
     "/gaoqing/latest": [],
-    "/gaoqingla/:tag?": [],
-    "/gaze/update/:mid": [
-        "zytomorrow"
-    ],
     "/gbcc/trust": [],
     "/gcores/category/:category": [
         "MoguCloud",
@@ -3454,12 +3443,6 @@
     ],
     "/huya/live/:id": [],
     "/ianspriggs/:category?": [
-        "nczitzk"
-    ],
-    "/ibc/maitta": [
-        "fengkx"
-    ],
-    "/ibc/radio/:id?": [
         "nczitzk"
     ],
     "/icac/news/:lang?": [
@@ -4536,7 +4519,6 @@
     ],
     "/moxingfans": [],
     "/moxingnet": [],
-    "/mp4ba/:param": [],
     "/mpaypass/main/:type?": [
         "zhuan-zhu"
     ],
@@ -4544,15 +4526,8 @@
         "LogicJake",
         "genghis-yang"
     ],
-    "/mqube/latest": [],
-    "/mqube/tag/:tag": [],
-    "/mqube/top": [],
-    "/mqube/user/:user": [],
     "/mrdx/today": [
         "Dustin-Jiang"
-    ],
-    "/mtime/news": [
-        "TsSmartTT"
     ],
     "/mubu/explore/:category?/:title?": [],
     "/muchong/:id/:type?/:sort?": [],
@@ -4733,7 +4708,6 @@
     "/nextapple/realtime/:category?": [
         "miles170"
     ],
-    "/nfmovies/:id?": [],
     "/nga/forum/:fid/:recommend?": [
         "xyqfer"
     ],
@@ -4783,7 +4757,6 @@
     "/nikkei/index": [
         "zjysdhr"
     ],
-    "/ningmeng/song": [],
     "/nintendo/direct": [
         "HFO4"
     ],
@@ -5257,7 +5230,6 @@
     "/pianyuan/indexers/pianyuan/results/search/api": [
         "jerry1119"
     ],
-    "/piaohua/hot": [],
     "/piapro/public/:type/:tag?/:category?": [],
     "/piapro/user/:pid": [],
     "/picnob/user/:id": [
@@ -5420,9 +5392,6 @@
         "nczitzk"
     ],
     "/potplayer/update/:language?": [],
-    "/prestige-av/series/:mid/:sort?": [
-        "minimalistrojan"
-    ],
     "/processon/popular/:cate?/:sort?": [],
     "/producthunt/today": [
         "miaoyafeng",
@@ -5692,7 +5661,6 @@
     "/routledge/:bookName/book-series/:bookId": [
         "TonyRL"
     ],
-    "/rs05/rs05": [],
     "/rsc/journal/:id/:category?": [
         "nczitzk"
     ],
@@ -5735,7 +5703,6 @@
     "/rustcc/jobs": [
         "CcccFz"
     ],
-    "/s-hentai/:id?": [],
     "/sagawa/:id": [],
     "/sakurazaka46/blog/:id?/:page?": [
         "victor21813",
@@ -5749,7 +5716,6 @@
         "nczitzk"
     ],
     "/samsungmembers/latest": [],
-    "/sankakucomplex/post": [],
     "/sans/summit_archive": [],
     "/saraba1st/digest/:tid": [
         "shinemoon"
@@ -5970,10 +5936,6 @@
         "gumibea",
         "TeamSUEP"
     ],
-    "/shinybbs": [],
-    "/shinybbs/latest": [],
-    "/shinybbs/p/:id": [],
-    "/shinybbs/page/:id?": [],
     "/shmeea": [
         "jialinghui"
     ],
@@ -6490,7 +6452,6 @@
     "/tencent/qq/sdk/changelog/:platform": [
         "nuomi1"
     ],
-    "/tencentvideo/playlist/:id": [],
     "/tesla/cx/:category?/:city?": [
         "simonsmh",
         "nczitzk"
@@ -7062,8 +7023,6 @@
     "/wanqu/news": [
         "Fatpandac"
     ],
-    "/wanwansub/:id?": [],
-    "/wanwansub/info/:id": [],
     "/warthunder/news": [
         "axojhf"
     ],
@@ -7466,7 +7425,6 @@
         "nczitzk"
     ],
     "/yahoo-author/:author": [],
-    "/yahoo-jp-tv/:query": [],
     "/yahoo/news/:region/:category?": [
         "KeiLongW"
     ],
@@ -7777,8 +7735,6 @@
     "/zimuxia/portfolio/:id": [
         "nczitzk"
     ],
-    "/zimuzu/resource/:id?": [],
-    "/zimuzu/top/:range/:type": [],
     "/ziroom/room/:city/:iswhole/:room/:keyword": [],
     "/zjgsu/gsgg": [],
     "/zjgsu/tzgg": [],
