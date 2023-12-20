@@ -3293,9 +3293,25 @@
     "/houxu/memory": [
         "nczitzk"
     ],
-    "/hpoi/:category/:words": [],
-    "/hpoi/info/:type?": [],
-    "/hpoi/user/:user_id/:caty": [],
+    "/hpoi/bannerItem": [
+        "DIYgod"
+    ],
+    "/hpoi/info/:type?": [
+        "sanmmm DIYgod"
+    ],
+    "/hpoi/items/all/:order?": [
+        "DIYgod"
+    ],
+    "/hpoi/items/character/:id/:order?": [
+        "DIYgod"
+    ],
+    "/hpoi/items/work/:id/:order?": [
+        "DIYgod"
+    ],
+    "/hpoi/user/:user_id/:caty": [
+        "DIYgod",
+        "luyuhuang"
+    ],
     "/hrbeu/gx/:type/:colume/:id?": [
         "Derekmini"
     ],
