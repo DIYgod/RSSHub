@@ -117,24 +117,6 @@
     "/2cycd/:fid/:sort?": [
         "shelken"
     ],
-    "/35photo/actual": [
-        "nczitzk"
-    ],
-    "/35photo/author/:id": [
-        "nczitzk"
-    ],
-    "/35photo/genre/:id": [
-        "nczitzk"
-    ],
-    "/35photo/interesting": [
-        "nczitzk"
-    ],
-    "/35photo/map": [
-        "nczitzk"
-    ],
-    "/35photo/new": [
-        "nczitzk"
-    ],
     "/36kr/hot-list/:category?": [
         "nczitzk"
     ],
@@ -615,15 +597,12 @@
     "/baai/hub/events": [
         "TonyRL"
     ],
-    "/babehub/:category?": [],
-    "/babehub/search/:keyword?": [],
     "/babykingdom/:id/:order?": [],
     "/bad/:path+": [
         "nczitzk"
     ],
     "/bahamut/creation/:author/:category?": [],
     "/bahamut/creation_index/:category?/:subcategory?/:type?": [],
-    "/baidu/doodles": [],
     "/baidu/gushitong/index": [
         "CaoMeiYouRen"
     ],
@@ -1677,9 +1656,6 @@
     "/dblp/:field": [
         "ytno1"
     ],
-    "/dbmv/:category?": [
-        "kba977"
-    ],
     "/dcard/:section/:type?": [
         "HenryQW"
     ],
@@ -1786,7 +1762,6 @@
     "/digitaling/articles/:category/:subcate?": [],
     "/digitaling/index": [],
     "/digitaling/projects/:category": [],
-    "/dilbert/strip": [],
     "/dilidili/fanju/:id": [],
     "/discord/channel/:channelId": [
         "TonyRL"
@@ -2168,9 +2143,6 @@
     ],
     "/eleme/open/announce": [],
     "/elife/:tid": [],
-    "/elitebabes/:category?": [],
-    "/elitebabes/search/:keyword?": [],
-    "/elitebabes/videos/:sort?": [],
     "/elsevier/:journal": [
         "Derekmini",
         "sunwolf-swb"
@@ -2528,7 +2500,6 @@
     "/gihyo/list/group/:id": [
         "masakichi"
     ],
-    "/girlimg/album/:tag?/:mode?": [],
     "/gitee/commits/:owner/:repo": [
         "TonyRL"
     ],
@@ -3002,7 +2973,6 @@
         "SettingDust",
         "nczitzk"
     ],
-    "/gracg/:user/:love?": [],
     "/gradcafe/result": [],
     "/gradcafe/result/:type": [],
     "/grandchallenge/challenges": [],
@@ -3204,7 +3174,6 @@
         "nczitzk",
         "CaoMeiYouRen"
     ],
-    "/hentai-cosplays/:type?/:name?": [],
     "/hentaimama/videos": [],
     "/henu/:type?": [],
     "/hex-rays/news": [
@@ -3865,7 +3834,6 @@
     "/jd/price/:id": [
         "nczitzk"
     ],
-    "/jdlingyu/:type": [],
     "/jewishmuseum/exhibitions": [
         "chazeon"
     ],
@@ -4264,7 +4232,6 @@
     "/loltw/news/:category?": [
         "hoilc"
     ],
-    "/loveheaven/update/:slug": [],
     "/lovelive-anime/news/:option?": [
         "axojhf"
     ],
@@ -4407,9 +4374,6 @@
     "/meihua/shots/:caty": [],
     "/meipai/user/:uid": [],
     "/meituan/open/announce": [],
-    "/meituclub/latest": [
-        "ocleo1"
-    ],
     "/melon/chart/:category?": [],
     "/mercari/:type/:id": [],
     "/metacritic/game/:sort?/:filter?": [
@@ -4572,11 +4536,6 @@
     "/mysql/release/:version?": [
         "nczitzk"
     ],
-    "/mzitu/category/:category": [],
-    "/mzitu/home/:type?": [],
-    "/mzitu/post/:id": [],
-    "/mzitu/tag/:tag": [],
-    "/mzitu/tags": [],
     "/nace/blog/:sort?": [],
     "/namoc/announcement": [],
     "/namoc/exhibition": [],
@@ -7732,7 +7691,6 @@
         "nczitzk"
     ],
     "/zhuixinfan/list": [],
-    "/zhutix/latest": [],
     "/zimuku/:type?": [],
     "/zimuxia/:category?": [
         "nczitzk"
