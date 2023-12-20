@@ -2857,7 +2857,12 @@
     "/gov/mot/:category?": [
         "nczitzk"
     ],
-    "/gov/ndrc/xwdt/:caty?": [],
+    "/gov/ndrc/fggz/:category?": [
+        "nczitzk"
+    ],
+    "/gov/ndrc/xwdt/:category?": [
+        "nczitzk"
+    ],
     "/gov/nea/sjzz/ghs": [
         "nczitzk"
     ],
