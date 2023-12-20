@@ -279,21 +279,41 @@
   | all  | hobby | model |
 </Route>
 
-### 浏览周边 {#hpoi-shou-ban-wei-ji-liu-lan-zhou-bian}
+### 所有周边 {#hpoi-shou-ban-wei-ji-suo-you-zhou-bian}
 
-<Route author="howel52 DIYgod" path="/hpoi/:category/:words" example="/hpoi/charactar/1246512" paramsDesc={['分类, 见下表', '角色/作品 ID']} notOperational="1">
-  | 角色手办  | 作品手办 |
-  | --------- | -------- |
-  | charactar | works    |
+<Route author="DIYgod" path="/hpoi/items/all/:order?" example="/hpoi/items/all" paramsDesc={['排序, 见下表，默认为 add']}>
+  | 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |
+  | ------- | ---- | ------ | -------- | -------- | ------ |
+  | release | add  | hits   | hits7Day | hitsDay  | rating |
+</Route>
+
+### 角色周边 {#hpoi-shou-ban-wei-ji-jue-se-zhou-bian}
+
+<Route author="DIYgod" path="/hpoi/items/character/:id/:order?" example="/hpoi/items/character/1035374" paramsDesc={['角色 ID', '排序, 见下表，默认为 add']}>
+  | 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |
+  | ------- | ---- | ------ | -------- | -------- | ------ |
+  | release | add  | hits   | hits7Day | hitsDay  | rating |
+</Route>
+
+### 作品周边 {#hpoi-shou-ban-wei-ji-zuo-pin-zhou-bian}
+
+<Route author="DIYgod" path="/hpoi/items/work/:id/:order?" example="/hpoi/items/work/4117491" paramsDesc={['作品 ID', '排序, 见下表，默认为 add']}>
+  | 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |
+  | ------- | ---- | ------ | -------- | -------- | ------ |
+  | release | add  | hits   | hits7Day | hitsDay  | rating |
 </Route>
 
 ### 用户动态 {#hpoi-shou-ban-wei-ji-yong-hu-dong-tai}
 
-<Route author="luyuhuang DIYgod" path="/hpoi/user/:user_id/:caty" example="/hpoi/user/116297/buy" paramsDesc={['用户ID', '类别, 见下表']}>
+<Route author="DIYgod luyuhuang" path="/hpoi/user/:user_id/:caty" example="/hpoi/user/116297/buy" paramsDesc={['用户ID', '类别, 见下表']}>
   | 想买 | 预定     | 已入 | 关注 | 有过   |
   | ---- | -------- | ---- | ---- | ------ |
   | want | preorder | buy  | care | resell |
 </Route>
+
+### 热门推荐 {#hpoi-shou-ban-wei-ji-re-men-tui-jian}
+
+<Route author="DIYgod" path="/hpoi/bannerItem" example="/hpoi/bannerItem" />
 
 ## IDOLY PRIDE 偶像荣耀 {#idoly-pride-ou-xiang-rong-yao}
 
