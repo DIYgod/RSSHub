@@ -266,7 +266,6 @@
             { title: '首页 / 自考快递', docs: 'https://docs.rsshub.app/routes/government#bei-jing-jiao-yu-kao-shi-yuan', source: ['/zkkd'], target: '/gov/beijing/bjeea/zkkd' },
         ],
     },
-    'ems.com.cn': { _name: '中国邮政速递物流', www: [{ title: '新闻', docs: 'https://docs.rsshub.app/routes/other#zhong-guo-you-zheng-su-di-wu-liu', source: '/aboutus/xin_wen_yu_shi_jian', target: '/ems/news' }] },
     'nppa.gov.cn': {
         _name: '国家新闻出版署',
         www: [
