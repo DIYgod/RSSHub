@@ -169,7 +169,6 @@
     "/50forum": [
         "sddiky"
     ],
-    "/51voa/:channel": [],
     "/52hrtt/:area?/:type?": [
         "nczitzk"
     ],
@@ -456,7 +455,6 @@
         "qwertyuiop6"
     ],
     "/anytxt/release-notes": [],
-    "/aom/journal/:id": [],
     "/aozora/newbook/:count?": [],
     "/apache/apisix/blog": [
         "aneasystone"
@@ -1466,7 +1464,6 @@
         "Fatpandac"
     ],
     "/cppcc/:slug?": [],
-    "/cpta/notice": [],
     "/cpu/home": [],
     "/cpu/jwc": [],
     "/cpu/yjsy": [],
@@ -1512,9 +1509,6 @@
     "/cs/news/:caty": [],
     "/csc/notice/:type?": [
         "Derekmini"
-    ],
-    "/cscse/tzgg": [
-        "nczitzk"
     ],
     "/csdn/blog": [
         "Jkker"
@@ -2108,7 +2102,6 @@
         "running-grass"
     ],
     "/eleme/open/announce": [],
-    "/elife/:tid": [],
     "/elsevier/:journal": [
         "Derekmini",
         "sunwolf-swb"
@@ -2403,7 +2396,6 @@
         "TonyRL"
     ],
     "/gaoqing/latest": [],
-    "/gbcc/trust": [],
     "/gcores/category/:category": [
         "MoguCloud",
         "StevenRCE0"
@@ -2940,8 +2932,6 @@
         "SettingDust",
         "nczitzk"
     ],
-    "/gradcafe/result": [],
-    "/gradcafe/result/:type": [],
     "/grandchallenge/challenges": [],
     "/grandchallenge/user/:id": [],
     "/greasyfork/:language/:domain?": [
@@ -3831,8 +3821,6 @@
         "WenhuWee",
         "nczitzk"
     ],
-    "/jijitang/article/:id": [],
-    "/jijitang/publication": [],
     "/jike/topic/:id/:showUid?": [
         "DIYgod",
         "prnake"
@@ -4370,9 +4358,6 @@
     "/mihoyo/ys/:location?/:category?": [
         "nczitzk"
     ],
-    "/mind42/:caty?": [],
-    "/mind42/search/:keyword": [],
-    "/mind42/tag/:id": [],
     "/mindmeister/:category?/:language?": [
         "TonyRL"
     ],
@@ -5293,7 +5278,6 @@
         "nczitzk"
     ],
     "/potplayer/update/:language?": [],
-    "/processon/popular/:cate?/:sort?": [],
     "/producthunt/today": [
         "miaoyafeng",
         "Fatpandac"
@@ -5341,7 +5325,6 @@
     "/pumc/mdadmission": [
         "nczitzk"
     ],
-    "/putonghua": [],
     "/putty/changes": [
         "nczitzk"
     ],
@@ -6127,7 +6110,6 @@
     "/stockedge/daily-updates/news": [
         "Rjnishant530"
     ],
-    "/stork/keyword/:trackID/:displayKey": [],
     "/storm/:category?/:id?": [
         "nczitzk"
     ],
