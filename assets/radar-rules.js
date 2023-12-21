@@ -52,7 +52,6 @@
         ],
     },
     'www.chicagotribune.com': { _name: 'Chicago Tribune', www: [{ title: 'Chicago Tribune', docs: 'https://docs.rsshub.app/routes/traditional_media#chicago-tribune', source: '/' }] },
-    'wineyun.com': { _name: '酒云网', www: [{ title: '最新商品', docs: 'https://docs.rsshub.app/routes/other#jiu-yun-wang', source: ['/:category'], target: '/wineyun/:category' }] },
     'playstation.com': {
         _name: 'PlayStation',
         store: [
@@ -86,8 +85,6 @@
             { title: '新闻', docs: 'https://docs.rsshub.app/routes/other#xin-tian-hui-hai-guan-fang-wang-zhan', source: '/contents/news', target: '/emi-nitta/news' },
         ],
     },
-    'alter-shanghai.cn': { _name: 'Alter', '.': [{ title: '新闻', docs: 'https://docs.rsshub.app/routes/shopping#alter-zhong-guo', source: '/cn/news', target: '/alter-cn/news' }] },
-    'leboncoin.fr': { _name: 'leboncoin', www: [{ title: 'ads', docs: 'https://docs.rsshub.app/routes/shopping#leboncoin', source: '/recherche', target: (params, url) => '/leboncoin/ad/' + url.split('?')[1] }] },
     'yuancheng.work': {
         _name: '远程.work',
         '.': [
@@ -306,7 +303,6 @@
     },
     'eventernote.com': { _name: 'Eventernote', www: [{ title: '声优活动及演唱会', docs: 'https://docs.rsshub.app/routes/anime#eventernote', source: '/actors/:name/:id/events', target: '/eventernote/actors/:name/:id' }] },
     'huya.com': { _name: '虎牙直播', '.': [{ title: '直播间开播', docs: 'https://docs.rsshub.app/routes/live#hu-ya-zhi-bo-zhi-bo-jian-kai-bo', source: '/:id', target: '/huya/live/:id' }] },
-    'craigslist.org': { _name: 'Craigslist', '.': [{ title: '商品搜索列表', docs: 'https://docs.rsshub.app/routes/shopping#craigslist' }] },
     'scboy.com': {
         _name: 'scboy 论坛',
         www: [
