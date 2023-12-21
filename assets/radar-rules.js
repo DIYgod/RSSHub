@@ -52,7 +52,6 @@
         ],
     },
     'www.chicagotribune.com': { _name: 'Chicago Tribune', www: [{ title: 'Chicago Tribune', docs: 'https://docs.rsshub.app/routes/traditional_media#chicago-tribune', source: '/' }] },
-    'pgyer.com': { _name: '蒲公英应用分发', www: [{ title: 'app更新', docs: 'https://docs.rsshub.app/routes/program-update#pu-gong-ying-ying-yong-fen-fa', source: '/:app', target: '/pgyer/:app' }] },
     'wineyun.com': { _name: '酒云网', www: [{ title: '最新商品', docs: 'https://docs.rsshub.app/routes/other#jiu-yun-wang', source: ['/:category'], target: '/wineyun/:category' }] },
     'playstation.com': {
         _name: 'PlayStation',
@@ -393,7 +392,6 @@
             { title: '日记评论区', docs: 'https://docs.rsshub.app/routes/social-media#fur-affinity', source: '/journal/:id/', target: '/furaffinity/journal_comments/:id' },
         ],
     },
-    'macwk.com': { _name: 'MacWk', '.': [{ title: '应用更新', docs: 'https://docs.rsshub.app/routes/program-update#macwk', source: '/soft/:name', target: '/macwk/soft/:name' }] },
     'foreverblog.cn': {
         _name: 'foreverblog',
         www: [

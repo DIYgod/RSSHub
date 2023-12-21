@@ -20,12 +20,6 @@
 
 <Route author="nczitzk" example="/android/platform-tools-releases" path="/android/platform-tools-releases" />
 
-## Anki {#anki}
-
-### Changes {#anki-changes}
-
-<Route author="nczitzk" example="/anki/changes" path="/anki/changes" notOperational="1" />
-
 ## AnyTXT {#anytxt}
 
 ### Release Notes {#anytxt-release-notes}
@@ -73,16 +67,6 @@
 ### 每日精品限免 / 促销应用（鲜面连线 by AppSo） {#app-store-mac-app-store-mei-ri-jing-pin-xian-mian-cu-xiao-ying-yong-xian-mian-lian-xian-by-appso}
 
 <Route author="Andiedie" example="/appstore/xianmian" path="/appstore/xianmian" />
-
-### 最新限免（GoFans） {#app-store-mac-app-store-zui-xin-xian-mian-gofans}
-
-<Route author="HenryQW" example="/appstore/gofans" path="/appstore/gofans" notOperational="1" />
-
-## aptonic {#aptonic}
-
-### New Dropzone Actions {#aptonic-new-dropzone-actions}
-
-<Route author="HenryQW" example="/aptonic/action" path="/aptonic/action/:untested?" paramsDesc={['Set any value to include untested actions.']} notOperational="1" />
 
 ## ASUS {#asus}
 
@@ -154,12 +138,6 @@
 
 <Route author="nczitzk" example="/brave/latest" path="/brave/latest" />
 
-## Bugly SDK {#bugly-sdk}
-
-### 更新日志 {#bugly-sdk-geng-xin-ri-zhi}
-
-<Route author="EkkoG" example="/bugly/changelog/1" path="/bugly/changelog/:platform" paramsDesc={['平台类型, 必选, 1 为 Android, 2 为 iOS']} notOperational="1" />
-
 ## Cent Browser {#cent-browser}
 
 ### 更新日志 {#cent-browser-geng-xin-ri-zhi}
@@ -196,13 +174,7 @@
 Need to configure `CIVITAI_COOKIE` to obtain image information of NSFW models.
 :::
 
-<Route author="DIYgod" example="/civitai/discussions/4384" path="/civitai/discussions/:modelId" notOperational="1" />
-
-## Clash {#clash}
-
-### Premium Releases {#clash-premium-releases}
-
-<Route author="ttttmr" example="/clash/premium" path="/clash/premium" radar="1" notOperational="1" />
+<Route author="DIYgod" example="/civitai/discussions/4384" path="/civitai/discussions/:modelId" configRequired="1" />
 
 ## CPUID {#cpuid}
 
@@ -219,14 +191,6 @@ Need to configure `CIVITAI_COOKIE` to obtain image information of NSFW models.
 ### 所有版本发布 {#cpython-suo-you-ban-ben-fa-bu}
 
 <Route author="trim21" example="/cpython/pre" path="/cpython/pre" />
-
-## CurseForge {#curseforge}
-
-### File Update {#curseforge-file-update}
-
-<Route author="junfengP" example="/curseforge/sc2/assets/taylor-mouses-stuff/files" path="/curseforge/:gameid/:catalogid/:projectid/files" paramsDesc={['Game name', 'Catalog name', 'Progect name']} notOperational="1">
-  For example: `https://www.curseforge.com/sc2/assets/taylor-mouses-stuff/files` to `/curseforge/sc2/assets/taylor-mouses-stuff/files`
-</Route>
 
 ## Ditto clipboard manager {#ditto-clipboard-manager}
 
@@ -275,12 +239,6 @@ Need to configure `CIVITAI_COOKIE` to obtain image information of NSFW models.
 ### App Update {#f-droid-app-update}
 
 <Route author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" paramsDesc={['App\'s package name']} />
-
-## fir.im 应用 {#fir-im-ying-yong}
-
-### 更新 {#fir-im-ying-yong-geng-xin}
-
-<Route author="EkkoG" example="/fir/update/xcz" path="/fir/update/:id" paramsDesc={['fir app id, 必选, 如 fir 生成的链接地址为 https://fir.im/xcz, 则 id 为 `xcz`']} notOperational="1" />
 
 ## Firefox {#firefox}
 
@@ -335,12 +293,6 @@ Need to configure `CIVITAI_COOKIE` to obtain image information of NSFW models.
 | updated         | Updated date   |
 | name            | Name           |
 
-## Hugo {#hugo}
-
-### Release News {#hugo-release-news}
-
-<Route author="maokwen" example="/hugo/releases" path="/hugo/releases" notOperational="1" />
-
 ## iFi audio {#ifi-audio}
 
 ### Download Hub {#ifi-audio-download-hub}
@@ -378,23 +330,11 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 请使用 `https://github.com/logseq/logseq/releases.atom` 代替。
 :::
 
-## MacKed {#macked}
-
-### APP Update {#macked-app-update}
-
-<Route author="HXHL" example="/macked/app/cleanmymac-x" path="/macked/app/:name" paramsDesc={['app name, can be found in URL']} notOperational="1" />
-
 ## MacUpdate {#macupdate}
 
 ### Update {#macupdate-update}
 
 <Route author="TonyRL" example="/macupdate/app/11942" path="/macupdate/app/:appId/:appSlug?" paramsDesc={['Application unique ID, can be found in URL', 'Application slug, can be found in URL']} radar="1" />
-
-## MacWk {#macwk}
-
-### 应用更新 {#macwk-ying-yong-geng-xin}
-
-<Route author="f48vj" example="/macwk/soft/sublime-text" path="/macwk/soft/:name" paramsDesc={['应用名，可在应用页 URL 中找到']} radar="1" notOperational="1" />
 
 ## ManicTime {#manictime}
 
@@ -471,12 +411,6 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
   | O\&O Lanytix    | oolanytix   |
   | O\&O DeskInfo   | oodeskinfo  |
 </Route>
-
-## Obsidian {#obsidian}
-
-### Announcements {#obsidian-announcements}
-
-<Route author="nczitzk" example="/obsidian/announcements" path="/obsidian/announcements" notOperational="1" />
 
 ## OneNote Gem Add-Ins {#onenote-gem-add-ins}
 
@@ -568,25 +502,11 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 <Route author="DIYgod" path="/rsshub/routes/:lang?" example="/rsshub/routes/en" paramsDesc={['Language, `zh` means Chinese docs, other values or null means English docs, `en` by default']} />
 
-### New sponsors {#rsshub-new-sponsors}
-
-<Route author="DIYgod" example="/rsshub/sponsors" path="/rsshub/sponsors" radar="1" notOperational="1" />
-
 ## Sesame {#sesame}
 
 ### Release Notes {#sesame-release-notes}
 
 <Route author="nczitzk" example="/sesame/release_notes" path="/sesame/release_notes" />
-
-## Shuax {#shuax}
-
-### Project {#shuax-project}
-
-<Route author="nczitzk" example="/shuax/project/chrome" path="/shuax/project" paramsDesc={['项目名，见下表，默认为 MouseInc']} notOperational="1">
-  | MouseInc | Chrome | Edge |
-  | -------- | ------ | ---- |
-  | mouseinc | chrome | edge |
-</Route>
 
 ## simpread {#simpread}
 
@@ -681,12 +601,6 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 <Route author="nczitzk" example="/typora/changelog/dev" path="/typora/changelog/dev" radar="1" />
 
-## VMware {#vmware}
-
-### Flings {#vmware-flings}
-
-<Route author="nczitzk" example="/vmware/flings" path="/vmware/flings" notOperational="1" />
-
 ## Western Digital {#western-digital}
 
 ### Download {#western-digital-download}
@@ -729,12 +643,6 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 <Route author="maple3142" example="/xiaomieu/releases" path="/xiaomieu/releases" />
 
-## Xposed Module Repository {#xposed-module-repository}
-
-### Module Update {#xposed-module-repository-module-update}
-
-<Route author="nczitzk" example="/xposed/module/com.ext.star.wars" path="/xposed/module/:mod" paramsDesc={['module package name']} notOperational="1" />
-
 ## XYplorer {#xyplorer}
 
 ### What's New {#xyplorer-what-s-new}
@@ -746,12 +654,6 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 ### Version History {#zotero-version-history}
 
 <Route author="jasongzy" example="/zotero/versions" path="/zotero/versions" />
-
-## 蒲公英应用分发 {#pu-gong-ying-ying-yong-fen-fa}
-
-### app 更新 {#pu-gong-ying-ying-yong-fen-fa-app-geng-xin}
-
-<Route author="zytomorrow" example="/pgyer/:app" path="/pgyer/kz-test" paramsDesc={['app为下载页最后的路径']} radar="1" notOperational="1" />
 
 ## 腾讯云移动直播 SDK {#teng-xun-yun-yi-dong-zhi-bo-sdk}
 
