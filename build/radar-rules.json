@@ -6869,35 +6869,6 @@
       }
     ]
   },
-  "csc.edu.cn": {
-    "_name": "国家留学网",
-    "www": [
-      {
-        "title": "遴选通知",
-        "docs": "https://docs.rsshub.app/routes/other#guo-jia-liu-xue-wang",
-        "source": "/*",
-        "target": "/csc/notice/lxtz"
-      },
-      {
-        "title": "综合项目专栏",
-        "docs": "https://docs.rsshub.app/routes/other#guo-jia-liu-xue-wang",
-        "source": "/*",
-        "target": "/csc/notice/xmzl"
-      },
-      {
-        "title": "常见问题解答",
-        "docs": "https://docs.rsshub.app/routes/other#guo-jia-liu-xue-wang",
-        "source": "/*",
-        "target": "/csc/notice/wtjd"
-      },
-      {
-        "title": "录取公告",
-        "docs": "https://docs.rsshub.app/routes/other#guo-jia-liu-xue-wang",
-        "source": "/*",
-        "target": "/csc/notice/lqgg"
-      }
-    ]
-  },
   "csdn.net": {
     "_name": "CSDN",
     "blog": [
@@ -9038,25 +9009,6 @@
           "/"
         ],
         "target": "/embassy/uk/manchester"
-      }
-    ]
-  },
-  "ems.com.cn": {
-    "_name": "中国邮政速递物流",
-    "www": [
-      {
-        "title": "新闻",
-        "docs": "https://docs.rsshub.app/routes/other#zhong-guo-you-zheng-su-di-wu-liu",
-        "source": "/aboutus/xin_wen_yu_shi_jian.html",
-        "target": "/ems/news"
-      },
-      {
-        "title": "苹果邮件",
-        "docs": "https://docs.rsshub.app/routes/other#zhong-guo-you-zheng-su-di-wu-liu",
-        "source": [
-          "/apple/query/:id"
-        ],
-        "target": "/apple/ems/:id"
       }
     ]
   },
@@ -17694,19 +17646,6 @@
           "/"
         ],
         "target": "/leiphone/newsflash"
-      }
-    ]
-  },
-  "lever.co": {
-    "_name": "Lever",
-    ".": [
-      {
-        "title": "Lever HRIS Job Boards Feed",
-        "docs": "https://docs.rsshub.app/routes/other#lever",
-        "source": [
-          "/:domain"
-        ],
-        "target": "/lever/:domain"
       }
     ]
   },
