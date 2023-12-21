@@ -2532,19 +2532,6 @@
       }
     ]
   },
-  "gofans.cn": {
-    "_name": "GoFans",
-    ".": [
-      {
-        "title": "最新限免",
-        "docs": "https://docs.rsshub.app/routes/program-update#app-store-mac-app-store",
-        "source": [
-          "/"
-        ],
-        "target": "/appstore/gofans"
-      }
-    ]
-  },
   "aqara.com": {
     "_name": "Aqara",
     ".": [
@@ -6035,151 +6022,6 @@
         "docs": "https://docs.rsshub.app/routes/program-update#civitai",
         "source": "/models/:modelId",
         "target": "/civitai/discussions/:modelId"
-      }
-    ]
-  },
-  "github.com": {
-    "_name": "GitHub",
-    ".": [
-      {
-        "title": "Repo branches",
-        "docs": "https://docs.rsshub.app/routes/programming#github",
-        "source": [
-          "/:user/:repo/branches",
-          "/:user/:repo"
-        ],
-        "target": "/github/branches/:user/:repo"
-      },
-      {
-        "title": "Issues / Pull Requests comments",
-        "docs": "https://docs.rsshub.app/routes/programming#github",
-        "source": [
-          "/:user/:repo/:type/:number"
-        ],
-        "target": "/github/comments/:user/:repo/:number"
-      },
-      {
-        "title": "Issue & Pull Request comments",
-        "docs": "https://docs.rsshub.app/routes/programming#github",
-        "source": [
-          "/:user/:repo/:type"
-        ],
-        "target": "/github/comments/:user/:repo"
-      },
-      {
-        "title": "Repo contributors",
-        "docs": "https://docs.rsshub.app/routes/programming#github",
-        "source": [
-          "/:user/:repo/graphs/contributors",
-          "/:user/:repo"
-        ],
-        "target": "/github/contributors/:user/:repo"
-      },
-      {
-        "title": "File commits",
-        "docs": "https://docs.rsshub.app/routes/programming#github",
-        "source": "/:user/:repo/blob/:branch/*filepath",
-        "target": "/github/file/:user/:repo/:branch/:filepath"
-      },
-      {
-        "title": "Repo issues",
-        "docs": "https://docs.rsshub.app/routes/programming#github",
-        "source": [
-          "/:user/:repo/issues",
-          "/:user/:repo/issues/:id",
-          "/:user/:repo"
-        ],
-        "target": "/github/issue/:user/:repo"
-      },
-      {
-        "title": "Repo Pull Requests",
-        "docs": "https://docs.rsshub.app/routes/programming#github",
-        "source": [
-          "/:user/:repo/pulls",
-          "/:user/:repo/pulls/:id",
-          "/:user/:repo"
-        ],
-        "target": "/github/pull/:user/:repo"
-      },
-      {
-        "title": "Pulse",
-        "docs": "https://docs.rsshub.app/routes/programming#github",
-        "source": [
-          "/:user/:repo/pulse",
-          "/:user/:repo/pulse/:period"
-        ],
-        "target": "/github/pulse/:user/:repo/:period?"
-      },
-      {
-        "title": "User repos",
-        "docs": "https://docs.rsshub.app/routes/programming#github",
-        "source": "/:user",
-        "target": "/github/repos/:user"
-      },
-      {
-        "title": "Repo stars",
-        "docs": "https://docs.rsshub.app/routes/programming#github",
-        "source": [
-          "/:user/:repo/stargazers",
-          "/:user/:repo"
-        ],
-        "target": "/github/stars/:user/:repo"
-      },
-      {
-        "title": "User starred repositories",
-        "docs": "https://docs.rsshub.app/routes/programming#github",
-        "source": "/:user",
-        "target": "/github/starred_repos/:user"
-      },
-      {
-        "title": "Topics",
-        "docs": "https://docs.rsshub.app/routes/programming#github",
-        "source": "/topics",
-        "target": "/github/topics/:name/:qs?"
-      },
-      {
-        "title": "Trending",
-        "docs": "https://docs.rsshub.app/routes/programming#github",
-        "source": "/trending",
-        "target": "/github/trending/:since"
-      },
-      {
-        "title": "User followers",
-        "docs": "https://docs.rsshub.app/routes/programming#github",
-        "source": "/:user",
-        "target": "/github/user/followers/:user"
-      },
-      {
-        "title": "Wiki history",
-        "docs": "https://docs.rsshub.app/routes/programming#github",
-        "source": [
-          "/:user/:repo/wiki/:page/_history",
-          "/:user/:repo/wiki/:page",
-          "/:user/:repo/wiki/_history",
-          "/:user/:repo/wiki"
-        ],
-        "target": "/github/wiki/:user/:repo/:page"
-      },
-      {
-        "title": "Notifications",
-        "docs": "https://docs.rsshub.app/routes/programming#github",
-        "source": [
-          "/notifications"
-        ],
-        "target": "/github/notifications"
-      }
-    ],
-    "gist": [
-      {
-        "title": "Gist Commits",
-        "docs": "https://docs.rsshub.app/routes/programming#github",
-        "source": [
-          "/:owner/:gistId/revisions",
-          "/:owner/:gistId/stargazers",
-          "/:owner/:gistId/forks",
-          "/:owner/:gistId"
-        ],
-        "target": "/github/gist/:gistId"
       }
     ]
   },
@@ -10498,6 +10340,151 @@
       }
     ]
   },
+  "github.com": {
+    "_name": "GitHub",
+    ".": [
+      {
+        "title": "Repo branches",
+        "docs": "https://docs.rsshub.app/routes/programming#github",
+        "source": [
+          "/:user/:repo/branches",
+          "/:user/:repo"
+        ],
+        "target": "/github/branches/:user/:repo"
+      },
+      {
+        "title": "Issues / Pull Requests comments",
+        "docs": "https://docs.rsshub.app/routes/programming#github",
+        "source": [
+          "/:user/:repo/:type/:number"
+        ],
+        "target": "/github/comments/:user/:repo/:number"
+      },
+      {
+        "title": "Issue & Pull Request comments",
+        "docs": "https://docs.rsshub.app/routes/programming#github",
+        "source": [
+          "/:user/:repo/:type"
+        ],
+        "target": "/github/comments/:user/:repo"
+      },
+      {
+        "title": "Repo contributors",
+        "docs": "https://docs.rsshub.app/routes/programming#github",
+        "source": [
+          "/:user/:repo/graphs/contributors",
+          "/:user/:repo"
+        ],
+        "target": "/github/contributors/:user/:repo"
+      },
+      {
+        "title": "File commits",
+        "docs": "https://docs.rsshub.app/routes/programming#github",
+        "source": "/:user/:repo/blob/:branch/*filepath",
+        "target": "/github/file/:user/:repo/:branch/:filepath"
+      },
+      {
+        "title": "Repo issues",
+        "docs": "https://docs.rsshub.app/routes/programming#github",
+        "source": [
+          "/:user/:repo/issues",
+          "/:user/:repo/issues/:id",
+          "/:user/:repo"
+        ],
+        "target": "/github/issue/:user/:repo"
+      },
+      {
+        "title": "Repo Pull Requests",
+        "docs": "https://docs.rsshub.app/routes/programming#github",
+        "source": [
+          "/:user/:repo/pulls",
+          "/:user/:repo/pulls/:id",
+          "/:user/:repo"
+        ],
+        "target": "/github/pull/:user/:repo"
+      },
+      {
+        "title": "Pulse",
+        "docs": "https://docs.rsshub.app/routes/programming#github",
+        "source": [
+          "/:user/:repo/pulse",
+          "/:user/:repo/pulse/:period"
+        ],
+        "target": "/github/pulse/:user/:repo/:period?"
+      },
+      {
+        "title": "User repos",
+        "docs": "https://docs.rsshub.app/routes/programming#github",
+        "source": "/:user",
+        "target": "/github/repos/:user"
+      },
+      {
+        "title": "Repo stars",
+        "docs": "https://docs.rsshub.app/routes/programming#github",
+        "source": [
+          "/:user/:repo/stargazers",
+          "/:user/:repo"
+        ],
+        "target": "/github/stars/:user/:repo"
+      },
+      {
+        "title": "User starred repositories",
+        "docs": "https://docs.rsshub.app/routes/programming#github",
+        "source": "/:user",
+        "target": "/github/starred_repos/:user"
+      },
+      {
+        "title": "Topics",
+        "docs": "https://docs.rsshub.app/routes/programming#github",
+        "source": "/topics",
+        "target": "/github/topics/:name/:qs?"
+      },
+      {
+        "title": "Trending",
+        "docs": "https://docs.rsshub.app/routes/programming#github",
+        "source": "/trending",
+        "target": "/github/trending/:since"
+      },
+      {
+        "title": "User followers",
+        "docs": "https://docs.rsshub.app/routes/programming#github",
+        "source": "/:user",
+        "target": "/github/user/followers/:user"
+      },
+      {
+        "title": "Wiki history",
+        "docs": "https://docs.rsshub.app/routes/programming#github",
+        "source": [
+          "/:user/:repo/wiki/:page/_history",
+          "/:user/:repo/wiki/:page",
+          "/:user/:repo/wiki/_history",
+          "/:user/:repo/wiki"
+        ],
+        "target": "/github/wiki/:user/:repo/:page"
+      },
+      {
+        "title": "Notifications",
+        "docs": "https://docs.rsshub.app/routes/programming#github",
+        "source": [
+          "/notifications"
+        ],
+        "target": "/github/notifications"
+      }
+    ],
+    "gist": [
+      {
+        "title": "Gist Commits",
+        "docs": "https://docs.rsshub.app/routes/programming#github",
+        "source": [
+          "/:owner/:gistId/revisions",
+          "/:owner/:gistId/stargazers",
+          "/:owner/:gistId/forks",
+          "/:owner/:gistId"
+        ],
+        "target": "/github/gist/:gistId"
+      }
+    ]
+  },
   "gitpod.io": {
     "_name": "Gitpod",
     ".": [
@@ -13468,15 +13455,6 @@
       }
     ]
   },
-  "guggenheim.org": {
-    "_name": "Solomon R. Guggenheim Museum",
-    "www": [
-      {
-        "title": "Exhibitions",
-        "docs": "https://docs.rsshub.app/routes/en/travel#solomon-r-guggenheim-museum"
-      }
-    ]
-  },
   "gumroad.com": {
     "_name": "Gumroad",
     ".": [
@@ -14830,19 +14808,6 @@
           "/explore/find"
         ],
         "target": "/imiker/ask/jinghua"
-      }
-    ]
-  },
-  "independent.co.uk": {
-    "_name": "PS5 stock UK - The Independent",
-    "www": [
-      {
-        "title": "News",
-        "docs": "https://docs.rsshub.app/routes/shopping#the-independent",
-        "source": [
-          "/extras/indybest/gadgets-tech/video-games-consoles/ps5-stock-uk-restock-live-today-b1938965.html"
-        ],
-        "target": "/ps5-stock-uk"
       }
     ]
   },
@@ -17670,17 +17635,6 @@
       }
     ]
   },
-  "lativ.com.tw": {
-    "_name": "lativ",
-    "www": [
-      {
-        "title": "订阅商品价格",
-        "docs": "https://docs.rsshub.app/routes/shopping#lativ",
-        "source": "/Detail/:id",
-        "target": "/lativ/:id"
-      }
-    ]
-  },
   "layoffs.fyi": {
     "_name": "Layoffs",
     ".": [
@@ -18659,15 +18613,6 @@
         "source": [
           "/:acct"
         ]
-      }
-    ]
-  },
-  "mcachicago.org": {
-    "_name": "MCA Chicago",
-    ".": [
-      {
-        "title": "Exhibitions",
-        "docs": "https://docs.rsshub.app/routes/en/travel#museum-of-contemporary-art-chicago"
       }
     ]
   },
@@ -23343,14 +23288,6 @@
           "/*"
         ],
         "target": "/rsshub/routes"
-      },
-      {
-        "title": "有新赞助商啦",
-        "docs": "https://docs.rsshub.app/routes/program-update#rsshub",
-        "source": [
-          "/*"
-        ],
-        "target": "/rsshub/sponsors"
       }
     ]
   },
@@ -28851,20 +28788,6 @@
       }
     ]
   },
-  "vmware.com": {
-    "_name": "VMware",
-    "flings": [
-      {
-        "title": "Flings",
-        "docs": "https://docs.rsshub.app/routes/program-update#vmware-flings",
-        "source": [
-          "/flings",
-          "/"
-        ],
-        "target": "/vmware/flings"
-      }
-    ]
-  },
   "vocus.cc": {
     "_name": "方格子",
     ".": [
@@ -31757,30 +31680,6 @@
       }
     ]
   },
-  "pgyer.com": {
-    "_name": "蒲公英应用分发",
-    "www": [
-      {
-        "title": "app更新",
-        "docs": "https://docs.rsshub.app/routes/program-update#pu-gong-ying-ying-yong-fen-fa",
-        "source": "/:app",
-        "target": "/pgyer/:app"
-      }
-    ]
-  },
-  "wineyun.com": {
-    "_name": "酒云网",
-    "www": [
-      {
-        "title": "最新商品",
-        "docs": "https://docs.rsshub.app/routes/other#jiu-yun-wang",
-        "source": [
-          "/:category"
-        ],
-        "target": "/wineyun/:category"
-      }
-    ]
-  },
   "playstation.com": {
     "_name": "PlayStation",
     "store": [
@@ -31875,27 +31774,6 @@
         "docs": "https://docs.rsshub.app/routes/other#xin-tian-hui-hai-guan-fang-wang-zhan",
         "source": "/contents/news",
         "target": "/emi-nitta/news"
-      }
-    ]
-  },
-  "alter-shanghai.cn": {
-    "_name": "Alter",
-    ".": [
-      {
-        "title": "新闻",
-        "docs": "https://docs.rsshub.app/routes/shopping#alter-zhong-guo",
-        "source": "/cn/news.html",
-        "target": "/alter-cn/news"
-      }
-    ]
-  },
-  "leboncoin.fr": {
-    "_name": "leboncoin",
-    "www": [
-      {
-        "title": "ads",
-        "docs": "https://docs.rsshub.app/routes/shopping#leboncoin",
-        "source": "/recherche"
       }
     ]
   },
@@ -32349,15 +32227,6 @@
       }
     ]
   },
-  "craigslist.org": {
-    "_name": "Craigslist",
-    ".": [
-      {
-        "title": "商品搜索列表",
-        "docs": "https://docs.rsshub.app/routes/shopping#craigslist"
-      }
-    ]
-  },
   "scboy.com": {
     "_name": "scboy 论坛",
     "www": [
@@ -32489,17 +32358,6 @@
         "docs": "https://docs.rsshub.app/routes/social-media#fur-affinity",
         "source": "/journal/:id/",
         "target": "/furaffinity/journal_comments/:id"
-      }
-    ]
-  },
-  "macwk.com": {
-    "_name": "MacWk",
-    ".": [
-      {
-        "title": "应用更新",
-        "docs": "https://docs.rsshub.app/routes/program-update#macwk",
-        "source": "/soft/:name",
-        "target": "/macwk/soft/:name"
       }
     ]
   }
