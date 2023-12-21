@@ -6251,6 +6251,16 @@
         source:[ "/s78/:column/tongzhi",
           "/s78/:column" ],
         target:"/gov/moe/s78/:column" } ] },
+  "mof.gov.cn":{ _name:"中华人民共和国财政部",
+    gks:[ { title:"专题: 政府债券管理",
+        docs:"https://docs.rsshub.app/routes/government#zhong-hua-ren-min-gong-he-guo-cai-zheng-bu",
+        source:[ "/ztztz/guozaiguanli/:category",
+          "/ztztz/guozaiguanli/:category/*",
+          "/ztztz/guozaiguanli/" ],
+        target:(params) => {
+                    const category = params.category;
+                    return `/gov/mof/bond/${category ? category : ''}`;
+                } } ] },
   "mofcom.gov.cn":{ _name:"中华人民共和国商务部",
     ".":[ { title:"新闻发布",
         docs:"https://docs.rsshub.app/routes/government#zhong-hua-ren-min-gong-he-guo-shang-wu-bu",

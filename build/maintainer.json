@@ -2807,6 +2807,9 @@
     "/gov/moe/s78/:column": [
         "TonyRL"
     ],
+    "/gov/mof/bond/:category?": [
+        "la3rence"
+    ],
     "/gov/mofcom/article/:suffix+": [
         "LogicJake"
     ],
