@@ -1173,7 +1173,6 @@
         "TonyRL"
     ],
     "/cfan/news": [],
-    "/cfd/gbp_div": [],
     "/cgtn/most/:type?/:time?": [],
     "/cgtn/opinions": [],
     "/cgtn/podcast/:category/:id": [
@@ -1216,15 +1215,6 @@
     ],
     "/china/news/military": [
         "jiaaoMario"
-    ],
-    "/chinacef": [
-        "FledgeXu"
-    ],
-    "/chinacef/:experts_id": [
-        "kdanfly"
-    ],
-    "/chinacef/portal/hot": [
-        "kdanfly"
     ],
     "/chinadaily/english/:category": [],
     "/chinadegrees/:province?": [
@@ -6946,7 +6936,6 @@
         "TonyRL"
     ],
     "/weexcn/news/:typeid": [],
-    "/weforum/report/:lang?/:year?/:platform?": [],
     "/wegene/column/:type/:category": [],
     "/wegene/newest": [],
     "/weibo/group/:gid/:gname?/:routeParams?": [
