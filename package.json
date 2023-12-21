@@ -185,7 +185,7 @@
     "cross-env": "7.0.3",
     "eslint": "8.56.0",
     "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-n": "16.4.0",
+    "eslint-plugin-n": "16.5.0",
     "eslint-plugin-prettier": "5.1.0",
     "eslint-plugin-yml": "1.11.0",
     "fs-extra": "11.2.0",
