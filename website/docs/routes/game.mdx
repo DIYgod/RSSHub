@@ -290,12 +290,6 @@
   | na   | eu           | fr   | de   | jp   |
 </Route>
 
-## Konami {#konami}
-
-### PES Mobile Announcement {#konami-pes-mobile-announcement}
-
-<Route author="HenryQW" example="/konami/pesmobile/en/ios" path="/konami/pesmobile/:lang?/:os?" paramsDesc={['language, obtained from the URL, eg. zh-cn, zh-tw, en', 'operating system, iOS or Android']} notOperational="1" />
-
 ## Liquipedia {#liquipedia}
 
 ### Dota2 战队最近比赛结果 {#liquipedia-dota2-zhan-dui-zui-jin-bi-sai-jie-guo}
@@ -306,29 +300,11 @@
 
 <Route author="CookiePieWw" example="/liquipedia/counterstrike/matches/G2_Esports" path="/liquipedia/counterstrike/matches/:id" paramsDesc={['战队名称，可在url中找到。例如:https://liquipedia.net/counterstrike/G2_Esports']} />
 
-## Maxjia News {#maxjia-news}
-
-### Dota 2 {#maxjia-news-dota-2}
-
-<Route author="dearrrfish" example="/maxnews/dota2" path="/maxnews/dota2" notOperational="1" />
-
 ## Minecraft {#minecraft}
 
 ### Java Game Update {#minecraft-java-game-update}
 
 <Route author="TheresaQWQ" example="/minecraft/version" path="/minecraft/version" />
-
-### CurseForge Mod Update {#minecraft-curseforge-mod-update}
-
-<Route author="Indexyz" example="/curseforge/files/jei" path="/curseforge/files/:project" paramsDesc={['Progect shortname or `Project ID`. The short name of the project can be found in the address bar, for example `https://minecraft.curseforge.com/projects/non-update` to `non-update`. `Project ID` can be found in `About This Project` in `Overview`']} notOperational="1" />
-
-### Feed The Beast Modpack Updates {#minecraft-feed-the-beast-modpack-updates}
-
-<Route author="gucheen" example="/feed-the-beast/modpack/ftb_presents_direwolf20_1_16" path="/feed-the-beast/modpack/:modpackEntry" paramsDesc={['entry name of modpack.']} notOperational="1">
-  | param        | description                                                                                                                                                                    |
-  | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-  | modpackEntry | The entry name of modpack, can be found in modpack's page link, for `https://www.feed-the-beast.com/modpack/ftb_presents_direwolf20_1_16`, use `ftb_presents_direwolf20_1_16`. |
-</Route>
 
 ## Nintendo {#nintendo}
 
@@ -430,12 +406,6 @@
   | GTAV     | 侠盗猎车手 5 |
   | RDR2     | 荒野大镖客 2 |
 </Route>
-
-## ScoreSaber {#scoresaber}
-
-### 用户动态 {#scoresaber-yong-hu-dong-tai}
-
-<Route author="zhangpeng2k" example="/scoresaber/user/76561198400378578" path="/scoresaber/user/:id" paramsDesc={['用户 id, 用户主页URL中获取']} notOperational="1" />
 
 ## Steam {#steam}
 
@@ -908,7 +878,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 分类 {#you-xi-nian-lun-fen-lei}
 
-<Route author="nczitzk" example="/bibgame/sgame" path="/bibgame/:category?/:type?" paramsDesc={['分类，见下表，默认为 PC 游戏', '类型，可在各分类页中导航栏中找到']} notOperational="1">
+<Route author="nczitzk" example="/bibgame/sgame" path="/bibgame/:category?/:type?" paramsDesc={['分类，见下表，默认为 PC 游戏', '类型，可在各分类页中导航栏中找到']}>
   | PC 游戏 | PS4 游戏 | Switch 游戏 | NS 其他板块 | galgame | VR 游戏 | 3DS 游戏 | psv 游戏 | xbox360 游戏 | ps3 游戏 | 其他掌机 |
   | ------- | -------- | ----------- | ----------- | ------- | ------- | -------- | -------- | ------------ | -------- | -------- |
   | pcgame  | ps4      | sgame       | nsaita      | ps      | bt      | 3ds      | psv      | jiaocheng    | ps3yx    | zhangji  |
@@ -996,12 +966,6 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
   | -------- | -------- | --- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
   | lol      | lscs     | dnf | swxf     | yxzj     | steam    | mobile   | lolchess | blzz     | hszz     | dnfm     | brawlstars |
 </Route>
-
-## きららファンタジア｜奇拉拉幻想曲 {#%E3%81%8D%E3%82%89%E3%82%89%E3%83%95%E3%82%A1%E3%83%B3%E3%82%BF%E3%82%B8%E3%82%A2-qi-la-la-huan-xiang-qu}
-
-### 公告 {#%E3%81%8D%E3%82%89%E3%82%89%E3%83%95%E3%82%A1%E3%83%B3%E3%82%BF%E3%82%B8%E3%82%A2-qi-la-la-huan-xiang-qu-gong-gao}
-
-<Route author="magic-akari" example="/kirara/news" path="/kirara/news" notOperational="1" />
 
 ## ファミ通 {#%E3%83%95%E3%82%A1%E3%83%9F-tong}
 
