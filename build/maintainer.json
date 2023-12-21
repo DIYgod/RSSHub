@@ -85,7 +85,6 @@
     "/19lou/:city?": [
         "nczitzk"
     ],
-    "/1draw": [],
     "/1point3acres/blog/:category?": [
         "nczitzk"
     ],
@@ -152,7 +151,6 @@
     "/3dmgame/news/:category?": [
         "zhboner"
     ],
-    "/3ycy/home": [],
     "/423down/:category/:type": [
         "Fatpandac"
     ],
@@ -453,8 +451,6 @@
     "/anigamer/new_anime": [],
     "/anime1/anime/:time/:name": [],
     "/anime1/search/:keyword": [],
-    "/animen/news/:type": [],
-    "/anitama/:channel?": [],
     "/anki/changes": [],
     "/annualreviews/:id": [
         "nczitzk"
@@ -918,10 +914,6 @@
     ],
     "/blizzard/news/:language?/:category?": [
         "nczitzk"
-    ],
-    "/blockbeats/:channel?": [
-        "Fatpandac",
-        "jameshih"
     ],
     "/blogread/newest": [],
     "/blogs/foreverblog": [],
@@ -1721,7 +1713,6 @@
     "/deltaio/blog": [
         "RengarLee"
     ],
-    "/dengekionline/:type?": [],
     "/dev.to/top/:period": [],
     "/devolverdigital/blog": [
         "XXY233"
@@ -1762,7 +1753,6 @@
     "/digitaling/articles/:category/:subcate?": [],
     "/digitaling/index": [],
     "/digitaling/projects/:category": [],
-    "/dilidili/fanju/:id": [],
     "/discord/channel/:channelId": [
         "TonyRL"
     ],
@@ -3107,7 +3097,6 @@
     "/hafu/news/:tpye?": [
         "WenPeiTung"
     ],
-    "/haimaoba/:id?": [],
     "/hainanu/ssszs": [],
     "/hakkatv/news/:type?": [
         "TonyRL"
@@ -3184,7 +3173,6 @@
     "/hexo/next/:url": [],
     "/hexo/yilia/:url": [],
     "/hfut/tzgg": [],
-    "/hhgal": [],
     "/hhu/libNews": [],
     "/hhu/libNewsc": [],
     "/hinatazaka46/blog/:id?": [
@@ -4319,7 +4307,6 @@
         "vzz64"
     ],
     "/manhuadb/comics/:id": [],
-    "/manhuadui/manhua/:name/:serial?": [],
     "/manhuagui/comic/:id/:chapterCnt?": [
         "MegrezZhu"
     ],
@@ -4475,7 +4462,6 @@
         "Misaka13514"
     ],
     "/mlhang": [],
-    "/mmgal": [],
     "/mobdata/report": [],
     "/modb/topic/:id": [
         "yueneiqi"
@@ -4542,7 +4528,6 @@
     "/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?": [
         "nczitzk"
     ],
-    "/mygalgame": [],
     "/mygopen/:label?": [
         "nczitzk"
     ],
@@ -5706,7 +5691,6 @@
     "/sass/gs/:type": [
         "yanbot-team"
     ],
-    "/sayhuahuo": [],
     "/scau/yjsy": [
         "Chunssu"
     ],
@@ -5959,7 +5943,6 @@
         "tuxinghuan"
     ],
     "/shuax/project/:name?": [],
-    "/shuhui/comics/:id": [],
     "/sicau/dky/:category?": [
         "nczitzk"
     ],
@@ -6948,9 +6931,6 @@
         "quinn-dev"
     ],
     "/vgn/:platform?": [],
-    "/vgtime/keyword/:keyword": [],
-    "/vgtime/news": [],
-    "/vgtime/release": [],
     "/vimeo/category/:category/:staffpicks?": [
         "MisteryMonster"
     ],
@@ -7596,7 +7576,6 @@
     "/zcool/user/:uid": [
         "junbaor"
     ],
-    "/zdfx": [],
     "/zhangyoubao/:category": [
         "ztmzzz"
     ],
