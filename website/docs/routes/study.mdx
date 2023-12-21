@@ -1,38 +1,5 @@
 # 📖 Study
 
-## 51VOA 美国之音 {#51voa-mei-guo-zhi-yin}
-
-### 频道 {#51voa-mei-guo-zhi-yin-pin-dao}
-
-<Route author="guhuaijin" example="/51voa/address" path="/51voa/:channel" paramsDesc={['频道名称']} notOperational="1" />
-
-| `:channel`  | 对应网站栏目                                 |
-| ----------- | -------------------------------------------- |
-| standard    | 常速英语 (VOA Standard English)              |
-| archive     | 常速英语存档 (VOA Standard English Archives) |
-| technology  | 科技报道 (Technology Report)                 |
-| daily       | 今日美国 (This is America)                   |
-| sciences    | 科技报道 (Science in the News)               |
-| health      | 健康报道 (Health Report)                     |
-| education   | 教育报道 (Education Report)                  |
-| economics   | 经济报道 (Economics Report)                  |
-| culture     | 文化艺术 (American Mosaic)                   |
-| events      | 时事新闻 (In the News)                       |
-| stories     | 美国故事 (American Stories)                  |
-| words       | 词汇掌故 (Words And Their Stories)           |
-| trending    | 今日热点 (Trending Today)                    |
-| magazine    | 新闻杂志 (AS IT IS)                          |
-| grammar     | 日常语法 (Everyday Grammar)                  |
-| queries     | 名师答疑 (Ask a Teacher)                     |
-| history     | 美国历史 (U.S. History)                      |
-| park        | 国家公园 (America's National Parks)          |
-| president   | 美国总统 (America's Presidents)              |
-| agriculture | 农业报道 (Agriculture Report)                |
-| exploration | 自然探索 (Explorations)                      |
-| people      | 美国人物 (People in America)                 |
-| bilingual   | 双语新闻 (Bilingual News)                    |
-| address     | 总统演讲 (President Address)                 |
-
 ## Asian Innovation and Entrepreneurship Association {#asian-innovation-and-entrepreneurship-association}
 
 ### Seminar Series {#asian-innovation-and-entrepreneurship-association-seminar-series}
@@ -83,22 +50,6 @@
 
 <Route author="ytno1" example="/dblp/knowledge%20tracing" path="/dblp/:field" paramsDesc={['Research field']} radar="1" />
 
-## gradCafe {#gradcafe}
-
-### gradCafe result {#gradcafe-gradcafe-result}
-
-<Route author="liecn" example="/gradcafe/result" path="/gradcafe/result" notOperational="1" />
-
-### gradCafe result by key words {#gradcafe-gradcafe-result-by-key-words}
-
-<Route author="liecn" example="/gradcafe/result/computer" path="/gradcafe/result/:type" paramsDesc={['Keyword']} notOperational="1" />
-
-## Great Britain China Centre {#great-britain-china-centre}
-
-### Educational Trust {#great-britain-china-centre-educational-trust}
-
-<Route author="HenryQW" example="/gbcc/trust" path="/gbcc/trust" notOperational="1" />
-
 ## iciba {#iciba}
 
 ### Daily English Sentence {#iciba-daily-english-sentence}
@@ -116,7 +67,7 @@
 
 ### 最新消息 {#ielts-ya-si-zui-xin-xiao-xi}
 
-<Route author="zenxds" example="/ielts" path="/ielts" puppeteer="1" notOperational="1" />
+<Route author="zenxds" example="/ielts" path="/ielts" puppeteer="1" />
 
 ## Link Research {#link-research}
 
@@ -139,27 +90,6 @@
   | 经验分享 | 论坛精华 | 待跟进反馈 | 优秀建议 | 精选回答 | 官方签名 | 自动更新 | 3674 以上版本支持 | 368 以上版本支持 | 未经验证的安全风险 | 笔记本分享 | 关键反馈 | 精选话题讨论 | 灵感盒 | 引用 |
   | -------- | -------- | ---------- | -------- | -------- | -------- | -------- | ----------------- | ---------------- | ------------------ | ---------- | -------- | ------------ | ------ | ---- |
 </Route>
-
-## Mind42 {#mind42}
-
-### 分类 {#mind42-fen-lei}
-
-<Route author="nczitzk" example="/mind42" path="/mind42/:caty?" paramsDesc={['分类，见下表，默认为 Overview']} notOperational="1">
-  | Overview | Popular | All    |
-  | -------- | ------- | ------ |
-  | mindmaps | popular | public |
-</Route>
-
-### 标签 {#mind42-biao-qian}
-
-<Route author="nczitzk" example="/mind42/tag/online" path="/mind42/tag/:id" paramsDesc={['标签，见下表']} notOperational="1">
-  | in | online | cleaning | buy | best | services | for | carpet | service | india | company | and | de | mapa | control | malware | online-dating-website-reviews | virus | international-online-dating-sites-review | repair |
-  | -- | ------ | -------- | --- | ---- | -------- | --- | ------ | ------- | ----- | ------- | --- | -- | ---- | ------- | ------- | ----------------------------- | ----- | ---------------------------------------- | ------ |
-</Route>
-
-### 搜索 {#mind42-sou-suo}
-
-<Route author="nczitzk" example="/mind42/search/online" path="/mind42/search/:keyword" paramsDesc={['关键字']} notOperational="1" />
 
 ## MindMeister {#mindmeister}
 
@@ -235,24 +165,6 @@
 ### Works List {#orcid-works-list}
 
 <Route author="OrangeEd1t" example="/orcid/0000-0002-4731-9700" path="/orcid/:id" paramsDesc={['Open Researcher and Contributor ID']} />
-
-## ProcessOn {#processon}
-
-### 推荐 {#processon-tui-jian}
-
-<Route author="nczitzk" example="/processon/popular" path="/processon/popular/:cate?/:sort?" paramsDesc={['分类，见下表，默认为所有类型', '排序，见下表，默认为人气']} notOperational="1">
-  分类
-
-  | 所有类型 | 流程图 | BPMN | 思维导图 | UI 原型图  | UML | Org 组织结构图 | 网络拓扑图 | 韦恩图  |      |
-  | -------- | ------ | ---- | -------- | ---------- | --- | -------------- | ---------- | ------- | ---- |
-  |          | es     | flow | bpmn     | mind\_free | ui  | uml            | org        | network | venn |
-
-  排序
-
-  | 人气 | 最多人赞  | 最多收藏       | 最多浏览  | 最新发布    |
-  | ---- | --------- | -------------- | --------- | ----------- |
-  |      | likeCount | favouriteCount | viewCount | publishTime |
-</Route>
 
 ## ResearchGate {#researchgate}
 
@@ -373,27 +285,11 @@
   | 0                           | 1              | 2                          | 3              | 4                      | 5          | news     | policy   |
 </Route>
 
-## 杭州市国家普通话测试网报信息 {#hang-zhou-shi-guo-jia-pu-tong-hua-ce-shi-wang-bao-xin-xi}
-
-### 考试信息 {#hang-zhou-shi-guo-jia-pu-tong-hua-ce-shi-wang-bao-xin-xi-kao-shi-xin-xi}
-
-<Route author="ChaosTong" example="/putonghua" path="/putonghua" notOperational="1" />
-
 ## 湖南人事考试网 {#hu-nan-ren-shi-kao-shi-wang}
 
 ### 公告 {#hu-nan-ren-shi-kao-shi-wang-gong-gao}
 
 <Route author="TonyRL" example="/hunanpea/rsks/2f1a6239-b4dc-491b-92af-7d95e0f0543e" path="/hunanpea/rsks/:guid" paramsDesc={['分类 id，可在 URL 中找到']} radar="1" />
-
-## 唧唧堂 {#ji-ji-tang}
-
-### 论文 {#ji-ji-tang-lun-wen}
-
-<Route author="xfangbao" example="/jijitang/publication" path="/jijitang/publication/" />
-
-### 文档 {#ji-ji-tang-wen-dang}
-
-<Route author="xfangbao" example="/jijitang/article/latest" path="/jijitang/article/:id" paramsDesc={['类别，latest 或者 recommand']} />
 
 ## 经济 50 人论坛 {#jing-ji-50-ren-lun-tan}
 
@@ -663,23 +559,11 @@
   | 16       | 18       | 19       | 20       | 21       |
 </Route>
 
-## 中国留学网 {#zhong-guo-liu-xue-wang}
-
-### 通知公告 {#zhong-guo-liu-xue-wang-tong-zhi-gong-gao}
-
-<Route author="nczitzk" example="/cscse/tzgg" path="/cscse/tzgg" notOperational="1" />
-
 ## 中国人工智能学会 {#zhong-guo-ren-gong-zhi-neng-xue-hui}
 
 ### 学会动态 {#zhong-guo-ren-gong-zhi-neng-xue-hui-xue-hui-dong-tai}
 
 <Route author="tudou027" example="/caai/45" path="/caai/:caty" paramsDesc={['分类 ID，可在 URL 找到']} radar="1" />
-
-## 中国人事考试网 {#zhong-guo-ren-shi-kao-shi-wang}
-
-### 通知公告 {#zhong-guo-ren-shi-kao-shi-wang-tong-zhi-gong-gao}
-
-<Route author="nczitzk" example="/cpta/notice" path="/cpta/notice" notOperational="1" />
 
 ## 中国研究生招生信息网 {#zhong-guo-yan-jiu-sheng-zhao-sheng-xin-xi-wang}
 
