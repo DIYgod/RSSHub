@@ -17067,19 +17067,6 @@
       }
     ]
   },
-  "kakuyomu.jp": {
-    "_name": "kakuyomu",
-    ".": [
-      {
-        "title": "章节更新",
-        "docs": "https://docs.rsshub.app/routes/reading#kakuyomu-zhang-jie-geng-xin",
-        "source": [
-          "/works/:id"
-        ],
-        "target": "/kakuyomu/episode/:id"
-      }
-    ]
-  },
   "kamen-rider-official.com": {
     "_name": "仮面ライダ",
     ".": [
@@ -22712,29 +22699,6 @@
         "docs": "https://docs.rsshub.app/routes/reading#qi-dian",
         "source": "/mm/free",
         "target": "/qidian/free/mm"
-      }
-    ]
-  },
-  "qidiantu.com": {
-    "_name": "起点图",
-    ".": [
-      {
-        "title": "首订",
-        "docs": "https://docs.rsshub.app/routes/reading#qi-dian-tu-shou-ding",
-        "source": [
-          "/shouding",
-          "/"
-        ],
-        "target": "/qidiantu/shouding"
-      },
-      {
-        "title": "榜单",
-        "docs": "https://docs.rsshub.app/routes/reading#qi-dian-tu-bang-dan",
-        "source": [
-          "/bang/:category/:type",
-          "/"
-        ],
-        "target": "/qidiantu/:category?/:type?/:is_history?"
       }
     ]
   },
@@ -31957,20 +31921,6 @@
           "/:id",
           "/:id/comments"
         ]
-      }
-    ]
-  },
-  "zhaishuyuan.com": {
-    "_name": "斋书苑",
-    ".": [
-      {
-        "title": "最新章节",
-        "docs": "https://docs.rsshub.app/routes/reading#zhai-shu-yuan",
-        "source": [
-          "/book/:id",
-          "/read/:id"
-        ],
-        "target": "/novel/zhaishuyuan/:id"
       }
     ]
   },

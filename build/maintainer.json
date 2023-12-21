@@ -441,7 +441,6 @@
     "/amazon/kindle/software-updates": [
         "EthanWng97"
     ],
-    "/amazon/ku/:type?": [],
     "/amd/graphicsdrivers/:id/:rid?": [],
     "/android/platform-tools-releases": [
         "nczitzk"
@@ -574,8 +573,6 @@
     "/av01/tag/:name/:type?": [],
     "/avgle/search/:keyword/:order?/:time?/:top?": [],
     "/avgle/videos/:order?/:time?/:top?": [],
-    "/axdzs/:id1/:id2": [],
-    "/axdzs/:novel": [],
     "/axis-studios/:type/:tag?": [],
     "/baai/hub/:tagId?/:sort?/:range?": [
         "TonyRL"
@@ -835,8 +832,6 @@
         "ttttmr"
     ],
     "/bing": [],
-    "/biobio/:column/:id": [],
-    "/biobio/:id": [],
     "/biodiscover/:channel?": [
         "aidistan"
     ],
@@ -954,7 +949,6 @@
     "/bookfere/:category": [
         "OdinZhang"
     ],
-    "/bookscomtw/newbooks/:category": [],
     "/booksource": [],
     "/bookwalkertw/news": [],
     "/booru/mmda/tags/:tags?": [
@@ -1274,8 +1268,6 @@
     "/chsi/zszcgd/:category?": [],
     "/chuapp/index/:category?": [],
     "/chuhaibiji": [],
-    "/chuiniu/column/:id": [],
-    "/chuiniu/column_list": [],
     "/cia/foia-annual-report": [],
     "/ciidbnu/:id?": [
         "nczitzk"
@@ -1287,7 +1279,6 @@
     "/civitai/models": [
         "DIYgod"
     ],
-    "/ciweimao/chapter/:id": [],
     "/cktest/app/:ctgroup?/:domain?": [],
     "/cktest/policy": [],
     "/clb/commentary/:lang?": [],
@@ -1564,7 +1555,6 @@
     "/curius/links/:name": [
         "Ovler-Young"
     ],
-    "/curseforge/files/:project": [],
     "/cw/author/:channel": [
         "TonyRL"
     ],
@@ -1654,7 +1644,6 @@
         "TonyRL"
     ],
     "/dcinside/board/:id": [],
-    "/dcrsw/:name/:count?": [],
     "/ddosi": [
         "XinRoom"
     ],
@@ -2207,7 +2196,6 @@
         "nczitzk"
     ],
     "/fdroid/apprelease/:app": [],
-    "/feed-the-beast/modpack/:modpackEntry": [],
     "/feng/forum/:id/:type?": [
         "TonyRL"
     ],
@@ -3921,9 +3909,6 @@
     ],
     "/jx3/:caty?": [],
     "/kaiyan/index": [],
-    "/kakuyomu/episode/:id": [
-        "huangliangshusheng"
-    ],
     "/kamen-rider-official/news/:category?": [
         "nczitzk"
     ],
@@ -3968,7 +3953,6 @@
         "TonyRL"
     ],
     "/kingarthur/:type": [],
-    "/kirara/news": [],
     "/kmust/job/careers/:type?": [],
     "/kmust/job/jobfairs": [],
     "/kmust/jwc/:type?": [],
@@ -3978,7 +3962,6 @@
     "/konachan.net/post/popular_recent/:period": [],
     "/konachan/post/popular_recent": [],
     "/konachan/post/popular_recent/:period": [],
-    "/konami/pesmobile/:lang?/:os?": [],
     "/kongfz/people/:id": [],
     "/kongfz/shop/:id/:cat?": [],
     "/kotaku/story/:type": [],
@@ -4314,7 +4297,6 @@
     "/matters/hot": [],
     "/matters/latest/:type?": [],
     "/matters/tags/:tid": [],
-    "/maxnews/dota2": [],
     "/mcbbs/forum/:type": [],
     "/mcbbs/post/:tid/:authorid?": [],
     "/mcdonalds/:category": [],
@@ -4825,12 +4807,7 @@
     "/notion/database/:databaseId": [
         "curly210102"
     ],
-    "/novel/booksky/:id": [],
-    "/novel/d1bz/:category/:id": [],
-    "/novel/ptwxz/:id1/:id2": [],
     "/novel/uukanshu/:uid": [],
-    "/novel/wenxuemi/:id1/:id2": [],
-    "/novel/zhaishuyuan/:id": [],
     "/now/news/:category?/:id?": [
         "nczitzk"
     ],
@@ -5402,12 +5379,6 @@
     "/qidian/free/:type?": [
         "LogicJake"
     ],
-    "/qidiantu/:category?/:type?/:is_history?": [
-        "nczitzk"
-    ],
-    "/qidiantu/shouding": [
-        "nczitzk"
-    ],
     "/qingting/channel/:id": [
         "nczitzk"
     ],
@@ -5705,7 +5676,6 @@
     "/scnu/yjs": [
         "shengmaosu"
     ],
-    "/scoresaber/user/:id": [],
     "/sctu/jwc/:type/:id": [],
     "/sctu/jwc/:type?": [],
     "/sctu/xgxy": [],
@@ -5851,7 +5821,6 @@
     "/shcstheatre/programs": [
         "fuzy112"
     ],
-    "/shengwugu/:uid?": [],
     "/shiep/:type/:id?": [
         "gumibea",
         "TeamSUEP"
