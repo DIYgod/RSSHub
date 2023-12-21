@@ -51,9 +51,7 @@
             { title: '经济信息工程学院 - 学院新闻', docs: 'https://docs.rsshub.app/routes/university#xi-nan-cai-jing-da-xue', source: '/index/xyxw.htm', target: '/swufe/seie/xyxw' },
         ],
     },
-    'ishuhui.com': { _name: '鼠绘漫画', www: [{ title: '鼠绘漫画', docs: 'https://docs.rsshub.app/routes/anime#shu-hui-man-hua', source: '/comics/anime/:id', target: '/shuhui/comics/:id' }] },
     'www.chicagotribune.com': { _name: 'Chicago Tribune', www: [{ title: 'Chicago Tribune', docs: 'https://docs.rsshub.app/routes/traditional_media#chicago-tribune', source: '/' }] },
-    'haimaoba.com': { _name: '海猫吧', www: [{ title: '漫画更新', docs: 'https://docs.rsshub.app/routes/anime#hai-mao-ba', source: '/catalog/:id', target: '/haimaoba/:id' }] },
     'pgyer.com': { _name: '蒲公英应用分发', www: [{ title: 'app更新', docs: 'https://docs.rsshub.app/routes/program-update#pu-gong-ying-ying-yong-fen-fa', source: '/:app', target: '/pgyer/:app' }] },
     'wineyun.com': { _name: '酒云网', www: [{ title: '最新商品', docs: 'https://docs.rsshub.app/routes/other#jiu-yun-wang', source: ['/:category'], target: '/wineyun/:category' }] },
     'playstation.com': {
@@ -74,14 +72,6 @@
             { title: '最新消息', docs: 'https://docs.rsshub.app/routes/game#guai-wu-lie-ren-shi-jie', source: ['', '/*tpath'], target: '/mhw/news' },
         ],
     },
-    'vgtime.com': {
-        _name: '游戏时光',
-        www: [
-            { title: '新闻', docs: 'https://docs.rsshub.app/routes/game#you-xi-shi-guang', source: '/topic/index.', target: '/vgtime/news' },
-            { title: '游戏发售表', docs: 'https://docs.rsshub.app/routes/game#you-xi-shi-guang', source: '/game/release.', target: '/vgtime/release' },
-            { title: '关键词资讯', docs: 'https://docs.rsshub.app/routes/game#you-xi-shi-guang', source: '/search/list.', target: (params, url) => `/vgtime/keyword/${new URL(url).searchParams.get('keyword')}` },
-        ],
-    },
     'bing.com': { _name: 'Bing', www: [{ title: '每日壁纸', docs: 'https://docs.rsshub.app/routes/picture#bing-bi-zhi', source: '', target: '/bing' }] },
     'wegene.com': {
         _name: 'WeGene',
@@ -90,7 +80,6 @@
             { title: '栏目', docs: 'https://docs.rsshub.app/routes/other#wegene', source: '/crowdsourcing', target: '/wegene/column/all/all' },
         ],
     },
-    '3ycy.com': { _name: '三界异次元', www: [{ title: '最近更新', docs: 'https://docs.rsshub.app/routes/anime#san-jie-yi-ci-yuan', source: '/', target: '/3ycy/home' }] },
     'emi-nitta.net': {
         _name: 'Emi Nitta',
         '.': [
