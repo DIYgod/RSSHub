@@ -499,16 +499,6 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
     3.  找到 `https://bbs.pku.edu.cn/v2/home.php` 请求
     4.  找到请求头中的 Cookie
 
-### 吹牛部落
-
-用于栏目
-
--   `CHUINIU_MEMBER`: 吹牛部落登录后的 x-member，获取方式
-    1.  登陆后点开文章正文
-    2.  打开控制台，刷新
-    3.  找到 `http://api.duanshu.com/h5/content/detail` 开头的请求
-    4.  找到请求头中的 x-member
-
 ### 滴答清单
 
 -   `DIDA365_USERNAME`: 滴答清单用户名

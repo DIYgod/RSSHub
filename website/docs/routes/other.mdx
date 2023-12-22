@@ -91,12 +91,6 @@ See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
   2.  Copy everything in the URL after `?`, for example: `https://www.autotrader.co.uk/car-search?radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on` will produce `radius=50&postcode=sw1a1aa&onesearchad=Used&onesearchad=Nearly%20New&onesearchad=New&price-to=9000&year-from=2012&body-type=Hatchback&transmission=Automatic&exclude-writeoff-categories=on`
 </Route>
 
-## BOOKSOURCE.STORE {#booksource-store}
-
-### 书源仓库更新 {#booksource-store-shu-yuan-cang-ku-geng-xin}
-
-<Route author="vhxubo" example="/booksource" path="/booksource" notOperational="1" />
-
 ## BOOKWALKERTW {#bookwalkertw}
 
 ### 热门新书 {#bookwalkertw-re-men-xin-shu}
@@ -115,45 +109,11 @@ See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 
 <Route author="hoilc" example="/clickme/default/category/beauty" path="/clickme/:site/:grouping/:name" paramsDesc={['站点，`default`为普通站，`r18`为成人站，其它值默认为普通站','分组方式，`category`为分类，`tag`为标签，其他值默认为分类','分类名或标签名，分类名为英文，可以在分类 URL 中找到']} radar="1" anticrawler="1" />
 
-## Corona Virus Disease 2019 {#corona-virus-disease-2019}
-
-### 国家卫健委 - 疫情通报 {#corona-virus-disease-2019-guo-jia-wei-jian-wei-yi-qing-tong-bao}
-
-<Route author="EkkoG DIYgod" example="/coronavirus/nhc" path="/coronavirus/nhc" notOperational="1" />
-
-### 财新网 - 新冠肺炎防疫全纪录 {#corona-virus-disease-2019-cai-xin-wang-xin-guan-fei-yan-fang-yi-quan-ji-lu}
-
-<Route author="DIYgod" example="/coronavirus/caixin" path="/coronavirus/caixin" />
-
-### 丁香园 - 新冠病毒疫情实时播报 {#corona-virus-disease-2019-ding-xiang-yuan-xin-guan-bing-du-yi-qing-shi-shi-bo-bao}
-
-<Route author="DIYgod" example="/coronavirus/dxy" path="/coronavirus/dxy" notOperational="1" />
-
-### 丁香园 - 新冠病毒疫情数据统计 {#corona-virus-disease-2019-ding-xiang-yuan-xin-guan-bing-du-yi-qing-shu-ju-tong-ji}
-
-<Route author="DIYgod HenryQW" example="/coronavirus/dxy/data/湖北/武汉" path="/coronavirus/dxy/data/:province?/:city?" paramsDesc={['省/直辖市名，缺省或错误则返回国内数据','城市名，缺省或错误则返回全省数据。直辖市请使用区/县名。']} />
-
-### 腾讯新闻 - 新型冠状病毒肺炎实时辟谣 {#corona-virus-disease-2019-teng-xun-xin-wen-xin-xing-guan-zhuang-bing-du-fei-yan-shi-shi-pi-yao}
-
-<Route author="DIYgod" example="/coronavirus/qq/fact" path="/coronavirus/qq/fact" notOperational="1" />
-
-### 腾讯新闻 - 新型冠状病毒肺炎疫情实时追踪 {#corona-virus-disease-2019-teng-xun-xin-wen-xin-xing-guan-zhuang-bing-du-fei-yan-yi-qing-shi-shi-zhui-zong}
-
-数据来源：[https://news.qq.com/zt2020/page/feiyan.htm#/](https://news.qq.com/zt2020/page/feiyan.htm#/)
-
-#### 中国本土数据统计 {#corona-virus-disease-2019-teng-xun-xin-wen-xin-xing-guan-zhuang-bing-du-fei-yan-yi-qing-shi-shi-zhui-zong-zhong-guo-ben-tu-shu-ju-tong-ji}
-
-<Route author="CaoMeiYouRen" example="/tencent/news/coronavirus/total" path="/tencent/news/coronavirus/total" notOperational="1" />
-
-#### 省市疫情数据 {#corona-virus-disease-2019-teng-xun-xin-wen-xin-xing-guan-zhuang-bing-du-fei-yan-yi-qing-shi-shi-zhui-zong-sheng-shi-yi-qing-shu-ju}
-
-<Route author="CaoMeiYouRen" example="/tencent/news/coronavirus/data/湖北/武汉" path="/tencent/news/coronavirus/data/:province?/:city?" paramsDesc={['省/直辖市名，缺省则返回国内数据','城市名，缺省则返回全省数据。直辖市请使用区/县名。']} />
-
-### South China Morning Post - China coronavirus outbreak {#corona-virus-disease-2019-south-china-morning-post-china-coronavirus-outbreak}
+### South China Morning Post - China coronavirus outbreak {#clickme-south-china-morning-post-china-coronavirus-outbreak}
 
 <Route author="DIYgod" example="/coronavirus/scmp" path="/coronavirus/scmp" notOperational="1" />
 
-### Macao Pagina Electrónica Especial Contra Epidemias: What’s New {#corona-virus-disease-2019-macao-pagina-electronica-especial-contra-epidemias-what-s-new}
+### Macao Pagina Electrónica Especial Contra Epidemias: What’s New {#clickme-macao-pagina-electronica-especial-contra-epidemias-what-s-new}
 
 Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx)
 
@@ -163,11 +123,11 @@ Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](h
 | ------- | ------- | ---------- |
 | ch      | en      | pt         |
 
-### Singapore Ministry of Health - Past Updates on 2019-nCov Local Situation in Singapore {#corona-virus-disease-2019-singapore-ministry-of-health-past-updates-on-2019-ncov-local-situation-in-singapore}
+### Singapore Ministry of Health - Past Updates on 2019-nCov Local Situation in Singapore {#clickme-singapore-ministry-of-health-past-updates-on-2019-ncov-local-situation-in-singapore}
 
 <Route author="Gnnng" example="/coronavirus/sg-moh" path="/coronavirus/sg-moh" notOperational="1" />
 
-### Yahoo Japan 新型コロナウイルス感染症まとめ {#corona-virus-disease-2019-yahoo-japan-xin-xing-%E3%82%B3%E3%83%AD%E3%83%8A%E3%82%A6%E3%82%A4%E3%83%AB%E3%82%B9-gan-ran-zheng-%E3%81%BE%E3%81%A8%E3%82%81}
+### Yahoo Japan 新型コロナウイルス感染症まとめ {#clickme-yahoo-japan-xin-xing-%E3%82%B3%E3%83%AD%E3%83%8A%E3%82%A6%E3%82%A4%E3%83%AB%E3%82%B9-gan-ran-zheng-%E3%81%BE%E3%81%A8%E3%82%81}
 
 Official Website: [https://news.yahoo.co.jp/pages/article/20200207](https://news.yahoo.co.jp/pages/article/20200207)
 
@@ -184,12 +144,6 @@ Official Website: [https://news.yahoo.co.jp/pages/article/20200207](https://news
 ### board {#dcinside-board}
 
 <Route author="zfanta" example="/dcinside/board/programming" path="/dcinside/board/:id" paramsDesc={['board id']} />
-
-## DHL {#dhl}
-
-### DHL express {#dhl-dhl-express}
-
-<Route author="ntzyz" example="/dhl/12345678" path="/dhl/:shipment_id" paramsDesc={['Waybill number']} notOperational="1" />
 
 ## Email {#email}
 
@@ -247,12 +201,6 @@ Official Website: [https://news.yahoo.co.jp/pages/article/20200207](https://news
 
 <Route author="imlonghao" example="/hackerone/search/rocket_chat" path="/hackerone/search/:search" paramsDesc={['Search string']} radar="1" />
 
-## Instapaper {#instapaper}
-
-### Personal sharing {#instapaper-personal-sharing}
-
-<Route author="LogicJake" example="/instapaper/person/viridiano" path="/instapaper/person" notOperational="1" />
-
 ## Instructables {#instructables}
 
 ### Projects {#instructables-projects}
@@ -262,18 +210,6 @@ Official Website: [https://news.yahoo.co.jp/pages/article/20200207](https://news
   | --- | -------- | -------- | ----- | ------- | ------ | ------- | -------- |
   |     | circuits | workshop | craft | cooking | living | outside | teachers |
 </Route>
-
-## iYouport {#iyouport}
-
-### 首页（旧版） {#iyouport-shou-ye-jiu-ban}
-
-<Route author="EsuRt" example="/iyouport/article" path="/iyouport/article" notOperational="1" />
-
-### 分类 {#iyouport-fen-lei}
-
-支持 iyouport.org 页面 Header 全部分类。例如，`https://www.iyouport.org/category/osint` 对应 `/iyouport/osint`。若不填写 `category`，则输出全部文章，但比旧版首页 feed 有更多元数据。
-
-<Route author="proletarius101" example="/iyouport/osint" path="/iyouport/:category?" notOperational="1" />
 
 ## Japanpost 日本郵便 {#japanpost-ri-ben-you-bian}
 
@@ -285,16 +221,6 @@ Official Website: [https://news.yahoo.co.jp/pages/article/20200207](https://news
   | ja       | en      |
 </Route>
 
-## King Arthur {#king-arthur}
-
-### Baking {#king-arthur-baking}
-
-<Route author="loganrockmore" example="/kingarthur/story" path="/instapaper/:category">
-  | Story | Recipes | Tips and Techniques |
-  | ----- | ------- | ------------------- |
-  | story | recipes | tips-and-techniques |
-</Route>
-
 ## Layoffs.fyi {#layoffs-fyi}
 
 ### Layoff Data Tracker {#layoffs-fyi-layoff-data-tracker}
@@ -302,12 +228,6 @@ Official Website: [https://news.yahoo.co.jp/pages/article/20200207](https://news
 <Route author="BrandNewLifeJackie26" example="/layoffs" path="/layoffs" radar="1" anticrawler="1" />
 
 RSS source in the original site is outdated.
-
-## Lever {#lever}
-
-### Recruitment {#lever-recruitment}
-
-<Route author="tsarlewey" example="/lever/lever" path="/lever/:domain" paramsDesc={['Company with Lever Board']} notOperational="1" />
 
 ## LinkedIn {#linkedin}
 
@@ -395,18 +315,6 @@ RSS source in the original site is outdated.
 
   一例：如果用户希望输出全部订阅源中，最旧的两篇未读的文章，并希望在文章的标题栏显示订阅源的名字，同时希望输出内容在 MiniFlux 中被标为已读，那么路由设置应为：`/miniflux/all/direction=asc&status=unread&feed_name=1&mark=read&limit=2`
 </Route>
-
-## MITRE {#mitre}
-
-### All Publications {#mitre-all-publications}
-
-<Route author="sbilly" example="/mitre/publications" path="/mitre/publications" notOperational="1" />
-
-## MobData {#mobdata}
-
-### 分析报告 {#mobdata-fen-xi-bao-gao}
-
-<Route author="brilon" example="/mobdata/report" path="/mobdata/report" notOperational="1" />
 
 ## Mozilla {#mozilla}
 
@@ -496,12 +404,6 @@ It is recommended to use with clipping tools such as Notion Web Clipper.
 
 <Route author="HenryQW" example="/parcel/hermesuk/[tracking number]" path="/parcel/hermesuk/:tracking" paramsDesc={['Tracking number']} />
 
-## Pocket {#pocket}
-
-### Trending {#pocket-trending}
-
-<Route author="hoilc" example="/pocket/trending" path="/pocket/trending" notOperational="1" />
-
 ## Product Hunt {#product-hunt}
 
 > 官方 Feed 地址为: [https://www.producthunt.com/feed](https://www.producthunt.com/feed)
@@ -519,12 +421,6 @@ It is recommended to use with clipping tools such as Notion Web Clipper.
   | :------: | :---------: | :----: | :-------: | :-----: | :---: | :-------: | :---: |
   |    all   | development | design | operation | product | other | marketing | sales |
 </Route>
-
-## SANS Institute {#sans-institute}
-
-### Latest conference materials {#sans-institute-latest-conference-materials}
-
-<Route author="sbilly" example="/sans/summit_archive" path="/sans/summit_archive" notOperational="1" />
 
 ## Transformation {#transformation}
 
@@ -614,14 +510,6 @@ Specify options (in the format of query string) in parameter `routeParams` param
   | `routeParams` | `title=Example`                        |
 </Route>
 
-## TSSstatus (iOS downgrade channel) {#tssstatus-ios-downgrade-channel}
-
-### Status {#tssstatus-ios-downgrade-channel-status}
-
-<Route author="xyqfer" example="/tssstatus/j42dap/14W585a" path="/tssstatus/:board/:build" paramsDesc={['Board id', 'Build id']} notOperational="1">
-  Board and Build can be found in [here](http://api.ineal.me/tss/status)
-</Route>
-
 ## Urban Dictionary {#urban-dictionary}
 
 ### Random words {#urban-dictionary-random-words}
@@ -659,24 +547,6 @@ Specify options (in the format of query string) in parameter `routeParams` param
 ### News {#wfdf-news}
 
 <Route author="HankChow" example="/wfdf/news" path="/wfdf/news" radar="1" />
-
-## wikiHow {#wikihow}
-
-### Home {#wikihow-home}
-
-<Route author="sanmmm" example="/wikihow/index" path="/wikihow/index" notOperational="1" />
-
-### Category {#wikihow-category}
-
-<Route author="sanmmm" example="/wikihow/category/饮食与休闲/all" path="/wikihow/category/:category/:type?" paramsDesc={['Category', 'Type, default to `all`']}>
-  Top category can be found in [category Page](https://zh.wikihow.com/Special\:CategoryListing), support secondary directories
-
-  Type
-
-  | All | Recommend |
-  | --- | --------- |
-  | all | rec       |
-</Route>
 
 ## Wise {#wise}
 
@@ -727,16 +597,6 @@ Specify options (in the format of query string) in parameter `routeParams` param
 
 <Route author="sanmmm" example="/afdian/dynamic/@afdian" path="/afdian/dynamic/:uid?" paramsDesc={['用户id，用户动态页面url里可找到']} />
 
-## 澳門特別行政區政府各公共部門獎助貸學金服務平台 {#ao-men-te-bie-xing-zheng-qu-zheng-fu-ge-gong-gong-bu-men-jiang-zhu-dai-xue-jin-fu-wu-ping-tai}
-
-官方網址：[https://www.bolsas.gov.mo/](https://www.bolsas.gov.mo/)
-
-<Route author="KeiLongW" example="/macau-bolsas" path="/macau-bolsas/:lang?" paramsDesc={['語言']} notOperational="1">
-  | 中文 | 葡文 |
-  | ---- | ---- |
-  | ch   | pt   |
-</Route>
-
 ## 百度热搜 {#bai-du-re-sou}
 
 ### 榜单 {#bai-du-re-sou-bang-dan}
@@ -775,12 +635,6 @@ Specify options (in the format of query string) in parameter `routeParams` param
 
 <Route author="DIYgod" example="/dida365/habit/checkins" path="/dida365/habit/checkins" configRequired="1" />
 
-## 福利资源 - met.red {#fu-li-zi-yuan-met-red}
-
-### 福利资源 - met.red {#fu-li-zi-yuan-met-red-fu-li-zi-yuan-met-red}
-
-<Route author="junfengP queensferryme" example="/metred/fuli" path="/metred/fuli" notOperational="1" />
-
 ## 古诗文网 {#gu-shi-wen-wang}
 
 ### 首页推荐 {#gu-shi-wen-wang-shou-ye-tui-jian}
@@ -814,28 +668,6 @@ Specify options (in the format of query string) in parameter `routeParams` param
   | 协会通知公告      | 38      |
   | 会员动态          | 39      |
 </Route>
-
-## 国家留学网 {#guo-jia-liu-xue-wang}
-
-### 通知 {#guo-jia-liu-xue-wang-tong-zhi}
-
-<Route author="Derekmini markmingjie" example="/csc/notice/lxtz" path="/csc/notice/:type?" paramsDesc={['分类, 默认为 `lxtz`']} radar="1" notOperational="1">
-  | 遴选通知 | 综合项目专栏 | 常见问题解答 | 录取公告 | 新闻资讯 | 新闻公告 |
-  | -------- | ------------ | ------------ | -------- | -------- | -------- |
-  | lxtz     | xmzl         | wtjd         | lqgg     | xwzx     | xwgg     |
-</Route>
-
-## 好队友 {#hao-dui-you}
-
-### 工作机会 {#hao-dui-you-gong-zuo-ji-hui}
-
-<Route author="lotosbin" example="/network360/jobs" path="/network360/jobs" notOperational="1" />
-
-## 惠誉评级 {#hui-yu-ping-ji}
-
-### 板块信息 {#hui-yu-ping-ji-ban-kuai-xin-xi}
-
-<Route author="LogicJake" example="/fitchratings/site/economics" path="/fitchratings/site/:type" paramsDesc={['板块名称，在网址 site 后面']} notOperational="1" />
 
 ## 静态模型爱好者 {#jing-tai-mo-xing-ai-hao-zhe}
 
@@ -949,12 +781,6 @@ Specify options (in the format of query string) in parameter `routeParams` param
 
 <Route author="snipersteve" example="/law/jctd" path="/law/jctd" notOperational="1" />
 
-## 马良行 {#ma-liang-xing}
-
-### 产品更新 {#ma-liang-xing-chan-pin-geng-xin}
-
-<Route author="junfengP" example="/mlhang" path="/mlhang" notOperational="1" />
-
 ## 每日生猪价格 {#mei-ri-sheng-zhu-jia-ge}
 
 ### 每日生猪价格更新 {#mei-ri-sheng-zhu-jia-ge-mei-ri-sheng-zhu-jia-ge-geng-xin}
@@ -979,12 +805,6 @@ Specify options (in the format of query string) in parameter `routeParams` param
   | 0        | 1        | recommends |
 </Route>
 
-## 模型网 {#mo-xing-wang}
-
-### 新闻 {#mo-xing-wang-xin-wen}
-
-<Route author="cc798461" example="/moxingnet" path="/moxingnet" notOperational="1" />
-
 ## 汽油价格网 {#qi-you-jia-ge-wang}
 
 ### 今日油价查询 {#qi-you-jia-ge-wang-jin-ri-you-jia-cha-xun}
@@ -995,24 +815,6 @@ Specify options (in the format of query string) in parameter `routeParams` param
 
   若订阅 [福建漳州龙海今日油价](http://www.qiyoujiage.com/fujian/zhangzhou/longhai.shtml) 则将对应页面 URL `http://www.qiyoujiage.com/fujian/zhangzhou/longhai.shtml` 中 `http://www.qiyoujiage.com/` 和 `.shtml` 之间的字段 `fujian/zhangzhou/longhai` 作为路径填入。此时路由为 [`/qiyoujiage/fujian/zhangzhou/longhai`](https://rsshub.app/qiyoujiage/fujian/zhangzhou/longhai)
   :::
-</Route>
-
-## 且听风吟福利 {#qie-ting-feng-yin-fu-li}
-
-### 分类 {#qie-ting-feng-yin-fu-li-fen-lei}
-
-<Route author="qiwihui" example="/qtfyfl/guoji" path="/qtfyfl/:category" paramsDesc={['分类，可在 URL 中找到']} notOperational="1">
-  | 最新文章 | 福利社  | 求出处    | 套图集  | 门事件     | 内涵图   | 电影下载       | 影视资讯 |
-  | -------- | ------- | --------- | ------- | ---------- | -------- | -------------- | -------- |
-  | latest   | fulishe | qiuchuchu | taotuji | menshijian | neihantu | dianyingxiazai | yingshi  |
-
-  | 电视剧下载 | 动漫下载 | 电影彩蛋 | 影视剧情 | 涨姿势     | 娱乐 | 明星八卦 | 音乐歌曲 |
-  | ---------- | -------- | -------- | -------- | ---------- | ---- | -------- | -------- |
-  | dianshiju  | dongman  | caidan   | juqing   | zhangzishi | yule | mingxing | music    |
-
-  | 游戏  | 电脑软件 | 实时热点     | 心灵鸡汤 | 符号大全 | 国际新闻 | 科技苑 | 其他  |
-  | ----- | -------- | ------------ | -------- | -------- | -------- | ------ | ----- |
-  | games | software | shishiredian | xljt     | fhdq     | xljt     | tech   | other |
 </Route>
 
 ## 親子王國 {#qin-zi-wang-guo}
@@ -1046,22 +848,6 @@ Specify options (in the format of query string) in parameter `routeParams` param
 数据源: [trending-in-one](https://github.com/huqi-pr/trending-in-one)
 
 <Route author="Jkker" example="/trending/唐山,打人/3" path="/trending/:keywords/:numberOfDays?" radar="1" paramsDesc={['通过逗号区隔的关键词列表', '向前追溯的天数，默认为3天']} />
-
-## 守望先锋 {#shou-wang-xian-feng}
-
-### 补丁说明 {#shou-wang-xian-feng-bu-ding-shuo-ming}
-
-<Route author="nczitzk" example="/ow/patch" path="/ow/patch" notOperational="1" />
-
-## 四川省科学技术厅 {#si-chuan-sheng-ke-xue-ji-shu-ting}
-
-### 四川省科学技术厅 - 公示公告 {#si-chuan-sheng-ke-xue-ji-shu-ting-si-chuan-sheng-ke-xue-ji-shu-ting-gong-shi-gong-gao}
-
-<Route author="Cubernet" example="/sckjt/news" path="/sckjt/news/:type?" paramsDesc={['默认为`tz`']} notOperational="1">
-  | 通知 | 公示公告 |
-  | ---- | -------- |
-  | tz   | gs       |
-</Route>
 
 ## 搜狗 {#sou-gou}
 
@@ -1125,60 +911,11 @@ Specify options (in the format of query string) in parameter `routeParams` param
 
 <Route author="alienmao" example="/itslaw/judgements/regulation+1121495748+13+中华人民共和国公司法（2018）第二十一条" path="/itslaw/judgements/:conditions" paramsDesc={['筛选条件，见示例']} />
 
-## 新趣集 {#xin-qu-ji}
-
-> 官方 Feed 地址为: [https://xinquji.com/rss](https://xinquji.com/rss)
-
-### 今日最佳 {#xin-qu-ji-jin-ri-zui-jia}
-
-<Route author="kiddyuchina" example="/xinquji/today" path="/xinquji/today" notOperational="1" />
-
-### 今日国内 {#xin-qu-ji-jin-ri-guo-nei}
-
-<Route author="kiddyuchina" example="/xinquji/today/internal" path="/xinquji/today/internal" notOperational="1" />
-
 ## 有据 {#you-ju}
 
 ### 最新文章列表 {#you-ju-zui-xin-wen-zhang-lie-biao}
 
 <Route author="kdanfly" example="/chinafactcheck" path="/chinafactcheck" radar="1" />
-
-## 源仓库 {#yuan-cang-ku}
-
-### 源仓库更新 {#yuan-cang-ku-yuan-cang-ku-geng-xin}
-
-<Route author="vhxubo" example="/ku" path="/ku/:name?" paramsDesc={['默认为 `yuedu`']} notOperational="1">
-  | 阅读  | 异次元   | 海阔   |
-  | ----- | -------- | ------ |
-  | yuedu | yiciyuan | haikuo |
-</Route>
-
-## 智联招聘 {#zhi-lian-zhao-pin}
-
-### 搜索 {#zhi-lian-zhao-pin-sou-suo}
-
-<Route author="SunShinenny" example="/zhilian/台州/JavaScript" path="/zhilian/:city/:keyword" paramsDesc={['城市「如若无该城市数据，将会报错」','搜索关键词']} />
-
-## 中国工程科技知识中心 {#zhong-guo-gong-cheng-ke-ji-zhi-shi-zhong-xin}
-
-### 知识应用 {#zhong-guo-gong-cheng-ke-ji-zhi-shi-zhong-xin-zhi-shi-ying-yong}
-
-<Route author="nczitzk" example="/cktest/app" path="/cktest/app/:ctgroup?/:domain?" paramsDesc={['所属类别，见下表，默认为全部类别', '领域，见下表，默认为全部列表']} notOperational="1">
-  所属类别
-
-  | 专题知识服务 | 知识分析 | 知识工具 | 综合性知识服务 | 全部类别 |
-  | ------------ | -------- | -------- | -------------- | -------- |
-  | 2            | 3        | 4        | 1              | 0        |
-
-  领域
-
-  | 综合 | 农业 | 航天 | 地质 | 信息技术 | 林业 | 医药卫生 | 战略性新兴产业 | 能源 | 冶金 | 化工 | 地理信息 | 营养健康 | 工程科教图书 | 交通 | 创新设计 | 地理资源与生态 | 材料 | 气象 | 渔业 | 环境工程 | 试验技术 | 中草药 | 水利 | 海洋工程 |
-  | ---- | ---- | ---- | ---- | -------- | ---- | -------- | -------------- | ---- | ---- | ---- | -------- | -------- | ------------ | ---- | -------- | -------------- | ---- | ---- | ---- | -------- | -------- | ------ | ---- | -------- |
-</Route>
-
-### 产业政策 {#zhong-guo-gong-cheng-ke-ji-zhi-shi-zhong-xin-chan-ye-zheng-ce}
-
-<Route author="nczitzk" example="/cktest/policy" path="/cktest/policy" notOperational="1" />
 
 ## 中国工商银行 {#zhong-guo-gong-shang-yin-hang}
 
@@ -1309,28 +1046,6 @@ Specify options (in the format of query string) in parameter `routeParams` param
   | ------ | ---------- | -------- | -------- | -------- | -------- | -------- | -------- |
   | short  | zs         | xh       | xc       | xhmr     | xhmc     | xcmr     | xcmc     |
 </Route>
-
-## 中国邮政速递物流 {#zhong-guo-you-zheng-su-di-wu-liu}
-
-### 新闻 {#zhong-guo-you-zheng-su-di-wu-liu-xin-wen}
-
-<Route author="luyuhuang" example="/ems/news" path="/ems/news" radar="1" notOperational="1" />
-
-### 苹果邮件 {#zhong-guo-you-zheng-su-di-wu-liu-ping-guo-you-jian}
-
-<Route author="Fatpandac" example="/ems/apple/EZ319397281CN" path="/ems/apple/:id" paramsDesc={['苹果邮件编号']} notOperational="1" />
-
-## 自如 {#zi-ru}
-
-### 房源 {#zi-ru-fang-yuan}
-
-<Route author="DIYgod" example="/ziroom/room/sh/1/2/五角场" path="/ziroom/room/:city/:iswhole/:room/:keyword" paramsDesc={['城市, 北京 bj; 上海 sh; 深圳 sz; 杭州 hz; 南京 nj; 广州 gz; 成都 cd; 武汉 wh; 天津 tj', '是否整租', '房间数', '关键词']} />
-
-## 佐川急便 {#zuo-chuan-ji-bian}
-
-### 查询快递 {#zuo-chuan-ji-bian-cha-xun-kuai-di}
-
-<Route author="nczitzk" example="/sagawa/359554419420" path="/sagawa/:id" paramsDesc={['快递编号']} notOperational="1" />
 
 ## はてな {#%E3%81%AF%E3%81%A6%E3%81%AA}
 

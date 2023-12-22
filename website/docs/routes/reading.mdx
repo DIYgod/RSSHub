@@ -38,24 +38,6 @@
 
 <Route author="EthanWng97" example="/inoreader/rss/1005137674/user-favorites" path="/inoreader/rss/:user/:tag" paramsDesc={['user id, the interger after user/ in the example URL','tag, the string after tag/ in the example URL']} />
 
-## kakuyomu {#kakuyomu}
-
-### episode {#kakuyomu-episode}
-
-<Route author="huangliangshusheng" example="/kakuyomu/episode/1177354054883783581" path="/kakuyomu/episode/:id" paramsDesc={['Novel id, can be found in URL']} notOperational="1">
-  Eg: [https://kakuyomu.jp/works/1177354054883783581](https://kakuyomu.jp/works/1177354054883783581)
-</Route>
-
-## Kindle Unlimited {#kindle-unlimited}
-
-### 会员限时免费读书单 {#kindle-unlimited-hui-yuan-xian-shi-mian-fei-du-shu-dan}
-
-<Route author="nczitzk" example="/amazon/ku/this" path="/amazon/ku/:type?" paramsDesc={['书单类型，见下表']} notOperational="1">
-  | 本月书单 | 好评返场 | 次月预告 |
-  | -------- | -------- | -------- |
-  | this     | back     | next     |
-</Route>
-
 ## Literotica {#literotica}
 
 ### New Stories {#literotica-new-stories}
@@ -162,12 +144,6 @@
   | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 </Route>
 
-## 爱下电子书 {#ai-xia-dian-zi-shu}
-
-### 最新章节 {#ai-xia-dian-zi-shu-zui-xin-zhang-jie}
-
-<Route author="JeasonLau Maecenas" example="/axdzs/诡秘之主" path="/axdzs/:novel" paramsDesc={['小说的中文名, 可在对应小说页 URL 中找到']} />
-
 ## 笔趣阁 {#bi-qu-ge}
 
 :::tip
@@ -216,12 +192,6 @@
   :::
 </Route>
 
-## 博客来 {#bo-ke-lai}
-
-### 新书出版 {#bo-ke-lai-xin-shu-chu-ban}
-
-<Route author="CokeMine" example="/bookscomtw/newbooks/books_nbtopm_15" path="/bookscomtw/newbooks/:category" paramsDesc={['书籍类型 category, 可在对应博客来新书页 URL 中找到']} notOperational="1" />
-
 ## 超星 {#chao-xing}
 
 ### 期刊 {#chao-xing-qi-kan}
@@ -242,26 +212,6 @@
   :::
 </Route>
 
-## 吹牛部落 {#chui-niu-bu-luo}
-
-### 栏目 {#chui-niu-bu-luo-lan-mu}
-
-<Route author="LogicJake" example="/chuiniu/column/0b1c4cf6e7f24e8da11e37882de73704" path="/chuiniu/column/:id" paramsDesc={['栏目 id, 可在对应栏目页 URL 中找到']} notOperational="1">
-  :::warning
-  正文内容需要用户登录后的 x-member 值，详情见部署页面的配置模块。若无相关配置或 x-member 失效，则只显示文章摘要。
-  :::
-</Route>
-
-### 专栏列表 {#chui-niu-bu-luo-zhuan-lan-lie-biao}
-
-<Route author="LogicJake" example="/chuiniu/column_list" path="/chuiniu/column_list" notOperational="1" />
-
-## 刺猬猫 {#ci-wei-mao}
-
-### 章节 {#ci-wei-mao-zhang-jie}
-
-<Route author="Netrvin" example="/ciweimao/chapter/100045750" path="/ciweimao/chapter/:id" paramsDesc={['小说 id, 可在对应小说页 URL 中找到']} notOperational="1" />
-
 ## 单向空间 {#dan-xiang-kong-jian}
 
 ### 单读 {#dan-xiang-kong-jian-dan-du}
@@ -271,22 +221,6 @@
   | ---- | ---- | ---- | ---- | ------ | ---- |
   | 0    | 1    | 2    | 3    | 4      | 6    |
 </Route>
-
-## 稻草人书屋 {#dao-cao-ren-shu-wu}
-
-### 章节更新 {#dao-cao-ren-shu-wu-zhang-jie-geng-xin}
-
-<Route author="JeasonLau" example="/dcrsw/zhongjidouluo/2" path="/dcrsw/:name/:count?" paramsDesc={['小说名，可在对应小说页URL中找到', '显示的章节数，缺省为`3`']} notOperational="1">
-  :::warning
-  count 的取值范围为 1-12，为防止请求次数过多，推荐设置为 5 以下。
-  :::
-</Route>
-
-## 第一版主 {#di-yi-ban-zhu}
-
-### 小说 {#di-yi-ban-zhu-xiao-shuo}
-
-<Route author="x1a0xv4n" example="/novel/d1bz/2/2608_6" path="/novel/d1bz/:category/:id" paramsDesc={['小说分类，可在对应小说页 URL 中找到，例如`2`', '小说id，可在对应小说页 URL 中找到，例如`2608_6`']} notOperational="1" />
 
 ## 东立出版 {#dong-li-chu-ban}
 
@@ -339,27 +273,11 @@
 
 <Route author="nczitzk" example="/kongfz/shop/238901/1" path="/kongfz/shop/:id/:cat?" paramsDesc={['店铺 id, 可在对应店铺页 URL 中找到', '分类 id，可在对应分类页 URL 中找到，默认为店铺最新上架']} />
 
-## 快眼看书 {#kuai-yan-kan-shu}
-
-### 小说更新 {#kuai-yan-kan-shu-xiao-shuo-geng-xin}
-
-<Route author="squkw" example="/novel/booksky/98619" path="/novel/booksky/:id" paramsDesc={['小说 id, 可在对应小说页 URL 中找到, 例如 `98619`']} notOperational="1">
-  举例网址：`http://booksky.so/BookDetail.aspx?Level=1&bid=98619`
-</Route>
-
 ## 哩哔轻小说 {#li-bi-qing-xiao-shuo}
 
 ### 小说更新 {#li-bi-qing-xiao-shuo-xiao-shuo-geng-xin}
 
 <Route author="misakicoca" path="/linovelib/novel/:id" example="/linovelib/novel/2547" paramsDesc={['小说 id，对应书架开始阅读 URL 中找到']} anticrawler="1" />
-
-## 飘天文学 {#piao-tian-wen-xue}
-
-### 章节 {#piao-tian-wen-xue-zhang-jie}
-
-<Route author="LJason77" example="/novel/ptwxz/10/10272" path="/novel/ptwxz/:id1/:id2" paramsDesc={['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `10`', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `10272`']} notOperational="1">
-  举例网址：`https://www.ptwxz.com/bookinfo/10/10272.html`
-</Route>
 
 ## 起点 {#qi-dian}
 
@@ -382,24 +300,6 @@
 ### 作者 {#qi-dian-zuo-zhe}
 
 <Route author="miles170" example="/qidian/author/9639927" path="/qidian/author/:id" paramsDesc={['作者 id, 可在作者页面 URL 找到']} />
-
-## 起点图 {#qi-dian-tu}
-
-### 首订 {#qi-dian-tu-shou-ding}
-
-<Route author="nczitzk" example="/qidiantu/shouding" path="/qidiantu/shouding" notOperational="1" />
-
-### 榜单 {#qi-dian-tu-bang-dan}
-
-<Route author="nczitzk" example="/qidiantu" path="/qidiantu/:category?/:type?/:is_history?" paramsDesc={['分类', '类型', '是否查看历史榜单，填写 true/yes 表示是，默认否']} notOperational="1">
-  :::tip
-  参数 **是否查看历史榜单** 设置为 `true` `yes` `t` `y` 等值后，RSS 会返回历史榜单。
-
-  如 [`/qidiantu/1/1/t`](https://rsshub.app/qidiantu/1/1/t) 将会返回 [起点首页 - 封推 的历史推荐记录](https://www.qidiantu.com/bang/1/1/) 的结果。
-
-  而 [`/qidiantu/1/1`](https://rsshub.app/qidiantu/1/1) 将会返回最新一期 [收藏增长 (起点首页 - 封推)](https://www.qidiantu.com/bang/1/1/2021-12-14) 的结果（编写文档时最新一期为 2021-12-14）。
-  :::
-</Route>
 
 ## 青空文庫 {#qing-kong-wen-ku}
 
@@ -437,31 +337,6 @@
 
 <Route author="eternasuno" example="/yomujp/n1" path="/yomujp/:level?" paramsDesc={['等级，n1~n6，为空默认全部']} />
 
-## 生物帮 {#sheng-wu-bang}
-
-### 所有栏目 {#sheng-wu-bang-suo-you-lan-mu}
-
-<Route author="xfangbao" example="/biobio/nature/cell-reports" path="/biobio/:column/:id" paramsDesc={['', '']} notOperational="1" />
-
-具体栏目编号，去网站上看标签
-
-| 网址                                             | 对应路由                            |
-| ------------------------------------------------ | ----------------------------------- |
-| `http://science.bio1000.com/ecology-environment` | /biobio/science/ecology-environment |
-| `http://www.bio1000.com/gnjz`                    | /biobio/gnjz                        |
-
-## 生物谷 {#sheng-wu-gu}
-
-### 所有栏目 {#sheng-wu-gu-suo-you-lan-mu}
-
-<Route author="xfangbao" example="/shengwugu/biology" path="/shengwugu/:uid/" paramsDesc={['分栏代码, 可在 URL 找到']} notOperational="1" />
-
-具体栏目编号，去网站上看标签
-
-| 网址                            | 对应路由           |
-| ------------------------------- | ------------------ |
-| `http://news.bioon.com/biology` | /shengwugu/biology |
-
 ## 书伴 {#shu-ban}
 
 ### 分类 {#shu-ban-fen-lei}
@@ -470,14 +345,6 @@
   | 每周一书 | 使用技巧 | 图书推荐 | 新闻速递 | 精选短文 |
   | -------- | -------- | -------- | -------- | -------- |
   | weekly   | skills   | books    | news     | essay    |
-</Route>
-
-## 文学迷 {#wen-xue-mi}
-
-### 小说更新 {#wen-xue-mi-xiao-shuo-geng-xin}
-
-<Route author="lengthmin" example="/novel/wenxuemi/6/6144" path="/novel/wenxuemi/:id1/:id2" paramsDesc={['小说网站链接倒数第二部分的数字, 可在对应小说页 URL 中找到, 例如 `6`', '小说网站链接最后的数字, 可在对应小说页 URL 中找到, 例如 `6144`']} notOperational="1">
-  举例网址：`https://www.wenxuemi.com/files/article/html/6/6144/`
 </Route>
 
 ## 虛詞 {#xu-ci}
@@ -489,14 +356,6 @@
 ### 作者 {#xu-ci-zuo-zhe}
 
 <Route author="LogicJake" example="/p-articles/contributors/朗天" path="/p-articles/contributors/:author" paramsDesc={['作者 id, 可在作者页面 URL 找到']} />
-
-## 斋书苑 {#zhai-shu-yuan}
-
-### 最新章节 {#zhai-shu-yuan-zui-xin-zhang-jie}
-
-<Route author="suiyuran" example="/novel/zhaishuyuan/17858" path="/novel/zhaishuyuan/:id" paramsDesc={['小说 id, 可在对应小说页 URL 中找到, 例如 `17858`']} radar="1" notOperational="1">
-  举例网址：`https://www.zhaishuyuan.com/book/17858`
-</Route>
 
 ## 纵横 {#zong-heng}
 

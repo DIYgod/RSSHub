@@ -25,16 +25,6 @@
   Return results from 2020
 </Route>
 
-## American Chemistry Society {#american-chemistry-society}
-
-### Journal {#american-chemistry-society-journal}
-
-<Route author="nczitzk" example="/acs/journal/jacsat" path="/aom/journal/:id" paramsDesc={['Journal id, can be found in URL']} supportScihub="1">
-  :::tip
-  See [Browse Content](https://pubs.acs.org)
-  :::
-</Route>
-
 ## American Economic Association {#american-economic-association}
 
 ### Journal {#american-economic-association-journal}
@@ -133,12 +123,6 @@
   | -------- | ---------------------------- | ------------------ | -------------------------- | ------------------------ | ----------------------------------- |
   | consumer | energy-resources-industrials | financial-services | government-public-services | life-sciences-healthcare | technology-media-telecommunications |
 </Route>
-
-## elife {#elife}
-
-### Latest Research - Research by Subject {#elife-latest-research-research-by-subject}
-
-<Route author="emdoe" example="/elife/cell-biology" path="/elife/:subject" paramsDesc={['topic name', 'obtain it from the homepage. `latest` will include all topics.']} supportScihub="1" notOperational="1" />
 
 ## ELSEVIER {#elsevier}
 
@@ -422,14 +406,6 @@ You can get all short name of a journal from [https://www.nature.com/siteindex](
 ### Journal {#springer-journal}
 
 <Route author="Derekmini TonyRL" example="/springer/journal/10450" path="/springer/journal/:journal" paramsDesc={['Journal Code, the number in the URL from the journal homepage']} radar="1" />
-
-## Stork 文献鸟订阅 {#stork-wen-xian-niao-ding-yue}
-
-### 关键词 {#stork-wen-xian-niao-ding-yue-guan-jian-ci}
-
-<Route author="xraywu" example="/stork/keyword/409159/R4j3Hbn5ia" path="/stork/keyword/:trackID/:displayKey" paramsDesc={['关键词订阅 URL 上的 trackID 参数','关键词订阅 URL 上的  displayKey 参数']} notOperational="1">
-  在 Stork 上注册并订阅关键词后，在 `我的` -> `关键词` 中可找到对应关键词的订阅 URL。URL 后的两个参数即为路由参数。
-</Route>
 
 ## Telecompaper {#telecompaper}
 
