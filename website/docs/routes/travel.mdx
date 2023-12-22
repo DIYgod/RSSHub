@@ -10,49 +10,11 @@
 
 <Route author="Fatpandac" example="/12306/2022-02-19/重庆/永川东" path="/12306/:date/:from/:to/:type?" paramsDesc={['时间，格式为（YYYY-MM-DD）', '始发站', '终点站', '售票类型，成人和学生可选，默认为成人']} />
 
-## All the Flight Deals {#all-the-flight-deals}
-
-### Flight Deals {#all-the-flight-deals-flight-deals}
-
-<Route author="HenryQW" path="/atfd/:locations/:nearby?" example="/atfd/us+new%20york,gb+london/1" paramsDesc={['the departing city, consists of an 「ISO 3166-1 country code」 and a 「city name」.  Origin\'s ISO 3166-1 country code + city name, eg. `us+new york`, [https://rsshub.app/atfd/us+new york](https://rsshub.app/atfd/us+new%20york). Multiple origins are supported via a comma separated string, eg. `us+new york,gb+london`, [https://rsshub.app/atfd/us+new york,gb+london/](https://rsshub.app/atfd/us+new%20york,gb+london/).', 'whether includes nearby airports, optional value of 0 or 1, default to 0 (exclude nearby airports)']} notOperational="1">
-  For ISO 3166-1 country codes please refer to [Wikipedia ISO\_3166-1](https://en.wikipedia.org/wiki/ISO_3166-1)
-
-  :::tip
-  If the city name contains a space like `Mexico City`, replace the space with `%20`, `Mexico%20City`.
-  :::
-</Route>
-
 ## Brooklyn Museum 纽约布鲁克林博物馆 {#brooklyn-museum-niu-yue-bu-lu-ke-lin-bo-wu-guan}
 
 ### Exhibitions {#brooklyn-museum-niu-yue-bu-lu-ke-lin-bo-wu-guan-exhibitions}
 
 <Route author="chazeon" example="/brooklynmuseum/exhibitions" path="/brooklynmuseum/exhibitions/:state?" paramsDesc={['展览进行的状态：`current` 对应展览当前正在进行，`past` 对应过去的展览，`upcoming` 对应即将举办的展览，默认为 `current`']} />
-
-## Hopper {#hopper}
-
-### Flight Deals {#hopper-flight-deals}
-
-<Route author="HenryQW" path="/hopper/:lowestOnly/:from/:to?" example="/hopper/1/LHR/PEK" paramsDesc={['set to `1` will return the cheapest deal only, instead of all deals, so you don\'t get spammed', 'origin airport IATA code', 'destination airport IATA code, if unset the destination will be set to `anywhere`']} notOperational="1">
-  This route returns a list of flight deals (in most cases, 6 flight deals) for a period defined by Hopper's algorithm, which means the travel date will be totally random (could be tomorrow or 10 months from now).
-
-  For airport IATA code please refer to [Wikipedia List of airports by IATA code](https://en.wikipedia.org/wiki/List_of_airports_by_IATA_code:_A)
-</Route>
-
-## iMuseum {#imuseum}
-
-### 展览信息 {#imuseum-zhan-lan-xin-xi}
-
-<Route author="sinchang" example="/imuseum/shanghai/all" path="/imuseum/:city/:type?" paramsDesc={['如 shanghai, beijing', '不填则默认为 `all`']} notOperational="1">
-  | 全部 | 最新   | 热门 | 即将结束  | 即将开始 | 已结束   |
-  | ---- | ------ | ---- | --------- | -------- | -------- |
-  | all  | latest | hot  | end\_soon | coming   | outdated |
-</Route>
-
-## Museum of Contemporary Art Chicago 芝加哥当代艺术博物馆 {#museum-of-contemporary-art-chicago-zhi-jia-ge-dang-dai-yi-shu-bo-wu-guan}
-
-### Exhibitions {#museum-of-contemporary-art-chicago-zhi-jia-ge-dang-dai-yi-shu-bo-wu-guan-exhibitions}
-
-<Route author="chazeon" example="/mcachicago/exhibitions" path="/mcachicago/exhibitions" notOperational="1" />
 
 ## National Geographic {#national-geographic}
 
@@ -65,12 +27,6 @@
 ### Exhibitions {#new-museum-niu-yue-xin-mei-shu-guan-exhibitions}
 
 <Route author="chazeon" example="/newmuseum/exhibitions" path="/newmuseum/exhibitions" />
-
-## The Guggenheim Museums and Foundation {#the-guggenheim-museums-and-foundation}
-
-### Solomon R. Guggenheim Museum 纽约古根海姆基金会 - Exhibitions {#the-guggenheim-museums-and-foundation-solomon-r-guggenheim-museum-niu-yue-gu-gen-hai-mu-ji-jin-hui-exhibitions}
-
-<Route author="chazeon" example="/guggenheim/exhibitions" path="/guggenheim/exhibitions" notOperational="1" />
 
 ## 飞客茶馆 {#fei-ke-cha-guan}
 
@@ -157,16 +113,6 @@
 ### 服务公告 {#zhong-guo-guo-ji-hang-kong-gong-si-fu-wu-gong-gao}
 
 <Route author="LandonLi" example="/airchina/announcement" path="/airchina/announcement" radar="1" />
-
-## 中国美术馆 {#zhong-guo-mei-shu-guan}
-
-### 美术馆新闻 {#zhong-guo-mei-shu-guan-mei-shu-guan-xin-wen}
-
-<Route author="HenryQW" example="/namoc/announcement" path="/namoc/:type" paramsDesc={['新闻类型， 可选如下']} notOperational="1">
-  | 通知公告     | 新闻 | 媒体联报 | 展览预告   | 焦点专题 |
-  | ------------ | ---- | -------- | ---------- | -------- |
-  | announcement | news | media    | exhibition | specials |
-</Route>
 
 ## 走进日本 {#zou-jin-ri-ben}
 

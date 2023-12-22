@@ -51,11 +51,7 @@
             { title: '经济信息工程学院 - 学院新闻', docs: 'https://docs.rsshub.app/routes/university#xi-nan-cai-jing-da-xue', source: '/index/xyxw.htm', target: '/swufe/seie/xyxw' },
         ],
     },
-    'ishuhui.com': { _name: '鼠绘漫画', www: [{ title: '鼠绘漫画', docs: 'https://docs.rsshub.app/routes/anime#shu-hui-man-hua', source: '/comics/anime/:id', target: '/shuhui/comics/:id' }] },
     'www.chicagotribune.com': { _name: 'Chicago Tribune', www: [{ title: 'Chicago Tribune', docs: 'https://docs.rsshub.app/routes/traditional_media#chicago-tribune', source: '/' }] },
-    'haimaoba.com': { _name: '海猫吧', www: [{ title: '漫画更新', docs: 'https://docs.rsshub.app/routes/anime#hai-mao-ba', source: '/catalog/:id', target: '/haimaoba/:id' }] },
-    'pgyer.com': { _name: '蒲公英应用分发', www: [{ title: 'app更新', docs: 'https://docs.rsshub.app/routes/program-update#pu-gong-ying-ying-yong-fen-fa', source: '/:app', target: '/pgyer/:app' }] },
-    'wineyun.com': { _name: '酒云网', www: [{ title: '最新商品', docs: 'https://docs.rsshub.app/routes/other#jiu-yun-wang', source: ['/:category'], target: '/wineyun/:category' }] },
     'playstation.com': {
         _name: 'PlayStation',
         store: [
@@ -74,14 +70,6 @@
             { title: '最新消息', docs: 'https://docs.rsshub.app/routes/game#guai-wu-lie-ren-shi-jie', source: ['', '/*tpath'], target: '/mhw/news' },
         ],
     },
-    'vgtime.com': {
-        _name: '游戏时光',
-        www: [
-            { title: '新闻', docs: 'https://docs.rsshub.app/routes/game#you-xi-shi-guang', source: '/topic/index.', target: '/vgtime/news' },
-            { title: '游戏发售表', docs: 'https://docs.rsshub.app/routes/game#you-xi-shi-guang', source: '/game/release.', target: '/vgtime/release' },
-            { title: '关键词资讯', docs: 'https://docs.rsshub.app/routes/game#you-xi-shi-guang', source: '/search/list.', target: (params, url) => `/vgtime/keyword/${new URL(url).searchParams.get('keyword')}` },
-        ],
-    },
     'bing.com': { _name: 'Bing', www: [{ title: '每日壁纸', docs: 'https://docs.rsshub.app/routes/picture#bing-bi-zhi', source: '', target: '/bing' }] },
     'wegene.com': {
         _name: 'WeGene',
@@ -90,7 +78,6 @@
             { title: '栏目', docs: 'https://docs.rsshub.app/routes/other#wegene', source: '/crowdsourcing', target: '/wegene/column/all/all' },
         ],
     },
-    '3ycy.com': { _name: '三界异次元', www: [{ title: '最近更新', docs: 'https://docs.rsshub.app/routes/anime#san-jie-yi-ci-yuan', source: '/', target: '/3ycy/home' }] },
     'emi-nitta.net': {
         _name: 'Emi Nitta',
         '.': [
@@ -98,8 +85,6 @@
             { title: '新闻', docs: 'https://docs.rsshub.app/routes/other#xin-tian-hui-hai-guan-fang-wang-zhan', source: '/contents/news', target: '/emi-nitta/news' },
         ],
     },
-    'alter-shanghai.cn': { _name: 'Alter', '.': [{ title: '新闻', docs: 'https://docs.rsshub.app/routes/shopping#alter-zhong-guo', source: '/cn/news', target: '/alter-cn/news' }] },
-    'leboncoin.fr': { _name: 'leboncoin', www: [{ title: 'ads', docs: 'https://docs.rsshub.app/routes/shopping#leboncoin', source: '/recherche', target: (params, url) => '/leboncoin/ad/' + url.split('?')[1] }] },
     'yuancheng.work': {
         _name: '远程.work',
         '.': [
@@ -159,7 +144,6 @@
             },
         ],
     },
-    'zhaishuyuan.com': { _name: '斋书苑', '.': [{ title: '最新章节', docs: 'https://docs.rsshub.app/routes/reading#zhai-shu-yuan', source: ['/book/:id', '/read/:id'], target: '/novel/zhaishuyuan/:id' }] },
     'hbut.edu.cn': {
         _name: '湖北工业大学',
         www: [
@@ -282,7 +266,6 @@
             { title: '首页 / 自考快递', docs: 'https://docs.rsshub.app/routes/government#bei-jing-jiao-yu-kao-shi-yuan', source: ['/zkkd'], target: '/gov/beijing/bjeea/zkkd' },
         ],
     },
-    'ems.com.cn': { _name: '中国邮政速递物流', www: [{ title: '新闻', docs: 'https://docs.rsshub.app/routes/other#zhong-guo-you-zheng-su-di-wu-liu', source: '/aboutus/xin_wen_yu_shi_jian', target: '/ems/news' }] },
     'nppa.gov.cn': {
         _name: '国家新闻出版署',
         www: [
@@ -318,7 +301,6 @@
     },
     'eventernote.com': { _name: 'Eventernote', www: [{ title: '声优活动及演唱会', docs: 'https://docs.rsshub.app/routes/anime#eventernote', source: '/actors/:name/:id/events', target: '/eventernote/actors/:name/:id' }] },
     'huya.com': { _name: '虎牙直播', '.': [{ title: '直播间开播', docs: 'https://docs.rsshub.app/routes/live#hu-ya-zhi-bo-zhi-bo-jian-kai-bo', source: '/:id', target: '/huya/live/:id' }] },
-    'craigslist.org': { _name: 'Craigslist', '.': [{ title: '商品搜索列表', docs: 'https://docs.rsshub.app/routes/shopping#craigslist' }] },
     'scboy.com': {
         _name: 'scboy 论坛',
         www: [
@@ -404,7 +386,6 @@
             { title: '日记评论区', docs: 'https://docs.rsshub.app/routes/social-media#fur-affinity', source: '/journal/:id/', target: '/furaffinity/journal_comments/:id' },
         ],
     },
-    'macwk.com': { _name: 'MacWk', '.': [{ title: '应用更新', docs: 'https://docs.rsshub.app/routes/program-update#macwk', source: '/soft/:name', target: '/macwk/soft/:name' }] },
     'foreverblog.cn': {
         _name: 'foreverblog',
         www: [

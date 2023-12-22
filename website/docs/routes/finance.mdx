@@ -77,12 +77,6 @@
 
 <Route author="josh" example="/bloomberg/authors/ARbTQlRLRjE/matthew-s-levine" path="/bloomberg/authors/:id/:slug/:source?" paramsDesc={['Author ID, can be found in URL', 'Author Slug, can be found in URL', 'Data source, either `api` or `rss`,`api` by default']} anticrawler="1" radar="1" />
 
-## CFD {#cfd}
-
-### Indices Dividend Adjustment {#cfd-indices-dividend-adjustment}
-
-<Route author="HenryQW" example="/cfd/div_gbp" path="/cfd/div_gbp" notOperational="1" />
-
 ## DL NEWS {#dl-news}
 
 ### All Articles {#dl-news-all-articles}
@@ -321,18 +315,6 @@ TokenInsight also provides official RSS, you can take a look at [https://api.tok
 
 ## World Economic Forum 世界经济论坛 {#world-economic-forum-shi-jie-jing-ji-lun-tan}
 
-### Report {#world-economic-forum-shi-jie-jing-ji-lun-tan-report}
-
-<Route author="nczitzk" example="/weforum/report" path="/weforum/report/:lang?/:year?/:platform?" paramsDesc={['Language, see below, `en` by default', 'Year, filter by year, all by default', 'Platform, filter by platform, all by default']} notOperational="1">
-  Languages
-
-  | English | Español | Français | 中文 | 日本語 |
-  | ------- | ------- | -------- | ---- | ------ |
-  | en      | es      | fr       | cn   | jp     |
-
-  See filters in [Report](https://www.weforum.org/reports) for Year and Platform these two parameters.
-</Route>
-
 ## 巴伦周刊中文版 {#ba-lun-zhou-kan-zhong-wen-ban}
 
 ### 栏目 {#ba-lun-zhou-kan-zhong-wen-ban-lan-mu}
@@ -530,7 +512,7 @@ TokenInsight also provides official RSS, you can take a look at [https://api.tok
 
 ### 分类 {#mei-jing-wang-fen-lei}
 
-<Route author="nczitzk" example="/nbd" path="/nbd/:id?" paramsDesc={['分类 id，见下表，默认为要闻']} notOperational="1">
+<Route author="nczitzk" example="/nbd" path="/nbd/:id?" paramsDesc={['分类 id，见下表，默认为要闻']}>
   | 头条 | 要闻 | 图片新闻 | 推荐 |
   | ---- | ---- | -------- | ---- |
   | 2    | 3    | 4        | 5    |
@@ -648,24 +630,6 @@ TokenInsight also provides official RSS, you can take a look at [https://api.tok
   | ---- | ---------- | ---- |
   | 80   | 90         | 95   |
 </Route>
-
-## 首席经济学家论坛 {#shou-xi-jing-ji-xue-jia-lun-tan}
-
-### 最新更新 {#shou-xi-jing-ji-xue-jia-lun-tan-zui-xin-geng-xin}
-
-<Route author="FledgeXu" example="/chinacef" path="/chinacef" notOperational="1" />
-
-### 专家 {#shou-xi-jing-ji-xue-jia-lun-tan-zhuan-jia}
-
-<Route author="kdanfly" example="/chinacef/17/" path="/chinacef/:experts_id/" paramsDesc={['专家编号']} radar="1" notOperational="1">
-  | 李迅雷 | 夏斌 |
-  | ------ | ---- |
-  | 17     | 35   |
-</Route>
-
-### 金融热点 {#shou-xi-jing-ji-xue-jia-lun-tan-jin-rong-re-dian}
-
-<Route author="kdanfly" example="/chinacef/portal/hot" path="/chinacef/portal/hot" radar="1" notOperational="1" />
 
 ## 淘股吧 {#tao-gu-ba}
 
