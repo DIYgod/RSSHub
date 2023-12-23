@@ -1,3 +1,0 @@
-{{ if image }}
-<a href="{{ link }}"><img src="{{ image }}"></a>
-{{ /if }}
