@@ -1401,6 +1401,9 @@
     "/consumer/:category?/:language?/:keyword?": [
         "nczitzk"
     ],
+    "/consumer/shopping-guide/:category?/:language?": [
+        "TonyRL"
+    ],
     "/cool18/:id?/:type?/:keyword?": [
         "nczitzk"
     ],
