@@ -6,12 +6,6 @@
 
 <Route author="junfengP" example="/005tv/zx/latest" path="/005tv/zx/latest" />
 
-## 1draw #深夜の真剣お絵描き 60 分一本勝負 {#1draw-shen-ye-%E3%81%AE-zhen-jian-%E3%81%8A-hui-miao-%E3%81%8D-60-fen-yi-ben-sheng-fu}
-
-### 投稿一览 {#1draw-shen-ye-%E3%81%AE-zhen-jian-%E3%81%8A-hui-miao-%E3%81%8D-60-fen-yi-ben-sheng-fu-tou-gao-yi-lan}
-
-<Route author="jackyu1996" path="/1draw/" example="/1draw/" notOperational="1" />
-
 ## 78 动漫 {#78-dong-man}
 
 ### 新品速递 {#78-dong-man-xin-pin-su-di}
@@ -102,16 +96,6 @@
 ### 搜尋 {#anime1-sou-xun}
 
 <Route author="maple3142" example="/anime1/search/兔女郎學姊" path="/anime1/search/:keyword" paramsDesc={['关键字']} radar="1" />
-
-## Animen 动漫平台 {#animen-dong-man-ping-tai}
-
-### news {#animen-dong-man-ping-tai-news}
-
-<Route author="LogicJake" example="/animen/news/zx" path="/animen/news/:type" paramsDesc={['板块类型']} notOperational="1">
-  | 最新 | 焦点 | 动画 | 漫画 | 游戏 | 小说 | 真人版 | 活动 | 音乐 | 访谈 | 其他 | 新闻稿 | 懒人包 | 公告 |
-  | ---- | ---- | ---- | ---- | ---- | ---- | ------ | ---- | ---- | ---- | ---- | ------ | ------ | ---- |
-  | zx   | jd   | dh   | mh   | yx   | xs   | zrb    | hd   | yy   | ft   | qt   | xwg    | lrb    | gg   |
-</Route>
 
 ## Anitama {#anitama}
 
@@ -279,21 +263,41 @@
   | all  | hobby | model |
 </Route>
 
-### 浏览周边 {#hpoi-shou-ban-wei-ji-liu-lan-zhou-bian}
+### 所有周边 {#hpoi-shou-ban-wei-ji-suo-you-zhou-bian}
 
-<Route author="howel52 DIYgod" path="/hpoi/:category/:words" example="/hpoi/charactar/1246512" paramsDesc={['分类, 见下表', '角色/作品 ID']} notOperational="1">
-  | 角色手办  | 作品手办 |
-  | --------- | -------- |
-  | charactar | works    |
+<Route author="DIYgod" path="/hpoi/items/all/:order?" example="/hpoi/items/all" paramsDesc={['排序, 见下表，默认为 add']}>
+  | 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |
+  | ------- | ---- | ------ | -------- | -------- | ------ |
+  | release | add  | hits   | hits7Day | hitsDay  | rating |
+</Route>
+
+### 角色周边 {#hpoi-shou-ban-wei-ji-jue-se-zhou-bian}
+
+<Route author="DIYgod" path="/hpoi/items/character/:id/:order?" example="/hpoi/items/character/1035374" paramsDesc={['角色 ID', '排序, 见下表，默认为 add']}>
+  | 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |
+  | ------- | ---- | ------ | -------- | -------- | ------ |
+  | release | add  | hits   | hits7Day | hitsDay  | rating |
+</Route>
+
+### 作品周边 {#hpoi-shou-ban-wei-ji-zuo-pin-zhou-bian}
+
+<Route author="DIYgod" path="/hpoi/items/work/:id/:order?" example="/hpoi/items/work/4117491" paramsDesc={['作品 ID', '排序, 见下表，默认为 add']}>
+  | 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |
+  | ------- | ---- | ------ | -------- | -------- | ------ |
+  | release | add  | hits   | hits7Day | hitsDay  | rating |
 </Route>
 
 ### 用户动态 {#hpoi-shou-ban-wei-ji-yong-hu-dong-tai}
 
-<Route author="luyuhuang DIYgod" path="/hpoi/user/:user_id/:caty" example="/hpoi/user/116297/buy" paramsDesc={['用户ID', '类别, 见下表']}>
+<Route author="DIYgod luyuhuang" path="/hpoi/user/:user_id/:caty" example="/hpoi/user/116297/buy" paramsDesc={['用户ID', '类别, 见下表']}>
   | 想买 | 预定     | 已入 | 关注 | 有过   |
   | ---- | -------- | ---- | ---- | ------ |
   | want | preorder | buy  | care | resell |
 </Route>
+
+### 热门推荐 {#hpoi-shou-ban-wei-ji-re-men-tui-jian}
+
+<Route author="DIYgod" path="/hpoi/bannerItem" example="/hpoi/bannerItem" />
 
 ## IDOLY PRIDE 偶像荣耀 {#idoly-pride-ou-xiang-rong-yao}
 
@@ -450,12 +454,6 @@
 
 <Route author="nczitzk" example="/rawkuma/manga/tensei-shitara-dai-nana-ouji-dattanode-kimamani-majutsu-o-kiwamemasu" path="/rawkuma/manga/:id" paramsDesc={['Manga ID, can be found in URL']} radar="1" />
 
-## say 花火 {#say-hua-huo}
-
-### 文章 {#say-hua-huo-wen-zhang}
-
-<Route author="junfengP" example="/sayhuahuo" path="/sayhuahuo" notOperational="1" />
-
 ## THBWiki {#thbwiki}
 
 ### Calendar {#thbwiki-calendar}
@@ -564,26 +562,6 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 <Route author="Fatpandac" example="/baozimh/comic/guowangpaiming-shiricaofu" path="/baozimh/comic/:name" paramsDesc={['漫画名称，在漫画链接可以得到(`comic/` 后的那段)']} />
 
-## 嘀哩嘀哩 - dilidili {#di-li-di-li-dilidili}
-
-### 嘀哩嘀哩番剧更新 {#di-li-di-li-dilidili-di-li-di-li-fan-ju-geng-xin}
-
-<Route author="SunShinenny" path="/dilidili/fanju/:id" example="/dilidili/fanju/onepunchman2" paramsDesc={['番剧id']} notOperational="1">
-  请打开对应番剧的纵览页 (非具体某集), 从 url 中最后一位查看番剧 id.(一般为英文)
-  除去 ' 海贼 ' 此类具有特殊页面的超长番剧，绝大多数页面都可以解析.
-  最适合用来追新番
-</Route>
-
-## 電撃オンライン {#dian-ji-%E3%82%AA%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%B3}
-
-### 最新記事 {#dian-ji-%E3%82%AA%E3%83%B3%E3%83%A9%E3%82%A4%E3%83%B3-zui-xin-ji-shi}
-
-<Route author="cssxsh" path="/dengekionline/:type?" example="/dengekionline/dps" paramsDesc={['新闻类别，如下表']} notOperational="1">
-  | All | PlayStation | Nintendo | Xbox      | PC  | Girl’sStyle | Arcade Web | App | Anime | Review | Rank |
-  | --- | ----------- | -------- | --------- | --- | ----------- | ---------- | --- | ----- | ------ | ---- |
-  |     | dps         | nintendo | microsoft | dpc | gstyle      | arcade     | app | anime | review | rank |
-</Route>
-
 ## 咚漫 {#dong-man}
 
 ### 漫画更新 {#dong-man-man-hua-geng-xin}
@@ -627,12 +605,6 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 ### 在线漫画 {#feng-zhi-dong-man-zai-xian-man-hua}
 
 <Route author="geeeeoff zytomorrow" path="/fffdm/manhua/:id/:cdn?" example="/fffdm/manhua/93" paramsDesc={['漫画ID。默认获取全部，建议使用通用参数limit获取指定数量', 'cdn加速器。默认5，当前可选1-5']} radar="1" />
-
-## 海猫吧 {#hai-mao-ba}
-
-### 漫画更新 {#hai-mao-ba-man-hua-geng-xin}
-
-<Route author="zytomorrow" path="/haimaoba/:id" example="/haimaoba/4026" paramsDesc={['漫画id，漫画主页的地址栏中最后一位数字']} radar="1" notOperational="1" />
 
 ## 禁漫天堂 {#jin-man-tian-tang}
 
@@ -728,12 +700,6 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 <Route author="junfengP" path="/manhuadb/:id" example="/manhuadb/comics/1711" paramsDesc={['漫画ID']} />
 
-## 漫画堆 {#man-hua-dui}
-
-### 漫画 {#man-hua-dui-man-hua}
-
-<Route author="geeeeoff" path="/manhuadui/manhua/:name/:serial?" example="/manhuadui/manhua/yiquanchaoren/1" paramsDesc={['漫画名称', '内容序号，部分漫画存在最新章节、原作、番外，根据页面顺序从1开始排序']} notOperational="1" />
-
 ## 漫小肆 {#man-xiao-si}
 
 ### 漫画更新 {#man-xiao-si-man-hua-geng-xin}
@@ -745,12 +711,6 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 ### 文章更新阅读 {#qing-zhi-guo-du-wen-zhang-geng-xin-yue-du}
 
 <Route author="nightmare-mio" path="/lightnovel/:keywords/:security_key" example="/lightnovel/歡迎來到實力至上主義的教室/3cfc2dc63f3575ee42e12823188ad1b5:1709125:0" paramsDesc={['关键字，可以模糊匹配，但最好精确匹配。默认为文章类型','cookie,由于文章有防爬，所以必须携带cookie请求。route中的cookie优先级高于环境变量cookie，取token中的security_key值']} radar="1" />
-
-## 三界异次元 {#san-jie-yi-ci-yuan}
-
-### 三界异次元 {#san-jie-yi-ci-yuan-san-jie-yi-ci-yuan}
-
-<Route author="luyuhuang" example="/3ycy/home" path="/3ycy/home" radar="1" notOperational="1" />
 
 ## 紳士漫畫 {#shen-shi-man-hua}
 
@@ -765,12 +725,6 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 ### 標籤更新 {#shen-shi-man-hua-biao-qian-geng-xin}
 
 <Route author="Gandum2077" example="/wnacg/tag/漢化" path="/wnacg/tag/:tag" paramsDesc={['標籤，即 URL 中的 `tag-`後的文字']} radar="1" />
-
-## 鼠绘漫画 {#shu-hui-man-hua}
-
-### 鼠绘漫画 {#shu-hui-man-hua-shu-hui-man-hua}
-
-<Route author="zytomorrow" path="/shuhui/comics/:id" example="/shuhui/comics/1" paramsDesc={['漫画id，漫画主页的地址栏中最后一位数字']} radar="1" notOperational="1" />
 
 ## 腾讯动漫 {#teng-xun-dong-man}
 
@@ -790,12 +744,6 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 <Route author="nczitzk" example="/qq/ac/comic/531490" path="/qq/ac/comic/:id" paramsDesc={['编号，可在对应页 URL 中找到']} radar="1" />
 
-## 忧郁的 loli {#you-yu-de-loli}
-
-### 文章 {#you-yu-de-loli-wen-zhang}
-
-<Route author="DIYgod kotoyuuko" example="/hhgal" path="/hhgal" notOperational="1" />
-
 ## 月幕 Galgame {#yue-mu-galgame}
 
 ### 文章 {#yue-mu-galgame-wen-zhang}
@@ -809,12 +757,6 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 ### 本月新作 {#yue-mu-galgame-ben-yue-xin-zuo}
 
 <Route author="SunBK201" example="/ymgal/game/release" path="/ymgal/game/release" radar="1" />
-
-## 终点分享 {#zhong-dian-fen-xiang}
-
-### 最新汉化 {#zhong-dian-fen-xiang-zui-xin-han-hua}
-
-<Route author="junfengP" example="/zdfx" path="/zdfx" notOperational="1" />
 
 ## アニメ新番組 {#%E3%82%A2%E3%83%8B%E3%83%A1-xin-fan-zu}
 

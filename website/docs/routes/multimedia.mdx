@@ -485,22 +485,6 @@ Official RSS: [https://eztv.io/ezrss.xml](https://eztv.io/ezrss.xml)
 
 <Route author="everyonus" example="/hentaimama/videos" path="/hentaimama/videos" />
 
-## IBC 岩手放送 {#ibc-yan-shou-fang-song}
-
-### イヤーマイッタマイッタ {#ibc-yan-shou-fang-song-%E3%82%A4%E3%83%A4%E3%83%BC%E3%83%9E%E3%82%A4%E3%83%83%E3%82%BF%E3%83%9E%E3%82%A4%E3%83%83%E3%82%BF}
-
-<Route author="fengkx" example="/ibc/maitta" path="/ibc/maitta" supportPodcast="1" radar="1" notOperational="1" />
-
-### ラジオ {#ibc-yan-shou-fang-song-%E3%83%A9%E3%82%B8%E3%82%AA}
-
-<Route author="nczitzk" example="/ibc/radio/maitta" path="/ibc/radio/:id?" paramsDesc={['Radio id, can be found in URL, イヤーマイッタマイッタ by default']} supportPodcast="1" notOperational="1">
-  :::tip
-  If you subscribe to [イヤーマイッタマイッタ](https://www.ibc.co.jp/radio/maitta/audio), the URL is `https://www.ibc.co.jp/radio/maitta/audio`. Intercept `maitta` between `https://www.ibc.co.jp/radio/` and `/audio/` as an argument, then the route will be [`/ibc/radio/maitta`](https://rsshub.app/ibc/radio/maitta).
-
-  If you subscribe to [火曜ワイド「境界トラブル解決ラジオ！](https://www.ibc.co.jp/radio/TochiKyokai/audio), the URL is `https://www.ibc.co.jp/radio/TochiKyokai/audio`. Intercept `TochiKyokai` between `https://www.ibc.co.jp/radio/` and `/audio/` as an argument, then the route is [`/ibc/radio/TochiKyokai`](https://rsshub.app/ibc/radio/TochiKyokai).
-  :::
-</Route>
-
 ## JavBus {#javbus}
 
 :::warning
@@ -873,48 +857,6 @@ JavDB 有多个备用域名，本路由默认使用永久域名 `https://javdb.c
   | uploads | favorites | listens | stream |
 </Route>
 
-## Mp4Ba {#mp4ba}
-
-### 影视分类 {#mp4ba-ying-shi-fen-lei}
-
-<Route author="SettingDust wolfyu1991" example="/mp4ba/6" path="/mp4ba/:param" paramsDesc={['类型']} supportBT="1" notOperational="1">
-  **类型参考这里**
-
-  | 电影 | 连续剧 | 动画 | 综艺 | 纪录片 |
-  | ---- | ------ | ---- | ---- | ------ |
-  | 6    | 7      | 15   | 20   | 24     |
-
-  | 动作片 | 喜剧片 | 爱情片 | 科幻片 | 恐怖片 |
-  | ------ | ------ | ------ | ------ | ------ |
-  | 8      | 9      | 10     | 11     | 12     |
-
-  | 剧情片 | 战争片 | 国产剧 | 港台剧 | 日韩剧 | 欧美剧 |
-  | ------ | ------ | ------ | ------ | ------ | ------ |
-  | 13     | 14     | 16     | 17     | 18     | 19     |
-</Route>
-
-### 影视搜索 {#mp4ba-ying-shi-sou-suo}
-
-<Route author="wolfyu1991" example="/mp4ba/复仇者联盟" path="/mp4ba/:keyword" paramsDesc={['搜索关键字']} supportBT="1" />
-
-## MQube {#mqube}
-
-### 全站最近更新 {#mqube-quan-zhan-zui-jin-geng-xin}
-
-<Route author="hoilc" example="/mqube/latest" path="/mqube/latest" radar="1" notOperational="1" />
-
-### 全站每日排行 {#mqube-quan-zhan-mei-ri-pai-hang}
-
-<Route author="hoilc" example="/mqube/top" path="/mqube/top" radar="1" notOperational="1" />
-
-### 个人最近更新 {#mqube-ge-ren-zui-jin-geng-xin}
-
-<Route author="hoilc" example="/mqube/user/mukamui_v_p" path="/mqube/user/:user" paramsDesc={['用户 ID, 可以在个人资料页的 URL 中找到']} radar="1" notOperational="1" />
-
-### 标签最近更新 {#mqube-biao-qian-zui-jin-geng-xin}
-
-<Route author="hoilc" example="/mqube/tag/UTAU" path="/mqube/tag/:tag" paramsDesc={['标签名称, 可参考`https://mqube.net/search/tag`']} radar="1" notOperational="1" />
-
 ## Netflav {#netflav}
 
 ### Index {#netflav-index}
@@ -1055,38 +997,6 @@ JavDB 有多个备用域名，本路由默认使用永久域名 `https://javdb.c
   -   `jp` (Japanese), for Pornhub in Japan [https://jp.pornhub.com](https://jp.pornhub.com) etc.
 </Route>
 
-## PRESTIGE (プレステージ 蚊香社) {#prestige-%E3%83%97%E3%83%AC%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8-wen-xiang-she}
-
-### シリーズ {#prestige-%E3%83%97%E3%83%AC%E3%82%B9%E3%83%86%E3%83%BC%E3%82%B8-wen-xiang-she-%E3%82%B7%E3%83%AA%E3%83%BC%E3%82%BA}
-
-<Route author="minimalistrojan" example="/prestige-av/series/847" path="/prestige-av/series/:mid/:sort?" paramsDesc={['Series number', 'Sorting, `near` by default']} puppeteer="1" notOperational="1">
-  | 人気順  | 新着順 | 発売日順 | タイトル順 | 価格の安い順 | 価格の高い順 |
-  | ------- | ------ | -------- | ---------- | ------------ | ------------ |
-  | popular | near   | date     | title      | low          | high         |
-</Route>
-
-## rs05 人生 05 电影 {#rs05-ren-sheng-05-dian-ying}
-
-### rs05 电影列表 {#rs05-ren-sheng-05-dian-ying-rs05-dian-ying-lie-biao}
-
-<Route author="monner-henster" example="/rs05/rs05" path="/rs05/rs05" notOperational="1" />
-
-## s-hentai {#s-hentai}
-
-### Category {#s-hentai-category}
-
-<Route author="nczitzk" example="/s-hentai" path="/hentai/:id?" paramsDesc={['id, see below, ready-to-download by default']} notOperational="1">
-  | Doujin | HCG | Games・Animes | Voices・ASMR | Ready to Download |
-  | ------ | --- | ------------- | ------------ | ----------------- |
-  | 1      | 2   | 3             | 4            | ready-to-download |
-</Route>
-
-## Sankaku Complex {#sankaku-complex}
-
-### Post {#sankaku-complex-post}
-
-<Route author="xyqfer" example="/sankakucomplex/post" path="/sankakucomplex/post" notOperational="1" />
-
 ## sexinsex {#sexinsex}
 
 ### 分区帖子 {#sexinsex-fen-qu-tie-zi}
@@ -1135,7 +1045,7 @@ JavDB 有多个备用域名，本路由默认使用永久域名 `https://javdb.c
 
 ### 字幕 {#sub-hd-zi-mu}
 
-<Route author="laampui nczitzk" example="/subhd/sub/new" path="/subhd/sub/:category?" paramsDesc={['分类，见下表，默认为最新']} notOperational="1">
+<Route author="laampui nczitzk" example="/subhd/sub/new" path="/subhd/sub/:category?" paramsDesc={['分类，见下表，默认为最新']}>
   | 最新字幕 | 热门字幕 | 剧集字幕 | 电影字幕 |
   | -------- | -------- | -------- | -------- |
   | new      | top      | tv       | movie    |
@@ -1213,23 +1123,11 @@ Refer to [https://developers.themoviedb.org/3/getting-started/languages](https:/
 
 <Route author="TonyRL" example="/u9a9/search/新片速递" path="/u3c3/search/:keyword/:preview?" paramsDesc={['Search keyword', 'Show image preview, off by default, non empty value means on']} supportBT="1" radar="1" />
 
-## Yahoo! テレビ {#yahoo!-%E3%83%86%E3%83%AC%E3%83%93}
-
-### 番組検索 {#yahoo!-%E3%83%86%E3%83%AC%E3%83%93-fan-zu-jian-suo}
-
-<Route author="sakamossan" example="/yahoo-jp-tv/%E8%8A%B1%E6%BE%A4%E9%A6%99%E8%8F%9C" path="/yahoo-jp-tv/:query" paramsDesc={['搜索查询']} notOperational="1" />
-
 ## 阿基米德 FM {#a-ji-mi-de-fm}
 
 ### 播客 {#a-ji-mi-de-fm-bo-ke}
 
 <Route author="Fatpandac" example="/ajmide/10603594" path="/ajmide/:id" paramsDesc={['播客 id，可以从播客页面 URL 中找到']} radar="1" />
-
-## 阿里云盘 {#a-li-yun-pan}
-
-### 文件列表 {#a-li-yun-pan-wen-jian-lie-biao}
-
-<Route author="DIYgod" example="/aliyundrive/files/XDFSyJ3J5wk/63035a070a078cf4e55e4b7ea3fd5bd269c4e41c" path="/aliyundrive/files/:share_id/:parent_file_id?" paramsDesc={['分享 id，可以从分享页面 URL 中找到', '文件夹 id，可以从文件夹页面 URL 中找到']} radar="1" notOperational="1" />
 
 ## 爱奇艺 {#ai-qi-yi}
 
@@ -1345,55 +1243,23 @@ Refer to [https://developers.themoviedb.org/3/getting-started/languages](https:/
   :::
 </Route>
 
-## 场库 {#chang-ku}
-
-### 今日精选 {#chang-ku-jin-ri-jing-xuan}
-
-<Route author="Wenmoux" example="/changku" path="/changku" notOperational="1" />
-
-### 分类 {#chang-ku-fen-lei}
-
-<Route author="Wenmoux" example="/changku/cate/12" path="/changku/cate/:cateid" paramsDesc={['分类id']} notOperational="1">
-  | 创意 | 励志 | 搞笑 | 广告 | 汽车 | 旅行 |
-  | ---- | ---- | ---- | ---- | ---- | ---- |
-  | 6    | 7    | 8    | 13   | 92   | 11   |
-
-  | 爱情 | 剧情 | 运动 | 动画 | 音乐 | 科幻 |
-  | ---- | ---- | ---- | ---- | ---- | ---- |
-  | 12   | 17   | 10   | 16   | 18   | 23   |
-
-  | 预告 | 记录 | 混剪 | 游戏 | 时尚 | 实验 |
-  | ---- | ---- | ---- | ---- | ---- | ---- |
-  | 43   | 24   | 44   | 104  | 88   | 45   |
-
-  | 生活 |
-  | ---- |
-  | 78   |
-</Route>
-
 ## 低端影视 {#di-duan-ying-shi}
 
 ### 影视剧集更新 {#di-duan-ying-shi-ying-shi-ju-ji-geng-xin}
 
-<Route author="saintwinkle" example="/ddrk/update/silicon-valley/6" path="/ddrk/update/:name/:season?" paramsDesc={['影视名称，可以在 URL 中找到','季数，可以在 URL 中找到，剧集没有分季时不用填写，或是默认输出第一季的内容']} radar="1" notOperational="1" />
+<Route author="saintwinkle" example="/ddrk/update/silicon-valley/6" path="/ddrk/update/:name/:season?" paramsDesc={['影视名称，可以在 URL 中找到','季数，可以在 URL 中找到，剧集没有分季时不用填写，或是默认输出第一季的内容']} radar="1" anticrawler="1" />
 
 ### 首页 {#di-duan-ying-shi-shou-ye}
 
-<Route author="hoilc" example="/ddrk/index" path="/ddrk/index" radar="1" notOperational="1" />
+<Route author="hoilc" example="/ddrk/index" path="/ddrk/index" radar="1" anticrawler="1" />
 
 ### 分类 {#di-duan-ying-shi-fen-lei}
 
-<Route author="hoilc" example="/ddrk/category/jp-drama" path="/ddrk/category/:category" paramsDesc={['分类 ID, 可在 URL 中找到, 注意, 如果有两级分类, 只需要填写第二级即可']} radar="1" notOperational="1" />
+<Route author="hoilc" example="/ddrk/category/jp-drama" path="/ddrk/category/:category" paramsDesc={['分类 ID, 可在 URL 中找到, 注意, 如果有两级分类, 只需要填写第二级即可']} radar="1" anticrawler="1" />
 
 ### 标签 {#di-duan-ying-shi-biao-qian}
 
-<Route author="hoilc" example="/ddrk/tag/石原里美" path="/ddrk/tag/:tag" paramsDesc={['标签名, 可在 URL 中找到']} radar="1" />
-
-## 电影首发站 {#dian-ying-shou-fa-zhan}
-
-### 电影 {#dian-ying-shou-fa-zhan-dian-ying}
-
-<Route author="epirus" example="/dysfz" path="/dysfz" notOperational="1" />
+<Route author="hoilc" example="/ddrk/tag/石原里美" path="/ddrk/tag/:tag" paramsDesc={['标签名, 可在 URL 中找到']} radar="1" anticrawler="1" />
 
 ## 电影天堂 {#dian-ying-tian-tang}
 
@@ -1405,7 +1271,7 @@ Refer to [https://developers.themoviedb.org/3/getting-started/languages](https:/
 
 ### 最新电影 {#gao-qing-dian-tai-zui-xin-dian-ying}
 
-<Route author="Songkeys" example="/gaoqing/latest" path="/gaoqing/latest" notOperational="1" />
+<Route author="Songkeys" example="/gaoqing/latest" path="/gaoqing/latest" anticrawler="1" />
 
 ## 故事 FM {#gu-shi-fm}
 
@@ -1453,22 +1319,6 @@ Refer to [https://developers.themoviedb.org/3/getting-started/languages](https:/
 
 <Route author="song-zhou" example="/maoyan/hotComplete" path="/maoyan/hotComplete/:orderby?/:ascOrDesc?/:top?" paramsDesc={['排序条件，(score: 评分,pubDate: 发布时间),', '正序或倒序 (asc: 正序, desc: 倒序) 默认倒序', '取前多少条，默认取所有']} />
 
-## 奈菲影视 {#nai-fei-ying-shi}
-
-### 分区 {#nai-fei-ying-shi-fen-qu}
-
-<Route author="AngUOI" example="/nfmovies/0" path="/nfmovies/:id?" paramsDesc={['子版块 id, 为空默认首页']} notOperational="1">
-  | 首页 | 电影 | 电视剧 | 综艺 | 动漫 | 奈菲独家 |
-  | ---- | ---- | ------ | ---- | ---- | -------- |
-  | 0    | 1    | 2      | 3    | 4    | 5        |
-</Route>
-
-## 柠檬 私房歌 (ningmeng.name) {#ning-meng-si-fang-ge-ningmeng-name}
-
-### 私房歌 {#ning-meng-si-fang-ge-ningmeng-name-si-fang-ge}
-
-<Route author="dearrrfish" example="/ningmeng/song" path="/ningmeng/song" notOperational="1" />
-
 ## 片源网 {#pian-yuan-wang}
 
 ### 最新资源 {#pian-yuan-wang-zui-xin-zi-yuan}
@@ -1484,12 +1334,6 @@ Refer to [https://developers.themoviedb.org/3/getting-started/languages](https:/
 <Route author="jerry1119" example="/pianyuan/indexers/pianyuan/results/search/api?t=test&q=长津湖" path="/pianyuan/indexers/pianyuan/results/search/" configRequired="1" />
 
 搜索路由模仿 jackett 的搜索 api, 以提供给 nastools 使用，填写在 nastools 配置 indexer 中
-
-## 飘花电影网 {#piao-hua-dian-ying-wang}
-
-### 今日热门 {#piao-hua-dian-ying-wang-jin-ri-re-men}
-
-<Route author="nczitzk" example="/piaohua/hot" path="/piaohua/hot" notOperational="1" />
 
 ## 蜻蜓 FM {#qing-ting-fm}
 
@@ -1549,59 +1393,11 @@ Refer to [https://developers.themoviedb.org/3/getting-started/languages](https:/
 
 <Route author="JamYiz" example="/sehuatang/user/411096" path="/sehuatang/user/:uid" paramsDesc={['用户 uid, 可在用户主页 URL 中找到']} configRequired="1" />
 
-## 深影译站 {#shen-ying-yi-zhan}
-
-### 首页 {#shen-ying-yi-zhan-shou-ye}
-
-<Route author="nczitzk" example="/shinybbs" path="/shinybbs" />
-
-### 剧集类型 {#shen-ying-yi-zhan-ju-ji-lei-xing}
-
-<Route author="nczitzk" example="/shinybbs/page/62" path="/shinybbs/page/:id?" paramsDesc={['类型 id，见下表']}>
-  | 英美剧 | 日韩剧 | 小语种 |
-  | ------ | ------ | ------ |
-  | 62     | 140    | 2      |
-</Route>
-
-### 最新作品 {#shen-ying-yi-zhan-zui-xin-zuo-pin}
-
-<Route author="nczitzk" example="/shinybbs/latest" path="/shinybbs/latest" />
-
-### 指定剧集 {#shen-ying-yi-zhan-zhi-ding-ju-ji}
-
-<Route author="nczitzk" example="/shinybbs/p/1790" path="/shinybbs/p/:id" paramsDesc={['剧集 id，可在剧集页 URL 中找到']} notOperational="1" />
-
-## 时光网 {#shi-guang-wang}
-
-### 时光新闻 {#shi-guang-wang-shi-guang-xin-wen}
-
-<Route author="TsSmartTT" example="/mtime/news" path="/mtime/news" radar="1" notOperational="1" />
-
-## 腾讯视频 {#teng-xun-shi-pin}
-
-### 播放列表 {#teng-xun-shi-pin-bo-fang-lie-biao}
-
-<Route author="Andiedie" example="/tencentvideo/playlist/jx7g4sm320sqm7i" path="/tencentvideo/playlist/:id" paramsDesc={['播放列表 ID，可以在 URL 中找到']} radar="1" notOperational="1" />
-
 ## 听听 FM {#ting-ting-fm}
 
 ### 节目 {#ting-ting-fm-jie-mu}
 
 <Route author="TonyRL" example="/tingtingfm/program/M7VJv6Jj4R" path="/tingtingfm/program/:programId" paramsDesc={['节目 ID，可以在 URL 中找到']} radar="1" supportPodcast="1" />
-
-## 弯弯字幕组 {#wan-wan-zi-mu-zu}
-
-### 分类 {#wan-wan-zi-mu-zu-fen-lei}
-
-<Route author="nczitzk" example="/wanwansub/139" path="/wanwansub/:id?" paramsDesc={['分类 id，见下表，默认为 ALL']} notOperational="1">
-  | ALL | 英语小分队 | 日语小分队 | 韩语小分队 | 葡语小分队 | 西语小分队 | 法语小分队 | 意语小分队 | 德语小分队 | 泰语小分队 | 其他语种 |
-  | --- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | ---------- | -------- |
-  | 139 | 110        | 111        | 112        | 113        | 114        | 115        | 116        | 153        | 117        | 154      |
-</Route>
-
-### 剧集 {#wan-wan-zi-mu-zu-ju-ji}
-
-<Route author="nczitzk" example="/wanwansub/info/393" path="/wanwansub/info/:id" paramsDesc={['剧集 id，可在剧集页 URL 中找到']} notOperational="1" />
 
 ## 网易云音乐 {#wang-yi-yun-yin-yue}
 
@@ -1731,16 +1527,6 @@ Refer to [https://developers.themoviedb.org/3/getting-started/languages](https:/
   | nba | zuqiu |
 </Route>
 
-## 中国高清网 {#zhong-guo-gao-qing-wang}
-
-### 电影 {#zhong-guo-gao-qing-wang-dian-ying}
-
-<Route author="minosss" example="/gaoqingla" path="/gaoqingla/:tag?" paramsDesc={['标签tag，视频清晰度']} anticrawler="1" />
-
-| 全部 | 蓝光   | 1080P | 720P | 3D | WEB-DL |
-| ---- | ------ | ----- | ---- | -- | ------ |
-| 留空 | bluray | 1080p | 720p | 3d | webdl  |
-
 ## 中文播客榜 {#zhong-wen-bo-ke-bang}
 
 :::tip
@@ -1767,12 +1553,6 @@ Refer to [https://developers.themoviedb.org/3/getting-started/languages](https:/
 
 <Route author="nczitzk" example="/xyzrank/new-podcasts" path="/xyzrank/new-podcasts" />
 
-## 注视影视 {#zhu-shi-ying-shi}
-
-### 更新通知 {#zhu-shi-ying-shi-geng-xin-tong-zhi}
-
-<Route author="zytomorrow" example="/gaze/update/5157c267ee121ab8d1b45092304a1e85" path="/gaze/update/:mid" paramsDesc={['剧集的id。播放页面play之后的一串字符']} notOperational="1" />
-
 ## 追新番 {#zhui-xin-fan}
 
 ### 最近更新 {#zhui-xin-fan-zui-jin-geng-xin}
@@ -1783,7 +1563,7 @@ Refer to [https://developers.themoviedb.org/3/getting-started/languages](https:/
 
 ### 字幕列表 {#zi-mu-ku-zi-mu-lie-biao}
 
-<Route author="sanmmm" example="/zimuku/mv" path="/zimuku/:type?" paramsDesc={['类型, 默认为`mv`电影']} notOperational="1">
+<Route author="sanmmm" example="/zimuku/mv" path="/zimuku/:type?" paramsDesc={['类型, 默认为`mv`电影']}>
   类型
 
   | 最新电影 | 最新美剧 |
@@ -1791,27 +1571,11 @@ Refer to [https://developers.themoviedb.org/3/getting-started/languages](https:/
   | mv       | tv       |
 </Route>
 
-## 字幕组（ZiMuZu.tv） {#zi-mu-zu-zimuzu-tv}
-
-### 影视 {#zi-mu-zu-zimuzu-tv-ying-shi}
-
-:::tip
-跟官方提供的 RSS 相比：官方使用了不规范的 magnet 字段，无法被 BT 客户端识别并自动下载，其他数据相同
-:::
-
-<Route author="DIYgod" example="/zimuzu/resource/37031" path="/zimuzu/resource/:id?" paramsDesc={['影视 id，对应影视的 URL 中找到，为空时输出最近更新']} supportBT="1" notOperational="1" />
-
-### 排行榜 {#zi-mu-zu-zimuzu-tv-pai-hang-bang}
-
-<Route author="queensferryme DIYgod" example="/zimuzu/top/week/movie" path="/zimuzu/top/:range/:type" paramsDesc={['时间范围, 可以是 `week` `month` `year` `total`', '排行类型, 可以是 `fav` `tv` `movie`']} notOperational="1">
-  例如，路由 `/zimuzu/top/week/movie` 应该输出 [http://www.rrys2019.com/html/top/week\_movie\_list.html](http://www.rrys2019.com/html/top/week_movie_list.html) 的排行榜单
-</Route>
-
 ## 综艺秀 {#zong-yi-xiu}
 
 ### 综艺 {#zong-yi-xiu-zong-yi}
 
-<Route author="pharaoh2012 nczitzk" example="/zyshow/chongchongchong" path="/zyshow/:region?/:id" paramsDesc={['地区，见下表，默认为空，即台湾', '综艺 id，综艺详情对应页 URL 中找到']} radar="1" notOperational="1">
+<Route author="pharaoh2012 nczitzk" example="/zyshow/chongchongchong" path="/zyshow/:region?/:id" paramsDesc={['地区，见下表，默认为空，即台湾', '综艺 id，综艺详情对应页 URL 中找到']} radar="1" anticrawler="1">
   地区
 
   | 台湾 | 韩国 | 大陆 |
