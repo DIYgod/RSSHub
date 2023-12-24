@@ -2567,6 +2567,9 @@
         "Fatpandac"
     ],
     "/gov/beijing/mhc/:caty": [],
+    "/gov/caac/cjwt/:category?": [
+        "nczitzk"
+    ],
     "/gov/cac/:path+": [
         "drgnchan"
     ],
