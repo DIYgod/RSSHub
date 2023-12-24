@@ -366,6 +366,11 @@ Warning: Two Factor Authentication is **not** supported.
 
 -   `LASTFM_API_KEY`: Last.fm API Key
 
+
+### LightNovel.us
+
+-   `SECURITY_KEY`: security_key in the token，please remove %22，example `{%22security_key%22:%223cXXXX%22}`,only need 3cXXXX
+
 ### Email
 
 -   `EMAIL_CONFIG_{email}`: Mail setting, replace `{email}` with the email account, replace `@` and `.` in email account with `_`, e.g. `EMAIL_CONFIG_xxx_gmail_com`. The value is in the format of `password=password&host=server&port=port`, eg:
@@ -511,16 +516,6 @@ In addition, we have prepared a Node.js script to help you use proxies to create
     2.  打开控制台， 刷新
     3.  找到 `https://bbs.pku.edu.cn/v2/home.php` 请求
     4.  找到请求头中的 Cookie
-
-### 吹牛部落
-
-用于栏目
-
--   `CHUINIU_MEMBER`: 吹牛部落登录后的 x-member，获取方式
-    1.  登陆后点开文章正文
-    2.  打开控制台，刷新
-    3.  找到 `http://api.duanshu.com/h5/content/detail` 开头的请求
-    4.  找到请求头中的 x-member
 
 ### 滴答清单
 

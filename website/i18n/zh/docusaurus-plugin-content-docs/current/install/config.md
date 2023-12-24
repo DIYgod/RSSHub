@@ -360,6 +360,10 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 
 -   `LASTFM_API_KEY`: Last.fm API Key
 
+### LightNovel.us
+
+-   `SECURITY_KEY`: 在token中security_key的值，请去除%22，例如`{%22security_key%22:%223cXXXX%22}`,只需要3cXXXX部分
+
 ### Mastodon
 
 用户时间线路由：访问 `https://mastodon.example/settings/applications` 申请（替换掉 `mastodon.example`）。需要 `read:search` 权限
@@ -496,16 +500,6 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
     2.  打开控制台， 刷新
     3.  找到 `https://bbs.pku.edu.cn/v2/home.php` 请求
     4.  找到请求头中的 Cookie
-
-### 吹牛部落
-
-用于栏目
-
--   `CHUINIU_MEMBER`: 吹牛部落登录后的 x-member，获取方式
-    1.  登陆后点开文章正文
-    2.  打开控制台，刷新
-    3.  找到 `http://api.duanshu.com/h5/content/detail` 开头的请求
-    4.  找到请求头中的 x-member
 
 ### 滴答清单
 
