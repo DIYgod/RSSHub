@@ -130,6 +130,7 @@
     "oauth-1.0a": "2.2.6",
     "plist": "3.1.0",
     "proxy-chain": "2.4.0",
+    "psl": "1.9.0",
     "puppeteer": "21.6.1",
     "puppeteer-extra": "3.3.6",
     "puppeteer-extra-plugin-stealth": "2.11.2",

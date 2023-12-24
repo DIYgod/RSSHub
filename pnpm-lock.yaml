@@ -146,6 +146,9 @@ dependencies:
   proxy-chain:
     specifier: 2.4.0
     version: 2.4.0
+  psl:
+    specifier: 1.9.0
+    version: 1.9.0
   puppeteer:
     specifier: 21.6.1
     version: 21.6.1
