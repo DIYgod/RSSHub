@@ -6331,6 +6331,10 @@
     "/theatlantic/:category": [
         "EthanWng97"
     ],
+    "/theblockbeats/:channel?": [
+        "Fatpandac",
+        "jameshih"
+    ],
     "/thebrain/:category?": [],
     "/thecatcity/:term?": [
         "TonyRL"
