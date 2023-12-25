@@ -1564,6 +1564,13 @@
         source:[ "/" ],
         target:(params, url) => `/bad${new URL(url).href.match(/bad\.news(.*?)/)[1]}` } ] },
   "baidu.com":{ _name:"百度",
+    www:[ { title:"搜索",
+        docs:"https://docs.rsshub.app/routes/other#bai-du-sou-suo",
+        source:[ "/" ],
+        target:(params, url) => {
+                    const keyword = new URL(url).searchParams.get('wd');
+                    return `/baidu/search/${keyword}`;
+                } } ],
     gushitong:[ { title:"首页指数",
         docs:"https://docs.rsshub.app/routes/finance#bai-du-gu-shi-tong",
         source:[ "/" ],
@@ -1616,7 +1623,7 @@
                     }
                 } } ],
     top:[ { title:"热搜榜单",
-        docs:"https://docs.rsshub.app/routes/other#bai-du-re-sou",
+        docs:"https://docs.rsshub.app/routes/other#bai-du-re-sou-bang-dan",
         source:[ "/board" ],
         target:(_, url) => `/baidu/top/${new URL(url).searchParams.get('tab')}` } ] },
   "bandcamp.com":{ _name:"Bandcamp",
@@ -1922,6 +1929,11 @@
         docs:"https://docs.rsshub.app/routes/social-media#bilibili-hui-yuan-gou-zuo-pin",
         source:"/platform",
         target:"/bilibili/platform/:area?/:p_type?/:uid?" } ] },
+  "bing.com":{ _name:"Bing",
+    www:[ { title:"每日壁纸",
+        docs:"https://docs.rsshub.app/routes/picture#bing-bi-zhi",
+        source:"",
+        target:"/bing" } ] },
   "biodiscover.com":{ _name:"生物探索",
     www:[ { title:"频道",
         docs:"https://docs.rsshub.app/routes/new-media#sheng-wu-tan-suo",
@@ -5465,6 +5477,14 @@
         source:[ "/" ],
         target:"/gogoanimehd/recent-releases" } ] },
   "google.com":{ _name:"谷歌",
+    www:[ { title:"搜索",
+        docs:"https://docs.rsshub.app/routes/other#google",
+        source:"/",
+        target:(params, url, document) => {
+                    const q = new URL(url).searchParams.get('q');
+                    const lang = document.documentElement.lang;
+                    return `/google/search/${q}/${lang}`;
+                } } ],
     chrome:[ { title:"插件更新",
         source:"/webstore/detail/:name/:id",
         docs:"https://docs.rsshub.app/routes/program-update#chrome-wang-shang-ying-yong-dian",
@@ -13888,6 +13908,17 @@
         docs:"https://docs.rsshub.app/routes/reading#sobooks",
         source:[ "/books/date/*date" ],
         target:(params) => `/sobooks/date/${params.date.repalce('/', '-')}` } ] },
+  "sogou.com":{ _name:"微信",
+    weixin:[ { title:"公众号（搜狗来源）",
+        docs:"https://docs.rsshub.app/routes/new-media#wei-xin",
+        source:[ "/weixin" ],
+        target:(_, url) => {
+                    const id = new URL(url).searchParams.get('query');
+                    if (id === null) {
+                        return false;
+                    }
+                    return `/wechat/sogou/${id}`;
+                } } ] },
   "sohu.com":{ _name:"搜狐",
     ".":[ { title:"搜狐号",
         docs:"https://docs.rsshub.app/routes/new-media#sou-hu-hao",
@@ -15880,17 +15911,6 @@
   "privacyhide.com":{ _name:"微信",
     wechat:[ { title:"公众号（wechat-feeds 来源）",
         docs:"https://docs.rsshub.app/routes/new-media#wei-xin" } ] },
-  "sogou.com":{ _name:"微信",
-    weixin:[ { title:"公众号（搜狗来源）",
-        docs:"https://docs.rsshub.app/routes/new-media#wei-xin",
-        source:[ "/weixin" ],
-        target:(_, url) => {
-                    const id = new URL(url).searchParams.get('query');
-                    if (id === null) {
-                        return false;
-                    }
-                    return `/wechat/sogou/${id}`;
-                } } ] },
   "wxnmh.com":{ _name:"微信",
     ".":[ { title:"公众号（wxnmh.com 来源）",
         docs:"https://docs.rsshub.app/routes/new-media#wei-xin",
@@ -17345,11 +17365,6 @@
         source:[ "",
           "/*tpath" ],
         target:"/mhw/news" } ] },
-  "bing.com":{ _name:"Bing",
-    www:[ { title:"每日壁纸",
-        docs:"https://docs.rsshub.app/routes/picture#bing-bi-zhi",
-        source:"",
-        target:"/bing" } ] },
   "wegene.com":{ _name:"WeGene",
     www:[ { title:"最近更新",
         docs:"https://docs.rsshub.app/routes/other#wegene",
