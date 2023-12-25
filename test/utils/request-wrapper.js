@@ -192,6 +192,29 @@ describe('got', () => {
         await parser.parseURL('http://rsshub.test/proxy');
     });
 
+    it('proxy reverse proxy', async () => {
+        process.env.REVERSE_PROXY_URL = 'http://rsshub.test/?target=';
+        const url = 'http://rsshub.test/proxy';
+
+        jest.resetModules();
+        require('../../lib/utils/request-wrapper');
+        check = (request) => {
+            expect(request.url.toString()).toBe(`${process.env.REVERSE_PROXY_URL}${encodeURIComponent(url)}`);
+        };
+
+        nock(/rsshub\.test/)
+            .get(`/?target=${encodeURIComponent(url)}`)
+            .times(2)
+            .reply(200, simpleResponse);
+        nock(/rsshub\.test/)
+            .get('/proxy')
+            .times(2)
+            .reply(200, simpleResponse);
+
+        await got.get(url);
+        await parser.parseURL(url);
+    });
+
     it('auth', async () => {
         process.env.PROXY_AUTH = 'testtest';
         process.env.PROXY_PROTOCOL = 'http'; // only http(s) proxies extract auth from Headers

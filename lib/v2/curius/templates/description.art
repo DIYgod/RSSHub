@@ -1,4 +1,4 @@
-{{ if item.metadata.full_text }}
+{{ if item.metadata?.full_text }}
     原文：{{@ item.metadata.full_text.replace(/\n/gm, '<br>') }}<br><br>
 {{ /if }}
 {{ if item.comments.length }}

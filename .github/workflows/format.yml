@@ -1,4 +1,4 @@
-name: format
+name: Format
 
 on:
   push:
@@ -17,17 +17,17 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
         with:
           version: 8
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
           node-version: lts/*
           cache: 'pnpm'
       - run: pnpm i
       - run: pnpm i
-        working-directory: docs
+        working-directory: website
       - run: npm run format
       - name: Commit files
         run: |
