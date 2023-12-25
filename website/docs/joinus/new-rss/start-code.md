@@ -639,7 +639,7 @@ module.exports = async (ctx) => {
     // got requests will be logged automatically
     // but puppeteer requests are not
     // so we need to log them manually
-    logger.debug(`Requesting ${link}`);
+    logger.http(`Requesting ${link}`);
     await page.goto(link, {
         // specify how long to wait for the page to load
         waitUntil: 'domcontentloaded',
@@ -711,7 +711,7 @@ module.exports = async (ctx) => {
     });
 
     const link = `${baseUrl}/${user}/${repo}/issues`;
-    logger.debug(`Requesting ${link}`);
+    logger.http(`Requesting ${link}`);
     await page.goto(link, {
         waitUntil: 'domcontentloaded',
     });
@@ -749,7 +749,7 @@ module.exports = async (ctx) => {
                     request.resourceType() === 'document' ? request.continue() : request.abort();
                 });
 
-                logger.debug(`Requesting ${item.link}`);
+                logger.http(`Requesting ${item.link}`);
                 await page.goto(item.link, {
                     waitUntil: 'domcontentloaded',
                 });
