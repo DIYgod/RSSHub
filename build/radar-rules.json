@@ -25025,16 +25025,6 @@
         "target": "/shiep/zdhxy/:id"
       }
     ],
-    "ztjy": [
-      {
-        "title": "学习路上",
-        "docs": "https://docs.rsshub.app/routes/university#shang-hai-dian-li-da-xue",
-        "source": [
-          "/:id/list.htm"
-        ],
-        "target": "/shiep/ztjy/:id"
-      }
-    ],
     "zs": [
       {
         "title": "本科招生网",
@@ -25043,6 +25033,16 @@
           "/:id/list.htm"
         ],
         "target": "/shiep/zs/:id"
+      }
+    ],
+    "ztjy": [
+      {
+        "title": "学习路上",
+        "docs": "https://docs.rsshub.app/routes/university#shang-hai-dian-li-da-xue",
+        "source": [
+          "/:id/list.htm"
+        ],
+        "target": "/shiep/ztjy/:id"
       }
     ],
     "zzb": [
