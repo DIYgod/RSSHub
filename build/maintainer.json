@@ -3798,11 +3798,20 @@
         "HenryQW",
         "JimenezLi"
     ],
-    "/jiemian": [
+    "/jiemian/account/main/:id": [
         "nczitzk"
     ],
-    "/jiemian/list/:id?": [
+    "/jiemian/lists/:id": [
         "WenhuWee",
+        "nczitzk"
+    ],
+    "/jiemian/pro/lists/:id": [
+        "nczitzk"
+    ],
+    "/jiemian/special/lists/:id": [
+        "nczitzk"
+    ],
+    "/jiemian/video/lists/:id": [
         "nczitzk"
     ],
     "/jike/topic/:id/:showUid?": [
