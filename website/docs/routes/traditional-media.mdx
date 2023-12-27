@@ -1176,13 +1176,133 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 
 ## 界面新闻 {#jie-mian-xin-wen}
 
-### 快报 {#jie-mian-xin-wen-kuai-bao}
-
-<Route author="nczitzk" example="/jiemian" path="/jiemian" />
-
 ### 栏目 {#jie-mian-xin-wen-lan-mu}
 
-<Route author="WenhuWee nczitzk" example="/jiemian/list/65" path="/jiemian/list/:id?" paramsDesc={['栏目，可在对应栏目页 URL 中找到，默认为 `4` 即快报']} />
+<Route author="WenhuWee nczitzk" example="/jiemian/lists/65" path="/jiemian/lists/:id" paramsDesc={['分类 id，见下表，可在对应分类页 URL 中找到']} radar="1">
+  | [首页](https://www.jiemian.com) | [商业](https://www.jiemian.com/lists/2.html) | [财经](https://www.jiemian.com/lists/800.html) | [新闻](https://www.jiemian.com/lists/801.html) | [文化生活](https://www.jiemian.com/lists/130.html) | [快报](https://www.jiemian.com/lists/4.html) |
+  | ------------------------------- | -------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- | -------------------------------------------------- | -------------------------------------------- |
+  |                                 | 2                                            | 800                                            | 801                                            | 130                                                | 4                                            |
+
+  <details>
+    <summary>更多分类</summary>
+
+    #### [首页](https://www.jiemian.com)
+
+    | [科技](https://www.jiemian.com/lists/65.html) | [金融](https://www.jiemian.com/lists/9.html) | [证券](https://www.jiemian.com/lists/112.html) | [地产](https://www.jiemian.com/lists/62.html) | [汽车](https://www.jiemian.com/lists/51.html) | [健康](https://www.jiemian.com/lists/472.html) |
+    | --------------------------------------------- | -------------------------------------------- | ---------------------------------------------- | --------------------------------------------- | --------------------------------------------- | ---------------------------------------------- |
+    | 65                                            | 9                                            | 112                                            | 62                                            | 51                                            | 472                                            |
+
+    | [大湾区](https://www.jiemian.com/lists/680.html) | [元宇宙](https://www.jiemian.com/lists/704.html) | [文旅](https://www.jiemian.com/lists/105.html) | [数据](https://www.jiemian.com/lists/154.html) | [ESG](https://www.jiemian.com/lists/712.html) | [双碳](https://www.jiemian.com/lists/877.html) |
+    | ------------------------------------------------ | ------------------------------------------------ | ---------------------------------------------- | ---------------------------------------------- | --------------------------------------------- | ---------------------------------------------- |
+    | 680                                              | 704                                              | 105                                            | 154                                            | 712                                           | 877                                            |
+
+    | [电厂](https://www.jiemian.com/lists/872.html) |
+    | ---------------------------------------------- |
+    | 872                                            |
+
+    #### [商业](https://www.jiemian.com/lists/2.html)
+
+    | [科技](https://www.jiemian.com/lists/65.html) | [地产](https://www.jiemian.com/lists/62.html) | [ 汽车](https://www.jiemian.com/lists/51.html) | [消费](https://www.jiemian.com/lists/31.html) | [工业](https://www.jiemian.com/lists/28.html) | [时尚](https://www.jiemian.com/lists/68.html) |
+    | --------------------------------------------- | --------------------------------------------- | ---------------------------------------------- | --------------------------------------------- | --------------------------------------------- | --------------------------------------------- |
+    | 65                                            | 62                                            | 51                                             | 31                                            | 28                                            | 68                                            |
+
+    | [交通](https://www.jiemian.com/lists/30.html) | [医药](https://www.jiemian.com/lists/472.html) | [互联网](https://www.jiemian.com/lists/851.html) | [创投 ](https://www.jiemian.com/lists/858.html) | [能源](https://www.jiemian.com/lists/856.html) | [数码](https://www.jiemian.com/lists/853.html) |
+    | --------------------------------------------- | ---------------------------------------------- | ------------------------------------------------ | ----------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- |
+    | 30                                            | 472                                            | 851                                              | 858                                             | 856                                            | 853                                            |
+
+    | [教育](https://www.jiemian.com/lists/256.html) | [食品](https://www.jiemian.com/lists/845.html) | [新能源](https://www.jiemian.com/lists/857.html) | [家电](https://www.jiemian.com/lists/850.html) | [健康](https://www.jiemian.com/lists/854.html) | [酒业](https://www.jiemian.com/lists/676.html) |
+    | ---------------------------------------------- | ---------------------------------------------- | ------------------------------------------------ | ---------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- |
+    | 256                                            | 845                                            | 857                                              | 850                                            | 854                                            | 676                                            |
+
+    | [物流](https://www.jiemian.com/lists/841.html) | [零售](https://www.jiemian.com/lists/847.html) | [美妆](https://www.jiemian.com/lists/838.html) | [楼市](https://www.jiemian.com/city/main/181.html) | [家居](https://www.jiemian.com/lists/694.html) | [餐饮](https://www.jiemian.com/lists/848.html) |
+    | ---------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- | -------------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- |
+    | 841                                            | 847                                            | 838                                            | city/main/181                                      | 694                                            | 848                                            |
+
+    | [日用](https://www.jiemian.com/lists/846.html) | [企服](https://www.jiemian.com/lists/852.html) | [珠宝](https://www.jiemian.com/lists/839.html) | [腕表](https://www.jiemian.com/lists/840.html) | [ 商学院](https://www.jiemian.com/lists/605.html) | [元宇宙](https://www.jiemian.com/lists/704.html) |
+    | ---------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- | ------------------------------------------------- | ------------------------------------------------ |
+    | 846                                            | 852                                            | 839                                            | 840                                            | 605                                               | 704                                              |
+
+    | [电厂](https://www.jiemian.com/lists/872.html) | [农业](https://www.jiemian.com/lists/883.html) |
+    | ---------------------------------------------- | ---------------------------------------------- |
+    | 872                                            | 883                                            |
+
+    #### [财经](https://www.jiemian.com/lists/800.html)
+
+    | [金融](https://www.jiemian.com/lists/9.html) | [投资](https://www.jiemian.com/lists/86.html) | [证券](https://www.jiemian.com/lists/112.html) | [IPO](https://www.jiemian.com/lists/699.html) | [宏观](https://www.jiemian.com/lists/174.html) | [股市](https://www.jiemian.com/lists/418.html) |
+    | -------------------------------------------- | --------------------------------------------- | ---------------------------------------------- | --------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- |
+    | 9                                            | 86                                            | 112                                            | 699                                           | 174                                            | 418                                            |
+
+    | [财富](https://www.jiemian.com/lists/410.html) | [有连云](https://www.jiemian.com/lists/889.html) |
+    | ---------------------------------------------- | ------------------------------------------------ |
+    | 410                                            | 889                                              |
+
+    #### [新闻](https://www.jiemian.com/lists/801.html)
+
+    | [天下](https://www.jiemian.com/lists/32.html) | [中国](https://www.jiemian.com/lists/71.html) | [ 评论](https://www.jiemian.com/lists/8.html) | [数据](https://www.jiemian.com/lists/154.html) | [职场](https://www.jiemian.com/lists/50.html) | [国是](https://www.jiemian.com/lists/422.html) |
+    | --------------------------------------------- | --------------------------------------------- | --------------------------------------------- | ---------------------------------------------- | --------------------------------------------- | ---------------------------------------------- |
+    | 32                                            | 71                                            | 8                                             | 154                                            | 50                                            | 422                                            |
+
+    | [体育](https://www.jiemian.com/lists/82.html) | [文娱](https://www.jiemian.com/lists/63.html) | [ 影像](https://www.jiemian.com/lists/225.html) | [营销](https://www.jiemian.com/lists/49.html) | [大 湾区](https://www.jiemian.com/lists/680.html) | [ESG](https://www.jiemian.com/lists/712.html) |
+    | --------------------------------------------- | --------------------------------------------- | ----------------------------------------------- | --------------------------------------------- | ------------------------------------------------- | --------------------------------------------- |
+    | 82                                            | 63                                            | 225                                             | 49                                            | 680                                               | 712                                           |
+
+    | [双碳](https://www.jiemian.com/lists/877.html) | [长三角](https://www.jiemian.com/lists/917.html) |
+    | ---------------------------------------------- | ------------------------------------------------ |
+    | 877                                            | 917                                              |
+
+    #### [文化生活](https://www.jiemian.com/lists/130.html)
+
+    | [文化](https://www.jiemian.com/lists/130.html) | [文旅](https://www.jiemian.com/lists/105.html) | [生活方式](https://www.jiemian.com/lists/135.html) | [美食美酒](https://www.jiemian.com/lists/865.html) | [艺术](https://www.jiemian.com/lists/643.html) | [游戏](https://www.jiemian.com/lists/118.html) |
+    | ---------------------------------------------- | ---------------------------------------------- | -------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------- | ---------------------------------------------- |
+    | 130                                            | 105                                            | 135                                                | 865                                                | 643                                            | 118                                            |
+
+    | [正午](https://www.jiemian.com/lists/53.html) | [箭厂](https://www.jiemian.com/video/lists/195_1.html) |
+    | --------------------------------------------- | ------------------------------------------------------ |
+    | 53                                            | video/lists/195\_1                                     |
+
+    #### [快报](https://www.jiemian.com/lists/4.html)
+
+    | [今日热点](https://www.jiemian.com/lists/1324kb.html) | [公司头条](https://www.jiemian.com/lists/1322kb.html) | [股市前沿](https://www.jiemian.com/lists/1327kb.html) | [监管通报](https://www.jiemian.com/lists/1330kb.html) | [财经速览](https://www.jiemian.com/lists/1326kb.html) | [时事追踪](https://www.jiemian.com/lists/1325kb.html) |
+    | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
+    | 1324kb                                                | 1322kb                                                | 1327kb                                                | 1330kb                                                | 1326kb                                                | 1325kb                                                |
+  </details>
+</Route>
+
+### VIP {#jie-mian-xin-wen-vip}
+
+<Route author="nczitzk" example="/jiemian/pro/lists/12" path="/jiemian/pro/lists/:id" paramsDesc={['分类 id，见下表，可在对应分类页 URL 中找到']} radar="1">
+  | [投资早晚报](https://www.jiemian.com/pro/lists/12.html) | [宏观晚 6 点](https://www.jiemian.com/pro/lists/20.html) | [打新早报](https://www.jiemian.com/pro/lists/21.html) | [盘前机会前瞻](https://www.jiemian.com/pro/lists/13.html) | [公告快评](https://www.jiemian.com/pro/lists/14.html) | [盘中必读](https://www.jiemian.com/pro/lists/15.html) |
+  | ------------------------------------------------------- | -------------------------------------------------------- | ----------------------------------------------------- | --------------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
+  | 12                                                      | 20                                                       | 21                                                    | 13                                                        | 14                                                    | 15                                                    |
+
+  | [金股挖掘](https://www.jiemian.com/pro/lists/16.html) | [调研早知道](https://www.jiemian.com/pro/lists/17.html) | [研报新知](https://www.jiemian.com/pro/lists/18.html) | [大势侦察](https://www.jiemian.com/pro/lists/1.html) | [市场风向标](https://www.jiemian.com/pro/lists/19.html) |
+  | ----------------------------------------------------- | ------------------------------------------------------- | ----------------------------------------------------- | ---------------------------------------------------- | ------------------------------------------------------- |
+  | 16                                                    | 17                                                      | 18                                                    | 1                                                    | 19                                                      |
+</Route>
+
+### 界面号 {#jie-mian-xin-wen-jie-mian-hao}
+
+<Route author="nczitzk" example="/jiemian/account/main/1" path="/jiemian/account/main/:id" paramsDesc={['分类 id，见下表，可在对应分类页 URL 中找到']} radar="1">
+  | [财经号](https://www.jiemian.com/account/main/1.html) | [城市号](https://www.jiemian.com/account/main/2.html) | [媒体号](https://www.jiemian.com/account/main/3.html) |
+  | ----------------------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------- |
+  | 1                                                     | 2                                                     | 3                                                     |
+</Route>
+
+### 视频 {#jie-mian-xin-wen-shi-pin}
+
+<Route author="nczitzk" example="/jiemian/video/lists/258_1" path="/jiemian/video/lists/:id" paramsDesc={['分类 id，见下表，可在对应分类页 URL 中找到']} radar="1">
+  | [界面 Vnews](https://www.jiemian.com/video/lists/258_1.html) | [直播](https://www.jiemian.com/videoLive/lists_1.html) | [箭厂](https://www.jiemian.com/video/lists/195_1.html) | [面谈](https://www.jiemian.com/video/lists/111_1.html) | [品牌创酷](https://www.jiemian.com/video/lists/226_1.html) | [番 茄社](https://www.jiemian.com/video/lists/567_1.html) |
+  | ------------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ---------------------------------------------------------- | --------------------------------------------------------- |
+  | 258\_1                                                       | videoLive/lists\_1                                     | 195\_1                                                 | 111\_1                                                 | 226\_1                                                     | 567\_1                                                    |
+
+  | [商业微史记](https://www.jiemian.com/video/lists/882_1.html) |
+  | ------------------------------------------------------------ |
+  | 882\_1                                                       |
+</Route>
+
+### 专题 {#jie-mian-xin-wen-zhuan-ti}
+
+<Route author="nczitzk" example="/jiemian/special/1192" path="/jiemian/special/lists/:id" paramsDesc={['分类 id，可在对应分类页 URL 中找到']} radar="1" />
 
 ## 经济观察网 {#jing-ji-guan-cha-wang}
 
