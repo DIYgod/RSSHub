@@ -1,0 +1,7 @@
+{{ if summary }}
+  <p>{{ summary }}</p>
+{{ /if }}
+
+{{ if kimi }}
+  {{@ kimi }}
+{{ /if }}
