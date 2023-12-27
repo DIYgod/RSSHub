@@ -178,7 +178,7 @@
     "@types/plist": "3.0.5",
     "@types/request-promise-native": "1.0.21",
     "@types/require-all": "3.0.6",
-    "@types/supertest": "6.0.1",
+    "@types/supertest": "6.0.2",
     "@types/tiny-async-pool": "2.0.3",
     "@types/tough-cookie": "4.0.5",
     "@vercel/nft": "0.26.0",
