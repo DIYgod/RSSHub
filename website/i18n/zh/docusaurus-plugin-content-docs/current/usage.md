@@ -71,3 +71,20 @@ RSSHub.request('/bilibili/bangumi/media/9192')
     CACHE_TYPE: null,
 }
 ```
+
+## Radar
+
+除了生成 RSS 和获取数据两个功能之外，RSSHub 还提供了一个 Radar 功能，用于将网站地址映射到 RSSHub 地址
+
+### 配置文件
+
+Radar 有两种配置文件，一种是全功能的 [js 文件](https://github.com/DIYgod/RSSHub/blob/gh-pages/build/radar-rules.js)，一种是简化的 [json 文件](https://github.com/DIYgod/RSSHub/blob/gh-pages/build/radar-rules.json)
+
+### 使用
+
+你需要借助支持此功能的浏览器插件、手机应用、RSS 阅读器等工具来使用 Radar 功能，具体使用方法请参考对应工具的文档
+
+- 浏览器插件: [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar)
+- iOS 应用: [RSSBud](https://github.com/Cay-Zhang/RSSBud)
+- Android 应用: [RSSAid](https://github.com/LeetaoGoooo/RSSAid)
+- RSS 阅读器: Coming soon

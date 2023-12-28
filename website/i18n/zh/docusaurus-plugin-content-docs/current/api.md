@@ -51,11 +51,9 @@ RSSHub 提供下列 API:
                 "/bilibili/live/search/:key/:order",
                 "/bilibili/live/area/:areaID/:order",
                 "/bilibili/fav/:uid/:fid",
-                "/bilibili/blackboard",
                 "/bilibili/mall/new",
                 "/bilibili/mall/ip/:id",
-                "/bilibili/ranking/:rid?/:day?",
-                "/bilibili/topic/:topic"
+                "/bilibili/ranking/:rid?/:day?"
             ]
         }
     },

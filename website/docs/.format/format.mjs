@@ -1,8 +1,8 @@
 import file from './file.mjs';
 import sgf from 'staged-git-files';
 import sortByHeading from './sortByHeading.mjs';
-import slugId from './slugId.mjs';
-// import chineseFormat from './chineseFormat.mjs';
+// import slugId from './slugId.mjs';
+import routeFormat from './routeFormat.mjs';
 import { exec } from 'child_process';
 import { fileURLToPath } from 'url';
 import sidebars from '../../sidebars.mjs';
@@ -13,7 +13,7 @@ import sidebars from '../../sidebars.mjs';
  * rules filters required file document object
  * and handler get document string and return formatted document
  */
-const processors = [sortByHeading, slugId];
+const processors = [sortByHeading, routeFormat];
 
 // Helpers
 // const loopSideBar = (children, type, lang, prefix) =>
@@ -123,7 +123,7 @@ const buildStagedList = async () => {
     for (const processor of processors) {
         for (const e of processor.rules(fileList)) {
             let formatted = await file.readFile(e.path);
-            formatted = await processor.handler(formatted);
+            formatted = await processor.handler(formatted, e.path); // remark requires path to show error position
             await file.writeFile(e.path, formatted);
             if (stagedFiles.find((x) => e.path.indexOf(x.filename) !== -1)) {
                 await exec(`git add ${e.path}`);

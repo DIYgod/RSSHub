@@ -72,12 +72,12 @@ To add documentation to your route, use the `Route` React component. It works li
 -   `example`: The route example, with a leading `/`
 -   `path`: The route path, which should be the same as the key in [`maintainer.js`](/joinus/new-rss/before-start#understand-the-basics-maintainer-js) with the namespace. In the above example, it is `/github/issue/:user/:repo?`
 -   `paramsDesc`: The route parameter description, in an array of strings that support Markdown.
-    -   The description **must** follow the order in which they appear in the path.
-    -   The number of description should match with the number of parameters in `path`. If you miss a description, the build will fail.
-    -   Route parameters ending with `?`, `*` or `+` will be automatically marked as `optional`, `zero or more` or `one or more`, respectively.
-    -   Route parameters without a suffix are marked as `required`
-    -   There's no need to explicitly mention the necessity of path parameters again.
-    -   If a parameter is optional, make sure to mention the default value.
+  -   The description **must** follow the order in which they appear in the path.
+  -   The number of description should match with the number of parameters in `path`. If you miss a description, the build will fail.
+  -   Route parameters ending with `?`, `*` or `+` will be automatically marked as `optional`, `zero or more` or `one or more`, respectively.
+  -   Route parameters without a suffix are marked as `required`
+  -   There's no need to explicitly mention the necessity of path parameters again.
+  -   If a parameter is optional, make sure to mention the default value.
 
 ## Documentation examples
 
@@ -108,7 +108,7 @@ To add documentation to your route, use the `Route` React component. It works li
 ### Keyword (Description with table)
 
 ```tsx
-<Route author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" paramsDesc={['keyword', 'rank mode, empty or other for time order, `popular` for popular order, `date` by default', 'filte R18 content, see table below, empty by default']}>
+<Route author="DIYgod" example="/pixiv/search/Nezuko/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" paramsDesc={['keyword', 'rank mode, empty or other for time order, `popular` for popular order, `date` by default', 'filte R18 content, see table below, empty by default']}>
 
 | only not R18 | only R18 | no filter      |
 | ------------ | -------- | -------------- |
@@ -119,7 +119,7 @@ To add documentation to your route, use the `Route` React component. It works li
 
 ---
 
-<Route author="DIYgod" example="/pixiv/search/麻衣/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" paramsDesc={['keyword', 'rank mode, empty or other for time order, `popular` for popular order, `date` by default', 'filte R18 content, see table below, empty by default']}>
+<Route author="DIYgod" example="/pixiv/search/Nezuko/popular/2" path="/pixiv/search/:keyword/:order?/:mode?" paramsDesc={['keyword', 'rank mode, empty or other for time order, `popular` for popular order, `date` by default', 'filte R18 content, see table below, empty by default']}>
 
 | only not R18 | only R18 | no filter      |
 | ------------ | -------- | -------------- |
@@ -216,8 +216,7 @@ In addition to the aforementioned component properties, there are several other 
 -   `anticrawler`: set to `1` if the target website has an anti-crawler mechanism.
 -   `puppeteer`: set to `1` if the feed uses puppeteer.
 -   `radar`: set to `1` if the feed has a radar rule.
--   `rssbud`: set to `1` if the radar rule is also compatible with RSSBud
--   `selfhost`: set to `1` if the feed requires extra configuration through environment variables.
+-   `configRequired`: set to `1` if the feed requires extra configuration through environment variables.
 -   `supportBT`: set to `1` if the feed supports BitTorrent.
 -   `supportPodcast`: set to `1` if the feed supports podcasts.
 -   `supportScihub`: set to `1` if the feed supports Sci-Hub.
@@ -225,12 +224,12 @@ In addition to the aforementioned component properties, there are several other 
 By using these properties, you can provide valuable information to users and make it easier for them to understand and use your route. Adding these properties to your route documentation will add a badge in front of it.
 
 ```tsx
-<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub username', 'GitHub repo name, `RSSHub` by default']} anticrawler="1" puppeteer="1" radar="1" rssbud="1" selfhost="1" supportBT="1" supportPodcast="1" supportScihub="1" />
+<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub username', 'GitHub repo name, `RSSHub` by default']} anticrawler="1" puppeteer="1" radar="1" configRequired="1" supportBT="1" supportPodcast="1" supportScihub="1" />
 ```
 
 ---
 
-<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub username', 'GitHub repo name, `RSSHub` by default']} anticrawler="1" puppeteer="1" radar="1" rssbud="1" selfhost="1" supportBT="1" supportPodcast="1" supportScihub="1" />
+<Route author="HenryQW" example="/github/issue/DIYgod/RSSHub" path="/github/issue/:user/:repo?" paramsDesc={['GitHub username', 'GitHub repo name, `RSSHub` by default']} anticrawler="1" puppeteer="1" radar="1" configRequired="1" supportBT="1" supportPodcast="1" supportScihub="1" />
 
 ---
 

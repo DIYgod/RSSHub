@@ -501,7 +501,6 @@ module.exports = async (ctx) => {
 
 我们的 RSS 订阅源目前缺少内容。必须设置 `item` 才能添加内容。以下是一个示例：
 
-
 ```js
 const buildData = require('@/utils/common-config');
 
@@ -637,7 +636,7 @@ module.exports = async (ctx) => {
     // got 请求会被自动记录，
     // 但 puppeteer 请求不会
     // 所以我们需要手动记录它们
-    logger.debug(`Requesting ${link}`);
+    logger.http(`Requesting ${link}`);
     await page.goto(link, {
         // 指定页面等待载入的时间
         waitUntil: 'domcontentloaded',
@@ -709,7 +708,7 @@ module.exports = async (ctx) => {
     });
 
     const link = `${baseUrl}/${user}/${repo}/issues`;
-    logger.debug(`Requesting ${link}`);
+    logger.http(`Requesting ${link}`);
     await page.goto(link, {
         waitUntil: 'domcontentloaded',
     });
@@ -747,7 +746,7 @@ module.exports = async (ctx) => {
                     request.resourceType() === 'document' ? request.continue() : request.abort();
                 });
 
-                logger.debug(`Requesting ${item.link}`);
+                logger.http(`Requesting ${item.link}`);
                 await page.goto(item.link, {
                     waitUntil: 'domcontentloaded',
                 });
