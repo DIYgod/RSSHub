@@ -287,8 +287,8 @@ devDependencies:
     specifier: 3.0.6
     version: 3.0.6
   '@types/supertest':
-    specifier: 6.0.1
-    version: 6.0.1
+    specifier: 6.0.2
+    version: 6.0.2
   '@types/tiny-async-pool':
     specifier: 2.0.3
     version: 2.0.3
@@ -1810,8 +1810,8 @@ packages:
       '@types/node': 20.5.6
     dev: true
 
-  /@types/supertest@6.0.1:
-    resolution: {integrity: sha512-M1xs8grAWC4RisSEQjyQV0FZzXnL3y796540Q/HCdiPcErwKpcAfvsNQFb4xp+5btSWMOZG1YlDWs2z96pdbcw==}
+  /@types/supertest@6.0.2:
+    resolution: {integrity: sha512-137ypx2lk/wTQbW6An6safu9hXmajAifU/s7szAHLN/FeIm5w7yR0Wkl9fdJMRSHwOn4HLAI0DaB2TOORuhPDg==}
     dependencies:
       '@types/methods': 1.1.4
       '@types/superagent': 8.1.1
