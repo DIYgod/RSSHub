@@ -5054,6 +5054,9 @@
     "/panewslab/topic/:id": [
         "nczitzk"
     ],
+    "/papers/:category?": [
+        "nczitzk"
+    ],
     "/paradigm/writing": [
         "Fatpandac"
     ],
