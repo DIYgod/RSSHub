@@ -1,7 +1,15 @@
-{{ if summary }}
-  <p>{{ summary }}</p>
+{{ if pdfUrl }}
+  <a href="{{ pdfUrl }}">[PDF]</a>
 {{ /if }}
 
-{{ if kimi }}
-  {{@ kimi }}
+{{ if siteUrl }}
+  <a href="{{ siteUrl }}">[Site]</a>
+{{ /if }}
+
+{{ if kimiUrl }}
+  <a href="{{ kimiUrl }}">[Kimi]</a>
+{{ /if }}
+
+{{ if summary }}
+  <p>{{ summary }}</p>
 {{ /if }}
