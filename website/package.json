@@ -22,7 +22,7 @@
     "@docusaurus/plugin-pwa": "3.0.1",
     "@docusaurus/preset-classic": "3.0.1",
     "@mdx-js/react": "^3.0.0",
-    "clsx": "^2.0.0",
+    "clsx": "^2.1.0",
     "markdown-it": "^14.0.0",
     "meilisearch-docsearch": "^0.6.0",
     "pinyin-pro": "3.18.5",
