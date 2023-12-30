@@ -1,0 +1,47 @@
+{{if item._isCompleteInfo}}
+    <table border="1" cellpadding="2" cellspacing="0" align="center">
+        <tbody>
+                <tr>
+                    <td>索引号</td>
+                    <td>{{item.id}}</td>
+                </tr>
+                <tr>
+                    <td>文号</td>
+                    <td>{{item.infoNum}}</td>
+                </tr>
+                <tr>
+                    <td>发文日期</td>
+                    <td>{{item.date}}</td>
+                </tr>
+                <tr>
+                    <td>关键词</td>
+                    <td>{{item.keyWord}}</td>
+                </tr>
+                <tr>
+                    <td>信息来源</td>
+                    <td>{{item.source}}</td>
+                </tr>
+                {{if item.file.length}}
+                    <tr>
+                        <td>附件</td>
+                        <td>
+                            {{each item.file}}
+                                <a href="{{$value.url}}">{{$value.name}}</a><br>
+                            {{/each}}
+                        </td>
+                    </tr>
+                {{/if}}
+        </tbody>
+    </table>
+
+    <hr/>
+    <div>
+        {{@ item.content }}
+    </div>
+{{else}}
+    <div>
+        <a href="{{item.link}}">{{item.title}}</a>
+    </div>
+{{/if}}
+
+

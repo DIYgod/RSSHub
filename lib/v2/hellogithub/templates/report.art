@@ -1,0 +1,118 @@
+{{ if tiobe_list }}
+<table>
+  <tbody>
+    <tr>
+      <th>排名</th>
+      <th>编程语言</th>
+      <th>流行度</th>
+      <th>对比上月</th>
+      <th>年度明星语言</th>
+    </tr>
+    {{ each tiobe_list l }}
+    <tr>
+      <td>{{ l.position }}</td>
+      <td>{{ l.name }}</td>
+      <td>{{ l.rating }}</td>
+      <td>
+      {{ if l.change }}
+        {{ l.change }}
+      {{ else }}
+        新上榜
+      {{ /if }}
+      </td>
+      <td>{{ l.star }}</td>
+    </tr>
+    {{ /each }}
+  </tbody>
+</table>
+{{ /if }}
+
+{{ if all_list }}
+<h1>市场份额排名</h1>
+<table>
+  <tbody>
+    <tr>
+      <th>排名</th>
+      <th>服务器</th>
+      <th>占比</th>
+      <th>对比上月</th>
+      <th>总数</th>
+    </tr>
+    {{ each all_list l }}
+    <tr>
+      <td>{{ l.position }}</td>
+      <td>{{ l.name }}</td>
+      <td>{{ l.rating }}</td>
+      <td>
+      {{ if l.change }}
+        {{ l.change }}
+      {{ else }}
+        新上榜
+      {{ /if }}
+      </td>
+      <td>{{ l.total }}</td>
+    </tr>
+    {{ /each }}
+  </tbody>
+</table>
+<br>
+{{ /if }}
+
+{{ if active_list }}
+<h1>活跃网站排名</h1>
+<table>
+  <tbody>
+    <tr>
+      <th>排名</th>
+      <th>服务器</th>
+      <th>占比</th>
+      <th>对比上月</th>
+      <th>总数</th>
+    </tr>
+    {{ each active_list l }}
+    <tr>
+      <td>{{ l.position }}</td>
+      <td>{{ l.name }}</td>
+      <td>{{ l.rating }}</td>
+      <td>
+      {{ if l.change }}
+        {{ l.change }}
+      {{ else }}
+        新上榜
+      {{ /if }}
+      </td>
+      <td>{{ l.total }}</td>
+    </tr>
+    {{ /each }}
+  </tbody>
+</table>
+{{ /if }}
+
+{{ if db_list }}
+<table>
+  <tbody>
+    <tr>
+      <th>排名</th>
+      <th>数据库</th>
+      <th>分数</th>
+      <th>对比上月</th>
+      <th>类型</th>
+    </tr>
+    {{ each db_list l }}
+    <tr>
+      <td>{{ l.position }}</td>
+      <td>{{ l.name }}</td>
+      <td>{{ l.rating }}</td>
+      <td>
+      {{ if l.change }}
+        {{ l.change }}
+      {{ else }}
+        新上榜
+      {{ /if }}
+      </td>
+      <td>{{ l.db_model }}</td>
+    </tr>
+    {{ /each }}
+  </tbody>
+</table>
+{{ /if }}

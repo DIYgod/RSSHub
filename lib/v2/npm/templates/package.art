@@ -1,0 +1,10 @@
+<h3>Download</h3>
+<p>Last Day: {{packageDownloadCountLastDay}}</p>
+<p>Last week: {{packageDownloadCountLastWeek}}</p>
+<p>Last month: {{packageDownloadCountLastMonth}}</p>
+<hr/>
+<h3>Version</h3>
+{{ each packageVersion}}
+<p>{{$value.version}}: {{$value.time}}</p>
+{{/each}}
+

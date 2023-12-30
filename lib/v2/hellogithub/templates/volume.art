@@ -1,0 +1,36 @@
+{{ if data }}
+{{ each data d }}
+<div>
+  <h1>{{ d.category_name }}</h1>
+  {{ each d.items item }}
+  <div>
+    <h2>
+      <a href="{{ item.github_url }}">{{ item.name }}</a>
+    </h2>
+    <table>
+      <tbody>
+        <tr>
+          <th>Stars</th>
+          <td>{{ item.stars }}</td>
+        </tr>
+        <tr>
+          <th>Forks</th>
+          <td>{{ item.forks }}</td>
+        </tr>
+        <tr>
+          <th>Watch</th>
+          <td>{{ item.watch }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>{{@ item.description | render }}</p>
+    {{ if item.image_url }}
+    <figure>
+      <img src="{{ item.image_url }}">
+    </figure>
+    {{ /if }}
+  </div>
+  {{ /each }}
+</div>
+{{ /each }}
+{{ /if }}

@@ -1,0 +1,23 @@
+<div class="quote">
+<a href="{{ target }}" class="quote-link">
+<svg xmlns="http://www.w3.org/2000/svg" width="13.16" height="12" viewBox="0 0 13.16 12" class="css-1f5j0lz"><path d="M5.71,0,0,5l5.71,5V6.57S13.63,4,12,12c0,0,5.11-9.71-6.42-9L5.71,0Z"></path></svg>
+{{ author }}</a>:
+{{@ content }}
+</div>
+
+<style>
+.quote {
+    margin: 15px 0px 15px;
+    width: 100%;
+    border: 1px solid #eee;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    padding: 8px 14px;
+    cursor: pointer;
+}
+
+.quote-link {
+    color: #1890ff;
+    text-decoration: none;
+}
+</style>

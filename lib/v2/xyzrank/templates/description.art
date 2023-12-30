@@ -1,0 +1,12 @@
+{{ if logo }}
+<img src="{{ logo }}">
+{{ /if }}
+<table>
+{{ each items item index }}
+{{ if item }}
+<tr>
+  <td><b>{{ index }}</b></td>
+  <td>{{ item }}</td>
+</tr>
+{{ /if }}
+{{ /each }}

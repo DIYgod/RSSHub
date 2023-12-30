@@ -1,0 +1,158 @@
+<table>
+  <tbody>
+    {{ set hasOfficialPrice = false }}
+    {{ set haslocaleOfficialPrices = false }}
+    {{ set officialPrice = '' }}
+    {{ set localeOfficialPrices = {} }}
+
+    {{ if detail.official_price_str }}
+      {{ set officialPrice = detail.official_price_str }}
+      {{ set hasOfficialPrice = true }}
+    {{ /if }}
+
+    {{ if detail.locale_official_price_str }}
+      {{ set localeOfficialPrices = detail.locale_official_price_str }}
+      {{ set haslocaleOfficialPrices = true }}
+    {{ /if }}
+
+    {{ set price = detail.price_str }}
+    {{ set localePrices = detail.locale_price_str }}
+
+    {{ if detail.discount_rate }}
+      {{ set discountRate = detail.discount_rate }}
+      <tr>
+        <th>割引</th>
+        <td>{{ discountRate }}%</td>
+      </tr>
+    {{ /if }}
+    {{ if discountEndDate }}
+      <tr>
+        <th>割引終了時間</th>
+        <td>{{ discountEndDate | formatDate 'YYYY-MM-DD HH:mm' }}</td>
+      </tr>
+    {{ /if }}
+    {{ if price }}
+      <tr>
+        <th>価格&nbsp;(JPY)</th>
+        <td>
+          {{@ price }}<i>&nbsp;円</i>&nbsp;&nbsp;
+          {{ if hasOfficialPrice }}
+            <del><small>{{@ officialPrice }}<i>&nbsp;円</i></small></del>
+          {{ /if }}
+        </td>
+      </tr>
+    {{ /if }}
+    {{ if localePrices.en_US }}
+      {{ set price = localePrices.en_US }}
+      {{ set officialPrice = localeOfficialPrices.en_US }}
+      <tr>
+        <th>価格&nbsp;(USD)</th>
+        <td>
+          {{@ price }}
+          {{ if haslocaleOfficialPrices }}
+            <del><small>{{@ officialPrice }}</small></del>
+          {{ /if }}
+        </td>
+      </tr>
+    {{ /if }}
+    {{ if localePrices.ko_KR }}
+      {{ set price = localePrices.ko_KR }}
+      {{ set officialPrice = localeOfficialPrices.ko_KR }}
+      <tr>
+        <th>価格&nbsp;(KRW)</th>
+        <td>
+          {{@ price }}
+          {{ if haslocaleOfficialPrices }}
+            <del><small>{{@ officialPrice }}</small></del>
+          {{ /if }}
+        </td>
+      </tr>
+    {{ /if }}
+    {{ if localePrices.zh_CN }}
+      {{ set price = localePrices.zh_CN }}
+      {{ set officialPrice = localeOfficialPrices.zh_CN }}
+      <tr>
+        <th>価格&nbsp;(RMB)</th>
+        <td>
+          {{@ price }}
+          {{ if haslocaleOfficialPrices }}
+            <del><small>{{@ officialPrice }}</small></del>
+          {{ /if }}
+        </td>
+      </tr>
+    {{ /if }}
+    {{ if localePrices.zh_TW }}
+      {{ set price = localePrices.zh_TW }}
+      {{ set officialPrice = localeOfficialPrices.zh_TW }}
+      <tr>
+        <th>価格&nbsp;(TWD)</th>
+        <td>
+          {{@ price }}
+          {{ if haslocaleOfficialPrices }}
+            <del><small>{{@ officialPrice }}</small></del>
+          {{ /if }}
+        </td>
+      </tr>
+    {{ /if }}
+    {{ if detail.default_point_str }}
+      {{ set defaultPoint = detail.default_point_str }}
+      <tr>
+        <th>ポイント</th>
+        <td>{{ defaultPoint }}&nbsp;pt</td>
+      </tr>
+    {{ /if }}
+    {{ if authors }}
+      <tr>
+        <th>作者</th>
+        <td>
+          {{ each authors a }}
+            <a href="{{ a.link }}">{{ a.name }}</a>
+          {{ /each }}
+        </td>
+      </tr>
+    {{ /if }}
+    {{ if updatedDate }}
+      <tr>
+        <th>発売日</th>
+        <td>{{ updatedDate | formatDate 'YYYY-MM-DD HH:mm' }}</td>
+      </tr>
+    {{ /if }}
+    {{ if pubDate }}
+      <tr>
+        <th>販売日</th>
+        <td>{{ pubDate | formatDate 'YYYY-MM-DD HH:mm' }}</td>
+      </tr>
+    {{ /if }}
+    {{ if workCategories }}
+      <tr>
+        <th>作品形式</th>
+        <td>
+          {{ each workCategories w }}
+            <a href="{{ w.link }}">{{ w.text }}</a>,&nbsp;
+          {{ /each }}
+        </td>
+      </tr>
+    {{ /if }}
+    {{ if searchTags }}
+      <tr>
+        <th>ジャンル</th>
+        <td>
+          {{ each searchTags s }}
+            <a href="{{ s.link }}">{{ s.text }}</a>,&nbsp;
+          {{ /each }}
+        </td>
+      </tr>
+    {{ /if }}
+    {{ if description }}
+      <tr>
+        <th>概要</th>
+        <td>{{ description }}</td>
+      </tr>
+    {{ /if }}
+  </tbody>
+</table>
+{{ if images }}
+  {{ each images image }}
+    <img src="{{ image }}">
+  {{ /each }}
+{{ /if }}

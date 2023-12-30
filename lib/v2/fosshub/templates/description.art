@@ -1,0 +1,20 @@
+<table>
+<tbody>
+{{ each links link }}
+<tr>
+{{ each link l }}
+<th>{{ l.dt }}</th>
+{{ /each }}
+<tr>
+<tr>
+{{ each link l }}
+<td>{{@ l.dd }}</td>
+{{ /each }}
+<tr>
+{{ /each }}
+</tbody>
+</table>
+{{ if changelog }}
+<br>
+{{@ changelog }}
+{{ /if }}

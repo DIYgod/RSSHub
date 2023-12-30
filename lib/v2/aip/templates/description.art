@@ -1,0 +1,8 @@
+<p>
+    <span><big>{{ title }}</big></span><br>
+</p>
+<p>
+    <span><small><i>{{ authors }}</i></small></span><br>
+    <span><small><i>https://doi.org/{{ doi }}</i></small></span><br>
+    {{ if img }}<img src={{ img }}>{{ /if }}
+</p>

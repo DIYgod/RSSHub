@@ -1,0 +1,11 @@
+[Unit]
+Description=RSSHub is an open source, easy to use, and extensible RSS feed aggregator
+
+[Service]
+User=rsshub
+WorkingDirectory=/home/rsshub/app
+ExecStart=yarn start
+EnvironmentFile=/home/rsshub/app/.env
+
+[Install]
+WantedBy=multi-user.target

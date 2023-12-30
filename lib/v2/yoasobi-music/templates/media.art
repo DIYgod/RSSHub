@@ -1,0 +1,2 @@
+<p>{{date}} [{{weekDay}}] {{ if postFix }}{{postFix}}{{ /if }}</p>
+{{@ description }}

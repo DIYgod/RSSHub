@@ -1,0 +1,45 @@
+name: Build assets
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'assets/radar-rules.js'
+      - 'lib/**/maintainer.js'
+      - 'lib/**/radar-rules.js'
+      - 'lib/**/radar.js'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build assets
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Use Node.js Active LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: 'pnpm'
+      - name: Install dependencies (yarn)
+        run: pnpm i
+      - name: Build assets
+        run: npm run build:all
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./assets
+          user_name: 'github-actions[bot]'
+          user_email: '41898282+github-actions[bot]@users.noreply.github.com'

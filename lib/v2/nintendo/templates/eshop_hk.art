@@ -1,0 +1,61 @@
+{{ if host === 'store.nintendo.com.hk' }}
+
+{{ if gallery }}{{ each gallery g }}{{ if g.type === 'image' && g.isMain }}<img src="{{ g.full || g.img || g.thumb }}">{{ /if }}{{ /each }}{{ /if }}
+<table>
+  <tr>
+    {{ if attributes.platform }}<th>支援平台：</th><td>{{ attributes.platform }}</td>{{ /if }}
+    {{ if attributes.supported_languages }}<th>對應語言：</th><td>{{ attributes.supported_languages }}</td>{{ /if }}
+  </tr>
+  <tr>
+    {{ if attributes.game_category }}<th>遊戲類型：</th><td>{{ attributes.game_category }}</td>{{ /if }}
+    {{ if attributes.required_space }}<th>所需容量（約）：</th><td>{{ attributes.required_space }}</td>{{ /if }}
+  </tr>
+  <tr>
+    {{ if attributes.release_date }}<th>發售日：</th><td>{{ attributes.release_date }}</td>{{ /if }}
+    {{ if attributes.supported_controllers }}<th>支援的控制器：</th><td>{{ attributes.supported_controllers }}</td>{{ /if }}
+  </tr>
+  <tr>
+    {{ if attributes.publisher }}<th>發行商：</th><td>{{ attributes.publisher }}</td>{{ /if }}
+    {{ if attributes.supported_play_modes }}<th>遊玩模式：</th><td>{{ attributes.supported_play_modes }}</td>{{ /if }}
+  </tr>
+  <tr>
+    {{ if attributes.no_of_players }}<th>遊玩人數：</th><td>{{ attributes.no_of_players }}</td>{{ /if }}
+    {{ if attributes.price }}<th>售價：</th><td>{{ attributes.currency }} {{ attributes.price }}</td>{{ /if }}
+  </tr>
+</table>
+{{ if attributes.disclaimer }}{{ attributes.disclaimer }}{{ /if }}
+<br><br>{{@ description }}<br>
+{{ if gallery }}{{ each gallery g }}
+    {{ if g.type === 'image' && !g.isMain }}<img src="{{ g.full || g.img || g.thumb }}">{{ /if }}
+{{ /each }}{{ /if }}
+
+{{ else if host === 'ec.nintendo.com' }}
+
+{{ if jsonData.hero_banner_url }}<img src="{{ jsonData.hero_banner_url }}">{{ /if }}
+<h2>{{ jsonData.catch_copy }}</h2>
+<div>{{@ jsonData.description.replace(/\n/g, '<br>') }}</div>
+{{ if jsonData.notices }}
+<br><span>廠商通知</span>
+<div>{{ jsonData.notices[0].text }}</div><br>
+{{ /if }}
+<table>
+  {{ if priceData }}<tr><th>售價</th><td>{{ priceData.price.regular_price.formatted_value }}</td></tr>{{ /if }}
+  {{ if jsonData.total_rom_size }}<tr><th>需要空間</th><td>{{ (jsonData.total_rom_size / 1024 / 1024 / 1024).toFixed(1) }} GB</td></tr>{{ /if }}
+  {{ if jsonData.play_styles }}<tr><th>遊玩模式</th><td>{{ jsonData.play_styles.map((s) => s.name).join(', ') }}</td></tr>{{ /if }}
+  {{ if jsonData.player_number }}<tr><th>遊玩人數</th><td>{{ jsonData.player_number.offline_max }}</td></tr>{{ /if }}
+  {{ if jsonData.player_number }}<tr><th>鄰近主機通訊遊玩人數</th><td>{{ jsonData.player_number.local_max }}</td></tr>{{ /if }}
+  {{ if jsonData.player_number }}<tr><th>網路通訊遊玩人數</th><td>{{ jsonData.player_number.online_max }}</td></tr>{{ /if }}
+  {{ if jsonData.controllers }}<tr><th>對應控制器</th><td>{{ jsonData.controllers.map((c) => c.name).join(', ') }}</td></tr>{{ /if }}
+  {{ if jsonData.cloud_backup_type }}<tr><th>保管儲存資料</th><td>{{ jsonData.cloud_backup_type === 'supported' ? '對應' : '不對應' }}</td></tr>{{ /if }}
+  {{ if jsonData.platform }}<tr><th>平台</th><td>{{ jsonData.platform.name }}</td></tr>{{ /if }}
+  {{ if jsonData.publisher }}<tr><th>廠商</th><td>{{ jsonData.publisher.name }}</td></tr>{{ /if }}
+  {{ if jsonData.genre }}<tr><th>類型</th><td>{{ jsonData.genre }}</td></tr>{{ /if }}
+  {{ if jsonData.release_date_on_eshop }}<tr><th>發布日</th><td>{{ jsonData.release_date_on_eshop }}</td></tr>{{ /if }}
+  {{ if jsonData.languages }}<tr><th>對應語言</th><td>{{ jsonData.languages.map((l) => l.name).join(', ') }}</td></tr>{{ /if }}
+</table>
+{{ if jsonData.network_feature_description}}{{ jsonData.network_feature_description }}<br>{{ /if }}
+{{ if jsonData.copyright_text }}{{ jsonData.copyright_text }}{{ /if }}
+{{ if jsonData.screenshots }}{{ each jsonData.screenshots s }}
+    {{ each s.images i }}<img src="{{ i.url }}">{{ /each }}
+{{ /each }}{{ /if }}
+{{ /if }}

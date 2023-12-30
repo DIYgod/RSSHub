@@ -1,2 +1,6 @@
 coverage
 .vscode
+docker-compose.yml
+!/.github
+!/docs/.vuepress
+website

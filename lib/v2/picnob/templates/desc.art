@@ -1,0 +1,13 @@
+{{ if item.type === 'video' }}
+    <video poster="{{ item.pic }}" controls>
+        <source src="{{ item.video }}" type="video/mp4">
+    </video>
+{{ else if item.type === 'img_multi' }}
+    {{ each item.images i }}
+        <img src="{{ i.url }}">
+    {{ /each }}
+{{ else if item.type === 'img_sig' }}
+    <img src="{{ item.pic }}">
+{{ /if }}
+<br>
+{{@ item.sum }}

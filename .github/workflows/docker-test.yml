@@ -1,36 +1,79 @@
-name: '[docker] CI for build tests'
+name: PR - Docker build test
 
 on:
-    pull_request:
-        branches: master
-        paths:
-            - 'lib/**'
-            - 'Dockerfile'
-            - 'package.json'
-    push:
-        branches: '*'
-        paths:
-            - 'lib/**'
-            - 'Dockerfile'
-            - 'package.json'
+  pull_request:
+    branches:
+      - master
+    paths:
+      - '.github/workflows/docker-test.yml'
+      - 'lib/**'
+      - '!**/maintainer.js'
+      - '!**/radar.js'
+      - '!**/radar-rules.js'
+      - 'Dockerfile'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+    types: [opened, reopened, synchronize, edited]
+  # Please, always create a pull request instead of push to master.
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: docker-test-${{ github.ref_name }}
+  cancel-in-progress: true
 
 jobs:
-    test:
-        runs-on: ubuntu-latest
-        steps:
-        -
-            name: Checkout
-            uses: actions/checkout@v2
-        -
-            name: Set up Docker Buildx
-            id: buildx
-            uses: crazy-max/ghaction-docker-buildx@v1
-            with:
-                buildx-version: latest
-        -
-            name: Build dockerfile (without push)
-            run: |
-                docker buildx build \
-                --platform=linux/amd64,linux/arm/v7,linux/arm64 \
-                --output "type=image,push=false" \
-                --file ./Dockerfile .
+  test:
+    name: Docker build & tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx  # needed by `cache-from`
+        uses: docker/setup-buildx-action@v3
+
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: rsshub
+          flavor: latest=true
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          build-args: PUPPETEER_SKIP_DOWNLOAD=0  # also test bundling Chromium
+          load: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          platforms: linux/amd64  # explicit
+          cache-from: |
+            type=registry,ref=${{ secrets.DOCKER_USERNAME }}/rsshub:chromium-bundled
+            type=gha,scope=docker-release
+
+      - name: Pull Request Labeler
+        if: ${{ failure() }}
+        uses: actions-cool/issues-helper@v3
+        with:
+          actions: 'add-labels'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          labels: 'Route Test: Failed'
+
+      - name: Test Docker image
+        run: bash scripts/docker/test-docker.sh
+
+      - name: Export Docker image
+        run: docker save rsshub:latest | gzip -1cf > rsshub.tar.gz
+
+      - name: Upload Docker image
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-image
+          path: rsshub.tar.gz
+          retention-days: 1

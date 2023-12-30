@@ -13,7 +13,7 @@ beforeAll(() => {
 afterEach(() => {
     delete process.env.CACHE_TYPE;
     jest.resetModules();
-    server.close();
+    server?.close();
 });
 
 afterAll(() => {
@@ -134,8 +134,8 @@ describe('cache', () => {
     it('redis with quit', async () => {
         process.env.CACHE_TYPE = 'redis';
         server = require('../../lib/index');
-        const client = require('../../lib/app').context.cache.client;
-        await client.quit();
+        const { redisClient } = require('../../lib/app').context.cache.clients;
+        await redisClient.quit();
         const request = supertest(server);
 
         const response1 = await request.get('/test/cache');
@@ -189,5 +189,31 @@ describe('cache', () => {
 
         expect(parsed1.items[0].content).toBe('Cache1');
         expect(parsed2.items[0].content).toBe('Cache2');
+    });
+
+    it('throws URL key', async () => {
+        process.env.CACHE_TYPE = 'memory';
+        server = require('../../lib/index');
+        const request = supertest(server);
+
+        try {
+            const response = await request.get('/test/cacheUrlKey');
+            expect(response).toThrow(Error);
+        } catch (e) {
+            expect(e.message).toContain('Cache key must be a string');
+        }
+    });
+
+    it('throws TTL key', async () => {
+        process.env.CACHE_TYPE = 'redis';
+        const app = require('../../lib/app');
+
+        try {
+            await app.context.cache.get('rsshub:cacheTtl:mock');
+        } catch (e) {
+            expect(e.message).toContain('reserved for the internal usage');
+        } finally {
+            await app.context.cache.clients.redisClient.quit();
+        }
     });
 });

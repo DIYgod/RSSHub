@@ -1,0 +1,5 @@
+<video poster="{{ videoPoster }}" controls>
+  <% for (let src of videoSrcs) { %>
+    <source src="{{ src }}" type="video/mp4">
+  <% } %>
+</video>

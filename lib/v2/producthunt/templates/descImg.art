@@ -1,0 +1,5 @@
+<br>
+{{ each descData.structuredData.screenshot }}
+    <img src="{{ $value }}">
+{{ /each }}
+

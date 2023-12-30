@@ -1,0 +1,8 @@
+version: '1'
+rules:
+  - base: master
+    upstream: diygod:master
+    # default value if this file does not exist is `hardreset`, effectively overwriting any downstream changes!
+    # previously it was the misconfigured PR route test workflow that rescued downstream changes from being overwritten
+    mergeMethod: merge
+    mergeUnstable: true # prevent non-pass tests from preventing automatic merge

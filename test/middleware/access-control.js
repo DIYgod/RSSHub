@@ -3,24 +3,24 @@ const md5 = require('../../lib/utils/md5');
 let server;
 jest.mock('request-promise-native');
 
-async function checkBlock(response) {
+function checkBlock(response) {
     expect(response.status).toBe(403);
     expect(response.text).toMatch(/Access denied\./);
 }
 
 afterEach(() => {
     delete process.env.ACCESS_KEY;
-    delete process.env.BLACKLIST;
-    delete process.env.WHITELIST;
+    delete process.env.DENYLIST;
+    delete process.env.ALLOWLIST;
     jest.resetModules();
     server.close();
 });
 
 describe('access-control', () => {
-    it(`blacklist`, async () => {
+    it(`denylist`, async () => {
         const key = '1L0veRSSHub';
         const code = md5('/test/2' + key);
-        process.env.BLACKLIST = '/test/1,233.233.233.233';
+        process.env.DENYLIST = 'est/1,233.233.233.,black';
         process.env.ACCESS_KEY = key;
         server = require('../../lib/index');
         const request = supertest(server);
@@ -31,27 +31,33 @@ describe('access-control', () => {
         const response12 = await request.get('/test/1').set('X-Forwarded-For', '233.233.233.233');
         checkBlock(response12);
 
+        const response13 = await request.get('/test/1').set('user-agent', 'blackua');
+        checkBlock(response13);
+
         const response21 = await request.get('/test/2');
         expect(response21.status).toBe(200);
 
         const response22 = await request.get('/test/2').set('X-Forwarded-For', '233.233.233.233');
         checkBlock(response22);
 
-        // wrong key/code, not on blacklist
+        const response23 = await request.get('/test/2').set('user-agent', 'blackua');
+        checkBlock(response23);
+
+        // wrong key/code, not on denylist
         const response311 = await request.get(`/test/2?key=wrong+${key}`);
         expect(response311.status).toBe(200);
 
         const response312 = await request.get(`/test/2?code=wrong+${code}`);
         expect(response312.status).toBe(200);
 
-        // wrong key/code, on blacklist
+        // wrong key/code, on denylist
         const response321 = await request.get(`/test/2?key=wrong+${key}`).set('X-Forwarded-For', '233.233.233.233');
         checkBlock(response321);
 
         const response322 = await request.get(`/test/2?code=wrong+${code}`).set('X-Forwarded-For', '233.233.233.233');
         checkBlock(response322);
 
-        // right key/code, on blacklist
+        // right key/code, on denylist
         const response331 = await request.get(`/test/2?key=${key}`).set('X-Forwarded-For', '233.233.233.233');
         expect(response331.status).toBe(200);
 
@@ -59,10 +65,10 @@ describe('access-control', () => {
         expect(response332.status).toBe(200);
     });
 
-    it(`whitelist`, async () => {
+    it(`allowlist`, async () => {
         const key = '1L0veRSSHub';
         const code = md5('/test/2' + key);
-        process.env.WHITELIST = '/test/1,233.233.233.233';
+        process.env.ALLOWLIST = 'est/1,233.233.233.,white';
         process.env.ACCESS_KEY = key;
         server = require('../../lib/index');
         const request = supertest(server);
@@ -79,20 +85,26 @@ describe('access-control', () => {
         const response12 = await request.get('/test/1').set('X-Forwarded-For', '233.233.233.233');
         expect(response12.status).toBe(200);
 
+        const response13 = await request.get('/test/1').set('user-agent', 'whiteua');
+        expect(response13.status).toBe(200);
+
         const response21 = await request.get('/test/2');
         checkBlock(response21);
 
         const response22 = await request.get('/test/2').set('X-Forwarded-For', '233.233.233.233');
         expect(response22.status).toBe(200);
 
-        // wrong key/code, not on whitelist
+        const response23 = await request.get('/test/2').set('user-agent', 'whiteua');
+        expect(response23.status).toBe(200);
+
+        // wrong key/code, not on allowlist
         const response311 = await request.get(`/test/2?code=wrong+${code}`);
         checkBlock(response311);
 
         const response312 = await request.get(`/test/2?key=wrong+${key}`);
         checkBlock(response312);
 
-        // wrong key/code, on whitelist
+        // wrong key/code, on allowlist
         const response321 = await request.get(`/test/2?code=wrong+${code}`).set('X-Forwarded-For', '233.233.233.233');
         expect(response321.status).toBe(200);
 

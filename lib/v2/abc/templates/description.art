@@ -1,0 +1,21 @@
+{{ if image }}
+  <figure>
+    <img src="{{ image.src }}" alt="{{ image.alt }}">
+    <figcaption>{{ image.alt }}</figcaption>
+  </figure>
+{{ /if }}
+
+{{ if enclosure }}
+  <{{ enclosure.type.split(/\//)[0] }} controls>
+    <source
+      src="{{ enclosure.src }}"
+      type="{{ enclosure.type }}">
+    <object data="{{ enclosure.src }}">
+      <embed src="{{ enclosure.src }}">
+    </object>
+  </{{ enclosure.type.split(/\//)[0] }}>
+{{ /if }}
+
+{{ if description }}
+  {{@ description }}
+{{ /if }}
