@@ -5806,8 +5806,9 @@
         "gumibea",
         "TeamSUEP"
     ],
-    "/shmeea": [
-        "jialinghui"
+    "/shmeea/:id?": [
+        "jialinghui",
+        "Misaka13514"
     ],
     "/shmeea/self-study": [
         "h2ws"
