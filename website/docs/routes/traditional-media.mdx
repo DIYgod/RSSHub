@@ -1812,6 +1812,28 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
   | ---- | ---- | ---- | ---- | ---- | -------- |
 </Route>
 
+## 三联生活周刊 {#san-lian-sheng-huo-zhou-kan}
+
+### 栏目 {#san-lian-sheng-huo-zhou-kan-lan-mu}
+
+提取文章全文，获得更好的阅读体验。支持所有频道，频道名称见 [杂志栏目](https://www.lifeweek.com.cn/classify?type=2)。例如 [调查栏目](https://www.lifeweek.com.cn/column/9) URL 最后的数字为栏目 ID
+
+<Route author="changren-wcr" example="/lifeweek/channel/9" path="/lifeweek/channel/:channel" paramsDesc={['栏目 ID']}>
+  | 调查 | 热点 | 人物 | 社会 | 经济 | 文化 |
+  | ---- | ---- | ---- | ---- | ---- | ---- |
+  | 9    | 6    | 10   | 2    | 3    | 4    |
+</Route>
+
+### 标签 {#san-lian-sheng-huo-zhou-kan-biao-qian}
+
+提取文章全文，获得更好的阅读体验。支持所有标签，标签名称见 [全部标签](https://www.lifeweek.com.cn/classify?type=1)。例如 [社会调查标签](https://www.lifeweek.com.cn/articleList/122) URL 最后的数字为标签 ID
+
+<Route author="changren-wcr" example="/lifeweek/tag/122" path="/lifeweek/tag/:tag" paramsDesc={['标签 ID']}>
+  | 社会调查 | 社会 | 经济 | 理财 | 热点 |
+  | -------- | ---- | ---- | ---- | ---- |
+  | 122      | 21   | 73   | 74   | 123  |
+</Route>
+
 ## 厦门网 {#xia-men-wang}
 
 ### 数字媒体 {#xia-men-wang-shu-zi-mei-ti}

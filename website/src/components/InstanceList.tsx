@@ -46,6 +46,11 @@ export default function InstanceList(): JSX.Element {
     location: '🇺🇸',
     maintainer: 'limfoo',
     maintainerUrl: 'https://blog.limfoo.io',
+  }, {
+    url: 'https://rsshub.rss.tips',
+    location: '🇺🇸',
+    maintainer: 'AboutRSS',
+    maintainerUrl: 'https://github.com/AboutRSS/ALL-about-RSS',
   }]
 
   return (
