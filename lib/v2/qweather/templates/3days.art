@@ -4,6 +4,8 @@
 <br>
 <text>相对湿度：{{item.humidity}}%</text>
 <br>
+<text>空气质量指数：{{item.aqi}} ({{item.aqiCategory}})</text>
+<br>
 <text>大气压强：{{item.pressure}}百帕</text>
 <br>
 <text>紫外线强度：{{item.uvIndex}}</text>
