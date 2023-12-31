@@ -68,6 +68,77 @@
 
 <Route author="Fatpandac" example="/gov/guangdong/tqyb/sncsyjxh" path="/gov/guangdong/tqyb/sncsyjxh" />
 
+## 国家气候中心 {#guo-jia-qi-hou-zhong-xin}
+
+### 最新监测 {#guo-jia-qi-hou-zhong-xin-zui-xin-jian-ce}
+
+<Route author="nczitzk" example="/ncc-cma/cmdp/image" path="/ncc-cma/cmdp/image" paramsDesc={['分类 id，见下表，默认为全部']} radar="1" supportBT="1">
+  :::tip
+  若订阅全部最新监测信息，此时路由为 [`/ncc-cma/cmdp/image`](https://rsshub.app/ncc-cma/cmdp/image)。
+
+  若订阅中国气温 **日平均气温距平** 的最新监测信息，此时路由为 [`/ncc-cma/cmdp/image/RPJQWQYZ`](https://rsshub.app/ncc-cma/cmdp/image/RPJQWQYZ)。
+
+  若订阅全球降水 **降水量（最近 10 天）** / **降水量（最近 10 天）** / **降水量（最近 10 天）** 的最新监测信息，此时路由为 [`/ncc-cma/cmdp/image/glbrain10_/glbrain20_/glbrain30_`](https://rsshub.app/ncc-cma/cmdp/image/glbrain10_/glbrain20_/glbrain30_)。
+  :::
+
+  #### [中国气温](http://cmdp.ncc-cma.net/cn/index.htm)
+
+  | 分类                 | ID         |
+  | -------------------- | ---------- |
+  | 日平均气温距平       | RPJQWQYZ   |
+  | 近 5 天平均气温距平  | ZJ5TPJQWJP |
+  | 近 10 天平均气温距平 | ZJ10TQWJP  |
+  | 近 20 天平均气温距平 | ZJ20TQWJP  |
+  | 近 30 天平均气温距平 | ZJ30TQWJP  |
+  | 本月以来气温距平     | BYYLQWJP   |
+  | 本季以来气温距平     | BJYLQWJP   |
+  | 本年以来气温距平     | BNYLQWJP   |
+
+  #### [中国降水](http://cmdp.ncc-cma.net/cn/index.htm)
+
+  | 分类                     | ID             |
+  | ------------------------ | -------------- |
+  | 日降水量分布             | QGRJSLFBT0808S |
+  | 近 5 天降水量            | ZJ5TJSLFBT     |
+  | 近 10 天降水量           | ZJ10TJSL       |
+  | 近 20 天降水量           | ZJ20TJSL       |
+  | 近 30 天降水量           | ZJ30TJSL       |
+  | 本月以来降水量           | BYYLJSL        |
+  | 本季以来降水量           | BJYLJSL        |
+  | 近 10 天降水量距平百分率 | ZJ10TJSLJP     |
+  | 近 20 天降水量距平百分率 | ZJ20TJSLJP     |
+  | 近 30 天降水量距平百分率 | ZJ30TJSLJP     |
+  | 本月以来降水量距平百分率 | BYYLJSLJPZYQHZ |
+  | 本季以来降水量距平百分率 | BJYLJSLJPZJQHZ |
+  | 本年以来降水量距平百分率 | BNYLJSLJP      |
+
+  #### [全球气温](http://cmdp.ncc-cma.net/cn/index.htm)
+
+  | 分类                       | ID            |
+  | -------------------------- | ------------- |
+  | 气温距平（最近 10 天）     | glbtmeana10\_ |
+  | 气温距平（最近 20 天）     | glbtmeana20\_ |
+  | 气温距平（最近 30 天）     | glbtmeana30\_ |
+  | 气温距平（最近 90 天）     | glbtmeana90\_ |
+  | 最低气温距平（最近 30 天） | glbtmina30\_  |
+  | 最低气温距平（最近 90 天） | glbtmina90\_  |
+  | 最高气温距平（最近 30 天） | glbtmaxa30\_  |
+  | 最高气温距平（最近 90 天） | glbtmaxa90\_  |
+
+  #### [全球降水](http://cmdp.ncc-cma.net/cn/index.htm)
+
+  | 分类                         | ID           |
+  | ---------------------------- | ------------ |
+  | 降水量（最近 10 天）         | glbrain10\_  |
+  | 降水量（最近 20 天）         | glbrain20\_  |
+  | 降水量（最近 30 天）         | glbrain30\_  |
+  | 降水量（最近 90 天）         | glbrain90\_  |
+  | 降水距平百分率（最近 10 天） | glbraina10\_ |
+  | 降水距平百分率（最近 20 天） | glbraina20\_ |
+  | 降水距平百分率（最近 30 天） | glbraina30\_ |
+  | 降水距平百分率（最近 90 天） | glbraina90\_ |
+</Route>
+
 ## 国家突发事件预警信息发布网 {#guo-jia-tu-fa-shi-jian-yu-jing-xin-xi-fa-bu-wang}
 
 ### 当前生效预警 {#guo-jia-tu-fa-shi-jian-yu-jing-xin-xi-fa-bu-wang-dang-qian-sheng-xiao-yu-jing}
