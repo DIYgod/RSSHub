@@ -4533,6 +4533,9 @@
     "/nber/news": [
         "5upernova-heng"
     ],
+    "/ncc-cma/cmdp/image/:id?": [
+        "nczitzk"
+    ],
     "/ncepu/master/:type": [
         "nilleo"
     ],
