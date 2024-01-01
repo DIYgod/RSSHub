@@ -6093,6 +6093,9 @@
     "/sspu/jwc/:listId": [
         "TonyRL"
     ],
+    "/sspu/pe/:id?": [
+        "nczitzk"
+    ],
     "/ssydt/article/:id?": [],
     "/startuplatte/:category?": [
         "nczitzk"
