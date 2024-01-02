@@ -18,8 +18,8 @@ dependencies:
     specifier: 7.91.0
     version: 7.91.0
   '@tonyrl/rand-user-agent':
-    specifier: 2.0.43
-    version: 2.0.43
+    specifier: 2.0.44
+    version: 2.0.44
   aes-js:
     specifier: 3.1.2
     version: 3.1.2
@@ -1357,8 +1357,8 @@ packages:
       defer-to-connect: 2.0.1
     dev: false
 
-  /@tonyrl/rand-user-agent@2.0.43:
-    resolution: {integrity: sha512-WSRY50iLJnaDSmOeHRgFHXuZrVjUZAkC0lYnGSe2OVJFtzFzAwoZcUEUCrqlOAKNWg0AjNvxD/kxvWFUYGBpZg==}
+  /@tonyrl/rand-user-agent@2.0.44:
+    resolution: {integrity: sha512-m+186oR7dSKjbOcQYW7twY/uLrstr4zi69FI0bqOjiyoKPuRkXgI5VWQss2VNACKn18trI0qtqbO+6B+UJqbMQ==}
     engines: {node: '>=14.16'}
     dev: false
 
