@@ -582,6 +582,9 @@
         "TonyRL"
     ],
     "/babykingdom/:id/:order?": [],
+    "/backlinko/blog": [
+        "TonyRL"
+    ],
     "/bad/:path+": [
         "nczitzk"
     ],
