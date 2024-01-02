@@ -146,9 +146,6 @@ dependencies:
   proxy-chain:
     specifier: 2.4.0
     version: 2.4.0
-  psl:
-    specifier: 1.9.0
-    version: 1.9.0
   puppeteer:
     specifier: 21.6.1
     version: 21.6.1
@@ -194,6 +191,9 @@ dependencies:
   title:
     specifier: 3.5.3
     version: 3.5.3
+  tldts:
+    specifier: 6.1.1
+    version: 6.1.1
   tough-cookie:
     specifier: 4.1.3
     version: 4.1.3
@@ -8563,6 +8563,17 @@ packages:
   /tlds@1.242.0:
     resolution: {integrity: sha512-aP3dXawgmbfU94mA32CJGHmJUE1E58HCB1KmlKRhBNtqBL27mSQcAEmcaMaQ1Za9kIVvOdbxJD3U5ycDy7nJ3w==}
     hasBin: true
+    dev: false
+
+  /tldts-core@6.1.1:
+    resolution: {integrity: sha512-xBHFfOO2YmEwogupGTKR0IBXe1IJe1/GleNeXpO294Fk90aQSvrop41BKA66CkfNLVOuomJDZ304KxwovT04Vw==}
+    dev: false
+
+  /tldts@6.1.1:
+    resolution: {integrity: sha512-uV5xEtjR8VdMZZU0my9zLqWJNAkG0PZ5l5t9F1dBYwOyeFeWTFd0emxEs12Y1U39XKD+dF2ElzNU59Qq0Z4PGQ==}
+    hasBin: true
+    dependencies:
+      tldts-core: 6.1.1
     dev: false
 
   /tmpl@1.0.5:
