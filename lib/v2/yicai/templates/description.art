@@ -1,11 +1,39 @@
-{{ if thumb }}
-<img src="{{ thumb }}">
+{{ if !video?.src && image?.src }}
+  <figure>
+    <img
+      {{ if image.alt }}
+        alt="{{ image.alt }}"
+      {{ /if }}
+      {{ if image.width }}
+        alt="{{ image.width }}"
+      {{ /if }}
+      {{ if image.height }}
+        alt="{{ image.height }}"
+      {{ /if }}
+    src="{{ image.src }}">
+  </figure>
 {{ /if }}
-{{ if video }}
-<video controls>
-<source src="{{ video }}" type="video/mp4">
-</video>
+
+{{ if intro }}
+  <p>{{ intro }}</p>
 {{ /if }}
+
+{{ if video?.src }}
+  <video
+    {{ set poster = video.poster || image?.src }}
+    {{ if poster }}
+      poster="{{ poster }}"
+    {{ /if }}
+    controls>
+    <source
+      src="{{ video.src }}"
+      type="{{ video.type }}">
+    <object data="{{ video.src }}">
+      <embed src="{{ video.src }}">
+    </object>
+  </video>
+{{ /if }}
+
 {{ if description }}
-<p>{{ description }}</p>
+  {{@ description }}
 {{ /if }}
