@@ -5016,6 +5016,15 @@
     "/osu/packs/:type?": [
         "JimenezLi"
     ],
+    "/otobanana/user/:id": [
+        "TonyRL"
+    ],
+    "/otobanana/user/:id/cast": [
+        "TonyRL"
+    ],
+    "/otobanana/user/:id/livestream": [
+        "TonyRL"
+    ],
     "/ouc/it/:type?": [
         "GeoffreyChen777",
         "3401797899"
