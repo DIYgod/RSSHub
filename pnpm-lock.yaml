@@ -18,8 +18,8 @@ dependencies:
     specifier: 7.91.0
     version: 7.91.0
   '@tonyrl/rand-user-agent':
-    specifier: 2.0.43
-    version: 2.0.43
+    specifier: 2.0.44
+    version: 2.0.44
   aes-js:
     specifier: 3.1.2
     version: 3.1.2
@@ -33,8 +33,8 @@ dependencies:
     specifier: 1.0.0-rc.12
     version: 1.0.0-rc.12
   chrono-node:
-    specifier: 2.7.3
-    version: 2.7.3
+    specifier: 2.7.4
+    version: 2.7.4
   city-timezones:
     specifier: 1.2.1
     version: 1.2.1
@@ -1357,8 +1357,8 @@ packages:
       defer-to-connect: 2.0.1
     dev: false
 
-  /@tonyrl/rand-user-agent@2.0.43:
-    resolution: {integrity: sha512-WSRY50iLJnaDSmOeHRgFHXuZrVjUZAkC0lYnGSe2OVJFtzFzAwoZcUEUCrqlOAKNWg0AjNvxD/kxvWFUYGBpZg==}
+  /@tonyrl/rand-user-agent@2.0.44:
+    resolution: {integrity: sha512-m+186oR7dSKjbOcQYW7twY/uLrstr4zi69FI0bqOjiyoKPuRkXgI5VWQss2VNACKn18trI0qtqbO+6B+UJqbMQ==}
     engines: {node: '>=14.16'}
     dev: false
 
@@ -2553,8 +2553,8 @@ packages:
       urlpattern-polyfill: 9.0.0
     dev: false
 
-  /chrono-node@2.7.3:
-    resolution: {integrity: sha512-M/CusGocGJaubS8OFPEzmSa6IT/MJo2LaVqFyUVaLMo+UWwqyahKHsDe9FQBzwaytVGwR/bwZ5JhnAcu894Owg==}
+  /chrono-node@2.7.4:
+    resolution: {integrity: sha512-gk2xUWroQftZW3Z9mDqD3/HZW1d7fxSf0S0rNxOCfY+uUQP1FuuEcb5ulFcsEWSOQvzl02dqTeY1RK+zmc0WOQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       dayjs: 1.11.8
