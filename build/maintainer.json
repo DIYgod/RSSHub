@@ -2540,6 +2540,9 @@
         "CcccFz"
     ],
     "/gocomics/:name": [],
+    "/gofans/:kind?": [
+        "HenryQW"
+    ],
     "/gogoanimehd/recent-releases": [
         "user4302"
     ],
