@@ -194,6 +194,15 @@
   -   频道包含多重路径，如 `http://www.ftchinese.com/rss/column/007000002` 则替换 `/` 为 `-` `/ft/chinese/column-007000002`.
 </Route>
 
+### myFT personal RSS {#financial-times-myft-personal-rss}
+
+<Route author="HenryQW" example="/ft/myft/rss-key" path="/ft/myft/:key" paramsDesc={['the last part of myFT personal RSS address']} configRequired="1">
+  :::tip
+  -   Visit ft.com -> myFT -> Contact Preferences to enable personal RSS feed, see [help.ft.com](https://help.ft.com/faq/email-alerts-and-contact-preferences/what-is-myft-rss-feed/)
+  -   Obtain the key from the personal RSS address, it looks like `12345678-abcd-4036-82db-vdv20db024b8`
+  :::
+</Route>
+
 ## Korean Central News Agency (KCNA) 朝鲜中央通讯社 {#korean-central-news-agency-kcna-chao-xian-zhong-yang-tong-xun-she}
 
 ### News {#korean-central-news-agency-kcna-chao-xian-zhong-yang-tong-xun-she-news}
@@ -960,6 +969,52 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 ### 一财号 {#di-yi-cai-jing-yi-cai-hao}
 
 <Route author="nczitzk" example="/yicai/author/100005663" path="/yicai/author/:id?" paramsDesc={['作者 id，可在对应作者页中找到，默认为第一财经研究院']} />
+
+### DT 财经 {#di-yi-cai-jing-dt-cai-jing}
+
+<Route author="nczitzk" example="/yicai/dt/article" path="/yicai/dt/:column?/:category?" paramsDesc={['栏目，见下表，默认为文章', '分类，见下表，默认为全部']} radar="1">
+  #### [文章](https://dt.yicai.com/article)
+
+  | 分类     | ID         |
+  | -------- | ---------- |
+  | 全部     | article/0  |
+  | 新流行   | article/31 |
+  | 新趋势   | article/32 |
+  | 商业黑马 | article/33 |
+  | 新品     | article/34 |
+  | 营销     | article/35 |
+  | 大公司   | article/36 |
+  | 城市生活 | article/38 |
+
+  #### [报告](https://dt.yicai.com/report)
+
+  | 分类       | ID        |
+  | ---------- | --------- |
+  | 全部       | report/0  |
+  | 人群观念   | report/9  |
+  | 人群行为   | report/22 |
+  | 美妆个护   | report/23 |
+  | 3C 数码    | report/24 |
+  | 营销趋势   | report/25 |
+  | 服饰鞋包   | report/27 |
+  | 互联网     | report/28 |
+  | 城市与居住 | report/29 |
+  | 消费趋势   | report/30 |
+  | 生活趋势   | report/37 |
+
+  #### [可视化](https://dt.yicai.com/visualization)
+
+  | 分类     | ID               |
+  | -------- | ---------------- |
+  | 全部     | visualization/0  |
+  | 新流行   | visualization/39 |
+  | 新趋势   | visualization/40 |
+  | 商业黑马 | visualization/41 |
+  | 新品     | visualization/42 |
+  | 营销     | visualization/43 |
+  | 大公司   | visualization/44 |
+  | 城市生活 | visualization/45 |
+</Route>
 
 ## 东方网 {#dong-fang-wang}
 
