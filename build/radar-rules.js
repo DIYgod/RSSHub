@@ -10163,6 +10163,11 @@
 
                     return `/liulinblog${path === '/' ? '' : path}`;
                 } } ] },
+  "liveuamap.com":{ _name:"Live Universal Awareness Map",
+    ".":[ { title:"Region",
+        docs:"https://docs.rsshub.app/routes/new-media#live-universal-awareness-map",
+        source:[ "/:region*" ],
+        target:"/liveuamap/:region" } ] },
   "lkong.com":{ _name:"龙空",
     ".":[ { title:"分区",
         docs:"https://docs.rsshub.app/routes/bbs#long-kong-fen-qu",

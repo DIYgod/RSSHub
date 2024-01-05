@@ -4123,6 +4123,9 @@
     "/liulinblog/tag/:id": [
         "nczitzk"
     ],
+    "/liveuamap/:region?": [
+        "CoderSherlock"
+    ],
     "/liyuan-forums/threads": [],
     "/liyuan-forums/threads/forum/:forum_id": [],
     "/liyuan-forums/threads/topic/:topic_id": [],
