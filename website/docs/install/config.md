@@ -261,6 +261,11 @@ See docs of the specified route and `lib/config.js` for detailed information.
     2.  打开控制台，切换到 Network 面板，刷新
     3.  点击 dynamic_new 请求，找到 Cookie
     4.  视频和专栏，UP 主粉丝及关注只要求 `SESSDATA` 字段，动态需复制整段 Cookie
+-   `BILIBILI_DM_IMG_LIST`: 用于获取UP主投稿系列的路由，获取方式：
+    1.  打开 [任意UP主个人空间页](https://space.bilibili.com/1)
+    2.  打开控制台，切换到 Network 面板，关闭缓存，刷新，鼠标在窗口内不断移动
+    3.  使用过滤器找到符合 `https://api.bilibili.com/x/space/wbi/arc/search` 的请求
+    4.  复制请求参数中 `dm_img_list` 字段的内容，如 `[{"x":2721,"y":615,"z":0,"timestamp":29,"type":0}]`
 
 ### Bitbucket
 
