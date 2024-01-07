@@ -6607,7 +6607,7 @@
     "/tprtc/cqzr": [],
     "/tprtc/news": [],
     "/tprtc/qyzc": [],
-    "/tradingview/blog/:language?": [
+    "/tradingview/blog/:language?/category/:category?": [
         "nczitzk"
     ],
     "/trakt/collection/:username/:type?": [],
