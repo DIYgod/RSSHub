@@ -1,0 +1,5 @@
+{{if lead != null }}
+    <p><strong>{{ lead }}</strong></p>
+{{/if}}
+{{@ mainImage }}
+{{@ content }}
