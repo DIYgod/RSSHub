@@ -17,10 +17,10 @@
   },
   "dependencies": {
     "@dipakparmar/docusaurus-plugin-umami": "^2.1.2",
-    "@docusaurus/core": "3.0.1",
-    "@docusaurus/plugin-client-redirects": "3.0.1",
-    "@docusaurus/plugin-pwa": "3.0.1",
-    "@docusaurus/preset-classic": "3.0.1",
+    "@docusaurus/core": "3.1.0",
+    "@docusaurus/plugin-client-redirects": "3.1.0",
+    "@docusaurus/plugin-pwa": "3.1.0",
+    "@docusaurus/preset-classic": "3.1.0",
     "@mdx-js/react": "^3.0.0",
     "clsx": "^2.1.0",
     "markdown-it": "^14.0.0",
@@ -31,9 +31,9 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "3.0.1",
-    "@docusaurus/tsconfig": "^3.0.1",
-    "@docusaurus/types": "3.0.1",
+    "@docusaurus/module-type-aliases": "3.1.0",
+    "@docusaurus/tsconfig": "^3.1.0",
+    "@docusaurus/types": "3.1.0",
     "@types/markdown-it": "^13.0.7",
     "@types/mdx-js__react": "^1.5.8",
     "@types/react": "^18.2.46",
