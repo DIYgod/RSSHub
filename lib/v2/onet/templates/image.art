@@ -1,7 +1,7 @@
 <figure>
     <img src="{{ url }}" alt="{{ alt }}">
     <figcation>
-        {{if caption != null }}
+        {{if caption }}
             <cite>{{ caption }}</cite> -
         {{/if}}
         {{ author }}
