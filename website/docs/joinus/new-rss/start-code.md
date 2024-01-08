@@ -320,7 +320,7 @@ Next, we'll use Cheerio selectors to select the relevant HTML elements, parse th
     // We use a Cheerio selector to select all 'div' elements with the class name 'js-navigation-container'
     // that contain child elements with the class name 'flex-auto'.
     // highlight-start
-    const item = $('div.js-navigation-container .flex-auto')
+    const items = $('div.js-navigation-container .flex-auto')
         // We use the `toArray()` method to retrieve all the DOM elements selected as an array.
         .toArray()
         // We use the `map()` method to traverse the array and parse the data we need from each element.
@@ -366,7 +366,7 @@ module.exports = async (ctx) => {
     const { data: response } = await got(`${baseUrl}/${user}/${repo}/issues`);
     const $ = cheerio.load(response);
 
-    const item = $('div.js-navigation-container .flex-auto')
+    const items = $('div.js-navigation-container .flex-auto')
         .toArray()
         .map((item) => {
             item = $(item);
