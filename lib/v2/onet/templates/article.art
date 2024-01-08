@@ -1,4 +1,4 @@
-{{if lead != null }}
+{{if lead }}
     <p><strong>{{ lead }}</strong></p>
 {{/if}}
 {{@ mainImage }}
