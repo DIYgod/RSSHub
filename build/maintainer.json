@@ -288,6 +288,9 @@
         "SunBK201"
     ],
     "/acm/amturingaward": [],
+    "/acpaa/:id?/:name?": [
+        "nczitzk"
+    ],
     "/acs/journal/:id": [
         "nczitzk"
     ],
