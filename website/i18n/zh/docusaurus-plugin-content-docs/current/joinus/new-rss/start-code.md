@@ -317,7 +317,7 @@ module.exports = async (ctx) => {
     // 我们使用 Cheerio 选择器选择所有带类名“js-navigation-container”的“div”元素，
     // 其中包含带类名“flex-auto”的子元素。
     // highlight-start
-    const item = $('div.js-navigation-container .flex-auto')
+    const items = $('div.js-navigation-container .flex-auto')
         // 使用“toArray()”方法将选择的所有 DOM 元素以数组的形式返回。
         .toArray()
         // 使用“map()”方法遍历数组，并从每个元素中解析需要的数据。
@@ -363,7 +363,7 @@ module.exports = async (ctx) => {
     const { data: response } = await got(`${baseUrl}/${user}/${repo}/issues`);
     const $ = cheerio.load(response);
 
-    const item = $('div.js-navigation-container .flex-auto')
+    const items = $('div.js-navigation-container .flex-auto')
         .toArray()
         .map((item) => {
             item = $(item);
