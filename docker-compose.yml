@@ -39,7 +39,7 @@ services:
             - 1080
         restart: always
         environment:
-            WARP_LICENSE: xxxxxxxx-xxxxxxxx-xxxxxxxx #get license from https://t.me/generatewarpplusbot
+            WARP_LICENSE: xxxxxxxx-xxxxxxxx-xxxxxxxx #get license from https://t.me/generatewarpplusbot.
             FAMILIES_MODE: off
         volumes:
             - ./warp:/var/lib/cloudflare-warp
