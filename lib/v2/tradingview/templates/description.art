@@ -1,4 +1,13 @@
-{{ if image }}
-<img src="{{ image }}">
+{{ if image?.src }}
+  <figure>
+    <img
+      {{ if image.alt }}
+        alt="{{ image.alt }}"
+      {{ /if }}
+    src="{{ image.src }}">
+  </figure>
 {{ /if }}
-{{@ description }}
+
+{{ if description }}
+  {{@ description }}
+{{ /if }}
