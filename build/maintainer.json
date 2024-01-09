@@ -4982,6 +4982,9 @@
     "/one": [],
     "/onejav/:type/:key?": [],
     "/onenotegem/release": [],
+    "/onet/news": [
+        "Vegann"
+    ],
     "/oo-software/changelog/:id": [
         "nczitzk"
     ],
