@@ -6632,6 +6632,9 @@
     "/trending/:keywords/:numberOfDays?": [
         "Jkker"
     ],
+    "/trendingpapers/papers/:category?/:time?/:cited?": [
+        "CookiePieWw"
+    ],
     "/tribalfootball": [
         "Rongronggg9"
     ],
