@@ -9358,7 +9358,7 @@ packages:
     dev: true
 
   github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git+ssh://git@github.com/postlight/difflib.js.git, type: git}
+    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
     name: difflib
     version: 0.2.6
     dependencies:
