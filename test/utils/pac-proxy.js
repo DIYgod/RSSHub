@@ -35,7 +35,7 @@ describe('pac-proxy', () => {
         effectiveExpect(pacProxy(httpsUri, null, emptyProxyObj), httpsUri, emptyProxyObj);
     });
 
-    const ftpUri = 'ftp://rsshub.proxy/pac.pac';
+    const ftpUri = 'ftp://rsshub.proxy:2333';
     it('pac-uri ftp', () => {
         effectiveExpect(pacProxy(ftpUri, null, emptyProxyObj), ftpUri, emptyProxyObj);
     });
@@ -73,7 +73,7 @@ describe('pac-proxy', () => {
 
     const ftpAuthObj = { ...ftpObj, auth: 'testtest' };
     it('pac-uri ftp auth (invalid)', () => {
-        effectiveExpect(pacProxy(ftpAuthUri, null, ftpAuthObj), ftpAuthUri, ftpObj);
+        effectiveExpect(pacProxy(ftpUri, null, ftpAuthObj), ftpUri, ftpObj);
     });
 
     it('pac-uri user@pass override proxy-obj auth', () => {
