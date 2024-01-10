@@ -1,0 +1,5 @@
+<img src="{{ item.verticalPic }}">
+<p>{{@ item.description }}</p>
+<p>地点：{{ item.venuecity }} | {{ item.venue }}</p>
+<p>时间：{{ item.showtime }}</p>
+<p>票价：{{ item.price_str }}</p>
