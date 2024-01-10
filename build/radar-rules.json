@@ -14701,6 +14701,15 @@
           "/"
         ],
         "target": "/huggingface/daily-papers"
+      },
+      {
+        "title": "中文博客",
+        "docs": "https://docs.rsshub.app/routes/programming#huggingface",
+        "source": [
+          "/blog/zh",
+          "/"
+        ],
+        "target": "/huggingface/blog-zh"
       }
     ]
   },

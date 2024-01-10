@@ -3298,6 +3298,9 @@
     ],
     "/hubu/news/:type": [],
     "/hudongba/:city/:id": [],
+    "/huggingface/blog-zh": [
+        "zcf0508"
+    ],
     "/huggingface/daily-papers": [
         "zeyugao"
     ],
