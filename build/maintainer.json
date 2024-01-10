@@ -3253,6 +3253,9 @@
     "/houxu/memory": [
         "nczitzk"
     ],
+    "/hoyolab/news/:language/:gids/:type": [
+        "ZenoTian"
+    ],
     "/hpoi/bannerItem": [
         "DIYgod"
     ],

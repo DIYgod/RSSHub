@@ -14590,6 +14590,19 @@
       }
     ]
   },
+  "hoyolab.com": {
+    "_name": "HoYoLAB",
+    ".": [
+      {
+        "title": "活动公告资讯",
+        "docs": "https://docs.rsshub.app/routes/game#hoyolab-news",
+        "source": [
+          "/",
+          "/circles/:gid/:unknow/official"
+        ]
+      }
+    ]
+  },
   "hpoi.net": {
     "_name": "Hpoi手办维基",
     "www": [
