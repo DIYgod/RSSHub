@@ -177,6 +177,18 @@
   :::
 </Route>
 
+## Ekantipur / कान्तिपुर (Nepal) {#ekantipur-%E0%A4%95%E0%A4%BE%E0%A4%A8%E0%A5%8D%E0%A4%A4%E0%A4%BF%E0%A4%AA%E0%A5%81%E0%A4%B0-nepal}
+
+### Full Article RSS {#ekantipur-%E0%A4%95%E0%A4%BE%E0%A4%A8%E0%A5%8D%E0%A4%A4%E0%A4%BF%E0%A4%AA%E0%A5%81%E0%A4%B0-nepal-full-article-rss}
+
+<Route author="maniche04" example="/ekantipur/news" path="/ekantipur/:channel?" paramsDesc={['Find it in the ekantipur.com menu or pick from the list below:']} radar="1">
+  Channels:
+
+  | समाचार | अर्थ / वाणिज्य | विचार     | खेलकुद   | उपत्यका     | मनोरञ्जन         | फोटोफिचर          | फिचर     | विश्व    | ब्लग   |
+  | ---- | -------- | ------- | ------ | -------- | ------------- | -------------- | ------- | ----- | ---- |
+  | news | business | opinion | sports | national | entertainment | photo\_feature | feature | world | blog |
+</Route>
+
 ## Financial Times {#financial-times}
 
 ### FT 中文网 {#financial-times-ft-zhong-wen-wang}
@@ -192,6 +204,15 @@
 
   -   频道为单一路径，如 `http://www.ftchinese.com/rss/news` 则为 `/ft/chinese/news`.
   -   频道包含多重路径，如 `http://www.ftchinese.com/rss/column/007000002` 则替换 `/` 为 `-` `/ft/chinese/column-007000002`.
+</Route>
+
+### myFT personal RSS {#financial-times-myft-personal-rss}
+
+<Route author="HenryQW" example="/ft/myft/rss-key" path="/ft/myft/:key" paramsDesc={['the last part of myFT personal RSS address']} configRequired="1">
+  :::tip
+  -   Visit ft.com -> myFT -> Contact Preferences to enable personal RSS feed, see [help.ft.com](https://help.ft.com/faq/email-alerts-and-contact-preferences/what-is-myft-rss-feed/)
+  -   Obtain the key from the personal RSS address, it looks like `12345678-abcd-4036-82db-vdv20db024b8`
+  :::
 </Route>
 
 ## Korean Central News Agency (KCNA) 朝鲜中央通讯社 {#korean-central-news-agency-kcna-chao-xian-zhong-yang-tong-xun-she}
@@ -960,6 +981,52 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 ### 一财号 {#di-yi-cai-jing-yi-cai-hao}
 
 <Route author="nczitzk" example="/yicai/author/100005663" path="/yicai/author/:id?" paramsDesc={['作者 id，可在对应作者页中找到，默认为第一财经研究院']} />
+
+### DT 财经 {#di-yi-cai-jing-dt-cai-jing}
+
+<Route author="nczitzk" example="/yicai/dt/article" path="/yicai/dt/:column?/:category?" paramsDesc={['栏目，见下表，默认为文章', '分类，见下表，默认为全部']} radar="1">
+  #### [文章](https://dt.yicai.com/article)
+
+  | 分类     | ID         |
+  | -------- | ---------- |
+  | 全部     | article/0  |
+  | 新流行   | article/31 |
+  | 新趋势   | article/32 |
+  | 商业黑马 | article/33 |
+  | 新品     | article/34 |
+  | 营销     | article/35 |
+  | 大公司   | article/36 |
+  | 城市生活 | article/38 |
+
+  #### [报告](https://dt.yicai.com/report)
+
+  | 分类       | ID        |
+  | ---------- | --------- |
+  | 全部       | report/0  |
+  | 人群观念   | report/9  |
+  | 人群行为   | report/22 |
+  | 美妆个护   | report/23 |
+  | 3C 数码    | report/24 |
+  | 营销趋势   | report/25 |
+  | 服饰鞋包   | report/27 |
+  | 互联网     | report/28 |
+  | 城市与居住 | report/29 |
+  | 消费趋势   | report/30 |
+  | 生活趋势   | report/37 |
+
+  #### [可视化](https://dt.yicai.com/visualization)
+
+  | 分类     | ID               |
+  | -------- | ---------------- |
+  | 全部     | visualization/0  |
+  | 新流行   | visualization/39 |
+  | 新趋势   | visualization/40 |
+  | 商业黑马 | visualization/41 |
+  | 新品     | visualization/42 |
+  | 营销     | visualization/43 |
+  | 大公司   | visualization/44 |
+  | 城市生活 | visualization/45 |
+</Route>
 
 ## 东方网 {#dong-fang-wang}
 
@@ -1810,6 +1877,28 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
 
   | 新奇 | 科技 | 汽車 | 寵物 | 女孩 | HOT 焦點 |
   | ---- | ---- | ---- | ---- | ---- | -------- |
+</Route>
+
+## 三联生活周刊 {#san-lian-sheng-huo-zhou-kan}
+
+### 栏目 {#san-lian-sheng-huo-zhou-kan-lan-mu}
+
+提取文章全文，获得更好的阅读体验。支持所有频道，频道名称见 [杂志栏目](https://www.lifeweek.com.cn/classify?type=2)。例如 [调查栏目](https://www.lifeweek.com.cn/column/9) URL 最后的数字为栏目 ID
+
+<Route author="changren-wcr" example="/lifeweek/channel/9" path="/lifeweek/channel/:channel" paramsDesc={['栏目 ID']}>
+  | 调查 | 热点 | 人物 | 社会 | 经济 | 文化 |
+  | ---- | ---- | ---- | ---- | ---- | ---- |
+  | 9    | 6    | 10   | 2    | 3    | 4    |
+</Route>
+
+### 标签 {#san-lian-sheng-huo-zhou-kan-biao-qian}
+
+提取文章全文，获得更好的阅读体验。支持所有标签，标签名称见 [全部标签](https://www.lifeweek.com.cn/classify?type=1)。例如 [社会调查标签](https://www.lifeweek.com.cn/articleList/122) URL 最后的数字为标签 ID
+
+<Route author="changren-wcr" example="/lifeweek/tag/122" path="/lifeweek/tag/:tag" paramsDesc={['标签 ID']}>
+  | 社会调查 | 社会 | 经济 | 理财 | 热点 |
+  | -------- | ---- | ---- | ---- | ---- |
+  | 122      | 21   | 73   | 74   | 123  |
 </Route>
 
 ## 厦门网 {#xia-men-wang}
