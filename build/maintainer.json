@@ -2846,7 +2846,7 @@
         "Fatpandac"
     ],
     "/gov/province/:name/:category": [],
-    "/gov/safe/bussiness/:site?": [
+    "/gov/safe/business/:site?": [
         "nczitzk"
     ],
     "/gov/safe/complaint/:site?": [
