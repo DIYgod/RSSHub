@@ -1587,19 +1587,31 @@ Refer to [https://developers.themoviedb.org/3/getting-started/languages](https:/
   | mv       | tv       |
 </Route>
 
+## 综艺秀 {#zong-yi-xiu}
+
+### 综艺 {#zong-yi-xiu-zong-yi}
+
+<Route author="pharaoh2012 nczitzk" example="/zyshow/chongchongchong" path="/zyshow/:region?/:id" paramsDesc={['地区，见下表，默认为空，即台湾', '综艺 id，综艺详情对应页 URL 中找到']} radar="1" anticrawler="1">
+  地区
+
+  | 台湾 | 韩国 | 大陆 |
+  | ---- | ---- | ---- |
+  |      | kr   | dl   |
+</Route>
+
 ## BT之家 1LOU站 {#bt-zhi-ji-1Lou}
 
 ### 搜索 {#bt-zhi-ji-1Lou-sou-suo}
 
-<Route author="falling" example="/1lou/search-_E5_8B_BF_E8_A8_80_E6_8E_A8_E7_90_86" path="/1lou/:path" paramsDesc={['路径信息在URL里找到,主页为 index']}>
+<Route author="falling" example="/1lou/search-繁花.htm" path="/1lou/:path" paramsDesc={['路径信息在URL里找到,主页为 index']}>
 :::tip
-  将1lou.me/后，.htm 前的内容作为参数传入到path即可
+  将1lou.me/后的内容作为参数传入到path即可
 
-  www.1lou.me/search-繁花.htm --> /1lou/search-繁花
+  www.1lou.me/search-繁花.htm --> /1lou/search-繁花.htm
 
-  www.1lou.me/forum-1.htm --> /1lou/forum-1
+  www.1lou.me/forum-1.htm --> /1lou/forum-1.htm
 
-  www.1lou.me/ --> /1lou/index
+  www.1lou.me/ --> /1lou/
   :::
 
 </Route>
