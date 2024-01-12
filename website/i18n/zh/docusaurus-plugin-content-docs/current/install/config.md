@@ -76,11 +76,11 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 :::warning
 
-该方法会覆盖 `PROXY_URI`.
+该方法会覆盖 `PROXY_URI`, `PROXY_PROTOCOL`, `PROXY_HOST` 以及 `PROXY_PORT`。
 
 :::
 
-关于代理自动配置文件 (PAC)，请查看[代理自动配置文件（PAC）文件](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_PAC_file)。
+关于代理自动配置文件 (PAC)，请查看[代理自动配置文件（PAC）文件](https://developer.mozilla.org/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_PAC_file)。
 
 `PAC_URI`: PAC 文件 URI，支持 http, https, ftp, file, data。具体以 [pac-proxy-agent](https://www.npmjs.com/package/pac-proxy-agent) NPM 包的支持为准。
 
