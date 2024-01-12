@@ -85,6 +85,9 @@
     "/19lou/:city?": [
         "nczitzk"
     ],
+    "/1lou/:path?": [
+        "falling"
+    ],
     "/1point3acres/blog/:category?": [
         "nczitzk"
     ],
