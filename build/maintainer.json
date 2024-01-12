@@ -6512,7 +6512,7 @@
         "aether17"
     ],
     "/tianyancha/hot": [],
-    "/tiktok/user/:user": [
+    "/tiktok/user/:user/:iframe?": [
         "TonyRL"
     ],
     "/timednews/news/:type?": [
