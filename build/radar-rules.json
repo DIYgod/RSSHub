@@ -24082,6 +24082,23 @@
       }
     ]
   },
+  "playstation.com": {
+    "_name": "PlayStation Store",
+    "www": [
+      {
+        "title": "Monthly Games",
+        "docs": "https://docs.rsshub.app/routes/game#playstation-store",
+        "source": [
+          "/en-sg/ps-plus/whats-new"
+        ],
+        "target": "/ps/monthly-games"
+      },
+      {
+        "title": "User trophy",
+        "docs": "https://docs.rsshub.app/routes/game#playstation-store"
+      }
+    ]
+  },
   "pts.org.tw": {
     "_name": "公視新聞網 PNN",
     "news": [
@@ -33617,35 +33634,6 @@
         "title": "Chicago Tribune",
         "docs": "https://docs.rsshub.app/routes/traditional_media#chicago-tribune",
         "source": "/"
-      }
-    ]
-  },
-  "playstation.com": {
-    "_name": "PlayStation",
-    "store": [
-      {
-        "title": "游戏列表",
-        "docs": "https://docs.rsshub.app/routes/game#playstation",
-        "source": "/zh-hans-hk/grid/:id/:page",
-        "target": "/ps/list/:id"
-      },
-      {
-        "title": "折扣|价格",
-        "docs": "https://docs.rsshub.app/routes/game#playstation",
-        "source": [
-          "/:lang/product/:gridName"
-        ],
-        "target": "/ps/:lang/product/:gridName"
-      }
-    ],
-    "www": [
-      {
-        "title": "用户奖杯",
-        "docs": "https://docs.rsshub.app/routes/game#playstation"
-      },
-      {
-        "title": "系统更新纪录",
-        "docs": "https://docs.rsshub.app/routes/game#playstation"
       }
     ]
   },

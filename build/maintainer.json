@@ -5329,10 +5329,12 @@
     ],
     "/project-zero-issues": [],
     "/proletar/:type?/:id?": [],
-    "/ps/:lang?/product/:gridName": [],
-    "/ps/list/:gridName": [],
-    "/ps/ps4updates": [],
-    "/ps/trophy/:id": [],
+    "/ps/monthly-games": [
+        "justjustCC"
+    ],
+    "/ps/trophy/:id": [
+        "DIYgod"
+    ],
     "/psnine/game": [],
     "/psnine/index": [],
     "/psnine/news/:order?": [],
