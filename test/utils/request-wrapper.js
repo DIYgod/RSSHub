@@ -5,6 +5,11 @@ require('../../lib/utils/request-wrapper');
 let check = () => {};
 const simpleResponse = '<rss version="2.0"><channel><item></item></channel></rss>';
 
+beforeEach(() => {
+    delete process.env.PAC_URI;
+    delete process.env.PAC_SCRIPT;
+});
+
 afterEach(() => {
     delete process.env.PROXY_URI;
     delete process.env.PROXY_PROTOCOL;
@@ -213,6 +218,117 @@ describe('got', () => {
 
         await got.get(url);
         await parser.parseURL(url);
+    });
+
+    it('pac-uri http', async () => {
+        process.env.PAC_URI = 'http://rsshub.proxy:2333';
+
+        jest.resetModules();
+        require('../../lib/utils/request-wrapper');
+
+        check = (request) => {
+            expect(request.agent.constructor.name).toBe('PacProxyAgent');
+            expect(request.agent.uri.protocol).toBe('http:');
+            expect(request.agent.uri.host).toBe('rsshub.proxy:2333');
+            expect(request.agent.uri.hostname).toBe('rsshub.proxy');
+            expect(request.agent.uri.port).toBe('2333');
+        };
+
+        nock(/rsshub\.test/)
+            .get('/proxy')
+            .times(2)
+            .reply(200, simpleResponse);
+
+        await got.get('http://rsshub.test/proxy');
+        await parser.parseURL('http://rsshub.test/proxy');
+    });
+
+    it('pac-uri https', async () => {
+        process.env.PAC_URI = 'https://rsshub.proxy:2333';
+
+        jest.resetModules();
+        require('../../lib/utils/request-wrapper');
+
+        check = (request) => {
+            expect(request.agent.constructor.name).toBe('PacProxyAgent');
+            expect(request.agent.uri.protocol).toBe('https:');
+            expect(request.agent.uri.host).toBe('rsshub.proxy:2333');
+            expect(request.agent.uri.hostname).toBe('rsshub.proxy');
+            expect(request.agent.uri.port).toBe('2333');
+        };
+
+        nock(/rsshub\.test/)
+            .get('/proxy')
+            .times(2)
+            .reply(200, simpleResponse);
+
+        await got.get('http://rsshub.test/proxy');
+        await parser.parseURL('http://rsshub.test/proxy');
+    });
+
+    it('pac-uri ftp', async () => {
+        process.env.PAC_URI = 'ftp://rsshub.proxy:2333';
+
+        jest.resetModules();
+        require('../../lib/utils/request-wrapper');
+
+        check = (request) => {
+            expect(request.agent.constructor.name).toBe('PacProxyAgent');
+            expect(request.agent.uri.protocol).toBe('ftp:');
+            expect(request.agent.uri.host).toBe('rsshub.proxy:2333');
+            expect(request.agent.uri.hostname).toBe('rsshub.proxy');
+            expect(request.agent.uri.port).toBe('2333');
+        };
+
+        nock(/rsshub\.test/)
+            .get('/proxy')
+            .times(2)
+            .reply(200, simpleResponse);
+
+        await got.get('http://rsshub.test/proxy');
+        await parser.parseURL('http://rsshub.test/proxy');
+    });
+
+    it('pac-uri file', async () => {
+        process.env.PAC_URI = 'file:///D:/rsshub/proxy';
+
+        jest.resetModules();
+        require('../../lib/utils/request-wrapper');
+
+        check = (request) => {
+            expect(request.agent.constructor.name).toBe('PacProxyAgent');
+            expect(request.agent.uri.protocol).toBe('file:');
+            expect(request.agent.uri.pathname).toBe('/D:/rsshub/proxy');
+        };
+
+        nock(/rsshub\.test/)
+            .get('/proxy')
+            .times(2)
+            .reply(200, simpleResponse);
+
+        await got.get('http://rsshub.test/proxy');
+        await parser.parseURL('http://rsshub.test/proxy');
+    });
+
+    it('pac-script data', async () => {
+        process.env.PAC_SCRIPT = "function FindProxyForURL(url,host){return 'DIRECT';}";
+
+        jest.resetModules();
+        require('../../lib/utils/request-wrapper');
+
+        check = (request) => {
+            expect(request.agent.constructor.name).toBe('PacProxyAgent');
+            expect(request.agent.uri.protocol).toBe('data:');
+            expect(request.agent.uri.pathname).toBe("text/javascript;charset=utf-8,function%20FindProxyForURL(url%2Chost)%7Breturn%20'DIRECT'%3B%7D");
+        };
+
+        nock(/rsshub\.test/)
+            .get('/proxy')
+            .times(2)
+            .reply(200, simpleResponse);
+
+        await got.get('http://rsshub.test/proxy');
+        await parser.parseURL('http://rsshub.test/proxy');
     });
 
     it('auth', async () => {
