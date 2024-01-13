@@ -140,6 +140,9 @@ dependencies:
   oauth-1.0a:
     specifier: 2.2.6
     version: 2.2.6
+  pac-proxy-agent:
+    specifier: 7.0.1
+    version: 7.0.1
   plist:
     specifier: 3.1.0
     version: 3.1.0

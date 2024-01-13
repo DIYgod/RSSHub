@@ -40,7 +40,7 @@ RSSHub supports two caching methods: memory and redis
 
 Partial routes have a strict anti-crawler policy, and can be configured to use proxy.
 
-Proxy can be configured through **Proxy URI**, **Proxy options**, or **Reverse proxy**.
+Proxy can be configured through **Proxy URI**, **Proxy options**, **PAC script**, or **Reverse proxy**.
 
 ### Proxy URI
 
@@ -95,6 +95,20 @@ async function handleRequest(request) {
   }
 }
 ```
+
+### PAC script
+
+:::warning
+
+This proxy method overwrites `PROXY_URI`, `PROXY_PROTOCOL`, `PROXY_HOST` and `PROXY_PORT`.
+
+:::
+
+About PAC script, please refer to [Proxy Auto-Configuration (PAC) file](https://developer.mozilla.org/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_PAC_file).
+
+`PAC_URI`: PAC script URL, supports http, https, ftp, file, data. See [pac-proxy-agent](https://www.npmjs.com/package/pac-proxy-agent) NPM package page.
+
+`PAC_SCRIPT`: Hard-coded JavaScript code string of PAC script. Overwrites `PAC_URI`.
 
 ### Proxy options
 
