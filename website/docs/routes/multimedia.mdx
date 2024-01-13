@@ -303,6 +303,22 @@ Full transcript support for better user experience.
 
 <Route author="nczitzk" example="/bandcamp/live" path="/bandcamp/live" />
 
+## BT 之家 1LOU 站 {#bt-zhi-jia-1lou-zhan}
+
+### 搜索 {#bt-zhi-jia-1lou-zhan-sou-suo}
+
+<Route author="falling" example="/1lou/search-繁花.htm" path="/1lou/:path?" paramsDesc={['路径信息在URL里找到,主页为 index']}>
+  :::tip
+  将 1lou.me/ 后的内容作为参数传入到 path 即可
+
+  [www.1lou.me/search - 繁花.htm](http://www.1lou.me/search-繁花.htm) --> /1lou/search - 繁花.htm
+
+  [www.1lou.me/forum-1.htm](http://www.1lou.me/forum-1.htm) --> /1lou/forum-1.htm
+
+  [www.1lou.me/](http://www.1lou.me/) --> /1lou/
+  :::
+</Route>
+
 ## BT 之家 {#bt-zhi-jia}
 
 ### 分类 {#bt-zhi-jia-fen-lei}
