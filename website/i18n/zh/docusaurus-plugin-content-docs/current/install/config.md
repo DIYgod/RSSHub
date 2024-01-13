@@ -40,7 +40,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 部分路由反爬严格，可以配置使用代理抓取。
 
-可通过**代理 URI **或**代理选项**或**反向代理**三种方式来配置代理。
+可通过**代理 URI** 或**代理选项**或**代理自动配置文件 (PAC)** 或**反向代理**等方式来配置代理。
 
 ### 代理 URI
 
@@ -71,6 +71,20 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 `PROXY_AUTH`: 给代理服务器的身份验证凭证，`Proxy-Authorization: Basic ${process.env.PROXY_AUTH}`
 
 `PROXY_URL_REGEX`: 启用代理的 URL 正则表达式，默认全部开启 `.*`
+
+### 代理自动配置文件 (PAC)
+
+:::warning
+
+该方法会覆盖 `PROXY_URI`, `PROXY_PROTOCOL`, `PROXY_HOST` 以及 `PROXY_PORT`。
+
+:::
+
+关于代理自动配置文件 (PAC)，请查看[代理自动配置文件（PAC）文件](https://developer.mozilla.org/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_PAC_file)。
+
+`PAC_URI`: PAC 文件 URI，支持 http, https, ftp, file, data。具体以 [pac-proxy-agent](https://www.npmjs.com/package/pac-proxy-agent) NPM 包的支持为准。
+
+`PAC_SCRIPT`: 硬编码的 PAC 脚本字符串。覆盖 `PAC_URI`。
 
 ### 反向代理
 
