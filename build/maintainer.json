@@ -6632,6 +6632,9 @@
     "/tradingview/blog/:language?/category/:category?": [
         "nczitzk"
     ],
+    "/tradingview/desktop": [
+        "nczitzk"
+    ],
     "/trakt/collection/:username/:type?": [],
     "/treasury/press-releases/:category?/:title?": [],
     "/trending/:keywords/:numberOfDays?": [
