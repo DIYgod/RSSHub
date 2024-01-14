@@ -2906,8 +2906,16 @@
         "bigfei",
         "nczitzk"
     ],
-    "/gov/suzhou/doc": [],
-    "/gov/suzhou/news/:uid": [],
+    "/gov/suzhou/doc": [
+        "EsuRt"
+    ],
+    "/gov/suzhou/fg/:category?": [
+        "nczitzk"
+    ],
+    "/gov/suzhou/news/:uid": [
+        "EsuRt",
+        "luyuhuang"
+    ],
     "/gov/taiwan/mnd": [],
     "/gov/taiyuan/rsj/:caty/:page?": [
         "2PoL"

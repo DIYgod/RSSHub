@@ -13414,6 +13414,17 @@
       }
     ]
   },
+  "suzhou.gov.cn": {
+    "_name": "苏州市政府",
+    "www": [
+      {
+        "title": "政府新闻",
+        "docs": "https://docs.rsshub.app/routes/government#su-zhou-shi-ren-min-zheng-fu",
+        "source": "/szsrmzf/:uid/nav_list.shtml",
+        "target": "/gov/suzhou/news/:uid"
+      }
+    ]
+  },
   "sz.gov.cn": {
     "_name": "深圳政府在线移动门户",
     "hrss": [
@@ -33730,17 +33741,6 @@
         "title": "search",
         "docs": "https://docs.rsshub.app/routes/game#steam",
         "source": "/search/"
-      }
-    ]
-  },
-  "suzhou.gov.cn": {
-    "_name": "苏州市政府",
-    "www": [
-      {
-        "title": "政府新闻",
-        "docs": "https://docs.rsshub.app/routes/government#su-zhou-shi-ren-min-zheng-fu",
-        "source": "/szsrmzf/:uid/nav_list.shtml",
-        "target": "/gov/suzhou/news/:uid"
       }
     ]
   },
