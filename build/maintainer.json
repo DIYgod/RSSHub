@@ -5921,6 +5921,9 @@
     "/shu/jwb/:type?": [
         "tuxinghuan"
     ],
+    "/shuiguopai": [
+        "nczitzk"
+    ],
     "/sicau/dky/:category?": [
         "nczitzk"
     ],
