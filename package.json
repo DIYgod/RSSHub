@@ -210,7 +210,7 @@
     "request-promise-native": "1.0.9",
     "staged-git-files": "1.3.0",
     "string-width": "7.0.0",
-    "supertest": "6.3.3",
+    "supertest": "6.3.4",
     "to-vfile": "8.0.0",
     "tosource": "2.0.0-alpha.3",
     "unified": "9.2.2",
