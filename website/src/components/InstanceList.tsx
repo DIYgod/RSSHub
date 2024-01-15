@@ -51,7 +51,13 @@ export default function InstanceList(): JSX.Element {
     location: '🇺🇸',
     maintainer: 'AboutRSS',
     maintainerUrl: 'https://github.com/AboutRSS/ALL-about-RSS',
-  }]
+  }, {
+    url: 'https://rsshub.mubibai.com',
+    location: '🇳🇱',
+    maintainer: 'Kai',
+    maintainerUrl: 'https://mubibai.com',
+  }
+]
 
   return (
     <table>
