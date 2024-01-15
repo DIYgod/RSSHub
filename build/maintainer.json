@@ -7640,6 +7640,9 @@
     "/zhihu/xhu/people/answers/:hexId": [
         "JimenezLi"
     ],
+    "/zhihu/xhu/people/posts/:hexId": [
+        "JimenezLi"
+    ],
     "/zhihu/xhu/question/:questionId/:sortBy?": [
         "JimenezLi"
     ],

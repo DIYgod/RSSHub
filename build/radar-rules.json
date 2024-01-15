@@ -29711,12 +29711,26 @@
       {
         "title": "xhu - 用户动态",
         "docs": "https://docs.rsshub.app/routes/social-media#zhi-hu",
-        "source": "/people/:id"
+        "source": [
+          "/people/:id",
+          "/org/:id"
+        ]
       },
       {
         "title": "xhu - 用户回答",
         "docs": "https://docs.rsshub.app/routes/social-media#zhi-hu",
-        "source": "/people/:id/answers"
+        "source": [
+          "/people/:id/answers",
+          "/org/:id/answers"
+        ]
+      },
+      {
+        "title": "xhu - 用户文章",
+        "docs": "https://docs.rsshub.app/routes/social-media#zhi-hu",
+        "source": [
+          "/people/:id/posts",
+          "/org/:id/posts"
+        ]
       },
       {
         "title": "xhu - 收藏夹",
