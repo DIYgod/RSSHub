@@ -7707,7 +7707,7 @@
         target:"/houxu/lives/:id" } ] },
   "hoyolab.com":{ _name:"HoYoLAB",
     ".":[ { title:"活动公告资讯",
-        docs:"https://docs.rsshub.app/routes/game#hoyolab-news",
+        docs:"https://docs.rsshub.app/routes/game#hoyolab",
         source:[ "/",
           "/circles/:gid/:unknow/official" ],
         target:(params, url) => {
