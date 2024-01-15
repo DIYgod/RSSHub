@@ -1967,7 +1967,7 @@
     "agirls": [
       {
         "title": "分類",
-        "docs": "https://docs.rsshub.app/routes/new-media##dian-ta-shao-nu",
+        "docs": "https://docs.rsshub.app/routes/new-media#dian-ta-shao-nv",
         "source": [
           "/posts/:category"
         ],
@@ -1975,12 +1975,20 @@
       },
       {
         "title": "精選主題列表",
-        "docs": "https://docs.rsshub.app/routes/new-media##dian-ta-shao-nu",
+        "docs": "https://docs.rsshub.app/routes/new-media#dian-ta-shao-nv",
         "source": [
           "/",
           "/topic"
         ],
         "target": "/agirls/topic_list"
+      },
+      {
+        "title": "精选主题",
+        "docs": "https://docs.rsshub.app/routes/new-media#dian-ta-shao-nv",
+        "source": [
+          "/topic/:topic"
+        ],
+        "target": "/agirls/topic/:topic"
       }
     ]
   },
@@ -14447,6 +14455,59 @@
       }
     ]
   },
+  "hket.com": {
+    "_name": "香港经济日报",
+    "china": [
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/traditional-media#xiang-gang-jing-ji-ri-bao",
+        "source": [
+          "/:category/*"
+        ],
+        "target": "/hket/:category"
+      }
+    ],
+    "inews": [
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/traditional-media#xiang-gang-jing-ji-ri-bao",
+        "source": [
+          "/:category/*"
+        ],
+        "target": "/hket/:category"
+      }
+    ],
+    "topick": [
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/traditional-media#xiang-gang-jing-ji-ri-bao",
+        "source": [
+          "/:category/*"
+        ],
+        "target": "/hket/:category"
+      }
+    ],
+    "wealth": [
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/traditional-media#xiang-gang-jing-ji-ri-bao",
+        "source": [
+          "/:category/*"
+        ],
+        "target": "/hket/:category"
+      }
+    ],
+    "www": [
+      {
+        "title": "新闻",
+        "docs": "https://docs.rsshub.app/routes/traditional-media#xiang-gang-jing-ji-ri-bao",
+        "source": [
+          "/"
+        ],
+        "target": "/hket"
+      }
+    ]
+  },
   "hkjunkcall.com": {
     "_name": "HKJunkCall資訊中心",
     ".": [
@@ -17228,6 +17289,19 @@
       }
     ]
   },
+  "jiaoliudao.com": {
+    "_name": "交流岛资源网",
+    ".": [
+      {
+        "title": "最新文章",
+        "docs": "https://docs.rsshub.app/routes/blog#jiao-liu-dao-zi-yuan-wang",
+        "source": [
+          "/"
+        ],
+        "target": "/jiaoliudao"
+      }
+    ]
+  },
   "jiemian.com": {
     "_name": "界面新闻",
     ".": [
@@ -18743,6 +18817,29 @@
           "/essay"
         ],
         "target": "/kunchengblog/essay"
+      }
+    ]
+  },
+  "kuwaitlocal.com": {
+    "_name": "Kuwait Local",
+    ".": [
+      {
+        "title": "Latest News",
+        "docs": "https://docs.rsshub.app/routes/en/new-media#kuwait-local",
+        "source": [
+          "/news/latest",
+          "/news",
+          "/"
+        ],
+        "target": "/kuwaitlocal"
+      },
+      {
+        "title": "Categorised News",
+        "docs": "https://docs.rsshub.app/routes/en/new-media#kuwait-local",
+        "source": [
+          "/news/categories/:category"
+        ],
+        "target": "/kuwaitlocal/:category"
       }
     ]
   },
@@ -24277,6 +24374,18 @@
       }
     ]
   },
+  "qianp.com": {
+    "_name": "千篇网",
+    ".": [
+      {
+        "title": "知识库／资讯",
+        "docs": "https://docs.rsshub.app/routes/new-media#qian-pian-wang",
+        "source": [
+          "/*path"
+        ]
+      }
+    ]
+  },
   "qianzhan.com": {
     "_name": "前瞻网",
     ".": [
@@ -27986,6 +28095,17 @@
       {
         "title": "Viz of the day",
         "docs": "https://docs.rsshub.app/routes/study#tableau"
+      }
+    ]
+  },
+  "taiwannews.com.tw": {
+    "_name": "台灣英文新聞",
+    ".": [
+      {
+        "title": "最新熱門消息",
+        "docs": "https://docs.rsshub.app/routes/traditional-media#tai-wan-ying-wen-xin-wen",
+        "source": "/:lang/index",
+        "target": "/taiwannews/hot/:lang"
       }
     ]
   },

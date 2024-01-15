@@ -320,6 +320,9 @@
     "/agirls/:category?": [
         "TonyRL"
     ],
+    "/agirls/topic/:topic": [
+        "TonyRL"
+    ],
     "/agirls/topic_list": [
         "TonyRL"
     ],
@@ -3219,6 +3222,9 @@
     "/hkepc/:category?": [
         "TonyRL"
     ],
+    "/hket/:category?": [
+        "TonyRL"
+    ],
     "/hkjunkcall": [
         "nczitzk"
     ],
@@ -3838,6 +3844,9 @@
         "HenryQW",
         "JimenezLi"
     ],
+    "/jiaoliudao": [
+        "TonyRL"
+    ],
     "/jiemian/account/main/:id": [
         "nczitzk"
     ],
@@ -3998,6 +4007,12 @@
     ],
     "/kunchengblog/essay": [
         "nczitzk"
+    ],
+    "/kuwaitlocal": [
+        "TonyRL"
+    ],
+    "/kuwaitlocal/:category?": [
+        "TonyRL"
     ],
     "/kyodonews/:language?/:keyword?": [
         "Rongronggg9"
@@ -5396,6 +5411,9 @@
     "/qdu/jwc": [
         "abc1763613206"
     ],
+    "/qianp/news/:path*": [
+        "TonyRL"
+    ],
     "/qianzhan/analyst/column/:type?": [
         "moke8"
     ],
@@ -6289,6 +6307,9 @@
     "/t66y/post/:tid": [],
     "/tableau/app/discover/viz-of-the-day": [
         "KaiyoungYu"
+    ],
+    "/taiwannews/hot/:lang?": [
+        "TonyRL"
     ],
     "/tanchinese/:category?": [],
     "/tangshufang/:category?": [
