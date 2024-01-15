@@ -197,7 +197,7 @@
     "mockdate": "3.0.5",
     "nock": "13.4.0",
     "nodemon": "3.0.2",
-    "prettier": "3.2.1",
+    "prettier": "3.2.2",
     "remark": "14.0.3",
     "remark-custom-heading-id": "1.0.1",
     "remark-directive": "3.0.0",
