@@ -1080,7 +1080,7 @@
 
 ### 政府新闻 {#su-zhou-shi-ren-min-zheng-fu-zheng-fu-xin-wen}
 
-<Route author="EsuRt luyuhuang" example="/gov/suzhou/news/news" path="/gov/suzhou/news/:uid" paramsDesc={['栏目名']} notOperational="1">
+<Route author="EsuRt luyuhuang" example="/gov/suzhou/news/news" path="/gov/suzhou/news/:uid" paramsDesc={['栏目名']} radar="1">
   | 新闻栏目名 |       :uid       |
   | :--------: | :--------------: |
   |  苏州要闻  |   news 或 szyw   |
@@ -1110,7 +1110,15 @@
 
 ### 政府信息公开文件 {#su-zhou-shi-ren-min-zheng-fu-zheng-fu-xin-xi-gong-kai-wen-jian}
 
-<Route author="EsuRt" example="/gov/suzhou/doc" path="/gov/suzhou/doc" notOperational="1" />
+<Route author="EsuRt" example="/gov/suzhou/doc" path="/gov/suzhou/doc" radar="1" />
+
+### 苏州市发展和改革委员会 {#su-zhou-shi-ren-min-zheng-fu-su-zhou-shi-fa-zhan-he-gai-ge-wei-yuan-hui}
+
+<Route author="nczitzk" example="/gov/suzhou/fg/szfgw/ggl/nav_list" path="/gov/suzhou/fg/:category?" paramsDesc={['分类，见下表，默认为通知公告']} radar="1">
+  | 通知公告            | 发改要闻             |
+  | ------------------- | -------------------- |
+  | szfgw/ggl/nav\_list | szfgw/gzdt/nav\_list |
+</Route>
 
 ## 台湾行政院消费者保护会 {#tai-wan-xing-zheng-yuan-xiao-fei-zhe-bao-hu-hui}
 
