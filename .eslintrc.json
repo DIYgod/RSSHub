@@ -98,7 +98,6 @@
         "unicorn/prefer-node-protocol": 0,
         "unicorn/prefer-number-properties": 0,
         "unicorn/prefer-object-from-entries": 1,
-        "unicorn/prefer-optional-catch-binding": 1,
         "unicorn/prefer-prototype-methods": 1,
         "unicorn/prefer-query-selector": 1,
         "unicorn/prefer-reflect-apply": 1,
