@@ -115,7 +115,7 @@
     "jsdom": "23.2.0",
     "json-bigint": "1.0.0",
     "json5": "2.2.3",
-    "jsrsasign": "10.9.0",
+    "jsrsasign": "11.0.0",
     "koa": "2.15.0",
     "koa-basic-auth": "4.0.0",
     "koa-favicon": "2.1.0",
