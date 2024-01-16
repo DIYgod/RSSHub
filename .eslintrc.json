@@ -106,7 +106,6 @@
         "unicorn/prefer-ternary": 1,
         "unicorn/prefer-top-level-await": 0,
         "unicorn/prevent-abbreviations": 0,
-        "unicorn/require-array-join-separator": 1,
         "unicorn/switch-case-braces": 0,
         "unicorn/text-encoding-identifier-case": 1,
         "unicorn/throw-new-error": 1,
