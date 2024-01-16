@@ -167,7 +167,7 @@
                 docs: 'https://docs.rsshub.app/routes/multimedia#onejav',
                 source: '/',
                 target: (params, url, document) => {
-                    const today = document.querySelector('div.card.mb-1.card-overview').getAttribute('data-date').replace(/-/g, '');
+                    const today = document.querySelector('div.card.mb-1.card-overview').dataset.date.replaceAll('-', '');
                     return `/onejav/day/${today}`;
                 },
             },

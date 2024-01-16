@@ -85,7 +85,6 @@
         "unicorn/prefer-add-event-listener": 1,
         "unicorn/prefer-array-some": 1,
         "unicorn/prefer-code-point": 1,
-        "unicorn/prefer-dom-node-dataset": 1,
         "unicorn/prefer-dom-node-text-content": 1,
         "unicorn/prefer-logical-operator-over-ternary": 1,
         "unicorn/prefer-module": 0,
