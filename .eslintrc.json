@@ -90,7 +90,6 @@
         "unicorn/prefer-logical-operator-over-ternary": 1,
         "unicorn/prefer-math-trunc": 1,
         "unicorn/prefer-module": 0,
-        "unicorn/prefer-native-coercion-functions": 1,
         "unicorn/prefer-negative-index": 1,
         "unicorn/prefer-node-protocol": 0,
         "unicorn/prefer-number-properties": 0,
