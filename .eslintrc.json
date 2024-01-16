@@ -76,7 +76,6 @@
         "unicorn/no-process-exit": 0,
         "unicorn/no-useless-switch-case": 0,
         "unicorn/numeric-separators-style": 0,
-        "unicorn/prefer-array-some": 1,
         "unicorn/prefer-code-point": 1,
         "unicorn/prefer-logical-operator-over-ternary": 1,
         "unicorn/prefer-module": 0,
