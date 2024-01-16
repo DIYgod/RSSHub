@@ -16,8 +16,8 @@ async function checkRSS(response) {
     const checkDate = (date) => {
         expect(date).toEqual(expect.any(String));
         expect(Date.parse(date)).toEqual(expect.any(Number));
-        expect(new Date() - new Date(date)).toBeGreaterThan(-1000 * 60 * 60 * 24 * 5);
-        expect(new Date() - new Date(date)).toBeLessThan(1000 * 60 * 60 * 24 * 30 * 12 * 10);
+        expect(Date.now() - new Date(date)).toBeGreaterThan(-1000 * 60 * 60 * 24 * 5);
+        expect(Date.now() - new Date(date)).toBeLessThan(1000 * 60 * 60 * 24 * 30 * 12 * 10);
     };
 
     const parsed = await parser.parseString(response.text);
@@ -34,7 +34,7 @@ async function checkRSS(response) {
 
     // check items
     const guids = [];
-    parsed.items.forEach((item) => {
+    for (const item of parsed.items) {
         expect(item).toEqual(expect.any(Object));
         expect(item.title).toEqual(expect.any(String));
         expect(item.link).toEqual(expect.any(String));
@@ -48,7 +48,7 @@ async function checkRSS(response) {
         // guid must be unique
         expect(guids).not.toContain(item.guid);
         guids.push(item.guid);
-    });
+    }
 }
 
 afterAll(() => {
