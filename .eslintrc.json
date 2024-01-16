@@ -77,7 +77,6 @@
         "unicorn/no-array-reduce": 1,
         "unicorn/no-await-expression-member": 1,
         "unicorn/no-empty-file": 1,
-        "unicorn/no-for-loop": 1,
         "unicorn/no-hex-escape": 1,
         "unicorn/no-lonely-if": 1,
         "unicorn/no-negated-condition": 1,
