@@ -87,7 +87,6 @@
         "unicorn/numeric-separators-style": 0,
         "unicorn/prefer-add-event-listener": 1,
         "unicorn/prefer-array-some": 1,
-        "unicorn/prefer-at": 1,
         "unicorn/prefer-code-point": 1,
         "unicorn/prefer-dom-node-dataset": 1,
         "unicorn/prefer-dom-node-text-content": 1,
