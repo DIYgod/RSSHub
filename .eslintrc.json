@@ -71,7 +71,6 @@
         "unicorn/no-array-reduce": 1,
         "unicorn/no-await-expression-member": 1,
         "unicorn/no-hex-escape": 1,
-        "unicorn/no-lonely-if": 1,
         "unicorn/no-null": 0,
         "unicorn/no-object-as-default-parameter": 1,
         "unicorn/no-process-exit": 0,
