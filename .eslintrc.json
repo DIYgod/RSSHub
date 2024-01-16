@@ -89,7 +89,6 @@
         "unicorn/prefer-prototype-methods": 1,
         "unicorn/prefer-reflect-apply": 1,
         "unicorn/prefer-regexp-test": 1,
-        "unicorn/prefer-set-has": 1,
         "unicorn/prefer-spread": 1,
         "unicorn/prefer-string-replace-all": 1,
         "unicorn/prefer-string-slice": 1,
