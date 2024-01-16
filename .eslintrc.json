@@ -66,7 +66,6 @@
                 "ignore": [".*\\.(yaml|yml)$"]
             }
         ],
-        "unicorn/import-style": 1,
         "unicorn/new-for-builtins": 0,
         "unicorn/no-array-callback-reference": 1,
         "unicorn/no-array-push-push": 1,
