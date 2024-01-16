@@ -338,8 +338,8 @@ devDependencies:
     specifier: 3.0.5
     version: 3.0.5
   nock:
-    specifier: 13.4.0
-    version: 13.4.0
+    specifier: 13.5.0
+    version: 13.5.0
   nodemon:
     specifier: 3.0.2
     version: 3.0.2
@@ -6839,8 +6839,8 @@ packages:
       lower-case: 1.1.4
     dev: false
 
-  /nock@13.4.0:
-    resolution: {integrity: sha512-W8NVHjO/LCTNA64yxAPHV/K47LpGYcVzgKd3Q0n6owhwvD0Dgoterc25R4rnZbckJEb6Loxz1f5QMuJpJnbSyQ==}
+  /nock@13.5.0:
+    resolution: {integrity: sha512-9hc1eCS2HtOz+sE9W7JQw/tXJktg0zoPSu48s/pYe73e25JW9ywiowbqnUSd7iZPeVawLcVpPZeZS312fwSY+g==}
     engines: {node: '>= 10.13'}
     dependencies:
       debug: 4.3.4(supports-color@5.5.0)
