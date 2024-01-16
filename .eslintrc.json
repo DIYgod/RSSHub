@@ -12,7 +12,7 @@
     },
     "rules": {
         // possible problems
-        "array-callback-return": 2,
+        "array-callback-return": ["error", { "allowImplicit": true }],
         "no-await-in-loop": 2,
         "no-control-regex": 0,
         "no-duplicate-imports": 2,
@@ -77,7 +77,6 @@
         "unicorn/no-object-as-default-parameter": 1,
         "unicorn/no-process-exit": 0,
         "unicorn/no-useless-switch-case": 0,
-        "unicorn/no-useless-undefined": 1,
         "unicorn/numeric-separators-style": 0,
         "unicorn/prefer-array-some": 1,
         "unicorn/prefer-code-point": 1,
