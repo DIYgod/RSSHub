@@ -88,7 +88,6 @@
         "unicorn/prefer-add-event-listener": 1,
         "unicorn/prefer-array-flat": 1,
         "unicorn/prefer-array-flat-map": 1,
-        "unicorn/prefer-array-find": 1,
         "unicorn/prefer-array-some": 1,
         "unicorn/prefer-at": 1,
         "unicorn/prefer-code-point": 1,
