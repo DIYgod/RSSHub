@@ -86,7 +86,6 @@
         "unicorn/no-object-as-default-parameter": 1,
         "unicorn/no-process-exit": 0,
         "unicorn/no-typeof-undefined": 1,
-        "unicorn/no-useless-promise-resolve-reject": 1,
         "unicorn/no-useless-switch-case": 1,
         "unicorn/no-useless-undefined": 1,
         "unicorn/no-zero-fractions": 1,
