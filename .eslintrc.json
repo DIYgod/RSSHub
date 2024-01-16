@@ -86,7 +86,6 @@
         "unicorn/no-useless-undefined": 1,
         "unicorn/numeric-separators-style": 0,
         "unicorn/prefer-add-event-listener": 1,
-        "unicorn/prefer-array-flat": 1,
         "unicorn/prefer-array-flat-map": 1,
         "unicorn/prefer-array-some": 1,
         "unicorn/prefer-at": 1,
