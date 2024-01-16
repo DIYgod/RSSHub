@@ -63,8 +63,8 @@ dependencies:
     specifier: 3.0.2
     version: 3.0.2
   googleapis:
-    specifier: 130.0.0
-    version: 130.0.0
+    specifier: 131.0.0
+    version: 131.0.0
   got:
     specifier: 11.8.6
     version: 11.8.6
@@ -4094,8 +4094,8 @@ packages:
       - supports-color
     dev: false
 
-  /googleapis@130.0.0:
-    resolution: {integrity: sha512-+ZSOowVv+vGBTueu1Ot9O7EqC0U4PS9l7fUjzc0ThCT4w4g+r78Vgn17q7eGBB5JMu4hxYC1hbbm1U/MCnYFdg==}
+  /googleapis@131.0.0:
+    resolution: {integrity: sha512-fa4kdkY0VwHDw/04ItpQv2tlvlPIwbh6NjHDoWAVrV52GuaZbYCMOC5Y+hRmprp5HHIMRODmyb2YujlbZSRUbQ==}
     engines: {node: '>=14.0.0'}
     dependencies:
       google-auth-library: 9.0.0
