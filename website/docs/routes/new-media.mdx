@@ -884,6 +884,16 @@
   所以，如果您把`https://kotaku.com/latest`中的`latest`填入，该路由并不会正常工作
 </Route>
 
+## Kuwait Local {#kuwait-local}
+
+### Latest News {#kuwait-local-latest-news}
+
+<Route author="TonyRL" example="/kuwaitlocal" path="/kuwaitlocal" radar="1" />
+
+### Categorised News {#kuwait-local-categorised-news}
+
+<Route author="TonyRL" example="/kuwaitlocal/article" path="/kuwaitlocal/:category?" paramsDesc={['Category name, can be found in URL, `latest` by default']} radar="1" />
+
 ## Letterboxd {#letterboxd}
 
 ### User diary {#letterboxd-user-diary}
@@ -2375,6 +2385,10 @@
   | -------- | -------- | -------- | ----------- | ---------- | -------- |
   | app      | phone    | computer | accessories | tutorial   | techlife |
 </Route>
+
+### 精选主题 {#dian-ta-shao-nv-jing-xuan-zhu-ti}
+
+<Route author="TonyRL" example="/agirls/topic/AppleWatch" path="/agirls/topic/:topic" paramsDesc={['精选主题，可通过下方精选主题列表获得']} radar="1" />
 
 ### 当前精选主题列表 {#dian-ta-shao-nv-dang-qian-jing-xuan-zhu-ti-lie-biao}
 
@@ -4036,6 +4050,12 @@
   -   `fulltext`，全文输出，例如：`/pingwest/user/7781550877/article/fulltext`
 </Route>
 
+## 千篇网 {#qian-pian-wang}
+
+### 知识库 / 资讯 {#qian-pian-wang-zhi-shi-ku-zi-xun}
+
+<Route author="TonyRL" example="/qianp/news" path="/qianp/news/:path*" paramsDesc={['路径，可在URL中找到，默认为 `news/recommend`']} radar="1" />
+
 ## 求是网 {#qiu-shi-wang}
 
 ### 分类 {#qiu-shi-wang-fen-lei}
@@ -4319,6 +4339,12 @@
   | ---- | ------------ | ------------ | ------------- | ------------ | ------------ |
   | all  | weekly       | monthly      | international | hot          | favorite     |
 </Route>
+
+## 水果派 {#shui-guo-pai}
+
+### 首页 {#shui-guo-pai-shou-ye}
+
+<Route author="nczitzk" example="/shuiguopai" path="/shuiguopai" radar="1" />
 
 ## 搜狐号 {#sou-hu-hao}
 
