@@ -108,7 +108,6 @@
         "unicorn/prefer-spread": 1,
         "unicorn/prefer-string-replace-all": 1,
         "unicorn/prefer-string-slice": 1,
-        "unicorn/prefer-string-starts-ends-with": 1,
         "unicorn/prefer-switch": 1,
         "unicorn/prefer-ternary": 1,
         "unicorn/prefer-top-level-await": 0,
