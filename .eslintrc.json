@@ -69,7 +69,6 @@
         "unicorn/import-style": 1,
         "unicorn/new-for-builtins": 0,
         "unicorn/no-array-callback-reference": 1,
-        "unicorn/no-array-for-each": 1,
         "unicorn/no-array-push-push": 1,
         "unicorn/no-array-reduce": 1,
         "unicorn/no-await-expression-member": 1,
