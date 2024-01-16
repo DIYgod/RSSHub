@@ -56,7 +56,6 @@
         "require-await": 2,
         // plugin specific
         "unicorn/better-regex": 1,
-        "unicorn/catch-error-name": 1,
         "unicorn/consistent-destructuring": 1,
         "unicorn/consistent-function-scoping": 1,
         "unicorn/escape-case": 1,
