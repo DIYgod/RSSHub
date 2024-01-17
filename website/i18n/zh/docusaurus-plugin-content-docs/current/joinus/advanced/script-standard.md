@@ -60,7 +60,7 @@ sidebar_position: 2
 ### 命名
 
 -   使用 `lowerCamelCase` 命名变量和函数
--   使用 `kebab-case` 命名文件和文件夹，也可以使用 `snake_case`。
+-   使用 `kebab-case` 命名文件和文件夹。
 -   使用 `CONSTANT_CASE` 命名常量。
 
 ## v2 路由规范
