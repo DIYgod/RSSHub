@@ -84,7 +84,7 @@
         "unicorn/prefer-object-from-entries": 1,
         "unicorn/prefer-regexp-test": 1,
         "unicorn/prefer-string-replace-all": 1,
-        "unicorn/prefer-string-slice": 1,
+        "unicorn/prefer-string-slice": 0,
         "unicorn/prefer-switch": ["error", { "emptyDefaultCase": "do-nothing-comment" }],
         "unicorn/prefer-ternary": 1,
         "unicorn/prefer-top-level-await": 0,
