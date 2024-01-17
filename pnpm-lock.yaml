@@ -63,8 +63,8 @@ dependencies:
     specifier: 3.0.2
     version: 3.0.2
   googleapis:
-    specifier: 130.0.0
-    version: 130.0.0
+    specifier: 131.0.0
+    version: 131.0.0
   got:
     specifier: 11.8.6
     version: 11.8.6
@@ -78,8 +78,8 @@ dependencies:
     specifier: 0.6.3
     version: 0.6.3
   imapflow:
-    specifier: 1.0.147
-    version: 1.0.147
+    specifier: 1.0.148
+    version: 1.0.148
   instagram-private-api:
     specifier: 1.45.3
     version: 1.45.3
@@ -341,8 +341,8 @@ devDependencies:
     specifier: 13.5.0
     version: 13.5.0
   nodemon:
-    specifier: 3.0.2
-    version: 3.0.2
+    specifier: 3.0.3
+    version: 3.0.3
   prettier:
     specifier: 3.2.2
     version: 3.2.2
@@ -4094,8 +4094,8 @@ packages:
       - supports-color
     dev: false
 
-  /googleapis@130.0.0:
-    resolution: {integrity: sha512-+ZSOowVv+vGBTueu1Ot9O7EqC0U4PS9l7fUjzc0ThCT4w4g+r78Vgn17q7eGBB5JMu4hxYC1hbbm1U/MCnYFdg==}
+  /googleapis@131.0.0:
+    resolution: {integrity: sha512-fa4kdkY0VwHDw/04ItpQv2tlvlPIwbh6NjHDoWAVrV52GuaZbYCMOC5Y+hRmprp5HHIMRODmyb2YujlbZSRUbQ==}
     engines: {node: '>=14.0.0'}
     dependencies:
       google-auth-library: 9.0.0
@@ -4443,8 +4443,8 @@ packages:
     hasBin: true
     dev: false
 
-  /imapflow@1.0.147:
-    resolution: {integrity: sha512-ICMPIkgQ0ysrjj4uQyz6JN8e4hUFpDMZJaNHvRW52uZCTIEGDNmH6IoIAfsdErwsn5z/1g+86e7v/n09A/0XmA==}
+  /imapflow@1.0.148:
+    resolution: {integrity: sha512-C4d1N/heE2nw5WFLjY9lmyyQiGBqYibxoFUquhWluyKPZErw1UIXgydpa7+LrxrSMvKWTp4Wsxi1g51GDncCxQ==}
     dependencies:
       encoding-japanese: 2.0.0
       iconv-lite: 0.6.3
@@ -6884,8 +6884,8 @@ packages:
     engines: {node: '>=6.0.0'}
     dev: false
 
-  /nodemon@3.0.2:
-    resolution: {integrity: sha512-9qIN2LNTrEzpOPBaWHTm4Asy1LxXLSickZStAQ4IZe7zsoIpD/A7LWxhZV3t4Zu352uBcqVnRsDXSMR2Sc3lTA==}
+  /nodemon@3.0.3:
+    resolution: {integrity: sha512-7jH/NXbFPxVaMwmBCC2B9F/V6X1VkEdNgx3iu9jji8WxWcvhMWkmhNWhI5077zknOnZnBzba9hZP6bCPJLSReQ==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:
