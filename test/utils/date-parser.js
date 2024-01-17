@@ -1,4 +1,4 @@
-const dateParser = require('../../lib/utils/dateParser');
+const dateParser = require('../../lib/utils/date-parser');
 const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
 const MockDate = require('mockdate');
