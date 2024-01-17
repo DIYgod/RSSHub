@@ -86,12 +86,10 @@
         "unicorn/prefer-string-replace-all": 1,
         "unicorn/prefer-string-slice": 0,
         "unicorn/prefer-switch": ["error", { "emptyDefaultCase": "do-nothing-comment" }],
-        "unicorn/prefer-ternary": 1,
         "unicorn/prefer-top-level-await": 0,
         "unicorn/prevent-abbreviations": 0,
         "unicorn/switch-case-braces": ["error", "avoid"],
         "unicorn/text-encoding-identifier-case": 0,
-        "unicorn/throw-new-error": 1,
         // previous eslint formatting rules
         "@stylistic/js/arrow-parens": 2,
         "@stylistic/js/arrow-spacing": 2,
