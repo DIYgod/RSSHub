@@ -52,17 +52,6 @@
         ],
     },
     'www.chicagotribune.com': { _name: 'Chicago Tribune', www: [{ title: 'Chicago Tribune', docs: 'https://docs.rsshub.app/routes/traditional_media#chicago-tribune', source: '/' }] },
-    'playstation.com': {
-        _name: 'PlayStation',
-        store: [
-            { title: '游戏列表', docs: 'https://docs.rsshub.app/routes/game#playstation', source: '/zh-hans-hk/grid/:id/:page', target: '/ps/list/:id' },
-            { title: '折扣|价格', docs: 'https://docs.rsshub.app/routes/game#playstation', source: ['/:lang/product/:gridName'], target: '/ps/:lang/product/:gridName' },
-        ],
-        www: [
-            { title: '用户奖杯', docs: 'https://docs.rsshub.app/routes/game#playstation' },
-            { title: '系统更新纪录', docs: 'https://docs.rsshub.app/routes/game#playstation' },
-        ],
-    },
     'monsterhunter.com': {
         _name: '怪物猎人世界',
         www: [

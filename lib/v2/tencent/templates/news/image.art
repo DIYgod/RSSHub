@@ -1,0 +1,4 @@
+{{ if attribute?.startsWith('IMG') && originAttribute[attribute] }}
+    {{ set image = originAttribute[attribute] }}
+    <img src="{{ image.bigOrigUrl }}" style="{{ image.style }}" >
+{{ /if }}

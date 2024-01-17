@@ -317,7 +317,7 @@ module.exports = async (ctx) => {
     // 我们使用 Cheerio 选择器选择所有带类名“js-navigation-container”的“div”元素，
     // 其中包含带类名“flex-auto”的子元素。
     // highlight-start
-    const item = $('div.js-navigation-container .flex-auto')
+    const items = $('div.js-navigation-container .flex-auto')
         // 使用“toArray()”方法将选择的所有 DOM 元素以数组的形式返回。
         .toArray()
         // 使用“map()”方法遍历数组，并从每个元素中解析需要的数据。
@@ -363,7 +363,7 @@ module.exports = async (ctx) => {
     const { data: response } = await got(`${baseUrl}/${user}/${repo}/issues`);
     const $ = cheerio.load(response);
 
-    const item = $('div.js-navigation-container .flex-auto')
+    const items = $('div.js-navigation-container .flex-auto')
         .toArray()
         .map((item) => {
             item = $(item);
@@ -636,7 +636,7 @@ module.exports = async (ctx) => {
     // got 请求会被自动记录，
     // 但 puppeteer 请求不会
     // 所以我们需要手动记录它们
-    logger.debug(`Requesting ${link}`);
+    logger.http(`Requesting ${link}`);
     await page.goto(link, {
         // 指定页面等待载入的时间
         waitUntil: 'domcontentloaded',
@@ -708,7 +708,7 @@ module.exports = async (ctx) => {
     });
 
     const link = `${baseUrl}/${user}/${repo}/issues`;
-    logger.debug(`Requesting ${link}`);
+    logger.http(`Requesting ${link}`);
     await page.goto(link, {
         waitUntil: 'domcontentloaded',
     });
@@ -746,7 +746,7 @@ module.exports = async (ctx) => {
                     request.resourceType() === 'document' ? request.continue() : request.abort();
                 });
 
-                logger.debug(`Requesting ${item.link}`);
+                logger.http(`Requesting ${item.link}`);
                 await page.goto(item.link, {
                     waitUntil: 'domcontentloaded',
                 });

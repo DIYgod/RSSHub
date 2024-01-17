@@ -339,6 +339,10 @@
 
 ## Bluesky (bsky) {#bluesky-bsky}
 
+### Post {#bluesky-bsky-post}
+
+<Route author="TonyRL" example="/bsky/profile/bsky.app" path="/bsky/profile/:handle" paramsDesc={['User handle, can be found in URL']} radar="1" />
+
 ### Keywords {#bluesky-bsky-keywords}
 
 <Route author="untitaker" example="/bsky/keyword/hello" path="/bsky/keyword/:keyword" radar="1" />
@@ -1668,6 +1672,10 @@ YouTube provides official RSS feeds for channels, for instance [https://www.yout
 ### xhu - 用户回答 {#zhi-hu-xhu-yong-hu-hui-da}
 
 <Route author="JimenezLi" example="/zhihu/xhu/people/answers/246e6cf44e94cefbf4b959cb5042bc91" path="/zhihu/xhu/people/answers/:hexId" paramsDesc={['用户的 16 进制 id，获取方式同 [xhu - 用户动态](#zhi-hu-xhu-yong-hu-dong-tai)']} radar="1" />
+
+### xhu - 用户文章 {#zhi-hu-xhu-yong-hu-wen-zhang}
+
+<Route author="JimenezLi" example="/zhihu/xhu/people/posts/246e6cf44e94cefbf4b959cb5042bc91" path="/zhihu/xhu/people/posts/:hexId" paramsDesc={['用户的 16 进制 id，获取方式同 [xhu - 用户动态](#zhi-hu-xhu-yong-hu-dong-tai)']} radar="1" />
 
 ### xhu - 收藏夹 {#zhi-hu-xhu-shou-cang-jia}
 
