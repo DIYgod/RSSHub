@@ -108,9 +108,9 @@ function generateOne() {
     const oldAccounts = fs.readFileSync(path.join(__dirname, 'accounts.txt'));
     const tokens = oldAccounts.toString().split('\n')[0].split('=')[1].split(',');
     const secrets = oldAccounts.toString().split('\n')[1].split('=')[1].split(',');
-    for (let i = 0; i < tokens.length; i++) {
+    for (const [i, token] of tokens.entries()) {
         accounts.push({
-            t: tokens[i],
+            t: token,
             s: secrets[i],
         });
     }
