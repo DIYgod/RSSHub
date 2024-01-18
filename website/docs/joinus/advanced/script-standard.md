@@ -60,7 +60,7 @@ sidebar_position: 2
 ### Naming
 
 -   Use `lowerCamelCase` for variables and functions to adhere to standard naming conventions.
--   Use `kebab-case` for files and folders. `snake_case` is also acceptable.
+-   Use `kebab-case` for files and folders.
 -   Use `CONSTANT_CASE` for constants.
 
 ## v2 Route Standard
