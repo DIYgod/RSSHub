@@ -61,7 +61,7 @@ describe('wechat-mp', () => {
         expect(fixArticleContent($('div#js_content.rich_media_content'))).toBe(expectedHtmlSection);
 
         const htmlImg = '<img alt="test" data-src="http://rsshub.test/test.jpg" src="http://rsshub.test/test.jpg">' + '<img alt="test" data-src="http://rsshub.test/test.jpg">' + '<img alt="test" src="http://rsshub.test/test.jpg">';
-        const expectedHtmlImg = new Array(3 + 1).join('<img alt="test" src="http://rsshub.test/test.jpg">');
+        const expectedHtmlImg = Array.from({ length: 3 + 1 }).join('<img alt="test" src="http://rsshub.test/test.jpg">');
         $ = cheerio.load(divHeader + htmlImg + divFooter);
         expect(fixArticleContent(htmlImg)).toBe(expectedHtmlImg);
         expect(fixArticleContent($('div#js_content.rich_media_content'))).toBe(expectedHtmlImg);
@@ -70,7 +70,7 @@ describe('wechat-mp', () => {
 
         expect(fixArticleContent('')).toBe('');
         expect(fixArticleContent(null)).toBe('');
-        expect(fixArticleContent(undefined)).toBe('');
+        expect(fixArticleContent()).toBe('');
         expect(fixArticleContent($('div#something_not_in.the_document_tree'))).toBe('');
     });
 
@@ -101,7 +101,7 @@ describe('wechat-mp', () => {
     });
 
     it('fetchArticle_&_finishArticleItem', async () => {
-        const ct = 1636626300;
+        const ct = 1_636_626_300;
         const exampleMpArticlePage =
             '\n' +
             '<meta name="description" content="summary" />\n' +

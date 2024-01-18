@@ -35,7 +35,7 @@ afterEach(() => {
             } else {
                 check(request);
             }
-            return origin.apply(this, arguments);
+            return Reflect.apply(origin, this, arguments);
         };
     };
     http.get = httpWrap(http.get);
