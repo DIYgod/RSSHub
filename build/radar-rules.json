@@ -7848,6 +7848,16 @@
       }
     ]
   },
+  "dol.go.th": {
+    "_name": "กรมที่ดิน (Thaland Department of Lands)",
+    "announce": [
+      {
+        "title": "ประกาศกรมที่ดิน",
+        "docs": "https://docs.rsshub.app/routes/government#thailand-department-of-lands-e-landsannouncement",
+        "source": "/index.php"
+      }
+    ]
+  },
   "domp4.cc": {
     "_name": "domp4电影",
     ".": [

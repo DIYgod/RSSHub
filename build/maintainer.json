@@ -1794,6 +1794,9 @@
     "/docschina/jsweekly": [
         "daijinru"
     ],
+    "/dol/announce/:owner?/:province?/:office?": [
+        "itpcc"
+    ],
     "/domp4/detail/:id": [
         "savokiss"
     ],
