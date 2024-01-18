@@ -63,7 +63,7 @@
         "unicorn/prefer-logical-operator-over-ternary": 1,
         "unicorn/prefer-module": 0,
         "unicorn/prefer-node-protocol": 0,
-        "unicorn/prefer-number-properties": 0,
+        "unicorn/prefer-number-properties": ["warn", { "checkInfinity": false }],
         "unicorn/prefer-object-from-entries": 1,
         "unicorn/prefer-regexp-test": 1,
         "unicorn/prefer-string-replace-all": 1,
