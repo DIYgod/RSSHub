@@ -215,8 +215,8 @@ devDependencies:
     specifier: 3.0.0
     version: 3.0.0
   '@stylistic/eslint-plugin-js':
-    specifier: 1.5.3
-    version: 1.5.3(eslint@8.56.0)
+    specifier: 1.5.4
+    version: 1.5.4(eslint@8.56.0)
   '@types/aes-js':
     specifier: 3.1.4
     version: 3.1.4
@@ -1371,8 +1371,8 @@ packages:
       '@sinonjs/commons': 3.0.0
     dev: true
 
-  /@stylistic/eslint-plugin-js@1.5.3(eslint@8.56.0):
-    resolution: {integrity: sha512-XlKnm82fD7Sw9kQ6FFigE0tobvptNBXZWsdfoKmUyK7bNxHsAHOFT8zJGY3j3MjZ0Fe7rLTu86hX/vOl0bRRdQ==}
+  /@stylistic/eslint-plugin-js@1.5.4(eslint@8.56.0):
+    resolution: {integrity: sha512-3ctWb3NvJNV1MsrZN91cYp2EGInLPSoZKphXIbIRx/zjZxKwLDr9z4LMOWtqjq14li/OgqUUcMq5pj8fgbLoTw==}
     engines: {node: ^16.0.0 || >=18.0.0}
     peerDependencies:
       eslint: '>=8.40.0'
