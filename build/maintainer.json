@@ -4402,10 +4402,16 @@
     "/micmicidol": [],
     "/micmicidol/search/:label": [],
     "/microsoft-store/updates/:productid/:market?": [],
+    "/mihoyo/bbs/follow-list/:uid": [
+        "CaoMeiYouRen"
+    ],
     "/mihoyo/bbs/img-ranking/:game/:routeParams?": [
         "CaoMeiYouRen"
     ],
     "/mihoyo/bbs/official/:gids/:type?/:page_size?/:last_id?": [
+        "CaoMeiYouRen"
+    ],
+    "/mihoyo/bbs/user-post/:uid": [
         "CaoMeiYouRen"
     ],
     "/mihoyo/bh2/:type": [],
