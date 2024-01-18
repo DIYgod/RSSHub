@@ -16,9 +16,6 @@
         "no-await-in-loop": 2,
         "no-control-regex": 0,
         "no-duplicate-imports": 2,
-        "no-prototype-builtins": 0,
-        "no-unsafe-negation": 2,
-        "require-atomic-updates": 0,
         // suggestions
         "arrow-body-style": 2,
         "block-scoped-var": 2,
