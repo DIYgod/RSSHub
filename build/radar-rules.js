@@ -12079,15 +12079,15 @@
         target:(params) => {
                     let type;
                     switch (params.type) {
-                        case 'cgxxhw':
-                        default:
-                            type = 'cgxx';
-                            break;
                         case 'cjgshw':
                             type = 'cjgs';
                             break;
                         case 'zfcgyxgk':
                             type = params.type;
+                            break;
+                        case 'cgxxhw':
+                        default:
+                            type = 'cgxx';
                             break;
                     }
                     return `/nju/zbb/${type}`;
