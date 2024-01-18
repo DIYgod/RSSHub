@@ -101,7 +101,7 @@ describe('wechat-mp', () => {
     });
 
     it('fetchArticle_&_finishArticleItem', async () => {
-        const ct = 1636626300;
+        const ct = 1_636_626_300;
         const exampleMpArticlePage =
             '\n' +
             '<meta name="description" content="summary" />\n' +

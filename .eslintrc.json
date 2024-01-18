@@ -59,7 +59,16 @@
         "unicorn/no-process-exit": 0,
         "unicorn/no-useless-switch-case": 0,
         "unicorn/no-useless-undefined": ["error", { "checkArguments": false }],
-        "unicorn/numeric-separators-style": 0,
+        "unicorn/numeric-separators-style": [
+            "warn",
+            {
+              "onlyIfContainsSeparator": false,
+              "number": { "minimumDigits": 7, "groupLength": 3 },
+              "binary": { "minimumDigits": 9, "groupLength": 4 },
+              "octal": { "minimumDigits": 9, "groupLength": 4 },
+              "hexadecimal": { "minimumDigits": 5, "groupLength": 2 }
+            }
+          ],
         "unicorn/prefer-code-point": 1,
         "unicorn/prefer-logical-operator-over-ternary": 1,
         "unicorn/prefer-module": 0,
