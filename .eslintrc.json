@@ -47,7 +47,6 @@
         "prefer-regex-literals": ["error", { "disallowRedundantWrapping": true }],
         "require-await": 2,
         // plugin specific
-        "unicorn/better-regex": 1,
         "unicorn/consistent-destructuring": 1,
         "unicorn/consistent-function-scoping": 1,
         "unicorn/explicit-length-check": 0,
