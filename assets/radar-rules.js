@@ -215,7 +215,7 @@
                     } else {
                         return false;
                     }
-                    return `/sexinsex/${pid}/${typeid ? typeid : ''}`;
+                    return `/sexinsex/${pid}/${typeid ?? ''}`;
                 },
             },
         ],
@@ -230,7 +230,7 @@
                 target: (params, url) => {
                     const id = new URL(url).searchParams.get('fid');
                     const type = new URL(url).searchParams.get('type');
-                    return `/t66y/${id}/${type ? type : ''}`;
+                    return `/t66y/${id}/${type ?? ''}`;
                 },
             },
         ],
