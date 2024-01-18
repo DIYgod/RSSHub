@@ -44,7 +44,7 @@
         "object-shorthand": 2,
         "prefer-arrow-callback": 2,
         "prefer-const": 2,
-        "prefer-regex-literals": 2,
+        "prefer-regex-literals": ["error", { "disallowRedundantWrapping": true }],
         "require-await": 2,
         // plugin specific
         "unicorn/better-regex": 1,
