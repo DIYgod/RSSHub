@@ -66,7 +66,7 @@ describe('got', () => {
 
         try {
             await got.get('http://rsshub.test/timeout');
-            throw Error('Timeout Invalid');
+            throw new Error('Timeout Invalid');
         } catch (error) {
             expect(error.name).toBe('RequestError');
         }

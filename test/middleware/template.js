@@ -10,7 +10,7 @@ afterAll(() => {
 });
 
 describe('template', () => {
-    const expectPubDate = new Date(1546272000000 - 10 * 1000);
+    const expectPubDate = new Date(1_546_272_000_000 - 10 * 1000);
 
     it(`.rss`, async () => {
         const response1 = await request.get('/test/1.rss');

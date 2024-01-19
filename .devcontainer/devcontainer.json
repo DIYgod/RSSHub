@@ -65,7 +65,7 @@
     "remoteUser": "node",
     "features": {
         "ghcr.io/devcontainers/features/docker-in-docker": {
-            "version": "latest"
+            "version": "latest",
         },
         "ghcr.io/devcontainers/features/github-cli": {
             "version": "latest"

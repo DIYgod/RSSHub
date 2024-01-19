@@ -1,10 +1,10 @@
 const noFound = 'Auto: Route No Found';
-const allowedUser = ['dependabot[bot]', 'pull[bot]']; // dependabot and downstream PR requested by pull[bot]
+const allowedUser = new Set(['dependabot[bot]', 'pull[bot]']); // dependabot and downstream PR requested by pull[bot]
 
 module.exports = async ({ github, context, core }, body, number, sender) => {
     core.debug(`sender: ${sender}`);
     core.debug(`body: ${body}`);
-    const m = body.match(/```routes\s+([\s\S]*?)```/);
+    const m = body.match(/```routes\s+([\S\s]*?)```/);
     core.debug(`match: ${m}`);
     let res = null;
 
@@ -25,8 +25,8 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
                 ...issueFacts,
                 labels,
             })
-            .catch((e) => {
-                core.warning(e);
+            .catch((error) => {
+                core.warning(error);
             });
 
     const removeLabel = () =>
@@ -35,8 +35,8 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
                 ...issueFacts,
                 name: noFound,
             })
-            .catch((e) => {
-                core.warning(e);
+            .catch((error) => {
+                core.warning(error);
             });
 
     const updatePrState = (state) =>
@@ -45,8 +45,8 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
                 ...prFacts,
                 state,
             })
-            .catch((e) => {
-                core.warning(e);
+            .catch((error) => {
+                core.warning(error);
             });
 
     const createComment = (body) =>
@@ -55,8 +55,8 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
                 ...issueFacts,
                 body,
             })
-            .catch((e) => {
-                core.warning(e);
+            .catch((error) => {
+                core.warning(error);
             });
 
     const createFailedComment = () => {
@@ -75,14 +75,14 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
         .get({
             ...issueFacts,
         })
-        .catch((e) => {
-            core.warning(e);
+        .catch((error) => {
+            core.warning(error);
         });
     if (pr.pull_request && pr.state === 'closed') {
         await updatePrState('open');
     }
 
-    if (allowedUser.includes(sender)) {
+    if (allowedUser.has(sender)) {
         core.info('PR created by a allowed user, passing');
         await removeLabel();
         await addLabels(['Auto: allowed']);
@@ -116,5 +116,5 @@ module.exports = async ({ github, context, core }, body, number, sender) => {
         await updatePrState('closed');
     }
 
-    throw Error('Please follow the PR rules: failed to detect route');
+    throw new Error('Please follow the PR rules: failed to detect route');
 };
