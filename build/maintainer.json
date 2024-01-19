@@ -2600,6 +2600,9 @@
     "/gov/anhui/kjt/:path?": [
         "nczitzk"
     ],
+    "/gov/beijing/bjedu/gh/:urlPath?": [
+        "TonyRL"
+    ],
     "/gov/beijing/bjeea/:type": [],
     "/gov/beijing/bphc/:channel": [
         "bigfei"
