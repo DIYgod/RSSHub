@@ -13,7 +13,6 @@ type Config = {
     chromiumExecutablePath?: string;
     connect: {
         port: number;
-        socket: string | null;
     };
     listenInaddrAny: boolean;
     requestRetry: number;
@@ -347,7 +346,6 @@ const calculateValue = () => {
         // network
         connect: {
             port: toInt(envs.PORT, 1200), // 监听端口
-            socket: envs.SOCKET || null, // 监听 Unix Socket, null 为禁用
         },
         listenInaddrAny: toBoolean(envs.LISTEN_INADDR_ANY, true), // 是否允许公网连接，取值 0 1
         requestRetry: toInt(envs.REQUEST_RETRY, 2), // 请求失败重试次数

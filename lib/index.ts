@@ -9,9 +9,15 @@ import debug from '@/middleware/debug'
 import header from '@/middleware/header'
 import antiHotlink from '@/middleware/anti-hotlink'
 import parameter from '@/middleware/parameter'
+import logger from '@/utils/logger'
 
 import routes from '@/routes'
+import index from '@/v3/index'
 import { config } from '@/config'
+
+process.on('uncaughtException', (e) => {
+    logger.error('uncaughtException: ' + e);
+});
 
 const app = new Hono()
 
@@ -38,12 +44,14 @@ for (const name in routes) {
   })
 }
 
-app.get('/', (c) => {
-  return c.text('Hello Hono!')
-})
+app.get('/', index)
+
+console.log(app)
 
 const port = config.connect.port
-console.log(`Server is running on port ${port}`)
+
+logger.info(`🎉 RSSHub is running on port ${port}! Cheers!`)
+logger.info('💖 Can you help keep this open source project alive? Please sponsor 👉 https://docs.rsshub.app/support');
 
 serve({
   fetch: app.fetch,

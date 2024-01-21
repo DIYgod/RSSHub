@@ -56,7 +56,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     const data = ctx.get('data') as Data;
     if (!data) {
-        throw new Error('wrong path');
+        // throw new Error('wrong path');
     } else {
         if ((!data.item || data.item.length === 0) && !data.allowEmpty) {
             throw new Error('this route is empty, please check the original site or <a href="https://github.com/DIYgod/RSSHub/issues/new/choose">create an issue</a>');
@@ -194,7 +194,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     regex instanceof RE2JS
                         ? regex.matcher(title).find() || regex.matcher(description).find() || regex.matcher(author).find() || category.some((c) => regex.matcher(c).find())
                         : title.match(regex) || description.match(regex) || author.match(regex) || category.some((c) => c.match(regex));
-                
+
                 return isFilter;
             });
         }
