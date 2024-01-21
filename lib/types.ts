@@ -41,4 +41,5 @@ export type Data = {
     author?: string;
     language?: string;
     feedLink?: string;
+    lastBuildDate?: string;
 };

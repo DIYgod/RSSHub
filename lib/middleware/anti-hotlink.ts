@@ -4,6 +4,7 @@ import logger from '@/utils/logger';
 import * as path from 'node:path';
 import render from '@/utils/render';
 import { type MiddlewareHandler } from 'hono';
+import { Data } from '@/types';
 
 const templateRegex = /\${([^{}]+)}/g;
 const allowedUrlProperties = new Set(['hash', 'host', 'hostname', 'href', 'origin', 'password', 'pathname', 'port', 'protocol', 'search', 'searchParams', 'username']);
@@ -130,7 +131,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     // and here we will only check them in description.
     // Use Cheerio to load the description as html and filter all
     // image link
-    const data = ctx.get('data');
+    const data: Data = ctx.get('data');
     if (data) {
         if (data.description) {
             data.description = process(data.description, image_hotlink_template, multimedia_hotlink_template, shouldWrapInIframe);

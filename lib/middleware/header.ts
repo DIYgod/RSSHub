@@ -3,6 +3,7 @@ import { MiddlewareHandler } from "hono";
 import etagCalculate from "etag";
 import logger from "@/utils/logger";
 import { config } from "@/config";
+import { Data } from "@/types";
 
 const headers: Record<string, string> = {
     'Access-Control-Allow-Methods': 'GET',
@@ -29,7 +30,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     await next();
 
-    const data = ctx.get('data');
+    const data: Data = ctx.get('data');
     if (!data || ctx.res.headers.get('ETag')) {
         return;
     }

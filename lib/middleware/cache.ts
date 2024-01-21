@@ -4,6 +4,7 @@ import type { MiddlewareHandler } from 'hono';
 import { config } from '@/config';
 import { RequestInProgressError } from '@/errors';
 import cacheModule from '@/utils/cache/index'
+import { Data } from '@/types';
 
 // only give cache string, as the `!` condition tricky
 // md5 is used to shrink key size
@@ -48,7 +49,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         throw error;
     }
 
-    const data = ctx.get('data')
+    const data: Data = ctx.get('data');
     if (ctx.res.headers.get('Cache-Control') !== 'no-cache' && data) {
         data.lastBuildDate = new Date().toUTCString();
         ctx.set('data', data)
