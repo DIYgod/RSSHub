@@ -23,7 +23,7 @@
     "build:all": "npm run build:radar && npm run build:maintainer",
     "build:maintainer": "node scripts/workflow/build-maintainer.js",
     "build:radar": "node scripts/workflow/build-radar.js",
-    "dev": "cross-env NODE_ENV=dev nodemon --inspect lib/index.js",
+    "dev": "cross-env NODE_ENV=dev tsx watch lib/index.ts",
     "format": "eslint --cache --fix \"**/*.{js,yml}\" && node website/docs/.format/format.mjs && prettier \"**/*.{js,json}\" --write",
     "format:check": "eslint --cache \"**/*.{js,yml}\" && prettier \"**/*.{js,json}\" --check",
     "format:staged": "lint-staged",
@@ -43,14 +43,6 @@
     ],
     "*.md?(x)": "node website/docs/.format/format.mjs --staged",
     "*.yml": "eslint --cache --fix"
-  },
-  "nodemonConfig": {
-    "ext": "art,js,mjs,json",
-    "watch": [
-      ".env",
-      "lib",
-      "test"
-    ]
   },
   "jest": {
     "bail": true,
@@ -83,11 +75,13 @@
     "outputDirectory": "coverage"
   },
   "dependencies": {
+    "@hono/node-server": "1.4.0",
     "@koa/router": "12.0.1",
     "@notionhq/client": "2.2.14",
     "@postlight/parser": "2.2.3",
     "@sentry/node": "7.94.1",
     "@tonyrl/rand-user-agent": "2.0.46",
+    "@types/node": "20.11.5",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
@@ -104,6 +98,7 @@
     "git-rev-sync": "3.0.2",
     "googleapis": "131.0.0",
     "got": "11.8.6",
+    "hono": "3.12.6",
     "html-to-text": "9.0.5",
     "https-proxy-agent": "7.0.2",
     "iconv-lite": "0.6.3",
@@ -176,7 +171,6 @@
     "@types/mailparser": "3.4.4",
     "@types/markdown-it": "13.0.7",
     "@types/module-alias": "2.0.4",
-    "@types/nodemon": "1.19.6",
     "@types/plist": "3.0.5",
     "@types/request-promise-native": "1.0.21",
     "@types/require-all": "3.0.6",
@@ -199,7 +193,6 @@
     "lint-staged": "15.2.0",
     "mockdate": "3.0.5",
     "nock": "13.5.0",
-    "nodemon": "3.0.3",
     "prettier": "3.2.4",
     "remark": "14.0.3",
     "remark-custom-heading-id": "1.0.1",
@@ -216,6 +209,7 @@
     "supertest": "6.3.4",
     "to-vfile": "8.0.0",
     "tosource": "2.0.0-alpha.3",
+    "tsx": "4.7.0",
     "unified": "9.2.2",
     "unist-util-visit": "4.1.2",
     "unist-util-visit-parents": "5.1.3"

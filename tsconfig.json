@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "lib": ["ES2022"],
+    "strict": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx",
+    "paths": {
+      "@/*": ["./lib/*"]
+    },
+    "esModuleInterop": true
+  }
+}
