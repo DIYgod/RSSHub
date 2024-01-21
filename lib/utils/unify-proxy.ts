@@ -1,15 +1,15 @@
-const config = require('@/config').value;
-const logger = require('./logger');
+import { type Config } from '@/config';
+import logger from '@/utils/logger';
 
 const defaultProtocol = 'http';
 const possibleProtocol = ['http', 'https', 'socks', 'socks4', 'socks4a', 'socks5', 'socks5h'];
 
-const unifyProxy = (proxyUri, proxyObj) => {
+const unifyProxy = (proxyUri: Config['proxyUri'], proxyObj: Config['proxy']) => {
     proxyObj = proxyObj || {};
     const [oriProxyUri, oriProxyObj] = [proxyUri, proxyObj];
     proxyObj = { ...proxyObj };
 
-    let proxyUrlHandler;
+    let proxyUrlHandler: URL | null = null;
 
     // PROXY_URI
     if (proxyUri && typeof proxyUri === 'string') {
@@ -19,7 +19,7 @@ const unifyProxy = (proxyUri, proxyObj) => {
         }
         try {
             proxyUrlHandler = new URL(proxyUri);
-        } catch (error) {
+        } catch (error: any) {
             logger.error(`Parse PROXY_URI error: ${error.stack}`);
         }
     }
@@ -52,7 +52,7 @@ const unifyProxy = (proxyUri, proxyObj) => {
                 } else {
                     logger.warn('PROXY_PORT is not set, leaving proxy agent to determine');
                 }
-            } catch (error) {
+            } catch (error: any) {
                 logger.error(`Parse PROXY_HOST error: ${error.stack}`);
             }
         } else {
@@ -90,7 +90,7 @@ const unifyProxy = (proxyUri, proxyObj) => {
             }
             proxyObj.protocol = protocol;
             proxyObj.host = proxyUrlHandler.hostname;
-            proxyObj.port = Number.parseInt(proxyUrlHandler.port) || undefined;
+            proxyObj.port = proxyUrlHandler.port;
             // trailing slash will cause puppeteer to throw net::ERR_NO_SUPPORTED_PROXIES, trim it
             proxyUri = proxyUrlHandler.href.endsWith('/') ? proxyUrlHandler.href.slice(0, -1) : proxyUrlHandler.href;
             isProxyValid = true;
@@ -103,14 +103,11 @@ const unifyProxy = (proxyUri, proxyObj) => {
             logger.error('Proxy is disabled due to misconfiguration');
         }
         proxyObj.protocol = proxyObj.host = proxyObj.port = proxyObj.auth = undefined;
-        proxyUri = null;
+        proxyUri = undefined;
         proxyUrlHandler = null;
     }
 
     return { proxyUri, proxyObj, proxyUrlHandler };
 };
 
-module.exports = {
-    unifyProxy,
-    ...unifyProxy(config.proxyUri, config.proxy),
-};
+export default unifyProxy

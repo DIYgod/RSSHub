@@ -1,9 +1,9 @@
-const config = require('@/config').value;
-const logger = require('./logger');
+import { type Config } from '@/config';
+import logger from '@/utils/logger';
 
 const possibleProtocol = ['http', 'https', 'ftp', 'file', 'data'];
 
-const pacProxy = (pacUri, pacScript, proxyObj) => {
+const pacProxy = (pacUri: Config['pacUri'], pacScript: Config['pacScript'], proxyObj: Config['proxy']) => {
     let pacUrlHandler = null;
 
     // Validate PAC_URI / PAC_SCRIPT
@@ -17,26 +17,26 @@ const pacProxy = (pacUri, pacScript, proxyObj) => {
     if (pacUri && typeof pacUri === 'string') {
         try {
             pacUrlHandler = new URL(pacUri);
-        } catch (error) {
-            pacUri = null;
+        } catch (error: any) {
+            pacUri = undefined;
             pacUrlHandler = null;
             logger.error(`Parse PAC_URI error: ${error.stack}`);
         }
     } else {
-        pacUri = null;
+        pacUri = undefined;
     }
 
     // Check if PAC_URI has the right protocol
-    if (pacUri && !possibleProtocol.includes(pacUrlHandler?.protocol?.replace(':', ''))) {
+    if (pacUri && (!pacUrlHandler?.protocol || !possibleProtocol.includes(pacUrlHandler.protocol.replace(':', '')))) {
         logger.error(`Unsupported PAC protocol: ${pacUrlHandler?.protocol?.replace(':', '')}, expect one of ${possibleProtocol.join(', ')}`);
-        pacUri = null;
+        pacUri = undefined;
         pacUrlHandler = null;
     }
 
     // Validate proxyObj
     if (pacUrlHandler) {
         proxyObj.host = pacUrlHandler.hostname;
-        proxyObj.port = Number.parseInt(pacUrlHandler.port) || undefined;
+        proxyObj.port = pacUrlHandler.port;
         proxyObj.protocol = pacUrlHandler.protocol.replace(':', '');
     } else {
         proxyObj.protocol = proxyObj.host = proxyObj.port = proxyObj.auth = undefined;
@@ -69,7 +69,4 @@ const pacProxy = (pacUri, pacScript, proxyObj) => {
     };
 };
 
-module.exports = {
-    pacProxy,
-    ...pacProxy(config.pacUri, config.pacScript, config.proxy),
-};
+export default pacProxy

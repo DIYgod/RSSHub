@@ -4,7 +4,7 @@ import got from 'got';
 
 let envs = process.env;
 
-type Config = {
+export type Config = {
     disallowRobot: boolean;
     enableCluster?: string;
     isPackage: boolean;
@@ -41,7 +41,6 @@ type Config = {
         url_regex: string;
     };
     proxyStrategy: string;
-    reverseProxyUrl?: string;
     pacUri?: string;
     pacScript?: string;
     authentication: {
@@ -378,7 +377,6 @@ const calculateValue = () => {
             url_regex: envs.PROXY_URL_REGEX || '.*',
         },
         proxyStrategy: envs.PROXY_STRATEGY || 'all', // all / on_retry
-        reverseProxyUrl: envs.REVERSE_PROXY_URL,
         pacUri: envs.PAC_URI,
         pacScript: envs.PAC_SCRIPT,
         // auth

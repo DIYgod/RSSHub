@@ -1,3 +1,5 @@
+import '@/utils/request-wrapper'
+
 import { serve } from '@hono/node-server'
 import { Handler, Hono } from 'hono'
 
