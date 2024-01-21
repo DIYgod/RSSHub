@@ -5730,6 +5730,12 @@
     "/scmp/:category_id": [
         "proletarius101"
     ],
+    "/scmp/coronavirus": [
+        "DIYgod"
+    ],
+    "/scmp/topics/:topic": [
+        "TonyRL"
+    ],
     "/scnu/cs/match": [
         "fengkx"
     ],
