@@ -29,30 +29,24 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     await next();
 
-    if (!ctx.res.body || ctx.res.headers.get('ETag')) {
+    const data = ctx.get('data');
+    if (!data || ctx.res.headers.get('ETag')) {
         return;
     }
 
-    const status = Math.trunc(ctx.res.status / 100);
-    if (2 !== status) {
-        return;
-    }
+    const lastBuildDate = data.lastBuildDate;
+    delete data.lastBuildDate;
+    const etag = etagCalculate(JSON.stringify(data));
 
-    const res = ctx.res as Response;
-    const body = await res.clone().text();
-    const etag = etagCalculate(body.replace(/<lastBuildDate>(.*)<\/lastBuildDate>/, '').replace(/<atom:link(.*)\/>/, ''));
-
-    ctx.set('ETag', etag);
+    ctx.header('ETag', etag);
 
     const ifNoneMatch = ctx.req.header('If-None-Match') ?? null;
     if (etagMatches(etag, ifNoneMatch)) {
+        console.log('in')
         ctx.status(304);
-        ctx.body(null);
+        return ctx.body(null);
     } else {
-        const match = body.match(/<lastBuildDate>(.*)<\/lastBuildDate>/);
-        if (match) {
-            ctx.header('Last-Modified', match[1]);
-        }
+        ctx.header('Last-Modified', lastBuildDate);
     }
 };
 

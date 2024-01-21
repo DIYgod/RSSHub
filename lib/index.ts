@@ -25,8 +25,8 @@ const app = new Hono()
 app.use('*', onerror);
 app.use('*', accessControl);
 app.use('*', debug);
-app.use('*', header);
 app.use('*', template);
+app.use('*', header);
 app.use('*', antiHotlink);
 app.use('*', parameter);
 app.use('*', cache);

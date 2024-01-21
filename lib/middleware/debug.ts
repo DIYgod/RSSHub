@@ -12,7 +12,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     {
         const debug = getDebugInfo();
-        if (ctx.res.headers.get('X-Koa-Redis-Cache') || ctx.res.headers.get('X-Koa-Memory-Cache')) {
+        if (ctx.res.headers.get('RSSHub-Cache-Status')) {
             debug.hitCache++;
         }
 

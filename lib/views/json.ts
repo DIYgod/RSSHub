@@ -1,9 +1,11 @@
+import { Data } from "@/types";
+
 /**
  * This function should be used by RSSHub middleware only.
  * @param {object} data ctx.state.data
  * @returns `JSON.stringify`-ed [JSON Feed](https://www.jsonfeed.org/)
  */
-const json = (data) => {
+const json = (data: Data) => {
     const jsonFeed = {
         version: 'https://jsonfeed.org/version/1.1',
         title: data.title || 'RSSHub',
@@ -13,7 +15,7 @@ const json = (data) => {
         icon: data.image,
         authors: typeof data.author === 'string' ? [{ name: data.author }] : data.author,
         language: data.language || 'zh-cn',
-        items: data.item.map((item) => ({
+        items: data.item?.map((item) => ({
             id: item.guid || item.id || item.link,
             url: item.link,
             title: item.title,

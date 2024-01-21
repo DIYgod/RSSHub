@@ -126,7 +126,7 @@ const toDurations = (matches: string[]) => {
 };
 
 export default {
-    parse: (date: string, ...options: any) => dayjs(date, ...options).toDate(),
+    parse: (date: string | number, ...options: any) => dayjs(date, ...options).toDate(),
     parseRelativeDate: (date: string) => {
         // 预处理日期字符串 date
 
@@ -176,9 +176,9 @@ export default {
                     const wordMatches = w.regExp.exec(firstMatch);
                     if (wordMatches) {
                         matches.unshift(wordMatches[1]);
-    
+
                         // 取特殊词对应日零时为起点，加上相应的时间长度
-    
+
                         return w.startAt
                             .set('hour', 0)
                             .set('minute', 0)

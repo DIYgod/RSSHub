@@ -15,7 +15,7 @@ const collapseWhitespace = (str: string) => {
     return str;
 };
 
-const convertDateToISO8601 = (date: string | Date) => {
+const convertDateToISO8601 = (date: string | Date | number) => {
     if (!date) {
         return date;
     }

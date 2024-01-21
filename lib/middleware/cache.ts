@@ -29,11 +29,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
         if (value) {
             ctx.status(200)
-            if (config.cache.type === 'redis') {
-                ctx.header('X-Koa-Redis-Cache', 'true')
-            } else if (config.cache.type === 'memory') {
-                ctx.header('X-Koa-Memory-Cache', 'true')
-            }
+            ctx.header('RSSHub-Cache-Status', 'HIT')
             ctx.set('data', JSON.parse(value))
             await next();
             return;
