@@ -14,6 +14,7 @@ import logger from '@/utils/logger'
 import routes from '@/routes'
 import index from '@/v3/index'
 import { config } from '@/config'
+import { errorHandler } from '@/errors'
 
 process.on('uncaughtException', (e) => {
     logger.error('uncaughtException: ' + e);
@@ -46,7 +47,7 @@ for (const name in routes) {
 
 app.get('/', index)
 
-console.log(app)
+app.onError(errorHandler)
 
 const port = config.connect.port
 

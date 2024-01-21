@@ -1,5 +1,5 @@
 import { directoryImport } from '@/utils/directory-import';
-import type { Context, Handler, Hono } from 'hono'
+import type { Handler } from 'hono'
 
 type Root = {
   get: (path: string, handler: Handler) => void;
