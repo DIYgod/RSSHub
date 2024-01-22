@@ -463,6 +463,37 @@ TokenInsight also provides official RSS, you can take a look at [https://api.tok
 
 <Route author="occupy5 dousha" example="/fx678/kx" path="/fx678/kx" radar="1" />
 
+## 金色财经 {#jin-se-cai-jing}
+
+### 首页 {#jin-se-cai-jing-shou-ye}
+
+<Route author="nczitzk" example="/jinse/timeline" path="/jinse/timeline/:category?" paramsDesc={['分类，见下表，默认为头条']} radar="1">
+  | 头条   | 独家 | 铭文    | 产业       | 项目 |
+  | ------ | ---- | ------- | ---------- | ---- |
+  | 政策   | AI   | Web 3.0 | 以太坊 2.0 | DeFi |
+  | Layer2 | NFT  | DAO     | 百科       |      |
+</Route>
+
+### 快讯 {#jin-se-cai-jing-kuai-xun}
+
+<Route author="nczitzk" example="/jinse/lives" path="/jinse/lives/:category?" paramsDesc={['分类，见下表，默认为全部']} radar="1">
+  | 全部 | 精选 | 政策 | 数据 | NFT | 项目 |
+  | ---- | ---- | ---- | ---- | --- | ---- |
+  | 0    | 1    | 2    | 3    | 4   | 5    |
+</Route>
+
+### 分类 {#jin-se-cai-jing-fen-lei}
+
+<Route author="nczitzk" example="/jinse/zhengce" path="/jinse/:category?" paramsDesc={['分类，见下表，默认为政策']}>
+  | 政策    | 行情         | DeFi | 矿业  | 以太坊 2.0 |
+  | ------- | ------------ | ---- | ----- | ---------- |
+  | zhengce | fenxishishuo | defi | kuang | 以太坊 2.0 |
+
+  | 产业     | IPFS | 技术 | 百科  | 研报          |
+  | -------- | ---- | ---- | ----- | ------------- |
+  | industry | IPFS | tech | baike | capitalmarket |
+</Route>
+
 ## 金十数据 {#jin-shi-shu-ju}
 
 ### 市场快讯 {#jin-shi-shu-ju-shi-chang-kuai-xun}
@@ -711,7 +742,7 @@ TokenInsight also provides official RSS, you can take a look at [https://api.tok
 
 ### 股票评论 {#xue-qiu-gu-piao-ping-lun}
 
-<Route author="zytomorrow" example="/xueqiu/stock_comments/SZ002626" path="/xueqiu/stock_comments/:id/:titleLength?" paramsDesc={['股票代码（需要带上交易所）', '标题长度']} />
+<Route author="zytomorrow" example="/xueqiu/stock_comments/SZ002626" path="/xueqiu/stock_comments/:id" paramsDesc={['股票代码（需要带上交易所）']} />
 
 ### 热帖 {#xue-qiu-re-tie}
 
