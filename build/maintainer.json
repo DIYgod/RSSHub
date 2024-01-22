@@ -1403,6 +1403,9 @@
     "/cnljxh/price/:id?": [
         "nczitzk"
     ],
+    "/cntheory/paper/:id?": [
+        "nczitzk"
+    ],
     "/cntv/:column": [
         "WhoIsSure",
         "Fatpandac"
