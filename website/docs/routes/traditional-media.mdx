@@ -500,11 +500,15 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
   See the [official RSS page](https://www.scmp.com/rss) to get the ID of each category. This route provides fulltext that the offical feed doesn't.
 </Route>
 
+### Topics {#south-china-morning-post-nan-hua-zao-bao-topics}
+
+<Route author="TonyRL" example="/scmp/topics/coronavirus-pandemic-all-stories" path="/scmp/topics/:topic" paramsDesc={['Topic, can be found in URL']} radar="1" />
+
 ## Sputnik News 俄罗斯卫星通讯社 {#sputnik-news-e-luo-si-wei-xing-tong-xun-she}
 
 ### Category {#sputnik-news-e-luo-si-wei-xing-tong-xun-she-category}
 
-<Route author="nczitzk" example="/sputniknews" path="/sputniknews/:category?/:language?" paramsDesc={['Categort, can be found in URL, `news` by default', 'Language, see below, English by default']}>
+<Route author="nczitzk" example="/sputniknews" path="/sputniknews/:category?/:language?" paramsDesc={['Category, can be found in URL, `news` by default', 'Language, see below, English by default']}>
   Categories for International site:
 
   | WORLD | COVID-19 | BUSINESS | SPORT | TECH | OPINION |

@@ -78,6 +78,12 @@
 
 <Route author="nczitzk" example="/us/supremecourt/argument_audio" path="/us/supremecourt/argument_audio/:year?" paramsDesc={['Year, current year by default']} notOperational="1" />
 
+## Thailand Department of Lands {#thailand-department-of-lands}
+
+### e-LandsAnnouncement {#thailand-department-of-lands-e-landsannouncement}
+
+<Route author="itpcc" example="/dol/announce" path="/dol/announce/:owner?/:province?/:office?" paramsDesc={['Requester/former land owner', 'Province which the land is belongs to', 'DOL office name which the land is belongs to (สำนักงานที่ดิน(กรุงเทพมหานคร|จังหวัด*) [สาขา*])']} />
+
 ## The United States Trade Representative {#the-united-states-trade-representative}
 
 ### Press Releases {#the-united-states-trade-representative-press-releases}
@@ -216,6 +222,18 @@
   |   通知公告   | 项目介绍 |
   | :----------: | :------: |
   | announcement |  project |
+</Route>
+
+## 北京市教育科学规划网 {#bei-jing-shi-jiao-yu-ke-xue-gui-hua-wang}
+
+### 通用 {#bei-jing-shi-jiao-yu-ke-xue-gui-hua-wang-tong-yong}
+
+<Route author="TonyRL" example="/gov/beijing/bjedu/gh" path="/gov/beijing/bjedu/gh/:urlPath?" paramsDesc={['路径，默认为 `zxtzgg`']} radar="1">
+  :::tip
+  路径处填写对应页面 URL 中 `https://gh.bjedu.cn/ghsite/` 和 `/index.html` 之间的字段。下面是一个例子。
+
+  若订阅 [通知公告](https://gh.bjedu.cn/ghsite/zxtzgg/index.html) 则将对应页面 URL `https://gh.bjedu.cn/ghsite/zxtzgg/index.html` 中 `https://gh.bjedu.cn/ghsite/` 和 `/index.html` 之间的字段 `zxtzgg` 作为路径填入。此时路由为 [`/gov/beijing/bjedu/gh/zxtzgg`](https://rsshub.app/gov/beijing/bjedu/gh/zxtzgg)
+  :::
 </Route>
 
 ## 北京市教育委员会 {#bei-jing-shi-jiao-yu-wei-yuan-hui}
@@ -1532,7 +1550,7 @@
 
 ### 政府新闻 {#zhong-guo-zheng-fu-wang-zheng-fu-xin-wen}
 
-<Route author="EsuRt" example="/gov/news/:uid" path="/gov/news" paramsDesc={['分类名']} notOperational="1">
+<Route author="EsuRt" example="/gov/news/bm" path="/gov/news/:uid" paramsDesc={['分类名']}>
   | 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 | 政策文件 |
   | :------: | :------: | :------: | :--------: | :------: |
   |    bm    |    gd    |    yw    |     gwy    |  zhengce |

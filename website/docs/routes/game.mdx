@@ -658,7 +658,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 米游社 - 同人榜 {#mi-ha-you-mi-you-she-tong-ren-bang}
 
-<Route author="CaoMeiYouRen" example="/mihoyo/bbs/img-ranking/ys/forumType=tongren&cateType=illustration&rankingType=daily" path="/bbs/img-ranking/:game/:routeParams?" paramsDesc={['游戏缩写','额外参数；请参阅以下说明和表格']} radar="1">
+<Route author="CaoMeiYouRen" example="/mihoyo/bbs/img-ranking/ys/forumType=tongren&cateType=illustration&rankingType=daily" path="/mihoyo/bbs/img-ranking/:game/:routeParams?" paramsDesc={['游戏缩写','额外参数；请参阅以下说明和表格']} radar="1">
   | 键          | 含义                                  | 接受的值                                                             | 默认值       |
   | ----------- | ------------------------------------- | -------------------------------------------------------------------- | ------------ |
   | forumType   | 主榜类型（仅原神、大别野有 cos 主榜） | tongren/cos                                                          | tongren      |
@@ -701,7 +701,7 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 
 ### 米游社 - 官方公告 {#mi-ha-you-mi-you-she-guan-fang-gong-gao}
 
-<Route author="CaoMeiYouRen" example="/mihoyo/bbs/official/2/3/20/" path="/bbs/official/:gids/:type?/:page_size?/:last_id?" paramsDesc={['游戏id','公告类型，默认为 2(即 活动)','分页大小，默认为 20 ','跳过的公告数，例如指定为 40 就是从第 40 条公告开始，可用于分页']} radar="1">
+<Route author="CaoMeiYouRen" example="/mihoyo/bbs/official/2/3/20/" path="/mihoyo/bbs/official/:gids/:type?/:page_size?/:last_id?" paramsDesc={['游戏id','公告类型，默认为 2(即 活动)','分页大小，默认为 20 ','跳过的公告数，例如指定为 40 就是从第 40 条公告开始，可用于分页']} radar="1">
   游戏 id
 
   | 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 | 绝区零 |
@@ -714,6 +714,14 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
   | ---- | ---- | ---- |
   | 1    | 2    | 3    |
 </Route>
+
+### 米游社 - 用户关注 {#mi-ha-you-mi-you-she-yong-hu-guan-zhu}
+
+<Route author="CaoMeiYouRen" example="/mihoyo/bbs/follow-list/77005350" path="/mihoyo/bbs/follow-list/:uid" paramsDesc={['用户uid']} radar="1" />
+
+### 米游社 - 用户帖子 {#mi-ha-you-mi-you-she-yong-hu-tie-zi}
+
+<Route author="CaoMeiYouRen" example="/mihoyo/bbs/user-post/77005350" path="/mihoyo/bbs/user-post/:uid" paramsDesc={['用户uid']} radar="1" />
 
 ### 原神 {#mi-ha-you-yuan-shen}
 
