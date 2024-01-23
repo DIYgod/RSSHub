@@ -156,7 +156,7 @@
     "@microsoft/eslint-formatter-sarif": "3.0.0",
     "@stylistic/eslint-plugin-js": "1.5.4",
     "@types/aes-js": "3.1.4",
-    "@types/crypto-js": "4.2.1",
+    "@types/crypto-js": "4.2.2",
     "@types/eslint": "8.56.2",
     "@types/eslint-config-prettier": "6.11.3",
     "@types/etag": "1.8.3",
