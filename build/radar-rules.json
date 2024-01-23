@@ -20947,6 +20947,18 @@
       }
     ]
   },
+  "mrm.com.cn": {
+    "_name": "华储网",
+    ".": [
+      {
+        "title": "通知",
+        "docs": "https://docs.rsshub.app/finance#hua-chu-wang",
+        "source": [
+          "/:category"
+        ]
+      }
+    ]
+  },
   "mwm.net.cn": {
     "_name": "管理世界",
     ".": [
