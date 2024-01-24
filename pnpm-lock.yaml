@@ -48,8 +48,8 @@ dependencies:
     specifier: 1.11.8
     version: 1.11.8
   dotenv:
-    specifier: 16.3.2
-    version: 16.3.2
+    specifier: 16.4.0
+    version: 16.4.0
   entities:
     specifier: 4.5.0
     version: 4.5.0
@@ -3275,8 +3275,8 @@ packages:
       domhandler: 5.0.3
     dev: false
 
-  /dotenv@16.3.2:
-    resolution: {integrity: sha512-HTlk5nmhkm8F6JcdXvHIzaorzCoziNQT9mGxLPVXW8wJF1TiGSL60ZGB4gHWabHOaMmWmhvk2/lPHfnBiT78AQ==}
+  /dotenv@16.4.0:
+    resolution: {integrity: sha512-WvImr5kpN5NGNn7KaDjJnLTh5rDVLZiDf/YLA8T1ZEZEBZNEDOE+mnkS0PVjPax8ZxBP5zC5SLMB3/9VV5de9g==}
     engines: {node: '>=12'}
     dev: false
 
