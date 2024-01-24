@@ -406,6 +406,17 @@ describe('opencc', () => {
     });
 });
 
+describe('brief', () => {
+    it(`brief`, async () => {
+        const response = await request.get('/test/brief?brief=100');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items[0].title).toBe('小可愛');
+        expect(parsed.items[0].content).toBe(
+            '<p>宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵…</p>'
+        );
+    });
+});
+
 describe('multi parameter', () => {
     it(`filter before limit`, async () => {
         const response = await request.get('/test/filter-limit?filterout_title=2&limit=2');
