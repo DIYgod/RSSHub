@@ -53,6 +53,9 @@ dependencies:
   dayjs:
     specifier: 1.11.8
     version: 1.11.8
+  directory-import:
+    specifier: 3.2.1
+    version: 3.2.1
   dotenv:
     specifier: 16.3.2
     version: 16.3.2
@@ -3420,6 +3423,11 @@ packages:
     resolution: {integrity: sha512-D+mk+qE8VC/PAUrlAU34N+VfXev0ghe5ywmpqrawphmVZc1bEfn56uo9qpyGp1p4xpzOHkSW4ztBd6L7Xx4ACw==}
     engines: {node: '>=0.3.1'}
     dev: true
+
+  /directory-import@3.2.1:
+    resolution: {integrity: sha512-hIMc9WJHs4HRZbBiNAvKGxkhjaJ2wOaFcFA0K+yj16GyBJDg28e6QgQ3hFuFB0ZRETNYZu3u85rmxIxoxWEwbA==}
+    engines: {node: '>=18.17.0'}
+    dev: false
 
   /doctrine@3.0.0:
     resolution: {integrity: sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==}

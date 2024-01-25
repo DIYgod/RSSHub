@@ -1,4 +1,4 @@
-import { directoryImport } from '@/utils/directory-import';
+import { directoryImport } from 'directory-import';
 import type { Handler } from 'hono'
 
 type Root = {
@@ -6,7 +6,6 @@ type Root = {
 }
 
 const imports = directoryImport({
-  callerDirectoryPath: __dirname,
   targetDirectoryPath: './v3',
   importPattern: /router\.js$/,
 });
