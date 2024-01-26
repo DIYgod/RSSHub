@@ -332,8 +332,8 @@ devDependencies:
     specifier: 11.2.0
     version: 11.2.0
   husky:
-    specifier: 9.0.5
-    version: 9.0.5
+    specifier: 9.0.6
+    version: 9.0.6
   jest:
     specifier: 29.7.0
     version: 29.7.0
@@ -4608,8 +4608,8 @@ packages:
     engines: {node: '>=16.17.0'}
     dev: true
 
-  /husky@9.0.5:
-    resolution: {integrity: sha512-/EX48XLor4FczjgdJjwK4qMETrJxJqF4rkgo+NUeK8b2F4TV6s5QxAuG2JZfxm4b9WnrgBGS7bA/JK+H5CKg+A==}
+  /husky@9.0.6:
+    resolution: {integrity: sha512-EEuw/rfTiMjOfuL7pGO/i9otg1u36TXxqjIA6D9qxVjd/UXoDOsLor/BSFf5hTK50shwzCU3aVVwdXDp/lp7RA==}
     engines: {node: '>=18'}
     hasBin: true
     dev: true
