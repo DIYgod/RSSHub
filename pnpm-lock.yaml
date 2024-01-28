@@ -15,8 +15,8 @@ dependencies:
     specifier: 2.2.3
     version: 2.2.3
   '@sentry/node':
-    specifier: 7.95.0
-    version: 7.95.0
+    specifier: 7.98.0
+    version: 7.98.0
   '@tonyrl/rand-user-agent':
     specifier: 2.0.47
     version: 2.0.47
@@ -120,8 +120,8 @@ dependencies:
     specifier: 5.0.0
     version: 5.0.0
   lru-cache:
-    specifier: 10.1.0
-    version: 10.1.0
+    specifier: 10.2.0
+    version: 10.2.0
   lz-string:
     specifier: 1.5.0
     version: 1.5.0
@@ -332,8 +332,8 @@ devDependencies:
     specifier: 11.2.0
     version: 11.2.0
   husky:
-    specifier: 8.0.3
-    version: 8.0.3
+    specifier: 9.0.6
+    version: 9.0.6
   jest:
     specifier: 29.7.0
     version: 29.7.0
@@ -1295,43 +1295,43 @@ packages:
       selderee: 0.11.0
     dev: false
 
-  /@sentry-internal/tracing@7.95.0:
-    resolution: {integrity: sha512-YKiLPMnEgTsTh7u/W1Zep9HtV1rJqAetqJ4ekaIxyUUB6ppi6V00MacSjb01o++fwlNNDYFxNpJlgQqNPqsCNA==}
+  /@sentry-internal/tracing@7.98.0:
+    resolution: {integrity: sha512-FnhD2uMLIAJvv4XsYPv3qsTTtxrImyLxiZacudJyaWFhxoeVQ8bKKbWJ/Ar68FAwqTtjXMeY5evnEBbRMcQlaA==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.95.0
-      '@sentry/types': 7.95.0
-      '@sentry/utils': 7.95.0
+      '@sentry/core': 7.98.0
+      '@sentry/types': 7.98.0
+      '@sentry/utils': 7.98.0
     dev: false
 
-  /@sentry/core@7.95.0:
-    resolution: {integrity: sha512-z+ffO6jK/ZUxnRbBGmnj5sOouKZ4mvRY0KJa33kbyqcmeiJKrN81M7Ecj1IJUCamo/6RqX0GCwDDxgUPZZZBwA==}
+  /@sentry/core@7.98.0:
+    resolution: {integrity: sha512-baRUcpCNGyk7cApQHMfqEZJkXdvAKK+z/dVWiMqWc5T5uhzMnPE8/gjP1JZsMtJSQ8g5nHimBdI5TwOyZtxPaA==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.95.0
-      '@sentry/utils': 7.95.0
+      '@sentry/types': 7.98.0
+      '@sentry/utils': 7.98.0
     dev: false
 
-  /@sentry/node@7.95.0:
-    resolution: {integrity: sha512-3fbN+4ajPly9rhbuJtuZ+o2FGmka8Y7A3T/ooHuhCGoWegKtn3OzaOIrdwcYoBIy1fO6SuldTi/P72Y7wgIPtw==}
+  /@sentry/node@7.98.0:
+    resolution: {integrity: sha512-9cHW217DnU9wC4iR+QxmY3q59N1Touh23hPMDtpMRmbRHSgrmLMoHTVPhK9zHsXRs0mUeidmMqY1ubAWauQByw==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry-internal/tracing': 7.95.0
-      '@sentry/core': 7.95.0
-      '@sentry/types': 7.95.0
-      '@sentry/utils': 7.95.0
+      '@sentry-internal/tracing': 7.98.0
+      '@sentry/core': 7.98.0
+      '@sentry/types': 7.98.0
+      '@sentry/utils': 7.98.0
     dev: false
 
-  /@sentry/types@7.95.0:
-    resolution: {integrity: sha512-ouU7NsEcrwmcnXHMNBGmKZEmKMzmgPGoBydZn1gukCI67Ci71fAYpPNrbtmjai6+jtsY21o45rVLqExru2sdfw==}
+  /@sentry/types@7.98.0:
+    resolution: {integrity: sha512-pc034ziM0VTETue4bfBcBqTWGy4w0okidtoZJjGVrYAfE95ObZnUGVj/XYIQ3FeCYWIa7NFN2MvdsCS0buwivQ==}
     engines: {node: '>=8'}
     dev: false
 
-  /@sentry/utils@7.95.0:
-    resolution: {integrity: sha512-0zget8AOaQWLIEA9cTx/qiQQYpx2x0UfnaW5xRmQg12QGTSngo/cUm9O04zuHw5gpBBGG0ocMDHxwwr+UCCBiw==}
+  /@sentry/utils@7.98.0:
+    resolution: {integrity: sha512-0/LY+kpHxItVRY0xPDXPXVsKRb95cXsGSQf8sVMtfSjz++0bLL1U4k7PFz1c5s2/Vk0B8hS6duRrgMv6dMIZDw==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.95.0
+      '@sentry/types': 7.98.0
     dev: false
 
   /@sinclair/typebox@0.27.8:
@@ -4608,9 +4608,9 @@ packages:
     engines: {node: '>=16.17.0'}
     dev: true
 
-  /husky@8.0.3:
-    resolution: {integrity: sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==}
-    engines: {node: '>=14'}
+  /husky@9.0.6:
+    resolution: {integrity: sha512-EEuw/rfTiMjOfuL7pGO/i9otg1u36TXxqjIA6D9qxVjd/UXoDOsLor/BSFf5hTK50shwzCU3aVVwdXDp/lp7RA==}
+    engines: {node: '>=18'}
     hasBin: true
     dev: true
 
@@ -6010,8 +6010,8 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /lru-cache@10.1.0:
-    resolution: {integrity: sha512-/1clY/ui8CzjKFyjdvwPWJUYKiFVXG2I2cY0ssG7h4+hwk+XOIX7ZSG9Q7TW8TW3Kp3BUSqgFWBLgL4PJ+Blag==}
+  /lru-cache@10.2.0:
+    resolution: {integrity: sha512-2bIM8x+VAf6JT4bKAljS1qUWgMsqZRPGJS6FSahIMPVvctcNhyVp7AJu7quxOW9jwkryBReKZY5tY5JYv2n/7Q==}
     engines: {node: 14 || >=16.14}
     dev: false
 
