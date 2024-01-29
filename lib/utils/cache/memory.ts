@@ -4,14 +4,16 @@ import type CacheModule from './base';
 
 const status = { available: false };
 
-const memoryCache = new LRUCache({
-    ttl: config.cache.routeExpire * 1000,
-    max: config.memory.max,
-});
-
-status.available = true;
+let memoryCache: LRUCache<{}, {}>;
 
 export default {
+    init: () => {
+        memoryCache = new LRUCache({
+            ttl: config.cache.routeExpire * 1000,
+            max: config.memory.max,
+        });
+        status.available = true;
+    },
     get: (key: string, refresh = true) => {
         if (key && status.available) {
             let value = memoryCache.get(key, { updateAgeOnGet: refresh }) as string | undefined;

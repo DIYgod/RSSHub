@@ -3,21 +3,9 @@ import Redis from 'ioredis';
 import logger from '@/utils/logger';
 import type CacheModule from './base';
 
-const redisClient = new Redis(config.redis.url);
+let redisClient: Redis;
 
 const status = { available: false };
-
-redisClient.on('error', (error) => {
-    status.available = false;
-    logger.error('Redis error: ', error);
-});
-redisClient.on('end', () => {
-    status.available = false;
-});
-redisClient.on('connect', () => {
-    status.available = true;
-    logger.info('Redis connected.');
-});
 
 const getCacheTtlKey = (key: string) => {
     if (key.startsWith('rsshub:cacheTtl:')) {
@@ -27,6 +15,23 @@ const getCacheTtlKey = (key: string) => {
 };
 
 export default {
+    init: () => {
+        redisClient = new Redis(config.redis.url);
+
+        const status = { available: false };
+
+        redisClient.on('error', (error) => {
+            status.available = false;
+            logger.error('Redis error: ', error);
+        });
+        redisClient.on('end', () => {
+            status.available = false;
+        });
+        redisClient.on('connect', () => {
+            status.available = true;
+            logger.info('Redis connected.');
+        });
+    },
     get: async (key: string, refresh = true) => {
         if (key && status.available) {
             const cacheTtlKey = getCacheTtlKey(key);

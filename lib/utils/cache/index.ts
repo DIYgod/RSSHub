@@ -15,6 +15,7 @@ let cacheModule: CacheModule
 
 if (config.cache.type === 'redis') {
     cacheModule = redis;
+    cacheModule.init();
     const { redisClient } = cacheModule.clients;
     globalCache.get = async (key) => {
         if (key && cacheModule.status.available && redisClient) {
@@ -25,6 +26,7 @@ if (config.cache.type === 'redis') {
     globalCache.set = cacheModule.set;
 } else {
     cacheModule = memory;
+    cacheModule.init();
     const { memoryCache } = cacheModule.clients;
     globalCache.get = (key) => {
         if (key && cacheModule.status.available && memoryCache) {
