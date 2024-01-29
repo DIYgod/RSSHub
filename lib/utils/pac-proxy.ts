@@ -69,4 +69,4 @@ const pacProxy = (pacUri: Config['pacUri'], pacScript: Config['pacScript'], prox
     };
 };
 
-export default pacProxy
+export default pacProxy;

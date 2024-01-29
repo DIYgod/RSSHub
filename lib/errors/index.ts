@@ -1,5 +1,5 @@
 import { type ErrorHandler } from 'hono';
-import _RequestInProgressError from './RequestInProgress';
+import _RequestInProgressError from './request-in-progress';
 import { getDebugInfo, setDebugInfo } from '@/utils/debug-info';
 import { config } from '@/config';
 import Sentry from '@sentry/node';
@@ -15,7 +15,7 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
     if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError')) {
         message = `${error.message}: target website might be blocking our access, you can <a href="https://docs.rsshub.app/install/">host your own RSSHub instance</a> for a better usability.`;
     } else if (error instanceof Error) {
-        message = process.env.NODE_ENV === 'production' ? error.message : (error.stack || error.message);
+        message = process.env.NODE_ENV === 'production' ? error.message : error.stack || error.message;
     }
 
     const debug = getDebugInfo();
@@ -54,12 +54,14 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
 
         const requestPath = ctx.req.path;
 
-        return ctx.body(art(path.resolve(__dirname, '../views/error.art'), {
-            requestPath,
-            message,
-            errorPath: ctx.req.path,
-            nodeVersion: process.version,
-            gitHash,
-        }));
+        return ctx.body(
+            art(path.resolve(__dirname, '../views/error.art'), {
+                requestPath,
+                message,
+                errorPath: ctx.req.path,
+                nodeVersion: process.version,
+                gitHash,
+            })
+        );
     }
-}
+};

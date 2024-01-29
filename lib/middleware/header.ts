@@ -1,9 +1,9 @@
-import { getIp } from "@/utils/helpers";
-import { MiddlewareHandler } from "hono";
-import etagCalculate from "etag";
-import logger from "@/utils/logger";
-import { config } from "@/config";
-import { Data } from "@/types";
+import { getIp } from '@/utils/helpers';
+import { MiddlewareHandler } from 'hono';
+import etagCalculate from 'etag';
+import logger from '@/utils/logger';
+import { config } from '@/config';
+import { Data } from '@/types';
 
 const headers: Record<string, string> = {
     'Access-Control-Allow-Methods': 'GET',
@@ -16,7 +16,7 @@ if (config.nodeName) {
 }
 
 function etagMatches(etag: string, ifNoneMatch: string | null) {
-    return ifNoneMatch != null && ifNoneMatch.split(/,\s*/).indexOf(etag) > -1
+    return ifNoneMatch !== null && ifNoneMatch.split(/,\s*/).includes(etag);
 }
 
 const middleware: MiddlewareHandler = async (ctx, next) => {
@@ -24,7 +24,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     logger.info(`${ctx.req.url}, user IP: ${ip}`);
 
     for (const key in headers) {
-        ctx.header(key, headers[key])
+        ctx.header(key, headers[key]);
     }
     ctx.header('Access-Control-Allow-Origin', config.allowOrigin || new URL(ctx.req.url).host);
 
@@ -43,7 +43,6 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     const ifNoneMatch = ctx.req.header('If-None-Match') ?? null;
     if (etagMatches(etag, ifNoneMatch)) {
-        console.log('in')
         ctx.status(304);
         return ctx.body(null);
     } else {

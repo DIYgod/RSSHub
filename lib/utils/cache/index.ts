@@ -11,7 +11,7 @@ const globalCache: {
     set: () => null,
 };
 
-let cacheModule: CacheModule
+let cacheModule: CacheModule;
 
 if (config.cache.type === 'redis') {
     cacheModule = redis;

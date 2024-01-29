@@ -4,8 +4,8 @@ import { simplecc } from 'simplecc-wasm';
 import got from '@/utils/got';
 import { config } from '@/config';
 import { RE2JS } from 're2js';
-import markdownit from 'markdown-it'
-import htmlToText from 'html-to-text'
+import markdownit from 'markdown-it';
+import htmlToText from 'html-to-text';
 import sanitizeHtml from 'sanitize-html';
 import { MiddlewareHandler } from 'hono';
 import cache from '@/utils/cache';
@@ -14,7 +14,7 @@ import { Data, DataItem } from '@/types';
 
 const md = markdownit({
     html: true,
-})
+});
 
 const resolveRelativeLink = ($: CheerioAPI, elem: Element, attr: string, baseUrl?: string) => {
     const $elem = $(elem);
@@ -56,9 +56,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     await next();
 
     const data = ctx.get('data') as Data;
-    if (!data) {
-        // throw new Error('wrong path');
-    } else {
+    if (data) {
         if ((!data.item || data.item.length === 0) && !data.allowEmpty) {
             throw new Error('this route is empty, please check the original site or <a href="https://github.com/DIYgod/RSSHub/issues/new/choose">create an issue</a>');
         }
@@ -283,6 +281,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     const encodedlink = encodeURIComponent(item.link);
                     item.link = `https://t.me/iv?url=${encodedlink}&rhash=${ctx.req.query('tgiv')}`;
                     return item;
+                } else {
+                    return item;
                 }
             });
         }
@@ -374,7 +374,9 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         }
         // some parameters are processed in `anti-hotlink.js`
 
-        ctx.set('data', data)
+        ctx.set('data', data);
+    } else {
+        // throw new Error('wrong path');
     }
 };
 

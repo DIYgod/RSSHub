@@ -1,6 +1,6 @@
-import logger from "@/utils/logger";
-import { config } from "@/config";
-import got, { type Response, type NormalizedOptions, type Options } from "got";
+import logger from '@/utils/logger';
+import { config } from '@/config';
+import got, { type Response, type NormalizedOptions, type Options } from 'got';
 
 const custom: typeof got & {
     all?: <T>(list: Array<Promise<T>>) => Promise<Array<T>>;
@@ -11,9 +11,13 @@ const custom: typeof got & {
     },
     hooks: {
         beforeRetry: [
-            (options: NormalizedOptions & {
-                retryCount?: number;
-            }, err, count) => {
+            (
+                options: NormalizedOptions & {
+                    retryCount?: number;
+                },
+                err,
+                count
+            ) => {
                 logger.error(`Request ${options.url} fail, retry attempt #${count}: ${err}`);
                 options.retryCount = count;
             },
@@ -24,10 +28,12 @@ const custom: typeof got & {
             },
         ],
         afterResponse: [
-            (response: Response & {
-                data?: Record<string, any> | string;
-                status?: number;
-            }) => {
+            (
+                response: Response & {
+                    data?: Record<string, any> | string;
+                    status?: number;
+                }
+            ) => {
                 try {
                     response.data = JSON.parse(response.body as string);
                 } catch {
@@ -38,9 +44,11 @@ const custom: typeof got & {
             },
         ],
         init: [
-            (options: Options & {
-                data?: string;
-            }) => {
+            (
+                options: Options & {
+                    data?: string;
+                }
+            ) => {
                 // compatible with axios api
                 if (options && options.data) {
                     options.body = options.body || options.data;

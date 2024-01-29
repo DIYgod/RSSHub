@@ -1,5 +1,5 @@
-import { MiddlewareHandler } from "hono";
-import { getDebugInfo, setDebugInfo } from "@/utils/debug-info";
+import { MiddlewareHandler } from 'hono';
+import { getDebugInfo, setDebugInfo } from '@/utils/debug-info';
 
 const middleware: MiddlewareHandler = async (ctx, next) => {
     {

@@ -1,8 +1,8 @@
-import { MiddlewareHandler } from "hono";
-import logger from "@/utils/logger";
-import { config } from "@/config";
+import { MiddlewareHandler } from 'hono';
+import logger from '@/utils/logger';
+import { config } from '@/config';
 import Sentry from '@sentry/node';
-import { getRouteNameFromPath } from "@/utils/helpers";
+import { getRouteNameFromPath } from '@/utils/helpers';
 
 if (config.sentry.dsn) {
     Sentry.init({

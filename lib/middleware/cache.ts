@@ -3,7 +3,7 @@ import type { MiddlewareHandler } from 'hono';
 
 import { config } from '@/config';
 import { RequestInProgressError } from '@/errors';
-import cacheModule from '@/utils/cache/index'
+import cacheModule from '@/utils/cache/index';
 import { Data } from '@/types';
 
 // only give cache string, as the `!` condition tricky
@@ -25,13 +25,14 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         throw new RequestInProgressError('This path is currently fetching, please come back later!');
     }
 
+    // eslint-disable-next-line no-useless-catch
     try {
         const value = await cacheModule.globalCache.get(key);
 
         if (value) {
-            ctx.status(200)
-            ctx.header('RSSHub-Cache-Status', 'HIT')
-            ctx.set('data', JSON.parse(value))
+            ctx.status(200);
+            ctx.header('RSSHub-Cache-Status', 'HIT');
+            ctx.set('data', JSON.parse(value));
             await next();
             return;
         }
@@ -52,7 +53,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     const data: Data = ctx.get('data');
     if (ctx.res.headers.get('Cache-Control') !== 'no-cache' && data) {
         data.lastBuildDate = new Date().toUTCString();
-        ctx.set('data', data)
+        ctx.set('data', data);
         const body = JSON.stringify(data);
         await cacheModule.globalCache.set(key, body, config.cache.routeExpire);
     }

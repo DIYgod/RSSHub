@@ -12,12 +12,12 @@ let proxyUri: string | undefined;
 let proxyObj: Record<string, any> | undefined;
 let proxyUrlHandler: URL | null = null;
 if (proxyIsPAC) {
-    const proxy = pacProxy(config.pacUri, config.pacScript, config.proxy)
+    const proxy = pacProxy(config.pacUri, config.pacScript, config.proxy);
     proxyUri = proxy.proxyUri;
     proxyObj = proxy.proxyObj;
     proxyUrlHandler = proxy.proxyUrlHandler;
 } else {
-    const proxy = unifyProxy(config.proxyUri, config.proxy)
+    const proxy = unifyProxy(config.proxyUri, config.proxy);
     proxyUri = proxy.proxyUri;
     proxyObj = proxy.proxyObj;
     proxyUrlHandler = proxy.proxyUrlHandler;
@@ -37,9 +37,12 @@ if (proxyIsPAC) {
     }
 }
 
-let proxyWrapper: (url: string, options: RequestOptions & {
-    headers: Record<string, string>;
-}) => boolean = () => false;
+let proxyWrapper: (
+    url: string,
+    options: RequestOptions & {
+        headers: Record<string, string>;
+    }
+) => boolean = () => false;
 
 if (agent) {
     const proxyRegex = new RegExp(proxyObj.url_regex);
@@ -63,10 +66,7 @@ if (agent) {
     };
 }
 
-const requestWrapper = (
-    url: string,
-    options: http.RequestOptions = {},
-) => {
+const requestWrapper = (url: string, options: http.RequestOptions = {}) => {
     options.headers = options.headers || {};
 
     const optionsWithHeaders = options as http.RequestOptions & {
@@ -121,11 +121,11 @@ const httpWrap = (func: typeof http.request) => {
             options = args[1] as http.RequestOptions;
         } else {
             options = args[0] as http.RequestOptions;
-            url = `${options.protocol}//${options.hostname || options.host}${options.path}`
+            url = `${options.protocol}//${options.hostname || options.host}${options.path}`;
         }
         requestWrapper(url, options);
 
-        // @ts-ignore
+        // @ts-expect-error apply
         return origin.apply(this, args);
     };
     return warpped;

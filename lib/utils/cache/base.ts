@@ -9,9 +9,9 @@ type CacheModule = {
         available: boolean;
     };
     clients: {
-      redisClient?: Redis;
-      memoryCache?: LRUCache<{}, {}>;
-    }
+        redisClient?: Redis;
+        memoryCache?: LRUCache<any, any>;
+    };
 };
 
 export default CacheModule;

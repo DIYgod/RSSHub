@@ -110,4 +110,4 @@ const unifyProxy = (proxyUri: Config['proxyUri'], proxyObj: Config['proxy']) => 
     return { proxyUri, proxyObj, proxyUrlHandler };
 };
 
-export default unifyProxy
+export default unifyProxy;

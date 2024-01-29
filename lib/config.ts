@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import 'dotenv/config';
 import randUserAgent from '@/utils/rand-user-agent';
 import got from 'got';
 
@@ -288,25 +288,19 @@ export type Config = {
     };
 };
 
-let _value: Config | undefined = undefined;
+let _value: Config | undefined;
 
 const TRUE_UA = 'RSSHub/1.0 (+http://github.com/DIYgod/RSSHub; like FeedFetcher-Google)';
 
 const toBoolean = (value: string | undefined, defaultValue: boolean) => {
-    if (value !== undefined) {
-        return (value === '' || value === '0' || value === 'false') ? false : !!value;
-    } else {
+    if (value === undefined) {
         return defaultValue;
+    } else {
+        return value === '' || value === '0' || value === 'false' ? false : !!value;
     }
-}
+};
 
-const toInt = (value: string | undefined, defaultValue: number) => {
-    if (value !== undefined) {
-        return Number.parseInt(value);
-    } else {
-        return defaultValue;
-    }
-}
+const toInt = (value: string | undefined, defaultValue: number) => (value === undefined ? defaultValue : Number.parseInt(value));
 
 const calculateValue = () => {
     const bilibili_cookies: Record<string, string | undefined> = {};
@@ -656,4 +650,4 @@ export const config: Config = _value!;
 export const setConfig = (env: Partial<Config>) => {
     envs = Object.assign(process.env, env);
     calculateValue();
-}
+};

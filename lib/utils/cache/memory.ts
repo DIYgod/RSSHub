@@ -4,7 +4,7 @@ import type CacheModule from './base';
 
 const status = { available: false };
 
-let memoryCache: LRUCache<{}, {}>;
+let memoryCache: LRUCache<any, any>;
 
 export default {
     init: () => {
