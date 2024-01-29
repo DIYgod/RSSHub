@@ -488,10 +488,11 @@ For user data related routes
 
 ### Twitter
 
-Please use an account without two-step verification enabled, and it is recommended to use a non-important account.
+It is recommended to use a non-important account.
 
 -   `TWITTER_USERNAME`: Twitter username
 -   `TWITTER_PASSWORD`: Twitter password
+-   `TWITTER_AUTHENTICATION_SECRET`: Twitter Two-factor authentication -> Authentication app -> Secret part in `otpauth://totp/Twitter:@_RSSHub?secret=xxxxxxxxxxxxxxxx&issuer=Twitter`
 
 ### Wordpress
 
