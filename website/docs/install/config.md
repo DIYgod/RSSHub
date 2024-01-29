@@ -488,14 +488,10 @@ For user data related routes
 
 ### Twitter
 
-Given the recent changes in Twitter and its API access a new method for accessing Twitter anonymously was devised. This method involves using temporary guest accounts created when going through the onboarding process with the Android app.
+Please use an account without two-step verification enabled, and it is recommended to use a non-important account.
 
-Please see the details in [Nitter - Guest Account Branch Deployment](https://github.com/zedeus/nitter/wiki/Guest-Account-Branch-Deployment) and [zedeus/nitter#983](https://github.com/zedeus/nitter/issues/983).
-
-In addition, we have prepared a Node.js script to help you use proxies to create these tokens in batches. [Please click here](https://github.com/DIYgod/RSSHub/tree/master/scripts/twitter-token/generate.js).
-
--   `TWITTER_OAUTH_TOKEN`: Support multiple keys, split them with `,`
--   `TWITTER_OAUTH_TOKEN_SECRET`: Support multiple keys, split them with `,`
+-   `TWITTER_USERNAME`: Twitter username
+-   `TWITTER_PASSWORD`: Twitter password
 
 ### Wordpress
 

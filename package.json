@@ -149,6 +149,7 @@
     "title": "3.5.3",
     "tough-cookie": "4.1.3",
     "twitter-api-v2": "1.16.0",
+    "uuid": "9.0.1",
     "winston": "3.11.0",
     "xxhash-wasm": "1.0.2"
   },
