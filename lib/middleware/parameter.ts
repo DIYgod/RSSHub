@@ -6,6 +6,7 @@ import { config } from '@/config';
 import { RE2JS } from 're2js';
 import markdownit from 'markdown-it'
 import htmlToText from 'html-to-text'
+import sanitizeHtml from 'sanitize-html';
 import { MiddlewareHandler } from 'hono';
 import cache from '@/utils/cache';
 import Parser from '@postlight/parser';
@@ -363,7 +364,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 for (const item of data.item) {
                     let text;
                     if (item.description) {
-                        text = item.description.replaceAll(/<\/?[^>]+(>|$)/g, '');
+                        text = sanitizeHtml(item.description, { allowedTags: [], allowedAttributes: {} });
                         item.description = text.length > brief ? `<p>${text.substring(0, brief)}…</p>` : `<p>${text}</p>`;
                     }
                 }

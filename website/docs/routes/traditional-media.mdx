@@ -500,11 +500,15 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
   See the [official RSS page](https://www.scmp.com/rss) to get the ID of each category. This route provides fulltext that the offical feed doesn't.
 </Route>
 
+### Topics {#south-china-morning-post-nan-hua-zao-bao-topics}
+
+<Route author="TonyRL" example="/scmp/topics/coronavirus-pandemic-all-stories" path="/scmp/topics/:topic" paramsDesc={['Topic, can be found in URL']} radar="1" />
+
 ## Sputnik News 俄罗斯卫星通讯社 {#sputnik-news-e-luo-si-wei-xing-tong-xun-she}
 
 ### Category {#sputnik-news-e-luo-si-wei-xing-tong-xun-she-category}
 
-<Route author="nczitzk" example="/sputniknews" path="/sputniknews/:category?/:language?" paramsDesc={['Categort, can be found in URL, `news` by default', 'Language, see below, English by default']}>
+<Route author="nczitzk" example="/sputniknews" path="/sputniknews/:category?/:language?" paramsDesc={['Category, can be found in URL, `news` by default', 'Language, see below, English by default']}>
   Categories for International site:
 
   | WORLD | COVID-19 | BUSINESS | SPORT | TECH | OPINION |
@@ -1483,6 +1487,14 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
   | 客家焦點 | 政經要聞  | 民生醫療 | 地方風采 | 國際萬象      |
   | -------- | --------- | -------- | -------- | ------------- |
   | hakka    | political | medical  | local    | international |
+</Route>
+
+## 理论网 {#li-lun-wang}
+
+### 学习时报 {#li-lun-wang-xue-xi-shi-bao}
+
+<Route author="nczitzk" example="/cntheory/paper" path="/cntheory/paper/:id?" paramsDesc={['板块，默认为全部']}>
+  如订阅 **第 A1 版：国内大局**，路由为 [`/cntheory/paper/国内大局`](https://rsshub.app/cntheory/paper/国内大局)。
 </Route>
 
 ## 联合早报 {#lian-he-zao-bao}
