@@ -488,11 +488,11 @@ For user data related routes
 
 ### Twitter
 
-It is recommended to use a non-important account.
+It is recommended to use a non-important account, new accounts or logins from different regions may be restricted.
 
 -   `TWITTER_USERNAME`: Twitter username
 -   `TWITTER_PASSWORD`: Twitter password
--   `TWITTER_AUTHENTICATION_SECRET`: Twitter Two-factor authentication -> Authentication app -> Secret part in `otpauth://totp/Twitter:@_RSSHub?secret=xxxxxxxxxxxxxxxx&issuer=Twitter`
+-   `TWITTER_AUTHENTICATION_SECRET`: Optional, Twitter Two-factor authentication -> Authentication app -> Secret part in `otpauth://totp/Twitter:@_RSSHub?secret=xxxxxxxxxxxxxxxx&issuer=Twitter`
 
 ### Wordpress
 
