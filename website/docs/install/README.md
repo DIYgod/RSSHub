@@ -22,6 +22,7 @@ Deploy for public access may require:
 5.  [Google App Engine](https://cloud.google.com/appengine/)
 6.  [Fly.io](https://fly.io/)
 7.  [Zeabur](https://zeabur.com)
+8.  [Sealos](https://sealos.io)
 
 ## Docker Image
 
@@ -451,6 +452,12 @@ Heroku [no longer](https://blog.heroku.com/next-chapter) offers free product pla
 2.  Deploy your fork to Heroku: `https://heroku.com/deploy?template=URL`, where `URL` is your fork address (_e.g._ `https://github.com/USERNAME/RSSHub`).
 3.  Configure `automatic deploy` in Heroku app to follow the changes to your fork.
 4.  Install [Pull](https://github.com/apps/pull) app to keep your fork synchronized with RSSHub.
+
+## Deploy to Sealos(use Redis as cache)
+
+Automatic updates are included.
+
+[![Deploy to Sealos](https://raw.githubusercontent.com/labring-actions/templates/main/Deploy-on-Sealos.svg)](https://template.cloud.sealos.io/deploy?templateName=rsshub)
 
 ## Deploy to Vercel (ZEIT Now)
 

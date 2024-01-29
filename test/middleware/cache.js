@@ -199,8 +199,8 @@ describe('cache', () => {
         try {
             const response = await request.get('/test/cacheUrlKey');
             expect(response).toThrow(Error);
-        } catch (e) {
-            expect(e.message).toContain('Cache key must be a string');
+        } catch (error) {
+            expect(error.message).toContain('Cache key must be a string');
         }
     });
 
@@ -210,8 +210,8 @@ describe('cache', () => {
 
         try {
             await app.context.cache.get('rsshub:cacheTtl:mock');
-        } catch (e) {
-            expect(e.message).toContain('reserved for the internal usage');
+        } catch (error) {
+            expect(error.message).toContain('reserved for the internal usage');
         } finally {
             await app.context.cache.clients.redisClient.quit();
         }

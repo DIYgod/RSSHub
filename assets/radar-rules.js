@@ -167,7 +167,7 @@
                 docs: 'https://docs.rsshub.app/routes/multimedia#onejav',
                 source: '/',
                 target: (params, url, document) => {
-                    const today = document.querySelector('div.card.mb-1.card-overview').getAttribute('data-date').replace(/-/g, '');
+                    const today = document.querySelector('div.card.mb-1.card-overview').dataset.date.replaceAll('-', '');
                     return `/onejav/day/${today}`;
                 },
             },
@@ -215,7 +215,7 @@
                     } else {
                         return false;
                     }
-                    return `/sexinsex/${pid}/${typeid ? typeid : ''}`;
+                    return `/sexinsex/${pid}/${typeid ?? ''}`;
                 },
             },
         ],
@@ -230,7 +230,7 @@
                 target: (params, url) => {
                     const id = new URL(url).searchParams.get('fid');
                     const type = new URL(url).searchParams.get('type');
-                    return `/t66y/${id}/${type ? type : ''}`;
+                    return `/t66y/${id}/${type ?? ''}`;
                 },
             },
         ],
