@@ -8021,7 +8021,7 @@ packages:
       '@puppeteer/browsers': 1.9.1
       chromium-bidi: 0.5.4(devtools-protocol@0.0.1232444)
       cross-fetch: 4.0.0
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       devtools-protocol: 0.0.1232444
       ws: 8.16.0
     transitivePeerDependencies:
@@ -8043,7 +8043,7 @@ packages:
       puppeteer-extra:
         optional: true
     dependencies:
-      debug: 4.3.4(supports-color@5.5.0)
+      debug: 4.3.4
       puppeteer-extra: 3.3.6(puppeteer@21.9.0)
       puppeteer-extra-plugin: 3.2.3(puppeteer-extra@3.3.6)
       puppeteer-extra-plugin-user-preferences: 2.4.1(puppeteer-extra@3.3.6)
