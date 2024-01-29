@@ -64,7 +64,7 @@
     },
     "testEnvironment": "node",
     "testMatch": [
-      "**/test/**/*.js"
+      "**/test/**/*.ts"
     ],
     "testPathIgnorePatterns": [
       "/node_modules/",
@@ -150,6 +150,9 @@
     "xxhash-wasm": "1.0.2"
   },
   "devDependencies": {
+    "@babel/preset-env": "7.23.9",
+    "@babel/preset-typescript": "7.23.3",
+    "@jest/globals": "29.7.0",
     "@microsoft/eslint-formatter-sarif": "3.0.0",
     "@stylistic/eslint-plugin-js": "1.5.4",
     "@types/aes-js": "3.1.4",
@@ -211,6 +214,7 @@
     "supertest": "6.3.4",
     "to-vfile": "8.0.0",
     "tosource": "2.0.0-alpha.3",
+    "ts-jest": "29.1.2",
     "tsx": "4.7.0",
     "unified": "9.2.2",
     "unist-util-visit": "4.1.2",
