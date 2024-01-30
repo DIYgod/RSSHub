@@ -1,8 +1,9 @@
 import { config } from '@/config';
 import puppeteer from 'puppeteer';
-import proxyChain from 'proxy-chain';
 import logger from './logger';
 import proxy from './proxy';
+
+const proxyChain = require('proxy-chain');
 
 import { type PuppeteerExtra, addExtra } from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
