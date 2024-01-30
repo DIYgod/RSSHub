@@ -5180,6 +5180,9 @@
         "Fatpandac"
     ],
     "/parcel/hermesuk/:tracking": [],
+    "/parliament/section77/:type?": [
+        "itpcc"
+    ],
     "/patagonia/patagonia/new-arrivals/:category": [
         "EthanWng97"
     ],
