@@ -2,40 +2,7 @@ import { config } from '@/config';
 import logger from '@/utils/logger';
 import http, { type RequestOptions } from 'node:http';
 import https from 'node:https';
-
-const proxyIsPAC = config.pacUri || config.pacScript;
-
-import pacProxy from './pac-proxy';
-import unifyProxy from './unify-proxy';
-
-let proxyUri: string | undefined;
-let proxyObj: Record<string, any> | undefined;
-let proxyUrlHandler: URL | null = null;
-if (proxyIsPAC) {
-    const proxy = pacProxy(config.pacUri, config.pacScript, config.proxy);
-    proxyUri = proxy.proxyUri;
-    proxyObj = proxy.proxyObj;
-    proxyUrlHandler = proxy.proxyUrlHandler;
-} else {
-    const proxy = unifyProxy(config.proxyUri, config.proxy);
-    proxyUri = proxy.proxyUri;
-    proxyObj = proxy.proxyObj;
-    proxyUrlHandler = proxy.proxyUrlHandler;
-}
-
-let agent = null;
-if (proxyIsPAC) {
-    const { PacProxyAgent } = require('pac-proxy-agent');
-    agent = new PacProxyAgent(`pac+${proxyUri}`);
-} else if (proxyUri) {
-    if (proxyUri.startsWith('http')) {
-        const { HttpsProxyAgent } = require('https-proxy-agent');
-        agent = new HttpsProxyAgent(proxyUri);
-    } else if (proxyUri.startsWith('socks')) {
-        const { SocksProxyAgent } = require('socks-proxy-agent');
-        agent = new SocksProxyAgent(proxyUri);
-    }
-}
+import proxy from '@/utils/proxy';
 
 let proxyWrapper: (
     url: string,
@@ -44,8 +11,8 @@ let proxyWrapper: (
     }
 ) => boolean = () => false;
 
-if (agent) {
-    const proxyRegex = new RegExp(proxyObj.url_regex);
+if (proxy.agent) {
+    const proxyRegex = new RegExp(proxy.proxyObj.url_regex);
     const protocolMatch = (protocolLike?: string | null) => protocolLike?.toLowerCase().startsWith('http');
 
     proxyWrapper = (url, options) => {
@@ -55,10 +22,10 @@ if (agent) {
         } catch {
             // ignore
         }
-        if (proxyRegex.test(url) && (protocolMatch(options.protocol) || protocolMatch(url)) && (!urlHandler || urlHandler.host !== proxyUrlHandler?.host)) {
-            options.agent = agent;
-            if (proxyObj.auth) {
-                options.headers['Proxy-Authorization'] = `Basic ${proxyObj.auth}`;
+        if (proxyRegex.test(url) && (protocolMatch(options.protocol) || protocolMatch(url)) && (!urlHandler || urlHandler.host !== proxy.proxyUrlHandler?.host)) {
+            options.agent = proxy.agent || false;
+            if (proxy.proxyObj.auth) {
+                options.headers['Proxy-Authorization'] = `Basic ${proxy.proxyObj.auth}`;
             }
             return true;
         }

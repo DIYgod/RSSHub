@@ -1,12 +1,15 @@
-const config = require('@/config').value;
-const { proxyUri, proxyUrlHandler } = require('./unify-proxy');
-let puppeteer = require('puppeteer');
-const proxyChain = require('proxy-chain');
-const logger = require('./logger');
+import { config } from '@/config';
+import puppeteer from 'puppeteer';
+import proxyChain from 'proxy-chain';
+import logger from './logger';
+import proxy from './proxy';
+
+import { type PuppeteerExtra, addExtra } from 'puppeteer-extra';
+import StealthPlugin from 'puppeteer-extra-plugin-stealth';
 
 const options = {
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-infobars', '--window-position=0,0', '--ignore-certificate-errors', '--ignore-certificate-errors-spki-list', `--user-agent=${config.ua}`],
-    headless: 'new',
+    headless: 'new' as const,
     ignoreHTTPSErrors: true,
 };
 
@@ -15,10 +18,14 @@ const options = {
  * @param {boolean} extraOptions.stealth - Use puppeteer-extra-plugin-stealth
  * @returns Puppeteer browser
  */
-module.exports = async (extraOptions = {}) => {
+const outPuppeteer = async (
+    extraOptions: {
+        stealth?: boolean;
+    } = {}
+) => {
+    let insidePuppeteer: PuppeteerExtra | typeof puppeteer = puppeteer;
     if (extraOptions.stealth) {
-        const { addExtra } = require('puppeteer-extra');
-        puppeteer = addExtra(puppeteer);
+        insidePuppeteer = addExtra(puppeteer);
 
         // workaround for vercel/nft #54, #283, #304
         require('puppeteer-extra-plugin-stealth/evasions/chrome.app');
@@ -41,27 +48,27 @@ module.exports = async (extraOptions = {}) => {
         require('puppeteer-extra-plugin-user-preferences');
         require('puppeteer-extra-plugin-user-data-dir');
 
-        puppeteer.use(require('puppeteer-extra-plugin-stealth')());
+        insidePuppeteer.use(StealthPlugin());
     }
 
-    if (proxyUri) {
-        if (proxyUrlHandler.username || proxyUrlHandler.password) {
+    if (proxy.proxyUri) {
+        if (proxy.proxyUrlHandler?.username || proxy.proxyUrlHandler?.password) {
             // only proxies with authentication need to be anonymized
-            if (proxyUrlHandler.protocol === 'http:') {
-                options.args.push(`--proxy-server=${await proxyChain.anonymizeProxy(proxyUri)}`);
+            if (proxy.proxyUrlHandler.protocol === 'http:') {
+                options.args.push(`--proxy-server=${await proxyChain.anonymizeProxy(proxy.proxyUri)}`);
             } else {
                 logger.warn('SOCKS/HTTPS proxy with authentication is not supported by puppeteer, continue without proxy');
             }
         } else {
             // Chromium cannot recognize socks5h and socks4a, so we need to trim their postfixes
-            options.args.push(`--proxy-server=${proxyUri.replace('socks5h://', 'socks5://').replace('socks4a://', 'socks4://')}`);
+            options.args.push(`--proxy-server=${proxy.proxyUri.replace('socks5h://', 'socks5://').replace('socks4a://', 'socks4://')}`);
         }
     }
     const browser = await (config.puppeteerWSEndpoint
-        ? puppeteer.connect({
+        ? insidePuppeteer.connect({
               browserWSEndpoint: config.puppeteerWSEndpoint,
           })
-        : puppeteer.launch(
+        : insidePuppeteer.launch(
               config.chromiumExecutablePath
                   ? {
                         executablePath: config.chromiumExecutablePath,
@@ -75,3 +82,5 @@ module.exports = async (extraOptions = {}) => {
 
     return browser;
 };
+
+export default outPuppeteer;
