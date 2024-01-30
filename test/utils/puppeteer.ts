@@ -74,6 +74,7 @@ describe('puppeteer', () => {
         browser = await puppeteer();
 
         // trailing slash will cause net::ERR_NO_SUPPORTED_PROXIES, prohibit it
+        console.log(browser.process()?.spawnargs);
         expect(browser.process()?.spawnargs.some((arg) => /^--proxy-server=http:\/\/.*[^/]$/.test(arg))).toBe(true);
     });
 
