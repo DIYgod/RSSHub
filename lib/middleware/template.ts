@@ -88,12 +88,12 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     if (outputType === 'ums') {
         ctx.header('Content-Type', 'application/json; charset=UTF-8');
-        return ctx.body(render.rss3Ums(data));
+        return ctx.body(render.rss3Ums(result));
     } else if (outputType === 'json') {
         ctx.header('Content-Type', 'application/feed+json; charset=UTF-8');
-        return ctx.body(render.json(data));
+        return ctx.body(render.json(result));
     } else {
-        return ctx.body(render.art(template, data));
+        return ctx.body(render.art(template, result));
     }
 };
 
