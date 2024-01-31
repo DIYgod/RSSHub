@@ -1027,6 +1027,9 @@
     "/caai/:caty": [
         "tudou027"
     ],
+    "/caam/:category?": [
+        "nczitzk"
+    ],
     "/caareviews/book": [
         "Fatpandac"
     ],
