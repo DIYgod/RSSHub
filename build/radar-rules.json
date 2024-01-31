@@ -20949,7 +20949,13 @@
           "/datapack/:id/*",
           "/shader/:id/*",
           "/resourcepack/:id/*",
-          "/modpack/:id/*"
+          "/modpack/:id/*",
+          "/mod/:id",
+          "/plugin/:id",
+          "/datapack/:id",
+          "/shader/:id",
+          "/resourcepack/:id",
+          "/modpack/:id"
         ],
         "target": "/modrinth/project/:id/versions"
       }
