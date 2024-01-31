@@ -254,6 +254,8 @@ export type Config = {
     twitter: {
         oauthTokens?: string[];
         oauthTokenSecrets?: string[];
+        username?: string;
+        password?: string;
     };
     weibo: {
         app_key?: string;
@@ -288,7 +290,7 @@ export type Config = {
     };
 };
 
-let _value: Config | undefined;
+const value: Config | Record<string, any> = {};
 
 const TRUE_UA = 'RSSHub/1.0 (+http://github.com/DIYgod/RSSHub; like FeedFetcher-Google)';
 
@@ -328,7 +330,7 @@ const calculateValue = () => {
         }
     }
 
-    _value = {
+    const _value = {
         // app config
         disallowRobot: envs.DISALLOW_ROBOT !== '0' && envs.DISALLOW_ROBOT !== 'false',
         enableCluster: envs.ENABLE_CLUSTER,
@@ -627,6 +629,10 @@ const calculateValue = () => {
             cookie: envs.ZODGAME_COOKIE,
         },
     };
+
+    for (const name in _value) {
+        value[name] = _value[name];
+    }
 };
 calculateValue();
 
@@ -645,7 +651,8 @@ if (envs.REMOTE_CONFIG) {
         });
 }
 
-export const config: Config = _value!;
+// @ts-expect-error value is set
+export const config: Config = value;
 
 export const setConfig = (env: Partial<Config>) => {
     envs = Object.assign(process.env, env);
