@@ -383,32 +383,6 @@ For RSS content, specify options in the `routeParams` parameter in query string 
 
 <Route author="LogicJake OrangeEd1t TonyRL" example="/natgeo/dailyphoto" path="/natgeo/dailyphoto" />
 
-## Nicesss 呦糖社 {#nicesss-you-tang-she}
-
-### 首页 Homepage {#nicesss-you-tang-she-shou-ye-homepage}
-
-<Route author="Steven-Fake" example="/nicesss/30" path="/nicesss/:limit?" paramsDesc={['结果数量，不足时显示全部结果，默认为24(第1页的数量)']} anticrawler="1" />
-
-### 搜索 Search {#nicesss-you-tang-she-sou-suo-search}
-
-<Route author="Steven-Fake" example="/nicesss/search/蠢沫沫/40" path="/nicesss/search/:keyword/:limit?" paramsDesc={['搜索关键词' ,'结果数量，不足时显示全部结果，默认为20(第1页的数量)']} />
-
-### 类别 Category {#nicesss-you-tang-she-lei-bie-category}
-
-<Route author="Steven-Fake" example="/nicesss/category/Cosplay" path="/nicesss/category/:category/:limit?" paramsDesc={['类别，可选项见下表' ,'结果数量，不足时显示全部结果，默认为20(第1页的数量)']}>
-  -   Category 可选项
-      -   `秀人`, `秀人网`, `XiuRen` 任选其一
-      -   `韩国`, `韩国美女`, `韩国美女写真`, `秘境` 任选其一
-      -   `丝袜`, `丝袜美女`, `丝袜美女写真`, `丝真` 任选其一
-      -   `热门`, `热门美女`, `热门美女写真`, `热站` 任选其一
-      -   `私影`
-      -   `cos`, `Cos`, `cosplay`, `Cosplay` 任选其一
-</Route>
-
-### 标签 Tag {#nicesss-you-tang-she-biao-qian-tag}
-
-<Route author="Steven-Fake" example="/nicesss/tag/rioko凉凉子/40" path="/nicesss/tag/:tag/:limit?" paramsDesc={['标签' ,'结果数量，不足时显示全部结果，默认为20(第1页的数量)']} />
-
 ## Pixabay {#pixabay}
 
 ### Search {#pixabay-search}
@@ -563,3 +537,29 @@ For example [Latest Wallpapers](https://wallhaven.cc/latest), the route turning 
 ### 频道 {#qi-pa-mai-jia-xiu-pin-dao}
 
 <Route author="Fatpandac nczitzk" example="/qipamaijia/fuli" path="/qipamaijia/:cate?" paramsDesc={['频道名，可在对应网址中找到，默认为最新']} radar="1" />
+
+## 呦糖社 {#you-tang-she}
+
+### 首页 {#you-tang-she-shou-ye}
+
+<Route author="Steven-Fake" example="/nicesss/30" path="/nicesss/:limit?" paramsDesc={['结果数量，不足时显示全部结果，默认为24(第1页的数量)']} anticrawler="1" />
+
+### 搜索 {#you-tang-she-sou-suo}
+
+<Route author="Steven-Fake" example="/nicesss/search/蠢沫沫/40" path="/nicesss/search/:keyword/:limit?" paramsDesc={['搜索关键词' ,'结果数量，不足时显示全部结果，默认为20(第1页的数量)']} />
+
+### 类别 {#you-tang-she-lei-bie}
+
+<Route author="Steven-Fake" example="/nicesss/category/Cosplay" path="/nicesss/category/:category/:limit?" paramsDesc={['类别，可选项见下表' ,'结果数量，不足时显示全部结果，默认为20(第1页的数量)']}>
+  -   Category 可选项
+      -   `秀人`, `秀人网`, `XiuRen` 任选其一
+      -   `韩国`, `韩国美女`, `韩国美女写真`, `秘境` 任选其一
+      -   `丝袜`, `丝袜美女`, `丝袜美女写真`, `丝真` 任选其一
+      -   `热门`, `热门美女`, `热门美女写真`, `热站` 任选其一
+      -   `私影`
+      -   `cos`, `Cos`, `cosplay`, `Cosplay` 任选其一
+</Route>
+
+### 标签 {#you-tang-she-biao-qian}
+
+<Route author="Steven-Fake" example="/nicesss/tag/rioko凉凉子/40" path="/nicesss/tag/:tag/:limit?" paramsDesc={['标签' ,'结果数量，不足时显示全部结果，默认为20(第1页的数量)']} />
