@@ -341,7 +341,15 @@
 
 ### Project versions {#modrinth-project-versions}
 
-<Route author="SettingDust" example="/modrinth/sodium/versions" path="/modrinth/:id/versions" paramsDesc={['Id or slug of the Modrinth project']} radar="1" />
+<Route author="SettingDust" example="/project/modrinth/sodium/versions" path="/project/modrinth/:id/versions" paramsDesc={['Id or slug of the Modrinth project']} radar="1" />
+
+Addition query parameters
+
+| Name           | Example                                       |
+| -------------- | --------------------------------------------- |
+| loaders        | ?loaders=fabric\&loaders=quilt\&loaders=forge |
+| game\_versions | ?game\_versions=1.20.1\&game\_versions=1.20.2 |
+| featured       | ?featured=true                                |
 
 ## Nintendo {#nintendo}
 
