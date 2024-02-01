@@ -1479,8 +1479,14 @@ YouTube provides official RSS feeds for channels, for instance [https://www.yout
 
 ### 博主 {#wei-bo-bo-zhu}
 
-<Route author="DIYgod iplusx Rongronggg9" example="/weibo/user/1195230310" path="/weibo/user/:uid/:routeParams?" paramsDesc={['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=1` 时开启微博视频显示']} radar="1">
-  部分博主仅登录可见，不支持订阅，可以通过打开 `https://m.weibo.cn/u/:uid` 验证
+<Route author="DIYgod iplusx Rongronggg9" example="/weibo/user/1195230310" path="/weibo/user/:uid/:routeParams?" paramsDesc={['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=1` 时开启微博视频显示']} radar="1" anticrawler="1">
+  :::warning
+  部分博主仅登录可见，未提供 Cookie 的情况下不支持订阅，可以通过打开 `https://m.weibo.cn/u/:uid` 验证。如需要订阅该部分博主，可配置 Cookie 后订阅。
+
+  未提供 Cookie 的情况下偶尔会触发反爬限制，提供 Cookie 可缓解该情况。
+
+  微博用户 Cookie 的配置可参照部署文档
+  :::
 </Route>
 
 ### 关键词 {#wei-bo-guan-jian-ci}
