@@ -4503,7 +4503,7 @@
         "TonyRL"
     ],
     "/modian/zhongchou/:category?/:sort?/:status?": [],
-    "/modrinth/project/:id/versions": [
+    "/modrinth/project/:id/versions/:routeParams?": [
         "SettingDust"
     ],
     "/mofish/:id": [],
