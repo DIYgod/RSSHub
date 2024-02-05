@@ -7102,6 +7102,9 @@
     "/weexcn/news/:typeid": [],
     "/wegene/column/:type/:category": [],
     "/wegene/newest": [],
+    "/weibo/friends/:routeParams?": [
+        "CaoMeiYouRen"
+    ],
     "/weibo/group/:gid/:gname?/:routeParams?": [
         "monologconnor",
         "Rongronggg9"

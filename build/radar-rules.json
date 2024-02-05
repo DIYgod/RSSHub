@@ -33671,6 +33671,12 @@
         "docs": "https://docs.rsshub.app/routes/social-media#wei-bo",
         "source": "/p/:id/super_index",
         "target": "/weibo/super_index/:id"
+      },
+      {
+        "title": "最新关注时间线",
+        "docs": "https://docs.rsshub.app/routes/social-media#wei-bo",
+        "source": "/",
+        "target": "/weibo/friends"
       }
     ],
     "s": [
