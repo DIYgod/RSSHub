@@ -198,7 +198,7 @@
     "husky": "9.0.10",
     "jest": "29.7.0",
     "jest-junit": "16.0.0",
-    "lint-staged": "15.2.1",
+    "lint-staged": "15.2.2",
     "mockdate": "3.0.5",
     "nock": "13.5.1",
     "nodemon": "3.0.3",
