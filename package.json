@@ -202,7 +202,7 @@
     "mockdate": "3.0.5",
     "nock": "13.5.1",
     "nodemon": "3.0.3",
-    "prettier": "3.2.4",
+    "prettier": "3.2.5",
     "remark": "14.0.3",
     "remark-custom-heading-id": "1.0.1",
     "remark-directive": "3.0.0",
