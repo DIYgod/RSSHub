@@ -1525,6 +1525,18 @@ YouTube provides official RSS feeds for channels, for instance [https://www.yout
   :::
 </Route>
 
+### 最新关注时间线 {#wei-bo-zui-xin-guan-zhu-shi-jian-xian}
+
+<Route author="CaoMeiYouRen" example="/weibo/friends" path="/weibo/friends/:routeParams?" paramsDesc={['额外参数；请参阅上面的说明和表格']} configRequired="1">
+  :::warning
+  此方案必须使用用户`Cookie`进行抓取
+
+  因微博 cookies 的过期与更新方案未经验证，部署一次 Cookie 的有效时长未知
+
+  微博用户 Cookie 的配置可参照部署文档
+  :::
+</Route>
+
 ### 自定义分组 {#wei-bo-zi-ding-yi-fen-zu}
 
 <Route author="monologconnor Rongronggg9" example="/weibo/group/4541216424989965" path="/weibo/group/:gid/:gname?/:routeParams?" paramsDesc={['分组id, 在网页版分组地址栏末尾`?gid=`处获取', '分组显示名称; 默认为: `微博分组`', '额外参数；请参阅上面的说明和表格']} configRequired="1">
