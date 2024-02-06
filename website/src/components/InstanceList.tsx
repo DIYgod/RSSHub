@@ -56,6 +56,21 @@ export default function InstanceList(): JSX.Element {
     location: '🇳🇱',
     maintainer: 'Kai',
     maintainerUrl: 'https://mubibai.com',
+  }, {
+    url: 'https://rsshub.ktachibana.party',
+    location: '🇺🇸',
+    maintainer: 'KTachibanaM',
+    maintainerUrl: 'https://github.com/KTachibanaM',
+  }, {
+    url: 'https://rsshub.woodland.cafe',
+    location: '🇩🇪',
+    maintainer: 'untitaker',
+    maintainerUrl: 'https://github.com/untitaker',
+  }, {
+    url: 'https://rsshub.aierliz.xyz',
+    location: '🇺🇸',
+    maintainer: '麦当狗',
+    maintainerUrl: 'https://t.me/rsshub/281479',
   }
 ]
 
