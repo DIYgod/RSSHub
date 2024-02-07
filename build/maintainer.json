@@ -6418,6 +6418,9 @@
         "hoilc",
         "TonyRL"
     ],
+    "/tass/:category?": [
+        "TonyRL"
+    ],
     "/techcrunch/news": [
         "EthanWng97"
     ],
