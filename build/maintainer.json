@@ -4444,6 +4444,9 @@
     "/mihoyo/bbs/official/:gids/:type?/:page_size?/:last_id?": [
         "CaoMeiYouRen"
     ],
+    "/mihoyo/bbs/timeline": [
+        "CaoMeiYouRen"
+    ],
     "/mihoyo/bbs/user-post/:uid": [
         "CaoMeiYouRen"
     ],

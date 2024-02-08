@@ -24205,6 +24205,12 @@
         "title": "米游社 - 用户帖子",
         "docs": "https://docs.rsshub.app/routes/game#mi-ha-you",
         "source": "/:game/accountCenter/postList"
+      },
+      {
+        "title": "米游社 - 用户关注动态",
+        "docs": "https://docs.rsshub.app/routes/game#mi-ha-you",
+        "source": "/:game/timeline",
+        "target": "/mihoyo/bbs/timeline"
       }
     ],
     "sr": [
@@ -24254,6 +24260,12 @@
         "title": "米游社 - 用户帖子",
         "docs": "https://docs.rsshub.app/routes/game#mi-ha-you",
         "source": "/:game/accountCenter/postList"
+      },
+      {
+        "title": "米游社 - 用户关注动态",
+        "docs": "https://docs.rsshub.app/routes/game#mi-ha-you",
+        "source": "/:game/timeline",
+        "target": "/mihoyo/bbs/timeline"
       }
     ]
   },
