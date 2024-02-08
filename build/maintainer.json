@@ -7700,7 +7700,7 @@
     "/zhihu/timeline": [
         "SeanChao"
     ],
-    "/zhihu/topic/:topicId": [
+    "/zhihu/topic/:topicId/:isTop?": [
         "xyqfer"
     ],
     "/zhihu/weekly": [
