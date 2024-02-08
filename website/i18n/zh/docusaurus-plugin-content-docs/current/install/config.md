@@ -553,6 +553,10 @@ Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即
 
 -   `TOPHUB_COOKIE`: 今日热榜登录后的 cookie，目前只需要 `itc_center_user=...` 以获取原始链接
 
+### 米游社
+
+-   `MIHOYO_COOKIE`：登录米游社后的 cookie，用于获取用户关注动态时间线。
+
 ### 南方周末
 
 付费全文
