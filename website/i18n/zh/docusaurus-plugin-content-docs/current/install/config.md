@@ -555,7 +555,7 @@ Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即
 
 ### 米游社
 
--   `MIYOUSHE_COOKIE`：登录米游社后的 cookie，用于获取用户关注动态时间线。
+-   `MIHOYO_COOKIE`：登录米游社后的 cookie，用于获取用户关注动态时间线。
 
 ### 南方周末
 
