@@ -4472,6 +4472,9 @@
 
                     return `/chinaisa${columnId ? `/${columnId}` : ''}`;
                 } } ] },
+  "chinamoney.com.cn":{ _name:"中国货币网",
+    ".":[ { title:"公告",
+        docs:"https://docs.rsshub.app/routes/finance#zhong-guo-huo-bi-wang" } ] },
   "chinanews.com.cn":{ _name:"中国新闻网",
     ".":[ { title:"最新",
         docs:"https://docs.rsshub.app/routes/traditional-media#zhong-xin-wang",
