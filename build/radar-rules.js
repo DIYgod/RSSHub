@@ -19181,6 +19181,15 @@
         docs:"https://docs.rsshub.app/routes/new-media#wei-ji-xin-wen",
         source:[ "/wizfile/download" ],
         target:"/wizfile/updates" } ] },
+  "wmc-bj.net":{ _name:"World Meteorological Centre Beijing",
+    ".":[ { title:"Publish",
+        docs:"https://docs.rsshub.app/routes/other#world-meteorological-centre-beijing-publish",
+        source:[ "/publish/:category*" ],
+        target:(params) => {
+                    const category = params.category;
+
+                    return `/wmc-bj/publish${category ? `/${category}` : ''}`;
+                } } ] },
   "wnacg.org":{ _name:"紳士漫畫",
     ".":[ { title:"最新",
         docs:"https://docs.rsshub.app/routes/anime#shen-shi-man-hua",
