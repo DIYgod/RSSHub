@@ -1528,6 +1528,9 @@
     "/crossbell/notes/source/:source": [
         "DIYgod"
     ],
+    "/cs/:category?": [
+        "nczitzk"
+    ],
     "/cs/zzkx": [
         "nczitzk"
     ],
