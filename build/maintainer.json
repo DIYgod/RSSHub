@@ -2180,6 +2180,12 @@
     "/fanfou/public_timeline/:keyword": [],
     "/fanfou/trends": [],
     "/fanfou/user_timeline/:uid": [],
+    "/fansly/tag/:tag": [
+        "TonyRL"
+    ],
+    "/fansly/user/:username": [
+        "TonyRL"
+    ],
     "/fantia/search/:type?/:caty?/:peroid?/:order?/:rating?/:keyword?": [
         "nczitzk"
     ],
