@@ -21,7 +21,7 @@
     "@docusaurus/plugin-client-redirects": "3.1.1",
     "@docusaurus/plugin-pwa": "3.1.1",
     "@docusaurus/preset-classic": "3.1.1",
-    "@mdx-js/react": "^3.0.0",
+    "@mdx-js/react": "^3.0.1",
     "clsx": "^2.1.0",
     "markdown-it": "^14.0.0",
     "meilisearch-docsearch": "^0.6.0",
