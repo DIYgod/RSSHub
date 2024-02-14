@@ -15,7 +15,7 @@ Fail to comply will result in your pull request being closed automatically.
 请在 `routes` 区域填写以 / 开头的完整路由地址，否则你的 PR 将会被无条件关闭。
 如果路由包含在文档中列出可以完全穷举的参数（例如分类），请依次全部列出。
 
-```route
+```routes
 /some/route
 /some/other/route
 /dont/use/this/or/modify/it

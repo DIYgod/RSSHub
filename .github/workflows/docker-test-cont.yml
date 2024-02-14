@@ -69,7 +69,7 @@ jobs:
             -p 1200:1200 \
             rsshub:latest
 
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v3
         with:
           version: 8
 

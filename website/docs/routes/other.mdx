@@ -121,7 +121,7 @@ See [#app-store-mac-app-store](/routes/program-update#app-store-mac-app-store)
 
 <Route author="DIYgod" example="/scmp/coronavirus" path="/scmp/coronavirus" />
 
-### Macao Pagina Electrónica Especial Contra Epidemias: What’s New {#corona-virus-disease-2019-macao-pagina-electronica-especial-contra-epidemias-what-s-new}
+### Macao Pagina Electrónica Especial Contra Epidemias: What’s New {#corona-virus-disease-2019-macao-pagina-electr%C3%B3nica-especial-contra-epidemias-what-s-new}
 
 Official Website: [https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx](https://www.ssm.gov.mo/apps1/PreventWuhanInfection/en.aspx)
 
@@ -566,6 +566,18 @@ Specify options (in the format of query string) in parameter `routeParams` param
 
 <Route author="HenryQW" example="/wise/pair/GBP/USD" path="/wise/pair/:source/:target" paramsDesc={['Base currency abbreviation','Quote currency abbreviation']} radar="1">
   Refer to [the list of supported currencies](https://wise.com/tools/exchange-rate-alerts/).
+</Route>
+
+## World Meteorological Centre Beijing {#world-meteorological-centre-beijing}
+
+### Publish {#world-meteorological-centre-beijing-publish}
+
+<Route author="nczitzk" example="/wmc-bj/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html" path="/wmc-bj/publish/:category?" paramsDesc={['Category, can be found in URL, `CRA-Reanalysis/2m-Temperature/6-hour/index.html` by default']} radar="1">
+  :::tip
+  `category` is the text after `publish/` in the URL.
+
+  eg. The URL for [Monitoring\_CMA-RA\_2m-Temperature\_6-hour](http://www.wmc-bj.net/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html) is [http://www.wmc-bj.net/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html](http://www.wmc-bj.net/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html). The `category` for route can be represented as [`/wmc-bj/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html`](https://rsshub.app/wmc-bj/publish/CRA-Reanalysis/2m-Temperature/6-hour/index.html).
+  :::
 </Route>
 
 ## 艾瑞 {#ai-rui}
