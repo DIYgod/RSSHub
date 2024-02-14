@@ -313,8 +313,6 @@ TokenInsight also provides official RSS, you can take a look at [https://api.tok
 | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
 | 1        | 2        | 3        | 4        | 5        | 6        | 7        | 8          |
 
-## World Economic Forum 世界经济论坛 {#world-economic-forum-shi-jie-jing-ji-lun-tan}
-
 ## 巴伦周刊中文版 {#ba-lun-zhou-kan-zhong-wen-ban}
 
 ### 栏目 {#ba-lun-zhou-kan-zhong-wen-ban-lan-mu}
@@ -459,11 +457,52 @@ TokenInsight also provides official RSS, you can take a look at [https://api.tok
   `http://www.nifd.cn/Research?categoryGuid=7a6a826d-b525-42aa-b550-4236e524227f` 对应 `/nifd/research/7a6a826d-b525-42aa-b550-4236e524227f`
 </Route>
 
+## 华储网 {#hua-chu-wang}
+
+### 通知 {#hua-chu-wang-tong-zhi}
+
+<Route author="TonyRL" example="/mrm" path="/mrm/:category?" paramDesc={['分类，见下表，默认为 `zonghezixun3`']} radar="1">
+  | 交易通知     | 政策规定             | 业务通知          |
+  | ------------ | -------------------- | ----------------- |
+  | zonghezixun3 | zhengceguiding\_list | yewutongzhi\_list |
+</Route>
+
 ## 汇通网 {#hui-tong-wang}
 
 ### 7x24 小时快讯 {#hui-tong-wang-7x24-xiao-shi-kuai-xun}
 
 <Route author="occupy5 dousha" example="/fx678/kx" path="/fx678/kx" radar="1" />
+
+## 金色财经 {#jin-se-cai-jing}
+
+### 首页 {#jin-se-cai-jing-shou-ye}
+
+<Route author="nczitzk" example="/jinse/timeline" path="/jinse/timeline/:category?" paramsDesc={['分类，见下表，默认为头条']} radar="1">
+  | 头条   | 独家 | 铭文    | 产业       | 项目 |
+  | ------ | ---- | ------- | ---------- | ---- |
+  | 政策   | AI   | Web 3.0 | 以太坊 2.0 | DeFi |
+  | Layer2 | NFT  | DAO     | 百科       |      |
+</Route>
+
+### 快讯 {#jin-se-cai-jing-kuai-xun}
+
+<Route author="nczitzk" example="/jinse/lives" path="/jinse/lives/:category?" paramsDesc={['分类，见下表，默认为全部']} radar="1">
+  | 全部 | 精选 | 政策 | 数据 | NFT | 项目 |
+  | ---- | ---- | ---- | ---- | --- | ---- |
+  | 0    | 1    | 2    | 3    | 4   | 5    |
+</Route>
+
+### 分类 {#jin-se-cai-jing-fen-lei}
+
+<Route author="nczitzk" example="/jinse/zhengce" path="/jinse/:category?" paramsDesc={['分类，见下表，默认为政策']}>
+  | 政策    | 行情         | DeFi | 矿业  | 以太坊 2.0 |
+  | ------- | ------------ | ---- | ----- | ---------- |
+  | zhengce | fenxishishuo | defi | kuang | 以太坊 2.0 |
+
+  | 产业     | IPFS | 技术 | 百科  | 研报          |
+  | -------- | ---- | ---- | ----- | ------------- |
+  | industry | IPFS | tech | baike | capitalmarket |
+</Route>
 
 ## 金十数据 {#jin-shi-shu-ju}
 
@@ -713,7 +752,7 @@ TokenInsight also provides official RSS, you can take a look at [https://api.tok
 
 ### 股票评论 {#xue-qiu-gu-piao-ping-lun}
 
-<Route author="zytomorrow" example="/xueqiu/stock_comments/SZ002626" path="/xueqiu/stock_comments/:id/:titleLength?" paramsDesc={['股票代码（需要带上交易所）', '标题长度']} />
+<Route author="zytomorrow" example="/xueqiu/stock_comments/SZ002626" path="/xueqiu/stock_comments/:id" paramsDesc={['股票代码（需要带上交易所）']} />
 
 ### 热帖 {#xue-qiu-re-tie}
 
@@ -794,6 +833,95 @@ TokenInsight also provides official RSS, you can take a look at [https://api.tok
   | company      | 公司 |
 </Route>
 
+## 中国货币网 {#zhong-guo-huo-bi-wang}
+
+### 公告 {#zhong-guo-huo-bi-wang-gong-gao}
+
+<Route author="TonyRL" example="/chinamoney" path="/chinamoney/:channelId?" paramsDesc={['分类，见下表，默认为 `2834`']}>
+  <details>
+    <summary>市场公告</summary>
+
+    外汇市场公告
+
+    | 最新 | 市场公告通知 | 中心会员公告 | 会员信息公告 |
+    | ---- | ------------ | ------------ | ------------ |
+    | 2834 | 2835         | 2836         | 2837         |
+
+    本币市场公告
+
+    | 最新           | 市场公告通知 | 中心会员公告 | 会员信息公告 |
+    | -------------- | ------------ | ------------ | ------------ |
+    | 2839,2840,2841 | 2839         | 2840         | 2841         |
+
+    央行业务公告
+
+    | 最新      | 公开市场操作 | 中央国库现金管理 |
+    | --------- | ------------ | ---------------- |
+    | 2845,2846 | 2845         | 2846             |
+  </details>
+
+  <details>
+    <summary>本币市场</summary>
+
+    贷款市场报价利率
+
+    | LPR 市场公告 |
+    | ------------ |
+    | 3686         |
+  </details>
+</Route>
+
+## 中国期货市场监控中心 {#zhong-guo-qi-huo-shi-chang-jian-kong-zhong-xin}
+
+### 栏目 {#zhong-guo-qi-huo-shi-chang-jian-kong-zhong-xin-lan-mu}
+
+<Route author="nczitzk" example="/cfmmc/main/noticeannouncement/cfmmcnotice" path="/cfmmc/:id?" paramsDesc={['栏目 id，见下表，默认为中国期货监控公告']} radar="1">
+  #### 党的建设
+
+  | 栏目     | id                                     |
+  | -------- | -------------------------------------- |
+  | 党建动态 | main/partybuilding/partybuildingtrends |
+  | 基层风采 | main/partybuilding/basestyle           |
+  | 学习园地 | main/partybuilding/learninggarden      |
+
+  #### 通知公告
+
+  | 栏目             | id                                  |
+  | ---------------- | ----------------------------------- |
+  | 中国期货监控公告 | main/noticeannouncement/cfmmcnotice |
+  | 证监会公告       | main/noticeannouncement/csrcnotice  |
+  | 上期所公告       | main/noticeannouncement/shfenotice  |
+  | 郑商所公告       | main/noticeannouncement/czcenotice  |
+  | 大商所公告       | main/noticeannouncement/dcenotice   |
+  | 中金所公告       | main/noticeannouncement/cffexnotice |
+  | 广期所公告       | main/noticeannouncement/gfexnotice  |
+
+  #### 焦点新闻
+
+  | 栏目     | id                               |
+  | -------- | -------------------------------- |
+  | 财经要闻 | main/focusnews/financialnews     |
+  | 专题聚焦 | main/focusnews/thematicfocus     |
+  | 金融动态 | main/focusnews/financialdynamics |
+
+  #### 保障基金
+
+  | 栏目     | id                                    |
+  | -------- | ------------------------------------- |
+  | 基金概况 | main/securityfund/fundoverview        |
+  | 政策法规 | main/securityfund/policiesregulations |
+  | 公告信息 | main/securityfund/noticeinformation   |
+
+  #### 政策法规
+
+  | 栏目                 | id                                            |
+  | -------------------- | --------------------------------------------- |
+  | 国家法律法规         | main/policiesregulations/lawsregulations      |
+  | 部门规章及规范性文件 | main/policiesregulations/regulationsnormative |
+  | 行业法规政策         | main/policiesregulations/industrypolicies     |
+  | 中国期货监控相关规则 | main/policiesregulations/cfmmcrules           |
+</Route>
+
 ## 中国人民银行 {#zhong-guo-ren-min-yin-hang}
 
 ### 沟通交流 {#zhong-guo-ren-min-yin-hang-gou-tong-jiao-liu}
@@ -814,10 +942,61 @@ TokenInsight also provides official RSS, you can take a look at [https://api.tok
 
 ## 中证网 {#zhong-zheng-wang}
 
-### 资讯 {#zhong-zheng-wang-zi-xun}
+### 栏目 {#zhong-zheng-wang-lan-mu}
 
-<Route author="nczitzk" example="/cs/news/zzkx" path="/cs/news/:caty" paramsDesc={['资讯类型']}>
-  | 中证快讯 | 行业资讯 |
-  | -------- | -------- |
-  | zzkx     | hyzx     |
+<Route author="nczitzk" example="/cs" path="/cs/:category?" paramsDesc={['分类，见下表，默认为首页']} radar="1">
+  | 要闻 | 公司 | 市场 | 基金 |
+  | ---- | ---- | ---- | ---- |
+  | xwzx | ssgs | gppd | tzjj |
+
+  | 科创 | 产经   | 期货     | 海外   |
+  | ---- | ------ | -------- | ------ |
+  | 5g   | cj2020 | zzqh2020 | hw2020 |
+
+  <details>
+    <summary>更多栏目</summary>
+
+    #### 要闻
+
+    | 财经要闻 | 观点评论 | 民生消费  |
+    | -------- | -------- | --------- |
+    | xwzx/hg  | xwzx/jr  | xwzx/msxf |
+
+    #### 公司
+
+    | 公司要闻  | 公司深度  | 公司巡礼  |
+    | --------- | --------- | --------- |
+    | ssgs/gsxw | ssgs/gssd | ssgs/gsxl |
+
+    #### 市场
+
+    | A 股市场  | 港股资讯  | 债市研究  | 海外报道  | 期货报道  |
+    | --------- | --------- | --------- | --------- | --------- |
+    | gppd/gsyj | gppd/ggzx | gppd/zqxw | gppd/hwbd | gppd/qhbd |
+
+    #### 基金
+
+    | 基金动态  | 基金视点  | 基金持仓  | 私募基金  | 基民学苑  |
+    | --------- | --------- | --------- | --------- | --------- |
+    | tzjj/jjdt | tzjj/jjks | tzjj/jjcs | tzjj/smjj | tzjj/tjdh |
+
+    #### 机构
+
+    | 券商 | 银行 | 保险 |
+    | ---- | ---- | ---- |
+    | qs   | yh   | bx   |
+
+    #### 其他
+
+    | 中证快讯 7x24 | IPO 鉴真 | 公司能见度 |
+    | ------------- | -------- | ---------- |
+    | sylm/jsbd     | yc/ipojz | yc/gsnjd   |
+  </details>
+</Route>
+
+### 中证视频 {#zhong-zheng-wang-zhong-zheng-shi-pin}
+
+<Route author="nczitzk" example="/cs/video/今日聚焦" path="/cs/video/:category?" paramsDesc={['分类，见下表，默认为今日聚焦']} radar="1">
+  | 今日聚焦 | 传闻求证 | 高端访谈 | 投教课堂 | 直播汇 |
+  | -------- | -------- | -------- | -------- | ------ |
 </Route>

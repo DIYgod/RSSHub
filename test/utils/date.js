@@ -96,7 +96,7 @@ describe('date', () => {
 
     it('刚刚', () => {
         const result = +new Date(parseDate('刚刚'));
-        const now = +new Date();
+        const now = Date.now();
         expect(result - now).toBeLessThan(10);
         expect(result - now).toBeGreaterThanOrEqual(0);
     });

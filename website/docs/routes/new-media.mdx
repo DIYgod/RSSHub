@@ -884,6 +884,16 @@
   所以，如果您把`https://kotaku.com/latest`中的`latest`填入，该路由并不会正常工作
 </Route>
 
+## Kuwait Local {#kuwait-local}
+
+### Latest News {#kuwait-local-latest-news}
+
+<Route author="TonyRL" example="/kuwaitlocal" path="/kuwaitlocal" radar="1" />
+
+### Categorised News {#kuwait-local-categorised-news}
+
+<Route author="TonyRL" example="/kuwaitlocal/article" path="/kuwaitlocal/:category?" paramsDesc={['Category name, can be found in URL, `latest` by default']} radar="1" />
+
 ## Letterboxd {#letterboxd}
 
 ### User diary {#letterboxd-user-diary}
@@ -909,6 +919,12 @@
 ### TODAY - Channel {#line-today-channel}
 
 <Route author="TonyRL" example="/line/today/th/publisher/101048" path="/line/today/:edition/publisher/:id" paramsDesc={['Edition, see table above', 'Channel ID, can be found in URL']} radar="1" />
+
+## Live Universal Awareness Map {#live-universal-awareness-map}
+
+### 实时消息 {#live-universal-awareness-map-shi-shi-xiao-xi}
+
+<Route author="CoderSherlock" example="/liveuamap" path="/liveuamap/:region?" paramsDesc={['region 热点地区，默认为`ukraine`，其他选项见liveuamap.com的三级域名']} anticrawler="1" />
 
 ## LVV2 {#lvv2}
 
@@ -1100,6 +1116,14 @@
 ### 活动 {#odaily-xing-qiu-ri-bao-huo-dong}
 
 <Route author="ncziztk" example="/odaily/activity" path="/odaily/activity" />
+
+## Onet {#onet}
+
+### News {#onet-news}
+
+<Route author="Vegann" example="/onet/news" path="/onet/news" radar="1">
+  This route provides a better reading experience (full text articles) over the official one for `https://wiadomosci.onet.pl`.
+</Route>
 
 ## OpenAI {#openai}
 
@@ -2362,6 +2386,10 @@
   | app      | phone    | computer | accessories | tutorial   | techlife |
 </Route>
 
+### 精选主题 {#dian-ta-shao-nv-jing-xuan-zhu-ti}
+
+<Route author="TonyRL" example="/agirls/topic/AppleWatch" path="/agirls/topic/:topic" paramsDesc={['精选主题，可通过下方精选主题列表获得']} radar="1" />
+
 ### 当前精选主题列表 {#dian-ta-shao-nv-dang-qian-jing-xuan-zhu-ti-lie-biao}
 
 <Route author="TonyRL" example="/agirls/topic_list" path="/agirls/topic_list" radar="1" />
@@ -2843,24 +2871,6 @@
 :::tip
 将榜单条目集合到一个列表中，可避免推送大量条目，更符合阅读习惯且有热度排序，推荐使用。
 :::
-
-## 金色财经 {#jin-se-cai-jing}
-
-### 快讯 {#jin-se-cai-jing-kuai-xun}
-
-<Route author="nczitzk" example="/jinse/lives" path="/jinse/lives" />
-
-### 头条 {#jin-se-cai-jing-tou-tiao}
-
-<Route author="nczitzk" example="/jinse/timeline" path="/jinse/timeline" />
-
-### 分类 {#jin-se-cai-jing-fen-lei}
-
-<Route author="nczitzk" example="/jinse/catalogue/zhengce" path="/jinse/catalogue/:caty" paramsDesc={['分类名，参见下表']}>
-  | 政策    | 行情         | DeFi | 矿业  | 以太坊 2.0 | 产业     | IPFS | 技术 | 百科  | 研报          |
-  | ------- | ------------ | ---- | ----- | ---------- | -------- | ---- | ---- | ----- | ------------- |
-  | zhengce | fenxishishuo | defi | kuang | 以太坊 2.0 | industry | IPFS | tech | baike | capitalmarket |
-</Route>
 
 ## 巨潮资讯 {#ju-chao-zi-xun}
 
@@ -4022,6 +4032,12 @@
   -   `fulltext`，全文输出，例如：`/pingwest/user/7781550877/article/fulltext`
 </Route>
 
+## 千篇网 {#qian-pian-wang}
+
+### 知识库 / 资讯 {#qian-pian-wang-zhi-shi-ku-zi-xun}
+
+<Route author="TonyRL" example="/qianp/news" path="/qianp/news/:path*" paramsDesc={['路径，可在URL中找到，默认为 `news/recommend`']} radar="1" />
+
 ## 求是网 {#qiu-shi-wang}
 
 ### 分类 {#qiu-shi-wang-fen-lei}
@@ -4306,6 +4322,12 @@
   | all  | weekly       | monthly      | international | hot          | favorite     |
 </Route>
 
+## 水果派 {#shui-guo-pai}
+
+### 首页 {#shui-guo-pai-shou-ye}
+
+<Route author="nczitzk" example="/shuiguopai" path="/shuiguopai" radar="1" />
+
 ## 搜狐号 {#sou-hu-hao}
 
 ### 更新 {#sou-hu-hao-geng-xin}
@@ -4572,6 +4594,12 @@
   根据维基新闻的[sitemap](https://zh.wikinews.org/wiki/Special:%E6%96%B0%E9%97%BB%E8%AE%A2%E9%98%85)获取新闻全文。目前仅支持中文维基新闻。
 </Route>
 
+## 我不是盐神 {#wo-bu-shi-yan-shen}
+
+### 首页 {#wo-bu-shi-yan-shen-shou-ye}
+
+<Route author="ruoshui9527" example="/onehu" path="/onehu" />
+
 ## 乌有之乡 {#wu-you-zhi-xiang}
 
 ### 栏目 {#wu-you-zhi-xiang-lan-mu}
@@ -4746,7 +4774,7 @@
 
 ### 新华社新闻 {#xin-hua-wang-xin-hua-she-xin-wen}
 
-<Route author="nczitzk" example="/news/whxw" path="/news/whxw" />
+<Route author="nczitzk" example="/news/xhsxw" path="/news/xhsxw" radar="1" />
 
 ## 新浪 {#xin-lang}
 

@@ -40,7 +40,7 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 
 部分路由反爬严格，可以配置使用代理抓取。
 
-可通过**代理 URI **或**代理选项**或**反向代理**三种方式来配置代理。
+可通过**代理 URI** 或**代理选项**或**代理自动配置文件 (PAC)** 或**反向代理**等方式来配置代理。
 
 ### 代理 URI
 
@@ -71,6 +71,20 @@ RSSHub 支持 `memory` 和 `redis` 两种缓存方式
 `PROXY_AUTH`: 给代理服务器的身份验证凭证，`Proxy-Authorization: Basic ${process.env.PROXY_AUTH}`
 
 `PROXY_URL_REGEX`: 启用代理的 URL 正则表达式，默认全部开启 `.*`
+
+### 代理自动配置文件 (PAC)
+
+:::warning
+
+该方法会覆盖 `PROXY_URI`, `PROXY_PROTOCOL`, `PROXY_HOST` 以及 `PROXY_PORT`。
+
+:::
+
+关于代理自动配置文件 (PAC)，请查看[代理自动配置文件（PAC）文件](https://developer.mozilla.org/docs/Web/HTTP/Proxy_servers_and_tunneling/Proxy_Auto-Configuration_PAC_file)。
+
+`PAC_URI`: PAC 文件 URI，支持 http, https, ftp, file, data。具体以 [pac-proxy-agent](https://www.npmjs.com/package/pac-proxy-agent) NPM 包的支持为准。
+
+`PAC_SCRIPT`: 硬编码的 PAC 脚本字符串。覆盖 `PAC_URI`。
 
 ### 反向代理
 
@@ -455,14 +469,11 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 
 ### Twitter
 
-鉴于 Twitter 和其 API 访问的最新变化，已经设计了一种新的匿名访问 Twitter 的方法。该方法涉及使用在通过 Android 应用程序进行注册流程时创建的临时访客账户。
+建议使用非重要账号，新账号或者不同地区登录可能会被限制登录
 
-详细信息请参阅 [Nitter - Guest Account Branch Deployment](https://github.com/zedeus/nitter/wiki/Guest-Account-Branch-Deployment) 和 [zedeus/nitter#983](https://github.com/zedeus/nitter/issues/983)。
-
-另外我们也准备了一个 Node.js 脚本来帮助你使用代理批量创建这些 token，[请点击这里](https://github.com/DIYgod/RSSHub/tree/master/scripts/twitter-token/generate.js)。
-
--   `TWITTER_OAUTH_TOKEN`: 支持多个 key，用英文逗号 `,` 隔开
--   `TWITTER_OAUTH_TOKEN_SECRET`: 支持多个 key，用英文逗号 `,` 隔开
+-   `TWITTER_USERNAME`: Twitter 用户名
+-   `TWITTER_PASSWORD`: Twitter 密码
+-   `TWITTER_AUTHENTICATION_SECRET`: 可选，Twitter 两步验证 -> 认证应用 -> `otpauth://totp/Twitter:@_RSSHub?secret=xxxxxxxxxxxxxxxx&issuer=Twitter` 中的 secret 部分
 
 ### Wordpress
 
@@ -543,6 +554,10 @@ Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即
 ### 今日热榜
 
 -   `TOPHUB_COOKIE`: 今日热榜登录后的 cookie，目前只需要 `itc_center_user=...` 以获取原始链接
+
+### 米游社
+
+-   `MIHOYO_COOKIE`：登录米游社后的 cookie，用于获取用户关注动态时间线。
 
 ### 南方周末
 

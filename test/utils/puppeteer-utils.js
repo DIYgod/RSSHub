@@ -28,7 +28,7 @@ describe('puppeteer-utils', () => {
         { name: 'rsshub', value: '', domain: 'rsshub.test' },
         { name: 'test', value: 'rsshub', domain: 'rsshub.test' },
     ];
-    const cookieArrayAll = cookieArrayExampleCom.concat(cookieArraySubExampleCom).concat(cookieArrayRsshubTest);
+    const cookieArrayAll = [...cookieArrayExampleCom, ...cookieArraySubExampleCom, ...cookieArrayRsshubTest];
 
     const cookieStrExampleCom = 'foobar=; foo=bar; baz=qux';
     const cookieStrSubExampleCom = 'barfoo=; bar=foo; qux=baz';
@@ -36,14 +36,14 @@ describe('puppeteer-utils', () => {
     const cookieStrAll = [cookieStrExampleCom, cookieStrSubExampleCom, cookieStrRsshubTest].join('; ');
 
     it('parseCookieArray', () => {
-        [
+        for (const [cookieArray, cookieStr] of [
             [cookieArrayExampleCom, cookieStrExampleCom],
             [cookieArraySubExampleCom, cookieStrSubExampleCom],
             [cookieArrayRsshubTest, cookieStrRsshubTest],
             [cookieArrayAll, cookieStrAll],
-        ].forEach(([cookieArray, cookieStr]) => {
+        ]) {
             expect(parseCookieArray(cookieArray)).toEqual(cookieStr);
-        });
+        }
         expect(parseCookieArray(cookieArrayAll, 'example.com')).toEqual(`${cookieStrExampleCom}; ${cookieStrSubExampleCom}`);
         expect(parseCookieArray(cookieArrayAll, 'sub.example.com')).toEqual(cookieStrSubExampleCom);
         expect(parseCookieArray(cookieArrayExampleCom, 'sub.example.com')).toEqual('');
@@ -56,13 +56,13 @@ describe('puppeteer-utils', () => {
     });
 
     it('constructCookieArray', () => {
-        [
+        for (const [cookieArray, cookieStr] of [
             [cookieArrayExampleCom, cookieStrExampleCom],
             [cookieArraySubExampleCom, cookieStrSubExampleCom],
             [cookieArrayRsshubTest, cookieStrRsshubTest],
-        ].forEach(([cookieArray, cookieStr]) => {
+        ]) {
             expect(constructCookieArray(cookieStr, cookieArray[0].domain)).toEqual(cookieArray);
-        });
+        }
     });
 
     it('getCookies httpbingo', async () => {
@@ -84,7 +84,7 @@ describe('puppeteer-utils', () => {
         await page.goto('https://httpbingo.org/cookies', {
             waitUntil: 'domcontentloaded',
         });
-        const data = await page.evaluate(() => JSON.parse(document.body.innerText));
+        const data = await page.evaluate(() => JSON.parse(document.body.textContent));
         expect(data).toEqual(Object.fromEntries(cookieArrayExampleCom.map(({ name, value }) => [name, value])));
     }, 15000);
 

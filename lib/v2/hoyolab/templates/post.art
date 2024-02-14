@@ -1,0 +1,7 @@
+{{ if hasCover }}
+    {{ each coverList c }}
+        <img src="{{ c.url }}"><br>
+    {{ /each }}
+{{ /if }}
+
+{{@ content }}
