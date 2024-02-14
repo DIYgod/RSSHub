@@ -1531,6 +1531,9 @@
     "/cs/:category?": [
         "nczitzk"
     ],
+    "/cs/video/:category?": [
+        "nczitzk"
+    ],
     "/cs/zzkx": [
         "nczitzk"
     ],
