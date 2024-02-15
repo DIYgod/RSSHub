@@ -1,0 +1,18 @@
+{{ if audios }}
+  {{ each audios audio }}
+    {{ if audio?.src }}
+      <audio controls>
+        <source
+          src="{{ audio.src }}"
+          type="{{ audio.type }}">
+        <object data="{{ audio.src }}">
+          <embed src="{{ audio.src }}">
+        </object>
+      </audio>
+    {{ /if }}
+  {{ /each }}
+{{ /if }}
+
+{{ if description }}
+  <p>{{ description }}</p>
+{{ /if }}
