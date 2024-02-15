@@ -1,0 +1,3 @@
+<blockquote>{{ intro }}</blockquote>
+<br>
+{{@ content }}
