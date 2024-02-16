@@ -4173,6 +4173,19 @@
       }
     ]
   },
+  "bulianglin.com": {
+    "_name": "不良林",
+    ".": [
+      {
+        "title": "博客",
+        "docs": "https://docs.rsshub.app/routes/blog#bu-liang-lin",
+        "source": [
+          "/"
+        ],
+        "target": "/bulianglin"
+      }
+    ]
+  },
   "bupt.edu.cn": {
     "_name": "北京邮电大学",
     ".": [
