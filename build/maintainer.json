@@ -1095,7 +1095,7 @@
     "/cas/cg/:caty?": [
         "nczitzk"
     ],
-    "/cas/genetics/xshd": [
+    "/cas/genetics/:path+": [
         "panyq357"
     ],
     "/cas/ia/yjs": [
