@@ -6775,6 +6775,9 @@
         "nczitzk"
     ],
     "/trakt/collection/:username/:type?": [],
+    "/transcriptforest/:channel?": [
+        "nczitzk"
+    ],
     "/treasury/press-releases/:category?/:title?": [],
     "/trending/:keywords/:numberOfDays?": [
         "Jkker"
