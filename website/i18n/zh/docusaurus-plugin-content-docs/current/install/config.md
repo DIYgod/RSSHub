@@ -457,7 +457,13 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 
 用户相关路由
 
--   `SPOTIFY_REFRESHTOKEN`：用户在此 Spotify 应用的 refresh token。可以利用 [此 gist](https://gist.github.com/outloudvi/d1bbeb5e989db5385384a223a7263744) 获取。
+-   `SPOTIFY_REFRESHTOKEN`：用户在此 Spotify 应用的 refresh token。可以利用 [alecchendev](https://github.com/alecchendev/spotify-refresh-token) 制作的 [spotify-refresh-token](https://alecchen.dev/spotify-refresh-token/) 获取。
+
+:::tip
+
+记得为 `Personal Top Items` 或 `Personal Saved Tracks` 分别勾选 `user-top-read` 或 `user-library-read` scope。
+
+:::
 
 ### Telegram
 
