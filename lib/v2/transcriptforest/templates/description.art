@@ -13,6 +13,11 @@
   {{ /each }}
 {{ /if }}
 
-{{ if description }}
-  <p>{{ description }}</p>
+{{ if texts }}
+  {{ each texts t }}
+    {{ if t.startTime && t.endTime }}
+      <small>{{ t.startTime }} - {{ t.endTime }}</small>
+    {{ /if }}
+    <p>{{ t.text }}</p>
+  {{ /each }}
 {{ /if }}
