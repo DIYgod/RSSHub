@@ -478,7 +478,13 @@ For scientific journal routes
 
 For user data related routes
 
--   `SPOTIFY_REFRESHTOKEN`: The refresh token of the user from the Spotify application. Check [this gist](https://gist.github.com/outloudvi/d1bbeb5e989db5385384a223a7263744) for detailed information.
+-   `SPOTIFY_REFRESHTOKEN`: The refresh token of the user from the Spotify application. You can obtain it through [spotify-refresh-token](https://alecchen.dev/spotify-refresh-token/) by [alecchendev](https://github.com/alecchendev/spotify-refresh-token).
+
+:::tip
+
+Remember to check `user-top-read` and `user-library-read` in the scope for `Personal Top Items` and `Personal Saved Tracks` respectively.
+
+:::
 
 ### Telegram
 
