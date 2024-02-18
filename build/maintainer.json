@@ -3543,7 +3543,19 @@
     "/indiansinkuwait/latest": [
         "TonyRL"
     ],
-    "/indienova/:type": [],
+    "/indienova/:type": [
+        "GensouSakuya",
+        "kt286"
+    ],
+    "/indienova/column/:columnId": [
+        "TonyRL"
+    ],
+    "/indienova/gamedb/recent": [
+        "TonyRL"
+    ],
+    "/indienova/usergames": [
+        "TonyRL"
+    ],
     "/inewsweek/:channel": [
         "changren-wcr"
     ],
