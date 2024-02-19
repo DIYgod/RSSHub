@@ -18,19 +18,23 @@
   | news | gl   | resource |
 </Route>
 
-## 4Gamers 新闻 {#4gamers-xin-wen}
+## 4Gamers {#4gamers}
 
-### 分类 {#4gamers-xin-wen-fen-lei}
+### 最新消息 {#4gamers-zui-xin-xiao-xi}
 
-<Route author="hoilc" example="/4gamers/category/352" path="/4gamers/category/:category" paramsDesc={['分类 ID, 可从分类 URL 中找到']} />
+<Route author="TonyRL" example="/4gamers" path="/4gamers" radar="1" />
 
-### 标签 {#4gamers-xin-wen-biao-qian}
+### 分类 {#4gamers-fen-lei}
 
-<Route author="hoilc" example="/4gamers/tag/英雄聯盟" path="/4gamers/tag/:tag" paramsDesc={['标签名, 可在标签 URL 中找到']} />
+<Route author="hoilc" example="/4gamers/category/352" path="/4gamers/category/:category" paramsDesc={['分类 ID，可从分类 URL 中找到']} radar="1" />
 
-### 主題 {#4gamers-xin-wen-zhu-ti}
+### 标签 {#4gamers-biao-qian}
 
-<Route author="bestpika" example="/4gamers/topic/gentlemen-topic" path="/4gamers/topic/:topic" paramsDesc={['主题, 可在首页上方页面内找到']} />
+<Route author="hoilc" example="/4gamers/tag/限時免費" path="/4gamers/tag/:tag" paramsDesc={['标签名，可在标签 URL 中找到']} radar="1" />
+
+### 主題 {#4gamers-zhu-ti}
+
+<Route author="bestpika" example="/4gamers/topic/gentlemen-topic" path="/4gamers/topic/:topic" paramsDesc={['主题，可在首页上方页面内找到']} radar="1" />
 
 ## 5EPLAY {#5eplay}
 
@@ -265,11 +269,67 @@
   | 1       | 2      | 3    |
 </Route>
 
-## Indienova {#indienova}
+## indienova 独立游戏 {#indienova-du-li-you-xi}
 
-### indienova 文章 {#indienova-indienova-wen-zhang}
+### 文章 {#indienova-du-li-you-xi-wen-zhang}
 
-<Route author="GensouSakuya kt286" example="/indienova/article" path="indienova/:type" paramsDesc={['类型: `article` 文章，`development` 开发']} />
+<Route author="GensouSakuya kt286" example="/indienova/article" path="indienova/:type" paramsDesc={['类型: `article` 文章，`development` 开发']} radar="1" />
+
+### 专题 {#indienova-du-li-you-xi-zhuan-ti}
+
+<Route author="TonyRL" example="/indienova/column/52" path="/indienova/column/:columnId" paramsDesc={['专题 ID，可在 URL中找到']} radar="1">
+  <details>
+    <summary>专题 ID</summary>
+
+    游戏推荐
+
+    | itch 一周游戏汇 | 一周值得关注的发售作品 | 诺娃速递 | 周末游戏视频集锦 | 每月媒体评分 | 年度最佳游戏 | Indie Focus 近期新游 | indienova Picks 精选 |
+    | --------------- | ---------------------- | -------- | ---------------- | ------------ | ------------ | -------------------- | -------------------- |
+    | 52              | 29                     | 41       | 43               | 45           | 39           | 1                    | 8                    |
+
+    游戏评论
+
+    | 游必有方 Podcast | 独立游戏潮（RED） |
+    | ---------------- | ----------------- |
+    | 6                | 3                 |
+
+    游戏开发
+
+    | 游戏设计模式 | Roguelike 开发 | GMS 中文教程 |
+    | ------------ | -------------- | ------------ |
+    | 15           | 14             | 7            |
+
+    游戏设计
+
+    | 游戏与所有 | 让人眼前一亮的游戏设计 | 游戏音乐分析 | 游戏情感设计 | 游戏相关书籍 | 游戏设计课程笔记 | 游戏设计工具 | 游戏设计灵感 | 设计师谈设计 | 游戏研究方法 | 功能游戏 | 游戏设计专业院校 | 像素课堂 |
+    | ---------- | ---------------------- | ------------ | ------------ | ------------ | ---------------- | ------------ | ------------ | ------------ | ------------ | -------- | ---------------- | -------- |
+    | 10         | 33                     | 17           | 4            | 22           | 11               | 24           | 26           | 27           | 28           | 38       | 9                | 19       |
+
+    游戏文化
+
+    | NOVA 海外独立游戏见闻 | 工作室访谈 | indie Figure 游戏人 | 游戏艺术家 | 独立游戏音乐欣赏 | 游戏瑰宝 | 电脑 RPG 游戏史 | ALT. CTRL. GAMING |
+    | --------------------- | ---------- | ------------------- | ---------- | ---------------- | -------- | --------------- | ----------------- |
+    | 53                    | 23         | 5                   | 44         | 18               | 21       | 16              | 2                 |
+
+    Game Jam
+
+    | Ludum Dare | Global Game Jam |
+    | ---------- | --------------- |
+    | 31         | 13              |
+  </details>
+</Route>
+
+### GameDB 游戏库 {#indienova-du-li-you-xi-gamedb-you-xi-ku}
+
+<Route author="TonyRL" example="/indienova/gamedb/recent" path="/indienova/gamedb/recent/:platform?" paramsDesc={['平台，见下表，留空为 `all`']} radar="1">
+  | 全部 | PS4 | XBOX One | Nintendo Switch |
+  | ---- | --- | -------- | --------------- |
+  | all  | ps4 | xboxone  | nintendo-switch |
+</Route>
+
+### 会员开发游戏库 {#indienova-du-li-you-xi-hui-yuan-kai-fa-you-xi-ku}
+
+<Route author="TonyRL" example="/indienova/usergames" path="/indienova/usergames" radar="1" />
 
 ## itch.io {#itch-io}
 
@@ -336,6 +396,18 @@
 ### Java Game Update {#minecraft-java-game-update}
 
 <Route author="TheresaQWQ" example="/minecraft/version" path="/minecraft/version" />
+
+## Modrinth {#modrinth}
+
+### Project versions {#modrinth-project-versions}
+
+<Route author="SettingDust" example="/modrinth/project/sodium/versions" path="/modrinth/project/:id/versions/:routeParams?" paramsDesc={['Id or slug of the Modrinth project','Extra route params. See the table below for options']} radar="1" />
+
+| Name           | Example                                      |
+| -------------- | -------------------------------------------- |
+| loaders        | loaders=fabric\&loaders=quilt\&loaders=forge |
+| game\_versions | game\_versions=1.20.1\&game\_versions=1.20.2 |
+| featured       | featured=true                                |
 
 ## Nintendo {#nintendo}
 
@@ -722,6 +794,14 @@ Example：`https://www.iyingdi.com/tz/people/55547` ，id 是 `55547`
 ### 米游社 - 用户帖子 {#mi-ha-you-mi-you-she-yong-hu-tie-zi}
 
 <Route author="CaoMeiYouRen" example="/mihoyo/bbs/user-post/77005350" path="/mihoyo/bbs/user-post/:uid" paramsDesc={['用户uid']} radar="1" />
+
+### 米游社 - 用户关注动态 {#mi-ha-you-mi-you-she-yong-hu-guan-zhu-dong-tai}
+
+<Route author="CaoMeiYouRen" example="/mihoyo/bbs/timeline" path="/mihoyo/bbs/timeline" radar="1" configRequired="1">
+  :::warning
+  用户关注动态需要米游社登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+  :::
+</Route>
 
 ### 原神 {#mi-ha-you-yuan-shen}
 

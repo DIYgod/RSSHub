@@ -531,6 +531,9 @@ const calculateValue = () => {
             cookies: medium_cookies,
             articleCookie: envs.MEDIUM_ARTICLE_COOKIE || '',
         },
+        mihoyo: {
+            cookie: envs.MIHOYO_COOKIE,
+        },
         miniflux: {
             instance: envs.MINIFLUX_INSTANCE || 'https://reader.miniflux.app',
             token: envs.MINIFLUX_TOKEN || '',
@@ -596,6 +599,7 @@ const calculateValue = () => {
             oauthTokenSecrets: envs.TWITTER_OAUTH_TOKEN_SECRET?.split(','),
             username: envs.TWITTER_USERNAME,
             password: envs.TWITTER_PASSWORD,
+            authenticationSecret: envs.TWITTER_AUTHENTICATION_SECRET,
         },
         weibo: {
             app_key: envs.WEIBO_APP_KEY,

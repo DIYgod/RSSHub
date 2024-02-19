@@ -84,6 +84,22 @@
 
 <Route author="itpcc" example="/dol/announce" path="/dol/announce/:owner?/:province?/:office?" paramsDesc={['Requester/former land owner', 'Province which the land is belongs to', 'DOL office name which the land is belongs to (สำนักงานที่ดิน(กรุงเทพมหานคร|จังหวัด*) [สาขา*])']} />
 
+## Thailand Parliament {#thailand-parliament}
+
+### Thailand Parliament Draft of Law's public hearing system {#thailand-parliament-thailand-parliament-draft-of-law-s-public-hearing-system}
+
+<Route author="itpcc" example="/parliament/section77" path="/parliament/section77/:type?" paramsDesc={['Type of hearing status, see below']} radar="1">
+  | Presented by MP \*       | Presented by People \* | Hearing Ongoing     | Hearing ended   | Hearing result reported  | Waiting for PM approval | Assigned into the session | Processed  | PM Rejected   |
+  | ------------------------ | ---------------------- | ------------------- | --------------- | ------------------------ | ----------------------- | ------------------------- | ---------- | ------------- |
+  | presentbymp              | presentbyperson        | openwsu             | closewsu        | reportwsu                | substatus1              | substatus2                | substatus3 | closewsubypm  |
+  | เสนอโดยสมาชิกสภาผู้แทนราษฏร | เสนอโดยประชาชน         | กำลังเปิดรับฟังความคิดเห็น | ปิดรับฟังความคิดเห็น | รายงานผลการรับฟังความคิดเห็น | รอคำรับรองจากนายกรัฐมนตรี   | บรรจุเข้าระเบียบวาระ         | พิจารณาแล้ว  | นายกฯ ไม่รับรอง |
+
+  *Note:* For `presentbymp` and `presentbyperson`, it can also add:
+
+  -   `-m` for the draft which Speaker of Parliament considered as a monetary draft (ประธานสภาผู้แทนราษฎรวินิจฉัยว่า เป็นร่างการเงิน), or
+  -   `-nm` for non-monetary one (ประธานสภาผู้แทนราษฎรวินิจฉัยว่า ไม่เป็นร่างการเงิน).
+</Route>
+
 ## The United States Trade Representative {#the-united-states-trade-representative}
 
 ### Press Releases {#the-united-states-trade-representative-press-releases}

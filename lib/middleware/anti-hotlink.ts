@@ -72,6 +72,7 @@ const process = (html: string, image_hotlink_template?: string, multimedia_hotli
     if (image_hotlink_template) {
         replaceUrls($, 'img, picture > source', image_hotlink_template);
         replaceUrls($, 'video[poster]', image_hotlink_template, 'poster');
+        replaceUrls($, '*[data-rsshub-image="href"]', image_hotlink_template, 'href');
     }
     if (multimedia_hotlink_template) {
         replaceUrls($, 'video, video > source, audio, audio > source', multimedia_hotlink_template);

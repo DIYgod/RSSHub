@@ -457,7 +457,13 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 
 用户相关路由
 
--   `SPOTIFY_REFRESHTOKEN`：用户在此 Spotify 应用的 refresh token。可以利用 [此 gist](https://gist.github.com/outloudvi/d1bbeb5e989db5385384a223a7263744) 获取。
+-   `SPOTIFY_REFRESHTOKEN`：用户在此 Spotify 应用的 refresh token。可以利用 [alecchendev](https://github.com/alecchendev/spotify-refresh-token) 制作的 [spotify-refresh-token](https://alecchen.dev/spotify-refresh-token/) 获取。
+
+:::tip
+
+记得为 `Personal Top Items` 或 `Personal Saved Tracks` 分别勾选 `user-top-read` 或 `user-library-read` scope。
+
+:::
 
 ### Telegram
 
@@ -467,10 +473,11 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 
 ### Twitter
 
-请使用未开启两步验证的账号，并建议使用非重要账号
+建议使用非重要账号，新账号或者不同地区登录可能会被限制登录
 
 -   `TWITTER_USERNAME`: Twitter 用户名
 -   `TWITTER_PASSWORD`: Twitter 密码
+-   `TWITTER_AUTHENTICATION_SECRET`: 可选，Twitter 两步验证 -> 认证应用 -> `otpauth://totp/Twitter:@_RSSHub?secret=xxxxxxxxxxxxxxxx&issuer=Twitter` 中的 secret 部分
 
 ### Wordpress
 
@@ -551,6 +558,10 @@ Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即
 ### 今日热榜
 
 -   `TOPHUB_COOKIE`: 今日热榜登录后的 cookie，目前只需要 `itc_center_user=...` 以获取原始链接
+
+### 米游社
+
+-   `MIHOYO_COOKIE`：登录米游社后的 cookie，用于获取用户关注动态时间线。
 
 ### 南方周末
 

@@ -413,6 +413,16 @@
 
 <Route author="DIYgod" path="/disqus/posts/:forum" example="/disqus/posts/diygod-me" paramsDesc={['forum, disqus name of the target website']} />
 
+## Fansly {#fansly}
+
+### User Timeline {#fansly-user-timeline}
+
+<Route author="TonyRL" example="/fansly/user/AeriGoMoo" path="/fansly/user/:username" paramsDesc={['User ID']} radar="1" />
+
+### Hashtag {#fansly-hashtag}
+
+<Route author="TonyRL" example="/fansly/tag/free" path="/fansly/tag/:tag" paramsDesc={['Hashtag']} radar="1" />
+
 ## Fur Affinity {#fur-affinity}
 
 ### Home {#fur-affinity-home}
@@ -1479,8 +1489,14 @@ YouTube provides official RSS feeds for channels, for instance [https://www.yout
 
 ### 博主 {#wei-bo-bo-zhu}
 
-<Route author="DIYgod iplusx Rongronggg9" example="/weibo/user/1195230310" path="/weibo/user/:uid/:routeParams?" paramsDesc={['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=1` 时开启微博视频显示']} radar="1">
-  部分博主仅登录可见，不支持订阅，可以通过打开 `https://m.weibo.cn/u/:uid` 验证
+<Route author="DIYgod iplusx Rongronggg9" example="/weibo/user/1195230310" path="/weibo/user/:uid/:routeParams?" paramsDesc={['用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=1` 时开启微博视频显示']} radar="1" anticrawler="1">
+  :::warning
+  部分博主仅登录可见，未提供 Cookie 的情况下不支持订阅，可以通过打开 `https://m.weibo.cn/u/:uid` 验证。如需要订阅该部分博主，可配置 Cookie 后订阅。
+
+  未提供 Cookie 的情况下偶尔会触发反爬限制，提供 Cookie 可缓解该情况。
+
+  微博用户 Cookie 的配置可参照部署文档
+  :::
 </Route>
 
 ### 关键词 {#wei-bo-guan-jian-ci}
@@ -1516,6 +1532,18 @@ YouTube provides official RSS feeds for channels, for instance [https://www.yout
   需要对应用户打开页面进行授权生成 token 才能生成内容
 
   自部署需要申请并配置微博 key，具体见部署文档
+  :::
+</Route>
+
+### 最新关注时间线 {#wei-bo-zui-xin-guan-zhu-shi-jian-xian}
+
+<Route author="CaoMeiYouRen" example="/weibo/friends" path="/weibo/friends/:routeParams?" paramsDesc={['额外参数；请参阅上面的说明和表格']} configRequired="1">
+  :::warning
+  此方案必须使用用户`Cookie`进行抓取
+
+  因微博 cookies 的过期与更新方案未经验证，部署一次 Cookie 的有效时长未知
+
+  微博用户 Cookie 的配置可参照部署文档
   :::
 </Route>
 
@@ -1578,19 +1606,19 @@ YouTube provides official RSS feeds for channels, for instance [https://www.yout
 
 ### 收藏夹 {#zhi-hu-shou-cang-jia}
 
-<Route author="huruji Colin-XKL Fatpandac" example="/zhihu/collection/26444956" path="/zhihu/collection/:id/:getAll?" paramsDesc={['收藏夹 id, 可在收藏夹页面 URL 中找到', '获取全部收藏内容，任意值为打开']} anticrawler="1" radar="1" />
+<Route author="huruji Colin-XKL Fatpandac" example="/zhihu/collection/26444956" path="/zhihu/collection/:id/:getAll?" paramsDesc={['收藏夹 id，可在收藏夹页面 URL 中找到', '获取全部收藏内容，任意值为打开']} anticrawler="1" radar="1" />
 
 ### 用户动态 {#zhi-hu-yong-hu-dong-tai}
 
-<Route author="DIYgod" example="/zhihu/people/activities/diygod" path="/zhihu/people/activities/:id" paramsDesc={['作者 id, 可在用户主页 URL 中找到']} anticrawler="1" radar="1" />
+<Route author="DIYgod" example="/zhihu/people/activities/diygod" path="/zhihu/people/activities/:id" paramsDesc={['作者 id，可在用户主页 URL 中找到']} anticrawler="1" radar="1" />
 
 ### 用户回答 {#zhi-hu-yong-hu-hui-da}
 
-<Route author="DIYgod prnake" example="/zhihu/people/answers/diygod" path="/zhihu/people/answers/:id" paramsDesc={['作者 id, 可在用户主页 URL 中找到']} anticrawler="1" radar="1" />
+<Route author="DIYgod prnake" example="/zhihu/people/answers/diygod" path="/zhihu/people/answers/:id" paramsDesc={['作者 id，可在用户主页 URL 中找到']} anticrawler="1" radar="1" />
 
 ### 用户文章 {#zhi-hu-yong-hu-wen-zhang}
 
-<Route author="whtsky Colin-XKL" example="/zhihu/posts/people/frederchen" path="/zhihu/posts/:usertype/:id" paramsDesc={['作者 id, 可在用户主页 URL 中找到', '用户类型usertype，参考用户主页的URL。目前有两种，见下表']} anticrawler="1" radar="1" />
+<Route author="whtsky Colin-XKL" example="/zhihu/posts/people/frederchen" path="/zhihu/posts/:usertype/:id" paramsDesc={['作者 id，可在用户主页 URL 中找到', '用户类型usertype，参考用户主页的URL。目前有两种，见下表']} anticrawler="1" radar="1" />
 
 | 普通用户 | 机构用户 |
 | -------- | -------- |
@@ -1598,7 +1626,7 @@ YouTube provides official RSS feeds for channels, for instance [https://www.yout
 
 ### 专栏 {#zhi-hu-zhuan-lan}
 
-<Route author="DIYgod" example="/zhihu/zhuanlan/googledevelopers" path="/zhihu/zhuanlan/:id" paramsDesc={['专栏 id, 可在专栏主页 URL 中找到']} anticrawler="1" radar="1" />
+<Route author="DIYgod" example="/zhihu/zhuanlan/googledevelopers" path="/zhihu/zhuanlan/:id" paramsDesc={['专栏 id，可在专栏主页 URL 中找到']} anticrawler="1" radar="1" />
 
 ### 知乎日报 {#zhi-hu-zhi-hu-ri-bao}
 
@@ -1606,7 +1634,7 @@ YouTube provides official RSS feeds for channels, for instance [https://www.yout
 
 ### 知乎日报 - 合集 {#zhi-hu-zhi-hu-ri-bao-he-ji}
 
-<Route author="ccbikai" example="/zhihu/daily/section/2" path="/zhihu/daily/section/:sectionId" paramsDesc={['合集 id, 可在 https://news-at.zhihu.com/api/7/sections 找到']} anticrawler="1" />
+<Route author="ccbikai" example="/zhihu/daily/section/2" path="/zhihu/daily/section/:sectionId" paramsDesc={['合集 id，可在 https://news-at.zhihu.com/api/7/sections 找到']} anticrawler="1" />
 
 ### 知乎热榜 {#zhi-hu-zhi-hu-re-bang}
 
@@ -1630,11 +1658,11 @@ YouTube provides official RSS feeds for channels, for instance [https://www.yout
 
 ### 话题 {#zhi-hu-hua-ti}
 
-<Route author="xyqfer" example="/zhihu/topic/19828946" path="/zhihu/topic/:topicId" paramsDesc={['话题 id']} anticrawler="1" radar="1" />
+<Route author="xyqfer" example="/zhihu/topic/19828946" path="/zhihu/topic/:topicId/:isTop?" paramsDesc={['话题 id', '仅精华，默认为否，其他值为是']} anticrawler="1" radar="1" />
 
 ### 用户想法 {#zhi-hu-yong-hu-xiang-fa}
 
-<Route author="xyqfer" example="/zhihu/people/pins/kan-dan-45" path="/zhihu/people/pins/:id" paramsDesc={['作者 id, 可在用户主页 URL 中找到']} anticrawler="1" radar="1" />
+<Route author="xyqfer" example="/zhihu/people/pins/kan-dan-45" path="/zhihu/people/pins/:id" paramsDesc={['作者 id，可在用户主页 URL 中找到']} anticrawler="1" radar="1" />
 
 ### 知乎书店 - 新书 {#zhi-hu-zhi-hu-shu-dian-xin-shu}
 
