@@ -3958,6 +3958,12 @@
     "/jisilu/:category?/:sort?/:day?": [
         "nczitzk"
     ],
+    "/jjwxc/author/:id?": [
+        "nczitzk"
+    ],
+    "/jjwxc/book/:id?": [
+        "nczitzk"
+    ],
     "/jlbtc/:category?": [],
     "/jlbtc/jwc/:id?": [],
     "/jlbtc/kyc/:category?": [],
