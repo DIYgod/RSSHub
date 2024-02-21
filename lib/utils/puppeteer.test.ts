@@ -1,5 +1,5 @@
 import { describe, expect, it, jest, afterEach } from '@jest/globals';
-import wait from '../../lib/utils/wait';
+import wait from './wait';
 import { type Browser } from 'puppeteer';
 
 let browser: Browser | null = null;
@@ -23,7 +23,7 @@ afterEach(() => {
 
 describe('puppeteer', () => {
     it('puppeteer run', async () => {
-        const { default: puppeteer } = await import('../../lib/utils/puppeteer');
+        const { default: puppeteer } = await import('./puppeteer');
         browser = await puppeteer();
         const startTime = Date.now();
         const page = await browser.newPage();
@@ -45,7 +45,7 @@ describe('puppeteer', () => {
 
     if (!process.env.GITHUB_ACTIONS) {
         it('puppeteer without stealth', async () => {
-            const { default: puppeteer } = await import('../../lib/utils/puppeteer');
+            const { default: puppeteer } = await import('./puppeteer');
             browser = await puppeteer({ stealth: false });
             const page = await browser.newPage();
             await page.goto('https://bot.sannysoft.com', { waitUntil: 'networkidle0' });
@@ -58,7 +58,7 @@ describe('puppeteer', () => {
         }, 15000);
 
         it('puppeteer with stealth', async () => {
-            const { default: puppeteer } = await import('../../lib/utils/puppeteer');
+            const { default: puppeteer } = await import('./puppeteer');
             browser = await puppeteer({ stealth: true });
             const page = await browser.newPage();
             await page.goto('https://bot.sannysoft.com', { waitUntil: 'networkidle0' });
@@ -73,7 +73,7 @@ describe('puppeteer', () => {
     it('puppeteer accept http proxy uri w/ auth', async () => {
         process.env.PROXY_URI = 'http://user:pass@rsshub.proxy:2333';
 
-        const { default: puppeteer } = await import('../../lib/utils/puppeteer');
+        const { default: puppeteer } = await import('./puppeteer');
         browser = await puppeteer();
 
         // trailing slash will cause net::ERR_NO_SUPPORTED_PROXIES, prohibit it
@@ -83,7 +83,7 @@ describe('puppeteer', () => {
     it('puppeteer reject https proxy uri w/ auth', async () => {
         process.env.PROXY_URI = 'https://user:pass@rsshub.proxy:2333';
 
-        const { default: puppeteer } = await import('../../lib/utils/puppeteer');
+        const { default: puppeteer } = await import('./puppeteer');
         browser = await puppeteer();
 
         expect(browser.process()?.spawnargs.some((arg) => arg.includes('--proxy-server'))).toBe(false);
@@ -92,7 +92,7 @@ describe('puppeteer', () => {
     it('puppeteer reject socks proxy uri w/ auth', async () => {
         process.env.PROXY_URI = 'socks5://user:pass@rsshub.proxy:2333';
 
-        const { default: puppeteer } = await import('../../lib/utils/puppeteer');
+        const { default: puppeteer } = await import('./puppeteer');
         browser = await puppeteer();
 
         expect(browser.process()?.spawnargs.some((arg) => arg.includes('--proxy-server'))).toBe(false);
@@ -103,7 +103,7 @@ describe('puppeteer', () => {
         process.env.PROXY_HOST = 'rsshub.proxy';
         process.env.PROXY_PORT = '2333';
 
-        const { default: puppeteer } = await import('../../lib/utils/puppeteer');
+        const { default: puppeteer } = await import('./puppeteer');
         browser = await puppeteer();
 
         expect(browser.process()?.spawnargs.some((arg) => /^--proxy-server=http:\/\/rsshub.proxy:2333$/.test(arg))).toBe(true);
@@ -114,7 +114,7 @@ describe('puppeteer', () => {
         process.env.PROXY_HOST = 'rsshub.proxy';
         process.env.PROXY_PORT = '2333';
 
-        const { default: puppeteer } = await import('../../lib/utils/puppeteer');
+        const { default: puppeteer } = await import('./puppeteer');
         browser = await puppeteer();
 
         expect(browser.process()?.spawnargs.some((arg) => /^--proxy-server=https:\/\/rsshub.proxy:2333$/.test(arg))).toBe(true);
@@ -125,7 +125,7 @@ describe('puppeteer', () => {
         process.env.PROXY_HOST = 'rsshub.proxy';
         process.env.PROXY_PORT = '2333';
 
-        const { default: puppeteer } = await import('../../lib/utils/puppeteer');
+        const { default: puppeteer } = await import('./puppeteer');
         browser = await puppeteer();
 
         expect(browser.process()?.spawnargs.some((arg) => /^--proxy-server=socks4:\/\/rsshub.proxy:2333$/.test(arg))).toBe(true);
@@ -136,7 +136,7 @@ describe('puppeteer', () => {
         process.env.PROXY_HOST = 'rsshub.proxy';
         process.env.PROXY_PORT = '2333';
 
-        const { default: puppeteer } = await import('../../lib/utils/puppeteer');
+        const { default: puppeteer } = await import('./puppeteer');
         browser = await puppeteer();
 
         expect(browser.process()?.spawnargs.some((arg) => /^--proxy-server=socks5:\/\/rsshub.proxy:2333$/.test(arg))).toBe(true);

@@ -116,7 +116,8 @@
         "yml/quotes": ["error", { "prefer": "single" }],
         "@typescript-eslint/no-var-requires": 0,
         "@typescript-eslint/no-explicit-any": 0,
-        "n/no-missing-import": 0
+        "n/no-missing-import": 0,
+        "n/no-unpublished-import": 0
     },
     "overrides": [
         {

@@ -68,11 +68,10 @@
     },
     "testEnvironment": "node",
     "testMatch": [
-      "**/test/**/*.ts"
+      "**/lib/**/*.test.ts"
     ],
     "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/lib/"
+      "/node_modules/"
     ]
   },
   "jest-junit": {

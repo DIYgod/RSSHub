@@ -1,6 +1,6 @@
 import { describe, expect, it } from '@jest/globals';
 
-import app from '../lib/app';
+import app from './app';
 
 describe('index', () => {
     it('serve index', async () => {
