@@ -43,10 +43,6 @@ export type Config = {
     proxyStrategy: string;
     pacUri?: string;
     pacScript?: string;
-    authentication: {
-        name: string;
-        pass: string;
-    };
     denylist?: string[];
     allowlist?: string[];
     allowLocalhost: boolean;
@@ -375,11 +371,6 @@ const calculateValue = () => {
         proxyStrategy: envs.PROXY_STRATEGY || 'all', // all / on_retry
         pacUri: envs.PAC_URI,
         pacScript: envs.PAC_SCRIPT,
-        // auth
-        authentication: {
-            name: envs.HTTP_BASIC_AUTH_NAME || 'usernam3',
-            pass: envs.HTTP_BASIC_AUTH_PASS || 'passw0rd',
-        },
         // access control
         denylist: envs.DENYLIST ? envs.DENYLIST.split(',') : undefined,
         allowlist: envs.ALLOWLIST ? envs.ALLOWLIST.split(',') : undefined,
