@@ -54,8 +54,7 @@
       "lib/**/*.js",
       "!lib/routes/**/*.js",
       "!lib/v2/**/*.js",
-      "!lib/router.js",
-      "!lib/radar-rules.js"
+      "!lib/router.js"
     ],
     "coverageReporters": [
       "text-summary",

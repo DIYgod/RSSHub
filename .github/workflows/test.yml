@@ -7,7 +7,6 @@ on:
     paths:
       - 'test/**'
       - 'lib/**'
-      - '!**/radar-rules.js'
       - 'package.json'
       - 'pnpm-lock.yaml'
       - '.github/workflows/test.yml'

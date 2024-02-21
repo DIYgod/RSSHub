@@ -7,7 +7,6 @@ on:
     paths:
       - '.github/workflows/docker-test.yml'
       - 'lib/**'
-      - '!**/radar-rules.js'
       - 'Dockerfile'
       - 'package.json'
       - 'pnpm-lock.yaml'

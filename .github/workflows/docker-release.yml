@@ -7,7 +7,6 @@ on:
     paths:
       - '.github/workflows/docker-release.yml'
       - 'lib/**'
-      - '!**/radar-rules.js'
       - '!lib/v2/test/**'
       - '!test/**'
       - 'Dockerfile'
