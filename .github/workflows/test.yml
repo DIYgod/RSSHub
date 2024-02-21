@@ -7,6 +7,8 @@ on:
     paths:
       - 'test/**'
       - 'lib/**'
+      - '!**/maintainer.js'
+      - '!**/radar.js'
       - 'package.json'
       - 'pnpm-lock.yaml'
       - '.github/workflows/test.yml'
