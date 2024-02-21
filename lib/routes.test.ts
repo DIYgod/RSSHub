@@ -68,16 +68,15 @@ describe('router', () => {
     });
 
     // robots.txt
-    // TODO
-    // it('/robots.txt', async () => {
-    //     config.disallowRobot = false;
-    //     const response404 = await app.request('/robots.txt');
-    //     expect(response404.status).toBe(404);
+    it('/robots.txt', async () => {
+        config.disallowRobot = false;
+        const response404 = await app.request('/robots.txt');
+        expect(response404.status).toBe(404);
 
-    //     config.disallowRobot = true;
-    //     const response = await app.request('/robots.txt');
-    //     expect(response.status).toBe(200);
-    //     expect(await response.text()).toBe('User-agent: *\nDisallow: /');
-    //     expect(response.headers.get('content-type')).toBe('text/plain');
-    // });
+        config.disallowRobot = true;
+        const response = await app.request('/robots.txt');
+        expect(response.status).toBe(200);
+        expect(await response.text()).toBe('User-agent: *\nDisallow: /');
+        expect(response.headers.get('content-type')).toBe('text/plain');
+    });
 });
