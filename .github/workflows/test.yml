@@ -7,7 +7,6 @@ on:
     paths:
       - 'test/**'
       - 'lib/**'
-      - '!**/maintainer.js'
       - '!**/radar.js'
       - '!**/radar-rules.js'
       - 'package.json'

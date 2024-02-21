@@ -55,7 +55,6 @@
       "!lib/routes/**/*.js",
       "!lib/v2/**/*.js",
       "!lib/router.js",
-      "!lib/maintainer.js",
       "!lib/radar.js",
       "!lib/radar-rules.js"
     ],
