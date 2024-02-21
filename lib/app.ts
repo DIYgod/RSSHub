@@ -14,6 +14,7 @@ import logger from '@/utils/logger';
 
 import routes from '@/routes';
 import index from '@/v3/index';
+import robotstxt from '@/v3/robots.txt';
 import { errorHandler } from '@/errors';
 
 process.on('uncaughtException', (e) => {
@@ -46,6 +47,7 @@ for (const name in routes) {
 }
 
 app.get('/', index);
+app.get('/robots.txt', robotstxt);
 
 app.onError(errorHandler);
 

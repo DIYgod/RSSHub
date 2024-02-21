@@ -332,7 +332,7 @@ const calculateValue = () => {
 
     const _value = {
         // app config
-        disallowRobot: envs.DISALLOW_ROBOT !== '0' && envs.DISALLOW_ROBOT !== 'false',
+        disallowRobot: toBoolean(envs.DISALLOW_ROBOT, false),
         enableCluster: envs.ENABLE_CLUSTER,
         isPackage: !!envs.IS_PACKAGE,
         nodeName: envs.NODE_NAME,
