@@ -8,7 +8,7 @@ import Translate from '@docusaurus/Translate';
 
 **Q: Can I use the demo instance？**
 
-**A:** [rsshub.app](https://rsshub.app) is the demo instance provided, running the latest build of RSSHub from master branch, the cache is set 120 minutes and it's free to use. However, if you see an badge <Badge vertical="middle" type="warn"><Translate id="badge.anticrawler" /></Badge> for route, this means popular websites such as Facebook etc. may pose a request quota on individual IP address, which means it can get unreliable from time to time for the demo instance. You are encouraged to [host your own RSSHub instance](/install/) to get a better usability.
+**A:** [rsshub.app](https://rsshub.app) is the demo instance provided, running the latest build of RSSHub from master branch, the cache is set 120 minutes and it's free to use. However, if you see an badge <Badge vertical="middle" type="caution"><Translate id="badge.anticrawler" /></Badge> for route, this means popular websites such as Facebook etc. may pose a request quota on individual IP address, which means it can get unreliable from time to time for the demo instance. You are encouraged to [host your own RSSHub instance](/install/) to get a better usability.
 
 **Q: Why are images/videos not loading in some RSSHub routes？**
 

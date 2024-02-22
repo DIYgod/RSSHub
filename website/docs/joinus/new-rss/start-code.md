@@ -320,7 +320,7 @@ Next, we'll use Cheerio selectors to select the relevant HTML elements, parse th
     // We use a Cheerio selector to select all 'div' elements with the class name 'js-navigation-container'
     // that contain child elements with the class name 'flex-auto'.
     // highlight-start
-    const item = $('div.js-navigation-container .flex-auto')
+    const items = $('div.js-navigation-container .flex-auto')
         // We use the `toArray()` method to retrieve all the DOM elements selected as an array.
         .toArray()
         // We use the `map()` method to traverse the array and parse the data we need from each element.
@@ -366,7 +366,7 @@ module.exports = async (ctx) => {
     const { data: response } = await got(`${baseUrl}/${user}/${repo}/issues`);
     const $ = cheerio.load(response);
 
-    const item = $('div.js-navigation-container .flex-auto')
+    const items = $('div.js-navigation-container .flex-auto')
         .toArray()
         .map((item) => {
             item = $(item);
@@ -639,7 +639,7 @@ module.exports = async (ctx) => {
     // got requests will be logged automatically
     // but puppeteer requests are not
     // so we need to log them manually
-    logger.debug(`Requesting ${link}`);
+    logger.http(`Requesting ${link}`);
     await page.goto(link, {
         // specify how long to wait for the page to load
         waitUntil: 'domcontentloaded',
@@ -711,7 +711,7 @@ module.exports = async (ctx) => {
     });
 
     const link = `${baseUrl}/${user}/${repo}/issues`;
-    logger.debug(`Requesting ${link}`);
+    logger.http(`Requesting ${link}`);
     await page.goto(link, {
         waitUntil: 'domcontentloaded',
     });
@@ -749,7 +749,7 @@ module.exports = async (ctx) => {
                     request.resourceType() === 'document' ? request.continue() : request.abort();
                 });
 
-                logger.debug(`Requesting ${item.link}`);
+                logger.http(`Requesting ${item.link}`);
                 await page.goto(item.link, {
                     waitUntil: 'domcontentloaded',
                 });
@@ -807,6 +807,6 @@ You can find all the possible values of `request.resourceType()` [here](https://
 
 In the code above, you'll see that `waitUntil: 'domcontentloaded'` is used in the page.goto() function. This is a Puppeteer option that tells it when to consider a navigation successful. You can find all the possible values and their meanings [here](https://pptr.dev/api/puppeteer.page.goto/#remarks).
 
-It's worth noting that `domcontentloaded `waits for a shorter time than the default value `load`, and `networkidle0` may not be suitable for websites that keep sending background telemetry or fetching data.
+It's worth noting that `domcontentloaded`waits for a shorter time than the default value `load`, and `networkidle0` may not be suitable for websites that keep sending background telemetry or fetching data.
 
 Additionally, it's important to avoid waiting for a specific timeout and instead wait for a selector to appear. Waiting for a timeout is inaccurate, as it depends on the load of the Puppeteer instance.

@@ -1,0 +1,22 @@
+<table>
+  <thead>
+    <tr>
+      <th>排名</th>
+      <th>标题</th>
+      <th>热度</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{each items}}
+      <tr>
+        <td>{{ $index + 1 }}</td>
+        <td>
+          <a href="{{ $value.link }}">
+            {{ $value.title }}
+          </a>
+        </td>
+        <td>{{ $value.heatRate }}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>

@@ -1,0 +1,25 @@
+<div>
+  <dl>
+    <dt>
+      <label>【{{ item.messageType }}】</label>
+      <span>{{ item.workUnit }}</span>
+      <span>{{ item.gname }}</span>
+      <span>{{ item.createDate }}</span>
+    </dt>
+    <dd style="margin-top:10px; color:#EF7321;">
+      <p style="text-indent:1em;">
+        {{@ item.infoMess }}
+      </p>
+    </dd>
+    <dt width="140px">
+      <label>【回复】</label>
+      <span>{{ item.feedbackName }}</span>
+      <span>{{ item.feedbackDate }}</span>
+    </dt>
+    <dd>
+      <p style="text-indent:1em;">
+        {{@ item.feedback }}
+      </p>
+    </dd>
+  </dl>
+</div>
