@@ -3989,6 +3989,21 @@
     "/jseea/news/:type?": [
         "schen1024"
     ],
+    "/jsu/cxzx/:types?": [
+        "wenjia03"
+    ],
+    "/jsu/jwc/:types?": [
+        "wenjia03"
+    ],
+    "/jsu/notice": [
+        "wenjia03"
+    ],
+    "/jsu/rjxy": [
+        "wenjia03"
+    ],
+    "/jsu/stxy": [
+        "wenjia03"
+    ],
     "/ju/jwc/:type?": [],
     "/juejin/books": [
         "xyqfer"
