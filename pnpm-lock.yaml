@@ -146,6 +146,9 @@ dependencies:
   pac-proxy-agent:
     specifier: 7.0.1
     version: 7.0.1
+  pinyin-pro:
+    specifier: ^3.19.5
+    version: 3.19.5
   plist:
     specifier: 3.1.0
     version: 3.1.0
@@ -7559,6 +7562,10 @@ packages:
       safe-stable-stringify: 2.4.3
       sonic-boom: 3.8.0
       thread-stream: 2.4.1
+    dev: false
+
+  /pinyin-pro@3.19.5:
+    resolution: {integrity: sha512-cklxUx9S2EBr9N25XgdihSPHLKvwsQ3i3a8YdbtYr56XYMcyRsAH7dS3wdIeRazvg94qcW/3TTu0EKTtiVFXcQ==}
     dev: false
 
   /pirates@4.0.6:
