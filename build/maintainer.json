@@ -187,6 +187,12 @@
     "/52hrtt/symposium/:id?/:classId?": [
         "nczitzk"
     ],
+    "/56kog/class/:category?": [
+        "nczitzk"
+    ],
+    "/56kog/top/:category?": [
+        "nczitzk"
+    ],
     "/591/:country/rent/:query?": [
         "Yukaii"
     ],
