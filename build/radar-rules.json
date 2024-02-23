@@ -4155,7 +4155,7 @@
     ".": [
       {
         "title": "外汇牌价",
-        "docs": "https://docs.rsshub.app/routes/others#zhong-guo-yin-hang",
+        "docs": "https://docs.rsshub.app/routes/other#zhong-guo-yin-hang",
         "source": [
           "/sourcedb/whpj",
           "/"
@@ -9821,6 +9821,19 @@
           "/nice"
         ],
         "target": "/chuanliu/nice"
+      }
+    ]
+  },
+  "cib.com.cn": {
+    "_name": "中国兴业银行",
+    ".": [
+      {
+        "title": "外汇牌价",
+        "docs": "https://docs.rsshub.app/routes/other#zhong-guo-xing-ye-yin-hang",
+        "source": [
+          "/"
+        ],
+        "target": "/cib/whpj"
       }
     ]
   },
@@ -19918,7 +19931,7 @@
     ".": [
       {
         "title": "最近更新",
-        "docs": "https://docs.rsshub.app/routes/others#ai-q-sheng-huo-wang",
+        "docs": "https://docs.rsshub.app/routes/other#ai-q-sheng-huo-wang",
         "source": [
           "/post/new_100/",
           "/"

@@ -1313,6 +1313,9 @@
     "/chuapp/index/:category?": [],
     "/chuhaibiji": [],
     "/cia/foia-annual-report": [],
+    "/cib/whpj/:format?": [
+        "Qixingchen"
+    ],
     "/ciidbnu/:id?": [
         "nczitzk"
     ],
