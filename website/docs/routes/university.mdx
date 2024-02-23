@@ -2593,9 +2593,13 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE\_TL
 
 ## 上海外国语大学 {#shang-hai-eai-guo-yu-da-xue}
 
-### 上外新闻 {#shang-hai-eai-guo-yu-da-xue-shisunews}
+### 上外新闻 {#shang-hai-eai-guo-yu-da-xue-sisu-news}
 
-<Route author="Duuckjing" example="/shisu/news" path="/shisu/news" />
+<Route author="Duuckjing" example="/shisu/news/notice" path="/shisu/news/:category?" paramsDesc={['新闻的分类可根据自己的需要选择。若不填写分类`category`，默认为首页的全部新闻，此时`news`可不填']} radar="1">
+| 首页 |   特稿   |   学术   |   教学   |      国际     |  校园  |  人物  |    视讯    |  公告  |
+| ---- | -------- | -------- | -------- | ------------- | ------ | ------ | ---------- | ------ |
+| news | feature  | research | academic | international | campus | people | multimedia | notice |
+</Route>
 
 ## 深圳大学 {#shen-zhen-da-xue}
 
