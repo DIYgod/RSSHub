@@ -1,5 +1,6 @@
-const { parseRelativeDate } = require('@/utils/parse-date');
-const MockDate = require('mockdate');
+import { describe, expect, it } from '@jest/globals';
+import { parseRelativeDate } from '@/utils/parse-date';
+import MockDate from 'mockdate';
 
 describe('parseRelativeDate', () => {
     const second = 1000;

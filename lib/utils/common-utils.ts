@@ -1,4 +1,4 @@
-import parseDate from '@/utils/parse-date';
+import { parseDate } from '@/utils/parse-date';
 const title = require('title');
 
 // convert a string into title case
@@ -21,7 +21,7 @@ const convertDateToISO8601 = (date?: string | Date | number | null) => {
     }
     if (typeof date !== 'object') {
         // some routes may call `.toUTCString()` before passing the date to ctx...
-        date = parseDate.parse(date);
+        date = parseDate(date);
     }
     return date.toISOString();
 };
