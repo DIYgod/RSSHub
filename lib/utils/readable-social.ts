@@ -39,8 +39,4 @@ const queryToInteger = (s) => {
     return Number.parseInt(s);
 };
 
-module.exports = {
-    fallback,
-    queryToBoolean,
-    queryToInteger,
-};
+export { fallback, queryToBoolean, queryToInteger };

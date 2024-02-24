@@ -25,9 +25,9 @@
  * For more details of these functions, please refer to the jsDoc in the source code.
  */
 
-const got = require('@/utils/got');
-const cheerio = require('cheerio');
-const { parseDate } = require('@/utils/parse-date');
+import got from '@/utils/got';
+import { load } from 'cheerio';
+import { parseDate } from '@/utils/parse-date';
 
 const replaceTag = ($, oldTag, newTagName) => {
     oldTag = $(oldTag);
@@ -81,24 +81,24 @@ const fixArticleContent = (html, skipImg = false) => {
     if (!html) {
         return '';
     }
-    const $ = cheerio.load(html, undefined, false);
+    const $ = load(html, undefined, false);
     if (!skipImg) {
         // fix img lazy loading
         $('img[data-src]').each((_, img) => {
-            img = $(img);
-            const realSrc = img.attr('data-src');
+            const $img = $(img);
+            const realSrc = $img.attr('data-src');
             if (realSrc) {
-                img.attr('src', realSrc);
-                img.removeAttr('data-src');
+                $img.attr('src', realSrc);
+                $img.removeAttr('data-src');
             }
         });
     }
     // fix section
     $('section').each((_, section) => {
-        section = $(section);
-        const p_count = section.find('p').length;
-        const div_count = section.find('div').length;
-        const section_count = section.find('section').length;
+        const $section = $(section);
+        const p_count = $section.find('p').length;
+        const div_count = $section.find('div').length;
+        const section_count = $section.find('section').length;
         if (p_count + div_count + section_count === 0) {
             // make it a p
             replaceTag($, section, 'p');
@@ -119,11 +119,11 @@ const fixArticleContent = (html, skipImg = false) => {
     // fix single picture article
     // example: https://mp.weixin.qq.com/s/4p5YmYuASiQSYFiy7KqydQ
     $('script').each((_, script) => {
-        script = $(script);
-        const matchs = script.html().match(/document\.getElementById\('js_image_desc'\)\.innerHTML = "(.*)"\.replace/);
+        const $script = $(script);
+        const matchs = $script.html()?.match(/document\.getElementById\('js_image_desc'\)\.innerHTML = "(.*)"\.replace/);
 
         if (matchs) {
-            script.replaceWith(matchs[1].replaceAll('\r', '').replaceAll('\n', '<br>').replaceAll('\\x0d', '').replaceAll('\\x0a', '<br>'));
+            $script.replaceWith(matchs[1].replaceAll('\r', '').replaceAll('\n', '<br>').replaceAll('\\x0d', '').replaceAll('\\x0a', '<br>'));
         }
     });
 
@@ -191,7 +191,8 @@ const fetchArticle = (ctx, url, bypassHostCheck = false) => {
     url = normalizeUrl(url, bypassHostCheck);
     return ctx.cache.tryGet(url, async () => {
         const response = await got(url);
-        const $ = cheerio.load(response.data);
+        // @ts-expect-error custom field
+        const $ = load(response.data);
 
         const title = ($('meta[property="og:title"]').attr('content') || '').replaceAll('\\r', '').replaceAll('\\n', ' ');
         const author = $('meta[name=author]').attr('content');
@@ -203,7 +204,8 @@ const fetchArticle = (ctx, url, bypassHostCheck = false) => {
         if (originalUrl) {
             // try to fetch the description from the original article
             const originalResponse = await got(normalizeUrl(originalUrl, bypassHostCheck));
-            const original$ = cheerio.load(originalResponse.data);
+            // @ts-expect-error custom field
+            const original$ = load(originalResponse.data);
             description += fixArticleContent(original$('#js_content'));
         }
 
@@ -217,7 +219,7 @@ const fetchArticle = (ctx, url, bypassHostCheck = false) => {
         const publish_time_match = publish_time_script && publish_time_script.match(/var ct *= *"?(\d{10})"?/);
         const publish_timestamp = publish_time_match && publish_time_match[1];
         if (publish_timestamp) {
-            pubDate = parseDate(publish_timestamp * 1000);
+            pubDate = parseDate(Number.parseInt(publish_timestamp) * 1000);
         }
 
         let mpName = $('.profile_nickname').first().text();
@@ -257,11 +259,4 @@ const finishArticleItem = async (ctx, item, setMpNameAsAuthor = false, skipLink 
     return item;
 };
 
-module.exports = {
-    fixArticleContent,
-    fetchArticle,
-    finishArticleItem, // a new route SHOULD use this function instead of manually calling the above functions
-    _internal: {
-        normalizeUrl, // for internal use only, exported for testing
-    },
-};
+export { fixArticleContent, fetchArticle, finishArticleItem, normalizeUrl };

@@ -11,6 +11,4 @@ const isValidHost = (hostname) => {
     return regex.test(hostname);
 };
 
-module.exports = {
-    isValidHost,
-};
+export { isValidHost };
