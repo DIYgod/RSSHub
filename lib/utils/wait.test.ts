@@ -1,12 +1,13 @@
-const wait = require('../../lib/utils/wait');
+import { describe, expect, it } from '@jest/globals';
+import wait from '@/utils/wait';
 
 describe('wait', () => {
     it('wait 0.1 second', async () => {
-        const startDate = new Date();
+        const startDate = Date.now();
 
         await wait(0.1 * 1000);
 
-        const endDate = new Date();
+        const endDate = Date.now();
         expect(endDate - startDate).toBeGreaterThan(90);
         expect(endDate - startDate).toBeLessThan(150);
     });
