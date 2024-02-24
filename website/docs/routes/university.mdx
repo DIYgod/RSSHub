@@ -1701,6 +1701,36 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE\_TL
   | 1888     | 1887     | 1947     | 1949         | 2011         | 1948         |
 </Route>
 
+## 吉首大学 {#ji-shou-da-xue}
+
+### 通知公告 {#ji-shou-da-xue-tong-zhi-gong-gao}
+
+<Route author="wenjia03" example="/jsu/notice" path="/jsu/notice" />
+
+### 计算机科学与工程学院 - 通知公告 {#ji-shou-da-xue-ji-suan-ji-ke-xue-yu-gong-cheng-xue-yuan-tong-zhi-gong-gao}
+
+<Route author="wenjia03" example="/jsu/rjxy" path="/jsu/rjxy" />
+
+### 教务处 {#ji-shou-da-xue-jiao-wu-chu}
+
+<Route author="wenjia03" example="/jsu/jwc/jwdt" path="/jsu/jwc/:types?" paramsDesc={['通知分类 默认为`jwtz`']}>
+  | 教务通知 | 教务动态 |
+  | -------- | -------- |
+  | jwtz     | jwdt     |
+</Route>
+
+### 数学与统计学院 - 通知公告 {#ji-shou-da-xue-shu-xue-yu-tong-ji-xue-yuan-tong-zhi-gong-gao}
+
+<Route author="wenjia03" example="/jsu/stxy" path="/jsu/stxy" />
+
+### 创新中心 {#ji-shou-da-xue-chuang-xin-zhong-xin}
+
+<Route author="wenjia03" example="/cxzx/xkjs" path="/cxzx/:types?" paramsDesc={['通知分类 默认为`xkjs`']}>
+  | 通知公告 | 学科竞赛公告 | 创新项目公告 | 竞赛新闻 | 竞赛通知 |
+  | -------- | ------------ | ------------ | -------- | -------- |
+  | tzgg     | xkjs         | cxtz         | jsxw     | jstz     |
+</Route>
+
 ## 暨南大学 {#ji-nan-da-xue}
 
 ### 暨南要闻 {#ji-nan-da-xue-ji-nan-yao-wen}
@@ -2198,6 +2228,10 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE\_TL
 ### 教务处通知 {#qing-dao-da-xue-jiao-wu-chu-tong-zhi}
 
 <Route author="abc1763613206" example="/qdu/jwc" path="/qdu/jwc" radar="1" anticrawler="1" />
+
+### 后勤管理处通知 {#qing-dao-da-xue-hou-qin-guan-li-chu-tong-zhi}
+
+<Route author="abc1763613206" example="/qdu/houqin" path="/qdu/houqin" radar="1" />
 
 ## 清华大学 {#qing-hua-da-xue}
 

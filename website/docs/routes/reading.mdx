@@ -242,6 +242,16 @@
 
 <Route author="junbaor" example="/enclavebooks/collection/103702" path="/enclavebooks/collection/:uid" paramsDesc={['用户ID, 自行抓包寻找']} />
 
+## 晋江文学城 {#jin-jiang-wen-xue-cheng}
+
+### 作者最新作品 {#jin-jiang-wen-xue-cheng-zuo-zhe-zui-xin-zuo-pin}
+
+<Route author="nczitzk" example="/jjwxc/author/4364484" path="/jjwxc/author/:id?" paramsDesc={['作者 id，可在对应作者页中找到']} radar="1" />
+
+### 作品 {#jin-jiang-wen-xue-cheng-zuo-pin}
+
+<Route author="nczitzk" example="/jjwxc/book/7013024" path="/jjwxc/book/:id?" paramsDesc={['作品 id，可在对应作品页中找到']} radar="1" />
+
 ## 禁忌书屋 {#jin-ji-shu-wu}
 
 ### 首页 {#jin-ji-shu-wu-shou-ye}
@@ -278,6 +288,28 @@
 ### 小说更新 {#li-bi-qing-xiao-shuo-xiao-shuo-geng-xin}
 
 <Route author="misakicoca" path="/linovelib/novel/:id" example="/linovelib/novel/2547" paramsDesc={['小说 id，对应书架开始阅读 URL 中找到']} anticrawler="1" />
+
+## 明月中文网 {#ming-yue-zhong-wen-wang}
+
+### 分类 {#ming-yue-zhong-wen-wang-fen-lei}
+
+<Route author="nczitzk" example="/56kog/class/1_1" path="/56kog/class/:category?" paramsDesc={['分类，见下表，默认为玄幻魔法']} radar="1">
+  | [玄幻魔法](https://www.56kog.com/class/1_1.html) | [武侠修真](https://www.56kog.com/class/2_1.html) | [历史军事](https://www.56kog.com/class/4_1.html) | [侦探推理](https://www.56kog.com/class/5_1.html) | [网游动漫](https://www.56kog.com/class/6_1.html) |
+  | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ |
+  | 1\_1                                             | 2\_1                                             | 4\_1                                             | 5\_1                                             | 6\_1                                             |
+
+  | [恐怖灵异](https://www.56kog.com/class/8_1.html) | [都市言情](https://www.56kog.com/class/3_1.html) | [科幻](https://www.56kog.com/class/7_1.html) | [女生小说](https://www.56kog.com/class/9_1.html) | [其他](https://www.56kog.com/class/10_1.html) |
+  | ------------------------------------------------ | ------------------------------------------------ | -------------------------------------------- | ------------------------------------------------ | --------------------------------------------- |
+  | 8\_1                                             | 3\_1                                             | 7\_1                                         | 9\_1                                             | 10\_1                                         |
+</Route>
+
+### 榜单 {#ming-yue-zhong-wen-wang-bang-dan}
+
+<Route author="nczitzk" example="/56kog/top/weekvisit" path="/56kog/top/:category?" paramsDesc={['分类，见下表，默认为周点击榜']} radar="1">
+  | [周点击榜](https://www.56kog.com/top/weekvisit.html) | [总收藏榜](https://www.56kog.com/top/goodnum.html) | [最新 入库](https://www.56kog.com/top/postdate.html) |
+  | ---------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------------- |
+  | weekvisit                                            | goodnum                                            | postdate                                             |
+</Route>
 
 ## 起点 {#qi-dian}
 
