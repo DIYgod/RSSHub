@@ -1,20 +1,22 @@
-const got = require('@/utils/got');
-const config = require('@/config').value;
-const nock = require('nock');
-const randUserAgent = require('@/utils/rand-user-agent');
-const mobileUa = require('@/utils/rand-user-agent')({ browser: 'mobile safari', os: 'ios', device: 'mobile' });
+import { describe, expect, it } from '@jest/globals';
+import got from '@/utils/got';
+import { config } from '@/config';
+import nock from 'nock';
+import randUserAgent from '@/utils/rand-user-agent';
+
+const mobileUa = randUserAgent({ browser: 'mobile safari', os: 'ios', device: 'mobile' });
 
 describe('rand-user-agent', () => {
     it('chrome should not include headlesschrome', () => {
         const uaArr = Array(100)
-            .fill()
+            .fill(null)
             .map(() => randUserAgent({ browser: 'chrome', os: 'windows' }));
         const match = uaArr.find((e) => !!(e.includes('Chrome-Lighthouse') || e.includes('HeadlessChrome')));
         expect(match).toBeFalsy();
     });
     it('chrome should not include electron', () => {
         const uaArr = Array(100)
-            .fill()
+            .fill(null)
             .map(() => randUserAgent({ browser: 'chrome', os: 'windows' }));
         const match = uaArr.find((e) => !!e.includes('Electron'));
         expect(match).toBeFalsy();
@@ -44,6 +46,7 @@ describe('rand-user-agent', () => {
                 'user-agent': mobileUa,
             },
         });
+        // @ts-expect-error custom field
         expect(resonse.data.ua).toBe(mobileUa);
     });
 });
