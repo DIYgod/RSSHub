@@ -1,11 +1,11 @@
-/* eslint-disable unicorn/consistent-function-scoping */
-const configUtils = require('../../lib/utils/common-config');
-const nock = require('nock');
+import { describe, expect, it } from '@jest/globals';
+import configUtils, { transElemText, replaceParams, getProp } from '@/utils/common-config';
+import nock from 'nock';
 
 describe('index', () => {
     it('transElemText', () => {
         const $ = () => 'RSSHub';
-        expect(configUtils.transElemText($, '$()')).toBe('RSSHub');
+        expect(transElemText($, '$()')).toBe('RSSHub');
     });
 
     it('replaceParams', () => {
@@ -16,7 +16,7 @@ describe('index', () => {
             },
             title: '%title%',
         };
-        expect(configUtils.replaceParams(data, data.title, $)).toBe('RSSHub');
+        expect(replaceParams(data, data.title, $)).toBe('RSSHub');
     });
 
     it('getProp', () => {
@@ -24,8 +24,8 @@ describe('index', () => {
         const data = {
             title: 'RSSHub',
         };
-        expect(configUtils.getProp(data, ['title'], $)).toBe('RSSHub');
-        expect(configUtils.getProp(data, 'title', $)).toBe('RSSHub');
+        expect(getProp(data, ['title'], $)).toBe('RSSHub');
+        expect(getProp(data, 'title', $)).toBe('RSSHub');
     });
 
     it('all', () => {
@@ -36,7 +36,7 @@ describe('index', () => {
             },
             title: '%title%',
         };
-        expect(configUtils.getProp(data, ['title'], $)).toBe('RSSHub');
+        expect(getProp(data, ['title'], $)).toBe('RSSHub');
     });
 
     it('buildData', async () => {
