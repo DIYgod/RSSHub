@@ -3,7 +3,7 @@
  * @param {String} hostname sub-domain
  * @returns {Boolean} true if valid
  */
-const isValidHost = (hostname) => {
+const isValidHost = (hostname?: string) => {
     if (typeof hostname !== 'string') {
         return false;
     }

@@ -1,9 +1,9 @@
-const { isValidHost } = require('../../lib/utils/valid-host');
+import { describe, expect, it } from '@jest/globals';
+import { isValidHost } from '@/utils/valid-host';
 
 describe('valid-host', () => {
     it('validate hostname', () => {
         expect(isValidHost()).toBe(false);
-        expect(isValidHost(123)).toBe(false);
         expect(isValidHost('')).toBe(false);
         expect(isValidHost('subd0main')).toBe(true);
         expect(isValidHost('-subd0main')).toBe(false);
