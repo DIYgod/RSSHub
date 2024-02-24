@@ -1,7 +1,9 @@
-let puppeteer;
-const { parseCookieArray, constructCookieArray, setCookies, getCookies } = require('../../lib/utils/puppeteer-utils');
+import { describe, expect, it, jest, afterEach } from '@jest/globals';
+import { parseCookieArray, constructCookieArray, setCookies, getCookies } from '@/utils/puppeteer-utils';
+import puppeteer from '@/utils/puppeteer';
+import type { Browser } from 'puppeteer';
 
-let browser = null;
+let browser: Browser | null = null;
 
 afterEach(() => {
     if (browser) {
@@ -60,13 +62,12 @@ describe('puppeteer-utils', () => {
             [cookieArrayExampleCom, cookieStrExampleCom],
             [cookieArraySubExampleCom, cookieStrSubExampleCom],
             [cookieArrayRsshubTest, cookieStrRsshubTest],
-        ]) {
+        ] as const) {
             expect(constructCookieArray(cookieStr, cookieArray[0].domain)).toEqual(cookieArray);
         }
     });
 
     it('getCookies httpbingo', async () => {
-        puppeteer = require('../../lib/utils/puppeteer');
         browser = await puppeteer();
         const page = await browser.newPage();
         await page.goto('https://httpbingo.org/cookies/set?foo=bar&baz=qux', {
@@ -76,7 +77,6 @@ describe('puppeteer-utils', () => {
     }, 15000);
 
     it('setCookies httpbingo', async () => {
-        puppeteer = require('../../lib/utils/puppeteer');
         browser = await puppeteer();
         const page = await browser.newPage();
         // httpbingo.org cannot recognize cookies with empty name properly, so we cannot use cookieStrAll here
@@ -84,12 +84,11 @@ describe('puppeteer-utils', () => {
         await page.goto('https://httpbingo.org/cookies', {
             waitUntil: 'domcontentloaded',
         });
-        const data = await page.evaluate(() => JSON.parse(document.body.textContent));
+        const data = await page.evaluate(() => JSON.parse(document.body.textContent || ''));
         expect(data).toEqual(Object.fromEntries(cookieArrayExampleCom.map(({ name, value }) => [name, value])));
     }, 15000);
 
     it('setCookies & getCookies example.org', async () => {
-        puppeteer = require('../../lib/utils/puppeteer');
         browser = await puppeteer();
         const page = await browser.newPage();
         // we can use cookieStrAll here!

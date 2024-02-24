@@ -5,7 +5,7 @@
  * @param {RegExp | string} domainFilter Filter cookies by domain or RegExp
  * @return {string} Cookie-header-style cookie string (e.g. "foobar; foo=bar; baz=qux")
  */
-const parseCookieArray = (cookies, domainFilter = null) => {
+const parseCookieArray = (cookies, domainFilter?: string | RegExp) => {
     if (typeof domainFilter === 'string') {
         const dotDomain = '.' + domainFilter;
         cookies = cookies.filter(({ domain }) => domain === domainFilter || domain.endsWith(dotDomain));
@@ -50,14 +50,9 @@ const setCookies = async (page, cookieStr, domain) => {
  * @param {RegExp | string} domainFilter Filter cookies by domain or RegExp
  * @return {Promise<string>} Cookie-header-style cookie string
  */
-const getCookies = async (page, domainFilter = null) => {
+const getCookies = async (page, domainFilter?: string) => {
     const cookies = await page.cookies();
     return parseCookieArray(cookies, domainFilter);
 };
 
-module.exports = {
-    parseCookieArray,
-    constructCookieArray,
-    setCookies,
-    getCookies,
-};
+export { parseCookieArray, constructCookieArray, setCookies, getCookies };
