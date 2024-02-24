@@ -1,6 +1,7 @@
-const parser = require('../../lib/utils/rss-parser');
-const config = require('../../lib/config').value;
-const nock = require('nock');
+import { describe, expect, it } from '@jest/globals';
+import parser from '@/utils/rss-parser';
+import { config } from '@/config';
+import nock from 'nock';
 
 describe('got', () => {
     it('headers', async () => {
