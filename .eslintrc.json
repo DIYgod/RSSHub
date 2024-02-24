@@ -55,7 +55,7 @@
         "unicorn/new-for-builtins": 0,
         "unicorn/no-array-callback-reference": 0,
         "unicorn/no-array-reduce": 1,
-        "unicorn/no-await-expression-member": 1,
+        "unicorn/no-await-expression-member": 0,
         "unicorn/no-empty-file": 1,
         "unicorn/no-hex-escape": 1,
         "unicorn/no-null": 0,

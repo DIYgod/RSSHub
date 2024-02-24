@@ -1,19 +1,19 @@
-jest.mock('request-promise-native');
-const RSSHub = require('../lib/pkg');
+import { describe, expect, it } from '@jest/globals';
+import { init, request } from './pkg';
 
 describe('pkg', () => {
-    it('config', () => {
-        RSSHub.init({
+    it('config', async () => {
+        await init({
             UA: 'mock',
         });
-        const config = require('../lib/config').value;
+        const { config } = await import('./config');
         expect(config.ua).toBe('mock');
     });
 
     it('request', (done) => {
-        RSSHub.request('/test/1').then((data) => {
+        request('/test/1').then((data) => {
             expect(data).toMatchObject({
-                atomlink: 'http:///test/1',
+                atomlink: 'http://localhost/test/1',
                 title: 'Test 1',
                 itunes_author: null,
                 link: 'https://github.com/DIYgod/RSSHub',
@@ -61,7 +61,7 @@ describe('pkg', () => {
     });
 
     it('error', (done) => {
-        RSSHub.request('/test/error')
+        request('/test/error')
             .then(() => {
                 done();
             })
