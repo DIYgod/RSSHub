@@ -649,7 +649,7 @@ if (envs.REMOTE_CONFIG) {
 // @ts-expect-error value is set
 export const config: Config = value;
 
-export const setConfig = (env: Partial<Config>) => {
+export const setConfig = (env: Record<string, any>) => {
     envs = Object.assign(process.env, env);
     calculateValue();
 };

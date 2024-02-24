@@ -1,15 +1,14 @@
-process.env.REQUEST_TIMEOUT = '500';
-const got = require('../../lib/utils/got');
-const logger = require('../../lib/utils/logger');
-const config = require('../../lib/config').value;
-const nock = require('nock');
+import { describe, expect, it, afterEach, jest } from '@jest/globals';
+import nock from 'nock';
 
-afterAll(() => {
-    delete process.env.REQUEST_TIMEOUT;
+afterEach(() => {
+    jest.resetModules();
 });
 
 describe('got', () => {
     it('headers', async () => {
+        const { default: got } = await import('@/utils/got');
+        const { config } = await import('@/config');
         nock('http://rsshub.test')
             .get('/test')
             .reply(function () {
@@ -21,6 +20,8 @@ describe('got', () => {
     });
 
     it('retry', async () => {
+        const { default: got } = await import('@/utils/got');
+        const { config } = await import('@/config');
         const requestRun = jest.fn();
         nock('http://rsshub.test')
             .get('/testRerty')
@@ -32,7 +33,7 @@ describe('got', () => {
 
         try {
             await got.get('http://rsshub.test/testRerty');
-        } catch (error) {
+        } catch (error: any) {
             expect(error.name).toBe('HTTPError');
         }
 
@@ -41,6 +42,7 @@ describe('got', () => {
     });
 
     it('axios', async () => {
+        const { default: got } = await import('@/utils/got');
         nock('http://rsshub.test')
             .post('/post')
             .reply(() => [200, '{"code": 0}']);
@@ -51,27 +53,36 @@ describe('got', () => {
             },
         });
         expect(response1.statusCode).toBe(200);
+        // @ts-expect-error custom property
         expect(response1.status).toBe(200);
         expect(response1.body).toBe('{"code": 0}');
+        // @ts-expect-error custom property
         expect(response1.data.code).toBe(0);
     });
 
     it('timeout', async () => {
+        process.env.REQUEST_TIMEOUT = '500';
+
+        const { default: got } = await import('@/utils/got');
         nock('http://rsshub.test')
             .get('/timeout')
             .delay(600)
             .reply(() => [200, '{"code": 0}']);
 
+        const logger = (await import('@/utils/logger')).default;
+        // @ts-expect-error unused
         const loggerSpy = jest.spyOn(logger, 'error').mockReturnValue({});
 
         try {
             await got.get('http://rsshub.test/timeout');
             throw new Error('Timeout Invalid');
-        } catch (error) {
+        } catch (error: any) {
             expect(error.name).toBe('RequestError');
         }
         expect(loggerSpy).toHaveBeenCalledWith(expect.stringContaining('http://rsshub.test/timeout'));
 
         loggerSpy.mockRestore();
+
+        delete process.env.REQUEST_TIMEOUT;
     });
 });

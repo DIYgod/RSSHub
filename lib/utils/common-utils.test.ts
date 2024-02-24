@@ -1,5 +1,5 @@
 import { describe, expect, it } from '@jest/globals';
-import utils from './common-utils';
+import utils from '@/utils/common-utils';
 
 describe('common-utils', () => {
     it('toTitleCase', () => {
