@@ -1,4 +1,5 @@
-const md5 = require('../../lib/utils/md5');
+import { describe, expect, it } from '@jest/globals';
+import md5 from '@/utils/md5';
 
 describe('md5', () => {
     it('md5 RSSHub', () => {
