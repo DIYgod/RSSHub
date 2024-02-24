@@ -8,14 +8,14 @@ const rWhiteSpace = /\s+/;
 const rAllWhiteSpace = /\s+/g;
 
 // collapse all whitespaces into a single space (like "white-space: normal;" would do), and trim
-const collapseWhitespace = (str: string) => {
+const collapseWhitespace = (str?: string | null) => {
     if (str && rWhiteSpace.test(str)) {
         return str.replaceAll(rAllWhiteSpace, ' ').trim();
     }
     return str;
 };
 
-const convertDateToISO8601 = (date: string | Date | number) => {
+const convertDateToISO8601 = (date?: string | Date | number | null) => {
     if (!date) {
         return date;
     }

@@ -1,4 +1,5 @@
-const utils = require('../../lib/utils/common-utils');
+import { describe, expect, it } from '@jest/globals';
+import utils from './common-utils';
 
 describe('common-utils', () => {
     it('toTitleCase', () => {
