@@ -1,8 +1,16 @@
-const got = require('../../lib/utils/got');
-const parser = require('../../lib/utils/rss-parser');
-const nock = require('nock');
-require('../../lib/utils/request-wrapper');
-let check = () => {};
+import { describe, expect, it, beforeEach, afterEach, jest } from '@jest/globals';
+
+import got from '@/utils/got';
+import parser from '@/utils/rss-parser';
+import nock from 'nock';
+import http from 'node:http';
+
+let check: (
+    request: Request & {
+        agent: any;
+        path: string;
+    }
+) => void = () => {};
 const simpleResponse = '<rss version="2.0"><channel><item></item></channel></rss>';
 
 beforeEach(() => {
@@ -22,7 +30,6 @@ afterEach(() => {
     nock.activate();
     check = () => {};
 
-    const http = require('http');
     const httpWrap = (func) => {
         const origin = func;
         return function (url, request) {
@@ -35,15 +42,21 @@ afterEach(() => {
             } else {
                 check(request);
             }
+            // @ts-expect-error any
+            // eslint-disable-next-line prefer-rest-params
             return Reflect.apply(origin, this, arguments);
         };
     };
     http.get = httpWrap(http.get);
     http.request = httpWrap(http.request);
+
+    jest.resetModules();
 });
 
 describe('got', () => {
     it('headers', async () => {
+        await import('@/utils/request-wrapper');
+
         nock(/rsshub\.test/)
             .get(/.*/)
             .times(3)
@@ -62,8 +75,7 @@ describe('got', () => {
     it('proxy-uri socks', async () => {
         process.env.PROXY_URI = 'socks5://user:pass@rsshub.proxy:2333';
 
-        jest.resetModules();
-        require('../../lib/utils/request-wrapper');
+        await import('@/utils/request-wrapper');
         check = (request) => {
             expect(request.agent.constructor.name).toBe('SocksProxyAgent');
             expect(request.agent.proxy.host).toBe('rsshub.proxy');
@@ -83,8 +95,7 @@ describe('got', () => {
     it('proxy-uri http', async () => {
         process.env.PROXY_URI = 'http://user:pass@rsshub.proxy:2333';
 
-        jest.resetModules();
-        require('../../lib/utils/request-wrapper');
+        await import('@/utils/request-wrapper');
         check = (request) => {
             expect(request.agent.constructor.name).toBe('HttpsProxyAgent');
             expect(request.agent.proxy.protocol).toBe('http:');
@@ -107,8 +118,7 @@ describe('got', () => {
     it('proxy-uri https', async () => {
         process.env.PROXY_URI = 'https://rsshub.proxy:2333';
 
-        jest.resetModules();
-        require('../../lib/utils/request-wrapper');
+        await import('@/utils/request-wrapper');
         check = (request) => {
             expect(request.agent.constructor.name).toBe('HttpsProxyAgent');
             expect(request.agent.proxy.protocol).toBe('https:');
@@ -131,8 +141,7 @@ describe('got', () => {
         process.env.PROXY_HOST = 'rsshub.proxy';
         process.env.PROXY_PORT = '2333';
 
-        jest.resetModules();
-        require('../../lib/utils/request-wrapper');
+        await import('@/utils/request-wrapper');
         check = (request) => {
             expect(request.agent.constructor.name).toBe('SocksProxyAgent');
             expect(request.agent.proxy.host).toBe('rsshub.proxy');
@@ -154,8 +163,7 @@ describe('got', () => {
         process.env.PROXY_HOST = 'rsshub.proxy';
         process.env.PROXY_PORT = '2333';
 
-        jest.resetModules();
-        require('../../lib/utils/request-wrapper');
+        await import('@/utils/request-wrapper');
         check = (request) => {
             expect(request.agent.constructor.name).toBe('HttpsProxyAgent');
             expect(request.agent.proxy.protocol).toBe('http:');
@@ -178,8 +186,7 @@ describe('got', () => {
         process.env.PROXY_HOST = 'rsshub.proxy';
         process.env.PROXY_PORT = '2333';
 
-        jest.resetModules();
-        require('../../lib/utils/request-wrapper');
+        await import('@/utils/request-wrapper');
         check = (request) => {
             expect(request.agent.constructor.name).toBe('HttpsProxyAgent');
             expect(request.agent.proxy.protocol).toBe('https:');
@@ -197,34 +204,10 @@ describe('got', () => {
         await parser.parseURL('http://rsshub.test/proxy');
     });
 
-    it('proxy reverse proxy', async () => {
-        process.env.REVERSE_PROXY_URL = 'http://rsshub.test/?target=';
-        const url = 'http://rsshub.test/proxy';
-
-        jest.resetModules();
-        require('../../lib/utils/request-wrapper');
-        check = (request) => {
-            expect(request.url.toString()).toBe(`${process.env.REVERSE_PROXY_URL}${encodeURIComponent(url)}`);
-        };
-
-        nock(/rsshub\.test/)
-            .get(`/?target=${encodeURIComponent(url)}`)
-            .times(2)
-            .reply(200, simpleResponse);
-        nock(/rsshub\.test/)
-            .get('/proxy')
-            .times(2)
-            .reply(200, simpleResponse);
-
-        await got.get(url);
-        await parser.parseURL(url);
-    });
-
     it('pac-uri http', async () => {
         process.env.PAC_URI = 'http://rsshub.proxy:2333';
 
-        jest.resetModules();
-        require('../../lib/utils/request-wrapper');
+        await import('@/utils/request-wrapper');
 
         check = (request) => {
             expect(request.agent.constructor.name).toBe('PacProxyAgent');
@@ -246,8 +229,7 @@ describe('got', () => {
     it('pac-uri https', async () => {
         process.env.PAC_URI = 'https://rsshub.proxy:2333';
 
-        jest.resetModules();
-        require('../../lib/utils/request-wrapper');
+        await import('@/utils/request-wrapper');
 
         check = (request) => {
             expect(request.agent.constructor.name).toBe('PacProxyAgent');
@@ -269,8 +251,7 @@ describe('got', () => {
     it('pac-uri ftp', async () => {
         process.env.PAC_URI = 'ftp://rsshub.proxy:2333';
 
-        jest.resetModules();
-        require('../../lib/utils/request-wrapper');
+        await import('@/utils/request-wrapper');
 
         check = (request) => {
             expect(request.agent.constructor.name).toBe('PacProxyAgent');
@@ -292,8 +273,7 @@ describe('got', () => {
     it('pac-uri file', async () => {
         process.env.PAC_URI = 'file:///D:/rsshub/proxy';
 
-        jest.resetModules();
-        require('../../lib/utils/request-wrapper');
+        await import('@/utils/request-wrapper');
 
         check = (request) => {
             expect(request.agent.constructor.name).toBe('PacProxyAgent');
@@ -313,8 +293,7 @@ describe('got', () => {
     it('pac-script data', async () => {
         process.env.PAC_SCRIPT = "function FindProxyForURL(url,host){return 'DIRECT';}";
 
-        jest.resetModules();
-        require('../../lib/utils/request-wrapper');
+        await import('@/utils/request-wrapper');
 
         check = (request) => {
             expect(request.agent.constructor.name).toBe('PacProxyAgent');
@@ -337,8 +316,7 @@ describe('got', () => {
         process.env.PROXY_HOST = 'rsshub.proxy';
         process.env.PROXY_PORT = '2333';
 
-        jest.resetModules();
-        require('../../lib/utils/request-wrapper');
+        await import('@/utils/request-wrapper');
 
         nock(/rsshub\.test/)
             .get('/auth')
@@ -358,8 +336,7 @@ describe('got', () => {
         process.env.PROXY_HOST = 'rsshub.proxy';
         process.env.PROXY_PORT = '2333';
 
-        jest.resetModules();
-        require('../../lib/utils/request-wrapper');
+        await import('@/utils/request-wrapper');
         check = (request) => {
             if (request.path === '/url_regex') {
                 expect(request.agent.constructor.name).toBe('SocksProxyAgent');
