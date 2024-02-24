@@ -26,8 +26,9 @@
  */
 
 import got from '@/utils/got';
-import { load } from 'cheerio';
+import { load, type Cheerio, type Element } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
+import cache from '@/utils/cache';
 
 const replaceTag = ($, oldTag, newTagName) => {
     oldTag = $(oldTag);
@@ -76,12 +77,17 @@ const detectSourceUrl = ($) => {
  * @param {boolean} skipImg - Whether to skip fixing images.
  * @return {string} - The fixed html, a string.
  */
-const fixArticleContent = (html, skipImg = false) => {
-    html = html && html.html ? html.html() : html; // do not disturb the original tree
-    if (!html) {
+const fixArticleContent = (html?: string | Cheerio<Element>, skipImg = false) => {
+    let htmlResult = '';
+    if (typeof html === 'string') {
+        htmlResult = html;
+    } else if (html?.html) {
+        htmlResult = html.html() || '';
+    }
+    if (!htmlResult) {
         return '';
     }
-    const $ = load(html, undefined, false);
+    const $ = load(htmlResult, undefined, false);
     if (!skipImg) {
         // fix img lazy loading
         $('img[data-src]').each((_, img) => {
@@ -187,9 +193,9 @@ const normalizeUrl = (url, bypassHostCheck = false) => {
  * @param {boolean} bypassHostCheck - Whether to bypass host check.
  * @return {Promise<object>} - An object containing the article and its metadata.
  */
-const fetchArticle = (ctx, url, bypassHostCheck = false) => {
+const fetchArticle = (url, bypassHostCheck = false) => {
     url = normalizeUrl(url, bypassHostCheck);
-    return ctx.cache.tryGet(url, async () => {
+    return cache.tryGet(url, async () => {
         const response = await got(url);
         // @ts-expect-error custom field
         const $ = load(response.data);
@@ -225,7 +231,15 @@ const fetchArticle = (ctx, url, bypassHostCheck = false) => {
         let mpName = $('.profile_nickname').first().text();
         mpName = mpName && mpName.trim();
         return { title, author, description, summary, pubDate, mpName, link: response.url };
-    });
+    }) as Promise<{
+        title: string;
+        author: string;
+        description: string;
+        summary: string;
+        pubDate?: Date;
+        mpName?: string;
+        link: string;
+    }>;
 };
 
 /**
@@ -244,8 +258,8 @@ const fetchArticle = (ctx, url, bypassHostCheck = false) => {
  * @param {boolean} skipLink - Whether to skip overriding `item.link` with the normalized url.
  * @return {Promise<object>} - The incoming `item` object, with the article and its metadata filled in.
  */
-const finishArticleItem = async (ctx, item, setMpNameAsAuthor = false, skipLink = false) => {
-    const { title, author, description, summary, pubDate, mpName, link } = await fetchArticle(ctx, item.link);
+const finishArticleItem = async (item, setMpNameAsAuthor = false, skipLink = false) => {
+    const { title, author, description, summary, pubDate, mpName, link } = await fetchArticle(item.link);
     item.title = title || item.title;
     item.description = description || item.description;
     item.summary = summary || item.summary;

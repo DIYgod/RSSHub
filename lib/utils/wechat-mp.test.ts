@@ -1,17 +1,7 @@
-process.env.REQUEST_TIMEOUT = '500';
-const cheerio = require('cheerio');
-const {
-    _internal: { normalizeUrl },
-    fetchArticle,
-    finishArticleItem,
-    fixArticleContent,
-} = require('../../lib/utils/wechat-mp');
-const nock = require('nock');
-const ctx = require('../../lib/app').context;
-
-afterAll(() => {
-    delete process.env.REQUEST_TIMEOUT;
-});
+import { describe, expect, it } from '@jest/globals';
+import { load } from 'cheerio';
+import nock from 'nock';
+import { fixArticleContent, fetchArticle, finishArticleItem, normalizeUrl } from '@/utils/wechat-mp';
 
 // date from the cache will be an ISO8601 string, so we need to use this function
 const compareDate = (date1, date2) => {
@@ -56,20 +46,19 @@ describe('wechat-mp', () => {
             '<script>const test = "test"</script>';
         const expectedHtmlSection =
             expectedCodeSection + '<p>test</p>' + '<div><p>test</p></div>' + '<div><div>test</div></div>' + '<div><div><p>test</p></div></div>' + '<div><div><p>test</p></div></div>' + '<p>test</p>' + '<div><p>test</p></div>';
-        let $ = cheerio.load(divHeader + htmlSection + divFooter);
+        let $ = load(divHeader + htmlSection + divFooter);
         expect(fixArticleContent(htmlSection)).toBe(expectedHtmlSection);
         expect(fixArticleContent($('div#js_content.rich_media_content'))).toBe(expectedHtmlSection);
 
         const htmlImg = '<img alt="test" data-src="http://rsshub.test/test.jpg" src="http://rsshub.test/test.jpg">' + '<img alt="test" data-src="http://rsshub.test/test.jpg">' + '<img alt="test" src="http://rsshub.test/test.jpg">';
         const expectedHtmlImg = Array.from({ length: 3 + 1 }).join('<img alt="test" src="http://rsshub.test/test.jpg">');
-        $ = cheerio.load(divHeader + htmlImg + divFooter);
+        $ = load(divHeader + htmlImg + divFooter);
         expect(fixArticleContent(htmlImg)).toBe(expectedHtmlImg);
         expect(fixArticleContent($('div#js_content.rich_media_content'))).toBe(expectedHtmlImg);
         expect(fixArticleContent(htmlImg, true)).toBe(htmlImg);
         expect(fixArticleContent($('div#js_content.rich_media_content'), true)).toBe(htmlImg);
 
         expect(fixArticleContent('')).toBe('');
-        expect(fixArticleContent(null)).toBe('');
         expect(fixArticleContent()).toBe('');
         expect(fixArticleContent($('div#something_not_in.the_document_tree'))).toBe('');
     });
@@ -121,7 +110,14 @@ describe('wechat-mp', () => {
         const httpsUrl = 'https://mp.weixin.qq.com/rsshub_test/wechatMp_fetchArticle';
         const httpUrl = httpsUrl.replace(/^https:\/\//, 'http://');
 
-        const expectedItem = {
+        const expectedItem: {
+            title: string;
+            summary: string;
+            author: string;
+            description: string;
+            mpName?: string;
+            link: string;
+        } = {
             title: 'title',
             summary: 'summary',
             author: 'author',
@@ -131,13 +127,13 @@ describe('wechat-mp', () => {
         };
         const expectedDate = new Date(ct * 1000);
 
-        const fetchArticleItem = await fetchArticle(ctx, httpUrl);
+        const fetchArticleItem = await fetchArticle(httpUrl);
         expect(compareDate(fetchArticleItem.pubDate, expectedDate)).toBe(true);
         delete fetchArticleItem.pubDate;
         expect(fetchArticleItem).toEqual(expectedItem);
 
         delete expectedItem.mpName;
-        const finishedArticleItem = await finishArticleItem(ctx, { link: httpUrl });
+        const finishedArticleItem = await finishArticleItem({ link: httpUrl });
         expect(compareDate(finishedArticleItem.pubDate, expectedDate)).toBe(true);
         delete finishedArticleItem.pubDate;
         expect(finishedArticleItem).toEqual(expectedItem);
