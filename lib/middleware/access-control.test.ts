@@ -4,7 +4,6 @@ import md5 from '@/utils/md5';
 import type { serve } from '@hono/node-server';
 
 let server: ReturnType<typeof serve>;
-jest.mock('request-promise-native');
 
 function checkBlock(response) {
     expect(response.status).toBe(403);

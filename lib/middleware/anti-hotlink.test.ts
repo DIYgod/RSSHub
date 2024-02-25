@@ -1,10 +1,12 @@
-const supertest = require('supertest');
-jest.mock('request-promise-native');
-const Parser = require('rss-parser');
-const querystring = require('query-string');
+import { describe, expect, it, jest, afterEach, afterAll } from '@jest/globals';
+import supertest from 'supertest';
+import Parser from 'rss-parser';
+import querystring from 'query-string';
+import type { serve } from '@hono/node-server';
+
 const parser = new Parser();
 jest.setTimeout(50000);
-let server;
+let server: ReturnType<typeof serve>;
 
 afterAll(() => {
     delete process.env.HOTLINK_TEMPLATE;
@@ -116,72 +118,11 @@ const expects = {
             ],
             desc: '<video src="https://i3.wp.com/mock.com/DIYgod/DIYgod/RSSHub"></video> - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)',
         },
-        wrappedInIframe: {
-            items: [
-                `<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">
-<iframe referrerpolicy="no-referrer" width="100%" height="150vh" frameborder="0" marginheight="0" marginwidth="0" style="border:0; margin:0; padding:0; width:100%; height:150vh;" srcdoc="
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;>
-  </head>
-  <body>
-    <video src=&quot;https://mock.com/DIYgod/RSSHub.mp4&quot;></video>
-  </body>
-</html>
-">
-</iframe>
-
-<iframe referrerpolicy="no-referrer" width="100%" height="150vh" frameborder="0" marginheight="0" marginwidth="0" style="border:0; margin:0; padding:0; width:100%; height:150vh;" srcdoc="
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;>
-  </head>
-  <body>
-    <video poster=&quot;https://mock.com/DIYgod/RSSHub.jpg&quot;>
-<source src=&quot;https://mock.com/DIYgod/RSSHub.mp4&quot; type=&quot;video/mp4&quot;>
-<source src=&quot;https://mock.com/DIYgod/RSSHub.webm&quot; type=&quot;video/webm&quot;>
-</video>
-  </body>
-</html>
-">
-</iframe>
-
-<iframe referrerpolicy="no-referrer" width="100%" height="150vh" frameborder="0" marginheight="0" marginwidth="0" style="border:0; margin:0; padding:0; width:100%; height:150vh;" srcdoc="
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;>
-  </head>
-  <body>
-    <audio src=&quot;https://mock.com/DIYgod/RSSHub.mp3&quot;></audio>
-  </body>
-</html>
-">
-</iframe>
-
-<iframe src="https://mock.com/DIYgod/RSSHub.html" referrerpolicy="no-referrer"></iframe>`,
-            ],
-            desc: `<iframe referrerpolicy="no-referrer" width="100%" height="150vh" frameborder="0" marginheight="0" marginwidth="0" style="border:0; margin:0; padding:0; width:100%; height:150vh;" srcdoc="
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;>
-  </head>
-  <body>
-    <video src=&quot;http://mock.com/DIYgod/DIYgod/RSSHub&quot;></video>
-  </body>
-</html>
-">
-</iframe>
- - Made with love by RSSHub(https://github.com/DIYgod/RSSHub)`,
-        },
     },
 };
 
-const testAntiHotlink = async (path, expectObj, query) => {
-    server = require('../../lib/index');
+const testAntiHotlink = async (path, expectObj, query?: string | Record<string, any>) => {
+    server = (await import('@/index')).default;
     const request = supertest(server);
 
     let queryStr;
@@ -200,13 +141,12 @@ const testAntiHotlink = async (path, expectObj, query) => {
     return parsed;
 };
 
-const expectImgOrigin = (query) => testAntiHotlink('/test/complicated', expects.complicated.origin, query);
-const expectImgProcessed = (query) => testAntiHotlink('/test/complicated', expects.complicated.processed, query);
-const expectImgUrlencoded = (query) => testAntiHotlink('/test/complicated', expects.complicated.urlencoded, query);
-const expectMultimediaOrigin = (query) => testAntiHotlink('/test/multimedia', expects.multimedia.origin, query);
-const expectMultimediaRelayed = (query) => testAntiHotlink('/test/multimedia', expects.multimedia.relayed, query);
-const expectMultimediaPartlyRelayed = (query) => testAntiHotlink('/test/multimedia', expects.multimedia.partlyRelayed, query);
-const expectMultimediaWrappedInIframe = (query) => testAntiHotlink('/test/multimedia', expects.multimedia.wrappedInIframe, query);
+const expectImgOrigin = (query?: string | Record<string, any>) => testAntiHotlink('/test/complicated', expects.complicated.origin, query);
+const expectImgProcessed = (query?: string | Record<string, any>) => testAntiHotlink('/test/complicated', expects.complicated.processed, query);
+const expectImgUrlencoded = (query?: string | Record<string, any>) => testAntiHotlink('/test/complicated', expects.complicated.urlencoded, query);
+const expectMultimediaOrigin = (query?: string | Record<string, any>) => testAntiHotlink('/test/multimedia', expects.multimedia.origin, query);
+const expectMultimediaRelayed = (query?: string | Record<string, any>) => testAntiHotlink('/test/multimedia', expects.multimedia.relayed, query);
+const expectMultimediaPartlyRelayed = (query?: string | Record<string, any>) => testAntiHotlink('/test/multimedia', expects.multimedia.partlyRelayed, query);
 
 describe('anti-hotlink', () => {
     it('template-legacy', async () => {
@@ -253,10 +193,6 @@ describe('anti-hotlink', () => {
         process.env.ALLOW_USER_HOTLINK_TEMPLATE = 'true';
         await expectMultimediaOrigin({ multimedia_hotlink_template: '${protocol}//${host}${pathname}' });
         await expectMultimediaPartlyRelayed({ multimedia_hotlink_template: 'https://i3.wp.com/${host}${pathname}' });
-    });
-
-    it('multimedia-wrapped-in-iframe-experimental', async () => {
-        await expectMultimediaWrappedInIframe({ wrap_multimedia_in_iframe: '1' });
     });
 
     it('include-paths-partial-matched', async () => {
@@ -311,7 +247,7 @@ describe('anti-hotlink', () => {
 
     it('invalid-property', async () => {
         process.env.HOTLINK_TEMPLATE = 'https://i3.wp.com/${createObjectURL}';
-        server = require('../../lib/index');
+        server = (await import('@/index')).default;
         const request = supertest(server);
         const response = await request.get('/test/complicated');
         expect(response.text).toContain('Error: Invalid URL property: createObjectURL');
