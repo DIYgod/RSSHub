@@ -19,6 +19,7 @@ coverage
 docs/.vuepress/dist
 node_modules
 tmp
+dist
 
 Session.vim
 combined.log

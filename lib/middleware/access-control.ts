@@ -1,7 +1,7 @@
 import type { MiddlewareHandler } from 'hono';
 import { config } from '@/config';
 import md5 from '@/utils/md5';
-import isLocalhost from 'is-localhost-ip';
+import ipUtils from 'ip';
 import { getIp } from '@/utils/helpers';
 import RejectError from '@/errors/reject';
 
@@ -39,7 +39,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     const isControlled = config.accessKey || config.allowlist || config.denylist;
 
-    const allowLocalhost = config.allowLocalhost && ip && (await isLocalhost(ip));
+    const allowLocalhost = config.allowLocalhost && ip && ipUtils.isPrivate(ip);
 
     const grant = async () => {
         if (ctx.res.status !== 403) {

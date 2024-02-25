@@ -49,7 +49,16 @@ const summarizeArticle = async (articleText: string) => {
         },
     });
 
+    // @ts-expect-error custom field
     return response.data.choices[0].message.content;
+};
+
+const getAuthorString = (item) => {
+    let author = '';
+    if (item.author) {
+        author = typeof item.author === 'string' ? item.author : item.author.map((i) => i.name).join(' ');
+    }
+    return author;
 };
 
 const middleware: MiddlewareHandler = async (ctx, next) => {
@@ -187,7 +196,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             data.item = data.item.filter((item) => {
                 const title = item.title || '';
                 const description = item.description || title;
-                const author = item.author || '';
+                const author = getAuthorString(item);
                 const category = item.category || [];
                 const isFilter =
                     regex instanceof RE2JS
@@ -203,7 +212,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             data.item = data.item.filter((item) => {
                 const title = item.title || '';
                 const description = item.description || title;
-                const author = item.author || '';
+                const author = getAuthorString(item);
                 const category = item.category || [];
                 let isFilter = true;
 
@@ -232,7 +241,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             data.item = data.item.filter((item) => {
                 const title = item.title;
                 const description = item.description || title;
-                const author = item.author || '';
+                const author = getAuthorString(item);
                 const category = item.category || [];
                 let isFilter = true;
 
@@ -295,6 +304,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     if (link) {
                         // if parser failed, return default description and not report error
                         try {
+                            // @ts-expect-error custom field
                             const { data: res } = await got(link);
                             const $ = load(res);
                             const result = await Parser.parse(link, {

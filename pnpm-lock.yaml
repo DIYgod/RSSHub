@@ -98,12 +98,12 @@ dependencies:
   ioredis:
     specifier: 5.3.2
     version: 5.3.2
+  ip:
+    specifier: 2.0.1
+    version: 2.0.1
   ip-regex:
     specifier: 4.3.0
     version: 4.3.0
-  is-localhost-ip:
-    specifier: 2.0.0
-    version: 2.0.0
   jsdom:
     specifier: 24.0.0
     version: 24.0.0
@@ -6302,8 +6302,8 @@ packages:
     resolution: {integrity: sha512-PuExPYUiu6qMBQb4l06ecm6T6ujzhmh+MeJcW9wa89PoAz5pvd4zPgN5WJV104mb6S2T1AwNIAaB70JNrLQWhg==}
     dev: false
 
-  /ip@2.0.0:
-    resolution: {integrity: sha512-WKa+XuLG1A1R0UWhl2+1XQSi+fZWMsYKffMZTTYsiZaUD8k2yDAj5atimTUD2TZkyCkNEeYE5NhFZmupOGtjYQ==}
+  /ip@2.0.1:
+    resolution: {integrity: sha512-lJUL9imLTNi1ZfXT+DU6rBBdbiKGBuay9B6xGSPVjUeQwaH1RIGqef8RZkUtHioLmSNpPR5M4HVKJGm1j8FWVQ==}
     dev: false
 
   /is-alphabetical@1.0.4:
@@ -6445,11 +6445,6 @@ packages:
   /is-keyword-js@1.0.3:
     resolution: {integrity: sha512-EW8wNCNvomPa/jsH1g0DmLfPakkRCRTcTML1v1fZMLiVCvQ/1YB+tKsRzShBiWQhqrYCi5a+WsepA4Z8TA9iaA==}
     engines: {node: '>=0.10.0'}
-    dev: false
-
-  /is-localhost-ip@2.0.0:
-    resolution: {integrity: sha512-vlgs2cSgMOfnKU8c1ewgKPyum9rVrjjLLW2HBdL5i0iAJjOs8NY55ZBd/hqUTaYR0EO9CKZd3hVSC2HlIbygTQ==}
-    engines: {node: '>=12'}
     dev: false
 
   /is-number@7.0.0:
@@ -10156,7 +10151,7 @@ packages:
     resolution: {integrity: sha512-7maUZy1N7uo6+WVEX6psASxtNlKaNVMlGQKkG/63nEDdLOWNbiUMoLK7X4uYoLhQstau72mLgfEWcXcwsaHbYQ==}
     engines: {node: '>= 10.13.0', npm: '>= 3.0.0'}
     dependencies:
-      ip: 2.0.0
+      ip: 2.0.1
       smart-buffer: 4.2.0
     dev: false
 

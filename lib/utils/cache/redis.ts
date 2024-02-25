@@ -3,7 +3,7 @@ import Redis from 'ioredis';
 import logger from '@/utils/logger';
 import type CacheModule from './base';
 
-let redisClient: Redis;
+let redisClient: Redis | undefined;
 
 const status = { available: false };
 
@@ -33,7 +33,7 @@ export default {
         });
     },
     get: async (key: string, refresh = true) => {
-        if (key && status.available) {
+        if (key && status.available && redisClient) {
             const cacheTtlKey = getCacheTtlKey(key);
             let [value, cacheTtl] = await redisClient.mget(key, cacheTtlKey);
             if (value && refresh) {
@@ -52,7 +52,7 @@ export default {
         }
     },
     set: (key: string, value?: string | Record<string, any>, maxAge = config.cache.contentExpire) => {
-        if (!status.available) {
+        if (!status.available || !redisClient) {
             return;
         }
         if (!value || value === 'undefined') {

@@ -43,9 +43,10 @@ async function buildData(data) {
     let charset = 'utf-8';
     for (const attr of contentType.split(';')) {
         if (attr.includes('charset=')) {
-            charset = attr.split('=').pop();
+            charset = attr.split('=').pop() || 'utf-8';
         }
     }
+    // @ts-expect-error custom property
     const responseData = charset === 'utf-8' ? response.data : iconv.decode((await got.get({ url: data.url, responseType: 'buffer' })).data, charset);
     const $ = cheerio.load(responseData);
     const $item = $(data.item.item);

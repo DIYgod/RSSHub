@@ -20,9 +20,10 @@
     "lib"
   ],
   "scripts": {
-    "build:all": "npm run build:radar && npm run build:maintainer",
+    "build:all": "npm run build && npm run build:radar && npm run build:maintainer",
     "build:maintainer": "node scripts/workflow/build-maintainer.js",
     "build:radar": "node scripts/workflow/build-radar.js",
+    "build": "tsc",
     "dev": "cross-env NODE_ENV=dev tsx watch lib/index.ts",
     "format": "eslint --cache --fix \"**/*.{ts,js,yml}\" && node website/docs/.format/format.mjs && prettier \"**/*.{ts,js,json}\" --write",
     "format:check": "eslint --cache \"**/*.{ts,js,yml}\" && prettier \"**/*.{ts,js,json}\" --check",
@@ -106,8 +107,8 @@
     "imapflow": "1.0.152",
     "instagram-private-api": "1.45.3",
     "ioredis": "5.3.2",
+    "ip": "2.0.1",
     "ip-regex": "4.3.0",
-    "is-localhost-ip": "2.0.0",
     "jsdom": "24.0.0",
     "json-bigint": "1.0.0",
     "json5": "2.2.3",

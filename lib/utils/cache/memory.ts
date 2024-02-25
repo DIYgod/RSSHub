@@ -4,7 +4,7 @@ import type CacheModule from './base';
 
 const status = { available: false };
 
-let memoryCache: LRUCache<any, any>;
+let memoryCache: LRUCache<any, any> | undefined;
 
 export default {
     init: () => {
@@ -15,7 +15,7 @@ export default {
         status.available = true;
     },
     get: (key: string, refresh = true) => {
-        if (key && status.available) {
+        if (key && status.available && memoryCache) {
             let value = memoryCache.get(key, { updateAgeOnGet: refresh }) as string | undefined;
             if (value) {
                 value = value + '';
@@ -30,7 +30,7 @@ export default {
         if (typeof value === 'object') {
             value = JSON.stringify(value);
         }
-        if (key && status.available) {
+        if (key && status.available && memoryCache) {
             return memoryCache.set(key, value, { ttl: maxAge * 1000 });
         }
     },
