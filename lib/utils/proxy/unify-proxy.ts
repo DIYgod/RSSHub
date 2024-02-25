@@ -90,7 +90,7 @@ const unifyProxy = (proxyUri: Config['proxyUri'], proxyObj: Config['proxy']) => 
             }
             proxyObj.protocol = protocol;
             proxyObj.host = proxyUrlHandler.hostname;
-            proxyObj.port = proxyUrlHandler.port;
+            proxyObj.port = proxyUrlHandler.port || undefined;
             // trailing slash will cause puppeteer to throw net::ERR_NO_SUPPORTED_PROXIES, trim it
             proxyUri = proxyUrlHandler.href.endsWith('/') ? proxyUrlHandler.href.slice(0, -1) : proxyUrlHandler.href;
             isProxyValid = true;

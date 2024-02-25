@@ -4,7 +4,7 @@ import logger from '@/utils/logger';
 const possibleProtocol = ['http', 'https', 'ftp', 'file', 'data'];
 
 const pacProxy = (pacUri: Config['pacUri'], pacScript: Config['pacScript'], proxyObj: Config['proxy']) => {
-    let pacUrlHandler = null;
+    let pacUrlHandler: URL | null = null;
 
     // Validate PAC_URI / PAC_SCRIPT
     if (pacScript) {

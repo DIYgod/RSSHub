@@ -1,4 +1,5 @@
-const { pacProxy } = require('../../lib/utils/pac-proxy');
+import { describe, expect, it } from '@jest/globals';
+import pacProxy from '@/utils/proxy/pac-proxy';
 
 const emptyProxyObj = {
     protocol: undefined,
@@ -14,69 +15,66 @@ const effectiveExpect = ({ proxyUri, proxyObj }, expectUri, expectObj) => {
 };
 
 describe('pac-proxy', () => {
-    const nullExpect = (pac) => effectiveExpect(pac, null, emptyProxyObj);
+    const nullExpect = (pac) => effectiveExpect(pac, undefined, emptyProxyObj);
     it('pac empty', () => {
-        nullExpect(pacProxy(null, null, emptyProxyObj));
+        nullExpect(pacProxy('', '', emptyProxyObj));
     });
     it('pac-uri invalid', () => {
-        nullExpect(pacProxy('http://inv ild.test', null, emptyProxyObj));
+        nullExpect(pacProxy('http://inv ild.test', '', emptyProxyObj));
     });
     it('pac-uri invalid protocol', () => {
-        nullExpect(pacProxy('socks://rsshub.proxy', null, emptyProxyObj));
+        nullExpect(pacProxy('socks://rsshub.proxy', '', emptyProxyObj));
     });
 
     const httpUri = 'http://rsshub.proxy/pac.pac';
     it('pac-uri http', () => {
-        effectiveExpect(pacProxy(httpUri, null, emptyProxyObj), httpUri, emptyProxyObj);
+        effectiveExpect(pacProxy(httpUri, '', emptyProxyObj), httpUri, emptyProxyObj);
     });
 
     const httpsUri = 'https://rsshub.proxy/pac.pac';
     it('pac-uri https', () => {
-        effectiveExpect(pacProxy(httpsUri, null, emptyProxyObj), httpsUri, emptyProxyObj);
+        effectiveExpect(pacProxy(httpsUri, '', emptyProxyObj), httpsUri, emptyProxyObj);
     });
 
     const ftpUri = 'ftp://rsshub.proxy:2333';
     it('pac-uri ftp', () => {
-        effectiveExpect(pacProxy(ftpUri, null, emptyProxyObj), ftpUri, emptyProxyObj);
+        effectiveExpect(pacProxy(ftpUri, '', emptyProxyObj), ftpUri, emptyProxyObj);
     });
 
     const fileUri = 'file:///path/to/pac.pac';
     it('pac-uri file', () => {
-        effectiveExpect(pacProxy(fileUri, null, emptyProxyObj), fileUri, emptyProxyObj);
+        effectiveExpect(pacProxy(fileUri, '', emptyProxyObj), fileUri, emptyProxyObj);
     });
 
     const dataPacScript = "function FindProxyForURL(url, host){return 'DIRECT';}";
     const dataUri = 'data:text/javascript;charset=utf-8,' + encodeURIComponent(dataPacScript);
     it('pac-script data', () => {
-        effectiveExpect(pacProxy(null, dataPacScript, emptyProxyObj), dataUri, emptyProxyObj);
-    });
-    it('pac-script data invalid type', () => {
-        effectiveExpect(pacProxy(httpsUri, 1, emptyProxyObj), httpsUri, emptyProxyObj);
+        effectiveExpect(pacProxy('', dataPacScript, emptyProxyObj), dataUri, emptyProxyObj);
     });
 
-    const httpsObj = { ...emptyProxyObj, protocol: 'https', host: 'rsshub.proxy', port: 2333 };
+    const httpsObj = { ...emptyProxyObj, protocol: 'https', host: 'rsshub.proxy', port: '2333' };
     const httpsAuthUri = 'https://user:pass@rsshub.proxy:2333';
     it('pac-uri https auth', () => {
-        effectiveExpect(pacProxy(httpsAuthUri, null, emptyProxyObj), httpsAuthUri, httpsObj);
+        effectiveExpect(pacProxy(httpsAuthUri, '', emptyProxyObj), httpsAuthUri, httpsObj);
     });
 
     const httpsAuthObj = { ...httpsObj, auth: 'testtest' };
     it('pac proxy-obj https auth', () => {
-        effectiveExpect(pacProxy(httpsUri, null, httpsAuthObj), httpsUri, httpsAuthObj);
+        effectiveExpect(pacProxy(httpsUri, '', httpsAuthObj), httpsUri, httpsAuthObj);
     });
 
     const ftpObj = { ...httpsObj, protocol: 'ftp' };
     const ftpAuthUri = 'ftp://user:pass@rsshub.proxy:2333';
     it('pac-uri ftp auth', () => {
-        effectiveExpect(pacProxy(ftpAuthUri, null, emptyProxyObj), ftpAuthUri, ftpObj);
+        effectiveExpect(pacProxy(ftpAuthUri, '', emptyProxyObj), ftpAuthUri, ftpObj);
     });
 
     const ftpAuthObj = { ...ftpObj, auth: 'testtest' };
     it('pac-uri ftp auth (invalid)', () => {
-        effectiveExpect(pacProxy(ftpUri, null, ftpAuthObj), ftpUri, ftpObj);
+        effectiveExpect(pacProxy(ftpUri, '', ftpAuthObj), ftpUri, ftpObj);
     });
 
     it('pac-uri user@pass override proxy-obj auth', () => {
-        effectiveExpect(pacProxy(httpsAuthUri, null, httpsAuthObj), httpsAuthUri, httpsObj);
+        effectiveExpect(pacProxy(httpsAuthUri, '', httpsAuthObj), httpsAuthUri, httpsObj);
     });
 });

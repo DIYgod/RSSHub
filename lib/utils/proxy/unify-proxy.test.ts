@@ -1,4 +1,5 @@
-const { unifyProxy } = require('../../lib/utils/unify-proxy');
+import { describe, expect, it } from '@jest/globals';
+import unifyProxy from '@/utils/proxy/unify-proxy';
 
 const emptyProxyObj = {
     protocol: undefined,
@@ -14,9 +15,9 @@ const effectiveExpect = ({ proxyUri, proxyObj }, expectUri, expectObj) => {
 };
 
 describe('unify-proxy', () => {
-    const nullExpect = (unified) => effectiveExpect(unified, null, emptyProxyObj);
+    const nullExpect = (unified) => effectiveExpect(unified, undefined, emptyProxyObj);
     it('proxy empty', () => {
-        nullExpect(unifyProxy(null, emptyProxyObj));
+        nullExpect(unifyProxy('', emptyProxyObj));
     });
     it('proxy-uri invalid', () => {
         nullExpect(unifyProxy('http://inv lid.test', emptyProxyObj));
@@ -25,13 +26,13 @@ describe('unify-proxy', () => {
         nullExpect(unifyProxy('ftp://rsshub.proxy', emptyProxyObj));
     });
     it('proxy-obj no host', () => {
-        nullExpect(unifyProxy(null, { ...emptyProxyObj, protocol: 'http', port: 2333 }));
+        nullExpect(unifyProxy('', { ...emptyProxyObj, protocol: 'http', port: '2333' }));
     });
     it('proxy-obj invalid host', () => {
-        nullExpect(unifyProxy(null, { ...emptyProxyObj, protocol: 'http', host: 'inv lid.test', port: 2333 }));
+        nullExpect(unifyProxy('', { ...emptyProxyObj, protocol: 'http', host: 'inv lid.test', port: '2333' }));
     });
     it('proxy-obj invalid protocol', () => {
-        nullExpect(unifyProxy(null, { ...emptyProxyObj, protocol: 'ftp', host: 'rsshub.proxy', port: 2333 }));
+        nullExpect(unifyProxy('', { ...emptyProxyObj, protocol: 'ftp', host: 'rsshub.proxy', port: '2333' }));
     });
 
     const httpNoPortUri = 'http://rsshub.proxy';
@@ -41,17 +42,17 @@ describe('unify-proxy', () => {
         httpNoPortExpect(unifyProxy(httpNoPortUri, emptyProxyObj));
     });
     it('proxy-obj http no port', () => {
-        httpNoPortExpect(unifyProxy(null, httpNoPortObj));
+        httpNoPortExpect(unifyProxy('', httpNoPortObj));
     });
 
     const httpUri = 'http://rsshub.proxy:2333';
-    const httpObj = { ...httpNoPortObj, port: 2333 };
+    const httpObj = { ...httpNoPortObj, port: '2333' };
     const httpExpect = (unified) => effectiveExpect(unified, httpUri, httpObj);
     it('proxy-uri http', () => {
         httpExpect(unifyProxy(httpUri, emptyProxyObj));
     });
     it('proxy-obj http', () => {
-        httpExpect(unifyProxy(null, httpObj));
+        httpExpect(unifyProxy('', httpObj));
     });
 
     const httpsUri = 'https://rsshub.proxy:2333';
@@ -61,7 +62,7 @@ describe('unify-proxy', () => {
         httpsExpect(unifyProxy(httpsUri, emptyProxyObj));
     });
     it('proxy-obj https', () => {
-        httpsExpect(unifyProxy(null, httpsObj));
+        httpsExpect(unifyProxy('', httpsObj));
     });
 
     const socks5Uri = 'socks5://rsshub.proxy:2333';
@@ -71,10 +72,10 @@ describe('unify-proxy', () => {
         socks5Expect(unifyProxy(socks5Uri, emptyProxyObj));
     });
     it('proxy-obj socks5', () => {
-        socks5Expect(unifyProxy(null, socks5Obj));
+        socks5Expect(unifyProxy('', socks5Obj));
     });
 
-    const overrideObj = { ...emptyProxyObj, protocol: 'http', host: 'over.ride', port: 6666 };
+    const overrideObj = { ...emptyProxyObj, protocol: 'http', host: 'over.ride', port: '6666' };
     it('proxy-uri override proxy-obj {PROTOCAL,HOST,PORT}', () => {
         socks5Expect(unifyProxy(socks5Uri, overrideObj));
     });
@@ -86,32 +87,32 @@ describe('unify-proxy', () => {
 
     const noProtocolObj = { ...httpObj, protocol: undefined };
     it('proxy-obj no protocol', () => {
-        httpExpect(unifyProxy(null, noProtocolObj));
+        httpExpect(unifyProxy('', noProtocolObj));
     });
 
     const protocolInHostObj = { ...httpObj, host: httpNoPortUri, protocol: undefined };
     it('proxy-obj protocol in host', () => {
-        httpExpect(unifyProxy(null, protocolInHostObj));
+        httpExpect(unifyProxy('', protocolInHostObj));
     });
 
     const portInHostObj = { ...httpNoPortObj, host: httpUri };
     it('proxy-obj port in host', () => {
-        httpExpect(unifyProxy(null, portInHostObj));
+        httpExpect(unifyProxy('', portInHostObj));
     });
 
     const everythingInHostObj = { ...emptyProxyObj, host: httpUri };
     it('proxy-obj everything in host', () => {
-        httpExpect(unifyProxy(null, everythingInHostObj));
+        httpExpect(unifyProxy('', everythingInHostObj));
     });
 
-    const portBothObj = { ...portInHostObj, port: 6666 };
+    const portBothObj = { ...portInHostObj, port: '6666' };
     it('proxy-obj port in host override proxy-obj port', () => {
-        httpExpect(unifyProxy(null, portBothObj));
+        httpExpect(unifyProxy('', portBothObj));
     });
 
     const PortNaNObj = { ...httpNoPortObj, port: 'test' };
     it('proxy-obj port NaN', () => {
-        httpNoPortExpect(unifyProxy(null, PortNaNObj));
+        httpNoPortExpect(unifyProxy('', PortNaNObj));
     });
 
     const httpsAuthUri = 'https://user:pass@rsshub.proxy:2333';
@@ -121,7 +122,7 @@ describe('unify-proxy', () => {
 
     const httpsAuthObj = { ...httpsObj, auth: 'testtest' };
     it('proxy-obj https auth', () => {
-        effectiveExpect(unifyProxy(null, httpsAuthObj), httpsUri, httpsAuthObj);
+        effectiveExpect(unifyProxy('', httpsAuthObj), httpsUri, httpsAuthObj);
     });
 
     const socks5AuthUri = 'socks5://user:pass@rsshub.proxy:2333';
@@ -131,7 +132,7 @@ describe('unify-proxy', () => {
 
     const socks5AuthObj = { ...socks5Obj, auth: 'testtest' };
     it('proxy-obj socks5 auth (invalid)', () => {
-        socks5Expect(unifyProxy(null, socks5AuthObj));
+        socks5Expect(unifyProxy('', socks5AuthObj));
     });
 
     it('proxy-uri user@pass override proxy-obj auth', () => {
