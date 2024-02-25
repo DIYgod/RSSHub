@@ -8,9 +8,9 @@ const port = config.connect.port;
 logger.info(`🎉 RSSHub is running on port ${port}! Cheers!`);
 logger.info('💖 Can you help keep this open source project alive? Please sponsor 👉 https://docs.rsshub.app/support');
 
-serve({
+const server = serve({
     fetch: app.fetch,
     port,
 });
 
-export { default } from '@/app';
+export default server;

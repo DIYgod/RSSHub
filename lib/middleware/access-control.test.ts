@@ -1,6 +1,9 @@
-const supertest = require('supertest');
-const md5 = require('../../lib/utils/md5');
-let server;
+import { describe, expect, it, jest, afterEach } from '@jest/globals';
+import supertest from 'supertest';
+import md5 from '@/utils/md5';
+import type { serve } from '@hono/node-server';
+
+let server: ReturnType<typeof serve>;
 jest.mock('request-promise-native');
 
 function checkBlock(response) {
@@ -22,7 +25,7 @@ describe('access-control', () => {
         const code = md5('/test/2' + key);
         process.env.DENYLIST = 'est/1,233.233.233.,black';
         process.env.ACCESS_KEY = key;
-        server = require('../../lib/index');
+        server = (await import('@/index')).default;
         const request = supertest(server);
 
         const response11 = await request.get('/test/1');
@@ -70,14 +73,14 @@ describe('access-control', () => {
         const code = md5('/test/2' + key);
         process.env.ALLOWLIST = 'est/1,233.233.233.,103.31.4.0/22,white';
         process.env.ACCESS_KEY = key;
-        server = require('../../lib/index');
+        server = (await import('@/index')).default;
         const request = supertest(server);
 
         const response01 = await request.get('/');
         expect(response01.status).toBe(200);
 
         const response02 = await request.get('/robots.txt');
-        expect(response02.status).toBe(200);
+        expect(response02.status).toBe(404);
 
         const response11 = await request.get('/test/1');
         expect(response11.status).toBe(200);
@@ -132,14 +135,14 @@ describe('access-control', () => {
         const key = '1L0veRSSHub';
         const code = md5('/test/2' + key);
         process.env.ACCESS_KEY = key;
-        server = require('../../lib/index');
+        server = (await import('@/index')).default;
         const request = supertest(server);
 
         const response01 = await request.get('/');
         expect(response01.status).toBe(200);
 
         const response02 = await request.get('/robots.txt');
-        expect(response02.status).toBe(200);
+        expect(response02.status).toBe(404);
 
         const response11 = await request.get('/test/1');
         checkBlock(response11);
