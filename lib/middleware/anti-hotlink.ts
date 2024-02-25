@@ -1,14 +1,11 @@
 import { config } from '@/config';
 import { load, type CheerioAPI } from 'cheerio';
 import logger from '@/utils/logger';
-import * as path from 'node:path';
-import render from '@/utils/render';
 import { type MiddlewareHandler } from 'hono';
 import { Data } from '@/types';
 
 const templateRegex = /\${([^{}]+)}/g;
 const allowedUrlProperties = new Set(['hash', 'host', 'hostname', 'href', 'origin', 'password', 'pathname', 'port', 'protocol', 'search', 'searchParams', 'username']);
-const IframeWrapperTemplate = path.join(__dirname, 'templates/iframe.art');
 
 // match path or sub-path
 const matchPath = (path: string, paths: string[]) => {
@@ -60,14 +57,7 @@ const replaceUrls = ($: CheerioAPI, selector: string, template: string, attribut
     });
 };
 
-const wrapWithIframe = ($: CheerioAPI, selector: string) => {
-    $(selector).each((_, elem) => {
-        const $elem = $(elem);
-        $elem.replaceWith(render.art(IframeWrapperTemplate, { content: elem.toString() }));
-    });
-};
-
-const process = (html: string, image_hotlink_template?: string, multimedia_hotlink_template?: string, wrap_multimedia_in_iframe?: boolean) => {
+const process = (html: string, image_hotlink_template?: string, multimedia_hotlink_template?: string) => {
     const $ = load(html, undefined, false);
     if (image_hotlink_template) {
         replaceUrls($, 'img, picture > source', image_hotlink_template);
@@ -79,9 +69,6 @@ const process = (html: string, image_hotlink_template?: string, multimedia_hotli
         if (!image_hotlink_template) {
             replaceUrls($, 'video[poster]', multimedia_hotlink_template, 'poster');
         }
-    }
-    if (wrap_multimedia_in_iframe) {
-        wrapWithIframe($, 'video, audio');
     }
     return $.html();
 };
@@ -103,7 +90,6 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     let image_hotlink_template;
     let multimedia_hotlink_template;
-    const shouldWrapInIframe = ctx.req.query('wrap_multimedia_in_iframe') === '1';
 
     // Read params if enabled
     if (config.feature.allow_user_hotlink_template) {
@@ -121,7 +107,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         image_hotlink_template = filterPath(ctx.req.path) ? config.hotlink.template : undefined;
     }
 
-    if (!image_hotlink_template && !multimedia_hotlink_template && !shouldWrapInIframe) {
+    if (!image_hotlink_template && !multimedia_hotlink_template) {
         return;
     }
 
@@ -135,13 +121,13 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     const data: Data = ctx.get('data');
     if (data) {
         if (data.description) {
-            data.description = process(data.description, image_hotlink_template, multimedia_hotlink_template, shouldWrapInIframe);
+            data.description = process(data.description, image_hotlink_template, multimedia_hotlink_template);
         }
 
         if (data.item) {
             for (const item of data.item) {
                 if (item.description) {
-                    item.description = process(item.description, image_hotlink_template, multimedia_hotlink_template, shouldWrapInIframe);
+                    item.description = process(item.description, image_hotlink_template, multimedia_hotlink_template);
                 }
             }
         }
