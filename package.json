@@ -20,10 +20,9 @@
     "lib"
   ],
   "scripts": {
-    "build:all": "npm run build && npm run build:radar && npm run build:maintainer",
+    "build:all": "npm run build:radar && npm run build:maintainer",
     "build:maintainer": "node scripts/workflow/build-maintainer.js",
     "build:radar": "node scripts/workflow/build-radar.js",
-    "build": "tsc",
     "dev": "cross-env NODE_ENV=dev tsx watch lib/index.ts",
     "format": "eslint --cache --fix \"**/*.{ts,js,yml}\" && node website/docs/.format/format.mjs && prettier \"**/*.{ts,js,json}\" --write",
     "format:check": "eslint --cache \"**/*.{ts,js,yml}\" && prettier \"**/*.{ts,js,json}\" --check",
@@ -33,8 +32,8 @@
     "jest:watch": "cross-env NODE_ENV=test jest --watch",
     "lint": "eslint --cache .",
     "prepare": "husky || true",
-    "profiling": "NODE_ENV=production node --prof lib/index.js",
-    "start": "node lib/index.js",
+    "profiling": "NODE_ENV=production tsx --prof lib/index.ts",
+    "start": "tsx lib/index.ts",
     "test": "npm run format:check && npm run jest:coverage"
   },
   "lint-staged": {
