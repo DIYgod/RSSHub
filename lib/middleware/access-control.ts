@@ -1,13 +1,12 @@
-import type { MiddlewareHandler, Context } from 'hono';
+import type { MiddlewareHandler } from 'hono';
 import { config } from '@/config';
 import md5 from '@/utils/md5';
 import isLocalhost from 'is-localhost-ip';
 import { getIp } from '@/utils/helpers';
+import RejectError from '@/errors/reject';
 
-const reject = (ctx: Context) => {
-    ctx.status(403);
-
-    throw new Error('Authentication failed. Access denied.');
+const reject = () => {
+    throw new RejectError('Authentication failed. Access denied.');
 };
 
 const ipv4Pattern = /^(\d{1,3}\.){3}\d{1,3}$/;
@@ -67,7 +66,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             return grant();
         }
 
-        reject(ctx);
+        reject();
     }
 };
 

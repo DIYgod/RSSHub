@@ -1,5 +1,4 @@
 import { type ErrorHandler } from 'hono';
-import _RequestInProgressError from './request-in-progress';
 import { getDebugInfo, setDebugInfo } from '@/utils/debug-info';
 import { config } from '@/config';
 import Sentry from '@sentry/node';
@@ -8,7 +7,8 @@ import art from 'art-template';
 import * as path from 'node:path';
 import gitHash from '@/utils/git-hash';
 
-export const RequestInProgressError = _RequestInProgressError;
+import RequestInProgressError from './request-in-progress';
+import RejectError from './reject';
 
 export const errorHandler: ErrorHandler = (error, ctx) => {
     let message = '';
@@ -46,7 +46,8 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
             ctx.status(503);
             message = error.message;
             ctx.set('Cache-Control', `public, max-age=${config.cache.requestTimeout}`);
-        } else if (ctx.res.status === 403) {
+        } else if (error instanceof RejectError) {
+            ctx.status(403);
             message = error.message;
         } else {
             ctx.status(404);
