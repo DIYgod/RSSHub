@@ -4398,6 +4398,12 @@
         "Kiotlin"
     ],
     "/lyu/news/:type": [],
+    "/m4/mil/:category?": [
+        "nczitzk"
+    ],
+    "/m4/news/:category?": [
+        "nczitzk"
+    ],
     "/macfilos/blog": [
         "nczitzk"
     ],
