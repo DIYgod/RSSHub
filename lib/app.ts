@@ -4,7 +4,7 @@ import { Hono } from 'hono';
 
 import cache from '@/middleware/cache';
 import template from '@/middleware/template';
-import onerror from '@/middleware/onerror';
+import sentry from '@/middleware/sentry';
 import accessControl from '@/middleware/access-control';
 import debug from '@/middleware/debug';
 import header from '@/middleware/header';
@@ -21,7 +21,7 @@ process.on('uncaughtException', (e) => {
 
 const app = new Hono();
 
-app.use('*', onerror);
+app.use('*', sentry);
 app.use('*', accessControl);
 app.use('*', debug);
 app.use('*', template);
