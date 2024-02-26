@@ -43,9 +43,9 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
         ctx.header('Content-Type', 'text/html; charset=UTF-8');
 
         if (error instanceof RequestInProgressError) {
+            ctx.header('Cache-Control', `public, max-age=${config.requestTimeout / 1000}`);
             ctx.status(503);
             message = error.message;
-            ctx.set('Cache-Control', `public, max-age=${config.cache.requestTimeout}`);
         } else if (error instanceof RejectError) {
             ctx.status(403);
             message = error.message;
