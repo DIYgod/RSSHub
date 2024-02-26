@@ -6920,8 +6920,12 @@
     "/typora/changelog/dev": [
         "nczitzk"
     ],
-    "/u3c3/:type?/:keyword?": [
-        "noname1897"
+    "/u3c3/:type?/:preview?": [
+        "noname1897",
+        "storytellerF"
+    ],
+    "/u3c3/search/:keyword/:preview?": [
+        "storytellerF"
     ],
     "/u9a9/:preview?": [
         "TonyRL"
