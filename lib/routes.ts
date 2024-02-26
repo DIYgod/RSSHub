@@ -45,7 +45,7 @@ export default function (app: Hono) {
     app.use(
         '/*',
         serveStatic({
-            root: './assets',
+            root: './lib/assets',
         })
     );
 }
