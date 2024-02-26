@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import { config } from '@/config';
 import { RE2JS } from 're2js';
 import markdownit from 'markdown-it';
-import htmlToText from 'html-to-text';
+import { convert } from 'html-to-text';
 import sanitizeHtml from 'sanitize-html';
 import { MiddlewareHandler } from 'hono';
 import cache from '@/utils/cache';
@@ -245,11 +245,12 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 const category = item.category || [];
                 let isFilter = true;
 
-                if (ctx.req.query('filterout')) {
+                if (ctx.req.query('filterout') || ctx.req.query('filterout_title')) {
                     const titleRegex = makeRegex(ctx.req.query('filterout_title') || ctx.req.query('filterout')!);
-                    const descriptionRegex = makeRegex(ctx.req.query('filterout_description') || ctx.req.query('filterout')!);
-
                     isFilter = titleRegex instanceof RE2JS ? !titleRegex.matcher(title).find() : !title.match(titleRegex);
+                }
+                if (ctx.req.query('filterout') || ctx.req.query('filterout_description')) {
+                    const descriptionRegex = makeRegex(ctx.req.query('filterout_description') || ctx.req.query('filterout')!);
                     isFilter = isFilter && (descriptionRegex instanceof RE2JS ? !descriptionRegex.matcher(description).find() : !description.match(descriptionRegex));
                 }
                 if (ctx.req.query('filterout_author')) {
@@ -330,7 +331,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                     if (item.description) {
                         try {
                             const summary = await cache.tryGet(`openai:${item.link}`, async () => {
-                                const text = htmlToText.htmlToText(item.description!);
+                                const text = convert(item.description!);
                                 if (text.length < 300) {
                                     return '';
                                 }
