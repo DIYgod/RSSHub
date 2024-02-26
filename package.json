@@ -200,7 +200,7 @@
     "jest-junit": "16.0.0",
     "lint-staged": "15.2.2",
     "mockdate": "3.0.5",
-    "nock": "13.5.3",
+    "nock": "13.5.4",
     "nodemon": "3.1.0",
     "prettier": "3.2.5",
     "remark": "14.0.3",
