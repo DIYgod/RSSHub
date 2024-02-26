@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@fullerstack/nax-ipware':
+    specifier: 0.10.0
+    version: 0.10.0(typescript@5.3.3)
   '@hono/node-server':
     specifier: 1.8.1
     version: 1.8.1
@@ -2228,6 +2231,16 @@ packages:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  /@fullerstack/nax-ipware@0.10.0(typescript@5.3.3):
+    resolution: {integrity: sha512-A2g9pqeRprTcaK9zQk4fQVKKoH0YFTVTFJkJNPuq6UIs2nWnaWDeoK8xWIQHJF13k9Tz84iDQlovs7YDw/iZDQ==}
+    dependencies:
+      lodash: 4.17.21
+      ts-essentials: 7.0.3(typescript@5.3.3)
+      tslib: 2.6.2
+    transitivePeerDependencies:
+      - typescript
+    dev: false
 
   /@hono/node-server@1.8.1:
     resolution: {integrity: sha512-9ondWs/5EuyZOd/iyiRp0GQfMEq+IA+IbV8Wy2bgdr5+cC55I3xbQrqtXKprw7jJhfvq3IVw7ALiuvCEmLdCAA==}
@@ -10945,6 +10958,14 @@ packages:
     resolution: {integrity: sha512-I0FEdfdatDjeigRqh1JFj67bcIKyRNm12UVGheBjs2pXgyELg2xeiQLVaWu1pVmNGXZVnz/fvycSU41moBIpOg==}
     engines: {node: '>=8.0.0'}
     deprecated: npm package tarball contains useless codeclimate-reporter binary, please update to version 3.1.1. See https://github.com/adriengibrat/ts-custom-error/issues/32
+    dev: false
+
+  /ts-essentials@7.0.3(typescript@5.3.3):
+    resolution: {integrity: sha512-8+gr5+lqO3G84KdiTSMRLtuyJ+nTBVRKuCrK4lidMPdVeEp0uqC875uE5NMcaA7YYMN7XsNiFQuMvasF8HT/xQ==}
+    peerDependencies:
+      typescript: '>=3.7.0'
+    dependencies:
+      typescript: 5.3.3
     dev: false
 
   /ts-jest@29.1.2(@babel/core@7.23.9)(jest@29.7.0)(typescript@5.3.3):
