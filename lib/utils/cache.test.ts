@@ -35,7 +35,6 @@ describe('cache', () => {
 
     it('redis', async () => {
         process.env.CACHE_TYPE = 'redis';
-        process.env.REDIS_URL = 'redis://localhost:6380';
         const cache = (await import('@/utils/cache')).default;
         await wait(500);
         if (!cache.clients.redisClient || !cache.status.available) {

@@ -1,13 +1,15 @@
-const supertest = require('supertest');
-const Parser = require('rss-parser');
+import { describe, expect, it, jest, afterEach, afterAll, beforeAll } from '@jest/globals';
+import supertest from 'supertest';
+import Parser from 'rss-parser';
+import wait from '@/utils/wait';
+import type { serve } from '@hono/node-server';
+
 const parser = new Parser();
-const wait = require('../../lib/utils/wait');
-let server;
-jest.mock('request-promise-native');
+let server: ReturnType<typeof serve>;
 
 beforeAll(() => {
-    process.env.CACHE_EXPIRE = 1;
-    process.env.CACHE_CONTENT_EXPIRE = 3;
+    process.env.CACHE_EXPIRE = '1';
+    process.env.CACHE_CONTENT_EXPIRE = '3';
 });
 
 afterEach(() => {
@@ -23,7 +25,7 @@ afterAll(() => {
 describe('cache', () => {
     it('memory', async () => {
         process.env.CACHE_TYPE = 'memory';
-        server = require('../../lib/index');
+        server = (await import('@/index')).default;
         const request = supertest(server);
 
         const response1 = await request.get('/test/cache');
@@ -34,16 +36,18 @@ describe('cache', () => {
 
         delete parsed1.lastBuildDate;
         delete parsed2.lastBuildDate;
+        delete parsed1.feedUrl;
+        delete parsed2.feedUrl;
+        delete parsed1.paginationLinks;
+        delete parsed2.paginationLinks;
         expect(parsed2).toMatchObject(parsed1);
 
         expect(response2.status).toBe(200);
-        expect(response2.headers['x-koa-memory-cache']).toBe('true');
-        expect(response2.headers).not.toHaveProperty('x-koa-redis-cache');
+        expect(response2.headers['rsshub-cache-status']).toBe('HIT');
 
         await wait(1 * 1000 + 100);
         const response3 = await request.get('/test/cache');
-        expect(response3.headers).not.toHaveProperty('x-koa-redis-cache');
-        expect(response3.headers).not.toHaveProperty('x-koa-memory-cache');
+        expect(response3.headers).not.toHaveProperty('rsshub-cache-status');
         const parsed3 = await parser.parseString(response3.text);
 
         await wait(3 * 1000 + 100);
@@ -54,17 +58,6 @@ describe('cache', () => {
         expect(parsed2.items[0].content).toBe('Cache1');
         expect(parsed3.items[0].content).toBe('Cache1');
         expect(parsed4.items[0].content).toBe('Cache2');
-
-        const app = require('../../lib/app');
-        await app.context.cache.set('mock', undefined);
-        expect(await app.context.cache.get('mock')).toBe('');
-
-        await app.context.cache.globalCache.set('mock', undefined);
-        expect(await app.context.cache.globalCache.get('mock')).toBe('');
-        await app.context.cache.globalCache.set('mock', {
-            mock: 1,
-        });
-        expect(await app.context.cache.globalCache.get('mock')).toBe('{"mock":1}');
 
         await request.get('/test/refreshCache');
         await wait(1 * 1000 + 100);
@@ -80,7 +73,7 @@ describe('cache', () => {
 
     it('redis', async () => {
         process.env.CACHE_TYPE = 'redis';
-        server = require('../../lib/index');
+        server = (await import('@/index')).default;
         const request = supertest(server);
 
         const response1 = await request.get('/test/cache');
@@ -91,16 +84,18 @@ describe('cache', () => {
 
         delete parsed1.lastBuildDate;
         delete parsed2.lastBuildDate;
+        delete parsed1.feedUrl;
+        delete parsed2.feedUrl;
+        delete parsed1.paginationLinks;
+        delete parsed2.paginationLinks;
         expect(parsed2).toMatchObject(parsed1);
 
         expect(response2.status).toBe(200);
-        expect(response2.headers['x-koa-redis-cache']).toBe('true');
-        expect(response2.headers).not.toHaveProperty('x-koa-memory-cache');
+        expect(response2.headers['rsshub-cache-status']).toBe('HIT');
 
         await wait(1 * 1000 + 100);
         const response3 = await request.get('/test/cache');
-        expect(response3.headers).not.toHaveProperty('x-koa-redis-cache');
-        expect(response3.headers).not.toHaveProperty('x-koa-memory-cache');
+        expect(response3.headers).not.toHaveProperty('rsshub-cache-status');
         const parsed3 = await parser.parseString(response3.text);
 
         await wait(3 * 1000 + 100);
@@ -112,13 +107,6 @@ describe('cache', () => {
         expect(parsed3.items[0].content).toBe('Cache1');
         expect(parsed4.items[0].content).toBe('Cache2');
 
-        const app = require('../../lib/app');
-        await app.context.cache.set('mock1', undefined);
-        expect(await app.context.cache.get('mock1')).toBe('');
-        await app.context.cache.set('mock2', '2');
-        await app.context.cache.set('mock2', '2');
-        expect(await app.context.cache.get('mock2')).toBe('2');
-
         await request.get('/test/refreshCache');
         await wait(1 * 1000 + 100);
         const response5 = await request.get('/test/refreshCache');
@@ -129,13 +117,16 @@ describe('cache', () => {
 
         expect(parsed5.items[0].content).toBe('1 1');
         expect(parsed6.items[0].content).toBe('1 0');
+
+        const cache = (await import('@/utils/cache')).default;
+        await cache.clients.redisClient!.quit();
     }, 10000);
 
     it('redis with quit', async () => {
         process.env.CACHE_TYPE = 'redis';
-        server = require('../../lib/index');
-        const { redisClient } = require('../../lib/app').context.cache.clients;
-        await redisClient.quit();
+        server = (await import('@/index')).default;
+        const cache = (await import('@/utils/cache')).default;
+        await cache.clients.redisClient!.quit();
         const request = supertest(server);
 
         const response1 = await request.get('/test/cache');
@@ -145,8 +136,7 @@ describe('cache', () => {
         const parsed2 = await parser.parseString(response2.text);
 
         expect(response2.status).toBe(200);
-        expect(response2.headers).not.toHaveProperty('x-koa-redis-cache');
-        expect(response2.headers).not.toHaveProperty('x-koa-memory-cache');
+        expect(response2.headers).not.toHaveProperty('rsshub-cache-status');
 
         expect(parsed1.items[0].content).toBe('Cache1');
         expect(parsed2.items[0].content).toBe('Cache2');
@@ -155,7 +145,7 @@ describe('cache', () => {
     it('redis with error', async () => {
         process.env.CACHE_TYPE = 'redis';
         process.env.REDIS_URL = 'redis://wrongpath:6379';
-        server = require('../../lib/index');
+        server = (await import('@/index')).default;
         const request = supertest(server);
 
         const response1 = await request.get('/test/cache');
@@ -165,16 +155,18 @@ describe('cache', () => {
         const parsed2 = await parser.parseString(response2.text);
 
         expect(response2.status).toBe(200);
-        expect(response2.headers).not.toHaveProperty('x-koa-redis-cache');
-        expect(response2.headers).not.toHaveProperty('x-koa-memory-cache');
+        expect(response2.headers).not.toHaveProperty('rsshub-cache-status');
 
         expect(parsed1.items[0].content).toBe('Cache1');
         expect(parsed2.items[0].content).toBe('Cache2');
+
+        const cache = (await import('@/utils/cache')).default;
+        await cache.clients.redisClient!.quit();
     });
 
     it('no cache', async () => {
-        process.env.CACHE_TYPE = '';
-        server = require('../../lib/index');
+        process.env.CACHE_TYPE = 'NO';
+        server = (await import('@/index')).default;
         const request = supertest(server);
 
         const response1 = await request.get('/test/cache');
@@ -184,8 +176,7 @@ describe('cache', () => {
         const parsed2 = await parser.parseString(response2.text);
 
         expect(response2.status).toBe(200);
-        expect(response2.headers).not.toHaveProperty('x-koa-redis-cache');
-        expect(response2.headers).not.toHaveProperty('x-koa-memory-cache');
+        expect(response2.headers).not.toHaveProperty('rsshub-cache-status');
 
         expect(parsed1.items[0].content).toBe('Cache1');
         expect(parsed2.items[0].content).toBe('Cache2');
@@ -193,27 +184,14 @@ describe('cache', () => {
 
     it('throws URL key', async () => {
         process.env.CACHE_TYPE = 'memory';
-        server = require('../../lib/index');
+        server = (await import('@/index')).default;
         const request = supertest(server);
 
         try {
             const response = await request.get('/test/cacheUrlKey');
             expect(response).toThrow(Error);
-        } catch (error) {
+        } catch (error: any) {
             expect(error.message).toContain('Cache key must be a string');
-        }
-    });
-
-    it('throws TTL key', async () => {
-        process.env.CACHE_TYPE = 'redis';
-        const app = require('../../lib/app');
-
-        try {
-            await app.context.cache.get('rsshub:cacheTtl:mock');
-        } catch (error) {
-            expect(error.message).toContain('reserved for the internal usage');
-        } finally {
-            await app.context.cache.clients.redisClient.quit();
         }
     });
 });
