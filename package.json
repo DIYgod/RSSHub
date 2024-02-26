@@ -87,7 +87,7 @@
     "@notionhq/client": "2.2.14",
     "@postlight/parser": "2.2.3",
     "@sentry/node": "7.102.1",
-    "@tonyrl/rand-user-agent": "2.0.51",
+    "@tonyrl/rand-user-agent": "2.0.52",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
