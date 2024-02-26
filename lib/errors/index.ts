@@ -1,4 +1,4 @@
-import { type ErrorHandler } from 'hono';
+import { type NotFoundHandler, type ErrorHandler } from 'hono';
 import { getDebugInfo, setDebugInfo } from '@/utils/debug-info';
 import { config } from '@/config';
 import Sentry from '@sentry/node';
@@ -9,6 +9,7 @@ import gitHash from '@/utils/git-hash';
 
 import RequestInProgressError from './request-in-progress';
 import RejectError from './reject';
+import NotFoundError from './not-found';
 
 export const errorHandler: ErrorHandler = (error, ctx) => {
     let message = '';
@@ -49,6 +50,9 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
         } else if (error instanceof RejectError) {
             ctx.status(403);
             message = error.message;
+        } else if (error instanceof NotFoundError) {
+            ctx.status(404);
+            message = 'wrong path';
         } else {
             ctx.status(404);
         }
@@ -66,3 +70,5 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
         );
     }
 };
+
+export const notFoundHandler: NotFoundHandler = (ctx) => errorHandler(new NotFoundError(), ctx);

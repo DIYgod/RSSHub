@@ -72,7 +72,7 @@ export type Config = {
         model?: string;
         temperature?: number;
         maxTokens?: number;
-        endpoint?: string;
+        endpoint: string;
         prompt?: string;
     };
     bilibili: {

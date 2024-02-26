@@ -13,7 +13,7 @@ import parameter from '@/middleware/parameter';
 import logger from '@/utils/logger';
 
 import routes from '@/routes';
-import { errorHandler } from '@/errors';
+import { notFoundHandler, errorHandler } from '@/errors';
 
 process.on('uncaughtException', (e) => {
     logger.error('uncaughtException: ' + e);
@@ -32,6 +32,7 @@ app.use('*', cache);
 
 routes(app);
 
+app.notFound(notFoundHandler);
 app.onError(errorHandler);
 
 export default app;
