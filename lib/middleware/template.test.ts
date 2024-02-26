@@ -1,8 +1,9 @@
-const supertest = require('supertest');
-jest.mock('request-promise-native');
-const server = require('../../lib/index');
+import { describe, expect, it, afterAll } from '@jest/globals';
+import supertest from 'supertest';
+import server from '@/index';
+import Parser from 'rss-parser';
+
 const request = supertest(server);
-const Parser = require('rss-parser');
 const parser = new Parser();
 
 afterAll(() => {
@@ -13,7 +14,7 @@ describe('template', () => {
     const expectPubDate = new Date(1_546_272_000_000 - 10 * 1000);
 
     it(`.rss`, async () => {
-        const response1 = await request.get('/test/1.rss');
+        const response1 = await request.get('/test/1?format=rss');
         const parsed1 = await parser.parseString(response1.text);
 
         expect(parsed1).toEqual(expect.any(Object));
@@ -44,7 +45,7 @@ describe('template', () => {
     });
 
     it(`.atom`, async () => {
-        const response = await request.get('/test/1.atom');
+        const response = await request.get('/test/1?format=atom');
         const parsed = await parser.parseString(response.text);
 
         expect(parsed).toEqual(expect.any(Object));
@@ -63,8 +64,8 @@ describe('template', () => {
     });
 
     it(`.json`, async () => {
-        const jsonResponse = await request.get('/test/1.json');
-        const rssResponse = await request.get('/test/1.rss');
+        const jsonResponse = await request.get('/test/1?format=json');
+        const rssResponse = await request.get('/test/1?format=rss');
         const jsonParsed = JSON.parse(jsonResponse.text);
         const rssParsed = await parser.parseString(rssResponse.text);
 
@@ -80,15 +81,15 @@ describe('template', () => {
     });
 
     it('.debug.html', async () => {
-        const jsonResponse = await request.get('/test/1.json');
+        const jsonResponse = await request.get('/test/1?format=json');
         const jsonParsed = JSON.parse(jsonResponse.text);
 
-        const debugHTMLResponse0 = await request.get('/test/1.0.debug.html');
+        const debugHTMLResponse0 = await request.get('/test/1?format=0.debug.html');
         expect(debugHTMLResponse0.headers['content-type']).toBe('text/html; charset=UTF-8');
         expect(debugHTMLResponse0.text).toBe(jsonParsed.items[0].content_html);
 
-        const debugHTMLResponseNotExist = await request.get(`/test/1.${jsonParsed.items.length}.debug.html`);
-        expect(debugHTMLResponseNotExist.text).toBe(`ctx.state.data.item[${jsonParsed.items.length}] not found`);
+        const debugHTMLResponseNotExist = await request.get(`/test/1?format=${jsonParsed.items.length}.debug.html`);
+        expect(debugHTMLResponseNotExist.text).toBe(`data.item[${jsonParsed.items.length}].description not found`);
     });
 
     it('flatten author object', async () => {
@@ -102,15 +103,15 @@ describe('template', () => {
     it(`long title`, async () => {
         const response = await request.get('/test/long');
         const parsed = await parser.parseString(response.text);
-        expect(parsed.items[0].title.length).toBe(153);
+        expect(parsed.items[0].title?.length).toBe(153);
     });
 
     it(`enclosure`, async () => {
         const response = await request.get('/test/enclosure');
         const parsed = await parser.parseString(response.text);
-        expect(parsed.itunes.author).toBe('DIYgod');
-        expect(parsed.items[0].enclosure.url).toBe('https://github.com/DIYgod/RSSHub/issues/1');
-        expect(parsed.items[0].enclosure.length).toBe('3661');
+        expect(parsed.itunes?.author).toBe('DIYgod');
+        expect(parsed.items[0].enclosure?.url).toBe('https://github.com/DIYgod/RSSHub/issues/1');
+        expect(parsed.items[0].enclosure?.length).toBe('3661');
         expect(parsed.items[0].itunes.duration).toBe('10:10:10');
     });
 });

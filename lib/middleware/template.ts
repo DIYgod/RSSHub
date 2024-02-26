@@ -18,11 +18,11 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
             return ctx.body(ctx.get('json') ? JSON.stringify(ctx.get('json'), null, 4) : JSON.stringify({ message: 'plugin does not set debug json' }));
         }
 
-        if (outputType === 'debug.html') {
+        if (/(\d+)\.debug\.html$/.test(outputType)) {
             ctx.header('Content-Type', 'text/html; charset=UTF-8');
 
             const index = Number.parseInt(outputType.match(/(\d+)\.debug\.html$/)?.[1] || '0');
-            return ctx.body(data?.item?.[index]?.description || `data?.item?.[${index}]?.description not found`);
+            return ctx.body(data?.item?.[index]?.description || `data.item[${index}].description not found`);
         }
     }
 
