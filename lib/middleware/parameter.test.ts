@@ -1,12 +1,12 @@
-const supertest = require('supertest');
-jest.mock('request-promise-native');
-const server = require('../../lib/index');
+import { describe, expect, it, afterAll, jest } from '@jest/globals';
+import supertest from 'supertest';
+import server from '@/index';
+import Parser from 'rss-parser';
+import { config } from '@/config';
+import nock from 'nock';
+
 const request = supertest(server);
-const Parser = require('rss-parser');
 const parser = new Parser();
-const config = require('../../lib/config').value;
-const got = require('../../lib/utils/got');
-jest.mock('../../lib/utils/got');
 
 afterAll(() => {
     server.close();
@@ -118,8 +118,8 @@ describe('filter', () => {
         const response = await request.get('/test/filter-illegal-category?filter_category=CategoryIllegal');
         const parsed = await parser.parseString(response.text);
         expect(parsed.items.length).toBe(1);
-        expect(parsed.items[0].categories.length).toBe(1);
-        expect(parsed.items[0].categories[0]).toBe('CategoryIllegal');
+        expect(parsed.items[0].categories?.length).toBe(1);
+        expect(parsed.items[0].categories?.[0]).toBe('CategoryIllegal');
     });
 
     it(`filter_time`, async () => {
@@ -326,7 +326,7 @@ describe('wrong_path', () => {
         const response = await request.get('/wrong');
         expect(response.status).toBe(404);
         expect(response.headers['cache-control']).toBe(`public, max-age=${config.cache.routeExpire}`);
-        expect(response.text).toMatch(/Error: wrong path/);
+        expect(response.text).toMatch(/Error message: wrong path/);
     });
 });
 
@@ -381,9 +381,9 @@ describe('sort', () => {
         expect(response.status).toBe(200);
         const parsed = await parser.parseString(response.text);
         expect(parsed.items[0].title).toBe('Sort Title 3');
-        expect(parsed.items.at(-3).title).toBe('Sort Title 2');
-        expect(parsed.items.at(-2).title).toBe('Sort Title 0');
-        expect(parsed.items.at(-1).title).toBe('Sort Title 1');
+        expect(parsed.items.at(-3)?.title).toBe('Sort Title 2');
+        expect(parsed.items.at(-2)?.title).toBe('Sort Title 0');
+        expect(parsed.items.at(-1)?.title).toBe('Sort Title 1');
     });
 });
 
@@ -429,21 +429,26 @@ describe('multi parameter', () => {
 
 describe('openai', () => {
     it(`chatgpt`, async () => {
-        config.openai.apiKey = 'sk-1234567890';
-        // 模拟 openai 请求的响应
-        const openaiResponse = {
-            data: {
-                choices: [
-                    {
-                        message: {
-                            content: 'Summary of the article.',
-                        },
-                    },
-                ],
-            },
-        };
+        jest.resetModules();
 
-        got.post.mockResolvedValue(openaiResponse);
+        process.env.OPENAI_API_KEY = 'sk-1234567890';
+        const request = supertest((await import('@/index')).default);
+        const { config } = await import('@/config');
+        nock(config.openai.endpoint)
+            .post('/chat/completions')
+            .reply(() => [
+                200,
+                {
+                    choices: [
+                        {
+                            message: {
+                                content: 'Summary of the article.',
+                            },
+                        },
+                    ],
+                },
+            ]);
+
         const responseWithGpt = await request.get('/test/gpt?chatgpt=true');
         const responseNormal = await request.get('/test/gpt');
 
