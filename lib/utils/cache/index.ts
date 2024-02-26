@@ -2,6 +2,7 @@ import { config } from '@/config';
 import redis from './redis';
 import memory from './memory';
 import type CacheModule from './base';
+import logger from '@/utils/logger';
 
 const globalCache: {
     get: (key: string) => Promise<string | null | undefined> | string | null | undefined;
@@ -24,7 +25,7 @@ if (config.cache.type === 'redis') {
         }
     };
     globalCache.set = cacheModule.set;
-} else {
+} else if (config.cache.type === 'memory') {
     cacheModule = memory;
     cacheModule.init();
     const { memoryCache } = cacheModule.clients;
@@ -44,6 +45,17 @@ if (config.cache.type === 'redis') {
             return memoryCache.set(key, value, { ttl: maxAge * 1000 });
         }
     };
+} else {
+    cacheModule = {
+        init: () => null,
+        get: () => null,
+        set: () => null,
+        status: {
+            available: false,
+        },
+        clients: {},
+    };
+    logger.error('Cache not available, concurrent requests are not limited. This could lead to bad behavior.');
 }
 
 // only give cache string, as the `!` condition tricky

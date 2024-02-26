@@ -3,24 +3,27 @@ import { config } from '@/config';
 import type CacheModule from './base';
 
 const status = { available: false };
-
-let memoryCache: LRUCache<any, any> | undefined;
+const clients: {
+    memoryCache?: LRUCache<any, any>;
+} = {};
 
 export default {
     init: () => {
-        memoryCache = new LRUCache({
+        clients.memoryCache = new LRUCache({
             ttl: config.cache.routeExpire * 1000,
             max: config.memory.max,
         });
         status.available = true;
     },
     get: (key: string, refresh = true) => {
-        if (key && status.available && memoryCache) {
-            let value = memoryCache.get(key, { updateAgeOnGet: refresh }) as string | undefined;
+        if (key && status.available && clients.memoryCache) {
+            let value = clients.memoryCache.get(key, { updateAgeOnGet: refresh }) as string | undefined;
             if (value) {
                 value = value + '';
             }
             return value;
+        } else {
+            return null;
         }
     },
     set: (key, value, maxAge = config.cache.contentExpire) => {
@@ -30,10 +33,10 @@ export default {
         if (typeof value === 'object') {
             value = JSON.stringify(value);
         }
-        if (key && status.available && memoryCache) {
-            return memoryCache.set(key, value, { ttl: maxAge * 1000 });
+        if (key && status.available && clients.memoryCache) {
+            return clients.memoryCache.set(key, value, { ttl: maxAge * 1000 });
         }
     },
-    clients: { memoryCache },
+    clients,
     status,
 } as CacheModule;
