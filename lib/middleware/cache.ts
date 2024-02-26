@@ -25,19 +25,14 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         throw new RequestInProgressError('This path is currently fetching, please come back later!');
     }
 
-    // eslint-disable-next-line no-useless-catch
-    try {
-        const value = await cacheModule.globalCache.get(key);
+    const value = await cacheModule.globalCache.get(key);
 
-        if (value) {
-            ctx.status(200);
-            ctx.header('RSSHub-Cache-Status', 'HIT');
-            ctx.set('data', JSON.parse(value));
-            await next();
-            return;
-        }
-    } catch (error) {
-        throw error;
+    if (value) {
+        ctx.status(200);
+        ctx.header('RSSHub-Cache-Status', 'HIT');
+        ctx.set('data', JSON.parse(value));
+        await next();
+        return;
     }
 
     // Doesn't hit the cache? We need to let others know!

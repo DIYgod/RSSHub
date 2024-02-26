@@ -218,15 +218,15 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
                 if (ctx.req.query('filter_title')) {
                     const titleRegex = makeRegex(ctx.req.query('filter_title')!);
-                    isFilter = titleRegex instanceof RE2JS ? titleRegex.matcher(title).find() : !!title.match(titleRegex);
+                    isFilter = titleRegex instanceof RE2JS ? titleRegex.matcher(title).find() : !!titleRegex.test(title);
                 }
                 if (ctx.req.query('filter_description')) {
                     const descriptionRegex = makeRegex(ctx.req.query('filter_description')!);
-                    isFilter = isFilter && (descriptionRegex instanceof RE2JS ? descriptionRegex.matcher(description).find() : !!description.match(descriptionRegex));
+                    isFilter = isFilter && (descriptionRegex instanceof RE2JS ? descriptionRegex.matcher(description).find() : !!descriptionRegex.test(description));
                 }
                 if (ctx.req.query('filter_author')) {
                     const authorRegex = makeRegex(ctx.req.query('filter_author')!);
-                    isFilter = isFilter && (authorRegex instanceof RE2JS ? authorRegex.matcher(author).find() : !!author.match(authorRegex));
+                    isFilter = isFilter && (authorRegex instanceof RE2JS ? authorRegex.matcher(author).find() : !!authorRegex.test(author));
                 }
                 if (ctx.req.query('filter_category')) {
                     const categoryRegex = makeRegex(ctx.req.query('filter_category')!);
@@ -247,15 +247,15 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
                 if (ctx.req.query('filterout') || ctx.req.query('filterout_title')) {
                     const titleRegex = makeRegex(ctx.req.query('filterout_title') || ctx.req.query('filterout')!);
-                    isFilter = titleRegex instanceof RE2JS ? !titleRegex.matcher(title).find() : !title.match(titleRegex);
+                    isFilter = titleRegex instanceof RE2JS ? !titleRegex.matcher(title).find() : !titleRegex.test(title);
                 }
                 if (ctx.req.query('filterout') || ctx.req.query('filterout_description')) {
                     const descriptionRegex = makeRegex(ctx.req.query('filterout_description') || ctx.req.query('filterout')!);
-                    isFilter = isFilter && (descriptionRegex instanceof RE2JS ? !descriptionRegex.matcher(description).find() : !description.match(descriptionRegex));
+                    isFilter = isFilter && (descriptionRegex instanceof RE2JS ? !descriptionRegex.matcher(description).find() : !descriptionRegex.test(description));
                 }
                 if (ctx.req.query('filterout_author')) {
                     const authorRegex = makeRegex(ctx.req.query('filterout_author')!);
-                    isFilter = isFilter && (authorRegex instanceof RE2JS ? !authorRegex.matcher(author).find() : !author.match(authorRegex));
+                    isFilter = isFilter && (authorRegex instanceof RE2JS ? !authorRegex.matcher(author).find() : !authorRegex.test(author));
                 }
                 if (ctx.req.query('filterout_category')) {
                     const categoryRegex = makeRegex(ctx.req.query('filterout_category')!);
