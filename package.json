@@ -159,7 +159,7 @@
     "@stylistic/eslint-plugin-js": "1.6.2",
     "@types/aes-js": "3.1.4",
     "@types/crypto-js": "4.2.2",
-    "@types/eslint": "8.56.3",
+    "@types/eslint": "8.56.4",
     "@types/eslint-config-prettier": "6.11.3",
     "@types/etag": "1.8.3",
     "@types/fs-extra": "11.0.4",
