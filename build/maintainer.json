@@ -6865,6 +6865,9 @@
     "/tvb/news/:category?/:language?": [
         "nczitzk"
     ],
+    "/tvtropes/featured/:category?": [
+        "nczitzk"
+    ],
     "/twitch/live/:login": [
         "hoilc"
     ],
