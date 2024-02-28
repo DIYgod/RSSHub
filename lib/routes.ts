@@ -1,16 +1,17 @@
 import { directoryImport } from 'directory-import';
 import type { Hono, Handler } from 'hono';
 import { serveStatic } from '@hono/node-server/serve-static';
+import * as path from 'node:path';
 
 import index from '@/v3/index';
 import robotstxt from '@/v3/robots.txt';
 
 type Root = {
-    get: (path: string, handler: Handler) => void;
+    get: (routePath: string, filePath: string) => void;
 };
 
 const imports = directoryImport({
-    targetDirectoryPath: './v3',
+    targetDirectoryPath: './v2',
     importPattern: /router\.js$/,
 });
 
@@ -27,13 +28,14 @@ export default function (app: Hono) {
     for (const name in routes) {
         const subApp = app.basePath(`/${name}`);
         routes[name]({
-            get: (path, handler) => {
+            get: (routePath, filePath) => {
                 const wrapedHandler: Handler = async (ctx, ...args) => {
                     if (!ctx.get('data')) {
+                        const handler = require(path.join(__dirname, 'v2', name, filePath));
                         await handler(ctx, ...args);
                     }
                 };
-                subApp.get(path, wrapedHandler);
+                subApp.get(routePath, wrapedHandler);
             },
         });
     }
