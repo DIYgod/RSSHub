@@ -6,7 +6,7 @@ const dirname = path.join(__dirname + '../../../lib/v2');
 const toSource = require('tosource');
 
 // Namespaces that do not require radar.js
-const allowNamespace = new Set(['discourse', 'discuz', 'ehentai', 'lemmy', 'mail', 'test']);
+const allowNamespace = new Set(['discourse', 'discuz', 'ehentai', 'lemmy', 'mail', 'test', 'index.ts', 'robots.txt.ts']);
 // Check if a radar.js file is exist under each folder of dirname
 for (const dir of fs.readdirSync(dirname)) {
     const dirPath = path.join(dirname, dir);
