@@ -1,4 +1,4 @@
-import render from '@/utils/render';
+import { rss3Ums, json, art } from '@/utils/render';
 import * as path from 'node:path';
 import { config } from '@/config';
 import utils from '@/utils/common-utils';
@@ -88,12 +88,12 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
     if (outputType === 'ums') {
         ctx.header('Content-Type', 'application/json; charset=UTF-8');
-        return ctx.body(render.rss3Ums(result));
+        return ctx.body(rss3Ums(result));
     } else if (outputType === 'json') {
         ctx.header('Content-Type', 'application/feed+json; charset=UTF-8');
-        return ctx.body(render.json(result));
+        return ctx.body(json(result));
     } else {
-        return ctx.body(render.art(template, result));
+        return ctx.body(art(template, result));
     }
 };
 
