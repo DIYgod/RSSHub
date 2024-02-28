@@ -21,8 +21,8 @@ dependencies:
     specifier: 2.2.3
     version: 2.2.3
   '@sentry/node':
-    specifier: 7.102.1
-    version: 7.102.1
+    specifier: 7.103.0
+    version: 7.103.0
   '@tonyrl/rand-user-agent':
     specifier: 2.0.52
     version: 2.0.52
@@ -257,8 +257,8 @@ devDependencies:
     specifier: 4.2.2
     version: 4.2.2
   '@types/eslint':
-    specifier: 8.56.3
-    version: 8.56.3
+    specifier: 8.56.4
+    version: 8.56.4
   '@types/eslint-config-prettier':
     specifier: 6.11.3
     version: 6.11.3
@@ -357,7 +357,7 @@ devDependencies:
     version: 16.6.2(eslint@8.57.0)
   eslint-plugin-prettier:
     specifier: 5.1.3
-    version: 5.1.3(@types/eslint@8.56.3)(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.2.5)
+    version: 5.1.3(@types/eslint@8.56.4)(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.2.5)
   eslint-plugin-unicorn:
     specifier: 51.0.1
     version: 51.0.1(eslint@8.57.0)
@@ -2777,43 +2777,43 @@ packages:
       selderee: 0.11.0
     dev: false
 
-  /@sentry-internal/tracing@7.102.1:
-    resolution: {integrity: sha512-RkFlFyAC0fQOvBbBqnq0CLmFW5m3JJz9pKbZd5vXPraWAlniKSb1bC/4DF9SlNx0FN1LWG+IU3ISdpzwwTeAGg==}
+  /@sentry-internal/tracing@7.103.0:
+    resolution: {integrity: sha512-sZ/Wao8HOvGaBs7WlOdflMpHGAFkOBWL6hBiirHaOy5d+IDm7n7et5U6zhvcfiyYBO4nY36gy1Tg5mw+aNO0Vw==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/core': 7.102.1
-      '@sentry/types': 7.102.1
-      '@sentry/utils': 7.102.1
+      '@sentry/core': 7.103.0
+      '@sentry/types': 7.103.0
+      '@sentry/utils': 7.103.0
     dev: false
 
-  /@sentry/core@7.102.1:
-    resolution: {integrity: sha512-QjY+LSP3du3J/C8x/FfEbRxgZgsWd0jfTJ4P7s9f219I1csK4OeBMC3UA1HwEa0pY/9OF6H/egW2CjOcMM5Pdg==}
+  /@sentry/core@7.103.0:
+    resolution: {integrity: sha512-LCI+PIDoF/RLqN41fNXum3ilmS6ukni6L7t38vSdibbe2G0804EbPLtOIpv2PkS8E6CFuRW5zOb+8OwEAAtZWw==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.102.1
-      '@sentry/utils': 7.102.1
+      '@sentry/types': 7.103.0
+      '@sentry/utils': 7.103.0
     dev: false
 
-  /@sentry/node@7.102.1:
-    resolution: {integrity: sha512-mb3vmM3SGuCruckPiv/Vafeh89UQavTfpPFoU6Jwe6dSpQ39BO8fO8k8Zev+/nP6r/FKLtX17mJobErHECXsYw==}
+  /@sentry/node@7.103.0:
+    resolution: {integrity: sha512-/bS/WNeO+PEd0r3o3LN0XGJV+l7hLNy1dTcn61VRgWGVs8SqMBb3uAvXAibZ9zGTCkaX/Ky3JumMcOOoxmNCtg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry-internal/tracing': 7.102.1
-      '@sentry/core': 7.102.1
-      '@sentry/types': 7.102.1
-      '@sentry/utils': 7.102.1
+      '@sentry-internal/tracing': 7.103.0
+      '@sentry/core': 7.103.0
+      '@sentry/types': 7.103.0
+      '@sentry/utils': 7.103.0
     dev: false
 
-  /@sentry/types@7.102.1:
-    resolution: {integrity: sha512-htKorf3t/D0XYtM7foTcmG+rM47rDP6XdbvCcX5gBCuCYlzpM1vqCt2rl3FLktZC6TaIpFRJw1TLfx6m+x5jdA==}
+  /@sentry/types@7.103.0:
+    resolution: {integrity: sha512-NCvKyx8d2AGBQKPARrJemZmZ16DiMo688OEikZg4BbvFNDUzK5Egm2BH0vfLDhbNkU19o3maJowrYo42m8r9Zw==}
     engines: {node: '>=8'}
     dev: false
 
-  /@sentry/utils@7.102.1:
-    resolution: {integrity: sha512-+8WcFjHVV/HROXSAwMuUzveElBFC43EiTG7SNEBNgOUeQzQVTmbUZXyTVgLrUmtoWqvnIxCacoLxtZo1o67kdg==}
+  /@sentry/utils@7.103.0:
+    resolution: {integrity: sha512-phkUJt3F0UOkVq+M4GfdAh2ewI3ASrNiJddx9aO7GnT0aDwwVBHZltnqt95qgAB8W+BipTSt1dAh8yUbbq1Ceg==}
     engines: {node: '>=8'}
     dependencies:
-      '@sentry/types': 7.102.1
+      '@sentry/types': 7.103.0
     dev: false
 
   /@sinclair/typebox@0.27.8:
@@ -2848,7 +2848,7 @@ packages:
     peerDependencies:
       eslint: '>=8.40.0'
     dependencies:
-      '@types/eslint': 8.56.3
+      '@types/eslint': 8.56.4
       acorn: 8.11.3
       escape-string-regexp: 4.0.0
       eslint: 8.57.0
@@ -2980,8 +2980,8 @@ packages:
     resolution: {integrity: sha512-3wXCiM8croUnhg9LdtZUJQwNcQYGWxxdOWDjPe1ykCqJFPVpzAKfs/2dgSoCtAvdPeaponcWPI7mPcGGp9dkKQ==}
     dev: true
 
-  /@types/eslint@8.56.3:
-    resolution: {integrity: sha512-PvSf1wfv2wJpVIFUMSb+i4PvqNYkB9Rkp9ZDO3oaWzq4SKhsQk4mrMBr3ZH06I0hKrVGLBacmgl8JM4WVjb9dg==}
+  /@types/eslint@8.56.4:
+    resolution: {integrity: sha512-lG1GLUnL5vuRBGb3MgWUWLdGMH2Hps+pERuyQXCfWozuGKdnhf9Pbg4pkcrVUHjKrU7Rl+GCZ/299ObBXZFAxg==}
     dependencies:
       '@types/estree': 1.0.1
       '@types/json-schema': 7.0.12
@@ -5247,7 +5247,7 @@ packages:
       semver: 7.5.4
     dev: true
 
-  /eslint-plugin-prettier@5.1.3(@types/eslint@8.56.3)(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.2.5):
+  /eslint-plugin-prettier@5.1.3(@types/eslint@8.56.4)(eslint-config-prettier@9.1.0)(eslint@8.57.0)(prettier@3.2.5):
     resolution: {integrity: sha512-C9GCVAs4Eq7ZC/XFQHITLiHJxQngdtraXaM+LoUFoFp/lHNl2Zn8f3WQbe9HvTBBQ9YnKFB0/2Ajdqwo5D1EAw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -5261,7 +5261,7 @@ packages:
       eslint-config-prettier:
         optional: true
     dependencies:
-      '@types/eslint': 8.56.3
+      '@types/eslint': 8.56.4
       eslint: 8.57.0
       eslint-config-prettier: 9.1.0(eslint@8.57.0)
       prettier: 3.2.5

@@ -7,7 +7,7 @@ import { pinyin } from 'pinyin-pro';
 import { visitParents } from 'unist-util-visit-parents';
 
 const slugify = (/** @type {string} */ s) => {
-    s = s?.replace(/[#&'()+,./:[\]_|’“”、「」・（）．：｜]/g, '-');
+    s = s?.replace(/[!"#&'()+,./:[\]_|’“”、「」・（）．：｜]/g, '-');
     return encodeURIComponent(
         pinyin(s, {
             nonZh: 'consecutive',
