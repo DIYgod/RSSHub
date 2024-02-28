@@ -26,8 +26,4 @@ const convertDateToISO8601 = (date?: string | Date | number | null) => {
     return date.toISOString();
 };
 
-export default {
-    toTitleCase,
-    collapseWhitespace,
-    convertDateToISO8601,
-};
+export { toTitleCase, collapseWhitespace, convertDateToISO8601 };

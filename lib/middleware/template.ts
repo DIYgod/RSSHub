@@ -1,7 +1,7 @@
 import { rss3Ums, json, art } from '@/utils/render';
 import * as path from 'node:path';
 import { config } from '@/config';
-import utils from '@/utils/common-utils';
+import { collapseWhitespace, convertDateToISO8601 } from '@/utils/common-utils';
 import type { MiddlewareHandler } from 'hono';
 import { Data } from '@/types';
 
@@ -30,14 +30,14 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     const template = path.resolve(__dirname, `../views/${templateName}`);
 
     if (data) {
-        data.title = utils.collapseWhitespace(data.title) || '';
-        data.description && (data.description = utils.collapseWhitespace(data.description) || '');
-        data.author && (data.author = utils.collapseWhitespace(data.author) || '');
+        data.title = collapseWhitespace(data.title) || '';
+        data.description && (data.description = collapseWhitespace(data.description) || '');
+        data.author && (data.author = collapseWhitespace(data.author) || '');
 
         if (data.item) {
             for (const item of data.item) {
                 if (item.title) {
-                    item.title = utils.collapseWhitespace(item.title) || '';
+                    item.title = collapseWhitespace(item.title) || '';
                     // trim title length
                     for (let length = 0, i = 0; i < item.title.length; i++) {
                         length += Buffer.from(item.title[i]).length === 1 ? 1 : 2;
@@ -49,10 +49,10 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 }
 
                 if (typeof item.author === 'string') {
-                    item.author = utils.collapseWhitespace(item.author) || '';
+                    item.author = collapseWhitespace(item.author) || '';
                 } else if (typeof item.author === 'object' && item.author !== null) {
                     for (const a of item.author) {
-                        a.name = utils.collapseWhitespace(a.name) || '';
+                        a.name = collapseWhitespace(a.name) || '';
                     }
                     if (outputType !== 'json') {
                         item.author = item.author.map((a: { name: string }) => a.name).join(', ');
@@ -66,8 +66,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
                 }
 
                 if (outputType !== 'rss') {
-                    item.pubDate && (item.pubDate = utils.convertDateToISO8601(item.pubDate) || '');
-                    item.updated && (item.updated = utils.convertDateToISO8601(item.updated) || '');
+                    item.pubDate && (item.pubDate = convertDateToISO8601(item.pubDate) || '');
+                    item.updated && (item.updated = convertDateToISO8601(item.updated) || '');
                 }
             }
         }
