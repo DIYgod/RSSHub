@@ -3,8 +3,8 @@ import type { Hono, Handler } from 'hono';
 import { serveStatic } from '@hono/node-server/serve-static';
 import * as path from 'node:path';
 
-import index from '@/v3/index';
-import robotstxt from '@/v3/robots.txt';
+import index from '@/v2/index';
+import robotstxt from '@/v2/robots.txt';
 
 type Root = {
     get: (routePath: string, filePath: string) => void;
