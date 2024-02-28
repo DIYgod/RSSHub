@@ -7,10 +7,10 @@
             alt="{{ image.alt }}"
           {{ /if }}
           {{ if image.width }}
-            alt="{{ image.width }}"
+            width="{{ image.width }}"
           {{ /if }}
           {{ if image.height }}
-            alt="{{ image.height }}"
+            height="{{ image.height }}"
           {{ /if }}
         src="{{ image.src }}">
       </figure>
