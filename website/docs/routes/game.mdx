@@ -431,9 +431,9 @@
 
 <Route author="hoilc" example="/nintendo/system-update" path="/nintendo/system-update" />
 
-## osu! {#osu!}
+## osu! {#osu}
 
-### Beatmap Packs {#osu!-beatmap-packs}
+### Beatmap Packs {#osu-beatmap-packs}
 
 <Route author="JimenezLi" example="/osu/packs" path="/osu/packs/:type?" paramsDesc={['pack type, default to `standard`, can choose from `featured`, `tournament`, `loved`, `chart`, `theme` and `artist`']} radar="1" />
 
@@ -447,13 +447,27 @@
 
 <Route author="justjustCC" example="/ps/monthly-games" path="/ps/monthly-games" />
 
-## psnine {#psnine}
+## PRINCESS CONNECT! Re Dive プリンセスコネクト！Re Dive {#princess-connect-re-dive-%E3%83%97%E3%83%AA%E3%83%B3%E3%82%BB%E3%82%B9%E3%82%B3%E3%83%8D%E3%82%AF%E3%83%88%EF%BC%81re-dive}
 
-### 首页 - 白金攻略 / 游戏开箱 {#psnine-shou-ye-bai-jin-gong-lve-you-xi-kai-xiang}
+### 日服公告 {#princess-connect-re-dive-%E3%83%97%E3%83%AA%E3%83%B3%E3%82%BB%E3%82%B9%E3%82%B3%E3%83%8D%E3%82%AF%E3%83%88%EF%BC%81re-dive-ri-fu-gong-gao}
+
+<Route author="SayaSS" example="/priconne-redive/news" path="/priconne-redive/news" radar="1" />
+
+### 台服公告 {#princess-connect-re-dive-%E3%83%97%E3%83%AA%E3%83%B3%E3%82%BB%E3%82%B9%E3%82%B3%E3%83%8D%E3%82%AF%E3%83%88%EF%BC%81re-dive-tai-fu-gong-gao}
+
+<Route author="hoilc" example="/pcr/news-tw" path="/pcr/news-tw" />
+
+### 国服公告 {#princess-connect-re-dive-%E3%83%97%E3%83%AA%E3%83%B3%E3%82%BB%E3%82%B9%E3%82%B3%E3%83%8D%E3%82%AF%E3%83%88%EF%BC%81re-dive-guo-fu-gong-gao}
+
+<Route author="KotoriK" example="/pcr/news-cn" path="/pcr/news-cn" />
+
+## PSN 中文站 {#psn-zhong-wen-zhan}
+
+### 首页 - 白金攻略 / 游戏开箱 {#psn-zhong-wen-zhan-shou-ye-bai-jin-gong-lve-you-xi-kai-xiang}
 
 <Route author="LightStrawberry" example="/psnine/index" path="/psnine/index" />
 
-### 节点 {#psnine-jie-dian}
+### 节点 {#psn-zhong-wen-zhan-jie-dian}
 
 <Route author="nczitzk" example="/psnine/node/news" path="/psnine/node/:id?/:order?" paramsDesc={['节点 id，见下表，默认为 news', '排序，可选 `date` 即最新，默认为 `obdate` 即综合排序']}>
   | 站务 | 活动  | 旅记   | 折扣 | 会免 |
@@ -473,15 +487,15 @@
   | famitsu | ign | ucg |
 </Route>
 
-### 数折 - 折扣信息推送 {#psnine-shu-zhe-zhe-kou-xin-xi-tui-song}
+### 数折 - 折扣信息推送 {#psn-zhong-wen-zhan-shu-zhe-zhe-kou-xin-xi-tui-song}
 
 <Route author="LightStrawberry" example="/psnine/shuzhe" path="/psnine/shuzhe" />
 
-### 闲游 - 二手盘信息 {#psnine-xian-you-er-shou-pan-xin-xi}
+### 闲游 - 二手盘信息 {#psn-zhong-wen-zhan-xian-you-er-shou-pan-xin-xi}
 
 <Route author="LightStrawberry" example="/psnine/trade" path="/psnine/trade" />
 
-### 游戏 - 新游戏奖杯信息 {#psnine-you-xi-xin-you-xi-jiang-bei-xin-xi}
+### 游戏 - 新游戏奖杯信息 {#psn-zhong-wen-zhan-you-xi-xin-you-xi-jiang-bei-xin-xi}
 
 <Route author="LightStrawberry" example="/psnine/game" path="/psnine/game" />
 
@@ -639,20 +653,6 @@ Due to the regional restrictions, an RSSHub deployment in China Mainland may not
 ### 新闻 {#er-bing-app-xin-wen}
 
 <Route author="wushijishan" example="/diershoubing/news" path="/diershoubing/news" />
-
-## 公主链接 {#gong-zhu-lian-jie}
-
-### 日服公告 {#gong-zhu-lian-jie-ri-fu-gong-gao}
-
-<Route author="SayaSS" example="/pcr/news" path="/pcr/news" />
-
-### 台服公告 {#gong-zhu-lian-jie-tai-fu-gong-gao}
-
-<Route author="hoilc" example="/pcr/news-tw" path="/pcr/news-tw" />
-
-### 国服公告 {#gong-zhu-lian-jie-guo-fu-gong-gao}
-
-<Route author="KotoriK" example="/pcr/news-cn" path="/pcr/news-cn" />
 
 ## 怪物猎人世界 {#guai-wu-lie-ren-shi-jie}
 
