@@ -26,4 +26,9 @@ const convertDateToISO8601 = (date?: string | Date | number | null) => {
     return date.toISOString();
 };
 
-export { toTitleCase, collapseWhitespace, convertDateToISO8601 };
+const getSubPath = (ctx) => {
+    const subPath = ctx.req.path.replace(/\/[^/]*/, '') || '/';
+    return subPath;
+};
+
+export { toTitleCase, collapseWhitespace, convertDateToISO8601, getSubPath };
