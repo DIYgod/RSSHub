@@ -219,8 +219,8 @@ dependencies:
     specifier: 3.5.3
     version: 3.5.3
   tldts:
-    specifier: 6.1.1
-    version: 6.1.1
+    specifier: 6.1.11
+    version: 6.1.11
   tough-cookie:
     specifier: 4.1.3
     version: 4.1.3
@@ -2711,7 +2711,7 @@ packages:
       '@babel/runtime-corejs2': 7.23.2
       '@postlight/ci-failed-test-reporter': 1.0.26
       cheerio: 0.22.0
-      difflib: github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
+      difflib: git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed
       ellipsize: 0.1.0
       iconv-lite: 0.5.0
       moment: 2.29.4
@@ -11030,8 +11030,8 @@ packages:
     resolution: {integrity: sha512-ZFcT+/fdEc5VRndQIJtArNBHsaq4udRoeE4E6cwLzGaH0dq7Ng2L7cAoea6riM2uhNFD09EDa1bN8lrfrOBCLg==}
     dev: false
 
-  /tldts@6.1.1:
-    resolution: {integrity: sha512-uV5xEtjR8VdMZZU0my9zLqWJNAkG0PZ5l5t9F1dBYwOyeFeWTFd0emxEs12Y1U39XKD+dF2ElzNU59Qq0Z4PGQ==}
+  /tldts@6.1.11:
+    resolution: {integrity: sha512-AAgE/IWvbsg4Lr4KGFNR7bL/MhQfBlgGV9UBg2uy5mCwSGi5f12eZ7ZydAqv4ACys6pUYjNoV2qfZdcCn4RS+Q==}
     hasBin: true
     dependencies:
       tldts-core: 6.1.11
@@ -11992,8 +11992,8 @@ packages:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
     dev: true
 
-  github.com/postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
-    resolution: {tarball: https://codeload.github.com/postlight/difflib.js/tar.gz/32e8e38c7fcd935241b9baab71bb432fd9b166ed}
+  git/github.com+postlight/difflib.js/32e8e38c7fcd935241b9baab71bb432fd9b166ed:
+    resolution: {commit: 32e8e38c7fcd935241b9baab71bb432fd9b166ed, repo: git@github.com:postlight/difflib.js.git, type: git}
     name: difflib
     version: 0.2.6
     dependencies:
