@@ -13,6 +13,6 @@
         "noImplicitAny": false,
         "outDir": "./dist"
     },
-    "include": ["./lib/**/*"],
+    "include": ["./lib/**/*", "./api/vercel.ts"],
     "exclude": ["node_modules", "*.test.*"]
 }
