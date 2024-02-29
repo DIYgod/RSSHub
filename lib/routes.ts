@@ -3,15 +3,15 @@ import type { Hono, Handler } from 'hono';
 import { serveStatic } from '@hono/node-server/serve-static';
 import * as path from 'node:path';
 
-import index from '@/v2/index';
-import robotstxt from '@/v2/robots.txt';
+import index from '@/routes/index';
+import robotstxt from '@/routes/robots.txt';
 
 type Root = {
     get: (routePath: string, filePath: string) => void;
 };
 
 const imports = directoryImport({
-    targetDirectoryPath: './v2',
+    targetDirectoryPath: path.join(__dirname, './routes'),
     importPattern: /router\.js$/,
 });
 
@@ -31,7 +31,7 @@ export default function (app: Hono) {
             get: (routePath, filePath) => {
                 const wrapedHandler: Handler = async (ctx, ...args) => {
                     if (!ctx.get('data')) {
-                        const handler = require(path.join(__dirname, 'v2', name, filePath));
+                        const handler = require(path.join(__dirname, 'routes', name, filePath));
                         await handler(ctx, ...args);
                     }
                 };
@@ -48,6 +48,7 @@ export default function (app: Hono) {
         '/*',
         serveStatic({
             root: './lib/assets',
+            rewriteRequestPath: (path) => (path === '/favicon.ico' ? '/favicon.png' : path),
         })
     );
 }

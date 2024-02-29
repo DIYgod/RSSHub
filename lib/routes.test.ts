@@ -79,4 +79,10 @@ describe('router', () => {
         expect(await response.text()).toBe('User-agent: *\nDisallow: /');
         expect(response.headers.get('content-type')).toBe('text/plain');
     });
+
+    // favicon.ico
+    it('/favicon.ico', async () => {
+        const response = await app.request('/favicon.ico');
+        expect(response.status).toBe(200);
+    });
 });

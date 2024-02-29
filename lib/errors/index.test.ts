@@ -37,8 +37,8 @@ describe('RequestInProgressError', () => {
     });
 });
 
-describe('v2 route throws an error', () => {
-    it('v2 route path error should have path mounted', async () => {
+describe('route throws an error', () => {
+    it('route path error should have path mounted', async () => {
         await request.get('/test/error');
         await request.get('/thisDoesNotExist');
         const response = await request.get('/');

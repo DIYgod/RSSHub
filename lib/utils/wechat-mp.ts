@@ -2,14 +2,14 @@
  * Author: @Rongronggg9
  *
  * There are at least three folders which are relevant with WeChat MP (Official Account Platform / Media Platform):
- * lib/v2/wechat
- * lib/v2/gov/npma
- * lib/v2/gzh360
- * lib/v2/pku/nsd/gd
- * lib/v2/sdu/cs
- * lib/v2/nua/utils
- * lib/v2/hrbeu
- * lib/v2/freewechat
+ * lib/routes/wechat
+ * lib/routes/gov/npma
+ * lib/routes/gzh360
+ * lib/routes/pku/nsd/gd
+ * lib/routes/sdu/cs
+ * lib/routes/nua/utils
+ * lib/routes/hrbeu
+ * lib/routes/freewechat
  *
  * If your new route is not in the above folders, please add it to the list.
  *

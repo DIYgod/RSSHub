@@ -16,7 +16,7 @@ sidebar_position: 5
 2.  将对象传递给 `ctx.set('json', obj)`。
 3.  访问相应的路由 + `.debug.json` 来查看您的对象。例如，如果您想调试 `/furstar/characters/en`，您可以访问 URL：`/furstar/characters/en.debug.json`。
 
-以下是来自 [furstar/index.js](https://github.com/DIYgod/RSSHub/blob/master/lib/v2/furstar/index.js) 的使用 `ctx.set('json', obj)` 的示例：
+以下是来自 [furstar/index.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/furstar/index.js) 的使用 `ctx.set('json', obj)` 的示例：
 
 ```js
 const info = utils.fetchAllCharacters(res.data, base);

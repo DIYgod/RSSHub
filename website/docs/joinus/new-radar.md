@@ -8,7 +8,7 @@ If you want to see the results, we suggest you install the browser extension. Yo
 
 ## Code the rule
 
-To create a new RSS feed, create a file called `radar.js` under the corresponding namespace in [/lib/v2/](https://github.com/DIYgod/RSSHub/tree/master/lib/v2). We will continue to use the example of creating an RSS feed for `GitHub Repo Issues`, which is described [here](/joinus/new-rss/before-start). The resulting code will look like this:
+To create a new RSS feed, create a file called `radar.js` under the corresponding namespace in [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/master/lib/routes). We will continue to use the example of creating an RSS feed for `GitHub Repo Issues`, which is described [here](/joinus/new-rss/before-start). The resulting code will look like this:
 
 ```js
 module.exports = {

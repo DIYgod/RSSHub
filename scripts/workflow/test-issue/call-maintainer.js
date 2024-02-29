@@ -8,8 +8,8 @@ const maintainerURL = 'https://raw.githubusercontent.com/DIYgod/RSSHub/gh-pages/
 const successTag = 'Bug Ping: Pinged';
 const parseFailTag = 'Bug Ping: Parsing Failed';
 const failTag = 'Bug Ping: Not Found';
-const v1route = 'Route: v1';
-const v2route = 'Route: v2';
+const deprecatedRoute = 'Route: deprecated';
+const route = 'Route';
 
 // DnD (do-not-disturb) usernames, add yours here to avoid being notified
 const dndUsernames = new Set([]);
@@ -147,11 +147,11 @@ module.exports = async ({ github, context, core }) => {
     }
 
     if (emptyCount > 0) {
-        labels.push(v1route);
+        labels.push(deprecatedRoute);
     }
 
     if (successCount > 0) {
-        labels.push(v2route);
+        labels.push(route);
     }
 
     // Write labels (status, affected route count)

@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const targetJs = path.join(__dirname, '../../assets/build/radar-rules.js');
 const targetJson = path.join(__dirname, '../../assets/build/radar-rules.json');
-const dirname = path.join(__dirname + '../../../lib/v2');
+const dirname = path.join(__dirname + '../../../lib/routes');
 const toSource = require('tosource');
 
 // Namespaces that do not require radar.js

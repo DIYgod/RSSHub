@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const target = path.join(__dirname, '../../assets/build/maintainer.json');
-const dirname = path.join(__dirname + '../../../lib/v2');
+const dirname = path.join(__dirname + '../../../lib/routes');
 
 // Presence Check
 for (const dir of fs.readdirSync(dirname)) {
