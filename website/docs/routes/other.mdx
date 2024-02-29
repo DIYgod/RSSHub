@@ -440,11 +440,15 @@ It is recommended to use with clipping tools such as Notion Web Clipper.
   |    all   | development | design | operation | product | other | marketing | sales |
 </Route>
 
-## Transformation {#transformation}
+## RSSHub {#rsshub}
+
+### Internal Media Proxy {#rsshub-internal-media-proxy}
+
+<Route author="TonyRL" example="/rsshub/m/key/https%3A%2F%2Fdocs.rsshub.app%2Fimg%2Flogo.png" path="/rsshub/m/:key/:url" paramsDesc={['Media Proxy Key', '`encodeURIComponent`ed URL address']} configRequired="1" />
+
+### Transformation - HTML {#rsshub-transformation-html}
 
 Pass URL and transformation rules to convert HTML/JSON into RSS.
-
-### HTML {#transformation-html}
 
 Specify options (in the format of query string) in parameter `routeParams` parameter to extract data from HTML.
 
@@ -476,7 +480,7 @@ Specify options (in the format of query string) in parameter `routeParams` param
   | `item`    | `div[class='post-content'] p a` |
 </Route>
 
-### JSON {#transformation-json}
+### Transformation - JSON {#rsshub-transformation-json}
 
 Specify options (in the format of query string) in parameter `routeParams` parameter to extract data from JSON.
 
@@ -511,7 +515,7 @@ JSON Path only supports format like `a.b.c`. if you need to access arrays, like 
   | `itemDesc`  | `body`          |
 </Route>
 
-### Sitemap {#transformation-sitemap}
+### Transformation - Sitemap {#rsshub-transformation-sitemap}
 
 Specify options (in the format of query string) in parameter `routeParams` parameter to extract data from Sitemap. (Follows Sitemap Protocol 0.9)
 
@@ -526,6 +530,16 @@ Specify options (in the format of query string) in parameter `routeParams` param
   | ------------- | -------------------------------------- |
   | `url`         | `https://www.sitemaps.org/sitemap.xml` |
   | `routeParams` | `title=Example`                        |
+</Route>
+
+## TV Tropes {#tv-tropes}
+
+### Featured {#tv-tropes-featured}
+
+<Route author="nczitzk" example="/tvtropes/featured/today" path="/tvtropes/featured/:category?" paramsDesc={['Category, see below, Today\'s Featured Trope by default']} radar="1">
+  | Today's Featured Trope | Newest Trope |
+  | ---------------------- | ------------ |
+  | today                  | newest       |
 </Route>
 
 ## Urban Dictionary {#urban-dictionary}

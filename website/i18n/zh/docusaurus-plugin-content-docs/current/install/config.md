@@ -209,7 +209,7 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 
 ## 功能特性
 
-:::tip 测试特性
+:::tip[测试特性]
 
 这个板块控制的是一些新特性的选项，他们都是**默认关闭**的。如果有需要请阅读对应说明后按需开启
 
@@ -220,6 +220,8 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 `FILTER_REGEX_ENGINE`: 控制 [通用参数 -> 内容过滤](/zh/parameter#内容过滤) 使用的正则引擎。可选`[re2, regexp]`，默认`re2`。我们推荐公开实例不要调整这个选项，这个选项目前主要用于向后兼容。
 
 `ALLOW_USER_SUPPLY_UNSAFE_DOMAIN`: 允许用户为路由提供域名作为参数。建议公共实例不要调整此选项，开启后可能会导致 [服务端请求伪造（SSRF）](https://owasp.org/www-community/attacks/Server_Side_Request_Forgery)
+
+`MEDIA_PROXY_KEY`: 内置多媒体代理的访问密钥
 
 ## 其他应用配置
 
@@ -470,6 +472,7 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 贴纸包路由：[Telegram 机器人](https://telegram.org/blog/bot-revolution)
 
 -   `TELEGRAM_TOKEN`: Telegram 机器人 token
+-   `TELEGRAM_SESSION`: 可通过运行 `node lib/v2/telegram/tglib/client.js`
 
 ### Twitter
 
