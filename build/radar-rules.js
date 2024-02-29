@@ -19812,6 +19812,9 @@
 
                     return `/wmc-bj/publish${category ? `/${category}` : ''}`;
                 } } ] },
+  "wmpvp.com":{ _name:"完美世界电竞",
+    ".":[ { title:"资讯",
+        docs:"https://docs.rsshub.app/routes/game#wan-mei-shi-jie-dian-jing-zi-xun" } ] },
   "wnacg.org":{ _name:"紳士漫畫",
     ".":[ { title:"最新",
         docs:"https://docs.rsshub.app/routes/anime#shen-shi-man-hua",
