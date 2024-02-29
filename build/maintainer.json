@@ -6570,6 +6570,9 @@
     "/telegram/blog": [
         "fengkx"
     ],
+    "/telegram/channel/:username": [
+        "synchrone"
+    ],
     "/telegram/channel/:username/:routeParams?": [
         "DIYgod",
         "Rongronggg9"
