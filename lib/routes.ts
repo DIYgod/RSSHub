@@ -11,7 +11,7 @@ type Root = {
 };
 
 const imports = directoryImport({
-    targetDirectoryPath: './v2',
+    targetDirectoryPath: path.join(__dirname, 'v2'),
     importPattern: /router\.js$/,
 });
 
