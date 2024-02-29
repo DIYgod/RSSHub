@@ -98,7 +98,7 @@ For example, if you are creating an RSS feed for [GitHub Repo Issues](/routes/pr
 ```js
 module.exports = (router) => {
     // highlight-next-line
-    router.get('/issue/:user/:repo?', require('./issue'));
+    router.get('/issue/:user/:repo?', './issue');
 };
 ```
 
@@ -108,26 +108,22 @@ module.exports = (router) => {
 ```js
 module.exports = function (router) {
     // highlight-next-line
-    router.get('/issue/:user/:repo?', require('./issue'));
+    router.get('/issue/:user/:repo?', './issue');
 };
 ```
 
 </TabItem>
 </Tabs>
 
-When registering your new RSS route in `router.js`, you can define the route path and specify the corresponding function to be executed. In the code above, the `router.get()` method is used to specify the HTTP method and the path of the new RSS route. The first parameter of `router.get()` is the route path using [path-to-regexp](https://github.com/pillarjs/path-to-regexp) syntax. The second parameter is the exported function from your new RSS rule, `issue.js`. Note that you can omit the `.js` extension.
+When registering your new RSS route in `router.js`, you can define the route path and specify the corresponding function to be executed. In the code above, the `router.get()` method is used to specify the HTTP method and the path of the new RSS route. The first parameter of `router.get()` is the route path using [Hono routing](https://hono.dev/api/routing) syntax. The second parameter is the relative path of your new RSS rule, `issue.js`. Note that you can omit the `.js` extension.
 
 In the example above, `issue` is an exact match, `:user` is a required parameter, and `:repo?` is an optional parameter. The `?` after `:repo` means that the parameter is optional. If the user does not enter repo, it will fall back to whatever is specified in your code (in this case, `RSSHub`).
 
-Once you have defined the route path, you can retrieve the value of the parameters from the `ctx.params` object. For example, if the user visits `/github/issue/DIYgod/RSSHub`, you can get the value of `user` and `repo` from `ctx.params.user` and `ctx.params.repo`, respectively. For example, if an user visits `/github/issue/DIYgod/RSSHub`, `ctx.params.user` and `ctx.params.repo` which will be `DIYgod` and `RSSHub`.
-
-**Note that the type of the value will be either `String` or `undefined`**.
-
-You can use the `*` or `+` symbols to match the rest of the path, like `/some/path/:variable*`. Note that `*` and `+` mean "zero or more" and "one or more", respectively. You can also use patterns like `/some/path/:variable(\\d+)?` or even RegExp.
+Once you have defined the route path, you can retrieve the value of the parameters from the [`ctx.req.param()`](https://hono.dev/api/request#param) function. For example, if the user visits `/github/issue/DIYgod/RSSHub`, you can get the value of `user` and `repo` from `ctx.req.param('user')` and `ctx.req.param('repo')`, respectively. For example, if an user visits `/github/issue/DIYgod/RSSHub`, `ctx.req.param('user')` and `ctx.req.param('repo')` which will be `DIYgod` and `RSSHub`.
 
 :::tip
 
-For more advanced usage of `router`, see the [@koa/router API Reference](https://github.com/koajs/router/blob/master/API.md).
+For more advanced usage of `router`, see the [Hono Routing API Reference](https://hono.dev/api/routing).
 
 :::
 

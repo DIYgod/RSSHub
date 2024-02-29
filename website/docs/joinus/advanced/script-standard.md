@@ -100,20 +100,20 @@ RSSHub appends the name of all route namespace folders in front of the actual ro
 
 ### Registering a Route
 
-To register a route, the `router.js` file should export a method that provides a `@koa/router` object when initializing the route.
+To register a route, the `router.js` file should export a method that provides a  Hoho route handler.
 
 ### Maintainer List
 
 The `maintainer.js` file should export an object that provides maintainer information related to the route, including:
 
--   Key: Corresponding path in the `@koa/router` object
+-   Key: Corresponding route path
 -   Value: Array of string, including all maintainers' GitHub ID.
 
 To generate a list of maintainers, use the following command: `pnpm run build:maintainer`, which will create the list under `assets/build/`.
 
 :::danger
 
-The path in the `@koa/router` object should be the same as the `path` in the corresponding documentation before the namespace appended in front of it.
+The path should be the same as the `path` in the corresponding documentation before the namespace appended in front of it.
 
 :::
 
@@ -151,8 +151,8 @@ Here's an example taken from the [furstar](https://github.com/DIYgod/RSSHub/blob
 ```
 
 ```js
-const path = require('path');
-const { art } = require('@/utils/render');
+import * as path from 'node:path';
+import { art } from '@/utils/render';
 const renderAuthor = (author) => art(path.join(__dirname, 'templates/author.art'), author);
 ```
 
