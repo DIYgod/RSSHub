@@ -472,6 +472,7 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 贴纸包路由：[Telegram 机器人](https://telegram.org/blog/bot-revolution)
 
 -   `TELEGRAM_TOKEN`: Telegram 机器人 token
+-   `TELEGRAM_SESSION`: 可通过运行 `node lib/v2/telegram/tglib/client.js`
 
 ### Twitter
 
