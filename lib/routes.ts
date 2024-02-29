@@ -48,6 +48,7 @@ export default function (app: Hono) {
         '/*',
         serveStatic({
             root: './lib/assets',
+            rewriteRequestPath: (path) => (path === '/favicon.ico' ? '/favicon.png' : path),
         })
     );
 }
