@@ -200,6 +200,9 @@ dependencies:
   title:
     specifier: 3.5.3
     version: 3.5.3
+  tldts:
+    specifier: 6.1.1
+    version: 6.1.1
   tough-cookie:
     specifier: 4.1.3
     version: 4.1.3
@@ -8994,6 +8997,17 @@ packages:
     dependencies:
       os-tmpdir: 1.0.2
     dev: true
+
+  /tldts-core@6.1.1:
+    resolution: {integrity: sha512-xBHFfOO2YmEwogupGTKR0IBXe1IJe1/GleNeXpO294Fk90aQSvrop41BKA66CkfNLVOuomJDZ304KxwovT04Vw==}
+    dev: false
+
+  /tldts@6.1.1:
+    resolution: {integrity: sha512-uV5xEtjR8VdMZZU0my9zLqWJNAkG0PZ5l5t9F1dBYwOyeFeWTFd0emxEs12Y1U39XKD+dF2ElzNU59Qq0Z4PGQ==}
+    hasBin: true
+    dependencies:
+      tldts-core: 6.1.1
+    dev: false
 
   /tmpl@1.0.5:
     resolution: {integrity: sha512-3f0uOEAQwIqGuWW2MVzYg8fV/QNnc/IpuJNG837rLuczAaLVHslWHZQj4IGiEl5Hs3kkbhwL9Ab7Hrsmuj+Smw==}
