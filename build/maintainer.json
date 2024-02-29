@@ -1326,6 +1326,9 @@
     "/civitai/models": [
         "DIYgod"
     ],
+    "/ciweimao/chapter/:id": [
+        "keocheung"
+    ],
     "/clb/commentary/:lang?": [],
     "/clickme/:site/:grouping/:name": [
         "hoilc"
