@@ -53,7 +53,7 @@
     "collectCoverageFrom": [
       "lib/**/*.js",
       "lib/**/*.ts",
-      "!lib/routes/**",
+      "!lib/routes-deprecated/**",
       "!lib/router.js"
     ],
     "coverageReporters": [
