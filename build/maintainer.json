@@ -5778,6 +5778,9 @@
     "/rsc/journal/:id/:category?": [
         "nczitzk"
     ],
+    "/rsshub/m/:key/:url": [
+        "TonyRL"
+    ],
     "/rsshub/routes/:lang?": [
         "DIYgod"
     ],
