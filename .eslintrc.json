@@ -1,6 +1,8 @@
 {
-    "extends": ["eslint:recommended", "plugin:n/recommended", "plugin:unicorn/recommended", "plugin:prettier/recommended", "plugin:yml/recommended"],
-    "plugins": ["prettier", "@stylistic/js", "unicorn"],
+    "extends": ["eslint:recommended", "plugin:n/recommended", "plugin:unicorn/recommended", "plugin:prettier/recommended", "plugin:yml/recommended", "plugin:@typescript-eslint/recommended"],
+    "parser": "@typescript-eslint/parser",
+    "root": true,
+    "plugins": ["prettier", "@stylistic/js", "unicorn", "@typescript-eslint"],
     "parserOptions": {
         "ecmaVersion": "latest",
         "sourceType": "module"
@@ -53,7 +55,7 @@
         "unicorn/new-for-builtins": 0,
         "unicorn/no-array-callback-reference": 0,
         "unicorn/no-array-reduce": 1,
-        "unicorn/no-await-expression-member": 1,
+        "unicorn/no-await-expression-member": 0,
         "unicorn/no-empty-file": 1,
         "unicorn/no-hex-escape": 1,
         "unicorn/no-null": 0,
@@ -111,7 +113,12 @@
         "n/no-process-exit": 0,
         "n/no-unpublished-require": ["error", { "allowModules": ["tosource"] }],
         "prettier/prettier": 0,
-        "yml/quotes": ["error", { "prefer": "single" }]
+        "yml/quotes": ["error", { "prefer": "single" }],
+        "@typescript-eslint/no-var-requires": 0,
+        "@typescript-eslint/no-explicit-any": 0,
+        "n/no-missing-import": 0,
+        "n/no-unpublished-import": 0,
+        "no-prototype-builtins": 0
     },
     "overrides": [
         {

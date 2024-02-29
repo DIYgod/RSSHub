@@ -28,15 +28,15 @@ sidebar_position: 3
 
 ```js
 // 导入所需模组
-const got = require('@/utils/got'); // 自订的 got
-const { parseDate } = require('@/utils/parse-date');
+import got from '@/utils/got'; // 自订的 got
+import { parseDate } from '@/utils/parse-date';
 
 module.exports = async (ctx) => {
     // 在此处编写您的逻辑
 
-    ctx.state.data = {
+    ctx.set('data', {
         // 在此处输出您的 RSS
-    };
+    });
 };
 ```
 
@@ -53,11 +53,11 @@ module.exports = async (ctx) => {
 ```js
 module.exports = async (ctx) => {
     // highlight-next-line
-    const { user, repo = 'RSSHub' } = ctx.params;
+    const { user, repo = 'RSSHub' } = ctx.req.param();
 
-    ctx.state.data = {
+    ctx.set('data', {
         // 在此处输出您的 RSS
-    };
+    });
 };
 ```
 
@@ -67,13 +67,13 @@ module.exports = async (ctx) => {
 ```js
 module.exports = async (ctx) => {
     // highlight-start
-    const user = ctx.params.user;
-    const repo = ctx.params.repo ?? 'RSSHub';
+    const user = ctx.req.param('user');
+    const repo = ctx.req.param('repo') ?? 'RSSHub';
     // highlight-end
 
-    ctx.state.data = {
+    ctx.set('data', {
         // 在此处输出您的 RSS
-    };
+    });
 };
 ```
 
@@ -91,7 +91,7 @@ module.exports = async (ctx) => {
 
 ```js
 module.exports = async (ctx) => {
-    const { user, repo = 'RSSHub' } = ctx.params;
+    const { user, repo = 'RSSHub' } = ctx.req.param();
     // highlight-start
     // 发送 HTTP GET 请求到 API 并解构返回的数据对象
     const { data } = await got(`https://api.github.com/repos/${user}/${repo}/issues`, {
@@ -102,14 +102,14 @@ module.exports = async (ctx) => {
         },
         searchParams: {
             // 这允许用户设置条数限制
-            per_page: ctx.query.limit ? parseInt(ctx.query.limit, 10) : 30,
+            per_page: ctx.req.query('limit') ? parseInt(ctx.req.query('limit'), 10) : 30,
         },
     });
     // highlight-end
 
-    ctx.state.data = {
+    ctx.set('data', {
         // 在此处输出您的 RSS
-    };
+    });
 };
 ```
 
@@ -118,8 +118,8 @@ module.exports = async (ctx) => {
 
 ```js
 module.exports = async (ctx) => {
-    const user = ctx.params.user;
-    const repo = ctx.params.repo ?? 'RSSHub';
+    const user = ctx.req.param('user');
+    const repo = ctx.req.param('repo') ?? 'RSSHub';
     // highlight-start
     // 发送 HTTP GET 请求到 API
     const response = await got(`https://api.github.com/repos/${user}/${repo}/issues`, {
@@ -127,16 +127,16 @@ module.exports = async (ctx) => {
             accept: 'application/vnd.github.html+json',
         },
         searchParams: {
-            per_page: ctx.query.limit ? parseInt(ctx.query.limit, 10) : 30,
+            per_page: ctx.req.query('limit') ? parseInt(ctx.req.query('limit'), 10) : 30,
         },
     });
     // response.data 是上述请求返回的数据对象
     const data = response.data;
     // highlight-end
 
-    ctx.state.data = {
+    ctx.set('data', {
         // 在此处输出您的 RSS
-    };
+    });
 };
 ```
 
@@ -147,7 +147,7 @@ module.exports = async (ctx) => {
 
 一旦我们从 API 获取到数据，我们需要进一步处理它以生成符合 RSS 规范的 RSS 源。具体来说，我们需要提取源标题、源链接、文章标题、文章链接、文章正文和文章发布日期。
 
-为此，我们可以将相关数据赋值给 `ctx.state.data` 对象，RSSHub 的中间件将处理其余部分。
+为此，我们可以将相关数据传给 `ctx.set('data', obj)`，RSSHub 的中间件将处理其余部分。
 
 以下是应有的最终代码：
 
@@ -155,18 +155,18 @@ module.exports = async (ctx) => {
 <TabItem value="Final code" label="最终代码" default>
 
 ```js
-const got = require('@/utils/got');
-const { parseDate } = require('@/utils/parse-date');
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 module.exports = async (ctx) => {
-    const { user, repo = 'RSSHub' } = ctx.params;
+    const { user, repo = 'RSSHub' } = ctx.req.param();
 
     const { data } = await got(`https://api.github.com/repos/${user}/${repo}/issues`, {
         headers: {
             accept: 'application/vnd.github.html+json',
         },
         searchParams: {
-            per_page: ctx.query.limit ? parseInt(ctx.query.limit, 10) : 30,
+            per_page: ctx.req.query('limit') ? parseInt(ctx.req.query('limit'), 10) : 30,
         },
     });
 
@@ -188,14 +188,14 @@ module.exports = async (ctx) => {
     }));
 
     // highlight-start
-    ctx.state.data = {
+    ctx.set('data', {
         // 源标题
         title: `${user}/${repo} issues`,
         // 源链接
         link: `https://github.com/${user}/${repo}/issues`,
         // 源文章
         item: items,
-    };
+    });
     // highlight-end
 };
 ```
@@ -204,23 +204,23 @@ module.exports = async (ctx) => {
 <TabItem value="Alternative" label="替代代码">
 
 ```js
-const got = require('@/utils/got');
-const { parseDate } = require('@/utils/parse-date');
+import got from '@/utils/got';
+import { parseDate } from '@/utils/parse-date';
 
 module.exports = async (ctx) => {
-    const { user, repo = 'RSSHub' } = ctx.params;
+    const { user, repo = 'RSSHub' } = ctx.req.param();
 
     const { data } = await got(`https://api.github.com/repos/${user}/${repo}/issues`, {
         headers: {
             accept: 'application/vnd.github.html+json',
         },
         searchParams: {
-            per_page: ctx.query.limit ? parseInt(ctx.query.limit, 10) : 30,
+            per_page: ctx.req.query('limit') ? parseInt(ctx.req.query('limit'), 10) : 30,
         },
     });
 
     // highlight-start
-    ctx.state.data = {
+    ctx.set('data', {
         // 源标题
         title: `${user}/${repo} issues`,
         // 源链接
@@ -240,7 +240,7 @@ module.exports = async (ctx) => {
             // 如果有的话，文章分类
             category: item.labels.map((label) => label.name),
         }));
-    };
+    });
     // highlight-end
 };
 ```
@@ -258,16 +258,16 @@ module.exports = async (ctx) => {
 
 ```js
 // 导入必要的模组
-const got = require('@/utils/got'); // 自订的 got
-const cheerio = require('cheerio'); // 可以使用类似 jQuery 的 API HTML 解析器
-const { parseDate } = require('@/utils/parse-date');
+import got from '@/utils/got'; // 自订的 got
+import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
+import { parseDate } from '@/utils/parse-date';
 
 module.exports = async (ctx) => {
     // 在此处编写您的逻辑
 
-    ctx.state.data = {
+    ctx.set('data', {
         // 在此处输出您的 RSS
-    };
+    });
 };
 ```
 
@@ -283,12 +283,12 @@ module.exports = async (ctx) => {
 module.exports = async (ctx) => {
     // highlight-start
     // 从 URL 参数中获取用户名和仓库名称
-    const { user, repo = 'RSSHub' } = ctx.params;
+    const { user, repo = 'RSSHub' } = ctx.req.param();
     // highlight-end
 
-    ctx.state.data = {
+    ctx.set('data', {
         // 在此处输出您的 RSS
-    };
+    });
 };
 ```
 
@@ -302,12 +302,12 @@ module.exports = async (ctx) => {
 
 ```js
     const baseUrl = 'https://github.com';
-    const { user, repo = 'RSSHub' } = ctx.params;
+    const { user, repo = 'RSSHub' } = ctx.req.param();
 
     // 注意，".data" 属性包含了请求返回的目标页面的完整 HTML 源代码
     // highlight-start
     const { data: response } = await got(`${baseUrl}/${user}/${repo}/issues`);
-    const $ = cheerio.load(response);
+    const $ = load(response);
     // highlight-end
 ```
 
@@ -338,30 +338,30 @@ module.exports = async (ctx) => {
         });
     // highlight-end
 
-    ctx.state.data = {
+    ctx.set('data', {
         // 在此处输出您的 RSS
-    };
+    });
 ```
 
 ### 生成 RSS 源
 
 一旦我们从 API 获取到数据，我们需要进一步处理它以生成符合 RSS 规范的 RSS 源。具体来说，我们需要提取源标题、源链接、文章标题、文章链接、文章正文和文章发布日期。
 
-为此，我们可以将相关数据赋值给 `ctx.state.data` 对象，RSSHub 的中间件将处理其余部分。
+为此，我们可以将相关数据传给 `ctx.set('data', obj)`，RSSHub 的中间件将处理其余部分。
 
 以下是应有的最终代码：
 
 ```js
-const got = require('@/utils/got');
-const cheerio = require('cheerio');
-const { parseDate } = require('@/utils/parse-date');
+import got from '@/utils/got';
+import { load } from 'cheerio';
+import { parseDate } from '@/utils/parse-date';
 
 module.exports = async (ctx) => {
     const baseUrl = 'https://github.com';
-    const { user, repo = 'RSSHub' } = ctx.params;
+    const { user, repo = 'RSSHub' } = ctx.req.param();
 
     const { data: response } = await got(`${baseUrl}/${user}/${repo}/issues`);
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     const items = $('div.js-navigation-container .flex-auto')
         .toArray()
@@ -381,14 +381,14 @@ module.exports = async (ctx) => {
         });
 
     // highlight-start
-    ctx.state.data = {
+    ctx.set('data', {
         // 源标题
         title: `${user}/${repo} issues`,
         // 源链接
         link: `${baseUrl}/${user}/${repo}/issues`,
         // 源文章
         item: items,
-    };
+    });
     // highlight-end
 };
 ```
@@ -400,16 +400,16 @@ module.exports = async (ctx) => {
 以下是更新后的代码：
 
 ```js
-const got = require('@/utils/got');
-const cheerio = require('cheerio');
-const { parseDate } = require('@/utils/parse-date');
+import got from '@/utils/got';
+import { load } from 'cheerio';
+import { parseDate } from '@/utils/parse-date';
 
 module.exports = async (ctx) => {
     const baseUrl = 'https://github.com';
-    const { user, repo = 'RSSHub' } = ctx.params;
+    const { user, repo = 'RSSHub' } = ctx.req.param();
 
     const { data: response } = await got(`${baseUrl}/${user}/${repo}/issues`);
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     // highlight-next-line
     const list = $('div.js-navigation-container .flex-auto')
@@ -432,9 +432,9 @@ module.exports = async (ctx) => {
     // highlight-start
     const items = await Promise.all(
         list.map((item) =>
-            ctx.cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link, async () => {
                 const { data: response } = await got(item.link);
-                const $ = cheerio.load(response);
+                const $ = load(response);
 
                 // 选择类名为“comment-body”的第一个元素
                 item.description = $('.comment-body').first().html();
@@ -447,12 +447,12 @@ module.exports = async (ctx) => {
     );
     // highlight-end
 
-    ctx.state.data = {
+    ctx.set('data', {
         title: `${user}/${repo} issues`,
         link: `https://github.com/${user}/${repo}/issues`,
         // highlight-next-line
         item: items,
-    };
+    });
 };
 
 ```
@@ -483,10 +483,10 @@ module.exports = async (ctx) => {
 
 ```js
 // 导入所需模组
-const buildData = require('@/utils/common-config');
+import buildData from '@/utils/common-config';
 
 module.exports = async (ctx) => {
-    ctx.state.data = await buildData({
+    ctx.set('data', await buildData({
         link: '', // RSS 来源链接
         url: '', // 数据来源链接
         // 此处可以使用变量
@@ -495,20 +495,20 @@ module.exports = async (ctx) => {
         params: {
             title: '', // 标题变量
         },
-    });
+    }));
 };
 ```
 
 我们的 RSS 订阅源目前缺少内容。必须设置 `item` 才能添加内容。以下是一个示例：
 
 ```js
-const buildData = require('@/utils/common-config');
+import buildData from '@/utils/common-config';
 
 module.exports = async (ctx) => {
-    const { user, repo = 'RSSHub' } = ctx.params;
+    const { user, repo = 'RSSHub' } = ctx.req.param();
     const link = `https://github.com/${user}/${repo}/issues`;
 
-    ctx.state.data = await buildData({
+    ctx.set('data', await buildData({
         link,
         url: link,
         title: `${user}/${repo} issues`, // 也可以使用 $('head title').text()
@@ -526,7 +526,7 @@ module.exports = async (ctx) => {
             pubDate: `parseDate($('relative-time').attr('datetime'))`,
         },
         // highlight-end
-    });
+    }));
 };
 ```
 
@@ -537,17 +537,17 @@ module.exports = async (ctx) => {
 要获取每个 GitHub Issue 的正文，你需要添加一些代码。以下是一个示例：
 
 ```js
-const buildData = require('@/utils/common-config');
+import buildData from '@/utils/common-config';
 // highlight-start
-const got = require('@/utils/got');
-const cheerio = require('cheerio');
+import got from '@/utils/got';
+import { load } from 'cheerio';
 // highlight-end
 
 module.exports = async (ctx) => {
-    const { user, repo = 'RSSHub' } = ctx.params;
+    const { user, repo = 'RSSHub' } = ctx.req.param();
     const link = `https://github.com/${user}/${repo}/issues`;
 
-    ctx.state.data = await buildData({
+    const data = await buildData({
         link,
         url: link,
         title: `${user}/${repo} issues`,
@@ -565,15 +565,17 @@ module.exports = async (ctx) => {
 
     // highlight-start
     await Promise.all(
-        ctx.state.data.item.map((item) =>
-            ctx.cache.tryGet(item.link, async () => {
+        data.item.map((item) =>
+            cache.tryGet(item.link, async () => {
                 const { data: resonse } = await got(item.link);
-                const $ = cheerio.load(resonse);
+                const $ = load(resonse);
                 item.description = $('.comment-body').first().html();
                 return item;
             })
         )
     );
+
+    ctx.set('data', data);
     // highlight-end
 };
 ```
@@ -590,16 +592,16 @@ module.exports = async (ctx) => {
 
 ```js
 // 导入所需模组
-const cheerio = require('cheerio'); // 可以使用类似 jQuery 的 API HTML 解析器
-const { parseDate } = require('@/utils/parse-date');
-const logger = require('@/utils/logger');
+import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
+import { parseDate } from '@/utils/parse-date';
+import logger from '@/utils/logger';
 
 module.exports = async (ctx) => {
     // 在此处编写您的逻辑
 
-    ctx.state.data = {
+    ctx.set('data', {
         // 在此处输出您的 RSS
-    };
+    });
 };
 ```
 
@@ -611,17 +613,18 @@ module.exports = async (ctx) => {
 <TabItem value="puppeteer" label="puppeteer">
 
 ```js
-const cheerio = require('cheerio');
-const { parseDate } = require('@/utils/parse-date');
-const logger = require('@/utils/logger');
+import { load } from 'cheerio';
+import { parseDate } from '@/utils/parse-date';
+import logger from '@/utils/logger';
+import puppeteer from '@/utils/puppeteer';
 
 module.exports = async (ctx) => {
     const baseUrl = 'https://github.com';
-    const { user, repo = 'RSSHub' } = ctx.params;
+    const { user, repo = 'RSSHub' } = ctx.req.param();
 
     // highlight-start
     // 导入 puppeteer 工具类并初始化浏览器实例
-    const browser = await require('@/utils/puppeteer')();
+    const browser = await puppeteer();
     // 打开一个新标签页
     const page = await browser.newPage();
     // 拦截所有请求
@@ -647,7 +650,7 @@ module.exports = async (ctx) => {
     page.close();
     // highlight-end
 
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     // const item = ...;
 
@@ -656,9 +659,9 @@ module.exports = async (ctx) => {
     browser.close();
     // highlight-end
 
-    ctx.state.data = {
+    ctx.set('data', {
         // 在此处输出您的 RSS
-    };
+    });
 }
 ```
 
@@ -666,21 +669,21 @@ module.exports = async (ctx) => {
 <TabItem value="got" label="got">
 
 ```js
-const got = require('@/utils/got');
-const cheerio = require('cheerio');
-const { parseDate } = require('@/utils/parse-date');
+import got from '@/utils/got';
+import { load } from 'cheerio';
+import { parseDate } from '@/utils/parse-date';
 
 module.exports = async (ctx) => {
     const baseUrl = 'https://github.com';
-    const { user, repo = 'RSSHub' } = ctx.params;
+    const { user, repo = 'RSSHub' } = ctx.req.param();
 
     // highlight-next-line
     const { data: response } = await got(`${baseUrl}/${user}/${repo}/issues`);
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
-    ctx.state.data = {
+    ctx.set('data', {
         // 在此处输出您的 RSS
-    };
+    });
 }
 ```
 
@@ -692,15 +695,16 @@ module.exports = async (ctx) => {
 使用浏览器新标签页获取每个 GitHub Issue 的正文，类似于 [上一节](#tong-guo-got-cong-html-huo-qu-shu-ju-geng-hao-de-yue-du-ti-yan)。我们可以使用以下代码：
 
 ```js
-const cheerio = require('cheerio');
-const { parseDate } = require('@/utils/parse-date');
-const logger = require('@/utils/logger');
+import { load } from 'cheerio';
+import { parseDate } from '@/utils/parse-date';
+import logger from '@/utils/logger';
+import puppeteer from '@/utils/puppeteer';
 
 module.exports = async (ctx) => {
     const baseUrl = 'https://github.com';
-    const { user, repo = 'RSSHub' } = ctx.params;
+    const { user, repo = 'RSSHub' } = ctx.req.param();
 
-    const browser = await require('@/utils/puppeteer')();
+    const browser = await puppeteer();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
     page.on('request', (request) => {
@@ -715,7 +719,7 @@ module.exports = async (ctx) => {
     const response = await page.content();
     page.close();
 
-    const $ = cheerio.load(response);
+    const $ = load(response);
 
     const list = $('div.js-navigation-container .flex-auto')
         .toArray()
@@ -736,7 +740,7 @@ module.exports = async (ctx) => {
 
     const items = await Promise.all(
         list.map((item) =>
-            ctx.cache.tryGet(item.link, async () => {
+            cache.tryGet(item.link, async () => {
                 // highlight-start
                 // 重用浏览器实例并打开新标签页
                 const page = await browser.newPage();
@@ -755,7 +759,7 @@ module.exports = async (ctx) => {
                 page.close();
                 // highlight-end
 
-                const $ = cheerio.load(response);
+                const $ = load(response);
 
                 item.description = $('.comment-body').first().html();
 
@@ -769,11 +773,11 @@ module.exports = async (ctx) => {
     browser.close();
     // highlight-end
 
-    ctx.state.data = {
+    ctx.set('data', {
         title: `${user}/${repo} issues`,
         link: `https://github.com/${user}/${repo}/issues`,
         item: items,
-    };
+    });
 };
 ```
 

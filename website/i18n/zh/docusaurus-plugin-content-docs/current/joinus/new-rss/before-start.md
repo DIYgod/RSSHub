@@ -98,7 +98,7 @@ npm run dev
 ```js
 module.exports = (router) => {
     // highlight-next-line
-    router.get('/issue/:user/:repo?', require('./issue'));
+    router.get('/issue/:user/:repo?', './issue');
 };
 ```
 
@@ -108,26 +108,22 @@ module.exports = (router) => {
 ```js
 module.exports = function (router) {
     // highlight-next-line
-    router.get('/issue/:user/:repo?', require('./issue'));
+    router.get('/issue/:user/:repo?', './issue');
 };
 ```
 
 </TabItem>
 </Tabs>
 
-在 `router.js` 中注册您的新 RSS 路由时，您可以定义路由路径并指定要执行的相应函数。在上面的代码中，`router.get()` 方法用于指定新的 RSS 路由的 HTTP 方法和路径。`router.get()` 的第一个参数是使用 [path-to-regexp](https://github.com/pillarjs/path-to-regexp) 语法的路由路径。第二个参数是您新的 RSS 规则 `issue.js` 中导出的函数。您可以省略 `.js` 扩展名。
+在 `router.js` 中注册您的新 RSS 路由时，您可以定义路由路径并指定要执行的相应函数。在上面的代码中，`router.get()` 方法用于指定新的 RSS 路由的 HTTP 方法和路径。`router.get()` 的第一个参数是使用 [Hono 路由](https://hono.dev/api/routing) 语法的路由路径。第二个参数是您新的 RSS 规则 `issue.js` 的相对路径。您可以省略 `.js` 扩展名。
 
 在上面的示例中，`issue` 是一个精确匹配，`:user` 是一个必需参数，`:repo?` 是一个可选参数。`?` 在 `:repo` 之后表示该参数是可选的。如果用户没有输入仓库名，则会返回到您代码中指定的内容（这里是 `RSSHub`）。
 
-一旦您定义了路由路径，您可以从 `ctx.params` 对象中获取参数的值。例如，如果用户访问了 `/github/issue/DIYgod/RSSHub`，您可以分别从 `ctx.params.user` 和 `ctx.params.repo` 中获取 `user` 和 `repo` 的值。例如，如果用户访问了 `/github/issue/DIYgod/RSSHub`，则 `ctx.params.user` 和 `ctx.params.repo` 将分别为 `DIYgod` 和 `RSSHub`。
-
-**请注意，值的类型将是 String 或 undefined。**
-
-您可以使用 `*` 或 `+` 符号来匹配路径的其余部分，例如 `/some/path/:variable*`。请注意，`*` 和 `+` 分别意味着“零个或多个”和“一个或多个”。您还可以使用模式，例如 `/some/path/:variable(\\d+)?`，甚至是正则表达式。
+一旦您定义了路由路径，您可以从 [`ctx.req.param()`](https://hono.dev/api/request#param) 方法中获取参数的值。例如，如果用户访问了 `/github/issue/DIYgod/RSSHub`，您可以分别从 `ctx.req.param('user')` 和 `ctx.req.param('repo')` 中获取 `user` 和 `repo` 的值。例如，如果用户访问了 `/github/issue/DIYgod/RSSHub`，则 `ctx.req.param('user')` 和 `ctx.req.param('repo')` 将分别为 `DIYgod` 和 `RSSHub`。
 
 :::tip
 
-有关 `router` 的更高级用法，请参阅 [@koa/router API 参考文档](https://github.com/koajs/router/blob/master/API.md)。
+有关 `router` 的更高级用法，请参阅 [Hono Routing API 参考文档](https://hono.dev/api/routing)。
 
 :::
 

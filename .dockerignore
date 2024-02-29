@@ -43,7 +43,6 @@ vercel.json
 .git/hooks
 
 # rsshub auxiliary files
-lib/radar-rules.js
 lib/v2/**/radar.js
 
 #dotenv-vault

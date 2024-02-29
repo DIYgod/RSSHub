@@ -29,7 +29,7 @@ We recommend using [day.js](https://github.com/iamkun/dayjs) for date processing
 The RSSHub utility class includes a wrapper for [day.js](https://github.com/iamkun/dayjs) that allows you to easily parse date strings and obtain a [Date Object](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Date) in most cases.
 
 ```js
-const { parseDate } = require('@/utils/parse-date');
+import { parseDate } from '@/utils/parse-date';
 
 const pubDate = parseDate('2020/12/30');
 // OR
@@ -45,7 +45,7 @@ You can refer to the [day.js documentation](https://day.js.org/docs/en/parse/str
 If you need to parse a relative date, use `parseRelativeDate`.
 
 ```js
-const { parseRelativeDate } = require('@/utils/parse-date');
+import { parseRelativeDate } from '@/utils/parse-date';
 
 const pubDate = parseRelativeDate('2 days ago');
 const pubDate = parseRelativeDate('day before yesterday 15:36');
@@ -58,7 +58,7 @@ When parsing dates from websites, it's important to consider time zones. Some we
 To manually specify the time zone in your code, use the following code:
 
 ```js
-const timezone = require('@/utils/timezone');
+import timezone from '@/utils/timezone';
 
 const pubDate = timezone(parseDate('2020/12/30 13:00'), +1);
 ```

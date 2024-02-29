@@ -10,7 +10,7 @@
 core enhancement:
 - changed-files:
   - any-glob-to-any-file: ['lib/routes/index.js']
-  - all-globs-to-any-file: ['lib/**', '!lib/radar-rules.js', '!/lib/config.js', '!lib/router.js', '!lib/routes/**', '!lib/v2/**']
+  - all-globs-to-any-file: ['lib/**', '!/lib/config.js', '!lib/router.js', '!lib/routes/**', '!lib/v2/**']
 
 dependencies:
 - changed-files:

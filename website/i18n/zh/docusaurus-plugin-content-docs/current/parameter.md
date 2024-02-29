@@ -171,7 +171,7 @@ RSSHub 同时支持 RSS 2.0、Atom、JSON Feed 和 RSS3 UMS 输出格式，在�
 
 ### debug.json
 
-在路由末尾添加 `.debug.json`且实例运行在`debugInfo=true`的情况下，RSShub 将会返回插件设置在`ctx.state.json`的内容
+在路由末尾添加 `.debug.json`且实例运行在`debugInfo=true`的情况下，RSShub 将会返回插件设置在 `ctx.set('json', obj)` 的内容
 
 这功能皆在方便开发者调试问题，方便用户自行开发需要的功能。插件作者可以酌情考虑使用，没有格式要求。
 
@@ -181,7 +181,7 @@ RSSHub 同时支持 RSS 2.0、Atom、JSON Feed 和 RSS3 UMS 输出格式，在�
 
 ### debug.html
 
-在路由末尾添加 `.{index}.debug.html` （`{index}` 为数字，为从 0 开始的下标）且实例运行在 `debugInfo=true` 的情况下，RSShub 将会返回插件设置在 `ctx.state.data.item[index].description` 的内容，你可用浏览器访问该页面来快速查看提取的信息的展示结果。
+在路由末尾添加 `.{index}.debug.html` （`{index}` 为数字，为从 0 开始的下标）且实例运行在 `debugInfo=true` 的情况下，RSShub 将会返回插件设置在 `data.item[index].description` 的内容，你可用浏览器访问该页面来快速查看提取的信息的展示结果。
 
 举例：
 

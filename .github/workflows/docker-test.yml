@@ -9,7 +9,6 @@ on:
       - 'lib/**'
       - '!**/maintainer.js'
       - '!**/radar.js'
-      - '!**/radar-rules.js'
       - 'Dockerfile'
       - 'package.json'
       - 'pnpm-lock.yaml'
