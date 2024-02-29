@@ -6815,6 +6815,9 @@
     "/tokeninsight/report:lang?": [
         "fuergaosi233"
     ],
+    "/tongji/bks": [
+        "shiquda"
+    ],
     "/tongji/sse/:type?": [
         "sgqy"
     ],
