@@ -9,8 +9,7 @@ on:
       - 'lib/**'
       - '!**/maintainer.js'
       - '!**/radar.js'
-      - '!lib/v2/test/**'
-      - '!test/**'
+      - '!lib/**/*.test.ts'
       - 'Dockerfile'
   workflow_dispatch: {}
 

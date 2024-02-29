@@ -63,9 +63,9 @@ sidebar_position: 2
 -   Use `kebab-case` for files and folders.
 -   Use `CONSTANT_CASE` for constants.
 
-## v2 Route Standard
+## Route Standard
 
-When creating a new route in RSSHub, you need to organize your files in a specific way. Your namespace folder should be stored in the `lib/v2` directory and should include three mandatory files:
+When creating a new route in RSSHub, you need to organize your files in a specific way. Your namespace folder should be stored in the `lib/routes` directory and should include three mandatory files:
 
 -   `router.js` Registers the routes
 -   `maintainer.js` Provides information about the route maintainer
@@ -74,7 +74,7 @@ When creating a new route in RSSHub, you need to organize your files in a specif
 Your namespace folder structure should look like this:
 
 ```
-├───lib/v2
+├───lib/routes
 │   ├───furstar
 │       ├─── templates
 │           ├─── description.art
@@ -87,7 +87,7 @@ Your namespace folder structure should look like this:
 ...
 ```
 
-**All eligible routes under the `lib/v2` path will be automatically loaded without the need for updating the `lib/router.js`.**
+**All eligible routes under the `lib/routes` path will be automatically loaded without the need for updating the `lib/router.js`.**
 
 ### Namespace
 
@@ -137,7 +137,7 @@ All templates should be placed in the namespace's `templates` folder with the `.
 
 #### Example
 
-Here's an example taken from the [furstar](https://github.com/DIYgod/RSSHub/blob/master/lib/v2/furstar) namespace:
+Here's an example taken from the [furstar](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/furstar) namespace:
 
 ```html
 <div>
@@ -160,6 +160,6 @@ const renderAuthor = (author) => art(path.join(__dirname, 'templates/author.art'
 
 :::danger
 
-The v1 Route Standard is deprecated. All new routes should be following the [v2 Route Standard](/joinus/advanced/script-standard#v2-route-standard).
+The v1 Route Standard is deprecated. All new routes should be following the [Route Standard](/joinus/advanced/script-standard#route-standard).
 
 :::

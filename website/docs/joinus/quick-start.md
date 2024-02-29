@@ -20,7 +20,7 @@ If you don't know much about them but would like to learn them, here are some go
 -   [W3Schools](https://www.w3schools.com/)
 -   [Git course on Codecademy](https://www.codecademy.com/learn/learn-git)
 
-If you'd like to see examples of how other developers use these technologies to create RSS feeds, you can take a look at some of the code in [our repository](https://github.com/DIYgod/RSSHub/tree/master/lib/v2).
+If you'd like to see examples of how other developers use these technologies to create RSS feeds, you can take a look at some of the code in [our repository](https://github.com/DIYgod/RSSHub/tree/master/lib/routes).
 
 ## Submit new RSSHub rules
 

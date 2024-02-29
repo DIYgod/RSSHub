@@ -54,8 +54,6 @@
       "lib/**/*.js",
       "lib/**/*.ts",
       "!lib/routes/**",
-      "!lib/v2/**",
-      "!lib/v3/**",
       "!lib/router.js"
     ],
     "coverageReporters": [

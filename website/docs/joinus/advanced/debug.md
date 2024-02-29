@@ -16,7 +16,7 @@ To pass a custom object to `ctx.set('json', obj)` for debugging, follow these st
 2.  Pass your object to `ctx.set('json', obj)`.
 3.  Access the corresponding route + `.debug.json` to view your object. For example, if you want to debug the route `/furstar/characters/:lang?`, you can access the URL: `/furstar/characters/en.debug.json`
 
-Here's an example of how to use `ctx.set('json', obj)` taken from [furstar/index.js](https://github.com/DIYgod/RSSHub/blob/master/lib/v2/furstar/index.js)
+Here's an example of how to use `ctx.set('json', obj)` taken from [furstar/index.js](https://github.com/DIYgod/RSSHub/blob/master/lib/routes/furstar/index.js)
 
 ```js
 const info = utils.fetchAllCharacters(res.data, base);
