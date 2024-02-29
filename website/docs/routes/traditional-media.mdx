@@ -177,6 +177,18 @@
   :::
 </Route>
 
+## Ekantipur / कान्तिपुर (Nepal) {#ekantipur-%E0%A4%95%E0%A4%BE%E0%A4%A8%E0%A5%8D%E0%A4%A4%E0%A4%BF%E0%A4%AA%E0%A5%81%E0%A4%B0-nepal}
+
+### Full Article RSS {#ekantipur-%E0%A4%95%E0%A4%BE%E0%A4%A8%E0%A5%8D%E0%A4%A4%E0%A4%BF%E0%A4%AA%E0%A5%81%E0%A4%B0-nepal-full-article-rss}
+
+<Route author="maniche04" example="/ekantipur/news" path="/ekantipur/:channel?" paramsDesc={['Find it in the ekantipur.com menu or pick from the list below:']} radar="1">
+  Channels:
+
+  | समाचार | अर्थ / वाणिज्य | विचार     | खेलकुद   | उपत्यका     | मनोरञ्जन         | फोटोफिचर          | फिचर     | विश्व    | ब्लग   |
+  | ---- | -------- | ------- | ------ | -------- | ------------- | -------------- | ------- | ----- | ---- |
+  | news | business | opinion | sports | national | entertainment | photo\_feature | feature | world | blog |
+</Route>
+
 ## Financial Times {#financial-times}
 
 ### FT 中文网 {#financial-times-ft-zhong-wen-wang}
@@ -464,6 +476,16 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
       (`opencc` 是 RSSHub 的通用参数，详情请参阅 [「中文简繁体转换」](/parameter#中文简繁体转换))
 </Route>
 
+## Russian News Agency TASS {#russian-news-agency-tass}
+
+### News {#russian-news-agency-tass-news}
+
+<Route author="TonyRL" example="/tass/politics" path="/tass/:category?" paramsDesc={['Category, can be found in URL, `politics` by default']} radar="1">
+  | Russian Politics & Diplomacy | World | Business & Economy | Military & Defense | Science & Space | Emergencies | Society & Culture | Press Review | Sports |
+  | ---------------------------- | ----- | ------------------ | ------------------ | --------------- | ----------- | ----------------- | ------------ | ------ |
+  | politics                     | world | economy            | defense            | science         | emergencies | society           | pressreview  | sports |
+</Route>
+
 ## Solidot {#solidot}
 
 ### 最新消息 {#solidot-zui-xin-xiao-xi}
@@ -488,11 +510,15 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
   See the [official RSS page](https://www.scmp.com/rss) to get the ID of each category. This route provides fulltext that the offical feed doesn't.
 </Route>
 
+### Topics {#south-china-morning-post-nan-hua-zao-bao-topics}
+
+<Route author="TonyRL" example="/scmp/topics/coronavirus-pandemic-all-stories" path="/scmp/topics/:topic" paramsDesc={['Topic, can be found in URL']} radar="1" />
+
 ## Sputnik News 俄罗斯卫星通讯社 {#sputnik-news-e-luo-si-wei-xing-tong-xun-she}
 
 ### Category {#sputnik-news-e-luo-si-wei-xing-tong-xun-she-category}
 
-<Route author="nczitzk" example="/sputniknews" path="/sputniknews/:category?/:language?" paramsDesc={['Categort, can be found in URL, `news` by default', 'Language, see below, English by default']}>
+<Route author="nczitzk" example="/sputniknews" path="/sputniknews/:category?/:language?" paramsDesc={['Category, can be found in URL, `news` by default', 'Language, see below, English by default']}>
   Categories for International site:
 
   | WORLD | COVID-19 | BUSINESS | SPORT | TECH | OPINION |
@@ -540,6 +566,12 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
   | Chinese     | chinese     |
   | Portuguese  | portuguese  |
 </Route>
+
+## Taiwan News 台灣英文新聞 {#taiwan-news-tai-wan-ying-wen-xin-wen}
+
+### Hot News {#taiwan-news-tai-wan-ying-wen-xin-wen-hot-news}
+
+<Route author="TonyRL" example="/taiwannews/hot" path="/taiwannews/hot/:lang?" paramsDesc={['Language, `en` or `zh`, `en` by default']} radar="1" />
 
 ## The Atlantic {#the-atlantic}
 
@@ -1467,6 +1499,14 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
   | hakka    | political | medical  | local    | international |
 </Route>
 
+## 理论网 {#li-lun-wang}
+
+### 学习时报 {#li-lun-wang-xue-xi-shi-bao}
+
+<Route author="nczitzk" example="/cntheory/paper" path="/cntheory/paper/:id?" paramsDesc={['板块，默认为全部']}>
+  如订阅 **第 A1 版：国内大局**，路由为 [`/cntheory/paper/国内大局`](https://rsshub.app/cntheory/paper/国内大局)。
+</Route>
+
 ## 联合早报 {#lian-he-zao-bao}
 
 :::warning
@@ -2041,6 +2081,72 @@ This route adds the missing photo and Link element. (Offical RSS doesn't have Li
   参数均可在官网获取，如：
 
   `https://www.soundofhope.org/term/203` 对应 `/soundofhope/term/203`
+</Route>
+
+## 香港经济日报 {#xiang-gang-jing-ji-ri-bao}
+
+### 新闻 {#xiang-gang-jing-ji-ri-bao-xin-wen}
+
+香港经济日报已有提供简单 RSS，详细可前往官方网站： [https://www.hket.com/rss](https://www.hket.com/rss)
+
+此路由主要补全官方 RSS 全文输出及完善分类输出。
+
+<Route author="TonyRL" example="/hket/sran001" path="/hket/:category?" paramsDesc={['分类，默认为全部新闻，可在 URL 中找到，部分见下表']} radar="1">
+  <details>
+    <summary>分类</summary>
+
+    | sran001  | sran008  | sran010  | sran011  | sran012  | srat006  |
+    | -------- | -------- | -------- | -------- | -------- | -------- |
+    | 全部新闻 | 财经地产 | 科技信息 | 国际新闻 | 商业新闻 | 香港新闻 |
+
+    | sran009  | sran009-1 | sran009-2 | sran009-3  | sran009-4 | sran009-5 | sran009-6 |
+    | -------- | --------- | --------- | ---------- | --------- | --------- | --------- |
+    | 即时财经 | 股市      | 新股 IPO  | 新经济追踪 | 当炒股    | 宏观解读  | Hot Talk  |
+
+    | sran011-1 | sran011-2    | sran011-3    |
+    | --------- | ------------ | ------------ |
+    | 环球政治  | 环球经济金融 | 环球社会热点 |
+
+    | sran016    | sran016-1  | sran016-2  | sran016-3  | sran016-4  | sran016-5      |
+    | ---------- | ---------- | ---------- | ---------- | ---------- | -------------- |
+    | 大湾区主页 | 大湾区发展 | 大湾区工作 | 大湾区买楼 | 大湾区消费 | 大湾区投资理财 |
+
+    | srac002  | srac003  | srac004  | srac005  |
+    | -------- | -------- | -------- | -------- |
+    | 即时中国 | 经济脉搏 | 国情动向 | 社会热点 |
+
+    | srat001 | srat008 | srat055  | srat069  | srat070   |
+    | ------- | ------- | -------- | -------- | --------- |
+    | 话题    | 观点    | 休闲消费 | 娱乐新闻 | TOPick TV |
+
+    | srat052  | srat052-1 | srat052-2  | srat052-3 |
+    | -------- | --------- | ---------- | --------- |
+    | 健康主页 | 食用安全  | 医生诊症室 | 保健美颜  |
+
+    | srat053  | srat053-1 | srat053-2 | srat053-3 | srat053-4  |
+    | -------- | --------- | --------- | --------- | ---------- |
+    | 亲子主页 | 儿童健康  | 育儿经    | 教育      | 亲子好去处 |
+
+    | srat053-6   | srat053-61 | srat053-62 | srat053-63 | srat053-64 |
+    | ----------- | ---------- | ---------- | ---------- | ---------- |
+    | Band 1 学堂 | 幼稚园     | 中小学     | 尖子教室   | 海外升学   |
+
+    | srat072-1  | srat072-2  | srat072-3        | srat072-4         |
+    | ---------- | ---------- | ---------------- | ----------------- |
+    | 健康身心活 | 抗癌新方向 | 「糖」「心」解密 | 风湿不再 你我自在 |
+
+    | sraw007  | sraw009  | sraw010  | sraw011  | sraw012  | sraw014  | sraw018  | sraw019  |
+    | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+    | 全部博客 | Bloggers | 收息攻略 | 精明消费 | 退休规划 | 个人增值 | 财富管理 | 绿色金融 |
+
+    | sraw015  | sraw015-07 | sraw015-08 | sraw015-09 | sraw015-10 |
+    | -------- | ---------- | ---------- | ---------- | ---------- |
+    | 移民百科 | 海外置业   | 移民攻略   | 移民点滴   | 海外理财   |
+
+    | sraw020  | sraw020-1    | sraw020-2 | sraw020-3 | sraw020-4 |
+    | -------- | ------------ | --------- | --------- | --------- |
+    | ESG 主页 | ESG 趋势政策 | ESG 投资  | ESG 企业  | ESG 社会  |
+  </details>
 </Route>
 
 ## 新华每日电讯 {#xin-hua-mei-ri-dian-xun}

@@ -381,9 +381,9 @@ describe('sort', () => {
         expect(response.status).toBe(200);
         const parsed = await parser.parseString(response.text);
         expect(parsed.items[0].title).toBe('Sort Title 3');
-        expect(parsed.items[parsed.items.length - 3].title).toBe('Sort Title 2');
-        expect(parsed.items[parsed.items.length - 2].title).toBe('Sort Title 0');
-        expect(parsed.items[parsed.items.length - 1].title).toBe('Sort Title 1');
+        expect(parsed.items.at(-3).title).toBe('Sort Title 2');
+        expect(parsed.items.at(-2).title).toBe('Sort Title 0');
+        expect(parsed.items.at(-1).title).toBe('Sort Title 1');
     });
 });
 
@@ -403,6 +403,17 @@ describe('opencc', () => {
         const parsed = await parser.parseString(response.text);
         expect(parsed.items[0].title).toBe('小可爱');
         expect(parsed.items[0].content).toBe('宇宙无敌');
+    });
+});
+
+describe('brief', () => {
+    it(`brief`, async () => {
+        const response = await request.get('/test/brief?brief=100');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items[0].title).toBe('小可愛');
+        expect(parsed.items[0].content).toBe(
+            '<p>宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵…</p>'
+        );
     });
 });
 

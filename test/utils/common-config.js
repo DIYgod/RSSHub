@@ -1,3 +1,4 @@
+/* eslint-disable unicorn/consistent-function-scoping */
 const configUtils = require('../../lib/utils/common-config');
 const nock = require('nock');
 

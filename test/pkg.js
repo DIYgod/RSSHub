@@ -65,8 +65,8 @@ describe('pkg', () => {
             .then(() => {
                 done();
             })
-            .catch((e) => {
-                expect(e).toBe('Error test');
+            .catch((error) => {
+                expect(error).toBe('Error test');
                 done();
             });
     });

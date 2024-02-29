@@ -12,9 +12,9 @@
 
 <Route author="nczitzk" example="/cia/foia-annual-report" path="/cia/foia-annual-report" notOperational="1" />
 
-## Constitutional Court of Baden-Württemberg (Germany) {#constitutional-court-of-baden-wvrttemberg-germany}
+## Constitutional Court of Baden-Württemberg (Germany) {#constitutional-court-of-baden-w%C3%BCrttemberg-germany}
 
-### Press releases {#constitutional-court-of-baden-wvrttemberg-germany-press-releases}
+### Press releases {#constitutional-court-of-baden-w%C3%BCrttemberg-germany-press-releases}
 
 <Route author="quinn-dev" example="/verfghbw/press" path="/verfghbw/press/:keyword?" paramsDesc={['Keyword']} notOperational="1" />
 
@@ -77,6 +77,28 @@
 ### Arguments Audios {#supreme-court-of-the-united-states-arguments-audios}
 
 <Route author="nczitzk" example="/us/supremecourt/argument_audio" path="/us/supremecourt/argument_audio/:year?" paramsDesc={['Year, current year by default']} notOperational="1" />
+
+## Thailand Department of Lands {#thailand-department-of-lands}
+
+### e-LandsAnnouncement {#thailand-department-of-lands-e-landsannouncement}
+
+<Route author="itpcc" example="/dol/announce" path="/dol/announce/:owner?/:province?/:office?" paramsDesc={['Requester/former land owner', 'Province which the land is belongs to', 'DOL office name which the land is belongs to (สำนักงานที่ดิน(กรุงเทพมหานคร|จังหวัด*) [สาขา*])']} />
+
+## Thailand Parliament {#thailand-parliament}
+
+### Thailand Parliament Draft of Law's public hearing system {#thailand-parliament-thailand-parliament-draft-of-law-s-public-hearing-system}
+
+<Route author="itpcc" example="/parliament/section77" path="/parliament/section77/:type?" paramsDesc={['Type of hearing status, see below']} radar="1">
+  | Presented by MP \*       | Presented by People \* | Hearing Ongoing     | Hearing ended   | Hearing result reported  | Waiting for PM approval | Assigned into the session | Processed  | PM Rejected   |
+  | ------------------------ | ---------------------- | ------------------- | --------------- | ------------------------ | ----------------------- | ------------------------- | ---------- | ------------- |
+  | presentbymp              | presentbyperson        | openwsu             | closewsu        | reportwsu                | substatus1              | substatus2                | substatus3 | closewsubypm  |
+  | เสนอโดยสมาชิกสภาผู้แทนราษฏร | เสนอโดยประชาชน         | กำลังเปิดรับฟังความคิดเห็น | ปิดรับฟังความคิดเห็น | รายงานผลการรับฟังความคิดเห็น | รอคำรับรองจากนายกรัฐมนตรี   | บรรจุเข้าระเบียบวาระ         | พิจารณาแล้ว  | นายกฯ ไม่รับรอง |
+
+  *Note:* For `presentbymp` and `presentbyperson`, it can also add:
+
+  -   `-m` for the draft which Speaker of Parliament considered as a monetary draft (ประธานสภาผู้แทนราษฎรวินิจฉัยว่า เป็นร่างการเงิน), or
+  -   `-nm` for non-monetary one (ประธานสภาผู้แทนราษฎรวินิจฉัยว่า ไม่เป็นร่างการเงิน).
+</Route>
 
 ## The United States Trade Representative {#the-united-states-trade-representative}
 
@@ -216,6 +238,18 @@
   |   通知公告   | 项目介绍 |
   | :----------: | :------: |
   | announcement |  project |
+</Route>
+
+## 北京市教育科学规划网 {#bei-jing-shi-jiao-yu-ke-xue-gui-hua-wang}
+
+### 通用 {#bei-jing-shi-jiao-yu-ke-xue-gui-hua-wang-tong-yong}
+
+<Route author="TonyRL" example="/gov/beijing/bjedu/gh" path="/gov/beijing/bjedu/gh/:urlPath?" paramsDesc={['路径，默认为 `zxtzgg`']} radar="1">
+  :::tip
+  路径处填写对应页面 URL 中 `https://gh.bjedu.cn/ghsite/` 和 `/index.html` 之间的字段。下面是一个例子。
+
+  若订阅 [通知公告](https://gh.bjedu.cn/ghsite/zxtzgg/index.html) 则将对应页面 URL `https://gh.bjedu.cn/ghsite/zxtzgg/index.html` 中 `https://gh.bjedu.cn/ghsite/` 和 `/index.html` 之间的字段 `zxtzgg` 作为路径填入。此时路由为 [`/gov/beijing/bjedu/gh/zxtzgg`](https://rsshub.app/gov/beijing/bjedu/gh/zxtzgg)
+  :::
 </Route>
 
 ## 北京市教育委员会 {#bei-jing-shi-jiao-yu-wei-yuan-hui}
@@ -1080,7 +1114,7 @@
 
 ### 政府新闻 {#su-zhou-shi-ren-min-zheng-fu-zheng-fu-xin-wen}
 
-<Route author="EsuRt luyuhuang" example="/gov/suzhou/news/news" path="/gov/suzhou/news/:uid" paramsDesc={['栏目名']} notOperational="1">
+<Route author="EsuRt luyuhuang" example="/gov/suzhou/news/news" path="/gov/suzhou/news/:uid" paramsDesc={['栏目名']} radar="1">
   | 新闻栏目名 |       :uid       |
   | :--------: | :--------------: |
   |  苏州要闻  |   news 或 szyw   |
@@ -1110,7 +1144,15 @@
 
 ### 政府信息公开文件 {#su-zhou-shi-ren-min-zheng-fu-zheng-fu-xin-xi-gong-kai-wen-jian}
 
-<Route author="EsuRt" example="/gov/suzhou/doc" path="/gov/suzhou/doc" notOperational="1" />
+<Route author="EsuRt" example="/gov/suzhou/doc" path="/gov/suzhou/doc" radar="1" />
+
+### 苏州市发展和改革委员会 {#su-zhou-shi-ren-min-zheng-fu-su-zhou-shi-fa-zhan-he-gai-ge-wei-yuan-hui}
+
+<Route author="nczitzk" example="/gov/suzhou/fg/szfgw/ggl/nav_list" path="/gov/suzhou/fg/:category?" paramsDesc={['分类，见下表，默认为通知公告']} radar="1">
+  | 通知公告            | 发改要闻             |
+  | ------------------- | -------------------- |
+  | szfgw/ggl/nav\_list | szfgw/gzdt/nav\_list |
+</Route>
 
 ## 台湾行政院消费者保护会 {#tai-wan-xing-zheng-yuan-xiao-fei-zhe-bao-hu-hui}
 
@@ -1524,7 +1566,7 @@
 
 ### 政府新闻 {#zhong-guo-zheng-fu-wang-zheng-fu-xin-wen}
 
-<Route author="EsuRt" example="/gov/news/:uid" path="/gov/news" paramsDesc={['分类名']} notOperational="1">
+<Route author="EsuRt" example="/gov/news/bm" path="/gov/news/:uid" paramsDesc={['分类名']}>
   | 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 | 政策文件 |
   | :------: | :------: | :------: | :--------: | :------: |
   |    bm    |    gd    |    yw    |     gwy    |  zhengce |

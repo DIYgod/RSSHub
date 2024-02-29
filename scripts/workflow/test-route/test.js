@@ -29,15 +29,15 @@ module.exports = async ({ github, context, core, got }, baseUrl, routes, number)
             const res = await got(lks);
             if (res && res.body) {
                 success = true;
-                detail = res.body.replace(/\s+(\n|$)/g, '\n');
+                detail = res.body.replaceAll(/\s+(\n|$)/g, '\n');
             }
-        } catch (err) {
+        } catch (error) {
             // TODO: change me when https://github.com/actions/github-script is run on node20
             // detail = `HTTPError: Response code ${err.status} (${err.statusText})`;
             // const res = await err.text();
             // const errInfoList = err.body && res.match(/(?<=<pre class="message">)(.+?)(?=<\/pre>)/gs);
-            detail = err.toString();
-            const errInfoList = err.response && err.response.body && err.response.body.match(/(?<=<pre class="message">)(.+?)(?=<\/pre>)/gs);
+            detail = error.toString();
+            const errInfoList = error.response && error.response.body && error.response.body.match(/(?<=<pre class="message">)(.+?)(?=<\/pre>)/gs);
             if (errInfoList) {
                 detail += '\n\n';
                 detail += errInfoList
@@ -82,8 +82,8 @@ ${detail.slice(0, 65300 - temp_com.length)}
                 repo: context.repo.repo,
                 labels: ['Auto: Route Test Complete'],
             })
-            .catch((e) => {
-                core.warning(e);
+            .catch((error) => {
+                core.warning(error);
             });
     }
 
@@ -96,8 +96,8 @@ ${detail.slice(0, 65300 - temp_com.length)}
                 repo: context.repo.repo,
                 body: com_s,
             })
-            .catch((e) => {
-                core.warning(e);
+            .catch((error) => {
+                core.warning(error);
             });
     }
 };

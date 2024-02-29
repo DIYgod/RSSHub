@@ -68,7 +68,7 @@ describe('access-control', () => {
     it(`allowlist`, async () => {
         const key = '1L0veRSSHub';
         const code = md5('/test/2' + key);
-        process.env.ALLOWLIST = 'est/1,233.233.233.,white';
+        process.env.ALLOWLIST = 'est/1,233.233.233.,103.31.4.0/22,white';
         process.env.ACCESS_KEY = key;
         server = require('../../lib/index');
         const request = supertest(server);
@@ -93,6 +93,15 @@ describe('access-control', () => {
 
         const response22 = await request.get('/test/2').set('X-Forwarded-For', '233.233.233.233');
         expect(response22.status).toBe(200);
+
+        const response221 = await request.get('/test/2').set('X-Forwarded-For', '103.31.4.0');
+        expect(response221.status).toBe(200);
+
+        const response222 = await request.get('/test/2').set('X-Forwarded-For', '103.31.7.255');
+        expect(response222.status).toBe(200);
+
+        const response223 = await request.get('/test/2').set('X-Forwarded-For', '103.31.8.0');
+        checkBlock(response223);
 
         const response23 = await request.get('/test/2').set('user-agent', 'whiteua');
         expect(response23.status).toBe(200);
