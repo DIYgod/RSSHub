@@ -88,6 +88,8 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     } else if (outputType === 'json') {
         ctx.header('Content-Type', 'application/feed+json; charset=UTF-8');
         return ctx.body(json(result));
+    } else if (ctx.get('no-content')) {
+        return ctx.body(null);
     } else {
         return ctx.body(art(template, result));
     }

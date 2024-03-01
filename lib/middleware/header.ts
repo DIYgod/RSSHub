@@ -39,7 +39,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     const ifNoneMatch = ctx.req.header('If-None-Match') ?? null;
     if (etagMatches(etag, ifNoneMatch)) {
         ctx.status(304);
-        return ctx.body(null);
+        ctx.set('no-content', true);
     } else {
         ctx.header('Last-Modified', lastBuildDate);
     }

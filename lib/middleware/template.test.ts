@@ -1,21 +1,15 @@
-import { describe, expect, it, afterAll } from '@jest/globals';
-import supertest from 'supertest';
-import server from '@/index';
+import { describe, expect, it } from '@jest/globals';
+import app from '@/app';
 import Parser from 'rss-parser';
 
-const request = supertest(server);
 const parser = new Parser();
-
-afterAll(() => {
-    server.close();
-});
 
 describe('template', () => {
     const expectPubDate = new Date(1_546_272_000_000 - 10 * 1000);
 
     it(`.rss`, async () => {
-        const response1 = await request.get('/test/1?format=rss');
-        const parsed1 = await parser.parseString(response1.text);
+        const response1 = await app.request('/test/1?format=rss');
+        const parsed1 = await parser.parseString(await response1.text());
 
         expect(parsed1).toEqual(expect.any(Object));
         expect(parsed1.title).toEqual(expect.any(String));
@@ -33,8 +27,8 @@ describe('template', () => {
         expect(parsed1.items[0].content).toEqual(expect.any(String));
         expect(parsed1.items[0].guid).toEqual(expect.any(String));
 
-        const response2 = await request.get('/test/1');
-        const parsed2 = await parser.parseString(response2.text);
+        const response2 = await app.request('/test/1');
+        const parsed2 = await parser.parseString(await response2.text());
         delete parsed1.lastBuildDate;
         delete parsed2.lastBuildDate;
         delete parsed1.feedUrl;
@@ -45,8 +39,8 @@ describe('template', () => {
     });
 
     it(`.atom`, async () => {
-        const response = await request.get('/test/1?format=atom');
-        const parsed = await parser.parseString(response.text);
+        const response = await app.request('/test/1?format=atom');
+        const parsed = await parser.parseString(await response.text());
 
         expect(parsed).toEqual(expect.any(Object));
         expect(parsed.title).toEqual(expect.any(String));
@@ -64,12 +58,12 @@ describe('template', () => {
     });
 
     it(`.json`, async () => {
-        const jsonResponse = await request.get('/test/1?format=json');
-        const rssResponse = await request.get('/test/1?format=rss');
-        const jsonParsed = JSON.parse(jsonResponse.text);
-        const rssParsed = await parser.parseString(rssResponse.text);
+        const jsonResponse = await app.request('/test/1?format=json');
+        const rssResponse = await app.request('/test/1?format=rss');
+        const jsonParsed = JSON.parse(await jsonResponse.text());
+        const rssParsed = await parser.parseString(await rssResponse.text());
 
-        expect(jsonResponse.headers['content-type']).toBe('application/feed+json; charset=UTF-8');
+        expect(jsonResponse.headers.get('content-type')).toBe('application/feed+json; charset=UTF-8');
 
         expect(jsonParsed.items[0].title).toEqual(rssParsed.items[0].title);
         expect(jsonParsed.items[0].url).toEqual(rssParsed.items[0].link);
@@ -81,34 +75,34 @@ describe('template', () => {
     });
 
     it('.debug.html', async () => {
-        const jsonResponse = await request.get('/test/1?format=json');
-        const jsonParsed = JSON.parse(jsonResponse.text);
+        const jsonResponse = await app.request('/test/1?format=json');
+        const jsonParsed = JSON.parse(await jsonResponse.text());
 
-        const debugHTMLResponse0 = await request.get('/test/1?format=0.debug.html');
-        expect(debugHTMLResponse0.headers['content-type']).toBe('text/html; charset=UTF-8');
-        expect(debugHTMLResponse0.text).toBe(jsonParsed.items[0].content_html);
+        const debugHTMLResponse0 = await app.request('/test/1?format=0.debug.html');
+        expect(debugHTMLResponse0.headers.get('content-type')).toBe('text/html; charset=UTF-8');
+        expect(await debugHTMLResponse0.text()).toBe(jsonParsed.items[0].content_html);
 
-        const debugHTMLResponseNotExist = await request.get(`/test/1?format=${jsonParsed.items.length}.debug.html`);
-        expect(debugHTMLResponseNotExist.text).toBe(`data.item[${jsonParsed.items.length}].description not found`);
+        const debugHTMLResponseNotExist = await app.request(`/test/1?format=${jsonParsed.items.length}.debug.html`);
+        expect(await debugHTMLResponseNotExist.text()).toBe(`data.item[${jsonParsed.items.length}].description not found`);
     });
 
     it('flatten author object', async () => {
-        const response = await request.get('/test/json');
-        const parsed = await parser.parseString(response.text);
+        const response = await app.request('/test/json');
+        const parsed = await parser.parseString(await response.text());
         expect(parsed.items[2].author).toBe(['DIYgod1', 'DIYgod2'].map((name) => name).join(', '));
         expect(parsed.items[3].author).toBe(['DIYgod3', 'DIYgod4', 'DIYgod5'].map((name) => name).join(', '));
         expect(parsed.items[4].author).toBeUndefined();
     });
 
     it(`long title`, async () => {
-        const response = await request.get('/test/long');
-        const parsed = await parser.parseString(response.text);
+        const response = await app.request('/test/long');
+        const parsed = await parser.parseString(await response.text());
         expect(parsed.items[0].title?.length).toBe(153);
     });
 
     it(`enclosure`, async () => {
-        const response = await request.get('/test/enclosure');
-        const parsed = await parser.parseString(response.text);
+        const response = await app.request('/test/enclosure');
+        const parsed = await parser.parseString(await response.text());
         expect(parsed.itunes?.author).toBe('DIYgod');
         expect(parsed.items[0].enclosure?.url).toBe('https://github.com/DIYgod/RSSHub/issues/1');
         expect(parsed.items[0].enclosure?.length).toBe('3661');
