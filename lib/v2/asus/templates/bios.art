@@ -1,0 +1,6 @@
+<p>更新信息：</p>
+{{@ item.Description}}
+<p>版本: {{item.Version}}</p>
+<p>大小: {{item.FileSize}}</p>
+<p>更新日期: {{item.ReleaseDate}}</p>
+<p>下载链接: <a href="{{item.DownloadUrl.China}}">中国下载</a> | <a href="{{item.DownloadUrl.Global}}">全球下载</a></p>

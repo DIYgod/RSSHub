@@ -1,0 +1,23 @@
+{{ if text }}
+    <p>{{ text.replace(/\n/g, '<br>') }}</p>
+{{ /if }}
+
+{{ each files file }}
+    <br>
+    {{ if file.type.includes('image') }}
+        <img src="{{ file.url }}" />
+    {{ else if file.type.includes('video') }}
+        <video controls poster="{{ file.thumbnailUrl }}">
+            <source src="{{ file.url }}" type="{{ file.type }}">
+        </video>
+    {{ else if file.type.includes('audio') }}
+        <audio controls>
+            <source src="{{ file.url }}" type="{{ file.type }}">
+        </audio>
+    {{ else }}
+        <a href="{{ file.url }}" target="_blank">{{ file.name }}</a>
+    {{ /if }}
+    {{ if file.comment }}
+        <p>{{ file.comment }}</p>
+    {{ /if }}
+{{ /each }}

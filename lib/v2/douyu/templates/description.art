@@ -1,0 +1,14 @@
+{{ if content }}
+{{ content }}
+{{ /if }}
+{{ if images }}
+{{ each images image }}
+<img src="{{ image.url }}" width="{{ image.size.w }}" height="{{ image.size.h }}">
+{{ /each }}
+{{ /if }}
+{{ if replies }}
+<h3>回复</h3>
+{{ each replies reply }}
+<p><b>{{ reply.nickname }}</b> <small>[{{ reply.time }}]</small>: {{ reply.content }}</p>
+{{ /each }}
+{{ /if }}

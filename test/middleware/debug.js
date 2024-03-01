@@ -8,7 +8,7 @@ const cheerio = require('cheerio');
 let gitHash;
 try {
     gitHash = require('git-rev-sync').short();
-} catch (e) {
+} catch {
     gitHash = (process.env.HEROKU_SLUG_COMMIT && process.env.HEROKU_SLUG_COMMIT.slice(0, 7)) || 'unknown';
 }
 

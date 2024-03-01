@@ -1,0 +1,5 @@
+<img src="{{@ img.src }}" alt="{{@ img.altText }}">
+<br>
+<h3>{{@ img.ttl }}</h3>
+<p>{{@ img.dsc }}</p>
+<p>{{@ img.crdt }}</p>

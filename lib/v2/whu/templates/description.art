@@ -1,0 +1,39 @@
+{{ if description }}
+  {{@ description }}
+{{ /if }}
+
+{{ if image }}
+<figure>
+  <img src="{{ image.src }}"
+    {{ if image.alt }}
+      alt={{ image.alt }}
+    {{ /if }}
+    {{ if image.width }}
+      width={{ image.width }}
+    {{ /if }}
+  >
+</figure>
+{{ /if }}
+
+{{ if video }}
+<video controls
+  {{ if video.width }}
+    width={{ video.width }}
+  {{ /if }}
+  {{ if video.height }}
+    height={{ video.height }}
+  {{ /if }}>
+  <source src="{{ video.src }}" type="video/{{ video.src.split('.').pop() }}">
+</video>
+{{ /if }}
+
+{{ if attachments && attachments.length > 0 }}
+  <b>附件</b>
+  <ul>
+  {{ each attachments attachment }}
+    <li>
+      <a href="{{ attachment.link }}">{{ attachment.title }}</a>
+    </li>
+  {{ /each }}
+  </ul>
+{{ /if }}

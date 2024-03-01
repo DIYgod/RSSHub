@@ -1,0 +1,14 @@
+{{ if media }}
+    {{ each media }}
+        {{ if $value.type === 'Photo' }}
+            <figure>
+                <img src="{{ $value.gcsBaseUrl + $value.imageRenderedSizes[0] + $value.imageFileExtension }}" alt="{{ $value.flattenedCaption }}">
+                <figcaption>{{@ $value.caption }}</figcaption>
+            </figure>
+        {{ else if $value.type === 'YouTube' }}
+            <iframe id="ytplayer" type="text/html" width="640" height="360" src="https://www.youtube-nocookie.com/embed/{{ $value.externalId }}" frameborder="0" allowfullscreen></iframe>
+            {{ if $value.caption }}{{@ $value.caption }}{{ /if }}
+        {{ /if }}
+    {{ /each }}
+{{ /if }}
+{{@ description }}

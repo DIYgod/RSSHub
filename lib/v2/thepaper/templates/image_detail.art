@@ -1,0 +1,6 @@
+{{ each images }}
+<figure class="wp-block-image size-full">
+    <img width="{{ $value.width }}" src="{{ $value.src }}">
+</figure>
+<p>{{ $value.description }}</p>
+{{ /each }}

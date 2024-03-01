@@ -1,0 +1,11 @@
+<p>
+    <span><big>{{ item.title }}</big></span><br>
+</p>
+<p>
+    <span><small><i>{{ item.authors }}</i></small></span><br>
+    <span><small><i>https://doi.org/{{ item.doi }}</i></small></span><br>
+    <span><small><i>Volume {{ item.volume }}</i></small></span><br>
+</p>
+<p>
+    <span>{{ item.abstract }}</span><br>
+</p>

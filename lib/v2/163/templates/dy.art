@@ -1,0 +1,6 @@
+{{ if imgsrc }}
+<img src="{{ imgsrc }}"><br>
+{{ /if }}
+{{ if postBody }}
+{{@ postBody }}
+{{ /if }}

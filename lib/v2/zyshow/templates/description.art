@@ -1,0 +1,16 @@
+<table>
+  <tbody>
+    <tr>
+      <td>播出日期：</td>
+      <td><b><a href="{{ link }}">{{ date }}</a></b></td>
+    </tr>
+    <tr>
+      <td>节目主题：</td>
+      <td><b>{{ subject }}</b></td>
+    </tr>
+    <tr>
+      <td>节目来宾：</td>
+      <td><b>{{ guests }}</b></td>
+    </tr>
+  </tbody>
+</table>

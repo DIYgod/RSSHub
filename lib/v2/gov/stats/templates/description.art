@@ -1,0 +1,12 @@
+{{@ description }}
+{{ if attachments }}
+<br>
+<p>附件：</p>
+<ul>
+{{ each attachments attachment }}
+<li>
+  <a href="{{ attachment.link }}" >{{ attachment.name }}</a>
+</li>
+{{ /each }}
+</ul>
+{{ /if }}

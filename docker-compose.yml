@@ -1,7 +1,10 @@
-version: '3'
+version: '3.9'
 
 services:
     rsshub:
+        # two ways to enable puppeteer:
+        # * comment out marked lines, then use this image instead: diygod/rsshub:chromium-bundled
+        # * (consumes more disk space and memory) leave everything unchanged
         image: diygod/rsshub
         restart: always
         ports:
@@ -10,25 +13,43 @@ services:
             NODE_ENV: production
             CACHE_TYPE: redis
             REDIS_URL: 'redis://redis:6379/'
-            PUPPETEER_WS_ENDPOINT: 'ws://browserless:3000'
+            PUPPETEER_WS_ENDPOINT: 'ws://browserless:3000'  # marked
+            PROXY_URI: 'socks5h://warp-socks:9091'
         depends_on:
             - redis
-            - browserless
+            - browserless  # marked
 
-    browserless:
-        # See issue 6680
-        image: browserless/chrome:1.43-chrome-stable
-        restart: always
-        ulimits:
-          core:
-            hard: 0
-            soft: 0
+    browserless:  # marked
+        image: browserless/chrome  # marked
+        restart: always  # marked
+        ulimits:  # marked
+          core:  # marked
+            hard: 0  # marked
+            soft: 0  # marked
 
     redis:
         image: redis:alpine
         restart: always
         volumes:
             - redis-data:/data
+
+    warp-socks:
+        image: monius/docker-warp-socks:latest
+        privileged: true
+        restart: always
+        volumes:
+            - /lib/modules:/lib/modules
+        cap_add:
+            - NET_ADMIN
+            - SYS_MODULE
+        sysctls:
+            net.ipv6.conf.all.disable_ipv6: 0
+            net.ipv4.conf.all.src_valid_mark: 1
+        healthcheck:
+            test: ["CMD", "curl", "-f", "https://www.cloudflare.com/cdn-cgi/trace"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
 
 volumes:
     redis-data:

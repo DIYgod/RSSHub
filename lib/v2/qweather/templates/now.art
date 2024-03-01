@@ -1,0 +1,16 @@
+<text>天气：{{item.text}}</text>
+<br>
+<text>气温：{{item.temp}}℃</text>
+<br>
+<text>体感温度：{{item.feelsLike}}℃</text>
+<br>
+<text>风向：{{item.windDir}}</text>
+<br>
+<text>风力：{{item.windScale}}级  风速：{{item.windSpeed}}km/h</text>
+<br>
+<text>湿度：{{item.humidity}}%  大气压强：{{item.pressure}}hPa</text>
+<br>
+<text>本小时降水量：{{item.precip}}mm</text>
+<br>
+<text>能见度：{{item.vis}}km</text>
+<br>

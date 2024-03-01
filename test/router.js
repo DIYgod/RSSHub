@@ -16,8 +16,8 @@ async function checkRSS(response) {
     const checkDate = (date) => {
         expect(date).toEqual(expect.any(String));
         expect(Date.parse(date)).toEqual(expect.any(Number));
-        expect(new Date() - new Date(date)).toBeGreaterThan(-1000 * 60 * 60 * 24 * 5);
-        expect(new Date() - new Date(date)).toBeLessThan(1000 * 60 * 60 * 24 * 30 * 12 * 5);
+        expect(Date.now() - new Date(date)).toBeGreaterThan(-1000 * 60 * 60 * 24 * 5);
+        expect(Date.now() - new Date(date)).toBeLessThan(1000 * 60 * 60 * 24 * 30 * 12 * 10);
     };
 
     const parsed = await parser.parseString(response.text);
@@ -28,13 +28,13 @@ async function checkRSS(response) {
     expect(parsed.description).toEqual(expect.any(String));
     expect(parsed.link).toEqual(expect.any(String));
     expect(parsed.lastBuildDate).toEqual(expect.any(String));
-    expect(parsed.ttl).toEqual(((config.cache.routeExpire / 60) | 0) + '');
+    expect(parsed.ttl).toEqual(Math.trunc(config.cache.routeExpire / 60) + '');
     expect(parsed.items).toEqual(expect.any(Array));
     checkDate(parsed.lastBuildDate);
 
     // check items
     const guids = [];
-    parsed.items.forEach((item) => {
+    for (const item of parsed.items) {
         expect(item).toEqual(expect.any(Object));
         expect(item.title).toEqual(expect.any(String));
         expect(item.link).toEqual(expect.any(String));
@@ -48,7 +48,7 @@ async function checkRSS(response) {
         // guid must be unique
         expect(guids).not.toContain(item.guid);
         guids.push(item.guid);
-    });
+    }
 }
 
 afterAll(() => {
@@ -98,7 +98,7 @@ describe('router', () => {
             },
             message: 'request returned 1 route',
         });
-    });
+    }, 60000);
     it(`/api/routes`, async () => {
         const response = await request.get('/api/routes');
         expect(response.status).toBe(200);

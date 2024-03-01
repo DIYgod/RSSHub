@@ -1,0 +1,16 @@
+{{ if image }}
+<figure>
+    <img src="{{ image.url }}" height="{{ image.height }}" width="{{ image.width }}">
+</figure>
+{{ /if }}
+{{ if description }}
+{{ each description d }}
+{{ if d.attachmentType === 'video' }}
+<video controls poster="{{ d.bigPosterUrl }}">
+    <source src="{{ d.playUrl }}">
+</video>
+{{ else }}
+{{@ d.replace(/data-lazyload=/g, 'src=') }}
+{{ /if }}
+{{ /each }}
+{{ /if }}

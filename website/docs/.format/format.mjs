@@ -1,0 +1,133 @@
+import file from './file.mjs';
+import sgf from 'staged-git-files';
+import sortByHeading from './sortByHeading.mjs';
+// import slugId from './slugId.mjs';
+import routeFormat from './routeFormat.mjs';
+import { exec } from 'child_process';
+import { fileURLToPath } from 'url';
+import sidebars from '../../sidebars.mjs';
+
+/**
+ * Processors are objects contains two methods:
+ * `rules(list)`, and `handler(str)`
+ * rules filters required file document object
+ * and handler get document string and return formatted document
+ */
+const processors = [sortByHeading, routeFormat];
+
+// Helpers
+// const loopSideBar = (children, type, lang, prefix) =>
+//     children
+//         .filter((e) => e !== '')
+//         .map((x) => ({
+//             path: path.resolve(__dirname, '..', prefix, `./${x}.md`),
+//             type,
+//             lang,
+//         }));
+// const loopNav = (nav, lang) =>
+//     nav.flatMap((e) => {
+//         if (e.items) {
+//             return loopNav(e.items, lang);
+//         }
+//         if (e.link.endsWith('/')) {
+//             return {
+//                 path: path.resolve(__dirname, '..', e.link.slice(1), 'README.md'),
+//                 type: file.NAV_TYPE,
+//                 lang,
+//             };
+//         } else {
+//             return {
+//                 path: path.resolve(__dirname, '..', `${e.link.replace(/^\//, '')}.md`),
+//                 type: file.NAV_TYPE,
+//                 lang,
+//             };
+//         }
+//     });
+// const loopType = (sidebar, lang, prefix) => loopSideBar(sidebar[0].children, file.GUIDE_TYPE, lang, prefix).concat(loopSideBar(sidebar[1].children, file.ROUTE_TYPE, lang, prefix));
+
+/**
+ * Iterate config and build document object:
+ * E.g.
+ * {
+        path: 'docs/other.md', <-- full path here
+        type: 'route', <--- Defined in file.js
+        lang: 'en' <-- Defined in file.js
+    }
+ */
+const buildFileList = async () => {
+    const fileList = sidebars.guideSidebar[2].items.map(({ id }) => ({
+        type: file.ROUTE_TYPE,
+        path: fileURLToPath(new URL(`../${id}.mdx`, import.meta.url)),
+        lang: file.LANG_EN,
+    }));
+    // let fileList = [];
+    // Object.keys(config.themeConfig.locales).forEach((key) => {
+    //     const locale = config.themeConfig.locales[key];
+    //     const key_path = key.slice(1);
+    //     if (locale.hasOwnProperty('sidebar')) {
+    //         fileList = fileList.concat(loopType(locale.sidebar[key], locale.lang, key_path));
+    //     }
+    //     if (locale.hasOwnProperty('nav')) {
+    //         fileList = fileList.concat(loopNav(locale.nav, locale.lang));
+    //     }
+    // });
+
+    return fileList;
+};
+
+/**
+ * Select files that only being modified
+ * Same format as `buildFileList()`
+ */
+const buildStagedList = async () => {
+    const stagedFiles = await sgf();
+    // const stagedFileList = [];
+    // stagedFiles.forEach((e) => {
+    //     if (e.filename.endsWith('.md')) {
+    //         stagedFileList.push(e.filename);
+    //     }
+    // });
+    const stagedFileList = stagedFiles.filter((e) => e.filename.endsWith('.md') || e.filename.endsWith('.mdx')).map((e) => e.filename);
+    const fullFileList = await buildFileList();
+    // const result = [];
+    // stagedFileList.forEach((e) => {
+    //     const f = fullFileList.find((x) => x.path.indexOf(e) !== -1);
+    //     if (f) {
+    //         result.push(f);
+    //     }
+    // });
+    const result = stagedFileList.map((e) => fullFileList.find((x) => x.path.includes(e))).filter((e) => e);
+
+    return result;
+};
+
+/** Entry
+ * Usage: node format.mjs --full/--staged
+ */
+(async () => {
+    // Mode
+    const flag = process.argv[2] || '--full';
+    let fileList = [];
+    switch (flag) {
+        case '--staged':
+            fileList = await buildStagedList();
+            break;
+        case '--full':
+        default:
+            fileList = await buildFileList();
+    }
+    // console.log(fileList);
+    // return
+
+    const stagedFiles = await sgf();
+    for (const processor of processors) {
+        for (const e of processor.rules(fileList)) {
+            let formatted = await file.readFile(e.path);
+            formatted = await processor.handler(formatted, e.path); // remark requires path to show error position
+            await file.writeFile(e.path, formatted);
+            if (stagedFiles.find((x) => e.path.indexOf(x.filename) !== -1)) {
+                await exec(`git add ${e.path}`);
+            }
+        }
+    }
+})();

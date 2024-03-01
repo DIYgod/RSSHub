@@ -1,0 +1,58 @@
+<div>
+    <div>
+        <img src={{coverImg}} /><br><br>
+        <span>{{publishTime}}</span><br>
+        <span>作者：{{author}}</span><br>
+        <span>{{introduction}}</span><br>
+    </div>
+
+    <div>
+        <h1> 描述 </h1>
+        {{@ content}}
+    </div>
+
+    {{ if images }}
+    <div>
+        <h1> PCB && schematic </h1>
+        {{each images $imgs $key}}
+            {{each $imgs $img}}
+                <img src={{$img}} /><br>
+            {{/each}}
+        {{/each}}
+    </div>
+    {{/if}}
+
+    {{ if boms }}
+    <div>
+        <h1> BOM </h1>
+        <table class="table">
+            <tr>
+                <th>No</th>
+                <th>Quantity</th>
+                <th>Device</th>
+                <th>Designator</th>
+                <th>Footprint</th>
+                <th>Value</th>
+                <th>Manufacturer Part</th>
+                <th>Manufacturer</th>
+                <th>Supplier Part</th>
+                <th>Supplier</th>
+            </tr>
+            {{each boms}}
+            <tr>
+                <th>{{$value.No}}</th>
+                <th>{{$value.Quantity}}</th>
+                <th>{{$value.Device}}</th>
+                <th>{{$value.Designator}}</th>
+                <th>{{$value.Footprint}}</th>
+                <th>{{$value.Value}}</th>
+                <th>{{$value['Manufacturer Part']}}</th>
+                <th>{{$value.Manufacturer}}</th>
+                <th>{{$value['Supplier Part']}}</th>
+                <th>{{$value.Supplier}}</th>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+    {{/if}}
+</div>

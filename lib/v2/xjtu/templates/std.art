@@ -1,0 +1,4 @@
+{{@ description }}
+{{ if attachments }}
+{{@ attachments }}
+{{ /if }}

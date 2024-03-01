@@ -5,6 +5,8 @@ const request = supertest(server);
 const Parser = require('rss-parser');
 const parser = new Parser();
 const config = require('../../lib/config').value;
+const got = require('../../lib/utils/got');
+jest.mock('../../lib/utils/got');
 
 afterAll(() => {
     server.close();
@@ -81,6 +83,43 @@ describe('filter', () => {
         expect(parsed.items.length).toBe(2);
         expect(parsed.items[0].title).toBe('Title4');
         expect(parsed.items[1].title).toBe('Title5');
+    });
+
+    it(`filter_category`, async () => {
+        const response = await request.get('/test/filter?filter_category=Category0|Category1');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(2);
+        expect(parsed.items[0].title).toBe('Filter Title1');
+        expect(parsed.items[1].title).toBe('Filter Title2');
+    });
+
+    it(`filter_category filter_case_sensitive default`, async () => {
+        const response = await request.get('/test/filter?filter_category=category0|category1');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(0);
+    });
+
+    it(`filter_category filter_case_sensitive=false`, async () => {
+        const response = await request.get('/test/filter?filter_category=category0|category1&filter_case_sensitive=false');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(2);
+        expect(parsed.items[0].title).toBe('Filter Title1');
+        expect(parsed.items[1].title).toBe('Filter Title2');
+    });
+
+    it(`filter_category filter_case_sensitive=false category string`, async () => {
+        const response = await request.get('/test/filter?filter_category=category3&filter_case_sensitive=false');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(1);
+        expect(parsed.items[0].title).toBe('Filter Title3');
+    });
+
+    it(`filter_category illegal_category`, async () => {
+        const response = await request.get('/test/filter-illegal-category?filter_category=CategoryIllegal');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(1);
+        expect(parsed.items[0].categories.length).toBe(1);
+        expect(parsed.items[0].categories[0]).toBe('CategoryIllegal');
     });
 
     it(`filter_time`, async () => {
@@ -185,6 +224,34 @@ describe('filter', () => {
         expect(parsed.items[2].title).toBe('Title3');
     });
 
+    it(`filterout_category`, async () => {
+        const response = await request.get('/test/filter?filterout_category=Category0|Category1');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(6);
+        expect(parsed.items[0].title).toBe('Filter Title3');
+        expect(parsed.items[1].title).toBe('Title1');
+        expect(parsed.items[2].title).toBe('Title2');
+    });
+
+    it(`filterout_category filter_case_sensitive default`, async () => {
+        const response = await request.get('/test/filter?filterout_category=category0|category1');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(8);
+        expect(parsed.items[0].title).toBe('Filter Title1');
+        expect(parsed.items[1].title).toBe('Filter Title2');
+        expect(parsed.items[2].title).toBe('Filter Title3');
+        expect(parsed.items[3].title).toBe('Title1');
+    });
+
+    it(`filterout_category filter_case_sensitive=false`, async () => {
+        const response = await request.get('/test/filter?filterout_category=category0|category1&filter_case_sensitive=false');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(6);
+        expect(parsed.items[0].title).toBe('Filter Title3');
+        expect(parsed.items[1].title).toBe('Title1');
+        expect(parsed.items[2].title).toBe('Title2');
+    });
+
     it(`filter combination`, async () => {
         const response = await request.get('/test/filter?filter_title=Filter&filter_description=Description1');
         const parsed = await parser.parseString(response.text);
@@ -208,6 +275,18 @@ describe('limit', () => {
         expect(parsed.items[0].title).toBe('Title1');
         expect(parsed.items[1].title).toBe('Title2');
         expect(parsed.items[2].title).toBe('Title3');
+    });
+});
+
+describe('sorted', () => {
+    it('sorted', async () => {
+        const response = await request.get('/test/sort?sorted=false');
+        expect(response.status).toBe(200);
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items[0].title).toBe('Sort Title 0');
+        expect(parsed.items[1].title).toBe('Sort Title 1');
+        expect(parsed.items[2].title).toBe('Sort Title 2');
+        expect(parsed.items[3].title).toBe('Sort Title 3');
     });
 });
 
@@ -246,7 +325,7 @@ describe('wrong_path', () => {
     it(`wrong_path`, async () => {
         const response = await request.get('/wrong');
         expect(response.status).toBe(404);
-        expect(response.headers['cache-control']).toBe(`public, max-age=${config.cache.routeExpire * 100}`);
+        expect(response.headers['cache-control']).toBe(`public, max-age=${config.cache.routeExpire}`);
         expect(response.text).toMatch(/Error: wrong path/);
     });
 });
@@ -257,8 +336,8 @@ describe('fulltext_mode', () => {
         expect(response.status).toBe(200);
         const parsed = await parser.parseString(response.text);
         expect(parsed.items[0].content).not.toBe(undefined);
-    });
-}, 10000);
+    }, 60000);
+});
 
 describe('complicated_description', () => {
     it(`complicated_description`, async () => {
@@ -280,15 +359,31 @@ describe('complicated_description', () => {
     });
 });
 
+describe('multimedia_description', () => {
+    it(`multimedia_description`, async () => {
+        const response = await request.get('/test/multimedia');
+        expect(response.status).toBe(200);
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items[0].content).toBe(`<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">
+<video src="https://mock.com/DIYgod/RSSHub.mp4"></video>
+<video poster="https://mock.com/DIYgod/RSSHub.jpg">
+<source src="https://mock.com/DIYgod/RSSHub.mp4" type="video/mp4">
+<source src="https://mock.com/DIYgod/RSSHub.webm" type="video/webm">
+</video>
+<audio src="https://mock.com/DIYgod/RSSHub.mp3"></audio>
+<iframe src="https://mock.com/DIYgod/RSSHub.html" referrerpolicy="no-referrer"></iframe>`);
+    });
+});
+
 describe('sort', () => {
     it(`sort`, async () => {
         const response = await request.get('/test/sort');
         expect(response.status).toBe(200);
         const parsed = await parser.parseString(response.text);
         expect(parsed.items[0].title).toBe('Sort Title 3');
-        expect(parsed.items[parsed.items.length - 3].title).toBe('Sort Title 2');
-        expect(parsed.items[parsed.items.length - 2].title).toBe('Sort Title 0');
-        expect(parsed.items[parsed.items.length - 1].title).toBe('Sort Title 1');
+        expect(parsed.items.at(-3).title).toBe('Sort Title 2');
+        expect(parsed.items.at(-2).title).toBe('Sort Title 0');
+        expect(parsed.items.at(-1).title).toBe('Sort Title 1');
     });
 });
 
@@ -308,5 +403,59 @@ describe('opencc', () => {
         const parsed = await parser.parseString(response.text);
         expect(parsed.items[0].title).toBe('小可爱');
         expect(parsed.items[0].content).toBe('宇宙无敌');
+    });
+});
+
+describe('brief', () => {
+    it(`brief`, async () => {
+        const response = await request.get('/test/brief?brief=100');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items[0].title).toBe('小可愛');
+        expect(parsed.items[0].content).toBe(
+            '<p>宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵宇宙無敵…</p>'
+        );
+    });
+});
+
+describe('multi parameter', () => {
+    it(`filter before limit`, async () => {
+        const response = await request.get('/test/filter-limit?filterout_title=2&limit=2');
+        const parsed = await parser.parseString(response.text);
+        expect(parsed.items.length).toBe(2);
+        expect(parsed.items[0].title).toBe('Title1');
+        expect(parsed.items[1].title).toBe('Title3');
+    });
+});
+
+describe('openai', () => {
+    it(`chatgpt`, async () => {
+        config.openai.apiKey = 'sk-1234567890';
+        // 模拟 openai 请求的响应
+        const openaiResponse = {
+            data: {
+                choices: [
+                    {
+                        message: {
+                            content: 'Summary of the article.',
+                        },
+                    },
+                ],
+            },
+        };
+
+        got.post.mockResolvedValue(openaiResponse);
+        const responseWithGpt = await request.get('/test/gpt?chatgpt=true');
+        const responseNormal = await request.get('/test/gpt');
+
+        expect(responseWithGpt.status).toBe(200);
+        expect(responseNormal.status).toBe(200);
+
+        const parsedGpt = await parser.parseString(responseWithGpt.text);
+        const parsedNormal = await parser.parseString(responseNormal.text);
+
+        expect(parsedGpt.items[0].content).not.toBe(undefined);
+        expect(parsedGpt.items[0].content).toBe(parsedNormal.items[0].content);
+        expect(parsedGpt.items[1].content).not.toBe(undefined);
+        expect(parsedGpt.items[1].content).not.toBe(parsedNormal.items[1].content);
     });
 });

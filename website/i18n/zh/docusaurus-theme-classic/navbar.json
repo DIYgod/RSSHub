@@ -1,0 +1,34 @@
+{
+  "title": {
+    "message": "RSSHub",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "RSSHub",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Guide": {
+    "message": "指南",
+    "description": "Navbar item with label Guide"
+  },
+  "item.label.Routes": {
+    "message": "路由",
+    "description": "Navbar item with label Routes"
+  },
+  "item.label.Join Us": {
+    "message": "参与我们",
+    "description": "Navbar item with label Join Us"
+  },
+  "item.label.Deploy": {
+    "message": "部署",
+    "description": "Navbar item with label Deploy"
+  },
+  "item.label.Support RSSHub": {
+    "message": "支持 RSSHub",
+    "description": "Navbar item with label Support RSSHub"
+  },
+  "item.label.GitHub": {
+    "message": "GitHub",
+    "description": "Navbar item with label GitHub"
+  }
+}
