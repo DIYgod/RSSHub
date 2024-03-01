@@ -100,7 +100,7 @@
     "fanfou-sdk": "5.0.0",
     "git-rev-sync": "3.0.2",
     "googleapis": "133.0.0",
-    "got": "14.2.0",
+    "got": "11.8.6",
     "hono": "4.0.8",
     "html-to-text": "9.0.5",
     "https-proxy-agent": "7.0.4",
