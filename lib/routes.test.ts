@@ -77,7 +77,7 @@ describe('router', () => {
         const response = await app.request('/robots.txt');
         expect(response.status).toBe(200);
         expect(await response.text()).toBe('User-agent: *\nDisallow: /');
-        expect(response.headers.get('content-type')).toBe('text/plain');
+        expect(response.headers.get('content-type')).toBe('text/plain; charset=UTF-8');
     });
 
     // favicon.ico
