@@ -83,7 +83,7 @@
     "@postlight/parser": "2.2.3",
     "@sentry/node": "7.103.0",
     "@tonyrl/rand-user-agent": "2.0.52",
-    "@types/node": "20.11.22",
+    "@types/node": "20.11.24",
     "aes-js": "3.1.2",
     "art-template": "4.13.2",
     "bbcodejs": "0.0.4",
