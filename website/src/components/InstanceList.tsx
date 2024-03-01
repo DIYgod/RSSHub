@@ -71,6 +71,11 @@ export default function InstanceList(): JSX.Element {
     location: '🇺🇸',
     maintainer: '麦当狗',
     maintainerUrl: 'https://t.me/rsshub/281479',
+  }, {
+    url: 'https://rsshub.xuyiyang.vip',
+    location: '🇺🇸',
+    maintainer: '小怕Creeper_xiaopa',
+    maintainerUrl: 'https://xuyiyang.vip',
   }
 ]
 
