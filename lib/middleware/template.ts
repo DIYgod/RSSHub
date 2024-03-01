@@ -19,7 +19,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
 
         if (/(\d+)\.debug\.html$/.test(outputType)) {
             const index = Number.parseInt(outputType.match(/(\d+)\.debug\.html$/)?.[1] || '0');
-            return ctx.text(data?.item?.[index]?.description || `data.item[${index}].description not found`);
+            return ctx.html(data?.item?.[index]?.description || `data.item[${index}].description not found`);
         }
     }
 
