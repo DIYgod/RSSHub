@@ -156,7 +156,7 @@
     "xxhash-wasm": "1.0.2"
   },
   "devDependencies": {
-    "@babel/preset-env": "7.23.9",
+    "@babel/preset-env": "7.24.0",
     "@babel/preset-typescript": "7.23.3",
     "@jest/globals": "29.7.0",
     "@microsoft/eslint-formatter-sarif": "3.0.0",
