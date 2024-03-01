@@ -1,7 +1,6 @@
 import { describe, expect, it, jest, afterEach, afterAll } from '@jest/globals';
 import supertest from 'supertest';
 import Parser from 'rss-parser';
-import querystring from 'query-string';
 import type { serve } from '@hono/node-server';
 
 const parser = new Parser();
@@ -127,7 +126,12 @@ const testAntiHotlink = async (path, expectObj, query?: string | Record<string, 
 
     let queryStr;
     if (query) {
-        queryStr = typeof query === 'string' ? query : querystring.stringify(query);
+        queryStr =
+            typeof query === 'string'
+                ? query
+                : Object.entries(query)
+                      .map(([key, value]) => `${key}=${value}`)
+                      .join('&');
     }
     path = path + (queryStr ? `?${queryStr}` : '');
 
