@@ -2,6 +2,7 @@ import '@/utils/request-wrapper';
 
 import { Hono } from 'hono';
 
+import { compress } from 'hono/compress';
 import cache from '@/middleware/cache';
 import template from '@/middleware/template';
 import sentry from '@/middleware/sentry';
@@ -21,6 +22,7 @@ process.on('uncaughtException', (e) => {
 
 const app = new Hono();
 
+app.use(compress());
 app.use('*', sentry);
 app.use('*', accessControl);
 app.use('*', debug);
