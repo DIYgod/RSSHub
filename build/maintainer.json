@@ -468,8 +468,6 @@
     "/android/platform-tools-releases": [
         "nczitzk"
     ],
-    "/anigamer/anime/:sn": [],
-    "/anigamer/new_anime": [],
     "/anime1/anime/:time/:name": [],
     "/anime1/search/:keyword": [],
     "/annualreviews/:id": [
@@ -2433,12 +2431,18 @@
     "/gamegene/news": [
         "lone1y-51"
     ],
+    "/gamer/anime/:sn": [
+        "maple3142"
+    ],
     "/gamer/gnn/:category?": [
         "Arracc"
     ],
     "/gamer/hot/:bsn": [
         "nczitzk",
         "TonyRL"
+    ],
+    "/gamer/new_anime": [
+        "maple3142"
     ],
     "/gameres/hot": [],
     "/gameres/list/:id": [],

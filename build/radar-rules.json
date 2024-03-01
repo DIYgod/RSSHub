@@ -14112,16 +14112,33 @@
     "acg": [
       {
         "title": "GNN 新聞",
-        "docs": "https://docs.rsshub.app/routes/bbs#ba-ha-mu-te-dian-wan-zi-xun-zhan",
+        "docs": "https://docs.rsshub.app/routes/anime#ba-ha-mu-te-dian-wan-zi-xun-zhan",
         "source": [
           "/news.php"
+        ]
+      }
+    ],
+    "ani": [
+      {
+        "title": "動畫瘋 - 最後更新",
+        "docs": "https://docs.rsshub.app/routes/anime#ba-ha-mu-te-dian-wan-zi-xun-zhan",
+        "source": [
+          "/"
+        ],
+        "target": "/gamer/new_anime"
+      },
+      {
+        "title": "動畫瘋 - 動畫",
+        "docs": "https://docs.rsshub.app/routes/anime#ba-ha-mu-te-dian-wan-zi-xun-zhan",
+        "source": [
+          "/animeVideo.php"
         ]
       }
     ],
     "forum": [
       {
         "title": "熱門推薦",
-        "docs": "https://docs.rsshub.app/routes/bbs#ba-ha-mu-te-dian-wan-zi-xun-zhan",
+        "docs": "https://docs.rsshub.app/routes/anime#ba-ha-mu-te-dian-wan-zi-xun-zhan",
         "source": [
           "/A.php",
           "/B.php"
@@ -14131,7 +14148,7 @@
     "gnn": [
       {
         "title": "GNN 新聞",
-        "docs": "https://docs.rsshub.app/routes/bbs#ba-ha-mu-te-dian-wan-zi-xun-zhan",
+        "docs": "https://docs.rsshub.app/routes/anime#ba-ha-mu-te-dian-wan-zi-xun-zhan",
         "source": [
           "/index.php"
         ]
