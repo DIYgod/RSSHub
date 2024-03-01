@@ -3,11 +3,10 @@ import { config } from '@/config';
 
 const handler: Handler = (ctx) => {
     if (config.disallowRobot) {
-        ctx.header('Content-Type', 'text/plain');
-        return ctx.body('User-agent: *\nDisallow: /');
+        return ctx.text('User-agent: *\nDisallow: /');
     } else {
         ctx.status(404);
-        return ctx.body('');
+        return ctx.text('');
     }
 };
 

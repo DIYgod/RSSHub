@@ -42,7 +42,7 @@ const json = (data: Data) => {
             _extra: item._extra || undefined,
         })),
     };
-    return JSON.stringify(jsonFeed, null, 4);
+    return JSON.stringify(jsonFeed);
 };
 
 export default json;
