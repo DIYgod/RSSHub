@@ -6824,7 +6824,9 @@
     "/tongji/yjs": [
         "shengmaosu"
     ],
-    "/tongli/news/:type": [],
+    "/tongli/news/:type": [
+        "CokeMine"
+    ],
     "/toodaylab/column/:id": [
         "nczitzk"
     ],
