@@ -59,7 +59,9 @@ const custom: typeof got & {
     headers: {
         'user-agent': config.ua,
     },
-    timeout: config.requestTimeout,
+    timeout: {
+        request: config.requestTimeout,
+    },
 });
 custom.all = (list) => Promise.all(list);
 

@@ -1,7 +1,6 @@
-import { describe, expect, it, afterAll, jest } from '@jest/globals';
+import { describe, expect, it, afterAll } from '@jest/globals';
 process.env.SOCKET = 'socket';
 
-jest.mock('request-promise-native');
 import app from '@/app';
 import Parser from 'rss-parser';
 const parser = new Parser();

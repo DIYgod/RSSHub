@@ -1,6 +1,5 @@
 const unified = require('unified');
 const parse = require('remark-parse');
-const got = require('got');
 
 // @TODO maybe we could use label or some other better ways to distinguish bug/feature issues
 const matchTitle = ['路由地址', 'Routes'];
@@ -44,6 +43,8 @@ async function parseBodyRoutes(body, core) {
 }
 
 async function getMaintainersByRoutes(routes, core) {
+    const got = await import('got');
+
     // TODO: change me when https://github.com/actions/github-script is run on node20
     // const response = await fetch(maintainerURL);
     // const maintainers = await response.json();
