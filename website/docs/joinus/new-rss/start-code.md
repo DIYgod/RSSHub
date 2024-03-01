@@ -31,7 +31,7 @@ Here's the basic code to get you started:
 import got from '@/utils/got'; // a customised got
 import { parseDate } from '@/utils/parse-date';
 
-module.exports = async (ctx) => {
+export default async (ctx) => {
     // Your logic here
 
     ctx.set('data', {
@@ -51,7 +51,7 @@ As mentioned earlier, we need to retrieve the GitHub username and repository nam
 <TabItem value="Object destructuring" label="Object destructuring" default>
 
 ```js
-module.exports = async (ctx) => {
+export default async (ctx) => {
     // highlight-next-line
     const { user, repo = 'RSSHub' } = ctx.req.param();
 
@@ -65,7 +65,7 @@ module.exports = async (ctx) => {
 <TabItem value="Traditional assignment" label="Traditional assignment">
 
 ```js
-module.exports = async (ctx) => {
+export default async (ctx) => {
     // highlight-start
     const user = ctx.req.param('user');
     const repo = ctx.req.param('repo') ?? 'RSSHub';
@@ -90,7 +90,7 @@ After we have the user input, we can use it to make a request to the API. In mos
 <TabItem value="Object destructuring" label="Object destructuring" default>
 
 ```js
-module.exports = async (ctx) => {
+export default async (ctx) => {
     const { user, repo = 'RSSHub' } = ctx.req.param();
     // highlight-start
     // Send an HTTP GET request to the API
@@ -119,7 +119,7 @@ module.exports = async (ctx) => {
 <TabItem value="Traditional assignment" label="Traditional assignment">
 
 ```js
-module.exports = async (ctx) => {
+export default async (ctx) => {
     const user = ctx.req.param('user');
     const repo = ctx.req.param('repo') ?? 'RSSHub';
     // highlight-start
@@ -160,7 +160,7 @@ Here is the final code that you should have:
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-module.exports = async (ctx) => {
+export default async (ctx) => {
     const { user, repo = 'RSSHub' } = ctx.req.param();
 
     const { data } = await got(`https://api.github.com/repos/${user}/${repo}/issues`, {
@@ -210,7 +210,7 @@ module.exports = async (ctx) => {
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-module.exports = async (ctx) => {
+export default async (ctx) => {
     const { user, repo = 'RSSHub' } = ctx.req.param();
 
     const { data } = await got(`https://api.github.com/repos/${user}/${repo}/issues`, {
@@ -265,7 +265,7 @@ import got from '@/utils/got'; // a customised got
 import { load } from 'cheerio'; // an HTML parser with a jQuery-like API
 import { parseDate } from '@/utils/parse-date';
 
-module.exports = async (ctx) => {
+export default async (ctx) => {
     // Your logic here
 
     ctx.set('data', {
@@ -283,7 +283,7 @@ You will add your own code to extract data from the HTML document, process it, a
 As mentioned before, we want users to enter a GitHub username and a repository name, and fall back to `RSSHub` if they don't enter the repository name in the request URL.
 
 ```js
-module.exports = async (ctx) => {
+export default async (ctx) => {
     // highlight-start
     // Retrieve user and repository name from the URL parameters
     const { user, repo = 'RSSHub' } = ctx.req.param();
@@ -359,7 +359,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-module.exports = async (ctx) => {
+export default async (ctx) => {
     const baseUrl = 'https://github.com';
     const { user, repo = 'RSSHub' } = ctx.req.param();
 
@@ -407,7 +407,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-module.exports = async (ctx) => {
+export default async (ctx) => {
     const baseUrl = 'https://github.com';
     const { user, repo = 'RSSHub' } = ctx.req.param();
 
@@ -488,7 +488,7 @@ Here's some basic code to get you started:
 // Import necessary modules
 import buildData from '@/utils/common-config';
 
-module.exports = async (ctx) => {
+export default async (ctx) => {
     ctx.set('data', await buildData({
         link: '', // The RSS source link
         url: '', // The data source link
@@ -507,7 +507,7 @@ Our RSS feed currently lacks content. The `item` must be set to add the content.
 ```js
 import buildData from '@/utils/common-config';
 
-module.exports = async (ctx) => {
+export default async (ctx) => {
     const { user, repo = 'RSSHub' } = ctx.req.param();
     const link = `https://github.com/${user}/${repo}/issues`;
 
@@ -546,7 +546,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 // highlight-end
 
-module.exports = async (ctx) => {
+export default async (ctx) => {
     const { user, repo = 'RSSHub' } = ctx.req.param();
     const link = `https://github.com/${user}/${repo}/issues`;
 
@@ -599,7 +599,7 @@ import { load } from 'cheerio'; // an HTML parser with a jQuery-like API
 import { parseDate } from '@/utils/parse-date';
 import logger from '@/utils/logger';
 
-module.exports = async (ctx) => {
+export default async (ctx) => {
     // Your logic here
 
     ctx.set('data', {
@@ -621,7 +621,7 @@ import { parseDate } from '@/utils/parse-date';
 import logger from '@/utils/logger';
 import puppeteer from '@/utils/puppeteer';
 
-module.exports = async (ctx) => {
+export default async (ctx) => {
     const baseUrl = 'https://github.com';
     const { user, repo = 'RSSHub' } = ctx.req.param();
 
@@ -676,7 +676,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-module.exports = async (ctx) => {
+export default async (ctx) => {
     const baseUrl = 'https://github.com';
     const { user, repo = 'RSSHub' } = ctx.req.param();
 
@@ -703,7 +703,7 @@ import { parseDate } from '@/utils/parse-date';
 import logger from '@/utils/logger';
 import puppeteer from '@/utils/puppeteer';
 
-module.exports = async (ctx) => {
+export default async (ctx) => {
     const baseUrl = 'https://github.com';
     const { user, repo = 'RSSHub' } = ctx.req.param();
 
