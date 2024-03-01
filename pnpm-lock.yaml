@@ -141,8 +141,8 @@ dependencies:
     specifier: 1.5.0
     version: 1.5.0
   mailparser:
-    specifier: 3.6.7
-    version: 3.6.7
+    specifier: 3.6.9
+    version: 3.6.9
   markdown-it:
     specifier: 14.0.0
     version: 14.0.0
@@ -7531,18 +7531,19 @@ packages:
     hasBin: true
     dev: false
 
-  /mailparser@3.6.7:
-    resolution: {integrity: sha512-/3x8HW70DNehw+3vdOPKdlLuxOHoWcGB5jfx5vJ5XUbY9/2jUJbrrhda5Si8Dj/3w08U0y5uGAkqs5+SPTPKoA==}
+  /mailparser@3.6.9:
+    resolution: {integrity: sha512-1fIDZlgN1NnuzmTSEUxkaViquXYkw5NbQehVc+kz55QRy98QgLdTtRSKv289Jy4NrCiDchRx6zAijB4HrPsvkA==}
     dependencies:
       encoding-japanese: 2.0.0
       he: 1.2.0
       html-to-text: 9.0.5
       iconv-lite: 0.6.3
-      libmime: 5.2.1
+      libmime: 5.3.4
       linkify-it: 5.0.0
       mailsplit: 5.4.0
-      nodemailer: 6.9.9
-      tlds: 1.248.0
+      nodemailer: 6.9.11
+      punycode: 2.3.1
+      tlds: 1.250.0
     dev: false
 
   /mailsplit@5.4.0:
@@ -10596,11 +10597,6 @@ packages:
   /titleize@1.0.0:
     resolution: {integrity: sha512-TARUb7z1pGvlLxgPk++7wJ6aycXF3GJ0sNSBTAsTuJrQG5QuZlkUQP+zl+nbjAh4gMX9yDw9ZYklMd7vAfJKEw==}
     engines: {node: '>=0.10.0'}
-    dev: false
-
-  /tlds@1.248.0:
-    resolution: {integrity: sha512-noj0KdpWTBhwsKxMOXk0rN9otg4kTgLm4WohERRHbJ9IY+kSDKr3RmjitaQ3JFzny+DyvBOQKlFZhp0G0qNSfg==}
-    hasBin: true
     dev: false
 
   /tlds@1.250.0:
