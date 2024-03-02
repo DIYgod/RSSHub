@@ -1,5 +1,4 @@
 import { describe, expect, it, afterAll } from '@jest/globals';
-import supertest from 'supertest';
 
 process.env.NODE_NAME = 'mock';
 process.env.ALLOW_ORIGIN = 'rsshub.mock';
@@ -13,24 +12,28 @@ afterAll(() => {
 
 describe('header', () => {
     it(`header`, async () => {
-        const request = supertest((await import('@/index')).default);
+        const app = (await import('@/app')).default;
         const { config } = await import('@/config');
-        const response = await request.get('/test/1');
-        expect(response.headers['access-control-allow-origin']).toBe('rsshub.mock');
-        expect(response.headers['access-control-allow-methods']).toBe('GET');
-        expect(response.headers['content-type']).toBe('application/xml; charset=utf-8');
-        expect(response.headers['cache-control']).toBe(`public, max-age=${config.cache.routeExpire}`);
-        expect(response.headers['last-modified']).toBe(response.text.match(/<lastBuildDate>(.*)<\/lastBuildDate>/)?.[1]);
-        expect(response.headers['rsshub-node']).toBe('mock');
-        expect(response.headers.etag).not.toBe(undefined);
-        etag = response.headers.etag;
+        const response = await app.request('/test/1');
+        expect(response.headers.get('access-control-allow-origin')).toBe('rsshub.mock');
+        expect(response.headers.get('access-control-allow-methods')).toBe('GET');
+        expect(response.headers.get('content-type')).toBe('application/xml; charset=utf-8');
+        expect(response.headers.get('cache-control')).toBe(`public, max-age=${config.cache.routeExpire}`);
+        expect(response.headers.get('last-modified')).toBe((await response.text()).match(/<lastBuildDate>(.*)<\/lastBuildDate>/)?.[1]);
+        expect(response.headers.get('rsshub-node')).toBe('mock');
+        expect(response.headers.get('etag')).not.toBe(undefined);
+        etag = response.headers.get('etag');
     });
 
     it(`etag`, async () => {
-        const request = supertest((await import('@/index')).default);
-        const response = await request.get('/test/1').set('If-None-Match', etag);
+        const app = (await import('@/app')).default;
+        const response = await app.request('/test/1', {
+            headers: {
+                'If-None-Match': etag,
+            },
+        });
         expect(response.status).toBe(304);
-        expect(response.text).toBe('');
-        expect(response.headers['last-modified']).toBe(undefined);
+        expect(await response.text()).toBe('');
+        expect(response.headers.get('last-modified')).toBe(null);
     });
 });

@@ -556,6 +556,32 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 <Route author="xueli-sherryli" example="/oreno3d/origins/3/latest/1" path="/oreno3d/origins/:originid/:sort/:pagelimit?" paramsDesc={['Origin id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" />
 
+## 巴哈姆特電玩資訊站 {#ba-ha-mu-te-dian-wan-zi-xun-zhan}
+
+### GNN 新聞 {#ba-ha-mu-te-dian-wan-zi-xun-zhan-gnn-xin-wen}
+
+<Route author="Arracc" example="/gamer/gnn/1" path="/gamer/gnn/:category?" paramsDesc={['版块']} notOperational="1">
+  | 首頁 | PC | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
+  | ---- | -- | ------- | -------- | ------ | -------- | -------- | ---- |
+  | 缺省 | 1  | 3       | 4        | 5      | 9        | 11       | 13   |
+
+  | Switch | PS5 | PS4 | XboxOne | XboxSX | PC 單機 | PC 線上 | iOS | Android | Web | 漫畫  | 動畫  |
+  | ------ | --- | --- | ------- | ------ | ------- | ------- | --- | ------- | --- | ----- | ----- |
+  | ns     | ps5 | ps4 | xbone   | xbsx   | pc      | olg     | ios | android | web | comic | anime |
+</Route>
+
+### 熱門推薦 {#ba-ha-mu-te-dian-wan-zi-xun-zhan-re-men-tui-jian}
+
+<Route author="nczitzk" example="/gamer/hot/47157" path="/gamer/hot/:bsn" paramsDesc={['板块 id，在 URL 可以找到']} />
+
+### 動畫瘋 - 最後更新 {#ba-ha-mu-te-dian-wan-zi-xun-zhan-dong-hua-feng-zui-hou-geng-xin}
+
+<Route author="maple3142" example="/gamer/ani/new_anime" path="/gamer/ani/new_anime" />
+
+### 動畫瘋 - 動畫 {#ba-ha-mu-te-dian-wan-zi-xun-zhan-dong-hua-feng-dong-hua}
+
+<Route author="maple3142" example="/gamer/ani/anime/36868" path="/gamer/ani/anime/:sn" paramsDesc={['動畫 sn，在 URL 可以找到']} radar="1" />
+
 ## 包子漫画 {#bao-zi-man-hua}
 
 ### 订阅漫画 {#bao-zi-man-hua-ding-yue-man-hua}
@@ -577,16 +603,6 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
   | ------------- | ------------------- | -------------- | --------------- | ----------- | ---------- | ------------- | -------------- | ------- |
   | manhuaqingbao | qingxiaoshuoqingbao | manhuazhoubian | shengyouqingbao | yinyuezixun | youxizixun | meituxinshang | manzhanqingbao | dazahui |
 </Route>
-
-## 動畫瘋 {#dong-hua-feng}
-
-### 最後更新 {#dong-hua-feng-zui-hou-geng-xin}
-
-<Route author="maple3142" example="/anigamer/new_anime" path="/anigamer/new_anime" />
-
-### 動畫 {#dong-hua-feng-dong-hua}
-
-<Route author="maple3142" example="/anigamer/anime/90003" path="/anigamer/anime/:sn" paramsDesc={['動畫 sn']} notOperational="1" />
 
 ## 動漫狂 {#dong-man-kuang}
 
