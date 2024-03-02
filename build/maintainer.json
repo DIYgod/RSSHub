@@ -4962,6 +4962,9 @@
         "real-jiakai"
     ],
     "/nku/jwc/:type?": [],
+    "/nlc/read/:type?": [
+        "nczitzk"
+    ],
     "/nltimes/news/:category?": [
         "Hivol"
     ],
