@@ -121,18 +121,6 @@ async function handleRequest(request) {
 }
 ```
 
-## 用户认证
-
-`protected_route.js` 内的路由将启用 HTTP Basic Authentication 认证
-
-支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：`http://usernam3:passw0rd@rsshub.app/protected/rsshub/routes`。
-
-对于不支持该认证协议的阅读器，请参考 [访问控制配置](#fang-wen-kong-zhi-pei-zhi)。
-
-`HTTP_BASIC_AUTH_NAME`: Http basic authentication 用户名，默认为 `usernam3`，请务必修改
-
-`HTTP_BASIC_AUTH_PASS`: Http basic authentication 密码，默认为 `passw0rd`，请务必修改
-
 ## 访问控制配置
 
 RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式进行访问控制。开启任意选项将会激活全局访问控制，没有访问权限将会导致访问被拒绝。同时可以通过 `ALLOW_LOCALHOST: true` 赋予所有本地 IP 访问权限。

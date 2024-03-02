@@ -122,18 +122,6 @@ About PAC script, please refer to [Proxy Auto-Configuration (PAC) file](https://
 
 `PROXY_URL_REGEX`: regex for url of enabling proxy, default to `.*`
 
-## User Authentication Configurations
-
-Routes in `protected_route.js` will be protected using HTTP Basic Authentication.
-
-When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg: `https://usernam3:passw0rd@rsshub.app/protected/rsshub/routes`.
-
-For readers that do not support HTTP Basic authentication, please refer to [Access Control Configuration](#access-control-configuration).
-
-`HTTP_BASIC_AUTH_NAME`: HTTP basic authentication username, default to `usernam3`, please change asap
-
-`HTTP_BASIC_AUTH_PASS`: HTTP basic authentication password, default to `passw0rd`, please change asap
-
 ## Access Control Configurations
 
 RSSHub supports access control via access key/code, allowlisting and denylisting, enabling any will activate access control for all routes. `ALLOW_LOCALHOST: true` will grant access to all localhost IP addresses.
