@@ -43,9 +43,6 @@ export type Config = {
     proxyStrategy: string;
     pacUri?: string;
     pacScript?: string;
-    denylist?: string[];
-    allowlist?: string[];
-    allowLocalhost: boolean;
     accessKey?: string;
     debugInfo: string;
     loggerLevel: string;
@@ -373,9 +370,6 @@ const calculateValue = () => {
         pacUri: envs.PAC_URI,
         pacScript: envs.PAC_SCRIPT,
         // access control
-        denylist: envs.DENYLIST ? envs.DENYLIST.split(',') : undefined,
-        allowlist: envs.ALLOWLIST ? envs.ALLOWLIST.split(',') : undefined,
-        allowLocalhost: toBoolean(envs.ALLOW_LOCALHOST, false),
         accessKey: envs.ACCESS_KEY,
         // logging
         // 是否显示 Debug 信息，取值 'true' 'false' 'some_string' ，取值为 'true' 时永久显示，取值为 'false' 时永远隐藏，取值为 'some_string' 时请求带上 '?debug=some_string' 显示

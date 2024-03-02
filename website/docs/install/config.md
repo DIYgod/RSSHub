@@ -124,15 +124,11 @@ About PAC script, please refer to [Proxy Auto-Configuration (PAC) file](https://
 
 ## Access Control Configurations
 
-RSSHub supports access control via access key/code, allowlisting and denylisting, enabling any will activate access control for all routes. `ALLOW_LOCALHOST: true` will grant access to all localhost IP addresses.
+RSSHub supports access control using access keys/codes. Enabling it will activate global access control, and lack of access permission will result in denied access.
 
 ### Allowlisting/denylisting
 
--   `ALLOWLIST`: the allowlist. When set, values in `DENYLIST` are disregarded
-
--   `DENYLIST`: the denylist
-
-Allowlisting/denylisting support IP, route and UA as values, fuzzy matching. Use `,` as the delimiter to separate multiple values, eg: `ALLOWLIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
+This configuration has been removed. It is recommended to use a proxy server such as Nginx or Cloudflare for access control.
 
 ### Access Key/Code
 
@@ -147,13 +143,6 @@ Access code is the md5 generated based on the access key + route, eg:
 -   Routes are accessible via `code`, eg: `https://rsshub.app/qdaily/column/59?code=0f820530128805ffc10351f22b5fd121`
 
 -   Or using `key` directly, eg: `https://rsshub.app/qdaily/column/59?key=ILoveRSSHub`
-
-See the relation between access key/code and allowlist/denylisting.
-
-|             | Allowlist | Denylist | Correct access key/code | Wrong access key/code | No access key/code |
-| ----------- | ----------- | ----------- | ----------------------- | --------------------- | ------------------ |
-| Allowlist | ✅          | ✅          | ✅                      | ✅                    | ✅                 |
-| Denylist | ✅          | ❌          | ✅                      | ❌                    | ❌                 |
 
 ## Logging Configurations
 

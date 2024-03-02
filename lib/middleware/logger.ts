@@ -1,6 +1,6 @@
 import { MiddlewareHandler } from 'hono';
 import logger from '@/utils/logger';
-import { getIp, getPath, time } from '@/utils/helpers';
+import { getPath, time } from '@/utils/helpers';
 
 enum LogPrefix {
     Outgoing = '-->',
@@ -28,7 +28,7 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     const { method, raw } = ctx.req;
     const path = getPath(raw);
 
-    logger.info(`${LogPrefix.Incoming} ${method} ${path} from ${getIp(ctx)}`);
+    logger.info(`${LogPrefix.Incoming} ${method} ${path}`);
 
     const start = Date.now();
 
