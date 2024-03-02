@@ -4965,6 +4965,9 @@
     "/nltimes/news/:category?": [
         "Hivol"
     ],
+    "/nmc/weatheralarm/:province?": [
+        "ylc395"
+    ],
     "/nmtv/column/:id?": [
         "nczitzk"
     ],
@@ -7199,7 +7202,6 @@
     "/wdc/download/:id": [
         "nczitzk"
     ],
-    "/weatheralarm/:province?": [],
     "/web3caff/:path?": [
         "nczitzk"
     ],
