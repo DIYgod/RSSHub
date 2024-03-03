@@ -6,6 +6,12 @@ import { config } from '@/config';
 
 const allowSiteList = ['mastodon.social', 'pawoo.net'];
 
+const apiHeaders = (site) => {
+    const { accessToken, apiHost } = config.mastodon;
+    // avoid sending API token to other sites
+    return accessToken && site === apiHost ? { Authorization: `Bearer ${accessToken}` } : {};
+};
+
 const mediaParse = (media_attachments) =>
     media_attachments
         .map((item) => {
@@ -60,6 +66,7 @@ async function getAccountStatuses(site, account_id, only_media) {
     const statuses_response = await got({
         method: 'get',
         url: statuses_url,
+        headers: apiHeaders(site),
     });
     const data = statuses_response.data;
 
@@ -71,6 +78,7 @@ async function getAccountStatuses(site, account_id, only_media) {
         const account_response = await got({
             method: 'get',
             url: account_url,
+            headers: apiHeaders(site),
         });
         account_data = account_response.data;
     }
@@ -96,9 +104,7 @@ async function getAccountIdByAcct(acct) {
         const search_response = await got({
             method: 'get',
             url: search_url,
-            headers: {
-                ...(mastodonConfig.accessToken ? { Authorization: `Bearer ${mastodonConfig.accessToken}` } : {}),
-            },
+            headers: apiHeaders(site),
             searchParams: {
                 q: acct,
                 type: 'accounts',
@@ -124,6 +130,7 @@ async function getAccountIdByAcct(acct) {
 }
 
 module.exports = {
+    apiHeaders,
     parseStatuses,
     getAccountStatuses,
     getAccountIdByAcct,

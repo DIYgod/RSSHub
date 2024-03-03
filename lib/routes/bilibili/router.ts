@@ -31,6 +31,7 @@ export default (router) => {
     router.get('/user/fav/:uid/:disableEmbed?', './user-fav');
     router.get('/user/followers/:uid/:loginUid', './followers');
     router.get('/user/followings/:uid/:loginUid', './followings');
+    router.get('/user/like/:uid/:disableEmbed?', './like');
     router.get('/user/video/:uid/:disableEmbed?', './video');
     router.get('/user/video-all/:uid/:disableEmbed?', './video-all');
     router.get('/video/danmaku/:bvid/:pid?', './danmaku');

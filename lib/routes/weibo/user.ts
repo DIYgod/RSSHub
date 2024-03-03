@@ -1,6 +1,6 @@
 // @ts-nocheck
 import cache from '@/utils/cache';
-const querystring = require('query-string');
+import querystring from 'querystring';
 import got from '@/utils/got';
 const weiboUtils = require('./utils');
 import { config } from '@/config';
