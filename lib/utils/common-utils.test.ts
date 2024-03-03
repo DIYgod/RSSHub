@@ -1,4 +1,4 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from 'vitest';
 import { toTitleCase, collapseWhitespace, convertDateToISO8601 } from '@/utils/common-utils';
 
 describe('common-utils', () => {

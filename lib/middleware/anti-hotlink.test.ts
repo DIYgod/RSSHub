@@ -1,8 +1,7 @@
-import { describe, expect, it, jest, afterEach, afterAll } from '@jest/globals';
+import { describe, expect, it, vi, afterEach, afterAll } from 'vitest';
 import Parser from 'rss-parser';
 
 const parser = new Parser();
-jest.setTimeout(50000);
 
 afterAll(() => {
     delete process.env.HOTLINK_TEMPLATE;
@@ -16,7 +15,7 @@ afterEach(() => {
     delete process.env.HOTLINK_INCLUDE_PATHS;
     delete process.env.HOTLINK_EXCLUDE_PATHS;
     delete process.env.ALLOW_USER_HOTLINK_TEMPLATE;
-    jest.resetModules();
+    vi.resetModules();
 });
 
 const expects = {

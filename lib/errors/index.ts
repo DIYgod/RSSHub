@@ -5,11 +5,14 @@ import Sentry from '@sentry/node';
 import logger from '@/utils/logger';
 import art from 'art-template';
 import * as path from 'node:path';
-import gitHash from '@/utils/git-hash';
+import { gitHash } from '@/utils/git-hash';
 
 import RequestInProgressError from './request-in-progress';
 import RejectError from './reject';
 import NotFoundError from './not-found';
+
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
 
 export const errorHandler: ErrorHandler = (error, ctx) => {
     let message = '';
@@ -22,8 +25,9 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
     const debug = getDebugInfo();
     if (ctx.res.headers.get('RSSHub-Cache-Status')) {
         debug.hitCache++;
-        setDebugInfo(debug);
     }
+    debug.error++;
+    setDebugInfo(debug);
 
     if (config.sentry.dsn) {
         Sentry.withScope((scope) => {

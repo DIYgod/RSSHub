@@ -18,7 +18,7 @@ permissions:
   contents: read
 
 jobs:
-  jest:
+  vitest:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     services:
@@ -31,7 +31,7 @@ jobs:
       fail-fast: false
       matrix:
         node-version: [ 18, 20, 21 ]
-    name: Jest on Node ${{ matrix.node-version }}
+    name: Vitest on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v3
@@ -46,7 +46,7 @@ jobs:
       - name: Run postinstall script for dependencies
         run: pnpm rb
       - name: Test all and generate coverage
-        run: pnpm run jest:coverage
+        run: pnpm run vitest:coverage
         env:
           REDIS_URL: redis://localhost:${{ job.services.redis.ports[6379] }}/
       - name: Upload coverage to Codecov
@@ -72,7 +72,7 @@ jobs:
           - name: Chrome from Google
             dependency: google-chrome-stable
             environment: '{ "CHROMIUM_EXECUTABLE_PATH": "google-chrome-stable" }'
-    name: Jest puppeteer on Node ${{ matrix.node-version }} with ${{ matrix.chromium.name }}
+    name: Vitest puppeteer on Node ${{ matrix.node-version }} with ${{ matrix.chromium.name }}
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v3
@@ -101,7 +101,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -yq --no-install-recommends ${{ matrix.chromium.dependency }}
       - name: Test puppeteer
-        run: pnpm run jest puppeteer
+        run: pnpm run vitest puppeteer
         env: ${{ fromJSON(matrix.chromium.environment) }}
 
   docs:
@@ -153,7 +153,7 @@ jobs:
 
   automerge:
     if: github.triggering_actor == 'dependabot[bot]' && github.event_name == 'pull_request'
-    needs: [ jest, puppeteer, docs, all ]
+    needs: [ vitest, puppeteer, docs, all ]
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write

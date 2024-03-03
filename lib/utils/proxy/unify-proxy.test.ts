@@ -1,4 +1,4 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from 'vitest';
 import unifyProxy from '@/utils/proxy/unify-proxy';
 
 const emptyProxyObj = {

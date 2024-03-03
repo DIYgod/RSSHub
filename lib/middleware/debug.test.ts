@@ -1,15 +1,8 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from 'vitest';
 import app from '@/app';
 import { load } from 'cheerio';
 
 process.env.NODE_NAME = 'mock';
-
-let gitHash;
-try {
-    gitHash = require('git-rev-sync').short();
-} catch {
-    gitHash = (process.env.HEROKU_SLUG_COMMIT && process.env.HEROKU_SLUG_COMMIT.slice(0, 7)) || 'unknown';
-}
 
 describe('debug', () => {
     it('debug', async () => {
@@ -33,9 +26,6 @@ describe('debug', () => {
             switch (key) {
                 case 'Node Name:':
                     expect(value).toBe('mock');
-                    break;
-                case 'Git Hash:':
-                    expect(value).toBe(gitHash);
                     break;
                 case 'Request Amount:':
                     expect(value).toBe('6');

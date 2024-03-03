@@ -8,10 +8,10 @@ If you want to see the results, we suggest you install the browser extension. Yo
 
 ## Code the rule
 
-To create a new RSS feed, create a file called `radar.js` under the corresponding namespace in [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/master/lib/routes). We will continue to use the example of creating an RSS feed for `GitHub Repo Issues`, which is described [here](/joinus/new-rss/before-start). The resulting code will look like this:
+To create a new RSS feed, create a file called `radar.ts` under the corresponding namespace in [/lib/routes/](https://github.com/DIYgod/RSSHub/tree/master/lib/routes). We will continue to use the example of creating an RSS feed for `GitHub Repo Issues`, which is described [here](/joinus/new-rss/before-start). The resulting code will look like this:
 
 ```js
-module.exports = {
+export default {
     'github.com': {
         _name: 'GitHub',
         '.': [
@@ -44,7 +44,7 @@ The rest of the inner object keys are the subdomains of a website. If a website 
 <TabItem value="github.com" label="github.com and www.github.com">
 
 ```js
-module.exports = {
+export default {
     'github.com': {
         _name: 'GitHub',
         // highlight-next-line
@@ -64,7 +64,7 @@ module.exports = {
 <TabItem value="abc.github.com" label="abc.github.com">
 
 ```js
-module.exports = {
+export default {
     'github.com': {
         _name: 'GitHub',
         // highlight-next-line
@@ -84,7 +84,7 @@ module.exports = {
 <TabItem value="abc.def.github.com" label="abc.def.github.com">
 
 ```js
-module.exports = {
+export default {
     'github.com': {
         _name: 'GitHub',
         // highlight-next-line
@@ -149,7 +149,7 @@ Here are two examples of how to use the `target` field as a function:
 <TabItem value="params" label="Match using params">
 
 ```js
-module.exports = {
+export default {
     'github.com': {
         _name: 'GitHub',
         '.': [
@@ -169,7 +169,7 @@ module.exports = {
 <TabItem value="url" label="Match using URL">
 
 ```js
-module.exports = {
+export default {
     'github.com': {
         _name: 'GitHub',
         '.': [
