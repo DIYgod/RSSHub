@@ -8,9 +8,9 @@ export default defineConfig({
         coverage: {
             include: ['lib/**/*.ts'],
             exclude: ['lib/routes/**', 'lib/routes-deprecated/**'],
-            reporter: ['junit'],
         },
         testTimeout: 10000,
         exclude: ['website', ...defaultExclude],
+        reporters: ['junit'],
     },
 });

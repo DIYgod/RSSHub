@@ -43,12 +43,12 @@ for (const dir in maintainerPath) {
 }
 
 // 兼容旧版路由
-const router = require('../../lib/router.js');
-for (const e of router.stack) {
-    if (!maintainers[e.path]) {
-        maintainers[e.path] = [];
-    }
-}
+// const router = require('../../lib/router.js');
+// for (const e of router.stack) {
+//     if (!maintainers[e.path]) {
+//         maintainers[e.path] = [];
+//     }
+// }
 
 const maintainer = Object.keys(maintainers)
     .sort()
