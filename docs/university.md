@@ -1891,11 +1891,11 @@ pageClass: routes
 
 ### 研究生院
 
-<Route author="yanbot-team" example="/gznu/yjsc/1077" path="/gznu/yjsc/:type" :paramsDesc="['分类名,见下表']">
+<Route author="yanbot-team" example="/gznu/yjsc/zsgl-ssyjs" path="/gznu/yjsc/:type" :paramsDesc="['分类名,见下表']">
 
-| 招生信息 |
-| -------- |
-| 1077     |
+| 招生信息   |
+| ---------- |
+| zsgl-ssyjs |
 
 </Route>
 
@@ -4293,11 +4293,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生处
 
-<Route author="yanbot-team" example="/sdutcm/yjs/zsgz1" path="/sdutcm/yjs/:type" :paramsDesc="['专栏名称，见下表，也可在对应页面的URL中找到']" radar="1" rssbud="1">
+<Route author="yanbot-team" example="/sdutcm/yjs/zsgz" path="/sdutcm/yjs/:type" :paramsDesc="['专栏名称，见下表，也可在对应页面的URL中找到']" radar="1" rssbud="1">
 
 | 招生工作 |
 | -------- |
-| zsgz1    |
+| zsgz     |
 
 </Route>
 
@@ -4495,11 +4495,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生招生网招考信息
 
-<Route author="yanbot-team" example="/sjtu/yzb/zkxx/sszs" path="/sjtu/yzb/zkxx/:type" :paramsDesc="['无默认选项']">
+<Route author="yanbot-team" example="/sjtu/yzb/zkxx-sszs" path="/sjtu/yzb/:type" :paramsDesc="['无默认选项']">
 
-| 博士招生 | 硕士招生 | 港澳台招生 | 考点信息 | 院系动态 |
-| -------- | -------- | ---------- | -------- | -------- |
-| bszs     | sszs     | gatzs      | kdxx     | yxdt     |
+| 硕士招生  |
+| --------- |
+| zkxx-sszs |
 
 </Route>
 
@@ -5499,11 +5499,11 @@ jsjxy.hbut.edu.cn 证书链不全，自建 RSSHub 可设置环境变量 NODE_TLS
 
 ### 研究生招生信息网
 
-<Route author="yanbot-team" example="/xbmu/yz/sszs-tzgg" path="/xbmu/yz/:type" :paramsDesc="['栏目ID,见下表，也可在页面URL中找到']">
+<Route author="yanbot-team" example="/xbmu/yz/index" path="/xbmu/yz/:type" :paramsDesc="['栏目ID,见下表，也可在页面URL中找到']">
 
-| 硕士招生  |
-| --------- |
-| sszs-tzgg |
+| 首页（硕士招生） |
+| ---------------- |
+| index            |
 
 </Route>
 
