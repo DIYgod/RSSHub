@@ -840,6 +840,9 @@
     "/bilibili/user/followings/:uid/:loginUid": [
         "Qixingchen"
     ],
+    "/bilibili/user/like/:uid/:disableEmbed?": [
+        "ygguorun"
+    ],
     "/bilibili/user/video/:uid/:disableEmbed?": [
         "DIYgod"
     ],
