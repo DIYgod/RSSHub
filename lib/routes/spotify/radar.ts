@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'spotify.com': {
         _name: 'Spotify',
         open: [

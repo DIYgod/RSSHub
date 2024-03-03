@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'pixabay.com': {
         _name: 'Pixabay',
         '.': [

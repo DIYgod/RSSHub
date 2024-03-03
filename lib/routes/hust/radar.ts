@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hust.edu.cn': {
         _name: '华中科技大学',
         aia: [

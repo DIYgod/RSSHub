@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'web3caff.com': {
         _name: 'web3caff',
         '.': [

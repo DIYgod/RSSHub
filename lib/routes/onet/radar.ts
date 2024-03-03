@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'onet.pl': {
         _name: 'Onet',
         wiadomosci: [

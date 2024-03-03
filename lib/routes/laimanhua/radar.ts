@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'laimanhua8.com': {
         _name: '来漫画',
         www: [

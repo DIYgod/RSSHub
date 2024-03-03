@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     aijishu: {
         _name: '极术社区',
         www: [

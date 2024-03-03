@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bad.news': {
         _name: 'Bad.news',
         '.': [

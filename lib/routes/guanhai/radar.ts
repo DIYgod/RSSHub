@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'guanhai.com.cn': {
         _name: '观海新闻',
         '.': [

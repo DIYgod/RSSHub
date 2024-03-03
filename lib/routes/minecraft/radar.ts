@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'minecraft.net': {
         _name: '我的世界',
         '.': [

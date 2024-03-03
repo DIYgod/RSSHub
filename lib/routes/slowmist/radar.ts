@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'slowmist.com': {
         _name: '慢雾科技 SLOWMIST',
         '.': [

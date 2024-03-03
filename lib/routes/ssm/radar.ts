@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ssm.gov.mo': {
         _name: '澳门卫生局',
         www: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'blizzard.com': {
         _name: 'Blizzard',
         news: [

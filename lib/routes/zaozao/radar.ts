@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zaozao.run': {
         _name: '前端早早聊',
         www: [

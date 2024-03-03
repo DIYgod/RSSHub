@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'wikinews.org': {
         _name: '维基新闻',
         zh: [

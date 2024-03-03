@@ -1,5 +1,5 @@
 const { categories } = require('./cn/category-map');
-module.exports = {
+export default {
     'mckinsey.com.cn': {
         _name: 'McKinsey Greater China',
         '.': Object.entries(categories).map(([key, value]) => ({

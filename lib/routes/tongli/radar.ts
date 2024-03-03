@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'tongli.com.tw': {
         _name: '東立出版社',
         '.': [

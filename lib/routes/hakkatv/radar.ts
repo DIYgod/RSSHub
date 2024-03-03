@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hakkatv.org.tw': {
         _name: '客家電視台',
         '.': [

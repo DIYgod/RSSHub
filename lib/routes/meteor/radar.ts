@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'meteor.today': {
         _name: 'Meteor',
         '.': [

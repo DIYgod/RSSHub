@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hjd2048.com': {
         _name: '2048 核基地',
         '.': [

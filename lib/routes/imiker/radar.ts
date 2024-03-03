@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'imiker.com': {
         _name: '米课',
         '.': [

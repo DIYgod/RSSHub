@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cma.cn': {
         _name: '中国气象局',
         weather: [

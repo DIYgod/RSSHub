@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'csdn.net': {
         _name: 'CSDN',
         blog: [

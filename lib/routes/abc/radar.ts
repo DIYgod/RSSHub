@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'abc.net.au': {
         _name: 'ABC News',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'instagram.com': {
         _name: 'Instagram',
         www: [

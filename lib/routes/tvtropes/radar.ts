@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'tvtropes.org': {
         _name: 'TV Tropes',
         '.': [

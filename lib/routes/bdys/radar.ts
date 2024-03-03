@@ -13,7 +13,7 @@ const bdys = {
     ],
 };
 
-module.exports = {
+export default {
     '52bdys.com': bdys,
     'bde4.icu': bdys,
     'bdys01.com': bdys,

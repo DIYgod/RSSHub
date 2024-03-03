@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'syosetu.com': {
         _name: 'syosetu',
         ncode: [

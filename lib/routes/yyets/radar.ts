@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'yysub.net': {
         _name: '人人影视',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'csu.edu.cn': {
         _name: '中南大学',
         career: [

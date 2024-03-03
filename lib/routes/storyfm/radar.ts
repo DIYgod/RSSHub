@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'storyfm.cn': {
         _name: '故事FM',
         '.': [

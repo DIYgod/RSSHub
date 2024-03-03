@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ouc.edu.cn': {
         _name: '中国海洋大学',
         it: [

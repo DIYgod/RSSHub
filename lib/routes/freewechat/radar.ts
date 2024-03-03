@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'freewechat.com': {
         _name: '自由微信',
         '.': [

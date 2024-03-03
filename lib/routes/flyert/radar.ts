@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'flyert.com': {
         _name: '飞客茶馆',
         '.': [

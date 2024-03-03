@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'chinadegrees.com.cn': {
         _name: '中华人民共和国学位证书查询',
         '.': [

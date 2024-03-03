@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'artstation.com': {
         _name: 'ArtStation',
         www: [

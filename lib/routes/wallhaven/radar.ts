@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'wallhaven.cc': {
         _name: 'wallhaven',
         '.': [

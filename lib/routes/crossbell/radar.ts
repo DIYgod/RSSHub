@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'crossbell.io': {
         _name: 'Crossbell',
         '.': [

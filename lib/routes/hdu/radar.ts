@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hdu.edu.cn': {
         _name: '杭州电子科技大学',
         computer: [

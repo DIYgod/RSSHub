@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sehuatang.net': {
         _name: '色花堂',
         '.': [

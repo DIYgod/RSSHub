@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'eventernote.com': {
         _name: 'Eventernote',
         www: [

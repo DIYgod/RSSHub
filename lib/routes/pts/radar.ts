@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'pts.org.tw': {
         _name: '公視新聞網 PNN',
         news: [

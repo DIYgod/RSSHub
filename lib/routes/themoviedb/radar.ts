@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'themoviedb.org': {
         _name: 'The Movie Database',
         '.': [

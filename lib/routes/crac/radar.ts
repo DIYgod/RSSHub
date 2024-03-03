@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'crac.org.cn': {
         _name: '中国无线电协会业余无线电分会',
         www: [

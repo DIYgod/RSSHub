@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ici.radio-canada.ca': {
         _name: 'Radio Canada',
         '.': [

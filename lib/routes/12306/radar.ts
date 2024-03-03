@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '12306.cn': {
         _name: '12306',
         kyfw: [

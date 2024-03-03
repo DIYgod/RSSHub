@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'diandong.com': {
         _name: '电动邦',
         '.': [

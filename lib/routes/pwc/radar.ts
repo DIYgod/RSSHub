@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'pwc.com': {
         _name: 'PwC Strategy&',
         strategyand: [

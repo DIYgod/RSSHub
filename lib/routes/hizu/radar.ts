@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hizh.cn': {
         _name: '珠海网',
         '.': [

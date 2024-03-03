@@ -5,7 +5,7 @@ const dy2 = {
     target: (params) => `/163/dy2/${params.id.replace('.html', '')}`,
 };
 
-module.exports = {
+export default {
     '163.com': {
         _name: '网易',
         '.': [dy2],

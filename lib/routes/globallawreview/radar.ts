@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'globallawreview.org': {
         _name: '环球法律评论',
         '.': [

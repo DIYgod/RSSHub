@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dlut.edu.cn': {
         _name: '大连理工大学',
         dutdice: [

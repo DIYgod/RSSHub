@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'fx678.com': {
         _name: '汇通网',
         '.': [

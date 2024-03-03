@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sec-in.com': {
         _name: 'SecIN信息安全技术社区',
         '.': [

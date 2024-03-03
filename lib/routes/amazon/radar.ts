@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'amazon.com': {
         _name: 'Amazon',
         '.': [

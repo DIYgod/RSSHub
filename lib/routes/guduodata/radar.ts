@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'guduodata.com': {
         _name: '骨朵数据',
         data: [

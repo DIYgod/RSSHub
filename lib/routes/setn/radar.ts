@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'setn.com': {
         _name: '三立新聞網',
         '.': [

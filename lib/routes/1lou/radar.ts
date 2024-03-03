@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '1lou.me': {
         _name: 'BT之家 1LOU站',
         '.': [

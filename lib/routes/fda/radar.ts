@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'fda.gov': {
         _name: 'U.S. Food and Drug Administration',
         '.': [

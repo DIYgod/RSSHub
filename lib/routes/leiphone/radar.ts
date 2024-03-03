@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'leiphone.com': {
         _name: '雷峰网',
         '.': [

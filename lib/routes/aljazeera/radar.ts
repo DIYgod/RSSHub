@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'aljazeera.com': {
         _name: 'Aljazeera 半岛电视台',
         '.': [

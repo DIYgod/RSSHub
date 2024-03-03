@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cssn.cn': {
         _name: '中国社会科学网',
         iolaw: [

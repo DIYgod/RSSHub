@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'fortnite.com': {
         _name: 'Fortnite',
         '.': [

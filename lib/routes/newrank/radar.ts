@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'newrank.cn': {
         _name: '新榜',
         '.': [

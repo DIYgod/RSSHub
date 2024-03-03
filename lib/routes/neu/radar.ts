@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'neu.edu.cn': {
         _name: '东北大学',
         neunews: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'mittrchina.com': {
         _name: '麻省理工科技评论',
         '.': [

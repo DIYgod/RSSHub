@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'mixcloud.com': {
         _name: 'Mixcloud',
         www: [

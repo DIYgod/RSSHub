@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hkjunkcall.com': {
         _name: 'HKJunkCall資訊中心',
         '.': [

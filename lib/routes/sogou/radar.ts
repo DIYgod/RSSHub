@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sogou.com': {
         _name: '搜狗',
         www: [

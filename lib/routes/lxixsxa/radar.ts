@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sonymusic.co.jp': {
         _name: 'Sony Music',
         www: [

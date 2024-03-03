@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'aeon.co': {
         _name: 'AEON',
         aeon: [

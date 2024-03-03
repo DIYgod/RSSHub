@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bupt.edu.cn': {
         _name: '北京邮电大学',
         '.': [

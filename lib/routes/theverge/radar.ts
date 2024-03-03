@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'theverge.com': {
         _name: 'The Verge',
         '.': [

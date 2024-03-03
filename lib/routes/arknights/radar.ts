@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'arknights.jp': {
         _name: '明日方舟',
         ak: [

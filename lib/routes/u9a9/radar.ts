@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'u9a9.com': {
         _name: 'U9A9',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dedao.cn': {
         _name: '得到',
         '.': [

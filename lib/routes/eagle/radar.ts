@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'eagle.cool': {
         _name: 'Eagle',
         cn: [

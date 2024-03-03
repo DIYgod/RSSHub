@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'luxiangdong.com': {
         _name: '土猛的员外',
         '.': [

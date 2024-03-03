@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cntheory.com': {
         _name: '理论网',
         paper: [

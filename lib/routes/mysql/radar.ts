@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'mysql.com': {
         _name: 'MySQL',
         dev: [

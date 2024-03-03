@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '52hrtt.com': {
         _name: '52hrtt 华人头条',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ccf.org.cn': {
         _name: '中国计算机学会',
         '.': [

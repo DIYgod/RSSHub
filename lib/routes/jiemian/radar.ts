@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'jiemian.com': {
         _name: '界面新闻',
         '.': [

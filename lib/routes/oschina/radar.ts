@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'oschina.net': {
         _name: '开源中国',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'techflowpost.com': {
         _name: '深潮TechFlow',
         '.': [

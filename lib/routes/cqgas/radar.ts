@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cqgas.cn': {
         _name: '重庆燃气',
         '.': [

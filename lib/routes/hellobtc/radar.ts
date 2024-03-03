@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hellobtc.com': {
         _name: '白话区块链',
         '.': [

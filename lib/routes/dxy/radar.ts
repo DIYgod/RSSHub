@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dxy.cn': {
         _name: '丁香园',
         '.': [

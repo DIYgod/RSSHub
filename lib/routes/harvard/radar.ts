@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'harvard.edu': {
         _name: 'Harvard University',
         'www.health': [

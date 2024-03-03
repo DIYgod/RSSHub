@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cls.cn': {
         _name: '财联社',
         '.': [

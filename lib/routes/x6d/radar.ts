@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'x6d.com': {
         _name: '小刀娱乐网',
         xd: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'vocus.cc': {
         _name: '方格子',
         '.': [

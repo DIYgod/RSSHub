@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hellogithub.com': {
         _name: 'HelloGitHub',
         '.': [

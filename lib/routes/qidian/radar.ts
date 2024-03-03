@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'qidian.com': {
         _name: '起点',
         book: [

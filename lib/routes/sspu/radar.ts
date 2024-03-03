@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sspu.edu.cn': {
         _name: '上海第二工业大学',
         jwc: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'voc.com.cn': {
         _name: '华声在线',
         '.': [

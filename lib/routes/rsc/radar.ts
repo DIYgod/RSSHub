@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'rsc.org': {
         _name: 'The Royal Society of Chemistry',
         pubs: [

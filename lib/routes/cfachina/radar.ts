@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cfachina.org': {
         _name: '中国期货业协会',
         '.': [

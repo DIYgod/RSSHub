@@ -28,7 +28,7 @@ const _18comic = {
     ],
 };
 
-module.exports = {
+export default {
     '18comic.org': _18comic,
     '18comic.vip': _18comic,
     //

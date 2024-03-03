@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'shuiguopai.com': {
         _name: '水果派',
         '.': [

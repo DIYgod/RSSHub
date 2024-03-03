@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '95mm.org': {
         _name: 'MM范',
         '.': [

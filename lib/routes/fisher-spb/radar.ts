@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'fisher.spb.ru': {
         _name: 'fisher spb',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dn.com': {
         _name: 'DN.com',
         '.': [

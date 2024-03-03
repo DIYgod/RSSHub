@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'mirror.xyz': {
         _name: 'Mirror',
         '.': [

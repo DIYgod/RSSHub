@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'danjuanapp.com': {
         _name: '雪球',
         '.': [

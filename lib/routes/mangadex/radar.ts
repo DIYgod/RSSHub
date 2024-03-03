@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'mangadex.org': {
         _name: 'MangaDex',
         '.': [

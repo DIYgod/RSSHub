@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'pianyuan.org': {
         _name: '片源网',
         '.': [

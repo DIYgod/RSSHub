@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gdsrx.org.cn': {
         _name: '广东省食品药品审评认证技术协会',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'wsyu.edu.cn': {
         _name: '新闻中心',
         www: [

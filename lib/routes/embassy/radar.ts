@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'china-embassy.org': {
         _name: '中国驻外使领馆',
         ca: [

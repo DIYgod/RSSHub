@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '7mmtv.tv': {
         _name: '7mmtv.tv',
         '.': [

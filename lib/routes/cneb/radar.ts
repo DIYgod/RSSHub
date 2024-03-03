@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cneb.gov.cn': {
         _name: '中国国家应急广播',
         '.': [

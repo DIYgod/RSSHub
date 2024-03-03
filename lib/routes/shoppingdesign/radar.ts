@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'shoppingdesign.com.tw': {
         _name: 'Shopping Design',
         www: [

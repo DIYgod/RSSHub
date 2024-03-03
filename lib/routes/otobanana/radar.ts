@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'otobanana.com': {
         _name: 'OTOBANANA',
         '.': [

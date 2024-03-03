@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'npmjs.com': {
         _name: 'npm',
         '.': [

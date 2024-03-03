@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'baden-wuerttemberg.de': {
         _name: 'Constitutional Court of Baden-Württemberg (Germany)',
         verfgh: [

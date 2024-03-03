@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'taptap.com': {
         _name: 'TapTap',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'people.com.cn': {
         _name: '人民网',
         '.': [

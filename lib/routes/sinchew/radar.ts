@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sinchew.com.my': {
         _name: '星洲网',
         '.': [

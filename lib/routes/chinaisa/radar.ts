@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'chinaisa.org.cn': {
         _name: '中国钢铁工业协会',
         '.': [

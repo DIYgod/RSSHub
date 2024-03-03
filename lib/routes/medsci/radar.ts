@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'medsci.cn': {
         _name: '梅斯医学',
         '.': [

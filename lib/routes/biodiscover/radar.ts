@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'biodiscover.com': {
         _name: '生物探索',
         www: [

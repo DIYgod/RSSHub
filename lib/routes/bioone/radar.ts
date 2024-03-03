@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bioone.org': {
         _name: 'BioOne',
         '.': [

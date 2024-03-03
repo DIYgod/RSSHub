@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'swpu.edu.cn': {
         _name: '西南石油大学',
         '.': [

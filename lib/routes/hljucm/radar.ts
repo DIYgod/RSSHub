@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hljucm.net': {
         _name: '黑龙江中医药大学',
         yjsy: [

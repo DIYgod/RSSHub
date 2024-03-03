@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gamme.com.tw': {
         _name: '卡卡洛普',
         news: [

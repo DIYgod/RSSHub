@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'github.io': {
         _name: 'GitHub',
         agorahub: [

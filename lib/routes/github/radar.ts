@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'github.com': {
         _name: 'GitHub',
         '.': [

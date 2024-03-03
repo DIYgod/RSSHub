@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'wallstreetcn.com': {
         _name: '华尔街见闻',
         '.': [

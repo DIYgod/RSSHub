@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'indienova.com': {
         _name: 'indienova 独立游戏',
         '.': [

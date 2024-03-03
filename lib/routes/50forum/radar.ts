@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '50forum.org.cn': {
         _name: '经济 50 人论坛',
         '.': [

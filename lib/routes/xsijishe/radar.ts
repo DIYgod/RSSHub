@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'xsijishe.com': {
         _name: '司机社',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zhubai.love': {
         _name: '竹白',
         '.': [

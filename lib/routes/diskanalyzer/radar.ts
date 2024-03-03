@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'diskanalyzer.com': {
         _name: "What's New",
         '.': [

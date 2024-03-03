@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'jseea.cn': {
         _name: '江苏省教育考试院',
         '.': [

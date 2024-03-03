@@ -5,7 +5,7 @@ const fffdm = {
     target: '/fffdm/manhua/:id',
 };
 
-module.exports = {
+export default {
     'fffdm.com': {
         _name: '风之动漫',
         manhua: [fffdm],

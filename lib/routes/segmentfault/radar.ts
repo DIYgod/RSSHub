@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'segmentfault.com': {
         _name: 'SegmentFault',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'threads.net': {
         _name: 'Threads',
         '.': [

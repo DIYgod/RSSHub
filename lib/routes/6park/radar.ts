@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '6parkbbs.com': {
         _name: '留园网',
         club: [

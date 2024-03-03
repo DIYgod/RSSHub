@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'scmp.com': {
         _name: 'South China Morning Post',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'barronschina.com.cn': {
         _name: '巴伦周刊中文版',
         '.': [

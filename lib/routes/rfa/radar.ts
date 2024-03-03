@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'rfa.org': {
         _name: '自由亚洲电台',
         '.': [

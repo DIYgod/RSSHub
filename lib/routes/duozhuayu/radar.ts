@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'duozhuayu.com': {
         _name: '多抓鱼',
         '.': [

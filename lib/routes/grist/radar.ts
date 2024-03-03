@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'grist.org': {
         _name: 'Grist',
         '.': [

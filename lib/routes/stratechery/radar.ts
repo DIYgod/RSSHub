@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'stratechery.com': {
         _name: 'Stratechery by Ben Thompson',
         blog: [

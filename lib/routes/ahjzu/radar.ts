@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ahjzu.edu.cn': {
         _name: '安徽建筑大学',
         news: [

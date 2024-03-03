@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'lightNovel.us': {
         _name: '轻之国度',
         '.': [

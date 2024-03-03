@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ifeng.com': {
         _name: '凤凰网',
         feng: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '4gamers.com.tw': {
         _name: '4Gamers',
         www: [

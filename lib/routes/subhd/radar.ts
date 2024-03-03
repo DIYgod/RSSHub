@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'subhd.tv': {
         _name: 'Sub HD',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'xidian.edu.cn': {
         _name: '西安电子科技大学',
         jwc: [

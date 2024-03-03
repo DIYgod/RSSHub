@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'secrss.com': {
         _name: '安全内参',
         '.': [

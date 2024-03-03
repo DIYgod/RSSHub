@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'btbtt20.com': {
         _name: 'BT之家',
         '.': [

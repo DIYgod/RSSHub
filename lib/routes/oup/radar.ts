@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'oup.com': {
         _name: 'Oxford University Press',
         academic: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'logclub.com': {
         _name: '罗戈网',
         '.': [

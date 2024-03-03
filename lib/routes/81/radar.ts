@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '81.cn': {
         _name: '中国军网',
         '81rc': [

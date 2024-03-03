@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'icac.org.hk': {
         _name: '香港廉政公署',
         '.': [

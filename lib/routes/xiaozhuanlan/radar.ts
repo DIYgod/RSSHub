@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'xiaozhuanlan.com': {
         _name: '小专栏',
         '.': [

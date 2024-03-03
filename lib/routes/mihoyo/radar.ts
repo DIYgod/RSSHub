@@ -54,7 +54,7 @@ const bbs = [
         target: '/mihoyo/bbs/timeline',
     },
 ];
-module.exports = {
+export default {
     'hoyoverse.com': {
         _name: '米哈游',
         genshin: [

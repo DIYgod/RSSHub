@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'readhub.cn': {
         _name: 'Readhub',
         '.': [

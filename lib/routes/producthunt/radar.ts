@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'producthunt.com': {
         _name: 'Product Hunt',
         www: [

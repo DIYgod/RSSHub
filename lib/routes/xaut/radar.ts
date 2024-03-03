@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'xaut.edu.cn': {
         _name: '西安理工大学',
         index: [

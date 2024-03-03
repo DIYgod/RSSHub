@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'huggingface.co': {
         _name: 'Hugging Face',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'greasyfork.org': {
         _name: 'Greasy Fork',
         '.': [

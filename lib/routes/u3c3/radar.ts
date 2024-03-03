@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'u3c3.com': {
         _name: 'u3c3',
         '.': [

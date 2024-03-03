@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'jou.edu.cn': {
         _name: '江苏海洋大学',
         www: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ddosi.org': {
         _name: '🔰雨苁ℒ🔰',
         '.': [

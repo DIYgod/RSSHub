@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'qweather.com': {
         _name: '和风天气',
         '.': [

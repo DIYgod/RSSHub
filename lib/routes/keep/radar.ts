@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gotokeep.com': {
         _name: 'Keep',
         '.': [

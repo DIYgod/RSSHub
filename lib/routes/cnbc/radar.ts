@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cnbc.com': {
         _name: 'CNBC',
         search: [

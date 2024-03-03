@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'codeforces.com': {
         _name: 'Codeforces',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bytes.dev': {
         _name: 'ui.dev',
         '.': [

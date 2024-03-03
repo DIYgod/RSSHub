@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cmpxchg8b.com': {
         _name: 'cmpxchg8b',
         lock: [

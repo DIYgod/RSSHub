@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'aisixiang.com': {
         _name: '爱思想',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'lsnu.edu.cn': {
         _name: '乐山师范学院',
         '.': [

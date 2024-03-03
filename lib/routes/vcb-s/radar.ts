@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'vcb-s.com': {
         _name: 'VCB-Studio',
         '.': [

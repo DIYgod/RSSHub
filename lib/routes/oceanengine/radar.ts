@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'oceanengine.com': {
         _name: '巨量算数',
         trendinsight: [

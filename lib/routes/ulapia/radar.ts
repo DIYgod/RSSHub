@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ulapia.com': {
         _name: '乌拉邦 ulapia',
         www: [

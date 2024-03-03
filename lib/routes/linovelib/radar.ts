@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'linovelib.com': {
         _name: '哩哔轻小说',
         '.': [

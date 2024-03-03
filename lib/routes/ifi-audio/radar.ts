@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ifi-audio.com': {
         _name: 'IFI audio',
         '.': [

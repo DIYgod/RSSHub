@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bendibao.com': {
         _name: '本地宝',
         '.': [

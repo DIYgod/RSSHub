@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'qdu.edu.cn': {
         _name: '青岛大学',
         jwc: [

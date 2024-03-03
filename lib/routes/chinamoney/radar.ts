@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'chinamoney.com.cn': {
         _name: '中国货币网',
         '.': [

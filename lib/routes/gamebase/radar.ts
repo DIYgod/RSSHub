@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gamebase.com.tw': {
         _name: '遊戲基地 Gamebase',
         news: [

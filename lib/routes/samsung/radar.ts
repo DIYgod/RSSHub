@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'samsung.com': {
         _name: 'Samsung',
         research: [

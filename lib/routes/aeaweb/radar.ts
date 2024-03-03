@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'aeaweb.org': {
         _name: 'American Economic Association',
         '.': [

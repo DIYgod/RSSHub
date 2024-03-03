@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'transcriptforest.com': {
         _name: 'Transcript Forest',
         www: [

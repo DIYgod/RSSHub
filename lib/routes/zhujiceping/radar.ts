@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zhujiceping.com': {
         _name: '国外主机测评',
         '.': [

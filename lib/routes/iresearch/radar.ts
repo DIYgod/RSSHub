@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'iresearch.com.cn': {
         _name: '艾瑞',
         www: [

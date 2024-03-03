@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'qianp.com': {
         _name: '千篇网',
         '.': [

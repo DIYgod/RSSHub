@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'stheadline.com': {
         _name: '星島日報',
         std: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'showstart.com': {
         _name: '秀动网',
         www: [

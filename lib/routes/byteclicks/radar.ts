@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'byteclicks.com': {
         _name: '字节点击',
         '.': [

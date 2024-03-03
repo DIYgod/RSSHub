@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'piyao.org.cn': {
         _name: '中国互联网联合辟谣平台',
         '.': [

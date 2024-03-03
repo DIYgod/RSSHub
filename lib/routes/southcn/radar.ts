@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nfapp.southcn.com': {
         _name: '南方网',
         '.': [

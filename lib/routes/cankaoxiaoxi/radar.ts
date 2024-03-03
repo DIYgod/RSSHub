@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cankaoxiaoxi.com': {
         _name: '参考消息',
         '.': [

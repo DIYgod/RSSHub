@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'theblockbeats.info': {
         _name: '律动',
         rszhaopin: [

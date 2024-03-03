@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hit.edu.cn': {
         _name: '哈尔滨工业大学',
         jwc: [

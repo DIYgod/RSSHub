@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bjfu.edu.cn': {
         _name: '北京林业大学',
         graduate: [

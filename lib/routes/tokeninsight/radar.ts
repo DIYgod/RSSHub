@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'tokeninsight.com': {
         _name: 'TokenInsight',
         '.': [

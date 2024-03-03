@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hkej.com': {
         _name: '信报财经新闻',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'deepmind.com': {
         _name: 'DeepMind',
         '.': [

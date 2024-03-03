@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bigquant.com': {
         _name: 'BigQuant',
         '.': [

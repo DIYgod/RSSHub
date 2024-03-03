@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dahecube.com': {
         _name: '大河财立方',
         '.': [

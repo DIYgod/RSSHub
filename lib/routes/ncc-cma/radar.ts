@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ncc-cma.net': {
         _name: '国家气候中心',
         cmdp: [

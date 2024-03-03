@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cnblogs.com': {
         _name: '博客园',
         www: [

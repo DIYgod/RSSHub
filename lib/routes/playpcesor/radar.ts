@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'playpcesor.com': {
         _name: '电脑玩物',
         '.': [

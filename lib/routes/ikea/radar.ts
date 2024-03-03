@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ikea.com': {
         _name: 'IKEA 宜家',
         '.': [

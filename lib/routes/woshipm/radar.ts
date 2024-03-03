@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'woshipm.com': {
         _name: '人人都是产品经理',
         '.': [

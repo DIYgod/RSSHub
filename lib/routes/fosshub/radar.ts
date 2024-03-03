@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'fosshub.com': {
         _name: 'FossHub',
         '.': [

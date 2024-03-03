@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'weekendhk.com': {
         _name: '新假期周刊',
         '.': [

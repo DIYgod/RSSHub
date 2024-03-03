@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'changba.com': {
         _name: '唱吧',
         '.': [

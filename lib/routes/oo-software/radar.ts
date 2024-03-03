@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'oo-software.com': {
         _name: 'O&O Software',
         '.': [

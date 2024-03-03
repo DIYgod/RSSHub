@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'creative-comic.tw': {
         _name: 'CCC 創作集',
         '.': [

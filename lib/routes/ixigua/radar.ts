@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ixigua.com': {
         _name: '西瓜视频',
         '.': [

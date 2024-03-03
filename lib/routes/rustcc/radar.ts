@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'rustcc.cn': {
         _name: 'Rust语言中文社区',
         '.': [

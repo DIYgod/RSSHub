@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'eastmoney.com': {
         _name: '东方财富',
         data: [

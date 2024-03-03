@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'theinitium.com': {
         _name: '端传媒',
         '.': [

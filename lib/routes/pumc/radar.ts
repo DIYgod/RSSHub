@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'pumc.edu.cn': {
         _name: '北京协和医学院',
         mdadmission: [

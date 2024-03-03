@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'tvb.com': {
         _name: '无线新闻',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gihyo.jp': {
         _name: 'gihyo.jp',
         '.': [

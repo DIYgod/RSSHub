@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ppy.sh': {
         _name: 'osu!',
         osu: [

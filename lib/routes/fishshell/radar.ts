@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'fishshell.com': {
         _name: 'fish shell',
         '.': [

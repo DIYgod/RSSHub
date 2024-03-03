@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'airchina.com.cn': {
         _name: '中国国际航空公司',
         www: [

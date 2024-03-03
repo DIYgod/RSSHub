@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'keylol.com': {
         _name: '其乐',
         '.': [

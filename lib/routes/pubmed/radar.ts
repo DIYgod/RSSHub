@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'pubmed.ncbi.nlm.nih.gov': {
         _name: 'PubMed',
         '.': [

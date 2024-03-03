@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'onehu.xyz': {
         _name: '我不是盐神',
         '.': [

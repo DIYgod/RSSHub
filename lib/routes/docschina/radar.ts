@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     docschina: {
         _name: '印记中文',
         '.': [

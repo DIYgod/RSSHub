@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'javlibrary.com': {
         _name: 'JAVLibrary',
         '.': [

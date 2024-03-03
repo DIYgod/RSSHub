@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cartoonmad.com': {
         _name: '動漫狂',
         '.': [

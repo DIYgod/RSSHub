@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'wyzxwk.com': {
         _name: '乌有之乡',
         '.': [

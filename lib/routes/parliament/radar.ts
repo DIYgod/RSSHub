@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'parliament.go.th': {
         _name: 'รัฐสภา',
         '.': [

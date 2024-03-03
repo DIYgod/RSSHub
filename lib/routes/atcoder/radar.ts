@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'atcoder.jp': {
         _name: 'AtCoder',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'skysports.com': {
         _name: 'Sky Sports',
         '.': [

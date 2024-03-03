@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dapenti.com': {
         _name: '喷嚏',
         '.': [

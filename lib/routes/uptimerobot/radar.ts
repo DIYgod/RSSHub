@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'uptimerobot.com': {
         _name: 'Uptime Robot',
         rss: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'kuaidi100.com': {
         _name: '快递 100',
         '.': [

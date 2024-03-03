@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'xys.org': {
         _name: '新语丝',
         '.': [

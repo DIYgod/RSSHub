@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'annualreviews.org': {
         _name: 'Annual Reviews',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zcool.com.cn': {
         _name: '站酷',
         www: [

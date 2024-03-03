@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'radio.cn': {
         _name: '云听',
         '.': [

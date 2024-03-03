@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'javdb.com': {
         _name: 'JavDB',
         '.': [

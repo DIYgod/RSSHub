@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'icbc.com.cn': {
         _name: '中国工商银行',
         '.': [

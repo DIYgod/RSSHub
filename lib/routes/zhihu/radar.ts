@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zhihu.com': {
         _name: '知乎',
         www: [

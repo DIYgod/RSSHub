@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'pingwest.com': {
         _name: '品玩',
         '.': [

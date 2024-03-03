@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '3dmgame.com': {
         _name: '3DMGame',
         '.': [

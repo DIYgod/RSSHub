@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gzdaily.cn': {
         _name: '广州日报',
         '.': [

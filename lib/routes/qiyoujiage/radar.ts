@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'qiyoujiage.com': {
         _name: '汽油价格网',
         '.': [

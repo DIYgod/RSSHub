@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'finology.in': {
         _name: 'Finology Insider',
         insider: [

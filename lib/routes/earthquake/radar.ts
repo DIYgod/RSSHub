@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ac.cn': {
         _name: '地震速报',
         'www.ceic': [

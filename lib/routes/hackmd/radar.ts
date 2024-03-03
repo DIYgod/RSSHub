@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hackmd.io': {
         _name: 'HackMD',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'twreporter.org': {
         _name: '報導者',
         '.': [

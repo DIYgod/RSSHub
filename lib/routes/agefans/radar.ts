@@ -16,7 +16,7 @@ const ageFans = {
     ],
 };
 
-module.exports = {
+export default {
     'agemys.cc': ageFans,
     'agemys.org': ageFans,
 };

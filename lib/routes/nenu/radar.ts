@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nenu.edu.cn': {
         _name: '东北师范大学',
         sohac: [

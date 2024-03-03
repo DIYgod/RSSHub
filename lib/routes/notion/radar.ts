@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'notion.so': {
         _name: 'Notion',
         '.': [

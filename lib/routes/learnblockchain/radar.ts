@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'learnblockchain.cn': {
         _name: '登链社区',
         '.': [

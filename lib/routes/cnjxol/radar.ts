@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cnjxol.com': {
         _name: '南湖清风',
         '.': [

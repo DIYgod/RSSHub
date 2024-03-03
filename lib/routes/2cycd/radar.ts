@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '2cycd.com': {
         _name: '二次元虫洞',
         '.': [

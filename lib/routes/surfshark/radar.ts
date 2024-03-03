@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'surfshark.com': {
         _name: 'Surfshark',
         '.': [

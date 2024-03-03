@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'startuplatte.com': {
         _name: '創新拿鐵',
         '.': [

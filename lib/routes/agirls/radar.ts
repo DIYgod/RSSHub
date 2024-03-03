@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'aotter.net': {
         _name: '電獺少女',
         agirls: [

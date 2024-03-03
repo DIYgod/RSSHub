@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hbooker.com': {
         _name: '欢乐书客',
         '.': [

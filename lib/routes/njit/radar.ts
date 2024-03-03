@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'njit.edu.cn': {
         _name: '南京工程学院',
         jwc: [

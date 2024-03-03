@@ -1,6 +1,6 @@
 const { wh } = require('./data');
 
-module.exports = {
+export default {
     'sdu.edu.cn': {
         _name: '山东大学',
         'xinwen.wh': Object.entries(wh.news.columns).map(([, value]) => ({

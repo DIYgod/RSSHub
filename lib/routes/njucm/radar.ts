@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'njucm.edu.cn': {
         _name: '南京中医药大学',
         lib: [

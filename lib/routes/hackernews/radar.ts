@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ycombinator.com': {
         _name: 'Hacker News',
         '.': [

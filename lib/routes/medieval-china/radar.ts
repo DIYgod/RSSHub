@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'medieval-china.club': {
         _name: '中国的中古',
         '.': [

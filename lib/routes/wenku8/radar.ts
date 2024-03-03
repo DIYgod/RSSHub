@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'wenku8.net': {
         _name: '轻小说文库',
         www: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'rodong.rep.kp': {
         _name: '劳动新闻',
         '.': [

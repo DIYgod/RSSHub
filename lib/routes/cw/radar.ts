@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cw.com.tw': {
         _name: '天下雜誌',
         '.': [

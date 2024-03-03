@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'shopback.com.tw': {
         _name: 'ShopBack',
         '.': [

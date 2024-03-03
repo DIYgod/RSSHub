@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'asiantolick.com': {
         _name: 'Asian to lick',
         '.': [

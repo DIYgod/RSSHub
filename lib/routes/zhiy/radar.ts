@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zhiy.cc': {
         _name: '知园',
         '.': [

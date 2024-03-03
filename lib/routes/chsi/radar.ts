@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'chsi.com.cn': {
         _name: '中国研究生招生信息网',
         yz: [

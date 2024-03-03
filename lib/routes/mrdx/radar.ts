@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'mrdx.cn': {
         _name: '新华每日电讯',
         '.': [

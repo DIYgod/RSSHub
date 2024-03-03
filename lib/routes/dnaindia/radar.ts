@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dnaindia.com': {
         _name: 'DNA India',
         '.': [

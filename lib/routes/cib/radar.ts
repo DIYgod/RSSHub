@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cib.com.cn': {
         _name: '中国兴业银行',
         '.': [

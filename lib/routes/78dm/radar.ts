@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '78dm.net': {
         _name: '78动漫',
         '.': [

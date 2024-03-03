@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'who.int': {
         _name: '世界卫生组织 WHO',
         '.': [

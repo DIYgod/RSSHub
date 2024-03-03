@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dribbble.com': {
         _name: 'Dribbble',
         '.': [

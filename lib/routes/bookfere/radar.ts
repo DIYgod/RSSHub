@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bookfere.com': {
         _name: '书伴',
         '.': [

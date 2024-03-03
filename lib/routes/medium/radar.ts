@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'medium.com': {
         _name: 'Medium',
         '.': [

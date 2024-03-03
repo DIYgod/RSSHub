@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zuvio.com.tw': {
         _name: 'Zuvio',
         irs: [

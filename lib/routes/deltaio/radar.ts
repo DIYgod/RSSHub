@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'delta.io': {
         _name: 'Delta Lake',
         '.': [

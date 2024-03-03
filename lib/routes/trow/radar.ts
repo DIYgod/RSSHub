@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'trow.cc': {
         _name: 'The Ring of Wonder',
         '.': [

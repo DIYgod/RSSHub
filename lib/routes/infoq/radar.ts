@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'infoq.cn': {
         _name: 'InfoQ 中文',
         '.': [

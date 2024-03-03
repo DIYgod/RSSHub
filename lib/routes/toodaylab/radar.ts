@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'toodaylab.com': {
         _name: '理想生活实验室',
         '.': [

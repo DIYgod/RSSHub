@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sciencenet.cn': {
         _name: '科学网',
         blog: [

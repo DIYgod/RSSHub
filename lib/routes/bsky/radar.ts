@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bsky.app': {
         _name: 'Bluesky',
         '.': [

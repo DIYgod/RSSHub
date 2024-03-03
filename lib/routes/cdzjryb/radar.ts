@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cdzjryb.com': {
         _name: '成都住建蓉 e 办',
         zw: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'shoac.com.cn': {
         _name: '上海东方艺术中心',
         '.': [

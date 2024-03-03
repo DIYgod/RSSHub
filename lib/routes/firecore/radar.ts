@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'firecore.com': {
         _name: 'Infuse',
         '.': [

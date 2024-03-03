@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'eleduck.com': {
         _name: '电鸭社区',
         '.': [

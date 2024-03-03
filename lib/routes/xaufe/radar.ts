@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'xaufe.edu.cn': {
         _name: '西安财经大学',
         jiaowu: [

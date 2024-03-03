@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'techpowerup.com': {
         _name: 'TechPowerUp',
         '.': [

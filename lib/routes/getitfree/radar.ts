@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'getitfree.cn': {
         _name: '正版中国',
         '.': [

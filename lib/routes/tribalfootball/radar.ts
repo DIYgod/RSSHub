@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'tribalfootball.com': {
         _name: 'Tribal Football',
         '.': [

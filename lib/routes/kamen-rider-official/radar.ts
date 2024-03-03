@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'kamen-rider-official.com': {
         _name: '仮面ライダ',
         '.': [

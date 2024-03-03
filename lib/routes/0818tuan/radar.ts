@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '0818tuan.com': {
         _name: '0818 团',
         '.': [

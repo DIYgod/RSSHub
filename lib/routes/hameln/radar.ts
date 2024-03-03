@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'syosetu.org': {
         _name: 'hameln',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gameapps.hk': {
         _name: 'GameApps.hk 香港手机游戏网',
         '.': [

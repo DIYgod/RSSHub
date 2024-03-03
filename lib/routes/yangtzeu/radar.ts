@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'yangtzeu.edu.cn': {
         _name: '长江大学',
         '.': [

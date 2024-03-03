@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'mygopen.com': {
         _name: 'MyGoPen',
         '.': [

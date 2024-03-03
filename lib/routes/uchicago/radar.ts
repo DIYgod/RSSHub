@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'journals.uchicago.edu': {
         _name: 'The University of Chicago Press: Journals',
         '.': [

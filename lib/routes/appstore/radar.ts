@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'apple.com': {
         _name: 'Apple',
         apps: [

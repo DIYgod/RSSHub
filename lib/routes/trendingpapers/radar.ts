@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'trendingpapers.com': {
         _name: 'trendingpapers',
         '.': [

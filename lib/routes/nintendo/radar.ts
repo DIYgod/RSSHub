@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nintendo.com': {
         _name: 'Nintendo',
         '.': [

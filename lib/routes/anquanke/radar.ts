@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'anquanke.com': {
         _name: '安全客',
         '.': [

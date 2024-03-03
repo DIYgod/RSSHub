@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'notefolio.net': {
         _name: 'Notefolio',
         '.': [

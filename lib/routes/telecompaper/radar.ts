@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'telecompaper.com': {
         _name: 'Telecompaper',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hotukdeals.com': {
         _name: 'hotukdeals',
         www: [

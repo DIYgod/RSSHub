@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'chinanews.com.cn': {
         _name: '中国新闻网',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'orcid.org': {
         _name: 'ORCID',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'literotica.com': {
         _name: 'Literotica',
         '.': [

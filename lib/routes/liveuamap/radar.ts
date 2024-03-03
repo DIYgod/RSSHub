@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'liveuamap.com': {
         _name: 'Live Universal Awareness Map',
         '.': [

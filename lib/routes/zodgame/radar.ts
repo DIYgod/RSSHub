@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zodgame.xyz': {
         _name: 'zodgame',
         '.': [

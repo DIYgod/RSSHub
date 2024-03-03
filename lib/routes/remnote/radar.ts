@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'remnote.com': {
         _name: 'RemNote',
         '.': [

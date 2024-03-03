@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'free.com.tw': {
         _name: '免費資源網路社群',
         '.': [

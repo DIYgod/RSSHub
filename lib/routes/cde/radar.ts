@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cde.org.cn': {
         _name: '国家药品监督管理局药品审评中心',
         www: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'liulinblog.com': {
         _name: '木木博客',
         '.': [

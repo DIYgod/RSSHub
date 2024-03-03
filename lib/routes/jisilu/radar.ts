@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'jisilu.cn': {
         _name: '集思录',
         '.': [

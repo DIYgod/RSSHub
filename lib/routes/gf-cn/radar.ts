@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sunborngame.com': {
         _name: '少女前线',
         '.': [

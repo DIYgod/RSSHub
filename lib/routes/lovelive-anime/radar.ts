@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'lovelive-anime.jp': {
         _name: 'Love Live 官网',
         www: [

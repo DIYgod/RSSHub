@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'jianshu.com': {
         _name: '简书',
         www: [

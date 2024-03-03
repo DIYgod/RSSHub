@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'guancha.cn': {
         _name: '观察者网',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'kcna.kp': {
         _name: '朝鲜中央通讯社',
         www: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'wmpvp.com': {
         _name: '完美世界电竞',
         '.': [

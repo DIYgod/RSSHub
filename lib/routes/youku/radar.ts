@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'youku.com': {
         _name: '优酷',
         i: [

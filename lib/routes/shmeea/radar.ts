@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'shmeea.edu.cn': {
         _name: '上海市教育考试院',
         www: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ally.net.cn': {
         _name: '艾莱资讯',
         rail: [

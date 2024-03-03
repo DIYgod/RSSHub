@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'm4.cn': {
         _name: '四月网',
         news: [

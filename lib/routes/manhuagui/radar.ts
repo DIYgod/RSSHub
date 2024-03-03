@@ -13,7 +13,7 @@ const rules = [
     },
 ];
 
-module.exports = {
+export default {
     'manhuagui.com': {
         _name: '漫画柜',
         www: rules,

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zhibo8.cc': {
         _name: '直播吧',
         '.': [

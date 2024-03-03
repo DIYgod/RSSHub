@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'lofter.com': {
         _name: 'Lofter',
         www: [

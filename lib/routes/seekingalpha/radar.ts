@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'seekingalpha.com': {
         _name: 'Seeking Alpha',
         '.': [

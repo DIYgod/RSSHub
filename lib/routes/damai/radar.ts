@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'damai.cn': {
         _name: '大麦网',
         search: [

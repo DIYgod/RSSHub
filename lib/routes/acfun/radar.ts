@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'acfun.cn': {
         _name: 'AcFun',
         www: [

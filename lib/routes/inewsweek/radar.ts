@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'inewsweek.cn': {
         _name: '中国新闻周刊',
         '.': [

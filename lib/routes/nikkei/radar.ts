@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nikkei.com': {
         _name: '日本经济新闻',
         asia: [

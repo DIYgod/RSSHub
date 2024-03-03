@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'uibe.edu.cn': {
         _name: '对外经济贸易大学',
         hr: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'abskoop.com': {
         _name: 'A姐分享',
         nsfw: [

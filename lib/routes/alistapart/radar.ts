@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'alistapart.com': {
         _name: 'A List Apart',
         '.': [

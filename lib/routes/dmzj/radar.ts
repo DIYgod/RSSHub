@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dmzj.com': {
         _name: '动漫之家',
         news: [

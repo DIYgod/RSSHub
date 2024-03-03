@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'soundofhope.org': {
         _name: '希望之声',
         '.': [

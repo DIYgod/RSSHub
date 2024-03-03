@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'xinpianchang.com': {
         _name: '新片场',
         '.': [

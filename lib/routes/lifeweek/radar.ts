@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'lifeweek.com.cn': {
         _name: '三联生活周刊',
         '.': [

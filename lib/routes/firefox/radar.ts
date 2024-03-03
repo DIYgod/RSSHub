@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'firefox.com': {
         _name: 'Mozilla',
         monitor: [

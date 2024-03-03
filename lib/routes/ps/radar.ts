@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'playstation.com': {
         _name: 'PlayStation Store',
         www: [

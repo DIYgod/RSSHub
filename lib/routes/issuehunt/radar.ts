@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'issuehunt.io': {
         _name: 'Issue Hunt',
         '.': [

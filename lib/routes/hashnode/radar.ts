@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hashnode.dev': {
         _name: 'hashnode',
         '.': [

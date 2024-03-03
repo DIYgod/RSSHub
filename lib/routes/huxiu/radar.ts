@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'huxiu.com': {
         _name: '虎嗅',
         '.': [

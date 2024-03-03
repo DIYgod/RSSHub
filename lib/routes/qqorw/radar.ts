@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'qqorw.cn': {
         _name: '早报网',
         '.': [

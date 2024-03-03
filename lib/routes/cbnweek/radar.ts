@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cbnweek.com': {
         _name: '第一财经杂志',
         '.': [

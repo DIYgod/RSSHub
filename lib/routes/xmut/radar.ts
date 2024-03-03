@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'xmut.edu.cn': {
         _name: '厦门理工学院',
         jwc: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'qoo-app.com': {
         _name: 'QooApp',
         apps: [

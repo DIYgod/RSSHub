@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'thejewishmuseum.org': {
         _name: 'Jewish Museum',
         '.': [

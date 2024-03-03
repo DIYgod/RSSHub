@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hebtv.com': {
         _name: '河北网络广播电视台',
         'web.cmc': [

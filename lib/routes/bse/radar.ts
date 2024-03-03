@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bse.cn': {
         _name: '北京证券交易所',
         '.': [

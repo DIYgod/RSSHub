@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'laohu8.com': {
         _name: '老虎社区',
         '.': [

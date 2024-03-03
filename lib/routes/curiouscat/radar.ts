@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'curiouscat.live': {
         _name: 'CuriousCat',
         '.': [

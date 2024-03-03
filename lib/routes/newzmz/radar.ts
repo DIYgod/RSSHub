@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'newzmz.com': {
         _name: 'NEW 字幕组',
         '.': [

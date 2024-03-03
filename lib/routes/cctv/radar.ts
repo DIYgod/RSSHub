@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cctv.com': {
         _name: '央视新闻',
         news: [

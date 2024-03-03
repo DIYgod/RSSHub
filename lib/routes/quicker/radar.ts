@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'getquicker.net': {
         _name: 'Quicker',
         '.': [

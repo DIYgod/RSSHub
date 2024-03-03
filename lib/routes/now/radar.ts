@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'news.now.com': {
         _name: 'Now 新聞',
         '.': [

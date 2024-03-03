@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bluestacks.com': {
         _name: 'BlueStacks',
         '.': [

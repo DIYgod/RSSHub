@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'android.com': {
         _name: 'Android Developers',
         developer: [

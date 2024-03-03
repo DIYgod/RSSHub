@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'indiansinkuwait.com': {
         _name: 'Indians in Kuwait',
         '.': [

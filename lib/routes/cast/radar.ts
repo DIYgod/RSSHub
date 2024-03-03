@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cast.org.cn': {
         _name: '中国科学技术协会',
         '.': [

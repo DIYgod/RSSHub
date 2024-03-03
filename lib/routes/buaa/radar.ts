@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'buaa.edu.cn': {
         _name: '北京航空航天大学',
         news: [

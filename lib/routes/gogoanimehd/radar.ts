@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'anitaku.to': {
         _name: 'Gogoanime',
         developer: [

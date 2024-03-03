@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'modrinth.com': {
         _name: 'Modrinth',
         '.': [

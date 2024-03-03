@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zjol.com.cn': {
         _name: '浙江在线',
         '.': [

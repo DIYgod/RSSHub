@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'baai.ac.cn': {
         _name: '北京智源人工智能研究院',
         hub: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'iqnew.com': {
         _name: '爱 Q 生活网',
         '.': [

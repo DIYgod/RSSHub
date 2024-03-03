@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nber.org': {
         _name: 'National Bureau of Economic Research',
         '.': [

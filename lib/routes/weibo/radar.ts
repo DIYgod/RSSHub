@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'weibo.com': {
         _name: '微博',
         '.': [

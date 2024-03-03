@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gocn.vip': {
         _name: 'GoCN',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ymgal.games': {
         _name: '月幕 Galgame',
         '.': [

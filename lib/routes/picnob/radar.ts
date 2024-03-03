@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'picnob.com': {
         _name: 'Picnob',
         '.': [

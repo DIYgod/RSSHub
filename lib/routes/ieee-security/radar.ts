@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ieee-security.org': {
         _name: 'IEEE Computer Society',
         '.': [

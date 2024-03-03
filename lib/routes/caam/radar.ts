@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'caam.org.cn': {
         _name: '中国汽车工业协会',
         '.': [

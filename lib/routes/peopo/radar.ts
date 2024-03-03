@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'peopo.org': {
         _name: 'PeoPo 公民新聞',
         '.': [

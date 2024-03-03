@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'comicskingdom.com': {
         _name: 'Comics Kingdom',
         '.': [

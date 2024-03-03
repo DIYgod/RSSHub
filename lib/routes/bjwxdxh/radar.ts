@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bjwxdxh.org.cn': {
         _name: '北京无线电协会',
         www: [

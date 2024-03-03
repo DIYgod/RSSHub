@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'asus.com.cn': {
         _name: 'Asus 华硕',
         '.': [

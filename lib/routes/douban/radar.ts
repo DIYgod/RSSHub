@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'douban.com': {
         _name: '豆瓣',
         www: [

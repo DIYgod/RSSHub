@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'e-hentai.org': {
         _name: 'E-Hentai',
         '.': [

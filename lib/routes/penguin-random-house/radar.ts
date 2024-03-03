@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'penguinrandomhouse.com': {
         _name: 'Penguin Random House',
         '.': [

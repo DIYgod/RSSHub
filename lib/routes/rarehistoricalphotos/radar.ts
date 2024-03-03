@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'rarehistoricalphotos.com': {
         _name: 'Rare Historical Photos',
         '.': [

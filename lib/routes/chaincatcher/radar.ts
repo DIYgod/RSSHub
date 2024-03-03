@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'chaincatcher.com': {
         _name: '链捕手 ChainCatcher',
         '.': [

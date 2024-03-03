@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'apache.org': {
         _name: 'Apache',
         apisix: [

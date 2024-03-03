@@ -10,6 +10,6 @@ const fuliba = {
     ],
 };
 
-module.exports = {
+export default {
     'fuliba2023.net': fuliba,
 };

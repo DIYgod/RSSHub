@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'pincong.rocks': {
         _name: '品葱',
         '.': [

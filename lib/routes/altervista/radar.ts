@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'altervista.org': {
         _name: 'Altervista',
         hyp3rlinx: [

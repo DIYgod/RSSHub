@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zyshow.net': {
         _name: '综艺秀',
         '.': [

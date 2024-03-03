@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'qq.com': {
         _name: '腾讯网',
         ac: [

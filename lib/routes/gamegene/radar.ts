@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gamegene.cn': {
         _name: '游戏基因',
         news: [

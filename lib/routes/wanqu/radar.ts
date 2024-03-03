@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'wanqu.co': {
         _name: '湾区日报',
         '.': [

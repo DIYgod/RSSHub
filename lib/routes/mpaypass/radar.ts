@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'mpaypass.com.cn': {
         _name: '移动支付网',
         '.': [

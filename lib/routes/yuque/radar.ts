@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'yuque.com': {
         _name: '语雀',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ccreports.com.cn': {
         _name: '消费者报道',
         www: [

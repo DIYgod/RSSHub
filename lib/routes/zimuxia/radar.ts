@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zimuxia.cn': {
         _name: 'FIX 字幕侠',
         '.': [

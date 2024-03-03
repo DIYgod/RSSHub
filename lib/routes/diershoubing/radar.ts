@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'diershoubing.com': {
         _name: '二柄 APP',
         '.': [

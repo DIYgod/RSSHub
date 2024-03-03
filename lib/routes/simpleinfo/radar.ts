@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'blog.simpleinfo.cc': {
         _name: '簡訊設計',
         '.': [

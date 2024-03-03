@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'apkpure.com': {
         _name: 'APKPure',
         '.': [

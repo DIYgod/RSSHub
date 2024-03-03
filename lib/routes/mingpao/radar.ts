@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'mingpao.com': {
         _name: '明报',
         '.': [

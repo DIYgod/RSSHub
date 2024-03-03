@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ekantipur.com': {
         _name: 'Ekantipur',
         '.': [

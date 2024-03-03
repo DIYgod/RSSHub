@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'uber.com': {
         _name: 'Uber Blog',
         www: [

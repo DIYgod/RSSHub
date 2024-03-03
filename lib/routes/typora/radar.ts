@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'typora.io': {
         _name: 'Typora',
         '.': [

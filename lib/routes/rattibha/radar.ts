@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'rattibha.com': {
         _name: 'رتبها - Rattibha',
         '.': [

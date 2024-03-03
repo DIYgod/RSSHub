@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'fantia.jp': {
         _name: 'Fantia',
         '.': [

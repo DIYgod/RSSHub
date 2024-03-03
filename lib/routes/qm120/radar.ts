@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'qm120.com': {
         _name: '全民健康网',
         '.': [

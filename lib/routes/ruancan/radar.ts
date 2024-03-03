@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ruancan.com': {
         _name: '软餐',
         '.': [

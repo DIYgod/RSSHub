@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sensortower.com': {
         _name: 'Sensor Tower',
         '.': [

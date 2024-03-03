@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'researchgate.net': {
         _name: 'ResearchGate',
         '.': [

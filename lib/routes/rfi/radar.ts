@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'rfi.fr': {
         _name: 'Radio France Internationale',
         '.': [

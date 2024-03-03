@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'postman.com': {
         _name: 'Postman',
         '.': [

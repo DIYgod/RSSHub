@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'tesla.cn': {
         _name: '特斯拉中国',
         '.': [

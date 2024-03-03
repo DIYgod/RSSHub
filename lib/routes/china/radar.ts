@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'china.com': {
         _name: '中华网',
 

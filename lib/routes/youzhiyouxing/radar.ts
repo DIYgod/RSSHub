@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'youzhiyouxing.cn': {
         _name: '有知有行',
         '.': [

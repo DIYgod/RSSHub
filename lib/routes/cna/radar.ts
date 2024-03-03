@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cna.com.tw': {
         _name: '中央通訊社',
         '.': [

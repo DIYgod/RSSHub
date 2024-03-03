@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'iguoguo.net': {
         _name: '爱果果',
         '.': [

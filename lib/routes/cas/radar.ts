@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cas.cn': {
         _name: '中国科学院',
         www: [

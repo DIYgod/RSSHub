@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'lala.im': {
         _name: '荒岛',
         '.': [

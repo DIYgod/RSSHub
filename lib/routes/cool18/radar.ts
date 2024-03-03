@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cool18.com': {
         _name: '酷 18',
         '.': [

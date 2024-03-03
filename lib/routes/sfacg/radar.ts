@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sfacg.com': {
         _name: 'SF 轻小说',
         book: [

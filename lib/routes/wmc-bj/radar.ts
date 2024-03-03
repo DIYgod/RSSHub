@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'wmc-bj.net': {
         _name: 'World Meteorological Centre Beijing',
         '.': [

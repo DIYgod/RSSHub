@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ntdtv.com': {
         _name: '新唐人电视台',
         www: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bmkg.go.id': {
         _name: 'BMKG 印尼气象气候和地球物理局',
         '.': [

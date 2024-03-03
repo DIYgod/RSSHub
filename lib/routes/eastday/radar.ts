@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'eastday.com': {
         _name: '东方网',
         mini: [

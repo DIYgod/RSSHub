@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hostmonit.com': {
         _name: '全球主机监控',
         stock: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zyw.asia': {
         _name: 'zyw',
         hot: [

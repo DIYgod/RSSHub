@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '1point3acres.com': {
         _name: '一亩三分地',
         blog: [

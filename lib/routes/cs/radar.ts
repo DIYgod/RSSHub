@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cs.com.cn': {
         _name: '中证网',
         '.': [

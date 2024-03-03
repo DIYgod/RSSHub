@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gamersecret.com': {
         _name: 'Gamer Secret',
         '.': [

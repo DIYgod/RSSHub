@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sustech.edu.cn': {
         _name: '南方科技大学',
         biddingoffice: [

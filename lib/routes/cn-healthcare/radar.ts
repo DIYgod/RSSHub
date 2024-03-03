@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cn-healthcare.com': {
         _name: '健康界',
         '.': [

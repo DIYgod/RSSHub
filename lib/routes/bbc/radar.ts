@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bbc.com': {
         _name: 'BBC',
         '.': [

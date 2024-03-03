@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '591.com.tw': {
         _name: '591 租屋網',
         rent: [

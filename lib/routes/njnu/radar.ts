@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'njnu.edu.cn': {
         _name: '南京师范大学',
         ceai: [

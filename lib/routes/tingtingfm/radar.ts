@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'tingtingfm.com': {
         _name: '听听 FM',
         mobile: [

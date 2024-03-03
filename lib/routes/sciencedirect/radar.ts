@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sciencedirect.com': {
         _name: 'ScienceDirect',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'kimlaw.or.kr': {
         _name: '韓國海事法學會',
         '.': [

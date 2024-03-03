@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'informs.org': {
         _name: 'INFORMS',
         pubsonline: [

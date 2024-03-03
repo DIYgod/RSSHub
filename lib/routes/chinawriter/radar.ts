@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'chinawriter.com.cn': {
         _name: '中国作家网',
         '.': [

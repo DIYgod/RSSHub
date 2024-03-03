@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'yoasobi-music.jp': {
         _name: 'Yoasobi Official',
         www: [

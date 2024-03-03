@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ciweimao.com': {
         _name: '刺猬猫',
         wap: [

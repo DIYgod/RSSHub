@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'xmnn.cn': {
         _name: '厦门网',
         epaper: [

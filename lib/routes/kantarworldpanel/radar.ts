@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'kantarworldpanel.com': {
         _name: 'Kantar Worldpanel',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'taobao.com': {
         _name: '淘宝',
         izhongchou: [

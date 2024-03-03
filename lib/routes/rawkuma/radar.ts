@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'rawkuma.com': {
         _name: 'Rawkuma',
         '.': [

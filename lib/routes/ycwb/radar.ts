@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'xwlb.com.cn': {
         _name: '羊城晚报金羊网',
         '.': [

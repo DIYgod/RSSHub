@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sina.com.cn': {
         _name: '新浪',
         finance: [

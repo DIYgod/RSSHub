@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'boc.cn': {
         _name: '中国银行',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'comicat.org': {
         _name: 'Comicat',
         '.': [

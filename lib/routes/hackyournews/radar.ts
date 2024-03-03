@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hackyournews.com': {
         _name: 'HackYourNews',
         '.': [

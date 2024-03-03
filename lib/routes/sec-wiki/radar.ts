@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sec-wiki.com': {
         _name: 'SecWiki-安全维基',
         www: [

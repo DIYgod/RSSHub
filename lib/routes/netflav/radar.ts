@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'netflav.com': {
         _name: 'Netflav',
         '.': [

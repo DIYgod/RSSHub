@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'fjksbm.com': {
         _name: '福建考试报名网',
         '.': [

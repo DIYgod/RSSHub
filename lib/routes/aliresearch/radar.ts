@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'aliresearch.com': {
         _name: '阿里研究院',
         '.': [

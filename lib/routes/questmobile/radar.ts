@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'questmobile.com.cn': {
         _name: 'QuestMobile',
         '.': [

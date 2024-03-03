@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'yystv.cn': {
         _name: '游研社',
         '.': [

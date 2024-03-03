@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hbr.org': {
         _name: 'Harvard Business Review',
         '.': [

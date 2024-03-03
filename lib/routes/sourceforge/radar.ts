@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sourceforge.net': {
         _name: 'SourceForge',
         www: [

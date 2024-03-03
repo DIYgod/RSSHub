@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hackertalk.net': {
         _name: 'Hacker Talk 黑客说',
         '.': [

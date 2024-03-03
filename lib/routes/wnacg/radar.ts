@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'wnacg.org': {
         _name: '紳士漫畫',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'yahoo.com': {
         _name: 'Yahoo',
         'hk.news': [

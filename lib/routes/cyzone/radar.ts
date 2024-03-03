@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cyzone.cn': {
         _name: '创业邦',
         '.': [

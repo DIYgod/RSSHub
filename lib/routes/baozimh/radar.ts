@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'baozimh.com': {
         _name: '包子漫画',
         www: [

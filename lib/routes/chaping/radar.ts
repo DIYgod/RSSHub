@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'chaping.cn': {
         _name: '差评',
         '.': [

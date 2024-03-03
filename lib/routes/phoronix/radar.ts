@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'phoronix.com': {
         _name: 'Phoronix',
         '.': [

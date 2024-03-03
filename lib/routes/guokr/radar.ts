@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'guokr.com': {
         _name: '果壳网',
         '.': [

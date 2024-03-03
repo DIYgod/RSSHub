@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bbcnewslabs.co.uk': {
         _name: 'BBC News Labs',
         '.': [

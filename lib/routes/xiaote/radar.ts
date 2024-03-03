@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'xiaote.com': {
         _name: '小特社区',
         '.': [

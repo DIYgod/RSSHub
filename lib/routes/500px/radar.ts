@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '500px.com.cn': {
         _name: '500px 摄影社区',
         '.': [

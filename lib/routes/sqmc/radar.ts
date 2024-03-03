@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sqmc.edu.cn': {
         _name: '新乡医学院三全学院',
         '.': [

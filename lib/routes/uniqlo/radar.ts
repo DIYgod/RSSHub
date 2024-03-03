@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'uniqlo.com': {
         _name: 'Uniqlo',
         www: [

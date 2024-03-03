@@ -7,7 +7,7 @@ const finalfantasyxiv = [
     },
 ];
 
-module.exports = {
+export default {
     'finalfantasyxiv.com': {
         _name: '最终幻想 14',
         eu: finalfantasyxiv,

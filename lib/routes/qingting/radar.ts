@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'qingting.fm': {
         _name: '蜻蜓 FM',
         '.': [

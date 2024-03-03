@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hitsz.edu.cn': {
         _name: '哈尔滨工业大学（深圳）',
         '.': [

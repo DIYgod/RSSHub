@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'taoguba.com.cn': {
         _name: '淘股吧',
         '.': [

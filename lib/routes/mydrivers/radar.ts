@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'mydrivers.com': {
         _name: '快科技',
         m: [

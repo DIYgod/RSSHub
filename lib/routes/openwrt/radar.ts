@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'openwrt.org': {
         _name: 'Openwrt',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'fortunechina.com': {
         _name: '财富中文网',
         '.': [

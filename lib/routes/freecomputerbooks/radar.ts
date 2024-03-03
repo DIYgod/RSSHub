@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'freecomputerbooks.com': {
         _name: 'Free Computer Books',
         '.': [

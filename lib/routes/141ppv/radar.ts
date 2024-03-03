@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '141ppv.com': {
         _name: '141JAV',
         '.': [

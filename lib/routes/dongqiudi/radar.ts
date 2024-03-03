@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dongqiudi.com': {
         _name: '懂球帝',
         m: [

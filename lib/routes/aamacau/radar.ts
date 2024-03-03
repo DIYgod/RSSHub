@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'aamacau.com': {
         _name: '論盡媒體 AllAboutMacau Media',
         '.': [

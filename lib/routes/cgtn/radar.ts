@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cgtn.com': {
         _name: '中国环球电视网 CGTN',
         '.': [

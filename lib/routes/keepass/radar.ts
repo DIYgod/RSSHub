@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'keepass.info': {
         _name: 'KeePass',
         '.': [

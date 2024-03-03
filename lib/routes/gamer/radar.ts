@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gamer.com.tw': {
         _name: '巴哈姆特電玩資訊站',
         acg: [

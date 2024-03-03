@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'japanpost.jp': {
         _name: '日本郵便',
         'trackings.post': [

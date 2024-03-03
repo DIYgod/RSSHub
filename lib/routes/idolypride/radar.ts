@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'idolypride.jp': {
         _name: '偶像荣耀',
         '.': [

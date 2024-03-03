@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ucas.ac.cn': {
         _name: '中国科学院大学',
         ai: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '5eplay.com': {
         _name: '5EPLAY',
         csgo: [

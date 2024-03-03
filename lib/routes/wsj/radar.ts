@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'wsj.com': {
         _name: '华尔街日报 The Wall Street Journal (WSJ)',
         cn: [

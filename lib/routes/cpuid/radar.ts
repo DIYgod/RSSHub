@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cpuid.com': {
         _name: 'CPUID',
         '.': [

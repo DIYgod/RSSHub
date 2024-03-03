@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'on.cc': {
         _name: '东网',
         hk: [

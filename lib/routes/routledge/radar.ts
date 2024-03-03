@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'routledge.com': {
         _name: 'Routledge',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'oshwhub.com': {
         _name: '立创开源硬件平台',
         '.': [

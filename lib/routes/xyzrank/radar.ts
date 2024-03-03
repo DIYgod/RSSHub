@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'xyzrank.com': {
         _name: '中文播客榜',
         '.': [

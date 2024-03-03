@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'urbandictionary.com': {
         _name: 'Urban Dictionary',
         '.': [

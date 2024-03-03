@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'iwara.tv': {
         _name: 'iwara',
         ecchi: [

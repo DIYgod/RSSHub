@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'oreno3d.com': {
         _name: '俺の3Dエロ動画',
         '.': [

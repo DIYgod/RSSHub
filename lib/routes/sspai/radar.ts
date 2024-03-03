@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sspai.com': {
         _name: '少数派',
         '.': [

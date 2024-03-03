@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sdust.edu.cn': {
         _name: '山东科技大学',
         '.': [

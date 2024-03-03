@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'huanqiu.com': {
         _name: '环球网',
         '.': [

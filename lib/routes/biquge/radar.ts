@@ -10,7 +10,7 @@ const biquge = {
     ],
 };
 
-module.exports = {
+export default {
     'xbiquwx.la': biquge,
     'biqu5200.net': biquge,
     'xbiquge.so': biquge,

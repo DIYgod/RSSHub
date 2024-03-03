@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'metacritic.com': {
         _name: 'Metacritic',
         '.': [

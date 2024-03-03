@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'patagonia.com': {
         _name: 'Patagonia',
         '.': [

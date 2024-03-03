@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'caai.cn': {
         _name: '中国人工智能学会',
         '.': [

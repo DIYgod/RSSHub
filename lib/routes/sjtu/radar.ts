@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sjtu.edu.cn': {
         _name: '上海交通大学',
         'bjwb.seiee': [

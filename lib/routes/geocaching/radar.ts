@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'geocaching.com': {
         _name: 'Geocaching',
         '.': [

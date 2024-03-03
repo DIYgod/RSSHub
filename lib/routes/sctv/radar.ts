@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sctv.com': {
         _name: '四川广播电视台',
         '.': [

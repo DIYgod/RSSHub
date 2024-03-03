@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'mindmeister.com': {
         _name: 'MindMeister',
         '.': [

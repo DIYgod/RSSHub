@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'stcn.com': {
         _name: '证券时报网',
         '.': [

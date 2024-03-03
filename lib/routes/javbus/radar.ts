@@ -130,7 +130,7 @@ const westernJavbus = {
     ],
 };
 
-module.exports = {
+export default {
     'javbus.com': javbus,
     'javsee.club': javbus,
     'javsee.icu': javbus,

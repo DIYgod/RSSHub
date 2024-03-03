@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'springer.com': {
         _name: 'Springer',
         www: [

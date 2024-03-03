@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sakurazaka46.com': {
         _name: '櫻坂46',
         '.': [

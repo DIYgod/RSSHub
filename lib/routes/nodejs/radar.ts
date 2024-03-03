@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nodejs.org': {
         _name: 'Node.js',
         '.': [

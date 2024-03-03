@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'chiculture.org.hk': {
         _name: '通識・現代中國',
         '.': [

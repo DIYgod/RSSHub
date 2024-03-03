@@ -1,17 +1,19 @@
-const fs = require('fs');
-const path = require('path');
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import { directoryImport } from 'directory-import';
+import toSource from 'tosource';
+
 const targetJs = path.join(__dirname, '../../assets/build/radar-rules.js');
 const targetJson = path.join(__dirname, '../../assets/build/radar-rules.json');
 const dirname = path.join(__dirname + '../../../lib/routes');
-const toSource = require('tosource');
 
-// Namespaces that do not require radar.js
+// Namespaces that do not require radar.ts
 const allowNamespace = new Set(['discourse', 'discuz', 'ehentai', 'lemmy', 'mail', 'test', 'index.tsx', 'robots.txt.ts']);
-// Check if a radar.js file is exist under each folder of dirname
+// Check if a radar.ts file is exist under each folder of dirname
 for (const dir of fs.readdirSync(dirname)) {
     const dirPath = path.join(dirname, dir);
-    if (!fs.existsSync(path.join(dirPath, 'radar.js')) && !allowNamespace.has(dir)) {
-        throw new Error(`No radar.js in "${dirPath}".`);
+    if (!fs.existsSync(path.join(dirPath, 'radar.ts')) && !allowNamespace.has(dir)) {
+        throw new Error(`No radar.ts in "${dirPath}".`);
     }
 }
 
@@ -80,17 +82,21 @@ const validateRadarRules = (rule, dir) => {
     }
 };
 
-const radarRules = require('require-all')({
-    dirname,
-    filter: /radar\.js$/,
+// const radarRules = require('require-all')({
+//     dirname,
+//     filter: /radar\.ts$/,
+// });
+const imports = directoryImport({
+    targetDirectoryPath: dirname,
+    importPattern: /radar\.ts$/,
 });
 
 let rules = {};
 
-for (const dir in radarRules) {
-    const rule = radarRules[dir]['radar.js']; // Do not merge other file
+for (const dir in imports) {
+    const rule = imports[dir].default; // Do not merge other file
 
-    validateRadarRules(rule, dir);
+    validateRadarRules(rule, dir.replace('/radar.ts', '').replace(/^\//, ''));
 
     rules = { ...rules, ...rule };
 }

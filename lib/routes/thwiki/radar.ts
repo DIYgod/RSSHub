@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'thwiki.cc': {
         _name: 'THBWiki',
         '.': [

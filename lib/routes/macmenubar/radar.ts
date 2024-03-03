@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'macmenubar.com': {
         _name: 'MacMenuBar',
         '.': [

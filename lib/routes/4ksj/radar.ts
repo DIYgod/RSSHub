@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '4ksj.com': {
         _name: '4k 世界',
         '.': [

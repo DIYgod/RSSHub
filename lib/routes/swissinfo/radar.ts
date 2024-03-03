@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'swissinfo.ch': {
         _name: 'swissinfo',
         '.': [

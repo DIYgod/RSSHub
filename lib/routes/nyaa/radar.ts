@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nyaa.si': {
         _name: 'nyaa',
         '.': [

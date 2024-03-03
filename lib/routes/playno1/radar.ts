@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'playno1.com': {
         _name: 'PLAYNO.1玩樂達人',
         stno1: [

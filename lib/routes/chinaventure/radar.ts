@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'chinaventure.com.cn': {
         _name: '投中网',
         '.': [

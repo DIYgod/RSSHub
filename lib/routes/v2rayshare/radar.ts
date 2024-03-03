@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'v2rayshare.com': {
         _name: 'V2rayShare',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nippon.com': {
         _name: '走进日本',
         www: [

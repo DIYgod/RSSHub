@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'grubstreet.com': {
         _name: 'Grub Street',
         '.': [

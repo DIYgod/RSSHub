@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'inoreader.com': {
         _name: 'Inoreader',
         '.': [

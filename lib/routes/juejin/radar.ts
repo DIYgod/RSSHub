@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'juejin.cn': {
         _name: '掘金',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'njglyy.com': {
         _name: '南京鼓楼医院',
         '.': [

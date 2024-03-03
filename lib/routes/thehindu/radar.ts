@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'thehindu.com': {
         _name: 'The Hindu',
         '.': [

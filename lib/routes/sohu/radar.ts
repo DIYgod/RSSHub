@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sohu.com': {
         _name: '搜狐',
         '.': [

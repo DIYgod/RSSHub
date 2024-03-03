@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'iiilab.com': {
         _name: '人人都是自媒体',
         www: [

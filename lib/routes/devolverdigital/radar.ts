@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'devolverdigital.com': {
         _name: 'DevolverDigital',
         '.': [

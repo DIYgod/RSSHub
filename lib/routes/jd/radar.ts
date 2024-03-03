@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'jd.com': {
         _name: '京东',
         item: [

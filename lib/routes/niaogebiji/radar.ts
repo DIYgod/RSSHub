@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'niaogebiji.com': {
         _name: '鸟哥笔记',
         '.': [

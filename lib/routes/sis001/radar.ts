@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sis001.com': {
         _name: '第一会所',
         '.': [

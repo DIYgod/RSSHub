@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dushu.io': {
         _name: '樊登读书会',
         card: [

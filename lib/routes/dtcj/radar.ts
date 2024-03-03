@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dtcj.com': {
         _name: 'DT 财经',
         '.': [

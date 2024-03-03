@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hunanpea.com': {
         _name: '湖南人事考试网',
         rsks: [

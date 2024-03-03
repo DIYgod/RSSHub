@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'mox.moe': {
         _name: 'Mox.moe',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'right.com.cn': {
         _name: '恩山无线论坛',
         '.': [

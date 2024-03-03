@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'antibody-software.com': {
         _name: 'WizFile',
         '.': [

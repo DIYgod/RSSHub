@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'kuwaitlocal.com': {
         _name: 'Kuwait Local',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'arcteryx.com': {
         _name: 'Arcteryx',
         '.': [

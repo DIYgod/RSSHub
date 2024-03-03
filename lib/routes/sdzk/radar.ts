@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sdzk.cn': {
         _name: '山东省教育招生考试院',
         '.': [

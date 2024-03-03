@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'huoxian.cn': {
         _name: '火线',
         zone: [

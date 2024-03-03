@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'kepu.net.cn': {
         _name: '中国科普博览',
         live: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'mwm.net.cn': {
         _name: '管理世界',
         '.': [

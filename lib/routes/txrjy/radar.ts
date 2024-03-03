@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'txrjy.com': {
         _name: '通信人家园',
         '.': [

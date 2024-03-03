@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'neea.cn': {
         _name: 'IELTS雅思',
         ielts: [

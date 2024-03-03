@@ -23,7 +23,7 @@ const rules = [
     },
 ];
 
-module.exports = {
+export default {
     'nga.cn': {
         _name: 'NGA',
         bbs: rules,

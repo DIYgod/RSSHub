@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'konghq.com': {
         _name: 'Kong API 网关平台',
         '.': [

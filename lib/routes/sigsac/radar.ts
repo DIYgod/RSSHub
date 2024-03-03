@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sigsac.org': {
         _name: 'ACM Special Interest Group on Security Audit and Control',
         '.': [

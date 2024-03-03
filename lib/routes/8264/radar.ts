@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '8264.com': {
         _name: '8264',
         '.': [

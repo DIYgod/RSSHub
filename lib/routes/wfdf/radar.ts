@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'wfdf.sport': {
         _name: 'WFDF',
         '.': [

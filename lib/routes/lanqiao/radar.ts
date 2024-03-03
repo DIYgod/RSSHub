@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'lanqiao.cn': {
         _name: '蓝桥云课',
         '.': [

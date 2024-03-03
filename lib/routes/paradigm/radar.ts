@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'paradigm.xyz': {
         _name: 'Paradigm',
         '.': [

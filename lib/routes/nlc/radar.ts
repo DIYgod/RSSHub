@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nlc.cn': {
         _name: '中国国家图书馆',
         read: [

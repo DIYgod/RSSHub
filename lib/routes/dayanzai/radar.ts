@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dayanzai.me': {
         _name: '大眼仔旭',
         '.': [

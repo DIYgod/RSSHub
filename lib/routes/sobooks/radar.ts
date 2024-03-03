@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sobooks.net': {
         _name: 'SoBooks',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ngocn2.org': {
         _name: 'NGOCN',
         '.': [

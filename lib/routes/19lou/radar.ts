@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '19lou.com': {
         _name: '19 楼',
         '.': [

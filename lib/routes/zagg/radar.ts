@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zagg.com': {
         _name: 'New Arrivals',
         '.': [

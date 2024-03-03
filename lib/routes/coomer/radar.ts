@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'coomer.party': {
         _name: 'Coomer',
         '.': [

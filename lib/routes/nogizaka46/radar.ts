@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nogizaka46.com': {
         _name: '乃木坂46',
         news: [

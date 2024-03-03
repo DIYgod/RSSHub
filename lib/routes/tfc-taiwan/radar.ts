@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'tfc-taiwan.org.tw': {
         _name: '台灣事實查核中心',
         '.': [

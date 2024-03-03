@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'elasticsearch.cn': {
         _name: 'Elastic 中文社区',
         '.': [

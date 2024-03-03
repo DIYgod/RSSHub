@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dh.gov.hk': {
         _name: '香港卫生署',
         '.': [

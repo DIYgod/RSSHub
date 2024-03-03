@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'unraid.net': {
         _name: 'Unraid',
         '.': [

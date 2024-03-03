@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sass.org.cn': {
         _name: '上海社会科学院',
         gs: [

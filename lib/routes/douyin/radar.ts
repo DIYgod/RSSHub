@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'douyin.com': {
         _name: '抖音',
         '.': [

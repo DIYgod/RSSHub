@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ajmide.com': {
         _name: '阿基米德FM',
         m: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'auto-stats.org.cn': {
         _name: '中国汽车工业协会统计信息网',
         '.': [

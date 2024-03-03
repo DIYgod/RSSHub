@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sysu.edu.cn': {
         _name: '中山大学',
         cse: [

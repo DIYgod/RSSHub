@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'instructables.com': {
         _name: 'Instructables',
         '.': [

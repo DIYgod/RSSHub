@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'shisu.edu.cn': {
         _name: '上海外国语大学',
         news: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'clickme.net': {
         _name: 'ClickMe',
         '.': [

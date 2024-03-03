@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bandcamp.com': {
         _name: 'Bandcamp',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bjp.org.cn': {
         _name: '北京天文馆',
         '.': [

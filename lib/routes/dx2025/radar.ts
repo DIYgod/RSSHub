@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dx2025.com': {
         _name: '东西智库',
         '.': [

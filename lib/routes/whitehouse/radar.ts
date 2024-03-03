@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'whitehouse.gov': {
         _name: '美国白宫办公厅',
         '.': [

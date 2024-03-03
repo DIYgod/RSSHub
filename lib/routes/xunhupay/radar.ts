@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'xunhupay.com': {
         _name: '虎皮椒',
         www: [

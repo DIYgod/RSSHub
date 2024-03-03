@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'howtoforge.com': {
         _name: 'Howtoforge Linux Tutorials',
         '.': [

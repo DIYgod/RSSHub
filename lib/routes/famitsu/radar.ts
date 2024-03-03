@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'famitsu.com': {
         _name: 'ファミ通',
         '.': [

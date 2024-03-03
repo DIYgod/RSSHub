@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'plurk.com': {
         _name: 'Plurk',
         '.': [

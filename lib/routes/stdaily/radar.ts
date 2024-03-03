@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'stdaily.com': {
         _name: '中国科技网',
         digitalpaper: [

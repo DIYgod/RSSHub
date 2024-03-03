@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'xboxfan.com': {
         _name: '盒心光环',
         '.': [

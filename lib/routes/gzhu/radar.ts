@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gzhu.edu.cn': {
         _name: '广州大学',
         yjsy: [

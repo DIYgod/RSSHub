@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'aip.org': {
         _name: 'American Institute of Physics',
         pubs: [

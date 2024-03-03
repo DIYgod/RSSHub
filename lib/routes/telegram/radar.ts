@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     't.me': {
         _name: 'Telegram',
         '.': [

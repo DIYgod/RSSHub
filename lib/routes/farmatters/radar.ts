@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'farmatters.com': {
         _name: 'Farmatters',
         '.': [

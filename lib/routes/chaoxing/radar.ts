@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'chaoxing.com': {
         _name: '超星',
         '.': [

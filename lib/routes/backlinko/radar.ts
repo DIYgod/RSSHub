@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'backlinko.com': {
         _name: 'Backlinko',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'thenewslens.com': {
         _name: 'The News Lens 關鍵評論',
         '.': [

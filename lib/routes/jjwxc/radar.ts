@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'jjwxc.net': {
         _name: '晋江文学城',
         '.': [

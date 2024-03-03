@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'npr.org': {
         _name: 'National Public Radio',
         '.': [

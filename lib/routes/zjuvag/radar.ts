@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zjuvag.org': {
         _name: '浙江大学可视分析小组',
         '.': [

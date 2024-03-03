@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'iyingdi.com': {
         _name: '旅法师营地',
         www: [

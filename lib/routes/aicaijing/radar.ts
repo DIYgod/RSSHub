@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'aicaijing.com': {
         _name: 'AI 财经社',
         www: [

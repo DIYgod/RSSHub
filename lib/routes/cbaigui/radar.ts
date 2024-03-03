@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cbaigui.com': {
         _name: '纪妖',
         '.': [

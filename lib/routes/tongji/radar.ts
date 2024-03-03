@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'tongji.edu.cn': {
         _name: '同济大学',
         bksy: [

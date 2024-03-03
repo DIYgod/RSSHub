@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'thecover.cn': {
         _name: '封面新闻',
         '.': [

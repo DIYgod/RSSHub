@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'twitch.tv': {
         _name: 'Twitch',
         www: [

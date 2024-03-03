@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'xkb.com.cn': {
         _name: '新快报',
         '.': [

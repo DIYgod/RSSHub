@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'modb.pro': {
         _name: '墨天轮',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hunau.edu.cn': {
         _name: '湖南农业大学',
         gfxy: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nowcoder.com': {
         _name: '牛客网',
         '.': [

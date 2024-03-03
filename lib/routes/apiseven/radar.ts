@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'apiseven.com': {
         _name: '支流科技',
         '.': [

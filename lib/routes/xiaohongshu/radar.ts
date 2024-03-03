@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'xiaohongshu.com': {
         _name: '小红书',
         '.': [

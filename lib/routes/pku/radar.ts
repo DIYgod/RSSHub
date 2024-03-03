@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'pku.edu.cn': {
         _name: '北京大学',
         admission: [

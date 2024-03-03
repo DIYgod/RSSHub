@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cngal.org': {
         _name: 'CnGal',
         www: [

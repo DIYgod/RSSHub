@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bing.com': {
         _name: 'Bing',
         cn: [

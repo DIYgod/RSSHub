@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'caus.com': {
         _name: '加美财经',
         '.': [

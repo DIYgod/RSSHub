@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'getdr.com': {
         _name: '趨勢科技防詐達人',
         '.': [

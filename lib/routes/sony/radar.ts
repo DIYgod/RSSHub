@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sony.com': {
         _name: 'Sony',
         '.': [

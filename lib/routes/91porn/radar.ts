@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '91porn.com': {
         _name: '91porn',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'caixin.com': {
         _name: '财新网',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'yicai.com': {
         _name: '第一财经',
         '.': [

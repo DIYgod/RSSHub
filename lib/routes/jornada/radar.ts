@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'jornada.com.mx': {
         _name: 'La Jornada',
         '.': [

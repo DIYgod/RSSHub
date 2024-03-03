@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zju.edu.cn': {
         _name: '浙江大学',
         physics: [

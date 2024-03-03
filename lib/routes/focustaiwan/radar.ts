@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'focustaiwan.tw': {
         _name: 'Focus Taiwan',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nltimes.nl': {
         _name: 'NL Times',
         '.': [

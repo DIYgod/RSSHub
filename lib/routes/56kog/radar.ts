@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '56kog.com': {
         _name: '明月中文网',
         '.': [

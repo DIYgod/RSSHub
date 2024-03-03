@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nuist.edu.cn': {
         _name: '南京信息工程大学',
         bulletin: [

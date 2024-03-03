@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'daily.dev': {
         _name: 'Daily.dev',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gelonghui.com': {
         _name: '格隆汇',
         '.': [

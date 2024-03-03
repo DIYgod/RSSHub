@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'consumer.org.hk': {
         _name: '消费者委员会',
         '.': [

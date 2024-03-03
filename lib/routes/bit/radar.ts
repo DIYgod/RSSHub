@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bit.edu.cn': {
         _name: '北京理工大学',
         cs: [

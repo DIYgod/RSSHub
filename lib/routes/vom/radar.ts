@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'vom.mn': {
         _name: '蒙古之声',
         '.': [

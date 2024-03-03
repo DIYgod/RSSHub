@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'tangshufang.com': {
         _name: '唐书房',
         '.': [

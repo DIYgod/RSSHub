@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cnljxh.com': {
         _name: '中国炼焦行业协会',
         '.': [

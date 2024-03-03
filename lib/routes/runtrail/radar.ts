@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'runtrail.cn': {
         _name: '跑野大爆炸',
         '.': [

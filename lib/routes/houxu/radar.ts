@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'houxu.app': {
         _name: '后续',
         '.': [

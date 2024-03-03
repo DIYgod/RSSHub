@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'kyodonews.net': {
         _name: '共同网',
         china: [

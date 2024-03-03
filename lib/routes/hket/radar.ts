@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hket.com': {
         _name: '香港经济日报',
         china: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'chinathinktanks.org.cn': {
         _name: '中国智库网',
         www: [

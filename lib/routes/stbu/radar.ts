@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'stbu.edu.cn': {
         _name: '四川工商学院',
         '.': [

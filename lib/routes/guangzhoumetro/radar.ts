@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gzmtr.com': {
         _name: '广州地铁',
         www: [

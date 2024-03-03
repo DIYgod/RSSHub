@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dol.go.th': {
         _name: 'กรมที่ดิน (Thaland Department of Lands)',
         announce: [

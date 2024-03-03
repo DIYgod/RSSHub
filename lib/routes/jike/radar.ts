@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'okjike.com': {
         _name: '即刻',
         m: [

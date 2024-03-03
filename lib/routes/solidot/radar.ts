@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'solidot.org': {
         _name: 'Solidot',
         www: [

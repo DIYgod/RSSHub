@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'followin.io': {
         _name: 'Followin',
         '.': [

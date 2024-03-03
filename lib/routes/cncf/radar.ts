@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cncf.io': {
         _name: 'CNCF',
         '.': [

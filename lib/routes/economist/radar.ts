@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'economist.com': {
         _name: 'The Economist',
         '.': [

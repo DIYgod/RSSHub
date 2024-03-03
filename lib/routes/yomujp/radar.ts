@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'yomujp.com': {
         _name: '日本語多読道場',
         '.': [

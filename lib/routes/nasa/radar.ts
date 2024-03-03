@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nasa.gov': {
         _name: 'NASA 每日天文图片',
         apod: [

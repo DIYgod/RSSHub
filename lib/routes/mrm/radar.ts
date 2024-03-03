@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'mrm.com.cn': {
         _name: '华储网',
         '.': [

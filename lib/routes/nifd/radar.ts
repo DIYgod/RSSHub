@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nifd.cn': {
         _name: '国家金融与发展实验室',
         www: [

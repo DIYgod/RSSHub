@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cahkms.org': {
         _name: '全国港澳研究会',
         '.': [

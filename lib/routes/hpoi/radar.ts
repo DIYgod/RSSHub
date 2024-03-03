@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hpoi.net': {
         _name: 'Hpoi手办维基',
         www: [

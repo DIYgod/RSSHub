@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'chuanliu.org': {
         _name: '川流',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hafu.edu.cn': {
         _name: '河南财政金融学院',
         www: [

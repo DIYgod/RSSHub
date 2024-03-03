@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nua.edu.cn': {
         _name: '南京艺术学院',
         index: [

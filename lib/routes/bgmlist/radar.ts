@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bgmlist.com': {
         _name: '番组放送',
         '.': [

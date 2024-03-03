@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'lvv2.com': {
         _name: 'LVV2',
         '.': [

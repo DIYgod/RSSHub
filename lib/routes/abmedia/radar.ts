@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'abmedia.io': {
         _name: 'abmedia.io',
         www: [

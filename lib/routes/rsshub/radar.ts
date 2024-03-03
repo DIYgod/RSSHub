@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'rsshub.app': {
         _name: 'RSSHub',
         docs: [

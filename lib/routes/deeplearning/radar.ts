@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'deeplearning.ai': {
         _name: 'deeplearning.ai',
         www: [

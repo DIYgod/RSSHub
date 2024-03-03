@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'epicgames.com': {
         _name: 'Epic Games Store',
         store: [

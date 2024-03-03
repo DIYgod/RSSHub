@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cloudnative.to': {
         _name: '云原生社区',
         '.': [

@@ -10,7 +10,7 @@ const copymanga = {
     ],
 };
 
-module.exports = {
+export default {
     'copymanga.com': copymanga,
     'copymanga.info': copymanga,
     'copymanga.net': copymanga,

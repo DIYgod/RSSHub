@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '423down.com': {
         _name: '423down',
         www: [

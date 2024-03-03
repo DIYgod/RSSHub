@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zrblog.net': {
         _name: '赵容部落',
         '.': [

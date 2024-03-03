@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'news.cn': {
         _name: '新华网',
         '.': [

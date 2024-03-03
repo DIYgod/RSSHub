@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bnu.edu.cn': {
         _name: '北京师范大学',
         bs: [

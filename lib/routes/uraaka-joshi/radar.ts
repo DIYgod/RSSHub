@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'uraaka-joshi.com': {
         _name: '裏垢女子まとめ',
         '.': [

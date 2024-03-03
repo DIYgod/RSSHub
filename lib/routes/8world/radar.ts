@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '8world.com': {
         _name: '8视界',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bjx.com.cn': {
         _name: '北极星电力网',
         guangfu: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cuc.edu.cn': {
         _name: '中国传媒大学',
         yz: [

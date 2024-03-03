@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dorohedoro.net': {
         _name: 'Dorohedoro',
         '.': [

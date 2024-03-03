@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'iq.com': {
         _name: '爱奇艺',
         '.': [

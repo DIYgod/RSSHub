@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ey.gov.tw': {
         _name: '行政院消费者保护会',
         cpc: [

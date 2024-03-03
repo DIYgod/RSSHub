@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'scnu.edu.cn': {
         _name: '华南师范大学',
         cs: [

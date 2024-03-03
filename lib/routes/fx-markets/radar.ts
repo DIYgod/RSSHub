@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'fx-markets.com': {
         _name: 'FX-Markets',
         '.': [

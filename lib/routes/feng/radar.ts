@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'feng.com': {
         _name: '威锋',
         '.': [

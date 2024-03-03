@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ithome.com': {
         _name: 'IT 之家',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'vimeo.com': {
         _name: 'Vimeo',
         '.': [

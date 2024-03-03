@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'aiea.org': {
         _name: 'Asian Innovation and Entrepreneurship Association',
         www: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dlnews.com': {
         _name: 'DL NEWS',
         '.': [

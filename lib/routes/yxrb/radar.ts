@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'yxrb.net': {
         _name: '游戏日报',
         news: [

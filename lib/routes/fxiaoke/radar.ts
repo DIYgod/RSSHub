@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'fxiaoke.com': {
         _name: '纷享销客 CRM',
         '.': [

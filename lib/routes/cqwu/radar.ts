@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cqwu.net': {
         _name: '重庆文理学院',
         www: [

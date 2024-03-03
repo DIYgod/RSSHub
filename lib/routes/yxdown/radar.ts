@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'yxdown.com': {
         _name: '游讯网',
         '.': [

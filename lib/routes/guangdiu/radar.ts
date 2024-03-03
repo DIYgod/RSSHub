@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'guangdiu.com': {
         _name: '逛丢',
         '.': [

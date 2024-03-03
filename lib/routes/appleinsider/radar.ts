@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'appleinsider.com': {
         _name: 'AppleInsider',
         '.': [

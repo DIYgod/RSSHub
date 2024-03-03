@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'qianzhan.com': {
         _name: '前瞻网',
         '.': [

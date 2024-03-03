@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'macupdate.com': {
         _name: 'MacUpdate',
         '.': [

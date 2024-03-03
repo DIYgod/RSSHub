@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'c114.com.cn': {
         _name: 'C114通信网',
         '.': [

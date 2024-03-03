@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'google.com': {
         _name: '谷歌',
         www: [

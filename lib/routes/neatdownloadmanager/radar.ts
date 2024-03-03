@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'neatdownloadmanager.com': {
         _name: 'Neat Download Manager',
         '.': [

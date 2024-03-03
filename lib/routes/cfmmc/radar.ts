@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cfmmc.com': {
         _name: '中国期货市场监控中心',
         '.': [

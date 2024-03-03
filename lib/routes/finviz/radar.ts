@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'finviz.com': {
         _name: 'finviz',
         '.': [

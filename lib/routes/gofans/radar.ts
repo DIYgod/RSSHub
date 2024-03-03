@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gofans.cn': {
         _name: 'GoFans',
         '.': [

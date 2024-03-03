@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'pkmer.cn': {
         _name: 'PKMer',
         '.': [

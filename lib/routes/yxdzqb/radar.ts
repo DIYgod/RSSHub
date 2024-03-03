@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'yxdzqb.com': {
         _name: '游戏打折情报',
         '.': [

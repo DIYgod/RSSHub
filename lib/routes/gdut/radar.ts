@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gdut.edu.cn': {
         _name: '广东工业大学',
         oas: [

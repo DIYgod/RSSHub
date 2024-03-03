@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'jin10.com': {
         _name: '金十数据',
         '.': [

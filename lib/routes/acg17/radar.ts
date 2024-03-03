@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'acg17.com': {
         _name: 'ACG17',
         '.': [

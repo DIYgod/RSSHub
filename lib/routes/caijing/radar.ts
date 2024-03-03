@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'caijing.com.cn': {
         _name: '财经网',
         roll: [

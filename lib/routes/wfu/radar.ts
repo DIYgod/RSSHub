@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'wfu.edu.cn': {
         _name: '潍坊学院',
         jwc: [

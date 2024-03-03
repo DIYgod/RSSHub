@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'neea.cn': {
         _name: '中国教育考试网',
         jlpt: [

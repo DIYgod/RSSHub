@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'booru.org': {
         _name: 'Booru',
         mmda: [

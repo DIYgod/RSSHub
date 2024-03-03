@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'deadline.com': {
         _name: 'Deadline',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'fansly.com': {
         _name: 'Fansly',
         '.': [

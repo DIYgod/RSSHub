@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'modelscope.cn': {
         _name: 'ModelScope 魔搭社区',
         '.': [

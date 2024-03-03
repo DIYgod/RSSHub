@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'thepaper.cn': {
         _name: '澎湃新闻',
         '.': [

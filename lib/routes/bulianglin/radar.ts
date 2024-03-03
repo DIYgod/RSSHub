@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bulianglin.com': {
         _name: '不良林',
         '.': [

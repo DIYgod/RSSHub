@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'behance.net': {
         _name: 'Behance',
         www: [

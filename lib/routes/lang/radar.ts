@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'lang.live': {
         _name: '浪 Play 直播',
         '.': [

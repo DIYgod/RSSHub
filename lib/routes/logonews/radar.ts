@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'logonews.cn': {
         _name: 'LogoNews 标志情报局',
         '.': [

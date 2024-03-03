@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cste.org.cn': {
         _name: '中国管理现代化研究会',
         '.': [

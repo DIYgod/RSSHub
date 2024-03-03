@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ieee.org': {
         _name: 'IEEE',
         www: [

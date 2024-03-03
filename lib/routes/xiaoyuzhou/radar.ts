@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'xiaoyuzhoufm.com': {
         _name: '小宇宙',
         '.': [

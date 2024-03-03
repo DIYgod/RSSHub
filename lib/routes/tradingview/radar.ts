@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'tradingview.com': {
         _name: 'TradingView',
         '.': [

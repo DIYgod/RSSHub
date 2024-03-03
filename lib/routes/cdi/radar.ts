@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cdi.com.cn': {
         _name: '国家高端智库 / 综合开发研究院',
         '.': [

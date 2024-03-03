@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bast.net.cn': {
         _name: '北京市科学技术协会',
         '.': [

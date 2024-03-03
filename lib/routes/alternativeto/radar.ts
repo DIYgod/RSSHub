@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'alternativeto.net': {
         _name: 'AlternativeTo',
         www: [

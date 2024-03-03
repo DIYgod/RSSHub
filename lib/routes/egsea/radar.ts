@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'egsea.com': {
         _name: 'e 公司',
         '.': [

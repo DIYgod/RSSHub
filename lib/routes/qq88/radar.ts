@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'qq88.info': {
         _name: '秋爸日字',
         '.': [

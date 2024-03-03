@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cebbank.com': {
         _name: '中国光大银行',
         '.': [

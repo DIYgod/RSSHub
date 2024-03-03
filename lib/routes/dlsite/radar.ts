@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dlsite.com': {
         _name: 'DLsite',
         '.': [

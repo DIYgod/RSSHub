@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'pixiv.net': {
         _name: 'Pixiv',
         www: [

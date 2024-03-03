@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'magazinelib.com': {
         _name: 'magazineLib',
         '.': [

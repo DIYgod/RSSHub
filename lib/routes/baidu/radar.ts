@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'baidu.com': {
         _name: '百度',
         www: [

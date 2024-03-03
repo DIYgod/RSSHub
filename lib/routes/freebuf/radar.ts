@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'freebuf.com': {
         _name: 'Freebuf',
         '.': [

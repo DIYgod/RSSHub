@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hupu.com': {
         _name: '虎扑',
         '': [

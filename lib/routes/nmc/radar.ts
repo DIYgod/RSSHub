@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nmc.cn': {
         _name: '中央气象台',
         '.': [

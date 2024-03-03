@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'papers.cool': {
         _name: 'Cool Papers',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'shcstheatre.com': {
         _name: '上海文化广场',
         www: [

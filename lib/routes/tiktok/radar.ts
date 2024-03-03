@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'tiktok.com': {
         _name: 'TikTok',
         '.': [

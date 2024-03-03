@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'youtube.com': {
         _name: 'YouTube',
         charts: [

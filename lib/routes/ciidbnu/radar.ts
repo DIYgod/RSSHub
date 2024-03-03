@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ciidbnu.org': {
         _name: '中国收入分配研究院',
         '.': [

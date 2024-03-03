@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'darwinawards.com': {
         _name: 'Darwin Awards',
         '.': [

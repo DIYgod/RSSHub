@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'futunn.com': {
         _name: '富途牛牛',
         news: [

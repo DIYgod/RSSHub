@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'udn.com': {
         _name: '聯合新聞網',
         '.': [

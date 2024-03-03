@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'priconne-redive.jp': {
         _name: 'プリンセスコネクト！Re:Dive',
         '.': [

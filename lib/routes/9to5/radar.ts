@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '9to5toys.com': {
         _name: '9to5',
         '.': [

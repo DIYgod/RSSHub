@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zuel.edu.cn': {
         _name: '中南财经政法大学',
         wap: [

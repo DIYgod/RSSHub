@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cts.com.tw': {
         _name: '華視',
         news: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'douyu.com': {
         _name: '斗鱼',
         www: [

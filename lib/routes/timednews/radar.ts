@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'timednews.com': {
         _name: '时刻新闻',
         '.': [

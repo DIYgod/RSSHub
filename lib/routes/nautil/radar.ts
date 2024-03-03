@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nautil.us': {
         _name: 'Nautilus',
         '.': [

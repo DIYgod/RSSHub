@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'newsmarket.com.tw': {
         _name: '上下游News&amp;Market',
         '.': [

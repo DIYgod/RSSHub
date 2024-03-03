@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hnu.edu.cn': {
         _name: '湖南大学',
         scc: [

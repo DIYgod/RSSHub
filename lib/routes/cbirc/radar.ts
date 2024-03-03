@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cbirc.gov.cn': {
         _name: '中国银行保险监督管理委员会',
         '.': [

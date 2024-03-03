@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'tableau.com': {
         _name: 'Tableau',
         public: [

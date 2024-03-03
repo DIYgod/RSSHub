@@ -23,7 +23,7 @@ const myFigureCollection = [
     },
 ];
 
-module.exports = {
+export default {
     'myfigurecollection.net': {
         _name: 'MyFigureCollection',
         '.': myFigureCollection,

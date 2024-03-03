@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nytimes.com': {
         _name: '纽约时报',
         '.': [

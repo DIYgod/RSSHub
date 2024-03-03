@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gettr.com': {
         _name: 'GETTR',
         '.': [

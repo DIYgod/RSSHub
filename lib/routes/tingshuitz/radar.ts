@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dl.gov.cn': {
         _name: '停水通知',
         swj: [

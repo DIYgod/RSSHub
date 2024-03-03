@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ndss-symposium.org': {
         _name: 'Network and Distributed System Security (NDSS) Symposium',
         '.': [

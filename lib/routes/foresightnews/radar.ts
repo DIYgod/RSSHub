@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'foresightnews.pro': {
         _name: 'Foresight News',
         '.': [

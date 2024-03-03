@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ftchinese.com': {
         _name: 'Financial Times',
         '.': [

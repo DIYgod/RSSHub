@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dhu.edu.cn': {
         _name: '东华大学',
         gs: [

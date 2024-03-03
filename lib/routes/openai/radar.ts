@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'openai.com': {
         _name: 'OpenAI',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'qipamaijia.com': {
         _name: '奇葩买家秀',
         '.': [

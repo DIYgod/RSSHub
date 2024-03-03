@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'caareviews.org': {
         _name: 'caa.reviews',
         '.': [

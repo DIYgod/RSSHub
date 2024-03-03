@@ -1,6 +1,6 @@
 const { termsMap } = require('./terms-map');
 
-module.exports = {
+export default {
     'thecatcity.com': {
         _name: '貓奴日常',
         '.': Object.entries(termsMap).map(([key, value]) => ({

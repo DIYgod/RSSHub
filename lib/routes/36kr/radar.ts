@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '36kr.com': {
         _name: '36氪',
         '.': [

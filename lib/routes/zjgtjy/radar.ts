@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zjgtjy.cn': {
         _name: '浙江省土地使用权网上交易系统',
         '.': [

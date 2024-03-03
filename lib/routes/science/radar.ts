@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'science.org': {
         _name: 'Science Magazine',
         '.': [

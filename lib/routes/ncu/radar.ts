@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ncu.edu.cn': {
         _name: '南昌大学',
         jwc: [

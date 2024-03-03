@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zhitongcaijing.com': {
         _name: '智通财经',
         '.': [

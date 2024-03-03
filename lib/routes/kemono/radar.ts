@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'kemono.su': {
         _name: 'Kemono',
         '.': [

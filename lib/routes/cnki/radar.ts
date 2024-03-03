@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cnki.net': {
         _name: '中国知网',
         navi: [

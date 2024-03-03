@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cnbeta.com.tw': {
         _name: 'cnBeta.COM',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'distill.pub': {
         _name: 'Distill',
         '.': [

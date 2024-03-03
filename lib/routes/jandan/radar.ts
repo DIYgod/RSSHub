@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'jandan.net': {
         _name: '煎蛋',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'research.ke.com': {
         _name: '贝壳研究院 - 房地产行业研究报告',
         www: [

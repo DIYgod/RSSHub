@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'metmuseum.org': {
         _name: 'The Metropolitan Museum of Art',
         www: [

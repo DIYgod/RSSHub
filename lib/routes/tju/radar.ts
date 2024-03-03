@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'tju.edu.cn': {
         _name: '天津大学',
         cic: [

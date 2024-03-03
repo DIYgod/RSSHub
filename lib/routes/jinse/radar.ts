@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'jinse.cn': {
         _name: '金色财经',
         '.': [

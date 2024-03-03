@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'acpaa.cn': {
         _name: '中华全国专利代理师协会',
         '.': [

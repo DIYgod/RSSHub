@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'docker.com': {
         _name: 'Docker Hub',
         hub: [

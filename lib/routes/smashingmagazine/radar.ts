@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'smashingmagazine.com': {
         _name: 'Smashing Magazine',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'shiep.edu.cn': {
         _name: '上海电力大学',
         bwc: [

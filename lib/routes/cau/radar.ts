@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cau.edu.cn': {
         _name: '中国农业大学',
         ciee: [

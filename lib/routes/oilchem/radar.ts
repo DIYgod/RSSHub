@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'oilchem.net': {
         _name: '隆众资讯',
         '.': [

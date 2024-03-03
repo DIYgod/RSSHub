@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hex-rays.com': {
         _name: 'Hex-Rays',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'picuki.com': {
         _name: 'Picuki',
         www: [

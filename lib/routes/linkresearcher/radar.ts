@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     linkresearcher: {
         _name: '领研',
         '.': [

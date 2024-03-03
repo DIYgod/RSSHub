@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'chiark.greenend.org.uk': {
         _name: 'PuTTY',
         www: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'pnas.org': {
         _name: 'Proceedings of the National Academy of Sciences',
         '.': [

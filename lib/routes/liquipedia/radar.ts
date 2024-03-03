@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'liquipedia.net': {
         _name: 'Liquipedia',
         '.': [

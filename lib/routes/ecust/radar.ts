@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ecust.edu.cn': {
         _name: '华东理工大学',
         e: [

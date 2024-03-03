@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ah.gov.cn': {
         _name: '安徽省科技厅',
         kjt: [

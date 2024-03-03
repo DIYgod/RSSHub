@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hoyolab.com': {
         _name: 'HoYoLAB',
         '.': [

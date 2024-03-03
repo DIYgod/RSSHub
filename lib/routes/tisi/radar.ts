@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'tisi.org': {
         _name: '腾讯研究院',
         '.': [

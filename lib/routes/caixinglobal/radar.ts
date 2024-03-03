@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'caixinglobal.com': {
         _name: 'Caixin Global',
         '.': [

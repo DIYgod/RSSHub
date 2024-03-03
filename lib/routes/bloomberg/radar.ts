@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bloomberg.com': {
         _name: 'Bloomberg',
         www: [

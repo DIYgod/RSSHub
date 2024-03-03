@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'smzdm.com': {
         _name: '什么值得买',
         post: [

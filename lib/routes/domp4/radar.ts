@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'domp4.cc': {
         _name: 'domp4电影',
         '.': [

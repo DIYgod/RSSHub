@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nationalgeographic.com': {
         _name: '国家地理',
         '.': [

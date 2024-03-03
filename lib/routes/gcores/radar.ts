@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gcores.com': {
         _name: '机核网',
         '.': [

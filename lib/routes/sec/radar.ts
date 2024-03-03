@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sec.today': {
         _name: '每日安全',
         '.': [

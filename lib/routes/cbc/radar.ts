@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cbc.ca': {
         _name: 'Canadian Broadcasting Corporation',
         '.': [

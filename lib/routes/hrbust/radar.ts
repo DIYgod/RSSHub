@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hrbust.edu.cn': {
         _name: '哈尔滨理工大学',
         jwzx: [

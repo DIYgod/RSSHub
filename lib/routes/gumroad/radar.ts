@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gumroad.com': {
         _name: 'Gumroad',
         '.': [

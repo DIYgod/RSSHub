@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'xiaomiyoupin.com': {
         _name: '小米有品',
         '.': [

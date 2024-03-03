@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'xmanhua.com': {
         _name: 'X 漫画',
         '.': [

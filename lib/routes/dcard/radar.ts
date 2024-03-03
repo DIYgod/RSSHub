@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dcard.tw': {
         _name: 'Dcard',
         www: [

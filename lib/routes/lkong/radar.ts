@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'lkong.com': {
         _name: '龙空',
         '.': [

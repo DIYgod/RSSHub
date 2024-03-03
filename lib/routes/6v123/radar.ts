@@ -16,7 +16,7 @@ const radarConfig = {
     ],
 };
 
-module.exports = {
+export default {
     'hao6v.cc': radarConfig,
     'hao6v.tv': radarConfig,
     'hao6v.com': radarConfig,

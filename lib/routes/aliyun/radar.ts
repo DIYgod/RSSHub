@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'aliyun.com': {
         _name: '阿里云',
         developer: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'worldjournal.com': {
         _name: '世界新聞網',
         '.': [

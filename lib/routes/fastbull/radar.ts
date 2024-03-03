@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'fastbull.cn': {
         _name: '法布财经',
         '.': [

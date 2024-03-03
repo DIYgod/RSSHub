@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'zhangyoubao.com': {
         _name: '掌游宝',
         mobile: [

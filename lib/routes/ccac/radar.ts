@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ccac.org.mo': {
         _name: '澳门廉政公署',
         '.': [

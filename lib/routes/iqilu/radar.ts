@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'iqilu.com': {
         _name: '齐鲁网',
         v: [

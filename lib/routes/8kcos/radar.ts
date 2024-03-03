@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '8kcosplay.com': {
         _name: '8KCosplay',
         '.': [

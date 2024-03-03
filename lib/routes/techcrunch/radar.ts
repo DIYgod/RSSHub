@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'techcrunch.com': {
         _name: 'TechCrunch',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'appcenter.ms': {
         _name: 'App Center',
         install: [

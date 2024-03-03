@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'mohw.gov.tw': {
         _name: '台灣衛生福利部',
         '.': [

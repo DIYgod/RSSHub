@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ruc.edu.cn': {
         _name: '中国人民大学',
         hr: [

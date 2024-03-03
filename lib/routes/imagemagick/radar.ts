@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'imagemagick.org': {
         _name: 'Changelog',
         '.': [

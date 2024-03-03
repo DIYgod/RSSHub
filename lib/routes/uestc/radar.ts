@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'uestc.edu.cn': {
         _name: '电子科技大学',
         gr: [

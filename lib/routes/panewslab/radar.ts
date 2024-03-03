@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'panewslab.com': {
         _name: 'PANews',
         '.': [

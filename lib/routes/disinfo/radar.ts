@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'disinfo.eu': {
         _name: 'EU Disinfo Lab',
         '.': [

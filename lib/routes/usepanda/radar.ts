@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'usepanda.com': {
         _name: 'Panda',
         '.': [

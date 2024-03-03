@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'linkedin.com': {
         _name: 'LinkedIn',
         '.': [

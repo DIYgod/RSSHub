@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'missav.com': {
         _name: 'MissAV.com',
         '.': [

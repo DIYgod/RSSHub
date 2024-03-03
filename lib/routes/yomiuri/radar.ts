@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'yomiuri.co.jp': {
         _name: '読売新聞',
         www: [

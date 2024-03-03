@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'qbitai.com': {
         _name: '量子位',
         '.': [

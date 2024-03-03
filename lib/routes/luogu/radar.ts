@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'luogu.com.cn': {
         _name: '洛谷',
         '.': [

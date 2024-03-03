@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '91wllm.com': {
         _name: '湖北高校就业网络联盟',
         wtu: [

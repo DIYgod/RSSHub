@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'taiwannews.com.tw': {
         _name: '台灣英文新聞',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'dgjyw.com': {
         _name: '东莞教研网',
         '.': [

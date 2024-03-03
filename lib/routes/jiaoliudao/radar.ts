@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'jiaoliudao.com': {
         _name: '交流岛资源网',
         '.': [

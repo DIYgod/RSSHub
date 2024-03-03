@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nbd.com.cn': {
         _name: '每经网',
         '.': [

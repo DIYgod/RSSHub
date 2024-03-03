@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bjsk.org.cn': {
         _name: '北京社科网',
         '.': [

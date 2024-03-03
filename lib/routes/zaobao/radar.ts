@@ -22,7 +22,7 @@ const radarConfig = {
     ],
 };
 
-module.exports = {
+export default {
     'zaobao.com': radarConfig,
     'zaobao.com.sg': radarConfig,
 };

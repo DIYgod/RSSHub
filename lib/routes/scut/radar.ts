@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'scut.edu.cn': {
         _name: '华南理工大学',
         jw: [

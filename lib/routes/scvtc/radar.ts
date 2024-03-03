@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'scvtc.edu.cn': {
         _name: '四川职业技术学院',
         '.': [

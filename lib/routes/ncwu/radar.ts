@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ncwu.edu.cn': {
         _name: '华北水利水电大学',
         '.': [

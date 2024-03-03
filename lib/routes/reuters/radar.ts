@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'reuters.com': {
         _name: '路透社',
         '.': [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bellroy.com': {
         _name: 'Bellroy',
         '.': [

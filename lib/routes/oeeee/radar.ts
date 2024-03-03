@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'oeeee.com': {
         _name: '奥一网',
         '.': [

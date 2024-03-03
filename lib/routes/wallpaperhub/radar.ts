@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'wallpaperhub.app': {
         _name: 'WallpaperHub',
         '.': [

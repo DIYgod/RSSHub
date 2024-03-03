@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'itch.io': {
         _name: 'itch.io',
         '.': [

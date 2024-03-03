@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'nmtv.cn': {
         _name: '内蒙古广播电视台',
         '.': [

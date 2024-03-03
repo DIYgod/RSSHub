@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'szse.cn': {
         _name: '深圳证券交易所',
         '.': [

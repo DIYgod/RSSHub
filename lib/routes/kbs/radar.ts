@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'kbs.co.kr': {
         _name: 'KBS',
         world: [

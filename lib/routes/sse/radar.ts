@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'sse.com.cn': {
         _name: '上海证券交易所',
         bond: [

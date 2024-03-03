@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'hk01.com': {
         _name: '香港01',
         '.': [

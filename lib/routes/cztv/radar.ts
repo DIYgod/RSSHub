@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'cztv.com': {
         _name: '新蓝网',
         '.': [

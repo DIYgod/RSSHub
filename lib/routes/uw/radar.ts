@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'gixnetwork.org': {
         _name: 'University of Washington',
         '.': [

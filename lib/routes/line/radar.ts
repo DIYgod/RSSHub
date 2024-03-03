@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'line.me': {
         _name: 'LINE',
         today: [

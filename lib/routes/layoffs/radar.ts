@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'layoffs.fyi': {
         _name: 'Layoffs',
         '.': [

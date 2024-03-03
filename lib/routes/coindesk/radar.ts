@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'coindesk.com': {
         _name: 'CoinDesk',
         '.': [

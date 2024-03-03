@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'topys.cn': {
         _name: 'TOPYS',
         '.': [

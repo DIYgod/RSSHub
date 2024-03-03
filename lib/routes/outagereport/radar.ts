@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'outage.report': {
         _name: 'Outage.Report',
         '.': [

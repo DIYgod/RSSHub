@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'latepost.com': {
         _name: '晚点 Latepost',
         '.': [

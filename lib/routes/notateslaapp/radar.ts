@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'notateslaapp.com': {
         _name: 'Not a Tesla App',
         '.': [

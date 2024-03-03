@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'ncepu.edu.cn': {
         _name: '华北电力大学研究生院',
         yjsy: [

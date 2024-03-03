@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'studygolang.com': {
         _name: 'Go 语言中文网',
         '.': [

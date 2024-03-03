@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'bossdesign.cn': {
         _name: 'Boss 设计',
         '.': [

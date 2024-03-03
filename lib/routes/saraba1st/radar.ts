@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'saraba1st.com': {
         _name: 'Saraba1st',
         bbs: [

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'tass.com': {
         _name: 'Russian News Agency TASS',
         '.': [

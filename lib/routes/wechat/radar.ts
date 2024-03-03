@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'careerengine.us': {
         _name: '微信',
         posts: [

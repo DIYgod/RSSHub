@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'twitter.com': {
         _name: 'Twitter',
         '.': [

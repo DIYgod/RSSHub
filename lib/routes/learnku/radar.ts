@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'learnku.com': {
         _name: 'Learn Ku 社区',
         '.': [

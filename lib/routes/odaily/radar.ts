@@ -34,7 +34,7 @@ const odaily = {
     ],
 };
 
-module.exports = {
+export default {
     'odaily.news': odaily,
     '0daily.com': odaily,
 };

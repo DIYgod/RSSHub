@@ -70,7 +70,7 @@ const bangumiTV = {
     ],
 };
 
-module.exports = {
+export default {
     'bangumi.moe': {
         _name: '萌番組',
         '.': [

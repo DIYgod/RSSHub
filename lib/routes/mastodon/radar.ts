@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'mastodon.social': {
         _name: 'Mastodon',
         '.': [
