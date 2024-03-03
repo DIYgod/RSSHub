@@ -1,4 +1,7 @@
 // @ts-nocheck
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
+
 import cache from '@/utils/cache';
 const asyncPool = require('tiny-async-pool');
 import { load } from 'cheerio';

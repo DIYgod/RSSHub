@@ -1,4 +1,7 @@
 // @ts-nocheck
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
+
 import got from '@/utils/got';
 const aesjs = require('aes-js');
 import { art } from '@/utils/render';

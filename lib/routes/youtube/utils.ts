@@ -1,4 +1,7 @@
 // @ts-nocheck
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
+
 const { google } = require('googleapis');
 const { OAuth2 } = google.auth;
 import { art } from '@/utils/render';

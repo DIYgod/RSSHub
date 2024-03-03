@@ -1,4 +1,7 @@
 // @ts-nocheck
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
+
 import { config } from '@/config';
 import got from '@/utils/got';
 import { art } from '@/utils/render';

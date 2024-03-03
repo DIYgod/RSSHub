@@ -1,4 +1,7 @@
 // @ts-nocheck
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
+
 // 导入所需模组
 import got from '@/utils/got'; // 自订的 got
 import { parseDate } from '@/utils/parse-date';

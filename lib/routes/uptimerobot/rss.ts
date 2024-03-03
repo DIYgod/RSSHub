@@ -1,4 +1,7 @@
 // @ts-nocheck
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
+
 const Parser = require('rss-parser');
 import { art } from '@/utils/render';
 import * as path from 'node:path';

@@ -1,4 +1,7 @@
 // @ts-nocheck
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
+
 const { getData } = require('./utils');
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
