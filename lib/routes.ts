@@ -13,7 +13,7 @@ type Root = {
 const routes: Record<string, (root: Root) => void> = {};
 
 if (process.env.NODE_ENV === 'test') {
-    routes.test = (await import('./routes/test/router')).default;
+    routes.test = require('./routes/test/router').default;
 } else {
     const imports = directoryImport({
         targetDirectoryPath: path.join(__dirname, './routes'),
