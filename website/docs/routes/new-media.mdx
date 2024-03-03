@@ -704,11 +704,15 @@
 
 <Route author="nczitzk" example="/hkjunkcall" path="/hkjunkcall" anticrawler="1" />
 
-## iDaily 每日环球视野 {#idaily-mei-ri-huan-qiu-shi-ye}
+## iDaily {#idaily}
 
-### 今日 Timeline {#idaily-mei-ri-huan-qiu-shi-ye-jin-ri-timeline}
+### 每日环球视野 {#idaily-mei-ri-huan-qiu-shi-ye}
 
-<Route author="zphw" example="/idaily/today" path="/idaily/today" />
+<Route author="zphw nczitzk" example="/idaily" path="/idaily/:language?" paramsDesc={['语言，见下表，默认为简体中文']} radar="1">
+  | 简体中文 | 繁体中文 |
+  | -------- | -------- |
+  | zh-hans  | zh-hant  |
+</Route>
 
 ## iDownloadBlog {#idownloadblog}
 
