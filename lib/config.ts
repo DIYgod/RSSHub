@@ -633,16 +633,18 @@ calculateValue();
 
 if (envs.REMOTE_CONFIG) {
     got.get(envs.REMOTE_CONFIG)
-        .then((response) => {
+        .then(async (response) => {
             const data = JSON.parse(response.body);
             if (data) {
                 envs = Object.assign(envs, data);
                 calculateValue();
-                require('@/utils/logger').default.info('Remote config loaded.');
+                const { default: logger } = await import('@/utils/logger');
+                logger.info('Remote config loaded.');
             }
         })
-        .catch((error) => {
-            require('@/utils/logger').default.error('Remote config load failed.', error);
+        .catch(async (error) => {
+            const { default: logger } = await import('@/utils/logger');
+            logger.error('Remote config load failed.', error);
         });
 }
 

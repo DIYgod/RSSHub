@@ -1,4 +1,4 @@
-import { describe, expect, it, afterAll } from '@jest/globals';
+import { describe, expect, it, afterAll } from 'vitest';
 process.env.SOCKET = 'socket';
 
 import app from '@/app';

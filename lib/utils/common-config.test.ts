@@ -1,4 +1,4 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from 'vitest';
 import configUtils, { transElemText, replaceParams, getProp } from '@/utils/common-config';
 import nock from 'nock';
 

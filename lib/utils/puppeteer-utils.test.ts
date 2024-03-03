@@ -1,4 +1,4 @@
-import { describe, expect, it, jest, afterEach } from '@jest/globals';
+import { describe, expect, it, vi, afterEach } from 'vitest';
 import { parseCookieArray, constructCookieArray, setCookies, getCookies } from '@/utils/puppeteer-utils';
 import puppeteer from '@/utils/puppeteer';
 import type { Browser } from 'puppeteer';
@@ -11,7 +11,7 @@ afterEach(() => {
         browser = null;
     }
 
-    jest.resetModules();
+    vi.resetModules();
 });
 
 describe('puppeteer-utils', () => {

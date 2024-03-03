@@ -1,4 +1,4 @@
-import { describe, expect, it, afterAll } from '@jest/globals';
+import { describe, expect, it, afterAll } from 'vitest';
 import supertest from 'supertest';
 import server from '@/index';
 import { load } from 'cheerio';

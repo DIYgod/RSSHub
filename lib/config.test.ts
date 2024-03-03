@@ -1,8 +1,8 @@
-import { describe, expect, it, afterEach, jest } from '@jest/globals';
+import { describe, expect, it, afterEach, vi } from 'vitest';
 import nock from 'nock';
 
 afterEach(() => {
-    jest.resetModules();
+    vi.resetModules();
 });
 
 describe('config', () => {

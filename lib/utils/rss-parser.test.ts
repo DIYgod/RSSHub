@@ -1,4 +1,4 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from 'vitest';
 import parser from '@/utils/rss-parser';
 import { config } from '@/config';
 import nock from 'nock';

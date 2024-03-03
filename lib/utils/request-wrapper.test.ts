@@ -1,4 +1,4 @@
-import { describe, expect, it, beforeEach, afterEach, jest } from '@jest/globals';
+import { describe, expect, it, beforeEach, afterEach, vi } from 'vitest';
 
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
@@ -50,7 +50,7 @@ afterEach(() => {
     http.get = httpWrap(http.get);
     http.request = httpWrap(http.request);
 
-    jest.resetModules();
+    vi.resetModules();
 });
 
 describe('got', () => {
