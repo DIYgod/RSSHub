@@ -11,6 +11,9 @@ import RequestInProgressError from './request-in-progress';
 import RejectError from './reject';
 import NotFoundError from './not-found';
 
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
+
 export const errorHandler: ErrorHandler = (error, ctx) => {
     let message = '';
     if (error.name && (error.name === 'HTTPError' || error.name === 'RequestError')) {

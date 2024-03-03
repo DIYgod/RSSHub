@@ -15,7 +15,7 @@ import parameter from '@/middleware/parameter';
 
 import logger from '@/utils/logger';
 
-import routes from '@/routes';
+import routes from '@/routes.ts';
 import { notFoundHandler, errorHandler } from '@/errors';
 
 process.on('uncaughtException', (e) => {

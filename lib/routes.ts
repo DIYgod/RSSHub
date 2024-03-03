@@ -5,6 +5,8 @@ import * as path from 'node:path';
 
 import index from '@/routes/index';
 import robotstxt from '@/routes/robots.txt';
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
 
 type Root = {
     get: (routePath: string, filePath: string) => void;
@@ -17,7 +19,7 @@ if (process.env.NODE_ENV === 'test') {
 } else {
     const imports = directoryImport({
         targetDirectoryPath: path.join(__dirname, './routes'),
-        importPattern: /router\.js$/,
+        importPattern: /router\.ts$/,
     });
 
     for (const path in imports) {

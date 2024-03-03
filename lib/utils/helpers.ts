@@ -1,3 +1,6 @@
+import { fileURLToPath } from 'url';
+import * as path from 'node:path';
+
 export const getRouteNameFromPath = (path: string) => {
     const p = path.split('/').filter(Boolean);
     if (p.length > 0) {
@@ -21,4 +24,9 @@ const humanize = (times: string[]) => {
 export const time = (start: number) => {
     const delta = Date.now() - start;
     return humanize([delta < 1000 ? delta + 'ms' : Math.round(delta / 1000) + 's']);
+};
+
+export const getCurrentPath = (metaUrl: string) => {
+    const __filename = path.join(fileURLToPath(metaUrl));
+    return path.dirname(__filename);
 };

@@ -19,6 +19,7 @@
   "files": [
     "lib"
   ],
+  "type": "module",
   "scripts": {
     "build:all": "npm run build:radar && npm run build:maintainer",
     "build:maintainer": "node scripts/workflow/build-maintainer.js",
