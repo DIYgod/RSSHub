@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/': ['TonyRL'],
     '/:type?': ['TonyRL'], // /info and /report
     '/:type/:id+': ['TonyRL'], // /category/:id+ and /topic/:id

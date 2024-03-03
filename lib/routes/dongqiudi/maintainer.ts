@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/daily': ['HenryQW'],
     '/player_news/:id': ['HenryQW'],
     '/result/:team': ['HenryQW'],

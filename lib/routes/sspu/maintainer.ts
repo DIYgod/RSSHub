@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/jwc/:listId': ['TonyRL'],
     '/pe/:id?': ['nczitzk'],
 };

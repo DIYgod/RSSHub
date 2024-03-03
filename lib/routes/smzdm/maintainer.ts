@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/article/:uid': ['xfangbao'],
     '/baoliao/:uid': ['nczitzk'],
     '/haowen/:day?': ['LogicJake'],

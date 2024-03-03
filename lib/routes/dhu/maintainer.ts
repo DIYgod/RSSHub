@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/jiaowu/news/:type?': ['KiraKiseki'],
     '/news/xsxx': ['fox2049'],
     '/xxgk/news': ['KiraKiseki'],

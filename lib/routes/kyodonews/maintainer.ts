@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/:language?/:keyword?': ['Rongronggg9'],
 };

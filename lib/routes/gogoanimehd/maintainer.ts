@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/recent-releases': ['user4302'],
 };

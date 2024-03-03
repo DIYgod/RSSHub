@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/asia': ['rainrdx'],
     '/cn/:language?/:path?': ['nczitzk'],
     '/index': ['zjysdhr'],

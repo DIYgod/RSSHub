@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/': ['nczitzk'],
     '/hot-episodes-new': ['nczitzk'],
     '/hot-podcasts': ['nczitzk'],

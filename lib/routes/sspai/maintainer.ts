@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/activity/:slug': ['umm233'],
     '/author/:id': ['SunShinenny', 'hoilc'],
     '/bookmarks/:slug': ['curly210102'],

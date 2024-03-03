@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/jwc': ['cccht'],
     '/news/:type?': ['cccht'],
 };

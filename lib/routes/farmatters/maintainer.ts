@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/exclusive/:locale?': ['nczitzk'],
     '/news/:locale?': ['nczitzk'],
     '/tag/:id/:locale?': ['nczitzk'],

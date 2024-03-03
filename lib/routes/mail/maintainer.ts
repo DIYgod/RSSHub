@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/imap/:email/:folder*': ['kt286'],
 };

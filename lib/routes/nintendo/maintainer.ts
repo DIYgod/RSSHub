@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/direct': ['HFO4'],
     '/eshop/:region': ['HFO4'],
     '/news': ['HFO4'],

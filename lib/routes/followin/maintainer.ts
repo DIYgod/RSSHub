@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/kol/:kolId/:lang?': ['TonyRL'],
     '/news/:lang?': ['TonyRL'],
     '/tag/:tagId/:lang?': ['TonyRL'],

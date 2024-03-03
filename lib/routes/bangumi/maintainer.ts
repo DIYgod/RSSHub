@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     // bangumi.moe
     '/moe': ['nczitzk'],
     '/moe/:tags?': ['nczitzk'],

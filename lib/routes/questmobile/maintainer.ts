@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/report/:industry?/:label?': ['nczitzk'],
 };

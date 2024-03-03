@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/cn/family_offers': ['jzhangdev'],
     '/cn/low_price': ['jzhangdev'],
     '/cn/new': ['jzhangdev'],

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/itnews/:channel?': ['Fatpandac', 'nczitzk'],
     '/kuaixun': ['Fatpandac', 'nczitzk'],
     '/search/:keyword': ['nczitzk'],

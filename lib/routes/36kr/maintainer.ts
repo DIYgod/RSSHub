@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/hot-list/:category?': ['nczitzk'],
     '/information/:category?': ['nczitzk'],
     '/motif/:id': ['nczitzk'],

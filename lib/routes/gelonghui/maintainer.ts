@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/home/:tag?': ['TonyRL'],
     '/keyword/:keyword': ['nczitzk'],
     '/subject/:id': ['nczitzk'],

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/eeis/:type?': ['jasongzy'],
     '/gs/:type?': ['jasongzy'],
     '/job/:category?': ['nczitzk'],

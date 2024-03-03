@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/career/:type': ['Caicailiushui'],
     '/cst/custom/:id': ['zwithz'],
     '/cst/:type': ['yonvenne', 'zwithz'],

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/gs/:type/:num?': ['dzx-dzx'],
     '/jwc/:type?': ['SeanChao'],
     '/seiee/academic': ['HenryQW'],

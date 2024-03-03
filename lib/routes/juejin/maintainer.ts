@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/books': ['xyqfer'],
     '/category/:category': ['DIYgod'],
     '/collection/:collectionId': ['isQ'],

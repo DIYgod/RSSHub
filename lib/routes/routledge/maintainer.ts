@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/:bookName/book-series/:bookId': ['TonyRL'],
 };

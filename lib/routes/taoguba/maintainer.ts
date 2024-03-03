@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/blog/:id': ['nczitzk'],
     '/index': ['nczitzk'],
     '/user/:id': ['nczitzk'],

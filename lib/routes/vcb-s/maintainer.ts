@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/': ['cxfksword'],
     '/category/:cate': ['cxfksword'],
 };

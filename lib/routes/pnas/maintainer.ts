@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/:topicPath*': ['emdoe', 'y9c'],
 };

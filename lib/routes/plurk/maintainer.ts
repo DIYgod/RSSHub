@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/anonymous': ['TonyRL'],
     '/hotlinks': ['TonyRL'],
     '/news/:lang?': ['TonyRL'],

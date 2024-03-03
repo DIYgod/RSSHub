@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/column/:id': ['TonyRL'],
     '/favorite/:id': ['imlonghao'],
     '/fund/:id': ['HenryQW', 'NathanDai'],

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/bestrated/:language?/:mode?': ['nczitzk'],
     '/bestreviews/:language?/:mode?': ['nczitzk'],
     '/genre/:genre?/:language?/:mode?': ['nczitzk'],

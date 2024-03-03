@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/author/:type/:language?': ['AgFlore'],
     '/channel/:type?/:language?': ['prnake'],
     '/follow/articles/:language?': ['AgFlore'],

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/branches/:user/:repo': ['max-arnold'],
     '/comments/:user/:repo/:number?': ['TonyRL', 'FliegendeWurst'],
     '/contributors/:user/:repo/:order?/:anon?': ['zoenglinghou'],

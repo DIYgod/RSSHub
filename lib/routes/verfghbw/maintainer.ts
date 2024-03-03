@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/press/:keyword?': ['quinn-dev'],
 };

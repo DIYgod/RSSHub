@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/:name/:count?': ['cxumol', 'nczitzk'],
 };

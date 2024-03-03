@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/book/latest': ['fengkx'],
     '/book/rank/:type?': ['xyqfer', 'queensferryme'],
     '/bookstore': ['xyqfer'],

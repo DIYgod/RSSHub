@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/aamacau/:category?/:id?': ['nczitzk'],
 };

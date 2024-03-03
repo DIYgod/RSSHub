@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/daily': ['Gem1ni'],
 };

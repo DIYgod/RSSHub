@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/funded/:username/:repo': ['running-grass'],
 };

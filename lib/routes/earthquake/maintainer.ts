@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/ceic/:type?': ['SettingDust'],
     '/:region?': ['LogicJake'],
 };

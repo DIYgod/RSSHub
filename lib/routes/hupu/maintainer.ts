@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/all/:id?': ['nczitzk'],
     '/bbs/:id?/:order?': ['LogicJake', 'nczitzk'],
     '/bxj/:id?/:order?': ['LogicJake', 'nczitzk'],

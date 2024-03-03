@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/zjxwlb': ['yhkang'],
     '/zjxwlb/daily': ['yhkang'],
 };

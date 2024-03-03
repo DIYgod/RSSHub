@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/aia/news': ['budui'],
     '/aia/notice/:type?': ['budui'],
     '/auto/news': ['budui'],

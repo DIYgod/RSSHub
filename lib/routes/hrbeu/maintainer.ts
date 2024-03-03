@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/job/bigemploy': ['Derekmini'],
     '/job/calendar': ['Derekmini'],
     '/job/list/:id': ['Derekmini'],

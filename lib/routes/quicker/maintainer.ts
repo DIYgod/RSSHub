@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/qa/:category?/:state?': ['Cesaryuan', 'nczitzk'],
     '/share/:category?': ['nczitzk'],
     '/update': ['Cesaryuan', 'nczitzk'],

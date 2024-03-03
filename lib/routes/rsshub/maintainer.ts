@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/m/:key/:url': ['TonyRL'],
     '/routes/:lang?': ['DIYgod'],
     '/transform/html/:url/:routeParams': ['ttttmr'],

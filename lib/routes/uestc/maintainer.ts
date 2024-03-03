@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     // departments
     '/gr': ['huyyi', 'mobyw'],
     '/cqe/:type?': ['truobel', 'mobyw'],

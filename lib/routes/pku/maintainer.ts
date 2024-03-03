@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/admission/sszs': ['pkuyjs'],
     '/bbs/hot': ['wooddance'],
     '/cls/announcement': ['william-swl'],

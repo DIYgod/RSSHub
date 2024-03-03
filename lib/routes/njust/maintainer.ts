@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/cwc/:type?': ['MilkShakeYoung', 'jasongzy'],
     '/dgxg/:type?': ['jasongzy'],
     '/eo/:grade?/:type?': ['jasongzy'],

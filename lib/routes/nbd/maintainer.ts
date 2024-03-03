@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/daily': ['yuuow'],
     '/:id?': ['nczitzk'],
 };

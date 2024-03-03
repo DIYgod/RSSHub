@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/changelog/:id/:lang?': ['hoilc', 'ETiV'],
     '/review/:id/:order?/:lang?': ['hoilc', 'TonyRL'],
     '/topic/:id/:type?/:sort?/:lang?': ['hoilc', 'TonyRL'],

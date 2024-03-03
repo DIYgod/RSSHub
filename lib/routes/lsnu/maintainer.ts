@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/jiaowc/tzgg/:category?': ['nyaShine'],
 };

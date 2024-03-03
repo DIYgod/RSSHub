@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/admission': ['ret-1'],
     '/dafls': ['ret-1'],
     '/exchangesys': ['cqjjjzr'],

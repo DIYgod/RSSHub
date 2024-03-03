@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/dyh/:dyhId': ['xizeyoupan'],
     '/huati/:tag': ['xizeyoupan'],
     '/hot/:type?/:period?': ['xizeyoupan'],

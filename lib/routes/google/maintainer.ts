@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/album/:id': ['hoilc'],
     '/alerts/:keyword': ['TonyRL'],
     '/citations/:id': ['KellyHwong', 'const7'],

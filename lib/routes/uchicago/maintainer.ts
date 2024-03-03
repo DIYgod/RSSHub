@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/journals/current/:journal': ['TonyRL'],
 };

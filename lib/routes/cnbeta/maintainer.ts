@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/': ['nczitzk'],
     '/category/:id': ['nczitzk'],
     '/topics/:id': ['nczitzk'],

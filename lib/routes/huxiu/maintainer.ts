@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/article': ['HenryQW', 'nczitzk'],
     '/briefcolumn/:id': ['Fatpandac', 'nczitzk'],
     '/channel/:id?': ['nczitzk'],

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/campaign/:type/:free?': ['cssxsh'],
     '/ci-en/:id/article': ['nczitzk'],
     '/new/:type': ['cssxsh'],

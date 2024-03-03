@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/bulletin/:category?': ['gylidian'],
     '/cas/:category?': ['gylidian'],
     '/jwc/:category?': ['gylidian'],

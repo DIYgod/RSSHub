@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/bt/:subforumid?': ['qiwihui', 'junfengP', 'nczitzk'],
     '/picture/:subforumid': ['qiwihui', 'junfengP', 'nczitzk'],
     '/user/:uid': ['JamYiz'],

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/csj': ['xapool'],
     '/discovery/:type': ['LogicJake'],
     '/finance/china/:lid?': ['yubinbai'],

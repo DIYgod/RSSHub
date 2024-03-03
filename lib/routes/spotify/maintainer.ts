@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/artist/:id': ['outloudvi'],
     '/playlist/:id': ['outloudvi'],
     '/saved/:limit?': ['outloudvi'],

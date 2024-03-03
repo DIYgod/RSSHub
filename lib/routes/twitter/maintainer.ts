@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/collection/:uid/:collectionId/:routeParams?': ['TonyRL'],
     '/followings/:id/:routeParams?': ['DIYgod'],
     '/keyword/:keyword/:routeParams?': ['DIYgod', 'yindaheng98', 'Rongronggg9'],

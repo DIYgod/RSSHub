@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/cmse/:type?': ['Ji4n1ng'],
     '/cs/:type?': ['Ji4n1ng'],
     '/epe/:type?': ['Ji4n1ng'],

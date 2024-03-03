@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/grs': ['markmingjie'],
     '/it/:type': ['wzc-blog'],
     '/jwc/:type': ['markmingjie'],

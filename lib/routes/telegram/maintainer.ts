@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/blog': ['fengkx'],
     '/channel/:username': ['synchrone'],
     '/channel/:username/:routeParams?': ['DIYgod', 'Rongronggg9'],

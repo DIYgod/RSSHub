@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/bookstore/newest': ['xyqfer'],
     '/collection/:id/:getAll?': ['huruji', 'Colin-XKL', 'Fatpandac'],
     '/daily': ['DHPO'],

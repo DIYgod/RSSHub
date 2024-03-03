@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/commits/:owner/:repo': ['TonyRL'],
     '/events/:owner/:repo': ['TonyRL'],
     '/events/:username': ['TonyRL'],

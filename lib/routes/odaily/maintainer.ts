@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/activity': ['nczitzk'],
     '/newsflash': ['nczitzk'],
     '/search/news/:keyword': ['snowraincloud'],

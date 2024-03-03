@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/ranking/:type': ['immmortal', 'luyuhuang'],
     '/tag/:name': ['Fatpandac'],
     '/tw/feeds/:category': ['miles170'],

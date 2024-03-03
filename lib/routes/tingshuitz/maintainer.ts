@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/changsha/:channelId?': ['shansing'],
     '/dalian': ['DIYgod'],
     '/dongguan': ['victoriqueko'],

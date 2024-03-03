@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/actors/:id/:filter?': ['nczitzk'],
     '/home/:category?/:sort?/:filter?': ['nczitzk'],
     '/lists/:id/:filter?/:sort?': ['dddepg'],

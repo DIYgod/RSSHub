@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/cs/match': ['fengkx'],
     '/jw': ['fengkx'],
     '/library': ['fengkx'],

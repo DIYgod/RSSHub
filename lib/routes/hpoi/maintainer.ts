@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/info/:type?': ['sanmmm DIYgod'],
     '/items/all/:order?': ['DIYgod'],
     '/items/character/:id/:order?': ['DIYgod'],

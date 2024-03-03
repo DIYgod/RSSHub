@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/jwc/:type?': ['CCraftY'],
     '/yxy/:type?': ['CCraftY'],
 };

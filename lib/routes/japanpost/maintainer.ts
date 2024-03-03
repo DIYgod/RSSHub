@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/track/:reqCode/:locale?': ['tuzi3040'],
 };

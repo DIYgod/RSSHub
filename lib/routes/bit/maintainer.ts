@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/cs': ['sinofp'],
     '/jwc': ['sinofp'],
     '/rszhaopin': ['nczitzk'],

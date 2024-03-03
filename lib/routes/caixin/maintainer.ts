@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/article': ['EsuRt'],
     '/blog/:column': ['Maecenas'],
     '/database': ['nczitzk'],

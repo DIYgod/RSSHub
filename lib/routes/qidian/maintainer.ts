@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/author/:id': ['miles170'],
     '/chapter/:id': ['fuzy112'],
     '/forum/:id': ['fuzy112'],

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/author/:id/:sort?': ['nczitzk'],
     '/category/:id/:sort?': ['nczitzk'],
     '/channel/:id/:sort?': ['nczitzk'],

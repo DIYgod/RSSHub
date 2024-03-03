@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/apps/:lang?/card/:id': ['TonyRL'],
     '/apps/:lang?/comment/:id': ['TonyRL'],
     '/apps/:lang?/note/:id': ['TonyRL'],

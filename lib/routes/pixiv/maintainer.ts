@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/ranking/:mode/:date?': ['EYHN'],
     '/search/:keyword/:order?/:mode?': ['DIYgod'],
     '/user/bookmarks/:id': ['EYHN'],

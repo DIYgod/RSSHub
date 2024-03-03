@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/c/:id/:embed?': ['TonyRL'],
     '/channel/:id/:embed?': ['DIYgod'],
     '/charts/:category?/:country?/:embed?': ['TonyRL'],

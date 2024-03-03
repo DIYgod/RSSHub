@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/earthquake': ['Shinanory'],
     '/news': ['Shinanory'],
 };

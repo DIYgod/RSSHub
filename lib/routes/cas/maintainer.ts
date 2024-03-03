@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/cg/:caty?': ['nczitzk'],
     '/genetics/:path+': ['panyq357'],
     '/ia/yjs': ['shengmaosu'],

@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/papers/:category?/:time?/:cited?': ['CookiePieWw'],
 };

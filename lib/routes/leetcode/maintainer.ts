@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/articles': ['LogicJake'],
     '/dailyquestion/:lang': ['EthanWng97'],
     '/dailyquestion/solution/:lang': ['woaidouya123'],

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/cover': ['y9c'],
     '/highlight/:journal?/:year?': ['y9c', 'TonyRL'],
     '/news': ['y9c', 'TonyRL'],

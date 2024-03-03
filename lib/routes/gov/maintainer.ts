@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     // ministry
     '/cac/:path+': ['drgnchan'],
     '/caac/cjwt/:category?': ['nczitzk'],

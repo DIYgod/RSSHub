@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/channel/:id': ['hoilc', 'Fatpandac', 'nczitzk'],
     '/hot': ['hoilc', 'Fatpandac', 'nczitzk'],
     '/latest': ['5upernova-heng'],

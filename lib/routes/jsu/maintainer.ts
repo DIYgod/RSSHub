@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/cxzx/:types?': ['wenjia03'],
     '/jwc/:types?': ['wenjia03'],
     '/notice': ['wenjia03'],

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/jtys/yjs': ['qizidog'],
     '/jyzpxx': ['qizidog'],
     '/jwc': ['mobyw'],

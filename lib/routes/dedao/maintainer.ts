@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/figure': ['nczitzk'],
     '/knowledge/:topic?/:type?': ['nczitzk'],
     '/list/:category?': ['nczitzk'],

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/announce': ['xyqfer'],
     '/ce/:id': ['HenryQW'],
     '/ershicimi/:id': ['sanmmm'],

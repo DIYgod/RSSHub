@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/': ['MegrezZhu', 'CoderTonyChan', 'nczitzk'],
     '/genre/:id': ['MegrezZhu', 'CoderTonyChan', 'nczitzk'],
     '/label/:id': ['MegrezZhu', 'CoderTonyChan', 'Felix2yu', 'nczitzk'],

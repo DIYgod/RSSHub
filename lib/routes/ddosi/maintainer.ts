@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/': ['XinRoom'],
     '/category/:category': ['XinRoom'],
 };

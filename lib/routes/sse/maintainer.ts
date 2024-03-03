@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/convert/:query?': ['kt286'],
     '/disclosure/:query?': ['harveyqiu'],
     '/inquire': ['Jeason0228'],

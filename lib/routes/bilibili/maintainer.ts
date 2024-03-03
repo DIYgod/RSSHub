@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/app/:id?': ['nczitzk'],
     '/audio/:id': ['LogicJake'],
     '/bangumi/:seasonid': ['DIYgod'],

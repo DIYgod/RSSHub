@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/topic/:topic?/:type?': ['nczitzk'],
 };

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/community': ['TonyRL'],
     '/datasets': ['TonyRL'],
     '/models': ['TonyRL'],

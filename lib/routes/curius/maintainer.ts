@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/links/:name': ['Ovler-Young'],
 };

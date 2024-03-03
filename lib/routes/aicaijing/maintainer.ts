@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/cover': ['nczitzk'],
     '/information/:id?': ['nczitzk'],
     '/latest': ['nczitzk'],

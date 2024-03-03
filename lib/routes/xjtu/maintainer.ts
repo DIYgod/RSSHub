@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/2yuan/news/:id?': ['nczitzk'],
     '/dean/:subpath+': ['hoilc'],
     '/dyyy/:path+': ['TonyRL'],

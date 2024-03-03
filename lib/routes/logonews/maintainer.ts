@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/work/tags/:tag': ['nczitzk'],
     '/work/categorys/:category': ['nczitzk'],
     '/work': ['nczitzk'],

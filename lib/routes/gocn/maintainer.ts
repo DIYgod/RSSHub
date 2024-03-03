@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/': ['AtlanCI', 'CcccFz'],
     '/jobs': ['AtlanCI', 'CcccFz'],
     '/news': ['AtlanCI'],

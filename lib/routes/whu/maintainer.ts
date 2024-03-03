@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/cs/:type': ['ttyfly'],
     '/gs/:type?': ['Delreyaa'],
     '/hyxt/:category?': ['nczitzk'],

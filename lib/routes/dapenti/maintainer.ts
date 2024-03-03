@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/tugua': ['tgly307'],
     '/subject/:id': ['xyqfer'],
 };

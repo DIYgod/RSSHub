@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/friends/:routeParams?': ['CaoMeiYouRen'],
     '/group/:gid/:gname?/:routeParams?': ['monologconnor', 'Rongronggg9'],
     '/keyword/:keyword/:routeParams?': ['DIYgod', 'Rongronggg9'],

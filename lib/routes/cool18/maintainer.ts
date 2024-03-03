@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/:id?/:type?/:keyword?': ['nczitzk'],
 };

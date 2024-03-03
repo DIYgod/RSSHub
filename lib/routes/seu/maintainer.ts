@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/cse/:type?': ['LogicJake'],
     '/radio/academic': ['HenryQW'],
     '/yjs': ['Denkiyohou'],

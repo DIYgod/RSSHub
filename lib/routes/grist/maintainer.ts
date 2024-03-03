@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/': ['Rjnishant530'],
     '/featured': ['Rjnishant530'],
     '/series/:series': ['Rjnishant530'],

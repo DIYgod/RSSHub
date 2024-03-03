@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/interactive-graphics': ['shunf4'],
     '/realtime/:section?': ['shunf4'],
     '/znews/:section?': ['shunf4'],

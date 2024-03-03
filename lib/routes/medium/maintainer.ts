@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/following/:user': ['ImSingee'],
     '/for-you/:user': ['ImSingee'],
     '/list/:user/:catalogId': ['ImSingee'],

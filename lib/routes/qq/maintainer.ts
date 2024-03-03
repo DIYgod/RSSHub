@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/ac/comic/:id': ['nczitzk'],
     '/ac/rank/:type?/:time?': ['nczitzk'],
     '/fact': ['hoilc'],

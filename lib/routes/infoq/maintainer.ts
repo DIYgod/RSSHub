@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/recommend': ['brilon'],
     '/topic/:id': ['brilon'],
 };

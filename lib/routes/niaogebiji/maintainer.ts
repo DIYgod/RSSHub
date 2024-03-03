@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/': ['WenryXu'],
     '/cat/:cat': ['cKotoriKat'],
     '/today': ['KotoriK'],

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/blog/:language?/category/:category?': ['nczitzk'],
     '/desktop': ['nczitzk'],
 };

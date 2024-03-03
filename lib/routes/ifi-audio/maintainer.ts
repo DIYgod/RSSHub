@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/download/:val/:id': ['EthanWng97'],
 };

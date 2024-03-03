@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/materials/:id?': ['broven', 'Fatpandac', 'nczitzk'],
 };

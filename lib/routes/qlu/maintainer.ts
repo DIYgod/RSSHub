@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/notice': ['SunBK201'],
 };

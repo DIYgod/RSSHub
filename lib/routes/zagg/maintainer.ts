@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/new-arrivals/:query?': ['EthanWng97'],
 };

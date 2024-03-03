@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/comic/:id/:chapterCnt?': ['MegrezZhu'],
     '/mhgui/comic/:id/:chapterCnt?': ['btdwv'],
     '/subscribe': ['shininome'],

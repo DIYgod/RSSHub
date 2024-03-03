@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/lists/:id': ['WenhuWee', 'nczitzk'],
     '/pro/lists/:id': ['nczitzk'],
     '/account/main/:id': ['nczitzk'],

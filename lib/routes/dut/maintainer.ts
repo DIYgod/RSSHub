@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/dutdice/:category?': ['beautyyuyanli', 'nczitzk'],
     '/eda/:category?': ['nczitzk'],
     '/fldpj/:category?': ['ueiu'],

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/gushitong/index': ['CaoMeiYouRen'],
     '/search/:keyword': ['CaoMeiYouRen'],
     '/tieba/forum/good/:kw/:cid?/:sortBy?': ['u3u'],

@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/exclusive/:id?': ['nczitzk'],
     '/ds/:id': ['luyuhuang'],
     '/dy/:id': ['HendricksZheng'],

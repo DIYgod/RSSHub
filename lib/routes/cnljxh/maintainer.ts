@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/collect/:id?': ['nczitzk'],
     '/date/:id?': ['nczitzk'],
     '/info/:id?': ['nczitzk'],

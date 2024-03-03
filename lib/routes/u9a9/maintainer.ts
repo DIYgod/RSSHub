@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/:preview?': ['TonyRL'],
     '/search/:keyword/:preview?': ['TonyRL'],
 };

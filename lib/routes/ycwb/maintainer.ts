@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/:node': ['TimWu007'],
 };

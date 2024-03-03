@@ -1,3 +1,3 @@
-module.exports = {
+export default {
     '/app/:column?': ['TimWu007'],
 };

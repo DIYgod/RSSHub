@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/community/:id?/:keyword?': ['nczitzk'],
     '/:region/news': ['nczitzk'],
     '/:region/blog': ['nczitzk'],

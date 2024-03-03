@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/bgw/:code': ['CYTMWIA'],
     '/cjxy/:code': ['RiverTwilight'],
     '/dean/:code': ['CYTMWIA'],

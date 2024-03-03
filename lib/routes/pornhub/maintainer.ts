@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/category/:caty': ['nczitzk'],
     '/search/:keyword': ['nczitzk'],
     '/:language?/category_url/:url?': ['I2IMk', 'queensferryme'],

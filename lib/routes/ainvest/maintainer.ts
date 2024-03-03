@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/article': ['TonyRL'],
     '/news': ['TonyRL'],
 };

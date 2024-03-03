@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/discuss/:type/:order': ['LogicJake'],
     '/experience/:tagId': ['huyyi'],
     '/jobcenter/:recruitType?/:city?/:type?/:order?/:latest?': ['nczitzk'],

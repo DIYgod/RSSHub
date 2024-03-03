@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/:id?': ['nczitzk'],
     '/:id/gold': ['nczitzk'],
     '/:id/keywords/:keyword?': ['nczitzk'],

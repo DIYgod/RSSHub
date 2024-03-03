@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/blog/:category?': ['nczitzk'],
     '/category/:id?/:type?/:order?': ['nczitzk'],
     '/offer/:year?/:major?/:school?': ['EthanWng97'],
