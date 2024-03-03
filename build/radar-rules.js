@@ -1736,7 +1736,7 @@
                     const qw = searchParams.get('qw');
                     const kw = searchParams.get('kw');
                     if (qw) {
-                        const route = `/baidu/tieba/user/${qw}`;
+                        const route = `/baidu/tieba/search/${qw}`;
                         return kw ? `${route}/kw=${kw}` : route;
                     }
                 } } ],
