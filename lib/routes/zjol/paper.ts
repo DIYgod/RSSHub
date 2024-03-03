@@ -8,6 +8,11 @@ export default async (ctx) => {
     const id = ctx.req.param('id') ?? 'zjrb';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100;
 
+    const allowedId = ['zjrb', 'qjwb', 'msb', 'zjlnb', 'zjfzb', 'jnyb'];
+    if (!allowedId.includes(id)) {
+        throw new Error('id not allowed');
+    }
+
     const query = id === 'jnyb' ? 'map[name="PagePicMap"] area' : 'ul.main-ed-articlenav-list li a';
 
     const rootUrl = id === 'qjwb' ? 'http://qjwb.thehour.cn' : `https://${id}.zjol.com.cn`;
