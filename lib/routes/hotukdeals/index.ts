@@ -1,0 +1,35 @@
+// @ts-nocheck
+import got from '@/utils/got';
+import { load } from 'cheerio';
+
+export default async (ctx) => {
+    let type = ctx.req.param('type');
+    if (type === 'highlights') {
+        type = '';
+    }
+
+    const data = await got.get(`https://www.hotukdeals.com/${type}?page=1&ajax=true&layout=horizontal`, {
+        headers: {
+            Referer: `https://www.hotukdeals.com/${type}`,
+        },
+    });
+    const $ = load(data.data.data.content);
+
+    const list = $('article.thread');
+
+    ctx.set('data', {
+        title: `hotukdeals ${type}`,
+        link: `https://www.hotukdeals.com/${type}`,
+        item: list
+            .map((index, item) => {
+                item = $(item);
+                return {
+                    title: item.find('.cept-tt').text(),
+                    description: `${item.find('.thread-listImgCell').html()}<br>${item.find('.cept-vote-temp').html()}<br>${item.find('.overflow--fade').html()}<br>${item.find('.threadGrid-body .userHtml').html()}`,
+                    link: item.find('.cept-tt').attr('href'),
+                };
+            })
+            .get()
+            .reverse(),
+    });
+};
