@@ -21,7 +21,7 @@ export default async (ctx) => {
         await Promise.all(
             Object.values(types).map(async (type) => {
                 const response = await got(`${host}/co/topic/list${type}`);
-                data.push.apply(data, response.data.data);
+                data.push(response.data.data);
             })
         );
         data = data.sort((a, b) => b.publishTime - a.publishTime).slice(0, 10);
