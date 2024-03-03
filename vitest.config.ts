@@ -11,6 +11,5 @@ export default defineConfig({
         },
         testTimeout: 10000,
         exclude: ['website', ...defaultExclude],
-        reporters: ['junit'],
     },
 });

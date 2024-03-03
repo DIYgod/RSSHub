@@ -28,7 +28,7 @@
     "format:check": "eslint --cache \"**/*.{ts,js,yml}\" && prettier \"**/*.{ts,js,json}\" --check",
     "format:staged": "lint-staged",
     "vitest": "cross-env NODE_ENV=test vitest",
-    "vitest:coverage": "cross-env NODE_ENV=test vitest --coverage.enabled",
+    "vitest:coverage": "cross-env NODE_ENV=test vitest --coverage.enabled --reporter=junit",
     "vitest:watch": "cross-env NODE_ENV=test vitest --watch",
     "lint": "eslint --cache .",
     "prepare": "husky || true",
