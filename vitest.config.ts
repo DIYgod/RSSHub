@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config';
+import { defineConfig, defaultExclude } from 'vitest/config';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
@@ -11,5 +11,6 @@ export default defineConfig({
             reporter: ['junit'],
         },
         testTimeout: 10000,
+        exclude: ['website', ...defaultExclude],
     },
 });
