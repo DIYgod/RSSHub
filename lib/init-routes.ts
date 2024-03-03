@@ -14,19 +14,22 @@ type Root = {
 
 const routes: Record<string, (root: Root) => void> = {};
 
-const imports = directoryImport({
-    targetDirectoryPath: path.join(__dirname, './routes'),
-    importPattern: /router\.ts$/,
-});
-
-for (const path in imports) {
-    const name = path.split('/').find(Boolean);
-    if (name) {
-        routes[name] = (
-            imports[path] as {
-                default: (root: Root) => void;
-            }
-        ).default;
+if (process.env.NODE_ENV === 'test') {
+    routes.test = (await import('./routes/test/router')).default;
+} else {
+    const imports = directoryImport({
+        targetDirectoryPath: path.join(__dirname, './routes'),
+        importPattern: /router\.ts$/,
+    });
+    for (const path in imports) {
+        const name = path.split('/').find(Boolean);
+        if (name) {
+            routes[name] = (
+                imports[path] as {
+                    default: (root: Root) => void;
+                }
+            ).default;
+        }
     }
 }
 
