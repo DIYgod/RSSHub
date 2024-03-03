@@ -67,9 +67,9 @@ sidebar_position: 2
 
 When creating a new route in RSSHub, you need to organize your files in a specific way. Your namespace folder should be stored in the `lib/routes` directory and should include three mandatory files:
 
--   `router.js` Registers the routes
--   `maintainer.js` Provides information about the route maintainer
--   `radar.js` Provide a [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) rule for each route
+-   `router.ts` Registers the routes
+-   `maintainer.ts` Provides information about the route maintainer
+-   `radar.ts` Provide a [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) rule for each route
 
 Your namespace folder structure should look like this:
 
@@ -78,16 +78,16 @@ Your namespace folder structure should look like this:
 │   ├───furstar
 │       ├─── templates
 │           ├─── description.art
-│       ├─── router.js
-│       ├─── maintainer.js
-│       ├─── radar.js
-│       ├─── someOtherJs.js
+│       ├─── router.ts
+│       ├─── maintainer.ts
+│       ├─── radar.ts
+│       ├─── someOtherJs.ts
 │   └───test
 │   └───someOtherNamespaces
 ...
 ```
 
-**All eligible routes under the `lib/routes` path will be automatically loaded without the need for updating the `lib/router.js`.**
+**All eligible routes under the `lib/routes` path will be automatically loaded without the need for updating the `lib/router.ts`.**
 
 ### Namespace
 
@@ -100,11 +100,11 @@ RSSHub appends the name of all route namespace folders in front of the actual ro
 
 ### Registering a Route
 
-To register a route, the `router.js` file should export a method that provides a  Hoho route handler.
+To register a route, the `router.ts` file should export a method that provides a  Hoho route handler.
 
 ### Maintainer List
 
-The `maintainer.js` file should export an object that provides maintainer information related to the route, including:
+The `maintainer.ts` file should export an object that provides maintainer information related to the route, including:
 
 -   Key: Corresponding route path
 -   Value: Array of string, including all maintainers' GitHub ID.
@@ -119,9 +119,9 @@ The path should be the same as the `path` in the corresponding documentation bef
 
 ### Radar Rules
 
-All routes are required to include the `radar.js` file, which includes the corresponding domain name. The minimum requirement for a successful match is for the rule to show up on the corresponding site which requires filling in the `title` and `docs` fields.
+All routes are required to include the `radar.ts` file, which includes the corresponding domain name. The minimum requirement for a successful match is for the rule to show up on the corresponding site which requires filling in the `title` and `docs` fields.
 
-To generate a complete `radar-rules.js` file, use the following command: `yarn build:radar`, which will create the file under `assets/build/`.
+To generate a complete `radar-rules.ts` file, use the following command: `yarn build:radar`, which will create the file under `assets/build/`.
 
 :::tip
 

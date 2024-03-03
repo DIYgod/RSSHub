@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Using Cache
 
-RSSHub have a cache module that expires after a short duration. You can change how long the cache lasts by modifying the `CACHE_EXPIRE` value in the `lib/config.js` file using environment variables. However, for interfaces that have less frequently updated content, it's better to specify a longer cache expiration time using `CACHE_CONTENT_EXPIRE` instead.
+RSSHub have a cache module that expires after a short duration. You can change how long the cache lasts by modifying the `CACHE_EXPIRE` value in the `lib/config.ts` file using environment variables. However, for interfaces that have less frequently updated content, it's better to specify a longer cache expiration time using `CACHE_CONTENT_EXPIRE` instead.
 
 For example, to retrieve the full text of the first comment for each issue, you can make a request to `${baseUrl}/${user}/${repo}/issues/${id}`, since this data is unavailable through `${baseUrl}/${user}/${repo}/issues`. It's recommended to store this data in the cache to avoid making repeated requests to the server.
 
@@ -63,7 +63,7 @@ Any assignments to variables that are declared outside of the `tryGet()` functio
 
 #### Defined in
 
-[lib/middleware/cache/index.js](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/cache/index.js#L58)
+[lib/middleware/cache/index.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/cache/index.ts#L58)
 
 :::tip
 
