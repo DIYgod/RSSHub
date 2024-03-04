@@ -55,7 +55,7 @@ const mediaTagDict = {
 };
 
 export default async (ctx) => {
-    const useWeb = ctx.req.param('routeParams') || !(config.telegram.session && config.feature.mediaProxyKey);
+    const useWeb = ctx.req.param('routeParams') || !config.telegram.session;
     if (!useWeb) {
         return require('./tglib/channel').default(ctx);
     }

@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 export default async (ctx) => {
-    const type = ctx.req.param.get('type');
+    const type = ctx.req.param('type');
 
     const response = await got({
         method: 'get',

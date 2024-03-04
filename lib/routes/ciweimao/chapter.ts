@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export default async (ctx) => {
-    const id = ctx.req.param.get('id');
+    const id = ctx.req.param('id');
     const limit = Number.parseInt(ctx.req.query('limit')) || 10;
 
     const baseUrl = 'https://wap.ciweimao.com';
