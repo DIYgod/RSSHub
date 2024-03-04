@@ -1,4 +1,4 @@
-import { describe, expect, it, jest } from '@jest/globals';
+import { describe, expect, it, vi } from 'vitest';
 import app from '@/app';
 import Parser from 'rss-parser';
 import { config } from '@/config';
@@ -423,7 +423,7 @@ describe('multi parameter', () => {
 
 describe('openai', () => {
     it(`chatgpt`, async () => {
-        jest.resetModules();
+        vi.resetModules();
 
         process.env.OPENAI_API_KEY = 'sk-1234567890';
         const app = (await import('@/app')).default;

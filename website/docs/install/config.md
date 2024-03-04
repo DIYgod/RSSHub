@@ -236,7 +236,7 @@ Configs in this sections are in beta stage, and **are turn off by default**. Ple
 
 Configs here are incomplete.
 
-See docs of the specified route and `lib/config.js` for detailed information.
+See docs of the specified route and `lib/config.ts` for detailed information.
 
 :::
 

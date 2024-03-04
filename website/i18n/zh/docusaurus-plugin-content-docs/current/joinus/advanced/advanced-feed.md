@@ -6,7 +6,7 @@ sidebar_position: 1
 
 本指南面向希望深入了解如何制作 RSS 订阅源的高级用户。如果您是第一次制作 RSS 订阅源，我们建议先阅读 [制作自己的 RSSHub 路由](/zh/joinus/new-rss/start-code)。
 
-一旦您获取了要包含在您的 RSS 订阅源中的数据，就可以将其传递给 `ctx.set('data', obj)`。然后RSSHub的中间件 [`template.js`](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/template.js) 将处理数据并以所需的格式呈现 RSS 输出（默认为RSS 2.0）。除了 [制作自己的 RSSHub 路由](/zh/joinus/new-rss/start-code) 中提到的字段外，您还可以使用以下字段进一步自定义 RSS 订阅源。
+一旦您获取了要包含在您的 RSS 订阅源中的数据，就可以将其传递给 `ctx.set('data', obj)`。然后RSSHub的中间件 [`template.ts`](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/template.ts) 将处理数据并以所需的格式呈现 RSS 输出（默认为RSS 2.0）。除了 [制作自己的 RSSHub 路由](/zh/joinus/new-rss/start-code) 中提到的字段外，您还可以使用以下字段进一步自定义 RSS 订阅源。
 
 需要注意的是，并非所有字段都适用于所有的输出格式，因为 RSSHub 支持多种输出格式。下表显示了不同输出格式兼容的字段。我们使用以下符号表示兼容性：`A` 表示 Atom，`J` 表示 JSON Feed，`R` 表示 RSS 2.0。
 

@@ -15,7 +15,7 @@ import parameter from '@/middleware/parameter';
 
 import logger from '@/utils/logger';
 
-import routes from '@/routes';
+import initRoutes from '@/init-routes';
 import { notFoundHandler, errorHandler } from '@/errors';
 
 process.on('uncaughtException', (e) => {
@@ -36,7 +36,7 @@ app.use(antiHotlink);
 app.use(parameter);
 app.use(cache);
 
-routes(app);
+initRoutes(app);
 
 app.notFound(notFoundHandler);
 app.onError(errorHandler);

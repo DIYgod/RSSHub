@@ -21,20 +21,20 @@
   ],
   "scripts": {
     "build:all": "npm run build:radar && npm run build:maintainer",
-    "build:maintainer": "node scripts/workflow/build-maintainer.js",
-    "build:radar": "node scripts/workflow/build-radar.js",
+    "build:maintainer": "tsx scripts/workflow/build-maintainer.ts",
+    "build:radar": "tsx scripts/workflow/build-radar.ts",
     "dev": "cross-env NODE_ENV=dev tsx watch --no-cache lib/index.ts",
     "format": "eslint --cache --fix \"**/*.{ts,js,yml}\" && node website/docs/.format/format.mjs && prettier \"**/*.{ts,js,json}\" --write",
     "format:check": "eslint --cache \"**/*.{ts,js,yml}\" && prettier \"**/*.{ts,js,json}\" --check",
     "format:staged": "lint-staged",
-    "jest": "cross-env NODE_ENV=test jest --runInBand --forceExit --detectOpenHandles",
-    "jest:coverage": "cross-env NODE_ENV=test jest --coverage --reporters=default --reporters=jest-junit --runInBand --forceExit --detectOpenHandles",
-    "jest:watch": "cross-env NODE_ENV=test jest --watch",
+    "vitest": "cross-env NODE_ENV=test vitest",
+    "vitest:coverage": "cross-env NODE_ENV=test vitest --coverage.enabled --reporter=junit",
+    "vitest:watch": "cross-env NODE_ENV=test vitest --watch",
     "lint": "eslint --cache .",
     "prepare": "husky || true",
     "profiling": "NODE_ENV=production tsx --prof lib/index.ts",
     "start": "tsx lib/index.ts",
-    "test": "npm run format:check && npm run jest:coverage"
+    "test": "npm run format:check && npm run vitest:coverage"
   },
   "lint-staged": {
     "*.js": [
@@ -48,36 +48,8 @@
     "*.md?(x)": "node website/docs/.format/format.mjs --staged",
     "*.yml": "eslint --cache --fix"
   },
-  "jest": {
-    "bail": true,
-    "collectCoverageFrom": [
-      "lib/**/*.js",
-      "lib/**/*.ts",
-      "!lib/routes/**",
-      "!lib/routes-deprecated/**",
-      "!lib/router.js"
-    ],
-    "coverageReporters": [
-      "text-summary",
-      "lcov"
-    ],
-    "moduleNameMapper": {
-      "@/(.*)": "<rootDir>/lib/$1"
-    },
-    "testEnvironment": "node",
-    "testMatch": [
-      "**/lib/**/*.test.ts"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/"
-    ]
-  },
-  "jest-junit": {
-    "outputDirectory": "coverage"
-  },
   "dependencies": {
     "@hono/node-server": "1.8.2",
-    "@koa/router": "12.0.1",
     "@notionhq/client": "2.2.14",
     "@postlight/parser": "2.2.3",
     "@sentry/node": "7.104.0",
@@ -112,11 +84,6 @@
     "json-bigint": "1.0.0",
     "json5": "2.2.3",
     "jsrsasign": "10.9.0",
-    "koa": "2.15.0",
-    "koa-basic-auth": "4.0.0",
-    "koa-favicon": "2.1.0",
-    "koa-mount": "4.0.0",
-    "koa-static": "5.0.0",
     "lru-cache": "10.2.0",
     "lz-string": "1.5.0",
     "mailparser": "3.6.9",
@@ -156,7 +123,6 @@
   "devDependencies": {
     "@babel/preset-env": "7.24.0",
     "@babel/preset-typescript": "7.23.3",
-    "@jest/globals": "29.7.0",
     "@microsoft/eslint-formatter-sarif": "3.0.0",
     "@stylistic/eslint-plugin-js": "1.6.3",
     "@types/aes-js": "3.1.4",
@@ -170,12 +136,6 @@
     "@types/imapflow": "1.0.18",
     "@types/jsdom": "21.1.6",
     "@types/json-bigint": "1.0.4",
-    "@types/koa": "2.15.0",
-    "@types/koa-basic-auth": "2.0.6",
-    "@types/koa-favicon": "2.1.3",
-    "@types/koa-mount": "4.0.5",
-    "@types/koa-static": "4.0.4",
-    "@types/koa__router": "12.0.4",
     "@types/lint-staged": "13.3.0",
     "@types/mailparser": "3.4.4",
     "@types/markdown-it": "13.0.7",
@@ -189,6 +149,7 @@
     "@typescript-eslint/eslint-plugin": "7.1.0",
     "@typescript-eslint/parser": "7.1.0",
     "@vercel/nft": "0.26.4",
+    "@vitest/coverage-v8": "1.3.1",
     "cross-env": "7.0.3",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
@@ -199,8 +160,6 @@
     "eslint-plugin-yml": "1.12.2",
     "fs-extra": "11.2.0",
     "husky": "9.0.11",
-    "jest": "29.7.0",
-    "jest-junit": "16.0.0",
     "lint-staged": "15.2.2",
     "mockdate": "3.0.5",
     "nock": "13.5.4",
@@ -219,17 +178,14 @@
     "supertest": "6.3.4",
     "to-vfile": "8.0.0",
     "tosource": "2.0.0-alpha.3",
-    "ts-jest": "29.1.2",
     "typescript": "5.3.3",
     "unified": "9.2.2",
     "unist-util-visit": "4.1.2",
-    "unist-util-visit-parents": "5.1.3"
+    "unist-util-visit-parents": "5.1.3",
+    "vite-tsconfig-paths": "4.3.1",
+    "vitest": "1.3.1"
   },
   "engines": {
-    "node": ">=16"
-  },
-  "reporters": [
-    "default",
-    "jest-junit"
-  ]
+    "node": ">=18"
+  }
 }

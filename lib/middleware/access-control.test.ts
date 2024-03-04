@@ -1,4 +1,4 @@
-import { describe, expect, it, jest, afterEach } from '@jest/globals';
+import { describe, expect, it, vi, afterEach } from 'vitest';
 import md5 from '@/utils/md5';
 
 process.env.NODE_NAME = 'mock';
@@ -10,7 +10,7 @@ async function checkBlock(response) {
 
 afterEach(() => {
     delete process.env.ACCESS_KEY;
-    jest.resetModules();
+    vi.resetModules();
 });
 
 describe('access-control', () => {

@@ -1,12 +1,14 @@
 import gitRevSync from 'git-rev-sync';
 
-let gitHash = process.env.HEROKU_SLUG_COMMIT?.slice(0, 7) || process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 7);
+let gitHash = process.env.HEROKU_SLUG_COMMIT?.slice(0, 8) || process.env.VERCEL_GIT_COMMIT_SHA?.slice(0, 8);
+let gitDate;
 if (!gitHash) {
     try {
-        gitHash = gitRevSync.short();
+        gitHash = gitRevSync.short(undefined, 8);
+        gitDate = gitRevSync.date();
     } catch {
         gitHash = 'unknown';
     }
 }
 
-export default gitHash;
+export { gitHash, gitDate };
