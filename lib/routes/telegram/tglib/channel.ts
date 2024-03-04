@@ -33,10 +33,6 @@ function parseRange(range, length) {
 }
 
 async function getMedia(ctx) {
-    if (ctx.req.param('key') !== config.feature.mediaProxyKey) {
-        throw new Error('Invalid key');
-    }
-
     const media = await decodeMedia(ctx.req.param('username'), ctx.req.param('media'));
     if (!media) {
         ctx.status = 500;
