@@ -1,9 +1,8 @@
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import got, { type Response } from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-import { Response } from 'got';
 const baseUrl = 'https://www.cast.org.cn';
 
 interface ResponseData<T> extends Response {
