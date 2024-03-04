@@ -207,8 +207,8 @@ dependencies:
     specifier: 9.0.1
     version: 9.0.1
   winston:
-    specifier: 3.11.0
-    version: 3.11.0
+    specifier: 3.12.0
+    version: 3.12.0
   xxhash-wasm:
     specifier: 1.0.2
     version: 1.0.2
@@ -10164,8 +10164,8 @@ packages:
       triple-beam: 1.4.1
     dev: false
 
-  /winston@3.11.0:
-    resolution: {integrity: sha512-L3yR6/MzZAOl0DsysUXHVjOwv8mKZ71TrA/41EIduGpOOV5LQVodqN+QdQ6BS6PJ/RdIshZhq84P/fStEZkk7g==}
+  /winston@3.12.0:
+    resolution: {integrity: sha512-OwbxKaOlESDi01mC9rkM0dQqQt2I8DAUMRLZ/HpbwvDXm85IryEHgoogy5fziQy38PntgZsLlhAYHz//UPHZ5w==}
     engines: {node: '>= 12.0.0'}
     dependencies:
       '@colors/colors': 1.6.0
