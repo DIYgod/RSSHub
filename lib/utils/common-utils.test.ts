@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { toTitleCase, collapseWhitespace, convertDateToISO8601 } from '@/utils/common-utils';
+import { toTitleCase, collapseWhitespace, convertDateToISO8601, getLocalhostAddress } from '@/utils/common-utils';
 
 describe('common-utils', () => {
     it('toTitleCase', () => {
@@ -33,5 +33,9 @@ describe('common-utils', () => {
         expect(collapseWhitespace('   \n\n\n    ')).toBe('');
         expect(collapseWhitespace('a string already collapsed')).toBe('a string already collapsed');
         expect(collapseWhitespace(' \n  a lot of     whitespaces   and \n\n\n\n linebreaks   \n\n ')).toBe('a lot of whitespaces and linebreaks');
+    });
+
+    it('getLocalhostAddress', () => {
+        expect(getLocalhostAddress()).toBeInstanceOf(Array);
     });
 });

@@ -38,9 +38,14 @@ export default function InstanceList(): JSX.Element {
     maintainerUrl: 'https://www.pseudoyu.com',
   }, {
     url: 'https://rsshub.friesport.ac.cn',
+    location: '🇨🇳',
+    maintainer: '薯条港研究院',
+    maintainerUrl: 'https://space.bilibili.com/1690617042',
+  }, {
+    url: 'https://rsshub.friesport.ac.cn/us',
     location: '🇺🇸',
-    maintainer: '思维悦动',
-    maintainerUrl: 'https://friesport.ac.cn',
+    maintainer: '薯条港研究院',
+    maintainerUrl: 'https://space.bilibili.com/1690617042',
   }, {
     url: 'https://rsshub.atgw.io',
     location: '🇺🇸',
