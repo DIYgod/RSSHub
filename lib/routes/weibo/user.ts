@@ -126,13 +126,18 @@ export default async (ctx) => {
             })
     );
 
-    // remove pinned weibo if they are too old (older than all the rest weibo)
-    // the character of pinned weibo is `card.profile_type_id.startsWith('proweibotop')`
-    // there can be 1 or 2 (WHAT A FANTASTIC BRAIN THE PM HAS?) pinned weibo at the same time
+    // remove pinned weibo if they are posted before the earliest **ordinary** weibo
+    // there may be multiple pinned weibo at the same time, only remove the ones that meet the above condition
     const pinnedItems = resultItems.filter((item) => item.isPinned);
     const ordinaryItems = resultItems.filter((item) => !item.isPinned);
-    if (pinnedItems.length > 0 && ordinaryItems.length > 0 && Math.max(...pinnedItems.map((i) => i.pubDate).filter(Boolean)) < Math.min(...ordinaryItems.map((i) => i.pubDate).filter(Boolean))) {
+    if (pinnedItems.length > 0 && ordinaryItems.length > 0) {
+        const earliestOrdinaryPostTime = Math.min(...ordinaryItems.map((i) => i.pubDate).filter(Boolean));
         resultItems = ordinaryItems;
+        for (const item of pinnedItems) {
+            if (item.pubDate > earliestOrdinaryPostTime) {
+                resultItems.unshift(item);
+            }
+        }
     }
 
     ctx.set(
