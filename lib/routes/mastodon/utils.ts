@@ -4,7 +4,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 
-const allowSiteList = ['mastodon.social', 'pawoo.net'];
+const allowSiteList = ['mastodon.social', 'pawoo.net', config.mastodon.apiHost];
 
 const apiHeaders = (site) => {
     const { accessToken, apiHost } = config.mastodon;
