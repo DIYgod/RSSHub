@@ -52,7 +52,7 @@
     "@hono/node-server": "1.8.2",
     "@notionhq/client": "2.2.14",
     "@postlight/parser": "2.2.3",
-    "@sentry/node": "7.104.0",
+    "@sentry/node": "7.105.0",
     "@tonyrl/rand-user-agent": "2.0.52",
     "@types/node": "20.11.24",
     "aes-js": "3.1.2",
