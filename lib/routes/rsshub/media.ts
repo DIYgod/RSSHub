@@ -9,7 +9,7 @@ export default async (ctx) => {
         throw new Error('Internal media proxy is disabled.');
     }
 
-    const key = ctx.req.param.get('key');
+    const key = ctx.req.param('key');
     if (key !== config.feature.mediaProxyKey) {
         throw new Error('Invalid media proxy key.');
     }
