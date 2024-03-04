@@ -32,7 +32,7 @@ const getSubPath = (ctx) => {
     return subPath;
 };
 
-function getLocalhostAddress() {
+const getLocalhostAddress = () => {
     const interfaces = os.networkInterfaces();
     const address = Object.keys(interfaces)
         .flatMap((name) => interfaces[name] ?? [])
@@ -40,6 +40,6 @@ function getLocalhostAddress() {
         .map((iface) => iface?.address)
         .filter(Boolean);
     return address;
-}
+};
 
 export { toTitleCase, collapseWhitespace, convertDateToISO8601, getSubPath, getLocalhostAddress };
