@@ -8,7 +8,7 @@ const targetJson = path.join(__dirname, '../../assets/build/radar-rules.json');
 const dirname = path.join(__dirname + '../../../lib/routes');
 
 // Namespaces that do not require radar.ts
-const allowNamespace = new Set(['discourse', 'discuz', 'ehentai', 'lemmy', 'mail', 'test', 'index.tsx', 'robots.txt.ts']);
+const allowNamespace = new Set(['discourse', 'discuz', 'ehentai', 'lemmy', 'mail', 'test', 'index.tsx', 'robots.txt.ts', 'metrics.ts']);
 // Check if a radar.ts file is exist under each folder of dirname
 for (const dir of fs.readdirSync(dirname)) {
     const dirPath = path.join(dirname, dir);

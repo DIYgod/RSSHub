@@ -6,6 +6,7 @@ import * as path from 'node:path';
 import index from '@/routes/index';
 import robotstxt from '@/routes/robots.txt';
 import test from '@/routes/test/router';
+import metrics from '@/routes/metrics';
 
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
@@ -54,6 +55,7 @@ export default function (app: Hono) {
     // routes without rss data
     app.get('/', index);
     app.get('/robots.txt', robotstxt);
+    app.get('/metrics', metrics);
 
     app.use(
         '/*',

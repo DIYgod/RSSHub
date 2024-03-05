@@ -9,6 +9,8 @@ import RequestInProgressError from './request-in-progress';
 import RejectError from './reject';
 import NotFoundError from './not-found';
 
+import { requestMetric } from '@/utils/otel';
+
 export const errorHandler: ErrorHandler = (error, ctx) => {
     const requestPath = ctx.req.path;
     const matchedRoute = ctx.req.routePath;
@@ -61,6 +63,7 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
     }
 
     logger.error(`Error in ${requestPath}: ${message}`);
+    requestMetric.error({ path: requestPath, method: ctx.req.method, status: ctx.res.status });
 
     return config.isPackage ? ctx.json({
         error: {

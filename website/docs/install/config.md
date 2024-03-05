@@ -158,6 +158,16 @@ Access code is the md5 generated based on the access key + route, eg:
 
 `SENTRY_ROUTE_TIMEOUT`: Report Sentry if route execution takes more than this milliseconds, default to `3000`
 
+## Opentelementry Config
+
+`OTEL_EXPORTER_OTLP_TRACES_TIMEOUT`: The maximum waiting time, in milliseconds, allowed to send each OTLP trace batch. Default is 10000.
+
+`OTEL_EXPORTER_OTLP_TIMEOUT`: The maximum waiting time, in milliseconds, allowed to send each OTLP trace and metric batch. Default is 10000.
+
+`OTEL_EXPORTER_OTLP_ENDPOINT`:  Target URL to which the exporter is going to send spans, metrics, or logs. The implementation MUST honor the following URL components: Default: `http://localhost:4318`
+
+For more details, see [OpenTelemetry Specification on Protocol Exporter.](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/protocol/exporter.md#configuration-options)
+
 ## Image Processing
 
 :::tip New Config Format

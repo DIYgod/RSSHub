@@ -12,6 +12,7 @@ import debug from '@/middleware/debug';
 import header from '@/middleware/header';
 import antiHotlink from '@/middleware/anti-hotlink';
 import parameter from '@/middleware/parameter';
+import trace from '@/middleware/trace';
 
 import logger from '@/utils/logger';
 
@@ -27,6 +28,7 @@ const app = new Hono();
 app.use(compress());
 
 app.use(mLogger);
+app.use(trace);
 app.use(sentry);
 app.use(accessControl);
 app.use(debug);
