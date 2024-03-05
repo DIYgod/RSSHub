@@ -347,7 +347,8 @@ describe('complicated_description', () => {
 <img data-mock="/DIYgod/RSSHub.png" src="https://mock.com/DIYgod/RSSHub.png" referrerpolicy="no-referrer">
 <img mock="/DIYgod/RSSHub.gif" src="https://mock.com/DIYgod/RSSHub.gif" referrerpolicy="no-referrer">
 <img src="http://mock.com/DIYgod/DIYgod/RSSHub" referrerpolicy="no-referrer">
-<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">`);
+<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">
+<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" referrerpolicy="no-referrer">`);
         expect(parsed.items[1].content).toBe(`<a href="https://mock.com/DIYgod/RSSHub"></a>
 <img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">`);
     });
