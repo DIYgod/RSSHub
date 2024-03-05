@@ -157,7 +157,7 @@ async function configureMiddlewares(ctx) {
     ctx.set('no-template', true); // skip RSSHub template middleware
 }
 
-function streamResponse(c, bodyIter, cb?: (e: Error|undefined, s: StreamingApi) => Promise<void>) {
+function streamResponse(c, bodyIter, cb?: (e: Error | undefined, s: StreamingApi) => Promise<void>) {
     return stream(c, async (stream) => {
         let aborted = false;
         stream.onAbort(() => {
