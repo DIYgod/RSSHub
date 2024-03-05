@@ -1,71 +1,76 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
-import got from '@/utils/got';
+import got, { type Response } from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 const baseUrl = 'https://www.cast.org.cn';
 
-export default async (ctx) => {
-    const { column = 457 } = ctx.req.param();
-    const { limit = 10 } = ctx.req.query();
-    const link = `${baseUrl}/col/col${column}/index.html`;
-    const { data: response } = await got.post(`${baseUrl}/module/web/jpage/dataproxy.jsp`, {
-        searchParams: {
-            startrecord: 1,
-            endrecord: limit,
-            perpage: limit,
-        },
-        form: {
-            col: 1,
-            appid: 1,
-            webid: 1,
-            path: '/',
-            columnid: column,
-            sourceContentType: 1,
-            unitid: 335,
-            webname: '中国科学技术协会',
-            permissiontype: 0,
-        },
-    });
+interface ResponseData<T> extends Response {
+    data: T;
+}
 
-    const $ = load(response, {
-        xml: {
-            xmlMode: true,
-        },
-    });
+async function parsePage(html: string) {
+    return await Promise.all(
+        load(html)('li')
+            .toArray()
+            .map((el) => {
+                const title = load(el)('a');
+                let articleUrl = title.attr('href');
 
-    const pageTitle = await cache.tryGet(link, async () => {
-        const { data: response } = await got(link);
-        const $ = load(response);
-        return $('head title').text();
-    });
+                if (articleUrl?.startsWith('http')) {
+                    return {
+                        title: title.text(),
+                        link: title.attr('href'),
+                    };
+                }
+                articleUrl = `${baseUrl}${title.attr('href')}`;
 
-    const list = $('record')
-        .toArray()
-        .map((item) => {
-            item = load($(item).html(), null, false);
-            const a = item('a').first();
-            return {
-                title: a.text(),
-                pubDate: parseDate(item('.list-data').text().trim(), 'DDYYYY/MM'),
-                link: `${baseUrl}${a.attr('href')}`,
-            };
-        });
+                return cache.tryGet(articleUrl, async () => {
+                    const res = (await got.get(articleUrl!)) as ResponseData<string>;
+                    const article = load(res.data);
+                    const pubDate = timezone(parseDate(article('meta[name=PubDate]').attr('content')!, 'YYYY-MM-DD HH:mm'), +8);
 
-    const items = await Promise.all(
-        list.map((item) =>
-            cache.tryGet(item.link, async () => {
-                const { data: response } = await got(item.link);
-                const $ = load(response);
-
-                item.description = $('#zoom').html();
-                item.pubDate = timezone(parseDate($('meta[name=PubDate]').attr('content'), 'YYYY-MM-DD HH:mm'), +8);
-
-                return item;
+                    return {
+                        title: title.text(),
+                        pubDate,
+                        description: article('#zoom').html(),
+                        link: articleUrl,
+                    };
+                });
             })
-        )
     );
+}
+
+export default async (ctx) => {
+    const { column, subColumn, category } = ctx.req.param();
+    const { limit = 10 } = ctx.req.query();
+    let link = `${baseUrl}/${column}/${subColumn}`;
+    if (category) {
+        link += `/${category}/index.html`;
+    }
+    const { data: indexData } = (await got.get(link)) as ResponseData<string>;
+
+    const $ = load(indexData);
+
+    let items: any[] = [];
+
+    // 新闻-视频首页特殊处理
+    if (column === 'xw' && subColumn === 'SP' && !category) {
+        items = await parsePage(indexData);
+    } else {
+        const buildUnitScript = $('script[parseType="bulidstatic"]');
+        const queryUrl = `${baseUrl}${buildUnitScript.attr('url')}`;
+        const queryData = JSON.parse(buildUnitScript.attr('querydata')?.replace(/'/g, '"') ?? '{}');
+        queryData.paramJson = `{"pageNo":1,"pageSize":${limit}}`;
+
+        const { data } = (await got.get(queryUrl, {
+            searchParams: new URLSearchParams(queryData),
+        })) as ResponseData<{ data: { html: string } }>;
+
+        items = await parsePage(data.data.html);
+    }
+
+    const pageTitle = $('head title').text();
 
     ctx.set('data', {
         title: pageTitle,

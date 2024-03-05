@@ -1348,7 +1348,21 @@
 
 ### 通用 {#zhong-guo-ke-xue-ji-shu-xie-hui-tong-yong}
 
-<Route author="TonyRL" example="/cast" path="/cast/:column?" paramsDesc={['栏目 ID，即 URL 中的数字，默认为 `457`']} radar="1" notOperational="1" />
+<Route author="KarasuShin TonyRL" example="/cast/xw/tzgg/ZH" path="/cast/:column/:subColumn/:category?" paramsDesc={['栏目编号，见下表', '二级栏目编号','分类']} radar="1" notOperational="1">
+  :::tip
+  在路由末尾处加上 `?limit=限制获取数目` 来限制获取条目数量，默认值为`10`
+  :::
+
+  | 分类     | 编码 |
+  | -------- | ---- |
+  | 全景科协 | qjkx |
+  | 智库     | zk   |
+  | 学术     | xs   |
+  | 科普     | kp   |
+  | 党建     | dj   |
+  | 数据     | sj   |
+  | 新闻     | xw   |
+</Route>
 
 ## 中国民用航空局 {#zhong-guo-min-yong-hang-kong-ju}
 
