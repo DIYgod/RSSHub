@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 import { config } from '@/config';
 import got from '@/utils/got';

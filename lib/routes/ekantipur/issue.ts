@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 // Require necessary modules
 import got from '@/utils/got'; // a customised got

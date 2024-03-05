@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 const { rootUrl, apiRootUrl, types, ProcessThreads } = require('./utils');
 

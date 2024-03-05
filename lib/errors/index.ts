@@ -68,6 +68,9 @@ export const errorHandler: ErrorHandler = (error, ctx) => {
         } else if (error instanceof NotFoundError) {
             ctx.status(404);
             message = 'wrong path';
+            if (ctx.req.path.endsWith('/')) {
+                message += ', you can try removing the trailing slash in the path';
+            }
         } else {
             ctx.status(404);
         }

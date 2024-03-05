@@ -1,4 +1,3 @@
-// @ts-nocheck
 const utils = require('./utils');
 
 export default async (ctx) => {

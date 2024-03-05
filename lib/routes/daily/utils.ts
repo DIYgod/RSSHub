@@ -1,4 +1,3 @@
-// @ts-nocheck
 const dayjs = require('dayjs');
 import got from '@/utils/got';
 

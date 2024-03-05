@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 // The content is generateed by undocumentated API of nature journals
 // This router has **just** been tested in:

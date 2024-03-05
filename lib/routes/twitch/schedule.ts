@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 
 // https://github.com/streamlink/streamlink/blob/master/src/streamlink/plugins/twitch.py#L286

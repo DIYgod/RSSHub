@@ -1,4 +1,3 @@
-// @ts-nocheck
 const categories = {
     // https://www.mckinsey.com.cn/wp-json/wp/v2/categories?parent=25&per_page=100
     2: {

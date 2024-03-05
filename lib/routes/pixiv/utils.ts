@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { config } from '@/config';
 
 module.exports = {

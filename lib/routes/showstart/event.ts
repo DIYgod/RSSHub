@@ -1,4 +1,3 @@
-// @ts-nocheck
 const { TITLE, HOST } = require('./const');
 const { fetchActivityList, fetchDictionary } = require('./service');
 

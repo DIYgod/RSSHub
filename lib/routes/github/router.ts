@@ -3,7 +3,7 @@ export default (router) => {
     router.get('/comments/:user/:repo/:type/:number', './comments'); // deprecated
     router.get('/comments/:user/:repo/:number?', './comments');
     router.get('/contributors/:user/:repo/:order?/:anon?', './contributors');
-    router.get('/file/:user/:repo/:branch/:filepath+', './file');
+    router.get('/file/:user/:repo/:branch/:filepath{.+}', './file');
     router.get('/gist/:gistId', './gist');
     router.get('/issue/:user/:repo/:state?/:labels?', './issue');
     router.get('/notifications', './notifications');

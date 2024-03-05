@@ -1,4 +1,3 @@
-// @ts-nocheck
 const util = require('./utils');
 const baseUrl = 'https://grad.nua.edu.cn';
 

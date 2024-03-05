@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { getCookies } from '@/utils/puppeteer-utils';
 import puppeteer from '@/utils/puppeteer';
 

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { config } from '@/config';
 
 function getConfig(ctx) {

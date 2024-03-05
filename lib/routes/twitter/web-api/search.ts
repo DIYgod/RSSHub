@@ -1,4 +1,3 @@
-// @ts-nocheck
 const utils = require('../utils');
 const { getSearch } = require('./twitter-api');
 const { initToken } = require('./token');

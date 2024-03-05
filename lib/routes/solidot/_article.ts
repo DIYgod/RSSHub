@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got'; // get web content
 import { load } from 'cheerio'; // html parser
 import { parseDate } from '@/utils/parse-date';

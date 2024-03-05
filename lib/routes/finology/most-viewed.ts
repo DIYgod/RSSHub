@@ -1,4 +1,3 @@
-// @ts-nocheck
 import logger from '@/utils/logger';
 const { getItems } = require('./utils');
 

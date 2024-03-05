@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 const { baseUrl, fetchFriends, getPlurk } = require('./utils');

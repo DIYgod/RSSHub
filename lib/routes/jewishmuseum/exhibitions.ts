@@ -1,4 +1,3 @@
-// @ts-nocheck
 import buildData from '@/utils/common-config';
 
 export default async (ctx) => {

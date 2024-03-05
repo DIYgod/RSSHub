@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 const qs = require('query-string');
 import { parseDate } from '@/utils/parse-date';

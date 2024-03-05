@@ -1,3 +1,3 @@
 export default (router) => {
-    router.get('/:topicPath*', './index');
+    router.get('/:topicPath{.+}?', './index');
 };

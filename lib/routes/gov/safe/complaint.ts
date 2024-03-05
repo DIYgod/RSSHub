@@ -1,4 +1,3 @@
-// @ts-nocheck
 const { processZxfkItems } = require('./util');
 
 export default async (ctx) => {

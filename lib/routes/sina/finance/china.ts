@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 const { getRollNewsList, parseRollNewsList, parseArticle } = require('../utils');
 

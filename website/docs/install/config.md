@@ -377,11 +377,11 @@ Warning: Two Factor Authentication is **not** supported.
 
 For user timeline
 
-apply API here `https://mastodon.example/settings/applications`(repalce `mastodon.example`), please check scope `read:search`
+Apply API at `https://mastodon.example/settings/applications` (replace `mastodon.example`). Scopes `read:search` and `read:statuses` are needed.
 
 -   `MASTODON_API_HOST`: API instance domain, only domain, no `http://` or `https://` protocol header
 -   `MASTODON_API_ACCESS_TOKEN`: user access token
--   `MASTODON_API_ACCT_DOMAIN`: acct domain for particular instance, Webfinger account URI, like `user@host`
+-   `MASTODON_API_ACCT_DOMAIN`: acct domain for this instance, i.e. the `domain` in the WebFinger URI `username@domain`. It's usually the same as `MASTODON_API_HOST`.
 
 ### Medium
 

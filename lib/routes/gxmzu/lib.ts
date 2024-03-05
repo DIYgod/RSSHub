@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 // 导入got库，该库用来请求网页数据
 import got from '@/utils/got';

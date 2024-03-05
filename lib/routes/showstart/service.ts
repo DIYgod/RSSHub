@@ -1,4 +1,3 @@
-// @ts-nocheck
 const { HOST } = require('./const');
 const { getAccessToken, post, sortBy, uniqBy } = require('./utils');
 

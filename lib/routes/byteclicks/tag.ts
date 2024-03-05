@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 const { parseItem } = require('./utils');
 const baseUrl = 'https://byteclicks.com';

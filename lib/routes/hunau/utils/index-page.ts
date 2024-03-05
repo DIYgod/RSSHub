@@ -1,4 +1,3 @@
-// @ts-nocheck
 const indexPage = (page) => {
     const fileName = 'index';
     const fileType = 'html';

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { config } from '@/config';
 import got from '@/utils/got';
 import wait from '@/utils/wait';

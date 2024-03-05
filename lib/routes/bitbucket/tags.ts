@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 import { config } from '@/config';
 import queryString from 'query-string';

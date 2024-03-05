@@ -1,4 +1,3 @@
-// @ts-nocheck
 // import cache from '@/utils/cache';
 /* eslint-disable unicorn/no-empty-file */
 /* Removed due to news.gdut.edu.cn no longer exists.

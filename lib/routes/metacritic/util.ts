@@ -1,4 +1,3 @@
-// @ts-nocheck
 const sorts = {
     metascore: {
         id: 'metaScore',

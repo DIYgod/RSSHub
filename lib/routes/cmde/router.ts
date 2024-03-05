@@ -1,3 +1,3 @@
 export default (router) => {
-    router.get('/:cate*', './index');
+    router.get('/:cate{.+}?', './index');
 };

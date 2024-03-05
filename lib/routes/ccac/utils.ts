@@ -1,4 +1,3 @@
-// @ts-nocheck
 const BASE_URL = 'https://www.ccac.org.mo';
 
 const LANG_TYPE = {

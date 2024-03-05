@@ -1,4 +1,3 @@
-// @ts-nocheck
 function generateRssData(item, index, arr, country) {
     const attributeSet = new Set(['name', 'image', 'short_description', 'slug', `price_${country}`, `discount_price_${country}`]);
     const attributes = item.attribute;

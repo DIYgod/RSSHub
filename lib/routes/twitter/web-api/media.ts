@@ -1,4 +1,3 @@
-// @ts-nocheck
 const utils = require('../utils');
 // import { config } from '@/config';
 const { getUser, getUserMedia } = require('./twitter-api');

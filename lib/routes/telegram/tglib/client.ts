@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { config } from '@/config';
 import * as readline from 'node:readline/promises';
 import process from 'node:process';

@@ -1,4 +1,3 @@
-// @ts-nocheck
 const elementMap = {
     code_block: (element) => `<pre><code class="${element.language}">${element.children[0].text}</code></pre>`,
     a: (element) => `<a href="${element.url}">${renderHTML(element.children)}</a>`,

@@ -1,4 +1,3 @@
-// @ts-nocheck
 module.exports = {
     '/www': 1,
     '/oil': 101,

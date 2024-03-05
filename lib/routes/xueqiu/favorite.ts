@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 import queryString from 'query-string';
 import { parseDate } from '@/utils/parse-date';

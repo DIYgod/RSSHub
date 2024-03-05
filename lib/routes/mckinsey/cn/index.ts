@@ -1,4 +1,3 @@
-// @ts-nocheck
 // use stock `got` package as a workaround for
 // https://github.com/DIYgod/RSSHub/issues/8239
 // https://github.com/DIYgod/RSSHub/pull/8288

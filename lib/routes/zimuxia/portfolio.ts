@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 import { load } from 'cheerio';
 const allowlinktypes = new Set(['all', 'magnet', 'ed2k', 'baidu', 'subhd', 'quark', '115']);

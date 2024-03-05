@@ -1,3 +1,3 @@
 export default (router) => {
-    router.get('/:filter*', './index');
+    router.get('/:filter{.+}?', './index');
 };

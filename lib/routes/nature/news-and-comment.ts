@@ -1,4 +1,3 @@
-// @ts-nocheck
 // example usage: `/nature/news-and-comment/ng`
 // The journals from NPG are run by different group of people,
 // and the website of may not be consitent for all the journals

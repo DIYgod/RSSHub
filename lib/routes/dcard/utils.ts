@@ -1,4 +1,3 @@
-// @ts-nocheck
 const asyncPool = require('tiny-async-pool');
 
 const ProcessFeed = async (items, cookies, browser, limit, cache) => {
