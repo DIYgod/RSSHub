@@ -128,7 +128,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                     .slice(0, 30)
                     .map((route) => (
                         <>
-                            {debug.routes[route]} {route}
+                            {debug.errorRoutes[route]} {route}
                             <br />
                         </>
                     )),
