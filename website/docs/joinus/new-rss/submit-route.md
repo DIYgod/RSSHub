@@ -109,7 +109,7 @@ Use this section to include any additional information or comments you'd like to
 
 The pull request title will be used as the commit message when your pull request is merged. Please follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary) specification.
 
-If you are adding a new route, including all required documentation and `radar.js`, use `route` as the scope. If you are adding new radar rules only, use `radar` as the scope.
+If you are adding a new route, including all required documentation and `radar.ts`, use `route` as the scope. If you are adding new radar rules only, use `radar` as the scope.
 
 ## Response to Code Review
 

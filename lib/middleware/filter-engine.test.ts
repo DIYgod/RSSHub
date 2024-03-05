@@ -1,6 +1,4 @@
-import { describe, expect, it, afterAll, jest, afterEach } from '@jest/globals';
-
-jest.setTimeout(50000);
+import { describe, expect, it, afterAll, vi, afterEach } from 'vitest';
 
 afterAll(() => {
     delete process.env.FILTER_REGEX_ENGINE;
@@ -8,7 +6,7 @@ afterAll(() => {
 
 afterEach(() => {
     delete process.env.FILTER_REGEX_ENGINE;
-    jest.resetModules();
+    vi.resetModules();
 });
 
 describe('filter-engine', () => {

@@ -86,11 +86,11 @@ npm run dev
 
 ## 理解基础知识
 
-### router.js
+### router.ts
 
-一旦您为 RSS 路由创建了命名空间，下一步就是在 `router.js` 中注册它。
+一旦您为 RSS 路由创建了命名空间，下一步就是在 `router.ts` 中注册它。
 
-例如，如果您为 [GitHub 仓库 Issues](/zh/routes/programming#github-yong-hu-cang-ku) 制作 RSS 源，并且假设您希望用户输入 GitHub 用户名和仓库名，如果他们没有输入仓库名，则返回到 `RSSHub`，您可以使用以下代码在 `github/router.js` 中注册您的新 RSS 路由：
+例如，如果您为 [GitHub 仓库 Issues](/zh/routes/programming#github-yong-hu-cang-ku) 制作 RSS 源，并且假设您希望用户输入 GitHub 用户名和仓库名，如果他们没有输入仓库名，则返回到 `RSSHub`，您可以使用以下代码在 `github/router.ts` 中注册您的新 RSS 路由：
 
 <Tabs>
 <TabItem value="Arrow Functions" label="箭头函数" active>
@@ -115,7 +115,7 @@ export default function (router) {
 </TabItem>
 </Tabs>
 
-在 `router.js` 中注册您的新 RSS 路由时，您可以定义路由路径并指定要执行的相应函数。在上面的代码中，`router.get()` 方法用于指定新的 RSS 路由的 HTTP 方法和路径。`router.get()` 的第一个参数是使用 [Hono 路由](https://hono.dev/api/routing) 语法的路由路径。第二个参数是您新的 RSS 规则 `issue.js` 的相对路径。您可以省略 `.js` 扩展名。
+在 `router.ts` 中注册您的新 RSS 路由时，您可以定义路由路径并指定要执行的相应函数。在上面的代码中，`router.get()` 方法用于指定新的 RSS 路由的 HTTP 方法和路径。`router.get()` 的第一个参数是使用 [Hono 路由](https://hono.dev/api/routing) 语法的路由路径。第二个参数是您新的 RSS 规则 `issue.js` 的相对路径。您可以省略 `.js` 扩展名。
 
 在上面的示例中，`issue` 是一个精确匹配，`:user` 是一个必需参数，`:repo?` 是一个可选参数。`?` 在 `:repo` 之后表示该参数是可选的。如果用户没有输入仓库名，则会返回到您代码中指定的内容（这里是 `RSSHub`）。
 
@@ -127,18 +127,18 @@ export default function (router) {
 
 :::
 
-### maintainer.js
+### maintainer.ts
 
-该文件用于存储 RSS 路由的维护者信息。您可以将您的 GitHub 用户名添加到该值数组中。请注意，此处的键应与 `router.js` 中的路径完全匹配：
+该文件用于存储 RSS 路由的维护者信息。您可以将您的 GitHub 用户名添加到该值数组中。请注意，此处的键应与 `router.ts` 中的路径完全匹配：
 
 ```js
-module.exports = {
+export default {
     // highlight-next-line
     '/issue/:user/:repo?': ['DIYgod'],
 };
 ```
 
-`maintainer.js` 文件有助于跟踪负责维护 RSS 路由的人员。当用户遇到 RSS 路由的问题时，他们可以联系此文件中列出的维护者。
+`maintainer.ts` 文件有助于跟踪负责维护 RSS 路由的人员。当用户遇到 RSS 路由的问题时，他们可以联系此文件中列出的维护者。
 
 ### `templates` 文件夹
 
@@ -146,7 +146,7 @@ module.exports = {
 
 每个模板文件应该有一个 `.art` 文件扩展名。
 
-### radar.js
+### radar.ts
 
 文件可以帮助用户在使用 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 或其他兼容其格式的软件时订阅您的新 RSS 路由。我们将在后面的部分更多介绍。
 

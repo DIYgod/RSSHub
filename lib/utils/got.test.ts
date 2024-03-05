@@ -1,8 +1,8 @@
-import { describe, expect, it, afterEach, jest } from '@jest/globals';
+import { describe, expect, it, afterEach, vi } from 'vitest';
 import nock from 'nock';
 
 afterEach(() => {
-    jest.resetModules();
+    vi.resetModules();
 });
 
 describe('got', () => {
@@ -22,7 +22,7 @@ describe('got', () => {
     it('retry', async () => {
         const { default: got } = await import('@/utils/got');
         const { config } = await import('@/config');
-        const requestRun = jest.fn();
+        const requestRun = vi.fn();
         nock('http://rsshub.test')
             .get('/testRerty')
             .times(config.requestRetry + 1)
@@ -71,7 +71,7 @@ describe('got', () => {
 
         const logger = (await import('@/utils/logger')).default;
         // @ts-expect-error unused
-        const loggerSpy = jest.spyOn(logger, 'error').mockReturnValue({});
+        const loggerSpy = vi.spyOn(logger, 'error').mockReturnValue({});
 
         try {
             await got.get('http://rsshub.test/timeout');

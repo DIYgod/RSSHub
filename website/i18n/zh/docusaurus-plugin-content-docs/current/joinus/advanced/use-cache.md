@@ -65,7 +65,7 @@ RSSHub 有一个缓存模块，该缓存在短时间后过期。您可以通过�
 
 #### 定义在
 
-[lib/middleware/cache/index.js](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/cache/index.js#L58)
+[lib/middleware/cache/index.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/cache/index.ts#L58)
 
 :::tip
 

@@ -19,12 +19,12 @@ sidebar_position: 3
 
 ### 创建主文件
 
-打开您的代码编辑器并创建一个新文件。由于我们要为 GitHub 仓库 Issues 制作 RSS 源，因此建议将文件命名为 `issue.js`。
+打开您的代码编辑器并创建一个新文件。由于我们要为 GitHub 仓库 Issues 制作 RSS 源，因此建议将文件命名为 `issue.ts`。
 
 以下是让您开始的基本代码：
 
 <Tabs>
-<TabItem value="issue.js" label="issue.js">
+<TabItem value="issue.ts" label="issue.ts">
 
 ```js
 // 导入所需模组
@@ -252,7 +252,7 @@ export default async (ctx) => {
 
 ### 创建主文件
 
-打开您的代码编辑器并创建一个新文件。由于我们要为 GitHub 仓库 Issues 制作 RSS 源，因此建议将文件命名为 `issue.js`。
+打开您的代码编辑器并创建一个新文件。由于我们要为 GitHub 仓库 Issues 制作 RSS 源，因此建议将文件命名为 `issue.ts`。
 
 以下是让您开始的基本代码：
 
@@ -477,7 +477,7 @@ export default async (ctx) => {
 2.  数据来源链接
 3.  RSS 订阅标题（不是每个文章的标题）
 
-打开您的代码编辑器并创建一个新文件。由于我们要为 GitHub 仓库 Issues 制作 RSS 源，因此建议将文件命名为 `issue.js`。
+打开您的代码编辑器并创建一个新文件。由于我们要为 GitHub 仓库 Issues 制作 RSS 源，因此建议将文件命名为 `issue.ts`。
 
 这是一些基础代码，你可以从这里开始：
 
@@ -588,7 +588,7 @@ export default async (ctx) => {
 
 ### 创建主文件
 
-创建一个新文件并使用适当的名称保存，例如 `issue.js`。然后，导入所需模组并设置函数的基本结构：
+创建一个新文件并使用适当的名称保存，例如 `issue.ts`。然后，导入所需模组并设置函数的基本结构：
 
 ```js
 // 导入所需模组

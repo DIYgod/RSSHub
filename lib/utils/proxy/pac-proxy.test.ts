@@ -1,4 +1,4 @@
-import { describe, expect, it } from '@jest/globals';
+import { describe, expect, it } from 'vitest';
 import pacProxy from '@/utils/proxy/pac-proxy';
 
 const emptyProxyObj = {

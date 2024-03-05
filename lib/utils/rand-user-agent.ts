@@ -1,5 +1,4 @@
 import { randUserAgent } from '@tonyrl/rand-user-agent';
-require.resolve('@tonyrl/rand-user-agent/data/user-agents.json'); // workaround for @vercel/nft removing datastore
 
 /**
  * A handy function to help generate a legit useragent.

@@ -442,10 +442,6 @@ It is recommended to use with clipping tools such as Notion Web Clipper.
 
 ## RSSHub {#rsshub}
 
-### Internal Media Proxy {#rsshub-internal-media-proxy}
-
-<Route author="TonyRL" example="/rsshub/m/key/https%3A%2F%2Fdocs.rsshub.app%2Fimg%2Flogo.png" path="/rsshub/m/:key/:url" paramsDesc={['Media Proxy Key', '`encodeURIComponent`ed URL address']} configRequired="1" />
-
 ### Transformation - HTML {#rsshub-transformation-html}
 
 Pass URL and transformation rules to convert HTML/JSON into RSS.
@@ -993,6 +989,18 @@ Specify options (in the format of query string) in parameter `routeParams` param
   | 美元 | 英镑 | 港币 | 瑞士法郎 | 瑞典克郎 | 丹麦克郎 | 挪威克郎 | 日元 | 加拿大元 | 澳大利亚元 | 新加坡元 | 欧元 | 澳门元 | 泰国铢 | 新西兰元 | 韩圆 |
   | ---- | ---- | ---- | -------- | -------- | -------- | -------- | ---- | -------- | ---------- | -------- | ---- | ------ | ------ | -------- | ---- |
   | usd  | gbp  | hkd  | chf      | sek      | dkk      | nok      | jpy  | cad      | aud        | sgd      | eur  | mop    | thb    | nzd      | krw  |
+</Route>
+
+## 中国国家图书馆 {#zhong-guo-guo-jia-tu-shu-guan}
+
+### 读者云平台 {#zhong-guo-guo-jia-tu-shu-guan-du-zhe-yun-ping-tai}
+
+<Route author="nczitzk" example="/nlc/read/电子图书" path="/nlc/read/:type?" paramsDesc={['分类，见下表，默认为电子图书']} radar="1">
+  | [电子图书](http://read.nlc.cn/outRes/outResList?type=电子图书) | [电子期刊](http://read.nlc.cn/outRes/outResList?type=电子期刊) | [电子论文](http://read.nlc.cn/outRes/outResList?type=电子论文) | [电子报纸](http://read.nlc.cn/outRes/outResList?type=电子报纸) | [音视频](http://read.nlc.cn/outRes/outResList?type=音视频) |
+  | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------- |
+
+  | [标准专利](http://read.nlc.cn/outRes/outResList?type=标准专利) | [工具书](http://read.nlc.cn/outRes/outResList?type=工具书) | [少儿资源](http://read.nlc.cn/outRes/outResList?type=少儿资源) |
+  | -------------------------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------------- |
 </Route>
 
 ## 中国互联网联合辟谣平台 {#zhong-guo-hu-lian-wang-lian-he-pi-yao-ping-tai}

@@ -8,10 +8,10 @@ sidebar_position: 3
 
 ## 编写规则
 
-要制作新的 RSSHub Radar 规则，需要在 `/lib/routes/` 目录下，相应的域名空间创建 `radar.js` 文件。下面以制作 `GitHub 仓库 Issues` 的 RSS 源为例，详见此处。编写的代码应如下所示：
+要制作新的 RSSHub Radar 规则，需要在 `/lib/routes/` 目录下，相应的域名空间创建 `radar.ts` 文件。下面以制作 `GitHub 仓库 Issues` 的 RSS 源为例，详见此处。编写的代码应如下所示：
 
 ```js
-module.exports = {
+export default {
     'github.com': {
         _name: 'GitHub',
         '.': [
@@ -44,7 +44,7 @@ module.exports = {
 <TabItem value="github.com" label="github.com 和 www.github.com">
 
 ```js
-module.exports = {
+export default {
     'github.com': {
         _name: 'GitHub',
         // highlight-next-line
@@ -64,7 +64,7 @@ module.exports = {
 <TabItem value="abc.github.com" label="abc.github.com">
 
 ```js
-module.exports = {
+export default {
     'github.com': {
         _name: 'GitHub',
         // highlight-next-line
@@ -84,7 +84,7 @@ module.exports = {
 <TabItem value="abc.def.github.com" label="abc.def.github.com">
 
 ```js
-module.exports = {
+export default {
     'github.com': {
         _name: 'GitHub',
         // highlight-next-line
@@ -145,7 +145,7 @@ source 应为一个字符串数组。例如，如果 `GitHub 仓库 Issues` 的 
 <TabItem value="params" label="使用 params 匹配">
 
 ```js
-module.exports = {
+export default {
     'github.com': {
         _name: 'GitHub',
         '.': [
@@ -165,7 +165,7 @@ module.exports = {
 <TabItem value="url" label="使用 URL 匹配">
 
 ```js
-module.exports = {
+export default {
     'github.com': {
         _name: 'GitHub',
         '.': [

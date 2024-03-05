@@ -5,6 +5,9 @@ import { collapseWhitespace, convertDateToISO8601 } from '@/utils/common-utils';
 import type { MiddlewareHandler } from 'hono';
 import { Data } from '@/types';
 
+import { getCurrentPath } from '@/utils/helpers';
+const __dirname = getCurrentPath(import.meta.url);
+
 const middleware: MiddlewareHandler = async (ctx, next) => {
     await next();
 
