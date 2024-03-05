@@ -58,7 +58,7 @@ export default async (ctx) => {
     if (column === 'xw' && subColumn === 'SP' && !category) {
         items = await parsePage(indexData);
     } else {
-        const buildUnitScript = $('script').filter((_, el) => $(el).attr('parsetype') === 'bulidstatic');
+        const buildUnitScript = $('script[parseType="bulidstatic"]');
         const queryUrl = `${baseUrl}/${buildUnitScript.attr('url')}`;
         const queryData = JSON.parse(buildUnitScript.attr('querydata')?.replace(/'/g, '"') ?? '{}');
         queryData.paramJson = `{"pageNo":1,"pageSize":${limit}}`;
