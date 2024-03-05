@@ -1,4 +1,3 @@
-// @ts-nocheck
 const { inflateSync } = require('zlib');
 
 const unzip = (b64Data) => {

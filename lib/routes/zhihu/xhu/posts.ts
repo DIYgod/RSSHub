@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 const auth = require('./auth');
 import { parseDate } from '@/utils/parse-date';

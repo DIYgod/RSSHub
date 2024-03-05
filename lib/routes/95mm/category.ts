@@ -1,4 +1,3 @@
-// @ts-nocheck
 const { rootUrl, ProcessItems } = require('./utils');
 
 export default async (ctx) => {

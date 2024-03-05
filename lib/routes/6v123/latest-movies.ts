@@ -1,4 +1,3 @@
-// @ts-nocheck
 const { processItems } = require('./utils');
 
 const baseURL = 'https://www.hao6v.cc/gvod/zx.html';

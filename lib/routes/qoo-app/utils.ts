@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 

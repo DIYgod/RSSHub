@@ -1,4 +1,3 @@
-// @ts-nocheck
 const queries = {
     stream: {
         query: `query UserStreamQuery(

@@ -1,4 +1,3 @@
-// @ts-nocheck
 const zlib = require('zlib');
 import got from '@/utils/got';
 import { load } from 'cheerio';

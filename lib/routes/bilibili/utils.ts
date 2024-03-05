@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { config } from '@/config';
 import md5 from '@/utils/md5';
 const CryptoJS = require('crypto-js');

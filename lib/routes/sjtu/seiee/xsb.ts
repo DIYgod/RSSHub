@@ -1,4 +1,3 @@
-// @ts-nocheck
 const workerFactory = require('./utils');
 
 module.exports = workerFactory(

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { getSubPath } from '@/utils/common-utils';
 const { rootUrl, parseNewsList, parseArticle } = require('./utils');
 

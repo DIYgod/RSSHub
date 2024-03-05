@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { load } from 'cheerio';
 const { Job } = require('./models');
 

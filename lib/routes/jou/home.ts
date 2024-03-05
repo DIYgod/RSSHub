@@ -1,4 +1,3 @@
-// @ts-nocheck
 const { getItems } = require('./utils');
 
 const url = 'https://www.jou.edu.cn/index/tzgg.htm';

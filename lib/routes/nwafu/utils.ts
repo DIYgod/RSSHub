@@ -1,4 +1,3 @@
-// @ts-nocheck
 const libValue = ['https://lib.nwafu.edu.cn/gg/', '.pageList ul li', 'li a', '.pageArticle', `西北农林科技大学图书馆通知公告`];
 const youthValue = ['https://54youth.nwsuaf.edu.cn/twsy/tzgg//', 'section ul li', 'li a', 'article', `共青团西北农林科技大学委员会通知公告`];
 const cieValue = ['https://cie.nwsuaf.edu.cn/dtytz/tzgg/', 'ul.list  li', 'li a', '.article', `西北农林科技大学信息工程学院通知公告`];

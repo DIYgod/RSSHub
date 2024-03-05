@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import queryString from 'query-string';

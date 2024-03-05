@@ -1,4 +1,3 @@
-// @ts-nocheck
 const { getTeslaPrice } = require('./get-price');
 
 export default async (ctx) => {

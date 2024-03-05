@@ -1,4 +1,3 @@
-// @ts-nocheck
 const { parseSearchHit, parseJobPosting } = require('./utils');
 
 const siteUrl = 'https://www.linkedin.cn/incareer/jobs/search';

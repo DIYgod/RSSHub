@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
 import { load } from 'cheerio';

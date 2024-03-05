@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 import { finishArticleItem } from '@/utils/wechat-mp';
 import { load } from 'cheerio';

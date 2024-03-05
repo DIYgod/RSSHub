@@ -1,4 +1,3 @@
-// @ts-nocheck
 // 排行榜基本数据
 const DATA_MAP = {
     bh2: {

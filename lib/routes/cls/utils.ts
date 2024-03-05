@@ -1,4 +1,3 @@
-// @ts-nocheck
 const CryptoJS = require('crypto-js');
 
 const rootUrl = 'https://www.cls.cn';

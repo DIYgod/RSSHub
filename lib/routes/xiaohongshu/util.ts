@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { config } from '@/config';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';

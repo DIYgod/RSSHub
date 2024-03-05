@@ -1,4 +1,3 @@
-// @ts-nocheck
 const TYPE = {
     recommend: {
         name: '推荐',

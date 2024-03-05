@@ -1,4 +1,3 @@
-// @ts-nocheck
 import wait from '@/utils/wait';
 import { config } from '@/config';
 const { client, decodeMedia, getFilename, getMediaLink, streamDocument, streamThumbnail } = require('./client');

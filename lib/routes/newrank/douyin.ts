@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 const utils = require('./utils');
 import { config } from '@/config';

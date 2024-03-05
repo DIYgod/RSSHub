@@ -1,4 +1,3 @@
-// @ts-nocheck
 function parseJSONP(jsonpData) {
     try {
         const startPos = jsonpData.indexOf('({');

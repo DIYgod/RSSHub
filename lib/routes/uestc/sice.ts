@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 const dayjs = require('dayjs');

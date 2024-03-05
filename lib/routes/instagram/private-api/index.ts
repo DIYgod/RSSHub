@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 const { ig, login } = require('./utils');
 import logger from '@/utils/logger';

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';

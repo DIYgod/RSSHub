@@ -1,4 +1,3 @@
-// @ts-nocheck
 const dayjs = require('dayjs');
 const { constructTopicEntry } = require('./utils');
 

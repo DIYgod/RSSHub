@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 const { getToken } = require('./token');
 const getBookmarks = require('./api/get-bookmarks');

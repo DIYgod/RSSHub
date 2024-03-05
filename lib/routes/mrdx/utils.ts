@@ -1,4 +1,3 @@
-// @ts-nocheck
 function getElementChildrenInnerText(element) {
     let text = '';
     for (const child of element.children) {

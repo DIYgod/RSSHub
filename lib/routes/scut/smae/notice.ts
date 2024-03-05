@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got';

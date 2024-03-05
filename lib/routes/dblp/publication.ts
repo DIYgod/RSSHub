@@ -1,4 +1,3 @@
-// @ts-nocheck
 // 导入所需模组
 import got from '@/utils/got'; // 自订的 got
 // import { parseDate } from '@/utils/parse-date';

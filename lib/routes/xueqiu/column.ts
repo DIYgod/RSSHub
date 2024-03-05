@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 const { JSDOM } = require('jsdom');
 const { CookieJar } = require('tough-cookie');

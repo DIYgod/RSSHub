@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 
 async function getCategoryId(categories) {

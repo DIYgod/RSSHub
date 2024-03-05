@@ -1,4 +1,3 @@
-// @ts-nocheck
 import puppeteer from '@/utils/puppeteer';
 
 const baseURL = 'https://alternativeto.net';

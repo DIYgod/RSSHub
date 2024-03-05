@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 // 计算机科学与技术学院：http://computer.upc.edu.cn/
 // - 学院新闻：http://computer.upc.edu.cn/6277/list.htm

@@ -1,4 +1,3 @@
-// @ts-nocheck
 module.exports = {
     viewForum: (id) => ({
         operationName: 'ViewForum',

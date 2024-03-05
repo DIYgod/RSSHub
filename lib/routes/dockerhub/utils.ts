@@ -1,4 +1,3 @@
-// @ts-nocheck
 import md5 from '@/utils/md5';
 
 function hash(images) {

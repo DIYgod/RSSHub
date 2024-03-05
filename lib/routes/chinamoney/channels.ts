@@ -1,4 +1,3 @@
-// @ts-nocheck
 const channels = {
     2834: {
         title: '最新 - 外汇市场公告 - 市场公告',

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { isValidHost } from '@/utils/valid-host';

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 const { host, acw_sc__v2, parseList, parseItems } = require('./utils');

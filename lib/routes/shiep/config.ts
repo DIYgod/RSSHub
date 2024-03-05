@@ -1,4 +1,3 @@
-// @ts-nocheck
 const config = {
     bwc: { title: '武装部保卫处', id: 'tzgg' },
     career: { title: '本科就业信息网', id: 'tzgg', listSelector: 'ul.newsList', pubDateSelector: 'li.span2.y', descriptionSelector: '.aContent' },

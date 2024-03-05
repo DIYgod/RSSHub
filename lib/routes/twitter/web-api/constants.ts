@@ -1,4 +1,3 @@
-// @ts-nocheck
 const baseUrl = 'https://api.twitter.com';
 
 const consumerKey = '3nVuSoBZnx6U4vzUxf5w';

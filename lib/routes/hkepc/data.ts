@@ -1,4 +1,3 @@
-// @ts-nocheck
 const baseUrl = 'https://www.hkepc.com';
 
 module.exports = {

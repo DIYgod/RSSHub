@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 const apiKey = require('./api-key');
 const { MEDIA_TYPE_TO_ITEM_HANDLE } = require('./utils');
