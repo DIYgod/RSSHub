@@ -95,7 +95,7 @@
     "pac-proxy-agent": "7.0.1",
     "plist": "3.1.0",
     "proxy-chain": "2.4.0",
-    "puppeteer": "22.3.0",
+    "puppeteer": "22.4.0",
     "puppeteer-extra": "3.3.6",
     "puppeteer-extra-plugin-stealth": "2.11.2",
     "puppeteer-extra-plugin-user-data-dir": "2.4.1",
