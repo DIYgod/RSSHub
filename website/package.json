@@ -36,7 +36,7 @@
     "@docusaurus/types": "3.1.1",
     "@types/markdown-it": "^13.0.7",
     "@types/mdx-js__react": "^1.5.8",
-    "@types/react": "^18.2.62",
+    "@types/react": "^18.2.63",
     "@types/react-dom": "^18.2.19",
     "typescript": "^5.3.3"
   },
