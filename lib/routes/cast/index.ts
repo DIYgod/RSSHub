@@ -59,7 +59,7 @@ export default async (ctx) => {
         items = await parsePage(indexData);
     } else {
         const buildUnitScript = $('script[parseType="bulidstatic"]');
-        const queryUrl = `${baseUrl}/${buildUnitScript.attr('url')}`;
+        const queryUrl = `${baseUrl}${buildUnitScript.attr('url')}`;
         const queryData = JSON.parse(buildUnitScript.attr('querydata')?.replace(/'/g, '"') ?? '{}');
         queryData.paramJson = `{"pageNo":1,"pageSize":${limit}}`;
 
