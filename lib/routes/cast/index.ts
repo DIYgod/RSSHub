@@ -34,7 +34,7 @@ async function parsePage(html: string) {
                         title: title.text(),
                         pubDate,
                         description: article('#zoom').html(),
-                        link: `${baseUrl}${title.attr('href')}`,
+                        link: articleUrl,
                     };
                 });
             })
