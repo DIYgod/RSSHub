@@ -1,3 +1,3 @@
 export default (router) => {
-    router.get('/blog/:category*', './blog');
+    router.get('/blog/:category{.+}?', './blog');
 };

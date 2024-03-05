@@ -1,3 +1,3 @@
 export default (router) => {
-    router.get('/v/:category*', './program');
+    router.get('/v/:category{.+}?', './program');
 };
