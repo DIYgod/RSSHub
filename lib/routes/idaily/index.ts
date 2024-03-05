@@ -21,7 +21,7 @@ export default async (ctx) => {
             const image = item.ui_sets?.cover_landscape_hd_4k ?? item.cover_landscape_hd;
 
             return {
-                title: `${item.ui_sets.caption_subtitle} - ${item.title}`,
+                title: `${item.ui_sets?.caption_subtitle} - ${item.title}`,
                 link: item.link_share,
                 description: art(path.join(__dirname, 'templates/description.art'), {
                     images: image

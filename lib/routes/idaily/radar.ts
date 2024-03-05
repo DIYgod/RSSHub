@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'idai.ly': {
         _name: 'iDaily',
         '.': [
