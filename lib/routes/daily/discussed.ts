@@ -1,4 +1,3 @@
-// @ts-nocheck
 const { getData, getList, getRedirectedLink } = require('./utils.js');
 
 const variables = {

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 const CryptoJS = require('crypto-js');
 import got from '@/utils/got';

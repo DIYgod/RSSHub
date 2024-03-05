@@ -1,4 +1,3 @@
-// @ts-nocheck
 module.exports = {
     亚洲: 1,
     欧洲: 2,

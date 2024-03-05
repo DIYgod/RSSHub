@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 import { toTitleCase } from '@/utils/common-utils';
 import { load } from 'cheerio';

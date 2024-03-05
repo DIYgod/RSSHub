@@ -1,4 +1,3 @@
-// @ts-nocheck
 const { getData, getList } = require('./utils');
 
 export default async (ctx) => {

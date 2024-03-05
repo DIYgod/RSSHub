@@ -1,4 +1,3 @@
-// @ts-nocheck
 const readline = require('node:readline/promises');
 const { Api, TelegramClient } = require('telegram');
 const { StringSession } = require('telegram/sessions');

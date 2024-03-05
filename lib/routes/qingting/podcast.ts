@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 const crypto = require('crypto');
 import got from '@/utils/got';

@@ -1,4 +1,3 @@
-// @ts-nocheck
 const envs = process.env;
 import got from '@/utils/got';
 import { load } from 'cheerio';

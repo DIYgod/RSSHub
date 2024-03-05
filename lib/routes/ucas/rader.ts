@@ -1,4 +1,3 @@
-// @ts-nocheck
 module.exports = {
     'ucas.ac.cn': {
         _name: '中国科学院大学招聘',

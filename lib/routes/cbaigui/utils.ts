@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 
 const rootUrl = 'https://cbaigui.com';

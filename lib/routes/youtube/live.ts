@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 const utils = require('./utils');
 import { config } from '@/config';

@@ -1,4 +1,3 @@
-// @ts-nocheck
 // https://github.com/BANKA2017/twitter-monitor/blob/node/apps/open_account/scripts/login.mjs
 
 const { bearerToken, guestActivateUrl } = require('./constants');

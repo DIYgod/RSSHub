@@ -1,4 +1,3 @@
-// @ts-nocheck
 const utils = require('./utils');
 import { load } from 'cheerio';
 import got from '@/utils/got';

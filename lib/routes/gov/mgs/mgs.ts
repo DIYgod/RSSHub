@@ -1,4 +1,3 @@
-// @ts-nocheck
 const { gdgov } = require('../general/general');
 
 export default async (ctx) => {

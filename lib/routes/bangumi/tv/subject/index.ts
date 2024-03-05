@@ -1,4 +1,3 @@
-// @ts-nocheck
 const getComments = require('./comments.js');
 const getFromAPI = require('./offcial-subject-api.js');
 const getEps = require('./ep.js');

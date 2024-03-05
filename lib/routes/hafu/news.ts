@@ -1,4 +1,3 @@
-// @ts-nocheck
 const parseList = require('./utils');
 
 export default async (ctx) => {

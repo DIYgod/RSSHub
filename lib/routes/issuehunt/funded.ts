@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 const MarkdownIt = require('markdown-it');
 

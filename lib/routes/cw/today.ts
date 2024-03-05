@@ -1,4 +1,3 @@
-// @ts-nocheck
 const { baseUrl, parsePage } = require('./utils');
 import puppeteer from '@/utils/puppeteer';
 

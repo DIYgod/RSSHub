@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 const { defaultMode, defaultGenre, defaultLanguage, rootUrl, ProcessItems } = require('./utils');
 

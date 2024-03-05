@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 /*
  * @Author: nightmare-mio wanglongwei2009@qq.com

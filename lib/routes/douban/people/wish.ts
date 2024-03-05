@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 const querystring = require('querystring');
 import { load } from 'cheerio';

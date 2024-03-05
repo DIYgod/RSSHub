@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 const currency = require('currency-symbol-map');
 export default async (ctx) => {

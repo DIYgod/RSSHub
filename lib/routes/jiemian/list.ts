@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default (ctx) => {
     const id = ctx.req.param('id');
 

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { load } from 'cheerio';
 const cache = require('./cache');
 import got from '@/utils/got';

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { config } from '@/config';
 import logger from '@/utils/logger';
 const utils = require('./utils');

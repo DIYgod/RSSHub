@@ -1,4 +1,3 @@
-// @ts-nocheck
 const crypto = require('crypto');
 const CryptoJS = require('crypto-js');
 const { KJUR, KEYUTIL, hextob64 } = require('jsrsasign');

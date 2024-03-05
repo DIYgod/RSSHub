@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 const { DATA_MAP, RANKING_TYPE_MAP } = require('./static-data');
 const { post2item } = require('./utils');

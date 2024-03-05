@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 const md = require('markdown-it')({
     html: true,

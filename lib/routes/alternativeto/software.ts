@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 const { baseURL, puppeteerGet } = require('./utils');
 import { load } from 'cheerio';

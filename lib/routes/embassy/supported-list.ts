@@ -1,4 +1,3 @@
-// @ts-nocheck
 module.exports = {
     ca: {
         country: 'ca',

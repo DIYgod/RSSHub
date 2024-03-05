@@ -1,4 +1,3 @@
-// @ts-nocheck
 const getContent = require('../utils/common');
 
 export default async (ctx) => {

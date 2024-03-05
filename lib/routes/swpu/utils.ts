@@ -1,4 +1,3 @@
-// @ts-nocheck
 function isCompleteUrl(url) {
     return /^\w+?:\/\/.*?\//.test(url);
 }

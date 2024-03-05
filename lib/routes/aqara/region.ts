@@ -1,4 +1,3 @@
-// @ts-nocheck
 export default (ctx) => {
     const types = {
         news: 'press-release',

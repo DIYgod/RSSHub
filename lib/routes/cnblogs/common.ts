@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import { load } from 'cheerio';

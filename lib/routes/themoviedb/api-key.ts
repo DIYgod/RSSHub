@@ -1,4 +1,3 @@
-// @ts-nocheck
 // https://github.com/rickylawson/freekeys/blob/master/index.js
 const KEYS = [
     'fb7bb23f03b6994dafc674c074d01761',

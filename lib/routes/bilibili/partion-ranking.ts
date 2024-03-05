@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 const utils = require('./utils');
 const got_ins = got.extend({
