@@ -784,7 +784,7 @@ If the instance address is not `mastodon.social` or `pawoo.net`, then the route 
 <Route author="synchrone" example="/telegram/channel/telegram" path="/telegram/channel/:username" paramsDesc={['Channel name, without @']} configRequired="1" />
 
 :::warning
-This route requires user-based `TELEGRAM_SESSION`.
+This route requires user-based `TELEGRAM_SESSION`. It can be acquired by running `npx tsx lib/routes/telegram/tglib/client.ts`
 :::
 
 ### Sticker Pack {#telegram-sticker-pack}

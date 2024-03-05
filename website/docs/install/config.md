@@ -468,7 +468,7 @@ Remember to check `user-top-read` and `user-library-read` in the scope for `Pers
 [Bot application](https://telegram.org/blog/bot-revolution)
 
 -   `TELEGRAM_TOKEN`: Telegram bot token for stickerpack feeds
--   `TELEGRAM_SESSION`: for video and file streaming, can be acquired by running `node lib/routes/telegram/tglib/client.js`
+-   `TELEGRAM_SESSION`: for video and file streaming, can be acquired by running `npx tsx lib/routes/telegram/tglib/client.ts`
 
 ### Twitter
 

@@ -240,6 +240,10 @@ export type Config = {
     };
     telegram: {
         token?: string;
+        session?: string;
+        apiId?: string;
+        apiHash?: string;
+        maxConcurrentDownloads?: string;
     };
     tophub: {
         cookie?: string;

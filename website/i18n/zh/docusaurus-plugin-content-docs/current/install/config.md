@@ -445,7 +445,7 @@ RSSHub 支持使用访问密钥 / 码进行访问控制。开启将会激活全�
 贴纸包路由：[Telegram 机器人](https://telegram.org/blog/bot-revolution)
 
 -   `TELEGRAM_TOKEN`: Telegram 机器人 token
--   `TELEGRAM_SESSION`: 可通过运行 `node lib/routes/telegram/tglib/client.js`
+-   `TELEGRAM_SESSION`: 可通过运行 `npx tsx lib/routes/telegram/tglib/client.ts`
 
 ### Twitter
 

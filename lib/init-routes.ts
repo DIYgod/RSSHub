@@ -12,6 +12,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 type Root = {
     get: (routePath: string, filePath: string) => void;
+    app: Hono
 };
 
 const routes: Record<string, (root: Root) => void> = {};
@@ -48,6 +49,7 @@ export default function (app: Hono) {
                 };
                 subApp.get(routePath, wrapedHandler);
             },
+            app: subApp
         });
     }
 
