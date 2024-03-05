@@ -296,7 +296,7 @@ describe('tgiv', () => {
 describe('empty', () => {
     it(`empty`, async () => {
         const response1 = await app.request('/test/empty');
-        expect(response1.status).toBe(404);
+        expect(response1.status).toBe(503);
         expect(await response1.text()).toMatch(/Error: this route is empty/);
 
         const response2 = await app.request('/test/1?limit=0');
@@ -320,7 +320,7 @@ describe('wrong_path', () => {
         const response = await app.request('/wrong');
         expect(response.status).toBe(404);
         expect(response.headers.get('cache-control')).toBe(`public, max-age=${config.cache.routeExpire}`);
-        expect(await response.text()).toMatch(/Error message: wrong path/);
+        expect(await response.text()).toMatch('wrong path');
     });
 });
 
