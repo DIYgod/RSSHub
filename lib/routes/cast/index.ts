@@ -21,7 +21,6 @@ async function parsePage(html: string) {
                     return {
                         title: title.text(),
                         link: title.attr('href'),
-                        description: '',
                     };
                 }
                 articleUrl = `${baseUrl}${title.attr('href')}`;
