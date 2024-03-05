@@ -58,7 +58,7 @@ describe('route throws an error', () => {
                     expect(value).toBe('2 /test/error<br>2 /test/slow<br>1 /test/httperror<br>1 /thisDoesNotExist<br>1 /<br>');
                     break;
                 case 'Hot Error Routes:':
-                    expect(value).toBe('4 /test/:id<br>');
+                    expect(value).toBe('3 /test/:id<br>');
                     break;
                 case 'Hot Error Paths:':
                     expect(value).toBe('2 /test/error<br>1 /test/httperror<br>1 /test/slow<br>1 /thisDoesNotExist<br>');
