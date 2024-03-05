@@ -1,3 +1,3 @@
 export default {
-    '/:column?': ['TonyRL'],
+    '/:column/:subColumn/:category?': ['KarasuShin', 'TonyRL'],
 };
