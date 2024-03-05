@@ -6,7 +6,7 @@ sidebar_position: 1
 
 This guide is intended for advanced users who want to know how to create an RSS feed in detail.  If you're new to creating RSS feeds, we recommend reading [Create Your Own RSSHub Route](/joinus/new-rss/start-code) first.
 
-Once you have collected the data you want to include in your RSS feed, you can pass it to `ctx.set('data', obj)`. RSSHub's middleware [`template.js`](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/template.js) will then process the data and render the RSS output in the required format (which is RSS 2.0 by default). In addition to the fields mentioned in [Create your own RSSHub route](/joinus/new-rss/start-code), you can customize your RSS feed further using the following fields.
+Once you have collected the data you want to include in your RSS feed, you can pass it to `ctx.set('data', obj)`. RSSHub's middleware [`template.ts`](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/template.ts) will then process the data and render the RSS output in the required format (which is RSS 2.0 by default). In addition to the fields mentioned in [Create your own RSSHub route](/joinus/new-rss/start-code), you can customize your RSS feed further using the following fields.
 
 It's important to note that not all fields are applicable to all output formats since RSSHub supports multiple output formats. The table below shows which fields are compatible with different output formats. We use the following symbols to denote compatibility: `A` for Atom, `J` for JSON Feed, `R` for RSS 2.0.
 

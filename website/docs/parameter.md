@@ -4,17 +4,9 @@
 
 Parameters here are actually URI query and can be linked together with `&` to generate a complex feed.
 
-Parameters here need to be placed after the route path. Some routes may have <b><span style={{color: "green"}}>custom route parameters</span></b> and <b><span style={{color: "violet"}}>parameters here</span></b> need to be placed after them.
+Parameters here need to be placed after the route path. Some routes may have <span style={{color: "blue"}}>**custom route parameters**</span> and <span style={{color: "violet"}}>**parameters here**</span> need to be placed after them.
 
-E.g.
-
-<Link to="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0?brief=100&limit=5">https://rsshub.app/twitter/user/durov/<span style={{color: "green"}}><b>readable=1&includeRts=0</b></span>?<span style={{color: "violet"}}><b>brief=100&limit=5</b></span></Link>
-
-If a <b><span style={{color: "magenta"}}>output format</span></b> (`.atom`, `.rss`, `.json`, `.debug.json`) is set, it needs to be placed between the route path (including <b><span style={{color: "green"}}>custom route parameters</span></b>) and <b><span style={{color: "violet"}}>other parameters</span></b>.
-
-E.g.
-
-<Link to="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0.atom?brief=100&limit=5">https://rsshub.app/twitter/user/durov/<span style={{color: "green"}}><b>readable=1&includeRts=0</b></span><span style={{color: "magenta"}}><b>.atom</b></span>?<span style={{color: "violet"}}><b>brief=100&limit=5</b></span></Link>
+E.g., <Link to="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0?brief=100&limit=5">https://rsshub.app/twitter/user/durov/<span style={{color: "blue"}}>**readable=1&includeRts=0**</span>?<span style={{color: "violet"}}>**brief=100&limit=5**</span></Link>
 
 :::
 
@@ -136,34 +128,34 @@ There are more details in the [FAQ](/faq).
 
 ## Output Formats
 
-RSSHub conforms to RSS 2.0, Atom, JSON Feed and RSS3 UMS Standard, simply append `.rss`, `.atom`, `.json`, or `.ums` to the end of the feed address to obtain the feed in corresponding format. The default output format is RSS 2.0.
+RSSHub conforms to RSS 2.0, Atom, JSON Feed and RSS3 UMS Standard. To obtain the feed in a specific format, simply add the `format` parameter with the value `rss`, `atom`, `json`, or `ums` to the feed address to obtain the feed in corresponding format. The default output format is RSS 2.0.
 
 E.g.
 
 -   Default (RSS 2.0) - [https://rsshub.app/dribbble/popular](https://rsshub.app/dribbble/popular)
--   RSS 2.0 - [https://rsshub.app/dribbble/popular.rss](https://rsshub.app/dribbble/popular.rss)
--   Atom - [https://rsshub.app/dribbble/popular.atom](https://rsshub.app/dribbble/popular.atom)
--   JSON Feed - [https://rsshub.app/twitter/user/DIYgod.json](https://rsshub.app/twitter/user/DIYgod.json)
--   RSS3 UMS - [https://rsshub.app/abc.ums](https://rsshub.app/abc.ums)
--   Apply filters or URL query - [https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular.atom?filterout=Blue|Yellow|Black)
+-   RSS 2.0 - [https://rsshub.app/dribbble/popular?format=rss](https://rsshub.app/dribbble/popular?format=rss)
+-   Atom - [https://rsshub.app/dribbble/popular?format=atom](https://rsshub.app/dribbble/popular?format=atom)
+-   JSON Feed - [https://rsshub.app/twitter/user/DIYgod?format=json](https://rsshub.app/twitter/user/DIYgod?format=json)
+-   RSS3 UMS - [https://rsshub.app/abc?format=ums](https://rsshub.app/abc?format=ums)
+-   Apply filters or URL query - [https://rsshub.app/dribbble/popular?format=atom&filterout=Blue|Yellow|Black](https://rsshub.app/dribbble/popular?format=atom&filterout=Blue|Yellow|Black)
 
 ### debug.json
 
-If the RSSHub instance is running with `debugInfo=true` enabled, suffixing a route with `.debug.json` will result in the value of `ctx.set('json', obj)` being returned.
+If the RSSHub instance is running with `debugInfo=true` enabled, a route with `debug.json` format parameter will result in the value of `ctx.set('json', obj)` being returned.
 
 This feature aims to facilitate debugging or developing customized features. A route developer has the freedom to determine whether to adopt it or not, without any format requirement.
 
 For example：
 
--   `/furstar/characters/cn.debug.json`
+-   `/furstar/characters/cn?format=debug.json`
 
 ### debug.html
 
-By adding `.{index}.debug.html` (where `{index}` is a number starting from 0) at the end of the route and running the instance with `debugInfo=true`, RSSHub will return the content set in the plugin's `data.item[index].description`. You can access this page with a browser to quickly view the extracted information.
+By adding `{index}.debug.html` (where `{index}` is a number starting from 0) format parameter and running the instance with `debugInfo=true`, RSSHub will return the content set in the plugin's `data.item[index].description`. You can access this page with a browser to quickly view the extracted information.
 
 Example:
 
--   `/furstar/characters/cn.0.debug.html`
+-   `/furstar/characters/cn?format=0.debug.html`
 
 ## Brief introduction
 

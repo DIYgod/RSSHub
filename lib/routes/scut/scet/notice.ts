@@ -1,0 +1,32 @@
+// @ts-nocheck
+import got from '@/utils/got';
+import { load } from 'cheerio';
+
+export default async (ctx) => {
+    const link = 'https://www2.scut.edu.cn/jtxs/24241/list.htm';
+    const response = await got({
+        method: 'get',
+        url: link,
+    });
+
+    const data = response.data;
+
+    const $ = load(data);
+    const list = $('#wp_news_w5 li');
+
+    ctx.set('data', {
+        title: '华南理工大学土木与交通学院 - 学工通知',
+        link,
+        item:
+            list &&
+            list.toArray().map((item) => {
+                item = $(item);
+                return {
+                    title: item.find('li a').text(),
+                    description: item.find('li a').text(),
+                    link: item.find('li a').attr('href'),
+                    pubDate: item.find('.Article_PublishDate').text(),
+                };
+            }),
+    });
+};

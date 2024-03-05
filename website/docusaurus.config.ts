@@ -214,6 +214,10 @@ const config: Config = {
                             label: 'Telegram Channel',
                             href: 'https://t.me/awesomeRSSHub',
                         },
+                        {
+                            label: 'Twitter',
+                            href: 'https://twitter.com/intent/follow?screen_name=_RSSHub',
+                        },
                     ],
                 },
                 {

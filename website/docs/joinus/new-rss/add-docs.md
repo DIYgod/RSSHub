@@ -68,9 +68,9 @@ The documentation is written in MDX v3 and rendered with [Docusaurus v3](https:/
 
 To add documentation to your route, use the `Route` React component. It works like HTML tag. The following are the most commonly used component properties:
 
--   `author`: The route maintainer(s), separated by a single space. It should be the same as [`maintainer.js`](/joinus/new-rss/before-start#understand-the-basics-maintainer-js)
+-   `author`: The route maintainer(s), separated by a single space. It should be the same as [`maintainer.ts`](/joinus/new-rss/before-start#understand-the-basics-maintainer-js)
 -   `example`: The route example, with a leading `/`
--   `path`: The route path, which should be the same as the key in [`maintainer.js`](/joinus/new-rss/before-start#understand-the-basics-maintainer-js) with the namespace. In the above example, it is `/github/issue/:user/:repo?`
+-   `path`: The route path, which should be the same as the key in [`maintainer.ts`](/joinus/new-rss/before-start#understand-the-basics-maintainer-js) with the namespace. In the above example, it is `/github/issue/:user/:repo?`
 -   `paramsDesc`: The route parameter description, in an array of strings that support Markdown.
   -   The description **must** follow the order in which they appear in the path.
   -   The number of description should match with the number of parameters in `path`. If you miss a description, the build will fail.

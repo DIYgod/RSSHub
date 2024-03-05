@@ -19,12 +19,12 @@ Different sites have different APIs. You can check the API documentation for the
 
 ### Create the main file
 
-Open your code editor and create a new file. Since we are going to create an RSS feed for GitHub issues, it is suggested that you save the file as `issue.js`, but you can name it whatever you like.
+Open your code editor and create a new file. Since we are going to create an RSS feed for GitHub issues, it is suggested that you save the file as `issue.ts`, but you can name it whatever you like.
 
 Here's the basic code to get you started:
 
 <Tabs>
-<TabItem value="issue.js" label="issue.js">
+<TabItem value="issue.ts" label="issue.ts">
 
 ```js
 // Import the necessary modules
@@ -255,7 +255,7 @@ export default async (ctx) => {
 
 ### Creat the main file
 
-To start, open your code editor and create a new file. Since we are going to create an RSS feed for GitHub issues, it is suggested that you save the file as `issue.js`. However, you can also name it whatever you like.
+To start, open your code editor and create a new file. Since we are going to create an RSS feed for GitHub issues, it is suggested that you save the file as `issue.ts`. However, you can also name it whatever you like.
 
 Here's the basic code to get you started:
 
@@ -480,7 +480,7 @@ First, we need a few data:
 2.  The data source link
 3.  The RSS feed title (not the title of individual items)
 
-Open your code editor and create a new file. Since we're going to create an RSS feed for GitHub issues, it's suggested that you save the file as `issue.js`, but you can name it whatever you like.
+Open your code editor and create a new file. Since we're going to create an RSS feed for GitHub issues, it's suggested that you save the file as `issue.ts`, but you can name it whatever you like.
 
 Here's some basic code to get you started:
 
@@ -591,7 +591,7 @@ Using puppeteer is another approach to obtain data from websites. However, it is
 
 ### Creat the main file
 
-To get started with puppeteer, create a new file in your code editor and save it with an appropriate name, such as `issue.js`. Then, require the necessary modules and set up the basic structure of the function:
+To get started with puppeteer, create a new file in your code editor and save it with an appropriate name, such as `issue.ts`. Then, require the necessary modules and set up the basic structure of the function:
 
 ```js
 // Require some useful modules

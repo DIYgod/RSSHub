@@ -1,0 +1,3 @@
+export default {
+    '/apod': ['HenryQW'],
+};

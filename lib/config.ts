@@ -61,7 +61,6 @@ export type Config = {
         allow_user_hotlink_template: boolean;
         filter_regex_engine: string;
         allow_user_supply_unsafe_domain: boolean;
-        mediaProxyKey?: string;
     };
     suffix?: string;
     titleLengthLimit: number;
@@ -391,7 +390,6 @@ const calculateValue = () => {
             allow_user_hotlink_template: toBoolean(envs.ALLOW_USER_HOTLINK_TEMPLATE, false),
             filter_regex_engine: envs.FILTER_REGEX_ENGINE || 're2',
             allow_user_supply_unsafe_domain: toBoolean(envs.ALLOW_USER_SUPPLY_UNSAFE_DOMAIN, false),
-            mediaProxyKey: envs.MEDIA_PROXY_KEY,
         },
         suffix: envs.SUFFIX,
         titleLengthLimit: toInt(envs.TITLE_LENGTH_LIMIT, 150),
@@ -633,16 +631,18 @@ calculateValue();
 
 if (envs.REMOTE_CONFIG) {
     got.get(envs.REMOTE_CONFIG)
-        .then((response) => {
+        .then(async (response) => {
             const data = JSON.parse(response.body);
             if (data) {
                 envs = Object.assign(envs, data);
                 calculateValue();
-                require('@/utils/logger').default.info('Remote config loaded.');
+                const { default: logger } = await import('@/utils/logger');
+                logger.info('Remote config loaded.');
             }
         })
-        .catch((error) => {
-            require('@/utils/logger').default.error('Remote config load failed.', error);
+        .catch(async (error) => {
+            const { default: logger } = await import('@/utils/logger');
+            logger.error('Remote config load failed.', error);
         });
 }
 

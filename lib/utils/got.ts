@@ -66,3 +66,4 @@ const custom: typeof got & {
 custom.all = (list) => Promise.all(list);
 
 export default custom;
+export type { Response, NormalizedOptions, Options } from 'got';

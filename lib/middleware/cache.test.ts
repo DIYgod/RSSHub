@@ -1,4 +1,4 @@
-import { describe, expect, it, jest, afterEach, afterAll, beforeAll } from '@jest/globals';
+import { describe, expect, it, vi, afterEach, afterAll, beforeAll } from 'vitest';
 import Parser from 'rss-parser';
 import wait from '@/utils/wait';
 
@@ -11,7 +11,7 @@ beforeAll(() => {
 
 afterEach(() => {
     delete process.env.CACHE_TYPE;
-    jest.resetModules();
+    vi.resetModules();
 });
 
 afterAll(() => {
