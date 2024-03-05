@@ -9,5 +9,5 @@ export default (router) => {
     router.get('/news/zzkx', toZzkx);
     router.get('/zzkx', toZzkx);
     router.get('/video/:category?', './video');
-    router.get('/:category*', './');
+    router.get('/:category{.+}?', './');
 };
