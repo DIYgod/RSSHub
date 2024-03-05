@@ -43,7 +43,7 @@ async function parsePage(html: string) {
 
 export default async (ctx) => {
     const { column, subColumn, category } = ctx.req.param();
-    const { limit = 20 } = ctx.req.query();
+    const { limit = 10 } = ctx.req.query();
     let link = `${baseUrl}/${column}/${subColumn}`;
     if (category) {
         link += `/${category}/index.html`;
