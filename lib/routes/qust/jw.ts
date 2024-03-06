@@ -10,19 +10,19 @@ export default async (ctx) => {
         url: `${baseUrl}jwtz.htm`,
     });
     const $ = load(response.data);
-    const items = [];
-    $('.winstyle60982 tr').each((_, element) => {
+    const items = $('.winstyle60982 tr').map((_, element) => {
         const linkElement = $(element).find('a.c60982');
         if (linkElement.length > 0) {
             const itemTitle = linkElement.text().trim();
             const path = linkElement.attr('href');
-            const itemUrl = path.startsWith('http') ? path : `${baseUrl}/${path}`;
-            items.push({
+            const itemUrl = path.startsWith('http') ? path : `${baseUrl}${path}`;
+            return {
                 title: itemTitle,
                 link: itemUrl,
-            });
+            };
         }
-    });
+        return null;
+    }).get();
 
     ctx.set('data', {
         title: '青岛科技大学 - 教务通知',
@@ -30,3 +30,4 @@ export default async (ctx) => {
         item: items,
     });
 };
+
