@@ -1,3 +1,3 @@
 export default (router) => {
-    router.get('/:path+', './price');
+    router.get('/:path{.+}', './price');
 };

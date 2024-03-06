@@ -1,4 +1,3 @@
-// @ts-nocheck
 const BASE_URL = 'https://www.icac.org.hk';
 
 const LANG_TYPE = {

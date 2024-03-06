@@ -1,4 +1,3 @@
-// @ts-nocheck
 const { rootUrl, asyncPoolAll, parseNewsList, parseArticle } = require('./utils');
 const site_title_mapping = {
     '/': 'News',

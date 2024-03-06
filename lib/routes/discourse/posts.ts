@@ -1,4 +1,3 @@
-// @ts-nocheck
 const { getConfig } = require('./utils');
 import got from '@/utils/got';
 import RSSParser from '@/utils/rss-parser';

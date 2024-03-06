@@ -1,4 +1,3 @@
-// @ts-nocheck
 import md5 from '@/utils/md5';
 
 const SALT = '1Ftjv0bfpVmqbE38';

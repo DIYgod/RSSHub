@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { load } from 'cheerio';
 import got from '@/utils/got';
 const { baseUrl, cookieJar, getArticleList, getArticle } = require('./utils');

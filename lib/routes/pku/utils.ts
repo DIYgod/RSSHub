@@ -1,4 +1,3 @@
-// @ts-nocheck
 const eecsMap = new Map([
     [0, 'qb.htm'],
     [1, 'xytz.htm'],

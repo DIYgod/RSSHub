@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 // 学校官网：http://www.upc.edu.cn/
 import got from '@/utils/got';

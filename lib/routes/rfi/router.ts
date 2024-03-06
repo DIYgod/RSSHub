@@ -1,3 +1,3 @@
 export default (router) => {
-    router.get('/:path*', './news');
+    router.get('/:path{.+}?', './news');
 };

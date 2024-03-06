@@ -1,4 +1,3 @@
-// @ts-nocheck
 const utils = require('./utils');
 import got from '@/utils/got';
 

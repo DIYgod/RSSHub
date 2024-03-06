@@ -1,4 +1,3 @@
-// @ts-nocheck
 import buildData from '@/utils/common-config';
 const baseUrl = 'https://www.xunhupay.com';
 

@@ -1,4 +1,3 @@
-// @ts-nocheck
 const got = require('../pixiv-got');
 const maskHeader = require('../constants').maskHeader;
 const assert = require('assert');

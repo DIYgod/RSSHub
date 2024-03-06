@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 /* refer to: ./tag.js (author: @StevenREC0) */
 import got from '@/utils/got';

@@ -1,4 +1,3 @@
-// @ts-nocheck
 const { parseList } = require('./util');
 const baseUrl = 'https://www.zaobao.com';
 

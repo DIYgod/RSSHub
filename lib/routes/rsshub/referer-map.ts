@@ -1,4 +1,3 @@
-// @ts-nocheck
 const refererMap = new Map([
     ['fbcdn.net', 'https://www.facebook.com/'],
     ['cdninstagram.com', 'https://www.instagram.com/'],

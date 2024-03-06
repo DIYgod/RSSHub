@@ -1,3 +1,3 @@
 export default (router) => {
-    router.get('/:id?/:category*', './');
+    router.get('/:id?/:category{.+}?', './');
 };

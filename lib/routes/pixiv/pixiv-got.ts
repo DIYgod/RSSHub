@@ -1,4 +1,3 @@
-// @ts-nocheck
 const tls = require('tls');
 import ipRegex from 'ip-regex';
 import got from '@/utils/got';

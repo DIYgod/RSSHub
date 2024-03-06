@@ -1,4 +1,3 @@
-// @ts-nocheck
 const CryptoJS = require('crypto-js');
 import got from '@/utils/got';
 import { load } from 'cheerio';

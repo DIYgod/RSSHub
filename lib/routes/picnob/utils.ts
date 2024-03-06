@@ -1,4 +1,3 @@
-// @ts-nocheck
 const puppeteerGet = async (url, browser) => {
     let data;
     const page = await browser.newPage();

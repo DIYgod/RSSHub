@@ -1,4 +1,3 @@
-// @ts-nocheck
 import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
 

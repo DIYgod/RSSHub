@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 const url = require('url');
 import got from '@/utils/got';

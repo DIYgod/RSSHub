@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { config } from '@/config';
 
 const defaultDomain = 'mp4us.com';

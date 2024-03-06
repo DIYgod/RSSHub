@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 const { Client, isNotionClientError, APIErrorCode } = require('@notionhq/client');
 import logger from '@/utils/logger';

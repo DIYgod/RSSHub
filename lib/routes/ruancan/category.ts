@@ -1,4 +1,3 @@
-// @ts-nocheck
 const fetchFeed = require('./utils');
 
 export default async (ctx) => {

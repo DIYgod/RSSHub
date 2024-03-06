@@ -1,9 +1,9 @@
-// @ts-nocheck
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
+import { isValidHost } from '@/utils/valid-host';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
@@ -12,6 +12,9 @@ import * as path from 'node:path';
 
 export default async (ctx) => {
     const { id = 'news', category = 'china' } = ctx.req.param();
+    if (!isValidHost(id)) {
+        throw new Error('Invalid id');
+    }
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
     const rootUrl = `http://${id}.m4.cn`;

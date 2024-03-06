@@ -11,6 +11,19 @@ const Layout: FC = (props) => (
         <head>
             <title>Welcome to RSSHub!</title>
             <script src="https://cdn.tailwindcss.com"></script>
+            <style>
+                {`
+                details::-webkit-scrollbar {
+                    width: 0.25rem;
+                }
+                details::-webkit-scrollbar-thumb {
+                    border-radius: 0.125rem;
+                    background-color: #e4e4e7;
+                }
+                details::-webkit-scrollbar-thumb:hover {
+                    background-color: #a1a1aa;
+                }`}
+            </style>
         </head>
         <body className="antialiased text-zinc-700">{props.children}</body>
     </html>
@@ -20,7 +33,7 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
     const debug = getDebugInfo();
 
     const showDebug = !config.debugInfo || config.debugInfo === 'false' ? false : config.debugInfo === 'true' || config.debugInfo === debugQuery;
-    const { disallowRobot, nodeName } = config;
+    const { disallowRobot, nodeName, cache } = config;
 
     const duration = Date.now() - startTime;
 
@@ -57,8 +70,8 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                   ]
                 : []),
             {
-                name: 'Cache Length',
-                value: config.cache.routeExpire + 's',
+                name: 'Cache Duration',
+                value: cache.routeExpire + 's',
             },
             {
                 name: 'Request Amount',
@@ -81,8 +94,56 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                 value: debug.request ? ((1 - debug.error / debug.request) * 100).toFixed(2) + '%' : 0,
             },
             {
-                name: 'Run Time',
+                name: 'Uptime',
                 value: (duration / 3_600_000).toFixed(2) + ' hour(s)',
+            },
+            {
+                name: 'Hot Routes',
+                value: Object.keys(debug.routes)
+                    .sort((a, b) => debug.routes[b] - debug.routes[a])
+                    .slice(0, 30)
+                    .map((route) => (
+                        <>
+                            {debug.routes[route]} {route}
+                            <br />
+                        </>
+                    )),
+            },
+            {
+                name: 'Hot Paths',
+                value: Object.keys(debug.paths)
+                    .sort((a, b) => debug.paths[b] - debug.paths[a])
+                    .slice(0, 30)
+                    .map((path) => (
+                        <>
+                            {debug.paths[path]} {path}
+                            <br />
+                        </>
+                    )),
+            },
+            {
+                name: 'Hot Error Routes',
+                value: Object.keys(debug.errorRoutes)
+                    .sort((a, b) => debug.errorRoutes[b] - debug.errorRoutes[a])
+                    .slice(0, 30)
+                    .map((route) => (
+                        <>
+                            {debug.errorRoutes[route]} {route}
+                            <br />
+                        </>
+                    )),
+            },
+            {
+                name: 'Hot Error Paths',
+                value: Object.keys(debug.errorPaths)
+                    .sort((a, b) => debug.errorPaths[b] - debug.errorPaths[a])
+                    .slice(0, 30)
+                    .map((path) => (
+                        <>
+                            {debug.errorPaths[path]} {path}
+                            <br />
+                        </>
+                    )),
             },
         ],
     };
@@ -105,22 +166,22 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                 <p className="text-xl font-medium text-zinc-600">Everything is RSSible</p>
                 <div className="font-bold space-x-4 text-sm">
                     <a target="_blank" href="https://docs.rsshub.app">
-                        <button className="text-white bg-[#F5712C] py-2 px-4 rounded-full">View Docs</button>
+                        <button className="text-white bg-[#F5712C] hover:bg-[#DD4A15] py-2 px-4 rounded-full">View Docs</button>
                     </a>
                     <a target="_blank" href="https://github.com/DIYgod/RSSHub">
-                        <button className="bg-zinc-200 py-2 px-4 rounded-full">View on GitHub</button>
+                        <button className="bg-zinc-200 hover:bg-zinc-300 py-2 px-4 rounded-full">View on GitHub</button>
                     </a>
                     <a target="_blank" href="https://docs.rsshub.app/support" className="text-[#F5712C]">
-                        <button className="text-white bg-red-500 py-2 px-4 rounded-full">❤️ Sponsor</button>
+                        <button className="text-white bg-red-500 hover:bg-red-600 py-2 px-4 rounded-full">❤️ Sponsor</button>
                     </a>
                 </div>
                 {info.showDebug ? (
-                    <details className="text-xs w-96 !mt-8">
+                    <details className="text-xs w-96 !mt-8 max-h-[400px] overflow-auto">
                         <summary className="text-sm cursor-pointer">Debug Info</summary>
                         {info.debug.map((item) => (
                             <div class="debug-item my-3 pl-8">
-                                <span class="debug-key">{item.name}: </span>
-                                <span class="debug-value">{item.value}</span>
+                                <span class="debug-key w-32 text-right inline-block mr-2">{item.name}: </span>
+                                <span class="debug-value inline-block break-all align-top">{item.value}</span>
                             </div>
                         ))}
                     </details>
@@ -142,7 +203,11 @@ const Index: FC<{ debugQuery: string | undefined }> = ({ debugQuery }) => {
                     </a>
                 </p>
                 <p className="!mt-6">
-                    Please consider <a target="_blank" href="https://docs.rsshub.app/support" className="text-[#F5712C]">sponsoring</a> to help keep this open source project alive.
+                    Please consider{' '}
+                    <a target="_blank" href="https://docs.rsshub.app/support" className="text-[#F5712C]">
+                        sponsoring
+                    </a>{' '}
+                    to help keep this open source project alive.
                 </p>
                 <p>
                     Made with ❤️ by{' '}

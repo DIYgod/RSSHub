@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 const { getArchive, getProviderList, parseList, parseItem } = require('./utils');
 

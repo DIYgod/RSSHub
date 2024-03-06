@@ -1,4 +1,3 @@
-// @ts-nocheck
 const { getNoticeList } = require('./utils');
 
 const url = 'https://www.njxzc.edu.cn/89/list.htm';

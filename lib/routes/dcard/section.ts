@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 const utils = require('./utils');

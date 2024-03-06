@@ -1,4 +1,3 @@
-// @ts-nocheck
 const { baseUrl, gqlMap, gqlFeatures, consumerKey, consumerSecret } = require('./constants');
 import { config } from '@/config';
 import logger from '@/utils/logger';

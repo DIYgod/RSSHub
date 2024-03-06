@@ -1,4 +1,3 @@
-// @ts-nocheck
 const crypto = require('crypto');
 
 const cityTimezones = require('city-timezones');

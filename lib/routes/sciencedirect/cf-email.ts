@@ -1,4 +1,3 @@
-// @ts-nocheck
 /**
  * The alogrithm is well-explained in https://andrewlock.net/simple-obfuscation-of-email-addresses-using-javascript/
  */

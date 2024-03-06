@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { load } from 'cheerio';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';

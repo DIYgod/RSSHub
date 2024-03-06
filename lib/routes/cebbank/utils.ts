@@ -1,4 +1,3 @@
-// @ts-nocheck
 const TYPE = {
     usd: {
         name: '美元(USD)',

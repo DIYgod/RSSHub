@@ -13,7 +13,7 @@ afterAll(() => {
 describe('error', () => {
     it(`error`, async () => {
         const response = await request.get('/test/error');
-        expect(response.status).toBe(404);
+        expect(response.status).toBe(503);
         expect(response.text).toMatch(/Error: Error test/);
     });
 });
@@ -21,10 +21,8 @@ describe('error', () => {
 describe('httperror', () => {
     it(`httperror`, async () => {
         const response = await request.get('/test/httperror');
-        expect(response.status).toBe(404);
-        expect(response.text).toMatch(
-            /Response code 404 \(Not Found\): target website might be blocking our access, you can <a href="https:\/\/docs\.rsshub\.app\/install\/">host your own RSSHub instance<\/a> for a better usability\./
-        );
+        expect(response.status).toBe(503);
+        expect(response.text).toMatch('Response code 404 (Not Found): target website might be blocking our access, you can host your own RSSHub instance for a better usability.');
     }, 20000);
 });
 
@@ -52,16 +50,16 @@ describe('route throws an error', () => {
                     expect(value).toBe('7');
                     break;
                 case 'Hot Routes:':
-                    expect(value).toBe('4  /test/:id<br>');
+                    expect(value).toBe('4 /test/:id<br>');
                     break;
                 case 'Hot Paths:':
-                    expect(value).toBe('2  /test/error<br>2  /test/slow<br>1  /test/httperror<br>1  /thisDoesNotExist<br>1  /<br>');
+                    expect(value).toBe('2 /test/error<br>2 /test/slow<br>1 /test/httperror<br>1 /thisDoesNotExist<br>1 /<br>');
                     break;
                 case 'Hot Error Routes:':
-                    expect(value).toBe('3  /test/:id<br>');
+                    expect(value).toBe('3 /test/:id<br>');
                     break;
                 case 'Hot Error Paths:':
-                    expect(value).toBe('2  /test/error<br>1  /test/httperror<br>1  /test/slow<br>1  /thisDoesNotExist<br>');
+                    expect(value).toBe('2 /test/error<br>1 /test/httperror<br>1 /test/slow<br>1 /thisDoesNotExist<br>');
                     break;
                 default:
             }

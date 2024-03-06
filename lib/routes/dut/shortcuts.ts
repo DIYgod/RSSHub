@@ -1,4 +1,3 @@
-// @ts-nocheck
 module.exports = {
     news: {
         xwjj: 'xwjj01',

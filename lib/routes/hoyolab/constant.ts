@@ -1,4 +1,3 @@
-// @ts-nocheck
 // 域名
 const HOST = 'https://bbs-api-os.hoyolab.com';
 // 活动列接口

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 const { apiBase, baseUrl, getUserInfo, renderPost } = require('./utils');

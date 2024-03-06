@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 // Warning: The author still knows nothing about javascript!
 

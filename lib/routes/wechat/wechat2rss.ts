@@ -1,4 +1,3 @@
-// @ts-nocheck
 import parser from '@/utils/rss-parser';
 import { parseDate } from '@/utils/parse-date';
 import { finishArticleItem } from '@/utils/wechat-mp';

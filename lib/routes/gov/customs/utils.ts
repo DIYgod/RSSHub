@@ -1,4 +1,3 @@
-// @ts-nocheck
 const host = 'http://www.customs.gov.cn';
 
 const puppeteerGet = async (url, browser) => {

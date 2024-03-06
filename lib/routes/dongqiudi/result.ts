@@ -1,4 +1,3 @@
-// @ts-nocheck
 import got from '@/utils/got';
 const { JSDOM } = require('jsdom');
 import { parseDate } from '@/utils/parse-date';

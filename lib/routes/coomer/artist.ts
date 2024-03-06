@@ -1,4 +1,3 @@
-// @ts-nocheck
 const fetchItems = require('./utils');
 
 export default async (ctx) => {

@@ -1,8 +1,8 @@
-// @ts-nocheck
 import { config } from '@/config';
 import got from '@/utils/got';
 import wait from '@/utils/wait';
 import cache from '@/utils/cache';
+import { DataItem } from '@/types';
 
 let cacheIndex = 0;
 
@@ -16,7 +16,7 @@ export default async (ctx) => {
             url: 'https://httpbingo.org/status/404',
         });
     }
-    let item = [];
+    let item: DataItem[] = [];
     switch (ctx.req.param('id')) {
         case 'filter':
             item = [
@@ -141,7 +141,8 @@ export default async (ctx) => {
 <img data-mock="/DIYgod/RSSHub.png">
 <img mock="/DIYgod/RSSHub.gif">
 <img src="http://mock.com/DIYgod/DIYgod/RSSHub">
-<img src="/DIYgod/RSSHub.jpg" onclick="alert(1);" onerror="alert(1);" onload="alert(1);">`,
+<img src="/DIYgod/RSSHub.jpg" onclick="alert(1);" onerror="alert(1);" onload="alert(1);">
+<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">`,
                     pubDate: new Date(`2019-3-1`).toUTCString(),
                     link: `//mock.com/DIYgod/RSSHub`,
                     author: `DIYgod`,

@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 const { ImapFlow } = require('imapflow');
 import { config } from '@/config';

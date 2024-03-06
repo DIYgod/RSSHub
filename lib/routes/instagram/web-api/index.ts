@@ -1,4 +1,3 @@
-// @ts-nocheck
 import cache from '@/utils/cache';
 const { CookieJar } = require('tough-cookie');
 import { config } from '@/config';

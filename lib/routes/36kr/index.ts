@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { getSubPath } from '@/utils/common-utils';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
