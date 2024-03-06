@@ -2,7 +2,7 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
-const { parseJSONP } = require('./jsonp-helper');
+import { parseJSONP } from './jsonp-helper';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 

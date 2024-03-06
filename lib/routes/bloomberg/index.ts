@@ -1,4 +1,4 @@
-const { rootUrl, asyncPoolAll, parseNewsList, parseArticle } = require('./utils');
+import { rootUrl, asyncPoolAll, parseNewsList, parseArticle } from './utils';
 const site_title_mapping = {
     '/': 'News',
     bpol: 'Politics',

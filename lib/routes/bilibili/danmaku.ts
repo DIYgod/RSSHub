@@ -1,5 +1,5 @@
 import { load } from 'cheerio';
-const cache = require('./cache');
+import cache from './cache';
 import got from '@/utils/got';
 const zlib = require('zlib');
 

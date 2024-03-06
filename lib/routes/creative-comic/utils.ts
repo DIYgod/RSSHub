@@ -82,14 +82,4 @@ const getRealKey = (imgKey, token = DEFAULT_TOKEN) => {
     };
 };
 
-module.exports = {
-    getBook,
-    getChapter,
-    getChapters,
-    getImgEncrypted,
-    getImgKey,
-    getUuid,
-    decrypt,
-    token2Key,
-    getRealKey,
-};
+export { getBook, getChapter, getChapters, getImgEncrypted, getImgKey, getUuid, decrypt, token2Key, getRealKey };

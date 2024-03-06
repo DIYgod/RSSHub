@@ -8,7 +8,7 @@ const dayjs = require('dayjs');
 import * as path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-const { config } = require('./config');
+import { config } from './config';
 
 export default async (ctx) => {
     const type = ctx.req.param('type');

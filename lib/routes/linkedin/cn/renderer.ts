@@ -174,6 +174,4 @@ const parseAttr = (description) => {
     return q.join('');
 };
 
-module.exports = {
-    parseAttr,
-};
+export { parseAttr };

@@ -131,10 +131,4 @@ async function getAccountIdByAcct(acct) {
     return { site, account_id };
 }
 
-module.exports = {
-    apiHeaders,
-    parseStatuses,
-    getAccountStatuses,
-    getAccountIdByAcct,
-    allowSiteList,
-};
+export { apiHeaders, parseStatuses, getAccountStatuses, getAccountIdByAcct, allowSiteList };

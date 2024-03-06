@@ -1,6 +1,6 @@
 // https://github.com/BANKA2017/twitter-monitor/blob/node/apps/open_account/scripts/login.mjs
 
-const { bearerToken, guestActivateUrl } = require('./constants');
+import { bearerToken, guestActivateUrl } from './constants';
 import got from '@/utils/got';
 const crypto = require('crypto');
 import { config } from '@/config';

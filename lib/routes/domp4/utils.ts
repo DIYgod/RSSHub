@@ -92,11 +92,4 @@ function ensureDomain(ctx, domain = defaultDomain) {
     return origin;
 }
 
-module.exports = {
-    defaultDomain,
-    magnetTrackers,
-    getUrlType,
-    composeMagnetUrl,
-    decodeCipherText,
-    ensureDomain,
-};
+export { defaultDomain, magnetTrackers, getUrlType, composeMagnetUrl, decodeCipherText, ensureDomain };

@@ -160,9 +160,4 @@ const processItems = async (i, downLinkType, itemSelector, categorySelector, dow
         });
 };
 
-module.exports = {
-    rootUrl,
-    getItems,
-    getItemInfo,
-    processItems,
-};
+export { rootUrl, getItems, getItemInfo, processItems };

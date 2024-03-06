@@ -121,7 +121,4 @@ const asyncPoolAll = async (...args) => {
     }
     return results;
 };
-module.exports = {
-    asyncPoolAll,
-    parseArticle,
-};
+export { asyncPoolAll, parseArticle };

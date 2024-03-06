@@ -63,10 +63,4 @@ const getPost = (item, tryGet) =>
         return item;
     });
 
-module.exports = {
-    phoneBaseUrl,
-    webBaseUrl,
-    generateNonce,
-    sign,
-    getPost,
-};
+export { phoneBaseUrl, webBaseUrl, generateNonce, sign, getPost };

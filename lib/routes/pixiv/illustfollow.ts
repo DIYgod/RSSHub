@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const { getToken } = require('./token');
+import { getToken } from './token';
 const getIllustFollows = require('./api/get-illust-follows');
 import { config } from '@/config';
 const pixivUtils = require('./utils');

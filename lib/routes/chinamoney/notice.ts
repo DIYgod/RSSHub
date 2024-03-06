@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-const { channels } = require('./channels');
+import { channels } from './channels';
 
 export default async (ctx) => {
     const { channelId = 2834 } = ctx.req.param();

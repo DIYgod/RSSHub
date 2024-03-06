@@ -1090,11 +1090,4 @@ const journalMap = {
     ],
 };
 
-module.exports = {
-    baseUrl,
-    cookieJar,
-    getArticle,
-    getArticleList,
-    getDataLayer,
-    journalMap,
-};
+export { baseUrl, cookieJar, getArticle, getArticleList, getDataLayer, journalMap };

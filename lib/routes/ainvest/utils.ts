@@ -65,9 +65,4 @@ const getHeaders = (key) => {
     };
 };
 
-module.exports = {
-    randomString,
-    encryptAES,
-    decryptAES,
-    getHeaders,
-};
+export { randomString, encryptAES, decryptAES, getHeaders };

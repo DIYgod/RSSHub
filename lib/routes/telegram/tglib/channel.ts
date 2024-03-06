@@ -1,6 +1,6 @@
 import wait from '@/utils/wait';
 import { config } from '@/config';
-const { client, decodeMedia, getFilename, getMediaLink, streamDocument, streamThumbnail } = require('./client');
+import { client, decodeMedia, getFilename, getMediaLink, streamDocument, streamThumbnail } from './client';
 const bigInt = require('telegram/Helpers').returnBigInt;
 const HTMLParser = require('telegram/extensions/html').HTMLParser;
 

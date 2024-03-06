@@ -45,8 +45,6 @@ async function getPageDetails(selector, pageUrl, titleSelector, dateSelector, da
               title: '无法获取标题',
           };
 }
+const getPageItemAndDate = getPageDetails;
 
-module.exports = {
-    getPageItem,
-    getPageItemAndDate: getPageDetails,
-};
+export { getPageItem, getPageItemAndDate };

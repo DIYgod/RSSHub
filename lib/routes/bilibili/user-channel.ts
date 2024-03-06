@@ -1,8 +1,8 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const cacheIn = require('./cache');
-const utils = require('./utils');
+import cacheIn from './cache';
+import utils from './utils';
 
 const notFoundData = {
     title: '此 bilibili 频道不存在',

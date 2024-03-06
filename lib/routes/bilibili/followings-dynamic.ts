@@ -1,7 +1,7 @@
 import got from '@/utils/got';
-const cache = require('./cache');
+import cache from './cache';
 import { config } from '@/config';
-const utils = require('./utils');
+import utils from './utils';
 const JSONbig = require('json-bigint');
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 const querystring = require('querystring');

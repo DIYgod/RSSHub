@@ -12,6 +12,4 @@ const unzip = (b64Data) => {
     return ret;
 };
 
-module.exports = {
-    unzip,
-};
+export { unzip };

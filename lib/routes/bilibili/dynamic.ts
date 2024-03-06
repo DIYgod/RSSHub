@@ -1,10 +1,10 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 const JSONbig = require('json-bigint');
-const utils = require('./utils');
+import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
-const cacheIn = require('./cache');
+import cacheIn from './cache';
 
 /**
     @by CaoMeiYouRen 2020-05-05 添加注释

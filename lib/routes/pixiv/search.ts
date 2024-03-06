@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const { getToken } = require('./token');
+import { getToken } from './token';
 const searchPopularIllust = require('./api/search-popular-illust');
 const searchIllust = require('./api/search-illust');
 import { config } from '@/config';

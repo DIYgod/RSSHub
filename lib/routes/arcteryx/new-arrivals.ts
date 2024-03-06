@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const { generateRssData } = require('./utils');
+import { generateRssData } from './utils';
 
 export default async (ctx) => {
     const { country, gender } = ctx.req.param();

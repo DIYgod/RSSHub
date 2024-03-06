@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-const { extractArticle, extractWork } = require('./utils');
+import { extractArticle, extractWork } from './utils';
 const baseUrl = 'https://www.zcool.com.cn';
 
 export default async (ctx) => {

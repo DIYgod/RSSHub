@@ -123,12 +123,6 @@ const parseItems = (list, browser, tryGet) =>
         )
     );
 
-module.exports = {
-    baseUrl,
-    pathMap,
-    getCookie,
-    setCookies,
-    parsePage,
-    parseList,
-    parseItems,
-};
+export { baseUrl, pathMap, getCookie, parsePage, parseList, parseItems };
+
+export { setCookies } from '@/utils/puppeteer-utils';

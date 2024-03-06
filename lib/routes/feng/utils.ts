@@ -73,9 +73,4 @@ const getThread = (tid, topicId) => {
     });
 };
 
-module.exports = {
-    baseUrl,
-    getForumMeta,
-    getThreads,
-    getThread,
-};
+export { baseUrl, getForumMeta, getThreads, getThread };

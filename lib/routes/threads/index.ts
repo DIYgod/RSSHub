@@ -1,6 +1,6 @@
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { PROFILE_QUERY, REPLIES_QUERY, THREADS_QUERY, apiUrl, threadUrl, profileUrl, extractTokens, makeHeader, buildContent } = require('./utils');
+import { PROFILE_QUERY, REPLIES_QUERY, THREADS_QUERY, apiUrl, threadUrl, profileUrl, extractTokens, makeHeader, buildContent } from './utils';
 
 export default async (ctx) => {
     const { user, routeParams } = ctx.req.param();

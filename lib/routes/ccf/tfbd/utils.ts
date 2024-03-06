@@ -41,7 +41,7 @@ const fetchAllArticles = (data) => {
     return info;
 };
 
-module.exports = {
+export default {
     BASE: base,
     urlBase,
     fetchAllArticles,

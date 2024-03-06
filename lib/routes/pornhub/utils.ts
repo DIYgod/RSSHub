@@ -30,9 +30,4 @@ const parseItems = (e) => ({
     pubDate: dayjs(extractDateFromImageUrl(e.find('img').data('mediumthumb'))) || parseRelativeDate(e.find('.added').text()),
 });
 
-module.exports = {
-    defaultDomain,
-    headers,
-    renderDescription,
-    parseItems,
-};
+export { defaultDomain, headers, renderDescription, parseItems };

@@ -33,6 +33,4 @@ function renderHTML(json) {
         .join('');
 }
 
-module.exports = {
-    renderHTML,
-};
+export { renderHTML };

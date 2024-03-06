@@ -56,4 +56,4 @@ const getItems = async (ctx, url, extra) => {
     return items;
 };
 
-module.exports = { getItems };
+export { getItems };

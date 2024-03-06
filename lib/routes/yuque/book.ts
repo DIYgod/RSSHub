@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-const { card2Html } = require('./utils');
+import { card2Html } from './utils';
 const { CookieJar } = require('tough-cookie');
 
 const APP_DATA_REGEX = /window\.appData = JSON\.parse\(decodeURIComponent\("(.+?)"\)\);/;

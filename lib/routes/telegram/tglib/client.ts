@@ -176,7 +176,7 @@ function streamDocument(obj, thumbSize = '', offset, limit) {
     return client.iterDownload(iterFileParams);
 }
 
-module.exports = { client, getMediaLink, decodeMedia, getFilename, streamDocument, streamThumbnail };
+export { client, getMediaLink, decodeMedia, getFilename, streamDocument, streamThumbnail };
 
 if (require.main === module) {
     Promise.resolve().then(async () => {

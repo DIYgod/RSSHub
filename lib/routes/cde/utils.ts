@@ -14,8 +14,4 @@ const getCookie = () =>
             .join('');
     });
 
-module.exports = {
-    title,
-    rootUrl,
-    getCookie,
-};
+export { title, rootUrl, getCookie };

@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 const { CookieJar } = require('tough-cookie');
 import { config } from '@/config';
 const { renderItems } = require('../common-utils');
-const { baseUrl, COOKIE_URL, checkLogin, getUserInfo, getUserFeedItems, getTagsFeedItems, getLoggedOutTagsFeedItems, renderGuestItems } = require('./utils');
+import { baseUrl, COOKIE_URL, checkLogin, getUserInfo, getUserFeedItems, getTagsFeedItems, getLoggedOutTagsFeedItems, renderGuestItems } from './utils';
 
 export default async (ctx) => {
     // if (!config.instagram || !config.instagram.cookie) {

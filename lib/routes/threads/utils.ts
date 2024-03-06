@@ -131,17 +131,4 @@ const buildContent = (item, options) => {
     return { title, description };
 };
 
-module.exports = {
-    apiUrl,
-    profileUrl,
-    threadUrl,
-    PROFILE_QUERY,
-    THREADS_QUERY,
-    REPLIES_QUERY,
-    USER_AGENT,
-    extractTokens,
-    makeHeader,
-    hasMedia,
-    buildMedia,
-    buildContent,
-};
+export { apiUrl, profileUrl, threadUrl, PROFILE_QUERY, THREADS_QUERY, REPLIES_QUERY, USER_AGENT, extractTokens, makeHeader, hasMedia, buildMedia, buildContent };

@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import { config } from '@/config';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const utils = require('./utils');
+import utils from './utils';
 const { CookieJar } = require('tough-cookie');
 const cookieJar = new CookieJar();
 import { queryToBoolean } from '@/utils/readable-social';

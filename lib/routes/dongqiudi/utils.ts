@@ -162,11 +162,4 @@ const ProcessFeedType3 = (item, response) => {
     }
 };
 
-module.exports = {
-    ProcessVideo,
-    ProcessFeed,
-    ProcessFeedType2,
-    ProcessFeedType3,
-    ProcessHref,
-    ProcessImg,
-};
+export { ProcessVideo, ProcessFeed, ProcessFeedType2, ProcessFeedType3, ProcessHref, ProcessImg };

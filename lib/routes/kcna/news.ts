@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 const asyncPool = require('tiny-async-pool');
 import { art } from '@/utils/render';
-const { parseJucheDate, fixDesc, fetchPhoto, fetchVideo } = require('./utils');
+import { parseJucheDate, fixDesc, fetchPhoto, fetchVideo } from './utils';
 import * as path from 'node:path';
 const sanitizeHtml = require('sanitize-html');
 

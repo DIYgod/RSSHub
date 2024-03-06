@@ -1,6 +1,6 @@
 import got from '@/utils/got';
-const utils = require('./utils');
-const cache = require('./cache');
+import utils from './utils';
+import cache from './cache';
 
 export default async (ctx) => {
     const key = ctx.req.param('key');

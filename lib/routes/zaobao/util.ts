@@ -178,7 +178,4 @@ const orderContent = (parent) => {
     }
 };
 
-module.exports = {
-    parseList,
-    orderContent,
-};
+export { parseList, orderContent };

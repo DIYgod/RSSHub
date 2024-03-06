@@ -7,7 +7,7 @@ const chrono = require('chrono-node');
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { config } from '@/config';
-const { puppeteerGet } = require('./utils');
+import { puppeteerGet } from './utils';
 import puppeteer from '@/utils/puppeteer';
 
 function deVideo(media) {

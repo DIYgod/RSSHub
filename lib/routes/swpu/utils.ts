@@ -17,6 +17,4 @@ function joinUrl(url1, url2) {
     return url1 + url2;
 }
 
-module.exports = {
-    joinUrl,
-};
+export { joinUrl };

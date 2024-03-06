@@ -131,10 +131,4 @@ const universalGet = async (url, route) => {
     return data;
 };
 
-module.exports = {
-    templates,
-    resolveUrl,
-    proxyVideo,
-    getOriginAvatar,
-    universalGet,
-};
+export { templates, resolveUrl, proxyVideo, getOriginAvatar, universalGet };

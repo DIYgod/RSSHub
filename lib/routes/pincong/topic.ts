@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-const { baseUrl, puppeteerGet } = require('./utils');
+import { baseUrl, puppeteerGet } from './utils';
 
 export default async (ctx) => {
     const url = `${baseUrl}/topic/${ctx.req.param('topic')}`;

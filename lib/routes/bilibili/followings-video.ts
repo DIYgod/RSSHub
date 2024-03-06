@@ -1,7 +1,7 @@
 import got from '@/utils/got';
-const cache = require('./cache');
+import cache from './cache';
 import { config } from '@/config';
-const utils = require('./utils');
+import utils from './utils';
 
 export default async (ctx) => {
     const uid = String(ctx.req.param('uid'));

@@ -1,6 +1,6 @@
 import got from '@/utils/got';
 const apiKey = require('./api-key');
-const { handleMovieItem } = require('./utils');
+import { handleMovieItem } from './utils';
 
 export default async (ctx) => {
     const { id, lang } = ctx.req.param();

@@ -1,6 +1,6 @@
 import got from '@/utils/got';
-const cache = require('./cache');
-const utils = require('./utils');
+import cache from './cache';
+import utils from './utils';
 import { config } from '@/config';
 
 export default async (ctx) => {

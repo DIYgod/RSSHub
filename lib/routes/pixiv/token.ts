@@ -1,7 +1,7 @@
 import { config } from '@/config';
 import logger from '@/utils/logger';
 const got = require('./pixiv-got');
-const { maskHeader } = require('./constants');
+import { maskHeader } from './constants';
 
 let token = null;
 
@@ -56,9 +56,7 @@ async function getToken(tryGet) {
     return token;
 }
 
-module.exports = {
-    getToken,
-};
+export { getToken };
 
 // let tickTokenStarted = false;
 

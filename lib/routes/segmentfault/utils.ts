@@ -58,9 +58,4 @@ const parseItems = (cookie, item, tryGet) =>
         return item;
     });
 
-module.exports = {
-    host,
-    acw_sc__v2,
-    parseList,
-    parseItems,
-};
+export { host, acw_sc__v2, parseList, parseItems };

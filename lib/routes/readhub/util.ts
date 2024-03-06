@@ -62,10 +62,6 @@ const processItems = async (items, tryGet) =>
         )
     );
 
-module.exports = {
-    rootUrl,
-    apiRootUrl,
-    apiTopicUrl,
-    art,
-    processItems,
-};
+export { rootUrl, apiRootUrl, apiTopicUrl, processItems };
+
+export { art } from '@/utils/render';

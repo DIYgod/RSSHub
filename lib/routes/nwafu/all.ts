@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-const { nwafuMap } = require('./utils');
+import { nwafuMap } from './utils';
 
 export default async (ctx) => {
     const { type = 'jiaowu' } = ctx.req.param();

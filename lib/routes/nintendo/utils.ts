@@ -163,11 +163,4 @@ const ProcessNewsChina = (list, cache) =>
         })
     );
 
-module.exports = {
-    ProcessItem,
-    ProcessNews,
-    ProcessNewsChina,
-    ProcessItemChina,
-    nuxtReader,
-    generateImageLink,
-};
+export { ProcessItem, ProcessNews, ProcessNewsChina, ProcessItemChina, nuxtReader, generateImageLink };

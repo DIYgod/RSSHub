@@ -237,6 +237,4 @@ const gdgov = async (info, ctx) => {
     });
 };
 
-module.exports = {
-    gdgov,
-};
+export { gdgov };

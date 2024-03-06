@@ -73,13 +73,4 @@ const parseItem = (item, tryGet) =>
         return item;
     });
 
-module.exports = {
-    apiUrl,
-    baseUrl,
-    favicon,
-    getBParam,
-    getBuildId,
-    getGToken,
-    parseList,
-    parseItem,
-};
+export { apiUrl, baseUrl, favicon, getBParam, getBuildId, getGToken, parseList, parseItem };

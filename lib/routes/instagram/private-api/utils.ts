@@ -34,4 +34,4 @@ async function login(ig, cache) {
     });
 }
 
-module.exports = { ig, login };
+export { ig, login };

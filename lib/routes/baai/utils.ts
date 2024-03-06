@@ -24,10 +24,4 @@ const parseEventDetail = async (item) => {
     return data.data.ac_desc + data.data.ac_desc_two;
 };
 
-module.exports = {
-    baseUrl,
-    eventUrl,
-    apiHost,
-    parseItem,
-    parseEventDetail,
-};
+export { baseUrl, eventUrl, apiHost, parseItem, parseEventDetail };

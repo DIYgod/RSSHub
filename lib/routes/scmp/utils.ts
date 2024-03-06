@@ -86,7 +86,4 @@ const parseItem = async (item) => {
     return item;
 };
 
-module.exports = {
-    renderHTML,
-    parseItem,
-};
+export { renderHTML, parseItem };

@@ -443,17 +443,4 @@ const processVideoInfo = (info) => {
     };
 };
 
-module.exports = {
-    rootUrl,
-    apiArticleRootUrl,
-    apiBriefRootUrl,
-    apiMemberRootUrl,
-    apiMomentRootUrl,
-    apiSearchRootUrl,
-
-    fetchBriefColumnData,
-    fetchClubData,
-    fetchData,
-    generateSignature,
-    processItems,
-};
+export { rootUrl, apiArticleRootUrl, apiBriefRootUrl, apiMemberRootUrl, apiMomentRootUrl, apiSearchRootUrl, fetchBriefColumnData, fetchClubData, fetchData, generateSignature, processItems };

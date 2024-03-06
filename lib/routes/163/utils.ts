@@ -38,6 +38,4 @@ const parseDyArticle = (charset, item, tryGet) =>
         return item;
     });
 
-module.exports = {
-    parseDyArticle,
-};
+export { parseDyArticle };

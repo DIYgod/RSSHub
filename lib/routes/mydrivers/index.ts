@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-const { rootUrl, title, categories, convertToQueryString, getInfo, processItems } = require('./util');
+import { rootUrl, title, categories, convertToQueryString, getInfo, processItems } from './util';
 
 export default async (ctx) => {
     let { category = 'new' } = ctx.req.param();

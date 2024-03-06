@@ -1,11 +1,11 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const utils = require('./utils');
+import utils from './utils';
 import { load } from 'cheerio';
 import { config } from '@/config';
 import logger from '@/utils/logger';
 
-module.exports = {
+export default {
     getCookie: () => {
         if (Object.keys(config.bilibili.cookies).length > 0) {
             return config.bilibili.cookies[Object.keys(config.bilibili.cookies)[Math.floor(Math.random() * Object.keys(config.bilibili.cookies).length)]];

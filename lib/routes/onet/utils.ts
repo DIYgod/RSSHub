@@ -48,7 +48,4 @@ const parseArticleContent = ($) => {
 
     return content;
 };
-module.exports = {
-    parseArticleContent,
-    parseMainImage,
-};
+export { parseArticleContent, parseMainImage };

@@ -88,8 +88,4 @@ const parseArticle = async (item) => {
     });
 };
 
-module.exports = {
-    rootUrl,
-    parseNewsList,
-    parseArticle,
-};
+export { rootUrl, parseNewsList, parseArticle };

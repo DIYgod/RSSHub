@@ -111,7 +111,9 @@ function addDmVerifyInfo(params, dmImgList) {
     return `${params}&dm_img_list=${dmImgList}&dm_img_str=${dmImgStr}&dm_cover_img_str=${dmCoverImgStr}`;
 }
 
-module.exports = {
+const bvidTime = 1_589_990_400;
+
+export default {
     iframe,
     lsid,
     _uuid,
@@ -119,5 +121,5 @@ module.exports = {
     addWbiVerifyInfo,
     getDmImgList,
     addDmVerifyInfo,
-    bvidTime: 1_589_990_400,
+    bvidTime,
 };

@@ -15,7 +15,4 @@ const getSearchParams = (moreParams) => {
     return searchParams;
 };
 
-module.exports = {
-    rootUrl,
-    getSearchParams,
-};
+export { rootUrl, getSearchParams };

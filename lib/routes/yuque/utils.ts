@@ -76,6 +76,4 @@ const card2Html = (elem, link) => {
     elem.replaceWith(html);
 };
 
-module.exports = {
-    card2Html,
-};
+export { card2Html };

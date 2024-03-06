@@ -36,4 +36,4 @@ const getRedirectedLink = (data) =>
         })
     );
 
-module.exports = { getData, getList, getRedirectedLink };
+export { getData, getList, getRedirectedLink };

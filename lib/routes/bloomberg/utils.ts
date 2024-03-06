@@ -598,9 +598,4 @@ const asyncPoolAll = async (...args) => {
     return results;
 };
 
-module.exports = {
-    rootUrl,
-    asyncPoolAll,
-    parseNewsList,
-    parseArticle,
-};
+export { rootUrl, asyncPoolAll, parseNewsList, parseArticle };

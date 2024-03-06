@@ -38,7 +38,4 @@ function getToken() {
     return token;
 }
 
-module.exports = {
-    initToken,
-    getToken,
-};
+export { initToken, getToken };

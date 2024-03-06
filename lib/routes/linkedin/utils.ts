@@ -1,5 +1,5 @@
 import { load } from 'cheerio';
-const { Job } = require('./models');
+import { Job } from './models';
 
 /**
  * Constants
@@ -108,14 +108,4 @@ function parseJobDetail(data) {
     return job;
 }
 
-module.exports = {
-    parseParamsToSearchParams,
-    parseParamsToString,
-    parseJobDetail,
-    parseJobSearch,
-    JOB_TYPES,
-    JOB_TYPES_QUERY_KEY,
-    EXP_LEVELS,
-    EXP_LEVELS_QUERY_KEY,
-    KEYWORDS_QUERY_KEY,
-};
+export { parseParamsToSearchParams, parseParamsToString, parseJobDetail, parseJobSearch, JOB_TYPES, JOB_TYPES_QUERY_KEY, EXP_LEVELS, EXP_LEVELS_QUERY_KEY, KEYWORDS_QUERY_KEY };

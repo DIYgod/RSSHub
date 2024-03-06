@@ -1,7 +1,7 @@
 import { config } from '@/config';
 
 const parseArticle = require('./parse-article.js');
-const { getUserCatalogMainContentQuery } = require('./graphql.js');
+import { getUserCatalogMainContentQuery } from './graphql.js';
 
 export default async (ctx) => {
     const user = ctx.req.param('user');

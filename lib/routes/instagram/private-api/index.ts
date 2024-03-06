@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const { ig, login } = require('./utils');
+import { ig, login } from './utils';
 import logger from '@/utils/logger';
 import { config } from '@/config';
 const { renderItems } = require('../common-utils');

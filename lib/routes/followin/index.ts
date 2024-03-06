@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const { apiUrl, favicon, getBParam, getBuildId, getGToken, parseList, parseItem } = require('./utils');
+import { apiUrl, favicon, getBParam, getBuildId, getGToken, parseList, parseItem } from './utils';
 
 export default async (ctx) => {
     const { categoryId = '1', lang = 'en' } = ctx.req.param();

@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const { SUB_NAME_PREFIX, SUB_URL } = require('./const');
+import { SUB_NAME_PREFIX, SUB_URL } from './const';
 const loadArticle = require('./article');
 export default async (ctx) => {
     const limit = Number.parseInt(ctx.req.query('limit'));

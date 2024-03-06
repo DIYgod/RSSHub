@@ -175,6 +175,4 @@ const ProcessItems = async (ctx) => {
     };
 };
 
-module.exports = {
-    ProcessItems,
-};
+export { ProcessItems };

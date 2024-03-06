@@ -214,13 +214,4 @@ const renderGuestItems = (items) => {
     });
 };
 
-module.exports = {
-    baseUrl,
-    COOKIE_URL,
-    checkLogin,
-    getUserInfo,
-    getUserFeedItems,
-    getTagsFeedItems,
-    getLoggedOutTagsFeedItems,
-    renderGuestItems,
-};
+export { baseUrl, COOKIE_URL, checkLogin, getUserInfo, getUserFeedItems, getTagsFeedItems, getLoggedOutTagsFeedItems, renderGuestItems };

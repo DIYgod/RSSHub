@@ -25,7 +25,4 @@ const parseArticle = async (item) => {
     return item;
 };
 
-module.exports = {
-    baseUrl,
-    parseArticle,
-};
+export { baseUrl, parseArticle };

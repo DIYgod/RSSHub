@@ -122,11 +122,4 @@ const parseItem = (item, tryGet) =>
         return item;
     });
 
-module.exports = {
-    getArchive,
-    getCategories,
-    getProviderList,
-    getStores,
-    parseList,
-    parseItem,
-};
+export { getArchive, getCategories, getProviderList, getStores, parseList, parseItem };

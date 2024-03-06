@@ -4,7 +4,7 @@ const zlib = require('zlib');
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
-const { getAcwScV2ByArg1 } = require('./utils');
+import { getAcwScV2ByArg1 } from './utils';
 
 export default async (ctx) => {
     const rootUrl = 'https://csgo.5eplay.com/';

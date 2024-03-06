@@ -5,7 +5,7 @@ const iconv = require('iconv-lite');
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-module.exports = {
+export default {
     parseFeed: async ({ subjectid }) => {
         const url = `https://www.dapenti.com/blog/blog.asp?name=xilei&subjectid=${subjectid}`;
         const listRes = await got({

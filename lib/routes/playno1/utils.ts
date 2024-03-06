@@ -26,7 +26,4 @@ const processArticle = (items, cache) =>
         )
     );
 
-module.exports = {
-    cookieJar,
-    processArticle,
-};
+export { cookieJar, processArticle };

@@ -45,6 +45,4 @@ const ProcessFeed = async (items, cookies, browser, limit, cache) => {
     return [...result, ...items.slice(limit)];
 };
 
-module.exports = {
-    ProcessFeed,
-};
+export { ProcessFeed };

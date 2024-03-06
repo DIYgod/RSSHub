@@ -87,12 +87,4 @@ const processItems = async (apiUrl, limit, ...searchParams) => {
     return { items, info };
 };
 
-module.exports = {
-    icon,
-    image,
-    rootUrl,
-    apiRootUrl,
-    imgRootUrl,
-
-    processItems,
-};
+export { icon, image, rootUrl, apiRootUrl, imgRootUrl, processItems };

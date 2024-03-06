@@ -108,7 +108,4 @@ const fetchItems = async (limit, currentUrl, tryGet) => {
     };
 };
 
-module.exports = {
-    rootUrl,
-    fetchItems,
-};
+export { rootUrl, fetchItems };

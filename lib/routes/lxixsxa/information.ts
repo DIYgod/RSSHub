@@ -3,7 +3,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { parseJSONP } = require('./jsonp-helper');
+import { parseJSONP } from './jsonp-helper';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 

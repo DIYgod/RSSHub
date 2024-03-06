@@ -69,11 +69,4 @@ const getBoards = (tryGet) =>
         }));
     });
 
-module.exports = {
-    token,
-    apiUrl,
-    rootUrl,
-    renderDesc,
-    renderSections,
-    getBoards,
-};
+export { token, apiUrl, rootUrl, renderDesc, renderSections, getBoards };

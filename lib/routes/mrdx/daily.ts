@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-const { getElementChildrenInnerText } = require('./utils');
+import { getElementChildrenInnerText } from './utils';
 const dayjs = require('dayjs');
 const utc = require('dayjs/plugin/utc');
 dayjs.extend(utc);

@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const { getToken } = require('./token');
+import { getToken } from './token';
 const getBookmarks = require('./api/get-bookmarks');
 const getUserDetail = require('./api/get-user-detail');
 import { config } from '@/config';
