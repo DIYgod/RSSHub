@@ -2,8 +2,8 @@ import { baseUrl, gqlMap, gqlFeatures, consumerKey, consumerSecret } from './con
 import { config } from '@/config';
 import logger from '@/utils/logger';
 import got from '@/utils/got';
-const OAuth = require('oauth-1.0a');
-const CryptoJS = require('crypto-js');
+import OAuth from 'oauth-1.0a';
+import CryptoJS from 'crypto-js';
 import queryString from 'query-string';
 import { getToken } from './token';
 import cache from '@/utils/cache';

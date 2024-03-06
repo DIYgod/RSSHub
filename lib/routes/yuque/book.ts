@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { card2Html } from './utils';
-const { CookieJar } = require('tough-cookie');
+import { CookieJar } from 'tough-cookie';
 
 const APP_DATA_REGEX = /window\.appData = JSON\.parse\(decodeURIComponent\("(.+?)"\)\);/;
 const baseUrl = 'https://www.yuque.com';

@@ -1,4 +1,4 @@
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 import got from '@/utils/got';
 
 const getData = async (graphqlQuery) =>

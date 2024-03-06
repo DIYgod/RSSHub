@@ -3,7 +3,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import * as path from 'node:path';
 
-const { CookieJar } = require('tough-cookie');
+import { CookieJar } from 'tough-cookie';
 import { load } from 'cheerio';
 
 import got from '@/utils/got';

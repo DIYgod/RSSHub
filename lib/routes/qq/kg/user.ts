@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const { JSDOM } = require('jsdom');
+import { JSDOM } from 'jsdom';
 import cache from './cache';
 import { parseDate } from '@/utils/parse-date';
 

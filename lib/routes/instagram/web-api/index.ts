@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const { CookieJar } = require('tough-cookie');
+import { CookieJar } from 'tough-cookie';
 import { config } from '@/config';
 import { renderItems } from '../common-utils';
 import { baseUrl, COOKIE_URL, checkLogin, getUserInfo, getUserFeedItems, getTagsFeedItems, getLoggedOutTagsFeedItems, renderGuestItems } from './utils';

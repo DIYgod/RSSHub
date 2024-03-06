@@ -32,7 +32,7 @@ export default async (ctx) => {
         ctx.set('data', notFoundData);
         return;
     }
-    const [userName, face] = await cacheIn.getUsernameAndFaceFromUID(ctx, uid);
+    const [userName, face] = await cacheIn.getUsernameAndFaceFromUID(uid);
     const host = `https://api.bilibili.com/x/series/archives?mid=${uid}&series_id=${sid}&only_normal=true&sort=desc&pn=1&ps=${limit}`;
 
     const response = await got(host, {

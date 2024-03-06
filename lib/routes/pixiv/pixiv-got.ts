@@ -1,4 +1,4 @@
-const tls = require('tls');
+import tls from 'tls';
 import ipRegex from 'ip-regex';
 import got from '@/utils/got';
 import logger from '@/utils/logger';

@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import util from './utils';
-const iconv = require('iconv-lite');
+import iconv from 'iconv-lite';
 
 export default async (ctx) => {
     const type = ctx.req.param('type');

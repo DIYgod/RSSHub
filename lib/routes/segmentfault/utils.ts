@@ -1,4 +1,4 @@
-const zlib = require('zlib');
+import zlib from 'zlib';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';

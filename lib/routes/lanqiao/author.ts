@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import utils from './utils';
-const MarkdownIt = require('markdown-it');
+import MarkdownIt from 'markdown-it';
 
 async function getUserName(uid) {
     // 获取用户信息

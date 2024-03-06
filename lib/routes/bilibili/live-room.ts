@@ -6,9 +6,9 @@ export default async (ctx) => {
 
     // 短号查询长号
     if (Number.parseInt(roomID, 10) < 10000) {
-        roomID = await cache.getLiveIDFromShortID(ctx, roomID);
+        roomID = await cache.getLiveIDFromShortID(roomID);
     }
-    const name = await cache.getUsernameFromLiveID(ctx, roomID);
+    const name = await cache.getUsernameFromLiveID(roomID);
 
     const response = await got({
         method: 'get',

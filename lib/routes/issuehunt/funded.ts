@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const MarkdownIt = require('markdown-it');
+import MarkdownIt from 'markdown-it';
 
 export default async (ctx) => {
     const { username, repo } = ctx.req.param();

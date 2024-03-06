@@ -1,8 +1,8 @@
 import wait from '@/utils/wait';
 import { config } from '@/config';
 import { client, decodeMedia, getFilename, getMediaLink, streamDocument, streamThumbnail } from './client';
-const bigInt = require('telegram/Helpers').returnBigInt;
-const HTMLParser = require('telegram/extensions/html').HTMLParser;
+import { returnBigInt as bigInt } from 'telegram/Helpers';
+import { HTMLParser } from 'telegram/extensions/html';
 
 function parseRange(range, length) {
     if (!range) {
@@ -162,4 +162,4 @@ export default async (ctx) => {
     });
 };
 
-module.exports.getMedia = getMedia;
+export { getMedia };

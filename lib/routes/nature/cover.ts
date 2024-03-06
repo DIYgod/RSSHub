@@ -19,7 +19,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { baseUrl, journalMap } from './utils';
-const { CookieJar } = require('tough-cookie');
+import { CookieJar } from 'tough-cookie';
 
 export default async (ctx) => {
     const cookieJar = new CookieJar();

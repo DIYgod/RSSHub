@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const iconv = require('iconv-lite');
+import iconv from 'iconv-lite';
 
 export default async (ctx) => {
     const id = ctx.req.param('id') ?? '2-1';

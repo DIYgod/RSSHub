@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const CryptoJS = require('crypto-js');
+import CryptoJS from 'crypto-js';
 
 const domain = 'huxiu.com';
 const rootUrl = `https://www.${domain}`;

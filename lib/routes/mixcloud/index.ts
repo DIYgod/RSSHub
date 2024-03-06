@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const CryptoJS = require('crypto-js');
+import CryptoJS from 'crypto-js';
 import { parseDate } from '@/utils/parse-date';
 import { queries } from './queries';
 

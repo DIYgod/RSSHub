@@ -8,7 +8,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const querystring = require('querystring');
+import querystring from 'querystring';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import tglibchannel from './tglib/channel';
 

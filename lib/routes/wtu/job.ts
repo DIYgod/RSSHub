@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const zlib = require('zlib');
+import zlib from 'zlib';
 import { load } from 'cheerio';
 
 const baseUrl = 'https://wtu.91wllm.com/';

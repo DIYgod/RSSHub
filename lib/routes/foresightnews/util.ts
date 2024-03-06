@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const zlib = require('zlib');
+import zlib from 'zlib';
 
 const constants = {
     labelHot: '热门',

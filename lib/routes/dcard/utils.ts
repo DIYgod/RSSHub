@@ -1,4 +1,4 @@
-const asyncPool = require('tiny-async-pool');
+import asyncPool from 'tiny-async-pool';
 
 const ProcessFeed = async (items, cookies, browser, limit, cache) => {
     let newCookies = [];

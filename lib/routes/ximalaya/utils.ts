@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+import crypto from 'crypto';
 const getParams = (ep) => {
     const a1 = 'xkt3a41psizxrh9l';
     const a = [

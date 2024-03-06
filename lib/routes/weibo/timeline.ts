@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const querystring = require('querystring');
+import querystring from 'querystring';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';

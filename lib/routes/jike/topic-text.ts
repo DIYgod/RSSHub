@@ -1,4 +1,4 @@
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 import { constructTopicEntry } from './utils';
 
 export default async (ctx) => {

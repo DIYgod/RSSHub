@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const CryptoJS = require('crypto-js');
+import CryptoJS from 'crypto-js';
 
 const apiHost = 'https://api.creative-comic.tw';
 const device = 'web_desktop';

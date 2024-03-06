@@ -1,7 +1,7 @@
-const readline = require('node:readline/promises');
-const { Api, TelegramClient } = require('telegram');
-const { StringSession } = require('telegram/sessions');
-const { getAppropriatedPartSize } = require('telegram/Utils');
+import readline from 'node:readline/promises';
+import { Api, TelegramClient } from 'telegram';
+import { StringSession } from 'telegram/sessions';
+import { getAppropriatedPartSize } from 'telegram/Utils';
 
 import { config } from '@/config';
 

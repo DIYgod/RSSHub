@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 
-const { CookieJar, Cookie } = require('tough-cookie');
+import { CookieJar, Cookie } from 'tough-cookie';
 const cookieJar = new CookieJar();
 
 const owner = '中央纪委国家监委网站';

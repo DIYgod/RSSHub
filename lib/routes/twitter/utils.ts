@@ -1,6 +1,6 @@
-const URL = require('url');
+import URL from 'url';
 import { config } from '@/config';
-const { TwitterApi } = require('twitter-api-v2');
+import { TwitterApi } from 'twitter-api-v2';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
 import { parseDate } from '@/utils/parse-date';
 

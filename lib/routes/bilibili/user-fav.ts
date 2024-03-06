@@ -6,7 +6,7 @@ import { config } from '@/config';
 export default async (ctx) => {
     const uid = ctx.req.param('uid');
     const disableEmbed = ctx.req.param('disableEmbed');
-    const name = await cache.getUsernameFromUID(ctx, uid);
+    const name = await cache.getUsernameFromUID(uid);
 
     const response = await got({
         method: 'get',

@@ -3,7 +3,7 @@ import { config } from '@/config';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import utils from './utils';
-const { CookieJar } = require('tough-cookie');
+import { CookieJar } from 'tough-cookie';
 const cookieJar = new CookieJar();
 import { queryToBoolean } from '@/utils/readable-social';
 

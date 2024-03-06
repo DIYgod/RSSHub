@@ -1,6 +1,6 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const CryptoJS = require('crypto-js');
+import CryptoJS from 'crypto-js';
 
 const rootUrl = 'https://www.36kr.com';
 

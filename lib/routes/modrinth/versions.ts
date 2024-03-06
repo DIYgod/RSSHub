@@ -6,6 +6,7 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { config } from '@/config';
 import got from '@/utils/got';
+import MarkdownIt from 'markdown-it';
 
 const customGot = got.extend({
     headers: {
@@ -13,7 +14,7 @@ const customGot = got.extend({
         'user-agent': config.trueUA,
     },
 });
-const markdownIt = require('markdown-it')({
+const md = MarkdownIt({
     html: true,
 });
 
@@ -64,7 +65,7 @@ export default async (
                 pubDate: parseDate(it.date_published),
                 description: art(path.join(__dirname, 'templates/version.art'), {
                     ...it,
-                    changelog: markdownIt.render(it.changelog),
+                    changelog: md.render(it.changelog),
                 }),
                 guid: it.id,
                 author: authors[index].name,

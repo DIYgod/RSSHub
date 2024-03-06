@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
-const { CookieJar } = require('tough-cookie');
+import { CookieJar } from 'tough-cookie';
 
 export default async (ctx) => {
     const baseUrl = 'https://www.parliament.go.th/section77';

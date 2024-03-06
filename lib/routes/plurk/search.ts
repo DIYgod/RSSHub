@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 import { baseUrl, getPlurk } from './utils';
 
 export default async (ctx) => {

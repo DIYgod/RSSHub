@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const { JSDOM } = require('jsdom');
+import { JSDOM } from 'jsdom';
 
 export default {
     getPlayInfo: async (ctx, shareId, ksong_mid = '') => {

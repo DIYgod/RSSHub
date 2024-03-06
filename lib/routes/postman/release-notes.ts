@@ -1,5 +1,6 @@
 import got from '@/utils/got';
-const md = require('markdown-it')({
+import MarkdownIt from 'markdown-it';
+const md = MarkdownIt({
     html: true,
 });
 

@@ -1,6 +1,6 @@
 import { config } from '@/config';
 import md5 from '@/utils/md5';
-const CryptoJS = require('crypto-js');
+import CryptoJS from 'crypto-js';
 
 function iframe(aid, page, bvid) {
     return `<iframe src="https://www.bilibili.com/blackboard/html5mobileplayer.html?${bvid ? `bvid=${bvid}` : `aid=${aid}`}${

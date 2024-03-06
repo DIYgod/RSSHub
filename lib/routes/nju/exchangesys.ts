@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 
 export default async (ctx) => {
     const type = ctx.req.param('type');

@@ -1,6 +1,6 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 
 const profileUrl = (user) => `https://www.threads.net/@${user}`;
 const threadUrl = (code) => `https://www.threads.net/t/${code}`;

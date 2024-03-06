@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const bbcode = require('bbcodejs');
+import bbcode from 'bbcodejs';
 
 const rootUrl = 'https://instant.1point3acres.com';
 const apiRootUrl = 'https://api.1point3acres.com';

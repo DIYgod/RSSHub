@@ -14,7 +14,7 @@ export default async (ctx) => {
     const limit = ctx.req.query('limit') ?? 25;
 
     const link = `https://space.bilibili.com/${uid}/channel/collectiondetail?sid=${sid}`;
-    const [userName, face] = await cache.getUsernameAndFaceFromUID(ctx, uid);
+    const [userName, face] = await cache.getUsernameAndFaceFromUID(uid);
     const host = `https://api.bilibili.com/x/polymer/space/seasons_archives_list?mid=${uid}&season_id=${sid}&sort_reverse=true&page_num=1&page_size=${limit}`;
 
     const response = await got(host, {

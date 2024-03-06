@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { topicDataHanding, constructTopicEntry } from './utils';
 import { load } from 'cheerio';
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 
 const urlRegex = /(https?:\/\/[^\s"'<>]+)/g;
 

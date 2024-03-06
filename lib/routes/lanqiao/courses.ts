@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import utils from './utils';
-const MarkdownIt = require('markdown-it');
+import MarkdownIt from 'markdown-it';
 
 export default async (ctx) => {
     const sort = ctx.req.param('sort');

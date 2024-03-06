@@ -1,4 +1,4 @@
-const { inflateSync } = require('zlib');
+import { inflateSync } from 'zlib';
 
 const unzip = (b64Data) => {
     const strData = Buffer.from(b64Data, 'base64').toString('binary');

@@ -5,11 +5,15 @@ import got from '@/utils/got';
 import * as path from 'node:path';
 import { art } from '@/utils/render';
 
-const dayjs = require('dayjs');
-dayjs.extend(require('dayjs/plugin/localizedFormat'));
-dayjs.extend(require('dayjs/plugin/duration'));
-dayjs.extend(require('dayjs/plugin/relativeTime'));
-require('dayjs/locale/zh-cn');
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+import duration from 'dayjs/plugin/duration';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/zh-cn';
+
+dayjs.extend(localizedFormat);
+dayjs.extend(duration);
+dayjs.extend(relativeTime);
 dayjs.locale('zh-cn');
 
 const sec2str = (sec) => dayjs.duration(Number.parseInt(sec), 'seconds').humanize();

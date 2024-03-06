@@ -10,7 +10,7 @@ export default async (ctx) => {
     }
 
     const uid = ctx.req.param('uid');
-    const name = await cache.getUsernameFromUID(ctx, uid);
+    const name = await cache.getUsernameFromUID(uid);
 
     const countResponse = await got({
         method: 'get',

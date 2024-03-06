@@ -1,4 +1,4 @@
-const { IgApiClient } = require('instagram-private-api');
+import { IgApiClient } from 'instagram-private-api';
 import logger from '@/utils/logger';
 import { config } from '@/config';
 

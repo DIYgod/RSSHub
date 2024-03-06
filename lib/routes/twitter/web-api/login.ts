@@ -2,10 +2,10 @@
 
 import { bearerToken, guestActivateUrl } from './constants';
 import got from '@/utils/got';
-const crypto = require('crypto');
+import crypto from 'crypto';
 import { config } from '@/config';
-const { v5: uuidv5 } = require('uuid');
-const { authenticator } = require('otplib');
+import { v5 as uuidv5 } from 'uuid';
+import { authenticator } from 'otplib';
 import logger from '@/utils/logger';
 import cache from '@/utils/cache';
 
