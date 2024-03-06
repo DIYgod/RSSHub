@@ -1,4 +1,4 @@
-module.exports = (link) => {
+export default (link) => {
     if (link.startsWith('https://xinwen.wh.sdu.edu.cn/')) {
         return require('./wh/news')(link);
     }

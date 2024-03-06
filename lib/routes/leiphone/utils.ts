@@ -36,4 +36,4 @@ const ProcessFeed = async (list, cache) => {
     return items;
 };
 
-export { ProcessFeed };
+export default { ProcessFeed };

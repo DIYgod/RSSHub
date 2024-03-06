@@ -65,4 +65,4 @@ const TYPE = {
     },
 };
 
-export { TYPE };
+export default { TYPE };

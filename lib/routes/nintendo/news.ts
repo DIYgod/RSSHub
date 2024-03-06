@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const util = require('./utils');
+import util from './utils';
 import { parseDate } from '@/utils/parse-date';
 
 export default async (ctx) => {

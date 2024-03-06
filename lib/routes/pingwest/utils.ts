@@ -86,4 +86,4 @@ const getFullArticle = (link, cache) =>
         return description;
     });
 
-export { articleListParser, statusListParser };
+export default { articleListParser, statusListParser };

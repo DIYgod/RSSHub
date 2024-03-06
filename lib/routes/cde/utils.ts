@@ -14,4 +14,4 @@ const getCookie = () =>
             .join('');
     });
 
-export { title, rootUrl, getCookie };
+export default { title, rootUrl, getCookie };

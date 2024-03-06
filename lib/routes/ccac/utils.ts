@@ -23,4 +23,4 @@ function typeFilter(list, type) {
     return type === '全部' ? list : list.filter((item) => item.tags.some((tag) => tag.name === type));
 }
 
-export { TYPE, BASE_URL, LANG_TYPE, langBase, typeFilter };
+export default { TYPE, BASE_URL, LANG_TYPE, langBase, typeFilter };

@@ -41,4 +41,4 @@ function parseUrl(type) {
     return type === 'recommend' ? 'https://www.dahecube.com/index.html?recid=1' : `https://www.dahecube.com/channel.html?recid=${TYPE[type].id}`;
 }
 
-export { TYPE, parseUrl };
+export default { TYPE, parseUrl };

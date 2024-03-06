@@ -141,4 +141,4 @@ const parseDynamic = async (item) => {
     };
 };
 
-export { get_app_token, base_url, getHeaders, parseDynamic, dynamicTpye };
+export default { get_app_token, base_url, getHeaders, parseDynamic, dynamicTpye };

@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const util = require('./utils');
+import util from './utils';
 const news_url = 'https://www.nintendoswitch.com.cn';
 
 export default async (ctx) => {

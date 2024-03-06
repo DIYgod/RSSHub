@@ -38,4 +38,4 @@ const getUserFullInfo = (ctx, uid) => {
     });
 };
 
-export { getUserFullInfo };
+export default { getUserFullInfo };

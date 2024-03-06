@@ -7,7 +7,7 @@ import queryString from 'query-string';
  * @param {string} token pixiv oauth token
  * @returns {Promise<got.AxiosResponse<{illusts: illust[]}>>}
  */
-module.exports = function getUserIllustFollows(token) {
+export default function getUserIllustFollows(token) {
     return got('https://app-api.pixiv.net/v2/illust/follow', {
         headers: {
             ...maskHeader,
@@ -17,4 +17,4 @@ module.exports = function getUserIllustFollows(token) {
             restrict: 'public',
         }),
     });
-};
+}

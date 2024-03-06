@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const apiKey = require('./api-key');
+import apiKey from './api-key';
 import { MEDIA_TYPE_TO_ITEM_HANDLE } from './utils';
 
 const API_PATH = {

@@ -106,4 +106,4 @@ function parseContent(content) {
     return parseToSimpleText([JSON.parse(content)]);
 }
 
-export { ProcessFeed };
+export default { ProcessFeed };

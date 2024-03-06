@@ -1,6 +1,6 @@
 import { config } from '@/config';
 import logger from '@/utils/logger';
-const got = require('./pixiv-got');
+import got from './pixiv-got';
 import { maskHeader } from './constants';
 
 let token = null;
@@ -76,7 +76,7 @@ export { getToken };
 //     return token;
 // }
 
-// module.exports = async (tryGet) => {
+// export default async (tryGet) => {
 //     await startTickToken(tryGet);
 //     return waitForToken();
 // };

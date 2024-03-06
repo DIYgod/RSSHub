@@ -1,6 +1,6 @@
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const apiKey = require('./api-key');
+import apiKey from './api-key';
 import { handleDescription } from './utils';
 
 export default async (ctx) => {

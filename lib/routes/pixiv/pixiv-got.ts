@@ -62,4 +62,4 @@ const pixivGot = got.extend({
     },
 });
 
-module.exports = pixivGot;
+export default pixivGot;

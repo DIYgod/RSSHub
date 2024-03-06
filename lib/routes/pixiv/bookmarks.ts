@@ -1,9 +1,9 @@
 import cache from '@/utils/cache';
 import { getToken } from './token';
-const getBookmarks = require('./api/get-bookmarks');
-const getUserDetail = require('./api/get-user-detail');
+import getBookmarks from './api/get-bookmarks';
+import getUserDetail from './api/get-user-detail';
 import { config } from '@/config';
-const pixivUtils = require('./utils');
+import pixivUtils from './utils';
 import { parseDate } from '@/utils/parse-date';
 
 export default async (ctx) => {

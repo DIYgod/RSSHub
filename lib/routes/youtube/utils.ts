@@ -155,4 +155,4 @@ const youtubeUtils = {
         }),
 };
 
-module.exports = youtubeUtils;
+export default youtubeUtils;

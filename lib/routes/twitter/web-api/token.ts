@@ -1,5 +1,5 @@
 import { config } from '@/config';
-const login = require('./login');
+import login from './login';
 
 let tokenIndex = 0;
 let authentication = null;

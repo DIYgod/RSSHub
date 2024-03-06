@@ -17,7 +17,7 @@ const markdownIt = require('markdown-it')({
     html: true,
 });
 
-module.exports = async (
+export default async (
     /** @type {import('koa').Context} */
     ctx
 ) => {

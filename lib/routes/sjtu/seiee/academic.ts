@@ -1,6 +1,6 @@
 import workerFactory from './utils';
 
-module.exports = workerFactory(
+export default workerFactory(
     () => ({
         title: '上海交通大学电子信息与电气工程学院本科教务办 -- 学术动态',
         local: 'seiee/list/683-1-20.htm',

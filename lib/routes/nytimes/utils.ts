@@ -108,4 +108,4 @@ const ProcessFeed = (data, hasEnVersion = false) => {
     return result;
 };
 
-export { ProcessFeed, PuppeterGetter };
+export default { ProcessFeed, PuppeterGetter };

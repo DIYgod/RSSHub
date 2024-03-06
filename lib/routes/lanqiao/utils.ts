@@ -10,4 +10,4 @@ const courseDesc = (picurl, desc) =>
         desc,
     });
 
-export { courseDesc };
+export default { courseDesc };

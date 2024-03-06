@@ -69,4 +69,4 @@ const ProcessFeed = (list, cache, current) =>
             })
     );
 
-export { ProcessFeed };
+export default { ProcessFeed };

@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const util = require('./utils');
+import util from './utils';
 const iconv = require('iconv-lite');
 
 const gbk2utf8 = (s) => iconv.decode(s, 'gbk');

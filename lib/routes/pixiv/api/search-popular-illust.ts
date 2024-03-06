@@ -8,7 +8,7 @@ import queryString from 'query-string';
  * @param {string} token pixiv oauth token
  * @returns {Promise<got.AxiosResponse<{illusts: illust[]}>>}
  */
-module.exports = function searchPopularIllust(keyword, token) {
+export default function searchPopularIllust(keyword, token) {
     return got('https://app-api.pixiv.net/v1/search/popular-preview/illust', {
         headers: {
             ...maskHeader,
@@ -20,4 +20,4 @@ module.exports = function searchPopularIllust(keyword, token) {
             filter: 'for_ios',
         }),
     });
-};
+}

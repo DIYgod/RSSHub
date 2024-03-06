@@ -1,6 +1,6 @@
 import workerFactory from './utils';
 
-module.exports = workerFactory(
+export default workerFactory(
     (ctx) => {
         const config = {
             abroad: {

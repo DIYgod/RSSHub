@@ -82,4 +82,4 @@ async function request(link, cache) {
     return response;
 }
 
-export { ProcessFeed, request };
+export default { ProcessFeed, request };

@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const auth = require('./auth');
+import auth from './auth';
 const { generateData } = require('../pin/utils');
 import { parseDate } from '@/utils/parse-date';
 

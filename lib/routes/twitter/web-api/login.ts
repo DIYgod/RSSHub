@@ -181,4 +181,4 @@ async function login() {
     );
 }
 
-module.exports = login;
+export default login;

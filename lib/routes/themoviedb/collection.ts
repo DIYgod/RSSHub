@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const apiKey = require('./api-key');
+import apiKey from './api-key';
 import { handleMovieItem } from './utils';
 
 export default async (ctx) => {

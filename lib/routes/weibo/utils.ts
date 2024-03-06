@@ -465,4 +465,4 @@ const weiboUtils = {
     })(),
 };
 
-module.exports = weiboUtils;
+export default weiboUtils;

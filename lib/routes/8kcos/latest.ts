@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { SUB_NAME_PREFIX, SUB_URL } from './const';
-const loadArticle = require('./article');
+import loadArticle from './article';
 const url = SUB_URL;
 
 export default async (ctx) => {

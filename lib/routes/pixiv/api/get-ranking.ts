@@ -12,7 +12,7 @@ const allowMode = new Set(['day', 'week', 'month', 'day_male', 'day_female', 'da
  * @param {string} token pixiv oauth token
  * @returns {Promise<got.AxiosResponse<{illusts: illust[]}>>}
  */
-module.exports = function getRanking(mode, date, token) {
+export default function getRanking(mode, date, token) {
     assert(allowMode.has(mode), 'Mode not allow.');
     return got('https://app-api.pixiv.net/v1/illust/ranking', {
         headers: {
@@ -27,4 +27,4 @@ module.exports = function getRanking(mode, date, token) {
             }),
         }),
     });
-};
+}

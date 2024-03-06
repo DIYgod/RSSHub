@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import querystring from 'querystring';
 import got from '@/utils/got';
-const weiboUtils = require('./utils');
+import weiboUtils from './utils';
 import { config } from '@/config';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';

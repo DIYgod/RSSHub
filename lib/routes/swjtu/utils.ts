@@ -29,4 +29,4 @@ const descpPage = (link, cache) =>
         };
     });
 
-export { descpPage, renderDetail, renderDesc };
+export default { descpPage, renderDetail, renderDesc };

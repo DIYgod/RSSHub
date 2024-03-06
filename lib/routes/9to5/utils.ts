@@ -31,4 +31,4 @@ const ProcessFeed = (data) => {
     return content.html();
 };
 
-export { ProcessFeed };
+export default { ProcessFeed };

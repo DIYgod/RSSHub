@@ -45,4 +45,4 @@ const ProcessFeed = async (items, cookies, browser, limit, cache) => {
     return [...result, ...items.slice(limit)];
 };
 
-export { ProcessFeed };
+export default { ProcessFeed };
