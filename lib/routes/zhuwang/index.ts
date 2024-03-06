@@ -1,25 +1,22 @@
-const got = require('@/utils/got');
+import got from '@/utils/got';
 
-const base_url = 'https://zhujia.zhuwang.cc/';
-module.exports = async (ctx) => {
+export default async (ctx) => {
+    const baseUrl = 'https://zhujia.zhuwang.cc/';
     const now = new Date();
     const date = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
-    const response = await got({
-        method: 'get',
-        url: `https://zhujia.zhuwang.cc/api/chartData?areaId=-1`,
-        headers: {
-            Referer: base_url,
+    const response = await got(`${baseUrl}/api/chartData`, {
+        searchParams: {
+            areaId: -1,
         },
     });
 
     const names = {
         pigprice: '生猪(外三元)',
-        pig_local: '生猪(土杂猪)',
         pig_in: '生猪(内三元)',
+        pig_local: '生猪(土杂猪)',
     };
 
-    const priceItems = [];
-    for (const key of Object.keys(names)) {
+    const priceItems = Object.entries(names).map(([key, name], i) => {
         const items = response.data[key];
         const today = items.at(-1);
         const yesterday = items.at(-2);
@@ -32,18 +29,18 @@ module.exports = async (ctx) => {
             description = '较昨日价格持平';
         }
 
-        priceItems.push({
-            title: `${date} ${names[key]} ${today}元/公斤. ${description}`,
+        return {
+            title: `${date} ${name} ${today}元/公斤. ${description}`,
             description,
-            link: base_url,
-            guid: `${date} ${names[key]}`,
-        });
-    }
+            link: `https://xt.yangzhu.vip/manage/datamap/ptype/${i + 1}/areano/-1.html`,
+            guid: `${date} ${name}`,
+        };
+    });
 
-    ctx.state.data = {
+    ctx.set('data', {
         title: `全国今日生猪价格`,
         desription: '中国养猪网猪价频道是中国猪价权威平台,提供每日猪评,猪价和行情分析,并且预测猪价和分析每天的猪价排行。',
-        link: base_url,
+        link: baseUrl,
         item: priceItems,
-    };
+    });
 };

@@ -353,11 +353,11 @@ RSSHub 支持使用访问密钥 / 码进行访问控制。开启将会激活全�
 
 ### Mastodon
 
-用户时间线路由：访问 `https://mastodon.example/settings/applications` 申请（替换掉 `mastodon.example`）。需要 `read:search` 权限
+用户时间线路由：访问 `https://mastodon.example/settings/applications` 申请（替换掉 `mastodon.example`）。需要 `read:search` 和 `read:statuses` 权限。
 
 -   `MASTODON_API_HOST`: API 请求的实例，仅域名，不包括 `http://` 或 `https://` 协议头
 -   `MASTODON_API_ACCESS_TOKEN`: 用户 access token, 申请应用后，在应用配置页可以看到申请者的 access token
--   `MASTODON_API_ACCT_DOMAIN`: 该实例本地用户 acct 标识的域名，Webfinger account URI，形如 `user@host`
+-   `MASTODON_API_ACCT_DOMAIN`: 该实例本地用户 acct 标识的域名，即 WebFinger URI `username@domain` 中的 `domain`，一般和 `MASTODON_API_HOST` 相同
 
 ### Medium
 
