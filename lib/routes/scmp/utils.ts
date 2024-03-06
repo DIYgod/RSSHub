@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-const renderHTML = (node) => {
+export const renderHTML = (node) => {
     if (!node) {
         return '';
     }
@@ -59,7 +59,7 @@ const renderHTML = (node) => {
     }
 };
 
-const parseItem = async (item) => {
+export const parseItem = async (item) => {
     const { data: response, url } = await got(item.link);
 
     if (new URL(url).hostname !== 'www.scmp.com') {
@@ -85,5 +85,3 @@ const parseItem = async (item) => {
 
     return item;
 };
-
-export { renderHTML, parseItem };
