@@ -162,4 +162,4 @@ const ProcessFeedType3 = (item, response) => {
     }
 };
 
-export { ProcessVideo, ProcessFeed, ProcessFeedType2, ProcessFeedType3, ProcessHref, ProcessImg };
+export default { ProcessVideo, ProcessFeed, ProcessFeedType2, ProcessFeedType3, ProcessHref, ProcessImg };

@@ -2,9 +2,9 @@ import cache from '@/utils/cache';
 // common.js
 import { load } from 'cheerio';
 import got from '@/utils/got';
-const categoryTitle = require('./category-title');
-const newsContent = require('./news-content');
-const indexPage = require('./index-page');
+import categoryTitle from './category-title';
+import newsContent from './news-content';
+import indexPage from './index-page';
 
 async function getContent(ctx, { baseHost, baseCategory, baseType, baseTitle, baseDescription = '', baseDeparment = '', baseClass = 'div.article_list ul li:has(a)' }) {
     const { category = baseCategory, type = baseType, page = '1' } = ctx.req.param();
@@ -59,4 +59,4 @@ async function getContent(ctx, { baseHost, baseCategory, baseType, baseTitle, ba
     });
 }
 
-module.exports = getContent;
+export default getContent;

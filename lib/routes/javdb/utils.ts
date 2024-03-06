@@ -78,4 +78,4 @@ const ProcessItems = async (ctx, currentUrl, title) => {
     };
 };
 
-export { ProcessItems };
+export default { ProcessItems };

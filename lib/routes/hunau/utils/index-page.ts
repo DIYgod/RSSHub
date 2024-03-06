@@ -7,4 +7,4 @@ const indexPage = (page) => {
     return `${fileName}${filePage}.${fileType}`;
 };
 
-module.exports = indexPage;
+export default indexPage;

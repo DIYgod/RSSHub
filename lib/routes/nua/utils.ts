@@ -70,4 +70,4 @@ const ProcessFeed = (items, artiContent) =>
         )
     );
 
-export { ProcessList, ProcessFeed };
+export default { ProcessList, ProcessFeed };

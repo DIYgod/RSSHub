@@ -131,4 +131,4 @@ async function getAccountIdByAcct(acct) {
     return { site, account_id };
 }
 
-export { apiHeaders, parseStatuses, getAccountStatuses, getAccountIdByAcct, allowSiteList };
+export default { apiHeaders, parseStatuses, getAccountStatuses, getAccountIdByAcct, allowSiteList };

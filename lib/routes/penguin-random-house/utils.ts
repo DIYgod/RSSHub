@@ -116,4 +116,4 @@ const parseList = (items, ctx, contentParser) =>
         )
     );
 
-export { parseList, parseBooks, parseArticle };
+export default { parseList, parseBooks, parseArticle };

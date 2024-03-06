@@ -1,4 +1,4 @@
-const utils = require('./utils');
+import utils from './utils';
 import { config } from '@/config';
 const T = {};
 const { TwitterApi } = require('twitter-api-v2');

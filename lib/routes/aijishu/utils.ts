@@ -32,4 +32,4 @@ const parseArticle = (item) => {
     });
 };
 
-export { parseArticle };
+export default { parseArticle };

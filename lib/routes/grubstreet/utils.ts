@@ -80,4 +80,4 @@ const getData = async (ctx, url, title, description) => {
     };
 };
 
-export { getData };
+export default { getData };

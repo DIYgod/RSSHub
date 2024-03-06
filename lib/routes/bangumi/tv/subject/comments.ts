@@ -2,7 +2,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
-module.exports = async (subjectID, minLength) => {
+export default async (subjectID, minLength) => {
     // bangumi.tv未提供获取“吐槽（comments）”的API，因此仍需要通过抓取网页来获取
     const link = `https://bgm.tv/subject/${subjectID}/comments`;
     const { data: html } = await got(link);

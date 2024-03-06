@@ -155,4 +155,4 @@ const getData = async (ctx, url, title) => {
     };
 };
 
-export { getData };
+export default { getData };

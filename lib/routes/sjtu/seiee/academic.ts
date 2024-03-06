@@ -1,4 +1,4 @@
-const workerFactory = require('./utils');
+import workerFactory from './utils';
 
 module.exports = workerFactory(
     () => ({

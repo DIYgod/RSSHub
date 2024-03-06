@@ -1,6 +1,6 @@
-const getComments = require('./comments.js');
-const getFromAPI = require('./offcial-subject-api.js');
-const getEps = require('./ep.js');
+import getComments from './comments';
+import getFromAPI from './offcial-subject-api';
+import getEps from './ep';
 import { queryToBoolean } from '@/utils/readable-social';
 
 export default async (ctx) => {

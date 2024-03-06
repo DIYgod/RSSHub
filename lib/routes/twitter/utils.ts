@@ -474,4 +474,4 @@ const parseRouteParams = (routeParams) => {
     return { count, exclude_replies, include_rts, force_web_api };
 };
 
-export { ProcessFeed, getAppClient, parseRouteParams };
+export default { ProcessFeed, getAppClient, parseRouteParams };
