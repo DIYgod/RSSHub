@@ -1,25 +1,25 @@
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { unescapeAll } from 'markdown-it/lib/common/utils.mjs';
 
 export default async (ctx) => {
     const rootUrl = 'https://www.techflowpost.com';
-    const apiRootUrl = 'https://data.techflowpost.com';
-    const apiUrl = `${apiRootUrl}/api/pc/home/more?pageIndex=0&pageSize=${ctx.req.query('limit') ?? 50}`;
 
-    const response = await got({
-        method: 'get',
-        url: apiUrl,
+    const { data: response } = await got.post('https://www.techflowpost.com/ashx/index.ashx', {
+        form: {
+            pageindex: 1,
+            pagesize: ctx.req.query('limit') ?? 50,
+        },
     });
 
-    const items = response.data.content.map((item) => ({
-        title: item.title,
-        author: item.source,
-        link: `${rootUrl}/article/${item.id}`,
-        category: item.tagList.map((t) => t.name),
-        pubDate: timezone(parseDate(item.createTime), +8),
-        description: unescapeAll(item.content),
+    const items = response.content.map((item) => ({
+        title: item.stitle,
+        author: item.sauthor_name,
+        link: `${rootUrl}/article/detail_${item.narticle_id}.html`,
+        category: [item.new_scata_name],
+        pubDate: timezone(parseDate(item.dcreate_time), +8),
+        updated: timezone(parseDate(item.dmodi_time), +8),
+        description: item.scontent,
     }));
 
     ctx.set('data', {

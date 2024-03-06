@@ -4,14 +4,14 @@ export default {
         '.': [
             {
                 title: '首页',
-                docs: 'https://docs.rsshub.app/routes/new-media#shen-chao-techflow-shou-ye',
+                docs: 'https://docs.rsshub.app/routes/finance#shen-chao-techflow-shou-ye',
                 source: ['/'],
                 target: '/techflowpost',
             },
             {
                 title: '快讯',
-                docs: 'https://docs.rsshub.app/routes/new-media#shen-chao-techflow-kuai-xun',
-                source: ['/express'],
+                docs: 'https://docs.rsshub.app/routes/finance#shen-chao-techflow-kuai-xun',
+                source: ['/newsletter/index.html'],
                 target: '/techflowpost/express',
             },
         ],
