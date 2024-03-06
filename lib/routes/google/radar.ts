@@ -13,12 +13,12 @@ export default {
                 },
             },
         ],
-        chrome: [
+        chromewebstore: [
             {
-                title: '插件更新',
-                source: '/webstore/detail/:name/:id',
-                docs: 'https://docs.rsshub.app/routes/program-update#chrome-wang-shang-ying-yong-dian',
-                target: '/chrome/webstore/extensions/:id',
+                title: 'Extension Update',
+                source: '/detail/:name/:id',
+                docs: 'https://docs.rsshub.app/routes/program-update#chrome-web-store',
+                target: '/google/chrome/extension/:id',
             },
         ],
         photos: [
