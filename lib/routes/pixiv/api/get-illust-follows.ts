@@ -1,5 +1,5 @@
 import got from '../pixiv-got';
-const maskHeader = require('../constants').maskHeader;
+import { maskHeader } from '../constants';
 import queryString from 'query-string';
 
 /**
