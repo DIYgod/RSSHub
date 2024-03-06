@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-const renderHTML = (node) => {
+export const renderHTML = (node) => {
     if (!node) {
         return '';
     }
@@ -59,7 +59,7 @@ const renderHTML = (node) => {
     }
 };
 
-const parseItem = async (item) => {
+export const parseItem = async (item) => {
     const { data: response, url } = await got(item.link);
 
     if (new URL(url).hostname !== 'www.scmp.com') {
@@ -84,9 +84,4 @@ const parseItem = async (item) => {
     // from https://www.scmp.com/news/china/politics/article/3239355/li-keqiang-former-premier-china-dead
 
     return item;
-};
-
-module.exports = {
-    renderHTML,
-    parseItem,
 };
