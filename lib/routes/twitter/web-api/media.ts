@@ -1,4 +1,4 @@
-const utils = require('../utils');
+import utils from '../utils';
 // import { config } from '@/config';
 import { getUser, getUserMedia } from './twitter-api';
 import { initToken } from './token';

@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
-const { getAcwScV2ByArg1 } = require('../5eplay/utils');
+import { getAcwScV2ByArg1 } from '../5eplay/utils';
 
 const host = 'https://segmentfault.com';
 

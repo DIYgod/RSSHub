@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { parseArticle } = require('../../utils');
+import { parseArticle } from '../../utils';
 
 export default async (ctx) => {
     const { cids = '57045' } = ctx.req.param();

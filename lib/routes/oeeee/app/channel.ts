@@ -5,7 +5,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-const { parseArticle } = require('../utils');
+import { parseArticle } from '../utils';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 

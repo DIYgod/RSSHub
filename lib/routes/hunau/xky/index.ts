@@ -1,4 +1,4 @@
-const getContent = require('../utils/common');
+import getContent from '../utils/common';
 
 export default async (ctx) => {
     await getContent(ctx, {

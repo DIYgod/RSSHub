@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 const data = require('../data').wh.jwc;
-const extractor = require('../extractor');
+import extractor from '../extractor';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 

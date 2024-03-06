@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import { ig, login } from './utils';
 import logger from '@/utils/logger';
 import { config } from '@/config';
-const { renderItems } = require('../common-utils');
+import { renderItems } from '../common-utils';
 
 // loadContent pulls the desired user/tag/etc
 async function loadContent(category, nameOrId, tryGet) {

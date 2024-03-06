@@ -1,4 +1,4 @@
-const got = require('../pixiv-got');
+import got from '../pixiv-got';
 const maskHeader = require('../constants').maskHeader;
 const assert = require('assert');
 import queryString from 'query-string';

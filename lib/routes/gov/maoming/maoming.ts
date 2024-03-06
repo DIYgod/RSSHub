@@ -1,5 +1,5 @@
 import { getSubPath } from '@/utils/common-utils';
-const { gdgov } = require('../general/general');
+import { gdgov } from '../general/general';
 
 export default async (ctx) => {
     const path = getSubPath(ctx)

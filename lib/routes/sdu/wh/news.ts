@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 const data = require('../data').wh.news;
-const extractor = require('../extractor');
+import extractor from '../extractor';
 import { parseDate } from '@/utils/parse-date';
 
 export default async (ctx) => {

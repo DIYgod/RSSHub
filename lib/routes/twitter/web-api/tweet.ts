@@ -1,6 +1,6 @@
 // import { config } from '@/config';
 import { getUser, getUserTweet } from './twitter-api';
-const utils = require('../utils');
+import utils from '../utils';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import { config } from '@/config';
 import { initToken } from './token';
