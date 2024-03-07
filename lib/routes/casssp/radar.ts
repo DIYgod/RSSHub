@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     'casssp.org.cn': {
         _name: '中国科学学与科技政策研究会',
         '.': [
