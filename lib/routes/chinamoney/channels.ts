@@ -52,6 +52,4 @@ const channels = {
     },
 };
 
-module.exports = {
-    channels,
-};
+export { channels };

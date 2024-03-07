@@ -53,7 +53,7 @@ const ProcessFeed = (data) =>
             return { ...single, ...other };
         })
     );
-module.exports = async () => {
+export default async () => {
     const baseUrl = 'https://api.cntv.cn/NewVideo/getVideoListByColumn?id=TOPC1451559066181661&n=20&sort=desc&p=1&mode=0&serviceId=tvcctv';
     // 获取要处理的页面
     const res = await got({

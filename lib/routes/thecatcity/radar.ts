@@ -1,4 +1,4 @@
-const { termsMap } = require('./terms-map');
+import { termsMap } from './terms-map';
 
 export default {
     'thecatcity.com': {

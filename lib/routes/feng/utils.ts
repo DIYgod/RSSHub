@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const CryptoJS = require('crypto-js');
+import CryptoJS from 'crypto-js';
 import got from '@/utils/got';
 import { config } from '@/config';
 const apiUrl = 'https://api.wfdata.club';
@@ -73,9 +73,4 @@ const getThread = (tid, topicId) => {
     });
 };
 
-module.exports = {
-    baseUrl,
-    getForumMeta,
-    getThreads,
-    getThread,
-};
+export { baseUrl, getForumMeta, getThreads, getThread };

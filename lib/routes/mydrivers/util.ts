@@ -113,13 +113,4 @@ const processItems = async (items, tryGet) =>
         )
     );
 
-module.exports = {
-    rootUrl,
-    rootRSSUrl,
-    title,
-    categories,
-
-    convertToQueryString,
-    getInfo,
-    processItems,
-};
+export { rootUrl, rootRSSUrl, title, categories, convertToQueryString, getInfo, processItems };

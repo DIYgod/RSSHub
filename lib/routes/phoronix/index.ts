@@ -2,9 +2,11 @@ import cache from '@/utils/cache';
 import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
 import got from '@/utils/got';
-const dayjs = require('dayjs');
-dayjs.extend(require('dayjs/plugin/utc'));
-dayjs.extend(require('dayjs/plugin/timezone'));
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const redirectCacheKey = 'phoronix:redirect';
 const webArticlesCacheKey = 'phoronix:web-articles';

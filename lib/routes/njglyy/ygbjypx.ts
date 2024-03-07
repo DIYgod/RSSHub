@@ -1,4 +1,4 @@
-const { getNoticeList } = require('./utils');
+import { getNoticeList } from './utils';
 
 const url = 'https://njglyy.com/ygb/jypx/jypx.aspx';
 const host = 'https://njglyy.com/ygb/jypx/';

@@ -82,7 +82,4 @@ async function request(link, cache) {
     return response;
 }
 
-module.exports = {
-    ProcessFeed,
-    request,
-};
+export default { ProcessFeed, request };

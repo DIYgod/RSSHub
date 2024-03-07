@@ -85,6 +85,4 @@ const processZxfkItems = async (site = 'beijing', category = 'ywzx', limit = '3'
     };
 };
 
-module.exports = {
-    processZxfkItems,
-};
+export { processZxfkItems };

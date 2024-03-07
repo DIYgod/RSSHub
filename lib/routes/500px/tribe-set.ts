@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-const { baseUrl, getTribeDetail, getTribeSets } = require('./utils');
+import { baseUrl, getTribeDetail, getTribeSets } from './utils';
 
 export default async (ctx) => {
     const id = ctx.req.param('id');

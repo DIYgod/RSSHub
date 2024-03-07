@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const url = require('url');
-const querystring = require('querystring');
+import * as url from 'node:url';
+import querystring from 'querystring';
 
 const baseUrl = 'http://jw.scut.edu.cn';
 const refererUrl = baseUrl + '/dist/';

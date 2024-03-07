@@ -140,9 +140,4 @@ const processItems = async (items, tryGet, rootUrl) =>
         })
     );
 
-module.exports = {
-    domain,
-    processMeta,
-    getMeta,
-    processItems,
-};
+export { domain, processMeta, getMeta, processItems };

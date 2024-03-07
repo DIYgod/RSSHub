@@ -10,7 +10,7 @@ import cache from '@/utils/cache';
 
 import { load } from 'cheerio';
 import got from '@/utils/got';
-const { baseUrl, fetchDesc, getItem } = require('./utils');
+import { baseUrl, fetchDesc, getItem } from './utils';
 import puppeteer from '@/utils/puppeteer';
 
 export default async (ctx) => {

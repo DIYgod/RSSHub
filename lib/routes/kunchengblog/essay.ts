@@ -1,7 +1,7 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-const { SourceMapConsumer } = require('source-map');
+import { SourceMapConsumer } from 'source-map';
 
 export default async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;

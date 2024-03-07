@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const utils = require('./utils');
+import utils from './utils';
 const getLinkAndTitle = (type, period) => {
     const baseURL = 'https://api.coolapk.com/v6/page/dataList?url=';
     let link;

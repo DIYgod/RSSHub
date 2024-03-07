@@ -1,4 +1,4 @@
-const { getNoticeList } = require('./utils');
+import { getNoticeList } from './utils';
 
 const url = 'https://gra.njucm.edu.cn/2899/list.htm';
 const host = 'https://gra.njucm.edu.cn';

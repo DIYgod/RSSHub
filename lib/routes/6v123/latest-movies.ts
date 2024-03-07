@@ -1,4 +1,4 @@
-const { processItems } = require('./utils');
+import { processItems } from './utils';
 
 const baseURL = 'https://www.hao6v.cc/gvod/zx.html';
 

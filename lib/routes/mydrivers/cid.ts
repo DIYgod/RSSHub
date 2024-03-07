@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
-const { rootUrl, rootRSSUrl, title, categories, getInfo, processItems } = require('./util');
+import { rootUrl, rootRSSUrl, title, categories, getInfo, processItems } from './util';
 
 export default async (ctx) => {
     const id = ctx.req.param('id');

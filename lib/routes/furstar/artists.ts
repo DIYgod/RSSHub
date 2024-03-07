@@ -1,4 +1,4 @@
-const utils = require('./utils');
+import utils from './utils';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';

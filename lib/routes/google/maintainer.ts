@@ -9,4 +9,5 @@ export default {
     '/search/:keyword/:language?': ['CaoMeiYouRen'],
     '/sites/:id': ['hoilc'],
     '/sites/recentChanges/:id': ['nczitzk'],
+    '/chrome/extension/:id': ['DIYgod'],
 };

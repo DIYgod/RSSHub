@@ -32,6 +32,4 @@ async function getContent(url, pptr = false) {
     }
 }
 
-module.exports = {
-    getContent,
-};
+export { getContent };

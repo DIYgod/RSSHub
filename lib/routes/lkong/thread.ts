@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-const { viewThread, countReplies } = require('./query');
+import { viewThread, countReplies } from './query';
 
 export default async (ctx) => {
     const id = ctx.req.param('id');

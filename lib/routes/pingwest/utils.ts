@@ -86,7 +86,4 @@ const getFullArticle = (link, cache) =>
         return description;
     });
 
-module.exports = {
-    articleListParser,
-    statusListParser,
-};
+export default { articleListParser, statusListParser };

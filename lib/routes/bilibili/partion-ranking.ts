@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const utils = require('./utils');
+import utils from './utils';
 const got_ins = got.extend({
     headers: {
         Referer: 'https://www.bilibili.com/',

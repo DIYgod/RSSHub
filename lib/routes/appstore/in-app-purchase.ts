@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const url = require('url');
+import * as url from 'node:url';
 import { load } from 'cheerio';
 
 export default async (ctx) => {

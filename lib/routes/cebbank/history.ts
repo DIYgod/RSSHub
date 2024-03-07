@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import * as path from 'node:path';
 import { art } from '@/utils/render';
-const utils = require('./utils');
+import utils from './utils';
 
 const { TYPE } = utils;
 

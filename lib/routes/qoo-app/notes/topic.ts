@@ -1,6 +1,6 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const { notesUrl, extractNotes } = require('../utils');
+import { notesUrl, extractNotes } from '../utils';
 
 export default async (ctx) => {
     const { topic, lang } = ctx.req.param();

@@ -1,19 +1,19 @@
-const got = require('@/utils/got');
+import got from '@/utils/got';
 
-module.exports = async (ctx) => {
-    const crxid = ctx.params.crxid;
+export default async (ctx) => {
+    const crxid = ctx.req.param('crxid');
 
     const page_url = `https://microsoftedge.microsoft.com/addons/detail/${crxid}`;
 
     const { data } = await got({
         method: 'get',
-        url: `https://microsoftedge.microsoft.com/addons/getproductdetailsbycrxid/${crxid}?hl=zh-CN&gl=CN`,
+        url: `https://microsoftedge.microsoft.com/addons/getproductdetailsbycrxid/${crxid}?hl=en`,
         headers: {
             Referer: page_url,
         },
     });
 
-    ctx.state.data = {
+    ctx.set('data', {
         title: `${data.name} - Microsoft Edge Addons`,
         description: data.shortDescription,
         image: `https:${data.thumbnail}`,
@@ -28,5 +28,5 @@ module.exports = async (ctx) => {
                 link: page_url,
             },
         ],
-    };
+    });
 };

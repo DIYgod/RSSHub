@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const { renderDescription } = require('./utils');
+import { renderDescription } from './utils';
 import { config } from '@/config';
 
 export default async (ctx) => {

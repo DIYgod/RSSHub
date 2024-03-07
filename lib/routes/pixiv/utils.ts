@@ -1,6 +1,6 @@
 import { config } from '@/config';
 
-module.exports = {
+export default {
     getImgs(illust) {
         const images = [];
         if (illust.meta_pages?.length) {

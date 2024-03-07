@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-const { baseUrl, parseArticle } = require('./utils');
+import { baseUrl, parseArticle } from './utils';
 
 export default async (ctx) => {
     const id = ctx.req.param('id');

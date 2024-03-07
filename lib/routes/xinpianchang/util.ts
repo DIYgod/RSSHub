@@ -105,9 +105,4 @@ const processItems = async (items, tryGet) => {
     );
 };
 
-module.exports = {
-    rootUrl,
-
-    getData,
-    processItems,
-};
+export { rootUrl, getData, processItems };

@@ -1,8 +1,8 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const { JSDOM } = require('jsdom');
+import { JSDOM } from 'jsdom';
 
-module.exports = {
+export default {
     getPlayInfo: async (ctx, shareId, ksong_mid = '') => {
         const link = `https://node.kg.qq.com/play?s=${shareId}`;
         const cache_key = ksong_mid ? `ksong:${ksong_mid}` : link;

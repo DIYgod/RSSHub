@@ -1,9 +1,9 @@
 import cache from '@/utils/cache';
-const { getToken } = require('./token');
-const searchPopularIllust = require('./api/search-popular-illust');
-const searchIllust = require('./api/search-illust');
+import { getToken } from './token';
+import searchPopularIllust from './api/search-popular-illust';
+import searchIllust from './api/search-illust';
 import { config } from '@/config';
-const pixivUtils = require('./utils');
+import pixivUtils from './utils';
 import { parseDate } from '@/utils/parse-date';
 
 export default async (ctx) => {

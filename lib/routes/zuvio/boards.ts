@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const { getBoards, rootUrl } = require('./utils');
+import { getBoards, rootUrl } from './utils';
 
 export default async (ctx) => {
     const items = await getBoards(cache.tryGet);

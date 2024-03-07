@@ -1,8 +1,8 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const util = require('./utils');
-const iconv = require('iconv-lite');
+import util from './utils';
+import iconv from 'iconv-lite';
 
 const gbk2utf8 = (s) => iconv.decode(s, 'gbk');
 const host = 'https://www.flyert.com';

@@ -1,15 +1,15 @@
 import got from '@/utils/got';
-const cache = require('./cache');
-const utils = require('./utils');
+import cache from './cache';
+import utils from './utils';
 import logger from '@/utils/logger';
 
 export default async (ctx) => {
     const uid = ctx.req.param('uid');
     const disableEmbed = ctx.req.param('disableEmbed');
-    const cookie = await cache.getCookie(ctx);
-    const wbiVerifyString = await cache.getWbiVerifyString(ctx);
+    const cookie = await cache.getCookie();
+    const wbiVerifyString = await cache.getWbiVerifyString();
     const dmImgList = utils.getDmImgList();
-    const [name, face] = await cache.getUsernameAndFaceFromUID(ctx, uid);
+    const [name, face] = await cache.getUsernameAndFaceFromUID(uid);
 
     // await got(`https://space.bilibili.com/${uid}/video?tid=0&page=1&keyword=&order=pubdate`, {
     //     headers: {

@@ -103,11 +103,4 @@ async function getCookie() {
     return token;
 }
 
-module.exports = {
-    getCookie,
-    random_nonce,
-    decrypt_wechat_detail_xyz,
-    decrypt_douyin_account_xyz,
-    decrypt_douyin_detail_xyz,
-    flatten,
-};
+export default { getCookie, random_nonce, decrypt_wechat_detail_xyz, decrypt_douyin_account_xyz, decrypt_douyin_detail_xyz, flatten };

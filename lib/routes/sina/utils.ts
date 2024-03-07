@@ -100,8 +100,4 @@ const parseArticle = (item, tryGet) =>
         return item;
     });
 
-module.exports = {
-    getRollNewsList,
-    parseRollNewsList,
-    parseArticle,
-};
+export { getRollNewsList, parseRollNewsList, parseArticle };

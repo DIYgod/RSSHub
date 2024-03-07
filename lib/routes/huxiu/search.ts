@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-const { rootUrl, apiSearchRootUrl, generateSignature, processItems, fetchData } = require('./util');
+import { rootUrl, apiSearchRootUrl, generateSignature, processItems, fetchData } from './util';
 
 export default async (ctx) => {
     const keyword = ctx.req.param('keyword');

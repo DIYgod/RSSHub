@@ -25,6 +25,4 @@ const termsMap = {
     },
 };
 
-module.exports = {
-    termsMap,
-};
+export { termsMap };

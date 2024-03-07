@@ -1,5 +1,5 @@
 import logger from '@/utils/logger';
-const { getItems } = require('./utils');
+import { getItems } from './utils';
 
 export default async (ctx) => {
     const baseUrl = 'https://insider.finology.in/most-viewed';

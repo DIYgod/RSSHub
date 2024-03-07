@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 // 导入所需模组
 import got from '@/utils/got'; // 自订的 got
 import { parseDate } from '@/utils/parse-date';
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 import * as path from 'node:path';
 import { art } from '@/utils/render';
 

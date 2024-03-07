@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const utils = require('./utils');
+import utils from './utils';
 
 const rootUrl = 'https://kns.cnki.net';
 

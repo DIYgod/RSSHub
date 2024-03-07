@@ -2,11 +2,11 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
-const crypto = require('crypto');
+import crypto from 'crypto';
 import * as path from 'node:path';
 import { art } from '@/utils/render';
 import got from '@/utils/got';
-const { parseAttr } = require('./renderer');
+import { parseAttr } from './renderer';
 
 const apiUrl = 'https://www.linkedin.cn/karpos/api/graphql';
 const searchHitQueryId = 'searchSearchHitsByJob.be362cd720abd0ebf89b4bbc3253047f';
@@ -120,7 +120,4 @@ const parseJobPosting = (ctx, jobPosting) => {
     });
 };
 
-module.exports = {
-    parseSearchHit,
-    parseJobPosting,
-};
+export { parseSearchHit, parseJobPosting };

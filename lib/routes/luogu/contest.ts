@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import MarkdownIt from 'markdown-it';
 const md = MarkdownIt();
-const asyncPool = require('tiny-async-pool');
+import asyncPool from 'tiny-async-pool';
 
 const baseUrl = 'https://www.luogu.com.cn';
 

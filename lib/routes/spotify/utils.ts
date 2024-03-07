@@ -54,9 +54,4 @@ const parseTrack = (x) => ({
 
 const parseArtist = (x) => ({ title: x.name, description: `${x.name}, with ${x.followers.total} followers`, link: x.external_urls.spotify });
 
-module.exports = {
-    getPublicToken,
-    getPrivateToken,
-    parseTrack,
-    parseArtist,
-};
+export default { getPublicToken, getPrivateToken, parseTrack, parseArtist };

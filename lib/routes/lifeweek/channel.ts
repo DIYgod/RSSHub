@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const getRssItem = require('./utils');
+import getRssItem from './utils';
 
 const rootApiUrl = 'https://www.lifeweek.com.cn/api/userWebFollow/getFollowTagContentList?type=3&sort=2&tagId';
 const rootUrl = 'https://www.lifeweek.com.cn/column';

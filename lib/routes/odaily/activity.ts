@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-const { rootUrl } = require('./utils');
+import { rootUrl } from './utils';
 
 export default async (ctx) => {
     const currentUrl = `${rootUrl}/service/scheme/group/8?page=1&per_page=${ctx.req.query('limit') ?? 25}`;

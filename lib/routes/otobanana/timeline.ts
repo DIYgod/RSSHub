@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const { apiBase, baseUrl, getUserInfo, renderPost } = require('./utils');
+import { apiBase, baseUrl, getUserInfo, renderPost } from './utils';
 
 export default async (ctx) => {
     const id = ctx.req.param('id');

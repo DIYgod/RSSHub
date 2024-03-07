@@ -26,7 +26,4 @@ const getI18nType = (language, tryGet) =>
         };
     });
 
-module.exports = {
-    getI18nGameInfo,
-    getI18nType,
-};
+export { getI18nGameInfo, getI18nType };

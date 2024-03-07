@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const { processList, ProcessFeed, baseUrl, apiUrl } = require('./utils');
+import { processList, ProcessFeed, baseUrl, apiUrl } from './utils';
 
 export default async (ctx) => {
     const id = ctx.req.param('id');

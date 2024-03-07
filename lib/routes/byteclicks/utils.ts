@@ -8,6 +8,4 @@ const parseItem = (data) =>
         link: item.link,
     }));
 
-module.exports = {
-    parseItem,
-};
+export { parseItem };

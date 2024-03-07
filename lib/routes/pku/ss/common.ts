@@ -30,8 +30,4 @@ const getArticle = (item, tryGet) =>
         return item;
     });
 
-module.exports = {
-    baseUrl,
-    getSingleRecord,
-    getArticle,
-};
+export { baseUrl, getSingleRecord, getArticle };

@@ -60,8 +60,4 @@ const getItem = (item, $) => {
     };
 };
 
-module.exports = {
-    baseUrl,
-    fetchDesc,
-    getItem,
-};
+export { baseUrl, fetchDesc, getItem };

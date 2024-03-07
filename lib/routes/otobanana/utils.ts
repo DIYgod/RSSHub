@@ -60,11 +60,4 @@ const renderPost = ({ id, type_label: type, cast, /** livestream  */ message /**
     }
 };
 
-module.exports = {
-    apiBase,
-    baseUrl,
-    getUserInfo,
-    renderCast,
-    renderLive,
-    renderPost,
-};
+export { apiBase, baseUrl, getUserInfo, renderCast, renderLive, renderPost };

@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-const { sorts, types } = require('./util');
+import { sorts, types } from './util';
 
 export default async (ctx) => {
     const { type = 'game', sort = 'new', filter } = ctx.req.param();

@@ -7,7 +7,7 @@ import { config } from '@/config';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
-const { getClientVal, sign } = require('./utils');
+import { getClientVal, sign } from './utils';
 
 export default async (ctx) => {
     const programId = ctx.req.param('programId');

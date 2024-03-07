@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
-const utils = require('./utils');
+import utils from './utils';
 
 export default async (ctx) => {
     const media = ctx.req.param('media') ?? -1;

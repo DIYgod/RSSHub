@@ -26,7 +26,4 @@ const renderDesc = (title, authors, doi, img) =>
         img,
     });
 
-module.exports = {
-    puppeteerGet,
-    renderDesc,
-};
+export { puppeteerGet, renderDesc };

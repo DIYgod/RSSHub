@@ -1,15 +1,15 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const data = require('../data').wh.jwc;
-const extractor = require('../extractor');
+import data from '../data';
+import extractor from '../extractor';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 export default async (ctx) => {
     const column = ctx.req.param('column') ?? 'gztz';
-    const baseUrl = data.url;
-    const response = await got(baseUrl + data.columns[column].url);
+    const baseUrl = data.wh.jwc.url;
+    const response = await got(baseUrl + data.wh.jwc.columns[column].url);
     const $ = load(response.data);
     const items = $('.articleul li');
     const out = await Promise.all(
@@ -36,8 +36,8 @@ export default async (ctx) => {
     );
 
     ctx.set('data', {
-        title: `${data.name} ${data.columns[column].name}`,
-        link: baseUrl + data.columns[column].url,
+        title: `${data.wh.jwc.name} ${data.wh.jwc.columns[column].name}`,
+        link: baseUrl + data.wh.jwc.columns[column].url,
         item: out,
     });
 };

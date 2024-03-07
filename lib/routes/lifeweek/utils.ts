@@ -15,4 +15,4 @@ async function getRssItem(item, articleLink) {
     };
 }
 
-module.exports = getRssItem;
+export default getRssItem;

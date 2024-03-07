@@ -81,8 +81,4 @@ const parseTradeItem = (item, tryGet) =>
         return item;
     });
 
-module.exports = {
-    baseUrl,
-    parseItem,
-    parseTradeItem,
-};
+export { baseUrl, parseItem, parseTradeItem };

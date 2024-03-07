@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const cache = require('./cache');
+import cache from './cache';
 import { config } from '@/config';
 
 export default async (ctx) => {
@@ -11,7 +11,7 @@ export default async (ctx) => {
         throw new Error('缺少对应 loginUid 的 Bilibili 用户登录后的 Cookie 值 <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">bilibili 用户关注动态系列路由</a>');
     }
 
-    const name = await cache.getUsernameFromUID(ctx, uid);
+    const name = await cache.getUsernameFromUID(uid);
 
     const countResponse = await got({
         method: 'get',

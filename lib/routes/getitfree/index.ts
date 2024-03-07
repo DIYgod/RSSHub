@@ -2,18 +2,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-const {
-    apiSlug,
-    rootUrl,
-
-    bakeFilterSearchParams,
-    bakeFiltersWithPair,
-    bakeUrl,
-    fetchData,
-    getFilterNameForTitle,
-    getFilterParamsForUrl,
-    parseFilterStr,
-} = require('./util');
+import { apiSlug, rootUrl, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchData, getFilterNameForTitle, getFilterParamsForUrl, parseFilterStr } from './util';
 
 export default async (ctx) => {
     const filter = ctx.req.param('filter');

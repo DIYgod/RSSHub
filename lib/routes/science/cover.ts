@@ -15,7 +15,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const { baseUrl } = require('./utils');
+import { baseUrl } from './utils';
 
 export default async (ctx) => {
     const pageURL = `${baseUrl}/journals`;

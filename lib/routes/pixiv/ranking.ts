@@ -1,8 +1,8 @@
 import cache from '@/utils/cache';
-const { getToken } = require('./token');
-const getRanking = require('./api/get-ranking');
+import { getToken } from './token';
+import getRanking from './api/get-ranking';
 import { config } from '@/config';
-const pixivUtils = require('./utils');
+import pixivUtils from './utils';
 import { parseDate } from '@/utils/parse-date';
 
 const titles = {

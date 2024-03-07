@@ -1,8 +1,8 @@
 import parser from '@/utils/rss-parser';
 import { parseDate } from '@/utils/parse-date';
-const dayjs = require('dayjs');
-const localizedFormat = require('dayjs/plugin/localizedFormat');
-require('dayjs/locale/zh-cn');
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+import 'dayjs/locale/zh-cn';
 dayjs.extend(localizedFormat);
 
 export default async (ctx) => {

@@ -1,4 +1,4 @@
-const { parseList } = require('./util');
+import { parseList } from './util';
 const baseUrl = 'https://www.zaobao.com';
 
 export default async (ctx) => {

@@ -4,10 +4,10 @@ const __dirname = getCurrentPath(import.meta.url);
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { baseUrl, fetchUserDate } = require('./utils');
+import { baseUrl, fetchUserDate } from './utils';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 
 export default async (ctx) => {
     art.defaults.imports = {

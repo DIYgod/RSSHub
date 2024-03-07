@@ -1,10 +1,10 @@
 import got from '@/utils/got';
-const cache = require('./cache');
+import cache from './cache';
 import { config } from '@/config';
-const utils = require('./utils');
-const JSONbig = require('json-bigint');
+import utils from './utils';
+import JSONbig from 'json-bigint';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
-const querystring = require('querystring');
+import querystring from 'querystring';
 
 export default async (ctx) => {
     const uid = String(ctx.req.param('uid'));
@@ -14,7 +14,7 @@ export default async (ctx) => {
     const disableEmbed = fallback(undefined, queryToBoolean(routeParams.disableEmbed), false);
     const displayArticle = fallback(undefined, queryToBoolean(routeParams.displayArticle), false);
 
-    const name = await cache.getUsernameFromUID(ctx, uid);
+    const name = await cache.getUsernameFromUID(uid);
 
     const cookie = config.bilibili.cookies[uid];
     if (cookie === undefined) {
@@ -123,7 +123,7 @@ export default async (ctx) => {
             }
 
             if (data.image_urls && displayArticle) {
-                data_content = (await cache.getArticleDataFromCvid(ctx, data.id, uid)).description;
+                data_content = (await cache.getArticleDataFromCvid(data.id, uid)).description;
             }
 
             return {

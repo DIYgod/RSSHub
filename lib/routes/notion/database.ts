@@ -1,12 +1,13 @@
 import cache from '@/utils/cache';
-const { Client, isNotionClientError, APIErrorCode } = require('@notionhq/client');
+import { Client, isNotionClientError, APIErrorCode } from '@notionhq/client';
 import logger from '@/utils/logger';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
-const { NotionToMarkdown } = require('notion-to-md');
+import { NotionToMarkdown } from 'notion-to-md';
 import { load } from 'cheerio';
-const md = require('markdown-it')({
+import MarkdownIt from 'markdown-it';
+const md = MarkdownIt({
     html: true,
     linkify: true,
 });

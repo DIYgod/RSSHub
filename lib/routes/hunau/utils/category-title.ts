@@ -28,4 +28,4 @@ const categoryTitle = (type) => {
     return title;
 };
 
-module.exports = categoryTitle;
+export default categoryTitle;

@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-const { baseUrl, apiHost, parseEventDetail, parseItem } = require('./utils');
+import { baseUrl, apiHost, parseEventDetail, parseItem } from './utils';
 
 export default async (ctx) => {
     const { tagId, sort = 'new', range } = ctx.req.param();

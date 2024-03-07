@@ -1,4 +1,4 @@
-const utils = require('../utils');
+import utils from '../utils';
 
 export default async (ctx) => {
     const id = ctx.req.param('id');

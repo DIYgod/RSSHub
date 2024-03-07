@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const currency = require('currency-symbol-map');
+import currency from 'currency-symbol-map';
 export default async (ctx) => {
     const country = ctx.req.param('country');
     const type = ctx.req.param('type').toLowerCase() === 'mac' ? 'macapps' : 'apps';

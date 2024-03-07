@@ -18,7 +18,4 @@ const parseFloorItem = (floor) =>
         };
     });
 
-module.exports = {
-    parseModule,
-    parseFloorItem,
-};
+export { parseModule, parseFloorItem };

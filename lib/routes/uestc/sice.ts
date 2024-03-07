@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 import puppeteer from '@/utils/puppeteer';
 
 const baseIndexUrl = 'https://www.sice.uestc.edu.cn/index.htm';

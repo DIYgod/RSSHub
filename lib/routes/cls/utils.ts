@@ -1,4 +1,4 @@
-const CryptoJS = require('crypto-js');
+import CryptoJS from 'crypto-js';
 
 const rootUrl = 'https://www.cls.cn';
 
@@ -15,7 +15,4 @@ const getSearchParams = (moreParams) => {
     return searchParams;
 };
 
-module.exports = {
-    rootUrl,
-    getSearchParams,
-};
+export { rootUrl, getSearchParams };

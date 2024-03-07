@@ -1,4 +1,4 @@
-const { processItems } = require('./utils');
+import { processItems } from './utils';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 

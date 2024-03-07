@@ -7,6 +7,4 @@ function getConfig(ctx) {
     return config.discourse.config[ctx.req.param('configId')];
 }
 
-module.exports = {
-    getConfig,
-};
+export { getConfig };

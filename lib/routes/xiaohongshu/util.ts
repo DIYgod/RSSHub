@@ -194,10 +194,4 @@ const formatNote = (url, note) => ({
     updated: parseDate(note.lastUpdateTime, 'x'),
 });
 
-module.exports = {
-    getUser,
-    getBoard,
-    getNotes,
-    formatText,
-    formatNote,
-};
+export { getUser, getBoard, getNotes, formatText, formatNote };

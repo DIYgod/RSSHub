@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import * as path from 'node:path';
-const asyncPool = require('tiny-async-pool');
+import asyncPool from 'tiny-async-pool';
 
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
@@ -598,9 +598,4 @@ const asyncPoolAll = async (...args) => {
     return results;
 };
 
-module.exports = {
-    rootUrl,
-    asyncPoolAll,
-    parseNewsList,
-    parseArticle,
-};
+export { rootUrl, asyncPoolAll, parseNewsList, parseArticle };

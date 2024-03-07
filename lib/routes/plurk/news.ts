@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const { baseUrl, fetchFriends, getPlurk } = require('./utils');
+import { baseUrl, fetchFriends, getPlurk } from './utils';
 
 export default async (ctx) => {
     const { lang = 'en' } = ctx.req.param();

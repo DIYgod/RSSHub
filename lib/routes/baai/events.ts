@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-const { baseUrl, apiHost, parseEventDetail, parseItem } = require('./utils');
+import { baseUrl, apiHost, parseEventDetail, parseItem } from './utils';
 
 export default async (ctx) => {
     const responses = await got.all(

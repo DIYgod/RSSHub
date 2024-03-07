@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-const { appsUrl } = require('../utils');
+import { appsUrl } from '../utils';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 

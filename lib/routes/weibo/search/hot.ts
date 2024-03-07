@@ -7,7 +7,7 @@ import { config } from '@/config';
 import { art } from '@/utils/render';
 import { load } from 'cheerio';
 import * as path from 'node:path';
-// const weiboUtils = require('../utils');
+// import weiboUtils from '../utils';
 
 // Default hide all picture
 let wpic = 'false';

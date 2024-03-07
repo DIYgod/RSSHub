@@ -1,7 +1,8 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const md = require('markdown-it')({ html: true });
+import MarkdownIt from 'markdown-it';
+const md = MarkdownIt({ html: true });
 import { config } from '@/config';
 
 export default async (ctx) => {

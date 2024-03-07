@@ -1,15 +1,15 @@
 import got from '@/utils/got';
-const cache = require('./cache');
-const utils = require('./utils');
+import cache from './cache';
+import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
 
 export default async (ctx) => {
     const uid = ctx.req.param('uid');
     const disableEmbed = ctx.req.param('disableEmbed');
-    const cookie = await cache.getCookie(ctx);
-    const wbiVerifyString = await cache.getWbiVerifyString(ctx);
+    const cookie = await cache.getCookie();
+    const wbiVerifyString = await cache.getWbiVerifyString();
     const dmImgList = utils.getDmImgList();
-    const [name, face] = await cache.getUsernameAndFaceFromUID(ctx, uid);
+    const [name, face] = await cache.getUsernameAndFaceFromUID(uid);
 
     await got(`https://space.bilibili.com/${uid}/video?tid=0&page=1&keyword=&order=pubdate`, {
         headers: {
@@ -29,7 +29,7 @@ export default async (ctx) => {
     const pageTotal = Math.ceil(response.data.data.page.count / response.data.data.page.ps);
 
     const getPage = async (pageId) => {
-        const cookie = await cache.getCookie(ctx);
+        const cookie = await cache.getCookie();
         await got(`https://space.bilibili.com/${uid}/video?tid=0&page=${pageId}&keyword=&order=pubdate`, {
             headers: {
                 Referer: `https://space.bilibili.com/${uid}/`,

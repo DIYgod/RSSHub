@@ -1,4 +1,4 @@
-const { parseSearchHit, parseJobPosting } = require('./utils');
+import { parseSearchHit, parseJobPosting } from './utils';
 
 const siteUrl = 'https://www.linkedin.cn/incareer/jobs/search';
 

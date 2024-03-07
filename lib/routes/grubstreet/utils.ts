@@ -80,6 +80,4 @@ const getData = async (ctx, url, title, description) => {
     };
 };
 
-module.exports = {
-    getData,
-};
+export default { getData };

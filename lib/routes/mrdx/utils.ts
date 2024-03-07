@@ -12,6 +12,4 @@ function getElementChildrenInnerText(element) {
     return text;
 }
 
-module.exports = {
-    getElementChildrenInnerText,
-};
+export { getElementChildrenInnerText };

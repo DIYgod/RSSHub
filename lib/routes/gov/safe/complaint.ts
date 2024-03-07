@@ -1,4 +1,4 @@
-const { processZxfkItems } = require('./util');
+import { processZxfkItems } from './util';
 
 export default async (ctx) => {
     const { site = 'beijing' } = ctx.req.param();

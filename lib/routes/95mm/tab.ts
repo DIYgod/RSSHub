@@ -1,4 +1,4 @@
-const { rootUrl, ProcessItems } = require('./utils');
+import { rootUrl, ProcessItems } from './utils';
 
 export default async (ctx) => {
     const tab = ctx.req.param('tab') ?? '最新';

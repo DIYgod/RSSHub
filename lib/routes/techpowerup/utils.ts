@@ -73,12 +73,4 @@ const parseReviews = async ($, item) => {
     item.description = content.html();
 };
 
-module.exports = {
-    baseUrl,
-    headers,
-    fixImages,
-    hdImage,
-    parseReviews,
-    removeFigureStyle,
-    removeResponsiveStyle,
-};
+export { baseUrl, headers, fixImages, hdImage, parseReviews, removeFigureStyle, removeResponsiveStyle };

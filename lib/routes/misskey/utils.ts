@@ -28,7 +28,4 @@ const parseNotes = (data, site) =>
         };
     });
 
-module.exports = {
-    parseNotes,
-    allowSiteList,
-};
+export default { parseNotes, allowSiteList };

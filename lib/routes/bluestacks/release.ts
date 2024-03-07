@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const cherrio = require('cheerio');
+import cherrio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
 

@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const { baseUrl, parseList, parseItems } = require('./utils');
+import { baseUrl, parseList, parseItems } from './utils';
 
 export default async (ctx) => {
     const requestPath = ctx.req.path;
