@@ -7,8 +7,7 @@ const arr = {
     xwrd: 'home!newsHome.action?category=12',
     tzgg: 'home!newsHome.action?category=13',
     zpxx: 'home!recruit.action?category=1&jobType=110001',
-    gfjgxx: 'home!recruitList.action?category=1&jobType=110002',
-    sxxx: 'home!recruitList.action?category=2',
+    sxxx: 'home!recruitList.action?category=2&jobType=110001',
     cyxx: 'home!newsHome.action?category=11',
 };
 const baseUrl = 'https://scc.pku.edu.cn/';
@@ -29,7 +28,7 @@ export default async (ctx) => {
             const date = parseDate(item.find('div.item-date').text());
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), baseUrl),
+                link: new URL(a.attr('href'), baseUrl).href,
                 pubDate: date,
             };
         })
