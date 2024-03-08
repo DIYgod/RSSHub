@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { rootUrl, ProcessItems } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:id?',
+    categories: ['bbs'],
+    example: '/yicai/news',
+    parameters: { id: '分类 id，见下表，可在对应分类页中找到，默认为新闻' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['yicai.com/news/:id', 'yicai.com/news'],
+        target: '/news/:id',
+    },
+    name: '新闻',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '';
 
     let channel;
@@ -32,9 +55,9 @@ export default async (ctx) => {
 
     const items = await ProcessItems(apiUrl, cache.tryGet);
 
-    ctx.set('data', {
+    return {
         title: `第一财经 - ${channel?.name ?? '新闻'}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

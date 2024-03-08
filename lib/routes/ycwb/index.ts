@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,25 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:node',
+    categories: ['bbs'],
+    example: '/ycwb/1',
+    parameters: { node: '栏目 id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '新闻',
+    maintainers: ['TimWu007'],
+    handler,
+};
+
+async function handler(ctx) {
     const node = ctx.req.param('node') ?? 1;
     const currentUrl = `https://6api.ycwb.com/app_if/jy/getArticles?nodeid=${node}&pagesize=15`;
 
@@ -78,9 +97,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `羊城晚报金羊网 - ${nodeName}`,
         link: String(nodeLink === '' ? 'https://www.ycwb.com/' : nodeLink),
         item: items,
-    });
-};
+    };
+}

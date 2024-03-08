@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id?',
+    categories: ['other'],
+    example: '/stcn/yw',
+    parameters: { id: '栏目 id，见下表，默认为要闻' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '栏目',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? 'yw';
 
     const rootUrl = 'https://www.stcn.com';
@@ -57,9 +76,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `证券时报网 - ${$('.breadcrumb a').last().text()}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

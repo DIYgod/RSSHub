@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,29 @@ import * as path from 'node:path';
 import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['traditional-media'],
+    example: '/simpleinfo',
+    parameters: { category: '分类名' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['blog.simpleinfo.cc/blog/:category'],
+        target: '/:category',
+    },
+    name: '志祺七七',
+    maintainers: ['haukeng'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
     const rootUrl = 'https://blog.simpleinfo.cc';
     const link = `${rootUrl}${category ? (category === 'work' || category === 'talk' ? `/blog/${category}` : `/shasha77?category=${category}`) : '/shasha77'}`;
@@ -45,10 +68,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title,
         link,
         language: 'zh-tw',
         item: items,
-    });
-};
+    };
+}

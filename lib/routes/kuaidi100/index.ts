@@ -1,6 +1,25 @@
+import { Route } from '@/types';
 import utils from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/track/:number/:id/:phone?',
+    categories: ['other'],
+    example: '/kuaidi100/track/shunfeng/SF1007896781640/0383',
+    parameters: { number: '快递公司代号', id: '订单号', phone: '手机号后四位（仅顺丰）' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '快递订单追踪',
+    maintainers: ['NeverBehave'],
+    handler,
+};
+
+async function handler(ctx) {
     // number is shorthand for company
     // id is ticket number
     // phone for shunfeng :)
@@ -31,7 +50,7 @@ export default async (ctx) => {
 
     // Maybe we can look into isCheck, condition, and state :)
     // But I just want to make it work for now.
-    ctx.set('data', {
+    return {
         title: `快递 ${company.name}-${id}`,
         link: 'https://www.kuaidi100.com',
         description: `快递 ${company.name}-${id}`,
@@ -42,5 +61,5 @@ export default async (ctx) => {
             pubDate: new Date(item.time || item.ftime).toUTCString(),
             link: 'https://www.kuaidi100.com',
         })),
-    });
-};
+    };
+}

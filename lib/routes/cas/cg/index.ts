@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/cg/:caty?',
+    categories: ['forecast'],
+    example: '/cas/cg/cgzhld',
+    parameters: { caty: '分类，见下表，默认为工作动态' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.cas.cn/cg/:caty?'],
+    },
+    name: '成果转化',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const caty = ctx.req.param('caty') || 'zh';
 
     const rootUrl = 'https://www.cas.cn';
@@ -45,9 +67,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text().replace('----', ' - '),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

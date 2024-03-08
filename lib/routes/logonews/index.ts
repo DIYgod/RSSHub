@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,17 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/work/tags/:tag', '/tag/:tag', '*'],
+    radar: {
+        source: ['logonews.cn/work/tags/:tag'],
+    },
+    name: 'Unknown',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const params = getSubPath(ctx);
     const isWork = params.indexOf('/work') === 0;
 
@@ -73,9 +84,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

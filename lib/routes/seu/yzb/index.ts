@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/yzb/:type',
+    categories: ['forecast'],
+    example: '/seu/yzb/6676',
+    parameters: { type: '分类名，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['yzb.seu.edu.cn/:type/list.htm'],
+    },
+    name: '研究生招生网通知公告',
+    maintainers: ['fuzy112'],
+    handler,
+};
+
+async function handler(ctx) {
     const host = 'https://yzb.seu.edu.cn';
 
     const map = {
@@ -44,9 +66,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         link: url,
         title: `东南大学研究生招生网 -- ${$('head title').text()}`,
         item: items,
-    });
-};
+    };
+}

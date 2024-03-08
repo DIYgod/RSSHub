@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,25 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/lc_report/:id?', '/report/:id?'],
+    categories: ['traditional-media'],
+    example: '/logclub/lc_report',
+    parameters: { id: '报告 id，见下表，默认为罗戈研究出品' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '报告',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const { id = 'Report' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 11;
 
@@ -87,7 +106,7 @@ export default async (ctx) => {
     const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
     const subtitle = $('meta[name="keywords"]').prop('content');
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${$('title').text()}${title}`,
         link: currentUrl,
@@ -98,5 +117,5 @@ export default async (ctx) => {
         logo: icon,
         subtitle: subtitle.replaceAll(',', ''),
         author: subtitle.split(/,/)[0],
-    });
-};
+    };
+}

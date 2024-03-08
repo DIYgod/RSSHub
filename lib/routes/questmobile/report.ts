@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -28,7 +29,25 @@ const parseTree = (tree, result = []) => {
     return result;
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/report/:industry?/:label?',
+    categories: ['traditional-media'],
+    example: '/questmobile/report',
+    parameters: { industry: '行业，见下表，默认为 `-1`，即全部行业', label: '标签，见下表，默认为 `-1`，即全部标签' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '行业研究报告',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const { industry, label } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
@@ -115,7 +134,7 @@ export default async (ctx) => {
     const image = $(`img[alt="${author}"]`).prop('src');
     const icon = $('link[rel="shortcut icon"]').prop('href');
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${author}${categories.length === 0 ? '' : ` - ${categories.join(' - ')}`}`,
         link: currentUrl,
@@ -127,5 +146,5 @@ export default async (ctx) => {
         subtitle: $('meta[name="keywords"]').prop('content'),
         author,
         allowEmpty: true,
-    });
-};
+    };
+}

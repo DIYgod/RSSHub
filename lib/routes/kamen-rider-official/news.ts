@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,25 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:category?',
+    categories: ['traditional-media'],
+    example: '/kamen-rider-official/news',
+    parameters: { category: 'Category, see below, すべて by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '最新情報',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
@@ -98,7 +117,7 @@ export default async (ctx) => {
 
     const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${$('title').text().split(/ー/)[0]}${category ? ` - ${category}` : ''}`,
         link: currentUrl,
@@ -110,5 +129,5 @@ export default async (ctx) => {
         subtitle: $('meta[property="keywords"]').prop('content'),
         author: $('meta[property="og:site_name"]').prop('content'),
         allowEmpty: true,
-    });
-};
+    };
+}

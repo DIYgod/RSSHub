@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 const getLinkAndTitle = (type, period) => {
@@ -65,7 +66,25 @@ const getLinkAndTitle = (type, period) => {
     return res;
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/hot/:type?/:period?',
+    categories: ['new-media'],
+    example: '/coolapk/hot',
+    parameters: { type: '默认为`jrrm`', period: '默认为`daily`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '热榜',
+    maintainers: ['xizeyoupan'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') || 'jrrm';
     const period = ctx.req.param('period') || 'daily';
     const { link, title } = getLinkAndTitle(type, period);
@@ -88,10 +107,10 @@ export default async (ctx) => {
 
     out = out.filter(Boolean);
 
-    ctx.set('data', {
+    return {
         title,
         link: 'https://www.coolapk.com/',
         description: `热榜-` + title,
         item: out,
-    });
-};
+    };
+}

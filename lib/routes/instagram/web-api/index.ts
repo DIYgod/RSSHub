@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { CookieJar } from 'tough-cookie';
 import { config } from '@/config';
 import { renderItems } from '../common-utils';
 import { baseUrl, COOKIE_URL, checkLogin, getUserInfo, getUserFeedItems, getTagsFeedItems, getLoggedOutTagsFeedItems, renderGuestItems } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/2/:category/:key',
+    categories: ['new-media'],
+    example: '/instagram/2/user/stefaniejoosten',
+    parameters: { category: 'Feed category, see table below', key: 'Username / Hashtag name' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'User Profile / Hashtag',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     // if (!config.instagram || !config.instagram.cookie) {
     //     throw Error('Instagram RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     // }
@@ -76,7 +95,7 @@ export default async (ctx) => {
 
     await cache.set('instagram:cookieJar', cookieJar.toJSON(), 31_536_000);
 
-    ctx.set('data', {
+    return {
         title: feedTitle,
         link: feedLink,
         description: feedDescription,
@@ -85,5 +104,5 @@ export default async (ctx) => {
         logo: feedLogo,
         image: feedLogo,
         allowEmpty: true,
-    });
-};
+    };
+}

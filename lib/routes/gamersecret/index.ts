@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:type?/:category?',
+    categories: ['reading'],
+    example: '/gamersecret',
+    parameters: { type: 'Type, see below, Latest News by default', category: 'Category, see below' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['gamersecret.com/:type', 'gamersecret.com/:type/:category', 'gamersecret.com/'],
+    },
+    name: 'Category',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'latest-news';
     const category = ctx.req.param('category') ?? '';
 
@@ -53,9 +75,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

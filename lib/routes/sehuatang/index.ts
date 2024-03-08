@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -38,7 +39,14 @@ const forumIdMaps = {
     hrxazp: '98', //  华人性爱自拍
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/bt/:subforumid?', '/picture/:subforumid', '/:subforumid?/:type?', '/:subforumid?', ''],
+    name: 'Unknown',
+    maintainers: ['qiwihui', 'junfengP', 'nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const subformName = ctx.req.param('subforumid') ?? 'gqzwzm';
     const subformId = subformName in forumIdMaps ? forumIdMaps[subformName] : subformName;
     const type = ctx.req.param('type');
@@ -122,9 +130,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `色花堂 - ${$('#pt > div:nth-child(1) > a:last-child').text()}`,
         link,
         item: out,
-    });
-};
+    };
+}

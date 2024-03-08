@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -18,7 +19,25 @@ function extractSfrmUrl(url) {
     urlObj.search = new URLSearchParams({ sfrm: sfrmValue }).toString();
     return urlObj.toString();
 }
-export default async (ctx) => {
+export const route: Route = {
+    path: '/new-arrivals/:category',
+    categories: ['game'],
+    example: '/patagonia/new-arrivals/mens',
+    parameters: { category: 'category, see below' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'New Arrivals',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
     const url = `${host}/on/demandware.store/Sites-patagonia-us-Site/en_US/Search-LazyGrid`;
     const response = await got({
@@ -50,7 +69,7 @@ export default async (ctx) => {
             return data;
         })
         .get();
-    ctx.set('data', {
+    return {
         title: `Patagonia - New Arrivals - ${category.toUpperCase()}`,
         link: `${host}/shop/${categoryMap[category][1]}`,
         description: `Patagonia - New Arrivals - ${category.toUpperCase()}`,
@@ -60,5 +79,5 @@ export default async (ctx) => {
             link: item.link,
             category: item.category,
         })),
-    });
-};
+    };
+}

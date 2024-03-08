@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/today/:need_content?',
+    categories: ['traditional-media'],
+    example: '/163/today',
+    parameters: { need_content: '需要获取全文，填写 true/yes 表示需要，默认需要' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['wp.m.163.com/163/html/newsapp/todayFocus/index.html', 'wp.m.163.com/'],
+        target: '/today',
+    },
+    name: '今日关注',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const needContent = /t|y/i.test(ctx.req.param('need_content') ?? 'true');
 
     const rootUrl = 'https://gw.m.163.com';
@@ -48,9 +71,9 @@ export default async (ctx) => {
         );
     }
 
-    ctx.set('data', {
+    return {
         title: '今日关注 - 网易新闻',
         link: 'https://wp.m.163.com/163/html/newsapp/todayFocus/index.html',
         item: items,
-    });
-};
+    };
+}

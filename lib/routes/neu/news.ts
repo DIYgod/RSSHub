@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 const baseUrl = 'https://neunews.neu.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:type',
+    categories: ['forecast'],
+    example: '/neu/news/ddyw',
+    parameters: { type: '种类名，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['neunews.neu.edu.cn/:type/list.htm'],
+    },
+    name: '新闻网',
+    maintainers: ['JeasonLau'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
     const newsUrl = `${baseUrl}/${type}/list.htm`;
     const response = await got(newsUrl);
@@ -37,9 +59,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `东北大学新闻网-${$('head title').text()}`,
         link: newsUrl,
         item: results,
-    });
-};
+    };
+}

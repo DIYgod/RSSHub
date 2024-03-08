@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,29 @@ import timezone from '@/utils/timezone';
 
 const rootUrl = 'http://www.dayanzai.me/';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category/:fulltext?',
+    categories: ['programming'],
+    example: '/dayanzai/windows',
+    parameters: { category: '分类', fulltext: '是否获取全文，需要获取则传入参数`y`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['dayanzai.me/:category', 'dayanzai.me/:category/*'],
+        target: '/:category',
+    },
+    name: '分类',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const { category, fulltext } = ctx.req.param();
     const currentUrl = rootUrl + category;
     const response = await got.get(currentUrl);
@@ -48,10 +71,10 @@ export default async (ctx) => {
               )
             : list;
 
-    ctx.set('data', {
+    return {
         title: `大眼仔旭 ${category}`,
         link: currentUrl,
         description: `大眼仔旭 ${category} RSS`,
         item: items,
-    });
-};
+    };
+}

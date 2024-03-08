@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -9,7 +10,28 @@ const categories = {
     opinion: 125,
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:category?/:id?',
+    categories: ['bbs'],
+    example: '/now/news',
+    parameters: { category: '分类，见下表，默认为首页', id: '编号，可在对应专题/节目页 URL 中找到 topicId' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['news.now.com/'],
+    },
+    name: '新聞',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') || '';
     const id = ctx.req.param('id') || '';
 
@@ -54,9 +76,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: String(Object.hasOwn(categories, category) ? $('title').text() : ($('.smallSpace.active').text() || '首頁') + ' | Now 新聞'),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import cache from './cache';
 import { config } from '@/config';
 import { post2item } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/bbs/timeline',
+    categories: ['reading'],
+    example: '/mihoyo/bbs/timeline',
+    parameters: {},
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['miyoushe.com/:game/timeline'],
+    },
+    name: '米游社 - 用户关注动态',
+    maintainers: ['CaoMeiYouRen'],
+    handler,
+};
+
+async function handler(ctx) {
     if (!config.mihoyo.cookie) {
         throw new Error('Miyoushe Timeline is not available due to the absense of [Miyoushe Cookie]. Check <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config tutorial</a>');
     }
@@ -38,4 +60,4 @@ export default async (ctx) => {
         item: items,
     };
     ctx.set('data', data);
-};
+}

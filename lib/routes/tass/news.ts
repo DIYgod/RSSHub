@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['bbs'],
+    example: '/tass/politics',
+    parameters: { category: 'Category, can be found in URL, `politics` by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['tass.com/:category'],
+        target: '/:category',
+    },
+    name: 'News',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = 'politics' } = ctx.req.param();
 
     const { data: categoryPage, url: link } = await got(`https://tass.com/${category}`);
@@ -47,7 +70,7 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link,
         language: 'en',
@@ -55,5 +78,5 @@ export default async (ctx) => {
         icon: $('head link[rel="apple-touch-icon"]').attr('href'),
         logo: $('head link[rel="apple-touch-icon"]').attr('href'),
         item: items,
-    });
-};
+    };
+}

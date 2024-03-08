@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,7 +8,28 @@ import iconv from 'iconv-lite';
 const gbk2utf8 = (s) => iconv.decode(s, 'gbk');
 const host = 'https://www.flyert.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/creditcard/:bank',
+    categories: ['shopping'],
+    example: '/flyert/creditcard/zhongxin',
+    parameters: { bank: '信用卡板块各银行的拼音简称' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['flyert.com/'],
+    },
+    name: '信用卡',
+    maintainers: ['nicolaszf'],
+    handler,
+};
+
+async function handler(ctx) {
     const bank = ctx.req.param('bank');
     const target = `${host}/forum-${bank}-1.html`;
     let bankname = '';
@@ -81,10 +103,10 @@ export default async (ctx) => {
 
     const result = await util.ProcessFeed(list, cache);
 
-    ctx.set('data', {
+    return {
         title: `飞客茶馆信用卡 - ${bankname}`,
         link: 'https://www.flyert.com/',
         description: `飞客茶馆信用卡 - ${bankname}`,
         item: result,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,14 @@ import { parseArticle } from '../utils';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/app/channel/:id',
+    name: 'Unknown',
+    maintainers: ['TimWu007'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? 50;
     const currentUrl = `https://api-ndapp.oeeee.com/friends.php?m=Zone&a=SpaceDoclist&uid=${id}&type=doc`;
 
@@ -32,9 +40,9 @@ export default async (ctx) => {
 
     const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
 
-    ctx.set('data', {
+    return {
         title: `南方都市报客户端 - ${channel}`,
         link: `https://m.mp.oeeee.com/u/${id}.html`,
         item: items,
-    });
-};
+    };
+}

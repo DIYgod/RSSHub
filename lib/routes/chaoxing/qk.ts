@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,25 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/qk/:id/:needContent?',
+    categories: ['government'],
+    example: '/chaoxing/qk/6b5c39b3dd84352be512e29df0297437',
+    parameters: { id: '期刊 id，可在期刊页 URL 中找到', needContent: '需要获取文章全文，填写 true/yes 表示需要，默认需要' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '期刊',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const needContent = /t|y/i.test(ctx.req.param('needContent') ?? 'true');
 
@@ -55,9 +74,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: response.data.list[0].infos.C307,
         link: `${rootUrl}/mqk/list?mags=${id}&isort=20&from=space`,
         item: items,
-    });
-};
+    };
+}

@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:bcid?/:cid?',
+    categories: ['journal'],
+    example: '/sdzk',
+    parameters: { bcid: '板块 id，可在对应板块页 URL 中找到，默认为 `1`，即信息与政策', cid: '栏目 id，可在对应板块页 URL 中找到，默认为 `16`，即通知公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '新闻',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const bcid = ctx.req.param('bcid') ?? '1';
     const cid = ctx.req.param('cid') ?? '16';
 
@@ -48,9 +67,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

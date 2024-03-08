@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -30,7 +31,28 @@ const titles = {
     '607d37ade4b05c59ac2f3d40': '高新',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:column?',
+    categories: ['traditional-media'],
+    example: '/hizu',
+    parameters: { column: '栏目，见下表，默认为热点' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['hizh.cn/'],
+    },
+    name: '栏目',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const column = ctx.req.param('column') ?? '5dd92265e4b0bf88dd8c1175';
 
     const rootUrl = 'https://www.hizh.cn';
@@ -69,9 +91,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${titles[column]} - 珠海网`,
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

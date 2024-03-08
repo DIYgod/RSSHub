@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getData, getList, getRedirectedLink } from './utils.js';
 
 const variables = {
@@ -66,12 +67,23 @@ const graphqlQuery = {
     variables,
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    radar: {
+        source: ['daily.dev/popular'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['Rjnishant530'],
+    handler,
+};
+
+async function handler() {
     const baseUrl = 'https://app.daily.dev/popular';
     const data = await getData(graphqlQuery);
     const list = getList(data);
     const items = await getRedirectedLink(list);
-    ctx.set('data', {
+    return {
         title: 'Popular',
         link: baseUrl,
         item: items,
@@ -79,5 +91,5 @@ export default async (ctx) => {
         logo: 'https://app.daily.dev/favicon-32x32.png',
         icon: 'https://app.daily.dev/favicon-32x32.png',
         language: 'en-us',
-    });
-};
+    };
+}

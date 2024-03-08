@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -28,7 +29,25 @@ const categories = {
     1176: '投教',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/depth/:category?',
+    categories: ['other'],
+    example: '/cls/depth/1000',
+    parameters: { category: '分类代码，可在首页导航栏的目标网址 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '深度',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '1000';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
 
@@ -77,9 +96,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `财联社 - ${title}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

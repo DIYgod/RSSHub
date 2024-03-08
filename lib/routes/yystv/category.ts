@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/category/:category',
+    categories: ['reading'],
+    example: '/yystv/category/recommend',
+    parameters: { category: '专栏类型' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '游研社 - 分类文章',
+    maintainers: ['LightStrawberry'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
     const url = `https://www.yystv.cn/b/${category}`;
     const response = await got({
@@ -56,11 +75,9 @@ export default async (ctx) => {
             })
         );
     }
-    await getDescription(items).then(() => {
-        ctx.set('data', {
-            title: '游研社-' + $('title').text(),
-            link: `https://www.yystv.cn/b/${category}`,
-            item: items,
-        });
-    });
-};
+    await getDescription(items).then(() => ({
+        title: '游研社-' + $('title').text(),
+        link: `https://www.yystv.cn/b/${category}`,
+        item: items,
+    }));
+}

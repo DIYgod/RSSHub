@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -79,7 +80,29 @@ const apiUrls = {
     'zh-tw': '/content_v2_user/app/a1b1f9d3315447cc/getContentList',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/ys/:location?/:category?',
+    categories: ['reading'],
+    example: '/mihoyo/ys',
+    parameters: { location: '区域，可选 `main`（简中）或 `zh-tw`（繁中）', category: '分类，见下表，默认为最新' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['genshin.hoyoverse.com/:location/news'],
+        target: '/ys/:location',
+    },
+    name: '原神',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const location = ctx.req.param('location') ?? 'main';
     const category = ctx.req.param('category') ?? 'latest';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
@@ -157,9 +180,9 @@ export default async (ctx) => {
         );
     }
 
-    ctx.set('data', {
+    return {
         title: `原神 - ${categories[category][location].title}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

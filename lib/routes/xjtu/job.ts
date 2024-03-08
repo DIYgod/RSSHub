@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -18,7 +19,25 @@ const arr = {
     jysx: '就业实习',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/job/:subpath?',
+    categories: ['forecast'],
+    example: '/xjtu/job/zxgg',
+    parameters: { subpath: '栏目类型，默认请求`zxgg`，详见下方表格' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '就业创业中心',
+    maintainers: ['DylanXie123'],
+    handler,
+};
+
+async function handler(ctx) {
     const subpath = ctx.req.param('subpath') ?? 'zxgg';
     const getTzgg = await got.post(`${baseUrl}/xsfw/sys/jyxtgktapp/modules/jywzManage/getTzgg.do`, {
         form: {
@@ -77,9 +96,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `西安交通大学学生就业创业信息网 - ${arr[subpath]}`,
         link: baseUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?/:sort?/:day?',
+    categories: ['blog'],
+    example: '/jisilu',
+    parameters: { category: '分类，见下表，默认为全部，可在 URL 中找到', sort: '排序，见下表，默认为最新，可在 URL 中找到', day: '几天内，见下表，默认为30天，本参数仅在排序参数设定为 `热门` 后才可生效' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['jisilu.cn/home/explore', 'jisilu.cn/explore', 'jisilu.cn/'],
+    },
+    name: '广场',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
     const sort = ctx.req.param('sort') ?? '';
     const day = ctx.req.param('day') ?? '';
@@ -83,9 +105,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${name ? `${name}的${category === 'topic' ? '主题' : '回复'}` : '广场'} - 集思录`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

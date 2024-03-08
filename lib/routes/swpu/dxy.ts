@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { joinUrl } from './utils';
 import { parseDate } from '@/utils/parse-date';
@@ -5,7 +6,29 @@ import { load } from 'cheerio';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/dxy/:code',
+    categories: ['forecast'],
+    example: '/swpu/dxy/1156',
+    parameters: { code: '栏目代码' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['swpu.edu.cn/'],
+        target: '',
+    },
+    name: '电气信息学院',
+    maintainers: ['CYTMWIA'],
+    handler,
+};
+
+async function handler(ctx) {
     // 移除 urltype=tree.TreeTempUrl 虽然也能顺利访问页面，
     // 但标题会缺失，而且在其他地方定位提取标题也比较麻烦。
     const url = `https://www.swpu.edu.cn/dxy/list1.jsp?urltype=tree.TreeTempUrl&wbtreeid=${ctx.req.param('code')}`;
@@ -52,11 +75,11 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `西南石油大学电气信息学院 ${title}`,
         link: url,
         description: `西南石油大学电气信息学院 ${title}`,
         language: 'zh-CN',
         item: out,
-    });
-};
+    };
+}

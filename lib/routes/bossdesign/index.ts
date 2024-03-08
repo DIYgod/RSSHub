@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['live'],
+    example: '/bossdesign',
+    parameters: { category: '分类，可在对应分类页 URL 中找到，留空为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '分类',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
     const limit = Number.parseInt(ctx.req.query('limit'), 10) || undefined;
     const baseUrl = 'https://www.bossdesign.cn';
@@ -32,11 +51,11 @@ export default async (ctx) => {
         category: [...new Set([...item._embedded['wp:term'][0].map((item) => item.name), ...item._embedded['wp:term'][1].map((item) => item.name)])],
     }));
 
-    ctx.set('data', {
+    return {
         title: currentCategory?.name ? `${currentCategory.name} | Boss设计` : 'Boss设计 | 收集国外设计素材网站的资源平台。',
         description: currentCategory?.description ?? 'Boss设计-收集国外设计素材网站的资源平台。专注于收集国外设计素材和国外设计网站，以及超实用的设计师神器，只为设计初学者和设计师提供海量的资源平台。..',
         image: currentCategory?.cover ?? `${baseUrl}/wp-content/themes/pinghsu/images/Bossdesign-ico.ico`,
         link: currentCategory?.link ?? baseUrl,
         item: items,
-    });
-};
+    };
+}

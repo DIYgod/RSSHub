@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { renderDescription } from './utils';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/charts/:category?/:country?/:embed?',
+    categories: ['new-media'],
+    example: '/youtube/charts',
+    parameters: { category: 'Chart, see table below, default to `TopVideos`', country: 'Country Code, see table below, default to global', embed: 'Default to embed the video, set to any value to disable embedding' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Music Charts',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const contentMap = {
         TopArtists: {
             contentKey: 'artists',
@@ -88,9 +107,9 @@ export default async (ctx) => {
                   };
               });
 
-    ctx.set('data', {
+    return {
         title: `YouTube Music Charts - ${contentMap[category].title}`,
         link: `https://charts.youtube.com/charts/${category}/${country ?? 'global'}`,
         item: items,
-    });
-};
+    };
+}

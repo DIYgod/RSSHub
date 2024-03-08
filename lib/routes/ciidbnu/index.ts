@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,25 @@ import iconv from 'iconv-lite';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id?',
+    categories: ['traditional-media'],
+    example: '/ciidbnu',
+    parameters: { id: '分类 id，可在分类页地址栏 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '分类',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '1';
 
     const rootUrl = 'http://www.ciidbnu.org';
@@ -50,9 +69,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${$('h3').text()} - 中国收入分配研究院`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

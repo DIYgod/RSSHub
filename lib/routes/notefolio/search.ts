@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -67,7 +68,33 @@ const categoryMap = [
  * @param query 搜索词
  * @query limit 分页，默认20
  */
-export default async (ctx) => {
+export const route: Route = {
+    path: '/search/:category?/:order?/:time?/:query?',
+    categories: ['live'],
+    example: '/notefolio/search/1/pick/all/life',
+    parameters: {
+        category: 'Category, see below, `all` by default',
+        order: 'Order, `pick` as Notefolio Pick, `published` as Newest, `like` as like, `pick` by default',
+        time: 'Time, `all` as All the time, `one-day` as Latest 24 hours, `week` as Latest week, `month` as Latest month, `three-month` as Latest 3 months, `all` by default',
+        query: 'Keyword, empty by default',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['notefolio.net/search'],
+    },
+    name: 'Works',
+    maintainers: ['BianTan'],
+    handler,
+};
+
+async function handler(ctx) {
     // 分类、排序、时间范围、搜索词
     const { category = 'all', order = 'pick', time = 'all', query = '' } = ctx.req.param();
     //  分页
@@ -136,12 +163,12 @@ export default async (ctx) => {
             };
         }) || [];
 
-    ctx.set('data', {
+    return {
         // 源标题
         title: `${category}/${order}/${time}/${query} search`,
         // 源链接
         // link: '',
         // 源文章
         item: items,
-    });
-};
+    };
+}

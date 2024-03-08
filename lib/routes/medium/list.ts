@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import { config } from '@/config';
 
 import parseArticle from './parse-article.js';
 import { getUserCatalogMainContentQuery } from './graphql.js';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/list/:user/:catalogId',
+    categories: ['programming'],
+    example: '/medium/list/imsingee/f2d8d48096a9',
+    parameters: { user: 'Username', catalogId: 'List ID' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'List',
+    maintainers: ['ImSingee'],
+    handler,
+};
+
+async function handler(ctx) {
     const user = ctx.req.param('user');
     const catalogId = ctx.req.param('catalogId');
 
@@ -24,9 +43,9 @@ export default async (ctx) => {
 
     const parsedArticles = await Promise.all(urls.map((url) => parseArticle(ctx, url)));
 
-    ctx.set('data', {
+    return {
         title: `List: ${name}`,
         link: `https://medium.com/@${user}/list/${catalogId}`,
         item: parsedArticles,
-    });
-};
+    };
+}

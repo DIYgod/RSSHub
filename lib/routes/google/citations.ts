@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/citations/:id',
+    categories: ['finance'],
+    example: '/google/citations/mlmE4JMAAAAJ',
+    parameters: { id: 'N' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Author Citations',
+    maintainers: ['KellyHwong', 'const7'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const BASE_URL = `https://scholar.google.com`;
     const url = `https://scholar.google.com/citations?user=${id}`;
@@ -35,10 +54,10 @@ export default async (ctx) => {
             guid: itemUrl,
         };
     });
-    ctx.set('data', {
+    return {
         title: `Google Scholar: ${name}`,
         link: url,
         description,
         item: out,
-    });
-};
+    };
+}

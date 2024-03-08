@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 // The content is generateed by undocumentated API of nature journals
 // This router has **just** been tested in:
@@ -21,7 +22,28 @@ import { parseDate } from '@/utils/parse-date';
 import { baseUrl, journalMap } from './utils';
 import { CookieJar } from 'tough-cookie';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/cover',
+    categories: ['finance'],
+    example: '/nature/cover',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['nature.com/'],
+    },
+    name: 'Cover Story',
+    maintainers: ['y9c'],
+    handler,
+};
+
+async function handler() {
     const cookieJar = new CookieJar();
 
     await got('https://www.nature.com', { cookieJar });
@@ -59,10 +81,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'Nature Covers Story',
         description: 'Find out the cover story of some Nature journals.',
         link: baseUrl,
         item: out,
-    });
-};
+    };
+}

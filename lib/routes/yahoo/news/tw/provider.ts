@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getArchive, getProviderList, parseList, parseItem } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/provider/:region/:providerId',
+    categories: ['traditional-media'],
+    example: '/yahoo/news/provider/tw/udn.com',
+    parameters: { region: '地區，見下表', providerId: '新聞來源 ID，可透過下方新聞來源列表獲得' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '新聞來源',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const { region, providerId } = ctx.req.param();
     if (!['hk', 'tw'].includes(region)) {
         throw new Error(`Unknown region: ${region}`);
@@ -16,10 +35,10 @@ export default async (ctx) => {
 
     const items = await Promise.all(list.map((item) => parseItem(item, cache.tryGet)));
 
-    ctx.set('data', {
+    return {
         title: `Yahoo 新聞 - ${provider?.title ?? ''}`,
         link: provider?.link ?? `https://${region}.news.yahoo.com`,
         image: 'https://s.yimg.com/cv/apiv2/social/images/yahoo_default_logo-1200x1200.png',
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -12,7 +13,29 @@ const alias = new Map([
     ['important', 'zyxw'], // 重要新闻
 ]);
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:type?',
+    categories: ['forecast'],
+    example: '/shu/news',
+    parameters: { type: '消息类型,默认为`news`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.shu.edu.cn/:type'],
+        target: '/:type',
+    },
+    name: '官网信息',
+    maintainers: ['lonelyion'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') || 'news';
     const link = `https://www.shu.edu.cn/${alias.get(type) || type}.htm`;
     const respond = await got.get(link);
@@ -41,9 +64,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title,
         link,
         item: all,
-    });
-};
+    };
+}

@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/transform/html/:url/:routeParams',
+    categories: ['other'],
+    example: '/rsshub/transform/html/https%3A%2F%2Fwechat2rss.xlab.app%2Fposts%2Flist%2F/item=div%5Bclass%3D%27post%2Dcontent%27%5D%20p%20a',
+    parameters: { url: '`encodeURIComponent`ed URL address', routeParams: 'Transformation rules, requires URL encode' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Transformation - HTML',
+    maintainers: ['ttttmr'],
+    handler,
+};
+
+async function handler(ctx) {
     if (!config.feature.allow_user_supply_unsafe_domain) {
         throw new Error(`This RSS is disabled unless 'ALLOW_USER_SUPPLY_UNSAFE_DOMAIN' is set to 'true'.`);
     }
@@ -56,10 +75,10 @@ export default async (ctx) => {
         })
         .filter(Boolean);
 
-    ctx.set('data', {
+    return {
         title: rssTitle,
         link: url,
         description: `Proxy ${url}`,
         item: items,
-    });
-};
+    };
+}

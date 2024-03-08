@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -22,7 +23,25 @@ const pageType = (href) => {
     }
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/oaa/:type?',
+    categories: ['forecast'],
+    example: '/tju/oaa/news',
+    parameters: { type: 'default `news`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'The Office of Academic Affairs',
+    maintainers: ['AmosChenYQ', 'SuperPung'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.params && ctx.req.param('type');
     let path, subtitle;
 
@@ -52,7 +71,7 @@ export default async (ctx) => {
     }
 
     if (response === null) {
-        ctx.set('data', {
+        return {
             title: '天津大学教务处 - ' + subtitle,
             link: oaa_base_url + path,
             description: '链接失效' + oaa_base_url + path,
@@ -63,7 +82,7 @@ export default async (ctx) => {
                     description: `<h2>请到<a href=${repo_url}>此处</a>提交Issue</h2>`,
                 },
             ],
-        });
+        };
     } else {
         const $ = load(response.data);
         const list = $('.notice_l > ul > li > dl > dt')
@@ -103,11 +122,11 @@ export default async (ctx) => {
             })
         );
 
-        ctx.set('data', {
+        return {
             title: '天津大学教务处 - ' + subtitle,
             link: oaa_base_url + path,
             description: null,
             item: items,
-        });
+        };
     }
-};
+}

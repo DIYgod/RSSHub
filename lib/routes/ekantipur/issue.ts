@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 // Require necessary modules
 import got from '@/utils/got'; // a customised got
 import { load } from 'cheerio'; // an HTML parser with a jQuery-like API
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:channel?',
+    categories: ['bbs'],
+    example: '/ekantipur/news',
+    parameters: { channel: 'Find it in the ekantipur.com menu or pick from the list below:' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['ekantipur.com/:channel'],
+        target: '/:channel',
+    },
+    name: 'Full Article RSS',
+    maintainers: ['maniche04'],
+    handler,
+};
+
+async function handler(ctx) {
     // Your logic here
     // Defining base URL
     const baseUrl = 'https://ekantipur.com';
@@ -54,12 +77,12 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         // channel title
         title: `Ekantipur - ${channel}`,
         // channel link
         link: `${baseUrl}/${channel}`,
         // each feed item
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 // journals form AAAS publishing group
 //
@@ -13,7 +14,29 @@ import got from '@/utils/got';
 import { baseUrl, fetchDesc, getItem } from './utils';
 import puppeteer from '@/utils/puppeteer';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/current/:journal?',
+    categories: ['finance'],
+    example: '/science/current/science',
+    parameters: { journal: 'Short name for a journal' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: true,
+    },
+    radar: {
+        source: ['science.org/journal/:journal', 'science.org/toc/:journal/current'],
+        target: '/current/:journal',
+    },
+    name: 'Current Issue',
+    maintainers: ['y9c', 'TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const { journal = 'science' } = ctx.req.param();
     const pageURL = `${baseUrl}/toc/${journal}/current`;
 
@@ -33,12 +56,12 @@ export default async (ctx) => {
     const items = await fetchDesc(list, browser, cache.tryGet);
     await browser.close();
 
-    ctx.set('data', {
+    return {
         title: `${pageTitleName} | Current Issue`,
         description: `Current Issue of ${pageTitleName}`,
         image: `${baseUrl}/apple-touch-icon.png`,
         link: pageURL,
         language: 'en-US',
         item: items,
-    });
-};
+    };
+}

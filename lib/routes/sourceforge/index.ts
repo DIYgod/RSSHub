@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:routeParams?',
+    categories: ['university'],
+    example: '/sourceforge/topic=artificial-intelligence&os=windows',
+    parameters: { routeParams: 'route params, see below' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Software',
+    maintainers: ['JimenezLi'],
+    handler,
+};
+
+async function handler(ctx) {
     const routeParams = ctx.req.param('routeParams');
 
     const baseURL = 'https://sourceforge.net';
@@ -12,7 +31,7 @@ export default async (ctx) => {
     const $ = load(response.data);
     const itemList = $('ul.projects li[itemprop=itemListElement]');
 
-    ctx.set('data', {
+    return {
         title: $('.content h1').text().trim(),
         link,
         item: itemList.toArray().map((element) => {
@@ -29,5 +48,5 @@ export default async (ctx) => {
                 pubDate,
             };
         }),
-    });
-};
+    };
+}

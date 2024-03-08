@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -76,7 +77,28 @@ const ids = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/exclusive/:id?',
+    categories: ['traditional-media'],
+    example: '/163/exclusive/qsyk',
+    parameters: { id: '栏目, 默认为首页' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['3g.163.com/touch/exclusive/sub/:id'],
+    },
+    name: '栏目',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '';
 
     const rootUrl = 'https://3g.163.com';
@@ -144,9 +166,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `网易独家 - ${ids[id].title}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

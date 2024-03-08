@@ -1,12 +1,35 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:category?',
+    categories: ['program-update'],
+    example: '/dmzj/news/donghuaqingbao',
+    parameters: { category: '类别' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['news.dmzj.com/'],
+        target: '/news',
+    },
+    name: '新闻站',
+    maintainers: ['vzz64'],
+    handler,
+};
+
+async function handler(ctx) {
     const url = `https://news.dmzj.com/${ctx.req.param('category') || ''}`;
     const $ = load((await got(url)).data);
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: url,
         item: $('.briefnews_con_li .li_img_de')
@@ -22,5 +45,5 @@ export default async (ctx) => {
                     .get(),
             }))
             .get(),
-    });
-};
+    };
+}

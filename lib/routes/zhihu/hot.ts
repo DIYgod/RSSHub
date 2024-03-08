@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -15,7 +16,25 @@ const titles = {
     film: '影视',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/hot/:category?',
+    categories: ['new-media'],
+    example: '/zhihu/hot',
+    parameters: { category: '分类，见下表，默认为全站' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '知乎分类热榜',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'total';
 
     const response = await got({
@@ -30,9 +49,9 @@ export default async (ctx) => {
         description: item.target.excerpt ? `<p>${item.target.excerpt}</p>` : '',
     }));
 
-    ctx.set('data', {
+    return {
         title: `知乎热榜 - ${titles[category]}`,
         link: `https://www.zhihu.com/hot?list=${category}`,
         item: items,
-    });
-};
+    };
+}

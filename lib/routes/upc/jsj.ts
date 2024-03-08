@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 // 计算机科学与技术学院：http://computer.upc.edu.cn/
 // - 学院新闻：http://computer.upc.edu.cn/6277/list.htm
@@ -25,7 +26,25 @@ const HEAD = {
     notice: '通知公告',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jsj/:type',
+    categories: ['forecast'],
+    example: '/upc/jsj/news',
+    parameters: { type: '分类，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '计算机科学与技术学院',
+    maintainers: ['Veagau'],
+    handler,
+};
+
+async function handler(ctx) {
     const baseUrl = 'https://computer.upc.edu.cn';
     const type = ctx.req.param('type');
     const link = `${baseUrl}/${MAP[type]}/list.htm`;
@@ -69,10 +88,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: HEAD[type] + `-计算机科学与技术学院`,
         link,
         description: HEAD[type] + `-计算机科学与技术学院`,
         item: out,
-    });
-};
+    };
+}

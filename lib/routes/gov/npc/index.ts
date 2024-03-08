@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/npc/:caty',
+    categories: ['study'],
+    example: '/gov/npc/c183',
+    parameters: { caty: '分类名，支持形如 `http://www.npc.gov.cn/npc/c2/*/` 的网站，传入 npc 之后的参数' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['npc.gov.cn/npc/c2/:caty'],
+    },
+    name: '通用',
+    maintainers: ['233yeee'],
+    handler,
+};
+
+async function handler(ctx) {
     const caty = ctx.req.param('caty');
     // 主页
     const baseurl = `http://www.npc.gov.cn/npc/c2/${caty}/`;
@@ -39,10 +61,10 @@ export default async (ctx) => {
         )
     );
     // 整合
-    ctx.set('data', {
+    return {
         title,
         link: baseurl,
         description: title,
         item: items,
-    });
-};
+    };
+}

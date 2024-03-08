@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jwc/:category?',
+    categories: ['forecast'],
+    example: '/xaut/jwc/tzgg',
+    parameters: { category: '通知类别，默认为通知公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '教务处',
+    maintainers: ['mocusez'],
+    handler,
+};
+
+async function handler(ctx) {
     let category = ctx.req.param('category');
     const rootUrl = 'http://jwc.xaut.edu.cn/';
     const dic_html = { tzgg: 'tzgg.htm', xwdt: 'xwdt.htm', gzzd: 'gzzd.htm', jggs: 'xkjs/jggs.htm', jsjg: 'xkjs/jsjg.htm', jsxx: 'xkjs/jsxx.htm', gkgs: 'gkgs.htm' };
@@ -37,7 +56,7 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         // 源标题
         title: '西安理工大学教务处-' + dic_title[category],
         // 源链接
@@ -62,5 +81,5 @@ export default async (ctx) => {
                 })
             )
         ),
-    });
-};
+    };
+}

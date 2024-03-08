@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import queryString from 'query-string';
@@ -5,7 +6,25 @@ import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/thread/:tid',
+    categories: ['blog'],
+    example: '/saraba1st/thread/1842868',
+    parameters: { tid: '帖子 id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '帖子',
+    maintainers: ['zengxs'],
+    handler,
+};
+
+async function handler(ctx) {
     const tid = ctx.req.param('tid');
     const cookieString = config.saraba1st.cookie ?? '';
 
@@ -55,9 +74,9 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: `Stage1 论坛 - ${title}`,
         link: `https://bbs.saraba1st.com/2b/thread-${tid}-1-1.html`,
         item: resultItems,
-    });
-};
+    };
+}

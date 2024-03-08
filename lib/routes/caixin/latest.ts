@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,28 @@ import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/latest',
+    categories: ['bbs'],
+    example: '/caixin/latest',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['caixin.com/'],
+    },
+    name: '最新文章',
+    maintainers: ['tpnonthealps'],
+    handler,
+};
+
+async function handler() {
     const { data } = await got('https://gateway.caixin.com/api/dataplatform/scroll/index').json();
 
     const list = data.articleList
@@ -41,9 +63,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '财新网 - 最新文章',
         link: 'https://www.caixin.com/',
         item: rss,
-    });
-};
+    };
+}

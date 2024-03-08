@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 
@@ -69,7 +70,28 @@ function getMetaInfo($) {
     };
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/detail/:id',
+    categories: ['picture'],
+    example: '/domp4/detail/LBTANI22222I',
+    parameters: { id: '从剧集详情页 URL 处获取，如：`https://www.mp4kan.com/html/LBTANI22222I.html`，取 `.html` 前面部分' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: true,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['domp4.cc/detail/:id'],
+    },
+    name: '剧集订阅',
+    maintainers: ['savokiss'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const { domain, second } = ctx.req.query();
     let pureId = id;
@@ -89,11 +111,11 @@ export default async (ctx) => {
     const list = getItemList($, detailUrl, second);
     const meta = getMetaInfo($);
 
-    ctx.set('data', {
+    return {
         link: detailUrl,
         title: meta.title || 'domp4电影 - 详情',
         image: meta.cover,
         description: meta.description,
         item: list,
-    });
-};
+    };
+}

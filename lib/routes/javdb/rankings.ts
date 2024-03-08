@@ -1,6 +1,29 @@
+import { Route } from '@/types';
 import utils from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/rankings/:category?/:time?',
+    categories: ['picture'],
+    example: '/javdb/rankings',
+    parameters: { category: '分类，见下表，默认为 `有碼`', time: '时间，见下表，默认为 `日榜`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['javdb.com/'],
+        target: '',
+    },
+    name: '排行榜',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'censored';
     const time = ctx.req.param('time') ?? 'daily';
 
@@ -9,4 +32,4 @@ export default async (ctx) => {
     const title = 'JavDB';
 
     ctx.set('data', await utils.ProcessItems(ctx, currentUrl, title));
-};
+}

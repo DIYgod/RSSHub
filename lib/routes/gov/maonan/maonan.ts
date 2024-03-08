@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,25 @@ import timezone from '@/utils/timezone';
 
 const host = 'http://www.maonan.gov.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/maonan/:category',
+    categories: ['study'],
+    example: '/gov/maonan/zwgk',
+    parameters: { category: '分类名' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '茂名市茂南区人民政府',
+    maintainers: ['ShuiHuo'],
+    handler,
+};
+
+async function handler(ctx) {
     let id = '';
     let name = '';
 
@@ -93,9 +112,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `茂名市茂南区人民政府 - ${name}`,
         link: `${host}/${id}`,
         item: items,
-    });
-};
+    };
+}

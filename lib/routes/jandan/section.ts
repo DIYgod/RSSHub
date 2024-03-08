@@ -1,8 +1,16 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'top';
 
     const rootUrl = 'http://i.jandan.net';
@@ -40,9 +48,9 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: `${$('title').text()} - 煎蛋`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

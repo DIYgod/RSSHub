@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/today/:category',
+    categories: ['forecast'],
+    example: '/hit/today/10',
+    parameters: { category: '分类编号，`10`为公告公示，`11`为新闻快讯，同时支持详细分类，使用方法见下' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['today.hit.edu.cn/category/:category'],
+    },
+    name: '今日哈工大',
+    maintainers: ['ranpox'],
+    handler,
+};
+
+async function handler(ctx) {
     const host = 'https://today.hit.edu.cn';
     const category = ctx.req.param('category');
 
@@ -52,9 +74,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text().trim(),
         link: host + '/category/' + category,
         item: out,
-    });
-};
+    };
+}

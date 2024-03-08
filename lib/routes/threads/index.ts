@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { PROFILE_QUERY, REPLIES_QUERY, THREADS_QUERY, apiUrl, threadUrl, profileUrl, extractTokens, makeHeader, buildContent } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:user/:routeParams?',
+    categories: ['new-media'],
+    example: '/threads/zuck',
+    parameters: { user: 'Username', routeParams: 'Extra parameters, see the table below' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'User timeline',
+    maintainers: ['ninboy'],
+    handler,
+};
+
+async function handler(ctx) {
     const { user, routeParams } = ctx.req.param();
     const { lsd, userId } = await extractTokens(user, ctx);
 
@@ -66,11 +85,11 @@ export default async (ctx) => {
     json.items = items;
     ctx.set('json', json);
 
-    ctx.set('data', {
+    return {
         title: `${user} (@${user}) on Threads`,
         link: profileUrl(user),
         image: userData.hd_profile_pic_versions?.sort((a, b) => b.width - a.width)[0].url ?? userData.profile_pic_url,
         description: userData.biography,
         item: items,
-    });
-};
+    };
+}

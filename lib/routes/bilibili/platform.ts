@@ -1,8 +1,34 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/platform/:area?/:p_type?/:uid?',
+    categories: ['new-media'],
+    example: '/bilibili/platform/-1',
+    parameters: {
+        area: '省市-国标码,默认为-1即全国',
+        p_type: '类型：见下表，默认为全部类型',
+        uid: '用户id，可以不填，不过不填不设置cookie，搜索结果与登入账号后搜索结果不一样。可以在url中找到，需要配置cookie值，只需要SESSDATA的值即可',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['show.bilibili.com/platform'],
+    },
+    name: '会员购票务',
+    maintainers: ['nightmare-mio'],
+    handler,
+};
+
+async function handler(ctx) {
     const { area = -1, type = '全部类型', uid } = ctx.req.param();
     const cookie = config.bilibili.cookies[uid];
     const link = 'https://show.bilibili.com/api/ticket/project/listV2';
@@ -35,9 +61,9 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: `bilibili会员购票务-${area}`,
         link,
         item: items,
-    });
-};
+    };
+}

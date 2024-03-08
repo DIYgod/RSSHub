@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://www.hinatazaka46.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/blog/:id?/:page?',
+    categories: ['traditional-media'],
+    example: '/hinatazaka46/blog',
+    parameters: { id: 'Member ID, see below, `all` by default', page: 'Page, `0` by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Hinatazaka46 Blog 日向坂 46 博客',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? 'all';
     const page = ctx.req.param('page') ?? '0';
 
@@ -31,10 +50,10 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         allowEmpty: true,
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

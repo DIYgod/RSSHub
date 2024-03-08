@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/dyh/:dyhId',
+    categories: ['new-media'],
+    example: '/coolapk/dyh/1524',
+    parameters: { dyhId: '看看号ID' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '看看号',
+    maintainers: ['xizeyoupan'],
+    handler,
+};
+
+async function handler(ctx) {
     const dyhId = ctx.req.param('dyhId');
     const full_url = utils.base_url + `/v6/dyhArticle/list?dyhId=${dyhId}&type=all&page=1`;
     const r = await got(`${utils.base_url}/v6/dyh/detail?dyhId=${dyhId}`, {
@@ -28,10 +47,10 @@ export default async (ctx) => {
     if (out.length === 0) {
         throw new Error('仅限于采集站内订阅的看看号的图文及动态内容。这个ID可能是站外订阅。');
     }
-    ctx.set('data', {
+    return {
         title: `酷安看看号-${targetTitle}`,
         link: `https://www.coolapk.com/dyh/${dyhId}`,
         description: feedDescription,
         item: out,
-    });
-};
+    };
+}

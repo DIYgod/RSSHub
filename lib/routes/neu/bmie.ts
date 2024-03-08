@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -23,7 +24,25 @@ const map = {
     alumni_style: 557,
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/bmie/:type',
+    categories: ['forecast'],
+    example: '/neu/bmie/news',
+    parameters: { type: '分类 id 见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '医学与生物信息工程学院',
+    maintainers: ['tennousuathena'],
+    handler,
+};
+
+async function handler(ctx) {
     let type = ctx.req.param('type');
     if (map[type] !== undefined) {
         type = map[type];
@@ -87,9 +106,9 @@ export default async (ctx) => {
             return result;
         })
     );
-    ctx.set('data', {
+    return {
         title: `东北大学 医学与生物信息工程学院 ${title}`,
         link: newsUrl,
         item: results,
-    });
-};
+    };
+}

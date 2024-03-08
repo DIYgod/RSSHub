@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,28 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { parseArticle } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:category?',
+    categories: ['reading'],
+    example: '/3dmgame/news',
+    parameters: { category: '分类名或 ID，见下表，默认为新闻推荐，ID 可从分类 URL 中找到，如 Steam 为 `22221`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['3dmgame.com/news/:category?', '3dmgame.com/news'],
+    },
+    name: '新闻中心',
+    maintainers: ['zhboner'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = '' } = ctx.req.param();
     const isArcPost = category && !isNaN(category); // https://www.3dmgame.com/news/\d+/
     const url = `https://www.3dmgame.com/${category && category !== 'news_36_1' ? 'news/' : ''}${category ?? 'news'}/`;
@@ -34,10 +56,10 @@ export default async (ctx) => {
 
     const out = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
 
-    ctx.set('data', {
+    return {
         title: '3DM - ' + $('title').text().split('_')[0],
         description: $('meta[name="Description"]').attr('content'),
         link: url,
         item: out,
-    });
-};
+    };
+}

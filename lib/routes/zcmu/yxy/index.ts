@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -14,7 +15,25 @@ const map = new Map([
     [6, { title: '药学院 -- 日常通知', id: 'xsgz/rctz' }],
 ]);
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/yxy/:type?',
+    categories: ['forecast'],
+    example: '/zcmu/yxy/0',
+    parameters: { type: '模块id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '药学院',
+    maintainers: ['CCraftY'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = Number.parseInt(ctx.req.param('type'));
     const id = map.get(type).id;
     const res = await got({
@@ -34,9 +53,9 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: map.get(type).title,
         link: `${host}${id}`,
         item: items,
-    });
-};
+    };
+}

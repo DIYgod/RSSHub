@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,25 @@ import { art } from '@/utils/render';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['traditional-media'],
+    example: '/focustaiwan',
+    parameters: { category: '分类，见下表，默认为 news' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Category',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'news';
 
     const rootUrl = 'https://focustaiwan.tw';
@@ -66,11 +85,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: response.data.ResultData.MetaData.Title,
         link: response.data.ResultData.MetaData.CanonicalUrl,
         item: items,
         itunes_author: 'Focus Taiwan',
         image: 'https://imgcdn.cna.com.tw/Eng/website/img/default.png',
-    });
-};
+    };
+}

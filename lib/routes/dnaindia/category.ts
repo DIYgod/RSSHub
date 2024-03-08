@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,28 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import logger from '@/utils/logger';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/:category', '/topic/:topic'],
+    categories: ['bbs'],
+    example: '/dnaindia/headlines',
+    parameters: { category: 'Find it in the URL, or tables below' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['dnaindia.com/:category'],
+    },
+    name: 'News',
+    maintainers: ['Rjnishant530'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category, topic } = ctx.req.param();
     const baseUrl = 'https://www.dnaindia.com';
     let route;
@@ -55,7 +77,7 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'DNA India',
         link: baseUrl,
         item: items,
@@ -63,5 +85,5 @@ export default async (ctx) => {
         logo: 'https://cdn.dnaindia.com/sites/all/themes/dnaindia/favicon-1016.ico',
         icon: 'https://cdn.dnaindia.com/sites/all/themes/dnaindia/favicon-1016.ico',
         language: 'en-us',
-    });
-};
+    };
+}

@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/blog/:language?',
+    categories: ['design'],
+    example: '/nodejs/blog',
+    parameters: { language: 'Language, see below, en by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['nodejs.org/:language/blog', 'nodejs.org/'],
+    },
+    name: 'News',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const language = ctx.req.param('language') ?? 'en';
 
     const rootUrl = 'https://nodejs.org';
@@ -53,9 +75,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'News - Node.js',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

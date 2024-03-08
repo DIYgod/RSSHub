@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got, { type Response } from '@/utils/got';
 import { load } from 'cheerio';
@@ -41,7 +42,25 @@ async function parsePage(html: string) {
     );
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:column/:subColumn/:category?',
+    categories: ['study'],
+    example: '/cast/xw/tzgg/ZH',
+    parameters: { column: '栏目编号，见下表', subColumn: '二级栏目编号', category: '分类' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '通用',
+    maintainers: ['KarasuShin', 'TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const { column, subColumn, category } = ctx.req.param();
     const { limit = 10 } = ctx.req.query();
     let link = `${baseUrl}/${column}/${subColumn}`;
@@ -72,10 +91,10 @@ export default async (ctx) => {
 
     const pageTitle = $('head title').text();
 
-    ctx.set('data', {
+    return {
         title: pageTitle,
         link,
         image: 'https://www.cast.org.cn/favicon.ico',
         item: items,
-    });
-};
+    };
+}

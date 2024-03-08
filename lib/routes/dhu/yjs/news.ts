@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -10,7 +11,25 @@ const map = {
     notice: '/7206/list.htm',
     class: '/xkks/list.htm',
 };
-export default async (ctx) => {
+export const route: Route = {
+    path: '/yjs/news/:type?',
+    categories: ['forecast'],
+    example: '/dhu/yjs/news/class',
+    parameters: { type: '默认为 `class`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '研究生院通知',
+    maintainers: ['fox2049'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') || 'class';
     const link = `${baseUrl}${map[type]}`;
     const { data: response } = await got(link);
@@ -40,9 +59,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '东华大学研究生-' + $('.Column_Name').text(),
         link,
         item: items,
-    });
-};
+    };
+}

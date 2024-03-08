@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/topic/:topic?/:type?',
+    categories: ['traditional-media'],
+    example: '/hbr/topic/leadership',
+    parameters: { topic: 'Topic, can be found in URL, Leadership by default', type: 'Type, see below, Latest by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['hbr.org/topic/:topic?', 'hbr.org/'],
+    },
+    name: 'Topic',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const topic = ctx.req.param('topic') ?? 'leadership';
     const type = ctx.req.param('type') ?? 'Latest';
 
@@ -49,9 +71,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${$('title').eq(0).text()} - ${type}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

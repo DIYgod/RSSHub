@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import parser from '@/utils/rss-parser';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 const host = 'https://techcrunch.com';
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news',
+    categories: ['traditional-media'],
+    example: '/techcrunch/news',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['techcrunch.com/'],
+    },
+    name: 'News',
+    maintainers: ['EthanWng97'],
+    handler,
+};
+
+async function handler() {
     const rssUrl = `${host}/feed/`;
     const feed = await parser.parseURL(rssUrl);
     const items = await Promise.all(
@@ -30,10 +52,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'TechCrunch',
         link: host,
         description: 'Reporting on the business of technology, startups, venture capital funding, and Silicon Valley.',
         item: items,
-    });
-};
+    };
+}

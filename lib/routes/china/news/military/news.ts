@@ -1,14 +1,36 @@
+import { Route } from '@/types';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/military',
+    categories: ['traditional-media'],
+    example: '/china/news/military',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['military.china.com/news'],
+    },
+    name: 'Military - Military News 军事 - 军事新闻',
+    maintainers: ['jiaaoMario'],
+    handler,
+};
+
+async function handler() {
     const websiteUrl = 'https://military.china.com/news/';
     const response = await got(websiteUrl);
     const data = response.data;
     const $ = load(data);
     const commonList = $('.item_list li');
-    ctx.set('data', {
+    return {
         title: '中华网-军事新闻',
         link: 'https://military.china.com/news/',
         item:
@@ -26,5 +48,5 @@ export default async (ctx) => {
                     };
                 })
                 .get(),
-    });
-};
+    };
+}

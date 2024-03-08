@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/apod',
+    categories: ['anime'],
+    example: '/bjp/apod',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['bjp.org.cn/APOD/today.shtml', 'bjp.org.cn/APOD/list.shtml', 'bjp.org.cn/'],
+    },
+    name: '每日一图',
+    maintainers: ['HenryQW'],
+    handler,
+};
+
+async function handler() {
     const baseUrl = 'https://www.bjp.org.cn';
     const listUrl = `${baseUrl}/APOD/list.shtml`;
 
@@ -35,10 +57,10 @@ export default async (ctx) => {
             })
         )
     );
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         description: '探索宇宙！每天发布一张迷人宇宙的影像，以及由专业天文学家撰写的简要说明。',
         link: listUrl,
         item: items,
-    });
-};
+    };
+}

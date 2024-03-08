@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,25 @@ import routes from './routes';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:type?/:category?/:subCategory?',
+    categories: ['traditional-media'],
+    example: '/oilchem/list/140/18263',
+    parameters: { type: '类别 id，可在对应类别页中找到，默认为首页', category: '分类 id，可在对应分类页中找到', subCategory: '子分类 id，可在对应分类页中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '资讯',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? '';
     const category = ctx.req.param('category') ?? '';
     const subCategory = ctx.req.param('subCategory') ?? '';
@@ -59,9 +78,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${$('.hdbox h3').text()} - 隆众资讯`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

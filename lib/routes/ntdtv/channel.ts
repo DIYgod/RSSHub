@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,28 @@ import timezone from '@/utils/timezone';
 
 const host = 'https://www.ntdtv.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:language/:id',
+    categories: ['bbs'],
+    example: '/ntdtv/b5/prog1201',
+    parameters: { language: '语言，简体为`gb`，繁体为`b5`', id: '子频道名称' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.ntdtv.com/:language/:id'],
+    },
+    name: '频道',
+    maintainers: ['Fatpandac'],
+    handler,
+};
+
+async function handler(ctx) {
     const language = ctx.req.param('language');
     const id = ctx.req.param('id');
     const url = `${host}/${language}/${id}`;
@@ -37,9 +59,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `新唐人电视台 - ${title}`,
         link: url,
         item: items,
-    });
-};
+    };
+}

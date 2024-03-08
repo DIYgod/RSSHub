@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/search/:keyword?/:company?/:sort?/:period?',
+    categories: ['finance'],
+    example: '/telecompaper/search/Nokia',
+    parameters: { keyword: 'Keyword', company: 'Company name, empty by default', sort: 'Sorting, see table below, `Date Descending` by default', period: 'Date selection, Last 12 months by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Search',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const keyword = ctx.req.param('keyword') || '';
     const company = ctx.req.param('company') || '';
     const sort = ctx.req.param('sort') || '2';
@@ -69,9 +88,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `Telecompaper Search - ${keyword}`,
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

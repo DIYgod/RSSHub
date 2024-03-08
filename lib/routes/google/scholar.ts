@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/scholar/:query',
+    categories: ['finance'],
+    example: '/google/scholar/data+visualization',
+    parameters: { query: 'query statement which supports「Basic」and「Advanced」modes' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Keywords Monitoring',
+    maintainers: ['HenryQW'],
+    handler,
+};
+
+async function handler(ctx) {
     let params = ctx.req.param('query');
     let query = params;
     let description = `Google Scholar Monitor Query: ${query}`;
@@ -36,10 +55,10 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: `Google Scholar Monitor: ${query}`,
         link: url,
         description,
         item: out,
-    });
-};
+    };
+}

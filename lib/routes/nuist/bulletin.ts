@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -21,7 +22,29 @@ const map = {
     qt: '其他',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/bulletin/:category?',
+    categories: ['forecast'],
+    example: '/nuist/bulletin/791',
+    parameters: { category: '默认为 `791`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['bulletin.nuist.edu.cn/:category/list.htm'],
+        target: '/bulletin/:category',
+    },
+    name: '南信大信息公告栏',
+    maintainers: ['gylidian'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = Object.hasOwn(map, ctx.req.param('category')) ? ctx.req.param('category') : '791';
     const link = `${baseUrl}/${category}/list.htm`;
 
@@ -29,7 +52,7 @@ export default async (ctx) => {
     const $ = load(response.data);
     const list = $('.news_list').find('.news');
 
-    ctx.set('data', {
+    return {
         title: baseTitle + (category === '791' ? '' : ':' + map[category]),
         link,
         item: list
@@ -57,5 +80,5 @@ export default async (ctx) => {
                 };
             })
             .get(),
-    });
-};
+    };
+}

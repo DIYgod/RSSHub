@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,25 @@ import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://www.bjsk.org.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:path?',
+    categories: ['study'],
+    example: '/bjsk/newslist-1394-1474-0',
+    parameters: { path: '路径，默认为 `newslist-1486-0-0`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '通用',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const { path = 'newslist-1486-0-0' } = ctx.req.param();
     const link = `${baseUrl}/${path}.html`;
     const { data: response } = await got(link, {
@@ -44,10 +63,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link,
         image: 'https://www.bjsk.org.cn/favicon.ico',
         item: items,
-    });
-};
+    };
+}

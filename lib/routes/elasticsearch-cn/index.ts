@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:params?',
+    categories: ['blog'],
+    example: '/elasticsearch-cn',
+    parameters: { params: '分类，可在对应分类页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['elasticsearch.cn/:params', 'elasticsearch.cn/'],
+        target: '/:params',
+    },
+    name: '发现',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const params = ctx.req.param('params') ?? '';
 
     const rootUrl = 'https://elasticsearch.cn';
@@ -50,9 +73,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -96,7 +97,25 @@ const getAllPageDiscountItem = async (countries, platform, termsId, totalNum) =>
 //         };
 // };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/discount/:platform/:filter?/:countries?',
+    categories: ['reading'],
+    example: '/jump/discount/ps5/all',
+    parameters: { platform: '平台:switch,ps4,ps5,xbox,steam,epic', filter: '过滤参数,all-全部，jx-精选，sd-史低，dl-独立，vip-会员', countries: '地区，具体支持较多，可自信查看地区简写' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '游戏折扣',
+    maintainers: ['zytomorrow'],
+    handler,
+};
+
+async function handler(ctx) {
     const platform = ctx.req.param('platform');
     const filter = ctx.req.param('filter') || 'all';
     const countries = ctx.req.param('countries') || '';
@@ -109,7 +128,7 @@ export default async (ctx) => {
     //     await seqGetGameDetail(allDiscountItem, ctx);
     // }
 
-    ctx.set('data', {
+    return {
         title: `jump 折扣-${platform}-${filterName[filter]}${countries ? `-${countries}` : ''}`,
         link: 'https://jumpvg.com/',
         description: 'jump 发现游戏',
@@ -119,5 +138,5 @@ export default async (ctx) => {
             link: item.banner,
             guid: `${platform}-${item.oldGameId}-${item.cutOff}`, // 平台-打折id-打折率
         })),
-    });
-};
+    };
+}

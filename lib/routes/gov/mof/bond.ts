@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,7 +8,25 @@ import { parseDate } from '@/utils/parse-date';
 const domain = 'gks.mof.gov.cn';
 const theme = 'guozaiguanli';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/mof/bond/:category?',
+    categories: ['study'],
+    example: '/gov/mof/bond',
+    parameters: { category: '专题，见下表，默认为国债管理工作动态' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '专题',
+    maintainers: ['la3rence'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = 'gzfxgzdt' } = ctx.req.param();
     const currentUrl = `https://${domain}/ztztz/${theme}/${category}/`;
     const { data: response } = await got(currentUrl);
@@ -42,11 +61,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         item: items,
         title,
         link: currentUrl,
         description: `${description} - ${siteName}`,
         author,
-    });
-};
+    };
+}

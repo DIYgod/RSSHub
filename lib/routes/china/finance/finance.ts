@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
@@ -15,7 +16,28 @@ const CATEGORY_MAP = {
     IPO: 'IPO', // IPO观察
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/finance/:category?',
+    categories: ['traditional-media'],
+    example: '/china/finance',
+    parameters: { category: 'Category of news. See the form below for details, default is suggest news.' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['finance.china.com/:category'],
+    },
+    name: 'Finance News 财经 - 财经新闻',
+    maintainers: ['KingJem'],
+    handler,
+};
+
+async function handler(ctx) {
     const baseUrl = 'https://finance.china.com';
     const category = CATEGORY_MAP[ctx.req.param('category')] ?? CATEGORY_MAP.tuijian;
     const websiteUrl = `${baseUrl}/${category}`;
@@ -53,10 +75,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link: websiteUrl,
         category: listCategory,
         item: items,
-    });
-};
+    };
+}

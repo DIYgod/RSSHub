@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,29 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/inquire/:category?/:select?/:keyword?',
+    categories: ['other'],
+    example: '/szse/inquire',
+    parameters: { category: '类型，见下表，默认为 `0` 即 主板', select: '函件类别, 见下表，默认为全部函件类别', keyword: '公司代码或简称，默认为空' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['szse.cn/disclosure/supervision/inquire/index.html', 'szse.cn/'],
+        target: '/inquire',
+    },
+    name: '问询函件',
+    maintainers: ['Jeason0228', 'nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '0';
     const select = ctx.req.param('select') ?? '全部函件类别';
     const keyword = ctx.req.param('keyword') ?? '';
@@ -35,10 +58,10 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: `深圳证券交易所 - 问询函件 - ${data.metadata.name}`,
         link: `${rootUrl}/disclosure/supervision/inquire/index.html`,
         item: items,
         description: `函件类别：${select}${keyword ? `; 公司代码或简称：${keyword}` : ''}`,
-    });
-};
+    };
+}

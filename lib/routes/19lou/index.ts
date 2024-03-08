@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -15,7 +16,25 @@ const setCookie = function (cookieName, cookieValue, seconds, path, domain, secu
     return [encodeURI(cookieName), '=', encodeURI(cookieValue), expires ? '; expires=' + expires.toGMTString() : '', path ? '; path=' + path : '/', domain ? '; domain=' + domain : '', secure ? '; secure' : ''].join('');
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:city?',
+    categories: ['blog'],
+    example: '/19lou/jiaxing',
+    parameters: { city: '分类，见下表，默认为 www，即杭州' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '头条',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const city = ctx.req.param('city') ?? 'www';
     if (!isValidHost(city)) {
         throw new Error('Invalid city');
@@ -71,9 +90,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text().split('-')[0],
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

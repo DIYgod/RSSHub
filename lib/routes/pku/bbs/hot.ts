@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { config } from '@/config';
 import { load } from 'cheerio';
@@ -5,7 +6,28 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/bbs/hot',
+    categories: ['forecast'],
+    example: '/pku/bbs/hot',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['bbs.pku.edu.cn/v2/hot-topic.php', 'bbs.pku.edu.cn/'],
+    },
+    name: '北大未名 BBS 全站十大',
+    maintainers: ['wooddance'],
+    handler,
+};
+
+async function handler() {
     const cookie = config.pkubbs.cookie;
     const headers = {};
     if (cookie) {
@@ -48,10 +70,10 @@ export default async (ctx) => {
             })
         )
     );
-    ctx.set('data', {
+    return {
         title: '北大未名BBS 全站十大',
         link: 'https://bbs.pku.edu.cn/v2/hot-topic.php',
         description: '北大未名BBS 全站热门话题前十名',
         item,
-    });
-};
+    };
+}

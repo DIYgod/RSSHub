@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,25 @@ import { parseArticle } from './utils';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/web/:channel',
+    categories: ['bbs'],
+    example: '/oeeee/web/170',
+    parameters: { channel: '频道 ID' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '奥一网',
+    maintainers: ['TimWu007'],
+    handler,
+};
+
+async function handler(ctx) {
     const channel = ctx.req.param('channel') ?? 0;
     const currentUrl = `https://www.oeeee.com/api/channel.php?m=Js4channelNews&a=newLatest&cid=${channel}`;
 
@@ -32,9 +51,9 @@ export default async (ctx) => {
 
     const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
 
-    ctx.set('data', {
+    return {
         title: `南方都市报奥一网`,
         link: `https://www.oeeee.com/api/channel.php?s=/index/index/channel/${channelEname}`,
         item: items,
-    });
-};
+    };
+}

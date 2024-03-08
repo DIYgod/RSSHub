@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,25 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['traditional-media'],
+    example: '/thoughtco',
+    parameters: { category: 'Category id, see below' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Category',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = '' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
@@ -84,7 +103,7 @@ export default async (ctx) => {
     const title = $('meta[property="og:title"]').prop('content');
     const icon = new URL($('link[rel="apple-touch-icon-precomposed"]').prop('href'), rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${author}${title.startsWith(author) ? '' : ` - ${title}`}`,
         link: currentUrl,
@@ -95,5 +114,5 @@ export default async (ctx) => {
         logo: icon,
         subtitle: $('meta[property="og:title"]').prop('content'),
         author,
-    });
-};
+    };
+}

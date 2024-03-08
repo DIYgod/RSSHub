@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import * as url from 'node:url';
@@ -54,7 +55,25 @@ const generateArticleLink = (id) => `<p>链接：<a href="${getArticleUrlById(id
 
 const generateArticleFullText = (data) => resolveRelativeUrl(data.content) + generateArticleLink(data.id);
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jwc/notice/:category?',
+    categories: ['forecast'],
+    example: '/scut/jwc/notice/all',
+    parameters: { category: '通知分类，默认为 `all`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '教务处通知公告',
+    maintainers: ['imkero'],
+    handler,
+};
+
+async function handler(ctx) {
     const categoryName = ctx.req.param('category') || 'all';
     const categoryMeta = categoryMap[categoryName];
 
@@ -116,9 +135,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: '华南理工大学教务处通知公告 - ' + categoryMeta.title,
         link: listPageUrl,
         item: out,
-    });
-};
+    };
+}

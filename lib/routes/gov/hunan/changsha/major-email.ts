@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,28 @@ import iconv from 'iconv-lite';
 import { parseDate } from '@/utils/parse-date';
 const baseUrl = 'http://wlwz.changsha.gov.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/hunan/changsha/major-email',
+    categories: ['study'],
+    example: '/gov/hunan/changsha/major-email',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['wlwz.changsha.gov.cn/webapp/cs2020/email/*'],
+    },
+    name: '长沙市人民政府',
+    maintainers: ['shansing'],
+    handler,
+};
+
+async function handler() {
     const listPage = await got('http://wlwz.changsha.gov.cn/webapp/cs2020/email/index.jsp', {
         responseType: 'buffer',
     });
@@ -45,9 +67,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '来信反馈 - 长沙市市长信箱',
         link: `${baseUrl}/webapp/cs2020/email/index.jsp`,
         item: items,
-    });
-};
+    };
+}

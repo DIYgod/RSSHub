@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -24,7 +25,29 @@ const urlMap = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['bbs'],
+    example: '/hket/sran001',
+    parameters: { category: '分类，默认为全部新闻，可在 URL 中找到，部分见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.hket.com/'],
+        target: '',
+    },
+    name: '新闻',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = 'sran001' } = ctx.req.param();
     const baseUrl = urlMap[category.substring(0, 4)].baseUrl;
 
@@ -123,13 +146,13 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head meta[name=title]').attr('content').trim(),
         link: baseUrl + '/' + category,
         description: $('head meta[name=description]').attr('content').trim(),
         item: items,
         language: 'zh-hk',
-    });
+    };
 
     ctx.set('json', {
         title: $('head meta[name=title]').attr('content').trim(),
@@ -138,4 +161,4 @@ export default async (ctx) => {
         item: items,
         language: 'zh-hk',
     });
-};
+}

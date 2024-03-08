@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/servicesupport/analygarden/:program?',
+    categories: ['other'],
+    example: '/cfachina/servicesupport/analygarden',
+    parameters: { program: '分类，见下表，留空为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['cfachina.org/servicesupport/analygarden/:program?', 'cfachina.org/'],
+    },
+    name: '分析师园地',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     let { program = '分析师园地' } = ctx.req.param();
     const baseUrl = 'https://www.cfachina.org';
     let pageData,
@@ -52,9 +74,9 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: `${pageData?.category.toReversed().join(' - ') ?? '分析师园地'} - 中国期货业协会`,
         link: pageUrl,
         item: items,
-    });
-};
+    };
+}

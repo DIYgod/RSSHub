@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,28 @@ import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/shenzhen',
+    categories: ['travel'],
+    example: '/tingshuitz/shenzhen',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['sz-water.com.cn/*'],
+    },
+    name: '深圳市',
+    maintainers: ['lilPiper'],
+    handler,
+};
+
+async function handler() {
     const url = 'https://szgk.sz-water.com.cn/api/wechat/op/getStopWaterNotice';
     const response = await got({
         method: 'get',
@@ -16,7 +38,7 @@ export default async (ctx) => {
 
     const data = response.data.data;
 
-    ctx.set('data', {
+    return {
         title: '停水通知 - 深圳水务',
         link: 'https://www.sz-water.com.cn/',
         item: data.map((item) => ({
@@ -28,5 +50,5 @@ export default async (ctx) => {
             link: 'https://szgk.sz-water.com.cn/wechat_web/Water_stop.html',
             guid: `${item.position}${item.stopStartTime}`,
         })),
-    });
-};
+    };
+}

@@ -1,8 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/ani/new_anime',
+    categories: ['program-update'],
+    example: '/gamer/ani/new_anime',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['ani.gamer.com.tw/'],
+        target: '/new_anime',
+    },
+    name: '動畫瘋 - 最後更新',
+    maintainers: [],
+    handler,
+};
+
+async function handler() {
     const rootUrl = 'https://ani.gamer.com.tw';
     const { data: response } = await got('https://api.gamer.com.tw/mobile_app/anime/v3/index.php');
 
@@ -13,9 +36,9 @@ export default async (ctx) => {
         pubDate: timezone(parseDate(`${item.upTime} ${item.upTimeHours}`, 'MM/DD HH:mm'), +8),
     }));
 
-    ctx.set('data', {
+    return {
         title: '動畫瘋最後更新',
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

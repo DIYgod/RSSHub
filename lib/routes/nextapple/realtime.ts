@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 import asyncPool from 'tiny-async-pool';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/realtime/:category?',
+    categories: ['traditional-media'],
+    example: '/nextapple/realtime/latest',
+    parameters: { category: '類別，見下表，默認為首頁' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['tw.nextapple.com/', 'tw.nextapple.com/realtime/:category'],
+    },
+    name: '最新新聞',
+    maintainers: ['miles170'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'latest';
     const currentUrl = `https://tw.nextapple.com/realtime/${category}`;
     const response = await got(currentUrl);
@@ -37,9 +59,9 @@ export default async (ctx) => {
         items.push(item);
     }
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/contest/:language?/:rated?/:category?/:keyword?',
+    categories: ['design'],
+    example: '/atcoder/contest',
+    parameters: { language: 'Language, `jp` as Japanese or `en` as English, English by default', rated: 'Rated Range, see below, all by default', category: 'Category, see below, all by default', keyword: 'Keyword' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Contests Archive',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const status = ['action', 'upcoming', 'recent'];
 
     const language = ctx.req.param('language') ?? 'en';
@@ -56,10 +75,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: String(isStatus ? `${$(`#contest-table-${rated} h3`).text()} - AtCoder` : $('title').text()),
         link: currentUrl,
         item: items,
         allowEmpty: true,
-    });
-};
+    };
+}

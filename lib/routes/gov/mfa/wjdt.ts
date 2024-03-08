@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -16,7 +17,14 @@ const categories = {
     zcjd: 'zcjd',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/fmprc/:category?', '/mfa/wjdt/:category?'],
+    name: 'Unknown',
+    maintainers: ['nicolaszf', 'nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'gjldrhd';
 
     const rootUrl = 'https://www.mfa.gov.cn';
@@ -60,9 +68,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

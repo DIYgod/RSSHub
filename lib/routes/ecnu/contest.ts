@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,29 @@ import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/acm/contest/:category?',
+    categories: ['forecast'],
+    example: '/ecnu/acm/contest/public',
+    parameters: { category: 'category is optional, default is all, use `public` for public only contests' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['acm.ecnu.edu.cn/contest/', 'acm.ecnu.edu.cn/'],
+        target: '/acm/contest/',
+    },
+    name: 'ACM Online-Judge contests list',
+    maintainers: ['a180285'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
     const publicOnly = category === 'public';
     const rootUrl = 'https://acm.ecnu.edu.cn';
@@ -36,9 +59,9 @@ export default async (ctx) => {
         })
         .toArray();
 
-    ctx.set('data', {
+    return {
         title: `ECNU ACM ${publicOnly ? '公开' : ''}比赛`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

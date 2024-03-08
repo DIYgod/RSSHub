@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -30,7 +31,25 @@ async function getPage(id) {
     );
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/cst/custom/:id',
+    categories: ['forecast'],
+    example: '/zju/cst/custom/36194+36241+36246',
+    parameters: { id: '提取出通知页面中的 `ID`，如 `http://www.cst.zju.edu.cn/36246/list.htm` 中的 `36246`，可将你想获取通知的多个页面，通过 `+` 符号来聚合。' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '软件学院',
+    maintainers: ['zwithz'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id').split('+');
     const tasks = id.map((id) => getPage(id));
     const results = await Promise.all(tasks);
@@ -39,9 +58,9 @@ export default async (ctx) => {
         items = [...items, ...result];
     }
 
-    ctx.set('data', {
+    return {
         title: '浙江大学软件学院通知',
         link: 'http://www.cst.zju.edu.cn/',
         item: items,
-    });
-};
+    };
+}

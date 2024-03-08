@@ -7,8 +7,8 @@ import { serveStatic } from '@hono/node-server/serve-static';
 
 import index from '@/routes/index';
 import robotstxt from '@/routes/robots.txt';
-import { namespace as testNamespace } from './routes-new/test/namespace';
-import { route as testRoute } from '@/routes-new/test/index';
+import { namespace as testNamespace } from './routes/test/namespace';
+import { route as testRoute } from '@/routes/test/index';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -42,7 +42,7 @@ switch (process.env.NODE_ENV) {
         break;
     default:
         modules = directoryImport({
-            targetDirectoryPath: path.join(__dirname, './routes-new'),
+            targetDirectoryPath: path.join(__dirname, './routes'),
             importPattern: /\.ts$/,
         }) as typeof modules;
 }
@@ -98,7 +98,7 @@ export default function (app: Hono) {
             const wrapedHandler: Handler = async (ctx) => {
                 if (!ctx.get('data')) {
                     if (typeof namespaces[namespace].routes[path].handler !== 'function') {
-                        const { route } = await import(`./routes-new/${namespace}/${namespaces[namespace].routes[path].location}`);
+                        const { route } = await import(`./routes/${namespace}/${namespaces[namespace].routes[path].location}`);
                         namespaces[namespace].routes[path].handler = route.handler;
                     }
                     ctx.set('data', await namespaces[namespace].routes[path].handler(ctx));

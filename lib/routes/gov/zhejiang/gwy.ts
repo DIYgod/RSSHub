@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/zhejiang/gwy/:category?/:column?',
+    categories: ['study'],
+    example: '/gov/zhejiang/gwy/1',
+    parameters: { category: '分类，见下表，默认为全部', column: '地市专栏，见下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['zjks.gov.cn/zjgwy/website/init.htm', 'zjks.gov.cn/zjgwy/website/queryDetail.htm', 'zjks.gov.cn/zjgwy/website/queryMore.htm'],
+        target: '/zhejiang/gwy',
+    },
+    name: '通知',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category, column } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
@@ -73,7 +96,7 @@ export default async (ctx) => {
     const columnName = $('button.btn-success').last().text();
     const categoryName = $('table').parent().prev().find('h5').text();
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${$('title').text()} - ${columnName}${categoryName}`,
         link: currentUrl,
@@ -81,5 +104,5 @@ export default async (ctx) => {
         subtitle: `${columnName}${categoryName}`,
         author: $('div.title-font').text(),
         allowEmpty: true,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -13,7 +14,25 @@ const typesIdMap = [
     { type: 'edu_focus_news', id: 'eight_con2 .pchide>.TRS_Editor', name: '教育要闻' },
 ];
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/moe/:type',
+    categories: ['study'],
+    example: '/gov/moe/policy_anal',
+    parameters: { type: '分类名' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '新闻',
+    maintainers: ['Crawler995'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
     let id = '';
     let name = '';
@@ -35,7 +54,7 @@ export default async (ctx) => {
     const $ = load(response.data);
     const newsLis = $('div#' + id + '>ul>li');
 
-    ctx.set('data', {
+    return {
         title: name,
         link: moeUrl,
         item: await Promise.all(
@@ -82,5 +101,5 @@ export default async (ctx) => {
                 })
                 .get()
         ),
-    });
-};
+    };
+}

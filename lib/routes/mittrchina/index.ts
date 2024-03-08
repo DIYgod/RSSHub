@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,25 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:type?',
+    categories: ['traditional-media'],
+    example: '/mittrchina/index',
+    parameters: { type: '类型，见下表，默认为首页资讯' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '首页',
+    maintainers: ['EsuRt', 'queensferryme'],
+    handler,
+};
+
+async function handler(ctx) {
     const typeMap = {
         breaking: {
             title: '快讯',
@@ -95,9 +114,9 @@ export default async (ctx) => {
         );
     }
 
-    ctx.set('data', {
+    return {
         title: `MIT 科技评论 - ${typeMap[type].title}`,
         link: `https://www.mittrchina.com/${type}`,
         item: items,
-    });
-};
+    };
+}

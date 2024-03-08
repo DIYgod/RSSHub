@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:area?/:type?',
+    categories: ['traditional-media'],
+    example: '/52hrtt/global',
+    parameters: { area: '地区，默认为全球', type: '分类，默认为新闻' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '新闻',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const area = ctx.req.param('area') ?? 'global';
     const type = ctx.req.param('type') ?? '';
 
@@ -49,9 +68,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${response.data.data.area.areaName} - ${$('.router-link-active').eq(0).text()} - 华人头条`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

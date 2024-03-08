@@ -36,10 +36,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${name} - 微信公众号`,
         link: 'https://www.wxnmh.com/',
         description,
         item,
-    });
+    };
 };

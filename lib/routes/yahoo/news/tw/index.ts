@@ -1,7 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getArchive, getCategories, parseList, parseItem } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:region/:category?',
+    categories: ['traditional-media'],
+    example: '/yahoo/news/hk/world',
+    parameters: { region: 'Region, see the table below', category: 'Category, see the table below' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['yahoo.com/'],
+    },
+    name: 'News',
+    maintainers: ['KeiLongW'],
+    handler,
+};
+
+async function handler(ctx) {
     const { region, category } = ctx.req.param();
     if (!['hk', 'tw'].includes(region)) {
         throw new Error(`Unknown region: ${region}`);
@@ -16,10 +38,10 @@ export default async (ctx) => {
 
     const items = await Promise.all(list.map((item) => parseItem(item, cache.tryGet)));
 
-    ctx.set('data', {
+    return {
         title: `Yahoo 新聞 - ${category ? categoryMap[category].name : '所有類別'}`,
         link: `https://${region}.news.yahoo.com/${category ? `${category}/` : ''}archive`,
         image: 'https://s.yimg.com/cv/apiv2/social/images/yahoo_default_logo-1200x1200.png',
         item: items,
-    });
-};
+    };
+}

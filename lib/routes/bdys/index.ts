@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -14,7 +15,31 @@ import { config } from '@/config';
 // Visit https://www.bdys.me for the list of domains
 const allowDomains = new Set(['52bdys.com', 'bde4.icu', 'bdys01.com']);
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:caty?/:type?/:area?/:year?/:order?',
+    categories: ['picture'],
+    example: '/bdys',
+    parameters: {
+        caty: '影视类型，见下表，默认为 `all` 即不限',
+        type: '资源分类，见下表，默认为 `all` 即不限',
+        area: '制片地区，见下表，默认为 `all` 即不限',
+        year: '上映时间，此处填写年份不小于2000，默认为 `all` 即不限',
+        order: '影视排序，见下表，默认为更新时间',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '首页',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const caty = ctx.req.param('caty') || 'all';
     const type = ctx.req.param('type') || 'all';
     const area = ctx.req.param('area') || 'all';
@@ -94,9 +119,9 @@ export default async (ctx) => {
         items.push(data);
     }
 
-    ctx.set('data', {
+    return {
         title: '哔嘀影视',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

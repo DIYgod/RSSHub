@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { rootUrl, apiArticleRootUrl, processItems, fetchData } from './util';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/collection/:id',
+    categories: ['traditional-media'],
+    example: '/huxiu/collection/212',
+    parameters: { id: '文集 id，可在对应文集页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: true,
+        supportPodcast: true,
+        supportScihub: false,
+    },
+    name: '文集',
+    maintainers: ['AlexdanerZe', 'nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
 
@@ -21,8 +40,8 @@ export default async (ctx) => {
 
     const data = await fetchData(currentUrl);
 
-    ctx.set('data', {
+    return {
         item: items,
         ...data,
-    });
-};
+    };
+}

@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/partion/:tid/:disableEmbed?',
+    categories: ['new-media'],
+    example: '/bilibili/partion/33',
+    parameters: { tid: '分区 id', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '分区视频',
+    maintainers: ['DIYgod'],
+    handler,
+};
+
+async function handler(ctx) {
     const tid = ctx.req.param('tid');
     const disableEmbed = ctx.req.param('disableEmbed');
 
@@ -19,7 +38,7 @@ export default async (ctx) => {
         name = list[0].tname;
     }
 
-    ctx.set('data', {
+    return {
         title: `bilibili ${name}分区`,
         link: 'https://www.bilibili.com',
         description: `bilibili ${name}分区`,
@@ -32,5 +51,5 @@ export default async (ctx) => {
                 link: item.pubdate > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
                 author: item.owner.name,
             })),
-    });
-};
+    };
+}

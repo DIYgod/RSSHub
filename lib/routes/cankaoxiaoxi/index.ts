@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,25 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/column/:id?', '/:id?'],
+    categories: ['bbs'],
+    example: '/cankaoxiaoxi/column/diyi',
+    parameters: { id: '栏目 id，默认为 `diyi`，即第一关注' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '栏目',
+    maintainers: ['yuxinliu-alex', 'nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? 'diyi';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
 
@@ -62,11 +81,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `参考消息 - ${channelResponse.data.name}`,
         link: currentUrl,
         description: '参考消息',
         language: 'zh-cn',
         item: items,
-    });
-};
+    };
+}

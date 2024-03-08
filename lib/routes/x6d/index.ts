@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,25 @@ import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://xd.x6d.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id?',
+    categories: ['traditional-media'],
+    example: '/x6d/34',
+    parameters: { id: '分类 id，可在对应分类页面的 URL 中找到，默认为首页最近更新' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '分类',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const { id = 'latest' } = ctx.req.param();
 
     const currentUrl = id === 'latest' ? baseUrl : `${baseUrl}/html/${id}.html`;
@@ -49,9 +68,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `小刀娱乐网 - ${$('title').text().split('-')[0]}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

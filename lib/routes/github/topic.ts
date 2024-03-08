@@ -1,15 +1,37 @@
+import { Route } from '@/types';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/topics/:name/:qs?',
+    categories: ['design'],
+    example: '/github/topics/framework',
+    parameters: { name: 'Topic name, which can be found in the URL of the corresponding [Topics Page](https://github.com/topics/framework)', qs: 'Query string, like `l=php&o=desc&s=stars`. Details listed as follows:' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['github.com/topics'],
+    },
+    name: 'Topics',
+    maintainers: ['queensferryme'],
+    handler,
+};
+
+async function handler(ctx) {
     const link = `https://github.com/topics/${ctx.req.param('name')}`;
     const { data, url } = await got(link, {
         searchParams: new URLSearchParams(ctx.req.param('qs')),
     });
     const $ = load(data);
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         description: $('.markdown-body').text().trim(),
         link: url,
@@ -37,5 +59,5 @@ export default async (ctx) => {
                     pubDate,
                 };
             }),
-    });
-};
+    };
+}

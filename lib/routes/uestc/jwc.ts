@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -15,7 +16,29 @@ const map = {
     office: 'list/ff80808160bcf79c0160c010a8d20020/?page=1',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jwc/:type?',
+    categories: ['forecast'],
+    example: '/uestc/jwc/student',
+    parameters: { type: '默认为 `important`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['jwc.uestc.edu.cn/'],
+        target: '/jwc',
+    },
+    name: '教务处',
+    maintainers: ['achjqz', 'mobyw'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') || 'important';
     const pageUrl = map[type];
     if (!pageUrl) {
@@ -43,10 +66,10 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: '教务处通知',
         link: baseUrl,
         description: '电子科技大学教务处通知',
         item: out,
-    });
-};
+    };
+}

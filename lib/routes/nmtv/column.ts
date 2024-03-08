@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,25 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/column/:id?',
+    categories: ['bbs'],
+    example: '/nmtv/column/877',
+    parameters: { id: '栏目 id，可在对应栏目 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '点播',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '877';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100;
 
@@ -46,11 +65,11 @@ export default async (ctx) => {
     const author = data[0].column_name;
     const imageUrl = data[0].column_info.indexpic;
 
-    ctx.set('data', {
+    return {
         title: `内蒙古广播电视台 - ${author}`,
         link: items[0].link.split(/\/\d{4}-\d{2}-\d{2}\//)[0],
         item: items,
         image: `${imageUrl.host}${imageUrl.filepath}${imageUrl.filename}`,
         itunes_author: author,
-    });
-};
+    };
+}

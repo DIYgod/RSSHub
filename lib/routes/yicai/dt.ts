@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -14,7 +15,25 @@ const columns = {
     visualization: 4,
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/dt/:column?/:category?',
+    categories: ['bbs'],
+    example: '/yicai/dt/article',
+    parameters: { column: '栏目，见下表，默认为文章', category: '分类，见下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'DT 财经',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const { column = 'article', category = '0' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -98,7 +117,7 @@ export default async (ctx) => {
     const image = $('div.logo a img').prop('src');
     const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${$(`a[data-cid="${category}"]`).text()}${title}`,
         link: currentUrl,
@@ -110,5 +129,5 @@ export default async (ctx) => {
         subtitle: $('meta[name="description"]').prop('content'),
         author: title.split(/_/).pop(),
         allowEmpty: true,
-    });
-};
+    };
+}

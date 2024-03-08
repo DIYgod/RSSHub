@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -30,7 +31,25 @@ function getNews(data) {
         }));
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/tj/news/:type?',
+    categories: ['forecast'],
+    example: '/ustb/tj/news/all',
+    parameters: { type: '默认为 `all`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '天津学院',
+    maintainers: ['henbf'],
+    handler,
+};
+
+async function handler(ctx) {
     let type = ctx.req.param('type') || 'all';
     if (!Object.keys(maps).includes(type)) {
         type = 'all';
@@ -58,4 +77,4 @@ export default async (ctx) => {
     }
 
     ctx.set('data', responseData);
-};
+}

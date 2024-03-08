@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,25 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:language?/:category?/:type?',
+    categories: ['picture'],
+    example: '/7mmtv/zh/censored_list/all',
+    parameters: { language: 'Language, see below, `en` as English by default', category: 'Category, see below, `censored_list` as Censored by default', type: 'Server, see below, all server by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Category',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const language = ctx.req.param('language') ?? 'en';
     const category = ctx.req.param('category') ?? 'censored_list';
     const type = ctx.req.param('type') ?? 'all';
@@ -71,12 +90,12 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title')
             .text()
             .replace(/ - Watch JAV Online/, ''),
         link: currentUrl,
         item: items,
         description: $('meta[name="description"]').attr('content'),
-    });
-};
+    };
+}

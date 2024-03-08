@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id?/:name?',
+    categories: ['other'],
+    example: '/acpaa',
+    parameters: { id: '标签 id，默认为 1，可在对应标签页 URL 中找到', name: '标签名称，默认为重要通知，可在对应标签页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '标签',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const { id = '1', name = '重要通知' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -46,7 +65,7 @@ export default async (ctx) => {
     const author = $('title').text().replaceAll('-', '');
     const subtitle = $('span.myTitle').text().trim();
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${author} - ${subtitle}`,
         link: currentUrl,
@@ -54,5 +73,5 @@ export default async (ctx) => {
         language: 'zh',
         subtitle,
         author,
-    });
-};
+    };
+}

@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?/:id?',
+    categories: ['traditional-media'],
+    example: '/aamacau',
+    parameters: { category: '分类，见下表，默认为即時報道', id: 'id，可在对应页面 URL 中找到，默认为空' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['aamacau.com/'],
+    },
+    name: '话题',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'topics';
     const id = ctx.req.param('id') ?? '';
 
@@ -49,9 +71,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

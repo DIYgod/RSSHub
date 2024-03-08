@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -67,7 +68,25 @@ const ids = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id?/:category?',
+    categories: ['other'],
+    example: '/zhitongcaijing',
+    parameters: { id: '栏目 id，可在对应栏目页 URL 中找到，默认为 recommend，即推荐', category: '分类 id，可在对应栏目子分类页 URL 中找到，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '推荐',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? 'recommend';
     const category = ctx.req.param('category') ?? '';
 
@@ -114,9 +133,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `智通财经 - ${ids[id].title}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

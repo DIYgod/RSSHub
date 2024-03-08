@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,25 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/programme/:id?/:limit?/:isFull?',
+    categories: ['bbs'],
+    example: '/sctv/programme/1',
+    parameters: { id: '节目 id，可在对应节目页中找到，默认为 `1`，即四川新闻联播', limit: '期数，默认为 15，即单次获取最新 15 期', isFull: '是否仅获取完整视频，填写 true/yes 表示是、false/no 表示否，默认是' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '电视回放',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '1';
     const limit = ctx.req.param('limit') ? Number.parseInt(ctx.req.param('limit')) : 15;
     const isFull = /t|y/i.test(ctx.req.param('isFull') ?? 'true');
@@ -75,10 +94,10 @@ export default async (ctx) => {
         }
     }
 
-    ctx.set('data', {
+    return {
         title: `四川广播电视台 - ${name}`,
         link: currentUrl,
         item: items.slice(0, ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100),
         image: cover,
-    });
-};
+    };
+}

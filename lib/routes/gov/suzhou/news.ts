@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/suzhou/news/:uid',
+    categories: ['study'],
+    example: '/gov/suzhou/news/news',
+    parameters: { uid: '栏目名' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.suzhou.gov.cn/szsrmzf/:uid/nav_list.shtml'],
+    },
+    name: '政府新闻',
+    maintainers: ['EsuRt', 'luyuhuang'],
+    handler,
+};
+
+async function handler(ctx) {
     const rootUrl = 'https://www.suzhou.gov.cn';
     const uid = ctx.req.param('uid');
     let url = '';
@@ -109,9 +131,9 @@ export default async (ctx) => {
             });
     }
 
-    ctx.set('data', {
+    return {
         title,
         link: url,
         item: items,
-    });
-};
+    };
+}

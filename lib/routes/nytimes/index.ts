@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
@@ -5,7 +6,29 @@ import utils from './utils';
 import { load } from 'cheerio';
 import puppeteer from '@/utils/puppeteer';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:lang?',
+    categories: ['bbs'],
+    example: '/nytimes/dual',
+    parameters: { lang: 'language, default to Chinese' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['nytimes.com/'],
+        target: '',
+    },
+    name: 'News',
+    maintainers: ['HenryQW'],
+    handler,
+};
+
+async function handler(ctx) {
     let { lang = '' } = ctx.req.param();
     lang = lang.toLowerCase();
 
@@ -115,10 +138,10 @@ export default async (ctx) => {
 
     browser.close();
 
-    ctx.set('data', {
+    return {
         title,
         link: 'https://cn.nytimes.com',
         description: title,
         item: items,
-    });
-};
+    };
+}

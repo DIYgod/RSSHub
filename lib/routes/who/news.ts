@@ -1,8 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:language?',
+    categories: ['study'],
+    example: '/who/news',
+    parameters: { language: 'Language, see below, English by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['who.int/news'],
+        target: '/news',
+    },
+    name: 'News',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const language = ctx.req.param('language') ?? 'en';
 
     const rootUrl = 'https://www.who.int';
@@ -35,9 +58,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'News - WHO',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

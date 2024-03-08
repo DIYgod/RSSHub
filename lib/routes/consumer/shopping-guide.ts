@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/shopping-guide/:category?/:language?',
+    categories: ['traditional-media'],
+    example: '/consumer/shopping-guide',
+    parameters: { category: '分类，见下表，默认为 `trivia`', language: '语言，见上表，默认为 `tc`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '消費全攻略',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = 'trivia', language = 'tc' } = ctx.req.param();
     const rootUrl = 'https://www.consumer.org.hk';
     const currentUrl = `${rootUrl}/${language}/shopping-guide/${category}`;
@@ -56,12 +75,12 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link: currentUrl,
         image: $('meta[property="og:image"]').attr('content'),
         logo: $('link[rel="apple-touch-icon"]').attr('href'),
         icon: $('link[rel="apple-touch-icon"]').attr('href'),
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,25 @@ import { parseDate } from '@/utils/parse-date';
 const baseTitle = '南京信息工程大学-教务处';
 const baseUrl = 'https://jwc.nuist.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jwc/:category?',
+    categories: ['forecast'],
+    example: '/nuist/jwc/jxyw',
+    parameters: { category: '默认为教学要闻' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '教务处',
+    maintainers: ['gylidian'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = 'jxyw' } = ctx.req.param();
     const link = `${baseUrl}/${category === 'jxyw' || category === 'xyjx' ? 'index' : 'xxtz'}/${category}.htm`;
 
@@ -36,9 +55,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: baseTitle + '：' + $('.dqwz').find('a').eq(1).text(),
         link,
         item: items,
-    });
-};
+    };
+}

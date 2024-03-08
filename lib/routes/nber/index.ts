@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -15,7 +16,28 @@ async function getData(url) {
     return response.results;
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/papers', '/news'],
+    categories: ['finance'],
+    example: '/nber/papers',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: true,
+    },
+    radar: {
+        source: ['nber.org/papers'],
+    },
+    name: 'All Papers',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const url = 'https://www.nber.org/api/v1/working_page_listing/contentType/working_paper/_/_/search';
     const baseUrl = 'https://www.nber.org';
     const data = await cache.tryGet(url, () => getData(url), config.cache.routeExpire, false);
@@ -44,10 +66,10 @@ export default async (ctx) => {
             })
     );
 
-    ctx.set('data', {
+    return {
         title: 'NBER Working Paper',
         link: 'https://www.nber.org/papers',
         item: items,
         description: `National Bureau of Economic Research Working Papers articles`,
-    });
-};
+    };
+}

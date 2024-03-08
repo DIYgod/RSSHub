@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/zhengce/govall/:advance?',
+    categories: ['study'],
+    example: '/gov/zhengce/govall/orpro=555&notpro=2&search_field=title',
+    parameters: { advance: '高级搜索选项，将作为请求参数直接添加到url后。目前已知的选项及其意义如下。' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.gov.cn/'],
+        target: '/zhengce/govall',
+    },
+    name: '信息稿件',
+    maintainers: ['ciaranchen'],
+    handler,
+};
+
+async function handler(ctx) {
     const advance = ctx.req.param('advance');
     const link = `http://sousuo.gov.cn/list.htm`;
     const params = new URLSearchParams({
@@ -48,9 +71,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '信息稿件 - 中国政府网',
         link: `${link}?${query}`,
         item: items,
-    });
-};
+    };
+}

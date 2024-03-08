@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,7 +12,25 @@ import * as path from 'node:path';
 
 const resolveRelativeLink = (link, baseUrl) => (link.startsWith('http') ? link : `${baseUrl}${link}`);
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:language?/:keyword?',
+    categories: ['bbs'],
+    example: '/kyodonews',
+    parameters: { language: '语言: `china` = 简体中文 (默认), `tchina` = 繁體中文', keyword: '关键词' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '最新报道',
+    maintainers: ['Rongronggg9'],
+    handler,
+};
+
+async function handler(ctx) {
     const language = ctx.req.param('language') ?? 'china';
     const keyword = ctx.req.param('keyword') === 'RSS' ? 'rss' : ctx.req.param('keyword') ?? '';
 
@@ -117,11 +136,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title,
         description,
         link: currentUrl,
         item: items,
         image,
-    });
-};
+    };
+}

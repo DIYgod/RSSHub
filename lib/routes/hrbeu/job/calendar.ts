@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
 const rootUrl = 'http://job.hrbeu.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/job/calendar',
+    categories: ['forecast'],
+    example: '/hrbeu/job/calendar',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['job.hrbeu.edu.cn/*'],
+    },
+    name: '就业服务平台',
+    maintainers: ['Derekmini'],
+    handler,
+};
+
+async function handler() {
     const date = new Date();
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
@@ -37,10 +59,10 @@ export default async (ctx) => {
         }))
         .get();
 
-    ctx.set('data', {
+    return {
         title: '今日招聘会',
         link: 'http://job.hrbeu.edu.cn/HrbeuJY/web',
         item: list,
         allowEmpty: true,
-    });
-};
+    };
+}

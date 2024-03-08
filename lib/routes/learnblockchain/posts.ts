@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseRelativeDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/posts/:cid/:sort?',
+    categories: ['design'],
+    example: '/learnblockchain/posts/DApp/newest',
+    parameters: { cid: '分类id,更多分类可以论坛的URL找到', sort: '排序方式，默认精选' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '文章',
+    maintainers: ['running-grass'],
+    handler,
+};
+
+async function handler(ctx) {
     const cid = ctx.req.param('cid') || 'all';
     const sort = ctx.req.param('sort');
 
@@ -19,7 +38,7 @@ export default async (ctx) => {
     const $ = load(data);
     const list = $('div.stream-list section.stream-list-item');
 
-    ctx.set('data', {
+    return {
         title: `登链社区--${cid}`,
         link: url,
         description: `登链社区`,
@@ -39,5 +58,5 @@ export default async (ctx) => {
                     return json;
                 })
                 .get(),
-    });
-};
+    };
+}

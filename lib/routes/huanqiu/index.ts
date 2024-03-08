@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -15,7 +16,28 @@ function getKeysRecursive(dic, key, attr, array) {
     return array;
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:category?',
+    categories: ['bbs'],
+    example: '/huanqiu/news/china',
+    parameters: { category: '类别，可以使用二级域名作为参数，默认为：china' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['huanqiu.com/'],
+    },
+    name: '分类',
+    maintainers: ['yuxinliu-alex'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'china';
     if (!isValidHost(category)) {
         throw new Error('Invalid category');
@@ -63,11 +85,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${name} - 环球网`,
         link: host,
         description: '环球网',
         language: 'zh-cn',
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,7 +8,25 @@ import timezone from '@/utils/timezone';
 const baseTitle = 'NUIST AS（南信大大气科学学院）';
 const baseUrl = 'https://cas.nuist.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/cas/:category?',
+    categories: ['forecast'],
+    example: '/nuist/cas/xxgg',
+    parameters: { category: '默认为信息公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'NUIST AS（南信大大气科学学院）',
+    maintainers: ['gylidian'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = 'xxgg' } = ctx.req.param();
     const link = `${baseUrl}/index/${category}.htm`;
 
@@ -63,10 +82,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: baseTitle + '：' + $('.dqlm').find('a').eq(1).text(),
         description: $('meta[name=description]').attr('content'),
         link,
         item: items,
-    });
-};
+    };
+}

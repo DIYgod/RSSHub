@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/gf/:type',
+    categories: ['bbs'],
+    example: '/bjx/gf/sc',
+    parameters: { type: '分类，北极星光伏最后的`type`字段' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '光伏',
+    maintainers: ['Sxuet'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
     const response = await got({
         method: 'get',
@@ -12,7 +31,7 @@ export default async (ctx) => {
     const $ = load(data);
     const typeName = $('div.box2 em:last').text();
     const list = $('div.cc-list-content ul li');
-    ctx.set('data', {
+    return {
         title: `北极星太阳能光大网${typeName}`,
         description: $('meta[name="Description"]').attr('content'),
         link: `https://guangfu.bjx.com.cn/${type}/`,
@@ -29,5 +48,5 @@ export default async (ctx) => {
                     };
                 })
                 .get(),
-    });
-};
+    };
+}

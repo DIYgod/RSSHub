@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 const baseUrl = 'https://xsijishe.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/forum/:fid',
+    categories: ['blog'],
+    example: '/xsijishe/forum/51',
+    parameters: { fid: '子论坛 id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '论坛',
+    maintainers: ['akynazh'],
+    handler,
+};
+
+async function handler(ctx) {
     const fid = ctx.req.param('fid');
     const url = `${baseUrl}/forum-${fid}-1.html`;
     const resp = await got(url);
@@ -48,10 +67,10 @@ export default async (ctx) => {
             })
         )
     );
-    ctx.set('data', {
+    return {
         title: `司机社${forumCategory}论坛`,
         link: url,
         description: `司机社${forumCategory}论坛`,
         item: items,
-    });
-};
+    };
+}

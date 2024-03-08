@@ -1,8 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/ceic/:type?',
+    categories: ['travel'],
+    example: '/earthquake/ceic/1',
+    parameters: { type: '类型，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.cea.gov.cn/cea/xwzx/zqsd/index.html', 'www.cea.gov.cn/'],
+        target: '',
+    },
+    name: '中国地震台',
+    maintainers: ['SettingDust'],
+    handler,
+};
+
+async function handler(ctx) {
     let type = Number(ctx.req.param('type'));
     type = type ?? 1;
     const baseUrl = 'http://www.ceic.ac.cn';
@@ -45,7 +68,7 @@ export default async (ctx) => {
         json = json.slice(0, 20);
     }
 
-    ctx.set('data', {
+    return {
         title: typeName,
         link: `${baseUrl}/speedsearch`,
         allowEmpty: true,
@@ -64,5 +87,5 @@ export default async (ctx) => {
                 guid: NEW_DID,
             };
         }),
-    });
-};
+    };
+}

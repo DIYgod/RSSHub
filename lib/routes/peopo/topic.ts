@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,29 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 const baseUrl = 'https://www.peopo.org';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/topic/:topicId?',
+    categories: ['traditional-media'],
+    example: '/peopo/topic/159',
+    parameters: { topicId: '分類 ID，見下表，默認為社會關懷' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['peopo.org/topic/:topicId'],
+        target: '/topic/:topicId',
+    },
+    name: '新聞分類',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const { topicId = '159' } = ctx.req.param();
     const url = `${baseUrl}/topic/${topicId}`;
     const response = await got(url);
@@ -38,10 +61,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link: url,
         language: 'zh-TW',
         item: items,
-    });
-};
+    };
+}

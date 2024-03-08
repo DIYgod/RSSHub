@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 
@@ -12,7 +13,25 @@ const getTrueHour = (rank_type, rank_id, hour) => {
     }
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/ranking/:rank_type/:rank_id/:hour',
+    categories: ['game'],
+    example: '/smzdm/ranking/pinlei/11/3',
+    parameters: { rank_type: '榜单类型', rank_id: '榜单ID', hour: '时间跨度' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '排行榜',
+    maintainers: ['DIYgod'],
+    handler,
+};
+
+async function handler(ctx) {
     const { rank_type, rank_id, hour } = ctx.req.param();
 
     // When the hour is 3, some special rank_id require a special hour num
@@ -42,7 +61,7 @@ export default async (ctx) => {
     }
     const list = [...list1, ...list2];
 
-    ctx.set('data', {
+    return {
         title: `${rank_type}榜-${rank_id}-${hour}小时`,
         link: 'https://www.smzdm.com/top/',
         allowEmpty: true,
@@ -52,5 +71,5 @@ export default async (ctx) => {
             pubDate: timezone(item.article_pubdate, +8),
             link: item.article_url,
         })),
-    });
-};
+    };
+}

@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:category?/:language?',
+    categories: ['traditional-media'],
+    example: '/kbs/news',
+    parameters: { category: 'Category, can be found in Url as `id`, all by default', language: 'Language, see below, e as English by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['world.kbs.co.kr/'],
+        target: '/news',
+    },
+    name: 'News',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'all';
     const language = ctx.req.param('language') ?? 'e';
 
@@ -60,9 +83,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${$('.active').text() || list[0].category} - KBS WORLD`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

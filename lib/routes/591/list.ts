@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -106,7 +107,25 @@ async function getHouseList(houseListURL) {
 
 const renderHouse = (house) => art(path.join(__dirname, 'templates/house.art'), { house });
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:country/rent/:query?',
+    categories: ['other'],
+    example: '/591/tw/rent/order=posttime&orderType=desc',
+    parameters: { country: 'Country code. Only tw is supported now', query: 'Query Parameters' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Rental house',
+    maintainers: ['Yukaii'],
+    handler,
+};
+
+async function handler(ctx) {
     const query = ctx.req.param('query') ?? '';
     const country = ctx.req.param('country') ?? 'tw';
 
@@ -134,14 +153,14 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: '591 租屋 - 自訂查詢',
         link: queryUrl,
         description: `591 租屋 - 自訂查詢, query: ${query}`,
         item: items,
-    });
+    };
 
     ctx.set('json', {
         houses,
     });
-};
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -22,7 +23,25 @@ const selectorMap = {
     ipo_research: 'div.col-md-6',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/reports/:category?',
+    categories: ['other'],
+    example: '/ulapia/reports/stock_research',
+    parameters: { category: '频道类型，默认为券商晨报（今日晨报）' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '频道',
+    maintainers: ['Fatpandac'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'brokerage_news';
     const url = `${rootUrl}/reports/${category}`;
 
@@ -39,9 +58,9 @@ export default async (ctx) => {
         }))
         .get();
 
-    ctx.set('data', {
+    return {
         title: ` ulapia - ${titleMap[category]}`,
         link: url,
         item: items,
-    });
-};
+    };
+}

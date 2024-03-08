@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/pins/:type?',
+    categories: ['design'],
+    example: '/juejin/pins/6824710202487472141',
+    parameters: { type: '默认为 recommend，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '沸点',
+    maintainers: ['xyqfer', 'laampui'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'recommend';
     const title = {
         recommend: '推荐',
@@ -59,9 +78,9 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: `沸点 - ${title[type]}`,
         link: 'https://juejin.cn/pins/recommended',
         item: items,
-    });
-};
+    };
+}

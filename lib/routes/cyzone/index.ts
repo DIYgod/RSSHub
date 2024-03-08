@@ -1,7 +1,19 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { rootUrl, apiRootUrl, processItems, getInfo } from './util';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/channel/:id?', '/:id?'],
+    radar: {
+        source: ['cyzone.cn/channel/:id', 'cyzone.cn/'],
+        target: '/:id',
+    },
+    name: 'Unknown',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const { id = 'news' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 5;
 
@@ -19,8 +31,8 @@ export default async (ctx) => {
               }
     );
 
-    ctx.set('data', {
+    return {
         item: items,
         ...(await getInfo(currentUrl, cache.tryGet)),
-    });
-};
+    };
+}

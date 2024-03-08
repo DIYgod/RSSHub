@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,25 @@ import iconv from 'iconv-lite';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/blog/:type?/:time?/:sort?',
+    categories: ['traditional-media'],
+    example: '/sciencenet/blog',
+    parameters: { type: '类型，见下表，默认为推荐', time: '时间，见下表，默认为所有时间', sort: '排序，见下表，默认为按发表时间排序' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '精选博客',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'recommend';
     const time = ctx.req.param('time') ?? '5';
     const sort = ctx.req.param('sort') ?? '1';
@@ -54,9 +73,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '科学网 - 精选博文',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

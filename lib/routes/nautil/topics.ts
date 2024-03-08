@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,28 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 const baseUrl = 'https://nautil.us';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/topic/:tid',
+    categories: ['traditional-media'],
+    example: '/nautil/topic/arts',
+    parameters: { tid: 'topic' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['nautil.us/topics/:tid'],
+    },
+    name: 'Topics',
+    maintainers: ['emdoe'],
+    handler,
+};
+
+async function handler(ctx) {
     const categoryIdMap = await cache.tryGet('nautil:categories', async () => {
         const { data } = await got(`${baseUrl}/wp-json/wp/v2/categories`, {
             searchParams: {
@@ -53,9 +75,9 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: 'Nautilus | ' + categoryIdMap.find((item) => item.slug === ctx.req.param('tid').toLowerCase()).name,
         link: `${baseUrl}/topics/${ctx.req.param('tid')}/`,
         item: out,
-    });
-};
+    };
+}

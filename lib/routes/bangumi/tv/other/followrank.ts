@@ -1,7 +1,29 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { config } from '@/config';
-export default async (ctx) => {
+export const route: Route = {
+    path: '/tv/followrank',
+    categories: ['program-update'],
+    example: '/bangumi/tv/followrank',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['bgm.tv/anime'],
+    },
+    name: '成员关注动画榜',
+    maintainers: ['honue'],
+    handler,
+};
+
+async function handler() {
     const url = 'https://bgm.tv/anime';
     const response = await got({
         url,
@@ -33,10 +55,10 @@ export default async (ctx) => {
             })),
     ];
 
-    ctx.set('data', {
+    return {
         title: 'Bangumi 成员关注动画榜',
         link: url,
         item: items,
         description: `Bangumi 首页-成员关注动画榜`,
-    });
-};
+    };
+}

@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/shaanxi/kjt/:id?',
+    categories: ['study'],
+    example: '/gov/shaanxi/kjt',
+    parameters: { id: '分类，见下表，默认为通知公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '省科学技术厅',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '221';
 
     const rootUrl = 'https://kjt.shaanxi.gov.cn';
@@ -48,9 +67,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `陕西省科学技术厅 - ${$('.catnm').text()}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

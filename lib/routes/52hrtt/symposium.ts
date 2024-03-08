@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/symposium/:id?/:classId?',
+    categories: ['traditional-media'],
+    example: '/52hrtt/symposium/F1626082387819',
+    parameters: { id: '专题 id', classId: '子分类 id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['52hrtt.com/global/n/w/symposium/:id'],
+        target: '/symposium/:id',
+    },
+    name: '专题',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '';
     const classId = ctx.req.param('classId') ?? '';
 
@@ -49,9 +72,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

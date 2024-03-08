@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
@@ -13,7 +14,28 @@ function combDate(date, time) {
     return timezone(parseDate(date + ' ' + time), +8);
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/podcast/:category/:id',
+    categories: ['bbs'],
+    example: '/cgtn/podcast/ezfm/4',
+    parameters: { category: '类型名', id: '播客 id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['cgtn.com/podcast/column/:category/*/:id'],
+    },
+    name: '播客',
+    maintainers: ['5upernova-heng'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category, id } = ctx.req.param();
     const categoryMap = { ezfm: 1, other: 5 };
     const data = await getData(categoryMap[category], id);
@@ -26,10 +48,10 @@ export default async (ctx) => {
         enclosure_url: item.mediaUrl,
         enclosure_type: 'audio/mpeg',
     }));
-    ctx.set('data', {
+    return {
         title: `中国环球电视网 CGTN Podcast - ${data.info}`,
         link: 'https://www.cgtn.com/radio/',
         item: items,
         description: String(data.info),
-    });
-};
+    };
+}

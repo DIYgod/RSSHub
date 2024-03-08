@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -38,7 +39,25 @@ const channelMap = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:language/:channel?',
+    categories: ['bbs'],
+    example: '/oncc/zh-hant/news',
+    parameters: { language: '`zh-hans` 为简体，`zh-hant` 为繁体', channel: '频道，默认为港澳' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '即時新聞',
+    maintainers: ['Fatpandac'],
+    handler,
+};
+
+async function handler(ctx) {
     const language = ctx.req.param('language');
     const channel = ctx.req.param('channel') ?? 'news';
     const newsUrl = `${rootUrl}/hk/${channel}/index${languageMap[language]}.html`;
@@ -79,9 +98,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `東網 - ${channelMap[channel][language]}`,
         link: newsUrl,
         item: items,
-    });
-};
+    };
+}

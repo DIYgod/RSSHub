@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -76,7 +77,29 @@ const timeRange = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/rank/:category?/:type?/:time?',
+    categories: ['traditional-media'],
+    example: '/163/news/rank/whole/click/day',
+    parameters: {
+        category: '新闻分类，参见下表，默认为“全站”',
+        type: '排行榜类型，“点击榜”对应`click`，“跟贴榜”对应`follow`，默认为“点击榜”',
+        time: '统计时间，“1小时”对应`hour`，“24小时”对应`day`，“本周”对应`week`，“本月”对应`month`，默认为“24小时”',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '排行榜',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') || 'whole';
     const type = ctx.req.param('type') || 'click';
     const time = ctx.req.param('time') || 'day';
@@ -148,9 +171,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `网易新闻${timeRange[time].title}${type === 'click' ? '点击' : '跟帖'}榜 - ${cfg.title}`,
         link: currentUrl,
         item: items.filter(Boolean),
-    });
-};
+    };
+}

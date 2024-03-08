@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 const baseUrl = 'https://jwc.xidian.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jwc/:category?',
+    categories: ['forecast'],
+    example: '/xidian/jwc/tzgg',
+    parameters: { category: '通知类别，默认为通知公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '教务处',
+    maintainers: ['ShadowySpirits'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = 'tzgg' } = ctx.req.param();
     const url = `${baseUrl}/${category}.htm`;
     const response = await got(url, {
@@ -47,9 +66,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: url,
         item: items,
-    });
-};
+    };
+}

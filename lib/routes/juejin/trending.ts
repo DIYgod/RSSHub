@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import util from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/trending/:category/:type',
+    categories: ['design'],
+    example: '/juejin/trending/ios/monthly',
+    parameters: { category: '分类名', type: '类型' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '热门',
+    maintainers: ['moaix'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category, type } = ctx.req.param();
 
     let id = '';
@@ -72,9 +91,9 @@ export default async (ctx) => {
 
     const resultItems = await util.ProcessFeed(entrylist, cache);
 
-    ctx.set('data', {
+    return {
         title,
         link,
         item: resultItems,
-    });
-};
+    };
+}

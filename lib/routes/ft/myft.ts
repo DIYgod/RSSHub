@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/myft/:key',
+    categories: ['bbs'],
+    example: '/ft/myft/rss-key',
+    parameters: { key: 'the last part of myFT personal RSS address' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'myFT personal RSS',
+    maintainers: ['HenryQW'],
+    handler,
+};
+
+async function handler(ctx) {
     const ProcessFeed = (content) => {
         // clean up the article
         content.find('div.o-share, aside, div.o-ads').remove();
@@ -44,10 +63,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `FT.com - myFT`,
         link,
         description: `FT.com - myFT`,
         item: items,
-    });
-};
+    };
+}

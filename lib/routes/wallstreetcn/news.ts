@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -16,7 +17,17 @@ const titles = {
     medicine: '医药',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/news/:category?', '/:category?'],
+    radar: {
+        source: ['wallstreetcn.com/news/:category', 'wallstreetcn.com/'],
+    },
+    name: 'Unknown',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'global';
 
     const rootUrl = 'https://wallstreetcn.com';
@@ -67,11 +78,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `华尔街见闻 - 资讯 - ${titles[category]}`,
         link: currentUrl,
         item: items,
         itunes_author: '华尔街见闻',
         image: 'https://static-alpha-wscn.awtmt.com/wscn-static/qrcode.jpg',
-    });
-};
+    };
+}

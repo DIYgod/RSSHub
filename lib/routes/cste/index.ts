@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id?',
+    categories: ['journal'],
+    example: '/cste',
+    parameters: { id: '分类，见下表，默认为 16，即通知公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '栏目',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '16';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 10;
 
@@ -49,9 +68,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `中国技术经济学会 - ${$('.leftTop').text()}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

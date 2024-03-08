@@ -1,9 +1,21 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import * as cheerio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    radar: {
+        source: ['a9vg.com/list/news', 'a9vg.com/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['monnerHenster'],
+    handler,
+};
+
+async function handler() {
     const baseUrl = 'http://www.a9vg.com';
     const link = `${baseUrl}/list/news`;
     const { data } = await got(link);
@@ -21,10 +33,10 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: 'A9VG 电玩部落',
         link,
         description: $('meta[name="description"]').attr('content'),
         item: list,
-    });
-};
+    };
+}

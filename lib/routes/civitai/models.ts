@@ -1,7 +1,29 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/models',
+    categories: ['university'],
+    example: '/civitai/models',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['civitai.com/'],
+    },
+    name: 'Latest models',
+    maintainers: ['DIYgod'],
+    handler,
+};
+
+async function handler() {
     const { data } = await got(`https://civitai.com/api/v1/models`, {
         searchParams: {
             limit: 20,
@@ -18,9 +40,9 @@ export default async (ctx) => {
         category: item.tags,
     }));
 
-    ctx.set('data', {
+    return {
         title: `Civitai latest models`,
         link: `https://civitai.com/`,
         item: items,
-    });
-};
+    };
+}

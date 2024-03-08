@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/gs/tzgg',
+    categories: ['forecast'],
+    example: '/xjtu/gs/tzgg',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['gs.xjtu.edu.cn/'],
+    },
+    name: '研究生院通知公告',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler() {
     const rootUrl = 'http://gs.xjtu.edu.cn/tzgg.htm';
     const response = await got({
         method: 'get',
@@ -23,7 +45,7 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: '西安交通大学研究生院 - 通知公告',
         link: rootUrl,
         item: await Promise.all(
@@ -36,5 +58,5 @@ export default async (ctx) => {
                 })
             )
         ),
-    });
-};
+    };
+}

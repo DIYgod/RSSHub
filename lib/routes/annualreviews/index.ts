@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id',
+    categories: ['finance'],
+    example: '/annualreviews/anchem',
+    parameters: { id: 'Journal id, can be found in URL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: true,
+    },
+    radar: {
+        source: ['annualreviews.org/journal/:id', 'annualreviews.org/'],
+    },
+    name: 'Journal',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const rootUrl = 'https://www.annualreviews.org';
@@ -57,7 +79,7 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title')
             .first()
             .text()
@@ -65,5 +87,5 @@ export default async (ctx) => {
         description: $('subtitle').first().text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,13 +1,35 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/scientific',
+    categories: ['traditional-media'],
+    example: '/guokr/scientific',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['guokr.com/scientific', 'guokr.com/'],
+    },
+    name: '科学人',
+    maintainers: ['alphardex', 'nczitzk'],
+    handler,
+};
+
+async function handler() {
     const response = await got('https://www.guokr.com/apis/minisite/article.json?retrieve_type=by_subject&limit=20&offset=0');
 
     const result = response.data.result;
 
-    ctx.set('data', {
+    return {
         title: '果壳网 科学人',
         link: 'https://www.guokr.com/scientific',
         description: '果壳网 科学人',
@@ -27,5 +49,5 @@ export default async (ctx) => {
                 })
             )
         ),
-    });
-};
+    };
+}

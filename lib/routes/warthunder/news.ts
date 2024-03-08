@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,28 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 const renderDescription = (desc) => art(path.join(__dirname, 'templates/description.art'), desc);
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news',
+    categories: ['reading'],
+    example: '/warthunder/news',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['warthunder.com/en/news', 'warthunder.com/'],
+    },
+    name: 'News',
+    maintainers: ['axojhf'],
+    handler,
+};
+
+async function handler() {
     const rootUrl = 'https://warthunder.com/en/news/';
 
     const response = await got(rootUrl);
@@ -44,9 +66,9 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: 'War Thunder News',
         link: 'https://warthunder.com/en/news/',
         item: pageFace,
-    });
-};
+    };
+}

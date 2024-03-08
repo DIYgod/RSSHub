@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,7 +12,28 @@ import * as path from 'node:path';
 import { config } from '@/config';
 const allowDomain = new Set(['2btjia.com', '88btbtt.com', 'btbtt15.com', 'btbtt20.com']);
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['picture'],
+    example: '/btzj',
+    parameters: { category: '分类，可在对应分类页 URL 中找到，默认为首页' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['btbtt20.com/'],
+    },
+    name: '分类',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     let category = ctx.req.param('category') ?? '';
     let domain = ctx.req.query('domain') ?? 'btbtt15.com';
     if (!config.feature.allow_user_supply_unsafe_domain && !allowDomain.has(new URL(`http://${domain}/`).hostname)) {
@@ -94,7 +116,7 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${$('#menu, #threadtype')
             .find('.checked')
             .toArray()
@@ -103,5 +125,5 @@ export default async (ctx) => {
             .join('|')} - BT之家`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/headline',
+    categories: ['traditional-media'],
+    example: '/guancha/headline',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['guancha.cn/GuanChaZheTouTiao', 'guancha.cn/'],
+    },
+    name: '头条',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler() {
     const rootUrl = 'https://www.guancha.cn';
     const currentUrl = `${rootUrl}/GuanChaZheTouTiao/list_1.shtml`;
 
@@ -44,9 +66,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '观察者网 - 头条',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

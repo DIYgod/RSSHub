@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import querystring from 'querystring';
 import got from '@/utils/got';
@@ -5,7 +6,25 @@ import { config } from '@/config';
 import weiboUtils from './utils';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/group/:gid/:gname?/:routeParams?',
+    categories: ['new-media'],
+    example: '/weibo/group/4541216424989965',
+    parameters: { gid: '分组id, 在网页版分组地址栏末尾`?gid=`处获取', gname: '分组显示名称; 默认为: `微博分组`', routeParams: '额外参数；请参阅上面的说明和表格' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '自定义分组',
+    maintainers: ['monologconnor', 'Rongronggg9'],
+    handler,
+};
+
+async function handler(ctx) {
     if (!config.weibo.cookies) {
         throw new Error('Weibo Group Timeline is not available due to the absense of [Weibo Cookies]. Check <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config tutorial</a>');
     }
@@ -86,4 +105,4 @@ export default async (ctx) => {
             item: resultItems,
         })
     );
-};
+}

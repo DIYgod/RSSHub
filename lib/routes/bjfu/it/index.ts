@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import util from './utils';
 import iconv from 'iconv-lite';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/it/:type',
+    categories: ['forecast'],
+    example: '/bjfu/it/xyxw',
+    parameters: { type: '通知类别' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['it.bjfu.edu.cn/:type/index.html'],
+    },
+    name: '信息学院通知',
+    maintainers: ['wzc-blog'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
     let title, path;
     switch (type) {
@@ -43,10 +65,10 @@ export default async (ctx) => {
 
     const result = await util.ProcessFeed(base, list, cache); // 感谢@hoilc指导
 
-    ctx.set('data', {
+    return {
         title: '北林信息 - ' + title,
         link: 'http://it.bjfu.edu.cn/' + path,
         description: '北京林业大学信息学院 - ' + title,
         item: result,
-    });
-};
+    };
+}

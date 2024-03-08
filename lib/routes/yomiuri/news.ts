@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['bbs'],
+    example: '/yomiuri/news',
+    parameters: { category: 'Category, `news` by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.yomiuri.co.jp/:category?'],
+    },
+    name: 'News',
+    maintainers: ['Arracc'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = 'news' } = ctx.req.param();
     const url = `https://www.yomiuri.co.jp/${category}`;
 
@@ -71,10 +93,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link: url,
         image: 'https://www.yomiuri.co.jp/apple-touch-icon.png',
         item: items,
-    });
-};
+    };
+}

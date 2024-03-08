@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/tgchannel/:id/:mpName?/:searchQueryType?',
+    categories: ['traditional-media'],
+    example: '/wechat/tgchannel/lifeweek',
+    parameters: { id: '公众号绑定频道 id', mpName: '欲筛选的公众号全名（URL-encoded，精确匹配），在频道订阅了多个公众号时可选用', searchQueryType: '搜索查询类型，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '公众号（Telegram 频道来源）',
+    maintainers: ['LogicJake', 'Rongronggg9'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const mpName = ctx.req.param('mpName') ?? '';
     let searchQueryType = ctx.req.param('searchQueryType') ?? '0';
@@ -137,10 +156,10 @@ export default async (ctx) => {
     );
 
     out.reverse();
-    ctx.set('data', {
+    return {
         title: $('.tgme_channel_info_header_title').text(),
         link: `https://t.me/s/${id}`,
         item: out.filter(Boolean),
         allowEmpty: !!mpName,
-    });
-};
+    };
+}

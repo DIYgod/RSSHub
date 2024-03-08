@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -54,7 +55,29 @@ const mediaTagDict = {
     PARTIALLY_UNSUPPORTED: ['', ''],
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/channel/:username/:routeParams?',
+    categories: ['new-media'],
+    example: '/telegram/channel/awesomeDIYgod/searchQuery=twitter',
+    parameters: { username: 'channel username', routeParams: 'extra parameters, see the table below' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['t.me/s/:username'],
+        target: '/channel/:username',
+    },
+    name: 'Channel',
+    maintainers: ['DIYgod', 'Rongronggg9'],
+    handler,
+};
+
+async function handler(ctx) {
     const useWeb = ctx.req.param('routeParams') || !config.telegram.session;
     if (!useWeb) {
         return tglibchannel(ctx);
@@ -116,7 +139,7 @@ export default async (ctx) => {
     const channelName = $('.tgme_channel_info_header_title').text();
     const feedTitle = (searchQuery ? `"${searchQuery}" - ` : '') + channelName + ' - Telegram Channel';
 
-    ctx.set('data', {
+    return {
         title: feedTitle,
         description: $('.tgme_channel_info_description').text(),
         link: resourceUrl,
@@ -598,5 +621,5 @@ export default async (ctx) => {
                 .get()
                 .filter(Boolean)
                 .reverse(),
-    });
-};
+    };
+}

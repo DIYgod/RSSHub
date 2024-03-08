@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,7 +11,29 @@ import { parseJucheDate, fixDesc, fetchPhoto, fetchVideo } from './utils';
 import * as path from 'node:path';
 import sanitizeHtml from 'sanitize-html';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:lang/:category?',
+    categories: ['bbs'],
+    example: '/kcna/en',
+    parameters: { lang: 'Language, refer to the table below', category: 'Category, refer to the table below' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.kcna.kp/:lang', 'www.kcna.kp/:lang/category/articles/q/1ee9bdb7186944f765208f34ecfb5407.kcmsf', 'www.kcna.kp/:lang/category/articles.kcmsf'],
+        target: '/:lang',
+    },
+    name: 'News',
+    maintainers: ['Rongronggg9'],
+    handler,
+};
+
+async function handler(ctx) {
     const { lang, category = '1ee9bdb7186944f765208f34ecfb5407' } = ctx.req.param();
 
     const rootUrl = 'http://www.kcna.kp';
@@ -76,9 +99,9 @@ export default async (ctx) => {
         items.push(item);
     }
 
-    ctx.set('data', {
+    return {
         title,
         link: pageUrl,
         item: items,
-    });
-};
+    };
+}

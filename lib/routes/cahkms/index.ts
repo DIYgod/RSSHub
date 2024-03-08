@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -22,7 +23,28 @@ const titles = {
     11: '研究资讯',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['traditional-media'],
+    example: '/cahkms',
+    parameters: { category: '分类，见下表，默认为重要新闻' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['cahkms.org/'],
+    },
+    name: '分类',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '03';
 
     const rootUrl = 'http://www.cahkms.org';
@@ -65,9 +87,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${titles[category]} - 全国港澳研究会`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

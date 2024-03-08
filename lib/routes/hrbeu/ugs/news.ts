@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -53,7 +54,29 @@ const authorMap = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/ugs/news/:author?/:category?',
+    categories: ['forecast'],
+    example: '/hrbeu/ugs/news/jwc/jxap',
+    parameters: { author: '发布部门，默认为 `gztz`', category: '分类，默认为 `all`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['ugs.hrbeu.edu.cn/:author/list.htm'],
+        target: '/ugs/news/:author',
+    },
+    name: '本科生院工作通知',
+    maintainers: ['XYenon'],
+    handler,
+};
+
+async function handler(ctx) {
     const author = ctx.req.param('author') || 'gztz';
     const category = ctx.req.param('category') || 'all';
     const link = baseUrl + authorMap[author][category] + '/list.htm';
@@ -91,9 +114,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '哈尔滨工程大学本科生院工作通知',
         link,
         item: out,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -8,7 +9,25 @@ import { CookieJar } from 'tough-cookie';
 const cookieJar = new CookieJar();
 const baseUrl = 'https://www.chinathinktanks.org.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id',
+    categories: ['journal'],
+    example: '/chinathinktanks/57',
+    parameters: { id: '见下表，亦可在网站 url 里找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '观点与实践',
+    maintainers: ['Aeliu'],
+    handler,
+};
+
+async function handler(ctx) {
     const link = `https://www.chinathinktanks.org.cn/content/list?id=${ctx.req.param('id')}&pt=1`;
 
     const response = await got(link, {
@@ -45,9 +64,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `中国智库网 —— ${$('title').text().split('_中国智库网')[0]}`,
         link,
         item: items,
-    });
-};
+    };
+}

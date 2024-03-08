@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,25 @@ import * as path from 'node:path';
 import { art } from '@/utils/render';
 import { fallback, queryToInteger } from '@/utils/readable-social';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/recommended/:type?/:routeParams?',
+    categories: ['new-media'],
+    example: '/douban/recommended/tv',
+    parameters: { type: '片单类型剧集/电影，tv或movie，默认为tv', routeParams: '额外参数；请参阅以下说明和表格' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '豆瓣每月推荐片单',
+    maintainers: ['honue'],
+    handler,
+};
+
+async function handler(ctx) {
     const subjectType = ctx.req.param('type') || 'tv';
     const apiKey = '0ac44ae016490db2204ce0a042db2916';
     let url = `https://frodo.douban.com/api/v2/skynet/new_playlists?apikey=${apiKey}&subject_type=${subjectType}`;
@@ -64,10 +83,10 @@ export default async (ctx) => {
                 description,
             };
         });
-    ctx.set('data', {
+    return {
         title: `豆瓣 - ${response.data.subject_collection.name}`,
         link: `https://m.douban.com/subject_collection/${subjectCollectionId}`,
         item: items,
         description,
-    });
-};
+    };
+}

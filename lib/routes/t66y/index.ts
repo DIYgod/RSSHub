@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import * as cheerio from 'cheerio';
 import got from '@/utils/got';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { baseUrl, parseContent } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id/:type?',
+    categories: ['picture'],
+    example: '/t66y/20/2',
+    parameters: { id: '分区 id, 可在分区页 URL 中找到', type: '类型 id, 可在分区类型过滤后的 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '分区帖子',
+    maintainers: ['zhboner'],
+    handler,
+};
+
+async function handler(ctx) {
     const { id, type } = ctx.req.param();
 
     const url = new URL(`thread0806.php?fid=${id}&search=today`, baseUrl);
@@ -47,9 +66,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: (type ? `[${$('.t .fn b').text()}]` : '') + $('head title').text(),
         link: url.href,
         item: out,
-    });
-};
+    };
+}

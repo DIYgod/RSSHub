@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -15,7 +16,29 @@ const gsIndexMap = new Map([
     [8, 'tzgg/zh.htm'],
 ]);
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/gs/:type?',
+    categories: ['forecast'],
+    example: '/whu/gs/0',
+    parameters: { type: '分类，默认为 `0`，具体参数见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['gs.whu.edu.cn/index.htm', 'gs.whu.edu.cn/'],
+        target: '/gs',
+    },
+    name: '研究生院',
+    maintainers: ['Delreyaa'],
+    handler,
+};
+
+async function handler(ctx) {
     const host = 'https://gs.whu.edu.cn/';
     const type = (ctx.params && Number.parseInt(ctx.req.param('type'))) || 0;
     const response = await got(host + gsIndexMap.get(type));
@@ -77,10 +100,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `武汉大学研究生院 - ${feed_title}`,
         link: host + gsIndexMap.get(type),
         description: '武大研究生院',
         item: items,
-    });
-};
+    };
+}

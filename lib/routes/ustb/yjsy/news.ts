@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 import { parseDate } from '@/utils/parse-date';
 // import logger from '@/utils/logger';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/yjsy/news/:type',
+    categories: ['forecast'],
+    example: '/ustb/yjsy/news/all',
+    parameters: { type: '文章类别' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['gs.ustb.edu.cn/:type'],
+    },
+    name: '研究生院',
+    maintainers: ['DA1Y1'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
     const struct = {
         all: {
@@ -401,7 +423,7 @@ export default async (ctx) => {
     // logger.info("list:" + list);
 
     // 处理返回
-    ctx.set('data', {
+    return {
         title: struct[type].name,
         link: struct[type].link,
         description: '北京科技大学研究生院',
@@ -453,5 +475,5 @@ export default async (ctx) => {
                           };
                 })
                 .get(),
-    });
-};
+    };
+}

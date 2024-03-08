@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,7 +12,28 @@ const rootUrl = 'https://vcb-s.com';
 const cateAPIUrl = `${rootUrl}/wp-json/wp/v2/categories`;
 const postsAPIUrl = `${rootUrl}/wp-json/wp/v2/posts`;
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/category/:cate',
+    categories: ['program-update'],
+    example: '/vcb-s/category/works',
+    parameters: { cate: '分类' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['vcb-s.com/archives/category/:cate'],
+    },
+    name: '分类文章',
+    maintainers: ['cxfksword'],
+    handler,
+};
+
+async function handler(ctx) {
     const cate = ctx.req.param('cate');
     const limit = ctx.req.query('limit') ?? 7;
 
@@ -47,9 +69,9 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: `${category.name} | VCB-Studio`,
         link: `${rootUrl}/archives/category/${category.slug}`,
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,29 @@ import * as path from 'node:path';
 import { art } from '@/utils/render';
 import { fallback, queryToInteger } from '@/utils/readable-social';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/list/:type?/:routeParams?',
+    categories: ['new-media'],
+    example: '/douban/list/subject_real_time_hotest',
+    parameters: { type: '榜单类型，见下表。默认为实时热门书影音', routeParams: '额外参数；请参阅以下说明和表格' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.douban.com/subject_collection/:type'],
+        target: '/list/:type',
+    },
+    name: '豆瓣榜单与集合',
+    maintainers: ['5upernova-heng', 'honue'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') || 'subject_real_time_hotest';
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const playable = fallback(undefined, queryToInteger(routeParams.playable), 0);
@@ -57,10 +80,10 @@ export default async (ctx) => {
         start += count;
     }
 
-    ctx.set('data', {
+    return {
         title: `豆瓣 - ${title}`,
         link: `https://m.douban.com/subject_collection/${type}`,
         item: items,
         description,
-    });
-};
+    };
+}

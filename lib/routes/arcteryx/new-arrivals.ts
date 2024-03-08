@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,28 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { generateRssData } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/new-arrivals/:country/:gender',
+    categories: ['game'],
+    example: '/arcteryx/new-arrivals/us/mens',
+    parameters: { country: 'country', gender: 'gender' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['arcteryx.com/:country/en/c/:gender/new-arrivals'],
+    },
+    name: 'New Arrivals',
+    maintainers: ['EthanWng97'],
+    handler,
+};
+
+async function handler(ctx) {
     const { country, gender } = ctx.req.param();
     const host = `https://arcteryx.com/${country}/en/`;
     const url = `${host}api/fredhopper/query`;
@@ -23,7 +45,7 @@ export default async (ctx) => {
     });
     const items = response.data.universes.universe[1]['items-section'].items.item.map((item, index, arr) => generateRssData(item, index, arr, country));
 
-    ctx.set('data', {
+    return {
         title: `Arcteryx - New Arrivals(${country.toUpperCase()}) - ${gender.toUpperCase()}`,
         link: pageUrl,
         description: `Arcteryx - New Arrivals(${country.toUpperCase()}) - ${gender.toUpperCase()}`,
@@ -34,5 +56,5 @@ export default async (ctx) => {
                 item,
             }),
         })),
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -160,7 +161,25 @@ const createItem = ({ dateTime, data, count, newItemCount }, keywords, isToday) 
 };
 
 // Main
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:keywords/:numberOfDays?',
+    categories: ['other'],
+    example: '/trending/唐山,打人/3',
+    parameters: { keywords: '通过逗号区隔的关键词列表', numberOfDays: '向前追溯的天数，默认为3天' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '关键词聚合追踪',
+    maintainers: ['Jkker'],
+    handler,
+};
+
+async function handler(ctx) {
     // Prevent making over 100 requests per invocation
     if (ctx.req.param('numberOfDays') > 14) {
         throw new Error('days must be less than 14');
@@ -194,10 +213,10 @@ export default async (ctx) => {
                   },
               ];
 
-    ctx.set('data', {
+    return {
         title: `${keywordStr} | 热点聚合`,
         description: `${keywordStr} | 今日头条热搜，知乎热门视频，知乎热搜榜，知乎热门话题，微博热搜榜聚合追踪`,
         language: 'zh-cn',
         item,
-    });
-};
+    };
+}

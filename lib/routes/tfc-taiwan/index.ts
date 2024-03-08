@@ -1,9 +1,17 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { baseUrl, parseList, parseItems } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/', '/category/:id{.+}', '/info', '/report', '/topic/:id'],
+    name: 'Unknown',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const requestPath = ctx.req.path;
     const isTopic = requestPath.startsWith('/topic/');
     let link = baseUrl;
@@ -25,7 +33,7 @@ export default async (ctx) => {
 
     const items = await parseItems(list, cache.tryGet);
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         description: $('head meta[name="description"]').attr('content'),
         image: $('head meta[property="og:image"]').attr('content'),
@@ -33,5 +41,5 @@ export default async (ctx) => {
         icon: $('head link[rel="shortcut icon"]').attr('href'),
         link,
         item: items,
-    });
-};
+    };
+}

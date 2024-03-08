@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/category/:category',
+    categories: ['traditional-media'],
+    example: '/gcores/category/news',
+    parameters: { category: '分类名' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['gcores.com/:category'],
+    },
+    name: '分类',
+    maintainers: ['MoguCloud', 'StevenRCE0'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
     const url = `https://www.gcores.com/${category}`;
     const res = await got({
@@ -105,12 +127,12 @@ export default async (ctx) => {
             });
         })
     );
-    ctx.set('data', {
+    return {
         title: feedTitle,
         link: url,
         item: out,
-    });
-};
+    };
+}
 
 function convertEntityToContent(entity) {
     const { type, data } = entity;

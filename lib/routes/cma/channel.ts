@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,25 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/channel/:id?',
+    categories: ['travel'],
+    example: '/cma/channel/380',
+    parameters: { id: '分类，见下表，可在对应频道页 URL 中找到，默认为 380，即每日天气提示' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '天气预报频道',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const { id = '380' } = ctx.req.param();
 
     const author = '中国气象局·天气预报';
@@ -74,7 +93,7 @@ export default async (ctx) => {
           ]
         : [];
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${author} - ${title}`,
         link: currentUrl,
@@ -86,5 +105,5 @@ export default async (ctx) => {
         subtitle: $('meta[name="keywords"]').prop('content'),
         author,
         allowEmpty: true,
-    });
-};
+    };
+}

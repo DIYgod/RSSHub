@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:user/:type?',
+    categories: ['live'],
+    example: '/behance/mishapetrick',
+    parameters: { user: 'username', type: 'type, `projects` or `appreciated`, `projects` by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'User Works',
+    maintainers: ['MisteryMonster'],
+    handler,
+};
+
+async function handler(ctx) {
     const user = ctx.req.param('user') ?? '';
     const type = ctx.req.param('type') ?? 'projects';
 
@@ -50,7 +69,7 @@ export default async (ctx) => {
             return description;
         })
     );
-    ctx.set('data', {
+    return {
         title: `${data.profile.owner.first_name} ${data.profile.owner.last_name}'s ${type}`,
         link: data.profile.owner.url,
         item: list.map((item, index) => {
@@ -64,5 +83,5 @@ export default async (ctx) => {
                 pubDate: parseDate(item.published_on * 1000),
             };
         }),
-    });
-};
+    };
+}

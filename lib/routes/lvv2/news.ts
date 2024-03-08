@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -28,7 +29,25 @@ const titleMap = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:channel/:sort?',
+    categories: ['traditional-media'],
+    example: '/lvv2/news/sort-score',
+    parameters: { channel: '频道，见下表', sort: '排序方式，仅得分和24小时榜可选填该参数，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '频道',
+    maintainers: ['Fatpandac'],
+    handler,
+};
+
+async function handler(ctx) {
     const channel = ctx.req.param('channel');
     const sort = (channel === 'sort-realtime' || channel === 'sort-score') && !ctx.req.param('sort') ? 't-week' : ctx.req.param('sort');
     const url = `${rootUrl}/${channel}/${sort}`;
@@ -70,9 +89,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `lvv2 - ${sort ? titleMap[channel][sort] : titleMap[channel]}`,
         link: url,
         item: items,
-    });
-};
+    };
+}

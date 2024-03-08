@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,28 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id',
+    categories: ['finance'],
+    example: '/aeaweb/aer',
+    parameters: { id: 'Journal id, can be found in URL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: true,
+    },
+    radar: {
+        source: ['aeaweb.org/journals/:id', 'aeaweb.org/'],
+    },
+    name: 'Journal',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     let id = ctx.req.param('id');
 
     const rootUrl = 'https://www.aeaweb.org';
@@ -76,10 +98,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title,
         description,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

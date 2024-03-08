@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,25 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { channels } from './channels';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:channelId?',
+    categories: ['other'],
+    example: '/chinamoney',
+    parameters: { channelId: '分类，见下表，默认为 `2834`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '公告',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const { channelId = 2834 } = ctx.req.param();
     const baseUrl = 'https://www.chinamoney.com.cn';
 
@@ -54,9 +73,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${channels[channelId] ? channels[channelId].title + ' - ' : ''}中国货币网`,
         link: `${baseUrl}${channels[channelId]?.urlPath ?? ''}`,
         item: items,
-    });
-};
+    };
+}

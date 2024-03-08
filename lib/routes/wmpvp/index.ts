@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:type',
+    categories: ['reading'],
+    example: '/wmpvp/news/1',
+    parameters: { type: '资讯分类，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '资讯列表',
+    maintainers: ['tssujt'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
 
     const response = await got({
@@ -26,9 +45,9 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: `完美世界电竞`,
         link: `https://news.wmpvp.com/`,
         item: items,
-    });
-};
+    };
+}

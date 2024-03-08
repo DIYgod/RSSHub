@@ -1,7 +1,29 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 const host = 'https://www.sony.com';
-export default async (ctx) => {
+export const route: Route = {
+    path: '/downloads/:productType/:productId',
+    categories: ['university'],
+    example: '/sony/downloads/product/nw-wm1am2',
+    parameters: { productType: 'product type', productId: 'product id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['sony.com/electronics/support/:productType/:productId/downloads'],
+    },
+    name: 'Software Downloads',
+    maintainers: ['EthanWng97'],
+    handler,
+};
+
+async function handler(ctx) {
     const { productType, productId } = ctx.req.param();
     const url = `${host}/electronics/support/${productType}/${productId}/downloads`;
     const response = await got({
@@ -34,7 +56,7 @@ export default async (ctx) => {
         }
         return data;
     });
-    ctx.set('data', {
+    return {
         title: `Sony - ${productId.toUpperCase()}`,
         link: url,
         description: `Sony - ${productId.toUpperCase()}`,
@@ -44,5 +66,5 @@ export default async (ctx) => {
             link: item.url,
             pubDate: item.pubDate,
         })),
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -14,7 +15,29 @@ const platforms = {
     tvos: 'appletvos',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/apps/update/:country/:id/:platform?',
+    categories: ['university'],
+    example: '/apple/apps/update/us/id408709785',
+    parameters: { country: 'App Store Country, obtain from the app URL, see below', id: 'App id, obtain from the app URL', platform: 'App Platform, see below, all by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['apps.apple.com/:country/app/:appSlug/:id', 'apps.apple.com/:country/app/:id'],
+        target: '/apps/update/:country/:id',
+    },
+    name: 'App Update',
+    maintainers: ['EkkoG', 'nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const { country, id } = ctx.req.param();
     let { platform } = ctx.req.param();
 
@@ -87,7 +110,7 @@ export default async (ctx) => {
 
     const icon = new URL('favicon.ico', rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title,
         link: currentUrl,
@@ -99,9 +122,9 @@ export default async (ctx) => {
         subtitle: appName,
         author: artistName,
         allowEmpty: true,
-    });
+    };
 
     ctx.set('json', {
         appData,
     });
-};
+}

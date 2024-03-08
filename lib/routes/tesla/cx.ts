@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,25 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/cx/:category?/:city?',
+    categories: ['game'],
+    example: '/tesla/cx/生活方式/北京',
+    parameters: { category: '分类，见下表，默认为空，即全部', city: '城市，默认为空，即全国' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '权益中心',
+    maintainers: ['simonsmh', 'nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category, city } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
 
@@ -107,7 +126,7 @@ export default async (ctx) => {
     const description = `${city ?? ''}${category ?? ''}`;
     const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${author}权益中心${description ? ` - ${description}` : ''}`,
         link: currentUrl,
@@ -119,5 +138,5 @@ export default async (ctx) => {
         subtitle: description,
         author,
         allowEmpty: true,
-    });
-};
+    };
+}

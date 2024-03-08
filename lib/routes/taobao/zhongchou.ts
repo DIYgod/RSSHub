@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -5,7 +6,25 @@ import got from '@/utils/got';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/zhongchou/:type?',
+    categories: ['game'],
+    example: '/taobao/zhongchou/all',
+    parameters: { type: '类型, 默认为 `all` 全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '众筹项目',
+    maintainers: ['xyqfer', 'Fatpandac'],
+    handler,
+};
+
+async function handler(ctx) {
     const { type = 'all' } = ctx.req.param();
     const map = {
         all: '',
@@ -41,9 +60,9 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: `淘宝众筹-${type}`,
         link: 'https://izhongchou.taobao.com/index.htm',
         item: items,
-    });
-};
+    };
+}

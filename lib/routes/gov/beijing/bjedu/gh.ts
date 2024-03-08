@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/beijing/bjedu/gh/:urlPath?',
+    categories: ['study'],
+    example: '/gov/beijing/bjedu/gh',
+    parameters: { urlPath: '路径，默认为 `zxtzgg`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['gh.bjedu.gov.cn/ghsite/:urlPath/index.html', 'gh.bjedu.gov.cn/ghsite/:urlPath'],
+        target: '/beijing/bjedu/gh/:urlPath',
+    },
+    name: '通用',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const baseUrl = 'https://gh.bjedu.cn';
     const { urlPath = 'zxtzgg' } = ctx.req.param();
 
@@ -41,9 +64,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link,
         item: items,
-    });
-};
+    };
+}

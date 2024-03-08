@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/share/:category?',
+    categories: ['design'],
+    example: '/quicker/share/Recent',
+    parameters: { category: '分类，见下表，默认为动作库最新更新' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['getquicker.net/Share/:category', 'getquicker.net/'],
+    },
+    name: '动作分享',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'Recent';
 
     const rootUrl = 'https://getquicker.net';
@@ -53,10 +75,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
         allowEmpty: true,
-    });
-};
+    };
+}

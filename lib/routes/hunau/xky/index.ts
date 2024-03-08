@@ -1,6 +1,29 @@
+import { Route } from '@/types';
 import getContent from '../utils/common';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/xky/:category?/:page?',
+    categories: ['forecast'],
+    example: '/hunau/xky',
+    parameters: { category: '页面分类，默认为 `tzgg_8472`', page: '页码，默认为 `1`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['xky.hunau.edu.cn/', 'xky.hunau.edu.cntzgg_8472', 'xky.hunau.edu.cn/:category'],
+        target: '/:category',
+    },
+    name: '信息与智能科学学院',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     await getContent(ctx, {
         baseHost: 'https://xky.hunau.edu.cn',
         baseCategory: 'tzgg_8472', // 默认：通知公告
@@ -9,4 +32,4 @@ export default async (ctx) => {
         baseDeparment: 'xky',
         baseClass: 'div.right_list ul li:has(a)',
     });
-};
+}

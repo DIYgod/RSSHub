@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,25 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 const baseUrl = 'https://www.mindmeister.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?/:language?',
+    categories: ['journal'],
+    example: '/mindmeister/mind-map-examples',
+    parameters: { category: 'Categories, see the table below, `mind-map-examples` by default', language: 'Languages, see the table below, `en` by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Public Maps',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = 'mind-map-examples', language = 'en' } = ctx.req.param();
     const link = `${baseUrl}${language === 'en' || language === 'other' ? '' : `/${language}`}/${category === 'mind-map-examples' ? category : `mind-maps/${category}?language=${language}`}`;
     const respsonse = await got(link);
@@ -37,11 +56,11 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         description: $('head meta[name=description]').text(),
         link,
         item: items,
         language,
-    });
-};
+    };
+}

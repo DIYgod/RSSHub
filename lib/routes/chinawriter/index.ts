@@ -1,10 +1,18 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id{.+}?',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 40;
 
@@ -74,7 +82,7 @@ export default async (ctx) => {
 
     const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl);
 
-    ctx.set('data', {
+    return {
         item: items,
         title: $('title').text().replaceAll('--', ' - '),
         link: currentUrl,
@@ -85,5 +93,5 @@ export default async (ctx) => {
         logo: icon,
         subtitle: $('meta[name="keywords"]').prop('content'),
         allowEmpty: true,
-    });
-};
+    };
+}

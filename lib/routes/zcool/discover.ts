@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,33 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import locations from './locations';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/discover/:query?/:subCate?/:hasVideo?/:city?/:college?/:recommendLevel?/:sort?',
+    categories: ['live'],
+    example: '/zcool/discover',
+    parameters: {
+        query: '查询参数或分类，若填写分类见下表，默认为空 或 `0` 即精选',
+        subCate: '子分类，见下表，默认为 `0` 即该父分类下全部',
+        hasVideo: '是否含视频，默认为 `0` 即全部，亦可选 `1` 即含视频',
+        city: '地区代码，填入发现页中 `选择城市` 中的各级地名，如 `亚洲`、`中国`、`北京`、`纽约`、`巴黎`等',
+        college: '学校，默认为 `0` 即全部',
+        recommendLevel: '推荐等级，见下表，默认为 `2` 即编辑精选',
+        sort: '排序方式，可选 `0` 即最新发布 或 `9` 即默认排序，默认为 `9`',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '发现',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const categories = {
         0: '精选',
         8: '平面',
@@ -151,9 +178,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `站酷 - ${categories[queries.cate]}${queries.subCate === '0' ? '' : ` - ${subCategories[queries.cate][queries.subCate]}`}`,
         link: `${rootUrl}/discover?${query}`,
         item: items,
-    });
-};
+    };
+}

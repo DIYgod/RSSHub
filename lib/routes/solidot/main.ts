@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 // Warning: The author still knows nothing about javascript!
 
@@ -9,7 +10,25 @@ import { load } from 'cheerio'; // html parser
 import get_article from './_article';
 import { isValidHost } from '@/utils/valid-host';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:type?',
+    categories: ['bbs'],
+    example: '/solidot/linux',
+    parameters: { type: '消息类型。默认为 www. 在网站上方选择后复制子域名即可' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '最新消息',
+    maintainers: ['sgqy', 'hang333', 'TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'www';
     if (!isValidHost(type)) {
         throw new Error('Invalid type');
@@ -34,9 +53,9 @@ export default async (ctx) => {
     const msg_list = await Promise.all(urls.map((u) => cache.tryGet(u, () => get_article(u))));
 
     // feed the data
-    ctx.set('data', {
+    return {
         title: '奇客的资讯，重要的东西',
         link: base_url,
         item: msg_list,
-    });
-};
+    };
+}

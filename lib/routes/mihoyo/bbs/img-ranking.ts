@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { DATA_MAP, RANKING_TYPE_MAP } from './static-data';
 import { post2item } from './utils';
@@ -38,7 +39,29 @@ const getRankingTypeInfo = (game, ranking_type) => {
     };
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/bbs/img-ranking/:game/:routeParams?',
+    categories: ['reading'],
+    example: '/mihoyo/bbs/img-ranking/ys/forumType=tongren&cateType=illustration&rankingType=daily',
+    parameters: { game: '游戏缩写', routeParams: '额外参数；请参阅以下说明和表格' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['miyoushe.com/:game/imgRanking/:forum_id/:ranking_id/:cate_id'],
+        target: '/bbs/img-ranking/:game',
+    },
+    name: '米游社 - 同人榜',
+    maintainers: ['CaoMeiYouRen'],
+    handler,
+};
+
+async function handler(ctx) {
     const game = ctx.req.param('game');
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const { forumType: forum_type = 'tongren', cateType: cate_type, rankingType: ranking_type, lastId: last_id = '' } = routeParams;
@@ -78,4 +101,4 @@ export default async (ctx) => {
         item: items,
     };
     ctx.set('data', data);
-};
+}

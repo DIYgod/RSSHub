@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { rootUrl, apiArticleRootUrl, processItems, fetchData } from './util';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/article', '/channel/:id?'],
+    categories: ['traditional-media'],
+    example: '/huxiu/article',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: true,
+        supportPodcast: true,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['huxiu.com/article'],
+    },
+    name: '资讯',
+    maintainers: ['HenryQW', 'nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
@@ -22,8 +44,8 @@ export default async (ctx) => {
 
     const data = await fetchData(currentUrl);
 
-    ctx.set('data', {
+    return {
         item: items,
         ...data,
-    });
-};
+    };
+}

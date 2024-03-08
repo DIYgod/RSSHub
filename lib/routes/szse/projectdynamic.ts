@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,28 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/projectdynamic/:type?/:stage?/:status?',
+    categories: ['other'],
+    example: '/szse/projectdynamic',
+    parameters: { type: '类型，见下表，默认为IPO', stage: '阶段，见下表，默认为全部', status: '状态，见下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['listing.szse.cn/projectdynamic/1/index.html', 'listing.szse.cn/projectdynamic/2/index.html', 'listing.szse.cn/projectdynamic/3/index.html', 'listing.szse.cn/'],
+    },
+    name: '创业板项目动态',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const typeMap = {
         1: 'IPO',
         2: '再融资',
@@ -86,9 +108,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${typeMap[type]}项目动态${status === '0' ? (stage === '0' ? '' : ` (${stageMap[stage]}) `) : ` (${statusMap[status]}) `} - 创业板发行上市审核信息公开网站 - 深圳证券交易所`,
         link: `${rootUrl}/projectdynamic/${type}/index.html`,
         item: items,
-    });
-};
+    };
+}

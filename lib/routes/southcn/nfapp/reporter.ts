@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,25 @@ import { art } from '@/utils/render';
 import { parseArticle } from './utils';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/nfapp/reporter/:reporter',
+    categories: ['bbs'],
+    example: '/southcn/nfapp/reporter/969927791',
+    parameters: { reporter: '作者 UUID' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '南方 +（按作者）',
+    maintainers: ['TimWu007'],
+    handler,
+};
+
+async function handler(ctx) {
     const reporterId = ctx.req.param('reporter');
     const currentUrl = `https://api.nfapp.southcn.com/nanfang_if/reporter/list?reporterUuid=${reporterId}&pageSize=20&pageNo=1&origin=0`;
 
@@ -29,9 +48,9 @@ export default async (ctx) => {
 
     const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
 
-    ctx.set('data', {
+    return {
         title: `南方+ - ${response.data.reportInfo.reporterName}`,
         link: `https://static.nfapp.southcn.com/apptpl/reporterWorksList/index.html?reporterUuid=${reporterId}`,
         item: items,
-    });
-};
+    };
+}

@@ -1,8 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import cache from './cache';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/followers/:uid/:loginUid',
+    categories: ['new-media'],
+    example: '/bilibili/user/followers/2267573/3',
+    parameters: { uid: '用户 id, 可在 UP 主主页中找到', loginUid: '用于登入的用户id,需要配置对应的 Cookie 值' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['space.bilibili.com/:uid'],
+        target: '/user/followers/:uid',
+    },
+    name: 'UP 主粉丝',
+    maintainers: ['Qixingchen'],
+    handler,
+};
+
+async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const loginUid = ctx.req.param('loginUid');
 
@@ -35,7 +58,7 @@ export default async (ctx) => {
     }
     const data = response.data.data.list;
 
-    ctx.set('data', {
+    return {
         title: `${name} 的 bilibili 粉丝`,
         link: `https://space.bilibili.com/${uid}/#/fans/fans`,
         description: `${name} 的 bilibili 粉丝`,
@@ -45,5 +68,5 @@ export default async (ctx) => {
             pubDate: new Date(item.mtime * 1000),
             link: `https://space.bilibili.com/${item.mid}`,
         })),
-    });
-};
+    };
+}

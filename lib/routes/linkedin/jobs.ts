@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { parseJobSearch, KEYWORDS_QUERY_KEY, JOB_TYPES, JOB_TYPES_QUERY_KEY, EXP_LEVELS_QUERY_KEY, parseParamsToSearchParams, EXP_LEVELS, parseParamsToString } from './utils';
@@ -5,7 +6,25 @@ import { parseJobSearch, KEYWORDS_QUERY_KEY, JOB_TYPES, JOB_TYPES_QUERY_KEY, EXP
 const BASE_URL = 'https://www.linkedin.com/';
 const JOB_SEARCH_PATH = '/jobs-guest/jobs/api/seeMoreJobPostings/search';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jobs/:job_types/:exp_levels/:keywords?',
+    categories: ['other'],
+    example: '/linkedin/jobs/C-P/1/software engineer',
+    parameters: { job_types: "See the following table for details, use '-' as delimiter", exp_levels: "See the following table for details, use '-' as delimiter", keywords: 'keywords' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Jobs',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const jobTypesParam = parseParamsToSearchParams(ctx.req.param('job_types'), JOB_TYPES);
     const expLevelsParam = parseParamsToSearchParams(ctx.req.param('exp_levels'), EXP_LEVELS);
 
@@ -25,7 +44,7 @@ export default async (ctx) => {
     const jobTypes = parseParamsToString(ctx.req.param('job_types'), JOB_TYPES);
     const expLevels = parseParamsToString(ctx.req.param('exp_levels'), EXP_LEVELS);
     const feedTitle = 'LinkedIn Job Listing' + (jobTypes ? ` | Job Types: ${jobTypes}` : '') + (expLevels ? ` | Experience Levels: ${expLevels}` : '') + (ctx.req.param('keywords') ? ` | Keywords: ${ctx.req.param('keywords')}` : '');
-    ctx.set('data', {
+    return {
         title: feedTitle,
         link: url,
         description: 'This feed gets LinkedIn job posts',
@@ -40,5 +59,5 @@ export default async (ctx) => {
                 link: job.link, // job source link
             };
         }),
-    });
-};
+    };
+}

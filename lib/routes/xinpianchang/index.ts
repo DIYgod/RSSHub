@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { rootUrl, getData, processItems } from './util';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/discover/:params?', '/:params?'],
+    categories: ['traditional-media'],
+    example: '/xinpianchang/discover',
+    parameters: { params: '参数，可在对应分类页 URL 中找到，默认为 `article-0-0-all-all-0-0-score` ，即全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '发现',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const { params = 'article-0-0-all-all-0-0-score' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 60;
 
@@ -13,8 +32,8 @@ export default async (ctx) => {
 
     items = await processItems(items.slice(0, limit), cache.tryGet);
 
-    ctx.set('data', {
+    return {
         ...data,
         item: items,
-    });
-};
+    };
+}

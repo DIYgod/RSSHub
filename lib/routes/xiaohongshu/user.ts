@@ -1,7 +1,15 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getUser } from './util';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:user_id/:category',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const userId = ctx.req.param('user_id');
     const category = ctx.req.param('category');
     const url = `https://www.xiaohongshu.com/user/profile/${userId}`;
@@ -45,11 +53,11 @@ export default async (ctx) => {
         }));
     };
 
-    ctx.set('data', {
+    return {
         title,
         description,
         image,
         link: url,
         item: category === 'notes' ? renderNote(notes) : renderCollect(collect),
-    });
-};
+    };
+}

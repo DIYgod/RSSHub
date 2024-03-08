@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,28 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 const gbk2utf8 = (s) => iconv.decode(s, 'gbk');
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jsjxy',
+    categories: ['forecast'],
+    example: '/stbu/jsjxy',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['jsjxy.stbu.edu.cn/news', 'jsjxy.stbu.edu.cn/'],
+    },
+    name: '计算机学院通知公告',
+    maintainers: ['HyperCherry'],
+    handler,
+};
+
+async function handler() {
     const baseUrl = 'https://jsjxy.stbu.edu.cn/news/';
     const { data: response } = await got(baseUrl, {
         responseType: 'buffer',
@@ -43,10 +65,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '四川工商学院计算机学院 - 新闻动态',
         link: baseUrl,
         description: '四川工商学院计算机学院 - 新闻动态',
         item: items,
-    });
-};
+    };
+}

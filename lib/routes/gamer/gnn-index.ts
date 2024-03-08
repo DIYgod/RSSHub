@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/gnn/:category?',
+    categories: ['program-update'],
+    example: '/gamer/gnn/1',
+    parameters: { category: '版块' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'GNN 新聞',
+    maintainers: ['Arracc'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
     let url = '';
     let categoryName = '';
@@ -119,9 +138,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: '巴哈姆特-GNN新聞' + categoryName,
         link: url,
         item: items,
-    });
-};
+    };
+}

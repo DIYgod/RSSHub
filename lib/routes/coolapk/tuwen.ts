@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/tuwen/:type?', '/tuwen-xinxian'],
+    categories: ['new-media'],
+    example: '/coolapk/tuwen',
+    parameters: { type: '默认为hot' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '图文',
+    maintainers: ['xizeyoupan'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') || 'hot';
     const requestPath = ctx.req.path;
     let feedTitle;
@@ -28,10 +47,10 @@ export default async (ctx) => {
 
     const out = await Promise.all(data.map((item) => utils.parseDynamic(item)));
 
-    ctx.set('data', {
+    return {
         title: feedTitle,
         link: 'https://www.coolapk.com/',
         description: feedTitle,
         item: out,
-    });
-};
+    };
+}

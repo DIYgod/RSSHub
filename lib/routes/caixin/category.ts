@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,25 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { parseArticle } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:column/:category',
+    categories: ['bbs'],
+    example: '/caixin/finance/regulation',
+    parameters: { column: '栏目名', category: '栏目下的子分类名' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: true,
+        supportScihub: false,
+    },
+    name: '新闻分类',
+    maintainers: ['idealclover'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
     const column = ctx.req.param('column');
     const url = `https://${column}.caixin.com/${category}`;
@@ -48,10 +67,10 @@ export default async (ctx) => {
 
     const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
 
-    ctx.set('data', {
+    return {
         title,
         link: url,
         description: '财新网 - 提供财经新闻及资讯服务',
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -20,7 +21,25 @@ const url_map = {
     pyxx: 'pyxx/pyxx',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/master/:type',
+    categories: ['forecast'],
+    example: '/ncepu/master/tzgg',
+    parameters: { type: '类型参数' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '北京校区研究生院',
+    maintainers: ['nilleo'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
     const response = await got(`https://yjsy.ncepu.edu.cn/${url_map[type]}/index.htm`);
     const data = response.data; // 获取页面 html 数据
@@ -65,10 +84,10 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `${title_map[type]}-华北电力大学研究生院`,
         link: `http://yjsy.ncepu.edu.cn/${url_map[type]}`,
         description: `华北电力大学研究生院${description_map[type]}`,
         item: items,
-    });
-};
+    };
+}

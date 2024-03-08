@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/hr/:category?',
+    categories: ['forecast'],
+    example: '/pku/hr',
+    parameters: { category: '分类，见下方说明，默认为首页最新公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['hr.pku.edu.cn/'],
+    },
+    name: '人事处',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category')?.replace(/-/g, '/') ?? 'zxgg';
 
     const rootUrl = 'https://hr.pku.edu.cn/';
@@ -47,9 +69,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${$('h2').text()} - ${$('title').text()}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,7 +11,25 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import { config } from './config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:type/:id?',
+    categories: ['forecast'],
+    example: '/shiep/news/notice',
+    parameters: { type: '类型名称，见下表', id: '页面 ID，默认为通知公告或学院公告所对应的 ID' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '新闻网与学院通知',
+    maintainers: ['gumibea', 'TeamSUEP'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
 
     if (!Object.keys(config).includes(type)) {
@@ -68,9 +87,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `上海电力大学-${title}`,
         link,
         item: items,
-    });
-};
+    };
+}

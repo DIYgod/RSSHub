@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,25 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { parseArticle } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/nfapp/column/:column?',
+    categories: ['bbs'],
+    example: '/southcn/nfapp/column/38',
+    parameters: { column: '栏目或南方号 ID' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '南方 +（按栏目 ID）',
+    maintainers: ['TimWu007'],
+    handler,
+};
+
+async function handler(ctx) {
     const columnId = ctx.req.param('column') ?? 38;
 
     const getColumnDetail = `https://api.nfapp.southcn.com/nanfang_if/getColumn?columnId=${columnId}`;
@@ -41,9 +60,9 @@ export default async (ctx) => {
 
     const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
 
-    ctx.set('data', {
+    return {
         title: columnName,
         link: columnLink,
         item: items,
-    });
-};
+    };
+}

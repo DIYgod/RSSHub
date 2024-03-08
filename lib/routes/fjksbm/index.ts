@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['journal'],
+    example: '/fjksbm',
+    parameters: { category: '分类，见下表，默认为网络报名进行中' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['fjksbm.com/portal/:category?', 'fjksbm.com/portal'],
+    },
+    name: '分类',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '0';
 
     const id = Number.parseInt(category);
@@ -44,11 +66,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${$('.panel-heading')
             .eq(isNumber ? id : 1)
             .text()} - 福建考试报名网`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

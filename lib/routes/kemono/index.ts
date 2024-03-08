@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,28 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:source?/:id?',
+    categories: ['program-update'],
+    example: '/kemono',
+    parameters: { source: 'Source, see below, Posts by default', id: 'User id, can be found in URL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['kemono.su/:source/user/:id', 'kemono.su/'],
+    },
+    name: 'Posts',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
     const source = ctx.req.param('source') ?? '';
     const id = ctx.req.param('id');
@@ -124,10 +146,10 @@ export default async (ctx) => {
         );
     }
 
-    ctx.set('data', {
+    return {
         title,
         image,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

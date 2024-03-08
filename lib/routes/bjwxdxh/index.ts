@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:type?',
+    categories: ['study'],
+    example: '/bjwxdxh/114',
+    parameters: { type: '类型，见下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '最新资讯',
+    maintainers: ['Misaka13514'],
+    handler,
+};
+
+async function handler(ctx) {
     const baseUrl = 'http://www.bjwxdxh.org.cn';
     const type = ctx.req.param('type');
     const link = type ? `${baseUrl}/news/class/?${type}.html` : `${baseUrl}/news/class/`;
@@ -45,9 +64,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link,
         item: list,
-    });
-};
+    };
+}

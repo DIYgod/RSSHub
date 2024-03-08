@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id?',
+    categories: ['traditional-media'],
+    example: '/chinaisa',
+    parameters: { id: '栏目，见下表，默认为钢协动态' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '栏目',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const { id = '58af05dfb6b4300151760176d2aad0a04c275aaadbb1315039263f021f920dcd' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
 
@@ -69,7 +88,7 @@ export default async (ctx) => {
 
     const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${$('title').text()} - ${subtitle}`,
         link: currentUrl,
@@ -80,5 +99,5 @@ export default async (ctx) => {
         logo: icon,
         subtitle,
         allowEmpty: true,
-    });
-};
+    };
+}

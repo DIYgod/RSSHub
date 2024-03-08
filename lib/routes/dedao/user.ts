@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -12,7 +13,25 @@ const types = {
     12: '视频',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:id/:type?',
+    categories: ['traditional-media'],
+    example: '/dedao/user/VkA5OqLX4RyGxmZRNBMlwBrDaJQ9og',
+    parameters: { id: '用户 id，可在对应用户主页 URL 中找到', type: '类型，见下表，默认为`0`，即动态' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '用户主页',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '';
     const type = ctx.req.param('type') ? Number.parseInt(ctx.req.param('type')) : 0;
     const count = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100;
@@ -71,12 +90,12 @@ export default async (ctx) => {
         }),
     }));
 
-    ctx.set('data', {
+    return {
         title: `${author}的得到主页 - ${types[type]}`,
         link: currentUrl,
         item: items,
         image,
         description,
         allowEmpty: true,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import querystring from 'querystring';
 import got from '@/utils/got';
@@ -5,7 +6,29 @@ import { config } from '@/config';
 import weiboUtils from './utils';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/friends/:routeParams?',
+    categories: ['new-media'],
+    example: '/weibo/friends',
+    parameters: { routeParams: '额外参数；请参阅上面的说明和表格' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['weibo.com/'],
+        target: '/friends',
+    },
+    name: '最新关注时间线',
+    maintainers: ['CaoMeiYouRen'],
+    handler,
+};
+
+async function handler(ctx) {
     if (!config.weibo.cookies) {
         throw new Error('Weibo Friends Timeline is not available due to the absense of [Weibo Cookies]. Check <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config tutorial</a>');
     }
@@ -123,4 +146,4 @@ export default async (ctx) => {
             item: resultItems,
         })
     );
-};
+}

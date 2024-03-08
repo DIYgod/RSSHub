@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -34,7 +35,25 @@ const config = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:caty',
+    categories: ['traditional-media'],
+    example: '/ithome/it',
+    parameters: { caty: '类别' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '分类资讯',
+    maintainers: ['luyuhuang'],
+    handler,
+};
+
+async function handler(ctx) {
     const cfg = config[ctx.req.param('caty')];
     if (!cfg) {
         throw new Error('Bad category. See <a href="https://docs.rsshub.app/routes/new-media#it-zhi-jia">https://docs.rsshub.app/routes/new-media#it-zhi-jia</a>');
@@ -77,10 +96,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'IT 之家 - ' + cfg.title,
         link: current_url,
         image: 'https://img.ithome.com/m/images/logo.png',
         item: items,
-    });
-};
+    };
+}

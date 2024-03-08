@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/bangumi/:id',
+    categories: ['program-update'],
+    example: '/acfun/bangumi/5022158',
+    parameters: { id: '番剧 id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '番剧',
+    maintainers: ['xyqfer'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const url = `https://www.acfun.cn/bangumi/aa${id}`;
 
@@ -13,7 +32,7 @@ export default async (ctx) => {
     const bangumiData = JSON.parse(bangumiPage.data.match(/window.bangumiData = (.*?);\n/)[1]);
     const bangumiList = JSON.parse(bangumiPage.data.match(/window.bangumiList = (.*?);\n/)[1]);
 
-    ctx.set('data', {
+    return {
         title: bangumiData.bangumiTitle,
         link: url,
         description: bangumiData.bangumiIntro,
@@ -24,5 +43,5 @@ export default async (ctx) => {
             link: `http://www.acfun.cn/bangumi/aa${id}_36188_${item.itemId}`,
             pubDate: parseDate(item.updateTime, 'x'),
         })),
-    });
-};
+    };
+}

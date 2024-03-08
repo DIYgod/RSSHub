@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { ig, login } from './utils';
 import logger from '@/utils/logger';
@@ -54,7 +55,25 @@ async function loadContent(category, nameOrId, tryGet) {
     };
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category/:key',
+    categories: ['new-media'],
+    example: '/instagram/user/stefaniejoosten',
+    parameters: { category: 'Feed category, see table above', key: 'Username / Hashtag name' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'User Profile / Hashtag - Private API',
+    maintainers: ['oppilate', 'DIYgod'],
+    handler,
+};
+
+async function handler(ctx) {
     // https://github.com/dilame/instagram-private-api#feeds
     // const availableCategories = ["accountFollowers", "accountFollowing", "news",
     //     "discover", "pendingFriendships", "blockedUsers", "directInbox", "directPending",
@@ -82,7 +101,7 @@ export default async (ctx) => {
         throw error;
     }
 
-    ctx.set('data', {
+    return {
         title: data.feedTitle,
         link: data.feedLink,
         description: data.feedDescription,
@@ -91,5 +110,5 @@ export default async (ctx) => {
         logo: data.feedLogo,
         image: data.feedLogo,
         allowEmpty: true,
-    });
-};
+    };
+}

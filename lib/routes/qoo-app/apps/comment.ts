@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,25 @@ import { appsUrl } from '../utils';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/apps/:lang?/comment/:id',
+    categories: ['program-update'],
+    example: '/qoo-app/apps/en/comment/7675',
+    parameters: { lang: 'Language, see the table below, empty means `中文`', id: 'Game ID, can be found in URL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Game Store - Review',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const { id, lang = '' } = ctx.req.param();
     const link = `${appsUrl}${lang ? `/${lang}` : ''}/app-comment/${id}`;
 
@@ -37,10 +56,10 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link,
         language: $('html').attr('lang'),
         item: items,
-    });
-};
+    };
+}

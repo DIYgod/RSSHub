@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,28 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:column',
+    categories: ['picture'],
+    example: '/cntv/TOPC1451528971114112',
+    parameters: { column: '栏目ID, 可在对应CNTV栏目页面找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['navi.cctv.com/'],
+    },
+    name: '栏目',
+    maintainers: ['WhoIsSure', 'Fatpandac'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('column');
     const limit = isNaN(Number.parseInt(ctx.req.query('limit'))) ? 25 : Number.parseInt(ctx.req.query('limit'));
 
@@ -17,7 +39,7 @@ export default async (ctx) => {
     const data = response.data.data.list;
     const name = data[0].title.match(/《(.*?)》/)[1];
 
-    ctx.set('data', {
+    return {
         title: `CNTV 栏目 - ${name}`,
         description: `${name} 栏目的视频更新`,
         item: data.map((item) => ({
@@ -28,5 +50,5 @@ export default async (ctx) => {
             pubDate: parseDate(item.time),
             link: item.url,
         })),
-    });
-};
+    };
+}

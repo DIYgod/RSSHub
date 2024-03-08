@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -26,7 +27,25 @@ async function getFullArticle(link) {
     return content.html() + ($('.Newslist2').length ? $('.Newslist2').html() : '');
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jwc/:type?',
+    categories: ['forecast'],
+    example: '/sjtu/jwc',
+    parameters: { type: '默认为 notice' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '教务处通知公告',
+    maintainers: ['SeanChao'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'notice';
     const config = {
         all: {
@@ -109,9 +128,9 @@ export default async (ctx) => {
             })
     );
 
-    ctx.set('data', {
+    return {
         title: '上海交通大学教务处 ' + config[type].section,
         link: sectionLink,
         item: out,
-    });
-};
+    };
+}

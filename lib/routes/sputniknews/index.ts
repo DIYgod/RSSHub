@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -36,7 +37,25 @@ const languages = {
     portuguese: 'https://br.sputniknews.com',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?/:language?',
+    categories: ['bbs'],
+    example: '/sputniknews',
+    parameters: { category: 'Category, can be found in URL, `news` by default', language: 'Language, see below, English by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Category',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'news';
     const language = ctx.req.param('language') ?? 'english';
 
@@ -87,9 +106,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${category} - Sputnik News`,
         link: `${rootUrl}/${category}`,
         item: items,
-    });
-};
+    };
+}

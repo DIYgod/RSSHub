@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,25 @@ import { parseDate } from '@/utils/parse-date';
 import * as path from 'node:path';
 import { art } from '@/utils/render';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/mp/:id',
+    categories: ['traditional-media'],
+    example: '/sohu/mp/119097',
+    parameters: { id: '搜狐号 ID' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '更新',
+    maintainers: ['HenryQW'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const authorArticleAPI = `https://v2.sohu.com/author-page-api/author-articles/pc/${id}`;
 
@@ -61,9 +80,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `搜狐号 - ${author}`,
         link,
         item: items,
-    });
-};
+    };
+}

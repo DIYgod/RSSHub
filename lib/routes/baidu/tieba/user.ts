@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/tieba/user/:uid',
+    categories: ['blog'],
+    example: '/baidu/tieba/user/斗鱼游戏君',
+    parameters: { uid: '用户 ID' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '用户帖子',
+    maintainers: ['igxlin', 'nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const response = await got(`https://tieba.baidu.com/home/main?un=${uid}`);
 
@@ -14,7 +33,7 @@ export default async (ctx) => {
     const list = $('div.n_right.clearfix');
     let imgurl;
 
-    ctx.set('data', {
+    return {
         title: `${name} 的贴吧`,
         link: `https://tieba.baidu.com/home/main?un=${uid}`,
         item:
@@ -29,5 +48,5 @@ export default async (ctx) => {
                     link: item.find('div.thread_name a').attr('href'),
                 };
             }),
-    });
-};
+    };
+}

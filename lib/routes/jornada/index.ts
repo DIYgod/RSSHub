@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -23,7 +24,25 @@ const getDateForToday = () => {
     return today;
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:date?/:category?',
+    categories: ['bbs'],
+    example: '/jornada/2022-10-12/capital',
+    parameters: { date: "Date string, must be in format of `YYYY-MM-DD`. You can get today's news using `today`", category: 'Category, refer to the table below' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'News',
+    maintainers: ['Thealf154'],
+    handler,
+};
+
+async function handler(ctx) {
     const date = ctx.req.param('date') === 'today' || ctx.req.param('date') === undefined ? getDateForToday() : ctx.req.param('date');
     const category = ctx.req.param('category');
     const url = `${rootUrl}/jsonstorage/articles_${date}_.json`;
@@ -51,9 +70,9 @@ export default async (ctx) => {
         }));
     }
 
-    ctx.set('data', {
+    return {
         title: 'La Jornada',
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:category?',
+    categories: ['traditional-media'],
+    example: '/qm120/news',
+    parameters: { category: '分类，见下表，默认为健康焦点' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['qm120.com/'],
+    },
+    name: '新闻',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'jdxw';
 
     const rootUrl = 'http://www.qm120.com';
@@ -43,9 +65,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${$('.zt_liebiao_tit').text()} - 全民健康网`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

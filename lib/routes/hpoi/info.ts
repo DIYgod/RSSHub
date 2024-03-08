@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseRelativeDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/info/:type?',
+    categories: ['program-update'],
+    example: '/hpoi/info/all',
+    parameters: { type: '分类, 见下表, 默认为`all`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '情报',
+    maintainers: ['sanmmm DIYgod'],
+    handler,
+};
+
+async function handler(ctx) {
     const { type = 'all' } = ctx.req.param();
     const baseUrl = 'https://www.hpoi.net';
     const reqUrl = `${baseUrl}/user/home/ajax`;
@@ -42,10 +61,10 @@ export default async (ctx) => {
         model: '模型',
     };
     const title = `手办维基 - 情报 - ${typeToLabel[type]}`;
-    ctx.set('data', {
+    return {
         title,
         link: `${baseUrl}/user/home?type=info&catType=${type}`,
         description: title,
         item: items,
-    });
-};
+    };
+}

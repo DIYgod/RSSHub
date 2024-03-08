@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/article/:id?',
+    categories: ['traditional-media'],
+    example: '/wyzxwk/article/shushe',
+    parameters: { id: '栏目 id，可在栏目页 URL 中找到，默认为时代观察' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['wyzxwk.com/Article/:id', 'wyzxwk.com/'],
+    },
+    name: '栏目',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? 'shidai';
 
     const rootUrl = 'http://www.wyzxwk.com';
@@ -57,9 +79,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${$('title').text().split(' - ')[0]} - 乌有之乡网刊`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

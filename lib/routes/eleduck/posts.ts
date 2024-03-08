@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -15,7 +16,25 @@ const getCateName = async (cid = 0) => {
     return cates[cid] || '全部';
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/posts/:id?',
+    categories: ['blog'],
+    example: '/eleduck/posts/4',
+    parameters: { id: '分类id,可以论坛的URL找到，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '分类文章',
+    maintainers: ['running-grass'],
+    handler,
+};
+
+async function handler(ctx) {
     const cid = ctx.req.param('id') || 0;
 
     const response = await got(`https://svc.eleduck.com/api/v1/posts?category=${cid}&sort=-published_at&page=1`);
@@ -27,7 +46,7 @@ export default async (ctx) => {
 
     const cname = await getCateName(cid);
 
-    ctx.set('data', {
+    return {
         title: `电鸭社区的文章--${cname}`,
         link: `https://eleduck.com/categories/${cid}`,
         description: `电鸭社区的文章,栏目为${cname}`,
@@ -38,5 +57,5 @@ export default async (ctx) => {
             link: `https://eleduck.com/${item.category.id === 22 ? 'tposts' : 'posts'}/${item.id}`,
             author: item.user.nickname,
         })),
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -22,7 +23,29 @@ const categories = {
     教育: 'jiaoyu',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/24/:category?',
+    categories: ['bbs'],
+    example: '/eastday/24',
+    parameters: { category: '分类，见下表，默认为社会' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['mini.eastday.com/'],
+        target: '/24',
+    },
+    name: '24 小时热闻',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '社会';
 
     const rootUrl = 'https://mini.eastday.com';
@@ -82,9 +105,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `24小时${category}热闻 - 东方资讯`,
         link: `${rootUrl}/#${categories[category]}`,
         item: items,
-    });
-};
+    };
+}

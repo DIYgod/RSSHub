@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,7 +11,25 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import iconv from 'iconv-lite';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/forum/:id?',
+    categories: ['picture'],
+    example: '/4ksj/forum',
+    parameters: { id: '分类 id，默认为最新4K电影' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '分类',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '2-1';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
 
@@ -108,12 +127,12 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `4k世界 - ${$('#fontsearch ul.cl li.a')
             .toArray()
             .map((a) => $(a).text())
             .join('+')}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

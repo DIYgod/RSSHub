@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { rootUrl, apiRootUrl, types, ProcessThreads } from './utils';
 
@@ -12,7 +13,28 @@ const sections = {
     265: '签证移民',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/section/:id?/:type?/:order?',
+    categories: ['blog'],
+    example: '/1point3acres/section/345',
+    parameters: { id: '分区 id，见下表，默认为全部', type: '帖子分类, 见下表，默认为 hot，即热门帖子', order: '排序方式，见下表，默认为空，即最新回复' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['instant.1point3acres.com/section/:id', 'instant.1point3acres.com/'],
+    },
+    name: '分区',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '';
     const type = ctx.req.param('type') ?? 'hot';
     const order = ctx.req.param('order') ?? '';
@@ -21,9 +43,9 @@ export default async (ctx) => {
     const currentUrl = `${rootUrl}${id ? (isNaN(id) ? `/category/${id}` : `/section/${id}`) : ''}`;
     const apiUrl = `${apiRootUrl}/api${id ? (isNaN(id) ? `/tags/${id}/` : `/forums/${id}/`) : ''}threads?type=${type}&includes=tags,forum_name,summary&ps=${limit}&pg=1&order=${order === '' ? '' : 'time_desc'}&is_groupid=1`;
 
-    ctx.set('data', {
+    return {
         title: `一亩三分地 - ${Object.hasOwn(sections, id) ? sections[id] : id}${types[type]}`,
         link: currentUrl,
         item: await ProcessThreads(cache.tryGet, apiUrl, order),
-    });
-};
+    };
+}

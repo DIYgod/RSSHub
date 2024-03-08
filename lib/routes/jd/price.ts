@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -5,7 +6,25 @@ import got from '@/utils/got';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/price/:id',
+    categories: ['game'],
+    example: '/jd/price/526835',
+    parameters: { id: '商品 id，可在商品详情页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '商品价格',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const rootUrl = 'https://item.jd.com';
@@ -26,7 +45,7 @@ export default async (ctx) => {
 
     const title = response.data.match(/name: '(.*?)'/)[1];
 
-    ctx.set('data', {
+    return {
         title: `京东商品价格 - ${title}`,
         link: currentUrl,
         item: [
@@ -41,5 +60,5 @@ export default async (ctx) => {
                 }),
             },
         ],
-    });
-};
+    };
+}

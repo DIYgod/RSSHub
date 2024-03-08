@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import utils from './utils';
 const { TYPE, parseUrl } = utils;
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:type?',
+    categories: ['traditional-media'],
+    example: '/dahecube',
+    parameters: { type: '板块，见下表，默认为推荐' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '新闻',
+    maintainers: ['linbuxiao'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'recommend';
     const params = JSON.stringify({
         channelid: TYPE[type].id,
@@ -50,13 +69,13 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '大河财立方',
         link: parseUrl(type),
         description: `大河财立方 ${TYPE[type].name}`,
         language: 'zh-cn',
         item: items,
-    });
+    };
 
     ctx.set('json', {
         title: '大河财立方',
@@ -64,4 +83,4 @@ export default async (ctx) => {
         description: `大河财立方 ${TYPE[type].name}`,
         items,
     });
-};
+}

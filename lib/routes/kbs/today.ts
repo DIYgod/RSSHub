@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/today/:language?',
+    categories: ['traditional-media'],
+    example: '/kbs/today',
+    parameters: { language: 'Language, see below, e as English by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['world.kbs.co.kr/'],
+        target: '/today',
+    },
+    name: 'Today',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const language = ctx.req.param('language') ?? 'e';
 
     const rootUrl = 'http://world.kbs.co.kr';
@@ -49,9 +72,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `Latest News | KBS WORLD`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

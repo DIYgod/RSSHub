@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 // example usage: `/nature/research/ng`
 // The journals from NPG are run by different group of people,
 // and the website of may not be consitent for all the journals
@@ -17,7 +18,29 @@ import { load } from 'cheerio';
 import got from '@/utils/got';
 import { baseUrl, cookieJar, getArticleList, getDataLayer, getArticle } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/research/:journal?',
+    categories: ['finance'],
+    example: '/nature/research/ng',
+    parameters: { journal: 'short name for a journal, `nature` by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: true,
+    },
+    radar: {
+        source: ['nature.com/:journal/research-articles', 'nature.com/:journal', 'nature.com/'],
+        target: '/research/:journal',
+    },
+    name: 'Latest Research',
+    maintainers: ['y9c', 'TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const journal = ctx.req.param('journal') ?? 'nature';
     const pageURL = `${baseUrl}/${journal}/research-articles`;
 
@@ -30,10 +53,10 @@ export default async (ctx) => {
 
     items = await Promise.all(items.map((item) => getArticle(item)));
 
-    ctx.set('data', {
+    return {
         title: `Nature (${pageTitle}) | Latest Research`,
         description: pageCapture('meta[name="description"]').attr('content') || `Nature, a nature research journal`,
         link: pageURL,
         item: items,
-    });
-};
+    };
+}

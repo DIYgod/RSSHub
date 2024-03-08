@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,28 @@ import { parseJSONP } from './jsonp-helper';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/media',
+    categories: ['multimedia'],
+    example: '/yoasobi-music/media',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.yoasobi-music.jp/', 'www.yoasobi-music.jp/media'],
+    },
+    name: 'Media',
+    maintainers: ['Kiotlin'],
+    handler,
+};
+
+async function handler() {
     const ARTIST = 'YOASOBI',
         BASEURL = 'https://www.sonymusic.co.jp/json/v2/artist',
         POSTFIX = 'start/0/count/-1';
@@ -33,7 +55,7 @@ export default async (ctx) => {
             description: item.note,
         }));
 
-    ctx.set('data', {
+    return {
         // the source title
         title,
         // the source url
@@ -58,5 +80,5 @@ export default async (ctx) => {
             // the article link
             link: officialUrl,
         })),
-    });
-};
+    };
+}

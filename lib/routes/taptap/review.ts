@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { getRootUrl, appDetail, X_UA } from './utils';
@@ -103,7 +104,29 @@ const fetchIntlItems = async (params) => {
     });
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/review/:id/:order?/:lang?', '/intl/review/:id/:order?/:lang?'],
+    categories: ['reading'],
+    example: '/taptap/review/142793/hot',
+    parameters: { id: '游戏 ID，游戏主页 URL 中获取', order: '排序方式，空为默认排序，可选如下', lang: '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['taptap.com/app/:id/review', 'taptap.com/app/:id'],
+        target: '/review/:id',
+    },
+    name: '游戏评价',
+    maintainers: ['hoilc', 'TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const is_intl = ctx.req.url.indexOf('/intl/') === 0;
     const id = ctx.req.param('id');
     const order = ctx.req.param('order') ?? 'default';
@@ -115,12 +138,12 @@ export default async (ctx) => {
 
     const items = is_intl ? await fetchIntlItems(ctx.params) : await fetchMainlandItems(ctx.params);
 
-    ctx.set('data', {
+    return {
         title: `TapTap 评价 ${app_name} - ${(is_intl ? intlSortMap : sortMap)[order][lang]}排序`,
         link: `${getRootUrl(is_intl)}/app/${id}/review?${makeSortParam(is_intl, order)}`,
         image: app_img,
         item: items,
-    });
+    };
 
     ctx.set('json', {
         title: `TapTap 评价 ${app_name} - ${(is_intl ? intlSortMap : sortMap)[order][lang]}排序`,
@@ -128,4 +151,4 @@ export default async (ctx) => {
         image: app_img,
         item: items,
     });
-};
+}

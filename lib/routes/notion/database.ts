@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { Client, isNotionClientError, APIErrorCode } from '@notionhq/client';
 import logger from '@/utils/logger';
@@ -12,7 +13,29 @@ const md = MarkdownIt({
     linkify: true,
 });
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/database/:databaseId',
+    categories: ['other'],
+    example: '/notion/database/a7cc133b68454f138011f1530a13531e',
+    parameters: { databaseId: 'Database ID' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['notion.so/:id'],
+        target: '/database/:id',
+    },
+    name: 'Database',
+    maintainers: ['curly210102'],
+    handler,
+};
+
+async function handler(ctx) {
     if (!config.notion.key) {
         throw new Error('Notion RSS is disabled due to the lack of NOTION_TOKEN(<a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>)');
     }
@@ -107,14 +130,14 @@ export default async (ctx) => {
             })
         );
 
-        ctx.set('data', {
+        return {
             title: `Notion - ${title}`,
             link,
             description,
             image,
             item: items,
             allowEmpty: true,
-        });
+        };
     } catch (error) {
         logger.error(error);
 
@@ -130,7 +153,7 @@ export default async (ctx) => {
             ctx.throw(error);
         }
     }
-};
+}
 
 function parseCustomQuery(queryString) {
     try {

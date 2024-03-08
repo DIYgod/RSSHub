@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import utils from './utils';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/list/:id',
+    categories: ['bbs'],
+    example: '/thepaper/list/25457',
+    parameters: { id: '栏目 id，可在栏目页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '栏目',
+    maintainers: ['nczitzk', 'bigfei'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const list_url = `https://m.thepaper.cn/list/${id}`;
     const list_url_resp = await got(list_url);
@@ -17,11 +36,11 @@ export default async (ctx) => {
     const list = pagePropsData.list;
 
     const items = await Promise.all(list.map((item) => utils.ProcessItem(item, ctx)));
-    ctx.set('data', {
+    return {
         title: `澎湃新闻栏目 - ${utils.ListIdToName(id, list_url_data)}`,
         link: list_url,
         item: items,
         itunes_author: '澎湃新闻',
         image: pagePropsData.nodeInfo?.pic ?? utils.ExtractLogo(list_url_resp),
-    });
-};
+    };
+}

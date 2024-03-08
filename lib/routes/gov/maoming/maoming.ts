@@ -1,7 +1,15 @@
+import { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import { gdgov } from '../general/general';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/maoming/*',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const path = getSubPath(ctx)
         .split('/')
         .filter((item) => item !== '');
@@ -371,4 +379,4 @@ export default async (ctx) => {
         // pubDate_format,
     };
     await gdgov(info, ctx);
-};
+}

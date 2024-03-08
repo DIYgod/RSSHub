@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import dayjs from 'dayjs';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/exchangesys/:type',
+    categories: ['forecast'],
+    example: '/nju/exchangesys/proj',
+    parameters: { type: '分类名' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '本科生交换生系统',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
     const type_dict = {
         news: ['http://elite.nju.edu.cn/exchangesystem/index/moreList', 'http://elite.nju.edu.cn/exchangesystem/index/more?type=xw', '新闻通知'],
@@ -16,7 +35,7 @@ export default async (ctx) => {
         },
     });
 
-    ctx.set('data', {
+    return {
         title: `本科生交换生管理系统-${type_dict[type][2]}`,
         link: type_dict[type][1],
         item:
@@ -42,5 +61,5 @@ export default async (ctx) => {
                 }
                 return null;
             }),
-    });
-};
+    };
+}

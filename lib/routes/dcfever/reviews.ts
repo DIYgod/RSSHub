@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { baseUrl, parseItem } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/reviews/:type?',
+    categories: ['traditional-media'],
+    example: '/dcfever/reviews/cameras',
+    parameters: { type: '分類，預設為 `cameras`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['dcfever.com/:type/reviews.php'],
+        target: '/reviews/:type',
+    },
+    name: '測試報告',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const { type = 'cameras' } = ctx.req.param();
 
     const response = await got(`${baseUrl}/${type}/reviews.php`);
@@ -21,10 +44,10 @@ export default async (ctx) => {
 
     const items = await Promise.all(list.map((item) => parseItem(item, cache.tryGet)));
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link: response.url,
         image: 'https://cdn10.dcfever.com/images/android_192.png',
         item: items,
-    });
-};
+    };
+}

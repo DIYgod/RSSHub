@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -80,7 +81,25 @@ function judgeTrue(str, ...validStrings) {
     return false;
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/:type/:id/:all?', '/:type/:id/:all/:shownote?'],
+    categories: ['picture'],
+    example: '/ximalaya/album/299146',
+    parameters: { type: '专辑类型, 通常可以使用 `album`，可在对应专辑页面的 URL 中找到', id: '专辑 id, 可在对应专辑页面的 URL 中找到', all: '是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: true,
+        supportScihub: false,
+    },
+    name: '专辑（不输出 ShowNote）',
+    maintainers: ['lengthmin', 'jjeejj', 'prnake'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type'); // 专辑分类
     const id = ctx.req.param('id'); // 专辑id
     const shouldAll = judgeTrue(ctx.req.param('all'), 'all');
@@ -209,7 +228,7 @@ export default async (ctx) => {
         return resultItem;
     });
 
-    ctx.set('data', {
+    return {
         title: albumTitle,
         link: baseUrl + albumUrl,
         description: albumIntro,
@@ -217,5 +236,5 @@ export default async (ctx) => {
         itunes_author: author,
         itunes_category: categoryDict[albumCategory] || albumCategory,
         item: resultItems,
-    });
-};
+    };
+}

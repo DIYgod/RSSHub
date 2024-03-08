@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,25 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:language/news/:category?',
+    categories: ['traditional-media'],
+    example: '/dn/en-us/news',
+    parameters: { language: 'Language, see below', category: 'Category, see below, The Latest by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'News',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const { language, category = '' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
 
@@ -79,7 +98,7 @@ export default async (ctx) => {
     const title = $('a.logo img').prop('alt');
     const icon = $('link[rel="icon"]').prop('href');
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${title} - ${$('div.group a.active').text()}`,
         link: currentUrl,
@@ -90,5 +109,5 @@ export default async (ctx) => {
         logo: icon,
         subtitle: $('title').text(),
         author: title,
-    });
-};
+    };
+}

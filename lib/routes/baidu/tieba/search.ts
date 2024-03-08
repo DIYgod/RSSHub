@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,25 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/tieba/search/:qw/:routeParams?',
+    categories: ['blog'],
+    example: '/baidu/tieba/search/neuro',
+    parameters: { qw: '搜索关键词', routeParams: '额外参数；请参阅以下说明和表格' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '贴吧搜索',
+    maintainers: ['JimenezLi'],
+    handler,
+};
+
+async function handler(ctx) {
     const qw = ctx.req.param('qw');
     const query = new URLSearchParams(ctx.req.param('routeParams'));
     query.set('ie', 'utf-8');
@@ -28,7 +47,7 @@ export default async (ctx) => {
     const $ = load(data);
     const resultList = $('div.s_post');
 
-    ctx.set('data', {
+    return {
         title: `${qw} - ${query.get('kw') || '百度贴'}吧搜索`,
         link,
         item: resultList.toArray().map((element) => {
@@ -62,5 +81,5 @@ export default async (ctx) => {
                 link,
             };
         }),
-    });
-};
+    };
+}

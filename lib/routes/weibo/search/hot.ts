@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -13,7 +14,28 @@ import * as path from 'node:path';
 let wpic = 'false';
 let fullpic = 'false';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/search/hot/:fulltext?',
+    categories: ['new-media'],
+    example: '/weibo/search/hot',
+    parameters: { fulltext: 'N' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['s.weibo.com/top/summary'],
+    },
+    name: '热搜榜',
+    maintainers: ['xyqfer', 'shinemoon'],
+    handler,
+};
+
+async function handler(ctx) {
     wpic = ctx.req.query('pic') ?? 'false';
     fullpic = ctx.req.query('fullpic') ?? 'false';
     const {
@@ -67,14 +89,14 @@ export default async (ctx) => {
     }
 
     // Update ctx
-    ctx.set('data', {
+    return {
         title: '微博热搜榜',
         link: 'https://s.weibo.com/top/summary?cate=realtimehot',
         description: '实时热点，每分钟更新一次',
         item: resultItems,
-    });
+    };
     // ctx.set('data', weiboUtils.sinaimgTvax(ctx.state.data)); // no image in the route
-};
+}
 
 async function fetchContent(url) {
     // Fetch the subpageinof

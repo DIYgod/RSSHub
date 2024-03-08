@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,25 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id',
+    categories: ['picture'],
+    example: '/radio/1552135',
+    parameters: { id: '专辑 id，可在对应专辑页面的 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: true,
+        supportScihub: false,
+    },
+    name: '节目',
+    maintainers: ['kt286', 'nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const size = ctx.req.query('limit') ?? '100';
 
@@ -47,12 +66,12 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: `云听 - ${data.odchannel.name}`,
         link: currentUrl,
         item: items,
         image: data.odchannel.imageUrl[0].url,
         itunes_author: data.odchannel.commissioningEditorName || data.odchannel.editorName || data.odchannel.source || 'radio.cn',
         description: data.odchannel.description || data.odchannel.sub_title || '',
-    });
-};
+    };
+}

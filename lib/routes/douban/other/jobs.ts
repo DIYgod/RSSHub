@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
@@ -9,7 +10,25 @@ const titleMap = {
     intern: '实习生招聘',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jobs/:type',
+    categories: ['new-media'],
+    example: '/douban/jobs/campus',
+    parameters: { type: '招聘类型，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '豆瓣招聘',
+    maintainers: ['Fatpandac'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
     const url = `${rootUrl}/jobs/${type}`;
 
@@ -25,9 +44,9 @@ export default async (ctx) => {
         }))
         .get();
 
-    ctx.set('data', {
+    return {
         title: `豆瓣${titleMap[type]}`,
         link: url,
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -73,7 +74,25 @@ const getPostContent = (list, { language }) =>
         })
     );
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:language/:gids/:type',
+    categories: ['reading'],
+    example: '/hoyolab/news/zh-cn/2/2',
+    parameters: { language: 'Language', gids: 'Game ID', type: 'Announcement type' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Official Announcement',
+    maintainers: ['ZenoTian'],
+    handler,
+};
+
+async function handler(ctx) {
     try {
         const { type, gids, language } = ctx.req.param();
         const params = {
@@ -86,15 +105,15 @@ export default async (ctx) => {
         const typeInfo = await getI18nType(language, cache.tryGet);
         const list = await getEventList(params);
         const items = await getPostContent(list, params);
-        ctx.set('data', {
+        return {
             title: `HoYoLAB-${gameInfo.name}-${typeInfo[type].title}`,
             link: `${LINK}/circles/${gids}/${OFFICIAL_PAGE_TYPE[gids]}/official?page_type=${OFFICIAL_PAGE_TYPE[gids]}&page_sort=${typeInfo[type].sort}`,
             item: items,
             image: gameInfo.icon,
             icon: gameInfo.icon,
             logo: gameInfo.icon,
-        });
+        };
     } catch (error) {
         logger.error(error);
     }
-};
+}

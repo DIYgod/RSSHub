@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -37,7 +38,28 @@ const getOption = async (type, name) => {
     return;
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/samr/xgzlyhd/:category?/:department?',
+    categories: ['study'],
+    example: '/gov/samr/xgzlyhd',
+    parameters: { category: '留言类型，见下表，默认为全部', department: '回复部门，见下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['xgzlyhd.samr.gov.cn/gjjly/index'],
+    },
+    name: '留言咨询',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category, department } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
 
@@ -87,7 +109,7 @@ export default async (ctx) => {
     const subtitle = [categoryOption ? categoryOption.name : undefined, departmentOption ? departmentOption.name : undefined].filter(Boolean).join(' - ');
     const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${author}${title}${subtitle ? ` - ${subtitle}` : ''}`,
         link: currentUrl,
@@ -99,5 +121,5 @@ export default async (ctx) => {
         subtitle,
         author,
         allowEmpty: true,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,29 @@ import timezone from '@/utils/timezone';
 
 const host = 'https://www.nowcoder.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/experience/:tagId',
+    categories: ['blog'],
+    example: '/nowcoder/experience/639?order=3&companyId=665&phaseId=0',
+    parameters: { tagId: '职位id [🔗查询链接](https://www.nowcoder.com/profile/all-jobs)复制打开' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['nowcoder.com/'],
+        target: '/experience',
+    },
+    name: '面经',
+    maintainers: ['huyyi'],
+    handler,
+};
+
+async function handler(ctx) {
     const params = new URLSearchParams(ctx.req.query());
     params.append('tagId', ctx.req.param('tagId'));
 
@@ -41,9 +64,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `牛客面经Tag${ctx.req.param('tagId')}`,
         link: link.href,
         item: out,
-    });
-};
+    };
+}

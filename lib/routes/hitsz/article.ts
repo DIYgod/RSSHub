@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/article/:category?',
+    categories: ['forecast'],
+    example: '/hitsz/article/id-74',
+    parameters: { category: '分类名，默认为校园动态' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '新闻中心',
+    maintainers: ['xandery-geek'],
+    handler,
+};
+
+async function handler(ctx) {
     const host = 'https://www.hitsz.edu.cn';
     const category = ctx.req.param('category') ?? 'id-77';
     const link = `${host}/article/${category}.html`;
@@ -33,10 +52,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '哈尔滨工业大学（深圳）-' + category_name,
         link,
         description: '哈尔滨工业大学（深圳）-' + category_name,
         item: items,
-    });
-};
+    };
+}

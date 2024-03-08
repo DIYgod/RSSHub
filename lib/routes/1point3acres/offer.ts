@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,29 @@ import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/offer/:year?/:major?/:school?',
+    categories: ['blog'],
+    example: '/1point3acres/offer/12/null/CMU',
+    parameters: { year: '录取年份  id，空为null', major: '录取专业 id，空为null', school: '录取学校 id，空为null' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['offer.1point3acres.com/'],
+        target: '/offer',
+    },
+    name: '录取结果',
+    maintainers: ['EthanWng97'],
+    handler,
+};
+
+async function handler(ctx) {
     // year 2017-2022
     // 2017:6   2018:11   2019:12   2020:13   2021:14   2022:15
     // CS:1     MIS:2
@@ -56,7 +79,7 @@ export default async (ctx) => {
     //     },
     // });
     // const tid = responseBasic_1.data.background.tid;
-    ctx.set('data', {
+    return {
         title: '录取结果 - 一亩三分地',
         link: 'https://offer.1point3acres.com',
         item: data.map((item) => ({
@@ -68,5 +91,5 @@ export default async (ctx) => {
             link: 'https://offer.1point3acres.com',
             guid: `1point3acres:offer:${year}:${major}:${school}:${item.id}`,
         })),
-    });
-};
+    };
+}

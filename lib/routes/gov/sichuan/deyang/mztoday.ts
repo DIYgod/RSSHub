@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -119,13 +120,35 @@ const getInfoContent = (item) =>
         };
     });
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/sichuan/deyang/mztoday/:infoType?',
+    categories: ['study'],
+    example: '/gov/sichuan/deyang/mztoday/zx',
+    parameters: { infoType: '信息栏目名称。默认最新(zx)' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.mztoday.gov.cn/*'],
+        target: '/sichuan/deyang/mztoday',
+    },
+    name: '今日绵竹',
+    maintainers: ['zytomorrow'],
+    handler,
+};
+
+async function handler(ctx) {
     const infoType = ctx.req.param('infoType') || 'zx';
     const infoBasicUrl = `${rootUrl}${basicInfoDict[infoType].url}`;
     const infoUrlList = await getInfoUrlList(infoBasicUrl);
     const items = await Promise.all(infoUrlList.map((item) => getInfoContent(item)));
 
-    ctx.set('data', {
+    return {
         title: `今日绵竹-${basicInfoDict[infoType].name}`,
         link: `${infoBasicUrl}1`,
         item: items.map((item) => ({
@@ -134,5 +157,5 @@ export default async (ctx) => {
             link: item.link,
             pubDate: item.pubDate,
         })),
-    });
-};
+    };
+}

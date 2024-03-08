@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/health/blog',
+    categories: ['traditional-media'],
+    example: '/harvard/health/blog',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.health.harvard.edu/blog'],
+    },
+    name: 'Health Blog',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler() {
     const rootUrl = 'https://www.health.harvard.edu';
     const currentUrl = `${rootUrl}/blog`;
 
@@ -45,9 +67,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'Harvard Health Blog',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

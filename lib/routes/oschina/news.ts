@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -32,7 +33,29 @@ const configs = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:category?',
+    categories: ['design'],
+    example: '/oschina/news/project',
+    parameters: { category: '板块名' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['oschina.net/news/:category'],
+        target: '/news/:category',
+    },
+    name: '资讯',
+    maintainers: ['tgly307', 'zengxs'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'all';
     const config = configs[category];
 
@@ -87,9 +110,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `开源中国-${config.name}`,
         link: config.link,
         item: resultItem,
-    });
-};
+    };
+}

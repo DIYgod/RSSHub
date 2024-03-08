@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import { config } from '@/config';
 
 import parseArticle from './parse-article.js';
 import { getWebInlineRecommendedFeedQuery } from './graphql.js';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/for-you/:user',
+    categories: ['programming'],
+    example: '/medium/for-you/imsingee',
+    parameters: { user: 'Username' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Personalized Recommendations - For You',
+    maintainers: ['ImSingee'],
+    handler,
+};
+
+async function handler(ctx) {
     const user = ctx.req.param('user');
 
     const cookie = config.medium.cookies[user];
@@ -23,9 +42,9 @@ export default async (ctx) => {
 
     const parsedArticles = await Promise.all(urls.map((url) => parseArticle(ctx, url)));
 
-    ctx.set('data', {
+    return {
         title: `${user} Medium For You`,
         link: 'https://medium.com/',
         item: parsedArticles,
-    });
-};
+    };
+}

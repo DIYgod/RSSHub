@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { CookieJar } from 'tough-cookie';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/section77/:type?',
+    categories: ['study'],
+    example: '/parliament/section77',
+    parameters: { type: 'Type of hearing status, see below' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: "Thailand Parliament Draft of Law's public hearing system",
+    maintainers: ['itpcc'],
+    handler,
+};
+
+async function handler(ctx) {
     const baseUrl = 'https://www.parliament.go.th/section77';
     const { type = '' } = ctx.req.param();
     const cookieJar = new CookieJar();
@@ -159,4 +178,4 @@ export default async (ctx) => {
     result.item = actListFull;
 
     ctx.set('data', result);
-};
+}

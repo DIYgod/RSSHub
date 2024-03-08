@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -20,7 +21,25 @@ const typeMap = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:type?',
+    categories: ['forecast'],
+    example: '/wsyu/news/xxyw',
+    parameters: { type: '分类，默认为 `xxyw`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '新闻中心',
+    maintainers: ['Derekmini'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') || 'xxyw';
     const link = baseUrl + typeMap[type].url;
     const response = await got({
@@ -78,9 +97,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: '武昌首义学院-' + typeMap[type].name,
         link,
         item: out,
-    });
-};
+    };
+}

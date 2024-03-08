@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
 import { rootUrl, ossUrl, ProcessFeed } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/thinktank/:id/:type?',
+    categories: ['government'],
+    example: '/aisixiang/thinktank/WuQine/论文',
+    parameters: { id: '专栏 ID，一般为作者拼音，可在URL中找到', type: '栏目类型，参考下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '思想库（专栏）',
+    maintainers: ['hoilc', 'nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const { id, type = '' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -38,7 +57,7 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         item: await ProcessFeed(limit, cache.tryGet, items),
         title: `爱思想 - ${title}`,
         link: currentUrl,
@@ -46,5 +65,5 @@ export default async (ctx) => {
         language: 'zh-cn',
         image: new URL('images/logo_thinktank.jpg', ossUrl).href,
         subtitle: title,
-    });
-};
+    };
+}

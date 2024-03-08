@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -33,7 +34,25 @@ const get_from_link = async (link) => {
         });
     return articleList;
 };
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jwc/:category?',
+    categories: ['forecast'],
+    example: '/ecust/jwc/mto',
+    parameters: { category: '订阅板块，默认为全部订阅' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '本科教务处信息网',
+    maintainers: ['lxl66566'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = 'all' } = ctx.req.param();
     const categoryItem = categoryMap[category] || null; // all -> null
     const pageUrl = categoryItem ? [`${baseUrl}${categoryItem.link}/list.htm`] : Object.values(categoryMap).map((item) => `${baseUrl}${item.link}/list.htm`);
@@ -59,9 +78,9 @@ export default async (ctx) => {
             })
         )
     );
-    ctx.set('data', {
+    return {
         title: `华理教务处 - ${categoryItem ? categoryItem.name : '全部'}`,
         link: categoryItem ? pageUrl[0] : baseUrl,
         item: result,
-    });
-};
+    };
+}

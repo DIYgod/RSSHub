@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import auth from './auth';
 import utils from '../utils';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/xhu/people/activities/:hexId',
+    categories: ['new-media'],
+    example: '/zhihu/xhu/people/activities/246e6cf44e94cefbf4b959cb5042bc91',
+    parameters: { hexId: '用户的 16 进制 id，获取方式见下方说明' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.zhihu.com/people/:id'],
+        target: '/people/activities/:id',
+    },
+    name: 'xhu - 用户动态',
+    maintainers: ['JimenezLi'],
+    handler,
+};
+
+async function handler(ctx) {
     const xhuCookie = await auth.getCookie(ctx);
     const hexId = ctx.req.param('hexId');
     const link = `https://www.zhihu.com/people/${hexId}`;
@@ -19,7 +42,7 @@ export default async (ctx) => {
     });
     const data = response.data.data;
 
-    ctx.set('data', {
+    return {
         title: `${data[0].actor.name}的知乎动态`,
         link,
         image: data[0].actor.avatar_url,
@@ -123,5 +146,5 @@ export default async (ctx) => {
                 link: url,
             };
         }),
-    });
-};
+    };
+}

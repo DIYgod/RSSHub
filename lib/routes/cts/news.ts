@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import asyncPool from 'tiny-async-pool';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category',
+    categories: ['bbs'],
+    example: '/cts/real',
+    parameters: { category: '类别' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['news.cts.com.tw/:category/index.html'],
+    },
+    name: '新聞',
+    maintainers: ['miles170'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
     const currentUrl = `https://news.cts.com.tw/${category}/index.html`;
     const response = await got(currentUrl);
@@ -32,10 +54,10 @@ export default async (ctx) => {
         items.push(data);
     }
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         description: $('meta[name="description"]').attr('content'),
         item: items,
-    });
-};
+    };
+}

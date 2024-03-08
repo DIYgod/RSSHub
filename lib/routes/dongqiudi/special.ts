@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/special/:id',
+    categories: ['traditional-media'],
+    example: '/dongqiudi/special/41',
+    parameters: { id: '专题 id, 可自行通过 https://www.dongqiudi.com/special/+数字匹配' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.dongqiudi.com/special/:id'],
+    },
+    name: '专题',
+    maintainers: ['dxmpalb'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const { data: response } = await got(`https://www.dongqiudi.com/api/old/columns/${id}`);
 
@@ -26,10 +48,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `懂球帝专题-${response.title}`,
         description: response.description,
         link: `https://www.dongqiudi.com/special/${id}`,
         item: out.filter(Boolean),
-    });
-};
+    };
+}

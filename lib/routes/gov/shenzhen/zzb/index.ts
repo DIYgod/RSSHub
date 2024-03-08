@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -5,7 +6,28 @@ import timezone from '@/utils/timezone';
 
 const rootURL = 'http://www.zzb.sz.gov.cn/';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/shenzhen/zzb/:caty/:page?',
+    categories: ['study'],
+    example: '/gov/shenzhen/zzb/tzgg',
+    parameters: { caty: '信息类别', page: '页码' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['zzb.sz.gov.cn/*'],
+    },
+    name: '深圳市委组织部',
+    maintainers: ['zlasd'],
+    handler,
+};
+
+async function handler(ctx) {
     const categoryID = ctx.req.param('caty');
     const page = ctx.req.param('page') ?? '1';
 
@@ -32,9 +54,9 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: '深圳组工在线 - ' + title,
         link: currentURL.href,
         item: list,
-    });
-};
+    };
+}

@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { nwafuMap } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:type?',
+    categories: ['forecast'],
+    example: '/nwafu/lib',
+    parameters: { type: '默认为 `jiaowu`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '校园要闻',
+    maintainers: ['karinido'],
+    handler,
+};
+
+async function handler(ctx) {
     const { type = 'jiaowu' } = ctx.req.param();
     const response = await got.get(nwafuMap.get(type)[0]);
     const $ = load(response.data);
@@ -35,10 +54,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: nwafuMap.get(type)[4],
         link: nwafuMap.get(type)[0],
         description: nwafuMap.get(type)[4],
         item: out,
-    });
-};
+    };
+}

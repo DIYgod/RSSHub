@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { isValidHost } from '@/utils/valid-host';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id',
+    categories: ['programming'],
+    example: '/zhubai/via',
+    parameters: { id: '`id` 为竹白主页 url 中的三级域名，如 via.zhubai.love 的 `id` 为 `via`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '文章',
+    maintainers: ['naixy28'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
     if (!isValidHost(id)) {
@@ -19,7 +38,7 @@ export default async (ctx) => {
     const data = response.data.data;
     const { name, description } = data[0].publication;
 
-    ctx.set('data', {
+    return {
         title: name,
         link: `https://${id}.zhubai.love/`,
         description,
@@ -29,5 +48,5 @@ export default async (ctx) => {
             link: `https://${id}.zhubai.love/posts/${item.id}`,
             author: name,
         })),
-    });
-};
+    };
+}

@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jgjcndrc/:id?',
+    categories: ['study'],
+    example: '/gov/jgjcndrc',
+    parameters: { id: '栏目 id，见下表，默认为 692，即通知公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '价格监测中心',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const { id = 'sytzgg' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -47,7 +66,7 @@ export default async (ctx) => {
     const subtitle = $('li.L').first().text();
     const image = new URL($('img.logo2').prop('src'), rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${author} - ${subtitle}`,
         link: currentUrl,
@@ -56,5 +75,5 @@ export default async (ctx) => {
         image,
         subtitle,
         author,
-    });
-};
+    };
+}

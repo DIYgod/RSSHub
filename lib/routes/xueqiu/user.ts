@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import queryString from 'query-string';
@@ -6,7 +7,29 @@ import sanitizeHtml from 'sanitize-html';
 
 const rootUrl = 'https://xueqiu.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:id/:type?',
+    categories: ['other'],
+    example: '/xueqiu/user/8152922548',
+    parameters: { id: '用户 id, 可在用户主页 URL 中找到', type: '动态的类型, 不填则默认全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['xueqiu.com/u/:id'],
+        target: '/user/:id',
+    },
+    name: '用户动态',
+    maintainers: ['imlonghao'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const type = ctx.req.param('type') || 10;
     const source = type === '11' ? '买卖' : '';
@@ -68,10 +91,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${data[0].user.screen_name} 的雪球${typename[type]}动态`,
         link: `${rootUrl}/u/${id}`,
         description: `${data[0].user.screen_name} 的雪球${typename[type]}动态`,
         item: items,
-    });
-};
+    };
+}

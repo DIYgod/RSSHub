@@ -1,14 +1,36 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/yjs',
+    categories: ['forecast'],
+    example: '/ccnu/yjs',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['gs.ccnu.edu.cn/zsgz/ssyjs.htm', 'gs.ccnu.edu.cn/'],
+    },
+    name: '研究生通知公告',
+    maintainers: ['shengmaosu'],
+    handler,
+};
+
+async function handler() {
     const link = 'http://gs.ccnu.edu.cn/zsgz/ssyjs.htm';
     const response = await got(link);
     const $ = load(response.data);
     const list = $('.main-zyrx li');
 
-    ctx.set('data', {
+    return {
         title: '华中师范大学研究生院',
         link,
         description: '华中师范大学研究生院通知公告',
@@ -23,5 +45,5 @@ export default async (ctx) => {
                     pubDate: parseDate(item.find('small').text(), 'YYYY-MM-DD'),
                 };
             }),
-    });
-};
+    };
+}

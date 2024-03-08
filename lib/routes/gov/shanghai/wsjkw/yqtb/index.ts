@@ -1,14 +1,36 @@
+import { Route } from '@/types';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/shanghai/wsjkw/yqtb',
+    categories: ['study'],
+    example: '/gov/shanghai/wsjkw/yqtb',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['wsjkw.sh.gov.cn/'],
+    },
+    name: '上海卫健委 疫情通报',
+    maintainers: ['zcf0508'],
+    handler,
+};
+
+async function handler() {
     const url = `https://wsjkw.sh.gov.cn/yqtb/index.html`;
 
     const res = await got.get(url);
     const $ = load(res.data);
     const list = $('.uli16.nowrapli.list-date  li');
-    ctx.set('data', {
+    return {
         title: '疫情通报-上海卫健委',
         link: url,
         item:
@@ -29,5 +51,5 @@ export default async (ctx) => {
                     };
                 })
                 .get(),
-    });
-};
+    };
+}

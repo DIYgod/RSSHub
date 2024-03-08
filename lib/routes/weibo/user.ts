@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import querystring from 'querystring';
 import got from '@/utils/got';
@@ -7,7 +8,29 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:uid/:routeParams?',
+    categories: ['new-media'],
+    example: '/weibo/user/1195230310',
+    parameters: { uid: '用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', routeParams: '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=1` 时开启微博视频显示' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['m.weibo.cn/u/:uid', 'm.weibo.cn/profile/:uid'],
+        target: '/user/:uid',
+    },
+    name: '博主',
+    maintainers: ['DIYgod', 'iplusx', 'Rongronggg9'],
+    handler,
+};
+
+async function handler(ctx) {
     const uid = ctx.req.param('uid');
     let displayVideo = '1';
     let displayArticle = '0';
@@ -149,4 +172,4 @@ export default async (ctx) => {
             item: resultItems,
         })
     );
-};
+}

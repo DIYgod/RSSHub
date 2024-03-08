@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -19,7 +20,18 @@ const categories = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/dept/:category?', '/:category?'],
+    radar: {
+        source: ['m.hupu.com/:category', 'm.hupu.com/'],
+        target: '/:category',
+    },
+    name: 'Unknown',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'soccer';
 
     const rootUrl = 'https://m.hupu.com';
@@ -73,9 +85,9 @@ export default async (ctx) => {
             )
     );
 
-    ctx.set('data', {
+    return {
         title: `虎扑 - ${categories[category].title}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

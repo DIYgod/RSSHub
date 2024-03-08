@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:type',
+    categories: ['forecast'],
+    example: '/buaa/news/zhxw',
+    parameters: { type: '新闻版块' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '新闻网',
+    maintainers: ['AlanDecode'],
+    handler,
+};
+
+async function handler(ctx) {
     const baseUrl = 'https://news.buaa.edu.cn';
     const type = ctx.req.param('type');
 
@@ -38,10 +57,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `北航新闻 - ${title}`,
         link,
         description: `北京航空航天大学新闻网 - ${title}`,
         item: result,
-    });
-};
+    };
+}

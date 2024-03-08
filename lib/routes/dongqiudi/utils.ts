@@ -109,12 +109,12 @@ const ProcessFeed = async (ctx, type, id) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${name} - 相关新闻`,
         link,
         image: type === 'team' ? typeInfo.team_logo : typeInfo.person_logo,
         item: out,
-    });
+    };
 };
 
 const ProcessFeedType2 = (item, response) => {

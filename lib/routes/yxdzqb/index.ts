@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -16,7 +17,28 @@ const map = {
     low_chinese: 'index_low_cn.html',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:type',
+    categories: ['reading'],
+    example: '/yxdzqb/popular_cn',
+    parameters: { type: '折扣类型' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['yxdzqb.com/'],
+    },
+    name: '游戏折扣',
+    maintainers: ['LogicJake', 'nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
 
     const link = `${host}/${Object.hasOwn(map, type) ? map[type] : `index_${type}.html`}`;
@@ -48,9 +70,9 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: `${title}-游戏打折情报`,
         link,
         item: out,
-    });
-};
+    };
+}

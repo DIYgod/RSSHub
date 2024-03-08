@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { rootUrl, processItems, fetchData } from './util';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/tag/:id',
+    categories: ['traditional-media'],
+    example: '/huxiu/tag/291',
+    parameters: { id: '标签 id，可在对应标签页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: true,
+        supportPodcast: true,
+        supportScihub: false,
+    },
+    name: '标签',
+    maintainers: ['xyqfer', 'HenryQW', 'nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
 
@@ -20,8 +39,8 @@ export default async (ctx) => {
 
     const data = await fetchData(currentUrl);
 
-    ctx.set('data', {
+    return {
         item: items,
         ...data,
-    });
-};
+    };
+}

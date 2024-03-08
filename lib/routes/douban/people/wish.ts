@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import querystring from 'querystring';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { config } from '@/config';
-export default async (ctx) => {
+export const route: Route = {
+    path: '/people/:userid/wish/:routeParams?',
+    categories: ['new-media'],
+    example: '/douban/people/exherb/wish',
+    parameters: { userid: '用户id', routeParams: '额外参数；见下' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '用户想看',
+    maintainers: ['exherb'],
+    handler,
+};
+
+async function handler(ctx) {
     const userid = ctx.req.param('userid');
     const routeParams = querystring.parse(ctx.req.param('routeParams'));
 
@@ -64,9 +83,9 @@ export default async (ctx) => {
     }
 
     const items = (await Promise.all(tasks)).flat();
-    ctx.set('data', {
+    return {
         title: `豆瓣想看 - ${userName || userid}`,
         link: `https://movie.douban.com/people/${userid}/wish`,
         item: items,
-    });
-};
+    };
+}

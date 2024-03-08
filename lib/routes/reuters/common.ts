@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,28 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category/:topic?',
+    categories: ['bbs'],
+    example: '/reuters/world/us',
+    parameters: { category: 'find it in the URL, or tables below', topic: 'find it in the URL, or tables below' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['reuters.com/:category/:topic?', 'reuters.com/'],
+    },
+    name: 'Category/Topic/Author',
+    maintainers: ['LyleLee', 'HenryQW', 'proletarius101', 'black-desk', 'nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const MUST_FETCH_BY_TOPICS = new Set(['authors']);
     const CAN_USE_SOPHI = ['world'];
 
@@ -135,11 +157,11 @@ export default async (ctx) => {
     );
     items = results.filter((r) => r.status === 'fulfilled').map((r) => r.value);
 
-    ctx.set('data', {
+    return {
         title,
         description,
         image: 'https://www.reuters.com/pf/resources/images/reuters/logo-vertical-default-512x512.png?d=116',
         link: `https://www.reuters.com${section_id}`,
         item: items,
-    });
-};
+    };
+}

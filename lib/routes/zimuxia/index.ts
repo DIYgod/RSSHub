@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['picture'],
+    example: '/zimuxia',
+    parameters: { category: '分类，见下表，默认为 ALL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '分类',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
 
     const rootUrl = 'https://www.zimuxia.cn';
@@ -57,9 +76,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${category || 'ALL'} - FIX字幕侠`,
         link: response.url,
         item: items,
-    });
-};
+    };
+}

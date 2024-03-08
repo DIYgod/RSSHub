@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/is/:code',
+    categories: ['forecast'],
+    example: '/swpu/is/xyxw',
+    parameters: { code: '栏目代码' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['swpu.edu.cn/'],
+        target: '',
+    },
+    name: '信息学院',
+    maintainers: ['RiverTwilight'],
+    handler,
+};
+
+async function handler(ctx) {
     const url = `https://www.swpu.edu.cn/is/xydt/${ctx.req.param('code')}.htm`;
 
     const res = await got(url);
@@ -44,11 +67,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `西南石油大学信息学院 ${title}`,
         link: url,
         description: `西南石油大学信息学院 ${title}`,
         language: 'zh-CN',
         item: out,
-    });
-};
+    };
+}

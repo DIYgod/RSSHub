@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { asyncPoolAll, parseArticle } from './utils';
@@ -6,7 +7,25 @@ const hostMap = {
     'zh-cn': 'https://cn.wsj.com/zh-hans',
     'zh-tw': 'https://cn.wsj.com/zh-hant',
 };
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:lang/:category?',
+    categories: ['bbs'],
+    example: '/wsj/en-us/opinion',
+    parameters: { lang: 'Language, `en-us`, `zh-cn`, `zh-tw`', category: 'Category. See below' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'News',
+    maintainers: ['oppilate'],
+    handler,
+};
+
+async function handler(ctx) {
     const lang = ctx.req.param('lang');
     const category = ctx.req.param('category') || '';
     const host = hostMap[lang];
@@ -42,10 +61,10 @@ export default async (ctx) => {
     });
     const items = await asyncPoolAll(10, list, (item) => parseArticle(item));
 
-    ctx.set('data', {
+    return {
         title: `WSJ${subTitle}`,
         link: url,
         description: `WSJ${subTitle}`,
         item: items,
-    });
-};
+    };
+}

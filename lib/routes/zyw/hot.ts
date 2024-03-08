@@ -1,6 +1,25 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/hot/:site?',
+    categories: ['traditional-media'],
+    example: '/zyw/hot',
+    parameters: { site: '站点，见下表，默认为空，即全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '今日热榜',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const site = ctx.req.param('site') ?? '';
 
     const rootUrl = 'https://hot.zyw.asia';
@@ -55,9 +74,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `今日热榜${site ? ` - ${sites[0].label}` : ''}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

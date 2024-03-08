@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import JSONbig from 'json-bigint';
@@ -67,7 +68,29 @@ import cacheIn from './cache';
         - cover 直播间封面
 */
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/dynamic/:uid/:routeParams?',
+    categories: ['new-media'],
+    example: '/bilibili/user/dynamic/2267573',
+    parameters: { uid: '用户 id, 可在 UP 主主页中找到', routeParams: '额外参数；请参阅以下说明和表格' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['space.bilibili.com/:uid'],
+        target: '/user/dynamic/:uid',
+    },
+    name: 'UP 主动态',
+    maintainers: ['DIYgod', 'zytomorrow', 'CaoMeiYouRen', 'JimenezLi'],
+    handler,
+};
+
+async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const showEmoji = fallback(undefined, queryToBoolean(routeParams.showEmoji), false);
@@ -236,11 +259,11 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `${author} 的 bilibili 动态`,
         link: `https://space.bilibili.com/${uid}/dynamic`,
         description: `${author} 的 bilibili 动态`,
         image: face,
         item: items,
-    });
-};
+    };
+}

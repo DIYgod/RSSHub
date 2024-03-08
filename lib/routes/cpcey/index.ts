@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -16,7 +17,25 @@ const typeMap = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:type?',
+    categories: ['study'],
+    example: '/cpcey/xwg',
+    parameters: { type: '默认为 `xwg`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '消费资讯',
+    maintainers: ['Fatpandac'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'xwg';
     const url = rootUrl + typeMap[type].url;
 
@@ -53,9 +72,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `行政院消费者保护会-${typeMap[type].name}`,
         link: url,
         item: items,
-    });
-};
+    };
+}

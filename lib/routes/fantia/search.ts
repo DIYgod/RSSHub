@@ -1,8 +1,34 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?',
+    categories: ['anime'],
+    example: '/fantia/search/posts/all/daily',
+    parameters: {
+        type: 'Type, see the table below, `posts` by default',
+        caty: 'Category, see the table below, can also be found in search page URL, `すべてのクリエイター` by default',
+        period: 'Ranking period, see the table below, empty by default',
+        order: 'Sorting, see the table below, `更新の新しい順` by default',
+        rating: 'Rating, see the table below, `すべて` by default',
+        keyword: 'Keyword, empty by default',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Search',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') || 'posts';
     const caty = ctx.req.param('caty') || '';
     const order = ctx.req.param('order') || 'updater';
@@ -62,9 +88,9 @@ export default async (ctx) => {
             break;
     }
 
-    ctx.set('data', {
+    return {
         title: `Fantia - Search ${type}`,
         link: apiUrl.replace('api/v1/search/', ''),
         item: items,
-    });
-};
+    };
+}

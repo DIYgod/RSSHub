@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import * as cheerio from 'cheerio';
 import got from '@/utils/got';
 import cache from '@/utils/cache';
@@ -29,7 +30,25 @@ function parseItems(tid: string, $: cheerio.CheerioAPI) {
         });
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/post/:tid',
+    categories: ['picture'],
+    example: '/t66y/post/3286088',
+    parameters: { tid: '帖子 id, 可在帖子 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '帖子跟踪',
+    maintainers: ['cnzgray'],
+    handler,
+};
+
+async function handler(ctx) {
     const tid = ctx.req.param('tid') as string;
     const { data: response } = await got(`${baseUrl}/read.php?tid=${tid}`);
     // 跟踪重定向
@@ -67,9 +86,9 @@ export default async (ctx) => {
 
     const items = [...firstPage, ...nextPages.flat()];
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link,
         item: items,
-    });
-};
+    };
+}
