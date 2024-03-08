@@ -20,7 +20,7 @@ export const route: Route = {
         supportScihub: false,
     },
     radar: {
-        source: ['mymusicsheet.com:username/*', 'mymusicsheet.com/:username'],
+        source: ['mymusicsheet.com/:username/*', 'mymusicsheet.com/:username'],
         target: '/user/sheets/:username',
     },
     name: 'User Sheets',

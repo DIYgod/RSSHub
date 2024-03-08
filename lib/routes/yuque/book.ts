@@ -23,7 +23,7 @@ export const route: Route = {
         supportScihub: false,
     },
     radar: {
-        source: ['yuque.com:name/:book'],
+        source: ['yuque.com/:name/:book'],
     },
     name: '知识库',
     maintainers: ['aha2mao', 'ltaoo'],

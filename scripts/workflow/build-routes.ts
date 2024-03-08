@@ -40,7 +40,7 @@ for (const namespace in namespaces) {
                 }
                 radar[domain][subdomain].push({
                     title: data.name,
-                    docs: `https://docs.rsshub.app/routes/${data.categories[0] || 'other'}`,
+                    docs: `https://docs.rsshub.app/routes/${data.categories?.[0] || 'other'}`,
                     source: data.radar.source.map((source) => {
                         const sourceURL = new URL('https://' + source);
                         return sourceURL.pathname + sourceURL.search + sourceURL.hash;
