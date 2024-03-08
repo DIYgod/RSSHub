@@ -1,3 +1,3 @@
 export default (router) => {
-    router.get('/jsweekly', './jsweekly');
+    router.get('/weekly/:category?', './weekly');
 };
