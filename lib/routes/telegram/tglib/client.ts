@@ -7,7 +7,7 @@ import { UserAuthParams } from 'telegram/client/auth';
 import { StringSession } from 'telegram/sessions';
 
 let client: TelegramClient | undefined;
-export async function getClient(authParams?: UserAuthParams, session?: string) {
+export async function getClient(authParams?: Partial<UserAuthParams>, session?: string) {
     if (!config.telegram.session && session === undefined) {
         throw new Error('TELEGRAM_SESSION is not configured');
     }
@@ -25,19 +25,29 @@ export async function getClient(authParams?: UserAuthParams, session?: string) {
         maxConcurrentDownloads: Number(config.telegram.maxConcurrentDownloads ?? 10),
     });
     await client.start(Object.assign(authParams ?? {}, {
-        onError: (err) => { throw new Error('Cannot start TG: ' + err); },
+        onError: (err: Error) => { throw new Error('Cannot start TG: ' + err); },
     }) as any);
     return client;
 }
 
-export function getFilename(x) {
+export function getFilename(x: Api.TypeMessageMedia) {
     if (x instanceof Api.MessageMediaDocument) {
-        const docFilename = x.document.attributes.find((a) => a.className === 'DocumentAttributeFilename');
-        if (docFilename) {
-            return docFilename.fileName;
+        for (const a of (x.document as Api.Document).attributes) {
+            if (a instanceof Api.DocumentAttributeFilename) {
+                return a.fileName;
+            }
         }
     }
     return x.className;
+}
+
+export function getDocument(m: Api.TypeMessageMedia) {
+    if (m instanceof Api.MessageMediaDocument && m.document && !(m.document instanceof Api.DocumentEmpty)) {
+        return m.document;
+    }
+    if (m instanceof Api.MessageMediaWebPage && m.webpage instanceof Api.WebPage && m.webpage.document instanceof Api.Document) {
+        return m.webpage.document;
+    }
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
@@ -46,8 +56,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
         const client = await getClient({
             phoneNumber: () => rl.question('Please enter your phone number: '),
             password: () => rl.question('Please enter your password: '),
-            phoneCode: () => rl.question('Please enter the code you received: '),
-            onError: (err) => process.stderr.write(err.toString()),
+            phoneCode: () => rl.question('Please enter the code you received: ')
         }, '');
         process.stdout.write(`TELEGRAM_SESSION=${client.session.save()}\n`);
         process.exit(0);

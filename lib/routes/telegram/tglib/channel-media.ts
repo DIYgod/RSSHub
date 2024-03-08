@@ -1,19 +1,21 @@
+import { Context } from 'hono';
+import { stream } from 'hono/streaming';
+import { Api, TelegramClient } from 'telegram';
+import { IterDownloadFunction } from 'telegram/client/downloads';
+import { getAppropriatedPartSize } from 'telegram/Utils';
 import { config } from '@/config';
 import cacheModule from '@/utils/cache/index';
-import { stream } from 'hono/streaming';
-import { getAppropriatedPartSize } from 'telegram/Utils';
-import { Api, TelegramClient } from 'telegram';
+import { getClient, getDocument, getFilename } from './client';
 import { returnBigInt as bigInt } from 'telegram/Helpers';
-import { getClient, getFilename } from './client';
-import { StreamingApi } from 'hono/utils/stream';
+
 /**
  * https://core.telegram.org/api/files#stripped-thumbnails
  * @param bytes Buffer
  * @returns Buffer jpeg
  */
-function ExpandInlineBytes(bytes) {
+function ExpandInlineBytes(bytes: Buffer) {
     if (bytes.length < 3 || bytes[0] !== 0x1) {
-        return [];
+        throw new Error('cannot inflate a stripped jpeg');
     }
     const header = Buffer.from([
         0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46, 0x49, 0x46, 0x00, 0x01, 0x01, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0xff, 0xdb, 0x00, 0x43, 0x00, 0x28, 0x1c, 0x1e, 0x23, 0x1e, 0x19, 0x28, 0x23, 0x21, 0x23, 0x2d, 0x2b,
@@ -44,7 +46,7 @@ function ExpandInlineBytes(bytes) {
     return real;
 }
 
-function sortThumb(thumb) {
+function sortThumb(thumb: Api.TypePhotoSize) {
     if (thumb instanceof Api.PhotoStrippedSize) {
         return thumb.bytes.length;
     }
@@ -57,28 +59,25 @@ function sortThumb(thumb) {
     if (thumb instanceof Api.PhotoSizeProgressive) {
         return Math.max(...thumb.sizes);
     }
-    if (thumb instanceof Api.VideoSize) {
-        return thumb.size;
-    }
     return 0;
 }
 
-function chooseLargestThumb(thumbs) {
+function chooseLargestThumb(thumbs:  Api.TypePhotoSize[]) {
     thumbs = [...thumbs].sort((a, b) => sortThumb(a) - sortThumb(b));
     return thumbs.pop();
 }
 
-export function streamThumbnail(doc: Api.Document) {
+export async function* streamThumbnail(client: TelegramClient, doc: Api.Document) {
     if (doc.thumbs?.length ?? 0 > 0) {
-        const size = chooseLargestThumb(doc.thumbs);
+        const size = chooseLargestThumb(doc.thumbs!);
         if (size instanceof Api.PhotoCachedSize || size instanceof Api.PhotoStrippedSize) {
-            return (function* () {
-                yield ExpandInlineBytes(size.bytes);
-            })();
+            yield ExpandInlineBytes(size.bytes);
+        } else {
+            yield* streamDocument(client, doc, size && 'type' in size ? size.type : '');
         }
-        return streamDocument(doc, size && 'type' in size ? size.type : '');
+        return;
     }
-    throw new Error('not supported');
+    throw new Error('no thumbnails available');
 }
 
 export async function decodeMedia(client: TelegramClient, channelName: string, x: string, retry = false) {
@@ -99,9 +98,9 @@ export async function decodeMedia(client: TelegramClient, channelName: string, x
     }
 }
 
-export function streamDocument(client: TelegramClient, obj: Api.Document, thumbSize = '', offset?, limit?) {
+export async function* streamDocument(client: TelegramClient, obj: Api.Document, thumbSize = '', offset?: bigInt.BigInteger, limit?: bigInt.BigInteger) {
     const chunkSize = (obj.size ? getAppropriatedPartSize(obj.size) : 64) * 1024;
-    const iterFileParams = {
+    const iterFileParams: IterDownloadFunction = {
         file: new Api.InputDocumentFileLocation({
             id: obj.id,
             accessHash: obj.accessHash,
@@ -118,12 +117,14 @@ export function streamDocument(client: TelegramClient, obj: Api.Document, thumbS
         iterFileParams.offset = offset;
     }
     if (limit) {
-        iterFileParams.limit = limit;
+        iterFileParams.limit = limit.valueOf();
     }
-    return client.iterDownload(iterFileParams);
+    const stream = client.iterDownload(iterFileParams);
+    yield* stream;
+    await stream.close();
 }
 
-function parseRange(range, length) {
+function parseRange(range: string, length: bigInt.BigInteger) {
     if (!range) {
         return [];
     }
@@ -132,7 +133,7 @@ function parseRange(range, length) {
         throw new Error(`unsupported range: ${typ}`);
     }
     const segs = segstr.split(',').map((s) => s.trim());
-    const parsedSegs: Array<number>[] = []; // actually BigInt but ts is unhappy
+    const parsedSegs: bigInt.BigInteger[][] = [];
     for (const seg of segs) {
         const range = seg
             .split('-', 2)
@@ -140,9 +141,9 @@ function parseRange(range, length) {
             .map(bigInt);
         if (range.length < 2) {
             if (seg.startsWith('-')) {
-                range.unshift(0);
+                range.unshift(bigInt(0));
             } else {
-                range.push(length);
+                range.push(length.subtract(bigInt(1)));
             }
         }
         parsedSegs.push(range);
@@ -150,14 +151,14 @@ function parseRange(range, length) {
     return parsedSegs;
 }
 
-async function configureMiddlewares(ctx) {
+async function configureMiddlewares(ctx: Context) {
     // media is too heavy to cache in memory or redis, and lock-up is not needed
     await cacheModule.set(ctx.get('cacheControlKey'), '0', config.cache.requestTimeout);
     ctx.req.raw.headers.delete('Accept-Encoding'); // avoid hono compress() middleware detecting Accept-Encoding on req
     ctx.set('no-template', true); // skip RSSHub template middleware
 }
 
-function streamResponse(c, bodyIter, cb?: (e: Error | undefined, s: StreamingApi) => Promise<void>) {
+function streamResponse(c: Context, bodyIter: AsyncGenerator<Buffer>) {
     return stream(c, async (stream) => {
         let aborted = false;
         stream.onAbort(() => {
@@ -169,13 +170,10 @@ function streamResponse(c, bodyIter, cb?: (e: Error | undefined, s: StreamingApi
             // console.log(`writing ${chunk.length / 1024}kB`);
             await stream.write(chunk);
         }
-        if (cb) {
-            await cb(undefined, stream);
-        }
-    }, cb);
+    });
 }
 
-export default async function handler(ctx) {
+export default async function handler(ctx: Context) {
     await configureMiddlewares(ctx);
     const client = await getClient();
     const media = await decodeMedia(client, ctx.req.param('username'), ctx.req.param('media'));
@@ -188,40 +186,38 @@ export default async function handler(ctx) {
         return new Response(buf, {headers: {'Content-Type': 'image/jpeg'}});
     }
 
-    if (media instanceof Api.MessageMediaDocument) {
-        const doc =  media.document as Api.Document;
+    const doc = getDocument(media);
+    if (doc) {
         if ('thumb' in ctx.req.query()) {
             ctx.header('Content-Type', 'image/jpeg');
-            return streamResponse(ctx, streamThumbnail(doc));
+            return streamResponse(ctx, streamThumbnail(client, doc));
         }
         ctx.header('Content-Type', doc.mimeType);
         ctx.header('Accept-Ranges', 'bytes');
         ctx.header('Content-Security-Policy', "default-src 'self'");
 
-        const rangeHeader = ctx.req.header('Range');
-        const range = parseRange(rangeHeader, doc.size.valueOf() - 1);
+        const rangeHeader = ctx.req.header('Range') ?? '';
+        const range = parseRange(rangeHeader, doc.size);
         if (range.length > 1) {
             return ctx.text('Not Satisfiable', 416);
         }
 
-        let stream;
         if (range.length === 0) {
-            ctx.header('Content-Length', doc.size);
+            ctx.header('Content-Length', doc.size.toString());
             if (!doc.mimeType.startsWith('video/') &&
                 !doc.mimeType.startsWith('audio/') &&
                 !doc.mimeType.startsWith('image/')) {
                 ctx.header('Content-Disposition', `attachment; filename="${encodeURIComponent(getFilename(media))}"`);
             }
-            stream = streamDocument(client, doc);
+            return streamResponse(ctx, streamDocument(client, doc));
         } else {
             const [offset, limit] = range[0];
-            // console.log(`${ctx.method} ${ctx.req.url} Range: ${rangeHeader}`);
+            // console.log(`Range: ${rangeHeader}`);
             ctx.status(206); // partial content
-            ctx.header('Content-Length', (limit - offset + 1).toString());
+            ctx.header('Content-Length', (limit.subtract(offset).add(1)).toString());
             ctx.header('Content-Range', `bytes ${offset}-${limit}/${doc.size}`);
-            stream = streamDocument(client, doc, '', offset, limit);
+            return streamResponse(ctx, streamDocument(client, doc, '', offset, limit));
         }
-        return streamResponse(ctx, stream, () => stream.close());
     }
 
     return ctx.text(media.className, 415);

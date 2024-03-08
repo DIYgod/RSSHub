@@ -1,55 +1,72 @@
-import { config } from '@/config';
+import { Context } from 'hono';
 import { Api } from 'telegram';
 import { HTMLParser } from 'telegram/extensions/html';
-import { getClient, getFilename } from './client';
+import { getClient, getDocument, getFilename } from './client';
+import { getDisplayName } from 'telegram/Utils';
 
-function getMediaLink(ctx, channel, channelName, message) {
-    const base = `${new URL(ctx.req.url).origin}/telegram/channel/${channelName}/`;
-    const src = base + `${channel.channelId}_${message.id}`;
+function getPeerId(p: Api.TypePeer) {
+    return p instanceof Api.PeerChannel ? p.channelId :
+        p instanceof Api.PeerUser ? p.userId :
+        /* groups are negative */ p.chatId.multiply(-1);
+}
 
-    const x = message.media;
-    if (x instanceof Api.MessageMediaPhoto || (x instanceof Api.MessageMediaDocument && x.document.mimeType.startsWith('image/'))) {
+function getMediaLink(src: string, m: Api.TypeMessageMedia) {
+    const doc = getDocument(m);
+    const mime = doc ? doc.mimeType : '';
+
+    if (m instanceof Api.MessageMediaPhoto || mime.startsWith('image/')) {
         return `<img src="${src}" alt=""/>`;
     }
-    if (x instanceof Api.MessageMediaDocument && x.document.mimeType.startsWith('video/')) {
-        const vid = x.document.attributes.find((t) => t.className === 'DocumentAttributeVideo') ?? { w: 1080, h: 720 };
-        return `<video controls preload="metadata" poster="${src}?thumb" width="${vid.w / 2}" height="${vid.h / 2}"><source src="${src}" type="${x.document.mimeType}"></video>`;
+    if (doc && mime.startsWith('video/')) {
+        const vid = (doc.attributes.find((t) => t instanceof Api.DocumentAttributeVideo) ?? { w: 1080, h: 720 }) as {w: number, h: number};
+        return `<video controls preload="metadata" poster="${src}?thumb" width="${vid.w / 2}" height="${vid.h / 2}"><source src="${src}" type="${mime}"></video>`;
     }
-    if (x instanceof Api.MessageMediaDocument && x.document.mimeType.startsWith('audio/')) {
+    if (mime.startsWith('audio/')) {
         return `<audio src="${src}"></audio>`;
     }
-    if (x instanceof Api.MessageMediaGeo) {
-        return `<a href="https://www.google.com/maps/search/?api=1&query=${x.geo.lat}%2C${x.geo.long}" target="_blank">Geo LatLon: ${x.geo.lat}, ${x.geo.long}</a>`;
+
+    if (doc && mime.startsWith('application/')) {
+        let linkText = `${getFilename(m)} (${humanFileSize(doc.size.valueOf())})`;
+        if (mime.endsWith('x-tgsticker')) {
+            linkText = ''; // remove filename, it's only an animated sticker
+        }
+        if ((doc.thumbs?.length ?? 0) > 0) {
+            linkText = `<img src="${src}?thumb" alt=""/><br/>${linkText}`;
+        }
+        return `<a href="${src}" target="_blank">${linkText}</a>`;
     }
-    let linkText = getFilename(x);
-    if (x instanceof Api.MessageMediaDocument) {
-        linkText += ` (${humanFileSize(x.document.size)})`;
-        return `<a href="${src}" target="_blank"><img src="${src}?thumb" alt=""/><br/>${linkText}</a>`;
+    if (m instanceof Api.MessageMediaGeo && m.geo instanceof Api.GeoPoint) {
+        return `<a href="https://www.google.com/maps/search/?api=1&query=${m.geo.lat}%2C${m.geo.long}" target="_blank">Geo LatLon: ${m.geo.lat}, ${m.geo.long}</a>`;
     }
-    return x.className;
+    if (m instanceof Api.MessageMediaWebPage) {
+        return ''; // a link without a document attach, usually is in the message text, so we can skip here
+    }
+
+    return m.className;
 }
 
-function humanFileSize(size) {
+function humanFileSize(size: number) {
     const i = size === 0 ? 0 : Math.floor(Math.log(size) / Math.log(1024));
-    return (size / Math.pow(1024, i)).toFixed(2) * 1 + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
+    return (size / Math.pow(1024, i)).toFixed(2) + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i];
 }
 
-export default async function handler(ctx) {
+export default async function handler(ctx: Context) {
     const client = await getClient();
-
-    const item: object[] = [];
-    const chat = await client.getInputEntity(ctx.req.param('username'));
-    const channelInfo = await client.getEntity(chat) as Api.Channel;
+    const username = ctx.req.param('username');
+    const peer = await client.getInputEntity(username);
+    const entity = await client.getEntity(peer);
 
     let attachments: string[] = [];
-    const messages = await client.getMessages(chat, { limit: 50 });
+    const messages = await client.getMessages(peer, { limit: 50 });
 
     let i = 0;
+    const item: object[] = [];
     for (const message of messages) {
         if (message.media) {
             // messages that have no text are shown as if they're one post
             // because in TG only 1 attachment per message is possible
-            attachments.push(getMediaLink(ctx, chat, ctx.req.param('username'), message));
+            const src = `${new URL(ctx.req.url).origin}/telegram/channel/${username}/${getPeerId(message.peerId)}_${message.id}`;
+            attachments.push(getMediaLink(src, message.media));
         }
         if (message.text !== '' || ++i === messages.length) {
             let description = attachments.join('<br/>\n');
@@ -64,18 +81,18 @@ export default async function handler(ctx) {
                 title,
                 description,
                 pubDate: new Date(message.date * 1000).toUTCString(),
-                link: `https://t.me/s/${channelInfo.username}/${message.id}`,
-                author: `${channelInfo.title} (@${channelInfo.username})`,
+                link: `https://t.me/s/${username}/${message.id}`,
+                author: getDisplayName(message.sender ?? entity),
             });
         }
     }
 
     ctx.set('data', {
-        title: channelInfo.title,
+        title: getDisplayName(entity),
         language: null,
-        link: `https://t.me/${channelInfo.username}`,
+        link: `https://t.me/${username}`,
         item,
         allowEmpty: ctx.req.param('id') === 'allow_empty',
-        description: `@${channelInfo.username} on Telegram`,
+        description: `@${username} on Telegram`,
     });
 }
