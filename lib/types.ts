@@ -1,3 +1,5 @@
+import type { Context } from 'hono';
+
 export type DataItem = {
     title: string;
     description?: string;
@@ -42,4 +44,37 @@ export type Data = {
     language?: string;
     feedLink?: string;
     lastBuildDate?: string;
+};
+
+export type Namespace = {
+    name: string;
+    url?: string;
+    categories?: string[];
+    description?: string;
+};
+
+export type Route = {
+    path: string;
+    name: string;
+    url?: string;
+    maintainers: string[];
+    handler: (ctx: Context) => Promise<Data> | Data;
+    example: string;
+    parameters?: Record<string, string>;
+    description?: string;
+    categories?: string[];
+
+    features: {
+        requireConfig?: string[] | false;
+        requirePuppeteer?: boolean;
+        antiCrawler?: boolean;
+        supportRadar?: boolean;
+        supportBT?: boolean;
+        supportPodcast?: boolean;
+        supportScihub?: boolean;
+    };
+    radar?: {
+        source: string[];
+        target?: string;
+    };
 };
