@@ -169,18 +169,6 @@ RUN \
 
 COPY --from=docker-minifier /app /app
 
-# RUN \
-#     set -ex && \
-#     # cp /app/scripts/docker/minify-docker.js /minifier/ && \
-#     # export PROJECT_ROOT=/app && \
-#     # node /minifier/minify-docker.js && \
-#     # rm -rf /app/node_modules /app/scripts && \
-#     # mv /app/app-minimal/node_modules /app/ && \
-#     # rm -rf /app/app-minimal && \
-#     npm run build && \
-#     ls -la /app && \
-#     du -hd1 /app
-
 EXPOSE 1200
 ENTRYPOINT ["dumb-init", "--"]
 
