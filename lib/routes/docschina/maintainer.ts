@@ -1,3 +1,3 @@
 export default {
-    '/jsweekly': ['daijinru', 'hestudy'],
+    '/weekly/:category?': ['daijinru', 'hestudy'],
 };
