@@ -2,8 +2,10 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 
 export default async (ctx) => {
+    const { category = 'js' } = ctx.req.param();
+
     const baseURL = 'https://docschina.org';
-    const path = '/news/weekly/js';
+    const path = `/news/weekly/${category}`;
     const { data: res } = await got(`${baseURL}${path}`);
 
     // @ts-ignore
@@ -25,7 +27,7 @@ export default async (ctx) => {
         item: data?.props?.pageProps?.data?.map((item) => ({
             title: item.title,
             description: item.description,
-            link: baseURL + path + '/' + item.issue,
+            link: `${baseURL}${path}/${item.issue}`,
             author: item.editors?.join(','),
             itunes_item_image: item.imageUrl,
         })),
