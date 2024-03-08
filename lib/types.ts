@@ -46,14 +46,22 @@ export type Data = {
     lastBuildDate?: string;
 };
 
-export type Namespace = {
+interface NamespaceItem {
     name: string;
     url?: string;
     categories?: string[];
     description?: string;
-};
+}
 
-export type Route = {
+interface Namespace extends NamespaceItem {
+    ja?: NamespaceItem;
+    zh?: NamespaceItem;
+    'zh-TW'?: NamespaceItem;
+}
+
+export type { Namespace };
+
+interface RouteItem {
     path: string;
     name: string;
     url?: string;
@@ -77,4 +85,12 @@ export type Route = {
         source: string[];
         target?: string;
     };
-};
+}
+
+interface Route extends RouteItem {
+    ja?: NamespaceItem;
+    zh?: NamespaceItem;
+    'zh-TW'?: NamespaceItem;
+}
+
+export type { Route };
