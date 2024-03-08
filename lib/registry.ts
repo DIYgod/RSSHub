@@ -2,11 +2,35 @@ import type { Namespace, Route } from '@/types';
 import { directoryImport } from 'directory-import';
 import type { Hono, Handler } from 'hono';
 import * as path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { serveStatic } from '@hono/node-server/serve-static';
 
-const modules = directoryImport({
-    targetDirectoryPath: path.join(__dirname, './routes-new'),
-    importPattern: /\.ts$/,
-});
+import index from '@/routes/index';
+import robotstxt from '@/routes/robots.txt';
+import { namespace as testNamespace } from './routes-new/test/namespace';
+import { route as testRoute } from '@/routes-new/test/index';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+let modules: Record<string, { route: Route } | { namespace: Namespace }> = {};
+
+switch (process.env.NODE_ENV) {
+    case 'test':
+        modules = {
+            '/test/namespace.ts': {
+                namespace: testNamespace,
+            },
+            '/test/index.ts': {
+                route: testRoute,
+            },
+        };
+        break;
+    default:
+        modules = directoryImport({
+            targetDirectoryPath: path.join(__dirname, './routes-new'),
+            importPattern: /\.ts$/,
+        }) as typeof modules;
+}
 
 const namespaces: Record<
     string,
@@ -63,4 +87,16 @@ export default function (app: Hono) {
             subApp.get(path, wrapedHandler);
         }
     }
+
+    // routes without rss data
+    app.get('/', index);
+    app.get('/robots.txt', robotstxt);
+
+    app.use(
+        '/*',
+        serveStatic({
+            root: './lib/assets',
+            rewriteRequestPath: (path) => (path === '/favicon.ico' ? '/favicon.png' : path),
+        })
+    );
 }

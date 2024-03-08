@@ -7,11 +7,11 @@ import { DataItem, Route } from '@/types';
 let cacheIndex = 0;
 
 export const route: Route = {
-    path: '/bangumi/media/:mediaid',
-    categories: ['new-media'],
-    example: '/bilibili/bangumi/media/9192',
+    path: '/:id',
+    categories: ['other'],
+    example: '/test/1',
     parameters: {
-        mediaid: '番剧媒体 id, 番剧主页 URL 中获取',
+        id: 'test id',
     },
     features: {
         requireConfig: false,
@@ -22,12 +22,8 @@ export const route: Route = {
         supportPodcast: false,
         supportScihub: false,
     },
-    name: '番剧',
+    name: 'Test',
     maintainers: ['DIYgod'],
-    radar: {
-        source: ['www.bilibili.com/bangumi/media/:bid'],
-        target: '/bangumi/media/:bid',
-    },
     handler,
 };
 
