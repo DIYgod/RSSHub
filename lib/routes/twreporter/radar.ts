@@ -8,6 +8,12 @@ export default {
                 source: ['/'],
                 target: '/twreporter/newest',
             },
+            {
+                title: '分類',
+                docs: 'https://docs.rsshub.app/routes/new-media#bao-dao-zhe',
+                source: ['/category/:category'],
+                target: '/twreporter/category',
+            },
         ],
     },
 };
