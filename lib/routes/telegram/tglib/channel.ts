@@ -1,8 +1,7 @@
-import wait from '@/utils/wait';
 import { config } from '@/config';
 import { Api } from 'telegram';
 import { HTMLParser } from 'telegram/extensions/html';
-import { client, getFilename } from './client';
+import { getClient, getFilename } from './client';
 
 function getMediaLink(ctx, channel, channelName, message) {
     const base = `${new URL(ctx.req.url).origin}/telegram/channel/${channelName}/`;
@@ -36,12 +35,7 @@ function humanFileSize(size) {
 }
 
 export default async function handler(ctx) {
-    if (!config.telegram.session) {
-        return [];
-    }
-    if (!client.connected) {
-        await wait(1000);
-    }
+    const client = await getClient();
 
     const item: object[] = [];
     const chat = await client.getInputEntity(ctx.req.param('username'));

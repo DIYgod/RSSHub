@@ -2,9 +2,9 @@ import { config } from '@/config';
 import cacheModule from '@/utils/cache/index';
 import { stream } from 'hono/streaming';
 import { getAppropriatedPartSize } from 'telegram/Utils';
-import { Api } from 'telegram';
+import { Api, TelegramClient } from 'telegram';
 import { returnBigInt as bigInt } from 'telegram/Helpers';
-import { client, getFilename } from './client';
+import { getClient, getFilename } from './client';
 import { StreamingApi } from 'hono/utils/stream';
 /**
  * https://core.telegram.org/api/files#stripped-thumbnails
@@ -81,7 +81,7 @@ export function streamThumbnail(doc: Api.Document) {
     throw new Error('not supported');
 }
 
-export async function decodeMedia(channelName: string, x: string, retry = false) {
+export async function decodeMedia(client: TelegramClient, channelName: string, x: string, retry = false) {
     const [channel, msg] = x.split('_');
 
     try {
@@ -93,13 +93,13 @@ export async function decodeMedia(channelName: string, x: string, retry = false)
         if (!retry) {
             // channel likely not seen before, we need to resolve ID and retry
             await client.getInputEntity(channelName);
-            return decodeMedia(channelName, x, true);
+            return decodeMedia(client, channelName, x, true);
         }
         throw error;
     }
 }
 
-export function streamDocument(obj: Api.Document, thumbSize = '', offset?, limit?) {
+export function streamDocument(client: TelegramClient, obj: Api.Document, thumbSize = '', offset?, limit?) {
     const chunkSize = (obj.size ? getAppropriatedPartSize(obj.size) : 64) * 1024;
     const iterFileParams = {
         file: new Api.InputDocumentFileLocation({
@@ -177,8 +177,8 @@ function streamResponse(c, bodyIter, cb?: (e: Error | undefined, s: StreamingApi
 
 export default async function handler(ctx) {
     await configureMiddlewares(ctx);
-
-    const media = await decodeMedia(ctx.req.param('username'), ctx.req.param('media'));
+    const client = await getClient();
+    const media = await decodeMedia(client, ctx.req.param('username'), ctx.req.param('media'));
     if (!media) {
         return ctx.text('Unknown media', 404);
     }
@@ -212,14 +212,14 @@ export default async function handler(ctx) {
                 !doc.mimeType.startsWith('image/')) {
                 ctx.header('Content-Disposition', `attachment; filename="${encodeURIComponent(getFilename(media))}"`);
             }
-            stream = streamDocument(doc);
+            stream = streamDocument(client, doc);
         } else {
             const [offset, limit] = range[0];
             // console.log(`${ctx.method} ${ctx.req.url} Range: ${rangeHeader}`);
             ctx.status(206); // partial content
             ctx.header('Content-Length', (limit - offset + 1).toString());
             ctx.header('Content-Range', `bytes ${offset}-${limit}/${doc.size}`);
-            stream = streamDocument(doc, '', offset, limit);
+            stream = streamDocument(client, doc, '', offset, limit);
         }
         return streamResponse(ctx, stream, () => stream.close());
     }
