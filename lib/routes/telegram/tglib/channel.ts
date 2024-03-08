@@ -41,29 +41,29 @@ export default async function handler(ctx) {
         await wait(1000);
     }
 
-    const item = [];
+    const item: object[] = [];
     const chat = await client.getInputEntity(ctx.req.param('username'));
-    const channelInfo = await client.getEntity(chat);
+    const channelInfo = await client.getEntity(chat) as Api.Channel;
 
-    let attachments = [];
+    let attachments: string[] = [];
     const messages = await client.getMessages(chat, { limit: 50 });
 
+    let i = 0;
     for (const message of messages) {
         if (message.media) {
             // messages that have no text are shown as if they're one post
             // because in TG only 1 attachment per message is possible
             attachments.push(getMediaLink(ctx, chat, ctx.req.param('username'), message));
         }
-        if (message.text !== '') {
-            let description = attachments.join('\n');
+        if (message.text !== '' || ++i === messages.length) {
+            let description = attachments.join('<br/>\n');
             attachments = []; // emitting these, buffer other ones
 
             if (message.text) {
                 description += `<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`;
             }
 
-            const title = message.text ? message.text.substring(0, 80) + (message.text.length > 80 ? '...' : '') : new Date(message.date * 1000).toUTCString();
-
+            const title = message.text ?? new Date(message.date * 1000).toLocaleString();
             item.push({
                 title,
                 description,
