@@ -11,13 +11,7 @@ export default async (ctx) => {
     // @ts-ignore
     const $ = load(res);
 
-    const rss: {
-        title?: string;
-        link?: string;
-    } = {};
-
     const title = $('head title').text();
-    rss.title = title;
     const dataEl = $('#__NEXT_DATA__');
     const dataText = dataEl.text();
     const data = JSON.parse(dataText);
