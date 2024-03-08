@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-const { defaultDomain, getRootUrl } = require('./utils');
+import { defaultDomain, getRootUrl } from './utils';
 
 export default async (ctx) => {
     const category = ctx.req.param('category') ?? '';

@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const { getSimple, getDetails, getTorrents } = require('./util');
+import { getSimple, getDetails, getTorrents } from './util';
 
 const supportedKeys = new Set(['parody', 'character', 'tag', 'artist', 'group', 'language', 'category']);
 

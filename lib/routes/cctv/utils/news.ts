@@ -7,7 +7,7 @@ import randUserAgent from '@/utils/rand-user-agent';
 
 const UA = randUserAgent({ browser: 'mobile safari', os: 'ios', device: 'mobile' });
 
-module.exports = async (category) => {
+export default async (category) => {
     const url = `https://news.cctv.com/2019/07/gaiban/cmsdatainterface/page/${category}_1.jsonp`;
 
     const response = await got({

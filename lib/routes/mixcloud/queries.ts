@@ -1523,6 +1523,4 @@ const queries = {
     },
 };
 
-module.exports = {
-    queries,
-};
+export { queries };

@@ -11,6 +11,4 @@ const refererMap = new Map([
     ['sinaimg.cn', 'https://weibo.com/'],
 ]);
 
-module.exports = {
-    refererMap,
-};
+export { refererMap };

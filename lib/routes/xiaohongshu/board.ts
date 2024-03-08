@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-const { getBoard } = require('./util');
+import { getBoard } from './util';
 
 export default async (ctx) => {
     const url = `https://www.xiaohongshu.com/board/${ctx.req.param('board_id')}`;

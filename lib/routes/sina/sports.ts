@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const { parseArticle } = require('./utils');
+import { parseArticle } from './utils';
 
 export default async (ctx) => {
     const type = ctx.req.param('type');

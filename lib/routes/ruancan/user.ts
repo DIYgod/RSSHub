@@ -1,4 +1,4 @@
-const fetchFeed = require('./utils');
+import fetchFeed from './utils';
 
 export default async (ctx) => {
     const id = ctx.req.param('id');

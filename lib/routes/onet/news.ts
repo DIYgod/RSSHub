@@ -8,7 +8,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const { parseArticleContent, parseMainImage } = require('./utils');
+import { parseArticleContent, parseMainImage } from './utils';
 
 export default async (ctx) => {
     const rssUrl = 'https://wiadomosci.onet.pl/.feed';

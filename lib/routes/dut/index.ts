@@ -2,8 +2,8 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-const defaults = require('./defaults');
-const shortcuts = require('./shortcuts');
+import defaults from './defaults';
+import shortcuts from './shortcuts';
 import { isValidHost } from '@/utils/valid-host';
 
 export default async (ctx) => {

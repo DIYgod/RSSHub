@@ -74,6 +74,4 @@ const categories = {
     },
 };
 
-module.exports = {
-    categories,
-};
+export { categories };

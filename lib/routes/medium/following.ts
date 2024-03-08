@@ -1,7 +1,7 @@
 import { config } from '@/config';
 
-const parseArticle = require('./parse-article.js');
-const { getFollowingFeedQuery } = require('./graphql.js');
+import parseArticle from './parse-article.js';
+import { getFollowingFeedQuery } from './graphql.js';
 
 export default async (ctx) => {
     const user = ctx.req.param('user');

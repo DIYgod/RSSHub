@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-const { viewForum, viewThread } = require('./query');
+import { viewForum, viewThread } from './query';
 
 export default async (ctx) => {
     const id = ctx.req.param('id') ?? '8';

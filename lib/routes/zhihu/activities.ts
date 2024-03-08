@@ -1,8 +1,8 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const utils = require('./utils');
+import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
-const g_encrypt = require('./execlib/x-zse-96-v3');
+import g_encrypt from './execlib/x-zse-96-v3';
 import md5 from '@/utils/md5';
 
 export default async (ctx) => {

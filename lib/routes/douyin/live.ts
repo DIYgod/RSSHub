@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import { config } from '@/config';
-const { getOriginAvatar } = require('./utils');
+import { getOriginAvatar } from './utils';
 import logger from '@/utils/logger';
 import puppeteer from '@/utils/puppeteer';
 

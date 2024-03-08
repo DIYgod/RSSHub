@@ -1,5 +1,5 @@
-const dayjs = require('dayjs');
-const { constructTopicEntry } = require('./utils');
+import dayjs from 'dayjs';
+import { constructTopicEntry } from './utils';
 
 export default async (ctx) => {
     const id = ctx.req.param('id');

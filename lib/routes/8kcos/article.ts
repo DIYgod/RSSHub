@@ -21,4 +21,4 @@ async function loadArticle(link) {
         link,
     };
 }
-module.exports = loadArticle;
+export default loadArticle;

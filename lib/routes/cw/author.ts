@@ -1,4 +1,4 @@
-const { baseUrl, parsePage } = require('./utils');
+import { baseUrl, parsePage } from './utils';
 import puppeteer from '@/utils/puppeteer';
 
 export default async (ctx) => {

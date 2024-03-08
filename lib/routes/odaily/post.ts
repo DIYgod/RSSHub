@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-const { rootUrl } = require('./utils');
+import { rootUrl } from './utils';
 
 const titles = {
     280: '最新',

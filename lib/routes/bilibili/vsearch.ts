@@ -2,8 +2,8 @@ import cache from '@/utils/cache';
 import { config } from '@/config';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const utils = require('./utils');
-const { CookieJar } = require('tough-cookie');
+import utils from './utils';
+import { CookieJar } from 'tough-cookie';
 const cookieJar = new CookieJar();
 import { queryToBoolean } from '@/utils/readable-social';
 

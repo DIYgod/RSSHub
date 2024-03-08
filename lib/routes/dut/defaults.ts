@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     // 新闻网：https://news.dlut.edu.cn
     // 默认 -> 头条关注 https://news.dlut.edu.cn/ttgz.htm
     news: 'ttgz',

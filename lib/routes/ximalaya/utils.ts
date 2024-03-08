@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+import crypto from 'crypto';
 const getParams = (ep) => {
     const a1 = 'xkt3a41psizxrh9l';
     const a = [
@@ -126,7 +126,4 @@ const getRandom16 = (len) =>
         .toString('hex')
         .slice(0, len);
 
-module.exports = {
-    getUrl,
-    getRandom16,
-};
+export { getUrl, getRandom16 };

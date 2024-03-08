@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const { rootUrl, fetchItems } = require('./util');
+import { rootUrl, fetchItems } from './util';
 
 export default async (ctx) => {
     const { category = 'weekvisit' } = ctx.req.param();

@@ -1,11 +1,11 @@
-const { baseUrl, gqlMap, gqlFeatures, consumerKey, consumerSecret } = require('./constants');
+import { baseUrl, gqlMap, gqlFeatures, consumerKey, consumerSecret } from './constants';
 import { config } from '@/config';
 import logger from '@/utils/logger';
 import got from '@/utils/got';
-const OAuth = require('oauth-1.0a');
-const CryptoJS = require('crypto-js');
+import OAuth from 'oauth-1.0a';
+import CryptoJS from 'crypto-js';
 import queryString from 'query-string';
-const { getToken } = require('./token');
+import { getToken } from './token';
 import cache from '@/utils/cache';
 
 const twitterGot = async (url, params) => {
@@ -269,7 +269,7 @@ const getUserTweet = (id, params) => cacheTryGet(id, params, getUserTweetByStatu
 
 const getSearch = async (keywords, params = {}) => gatherLegacyFromData(await timelineKeywords(keywords, params));
 
-module.exports = {
+export {
     getUser,
     getUserTweets,
     getUserTweetsAndReplies,

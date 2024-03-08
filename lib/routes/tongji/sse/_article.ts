@@ -1,7 +1,7 @@
 import got from '@/utils/got'; // get web content
 import { load } from 'cheerio'; // html parser
 
-module.exports = async function getArticle(item) {
+export default async function getArticle(item) {
     const response = await got({
         method: 'get',
         url: item.link,
@@ -22,4 +22,4 @@ module.exports = async function getArticle(item) {
     item.description = content + ($('ul[style]').length ? $('ul[style]').html() : '');
 
     return item;
-};
+}

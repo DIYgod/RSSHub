@@ -49,6 +49,4 @@ const getData = async (ctx, list) => {
     return items;
 };
 
-module.exports = {
-    getData,
-};
+export { getData };

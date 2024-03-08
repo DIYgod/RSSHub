@@ -1,4 +1,4 @@
-const utils = require('./utils');
+import utils from './utils';
 import got from '@/utils/got';
 
 export default async (ctx) => {

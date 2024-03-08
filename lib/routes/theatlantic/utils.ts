@@ -55,6 +55,4 @@ const getArticleDetails = async (items) => {
     return list;
 };
 
-module.exports = {
-    getArticleDetails,
-};
+export { getArticleDetails };

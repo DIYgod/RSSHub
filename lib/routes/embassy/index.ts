@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-const supportedList = require('./supported-list');
+import supportedList from './supported-list';
 
 export default async (ctx) => {
     const country = ctx.req.param('country');

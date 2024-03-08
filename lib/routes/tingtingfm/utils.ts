@@ -26,7 +26,4 @@ const sign = (params) => {
     return md5(`${searchParams.toString()}_${SALT}`);
 };
 
-module.exports = {
-    getClientVal,
-    sign,
-};
+export { getClientVal, sign };

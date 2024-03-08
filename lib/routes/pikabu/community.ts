@@ -1,7 +1,7 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-const { baseUrl, fixImage, fixVideo } = require('./utils');
+import { baseUrl, fixImage, fixVideo } from './utils';
 
 export default async (ctx) => {
     const { type, name, sort = 'new' } = ctx.req.param();

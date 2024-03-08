@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-const { decodeCFEmail } = require('./cf-email');
+import { decodeCFEmail } from './cf-email';
 
 export default async (ctx) => {
     const id = ctx.req.param('id');

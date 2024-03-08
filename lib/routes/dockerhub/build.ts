@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const { hash } = require('./utils');
+import { hash } from './utils';
 
 export default async (ctx) => {
     const { owner, image, tag = 'latest' } = ctx.req.param();

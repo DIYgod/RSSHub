@@ -11,7 +11,4 @@ const extractWork = (data) =>
         data: data.props.pageProps.data,
     });
 
-module.exports = {
-    extractArticle,
-    extractWork,
-};
+export { extractArticle, extractWork };

@@ -1,4 +1,4 @@
-const { rootUrl, apiRootUrl, processItems, icon, image } = require('./util');
+import { rootUrl, apiRootUrl, processItems, icon, image } from './util';
 
 export default async (ctx) => {
     const id = ctx.req.param('id');

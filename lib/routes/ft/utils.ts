@@ -87,6 +87,4 @@ const getData = async ({ site = 'www', channel }) => {
     };
 };
 
-module.exports = {
-    getData,
-};
+export default { getData };

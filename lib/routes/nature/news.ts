@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { baseUrl, cookieJar, getArticle } = require('./utils');
+import { baseUrl, cookieJar, getArticle } from './utils';
 
 export default async (ctx) => {
     const url = `${baseUrl}/latest-news`;

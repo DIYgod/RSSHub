@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-const { getTagId, getTagSuggestion, findAccountById, parseDescription, baseUrl, icon } = require('./utils');
+import { getTagId, getTagSuggestion, findAccountById, parseDescription, baseUrl, icon } from './utils';
 
 export default async (ctx) => {
     const tag = ctx.req.param('tag');

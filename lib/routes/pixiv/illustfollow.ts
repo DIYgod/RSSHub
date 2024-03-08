@@ -1,8 +1,8 @@
 import cache from '@/utils/cache';
-const { getToken } = require('./token');
-const getIllustFollows = require('./api/get-illust-follows');
+import { getToken } from './token';
+import getIllustFollows from './api/get-illust-follows';
 import { config } from '@/config';
-const pixivUtils = require('./utils');
+import pixivUtils from './utils';
 import { parseDate } from '@/utils/parse-date';
 
 export default async (ctx) => {

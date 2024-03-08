@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import logger from '@/utils/logger';
-const { CookieJar } = require('tough-cookie');
+import { CookieJar } from 'tough-cookie';
 import puppeteer from '@/utils/puppeteer';
 
 export default async (ctx) => {

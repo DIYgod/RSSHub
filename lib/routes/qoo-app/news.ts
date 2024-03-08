@@ -2,7 +2,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-const { newsUrl, siteIcon, fixImg } = require('./utils');
+import { newsUrl, siteIcon, fixImg } from './utils';
 
 export default async (ctx) => {
     const { lang = '' } = ctx.req.param();

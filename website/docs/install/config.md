@@ -377,11 +377,11 @@ Warning: Two Factor Authentication is **not** supported.
 
 For user timeline
 
-apply API here `https://mastodon.example/settings/applications`(repalce `mastodon.example`), please check scope `read:search`
+Apply API at `https://mastodon.example/settings/applications` (replace `mastodon.example`). Scopes `read:search` and `read:statuses` are needed.
 
 -   `MASTODON_API_HOST`: API instance domain, only domain, no `http://` or `https://` protocol header
 -   `MASTODON_API_ACCESS_TOKEN`: user access token
--   `MASTODON_API_ACCT_DOMAIN`: acct domain for particular instance, Webfinger account URI, like `user@host`
+-   `MASTODON_API_ACCT_DOMAIN`: acct domain for this instance, i.e. the `domain` in the WebFinger URI `username@domain`. It's usually the same as `MASTODON_API_HOST`.
 
 ### Medium
 
@@ -394,6 +394,12 @@ Open the console, copy the cookie (in theory, only uid and sid are required)
 
 -   `MINIFLUX_INSTANCE`: The instance used by the user, by default, is the official MiniFlux [paid service address](https://reader.miniflux.app)
 -   `MINIFLUX_TOKEN`: User's API key, please log in to the instance used and go to `Settings` -> `API Key` -> `Create a new API key` to obtain.
+
+### Netease Cloud Music Playlists
+
+For playlists and song rankings
+
+-   `NCM_COOKIES`: Cookies after logging into Netease Cloud Music, available via `document.cookie` in the browser console.
 
 ### nhentai torrent
 
@@ -571,12 +577,6 @@ Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即
 ### 色花堂
 
 -   `SEHUATANG_COOKIE`: 登陆色花堂后的 cookie 值。
-
-### 网易云歌单
-
-用于歌单及听歌排行
-
--   `NCM_COOKIES`: 网易云音乐登陆后的 cookie 值。
 
 ### 微博
 

@@ -7,4 +7,5 @@ export default (router) => {
     router.get('/news/:category/:locale', './news');
     router.get('/scholar/:query', './scholar');
     router.get('/search/:keyword/:language?', './search');
+    router.get('/chrome/extension/:id', './extension');
 };

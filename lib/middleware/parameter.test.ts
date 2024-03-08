@@ -296,7 +296,7 @@ describe('tgiv', () => {
 describe('empty', () => {
     it(`empty`, async () => {
         const response1 = await app.request('/test/empty');
-        expect(response1.status).toBe(404);
+        expect(response1.status).toBe(503);
         expect(await response1.text()).toMatch(/Error: this route is empty/);
 
         const response2 = await app.request('/test/1?limit=0');
@@ -320,7 +320,7 @@ describe('wrong_path', () => {
         const response = await app.request('/wrong');
         expect(response.status).toBe(404);
         expect(response.headers.get('cache-control')).toBe(`public, max-age=${config.cache.routeExpire}`);
-        expect(await response.text()).toMatch(/Error message: wrong path/);
+        expect(await response.text()).toMatch('wrong path');
     });
 });
 
@@ -347,7 +347,8 @@ describe('complicated_description', () => {
 <img data-mock="/DIYgod/RSSHub.png" src="https://mock.com/DIYgod/RSSHub.png" referrerpolicy="no-referrer">
 <img mock="/DIYgod/RSSHub.gif" src="https://mock.com/DIYgod/RSSHub.gif" referrerpolicy="no-referrer">
 <img src="http://mock.com/DIYgod/DIYgod/RSSHub" referrerpolicy="no-referrer">
-<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">`);
+<img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">
+<img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" referrerpolicy="no-referrer">`);
         expect(parsed.items[1].content).toBe(`<a href="https://mock.com/DIYgod/RSSHub"></a>
 <img src="https://mock.com/DIYgod/RSSHub.jpg" referrerpolicy="no-referrer">`);
     });

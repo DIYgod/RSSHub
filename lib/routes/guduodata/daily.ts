@@ -3,7 +3,7 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 

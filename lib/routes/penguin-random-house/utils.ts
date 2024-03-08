@@ -116,8 +116,4 @@ const parseList = (items, ctx, contentParser) =>
         )
     );
 
-module.exports = {
-    parseList,
-    parseBooks,
-    parseArticle,
-};
+export default { parseList, parseBooks, parseArticle };

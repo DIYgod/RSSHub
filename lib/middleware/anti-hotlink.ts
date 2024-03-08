@@ -46,10 +46,10 @@ const parseUrl = (str: string) => {
 };
 const replaceUrls = ($: CheerioAPI, selector: string, template: string, attribute = 'src') => {
     $(selector).each(function () {
-        const old_src = $(this).attr(attribute);
-        if (old_src) {
-            const url = parseUrl(old_src);
-            if (url) {
+        const oldSrc = $(this).attr(attribute);
+        if (oldSrc) {
+            const url = parseUrl(oldSrc);
+            if (url && url.protocol !== 'data:') {
                 // Cheerio will do the right thing to prohibit XSS.
                 $(this).attr(attribute, interpolate(template, url));
             }
@@ -88,8 +88,8 @@ const validateTemplate = (template?: string) => {
 const middleware: MiddlewareHandler = async (ctx, next) => {
     await next();
 
-    let image_hotlink_template;
-    let multimedia_hotlink_template;
+    let imageHotlinkTemplate: string | undefined;
+    let multimediaHotlinkTemplate: string | undefined;
 
     // Read params if enabled
     if (config.feature.allow_user_hotlink_template) {
@@ -98,21 +98,21 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
         // A risk is that the media URLs will be replaced by user-supplied templates,
         // so a user could literally take the control of "where are the media from",
         // but only in their personal-use feed URL.
-        multimedia_hotlink_template = ctx.req.query('multimedia_hotlink_template');
-        image_hotlink_template = ctx.req.query('image_hotlink_template');
+        multimediaHotlinkTemplate = ctx.req.query('multimedia_hotlink_template');
+        imageHotlinkTemplate = ctx.req.query('image_hotlink_template');
     }
 
     // Force config hotlink template on conflict
     if (config.hotlink.template) {
-        image_hotlink_template = filterPath(ctx.req.path) ? config.hotlink.template : undefined;
+        imageHotlinkTemplate = filterPath(ctx.req.path) ? config.hotlink.template : undefined;
     }
 
-    if (!image_hotlink_template && !multimedia_hotlink_template) {
+    if (!imageHotlinkTemplate && !multimediaHotlinkTemplate) {
         return;
     }
 
-    validateTemplate(image_hotlink_template);
-    validateTemplate(multimedia_hotlink_template);
+    validateTemplate(imageHotlinkTemplate);
+    validateTemplate(multimediaHotlinkTemplate);
 
     // Assume that only description include image link
     // and here we will only check them in description.
@@ -121,13 +121,13 @@ const middleware: MiddlewareHandler = async (ctx, next) => {
     const data: Data = ctx.get('data');
     if (data) {
         if (data.description) {
-            data.description = process(data.description, image_hotlink_template, multimedia_hotlink_template);
+            data.description = process(data.description, imageHotlinkTemplate, multimediaHotlinkTemplate);
         }
 
         if (data.item) {
             for (const item of data.item) {
                 if (item.description) {
-                    item.description = process(item.description, image_hotlink_template, multimedia_hotlink_template);
+                    item.description = process(item.description, imageHotlinkTemplate, multimediaHotlinkTemplate);
                 }
             }
         }

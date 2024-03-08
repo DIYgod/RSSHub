@@ -1,8 +1,8 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const cacheIn = require('./cache');
-const utils = require('./utils');
+import cacheIn from './cache';
+import utils from './utils';
 
 const notFoundData = {
     title: '此 bilibili 频道不存在',
@@ -32,7 +32,7 @@ export default async (ctx) => {
         ctx.set('data', notFoundData);
         return;
     }
-    const [userName, face] = await cacheIn.getUsernameAndFaceFromUID(ctx, uid);
+    const [userName, face] = await cacheIn.getUsernameAndFaceFromUID(uid);
     const host = `https://api.bilibili.com/x/series/archives?mid=${uid}&series_id=${sid}&only_normal=true&sort=desc&pn=1&ps=${limit}`;
 
     const response = await got(host, {

@@ -18,6 +18,4 @@ function generateRssData(item, index, arr, country) {
     }
     return (arr[index] = data);
 }
-module.exports = {
-    generateRssData,
-};
+export { generateRssData };

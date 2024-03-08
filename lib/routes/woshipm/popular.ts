@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { baseUrl, parseArticle } = require('./utils');
+import { baseUrl, parseArticle } from './utils';
 
 const rangeMap = {
     daily: '日榜',

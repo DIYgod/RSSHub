@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import rssParser from '@/utils/rss-parser';
-const { asyncPoolAll, parseArticle } = require('./utils');
+import { asyncPoolAll, parseArticle } from './utils';
 
 const parseAuthorNewsList = async (slug) => {
     const baseURL = `https://www.bloomberg.com/authors/${slug}`;

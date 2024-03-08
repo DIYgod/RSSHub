@@ -10,6 +10,4 @@ const courseDesc = (picurl, desc) =>
         desc,
     });
 
-module.exports = {
-    courseDesc,
-};
+export default { courseDesc };

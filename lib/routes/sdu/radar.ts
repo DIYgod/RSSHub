@@ -1,19 +1,19 @@
-const { wh } = require('./data');
+import data from './data';
 
 export default {
     'sdu.edu.cn': {
         _name: '山东大学',
-        'xinwen.wh': Object.entries(wh.news.columns).map(([, value]) => ({
-            title: wh.news.titlePrefix + value.name,
-            docs: wh.news.docs,
-            source: wh.news.source,
-            target: '/sdu/wh' + wh.news.getTarget(value.url),
+        'xinwen.wh': Object.entries(data.wh.news.columns).map(([, value]) => ({
+            title: data.wh.news.titlePrefix + value.name,
+            docs: data.wh.news.docs,
+            source: data.wh.news.source,
+            target: '/sdu/wh' + data.wh.news.getTarget(value.url),
         })),
-        'jwc.wh': Object.entries(wh.jwc.columns).map(([, value]) => ({
-            title: wh.jwc.titlePrefix + value.name,
-            docs: wh.jwc.docs,
-            source: wh.jwc.source,
-            target: '/sdu/wh' + wh.jwc.getTarget(value.url),
+        'jwc.wh': Object.entries(data.wh.jwc.columns).map(([, value]) => ({
+            title: data.wh.jwc.titlePrefix + value.name,
+            docs: data.wh.jwc.docs,
+            source: data.wh.jwc.source,
+            target: '/sdu/wh' + data.wh.jwc.getTarget(value.url),
         })),
         'www.cmse': [
             {

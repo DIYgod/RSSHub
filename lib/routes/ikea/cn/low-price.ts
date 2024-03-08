@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const { generateRequestHeaders, generateProductItem } = require('./utils');
+import { generateRequestHeaders, generateProductItem } from './utils';
 
 export default async (ctx) => {
     const response = await got({

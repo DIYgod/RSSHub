@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const { getUrl, getRandom16 } = require('./utils');
+import { getUrl, getRandom16 } from './utils';
 const baseUrl = 'https://www.ximalaya.com';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';

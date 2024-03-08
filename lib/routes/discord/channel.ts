@@ -6,7 +6,7 @@ import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const { baseUrl, getChannel, getChannelMessages, getGuild } = require('./discord-api');
+import { baseUrl, getChannel, getChannelMessages, getGuild } from './discord-api';
 
 export default async (ctx) => {
     if (!config.discord || !config.discord.authorization) {

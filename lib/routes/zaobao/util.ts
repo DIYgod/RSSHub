@@ -8,7 +8,7 @@ import { parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const { base32 } = require('rfc4648');
+import { base32 } from 'rfc4648';
 
 const baseUrl = 'https://www.zaobao.com';
 const got_ins = got.extend({
@@ -178,7 +178,4 @@ const orderContent = (parent) => {
     }
 };
 
-module.exports = {
-    parseList,
-    orderContent,
-};
+export { parseList, orderContent };

@@ -1,6 +1,6 @@
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { renderHTML } = require('./utils');
+import { renderHTML } from './utils';
 
 export default async (ctx) => {
     const api_url = 'https://gocn.vip/api/files?spaceGuid=Gd7OHl&currentPage=1&sort=1';

@@ -1,7 +1,7 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-const { defaultDomain, ensureDomain } = require('./utils');
+import { defaultDomain, ensureDomain } from './utils';
 
 function getItemList($, type) {
     const list = $(`#${type} .list-group-item`)

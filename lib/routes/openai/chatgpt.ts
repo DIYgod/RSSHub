@@ -1,10 +1,11 @@
 import cache from '@/utils/cache';
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { config } from '@/config';
 
-dayjs.extend(require('dayjs/plugin/isSameOrBefore'));
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+dayjs.extend(isSameOrBefore);
 
 export default async (ctx) => {
     const articleUrl = 'https://help.openai.com/en/articles/6825453-chatgpt-release-notes';

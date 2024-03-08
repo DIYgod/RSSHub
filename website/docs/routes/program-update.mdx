@@ -156,12 +156,6 @@
 
 <Route author="woodgear" example="/chocolatey/software/GoogleChrome" path="/chocolatey/software" />
 
-## Chrome Web Store {#chrome-web-store}
-
-### Extensions Update {#chrome-web-store-extensions-update}
-
-<Route author="DIYgod" example="/chrome/webstore/extensions/kefjpfngnndepjbopdmoebkipbgkggaa" path="/chrome/webstore/extensions/:id" paramsDesc={['Extension id, can be found in extension url']} />
-
 ## Civitai {#civitai}
 
 ### Latest models {#civitai-latest-models}
@@ -238,7 +232,7 @@ Need to configure `CIVITAI_COOKIE` to obtain image information of NSFW models.
 
 ### App Update {#f-droid-app-update}
 
-<Route author="garywill" example="/fdroid/apprelease/com.termux" path="/fdroid/apprelease/:app" paramsDesc={['App\'s package name']} />
+<Route author="garywill" example="/f-droid/apprelease/com.termux" path="/f-droid/apprelease/:app" paramsDesc={['App\'s package name']} radar="1" />
 
 ## Firefox {#firefox}
 
@@ -271,6 +265,12 @@ Need to configure `CIVITAI_COOKIE` to obtain image information of NSFW models.
 ### 最新限免 / 促销应用 {#gofans-zui-xin-xian-mian-cu-xiao-ying-yong}
 
 <Route author="HenryQW" example="/gofans" path="/gofans/:kind?" paramsDesc={['Platform, either `macos` or `ios`, empty means both (default)']} radar="1" />
+
+## Google Chrome Web Store {#google-chrome-web-store}
+
+### Extension Update {#google-chrome-web-store-extension-update}
+
+<Route author="DIYgod" example="/google/chrome/extension/kefjpfngnndepjbopdmoebkipbgkggaa" path="/google/chrome/extension/:id" paramsDesc={['Extension id, can be found in extension url']} />
 
 ## Greasy Fork {#greasy-fork}
 
@@ -364,7 +364,7 @@ Logseq 开发团队已经放弃了 [旧网站](https://logseq.com/blog)。
 
 ### Addons Update {#microsoft-edge-addons-update}
 
-<Route author="hoilc" example="/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln" path="/edge/addon/:crxid" paramsDesc={['Addon id, can be found in addon url']} />
+<Route author="hoilc DIYgod" example="/microsoft/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln" path="/microsoft/edge/addon/:crxid" paramsDesc={['Addon id, can be found in addon url']} />
 
 ## Microsoft Store {#microsoft-store}
 

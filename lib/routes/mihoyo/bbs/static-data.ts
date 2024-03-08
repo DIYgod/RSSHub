@@ -131,7 +131,4 @@ const RANKING_TYPE_MAP = {
     },
 };
 
-module.exports = {
-    DATA_MAP,
-    RANKING_TYPE_MAP,
-};
+export { DATA_MAP, RANKING_TYPE_MAP };

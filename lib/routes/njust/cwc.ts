@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-const { getContent } = require('./utils');
+import { getContent } from './utils';
 
 const map = new Map([
     ['tzgg', { title: '南京理工大学财务处 -- 通知公告', id: '/12432' }],

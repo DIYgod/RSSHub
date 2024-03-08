@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const { getRollNewsList, parseRollNewsList, parseArticle } = require('./utils');
+import { getRollNewsList, parseRollNewsList, parseArticle } from './utils';
 
 export default async (ctx) => {
     const pageid = '402';

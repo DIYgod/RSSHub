@@ -69,9 +69,4 @@ const fetchData = ($, currentUrl) => {
     };
 };
 
-module.exports = {
-    rootUrl,
-
-    processItems,
-    fetchData,
-};
+export { rootUrl, processItems, fetchData };

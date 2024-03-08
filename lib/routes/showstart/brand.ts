@@ -1,5 +1,5 @@
-const { TITLE, HOST } = require('./const');
-const { fetchBrandInfo } = require('./service');
+import { TITLE, HOST } from './const';
+import { fetchBrandInfo } from './service';
 
 export default async (ctx) => {
     const id = ctx.req.param('id');

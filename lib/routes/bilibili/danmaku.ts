@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
-const cache = require('./cache');
+import cache from './cache';
 import got from '@/utils/got';
-const zlib = require('zlib');
+import zlib from 'zlib';
 
 const processFloatTime = (time) => {
     const totalSeconds = Number.parseInt(time);
@@ -20,9 +20,9 @@ export default async (ctx) => {
     }
     const pid = Number(ctx.req.param('pid') || 1);
     const limit = 50;
-    const cid = await cache.getCidFromId(ctx, aid, pid, bvid);
+    const cid = await cache.getCidFromId(aid, pid, bvid);
 
-    const videoName = await cache.getVideoNameFromId(ctx, aid, bvid);
+    const videoName = await cache.getVideoNameFromId(aid, bvid);
 
     const link = `https://www.bilibili.com/video/${bvid || `av${aid}`}`;
     const danmakuResponse = await got.get(`https://comment.bilibili.com/${cid}.xml`, {

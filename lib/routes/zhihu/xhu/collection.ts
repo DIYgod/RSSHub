@@ -1,6 +1,6 @@
 import got from '@/utils/got';
-const auth = require('./auth');
-const { generateData } = require('../pin/utils');
+import auth from './auth';
+import { generateData } from '../pin/utils';
 import { parseDate } from '@/utils/parse-date';
 
 export default async (ctx) => {

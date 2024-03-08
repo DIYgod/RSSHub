@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const { baseUrl, getPlurk } = require('./utils');
+import { baseUrl, getPlurk } from './utils';
 
 export default async (ctx) => {
     const { data: apiResponse } = await got(`${baseUrl}/Stats/getAnonymousPlurks`, {

@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const { defaultLanguage, rootUrl, ProcessItems } = require('./utils');
+import { defaultLanguage, rootUrl, ProcessItems } from './utils';
 
 export default async (ctx) => {
     const language = ctx.req.param('language') ?? defaultLanguage;

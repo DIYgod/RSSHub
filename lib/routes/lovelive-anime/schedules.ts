@@ -5,9 +5,9 @@ import got from '@/utils/got';
 import * as path from 'node:path';
 import { art } from '@/utils/render';
 const renderDescription = (desc) => art(path.join(__dirname, 'templates/scheduleDesc.art'), desc);
-const dayjs = require('dayjs');
-const utc = require('dayjs/plugin/utc');
-const timezone = require('dayjs/plugin/timezone');
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 
 export default async (ctx) => {
     dayjs.extend(utc);

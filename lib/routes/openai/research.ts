@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const { getApiUrl, parseArticle } = require('./common');
+import { getApiUrl, parseArticle } from './common';
 
 export default async (ctx) => {
     const apiUrl = new URL('/api/v1/research-publications', await getApiUrl());

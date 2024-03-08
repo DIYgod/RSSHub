@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const { post2item } = require('./utils');
+import { post2item } from './utils';
 // 游戏id
 const GITS_MAP = {
     1: '崩坏三',

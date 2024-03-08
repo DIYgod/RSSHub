@@ -49,8 +49,4 @@ const getPlurk = (plurkGuid, item, author, tryGet) =>
         };
     });
 
-module.exports = {
-    baseUrl,
-    fetchFriends,
-    getPlurk,
-};
+export { baseUrl, fetchFriends, getPlurk };

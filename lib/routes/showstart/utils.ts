@@ -83,10 +83,4 @@ function uniqBy(items, key) {
     });
 }
 
-module.exports = {
-    post,
-    getAccessToken,
-    uuid,
-    sortBy,
-    uniqBy,
-};
+export { post, getAccessToken, uuid, sortBy, uniqBy };

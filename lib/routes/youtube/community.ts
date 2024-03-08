@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 import { parseRelativeDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const { isYouTubeChannelId } = require('./utils');
+import { isYouTubeChannelId } from './utils';
 
 export default async (ctx) => {
     const handle = ctx.req.param('handle');

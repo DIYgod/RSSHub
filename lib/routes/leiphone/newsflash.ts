@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const utils = require('./utils');
+import utils from './utils';
 // import { load } from 'cheerio';
 
 export default async (ctx) => {

@@ -39,8 +39,4 @@ const fixVideo = (element) => {
     element.replaceWith(videoHtml);
 };
 
-module.exports = {
-    baseUrl,
-    fixImage,
-    fixVideo,
-};
+export { baseUrl, fixImage, fixVideo };

@@ -36,7 +36,4 @@ const types = {
     },
 };
 
-module.exports = {
-    sorts,
-    types,
-};
+export { sorts, types };

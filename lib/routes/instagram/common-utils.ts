@@ -60,6 +60,4 @@ const renderItems = (items) =>
         };
     });
 
-module.exports = {
-    renderItems,
-};
+export { renderItems };

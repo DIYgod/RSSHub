@@ -32,6 +32,4 @@ const parseArticle = (item) => {
     });
 };
 
-module.exports = {
-    parseArticle,
-};
+export default { parseArticle };

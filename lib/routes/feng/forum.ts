@@ -2,7 +2,7 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import { parseDate } from '@/utils/parse-date';
-const { baseUrl, getForumMeta, getThreads, getThread } = require('./utils');
+import { baseUrl, getForumMeta, getThreads, getThread } from './utils';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 

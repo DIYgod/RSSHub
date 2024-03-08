@@ -29,6 +29,4 @@ const getAcwScV2ByArg1 = (arg1) => {
     return hexXor(box, pwd);
 };
 
-module.exports = {
-    getAcwScV2ByArg1,
-};
+export { getAcwScV2ByArg1 };

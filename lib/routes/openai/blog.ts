@@ -1,6 +1,6 @@
 import got from '@/utils/got';
 import { toTitleCase } from '@/utils/common-utils';
-const { getApiUrl, parseArticle } = require('./common');
+import { getApiUrl, parseArticle } from './common';
 
 export default async (ctx) => {
     const tag = ctx.req.param('tag') || '';

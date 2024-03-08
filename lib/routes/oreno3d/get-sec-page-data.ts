@@ -72,4 +72,4 @@ async function sync_detail(link) {
     };
 }
 
-module.exports = sync_detail;
+export default sync_detail;
