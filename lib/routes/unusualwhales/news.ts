@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'News Flow',
     maintainers: ['TonyRL'],
     handler,
+    url: 'unusualwhales.com/news',
 };
 
 async function handler() {

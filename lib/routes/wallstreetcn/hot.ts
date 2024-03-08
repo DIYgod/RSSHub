@@ -22,6 +22,7 @@ export const route: Route = {
     name: '最热文章',
     maintainers: ['nczitzk'],
     handler,
+    url: 'wallstreetcn.com/',
 };
 
 async function handler(ctx) {

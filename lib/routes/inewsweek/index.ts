@@ -27,6 +27,11 @@ export const route: Route = {
     name: '栏目',
     maintainers: ['changren-wcr'],
     handler,
+    description: `提取文章全文。
+
+  | 封面  | 时政     | 社会    | 经济    | 国际  | 调查   | 人物   |
+  | ----- | -------- | ------- | ------- | ----- | ------ | ------ |
+  | cover | politics | society | finance | world | survey | people |`,
 };
 
 async function handler(ctx) {

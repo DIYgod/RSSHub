@@ -18,6 +18,9 @@ export const route: Route = {
     name: '图文',
     maintainers: ['xizeyoupan'],
     handler,
+    description: `| 参数名称 | 编辑精选 | 最新   |
+  | -------- | -------- | ------ |
+  | type     | hot      | latest |`,
 };
 
 async function handler(ctx) {

@@ -24,6 +24,7 @@ export const route: Route = {
     name: 'Notifications',
     maintainers: ['zhzy0077'],
     handler,
+    url: 'github.com/notifications',
 };
 
 async function handler(ctx) {

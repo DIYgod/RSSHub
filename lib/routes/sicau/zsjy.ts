@@ -23,6 +23,10 @@ export const route: Route = {
     name: '招生就业',
     maintainers: ['nczitzk'],
     handler,
+    url: 'dky.sicau.edu.cn/',
+    description: `| 本科生招生 | 研究生招生 | 毕业生选录指南 |
+  | ---------- | ---------- | -------------- |
+  | bkszs      | yjszs      | bysxlzn        |`,
 };
 
 async function handler(ctx) {

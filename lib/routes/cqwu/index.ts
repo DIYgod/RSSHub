@@ -30,6 +30,9 @@ export const route: Route = {
     name: '通知公告',
     maintainers: ['Fatpandac'],
     handler,
+    description: `| 通知公告 | 学术活动公告 |
+  | -------- | ------------ |
+  | notify   | academiceve  |`,
 };
 
 async function handler(ctx) {

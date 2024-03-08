@@ -26,6 +26,7 @@ export const route: Route = {
     name: '习近平系列重要讲话',
     maintainers: [],
     handler,
+    url: 'people.com.cn/',
 };
 
 async function handler(ctx) {

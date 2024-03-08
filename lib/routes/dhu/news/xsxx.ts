@@ -25,6 +25,7 @@ export const route: Route = {
     name: '学术信息',
     maintainers: ['fox2049'],
     handler,
+    url: 'news.dhu.edu.cn/6410',
 };
 
 async function handler() {

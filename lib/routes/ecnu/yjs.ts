@@ -23,6 +23,7 @@ export const route: Route = {
     name: '研究生院',
     maintainers: ['shengmaosu'],
     handler,
+    url: 'yz.kaoyan.com/ecnu/tiaoji',
 };
 
 async function handler() {

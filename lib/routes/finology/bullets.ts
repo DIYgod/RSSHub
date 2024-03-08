@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Bullets',
     maintainers: ['Rjnishant530'],
     handler,
+    url: 'insider.finology.in/bullets',
 };
 
 async function handler() {

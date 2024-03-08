@@ -31,6 +31,7 @@ export const route: Route = {
     name: 'Articles',
     maintainers: ['LogicJake'],
     handler,
+    url: 'leetcode.com/articles',
 };
 
 async function handler() {

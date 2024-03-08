@@ -24,6 +24,7 @@ export const route: Route = {
     name: '每日早报',
     maintainers: ['nczitzk'],
     handler,
+    url: 'readhub.cn/daily',
 };
 
 async function handler(ctx) {

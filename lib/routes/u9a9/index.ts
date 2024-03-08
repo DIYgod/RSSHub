@@ -16,6 +16,8 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['TonyRL'],
     handler,
+    url: 'u9a9.com/',
+    url: 'u9a9.com/',
 };
 
 async function handler(ctx) {

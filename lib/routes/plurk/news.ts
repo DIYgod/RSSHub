@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Plurk News',
     maintainers: ['TonyRL'],
     handler,
+    url: 'plurk.com/news',
 };
 
 async function handler(ctx) {

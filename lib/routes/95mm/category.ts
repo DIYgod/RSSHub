@@ -20,6 +20,10 @@ export const route: Route = {
     name: '集合',
     maintainers: ['nczitzk'],
     handler,
+    url: '95mm.org/',
+    description: `| 清纯唯美 | 摄影私房 | 明星写真 | 三次元 | 异域美景 | 性感妖姬 | 游戏主题 | 美女壁纸 |
+  | -------- | -------- | -------- | ------ | -------- | -------- | -------- | -------- |
+  | 1        | 2        | 4        | 5      | 6        | 7        | 9        | 11       |`,
 };
 
 async function handler(ctx) {

@@ -26,6 +26,7 @@ export const route: Route = {
     name: 'First Release',
     maintainers: ['y9c', 'TonyRL'],
     handler,
+    description: `*only Science, Science Immunology and Science Translational Medicine have first release*`,
 };
 
 async function handler(ctx) {

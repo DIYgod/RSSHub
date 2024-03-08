@@ -16,6 +16,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'moa.gov.cn/',
 };
 
 async function handler(ctx) {

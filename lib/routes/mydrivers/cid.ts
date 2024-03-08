@@ -10,6 +10,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'm.mydrivers.com/',
 };
 
 async function handler(ctx) {

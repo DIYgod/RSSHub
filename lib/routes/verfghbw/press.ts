@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Press releases',
     maintainers: ['quinn-dev'],
     handler,
+    url: 'verfgh.baden-wuerttemberg.de/de/presse-und-service/pressemitteilungen/',
 };
 
 async function handler(ctx) {

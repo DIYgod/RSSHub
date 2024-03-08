@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'News',
     maintainers: [],
     handler,
+    url: 'cpuid.com/news.html',
 };
 
 async function handler() {

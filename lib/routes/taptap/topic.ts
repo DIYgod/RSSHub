@@ -43,6 +43,13 @@ export const route: Route = {
     name: '游戏论坛',
     maintainers: ['hoilc', 'TonyRL'],
     handler,
+    description: `| 全部 | 精华  | 官方     | 影片  |
+  | ---- | ----- | -------- | ----- |
+  | feed | elite | official | video |
+
+  | 发布时间 | 回复时间  |
+  | -------- | --------- |
+  | created  | commented |`,
 };
 
 async function handler(ctx) {

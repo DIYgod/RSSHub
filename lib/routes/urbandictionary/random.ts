@@ -26,6 +26,7 @@ export const route: Route = {
     name: 'Random words',
     maintainers: ['TonyRL'],
     handler,
+    url: 'urbandictionary.com/random.php',
 };
 
 async function handler() {

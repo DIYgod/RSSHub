@@ -12,6 +12,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['jerry1119'],
     handler,
+    url: 'pianyuan.org/',
 };
 
 async function handler(ctx) {

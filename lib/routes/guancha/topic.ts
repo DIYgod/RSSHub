@@ -13,6 +13,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['occupy5', 'nczitzk'],
     handler,
+    url: 'guancha.cn/',
 };
 
 async function handler(ctx) {

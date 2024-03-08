@@ -22,6 +22,7 @@ export const route: Route = {
     name: '推荐',
     maintainers: ['brilon'],
     handler,
+    url: 'infoq.cn/',
 };
 
 async function handler(ctx) {

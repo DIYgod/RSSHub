@@ -22,6 +22,7 @@ export const route: Route = {
     name: '就业信息',
     maintainers: ['jackyu1996'],
     handler,
+    url: 'ccnu.91wllm.com/news/index/tag/tzgg',
 };
 
 async function handler() {

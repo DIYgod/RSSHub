@@ -23,6 +23,9 @@ export const route: Route = {
     name: 'Keyword',
     maintainers: ['DIYgod'],
     handler,
+    description: `| only not R18 | only R18 | no filter      |
+  | ------------ | -------- | -------------- |
+  | safe         | r18      | empty or other |`,
 };
 
 async function handler(ctx) {

@@ -20,6 +20,7 @@ export const route: Route = {
     name: '快讯',
     maintainers: ['nczitzk'],
     handler,
+    url: 'foresightnews.pro/news',
 };
 
 async function handler(ctx) {

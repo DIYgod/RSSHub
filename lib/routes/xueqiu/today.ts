@@ -23,6 +23,7 @@ export const route: Route = {
     name: '今日话题',
     maintainers: ['nczitzk'],
     handler,
+    url: 'xueqiu.com/today',
 };
 
 async function handler(ctx) {

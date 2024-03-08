@@ -23,6 +23,10 @@ export const route: Route = {
     name: '动态',
     maintainers: ['AtlasQuan'],
     handler,
+    url: 'slowmist.com/zh/news.html',
+    description: `| 公司新闻 | 漏洞披露 | 技术研究 |
+  | -------- | -------- | -------- |
+  | news     | vul      | research |`,
 };
 
 async function handler(ctx) {

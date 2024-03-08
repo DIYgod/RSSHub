@@ -24,6 +24,7 @@ export const route: Route = {
     name: '政府信息公开文件',
     maintainers: ['EsuRt'],
     handler,
+    url: 'www.suzhou.gov.cn/szxxgk/front/xxgk_right.jsp',
 };
 
 async function handler() {

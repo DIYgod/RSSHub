@@ -20,6 +20,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['Rongronggg9'],
     handler,
+    url: 'tribalfootball.com/',
 };
 
 async function handler() {

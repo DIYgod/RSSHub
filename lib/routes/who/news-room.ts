@@ -24,6 +24,18 @@ export const route: Route = {
     name: 'Newsroom',
     maintainers: ['LogicJake', 'nczitzk'],
     handler,
+    url: 'who.int/news',
+    description: `Category
+
+  | Feature stories | Commentaries |
+  | --------------- | ------------ |
+  | feature-stories | commentaries |
+
+  Language
+
+  | English | العربية | 中文 | Français | Русский | Español | Português |
+  | ------- | ------- | ---- | -------- | ------- | ------- | --------- |
+  | en      | ar      | zh   | fr       | ru      | es      | pt        |`,
 };
 
 async function handler(ctx) {

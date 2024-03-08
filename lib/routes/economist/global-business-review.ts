@@ -86,6 +86,7 @@ export const route: Route = {
     name: 'Global Business Review',
     maintainers: ['prnake'],
     handler,
+    url: 'businessreview.global/',
 };
 
 async function handler(ctx) {

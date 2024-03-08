@@ -29,6 +29,7 @@ export const route: Route = {
     name: 'Love Live! Official Website Latest NEWS',
     maintainers: ['axojhf'],
     handler,
+    url: 'www.lovelive-anime.jp/',
 };
 
 async function handler(ctx) {

@@ -21,6 +21,7 @@ export const route: Route = {
     name: '萧山区',
     maintainers: ['znhocn'],
     handler,
+    url: 'www.xswater.com/gongshui/channels/227.html',
 };
 
 async function handler() {

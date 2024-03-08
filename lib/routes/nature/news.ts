@@ -24,6 +24,7 @@ export const route: Route = {
     name: 'Nature News',
     maintainers: ['y9c', 'TonyRL'],
     handler,
+    url: 'nature.com/latest-news',
 };
 
 async function handler() {

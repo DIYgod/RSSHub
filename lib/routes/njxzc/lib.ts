@@ -23,6 +23,7 @@ export const route: Route = {
     name: '图书馆通知公告',
     maintainers: ['real-jiakai'],
     handler,
+    url: 'lib.njxzc.edu.cn/pxyhd/list.htm',
 };
 
 async function handler(ctx) {

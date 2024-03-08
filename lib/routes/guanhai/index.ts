@@ -14,6 +14,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['TonyRL'],
     handler,
+    url: 'guanhai.com.cn/',
 };
 
 async function handler() {

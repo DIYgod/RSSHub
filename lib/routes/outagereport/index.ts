@@ -19,6 +19,7 @@ export const route: Route = {
     name: 'Report',
     maintainers: ['cxumol', 'nczitzk'],
     handler,
+    description: `Please skip the local service area code for \`name\`, for example \`https://outage.report/us/verizon-wireless\` to \`verizon-wireless\`.`,
 };
 
 async function handler(ctx) {

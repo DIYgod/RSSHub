@@ -24,6 +24,7 @@ export const route: Route = {
     name: '主题文章',
     maintainers: ['miles170'],
     handler,
+    url: 'jin10.com/',
 };
 
 async function handler(ctx) {

@@ -12,6 +12,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,
+    url: 'cbnweek.com/',
 };
 
 async function handler() {

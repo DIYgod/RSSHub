@@ -17,6 +17,16 @@ export const route: Route = {
     name: 'FT 中文网',
     maintainers: ['HenryQW', 'xyqfer'],
     handler,
+    description: `:::tip
+  -   不支持付费文章。
+  :::
+
+  通过提取文章全文，以提供比官方源更佳的阅读体验。
+
+  支持所有频道，频道名称见 [官方频道 RSS](http://www.ftchinese.com/channel/rss.html).
+
+  -   频道为单一路径，如 \`http://www.ftchinese.com/rss/news\` 则为 \`/ft/chinese/news\`.
+  -   频道包含多重路径，如 \`http://www.ftchinese.com/rss/column/007000002\` 则替换 \`/\` 为 \`-\` \`/ft/chinese/column-007000002\`.`,
 };
 
 async function handler(ctx) {

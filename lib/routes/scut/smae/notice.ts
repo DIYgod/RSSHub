@@ -31,6 +31,9 @@ export const route: Route = {
     name: '机械与汽车工程学院 - 通知公告',
     maintainers: ['Ermaotie'],
     handler,
+    description: `| 公务信息 | 党建工作 | 人事工作 | 学生工作 | 科研实验室 | 本科生教务 | 研究生教务 |
+  | -------- | -------- | -------- | -------- | ---------- | ---------- | ---------- |
+  | gwxx     | djgz     | rsgz     | xsgz     | kysys      | bksjw      | yjsjw      |`,
 };
 
 async function handler(ctx) {

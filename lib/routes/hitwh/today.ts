@@ -26,6 +26,7 @@ export const route: Route = {
     name: '今日工大 - 通知公告',
     maintainers: ['raptazure'],
     handler,
+    url: 'hitwh.edu.cn/1024/list.htm',
 };
 
 async function handler() {

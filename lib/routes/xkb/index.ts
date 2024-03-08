@@ -25,6 +25,15 @@ export const route: Route = {
     name: '新闻',
     maintainers: ['TimWu007'],
     handler,
+    description: `常用栏目 ID：
+
+  | 栏目名 | ID  |
+  | ------ | --- |
+  | 首页   | 350 |
+  | 重点   | 359 |
+  | 广州   | 353 |
+  | 湾区   | 360 |
+  | 天下   | 355 |`,
 };
 
 async function handler(ctx) {

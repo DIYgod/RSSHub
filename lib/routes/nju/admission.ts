@@ -22,6 +22,7 @@ export const route: Route = {
     name: '本科迎新',
     maintainers: ['ret-1'],
     handler,
+    url: 'admission.nju.edu.cn/tzgg/index.html',
 };
 
 async function handler() {

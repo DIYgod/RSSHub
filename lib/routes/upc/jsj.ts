@@ -42,6 +42,9 @@ export const route: Route = {
     name: '计算机科学与技术学院',
     maintainers: ['Veagau'],
     handler,
+    description: `| 学院新闻 | 学术关注 | 学工动态 | 通知公告 |
+  | -------- | -------- | -------- | -------- |
+  | news     | scholar  | states   | notice   |`,
 };
 
 async function handler(ctx) {

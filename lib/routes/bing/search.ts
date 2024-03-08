@@ -26,6 +26,7 @@ export const route: Route = {
     name: '搜索',
     maintainers: ['CaoMeiYouRen'],
     handler,
+    url: 'cn.bing.com/',
 };
 
 async function handler(ctx) {

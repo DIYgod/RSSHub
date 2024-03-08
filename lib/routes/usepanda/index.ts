@@ -18,6 +18,9 @@ export const route: Route = {
     name: 'Feeds',
     maintainers: ['lyrl'],
     handler,
+    description: `| Channel | feedId                   |
+  | ------- | ------------------------ |
+  | Github  | 5718e53e7a84fb1901e059cc |`,
 };
 
 async function handler(ctx) {

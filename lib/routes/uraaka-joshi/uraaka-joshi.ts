@@ -12,6 +12,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['SettingDust', 'Halcao'],
     handler,
+    url: 'uraaka-joshi.com/',
 };
 
 async function handler() {

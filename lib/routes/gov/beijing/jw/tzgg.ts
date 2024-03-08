@@ -24,6 +24,7 @@ export const route: Route = {
     name: '通知公告',
     maintainers: ['nczitzk'],
     handler,
+    url: 'jw.beijing.gov.cn/tzgg',
 };
 
 async function handler() {

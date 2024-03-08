@@ -10,6 +10,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['umm233'],
     handler,
+    url: 'thepaper.cn/',
 };
 
 async function handler(ctx) {

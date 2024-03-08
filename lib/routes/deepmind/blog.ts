@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Blog',
     maintainers: ['nczitzk', 'TonyRL'],
     handler,
+    url: 'deepmind.com/blog',
 };
 
 async function handler() {

@@ -37,6 +37,9 @@ export const route: Route = {
     name: '新闻快讯',
     maintainers: ['Fatpandac', 'jameshih'],
     handler,
+    description: `|    快讯   |   文章  |
+  | :-------: | :-----: |
+  | newsflash | article |`,
 };
 
 async function handler(ctx) {

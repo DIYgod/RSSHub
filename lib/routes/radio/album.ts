@@ -24,6 +24,13 @@ export const route: Route = {
     name: '专辑',
     maintainers: ['nczitzk'],
     handler,
+    description: `如果订阅 [中国相声榜](https://www.radio.cn/pc-portal/sanji/detail.html?columnId=15682090498666)，其 URL 为 \`https://www.radio.cn/pc-portal/sanji/detail.html?columnId=15682090498666\`，可以得到 \`columnId\` 为 \`15682090498666\`
+
+  所以对应路由为 [\`/radio/album/15682090498666\`](https://rsshub.app/radio/album/15682090498666)
+
+  :::tip
+  部分专辑不适用该路由，此时可以尝试 [节目](#yun-ting-jie-mu) 路由
+  :::`,
 };
 
 async function handler(ctx) {

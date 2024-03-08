@@ -54,6 +54,9 @@ export const route: Route = {
     name: '就业信息',
     maintainers: ['ticks-tan'],
     handler,
+    description: `| 信息类型 | 消息通知 | 通知公告 | 新闻快递 |
+  | -------- | -------- | -------- | -------- |
+  | 参数     | xxtz     | tzgg     | xwkd     |`,
 };
 
 async function handler(ctx) {

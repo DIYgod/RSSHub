@@ -21,6 +21,7 @@ export const route: Route = {
     name: '研究成果',
     maintainers: ['shaomingbo'],
     handler,
+    url: 'www.research.ke.com/researchResults',
 };
 
 async function handler() {

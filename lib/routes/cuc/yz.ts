@@ -24,6 +24,7 @@ export const route: Route = {
     name: '研究生招生网',
     maintainers: ['niuyi1017'],
     handler,
+    url: 'yz.cuc.edu.cn/8549/list.htm',
 };
 
 async function handler() {

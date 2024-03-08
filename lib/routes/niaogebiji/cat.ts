@@ -24,6 +24,7 @@ export const route: Route = {
     name: '分类目录',
     maintainers: ['cKotoriKat'],
     handler,
+    url: 'niaogebiji.com/',
 };
 
 async function handler(ctx) {

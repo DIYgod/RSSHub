@@ -29,6 +29,7 @@ export const route: Route = {
     name: '播客',
     maintainers: ['eternasuno'],
     handler,
+    url: 'gcores.com/radios',
 };
 
 async function handler(ctx) {

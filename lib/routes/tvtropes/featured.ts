@@ -28,6 +28,9 @@ export const route: Route = {
     name: 'Featured',
     maintainers: ['nczitzk'],
     handler,
+    description: `| Today's Featured Trope | Newest Trope |
+  | ---------------------- | ------------ |
+  | today                  | newest       |`,
 };
 
 async function handler(ctx) {

@@ -21,6 +21,7 @@ export const route: Route = {
     name: 'Daily Updates News',
     maintainers: ['Rjnishant530'],
     handler,
+    url: 'web.stockedge.com/daily-updates/news',
 };
 
 async function handler() {

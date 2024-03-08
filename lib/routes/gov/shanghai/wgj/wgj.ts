@@ -29,6 +29,7 @@ export const route: Route = {
     name: '上海市文旅局审批公告',
     maintainers: ['gideonsenku'],
     handler,
+    url: 'wsbs.wgj.sh.gov.cn/',
 };
 
 async function handler(ctx) {

@@ -27,6 +27,7 @@ export const route: Route = {
     name: '最新研报',
     maintainers: [],
     handler,
+    url: 'www.ulapia.com/',
 };
 
 async function handler() {

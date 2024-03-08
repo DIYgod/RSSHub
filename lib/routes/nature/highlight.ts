@@ -23,6 +23,9 @@ export const route: Route = {
     name: 'Research Highlight',
     maintainers: [],
     handler,
+    description: `:::warning
+  Only some journals are supported.
+  :::`,
 };
 
 async function handler(ctx) {

@@ -24,6 +24,7 @@ export const route: Route = {
     name: '7x24 小时快讯',
     maintainers: ['occupy5', 'dousha'],
     handler,
+    url: 'fx678.com/kx',
 };
 
 async function handler() {

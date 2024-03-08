@@ -77,6 +77,9 @@ export const route: Route = {
     name: 'RSS',
     maintainers: ['Rongronggg9'],
     handler,
+    description: `| Key    | Description                                                              | Accepts        | Defaults to |
+  | ------ | ------------------------------------------------------------------------ | -------------- | ----------- |
+  | showID | Show monitor ID (disabling it will also disable link for each RSS entry) | 0/1/true/false | true        |`,
 };
 
 async function handler(ctx) {

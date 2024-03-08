@@ -20,6 +20,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'sinchew.com.my/',
 };
 
 async function handler(ctx) {

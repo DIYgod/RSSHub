@@ -13,6 +13,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,
+    url: 'distill.pub/',
 };
 
 async function handler() {

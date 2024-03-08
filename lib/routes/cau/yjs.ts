@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['shengmaosu'],
     handler,
+    url: 'yz.cau.edu.cn/col/col41740/index.html',
 };
 
 async function handler() {

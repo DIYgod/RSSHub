@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['Derekmini'],
     handler,
+    url: 'job.hrbeu.edu.cn/*',
 };
 
 async function handler() {

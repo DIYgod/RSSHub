@@ -29,6 +29,7 @@ export const route: Route = {
     name: '财新数据通',
     maintainers: ['nczitzk'],
     handler,
+    url: 'k.caixin.com/web',
 };
 
 async function handler() {

@@ -36,6 +36,7 @@ export const route: Route = {
     name: '樊登福州运营中心',
     maintainers: ['Fatpandac'],
     handler,
+    url: 'www.dushu365.com*',
 };
 
 async function handler() {

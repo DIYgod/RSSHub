@@ -23,6 +23,7 @@ export const route: Route = {
     name: '教务处',
     maintainers: ['3401797899'],
     handler,
+    url: 'jwc.ouc.edu.cn/',
 };
 
 async function handler() {

@@ -22,6 +22,7 @@ export const route: Route = {
     name: '标签',
     maintainers: ['TonyRL'],
     handler,
+    url: 'byteclicks.com/',
 };
 
 async function handler(ctx) {

@@ -20,6 +20,7 @@ export const route: Route = {
     name: '支持的快递公司列表',
     maintainers: ['NeverBehave'],
     handler,
+    url: 'kuaidi100.com/',
 };
 
 async function handler() {

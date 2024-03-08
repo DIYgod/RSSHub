@@ -25,6 +25,10 @@ export const route: Route = {
     name: 'Following timeline',
     maintainers: ['ClarkeCheng'],
     handler,
+    url: 'www.pixiv.net/bookmark_new_illust.php',
+    description: `:::warning
+  Only for self-hosted
+  :::`,
 };
 
 async function handler() {

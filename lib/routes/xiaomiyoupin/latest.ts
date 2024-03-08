@@ -21,6 +21,7 @@ export const route: Route = {
     name: '小米有品每日上新',
     maintainers: ['xyqfer', 'DIYgod', 'bigfei'],
     handler,
+    url: 'xiaomiyoupin.com/',
 };
 
 async function handler() {

@@ -22,6 +22,9 @@ export const route: Route = {
     name: '大风号',
     maintainers: ['Jamch'],
     handler,
+    description: `| 文章 | 视频  |
+  | ---- | ----- |
+  | doc  | video |`,
 };
 
 async function handler(ctx) {

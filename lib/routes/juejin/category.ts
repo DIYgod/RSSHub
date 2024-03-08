@@ -19,6 +19,9 @@ export const route: Route = {
     name: '分类',
     maintainers: ['DIYgod'],
     handler,
+    description: `| 后端    | 前端     | Android | iOS | 人工智能 | 开发工具 | 代码人生 | 阅读    |
+  | ------- | -------- | ------- | --- | -------- | -------- | -------- | ------- |
+  | backend | frontend | android | ios | ai       | freebie  | career   | article |`,
 };
 
 async function handler(ctx) {

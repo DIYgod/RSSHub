@@ -25,6 +25,10 @@ export const route: Route = {
     name: '专辑',
     maintainers: ['nczitzk'],
     handler,
+    url: 'jmcomic.group/',
+    description: `:::tip
+  专辑 id 不包括 URL 中标题的部分。
+  :::`,
 };
 
 async function handler(ctx) {

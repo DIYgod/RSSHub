@@ -21,6 +21,7 @@ export const route: Route = {
     name: 'hottest',
     maintainers: ['DIYgod'],
     handler,
+    url: 'www.hotukdeals.com/',
 };
 
 async function handler() {

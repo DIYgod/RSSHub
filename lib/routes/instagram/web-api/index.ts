@@ -21,6 +21,14 @@ export const route: Route = {
     name: 'User Profile / Hashtag',
     maintainers: ['TonyRL'],
     handler,
+    description: `:::tip
+You may need to setup cookie for a less restrictive rate limit and private profiles.
+:::
+
+
+| User timeline | Hashtag |
+| ------------- | ------- |
+| user          | tags    |`,
 };
 
 async function handler(ctx) {

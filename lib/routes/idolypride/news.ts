@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'News',
     maintainers: ['Mingxia1'],
     handler,
+    url: 'idolypride.jp/news',
 };
 
 async function handler() {

@@ -23,6 +23,7 @@ export const route: Route = {
     name: '首页',
     maintainers: ['auto-bot-ty'],
     handler,
+    url: 'www.iyingdi.com/',
 };
 
 async function handler() {

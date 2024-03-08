@@ -20,6 +20,15 @@ export const route: Route = {
     name: '栏目',
     maintainers: [],
     handler,
+    description: `| 栏目名称          | 栏目 id |
+  | ----------------- | ------- |
+  | 法规文库          | 10      |
+  | 法规资讯          | 12      |
+  | 专家供稿          | 13      |
+  | 协会动态 会员动态 | 20      |
+  | 协会动态          | 37      |
+  | 协会通知公告      | 38      |
+  | 会员动态          | 39      |`,
 };
 
 async function handler(ctx) {

@@ -27,6 +27,8 @@ export const route: Route = {
     name: '新闻联播',
     maintainers: ['zengxs'],
     handler,
+    url: 'tv.cctv.com/lm/xwlb',
+    description: `新闻联播内容摘要。`,
 };
 
 async function handler() {

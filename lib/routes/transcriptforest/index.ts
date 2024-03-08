@@ -30,6 +30,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,
+    url: 'www.transcriptforest.com/en/channel',
 };
 
 async function handler(ctx) {

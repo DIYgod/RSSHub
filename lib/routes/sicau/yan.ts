@@ -24,6 +24,10 @@ export const route: Route = {
     name: '研究生院',
     maintainers: ['nczitzk'],
     handler,
+    url: 'yan.sicau.edu.cn/',
+    description: `| 新闻公告 | 学术报告 |
+  | -------- | -------- |
+  | xwgg     | xsbg     |`,
 };
 
 async function handler(ctx) {

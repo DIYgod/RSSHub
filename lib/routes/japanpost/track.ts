@@ -27,6 +27,9 @@ export const route: Route = {
     name: 'Track & Trace Service 郵便追跡サービス',
     maintainers: ['tuzi3040'],
     handler,
+    description: `| Japanese | English |
+  | -------- | ------- |
+  | ja       | en      |`,
 };
 
 async function handler(ctx) {

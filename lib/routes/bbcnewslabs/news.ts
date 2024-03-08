@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'News',
     maintainers: ['elxy'],
     handler,
+    url: 'bbcnewslabs.co.uk/',
 };
 
 async function handler() {

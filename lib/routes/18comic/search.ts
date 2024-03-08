@@ -27,6 +27,10 @@ export const route: Route = {
     name: '搜索',
     maintainers: [],
     handler,
+    url: 'jmcomic.group/',
+    description: `:::tip
+  关键字必须超过两个字，这是来自网站的限制。
+  :::`,
 };
 
 async function handler(ctx) {

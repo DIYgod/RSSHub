@@ -36,6 +36,20 @@ export const route: Route = {
     name: 'Best Seller Books',
     maintainers: ['melvinto'],
     handler,
+    url: 'nytimes.com/',
+    description: `| Category                             |
+| ------------------------------------ |
+| combined-print-and-e-book-nonfiction |
+| hardcover-nonfiction                 |
+| paperback-nonfiction                 |
+| advice-how-to-and-miscellaneous      |
+| combined-print-and-e-book-fiction    |
+| hardcover-fiction                    |
+| trade-fiction-paperback              |
+| childrens-middle-grade-hardcover     |
+| picture-books                        |
+| series-books                         |
+| young-adult-hardcover                |`,
 };
 
 async function handler(ctx) {

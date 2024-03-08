@@ -34,6 +34,9 @@ export const route: Route = {
     name: '教务处',
     maintainers: ['LenaNouzen'],
     handler,
+    description: `| 名师风采 | 热点新闻 | 教务公告 | 教学新闻 |
+  | -------- | -------- | -------- | -------- |
+  | 351      | 353      | 354      | 355      |`,
 };
 
 async function handler(ctx) {

@@ -38,6 +38,9 @@ export const route: Route = {
     name: '报道',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 最新报道 | 晚点独家 | 人物访谈 | 晚点早知道 | 长报道 |
+  | -------- | -------- | -------- | ---------- | ------ |
+  |          | 1        | 2        | 3          | 4      |`,
 };
 
 async function handler(ctx) {

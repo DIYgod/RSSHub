@@ -13,6 +13,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['meixger'],
     handler,
+    url: 'bytes.dev/issues',
 };
 
 async function handler() {

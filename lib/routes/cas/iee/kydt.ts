@@ -24,6 +24,7 @@ export const route: Route = {
     name: '电工研究所 科研动态',
     maintainers: ['nczitzk'],
     handler,
+    url: 'www.iee.cas.cn/xwzx/kydt',
 };
 
 async function handler() {

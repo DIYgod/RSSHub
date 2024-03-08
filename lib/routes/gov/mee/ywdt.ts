@@ -35,6 +35,9 @@ export const route: Route = {
     name: '要闻动态',
     maintainers: ['liuxsdev'],
     handler,
+    description: `| 时政要闻 | 环境要闻 | 地方快讯 | 新闻发布 | 视频新闻 | 公示公告 |
+| :------: | :------: | :------: | :------: | :------: | :------: |
+|   szyw   | hjywnews |  dfnews  |   xwfb   |   spxw   |   gsgg   |`,
 };
 
 async function handler(ctx) {

@@ -23,6 +23,9 @@ export const route: Route = {
     name: '人才招聘网',
     maintainers: ['ret-1'],
     handler,
+    description: `| 信息发布 | 教研类岗位 | 管理岗位及其他 |
+  | -------- | ---------- | -------------- |
+  | xxfb     | jylgw      | gllgw          |`,
 };
 
 async function handler(ctx) {

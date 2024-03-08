@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Office of Science and Technology Policy',
     maintainers: ['LyleLee'],
     handler,
+    url: 'whitehouse.gov/ostp',
 };
 
 async function handler() {

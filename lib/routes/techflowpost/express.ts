@@ -23,6 +23,8 @@ export const route: Route = {
     name: '快讯',
     maintainers: ['nczitzk'],
     handler,
+    url: 'techflowpost.com/',
+    url: 'techflowpost.com/newsletter/index.html',
 };
 
 async function handler(ctx) {

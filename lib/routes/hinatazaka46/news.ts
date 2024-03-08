@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Hinatazaka46 News 日向坂 46 新闻',
     maintainers: ['crispgm', 'akashigakki'],
     handler,
+    url: 'hinatazaka46.com/s/official/news/list',
 };
 
 async function handler(ctx) {

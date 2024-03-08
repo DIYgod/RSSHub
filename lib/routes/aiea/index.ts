@@ -17,6 +17,11 @@ export const route: Route = {
     name: 'Seminar Series',
     maintainers: ['zxx-457'],
     handler,
+    description: `| Time frame |
+  | ---------- |
+  | upcoming   |
+  | past       |
+  | both       |`,
 };
 
 async function handler(ctx) {

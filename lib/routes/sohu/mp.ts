@@ -25,6 +25,8 @@ export const route: Route = {
     name: '更新',
     maintainers: ['HenryQW'],
     handler,
+    description: `1.  通过浏览器搜索相关搜狐号 \`果壳 site: mp.sohu.com\`。
+  2.  通过浏览器控制台执行 \`contentData.mkey\`，返回的即为搜狐号 ID。`,
 };
 
 async function handler(ctx) {

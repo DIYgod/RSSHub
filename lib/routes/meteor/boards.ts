@@ -21,6 +21,7 @@ export const route: Route = {
     name: '看板列表',
     maintainers: ['TonyRL'],
     handler,
+    url: 'meteor.today/',
 };
 
 async function handler() {

@@ -19,6 +19,7 @@ export const route: Route = {
     name: 'Instance timeline (local)',
     maintainers: ['hoilc'],
     handler,
+    description: `If the instance address is not \`mastodon.social\` or \`pawoo.net\`, then the route requires \`ALLOW_USER_SUPPLY_UNSAFE_DOMAIN\` to be \`true\`.`,
 };
 
 async function handler(ctx) {

@@ -33,6 +33,9 @@ export const route: Route = {
     name: '教务处',
     maintainers: ['shaokeyibb'],
     handler,
+    description: `| 通知公告 |
+  | :------: |
+  |   tzgg   |`,
 };
 
 async function handler(ctx) {

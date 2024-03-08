@@ -26,6 +26,7 @@ export const route: Route = {
     name: '最近更新',
     maintainers: ['TonyRL'],
     handler,
+    url: 'missav.com/dm397/new',
 };
 
 async function handler() {

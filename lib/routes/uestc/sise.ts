@@ -50,6 +50,10 @@ export const route: Route = {
     name: '信息与软件工程学院',
     maintainers: ['Yadomin', 'mobyw'],
     handler,
+    url: 'sise.uestc.edu.cn/',
+    description: `| 最新 | 院办 | 学生科 | 教务科 | 研管科 | 组织 | 人事 | 实践教育中心 | Int'I |
+  | ---- | ---- | ------ | ------ | ------ | ---- | ---- | ------------ | ----- |
+  | 1    | 2    | 3      | 4      | 5      | 6    | 7    | 8            | 9     |`,
 };
 
 async function handler(ctx) {

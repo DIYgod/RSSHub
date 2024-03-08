@@ -44,6 +44,9 @@ export const route: Route = {
     name: '资讯热榜',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 24 小时热榜 | 资讯人气榜 | 资讯综合榜 | 资讯收藏榜 |
+  | ----------- | ---------- | ---------- | ---------- |
+  | 24          | renqi      | zonghe     | shoucang   |`,
 };
 
 async function handler(ctx) {

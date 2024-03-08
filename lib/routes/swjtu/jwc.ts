@@ -63,6 +63,7 @@ export const route: Route = {
     name: '教务网',
     maintainers: ['mobyw'],
     handler,
+    url: 'jwc.swjtu.edu.cn/vatuu/WebAction',
 };
 
 async function handler() {

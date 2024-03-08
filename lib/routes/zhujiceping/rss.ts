@@ -12,6 +12,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['cnkmmk'],
     handler,
+    url: 'zhujiceping.com/',
 };
 
 async function handler() {

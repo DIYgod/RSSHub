@@ -23,6 +23,7 @@ export const route: Route = {
     name: '最近更新',
     maintainers: ['nczitzk'],
     handler,
+    url: 'agemys.org/update',
 };
 
 async function handler() {

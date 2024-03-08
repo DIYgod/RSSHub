@@ -34,6 +34,17 @@ export const route: Route = {
     name: '米游社 - 官方公告',
     maintainers: ['CaoMeiYouRen'],
     handler,
+    description: `游戏 id
+
+  | 崩坏三 | 原神 | 崩坏二 | 未定事件簿 | 星穹铁道 | 绝区零 |
+  | ------ | ---- | ------ | ---------- | -------- | ------ |
+  | 1      | 2    | 3      | 4          | 6        | 8      |
+
+  公告类型
+
+  | 公告 | 活动 | 资讯 |
+  | ---- | ---- | ---- |
+  | 1    | 2    | 3    |`,
 };
 
 async function handler(ctx) {

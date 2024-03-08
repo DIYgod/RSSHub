@@ -22,6 +22,7 @@ export const route: Route = {
     name: '研究生院招生动态',
     maintainers: ['shengmaosu'],
     handler,
+    url: 'yjsy.gzhu.edu.cn/zsxx/zsdt/zsdt.htm',
 };
 
 async function handler() {

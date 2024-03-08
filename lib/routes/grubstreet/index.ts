@@ -10,6 +10,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['loganrockmore'],
     handler,
+    url: 'grubstreet.com/',
 };
 
 async function handler(ctx) {

@@ -25,6 +25,7 @@ export const route: Route = {
     name: '滚动新闻',
     maintainers: ['nczitzk'],
     handler,
+    url: 'c114.com.cn/news/roll.asp',
 };
 
 async function handler(ctx) {

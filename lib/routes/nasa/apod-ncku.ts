@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Cheng Kung University Mirror',
     maintainers: ['nczitzk', 'williamgateszhao'],
     handler,
+    url: 'apod.nasa.govundefined',
 };
 
 async function handler(ctx) {

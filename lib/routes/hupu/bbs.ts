@@ -30,6 +30,9 @@ export const route: Route = {
     name: '社区',
     maintainers: ['LogicJake', 'nczitzk'],
     handler,
+    description: `:::tip
+  更多社区参见 [社区](https://bbs.hupu.com)
+  :::`,
 };
 
 async function handler(ctx) {

@@ -20,6 +20,9 @@ export const route: Route = {
     name: '科学技术处',
     maintainers: ['ret-1'],
     handler,
+    description: `| 通知公告 | 科研动态 |
+  | -------- | -------- |
+  | tzgg     | kydt     |`,
 };
 
 async function handler(ctx) {

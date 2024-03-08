@@ -58,6 +58,7 @@ export const route: Route = {
     name: '自学考试通知公告',
     maintainers: ['h2ws'],
     handler,
+    url: 'www.shmeea.edu.cn/page/04000/index.html',
 };
 
 async function handler() {

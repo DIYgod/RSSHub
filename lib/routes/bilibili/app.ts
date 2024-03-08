@@ -25,6 +25,9 @@ export const route: Route = {
     name: '更新情报',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 安卓版  | iPhone 版 | iPad HD 版 | UWP 版 | TV 版            |
+| ------- | --------- | ---------- | ------ | ---------------- |
+| android | iphone    | ipad       | win    | android\_tv\_yst |`,
 };
 
 async function handler(ctx) {

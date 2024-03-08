@@ -23,6 +23,7 @@ export const route: Route = {
     name: '共和報',
     maintainers: ['TonyRL'],
     handler,
+    url: 'agorahub.github.io/pen0',
 };
 
 async function handler() {

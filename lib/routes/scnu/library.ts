@@ -22,6 +22,7 @@ export const route: Route = {
     name: '图书馆通知',
     maintainers: ['fengkx'],
     handler,
+    url: 'lib.scnu.edu.cn/news/zuixingonggao',
 };
 
 async function handler() {

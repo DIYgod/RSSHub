@@ -25,6 +25,10 @@ export const route: Route = {
     name: '财经学院',
     maintainers: ['RiverTwilight'],
     handler,
+    url: 'swpu.edu.cn/',
+    description: `| 栏目 | 学院新闻 | 学院通知 |
+  | ---- | -------- | -------- |
+  | 代码 | xyxw     | xytz     |`,
 };
 
 async function handler(ctx) {

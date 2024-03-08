@@ -21,6 +21,7 @@ export const route: Route = {
     name: '付费专栏文章更新',
     maintainers: ['TonyRL'],
     handler,
+    url: 'sspai.com/series',
 };
 
 async function handler(ctx) {

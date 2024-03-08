@@ -23,6 +23,7 @@ export const route: Route = {
     name: '软件与微电子学院 - 招生通知',
     maintainers: ['legr4ndk'],
     handler,
+    url: 'ss.pku.edu.cn/admission/admnotice',
 };
 
 async function handler() {

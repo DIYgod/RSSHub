@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'News',
     maintainers: ['Shinanory'],
     handler,
+    url: 'bmkg.go.id/',
 };
 
 async function handler() {

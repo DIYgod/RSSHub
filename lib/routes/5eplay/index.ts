@@ -26,6 +26,7 @@ export const route: Route = {
     name: '新闻列表',
     maintainers: ['Dlouxgit'],
     handler,
+    url: 'csgo.5eplay.com/',
 };
 
 async function handler() {

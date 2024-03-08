@@ -37,6 +37,10 @@ export const route: Route = {
     name: '果壳网专栏',
     maintainers: ['DHPO', 'hoilc'],
     handler,
+    url: 'guokr.com/',
+    description: `| 物种日历 | 吃货研究所 | 美丽也是技术活 |
+  | -------- | ---------- | -------------- |
+  | calendar | institute  | beauty         |`,
 };
 
 async function handler(ctx) {

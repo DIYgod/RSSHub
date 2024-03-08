@@ -21,6 +21,7 @@ export const route: Route = {
     name: 'TheBatch 周报',
     maintainers: ['nczitzk', 'juvenn'],
     handler,
+    url: 'www.deeplearning.ai/thebatch',
 };
 
 async function handler() {

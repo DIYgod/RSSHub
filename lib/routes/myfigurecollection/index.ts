@@ -34,6 +34,10 @@ export const route: Route = {
     name: '圖片',
     maintainers: ['nczitzk'],
     handler,
+    url: 'zh.myfigurecollection.net/browse',
+    description: `| 每日圖片 | 每週圖片 | 每月圖片 |
+  | -------- | -------- | -------- |
+  | potd     | potw     | potm     |`,
 };
 
 async function handler(ctx) {

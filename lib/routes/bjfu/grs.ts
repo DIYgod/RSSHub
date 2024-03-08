@@ -24,6 +24,7 @@ export const route: Route = {
     name: '研究生院培养动态',
     maintainers: ['markmingjie'],
     handler,
+    url: 'graduate.bjfu.edu.cn/',
 };
 
 async function handler() {

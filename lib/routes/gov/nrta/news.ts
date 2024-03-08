@@ -27,6 +27,9 @@ export const route: Route = {
     name: '分类',
     maintainers: ['yuxinliu-alex'],
     handler,
+    description: `| 总局要闻 | 公告公示 | 工作动态 | 其他 |
+  | -------- | -------- | -------- | ---- |
+  | 112      | 113      | 114      |      |`,
 };
 
 async function handler(ctx) {

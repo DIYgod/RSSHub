@@ -37,6 +37,7 @@ export const route: Route = {
     name: '最新辟谣',
     maintainers: ['hoilc'],
     handler,
+    url: 'vp.fact.qq.com/home',
 };
 
 async function handler() {

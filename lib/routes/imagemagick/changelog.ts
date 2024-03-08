@@ -26,6 +26,7 @@ export const route: Route = {
     name: 'Changelog',
     maintainers: ['nczitzk'],
     handler,
+    url: 'imagemagick.org/script/download.php',
 };
 
 async function handler() {

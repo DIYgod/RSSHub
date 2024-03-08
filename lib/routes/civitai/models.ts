@@ -21,6 +21,7 @@ export const route: Route = {
     name: 'Latest models',
     maintainers: ['DIYgod'],
     handler,
+    url: 'civitai.com/',
 };
 
 async function handler() {

@@ -46,6 +46,7 @@ export const route: Route = {
     name: '比赛列表',
     maintainers: ['prnake'],
     handler,
+    url: 'luogu.com.cn/contest/list',
 };
 
 async function handler() {

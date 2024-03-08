@@ -32,6 +32,7 @@ export const route: Route = {
     name: '时间线',
     maintainers: ['nczitzk'],
     handler,
+    url: 'utgd.net/',
 };
 
 async function handler(ctx) {

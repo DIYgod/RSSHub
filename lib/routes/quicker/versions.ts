@@ -8,6 +8,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['Cesaryuan', 'nczitzk'],
     handler,
+    url: 'getquicker.net/Help/Versions',
 };
 
 async function handler() {

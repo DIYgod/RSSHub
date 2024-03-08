@@ -22,6 +22,9 @@ export const route: Route = {
     name: '分类',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 社会动态 | 院内新闻 | 学术观点 | 文献书籍 | 工作论文 | 专题讨论 |
+  | -------- | -------- | -------- | -------- | -------- | -------- |
+  | 1        | 5        | 3        | 4        | 6        | 8        |`,
 };
 
 async function handler(ctx) {

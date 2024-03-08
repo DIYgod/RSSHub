@@ -27,6 +27,7 @@ export const route: Route = {
     name: '知乎日报 - 合集',
     maintainers: ['ccbikai'],
     handler,
+    url: 'daily.zhihu.com/*',
 };
 
 async function handler(ctx) {

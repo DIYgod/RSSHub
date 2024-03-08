@@ -22,6 +22,7 @@ export const route: Route = {
     name: '研究生院通知公告',
     maintainers: ['shengmaosu'],
     handler,
+    url: 'yz.tongji.edu.cn/zsxw/ggtz.htm',
 };
 
 async function handler() {

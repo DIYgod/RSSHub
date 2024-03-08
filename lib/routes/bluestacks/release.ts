@@ -25,6 +25,7 @@ export const route: Route = {
     name: 'BlueStacks 5 Release Notes',
     maintainers: ['TonyRL'],
     handler,
+    url: 'bluestacks.com/hc/en-us/articles/360056960211-Release-Notes-BlueStacks-5',
 };
 
 async function handler() {

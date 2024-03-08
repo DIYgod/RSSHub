@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Notes of source',
     maintainers: ['DIYgod'],
     handler,
+    url: 'crossbell.io/*',
 };
 
 async function handler(ctx) {

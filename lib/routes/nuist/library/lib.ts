@@ -14,6 +14,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['gylidian'],
     handler,
+    url: 'lib.nuist.edu.cn/',
 };
 
 async function handler() {

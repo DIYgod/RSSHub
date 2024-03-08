@@ -25,6 +25,7 @@ export const route: Route = {
     name: '一小时风云榜',
     maintainers: ['fatpandac'],
     handler,
+    url: 'guangdiu.com/rank',
 };
 
 async function handler() {

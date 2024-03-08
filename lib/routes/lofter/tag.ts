@@ -20,6 +20,9 @@ export const route: Route = {
     name: 'Tag',
     maintainers: ['hoilc', 'nczitzk'],
     handler,
+    description: `| new  | date | week | month | total |
+  | ---- | ---- | ---- | ----- | ----- |
+  | 最新 | 日榜 | 周榜 | 月榜  | 总榜  |`,
 };
 
 async function handler(ctx) {

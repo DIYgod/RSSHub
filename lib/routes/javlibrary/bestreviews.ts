@@ -18,6 +18,9 @@ export const route: Route = {
     name: 'Best Reviews',
     maintainers: ['nczitzk'],
     handler,
+    description: `| Last Month | All Time |
+  | ---------- | -------- |
+  | 1          | 2        |`,
 };
 
 async function handler(ctx) {

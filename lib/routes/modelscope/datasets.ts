@@ -32,6 +32,7 @@ export const route: Route = {
     name: '数据集',
     maintainers: ['TonyRL'],
     handler,
+    url: 'modelscope.cn/datasets',
 };
 
 async function handler(ctx) {

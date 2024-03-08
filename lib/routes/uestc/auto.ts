@@ -25,6 +25,7 @@ export const route: Route = {
     name: '自动化工程学院',
     maintainers: ['talengu', 'mobyw'],
     handler,
+    url: 'auto.uestc.edu.cn/',
 };
 
 async function handler() {

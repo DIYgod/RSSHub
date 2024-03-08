@@ -22,6 +22,9 @@ export const route: Route = {
     name: '栏目',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 新闻 | 通告栏 |
+  | ---- | ------ |
+  | 1    | 2      |`,
 };
 
 async function handler(ctx) {

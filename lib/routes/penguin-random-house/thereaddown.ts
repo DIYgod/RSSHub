@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Book Lists',
     maintainers: ['StevenRCE0'],
     handler,
+    url: 'penguinrandomhouse.com/the-read-down',
 };
 
 async function handler(ctx) {

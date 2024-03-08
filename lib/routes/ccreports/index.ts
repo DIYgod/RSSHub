@@ -26,6 +26,7 @@ export const route: Route = {
     name: '要闻',
     maintainers: ['EsuRt', 'Fatpandac'],
     handler,
+    url: 'www.ccreports.com.cn/',
 };
 
 async function handler() {

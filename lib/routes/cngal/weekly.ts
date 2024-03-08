@@ -26,6 +26,7 @@ export const route: Route = {
     name: '每周速报',
     maintainers: ['chengyuhui'],
     handler,
+    url: 'www.cngal.org/',
 };
 
 async function handler(ctx) {

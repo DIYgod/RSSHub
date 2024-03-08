@@ -17,6 +17,9 @@ export const route: Route = {
     name: '热门图书排行',
     maintainers: ['xyqfer', 'queensferryme'],
     handler,
+    description: `| 全部 | 虚构    | 非虚构     |
+  | ---- | ------- | ---------- |
+  |      | fiction | nonfiction |`,
 };
 
 async function handler(ctx) {

@@ -25,6 +25,7 @@ export const route: Route = {
     name: '快讯',
     maintainers: ['TonyRL'],
     handler,
+    url: 'chaincatcher.com/news',
 };
 
 async function handler() {

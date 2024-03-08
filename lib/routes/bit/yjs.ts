@@ -22,6 +22,7 @@ export const route: Route = {
     name: '研究生院招生信息',
     maintainers: ['shengmaosu'],
     handler,
+    url: 'grd.bit.edu.cn/zsgz/zsxx/index.htm',
 };
 
 async function handler() {

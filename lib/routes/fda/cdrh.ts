@@ -13,6 +13,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'fda.gov/medical-devices/news-events-medical-devices/cdrhnew-news-and-updates',
 };
 
 async function handler(ctx) {

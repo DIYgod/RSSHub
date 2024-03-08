@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Blog',
     maintainers: ['TonyRL'],
     handler,
+    url: 'backlinko.com/blog',
 };
 
 async function handler() {

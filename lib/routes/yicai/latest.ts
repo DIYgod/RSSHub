@@ -21,6 +21,7 @@ export const route: Route = {
     name: '最新',
     maintainers: ['nczitzk'],
     handler,
+    url: 'yicai.com/',
 };
 
 async function handler(ctx) {

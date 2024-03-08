@@ -23,6 +23,9 @@ export const route: Route = {
     name: '教务处',
     maintainers: ['gylidian'],
     handler,
+    description: `| 教学要闻 | 学院教学 | 教务管理 | 教学研究 | 教务管理 | 教材建设 | 考试中心 |
+  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+  | jxyw     | xyjx     | jwgl     | jxyj     | sjjx     | jcjs     | kszx     |`,
 };
 
 async function handler(ctx) {

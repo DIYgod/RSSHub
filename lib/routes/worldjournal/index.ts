@@ -16,6 +16,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'worldjournal.com/wj/*path',
 };
 
 async function handler(ctx) {

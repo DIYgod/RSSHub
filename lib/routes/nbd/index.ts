@@ -24,6 +24,10 @@ export const route: Route = {
     name: '分类',
     maintainers: ['nczitzk'],
     handler,
+    url: 'nbd.com.cn/',
+    description: `| 头条 | 要闻 | 图片新闻 | 推荐 |
+  | ---- | ---- | -------- | ---- |
+  | 2    | 3    | 4        | 5    |`,
 };
 
 async function handler(ctx) {

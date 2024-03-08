@@ -33,6 +33,9 @@ export const route: Route = {
     name: '消费资讯',
     maintainers: ['Fatpandac'],
     handler,
+    description: `| 新闻稿 | 消费资讯 |
+  | :----: | :------: |
+  |   xwg  |   xfzx   |`,
 };
 
 async function handler(ctx) {

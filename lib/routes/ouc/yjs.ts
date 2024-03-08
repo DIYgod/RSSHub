@@ -22,6 +22,7 @@ export const route: Route = {
     name: '研究生院',
     maintainers: ['shengmaosu'],
     handler,
+    url: 'yz.ouc.edu.cn/5926/list.htm',
 };
 
 async function handler() {

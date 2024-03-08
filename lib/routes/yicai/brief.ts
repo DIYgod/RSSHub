@@ -24,6 +24,7 @@ export const route: Route = {
     name: '正在',
     maintainers: ['sanmmm', 'nczitzk'],
     handler,
+    url: 'yicai.com/brief',
 };
 
 async function handler(ctx) {

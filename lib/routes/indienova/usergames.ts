@@ -24,6 +24,7 @@ export const route: Route = {
     name: '会员开发游戏库',
     maintainers: ['TonyRL'],
     handler,
+    url: 'indienova.com/usergames',
 };
 
 async function handler() {

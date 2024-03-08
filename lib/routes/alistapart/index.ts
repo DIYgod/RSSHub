@@ -10,6 +10,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['Rjnishant530'],
     handler,
+    url: 'alistapart.com/articles/',
 };
 
 async function handler() {

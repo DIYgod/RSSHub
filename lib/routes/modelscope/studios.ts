@@ -32,6 +32,7 @@ export const route: Route = {
     name: '创空间',
     maintainers: ['TonyRL'],
     handler,
+    url: 'modelscope.cn/studios',
 };
 
 async function handler(ctx) {

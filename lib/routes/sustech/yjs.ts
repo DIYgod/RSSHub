@@ -21,6 +21,7 @@ export const route: Route = {
     name: '研究生网通知公告',
     maintainers: ['shengmaosu'],
     handler,
+    url: 'gs.sustech.edu.cn/',
 };
 
 async function handler() {

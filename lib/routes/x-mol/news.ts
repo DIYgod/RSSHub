@@ -31,6 +31,7 @@ export const route: Route = {
     name: 'News',
     maintainers: ['cssxsh'],
     handler,
+    url: 'x-mol.com/news/index',
 };
 
 async function handler(ctx) {

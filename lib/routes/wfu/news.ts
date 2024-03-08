@@ -66,6 +66,12 @@ export const route: Route = {
     name: '新闻',
     maintainers: ['cccht'],
     handler,
+    url: 'news.wfu.edu.cn/',
+    description: `| **内容** | **参数** |
+  | :------: | :------: |
+  | 潍院要闻 |   wyyw   |
+  | 综合新闻 |   zhxw   |
+  | 学术纵横 |   xszh   |`,
 };
 
 async function handler(ctx) {

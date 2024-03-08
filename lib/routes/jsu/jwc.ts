@@ -22,6 +22,9 @@ export const route: Route = {
     name: '教务处',
     maintainers: ['wenjia03'],
     handler,
+    description: `| 教务通知 | 教务动态 |
+  | -------- | -------- |
+  | jwtz     | jwdt     |`,
 };
 
 async function handler(ctx) {

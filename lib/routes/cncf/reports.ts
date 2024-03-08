@@ -14,6 +14,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'cncf.io/reports',
 };
 
 async function handler() {

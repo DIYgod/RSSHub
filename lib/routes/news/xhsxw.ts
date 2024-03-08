@@ -29,6 +29,7 @@ export const route: Route = {
     name: '新华社新闻',
     maintainers: ['nczitzk'],
     handler,
+    url: 'news.cn/xhsxw.htm',
 };
 
 async function handler(ctx) {

@@ -32,6 +32,9 @@ export const route: Route = {
     name: 'College of Intelligence and Computing',
     maintainers: ['SuperPung'],
     handler,
+    description: `| College News | Notification | TJU Forum for CIC |
+  | :----------: | :----------: | :---------------: |
+  |     news     | notification |       forum       |`,
 };
 
 async function handler(ctx) {

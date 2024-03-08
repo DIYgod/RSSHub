@@ -20,6 +20,7 @@ export const route: Route = {
     name: 'Series',
     maintainers: ['Rjnishant530'],
     handler,
+    url: 'grist.org/articles/',
 };
 
 async function handler(ctx) {

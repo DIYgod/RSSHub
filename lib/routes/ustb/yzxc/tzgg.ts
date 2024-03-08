@@ -26,6 +26,7 @@ export const route: Route = {
     name: '研究生招生信息网',
     maintainers: ['yanbot-team'],
     handler,
+    url: 'yzxc.ustb.edu.cn/',
 };
 
 async function handler() {

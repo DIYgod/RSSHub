@@ -36,6 +36,7 @@ export const route: Route = {
     name: '最近更新',
     maintainers: ['savokiss'],
     handler,
+    url: 'domp4.cc/',
 };
 
 async function handler(ctx) {

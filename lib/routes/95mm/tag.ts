@@ -20,6 +20,7 @@ export const route: Route = {
     name: '标签',
     maintainers: ['nczitzk'],
     handler,
+    url: '95mm.org/',
 };
 
 async function handler(ctx) {

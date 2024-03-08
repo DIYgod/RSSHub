@@ -35,6 +35,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,
+    url: 'analy.zhubai.love/',
 };
 
 async function handler(ctx) {

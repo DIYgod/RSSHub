@@ -21,6 +21,9 @@ export const route: Route = {
     name: '省科学技术厅',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 科技头条 | 工作动态 | 基层科技 | 科技博览 | 媒体聚焦 | 通知公告 |
+  | -------- | -------- | -------- | -------- | -------- | -------- |
+  | 1061     | 24       | 27       | 25       | 28       | 221      |`,
 };
 
 async function handler(ctx) {

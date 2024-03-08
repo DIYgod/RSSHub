@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Calendar',
     maintainers: ['aether17'],
     handler,
+    url: 'thwiki.cc/',
 };
 
 async function handler(ctx) {

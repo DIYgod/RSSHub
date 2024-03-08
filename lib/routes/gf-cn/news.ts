@@ -28,6 +28,9 @@ export const route: Route = {
     name: '情报局',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 新闻 | 公告 |
+  | ---- | ---- |
+  | 1    | 3    |`,
 };
 
 async function handler(ctx) {

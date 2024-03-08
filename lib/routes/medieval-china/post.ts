@@ -14,6 +14,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['artefaritaKuniklo'],
     handler,
+    url: 'medieval-china.club/',
 };
 
 async function handler(ctx) {

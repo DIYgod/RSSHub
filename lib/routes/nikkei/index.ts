@@ -7,6 +7,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'www.nikkei.com/',
 };
 
 async function handler() {

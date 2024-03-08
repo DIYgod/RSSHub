@@ -7,6 +7,9 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    description: `| Last Month | All Time |
+  | ---------- | -------- |
+  | 1          | 2        |`,
 };
 
 async function handler(ctx) {

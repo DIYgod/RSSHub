@@ -28,6 +28,7 @@ export const route: Route = {
     name: 'Today Popular',
     maintainers: ['miaoyafeng', 'Fatpandac'],
     handler,
+    url: 'www.producthunt.com/',
 };
 
 async function handler() {

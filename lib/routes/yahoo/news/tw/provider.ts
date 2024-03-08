@@ -18,6 +18,9 @@ export const route: Route = {
     name: '新聞來源',
     maintainers: ['TonyRL'],
     handler,
+    description: `| 香港 | 台灣 |
+  | ---- | ---- |
+  | hk   | tw   |`,
 };
 
 async function handler(ctx) {

@@ -26,6 +26,11 @@ export const route: Route = {
     name: '人力社保局',
     maintainers: ['MajexH'],
     handler,
+    url: 'rlsbj.cq.gov.cn/',
+    description: `#### 人事考试通知 {#chong-qing-shi-ren-min-zheng-fu-ren-li-she-bao-ju-ren-shi-kao-shi-tong-zhi}
+
+
+#### 事业单位公开招聘 {#chong-qing-shi-ren-min-zheng-fu-ren-li-she-bao-ju-shi-ye-dan-wei-gong-kai-zhao-pin}`,
 };
 
 async function handler() {

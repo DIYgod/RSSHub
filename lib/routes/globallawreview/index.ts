@@ -11,6 +11,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,
+    url: 'globallawreview.org/Magazine/GetIssueContentList',
 };
 
 async function handler(ctx) {

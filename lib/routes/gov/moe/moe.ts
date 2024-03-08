@@ -30,6 +30,9 @@ export const route: Route = {
     name: '新闻',
     maintainers: ['Crawler995'],
     handler,
+    description: `|   政策解读   |   最新文件   | 公告公示 |      教育部简报     |     教育要闻     |
+  | :----------: | :----------: | :------: | :-----------------: | :--------------: |
+  | policy\_anal | newest\_file |  notice  | edu\_ministry\_news | edu\_focus\_news |`,
 };
 
 async function handler(ctx) {

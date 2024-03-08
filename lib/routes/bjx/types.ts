@@ -19,6 +19,11 @@ export const route: Route = {
     name: '光伏',
     maintainers: ['Sxuet'],
     handler,
+    description: `\`:type\` 类型可选如下
+
+  | 要闻 | 政策 | 市场行情 | 企业动态 | 独家观点 | 项目工程 | 招标采购 | 财经 | 国际行情 | 价格趋势 | 技术跟踪 |
+  | ---- | ---- | -------- | -------- | -------- | -------- | -------- | ---- | -------- | -------- | -------- |
+  | yw   | zc   | sc       | mq       | dj       | xm       | zb       | cj   | gj       | sj       | js       |`,
 };
 
 async function handler(ctx) {

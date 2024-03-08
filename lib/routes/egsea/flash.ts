@@ -21,6 +21,7 @@ export const route: Route = {
     name: '快讯',
     maintainers: ['hillerliao'],
     handler,
+    url: 'egsea.com/news/flash',
 };
 
 async function handler() {

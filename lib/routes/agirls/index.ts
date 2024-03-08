@@ -24,6 +24,9 @@ export const route: Route = {
     name: '分类',
     maintainers: ['TonyRL'],
     handler,
+    description: `| App 评测 | 手机开箱 | 笔电开箱 | 3C 周边     | 教学小技巧 | 科技情报 |
+  | -------- | -------- | -------- | ----------- | ---------- | -------- |
+  | app      | phone    | computer | accessories | tutorial   | techlife |`,
 };
 
 async function handler(ctx) {

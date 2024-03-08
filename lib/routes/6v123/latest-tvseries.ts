@@ -22,6 +22,7 @@ export const route: Route = {
     name: '最新电视剧',
     maintainers: ['tc9011'],
     handler,
+    url: 'hao6v.com/',
 };
 
 async function handler(ctx) {

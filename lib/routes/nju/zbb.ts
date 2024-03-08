@@ -20,6 +20,9 @@ export const route: Route = {
     name: '招标办公室',
     maintainers: ['ret-1'],
     handler,
+    description: `| 采购信息 | 成交公示 | 政府采购意向公开 |
+  | -------- | -------- | ---------------- |
+  | cgxx     | cjgs     | zfcgyxgk         |`,
 };
 
 async function handler(ctx) {

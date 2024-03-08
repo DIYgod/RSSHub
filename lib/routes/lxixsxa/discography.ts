@@ -27,6 +27,7 @@ export const route: Route = {
     name: 'Latest Discography',
     maintainers: ['Kiotlin'],
     handler,
+    url: 'www.lxixsxa.com/',
 };
 
 async function handler() {

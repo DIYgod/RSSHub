@@ -12,6 +12,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'whwater.com/IWater.shtml',
 };
 
 async function handler(ctx) {

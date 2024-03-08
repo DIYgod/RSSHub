@@ -30,6 +30,7 @@ export const route: Route = {
     name: '最新消息',
     maintainers: ['Fatpandac'],
     handler,
+    url: 'www.ssm.gov.mo/',
 };
 
 async function handler() {

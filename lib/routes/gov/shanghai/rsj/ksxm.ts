@@ -29,6 +29,7 @@ export const route: Route = {
     name: '上海市职业能力考试院 考试项目',
     maintainers: ['Fatpandac'],
     handler,
+    url: 'rsj.sh.gov.cn/',
 };
 
 async function handler() {

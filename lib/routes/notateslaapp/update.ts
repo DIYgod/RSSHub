@@ -21,6 +21,7 @@ export const route: Route = {
     name: 'Tesla Software Updates',
     maintainers: ['mrbruce516'],
     handler,
+    url: 'notateslaapp.com/software-updates/history',
 };
 
 async function handler() {

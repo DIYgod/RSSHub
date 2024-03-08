@@ -28,6 +28,7 @@ export const route: Route = {
     name: '米课圈精华',
     maintainers: ['nczitzk'],
     handler,
+    url: 'imiker.com/explore/find',
 };
 
 async function handler(ctx) {

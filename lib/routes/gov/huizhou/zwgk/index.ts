@@ -23,6 +23,7 @@ export const route: Route = {
     name: '惠州市人民政府',
     maintainers: ['Fatpandac'],
     handler,
+    description: `#### 政务公开 {#guang-dong-sheng-ren-min-zheng-fu-hui-zhou-shi-ren-min-zheng-fu-zheng-wu-gong-kai}`,
 };
 
 async function handler(ctx) {

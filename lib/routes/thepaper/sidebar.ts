@@ -17,6 +17,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['bigfei'],
     handler,
+    url: 'thepaper.cn/',
 };
 
 async function handler(ctx) {

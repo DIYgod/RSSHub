@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Desktop releases and release notes',
     maintainers: ['nczitzk'],
     handler,
+    url: 'tradingview.com/support/solutions/43000673888-tradingview-desktop-releases-and-release-notes/',
 };
 
 async function handler(ctx) {

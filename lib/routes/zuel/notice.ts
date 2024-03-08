@@ -23,6 +23,7 @@ export const route: Route = {
     name: '通知公告',
     maintainers: ['nczitzk'],
     handler,
+    url: 'wap.zuel.edu.cn/',
 };
 
 async function handler() {

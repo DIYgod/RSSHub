@@ -27,6 +27,7 @@ export const route: Route = {
     name: '數位敘事',
     maintainers: ['nczitzk'],
     handler,
+    url: 'news.pts.org.tw/projects',
 };
 
 async function handler() {

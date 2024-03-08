@@ -20,6 +20,13 @@ export const route: Route = {
     name: 'News',
     maintainers: ['zphw'],
     handler,
+    description: `Delivers a better experience by supporting parameter specification.
+
+Parameters can be obtained from the official website, for instance:
+
+\`https://www.rfa.org/cantonese/news\` corresponds to \`/rfa/cantonese/news\`
+
+\`https://www.rfa.org/cantonese/news/htm\` corresponds to \`/rfa/cantonese/news/htm\``,
 };
 
 async function handler(ctx) {

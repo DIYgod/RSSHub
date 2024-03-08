@@ -29,6 +29,7 @@ export const route: Route = {
     name: '节目列表',
     maintainers: ['fuzy112'],
     handler,
+    url: 'www.shcstheatre.com/Program/programList.aspx',
 };
 
 async function handler() {

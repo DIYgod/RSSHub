@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Platform Software',
     maintainers: ['JimenezLi'],
     handler,
+    description: `> routeParms can be copied from original site URL, example: \`/alternativeto/platform/firefox/license=free\``,
 };
 
 async function handler(ctx) {

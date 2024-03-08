@@ -22,6 +22,7 @@ export const route: Route = {
     name: '研究生招生网',
     maintainers: ['pkuyjs'],
     handler,
+    url: 'admission.pku.edu.cn/zsxx/sszs/index.htm',
 };
 
 async function handler() {

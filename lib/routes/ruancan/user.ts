@@ -9,6 +9,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'ruancan.com/',
 };
 
 async function handler(ctx) {

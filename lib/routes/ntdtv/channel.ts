@@ -26,6 +26,9 @@ export const route: Route = {
     name: '频道',
     maintainers: ['Fatpandac'],
     handler,
+    description: `参数均可在官网获取，如：
+
+  \`https://www.ntdtv.com/b5/prog1201\` 对应 \`/ntdtv/b5/prog1201\``,
 };
 
 async function handler(ctx) {

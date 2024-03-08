@@ -8,6 +8,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['AtlanCI', 'CcccFz'],
     handler,
+    url: 'gocn.vip/',
 };
 
 async function handler() {

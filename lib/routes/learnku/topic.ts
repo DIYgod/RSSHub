@@ -29,6 +29,9 @@ export const route: Route = {
     name: '社区',
     maintainers: ['kayw-geek'],
     handler,
+    description: `| 招聘 | 翻译         | 问答 | 链接  |
+| ---- | ------------ | ---- | ----- |
+| jobs | translations | qa   | links |`,
 };
 
 async function handler(ctx) {

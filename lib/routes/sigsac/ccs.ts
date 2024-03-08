@@ -24,6 +24,8 @@ export const route: Route = {
     name: 'The ACM Conference on Computer and Communications Security',
     maintainers: [],
     handler,
+    url: 'sigsac.org/ccs.html',
+    description: `Return results from 2020`,
 };
 
 async function handler() {

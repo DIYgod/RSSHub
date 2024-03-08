@@ -19,6 +19,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,
+    url: 'shuiguopai.com/',
 };
 
 async function handler(ctx) {

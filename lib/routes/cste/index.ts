@@ -20,6 +20,9 @@ export const route: Route = {
     name: '栏目',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 通知公告 | 学会新闻 | 科协简讯 | 学科动态 | 往事钩沉 |
+  | -------- | -------- | -------- | -------- | -------- |
+  | 16       | 18       | 19       | 20       | 21       |`,
 };
 
 async function handler(ctx) {

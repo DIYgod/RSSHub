@@ -29,6 +29,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['linbuxiao'],
     handler,
+    url: 'cebbank.com/site/ygzx/whpj/index.html',
 };
 
 async function handler(ctx) {

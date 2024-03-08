@@ -28,6 +28,10 @@ export const route: Route = {
     name: '新聞首頁',
     maintainers: ['TonyRL'],
     handler,
+    url: 'hakkatv.org.tw/news',
+    description: `| 客家焦點 | 政經要聞  | 民生醫療 | 地方風采 | 國際萬象      |
+  | -------- | --------- | -------- | -------- | ------------- |
+  | hakka    | political | medical  | local    | international |`,
 };
 
 async function handler(ctx) {

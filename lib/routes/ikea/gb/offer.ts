@@ -26,6 +26,7 @@ export const route: Route = {
     name: 'UK - Offers',
     maintainers: ['HenryQW'],
     handler,
+    url: 'ikea.com/gb/en/offers',
 };
 
 async function handler() {

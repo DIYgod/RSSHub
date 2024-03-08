@@ -22,6 +22,7 @@ export const route: Route = {
     name: '图片墙',
     maintainers: ['nczitzk'],
     handler,
+    url: 'chaping.cn/',
 };
 
 async function handler() {

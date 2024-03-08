@@ -22,6 +22,7 @@ export const route: Route = {
     name: '本科生院通知公告',
     maintainers: ['shiquda'],
     handler,
+    url: 'bksy.tongji.edu.cn/',
 };
 
 async function handler() {

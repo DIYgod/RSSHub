@@ -24,6 +24,7 @@ export const route: Route = {
     name: '智源社区 - 评论',
     maintainers: ['TonyRL'],
     handler,
+    url: 'hub.baai.ac.cn/comments',
 };
 
 async function handler(ctx) {

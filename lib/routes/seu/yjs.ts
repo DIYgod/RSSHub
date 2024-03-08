@@ -24,6 +24,7 @@ export const route: Route = {
     name: '研究生院全部公告',
     maintainers: ['Denkiyohou'],
     handler,
+    url: 'seugs.seu.edu.cn/26671/list.htm',
 };
 
 async function handler() {

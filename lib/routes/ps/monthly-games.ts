@@ -26,6 +26,7 @@ export const route: Route = {
     name: 'PlayStation Monthly Games',
     maintainers: ['justjustCC'],
     handler,
+    url: 'www.playstation.com/en-sg/ps-plus/whats-new',
 };
 
 async function handler() {

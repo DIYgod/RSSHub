@@ -26,6 +26,7 @@ export const route: Route = {
     name: 'Blog',
     maintainers: ['Fatpandac'],
     handler,
+    url: 'cn.eagle.cool/blog',
 };
 
 async function handler(ctx) {

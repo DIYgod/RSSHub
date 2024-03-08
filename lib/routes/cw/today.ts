@@ -21,6 +21,7 @@ export const route: Route = {
     name: '最新上線',
     maintainers: ['TonyRL'],
     handler,
+    url: 'cw.com.tw/today',
 };
 
 async function handler(ctx) {

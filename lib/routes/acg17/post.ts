@@ -23,6 +23,7 @@ export const route: Route = {
     name: '全部文章',
     maintainers: ['SunBK201'],
     handler,
+    url: 'acg17.com/post',
 };
 
 async function handler() {

@@ -27,6 +27,12 @@ export const route: Route = {
     name: '面经',
     maintainers: ['huyyi'],
     handler,
+    url: 'nowcoder.com/',
+    description: `可选参数：
+
+  -   companyId：公司 id，[🔗查询链接](https://www.nowcoder.com/discuss/tag/exp), 复制打开
+  -   order：3 - 最新；1 - 最热
+  -   phaseId：0 - 所有；1 - 校招；2 - 实习；3 - 社招`,
 };
 
 async function handler(ctx) {

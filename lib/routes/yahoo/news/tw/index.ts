@@ -21,6 +21,36 @@ export const route: Route = {
     name: 'News',
     maintainers: ['KeiLongW'],
     handler,
+    url: 'yahoo.com/',
+    description: `\`Region\`
+
+  | Hong Kong | Taiwan | US |
+  | --------- | ------ | -- |
+  | hk        | tw     | en |
+
+  <details>
+    <summary>\`Category\` (Hong Kong)</summary>
+
+    | 全部     | 港聞      | 兩岸國際 | 財經     | 娛樂          | 體育   | 健康   | 親子      | 副刊       |
+    | -------- | --------- | -------- | -------- | ------------- | ------ | ------ | --------- | ---------- |
+    | （留空） | hong-kong | world    | business | entertainment | sports | health | parenting | supplement |
+  </details>
+
+  <details>
+    <summary>\`Category\` (Taiwan)</summary>
+
+    | 全部     | 政治     | 財經    | 娛樂          | 運動   | 社會地方 | 國際  | 生活      | 健康   | 科技       | 品味  |
+    | -------- | -------- | ------- | ------------- | ------ | -------- | ----- | --------- | ------ | ---------- | ----- |
+    | （留空） | politics | finance | entertainment | sports | society  | world | lifestyle | health | technology | style |
+  </details>
+
+  <details>
+    <summary>\`Category\` (US)</summary>
+
+    | All     | World | Business | Entertainment | Sports | Health |
+    | ------- | ----- | -------- | ------------- | ------ | ------ |
+    | (Empty) | world | business | entertainment | sports | health |
+  </details>`,
 };
 
 async function handler(ctx) {

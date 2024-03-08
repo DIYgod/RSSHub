@@ -22,6 +22,9 @@ export const route: Route = {
     name: '政府新闻',
     maintainers: ['EsuRt'],
     handler,
+    description: `| 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 | 政策文件 |
+  | :------: | :------: | :------: | :--------: | :------: |
+  |    bm    |    gd    |    yw    |     gwy    |  zhengce |`,
 };
 
 async function handler(ctx) {

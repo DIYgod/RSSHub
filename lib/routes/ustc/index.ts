@@ -47,6 +47,10 @@ export const route: Route = {
     name: '官网通知公告',
     maintainers: ['hang333', 'jasongzy'],
     handler,
+    url: 'ustc.edu.cn/',
+    description: `| 教学类 | 科研类 | 管理类 | 服务类 |
+  | ------ | ------ | ------ | ------ |
+  | jx     | ky     | gl     | fw     |`,
 };
 
 async function handler(ctx) {

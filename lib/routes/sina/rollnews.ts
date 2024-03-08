@@ -18,6 +18,9 @@ export const route: Route = {
     name: '滚动新闻',
     maintainers: ['xyqfer'],
     handler,
+    description: `| 全部 | 国内 | 国际 | 社会 | 体育 | 娱乐 | 军事 | 科技 | 财经 | 股市 | 美股 |
+  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+  | 2509 | 2510 | 2511 | 2669 | 2512 | 2513 | 2514 | 2515 | 2516 | 2517 | 2518 |`,
 };
 
 async function handler(ctx) {

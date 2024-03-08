@@ -23,6 +23,7 @@ export const route: Route = {
     name: '教务通知',
     maintainers: ['Silent-wqh'],
     handler,
+    url: 'jw.qust.edu.cn/jwtz.htm',
 };
 
 async function handler() {

@@ -14,6 +14,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['x2cf'],
     handler,
+    url: 'fishshell.com/',
 };
 
 async function handler() {

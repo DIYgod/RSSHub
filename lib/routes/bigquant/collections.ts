@@ -25,6 +25,7 @@ export const route: Route = {
     name: '专题报告',
     maintainers: ['nczitzk'],
     handler,
+    url: 'bigquant.com/',
 };
 
 async function handler() {

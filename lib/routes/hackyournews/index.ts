@@ -13,6 +13,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['ftiasch'],
     handler,
+    url: 'hackyournews.com/',
 };
 
 async function handler() {

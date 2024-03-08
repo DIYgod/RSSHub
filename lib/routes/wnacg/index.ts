@@ -39,6 +39,9 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['KenMizz'],
     handler,
+    url: 'wnacg.org/albums.html',
+    url: 'wnacg.org/albums.html',
+    url: 'wnacg.org/albums.html',
 };
 
 async function handler(ctx) {

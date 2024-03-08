@@ -22,6 +22,7 @@ export const route: Route = {
     name: '世界计划 多彩舞台 ｜ ProjectSekai ｜ プロセカ',
     maintainers: ['15x15G'],
     handler,
+    url: 'pjsekai.sega.jp/news/index.html',
 };
 
 async function handler() {

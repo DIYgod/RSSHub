@@ -24,6 +24,7 @@ export const route: Route = {
     name: '人才招聘',
     maintainers: ['nczitzk'],
     handler,
+    url: 'bupt.edu.cn/',
 };
 
 async function handler() {

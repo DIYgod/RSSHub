@@ -28,6 +28,13 @@ export const route: Route = {
     name: '博主',
     maintainers: ['DIYgod', 'iplusx', 'Rongronggg9'],
     handler,
+    description: `:::warning
+  部分博主仅登录可见，未提供 Cookie 的情况下不支持订阅，可以通过打开 \`https://m.weibo.cn/u/:uid\` 验证。如需要订阅该部分博主，可配置 Cookie 后订阅。
+
+  未提供 Cookie 的情况下偶尔会触发反爬限制，提供 Cookie 可缓解该情况。
+
+  微博用户 Cookie 的配置可参照部署文档
+  :::`,
 };
 
 async function handler(ctx) {

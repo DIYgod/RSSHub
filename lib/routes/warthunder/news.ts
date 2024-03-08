@@ -29,6 +29,9 @@ export const route: Route = {
     name: 'News',
     maintainers: ['axojhf'],
     handler,
+    url: 'warthunder.com/en/news',
+    description: `News data from [https://warthunder.com/en/news/](https://warthunder.com/en/news/)
+  The year, month and day provided under UTC time zone are the same as the official website, so please ignore the specific time!!!`,
 };
 
 async function handler() {

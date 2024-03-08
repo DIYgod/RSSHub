@@ -23,6 +23,7 @@ export const route: Route = {
     name: '业界资讯',
     maintainers: [],
     handler,
+    url: 'leiphone.com/',
 };
 
 async function handler() {

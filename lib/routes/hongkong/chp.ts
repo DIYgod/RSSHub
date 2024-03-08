@@ -45,6 +45,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,
+    url: 'dh.gov.hk/',
 };
 
 async function handler(ctx) {

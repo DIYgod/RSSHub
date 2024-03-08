@@ -23,6 +23,9 @@ export const route: Route = {
     name: '茂名市茂南区人民政府',
     maintainers: ['ShuiHuo'],
     handler,
+    description: `| 政务公开 | 政务新闻 | 茂南动态 | 重大会议 | 公告公示 | 招录信息 | 政策解读 |
+  | :------: | :------: | :------: | :------: | :------: | :------: | :------: |
+  |   zwgk   |   zwxw   |   mndt   |   zdhy   |   tzgg   |   zlxx   |   zcjd   |`,
 };
 
 async function handler(ctx) {

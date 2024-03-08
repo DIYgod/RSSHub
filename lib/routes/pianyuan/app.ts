@@ -23,6 +23,10 @@ export const route: Route = {
     name: '最新资源',
     maintainers: ['greatcodeeer', 'jerry1119'],
     handler,
+    url: 'pianyuan.org/',
+    description: `| 电影 | 剧集 |
+| ---- | ---- |
+| mv   | tv   |`,
 };
 
 async function handler(ctx) {

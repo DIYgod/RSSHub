@@ -24,6 +24,7 @@ export const route: Route = {
     name: '电气学院',
     maintainers: ['DylanXie123'],
     handler,
+    url: 'ee.xjtu.edu.cn/',
 };
 
 async function handler(ctx) {

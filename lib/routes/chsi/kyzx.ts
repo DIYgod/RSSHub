@@ -26,6 +26,13 @@ export const route: Route = {
     name: '考研资讯',
     maintainers: ['yanbot-team'],
     handler,
+    description: `| \`:type\` | 专题名称 |
+  | ------- | -------- |
+  | fstj    | 复试调剂 |
+  | kydt    | 考研动态 |
+  | zcdh    | 政策导航 |
+  | kyrw    | 考研人物 |
+  | jyxd    | 经验心得 |`,
 };
 
 async function handler(ctx) {

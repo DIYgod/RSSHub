@@ -24,6 +24,9 @@ export const route: Route = {
     name: '通用',
     maintainers: ['233yeee'],
     handler,
+    description: `| 立法 | 监督 | 代表 | 理论 | 权威发布 | 滚动新闻 |
+  | ---- | ---- | ---- | ---- | -------- | -------- |
+  | c183 | c184 | c185 | c189 | c12435   | c10134   |`,
 };
 
 async function handler(ctx) {

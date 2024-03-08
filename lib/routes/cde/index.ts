@@ -92,6 +92,21 @@ export const route: Route = {
     name: '首页',
     maintainers: ['Fatpandac'],
     handler,
+    description: `-   频道
+
+  | 新闻中心 | 政策法规 |
+  | :------: | :------: |
+  |   news   |  policy  |
+
+  -   类别
+
+  | 新闻中心 | 政务新闻 | 要闻导读 | 图片新闻 | 工作动态 |
+  | :------: | :------: | :------: | :------: | :------: |
+  |          |   zwxw   |   ywdd   |   tpxw   |   gzdt   |
+
+  | 政策法规 | 法律法规 | 中心规章 |
+  | :------: | :------: | :------: |
+  |          |   flfg   |   zxgz   |`,
 };
 
 async function handler(ctx) {

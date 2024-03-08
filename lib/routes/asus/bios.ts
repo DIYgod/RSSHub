@@ -36,6 +36,7 @@ export const route: Route = {
     name: 'BIOS',
     maintainers: ['Fatpandac'],
     handler,
+    url: 'asus.com.cn/',
 };
 
 async function handler(ctx) {

@@ -23,6 +23,7 @@ export const route: Route = {
     name: '大学外语部',
     maintainers: ['ret-1'],
     handler,
+    url: 'dafls.nju.edu.cn/13167/list.html',
 };
 
 async function handler() {

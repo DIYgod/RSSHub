@@ -32,6 +32,10 @@ export const route: Route = {
     name: '信息科学技术学院',
     maintainers: ['jasongzy'],
     handler,
+    url: 'sist.ustc.edu.cn/',
+    description: `| 通知公告 | 招生工作 |
+  | -------- | -------- |
+  | tzgg     | zsgz     |`,
 };
 
 async function handler(ctx) {

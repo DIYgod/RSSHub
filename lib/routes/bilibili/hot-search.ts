@@ -22,6 +22,7 @@ export const route: Route = {
     name: '热搜',
     maintainers: ['CaoMeiYouRen'],
     handler,
+    url: 'www.bilibili.com/',
 };
 
 async function handler() {

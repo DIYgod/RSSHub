@@ -18,6 +18,9 @@ export const route: Route = {
     name: '新闻',
     maintainers: ['shunf4'],
     handler,
+    description: `| 中国  | 新加坡    | 东南亚 | 国际  | 体育   |
+  | ----- | --------- | ------ | ----- | ------ |
+  | china | singapore | sea    | world | sports |`,
 };
 
 async function handler(ctx) {

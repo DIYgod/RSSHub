@@ -28,6 +28,9 @@ export const route: Route = {
     name: '鱼吧帖子',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 回复时间排序 | 发布时间排序 |
+  | ------------ | ------------ |
+  | 1            | 2            |`,
 };
 
 async function handler(ctx) {

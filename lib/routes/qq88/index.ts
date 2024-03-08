@@ -20,6 +20,9 @@ export const route: Route = {
     name: '分类',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 首页 | オトナの土ドラ | 日剧 | 日剧 SP |
+  | ---- | -------------- | ---- | ------- |
+  |      | 10             | 5    | 11      |`,
 };
 
 async function handler(ctx) {

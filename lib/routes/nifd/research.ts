@@ -35,6 +35,9 @@ export const route: Route = {
     name: '研究',
     maintainers: ['Fatpandac'],
     handler,
+    description: `资讯类型可以从网址中获取，如：
+
+  \`http://www.nifd.cn/Research?categoryGuid=7a6a826d-b525-42aa-b550-4236e524227f\` 对应 \`/nifd/research/7a6a826d-b525-42aa-b550-4236e524227f\``,
 };
 
 async function handler(ctx) {

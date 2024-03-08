@@ -25,6 +25,10 @@ export const route: Route = {
     name: '北大未名 BBS 全站十大',
     maintainers: ['wooddance'],
     handler,
+    url: 'bbs.pku.edu.cn/v2/hot-topic.php',
+    description: `:::warning
+  论坛部分帖子正文内容的获取需要用户登录后的 Cookie 值，详情见部署页面的配置模块。
+  :::`,
 };
 
 async function handler() {

@@ -20,6 +20,9 @@ export const route: Route = {
     name: '学校主页',
     maintainers: ['mocusez'],
     handler,
+    description: `| 通知公告 | 校园要闻 | 媒体播报 | 学术活动 |
+  | :------: | :------: | :------: | :------: |
+  |   tzgg   |   xyyw   |   mtbd   |   xshd   |`,
 };
 
 async function handler(ctx) {

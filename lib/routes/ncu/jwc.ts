@@ -22,6 +22,7 @@ export const route: Route = {
     name: '教务通知',
     maintainers: ['ywh555hhh'],
     handler,
+    url: 'jwc.ncu.edu.cn/',
 };
 
 async function handler() {

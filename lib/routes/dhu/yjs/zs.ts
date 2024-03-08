@@ -26,6 +26,9 @@ export const route: Route = {
     name: '研究生招生信息',
     maintainers: ['fox2049'],
     handler,
+    description: `| 博士招生 | 硕士招生 |
+  | -------- | -------- |
+  | doctor   | master   |`,
 };
 
 async function handler(ctx) {

@@ -17,6 +17,9 @@ export const route: Route = {
     name: '作品周边',
     maintainers: ['DIYgod'],
     handler,
+    description: `| 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |
+  | ------- | ---- | ------ | -------- | -------- | ------ |
+  | release | add  | hits   | hits7Day | hitsDay  | rating |`,
 };
 
 async function handler(ctx) {

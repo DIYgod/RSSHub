@@ -27,6 +27,11 @@ export const route: Route = {
     name: 'Research',
     maintainers: [],
     handler,
+    description: `Language:
+
+  | Chinese | English |
+  | ------- | ------- |
+  | zh      | en      |`,
 };
 
 async function handler(ctx) {

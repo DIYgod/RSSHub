@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Changelog',
     maintainers: ['TonyRL'],
     handler,
+    url: 'gitpod.io/changelog',
 };
 
 async function handler() {

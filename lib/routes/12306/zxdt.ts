@@ -24,6 +24,7 @@ export const route: Route = {
     name: '最新动态',
     maintainers: ['LogicJake'],
     handler,
+    url: 'www.12306.cn/',
 };
 
 async function handler(ctx) {

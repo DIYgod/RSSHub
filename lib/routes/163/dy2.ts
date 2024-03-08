@@ -23,6 +23,8 @@ export const route: Route = {
     name: '网易号（通用）',
     maintainers: ['mjysci'],
     handler,
+    description: `优先使用方法一，若是网易号搜索页面搜不到的小众网易号（文章页面不含\`data-wemediaid\`）则可使用此法。
+触发反爬会只抓取到标题，建议自建。`,
 };
 
 async function handler(ctx) {

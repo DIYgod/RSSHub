@@ -36,6 +36,9 @@ export const route: Route = {
     name: '招聘信息',
     maintainers: ['Fatpandac'],
     handler,
+    description: `| 招聘类型 | 博士后 | 课题项目聘用 | 管理支撑人才 | 教学科研人才 |
+  | :------: | :----: | :----------: | :----------: | :----------: |
+  |   参数   |   bsh  |    ktxmpy    |    glzcrc    |    jxkyrc    |`,
 };
 
 async function handler(ctx) {

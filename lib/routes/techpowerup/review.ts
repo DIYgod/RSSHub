@@ -25,6 +25,7 @@ export const route: Route = {
     name: 'Reviews',
     maintainers: ['TonyRL'],
     handler,
+    url: 'techpowerup.com/',
 };
 
 async function handler(ctx) {

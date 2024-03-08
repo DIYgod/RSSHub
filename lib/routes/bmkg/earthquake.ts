@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Recent Earthquakes',
     maintainers: ['Shinanory'],
     handler,
+    url: 'bmkg.go.id/',
 };
 
 async function handler() {

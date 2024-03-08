@@ -21,6 +21,7 @@ export const route: Route = {
     name: '人才招聘',
     maintainers: ['nczitzk'],
     handler,
+    url: 'rszhaopin.bit.edu.cn/',
 };
 
 async function handler() {

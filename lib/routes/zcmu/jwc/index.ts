@@ -30,6 +30,9 @@ export const route: Route = {
     name: '教务处',
     maintainers: ['CCraftY'],
     handler,
+    description: `| 教务管理 | 成绩管理 | 学籍管理 | 考试管理 | 选课管理 | 排课管理 |
+  | -------- | -------- | -------- | -------- | -------- | -------- |
+  | 0        | 1        | 2        | 3        | 4        | 5        |`,
 };
 
 async function handler(ctx) {

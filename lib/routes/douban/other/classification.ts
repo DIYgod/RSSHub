@@ -17,6 +17,11 @@ export const route: Route = {
     name: '豆瓣电影分类',
     maintainers: ['zzwab'],
     handler,
+    description: `排序方式可选值如下
+
+| 近期热门 | 标记最多 | 评分最高 | 最近上映 |
+| -------- | -------- | -------- | -------- |
+| U        | T        | S        | R        |`,
 };
 
 async function handler(ctx) {

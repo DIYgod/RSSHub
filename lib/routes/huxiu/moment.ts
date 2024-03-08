@@ -23,6 +23,7 @@ export const route: Route = {
     name: '24 小时',
     maintainers: ['nczitzk'],
     handler,
+    url: 'huxiu.com/moment',
 };
 
 async function handler(ctx) {

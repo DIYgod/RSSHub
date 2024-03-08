@@ -33,6 +33,9 @@ export const route: Route = {
     name: '主页',
     maintainers: ['Veagau'],
     handler,
+    description: `| 通知公告 | 学术动态 |
+  | -------- | -------- |
+  | notice   | scholar  |`,
 };
 
 async function handler(ctx) {

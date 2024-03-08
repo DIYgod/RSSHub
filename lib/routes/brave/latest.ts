@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Release Notes',
     maintainers: ['nczitzk'],
     handler,
+    url: 'brave.com/latest',
 };
 
 async function handler() {

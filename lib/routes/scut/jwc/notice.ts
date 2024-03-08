@@ -71,6 +71,9 @@ export const route: Route = {
     name: '教务处通知公告',
     maintainers: ['imkero'],
     handler,
+    description: `| 全部 | 选课   | 考试 | 实践     | 交流          | 教师    | 信息 |
+  | ---- | ------ | ---- | -------- | ------------- | ------- | ---- |
+  | all  | course | exam | practice | communication | teacher | info |`,
 };
 
 async function handler(ctx) {

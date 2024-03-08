@@ -24,6 +24,9 @@ export const route: Route = {
     name: 'NUIST AS（南信大大气科学学院）',
     maintainers: ['gylidian'],
     handler,
+    description: `| 信息公告 | 新闻快讯 | 科学研究 | 网上公示 | 本科教育 | 研究生教育 |
+  | -------- | -------- | -------- | -------- | -------- | ---------- |
+  | xxgg     | xwkx     | kxyj     | wsgs     | bkjy     | yjsjy      |`,
 };
 
 async function handler(ctx) {

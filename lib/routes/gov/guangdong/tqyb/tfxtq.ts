@@ -28,6 +28,7 @@ export const route: Route = {
     name: '突发性天气提示',
     maintainers: ['Fatpandac'],
     handler,
+    url: 'www.tqyb.com.cn/gz/weatherAlarm/suddenWeather/',
 };
 
 async function handler() {

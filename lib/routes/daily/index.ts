@@ -76,6 +76,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['Rjnishant530'],
     handler,
+    url: 'daily.dev/popular',
 };
 
 async function handler() {

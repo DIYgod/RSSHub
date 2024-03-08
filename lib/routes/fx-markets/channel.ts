@@ -20,6 +20,9 @@ export const route: Route = {
     name: 'Channel',
     maintainers: [],
     handler,
+    description: `| Trading | Infrastructure | Tech and Data | Regulation |
+  | ------- | -------------- | ------------- | ---------- |
+  | trading | infrastructure | tech-and-data | regulation |`,
 };
 
 async function handler(ctx) {

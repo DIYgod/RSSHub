@@ -22,6 +22,9 @@ export const route: Route = {
     name: '分类',
     maintainers: ['FuryMartin'],
     handler,
+    description: `| 资讯 | 数码     | 智能车 | 智库  | 活动    |
+| ---- | -------- | ------ | ----- | ------- |
+| 资讯 | ebandeng | auto   | zhiku | huodong |`,
 };
 
 async function handler(ctx) {

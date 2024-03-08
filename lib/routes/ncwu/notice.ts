@@ -23,6 +23,7 @@ export const route: Route = {
     name: '学校通知',
     maintainers: [],
     handler,
+    url: 'ncwu.edu.cn/xxtz.htm',
 };
 
 async function handler() {

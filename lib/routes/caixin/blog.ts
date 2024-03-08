@@ -22,6 +22,7 @@ export const route: Route = {
     name: '用户博客',
     maintainers: [],
     handler,
+    description: `通过提取文章全文，以提供比官方源更佳的阅读体验.`,
 };
 
 async function handler(ctx) {

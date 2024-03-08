@@ -27,6 +27,7 @@ export const route: Route = {
     name: '博客最新文章',
     maintainers: ['piglei'],
     handler,
+    url: 'konghq.com/blog/*',
 };
 
 async function handler() {

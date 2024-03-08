@@ -35,6 +35,9 @@ export const route: Route = {
     name: 'New Arrivals',
     maintainers: [],
     handler,
+    description: `| Men's | Women's | Kids' & Baby | Packs & Gear |
+  | ----- | ------- | ------------ | ------------ |
+  | mens  | womens  | kids         | luggage      |`,
 };
 
 async function handler(ctx) {

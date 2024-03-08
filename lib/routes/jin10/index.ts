@@ -30,6 +30,7 @@ export const route: Route = {
     name: '市场快讯',
     maintainers: ['laampui'],
     handler,
+    url: 'jin10.com/',
 };
 
 async function handler(ctx) {

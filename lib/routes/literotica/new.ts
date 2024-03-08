@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'New Stories',
     maintainers: ['nczitzk'],
     handler,
+    url: 'literotica.com/',
 };
 
 async function handler() {

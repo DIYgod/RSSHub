@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Nikkei Asia Latest News',
     maintainers: ['rainrdx'],
     handler,
+    url: 'asia.nikkei.com/',
 };
 
 async function handler() {

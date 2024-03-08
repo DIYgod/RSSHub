@@ -29,6 +29,9 @@ export const route: Route = {
     name: '用户主页',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 动态 | 书评 | 视频 |
+  | ---- | ---- | ---- |
+  | 0    | 7    | 12   |`,
 };
 
 async function handler(ctx) {

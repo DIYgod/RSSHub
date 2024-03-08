@@ -27,6 +27,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'www.seejav.pw/',
 };
 
 async function handler(ctx) {

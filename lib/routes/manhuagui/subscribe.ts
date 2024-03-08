@@ -29,6 +29,11 @@ export const route: Route = {
     name: '漫画个人订阅',
     maintainers: ['shininome'],
     handler,
+    url: 'www.mhgui.com/user/book/shelf',
+    description: `:::tip
+  个人订阅需要自建
+  环境变量需要添加 MHGUI\_COOKIE
+  :::`,
 };
 
 async function handler() {

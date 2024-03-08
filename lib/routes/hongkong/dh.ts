@@ -23,6 +23,12 @@ export const route: Route = {
     name: 'Press Release',
     maintainers: ['nczitzk'],
     handler,
+    url: 'dh.gov.hk/',
+    description: `Language
+
+  | English | 中文简体 | 中文繁體 |
+  | ------- | -------- | -------- |
+  | english | chs      | tc\_chi  |`,
 };
 
 async function handler(ctx) {

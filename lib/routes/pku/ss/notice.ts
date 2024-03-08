@@ -12,6 +12,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['legr4ndk'],
     handler,
+    url: 'ss.pku.edu.cn/index.php/newscenter/notice',
 };
 
 async function handler() {

@@ -29,6 +29,7 @@ export const route: Route = {
     name: '广东省内城市预警信号',
     maintainers: ['Fatpandac'],
     handler,
+    url: 'www.tqyb.com.cn/gz/weatherAlarm/otherCity/',
 };
 
 async function handler() {

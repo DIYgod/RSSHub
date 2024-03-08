@@ -21,6 +21,7 @@ export const route: Route = {
     name: 'Switch System Update（Japan）',
     maintainers: ['hoilc'],
     handler,
+    url: 'nintendo.co.jp/support/switch/system_update/index.html',
 };
 
 async function handler() {

@@ -25,6 +25,7 @@ export const route: Route = {
     name: 'Writing',
     maintainers: ['Fatpandac'],
     handler,
+    url: 'paradigm.xyz/writing',
 };
 
 async function handler() {

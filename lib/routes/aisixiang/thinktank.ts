@@ -21,6 +21,8 @@ export const route: Route = {
     name: '思想库（专栏）',
     maintainers: ['hoilc', 'nczitzk'],
     handler,
+    description: `| 论文 | 时评 | 随笔 | 演讲 | 访谈 | 著作 | 读书 | 史论 | 译作 | 诗歌 | 书信 | 科学 |
+  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |`,
 };
 
 async function handler(ctx) {

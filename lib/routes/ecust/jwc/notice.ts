@@ -50,6 +50,9 @@ export const route: Route = {
     name: '本科教务处信息网',
     maintainers: ['lxl66566'],
     handler,
+    description: `| 其他任意值 | mto          | mttb               | gi       | mpt          | fai          |
+  | ---------- | ------------ | ------------------ | -------- | ------------ | ------------ |
+  | 全部订阅   | 教学运行管理 | 培养与教学建设管理 | 综合信息 | 实践教学管理 | 学院教务信息 |`,
 };
 
 async function handler(ctx) {

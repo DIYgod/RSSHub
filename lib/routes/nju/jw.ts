@@ -22,6 +22,9 @@ export const route: Route = {
     name: '本科生院',
     maintainers: ['cqjjjzr'],
     handler,
+    description: `| 公告通知 | 教学动态 |
+  | -------- | -------- |
+  | ggtz     | jxdt     |`,
 };
 
 async function handler(ctx) {

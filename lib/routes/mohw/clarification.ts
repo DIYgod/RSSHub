@@ -23,6 +23,7 @@ export const route: Route = {
     name: '即時新聞澄清',
     maintainers: ['nczitzk'],
     handler,
+    url: 'mohw.gov.tw/',
 };
 
 async function handler() {

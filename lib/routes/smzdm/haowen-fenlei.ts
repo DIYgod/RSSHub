@@ -24,6 +24,9 @@ export const route: Route = {
     name: '好文分类',
     maintainers: ['LogicJake'],
     handler,
+    description: `| 最新 | 周排行 | 月排行 |
+  | ---- | ------ | ------ |
+  | 0    | 7      | 30     |`,
 };
 
 async function handler(ctx) {

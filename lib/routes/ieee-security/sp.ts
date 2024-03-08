@@ -24,6 +24,8 @@ export const route: Route = {
     name: 'IEEE Symposium on Security and Privacy',
     maintainers: ['ZeddYu'],
     handler,
+    url: 'ieee-security.org/TC/SP-Index.html',
+    description: `Return results from 2020`,
 };
 
 async function handler() {

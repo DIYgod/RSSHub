@@ -24,6 +24,7 @@ export const route: Route = {
     name: '就业招聘信息',
     maintainers: ['qizidog'],
     handler,
+    url: 'jiuye.swjtu.edu.cn/career',
 };
 
 async function handler(ctx) {

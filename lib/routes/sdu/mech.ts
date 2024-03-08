@@ -25,6 +25,9 @@ export const route: Route = {
     name: '机械工程学院通知',
     maintainers: ['Ji4n1ng'],
     handler,
+    description: `| 通知公告 | 院所新闻 | 教学信息 | 学术动态 | 学院简报 |
+  | -------- | -------- | -------- | -------- | -------- |
+  | 0        | 1        | 2        | 3        | 4        |`,
 };
 
 async function handler(ctx) {

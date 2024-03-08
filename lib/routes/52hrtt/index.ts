@@ -21,6 +21,9 @@ export const route: Route = {
     name: '新闻',
     maintainers: ['nczitzk'],
     handler,
+    description: `地区和分类皆可在浏览器地址栏中找到，下面是一个例子。
+
+  访问华人头条全球站的国际分类，会跳转到 \`https://www.52hrtt.com/global/n/w?infoTypeId=A1459145516533\`。其中 \`global\` 即为 **全球** 对应的地区代码，\`A1459145516533\` 即为 **国际** 对应的分类代码。`,
 };
 
 async function handler(ctx) {

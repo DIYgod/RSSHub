@@ -26,6 +26,9 @@ export const route: Route = {
     name: 'Summary',
     maintainers: ['TonyRL'],
     handler,
+    description: `| Analysis | News | Transcripts | Press Releases | Related Analysis |
+  | -------- | ---- | ----------- | -------------- | ---------------- |
+  | analysis | news | transcripts | press-releases | related-analysis |`,
 };
 
 async function handler(ctx) {

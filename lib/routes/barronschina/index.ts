@@ -25,6 +25,10 @@ export const route: Route = {
     name: '栏目',
     maintainers: ['nczitzk'],
     handler,
+    url: 'barronschina.com.cn/',
+    description: `:::tip
+  栏目 id 留空则返回快讯，在对应页地址栏 \`columnId=\` 后可以看到。
+  :::`,
 };
 
 async function handler(ctx) {

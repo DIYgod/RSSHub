@@ -33,6 +33,11 @@ export const route: Route = {
     name: '专题',
     maintainers: ['nczitzk'],
     handler,
+    url: 'utgd.net/topic',
+    description: `| 在线阅读专栏 | 卡片笔记专题 |
+  | ------------ | ------------ |
+
+  更多专栏请见 [专题广场](https://utgd.net/topic)`,
 };
 
 async function handler(ctx) {

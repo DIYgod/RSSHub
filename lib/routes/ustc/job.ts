@@ -30,6 +30,10 @@ export const route: Route = {
     name: '就业信息网',
     maintainers: ['nczitzk'],
     handler,
+    url: 'job.ustc.edu.cn/',
+    description: `| 专场招聘会  | 校园双选会   | 空中宣讲  | 招聘公告 |
+  | ----------- | ------------ | --------- | -------- |
+  | RecruitList | Doublechoice | Broadcast | joblist2 |`,
 };
 
 async function handler(ctx) {

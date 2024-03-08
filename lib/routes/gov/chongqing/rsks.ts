@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['Mai19930513'],
     handler,
+    url: 'rlsbj.cq.gov.cn/',
 };
 
 async function handler() {

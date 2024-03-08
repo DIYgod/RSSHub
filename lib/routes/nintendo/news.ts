@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'News（Hong Kong only）',
     maintainers: ['HFO4'],
     handler,
+    url: 'nintendo.com.hk/topics',
 };
 
 async function handler(ctx) {

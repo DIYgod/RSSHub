@@ -23,6 +23,8 @@ export const route: Route = {
     name: '轉角國際 - 標籤',
     maintainers: ['emdoe', 'nczitzk'],
     handler,
+    description: `| 過去 24 小時 | 鏡頭背後 | 深度專欄 | 重磅廣播 |
+  | ------------ | -------- | -------- | -------- |`,
 };
 
 async function handler(ctx) {

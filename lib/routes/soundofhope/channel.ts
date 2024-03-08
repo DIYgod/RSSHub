@@ -26,6 +26,9 @@ export const route: Route = {
     name: '频道',
     maintainers: ['Fatpandac'],
     handler,
+    description: `参数均可在官网获取，如：
+
+  \`https://www.soundofhope.org/term/203\` 对应 \`/soundofhope/term/203\``,
 };
 
 async function handler(ctx) {

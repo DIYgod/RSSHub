@@ -29,6 +29,7 @@ export const route: Route = {
     name: '优惠信息',
     maintainers: ['howel52'],
     handler,
+    url: 'flyert.com/',
 };
 
 async function handler() {

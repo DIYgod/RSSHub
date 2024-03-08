@@ -24,6 +24,9 @@ export const route: Route = {
     name: '资讯',
     maintainers: ['nczitzk'],
     handler,
+    url: 'aliresearch.com/cn/information',
+    description: `| 新闻 | 观点 | 案例 |
+  | ---- | ---- | ---- |`,
 };
 
 async function handler(ctx) {

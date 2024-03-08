@@ -27,6 +27,7 @@ export const route: Route = {
     name: '模型库',
     maintainers: ['TonyRL'],
     handler,
+    url: 'modelscope.cn/models',
 };
 
 async function handler(ctx) {

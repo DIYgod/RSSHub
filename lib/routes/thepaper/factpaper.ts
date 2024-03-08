@@ -29,6 +29,7 @@ export const route: Route = {
     name: '明查',
     maintainers: ['nczitzk'],
     handler,
+    url: 'factpaper.cn/',
 };
 
 async function handler(ctx) {

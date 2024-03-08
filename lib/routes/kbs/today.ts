@@ -25,6 +25,10 @@ export const route: Route = {
     name: 'Today',
     maintainers: ['nczitzk'],
     handler,
+    url: 'world.kbs.co.kr/',
+    description: `| 한국어 | عربي | 中国语 | English | Français | Deutsch | Bahasa Indonesia | 日本語 | Русский | Español | Tiếng Việt |
+  | ------ | ---- | ------ | ------- | -------- | ------- | ---------------- | ------ | ------- | ------- | ---------- |
+  | k      | a    | c      | e       | f        | g       | i                | j      | r       | s       | v          |`,
 };
 
 async function handler(ctx) {

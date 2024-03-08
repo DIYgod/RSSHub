@@ -26,6 +26,7 @@ export const route: Route = {
     name: 'Weekly',
     maintainers: ['nczitzk'],
     handler,
+    url: 'bandcamp.com/',
 };
 
 async function handler() {

@@ -26,6 +26,7 @@ export const route: Route = {
     name: 'User Sheets',
     maintainers: ['Freddd13'],
     handler,
+    description: `关于 ISO 4217，请参考[维基百科](https://zh.wikipedia.org/zh-cn/ISO_4217#%E7%8E%B0%E8%A1%8C%E4%BB%A3%E7%A0%81)`,
 };
 
 async function handler(ctx) {

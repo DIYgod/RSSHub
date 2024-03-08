@@ -23,6 +23,7 @@ export const route: Route = {
     name: '研究生院通知公告',
     maintainers: ['hlmu'],
     handler,
+    url: 'hitgs.hit.edu.cn/*',
 };
 
 async function handler() {

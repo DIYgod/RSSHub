@@ -24,6 +24,16 @@ export const route: Route = {
     name: 'FINAL FANTASY XIV (The Lodestone)',
     maintainers: ['chengyuhui'],
     handler,
+    description: `Region
+
+  | North Ameria | Europe | France | Germany | Japan |
+  | ------------ | ------ | ------ | ------- | ----- |
+  | na           | eu     | fr     | de      | jp    |
+
+  Category
+
+  | all | topics | notices | maintenance | updates | status | developers |
+  | --- | ------ | ------- | ----------- | ------- | ------ | ---------- |`,
 };
 
 async function handler(ctx) {

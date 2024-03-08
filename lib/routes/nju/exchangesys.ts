@@ -18,6 +18,9 @@ export const route: Route = {
     name: '本科生交换生系统',
     maintainers: [],
     handler,
+    description: `| 新闻通知 | 交换生项目 |
+  | -------- | ---------- |
+  | news     | proj       |`,
 };
 
 async function handler(ctx) {

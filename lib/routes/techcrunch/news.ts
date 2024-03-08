@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'News',
     maintainers: ['EthanWng97'],
     handler,
+    url: 'techcrunch.com/',
 };
 
 async function handler() {

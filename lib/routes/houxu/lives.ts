@@ -21,6 +21,7 @@ export const route: Route = {
     name: 'Live',
     maintainers: ['nczitzk'],
     handler,
+    url: 'houxu.app/',
 };
 
 async function handler(ctx) {

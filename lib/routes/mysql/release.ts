@@ -20,6 +20,8 @@ export const route: Route = {
     name: 'Release Notes',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 8.0 | 5.7 | 5.6 |
+  | --- | --- | --- |`,
 };
 
 async function handler(ctx) {

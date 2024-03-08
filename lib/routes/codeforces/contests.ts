@@ -40,6 +40,7 @@ export const route: Route = {
     name: 'Latest contests',
     maintainers: ['Fatpandac'],
     handler,
+    url: 'www.codeforces.com/contests',
 };
 
 async function handler() {

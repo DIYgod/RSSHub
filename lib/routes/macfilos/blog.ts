@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Blog',
     maintainers: ['nczitzk'],
     handler,
+    url: 'macfilos.com/blog',
 };
 
 async function handler(ctx) {

@@ -23,6 +23,7 @@ export const route: Route = {
     name: '動畫瘋 - 最後更新',
     maintainers: [],
     handler,
+    url: 'ani.gamer.com.tw/',
 };
 
 async function handler() {

@@ -9,6 +9,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['Rjnishant530'],
     handler,
+    url: 'grist.org/articles/',
 };
 
 async function handler() {

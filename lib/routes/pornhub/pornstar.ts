@@ -24,6 +24,11 @@ export const route: Route = {
     name: 'Verified model / Pornstar',
     maintainers: ['I2IMk', 'queensferryme'],
     handler,
+    description: `**\`sort\`**
+
+  | Most Recent | Most Viewed | Top Rated | Longest | Best |
+  | ----------- | ----------- | --------- | ------- | ---- |
+  | mr          | mv          | tr        | lg      |      |`,
 };
 
 async function handler(ctx) {

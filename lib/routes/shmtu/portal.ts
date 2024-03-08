@@ -61,6 +61,9 @@ export const route: Route = {
     name: '数字平台',
     maintainers: ['imbytecat'],
     handler,
+    description: `| 部门通知公告 | 学术与大型活动公告 | 部门动态 |
+| ------------ | ------------------ | -------- |
+| bmtzgg       | xsydxhdgg          | bmdt     |`,
 };
 
 async function handler(ctx) {

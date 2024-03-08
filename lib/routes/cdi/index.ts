@@ -21,6 +21,9 @@ export const route: Route = {
     name: '栏目',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 樊纲观点 | 综研国策 | 综研观察 | 综研专访 | 综研视点 | 银湖新能源 |
+  | -------- | -------- | -------- | -------- | -------- | ---------- |
+  | 102      | 152      | 150      | 153      | 154      | 151        |`,
 };
 
 async function handler(ctx) {

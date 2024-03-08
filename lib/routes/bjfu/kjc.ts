@@ -24,6 +24,7 @@ export const route: Route = {
     name: '科技处通知公告',
     maintainers: ['markmingjie'],
     handler,
+    url: 'kyc.bjfu.edu.cn/',
 };
 
 async function handler() {

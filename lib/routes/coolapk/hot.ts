@@ -82,6 +82,17 @@ export const route: Route = {
     name: '热榜',
     maintainers: ['xizeyoupan'],
     handler,
+    description: `| 参数名称 | 今日热门 | 点赞榜 | 评论榜 | 收藏榜 | 酷图榜 |
+  | -------- | -------- | ------ | ------ | ------ | ------ |
+  | type     | jrrm     | dzb    | plb    | scb    | ktb    |
+
+  | 参数名称 | 日榜  | 周榜   |
+  | -------- | ----- | ------ |
+  | period   | daily | weekly |
+
+  :::tip
+  今日热门没有周榜，酷图榜日榜的参数会变成周榜，周榜的参数会变成月榜。
+  :::`,
 };
 
 async function handler(ctx) {

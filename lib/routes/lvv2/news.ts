@@ -45,6 +45,13 @@ export const route: Route = {
     name: '频道',
     maintainers: ['Fatpandac'],
     handler,
+    description: `|   热门   |   最新   |    得分    |   24 小时榜   |
+  | :------: | :------: | :--------: | :-----------: |
+  | sort-hot | sort-new | sort-score | sort-realtime |
+
+  | 排序方式 | 一小时内 | 一天内 | 一个周内 | 一个月内 |
+  | :------: | :------: | :----: | :------: | :------: |
+  |          |  t-hour  |  t-day |  t-week  |  t-month |`,
 };
 
 async function handler(ctx) {

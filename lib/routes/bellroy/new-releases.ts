@@ -20,6 +20,7 @@ export const route: Route = {
     name: 'New Releases',
     maintainers: ['EthanWng97'],
     handler,
+    url: 'bellroy.com/collection/new-releases',
 };
 
 async function handler() {

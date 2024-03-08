@@ -23,6 +23,7 @@ export const route: Route = {
     name: '研究生院博士招生',
     maintainers: ['real-jiakai'],
     handler,
+    url: 'lib.njucm.edu.cn/2899/list.htm',
 };
 
 async function handler(ctx) {

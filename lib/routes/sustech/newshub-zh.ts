@@ -22,6 +22,7 @@ export const route: Route = {
     name: '新闻网（中文）',
     maintainers: ['sparkcyf'],
     handler,
+    url: 'newshub.sustech.edu.cn/news',
 };
 
 async function handler() {

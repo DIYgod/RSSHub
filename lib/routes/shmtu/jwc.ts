@@ -42,6 +42,9 @@ export const route: Route = {
     name: '教务信息',
     maintainers: ['imbytecat', 'simonsmh'],
     handler,
+    description: `| 教务公告 | 教务新闻 |
+| -------- | -------- |
+| jwgg     | jwxw     |`,
 };
 
 async function handler(ctx) {

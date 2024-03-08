@@ -53,6 +53,52 @@ export const route: Route = {
     name: 'Category',
     maintainers: ['nczitzk'],
     handler,
+    description: `Categories for International site:
+
+  | WORLD | COVID-19 | BUSINESS | SPORT | TECH | OPINION |
+  | ----- | -------- | -------- | ----- | ---- | ------- |
+  | world | covid-19 | business | sport | tech | opinion |
+
+  Categories for Chinese site:
+
+  | 新闻 | 中国  | 俄罗斯 | 国际            | 俄中关系                 | 评论    |
+  | ---- | ----- | ------ | --------------- | ------------------------ | ------- |
+  | news | china | russia | category\_guoji | russia\_china\_relations | opinion |
+
+  Language
+
+  | Language    | Id          |
+  | ----------- | ----------- |
+  | English     | english     |
+  | Spanish     | spanish     |
+  | German      | german      |
+  | French      | french      |
+  | Greek       | greek       |
+  | Italian     | italian     |
+  | Czech       | czech       |
+  | Polish      | polish      |
+  | Serbian     | serbian     |
+  | Latvian     | latvian     |
+  | Lithuanian  | lithuanian  |
+  | Moldavian   | moldavian   |
+  | Belarusian  | belarusian  |
+  | Armenian    | armenian    |
+  | Abkhaz      | abkhaz      |
+  | Ssetian     | ssetian     |
+  | Georgian    | georgian    |
+  | Azerbaijani | azerbaijani |
+  | Arabic      | arabic      |
+  | Turkish     | turkish     |
+  | Persian     | persian     |
+  | Dari        | dari        |
+  | Kazakh      | kazakh      |
+  | Kyrgyz      | kyrgyz      |
+  | Uzbek       | uzbek       |
+  | Tajik       | tajik       |
+  | Vietnamese  | vietnamese  |
+  | Japanese    | japanese    |
+  | Chinese     | chinese     |
+  | Portuguese  | portuguese  |`,
 };
 
 async function handler(ctx) {

@@ -18,6 +18,7 @@ export const route: Route = {
     name: '其他栏目',
     maintainers: ['shunf4'],
     handler,
+    description: `除了上面两个兼容规则之外，联合早报网站里所有页面形如 [https://www.zaobao.com/lifestyle/health](https://www.zaobao.com/lifestyle/health) 这样的栏目都能被这个规则解析到，早报的大部分栏目都是这个样式的。你可以测试之后再订阅。`,
 };
 
 async function handler(ctx) {

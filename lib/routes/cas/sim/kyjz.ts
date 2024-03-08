@@ -25,6 +25,7 @@ export const route: Route = {
     name: '上海微系统与信息技术研究所 科技进展',
     maintainers: ['HenryQW'],
     handler,
+    url: 'www.sim.cas.cn/xwzx2016/kyjz',
 };
 
 async function handler() {

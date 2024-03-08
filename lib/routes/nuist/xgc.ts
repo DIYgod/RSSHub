@@ -26,6 +26,7 @@ export const route: Route = {
     name: '南信大学生工作处',
     maintainers: ['gylidian'],
     handler,
+    url: 'xgc.nuist.edu.cn/',
 };
 
 async function handler() {

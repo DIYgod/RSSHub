@@ -23,6 +23,7 @@ export const route: Route = {
     name: '技术社区',
     maintainers: ['huhuhang'],
     handler,
+    url: 'lanqiao.cn/questions/',
 };
 
 async function handler(ctx) {

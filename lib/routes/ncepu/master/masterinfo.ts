@@ -37,6 +37,9 @@ export const route: Route = {
     name: '北京校区研究生院',
     maintainers: ['nilleo'],
     handler,
+    description: `| 类型 | 硕士招生信息 | 通知公告 | 研究生培养信息 |
+  | ---- | ------------ | -------- | -------------- |
+  | 参数 | zsxx         | tzgg     | pyxx           |`,
 };
 
 async function handler(ctx) {

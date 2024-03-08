@@ -27,6 +27,9 @@ export const route: Route = {
     name: '研究生院通知',
     maintainers: ['fox2049'],
     handler,
+    description: `| 新闻动态 | 通知公告 | 选课考试 |
+  | -------- | -------- | -------- |
+  | trend    | notice   | class    |`,
 };
 
 async function handler(ctx) {

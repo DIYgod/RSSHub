@@ -26,6 +26,7 @@ export const route: Route = {
     name: '后勤管理处通知',
     maintainers: ['abc1763613206'],
     handler,
+    url: 'houqin.qdu.edu.cn/tzgg.htm',
 };
 
 async function handler() {

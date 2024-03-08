@@ -23,6 +23,7 @@ export const route: Route = {
     name: '员工版教育培训',
     maintainers: ['real-jiakai'],
     handler,
+    url: 'njglyy.com/ygb/jypx/jypx.aspx',
 };
 
 async function handler(ctx) {

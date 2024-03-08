@@ -25,6 +25,7 @@ export const route: Route = {
     name: '上海新闻',
     maintainers: ['saury'],
     handler,
+    url: 'sh.eastday.com/',
 };
 
 async function handler() {

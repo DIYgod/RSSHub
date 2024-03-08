@@ -27,6 +27,7 @@ export const route: Route = {
     name: '论坛摘要',
     maintainers: ['shinemoon'],
     handler,
+    description: `版面网址如果为 \`https://bbs.saraba1st.com/2b/forum-75-1.html\` 那么论坛 id 就是 \`forum-75-1\`。`,
 };
 
 async function handler(ctx) {

@@ -20,6 +20,7 @@ export const route: Route = {
     name: '求职推荐',
     maintainers: ['junfengP'],
     handler,
+    url: 'nowcoder.com/',
 };
 
 async function handler() {

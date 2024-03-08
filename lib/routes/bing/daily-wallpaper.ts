@@ -10,6 +10,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['FHYunCai'],
     handler,
+    url: 'cn.bing.com/',
 };
 
 async function handler(ctx) {

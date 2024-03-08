@@ -22,6 +22,9 @@ export const route: Route = {
     name: '最新消息',
     maintainers: ['TonyRL'],
     handler,
+    description: `| 全部 | 其他 | 採購公告 | 新聞稿 | 肅貪 | 預防 | 綜合 | 防疫專區 |
+  | ---- | ---- | -------- | ------ | ---- | ---- | ---- | -------- |
+  |      | 02   | 01       | 06     | 05   | 04   | 03   | 99       |`,
 };
 
 async function handler(ctx) {

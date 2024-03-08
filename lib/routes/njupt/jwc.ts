@@ -27,6 +27,9 @@ export const route: Route = {
     name: '教务处通知与新闻',
     maintainers: ['shaoye'],
     handler,
+    description: `| 通知公告 | 教务快讯 |
+  | -------- | -------- |
+  | notice   | news     |`,
 };
 
 async function handler(ctx) {

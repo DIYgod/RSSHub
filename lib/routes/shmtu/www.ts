@@ -42,6 +42,9 @@ export const route: Route = {
     name: '官网信息',
     maintainers: ['imbytecat', 'simonsmh'],
     handler,
+    description: `| 学术讲座 | 通知公告 |
+| -------- | -------- |
+| events   | notes    |`,
 };
 
 async function handler(ctx) {

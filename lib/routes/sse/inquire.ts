@@ -26,6 +26,7 @@ export const route: Route = {
     name: '监管问询',
     maintainers: ['Jeason0228'],
     handler,
+    url: 'www.sse.com.cn/disclosure/credibility/supervision/inquiries',
 };
 
 async function handler() {

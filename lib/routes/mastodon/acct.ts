@@ -17,6 +17,9 @@ export const route: Route = {
     name: 'User timeline',
     maintainers: ['notofoe'],
     handler,
+    description: `Started from Mastodon v4.0.0, the use of the \`search\` API in the route no longer requires a user token.
+If the domain of your Webfinger account URI is the same as the API host of the instance (i.e., no delegation called in some other protocols), then no configuration is required and the route is available out of the box.
+However, you can still specify these route-specific configurations if you need to override them.`,
 };
 
 async function handler(ctx) {

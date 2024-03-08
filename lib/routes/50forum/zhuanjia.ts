@@ -14,6 +14,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['sddiky'],
     handler,
+    url: '50forum.org.cn/home/article/index/category/zhuanjia.html',
 };
 
 async function handler() {

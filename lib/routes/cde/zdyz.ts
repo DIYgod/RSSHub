@@ -54,6 +54,9 @@ export const route: Route = {
     name: '指导原则专栏',
     maintainers: ['TonyRL'],
     handler,
+    description: `|    发布通告   |   征求意见  |
+  | :-----------: | :---------: |
+  | domesticGuide | opinionList |`,
 };
 
 async function handler(ctx) {

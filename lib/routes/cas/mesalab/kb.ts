@@ -24,6 +24,7 @@ export const route: Route = {
     name: '信息工程研究所 第二研究室 处理架构组 知识库',
     maintainers: ['renzhexigua'],
     handler,
+    url: 'www.mesalab.cn/f/article/articleList',
 };
 
 async function handler() {

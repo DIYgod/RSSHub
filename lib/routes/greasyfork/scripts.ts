@@ -22,6 +22,14 @@ export const route: Route = {
     name: 'Script Update',
     maintainers: ['imlonghao', 'miles170'],
     handler,
+    description: `| Sort            | Description    |
+| --------------- | -------------- |
+| today           | Daily installs |
+| total\_installs | Total installs |
+| ratings         | Ratings        |
+| created         | Created date   |
+| updated         | Updated date   |
+| name            | Name           |`,
 };
 
 async function handler(ctx) {

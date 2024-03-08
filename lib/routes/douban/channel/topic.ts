@@ -17,6 +17,9 @@ export const route: Route = {
     name: '频道专题',
     maintainers: ['umm233'],
     handler,
+    description: `| 默认    | 热门 | 最新 |
+  | ------- | ---- | ---- |
+  | default | hot  | new  |`,
 };
 
 async function handler(ctx) {

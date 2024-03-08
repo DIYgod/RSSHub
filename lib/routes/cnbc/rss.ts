@@ -24,6 +24,9 @@ export const route: Route = {
     name: 'Full article RSS',
     maintainers: ['TonyRL'],
     handler,
+    description: `Provides a better reading experience (full articles) over the official ones.
+
+  Support all channels, refer to [CNBC RSS feeds](https://www.cnbc.com/rss-feeds/).`,
 };
 
 async function handler(ctx) {

@@ -21,6 +21,7 @@ export const route: Route = {
     name: '杭州市',
     maintainers: ['znhocn'],
     handler,
+    url: 'www.hzwgc.com/public/stop_the_water',
 };
 
 async function handler() {

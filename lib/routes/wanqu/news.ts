@@ -22,6 +22,7 @@ export const route: Route = {
     name: '最新推荐',
     maintainers: ['Fatpandac'],
     handler,
+    url: 'wanqu.co/',
 };
 
 async function handler() {

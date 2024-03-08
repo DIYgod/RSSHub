@@ -23,6 +23,7 @@ export const route: Route = {
     name: '“4+4” 试点班招生网通知公告',
     maintainers: ['nczitzk'],
     handler,
+    url: 'mdadmission.pumc.edu.cn/mdweb/site',
 };
 
 async function handler(ctx) {

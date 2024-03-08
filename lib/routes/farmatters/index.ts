@@ -39,6 +39,8 @@ export const route: Route = {
     name: 'Exclusive',
     maintainers: ['nczitzk'],
     handler,
+    url: 'farmatters.com/news',
+    url: 'farmatters.com/exclusive',
 };
 
 async function handler(ctx) {

@@ -13,6 +13,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'leiphone.com/',
 };
 
 async function handler(ctx) {

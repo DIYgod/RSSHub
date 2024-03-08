@@ -33,6 +33,9 @@ export const route: Route = {
     name: '官网信息',
     maintainers: ['lonelyion'],
     handler,
+    description: `| 综合新闻 | 科研动态 | 通知公告 | 重要新闻  |
+  | -------- | -------- | -------- | --------- |
+  | news     | research | notice   | important |`,
 };
 
 async function handler(ctx) {

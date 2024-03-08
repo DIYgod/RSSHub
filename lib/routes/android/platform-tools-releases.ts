@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'SDK Platform Tools release notes',
     maintainers: ['nczitzk'],
     handler,
+    url: 'developer.android.com/studio/releases/platform-tools',
 };
 
 async function handler() {

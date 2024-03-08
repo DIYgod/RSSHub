@@ -24,6 +24,7 @@ export const route: Route = {
     name: 'Products',
     maintainers: ['Fatpandac'],
     handler,
+    description: `\`https://afkmaster.gumroad.com/l/Eve10\` -> \`/gumroad/afkmaster/Eve10\``,
 };
 
 async function handler(ctx) {

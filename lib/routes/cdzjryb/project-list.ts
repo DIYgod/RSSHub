@@ -29,6 +29,7 @@ export const route: Route = {
     name: '商品住房购房登记',
     maintainers: ['TonyRL'],
     handler,
+    url: 'zw.cdzjryb.com/lottery/accept/projectList',
 };
 
 async function handler() {

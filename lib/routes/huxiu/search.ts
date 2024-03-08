@@ -23,6 +23,7 @@ export const route: Route = {
     name: '搜索',
     maintainers: ['xyqfer', 'HenryQW', 'nczitzk'],
     handler,
+    url: 'huxiu.com/',
 };
 
 async function handler(ctx) {

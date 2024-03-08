@@ -23,6 +23,10 @@ export const route: Route = {
     name: '选课信息教务通知',
     maintainers: ['3401797899'],
     handler,
+    url: 'jwgl.ouc.edu.cn/cas/login.action',
+    description: `:::warning
+  由于选课通知仅允许校园网访问，需自行部署。
+  :::`,
 };
 
 async function handler() {

@@ -24,6 +24,7 @@ export const route: Route = {
     name: 'News',
     maintainers: ['proletarius101'],
     handler,
+    description: `See the [official RSS page](https://www.scmp.com/rss) to get the ID of each category. This route provides fulltext that the offical feed doesn't.`,
 };
 
 async function handler(ctx) {

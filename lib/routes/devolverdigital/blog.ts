@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Official Blogs',
     maintainers: ['XXY233'],
     handler,
+    url: 'devolverdigital.com/blog',
 };
 
 async function handler() {

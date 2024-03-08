@@ -24,6 +24,7 @@ export const route: Route = {
     name: '首页最新新闻',
     maintainers: [],
     handler,
+    url: 'www.abmedia.io/',
 };
 
 async function handler(ctx) {

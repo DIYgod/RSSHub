@@ -24,6 +24,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['Fatpandac', 'nczitzk'],
     handler,
+    url: 'qipamaijia.com/',
 };
 
 async function handler(ctx) {

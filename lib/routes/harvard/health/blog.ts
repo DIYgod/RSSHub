@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Health Blog',
     maintainers: ['nczitzk'],
     handler,
+    url: 'www.health.harvard.edu/blog',
 };
 
 async function handler() {

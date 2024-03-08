@@ -21,6 +21,12 @@ export const route: Route = {
     name: 'Search Result',
     maintainers: ['LogicJake'],
     handler,
+    description: `| Sort options     | sort      |
+  | ---------------- | --------- |
+  | Best match       | bestmatch |
+  | Most stars       | stars     |
+  | Most forks       | forks     |
+  | Recently updated | updated   |`,
 };
 
 async function handler(ctx) {

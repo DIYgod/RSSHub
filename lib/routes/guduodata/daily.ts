@@ -50,6 +50,7 @@ export const route: Route = {
     name: '日榜',
     maintainers: ['Gem1ni'],
     handler,
+    url: 'data.guduodata.com/',
 };
 
 async function handler() {

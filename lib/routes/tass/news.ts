@@ -24,6 +24,9 @@ export const route: Route = {
     name: 'News',
     maintainers: ['TonyRL'],
     handler,
+    description: `| Russian Politics & Diplomacy | World | Business & Economy | Military & Defense | Science & Space | Emergencies | Society & Culture | Press Review | Sports |
+  | ---------------------------- | ----- | ------------------ | ------------------ | --------------- | ----------- | ----------------- | ------------ | ------ |
+  | politics                     | world | economy            | defense            | science         | emergencies | society           | pressreview  | sports |`,
 };
 
 async function handler(ctx) {

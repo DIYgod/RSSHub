@@ -35,6 +35,7 @@ export const route: Route = {
     name: 'Latest Stories',
     maintainers: ['miles170'],
     handler,
+    url: 'www.nationalgeographic.com/pages/topic/latest-stories',
 };
 
 async function handler() {

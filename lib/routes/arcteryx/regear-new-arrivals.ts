@@ -30,6 +30,7 @@ export const route: Route = {
     name: 'Regear New Arrivals',
     maintainers: ['EthanWng97'],
     handler,
+    url: 'regear.arcteryx.com/shop/new-arrivals',
 };
 
 async function handler() {

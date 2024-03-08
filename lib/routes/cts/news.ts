@@ -24,6 +24,9 @@ export const route: Route = {
     name: '新聞',
     maintainers: ['miles170'],
     handler,
+    description: `| 即時 | 氣象    | 政治     | 國際          | 社會    | 運動   | 生活 | 財經  | 台語      | 地方  | 產業 | 綜合    | 藝文 | 娛樂      |
+  | ---- | ------- | -------- | ------------- | ------- | ------ | ---- | ----- | --------- | ----- | ---- | ------- | ---- | --------- |
+  | real | weather | politics | international | society | sports | life | money | taiwanese | local | pr   | general | arts | entertain |`,
 };
 
 async function handler(ctx) {

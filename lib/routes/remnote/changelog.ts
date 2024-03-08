@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Changelog',
     maintainers: ['TonyRL', 'amakerlife'],
     handler,
+    url: 'remnote.com/changelog',
 };
 
 async function handler() {

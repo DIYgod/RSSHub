@@ -20,6 +20,9 @@ export const route: Route = {
     name: 'User',
     maintainers: ['Misaka13514'],
     handler,
+    description: `| Shows   | Favorites | History | Stream |
+  | ------- | --------- | ------- | ------ |
+  | uploads | favorites | listens | stream |`,
 };
 
 async function handler(ctx) {

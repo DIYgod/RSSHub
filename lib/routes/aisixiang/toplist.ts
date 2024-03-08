@@ -11,6 +11,9 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['HenryQW', 'nczitzk'],
     handler,
+    description: `| 文章点击排行 | 最近更新文章 | 文章推荐排行 |
+  | ------------ | ------------ | ------------ |
+  | 1            | 10           | 11           |`,
 };
 
 async function handler(ctx) {

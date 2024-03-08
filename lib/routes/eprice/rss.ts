@@ -27,6 +27,11 @@ export const route: Route = {
     name: '最新消息',
     maintainers: ['TonyRL'],
     handler,
+    description: `地区：
+
+  | hk   | tw   |
+  | ---- | ---- |
+  | 香港 | 台湾 |`,
 };
 
 async function handler(ctx) {

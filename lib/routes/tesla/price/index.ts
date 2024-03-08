@@ -20,6 +20,7 @@ export const route: Route = {
     name: '价格',
     maintainers: ['xiaokyo'],
     handler,
+    url: 'tesla.cn/model3/design',
 };
 
 async function handler() {

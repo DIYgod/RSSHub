@@ -113,6 +113,21 @@ export const route: Route = {
     name: '游戏折扣',
     maintainers: ['zytomorrow'],
     handler,
+    description: `| switch | ps4  | ps5  | xbox   | steam | epic   |
+  | ------ | ---- | ---- | ------ | ----- | ------ |
+  | 可用   | 可用 | 可用 | 不可用 | 可用  | 不可用 |
+
+  | filter | switch | ps4 | ps5 | steam |
+  | ------ | ------ | --- | --- | ----- |
+  | all    | ✔     | ✔  | ✔  | ✔    |
+  | jx     | ✔     | ✔  | ❌  | ✔    |
+  | sd     | ✔     | ✔  | ✔  | ✔    |
+  | dl     | ❌     | ✔  | ❌  | ✔    |
+  | vip    | ❌     | ❌  | ✔  | ❌    |
+
+  | 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
+  | ---- | ------------ | ---- | ---- | ---- |
+  | na   | eu           | fr   | de   | jp   |`,
 };
 
 async function handler(ctx) {

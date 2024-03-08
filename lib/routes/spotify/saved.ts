@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Personal Saved Tracks',
     maintainers: ['outloudvi'],
     handler,
+    url: 'open.spotify.com/collection/tracks',
 };
 
 async function handler(ctx) {

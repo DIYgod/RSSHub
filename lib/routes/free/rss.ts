@@ -11,6 +11,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['cnkmmk'],
     handler,
+    url: 'free.com.tw/',
 };
 
 async function handler() {

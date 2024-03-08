@@ -22,6 +22,7 @@ export const route: Route = {
     name: '研究生通知公告',
     maintainers: ['shengmaosu'],
     handler,
+    url: 'gs.ccnu.edu.cn/zsgz/ssyjs.htm',
 };
 
 async function handler() {

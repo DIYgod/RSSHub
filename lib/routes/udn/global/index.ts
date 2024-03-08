@@ -24,6 +24,9 @@ export const route: Route = {
     name: '轉角國際 - 首頁',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 首頁 | 最新文章 | 熱門文章 |
+  | ---- | -------- | -------- |
+  |      | new      | hot      |`,
 };
 
 async function handler(ctx) {

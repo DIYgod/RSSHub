@@ -22,6 +22,24 @@ export const route: Route = {
     name: 'Jobs',
     maintainers: [],
     handler,
+    description: `#### \`job_types\` list
+
+  | Full Time | Part Time | Contractor | All |
+  | --------- | --------- | ---------- | --- |
+  | F         | P         | C          | all |
+
+  #### \`exp_levels\` list
+
+  | Intership | Entry Level | Associate | Mid-Senior Level | Director | All |
+  | --------- | ----------- | --------- | ---------------- | -------- | --- |
+  | 1         | 2           | 3         | 4                | 5        | all |
+
+  For example:
+
+  1.  If we want to search software engineer jobs of all levels and all job types, use \`/linkedin/jobs/all/all/software engineer\`
+  2.  If we want to search all entry level contractor/part time software engineer jobs, use \`/linkedin/jobs/P-C/2/software engineer\`
+
+  **To make it easier, the recommended way is to start a search on [LinkedIn](https://www.linkedin.com/jobs/search) and use [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) to load the specific feed.**`,
 };
 
 async function handler(ctx) {

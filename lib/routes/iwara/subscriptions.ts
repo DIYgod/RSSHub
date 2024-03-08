@@ -32,6 +32,10 @@ export const route: Route = {
     name: 'User Subscriptions',
     maintainers: ['FeCCC'],
     handler,
+    url: 'ecchi.iwara.tv/',
+    description: `:::warning
+  This route requires username and password, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
+  :::`,
 };
 
 async function handler() {

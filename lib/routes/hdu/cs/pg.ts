@@ -49,6 +49,7 @@ export const route: Route = {
     name: '计算机学院 - 研究生通知',
     maintainers: ['legr4ndk'],
     handler,
+    url: 'computer.hdu.edu.cn/6769/list.htm',
 };
 
 async function handler() {

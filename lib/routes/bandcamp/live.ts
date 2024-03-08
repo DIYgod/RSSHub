@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Upcoming Live Streams',
     maintainers: ['nczitzk'],
     handler,
+    url: 'bandcamp.com/live_schedule',
 };
 
 async function handler() {

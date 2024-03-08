@@ -20,6 +20,14 @@ export const route: Route = {
     name: '排行榜',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 分类     | id         |
+  | -------- | ---------- |
+  | 总榜     | all        |
+  | 精选榜   | staffPicks |
+  | 广告     | ad         |
+  | 宣传片   | publicity  |
+  | 创意     | creative   |
+  | 干货教程 | backstage  |`,
 };
 
 async function handler(ctx) {

@@ -69,6 +69,11 @@ export const route: Route = {
     name: '新闻',
     maintainers: ['linbuxiao'],
     handler,
+    description: `子分类
+
+  | 全部 | 时政           | 财经    | 科技       | 社会   | 体娱   | 国际          | 美国 | 中国 | 欧洲   | 评论     |
+  | ---- | -------------- | ------- | ---------- | ------ | ------ | ------------- | ---- | ---- | ------ | -------- |
+  | all  | currentAffairs | finance | technology | social | sports | international | usa  | cn   | europe | comments |`,
 };
 
 async function handler(ctx) {

@@ -26,6 +26,7 @@ export const route: Route = {
     name: '信息与通信工程学院',
     maintainers: ['huyyi', 'mobyw'],
     handler,
+    url: 'sice.uestc.edu.cn/',
 };
 
 async function handler() {

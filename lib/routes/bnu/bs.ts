@@ -24,6 +24,9 @@ export const route: Route = {
     name: '经济与工商管理学院',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 学院新闻 | 通知公告 | 学术成果 | 学术讲座 | 教师观点 | 人才招聘 |
+  | -------- | -------- | -------- | -------- | -------- | -------- |
+  | xw       | zytzyyg  | xzcg     | xzjz     | xz       | bshzs    |`,
 };
 
 async function handler(ctx) {

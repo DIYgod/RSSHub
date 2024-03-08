@@ -24,6 +24,7 @@ export const route: Route = {
     name: 'Version History',
     maintainers: ['Fatpandac'],
     handler,
+    url: 'antibody-software.com/wizfile/download',
 };
 
 async function handler() {

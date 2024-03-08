@@ -35,6 +35,11 @@ export const route: Route = {
     name: '就业创业中心',
     maintainers: ['DylanXie123'],
     handler,
+    description: `栏目类型
+
+  | 中心公告 | 选调生 | 重点单位 | 国际组织 | 创新创业 | 就业实习 |
+  | -------- | ------ | -------- | -------- | -------- | -------- |
+  | zxgg     | xds    | zddw     | gjzz     | cxcy     | jysx     |`,
 };
 
 async function handler(ctx) {

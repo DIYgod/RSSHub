@@ -23,6 +23,7 @@ export const route: Route = {
     name: '票务更新',
     maintainers: ['hoilc'],
     handler,
+    description: `城市、分类名、子分类名，请参见[大麦网搜索页面](https://search.damai.cn/search.htm)`,
 };
 
 async function handler(ctx) {

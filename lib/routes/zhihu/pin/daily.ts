@@ -22,6 +22,7 @@ export const route: Route = {
     name: '知乎想法 - 24 小时新闻汇总',
     maintainers: ['xyqfer'],
     handler,
+    url: 'daily.zhihu.com/*',
 };
 
 async function handler() {

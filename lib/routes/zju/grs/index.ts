@@ -30,6 +30,9 @@ export const route: Route = {
     name: '研究生院',
     maintainers: ['Caicailiushui'],
     handler,
+    description: `| 全部公告 | 教学管理 | 各类资助 | 学科建设 | 海外交流 |
+  | -------- | -------- | -------- | -------- | -------- |
+  | 1        | 2        | 3        | 4        | 5        |`,
 };
 
 async function handler(ctx) {

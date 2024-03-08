@@ -66,6 +66,9 @@ export const route: Route = {
     name: 'Current Release',
     maintainers: ['cssxsh'],
     handler,
+    description: `| Doujin | Comics | PC Games | Doujin (R18) | Adult Comics | H Games | Otome | BL |
+  | ------ | ------ | -------- | ------------ | ------------ | ------- | ----- | -- |
+  | home   | comic  | soft     | maniax       | books        | pro     | girls | bl |`,
 };
 
 async function handler(ctx) {

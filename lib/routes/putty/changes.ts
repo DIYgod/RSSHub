@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Change Log',
     maintainers: ['nczitzk'],
     handler,
+    url: 'www.chiark.greenend.org.uk/~sgtatham/putty/changes.html',
 };
 
 async function handler() {

@@ -24,6 +24,12 @@ export const route: Route = {
     name: 'Speeches',
     maintainers: ['nczitzk'],
     handler,
+    url: 'who.int/director-general/speeches',
+    description: `Language
+
+  | English | العربية | 中文 | Français | Русский | Español | Português |
+  | ------- | ------- | ---- | -------- | ------- | ------- | --------- |
+  | en      | ar      | zh   | fr       | ru      | es      | pt        |`,
 };
 
 async function handler(ctx) {

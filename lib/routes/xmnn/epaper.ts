@@ -25,6 +25,9 @@ export const route: Route = {
     name: '数字媒体',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 厦门日报 | 厦门晚报 | 海西晨报 | 城市捷报 |
+  | -------- | -------- | -------- | -------- |
+  | xmrb     | xmwb     | hxcb     | csjb     |`,
 };
 
 async function handler(ctx) {

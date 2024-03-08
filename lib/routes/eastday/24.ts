@@ -43,6 +43,15 @@ export const route: Route = {
     name: '24 小时热闻',
     maintainers: ['nczitzk'],
     handler,
+    url: 'mini.eastday.com/',
+    description: `| 推荐 | 社会 | 娱乐 | 国际 | 军事 |
+  | ---- | ---- | ---- | ---- | ---- |
+
+  | 养生 | 汽车 | 体育 | 财经 | 游戏 |
+  | ---- | ---- | ---- | ---- | ---- |
+
+  | 科技 | 国内 | 宠物 | 情感 | 人文 | 教育 |
+  | ---- | ---- | ---- | ---- | ---- | ---- |`,
 };
 
 async function handler(ctx) {

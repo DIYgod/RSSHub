@@ -21,6 +21,7 @@ export const route: Route = {
     name: '分类',
     maintainers: [],
     handler,
+    url: 'ruancan.com/',
 };
 
 async function handler(ctx) {

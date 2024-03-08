@@ -22,6 +22,7 @@ export const route: Route = {
     name: "What's New",
     maintainers: ['nczitzk'],
     handler,
+    url: 'diskanalyzer.com/whats-new',
 };
 
 async function handler() {

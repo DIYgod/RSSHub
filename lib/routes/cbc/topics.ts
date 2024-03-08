@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'News',
     maintainers: ['wb14123'],
     handler,
+    url: 'cbc.ca/news',
 };
 
 async function handler(ctx) {

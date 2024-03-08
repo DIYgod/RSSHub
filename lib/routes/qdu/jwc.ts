@@ -26,6 +26,7 @@ export const route: Route = {
     name: '教务处通知',
     maintainers: ['abc1763613206'],
     handler,
+    url: 'jwc.qdu.edu.cn/jwtz.htm',
 };
 
 async function handler() {

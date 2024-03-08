@@ -21,6 +21,7 @@ export const route: Route = {
     name: 'News',
     maintainers: ['HankChow'],
     handler,
+    url: 'wfdf.sport/news/',
 };
 
 async function handler(ctx) {

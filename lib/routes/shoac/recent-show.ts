@@ -27,6 +27,7 @@ export const route: Route = {
     name: '演出月历',
     maintainers: ['TonyRL'],
     handler,
+    url: 'shoac.com.cn/',
 };
 
 async function handler() {

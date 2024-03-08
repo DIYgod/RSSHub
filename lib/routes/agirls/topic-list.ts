@@ -22,6 +22,7 @@ export const route: Route = {
     name: '当前精选主题列表',
     maintainers: ['TonyRL'],
     handler,
+    url: 'agirls.aotter.net/',
 };
 
 async function handler() {

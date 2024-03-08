@@ -24,6 +24,7 @@ export const route: Route = {
     name: 'NASA',
     maintainers: ['nczitzk', 'williamgateszhao'],
     handler,
+    url: 'apod.nasa.govundefined',
 };
 
 async function handler(ctx) {

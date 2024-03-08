@@ -19,6 +19,17 @@ export const route: Route = {
     name: 'Search',
     maintainers: ['nczitzk'],
     handler,
+    description: `Sorting
+
+  | Date Ascending | Date Descending |
+  | -------------- | --------------- |
+  | 1              | 2               |
+
+  Date selection
+
+  | 1 month | 3 months | 6 months | 12 months | 24 months |
+  | ------- | -------- | -------- | --------- | --------- |
+  | 1       | 3        | 6        | 12        | 24        |`,
 };
 
 async function handler(ctx) {

@@ -73,6 +73,13 @@ export const route: Route = {
     name: 'Rankings',
     maintainers: ['EYHN'],
     handler,
+    description: `| daily rank | weekly rank | monthly rank | male rank | female rank | AI-generated work Rankings | original rank  | rookie user rank |
+  | ---------- | ----------- | ------------ | --------- | ----------- | -------------------------- | -------------- | ---------------- |
+  | day        | week        | month        | day\_male | day\_female | day\_ai                    | week\_original | week\_rookie     |
+
+  | R-18 daily rank | R-18 AI-generated work | R-18 male rank | R-18 female rank | R-18 weekly rank | R-18G rank |
+  | --------------- | ---------------------- | -------------- | ---------------- | ---------------- | ---------- |
+  | day\_r18        | day\_r18\_ai           | day\_male\_r18 | day\_female\_r18 | week\_r18        | week\_r18g |`,
 };
 
 async function handler(ctx) {

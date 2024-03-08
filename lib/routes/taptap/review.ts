@@ -124,6 +124,20 @@ export const route: Route = {
     name: '游戏评价',
     maintainers: ['hoilc', 'TonyRL'],
     handler,
+    description: `#### 排序方式
+
+  | 最相关  | 最新 |
+  | ------- | ---- |
+  | default | new  |
+
+  #### 语言代码
+
+  | English (US) | 繁體中文 | 한국어 | 日本語 |
+  | ------------ | -------- | ------ | ------ |
+  | en\_US       | zh\_TW   | ko\_KR | ja\_JP |`,
+    description: `| 最新   | 最热 | 游戏时长 | 默认排序 |
+  | ------ | ---- | -------- | -------- |
+  | update | hot  | spent    | default  |`,
 };
 
 async function handler(ctx) {

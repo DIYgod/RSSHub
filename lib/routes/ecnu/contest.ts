@@ -27,6 +27,7 @@ export const route: Route = {
     name: 'ACM Online-Judge contests list',
     maintainers: ['a180285'],
     handler,
+    url: 'acm.ecnu.edu.cn/contest/',
 };
 
 async function handler(ctx) {

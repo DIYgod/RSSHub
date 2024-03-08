@@ -26,6 +26,7 @@ export const route: Route = {
     name: 'Engineering',
     maintainers: ['hulb'],
     handler,
+    url: 'www.uber.com/blog/pittsburgh/engineering',
 };
 
 async function handler(ctx) {

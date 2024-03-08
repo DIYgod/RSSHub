@@ -10,6 +10,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['dddepg'],
     handler,
+    url: 'javdb.com/',
 };
 
 async function handler(ctx) {

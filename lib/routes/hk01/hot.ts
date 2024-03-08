@@ -22,6 +22,7 @@ export const route: Route = {
     name: '热门',
     maintainers: ['hoilc', 'Fatpandac', 'nczitzk'],
     handler,
+    url: 'hk01.com/hot',
 };
 
 async function handler(ctx) {

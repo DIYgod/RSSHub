@@ -22,6 +22,7 @@ export const route: Route = {
     name: '计算机学院竞赛通知',
     maintainers: ['fengkx'],
     handler,
+    url: 'cs.scnu.edu.cn/xueshenggongzuo/chengchangfazhan/kejichuangxin/',
 };
 
 async function handler() {

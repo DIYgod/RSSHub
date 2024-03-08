@@ -15,6 +15,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['CaoMeiYouRen'],
     handler,
+    url: 'new.qq.com/zt2020/page/feiyan.htm',
 };
 
 async function handler() {

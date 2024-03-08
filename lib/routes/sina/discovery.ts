@@ -30,6 +30,9 @@ export const route: Route = {
     name: '科技 - 科学探索',
     maintainers: ['LogicJake'],
     handler,
+    description: `| 最新 | 天文航空 | 动物植物 | 自然地理 | 历史考古 | 生命医学 | 生活百科 | 科技前沿 |
+  | ---- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
+  | zx   | twhk     | dwzw     | zrdl     | lskg     | smyx     | shbk     | kjqy     |`,
 };
 
 async function handler(ctx) {

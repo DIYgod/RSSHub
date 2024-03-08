@@ -40,6 +40,7 @@ export const route: Route = {
     name: '观点 - 国家发展研究院',
     maintainers: ['MisLink'],
     handler,
+    url: 'nsd.pku.edu.cn/',
 };
 
 async function handler() {

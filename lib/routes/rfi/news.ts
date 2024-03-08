@@ -13,6 +13,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'rfi.fr/*path',
 };
 
 async function handler(ctx) {

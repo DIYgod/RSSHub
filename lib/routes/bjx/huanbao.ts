@@ -33,6 +33,7 @@ export const route: Route = {
     name: '环保要闻',
     maintainers: ['zsimple'],
     handler,
+    url: 'huanbao.bjx.com.cn/yw',
 };
 
 async function handler() {

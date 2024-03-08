@@ -17,6 +17,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['TonyRL'],
     handler,
+    url: 'netflav.com/',
 };
 
 async function handler() {

@@ -20,6 +20,9 @@ export const route: Route = {
     name: '分类',
     maintainers: ['nczitzk'],
     handler,
+    url: '95mm.org/',
+    description: `| 最新 | 热门 | 校花 | 森系 | 清纯 | 童颜 | 嫩模 | 少女 |
+  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |`,
 };
 
 async function handler(ctx) {

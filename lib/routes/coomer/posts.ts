@@ -20,6 +20,7 @@ export const route: Route = {
     name: 'Recent Posts',
     maintainers: ['nczitzk'],
     handler,
+    url: 'coomer.party/posts',
 };
 
 async function handler(ctx) {

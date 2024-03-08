@@ -24,6 +24,7 @@ export const route: Route = {
     name: '滚动新闻',
     maintainers: ['TonyRL'],
     handler,
+    url: 'roll.caijing.com.cn/index1.html',
 };
 
 async function handler() {

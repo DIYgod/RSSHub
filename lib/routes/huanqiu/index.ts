@@ -35,6 +35,10 @@ export const route: Route = {
     name: '分类',
     maintainers: ['yuxinliu-alex'],
     handler,
+    url: 'huanqiu.com/',
+    description: `| 国内新闻 | 国际新闻 | 军事 | 台海   | 评论    |
+  | -------- | -------- | ---- | ------ | ------- |
+  | china    | world    | mil  | taiwai | opinion |`,
 };
 
 async function handler(ctx) {

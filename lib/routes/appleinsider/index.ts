@@ -24,6 +24,9 @@ export const route: Route = {
     name: 'Category',
     maintainers: ['nczitzk'],
     handler,
+    description: `| News | Reviews | How-tos |
+  | ---- | ------- | ------- |
+  |      | reviews | how-to  |`,
 };
 
 async function handler(ctx) {

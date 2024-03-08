@@ -22,6 +22,12 @@ export const route: Route = {
     name: 'TODAY',
     maintainers: ['nczitzk'],
     handler,
+    url: 'today.line.me/',
+    description: `Edition
+
+  | Taiwan | Thailand | Hong Kong |
+  | ------ | -------- | --------- |
+  | tw     | th       | hk        |`,
 };
 
 async function handler(ctx) {

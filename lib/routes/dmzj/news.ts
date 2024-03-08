@@ -24,6 +24,10 @@ export const route: Route = {
     name: '新闻站',
     maintainers: ['vzz64'],
     handler,
+    url: 'news.dmzj.com/',
+    description: `| 漫画情报      | 轻小说情报          | 动漫周边       | 声优情报        | 音乐资讯    | 游戏资讯   | 美图欣赏      | 漫展情报       | 大杂烩  |
+  | ------------- | ------------------- | -------------- | --------------- | ----------- | ---------- | ------------- | -------------- | ------- |
+  | manhuaqingbao | qingxiaoshuoqingbao | manhuazhoubian | shengyouqingbao | yinyuezixun | youxizixun | meituxinshang | manzhanqingbao | dazahui |`,
 };
 
 async function handler(ctx) {

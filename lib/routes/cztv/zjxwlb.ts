@@ -30,6 +30,7 @@ export const route: Route = {
     name: '浙江新闻联播',
     maintainers: ['yhkang'],
     handler,
+    url: 'cztv.com/videos/zjxwlb',
 };
 
 async function handler() {

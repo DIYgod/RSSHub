@@ -20,6 +20,11 @@ export const route: Route = {
     name: '用户想看',
     maintainers: ['exherb'],
     handler,
+    description: `对于豆瓣用户想看的内容，在 \`routeParams\` 参数中以 query string 格式设置如下选项可以控制输出的样式
+
+  | 键         | 含义       | 接受的值 | 默认值 |
+  | ---------- | ---------- | -------- | ------ |
+  | pagesCount | 查询页面数 |          | 1      |`,
 };
 
 async function handler(ctx) {

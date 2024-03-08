@@ -13,6 +13,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['kdanfly'],
     handler,
+    url: 'chinafactcheck.com/',
 };
 
 async function handler() {

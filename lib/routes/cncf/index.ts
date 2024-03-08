@@ -22,6 +22,9 @@ export const route: Route = {
     name: 'Category',
     maintainers: ['Fatpandac'],
     handler,
+    description: `| Blog | News | Announcements | Reports |
+  | ---- | ---- | ------------- | ------- |
+  | blog | news | announcements | reports |`,
 };
 
 async function handler(ctx) {

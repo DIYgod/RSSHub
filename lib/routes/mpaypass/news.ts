@@ -24,6 +24,7 @@ export const route: Route = {
     name: '新闻',
     maintainers: ['LogicJake', 'genghis-yang'],
     handler,
+    url: 'mpaypass.com.cn/',
 };
 
 async function handler() {

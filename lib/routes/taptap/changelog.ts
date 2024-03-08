@@ -23,6 +23,11 @@ export const route: Route = {
     name: '游戏更新',
     maintainers: ['hoilc', 'ETiV'],
     handler,
+    description: `#### 语言代码
+
+  | English (US) | 繁體中文 | 한국어 | 日本語 |
+  | ------------ | -------- | ------ | ------ |
+  | en\_US       | zh\_TW   | ko\_KR | ja\_JP |`,
 };
 
 async function handler(ctx) {

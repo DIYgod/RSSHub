@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Nogizaka46 News 乃木坂 46 新闻',
     maintainers: ['crispgm', 'Fatpandac'],
     handler,
+    url: 'news.nogizaka46.com/s/n46/news/list',
 };
 
 async function handler(ctx) {

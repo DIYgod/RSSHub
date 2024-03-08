@@ -26,6 +26,10 @@ export const route: Route = {
     name: '计算机科学学院',
     maintainers: ['CYTMWIA'],
     handler,
+    url: 'swpu.edu.cn/',
+    description: `| 栏目 | 通知公告 | 新闻速递 |
+  | ---- | -------- | -------- |
+  | 代码 | tzgg     | xwsd     |`,
 };
 
 async function handler(ctx) {

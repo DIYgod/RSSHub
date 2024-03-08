@@ -30,6 +30,9 @@ export const route: Route = {
     name: '文章',
     maintainers: ['moke8', 'nczitzk'],
     handler,
+    description: `| 热门 | 最近 |
+  | ---- | ---- |
+  | hot  | last |`,
 };
 
 async function handler(ctx) {

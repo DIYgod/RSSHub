@@ -24,6 +24,7 @@ export const route: Route = {
     name: 'Community Apps',
     maintainers: ['KTachibanaM'],
     handler,
+    url: 'unraid.net/community/apps',
 };
 
 async function handler(ctx) {

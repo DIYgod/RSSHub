@@ -22,6 +22,7 @@ export const route: Route = {
     name: '游研社 - 全部文章',
     maintainers: ['HaitianLiu'],
     handler,
+    url: 'yystv.cn/docs',
 };
 
 async function handler() {

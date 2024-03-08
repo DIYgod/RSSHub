@@ -20,6 +20,13 @@ export const route: Route = {
     name: 'Shuangxing Information',
     maintainers: ['evnydd0sf'],
     handler,
+    description: `| News Type | Parameters |
+  | --------- | ---------- |
+  | 校园电视  | 230        |
+  | 院部动态  | 232        |
+  | 动感校园  | 233        |
+  | 招就指南  | 234        |
+  | 南艺院报  | 236        |`,
 };
 
 async function handler(ctx) {

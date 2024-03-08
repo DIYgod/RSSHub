@@ -34,6 +34,9 @@ export const route: Route = {
     name: 'News',
     maintainers: ['SuperPung'],
     handler,
+    description: `| Focus on TJU | General News | Internal News | Media Report | Pictures of TJU |
+  | :----------: | :----------: | :-----------: | :----------: | :-------------: |
+  |     focus    |    general   |    internal   |     media    |     picture     |`,
 };
 
 async function handler(ctx) {

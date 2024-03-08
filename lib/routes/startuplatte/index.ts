@@ -23,6 +23,9 @@ export const route: Route = {
     name: '分类',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 首頁 | 大師智慧 | 深度分析 | 新知介紹 |
+  | ---- | -------- | -------- | -------- |
+  |      | quote    | analysis | trend    |`,
 };
 
 async function handler(ctx) {

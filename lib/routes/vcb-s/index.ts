@@ -19,6 +19,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['cxfksword'],
     handler,
+    url: 'vcb-s.com/',
 };
 
 async function handler(ctx) {

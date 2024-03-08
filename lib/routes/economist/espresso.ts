@@ -25,6 +25,7 @@ export const route: Route = {
     name: 'Espresso',
     maintainers: ['TonyRL'],
     handler,
+    url: 'economist.com/the-world-in-brief',
 };
 
 async function handler() {

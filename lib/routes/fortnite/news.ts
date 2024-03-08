@@ -20,6 +20,11 @@ export const route: Route = {
     name: 'News',
     maintainers: ['lyqluis'],
     handler,
+    description: `-   \`options.lang\`, optional, language, eg. \`/fortnite/news/lang=en-US\`, common languages are listed below, more languages are available one the [official website](https://www.fortnite.com/news)
+
+  | English (default) | Spanish | Japanese | French | Korean | Polish |
+  | ----------------- | ------- | -------- | ------ | ------ | ------ |
+  | en-US             | es-ES   | ja       | fr     | ko     | pl     |`,
 };
 
 async function handler(ctx) {

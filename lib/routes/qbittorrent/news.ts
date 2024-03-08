@@ -24,6 +24,7 @@ export const route: Route = {
     name: 'News',
     maintainers: ['TonyRL'],
     handler,
+    url: 'qbittorrent.org/news.php',
 };
 
 async function handler(ctx) {

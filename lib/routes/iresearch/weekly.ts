@@ -23,6 +23,8 @@ export const route: Route = {
     name: '周度市场观察',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 家电行业 | 服装行业 | 美妆行业 | 食品饮料行业 |
+  | -------- | -------- | -------- | ------------ |`,
 };
 
 async function handler(ctx) {

@@ -27,6 +27,9 @@ export const route: Route = {
     name: '校长信箱',
     maintainers: ['j1g5awi'],
     handler,
+    description: `| 类型 | 校长信箱 | 党委信箱 |
+  | ---- | -------- | -------- |
+  | 参数 | 01       | 02       |`,
 };
 
 async function handler(ctx) {

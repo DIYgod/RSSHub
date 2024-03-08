@@ -36,6 +36,10 @@ export const route: Route = {
     name: '教务处',
     maintainers: ['achjqz', 'mobyw'],
     handler,
+    url: 'jwc.uestc.edu.cn/',
+    description: `| 重要公告  | 学生事务公告 | 教师事务公告 | 教学新闻 | 办公室 |
+  | --------- | ------------ | ------------ | -------- | ------ |
+  | important | student      | teacher      | teach    | office |`,
 };
 
 async function handler(ctx) {

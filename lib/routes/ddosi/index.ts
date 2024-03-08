@@ -13,6 +13,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['XinRoom'],
     handler,
+    url: 'ddosi.org/',
 };
 
 async function handler() {

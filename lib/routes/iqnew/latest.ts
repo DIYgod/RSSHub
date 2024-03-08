@@ -25,6 +25,7 @@ export const route: Route = {
     name: '最近更新',
     maintainers: ['nczitzk'],
     handler,
+    url: 'iqnew.com/post/new_100/',
 };
 
 async function handler(ctx) {

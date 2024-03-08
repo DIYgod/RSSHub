@@ -24,6 +24,9 @@ export const route: Route = {
     name: '水声工程学院',
     maintainers: [],
     handler,
+    description: `| 新闻动态 | 通知公告 | 科学研究 / 科研动态 |
+  | :------: | :------: | :-----------------: |
+  |   xwdt   |   tzgg   |      kxyj-kydt      |`,
 };
 
 async function handler(ctx) {

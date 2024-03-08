@@ -31,6 +31,7 @@ export const route: Route = {
     name: '严选',
     maintainers: ['nczitzk'],
     handler,
+    url: 'chuanliu.org/nice',
 };
 
 async function handler(ctx) {

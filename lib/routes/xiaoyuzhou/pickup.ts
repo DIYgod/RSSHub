@@ -88,6 +88,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['prnake', 'Maecenas'],
     handler,
+    url: 'xiaoyuzhoufm.com/',
 };
 
 async function handler() {

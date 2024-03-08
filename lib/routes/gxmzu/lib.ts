@@ -33,6 +33,7 @@ export const route: Route = {
     name: '图书馆最新消息',
     maintainers: ['real-jiakai'],
     handler,
+    url: 'library.gxmzu.edu.cn/news/news_list.jsp',
 };
 
 async function handler() {

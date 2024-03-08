@@ -7,6 +7,9 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    description: `| Wanted     | Watched     | Owned     |
+  | ---------- | ----------- | --------- |
+  | userwanted | userwatched | userowned |`,
 };
 
 async function handler(ctx) {

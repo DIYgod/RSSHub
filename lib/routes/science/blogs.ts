@@ -26,6 +26,7 @@ export const route: Route = {
     name: 'Blogs',
     maintainers: ['TomHodson'],
     handler,
+    description: `To subscribe to [IN THE PIPELINE by Derek Lowe’s](https://science.org/blogs/pipeline) or the [science editor's blog](https://science.org/blogs/editors-blog), use the name parameter \`pipeline\` or \`editors-blog\`.`,
 };
 
 async function handler(ctx) {

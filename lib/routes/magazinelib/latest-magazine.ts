@@ -24,6 +24,7 @@ export const route: Route = {
     name: 'Latest Magazine',
     maintainers: ['EthanWng97'],
     handler,
+    description: `For instance, when doing search at [https://magazinelib.com](https://magazinelib.com) and you get url \`https://magazinelib.com/?s=new+yorker\`, the query is \`new+yorker\``,
 };
 
 async function handler(ctx) {

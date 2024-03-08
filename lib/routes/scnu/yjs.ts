@@ -21,6 +21,7 @@ export const route: Route = {
     name: '研究生院通知公告',
     maintainers: ['shengmaosu'],
     handler,
+    url: 'yz.scnu.edu.cn/tongzhigonggao/ssgg',
 };
 
 async function handler() {

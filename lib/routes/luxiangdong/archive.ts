@@ -21,6 +21,7 @@ export const route: Route = {
     name: '文章',
     maintainers: ['Levix'],
     handler,
+    url: 'luxiangdong.com/',
 };
 
 async function handler() {

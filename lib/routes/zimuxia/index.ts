@@ -19,6 +19,9 @@ export const route: Route = {
     name: '分类',
     maintainers: ['nczitzk'],
     handler,
+    description: `| ALL | FIX 德语社 | 欧美剧集 | 欧美电影 | 综艺 & 纪录 | FIX 日语社 | FIX 韩语社 | FIX 法语社 |
+  | --- | ---------- | -------- | -------- | ----------- | ---------- | ---------- | ---------- |
+  |     | 昆仑德语社 | 欧美剧集 | 欧美电影 | 综艺纪录    | fix 日语社 | fix 韩语社 | fix 法语社 |`,
 };
 
 async function handler(ctx) {

@@ -28,6 +28,7 @@ export const route: Route = {
     name: '飞行任务',
     maintainers: ['nczitzk'],
     handler,
+    url: 'www.cmse.gov.cn/fxrw',
 };
 
 async function handler() {

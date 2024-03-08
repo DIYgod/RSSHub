@@ -31,6 +31,7 @@ export const route: Route = {
     name: '农博士在行动',
     maintainers: ['iamqiz', 'nczitzk'],
     handler,
+    url: 'web.cmc.hebtv.com/cms/rmt0336/19/19js/st/ds/nmpd/nbszxd/index.shtml',
 };
 
 async function handler(ctx) {

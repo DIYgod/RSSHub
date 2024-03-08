@@ -28,6 +28,7 @@ export const route: Route = {
     name: '精品课程',
     maintainers: ['hoilc'],
     handler,
+    url: 'vip.open.163.com/',
 };
 
 async function handler() {

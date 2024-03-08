@@ -25,6 +25,9 @@ export const route: Route = {
     name: '股票信息',
     maintainers: ['YuYang'],
     handler,
+    description: `| 公告         | 新闻 | 研报     |
+  | ------------ | ---- | -------- |
+  | announcement | news | research |`,
 };
 
 async function handler(ctx) {

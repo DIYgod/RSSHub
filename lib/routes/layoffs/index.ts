@@ -47,6 +47,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['BrandNewLifeJackie26'],
     handler,
+    url: 'layoffs.fyi/',
 };
 
 async function handler() {

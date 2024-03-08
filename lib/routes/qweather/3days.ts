@@ -29,6 +29,7 @@ export const route: Route = {
     name: '近三天天气',
     maintainers: ['Rein-Ou', 'la3rence'],
     handler,
+    description: `需自行注册获取 api 的 key，并在环境变量 HEFENG\_KEY 中进行配置，获取订阅近三天天气预报`,
 };
 
 async function handler(ctx) {

@@ -26,6 +26,7 @@ export const route: Route = {
     name: 'New Arrivals(USA)',
     maintainers: ['EthanWng97'],
     handler,
+    url: 'snowpeak.com/collections/new-arrivals',
 };
 
 async function handler() {

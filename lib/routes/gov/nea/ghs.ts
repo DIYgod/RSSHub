@@ -24,6 +24,7 @@ export const route: Route = {
     name: '发展规划司',
     maintainers: ['nczitzk'],
     handler,
+    url: 'nea.gov.cn/sjzz/ghs/',
 };
 
 async function handler(ctx) {

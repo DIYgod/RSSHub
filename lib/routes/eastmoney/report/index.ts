@@ -23,6 +23,9 @@ export const route: Route = {
     name: '研究报告',
     maintainers: ['syzq'],
     handler,
+    description: `| 策略报告       | 宏观研究    | 券商晨报     | 行业研究 |
+  | -------------- | ----------- | ------------ | -------- |
+  | strategyreport | macresearch | brokerreport | industry |`,
 };
 
 async function handler(ctx) {

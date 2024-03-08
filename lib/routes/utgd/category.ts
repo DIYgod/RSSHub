@@ -33,6 +33,9 @@ export const route: Route = {
     name: '分类',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 方法   | 观点    |
+  | ------ | ------- |
+  | method | opinion |`,
 };
 
 async function handler(ctx) {

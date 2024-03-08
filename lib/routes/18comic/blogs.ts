@@ -25,6 +25,12 @@ export const route: Route = {
     name: '文庫',
     maintainers: ['nczitzk'],
     handler,
+    url: 'jmcomic.group/',
+    description: `分类
+
+  | 全部 | 紳夜食堂 | 遊戲文庫 | JG GAMES | 模型山下 |
+  | ---- | -------- | -------- | -------- | -------- |
+  |      | dinner   | raiders  | jg       | figure   |`,
 };
 
 async function handler(ctx) {

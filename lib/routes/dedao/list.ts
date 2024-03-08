@@ -22,6 +22,7 @@ export const route: Route = {
     name: '首页',
     maintainers: ['nczitzk'],
     handler,
+    url: 'igetget.com/',
 };
 
 async function handler(ctx) {

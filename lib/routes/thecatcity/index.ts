@@ -26,6 +26,10 @@ export const route: Route = {
     name: '分類',
     maintainers: ['TonyRL'],
     handler,
+    url: 'thecatcity.com/',
+    description: `| 貓物分享 | 貓咪新聞 | 養貓大全 | 貓奴景點 | 新手養貓教學 |
+  | -------- | -------- | -------- | -------- | ------------ |
+  | 1        | 2        | 3        | 4        | 5            |`,
 };
 
 async function handler(ctx) {

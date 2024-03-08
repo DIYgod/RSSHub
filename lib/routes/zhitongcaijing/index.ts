@@ -84,6 +84,22 @@ export const route: Route = {
     name: '推荐',
     maintainers: ['nczitzk'],
     handler,
+    description: `| id           | 栏目 |
+  | ------------ | ---- |
+  | recommend    | 推荐 |
+  | hkstock      | 港股 |
+  | meigu        | 美股 |
+  | agu          | 沪深 |
+  | ct           | 创投 |
+  | esg          | ESG  |
+  | aqs          | 券商 |
+  | ajj          | 基金 |
+  | focus        | 要闻 |
+  | announcement | 公告 |
+  | research     | 研究 |
+  | shares       | 新股 |
+  | bazaar       | 市场 |
+  | company      | 公司 |`,
 };
 
 async function handler(ctx) {

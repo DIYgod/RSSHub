@@ -31,6 +31,9 @@ export const route: Route = {
     name: 'Channel Video',
     maintainers: ['hoilc'],
     handler,
+    description: `| archive           | highlights                    | all        |
+| ----------------- | ----------------------------- | ---------- |
+| Recent broadcasts | Recent highlights and uploads | All videos |`,
 };
 
 async function handler(ctx) {

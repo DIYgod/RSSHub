@@ -14,6 +14,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'nintendo.com/store/games',
 };
 
 async function handler(ctx) {

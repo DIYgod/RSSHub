@@ -16,6 +16,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['yuxinliu-alex'],
     handler,
+    url: 'chinanews.com.cn/',
 };
 
 async function handler(ctx) {

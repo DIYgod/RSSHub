@@ -65,6 +65,17 @@ export const route: Route = {
     name: '新闻',
     maintainers: ['nczitzk'],
     handler,
+    description: `分类
+
+  | 要聞  | 快訊    | 港澳  | 兩岸         | 國際  | 財經    | 體育   | 法庭       | 天氣    |
+  | ----- | ------- | ----- | ------------ | ----- | ------- | ------ | ---------- | ------- |
+  | focus | instant | local | greaterchina | world | finance | sports | parliament | weather |
+
+  语言
+
+  | 繁 | 简 |
+  | -- | -- |
+  | tc | sc |`,
 };
 
 async function handler(ctx) {

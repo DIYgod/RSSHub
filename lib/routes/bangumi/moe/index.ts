@@ -13,6 +13,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'bangumi.moe/',
 };
 
 async function handler(ctx) {

@@ -22,6 +22,7 @@ export const route: Route = {
     name: '主題',
     maintainers: ['bestpika'],
     handler,
+    url: 'www.4gamers.com.tw/news',
 };
 
 async function handler(ctx) {

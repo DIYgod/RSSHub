@@ -22,6 +22,7 @@ export const route: Route = {
     name: '校招日程',
     maintainers: ['junfengP'],
     handler,
+    url: 'nowcoder.com/',
 };
 
 async function handler(ctx) {

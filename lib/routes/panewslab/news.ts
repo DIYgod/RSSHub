@@ -21,6 +21,8 @@ export const route: Route = {
     name: '快讯',
     maintainers: ['nczitzk'],
     handler,
+    url: 'panewslab.com/',
+    url: 'panewslab.com/',
 };
 
 async function handler(ctx) {

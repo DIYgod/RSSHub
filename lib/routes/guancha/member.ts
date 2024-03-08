@@ -30,6 +30,10 @@ export const route: Route = {
     name: '观学院',
     maintainers: ['nczitzk'],
     handler,
+    url: 'guancha.cn/',
+    description: `| 精选      | 观书堂 | 在线课  | 观学院   |
+  | --------- | ------ | ------- | -------- |
+  | recommend | books  | courses | huodongs |`,
 };
 
 async function handler(ctx) {

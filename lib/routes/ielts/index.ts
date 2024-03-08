@@ -17,6 +17,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['zenxds'],
     handler,
+    url: 'ielts.neea.cn/allnews',
 };
 
 async function handler() {

@@ -29,6 +29,7 @@ export const route: Route = {
     name: 'Blog',
     maintainers: ['TonyRL'],
     handler,
+    url: 'gitpod.io/blog',
 };
 
 async function handler(ctx) {

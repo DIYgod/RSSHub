@@ -21,6 +21,7 @@ export const route: Route = {
     name: '每日精品限免 / 促销应用（鲜面连线 by AppSo）',
     maintainers: ['Andiedie'],
     handler,
+    url: 'app.so/xianmian',
 };
 
 async function handler() {

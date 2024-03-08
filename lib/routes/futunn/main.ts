@@ -14,6 +14,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'news.futunn.com/main',
 };
 
 async function handler(ctx) {

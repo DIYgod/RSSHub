@@ -21,6 +21,12 @@ export const route: Route = {
     name: '系列',
     maintainers: ['nczitzk'],
     handler,
+    url: 'javdb.com/',
+    description: `| 全部 | 可播放   | 單體作品 | 可下載   | 字幕  | 預覽圖  |
+  | ---- | -------- | -------- | -------- | ----- | ------- |
+  |      | playable | single   | download | cnsub | preview |
+
+  所有系列编号参见 [系列庫](https://javdb.com/series)`,
 };
 
 async function handler(ctx) {

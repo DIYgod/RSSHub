@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Publications',
     maintainers: ['nczitzk'],
     handler,
+    url: 'disinfo.eu/',
 };
 
 async function handler() {

@@ -26,6 +26,10 @@ export const route: Route = {
     name: 'News',
     maintainers: ['TonyRL'],
     handler,
+    url: 'rodong.rep.kp/cn/index.php',
+    description: `| 조선어 | English | 中文 |
+  | ------ | ------- | ---- |
+  | ko     | en      | cn   |`,
 };
 
 async function handler(ctx) {

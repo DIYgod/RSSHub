@@ -19,6 +19,25 @@ export const route: Route = {
     name: '热门',
     maintainers: ['moaix'],
     handler,
+    description: `| category | 标签     |
+  | -------- | -------- |
+  | android  | Android  |
+  | frontend | 前端     |
+  | ios      | iOS      |
+  | backend  | 后端     |
+  | design   | 设计     |
+  | product  | 产品     |
+  | freebie  | 工具资源 |
+  | article  | 阅读     |
+  | ai       | 人工智能 |
+  | devops   | 运维     |
+  | all      | 全部     |
+
+  | type       | 类型     |
+  | ---------- | -------- |
+  | weekly     | 本周最热 |
+  | monthly    | 本月最热 |
+  | historical | 历史最热 |`,
 };
 
 async function handler(ctx) {

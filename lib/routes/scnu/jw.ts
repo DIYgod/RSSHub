@@ -22,6 +22,7 @@ export const route: Route = {
     name: '教务处通知',
     maintainers: ['fengkx'],
     handler,
+    url: 'jw.scnu.edu.cn/ann/index.html',
 };
 
 async function handler() {

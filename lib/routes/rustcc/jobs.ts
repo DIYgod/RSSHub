@@ -25,6 +25,7 @@ export const route: Route = {
     name: '招聘',
     maintainers: ['CcccFz'],
     handler,
+    url: 'rustcc.cn/',
 };
 
 async function handler() {

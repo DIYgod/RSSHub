@@ -24,6 +24,7 @@ export const route: Route = {
     name: '武汉要闻',
     maintainers: ['nczitzk'],
     handler,
+    url: 'wuhan.gov.cn/sy/whyw/',
 };
 
 async function handler() {

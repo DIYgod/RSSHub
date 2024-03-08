@@ -21,6 +21,7 @@ export const route: Route = {
     name: 'Official Blogs',
     maintainers: ['HankChow'],
     handler,
+    url: 'geocaching.com/blog/',
 };
 
 async function handler(ctx) {

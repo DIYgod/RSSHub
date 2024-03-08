@@ -24,6 +24,7 @@ export const route: Route = {
     name: '画师列表',
     maintainers: ['NeverBehave'],
     handler,
+    url: 'furstar.jp/',
 };
 
 async function handler(ctx) {

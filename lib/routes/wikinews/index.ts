@@ -24,6 +24,7 @@ export const route: Route = {
     name: '最新新闻',
     maintainers: ['KotoriK'],
     handler,
+    description: `根据维基新闻的[sitemap](https://zh.wikinews.org/wiki/Special:%E6%96%B0%E9%97%BB%E8%AE%A2%E9%98%85)获取新闻全文。目前仅支持中文维基新闻。`,
 };
 
 async function handler() {

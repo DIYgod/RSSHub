@@ -33,6 +33,9 @@ export const route: Route = {
     name: '人间',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 特写  | 记事  | 大写  | 好读  | 看客  |
+  | ----- | ----- | ----- | ----- | ----- |
+  | texie | jishi | daxie | haodu | kanke |`,
 };
 
 async function handler(ctx) {

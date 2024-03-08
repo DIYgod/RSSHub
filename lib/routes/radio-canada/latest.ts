@@ -23,6 +23,9 @@ export const route: Route = {
     name: 'Latest News',
     maintainers: ['nczitzk'],
     handler,
+    description: `| Français | English | Español | 简体中文 | 繁體中文 | العربية | ਪੰਜਾਬੀ | Tagalog |
+  | -------- | ------- | ------- | -------- | -------- | ------- | --- | ------- |
+  | fr       | en      | es      | zh-hans  | zh-hant  | ar      | pa  | tl      |`,
 };
 
 async function handler(ctx) {

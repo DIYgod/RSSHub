@@ -22,6 +22,7 @@ export const route: Route = {
     name: '科学人',
     maintainers: ['alphardex', 'nczitzk'],
     handler,
+    url: 'guokr.com/scientific',
 };
 
 async function handler() {

@@ -68,6 +68,9 @@ export const route: Route = {
     name: '教务处学院通知',
     maintainers: ['imkero', 'Rongronggg9'],
     handler,
+    description: `| 全部 | 选课   | 考试 | 信息 |
+  | ---- | ------ | ---- | ---- |
+  | all  | course | exam | info |`,
 };
 
 async function handler(ctx) {

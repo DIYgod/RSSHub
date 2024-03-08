@@ -22,6 +22,9 @@ export const route: Route = {
     name: '南京工程学院教务处',
     maintainers: ['zefengdaguo'],
     handler,
+    description: `| 教学 | 考试 | 信息 | 实践 |
+| ---- | ---- | ---- | ---- |
+| jx   | ks   | xx   | sj   |`,
 };
 
 async function handler(ctx) {

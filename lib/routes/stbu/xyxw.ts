@@ -15,6 +15,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['HyperCherry'],
     handler,
+    url: 'stbu.edu.cn/html/news/xueyuan',
 };
 
 async function handler() {

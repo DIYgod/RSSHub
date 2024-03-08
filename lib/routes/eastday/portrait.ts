@@ -24,6 +24,7 @@ export const route: Route = {
     name: '原创',
     maintainers: ['nczitzk'],
     handler,
+    url: 'www.eastday.com/',
 };
 
 async function handler() {

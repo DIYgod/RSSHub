@@ -24,6 +24,14 @@ export const route: Route = {
     name: '最新新聞',
     maintainers: ['miles170'],
     handler,
+    url: 'tw.nextapple.com/',
+    description: `| 首頁   | 焦點      | 熱門 | 娛樂          | 生活 | 女神     | 社會  |
+  | ------ | --------- | ---- | ------------- | ---- | -------- | ----- |
+  | latest | recommend | hit  | entertainment | life | gorgeous | local |
+
+  | 政治     | 國際          | 財經    | 體育   | 旅遊美食  | 3C 車市 |
+  | -------- | ------------- | ------- | ------ | --------- | ------- |
+  | politics | international | finance | sports | lifestyle | gadget  |`,
 };
 
 async function handler(ctx) {

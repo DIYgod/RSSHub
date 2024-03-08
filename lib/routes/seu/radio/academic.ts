@@ -23,6 +23,7 @@ export const route: Route = {
     name: '信息科学与工程学院学术活动',
     maintainers: ['HenryQW'],
     handler,
+    url: 'radio.seu.edu.cn/_s29/15986/list.psp',
 };
 
 async function handler() {

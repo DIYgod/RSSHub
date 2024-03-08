@@ -23,6 +23,7 @@ export const route: Route = {
     name: '标签',
     maintainers: ['StevenRCE0'],
     handler,
+    description: `分类名同上。`,
 };
 
 async function handler(ctx) {

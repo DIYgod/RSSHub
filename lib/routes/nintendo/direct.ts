@@ -27,6 +27,7 @@ export const route: Route = {
     name: 'Nintendo Direct',
     maintainers: ['HFO4'],
     handler,
+    url: 'nintendo.com/nintendo-direct/archive',
 };
 
 async function handler() {

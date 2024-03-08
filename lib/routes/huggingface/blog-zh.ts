@@ -22,6 +22,7 @@ export const route: Route = {
     name: '中文博客',
     maintainers: ['zcf0508'],
     handler,
+    url: 'huggingface.co/blog/zh',
 };
 
 async function handler() {

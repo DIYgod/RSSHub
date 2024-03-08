@@ -18,6 +18,15 @@ export const route: Route = {
     name: 'Videos by star',
     maintainers: ['nczitzk'],
     handler,
+    description: `| videos with comments (by date) | everything (by date) |
+  | ------------------------------ | -------------------- |
+  | 1                              | 2                    |
+
+  :::tip
+  See [Ranking](https://www.javlibrary.com/en/star_mostfav.php) to view stars by ranks.
+
+  See [Directory](https://www.javlibrary.com/en/star_list.php) to view all stars.
+  :::`,
 };
 
 async function handler(ctx) {

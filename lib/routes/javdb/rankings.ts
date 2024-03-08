@@ -21,6 +21,18 @@ export const route: Route = {
     name: '排行榜',
     maintainers: ['nczitzk'],
     handler,
+    url: 'javdb.com/',
+    description: `分类
+
+  | 有碼     | 無碼       | 歐美    |
+  | -------- | ---------- | ------- |
+  | censored | uncensored | western |
+
+  时间
+
+  | 日榜  | 週榜   | 月榜    |
+  | ----- | ------ | ------- |
+  | daily | weekly | monthly |`,
 };
 
 async function handler(ctx) {

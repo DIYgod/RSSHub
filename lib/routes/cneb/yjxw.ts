@@ -29,6 +29,9 @@ export const route: Route = {
     name: '应急新闻',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 全部 | 国内新闻 | 国际新闻 |
+  | ---- | -------- | -------- |
+  |      | gnxw     | gjxw     |`,
 };
 
 async function handler(ctx) {

@@ -32,6 +32,10 @@ export const route: Route = {
     name: '电子工程与信息科学系',
     maintainers: ['jasongzy'],
     handler,
+    url: 'eeis.ustc.edu.cn/',
+    description: `| 通知公告 | 新闻信息 |
+  | -------- | -------- |
+  | tzgg     | xwxx     |`,
 };
 
 async function handler(ctx) {

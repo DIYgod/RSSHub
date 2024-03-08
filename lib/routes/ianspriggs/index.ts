@@ -25,6 +25,9 @@ export const route: Route = {
     name: 'Category',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 3D PORTRAITS | CHARACTERS |
+  | ------------ | ---------- |
+  | portraits    | characters |`,
 };
 
 async function handler(ctx) {

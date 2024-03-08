@@ -27,6 +27,10 @@ export const route: Route = {
     name: '教务处通知新闻',
     maintainers: ['hang333'],
     handler,
+    url: 'www.teach.ustc.edu.cn/',
+    description: `| 信息 | 教学     | 考试 | 交流     |
+  | ---- | -------- | ---- | -------- |
+  | info | teaching | exam | exchange |`,
 };
 
 async function handler(ctx) {

@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Articles',
     maintainers: ['StevenRCE0'],
     handler,
+    url: 'penguinrandomhouse.com/articles',
 };
 
 async function handler(ctx) {

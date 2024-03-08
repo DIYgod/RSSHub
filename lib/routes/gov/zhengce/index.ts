@@ -24,6 +24,7 @@ export const route: Route = {
     name: '最新政策',
     maintainers: ['SettingDust', 'nczitzk'],
     handler,
+    url: 'www.gov.cn/zhengce/zuixin.htm',
 };
 
 async function handler(ctx) {

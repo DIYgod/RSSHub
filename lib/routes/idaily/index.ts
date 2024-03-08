@@ -10,6 +10,9 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    description: `| 简体中文 | 繁体中文 |
+  | -------- | -------- |
+  | zh-hans  | zh-hant  |`,
 };
 
 async function handler(ctx) {

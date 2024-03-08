@@ -24,6 +24,9 @@ export const route: Route = {
     name: 'Global Innovation Exchange News',
     maintainers: ['dykderrick'],
     handler,
+    description: `| Blog | In The News |
+  | ---- | ----------- |
+  | blog | inthenews   |`,
 };
 
 async function handler(ctx) {

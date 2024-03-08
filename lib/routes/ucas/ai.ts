@@ -22,6 +22,7 @@ export const route: Route = {
     name: '人工智能学院',
     maintainers: ['shengmaosu'],
     handler,
+    url: 'ai.ucas.ac.cn/index.php/zh-cn/tzgg',
 };
 
 async function handler() {

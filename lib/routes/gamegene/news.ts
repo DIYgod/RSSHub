@@ -23,6 +23,7 @@ export const route: Route = {
     name: '资讯',
     maintainers: ['lone1y-51'],
     handler,
+    url: 'news.gamegene.cn/news',
 };
 
 async function handler() {

@@ -27,6 +27,9 @@ export const route: Route = {
     name: '分类',
     maintainers: ['TonyRL'],
     handler,
+    description: `| 资讯 | 访谈    | 服务    | 游理游据 |
+  | ---- | ------- | ------- | -------- |
+  | info | talking | service | comments |`,
 };
 
 async function handler(ctx) {

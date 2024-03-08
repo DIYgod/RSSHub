@@ -22,6 +22,11 @@ export const route: Route = {
     name: '作品总榜单',
     maintainers: ['yuuow'],
     handler,
+    description: `榜单类型
+
+  | design   | article  |
+  | -------- | -------- |
+  | 作品榜单 | 文章榜单 |`,
 };
 
 async function handler(ctx) {

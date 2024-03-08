@@ -23,6 +23,13 @@ export const route: Route = {
     name: 'Topic',
     maintainers: ['nczitzk'],
     handler,
+    description: `| LATEST | POPULAR | FROM THE STORE | FOR YOU |
+  | ------ | ------- | -------------- | ------- |
+  | Latest | Popular | From the Store | For You |
+
+  :::tip
+  Click here to view [All Topics](https://hbr.org/topics)
+  :::`,
 };
 
 async function handler(ctx) {

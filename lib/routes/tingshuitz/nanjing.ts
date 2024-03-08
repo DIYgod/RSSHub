@@ -23,6 +23,7 @@ export const route: Route = {
     name: '南京市',
     maintainers: ['ocleo1'],
     handler,
+    url: 'jlwater.com/portal/10000013',
 };
 
 async function handler() {

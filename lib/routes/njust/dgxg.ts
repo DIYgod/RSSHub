@@ -28,6 +28,9 @@ export const route: Route = {
     name: '电光学院研学网',
     maintainers: ['jasongzy'],
     handler,
+    description: `| 公示通知 | 学术文化 | 就业指导 |
+  | -------- | -------- | -------- |
+  | gstz     | xswh     | jyzd     |`,
 };
 
 async function handler(ctx) {

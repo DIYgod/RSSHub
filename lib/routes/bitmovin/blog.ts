@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Blog',
     maintainers: ['elxy'],
     handler,
+    url: 'bitmovin.com/blog',
 };
 
 async function handler(ctx) {

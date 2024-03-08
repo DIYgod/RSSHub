@@ -19,6 +19,11 @@ export const route: Route = {
     name: '情报',
     maintainers: ['sanmmm DIYgod'],
     handler,
+    description: `分类
+
+  | 全部 | 手办  | 模型  |
+  | ---- | ----- | ----- |
+  | all  | hobby | model |`,
 };
 
 async function handler(ctx) {

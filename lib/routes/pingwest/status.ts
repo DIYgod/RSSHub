@@ -22,6 +22,7 @@ export const route: Route = {
     name: '实时要闻',
     maintainers: ['sanmmm'],
     handler,
+    url: 'pingwest.com/status',
 };
 
 async function handler() {

@@ -20,6 +20,9 @@ export const route: Route = {
     name: '计算机与电子信息学院 - 人工智能学院',
     maintainers: ['Shujakuinkuraudo'],
     handler,
+    description: `| 学院公告 | 学院新闻 | 学生资讯 |
+  | -------- | -------- | -------- |
+  | xygg     | xyxw     | xszx     |`,
 };
 
 async function handler(ctx) {

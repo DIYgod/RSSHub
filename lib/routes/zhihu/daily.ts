@@ -40,6 +40,7 @@ export const route: Route = {
     name: '知乎日报',
     maintainers: ['DHPO'],
     handler,
+    url: 'daily.zhihu.com/*',
 };
 
 async function handler() {

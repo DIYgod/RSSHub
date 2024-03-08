@@ -27,6 +27,7 @@ export const route: Route = {
     name: '專題策展',
     maintainers: ['nczitzk'],
     handler,
+    url: 'news.pts.org.tw/curations',
 };
 
 async function handler() {

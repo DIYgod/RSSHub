@@ -13,6 +13,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['WenryXu'],
     handler,
+    url: 'niaogebiji.com/',
 };
 
 async function handler() {

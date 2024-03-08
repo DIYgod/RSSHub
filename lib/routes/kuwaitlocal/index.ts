@@ -24,6 +24,7 @@ export const route: Route = {
     name: 'Categorised News',
     maintainers: ['TonyRL'],
     handler,
+    url: 'kuwaitlocal.com/news/latest',
 };
 
 async function handler(ctx) {

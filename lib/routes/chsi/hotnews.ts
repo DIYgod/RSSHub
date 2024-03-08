@@ -25,6 +25,7 @@ export const route: Route = {
     name: '考研热点新闻',
     maintainers: ['yanbot-team'],
     handler,
+    url: 'yz.chsi.com.cn/',
 };
 
 async function handler() {

@@ -20,6 +20,9 @@ export const route: Route = {
     name: '最新资讯',
     maintainers: ['Misaka13514'],
     handler,
+    description: `| 新闻动态 | 通知公告 | 政策法规 | 常见问题 | 资料下载 | English | 业余中继台 | 科普专栏 |
+  | -------- | -------- | -------- | -------- | -------- | ------- | ---------- | -------- |
+  | 1        | 2        | 3        | 5        | 6        | 7       | 8          | 9        |`,
 };
 
 async function handler(ctx) {

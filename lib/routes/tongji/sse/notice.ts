@@ -26,6 +26,11 @@ export const route: Route = {
     name: '软件学院通知',
     maintainers: ['sgqy'],
     handler,
+    description: `| 本科生通知 | 研究生通知 | 教工通知 | 全体通知 | 学院通知 | 学院新闻 | 学院活动 |
+  | ---------- | ---------- | -------- | -------- | -------- | -------- | -------- |
+  | bkstz      | yjstz      | jgtz     | qttz     | xytz     | xyxw     | xyhd     |
+
+  注意: \`qttz\` 与 \`xytz\` 在原网站等价.`,
 };
 
 async function handler(ctx) {

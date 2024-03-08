@@ -22,6 +22,8 @@ export const route: Route = {
     name: '研招网通知公告',
     maintainers: ['shengmaosu'],
     handler,
+    url: 'ciee.cau.edu.cn/col/col26712/index.html',
+    description: `#### 信电学院 {#zhong-guo-nong-ye-da-xue-yan-zhao-wang-tong-zhi-gong-gao-xin-dian-xue-yuan}`,
 };
 
 async function handler() {

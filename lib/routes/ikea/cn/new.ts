@@ -33,6 +33,7 @@ export const route: Route = {
     name: '中国 - 当季新品推荐',
     maintainers: ['jzhangdev'],
     handler,
+    url: 'ikea.cn/cn/zh/new/',
 };
 
 async function handler() {

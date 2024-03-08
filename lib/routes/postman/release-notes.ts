@@ -24,6 +24,7 @@ export const route: Route = {
     name: 'Release Notes',
     maintainers: ['nczitzk'],
     handler,
+    url: 'postman.com/downloads/release-notes',
 };
 
 async function handler() {

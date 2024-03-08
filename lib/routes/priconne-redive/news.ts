@@ -22,6 +22,7 @@ export const route: Route = {
     name: '日服公告',
     maintainers: ['SayaSS'],
     handler,
+    url: 'priconne-redive.jp/news',
 };
 
 async function handler() {

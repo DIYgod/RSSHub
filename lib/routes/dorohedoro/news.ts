@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'News',
     maintainers: ['nczitzk'],
     handler,
+    url: 'dorohedoro.net/news',
 };
 
 async function handler(ctx) {

@@ -32,6 +32,7 @@ export const route: Route = {
     name: '本月新作',
     maintainers: ['SunBK201'],
     handler,
+    url: 'ymgal.games/',
 };
 
 async function handler() {

@@ -26,6 +26,8 @@ export const route: Route = {
     name: 'Security Symposia',
     maintainers: ['ZeddYu'],
     handler,
+    url: 'usenix.org/conferences/all',
+    description: `Return results from 2020`,
 };
 
 async function handler() {

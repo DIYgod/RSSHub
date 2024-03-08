@@ -22,6 +22,7 @@ export const route: Route = {
     name: '招聘',
     maintainers: ['AtlanCI', 'CcccFz'],
     handler,
+    url: 'gocn.vip/',
 };
 
 async function handler() {

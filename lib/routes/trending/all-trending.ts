@@ -177,6 +177,11 @@ export const route: Route = {
     name: '关键词聚合追踪',
     maintainers: ['Jkker'],
     handler,
+    description: `追踪各大热搜榜上包含特定关键词的条目。
+
+当前收录榜单：*微博热搜*、*今日头条热搜*、*知乎热搜*、*知乎热门视频*、*知乎热门话题*。
+
+数据源: [trending-in-one](https://github.com/huqi-pr/trending-in-one)`,
 };
 
 async function handler(ctx) {

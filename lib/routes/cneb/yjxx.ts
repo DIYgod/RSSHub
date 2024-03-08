@@ -13,6 +13,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'cneb.gov.cn/yjxx',
 };
 
 async function handler(ctx) {

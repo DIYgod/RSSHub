@@ -19,6 +19,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['TonyRL'],
     handler,
+    url: 'gameapps.hk/',
 };
 
 async function handler() {

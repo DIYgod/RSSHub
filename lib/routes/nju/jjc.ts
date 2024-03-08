@@ -23,6 +23,7 @@ export const route: Route = {
     name: '基建处',
     maintainers: ['ret-1'],
     handler,
+    url: 'jjc.nju.edu.cn/main.htm',
 };
 
 async function handler() {

@@ -20,6 +20,7 @@ export const route: Route = {
     name: '校园招聘',
     maintainers: ['ningyougan'],
     handler,
+    url: 'scc.hnu.edu.cnundefined',
 };
 
 async function handler() {

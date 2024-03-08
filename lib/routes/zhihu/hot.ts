@@ -32,6 +32,9 @@ export const route: Route = {
     name: '知乎分类热榜',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 全站  | 国际  | 科学    | 汽车 | 视频   | 时尚    | 时事  | 数码    | 体育  | 校园   | 影视 |
+  | ----- | ----- | ------- | ---- | ------ | ------- | ----- | ------- | ----- | ------ | ---- |
+  | total | focus | science | car  | zvideo | fashion | depth | digital | sport | school | film |`,
 };
 
 async function handler(ctx) {

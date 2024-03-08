@@ -22,6 +22,11 @@ export const route: Route = {
     name: 'Latest News',
     maintainers: ['linbuxiao'],
     handler,
+    description: `Category
+
+  | All | Detected Cases | Investigation Reports or Recommendations | Annual Reports | CCAC's Updates |
+  | --- | -------------- | ---------------------------------------- | -------------- | -------------- |
+  | all | case           | Persuasion                               | AnnualReport   | PCANews        |`,
 };
 
 async function handler(ctx) {

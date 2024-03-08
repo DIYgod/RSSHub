@@ -15,6 +15,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['Fatpandac'],
     handler,
+    url: 'pbc.gov.cn/redianzhuanti/118742/4122386/4122510/index.html',
 };
 
 async function handler() {

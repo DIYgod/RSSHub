@@ -26,6 +26,7 @@ export const route: Route = {
     name: '通知公告',
     maintainers: ['SunBK201'],
     handler,
+    url: 'qlu.edu.cn/tzggsh/list1.htm',
 };
 
 async function handler() {

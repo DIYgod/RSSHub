@@ -23,6 +23,7 @@ export const route: Route = {
     name: '快讯',
     maintainers: ['nczitzk'],
     handler,
+    url: '0daily.com/newsflash',
 };
 
 async function handler(ctx) {

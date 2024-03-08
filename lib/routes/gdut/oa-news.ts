@@ -81,6 +81,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['Jim Kirisame'],
     handler,
+    url: 'oas.gdut.edu.cn/seeyon',
 };
 
 async function handler(ctx) {

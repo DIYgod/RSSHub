@@ -23,6 +23,7 @@ export const route: Route = {
     name: '研究生院',
     maintainers: ['ret-1'],
     handler,
+    url: 'grawww.nju.edu.cn/main.htm',
 };
 
 async function handler() {

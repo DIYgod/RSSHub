@@ -13,6 +13,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['TonyRL'],
     handler,
+    url: 'rarehistoricalphotos.com/',
 };
 
 async function handler(ctx) {

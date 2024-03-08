@@ -23,6 +23,7 @@ export const route: Route = {
     name: '首页更新',
     maintainers: ['shiningdracon'],
     handler,
+    url: 'trow.cc/',
 };
 
 async function handler() {

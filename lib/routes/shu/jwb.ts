@@ -20,6 +20,9 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    description: `| 通知通告 | 新闻 | 政策文件 |
+  | -------- | ---- | -------- |
+  | notice   | news | policy   |`,
 };
 
 async function handler(ctx) {

@@ -21,6 +21,7 @@ export const route: Route = {
     name: '搜索',
     maintainers: [],
     handler,
+    url: 'ruancan.com/',
 };
 
 async function handler(ctx) {

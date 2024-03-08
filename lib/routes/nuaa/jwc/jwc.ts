@@ -30,6 +30,9 @@ export const route: Route = {
     name: '教务处',
     maintainers: ['arcosx', 'Seiry', 'qrzbing', 'Xm798'],
     handler,
+    description: `| 通知公告 | 教学服务 | 教学建设 | 学生培养 | 教学资源 |
+  | -------- | -------- | -------- | -------- | -------- |
+  | tzgg     | jxfw     | jxjs     | xspy     | jxzy     |`,
 };
 
 async function handler(ctx) {

@@ -32,6 +32,13 @@ export const route: Route = {
     name: 'Google Fonts',
     maintainers: ['Fatpandac'],
     handler,
+    description: `| Newest | Trending | Most popular |  Name | Number of styles |
+  | :----: | :------: | :----------: | :---: | :--------------: |
+  |  date  | trending |  popularity  | alpha |       style      |
+
+  :::warning
+  This route requires API key, therefore it's only available when self-hosting, refer to the [Deploy Guide](https://docs.rsshub.app/install/#configuration-route-specific-configurations) for route-specific configurations.
+  :::`,
 };
 
 async function handler(ctx) {

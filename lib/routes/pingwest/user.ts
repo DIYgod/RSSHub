@@ -24,6 +24,15 @@ export const route: Route = {
     name: '用户',
     maintainers: ['sanmmm'],
     handler,
+    description: `内容类型
+
+  | 文章    | 动态  |
+  | ------- | ----- |
+  | article | state |
+
+  参数
+
+  -   \`fulltext\`，全文输出，例如：\`/pingwest/user/7781550877/article/fulltext\``,
 };
 
 async function handler(ctx) {

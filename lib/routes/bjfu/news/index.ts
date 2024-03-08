@@ -24,6 +24,9 @@ export const route: Route = {
     name: '绿色新闻网',
     maintainers: ['markmingjie'],
     handler,
+    description: `| 绿色要闻 | 校园动态 | 教学科研 | 党建思政 | 一周排行 |
+  | -------- | -------- | -------- | -------- | -------- |
+  | lsyw     | xydt     | jxky     | djsz     | yzph     |`,
 };
 
 async function handler(ctx) {

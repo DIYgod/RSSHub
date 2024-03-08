@@ -24,6 +24,9 @@ export const route: Route = {
     name: '零博客',
     maintainers: ['nczitzk'],
     handler,
+    description: `| muitinⒾ | aidemnⒾ | srettaⓂ | qⓅ | sucoⓋ |
+  | ------- | ------- | -------- | -- | ----- |
+  | initium | inmedia | matters  | pq | vocus |`,
 };
 
 async function handler(ctx) {

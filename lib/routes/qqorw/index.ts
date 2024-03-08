@@ -24,6 +24,9 @@ export const route: Route = {
     name: '每日早报',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 首页 | 每日早报 | 国际早报 | 生活冷知识 |
+  | ---- | -------- | -------- | ---------- |
+  |      | mrzb     | zbapp    | zbzzd      |`,
 };
 
 async function handler(ctx) {

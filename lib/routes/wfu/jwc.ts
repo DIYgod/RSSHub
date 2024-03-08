@@ -26,6 +26,7 @@ export const route: Route = {
     name: '教务处通知',
     maintainers: ['cccht'],
     handler,
+    url: 'jwc.wfu.edu.cn/',
 };
 
 async function handler() {

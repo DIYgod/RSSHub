@@ -22,6 +22,7 @@ export const route: Route = {
     name: '标签',
     maintainers: ['hoilc'],
     handler,
+    url: 'www.4gamers.com.tw/news',
 };
 
 async function handler(ctx) {

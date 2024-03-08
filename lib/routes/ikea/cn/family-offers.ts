@@ -52,6 +52,7 @@ export const route: Route = {
     name: '中国 - 会员特惠',
     maintainers: ['jzhangdev'],
     handler,
+    url: 'ikea.cn/cn/zh/offers/family-offers',
 };
 
 async function handler() {

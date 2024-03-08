@@ -27,6 +27,8 @@ export const route: Route = {
     name: '最新文章',
     maintainers: ['tpnonthealps'],
     handler,
+    url: 'caixin.com/',
+    description: `说明：此 RSS feed 会自动抓取财新网的最新文章，但不包含 FM 及视频内容。`,
 };
 
 async function handler() {

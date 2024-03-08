@@ -24,6 +24,7 @@ export const route: Route = {
     name: '每日一图',
     maintainers: ['HenryQW'],
     handler,
+    url: 'bjp.org.cn/APOD/today.shtml',
 };
 
 async function handler() {

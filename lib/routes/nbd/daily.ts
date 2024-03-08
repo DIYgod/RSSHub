@@ -18,6 +18,7 @@ export const route: Route = {
     name: '重磅原创',
     maintainers: ['yuuow'],
     handler,
+    url: 'nbd.com.cn/',
 };
 
 function handler(ctx) {

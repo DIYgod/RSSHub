@@ -26,6 +26,7 @@ export const route: Route = {
     name: '小米有品众筹',
     maintainers: ['bigfei'],
     handler,
+    url: 'xiaomiyoupin.com/',
 };
 
 async function handler() {

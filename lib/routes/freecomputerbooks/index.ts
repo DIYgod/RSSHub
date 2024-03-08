@@ -25,6 +25,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'freecomputerbooks.com/',
 };
 
 async function handler(ctx) {

@@ -21,6 +21,7 @@ export const route: Route = {
     name: '首页',
     maintainers: ['sanmmm'],
     handler,
+    url: 'storyfm.cn/',
 };
 
 async function handler() {

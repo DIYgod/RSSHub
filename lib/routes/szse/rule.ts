@@ -23,6 +23,7 @@ export const route: Route = {
     name: '最新规则',
     maintainers: ['nczitzk'],
     handler,
+    url: 'szse.cn/lawrules/rule/new',
 };
 
 async function handler() {

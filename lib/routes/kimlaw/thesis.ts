@@ -26,6 +26,7 @@ export const route: Route = {
     name: 'Thesis',
     maintainers: ['TonyRL'],
     handler,
+    url: 'kimlaw.or.kr/67',
 };
 
 async function handler() {

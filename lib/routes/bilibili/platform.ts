@@ -26,6 +26,12 @@ export const route: Route = {
     name: '会员购票务',
     maintainers: ['nightmare-mio'],
     handler,
+    url: 'show.bilibili.com/platform',
+    description: `| 类型     |
+| -------- |
+| 演出     |
+| 展览     |
+| 本地生活 |`,
 };
 
 async function handler(ctx) {

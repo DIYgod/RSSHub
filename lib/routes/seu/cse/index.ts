@@ -23,6 +23,9 @@ export const route: Route = {
     name: '计算机技术与工程学院',
     maintainers: ['LogicJake'],
     handler,
+    description: `| 学院新闻 | 通知公告 | 教务信息 | 就业信息 | 学工事务 |
+  | -------- | -------- | -------- | -------- | -------- |
+  | xyxw     | tzgg     | jwxx     | jyxx     | xgsw     |`,
 };
 
 async function handler(ctx) {

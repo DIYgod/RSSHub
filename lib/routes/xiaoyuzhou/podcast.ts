@@ -22,6 +22,7 @@ export const route: Route = {
     name: '播客',
     maintainers: ['hondajojo', 'jtsang4'],
     handler,
+    url: 'xiaoyuzhoufm.com/',
 };
 
 async function handler(ctx) {

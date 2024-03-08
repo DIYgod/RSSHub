@@ -25,6 +25,14 @@ export const route: Route = {
     name: '国家林草科技大讲堂',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 分类     | id   |
+  | -------- | ---- |
+  | 经济林   | jjl  |
+  | 林木良种 | lmlz |
+  | 林下经济 | lxjj |
+  | 生态修复 | stxf |
+  | 用材林   | ycl  |
+  | 其他     | qt   |`,
 };
 
 async function handler(ctx) {

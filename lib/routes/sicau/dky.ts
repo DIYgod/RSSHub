@@ -24,6 +24,10 @@ export const route: Route = {
     name: '动物科技学院',
     maintainers: ['nczitzk'],
     handler,
+    url: 'dky.sicau.edu.cn/',
+    description: `| 通知公告 | 学院动态 | 教学管理 | 动科大讲堂 | 就业信息 |
+  | -------- | -------- | -------- | ---------- | -------- |
+  | tzgg     | xydt     | jxgl     | dkdjt      | zpxx     |`,
 };
 
 async function handler(ctx) {

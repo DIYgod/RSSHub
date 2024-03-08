@@ -21,6 +21,7 @@ export const route: Route = {
     name: '数据科学与计算机学院动态',
     maintainers: [],
     handler,
+    url: 'cse.sysu.edu.cn/',
 };
 
 async function handler() {

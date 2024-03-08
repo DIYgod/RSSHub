@@ -22,6 +22,7 @@ export const route: Route = {
     name: '大连市',
     maintainers: ['DIYgod'],
     handler,
+    url: 'swj.dl.gov.cn/col/col4296/index.html',
 };
 
 async function handler() {

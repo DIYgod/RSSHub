@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Dev Release Changelog',
     maintainers: ['nczitzk'],
     handler,
+    url: 'support.typora.io/',
 };
 
 async function handler() {

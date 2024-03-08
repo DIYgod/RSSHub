@@ -18,6 +18,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'asiantolick.com/',
 };
 
 async function handler(ctx) {

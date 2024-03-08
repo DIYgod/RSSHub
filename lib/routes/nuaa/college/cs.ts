@@ -32,6 +32,9 @@ export const route: Route = {
     name: '计算机科学与技术学院',
     maintainers: ['LogicJake', 'Seiry', 'qrzbing', 'Xm798'],
     handler,
+    description: `| 通知公告 | 热点新闻 | 学科科研 | 教学动态 | 本科生培养 | 研究生培养 | 学生工作 |
+  | -------- | -------- | -------- | -------- | ---------- | ---------- | -------- |
+  | tzgg     | rdxw     | xkky     | jxdt     | be         | me         | xsgz     |`,
 };
 
 async function handler(ctx) {

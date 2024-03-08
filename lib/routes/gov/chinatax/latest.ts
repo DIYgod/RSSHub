@@ -22,6 +22,7 @@ export const route: Route = {
     name: '最新文件',
     maintainers: ['nczitzk', 'fuzy112'],
     handler,
+    url: 'www.chinatax.gov.cn/*',
 };
 
 async function handler() {

@@ -25,6 +25,7 @@ export const route: Route = {
     name: '继续教育学院 - 学院公告',
     maintainers: ['jialinghui'],
     handler,
+    url: 'e.ecust.edu.cn/engine2/m/38F638B77773ADD3',
 };
 
 async function handler() {

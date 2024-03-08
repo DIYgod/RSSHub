@@ -21,6 +21,9 @@ export const route: Route = {
     name: '徐州市人力资源和社会保障局',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 通知公告 | 要闻动态 | 县区动态 | 事业招聘 | 企业招聘 | 政声传递 |
+  | -------- | -------- | -------- | -------- | -------- | -------- |
+  |          | 001001   | 001002   | 001004   | 001005   | 001006   |`,
 };
 
 async function handler(ctx) {

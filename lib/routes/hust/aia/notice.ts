@@ -19,6 +19,9 @@ export const route: Route = {
     name: '人工智能和自动化学院通知',
     maintainers: ['budui'],
     handler,
+    description: `| 最新 | 党政 | 科研 | 本科生 | 研究生 | 学工思政 | 离退休 |
+  | ---- | ---- | ---- | ------ | ------ | -------- | ------ |
+  |      | dz   | ky   | bk     | yjs    | xgsz     | litui  |`,
 };
 
 async function handler(ctx) {

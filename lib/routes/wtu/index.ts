@@ -19,6 +19,9 @@ export const route: Route = {
     name: '信息门户公告',
     maintainers: ['loyio'],
     handler,
+    description: `| 公告类型 | 通知公告 | 教务信息 | 科研动态 |
+  | -------- | -------- | -------- | -------- |
+  | 参数     | 1        | 2        | 3        |`,
 };
 
 async function handler(ctx) {

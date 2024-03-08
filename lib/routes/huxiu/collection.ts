@@ -20,6 +20,7 @@ export const route: Route = {
     name: '文集',
     maintainers: ['AlexdanerZe', 'nczitzk'],
     handler,
+    description: `更多文集请参见 [文集](https://www.huxiu.com/collection)`,
 };
 
 async function handler(ctx) {

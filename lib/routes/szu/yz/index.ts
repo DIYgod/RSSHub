@@ -25,6 +25,9 @@ export const route: Route = {
     name: '研究生招生网',
     maintainers: ['NagaruZ'],
     handler,
+    description: `| 研究生 | 博士生 |
+  | ------ | ------ |
+  | 1      | 2      |`,
 };
 
 async function handler(ctx) {

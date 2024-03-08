@@ -18,6 +18,9 @@ export const route: Route = {
     name: '最新增加的音乐',
     maintainers: ['fengkx', 'xyqfer'],
     handler,
+    description: `| 华语    | 欧美    | 日韩        |
+  | ------- | ------- | ----------- |
+  | chinese | western | japankorean |`,
 };
 
 async function handler(ctx) {

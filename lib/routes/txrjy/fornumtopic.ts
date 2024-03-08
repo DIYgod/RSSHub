@@ -29,6 +29,9 @@ export const route: Route = {
     name: '论坛 频道',
     maintainers: ['Fatpandac'],
     handler,
+    description: `| 最新 500 个主题帖 | 最新 500 个回复帖 | 最新精华帖 | 最新精华帖 | 一周热帖 | 本月热帖 |
+  | :---------------: | :---------------: | :--------: | :--------: | :------: | :------: |
+  |         1         |         2         |      3     |      4     |     5    |     6    |`,
 };
 
 async function handler(ctx) {

@@ -81,6 +81,7 @@ export const route: Route = {
     name: 'Most upvoted',
     maintainers: ['Rjnishant530'],
     handler,
+    url: 'daily.dev/popular',
 };
 
 async function handler() {

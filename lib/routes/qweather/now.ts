@@ -25,6 +25,7 @@ export const route: Route = {
     name: '实时天气',
     maintainers: ['Rein-Ou'],
     handler,
+    description: `需自行注册获取 api 的 key，每小时更新一次数据`,
 };
 
 async function handler(ctx) {

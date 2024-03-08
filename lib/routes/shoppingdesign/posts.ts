@@ -24,6 +24,7 @@ export const route: Route = {
     name: '文章列表',
     maintainers: ['miles170'],
     handler,
+    url: 'www.shoppingdesign.com.tw/post',
 };
 
 async function handler() {

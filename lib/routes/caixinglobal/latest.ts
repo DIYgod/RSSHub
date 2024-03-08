@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Latest News',
     maintainers: ['TonyRL'],
     handler,
+    url: 'caixinglobal.com/news',
 };
 
 async function handler(ctx) {

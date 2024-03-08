@@ -23,6 +23,7 @@ export const route: Route = {
     name: '资讯',
     maintainers: ['XXY233'],
     handler,
+    url: 'xboxfan.com/',
 };
 
 async function handler() {

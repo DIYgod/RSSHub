@@ -21,6 +21,7 @@ export const route: Route = {
     name: 'Download',
     maintainers: ['nczitzk'],
     handler,
+    url: 'neatdownloadmanager.com/index.php',
 };
 
 async function handler(ctx) {

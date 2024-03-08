@@ -36,6 +36,10 @@ export const route: Route = {
     name: '游戏折扣',
     maintainers: ['LogicJake', 'nczitzk'],
     handler,
+    url: 'yxdzqb.com/',
+    description: `| Steam 最新折扣 | Steam 热门游戏折扣 | Steam 热门中文游戏折扣 | Steam 历史低价 | Steam 中文游戏历史低价 |
+  | -------------- | ------------------ | ---------------------- | -------------- | ---------------------- |
+  | discount       | popular            | popular\_cn            | low            | low\_cn                |`,
 };
 
 async function handler(ctx) {

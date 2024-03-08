@@ -24,6 +24,9 @@ export const route: Route = {
     name: '成果转化',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 工作动态 | 科技成果转移转化亮点工作 |
+  | -------- | ------------------------ |
+  | zh       | cgzhld                   |`,
 };
 
 async function handler(ctx) {

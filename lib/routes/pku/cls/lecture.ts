@@ -25,6 +25,7 @@ export const route: Route = {
     name: '生命科学学院近期讲座',
     maintainers: ['TPOB'],
     handler,
+    url: 'bio.pku.edu.cn/homes/Index/news_jz/7/7.html',
 };
 
 async function handler() {

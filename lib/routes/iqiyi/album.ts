@@ -24,6 +24,9 @@ export const route: Route = {
     name: '剧集',
     maintainers: ['TonyRL'],
     handler,
+    description: `:::tip
+  可抓取內容根据服务器所在地区而定
+  :::`,
 };
 
 async function handler(ctx) {

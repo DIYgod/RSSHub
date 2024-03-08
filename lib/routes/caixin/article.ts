@@ -23,6 +23,7 @@ export const route: Route = {
     name: '首页新闻',
     maintainers: ['EsuRt'],
     handler,
+    url: 'caixin.com/',
 };
 
 async function handler() {

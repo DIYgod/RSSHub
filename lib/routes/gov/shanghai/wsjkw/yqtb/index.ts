@@ -22,6 +22,7 @@ export const route: Route = {
     name: '上海卫健委 疫情通报',
     maintainers: ['zcf0508'],
     handler,
+    url: 'wsjkw.sh.gov.cn/',
 };
 
 async function handler() {

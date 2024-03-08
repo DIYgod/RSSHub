@@ -30,6 +30,7 @@ export const route: Route = {
     name: '首页指数',
     maintainers: ['CaoMeiYouRen'],
     handler,
+    url: 'gushitong.baidu.com/',
 };
 
 async function handler() {

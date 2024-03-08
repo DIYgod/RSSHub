@@ -24,6 +24,7 @@ export const route: Route = {
     name: '最热文章',
     maintainers: [],
     handler,
+    url: 'gelonghui.com/',
 };
 
 async function handler(ctx) {

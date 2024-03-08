@@ -21,6 +21,7 @@ export const route: Route = {
     name: '热门推荐',
     maintainers: ['DIYgod'],
     handler,
+    url: 'www.hpoi.net/bannerItem/list',
 };
 
 async function handler() {

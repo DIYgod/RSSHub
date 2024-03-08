@@ -22,6 +22,7 @@ export const route: Route = {
     name: '阳江市',
     maintainers: ['ciaranchen'],
     handler,
+    url: 'yjsswjt.com/zxdt_list.jsp',
 };
 
 async function handler() {

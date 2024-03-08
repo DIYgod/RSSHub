@@ -26,6 +26,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['devinmugen'],
     handler,
+    url: 'bangumi.online/',
 };
 
 async function handler() {

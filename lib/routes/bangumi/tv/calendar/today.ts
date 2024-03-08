@@ -26,6 +26,7 @@ export const route: Route = {
     name: '放送列表',
     maintainers: ['magic-akari'],
     handler,
+    url: 'bgm.tv/calendar',
 };
 
 async function handler() {

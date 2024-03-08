@@ -23,6 +23,9 @@ export const route: Route = {
     name: '信息流',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 推荐  | 最近更新 | 漏洞 / PoC 监控 | PDF |
+  | ----- | -------- | --------------- | --- |
+  | likes | index    | vul-poc         | pdf |`,
 };
 
 async function handler(ctx) {

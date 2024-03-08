@@ -28,6 +28,7 @@ export const route: Route = {
     name: '直播回看',
     maintainers: ['nczitzk'],
     handler,
+    url: 'live.kepu.net.cn/replay/index',
 };
 
 async function handler(ctx) {

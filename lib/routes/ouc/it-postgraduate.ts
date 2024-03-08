@@ -22,6 +22,7 @@ export const route: Route = {
     name: '信息科学与工程学院研究生招生通知公告',
     maintainers: ['shengmaosu'],
     handler,
+    url: 'it.ouc.edu.cn/_s381/16619/list.psp',
 };
 
 async function handler() {

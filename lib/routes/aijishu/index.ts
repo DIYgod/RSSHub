@@ -19,6 +19,11 @@ export const route: Route = {
     name: '频道、专栏、用户',
     maintainers: [],
     handler,
+    description: `| type    | 说明 |
+  | ------- | ---- |
+  | channel | 频道 |
+  | blog    | 专栏 |
+  | u       | 用户 |`,
 };
 
 async function handler(ctx) {

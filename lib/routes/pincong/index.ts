@@ -20,6 +20,9 @@ export const route: Route = {
     name: '发现',
     maintainers: ['zphw'],
     handler,
+    description: `| 最新 | 推荐      | 热门 |
+| ---- | --------- | ---- |
+| new  | recommend | hot  |`,
 };
 
 async function handler(ctx) {

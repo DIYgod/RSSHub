@@ -23,6 +23,7 @@ export const route: Route = {
     name: '游戏公告与新闻',
     maintainers: ['Astrian'],
     handler,
+    url: 'ak-conf.hypergryph.com/*',
 };
 
 async function handler() {

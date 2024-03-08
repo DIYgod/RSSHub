@@ -22,6 +22,7 @@ export const route: Route = {
     name: '首页头条',
     maintainers: ['HenryQW', 'nczitzk', 'bigfei'],
     handler,
+    url: 'thepaper.cn/',
 };
 
 async function handler(ctx) {

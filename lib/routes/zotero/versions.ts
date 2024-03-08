@@ -21,6 +21,7 @@ export const route: Route = {
     name: 'Version History',
     maintainers: ['jasongzy'],
     handler,
+    url: 'zotero.org/',
 };
 
 async function handler() {

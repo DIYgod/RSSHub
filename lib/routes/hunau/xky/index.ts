@@ -21,6 +21,10 @@ export const route: Route = {
     name: '信息与智能科学学院',
     maintainers: [],
     handler,
+    url: 'xky.hunau.edu.cn/',
+    description: `| 分类 | 通知公告   | 学院新闻 | 其他分类通知... |
+  | ---- | ---------- | -------- | --------------- |
+  | 参数 | tzgg\_8472 | xyxw     | 对应 URL        |`,
 };
 
 async function handler(ctx) {

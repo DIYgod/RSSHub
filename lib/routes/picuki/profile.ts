@@ -44,6 +44,16 @@ export const route: Route = {
     name: 'User Profile - Picuki',
     maintainers: ['hoilc', 'Rongronggg9', 'devinmugen'],
     handler,
+    description: `| functionalFlag | Video embedding                         | Fetching Instagram Stories |
+  | -------------- | --------------------------------------- | -------------------------- |
+  | 0              | off, only show video poster as an image | off                        |
+  | 1 (default)    | on                                      | off                        |
+  | 10             | on                                      | on                         |
+
+  :::warning
+  Instagram Stories do not have a reliable guid. It is possible that your RSS reader show the same story more than once.
+  Though, every Story expires after 24 hours, so it may be not so serious.
+  :::`,
 };
 
 async function handler(ctx) {

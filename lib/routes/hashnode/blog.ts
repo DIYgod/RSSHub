@@ -28,6 +28,10 @@ export const route: Route = {
     name: '用户博客',
     maintainers: ['hnrainll'],
     handler,
+    url: 'hashnode.dev/',
+    description: `:::tip
+  username 为博主用户名，而非\`xxx.hashnode.dev\`中\`xxx\`所代表的 blog 地址。
+  :::`,
 };
 
 async function handler(ctx) {

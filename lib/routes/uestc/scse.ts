@@ -39,6 +39,7 @@ export const route: Route = {
     name: '计算机科学与工程学院',
     maintainers: ['talengu', 'mobyw'],
     handler,
+    url: 'scse.uestc.edu.cn/',
 };
 
 async function handler() {

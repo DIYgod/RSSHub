@@ -25,6 +25,7 @@ export const route: Route = {
     name: 'Articles',
     maintainers: ['yuguorui'],
     handler,
+    url: 'lock.cmpxchg8b.com/articles',
 };
 
 async function handler() {

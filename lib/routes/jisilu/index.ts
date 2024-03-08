@@ -24,6 +24,24 @@ export const route: Route = {
     name: '广场',
     maintainers: ['nczitzk'],
     handler,
+    url: 'jisilu.cn/home/explore',
+    description: `分类
+
+  | 全部 | 债券 / 可转债 | 基金 | 套利 | 新股 |
+  | ---- | ------------- | ---- | ---- | ---- |
+  |      | 4             | 7    | 5    | 3    |
+
+  排序
+
+  | 最新 | 热门 | 按发表时间 |
+  | ---- | ---- | ---------- |
+  |      | hot  | add\_time  |
+
+  几天内
+
+  | 30 天 | 7 天 | 当天 |
+  | ----- | ---- | ---- |
+  | 30    | 7    | 1    |`,
 };
 
 async function handler(ctx) {

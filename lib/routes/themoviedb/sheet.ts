@@ -45,6 +45,17 @@ export const route: Route = {
     name: 'Sheet',
     maintainers: ['x2cf'],
     handler,
+    description: `When \`mediaType\` is \`tv\`, \`sheet\` should be:
+
+  | Airing Today | On TV      | Top Rated |
+  | ------------ | ---------- | --------- |
+  | airing-today | on-the-air | top-rated |
+
+  When \`mediaType\` is \`movie\`, \`sheet\` should be:
+
+  | Now Playing | Upcoming | Top Rated |
+  | ----------- | -------- | --------- |
+  | now-playing | upcoming | top-rated |`,
 };
 
 async function handler(ctx) {

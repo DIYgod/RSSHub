@@ -30,6 +30,7 @@ export const route: Route = {
     name: 'Author',
     maintainers: ['TonyRL'],
     handler,
+    url: '91porn.com/index.php',
 };
 
 async function handler(ctx) {

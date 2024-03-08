@@ -21,6 +21,18 @@ export const route: Route = {
     name: '搜索',
     maintainers: ['nczitzk'],
     handler,
+    url: 'javdb.com/',
+    description: `过滤
+
+  | 全部 | 占位 | 可播放   | 單體作品 | 演員  | 片商  | 導演     | 系列   | 番號 | 可下載   | 字幕  | 預覽圖  |
+  | ---- | ---- | -------- | -------- | ----- | ----- | -------- | ------ | ---- | -------- | ----- | ------- |
+  |      | none | playable | single   | actor | maker | director | series | code | download | cnsub | preview |
+
+  排序
+
+  | 按相关度排序 | 按发布时间排序 |
+  | ------------ | -------------- |
+  | 0            | 1              |`,
 };
 
 async function handler(ctx) {

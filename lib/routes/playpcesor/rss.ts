@@ -12,6 +12,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['cnkmmk'],
     handler,
+    url: 'playpcesor.com/',
 };
 
 async function handler() {

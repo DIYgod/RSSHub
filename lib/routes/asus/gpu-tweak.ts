@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'GPU Tweak',
     maintainers: ['TonyRL'],
     handler,
+    url: 'asus.com/campaign/GPU-Tweak-III/*',
 };
 
 async function handler() {

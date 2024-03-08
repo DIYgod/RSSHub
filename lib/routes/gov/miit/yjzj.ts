@@ -25,6 +25,7 @@ export const route: Route = {
     name: '意见征集',
     maintainers: ['Fatpandac'],
     handler,
+    url: 'miit.gov.cn/gzcy/yjzj/index.html',
 };
 
 async function handler() {

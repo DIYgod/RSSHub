@@ -88,6 +88,20 @@ export const route: Route = {
     name: 'UP 主动态',
     maintainers: ['DIYgod', 'zytomorrow', 'CaoMeiYouRen', 'JimenezLi'],
     handler,
+    description: `| 键           | 含义                              | 接受的值       | 默认值 |
+  | ------------ | --------------------------------- | -------------- | ------ |
+  | showEmoji    | 显示或隐藏表情图片                | 0/1/true/false | false  |
+  | disableEmbed | 关闭内嵌视频                      | 0/1/true/false | false  |
+  | useAvid      | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |
+  | directLink   | 使用内容直链                      | 0/1/true/false | false  |
+
+  用例：\`/bilibili/user/dynamic/2267573/showEmoji=1&disableEmbed=1&useAvid=1\`
+
+  :::tip[动态的专栏显示全文]
+  动态的专栏显示全文请使用通用参数里的 \`mode=fulltext\`
+
+  举例: bilibili 专栏全文输出 /bilibili/user/dynamic/2267573/?mode=fulltext
+  :::`,
 };
 
 async function handler(ctx) {

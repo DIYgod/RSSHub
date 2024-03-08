@@ -24,6 +24,7 @@ export const route: Route = {
     name: '天天问',
     maintainers: ['WenryXu'],
     handler,
+    url: 'wen.woshipm.com/',
 };
 
 async function handler() {

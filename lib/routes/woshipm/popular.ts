@@ -30,6 +30,10 @@ export const route: Route = {
     name: '热门文章',
     maintainers: ['WenryXu'],
     handler,
+    url: 'woshipm.com/',
+    description: `| 日榜  | 周榜   | 月榜    |
+  | ----- | ------ | ------- |
+  | daily | weekly | monthly |`,
 };
 
 async function handler(ctx) {

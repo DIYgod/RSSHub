@@ -19,6 +19,9 @@ export const route: Route = {
     name: 'Blog',
     maintainers: ['StevenRCE0', 'nczitzk'],
     handler,
+    description: `| All | Announcements | Events | Safety & Alignment | Community | Product | Culture & Careers   | Milestones | Research |
+  | --- | ------------- | ------ | ------------------ | --------- | ------- | ------------------- | ---------- | -------- |
+  |     | announcements | events | safety-alignment   | community | product | culture-and-careers | milestones | research |`,
 };
 
 async function handler(ctx) {

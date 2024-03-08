@@ -22,6 +22,7 @@ export const route: Route = {
     name: '帖子',
     maintainers: ['zengxs'],
     handler,
+    description: `帖子网址如果为 \`https://bbs.saraba1st.com/2b/thread-1842868-1-1.html\` 那么帖子 id 就是 \`1789863\`。`,
 };
 
 async function handler(ctx) {

@@ -22,6 +22,9 @@ export const route: Route = {
     name: '专题',
     maintainers: ['idealclover', 'xyqfer'],
     handler,
+    description: `| 新闻 | 国内  | 国际  | 社会    | 法治 | 文娱 | 科技 | 生活 | 教育 | 每周质量报告 | 新闻 1+1  |
+  | ---- | ----- | ----- | ------- | ---- | ---- | ---- | ---- | ---- | ------------ | --------- |
+  | news | china | world | society | law  | ent  | tech | life | edu  | mzzlbg       | xinwen1j1 |`,
 };
 
 async function handler(ctx) {

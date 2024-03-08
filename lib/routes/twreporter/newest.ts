@@ -24,6 +24,7 @@ export const route: Route = {
     name: '最新',
     maintainers: ['emdoe'],
     handler,
+    url: 'twreporter.org/',
 };
 
 async function handler() {

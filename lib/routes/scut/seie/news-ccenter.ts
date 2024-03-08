@@ -23,6 +23,10 @@ export const route: Route = {
     name: '电子与信息学院 - 新闻速递',
     maintainers: ['auto-bot-ty'],
     handler,
+    url: 'www2.scut.edu.cn/ee/16285/list.htm',
+    description: `:::warning
+由于学院官网对非大陆 IP 的访问存在限制，需自行部署。
+:::`,
 };
 
 async function handler() {

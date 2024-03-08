@@ -23,6 +23,7 @@ export const route: Route = {
     name: '教育部考试中心日本语能力测试重要通知',
     maintainers: ['nczitzk'],
     handler,
+    url: 'jlpt.neea.cn/',
 };
 
 async function handler() {

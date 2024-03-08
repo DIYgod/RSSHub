@@ -29,6 +29,7 @@ export const route: Route = {
     name: 'News Web Easy',
     maintainers: ['Andiedie'],
     handler,
+    url: 'www3.nhk.or.jp/news/easy/',
 };
 
 async function handler(ctx) {

@@ -23,6 +23,7 @@ export const route: Route = {
     name: '专题展示 - 文章',
     maintainers: ['7Wate', 'a180285'],
     handler,
+    url: 'www.foreverblog.cn/feeds.html',
 };
 
 async function handler() {

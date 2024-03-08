@@ -23,6 +23,7 @@ export const route: Route = {
     name: '智源社区 - 活动',
     maintainers: ['TonyRL'],
     handler,
+    url: 'hub.baai.ac.cn/events',
 };
 
 async function handler(ctx) {

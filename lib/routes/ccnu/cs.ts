@@ -22,6 +22,7 @@ export const route: Route = {
     name: '计算机学院',
     maintainers: ['shengmaosu'],
     handler,
+    url: 'cs.ccnu.edu.cn/xwzx/tzgg.htm',
 };
 
 async function handler() {

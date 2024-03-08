@@ -24,6 +24,9 @@ export const route: Route = {
     name: '測試報告',
     maintainers: ['TonyRL'],
     handler,
+    description: `| 相機及鏡頭 | 手機平板 | 試車報告 |
+  | ---------- | -------- | -------- |
+  | cameras    | phones   | cars     |`,
 };
 
 async function handler(ctx) {

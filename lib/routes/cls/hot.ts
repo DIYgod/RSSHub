@@ -30,6 +30,7 @@ export const route: Route = {
     name: '热门文章排行榜',
     maintainers: ['5upernova-heng', 'nczitzk'],
     handler,
+    url: 'cls.cn/',
 };
 
 async function handler(ctx) {

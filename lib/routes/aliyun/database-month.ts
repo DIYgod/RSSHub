@@ -22,6 +22,7 @@ export const route: Route = {
     name: '数据库内核月报',
     maintainers: ['junbaor'],
     handler,
+    url: 'mysql.taobao.org/monthly',
 };
 
 async function handler() {

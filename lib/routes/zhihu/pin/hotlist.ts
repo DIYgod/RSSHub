@@ -21,6 +21,7 @@ export const route: Route = {
     name: '知乎想法热榜',
     maintainers: ['xyqfer'],
     handler,
+    url: 'www.zhihu.com/zhihu/bookstore/newest',
 };
 
 async function handler() {

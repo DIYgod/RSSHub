@@ -22,6 +22,9 @@ export const route: Route = {
     name: '博客',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 留学申请   | 找工求职 | 生活攻略  | 投资理财 | 签证移民 | 时政要闻 |
+  | ---------- | -------- | --------- | -------- | -------- | -------- |
+  | studyinusa | career   | lifestyle | invest   | visa     | news     |`,
 };
 
 async function handler(ctx) {

@@ -25,6 +25,7 @@ export const route: Route = {
     name: 'UK - New Product Release',
     maintainers: ['HenryQW'],
     handler,
+    url: 'ikea.com/gb/en/new/new-products/',
 };
 
 async function handler() {

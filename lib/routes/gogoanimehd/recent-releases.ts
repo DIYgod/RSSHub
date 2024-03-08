@@ -21,6 +21,7 @@ export const route: Route = {
     name: 'Recent Releases',
     maintainers: ['user4302'],
     handler,
+    url: 'developer.anitaku.to/',
 };
 
 async function handler() {

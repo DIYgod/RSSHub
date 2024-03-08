@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Daily Papers',
     maintainers: ['zeyugao'],
     handler,
+    url: 'huggingface.co/papers',
 };
 
 async function handler() {

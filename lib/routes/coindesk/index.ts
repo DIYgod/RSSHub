@@ -22,6 +22,7 @@ export const route: Route = {
     name: '新闻周刊',
     maintainers: ['jameshih'],
     handler,
+    url: 'coindesk.com/',
 };
 
 async function handler(ctx) {

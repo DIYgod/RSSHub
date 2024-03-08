@@ -27,6 +27,7 @@ export const route: Route = {
     name: 'News',
     maintainers: ['denis-ya'],
     handler,
+    url: 'fisher.spb.ru/news',
 };
 
 async function handler() {

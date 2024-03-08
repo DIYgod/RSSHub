@@ -19,6 +19,11 @@ export const route: Route = {
     name: 'Changelog',
     maintainers: ['tigercubden'],
     handler,
+    description: `Language
+
+  | Simplified Chinese | Traditional Chinese | English |
+  | ------------------ | ------------------- | ------- |
+  | cn                 | tw                  | en      |`,
 };
 
 async function handler(ctx) {

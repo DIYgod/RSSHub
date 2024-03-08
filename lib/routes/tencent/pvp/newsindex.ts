@@ -53,6 +53,9 @@ export const route: Route = {
     name: '新闻中心',
     maintainers: ['Jeason0228', 'HenryQW'],
     handler,
+    description: `| 全部 | 热门 | 新闻 | 公告 | 活动 | 赛事 | 优化 |
+  | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+  | all  | rm   | xw   | gg   | hd   | ss   | yh   |`,
 };
 
 async function handler(ctx) {

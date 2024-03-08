@@ -24,6 +24,10 @@ export const route: Route = {
     name: '信息科学与工程学院团学工作',
     maintainers: ['3401797899'],
     handler,
+    url: 'it.ouc.edu.cn/',
+    description: `| 新闻动态 | 学院活动 | 奖助工作获奖情况 |
+  | -------- | -------- | ---------------- |
+  | xwdt     | tzgg     | 21758            |`,
 };
 
 async function handler(ctx) {

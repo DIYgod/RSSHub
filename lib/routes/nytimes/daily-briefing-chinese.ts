@@ -29,6 +29,8 @@ export const route: Route = {
     name: '新闻简报',
     maintainers: ['yueyericardo', 'nczitzk'],
     handler,
+    url: 'nytimes.com/',
+    description: `网站地址：[https://www.nytimes.com/zh-hans/series/daily-briefing-chinese](https://www.nytimes.com/zh-hans/series/daily-briefing-chinese)`,
 };
 
 async function handler() {

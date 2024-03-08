@@ -21,6 +21,13 @@ export const route: Route = {
     name: 'Top',
     maintainers: ['TonyRL'],
     handler,
+    description: `| Top Replurks | Top Favorites | Top Responded |
+  | ------------ | ------------- | ------------- |
+  | topReplurks  | topFavorites  | topResponded  |
+
+  | English | 中文（繁體） |
+  | ------- | ------------ |
+  | en      | zh           |`,
 };
 
 async function handler(ctx) {

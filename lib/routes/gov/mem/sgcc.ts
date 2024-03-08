@@ -24,6 +24,9 @@ export const route: Route = {
     name: '事故及灾害查处',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 挂牌督办 | 调查报告   |
+  | -------- | ---------- |
+  | sggpdbqk | tbzdsgdcbg |`,
 };
 
 async function handler(ctx) {

@@ -21,6 +21,7 @@ export const route: Route = {
     name: '专栏 - 创事记',
     maintainers: ['xapool'],
     handler,
+    url: 'tech.sina.com.cn/chuangshiji',
 };
 
 async function handler(ctx) {

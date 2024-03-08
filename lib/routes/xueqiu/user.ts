@@ -27,6 +27,9 @@ export const route: Route = {
     name: '用户动态',
     maintainers: ['imlonghao'],
     handler,
+    description: `| 原发布 | 长文 | 问答 | 热门 | 交易 |
+  | ------ | ---- | ---- | ---- | ---- |
+  | 0      | 2    | 4    | 9    | 11   |`,
 };
 
 async function handler(ctx) {

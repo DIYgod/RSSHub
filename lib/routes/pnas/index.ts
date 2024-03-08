@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'pnas.org/*topicPath',
 };
 
 async function handler(ctx) {

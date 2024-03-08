@@ -27,6 +27,9 @@ export const route: Route = {
     name: '财务处',
     maintainers: ['MilkShakeYoung', 'jasongzy'],
     handler,
+    description: `| 通知公告 | 办事流程 |
+  | -------- | -------- |
+  | tzgg     | bslc     |`,
 };
 
 async function handler(ctx) {

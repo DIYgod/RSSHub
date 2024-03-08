@@ -18,6 +18,9 @@ export const route: Route = {
     name: 'Image New Build',
     maintainers: ['HenryQW'],
     handler,
+    description: `:::warning
+  The owner of the official image fills in the library, for example: [https://rsshub.app/dockerhub/build/library/mysql](https://rsshub.app/dockerhub/build/library/mysql)
+  :::`,
 };
 
 async function handler(ctx) {

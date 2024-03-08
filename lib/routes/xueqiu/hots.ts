@@ -23,6 +23,7 @@ export const route: Route = {
     name: '热帖',
     maintainers: ['hillerliao'],
     handler,
+    url: 'xueqiu.com/',
 };
 
 async function handler() {

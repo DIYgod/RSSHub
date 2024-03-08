@@ -43,6 +43,9 @@ export const route: Route = {
     name: '教务处通知公告',
     maintainers: ['SeanChao'],
     handler,
+    description: `| 新闻中心 | 通知通告 | 教学运行  | 注册学务 | 研究办 | 教改办 | 综合办 | 语言文字 | 工会与支部 | 通识教育 |
+  | -------- | -------- | --------- | -------- | ------ | ------ | ------ | -------- | ---------- | -------- |
+  | news     | notice   | operation | affairs  | yjb    | jgb    | zhb    | language | party      | ge       |`,
 };
 
 async function handler(ctx) {

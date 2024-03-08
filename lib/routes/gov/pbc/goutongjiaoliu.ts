@@ -24,6 +24,7 @@ export const route: Route = {
     name: '沟通交流',
     maintainers: ['nczitzk'],
     handler,
+    url: 'pbc.gov.cn/goutongjiaoliu/113456/113469/index.html',
 };
 
 async function handler() {

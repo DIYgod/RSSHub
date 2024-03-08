@@ -17,6 +17,9 @@ export const route: Route = {
     name: '频道书影音',
     maintainers: ['umm233'],
     handler,
+    description: `| 电影 | 电视剧 | 图书 | 唱片 |
+  | ---- | ------ | ---- | ---- |
+  | 0    | 1      | 2    | 3    |`,
 };
 
 async function handler(ctx) {

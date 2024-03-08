@@ -23,6 +23,7 @@ export const route: Route = {
     name: '研招网通知公告',
     maintainers: ['real-jiakai'],
     handler,
+    url: 'yz.jou.edu.cn/index/zxgg.htm',
 };
 
 async function handler(ctx) {

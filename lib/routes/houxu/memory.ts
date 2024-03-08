@@ -26,6 +26,7 @@ export const route: Route = {
     name: '跟踪',
     maintainers: ['nczitzk'],
     handler,
+    url: 'houxu.app/memory',
 };
 
 async function handler(ctx) {

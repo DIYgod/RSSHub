@@ -25,6 +25,7 @@ export const route: Route = {
     name: '精彩推荐',
     maintainers: ['nczitzk'],
     handler,
+    url: 'yxdown.com/',
 };
 
 async function handler() {

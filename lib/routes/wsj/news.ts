@@ -23,6 +23,19 @@ export const route: Route = {
     name: 'News',
     maintainers: ['oppilate'],
     handler,
+    description: `en\_us
+
+  | World | U.S. | Politics | Economy | Business | Tech       | Markets | Opinion | Books & Arts | Real Estate | Life & Work | Sytle               | Sports |
+  | ----- | ---- | -------- | ------- | -------- | ---------- | ------- | ------- | ------------ | ----------- | ----------- | ------------------- | ------ |
+  | world | us   | politics | economy | business | technology | markets | opinion | books-arts   | realestate  | life-work   | style-entertainment | sports |
+
+  zh-cn / zh-tw
+
+  | 国际  | 中国  | 金融市场 | 经济    | 商业     | 科技       | 派        | 专栏与观点 |
+  | ----- | ----- | -------- | ------- | -------- | ---------- | --------- | ---------- |
+  | world | china | markets  | economy | business | technology | life-arts | opinion    |
+
+  Provide full article RSS for WSJ topics.`,
 };
 
 async function handler(ctx) {

@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'ITSC 信息中心',
     maintainers: ['ret-1'],
     handler,
+    url: 'itsc.nju.edu.cn/tzgg/list.htm',
 };
 
 async function handler() {

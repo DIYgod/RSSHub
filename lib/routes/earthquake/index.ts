@@ -23,6 +23,8 @@ export const route: Route = {
     name: '中国地震局',
     maintainers: ['LogicJake'],
     handler,
+    url: 'www.cea.gov.cn/cea/xwzx/zqsd/index.html',
+    description: `可通过全局过滤参数订阅您感兴趣的地区.`,
 };
 
 async function handler(ctx) {

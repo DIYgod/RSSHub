@@ -13,6 +13,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: '8kcosplay.com/',
 };
 
 async function handler(ctx) {

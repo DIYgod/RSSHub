@@ -24,6 +24,7 @@ export const route: Route = {
     name: 'Price Drop',
     maintainers: ['HenryQW'],
     handler,
+    url: 'apps.apple.com/',
 };
 
 async function handler(ctx) {

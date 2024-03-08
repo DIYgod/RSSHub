@@ -26,6 +26,7 @@ export const route: Route = {
     name: '教务处通知公告',
     maintainers: ['lty96117'],
     handler,
+    url: 'jwc.hit.edu.cn/*',
 };
 
 async function handler() {

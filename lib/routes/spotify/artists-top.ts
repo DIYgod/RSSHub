@@ -21,6 +21,7 @@ export const route: Route = {
     name: 'Personal Top Artists',
     maintainers: ['outloudvi'],
     handler,
+    url: 'open.spotify.com/',
 };
 
 async function handler() {

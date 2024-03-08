@@ -21,6 +21,9 @@ export const route: Route = {
     name: '文章列表',
     maintainers: ['moke8'],
     handler,
+    description: `| 全部 | 研究员专栏 | 规划师专栏 | 观察家专栏 |
+  | ---- | ---------- | ---------- | ---------- |
+  | all  | 220        | 627        | 329        |`,
 };
 
 async function handler(ctx) {

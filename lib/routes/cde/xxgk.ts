@@ -66,6 +66,9 @@ export const route: Route = {
     name: '信息公开',
     maintainers: ['TonyRL'],
     handler,
+    description: `|   优先审评公示   |  突破性治疗公示  | 临床试验默示许可 |
+  | :--------------: | :--------------: | :--------------: |
+  | priorityApproval | breakthroughCure |     cliniCal     |`,
 };
 
 async function handler(ctx) {

@@ -23,6 +23,7 @@ export const route: Route = {
     name: '停气检修通知',
     maintainers: ['Mai19930513'],
     handler,
+    url: 'cqgas.cn/',
 };
 
 async function handler() {

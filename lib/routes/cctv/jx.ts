@@ -23,6 +23,7 @@ export const route: Route = {
     name: '央视网图片《镜象》',
     maintainers: ['nczitzk'],
     handler,
+    url: 'photo.cctv.com/jx',
 };
 
 async function handler(ctx) {

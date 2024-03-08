@@ -23,6 +23,7 @@ export const route: Route = {
     name: '每周一推 - 中国政治学研究中心',
     maintainers: ['vhxubo'],
     handler,
+    url: 'www.rccp.pku.edu.cn/',
 };
 
 async function handler() {

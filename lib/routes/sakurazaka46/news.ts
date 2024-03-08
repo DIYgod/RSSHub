@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Sakurazaka46 News 櫻坂 46 新闻',
     maintainers: ['nczitzk'],
     handler,
+    url: 'sakurazaka46.com/s/s46/news/list',
 };
 
 async function handler(ctx) {

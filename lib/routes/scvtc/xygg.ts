@@ -23,6 +23,7 @@ export const route: Route = {
     name: '学院公告',
     maintainers: ['nczitzk'],
     handler,
+    url: 'scvtc.edu.cn/ggfw1/xygg.htm',
 };
 
 async function handler() {

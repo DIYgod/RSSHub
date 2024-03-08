@@ -20,6 +20,9 @@ export const route: Route = {
     name: '游研社 - 分类文章',
     maintainers: ['LightStrawberry'],
     handler,
+    description: `| 推游      | 游戏史  | 大事件 | 文化    | 趣闻 | 经典回顾 |
+  | --------- | ------- | ------ | ------- | ---- | -------- |
+  | recommend | history | big    | culture | news | retro    |`,
 };
 
 async function handler(ctx) {

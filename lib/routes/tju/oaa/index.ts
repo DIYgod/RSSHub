@@ -39,6 +39,9 @@ export const route: Route = {
     name: 'The Office of Academic Affairs',
     maintainers: ['AmosChenYQ', 'SuperPung'],
     handler,
+    description: `| News | Notification |
+  | :--: | :----------: |
+  | news | notification |`,
 };
 
 async function handler(ctx) {

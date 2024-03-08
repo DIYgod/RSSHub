@@ -10,6 +10,25 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,
+    url: 'javdb.com/',
+    description: `分类
+
+  | 有碼     | 無碼       | 歐美    |
+  | -------- | ---------- | ------- |
+  | censored | uncensored | western |
+
+  排序
+
+  | 发布日期排序 | 磁鏈更新排序 |
+  | ------------ | ------------ |
+  | 1            | 2            |
+
+  过滤
+
+  | 全部 | 可下载 | 含字幕 | 含短評 |
+  | ---- | ------ | ------ | ------ |
+  | 0    | 1      | 2      | 3      |`,
+    url: 'javdb.com/',
 };
 
 async function handler(ctx) {

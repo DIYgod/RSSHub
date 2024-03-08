@@ -24,6 +24,9 @@ export const route: Route = {
     name: '研究生院',
     maintainers: ['yanbot-team'],
     handler,
+    description: `| 硕士统考招生 | 硕士推免招生 |
+  | ------------ | ------------ |
+  | 1793         | sstmzs       |`,
 };
 
 async function handler(ctx) {

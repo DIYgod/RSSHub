@@ -30,6 +30,8 @@ export const route: Route = {
     name: 'Oxford Academic',
     maintainers: [],
     handler,
+    url: 'academic.oup.com/',
+    description: `#### Journal {#oxford-university-press-oxford-academic-journal}`,
 };
 
 async function handler(ctx) {

@@ -26,6 +26,12 @@ export const route: Route = {
     name: 'News',
     maintainers: ['HenryQW'],
     handler,
+    url: 'nytimes.com/',
+    description: `By extracting the full text of articles, we provide a better reading experience (full text articles) over the official one.
+
+  | Default to Chinese | Chinese-English | English | Chinese-English (Traditional Chinese) | Traditional Chinese |
+  | ------------------ | --------------- | ------- | ------------------------------------- | ------------------- |
+  | (empty)            | dual            | en      | dual-traditionalchinese               | traditionalchinese  |`,
 };
 
 async function handler(ctx) {

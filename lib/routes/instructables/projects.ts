@@ -21,6 +21,10 @@ export const route: Route = {
     name: 'Projects',
     maintainers: ['wolfg1969'],
     handler,
+    url: 'instructables.com/projects',
+    description: `| All | Circuits | Workshop | Craft | Cooking | Living | Outside | Teachers |
+  | --- | -------- | -------- | ----- | ------- | ------ | ------- | -------- |
+  |     | circuits | workshop | craft | cooking | living | outside | teachers |`,
 };
 
 async function handler(ctx) {

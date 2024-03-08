@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Military - Military News 军事 - 军事新闻',
     maintainers: ['jiaaoMario'],
     handler,
+    url: 'military.china.com/news',
 };
 
 async function handler() {

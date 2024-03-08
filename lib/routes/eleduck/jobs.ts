@@ -22,6 +22,7 @@ export const route: Route = {
     name: '工作机会',
     maintainers: ['sfyumi'],
     handler,
+    url: 'eleduck.com/categories/5',
 };
 
 async function handler() {

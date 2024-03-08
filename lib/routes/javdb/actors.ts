@@ -21,6 +21,12 @@ export const route: Route = {
     name: '演員',
     maintainers: ['nczitzk'],
     handler,
+    url: 'javdb.com/',
+    description: `| 全部 | 可播放 | 單體作品 | 可下載 | 含字幕 |
+  | ---- | ------ | -------- | ------ | ------ |
+  |      | p      | s        | d      | c      |
+
+  所有演员编号参见 [演員庫](https://javdb.com/actors)`,
 };
 
 async function handler(ctx) {

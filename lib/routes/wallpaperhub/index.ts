@@ -16,6 +16,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,
+    url: 'wallpaperhub.app/wallpaperhub',
 };
 
 async function handler() {

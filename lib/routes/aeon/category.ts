@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Categories',
     maintainers: ['emdoe'],
     handler,
+    description: `Supported categories: Philosophy, Science, Psychology, Society, and Culture.`,
 };
 
 async function handler(ctx) {

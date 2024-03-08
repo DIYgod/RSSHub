@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Anonymous',
     maintainers: ['TonyRL'],
     handler,
+    url: 'plurk.com/anonymous',
 };
 
 async function handler(ctx) {

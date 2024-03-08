@@ -21,6 +21,9 @@ export const route: Route = {
     name: 'News',
     maintainers: ['TonyRL'],
     handler,
+    description: `| 中文 | English |
+  | ---- | ------- |
+  |      | en      |`,
 };
 
 async function handler(ctx) {

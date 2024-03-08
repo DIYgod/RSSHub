@@ -32,6 +32,7 @@ export const route: Route = {
     name: 'Trending',
     maintainers: ['DIYgod', 'jameschensmith'],
     handler,
+    url: 'github.com/trending',
 };
 
 async function handler(ctx) {

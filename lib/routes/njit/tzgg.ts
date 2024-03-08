@@ -26,6 +26,7 @@ export const route: Route = {
     name: '南京工程学院通知公告',
     maintainers: ['zefengdaguo'],
     handler,
+    url: 'www.njit.edu.cn/',
 };
 
 async function handler() {

@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Matrix',
     maintainers: ['feigaoxyz'],
     handler,
+    url: 'sspai.com/matrix',
 };
 
 async function handler() {

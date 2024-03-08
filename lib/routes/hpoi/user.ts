@@ -28,6 +28,9 @@ export const route: Route = {
     name: '用户动态',
     maintainers: ['DIYgod', 'luyuhuang'],
     handler,
+    description: `| 想买 | 预定     | 已入 | 关注 | 有过   |
+  | ---- | -------- | ---- | ---- | ------ |
+  | want | preorder | buy  | care | resell |`,
 };
 
 async function handler(ctx) {

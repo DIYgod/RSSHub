@@ -25,6 +25,7 @@ export const route: Route = {
     name: '今日辟谣',
     maintainers: ['Fatpandac'],
     handler,
+    url: 'piyao.org.cn/jrpy/index.htm',
 };
 
 async function handler() {

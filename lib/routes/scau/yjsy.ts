@@ -22,6 +22,7 @@ export const route: Route = {
     name: '研究生院通知',
     maintainers: ['Chunssu'],
     handler,
+    url: 'yjsy.scau.edu.cn/208/list.htm',
 };
 
 async function handler() {

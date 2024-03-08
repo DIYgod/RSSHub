@@ -35,6 +35,13 @@ export const route: Route = {
     name: 'Finance News 财经 - 财经新闻',
     maintainers: ['KingJem'],
     handler,
+    description: `| 推荐    | TMT | 金融    | 地产   | 消费    | 医药  | 酒业 | IPO 观察 |
+  | ------- | --- | ------- | ------ | ------- | ----- | ---- | -------- |
+  | tuijian | TMT | jinrong | dichan | xiaofei | yiyao | wine | IPO      |
+
+  > Note: The default news num is \`30\`.
+
+  > 注意：默认新闻条数是 \`30\`。`,
 };
 
 async function handler(ctx) {

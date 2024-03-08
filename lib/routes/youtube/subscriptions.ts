@@ -25,6 +25,7 @@ export const route: Route = {
     name: 'Subscriptions',
     maintainers: ['TonyRL'],
     handler,
+    url: 'www.youtube.com/feed/subscriptions',
 };
 
 async function handler(ctx) {

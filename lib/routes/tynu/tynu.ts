@@ -14,6 +14,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['2PoL'],
     handler,
+    url: 'tynu.edu.cn/index/tzgg.htm',
 };
 
 async function handler() {

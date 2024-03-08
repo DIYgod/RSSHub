@@ -21,6 +21,7 @@ export const route: Route = {
     name: 'Shortcuts Gallery',
     maintainers: ['Andiedie'],
     handler,
+    url: 'shortcuts.sspai.com/*',
 };
 
 async function handler() {

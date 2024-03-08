@@ -24,6 +24,27 @@ export const route: Route = {
     name: 'Category',
     maintainers: ['nczitzk'],
     handler,
+    description: `| Latest News | PC | Playstation | Nintendo | Xbox | Moblie |
+  | ----------- | -- | ----------- | -------- | ---- | ------ |
+  | latest-news | pc | playstation | nintendo | xbox | moblie |
+
+  Or
+
+  | GENERAL          | GENERAL EN         | MOBILE          | MOBILE EN         |
+  | ---------------- | ------------------ | --------------- | ----------------- |
+  | category/general | category/generalen | category/mobile | category/mobileen |
+
+  | NINTENDO          | NINTENDO EN         | PC          | PC EN         |
+  | ----------------- | ------------------- | ----------- | ------------- |
+  | category/nintendo | category/nintendoen | category/pc | category/pcen |
+
+  | PLAYSTATION          | PLAYSTATION EN         | REVIEWS          |
+  | -------------------- | ---------------------- | ---------------- |
+  | category/playstation | category/playstationen | category/reviews |
+
+  | XBOX          | XBOX EN         |
+  | ------------- | --------------- |
+  | category/xbox | category/xboxen |`,
 };
 
 async function handler(ctx) {

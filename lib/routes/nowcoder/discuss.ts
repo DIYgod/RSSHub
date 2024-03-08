@@ -23,6 +23,9 @@ export const route: Route = {
     name: '讨论区',
     maintainers: ['LogicJake'],
     handler,
+    description: `| 最新回复 | 最新发表 | 最新 | 精华 |
+  | -------- | -------- | ---- | ---- |
+  | 0        | 3        | 1    | 4    |`,
 };
 
 async function handler(ctx) {

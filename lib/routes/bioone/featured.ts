@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Featured articles',
     maintainers: ['nczitzk'],
     handler,
+    url: 'bioone.org/',
 };
 
 async function handler(ctx) {

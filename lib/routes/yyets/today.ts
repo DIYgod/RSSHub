@@ -21,6 +21,7 @@ export const route: Route = {
     name: '今日播出',
     maintainers: ['bao1991213'],
     handler,
+    url: 'yysub.net/tv/schedule',
 };
 
 async function handler() {

@@ -21,6 +21,7 @@ export const route: Route = {
     name: '首页帖子',
     maintainers: ['wxsimon'],
     handler,
+    url: 'xiaote.com/',
 };
 
 async function handler() {

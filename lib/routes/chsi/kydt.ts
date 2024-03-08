@@ -26,6 +26,7 @@ export const route: Route = {
     name: '考研动态',
     maintainers: ['SunBK201'],
     handler,
+    url: 'yz.chsi.com.cn/kyzx/kydt',
 };
 
 async function handler() {

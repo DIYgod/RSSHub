@@ -24,6 +24,13 @@ export const route: Route = {
     name: '直播',
     maintainers: ['nczitzk'],
     handler,
+    description: `如果订阅 [新闻和报纸摘要](http://www.radio.cn/pc-portal/sanji/zhibo_2.html?name=1395528)，其 URL 为 \`http://www.radio.cn/pc-portal/sanji/zhibo_2.html?name=1395528\`，可以得到 \`name\` 为 \`1395528\`
+
+  所以对应路由为 [\`/radio/zhibo/1395528\`](https://rsshub.app/radio/zhibo/1395528)
+
+  :::tip
+  查看更多电台直播节目，可前往 [电台直播](http://www.radio.cn/pc-portal/erji/radioStation.html)
+  :::`,
 };
 
 async function handler(ctx) {

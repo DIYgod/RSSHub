@@ -26,6 +26,9 @@ export const route: Route = {
     name: 'Game Store - Review',
     maintainers: ['TonyRL'],
     handler,
+    description: `| 中文 | English | 한국어 | Español | 日本語 | ไทย | Tiếng Việt |
+  | ---- | ------- | ------ | ------- | ------ | --- | ---------- |
+  |      | en      | ko     | es      | ja     | th  | vi         |`,
 };
 
 async function handler(ctx) {

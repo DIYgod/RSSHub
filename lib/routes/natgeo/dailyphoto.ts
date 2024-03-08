@@ -29,6 +29,7 @@ export const route: Route = {
     name: '每日一图',
     maintainers: ['LogicJake', 'OrangeEd1t', 'TonyRL'],
     handler,
+    url: 'nationalgeographic.com/photo-of-the-day/*',
 };
 
 async function handler() {

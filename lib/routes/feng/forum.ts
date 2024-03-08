@@ -27,6 +27,9 @@ export const route: Route = {
     name: '社区',
     maintainers: ['TonyRL'],
     handler,
+    description: `| 最新回复 | 最新发布 | 热门 | 精华    |
+  | -------- | -------- | ---- | ------- |
+  | newest   | all      | hot  | essence |`,
 };
 
 async function handler(ctx) {

@@ -17,6 +17,9 @@ export const route: Route = {
     name: '会员购新品上架',
     maintainers: ['DIYgod'],
     handler,
+    description: `| 全部 | 手办 | 魔力赏 | 周边 | 游戏 |
+  | ---- | ---- | ------ | ---- | ---- |
+  | 0    | 1    | 7      | 3    | 6    |`,
 };
 
 async function handler(ctx) {

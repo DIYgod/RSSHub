@@ -29,6 +29,11 @@ export const route: Route = {
     name: 'News and current affairs 时事新闻',
     maintainers: ['jiaaoMario'],
     handler,
+    description: `Category of news
+
+  | China News | International News | Social News | Breaking News |
+  | ---------- | ------------------ | ----------- | ------------- |
+  | domestic   | international      | social      | news100       |`,
 };
 
 async function handler(ctx) {

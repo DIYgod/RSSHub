@@ -21,6 +21,7 @@ export const route: Route = {
     name: '自动化所',
     maintainers: ['shengmaosu'],
     handler,
+    url: 'www.ia.cas.cn/yjsjy/zs/sszs',
 };
 
 async function handler() {

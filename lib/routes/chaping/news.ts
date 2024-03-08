@@ -31,6 +31,16 @@ export const route: Route = {
     name: '资讯',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 编号 | 分类       |
+  | ---- | ---------- |
+  | 15   | 直播       |
+  | 3    | 科技新鲜事 |
+  | 7    | 互联网槽点 |
+  | 5    | 趣味科技   |
+  | 6    | DEBUG TIME |
+  | 1    | 游戏       |
+  | 8    | 视频       |
+  | 9    | 公里每小时 |`,
 };
 
 async function handler(ctx) {

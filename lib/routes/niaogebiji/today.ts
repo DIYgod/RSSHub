@@ -22,6 +22,7 @@ export const route: Route = {
     name: '今日事',
     maintainers: ['KotoriK'],
     handler,
+    url: 'niaogebiji.com/',
 };
 
 async function handler() {

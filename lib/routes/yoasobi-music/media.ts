@@ -26,6 +26,7 @@ export const route: Route = {
     name: 'Media',
     maintainers: ['Kiotlin'],
     handler,
+    url: 'www.yoasobi-music.jp/',
 };
 
 async function handler() {

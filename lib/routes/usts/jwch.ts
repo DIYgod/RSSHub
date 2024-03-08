@@ -23,6 +23,9 @@ export const route: Route = {
     name: '教务处',
     maintainers: [],
     handler,
+    description: `| 类型 | 教务动态 | 公告在线 | 选课通知 |
+  | ---- | -------- | -------- | -------- |
+  |      | jwdt     | ggzx     | xktz     |`,
 };
 
 async function handler(ctx) {

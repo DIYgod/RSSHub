@@ -22,6 +22,7 @@ export const route: Route = {
     name: '每日新闻',
     maintainers: ['AtlanCI', 'CcccFz'],
     handler,
+    url: 'gocn.vip/',
 };
 
 async function handler() {

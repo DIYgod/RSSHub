@@ -25,6 +25,10 @@ export const route: Route = {
     name: '排行榜',
     maintainers: ['moke8'],
     handler,
+    url: 'qianzhan.com/analyst',
+    description: `| 周排行 | 月排行 |
+  | ------ | ------ |
+  | week   | month  |`,
 };
 
 async function handler(ctx) {

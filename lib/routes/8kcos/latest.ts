@@ -26,6 +26,7 @@ export const route: Route = {
     name: '最新',
     maintainers: ['KotoriK'],
     handler,
+    url: '8kcosplay.com/',
 };
 
 async function handler(ctx) {

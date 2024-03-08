@@ -13,6 +13,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['zhenhappy'],
     handler,
+    url: 'ahhhhfs.com/',
 };
 
 async function handler(ctx) {

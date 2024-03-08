@@ -24,6 +24,13 @@ export const route: Route = {
     name: '动作分享',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 动作库最新更新 | 动作库最多赞 | 动作库新动作 | 动作库最近赞 |
+  | -------------- | ------------ | ------------ | ------------ |
+  | Recent         | Recommended  | NewActions   | RecentLiked  |
+
+  | 子程序      | 扩展热键  | 文本指令     |
+  | ----------- | --------- | ------------ |
+  | SubPrograms | PowerKeys | TextCommands |`,
 };
 
 async function handler(ctx) {

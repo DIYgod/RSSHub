@@ -22,6 +22,7 @@ export const route: Route = {
     name: '首页',
     maintainers: ['qnloft'],
     handler,
+    url: 'cn-healthcare.com/',
 };
 
 async function handler() {

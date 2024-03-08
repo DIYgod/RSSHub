@@ -21,6 +21,9 @@ export const route: Route = {
     name: '分类',
     maintainers: ['TonyRL'],
     handler,
+    description: `| 最新线报 | 实测活动 | 优惠券 |
+  | -------- | -------- | ------ |
+  | 1        | 2        | 3      |`,
 };
 
 async function handler(ctx) {

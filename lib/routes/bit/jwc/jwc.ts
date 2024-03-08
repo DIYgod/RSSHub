@@ -23,6 +23,7 @@ export const route: Route = {
     name: '教务处通知',
     maintainers: ['sinofp'],
     handler,
+    url: 'jwc.bit.edu.cn/tzgg',
 };
 
 async function handler() {

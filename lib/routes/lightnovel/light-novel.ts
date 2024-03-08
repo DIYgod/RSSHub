@@ -14,6 +14,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['nightmare-mio'],
     handler,
+    url: 'lightNovel.us/',
 };
 
 async function handler(ctx) {

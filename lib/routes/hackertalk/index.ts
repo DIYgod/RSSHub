@@ -13,6 +13,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['hyoban'],
     handler,
+    url: 'hackertalk.net/',
 };
 
 async function handler(ctx) {

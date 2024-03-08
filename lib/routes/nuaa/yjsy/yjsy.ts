@@ -29,6 +29,9 @@ export const route: Route = {
     name: '研究生院',
     maintainers: ['junfengP', 'Seiry', 'Xm798'],
     handler,
+    description: `| 通知公告 | 新闻动态 | 学术信息 | 师生风采 |
+  | -------- | -------- | -------- | -------- |
+  | tzgg     | xwdt     | xsxx     | ssfc     |`,
 };
 
 async function handler(ctx) {

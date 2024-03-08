@@ -22,6 +22,7 @@ export const route: Route = {
     name: '校医院',
     maintainers: ['ret-1'],
     handler,
+    url: 'hospital.nju.edu.cn/ggtz/index.html',
 };
 
 async function handler() {

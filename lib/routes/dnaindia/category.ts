@@ -25,6 +25,20 @@ export const route: Route = {
     name: 'News',
     maintainers: ['Rjnishant530'],
     handler,
+    description: `Topics:
+
+  | DNA verified |
+  | ------------ |
+  | dna-verified |
+
+  :::tip[Topic]
+  The URL of the form \`https://www.dnaindia.com/topic/dna-verified\` demonstrates the utilization of the subdomain \`topic\`
+  :::`,
+    description: `Categories:
+
+  | Headlines | Explainer | India | Entertainment | Sports | Viral | Lifestyle | Education | Business | World |
+  | --------- | --------- | ----- | ------------- | ------ | ----- | --------- | --------- | -------- | ----- |
+  | headlines | explainer | india | entertainment | sports | viral | lifestyle | education | business | world |`,
 };
 
 async function handler(ctx) {

@@ -23,6 +23,7 @@ export const route: Route = {
     name: '财新周刊',
     maintainers: ['TonyRL'],
     handler,
+    url: 'weekly.caixin.com/',
 };
 
 async function handler(ctx) {

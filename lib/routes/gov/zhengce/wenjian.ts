@@ -25,6 +25,7 @@ export const route: Route = {
     name: '最新文件',
     maintainers: ['ciaranchen'],
     handler,
+    url: 'www.gov.cn/',
 };
 
 async function handler(ctx) {

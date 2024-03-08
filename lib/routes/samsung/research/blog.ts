@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Research Blog',
     maintainers: ['nczitzk'],
     handler,
+    url: 'research.samsung.com/blog',
 };
 
 async function handler() {

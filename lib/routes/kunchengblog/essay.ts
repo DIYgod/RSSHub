@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Essay',
     maintainers: ['nczitzk'],
     handler,
+    url: 'kunchengblog.com/essay',
 };
 
 async function handler(ctx) {

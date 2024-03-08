@@ -26,6 +26,9 @@ export const route: Route = {
     name: '教务处通知',
     maintainers: ['KiraKiseki'],
     handler,
+    description: `| 学生专栏 | 教师专栏 |
+  | -------- | -------- |
+  | student  | teacher  |`,
 };
 
 async function handler(ctx) {

@@ -37,6 +37,9 @@ export const route: Route = {
     name: '新闻中心',
     maintainers: ['Derekmini'],
     handler,
+    description: `| 学校要闻 | 综合新闻 | 媒体聚焦 |
+  | -------- | -------- | -------- |
+  | xxyw     | zhxw     | mtjj     |`,
 };
 
 async function handler(ctx) {

@@ -23,6 +23,18 @@ export const route: Route = {
     name: '文章',
     maintainers: ['nczitzk'],
     handler,
+    url: 'consumer.org.hk/',
+    description: `分类
+
+  | 测试及调查 | 生活资讯 | 投诉实录  | 议题评论 |
+  | ---------- | -------- | --------- | -------- |
+  | test       | life     | complaint | topic    |
+
+  语言
+
+  | 简体中文 | 繁体中文 |
+  | -------- | -------- |
+  | sc       | tc       |`,
 };
 
 async function handler(ctx) {

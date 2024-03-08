@@ -24,6 +24,7 @@ export const route: Route = {
     name: '通知公告',
     maintainers: ['Yuk-0v0'],
     handler,
+    url: 'news.ahjzu.edu.cn/20/list.htm',
 };
 
 async function handler() {

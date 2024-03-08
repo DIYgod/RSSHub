@@ -23,6 +23,7 @@ export const route: Route = {
     name: '首页资讯（中国）',
     maintainers: ['NeverBehave'],
     handler,
+    url: 'nintendoswitch.com.cn/',
 };
 
 async function handler() {

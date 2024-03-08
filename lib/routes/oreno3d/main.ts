@@ -55,6 +55,9 @@ export const route: Route = {
     name: 'Author Search',
     maintainers: ['xueli_sherryli'],
     handler,
+    description: `| favorites | hot | latest | popularity |
+  | --------- | --- | ------ | ---------- |
+  | favorites | hot | latest | popularity |`,
 };
 
 async function handler(ctx) {

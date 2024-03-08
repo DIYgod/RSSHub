@@ -24,6 +24,9 @@ export const route: Route = {
     name: 'Feeds',
     maintainers: ['miles170'],
     handler,
+    description: `| 新聞 | AI       | Cloud | DevOps | 資安     |
+  | ---- | -------- | ----- | ------ | -------- |
+  | news | big-data | cloud | devops | security |`,
 };
 
 async function handler(ctx) {

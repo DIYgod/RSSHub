@@ -23,6 +23,10 @@ export const route: Route = {
     name: '首页',
     maintainers: ['nczitzk'],
     handler,
+    url: 'ngocn2.org/',
+    description: `| 所有文章 | 早报        | 热点     |
+  | -------- | ----------- | -------- |
+  | article  | daily-brief | trending |`,
 };
 
 async function handler(ctx) {

@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Latest Article',
     maintainers: ['TonyRL'],
     handler,
+    url: 'ainvest.com/news',
 };
 
 async function handler(ctx) {

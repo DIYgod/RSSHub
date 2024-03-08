@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Firefox Monitor',
     maintainers: ['TonyRL'],
     handler,
+    url: 'monitor.firefox.com/',
 };
 
 async function handler() {

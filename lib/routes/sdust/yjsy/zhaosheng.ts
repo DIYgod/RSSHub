@@ -20,6 +20,15 @@ export const route: Route = {
     name: '研究生招生网',
     maintainers: ['nczitzk'],
     handler,
+    description: `栏目
+
+  | 招生简章 | 专业目录 | 往届录取 | 管理规定 | 资料下载 |
+  | -------- | -------- | -------- | -------- | -------- |
+  | zsjz     | zyml     | wjlq     | glgd     | zlxz     |
+
+  | 通知公告 | 博士招生 | 硕士招生 | 推免生招生 | 招生宣传 |
+  | -------- | -------- | -------- | ---------- | -------- |
+  | tzgg     | bszs     | sszs     | tms        | zsxc     |`,
 };
 
 async function handler(ctx) {

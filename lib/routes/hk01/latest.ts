@@ -22,6 +22,7 @@ export const route: Route = {
     name: '即時',
     maintainers: ['5upernova-heng'],
     handler,
+    url: 'hk01.com/latest',
 };
 
 async function handler(ctx) {

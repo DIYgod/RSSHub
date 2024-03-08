@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Telegram Blog',
     maintainers: ['fengkx'],
     handler,
+    url: 'telegram.org/blog',
 };
 
 async function handler() {

@@ -27,6 +27,7 @@ export const route: Route = {
     name: '新闻',
     maintainers: ['wushijishan'],
     handler,
+    url: 'diershoubing.com/',
 };
 
 async function handler(ctx) {

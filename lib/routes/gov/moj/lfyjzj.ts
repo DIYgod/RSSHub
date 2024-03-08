@@ -26,6 +26,7 @@ export const route: Route = {
     name: '立法意见征集',
     maintainers: ['la3rence'],
     handler,
+    url: 'www.moj.gov.cn/lfyjzj/lflfyjzj/*',
 };
 
 async function handler() {

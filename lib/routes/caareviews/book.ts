@@ -20,6 +20,7 @@ export const route: Route = {
     name: 'Book Reviews',
     maintainers: ['Fatpandac'],
     handler,
+    url: 'caareviews.org/reviews/book',
 };
 
 async function handler(ctx) {

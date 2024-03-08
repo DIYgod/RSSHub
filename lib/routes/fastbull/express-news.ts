@@ -22,6 +22,7 @@ export const route: Route = {
     name: '快讯',
     maintainers: ['nczitzk'],
     handler,
+    url: 'fastbull.cn/express-news',
 };
 
 async function handler() {

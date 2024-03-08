@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Software Alternatives',
     maintainers: ['JimenezLi'],
     handler,
+    description: `> routeParms can be copied from original site URL, example: \`/alternativeto/software/cpp/license=opensource&platform=windows\``,
 };
 
 async function handler(ctx) {

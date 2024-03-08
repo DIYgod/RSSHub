@@ -19,6 +19,9 @@ export const route: Route = {
     name: '分类',
     maintainers: ['OdinZhang'],
     handler,
+    description: `| 每周一书 | 使用技巧 | 图书推荐 | 新闻速递 | 精选短文 |
+  | -------- | -------- | -------- | -------- | -------- |
+  | weekly   | skills   | books    | news     | essay    |`,
 };
 
 async function handler(ctx) {

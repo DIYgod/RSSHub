@@ -21,6 +21,9 @@ export const route: Route = {
     name: 'Collection',
     maintainers: ['TonyRL'],
     handler,
+    description: `:::warning
+  This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
+  :::`,
 };
 
 async function handler(ctx) {

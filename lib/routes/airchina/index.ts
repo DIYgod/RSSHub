@@ -24,6 +24,7 @@ export const route: Route = {
     name: '服务公告',
     maintainers: ['LandonLi'],
     handler,
+    url: 'www.airchina.com.cn/',
 };
 
 async function handler(ctx) {

@@ -39,6 +39,10 @@ export const route: Route = {
     name: '分类',
     maintainers: ['yuxinliu-alex'],
     handler,
+    url: 'chinaventure.com.cn/',
+    description: `| 推荐 | 商业深度 | 资本市场 | 5G | 健康 | 教育 | 地产 | 金融 | 硬科技 | 新消费 |
+  | ---- | -------- | -------- | -- | ---- | ---- | ---- | ---- | ------ | ------ |
+  |      | 78       | 80       | 83 | 111  | 110  | 112  | 113  | 114    | 116    |`,
 };
 
 async function handler(ctx) {

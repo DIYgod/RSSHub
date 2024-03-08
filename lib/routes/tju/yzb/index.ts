@@ -35,6 +35,9 @@ export const route: Route = {
     name: 'Admission Office of Graduate',
     maintainers: ['SuperPung'],
     handler,
+    description: `| School-level Notice | Master | Doctor | On-the-job Degree |
+  | :-----------------: | :----: | :----: | :---------------: |
+  |        notice       | master | doctor |        job        |`,
 };
 
 async function handler(ctx) {

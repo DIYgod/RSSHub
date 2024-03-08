@@ -29,6 +29,7 @@ export const route: Route = {
     name: 'DevPress 官方社区',
     maintainers: ['TonyRL'],
     handler,
+    url: 'community.modelscope.cn/',
 };
 
 async function handler(ctx) {

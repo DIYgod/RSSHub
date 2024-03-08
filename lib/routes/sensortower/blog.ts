@@ -29,6 +29,10 @@ export const route: Route = {
     name: 'Blog',
     maintainers: ['nczitzk'],
     handler,
+    url: 'sensortower.com/blog',
+    description: `| English | Chinese | Japanese | Korean |
+  | ------- | ------- | -------- | ------ |
+  |         | zh-CN   | ja       | ko     |`,
 };
 
 async function handler(ctx) {

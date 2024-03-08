@@ -29,6 +29,9 @@ export const route: Route = {
     name: '学生就业指导服务中心',
     maintainers: ['DylanXie123'],
     handler,
+    description: `| xwrd     | tzgg     | zpxx     | sxxx     | cyxx     |
+  | -------- | -------- | -------- | -------- | -------- |
+  | 新闻热点 | 通知公告 | 招聘信息 | 实习信息 | 创业信息 |`,
 };
 
 async function handler(ctx) {

@@ -11,6 +11,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['77taibai'],
     handler,
+    url: 'v2rayshare.com/',
 };
 
 async function handler() {

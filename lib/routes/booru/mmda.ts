@@ -19,6 +19,12 @@ export const route: Route = {
     name: 'MMDArchive 标签查询',
     maintainers: ['N78Wy'],
     handler,
+    description: `For example:
+
+  -   默认查询 (什么 tag 都不加)：\`/booru/mmda/tags\`
+  -   默认查询单个 tag：\`/booru/mmda/tags/full_body\`
+  -   默认查询多个 tag：\`/booru/mmda/tags/full_body%20blue_eyes\`
+  -   默认查询根据作者查询：\`/booru/mmda/tags/user:xxxx\``,
 };
 
 async function handler(ctx) {

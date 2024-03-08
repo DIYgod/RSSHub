@@ -22,6 +22,7 @@ export const route: Route = {
     name: '采购与招标管理部',
     maintainers: ['sparkcyf'],
     handler,
+    url: 'biddingoffice.sustech.edu.cn/',
 };
 
 async function handler() {

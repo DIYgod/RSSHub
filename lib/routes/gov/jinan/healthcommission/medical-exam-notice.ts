@@ -23,6 +23,7 @@ export const route: Route = {
     name: '获取国家医师资格考试通知',
     maintainers: ['tzjyxb'],
     handler,
+    url: 'jnmhc.jinan.gov.cn/*',
 };
 
 async function handler() {

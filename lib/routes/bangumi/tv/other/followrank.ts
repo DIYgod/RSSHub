@@ -21,6 +21,7 @@ export const route: Route = {
     name: '成员关注动画榜',
     maintainers: ['honue'],
     handler,
+    url: 'bgm.tv/anime',
 };
 
 async function handler() {

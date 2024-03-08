@@ -25,6 +25,15 @@ export const route: Route = {
     name: '搜索',
     maintainers: ['falling'],
     handler,
+    description: `:::tip
+  将 1lou.me/ 后的内容作为参数传入到 path 即可
+
+  [www.1lou.me/search - 繁花.htm](http://www.1lou.me/search-繁花.htm) --> /1lou/search - 繁花.htm
+
+  [www.1lou.me/forum-1.htm](http://www.1lou.me/forum-1.htm) --> /1lou/forum-1.htm
+
+  [www.1lou.me/](http://www.1lou.me/) --> /1lou/
+  :::`,
 };
 
 async function handler(ctx) {

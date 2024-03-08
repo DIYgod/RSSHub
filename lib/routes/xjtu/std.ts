@@ -26,6 +26,9 @@ export const route: Route = {
     name: '科技在线',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 通知公告 | 重要通知 | 项目申报 | 成果申报 | 信息快讯 |
+  | -------- | -------- | -------- | -------- | -------- |
+  |          | zytz     | xmsb     | cgsb     | xxkx     |`,
 };
 
 async function handler(ctx) {

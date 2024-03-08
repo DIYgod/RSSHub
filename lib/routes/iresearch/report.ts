@@ -51,6 +51,7 @@ export const route: Route = {
     name: '产业研究报告',
     maintainers: ['brilon', 'Fatpandac'],
     handler,
+    url: 'www.iresearch.com.cn/report.shtml',
 };
 
 async function handler(ctx) {

@@ -24,6 +24,9 @@ export const route: Route = {
     name: 'Briefing Room',
     maintainers: ['nczitzk'],
     handler,
+    description: `| All | Blog | Legislation | Presidential Actions | Press Briefings | Speeches and Remarks | Statements and Releases |
+  | --- | ---- | ----------- | -------------------- | --------------- | -------------------- | ----------------------- |
+  |     | blog | legislation | presidential-actions | press-briefings | speeches-remarks     | statements-releases     |`,
 };
 
 async function handler(ctx) {

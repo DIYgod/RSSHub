@@ -24,6 +24,9 @@ export const route: Route = {
     name: '信息学院通知',
     maintainers: ['wzc-blog'],
     handler,
+    description: `| 学院新闻 | 科研动态 | 本科生培养 | 研究生培养 |
+  | -------- | -------- | ---------- | ---------- |
+  | xyxw     | kydt     | pydt       | pydt2      |`,
 };
 
 async function handler(ctx) {

@@ -25,6 +25,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['ylc395'],
     handler,
+    url: 'nmc.cn/publish/alarm.html',
 };
 
 async function handler(ctx) {

@@ -26,6 +26,10 @@ export const route: Route = {
     name: '新聞',
     maintainers: ['nczitzk'],
     handler,
+    description: `类型
+
+  | newslist | r18list |
+  | -------- | ------- |`,
 };
 
 async function handler(ctx) {

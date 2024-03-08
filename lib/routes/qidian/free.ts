@@ -23,6 +23,7 @@ export const route: Route = {
     name: '限时免费',
     maintainers: ['LogicJake'],
     handler,
+    url: 'www.qidian.com/free',
 };
 
 async function handler(ctx) {

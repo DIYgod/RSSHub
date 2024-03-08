@@ -13,6 +13,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['monnerHenster'],
     handler,
+    url: 'a9vg.com/list/news',
 };
 
 async function handler() {

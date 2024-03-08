@@ -20,6 +20,7 @@ export const route: Route = {
     name: '用户帖子',
     maintainers: ['igxlin', 'nczitzk'],
     handler,
+    description: `用户 ID 可以通过打开用户的主页后查看地址栏的 \`un\` 字段来获取。`,
 };
 
 async function handler(ctx) {

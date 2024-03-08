@@ -31,6 +31,9 @@ export const route: Route = {
     name: 'CloudFlareYes',
     maintainers: ['nczitzk'],
     handler,
+    description: `| v4 | v6 |
+  | -- | -- |
+  |    | v6 |`,
 };
 
 async function handler(ctx) {

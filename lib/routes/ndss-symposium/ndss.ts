@@ -24,6 +24,8 @@ export const route: Route = {
     name: 'Accepted papers',
     maintainers: ['ZeddYu'],
     handler,
+    url: 'ndss-symposium.org/',
+    description: `Return results from 2020`,
 };
 
 async function handler() {

@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Podcasts',
     maintainers: ['nczitzk'],
     handler,
+    url: 'supchina.com/podcasts',
 };
 
 async function handler(ctx) {

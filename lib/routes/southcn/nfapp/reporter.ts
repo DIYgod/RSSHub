@@ -26,6 +26,7 @@ export const route: Route = {
     name: '南方 +（按作者）',
     maintainers: ['TimWu007'],
     handler,
+    description: `作者的 UUID 只可通过 \`static.nfapp.southcn.com\` 下的文章页面获取。点击文章下方的作者介绍，进入该作者的个人主页，即可从 url 中获取。`,
 };
 
 async function handler(ctx) {

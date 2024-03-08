@@ -23,6 +23,7 @@ export const route: Route = {
     name: '首页',
     maintainers: ['DIYgod', 'HenryQW', 'JimenezLi'],
     handler,
+    url: 'www.jianshu.com/',
 };
 
 async function handler() {

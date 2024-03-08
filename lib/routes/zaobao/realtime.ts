@@ -18,6 +18,9 @@ export const route: Route = {
     name: '即时新闻',
     maintainers: ['shunf4'],
     handler,
+    description: `| 中国  | 新加坡    | 国际  | 财经     |
+  | ----- | --------- | ----- | -------- |
+  | china | singapore | world | zfinance |`,
 };
 
 async function handler(ctx) {

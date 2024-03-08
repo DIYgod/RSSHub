@@ -30,6 +30,8 @@ export const route: Route = {
     name: 'News',
     maintainers: ['Vegann'],
     handler,
+    url: 'wiadomosci.onet.pl/',
+    description: `This route provides a better reading experience (full text articles) over the official one for \`https://wiadomosci.onet.pl\`.`,
 };
 
 async function handler() {

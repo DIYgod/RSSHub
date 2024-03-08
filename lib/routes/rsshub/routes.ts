@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'New routes',
     maintainers: ['DIYgod'],
     handler,
+    url: 'docs.rsshub.app/*',
 };
 
 async function handler(ctx) {

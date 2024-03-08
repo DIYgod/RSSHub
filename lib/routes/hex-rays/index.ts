@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Hex-Rays News',
     maintainers: ['hellodword ', 'TonyRL'],
     handler,
+    url: 'hex-rays.com/',
 };
 
 async function handler() {

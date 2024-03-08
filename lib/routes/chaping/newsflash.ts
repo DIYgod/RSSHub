@@ -23,6 +23,7 @@ export const route: Route = {
     name: '快讯',
     maintainers: ['Fatpandac'],
     handler,
+    url: 'chaping.cn/newsflash',
 };
 
 async function handler() {

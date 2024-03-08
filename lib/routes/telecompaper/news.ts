@@ -27,6 +27,17 @@ export const route: Route = {
     name: 'News',
     maintainers: ['nczitzk'],
     handler,
+    description: `Category
+
+  | WIRELESS | BROADBAND | VIDEO     | GENERAL | IT | INDUSTRY RESOURCES |
+  | -------- | --------- | --------- | ------- | -- | ------------------ |
+  | mobile   | internet  | boardcast | general | it | industry-resources |
+
+  :::tip
+  If \`country\` or \`type\` includes empty space, use \`-\` instead. For example, \`United States\` needs to be replaced with \`United-States\`, \`White paper\` needs to be replaced with \`White-paper\`
+
+  Filters in [INDUSTRY RESOURCES](https://www.telecompaper.com/industry-resources) only provides \`Content Type\` which corresponds to \`type\`. \`year\` and \`country\` are not supported.
+  :::`,
 };
 
 async function handler(ctx) {

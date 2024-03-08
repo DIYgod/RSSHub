@@ -28,6 +28,37 @@ export const route: Route = {
     name: 'Category/Topic/Author',
     maintainers: ['LyleLee', 'HenryQW', 'proletarius101', 'black-desk', 'nczitzk'],
     handler,
+    description: `-   \`:category\`:
+
+      | World | Business | Legal | Markets | Breakingviews | Technology | Graphics |
+      | ----- | -------- | ----- | ------- | ------------- | ---------- | -------- |
+      | world | business | legal | markets | breakingviews | technology | graphics |
+
+  -   \`world/:topic\`:
+
+      | All | Africa | Americas | Asia Pacific | China | Europe | India | Middle East | United Kingdom | United States | The Great Reboot | Reuters Next |
+      | --- | ------ | -------- | ------------ | ----- | ------ | ----- | ----------- | -------------- | ------------- | ---------------- | ------------ |
+      |     | africa | americas | asia-pacific | china | europe | india | middle-east | uk             | us            | the-great-reboot | reuters-next |
+
+  -   \`business/:topic\`:
+
+      | All | Aerospace & Defense | Autos & Transportation | Energy | Environment | Finance | Healthcare & Pharmaceuticals | Media & Telecom | Retail & Consumer | Sustainable Business | Charged | Future of Health | Future of Money | Take Five | Reuters Impact |
+      | --- | ------------------- | ---------------------- | ------ | ----------- | ------- | ---------------------------- | --------------- | ----------------- | -------------------- | ------- | ---------------- | --------------- | --------- | -------------- |
+      |     | aerospace-defense   | autos-transportation   | energy | environment | finance | healthcare-pharmaceuticals   | media-telecom   | retail-consumer   | sustainable-business | charged | future-of-health | future-of-money | take-five | reuters-impact |
+
+  -   \`legal/:topic\`:
+
+      | All | Government | Legal Industry | Litigation | Transactional |
+      | --- | ---------- | -------------- | ---------- | ------------- |
+      |     | government | legalindustry  | litigation | transactional |
+
+  -   \`authors/:topic\`:
+
+      | Default | Jonathan Landay | any other authors |
+      | ------- | --------------- | ----------------- |
+      | reuters | jonathan-landay | their name in URL |
+
+  More could be found in the URL of the category/topic page.`,
 };
 
 async function handler(ctx) {

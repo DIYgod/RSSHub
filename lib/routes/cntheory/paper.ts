@@ -25,6 +25,7 @@ export const route: Route = {
     name: '学习时报',
     maintainers: ['nczitzk'],
     handler,
+    description: `如订阅 **第 A1 版：国内大局**，路由为 [\`/cntheory/paper/国内大局\`](https://rsshub.app/cntheory/paper/国内大局)。`,
 };
 
 async function handler(ctx) {

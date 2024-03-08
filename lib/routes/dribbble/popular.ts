@@ -21,6 +21,7 @@ export const route: Route = {
     name: 'Popular',
     maintainers: ['DIYgod', 'loganrockmore'],
     handler,
+    url: 'dribbble.com/',
 };
 
 async function handler(ctx) {

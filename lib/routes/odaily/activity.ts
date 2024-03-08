@@ -25,6 +25,7 @@ export const route: Route = {
     name: '活动',
     maintainers: ['nczitzk'],
     handler,
+    url: '0daily.com/activityPage',
 };
 
 async function handler(ctx) {

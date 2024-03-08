@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Changelog',
     maintainers: ['cnzgray'],
     handler,
+    url: 'support.typora.io/',
 };
 
 async function handler() {

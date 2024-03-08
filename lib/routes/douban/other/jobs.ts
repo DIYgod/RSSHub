@@ -26,6 +26,9 @@ export const route: Route = {
     name: '豆瓣招聘',
     maintainers: ['Fatpandac'],
     handler,
+    description: `| 社会招聘 | 校园招聘 | 实习生招聘 |
+  | :------: | :------: | :--------: |
+  |  social  |  campus  |   intern   |`,
 };
 
 async function handler(ctx) {

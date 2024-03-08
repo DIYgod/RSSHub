@@ -25,6 +25,19 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,
+    description: `| id           | 分类 |
+  | ------------ | ---- |
+  | global       | 最新 |
+  | shares       | 股市 |
+  | bonds        | 债市 |
+  | commodities  | 商品 |
+  | forex        | 外汇 |
+  | enterprise   | 公司 |
+  | asset-manage | 资管 |
+  | tmt          | 科技 |
+  | estate       | 地产 |
+  | car          | 汽车 |
+  | medicine     | 医药 |`,
 };
 
 async function handler(ctx) {

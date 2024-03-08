@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Hotlinks',
     maintainers: ['TonyRL'],
     handler,
+    url: 'plurk.com/hotlinks',
 };
 
 async function handler(ctx) {

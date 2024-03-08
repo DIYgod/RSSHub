@@ -24,6 +24,7 @@ export const route: Route = {
     name: '头条',
     maintainers: ['nczitzk'],
     handler,
+    url: 'guancha.cn/GuanChaZheTouTiao',
 };
 
 async function handler() {

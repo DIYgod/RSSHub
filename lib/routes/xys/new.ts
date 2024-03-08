@@ -29,6 +29,7 @@ export const route: Route = {
     name: '新到资料',
     maintainers: ['wenzhenl'],
     handler,
+    url: 'xys.org/',
 };
 
 async function handler(ctx) {

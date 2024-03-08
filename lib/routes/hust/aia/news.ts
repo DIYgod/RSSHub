@@ -22,6 +22,7 @@ export const route: Route = {
     name: '人工智能和自动化学院新闻',
     maintainers: ['budui'],
     handler,
+    url: 'aia.hust.edu.cn/xyxw.htm',
 };
 
 async function handler() {

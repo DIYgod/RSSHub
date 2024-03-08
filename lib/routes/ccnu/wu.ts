@@ -22,6 +22,7 @@ export const route: Route = {
     name: '伍论贡学院',
     maintainers: ['shengmaosu'],
     handler,
+    url: 'uowji.ccnu.edu.cn/xwzx/tzgg.htm',
 };
 
 async function handler() {

@@ -23,6 +23,22 @@ export const route: Route = {
     name: 'The Verge',
     maintainers: ['HenryQW', 'vbali'],
     handler,
+    description: `| Hub         | Hub name            |
+  | ----------- | ------------------- |
+  |             | All Posts           |
+  | android     | Android             |
+  | apple       | Apple               |
+  | apps        | Apps & Software     |
+  | blackberry  | BlackBerry          |
+  | culture     | Culture             |
+  | gaming      | Gaming              |
+  | hd          | HD & Home           |
+  | microsoft   | Microsoft           |
+  | photography | Photography & Video |
+  | policy      | Policy & Law        |
+  | web         | Web & Social        |
+
+  Provides a better reading experience (full text articles) over the official one.`,
 };
 
 async function handler(ctx) {

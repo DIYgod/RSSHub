@@ -23,6 +23,9 @@ export const route: Route = {
     name: '计算机学院公告',
     maintainers: ['ttyfly'],
     handler,
+    description: `| 公告类型 | 学院新闻 | 学术交流 | 通知公告 | 科研进展 |
+  | -------- | -------- | -------- | -------- | -------- |
+  | 参数     | 0        | 1        | 2        | 3        |`,
 };
 
 async function handler(ctx) {

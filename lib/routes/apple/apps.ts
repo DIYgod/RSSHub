@@ -35,6 +35,13 @@ export const route: Route = {
     name: 'App Update',
     maintainers: ['EkkoG', 'nczitzk'],
     handler,
+    description: `| All | iOS | macOS | tvOS |
+  | --- | --- | ----- | ---- |
+  |     | iOS | macOS | tvOS |
+
+  :::tip
+  For example, the URL of [GarageBand](https://apps.apple.com/us/app/messages/id408709785) in the App Store is \`https://apps.apple.com/us/app/messages/id408709785\`. In this case, the \`App Store Country\` parameter for the route is \`us\`, and the \`App id\` parameter is \`id1146560473\`. So the route should be [\`/apple/apps/update/us/id408709785\`](https://rsshub.app/apple/apps/update/us/id408709785).
+  :::`,
 };
 
 async function handler(ctx) {

@@ -28,6 +28,10 @@ export const route: Route = {
     name: 'News',
     maintainers: ['nczitzk'],
     handler,
+    url: 'finviz.com/news.ashx',
+    description: `| News | Blog |
+  | ---- | ---- |
+  | news | blog |`,
 };
 
 async function handler(ctx) {

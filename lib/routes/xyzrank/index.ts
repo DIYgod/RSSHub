@@ -17,6 +17,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'xyzrank.com/',
 };
 
 async function handler(ctx) {

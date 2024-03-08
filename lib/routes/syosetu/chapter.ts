@@ -28,6 +28,7 @@ export const route: Route = {
     name: 'chapter',
     maintainers: ['huangliangshusheng'],
     handler,
+    description: `Eg: \`https://ncode.syosetu.com/n1976ey/\``,
 };
 
 async function handler(ctx) {

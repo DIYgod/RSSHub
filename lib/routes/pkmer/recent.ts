@@ -23,6 +23,7 @@ export const route: Route = {
     name: '最近更新',
     maintainers: ['Gnoyong'],
     handler,
+    url: 'pkmer.cn/page/*',
 };
 
 async function handler() {

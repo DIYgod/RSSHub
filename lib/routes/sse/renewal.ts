@@ -32,6 +32,7 @@ export const route: Route = {
     name: '科创板项目动态',
     maintainers: ['Jeason0228'],
     handler,
+    url: 'kcb.sse.com.cn/home',
 };
 
 async function handler() {

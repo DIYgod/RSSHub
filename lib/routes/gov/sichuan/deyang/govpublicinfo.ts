@@ -92,6 +92,9 @@ export const route: Route = {
     name: '政府公开信息',
     maintainers: ['zytomorrow'],
     handler,
+    description: `| 法定主动内容 | 公示公告 |
+  | :----------: | :------: |
+  |    fdzdnr    |   gsgg   |`,
 };
 
 async function handler(ctx) {

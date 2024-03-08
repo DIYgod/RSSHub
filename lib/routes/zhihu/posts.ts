@@ -23,6 +23,9 @@ export const route: Route = {
     name: '用户文章',
     maintainers: ['whtsky', 'Colin-XKL'],
     handler,
+    description: `| 普通用户 | 机构用户 |
+| -------- | -------- |
+| people   | org      |`,
 };
 
 async function handler(ctx) {

@@ -63,6 +63,18 @@ export const route: Route = {
     name: '新聞',
     maintainers: ['nczitzk'],
     handler,
+    url: 'setn.com/ViewAll.aspx',
+    description: `| 即時 | 熱門 | 娛樂 | 政治 | 社會 |
+  | ---- | ---- | ---- | ---- | ---- |
+
+  | 國際 | 兩岸 | 生活 | 健康 | 旅遊 |
+  | ---- | ---- | ---- | ---- | ---- |
+
+  | 運動 | 地方 | 財經 | 富房網 | 名家 |
+  | ---- | ---- | ---- | ------ | ---- |
+
+  | 新奇 | 科技 | 汽車 | 寵物 | 女孩 | HOT 焦點 |
+  | ---- | ---- | ---- | ---- | ---- | -------- |`,
 };
 
 async function handler(ctx) {

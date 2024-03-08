@@ -25,6 +25,7 @@ export const route: Route = {
     name: '就业信息网招聘信息',
     maintainers: ['TonyRL'],
     handler,
+    url: 'career.csu.edu.cn/campus/index/category/1',
 };
 
 async function handler() {

@@ -23,6 +23,7 @@ export const route: Route = {
     name: '后勤集团',
     maintainers: ['ret-1'],
     handler,
+    url: 'webplus.nju.edu.cn/_s25/main.psp',
 };
 
 async function handler() {

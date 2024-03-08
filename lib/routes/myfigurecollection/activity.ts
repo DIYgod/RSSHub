@@ -37,6 +37,31 @@ export const route: Route = {
     name: 'Activity',
     maintainers: ['nczitzk'],
     handler,
+    url: 'zh.myfigurecollection.net/browse',
+    description: `Category
+
+  | Figures | Goods | Media |
+  | ------- | ----- | ----- |
+  | 0       | 1     | 2     |
+
+  Language
+
+  | Id | Language   |
+  | -- | ---------- |
+  |    | en         |
+  | de | Deutsch    |
+  | es | Español    |
+  | fi | Suomeksi   |
+  | fr | Français   |
+  | it | Italiano   |
+  | ja | 日本語     |
+  | nl | Nederlands |
+  | no | Norsk      |
+  | pl | Polski     |
+  | pt | Português  |
+  | ru | Русский    |
+  | sv | Svenska    |
+  | zh | 中文       |`,
 };
 
 async function handler(ctx) {

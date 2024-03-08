@@ -23,6 +23,7 @@ export const route: Route = {
     name: '用户',
     maintainers: ['nczitzk', 'xie-dongping'],
     handler,
+    description: `订阅特定用户的内容`,
 };
 
 async function handler(ctx) {

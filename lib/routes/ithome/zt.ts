@@ -24,6 +24,7 @@ export const route: Route = {
     name: '专题',
     maintainers: ['nczitzk'],
     handler,
+    description: `所有专题请见[此处](https://www.ithome.com/zt)`,
 };
 
 async function handler(ctx) {

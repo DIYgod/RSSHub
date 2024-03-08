@@ -17,6 +17,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    url: 'nintendo.com.hk/software/switch',
 };
 
 async function handler(ctx) {

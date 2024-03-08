@@ -22,6 +22,7 @@ export const route: Route = {
     name: '首页',
     maintainers: ['HenryQW'],
     handler,
+    url: 'sspai.com/index',
 };
 
 async function handler() {

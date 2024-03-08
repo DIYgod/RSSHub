@@ -21,6 +21,7 @@ export const route: Route = {
     name: '最新',
     maintainers: ['shinemoon'],
     handler,
+    url: 'fuliba2023.net/',
 };
 
 async function handler(ctx) {

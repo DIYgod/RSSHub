@@ -23,6 +23,7 @@ export const route: Route = {
     name: '知乎书店 - 知乎周刊',
     maintainers: ['LogicJake'],
     handler,
+    url: 'www.zhihu.com/pub/weekly',
 };
 
 async function handler() {

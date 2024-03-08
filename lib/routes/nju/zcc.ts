@@ -21,6 +21,7 @@ export const route: Route = {
     name: '资产管理处',
     maintainers: ['ret-1'],
     handler,
+    url: 'zcc.nju.edu.cn/tzgg/gyfytdglk/index.html',
 };
 
 async function handler() {

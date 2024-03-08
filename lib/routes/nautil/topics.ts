@@ -29,6 +29,7 @@ export const route: Route = {
     name: 'Topics',
     maintainers: ['emdoe'],
     handler,
+    description: `This route provides a flexible plan with full text content to subscribe specific topic(s) on the Nautilus. Please visit [nautil.us](https://nautil.us) and click \`Topics\` to acquire whole topic list.`,
 };
 
 async function handler(ctx) {

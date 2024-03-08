@@ -19,6 +19,9 @@ export const route: Route = {
     name: '分类',
     maintainers: ['TonyRL'],
     handler,
+    description: `| Boss 笔记 | 电脑日志        | 素材资源         | 设计师神器      | 设计教程        | 设计资讯            |
+  | --------- | --------------- | ---------------- | --------------- | --------------- | ------------------- |
+  | note      | computer-skills | design-resources | design-software | design-tutorial | design\_information |`,
 };
 
 async function handler(ctx) {

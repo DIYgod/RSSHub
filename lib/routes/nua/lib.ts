@@ -21,6 +21,12 @@ export const route: Route = {
     name: 'Library',
     maintainers: ['evnydd0sf'],
     handler,
+    description: `| News Type | Parameters |
+  | --------- | ---------- |
+  | 新闻动态  | xwdt       |
+  | 党建动态  | djdt       |
+  | 资源动态  | zydt       |
+  | 服务动态  | fwdt       |`,
 };
 
 async function handler(ctx) {

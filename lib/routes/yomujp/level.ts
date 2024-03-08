@@ -24,6 +24,7 @@ export const route: Route = {
     name: '等级',
     maintainers: ['eternasuno'],
     handler,
+    url: 'yomujp.com/',
 };
 
 async function handler(ctx) {

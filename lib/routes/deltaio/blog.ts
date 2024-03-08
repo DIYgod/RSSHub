@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Blogs',
     maintainers: ['RengarLee'],
     handler,
+    url: 'delta.io/blog',
 };
 
 async function handler() {

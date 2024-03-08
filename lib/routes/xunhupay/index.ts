@@ -21,6 +21,7 @@ export const route: Route = {
     name: '文章',
     maintainers: ['Joey'],
     handler,
+    url: 'www.xunhupay.com/blog',
 };
 
 async function handler(ctx) {

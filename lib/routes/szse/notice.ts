@@ -23,6 +23,7 @@ export const route: Route = {
     name: '上市公告 - 可转换债券',
     maintainers: ['Jeason0228', 'nczitzk'],
     handler,
+    url: 'szse.cn/disclosure/notice/company/index.html',
 };
 
 async function handler() {

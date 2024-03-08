@@ -25,6 +25,7 @@ export const route: Route = {
     name: '快讯',
     maintainers: ['Fatpandac'],
     handler,
+    url: 'hellobtc.com/news',
 };
 
 async function handler() {

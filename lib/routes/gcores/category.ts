@@ -22,6 +22,9 @@ export const route: Route = {
     name: '分类',
     maintainers: ['MoguCloud', 'StevenRCE0'],
     handler,
+    description: `| 资讯 | 视频   | 电台   | 文章     |
+  | ---- | ------ | ------ | -------- |
+  | news | videos | radios | articles |`,
 };
 
 async function handler(ctx) {

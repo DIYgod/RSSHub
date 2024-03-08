@@ -26,6 +26,7 @@ export const route: Route = {
     name: '研究生院',
     maintainers: ['huyyi', 'mobyw'],
     handler,
+    url: 'gr.uestc.edu.cn/',
 };
 
 async function handler() {

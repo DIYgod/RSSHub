@@ -35,6 +35,10 @@ export const route: Route = {
     name: '文化素质教育中心',
     maintainers: ['truobel', 'mobyw'],
     handler,
+    url: 'cqe.uestc.edu.cn/',
+    description: `| 活动预告 | 通知公告 |
+  | -------- | -------- |
+  | hdyg     | tzgg     |`,
 };
 
 async function handler(ctx) {

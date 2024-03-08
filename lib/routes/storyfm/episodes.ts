@@ -28,6 +28,7 @@ export const route: Route = {
     name: '播客',
     maintainers: ['nczitzk'],
     handler,
+    url: 'storyfm.cn/episodes-list',
 };
 
 async function handler() {

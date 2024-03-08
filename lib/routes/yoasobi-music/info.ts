@@ -28,6 +28,7 @@ export const route: Route = {
     name: 'News & Biography',
     maintainers: [],
     handler,
+    url: 'www.yoasobi-music.jp/',
 };
 
 async function handler(ctx) {

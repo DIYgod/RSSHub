@@ -23,6 +23,7 @@ export const route: Route = {
     name: 'Sustainability',
     maintainers: ['mintyfrankie'],
     handler,
+    url: 'strategyand.pwc.com/at/en/functions/sustainability-strategy/publications.html',
 };
 
 async function handler() {

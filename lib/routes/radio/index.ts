@@ -23,6 +23,15 @@ export const route: Route = {
     name: '节目',
     maintainers: ['kt286', 'nczitzk'],
     handler,
+    description: `如果订阅 [共和国追梦人](http://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135)，其 URL 为 \`https://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135\`，可以得到 \`columnId\` 为 \`1552135\`
+
+  所以对应路由为 [\`/radio/1552135\`](https://rsshub.app/radio/1552135)
+
+  :::tip
+  该路由仅适用于更新时间较早的电台节目，如 [共和国追梦人](http://www.radio.cn/pc-portal/sanji/detail.html?columnId=1552135)
+
+  与适用于 [专辑](#yun-ting-zhuan-ji) 路由的专辑其 \`columnId\` 长度相比，它们的 \`columnId\` 长度较短
+  :::`,
 };
 
 async function handler(ctx) {

@@ -25,6 +25,9 @@ export const route: Route = {
     name: '发现',
     maintainers: ['nczitzk'],
     handler,
+    description: `如 [Elasticsearch 最新](https://elasticsearch.cn/category-2) 的 URL 为 \`https://elasticsearch.cn/category-2\`，则分类参数处填写 \`category-2\`，最后得到路由地址 [\`/elasticsearch-cn/category-2\`](https://rsshub.app/elasticsearch-cn/category-2)。
+
+  又如 [求职招聘 30 天热门](https://elasticsearch.cn/sort_type-hot____category-12__day-30) 的 URL 为 \`https://elasticsearch.cn/sort_type-hot____category-12__day-30\`，则分类参数处填写 \`sort_type-hot____category-12__day-30\`，最后得到路由地址 [\`/elasticsearch-cn/sort_type-hot____category-12__day-30\`](https://rsshub.app/elasticsearch-cn/sort_type-hot____category-12__day-30)。`,
 };
 
 async function handler(ctx) {

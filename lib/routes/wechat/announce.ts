@@ -22,6 +22,7 @@ export const route: Route = {
     name: '公众平台系统公告栏目',
     maintainers: ['xyqfer'],
     handler,
+    url: 'mp.weixin.qq.com/cgi-bin/announce',
 };
 
 async function handler() {

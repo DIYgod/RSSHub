@@ -10,6 +10,9 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 淘股论坛 | 社区总版 | 精华加油 | 网友点赞 |
+  | -------- | -------- | -------- | -------- |
+  | bbs      | zongban  | jinghua  | dianzan  |`,
 };
 
 async function handler(ctx) {

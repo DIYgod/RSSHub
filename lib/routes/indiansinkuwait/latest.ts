@@ -25,6 +25,7 @@ export const route: Route = {
     name: 'News',
     maintainers: ['TonyRL'],
     handler,
+    url: 'indiansinkuwait.com/latest-news',
 };
 
 async function handler() {

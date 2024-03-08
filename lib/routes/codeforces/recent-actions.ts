@@ -22,6 +22,7 @@ export const route: Route = {
     name: 'Recent actions',
     maintainers: [],
     handler,
+    url: 'codeforces.com/recent-actions',
 };
 
 async function handler(ctx) {

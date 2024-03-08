@@ -26,6 +26,9 @@ export const route: Route = {
     name: '报告',
     maintainers: ['nczitzk'],
     handler,
+    description: `| 罗戈研究出品 | 物流报告       | 绿色双碳报告          |
+  | ------------ | -------------- | --------------------- |
+  | Report       | IndustryReport | GreenDualCarbonReport |`,
 };
 
 async function handler(ctx) {

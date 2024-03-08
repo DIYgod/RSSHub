@@ -28,6 +28,7 @@ export const route: Route = {
     name: '今日',
     maintainers: ['Dustin-Jiang'],
     handler,
+    url: 'mrdx.cn*',
 };
 
 async function handler() {

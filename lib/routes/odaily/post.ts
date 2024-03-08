@@ -36,6 +36,10 @@ export const route: Route = {
     name: '文章',
     maintainers: ['nczitzk'],
     handler,
+    url: '0daily.com/',
+    description: `| 最新 | 新品 | DeFi | NFT | 存储 | 波卡 | 行情 | 活动 |
+  | ---- | ---- | ---- | --- | ---- | ---- | ---- | ---- |
+  | 280  | 333  | 331  | 334 | 332  | 330  | 297  | 296  |`,
 };
 
 async function handler(ctx) {

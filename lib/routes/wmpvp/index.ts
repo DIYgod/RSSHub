@@ -18,6 +18,9 @@ export const route: Route = {
     name: '资讯列表',
     maintainers: ['tssujt'],
     handler,
+    description: `| DOTA2 | CS2 |
+  | ----- | --- |
+  | 1     | 2   |`,
 };
 
 async function handler(ctx) {

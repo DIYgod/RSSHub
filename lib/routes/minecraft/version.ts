@@ -20,6 +20,7 @@ export const route: Route = {
     name: 'Java Game Update',
     maintainers: ['TheresaQWQ'],
     handler,
+    url: 'minecraft.net/',
 };
 
 async function handler() {

@@ -9,6 +9,9 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: [],
     handler,
+    description: `| TA 的文章 | TA 的 24 小时 |
+  | --------- | ------------- |
+  | article   | moment        |`,
 };
 
 async function handler(ctx) {

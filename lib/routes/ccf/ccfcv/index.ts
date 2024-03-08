@@ -35,6 +35,9 @@ export const route: Route = {
     name: '计算机视觉专委会 - 学术动态 - 分类',
     maintainers: ['elxy'],
     handler,
+    description: `| 学术前沿 | 热点征文 | 学术会议 |
+  | -------- | -------- | -------- |
+  | xsqy     | rdzw     | xshy     |`,
 };
 
 async function handler(ctx) {

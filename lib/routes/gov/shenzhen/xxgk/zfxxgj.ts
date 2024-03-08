@@ -41,6 +41,9 @@ export const route: Route = {
     name: '深圳市人民政府',
     maintainers: ['laoxua'],
     handler,
+    description: `| 通知公告 | 政府采购 | 资金信息 | 重大项目 |
+  | :------: | :------: | :------: | :------: |
+  |   tzgg   |   zfcg   |   zjxx   |   zdxm   |`,
 };
 
 async function handler(ctx) {

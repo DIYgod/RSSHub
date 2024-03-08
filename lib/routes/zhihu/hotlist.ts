@@ -22,6 +22,7 @@ export const route: Route = {
     name: '知乎热榜',
     maintainers: ['DIYgod'],
     handler,
+    url: 'www.zhihu.com/hot',
 };
 
 async function handler() {

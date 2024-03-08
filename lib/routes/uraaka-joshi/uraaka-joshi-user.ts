@@ -24,6 +24,7 @@ export const route: Route = {
     name: 'User',
     maintainers: ['SettingDust', 'Halcao'],
     handler,
+    url: 'uraaka-joshi.com/',
 };
 
 async function handler(ctx) {

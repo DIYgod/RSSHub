@@ -27,6 +27,7 @@ export const route: Route = {
     name: 'Unknown',
     maintainers: ['Rongronggg9'],
     handler,
+    url: 'mp.data258.com/',
 };
 
 async function handler(ctx) {

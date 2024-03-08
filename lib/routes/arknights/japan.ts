@@ -21,6 +21,7 @@ export const route: Route = {
     name: 'アークナイツ (日服新闻)',
     maintainers: ['ofyark'],
     handler,
+    url: 'ak.arknights.jp/news',
 };
 
 async function handler() {
