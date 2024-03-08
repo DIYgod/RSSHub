@@ -16,8 +16,8 @@ export default async (ctx) => {
     const type = ctx.req.param('type') ?? 'zpxx';
     const rootUrl = baseUrl + arr[type];
 
-    const list_response = await got(rootUrl);
-    const $ = load(list_response.data);
+    const listResponse = await got(rootUrl);
+    const $ = load(listResponse.data);
 
     const feed_title = $('h2.category').text();
 
@@ -42,9 +42,9 @@ export default async (ctx) => {
         item: await Promise.all(
             sorted.map((item) =>
                 cache.tryGet(item.link, async () => {
-                    const detail_page = await got(item.link);
-                    const detail = load(detail_page.data);
-                    const script = detail('script', 'div#content-div').html();
+                    const detailPage = await got(item.link);
+                    const detail = load(detailPage.data);
+                    const script = detail('div#content-div script').html();
                     if (script !== null) {
                         const content_route = script.match(/\$\("#content-div"\).load\("(\S+)"\)/)[1];
                         const content = await got(new URL(content_route, baseUrl).href);
