@@ -29,14 +29,14 @@ const getData = async (ctx, list) => {
                     // e.g. https://aeon.co/essays/how-to-mourn-a-forest-a-lesson-from-west-papua .
                     // But that's very rare.
 
-                    item.author = data.props.pageProps.article.authors.map((author) => author.displayName).join(', ');
+                    item.author = data.props.pageProps.article.authors.map((author) => author.name).join(', ');
 
                     const article = data.props.pageProps.article;
                     const capture = load(article.body);
                     const banner = article.thumbnail?.urls?.header;
                     capture('p.pullquote').remove();
 
-                    const authorsBio = article.authors.map((author) => '<p>' + author.displayName + author.authorBio.replaceAll(/^<p>/g, ' ')).join('');
+                    const authorsBio = article.authors.map((author) => '<p>' + author.name + author.authorBio.replaceAll(/^<p>/g, ' ')).join('');
 
                     item.description = art(path.join(__dirname, 'templates/essay.art'), { banner, authorsBio, content: capture.html() });
                 }
