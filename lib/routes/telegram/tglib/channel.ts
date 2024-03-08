@@ -19,13 +19,15 @@ function getMediaLink(ctx, channel, channelName, message) {
     if (x instanceof Api.MessageMediaDocument && x.document.mimeType.startsWith('audio/')) {
         return `<audio src="${src}"></audio>`;
     }
-
+    if (x instanceof Api.MessageMediaGeo) {
+        return `<a href="https://www.google.com/maps/search/?api=1&query=${x.geo.lat}%2C${x.geo.long}" target="_blank">Geo LatLon: ${x.geo.lat}, ${x.geo.long}</a>`;
+    }
     let linkText = getFilename(x);
     if (x instanceof Api.MessageMediaDocument) {
         linkText += ` (${humanFileSize(x.document.size)})`;
         return `<a href="${src}" target="_blank"><img src="${src}?thumb" alt=""/><br/>${linkText}</a>`;
     }
-    return;
+    return x.className;
 }
 
 function humanFileSize(size) {
