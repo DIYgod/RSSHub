@@ -87,11 +87,11 @@ dependencies:
     specifier: 0.6.3
     version: 0.6.3
   imapflow:
-    specifier: 1.0.155
-    version: 1.0.155
+    specifier: 1.0.156
+    version: 1.0.156
   instagram-private-api:
-    specifier: 1.45.3
-    version: 1.45.3
+    specifier: 1.46.1
+    version: 1.46.1
   ioredis:
     specifier: 5.3.2
     version: 5.3.2
@@ -5632,8 +5632,8 @@ packages:
     hasBin: true
     dev: false
 
-  /imapflow@1.0.155:
-    resolution: {integrity: sha512-kgFTBgQi4hSLnEmLfllxghVLohsgTuxQf3fg6uulaHwaV9fOWRzr7PD2UvExlAPU9kTu/grz6QiwMH1CFpTKmw==}
+  /imapflow@1.0.156:
+    resolution: {integrity: sha512-HzPBJ25omt2uL8p4VpkWYcL7ILVXuAAJplswpPuLtryy9eW0AvBtPxKeVbxU1QLQMdsZmEr0p4skHVO4jY3k8A==}
     dependencies:
       encoding-japanese: 2.0.0
       iconv-lite: 0.6.3
@@ -5692,8 +5692,8 @@ packages:
       wrap-ansi: 6.2.0
     dev: true
 
-  /instagram-private-api@1.45.3:
-    resolution: {integrity: sha512-IybVclR0Ahh01rn/4r9sxRn4vkfbfMXAXFVljsGk51mfL/EyyP6Yn+aWIxbG/JboArR1POJzaFI5bQOR99R3xA==}
+  /instagram-private-api@1.46.1:
+    resolution: {integrity: sha512-fq0q6UfhpikKZ5Kw8HNwS6YpsNghE9I/uc8AM9Do9nsQ+3H1u0jLz+0t/FcGkGTjZz5VGvU8s2VbWj9wxchwYg==}
     engines: {node: '>=8.0.0'}
     peerDependencies:
       re2: ^1.17.2
