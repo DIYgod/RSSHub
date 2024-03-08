@@ -1,8 +1,8 @@
 import cache from '@/utils/cache';
-const querystring = require('querystring');
+import querystring from 'querystring';
 import got from '@/utils/got';
 import { config } from '@/config';
-const weiboUtils = require('./utils');
+import weiboUtils from './utils';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
 export default async (ctx) => {

@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import { art } from '@/utils/render';
 import { load } from 'cheerio';
 import * as path from 'node:path';
-const utils = require('./utils');
+import utils from './utils';
 
 let baseTitle = '日本郵便';
 const baseUrl = 'https://trackings.post.japanpost.jp/services/srv/search/direct?';

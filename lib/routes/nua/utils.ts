@@ -70,7 +70,4 @@ const ProcessFeed = (items, artiContent) =>
         )
     );
 
-module.exports = {
-    ProcessList,
-    ProcessFeed,
-};
+export default { ProcessList, ProcessFeed };

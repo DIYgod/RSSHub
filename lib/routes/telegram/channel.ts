@@ -8,8 +8,9 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const querystring = require('querystring');
+import querystring from 'querystring';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
+import tglibchannel from './tglib/channel';
 
 /* message types */
 const REPLY = 'REPLY';
@@ -56,7 +57,7 @@ const mediaTagDict = {
 export default async (ctx) => {
     const useWeb = ctx.req.param('routeParams') || !config.telegram.session;
     if (!useWeb) {
-        return require('./tglib/channel').default(ctx);
+        return tglibchannel(ctx);
     }
 
     const username = ctx.req.param('username');

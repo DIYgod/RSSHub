@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
-const { ImapFlow } = require('imapflow');
+import { ImapFlow } from 'imapflow';
 import { config } from '@/config';
-const { simpleParser } = require('mailparser');
+import { simpleParser } from 'mailparser';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 

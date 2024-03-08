@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     // 基金要闻 - 基金要闻 https://www.nsfc.gov.cn/publish/portal0/tab440/
     jjyw: '/publish/portal0/tab440/',
 

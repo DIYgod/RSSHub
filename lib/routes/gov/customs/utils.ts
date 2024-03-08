@@ -15,7 +15,4 @@ const puppeteerGet = async (url, browser) => {
     return html;
 };
 
-module.exports = {
-    host,
-    puppeteerGet,
-};
+export { host, puppeteerGet };

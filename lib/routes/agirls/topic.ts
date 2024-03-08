@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const { baseUrl, parseArticle } = require('./utils');
+import { baseUrl, parseArticle } from './utils';
 
 export default async (ctx) => {
     const topic = ctx.req.param('topic');

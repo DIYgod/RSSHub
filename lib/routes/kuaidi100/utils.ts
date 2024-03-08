@@ -139,7 +139,7 @@ function clearCookie() {
     cache.set(csrf_key, null);
 }
 
-module.exports = {
+export default {
     company: () => getCompanyList(),
     checkCode: async (number, id, phone) => {
         const list = await getCompanyList();

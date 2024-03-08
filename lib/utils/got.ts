@@ -2,7 +2,7 @@ import logger from '@/utils/logger';
 import { config } from '@/config';
 import got, { CancelableRequest, Response as GotResponse, NormalizedOptions, Options } from 'got';
 
-type Response<T> = GotResponse<unknown> & {
+type Response<T> = GotResponse<string> & {
     data: T;
     status: number;
 };

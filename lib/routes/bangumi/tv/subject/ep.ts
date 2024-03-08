@@ -5,9 +5,9 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const { getLocalName } = require('./utils');
+import { getLocalName } from './utils';
 
-module.exports = async (subjectID, showOriginalName) => {
+export default async (subjectID, showOriginalName) => {
     const url = `https://api.bgm.tv/subject/${subjectID}?responseGroup=large`;
     const { data: epsInfo } = await got(url);
     const activeEps = [];

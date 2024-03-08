@@ -1,10 +1,10 @@
 import got from '@/utils/got';
-const cache = require('./cache');
+import cache from './cache';
 import { config } from '@/config';
 
 export default async (ctx) => {
     const uid = String(ctx.req.param('uid'));
-    const name = await cache.getUsernameFromUID(ctx, uid);
+    const name = await cache.getUsernameFromUID(uid);
 
     const cookie = config.bilibili.cookies[uid];
     if (cookie === undefined) {
@@ -27,7 +27,7 @@ export default async (ctx) => {
     const out = await Promise.all(
         cards.map(async (card) => {
             const card_data = JSON.parse(card.card);
-            const { url: link, description } = await cache.getArticleDataFromCvid(ctx, card_data.id, uid);
+            const { url: link, description } = await cache.getArticleDataFromCvid(card_data.id, uid);
 
             const item = {
                 title: card_data.title,

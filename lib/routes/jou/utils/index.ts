@@ -56,6 +56,4 @@ async function getItems(ctx, url, host, tableClass, timeStyleClass1, titleStyleC
     return out;
 }
 
-module.exports = {
-    getItems,
-};
+export { getItems };

@@ -1,6 +1,6 @@
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { defaultDomain, renderDescription } = require('./utils');
+import { defaultDomain, renderDescription } from './utils';
 
 export default async (ctx) => {
     const keyword = ctx.req.param('keyword');

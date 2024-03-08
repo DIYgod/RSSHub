@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
-const asyncPool = require('tiny-async-pool');
+import asyncPool from 'tiny-async-pool';
 
 const asyncPoolAll = async (...args) => {
     const results = [];

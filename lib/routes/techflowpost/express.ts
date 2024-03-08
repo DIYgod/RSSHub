@@ -1,28 +1,26 @@
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-import { unescapeAll } from 'markdown-it/lib/common/utils.mjs';
+import dayjs from 'dayjs';
 
 export default async (ctx) => {
     const rootUrl = 'https://www.techflowpost.com';
-    const apiRootUrl = 'https://data.techflowpost.com';
-    const currentUrl = `${rootUrl}/express`;
-    const apiUrl = `${apiRootUrl}/api/pc/express/all?pageIndex=0&pageSize=${ctx.req.query('limit') ?? 50}`;
+    const currentUrl = `${rootUrl}/newsletter/index.html`;
 
-    const response = await got({
-        method: 'post',
-        url: apiUrl,
-        json: {
-            createTime: [],
+    const { data: response } = await got.post('https://www.techflowpost.com/ashx/newflash_index.ashx', {
+        form: {
+            pageindex: 1,
+            pagesize: ctx.req.query('limit') ?? 50,
+            time: dayjs().format('YYYY/M/D HH:mm:ss'),
         },
     });
 
-    const items = response.data.content.map((item) => ({
-        title: item.title,
-        link: `${rootUrl}/express/${item.id}`,
-        category: item.tags?.split('，') ?? [],
-        pubDate: timezone(parseDate(item.createTime), +8),
-        description: unescapeAll(item.content),
+    const items = response.content.map((item) => ({
+        title: item.stitle,
+        link: `${rootUrl}/newsletter/detail_${item.nnewflash_id}.html`,
+        pubDate: timezone(parseDate(item.dcreate_time), +8),
+        updated: timezone(parseDate(item.dmodi_time), +8),
+        description: item.scontent,
     }));
 
     ctx.set('data', {

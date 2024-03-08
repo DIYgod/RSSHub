@@ -52,10 +52,4 @@ const getChannelMessages = (channelId, authorization, tryGet, limit = 100) =>
         false
     );
 
-module.exports = {
-    baseUrl,
-    getGuild,
-    getGuildChannels,
-    getChannel,
-    getChannelMessages,
-};
+export { baseUrl, getGuild, getGuildChannels, getChannel, getChannelMessages };

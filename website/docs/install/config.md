@@ -395,6 +395,12 @@ Open the console, copy the cookie (in theory, only uid and sid are required)
 -   `MINIFLUX_INSTANCE`: The instance used by the user, by default, is the official MiniFlux [paid service address](https://reader.miniflux.app)
 -   `MINIFLUX_TOKEN`: User's API key, please log in to the instance used and go to `Settings` -> `API Key` -> `Create a new API key` to obtain.
 
+### Netease Cloud Music Playlists
+
+For playlists and song rankings
+
+-   `NCM_COOKIES`: Cookies after logging into Netease Cloud Music, available via `document.cookie` in the browser console.
+
 ### nhentai torrent
 
 [Registration](https://nhentai.net/register/)
@@ -571,12 +577,6 @@ Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即
 ### 色花堂
 
 -   `SEHUATANG_COOKIE`: 登陆色花堂后的 cookie 值。
-
-### 网易云歌单
-
-用于歌单及听歌排行
-
--   `NCM_COOKIES`: 网易云音乐登陆后的 cookie 值。
 
 ### 微博
 

@@ -1,5 +1,5 @@
-const got = require('../pixiv-got');
-const maskHeader = require('../constants').maskHeader;
+import got from '../pixiv-got';
+import { maskHeader } from '../constants';
 import queryString from 'query-string';
 
 /**
@@ -8,7 +8,7 @@ import queryString from 'query-string';
  * @param {string} token pixiv oauth token
  * @returns {Promise<got.AxiosResponse<{illusts: illust[]}>>}
  */
-module.exports = function getIllusts(user_id, token) {
+export default function getIllusts(user_id, token) {
     return got('https://app-api.pixiv.net/v1/user/illusts', {
         headers: {
             ...maskHeader,
@@ -19,4 +19,4 @@ module.exports = function getIllusts(user_id, token) {
             filter: 'for_ios',
         }),
     });
-};
+}

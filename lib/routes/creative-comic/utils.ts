@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const CryptoJS = require('crypto-js');
+import CryptoJS from 'crypto-js';
 
 const apiHost = 'https://api.creative-comic.tw';
 const device = 'web_desktop';
@@ -82,14 +82,4 @@ const getRealKey = (imgKey, token = DEFAULT_TOKEN) => {
     };
 };
 
-module.exports = {
-    getBook,
-    getChapter,
-    getChapters,
-    getImgEncrypted,
-    getImgKey,
-    getUuid,
-    decrypt,
-    token2Key,
-    getRealKey,
-};
+export { getBook, getChapter, getChapters, getImgEncrypted, getImgKey, getUuid, decrypt, token2Key, getRealKey };

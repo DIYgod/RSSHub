@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-module.exports = (link) =>
+export default (link) =>
     cache.tryGet(link, async () => {
         let content, exactDate;
         try {

@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const utils = require('./utils');
+import utils from './utils';
 import got from '@/utils/got';
 
 const rootURL = 'https://jiuye.swjtu.edu.cn/career';

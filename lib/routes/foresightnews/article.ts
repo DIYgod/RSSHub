@@ -1,4 +1,4 @@
-const { rootUrl, apiRootUrl, processItems, icon, image } = require('./util');
+import { rootUrl, apiRootUrl, processItems, icon, image } from './util';
 
 export default async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;

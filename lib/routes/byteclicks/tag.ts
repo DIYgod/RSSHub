@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const { parseItem } = require('./utils');
+import { parseItem } from './utils';
 const baseUrl = 'https://byteclicks.com';
 
 export default async (ctx) => {

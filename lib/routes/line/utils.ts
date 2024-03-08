@@ -52,8 +52,4 @@ const parseItems = (list, tryGet) =>
         )
     );
 
-module.exports = {
-    baseUrl,
-    parseList,
-    parseItems,
-};
+export { baseUrl, parseList, parseItems };

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 import got from '@/utils/got';
-const { baseUrl, cookieJar, getArticleList, getArticle } = require('./utils');
+import { baseUrl, cookieJar, getArticleList, getArticle } from './utils';
 
 export default async (ctx) => {
     const { journal = 'nature' } = ctx.req.param();

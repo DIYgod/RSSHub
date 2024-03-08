@@ -67,10 +67,4 @@ const renderImages = (images) =>
         images,
     });
 
-module.exports = {
-    getCategories,
-    parseList,
-    parseItem,
-    renderDescription,
-    renderImages,
-};
+export { getCategories, parseList, parseItem, renderDescription, renderImages };

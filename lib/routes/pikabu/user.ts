@@ -1,8 +1,8 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const iconv = require('iconv-lite');
+import iconv from 'iconv-lite';
 import { parseDate } from '@/utils/parse-date';
-const { baseUrl, fixImage, fixVideo } = require('./utils');
+import { baseUrl, fixImage, fixVideo } from './utils';
 
 export default async (ctx) => {
     const name = ctx.req.param('name');

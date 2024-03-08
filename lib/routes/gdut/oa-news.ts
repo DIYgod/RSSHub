@@ -2,10 +2,10 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import wait from '@/utils/wait';
 import { load } from 'cheerio';
-const { CookieJar } = require('tough-cookie');
+import { CookieJar } from 'tough-cookie';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-const asyncPool = require('tiny-async-pool');
+import asyncPool from 'tiny-async-pool';
 
 const site = 'https://oas.gdut.edu.cn/seeyon';
 const typeMap = {

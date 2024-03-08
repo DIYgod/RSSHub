@@ -44,6 +44,4 @@ const ProcessFeed = async (type, id, order) => {
     };
 };
 
-module.exports = {
-    ProcessFeed,
-};
+export { ProcessFeed };

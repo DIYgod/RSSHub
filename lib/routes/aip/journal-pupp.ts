@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
-const { puppeteerGet, renderDesc } = require('./utils');
+import { puppeteerGet, renderDesc } from './utils';
 import { config } from '@/config';
 import { isValidHost } from '@/utils/valid-host';
 import puppeteer from '@/utils/puppeteer';

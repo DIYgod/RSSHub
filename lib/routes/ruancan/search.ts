@@ -1,4 +1,4 @@
-const fetchFeed = require('./utils');
+import fetchFeed from './utils';
 
 export default async (ctx) => {
     const keyword = ctx.req.param('keyword');

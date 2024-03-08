@@ -122,4 +122,4 @@ const encrypt = (md5Str) => {
     return resultStr;
 };
 
-module.exports = encrypt;
+export default encrypt;

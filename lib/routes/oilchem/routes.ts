@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     '/www': 1,
     '/oil': 101,
     '/oil/oil/crudeoil': 111,

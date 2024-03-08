@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const querystring = require('querystring');
+import querystring from 'querystring';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { config } from '@/config';

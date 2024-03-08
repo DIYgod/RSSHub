@@ -36,8 +36,4 @@ const parseItem = async (item) => {
     return item;
 };
 
-module.exports = {
-    baseUrl,
-    parseList,
-    parseItem,
-};
+export { baseUrl, parseList, parseItem };

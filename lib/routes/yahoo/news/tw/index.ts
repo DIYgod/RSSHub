@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const { getArchive, getCategories, parseList, parseItem } = require('./utils');
+import { getArchive, getCategories, parseList, parseItem } from './utils';
 
 export default async (ctx) => {
     const { region, category } = ctx.req.param();

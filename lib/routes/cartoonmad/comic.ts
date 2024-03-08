@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
-const iconv = require('iconv-lite');
+import iconv from 'iconv-lite';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 

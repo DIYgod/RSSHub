@@ -1,6 +1,6 @@
 import got from '@/utils/got';
-const utils = require('./utils');
-const cache = require('./cache');
+import utils from './utils';
+import cache from './cache';
 
 export default async (ctx) => {
     const key = ctx.req.param('key');
@@ -17,7 +17,7 @@ export default async (ctx) => {
             orderTitle = '人气直播';
             break;
     }
-    const wbiVerifyString = await cache.getWbiVerifyString(ctx);
+    const wbiVerifyString = await cache.getWbiVerifyString();
     let params = `__refresh__=true&_extra=&context=&page=1&page_size=42&order=${order}&duration=&from_source=&from_spmid=333.337&platform=pc&highlight=1&single_column=0&keyword=${urlEncodedKey}&ad_resource=&source_tag=3&gaia_vtoken=&category_id=&search_type=live&dynamic_offset=0&web_location=1430654`;
     params = utils.addWbiVerifyInfo(params, wbiVerifyString);
 
@@ -26,7 +26,7 @@ export default async (ctx) => {
         url: `https://api.bilibili.com/x/web-interface/wbi/search/type?${params}`,
         headers: {
             Referer: `https://search.bilibili.com/live?keyword=${urlEncodedKey}&from_source=webtop_search&spm_id_from=444.7&search_source=3&search_type=live_room`,
-            Cookie: await cache.getCookie(ctx),
+            Cookie: await cache.getCookie(),
         },
     });
     const data = response.data.data.result.live_room;

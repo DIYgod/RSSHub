@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { parseItem } = require('./utils');
+import { parseItem } from './utils';
 
 export default async (ctx) => {
     const keyword = ctx.req.param('keyword');

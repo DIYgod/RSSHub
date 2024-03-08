@@ -1,6 +1,6 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const url = require('url');
+import * as url from 'node:url';
 
 const host = 'https://github.com';
 

@@ -14,6 +14,4 @@ const getTokenAndSecret = (tryGet) =>
         return { token, secret };
     });
 
-module.exports = {
-    getTokenAndSecret,
-};
+export { getTokenAndSecret };

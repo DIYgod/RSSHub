@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { parseItem } = require('./utils');
+import { parseItem } from './utils';
 
 export default async (ctx) => {
     const categoryId = ctx.req.param('category_id');
@@ -14,8 +14,8 @@ export default async (ctx) => {
 
     const list = $('item')
         .toArray()
-        .map((item) => {
-            item = $(item);
+        .map((elem) => {
+            const item = $(elem);
             const enclosure = item.find('enclosure').first();
             const mediaContent = item.find('media\\:content').toArray()[0];
             const thumbnail = item.find('media\\:thumbnail').toArray()[0];
@@ -43,7 +43,7 @@ export default async (ctx) => {
             };
         });
 
-    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => parseItem)));
+    const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => parseItem(item))));
 
     ctx.set('json', {
         items,

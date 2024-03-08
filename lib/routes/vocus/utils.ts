@@ -43,9 +43,4 @@ const ProcessFeed = (list, tryGet) =>
         )
     );
 
-module.exports = {
-    processList,
-    ProcessFeed,
-    baseUrl,
-    apiUrl,
-};
+export { processList, ProcessFeed, baseUrl, apiUrl };

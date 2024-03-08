@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const { parseModule, parseFloorItem } = require('./utils');
+import { parseModule, parseFloorItem } from './utils';
 
 export default async (ctx) => {
     const response = await got('https://m.xiaomiyoupin.com/homepage/main/v1005');

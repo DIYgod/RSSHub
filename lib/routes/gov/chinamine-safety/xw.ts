@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-const { rootUrl, processItems, fetchData } = require('./util');
+import { rootUrl, processItems, fetchData } from './util';
 
 export default async (ctx) => {
     const { category = 'yjglbyw' } = ctx.req.param();

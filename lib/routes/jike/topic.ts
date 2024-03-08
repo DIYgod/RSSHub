@@ -1,9 +1,8 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const { topicDataHanding } = require('./utils');
+import { topicDataHanding, constructTopicEntry } from './utils';
 import { load } from 'cheerio';
-const dayjs = require('dayjs');
-const { constructTopicEntry } = require('./utils');
+import dayjs from 'dayjs';
 
 const urlRegex = /(https?:\/\/[^\s"'<>]+)/g;
 

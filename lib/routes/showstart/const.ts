@@ -1,4 +1,4 @@
-module.exports = {
-    HOST: 'https://www.showstart.com',
-    TITLE: '秀动网',
-};
+const HOST = 'https://www.showstart.com';
+const TITLE = '秀动网';
+
+export { HOST, TITLE };

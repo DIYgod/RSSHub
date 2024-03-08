@@ -2,7 +2,7 @@ import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-module.exports = async function fetch(address) {
+export default async function fetch(address) {
     const res = await got(address);
     const capture = load(res.data);
     capture('.gIMvvS').remove();
@@ -64,4 +64,4 @@ module.exports = async function fetch(address) {
         guid: address,
         pubDate: parseDate(time, 'M/D/YYYY'),
     };
-};
+}

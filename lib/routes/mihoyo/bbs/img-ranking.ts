@@ -1,6 +1,6 @@
 import got from '@/utils/got';
-const { DATA_MAP, RANKING_TYPE_MAP } = require('./static-data');
-const { post2item } = require('./utils');
+import { DATA_MAP, RANKING_TYPE_MAP } from './static-data';
+import { post2item } from './utils';
 
 const getGameInfo = (game) => ({
     gids: DATA_MAP[game]?.gids,

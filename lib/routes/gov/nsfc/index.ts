@@ -4,7 +4,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-const shortcuts = require('./shortcuts');
+import shortcuts from './shortcuts';
 
 export default async (ctx) => {
     let thePath = getSubPath(ctx).replace(/^\/nsfc/, '');

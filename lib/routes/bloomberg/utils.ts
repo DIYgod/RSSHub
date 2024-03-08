@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import * as path from 'node:path';
-const asyncPool = require('tiny-async-pool');
+import asyncPool from 'tiny-async-pool';
 
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
@@ -164,8 +164,11 @@ const parseAudioPage = async (res, api, item) => {
 const parseVideoPage = async (res, api, item) => {
     const $ = load(res.data);
     const script = $(api.sel).filter((i, el) => $(el).text().includes('__PRELOADED_STATE__'));
-    const json = script.text().trim().replace('window.__PRELOADED_STATE__ = ', '').slice(0, -1);
-    const article_json = JSON.parse(json);
+    const json = script
+        .text()
+        .trim()
+        .match(/window\.__PRELOADED_STATE__ = (.*?);/)?.[1];
+    const article_json = JSON.parse(json || '{}');
     const video_story = article_json.video?.videoStory ?? article_json.quicktakeVideo?.videoStory;
     if (video_story) {
         const desc = await processVideo(video_story.video.bmmrId, video_story.summary.html.replaceAll(emptyRegex, ''));
@@ -598,9 +601,4 @@ const asyncPoolAll = async (...args) => {
     return results;
 };
 
-module.exports = {
-    rootUrl,
-    asyncPoolAll,
-    parseNewsList,
-    parseArticle,
-};
+export { rootUrl, asyncPoolAll, parseNewsList, parseArticle };

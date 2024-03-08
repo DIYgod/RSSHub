@@ -51,7 +51,7 @@ class ArticleDetail {
     }
 }
 
-module.exports = {
+export default {
     siteLink,
     cleanDom,
     getArticleDetail,

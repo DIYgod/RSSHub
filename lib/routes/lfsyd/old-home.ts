@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { ProcessFeed } = require('./utils');
+import { ProcessFeed } from './utils';
 
 export default async (ctx) => {
     const limit = ctx.req.query('limit') ?? 10;

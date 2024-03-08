@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const { baseUrl, getBuildId, parseList, parseItem } = require('./utils');
+import { baseUrl, getBuildId, parseList, parseItem } from './utils';
 
 export default async (ctx) => {
     const { kolId, lang = 'en' } = ctx.req.param();

@@ -5,7 +5,7 @@ import cache from '@/utils/cache';
 import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
 import * as path from 'node:path';
-const { baseUrl, getUserInfoFromUsername, getUserInfoFromId, getUserWorks } = require('./utils');
+import { baseUrl, getUserInfoFromUsername, getUserInfoFromId, getUserWorks } from './utils';
 
 export default async (ctx) => {
     let { id } = ctx.req.param();

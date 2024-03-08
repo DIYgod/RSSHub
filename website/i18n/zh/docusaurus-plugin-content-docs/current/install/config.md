@@ -565,7 +565,7 @@ Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即
 
 用于歌单及听歌排行
 
--   `NCM_COOKIES`: 网易云音乐登陆后的 cookie 值。
+-   `NCM_COOKIES`: 网易云音乐登陆后的 cookie 值，可在浏览器控制台通过`document.cookie`获取。
 
 ### 微博
 

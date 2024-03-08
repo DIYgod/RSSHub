@@ -7,7 +7,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const { domainValidation } = require('./utils');
+import { domainValidation } from './utils';
 
 export default async (ctx) => {
     const { domain = '91porn.com' } = ctx.req.query();

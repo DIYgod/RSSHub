@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { ProcessForm, ProcessFeed } = require('./utils');
+import { ProcessForm, ProcessFeed } from './utils';
 
 export default async (ctx) => {
     const rootUrl = 'https://www.iyingdi.com';

@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-const { rootUrl, apiSlug, GetFilterId } = require('./utils');
+import { rootUrl, apiSlug, GetFilterId } from './utils';
 
 export default async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;

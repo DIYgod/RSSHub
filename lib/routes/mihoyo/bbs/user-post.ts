@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const { post2item } = require('./utils');
+import { post2item } from './utils';
 
 export default async (ctx) => {
     const uid = ctx.req.param('uid');

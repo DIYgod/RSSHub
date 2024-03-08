@@ -1,7 +1,7 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-const { rootUrl, mobileRootUrl } = require('./utils');
+import { rootUrl, mobileRootUrl } from './utils';
 
 export default async (ctx) => {
     const id = ctx.req.param('id');

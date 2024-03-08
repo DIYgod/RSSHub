@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const { rootUrl, apiRootUrl, ProcessItems } = require('./utils');
+import { rootUrl, apiRootUrl, ProcessItems } from './utils';
 
 export default async (ctx) => {
     const currentUrl = `${rootUrl}/hot`;

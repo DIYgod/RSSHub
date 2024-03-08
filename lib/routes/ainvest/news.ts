@@ -1,6 +1,6 @@
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { getHeaders, randomString, decryptAES } = require('./utils');
+import { getHeaders, randomString, decryptAES } from './utils';
 
 export default async (ctx) => {
     const key = randomString(16);

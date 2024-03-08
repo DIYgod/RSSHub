@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const utils = require('./utils');
+import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
 import { load } from 'cheerio';

@@ -2,7 +2,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import queryString from 'query-string';
 import { parseDate } from '@/utils/parse-date';
-const sanitizeHtml = require('sanitize-html');
+import sanitizeHtml from 'sanitize-html';
 
 export default async (ctx) => {
     const id = ctx.req.param('id');

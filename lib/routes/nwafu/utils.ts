@@ -30,6 +30,4 @@ const nwafuMap = new Map([
     ['forbiddenList', forbiddenList],
 ]);
 
-module.exports = {
-    nwafuMap,
-};
+export { nwafuMap };

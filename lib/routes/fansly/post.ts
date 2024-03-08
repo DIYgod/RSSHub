@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-const { getAccountByUsername, getTimelineByAccountId, parseDescription, baseUrl } = require('./utils');
+import { getAccountByUsername, getTimelineByAccountId, parseDescription, baseUrl } from './utils';
 
 export default async (ctx) => {
     const username = ctx.req.param('username');

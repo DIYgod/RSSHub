@@ -1,6 +1,6 @@
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { hash } = require('./utils');
+import { hash } from './utils';
 
 export default async (ctx) => {
     const { owner, image, limits } = ctx.req.param();

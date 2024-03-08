@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     getItem: (note) => {
         let link = note.metadata?.content?.external_urls?.[0] ?? `https://crossbell.io/notes/${note.characterId}-${note.noteId}`;
         if (link.startsWith('https://xn--')) {

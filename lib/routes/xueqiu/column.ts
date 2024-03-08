@@ -1,6 +1,6 @@
 import got from '@/utils/got';
-const { JSDOM } = require('jsdom');
-const { CookieJar } = require('tough-cookie');
+import { JSDOM } from 'jsdom';
+import { CookieJar } from 'tough-cookie';
 import { parseDate } from '@/utils/parse-date';
 const cookieJar = new CookieJar();
 const baseUrl = 'https://xueqiu.com';

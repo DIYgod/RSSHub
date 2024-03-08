@@ -1,11 +1,11 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const iconv = require('iconv-lite');
+import iconv from 'iconv-lite';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-module.exports = {
+export default {
     parseFeed: async ({ subjectid }) => {
         const url = `https://www.dapenti.com/blog/blog.asp?name=xilei&subjectid=${subjectid}`;
         const listRes = await got({

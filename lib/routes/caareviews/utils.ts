@@ -46,8 +46,4 @@ const getItems = (ctx, list) =>
         )
     );
 
-module.exports = {
-    rootUrl,
-    getList,
-    getItems,
-};
+export { rootUrl, getList, getItems };

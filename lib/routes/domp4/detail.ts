@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import got from '@/utils/got';
 
-const { decodeCipherText, composeMagnetUrl, getUrlType, ensureDomain } = require('./utils');
+import { decodeCipherText, composeMagnetUrl, getUrlType, ensureDomain } from './utils';
 
 // 兼容没有 script 标签的情况，直接解析 dom
 function getDomList($, detailUrl) {

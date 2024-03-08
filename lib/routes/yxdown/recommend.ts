@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-const { rootUrl, getCookie } = require('./utils');
+import { rootUrl, getCookie } from './utils';
 
 export default async (ctx) => {
     const currentUrl = `${rootUrl}/news/`;

@@ -19,4 +19,4 @@ const getList = (data) =>
         };
     });
 
-module.exports = { getData, getList };
+export { getData, getList };

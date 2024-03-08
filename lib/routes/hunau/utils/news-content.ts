@@ -44,4 +44,4 @@ async function newsContent(link, department = '') {
     }
 }
 
-module.exports = newsContent;
+export default newsContent;

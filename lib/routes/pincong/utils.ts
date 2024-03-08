@@ -18,7 +18,4 @@ const puppeteerGet = (url, cache) =>
         return html;
     });
 
-module.exports = {
-    baseUrl,
-    puppeteerGet,
-};
+export { baseUrl, puppeteerGet };

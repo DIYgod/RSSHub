@@ -1,4 +1,4 @@
-const { getNoticeList } = require('./utils');
+import { getNoticeList } from './utils';
 
 const url = 'https://yjs.gxmzu.edu.cn/tzgg/zsgg.htm';
 const host = 'https://yjs.gxmzu.edu.cn';

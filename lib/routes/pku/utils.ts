@@ -10,6 +10,4 @@ const eecsMap = new Map([
     [4, 'yytz.htm'],
 ]);
 
-module.exports = {
-    eecsMap,
-};
+export { eecsMap };

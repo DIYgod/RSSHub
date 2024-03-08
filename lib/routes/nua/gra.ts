@@ -1,4 +1,4 @@
-const util = require('./utils');
+import util from './utils';
 const baseUrl = 'https://grad.nua.edu.cn';
 
 export default async (ctx) => {

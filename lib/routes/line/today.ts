@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const { baseUrl: rootUrl, parseList, parseItems } = require('./utils');
+import { baseUrl as rootUrl, parseList, parseItems } from './utils';
 
 export default async (ctx) => {
     const edition = ctx.req.param('edition') || 'tw';

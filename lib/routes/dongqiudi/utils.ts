@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
-const { JSDOM } = require('jsdom');
+import { JSDOM } from 'jsdom';
 import { parseDate } from '@/utils/parse-date';
 
 const ProcessVideo = (content) => {
@@ -162,11 +162,4 @@ const ProcessFeedType3 = (item, response) => {
     }
 };
 
-module.exports = {
-    ProcessVideo,
-    ProcessFeed,
-    ProcessFeedType2,
-    ProcessFeedType3,
-    ProcessHref,
-    ProcessImg,
-};
+export default { ProcessVideo, ProcessFeed, ProcessFeedType2, ProcessFeedType3, ProcessHref, ProcessImg };

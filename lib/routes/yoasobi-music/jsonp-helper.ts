@@ -14,6 +14,4 @@ function parseJSONP(jsonpData) {
     }
 }
 
-module.exports = {
-    parseJSONP,
-};
+export { parseJSONP };

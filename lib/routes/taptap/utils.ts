@@ -47,11 +47,4 @@ const videoPost = (video) =>
         previewUrl: video?.video_resource.preview_animation.original_url,
     });
 
-module.exports = {
-    getRootUrl,
-    X_UA,
-    appDetail,
-    imagePost,
-    topicPost,
-    videoPost,
-};
+export { getRootUrl, X_UA, appDetail, imagePost, topicPost, videoPost };

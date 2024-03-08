@@ -3,7 +3,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import { config } from '@/config';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
-const { templates, resolveUrl, proxyVideo, getOriginAvatar } = require('./utils');
+import { templates, resolveUrl, proxyVideo, getOriginAvatar } from './utils';
 import puppeteer from '@/utils/puppeteer';
 
 export default async (ctx) => {

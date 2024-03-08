@@ -4,11 +4,11 @@ const __dirname = getCurrentPath(import.meta.url);
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 import * as path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
-const { config } = require('./config');
+import { config } from './config';
 
 export default async (ctx) => {
     const type = ctx.req.param('type');

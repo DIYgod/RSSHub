@@ -22,6 +22,4 @@ const parseItem = (item, tryGet) =>
         return item;
     });
 
-module.exports = {
-    parseItem,
-};
+export { parseItem };

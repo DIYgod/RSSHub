@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-const { rootUrl, getInfo, processItems } = require('./util');
+import { rootUrl, getInfo, processItems } from './util';
 
 export default async (ctx) => {
     const { range = '0' } = ctx.req.param();

@@ -20,6 +20,4 @@ async function getTeslaPrice(link) {
     return price;
 }
 
-module.exports = {
-    getTeslaPrice,
-};
+export { getTeslaPrice };

@@ -162,18 +162,4 @@ const renderTipGoal = (tipGoalId, tipGoals) => {
     });
 };
 
-module.exports = {
-    findAccountById,
-    baseUrl,
-    icon,
-    getAccountByUsername,
-    getTimelineByAccountId,
-    getTagId,
-    getTagSuggestion,
-    parseAttachments,
-    parseDescription,
-    parseMedia,
-    renderMedia,
-    renderPoll,
-    renderTipGoal,
-};
+export { findAccountById, baseUrl, icon, getAccountByUsername, getTimelineByAccountId, getTagId, getTagSuggestion, parseAttachments, parseDescription, parseMedia, renderMedia, renderPoll, renderTipGoal };

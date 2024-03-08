@@ -31,6 +31,4 @@ const ProcessFeed = (data) => {
     return content.html();
 };
 
-module.exports = {
-    ProcessFeed,
-};
+export default { ProcessFeed };

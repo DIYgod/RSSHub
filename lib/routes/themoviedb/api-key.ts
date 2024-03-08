@@ -20,4 +20,4 @@ const KEYS = [
     '09ad8ace66eec34302943272db0e8d2c',
 ];
 
-module.exports = () => KEYS[Math.floor(Math.random() * KEYS.length)];
+export default () => KEYS[Math.floor(Math.random() * KEYS.length)];

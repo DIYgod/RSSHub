@@ -1,4 +1,4 @@
-const { categories } = require('./cn/category-map');
+import { categories } from './cn/category-map';
 export default {
     'mckinsey.com.cn': {
         _name: 'McKinsey Greater China',

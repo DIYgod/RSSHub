@@ -43,6 +43,4 @@ async function getNoticeList(ctx, url, host, listSelector, titleSelector, conten
     return out;
 }
 
-module.exports = {
-    getNoticeList,
-};
+export { getNoticeList };

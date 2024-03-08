@@ -1,6 +1,7 @@
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const md = require('markdown-it')({
+import MarkdownIt from 'markdown-it';
+const md = MarkdownIt({
     html: true,
 });
 

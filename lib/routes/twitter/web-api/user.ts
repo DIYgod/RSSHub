@@ -1,6 +1,6 @@
-const utils = require('../utils');
-const { getUser, getUserTweets, getUserTweetsAndReplies, excludeRetweet } = require('./twitter-api');
-const { initToken } = require('./token');
+import utils from '../utils';
+import { getUser, getUserTweets, getUserTweetsAndReplies, excludeRetweet } from './twitter-api';
+import { initToken } from './token';
 
 export default async (ctx) => {
     const id = ctx.req.param('id');

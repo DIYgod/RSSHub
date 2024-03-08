@@ -1,7 +1,7 @@
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-const { rootUrl } = require('./utils');
+import { rootUrl } from './utils';
 
 export default async (ctx) => {
     const currentUrl = `${rootUrl}/api/pp/api/info-flow/newsflash_columns/newsflashes?b_id=&per_page=${ctx.req.query('limit') ?? 100}`;

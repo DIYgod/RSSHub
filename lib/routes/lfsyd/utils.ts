@@ -100,7 +100,4 @@ const cleanHtml = (htmlString) => {
     return $.html();
 };
 
-module.exports = {
-    ProcessForm,
-    ProcessFeed,
-};
+export { ProcessForm, ProcessFeed };

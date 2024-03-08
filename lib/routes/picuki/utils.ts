@@ -21,6 +21,4 @@ const puppeteerGet = async (url, browser, includeStories = false) => {
     return html;
 };
 
-module.exports = {
-    puppeteerGet,
-};
+export { puppeteerGet };

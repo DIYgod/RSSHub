@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { parseRelativeDate } from '@/utils/parse-date';
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 
 const defaultDomain = 'https://www.pornhub.com';
 
@@ -30,9 +30,4 @@ const parseItems = (e) => ({
     pubDate: dayjs(extractDateFromImageUrl(e.find('img').data('mediumthumb'))) || parseRelativeDate(e.find('.added').text()),
 });
 
-module.exports = {
-    defaultDomain,
-    headers,
-    renderDescription,
-    parseItems,
-};
+export { defaultDomain, headers, renderDescription, parseItems };

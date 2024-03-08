@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const utils = require('./utils');
+import utils from './utils';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 

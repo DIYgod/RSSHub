@@ -4,11 +4,11 @@ const __dirname = getCurrentPath(import.meta.url);
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const asyncPool = require('tiny-async-pool');
+import asyncPool from 'tiny-async-pool';
 import { art } from '@/utils/render';
-const { parseJucheDate, fixDesc, fetchPhoto, fetchVideo } = require('./utils');
+import { parseJucheDate, fixDesc, fetchPhoto, fetchVideo } from './utils';
 import * as path from 'node:path';
-const sanitizeHtml = require('sanitize-html');
+import sanitizeHtml from 'sanitize-html';
 
 export default async (ctx) => {
     const { lang, category = '1ee9bdb7186944f765208f34ecfb5407' } = ctx.req.param();

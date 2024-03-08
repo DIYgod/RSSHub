@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-const { CookieJar } = require('tough-cookie');
+import { CookieJar } from 'tough-cookie';
 
 const cookieJar = new CookieJar();
 cookieJar.setCookieSync('over18=yes', 'https://novel18.syosetu.com/');

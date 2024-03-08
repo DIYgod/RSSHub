@@ -1,4 +1,4 @@
-const utils = require('./utils');
+import utils from './utils';
 
 export default async (ctx) => {
     const timeframe = ctx.req.param('timeframe');

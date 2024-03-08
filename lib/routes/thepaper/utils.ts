@@ -20,7 +20,7 @@ const defaultRssItem = (item) => ({
     },
 });
 
-module.exports = {
+export default {
     ProcessItem: (item, ctx) => {
         const useOldMode = ctx.req.query('old') === 'yes';
         if (item.link) {

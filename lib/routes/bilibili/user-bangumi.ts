@@ -1,11 +1,11 @@
 import got from '@/utils/got';
-const cache = require('./cache');
+import cache from './cache';
 
 export default async (ctx) => {
     const uid = ctx.req.param('uid');
     const type = Number(ctx.req.param('type') || 1);
     const type_name = ((t) => ['', 'bangumi', 'cinema'][t])(type);
-    const name = await cache.getUsernameFromUID(ctx, uid);
+    const name = await cache.getUsernameFromUID(uid);
 
     const response = await got({
         method: 'get',

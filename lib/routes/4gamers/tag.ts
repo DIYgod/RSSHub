@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const { parseList, parseItem } = require('./utils');
+import { parseList, parseItem } from './utils';
 
 export default async (ctx) => {
     const tag = ctx.req.param('tag');

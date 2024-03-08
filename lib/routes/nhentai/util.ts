@@ -142,9 +142,4 @@ const getDetail = async (simple) => {
     };
 };
 
-module.exports = {
-    baseUrl,
-    getSimple,
-    getDetails,
-    getTorrents,
-};
+export { baseUrl, getSimple, getDetails, getTorrents };

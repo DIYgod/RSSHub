@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const { JSDOM } = require('jsdom');
+import { JSDOM } from 'jsdom';
 import { parseDate } from '@/utils/parse-date';
 
 export default async (ctx) => {

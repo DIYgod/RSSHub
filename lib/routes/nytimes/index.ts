@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
-const utils = require('./utils');
+import utils from './utils';
 import { load } from 'cheerio';
 import puppeteer from '@/utils/puppeteer';
 

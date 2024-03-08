@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const utils = require('./utils');
+import utils from './utils';
 
 const baseUrl = 'https://www.cde.org.cn';
 const xxgkMap = {

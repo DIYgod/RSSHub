@@ -16,6 +16,4 @@ const processItems = (list) =>
         )
     );
 
-module.exports = {
-    processItems,
-};
+export { processItems };

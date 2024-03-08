@@ -7,7 +7,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const { puppeteerGet } = require('./utils');
+import { puppeteerGet } from './utils';
 import puppeteer from '@/utils/puppeteer';
 
 export default async (ctx) => {

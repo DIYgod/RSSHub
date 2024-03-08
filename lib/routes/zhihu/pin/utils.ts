@@ -42,27 +42,27 @@ const generateDescription = (target, init) =>
         return description;
     }, init);
 
-module.exports = {
-    generateData: (data) =>
-        data.map((item) => {
-            const target = item.target ?? item;
-            const pubDate = parseDate(target.created * 1000);
-            const author = target.author.name;
-            const title = `${author}：${target.excerpt_title}`;
-            const link = `https://www.zhihu.com/pin/${target.id}`;
-            let description = generateDescription(target, `<a href="https://www.zhihu.com${target.author.url}">${author}</a>：`);
-            if (target.origin_pin !== undefined) {
-                const t = target.origin_pin;
-                const origin_link = `<a href="https://www.zhihu.com/pin/${t.id}">转发原文</a>：`;
-                const origin_description = generateDescription(t, `<a href="https://www.zhihu.com${t.author.url}">${t.author.name}</a>：`);
-                description = `${description} ${origin_link} ${origin_description}`;
-            }
-            return {
-                title,
-                description,
-                author,
-                pubDate,
-                link,
-            };
-        }),
-};
+const generateData = (data) =>
+    data.map((item) => {
+        const target = item.target ?? item;
+        const pubDate = parseDate(target.created * 1000);
+        const author = target.author.name;
+        const title = `${author}：${target.excerpt_title}`;
+        const link = `https://www.zhihu.com/pin/${target.id}`;
+        let description = generateDescription(target, `<a href="https://www.zhihu.com${target.author.url}">${author}</a>：`);
+        if (target.origin_pin !== undefined) {
+            const t = target.origin_pin;
+            const origin_link = `<a href="https://www.zhihu.com/pin/${t.id}">转发原文</a>：`;
+            const origin_description = generateDescription(t, `<a href="https://www.zhihu.com${t.author.url}">${t.author.name}</a>：`);
+            description = `${description} ${origin_link} ${origin_description}`;
+        }
+        return {
+            title,
+            description,
+            author,
+            pubDate,
+            link,
+        };
+    });
+
+export { generateData };

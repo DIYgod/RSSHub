@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const host = 'https://bjwb.seiee.sjtu.edu.cn';
 
-module.exports = function (meta, extract) {
+export default function (meta, extract) {
     return async (ctx) => {
         const { title, local, author } = meta(ctx);
 
@@ -38,4 +38,4 @@ module.exports = function (meta, extract) {
             item: out,
         });
     };
-};
+}

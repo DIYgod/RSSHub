@@ -1,3 +1,3 @@
-module.exports = {
-    rootUrl: 'https://www.odaily.news',
-};
+const rootUrl = 'https://www.odaily.news';
+
+export { rootUrl };

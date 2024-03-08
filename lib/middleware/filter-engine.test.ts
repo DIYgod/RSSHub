@@ -14,7 +14,7 @@ describe('filter-engine', () => {
         const app = (await import('@/app')).default;
 
         const response = await app.request('/test/1?filter=abc(%3F%3Ddef)');
-        expect(response.status).toBe(404);
+        expect(response.status).toBe(503);
         expect(await response.text()).toMatch(/RE2JSSyntaxException/);
     });
 
@@ -33,7 +33,7 @@ describe('filter-engine', () => {
         const app = (await import('@/app')).default;
 
         const response = await app.request('/test/1?filter=abc(%3F%3Ddef)');
-        expect(response.status).toBe(404);
+        expect(response.status).toBe(503);
         expect(await response.text()).toMatch(/somethingelse/);
     });
 });

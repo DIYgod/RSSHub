@@ -1,6 +1,6 @@
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { renderHTML } = require('./utils');
+import { renderHTML } from './utils';
 
 export default async (ctx) => {
     const base_url = 'https://gocn.vip/c/3lQ6GbD5ny/home';

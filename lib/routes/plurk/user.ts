@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const { baseUrl, fetchFriends, getPlurk } = require('./utils');
+import { baseUrl, fetchFriends, getPlurk } from './utils';
 
 export default async (ctx) => {
     const user = ctx.req.param('user');

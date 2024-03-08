@@ -1,6 +1,6 @@
-const utils = require('../utils');
-const { getSearch } = require('./twitter-api');
-const { initToken } = require('./token');
+import utils from '../utils';
+import { getSearch } from './twitter-api';
+import { initToken } from './token';
 
 export default async (ctx) => {
     const keyword = ctx.req.param('keyword');
