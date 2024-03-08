@@ -34,7 +34,7 @@ jobs:
       - name: Install dependencies (yarn)
         run: pnpm i
       - name: Build assets
-        run: npm run build:all
+        run: npm run build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

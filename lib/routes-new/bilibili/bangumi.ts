@@ -19,6 +19,10 @@ export const route: Route = {
     },
     name: '番剧',
     maintainers: ['DIYgod'],
+    radar: {
+        source: ['www.bilibili.com/bangumi/media/:bid'],
+        target: '/bangumi/media/:bid',
+    },
     handler: async (ctx) => {
         let seasonid = ctx.req.param('seasonid');
         const mediaid = ctx.req.param('mediaid');

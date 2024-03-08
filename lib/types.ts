@@ -62,7 +62,7 @@ interface Namespace extends NamespaceItem {
 export type { Namespace };
 
 interface RouteItem {
-    path: string;
+    path: string | string[];
     name: string;
     url?: string;
     maintainers: string[];

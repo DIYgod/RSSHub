@@ -149,7 +149,7 @@ jobs:
           cache: 'pnpm'
       - run: pnpm i
       - name: Build radar and maintainer
-        run: npm run build:all
+        run: npm run build
 
   automerge:
     if: github.triggering_actor == 'dependabot[bot]' && github.event_name == 'pull_request'

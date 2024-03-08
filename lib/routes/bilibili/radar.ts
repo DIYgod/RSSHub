@@ -26,7 +26,7 @@ export default {
                 title: '番剧',
                 docs: 'https://docs.rsshub.app/routes/social-media#bilibili',
                 source: '/bangumi/media/:bid',
-                target: (params) => `/bilibili/bangumi/media/${params.bid.replace('md', '')}`,
+                target: `/bilibili/bangumi/media/:bid`,
             },
             {
                 title: '当前在线',

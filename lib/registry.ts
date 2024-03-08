@@ -14,6 +14,7 @@ const namespaces: Record<
         routes: Record<string, Route>;
     }
 > = {};
+
 for (const module in modules) {
     const content = modules[module] as
         | {
@@ -38,9 +39,17 @@ for (const module in modules) {
                 routes: {},
             };
         }
-        namespaces[namespace].routes[content.route.path] = content.route;
+        if (Array.isArray(content.route.path)) {
+            for (const path of content.route.path) {
+                namespaces[namespace].routes[path] = content.route;
+            }
+        } else {
+            namespaces[namespace].routes[content.route.path] = content.route;
+        }
     }
 }
+
+export { namespaces };
 
 export default function (app: Hono) {
     for (const namespace in namespaces) {
