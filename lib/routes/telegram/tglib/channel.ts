@@ -35,8 +35,12 @@ function getMediaLink(src: string, m: Api.TypeMessageMedia) {
         }
         return `<a href="${src}" target="_blank">${linkText}</a>`;
     }
-    if (m instanceof Api.MessageMediaGeo && m.geo instanceof Api.GeoPoint) {
+    if ((m instanceof Api.MessageMediaGeo || m instanceof Api.MessageMediaGeoLive) && m.geo instanceof Api.GeoPoint) {
         return `<a href="https://www.google.com/maps/search/?api=1&query=${m.geo.lat}%2C${m.geo.long}" target="_blank">Geo LatLon: ${m.geo.lat}, ${m.geo.long}</a>`;
+    }
+    if (m instanceof Api.MessageMediaPoll) {
+        return `<h4>${m.poll.quiz ? 'Quiz' : 'Poll'}: ${m.poll.question}</h4><br />
+        <ul>${m.poll.answers.map((a) => `<li>${a.text}</li>`).join('')}</ul>`;
     }
     if (m instanceof Api.MessageMediaWebPage) {
         return ''; // a link without a document attach, usually is in the message text, so we can skip here
@@ -62,13 +66,18 @@ export default async function handler(ctx: Context) {
     let i = 0;
     const item: object[] = [];
     for (const message of messages) {
+        if (message.fwdFrom?.fromId !== undefined) {
+            // eslint-disable-next-line no-await-in-loop
+            const fwdFrom = await client.getEntity(message.fwdFrom.fromId);
+            attachments.push(`<b>Forwarded from: ${getDisplayName(fwdFrom)}</b>:`);
+        }
         if (message.media) {
             // messages that have no text are shown as if they're one post
             // because in TG only 1 attachment per message is possible
             const src = `${new URL(ctx.req.url).origin}/telegram/channel/${username}/${getPeerId(message.peerId)}_${message.id}`;
             attachments.push(getMediaLink(src, message.media));
         }
-        if (message.text !== '' || ++i === messages.length) {
+        if (message.text !== '' || ++i === messages.length - 1) {
             let description = attachments.join('<br/>\n');
             attachments = []; // emitting these, buffer other ones
 
@@ -76,7 +85,7 @@ export default async function handler(ctx: Context) {
                 description += `<p>${HTMLParser.unparse(message.message, message.entities).replaceAll('\n', '<br/>')}</p>`;
             }
 
-            const title = message.text ?? new Date(message.date * 1000).toLocaleString();
+            const title = message.text ? message.text : new Date(message.date * 1000).toLocaleString();
             item.push({
                 title,
                 description,
