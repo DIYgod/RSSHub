@@ -1,5 +1,5 @@
 export default {
-    docschina: {
+    'docschina.org': {
         _name: '印记中文',
         '.': [
             {
