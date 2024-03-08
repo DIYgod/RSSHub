@@ -196,6 +196,7 @@ export default async function handler(ctx) {
         }
         ctx.header('Content-Type', doc.mimeType);
         ctx.header('Accept-Ranges', 'bytes');
+        ctx.header('Content-Security-Policy', "default-src 'self'");
 
         const rangeHeader = ctx.req.header('Range');
         const range = parseRange(rangeHeader, doc.size.valueOf() - 1);
@@ -206,7 +207,9 @@ export default async function handler(ctx) {
         let stream;
         if (range.length === 0) {
             ctx.header('Content-Length', doc.size);
-            if (doc.mimeType.startsWith('application/')) {
+            if (!doc.mimeType.startsWith('video/') &&
+                !doc.mimeType.startsWith('audio/') &&
+                !doc.mimeType.startsWith('image/')) {
                 ctx.header('Content-Disposition', `attachment; filename="${encodeURIComponent(getFilename(media))}"`);
             }
             stream = streamDocument(doc);
