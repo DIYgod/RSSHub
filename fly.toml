@@ -1,10 +1,10 @@
-# fly.toml app configuration file generated for lindenhub on 2024-02-16T12:40:55+08:00
+# fly.toml app configuration file generated for lindenhub on 2024-03-09T22:15:38+08:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
 app = 'lindenhub'
-primary_region = 'iad'
+primary_region = 'hkg'
 kill_signal = 'SIGINT'
 kill_timeout = '5s'
 
