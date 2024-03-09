@@ -1,6 +1,6 @@
 import got from '@/utils/got';
-const { JSDOM } = require('jsdom');
-const cache = require('./cache');
+import { JSDOM } from 'jsdom';
+import cache from './cache';
 import { parseDate } from '@/utils/parse-date';
 
 export default async (ctx) => {

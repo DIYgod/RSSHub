@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     news: {
         xwjj: 'xwjj01',
         rcpy: 'xwjj01/rcpy',

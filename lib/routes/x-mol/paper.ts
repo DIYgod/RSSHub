@@ -1,10 +1,10 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const utils = require('./utils');
+import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-const asyncPool = require('tiny-async-pool');
+import asyncPool from 'tiny-async-pool';
 
 export default async (ctx) => {
     const { type, magazine } = ctx.req.param();

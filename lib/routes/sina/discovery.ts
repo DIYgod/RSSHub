@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const { getRollNewsList, parseRollNewsList, parseArticle } = require('./utils');
+import { getRollNewsList, parseRollNewsList, parseArticle } from './utils';
 
 const link = 'https://tech.sina.com.cn/discovery/';
 const map = new Map([

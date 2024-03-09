@@ -7,7 +7,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const locations = require('./locations');
+import locations from './locations';
 
 export default async (ctx) => {
     const categories = {

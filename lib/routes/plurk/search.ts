@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
-const dayjs = require('dayjs');
-const { baseUrl, getPlurk } = require('./utils');
+import dayjs from 'dayjs';
+import { baseUrl, getPlurk } from './utils';
 
 export default async (ctx) => {
     const keyword = ctx.req.param('keyword');

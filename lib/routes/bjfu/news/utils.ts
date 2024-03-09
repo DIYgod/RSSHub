@@ -56,6 +56,4 @@ const ProcessFeed = (base, list, caches) =>
             });
         })
     );
-module.exports = {
-    ProcessFeed,
-};
+export default { ProcessFeed };

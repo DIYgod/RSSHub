@@ -3,7 +3,7 @@ import { load } from 'cheerio';
 import got from '@/utils/got';
 import puppeteer from '@/utils/puppeteer';
 
-const { baseUrl, fetchDesc, getItem } = require('./utils');
+import { baseUrl, fetchDesc, getItem } from './utils';
 
 export default async (ctx) => {
     const { journal = 'science' } = ctx.req.param();

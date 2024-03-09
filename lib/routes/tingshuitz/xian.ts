@@ -1,6 +1,6 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const iconv = require('iconv-lite');
+import iconv from 'iconv-lite';
 
 export default async (ctx) => {
     const url = 'http://www.xazls.com/tsgg/index.htm';

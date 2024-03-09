@@ -86,8 +86,4 @@ const renderDesc = (desc) => {
     return desc.replaceAll('\n', '<br>');
 };
 
-module.exports = {
-    baseUrl,
-    getBoards,
-    renderDesc,
-};
+export { baseUrl, getBoards, renderDesc };

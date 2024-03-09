@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const cache = require('./cache');
+import cache from './cache';
 
 export default async (ctx) => {
     let bvid = ctx.req.param('bvid');
@@ -8,9 +8,9 @@ export default async (ctx) => {
         aid = bvid;
         bvid = null;
     }
-    const name = await cache.getVideoNameFromId(ctx, aid, bvid);
+    const name = await cache.getVideoNameFromId(aid, bvid);
     if (!aid) {
-        aid = await cache.getAidFromBvid(ctx, bvid);
+        aid = await cache.getAidFromBvid(bvid);
     }
 
     const link = `https://www.bilibili.com/video/${bvid || `av${aid}`}`;

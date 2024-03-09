@@ -1,7 +1,8 @@
-const got = require('@/utils/got');
-const cheerio = require('cheerio');
-const timezone = require('@/utils/timezone');
-module.exports = async (ctx) => {
+import got from '@/utils/got';
+import * as cheerio from 'cheerio';
+import timezone from '@/utils/timezone';
+import cache from '@/utils/cache';
+export default async (ctx) => {
     // 从仓库 Sekai-World/sekai-master-db-diff 获取最新公告
     const response = await got.get(`https://cdn.jsdelivr.net/gh/Sekai-World/sekai-master-db-diff@master/userInformations.json`);
     const posts = response.data || [];
@@ -15,10 +16,10 @@ module.exports = async (ctx) => {
                 const path = post.path.replace(/information\/index.html\?id=/, '');
                 link = `https://production-web.sekai.colorfulpalette.org/${post.path}`;
                 try {
-                    description = await ctx.cache.tryGet(guid, async () => {
+                    description = await cache.tryGet(guid, async () => {
                         const result = await got.get(`https://production-web.sekai.colorfulpalette.org/html/${path}.html`);
                         const $ = cheerio.load(result.data);
-                        return $('body').html();
+                        return $.html();
                     });
                 } catch {
                     description = link;
@@ -40,10 +41,10 @@ module.exports = async (ctx) => {
             return item;
         })
     );
-    ctx.state.data = {
+    ctx.set('data', {
         title: 'Project Sekai - News',
         link: 'https://pjsekai.sega.jp/',
         description: 'プロジェクトセカイ カラフルステージ！ feat.初音ミク',
         item: list,
-    };
+    });
 };

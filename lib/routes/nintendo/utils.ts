@@ -3,13 +3,13 @@ const __dirname = getCurrentPath(import.meta.url);
 
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const { JSDOM } = require('jsdom');
+import { JSDOM } from 'jsdom';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const dayjs = require('dayjs');
-const localizedFormat = require('dayjs/plugin/localizedFormat');
-require('dayjs/locale/zh-cn');
+import dayjs from 'dayjs';
+import localizedFormat from 'dayjs/plugin/localizedFormat';
+import 'dayjs/locale/zh-cn';
 dayjs.extend(localizedFormat);
 
 function nuxtReader(data) {
@@ -163,11 +163,4 @@ const ProcessNewsChina = (list, cache) =>
         })
     );
 
-module.exports = {
-    ProcessItem,
-    ProcessNews,
-    ProcessNewsChina,
-    ProcessItemChina,
-    nuxtReader,
-    generateImageLink,
-};
+export default { ProcessItem, ProcessNews, ProcessNewsChina, ProcessItemChina, nuxtReader, generateImageLink };

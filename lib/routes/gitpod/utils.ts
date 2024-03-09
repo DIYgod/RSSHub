@@ -1,3 +1,3 @@
-module.exports = {
-    rootUrl: 'https://www.gitpod.io',
-};
+const rootUrl = 'https://www.gitpod.io';
+
+export { rootUrl };

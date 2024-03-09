@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { setCookies } from '@/utils/puppeteer-utils';
-const { CookieJar } = require('tough-cookie');
+import { CookieJar } from 'tough-cookie';
 import logger from '@/utils/logger';
 import puppeteer from '@/utils/puppeteer';
 

@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { getRootUrl, X_UA, appDetail, imagePost, topicPost, videoPost } = require('./utils');
+import { getRootUrl, X_UA, appDetail, imagePost, topicPost, videoPost } from './utils';
 
 const typeMap = {
     feed: {

@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 import got from '@/utils/got';
-const { getData } = require('./utils');
+import { getData } from './utils';
 
 export default async (ctx) => {
     const url = `https://aeon.co/${ctx.req.param('category')}`;

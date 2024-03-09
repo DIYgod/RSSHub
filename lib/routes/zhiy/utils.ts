@@ -7,7 +7,4 @@ const fetchUserDate = async (author) => {
     return userData;
 };
 
-module.exports = {
-    baseUrl,
-    fetchUserDate,
-};
+export { baseUrl, fetchUserDate };

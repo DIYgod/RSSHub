@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { termsMap } = require('./terms-map');
+import { termsMap } from './terms-map';
 
 const baseUrl = 'https://thecatcity.com';
 

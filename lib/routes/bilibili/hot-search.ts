@@ -1,9 +1,9 @@
 import got from '@/utils/got';
-const cache = require('./cache');
-const utils = require('./utils');
+import cache from './cache';
+import utils from './utils';
 
 export default async (ctx) => {
-    const wbiVerifyString = await cache.getWbiVerifyString(ctx);
+    const wbiVerifyString = await cache.getWbiVerifyString();
     const params = utils.addWbiVerifyInfo('limit=10&platform=web', wbiVerifyString);
     const url = `https://api.bilibili.com/x/web-interface/wbi/search/square?${params}`;
     const response = await got({

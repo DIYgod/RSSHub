@@ -23,7 +23,4 @@ const renderVideo = (videoInfo) =>
         videoInfo,
     });
 
-module.exports = {
-    extractDoc,
-    renderVideo,
-};
+export { extractDoc, renderVideo };

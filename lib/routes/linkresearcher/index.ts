@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const qs = require('query-string');
+import qs from 'query-string';
 import { parseDate } from '@/utils/parse-date';
 
 const baseURL = 'https://www.linkresearcher.com';

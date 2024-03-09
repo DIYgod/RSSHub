@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 
 const domain = 'readhub.cn';
 const rootUrl = `https://${domain}`;
@@ -62,10 +62,6 @@ const processItems = async (items, tryGet) =>
         )
     );
 
-module.exports = {
-    rootUrl,
-    apiRootUrl,
-    apiTopicUrl,
-    art,
-    processItems,
-};
+export { rootUrl, apiRootUrl, apiTopicUrl, processItems };
+
+export { art } from '@/utils/render';

@@ -64,6 +64,4 @@ const config = {
     zzb: { title: '组织部（老干部处、党校）', id: '1534' },
 };
 
-module.exports = {
-    config,
-};
+export { config };

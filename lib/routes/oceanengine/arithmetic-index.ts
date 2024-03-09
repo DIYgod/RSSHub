@@ -2,13 +2,14 @@ import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
 import cache from '@/utils/cache';
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import * as path from 'node:path';
 import { config } from '@/config';
 import puppeteer from '@/utils/puppeteer';
+import { createDecipheriv } from 'node:crypto';
 
 // Parameters
 const CACHE_MAX_AGE = config.cache.contentExpire;
@@ -47,7 +48,6 @@ const getMultiKeywordHotTrend = async (page, keyword, start_date, end_date, app_
 };
 
 // Decrypt Data
-const { createDecipheriv } = require('node:crypto');
 const key = 'anN2bXA2NjYsamlh';
 const iv = 'amlheW91LHFpYW53';
 const algorithm = 'aes-128-cfb';

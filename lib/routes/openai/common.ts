@@ -70,7 +70,4 @@ const parseArticle = (ctx, rootUrl, attributes) =>
         };
     });
 
-module.exports = {
-    getApiUrl,
-    parseArticle,
-};
+export { getApiUrl, parseArticle };

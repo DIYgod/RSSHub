@@ -116,10 +116,4 @@ const processItems = async (apiUrl, limit, tryGet, ...searchParams) => {
     return items;
 };
 
-module.exports = {
-    rootUrl,
-    apiRootUrl,
-
-    getInfo,
-    processItems,
-};
+export { rootUrl, apiRootUrl, getInfo, processItems };

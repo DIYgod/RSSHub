@@ -6,7 +6,7 @@ import cache from '@/utils/cache';
 
 import got from '@/utils/got'; // get web content
 import { load } from 'cheerio'; // html parser
-const get_article = require('./_article');
+import get_article from './_article';
 import { isValidHost } from '@/utils/valid-host';
 
 export default async (ctx) => {

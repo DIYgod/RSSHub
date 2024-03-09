@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const { rootUrl, apiRootUrl, types, ProcessThreads } = require('./utils');
+import { rootUrl, apiRootUrl, types, ProcessThreads } from './utils';
 
 const sections = {
     257: '留学申请',

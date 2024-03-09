@@ -1,4 +1,4 @@
-const { getItems } = require('./utils');
+import { getItems } from './utils';
 
 const url = 'https://yz.jou.edu.cn/index/zxgg.htm';
 const host = 'https://yz.jou.edu.cn';

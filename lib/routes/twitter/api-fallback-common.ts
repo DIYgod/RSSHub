@@ -1,8 +1,8 @@
 import { config } from '@/config';
 import logger from '@/utils/logger';
-const utils = require('./utils');
+import utils from './utils';
 
-module.exports = async (ctx, devApiImpl, webApiImpl) => {
+export default async (ctx, devApiImpl, webApiImpl) => {
     const { force_web_api } = utils.parseRouteParams(ctx.req.param('routeParams'));
 
     if (!force_web_api && config.twitter && config.twitter.consumer_key && config.twitter.consumer_secret) {

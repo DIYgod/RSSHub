@@ -88,7 +88,7 @@ const fetchAllCharacters = (data, base) => {
     return info;
 };
 
-module.exports = {
+export default {
     BASE: base,
     langBase,
     fetchAllCharacters,

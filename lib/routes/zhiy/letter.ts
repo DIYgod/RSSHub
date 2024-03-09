@@ -1,6 +1,6 @@
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { baseUrl, fetchUserDate } = require('./utils');
+import { baseUrl, fetchUserDate } from './utils';
 
 export default async (ctx) => {
     const author = ctx.req.param('author');

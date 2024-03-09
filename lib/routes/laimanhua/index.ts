@@ -1,5 +1,5 @@
 import got from '@/utils/got';
-const iconv = require('iconv-lite');
+import iconv from 'iconv-lite';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 

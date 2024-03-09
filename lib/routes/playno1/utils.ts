@@ -1,6 +1,6 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const { CookieJar, Cookie } = require('tough-cookie');
+import { CookieJar, Cookie } from 'tough-cookie';
 const cookieJar = new CookieJar();
 const cookie = Cookie.fromJSON({
     key: 'playno1',
@@ -26,7 +26,4 @@ const processArticle = (items, cache) =>
         )
     );
 
-module.exports = {
-    cookieJar,
-    processArticle,
-};
+export { cookieJar, processArticle };

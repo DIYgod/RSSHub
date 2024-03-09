@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-const { appsUrl, newsUrl, fixImg } = require('../utils');
+import { appsUrl, newsUrl, fixImg } from '../utils';
 
 export default async (ctx) => {
     const { id, lang = '' } = ctx.req.param();

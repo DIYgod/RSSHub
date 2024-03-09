@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
-const { host, puppeteerGet } = require('./utils');
+import { host, puppeteerGet } from './utils';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';

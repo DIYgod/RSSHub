@@ -65,6 +65,4 @@ const TYPE = {
     },
 };
 
-module.exports = {
-    TYPE,
-};
+export default { TYPE };

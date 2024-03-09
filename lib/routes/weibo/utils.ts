@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const querystring = require('querystring');
+import querystring from 'querystring';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { fallback, queryToBoolean, queryToInteger } from '@/utils/readable-social';
@@ -465,4 +465,4 @@ const weiboUtils = {
     })(),
 };
 
-module.exports = weiboUtils;
+export default weiboUtils;

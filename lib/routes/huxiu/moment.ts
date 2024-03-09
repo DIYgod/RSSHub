@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-const { rootUrl, apiMomentRootUrl, processItems, fetchData } = require('./util');
+import { rootUrl, apiMomentRootUrl, processItems, fetchData } from './util';
 
 export default async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;

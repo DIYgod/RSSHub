@@ -208,4 +208,4 @@ function getTagItems(cache, tag, page, get_bittorrent = false, embed_thumb = fal
     return page ? gatherItemsByPage(cache, `tag/${tag}?next=${page}`, get_bittorrent, embed_thumb) : gatherItemsByPage(cache, `tag/${tag}`, get_bittorrent, embed_thumb);
 }
 
-module.exports = { getFavoritesItems, getSearchItems, getTagItems, has_cookie, from_ex };
+export default { getFavoritesItems, getSearchItems, getTagItems, has_cookie, from_ex };

@@ -1,5 +1,5 @@
-const { TITLE, HOST } = require('./const');
-const { fetchActivityList, fetchPerformerList, fetchBrandList, fetchCityList, fetchStyleList } = require('./service');
+import { TITLE, HOST } from './const';
+import { fetchActivityList, fetchPerformerList, fetchBrandList, fetchCityList, fetchStyleList } from './service';
 
 export default async (ctx) => {
     const type = ctx.req.param('type') || '';

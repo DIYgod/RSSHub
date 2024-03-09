@@ -7,8 +7,8 @@ import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const { HOST, NEW_LIST, OFFICIAL_PAGE_TYPE, POST_FULL, LINK, PUBLIC_IMG, PRIVATE_IMG } = require('./constant');
-const { getI18nGameInfo, getI18nType } = require('./utils');
+import { HOST, NEW_LIST, OFFICIAL_PAGE_TYPE, POST_FULL, LINK, PUBLIC_IMG, PRIVATE_IMG } from './constant';
+import { getI18nGameInfo, getI18nType } from './utils';
 
 const getEventList = async ({ type, gids, size, language }) => {
     const query = new URLSearchParams({

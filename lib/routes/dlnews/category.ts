@@ -4,10 +4,10 @@ const __dirname = getCurrentPath(import.meta.url);
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
-const { getData, getList } = require('./utils');
+import { getData, getList } from './utils';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const asyncPool = require('tiny-async-pool');
+import asyncPool from 'tiny-async-pool';
 
 const _website = 'dlnews';
 const topics = {

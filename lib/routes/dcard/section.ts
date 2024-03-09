@@ -1,6 +1,6 @@
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
-const utils = require('./utils');
+import utils from './utils';
 import puppeteer from '@/utils/puppeteer';
 
 export default async (ctx) => {

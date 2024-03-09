@@ -24,6 +24,4 @@ const ProcessItem = async (item) => {
     return item;
 };
 
-module.exports = {
-    ProcessItem,
-};
+export default { ProcessItem };

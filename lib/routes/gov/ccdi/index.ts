@@ -1,5 +1,5 @@
 import { getSubPath } from '@/utils/common-utils';
-const { rootUrl, parseNewsList, parseArticle } = require('./utils');
+import { rootUrl, parseNewsList, parseArticle } from './utils';
 
 export default async (ctx) => {
     const defaultPath = '/yaowenn/';

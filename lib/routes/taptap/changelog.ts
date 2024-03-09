@@ -1,6 +1,6 @@
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const { getRootUrl, appDetail, X_UA } = require('./utils');
+import { getRootUrl, appDetail, X_UA } from './utils';
 
 export default async (ctx) => {
     const is_intl = ctx.req.url.indexOf('/intl/') === 0;

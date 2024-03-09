@@ -1,7 +1,7 @@
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const url = require('url');
+import * as url from 'node:url';
 
 const ProcessFeed = async (list, cache) => {
     const host = 'https://www.leiphone.com';
@@ -36,6 +36,4 @@ const ProcessFeed = async (list, cache) => {
     return items;
 };
 
-module.exports = {
-    ProcessFeed,
-};
+export default { ProcessFeed };

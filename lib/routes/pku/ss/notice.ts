@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const { baseUrl, getSingleRecord, getArticle } = require('./common');
+import { baseUrl, getSingleRecord, getArticle } from './common';
 
 const host = `${baseUrl}/newscenter/notice/`;
 

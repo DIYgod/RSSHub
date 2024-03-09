@@ -155,6 +155,4 @@ const getData = async (ctx, url, title) => {
     };
 };
 
-module.exports = {
-    getData,
-};
+export default { getData };

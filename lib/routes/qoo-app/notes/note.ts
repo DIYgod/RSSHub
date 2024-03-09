@@ -4,7 +4,7 @@ const __dirname = getCurrentPath(import.meta.url);
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-const { ssoUrl, notesUrl } = require('../utils');
+import { ssoUrl, notesUrl } from '../utils';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 

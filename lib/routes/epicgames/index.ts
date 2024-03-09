@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 
 export default async (ctx) => {
     const locale = ctx.req.param('locale') ?? 'en-US';

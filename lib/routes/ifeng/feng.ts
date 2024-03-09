@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const { extractDoc, renderVideo } = require('./utils');
+import { extractDoc, renderVideo } from './utils';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 

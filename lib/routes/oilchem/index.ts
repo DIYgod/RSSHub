@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const routes = require('./routes');
+import routes from './routes';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 

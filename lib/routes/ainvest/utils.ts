@@ -1,6 +1,6 @@
-const crypto = require('crypto');
-const CryptoJS = require('crypto-js');
-const { KJUR, KEYUTIL, hextob64 } = require('jsrsasign');
+import crypto from 'crypto';
+import CryptoJS from 'crypto-js';
+import { KJUR, KEYUTIL, hextob64 } from 'jsrsasign';
 
 const publicKey =
     'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCARnxLlrhTK28bEV7s2IROjT73KLSjfqpKIvV8L+Yhe4BrF0Ut4oOH728HZlbSF0C3N0vXZjLAFesoS4v1pYOjVCPXl920Lh2seCv82m0cK78WMGuqZTfA44Nv7JsQMHC3+J6IZm8YD53ft2d8mYBFgKektduucjx8sObe7eRyoQIDAQAB';
@@ -65,9 +65,4 @@ const getHeaders = (key) => {
     };
 };
 
-module.exports = {
-    randomString,
-    encryptAES,
-    decryptAES,
-    getHeaders,
-};
+export { randomString, encryptAES, decryptAES, getHeaders };

@@ -36,8 +36,4 @@ const ProcessFeed = (limit, tryGet, items) =>
         )
     );
 
-module.exports = {
-    rootUrl,
-    ossUrl,
-    ProcessFeed,
-};
+export { rootUrl, ossUrl, ProcessFeed };

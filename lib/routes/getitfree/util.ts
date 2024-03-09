@@ -312,15 +312,4 @@ const parseFilterStr = (filterStr) => {
     return parseStr(filterStr, {});
 };
 
-module.exports = {
-    apiSlug,
-    rootUrl,
-
-    bakeFilterSearchParams,
-    bakeFiltersWithPair,
-    bakeUrl,
-    fetchData,
-    getFilterNameForTitle,
-    getFilterParamsForUrl,
-    parseFilterStr,
-};
+export { apiSlug, rootUrl, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchData, getFilterNameForTitle, getFilterParamsForUrl, parseFilterStr };

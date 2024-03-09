@@ -44,7 +44,7 @@ const getItemsFromURLs = async (URLs, cache) => {
     return items;
 };
 
-module.exports.announcementsRouter = async (ctx) => {
+export const announcementsRouter = async (ctx) => {
     const URLs = {
         党政: 'https://physics.scnu.edu.cn/NEWS/Notices/PartyAndGovernment/',
         教务: 'https://physics.scnu.edu.cn/NEWS/Notices/Education/',
@@ -61,7 +61,7 @@ module.exports.announcementsRouter = async (ctx) => {
     });
 };
 
-module.exports.newsRouter = async (ctx) => {
+export const newsRouter = async (ctx) => {
     const URLs = {
         学院新闻: 'https://physics.scnu.edu.cn/NEWS/News/College/',
         教务新闻: 'https://physics.scnu.edu.cn/NEWS/News/Education/',
@@ -77,7 +77,7 @@ module.exports.newsRouter = async (ctx) => {
     });
 };
 
-module.exports.researchNewsRouter = async (ctx) => {
+export const researchNewsRouter = async (ctx) => {
     const URLs = {
         学术报告: 'https://physics.scnu.edu.cn/RESEARCH/EVENTS/Seminars/',
         学术会议: 'https://physics.scnu.edu.cn/RESEARCH/EVENTS/Conferences/',

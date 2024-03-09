@@ -34,4 +34,4 @@ const MEDIA_TYPE_TO_ITEM_HANDLE = {
     movie: handleMovieItem,
 };
 
-module.exports = { handleDescription, handleMovieItem, handleTVShowItem, MEDIA_TYPE_TO_ITEM_HANDLE };
+export { handleDescription, handleMovieItem, handleTVShowItem, MEDIA_TYPE_TO_ITEM_HANDLE };

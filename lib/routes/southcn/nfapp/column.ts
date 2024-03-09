@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const { parseArticle } = require('./utils');
+import { parseArticle } from './utils';
 
 export default async (ctx) => {
     const columnId = ctx.req.param('column') ?? 38;

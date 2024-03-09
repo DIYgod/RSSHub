@@ -45,8 +45,4 @@ const getAuthorFeed = (did, tryGet) =>
         false
     );
 
-module.exports = {
-    resolveHandle,
-    getProfile,
-    getAuthorFeed,
-};
+export { resolveHandle, getProfile, getAuthorFeed };

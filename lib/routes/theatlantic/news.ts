@@ -1,6 +1,6 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const { getArticleDetails } = require('./utils');
+import { getArticleDetails } from './utils';
 export default async (ctx) => {
     const host = 'https://www.theatlantic.com';
     const category = ctx.req.param('category');

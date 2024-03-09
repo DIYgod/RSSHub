@@ -7,4 +7,4 @@ function hash(images) {
     return md5(entries.map((x) => x.join(',')).join('|'));
 }
 
-module.exports = { hash };
+export { hash };

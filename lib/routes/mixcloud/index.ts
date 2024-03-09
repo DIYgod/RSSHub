@@ -1,7 +1,7 @@
 import got from '@/utils/got';
-const CryptoJS = require('crypto-js');
+import CryptoJS from 'crypto-js';
 import { parseDate } from '@/utils/parse-date';
-const { queries } = require('./queries');
+import { queries } from './queries';
 
 export default async (ctx) => {
     const host = 'https://www.mixcloud.com';

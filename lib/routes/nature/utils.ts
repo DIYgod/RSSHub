@@ -2,7 +2,7 @@ import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-const { CookieJar } = require('tough-cookie');
+import { CookieJar } from 'tough-cookie';
 const baseUrl = 'https://www.nature.com';
 
 const fixFigure = (html) => {
@@ -1090,11 +1090,4 @@ const journalMap = {
     ],
 };
 
-module.exports = {
-    baseUrl,
-    cookieJar,
-    getArticle,
-    getArticleList,
-    getDataLayer,
-    journalMap,
-};
+export { baseUrl, cookieJar, getArticle, getArticleList, getDataLayer, journalMap };

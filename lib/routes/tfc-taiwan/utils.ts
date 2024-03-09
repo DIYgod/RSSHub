@@ -5,7 +5,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import * as path from 'node:path';
 import { art } from '@/utils/render';
-const asyncPool = require('tiny-async-pool');
+import asyncPool from 'tiny-async-pool';
 import { parseDate } from '@/utils/parse-date';
 
 const asyncPoolAll = async (...args) => {
@@ -52,8 +52,4 @@ const parseItems = (list, tryGet) =>
         })
     );
 
-module.exports = {
-    baseUrl,
-    parseList,
-    parseItems,
-};
+export { baseUrl, parseList, parseItems };

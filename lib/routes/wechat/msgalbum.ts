@@ -1,6 +1,6 @@
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
 export default async (ctx) => {

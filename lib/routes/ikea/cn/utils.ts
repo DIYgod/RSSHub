@@ -39,7 +39,4 @@ const generateProductItem = (product) => {
     };
 };
 
-module.exports = {
-    generateRequestHeaders,
-    generateProductItem,
-};
+export { generateRequestHeaders, generateProductItem };

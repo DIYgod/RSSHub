@@ -7,6 +7,4 @@ const domainValidation = (domain) => {
     }
 };
 
-module.exports = {
-    domainValidation,
-};
+export { domainValidation };

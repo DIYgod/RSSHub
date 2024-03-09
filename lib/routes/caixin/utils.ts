@@ -46,7 +46,4 @@ const parseBlogArticle = (item, tryGet) =>
         return item;
     });
 
-module.exports = {
-    parseArticle,
-    parseBlogArticle,
-};
+export { parseArticle, parseBlogArticle };

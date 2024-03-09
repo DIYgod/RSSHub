@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const EhAPI = require('./ehapi');
+import EhAPI from './ehapi';
 
 export default async (ctx) => {
     if (!EhAPI.has_cookie) {

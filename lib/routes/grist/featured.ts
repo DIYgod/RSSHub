@@ -1,5 +1,5 @@
 import cache from '@/utils/cache';
-const { getData, getList } = require('./utils');
+import { getData, getList } from './utils';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 

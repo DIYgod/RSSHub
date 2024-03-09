@@ -1,8 +1,8 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const utils = require('./utils');
-const { generateData } = require('./pin/utils');
+import utils from './utils';
+import { generateData } from './pin/utils';
 import { parseDate } from '@/utils/parse-date';
 
 export default async (ctx) => {

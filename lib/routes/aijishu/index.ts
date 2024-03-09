@@ -1,4 +1,4 @@
-const utils = require('./utils');
+import utils from './utils';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 

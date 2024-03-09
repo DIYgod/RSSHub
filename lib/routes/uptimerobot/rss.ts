@@ -1,10 +1,10 @@
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
-const Parser = require('rss-parser');
+import Parser from 'rss-parser';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
-const dayjs = require('dayjs');
+import dayjs from 'dayjs';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
 const titleRegex = /(.+)\s+is\s+([A-Z]+)\s+\((.+)\)/;

@@ -1,9 +1,9 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
-const tough = require('tough-cookie');
+import tough from 'tough-cookie';
 // eslint-disable-next-line n/no-extraneous-require
-const FormData = require('form-data');
+import FormData from 'form-data';
 
 export default async (ctx) => {
     const rootUrl = `https://www.telecompaper.com/${ctx.req.param('caty') === 'industry-resources' ? ctx.req.param('caty') : 'international/news/' + ctx.req.param('caty')}`;

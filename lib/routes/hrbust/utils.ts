@@ -55,7 +55,7 @@ const fetchAllArticle = (data, base) => {
     return info;
 };
 
-module.exports = {
+export default {
     // BASE: base,
     JWZXBASE: jwzxBase,
     columnIdBase,

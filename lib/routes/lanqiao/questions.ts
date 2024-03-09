@@ -1,7 +1,7 @@
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
-const MarkdownIt = require('markdown-it');
+import MarkdownIt from 'markdown-it';
 
 export default async (ctx) => {
     const id = ctx.req.param('id');

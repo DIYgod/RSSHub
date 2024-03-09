@@ -3,7 +3,7 @@
 // https://github.com/DIYgod/RSSHub/pull/8288
 import got from 'got';
 import { parseDate } from '@/utils/parse-date';
-const { categories } = require('./category-map');
+import { categories } from './category-map';
 
 const baseUrl = 'https://www.mckinsey.com.cn';
 const endpoint = `${baseUrl}/wp-json`;
