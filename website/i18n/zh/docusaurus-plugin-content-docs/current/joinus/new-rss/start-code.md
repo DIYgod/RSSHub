@@ -2,7 +2,107 @@
 sidebar_position: 3
 ---
 
-# 制作自己的 RSSHub 路由
+# 制作路由
+
+## 创建命名空间
+
+制作新的 RSS 路由的第一步是创建命名空间。命名空间原则上应该与您制作 RSS 源的主要网站的二级域名**相同**。例如，如果您正在为 [https://github.com/DIYgod/RSSHub/issues](https://github.com/DIYgod/RSSHub/issues) 制作 RSS 源，第二级域名是 `github`。因此，您应该在 `lib/routes` 下创建名为 `github` 的文件夹，作为您的 RSS 路由的命名空间。
+
+:::tip
+
+在创建命名空间时，避免为同一命名空间的创建多个变体。例如，如果您为 `yahoo.co.jp` 和 `yahoo.com` 制作 RSS 源，则应该使用单个命名空间 `yahoo`，而不是创建多个命名空间如 `yahoo-jp`、`yahoojp`、`yahoo.jp`、`jp.yahoo`、`yahoocojp` 等。
+
+:::
+
+一旦您为 RSS 路由创建了命名空间，下一步就是创建文件 `namespace.ts` 来定义命名空间。
+
+文件应该通过 namespace 返回一个符合 Namespace 类型的对象。Namespace 的定义在 [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L49)
+
+- name：供人类阅读的命名空间的名称，它会被用作文档的标题
+- url：对应网站的不包含 protocol 的网址
+- description：可选，对使用此命名空间用户的提示和额外说明，它会被插入到文档中
+- zh, zh-TW, ja: 可选，英文以外的多语言支持，它会被用作生成多语言文档
+
+一个完整的例子是：
+
+```ts
+import type { Namespace } from '@/types';
+
+export const namespace: Namespace = {
+    name: 'GitHub',
+    url: 'github.com',
+    description: `
+:::tip
+GitHub provides some official RSS feeds:
+
+-   Repo releases: \`https://github.com/:owner/:repo/releases.atom\`
+-   Repo commits: \`https://github.com/:owner/:repo/commits.atom\`
+-   User activities: \`https://github.com/:user.atom\`
+-   Private feed: \`https://github.com/:user.private.atom?token=:secret\` (You can find **Subscribe to your news feed** in [dashboard](https://github.com) page after login)
+-   Wiki history: \`https://github.com/:owner/:repo/wiki.atom\`
+:::`,
+
+    zh: {
+        name: '给他哈不',
+    },
+};
+```
+
+## 创建路由
+
+一旦您为路由创建了命名空间，下一步创建一个路由文件注册路由。
+
+例如，如果您为 [GitHub 仓库 Issues](/zh/routes/programming#github-yong-hu-cang-ku) 制作 RSS 源，并且假设您希望用户输入 GitHub 用户名和仓库名，如果他们没有输入仓库名，则返回到 `RSSHub`，您可以在 `/lib/routes/github/issue.ts` 中注册您的新 RSS 路由，文件需要通过 route 返回一个符合 Route 类型的对象。Route 的定义在 [/lib/types.ts](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L64)
+
+- path: 路由路径，使用 [Hono 路由](https://hono.dev/api/routing) 语法
+- name: 供人类阅读的路由名称，它会被用作文档的标题
+- url: 对应网站的不包含 protocol 的网址
+- maintainers: 负责维护此路由的人员的 GitHub handle
+- example: 路由的一个示例 URL
+- parameters: 路由的参数说明
+- description: 可选，对使用此路由用户的提示和额外说明，它会被插入到文档中
+- categories: 路由的分类，它会被写入到对应分类的文档中
+- features: 路由的一些特性，比如依赖哪些配置项，是否反爬严格，是否支持某种功能等
+- radar: 可以帮助用户在使用 [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) 或其他兼容其格式的软件时订阅您的新 RSS 路由，我们将在后面的部分更多介绍
+- handler: 路由的处理函数，我们将在后面的部分更多介绍
+
+一个完整例子是：
+
+```ts
+import { Route } from '@/types';
+
+export const route: Route = {
+    path: '/issue/:user/:repo/:state?/:labels?',
+    categories: ['programming'],
+    example: '/github/issue/vuejs/core/all/wontfix',
+    parameters: { user: 'GitHub username', repo: 'GitHub repo name', state: 'the state of the issues. Can be either `open`, `closed`, or `all`. Default: `open`.', labels: 'a list of comma separated label names' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['github.com/:user/:repo/issues', 'github.com/:user/:repo/issues/:id', 'github.com/:user/:repo'],
+        target: '/issue/:user/:repo',
+    },
+    name: 'Repo Issues',
+    maintainers: ['HenryQW', 'AndreyMZ'],
+    handler,
+};
+```
+
+在上面的示例中，`issue` 是一个精确匹配，`:user` 是一个必需参数，`:repo?` 是一个可选参数。`?` 在 `:repo` 之后表示该参数是可选的
+
+## 编写路由处理函数
+
+处理函数会被传入一个参数 ctx，函数结束后需要返回一个包含 RSS 所需信息的对象
+
+ctx 可以使用的 API 可以在 [Hono context 文档](https://hono.dev/api/context)中查看
+
+返回值的类型在这里定义：[/lib/types.ts#L36](https://github.com/DIYgod/RSSHub/blob/master/lib/types.ts#L36)
 
 如前所述，我们以 [GitHub 仓库 Issues](/zh/routes/programming#github-yong-hu-cang-ku) 为例制作 RSS 源。我们将展示前面提到的四种数据获取方法：
 
@@ -10,6 +110,15 @@ sidebar_position: 3
 2.  [通过 got 从 HTML 获取数据](#tong-guo-got-cong-html-huo-qu-shu-ju)
 3.  [使用通用配置路由](#shi-yong-tong-yong-pei-zhi-lu-you)
 4.  [使用 puppeteer](#shi-yong-puppeteer)
+
+:::warning
+
+以下示例代码为旧版标准，区别为
+
+- 处理函数之前会被整体返回，现在只作为 route 对象的一部分返回
+- 处理函数之前会把 RSS 信息保存在 `ctx.set('data')` 中且没有返回值，现在需要把 RSS 信息作为处理函数的返回值
+
+:::
 
 ## 通过 API
 
