@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -9,7 +10,31 @@ const indexs = {
     gjxw: 1,
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/yjxw/:category?',
+    categories: ['forecast'],
+    example: '/cneb/yjxw',
+    parameters: { category: '分类，见下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['cneb.gov.cn/yjxw/:category?', 'cneb.gov.cn/'],
+    },
+    name: '应急新闻',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 全部 | 国内新闻 | 国际新闻 |
+  | ---- | -------- | -------- |
+  |      | gnxw     | gjxw     |`,
+};
+
+async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 400;
 
     const category = ctx.req.param('category') ?? '';
@@ -65,9 +90,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `国家应急广播 - ${index === -1 ? '新闻' : $('.select').text()}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

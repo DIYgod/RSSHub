@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { baseUrl, apiHost, parseEventDetail, parseItem } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/hub/events',
+    categories: ['programming'],
+    example: '/baai/hub/events',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['hub.baai.ac.cn/events', 'hub.baai.ac.cn/'],
+    },
+    name: '智源社区 - 活动',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'hub.baai.ac.cn/events',
+};
+
+async function handler(ctx) {
     const responses = await got.all(
         Array.from(
             {
@@ -25,9 +48,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '活动 - 智源社区',
         link: `${baseUrl}/events`,
         item: items,
-    });
-};
+    };
+}

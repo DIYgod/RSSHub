@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 
 async function getCategoryId(categories) {
@@ -11,7 +12,25 @@ async function getCategoryId(categories) {
     return response.reduce((queryString, item) => queryString + item.id + ',', '');
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/recently/:category?',
+    categories: ['blog'],
+    example: '/macmenubar/recently/developer-apps,system-tools',
+    parameters: { category: 'Category path name, seperate by comma, default is all categories. Category path name can be found in url' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Recently',
+    maintainers: ['5upernova-heng'],
+    handler,
+};
+
+async function handler(ctx) {
     const baseUrl = 'https://macmenubar.com/wp-json/wp/v2/posts';
     const categories = ctx.req.param('category');
     const searchParams = {
@@ -39,9 +58,9 @@ export default async (ctx) => {
             category: [...tags, ...categories],
         };
     });
-    ctx.set('data', {
+    return {
         title: 'Recent Posts | MacMenuBar.com',
         link: 'https://macmenubar.com/recently-added/',
         item: items,
-    });
-};
+    };
+}

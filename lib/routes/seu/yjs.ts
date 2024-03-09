@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
 const url = 'https://seugs.seu.edu.cn/26671/list.htm';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/yjs',
+    categories: ['university'],
+    example: '/seu/yjs',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['seugs.seu.edu.cn/26671/list.htm', 'seugs.seu.edu.cn/'],
+    },
+    name: '研究生院全部公告',
+    maintainers: ['Denkiyohou'],
+    handler,
+    url: 'seugs.seu.edu.cn/26671/list.htm',
+};
+
+async function handler() {
     const response = await got(url);
     const $ = load(response.data);
     const list = $('.news')
@@ -30,9 +53,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '东南大学研究生公告',
         link: url,
         item: items,
-    });
-};
+    };
+}

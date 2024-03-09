@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -22,7 +23,36 @@ const typeMap = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/topic/:id/:type?/:sort?/:lang?',
+    categories: ['game'],
+    example: '/taptap/topic/142793/official',
+    parameters: { id: '游戏 ID，游戏主页 URL 中获取', type: '论坛版块，默认显示所有帖子，论坛版块 URL 中 `type` 参数，见下表，默认为 `feed`', sort: '排序，见下表，默认为 `created`', lang: '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['taptap.com/app/:id/topic', 'taptap.com/app/:id'],
+        target: '/topic/:id',
+    },
+    name: '游戏论坛',
+    maintainers: ['hoilc', 'TonyRL'],
+    handler,
+    description: `| 全部 | 精华  | 官方     | 影片  |
+  | ---- | ----- | -------- | ----- |
+  | feed | elite | official | video |
+
+  | 发布时间 | 回复时间  |
+  | -------- | --------- |
+  | created  | commented |`,
+};
+
+async function handler(ctx) {
     const lang = ctx.req.param('lang') ?? 'zh_CN';
     const appId = ctx.req.param('id');
     const appData = await appDetail(appId, lang);
@@ -67,12 +97,12 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `${app_name} - ${typeMap[type][lang]} - TapTap 论坛`,
         link: `${getRootUrl(false)}/app/${appId}/topic?type=${type}&sort=${sort}`,
         image: app_img,
         item: out.filter((item) => item !== ''),
-    });
+    };
 
     ctx.set('json', {
         title: `${app_name} - ${typeMap[type][lang]} - TapTap 论坛`,
@@ -83,4 +113,4 @@ export default async (ctx) => {
         groupId,
         topics_list,
     });
-};
+}

@@ -1,9 +1,35 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 const baseUrl = 'https://www.slowmist.com';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:type?',
+    categories: ['new-media'],
+    example: '/slowmist/research',
+    parameters: { type: '分类，见下表，默认为公司新闻' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['slowmist.com/zh/news.html'],
+    },
+    name: '动态',
+    maintainers: ['AtlasQuan'],
+    handler,
+    url: 'slowmist.com/zh/news.html',
+    description: `| 公司新闻 | 漏洞披露 | 技术研究 |
+  | -------- | -------- | -------- |
+  | news     | vul      | research |`,
+};
+
+async function handler(ctx) {
     let type = ctx.req.param('type');
 
     let title = '慢雾科技 - ';
@@ -41,9 +67,9 @@ export default async (ctx) => {
 
     items = await Promise.all(items.map((item) => finishArticleItem(item)));
 
-    ctx.set('data', {
+    return {
         title,
         link: url,
         item: items,
-    });
-};
+    };
+}

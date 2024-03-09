@@ -1,7 +1,29 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/citations/:id',
+    categories: ['journal'],
+    example: '/google/citations/mlmE4JMAAAAJ',
+    parameters: { id: 'N' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Author Citations',
+    maintainers: ['KellyHwong', 'const7'],
+    handler,
+    description: `The parameter id in the route is the id in the URL of the user's Google Scholar reference page, for example \`https://scholar.google.com/citations?user=mlmE4JMAAAAJ\` to \`mlmE4JMAAAAJ\`.
+
+  Query parameters are also supported here, for example \`https://scholar.google.com/citations?user=mlmE4JMAAAAJ&sortby=pubdate\` to \`mlmE4JMAAAAJ&sortby=pubdate\`. Please make sure that the user id (\`mlmE4JMAAAAJ\` in this case) should be the first parameter in the query string.`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const BASE_URL = `https://scholar.google.com`;
     const url = `https://scholar.google.com/citations?user=${id}`;
@@ -35,10 +57,10 @@ export default async (ctx) => {
             guid: itemUrl,
         };
     });
-    ctx.set('data', {
+    return {
         title: `Google Scholar: ${name}`,
         link: url,
         description,
         item: out,
-    });
-};
+    };
+}

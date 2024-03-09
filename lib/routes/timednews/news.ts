@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -52,7 +53,30 @@ const PATH_LIST = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:type?',
+    categories: ['new-media'],
+    example: '/timednews/news',
+    parameters: { type: '子分类，见下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '新闻',
+    maintainers: ['linbuxiao'],
+    handler,
+    description: `子分类
+
+  | 全部 | 时政           | 财经    | 科技       | 社会   | 体娱   | 国际          | 美国 | 中国 | 欧洲   | 评论     |
+  | ---- | -------------- | ------- | ---------- | ------ | ------ | ------------- | ---- | ---- | ------ | -------- |
+  | all  | currentAffairs | finance | technology | social | sports | international | usa  | cn   | europe | comments |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'all';
     const url = `${BASE}/${PATH_LIST[type].path}`;
     const res = await got({
@@ -91,12 +115,12 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '时刻新闻',
         link: url,
         description: `时刻新闻 ${PATH_LIST[type].name}`,
         item: items,
-    });
+    };
 
     ctx.set('json', {
         title: '时刻新闻',
@@ -104,4 +128,4 @@ export default async (ctx) => {
         description: `时刻新闻 ${PATH_LIST[type].name}`,
         item: items,
     });
-};
+}

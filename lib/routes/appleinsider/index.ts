@@ -1,9 +1,35 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['new-media'],
+    example: '/appleinsider',
+    parameters: { category: 'Category, see below, News by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['appleinsider.com/:category', 'appleinsider.com/'],
+        target: '/:category',
+    },
+    name: 'Category',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| News | Reviews | How-tos |
+  | ---- | ------- | ------- |
+  |      | reviews | how-to  |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
 
     const rootUrl = 'https://appleinsider.com';
@@ -52,9 +78,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

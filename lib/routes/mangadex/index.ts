@@ -1,7 +1,19 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id/:lang?',
+    radar: {
+        source: ['mangadex.org/title/:id/*', 'mangadex.org/title/:id'],
+        target: '/:id',
+    },
+    name: 'Unknown',
+    maintainers: ['vzz64'],
+    handler,
+};
+
+async function handler(ctx) {
     const { id, lang } = ctx.req.param();
     let { data } = await got.get(`https://api.mangadex.org/manga/${id}`);
     if (data.result === 'error') {
@@ -43,7 +55,7 @@ export default async (ctx) => {
     if (data.result === 'error') {
         throw new Error(data.errors[0].detail);
     }
-    ctx.set('data', {
+    return {
         title: `${title} - MangaDex`,
         link: `https://mangadex.org/title/${id}`,
         description,
@@ -66,5 +78,5 @@ export default async (ctx) => {
             };
         }),
         language: lang,
-    });
-};
+    };
+}

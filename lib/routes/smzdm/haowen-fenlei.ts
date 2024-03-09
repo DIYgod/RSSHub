@@ -1,9 +1,35 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
-export default async (ctx) => {
+export const route: Route = {
+    path: '/haowen/fenlei/:name/:sort?',
+    categories: ['shopping'],
+    example: '/smzdm/haowen/fenlei/shenghuodianqi',
+    parameters: { name: '分类名，可在 URL 中查看', sort: '排序方式，默认为最新' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['post.smzdm.com/fenlei/:name'],
+        target: '/haowen/fenlei/:name',
+    },
+    name: '好文分类',
+    maintainers: ['LogicJake'],
+    handler,
+    description: `| 最新 | 周排行 | 月排行 |
+  | ---- | ------ | ------ |
+  | 0    | 7      | 30     |`,
+};
+
+async function handler(ctx) {
     const name = ctx.req.param('name');
     const sort = ctx.req.param('sort') || '0';
 
@@ -44,9 +70,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${title}- 什么值得买好文分类`,
         link,
         item: out,
-    });
-};
+    };
+}

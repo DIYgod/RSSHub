@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,28 @@ import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:uid',
+    categories: ['government'],
+    example: '/gov/news/bm',
+    parameters: { uid: '分类名' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '政府新闻',
+    maintainers: ['EsuRt'],
+    handler,
+    description: `| 政务部门 | 滚动新闻 | 新闻要闻 | 国务院新闻 | 政策文件 |
+  | :------: | :------: | :------: | :--------: | :------: |
+  |    bm    |    gd    |    yw    |     gwy    |  zhengce |`,
+};
+
+async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const originDomain = 'https://www.gov.cn';
     let url = '';
@@ -46,7 +68,7 @@ export default async (ctx) => {
         list = $('.news_box .list li:not(.line)');
     }
 
-    ctx.set('data', {
+    return {
         title,
         link: url,
         item: await Promise.all(
@@ -102,5 +124,5 @@ export default async (ctx) => {
                 });
             })
         ),
-    });
-};
+    };
+}

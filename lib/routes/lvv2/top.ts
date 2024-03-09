@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -28,7 +29,32 @@ const titleMap = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/top/:channel/:sort?',
+    categories: ['new-media'],
+    example: '/lvv2/top/sort-score',
+    parameters: { channel: '频道，见下表', sort: '排序方式，仅得分和24小时榜可选填该参数，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '24 小时点击排行 Top 10',
+    maintainers: ['Fatpandac'],
+    handler,
+    description: `|   热门   |   最新   |    得分    |   24 小时榜   |
+  | :------: | :------: | :--------: | :-----------: |
+  | sort-hot | sort-new | sort-score | sort-realtime |
+
+  | 排序方式 | 一小时内 | 一天内 | 一个周内 | 一个月内 |
+  | :------: | :------: | :----: | :------: | :------: |
+  |          |  t-hour  |  t-day |  t-week  |  t-month |`,
+};
+
+async function handler(ctx) {
     const channel = ctx.req.param('channel');
     const sort = (channel === 'sort-realtime' || channel === 'sort-score') && !ctx.req.param('sort') ? 't-week' : ctx.req.param('sort');
     const url = `${rootUrl}/${channel}/${sort}`;
@@ -72,9 +98,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `lvv2 - ${sort ? titleMap[channel][sort] : titleMap[channel]} 24小时点击 Top 10`,
         link: url,
         item: items,
-    });
-};
+    };
+}

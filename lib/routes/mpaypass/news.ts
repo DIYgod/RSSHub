@@ -1,14 +1,37 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news',
+    categories: ['new-media'],
+    example: '/mpaypass/news',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['mpaypass.com.cn/'],
+    },
+    name: '新闻',
+    maintainers: ['LogicJake', 'genghis-yang'],
+    handler,
+    url: 'mpaypass.com.cn/',
+};
+
+async function handler() {
     const link = 'http://m.mpaypass.com.cn';
     const listData = await got(link);
     const $list = load(listData.data);
-    ctx.set('data', {
+    return {
         title: '新闻 - 移动支付网',
         link,
         language: 'zh-CN',
@@ -36,5 +59,5 @@ export default async (ctx) => {
                 })
                 .get()
         ),
-    });
-};
+    };
+}

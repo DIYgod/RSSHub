@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:user',
+    categories: ['social-media'],
+    example: '/rattibha/user/elonmusk',
+    parameters: { user: 'Twitter username, without @' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['rattibha.com/:user'],
+    },
+    name: 'User Threads',
+    maintainers: ['yshalsager'],
+    handler,
+};
+
+async function handler(ctx) {
     const baseUrl = 'https://rattibha.com';
     const { user: twitterUser } = ctx.req.param();
 
@@ -38,9 +60,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `سلاسل تغريدات ${twitterUser}`,
         link: `${baseUrl}/${twitterUser}`,
         item: items,
-    });
-};
+    };
+}

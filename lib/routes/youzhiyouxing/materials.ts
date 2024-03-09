@@ -1,9 +1,36 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/materials/:id?',
+    categories: ['finance'],
+    example: '/youzhiyouxing/materials',
+    parameters: { id: '分类，见下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['youzhiyouxing.cn/materials'],
+        target: '/materials',
+    },
+    name: '有知文章',
+    maintainers: ['broven', 'Fatpandac', 'nczitzk'],
+    handler,
+    url: 'youzhiyouxing.cn/materials',
+    description: `| 全部 | 知行小酒馆 | 知行黑板报 | 无人知晓 | 孟岩专栏 | 知行读书会 | 你好，同路人 |
+  | :--: | :--------: | :--------: | :------: | :------: | :--------: | :----------: |
+  |   0  |      4     |      2     |    10    |     1    |      3     |      11      |`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '';
 
     const rootUrl = 'https://youzhiyouxing.cn';
@@ -49,9 +76,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `有知有行 - ${$(`a[phx-value-column_id="${id === '' ? 0 : id}"]`).text()}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

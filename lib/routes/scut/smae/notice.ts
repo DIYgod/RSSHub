@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got';
@@ -14,7 +15,28 @@ const categoryMap = {
     yjsjw: { title: '研究生教务', tag: '20620' },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/smae/:category?',
+    categories: ['university'],
+    example: '/scut/smae/yjsjw',
+    parameters: { category: '通知分类，默认为 `yjsjw`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '机械与汽车工程学院 - 通知公告',
+    maintainers: ['Ermaotie'],
+    handler,
+    description: `| 公务信息 | 党建工作 | 人事工作 | 学生工作 | 科研实验室 | 本科生教务 | 研究生教务 |
+  | -------- | -------- | -------- | -------- | ---------- | ---------- | ---------- |
+  | gwxx     | djgz     | rsgz     | xsgz     | kysys      | bksjw      | yjsjw      |`,
+};
+
+async function handler(ctx) {
     const baseUrl = 'http://www2.scut.edu.cn';
 
     const categoryName = ctx.req.param('category') || 'yjsjw';
@@ -47,9 +69,9 @@ export default async (ctx) => {
             })
         )
     );
-    ctx.set('data', {
+    return {
         title: `华南理工大学机械与汽车工程学院 - ${categoryMeta.title}`,
         link: url,
         item: items,
-    });
-};
+    };
+}

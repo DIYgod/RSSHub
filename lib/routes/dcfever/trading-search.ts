@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 // import { parseRelativeDate } from '@/utils/parse-date';
 import { baseUrl, parseTradeItem } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/trading/search/:keyword/:mainCat?',
+    categories: ['new-media'],
+    example: '/dcfever/trading/search/Sony',
+    parameters: { keyword: '關鍵字', mainCat: '主要分類 ID，見上表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '二手市集 - 物品搜尋',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const { keyword, mainCat } = ctx.req.param();
 
     const response = await got(`${baseUrl}/trading/search.php`, {
@@ -31,10 +50,10 @@ export default async (ctx) => {
 
     const items = await Promise.all(list.map((item) => parseTradeItem(item, cache.tryGet)));
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link: response.url,
         image: 'https://cdn10.dcfever.com/images/android_192.png',
         item: items,
-    });
-};
+    };
+}

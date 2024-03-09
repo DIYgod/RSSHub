@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,32 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/group/:id/:sort?',
+    categories: ['bbs'],
+    example: '/douyu/group/1011',
+    parameters: { id: '鱼吧 id，可在鱼吧页 URL 中找到', sort: '排序方式，见下表，默认为发布时间排序' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['yuba.douyu.com/group/:id', 'yuba.douyu.com/group/newself/:id', 'yuba.douyu.com/group/newall/:id', 'yuba.douyu.com/'],
+        target: '/group/:id',
+    },
+    name: '鱼吧帖子',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 回复时间排序 | 发布时间排序 |
+  | ------------ | ------------ |
+  | 1            | 2            |`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const sort = ctx.req.param('sort') ?? '2';
 
@@ -39,10 +65,10 @@ export default async (ctx) => {
         }),
     }));
 
-    ctx.set('data', {
+    return {
         title: `斗鱼鱼吧 - ${detailResponse.data.data.group_name}`,
         link: currentUrl,
         item: items,
         description: detailResponse.data.data.describe,
-    });
-};
+    };
+}

@@ -1,10 +1,36 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id?',
+    categories: ['finance'],
+    example: '/nbd',
+    parameters: { id: '分类 id，见下表，默认为要闻' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['nbd.com.cn/', 'nbd.com.cn/columns/:id?'],
+    },
+    name: '分类',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'nbd.com.cn/',
+    description: `| 头条 | 要闻 | 图片新闻 | 推荐 |
+  | ---- | ---- | -------- | ---- |
+  | 2    | 3    | 4        | 5    |`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '3';
 
     const rootUrl = 'https://www.nbd.com.cn';
@@ -48,9 +74,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${$('h1').text() || $('.u-channelname').text()} - 每经网`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

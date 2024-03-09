@@ -1,6 +1,25 @@
+import { Route } from '@/types';
 import buildData from '@/utils/common-config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/exhibitions',
+    categories: ['travel'],
+    example: '/jewishmuseum/exhibitions',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Exhibitions',
+    maintainers: ['chazeon'],
+    handler,
+};
+
+async function handler(ctx) {
     const link = 'https://thejewishmuseum.org/exhibitions';
 
     ctx.set(
@@ -16,4 +35,4 @@ export default async (ctx) => {
             },
         })
     );
-};
+}

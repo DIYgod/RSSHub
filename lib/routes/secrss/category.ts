@@ -1,10 +1,29 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/category/:category?',
+    categories: ['programming'],
+    example: '/secrss/category/产业趋势',
+    parameters: { category: 'N' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '分类',
+    maintainers: ['XinRoom', 'SunBK201'],
+    handler,
+};
+
+async function handler(ctx) {
     const api = 'https://www.secrss.com/api/articles?tag=';
     const { category = '' } = ctx.req.param();
     const host = 'https://www.secrss.com';
@@ -30,9 +49,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `安全内参-${category}`,
         link: 'https://www.secrss.com',
         item: items,
-    });
-};
+    };
+}

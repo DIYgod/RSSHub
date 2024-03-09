@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import querystring from 'querystring';
 import got from '@/utils/got';
@@ -7,7 +8,36 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:uid/:routeParams?',
+    categories: ['social-media'],
+    example: '/weibo/user/1195230310',
+    parameters: { uid: '用户 id, 博主主页打开控制台执行 `$CONFIG.oid` 获取', routeParams: '额外参数；请参阅上面的说明和表格；特别地，当 `routeParams=1` 时开启微博视频显示' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['m.weibo.cn/u/:uid', 'm.weibo.cn/profile/:uid'],
+        target: '/user/:uid',
+    },
+    name: '博主',
+    maintainers: ['DIYgod', 'iplusx', 'Rongronggg9'],
+    handler,
+    description: `:::warning
+  部分博主仅登录可见，未提供 Cookie 的情况下不支持订阅，可以通过打开 \`https://m.weibo.cn/u/:uid\` 验证。如需要订阅该部分博主，可配置 Cookie 后订阅。
+
+  未提供 Cookie 的情况下偶尔会触发反爬限制，提供 Cookie 可缓解该情况。
+
+  微博用户 Cookie 的配置可参照部署文档
+  :::`,
+};
+
+async function handler(ctx) {
     const uid = ctx.req.param('uid');
     let displayVideo = '1';
     let displayArticle = '0';
@@ -149,4 +179,4 @@ export default async (ctx) => {
             item: resultItems,
         })
     );
-};
+}

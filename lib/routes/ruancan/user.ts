@@ -1,8 +1,20 @@
+import { Route } from '@/types';
 import fetchFeed from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:id',
+    radar: {
+        source: ['ruancan.com/i/:id', 'ruancan.com/'],
+    },
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    url: 'ruancan.com/',
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const currentUrl = `/i/${id}`;
 
     ctx.set('data', await fetchFeed(ctx, currentUrl));
-};
+}

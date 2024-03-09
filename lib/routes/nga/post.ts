@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
@@ -5,7 +6,25 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/post/:tid/:authorId?',
+    categories: ['bbs'],
+    example: '/nga/post/18449558',
+    parameters: { tid: '帖子 id, 可在帖子 URL 找到', authorId: '作者 id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '帖子',
+    maintainers: ['xyqfer', 'syrinka'],
+    handler,
+};
+
+async function handler(ctx) {
     const getPageUrl = (tid, authorId, page = 1, hash = '') => `https://nga.178.com/read.php?tid=${tid}&page=${page}${authorId ? `&authorid=${authorId}` : ''}&rand=${Math.random() * 1000}#${hash}`;
     const getPage = async (tid, authorId, pageId = 1) => {
         const link = getPageUrl(tid, authorId, pageId);
@@ -114,9 +133,9 @@ export default async (ctx) => {
 
     const rssTitle = authorName ? `NGA ${authorName} ${title}` : `NGA ${title}`;
 
-    ctx.set('data', {
+    return {
         title: rssTitle,
         link: getPageUrl(tid, authorId, pageId),
         item: items.get(),
-    });
-};
+    };
+}

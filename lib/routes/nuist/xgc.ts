@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,29 @@ import { parseDate } from '@/utils/parse-date';
 const baseTitle = '南信大学生工作处';
 const baseUrl = 'https://xgc.nuist.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/xgc',
+    categories: ['university'],
+    example: '/nuist/xgc',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['xgc.nuist.edu.cn/', 'xgc.nuist.edu.cn/419/list.htm'],
+    },
+    name: '南信大学生工作处',
+    maintainers: ['gylidian'],
+    handler,
+    url: 'xgc.nuist.edu.cn/',
+};
+
+async function handler() {
     const link = baseUrl + '/419/list.htm';
 
     const response = await got(link);
@@ -42,9 +65,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: baseTitle,
         link,
         item: items.filter(Boolean),
-    });
-};
+    };
+}

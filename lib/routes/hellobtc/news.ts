@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -5,7 +6,29 @@ import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.hellobtc.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news',
+    categories: ['new-media'],
+    example: '/hellobtc/news',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['hellobtc.com/news'],
+    },
+    name: '快讯',
+    maintainers: ['Fatpandac'],
+    handler,
+    url: 'hellobtc.com/news',
+};
+
+async function handler() {
     const url = `${rootUrl}/news`;
 
     const response = await got(url);
@@ -21,9 +44,9 @@ export default async (ctx) => {
         .filter(Boolean)
         .get();
 
-    ctx.set('data', {
+    return {
         title: `白话区块链 - 快讯`,
         link: url,
         item: items,
-    });
-};
+    };
+}

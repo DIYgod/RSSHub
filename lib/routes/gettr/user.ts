@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -12,7 +13,28 @@ const actionMap = {
     shares_pst: 'Shared a post: ',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:id',
+    categories: ['social-media'],
+    example: '/gettr/user/jasonmillerindc',
+    parameters: { id: 'User id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['gettr.com/user/:id'],
+    },
+    name: 'User timeline',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const baseUrl = 'https://gettr.com';
     const apiHost = 'https://api.gettr.com';
     const mediaHost = 'https://media.gettr.com';
@@ -48,12 +70,12 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: `${userInfo.nickname} on Gettr`,
         description: userInfo.dsc,
         link: `${baseUrl}/user/${id}`,
         image: `${mediaHost}/${userInfo.ico}`,
         language: 'en',
         item: items,
-    });
-};
+    };
+}

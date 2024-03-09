@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/desktop',
+    categories: ['program-update'],
+    example: '/tradingview/desktop',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['tradingview.com/support/solutions/43000673888-tradingview-desktop-releases-and-release-notes/'],
+    },
+    name: 'Desktop releases and release notes',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'tradingview.com/support/solutions/43000673888-tradingview-desktop-releases-and-release-notes/',
+};
+
+async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
     const rootUrl = 'https://www.tradingview.com';
@@ -47,7 +70,7 @@ export default async (ctx) => {
     const titleSplits = title.split(/—/);
     const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title,
         link: currentUrl,
@@ -57,5 +80,5 @@ export default async (ctx) => {
         logo: icon,
         subtitle: titleSplits[0],
         author: titleSplits.pop(),
-    });
-};
+    };
+}

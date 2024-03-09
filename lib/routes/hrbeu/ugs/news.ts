@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -53,7 +54,78 @@ const authorMap = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/ugs/news/:author?/:category?',
+    categories: ['university'],
+    example: '/hrbeu/ugs/news/jwc/jxap',
+    parameters: { author: '发布部门，默认为 `gztz`', category: '分类，默认为 `all`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['ugs.hrbeu.edu.cn/:author/list.htm'],
+        target: '/ugs/news/:author',
+    },
+    name: '本科生院工作通知',
+    maintainers: ['XYenon'],
+    handler,
+    description: `author 列表：
+
+  | 教务处 | 实践教学与交流处 | 教育评估处 | 专业建设处 | 国家大学生文化素质基地 | 教师教学发展中心 | 综合办公室 | 工作通知 |
+  | ------ | ---------------- | ---------- | ---------- | ---------------------- | ---------------- | ---------- | -------- |
+  | jwc    | sjjxyjlzx        | jypgc      | zyjsc      | gjdxswhszjd            | jsjxfzzx         | zhbgs      | gztz     |
+
+  category 列表：
+
+  \`all\` 为全部
+
+  教务处：
+
+  | 教学安排 | 考试管理 | 学籍管理 | 外语统考 | 成绩管理 |
+  | -------- | -------- | -------- | -------- | -------- |
+  | jxap     | ksgl     | xjgl     | wytk     | cjgl     |
+
+  实践教学与交流处：
+
+  | 实验教学 | 实验室建设 | 校外实习 | 学位论文 | 课程设计 | 创新创业 | 校际交流 |
+  | -------- | ---------- | -------- | -------- | -------- | -------- | -------- |
+  | syjx     | sysjs      | xwsx     | xwlw     | kcsj     | cxcy     | xjjl     |
+
+  教育评估处：
+
+  | 教学研究与教学成果 | 质量监控 |
+  | ------------------ | -------- |
+  | jxyjyjxcg          | zljk     |
+
+  专业建设处：
+
+  | 专业与教材建设 | 陈赓实验班 | 教学名师与优秀主讲教师 | 课程建设 | 双语教学 |
+  | -------------- | ---------- | ---------------------- | -------- | -------- |
+  | zyyjcjs        | cgsyb      | jxmsyyxzjjs            | kcjs     | syjx     |
+
+  国家大学生文化素质基地：无
+
+  教师教学发展中心：
+
+  | 教师培训 |
+  | -------- |
+  | jspx     |
+
+  综合办公室：
+
+  | 联系课程 |
+  | -------- |
+  | lxkc     |
+
+  工作通知：无`,
+};
+
+async function handler(ctx) {
     const author = ctx.req.param('author') || 'gztz';
     const category = ctx.req.param('category') || 'all';
     const link = baseUrl + authorMap[author][category] + '/list.htm';
@@ -91,9 +163,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '哈尔滨工程大学本科生院工作通知',
         link,
         item: out,
-    });
-};
+    };
+}

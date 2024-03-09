@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/douyin/:dyid',
+    categories: ['social-media'],
+    example: '/newrank/douyin/110266463747',
+    parameters: { dyid: '抖音ID，可在新榜账号详情 URL 中找到' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '抖音短视频',
+    maintainers: ['lessmoe'],
+    handler,
+    description: `:::warning
+免费版账户抖音每天查询次数 20 次，如需增加次数可购买新榜会员或等待未来多账户支持
+:::`,
+};
+
+async function handler(ctx) {
     if (!config.newrank || !config.newrank.cookie) {
         throw new Error('newrank RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -54,10 +76,10 @@ export default async (ctx) => {
         pubDate: item.create_time,
     }));
 
-    ctx.set('data', {
+    return {
         title: name + ' - 抖音',
         description,
         link: 'https://xd.newrank.cn/data/d/account/workList/' + uid,
         item: items,
-    });
-};
+    };
+}

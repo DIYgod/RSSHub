@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { config } from '@/config';
 import queryString from 'query-string';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/repos/:user',
+    categories: ['programming'],
+    example: '/github/repos/DIYgod',
+    parameters: { user: 'GitHub username' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['github.com/:user'],
+    },
+    name: 'User Repo',
+    maintainers: ['DIYgod'],
+    handler,
+};
+
+async function handler(ctx) {
     const user = ctx.req.param('user');
 
     const headers = {};
@@ -18,7 +40,7 @@ export default async (ctx) => {
         headers,
     });
     const data = response.data;
-    ctx.set('data', {
+    return {
         allowEmpty: true,
         title: `${user}'s GitHub repositories`,
         link: `https://github.com/${user}`,
@@ -30,5 +52,5 @@ export default async (ctx) => {
                 pubDate: new Date(item.created_at).toUTCString(),
                 link: item.html_url,
             })),
-    });
-};
+    };
+}

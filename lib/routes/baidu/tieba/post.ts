@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -31,7 +32,28 @@ async function getPost(id, lz = 0, pn = 7e6) {
     return data;
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/tieba/post/:id', '/tieba/post/lz/:id'],
+    categories: ['bbs'],
+    example: '/baidu/tieba/post/686961453',
+    parameters: { id: '帖子 ID' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['tieba.baidu.com/p/:id'],
+    },
+    name: '帖子动态',
+    maintainers: ['u3u'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const lz = ctx.req.path.includes('lz') ? 1 : 0;
     const html = await getPost(id, lz);
@@ -40,7 +62,7 @@ export default async (ctx) => {
     // .substr(3);
     const list = $('.p_postlist > [data-field]:not(:has(.ad_bottom_view))');
 
-    ctx.set('data', {
+    return {
         title: lz ? `【只看楼主】${title}` : title,
         link: `https://tieba.baidu.com/p/${id}?see_lz=${lz}`,
         description: `${title}的最新回复`,
@@ -79,5 +101,5 @@ export default async (ctx) => {
                     };
                 })
                 .get(),
-    });
-};
+    };
+}

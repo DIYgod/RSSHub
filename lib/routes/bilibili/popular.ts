@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/popular/all',
+    categories: ['social-media'],
+    example: '/bilibili/popular/all',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '综合热门',
+    maintainers: ['ziminliu'],
+    handler,
+};
+
+async function handler(ctx) {
     const disableEmbed = ctx.req.param('disableEmbed');
     const response = await got({
         method: 'get',
@@ -12,7 +31,7 @@ export default async (ctx) => {
     });
     const list = response.data.data.list;
 
-    ctx.set('data', {
+    return {
         title: `bilibili 综合热门`,
         link: 'https://www.bilibili.com',
         description: `bilibili 综合热门`,
@@ -25,5 +44,5 @@ export default async (ctx) => {
                 link: item.pubdate > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
                 author: item.owner.name,
             })),
-    });
-};
+    };
+}

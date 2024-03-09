@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/community/:id?/:keyword?',
+    categories: ['other'],
+    example: '/aqara/community',
+    parameters: { id: '分类 id，可在对应分类页 URL 中找到，默认为全部', keyword: '关键字，默认为空' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '社区',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '';
     const keyword = ctx.req.param('keyword') ?? '';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100;
@@ -23,10 +42,10 @@ export default async (ctx) => {
         author: item.user.nickname,
     }));
 
-    ctx.set('data', {
+    return {
         title: 'Aqara社区',
         link: currentUrl,
         item: items,
         allowEmpty: true,
-    });
-};
+    };
+}

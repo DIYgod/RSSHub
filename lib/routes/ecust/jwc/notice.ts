@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -33,7 +34,28 @@ const get_from_link = async (link) => {
         });
     return articleList;
 };
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jwc/:category?',
+    categories: ['university'],
+    example: '/ecust/jwc/mto',
+    parameters: { category: '订阅板块，默认为全部订阅' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '本科教务处信息网',
+    maintainers: ['lxl66566'],
+    handler,
+    description: `| 其他任意值 | mto          | mttb               | gi       | mpt          | fai          |
+  | ---------- | ------------ | ------------------ | -------- | ------------ | ------------ |
+  | 全部订阅   | 教学运行管理 | 培养与教学建设管理 | 综合信息 | 实践教学管理 | 学院教务信息 |`,
+};
+
+async function handler(ctx) {
     const { category = 'all' } = ctx.req.param();
     const categoryItem = categoryMap[category] || null; // all -> null
     const pageUrl = categoryItem ? [`${baseUrl}${categoryItem.link}/list.htm`] : Object.values(categoryMap).map((item) => `${baseUrl}${item.link}/list.htm`);
@@ -59,9 +81,9 @@ export default async (ctx) => {
             })
         )
     );
-    ctx.set('data', {
+    return {
         title: `华理教务处 - ${categoryItem ? categoryItem.name : '全部'}`,
         link: categoryItem ? pageUrl[0] : baseUrl,
         item: result,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -42,7 +43,41 @@ const getCurrentUrl = (category) => {
     return `${rootUrl}/viewall`;
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['traditional-media'],
+    example: '/setn',
+    parameters: { category: '分类，见下表，默认为即時' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['setn.com/ViewAll.aspx', 'setn.com/'],
+        target: '',
+    },
+    name: '新聞',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'setn.com/ViewAll.aspx',
+    description: `| 即時 | 熱門 | 娛樂 | 政治 | 社會 |
+  | ---- | ---- | ---- | ---- | ---- |
+
+  | 國際 | 兩岸 | 生活 | 健康 | 旅遊 |
+  | ---- | ---- | ---- | ---- | ---- |
+
+  | 運動 | 地方 | 財經 | 富房網 | 名家 |
+  | ---- | ---- | ---- | ------ | ---- |
+
+  | 新奇 | 科技 | 汽車 | 寵物 | 女孩 | HOT 焦點 |
+  | ---- | ---- | ---- | ---- | ---- | -------- |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '即時';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 42;
 
@@ -93,9 +128,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `三立新聞網 - ${category}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

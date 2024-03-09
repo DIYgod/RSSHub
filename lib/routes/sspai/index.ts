@@ -1,8 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/index',
+    categories: ['new-media'],
+    example: '/sspai/index',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['sspai.com/index'],
+    },
+    name: '首页',
+    maintainers: ['HenryQW'],
+    handler,
+    url: 'sspai.com/index',
+};
+
+async function handler() {
     const api_url = 'https://sspai.com/api/v1/article/index/page/get?limit=10&offset=0&created_at=0';
     const resp = await got({
         method: 'get',
@@ -29,10 +52,10 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: '少数派 -- 首页',
         link: 'https://sspai.com',
         description: '少数派 -- 首页',
         item: items,
-    });
-};
+    };
+}

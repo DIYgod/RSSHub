@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news',
+    categories: ['new-media'],
+    example: '/sakurazaka46/news',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['sakurazaka46.com/s/s46/news/list', 'sakurazaka46.com/'],
+    },
+    name: 'Sakurazaka46 News 櫻坂 46 新闻',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'sakurazaka46.com/s/s46/news/list',
+};
+
+async function handler(ctx) {
     const rootUrl = 'https://sakurazaka46.com';
     const currentUrl = `${rootUrl}/s/s46/news/list`;
 
@@ -44,9 +67,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

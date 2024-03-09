@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 // example usage: `/nature/news-and-comment/ng`
 // The journals from NPG are run by different group of people,
 // and the website of may not be consitent for all the journals
@@ -16,7 +17,19 @@ import { load } from 'cheerio';
 import got from '@/utils/got';
 import { baseUrl, cookieJar, getArticleList, getArticle } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news-and-comment/:journal?',
+    radar: {
+        source: ['nature.com/latest-news', 'nature.com/news', 'nature.com/'],
+        target: '/news',
+    },
+    name: 'Unknown',
+    maintainers: ['y9c', 'TonyRL'],
+    handler,
+    url: 'nature.com/latest-news',
+};
+
+async function handler(ctx) {
     const journal = ctx.req.param('journal');
     const pageURL = `${baseUrl}/${journal}/news-and-comment`;
 
@@ -28,10 +41,10 @@ export default async (ctx) => {
 
     items = await Promise.all(items.map((item) => getArticle(item)));
 
-    ctx.set('data', {
+    return {
         title: pageCapture('title').text(),
         description: pageDescription,
         link: pageURL,
         item: items,
-    });
-};
+    };
+}

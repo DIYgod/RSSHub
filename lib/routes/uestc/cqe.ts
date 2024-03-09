@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
@@ -14,7 +15,33 @@ const mapTitle = {
     tzgg: '通知公告',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/cqe/:type?',
+    categories: ['university'],
+    example: '/uestc/cqe/tzgg',
+    parameters: { type: '默认为 `tzgg`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['cqe.uestc.edu.cn/'],
+        target: '/cqe',
+    },
+    name: '文化素质教育中心',
+    maintainers: ['truobel', 'mobyw'],
+    handler,
+    url: 'cqe.uestc.edu.cn/',
+    description: `| 活动预告 | 通知公告 |
+  | -------- | -------- |
+  | hdyg     | tzgg     |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') || 'tzgg';
     const pageUrl = mapUrl[type];
     if (!pageUrl) {
@@ -52,10 +79,10 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: `大学生文化素质教育中心-${mapTitle[type]}`,
         link: baseUrl,
         description: '电子科技大学大学生文化素质教育中心通知',
         item: out,
-    });
-};
+    };
+}

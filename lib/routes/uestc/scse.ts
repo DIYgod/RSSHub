@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import dayjs from 'dayjs';
@@ -19,7 +20,29 @@ const prefixes = {
     1022: '【安全工作】',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/scse',
+    categories: ['university'],
+    example: '/uestc/scse',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['scse.uestc.edu.cn/'],
+    },
+    name: '计算机科学与工程学院',
+    maintainers: ['talengu', 'mobyw'],
+    handler,
+    url: 'scse.uestc.edu.cn/',
+};
+
+async function handler() {
     const browser = await puppeteer({ stealth: true });
     const page = await browser.newPage();
     await page.setRequestInterception(true);
@@ -82,10 +105,10 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: '计算机学院通知',
         link: baseIndexUrl,
         description: '电子科技大学计算机科学与工程学院通知',
         item: out,
-    });
-};
+    };
+}

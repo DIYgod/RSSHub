@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/blog/:name',
+    categories: ['programming'],
+    example: '/luogu/user/blog/ftiasch',
+    parameters: { name: '博客名称' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['luogu.com.cn/blog/:name'],
+    },
+    name: '用户博客',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const name = ctx.req.param('name');
 
     const blogBaseUrl = `https://www.luogu.com.cn/blog/${name}/`;
@@ -41,9 +63,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: blogTitle,
         link: blogBaseUrl,
         item,
-    });
-};
+    };
+}

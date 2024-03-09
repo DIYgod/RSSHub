@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -20,7 +21,29 @@ const sec2str = (sec) => dayjs.duration(Number.parseInt(sec), 'seconds').humaniz
 
 const contestAPI = 'https://codeforces.com/api/contest.list';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/contests',
+    categories: ['programming'],
+    example: '/codeforces/contests',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.codeforces.com/contests'],
+    },
+    name: 'Latest contests',
+    maintainers: ['Fatpandac'],
+    handler,
+    url: 'www.codeforces.com/contests',
+};
+
+async function handler() {
     const contestsData = await got.get(contestAPI).json();
     const contests = contestsData.result;
 
@@ -44,9 +67,9 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: 'Codeforces - Contests',
         link: 'https://codeforces.com/contests',
         item: items,
-    });
-};
+    };
+}

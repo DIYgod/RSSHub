@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import LZString from 'lz-string';
@@ -43,7 +44,29 @@ const getChapters = ($) => {
         .reduce((acc, curr) => [...acc, ...curr]);
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/comic/:id/:chapterCnt?', '/:domain?/comic/:id/:chapterCnt?'],
+    categories: ['anime'],
+    example: '/manhuagui/comic/22942/5',
+    parameters: { id: '漫画ID', chapterCnt: '返回章节的数量，默认为0，返回所有章节' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.mhgui.com/comic/:id/'],
+        target: '/comic/:id',
+    },
+    name: '漫画更新',
+    maintainers: ['MegrezZhu'],
+    handler,
+};
+
+async function handler(ctx) {
     const { id, domain } = ctx.req.param();
     if (domain === 'mhgui') {
         baseUrl = 'https://www.mhgui.com';
@@ -72,12 +95,12 @@ export default async (ctx) => {
     const reg = /最近[于於].+更新至/;
     // 处理已下架的漫画
     if ($('.status > span').text().indexOf('已下架') > 0) {
-        ctx.set('data', {
+        return {
             title: `看漫画 - ${bookTitle} 已下架`,
             link: `${baseUrl}/comic/${id}/`,
             description: bookIntro,
             item: [{ link: `${baseUrl}/comic/${id}/`, title: bookTitle, description: '已下架' }],
-        });
+        };
     } else {
         const pub_date_str = $('.status > span')
             .text()
@@ -104,11 +127,11 @@ export default async (ctx) => {
             itemsLen = chapterCnt < $.newChapterCnt ? $.newChapterCnt : chapterCnt;
         }
 
-        ctx.set('data', {
+        return {
             title: `看漫画 - ${bookTitle}`,
             link: `${baseUrl}/comic/${id}/`,
             description: bookIntro,
             item: items.slice(0, itemsLen),
-        });
+        };
     }
-};
+}

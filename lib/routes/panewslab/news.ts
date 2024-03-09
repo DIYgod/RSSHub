@@ -1,7 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/news', '/newsflash'],
+    categories: ['new-media'],
+    example: '/panewslab/news',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['panewslab.com/'],
+    },
+    name: '快讯',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'panewslab.com/',
+    url: 'panewslab.com/',
+};
+
+async function handler(ctx) {
     const rootUrl = 'https://panewslab.com';
     const apiUrl = `${rootUrl}/webapi/flashnews?LId=1&Rn=${ctx.req.query('limit') ?? 50}&tw=0`;
     const currentUrl = `${rootUrl}/zh/news/index.html`;
@@ -20,9 +44,9 @@ export default async (ctx) => {
         category: item.tags,
     }));
 
-    ctx.set('data', {
+    return {
         title: 'PANews - 快讯',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

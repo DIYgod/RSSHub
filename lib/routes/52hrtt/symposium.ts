@@ -1,10 +1,40 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/symposium/:id?/:classId?',
+    categories: ['new-media'],
+    example: '/52hrtt/symposium/F1626082387819',
+    parameters: { id: '专题 id', classId: '子分类 id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['52hrtt.com/global/n/w/symposium/:id'],
+        target: '/symposium/:id',
+    },
+    name: '专题',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `专题 id 和 子分类 id 皆可在浏览器地址栏中找到，下面是一个例子。
+
+  访问 “邱毅看平潭” 专题，会跳转到 \`https://www.52hrtt.com/global/n/w/symposium/F1626082387819\`。其中 \`F1626082387819\` 即为 **专题 id** 对应的地区代码。
+
+  :::tip
+  更多的专题可以点击 [这里](https://www.52hrtt.com/global/n/w/symposium)
+  :::`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '';
     const classId = ctx.req.param('classId') ?? '';
 
@@ -49,9 +79,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

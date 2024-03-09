@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,29 @@ import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://www.paradigm.xyz';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/writing',
+    categories: ['finance'],
+    example: '/paradigm/writing',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['paradigm.xyz/writing'],
+    },
+    name: 'Writing',
+    maintainers: ['Fatpandac'],
+    handler,
+    url: 'paradigm.xyz/writing',
+};
+
+async function handler() {
     const url = `${baseUrl}/writing`;
 
     const response = await got(url);
@@ -37,9 +60,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'Paradigm - Writing',
         link: url,
         item: items,
-    });
-};
+    };
+}

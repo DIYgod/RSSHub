@@ -1,7 +1,29 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/bookmarks/:slug',
+    categories: ['new-media'],
+    example: '/sspai/bookmarks/urfp0d9i',
+    parameters: { slug: '用户 slug，可在个人主页URL中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['sspai.com/u/:slug/bookmark_posts'],
+    },
+    name: '用户收藏',
+    maintainers: ['curly210102'],
+    handler,
+};
+
+async function handler(ctx) {
     const slug = ctx.req.param('slug');
     const link = `https://sspai.com/u/${slug}/bookmark_posts`;
 
@@ -26,7 +48,7 @@ export default async (ctx) => {
     ).data.data;
 
     const { nickname } = user;
-    ctx.set('data', {
+    return {
         title: `${nickname} 的全部收藏 - 少数派`,
         link,
         description: `少数派用户「${nickname}」的全部收藏`,
@@ -37,5 +59,5 @@ export default async (ctx) => {
             pubDate: parseDate(article.released_time * 1000),
             author: article.author.nickname,
         })),
-    });
-};
+    };
+}

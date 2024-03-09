@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -8,7 +9,29 @@ import { CookieJar } from 'tough-cookie';
 const cookieJar = new CookieJar();
 cookieJar.setCookieSync('over18=yes', 'https://novel18.syosetu.com/');
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/chapter/:id',
+    categories: ['reading'],
+    example: '/syosetu/chapter/n1976ey',
+    parameters: { id: 'Novel id, can be found in URL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['novel18.syosetu.com/:id'],
+    },
+    name: 'chapter',
+    maintainers: ['huangliangshusheng'],
+    handler,
+    description: `Eg: \`https://ncode.syosetu.com/n1976ey/\``,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const limit = Number.parseInt(ctx.req.query('limit')) || 5;
     const link = `https://ncode.syosetu.com/${id}`;
@@ -42,14 +65,14 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title,
         description,
         link,
         language: 'ja',
         item: item_list,
-    });
-};
+    };
+}
 
 const get = async (url) => {
     const response = await got({

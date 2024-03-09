@@ -1,6 +1,29 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/careers',
+    categories: ['university'],
+    example: '/hnu/careers',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['scc.hnu.edu.cnundefined'],
+    },
+    name: '校园招聘',
+    maintainers: ['ningyougan'],
+    handler,
+    url: 'scc.hnu.edu.cnundefined',
+};
+
+async function handler() {
     const rootUrl = 'http://scc.hnu.edu.cn/';
     // 校园招聘的路由为/module/getcareers，但该页面默认仅加载整体框架，具体的招聘信息在页面加载完成后再交易获取。
     // 具体的交易可以通过f12，网络栏进行查看，项目中仅保留了必须携带的参数。
@@ -13,7 +36,7 @@ export default async (ctx) => {
     });
     const company_list = response.data.data;
 
-    ctx.set('data', {
+    return {
         title: '校园招聘',
         link: currentRoute,
         item: company_list.map((company_info) => {
@@ -29,5 +52,5 @@ export default async (ctx) => {
             };
             return ret;
         }),
-    });
-};
+    };
+}

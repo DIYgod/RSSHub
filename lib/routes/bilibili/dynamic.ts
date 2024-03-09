@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import JSONbig from 'json-bigint';
@@ -67,7 +68,43 @@ import cacheIn from './cache';
         - cover 直播间封面
 */
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/dynamic/:uid/:routeParams?',
+    categories: ['social-media'],
+    example: '/bilibili/user/dynamic/2267573',
+    parameters: { uid: '用户 id, 可在 UP 主主页中找到', routeParams: '额外参数；请参阅以下说明和表格' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['space.bilibili.com/:uid'],
+        target: '/user/dynamic/:uid',
+    },
+    name: 'UP 主动态',
+    maintainers: ['DIYgod', 'zytomorrow', 'CaoMeiYouRen', 'JimenezLi'],
+    handler,
+    description: `| 键           | 含义                              | 接受的值       | 默认值 |
+  | ------------ | --------------------------------- | -------------- | ------ |
+  | showEmoji    | 显示或隐藏表情图片                | 0/1/true/false | false  |
+  | disableEmbed | 关闭内嵌视频                      | 0/1/true/false | false  |
+  | useAvid      | 视频链接使用 AV 号 (默认为 BV 号) | 0/1/true/false | false  |
+  | directLink   | 使用内容直链                      | 0/1/true/false | false  |
+
+  用例：\`/bilibili/user/dynamic/2267573/showEmoji=1&disableEmbed=1&useAvid=1\`
+
+  :::tip[动态的专栏显示全文]
+  动态的专栏显示全文请使用通用参数里的 \`mode=fulltext\`
+
+  举例: bilibili 专栏全文输出 /bilibili/user/dynamic/2267573/?mode=fulltext
+  :::`,
+};
+
+async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const routeParams = Object.fromEntries(new URLSearchParams(ctx.req.param('routeParams')));
     const showEmoji = fallback(undefined, queryToBoolean(routeParams.showEmoji), false);
@@ -236,11 +273,11 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `${author} 的 bilibili 动态`,
         link: `https://space.bilibili.com/${uid}/dynamic`,
         description: `${author} 的 bilibili 动态`,
         image: face,
         item: items,
-    });
-};
+    };
+}

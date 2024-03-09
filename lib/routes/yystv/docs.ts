@@ -1,8 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseRelativeDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/docs',
+    categories: ['game'],
+    example: '/yystv/docs',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['yystv.cn/docs'],
+    },
+    name: '游研社 - 全部文章',
+    maintainers: ['HaitianLiu'],
+    handler,
+    url: 'yystv.cn/docs',
+};
+
+async function handler() {
     const url = `https://www.yystv.cn/docs`;
     const response = await got({
         method: 'get',
@@ -26,9 +49,9 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: '游研社-' + $('title').text(),
         link: `https://www.yystv.cn/docs`,
         item: items,
-    });
-};
+    };
+}

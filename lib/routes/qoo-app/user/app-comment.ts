@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,25 @@ import { userUrl, appsUrl } from '../utils';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:lang?/appComment/:uid',
+    categories: ['anime'],
+    example: '/qoo-app/user/en/appComment/35399143',
+    parameters: { lang: 'Language, see the table above, empty means `中文`', uid: 'User ID, can be found in URL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'User Game Comments',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const { uid, lang = '' } = ctx.req.param();
     const link = `${userUrl}${lang ? `/${lang}` : ''}/${uid}`;
 
@@ -34,11 +53,11 @@ export default async (ctx) => {
         author: username,
     }));
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link,
         image: decodeURIComponent($('.person div.slot').attr('data-args')).replace('avatar=', '').split('?')[0],
         language: $('html').attr('lang'),
         item: items,
-    });
-};
+    };
+}

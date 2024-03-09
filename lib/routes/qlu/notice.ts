@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,29 @@ import { parseDate } from '@/utils/parse-date';
 
 const host = 'https://www.qlu.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/notice',
+    categories: ['university'],
+    example: '/qlu/notice',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['qlu.edu.cn/tzggsh/list1.htm'],
+    },
+    name: '通知公告',
+    maintainers: ['SunBK201'],
+    handler,
+    url: 'qlu.edu.cn/tzggsh/list1.htm',
+};
+
+async function handler() {
     const response = await got({
         method: 'get',
         url: `${host}/tzggsh/list1.htm`,
@@ -41,10 +64,10 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `齐鲁工业大学 - 通知公告`,
         link: `${host}/tzggsh/list1.htm`,
         description: '齐鲁工业大学 - 通知公告',
         item: items,
-    });
-};
+    };
+}

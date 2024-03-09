@@ -1,7 +1,15 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/ranking/:rid?/:day?/:arc_type?/:disableEmbed?',
+    name: 'Unknown',
+    maintainers: ['DIYgod'],
+    handler,
+};
+
+async function handler(ctx) {
     const rid = ctx.req.param('rid') || '0';
     const day = ctx.req.param('day') || '3';
     const arc_type = ctx.req.param('arc_type') || '1';
@@ -29,7 +37,7 @@ export default async (ctx) => {
             list = [...list, ...list[i].others];
         }
     }
-    ctx.set('data', {
+    return {
         title: `bilibili ${day}日排行榜-${rid_type}-${arc_type1}`,
         link: `https://www.bilibili.com/ranking/all/${rid}/0/${day}`,
         item: list.map((item) => ({
@@ -39,5 +47,5 @@ export default async (ctx) => {
             author: item.author,
             link: !item.create || (new Date(item.create) / 1000 > utils.bvidTime && item.bvid) ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
         })),
-    });
-};
+    };
+}

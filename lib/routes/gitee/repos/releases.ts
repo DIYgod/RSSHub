@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
@@ -6,7 +7,28 @@ const md = MarkdownIt({
     html: true,
 });
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/releases/:owner/:repo',
+    categories: ['programming'],
+    example: '/gitee/releases/y_project/RuoYi',
+    parameters: { owner: '用户名', repo: '仓库名' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['gitee.com/:owner/:repo/releases'],
+    },
+    name: '仓库 Releases',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const { owner, repo } = ctx.req.param();
 
     const response = await got(`https://gitee.com/api/v5/repos/${owner}/${repo}/releases`, {
@@ -26,9 +48,9 @@ export default async (ctx) => {
         link: `https://gitee.com/${owner}/${repo}/releases/${item.tag_name}`,
     }));
 
-    ctx.set('data', {
+    return {
         title: `${owner}/${repo} - 发行版`,
         link: `https://gitee.com/${owner}/${repo}/releases`,
         item: items,
-    });
-};
+    };
+}

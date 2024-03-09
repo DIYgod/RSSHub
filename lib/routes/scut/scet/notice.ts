@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/scet/notice',
+    categories: ['university'],
+    example: '/scut/scet/notice',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '土木与交通学院 - 学工通知',
+    maintainers: ['railzy'],
+    handler,
+};
+
+async function handler() {
     const link = 'https://www2.scut.edu.cn/jtxs/24241/list.htm';
     const response = await got({
         method: 'get',
@@ -13,7 +32,7 @@ export default async (ctx) => {
     const $ = load(data);
     const list = $('#wp_news_w5 li');
 
-    ctx.set('data', {
+    return {
         title: '华南理工大学土木与交通学院 - 学工通知',
         link,
         item:
@@ -27,5 +46,5 @@ export default async (ctx) => {
                     pubDate: item.find('.Article_PublishDate').text(),
                 };
             }),
-    });
-};
+    };
+}

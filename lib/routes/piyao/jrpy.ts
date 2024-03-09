@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,29 @@ import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://www.piyao.org.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jrpy',
+    categories: ['other'],
+    example: '/piyao/jrpy',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['piyao.org.cn/jrpy/index.htm'],
+    },
+    name: '今日辟谣',
+    maintainers: ['Fatpandac'],
+    handler,
+    url: 'piyao.org.cn/jrpy/index.htm',
+};
+
+async function handler() {
     const currentUrl = `${rootUrl}/jrpy/index.htm`;
 
     const response = await got(currentUrl);
@@ -32,9 +55,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '今日辟谣',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

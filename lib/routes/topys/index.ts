@@ -1,9 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:keyword?',
+    categories: ['new-media'],
+    example: '/topys',
+    parameters: { keyword: '关键字，可在对应结果页的 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['topys.cn/search/:keyword', 'topys.cn/'],
+    },
+    name: '关键字',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 创意 | 设计 | 商业 | 艺术 | 文化 | 科技 |
+  | ---- | ---- | ---- | ---- | ---- | ---- |`,
+};
+
+async function handler(ctx) {
     const keyword = ctx.req.param('keyword') ?? '';
 
     const rootUrl = 'https://www.topys.cn';
@@ -59,9 +83,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${keyword ? `${keyword} - ` : ''}TOPYS`,
         link: keyword ? currentUrl : `${rootUrl}/pick`,
         item: items,
-    });
-};
+    };
+}

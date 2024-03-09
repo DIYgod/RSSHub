@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -5,7 +6,30 @@ import got from '@/utils/got';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/sheets/:username/:iso?/:freeOnly?',
+    categories: ['shopping'],
+    example: '/mymusicsheet/user/sheets/HalcyonMusic/USD/1',
+    parameters: { username: '用户名，可在URL中找到', iso: '用于显示价格的ISO 4217货币代码, 支持常见代码, 默认为人民币, 即`CNY`', freeOnly: '只返回免费谱, 任意值为开启' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['mymusicsheet.com/:username/*', 'mymusicsheet.com/:username'],
+        target: '/user/sheets/:username',
+    },
+    name: 'User Sheets',
+    maintainers: ['Freddd13'],
+    handler,
+    description: `关于 ISO 4217，请参考[维基百科](https://zh.wikipedia.org/zh-cn/ISO_4217#%E7%8E%B0%E8%A1%8C%E4%BB%A3%E7%A0%81)`,
+};
+
+async function handler(ctx) {
     const baseUrl = 'https://www.mymusicsheet.com';
     const graphqlUrl = 'https://mms.pd.mapia.io/mms/graphql';
     const exchangeRateUrl = 'https://payport.pd.mapia.io/v2/currency';
@@ -115,9 +139,9 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: `${username}'s sheets`,
         link: `https://www.mymusicsheet.com/${username}?viewType=sheet&orderBy=createdAt`,
         item: items,
-    });
-};
+    };
+}

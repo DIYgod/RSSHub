@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -8,7 +9,28 @@ const host = 'https://www.cs.sdu.edu.cn/';
 const typelist = ['学院公告', '学术报告', '科技简讯'];
 const urlList = ['xygg.htm', 'xsbg.htm', 'kjjx.htm'];
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/cs/:type?',
+    categories: ['university'],
+    example: '/sdu/cs/0',
+    parameters: { type: '默认为 `0`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '计算机科学与技术学院通知',
+    maintainers: ['Ji4n1ng'],
+    handler,
+    description: `| 学院公告 | 学术报告 | 科技简讯 |
+  | -------- | -------- | -------- |
+  | 0        | 1        | 2        |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ? Number.parseInt(ctx.req.param('type')) : 0;
     const link = new URL(urlList[type], host).href;
 
@@ -49,10 +71,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `山东大学计算机科学与技术学院${typelist[type]}通知`,
         description: $('title').text(),
         link,
         item,
-    });
-};
+    };
+}

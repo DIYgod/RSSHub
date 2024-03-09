@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -8,7 +9,28 @@ const md = MarkdownIt({
 });
 const baseUrl = 'https://xiaozhuanlan.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/column/:id',
+    categories: ['new-media'],
+    example: '/xiaozhuanlan/column/olddriver-selection',
+    parameters: { id: '专栏 ID，可在专栏页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['xiaozhuanlan.com/:id'],
+    },
+    name: '专栏',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const response = await got(`${baseUrl}/${id}`);
 
@@ -45,10 +67,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text().trim(),
         link: `${baseUrl}/${id}`,
         description: $('meta[name=description]').attr('content'),
         item: items,
-    });
-};
+    };
+}

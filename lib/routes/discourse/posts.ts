@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import { getConfig } from './utils';
 import got from '@/utils/got';
 import RSSParser from '@/utils/rss-parser';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:configId/posts',
+    categories: ['bbs'],
+    example: '/discourse/0/posts',
+    parameters: { configId: 'Environment variable configuration id, see above' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Latest posts',
+    maintainers: ['dzx-dzx'],
+    handler,
+};
+
+async function handler(ctx) {
     const { link, key } = getConfig(ctx);
 
     const feed = await RSSParser.parseString(
@@ -21,5 +40,5 @@ export default async (ctx) => {
         ...e,
     }));
 
-    ctx.set('data', { item: feed.items, ...feed });
-};
+    return { item: feed.items, ...feed };
+}

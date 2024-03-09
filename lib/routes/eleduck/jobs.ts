@@ -1,8 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jobs',
+    categories: ['bbs'],
+    example: '/eleduck/jobs',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['eleduck.com/categories/5', 'eleduck.com/'],
+    },
+    name: '工作机会',
+    maintainers: ['sfyumi'],
+    handler,
+    url: 'eleduck.com/categories/5',
+};
+
+async function handler() {
     const { data: response } = await got('https://svc.eleduck.com/api/v1/posts', {
         searchParams: {
             category: 5,
@@ -31,9 +54,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '招聘 | 电鸭社区',
         link: 'https://eleduck.com/category/5',
         item: out,
-    });
-};
+    };
+}

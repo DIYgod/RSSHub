@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/list/group/:id',
+    categories: ['programming'],
+    example: '/gihyo/list/group/Ubuntu-Weekly-Recipe',
+    parameters: { id: 'Series' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['gihyo.jp/list/group/:id'],
+    },
+    name: 'Series',
+    maintainers: ['masakichi'],
+    handler,
+};
+
+async function handler(ctx) {
     const groupId = ctx.req.param('id');
 
     const baseUrl = 'https://gihyo.jp';
@@ -38,11 +60,11 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title,
         link,
         description,
         language,
         item,
-    });
-};
+    };
+}

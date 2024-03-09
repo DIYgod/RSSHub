@@ -1,10 +1,36 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/gnn/:category?',
+    categories: ['anime'],
+    example: '/gamer/gnn/1',
+    parameters: { category: '版块' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'GNN 新聞',
+    maintainers: ['Arracc'],
+    handler,
+    description: `| 首頁 | PC | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
+  | ---- | -- | ------- | -------- | ------ | -------- | -------- | ---- |
+  | 缺省 | 1  | 3       | 4        | 5      | 9        | 11       | 13   |
+
+  | Switch | PS5 | PS4 | XboxOne | XboxSX | PC 單機 | PC 線上 | iOS | Android | Web | 漫畫  | 動畫  |
+  | ------ | --- | --- | ------- | ------ | ------- | ------- | --- | ------- | --- | ----- | ----- |
+  | ns     | ps5 | ps4 | xbone   | xbsx   | pc      | olg     | ios | android | web | comic | anime |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
     let url = '';
     let categoryName = '';
@@ -119,9 +145,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: '巴哈姆特-GNN新聞' + categoryName,
         link: url,
         item: items,
-    });
-};
+    };
+}

@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['travel'],
+    example: '/nippon/Politics',
+    parameters: { category: '默认政治，可选如下' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.nippon.com/nippon/:category?', 'www.nippon.com/cn'],
+    },
+    name: 'Unknown',
+    maintainers: ['laampui'],
+    handler,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'Politics';
     const path = category === 'Science,Technology' ? 'condition4' : 'category_code';
     const res = await got.get(`https://www.nippon.com/api/search/cn/${path}/20/1/${category}?t=${Date.now()}`);
@@ -24,9 +46,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `走进日本 - ${category}`,
         link: 'https://www.nippon.com/cn/economy/',
         item,
-    });
-};
+    };
+}

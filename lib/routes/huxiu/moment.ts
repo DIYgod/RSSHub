@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { rootUrl, apiMomentRootUrl, processItems, fetchData } from './util';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/moment',
+    categories: ['new-media'],
+    example: '/huxiu/moment',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: true,
+        supportPodcast: true,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['huxiu.com/moment'],
+    },
+    name: '24 小时',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'huxiu.com/moment',
+};
+
+async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
     const apiUrl = new URL('web-v2/moment/feed', apiMomentRootUrl).href;
@@ -19,8 +42,8 @@ export default async (ctx) => {
 
     const data = await fetchData(currentUrl);
 
-    ctx.set('data', {
+    return {
         item: items,
         ...data,
-    });
-};
+    };
+}

@@ -1,14 +1,37 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const host = 'https://chaping.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/newsflash',
+    categories: ['new-media'],
+    example: '/chaping/newsflash',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['chaping.cn/newsflash'],
+    },
+    name: '快讯',
+    maintainers: ['Fatpandac'],
+    handler,
+    url: 'chaping.cn/newsflash',
+};
+
+async function handler() {
     const newflashAPI = `${host}/api/official/information/newsflash?page=1&limit=21`;
     const response = await got(newflashAPI).json();
     const data = response.data;
 
-    ctx.set('data', {
+    return {
         title: '差评 快讯',
         link: `${host}/newsflash`,
         item:
@@ -19,5 +42,5 @@ export default async (ctx) => {
                 pubDate: parseDate(item.time_publish_timestamp * 1000),
                 link: item.origin_url,
             })),
-    });
-};
+    };
+}

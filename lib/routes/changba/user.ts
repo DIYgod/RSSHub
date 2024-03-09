@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,28 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 const headers = { 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Mac OS X) AppleWebKit/604.1.38 (KHTML, like Gecko) Version/11.0 Mobile/15A372 Safari/604.1' };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:userid',
+    categories: ['social-media'],
+    example: '/changba/skp6hhF59n48R-UpqO3izw',
+    parameters: { userid: '用户ID, 可在对应分享页面的 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: true,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['changba.com/s/:userid'],
+    },
+    name: '用户',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const userid = ctx.req.param('userid');
     const url = `https://changba.com/wap/index.php?s=${userid}`;
     const response = await got({
@@ -76,7 +98,7 @@ export default async (ctx) => {
 
     items = items.filter(Boolean);
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: url,
         description: $('meta[name="description"]').attr('content') || $('title').text(),
@@ -84,5 +106,5 @@ export default async (ctx) => {
         image: authorimg,
         itunes_author: author,
         itunes_category: '唱吧',
-    });
-};
+    };
+}

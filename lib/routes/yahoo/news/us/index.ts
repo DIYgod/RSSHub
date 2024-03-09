@@ -1,10 +1,18 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
 import { isValidHost } from '@/utils/valid-host';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/en/:category?',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const region = ctx.req.param('region') === 'en' ? '' : ctx.req.param('region').toLowerCase();
     if (!isValidHost(region) && region !== '') {
         throw new Error('Invalid region');
@@ -37,10 +45,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: feed.title,
         link: feed.link,
         description: feed.description,
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -10,7 +11,28 @@ const map = new Map([
 
 const host = 'https://eoe.njust.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/eoe/:type?',
+    categories: ['university'],
+    example: '/njust/eoe/tzgg',
+    parameters: { type: '分类名，见下表，默认为通知公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '电光学院',
+    maintainers: ['jasongzy'],
+    handler,
+    description: `| 通知公告 | 新闻动态 |
+  | -------- | -------- |
+  | tzgg     | xwdt     |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'tzgg';
     const info = map.get(type);
     if (!info) {
@@ -23,7 +45,7 @@ export default async (ctx) => {
     const $ = load(html);
     const list = $('ul.news_ul').find('li');
 
-    ctx.set('data', {
+    return {
         title: info.title,
         link: siteUrl,
         item:
@@ -35,5 +57,5 @@ export default async (ctx) => {
                     link: $(item).find('a').attr('href'),
                 }))
                 .get(),
-    });
-};
+    };
+}

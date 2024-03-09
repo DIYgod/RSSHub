@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -80,7 +81,32 @@ function judgeTrue(str, ...validStrings) {
     return false;
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/:type/:id/:all?', '/:type/:id/:all/:shownote?'],
+    categories: ['multimedia'],
+    example: '/ximalaya/album/299146',
+    parameters: { type: '专辑类型, 通常可以使用 `album`，可在对应专辑页面的 URL 中找到', id: '专辑 id, 可在对应专辑页面的 URL 中找到', all: '是否需要获取全部节目，填入 `1`、`true`、`all` 视为获取所有节目，填入其他则不获取。' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: true,
+        supportScihub: false,
+    },
+    name: '专辑（不输出 ShowNote）',
+    maintainers: ['lengthmin', 'jjeejj', 'prnake'],
+    handler,
+    description: `目前喜马拉雅的 API 只能一集一集的获取各节目上的 ShowNote，会极大的占用系统资源，所以默认为不获取节目的 ShowNote。下方有一个新的路径可选获取 ShowNote。
+
+  :::warning
+  专辑类型即 url 中的分类拼音，使用通用分类 \`album\` 通常是可行的，专辑 id 是跟在**分类拼音**后的那个 id, 不要输成某集的 id 了
+
+  **付费内容需要配置好已购买账户的 token 才能收听，详情见部署页面的配置模块**
+  :::`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type'); // 专辑分类
     const id = ctx.req.param('id'); // 专辑id
     const shouldAll = judgeTrue(ctx.req.param('all'), 'all');
@@ -209,7 +235,7 @@ export default async (ctx) => {
         return resultItem;
     });
 
-    ctx.set('data', {
+    return {
         title: albumTitle,
         link: baseUrl + albumUrl,
         description: albumIntro,
@@ -217,5 +243,5 @@ export default async (ctx) => {
         itunes_author: author,
         itunes_category: categoryDict[albumCategory] || albumCategory,
         item: resultItems,
-    });
-};
+    };
+}

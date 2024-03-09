@@ -1,9 +1,35 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import utils from './utils';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/channel/:id/:embed?',
+    categories: ['social-media'],
+    example: '/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ',
+    parameters: { id: 'YouTube channel id', embed: 'Default to embed the video, set to any value to disable embedding' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.youtube.com/channel/:id'],
+        target: '/channel/:id',
+    },
+    name: 'Channel',
+    maintainers: ['DIYgod'],
+    handler,
+    description: `:::tip
+YouTube provides official RSS feeds for channels, for instance [https://www.youtube.com/feeds/videos.xml?channel\_id=UCDwDMPOZfxVV0x\_dz0eQ8KQ](https://www.youtube.com/feeds/videos.xml?channel_id=UCDwDMPOZfxVV0x_dz0eQ8KQ).
+:::`,
+};
+
+async function handler(ctx) {
     if (!config.youtube || !config.youtube.key) {
         throw new Error('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -18,7 +44,7 @@ export default async (ctx) => {
 
     const data = (await utils.getPlaylistItems(playlistId, 'snippet', cache)).data.items;
 
-    ctx.set('data', {
+    return {
         title: `${data[0].snippet.channelTitle} - YouTube`,
         link: `https://www.youtube.com/channel/${id}`,
         description: `YouTube channel ${data[0].snippet.channelTitle}`,
@@ -36,5 +62,5 @@ export default async (ctx) => {
                     author: snippet.videoOwnerChannelTitle,
                 };
             }),
-    });
-};
+    };
+}

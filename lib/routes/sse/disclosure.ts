@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/disclosure/:query?',
+    categories: ['finance'],
+    example: '/sse/disclosure/beginDate=2018-08-18&endDate=2020-08-25&productId=600696',
+    parameters: { query: '筛选条件，见示例' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '上市公司信息最新公告披露',
+    maintainers: ['harveyqiu'],
+    handler,
+};
+
+async function handler(ctx) {
     const query = ctx.req.param('query') ?? ''; // beginDate=2018-08-18&endDate=2020-09-01&productId=600696
     const queries = query.split('&').reduce((acc, cur) => {
         const [key, value] = cur.split('=');
@@ -39,9 +58,9 @@ export default async (ctx) => {
         author: item.SECURITY_NAME,
     }));
 
-    ctx.set('data', {
+    return {
         title: `上海证券交易所 - 上市公司信息 - ${items[0].author}最新公告`,
         link: pageUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,9 +1,22 @@
+import { Route } from '@/types';
 // Require necessary modules
 import got from '@/utils/got'; // a customised got
 import { load } from 'cheerio'; // an HTML parser with a jQuery-like API
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    radar: {
+        source: ['hackyournews.com/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['ftiasch'],
+    handler,
+    url: 'hackyournews.com/',
+};
+
+async function handler() {
     const baseUrl = 'https://hackyournews.com';
     const { data: response } = await got(baseUrl);
     const $ = load(response);
@@ -42,9 +55,9 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: 'Index',
         link: baseUrl,
         item,
-    });
-};
+    };
+}

@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import asyncPool from 'tiny-async-pool';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/posts',
+    categories: ['design'],
+    example: '/shoppingdesign/posts',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.shoppingdesign.com.tw/post'],
+    },
+    name: '文章列表',
+    maintainers: ['miles170'],
+    handler,
+    url: 'www.shoppingdesign.com.tw/post',
+};
+
+async function handler() {
     // sn_f parameter is required to prevent redirection
     const currentUrl = 'https://www.shoppingdesign.com.tw/post?sn_f=1';
     const response = await got(currentUrl);
@@ -35,10 +58,10 @@ export default async (ctx) => {
         items.push(data);
     }
 
-    ctx.set('data', {
+    return {
         title: $('meta[property="og:title"]').attr('content'),
         link: currentUrl,
         description: $('meta[property="og:description"]').attr('content'),
         item: items,
-    });
-};
+    };
+}

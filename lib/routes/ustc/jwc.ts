@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,33 @@ import timezone from '@/utils/timezone';
 const noticeUrl = 'https://www.teach.ustc.edu.cn/category/notice';
 const noticeType = { teaching: '教学', info: '信息', exam: '考试', exchange: '交流' };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jwc/:type?',
+    categories: ['university'],
+    example: '/ustc/jwc/info',
+    parameters: { type: '分类，默认显示所有种类' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.teach.ustc.edu.cn/'],
+        target: '/jwc',
+    },
+    name: '教务处通知新闻',
+    maintainers: ['hang333'],
+    handler,
+    url: 'www.teach.ustc.edu.cn/',
+    description: `| 信息 | 教学     | 考试 | 交流     |
+  | ---- | -------- | ---- | -------- |
+  | info | teaching | exam | exchange |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? '';
     // 发起 HTTP GET 请求
     const response = await got({
@@ -48,10 +75,10 @@ export default async (ctx) => {
 
     const desc = type === '' ? '中国科学技术大学教务处 - 通知新闻' : `中国科学技术大学教务处 - ${noticeType[type]}类通知`;
 
-    ctx.set('data', {
+    return {
         title: desc,
         description: desc,
         link: `${noticeUrl}${type === '' ? '' : '-' + type}`,
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,28 @@ import * as path from 'node:path';
 import { art } from '@/utils/render';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:handle',
+    categories: ['picture'],
+    example: '/artstation/wlop',
+    parameters: { handle: 'Artist handle, can be found in URL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.artstation.com/:handle'],
+    },
+    name: 'Artist Profolio',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const handle = ctx.req.param('handle');
 
     const headers = {
@@ -90,7 +112,7 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${userData.full_name} - ArtStation`,
         description: userData.headline,
         link: userData.permalink,
@@ -98,5 +120,5 @@ export default async (ctx) => {
         icon: userData.large_avatar_url,
         image: userData.default_cover_url,
         item: items,
-    });
-};
+    };
+}

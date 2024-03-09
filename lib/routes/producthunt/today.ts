@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,29 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/today',
+    categories: ['other'],
+    example: '/producthunt/today',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.producthunt.com/'],
+    },
+    name: 'Today Popular',
+    maintainers: ['miaoyafeng', 'Fatpandac'],
+    handler,
+    url: 'www.producthunt.com/',
+};
+
+async function handler() {
     const response = await got('https://www.producthunt.com/');
 
     const data = JSON.parse(load(response.data)('#__NEXT_DATA__').html());
@@ -40,9 +63,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'Product Hunt Today Popular',
         link: 'https://www.producthunt.com/',
         item: items,
-    });
-};
+    };
+}

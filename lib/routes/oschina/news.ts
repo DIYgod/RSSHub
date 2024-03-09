@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -32,7 +33,44 @@ const configs = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:category?',
+    categories: ['programming'],
+    example: '/oschina/news/project',
+    parameters: { category: '板块名' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['oschina.net/news/:category'],
+        target: '/news/:category',
+    },
+    name: '资讯',
+    maintainers: ['tgly307', 'zengxs'],
+    handler,
+    description: `| [综合资讯][osc_gen] | [软件更新资讯][osc_proj] | [行业资讯][osc_ind] | [编程语言资讯][osc_pl] |
+  | ------------------- | ------------------------ | ------------------- | ---------------------- |
+  | industry            | project                  | industry-news       | programming            |
+
+  订阅 [全部板块资讯][osc_all] 可以使用 [https://rsshub.app/oschina/news](https://rsshub.app/oschina/news)
+
+  [osc_all]: https://www.oschina.net/news "开源中国 - 全部资讯"
+
+  [osc_gen]: https://www.oschina.net/news/industry "开源中国 - 综合资讯"
+
+  [osc_proj]: https://www.oschina.net/news/project "开源中国 - 软件更新资讯"
+
+  [osc_ind]: https://www.oschina.net/news/industry-news "开源中国 - 行业资讯"
+
+  [osc_pl]: https://www.oschina.net/news/programming "开源中国 - 编程语言资讯"`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'all';
     const config = configs[category];
 
@@ -87,9 +125,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `开源中国-${config.name}`,
         link: config.link,
         item: resultItem,
-    });
-};
+    };
+}

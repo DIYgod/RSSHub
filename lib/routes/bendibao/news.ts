@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,39 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { isValidHost } from '@/utils/valid-host';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:city',
+    categories: ['new-media'],
+    example: '/bendibao/news/bj',
+    parameters: { city: '城市缩写，可在该城市页面的 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['bendibao.com/'],
+    },
+    name: '焦点资讯',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'bendibao.com/',
+    description: `| 城市名 | 缩写 |
+  | ------ | ---- |
+  | 北京   | bj   |
+  | 上海   | sh   |
+  | 广州   | gz   |
+  | 深圳   | sz   |
+
+  更多城市请参见 [这里](http://www.bendibao.com/city.htm)
+
+  > **香港特别行政区** 和 **澳门特别行政区** 的本地宝城市页面不更新资讯。`,
+};
+
+async function handler(ctx) {
     const city = ctx.req.param('city');
     if (!isValidHost(city)) {
         throw new Error('Invalid city');
@@ -102,9 +135,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title,
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

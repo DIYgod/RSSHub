@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseRelativeDate } from '@/utils/parse-date';
 import md5 from '@/utils/md5';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news',
+    categories: ['game'],
+    example: '/xboxfan/news',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['xboxfan.com/'],
+    },
+    name: '资讯',
+    maintainers: ['XXY233'],
+    handler,
+    url: 'xboxfan.com/',
+};
+
+async function handler() {
     const baseUrl = 'https://xboxfan.com/';
     const { data: response } = await got(baseUrl);
     const $ = load(response);
@@ -37,9 +60,9 @@ export default async (ctx) => {
             return data;
         });
 
-    ctx.set('data', {
+    return {
         title: '盒心光环·资讯',
         link: 'https://xboxfan.com/',
         item: items,
-    });
-};
+    };
+}

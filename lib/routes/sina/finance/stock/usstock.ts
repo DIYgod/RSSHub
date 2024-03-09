@@ -1,9 +1,36 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { parseArticle } from '../../utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/finance/stock/usstock/:cids?',
+    categories: ['new-media'],
+    example: '/sina/finance/stock/usstock',
+    parameters: { cids: '分区 id，见下表，默认为 `57045`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['finance.sina.com.cn/stock/usstock', 'finance.sina.com.cn/'],
+        target: '/finance/stock/usstock',
+    },
+    name: '美股',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'finance.sina.com.cn/stock/usstock',
+    description: `| 最新报道 | 中概股 | 国际财经 | 互联网 |
+  | -------- | ------ | -------- | ------ |
+  | 57045    | 57046  | 56409    | 40811  |`,
+};
+
+async function handler(ctx) {
     const { cids = '57045' } = ctx.req.param();
     const { limit = '50' } = ctx.req.query();
     const { data: response } = await got('https://interface.sina.cn/pc_api/public_news_data.d.json', {
@@ -30,9 +57,9 @@ export default async (ctx) => {
 
     const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
 
-    ctx.set('data', {
+    return {
         title: '美股|美股行情|美股新闻 - 新浪财经',
         link: 'https://finance.sina.com.cn/stock/usstock/',
         item: items,
-    });
-};
+    };
+}

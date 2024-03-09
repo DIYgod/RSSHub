@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/dota2/matches/:id',
+    categories: ['game'],
+    example: '/liquipedia/dota2/matches/Team_Aster',
+    parameters: { id: '战队名称，可在url中找到。例如:https://liquipedia.net/dota2/Team_Aster' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['liquipedia.net/dota2/:id'],
+    },
+    name: 'Dota2 战队最近比赛结果',
+    maintainers: ['wzekin'],
+    handler,
+};
+
+async function handler(ctx) {
     const team = ctx.req.param('id');
     const url = `https://liquipedia.net/dota2/${team}`;
     const response = await got({
@@ -15,7 +37,7 @@ export default async (ctx) => {
     const $ = load(data);
     const list = $('div.recent-matches > table > tbody > tr[style]');
 
-    ctx.set('data', {
+    return {
         title: `Liquipedia Dota2 ${team} Matches`,
         link: url,
         item: list?.toArray().map((item) => {
@@ -43,5 +65,5 @@ export default async (ctx) => {
                 guid: url + dateTime,
             };
         }),
-    });
-};
+    };
+}

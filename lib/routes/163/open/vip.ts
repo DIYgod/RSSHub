@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,29 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/open/vip',
+    categories: ['study'],
+    example: '/163/open/vip',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['vip.open.163.com/'],
+    },
+    name: '精品课程',
+    maintainers: ['hoilc'],
+    handler,
+    url: 'vip.open.163.com/',
+};
+
+async function handler() {
     const url = 'https://vip.open.163.com';
 
     const list_response = await got(url);
@@ -59,9 +82,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '网易公开课 - 精品课程',
         link: url,
         item: items,
-    });
-};
+    };
+}

@@ -1,10 +1,40 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 import asyncPool from 'tiny-async-pool';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/realtime/:category?',
+    categories: ['new-media'],
+    example: '/nextapple/realtime/latest',
+    parameters: { category: '類別，見下表，默認為首頁' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['tw.nextapple.com/', 'tw.nextapple.com/realtime/:category'],
+    },
+    name: '最新新聞',
+    maintainers: ['miles170'],
+    handler,
+    url: 'tw.nextapple.com/',
+    description: `| 首頁   | 焦點      | 熱門 | 娛樂          | 生活 | 女神     | 社會  |
+  | ------ | --------- | ---- | ------------- | ---- | -------- | ----- |
+  | latest | recommend | hit  | entertainment | life | gorgeous | local |
+
+  | 政治     | 國際          | 財經    | 體育   | 旅遊美食  | 3C 車市 |
+  | -------- | ------------- | ------- | ------ | --------- | ------- |
+  | politics | international | finance | sports | lifestyle | gadget  |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'latest';
     const currentUrl = `https://tw.nextapple.com/realtime/${category}`;
     const response = await got(currentUrl);
@@ -37,9 +67,9 @@ export default async (ctx) => {
         items.push(item);
     }
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

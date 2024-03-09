@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/nea/sjzz/ghs',
+    categories: ['government'],
+    example: '/gov/nea/sjzz/ghs',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['nea.gov.cn/sjzz/ghs/'],
+    },
+    name: '发展规划司',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'nea.gov.cn/sjzz/ghs/',
+};
+
+async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 35;
 
     const rootUrl = 'https://www.nea.gov.cn';
@@ -47,7 +70,7 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         item: items,
         title: $('title').text(),
         link: currentUrl,
@@ -55,5 +78,5 @@ export default async (ctx) => {
         language: 'zh',
         subtitle: $('meta[name="ColumnType"]').prop('content'),
         author: $('meta[name="ColumnKeywords"]').prop('content'),
-    });
-};
+    };
+}

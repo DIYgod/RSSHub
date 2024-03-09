@@ -17,11 +17,11 @@ export default async (ctx) => {
     const profileImageUrl = userInfo.profile_image_url || userInfo.profile_image_url_https;
     const item = original && config.isPackage ? data : utils.ProcessFeed(ctx, { data });
 
-    ctx.set('data', {
+    return {
         title: `Twitter @${userInfo.name}`,
         link: `https://twitter.com/${userInfo.screen_name}/status/${status}`,
         image: profileImageUrl.replace(/_normal.jpg$/, '.jpg'),
         description: userInfo.description,
         item,
-    });
+    };
 };

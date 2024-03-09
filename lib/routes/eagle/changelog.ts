@@ -1,8 +1,32 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/changelog/:language?',
+    categories: ['program-update'],
+    example: '/eagle/changelog/en',
+    parameters: { language: 'Language, see list, default to be `cn`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Changelog',
+    maintainers: ['tigercubden'],
+    handler,
+    description: `Language
+
+  | Simplified Chinese | Traditional Chinese | English |
+  | ------------------ | ------------------- | ------- |
+  | cn                 | tw                  | en      |`,
+};
+
+async function handler(ctx) {
     let language = ctx.req.param('language');
     let changelog = '';
 
@@ -33,7 +57,7 @@ export default async (ctx) => {
 
     const list = $('.version');
 
-    ctx.set('data', {
+    return {
         // 源标题
         title: `Eagle ${changelog}`,
         // 源链接
@@ -73,5 +97,5 @@ export default async (ctx) => {
                     };
                 })
                 .get(),
-    });
-};
+    };
+}

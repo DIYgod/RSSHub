@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/clarification',
+    categories: ['government'],
+    example: '/mohw/clarification',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['mohw.gov.tw/'],
+    },
+    name: '即時新聞澄清',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'mohw.gov.tw/',
+};
+
+async function handler() {
     const rootUrl = 'https://www.mohw.gov.tw';
     const currentUrl = `${rootUrl}/lp-17-1.html`;
 
@@ -43,9 +66,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '即時新聞澄清 - 台灣衛生福利部',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

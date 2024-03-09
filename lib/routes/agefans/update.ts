@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { rootUrl } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/update',
+    categories: ['anime'],
+    example: '/agefans/update',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['agemys.org/update', 'agemys.org/'],
+    },
+    name: '最近更新',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'agemys.org/update',
+};
+
+async function handler() {
     const currentUrl = `${rootUrl}/update`;
     const response = await got(currentUrl);
 
@@ -42,9 +65,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

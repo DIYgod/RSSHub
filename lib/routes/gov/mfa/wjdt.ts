@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -16,7 +17,25 @@ const categories = {
     zcjd: 'zcjd',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/fmprc/:category?', '/mfa/wjdt/:category?'],
+    name: 'Unknown',
+    maintainers: ['nicolaszf', 'nczitzk'],
+    handler,
+    description: `| 分类       | category |
+  | ---------- | -------- |
+  | 领导人活动 | gjldrhd  |
+  | 外事日程   | wsrc     |
+  | 部领导活动 | wjbxw    |
+  | 业务动态   | sjxw     |
+  | 发言人表态 | fyrbt    |
+  | 吹风会     | cfhsl    |
+  | 大使任免   | dsrm     |
+  | 驻外报道   | zwbd     |
+  | 政策解读   | zcjd     |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'gjldrhd';
 
     const rootUrl = 'https://www.mfa.gov.cn';
@@ -60,9 +79,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

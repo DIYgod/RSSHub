@@ -20,11 +20,9 @@
     "lib"
   ],
   "scripts": {
-    "build:all": "npm run build:radar && npm run build:maintainer",
-    "build:maintainer": "tsx scripts/workflow/build-maintainer.ts",
-    "build:radar": "tsx scripts/workflow/build-radar.ts",
+    "build": "tsx scripts/workflow/build-routes.ts",
     "dev": "cross-env NODE_ENV=dev tsx watch --no-cache lib/index.ts",
-    "format": "eslint --cache --fix \"**/*.{ts,js,yml}\" && node website/docs/.format/format.mjs && prettier \"**/*.{ts,js,json}\" --write",
+    "format": "eslint --cache --fix \"**/*.{ts,js,yml}\" && prettier \"**/*.{ts,js,json}\" --write",
     "format:check": "eslint --cache \"**/*.{ts,js,yml}\" && prettier \"**/*.{ts,js,json}\" --check",
     "format:staged": "lint-staged",
     "vitest": "cross-env NODE_ENV=test vitest",
@@ -33,7 +31,7 @@
     "lint": "eslint --cache .",
     "prepare": "husky || true",
     "profiling": "NODE_ENV=production tsx --prof lib/index.ts",
-    "start": "tsx lib/index.ts",
+    "start": "cross-env NODE_ENV=production tsx lib/index.ts",
     "test": "npm run format:check && npm run vitest:coverage"
   },
   "lint-staged": {
@@ -45,7 +43,6 @@
       "eslint --cache --fix",
       "prettier --ignore-unknown --ignore-path ./.gitignore --write"
     ],
-    "*.md?(x)": "node website/docs/.format/format.mjs --staged",
     "*.yml": "eslint --cache --fix"
   },
   "dependencies": {
@@ -175,6 +172,7 @@
     "staged-git-files": "1.3.0",
     "string-width": "7.1.0",
     "supertest": "6.3.4",
+    "tldts": "6.1.13",
     "to-vfile": "8.0.0",
     "tosource": "2.0.0-alpha.3",
     "typescript": "5.4.2",

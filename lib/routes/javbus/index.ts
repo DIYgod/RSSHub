@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -17,7 +18,19 @@ const toSize = (raw) => {
 
 const allowDomain = new Set(['javbus.com', 'javbus.org', 'javsee.icu', 'javsee.one']);
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '*',
+    radar: {
+        source: ['www.seejav.pw/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    url: 'www.seejav.pw/',
+};
+
+async function handler(ctx) {
     const isWestern = /^\/western/.test(getSubPath(ctx));
     const domain = ctx.req.query('domain') ?? 'javbus.com';
     const westernDomain = ctx.req.query('western_domain') ?? 'javbus.org';
@@ -176,10 +189,10 @@ export default async (ctx) => {
 
     const title = $('head title').text();
 
-    ctx.set('data', {
+    return {
         title: `${title.startsWith('JavBus') ? '' : 'JavBus - '}${title.replace(/ - AV磁力連結分享/, '')}`,
         link: currentUrl,
         item: items,
         allowEmpty: true,
-    });
-};
+    };
+}

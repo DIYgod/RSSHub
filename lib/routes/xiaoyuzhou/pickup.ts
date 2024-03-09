@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { config } from '@/config';
@@ -78,14 +79,26 @@ const ProcessFeed = async () => {
     });
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    radar: {
+        source: ['xiaoyuzhoufm.com/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['prnake', 'Maecenas'],
+    handler,
+    url: 'xiaoyuzhoufm.com/',
+};
+
+async function handler() {
     let resultItems = await cache.tryGet(XIAOYUZHOU_ITEMS, () => ProcessFeed());
     if (!isToday(resultItems[0].pubDate)) {
         // force refresh cache
         resultItems = await ProcessFeed();
         cache.set(XIAOYUZHOU_ITEMS, resultItems);
     }
-    ctx.set('data', {
+    return {
         title: '小宇宙 - 发现',
         link: 'https://www.xiaoyuzhoufm.com/',
         description: '小宇宙的编辑精选',
@@ -93,5 +106,5 @@ export default async (ctx) => {
         itunes_author: '小宇宙',
         itunes_category: 'Society & Culture',
         item: resultItems,
-    });
-};
+    };
+}

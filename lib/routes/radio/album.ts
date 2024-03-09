@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,32 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import CryptoJS from 'crypto-js';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/album/:id',
+    categories: ['multimedia'],
+    example: '/radio/album/15682090498666',
+    parameters: { id: '专辑 id，可在对应专辑页面的 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: true,
+        supportScihub: false,
+    },
+    name: '专辑',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `如果订阅 [中国相声榜](https://www.radio.cn/pc-portal/sanji/detail.html?columnId=15682090498666)，其 URL 为 \`https://www.radio.cn/pc-portal/sanji/detail.html?columnId=15682090498666\`，可以得到 \`columnId\` 为 \`15682090498666\`
+
+  所以对应路由为 [\`/radio/album/15682090498666\`](https://rsshub.app/radio/album/15682090498666)
+
+  :::tip
+  部分专辑不适用该路由，此时可以尝试 [节目](#yun-ting-jie-mu) 路由
+  :::`,
+};
+
+async function handler(ctx) {
     const KEY = 'f0fc4c668392f9f9a447e48584c214ee';
 
     const id = ctx.req.param('id');
@@ -97,7 +123,7 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: `云听 - ${data.columnName}`,
         link: currentUrl,
         item: items,
@@ -105,5 +131,5 @@ export default async (ctx) => {
         itunes_author: data.anchorpersons,
         description: data.descriptions ?? data.descriptionSimple,
         itunes_category: data.atypeInfo.map((c) => c.categoryName).join(','),
-    });
-};
+    };
+}

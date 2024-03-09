@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import utils from './utils';
@@ -5,7 +6,29 @@ import { parseDate } from '@/utils/parse-date';
 import g_encrypt from './execlib/x-zse-96-v3';
 import md5 from '@/utils/md5';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/topic/:topicId/:isTop?',
+    categories: ['social-media'],
+    example: '/zhihu/topic/19828946',
+    parameters: { topicId: '话题 id', isTop: '仅精华，默认为否，其他值为是' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.zhihu.com/topic/:topicId/:type'],
+        target: '/topic/:topicId',
+    },
+    name: '话题',
+    maintainers: ['xyqfer'],
+    handler,
+};
+
+async function handler(ctx) {
     const { topicId, isTop = false } = ctx.req.param();
     const link = `https://www.zhihu.com/topic/${topicId}/${isTop ? 'top-answers' : 'newest'}`;
 
@@ -103,10 +126,10 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: `知乎话题-${topicId}-${isTop ? '精华' : '讨论'}`,
         description: topicMeta.content.introduction,
         link,
         item: items,
-    });
-};
+    };
+}

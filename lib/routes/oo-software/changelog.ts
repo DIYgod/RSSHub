@@ -1,8 +1,33 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/changelog/:id',
+    categories: ['program-update'],
+    example: '/oo-software/changelog/shutup10',
+    parameters: { id: 'Software id, see below, shutup10 by default, can be found in URL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Changelog',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| Software        | Id          |
+  | --------------- | ----------- |
+  | O\&O ShutUp10++ | shutup10    |
+  | O\&O AppBuster  | ooappbuster |
+  | O\&O Lanytix    | oolanytix   |
+  | O\&O DeskInfo   | oodeskinfo  |`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? 'shutup10';
 
     const rootUrl = 'https://www.oo-software.com';
@@ -32,9 +57,9 @@ export default async (ctx) => {
 
     items[0].enclosure_url = $('.banner-inlay').find('a').attr('href');
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

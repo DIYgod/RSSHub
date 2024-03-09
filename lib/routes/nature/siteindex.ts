@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { baseUrl, cookieJar } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/siteindex',
+    categories: ['journal'],
+    example: '/nature/siteindex',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Journal List',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const response = await got(`${baseUrl}/siteindex`, { cookieJar });
     const $ = load(response.data);
 
@@ -38,12 +57,12 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'Nature siteindex',
         link: response.url,
         item: items,
-    });
+    };
     ctx.set('json', {
         items,
     });
-};
+}

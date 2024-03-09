@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,19 @@ import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://www.worldjournal.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:path{.+}?',
+    radar: {
+        source: ['worldjournal.com/wj/*path'],
+        target: '/:path',
+    },
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    url: 'worldjournal.com/wj/*path',
+};
+
+async function handler(ctx) {
     const { path = 'cate/breaking' } = ctx.req.param();
     const { data: response } = await got(`${baseUrl}/wj/${path}`);
 
@@ -51,11 +64,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         description: $('head meta[name="description"]').attr('content'),
         image: 'https://www.worldjournal.com/static/img/icons/icon-144x144.png',
         link: `${baseUrl}/wj/${path}`,
         item: items,
-    });
-};
+    };
+}

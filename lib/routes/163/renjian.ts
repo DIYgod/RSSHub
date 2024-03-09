@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -13,7 +14,31 @@ const titles = {
     kanke: '看客',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/renjian/:category?',
+    categories: ['new-media'],
+    example: '/163/renjian/texie',
+    parameters: { category: '分类，见下表，默认为特写' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['renjian.163.com/:category', 'renjian.163.com/'],
+    },
+    name: '人间',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 特写  | 记事  | 大写  | 好读  | 看客  |
+  | ----- | ----- | ----- | ----- | ----- |
+  | texie | jishi | daxie | haodu | kanke |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'texie';
 
     const rootUrl = 'https://renjian.163.com';
@@ -70,9 +95,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `人间 - ${titles[category]} - 网易新闻`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -57,7 +58,32 @@ const categories = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['traditional-media'],
+    example: '/hkej/index',
+    parameters: { category: '分类，默认为全部新闻' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['hkej.com/'],
+    },
+    name: '即时新闻',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'hkej.com/',
+    description: `| index    | stock    | hongkong | china    | international | property | current  |
+  | -------- | -------- | -------- | -------- | ------------- | -------- | -------- |
+  | 全部新闻 | 港股直击 | 香港财经 | 中国财经 | 国际财经      | 地产新闻 | 时事脉搏 |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'index';
     const cat = categories[category];
     const baseUrl = 'https://www2.hkej.com';
@@ -139,13 +165,13 @@ export default async (ctx) => {
             )
     );
 
-    ctx.set('data', {
+    return {
         title: `信報網站 - ${cat.title} - 信報網站 hkej.com`,
         link: baseUrl + cat.link,
         description: `信報網站(www.hkej.com)即時新聞${cat.name}，提供${cat.description}。`,
         item: items,
         language: 'zh-hk',
-    });
+    };
 
     ctx.set('json', {
         title: `信報網站 - ${cat.title} - 信報網站 hkej.com`,
@@ -155,4 +181,4 @@ export default async (ctx) => {
         language: 'zh-hk',
         cookieJar,
     });
-};
+}

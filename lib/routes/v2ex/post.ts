@@ -1,7 +1,29 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/post/:postid',
+    categories: ['bbs'],
+    example: '/v2ex/post/584403',
+    parameters: { postid: '帖子ID，在 URL 可以找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['v2ex.com/t/:postid'],
+    },
+    name: '帖子',
+    maintainers: ['kt286'],
+    handler,
+};
+
+async function handler(ctx) {
     const postid = ctx.req.param('postid');
     const pageUrl = `https://www.v2ex.com/t/${postid}`;
 
@@ -19,7 +41,7 @@ export default async (ctx) => {
 
     const topic = topicResponse[0];
 
-    ctx.set('data', {
+    return {
         title: `V2EX-${topic.title}`,
         link: pageUrl,
         description: topic.content,
@@ -31,5 +53,5 @@ export default async (ctx) => {
             pubDate: parseDate(item.created, 'X'),
         })),
         allowEmpty: true,
-    });
-};
+    };
+}
