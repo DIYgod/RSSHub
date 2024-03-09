@@ -194,7 +194,7 @@ export default async function handler(ctx: Context) {
         }
         ctx.header('Content-Type', doc.mimeType);
         ctx.header('Accept-Ranges', 'bytes');
-        ctx.header('Content-Security-Policy', "default-src 'self'");
+        ctx.header('Content-Security-Policy', "default-src 'self'; script-src 'none'");
 
         const rangeHeader = ctx.req.header('Range') ?? '';
         const range = parseRange(rangeHeader, doc.size);
