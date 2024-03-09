@@ -124,6 +124,22 @@
 
 <Route namespace="bandcamp" data={{"path":"/weekly","categories":["multimedia"],"example":"/bandcamp/weekly","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["bandcamp.com/"]},"name":"Weekly","maintainers":["nczitzk"],"url":"bandcamp.com/","location":"weekly.ts"}} />
 
+## BT 之家 1LOU 站 {#bt-zhi-jia-1lou-zhan}
+
+### 搜索 {#bt-zhi-jia-1lou-zhan-sou-suo}
+
+<Route namespace="1lou" data={{"path":"/:path?","categories":["multimedia"],"example":"/1lou/search-繁花.htm","parameters":{"path":"路径信息在URL里找到,主页为 index"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["1lou.me/:path"],"target":"/:path"},"name":"搜索","maintainers":["falling"],"description":":::tip\n  将 1lou.me/ 后的内容作为参数传入到 path 即可\n\n  [www.1lou.me/search - 繁花.htm](http://www.1lou.me/search-繁花.htm) --> /1lou/search - 繁花.htm\n\n  [www.1lou.me/forum-1.htm](http://www.1lou.me/forum-1.htm) --> /1lou/forum-1.htm\n\n  [www.1lou.me/](http://www.1lou.me/) --> /1lou/\n  :::","location":"index.ts"}} />
+
+:::tip
+将 1lou.me/ 后的内容作为参数传入到 path 即可
+
+[www.1lou.me/search - 繁花.htm](http://www.1lou.me/search-繁花.htm) --> /1lou/search - 繁花.htm
+
+[www.1lou.me/forum-1.htm](http://www.1lou.me/forum-1.htm) --> /1lou/forum-1.htm
+
+[www.1lou.me/](http://www.1lou.me/) --> /1lou/
+:::
+
 ## BT 之家 {#bt-zhi-jia}
 
 ### 分类 {#bt-zhi-jia-fen-lei}
@@ -160,22 +176,6 @@ BT 之家的域名会变更，本路由以 `https://www.btbtt20.com` 为默认�
 如果加入了分类参数，直接在分类参数后加入 `?domain=<域名>` 即可。如指定分类 [剧集](https://www.btbtt20.com/forum-index-fid-950.htm) `https://www.btbtt20.com/forum-index-fid-950.htm` 并指定域名为 `https://www.btbtt15.com`，即在 `/btzj/forum-index-fid-950` 后加上 `?domain=btbtt15.com`，此时路由为 [`/btzj/forum-index-fid-950?domain=btbtt15.com`](https://rsshub.app/btzj/forum-index-fid-950?domain=btbtt15.com)
 
 目前，你可以选择的域名有 `btbtt10-20.com` 共 10 个，或 `88btbbt.com`，该站也提供了专用网址查询工具。详见 [此贴](https://www.btbtt20.com/thread-index-fid-2-tid-4550191.htm)
-:::
-
-## BT 之家 1LOU 站 {#bt-zhi-jia-1lou-zhan}
-
-### 搜索 {#bt-zhi-jia-1lou-zhan-sou-suo}
-
-<Route namespace="1lou" data={{"path":"/:path?","categories":["multimedia"],"example":"/1lou/search-繁花.htm","parameters":{"path":"路径信息在URL里找到,主页为 index"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["1lou.me/:path"],"target":"/:path"},"name":"搜索","maintainers":["falling"],"description":":::tip\n  将 1lou.me/ 后的内容作为参数传入到 path 即可\n\n  [www.1lou.me/search - 繁花.htm](http://www.1lou.me/search-繁花.htm) --> /1lou/search - 繁花.htm\n\n  [www.1lou.me/forum-1.htm](http://www.1lou.me/forum-1.htm) --> /1lou/forum-1.htm\n\n  [www.1lou.me/](http://www.1lou.me/) --> /1lou/\n  :::","location":"index.ts"}} />
-
-:::tip
-将 1lou.me/ 后的内容作为参数传入到 path 即可
-
-[www.1lou.me/search - 繁花.htm](http://www.1lou.me/search-繁花.htm) --> /1lou/search - 繁花.htm
-
-[www.1lou.me/forum-1.htm](http://www.1lou.me/forum-1.htm) --> /1lou/forum-1.htm
-
-[www.1lou.me/](http://www.1lou.me/) --> /1lou/
 :::
 
 ## CNTV {#cntv}
