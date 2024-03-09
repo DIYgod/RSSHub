@@ -431,17 +431,17 @@ module.exports = {
             },
         ],
     },
-    'zhuixinfan.com': {
-        _name: '追新番日剧站',
-        '.': [
-            {
-                title: '更新列表',
-                docs: 'https://docs.rsshub.app/routes/multimedia#zhui-xin-fan-ri-ju-zhan',
-                source: ['/main.php'],
-                target: '/zhuixinfan/list',
-            },
-        ],
-    },
+    // 'zhuixinfan.com': {
+    //     _name: '追新番日剧站',
+    //     '.': [
+    //         {
+    //             title: '更新列表',
+    //             docs: 'https://docs.rsshub.app/routes/multimedia#zhui-xin-fan-ri-ju-zhan',
+    //             source: ['/main.php'],
+    //             target: '/zhuixinfan/list',
+    //         },
+    //     ],
+    // },
     'etoland.co.kr': {
         _name: 'eTOLAND',
         '.': [
