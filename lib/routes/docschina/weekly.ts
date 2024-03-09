@@ -31,7 +31,7 @@ export default async (ctx) => {
                     itunes_item_image: item.imageUrl,
                 };
             });
-        })
+        }) || {}
     );
 
     ctx.set('data', {
