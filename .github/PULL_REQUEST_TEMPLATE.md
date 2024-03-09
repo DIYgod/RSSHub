@@ -32,7 +32,7 @@ If your changes are not related to route, please fill in `routes` section with `
 ## New RSS Route Checklist / 新 RSS 路由检查表
   
 - [ ] New Route / 新的路由
-  - [ ] Follows [v2 Script Standard](https://docs.rsshub.app/joinus/advanced/script-standard) / 跟随 [v2 路由规范](https://docs.rsshub.app/zh/joinus/advanced/script-standard)
+  - [ ] Follows [Script Standard](https://docs.rsshub.app/joinus/advanced/script-standard) / 跟随 [路由规范](https://docs.rsshub.app/zh/joinus/advanced/script-standard)
 - [ ] Documentation / 文档说明
 - [ ] Full text / 全文获取
   - [ ] Use cache / 使用缓存

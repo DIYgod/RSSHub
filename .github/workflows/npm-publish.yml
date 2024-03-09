@@ -9,7 +9,6 @@ on:
       - 'lib/**'
       - '!**/maintainer.js'
       - '!**/radar.js'
-      - '!**/radar-rules.js'
 
 permissions:
   contents: read

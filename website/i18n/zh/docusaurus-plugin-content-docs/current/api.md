@@ -12,7 +12,7 @@ RSSHub 提供下列 API:
 
 :::tip
 
-`protected_router.js`下的路由**不会被**包含在此 API 返回的结果当中.
+`protected_router.ts`下的路由**不会被**包含在此 API 返回的结果当中.
 
 :::
 

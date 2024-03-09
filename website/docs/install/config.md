@@ -122,29 +122,13 @@ About PAC script, please refer to [Proxy Auto-Configuration (PAC) file](https://
 
 `PROXY_URL_REGEX`: regex for url of enabling proxy, default to `.*`
 
-## User Authentication Configurations
-
-Routes in `protected_route.js` will be protected using HTTP Basic Authentication.
-
-When adding feeds using RSS readers with HTTP Basic Authentication support, authentication information is required, eg: `https://usernam3:passw0rd@rsshub.app/protected/rsshub/routes`.
-
-For readers that do not support HTTP Basic authentication, please refer to [Access Control Configuration](#access-control-configuration).
-
-`HTTP_BASIC_AUTH_NAME`: HTTP basic authentication username, default to `usernam3`, please change asap
-
-`HTTP_BASIC_AUTH_PASS`: HTTP basic authentication password, default to `passw0rd`, please change asap
-
 ## Access Control Configurations
 
-RSSHub supports access control via access key/code, allowlisting and denylisting, enabling any will activate access control for all routes. `ALLOW_LOCALHOST: true` will grant access to all localhost IP addresses.
+RSSHub supports access control using access keys/codes. Enabling it will activate global access control, and lack of access permission will result in denied access.
 
 ### Allowlisting/denylisting
 
--   `ALLOWLIST`: the allowlist. When set, values in `DENYLIST` are disregarded
-
--   `DENYLIST`: the denylist
-
-Allowlisting/denylisting support IP, route and UA as values, fuzzy matching. Use `,` as the delimiter to separate multiple values, eg: `ALLOWLIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
+This configuration has been removed. It is recommended to use a proxy server such as Nginx or Cloudflare for access control.
 
 ### Access Key/Code
 
@@ -159,13 +143,6 @@ Access code is the md5 generated based on the access key + route, eg:
 -   Routes are accessible via `code`, eg: `https://rsshub.app/qdaily/column/59?code=0f820530128805ffc10351f22b5fd121`
 
 -   Or using `key` directly, eg: `https://rsshub.app/qdaily/column/59?key=ILoveRSSHub`
-
-See the relation between access key/code and allowlist/denylisting.
-
-|             | Allowlist | Denylist | Correct access key/code | Wrong access key/code | No access key/code |
-| ----------- | ----------- | ----------- | ----------------------- | --------------------- | ------------------ |
-| Allowlist | ✅          | ✅          | ✅                      | ✅                    | ✅                 |
-| Denylist | ✅          | ❌          | ✅                      | ❌                    | ❌                 |
 
 ## Logging Configurations
 
@@ -209,7 +186,7 @@ It is also valid to contain route parameters, e.g. `/weibo/user/2612249974`.
 
 ## Features
 
-:::tip Experimental features
+:::tip[Experimental features]
 
 Configs in this sections are in beta stage, and **are turn off by default**. Please read corresponded description and turn on if necessary.
 
@@ -257,7 +234,7 @@ Configs in this sections are in beta stage, and **are turn off by default**. Ple
 
 Configs here are incomplete.
 
-See docs of the specified route and `lib/config.js` for detailed information.
+See docs of the specified route and `lib/config.ts` for detailed information.
 
 :::
 
@@ -400,11 +377,11 @@ Warning: Two Factor Authentication is **not** supported.
 
 For user timeline
 
-apply API here `https://mastodon.example/settings/applications`(repalce `mastodon.example`), please check scope `read:search`
+Apply API at `https://mastodon.example/settings/applications` (replace `mastodon.example`). Scopes `read:search` and `read:statuses` are needed.
 
 -   `MASTODON_API_HOST`: API instance domain, only domain, no `http://` or `https://` protocol header
 -   `MASTODON_API_ACCESS_TOKEN`: user access token
--   `MASTODON_API_ACCT_DOMAIN`: acct domain for particular instance, Webfinger account URI, like `user@host`
+-   `MASTODON_API_ACCT_DOMAIN`: acct domain for this instance, i.e. the `domain` in the WebFinger URI `username@domain`. It's usually the same as `MASTODON_API_HOST`.
 
 ### Medium
 
@@ -417,6 +394,12 @@ Open the console, copy the cookie (in theory, only uid and sid are required)
 
 -   `MINIFLUX_INSTANCE`: The instance used by the user, by default, is the official MiniFlux [paid service address](https://reader.miniflux.app)
 -   `MINIFLUX_TOKEN`: User's API key, please log in to the instance used and go to `Settings` -> `API Key` -> `Create a new API key` to obtain.
+
+### Netease Cloud Music Playlists
+
+For playlists and song rankings
+
+-   `NCM_COOKIES`: Cookies after logging into Netease Cloud Music, available via `document.cookie` in the browser console.
 
 ### nhentai torrent
 
@@ -490,7 +473,8 @@ Remember to check `user-top-read` and `user-library-read` in the scope for `Pers
 
 [Bot application](https://telegram.org/blog/bot-revolution)
 
--   `TELEGRAM_TOKEN`: Telegram bot token
+-   `TELEGRAM_TOKEN`: Telegram bot token for stickerpack feeds
+-   `TELEGRAM_SESSION`: for video and file streaming, can be acquired by running `node lib/routes/telegram/tglib/client.js`
 
 ### Twitter
 
@@ -593,12 +577,6 @@ Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即
 ### 色花堂
 
 -   `SEHUATANG_COOKIE`: 登陆色花堂后的 cookie 值。
-
-### 网易云歌单
-
-用于歌单及听歌排行
-
--   `NCM_COOKIES`: 网易云音乐登陆后的 cookie 值。
 
 ### 微博
 

@@ -121,29 +121,12 @@ async function handleRequest(request) {
 }
 ```
 
-## 用户认证
-
-`protected_route.js` 内的路由将启用 HTTP Basic Authentication 认证
-
-支持该认证协议的阅读器，在添加源地址时，需要在源地址前添加认证信息，例如：`http://usernam3:passw0rd@rsshub.app/protected/rsshub/routes`。
-
-对于不支持该认证协议的阅读器，请参考 [访问控制配置](#fang-wen-kong-zhi-pei-zhi)。
-
-`HTTP_BASIC_AUTH_NAME`: Http basic authentication 用户名，默认为 `usernam3`，请务必修改
-
-`HTTP_BASIC_AUTH_PASS`: Http basic authentication 密码，默认为 `passw0rd`，请务必修改
-
 ## 访问控制配置
 
-RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式进行访问控制。开启任意选项将会激活全局访问控制，没有访问权限将会导致访问被拒绝。同时可以通过 `ALLOW_LOCALHOST: true` 赋予所有本地 IP 访问权限。
-
+RSSHub 支持使用访问密钥 / 码进行访问控制。开启将会激活全局访问控制，没有访问权限将会导致访问被拒绝。
 ### 允许清单/拒绝清单
 
--   `ALLOWLIST`: 允许清单，设置允许清单后拒绝清单无效
-
--   `DENYLIST`: 拒绝清单
-
-允许清单/拒绝清单支持 IP、路由和 UA，模糊匹配，设置多项时用英文逗号 `,` 隔开，例如 `ALLOWLIST=1.1.1.1,2.2.2.2,/qdaily/column/59`
+此配置已被移除，建议使用类似 Nginx 或 Cloudflare 的代理服务器进行访问控制。
 
 ### 访问密钥 / 码
 
@@ -158,14 +141,6 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 -   此时可以通过 `code` 访问路由，例如：`https://rsshub.app/qdaily/column/59?code=0f820530128805ffc10351f22b5fd121`
 
 -   或使用访问密钥 `key` 直接访问所有路由，例如：`https://rsshub.app/qdaily/column/59?key=ILoveRSSHub`
-
-访问密钥 / 码与允许清单/拒绝清单的访问控制关系如下：
-
-|            | 正确访问密钥 / 码 | 错误访问密钥 / 码 | 无访问密钥 / 码 |
-| ---------- | ----------------- | ----------------- | --------------- |
-| 在允许清单中 | ✅                | ✅                | ✅              |
-| 在拒绝清单中 | ✅                | ❌                | ❌              |
-| 无允许清单/拒绝清单 | ✅                | ❌                | ❌              |
 
 ## 日志配置
 
@@ -209,7 +184,7 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 
 ## 功能特性
 
-:::tip 测试特性
+:::tip[测试特性]
 
 这个板块控制的是一些新特性的选项，他们都是**默认关闭**的。如果有需要请阅读对应说明后按需开启
 
@@ -255,7 +230,7 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 
 :::tip
 
-此处信息不完整。完整配置请参考路由对应的文档和 `lib/config.js`。
+此处信息不完整。完整配置请参考路由对应的文档和 `lib/config.ts`。
 
 :::
 
@@ -378,11 +353,11 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 
 ### Mastodon
 
-用户时间线路由：访问 `https://mastodon.example/settings/applications` 申请（替换掉 `mastodon.example`）。需要 `read:search` 权限
+用户时间线路由：访问 `https://mastodon.example/settings/applications` 申请（替换掉 `mastodon.example`）。需要 `read:search` 和 `read:statuses` 权限。
 
 -   `MASTODON_API_HOST`: API 请求的实例，仅域名，不包括 `http://` 或 `https://` 协议头
 -   `MASTODON_API_ACCESS_TOKEN`: 用户 access token, 申请应用后，在应用配置页可以看到申请者的 access token
--   `MASTODON_API_ACCT_DOMAIN`: 该实例本地用户 acct 标识的域名，Webfinger account URI，形如 `user@host`
+-   `MASTODON_API_ACCT_DOMAIN`: 该实例本地用户 acct 标识的域名，即 WebFinger URI `username@domain` 中的 `domain`，一般和 `MASTODON_API_HOST` 相同
 
 ### Medium
 
@@ -470,6 +445,7 @@ RSSHub 支持使用访问密钥 / 码，允许清单和拒绝清单三种方式�
 贴纸包路由：[Telegram 机器人](https://telegram.org/blog/bot-revolution)
 
 -   `TELEGRAM_TOKEN`: Telegram 机器人 token
+-   `TELEGRAM_SESSION`: 可通过运行 `node lib/routes/telegram/tglib/client.js`
 
 ### Twitter
 
@@ -589,7 +565,7 @@ Web 版认证 token 和 iOS 内购回执认证 token 只需选择其一填入即
 
 用于歌单及听歌排行
 
--   `NCM_COOKIES`: 网易云音乐登陆后的 cookie 值。
+-   `NCM_COOKIES`: 网易云音乐登陆后的 cookie 值，可在浏览器控制台通过`document.cookie`获取。
 
 ### 微博
 

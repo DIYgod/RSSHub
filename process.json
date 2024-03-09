@@ -2,7 +2,7 @@
     "apps": [
         {
             "name": "rsshub",
-            "script": "lib/index.js",
+            "script": "lib/index.ts",
             "instances": "max",
             "exec_mode": "cluster",
             "env": {

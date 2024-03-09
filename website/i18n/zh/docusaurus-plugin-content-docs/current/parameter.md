@@ -4,38 +4,9 @@
 
 通用参数实际上是 URI 中的 query，可以使用 `&` 连接组合使用，效果叠加。
 
-通用参数需要置于路由路径的最后。有些路由在路由路径（route path）的最后引入了<b><span style={{color: "green"}}>自定义参数</span></b>，<b><span style={{color: "violet"}}>通用参数</span></b>也需要置于它们之后。
+通用参数需要置于路由路径的最后。有些路由在路由路径（route path）的最后引入了<span style={{color: "blue"}}>**自定义参数**</span>，<span style={{color: "violet"}}>**通用参数**</span>也需要置于它们之后。
 
-举例:
-
-<Link to="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0?brief=100&limit=5">
-https://rsshub.app/twitter/user/durov/
-<span style={{color: "green"}}>
-    <b>readable=1&includeRts=0</b>
-</span>
-?
-<span style={{color: "violet"}}>
-    <b>brief=100&limit=5</b>
-</span>
-</Link>
-
-如果设置了<b><span style={{color: "magenta"}}>输出格式</span></b>（`.atom`, `.rss`, `.json`, `.debug.json`），则需要置于路由路径（含<b><span style={{color: "green"}}>自定义参数</span></b>）与<b><span style={{color: "violet"}}>其它通用参数</span></b>之间。
-
-举例:
-
-<Link to="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0.atom?brief=100&limit=5">
-https://rsshub.app/twitter/user/durov/
-<span style={{color: "green"}}>
-    <b>readable=1&includeRts=0</b>
-</span>
-<span style={{color: "magenta"}}>
-    <b>.atom</b>
-</span>
-?
-<span style={{color: "violet"}}>
-    <b>brief=100&limit=5</b>
-</span>
-</Link>
+举例: <Link to="https://rsshub.app/twitter/user/durov/readable=1&includeRts=0?brief=100&limit=5">https://rsshub.app/twitter/user/durov/<span style={{color: "blue"}}>**readable=1&includeRts=0**</span>?<span style={{color: "violet"}}>**brief=100&limit=5**</span></Link>
 
 :::
 
@@ -158,34 +129,34 @@ Telegram 即时预览模式需要在官网制作页面处理模板，请前往[�
 
 ## 输出格式
 
-RSSHub 同时支持 RSS 2.0、Atom、JSON Feed 和 RSS3 UMS 输出格式，在路由末尾添加 `.rss`、`.atom`、`.json` 或 `.ums` 即可请求对应输出格式，缺省为 RSS 2.0
+RSSHub 同时支持 RSS 2.0、Atom、JSON Feed 和 RSS3 UMS 输出格式，在路由添加 `format` 参数（值为`rss`、`atom`、`json` 或 `ums`）即可请求对应输出格式，缺省为 RSS 2.0
 
 举例:
 
 -   缺省 RSS 2.0 - [https://rsshub.app/jianshu/home](https://rsshub.app/jianshu/home)
--   RSS 2.0 - [https://rsshub.app/jianshu/home.rss](https://rsshub.app/jianshu/home.rss)
--   Atom - [https://rsshub.app/jianshu/home.atom](https://rsshub.app/jianshu/home.atom)
--   JSON Feed - [https://rsshub.app/twitter/user/DIYgod.json](https://rsshub.app/twitter/user/DIYgod.json)
--   RSS3 UMS - [https://rsshub.app/abc.ums](https://rsshub.app/abc.ums)
--   和 filter 或其他 URL query 一起使用 - `https://rsshub.app/bilibili/user/coin/2267573.atom?filter=微小微|赤九玖|暴走大事件`
+-   RSS 2.0 - [https://rsshub.app/jianshu/home?format=rss](https://rsshub.app/jianshu/home?format=rss)
+-   Atom - [https://rsshub.app/jianshu/home?format=atom](https://rsshub.app/jianshu/home?format=atom)
+-   JSON Feed - [https://rsshub.app/twitter/user/DIYgod?format=json](https://rsshub.app/twitter/user/DIYgod?format=json)
+-   RSS3 UMS - [https://rsshub.app/abc?format=ums](https://rsshub.app/abc?format=ums)
+-   和 filter 或其他 URL query 一起使用 - `https://rsshub.app/bilibili/user/coin/2267573?format=atom&filter=微小微|赤九玖|暴走大事件`
 
 ### debug.json
 
-在路由末尾添加 `.debug.json`且实例运行在`debugInfo=true`的情况下，RSShub 将会返回插件设置在`ctx.state.json`的内容
+在路由添加 `debug.json` 格式参数且实例运行在 `debugInfo=true` 的情况下，RSShub 将会返回插件设置在 `ctx.set('json', obj)` 的内容
 
 这功能皆在方便开发者调试问题，方便用户自行开发需要的功能。插件作者可以酌情考虑使用，没有格式要求。
 
 举例：
 
--   `/furstar/characters/cn.debug.json`
+-   `/furstar/characters/cn?format=debug.json`
 
 ### debug.html
 
-在路由末尾添加 `.{index}.debug.html` （`{index}` 为数字，为从 0 开始的下标）且实例运行在 `debugInfo=true` 的情况下，RSShub 将会返回插件设置在 `ctx.state.data.item[index].description` 的内容，你可用浏览器访问该页面来快速查看提取的信息的展示结果。
+在路由添加 `{index}.debug.html` 格式参数（`{index}` 为数字，为从 0 开始的下标）且实例运行在 `debugInfo=true` 的情况下，RSShub 将会返回插件设置在 `data.item[index].description` 的内容，你可用浏览器访问该页面来快速查看提取的信息的展示结果。
 
 举例：
 
--   `/furstar/characters/cn.0.debug.html`
+-   `/furstar/characters/cn?format=0.debug.html`
 
 ## 输出简讯
 

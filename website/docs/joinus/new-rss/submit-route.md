@@ -41,7 +41,7 @@ If your changes are not related to route, please fill in `routes` section with `
 ## New RSS Route Checklist / 新 RSS 路由检查表
 
 - [ ] New Route / 新的路由
-  - [ ] Follows [v2 Script Standard](https://docs.rsshub.app/joinus/advanced/script-standard) / 跟随 [v2 路由规范](https://docs.rsshub.app/zh/joinus/advanced/script-standard)
+  - [ ] Follows [Script Standard](https://docs.rsshub.app/joinus/advanced/script-standard) / 跟随 [路由规范](https://docs.rsshub.app/zh/joinus/advanced/script-standard)
 - [ ] Documentation / 文档说明
 - [ ] Full text / 全文获取
   - [ ] Use cache / 使用缓存
@@ -89,7 +89,7 @@ NOROUTE
 
 ### New RSS Route Checklist
 
-This checklist will help you ensure that your pull request includes all necessary components. Although you don't have to check off all items to get your PR merged, please make sure that your new route follows the [v2 Script Standard](/joinus/advanced/script-standard). This is a **mandatory** requirement for all new routes.
+This checklist will help you ensure that your pull request includes all necessary components. Although you don't have to check off all items to get your PR merged, please make sure that your new route follows the [Script Standard](/joinus/advanced/script-standard). This is a **mandatory** requirement for all new routes.
 
 ```md
 - [ ] 新的路由 New Route
@@ -109,7 +109,7 @@ Use this section to include any additional information or comments you'd like to
 
 The pull request title will be used as the commit message when your pull request is merged. Please follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/#summary) specification.
 
-If you are adding a new route, including all required documentation and `radar.js`, use `route` as the scope. If you are adding new radar rules only, use `radar` as the scope.
+If you are adding a new route, including all required documentation and `radar.ts`, use `route` as the scope. If you are adding new radar rules only, use `radar` as the scope.
 
 ## Response to Code Review
 

@@ -440,11 +440,11 @@ It is recommended to use with clipping tools such as Notion Web Clipper.
   |    all   | development | design | operation | product | other | marketing | sales |
 </Route>
 
-## Transformation {#transformation}
+## RSSHub {#rsshub}
+
+### Transformation - HTML {#rsshub-transformation-html}
 
 Pass URL and transformation rules to convert HTML/JSON into RSS.
-
-### HTML {#transformation-html}
 
 Specify options (in the format of query string) in parameter `routeParams` parameter to extract data from HTML.
 
@@ -476,7 +476,7 @@ Specify options (in the format of query string) in parameter `routeParams` param
   | `item`    | `div[class='post-content'] p a` |
 </Route>
 
-### JSON {#transformation-json}
+### Transformation - JSON {#rsshub-transformation-json}
 
 Specify options (in the format of query string) in parameter `routeParams` parameter to extract data from JSON.
 
@@ -511,7 +511,7 @@ JSON Path only supports format like `a.b.c`. if you need to access arrays, like 
   | `itemDesc`  | `body`          |
 </Route>
 
-### Sitemap {#transformation-sitemap}
+### Transformation - Sitemap {#rsshub-transformation-sitemap}
 
 Specify options (in the format of query string) in parameter `routeParams` parameter to extract data from Sitemap. (Follows Sitemap Protocol 0.9)
 
@@ -526,6 +526,16 @@ Specify options (in the format of query string) in parameter `routeParams` param
   | ------------- | -------------------------------------- |
   | `url`         | `https://www.sitemaps.org/sitemap.xml` |
   | `routeParams` | `title=Example`                        |
+</Route>
+
+## TV Tropes {#tv-tropes}
+
+### Featured {#tv-tropes-featured}
+
+<Route author="nczitzk" example="/tvtropes/featured/today" path="/tvtropes/featured/:category?" paramsDesc={['Category, see below, Today\'s Featured Trope by default']} radar="1">
+  | Today's Featured Trope | Newest Trope |
+  | ---------------------- | ------------ |
+  | today                  | newest       |
 </Route>
 
 ## Urban Dictionary {#urban-dictionary}
@@ -815,12 +825,6 @@ Specify options (in the format of query string) in parameter `routeParams` param
 
 <Route author="snipersteve" example="/law/jctd" path="/law/jctd" notOperational="1" />
 
-## 每日生猪价格 {#mei-ri-sheng-zhu-jia-ge}
-
-### 每日生猪价格更新 {#mei-ri-sheng-zhu-jia-ge-mei-ri-sheng-zhu-jia-ge-geng-xin}
-
-<Route author="importcjj" example="/pork-price" path="/pork-price" />
-
 ## 米坛社区 {#mi-tan-she-qu}
 
 ### 表盘更新 {#mi-tan-she-qu-biao-pan-geng-xin}
@@ -979,6 +983,18 @@ Specify options (in the format of query string) in parameter `routeParams` param
   | 美元 | 英镑 | 港币 | 瑞士法郎 | 瑞典克郎 | 丹麦克郎 | 挪威克郎 | 日元 | 加拿大元 | 澳大利亚元 | 新加坡元 | 欧元 | 澳门元 | 泰国铢 | 新西兰元 | 韩圆 |
   | ---- | ---- | ---- | -------- | -------- | -------- | -------- | ---- | -------- | ---------- | -------- | ---- | ------ | ------ | -------- | ---- |
   | usd  | gbp  | hkd  | chf      | sek      | dkk      | nok      | jpy  | cad      | aud        | sgd      | eur  | mop    | thb    | nzd      | krw  |
+</Route>
+
+## 中国国家图书馆 {#zhong-guo-guo-jia-tu-shu-guan}
+
+### 读者云平台 {#zhong-guo-guo-jia-tu-shu-guan-du-zhe-yun-ping-tai}
+
+<Route author="nczitzk" example="/nlc/read/电子图书" path="/nlc/read/:type?" paramsDesc={['分类，见下表，默认为电子图书']} radar="1">
+  | [电子图书](http://read.nlc.cn/outRes/outResList?type=电子图书) | [电子期刊](http://read.nlc.cn/outRes/outResList?type=电子期刊) | [电子论文](http://read.nlc.cn/outRes/outResList?type=电子论文) | [电子报纸](http://read.nlc.cn/outRes/outResList?type=电子报纸) | [音视频](http://read.nlc.cn/outRes/outResList?type=音视频) |
+  | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------------- | ---------------------------------------------------------- |
+
+  | [标准专利](http://read.nlc.cn/outRes/outResList?type=标准专利) | [工具书](http://read.nlc.cn/outRes/outResList?type=工具书) | [少儿资源](http://read.nlc.cn/outRes/outResList?type=少儿资源) |
+  | -------------------------------------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------------- |
 </Route>
 
 ## 中国互联网联合辟谣平台 {#zhong-guo-hu-lian-wang-lian-he-pi-yao-ping-tai}
@@ -1197,6 +1213,16 @@ Specify options (in the format of query string) in parameter `routeParams` param
   | 信息快递 | 工作动态 | 专题分析 |
   | -------- | -------- | -------- |
   | xxkd     | gzdt     | ztfx     |
+</Route>
+
+## 中国兴业银行 {#zhong-guo-xing-ye-yin-hang}
+
+### 外汇牌价 {#zhong-guo-xing-ye-yin-hang-wai-hui-pai-jia}
+
+<Route author="Qixingchen" example="/cib/whpj/xh?filter_title=USD" path="/cib/whpj/:format?" paramsDesc={['输出的标题格式，默认为标题 + 所有价格。短格式仅包含货币名称。']}>
+  | 短格式 | 现汇买卖 | 现钞买卖 | 现汇买入 | 现汇卖出 | 现钞买入 | 现钞卖出 |
+  | ------ | -------- | -------- | -------- | -------- | -------- | -------- |
+  | short  | xh       | xc       | xhmr     | xhmc     | xcmr     | xcmc     |
 </Route>
 
 ## 中国银行 {#zhong-guo-yin-hang}

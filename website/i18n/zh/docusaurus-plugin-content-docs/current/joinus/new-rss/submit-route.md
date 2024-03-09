@@ -41,7 +41,7 @@ If your changes are not related to route, please fill in `routes` with `NOROUTE`
 ## New RSS Route Checklist / 新 RSS 路由检查表
 
 - [ ] New Route / 新的路由
-  - [ ] Follows [v2 Script Standard](https://docs.rsshub.app/joinus/advanced/script-standard) / 跟随 [v2 路由规范](https://docs.rsshub.app/zh/joinus/advanced/script-standard)
+  - [ ] Follows [Script Standard](https://docs.rsshub.app/joinus/advanced/script-standard) / 跟随 [路由规范](https://docs.rsshub.app/zh/joinus/advanced/script-standard)
 - [ ] Documentation / 文档说明
 - [ ] Full text / 全文获取
   - [ ] Use cache / 使用缓存
@@ -109,7 +109,7 @@ NOROUTE
 
 当您的拉取请求被合并时，拉取请求标题将用作提交信息。请遵循 [约定式提交](https://www.conventionalcommits.org/zh-hans/v1.0.0/#概述) 规范。
 
-如果您正在添加新的路由，包括所有必需的文档和 `radar.js`，请以 `route` 作为范围。如果仅添加新的 Radar 规则，则请以 `radar` 作为范围。
+如果您正在添加新的路由，包括所有必需的文档和 `radar.ts`，请以 `route` 作为范围。如果仅添加新的 Radar 规则，则请以 `radar` 作为范围。
 
 ## 回复代码审查
 

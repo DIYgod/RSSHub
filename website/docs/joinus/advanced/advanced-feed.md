@@ -6,7 +6,7 @@ sidebar_position: 1
 
 This guide is intended for advanced users who want to know how to create an RSS feed in detail.  If you're new to creating RSS feeds, we recommend reading [Create Your Own RSSHub Route](/joinus/new-rss/start-code) first.
 
-Once you have collected the data you want to include in your RSS feed, you can pass it to `ctx.state.data`. RSSHub's middleware [`template.js`](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/template.js) will then process the data and render the RSS output in the required format (which is RSS 2.0 by default). In addition to the fields mentioned in [Create your own RSSHub route](/joinus/new-rss/start-code), you can customize your RSS feed further using the following fields.
+Once you have collected the data you want to include in your RSS feed, you can pass it to `ctx.set('data', obj)`. RSSHub's middleware [`template.ts`](https://github.com/DIYgod/RSSHub/blob/master/lib/middleware/template.ts) will then process the data and render the RSS output in the required format (which is RSS 2.0 by default). In addition to the fields mentioned in [Create your own RSSHub route](/joinus/new-rss/start-code), you can customize your RSS feed further using the following fields.
 
 It's important to note that not all fields are applicable to all output formats since RSSHub supports multiple output formats. The table below shows which fields are compatible with different output formats. We use the following symbols to denote compatibility: `A` for Atom, `J` for JSON Feed, `R` for RSS 2.0.
 
@@ -72,7 +72,7 @@ RSSHub allows you to create BitTorrent/Magnet feeds, which can be useful for tri
 Here's an example of how to create a BitTorrent/Magnet feed:
 
 ```js
-ctx.state.data = {
+ctx.set('data', {
     item: [
         {
             enclosure_url: '', // This should be the Magnet URI
@@ -80,7 +80,7 @@ ctx.state.data = {
             enclosure_type: 'application/x-bittorrent', // This field should be fixed to 'application/x-bittorrent'
         },
     ],
-};
+});
 ```
 
 By including these fields in your RSS feed, you'll be able to create BitTorrent/Magnet feeds that can be automatically downloaded by compatible downloaders.
@@ -100,13 +100,13 @@ By setting the `supportBT` attribute to `"1"`, you'll be able to update your doc
 RSSHub supports creating journal feeds that can replace `item.link` with a Sci-hub link if users provide the [common parameter](/parameter#sci-hub-link) `scihub`. To create a journal feed, you'll need to include an **additional** field in your RSS feed:
 
 ```js
-ctx.state.data = {
+ctx.set('data', {
     item: [
         {
             doi: '', // This should be the DOI of the item (e.g., '10.47366/sabia.v5n1a3')
         },
     ],
-};
+});
 ```
 
 By including this `doi` field in your RSS feed, you'll be able to create journal feeds that are compatible with RSSHub's Sci-hub functionality.
@@ -126,7 +126,7 @@ By setting the `supportSciHub` attribute to `"1"`, the documentation for your ro
 RSSHub supports creating podcast feeds that can be used with many podcast players' subscription formats. To create a podcast feed, you'll need to include several **additional** fields in your RSS feed:
 
 ```js
-ctx.state.data = {
+ctx.set('data', {
     itunes_author: '', // This field is **required** and should specify the podcast author's name
     itunes_category: '', // This field specifies the channel category
     image: '', // This field specifies the channel's cover image or album art
@@ -139,7 +139,7 @@ ctx.state.data = {
             enclosure_type: '', // This field specifies the MIME type of the audio file (common types are 'audio/mpeg' for .mp3, 'audio/x-m4a' for .m4a, and 'video/mp4' for .mp4)
         },
     ],
-};
+});
 ```
 
 By including these fields in your RSS feed, you'll be able to create podcast feeds that are compatible with many podcast players.
@@ -168,7 +168,7 @@ RSSHub supports creating [Media RSS](https://www.rssboard.org/media-rss) feeds t
 Here's an example of how to create a [Media RSS](https://www.rssboard.org/media-rss) feed:
 
 ```js
-ctx.state.data = {
+ctx.set('data', {
     item: [
         {
             media: {
@@ -185,7 +185,7 @@ ctx.state.data = {
             },
         },
     ],
-};
+});
 ```
 
 By including these fields in your RSS feed, you'll be able to create [Media RSS](https://www.rssboard.org/media-rss) feeds that are compatible with many [Media RSS](https://www.rssboard.org/media-rss) software subscription formats.
@@ -197,7 +197,7 @@ RSSHub supports creating Atom feeds that include interactions like upvotes, down
 Here's an example of how to create an Atom feed with interactions:
 
 ```js
-ctx.state.data = {
+ctx.set('data', {
     item: [
         {
             upvotes: 0, // This should be the number of upvotes for this item
@@ -205,7 +205,7 @@ ctx.state.data = {
             comments: 0, // This should be the number of comments for this item
         },
     ],
-};
+});
 ```
 
 By including these fields in your Atom feed, you'll be able to create Atom feeds with interactions that are compatible with many Atom feed readers.

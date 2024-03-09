@@ -76,7 +76,7 @@ Before submitting your Pull Request, make sure to carefully review the [Script S
 
 ## Create a namespace
 
-The first step in creating a new RSS route is to create a namespace. The namespace should be the **same** as the second level domain name of the main website for which you are creating the RSS feed. For example, if you are creating an RSS feed for [https://github.com/DIYgod/RSSHub/issues](https://github.com/DIYgod/RSSHub/issues), the second level domain name is `github`. Therefore, you should create a folder called `github` under `lib/v2` to serve as the namespace for your RSS route.
+The first step in creating a new RSS route is to create a namespace. The namespace should be the **same** as the second level domain name of the main website for which you are creating the RSS feed. For example, if you are creating an RSS feed for [https://github.com/DIYgod/RSSHub/issues](https://github.com/DIYgod/RSSHub/issues), the second level domain name is `github`. Therefore, you should create a folder called `github` under `lib/routes` to serve as the namespace for your RSS route.
 
 :::tip
 
@@ -86,19 +86,19 @@ When creating a namespace, it's important to avoid creating multiple namespaces 
 
 ## Understand the Basics
 
-### router.js
+### router.ts
 
-Once you have created the namespace for your RSS route, the next step is to register it in the `router.js`
+Once you have created the namespace for your RSS route, the next step is to register it in the `router.ts`
 
-For example, if you are creating an RSS feed for [GitHub Repo Issues](/routes/programming#github-repo-issues) and suppose you want users to enter a GitHub username and a repository name, and fall back to `RSSHub` if they don't enter the repository name, you can register your new RSS route in `github/router.js` using the following code:
+For example, if you are creating an RSS feed for [GitHub Repo Issues](/routes/programming#github-repo-issues) and suppose you want users to enter a GitHub username and a repository name, and fall back to `RSSHub` if they don't enter the repository name, you can register your new RSS route in `github/router.ts` using the following code:
 
 <Tabs>
 <TabItem value="Arrow Functions" label="Arrow Functions" default>
 
 ```js
-module.exports = (router) => {
+export default (router) => {
     // highlight-next-line
-    router.get('/issue/:user/:repo?', require('./issue'));
+    router.get('/issue/:user/:repo?', './issue');
 };
 ```
 
@@ -106,43 +106,39 @@ module.exports = (router) => {
 <TabItem value="Regular Functions" label="Regular Functions">
 
 ```js
-module.exports = function (router) {
+export default function (router) {
     // highlight-next-line
-    router.get('/issue/:user/:repo?', require('./issue'));
+    router.get('/issue/:user/:repo?', './issue');
 };
 ```
 
 </TabItem>
 </Tabs>
 
-When registering your new RSS route in `router.js`, you can define the route path and specify the corresponding function to be executed. In the code above, the `router.get()` method is used to specify the HTTP method and the path of the new RSS route. The first parameter of `router.get()` is the route path using [path-to-regexp](https://github.com/pillarjs/path-to-regexp) syntax. The second parameter is the exported function from your new RSS rule, `issue.js`. Note that you can omit the `.js` extension.
+When registering your new RSS route in `router.ts`, you can define the route path and specify the corresponding function to be executed. In the code above, the `router.get()` method is used to specify the HTTP method and the path of the new RSS route. The first parameter of `router.get()` is the route path using [Hono routing](https://hono.dev/api/routing) syntax. The second parameter is the relative path of your new RSS rule, `issue.ts`. Note that you can omit the `.ts` extension.
 
 In the example above, `issue` is an exact match, `:user` is a required parameter, and `:repo?` is an optional parameter. The `?` after `:repo` means that the parameter is optional. If the user does not enter repo, it will fall back to whatever is specified in your code (in this case, `RSSHub`).
 
-Once you have defined the route path, you can retrieve the value of the parameters from the `ctx.params` object. For example, if the user visits `/github/issue/DIYgod/RSSHub`, you can get the value of `user` and `repo` from `ctx.params.user` and `ctx.params.repo`, respectively. For example, if an user visits `/github/issue/DIYgod/RSSHub`, `ctx.params.user` and `ctx.params.repo` which will be `DIYgod` and `RSSHub`.
-
-**Note that the type of the value will be either `String` or `undefined`**.
-
-You can use the `*` or `+` symbols to match the rest of the path, like `/some/path/:variable*`. Note that `*` and `+` mean "zero or more" and "one or more", respectively. You can also use patterns like `/some/path/:variable(\\d+)?` or even RegExp.
+Once you have defined the route path, you can retrieve the value of the parameters from the [`ctx.req.param()`](https://hono.dev/api/request#param) function. For example, if the user visits `/github/issue/DIYgod/RSSHub`, you can get the value of `user` and `repo` from `ctx.req.param('user')` and `ctx.req.param('repo')`, respectively. For example, if an user visits `/github/issue/DIYgod/RSSHub`, `ctx.req.param('user')` and `ctx.req.param('repo')` which will be `DIYgod` and `RSSHub`.
 
 :::tip
 
-For more advanced usage of `router`, see the [@koa/router API Reference](https://github.com/koajs/router/blob/master/API.md).
+For more advanced usage of `router`, see the [Hono Routing API Reference](https://hono.dev/api/routing).
 
 :::
 
-### maintainer.js
+### maintainer.ts
 
-This file is used to store information about the maintainer of the RSS routes. You can add your GitHub username to the value array. Note that the key here should exactly match the path in `router.js` :
+This file is used to store information about the maintainer of the RSS routes. You can add your GitHub username to the value array. Note that the key here should exactly match the path in `router.ts` :
 
 ```js
-module.exports = {
+export default {
     // highlight-next-line
     '/issue/:user/:repo?': ['DIYgod'],
 };
 ```
 
-The `maintainer.js` file is useful for keeping track of who is responsible for maintaining an RSS route. When a user encounters an issue with your RSS route, they can reach out to the maintainers listed in this file.
+The `maintainer.ts` file is useful for keeping track of who is responsible for maintaining an RSS route. When a user encounters an issue with your RSS route, they can reach out to the maintainers listed in this file.
 
 ### `templates` folder
 
@@ -150,11 +146,11 @@ The `templates` folder contains templates for your new RSS route. You only need 
 
 Each template file should have a `.art` file extension.
 
-### radar.js
+### radar.ts
 
-The `radar.js` file helps users subscribe to your new RSS route when they use [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) or other software that is compatible with its format. We'll cover more about this in a later section.
+The `radar.ts` file helps users subscribe to your new RSS route when they use [RSSHub Radar](https://github.com/DIYgod/RSSHub-Radar) or other software that is compatible with its format. We'll cover more about this in a later section.
 
-### Your new RSS route `issue.js`
+### Your new RSS route `issue.ts`
 
 Now you can [start writing](/joinus/new-rss/start-code) your new RSS route.
 

@@ -66,6 +66,12 @@
 
 <Route author="StevenRCE0" example="/penguin-random-house/articles" path="/penguin-random-house/articles" />
 
+## SF 轻小说 {#sf-qing-xiao-shuo}
+
+### 章节 {#sf-qing-xiao-shuo-zhang-jie}
+
+<Route author="keocheung" example="/sfacg/novel/chapter/672431" path="/sfacg/novel/chapter/:id" paramsDesc={['小说 id, 可在对应小说页 URL 中找到']} radar="1" />
+
 ## SoBooks {#sobooks}
 
 ### 首页 {#sobooks-shou-ye}
@@ -212,6 +218,12 @@
   :::
 </Route>
 
+## 刺猬猫 {#ci-wei-mao}
+
+### 章节 {#ci-wei-mao-zhang-jie}
+
+<Route author="keocheung" example="/ciweimao/chapter/100043404" path="/ciweimao/chapter/:id" paramsDesc={['小说 id, 可在对应小说页 URL 中找到']} radar="1" />
+
 ## 单向空间 {#dan-xiang-kong-jian}
 
 ### 单读 {#dan-xiang-kong-jian-dan-du}
@@ -222,11 +234,11 @@
   | 0    | 1    | 2    | 3    | 4      | 6    |
 </Route>
 
-## 东立出版 {#dong-li-chu-ban}
+## 東立出版社 {#dong-li-chu-ban-she}
 
-### NEWS 资讯 {#dong-li-chu-ban-news-zi-xun}
+### 新聞 {#dong-li-chu-ban-she-xin-wen}
 
-<Route author="CokeMine" example="/tongli/news/6" path="/tongli/news/:type" paramsDesc={['分类, 可以在“話題新聞”链接中找到']} />
+<Route author="CokeMine" example="/tongli/news/6" path="/tongli/news/:type" paramsDesc={['分類，可以在“新聞”鏈接中找到']} radar="1" />
 
 ## 飞地 {#fei-di}
 
@@ -241,6 +253,12 @@
 ### 用户收藏 {#fei-di-yong-hu-shou-cang}
 
 <Route author="junbaor" example="/enclavebooks/collection/103702" path="/enclavebooks/collection/:uid" paramsDesc={['用户ID, 自行抓包寻找']} />
+
+## 欢乐书客 {#huan-le-shu-ke}
+
+### 章节 {#huan-le-shu-ke-zhang-jie}
+
+<Route author="keocheung" example="/hbooker/chapter/100113279" path="/hbooker/chapter/:id" paramsDesc={['小说 id, 可在对应小说页 URL 中找到']} radar="1" />
 
 ## 晋江文学城 {#jin-jiang-wen-xue-cheng}
 
@@ -289,6 +307,28 @@
 
 <Route author="misakicoca" path="/linovelib/novel/:id" example="/linovelib/novel/2547" paramsDesc={['小说 id，对应书架开始阅读 URL 中找到']} anticrawler="1" />
 
+## 明月中文网 {#ming-yue-zhong-wen-wang}
+
+### 分类 {#ming-yue-zhong-wen-wang-fen-lei}
+
+<Route author="nczitzk" example="/56kog/class/1_1" path="/56kog/class/:category?" paramsDesc={['分类，见下表，默认为玄幻魔法']} radar="1">
+  | [玄幻魔法](https://www.56kog.com/class/1_1.html) | [武侠修真](https://www.56kog.com/class/2_1.html) | [历史军事](https://www.56kog.com/class/4_1.html) | [侦探推理](https://www.56kog.com/class/5_1.html) | [网游动漫](https://www.56kog.com/class/6_1.html) |
+  | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------ |
+  | 1\_1                                             | 2\_1                                             | 4\_1                                             | 5\_1                                             | 6\_1                                             |
+
+  | [恐怖灵异](https://www.56kog.com/class/8_1.html) | [都市言情](https://www.56kog.com/class/3_1.html) | [科幻](https://www.56kog.com/class/7_1.html) | [女生小说](https://www.56kog.com/class/9_1.html) | [其他](https://www.56kog.com/class/10_1.html) |
+  | ------------------------------------------------ | ------------------------------------------------ | -------------------------------------------- | ------------------------------------------------ | --------------------------------------------- |
+  | 8\_1                                             | 3\_1                                             | 7\_1                                         | 9\_1                                             | 10\_1                                         |
+</Route>
+
+### 榜单 {#ming-yue-zhong-wen-wang-bang-dan}
+
+<Route author="nczitzk" example="/56kog/top/weekvisit" path="/56kog/top/:category?" paramsDesc={['分类，见下表，默认为周点击榜']} radar="1">
+  | [周点击榜](https://www.56kog.com/top/weekvisit.html) | [总收藏榜](https://www.56kog.com/top/goodnum.html) | [最新 入库](https://www.56kog.com/top/postdate.html) |
+  | ---------------------------------------------------- | -------------------------------------------------- | ---------------------------------------------------- |
+  | weekvisit                                            | goodnum                                            | postdate                                             |
+</Route>
+
 ## 起点 {#qi-dian}
 
 ### 章节 {#qi-dian-zhang-jie}
@@ -327,7 +367,7 @@
 
 ### 最新卷 {#qing-xiao-shuo-wen-ku-zui-xin-juan}
 
-<Route author="huangliangshusheng" example="/wenku8/volume/1163" path="/wenku8/volume/:id" paramsDesc={['小说 id, 可在对应小说页 URL 中找到']} notOperational="1" />
+<Route author="huangliangshusheng" example="/wenku8/volume/1163" path="/wenku8/volume/:id" paramsDesc={['小说 id, 可在对应小说页 URL 中找到']} radar="1" />
 
 ### 首页分类 {#qing-xiao-shuo-wen-ku-shou-ye-fen-lei}
 

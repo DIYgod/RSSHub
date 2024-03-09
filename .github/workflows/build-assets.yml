@@ -7,7 +7,6 @@ on:
     paths:
       - 'assets/radar-rules.js'
       - 'lib/**/maintainer.js'
-      - 'lib/**/radar-rules.js'
       - 'lib/**/radar.js'
 
 permissions:

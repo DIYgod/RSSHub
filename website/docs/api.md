@@ -12,7 +12,7 @@ RSSHub provides the following APIs:
 
 :::tip
 
-This API **will not** return any routes under `lib/protected_router.js`.
+This API **will not** return any routes under `lib/protected_router.ts`.
 
 :::
 
