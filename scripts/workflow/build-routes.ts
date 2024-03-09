@@ -79,8 +79,8 @@ for (const category in docs) {
     md[category] = `# ${category}\n\n`;
 
     const namespaces = Object.keys(docs[category]).sort((a, b) => {
-        const aname = docs[category][a].name;
-        const bname = docs[category][b].name;
+        const aname = docs[category][a].name[0];
+        const bname = docs[category][b].name[0];
         const ia = isASCII(aname);
         const ib = isASCII(bname);
         if (ia && ib) {
@@ -98,8 +98,8 @@ for (const category in docs) {
         }
 
         const realPaths = Object.keys(docs[category][namespace].routes).sort((a, b) => {
-            const aname = docs[category][namespace].routes[a].name;
-            const bname = docs[category][namespace].routes[b].name;
+            const aname = docs[category][namespace].routes[a].name[0];
+            const bname = docs[category][namespace].routes[b].name[0];
             const ia = isASCII(aname);
             const ib = isASCII(bname);
             if (ia && ib) {
@@ -114,7 +114,7 @@ for (const category in docs) {
         for (const realPath of realPaths) {
             const data = docs[category][namespace].routes[realPath];
             md[category] += `### ${data.name}\n\n`;
-            md[category] += `<Route data={${JSON.stringify(data)}} />\n\n`;
+            md[category] += `<Route namespace="${namespace}" data={${JSON.stringify(data)}} />\n\n`;
             if (data.description) {
                 md[category] += `${data.description}\n\n`;
             }
