@@ -22,7 +22,7 @@
   "scripts": {
     "build": "tsx scripts/workflow/build-routes.ts",
     "dev": "cross-env NODE_ENV=dev tsx watch --no-cache lib/index.ts",
-    "format": "eslint --cache --fix \"**/*.{ts,js,yml}\" && node website/docs/.format/format.mjs && prettier \"**/*.{ts,js,json}\" --write",
+    "format": "eslint --cache --fix \"**/*.{ts,js,yml}\" && prettier \"**/*.{ts,js,json}\" --write",
     "format:check": "eslint --cache \"**/*.{ts,js,yml}\" && prettier \"**/*.{ts,js,json}\" --check",
     "format:staged": "lint-staged",
     "vitest": "cross-env NODE_ENV=test vitest",
@@ -43,7 +43,6 @@
       "eslint --cache --fix",
       "prettier --ignore-unknown --ignore-path ./.gitignore --write"
     ],
-    "*.md?(x)": "node website/docs/.format/format.mjs --staged",
     "*.yml": "eslint --cache --fix"
   },
   "dependencies": {

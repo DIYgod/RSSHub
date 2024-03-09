@@ -5,9 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'assets/radar-rules.js'
-      - 'lib/**/maintainer.js'
-      - 'lib/**/radar.js'
+      - 'lib/**/*.ts'
 
 permissions:
   contents: read
