@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { rootUrl } from './utils';
 
-export const route: Route = {
-    path: '/newsflash',
-    categories: ['new-media'],
-    example: '/odaily/newsflash',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['0daily.com/newsflash', '0daily.com/'],
-    },
-    name: '快讯',
-    maintainers: ['nczitzk'],
-    handler,
-    url: '0daily.com/newsflash',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const currentUrl = `${rootUrl}/api/pp/api/info-flow/newsflash_columns/newsflashes?b_id=&per_page=${ctx.req.query('limit') ?? 100}`;
 
     const response = await got({
@@ -41,9 +18,9 @@ async function handler(ctx) {
         description: `<p>${item.description}</p>`,
     }));
 
-    return {
+    ctx.set('data', {
         title: '快讯 - Odaily星球日报',
         link: `${rootUrl}/newsflash`,
         item: items,
-    };
-}
+    });
+};

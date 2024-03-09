@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -97,25 +96,7 @@ const getListArticles = async (list, cache) => {
     return items;
 };
 
-export const route: Route = {
-    path: '/digitalpaper',
-    categories: ['traditional-media'],
-    example: '/stdaily/digitalpaper',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '科技日报',
-    maintainers: ['lyqluis'],
-    handler,
-};
-
-async function handler() {
+export default async (ctx) => {
     const date = new Date();
     const dateStr = date.toLocaleDateString('zh-CN', {
         year: 'numeric',
@@ -140,9 +121,9 @@ async function handler() {
     // get all articles
     const items = await getListArticles(allPageArticleLists, cache);
 
-    return {
+    ctx.set('data', {
         title: `科技日报`,
         link: 'http://digitalpaper.stdaily.com',
         item: items,
-    };
-}
+    });
+};

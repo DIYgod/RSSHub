@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,28 +5,7 @@ import got from '@/utils/got';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/price/:id',
-    categories: ['shopping'],
-    example: '/jd/price/526835',
-    parameters: { id: '商品 id，可在商品详情页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '商品价格',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `:::tip
-  如商品 \`https://item.jd.com/526835.html\` 中的 id 为 \`526835\`，所以路由为 [\`/jd/price/526835\`](https://rsshub.app/jd/price/526835)
-  :::`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
 
     const rootUrl = 'https://item.jd.com';
@@ -48,7 +26,7 @@ async function handler(ctx) {
 
     const title = response.data.match(/name: '(.*?)'/)[1];
 
-    return {
+    ctx.set('data', {
         title: `京东商品价格 - ${title}`,
         link: currentUrl,
         item: [
@@ -63,5 +41,5 @@ async function handler(ctx) {
                 }),
             },
         ],
-    };
-}
+    });
+};

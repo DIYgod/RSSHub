@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import MarkdownIt from 'markdown-it';
@@ -20,18 +19,7 @@ const typeDict = {
     },
 };
 
-export const route: Route = {
-    path: ['/comments/:user/:repo/:type/:number', '/comments/:user/:repo/:number?'],
-    radar: {
-        source: ['github.com/:user/:repo/:type'],
-        target: '/comments/:user/:repo',
-    },
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const user = ctx.req.param('user');
     const repo = ctx.req.param('repo');
     const number = ctx.req.param('number') && isNaN(Number.parseInt(ctx.req.param('number'))) ? 1 : Number.parseInt(ctx.req.param('number'));
@@ -47,7 +35,7 @@ async function handler(ctx) {
               };
 
     await (isNaN(number) ? allIssues(ctx, user, repo, limit, headers) : singleIssue(ctx, user, repo, number, limit, headers));
-}
+};
 
 async function allIssues(ctx, user, repo, limit, headers) {
     const response = await got(`${apiUrl}/repos/${user}/${repo}/issues/comments`, {
@@ -85,11 +73,11 @@ async function allIssues(ctx, user, repo, limit, headers) {
         used: Number.parseInt(response.headers['x-ratelimit-used']),
     };
 
-    return {
+    ctx.set('data', {
         title: `${user}/${repo}: Issue & Pull request comments`,
         link: `${rootUrl}/${user}/${repo}`,
         item: items,
-    };
+    });
 
     ctx.set('json', {
         title: `${user}/${repo}: Issue & Pull request comments`,
@@ -177,11 +165,11 @@ async function singleIssue(ctx, user, repo, number, limit, headers) {
         }
     }
 
-    return {
+    ctx.set('data', {
         title: `${user}/${repo}: ${typeDict[type].title} #${number} - ${issue.title}`,
         link: issue.html_url,
         item: items,
-    };
+    });
 
     ctx.set('json', {
         title: `${user}/${repo}: ${typeDict[type].title} #${number} - ${issue.title}`,

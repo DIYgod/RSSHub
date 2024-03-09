@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,32 +9,7 @@ import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/all/:id?',
-    categories: ['bbs'],
-    example: '/hupu/all/topic-daily',
-    parameters: { id: '编号，可在对应热帖版面 URL 中找到，默认为步行街每日话题' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['m.hupu.com/:category', 'm.hupu.com/'],
-        target: '/:category',
-    },
-    name: '热帖',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `:::tip
-  更多热帖版面参见 [论坛](https://bbs.hupu.com)
-  :::`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id') ?? 'topic-daily';
 
     const rootUrl = 'https://bbs.hupu.com';
@@ -95,9 +69,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `虎扑社区 - ${$('.middle-title, .bbs-sl-web-intro-detail-title').text()}`,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

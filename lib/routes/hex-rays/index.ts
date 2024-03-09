@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/news',
-    categories: ['programming'],
-    example: '/hex-rays/news',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['hex-rays.com/', 'hex-rays.com/blog'],
-    },
-    name: 'Hex-Rays News',
-    maintainers: ['hellodword ', 'TonyRL'],
-    handler,
-    url: 'hex-rays.com/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const link = 'https://www.hex-rays.com/blog/';
     const response = await got.get(link);
     const $ = load(response.data);
@@ -63,9 +40,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: 'Hex-Rays Blog',
         link,
         item: items,
-    };
-}
+    });
+};

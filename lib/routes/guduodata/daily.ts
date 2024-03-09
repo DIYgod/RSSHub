@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -31,29 +30,7 @@ const types = {
     },
 };
 
-export const route: Route = {
-    path: '/daily',
-    categories: ['other'],
-    example: '/guduodata/daily',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['data.guduodata.com/'],
-    },
-    name: '日榜',
-    maintainers: ['Gem1ni'],
-    handler,
-    url: 'data.guduodata.com/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const now = dayjs().valueOf();
     // yestoday
     const yestoday = dayjs().subtract(1, 'day').format('YYYY-MM-DD');
@@ -66,7 +43,7 @@ async function handler() {
             url: `${host}/show/datalist?type=DAILY&category=${category.toUpperCase()}&date=${yestoday}`,
         }))
     );
-    return {
+    ctx.set('data', {
         title: `骨朵数据 - 日榜`,
         link: host,
         description: yestoday,
@@ -86,5 +63,5 @@ async function handler() {
                 })
             )
         ),
-    };
-}
+    });
+};

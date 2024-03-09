@@ -1,31 +1,6 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 
-export const route: Route = {
-    path: '/hot/:site?',
-    categories: ['new-media'],
-    example: '/zyw/hot',
-    parameters: { site: '站点，见下表，默认为空，即全部' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '今日热榜',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `:::tip
-  全部站点请见 [此处](https://hot.zyw.asia/#/list)
-  :::
-
-  | 哔哩哔哩 | 微博 | 知乎 | 36 氪 | 百度 | 少数派 | IT 之家 | 澎湃新闻 | 今日头条 | 百度贴吧 | 稀土掘金 | 腾讯新闻 |
-  | -------- | ---- | ---- | ----- | ---- | ------ | ------- | -------- | -------- | -------- | -------- | -------- |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const site = ctx.req.param('site') ?? '';
 
     const rootUrl = 'https://hot.zyw.asia';
@@ -80,9 +55,9 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: `今日热榜${site ? ` - ${sites[0].label}` : ''}`,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -12,14 +11,7 @@ const defaultIds = {
     price: '299',
 };
 
-export const route: Route = {
-    path: '/:category?/:id?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = 'news', id = Object.hasOwn(defaultIds, category) ? defaultIds[category] : '10' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
 
@@ -65,7 +57,7 @@ async function handler(ctx) {
     const image = new URL($('div.logo a img').prop('src'), currentUrl).href;
     const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
 
-    return {
+    ctx.set('data', {
         item: items,
         title: `${author} - ${subtitle}`,
         link: currentUrl,
@@ -76,5 +68,5 @@ async function handler(ctx) {
         logo: icon,
         subtitle,
         author,
-    };
-}
+    });
+};

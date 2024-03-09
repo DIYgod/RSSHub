@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
@@ -22,14 +21,7 @@ const cateTitleMap = {
     articlelist: '轻小说列表',
 };
 
-export const route: Route = {
-    path: '/:category?',
-    name: 'Unknown',
-    maintainers: ['Fatpandac'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') ?? 'lastupdate';
     const response = await got({
         method: 'get',
@@ -52,9 +44,9 @@ async function handler(ctx) {
         }))
         .get();
 
-    return {
+    ctx.set('data', {
         title: `轻小说文库 - ${cateTitleMap[category]}`,
         link: cateUrlMap[category],
         item: items,
-    };
-}
+    });
+};

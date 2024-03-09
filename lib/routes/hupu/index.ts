@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -20,25 +19,7 @@ const categories = {
     },
 };
 
-export const route: Route = {
-    path: ['/dept/:category?', '/:category?'],
-    radar: {
-        source: ['m.hupu.com/:category', 'm.hupu.com/'],
-        target: '/:category',
-    },
-    name: 'Unknown',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| NBA | CBA | 足球   |
-  | --- | --- | ------ |
-  | nba | cba | soccer |
-
-  :::tip
-  电竞分类参见 [游戏热帖](https://bbs.hupu.com/all-gg) 的对应路由 [\`/hupu/all/all-gg\`](https://rsshub.app/hupu/all/all-gg)。
-  :::`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') ?? 'soccer';
 
     const rootUrl = 'https://m.hupu.com';
@@ -92,9 +73,9 @@ async function handler(ctx) {
             )
     );
 
-    return {
+    ctx.set('data', {
         title: `虎扑 - ${categories[category].title}`,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

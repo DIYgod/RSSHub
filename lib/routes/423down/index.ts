@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -66,14 +65,7 @@ const titleMap = {
     },
 };
 
-export const route: Route = {
-    path: '/:category/:type?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category, type } = ctx.req.param();
 
     const url = `${rootUrl}/${categeoryMap[category][type]}`;
@@ -115,9 +107,9 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: `423down-${titleMap[category][type]}`,
         link: url,
         item: items,
-    };
-}
+    });
+};

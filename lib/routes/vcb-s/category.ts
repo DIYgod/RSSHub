@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -12,32 +11,7 @@ const rootUrl = 'https://vcb-s.com';
 const cateAPIUrl = `${rootUrl}/wp-json/wp/v2/categories`;
 const postsAPIUrl = `${rootUrl}/wp-json/wp/v2/posts`;
 
-export const route: Route = {
-    path: '/category/:cate',
-    categories: ['anime'],
-    example: '/vcb-s/category/works',
-    parameters: { cate: '分类' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['vcb-s.com/archives/category/:cate'],
-    },
-    name: '分类文章',
-    maintainers: ['cxfksword'],
-    handler,
-    url: 'vcb-s.com/',
-    description: `| 作品项目 | 科普系列 | 计划与日志 |
-  | -------- | -------- | ---------- |
-  | works    | kb       | planlog    |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const cate = ctx.req.param('cate');
     const limit = ctx.req.query('limit') ?? 7;
 
@@ -73,9 +47,9 @@ async function handler(ctx) {
         };
     });
 
-    return {
+    ctx.set('data', {
         title: `${category.name} | VCB-Studio`,
         link: `${rootUrl}/archives/category/${category.slug}`,
         item: items,
-    };
-}
+    });
+};

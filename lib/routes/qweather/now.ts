@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,26 +8,7 @@ import * as path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 const rootUrl = 'https://devapi.qweather.com/v7/weather/now?';
-export const route: Route = {
-    path: '/now/:location',
-    categories: ['forecast'],
-    example: '/qweather/广州',
-    parameters: { location: 'N' },
-    features: {
-        requireConfig: true,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '实时天气',
-    maintainers: ['Rein-Ou'],
-    handler,
-    description: `需自行注册获取 api 的 key，每小时更新一次数据`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = await cache.tryGet(ctx.req.param('location') + '_id', async () => {
         const response = await got(`https://geoapi.qweather.com/v2/city/lookup?location=${ctx.req.param('location')}&key=${config.hefeng.key}`);
         const data = [];
@@ -54,7 +34,7 @@ async function handler(ctx) {
 
     const time_show = timeObj.toLocaleString();
 
-    return {
+    ctx.set('data', {
         title: ctx.req.param('location') + '实时天气',
         description: ctx.req.param('location') + '实时天气状况',
         item: data.map((item) => ({
@@ -65,5 +45,5 @@ async function handler(ctx) {
             link: responseData.fxLink,
         })),
         link: responseData.fxLink,
-    };
-}
+    });
+};

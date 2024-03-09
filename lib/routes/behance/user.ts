@@ -1,29 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/:user/:type?',
-    categories: ['design'],
-    example: '/behance/mishapetrick',
-    parameters: { user: 'username', type: 'type, `projects` or `appreciated`, `projects` by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'User Works',
-    maintainers: ['MisteryMonster'],
-    handler,
-    description: `Behance user's profile URL, like [https://www.behance.net/mishapetrick](https://www.behance.net/mishapetrick) the username will be \`mishapetrick\`。`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const user = ctx.req.param('user') ?? '';
     const type = ctx.req.param('type') ?? 'projects';
 
@@ -70,7 +50,7 @@ async function handler(ctx) {
             return description;
         })
     );
-    return {
+    ctx.set('data', {
         title: `${data.profile.owner.first_name} ${data.profile.owner.last_name}'s ${type}`,
         link: data.profile.owner.url,
         item: list.map((item, index) => {
@@ -84,5 +64,5 @@ async function handler(ctx) {
                 pubDate: parseDate(item.published_on * 1000),
             };
         }),
-    };
-}
+    });
+};

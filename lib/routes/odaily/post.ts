@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -17,32 +16,7 @@ const titles = {
     296: '活动',
 };
 
-export const route: Route = {
-    path: '/:id?',
-    categories: ['new-media'],
-    example: '/odaily',
-    parameters: { id: 'id，见下表，默认为最新' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['0daily.com/'],
-    },
-    name: '文章',
-    maintainers: ['nczitzk'],
-    handler,
-    url: '0daily.com/',
-    description: `| 最新 | 新品 | DeFi | NFT | 存储 | 波卡 | 行情 | 活动 |
-  | ---- | ---- | ---- | --- | ---- | ---- | ---- | ---- |
-  | 280  | 333  | 331  | 334 | 332  | 330  | 297  | 296  |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id') ?? '280';
 
     const currentUrl = `${rootUrl}/api/pp/api/app-front/feed-stream?feed_id=${id}&b_id=&per_page=${ctx.req.query('limit') ?? 25}`;
@@ -82,9 +56,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `${titles[id]} - Odaily星球日报`,
         link: rootUrl,
         item: items,
-    };
-}
+    });
+};

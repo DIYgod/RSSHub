@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,29 +5,7 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { rootUrl, getCookie } from './utils';
 
-export const route: Route = {
-    path: '/recommend',
-    categories: ['game'],
-    example: '/yxdown/recommend',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['yxdown.com/'],
-    },
-    name: '精彩推荐',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'yxdown.com/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const currentUrl = `${rootUrl}/news/`;
     const cookie = await getCookie();
     const response = await got(currentUrl, {
@@ -70,9 +47,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '精彩推荐 - 游讯网',
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

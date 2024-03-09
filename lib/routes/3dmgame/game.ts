@@ -1,21 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { parseArticle } from './utils';
 
-export const route: Route = {
-    path: '/:name/:type?',
-    radar: {
-        source: ['3dmgame.com/games/:name/:type'],
-    },
-    name: 'Unknown',
-    maintainers: ['sinchang', 'jacky2001114', 'HenryQW'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { name, type = 'news' } = ctx.req.param();
     const url = `https://www.3dmgame.com/games/${name}/${type}/`;
 
@@ -37,10 +26,10 @@ async function handler(ctx) {
 
     const items = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
 
-    return {
+    ctx.set('data', {
         title: $('head title').text().split('_')[0],
         description: $('head meta[name="Description"]').attr('content'),
         link: url,
         item: items,
-    };
-}
+    });
+};

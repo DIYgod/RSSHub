@@ -1,18 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/gamedb/recent',
-    name: 'Unknown',
-    maintainers: ['TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { platform = 'all' } = ctx.req.param();
     const baseUrl = 'https://indienova.com';
 
@@ -56,9 +48,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('head title').text(),
         link,
         item: items,
-    };
-}
+    });
+};

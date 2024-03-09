@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -19,31 +18,7 @@ const categories = {
     活动: 'zqives',
 };
 
-export const route: Route = {
-    path: '/:category?',
-    categories: ['new-media'],
-    example: '/panewslab',
-    parameters: { category: '分类，见下表，默认为精选' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['panewslab.com/'],
-    },
-    name: '深度',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'panewslab.com/',
-    description: `| 精选 | 链游 | 元宇宙 | NFT | DeFi | 监管 | 央行数字货币 | 波卡 | Layer 2 | DAO | 融资 | 活动 |
-  | ---- | ---- | ------ | --- | ---- | ---- | ------------ | ---- | ------- | --- | ---- | ---- |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') ?? '精选';
 
     const rootUrl = 'https://panewslab.com';
@@ -81,9 +56,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `PANews - ${category}`,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

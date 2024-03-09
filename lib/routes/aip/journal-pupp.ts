@@ -51,10 +51,10 @@ export default async (ctx) => {
 
     browser.close();
 
-    return {
+    ctx.set('data', {
         title: jrnlName,
         link: jrnlUrl,
         item: list,
         allowEmpty: true,
-    };
+    });
 };

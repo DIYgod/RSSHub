@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,25 +5,7 @@ import utils from './utils';
 
 const rootUrl = 'https://kns.cnki.net';
 
-export const route: Route = {
-    path: '/author/:code',
-    categories: ['journal'],
-    example: '/cnki/author/000042423923',
-    parameters: { code: '作者对应code，可以在网址中得到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Unknown',
-    maintainers: ['harveyqiu', 'Derekmini'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const code = ctx.req.param('code');
 
     const authorInfoUrl = `${rootUrl}/kcms/detail/knetsearch.aspx?sfield=au&code=${code}`;
@@ -69,9 +50,9 @@ async function handler(ctx) {
 
     const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => utils.ProcessItem(item))));
 
-    return {
+    ctx.set('data', {
         title: `知网 ${authorName} ${companyName}`,
         link: authorInfoUrl,
         item: items,
-    };
-}
+    });
+};

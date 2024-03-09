@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import parser from '@/utils/rss-parser';
 import got from '@/utils/got';
@@ -19,28 +18,7 @@ const getArticleDetail = (link) =>
         return { article, categories };
     });
 
-export const route: Route = {
-    path: '/:endpoint',
-    categories: ['traditional-media'],
-    example: '/economist/latest',
-    parameters: { endpoint: 'Category name, can be found on the [official page](https://www.economist.com/rss). For example, https://www.economist.com/china/rss.xml to china' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['economist.com/:endpoint'],
-    },
-    name: 'Category',
-    maintainers: ['ImSingee'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const endpoint = ctx.req.param('endpoint');
     const feed = await parser.parseURL(`https://www.economist.com/${endpoint}/rss.xml`);
 
@@ -60,10 +38,10 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: feed.title,
         link: feed.link,
         description: feed.description,
         item: items,
-    };
-}
+    });
+};

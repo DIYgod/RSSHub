@@ -1,31 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/admission',
-    categories: ['university'],
-    example: '/nju/admission',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['admission.nju.edu.cn/tzgg/index.html', 'admission.nju.edu.cn/tzgg', 'admission.nju.edu.cn/'],
-    },
-    name: '本科迎新',
-    maintainers: ['ret-1'],
-    handler,
-    url: 'admission.nju.edu.cn/tzgg/index.html',
-};
-
-async function handler() {
+export default async (ctx) => {
     const category_dict = {
         tzgg: '通知公告',
     };
@@ -54,9 +31,9 @@ async function handler() {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: '本科迎新-通知公告',
         link: 'https://admission.nju.edu.cn/tzgg',
         item: items[0],
-    };
-}
+    });
+};

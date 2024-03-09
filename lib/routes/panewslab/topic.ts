@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/topic/:id',
-    categories: ['new-media'],
-    example: '/panewslab/topic/1629365774078402',
-    parameters: { id: '专题 id，可在地址栏 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['panewslab.com/'],
-    },
-    name: '专题',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'panewslab.com/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
 
     const rootUrl = 'https://panewslab.com';
@@ -64,9 +41,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `PANews - ${id}`,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

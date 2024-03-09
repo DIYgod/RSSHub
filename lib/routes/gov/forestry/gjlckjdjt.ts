@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,33 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/forestry/gjlckjdjt/:category?',
-    categories: ['government'],
-    example: '/gov/forestry/gjlckjdjt',
-    parameters: { category: '分类，见下表，默认为全部' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '国家林草科技大讲堂',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 分类     | id   |
-  | -------- | ---- |
-  | 经济林   | jjl  |
-  | 林木良种 | lmlz |
-  | 林下经济 | lxjj |
-  | 生态修复 | stxf |
-  | 用材林   | ycl  |
-  | 其他     | qt   |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = 'gjlckjdjt' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -112,7 +85,7 @@ async function handler(ctx) {
 
     const icon = new URL('favicon.ico', rootUrl).href;
 
-    return {
+    ctx.set('data', {
         item: items,
         title: $('title').text(),
         link: currentUrl,
@@ -123,5 +96,5 @@ async function handler(ctx) {
         subtitle: $('div.weizhi').contents().last().text(),
         author: '国家林业和草原局',
         allowEmpty: true,
-    };
-}
+    });
+};

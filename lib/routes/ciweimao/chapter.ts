@@ -1,32 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/chapter/:id',
-    categories: ['reading'],
-    example: '/ciweimao/chapter/100043404',
-    parameters: { id: '小说 id, 可在对应小说页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['wap.ciweimao.com/book/:id'],
-    },
-    name: '章节',
-    maintainers: ['keocheung'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const limit = Number.parseInt(ctx.req.query('limit')) || 10;
 
@@ -74,11 +52,11 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `刺猬猫 ${$('.book-name').text()}`,
         link: `${baseUrl}/book/${id}`,
         description: $('.book-desc div p').text(),
         image: $('meta[name=image]').attr('content'),
         item: items,
-    };
-}
+    });
+};

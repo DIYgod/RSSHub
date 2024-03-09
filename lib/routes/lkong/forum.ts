@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,17 +9,7 @@ import * as path from 'node:path';
 
 import { viewForum, viewThread } from './query';
 
-export const route: Route = {
-    path: '/forum/:id?/:digest?',
-    radar: {
-        source: ['lkong.com/forum/:id', 'lkong.com/'],
-    },
-    name: 'Unknown',
-    maintainers: ['nczitzk', 'ma6254'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id') ?? '8';
     const digest = ctx.req.param('digest');
 
@@ -61,10 +50,10 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `${response.data.data.forum.name} - 龙空`,
         link: currentUrl,
         item: items,
         description: response.data.data.forumCount.info,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -12,25 +11,7 @@ import { config } from '@/config';
 
 const renderDescription = (description, images) => art(path.join(__dirname, './templates/description.art'), { description, images });
 
-export const route: Route = {
-    path: '/search/:keyword',
-    categories: ['other'],
-    example: '/sogou/search/rss',
-    parameters: { keyword: '搜索关键词' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '搜索',
-    maintainers: ['CaoMeiYouRen'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const keyword = ctx.req.param('keyword');
     const url = `https://www.sogou.com/web?query=${encodeURIComponent(keyword)}`;
     const key = `sogou-search:${url}`;
@@ -68,10 +49,10 @@ async function handler(ctx) {
         false
     );
 
-    return {
+    ctx.set('data', {
         title: `${keyword} - 搜狗搜索`,
         description: `${keyword} - 搜狗搜索`,
         link: url,
         item: items,
-    };
-}
+    });
+};

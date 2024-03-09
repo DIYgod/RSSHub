@@ -1,30 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/activity/:slug',
-    categories: ['new-media'],
-    example: '/sspai/activity/urfp0d9i',
-    parameters: { slug: '作者 slug，可在作者主页URL中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['sspai.com/u/:id/updates'],
-        target: '/activity/:id',
-    },
-    name: '作者动态',
-    maintainers: ['umm233'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const slug = ctx.req.param('slug');
     const link = `https://sspai.com/u/${slug}/updates`;
 
@@ -52,7 +29,7 @@ async function handler(ctx) {
     let item_desc = '';
     let item_url = '';
 
-    return {
+    ctx.set('data', {
         title: `少数派用户「${user_nickname}」动态更新`,
         link,
         description: `少数派用户「${user_nickname}」的动态更新`,
@@ -102,5 +79,5 @@ async function handler(ctx) {
                 pubDate: parseDate(item.created_at * 1000),
             };
         }),
-    };
-}
+    });
+};

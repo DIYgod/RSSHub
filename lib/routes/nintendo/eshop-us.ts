@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,18 +5,7 @@ import { art } from '@/utils/render';
 import got from '@/utils/got';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/eshop/us',
-    radar: {
-        source: ['nintendo.com/store/games', 'nintendo.com/'],
-    },
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-    url: 'nintendo.com/store/games',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const response = await got.post('https://u3b6gr4ua3-dsn.algolia.net/1/indexes/store_game_en_us_release_des/query', {
         headers: {
             'x-algolia-api-key': 'a29c6927638bfd8cee23993e51e721c9',
@@ -33,7 +21,7 @@ async function handler(ctx) {
     });
     const data = response.data.hits;
 
-    return {
+    ctx.set('data', {
         title: `Nintendo eShop（美服）新游戏`,
         link: `https://www.nintendo.com/store/games/`,
         description: `Nintendo eShop（美服）新上架的游戏`,
@@ -42,6 +30,6 @@ async function handler(ctx) {
             description: art(path.join(__dirname, 'templates/eshop_us.art'), item),
             link: `https://www.nintendo.com${item.url}`,
         })),
-    };
+    });
     ctx.set('json', response.data);
-}
+};

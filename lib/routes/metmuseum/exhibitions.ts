@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -12,14 +11,7 @@ function generateExhibitionItem(result) {
     };
 }
 
-export const route: Route = {
-    path: '/exhibitions/:state?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const searchType = ctx.req.param('state') ?? 'current';
 
     const url = `https://www.metmuseum.org/ghidorah/ExhibitionListing/Search?searchType=${searchType}`;
@@ -31,9 +23,9 @@ async function handler(ctx) {
 
     const data = response.data.data;
 
-    return {
+    ctx.set('data', {
         title: 'The Metropolitan Museum of Art - Exhibitions',
         link: 'https://www.metmuseum.org/exhibitions',
         item: data.results.map((element) => generateExhibitionItem(element)),
-    };
-}
+    });
+};

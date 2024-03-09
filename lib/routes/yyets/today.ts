@@ -1,30 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/today',
-    categories: ['multimedia'],
-    example: '/yyets/today',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['yysub.net/tv/schedule', 'yysub.net/'],
-    },
-    name: '今日播出',
-    maintainers: ['bao1991213'],
-    handler,
-    url: 'yysub.net/tv/schedule',
-};
-
-async function handler() {
+export default async (ctx) => {
     // 发起 HTTP GET 请求
     const response = await got({
         method: 'get',
@@ -41,7 +18,7 @@ async function handler() {
     // 注：cheerio 选择器与 jquery 选择器几乎相同
     // 参考 cheerio 文档：https://cheerio.js.org/
 
-    return {
+    ctx.set('data', {
         title: '人人影视-今日播出',
         link: 'https://yysub.net',
         item:
@@ -56,5 +33,5 @@ async function handler() {
                     };
                 })
                 .get(),
-    };
-}
+    });
+};

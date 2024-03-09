@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 // 学校官网：http://www.upc.edu.cn/
 import got from '@/utils/got';
@@ -17,28 +16,7 @@ const HEAD = {
     scholar: '学术动态',
 };
 
-export const route: Route = {
-    path: '/main/:type',
-    categories: ['university'],
-    example: '/upc/main/notice',
-    parameters: { type: '分类，见下表' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '主页',
-    maintainers: ['Veagau'],
-    handler,
-    description: `| 通知公告 | 学术动态 |
-  | -------- | -------- |
-  | notice   | scholar  |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const baseUrl = 'https://news.upc.edu.cn';
     const type = ctx.req.param('type');
     const link = `${baseUrl}/${MAP[type]}.htm`;
@@ -86,10 +64,10 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: HEAD[type] + `-中国石油大学（华东）`,
         link,
         description: HEAD[type] + `-中国石油大学（华东）`,
         item: out,
-    };
-}
+    });
+};

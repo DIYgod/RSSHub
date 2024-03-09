@@ -1,16 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: ['/', '/index'],
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-    url: 'www.nikkei.com/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const url = 'https://www.nikkei.com';
     const response = await got(url);
     const $ = load(response.data);
@@ -37,9 +28,9 @@ async function handler() {
             };
         });
 
-    return {
+    ctx.set('data', {
         title: '日本経済新聞',
         link: url,
         item: list,
-    };
-}
+    });
+};

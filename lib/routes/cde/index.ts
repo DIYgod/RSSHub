@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import utils from './utils';
 import got from '@/utils/got';
@@ -76,40 +75,7 @@ const requestData = {
     },
 };
 
-export const route: Route = {
-    path: '/:channel/:category',
-    categories: ['government'],
-    example: '/cde/news/gzdt',
-    parameters: { channel: '频道', category: '类别' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '首页',
-    maintainers: ['Fatpandac'],
-    handler,
-    description: `-   频道
-
-  | 新闻中心 | 政策法规 |
-  | :------: | :------: |
-  |   news   |  policy  |
-
-  -   类别
-
-  | 新闻中心 | 政务新闻 | 要闻导读 | 图片新闻 | 工作动态 |
-  | :------: | :------: | :------: | :------: | :------: |
-  |          |   zwxw   |   ywdd   |   tpxw   |   gzdt   |
-
-  | 政策法规 | 法律法规 | 中心规章 |
-  | :------: | :------: | :------: |
-  |          |   flfg   |   zxgz   |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const channel = ctx.req.param('channel');
     const cate = ctx.req.param('category');
     requestData[channel][cate].pageSize = ctx.req.param('limit') ?? 25;
@@ -159,9 +125,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `${utils.title} - ${cateTitleMap[channel][cate]}`,
         link: channelLinkMap[channel],
         item: items,
-    };
-}
+    });
+};

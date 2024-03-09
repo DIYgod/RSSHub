@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/ostp',
-    categories: ['government'],
-    example: '/whitehouse/ostp',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['whitehouse.gov/ostp', 'whitehouse.gov/'],
-    },
-    name: 'Office of Science and Technology Policy',
-    maintainers: ['LyleLee'],
-    handler,
-    url: 'whitehouse.gov/ostp',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://www.whitehouse.gov';
     const currentUrl = `${rootUrl}/ostp/news-updates`;
     const response = await got({
@@ -65,10 +42,10 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: 'Whitehouse OSTP',
         link: currentUrl,
         description: 'Whitehouse Office of Science and Technology Policy',
         item: items,
-    };
-}
+    });
+};

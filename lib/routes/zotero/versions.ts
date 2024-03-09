@@ -1,37 +1,14 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/versions',
-    categories: ['program-update'],
-    example: '/zotero/versions',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['zotero.org/', 'zotero.org/support/changelog'],
-    },
-    name: 'Version History',
-    maintainers: ['jasongzy'],
-    handler,
-    url: 'zotero.org/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const url = 'https://www.zotero.org/support/changelog';
     const response = await got(url);
     const data = response.data;
     const $ = load(data);
     const list = $('h2');
 
-    return {
+    ctx.set('data', {
         title: 'Zotero - Version History',
         link: url,
         item:
@@ -51,5 +28,5 @@ async function handler() {
                     };
                 })
                 .get(),
-    };
-}
+    });
+};

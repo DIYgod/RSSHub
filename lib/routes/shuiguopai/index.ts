@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,19 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/',
-    radar: {
-        source: ['shuiguopai.com/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'shuiguopai.com/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const rootUrl = 'https://sgptv.vip';
     const apiRootUrl = 'https://api.cbbee0.com';
     const listUrl = `${apiRootUrl}/v1_2/homePage`;
@@ -95,9 +82,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '水果派',
         link: rootUrl,
         item: items,
-    };
-}
+    });
+};

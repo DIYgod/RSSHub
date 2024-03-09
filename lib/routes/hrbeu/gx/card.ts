@@ -1,17 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 const rootUrl = 'http://news.hrbeu.edu.cn';
 
-export const route: Route = {
-    path: '/gx/card/:column/:id?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const column = ctx.req.param('column');
     const id = ctx.req.param('id') || '';
     const toUrl = id === '' ? `${rootUrl}/${column}.htm` : `${rootUrl}/${column}/${id}.htm`;
@@ -37,9 +29,9 @@ async function handler(ctx) {
         }))
         .get();
 
-    return {
+    ctx.set('data', {
         title: '工学-' + bigTitle,
         link: toUrl,
         item: card,
-    };
-}
+    });
+};

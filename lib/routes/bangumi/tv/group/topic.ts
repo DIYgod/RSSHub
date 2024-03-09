@@ -1,32 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 const base_url = 'https://bgm.tv';
 
-export const route: Route = {
-    path: '/tv/group/:id',
-    categories: ['anime'],
-    example: '/bangumi/tv/group/boring',
-    parameters: { id: '小组 id, 在小组页面地址栏查看' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['bgm.tv/group/:id'],
-    },
-    name: '小组话题',
-    maintainers: ['SettingDust'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const groupID = ctx.req.param('id');
     const link = `${base_url}/group/${groupID}/forum`;
     const { data: html } = await got(link);
@@ -54,9 +32,9 @@ async function handler(ctx) {
             })
     );
 
-    return {
+    ctx.set('data', {
         title,
         link,
         item: items,
-    };
-}
+    });
+};

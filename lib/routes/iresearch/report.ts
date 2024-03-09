@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -32,29 +31,7 @@ function processReport(item) {
     return description;
 }
 
-export const route: Route = {
-    path: '/report',
-    categories: ['other'],
-    example: '/iresearch/report',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.iresearch.com.cn/report.shtml'],
-    },
-    name: '产业研究报告',
-    maintainers: ['brilon', 'Fatpandac'],
-    handler,
-    url: 'www.iresearch.com.cn/report.shtml',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const limit = isNaN(Number.parseInt(ctx.req.query('limit'))) ? 20 : Number.parseInt(ctx.req.query('limit'));
     const apiUrl = `https://www.iresearch.com.cn/api/products/GetReportList?fee=0&date=&lastId=&pageSize=${limit}`;
     const pageUrl = 'https://www.iresearch.com.cn/m/report.shtml';
@@ -78,10 +55,10 @@ async function handler(ctx) {
         }))
     );
 
-    return {
+    ctx.set('data', {
         title: '艾瑞产业研究报告',
         link: pageUrl,
         description: '艾瑞产业研究报告',
         item: items,
-    };
-}
+    });
+};

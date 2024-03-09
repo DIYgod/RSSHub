@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,33 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/:id',
-    categories: ['journal'],
-    example: '/aeaweb/aer',
-    parameters: { id: 'Journal id, can be found in URL' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: true,
-    },
-    radar: {
-        source: ['aeaweb.org/journals/:id', 'aeaweb.org/'],
-    },
-    name: 'Journal',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `The URL of the journal [American Economic Review](https://www.aeaweb.org/journals/aer) is \`https://www.aeaweb.org/journals/aer\`, where \`aer\` is the id of the journal, so the route for this journal is \`/aeaweb/aer\`.
-
-  :::tip
-  More jounals can be found in [AEA Journals](https://www.aeaweb.org/journals).
-  :::`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     let id = ctx.req.param('id');
 
     const rootUrl = 'https://www.aeaweb.org';
@@ -103,10 +76,10 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title,
         description,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

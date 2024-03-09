@@ -1,30 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/developer/group/:type',
-    categories: ['programming'],
-    example: '/aliyun/developer/group/alitech',
-    parameters: { type: '对应技术领域分类' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['developer.aliyun.com/group/:type'],
-    },
-    name: '开发者社区 - 主题',
-    maintainers: ['umm233'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type');
     const link = `https://developer.aliyun.com/group/${type}`;
 
@@ -48,7 +26,7 @@ async function handler(ctx) {
     const desc = $('div[class="header-information"]').find('span').last().text().trim();
     const list = $('ul[class^="content-tab-list"] > li');
 
-    return {
+    ctx.set('data', {
         title: `阿里云开发者社区-${title}`,
         link,
         description: desc,
@@ -67,5 +45,5 @@ async function handler(ctx) {
                     };
                 })
                 .get(),
-    };
-}
+    });
+};

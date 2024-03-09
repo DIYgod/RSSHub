@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 // Get the lastest blog posts of https://konghq.com/
 import got from '@/utils/got';
@@ -8,29 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 const BASE_URL = 'https://konghq.com';
 const BLOG_POSTS_URL = `${BASE_URL}/blog`;
 
-export const route: Route = {
-    path: '/blog-posts',
-    categories: ['programming'],
-    example: '/konghq/blog-posts',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['konghq.com/blog/*'],
-    },
-    name: '博客最新文章',
-    maintainers: ['piglei'],
-    handler,
-    url: 'konghq.com/blog/*',
-};
-
-async function handler() {
+export default async (ctx) => {
     // Always get the posts on the first page.
     const url = `${BLOG_POSTS_URL}/page/1`;
 
@@ -68,9 +45,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `Kong Inc(konghq.com) blog posts`,
         link: BLOG_POSTS_URL,
         item: items,
-    };
-}
+    });
+};

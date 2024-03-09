@@ -1,31 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/people/answers/:id',
-    categories: ['social-media'],
-    example: '/zhihu/people/answers/diygod',
-    parameters: { id: '作者 id，可在用户主页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.zhihu.com/people/:id/answers'],
-    },
-    name: '用户回答',
-    maintainers: ['DIYgod', 'prnake'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const headers = {
         'User-Agent': 'ZhihuHybrid com.zhihu.android/Futureve/6.59.0 Mozilla/5.0 (Linux; Android 10; GM1900 Build/QKQ1.190716.003; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/85.0.4183.127 Mobile Safari/537.36',
@@ -82,9 +60,9 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: `${name}的知乎回答`,
         link: `https://www.zhihu.com/people/${id}/answers`,
         item: items,
-    };
-}
+    });
+};

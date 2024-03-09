@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,28 +9,7 @@ import { config } from '@/config';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/news/author/:mid',
-    categories: ['new-media'],
-    example: '/tencent/news/author/5933889',
-    parameters: { mid: '企鹅号 ID' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['new.qq.com/omn/author/:mid'],
-    },
-    name: '更新',
-    maintainers: ['LogicJake', 'miles170'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const mid = ctx.req.param('mid');
     const homePageInfoUrl = `https://i.news.qq.com/i/getUserHomepageInfo?chlid=${mid}`;
     const userInfo = await cache.tryGet(homePageInfoUrl, async () => (await got(homePageInfoUrl)).data.userinfo);
@@ -89,10 +67,10 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         title,
         description,
         link: `https://new.qq.com/omn/author/${mid}`,
         item: items,
-    };
-}
+    });
+};

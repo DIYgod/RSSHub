@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -17,28 +16,7 @@ const categories = {
     5: '项目',
 };
 
-export const route: Route = {
-    path: '/lives/:category?',
-    categories: ['finance'],
-    example: '/jinse/lives',
-    parameters: { category: '分类，见下表，默认为全部' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '快讯',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 全部 | 精选 | 政策 | 数据 | NFT | 项目 |
-  | ---- | ---- | ---- | ---- | --- | ---- |
-  | 0    | 1    | 2    | 3    | 4   | 5    |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = '0' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
 
@@ -96,7 +74,7 @@ async function handler(ctx) {
     const image = $('a.js-logoBox img').prop('src');
     const icon = new URL($('link[rel="favicon"]').prop('href'), rootUrl).href;
 
-    return {
+    ctx.set('data', {
         item: items,
         title: `${author} - ${Object.hasOwn(categories, category) ? categories[category] : category}`,
         link: currentUrl,
@@ -108,5 +86,5 @@ async function handler(ctx) {
         subtitle: $('meta[name="keywords"]').prop('content'),
         author,
         allowEmpty: true,
-    };
-}
+    });
+};

@@ -1,22 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/:type/:id?',
-    radar: {
-        source: ['myzaker.com/:type/:id'],
-        target: '/:type/:id',
-    },
-    name: 'Unknown',
-    maintainers: ['LogicJake', 'kt286', 'AlexdanerZe', 'TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type') ?? 'channel';
     const id = ctx.req.param('id') ?? 1;
     const rootUrl = 'http://www.myzaker.com';
@@ -70,9 +58,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: type === 'focusread' ? 'ZAKER 精读新闻' : feedTitle,
         link,
         item: items.filter((t) => t.description !== '原文已被删除'),
-    };
-}
+    });
+};

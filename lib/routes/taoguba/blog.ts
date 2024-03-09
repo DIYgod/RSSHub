@@ -1,32 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: ['/blog/:id', '/user/:id'],
-    categories: ['finance'],
-    example: '/taoguba/blog/252069',
-    parameters: { id: '博客 id，可在对应博客页中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['taoguba.com.cn/blog/:id', 'taoguba.com.cn/'],
-    },
-    name: '用户博客',
-    maintainers: ['nczitzk'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
 
     const rootUrl = 'https://www.taoguba.com.cn';
@@ -97,11 +75,11 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `淘股吧 - ${author}`,
         description: $('meta[http-equiv="description"]').attr('content'),
         image: $('meta[property="og:image"]').attr('content'),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

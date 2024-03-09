@@ -1,29 +1,6 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 
-export const route: Route = {
-    path: '/version',
-    categories: ['game'],
-    example: '/minecraft/version',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['minecraft.net/'],
-    },
-    name: 'Java Game Update',
-    maintainers: ['TheresaQWQ'],
-    handler,
-    url: 'minecraft.net/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const url = 'https://launchermeta.mojang.com/mc/game/version_manifest.json';
 
     const response = await got({
@@ -42,7 +19,7 @@ async function handler() {
 
     const title = `Minecraft Java版游戏更新`;
 
-    return {
+    ctx.set('data', {
         title,
         link: `https://www.minecraft.net/`,
         description: title,
@@ -53,5 +30,5 @@ async function handler() {
             link: `https://www.minecraft.net`,
             guid: item.id + item.type,
         })),
-    };
-}
+    });
+};

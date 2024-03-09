@@ -1,25 +1,6 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 
-export const route: Route = {
-    path: '/event/hot/:locationId',
-    categories: ['social-media'],
-    example: '/douban/event/hot/118172',
-    parameters: { locationId: '位置 id, [同城首页](https://www.douban.com/location)打开控制台执行 `window.__loc_id__` 获取' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '热门同城活动',
-    maintainers: ['xyqfer'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { locationId = 0 } = ctx.req.param();
     const referer = 'https://m.douban.com/app_topic/event_hot';
 
@@ -31,7 +12,7 @@ async function handler(ctx) {
         },
     });
 
-    return {
+    ctx.set('data', {
         title: `豆瓣同城-热门活动-${locationId}`,
         link: referer,
         item: response.data.subject_collection_items.map(({ title, url, cover, subtype, info, price_range }) => {
@@ -45,5 +26,5 @@ async function handler(ctx) {
                 link: url,
             };
         }),
-    };
-}
+    });
+};

@@ -1,20 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/',
-    radar: {
-        source: ['jiaoliudao.com/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'jiaoliudao.com/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const baseUrl = 'https://www.jiaoliudao.com';
     const { data } = await got(`${baseUrl}/wp-json/wp/v2/posts`, {
         searchParams: {
@@ -30,10 +17,10 @@ async function handler(ctx) {
         link: item.link,
     }));
 
-    return {
+    ctx.set('data', {
         title: '交流岛资源网-专注网络资源收集',
         image: `${baseUrl}/favicon.ico`,
         link: baseUrl,
         item: items,
-    };
-}
+    });
+};

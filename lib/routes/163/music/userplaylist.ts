@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,25 +5,7 @@ import got from '@/utils/got';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/music/user/playlist/:uid',
-    categories: ['multimedia'],
-    example: '/163/music/user/playlist/45441555',
-    parameters: { uid: '用户 uid, 可在用户主页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '用户歌单',
-    maintainers: ['DIYgod'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const uid = ctx.req.param('uid');
 
     const response = await got.post('https://music.163.com/api/user/playlist', {
@@ -44,7 +25,7 @@ async function handler(ctx) {
 
     const { nickname, signature, avatarUrl } = creator;
 
-    return {
+    ctx.set('data', {
         title: `${nickname} 的所有歌单`,
         link: `https://music.163.com/user/home?id=${uid}`,
         subtitle: signature,
@@ -74,5 +55,5 @@ async function handler(ctx) {
                 category: pl.tags,
             };
         }),
-    };
-}
+    });
+};

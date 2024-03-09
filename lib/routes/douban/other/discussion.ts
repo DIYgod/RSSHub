@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 /*
  * @Author: nightmare-mio wanglongwei2009@qq.com
@@ -10,28 +9,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/:id/discussion',
-    categories: ['social-media'],
-    example: '/douban/36328704/discussion',
-    parameters: { id: '书本id;默认论坛文章使用"按回应时间排序",仅第一页文章' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['book.douban.com/:id/discussion'],
-    },
-    name: '豆瓣读书论坛',
-    maintainers: ['nightmare-mio'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const link = 'https://book.douban.com/subject';
     const { data: response } = await got(`${link}/${id}/discussion/`);
@@ -73,9 +51,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title,
         link: `${link}/${id}/discussion`,
         item: items,
-    };
-}
+    });
+};

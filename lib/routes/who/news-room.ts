@@ -1,44 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/news-room/:category?/:language?',
-    categories: ['government'],
-    example: '/who/news-room/feature-stories',
-    parameters: { category: 'Category, see below, Feature stories by default', language: 'Language, see below, English by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['who.int/news-room/:type'],
-        target: '/news-room/:type',
-    },
-    name: 'Newsroom',
-    maintainers: ['LogicJake', 'nczitzk'],
-    handler,
-    url: 'who.int/news',
-    description: `Category
-
-  | Feature stories | Commentaries |
-  | --------------- | ------------ |
-  | feature-stories | commentaries |
-
-  Language
-
-  | English | العربية | 中文 | Français | Русский | Español | Português |
-  | ------- | ------- | ---- | -------- | ------- | ------- | --------- |
-  | en      | ar      | zh   | fr       | ru      | es      | pt        |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') ?? 'feature-stories';
     const language = ctx.req.param('language') ?? '';
 
@@ -103,9 +68,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `${$('meta[property="og:title"]').attr('content')} - WHO`,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,30 +8,7 @@ import got from '@/utils/got';
 import md5 from '@/utils/md5';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/radios/:category?',
-    categories: ['new-media'],
-    example: '/gcores/radios/45',
-    parameters: { category: '分类名，默认为全部，可在分类页面的 URL 中找到，如 Gadio News -- 45' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: true,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['gcores.com/categories/:category'],
-        target: '/radios/:category',
-    },
-    name: '播客',
-    maintainers: ['eternasuno'],
-    handler,
-    url: 'gcores.com/radios',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') || 'all';
     const limit = Number.parseInt(ctx.req.query('limit')) || 12;
 
@@ -81,7 +57,7 @@ async function handler(ctx) {
         };
     });
 
-    return {
+    ctx.set('data', {
         title,
         link,
         description,
@@ -89,8 +65,8 @@ async function handler(ctx) {
         itunes_author: '机核 GCORES',
         image: `https://www.gcores.com/${image}`,
         item,
-    };
-}
+    });
+};
 
 const get = async (url) => {
     const response = await got({

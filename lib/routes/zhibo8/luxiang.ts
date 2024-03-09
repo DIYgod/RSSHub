@@ -1,21 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/luxiang/:category?',
-    radar: {
-        source: ['zhibo8.cc/:category/luxiang.htm'],
-        target: '/luxiang/:category',
-    },
-    name: 'Unknown',
-    maintainers: ['TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const rootUrl = 'https://www.zhibo8.cc';
     const { category = 'nba' } = ctx.req.param();
     const link = `${rootUrl}/${category}/luxiang.htm`;
@@ -41,10 +29,10 @@ async function handler(ctx) {
                 });
         });
 
-    return {
+    ctx.set('data', {
         title: $('head title').text(),
         link,
         image: 'https://www.zhibo8.cc/favicon.ico',
         item: list,
-    };
-}
+    });
+};

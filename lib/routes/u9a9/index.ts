@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,20 +6,7 @@ import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://u9a9.com';
 
-export const route: Route = {
-    path: ['/:preview?', '/search/:keyword/:preview?'],
-    radar: {
-        source: ['u9a9.com/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'u9a9.com/',
-    url: 'u9a9.com/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { preview, keyword } = ctx.req.param();
 
     let link;
@@ -73,9 +59,9 @@ async function handler(ctx) {
           )
         : list;
 
-    return {
+    ctx.set('data', {
         title,
         link,
         item: items,
-    };
-}
+    });
+};

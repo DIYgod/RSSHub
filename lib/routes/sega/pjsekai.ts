@@ -1,31 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import * as cheerio from 'cheerio';
 import timezone from '@/utils/timezone';
 import cache from '@/utils/cache';
-export const route: Route = {
-    path: '/pjsekai/news',
-    categories: ['game'],
-    example: '/sega/pjsekai/news',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['pjsekai.sega.jp/news/index.html'],
-    },
-    name: '世界计划 多彩舞台 ｜ ProjectSekai ｜ プロセカ',
-    maintainers: ['15x15G'],
-    handler,
-    url: 'pjsekai.sega.jp/news/index.html',
-};
-
-async function handler() {
+export default async (ctx) => {
     // 从仓库 Sekai-World/sekai-master-db-diff 获取最新公告
     const response = await got.get(`https://cdn.jsdelivr.net/gh/Sekai-World/sekai-master-db-diff@master/userInformations.json`);
     const posts = response.data || [];
@@ -64,10 +41,10 @@ async function handler() {
             return item;
         })
     );
-    return {
+    ctx.set('data', {
         title: 'Project Sekai - News',
         link: 'https://pjsekai.sega.jp/',
         description: 'プロジェクトセカイ カラフルステージ！ feat.初音ミク',
         item: list,
-    };
-}
+    });
+};

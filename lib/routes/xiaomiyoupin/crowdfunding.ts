@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,29 +6,7 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 
 const base_url = 'https://m.xiaomiyoupin.com';
-export const route: Route = {
-    path: '/crowdfunding',
-    categories: ['shopping'],
-    example: '/xiaomiyoupin/crowdfunding',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['xiaomiyoupin.com/'],
-    },
-    name: '小米有品众筹',
-    maintainers: ['bigfei'],
-    handler,
-    url: 'xiaomiyoupin.com/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const resp = await got('https://home.mi.com/lasagne/page/5');
     const site_url = resp.data.redirect.location;
 
@@ -60,10 +37,10 @@ async function handler() {
             pubDate: new Date(goods.fist_release_time * 1000).toUTCString(),
         };
     });
-    return {
+    ctx.set('data', {
         title: '小米有品众筹',
         link: site_url,
         description: '小米有品众筹',
         item: items,
-    };
-}
+    });
+};

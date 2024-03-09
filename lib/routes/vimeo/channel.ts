@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,28 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/channel/:channel',
-    categories: ['social-media'],
-    example: '/vimeo/channel/bestoftheyear',
-    parameters: { channel: 'channel name can get from url like `bestoftheyear` in  [https://vimeo.com/channels/bestoftheyear/videos](https://vimeo.com/channels/bestoftheyear/videos) .' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['vimeo.com/channels/:channel', 'vimeo.com/channels/:channel/videos', 'vimeo.com/channels/:channel/videos/:sort/:format'],
-    },
-    name: 'Channel',
-    maintainers: ['MisteryMonster'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const channel = ctx.req.param('channel');
     const url = `https://vimeo.com/channels/${channel}/videos`;
     const page1 = await got({
@@ -74,7 +52,7 @@ async function handler(ctx) {
             });
         })
     );
-    return {
+    ctx.set('data', {
         title: `${channel} | Vimeo channel`,
         link: url,
         item: list
@@ -94,5 +72,5 @@ async function handler(ctx) {
                 };
             })
             .get(),
-    };
-}
+    });
+};

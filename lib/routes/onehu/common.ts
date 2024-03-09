@@ -1,17 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/',
-    name: 'Unknown',
-    maintainers: ['ruoshui9527'],
-    handler,
-};
-
-async function handler() {
+export default async (ctx) => {
     const link = 'https://onehu.xyz';
     const response = await got(link);
     const data = response.data;
@@ -28,9 +20,9 @@ async function handler() {
             };
         });
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link,
         item: list,
-    };
-}
+    });
+};

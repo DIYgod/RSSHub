@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -19,28 +18,7 @@ const cateTitleMap = {
     },
 };
 
-export const route: Route = {
-    path: '/ccfcv/:channel/:category',
-    categories: ['study'],
-    example: '/ccf/ccfcv/xsdt/xsqy',
-    parameters: { channel: '频道，仅支持 `xsdt`', category: '分类，见下表，亦可在网站 url 里找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '计算机视觉专委会 - 学术动态 - 分类',
-    maintainers: ['elxy'],
-    handler,
-    description: `| 学术前沿 | 热点征文 | 学术会议 |
-  | -------- | -------- | -------- |
-  | xsqy     | rdzw     | xshy     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const channel = ctx.req.param('channel');
     const cate = ctx.req.param('category');
 
@@ -86,9 +64,9 @@ async function handler(ctx) {
         );
     }
 
-    return {
+    ctx.set('data', {
         title: `计算机视觉专委 - ${cateTitleMap[channel][cate]}`,
         link: url,
         item: items,
-    };
-}
+    });
+};

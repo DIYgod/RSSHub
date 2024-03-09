@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -41,25 +40,7 @@ function getItem(records) {
     });
 }
 
-export const route: Route = {
-    path: '/music/user/playrecords/:uid/:type?',
-    categories: ['multimedia'],
-    example: '/163/music/user/playrecords/45441555/1',
-    parameters: { uid: '用户 uid, 可在用户主页 URL 中找到', type: '排行榜类型，0所有时间(默认)，1最近一周' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '用户听歌排行',
-    maintainers: ['alfredcai'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const uid = ctx.req.param('uid');
     const type = Number.parseInt(ctx.req.param('type')) || 0;
 
@@ -68,10 +49,10 @@ async function handler(ctx) {
 
     const records = type === 1 ? response.data.weekData : response.data.allData;
 
-    return {
+    ctx.set('data', {
         title: `${type === 1 ? '听歌榜单（最近一周）' : '听歌榜单（所有时间}'} - ${uid}}`,
         link: `https://music.163.com/user/home?id=${uid}`,
         updated: response.headers.date,
         item: getItem(records),
-    };
-}
+    });
+};

@@ -1,30 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/ota',
-    categories: ['program-update'],
-    example: '/notateslaapp/ota',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['notateslaapp.com/software-updates/history', 'notateslaapp.com/software-updates', 'notateslaapp.com/'],
-    },
-    name: 'Tesla Software Updates',
-    maintainers: ['mrbruce516'],
-    handler,
-    url: 'notateslaapp.com/software-updates/history',
-};
-
-async function handler() {
+export default async (ctx) => {
     const response = await got({
         method: 'get',
         url: 'https://www.notateslaapp.com/software-updates/history/',
@@ -38,7 +15,7 @@ async function handler() {
     const $ = load(data);
     const list = $('article[id]');
 
-    return {
+    ctx.set('data', {
         title: '特斯拉系统更新',
         link: 'https://www.notateslaapp.com/software-updates/history/',
         description: '特斯拉系统更新 - 最新发布',
@@ -55,5 +32,5 @@ async function handler() {
                     };
                 })
                 .get(),
-    };
-}
+    });
+};

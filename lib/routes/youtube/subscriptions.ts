@@ -1,34 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { config } from '@/config';
 import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
 import asyncPool from 'tiny-async-pool';
 
-export const route: Route = {
-    path: '/subscriptions/:embed?',
-    categories: ['social-media'],
-    example: '/youtube/subscriptions',
-    parameters: { embed: 'Default to embed the video, set to any value to disable embedding' },
-    features: {
-        requireConfig: true,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.youtube.com/feed/subscriptions', 'www.youtube.com/feed/channels'],
-        target: '/subscriptions',
-    },
-    name: 'Subscriptions',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'www.youtube.com/feed/subscriptions',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     if (!config.youtube || !config.youtube.key || !config.youtube.clientId || !config.youtube.clientSecret || !config.youtube.refreshToken) {
         throw new Error('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -65,11 +41,11 @@ async function handler(ctx) {
             };
         });
 
-    return {
+    ctx.set('data', {
         title: 'Subscriptions - YouTube',
         description: 'YouTube Subscriptions',
         item: items,
-    };
+    });
 
     ctx.set('json', {
         title: 'Subscriptions - YouTube',
@@ -78,4 +54,4 @@ async function handler(ctx) {
         playlistIds,
         item: items,
     });
-}
+};

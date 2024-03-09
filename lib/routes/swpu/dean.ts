@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { joinUrl } from './utils';
 import { parseDate } from '@/utils/parse-date';
@@ -6,33 +5,7 @@ import { load } from 'cheerio';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/dean/:code',
-    categories: ['university'],
-    example: '/swpu/dean/tzgg',
-    parameters: { code: '栏目代码' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['swpu.edu.cn/'],
-        target: '',
-    },
-    name: '教务处',
-    maintainers: ['CYTMWIA'],
-    handler,
-    url: 'swpu.edu.cn/',
-    description: `| 栏目 | 通知公告 | 新闻报道 | 视点声音 |
-  | ---- | -------- | -------- | -------- |
-  | 代码 | tzgg     | xwbd     | sdsy     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const url = `https://www.swpu.edu.cn/dean/${ctx.req.param('code')}.htm`;
 
     const res = await got.get(url);
@@ -77,11 +50,11 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: `西南石油大学教务处 ${title}`,
         link: url,
         description: `西南石油大学教务处 ${title}`,
         language: 'zh-CN',
         item: out,
-    };
-}
+    });
+};

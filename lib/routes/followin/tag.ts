@@ -1,30 +1,8 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { apiUrl, baseUrl, getBParam, getBuildId, getGToken, parseList, parseItem } from './utils';
 
-export const route: Route = {
-    path: '/tag/:tagId/:lang?',
-    categories: ['finance'],
-    example: '/followin/tag/177008',
-    parameters: { tagId: 'Tag ID, can be found in URL', lang: 'Language, see table above, `en` by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['followin.io/:lang/tag/:tagId', 'followin.io/tag/:tagId'],
-    },
-    name: 'Tag',
-    maintainers: ['TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { tagId, lang = 'en' } = ctx.req.param();
     const { limit = 20 } = ctx.req.query();
 
@@ -56,12 +34,12 @@ async function handler(ctx) {
     const list = parseList(tagResponse.data.list.slice(0, limit), lang, buildId);
     const items = await Promise.all(list.map((item) => parseItem(item, cache.tryGet)));
 
-    return {
+    ctx.set('data', {
         title: `${tagInfo.name} - Followin`,
         description: tagInfo.description,
         link: `${baseUrl}/${lang}/tag/${tagId}`,
         image: tagInfo.logo,
         language: lang,
         item: items,
-    };
-}
+    });
+};

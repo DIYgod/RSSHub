@@ -1,19 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
 import { rootUrl, rootRSSUrl, title, categories, getInfo, processItems } from './util';
 
-export const route: Route = {
-    path: ['/cid/:id?', '/zhibo'],
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-    url: 'm.mydrivers.com/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
 
@@ -38,10 +29,10 @@ async function handler(ctx) {
         items = await processItems(items, cache.tryGet);
     }
 
-    return {
+    ctx.set('data', {
         ...(await getInfo(currentUrl, cache.tryGet)),
 
         item: items,
         title: `${title} - ${feed.title.split(/_/).pop() || categories.zhibo}`,
-    };
-}
+    });
+};

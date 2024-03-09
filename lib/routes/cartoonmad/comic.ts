@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -34,28 +33,7 @@ const getChapters = (id, list, tryGet) =>
         )
     );
 
-export const route: Route = {
-    path: '/comic/:id',
-    categories: ['anime'],
-    example: '/cartoonmad/comic/5827',
-    parameters: { id: '漫画ID' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['cartoonmad.com/comic/:id'],
-    },
-    name: '漫画更新',
-    maintainers: ['KellyHwong'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const link = `${baseUrl}/comic/${id}`;
 
@@ -87,10 +65,10 @@ async function handler(ctx) {
 
     const chapters = await getChapters(id, list, cache.tryGet);
 
-    return {
+    ctx.set('data', {
         title: $('head title').text(),
         link,
         description: bookIntro,
         item: chapters,
-    };
-}
+    });
+};

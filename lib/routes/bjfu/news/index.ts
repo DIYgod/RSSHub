@@ -1,35 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import util from './utils';
 import iconv from 'iconv-lite';
 
-export const route: Route = {
-    path: '/news/:type',
-    categories: ['university'],
-    example: '/bjfu/news/lsyw',
-    parameters: { type: '新闻栏目' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['news.bjfu.edu.cn/:type/index.html'],
-    },
-    name: '绿色新闻网',
-    maintainers: ['markmingjie'],
-    handler,
-    description: `| 绿色要闻 | 校园动态 | 教学科研 | 党建思政 | 一周排行 |
-  | -------- | -------- | -------- | -------- | -------- |
-  | lsyw     | xydt     | jxky     | djsz     | yzph     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type');
     let title, path;
     switch (type) {
@@ -75,10 +50,10 @@ async function handler(ctx) {
 
     const result = await util.ProcessFeed(base, list, cache); // 感谢@hoilc指导
 
-    return {
+    ctx.set('data', {
         title: '北林新闻- ' + title,
         link: 'http://news.bjfu.edu.cn/' + path,
         description: '绿色新闻网 - ' + title,
         item: result,
-    };
-}
+    });
+};

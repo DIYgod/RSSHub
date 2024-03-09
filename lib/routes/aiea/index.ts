@@ -1,30 +1,6 @@
-import { Route } from '@/types';
 import buildData from '@/utils/common-config';
 
-export const route: Route = {
-    path: '/seminars/:period',
-    categories: ['study'],
-    example: '/aiea/seminars/upcoming',
-    parameters: { period: 'Time frame' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Seminar Series',
-    maintainers: ['zxx-457'],
-    handler,
-    description: `| Time frame |
-  | ---------- |
-  | upcoming   |
-  | past       |
-  | both       |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const link = 'http://www.aiea.org/0504';
     const period = ctx.req.param('period') ?? '';
 
@@ -63,4 +39,4 @@ async function handler(ctx) {
             },
         })
     );
-}
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,14 +9,7 @@ import asyncPool from 'tiny-async-pool';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/blog/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = 'en' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 22;
 
@@ -102,7 +94,7 @@ async function handler(ctx) {
 
     const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
 
-    return {
+    ctx.set('data', {
         item: items,
         title: $('title').text(),
         link: currentUrl,
@@ -111,5 +103,5 @@ async function handler(ctx) {
         icon,
         logo: icon,
         subtitle: $('h1.site-title').text(),
-    };
-}
+    });
+};

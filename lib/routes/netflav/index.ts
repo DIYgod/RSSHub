@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,19 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/',
-    radar: {
-        source: ['netflav.com/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'netflav.com/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://netflav.com';
     const { data } = await got(baseUrl);
 
@@ -43,7 +30,7 @@ async function handler() {
         category: [...new Set(item.tags?.map((t) => t.replace(/^(\w{2}:)/, '')))],
     }));
 
-    return {
+    ctx.set('data', {
         title: head.find((h) => h[0] === 'title')[1].children,
         description: head.find((h) => h[0] === 'meta' && h[1].name === 'description')[1].content,
         logo: `${baseUrl}${head.find((h) => h[0] === 'meta' && h[1].property === 'og:image')[1].content}`,
@@ -51,5 +38,5 @@ async function handler() {
         link: baseUrl,
         item: items,
         allowEmpty: true,
-    };
-}
+    });
+};

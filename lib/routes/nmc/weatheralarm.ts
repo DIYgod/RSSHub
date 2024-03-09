@@ -1,34 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import * as cheerio from 'cheerio';
 
-export const route: Route = {
-    path: '/weatheralarm/:province?',
-    categories: ['forecast'],
-    example: '/nmc/weatheralarm/广东省',
-    parameters: { province: '省份' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['nmc.cn/publish/alarm.html', 'nmc.cn/'],
-        target: '/weatheralarm',
-    },
-    name: 'Unknown',
-    maintainers: ['ylc395'],
-    handler,
-    url: 'nmc.cn/publish/alarm.html',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { province } = ctx.req.param();
     const alarmInfoURL = `http://www.nmc.cn/rest/findAlarm`;
     const { data: response } = await got(alarmInfoURL, {
@@ -65,9 +41,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '中央气象台全国气象预警',
         link: 'http://www.nmc.cn/publish/alarm.html',
         item: items,
-    };
-}
+    });
+};

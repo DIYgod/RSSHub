@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -30,21 +29,7 @@ const categories = {
 
 const baseUrl = 'https://www.wnacg.com';
 
-export const route: Route = {
-    path: ['/', '/category/:cid', '/tag/:tag'],
-    radar: {
-        source: ['wnacg.org/albums.html', 'wnacg.org/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['KenMizz'],
-    handler,
-    url: 'wnacg.org/albums.html',
-    url: 'wnacg.org/albums.html',
-    url: 'wnacg.org/albums.html',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { cid, tag } = ctx.req.param();
     if (cid && !Object.keys(categories).includes(cid)) {
         throw new Error('此分类不存在');
@@ -115,9 +100,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('head title').text(),
         link: url,
         item: items,
-    };
-}
+    });
+};

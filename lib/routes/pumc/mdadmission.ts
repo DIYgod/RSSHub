@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/mdadmission',
-    categories: ['university'],
-    example: '/pumc/mdadmission',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['mdadmission.pumc.edu.cn/mdweb/site', 'mdadmission.pumc.edu.cn/'],
-    },
-    name: '“4+4” 试点班招生网通知公告',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'mdadmission.pumc.edu.cn/mdweb/site',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 100;
 
     const rootUrl = 'https://mdadmission.pumc.edu.cn';
@@ -78,9 +55,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '北京协和医学院招生网 - 通知公告',
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

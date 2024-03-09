@@ -1,33 +1,10 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://github.com';
 
-export const route: Route = {
-    path: '/wiki/:user/:repo/:page?',
-    categories: ['programming'],
-    example: '/github/wiki/flutter/flutter/Roadmap',
-    parameters: { user: 'User / Org name', repo: 'Repo name', page: 'Page slug, can be found in URL, empty means Home' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['github.com/:user/:repo/wiki/:page/_history', 'github.com/:user/:repo/wiki/:page', 'github.com/:user/:repo/wiki/_history', 'github.com/:user/:repo/wiki'],
-        target: '/wiki/:user/:repo/:page',
-    },
-    name: 'Wiki History',
-    maintainers: ['TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { user, repo, page } = ctx.req.param();
 
     const url = `${baseUrl}/${user}/${repo}/wiki${page ? `/${page}` : ''}/_history`;
@@ -47,9 +24,9 @@ async function handler(ctx) {
             };
         });
 
-    return {
+    ctx.set('data', {
         title: `${$('.gh-header-title').text()} - ${user}/${repo}`,
         link: url,
         item: items,
-    };
-}
+    });
+};

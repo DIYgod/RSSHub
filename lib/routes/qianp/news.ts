@@ -1,18 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { getTokenAndSecret } from './utils';
 
-export const route: Route = {
-    path: '/news/:path{.+}?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const baseUrl = 'https://qianp.com';
     const { path = 'news/recommend' } = ctx.req.param();
     const url = `${baseUrl}/${path}/`;
@@ -56,11 +48,11 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('head title').text(),
         description: $('meta[name="description"]').attr('content'),
         link: url,
         image: `${baseUrl}/favicon.ico`,
         item: items,
-    };
-}
+    });
+};

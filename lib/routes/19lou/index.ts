@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -16,40 +15,7 @@ const setCookie = function (cookieName, cookieValue, seconds, path, domain, secu
     return [encodeURI(cookieName), '=', encodeURI(cookieValue), expires ? '; expires=' + expires.toGMTString() : '', path ? '; path=' + path : '/', domain ? '; domain=' + domain : '', secure ? '; secure' : ''].join('');
 };
 
-export const route: Route = {
-    path: '/:city?',
-    categories: ['bbs'],
-    example: '/19lou/jiaxing',
-    parameters: { city: '分类，见下表，默认为 www，即杭州' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '头条',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 杭州 | 台州    | 嘉兴    | 宁波   | 湖州   |
-  | ---- | ------- | ------- | ------ | ------ |
-  | www  | taizhou | jiaxing | ningbo | huzhou |
-
-  | 绍兴     | 湖州   | 温州    | 金华   | 舟山     |
-  | -------- | ------ | ------- | ------ | -------- |
-  | shaoxing | huzhou | wenzhou | jinhua | zhoushan |
-
-  | 衢州   | 丽水   | 义乌 | 萧山     | 余杭   |
-  | ------ | ------ | ---- | -------- | ------ |
-  | quzhou | lishui | yiwu | xiaoshan | yuhang |
-
-  | 临安  | 富阳   | 桐庐   | 建德   | 淳安   |
-  | ----- | ------ | ------ | ------ | ------ |
-  | linan | fuyang | tonglu | jiande | chunan |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const city = ctx.req.param('city') ?? 'www';
     if (!isValidHost(city)) {
         throw new Error('Invalid city');
@@ -105,9 +71,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text().split('-')[0],
         link: rootUrl,
         item: items,
-    };
-}
+    });
+};

@@ -1,16 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/html_clip/:user/:tag',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = 'html';
     const user = ctx.req.param('user');
     const tag = ctx.req.param('tag');
@@ -26,7 +18,7 @@ async function handler(ctx) {
     const $ = load(data);
     const entries = $('#snip_body>.article_content');
 
-    return {
+    ctx.set('data', {
         title: $('.header_text').text().trim(),
         link: currentUrl,
         item: entries
@@ -49,5 +41,5 @@ async function handler(ctx) {
             })
             .get(),
         allowEmpty: true,
-    };
-}
+    });
+};

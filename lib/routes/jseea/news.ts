@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -23,18 +22,7 @@ async function loadContent(link) {
     return description;
 }
 
-export const route: Route = {
-    path: '/news/:type?',
-    radar: {
-        source: ['jseea.cn/webfile/news/:type'],
-        target: '/news/:type',
-    },
-    name: 'Unknown',
-    maintainers: ['schen1024'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     // 默认 正常规定 然后获取列表页面
     const type = ctx.req.param('type') ?? 'zkyw';
     const listPageUrl = `${baseUrl}/webfile/news/${type}/`;
@@ -69,9 +57,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('head title').text() + siteTitle,
         link: listPageUrl,
         item: result,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -15,32 +14,7 @@ const columns = {
     gsgg: { name: '公示公告', order: 6 },
 };
 
-export const route: Route = {
-    path: '/mee/ywdt/:category?',
-    categories: ['government'],
-    example: '/gov/mee/ywdt/hjywnews',
-    parameters: { category: '分类名，预设 `szyw`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.mee.gov.cn/ywdt/:category'],
-        target: '/mee/ywdt/:category',
-    },
-    name: '要闻动态',
-    maintainers: ['liuxsdev'],
-    handler,
-    description: `| 时政要闻 | 环境要闻 | 地方快讯 | 新闻发布 | 视频新闻 | 公示公告 |
-| :------: | :------: | :------: | :------: | :------: | :------: |
-|   szyw   | hjywnews |  dfnews  |   xwfb   |   spxw   |   gsgg   |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const cate = ctx.req.param('category') ?? 'szyw';
     const url = `${baseUrl}ywdt/`;
     const title = `${columns[cate].name} - 要闻动态 - 中华人民共和国生态环境部`;
@@ -99,9 +73,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title,
         link: url,
         item: items,
-    };
-}
+    });
+};

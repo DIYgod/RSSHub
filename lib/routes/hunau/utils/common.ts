@@ -48,7 +48,7 @@ async function getContent(ctx, { baseHost, baseCategory, baseType, baseTitle, ba
         )
     );
 
-    return {
+    ctx.set('data', {
         // 源标题
         title,
         description,
@@ -56,7 +56,7 @@ async function getContent(ctx, { baseHost, baseCategory, baseType, baseTitle, ba
         link: url,
         // 源文章
         item: items,
-    };
+    });
 }
 
 export default getContent;

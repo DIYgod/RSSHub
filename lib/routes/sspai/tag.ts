@@ -1,30 +1,8 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/tag/:keyword',
-    categories: ['new-media'],
-    example: '/sspai/tag/apple',
-    parameters: { keyword: '关键词' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['sspai.com/tag/:keyword'],
-    },
-    name: '标签订阅',
-    maintainers: ['Jeason0228'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const keyword = ctx.req.param('keyword');
     const keyword_encode = encodeURIComponent(decodeURIComponent(keyword));
     const api_url = `https://sspai.com/api/v1/articles?offset=0&limit=50&has_tag=1&tag=${keyword_encode}&include_total=false`;
@@ -56,10 +34,10 @@ async function handler(ctx) {
             });
         })
     );
-    return {
+    ctx.set('data', {
         title: `#${keyword} - 少数派`,
         link: host,
         description: `${keyword} 更新推送 `,
         item: items,
-    };
-}
+    });
+};

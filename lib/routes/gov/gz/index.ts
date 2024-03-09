@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -12,14 +11,7 @@ const urlMap = {
     zcjd: 'zcjd/zcjd',
 };
 
-export const route: Route = {
-    path: '/gz/:channel/:category',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const channel = ctx.req.param('channel');
     const category = ctx.req.param('category');
     const url = `${rootUrl}/${channel}/${urlMap[category]}/`;
@@ -38,9 +30,9 @@ async function handler(ctx) {
             };
         });
 
-    return {
+    ctx.set('data', {
         title: `广州市人民政府 - ${$('.main_title').text()}`,
         link: url,
         item: items,
-    };
-}
+    });
+};

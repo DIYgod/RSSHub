@@ -1,30 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
-export const route: Route = {
-    path: '/zcc',
-    categories: ['university'],
-    example: '/nju/zcc',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['zcc.nju.edu.cn/tzgg/gyfytdglk/index.html', 'zcc.nju.edu.cn/tzgg/index.html', 'zcc.nju.edu.cn/'],
-    },
-    name: '资产管理处',
-    maintainers: ['ret-1'],
-    handler,
-    url: 'zcc.nju.edu.cn/tzgg/gyfytdglk/index.html',
-};
-
-async function handler() {
+export default async (ctx) => {
     const category_dict = {
         ggtz: '公告通知',
     };
@@ -53,9 +30,9 @@ async function handler() {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: '资产管理处-公告通知',
         link: 'https://zcc.nju.edu.cn/sy/tzzhxx/index.html',
         item: items[0],
-    };
-}
+    });
+};

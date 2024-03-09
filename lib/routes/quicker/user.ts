@@ -1,32 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/user/:category/:id',
-    categories: ['programming'],
-    example: '/quicker/user/Actions/3-CL',
-    parameters: { category: '分类，见下表', id: '用户 id，可在对应用户页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '用户更新',
-    maintainers: ['Cesaryuan', 'nczitzk'],
-    handler,
-    description: `| 动作    | 子程序      | 动作单      |
-  | ------- | ----------- | ----------- |
-  | Actions | SubPrograms | ActionLists |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category');
     const id = ctx.req.param('id');
 
@@ -76,10 +54,10 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
         allowEmpty: true,
-    };
-}
+    });
+};

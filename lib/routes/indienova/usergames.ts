@@ -1,33 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/usergames',
-    categories: ['game'],
-    example: '/indienova/usergames',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['indienova.com/usergames', 'indienova.com/'],
-    },
-    name: '会员开发游戏库',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'indienova.com/usergames',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://indienova.com';
 
     const { data: response, url: link } = await got(`${baseUrl}/usergames`);
@@ -58,9 +35,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('head title').text(),
         link,
         item: items,
-    };
-}
+    });
+};

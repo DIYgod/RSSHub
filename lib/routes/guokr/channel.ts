@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -18,32 +17,7 @@ const channelMap = {
     pretty: 'beauty',
 };
 
-export const route: Route = {
-    path: '/:channel',
-    categories: ['new-media'],
-    example: '/guokr/calendar',
-    parameters: { channel: '专栏类别' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['guokr.com/'],
-    },
-    name: '果壳网专栏',
-    maintainers: ['DHPO', 'hoilc'],
-    handler,
-    url: 'guokr.com/',
-    description: `| 物种日历 | 吃货研究所 | 美丽也是技术活 |
-  | -------- | ---------- | -------------- |
-  | calendar | institute  | beauty         |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const channel = channelMap[ctx.req.param('channel')] ?? ctx.req.param('channel');
 
     const response = await got(`https://www.guokr.com/apis/minisite/article.json?retrieve_type=by_wx&channel_key=${channel}&offset=0&limit=10`);
@@ -66,9 +40,9 @@ async function handler(ctx) {
         }))
     );
 
-    return {
+    ctx.set('data', {
         title: `果壳网 ${channel_name}`,
         link: channel_url,
         item: result,
-    };
-}
+    });
+};

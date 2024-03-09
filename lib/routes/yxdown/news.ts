@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,28 +5,7 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { rootUrl, getCookie } from './utils';
 
-export const route: Route = {
-    path: '/news/:category?',
-    categories: ['game'],
-    example: '/yxdown/news',
-    parameters: { category: '分类，见下表，默认为资讯首页' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '资讯',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 资讯首页 | 业界动态 | 视频预告 | 新作发布 | 游戏资讯 | 游戏评测 | 网络游戏 | 手机游戏 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  |          | dongtai  | yugao    | xinzuo   | zixun    | pingce   | wangluo  | shouyou  |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') ? `${ctx.req.param('category')}/` : '';
 
     const currentUrl = `${rootUrl}/news/${category}`;
@@ -72,9 +50,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `${$('.now').text()} - 游讯网`,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

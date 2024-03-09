@@ -1,33 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/kjc',
-    categories: ['university'],
-    example: '/bjfu/kjc',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['kyc.bjfu.edu.cn/'],
-    },
-    name: '科技处通知公告',
-    maintainers: ['markmingjie'],
-    handler,
-    url: 'kyc.bjfu.edu.cn/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const url = 'http://kyc.bjfu.edu.cn/tztg/index.html';
     const response = await got.get(url);
     const data = response.data;
@@ -68,9 +45,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '北林科技处通知',
         link: url,
         item: result,
-    };
-}
+    });
+};

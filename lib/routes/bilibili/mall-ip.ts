@@ -1,25 +1,6 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 
-export const route: Route = {
-    path: '/mall/ip/:id',
-    categories: ['social-media'],
-    example: '/bilibili/mall/ip/0_3000294',
-    parameters: { id: '作品 id, 可在作品列表页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '会员购作品',
-    maintainers: ['DIYgod'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
 
     const detail = await got({
@@ -40,7 +21,7 @@ async function handler(ctx) {
 
     const data = response.data.data;
 
-    return {
+    ctx.set('data', {
         title: `${detail.data.data.name} - 会员购`,
         description: detail.data.data.intro,
         link: `https://mall.bilibili.com/list.html?ip=${id}`,
@@ -49,5 +30,5 @@ async function handler(ctx) {
             description: `${item.name}<br>￥${item.price}<br><img src="${item.itemsImg}">`,
             link: item.jumpUrlH5,
         })),
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -24,32 +23,7 @@ const categories = {
     },
 };
 
-export const route: Route = {
-    path: '/hot-list/:category?',
-    categories: ['new-media'],
-    example: '/36kr/hot-list',
-    parameters: { category: '分类，默认为24小时热榜' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['36kr.com/hot-list/:category', '36kr.com/'],
-        target: '/hot-list/:category',
-    },
-    name: '资讯热榜',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 24 小时热榜 | 资讯人气榜 | 资讯综合榜 | 资讯收藏榜 |
-  | ----------- | ---------- | ---------- | ---------- |
-  | 24          | renqi      | zonghe     | shoucang   |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') ?? '24';
 
     const currentUrl = category === '24' ? rootUrl : `${rootUrl}/hot-list/catalog`;
@@ -78,9 +52,9 @@ async function handler(ctx) {
 
     items = await Promise.all(items.map((item) => ProcessItem(item, cache.tryGet)));
 
-    return {
+    ctx.set('data', {
         title: `36氪 - ${categories[category].title}`,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

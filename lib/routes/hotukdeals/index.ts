@@ -1,26 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/:type',
-    categories: ['shopping'],
-    example: '/hotukdeals/hot',
-    parameters: { type: 'should be one of highlights, hot, new, discussed' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'thread',
-    maintainers: ['DIYgod'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     let type = ctx.req.param('type');
     if (type === 'highlights') {
         type = '';
@@ -35,7 +16,7 @@ async function handler(ctx) {
 
     const list = $('article.thread');
 
-    return {
+    ctx.set('data', {
         title: `hotukdeals ${type}`,
         link: `https://www.hotukdeals.com/${type}`,
         item: list
@@ -49,5 +30,5 @@ async function handler(ctx) {
             })
             .get()
             .reverse(),
-    };
-}
+    });
+};

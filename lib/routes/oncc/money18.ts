@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -24,28 +23,7 @@ const sections = {
     tech: '科技財情',
 };
 
-export const route: Route = {
-    path: '/money18/:id?',
-    categories: ['traditional-media'],
-    example: '/oncc/money18/exp',
-    parameters: { id: '栏目 id，可在对应栏目页 URL 中找到，默认为 exp，即新聞總覽' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Money18',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 新聞總覽 | 全日焦點 | 板塊新聞 | 國際金融 | 大行報告 | A 股新聞 | 地產新聞 | 投資理財  | 新股 IPO | 科技財情 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- | --------- | -------- | -------- |
-  | exp      | fov      | industry | int      | recagent | ntlgroup | pro      | weainvest | ipo      | tech     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id') ?? 'exp';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30;
 
@@ -133,9 +111,9 @@ async function handler(ctx) {
         );
     }
 
-    return {
+    ctx.set('data', {
         title: `東網產經 - ${sections[id]}`,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

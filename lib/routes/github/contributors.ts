@@ -1,30 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { config } from '@/config';
 
-export const route: Route = {
-    path: '/contributors/:user/:repo/:order?/:anon?',
-    categories: ['programming'],
-    example: '/github/contributors/DIYgod/RSSHub',
-    parameters: { user: 'User name', repo: 'Repo name', order: 'Sort order by commit numbers, desc and asc (descending by default)', anon: 'Show anonymous users. Defaults to no, use any values for yes.' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['github.com/:user/:repo/graphs/contributors', 'github.com/:user/:repo'],
-        target: '/contributors/:user/:repo',
-    },
-    name: 'Repo Contributors',
-    maintainers: ['zoenglinghou'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { user, repo, order, anon } = ctx.req.param();
 
     const host = `https://github.com/${user}/${repo}`;
@@ -93,10 +70,10 @@ async function handler(ctx) {
               }
     );
 
-    return {
+    ctx.set('data', {
         title: `${user}/${repo} Contributors`,
         link: `${host}/graphs/contributors`,
         description: `New contributors for ${user}/${repo}`,
         item: items,
-    };
-}
+    });
+};

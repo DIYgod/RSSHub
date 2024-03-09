@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -11,32 +10,7 @@ const FILTER_NODE_TYPE_MAP = {
     all: 'ALL_VIDEOS',
 };
 
-export const route: Route = {
-    path: '/video/:login/:filter?',
-    categories: ['live'],
-    example: '/twitch/video/riotgames/highlights',
-    parameters: { login: 'Twitch username', filter: 'Video type, Default to all' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.twitch.tv/:login/videos'],
-        target: '/video/:login',
-    },
-    name: 'Channel Video',
-    maintainers: ['hoilc'],
-    handler,
-    description: `| archive           | highlights                    | all        |
-| ----------------- | ----------------------------- | ---------- |
-| Recent broadcasts | Recent highlights and uploads | All videos |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const login = ctx.req.param('login');
     const filter = ctx.req.param('filter')?.toLowerCase() || 'all';
     if (!FILTER_NODE_TYPE_MAP[filter]) {
@@ -89,9 +63,9 @@ async function handler(ctx) {
         category: item.game && [item.game.displayName], // item.game may be null
     }));
 
-    return {
+    ctx.set('data', {
         title: `Twitch - ${displayName} - ${videoShelvesEdge.node.title}`,
         link: `https://www.twitch.tv/${login}`,
         item: out,
-    };
-}
+    });
+};

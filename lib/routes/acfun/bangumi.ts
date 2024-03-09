@@ -1,30 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/bangumi/:id',
-    categories: ['anime'],
-    example: '/acfun/bangumi/5022158',
-    parameters: { id: '番剧 id' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '番剧',
-    maintainers: ['xyqfer'],
-    handler,
-    description: `:::tip
-番剧 id 不包含开头的 aa。
-例如：\`https://www.acfun.cn/bangumi/aa5022158\` 的番剧 id 是 5022158，不包括开头的 aa。
-:::`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const url = `https://www.acfun.cn/bangumi/aa${id}`;
 
@@ -36,7 +13,7 @@ async function handler(ctx) {
     const bangumiData = JSON.parse(bangumiPage.data.match(/window.bangumiData = (.*?);\n/)[1]);
     const bangumiList = JSON.parse(bangumiPage.data.match(/window.bangumiList = (.*?);\n/)[1]);
 
-    return {
+    ctx.set('data', {
         title: bangumiData.bangumiTitle,
         link: url,
         description: bangumiData.bangumiIntro,
@@ -47,5 +24,5 @@ async function handler(ctx) {
             link: `http://www.acfun.cn/bangumi/aa${id}_36188_${item.itemId}`,
             pubDate: parseDate(item.updateTime, 'x'),
         })),
-    };
-}
+    });
+};

@@ -1,36 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/:id?',
-    categories: ['study'],
-    example: '/shmeea/08000',
-    parameters: { id: '页面 ID，可在 URL 中找到，默认为消息速递' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '消息',
-    maintainers: ['jialinghui', 'Misaka13514'],
-    handler,
-    description: `:::tip
-  例如：消息速递的网址为 \`https://www.shmeea.edu.cn/page/08000/index.html\`，则页面 ID 为 \`08000\`。
-  :::
-
-  :::warning
-  暂不支持大类分类和[院内动态](https://www.shmeea.edu.cn/page/19000/index.html)
-  :::`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id') ?? '08000';
     const baseURL = 'https://www.shmeea.edu.cn';
     const link = `${baseURL}/page/${id}/index.html`;
@@ -72,9 +46,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title,
         link,
         item: items,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,14 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = 'arxiv/cs.CL' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 150;
 
@@ -75,7 +67,7 @@ async function handler(ctx) {
     const title = $('title').text();
     const icon = new URL('favicon.ico', rootUrl).href;
 
-    return {
+    ctx.set('data', {
         item: items,
         title: title.split(/-/)[0].trim(),
         link: currentUrl,
@@ -83,5 +75,5 @@ async function handler(ctx) {
         icon,
         logo: icon,
         subtitle: $('h1').first().text(),
-    };
-}
+    });
+};

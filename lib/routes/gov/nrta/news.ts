@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -11,28 +10,7 @@ const categories = {
     114: '工作动态',
 };
 
-export const route: Route = {
-    path: '/nrta/news/:category?',
-    categories: ['government'],
-    example: '/gov/nrta/news',
-    parameters: { category: '资讯类别，可从地址中获取，默认为总局要闻' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '分类',
-    maintainers: ['yuxinliu-alex'],
-    handler,
-    description: `| 总局要闻 | 公告公示 | 工作动态 | 其他 |
-  | -------- | -------- | -------- | ---- |
-  | 112      | 113      | 114      |      |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') ?? 112;
 
     const rootUrl = 'http://www.nrta.gov.cn';
@@ -75,11 +53,11 @@ async function handler(ctx) {
             })
         )
     );
-    return {
+    ctx.set('data', {
         title: category in categories ? categories[category] : '其他',
         link: `http://www.nrta.gov.cn/col/col${category}/index.html`,
         description: '国家广播电视总局',
         language: 'zh-cn',
         item: items,
-    };
-}
+    });
+};

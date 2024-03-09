@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,29 +5,7 @@ import { parseRelativeDate } from '@/utils/parse-date';
 
 const host = 'https://guangdiu.com';
 
-export const route: Route = {
-    path: '/rank',
-    categories: ['shopping'],
-    example: '/guangdiu/rank',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['guangdiu.com/rank'],
-    },
-    name: '一小时风云榜',
-    maintainers: ['fatpandac'],
-    handler,
-    url: 'guangdiu.com/rank',
-};
-
-async function handler() {
+export default async (ctx) => {
     const url = `${host}/rank.php`;
 
     const response = await got(url);
@@ -54,9 +31,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `逛丢 - 一小时风云榜`,
         link: url,
         item: items,
-    };
-}
+    });
+};

@@ -1,29 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/haowen/:day?',
-    categories: ['shopping'],
-    example: '/smzdm/haowen/1',
-    parameters: { day: '以天为时间跨度，默认为 `all`，其余可以选择 `1`，`7`，`30`，`365`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '好文',
-    maintainers: ['LogicJake'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const day = ctx.req.param('day') ?? 'all';
     const link = `https://post.smzdm.com/hot_${day}/`;
 
@@ -60,9 +41,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `${title}-什么值得买好文`,
         link,
         item: out,
-    };
-}
+    });
+};

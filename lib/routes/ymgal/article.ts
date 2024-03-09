@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -12,28 +11,7 @@ const types = {
     column: '?type=COLUMN&page=1',
 };
 
-export const route: Route = {
-    path: '/article/:type?',
-    categories: ['anime'],
-    example: '/ymgal/article',
-    parameters: { type: '文章类型' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '文章',
-    maintainers: ['SunBK201'],
-    handler,
-    description: `| 全部文章 | 资讯 | 专栏   |
-  | -------- | ---- | ------ |
-  | all      | news | column |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type') || 'all';
 
     const link = `${host}/co/topic/list` + types[type];
@@ -75,10 +53,10 @@ async function handler(ctx) {
         info = '专栏';
     }
 
-    return {
+    ctx.set('data', {
         title: `月幕 Galgame - ${info}`,
         link: `${host}/co/article`,
         description: `月幕 Galgame - ${info}`,
         item: items,
-    };
-}
+    });
+};

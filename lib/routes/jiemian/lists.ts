@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,14 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = '' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
@@ -97,7 +89,7 @@ async function handler(ctx) {
     const image = $('div.logo img').prop('src');
     const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
 
-    return {
+    ctx.set('data', {
         item: items,
         title,
         link: currentUrl,
@@ -108,5 +100,5 @@ async function handler(ctx) {
         logo: icon,
         subtitle: titleSplits[0],
         author: titleSplits.pop(),
-    };
-}
+    });
+};

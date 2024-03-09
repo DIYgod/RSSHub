@@ -1,37 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/dh/:language?',
-    categories: ['government'],
-    example: '/hongkong/dh',
-    parameters: { language: 'Language, see below, tc_chi by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['dh.gov.hk/'],
-    },
-    name: 'Press Release',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'dh.gov.hk/',
-    description: `Language
-
-  | English | 中文简体 | 中文繁體 |
-  | ------- | -------- | -------- |
-  | english | chs      | tc\_chi  |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const language = ctx.req.param('language') ?? 'tc_chi';
 
     const rootUrl = 'https://www.dh.gov.hk';
@@ -74,9 +46,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

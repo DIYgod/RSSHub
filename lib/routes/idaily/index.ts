@@ -1,21 +1,10 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: ['/today/:language?', '/:language?'],
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-    description: `| 简体中文 | 繁体中文 |
-  | -------- | -------- |
-  | zh-hans  | zh-hant  |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { language = 'zh-hans' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
 
@@ -62,7 +51,7 @@ async function handler(ctx) {
     const title = $('title').text();
     const image = new URL('img/idaily/logo_2x.png', currentUrl).href;
 
-    return {
+    ctx.set('data', {
         item: items,
         title,
         link: currentUrl,
@@ -72,5 +61,5 @@ async function handler(ctx) {
         subtitle: $('meta[name="keywords"]').prop('content'),
         author: title.split(/\s/)[0],
         allowEmpty: true,
-    };
-}
+    });
+};

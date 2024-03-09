@@ -1,30 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/recent-releases',
-    categories: ['anime'],
-    example: '/gogoanimehd/recent-releases',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['developer.anitaku.to/'],
-    },
-    name: 'Recent Releases',
-    maintainers: ['user4302'],
-    handler,
-    url: 'developer.anitaku.to/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://anitaku.to/home.html';
 
     const response = await got({
@@ -52,9 +29,9 @@ async function handler() {
         return structuredData;
     });
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: rootUrl,
         item: arrayOfItems,
-    };
-}
+    });
+};

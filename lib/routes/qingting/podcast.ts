@@ -1,33 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import crypto from 'crypto';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/podcast/:id',
-    categories: ['multimedia'],
-    example: '/qingting/podcast/293411',
-    parameters: { id: '专辑id, 可在专辑页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: true,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['qingting.fm/channels/:id'],
-    },
-    name: '播客',
-    maintainers: ['RookieZoe', 'huyyi'],
-    handler,
-    description: `获取的播放 URL 有效期只有 1 天，需要开启播客 APP 的自动下载功能。`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const channelUrl = `https://i.qingting.fm/capi/v3/channel/${ctx.req.param('id')}`;
     let response = await got({
         method: 'get',
@@ -90,12 +67,12 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `${title} - 蜻蜓FM`,
         description: desc,
         itunes_author: authors,
         image: channel_img,
         link: `https://www.qingting.fm/channels/${ctx.req.param('id')}`,
         item: resultItems,
-    };
-}
+    });
+};

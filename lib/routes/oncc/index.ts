@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -39,30 +38,7 @@ const channelMap = {
     },
 };
 
-export const route: Route = {
-    path: '/:language/:channel?',
-    categories: ['traditional-media'],
-    example: '/oncc/zh-hant/news',
-    parameters: { language: '`zh-hans` 为简体，`zh-hant` 为繁体', channel: '频道，默认为港澳' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '即時新聞',
-    maintainers: ['Fatpandac'],
-    handler,
-    description: `频道参数可以从官网的地址中获取，如：
-
-  \`https://hk.on.cc/hk/finance/index_cn.html\` 对应 \`/oncc/zh-hans/finance\`
-
-  \`https://hk.on.cc/hk/finance/index.html\` 对应 \`/oncc/zh-hant/finance\``,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const language = ctx.req.param('language');
     const channel = ctx.req.param('channel') ?? 'news';
     const newsUrl = `${rootUrl}/hk/${channel}/index${languageMap[language]}.html`;
@@ -103,9 +79,9 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: `東網 - ${channelMap[channel][language]}`,
         link: newsUrl,
         item: items,
-    };
-}
+    });
+};

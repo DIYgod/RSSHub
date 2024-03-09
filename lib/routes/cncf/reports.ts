@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,18 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const rootURL = 'https://www.cncf.io';
 
-export const route: Route = {
-    path: '/reports',
-    radar: {
-        source: ['cncf.io/reports'],
-    },
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-    url: 'cncf.io/reports',
-};
-
-async function handler() {
+export default async (ctx) => {
     const url = `${rootURL}/reports/`;
 
     const response = await got(url);
@@ -43,9 +31,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `CNCF - Reports`,
         link: url,
         item: items,
-    };
-}
+    });
+};

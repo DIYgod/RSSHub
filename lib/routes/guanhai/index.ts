@@ -1,23 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/',
-    radar: {
-        source: ['guanhai.com.cn/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'guanhai.com.cn/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const { data: response } = await got('https://www.guanhai.com.cn');
     const $ = load(response);
 
@@ -58,11 +45,11 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('head title').text(),
         description: $('head meta[name=description]').text(),
         image: 'https://www.guanhai.com.cn/favicon.ico',
         link: 'https://www.guanhai.com.cn',
         item: items,
-    };
-}
+    });
+};

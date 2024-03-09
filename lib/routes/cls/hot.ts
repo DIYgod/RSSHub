@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,29 +10,7 @@ import * as path from 'node:path';
 
 import { rootUrl, getSearchParams } from './utils';
 
-export const route: Route = {
-    path: '/hot',
-    categories: ['finance'],
-    example: '/cls/hot',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['cls.cn/'],
-    },
-    name: '热门文章排行榜',
-    maintainers: ['5upernova-heng', 'nczitzk'],
-    handler,
-    url: 'cls.cn/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
 
     const apiUrl = `${rootUrl}/v2/article/hot/list`;
@@ -73,9 +50,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '财联社 - 热门文章排行榜',
         link: rootUrl,
         item: items,
-    };
-}
+    });
+};

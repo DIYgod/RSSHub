@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,28 +5,7 @@ import iconv from 'iconv-lite';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/:category?',
-    categories: ['other'],
-    example: '/auto-stats',
-    parameters: { category: '分类，见下表，默认为信息快递' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '分类',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 信息快递 | 工作动态 | 专题分析 |
-  | -------- | -------- | -------- |
-  | xxkd     | gzdt     | ztfx     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = 'xxkd' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -75,7 +53,7 @@ async function handler(ctx) {
     const subtitle = $('title').text().split(/——/).pop();
     const image = new URL('images/logo.jpg', rootUrl).href;
 
-    return {
+    ctx.set('data', {
         item: items,
         title: $('title').text(),
         link: currentUrl,
@@ -84,5 +62,5 @@ async function handler(ctx) {
         image,
         subtitle,
         allowEmpty: true,
-    };
-}
+    });
+};

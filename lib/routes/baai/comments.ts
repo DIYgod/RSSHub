@@ -1,33 +1,10 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
 import { baseUrl, apiHost } from './utils';
 
-export const route: Route = {
-    path: '/hub/comments',
-    categories: ['programming'],
-    example: '/baai/hub/comments',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['hub.baai.ac.cn/comments', 'hub.baai.ac.cn/'],
-    },
-    name: '智源社区 - 评论',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'hub.baai.ac.cn/comments',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const responses = await got.all(
         Array.from(
             {
@@ -49,9 +26,9 @@ async function handler(ctx) {
             guid: `baai:hub:comments:${item.id}`,
         }));
 
-    return {
+    ctx.set('data', {
         title: '评论 - 智源社区',
         link: `${baseUrl}/comments`,
         item: items,
-    };
-}
+    });
+};

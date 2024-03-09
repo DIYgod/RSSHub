@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -19,31 +18,7 @@ const ids = {
     3: 1,
 };
 
-export const route: Route = {
-    path: ['/exclusive/:locale?', '/news/:locale?', '/:locale?', '/:type/:id/:locale?'],
-    categories: ['new-media'],
-    example: '/farmatters/exclusive',
-    parameters: { locale: 'Locale, `zh-CN` or `en-US`, `zh-CN` by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['farmatters.com/exclusive'],
-        target: '/exclusive',
-    },
-    name: 'Exclusive',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'farmatters.com/news',
-    url: 'farmatters.com/exclusive',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { type, id, locale = 'zh-CN' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
@@ -99,7 +74,7 @@ async function handler(ctx) {
     const subtitle = `${$('h4').first().text()}${type === 'wiki' ? ` - ${$('div.css-6f6728 div.MuiBox-root').eq(ids[id]).text()}` : ''}`;
     const icon = new URL('favicon.ico', rootUrl).href;
 
-    return {
+    ctx.set('data', {
         item: items,
         title: `${$('title').text().split(/-/)[0].trim()} - ${subtitle}`,
         link: currentUrl,
@@ -110,5 +85,5 @@ async function handler(ctx) {
         logo: icon,
         subtitle,
         allowEmpty: true,
-    };
-}
+    });
+};

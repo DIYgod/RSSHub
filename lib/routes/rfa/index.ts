@@ -1,35 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/:language?/:channel?/:subChannel?',
-    categories: ['traditional-media'],
-    example: '/rfa/english',
-    parameters: { language: 'language, English by default', channel: 'channel', subChannel: 'subchannel, where applicable' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'News',
-    maintainers: ['zphw'],
-    handler,
-    description: `Delivers a better experience by supporting parameter specification.
-
-Parameters can be obtained from the official website, for instance:
-
-\`https://www.rfa.org/cantonese/news\` corresponds to \`/rfa/cantonese/news\`
-
-\`https://www.rfa.org/cantonese/news/htm\` corresponds to \`/rfa/cantonese/news/htm\``,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     let url = 'https://www.rfa.org/' + (ctx.req.param('language') ?? 'english');
 
     if (ctx.req.param('channel')) {
@@ -70,9 +44,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: 'RFA',
         link: 'https://www.rfa.org/',
         item: result,
-    };
-}
+    });
+};

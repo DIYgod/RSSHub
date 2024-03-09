@@ -1,30 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/:category',
-    categories: ['reading'],
-    example: '/bookfere/skills',
-    parameters: { category: '分类名' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '分类',
-    maintainers: ['OdinZhang'],
-    handler,
-    description: `| 每周一书 | 使用技巧 | 图书推荐 | 新闻速递 | 精选短文 |
-  | -------- | -------- | -------- | -------- | -------- |
-  | weekly   | skills   | books    | news     | essay    |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const url = 'https://bookfere.com/category/' + ctx.req.param('category');
     const response = await got({
         method: 'get',
@@ -36,7 +14,7 @@ async function handler(ctx) {
     const $ = load(data);
     const list = $('main div div section');
 
-    return {
+    ctx.set('data', {
         title: $('head title').text(),
         link: url,
         item:
@@ -54,5 +32,5 @@ async function handler(ctx) {
                     };
                 })
                 .get(),
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,25 +8,7 @@ import cache from './cache';
 
 const renderDescription = (description, images) => art(path.join(__dirname, '../templates/description.art'), { description, images });
 
-export const route: Route = {
-    path: '/bbs/follow-list/:uid',
-    categories: ['game'],
-    example: '/mihoyo/bbs/follow-list/77005350',
-    parameters: { uid: '用户uid' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '米游社 - 用户关注',
-    maintainers: ['CaoMeiYouRen'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const uid = ctx.req.param('uid');
     const page_size = ctx.req.query('limit') || '20';
     const searchParams = {
@@ -69,4 +50,4 @@ async function handler(ctx) {
         item: items,
     };
     ctx.set('data', data);
-}
+};

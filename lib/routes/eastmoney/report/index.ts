@@ -1,34 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/report/:category',
-    categories: ['finance'],
-    example: '/eastmoney/report/strategyreport',
-    parameters: { category: '研报类型' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['data.eastmoney.com/report/:category'],
-    },
-    name: '研究报告',
-    maintainers: ['syzq'],
-    handler,
-    description: `| 策略报告       | 宏观研究    | 券商晨报     | 行业研究 |
-  | -------------- | ----------- | ------------ | -------- |
-  | strategyreport | macresearch | brokerreport | industry |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const baseUrl = 'https://data.eastmoney.com';
     const { category = 'strategyreport' } = ctx.req.param();
 
@@ -77,9 +52,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `东方财富网-${reportType[category]}`,
         link: baseUrl,
         item: items,
-    };
-}
+    });
+};

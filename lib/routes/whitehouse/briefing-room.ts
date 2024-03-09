@@ -1,35 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/briefing-room/:category?',
-    categories: ['government'],
-    example: '/whitehouse/briefing-room',
-    parameters: { category: 'Category, see below, all by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['whitehouse.gov/briefing-room/:category', 'whitehouse.gov/'],
-        target: '/briefing-room/:category',
-    },
-    name: 'Briefing Room',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| All | Blog | Legislation | Presidential Actions | Press Briefings | Speeches and Remarks | Statements and Releases |
-  | --- | ---- | ----------- | -------------------- | --------------- | -------------------- | ----------------------- |
-  |     | blog | legislation | presidential-actions | press-briefings | speeches-remarks     | statements-releases     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') ?? '';
 
     const rootUrl = 'https://www.whitehouse.gov';
@@ -69,9 +43,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

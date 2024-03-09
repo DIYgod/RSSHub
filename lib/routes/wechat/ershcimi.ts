@@ -1,29 +1,10 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { finishArticleItem } from '@/utils/wechat-mp';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/ershicimi/:id',
-    categories: ['new-media'],
-    example: '/wechat/ershicimi/813oxJOl',
-    parameters: { id: '公众号id，打开公众号页，在 URL 中找到 id' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '公众号（二十次幂来源）',
-    maintainers: ['sanmmm'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const rootUrl = 'https://www.cimidata.com';
 
@@ -45,10 +26,10 @@ async function handler(ctx) {
 
     await Promise.all(items.map((item) => finishArticleItem(item)));
 
-    return {
+    ctx.set('data', {
         title: `微信公众号 - ${$('span.name').text()}`,
         link: url,
         description: $('div.Profile-sideColumnItemValue').text(),
         item: items,
-    };
-}
+    });
+};

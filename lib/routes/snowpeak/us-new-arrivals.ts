@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,29 +6,7 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { load } from 'cheerio';
 const host = 'https://www.snowpeak.com';
-export const route: Route = {
-    path: '/us/new-arrivals',
-    categories: ['shopping'],
-    example: '/snowpeak/us/new-arrivals',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['snowpeak.com/collections/new-arrivals', 'snowpeak.com/'],
-    },
-    name: 'New Arrivals(USA)',
-    maintainers: ['EthanWng97'],
-    handler,
-    url: 'snowpeak.com/collections/new-arrivals',
-};
-
-async function handler() {
+export default async (ctx) => {
     const url = `${host}/collections/new-arrivals`;
     const response = await got({
         method: 'get',
@@ -56,7 +33,7 @@ async function handler() {
             return data;
         })
         .get();
-    return {
+    ctx.set('data', {
         title: 'Snow Peak - New Arrivals',
         link: `${host}/new-arrivals`,
         description: 'Snow Peak - New Arrivals',
@@ -67,5 +44,5 @@ async function handler() {
             pubDate: item.pubDate,
             link: item.link,
         })),
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,17 +9,7 @@ import * as path from 'node:path';
 import { config } from '@/config';
 import puppeteer from '@/utils/puppeteer';
 
-export const route: Route = {
-    path: '/journal/:id',
-    radar: {
-        source: ['pubs.acs.org/journal/:id', 'pubs.acs.org/'],
-    },
-    name: 'Unknown',
-    maintainers: ['nczitzk'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id') ?? '';
 
     const rootUrl = 'https://pubs.acs.org';
@@ -81,9 +70,9 @@ async function handler(ctx) {
 
     await browser.close();
 
-    return {
+    ctx.set('data', {
         title,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

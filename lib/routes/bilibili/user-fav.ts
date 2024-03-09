@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import cache from './cache';
 import utils from './utils';
 import { config } from '@/config';
 
-export const route: Route = {
-    path: '/user/fav/:uid/:disableEmbed?',
-    categories: ['social-media'],
-    example: '/bilibili/user/fav/2267573',
-    parameters: { uid: '用户 id, 可在 UP 主主页中找到', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['space.bilibili.com/:uid', 'space.bilibili.com/:uid/favlist'],
-        target: '/user/fav/:uid',
-    },
-    name: 'UP 主默认收藏夹',
-    maintainers: ['DIYgod'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const uid = ctx.req.param('uid');
     const disableEmbed = ctx.req.param('disableEmbed');
     const name = await cache.getUsernameFromUID(uid);
@@ -41,7 +18,7 @@ async function handler(ctx) {
     });
     const data = response.data;
 
-    return {
+    ctx.set('data', {
         title: `${name} 的 bilibili 收藏夹`,
         link: `https://space.bilibili.com/${uid}/#/favlist`,
         description: `${name} 的 bilibili 收藏夹`,
@@ -56,5 +33,5 @@ async function handler(ctx) {
                 link: item.fav_at > utils.bvidTime && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.aid}`,
                 author: item.owner.name,
             })),
-    };
-}
+    });
+};

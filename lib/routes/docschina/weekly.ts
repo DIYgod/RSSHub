@@ -1,27 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import cache from '@/utils/cache';
 
-export const route: Route = {
-    path: '/weekly/:category?',
-    categories: ['programming'],
-    example: '/docschina/weekly',
-    parameters: { category: '周刊分类，见下表，默认为js' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Unknown',
-    maintainers: ['daijinru', 'hestudy'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = 'js' } = ctx.req.param();
 
     const baseURL = 'https://docschina.org';
@@ -34,6 +15,7 @@ async function handler(ctx) {
     const dataEl = $('#__NEXT_DATA__');
     const dataText = dataEl.text();
     const data = JSON.parse(dataText);
+
     const items = await Promise.all(
         data?.props?.pageProps?.data?.map((item) => {
             const link = `${baseURL}${path}/${item.issue}`;

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,18 +10,7 @@ import { art } from '@/utils/render';
 import { CookieJar } from 'tough-cookie';
 const cookieJar = new CookieJar();
 
-export const route: Route = {
-    path: ['/:journal/vol/:issue', '/:journal/:issue'],
-    radar: {
-        source: ['www.sciencedirect.com/journal/:journal/*'],
-        target: '/:journal',
-    },
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const journal = ctx.req.param('journal');
     const issue = 'Volume ' + ctx.req.param('issue').replace('-', ' Issue ');
     const host = 'https://www.sciencedirect.com';
@@ -70,9 +58,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `${jrnlName} - ${issue}`,
         link: issueUrl,
         item: items,
-    };
-}
+    });
+};

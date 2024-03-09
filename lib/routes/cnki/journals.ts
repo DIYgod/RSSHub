@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,28 +6,7 @@ import { ProcessItem } from './utils';
 
 const rootUrl = 'https://navi.cnki.net';
 
-export const route: Route = {
-    path: '/journals/:name',
-    categories: ['journal'],
-    example: '/cnki/journals/LKGP',
-    parameters: { name: '期刊缩写，可以在网址中得到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['navi.cnki.net/knavi/journals/:name/detail'],
-    },
-    name: '期刊',
-    maintainers: ['Fatpandac', 'Derekmini'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const name = ctx.req.param('name');
     const journalUrl = `${rootUrl}/knavi/journals/${name}/detail`;
     const title = await got.get(journalUrl).then((res) => load(res.data)('head > title').text());
@@ -64,9 +42,9 @@ async function handler(ctx) {
 
     const items = await Promise.all(list.map((item) => cache.tryGet(item.link, () => ProcessItem(item))));
 
-    return {
+    ctx.set('data', {
         title: String(title),
         link: journalUrl,
         item: items,
-    };
-}
+    });
+};

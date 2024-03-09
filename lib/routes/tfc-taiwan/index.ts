@@ -1,19 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { baseUrl, parseList, parseItems } from './utils';
 
-export const route: Route = {
-    path: ['/', '/category/:id{.+}', '/info', '/report', '/topic/:id'],
-    name: 'Unknown',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'tfc-taiwan.org.tw/articles/report',
-    url: 'tfc-taiwan.org.tw/articles/info',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const requestPath = ctx.req.path;
     const isTopic = requestPath.startsWith('/topic/');
     let link = baseUrl;
@@ -35,7 +25,7 @@ async function handler(ctx) {
 
     const items = await parseItems(list, cache.tryGet);
 
-    return {
+    ctx.set('data', {
         title: $('head title').text(),
         description: $('head meta[name="description"]').attr('content'),
         image: $('head meta[property="og:image"]').attr('content'),
@@ -43,5 +33,5 @@ async function handler(ctx) {
         icon: $('head link[rel="shortcut icon"]').attr('href'),
         link,
         item: items,
-    };
-}
+    });
+};

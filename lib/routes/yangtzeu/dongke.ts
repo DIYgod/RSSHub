@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -6,14 +5,7 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/dongke/*',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
 
     const rootUrl = 'https://dongke.yangtzeu.edu.cn';
@@ -59,12 +51,12 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         item: items,
         title: $('title').text(),
         link: currentUrl,
         language: 'zh-cn',
         image: new URL($('#head-img a img').prop('src'), rootUrl).href,
         author: '长江大学动物科学学院',
-    };
-}
+    });
+};

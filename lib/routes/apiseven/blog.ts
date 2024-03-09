@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -23,25 +22,7 @@ async function getArticles() {
     }));
 }
 
-export const route: Route = {
-    path: '/blog',
-    categories: ['blog'],
-    example: '/apiseven/blog',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '博客',
-    maintainers: ['aneasystone'],
-    handler,
-};
-
-async function handler() {
+export default async (ctx) => {
     const articles = await getArticles();
     const items = await Promise.all(
         articles.map((item) =>
@@ -60,9 +41,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '博客 | 支流科技',
         link: 'https://www.apiseven.com/blog',
         item: items,
-    };
-}
+    });
+};

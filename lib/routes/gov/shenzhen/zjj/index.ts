@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -11,31 +10,7 @@ const config = {
     },
 };
 
-export const route: Route = {
-    path: '/shenzhen/zjj/xxgk/:caty',
-    categories: ['government'],
-    example: '/gov/shenzhen/zjj/xxgk/tzgg',
-    parameters: { caty: '信息类别' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['zjj.sz.gov.cn/xxgk/:caty'],
-    },
-    name: '深圳市住房和建设局',
-    maintainers: ['lonn'],
-    handler,
-    description: `| 通知公告 |
-  | :------: |
-  |   tzgg   |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const baseUrl = 'http://zjj.sz.gov.cn/xxgk/';
     const cfg = config[ctx.req.param('caty')];
     if (!cfg) {
@@ -62,9 +37,9 @@ async function handler(ctx) {
             };
         });
 
-    return {
+    ctx.set('data', {
         title: '深圳市住房和建设局 - ' + cfg.title,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

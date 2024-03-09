@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,14 +5,7 @@ import got from '@/utils/got';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: 'package/:name{(@[a-z0-9-~][a-z0-9-._~]*/)?[a-z0-9-~][a-z0-9-._~]*}',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const name = ctx.req.param('name');
     const packageDownloadLastMonthAPI = `https://api.npmjs.org/downloads/point/last-month/${name}`; // 按月统计
     const packageDownloadLastWeekAPI = `https://api.npmjs.org/downloads/point/last-week/${name}`; // 按周统计
@@ -33,7 +25,7 @@ async function handler(ctx) {
         }))
         .toReversed();
 
-    return {
+    ctx.set('data', {
         title: `${name} - npm`,
         link: `https://www.npmjs.com/package/${name}`,
         description: `${name} - npm`,
@@ -50,5 +42,5 @@ async function handler(ctx) {
                 guid: `https://www.npmjs.com/package/${name}${packageVersion.modified}`,
             },
         ],
-    };
-}
+    });
+};

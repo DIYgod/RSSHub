@@ -1,36 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 const baseUrl = 'http://www.vom.mn';
 
-export const route: Route = {
-    path: '/featured/:lang?',
-    categories: ['traditional-media'],
-    example: '/vom/featured',
-    parameters: { lang: 'Language, see the table below, `mn` by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['vom.mn/:lang', 'vom.mn/'],
-        target: '/featured/:lang',
-    },
-    name: 'News',
-    maintainers: ['TonyRL'],
-    handler,
-    description: `| English | 日本語 | Монгол | Русский | 简体中文 |
-  | ------- | ------ | ------ | ------- | -------- |
-  | en      | ja     | mn     | ru      | zh       |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { lang = 'mn' } = ctx.req.param();
     const { data: response } = await got(`${baseUrl}/${lang}`);
 
@@ -69,9 +43,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('meta[name=description]').attr('content'),
         image: 'http://www.vom.mn/dist/images/vom-logo.png',
         item: items,
-    };
-}
+    });
+};

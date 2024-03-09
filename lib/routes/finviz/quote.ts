@@ -1,27 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/news/:ticker',
-    categories: ['finance'],
-    example: '/finviz/news/AAPL',
-    parameters: { ticker: 'The stock ticker' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'US Stock News',
-    maintainers: ['HenryQW'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const link = `https://finviz.com/quote.ashx?t=${ctx.req.param('ticker')}`;
     const response = await got(link);
 
@@ -50,10 +31,10 @@ async function handler(ctx) {
 
     const name = $('.fullview-title b').text();
 
-    return {
+    ctx.set('data', {
         title: `${ctx.req.param('ticker')} ${name} News by Finviz`,
         link,
         description: `A collection of ${name} news aggregated by Finviz.`,
         item,
-    };
-}
+    });
+};

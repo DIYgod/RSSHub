@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got'; // 自订的 got
@@ -6,28 +5,7 @@ import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析
 import { parseDate } from '@/utils/parse-date';
 import { getPageItemAndDate } from './utils';
 
-export const route: Route = {
-    path: '/jwc/:types?',
-    categories: ['university'],
-    example: '/jsu/jwc/jwdt',
-    parameters: { types: '通知分类 默认为`jwtz`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '教务处',
-    maintainers: ['wenjia03'],
-    handler,
-    description: `| 教务通知 | 教务动态 |
-  | -------- | -------- |
-  | jwtz     | jwdt     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const baseUrl = 'https://jwc.jsu.edu.cn/';
     const { types = 'jwtz' } = ctx.req.param();
     const selectors = {
@@ -72,11 +50,11 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         // 在此处输出您的 RSS
         title: `吉首大学教务处 - ${selectors[types].category}`,
         link: selectors[types].url,
         description: `吉首大学教务处 - ${selectors[types].category}`,
         item: out,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { ImapFlow } from 'imapflow';
 import { config } from '@/config';
@@ -6,14 +5,7 @@ import { simpleParser } from 'mailparser';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/imap/:email/:folder{.+}?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { email, folder = 'INBOX' } = ctx.req.param();
     const { limit = 10 } = ctx.req.query();
     const mailConfig = {
@@ -99,10 +91,10 @@ async function handler(ctx) {
 
     await client.logout();
 
-    return {
+    ctx.set('data', {
         title: `${email}'s Inbox${folder === 'INBOX' ? '' : ` - ${folder}`}`,
         link: `https://${email.split('@')[1]}`,
         item: items,
         allowEmpty: true,
-    };
-}
+    });
+};

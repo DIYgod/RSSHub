@@ -1,48 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/qa/:category?/:state?',
-    categories: ['programming'],
-    example: '/quicker/qa',
-    parameters: { category: '分类，见下表，默认为全部', state: '状态，见下表，默认为全部' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '讨论区',
-    maintainers: ['Cesaryuan', 'nczitzk'],
-    handler,
-    description: `分类
-
-  | 使用问题 | 动作开发 | BUG 反馈 | 功能建议 |
-  | -------- | -------- | -------- | -------- |
-  | 1        | 9        | 3        | 4        |
-
-  | 动作需求 | 经验创意 | 动作推荐 | 信息发布 |
-  | -------- | -------- | -------- | -------- |
-  | 6        | 2        | 7        | 5        |
-
-  | 随便聊聊 | 异常报告 | 全部 |
-  | -------- | -------- | ---- |
-  | 8        | 10       | all  |
-
-  状态
-
-  | 全部 | 精华   | 已归档  |
-  | ---- | ------ | ------- |
-  |      | digest | achived |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') ?? 'all';
     const state = ctx.req.param('state') ?? '';
 
@@ -95,10 +57,10 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
         allowEmpty: true,
-    };
-}
+    });
+};

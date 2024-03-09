@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -8,33 +7,7 @@ import iconv from 'iconv-lite';
 
 const rootUrl = 'http://news.inewsweek.cn';
 
-export const route: Route = {
-    path: '/:channel',
-    categories: ['traditional-media'],
-    example: '/inewsweek/survey',
-    parameters: { channel: '栏目' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['inewsweek.cn/:channel', 'inewsweek.cn/'],
-    },
-    name: '栏目',
-    maintainers: ['changren-wcr'],
-    handler,
-    description: `提取文章全文。
-
-  | 封面  | 时政     | 社会    | 经济    | 国际  | 调查   | 人物   |
-  | ----- | -------- | ------- | ------- | ----- | ------ | ------ |
-  | cover | politics | society | finance | world | survey | people |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const channel = ctx.req.param('channel');
     const url = `${rootUrl}/${channel}`;
     const response = await got(url, {
@@ -73,9 +46,9 @@ async function handler(ctx) {
             })
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: url,
         item: items,
-    };
-}
+    });
+};

@@ -1,29 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/hot/:bsn',
-    categories: ['anime'],
-    example: '/gamer/hot/47157',
-    parameters: { bsn: '板块 id，在 URL 可以找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '熱門推薦',
-    maintainers: ['nczitzk', 'TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const rootUrl = `https://forum.gamer.com.tw/A.php?bsn=${ctx.req.param('bsn')}`;
     const response = await got({
         url: rootUrl,
@@ -65,15 +46,15 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: rootUrl,
         item: items,
-    };
+    });
 
     ctx.set('json', {
         title: $('title').text(),
         link: rootUrl,
         item: items,
     });
-}
+};

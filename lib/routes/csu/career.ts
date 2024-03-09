@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,29 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { unzip } from './utils';
 
-export const route: Route = {
-    path: '/career',
-    categories: ['university'],
-    example: '/csu/career',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['career.csu.edu.cn/campus/index/category/1', 'career.csu.edu.cn/campus', 'career.csu.edu.cn/'],
-    },
-    name: '就业信息网招聘信息',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'career.csu.edu.cn/campus/index/category/1',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://career.csu.edu.cn';
     const link = `${baseUrl}/campus/index/category/1`;
     const { data: response } = await got(link);
@@ -67,9 +44,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `${$('.curr').text()} - ${$('head title').text()}`,
         link,
         item: items,
-    };
-}
+    });
+};

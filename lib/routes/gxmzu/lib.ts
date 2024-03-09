@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 // 导入got库，该库用来请求网页数据
 import got from '@/utils/got';
@@ -14,29 +13,7 @@ const url = 'https://library.gxmzu.edu.cn/news/news_list.jsp?urltype=tree.TreeTe
 // 广西民大图书馆网址
 const host = 'https://library.gxmzu.edu.cn';
 
-export const route: Route = {
-    path: '/libzxxx',
-    categories: ['university'],
-    example: '/gxmzu/libzxxx',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['library.gxmzu.edu.cn/news/news_list.jsp', 'library.gxmzu.edu.cn/'],
-    },
-    name: '图书馆最新消息',
-    maintainers: ['real-jiakai'],
-    handler,
-    url: 'library.gxmzu.edu.cn/news/news_list.jsp',
-};
-
-async function handler() {
+export default async (ctx) => {
     // 发起Http请求，获取网页数据
     const response = await got(url);
 
@@ -83,12 +60,12 @@ async function handler() {
     );
 
     // 生成RSS源
-    return {
+    ctx.set('data', {
         // 项目标题
         title: '广西民族大学图书馆 -- 最新消息',
         // 项目链接
         link: url,
         // items的内容
         item: out,
-    };
-}
+    });
+};

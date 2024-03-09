@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,30 +5,7 @@ import * as url from 'node:url';
 
 const host = 'http://jhsjk.people.cn';
 
-export const route: Route = {
-    path: '/xjpjh/:keyword?/:year?',
-    categories: ['traditional-media'],
-    example: '/people/xjpjh',
-    parameters: { keyword: '关键词，默认不填', year: '年份，默认 all' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['people.com.cn/'],
-        target: '/:site?/:category?',
-    },
-    name: '习近平系列重要讲话',
-    maintainers: [],
-    handler,
-    url: 'people.com.cn/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     let keyword = ctx.req.param('keyword') || 'all';
     let year = ctx.req.param('year') || 0;
 
@@ -85,9 +61,9 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         title,
         link,
         item: out,
-    };
-}
+    });
+};

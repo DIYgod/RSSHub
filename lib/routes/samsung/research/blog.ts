@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/research/blog',
-    categories: ['new-media'],
-    example: '/samsung/research/blog',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['research.samsung.com/blog', 'research.samsung.com/'],
-    },
-    name: 'Research Blog',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'research.samsung.com/blog',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://research.samsung.com';
     const currentUrl = `${rootUrl}/blogMain/list.json`;
 
@@ -65,9 +42,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: 'BLOG | Samsung Research',
         link: `${rootUrl}/blog`,
         item: items,
-    };
-}
+    });
+};

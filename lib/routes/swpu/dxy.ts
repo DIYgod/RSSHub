@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { joinUrl } from './utils';
 import { parseDate } from '@/utils/parse-date';
@@ -6,33 +5,7 @@ import { load } from 'cheerio';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/dxy/:code',
-    categories: ['university'],
-    example: '/swpu/dxy/1156',
-    parameters: { code: '栏目代码' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['swpu.edu.cn/'],
-        target: '',
-    },
-    name: '电气信息学院',
-    maintainers: ['CYTMWIA'],
-    handler,
-    url: 'swpu.edu.cn/',
-    description: `| 栏目 | 学院新闻 | 学院通知 |
-  | ---- | -------- | -------- |
-  | 代码 | 1122     | 1156     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     // 移除 urltype=tree.TreeTempUrl 虽然也能顺利访问页面，
     // 但标题会缺失，而且在其他地方定位提取标题也比较麻烦。
     const url = `https://www.swpu.edu.cn/dxy/list1.jsp?urltype=tree.TreeTempUrl&wbtreeid=${ctx.req.param('code')}`;
@@ -79,11 +52,11 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: `西南石油大学电气信息学院 ${title}`,
         link: url,
         description: `西南石油大学电气信息学院 ${title}`,
         language: 'zh-CN',
         item: out,
-    };
-}
+    });
+};

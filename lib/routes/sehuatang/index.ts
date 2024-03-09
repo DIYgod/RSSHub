@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -39,25 +38,7 @@ const forumIdMaps = {
     hrxazp: '98', //  华人性爱自拍
 };
 
-export const route: Route = {
-    path: ['/bt/:subforumid?', '/picture/:subforumid', '/:subforumid?/:type?', '/:subforumid?', ''],
-    name: 'Unknown',
-    maintainers: ['qiwihui', 'junfengP', 'nczitzk'],
-    handler,
-    description: `**原创 BT 电影**
-
-  | 国产原创 | 亚洲无码原创 | 亚洲有码原创 | 高清中文字幕 | 三级写真 | VR 视频 | 素人有码 | 欧美无码 | 韩国主播 | 动漫原创 | 综合讨论 |
-  | -------- | ------------ | ------------ | ------------ | -------- | ------- | -------- | -------- | -------- | -------- | -------- |
-  | gcyc     | yzwmyc       | yzymyc       | gqzwzm       | sjxz     | vr      | srym     | omwm     | hgzb     | dmyc     | zhtl     |
-
-  **色花图片**
-
-  | 原创自拍 | 转贴自拍 | 华人街拍 | 亚洲性爱 | 欧美性爱 | 卡通动漫 | 套图下载 |
-  | -------- | -------- | -------- | -------- | -------- | -------- | -------- |
-  | yczp     | ztzp     | hrjp     | yzxa     | omxa     | ktdm     | ttxz     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const subformName = ctx.req.param('subforumid') ?? 'gqzwzm';
     const subformId = subformName in forumIdMaps ? forumIdMaps[subformName] : subformName;
     const type = ctx.req.param('type');
@@ -141,9 +122,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `色花堂 - ${$('#pt > div:nth-child(1) > a:last-child').text()}`,
         link,
         item: out,
-    };
-}
+    });
+};

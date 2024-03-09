@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,29 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const DOMAIN = 'www.moj.gov.cn';
 
-export const route: Route = {
-    path: '/moj/lfyjzj',
-    categories: ['government'],
-    example: '/gov/moj/lfyjzj',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.moj.gov.cn/lfyjzj/lflfyjzj/*', 'www.moj.gov.cn/pub/sfbgw/lfyjzj/lflfyjzj/*'],
-    },
-    name: '立法意见征集',
-    maintainers: ['la3rence'],
-    handler,
-    url: 'www.moj.gov.cn/lfyjzj/lflfyjzj/*',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = `https://${DOMAIN}`;
     const currentUrl = `${rootUrl}/lfyjzj/lflfyjzj/index.html`;
     const { data: response } = await got(currentUrl);
@@ -66,12 +43,12 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         item: items,
         title: theme,
         link: currentUrl,
         description,
         author: siteName,
         icon,
-    };
-}
+    });
+};

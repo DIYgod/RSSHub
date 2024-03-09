@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
@@ -7,14 +6,7 @@ import puppeteer from '@/utils/puppeteer';
 
 const rootURL = 'https://www.cmde.org.cn';
 
-export const route: Route = {
-    path: '/:cate{.+}?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const cate = ctx.req.param('cate') ?? 'xwdt/zxyw';
     const url = `${rootURL}/${cate}/`;
     const browser = await puppeteer({ stealth: true });
@@ -73,10 +65,10 @@ async function handler(ctx) {
 
     await browser.close();
 
-    return {
+    ctx.set('data', {
         title: data.title,
         description: data.description,
         link: url,
         item: items,
-    };
-}
+    });
+};

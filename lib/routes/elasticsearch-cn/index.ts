@@ -1,36 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/:params?',
-    categories: ['bbs'],
-    example: '/elasticsearch-cn',
-    parameters: { params: '分类，可在对应分类页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['elasticsearch.cn/:params', 'elasticsearch.cn/'],
-        target: '/:params',
-    },
-    name: '发现',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `如 [Elasticsearch 最新](https://elasticsearch.cn/category-2) 的 URL 为 \`https://elasticsearch.cn/category-2\`，则分类参数处填写 \`category-2\`，最后得到路由地址 [\`/elasticsearch-cn/category-2\`](https://rsshub.app/elasticsearch-cn/category-2)。
-
-  又如 [求职招聘 30 天热门](https://elasticsearch.cn/sort_type-hot____category-12__day-30) 的 URL 为 \`https://elasticsearch.cn/sort_type-hot____category-12__day-30\`，则分类参数处填写 \`sort_type-hot____category-12__day-30\`，最后得到路由地址 [\`/elasticsearch-cn/sort_type-hot____category-12__day-30\`](https://rsshub.app/elasticsearch-cn/sort_type-hot____category-12__day-30)。`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const params = ctx.req.param('params') ?? '';
 
     const rootUrl = 'https://elasticsearch.cn';
@@ -76,9 +50,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

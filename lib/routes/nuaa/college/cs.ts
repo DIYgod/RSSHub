@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -16,28 +15,7 @@ const map = new Map([
     ['xsgz', { title: '学生工作 | 南京航空航天大学计算机科学与技术学院', suffix: '1959/list.htm' }],
 ]);
 
-export const route: Route = {
-    path: '/cs/:type/:getDescription?',
-    categories: ['university'],
-    example: '/nuaa/cs/jxdt',
-    parameters: { type: '分类名，见下表', getDescription: '是否获取全文' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: true,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '计算机科学与技术学院',
-    maintainers: ['LogicJake', 'Seiry', 'qrzbing', 'Xm798'],
-    handler,
-    description: `| 通知公告 | 热点新闻 | 学科科研 | 教学动态 | 本科生培养 | 研究生培养 | 学生工作 |
-  | -------- | -------- | -------- | -------- | ---------- | ---------- | -------- |
-  | tzgg     | rdxw     | xkky     | jxdt     | be         | me         | xsgz     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type');
     const getDescription = Boolean(ctx.req.param('getDescription')) || false;
     const suffix = map.get(type).suffix;
@@ -92,10 +70,10 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: map.get(type).title,
         link,
         description: '南京航空航天大学计算机科学与技术学院RSS',
         item: out,
-    };
-}
+    });
+};

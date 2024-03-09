@@ -1,21 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/:id?/:type?/:keyword?',
-    radar: {
-        source: ['cool18.com/'],
-    },
-    name: 'Unknown',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'cool18.com/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id') ?? 'bbs4';
     const type = ctx.req.param('type') ?? '';
     const keyword = ctx.req.param('keyword') ?? '';
@@ -66,9 +54,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

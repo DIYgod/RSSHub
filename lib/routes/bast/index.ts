@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -6,14 +5,7 @@ import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '*',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const colPath = getSubPath(ctx).replace(/^\//, '') || '32942';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
 
@@ -76,9 +68,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

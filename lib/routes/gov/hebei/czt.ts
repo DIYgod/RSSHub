@@ -1,31 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/hebei/czt/xwdt/:category?',
-    categories: ['government'],
-    example: '/gov/hebei/czt/xwdt',
-    parameters: { category: '分类，见下表，默认为财政动态' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '财政厅',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 财政动态 | 综合新闻 | 通知公告 |
-  | -------- | -------- | -------- |
-  | gzdt     | zhxw     | tzgg     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') ?? 'gzdt';
 
     const rootUrl = 'http://czt.hebei.gov.cn';
@@ -68,9 +46,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

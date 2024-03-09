@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 
 const fetchAPIByUser = async (user) => {
@@ -7,17 +6,7 @@ const fetchAPIByUser = async (user) => {
     return data;
 };
 
-export const route: Route = {
-    path: '/user/:id',
-    radar: {
-        source: ['curiouscat.live/:id'],
-    },
-    name: 'Unknown',
-    maintainers: ['lucasew'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const user = id;
     const data = await fetchAPIByUser(user);
@@ -41,11 +30,11 @@ async function handler(ctx) {
         };
     });
 
-    return {
+    ctx.set('data', {
         title: `CuriousCat - ${user}`,
         link: `https://curiouscat.live/${user}`,
         description: `Questions answered by ${user} using CuriousCat`,
         language: data.lang,
         item: items,
-    };
-}
+    });
+};

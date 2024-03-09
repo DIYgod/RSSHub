@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -44,29 +43,7 @@ const getItem = (item, cache) => {
     });
 };
 
-export const route: Route = {
-    path: '/jwc',
-    categories: ['university'],
-    example: '/swjtu/jwc',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['jwc.swjtu.edu.cn/vatuu/WebAction', 'jwc.swjtu.edu.cn/'],
-    },
-    name: '教务网',
-    maintainers: ['mobyw'],
-    handler,
-    url: 'jwc.swjtu.edu.cn/vatuu/WebAction',
-};
-
-async function handler() {
+export default async (ctx) => {
     const resp = await got({
         method: 'get',
         url: pageURL,
@@ -82,10 +59,10 @@ async function handler() {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: '西南交大-教务网通知',
         link: pageURL,
         item: items,
         allowEmpty: true,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,29 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 import { extractArticle, extractWork } from './utils';
 import { isValidHost } from '@/utils/valid-host';
 
-export const route: Route = {
-    path: '/user/:uid',
-    categories: ['design'],
-    example: '/zcool/user/baiyong',
-    parameters: { uid: '个性域名前缀或者用户ID' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.zcool.com.cn/u/:id'],
-        target: '/user/:id',
-    },
-    name: 'Unknown',
-    maintainers: ['junbaor'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const uid = ctx.req.param('uid');
     let pageUrl = `https://www.zcool.com.cn/u/${uid}`;
     if (isNaN(uid)) {
@@ -66,11 +43,11 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: data.props.pageProps.seo.title,
         description: data.props.pageProps.seo.description,
         image: data.props.pageProps.userInfo.avatar.includes('?x-oss-process') ? data.props.pageProps.userInfo.avatar.split('?')[0] : data.props.pageProps.userInfo.avatar,
         link: pageUrl,
         item: items,
-    };
-}
+    });
+};

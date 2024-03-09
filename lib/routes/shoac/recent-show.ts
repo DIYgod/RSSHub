@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,29 +7,7 @@ import * as path from 'node:path';
 import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/recent-show',
-    categories: ['shopping'],
-    example: '/shoac/recent-show',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['shoac.com.cn/'],
-    },
-    name: '演出月历',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'shoac.com.cn/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://www.shoac.com.cn';
 
     const headers = {
@@ -91,9 +68,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '演出月历 - 上海东方艺术中心管理有限公司',
         link: baseUrl,
         item: items,
-    };
-}
+    });
+};

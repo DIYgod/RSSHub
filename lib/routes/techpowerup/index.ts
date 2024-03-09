@@ -1,23 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { baseUrl, headers, fixImages, parseReviews } from './utils';
 
-export const route: Route = {
-    path: '/',
-    radar: {
-        source: ['techpowerup.com/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'techpowerup.com/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const { data: response } = await got(baseUrl, {
         headers,
     });
@@ -73,11 +60,11 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: 'TechPowerUp',
         link: baseUrl,
         language: 'en',
         image: 'https://tpucdn.com/apple-touch-icon-v1684568903519.png',
         item: items,
-    };
-}
+    });
+};

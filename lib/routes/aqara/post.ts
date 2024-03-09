@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,14 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '*',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
     const rootUrl = 'https://aqara.com';
@@ -89,7 +81,7 @@ async function handler(ctx) {
     const icon = $('link[rel="apple-touch-icon"]').first().prop('href');
     const title = $('meta[property="og:site_name"]').prop('content') ?? 'Aqara';
 
-    return {
+    ctx.set('data', {
         item: items,
         title: `${title}${filterName ? ` - ${filterName}` : ''}`,
         link: currentUrl,
@@ -100,5 +92,5 @@ async function handler(ctx) {
         logo: icon,
         subtitle: $('meta[property="og:type"]').prop('content'),
         author: title,
-    };
-}
+    });
+};

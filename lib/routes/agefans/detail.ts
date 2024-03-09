@@ -1,30 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { rootUrl } from './utils';
 
-export const route: Route = {
-    path: '/detail/:id',
-    categories: ['anime'],
-    example: '/agefans/detail/20200035',
-    parameters: { id: '番剧 id，对应详情 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['agemys.org/detail/:id'],
-    },
-    name: '番剧详情',
-    maintainers: ['s2marine'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const response = await got(`${rootUrl}/detail/${ctx.req.param('id')}`);
     const $ = load(response.data);
 
@@ -44,10 +22,10 @@ async function handler(ctx) {
         })
         .reverse();
 
-    return {
+    ctx.set('data', {
         title: `AGE动漫 - ${ldJson.name}`,
         link: `${rootUrl}/detail/${ctx.req.param('id')}`,
         description: ldJson.description,
         item: items,
-    };
-}
+    });
+};

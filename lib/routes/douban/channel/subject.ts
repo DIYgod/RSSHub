@@ -1,28 +1,6 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 
-export const route: Route = {
-    path: '/channel/:id/subject/:nav',
-    categories: ['social-media'],
-    example: '/douban/channel/30168934/subject/0',
-    parameters: { id: '频道id', nav: '书影音分类' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '频道书影音',
-    maintainers: ['umm233'],
-    handler,
-    description: `| 电影 | 电视剧 | 图书 | 唱片 |
-  | ---- | ------ | ---- | ---- |
-  | 0    | 1      | 2    | 3    |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const nav = ctx.req.param('nav');
     const link = `https://www.douban.com/subject/${id}`;
@@ -62,7 +40,7 @@ async function handler(ctx) {
             break;
     }
 
-    return {
+    ctx.set('data', {
         title: `豆瓣${channel_name}频道-${nav_name}推荐`,
         link,
         description: `豆瓣${channel_name}频道书影音下的${nav_name}推荐`,
@@ -78,5 +56,5 @@ async function handler(ctx) {
                 link: url,
             };
         }),
-    };
-}
+    });
+};

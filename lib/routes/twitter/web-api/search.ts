@@ -7,12 +7,12 @@ export default async (ctx) => {
     await initToken();
     const data = await getSearch(keyword);
 
-    return {
+    ctx.set('data', {
         title: `Twitter Keyword - ${keyword}`,
         link: `https://twitter.com/search?q=${encodeURIComponent(keyword)}`,
         item: utils.ProcessFeed(ctx, {
             data,
         }),
         allowEmpty: true,
-    };
+    });
 };

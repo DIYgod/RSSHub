@@ -1,29 +1,10 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 // https://github.com/streamlink/streamlink/blob/master/src/streamlink/plugins/twitch.py#L286
 const TWITCH_CLIENT_ID = 'kimne78kx3ncx6brgo4mv6wki5h1ko';
 
-export const route: Route = {
-    path: '/live/:login',
-    categories: ['live'],
-    example: '/twitch/live/riotgames',
-    parameters: { login: 'Twitch username' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Live',
-    maintainers: ['hoilc'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const login = ctx.req.param('login');
 
     const response = await got({
@@ -98,10 +79,10 @@ async function handler(ctx) {
         });
     }
 
-    return {
+    ctx.set('data', {
         title: `Twitch - ${displayName} - Live`,
         link: `https://www.twitch.tv/${login}`,
         item: liveItem,
         allowEmpty: true,
-    };
-}
+    });
+};

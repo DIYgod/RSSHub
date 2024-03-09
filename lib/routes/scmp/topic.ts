@@ -1,32 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { parseItem } from './utils';
 
-export const route: Route = {
-    path: '/topics/:topic',
-    categories: ['traditional-media'],
-    example: '/scmp/topics/coronavirus-pandemic-all-stories',
-    parameters: { topic: 'Topic, can be found in URL' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['scmp.com/topics/:topic'],
-    },
-    name: 'Topics',
-    maintainers: ['TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const topic = ctx.req.param('topic');
     const limit = Number.parseInt(ctx.req.query('limit'), 10) || 30;
     const pageUrl = `https://www.scmp.com/topics/${topic}`;
@@ -76,7 +54,7 @@ async function handler(ctx) {
         apiResponse,
     });
 
-    return {
+    ctx.set('data', {
         title: topicData.name,
         link: pageUrl,
         description: topicData.description.text,
@@ -85,5 +63,5 @@ async function handler(ctx) {
         icon: 'https://assets.i-scmp.com/static/img/icons/scmp-icon-256x256.png',
         logo: 'https://customerservice.scmp.com/img/logo_scmp@2x.png',
         image: 'https://assets-v2.i-scmp.com/production/_next/static/media/default-image.d1be8967.png',
-    };
-}
+    });
+};

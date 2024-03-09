@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import utils from './utils';
 import { config } from '@/config';
@@ -6,18 +5,7 @@ import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/c/:username/:embed?',
-    radar: {
-        source: ['www.youtube.com/c/:id'],
-        target: '/c/:id',
-    },
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     if (!config.youtube || !config.youtube.key) {
         throw new Error('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -36,7 +24,7 @@ async function handler(ctx) {
 
     const data = (await utils.getPlaylistItems(playlistId, 'snippet', cache)).data.items;
 
-    return {
+    ctx.set('data', {
         title: `${username} - YouTube`,
         link: `https://www.youtube.com/c/${username}`,
         description: ytInitialData.metadata.channelMetadataRenderer.description,
@@ -54,5 +42,5 @@ async function handler(ctx) {
                     author: snippet.videoOwnerChannelTitle,
                 };
             }),
-    };
-}
+    });
+};

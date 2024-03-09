@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import * as url from 'node:url';
@@ -47,25 +46,7 @@ const generateArticleLink = (id) => `<p>链接：<a href="${getArticleUrlById(id
 
 const generateArticleFullText = (data) => generateBannerImgHtml(data.bannerUrl) + resolveRelativeUrl(data.content) + generateArticleLink(data.id);
 
-export const route: Route = {
-    path: '/jwc/news',
-    categories: ['university'],
-    example: '/scut/jwc/news',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '教务处新闻动态',
-    maintainers: ['imkero'],
-    handler,
-};
-
-async function handler() {
+export default async (ctx) => {
     const qs = querystring.stringify({
         pageNo: 1,
         pageSize: 20,
@@ -123,9 +104,9 @@ async function handler() {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: '华南理工大学教务处新闻动态',
         link: listPageUrl,
         item: out,
-    };
-}
+    });
+};

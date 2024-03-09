@@ -1,28 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/investigates',
-    categories: ['traditional-media'],
-    example: '/reuters/investigates',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Inverstigates',
-    maintainers: ['LyleLee'],
-    handler,
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://www.reuters.com';
     const currentUrl = `${rootUrl}/investigates/`;
     const response = await got(currentUrl);
@@ -51,9 +32,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('h1.series-subtitle').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

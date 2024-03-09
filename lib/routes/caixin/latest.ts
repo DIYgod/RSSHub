@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,30 +7,7 @@ import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/latest',
-    categories: ['traditional-media'],
-    example: '/caixin/latest',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['caixin.com/'],
-    },
-    name: '最新文章',
-    maintainers: ['tpnonthealps'],
-    handler,
-    url: 'caixin.com/',
-    description: `说明：此 RSS feed 会自动抓取财新网的最新文章，但不包含 FM 及视频内容。`,
-};
-
-async function handler() {
+export default async (ctx) => {
     const { data } = await got('https://gateway.caixin.com/api/dataplatform/scroll/index').json();
 
     const list = data.articleList
@@ -65,9 +41,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '财新网 - 最新文章',
         link: 'https://www.caixin.com/',
         item: rss,
-    };
-}
+    });
+};

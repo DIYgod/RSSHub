@@ -1,26 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/k',
-    categories: ['traditional-media'],
-    example: '/caixin/k',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: true,
-        supportScihub: false,
-    },
-    name: '财新一线',
-    maintainers: ['boypt'],
-    handler,
-};
-
-async function handler() {
+export default async (ctx) => {
     const response = await got('https://k.caixin.com/app/v1/list', {
         searchParams: {
             productIdList: '8,28',
@@ -50,10 +31,10 @@ async function handler() {
         };
     });
 
-    return {
+    ctx.set('data', {
         title: '财新网 - 财新一线新闻',
         link: 'https://k.caixin.com/web/',
         description: '财新网 - 财新一线新闻',
         item: items,
-    };
-}
+    });
+};

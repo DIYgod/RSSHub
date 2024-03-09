@@ -1,35 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/seie/news_center',
-    categories: ['university'],
-    example: '/scut/seie/news_center',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www2.scut.edu.cn/ee/16285/list.htm'],
-    },
-    name: '电子与信息学院 - 新闻速递',
-    maintainers: ['auto-bot-ty'],
-    handler,
-    url: 'www2.scut.edu.cn/ee/16285/list.htm',
-    description: `:::warning
-由于学院官网对非大陆 IP 的访问存在限制，需自行部署。
-:::`,
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://www2.scut.edu.cn';
     const url = `${rootUrl}/ee/16285/list.htm`;
     const response = await got(url);
@@ -71,9 +45,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '华南理工大学电子与信息学院 - 新闻速递',
         link: url,
         item: items,
-    };
-}
+    });
+};

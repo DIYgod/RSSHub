@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -8,30 +7,7 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 
-export const route: Route = {
-    path: '/xwlb',
-    categories: ['traditional-media'],
-    example: '/cctv/xwlb',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['tv.cctv.com/lm/xwlb', 'tv.cctv.com/'],
-    },
-    name: '新闻联播',
-    maintainers: ['zengxs'],
-    handler,
-    url: 'tv.cctv.com/lm/xwlb',
-    description: `新闻联播内容摘要。`,
-};
-
-async function handler() {
+export default async (ctx) => {
     const res = await got({ method: 'get', url: 'https://tv.cctv.com/lm/xwlb/' });
     const $ = load(res.data);
     // 解析最新一期新闻联播的日期
@@ -67,9 +43,9 @@ async function handler() {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: 'CCTV 新闻联播',
         link: 'http://tv.cctv.com/lm/xwlb/',
         item: resultItems,
-    };
-}
+    });
+};

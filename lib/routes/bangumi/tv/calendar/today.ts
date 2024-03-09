@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,29 +6,7 @@ import getData from './_base';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/tv/calendar/today',
-    categories: ['anime'],
-    example: '/bangumi/tv/calendar/today',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['bgm.tv/calendar'],
-    },
-    name: '放送列表',
-    maintainers: ['magic-akari'],
-    handler,
-    url: 'bgm.tv/calendar',
-};
-
-async function handler() {
+export default async (ctx) => {
     const [list, data] = await getData(cache.tryGet);
     const siteMeta = data.siteMeta;
 
@@ -49,7 +26,7 @@ async function handler() {
         bgm.image = images[bgm.bgmId];
     }
 
-    return {
+    ctx.set('data', {
         title: 'bangumi 每日放送',
         link: 'https://bgm.tv/calendar',
         item: todayBgm.map((bgm) => {
@@ -86,5 +63,5 @@ async function handler() {
                 content: { html },
             };
         }),
-    };
-}
+    });
+};

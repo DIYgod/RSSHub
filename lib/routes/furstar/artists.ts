@@ -1,33 +1,9 @@
-import { Route } from '@/types';
 import utils from './utils';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/artists/:lang?',
-    categories: ['shopping'],
-    example: '/furstar/artists/cn',
-    parameters: { lang: '语言, 留空为jp, 支持cn, en' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['furstar.jp/'],
-        target: '/artists',
-    },
-    name: '画师列表',
-    maintainers: ['NeverBehave'],
-    handler,
-    url: 'furstar.jp/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const base = utils.langBase(ctx.req.param('lang'));
     const res = await got.get(base, {
         https: {
@@ -40,7 +16,7 @@ async function handler(ctx) {
         .get();
     artists.shift(); // the first one is "show all"
 
-    return {
+    ctx.set('data', {
         title: 'furstar 所有画家',
         link: 'https://furstar.jp',
         description: 'Furstar 所有画家列表',
@@ -52,5 +28,5 @@ async function handler(ctx) {
             pubDate: parseDate(new Date().toISOString()), // No Time for now
             link: `${base}/${e.link}`,
         })),
-    };
-}
+    });
+};

@@ -1,31 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/news',
-    categories: ['game'],
-    example: '/priconne-redive/news',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['priconne-redive.jp/news'],
-    },
-    name: '日服公告',
-    maintainers: ['SayaSS'],
-    handler,
-    url: 'priconne-redive.jp/news',
-};
-
-async function handler() {
+export default async (ctx) => {
     const parseContent = (htmlString) => {
         const $ = load(htmlString);
 
@@ -69,10 +46,10 @@ async function handler() {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: '公主链接日服-新闻',
         link: 'https://priconne-redive.jp/news/',
         language: 'ja',
         item: out,
-    };
-}
+    });
+};

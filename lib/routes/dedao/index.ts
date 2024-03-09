@@ -1,17 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/:category?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') ?? 'news';
 
     const rootUrl = `https://www.igetget.com/${category === 'video' ? 'video' : 'news'}`;
@@ -46,10 +38,10 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `得到${category === 'video' ? '' : '大事件'} - ${category === 'news' ? '新闻' : category === 'figure' ? '人物故事' : '视频'}`,
         link: rootUrl,
         item: items,
         description: data.description,
-    };
-}
+    });
+};

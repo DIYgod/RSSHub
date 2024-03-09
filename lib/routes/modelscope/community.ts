@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,29 +9,7 @@ import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/community',
-    categories: ['programming'],
-    example: '/modelscope/community',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['community.modelscope.cn/'],
-    },
-    name: 'DevPress 官方社区',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'community.modelscope.cn/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const baseUrl = 'https://community.modelscope.cn';
 
     const { data } = await got.post(`${baseUrl}/v1/namespace_page/article`, {
@@ -72,11 +49,11 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: 'ModelScope魔搭社区-DevPress官方社区',
         description: 'ModelScope魔搭社区 DevPress官方社区-ModelScope旨在打造下一代开源的模型即服务共享平台，为泛AI开发者提供灵活、易用、低成本的一站式模型服务产品，让模型应用更简单。',
         image: 'https://g.alicdn.com/sail-web/maas/0.8.10/favicon/128.ico',
         link: baseUrl,
         item: items,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -77,46 +76,7 @@ const ids = {
     },
 };
 
-export const route: Route = {
-    path: '/exclusive/:id?',
-    categories: ['new-media'],
-    example: '/163/exclusive/qsyk',
-    parameters: { id: '栏目, 默认为首页' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['3g.163.com/touch/exclusive/sub/:id'],
-    },
-    name: '栏目',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 分类     | 编号 |
-  | -------- | ---- |
-  | 首页     |      |
-  | 轻松一刻 | qsyk |
-  | 槽值     | cz   |
-  | 人间     | rj   |
-  | 大国小民 | dgxm |
-  | 三三有梗 | ssyg |
-  | 数读     | sd   |
-  | 看客     | kk   |
-  | 下划线   | xhx  |
-  | 谈心社   | txs  |
-  | 哒哒     | dd   |
-  | 胖编怪聊 | pbgl |
-  | 曲一刀   | qyd  |
-  | 今日之声 | jrzs |
-  | 浪潮     | lc   |
-  | 沸点     | fd   |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id') ?? '';
 
     const rootUrl = 'https://3g.163.com';
@@ -184,9 +144,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `网易独家 - ${ids[id].title}`,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

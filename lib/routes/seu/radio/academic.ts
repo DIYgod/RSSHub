@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/radio/academic',
-    categories: ['university'],
-    example: '/seu/radio/academic',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['radio.seu.edu.cn/_s29/15986/list.psp', 'radio.seu.edu.cn/'],
-    },
-    name: '信息科学与工程学院学术活动',
-    maintainers: ['HenryQW'],
-    handler,
-    url: 'radio.seu.edu.cn/_s29/15986/list.psp',
-};
-
-async function handler() {
+export default async (ctx) => {
     const host = 'https://radio.seu.edu.cn';
     const link = new URL('_s29/15986/list.psp', host).href;
     const response = await got(link);
@@ -59,9 +36,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '东南大学信息科学与工程学院 -- 学术活动',
         link,
         item: out,
-    };
-}
+    });
+};

@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/dafls',
-    categories: ['university'],
-    example: '/nju/dafls',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['dafls.nju.edu.cn/13167/list.html', 'dafls.nju.edu.cn/'],
-    },
-    name: '大学外语部',
-    maintainers: ['ret-1'],
-    handler,
-    url: 'dafls.nju.edu.cn/13167/list.html',
-};
-
-async function handler() {
+export default async (ctx) => {
     const category_dict = {
         tzgg: '通知公告',
     };
@@ -52,9 +29,9 @@ async function handler() {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: '大外部-通知公告',
         link: 'https://dafls.nju.edu.cn/13167/list.htm',
         item: [...items[0]],
-    };
-}
+    });
+};

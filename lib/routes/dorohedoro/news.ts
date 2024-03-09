@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/news',
-    categories: ['game'],
-    example: '/dorohedoro/news',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['dorohedoro.net/news', 'dorohedoro.net/'],
-    },
-    name: 'News',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'dorohedoro.net/news',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
 
     const rootUrl = 'https://dorohedoro.net';
@@ -87,9 +64,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: 'アニメ『ドロヘドロ』',
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

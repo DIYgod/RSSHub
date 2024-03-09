@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import utils from './utils';
 import got from '@/utils/got';
 
@@ -8,19 +7,7 @@ const sections = {
     morningEveningNews: '早晚报',
 };
 
-export const route: Route = {
-    path: '/sidebar/:sec?',
-    radar: {
-        source: ['thepaper.cn/'],
-        target: '/sidebar',
-    },
-    name: 'Unknown',
-    maintainers: ['bigfei'],
-    handler,
-    url: 'thepaper.cn/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { sec = 'hotNews' } = ctx.req.param();
 
     const sidebar_url = `https://cache.thepaper.cn/contentapi/wwwIndex/rightSidebar`;
@@ -29,9 +16,9 @@ async function handler(ctx) {
     const list = sidebar_url_data.data[sec];
 
     const items = await Promise.all(list.filter((item) => item.contId).map((item) => utils.ProcessItem(item, ctx)));
-    return {
+    ctx.set('data', {
         title: `澎湃新闻 - ${sections[sec]}`,
         item: items,
         link: 'https://www.thepaper.cn',
-    };
-}
+    });
+};

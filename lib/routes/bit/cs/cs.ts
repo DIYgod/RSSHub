@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import util from './utils';
 
-export const route: Route = {
-    path: '/cs',
-    categories: ['university'],
-    example: '/bit/cs',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['cs.bit.edu.cn/tzgg', 'cs.bit.edu.cn/'],
-    },
-    name: '计院通知',
-    maintainers: ['sinofp'],
-    handler,
-    url: 'cs.bit.edu.cn/tzgg',
-};
-
-async function handler() {
+export default async (ctx) => {
     const link = 'https://cs.bit.edu.cn/tzgg/';
     const response = await got({
         method: 'get',
@@ -39,10 +16,10 @@ async function handler() {
 
     const result = await util.ProcessFeed(list, cache);
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link,
         description: $('meta[name="description"]').attr('content'),
         item: result,
-    };
-}
+    });
+};

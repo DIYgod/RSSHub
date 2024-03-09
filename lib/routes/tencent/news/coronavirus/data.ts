@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,14 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/news/coronavirus/data/:province?/:city?',
-    name: 'Unknown',
-    maintainers: ['CaoMeiYouRen'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const province = ctx.req.param('province') || '';
     const city = ctx.req.param('city') || '';
 
@@ -74,9 +66,9 @@ async function handler(ctx) {
 
     item.push(info);
 
-    return {
+    ctx.set('data', {
         title,
         link,
         item,
-    };
-}
+    });
+};

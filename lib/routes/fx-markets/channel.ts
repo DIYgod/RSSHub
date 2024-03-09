@@ -1,31 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/:channel',
-    categories: ['finance'],
-    example: '/fx-markets/trading',
-    parameters: { channel: 'channel, can be found in the navi bar links at the home page' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Channel',
-    maintainers: [],
-    handler,
-    description: `| Trading | Infrastructure | Tech and Data | Regulation |
-  | ------- | -------------- | ------------- | ---------- |
-  | trading | infrastructure | tech-and-data | regulation |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const channel = ctx.req.param('channel');
     const link = `https://www.fx-markets.com/${channel}`;
     const html = (await got(link)).data;
@@ -71,9 +49,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title,
         link,
         item: result,
-    };
-}
+    });
+};

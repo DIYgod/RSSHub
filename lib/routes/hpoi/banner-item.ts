@@ -1,37 +1,14 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/bannerItem',
-    categories: ['anime'],
-    example: '/hpoi/bannerItem',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.hpoi.net/bannerItem/list'],
-    },
-    name: '热门推荐',
-    maintainers: ['DIYgod'],
-    handler,
-    url: 'www.hpoi.net/bannerItem/list',
-};
-
-async function handler() {
+export default async (ctx) => {
     const link = 'https://www.hpoi.net/bannerItem/list?categoryId=0&bannerItemType=0&subType=0&page=1';
     const response = await got({
         method: 'get',
         url: link,
     });
     const $ = load(response.data);
-    return {
+    ctx.set('data', {
         title: `Hpoi 手办维基 - 热门推荐`,
         link,
         item: $('#content .item')
@@ -45,5 +22,5 @@ async function handler() {
                 };
             })
             .get(),
-    };
-}
+    });
+};

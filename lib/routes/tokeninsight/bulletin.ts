@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -13,29 +12,7 @@ const get_articles = async () => {
     return data;
 };
 
-export const route: Route = {
-    path: '/bulletin/:lang?',
-    categories: ['finance'],
-    example: '/tokeninsight/bulletin/en',
-    parameters: { lang: 'Language, see below, Chinese by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['tokeninsight.com/:lang/latest'],
-        target: '/bulletin/:lang',
-    },
-    name: 'Latest',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const lang = ctx.req.param('lang') ?? 'zh';
 
     const get_article_info = async (article) => {
@@ -60,9 +37,9 @@ async function handler(ctx) {
 
     const articles = await get_articles();
     const list = await Promise.all(articles.map((element) => get_article_info(element)));
-    return {
+    ctx.set('data', {
         title: `${lang === 'zh' ? '快讯' : 'Latest'} | ${title}`,
         link: `${link}${lang}/latest`,
         item: list,
-    };
-}
+    });
+};

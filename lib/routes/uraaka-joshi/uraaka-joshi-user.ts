@@ -1,33 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 import puppeteer from '@/utils/puppeteer';
 
-export const route: Route = {
-    path: '/:id',
-    categories: ['other'],
-    example: '/uraaka-joshi/_rrwq',
-    parameters: { id: 'User ID' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: true,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['uraaka-joshi.com/:id'],
-    },
-    name: 'User',
-    maintainers: ['SettingDust', 'Halcao'],
-    handler,
-    url: 'uraaka-joshi.com/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const link = `https://www.uraaka-joshi.com/user/${id}`;
 
@@ -121,10 +98,10 @@ async function handler(ctx) {
             };
         });
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         description: $('meta[name="description"]').attr('content'),
         link,
         item: items,
-    };
-}
+    });
+};

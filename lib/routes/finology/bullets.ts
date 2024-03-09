@@ -1,31 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/bullets',
-    categories: ['finance'],
-    example: '/finology/bullets',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['insider.finology.in/bullets'],
-    },
-    name: 'Bullets',
-    maintainers: ['Rjnishant530'],
-    handler,
-    url: 'insider.finology.in/bullets',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://insider.finology.in/bullets';
 
     const { data: response } = await got(baseUrl);
@@ -46,7 +23,7 @@ async function handler() {
             };
         });
 
-    return {
+    ctx.set('data', {
         title: 'Finology Insider Bullets',
         link: baseUrl,
         item: listItems,
@@ -54,5 +31,5 @@ async function handler() {
         logo: 'https://assets.finology.in/insider/images/favicon/apple-touch-icon.png',
         icon: 'https://assets.finology.in/insider/images/favicon/favicon-32x32.png',
         language: 'en-us',
-    };
-}
+    });
+};

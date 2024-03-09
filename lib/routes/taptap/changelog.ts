@@ -1,36 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { getRootUrl, appDetail, X_UA } from './utils';
 
-export const route: Route = {
-    path: ['/changelog/:id/:lang?', '/intl/changelog/:id/:lang?'],
-    categories: ['game'],
-    example: '/taptap/changelog/60809/en_US',
-    parameters: { id: '游戏 ID，游戏主页 URL 中获取', lang: '语言，默认使用 `zh_CN`，亦可使用 `en_US`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['taptap.com/app/:id'],
-        target: '/changelog/:id',
-    },
-    name: '游戏更新',
-    maintainers: ['hoilc', 'ETiV'],
-    handler,
-    description: `#### 语言代码
-
-  | English (US) | 繁體中文 | 한국어 | 日本語 |
-  | ------------ | -------- | ------ | ------ |
-  | en\_US       | zh\_TW   | ko\_KR | ja\_JP |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const is_intl = ctx.req.url.indexOf('/intl/') === 0;
     const id = ctx.req.param('id');
     const lang = ctx.req.param('lang') ?? (is_intl ? 'en_US' : 'zh_CN');
@@ -53,7 +25,7 @@ async function handler(ctx) {
 
     const list = response.data.data.list;
 
-    return {
+    ctx.set('data', {
         title: `TapTap 更新记录 ${app_name}`,
         description: app_description,
         link: url,
@@ -65,5 +37,5 @@ async function handler(ctx) {
             link: url,
             guid: item.version_label,
         })),
-    };
-}
+    });
+};

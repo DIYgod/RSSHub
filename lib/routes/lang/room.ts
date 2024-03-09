@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,28 +5,7 @@ import got from '@/utils/got';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/live/room/:id',
-    categories: ['live'],
-    example: '/lang/live/room/1352360',
-    parameters: { id: '直播间 id, 可在主播直播间页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['lang.live/room/:id'],
-    },
-    name: 'Unknown',
-    maintainers: ['MittWillson'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const url = `https://www.lang.live/room/${id}`;
 
@@ -55,11 +33,11 @@ async function handler(ctx) {
         ];
     }
 
-    return {
+    ctx.set('data', {
         title: `${name} 的浪 Play 直播`,
         description: data.live_info.sign,
         link: url,
         item,
         allowEmpty: true,
-    };
-}
+    });
+};

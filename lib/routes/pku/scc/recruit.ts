@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -13,28 +12,7 @@ const arr = {
 };
 const baseUrl = 'https://scc.pku.edu.cn/';
 
-export const route: Route = {
-    path: '/scc/recruit/:type?',
-    categories: ['university'],
-    example: '/pku/scc/recruit/zpxx',
-    parameters: { type: '分区，见下表，默认请求 `zpxx`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '学生就业指导服务中心',
-    maintainers: ['DylanXie123'],
-    handler,
-    description: `| xwrd     | tzgg     | zpxx     | sxxx     | cyxx     |
-  | -------- | -------- | -------- | -------- | -------- |
-  | 新闻热点 | 通知公告 | 招聘信息 | 实习信息 | 创业信息 |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type') ?? 'zpxx';
     const rootUrl = baseUrl + arr[type];
 
@@ -58,7 +36,7 @@ async function handler(ctx) {
 
     const sorted = list.sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime()).slice(0, 10);
 
-    return {
+    ctx.set('data', {
         title: `北京大学学生就业指导服务中心 - ${feed_title}`,
         link: rootUrl,
         item: await Promise.all(
@@ -76,5 +54,5 @@ async function handler(ctx) {
                 })
             )
         ),
-    };
-}
+    });
+};

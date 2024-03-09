@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,29 +5,7 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { rootUrl } from './utils';
 
-export const route: Route = {
-    path: '/activity',
-    categories: ['new-media'],
-    example: '/odaily/activity',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['0daily.com/activityPage', '0daily.com/'],
-    },
-    name: '活动',
-    maintainers: ['nczitzk'],
-    handler,
-    url: '0daily.com/activityPage',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const currentUrl = `${rootUrl}/service/scheme/group/8?page=1&per_page=${ctx.req.query('limit') ?? 25}`;
 
     const response = await got({
@@ -63,9 +40,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '活动 - Odaily星球日报',
         link: `${rootUrl}/activityPage`,
         item: items,
-    };
-}
+    });
+};

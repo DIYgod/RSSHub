@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/notice',
-    categories: ['university'],
-    example: '/zuel/notice',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['wap.zuel.edu.cn/', 'wap.zuel.edu.cn/notice/list.htm'],
-    },
-    name: '通知公告',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'wap.zuel.edu.cn/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'http://wap.zuel.edu.cn';
     const currentUrl = `${rootUrl}/notice/list.htm`;
 
@@ -68,9 +45,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '中南财经大学 - 通知公告',
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

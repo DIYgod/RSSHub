@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,25 +10,7 @@ import { art } from '@/utils/render';
 import { CookieJar } from 'tough-cookie';
 const cookieJar = new CookieJar();
 
-export const route: Route = {
-    path: '/journal/:journal/earlyaccess/:sortType?',
-    categories: ['journal'],
-    example: '/ieee/journal/5306045/earlyaccess',
-    parameters: { journal: 'Issue code, the number of the `isnumber` in the URL', sortType: 'Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Early Access Journal',
-    maintainers: ['5upernova-heng'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const isnumber = ctx.req.param('journal');
     const sortType = ctx.req.param('sortType') ?? 'vol-only-seq';
     const host = 'https://ieeexplore.ieee.org';
@@ -92,9 +73,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: jrnlName,
         link: jrnlUrl,
         item: list,
-    };
-}
+    });
+};

@@ -1,31 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/:type?',
-    categories: ['government'],
-    example: '/crac/2',
-    parameters: { type: '类型，见下表，默认为全部' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '最新资讯',
-    maintainers: ['Misaka13514'],
-    handler,
-    description: `| 新闻动态 | 通知公告 | 政策法规 | 常见问题 | 资料下载 | English | 业余中继台 | 科普专栏 |
-  | -------- | -------- | -------- | -------- | -------- | ------- | ---------- | -------- |
-  | 1        | 2        | 3        | 5        | 6        | 7       | 8          | 9        |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const baseUrl = 'http://www.crac.org.cn';
     const type = ctx.req.param('type');
     const link = type ? `${baseUrl}/News/List?type=${type}` : `${baseUrl}/News/List`;
@@ -61,9 +39,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link,
         item: list,
-    };
-}
+    });
+};

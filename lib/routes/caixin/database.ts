@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,29 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/database',
-    categories: ['traditional-media'],
-    example: '/caixin/database',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['k.caixin.com/web', 'k.caixin.com/'],
-    },
-    name: '财新数据通',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'k.caixin.com/web',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://database.caixin.com';
     const currentUrl = `${rootUrl}/news/`;
     const response = await got(currentUrl);
@@ -67,9 +44,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '财新数据通 - 专享资讯',
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

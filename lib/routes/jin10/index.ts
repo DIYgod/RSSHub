@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,30 +9,7 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { config } from '@/config';
 
-export const route: Route = {
-    path: '/:important?',
-    categories: ['finance'],
-    example: '/jin10',
-    parameters: { important: '只看重要，任意值开启，留空关闭' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['jin10.com/'],
-        target: '',
-    },
-    name: '市场快讯',
-    maintainers: ['laampui'],
-    handler,
-    url: 'jin10.com/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { important = false } = ctx.req.param();
     const data = await cache.tryGet(
         'jin10:index',
@@ -78,9 +54,9 @@ async function handler(ctx) {
         };
     });
 
-    return {
+    ctx.set('data', {
         title: '金十数据',
         link: 'https://www.jin10.com/',
         item: important ? item.filter((item) => item.important) : item,
-    };
-}
+    });
+};

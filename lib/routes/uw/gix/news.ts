@@ -1,35 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
 const gixBaseURL = 'https://gixnetwork.org';
 
-export const route: Route = {
-    path: '/gix/news/:category',
-    categories: ['university'],
-    example: '/uw/gix/news/blog',
-    parameters: { category: 'Blog Type' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['gixnetwork.org/news/:category'],
-    },
-    name: 'Global Innovation Exchange News',
-    maintainers: ['dykderrick'],
-    handler,
-    description: `| Blog | In The News |
-  | ---- | ----------- |
-  | blog | inthenews   |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category');
 
     let newsURL = gixBaseURL + '/news';
@@ -85,9 +60,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: feedTitle,
         link: newsURL,
         item: itemContent,
-    };
-}
+    });
+};

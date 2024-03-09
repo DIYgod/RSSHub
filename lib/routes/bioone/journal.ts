@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/journals/:journal?',
-    categories: ['journal'],
-    example: '/bioone/journals/acta-chiropterologica',
-    parameters: { journal: 'Journals, can be found in URL' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['bioone.org/journals/:journal', 'bioone.org/'],
-        target: '/journals/:journal',
-    },
-    name: 'Journals',
-    maintainers: ['nczitzk'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const journal = ctx.req.param('journal') ?? 'acta-chiropterologica';
 
     const rootUrl = 'https://bioone.org';
@@ -75,10 +52,10 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `${$('.panel-body .row a').first().text()} - BioOne`,
         description: $('.panel-body .row text').first().text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

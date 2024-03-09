@@ -1,34 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import cache from './cache';
 import { config } from '@/config';
 
-export const route: Route = {
-    path: '/user/followings/:uid/:loginUid',
-    categories: ['social-media'],
-    example: '/bilibili/user/followings/2267573/3',
-    parameters: { uid: '用户 id, 可在 UP 主主页中找到', loginUid: '用于登入的用户id,需要配置对应的 Cookie 值' },
-    features: {
-        requireConfig: true,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['space.bilibili.com/:uid'],
-        target: '/user/followings/:uid',
-    },
-    name: 'UP 主关注用户',
-    maintainers: ['Qixingchen'],
-    handler,
-    description: `:::warning
-  UP 主关注用户现在需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
-  :::`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const loginUid = ctx.req.param('loginUid');
     const cookie = config.bilibili.cookies[loginUid];
     if (cookie === undefined) {
@@ -64,7 +38,7 @@ async function handler(ctx) {
     }
     const data = response.data.data.list;
 
-    return {
+    ctx.set('data', {
         title: `${name} 的 bilibili 关注`,
         link: `https://space.bilibili.com/${uid}/#/fans/follow`,
         description: `${name} 的 bilibili 关注`,
@@ -74,5 +48,5 @@ async function handler(ctx) {
             pubDate: new Date(item.mtime * 1000),
             link: `https://space.bilibili.com/${item.mid}`,
         })),
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,30 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/factpaper/:status?',
-    categories: ['traditional-media'],
-    example: '/thepaper/factpaper',
-    parameters: { status: '状态 id，可选 `1` 即 有定论 或 `0` 即 核查中，默认为 `1`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['factpaper.cn/'],
-        target: '/factpaper/:status',
-    },
-    name: '明查',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'factpaper.cn/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const status = Number.parseInt(ctx.req.param('status') ?? '1');
 
     const rootUrl = 'https://www.factpaper.cn';
@@ -81,9 +57,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `澎湃明查 - ${status === 1 ? '有定论' : '核查中'}`,
         link: rootUrl,
         item: items,
-    };
-}
+    });
+};

@@ -1,32 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/chapter/:id',
-    categories: ['reading'],
-    example: '/hbooker/chapter/100113279',
-    parameters: { id: '小说 id, 可在对应小说页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['hbooker.com/book/:id'],
-    },
-    name: '章节',
-    maintainers: ['keocheung'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const limit = Number.parseInt(ctx.req.query('limit')) || 10;
 
@@ -59,11 +37,11 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `欢乐书客 ${$('div.book-title h1').text()}`,
         link: `${baseUrl}/book/${id}`,
         description: $('div.book-desc').text(),
         image: $('div.book-cover img').attr('src'),
         item: items,
-    };
-}
+    });
+};

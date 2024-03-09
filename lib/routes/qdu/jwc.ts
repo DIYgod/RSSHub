@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,29 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const base = 'https://jwc.qdu.edu.cn/';
 
-export const route: Route = {
-    path: '/jwc',
-    categories: ['university'],
-    example: '/qdu/jwc',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['jwc.qdu.edu.cn/jwtz.htm', 'jwc.qdu.edu.cn/'],
-    },
-    name: '教务处通知',
-    maintainers: ['abc1763613206'],
-    handler,
-    url: 'jwc.qdu.edu.cn/jwtz.htm',
-};
-
-async function handler() {
+export default async (ctx) => {
     const response = await got({
         method: 'get',
         url: `${base}jwtz.htm`,
@@ -67,10 +44,10 @@ async function handler() {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: '青岛大学 - 教务处通知',
         link: `${base}jwtz.htm`,
         description: '青岛大学 - 教务处通知',
         item: items,
-    };
-}
+    });
+};

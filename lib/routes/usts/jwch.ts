@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,28 +6,7 @@ import timezone from '@/utils/timezone';
 
 const rootURL = 'http://jwch.usts.edu.cn/index';
 
-export const route: Route = {
-    path: '/jwch/:type?',
-    categories: ['university'],
-    example: '/usts/jwch',
-    parameters: { type: '类型，默认为教务动态' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '教务处',
-    maintainers: [],
-    handler,
-    description: `| 类型 | 教务动态 | 公告在线 | 选课通知 |
-  | ---- | -------- | -------- | -------- |
-  |      | jwdt     | ggzx     | xktz     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type') ?? 'jwdt';
     const url = `${rootURL}/${type}.htm`;
     const response = await got(url);
@@ -68,9 +46,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `苏州科技大学 教务处 - ${title}`,
         link: url,
         item: items,
-    };
-}
+    });
+};

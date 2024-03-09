@@ -1,14 +1,6 @@
-import { Route } from '@/types';
 import { gdgov } from '../general/general';
 
-export const route: Route = {
-    path: '/mmht/*',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const info = {
         defaultPath: 'xwzx/zcjd/',
         list_element: '#main21l_main_dk > table > tbody > tr > td:nth-child(2) a',
@@ -24,4 +16,4 @@ async function handler(ctx) {
         pubDate_format: undefined,
     };
     await gdgov(info, ctx);
-}
+};

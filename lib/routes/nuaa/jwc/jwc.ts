@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -14,28 +13,7 @@ const map = new Map([
     ['jxzy', { title: '教学资源 | 南京航空航天大学教务处', suffix: '8233/list.htm' }],
 ]);
 
-export const route: Route = {
-    path: '/jwc/:type/:getDescription?',
-    categories: ['university'],
-    example: '/nuaa/jwc/tzgg/getDescription',
-    parameters: { type: '分类名，见下表', getDescription: '是否获取全文' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: true,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '教务处',
-    maintainers: ['arcosx', 'Seiry', 'qrzbing', 'Xm798'],
-    handler,
-    description: `| 通知公告 | 教学服务 | 教学建设 | 学生培养 | 教学资源 |
-  | -------- | -------- | -------- | -------- | -------- |
-  | tzgg     | jxfw     | jxjs     | xspy     | jxzy     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type');
     const suffix = map.get(type).suffix;
     const getDescription = Boolean(ctx.req.param('getDescription')) || false;
@@ -90,10 +68,10 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: map.get(type).title,
         link,
         description: '南京航空航天大学教务处RSS',
         item: out,
-    };
-}
+    });
+};

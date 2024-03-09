@@ -1,27 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 const host = 'https://weixin.sogou.com';
 import { finishArticleItem } from '@/utils/wechat-mp';
-export const route: Route = {
-    path: '/sogou/:id',
-    categories: ['new-media'],
-    example: '/wechat/sogou/qimao0908',
-    parameters: { id: '公众号 id, 打开 weixin.sogou.com 并搜索相应公众号， 在 URL 中找到 id' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '公众号（搜狗来源）',
-    maintainers: ['EthanWng97'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const wechatId = ctx.req.param('id');
     let url = `${host}/weixin`;
     let response = await got({
@@ -68,10 +49,10 @@ async function handler(ctx) {
 
     await finishArticleItem(item);
 
-    return {
+    ctx.set('data', {
         title: `${title} 的微信公众号`,
         link: url,
         description: `${title} 的微信公众号`,
         item: [item],
-    };
-}
+    });
+};

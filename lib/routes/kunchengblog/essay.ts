@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import { SourceMapConsumer } from 'source-map';
 
-export const route: Route = {
-    path: '/essay',
-    categories: ['blog'],
-    example: '/kunchengblog/essay',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['kunchengblog.com/essay'],
-    },
-    name: 'Essay',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'kunchengblog.com/essay',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
 
     const rootUrl = 'https://www.kunchengblog.com';
@@ -73,7 +50,7 @@ async function handler(ctx) {
     const description = $('meta[name="description"]').prop('content');
     const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
 
-    return {
+    ctx.set('data', {
         item: items,
         title: `${title} - Essay`,
         link: currentUrl,
@@ -85,5 +62,5 @@ async function handler(ctx) {
         subtitle: description,
         author: title,
         allowEmpty: true,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,29 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const host = 'https://yz.chsi.com.cn';
 
-export const route: Route = {
-    path: '/hotnews',
-    categories: ['study'],
-    example: '/chsi/hotnews',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['yz.chsi.com.cn/'],
-    },
-    name: '考研热点新闻',
-    maintainers: ['yanbot-team'],
-    handler,
-    url: 'yz.chsi.com.cn/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const response = await got(host);
     const $ = load(response.data);
     const list = $('.focus-part .index-hot a');
@@ -63,10 +40,10 @@ async function handler() {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: `中国研究生招生信息网 - 热点`,
         link: host,
         description: '中国研究生招生信息网 - 热点',
         item: items,
-    };
-}
+    });
+};

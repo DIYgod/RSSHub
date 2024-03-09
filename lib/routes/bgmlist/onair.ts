@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,30 +6,12 @@ import * as path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 
-export const route: Route = {
-    path: '/onair/:lang?',
-    categories: ['anime'],
-    example: '/bgmlist/onair/zh-Hans',
-    parameters: { lang: '语言' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '开播提醒',
-    maintainers: ['x2cf'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const lang = ctx.req.param('lang');
     const { data: sites } = await got('https://bgmlist.com/api/v1/bangumi/site');
     const { data } = await got('https://bgmlist.com/api/v1/bangumi/onair');
 
-    return {
+    ctx.set('data', {
         title: '番组放送 开播提醒',
         link: 'https://bgmlist.com/',
         item: data.items.map((item) => {
@@ -50,5 +31,5 @@ async function handler(ctx) {
                 guid: item.id,
             };
         }),
-    };
-}
+    });
+};

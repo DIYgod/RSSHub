@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -23,38 +22,7 @@ const categories = {
     教育: 'jiaoyu',
 };
 
-export const route: Route = {
-    path: '/24/:category?',
-    categories: ['traditional-media'],
-    example: '/eastday/24',
-    parameters: { category: '分类，见下表，默认为社会' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['mini.eastday.com/'],
-        target: '/24',
-    },
-    name: '24 小时热闻',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'mini.eastday.com/',
-    description: `| 推荐 | 社会 | 娱乐 | 国际 | 军事 |
-  | ---- | ---- | ---- | ---- | ---- |
-
-  | 养生 | 汽车 | 体育 | 财经 | 游戏 |
-  | ---- | ---- | ---- | ---- | ---- |
-
-  | 科技 | 国内 | 宠物 | 情感 | 人文 | 教育 |
-  | ---- | ---- | ---- | ---- | ---- | ---- |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') ?? '社会';
 
     const rootUrl = 'https://mini.eastday.com';
@@ -114,9 +82,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `24小时${category}热闻 - 东方资讯`,
         link: `${rootUrl}/#${categories[category]}`,
         item: items,
-    };
-}
+    });
+};

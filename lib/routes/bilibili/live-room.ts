@@ -1,29 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import cache from './cache';
 
-export const route: Route = {
-    path: '/live/room/:roomID',
-    categories: ['live'],
-    example: '/bilibili/live/room/3',
-    parameters: { roomID: '房间号, 可在直播间 URL 中找到, 长短号均可' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['live.bilibili.com/:roomID'],
-    },
-    name: '直播开播',
-    maintainers: ['Qixingchen'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     let roomID = ctx.req.param('roomID');
 
     // 短号查询长号
@@ -53,11 +31,11 @@ async function handler(ctx) {
         });
     }
 
-    return {
+    ctx.set('data', {
         title: `${name} 直播间开播状态`,
         link: `https://live.bilibili.com/${roomID}`,
         description: `${name} 直播间开播状态`,
         item: liveItem,
         allowEmpty: true,
-    };
-}
+    });
+};

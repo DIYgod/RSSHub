@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,25 +8,7 @@ import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: ['/tieba/forum/good/:kw/:cid?/:sortBy?', '/tieba/forum/:kw/:sortBy?'],
-    categories: ['bbs'],
-    example: '/baidu/tieba/forum/good/女图',
-    parameters: { kw: '吧名', cid: '精品分类，默认为 `0`（全部分类），如果不传 `cid` 则获取全部分类', sortBy: '排序方式：`created`, `replied`。默认为 `created`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '精品帖子',
-    maintainers: ['u3u'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     // sortBy: created, replied
     const { kw, cid = '0', sortBy = 'created' } = ctx.req.param();
 
@@ -77,10 +58,10 @@ async function handler(ctx) {
             };
         });
 
-    return {
+    ctx.set('data', {
         title: `${kw}吧`,
         description: load(data)('meta[name="description"]').attr('content'),
         link: `https://tieba.baidu.com/f?kw=${encodeURIComponent(kw)}`,
         item: list,
-    };
-}
+    });
+};

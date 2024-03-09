@@ -1,22 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/',
-    radar: {
-        source: ['niaogebiji.com/', 'niaogebiji.com/bulletin'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['WenryXu'],
-    handler,
-    url: 'niaogebiji.com/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://www.niaogebiji.com';
     const { data: response } = await got(`${baseUrl}/pc/index/getMoreArticle`);
 
@@ -47,9 +34,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '鸟哥笔记',
         link: baseUrl,
         item: result,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { config } from '@/config';
@@ -7,14 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const TOKEN = 'Basic YW5vbnltb3VzOkdpQ2VMRWp4bnFCY1ZwbnA2Y0xzVXZKaWV2dlJRY0FYTHY=';
 
-export const route: Route = {
-    path: '/:model?/:type?/:language?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     // model是channel/tag/etc.，而type是latest/feature/quest-academy这些一级栏目/标签/作者名的slug名。如果是追踪的话，那就是model是follow，type是articles。
     const model = ctx.req.param('model') ?? 'channel';
     const type = ctx.req.param('type') ?? 'latest';
@@ -168,11 +160,11 @@ async function handler(ctx) {
             })
     );
 
-    return {
+    ctx.set('data', {
         title: `端传媒 - ${name}`,
         link: listLink,
         icon: 'https://theinitium.com/misc/about/logo192.png',
         item: items,
         image,
-    };
-}
+    });
+};

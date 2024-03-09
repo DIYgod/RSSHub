@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -7,28 +6,7 @@ import { load } from 'cheerio';
 
 const baseUrl = 'https://cs.whu.edu.cn';
 
-export const route: Route = {
-    path: '/cs/:type',
-    categories: ['university'],
-    example: '/whu/cs/2',
-    parameters: { type: '公告类型，详见表格' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '计算机学院公告',
-    maintainers: ['ttyfly'],
-    handler,
-    description: `| 公告类型 | 学院新闻 | 学术交流 | 通知公告 | 科研进展 |
-  | -------- | -------- | -------- | -------- | -------- |
-  | 参数     | 0        | 1        | 2        | 3        |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = Number.parseInt(ctx.req.param('type'));
 
     let link;
@@ -101,9 +79,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').first().text(),
         link,
         item: items,
-    };
-}
+    });
+};

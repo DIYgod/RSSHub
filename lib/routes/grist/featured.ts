@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getData, getList } from './utils';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/featured',
-    categories: ['new-media'],
-    example: '/grist/featured',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['grist.org/'],
-    },
-    name: 'Featured',
-    maintainers: ['Rjnishant530'],
-    handler,
-    url: 'grist.org/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://grist.org/';
     const { data: response } = await got(baseUrl);
     const $ = load(response);
@@ -43,7 +20,7 @@ async function handler() {
     const itemData = await Promise.all(listItems.map((item) => cache.tryGet(item.link, async () => (await getData(`https://grist.org/wp-json/wp/v2/posts?slug='${item.link}'&_embed`))[0])));
     const items = await getList(itemData);
 
-    return {
+    ctx.set('data', {
         title: 'Gist Featured Articles',
         link: baseUrl,
         item: items,
@@ -51,5 +28,5 @@ async function handler() {
         logo: 'https://grist.org/wp-content/uploads/2021/03/cropped-Grist-Favicon.png?w=192',
         icon: 'https://grist.org/wp-content/uploads/2021/03/cropped-Grist-Favicon.png?w=32',
         language: 'en-us',
-    };
-}
+    });
+};

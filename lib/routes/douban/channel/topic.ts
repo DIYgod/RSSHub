@@ -1,28 +1,6 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 
-export const route: Route = {
-    path: '/channel/:id/:nav?',
-    categories: ['social-media'],
-    example: '/douban/channel/30168934/hot',
-    parameters: { id: '频道id', nav: '专题分类，可选，默认为 default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '频道专题',
-    maintainers: ['umm233'],
-    handler,
-    description: `| 默认    | 热门 | 最新 |
-  | ------- | ---- | ---- |
-  | default | hot  | new  |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const nav = ctx.req.param('nav') || 'default';
     const link = `https://www.douban.com/channel/${id}`;
@@ -59,7 +37,7 @@ async function handler(ctx) {
             break;
     }
 
-    return {
+    ctx.set('data', {
         title: `豆瓣${channel_name}频道-${nav_name}动态`,
         link,
         description: `豆瓣${channel_name}频道专题下的${nav_name}动态`,
@@ -81,5 +59,5 @@ async function handler(ctx) {
             })
             .filter(Boolean),
         allowEmpty: true,
-    };
-}
+    });
+};

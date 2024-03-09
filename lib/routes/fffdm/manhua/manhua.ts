@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -21,29 +20,7 @@ const get_pic = async (url) => {
     };
 };
 
-export const route: Route = {
-    path: '/manhua/:id/:cdn?',
-    categories: ['anime'],
-    example: '/fffdm/manhua/93',
-    parameters: { id: '漫画ID。默认获取全部，建议使用通用参数limit获取指定数量', cdn: 'cdn加速器。默认5，当前可选1-5' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.fffdm.com/manhua/:id', 'www.fffdm.com/:id'],
-        target: '/manhua/:id',
-    },
-    name: '在线漫画',
-    maintainers: ['zytomorrow'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const count = ctx.req.query('limit') || 99999;
     const cdnNum = ctx.req.param('cdn') || 5;
@@ -68,10 +45,10 @@ async function handler(ctx) {
             });
         })
     );
-    return {
+    ctx.set('data', {
         title: '风之动漫 - ' + chapter_detail[0].comicTitle,
         link: `${host}/${id}`,
         description: '风之动漫',
         item: chapter_detail,
-    };
-}
+    });
+};

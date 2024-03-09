@@ -1,30 +1,8 @@
-import { Route } from '@/types';
 import utils from './utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/playlist/:id',
-    categories: ['multimedia'],
-    example: '/spotify/playlist/4UBVy1LttvodwivPUuwJk2',
-    parameters: { id: 'Playlist ID' },
-    features: {
-        requireConfig: true,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['open.spotify.com/playlist/:id'],
-    },
-    name: 'Playlist',
-    maintainers: ['outloudvi'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const token = await utils.getPublicToken();
     const id = ctx.req.param('id');
     const meta = await got
@@ -36,7 +14,7 @@ async function handler(ctx) {
         .json();
     const tracks = meta.tracks.items;
 
-    return {
+    ctx.set('data', {
         title: meta.name,
         link: meta.external_urls.spotify,
         description: meta.description,
@@ -46,5 +24,5 @@ async function handler(ctx) {
             pubDate: parseDate(x.added_at),
         })),
         image: meta.images.length ? meta.images[0].url : undefined,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -29,28 +28,7 @@ const titleMap = {
     public_blockchain: '公链',
 };
 
-export const route: Route = {
-    path: '/kepu/:channel?',
-    categories: ['new-media'],
-    example: '/hellobtc/kepu/latest',
-    parameters: { channel: '类型，见下表，默认为最新' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '科普',
-    maintainers: ['Fatpandac'],
-    handler,
-    description: `| latest | bitcoin | ethereum | defi | inter\_blockchain | mining | safety | satoshi\_nakomoto | public\_blockchain |
-  | ------ | ------- | -------- | ---- | ----------------- | ------ | ------ | ----------------- | ------------------ |
-  | 最新   | 比特币  | 以太坊   | DeFi | 跨链              | 挖矿   | 安全   | 中本聪            | 公链               |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const channel = ctx.req.param('channel') ?? 'latest';
     const url = `${rootUrl}/kepu.html`;
 
@@ -79,9 +57,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `白话区块链 - 科普 ${titleMap[channel]}`,
         link: url,
         item: items,
-    };
-}
+    });
+};

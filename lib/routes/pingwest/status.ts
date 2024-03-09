@@ -1,31 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/status',
-    categories: ['new-media'],
-    example: '/pingwest/status',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['pingwest.com/status', 'pingwest.com/'],
-    },
-    name: '实时要闻',
-    maintainers: ['sanmmm'],
-    handler,
-    url: 'pingwest.com/status',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://www.pingwest.com';
     const url = `${baseUrl}/api/state/list`;
     const response = await got(url, {
@@ -61,10 +38,10 @@ async function handler() {
             };
         });
 
-    return {
+    ctx.set('data', {
         title: '品玩 - 实时要闻',
         description: '品玩 - 实时要闻',
         link: `${baseUrl}/status`,
         item: items,
-    };
-}
+    });
+};

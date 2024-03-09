@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,29 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://www.indiansinkuwait.com';
 
-export const route: Route = {
-    path: '/latest',
-    categories: ['new-media'],
-    example: '/indiansinkuwait/latest',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['indiansinkuwait.com/latest-news', 'indiansinkuwait.com/'],
-    },
-    name: 'News',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'indiansinkuwait.com/latest-news',
-};
-
-async function handler() {
+export default async (ctx) => {
     const { data: response } = await got(`${baseUrl}/latest-news`);
     const $ = load(response);
 
@@ -57,11 +34,11 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('head title').text(),
         description: $('head meta[name="description"]').attr('content'),
         image: 'https://www.indiansinkuwait.com/apple-touch-icon-152x152-precomposed.png',
         link: `${baseUrl}/latest-news`,
         item: items,
-    };
-}
+    });
+};

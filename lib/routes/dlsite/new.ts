@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -50,28 +49,7 @@ const infos = {
     },
 };
 
-export const route: Route = {
-    path: '/new/:type',
-    categories: ['anime'],
-    example: '/dlsite/new/home',
-    parameters: { type: 'Type, see table below' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Current Release',
-    maintainers: ['cssxsh'],
-    handler,
-    description: `| Doujin | Comics | PC Games | Doujin (R18) | Adult Comics | H Games | Otome | BL |
-  | ------ | ------ | -------- | ------------ | ------------ | ------- | ----- | -- |
-  | home   | comic  | soft     | maniax       | books        | pro     | girls | bl |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const info = infos[ctx.req.param('type')];
     // 判断参数是否合理
     if (info === undefined) {
@@ -120,11 +98,11 @@ async function handler(ctx) {
         return signle;
     });
 
-    return {
+    ctx.set('data', {
         title,
         link,
         description,
         language: 'ja-jp',
         item,
-    };
-}
+    });
+};

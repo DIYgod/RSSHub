@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,28 +9,7 @@ import * as path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 import { getClientVal, sign } from './utils';
 
-export const route: Route = {
-    path: '/program/:programId',
-    categories: ['multimedia'],
-    example: '/tingtingfm/program/M7VJv6Jj4R',
-    parameters: { programId: '节目 ID，可以在 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: true,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['mobile.tingtingfm.com/v3/program/:programId'],
-    },
-    name: '节目',
-    maintainers: ['TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const programId = ctx.req.param('programId');
     const apiBaseUrl = 'https://api-v3.tingtingfm.com';
     const mobileBaseUrl = 'https://mobile.tingtingfm.com';
@@ -117,7 +95,7 @@ async function handler(ctx) {
         enclosure_type: 'audio/x-m4a',
     }));
 
-    return {
+    ctx.set('data', {
         title: `${radioInfo.title} - ${radioInfo.belong_radio}${radioInfo.belong_fm}`,
         description: radioInfo.description,
         link: `${mobileBaseUrl}/v3/program/${programId}`,
@@ -126,5 +104,5 @@ async function handler(ctx) {
         itunes_category: radioInfo.category,
         itunes_explicit: false,
         item: items,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
@@ -7,14 +6,7 @@ import timezone from '@/utils/timezone';
 
 const host = 'http://www.mofcom.gov.cn';
 
-export const route: Route = {
-    path: '/mofcom/article/:suffix{.+}',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const suffix = ctx.req.param('suffix');
     const url = `http://www.mofcom.gov.cn/article/${suffix}/`;
     const { data: res } = await got(url);
@@ -68,10 +60,10 @@ async function handler(ctx) {
             })
         )
     );
-    return {
+    ctx.set('data', {
         title: $('head > title').text(),
         description: $('meta[name=description]').attr('content'),
         link: url,
         item: list,
-    };
-}
+    });
+};

@@ -1,29 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { config } from '@/config';
 
-export const route: Route = {
-    path: '/branches/:user/:repo',
-    categories: ['programming'],
-    example: '/github/branches/DIYgod/RSSHub',
-    parameters: { user: 'User name', repo: 'Repo name' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['github.com/:user/:repo/branches', 'github.com/:user/:repo'],
-    },
-    name: 'Repo Branches',
-    maintainers: ['max-arnold'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const user = ctx.req.param('user');
     const repo = ctx.req.param('repo');
 
@@ -41,7 +19,7 @@ async function handler(ctx) {
     });
     const data = response.data;
 
-    return {
+    ctx.set('data', {
         title: `${user}/${repo} Branches`,
         link: `${host}/branches/all`,
         item: data.map((item) => ({
@@ -49,5 +27,5 @@ async function handler(ctx) {
             description: item.name,
             link: `${host}/commits/${item.name}`,
         })),
-    };
-}
+    });
+};

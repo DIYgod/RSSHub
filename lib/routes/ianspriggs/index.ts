@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,28 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/:category?',
-    categories: ['blog'],
-    example: '/ianspriggs/portraits',
-    parameters: { category: 'Category, see below, 3D PORTRAITS by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Category',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 3D PORTRAITS | CHARACTERS |
-  | ------------ | ---------- |
-  | portraits    | characters |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = 'portraits' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -102,7 +80,7 @@ async function handler(ctx) {
 
     const icon = new URL('favicon.ico', rootUrl).href;
 
-    return {
+    ctx.set('data', {
         item: items,
         title: $('title').text(),
         link: currentUrl,
@@ -112,5 +90,5 @@ async function handler(ctx) {
         logo: icon,
         subtitle: $('a[aria-current="page"] span.menu-title-text').text(),
         author,
-    };
-}
+    });
+};

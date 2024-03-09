@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,28 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://www.laohu8.com';
 
-export const route: Route = {
-    path: '/personal/:id',
-    categories: ['finance'],
-    example: '/laohu8/personal/3527667596890271',
-    parameters: { id: '用户 ID，见网址链接' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['laohu8.com/personal/:id'],
-    },
-    name: '个人主页',
-    maintainers: ['Fatpandac'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const url = `${rootUrl}/personal/${id}`;
 
@@ -47,9 +25,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `老虎社区 - ${author} 个人社区`,
         link: url,
         item: items,
-    };
-}
+    });
+};

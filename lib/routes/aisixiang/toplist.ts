@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,17 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 import { rootUrl, ossUrl, ProcessFeed } from './utils';
 
-export const route: Route = {
-    path: ['/ranking/:id?/:period?', '/toplist/:id?/:period?'],
-    name: 'Unknown',
-    maintainers: ['HenryQW', 'nczitzk'],
-    handler,
-    description: `| 文章点击排行 | 最近更新文章 | 文章推荐排行 |
-  | ------------ | ------------ | ------------ |
-  | 1            | 10           | 11           |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { id = '1', period = '1' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -44,12 +33,12 @@ async function handler(ctx) {
             };
         });
 
-    return {
+    ctx.set('data', {
         item: await ProcessFeed(limit, cache.tryGet, items),
         title: `爱思想 - ${title}`,
         link: currentUrl,
         language: 'zh-cn',
         image: new URL('images/logo_toplist.jpg', ossUrl).href,
         subtitle: title,
-    };
-}
+    });
+};

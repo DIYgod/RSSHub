@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,42 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import logger from '@/utils/logger';
 
-export const route: Route = {
-    path: ['/:category', '/topic/:topic'],
-    categories: ['traditional-media'],
-    example: '/dnaindia/headlines',
-    parameters: { category: 'Find it in the URL, or tables below' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['dnaindia.com/:category'],
-    },
-    name: 'News',
-    maintainers: ['Rjnishant530'],
-    handler,
-    description: `Topics:
-
-  | DNA verified |
-  | ------------ |
-  | dna-verified |
-
-  :::tip[Topic]
-  The URL of the form \`https://www.dnaindia.com/topic/dna-verified\` demonstrates the utilization of the subdomain \`topic\`
-  :::`,
-    description: `Categories:
-
-  | Headlines | Explainer | India | Entertainment | Sports | Viral | Lifestyle | Education | Business | World |
-  | --------- | --------- | ----- | ------------- | ------ | ----- | --------- | --------- | -------- | ----- |
-  | headlines | explainer | india | entertainment | sports | viral | lifestyle | education | business | world |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category, topic } = ctx.req.param();
     const baseUrl = 'https://www.dnaindia.com';
     let route;
@@ -91,7 +55,7 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: 'DNA India',
         link: baseUrl,
         item: items,
@@ -99,5 +63,5 @@ async function handler(ctx) {
         logo: 'https://cdn.dnaindia.com/sites/all/themes/dnaindia/favicon-1016.ico',
         icon: 'https://cdn.dnaindia.com/sites/all/themes/dnaindia/favicon-1016.ico',
         language: 'en-us',
-    };
-}
+    });
+};

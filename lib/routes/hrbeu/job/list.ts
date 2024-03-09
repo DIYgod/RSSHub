@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -17,25 +16,7 @@ const idMap = {
     },
 };
 
-export const route: Route = {
-    path: '/job/list/:id',
-    categories: ['university'],
-    example: '/hrbeu/job/list/tzgg',
-    parameters: { id: '栏目，如下表' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Unknown',
-    maintainers: ['Derekmini'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
 
     const response = await got(idMap[id].url, {
@@ -77,9 +58,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '就业服务平台-' + idMap[id].name,
         link: idMap[id].url,
         item: items,
-    };
-}
+    });
+};

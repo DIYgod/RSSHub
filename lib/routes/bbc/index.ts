@@ -1,18 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
 import utils from './utils';
 
-export const route: Route = {
-    path: '/:site?/:channel?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     let feed, title, link;
 
     // 为了向下兼容，这里 site 对应的是中文网文档中的 lang，英文网文档中的 channel
@@ -77,11 +69,11 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title,
         link,
         image: 'https://www.bbc.com/favicon.ico',
         description: title,
         item: items,
-    };
-}
+    });
+};

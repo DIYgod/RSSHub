@@ -14,10 +14,10 @@ export default async (ctx) => {
     }));
     await Promise.all(items.map((item) => finishArticleItem(item)));
 
-    return {
+    ctx.set('data', {
         title: feed.title,
         link,
         description: feed.description,
         item: items,
-    };
+    });
 };

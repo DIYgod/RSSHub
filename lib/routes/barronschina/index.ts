@@ -1,37 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/:id?',
-    categories: ['finance'],
-    example: '/barronschina',
-    parameters: { id: '栏目 id，默认为快讯' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['barronschina.com.cn/'],
-        target: '/:category?',
-    },
-    name: '栏目',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'barronschina.com.cn/',
-    description: `:::tip
-  栏目 id 留空则返回快讯，在对应页地址栏 \`columnId=\` 后可以看到。
-  :::`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id') ?? '';
 
     const rootUrl = 'http://www.barronschina.com.cn';
@@ -90,9 +63,9 @@ async function handler(ctx) {
                   };
               });
 
-    return {
+    ctx.set('data', {
         title: $('title').text().split('，')[0],
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -19,18 +18,7 @@ const parsePage = ($item, hyperlinkSelector, timeSelector) => {
     };
 };
 
-export const route: Route = {
-    path: '/data258/:id?',
-    radar: {
-        source: ['mp.data258.com/', 'mp.data258.com/article/category/:id'],
-    },
-    name: 'Unknown',
-    maintainers: ['Rongronggg9'],
-    handler,
-    url: 'mp.data258.com/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     // !!! here we must use a lock to prevent other requests to break the anti-anti-crawler workarounds !!!
     if ((await cache.get('data258:lock', false)) === '1') {
         throw new Error('Another request is in progress, please try again later.');
@@ -133,13 +121,13 @@ async function handler(ctx) {
 
     await Promise.all(items.map((item) => finishArticleItem(item, !!categoryPage)));
 
-    return {
+    ctx.set('data', {
         title,
         link: pageUrl,
         description,
         item: items,
-    };
-}
+    });
+};
 
 // TODO: login? the valid time for cookies seems to be short, and abusing account will probably get banned...
 // TODO: fetch full article for the official RSS feed? unless someone who is VIP contributes their RSS feed for test...

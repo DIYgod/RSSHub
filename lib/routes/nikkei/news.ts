@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,32 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/:category/:article_type?',
-    categories: ['traditional-media'],
-    example: '/nikkei/news',
-    parameters: { category: 'Category, see table below', article_type: 'Only includes free articles, set `free` to enable, disabled by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.nikkei.com/:category/archive', 'www.nikkei.com/:category'],
-        target: '/:category',
-    },
-    name: 'News',
-    maintainers: ['Arracc'],
-    handler,
-    description: `| 総合 | オピニオン | 経済    | 政治     | 金融      | マーケット | ビジネス | マネーのまなび | テック     | 国際          | スポーツ | 社会・調査 | 地域  | 文化    | ライフスタイル |
-  | ---- | ---------- | ------- | -------- | --------- | ---------- | -------- | -------------- | ---------- | ------------- | -------- | ---------- | ----- | ------- | -------------- |
-  | news | opinion    | economy | politics | financial | business   | 不支持   | 不支持         | technology | international | sports   | society    | local | culture | lifestyle      |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const baseUrl = 'https://www.nikkei.com';
     const { category, article_type = 'paid' } = ctx.req.param();
     let url = '';
@@ -106,12 +80,12 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '日本経済新聞 - ' + categoryName,
         description: $('meta[name="description"]').attr('content'),
         link: url,
         image: $('meta[property="og:image"]').attr('content'),
         language: 'ja',
         item: article_type === 'free' ? items.filter((item) => !item.paywall) : items,
-    };
-}
+    });
+};

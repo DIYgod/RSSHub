@@ -1,32 +1,10 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import randUserAgent from '@/utils/rand-user-agent';
 
 const UA = randUserAgent({ browser: 'chrome', os: 'android', device: 'mobile' });
 
-export const route: Route = {
-    path: '/snb/:id',
-    categories: ['finance'],
-    example: '/xueqiu/snb/ZH1288184',
-    parameters: { id: '组合代码, 可在组合主页 URL 中找到.' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['xueqiu.com/P/:id', 'xueqiu.com/p/:id'],
-    },
-    name: '组合最新调仓信息',
-    maintainers: ['ZhishanZhang'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const url = 'https://xueqiu.com/p/' + id;
 
@@ -60,10 +38,10 @@ async function handler(ctx) {
         guid: `xueqiu::snb::${id}::${time}`,
     };
 
-    return {
+    ctx.set('data', {
         title: snb_title,
         link: url,
         description: snb_description,
         item: [single],
-    };
-}
+    });
+};

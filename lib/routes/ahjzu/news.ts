@@ -1,33 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/news',
-    categories: ['university'],
-    example: '/ahjzu/news',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['news.ahjzu.edu.cn/20/list.htm'],
-    },
-    name: '通知公告',
-    maintainers: ['Yuk-0v0'],
-    handler,
-    url: 'news.ahjzu.edu.cn/20/list.htm',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://www.ahjzu.edu.cn';
     const currentUrl = 'https://www.ahjzu.edu.cn/20/list.htm';
 
@@ -72,10 +49,10 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '安建大-通知公告',
         description: '安徽建筑大学-通知公告',
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -24,40 +23,7 @@ const getDateForToday = () => {
     return today;
 };
 
-export const route: Route = {
-    path: '/:date?/:category?',
-    categories: ['traditional-media'],
-    example: '/jornada/2022-10-12/capital',
-    parameters: { date: "Date string, must be in format of `YYYY-MM-DD`. You can get today's news using `today`", category: 'Category, refer to the table below' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'News',
-    maintainers: ['Thealf154'],
-    handler,
-    description: `Provides a way to get an specific rss feed by date and category over the official one.
-
-  | Category             | \`:category\` |
-  | -------------------- | ----------- |
-  | Capital              | capital     |
-  | Cartones             | cartones    |
-  | Ciencia y Tecnología | ciencia     |
-  | Cultura              | cultura     |
-  | Deportes             | deportes    |
-  | Economía             | economia    |
-  | Estados              | estados     |
-  | Mundo                | mundo       |
-  | Opinión              | opinion     |
-  | Política             | politica    |
-  | Sociedad             | sociedad    |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const date = ctx.req.param('date') === 'today' || ctx.req.param('date') === undefined ? getDateForToday() : ctx.req.param('date');
     const category = ctx.req.param('category');
     const url = `${rootUrl}/jsonstorage/articles_${date}_.json`;
@@ -85,9 +51,9 @@ async function handler(ctx) {
         }));
     }
 
-    return {
+    ctx.set('data', {
         title: 'La Jornada',
         link: rootUrl,
         item: items,
-    };
-}
+    });
+};

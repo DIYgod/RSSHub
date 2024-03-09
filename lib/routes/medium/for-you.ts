@@ -1,31 +1,9 @@
-import { Route } from '@/types';
 import { config } from '@/config';
 
 import parseArticle from './parse-article.js';
 import { getWebInlineRecommendedFeedQuery } from './graphql.js';
 
-export const route: Route = {
-    path: '/for-you/:user',
-    categories: ['blog'],
-    example: '/medium/for-you/imsingee',
-    parameters: { user: 'Username' },
-    features: {
-        requireConfig: true,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Personalized Recommendations - For You',
-    maintainers: ['ImSingee'],
-    handler,
-    description: `:::warning
-  Personalized recommendations require the cookie value after logging in, so only self-hosting is supported. See the configuration module on the deployment page for details.
-  :::`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const user = ctx.req.param('user');
 
     const cookie = config.medium.cookies[user];
@@ -45,9 +23,9 @@ async function handler(ctx) {
 
     const parsedArticles = await Promise.all(urls.map((url) => parseArticle(ctx, url)));
 
-    return {
+    ctx.set('data', {
         title: `${user} Medium For You`,
         link: 'https://medium.com/',
         item: parsedArticles,
-    };
-}
+    });
+};

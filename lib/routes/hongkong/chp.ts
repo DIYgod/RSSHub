@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -37,18 +36,7 @@ const titles = {
     },
 };
 
-export const route: Route = {
-    path: '/chp/:category?/:language?',
-    radar: {
-        source: ['dh.gov.hk/'],
-    },
-    name: 'Unknown',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'dh.gov.hk/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const languageCodes = {
         en: 'en',
         zh_cn: 'sc',
@@ -108,9 +96,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `${titles[category][language]} - ${titles.title[language]}`,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

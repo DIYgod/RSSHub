@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,28 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/live/:id',
-    categories: ['traditional-media'],
-    example: '/pts/live/62e8e4bbb4de2cbd74468b2b',
-    parameters: { id: '報導 id，可在对应整理報導页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['news.pts.org.tw/live/:id', 'news.pts.org.tw/'],
-    },
-    name: '整理報導',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
 
     const rootUrl = 'https://news.pts.org.tw';
@@ -67,9 +45,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `公視新聞網 PNN - ${response.data.data.title.replace(/【不斷更新】/, '')}`,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

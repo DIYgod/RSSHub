@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,28 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://www.ithome.com/';
 
-export const route: Route = {
-    path: '/tag/:name',
-    categories: ['new-media'],
-    example: '/ithome/tag/win11',
-    parameters: { name: '标签名称，可从网址链接中获取' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['ithome.com/tag/:name'],
-    },
-    name: '标签',
-    maintainers: ['Fatpandac'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const name = ctx.req.param('name');
     const url = `${rootUrl}tag/${name}`;
 
@@ -74,9 +52,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `IT之家 - ${name}标签`,
         link: url,
         item: items.filter(Boolean),
-    };
-}
+    });
+};

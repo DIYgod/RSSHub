@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,19 +6,7 @@ import { parseRelativeDate } from '@/utils/parse-date';
 const hostUrl = 'http://www.moa.gov.cn/';
 const hostUrlObj = new URL(hostUrl); // 用于在下面判断host
 
-export const route: Route = {
-    path: '/moa/:suburl{.+}',
-    radar: {
-        source: ['moa.gov.cn/'],
-        target: '/moa/:suburl',
-    },
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-    url: 'moa.gov.cn/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const rawSuburl = ctx.req.param('suburl');
     const suburl = rawSuburl.slice(-1) === '/' ? rawSuburl : rawSuburl + '/';
 
@@ -57,7 +44,7 @@ async function handler(ctx) {
             })
         );
     }
-}
+};
 
 // 处理文章列表, 从那里获得一堆要爬取的页面, 然后爬取
 async function dealChannel(suburl, selectors) {

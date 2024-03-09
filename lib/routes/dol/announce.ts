@@ -1,27 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/announce/:owner?/:province?/:office?',
-    categories: ['government'],
-    example: '/dol/announce',
-    parameters: { owner: 'Requester/former land owner', province: 'Province which the land is belongs to', office: 'DOL office name which the land is belongs to (สำนักงานที่ดิน(กรุงเทพมหานคร|จังหวัด*) [สาขา*])' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'e-LandsAnnouncement',
-    maintainers: ['itpcc'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const baseUrl = 'https://announce.dol.go.th';
     const { owner, province, office } = ctx.req.param();
     const queryParams = {
@@ -108,4 +89,4 @@ async function handler(ctx) {
         });
 
     ctx.set('data', result);
-}
+};

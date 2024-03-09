@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,25 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/:kind?',
-    categories: ['program-update'],
-    example: '/gofans',
-    parameters: { kind: 'Platform, either `macos` or `ios`, empty means both (default)' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '最新限免 / 促销应用',
-    maintainers: ['HenryQW'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { kind = '' } = ctx.req.param();
     const baseUrl = 'https://gofans.cn';
 
@@ -54,10 +35,10 @@ async function handler(ctx) {
         category: item.primary_genre_name,
     }));
 
-    return {
+    ctx.set('data', {
         title: '最新限免 / 促销应用',
         link: baseUrl,
         description: 'GoFans：最新限免 / 促销应用',
         item: items,
-    };
-}
+    });
+};

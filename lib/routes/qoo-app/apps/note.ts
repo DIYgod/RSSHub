@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,25 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { appsUrl } from '../utils';
 
-export const route: Route = {
-    path: '/apps/:lang?/note/:id',
-    categories: ['anime'],
-    example: '/qoo-app/apps/en/note/7675',
-    parameters: { lang: 'Language, see the table above, empty means `中文`', id: 'Game ID, can be found in URL' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Game Store - Notes',
-    maintainers: ['TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { id, lang = '' } = ctx.req.param();
     const link = `${appsUrl}${lang ? `/${lang}` : ''}/app-note/${id}`;
 
@@ -58,10 +39,10 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('head title').text(),
         link,
         language: $('html').attr('lang'),
         item: items,
-    };
-}
+    });
+};

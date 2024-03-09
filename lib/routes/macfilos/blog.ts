@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/blog',
-    categories: ['new-media'],
-    example: '/macfilos/blog',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['macfilos.com/blog', 'macfilos.com/'],
-    },
-    name: 'Blog',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'macfilos.com/blog',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const rootUrl = 'https://www.macfilos.com';
     const currentUrl = `${rootUrl}/blog`;
 
@@ -77,9 +54,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

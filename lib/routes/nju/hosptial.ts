@@ -1,31 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/hospital',
-    categories: ['university'],
-    example: '/nju/hospital',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['hospital.nju.edu.cn/ggtz/index.html'],
-    },
-    name: '校医院',
-    maintainers: ['ret-1'],
-    handler,
-    url: 'hospital.nju.edu.cn/ggtz/index.html',
-};
-
-async function handler() {
+export default async (ctx) => {
     const category_dict = {
         ggtz: '公告通知',
     };
@@ -54,9 +31,9 @@ async function handler() {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: '校医院-公告通知',
         link: 'https://hospital.nju.edu.cn/ggtz/index.html',
         item: items[0],
-    };
-}
+    });
+};

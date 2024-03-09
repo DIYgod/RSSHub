@@ -1,29 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/forum/:id',
-    categories: ['bbs'],
-    example: '/zhibo8/forum/8',
-    parameters: { id: '子论坛 id，可在子论坛 URL 找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '子论坛',
-    maintainers: ['LogicJake'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const link = `https://bbs.zhibo8.cc/forum/list/?fid=${id}`;
 
@@ -58,9 +39,9 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: `${title}—直播吧`,
         link,
         item: out,
-    };
-}
+    });
+};

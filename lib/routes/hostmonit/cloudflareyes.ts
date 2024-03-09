@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -15,28 +14,7 @@ const lines = {
     CT: '中国电信',
 };
 
-export const route: Route = {
-    path: '/cloudflareyes/:type?',
-    categories: ['other'],
-    example: '/hostmonit/cloudflareyes',
-    parameters: { type: '类型，见下表，默认为 v4' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'CloudFlareYes',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| v4 | v6 |
-  | -- | -- |
-  |    | v6 |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { type = 'v4' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -101,7 +79,7 @@ async function handler(ctx) {
 
     const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
 
-    return {
+    ctx.set('data', {
         item: items,
         title: $('title').text().replace(/- .*$/, `- ${title}`),
         link: currentUrl,
@@ -112,5 +90,5 @@ async function handler(ctx) {
         subtitle: title,
         author: $('title').text().split(/\s-/)[0],
         allowEmpty: true,
-    };
-}
+    });
+};

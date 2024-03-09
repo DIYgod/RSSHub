@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -17,35 +16,7 @@ const titleMap = {
     23: '行业',
 };
 
-export const route: Route = {
-    path: '/news/:cate?',
-    categories: ['new-media'],
-    example: '/diandong/news',
-    parameters: { cate: '分类，见下表，默认为推荐' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['diandong.com/news'],
-        target: '/news/:cate',
-    },
-    name: '资讯',
-    maintainers: ['Fatpandac'],
-    handler,
-    url: 'diandong.com/news',
-    description: `分类
-
-  | 推荐 | 新车 | 导购 | 试驾 | 用车 | 技术 | 政策 | 行业 |
-  | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
-  | 0    | 29   | 61   | 30   | 75   | 22   | 24   | 23   |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const cate = ctx.req.param('cate') ?? 0;
     const limit = ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 25;
     const url = `${rootUrl}/content/list?page=1&size=${limit}&source_id=12&content_type=news&content_ids=&category_id=${cate}`;
@@ -72,9 +43,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `电动邦 - ${titleMap[cate]}`,
         link: 'https://www.diandong.com/news',
         item: items,
-    };
-}
+    });
+};

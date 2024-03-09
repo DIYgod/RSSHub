@@ -1,31 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/zhuanlan/:id',
-    categories: ['social-media'],
-    example: '/zhihu/zhuanlan/googledevelopers',
-    parameters: { id: '专栏 id，可在专栏主页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['zhuanlan.zhihu.com/:id'],
-    },
-    name: '专栏',
-    maintainers: ['DIYgod'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
 
     const listRes = await got({
@@ -113,10 +91,10 @@ async function handler(ctx) {
         };
     });
 
-    return {
+    ctx.set('data', {
         description,
         item,
         title: `知乎专栏-${title}`,
         link: url,
-    };
-}
+    });
+};

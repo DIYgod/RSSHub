@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/photo/jx',
-    categories: ['traditional-media'],
-    example: '/cctv/photo/jx',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['photo.cctv.com/jx', 'photo.cctv.com/'],
-    },
-    name: '央视网图片《镜象》',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'photo.cctv.com/jx',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const rootUrl = 'https://photo.cctv.com';
     const currentUrl = `${rootUrl}/jx/`;
     const response = await got({
@@ -67,9 +44,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '央视网图片《镜象》',
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

@@ -1,31 +1,8 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import util from './utils';
 
-export const route: Route = {
-    path: '/collections/:userId',
-    categories: ['programming'],
-    example: '/juejin/collections/1697301682482439',
-    parameters: { userId: '用户唯一标志符, 在浏览器地址栏URL中能够找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['juejin.cn/user/:id', 'juejin.cn/user/:id/collections'],
-        target: '/collections/:id',
-    },
-    name: '收藏集',
-    maintainers: ['isQ'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const userId = ctx.req.param('userId');
     const response = await got({
         method: 'get',
@@ -53,11 +30,11 @@ async function handler(ctx) {
 
     const result = await util.ProcessFeed(posts, cache);
 
-    return {
+    ctx.set('data', {
         title: '掘金 - 收藏集',
         link: `https://juejin.im/user/${userId}/collections`,
         description: '掘金，指定用户整个收藏集',
         item: result,
         allowEmpty: true,
-    };
-}
+    });
+};

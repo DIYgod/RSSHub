@@ -1,21 +1,8 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import utils from './utils';
 
-export const route: Route = {
-    path: '/indexers/pianyuan/results/search/api',
-    radar: {
-        source: ['pianyuan.org/'],
-        target: '/index',
-    },
-    name: 'Unknown',
-    maintainers: ['jerry1119'],
-    handler,
-    url: 'pianyuan.org/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const link_base = 'https://pianyuan.org/';
     const description = '搜索';
     // 适配jackett 搜索api, eg: https://rsshub.app/pianyuan/indexers/pianyuan/results/search/api?t=test&q=halo
@@ -50,10 +37,10 @@ async function handler(ctx) {
 
     const items = await utils.ProcessFeed(detailLinks, cache);
 
-    return {
+    ctx.set('data', {
         title: '片源网',
         description,
         link: link_base,
         item: items,
-    };
-}
+    });
+};

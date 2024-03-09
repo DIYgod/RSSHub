@@ -1,29 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { config } from '@/config';
 
-export const route: Route = {
-    path: '/starred_repos/:user',
-    categories: ['programming'],
-    example: '/github/starred_repos/DIYgod',
-    parameters: { user: 'User name' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['github.com/:user'],
-    },
-    name: 'User Starred Repositories',
-    maintainers: ['LanceZhu'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     if (!config.github || !config.github.access_token) {
         throw new Error('GitHub star RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -67,7 +45,7 @@ async function handler(ctx) {
 
     const data = response.data.data.user.starredRepositories.edges;
 
-    return {
+    ctx.set('data', {
         allowEmpty: true,
         title: `${user}’s starred repositories`,
         link: host,
@@ -81,5 +59,5 @@ async function handler(ctx) {
             pubDate: new Date(repo.starredAt),
             link: repo.node.url,
         })),
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,32 +8,7 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/:community/:category?',
-    categories: ['bbs'],
-    example: '/learnku/laravel/qa',
-    parameters: { community: '社区 标识，可在 <https://learnku.com/communities> 找到', category: '分类，如果不传 `category` 则获取全部分类' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['learnku.com/:community'],
-        target: '/:community',
-    },
-    name: '社区',
-    maintainers: ['kayw-geek'],
-    handler,
-    description: `| 招聘 | 翻译         | 问答 | 链接  |
-| ---- | ------------ | ---- | ----- |
-| jobs | translations | qa   | links |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const community = ctx.req.param('community');
     const category = ctx.req.param('category') || '';
 
@@ -93,10 +67,10 @@ async function handler(ctx) {
         ['links', { name: '链接' }],
         ['', { name: '最新' }],
     ]);
-    return {
+    ctx.set('data', {
         title: `LearnKu - ${title} - ${categoryTitle.get(category).name}`,
         link: url,
         description,
         item: item.filter((item) => item !== ''),
-    };
-}
+    });
+};

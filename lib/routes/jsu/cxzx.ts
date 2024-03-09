@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got'; // 自订的 got
@@ -6,14 +5,7 @@ import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析
 import { parseDate } from '@/utils/parse-date';
 import { getPageItemAndDate } from './utils/index';
 
-export const route: Route = {
-    path: '/cxzx/:types?',
-    name: 'Unknown',
-    maintainers: ['wenjia03'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     // 在此处编写您的逻辑
     const { types = 'xkjs' } = ctx.req.param();
     const baseUrl = 'https://cxzx.jsu.edu.cn/';
@@ -74,11 +66,11 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         // 在此处输出您的 RSS
         title: `吉首大学创新中心 - ${urls[types].title}`,
         link: urls[types].url,
         description: '吉首大学创新中心',
         item: out,
-    };
-}
+    });
+};

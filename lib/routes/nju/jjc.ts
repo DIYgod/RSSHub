@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/jjc',
-    categories: ['university'],
-    example: '/nju/jjc',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['jjc.nju.edu.cn/main.htm', 'jjc.nju.edu.cn/'],
-    },
-    name: '基建处',
-    maintainers: ['ret-1'],
-    handler,
-    url: 'jjc.nju.edu.cn/main.htm',
-};
-
-async function handler() {
+export default async (ctx) => {
     const category_dict = {
         cgxx: '采购信息',
         cjgg: '成交公告',
@@ -55,9 +32,9 @@ async function handler() {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: `南京大学基建处`,
         link: 'https://jjc.nju.edu.cn/main.htm',
         item: [...items[0], ...items[1], ...items[2]],
-    };
-}
+    });
+};

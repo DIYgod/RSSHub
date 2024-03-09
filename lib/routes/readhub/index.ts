@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,28 +9,7 @@ import * as path from 'node:path';
 
 import { rootUrl, apiTopicUrl, art, processItems } from './util';
 
-export const route: Route = {
-    path: '/:category?',
-    categories: ['new-media'],
-    example: '/readhub',
-    parameters: { category: '分类，见下表，默认为热门话题' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '分类',
-    maintainers: ['WhiteWorld', 'nczitzk', 'Fatpandac'],
-    handler,
-    description: `| 热门话题 | 科技动态 | 医疗产业 | 财经快讯           |
-  | -------- | -------- | -------- | ------------------ |
-  |          | news     | medical  | financial\_express |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = '' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -72,7 +50,7 @@ async function handler(ctx) {
     const image = $('link[rel="preload"][as="image"]').prop('href');
     const icon = $('meta[property="og:image"]').prop('content');
 
-    return {
+    ctx.set('data', {
         item: items,
         title: `${author} - ${subtitle}`,
         link: currentUrl,
@@ -84,5 +62,5 @@ async function handler(ctx) {
         subtitle,
         author,
         allowEmpty: true,
-    };
-}
+    });
+};

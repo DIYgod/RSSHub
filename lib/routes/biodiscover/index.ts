@@ -1,21 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/:channel?',
-    radar: {
-        source: ['www.biodiscover.com/:channel'],
-        target: '/:channel',
-    },
-    name: 'Unknown',
-    maintainers: ['aidistan'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const channel = ctx.req.param('channel');
     const listUrl = 'http://www.biodiscover.com/' + channel;
     const response = await got({ url: listUrl });
@@ -28,7 +16,7 @@ async function handler(ctx) {
         }))
         .toArray();
 
-    return {
+    ctx.set('data', {
         title: '生物探索 - ' + $('.header li.sel a').text(),
         link: listUrl,
         description: $('meta[name=description]').attr('content'),
@@ -53,5 +41,5 @@ async function handler(ctx) {
                 })
             )
         ),
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
@@ -17,39 +16,7 @@ const map = new Map([
 
 const host = 'https://dgxg.njust.edu.cn';
 
-export const route: Route = {
-    path: '/eo/:grade?/:type?',
-    categories: ['university'],
-    example: '/njust/eo/17/tz',
-    parameters: {
-        grade: '年级，见下表，默认为本科 2017 级，未列出的年级所对应的参数可以从级网二级页面的 URL Path 中找到，例如：本科 2020 级为 `_t1316`',
-        type: '类别，见下表，默认为年级通知（通知公告），未列出的类别所对应的参数可以从级网二级页面的 URL Path 中找到，例如：电光 20 的通知公告为 `tzgg_12969`',
-    },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: true,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '电光学院年级网站',
-    maintainers: ['jasongzy'],
-    handler,
-    description: `\`grade\` 列表：
-
-  | 本科 2016 级 | 本科 2017 级 | 本科 2018 级 | 本科 2019 级 |
-  | ------------ | ------------ | ------------ | ------------ |
-  | 16           | 17           | 18           | 19           |
-
-  \`type\` 列表：
-
-  | 年级通知（通知公告） | 每日动态（主任寄语） |
-  | -------------------- | -------------------- |
-  | tz                   | dt                   |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const grade = ctx.req.param('grade') ?? '17';
     const type = ctx.req.param('type') ?? 'tz';
     let info = map.get(grade + type);
@@ -67,7 +34,7 @@ async function handler(ctx) {
     }
     const list = $('li.list_item');
 
-    return {
+    ctx.set('data', {
         title: info.title,
         link: siteUrl,
         item:
@@ -79,5 +46,5 @@ async function handler(ctx) {
                     link: $(item).find('a').attr('href'),
                 }))
                 .get(),
-    };
-}
+    });
+};

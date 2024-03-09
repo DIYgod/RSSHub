@@ -1,21 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { ProcessForm, ProcessFeed } from './utils';
 
-export const route: Route = {
-    path: '/tag/:tagId?',
-    radar: {
-        source: ['mob.iyingdi.com/fine/:tagId'],
-        target: '/tag/:tagId',
-    },
-    name: 'Unknown',
-    maintainers: ['auto-bot-ty'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const tagId = ctx.req.param('tagId');
     const tagList = {
         17: '炉石传说',
@@ -69,9 +57,9 @@ async function handler(ctx) {
 
     const items = await ProcessFeed(cache, articleList);
 
-    return {
+    ctx.set('data', {
         title: `${tagName || tagJson[0].tag} - 旅法师营地 `,
         link: `${rootUrl}/tz/tag/${tagId}`,
         item: items,
-    };
-}
+    });
+};

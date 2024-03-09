@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -13,17 +12,7 @@ const types = {
     'db-engines': '数据库',
 };
 
-export const route: Route = {
-    path: ['/ranking/:type?', '/report/:type?'],
-    name: 'Unknown',
-    maintainers: ['moke8', 'nczitzk'],
-    handler,
-    description: `| 编程语言 | 服务器   | 数据库     |
-  | -------- | -------- | ---------- |
-  | tiobe    | netcraft | db-engines |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     let type = ctx.req.param('type') ?? 'tiobe';
 
     type = type === 'webserver' ? 'netcraft' : type === 'db' ? 'db-engines' : type;
@@ -62,9 +51,9 @@ async function handler(ctx) {
         },
     ];
 
-    return {
+    ctx.set('data', {
         title: `HelloGitHub - ${types[type]}排行榜`,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

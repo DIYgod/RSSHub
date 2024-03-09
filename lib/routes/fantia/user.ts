@@ -1,31 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 
-export const route: Route = {
-    path: '/user/:id',
-    categories: ['picture'],
-    example: '/fantia/user/3498',
-    parameters: { id: 'User id, can be found in user profile URL' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['fantia.jp/fanclubs/:id'],
-    },
-    name: 'User Posts',
-    maintainers: ['nczitzk'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const rootUrl = 'https://fantia.jp';
     const userUrl = `${rootUrl}/api/v1/fanclubs/${ctx.req.param('id')}`;
 
@@ -75,9 +53,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `Fantia - ${response.data.fanclub.fanclub_name_with_creator_name}`,
         link: `${rootUrl}/fanclubs/${ctx.req.param('id')}`,
         item: items,
-    };
-}
+    });
+};

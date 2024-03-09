@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -16,14 +15,7 @@ const shortcuts = {
     '/information/workplace': '/information/web_zhichang',
 };
 
-export const route: Route = {
-    path: '*',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const path = getSubPath(ctx)
         .replace(/^\/news(?!flashes)/, '/information')
         .replace(/\/search\/article/, '/search/articles');
@@ -57,9 +49,9 @@ async function handler(ctx) {
         items = await Promise.all(items.map((item) => ProcessItem(item, cache.tryGet)));
     }
 
-    return {
+    ctx.set('data', {
         title: `36氪 - ${$('title').text().split('_')[0]}`,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,14 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 import { eecsMap } from './utils';
 
-export const route: Route = {
-    path: '/eecs/:type?',
-    name: 'Unknown',
-    maintainers: ['Ir1d'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const host = 'https://eecs.pku.edu.cn';
 
     let type = ctx.params && Number.parseInt(ctx.req.param('type'));
@@ -64,10 +56,10 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: host + '/xygk1/ggtz/' + eecsMap.get(type),
         description: '北大信科 公告通知',
         item: items,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import utils from './utils';
@@ -17,28 +16,7 @@ async function getUserName(uid) {
     return response.data.name;
 }
 
-export const route: Route = {
-    path: '/author/:uid',
-    categories: ['programming'],
-    example: '/lanqiao/author/1701267',
-    parameters: { uid: '作者 `uid` 可在作者主页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['lanqiao.cn/users/:uid'],
-    },
-    name: '作者发布的课程',
-    maintainers: ['huhuhang'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const uid = ctx.req.param('uid');
     const userName = await getUserName(uid);
     // 发起 HTTP GET 请求
@@ -71,7 +49,7 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         // 源标题
         title: `${userName} 发布的课程`,
         // 源链接
@@ -80,5 +58,5 @@ async function handler(ctx) {
         description: `${userName} 发布的课程`,
         // 遍历此前获取的数据
         item: items,
-    };
-}
+    });
+};

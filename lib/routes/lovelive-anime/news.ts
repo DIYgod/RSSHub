@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,30 +8,7 @@ import * as path from 'node:path';
 import { art } from '@/utils/render';
 const renderDescription = (desc) => art(path.join(__dirname, 'templates/description.art'), desc);
 
-export const route: Route = {
-    path: '/news/:option?',
-    categories: ['anime'],
-    example: '/lovelive-anime/news',
-    parameters: { option: 'Crawl full text when `option` is `detail`.' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.lovelive-anime.jp/', 'www.lovelive-anime.jp/news'],
-        target: '/news',
-    },
-    name: 'Love Live! Official Website Latest NEWS',
-    maintainers: ['axojhf'],
-    handler,
-    url: 'www.lovelive-anime.jp/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const rootUrl = 'https://www.lovelive-anime.jp/news/';
 
     const response = await got(rootUrl);
@@ -76,9 +52,9 @@ async function handler(ctx) {
         );
     }
 
-    return {
+    ctx.set('data', {
         title: 'lovelive official website news',
         link: 'https://www.lovelive-anime.jp/news/',
         item: items,
-    };
-}
+    });
+};

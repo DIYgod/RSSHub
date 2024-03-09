@@ -1,15 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/839studio',
-    name: 'Unknown',
-    maintainers: ['umm233'],
-    handler,
-};
-
-async function handler() {
+export default async (ctx) => {
     // 发起 HTTP GET 请求
     const response = await got({
         method: 'get',
@@ -22,7 +14,7 @@ async function handler() {
     const $ = load(data);
     const list = $('div[class=imgtext]');
 
-    return {
+    ctx.set('data', {
         title: '澎湃美数课作品集',
         link: 'http://projects.thepaper.cn/thepaper-cases/839studio/',
         item:
@@ -37,5 +29,5 @@ async function handler() {
                     };
                 })
                 .get(),
-    };
-}
+    });
+};

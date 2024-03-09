@@ -1,27 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 
-export const route: Route = {
-    path: '/chapter/:id',
-    categories: ['reading'],
-    example: '/wenku8/chapter/74',
-    parameters: { id: '小说 id, 可在对应小说页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '章节',
-    maintainers: ['zsakvo'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const index = Number.parseInt(id / 1000);
 
@@ -46,9 +27,9 @@ async function handler(ctx) {
         });
     });
 
-    return {
+    ctx.set('data', {
         title: `轻小说文库 ${name}`,
         link: `https://www.wenku8.net/book/${id}.htm`,
         item: chapter_item,
-    };
-}
+    });
+};

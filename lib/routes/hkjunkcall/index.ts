@@ -1,22 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/',
-    radar: {
-        source: ['hkjunkcall.com/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'hkjunkcall.com/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://hkjunkcall.com';
     const currentUrl = `${rootUrl}/cdpushdash.asp`;
 
@@ -59,9 +46,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

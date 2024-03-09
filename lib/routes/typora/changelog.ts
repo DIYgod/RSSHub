@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/changelog',
-    categories: ['program-update'],
-    example: '/typora/changelog',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['support.typora.io/'],
-    },
-    name: 'Changelog',
-    maintainers: ['cnzgray'],
-    handler,
-    url: 'support.typora.io/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const host = 'https://support.typora.io';
 
     const { data } = await got(`${host}/store/`);
@@ -54,11 +31,11 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: 'Typora Changelog',
         link: host,
         description: 'Typora Changelog',
         image: `${host}/assets/img/favicon-128.png`,
         item: items,
-    };
-}
+    });
+};

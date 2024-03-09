@@ -1,29 +1,7 @@
-import { Route } from '@/types';
 import { parseList } from './util';
 const baseUrl = 'https://www.zaobao.com';
 
-export const route: Route = {
-    path: '/realtime/:section?',
-    categories: ['traditional-media'],
-    example: '/zaobao/realtime/china',
-    parameters: { section: '分类，缺省为 china' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '即时新闻',
-    maintainers: ['shunf4'],
-    handler,
-    description: `| 中国  | 新加坡    | 国际  | 财经     |
-  | ----- | --------- | ----- | -------- |
-  | china | singapore | world | zfinance |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const section = ctx.req.param('section') ?? 'china';
 
     let name;
@@ -58,10 +36,10 @@ async function handler(ctx) {
 
     const { resultList } = await parseList(ctx, sectionLink);
 
-    return {
+    ctx.set('data', {
         title: `《联合早报》-${name}-即时`,
         link: baseUrl + sectionLink,
         description: '新加坡、中国、亚洲和国际的即时、评论、商业、体育、生活、科技与多媒体新闻，尽在联合早报。',
         item: resultList,
-    };
-}
+    });
+};

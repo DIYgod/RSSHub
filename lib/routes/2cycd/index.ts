@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -8,14 +7,7 @@ import iconv from 'iconv-lite';
 
 // http://www.2cycd.com/forum.php?mod=forumdisplay&fid=43&orderby=dateline
 
-export const route: Route = {
-    path: '/:fid/:sort?',
-    name: 'Unknown',
-    maintainers: ['shelken'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const fid = ctx.req.param('fid') ?? '43';
     const sort = ctx.req.param('sort') ?? 'dateline';
 
@@ -58,9 +50,9 @@ async function handler(ctx) {
             })
         )
     );
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

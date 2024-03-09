@@ -1,30 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/shortcuts',
-    categories: ['new-media'],
-    example: '/sspai/shortcuts',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['shortcuts.sspai.com/*'],
-    },
-    name: 'Shortcuts Gallery',
-    maintainers: ['Andiedie'],
-    handler,
-    url: 'shortcuts.sspai.com/*',
-};
-
-async function handler() {
+export default async (ctx) => {
     const {
         data: { data: categories },
     } = await got('https://shortcuts.sspai.com/api/v1/user/workflow/all/get');
@@ -43,10 +20,10 @@ async function handler() {
         }
     }
 
-    return {
+    ctx.set('data', {
         title: 'Shortcuts Gallery - 少数派',
         link: 'https://shortcuts.sspai.com/#/main/workflow',
         description: 'Shortcuts Gallery - 少数派',
         item: items,
-    };
-}
+    });
+};

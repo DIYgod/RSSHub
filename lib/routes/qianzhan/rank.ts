@@ -1,37 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/analyst/rank/:type?',
-    categories: ['finance'],
-    example: '/qianzhan/analyst/rank/week',
-    parameters: { type: '分类，见下表' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['qianzhan.com/analyst', 'qianzhan.com/'],
-        target: '/analyst/rank',
-    },
-    name: '排行榜',
-    maintainers: ['moke8'],
-    handler,
-    url: 'qianzhan.com/analyst',
-    description: `| 周排行 | 月排行 |
-  | ------ | ------ |
-  | week   | month  |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type') === 'week' ? 1 : 2;
     const rootUrl = 'https://www.qianzhan.com/analyst/';
 
@@ -60,9 +33,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `前瞻经济学人 - ${type === 1 ? '周排行' : '月排行'}`,
         link: rootUrl,
         item: items,
-    };
-}
+    });
+};

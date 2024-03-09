@@ -1,27 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/announcements',
-    categories: ['travel'],
-    example: '/fzmtr/announcements',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '通知公告',
-    maintainers: ['HankChow'],
-    handler,
-};
-
-async function handler() {
+export default async (ctx) => {
     const domain = 'www.fzmtr.com';
     const announcementsUrl = `http://${domain}/html/fzdt/tzgg/index.html`;
     const response = await got(announcementsUrl);
@@ -43,7 +24,7 @@ async function handler() {
         })
         .get();
 
-    return {
+    ctx.set('data', {
         title: '福州地铁通知公告',
         url: announcementsUrl,
         description: '福州地铁通知公告',
@@ -53,5 +34,5 @@ async function handler() {
             link: item.link,
             author: item.author,
         })),
-    };
-}
+    });
+};

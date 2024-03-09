@@ -1,31 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/free-next/:type?',
-    categories: ['reading'],
-    example: '/qidian/free-next',
-    parameters: { type: '默认不填为起点中文网，填 mm 为起点女生网' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.qidian.com/free'],
-        target: '/free',
-    },
-    name: '限时免费下期预告',
-    maintainers: ['LogicJake'],
-    handler,
-    url: 'www.qidian.com/free',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type');
 
     let link, title;
@@ -57,10 +33,10 @@ async function handler(ctx) {
         })
         .get();
 
-    return {
+    ctx.set('data', {
         title,
         description: `限时免费下期预告-${title}`,
         link,
         item: out,
-    };
-}
+    });
+};

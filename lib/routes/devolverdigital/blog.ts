@@ -1,31 +1,8 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/blog',
-    categories: ['blog'],
-    example: '/devolverdigital/blog',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['devolverdigital.com/blog'],
-    },
-    name: 'Official Blogs',
-    maintainers: ['XXY233'],
-    handler,
-    url: 'devolverdigital.com/blog',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://www.devolverdigital.com/blog';
     const { data: response } = await got(baseUrl);
 
@@ -65,10 +42,10 @@ async function handler() {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: 'DevolverDigital Blog',
         language: 'en-us',
         link: 'https://www.devolverdigital.com/blog',
         item: items,
-    };
-}
+    });
+};

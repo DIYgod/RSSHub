@@ -1,31 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 const rootUrl = 'https://www.coindesk.com';
 
-export const route: Route = {
-    path: '/consensus-magazine',
-    categories: ['new-media'],
-    example: '/coindesk/consensus-magazine',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['coindesk.com/'],
-    },
-    name: '新闻周刊',
-    maintainers: ['jameshih'],
-    handler,
-    url: 'coindesk.com/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const channel = ctx.req.param('channel') ?? 'consensus-magazine';
 
     const response = await got.get(`${rootUrl}/${channel}/`);
@@ -49,9 +26,9 @@ async function handler(ctx) {
         pubDate: item.display_date,
     }));
 
-    return {
+    ctx.set('data', {
         title: 'CoinDesk Consensus Magazine',
         link: `${rootUrl}/${channel}`,
         item: items,
-    };
-}
+    });
+};

@@ -1,28 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { config } from '@/config';
 import queryString from 'query-string';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/tags/:workspace/:repo_slug',
-    categories: ['programming'],
-    example: '/bitbucket/tags/blaze-lib/blaze',
-    parameters: { workspace: 'Workspace', repo_slug: 'Repository' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Tags',
-    maintainers: ['AuroraDysis'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const workspace = ctx.req.param('workspace');
     const repo_slug = ctx.req.param('repo_slug');
 
@@ -42,7 +23,7 @@ async function handler(ctx) {
         headers,
     });
     const data = response.data.values;
-    return {
+    ctx.set('data', {
         allowEmpty: true,
         title: `Recent Tags in ${workspace}/${repo_slug}`,
         link: `https://bitbucket.org/${workspace}/${repo_slug}`,
@@ -55,5 +36,5 @@ async function handler(ctx) {
                 pubDate: parseDate(item.date),
                 link: item.links.html.href,
             })),
-    };
-}
+    });
+};

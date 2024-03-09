@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -11,14 +10,7 @@ const platformSlugs = {
     ios: 'ios/notes',
 };
 
-export const route: Route = {
-    path: '/release/:platform?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { platform = 'desktop' } = ctx.req.param();
     const devicePlatform = platform.replace('-', '/');
 
@@ -28,7 +20,7 @@ async function handler(ctx) {
     const version = $('.c-release-version').text();
     const pubDate = parseDate($('.c-release-date').text(), 'MMMM D, YYYY');
 
-    return {
+    ctx.set('data', {
         title: `Firefox ${platform} release notes`,
         link,
         item: [
@@ -40,5 +32,5 @@ async function handler(ctx) {
                 pubDate,
             },
         ],
-    };
-}
+    });
+};

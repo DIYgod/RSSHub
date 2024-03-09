@@ -1,30 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { config } from '@/config';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/release/:version?',
-    categories: ['programming'],
-    example: '/mysql/release/8.0',
-    parameters: { version: 'Version, see below, 8.0 by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Release Notes',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 8.0 | 5.7 | 5.6 |
-  | --- | --- | --- |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const version = ctx.req.param('version') ?? '8.0';
 
     const rootUrl = 'https://dev.mysql.com';
@@ -76,9 +55,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

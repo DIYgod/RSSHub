@@ -1,29 +1,6 @@
-import { Route } from '@/types';
 import { getTeslaPrice } from './get-price';
 
-export const route: Route = {
-    path: '/price',
-    categories: ['shopping'],
-    example: '/tesla/price',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['tesla.cn/model3/design', 'tesla.cn/'],
-    },
-    name: '价格',
-    maintainers: ['xiaokyo'],
-    handler,
-    url: 'tesla.cn/model3/design',
-};
-
-async function handler() {
+export default async (ctx) => {
     const cars = [
         {
             name: 'Model 3',
@@ -50,7 +27,7 @@ async function handler() {
     const promises = cars.map((car) => getTeslaPrice(car.link));
     const prices = await Promise.all(promises);
 
-    return {
+    ctx.set('data', {
         title: 'Tesla Model 系列价格更新',
         link: 'https://www.tesla.cn/model3/design#overview',
         description: 'Tesla Model 系列价格更新',
@@ -60,5 +37,5 @@ async function handler() {
             author: 'Tesla',
             guid: `https://www.tesla.cn/${cars[index].slug}/design#overview#${price}`,
         })),
-    };
-}
+    });
+};

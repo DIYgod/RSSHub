@@ -1,20 +1,7 @@
-import { Route } from '@/types';
 import buildData from '@/utils/common-config';
 const baseUrl = 'https://www.iiilab.com/';
 
-export const route: Route = {
-    path: '/',
-    radar: {
-        source: ['www.iiilab.com/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['Joey'],
-    handler,
-    url: 'www.iiilab.com/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const link = baseUrl;
     ctx.set(
         'data',
@@ -37,4 +24,4 @@ async function handler(ctx) {
             },
         })
     );
-}
+};

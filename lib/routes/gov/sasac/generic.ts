@@ -1,17 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/sasac/:path{.+}',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const path = ctx.req.param('path');
     const baseUrl = 'http://www.sasac.gov.cn';
     const url = `${baseUrl}/${path}/index.html`;
@@ -42,10 +34,10 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('head title').text().trim(),
         link: url,
         image: 'http://www.sasac.gov.cn/dbsource/11869722/11869731.jpg',
         item: items,
-    };
-}
+    });
+};

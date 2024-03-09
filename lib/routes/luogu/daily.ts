@@ -1,32 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/daily/:id?',
-    categories: ['programming'],
-    example: '/luogu/daily',
-    parameters: { id: '年度日报所在帖子 id，可在 URL 中找到，不填默认为 `47327`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['luogu.com.cn/discuss/47327', 'luogu.com.cn/'],
-        target: '/daily',
-    },
-    name: '日报',
-    maintainers: ['LogicJake ', 'prnake ', 'nczitzk'],
-    handler,
-    url: 'luogu.com.cn/discuss/47327',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id') ?? 47327;
     const link = `https://www.luogu.com.cn/discuss/${id}`;
     const response = await got(link);
@@ -54,9 +30,9 @@ async function handler(ctx) {
         },
     ];
 
-    return {
+    ctx.set('data', {
         title: '洛谷日报',
         link,
         item,
-    };
-}
+    });
+};

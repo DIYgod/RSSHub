@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/latest',
-    categories: ['traditional-media'],
-    example: '/caixinglobal/latest',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['caixinglobal.com/news', 'caixinglobal.com/'],
-    },
-    name: 'Latest News',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'caixinglobal.com/news',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { data } = await got('https://gateway.caixin.com/api/extapi/homeInterface.jsp', {
         searchParams: {
             subject: '100990318;100990314;100990311',
@@ -78,11 +55,11 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: 'The Latest Top Headlines on China - Caixin Global',
         description: 'The latest headlines on China finance, companies, politics, international affairs and other China-related issues from around the world. Caixin Global',
         language: 'en',
         link: 'https://www.caixinglobal.com/news/',
         item: items,
-    };
-}
+    });
+};

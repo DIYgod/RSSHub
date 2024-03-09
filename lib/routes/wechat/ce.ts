@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import parser from '@/utils/rss-parser';
 import got from '@/utils/got';
@@ -10,28 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 // mark the UA as a desktop UA with "(X11; Linux x86_64)"
 const UA = 'Mozilla/5.0 (X11; Linux x86_64) RSS Reader';
 
-export const route: Route = {
-    path: '/ce/:id',
-    categories: ['new-media'],
-    example: '/wechat/ce/595a5b14d7164e53908f1606',
-    parameters: { id: '公众号 id，在 [CareerEngine](https://search.careerengine.us/) 搜索公众号，通过 URL 中找到对应的公众号 id' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['cimidata.com/a/:id'],
-    },
-    name: '公众号（CareerEngine 来源）',
-    maintainers: ['HenryQW'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
 
     const feed = await parser.parseString(
@@ -83,10 +61,10 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: `微信公众号 - ${feed.title}`,
         link: `https://posts.careerengine.us/author/${id}/posts`,
         description: feed.description,
         item: items,
-    };
-}
+    });
+};

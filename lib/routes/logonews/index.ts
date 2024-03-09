@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,21 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: ['/work/tags/:tag', '/tag/:tag', '*'],
-    radar: {
-        source: ['logonews.cn/work/tags/:tag'],
-    },
-    name: 'Unknown',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'logonews.cn/',
-    url: 'logonews.cn/',
-    description: `如 [中国 - 标志情报局](https://www.logonews.cn/tag/china) 的 URL 为 \`https://www.logonews.cn/tag/china\`，可得路由为 [\`/logonews/tag/china\`](https://rsshub.app/logonews/tag/china)。`,
-    url: 'logonews.cn/work',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const params = getSubPath(ctx);
     const isWork = params.indexOf('/work') === 0;
 
@@ -88,9 +73,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

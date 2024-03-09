@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -44,25 +43,7 @@ async function getPage(id) {
     );
 }
 
-export const route: Route = {
-    path: '/cst/:type',
-    categories: ['university'],
-    example: '/zju/cst/0',
-    parameters: { type: '分类，见下表' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Unknown',
-    maintainers: ['yonvenne', 'zwithz'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = Number.parseInt(ctx.req.param('type'));
     const link = host + map.get(type).id;
     let items = [];
@@ -96,9 +77,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: map.get(type).title,
         link,
         item: out,
-    };
-}
+    });
+};

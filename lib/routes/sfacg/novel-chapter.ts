@@ -1,32 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/novel/chapter/:id',
-    categories: ['reading'],
-    example: '/sfacg/novel/chapter/672431',
-    parameters: { id: '小说 id, 可在对应小说页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['book.sfacg.com/Novel/:id/*'],
-    },
-    name: '章节',
-    maintainers: ['keocheung'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const limit = Number.parseInt(ctx.req.query('limit')) || 20;
 
@@ -64,11 +42,11 @@ async function handler(ctx) {
     const { data: intro } = await got(`${baseUrl}/Novel/${id}/`);
     const $i = load(intro);
 
-    return {
+    ctx.set('data', {
         title: `SF轻小说 ${$('h1.story-title').text()}`,
         link: `${baseUrl}/Novel/${id}`,
         description: $i('p.introduce').text(),
         image: $i('div.summary-pic img').attr('src').replace('http://', 'https://'),
         item: items,
-    };
-}
+    });
+};

@@ -1,31 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { getHeaders, randomString, encryptAES, decryptAES } from './utils';
 
-export const route: Route = {
-    path: '/article',
-    categories: ['finance'],
-    example: '/ainvest/article',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['ainvest.com/news'],
-    },
-    name: 'Latest Article',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'ainvest.com/news',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const key = randomString(16);
 
     const { data: response } = await got.post('https://api.ainvest.com/gw/socialcenter/v1/edu/article/listArticle', {
@@ -56,10 +33,10 @@ async function handler(ctx) {
         category: [item.nickName, ...item.tags.map((tag) => tag.code)],
     }));
 
-    return {
+    ctx.set('data', {
         title: 'AInvest - Latest Articles',
         link: 'https://www.ainvest.com/news',
         language: 'en',
         item: items,
-    };
-}
+    });
+};

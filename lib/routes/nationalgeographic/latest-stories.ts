@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -16,29 +15,7 @@ const findNatgeo = ($) =>
             .match(/\['__natgeo__']=({.*?});/)[1]
     );
 
-export const route: Route = {
-    path: '/latest-stories',
-    categories: ['travel'],
-    example: '/nationalgeographic/latest-stories',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.nationalgeographic.com/pages/topic/latest-stories'],
-    },
-    name: 'Latest Stories',
-    maintainers: ['miles170'],
-    handler,
-    url: 'www.nationalgeographic.com/pages/topic/latest-stories',
-};
-
-async function handler() {
+export default async (ctx) => {
     const currentUrl = 'https://www.nationalgeographic.com/pages/topic/latest-stories';
     const response = await got(currentUrl);
     const $ = load(response.data);
@@ -75,9 +52,9 @@ async function handler() {
             )
     );
 
-    return {
+    ctx.set('data', {
         title: $('meta[property="og:title"]').attr('content'),
         link: currentUrl,
         item: items.filter((item) => item !== null),
-    };
-}
+    });
+};

@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/today',
-    categories: ['finance'],
-    example: '/xueqiu/today',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['xueqiu.com/today'],
-    },
-    name: '今日话题',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'xueqiu.com/today',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const size = ctx.req.query('limit') ?? '20';
 
     const rootUrl = 'https://xueqiu.com';
@@ -81,9 +58,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '今日话题 - 雪球',
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

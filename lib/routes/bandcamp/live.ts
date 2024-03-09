@@ -1,31 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/live',
-    categories: ['multimedia'],
-    example: '/bandcamp/live',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['bandcamp.com/live_schedule'],
-    },
-    name: 'Upcoming Live Streams',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'bandcamp.com/live_schedule',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://bandcamp.com';
     const currentUrl = `${rootUrl}/live_schedule`;
     const response = await got({
@@ -56,9 +33,9 @@ async function handler() {
             };
         });
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,14 +9,7 @@ import * as path from 'node:path';
 
 import { sorts, types } from './util';
 
-export const route: Route = {
-    path: '/:type?/:sort?/:filter?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { type = 'game', sort = 'new', filter } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
@@ -116,7 +108,7 @@ async function handler(ctx) {
 
     const icon = new URL($('meta[data-hid="msapplication-task-metacritic"]').prop('content').split('icon-uri=').pop(), rootUrl).href;
 
-    return {
+    ctx.set('data', {
         item: items,
         title: $('title').text(),
         link: currentUrl,
@@ -128,5 +120,5 @@ async function handler(ctx) {
         subtitle: $('meta[name="msapplication-tooltip"]').prop('content'),
         author: $('meta[name="twitter:site"]').prop('content'),
         allowEmpty: true,
-    };
-}
+    });
+};

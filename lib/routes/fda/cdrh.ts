@@ -1,22 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/cdrh/:titleOnly?',
-    radar: {
-        source: ['fda.gov/medical-devices/news-events-medical-devices/cdrhnew-news-and-updates', 'fda.gov/'],
-        target: '/cdrh/:titleOnly',
-    },
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-    url: 'fda.gov/medical-devices/news-events-medical-devices/cdrhnew-news-and-updates',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const titleOnly = !!(ctx.req.param('titleOnly') ?? '');
     const rootUrl = 'https://www.fda.gov';
     const currentUrl = `${rootUrl}/medical-devices/news-events-medical-devices/cdrhnew-news-and-updates`;
@@ -68,9 +55,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

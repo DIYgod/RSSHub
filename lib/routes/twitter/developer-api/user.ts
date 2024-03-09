@@ -25,7 +25,7 @@ export default async (ctx) => {
     }
     const profileImageUrl = userInfo.profile_image_url || userInfo.profile_image_url_https;
 
-    return {
+    ctx.set('data', {
         title: `Twitter @${userInfo.name}`,
         link: `https://twitter.com/${screen_name}`,
         image: profileImageUrl,
@@ -33,5 +33,5 @@ export default async (ctx) => {
         item: utils.ProcessFeed(ctx, {
             data,
         }),
-    };
+    });
 };

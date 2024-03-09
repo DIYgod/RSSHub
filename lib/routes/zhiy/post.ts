@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,28 +9,7 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import dayjs from 'dayjs';
 
-export const route: Route = {
-    path: '/posts/:author',
-    categories: ['new-media'],
-    example: '/zhiy/posts/long',
-    parameters: { author: '作者 ID，可在URL中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['zhiy.cc/:author'],
-    },
-    name: '笔记',
-    maintainers: ['TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     art.defaults.imports = {
         dayjs,
         ...art.defaults.imports,
@@ -85,11 +63,11 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: authorName,
         link: `${baseUrl}/${author}`,
         description: authorSignature,
         image: authorAvatarUrl,
         item: items,
-    };
-}
+    });
+};

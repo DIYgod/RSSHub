@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,32 +6,7 @@ import timezone from '@/utils/timezone';
 
 const baseUrl = 'http://news.yxrb.net';
 
-export const route: Route = {
-    path: '/:category?',
-    categories: ['game'],
-    example: '/yxrb/info',
-    parameters: { category: '分类，见下表，预设为 `info`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['news.yxrb.net/:category', 'news.yxrb.net/'],
-        target: '/:category',
-    },
-    name: '分类',
-    maintainers: ['TonyRL'],
-    handler,
-    description: `| 资讯 | 访谈    | 服务    | 游理游据 |
-  | ---- | ------- | ------- | -------- |
-  | info | talking | service | comments |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = 'info' } = ctx.req.param();
     const link = `${baseUrl}/${category}/`;
     const response = await got(link);
@@ -78,11 +52,11 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('head title').text(),
         description: $('head meta[name=description]').attr('content'),
         link,
         image: $('.channel-img img').attr('src'),
         item: items,
-    };
-}
+    });
+};

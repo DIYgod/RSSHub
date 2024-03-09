@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -10,28 +9,7 @@ const map = {
     doctor: '/7126/list.htm',
     master: '/7128/list.htm',
 };
-export const route: Route = {
-    path: '/yjs/zs/:type?',
-    categories: ['university'],
-    example: '/dhu/yjs/zs/master',
-    parameters: { type: '默认为 `master`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '研究生招生信息',
-    maintainers: ['fox2049'],
-    handler,
-    description: `| 博士招生 | 硕士招生 |
-  | -------- | -------- |
-  | doctor   | master   |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type') || 'master';
     const link = `${baseUrl}${map[type]}`;
     const { data: response } = await got(link);
@@ -61,9 +39,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '东华大学研究生-' + $('.col_title').text(),
         link,
         item: items,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import utils from './utils';
@@ -18,28 +17,7 @@ const typeMap = {
     },
 };
 
-export const route: Route = {
-    path: '/jwzx/:type?/:page?',
-    categories: ['university'],
-    example: '/hrbust/jwzx',
-    parameters: { type: '分类名，默认为教务公告', page: '文章数，默认为12' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '教务处',
-    maintainers: ['LenaNouzen'],
-    handler,
-    description: `| 名师风采 | 热点新闻 | 教务公告 | 教学新闻 |
-  | -------- | -------- | -------- | -------- |
-  | 351      | 353      | 354      | 355      |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const page = ctx.req.param('page') || '12';
     const base = utils.columnIdBase(ctx.req.param('type')) + '&pagingNumberPer=' + page;
     const res = await got(base);
@@ -51,9 +29,9 @@ async function handler(ctx) {
     //     info,
     // };
 
-    return {
+    ctx.set('data', {
         title: '哈理工教务处' + typeMap[ctx.req.param('type') || 354].name,
         link: base,
         item: details,
-    };
-}
+    });
+};

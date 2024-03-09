@@ -1,20 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/',
-    radar: {
-        source: ['runtrail.cn/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'runtrail.cn/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const baseUrl = 'https://runtrail.cn';
     const { data: response } = await got(`${baseUrl}/wp-json/wp/v2/posts`, {
         searchParams: {
@@ -39,9 +26,9 @@ async function handler(ctx) {
         link: item.link,
     }));
 
-    return {
+    ctx.set('data', {
         title: '最新文章 - 跑野大爆炸',
         link: baseUrl,
         item: items,
-    };
-}
+    });
+};

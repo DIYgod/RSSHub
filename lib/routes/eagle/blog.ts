@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,30 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 import { isValidHost } from '@/utils/valid-host';
 const cateList = new Set(['all', 'design-resources', 'learn-design', 'inside-eagle']);
 
-export const route: Route = {
-    path: '/blog/:cate?/:language?',
-    categories: ['design'],
-    example: '/eagle/blog/en',
-    parameters: { cate: 'Category, get by URL, `all` by default', language: 'Language, `cn`, `tw`, `en`, `en` by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['cn.eagle.cool/blog'],
-        target: '/blog',
-    },
-    name: 'Blog',
-    maintainers: ['Fatpandac'],
-    handler,
-    url: 'cn.eagle.cool/blog',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     let cate = ctx.req.param('cate') ?? 'all';
     let language = ctx.req.param('language') ?? 'cn';
     if (!isValidHost(cate) || !isValidHost(language)) {
@@ -68,9 +44,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `eagle - ${title}`,
         link: url,
         item: items,
-    };
-}
+    });
+};

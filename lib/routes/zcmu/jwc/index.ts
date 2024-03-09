@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -14,28 +13,7 @@ const map = new Map([
     [5, { title: '教务处 -- 排课管理', id: 'jwgl/pkgl' }],
 ]);
 
-export const route: Route = {
-    path: '/jwc/:type?',
-    categories: ['university'],
-    example: '/zcmu/jwc/1',
-    parameters: { type: '通知模块id' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '教务处',
-    maintainers: ['CCraftY'],
-    handler,
-    description: `| 教务管理 | 成绩管理 | 学籍管理 | 考试管理 | 选课管理 | 排课管理 |
-  | -------- | -------- | -------- | -------- | -------- | -------- |
-  | 0        | 1        | 2        | 3        | 4        | 5        |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = Number.parseInt(ctx.req.param('type'));
     const id = map.get(type).id;
     const res = await got({
@@ -55,9 +33,9 @@ async function handler(ctx) {
         })
         .get();
 
-    return {
+    ctx.set('data', {
         title: map.get(type).title,
         link: `${host}${id}`,
         item: items,
-    };
-}
+    });
+};

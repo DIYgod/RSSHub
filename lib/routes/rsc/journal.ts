@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,32 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/journal/:id/:category?',
-    categories: ['journal'],
-    example: '/rsc/journal/ta',
-    parameters: { id: 'Journal id, can be found in URL', category: 'Category, see below, All Recent Articles by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Journal',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `:::tip
-  All journals at [Current journals](https://pubs.rsc.org/en/journals)
-  :::
-
-  | All Recent Articles | Advance Articles |
-  | ------------------- | ---------------- |
-  | allrecentarticles   | advancearticles  |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { id, category = 'allrecentarticles' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
@@ -120,7 +94,7 @@ async function handler(ctx) {
 
     const icon = new URL($('link[rel="apple-touch-icon"]').prop('href'), rootUrl).href;
 
-    return {
+    ctx.set('data', {
         item: items,
         title: $('meta[name="citation_title"]').prop('content'),
         link: currentUrl,
@@ -132,5 +106,5 @@ async function handler(ctx) {
         subtitle: $('title').text(),
         author: $('meta[name="citation_journal_abbrev"]').prop('content'),
         allowEmpty: true,
-    };
-}
+    });
+};

@@ -1,25 +1,6 @@
-import { Route } from '@/types';
 import buildData from '@/utils/common-config';
 
-export const route: Route = {
-    path: '/exhibitions',
-    categories: ['travel'],
-    example: '/newmuseum/exhibitions',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Exhibitions',
-    maintainers: ['chazeon'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     let link;
     const state = ctx.req.query('state');
 
@@ -46,4 +27,4 @@ async function handler(ctx) {
             },
         })
     );
-}
+};

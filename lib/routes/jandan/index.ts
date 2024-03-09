@@ -1,17 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import parser from '@/utils/rss-parser';
 
-export const route: Route = {
-    path: '/',
-    name: 'Unknown',
-    maintainers: ['nczitzk', 'bigfei'],
-    handler,
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'http://i.jandan.net';
     const feed = await parser.parseURL(`${rootUrl}/feed/`);
     const items = await Promise.all(
@@ -32,9 +24,9 @@ async function handler() {
             })
         )
     );
-    return {
+    ctx.set('data', {
         title: '煎蛋',
         link: rootUrl,
         item: items,
-    };
-}
+    });
+};

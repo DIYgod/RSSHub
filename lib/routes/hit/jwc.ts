@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,29 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 const baseUrl = 'https://jwc.hit.edu.cn';
 const type = (filename) => filename.split('.').pop();
 
-export const route: Route = {
-    path: '/jwc',
-    categories: ['university'],
-    example: '/hit/jwc',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['jwc.hit.edu.cn/*'],
-    },
-    name: '教务处通知公告',
-    maintainers: ['lty96117'],
-    handler,
-    url: 'jwc.hit.edu.cn/*',
-};
-
-async function handler() {
+export default async (ctx) => {
     const response = await got(`${baseUrl}/2591/list.htm`);
 
     const { data } = response;
@@ -76,9 +53,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '哈尔滨工业大学教务处通知公告',
         link: `${baseUrl}/2591/list.htm`,
         item: items,
-    };
-}
+    });
+};

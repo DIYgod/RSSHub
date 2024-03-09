@@ -1,30 +1,8 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { getTagId, getTagSuggestion, findAccountById, parseDescription, baseUrl, icon } from './utils';
 
-export const route: Route = {
-    path: '/tag/:tag',
-    categories: ['social-media'],
-    example: '/fansly/tag/free',
-    parameters: { tag: 'Hashtag' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['fansly.com/explore/tag/:tag'],
-    },
-    name: 'Hashtag',
-    maintainers: ['TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const tag = ctx.req.param('tag');
 
     const tagId = await getTagId(tag, cache.tryGet);
@@ -41,7 +19,7 @@ async function handler(ctx) {
         };
     });
 
-    return {
+    ctx.set('data', {
         title: `#${tag} - Fansly`,
         link: `${baseUrl}/explore/tag/${tag}`,
         image: icon,
@@ -49,5 +27,5 @@ async function handler(ctx) {
         logo: icon,
         language: 'en',
         item: items,
-    };
-}
+    });
+};

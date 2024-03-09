@@ -1,30 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import * as url from 'node:url';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/iap/:country/:id',
-    categories: ['program-update'],
-    example: '/appstore/iap/us/id953286746',
-    parameters: {
-        country: 'App Store Country, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `us`',
-        id: 'App Store app id, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `id953286746`',
-    },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'In-App-Purchase Price Drop Alert',
-    maintainers: ['HenryQW'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const country = ctx.req.param('country');
     const id = ctx.req.param('id');
     const link = `https://apps.apple.com/${country}/app/${id}`;
@@ -72,9 +50,9 @@ async function handler(ctx) {
         });
     }
 
-    return {
+    ctx.set('data', {
         title,
         link,
         item,
-    };
-}
+    });
+};

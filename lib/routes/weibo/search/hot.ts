@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -14,33 +13,7 @@ import * as path from 'node:path';
 let wpic = 'false';
 let fullpic = 'false';
 
-export const route: Route = {
-    path: '/search/hot/:fulltext?',
-    categories: ['social-media'],
-    example: '/weibo/search/hot',
-    parameters: { fulltext: 'N' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['s.weibo.com/top/summary'],
-    },
-    name: '热搜榜',
-    maintainers: ['xyqfer', 'shinemoon'],
-    handler,
-    url: 's.weibo.com/top/summary',
-    description: `-   使用\`/weibo/search/hot\`可以获取热搜条目列表；
--   使用\`/weibo/search/hot/fulltext\`可以进一步获取热搜条目下的摘要信息（不含图片视频）；
--   使用\`/weibo/search/hot/fulltext?pic=true\`可以获取图片缩略（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为\`https://weibo.com\`，以规避微博的外链限制，否则图片无法显示。）
--   使用\`/weibo/search/hot/fulltext?pic=true&fullpic=true\`可以获取 Original 图片（但需要配合额外的手段，例如浏览器上的 Header Editor 等来修改 referer 参数为\`https://weibo.com\`，以规避微博的外链限制，否则图片无法显示。）`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     wpic = ctx.req.query('pic') ?? 'false';
     fullpic = ctx.req.query('fullpic') ?? 'false';
     const {
@@ -94,14 +67,14 @@ async function handler(ctx) {
     }
 
     // Update ctx
-    return {
+    ctx.set('data', {
         title: '微博热搜榜',
         link: 'https://s.weibo.com/top/summary?cate=realtimehot',
         description: '实时热点，每分钟更新一次',
         item: resultItems,
-    };
+    });
     // ctx.set('data', weiboUtils.sinaimgTvax(ctx.state.data)); // no image in the route
-}
+};
 
 async function fetchContent(url) {
     // Fetch the subpageinof

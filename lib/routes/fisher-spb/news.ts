@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,29 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/news',
-    categories: ['other'],
-    example: '/fisher-spb/news',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['fisher.spb.ru/news'],
-    },
-    name: 'News',
-    maintainers: ['denis-ya'],
-    handler,
-    url: 'fisher.spb.ru/news',
-};
-
-async function handler() {
+export default async (ctx) => {
     const renderVideo = (link) => art(path.join(__dirname, './templates/video.art'), { link });
     const renderImage = (href) => art(path.join(__dirname, './templates/image.art'), { href });
 
@@ -66,9 +43,9 @@ async function handler() {
         }))
         .get();
 
-    return {
+    ctx.set('data', {
         title: $('head > title').text().trim(),
         link: rootUrl,
         item: items,
-    };
-}
+    });
+};

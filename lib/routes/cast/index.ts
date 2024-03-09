@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got, { type Response } from '@/utils/got';
 import { load } from 'cheerio';
@@ -42,38 +41,7 @@ async function parsePage(html: string) {
     );
 }
 
-export const route: Route = {
-    path: '/:column/:subColumn/:category?',
-    categories: ['government'],
-    example: '/cast/xw/tzgg/ZH',
-    parameters: { column: '栏目编号，见下表', subColumn: '二级栏目编号', category: '分类' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '通用',
-    maintainers: ['KarasuShin', 'TonyRL'],
-    handler,
-    description: `:::tip
-  在路由末尾处加上 \`?limit=限制获取数目\` 来限制获取条目数量，默认值为\`10\`
-  :::
-
-  | 分类     | 编码 |
-  | -------- | ---- |
-  | 全景科协 | qjkx |
-  | 智库     | zk   |
-  | 学术     | xs   |
-  | 科普     | kp   |
-  | 党建     | dj   |
-  | 数据     | sj   |
-  | 新闻     | xw   |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { column, subColumn, category } = ctx.req.param();
     const { limit = 10 } = ctx.req.query();
     let link = `${baseUrl}/${column}/${subColumn}`;
@@ -104,10 +72,10 @@ async function handler(ctx) {
 
     const pageTitle = $('head title').text();
 
-    return {
+    ctx.set('data', {
         title: pageTitle,
         link,
         image: 'https://www.cast.org.cn/favicon.ico',
         item: items,
-    };
-}
+    });
+};

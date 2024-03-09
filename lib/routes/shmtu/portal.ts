@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -42,31 +41,7 @@ const processFeed = (list, caches) =>
         )
     );
 
-export const route: Route = {
-    path: '/portal/:type',
-    categories: ['university'],
-    example: '/shmtu/portal/bmtzgg',
-    parameters: { type: '类型名称' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['portal.shmtu.edu.cn/:type'],
-    },
-    name: '数字平台',
-    maintainers: ['imbytecat'],
-    handler,
-    description: `| 部门通知公告 | 学术与大型活动公告 | 部门动态 |
-| ------------ | ------------------ | -------- |
-| bmtzgg       | xsydxhdgg          | bmdt     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type');
     let info;
     switch (type) {
@@ -101,10 +76,10 @@ async function handler(ctx) {
 
     const result = await processFeed(list, cache);
 
-    return {
+    ctx.set('data', {
         title: `上海海事大学 ${info}`,
         link: 'https://portal.shmtu.edu.cn/bumentongzhigonggao',
         description: '上海海事大学 数字平台',
         item: result,
-    };
-}
+    });
+};

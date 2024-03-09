@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -16,19 +15,7 @@ async function cheerioLoad(url) {
     return load((await got(url)).data);
 }
 
-export const route: Route = {
-    path: '/:category?',
-    radar: {
-        source: ['freecomputerbooks.com/', 'freecomputerbooks.com/index.html'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-    url: 'freecomputerbooks.com/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const categoryId = ctx.req.param('category')?.trim();
     const requestURL = categoryId ? new URL(`${categoryId}.html`, baseURL).href : baseURL;
     const $ = await cheerioLoad(requestURL);
@@ -38,7 +25,7 @@ async function handler(ctx) {
     // Needing more robust processing if some day more such elements show up.
     const categoryTitle = $('.maintitlebar').text();
 
-    return {
+    ctx.set('data', {
         title: 'Free Computer Books - ' + categoryTitle,
         link: requestURL,
         description: $('title').text(),
@@ -50,8 +37,8 @@ async function handler(ctx) {
                 .toArray()
                 .map((elem) => buildPostItem($(elem), categoryTitle, cache))
         ),
-    };
-}
+    });
+};
 
 function buildPostItem(listItem, categoryTitle, cache) {
     const $ = load(''); // the only use below doesn't care about the content

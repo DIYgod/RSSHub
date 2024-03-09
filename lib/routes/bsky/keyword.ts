@@ -1,25 +1,6 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 
-export const route: Route = {
-    path: '/keyword/:keyword',
-    categories: ['social-media'],
-    example: '/bsky/keyword/hello',
-    parameters: { keyword: 'N' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Keywords',
-    maintainers: ['untitaker'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const keyword = ctx.req.param('keyword');
     const apiLink = `https://search.bsky.social/search/posts?q=${encodeURIComponent(keyword)}`;
 
@@ -33,9 +14,9 @@ async function handler(ctx) {
         author: item.user.handle,
     }));
 
-    return {
+    ctx.set('data', {
         title: `Bluesky Keyword - ${keyword}`,
         link: `https://bsky.app/search?q=${encodeURIComponent(keyword)}`,
         item: items,
-    };
-}
+    });
+};

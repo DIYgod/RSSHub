@@ -1,32 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/rsks/:guid',
-    categories: ['study'],
-    example: '/hunanpea/rsks/2f1a6239-b4dc-491b-92af-7d95e0f0543e',
-    parameters: { guid: '分类 id，可在 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['rsks.hunanpea.com/Category/:guid/ArticlesByCategory.do'],
-    },
-    name: '公告',
-    maintainers: ['TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const baseUrl = 'http://rsks.hunanpea.com';
     const guid = ctx.req.param('guid');
     const link = `${baseUrl}/Category/${guid}/ArticlesByCategory.do?PageIndex=1`;
@@ -57,9 +35,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `${$('.sitemap h2').text()} - ${$('head title').text()}`,
         link,
         item: items,
-    };
-}
+    });
+};

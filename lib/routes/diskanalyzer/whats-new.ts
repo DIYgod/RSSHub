@@ -1,31 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/whats-new',
-    categories: ['program-update'],
-    example: '/diskanalyzer/whats-new',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['diskanalyzer.com/whats-new', 'diskanalyzer.com/'],
-    },
-    name: "What's New",
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'diskanalyzer.com/whats-new',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://diskanalyzer.com';
     const currentUrl = `${rootUrl}/whats-new`;
 
@@ -64,9 +41,9 @@ async function handler() {
             };
         });
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

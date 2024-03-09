@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,17 +8,7 @@ import * as path from 'node:path';
 
 import { viewThread, countReplies } from './query';
 
-export const route: Route = {
-    path: '/thread/:id',
-    radar: {
-        source: ['lkong.com/thread/:id', 'lkong.com/'],
-    },
-    name: 'Unknown',
-    maintainers: ['nczitzk', 'ma6254'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
 
     const rootUrl = 'https://www.lkong.com';
@@ -63,9 +52,9 @@ async function handler(ctx) {
             }),
     }));
 
-    return {
+    ctx.set('data', {
         title: `${response.data.data.thread.title} - 龙空`,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

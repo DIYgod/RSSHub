@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,28 +10,7 @@ import utils from './utils';
 let baseTitle = '日本郵便';
 const baseUrl = 'https://trackings.post.japanpost.jp/services/srv/search/direct?';
 
-export const route: Route = {
-    path: '/track/:reqCode/:locale?',
-    categories: ['other'],
-    example: '/japanpost/track/EJ123456789JP/en',
-    parameters: { reqCode: 'Package Number', locale: 'Language, default to japanese `ja`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Track & Trace Service 郵便追跡サービス',
-    maintainers: ['tuzi3040'],
-    handler,
-    description: `| Japanese | English |
-  | -------- | ------- |
-  | ja       | en      |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const reqCode = ctx.req.param('reqCode');
     const reqReqCode = 'reqCodeNo1=' + reqCode;
 
@@ -86,7 +64,7 @@ async function handler(ctx) {
     let lastItemTimeStamp;
     let tz;
 
-    return {
+    ctx.set('data', {
         title: `${baseTitle} ${reqCode} ${packageType}`,
         link,
         description: `${baseTitle} ${reqCode} ${packageType}`,
@@ -133,5 +111,5 @@ async function handler(ctx) {
                 };
             })
             .get(),
-    };
-}
+    });
+};

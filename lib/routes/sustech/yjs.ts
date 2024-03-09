@@ -1,30 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/yjs',
-    categories: ['university'],
-    example: '/sustech/yjs',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['gs.sustech.edu.cn/'],
-    },
-    name: '研究生网通知公告',
-    maintainers: ['shengmaosu'],
-    handler,
-    url: 'gs.sustech.edu.cn/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://gs.sustech.edu.cn';
     const link = `${baseUrl}/#/common/index?current_id=99&id=99`;
     const response = await got(`${baseUrl}/api/www/v1/article/list`, {
@@ -43,10 +20,10 @@ async function handler() {
         pubDate: parseDate(item.published_at, 'YYYY-MM-DD'),
     }));
 
-    return {
+    ctx.set('data', {
         title: '南方科技大学研究生院',
         link,
         description: '南方科技大学研招网通知公告',
         item: list,
-    };
-}
+    });
+};

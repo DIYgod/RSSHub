@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -12,28 +11,7 @@ const categories = {
     newest: 'right',
 };
 
-export const route: Route = {
-    path: '/featured/:category?',
-    categories: ['other'],
-    example: '/tvtropes/featured/today',
-    parameters: { category: "Category, see below, Today's Featured Trope by default" },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Featured',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| Today's Featured Trope | Newest Trope |
-  | ---------------------- | ------------ |
-  | today                  | newest       |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = 'today' } = ctx.req.param();
 
     const rootUrl = 'https://tvtropes.org';
@@ -82,7 +60,7 @@ async function handler(ctx) {
     const image = new URL($('img.logo-big').prop('src'), rootUrl).href;
     const icon = $('link[rel="shortcut icon"]').prop('href');
 
-    return {
+    ctx.set('data', {
         item: items,
         title: `${$('title').text()} - ${item.find('span.box-title').text()}`,
         link: rootUrl,
@@ -94,5 +72,5 @@ async function handler(ctx) {
         subtitle: $('meta[property="og:title"]').prop('content'),
         author: $('meta[property="og:site_name"]').prop('content'),
         allowEmpty: true,
-    };
-}
+    });
+};

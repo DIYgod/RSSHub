@@ -1,28 +1,6 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 
-export const route: Route = {
-    path: '/room/:id',
-    categories: ['live'],
-    example: '/douyu/room/24422',
-    parameters: { id: '直播间 id, 可在主播直播间页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.douyu.com/:id', 'www.douyu.com/'],
-    },
-    name: '直播间开播',
-    maintainers: ['DIYgod'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
 
     const response = await got({
@@ -47,10 +25,10 @@ async function handler(ctx) {
         ];
     }
 
-    return {
+    ctx.set('data', {
         title: `${data.owner_name}的斗鱼直播间`,
         link: `https://www.douyu.com/${id}`,
         item,
         allowEmpty: true,
-    };
-}
+    });
+};

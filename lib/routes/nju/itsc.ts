@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/itsc',
-    categories: ['university'],
-    example: '/nju/itsc',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['itsc.nju.edu.cn/tzgg/list.htm'],
-    },
-    name: 'ITSC 信息中心',
-    maintainers: ['ret-1'],
-    handler,
-    url: 'itsc.nju.edu.cn/tzgg/list.htm',
-};
-
-async function handler() {
+export default async (ctx) => {
     const category_dict = {
         tzgg: '通知公告',
     };
@@ -59,9 +36,9 @@ async function handler() {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: 'ITSC-公告通知',
         link: 'https://itsc.nju.edu.cn/tzgg/list.htm',
         item: items[0],
-    };
-}
+    });
+};

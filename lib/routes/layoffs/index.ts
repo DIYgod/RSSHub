@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -38,19 +37,7 @@ const getMappings = function (obj) {
     return [mapping, reverseMapping];
 };
 
-export const route: Route = {
-    path: '/',
-    radar: {
-        source: ['layoffs.fyi/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['BrandNewLifeJackie26'],
-    handler,
-    url: 'layoffs.fyi/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const headers = {
         'x-airtable-application-id': 'app1PaujS9zxVGUZ4',
         'x-airtable-inter-service-client': 'webClient',
@@ -121,7 +108,7 @@ async function handler() {
     const countryMapping = getMappings(table.columns.find((col) => col.name === 'Country').typeOptions.choices)[0];
 
     const rows = table.rows.slice(0, ROW_COUNT);
-    return {
+    ctx.set('data', {
         title: 'Tech layoff data feed from layoffs.fyi',
         link: WEBSITE_URL,
         description: 'This feed gets tech layoff data from layoffs.fyi and display them in a user friendly way',
@@ -144,5 +131,5 @@ async function handler() {
                 link: source, // Laid off source link
             };
         }),
-    };
-}
+    });
+};

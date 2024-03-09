@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import zlib from 'zlib';
@@ -7,29 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 import { getAcwScV2ByArg1 } from './utils';
 
-export const route: Route = {
-    path: '/article',
-    categories: ['game'],
-    example: '/5eplay/article',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['csgo.5eplay.com/', 'csgo.5eplay.com/article'],
-    },
-    name: '新闻列表',
-    maintainers: ['Dlouxgit'],
-    handler,
-    url: 'csgo.5eplay.com/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://csgo.5eplay.com/';
     const apiUrl = `${rootUrl}api/article?page=1&type_id=0&time=0&order_by=0`;
     const articleUrl = `${rootUrl}article`;
@@ -116,9 +93,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '5EPLAY',
         link: 'https://csgo.5eplay.com/article',
         item: items,
-    };
-}
+    });
+};

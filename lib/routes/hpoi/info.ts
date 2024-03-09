@@ -1,32 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseRelativeDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/info/:type?',
-    categories: ['anime'],
-    example: '/hpoi/info/all',
-    parameters: { type: '分类, 见下表, 默认为`all`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '情报',
-    maintainers: ['sanmmm DIYgod'],
-    handler,
-    description: `分类
-
-  | 全部 | 手办  | 模型  |
-  | ---- | ----- | ----- |
-  | all  | hobby | model |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { type = 'all' } = ctx.req.param();
     const baseUrl = 'https://www.hpoi.net';
     const reqUrl = `${baseUrl}/user/home/ajax`;
@@ -66,10 +42,10 @@ async function handler(ctx) {
         model: '模型',
     };
     const title = `手办维基 - 情报 - ${typeToLabel[type]}`;
-    return {
+    ctx.set('data', {
         title,
         link: `${baseUrl}/user/home?type=info&catType=${type}`,
         description: title,
         item: items,
-    };
-}
+    });
+};

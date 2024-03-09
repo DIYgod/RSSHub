@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { config } from '@/config';
@@ -8,28 +7,7 @@ import puppeteer from '@/utils/puppeteer';
 
 // /iqiyi/user/video/:uid
 // http://localhost:1200/iqiyi/user/video/2289191062
-export const route: Route = {
-    path: '/user/video/:uid',
-    categories: ['multimedia'],
-    example: '/iqiyi/user/video/2289191062',
-    parameters: { uid: '用户名' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['iqiyi.com/u/:uid/*'],
-    },
-    name: '用户视频',
-    maintainers: ['talengu', 'JimenezLi'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const uid = ctx.req.param('uid');
     const link = `https://www.iqiyi.com/u/${uid}/videos`;
 
@@ -74,4 +52,4 @@ async function handler(ctx) {
     browser.close();
 
     ctx.set('data', data);
-}
+};

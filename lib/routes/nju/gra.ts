@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/gra',
-    categories: ['university'],
-    example: '/nju/gra',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['grawww.nju.edu.cn/main.htm', 'grawww.nju.edu.cn/'],
-    },
-    name: '研究生院',
-    maintainers: ['ret-1'],
-    handler,
-    url: 'grawww.nju.edu.cn/main.htm',
-};
-
-async function handler() {
+export default async (ctx) => {
     const response = await got({
         method: 'get',
         url: 'https://grawww.nju.edu.cn/905/list.htm',
@@ -37,7 +14,7 @@ async function handler() {
     const $ = load(data);
     const list = $('li.news');
 
-    return {
+    ctx.set('data', {
         title: '研究生院-动态通知',
         link: 'https://grawww.nju.edu.cn/905/list.htm',
         item: list
@@ -58,5 +35,5 @@ async function handler() {
             })
             .get()
             .filter(Boolean),
-    };
-}
+    });
+};

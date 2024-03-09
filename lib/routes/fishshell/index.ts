@@ -1,27 +1,14 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/',
-    radar: {
-        source: ['fishshell.com/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['x2cf'],
-    handler,
-    url: 'fishshell.com/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const link = 'https://fishshell.com/docs/current/relnotes.html';
     const data = await cache.tryGet(link, async () => (await got(link)).data, config.cache.contentExpire, false);
     const $ = load(data);
-    return {
+    ctx.set('data', {
         link,
         title: 'Release notes — fish-shell',
         language: 'en',
@@ -37,5 +24,5 @@ async function handler() {
                 };
             })
             .get(),
-    };
-}
+    });
+};

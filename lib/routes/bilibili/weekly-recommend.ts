@@ -1,26 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 
-export const route: Route = {
-    path: '/weekly/:disableEmbed?',
-    categories: ['social-media'],
-    example: '/bilibili/weekly',
-    parameters: { disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'B 站每周必看',
-    maintainers: ['ttttmr'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const disableEmbed = ctx.req.param('disableEmbed');
 
     const status_response = await got({
@@ -42,7 +23,7 @@ async function handler(ctx) {
     });
     const data = response.data.data.list;
 
-    return {
+    ctx.set('data', {
         title: 'B站每周必看',
         link: 'https://www.bilibili.com/h5/weekly-recommend',
         description: 'B站每周必看',
@@ -56,5 +37,5 @@ async function handler(ctx) {
             `,
             link: weekly_number > 60 && item.bvid ? `https://www.bilibili.com/video/${item.bvid}` : `https://www.bilibili.com/video/av${item.param}`,
         })),
-    };
-}
+    });
+};

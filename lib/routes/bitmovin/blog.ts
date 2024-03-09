@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://bitmovin.com';
 
-export const route: Route = {
-    path: '/blog',
-    categories: ['programming'],
-    example: '/bitmovin/blog',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['bitmovin.com/blog', 'bitmovin.com/'],
-    },
-    name: 'Blog',
-    maintainers: ['elxy'],
-    handler,
-    url: 'bitmovin.com/blog',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const apiUrl = `${baseUrl}/wp-json/wp/v2`;
     const { data } = await got(`${apiUrl}/posts`, {
         searchParams: {
@@ -42,9 +19,9 @@ async function handler(ctx) {
         link: item.link,
     }));
 
-    return {
+    ctx.set('data', {
         title: 'Blog - Bitmovin',
         link: `${baseUrl}/blog/`,
         item: items,
-    };
-}
+    });
+};

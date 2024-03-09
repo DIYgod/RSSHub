@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -10,29 +9,7 @@ const gbk2utf8 = (s) => iconv.decode(s, 'gbk');
 const host = 'https://www.flyert.com';
 const target = `${host}/forum.php?mod=forumdisplay&sum=all&fid=all&catid=322`;
 
-export const route: Route = {
-    path: '/preferential',
-    categories: ['travel'],
-    example: '/flyert/preferential',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['flyert.com/'],
-    },
-    name: '优惠信息',
-    maintainers: ['howel52'],
-    handler,
-    url: 'flyert.com/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const response = await got(target, {
         responseType: 'buffer',
     });
@@ -63,10 +40,10 @@ async function handler() {
             })
         )
     );
-    return {
+    ctx.set('data', {
         title: '飞客茶馆优惠',
         link: 'https://www.flyert.com/',
         description: '飞客茶馆优惠',
         item: items,
-    };
-}
+    });
+};

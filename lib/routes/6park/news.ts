@@ -1,22 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/news/:site?/:id?/:keyword?',
-    radar: {
-        source: ['club.6parkbbs.com/:id/index.php', 'club.6parkbbs.com/'],
-        target: '/:id?',
-    },
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const site = ctx.req.param('site') ?? 'newspark';
     const id = ctx.req.param('id') ?? '';
     const keyword = ctx.req.param('keyword') ?? '';
@@ -79,9 +67,9 @@ async function handler(ctx) {
             )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

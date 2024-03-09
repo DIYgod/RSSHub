@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import MarkdownIt from 'markdown-it';
 const md = MarkdownIt({
@@ -7,18 +6,7 @@ const md = MarkdownIt({
 });
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
-export const route: Route = {
-    path: '/dailyquestion/solution/cn',
-    radar: {
-        source: ['leetcode.cn/'],
-    },
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-    url: 'leetcode.cn/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseurl = `https://leetcode.cn`;
     const url = `${baseurl}/graphql/`;
     const headers = {
@@ -176,7 +164,7 @@ async function handler() {
         s = s.replaceAll(/(```)([\d#+A-Za-z-]+)\s*?(\[.*?])?\n/g, '\r\n###$2\r\n$1$2\r\n');
         return s;
     };
-    return {
+    ctx.set('data', {
         title: 'LeetCode 每日一题题解',
         description: 'LeetCode 每日一题题解',
         link: questionUrl,
@@ -195,5 +183,5 @@ async function handler() {
                 author: art.author.username,
             })),
         ],
-    };
-}
+    });
+};

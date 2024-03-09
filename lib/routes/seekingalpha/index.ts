@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,32 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 import dayjs from 'dayjs';
 const baseUrl = 'https://seekingalpha.com';
 
-export const route: Route = {
-    path: '/:symbol/:category?',
-    categories: ['finance'],
-    example: '/seekingalpha/TSM/transcripts',
-    parameters: { symbol: 'Stock symbol', category: 'Category, see below, `news` by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['seekingalpha.com/symbol/:symbol/:category', 'seekingalpha.com/symbol/:symbol/earnings/:category'],
-        target: '/:symbol/:category',
-    },
-    name: 'Summary',
-    maintainers: ['TonyRL'],
-    handler,
-    description: `| Analysis | News | Transcripts | Press Releases | Related Analysis |
-  | -------- | ---- | ----------- | -------------- | ---------------- |
-  | analysis | news | transcripts | press-releases | related-analysis |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = 'news', symbol } = ctx.req.param();
     const pageUrl = `${baseUrl}/symbol/${symbol.toUpperCase()}/${category === 'transcripts' ? `earnings/${category}` : category}`;
 
@@ -71,7 +45,7 @@ async function handler(ctx) {
           )
         : [];
 
-    return {
+    ctx.set('data', {
         title: response.data.meta.page.title,
         description: response.data.meta.page.description,
         link: pageUrl,
@@ -79,5 +53,5 @@ async function handler(ctx) {
         item: items,
         allowEmpty: true,
         language: 'en-US',
-    };
-}
+    });
+};

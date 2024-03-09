@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import MarkdownIt from 'markdown-it';
 
-export const route: Route = {
-    path: '/questions/:id',
-    categories: ['programming'],
-    example: '/lanqiao/questions/2',
-    parameters: { id: 'topic_id 主题 `id` 可在社区板块 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['lanqiao.cn/questions/', 'lanqiao.cn/questions/topics/:id'],
-    },
-    name: '技术社区',
-    maintainers: ['huhuhang'],
-    handler,
-    url: 'lanqiao.cn/questions/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     // 发起 HTTP GET 请求
     const response = await got({
@@ -65,7 +42,7 @@ async function handler(ctx) {
                 })
             )
     );
-    return {
+    ctx.set('data', {
         // 源标题
         title: `蓝桥云课技术社区【${topic_name}】`,
         // 源链接
@@ -74,5 +51,5 @@ async function handler(ctx) {
         description: `蓝桥云课技术社区【${topic_name}】`,
         // 遍历此前获取的数据
         item: items,
-    };
-}
+    });
+};

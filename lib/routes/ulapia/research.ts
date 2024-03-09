@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -8,29 +7,7 @@ const rootUrl = 'http://www.ulapia.com';
 
 const researchList = ['stock_research', 'industry_research', 'strategy_research', 'macro_research', 'ipo_research'];
 
-export const route: Route = {
-    path: '/research/latest',
-    categories: ['finance'],
-    example: '/ulapia/research/latest',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.ulapia.com/'],
-    },
-    name: '最新研报',
-    maintainers: [],
-    handler,
-    url: 'www.ulapia.com/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const items = await Promise.all(
         researchList.map((item) => {
             const url = `${rootUrl}/reports/${item}`;
@@ -54,9 +31,9 @@ async function handler() {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: 'Ulapia - 最新研报',
         link: rootUrl,
         item: items.flat(),
-    };
-}
+    });
+};

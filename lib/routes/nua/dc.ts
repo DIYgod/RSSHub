@@ -1,36 +1,6 @@
-import { Route } from '@/types';
 import util from './utils';
 
-export const route: Route = {
-    path: '/dc/:type',
-    categories: ['university'],
-    example: '/nua/dc/news',
-    parameters: { type: 'News Type' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['dc.nua.edu.cn/:type/list.htm'],
-    },
-    name: 'School of Design',
-    maintainers: ['evnydd0sf'],
-    handler,
-    description: `| News Type                | Parameters |
-  | ------------------------ | ---------- |
-  | 学院新闻 NEWS            | news       |
-  | 展览 EXHIBITION          | exhibition |
-  | 研创 RESEARCH & CREATION | rc         |
-  | 项目 PROJECT             | project    |
-  | 党团 PARTY               | party      |
-  | 后浪 YOUTH               | youth      |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type');
 
     const baseUrl = 'https://dc.nua.edu.cn';
@@ -84,10 +54,10 @@ async function handler(ctx) {
     const items = await util.ProcessList(baseUrl, baseUrl, listName, listDate, webPageName);
     const results = await util.ProcessFeed(items[0], artiContent);
 
-    return {
+    ctx.set('data', {
         title: 'NUA-设计学院-' + items[1],
         link: baseUrl,
         description: '南京艺术学院 设计学院 ' + items[1],
         item: results,
-    };
-}
+    });
+};

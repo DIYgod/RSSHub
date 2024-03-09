@@ -1,31 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/yjs',
-    categories: ['university'],
-    example: '/cau/yjs',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['yz.cau.edu.cn/col/col41740/index.html', 'yz.cau.edu.cn/'],
-    },
-    name: 'Unknown',
-    maintainers: ['shengmaosu'],
-    handler,
-    url: 'yz.cau.edu.cn/col/col41740/index.html',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://yz.cau.edu.cn';
     const link = `${baseUrl}/col/col41740/index.html`;
     const response = await got(`${baseUrl}/module/web/jpage/dataproxy.jsp`, {
@@ -43,7 +20,7 @@ async function handler() {
     const $ = load(response.data);
     const list = $('recordset record');
 
-    return {
+    ctx.set('data', {
         title: '中农研究生学院',
         link,
         description: '中农研究生学院',
@@ -61,5 +38,5 @@ async function handler() {
                     pubDate: parseDate(item.find('span').text().replaceAll(/[[\]]/g, '')),
                 };
             }),
-    };
-}
+    });
+};

@@ -1,28 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/video/:category?',
-    categories: ['finance'],
-    example: '/cs/video/今日聚焦',
-    parameters: { category: '分类，见下表，默认为今日聚焦' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Unknown',
-    maintainers: ['nczitzk'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = '今日聚焦' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
@@ -73,7 +54,7 @@ async function handler(ctx) {
     const image = selected.image;
     const icon = new URL($('link[rel="icon"]').prop('href'), rootUrl).href;
 
-    return {
+    ctx.set('data', {
         item: items,
         title: `${title} | ${selected.title}`,
         link: currentUrl,
@@ -85,5 +66,5 @@ async function handler(ctx) {
         subtitle: $('meta[name="Keywords"]').prop('content'),
         author: title.split('-').pop().trim(),
         allowEmpty: true,
-    };
-}
+    });
+};

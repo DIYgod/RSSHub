@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -23,29 +22,11 @@ async function getArticles() {
     });
 }
 
-export const route: Route = {
-    path: '/apisix/blog',
-    categories: ['blog'],
-    example: '/apache/apisix/blog',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'APISIX 博客',
-    maintainers: ['aneasystone'],
-    handler,
-};
-
-async function handler() {
+export default async (ctx) => {
     const articles = await getArticles();
-    return {
+    ctx.set('data', {
         title: 'Blog | Apache APISIX',
         link: 'https://apisix.apache.org/zh/blog/',
         item: articles,
-    };
-}
+    });
+};

@@ -1,27 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/:os',
-    categories: ['program-update'],
-    example: '/firecore/ios',
-    parameters: { os: '`ios`,`tvos`,`macos`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Release Notes',
-    maintainers: ['NathanDai'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const host = 'https://firecore.com/releases';
     const { data } = await got(host);
     const $ = load(data);
@@ -48,9 +29,9 @@ async function handler(ctx) {
             };
         });
 
-    return {
+    ctx.set('data', {
         title: `Infuse Release Notes (${ctx.req.param('os')})`,
         link: 'https://firecore.com/releases',
         item: items,
-    };
-}
+    });
+};

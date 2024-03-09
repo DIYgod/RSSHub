@@ -1,28 +1,6 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 
-export const route: Route = {
-    path: '/manga/update/:comicid',
-    categories: ['social-media'],
-    example: '/bilibili/manga/update/26009',
-    parameters: { comicid: '漫画 id, 可在 URL 中找到, 支持带有`mc`前缀' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['manga.bilibili.com/detail/:comicid'],
-    },
-    name: '漫画更新',
-    maintainers: ['hoilc'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const comic_id = ctx.req.param('comicid').startsWith('mc') ? ctx.req.param('comicid').replace('mc', '') : ctx.req.param('comicid');
     const link = `https://manga.bilibili.com/detail/mc${comic_id}`;
 
@@ -39,7 +17,7 @@ async function handler(ctx) {
     const data = response.data.data;
     const author = data.author_name.join(', ');
 
-    return {
+    ctx.set('data', {
         title: `${data.title} - 哔哩哔哩漫画`,
         link,
         image: data.vertical_cover,
@@ -51,5 +29,5 @@ async function handler(ctx) {
             pubDate: new Date(item.pub_time + ' +0800'),
             link: `https://manga.bilibili.com/mc${comic_id}/${item.id}`,
         })),
-    };
-}
+    });
+};

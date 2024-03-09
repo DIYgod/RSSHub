@@ -1,31 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/newshub-zh',
-    categories: ['university'],
-    example: '/sustech/newshub-zh',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['newshub.sustech.edu.cn/news'],
-    },
-    name: '新闻网（中文）',
-    maintainers: ['sparkcyf'],
-    handler,
-    url: 'newshub.sustech.edu.cn/news',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://newshub.sustech.edu.cn';
     const link = `${baseUrl}/news`;
     const response = await got({
@@ -39,7 +16,7 @@ async function handler() {
 
     const list = $('.m-newslist ul li');
 
-    return {
+    ctx.set('data', {
         title: '南方科技大学新闻网-中文',
         link,
         item:
@@ -58,5 +35,5 @@ async function handler() {
                     link: `${baseUrl}${item.find('a').attr('href')}`,
                 };
             }),
-    };
-}
+    });
+};

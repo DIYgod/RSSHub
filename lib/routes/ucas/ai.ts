@@ -1,38 +1,15 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/ai',
-    categories: ['university'],
-    example: '/ucas/ai',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['ai.ucas.ac.cn/index.php/zh-cn/tzgg', 'ai.ucas.ac.cn/'],
-    },
-    name: '人工智能学院',
-    maintainers: ['shengmaosu'],
-    handler,
-    url: 'ai.ucas.ac.cn/index.php/zh-cn/tzgg',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://ai.ucas.ac.cn';
     const link = `${baseUrl}/index.php/zh-cn/tzgg`;
     const response = await got(link);
     const $ = load(response.data);
     const list = $('.b-list li');
 
-    return {
+    ctx.set('data', {
         title: '中科院人工智能所',
         link,
         description: '中科院人工智能通知公告',
@@ -47,5 +24,5 @@ async function handler() {
                     pubDate: parseDate(item.find('.m-date').text(), 'YYYY-MM-DD'),
                 };
             }),
-    };
-}
+    });
+};

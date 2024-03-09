@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -12,14 +11,7 @@ import * as path from 'node:path';
 
 import { rootUrl, title, categories, convertToQueryString, getInfo, processItems } from './util';
 
-export const route: Route = {
-    path: '/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     let { category = 'new' } = ctx.req.param();
 
     let newTitle = '';
@@ -61,7 +53,7 @@ async function handler(ctx) {
 
     items = await processItems(items, cache.tryGet);
 
-    return {
+    ctx.set('data', {
         ...(await getInfo(currentUrl, cache.tryGet)),
         ...Object.fromEntries(
             Object.entries({
@@ -69,5 +61,5 @@ async function handler(ctx) {
                 title: newTitle,
             }).filter(([value]) => value)
         ),
-    };
-}
+    });
+};

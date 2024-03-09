@@ -1,30 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/gist/:gistId',
-    categories: ['programming'],
-    example: '/github/gist/d2c152bb7179d07015f336b1a0582679',
-    parameters: { gistId: 'Gist ID' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['gist.github.com/:owner/:gistId/revisions', 'gist.github.com/:owner/:gistId/stargazers', 'gist.github.com/:owner/:gistId/forks', 'gist.github.com/:owner/:gistId'],
-    },
-    name: 'Gist Commits',
-    maintainers: ['TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const gistId = ctx.req.param('gistId');
 
     const headers = { Accept: 'application/vnd.github.v3+json' };
@@ -46,12 +24,12 @@ async function handler(ctx) {
         pubDate: parseDate(item.committed_at), // e.g. 2022-09-02T11:09:56Z
     }));
 
-    return {
+    ctx.set('data', {
         allowEmpty: true,
         title: `${response.owner.login} / ${Object.values(response.files)[0].filename}`,
         description: response.description,
         image: response.owner.avatar_url,
         link: `${response.html_url}/revisions`,
         item: items,
-    };
-}
+    });
+};

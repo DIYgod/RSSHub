@@ -1,32 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { config } from '@/config';
 import { getOriginAvatar } from './utils';
 import logger from '@/utils/logger';
 import puppeteer from '@/utils/puppeteer';
 
-export const route: Route = {
-    path: '/live/:rid',
-    categories: ['live'],
-    example: '/douyin/live/685317364746',
-    parameters: { rid: '直播间 id, 可在主播直播间页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: true,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['live.douyin.com/:rid'],
-    },
-    name: '直播间开播',
-    maintainers: ['TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const rid = ctx.req.param('rid');
     if (isNaN(rid)) {
         throw new TypeError('Invalid room ID. Room ID should be a number.');
@@ -92,12 +70,12 @@ async function handler(ctx) {
         }
     }
 
-    return {
+    ctx.set('data', {
         title: `${nickname}的抖音直播间 - 抖音直播`,
         description: `欢迎来到${nickname}的抖音直播间，${nickname}与大家一起记录美好生活 - 抖音直播`,
         image: getOriginAvatar(userAvatar),
         link: pageUrl,
         item: items,
         allowEmpty: true,
-    };
-}
+    });
+};

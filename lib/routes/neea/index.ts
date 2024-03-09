@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -20,14 +19,7 @@ function loadContent(link) {
     });
 }
 
-export const route: Route = {
-    path: '/:type?',
-    name: 'Unknown',
-    maintainers: ['SunShinenny'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type');
     const host = `http://${type}.neea.edu.cn${typeDic[type].url}`;
     const response = await got({
@@ -56,13 +48,13 @@ async function handler(ctx) {
             return Object.assign({}, single, other);
         })
     );
-    return {
+    ctx.set('data', {
         title: `${typeDic[String(type)].title}动态`,
         link: host,
         description: `${typeDic[String(type)].title}动态 `,
         item: process,
-    };
-}
+    });
+};
 
 const typeDic = {
     // 国家教育考试

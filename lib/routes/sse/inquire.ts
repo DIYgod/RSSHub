@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,29 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/inquire',
-    categories: ['finance'],
-    example: '/sse/inquire',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.sse.com.cn/disclosure/credibility/supervision/inquiries', 'www.sse.com.cn/'],
-    },
-    name: '监管问询',
-    maintainers: ['Jeason0228'],
-    handler,
-    url: 'www.sse.com.cn/disclosure/credibility/supervision/inquiries',
-};
-
-async function handler() {
+export default async (ctx) => {
     const refererUrl = 'https://www.sse.com.cn/disclosure/credibility/supervision/inquiries/';
     const response = await got('https://query.sse.com.cn/commonSoaQuery.do', {
         searchParams: {
@@ -63,9 +40,9 @@ async function handler() {
         author: item.extGSJC,
     }));
 
-    return {
+    ctx.set('data', {
         title: '上海证券交易所 - 科创板股票审核',
         link: refererUrl,
         item: items,
-    };
-}
+    });
+};

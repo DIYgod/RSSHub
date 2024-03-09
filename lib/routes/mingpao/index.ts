@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -22,14 +21,7 @@ const renderDesc = (media, desc) =>
         desc,
     });
 
-export const route: Route = {
-    path: '/:type?/:category?',
-    name: 'Unknown',
-    maintainers: ['TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type') ?? 'ins';
     const category = ctx.req.param('category') ?? (type === 'ins' ? 'all' : 's00001');
     const link = `https://news.mingpao.com/rss/${type}/${category}.xml`;
@@ -100,12 +92,12 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: feed.title,
         link: feed.link,
         description: feed.description,
         item: items,
         image: feed.image.url,
         language: feed.language,
-    };
-}
+    });
+};

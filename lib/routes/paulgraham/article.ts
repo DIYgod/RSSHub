@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: ['/articles', '/essays', '/'],
-    categories: ['blog'],
-    example: '/paulgraham/articles',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['paulgraham.com/articles.html'],
-    },
-    name: 'Essays',
-    maintainers: ['Maecenas', 'nczitzk'],
-    handler,
-    url: 'paulgraham.com/articles.html',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
     const rootUrl = 'http://paulgraham.com';
@@ -70,7 +47,7 @@ async function handler(ctx) {
     const title = $('title').text();
     const icon = $('link[rel="shortcut icon"]').prop('href');
 
-    return {
+    ctx.set('data', {
         item: items,
         title: `${author} - ${title}`,
         link: currentUrl,
@@ -82,5 +59,5 @@ async function handler(ctx) {
         subtitle: title,
         author,
         allowEmpty: true,
-    };
-}
+    });
+};

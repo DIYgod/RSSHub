@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,14 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/trending/:filters?',
-    name: 'Unknown',
-    maintainers: ['nczitzk'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const filters = ctx.req.param('filters');
 
     const rootUrl = 'https://pubmed.ncbi.nlm.nih.gov';
@@ -62,9 +54,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: 'Trending page - PubMed',
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

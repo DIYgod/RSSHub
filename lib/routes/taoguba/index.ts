@@ -1,21 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: ['/index', '/:category?'],
-    name: 'Unknown',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 淘股论坛 | 社区总版 | 精华加油 | 网友点赞 |
-  | -------- | -------- | -------- | -------- |
-  | bbs      | zongban  | jinghua  | dianzan  |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') ?? 'zongban';
 
     const rootUrl = 'https://www.taoguba.com.cn';
@@ -86,9 +75,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('head title').text().trim().split('_')[0],
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

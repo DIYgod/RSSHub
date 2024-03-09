@@ -1,30 +1,7 @@
-import { Route } from '@/types';
 import logger from '@/utils/logger';
 import { getItems } from './utils';
 
-export const route: Route = {
-    path: '/most-viewed/:time',
-    categories: ['finance'],
-    example: '/finology/most-viewed/monthly',
-    parameters: { time: 'N' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['insider.finology.in/:category'],
-        target: '/:category',
-    },
-    name: 'Most Viewed',
-    maintainers: ['Rjnishant530'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const baseUrl = 'https://insider.finology.in/most-viewed';
     let selector;
     let title;
@@ -44,7 +21,7 @@ async function handler(ctx) {
         selector,
     };
     const listItems = await getItems(ctx, baseUrl, extra);
-    return {
+    ctx.set('data', {
         title: `Most Viewed ${title} - Finology Insider`,
         link: baseUrl,
         item: listItems,
@@ -52,5 +29,5 @@ async function handler(ctx) {
         logo: 'https://assets.finology.in/insider/images/favicon/apple-touch-icon.png',
         icon: 'https://assets.finology.in/insider/images/favicon/favicon-32x32.png',
         language: 'en-us',
-    };
-}
+    });
+};

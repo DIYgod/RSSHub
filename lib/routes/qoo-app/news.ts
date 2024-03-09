@@ -1,32 +1,10 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 import { newsUrl, siteIcon, fixImg } from './utils';
 
-export const route: Route = {
-    path: '/news/:lang?',
-    categories: ['anime'],
-    example: '/qoo-app/news/en',
-    parameters: { lang: 'Language, see the table below, empty means `中文`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'News',
-    maintainers: ['TonyRL'],
-    handler,
-    description: `| 中文 | English |
-  | ---- | ------- |
-  |      | en      |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { lang = '' } = ctx.req.param();
     const apiUrl = `${newsUrl}${lang ? `/${lang}` : ''}/wp-json/wp/v2/posts`;
 
@@ -49,7 +27,7 @@ async function handler(ctx) {
         };
     });
 
-    return {
+    ctx.set('data', {
         title: 'QooApp : Anime Game Platform',
         description:
             lang === 'en'
@@ -59,5 +37,5 @@ async function handler(ctx) {
         link: `${newsUrl}${lang ? `/${lang}` : ''}`,
         language: lang === 'en' ? 'en' : 'zh',
         item: items,
-    };
-}
+    });
+};

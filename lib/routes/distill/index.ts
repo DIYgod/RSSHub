@@ -1,22 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/',
-    radar: {
-        source: ['distill.pub/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'distill.pub/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://distill.pub';
 
     const response = await got({
@@ -70,9 +57,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: rootUrl,
         item: items,
-    };
-}
+    });
+};

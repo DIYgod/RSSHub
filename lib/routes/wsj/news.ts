@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { asyncPoolAll, parseArticle } from './utils';
@@ -7,38 +6,7 @@ const hostMap = {
     'zh-cn': 'https://cn.wsj.com/zh-hans',
     'zh-tw': 'https://cn.wsj.com/zh-hant',
 };
-export const route: Route = {
-    path: '/:lang/:category?',
-    categories: ['traditional-media'],
-    example: '/wsj/en-us/opinion',
-    parameters: { lang: 'Language, `en-us`, `zh-cn`, `zh-tw`', category: 'Category. See below' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'News',
-    maintainers: ['oppilate'],
-    handler,
-    description: `en\_us
-
-  | World | U.S. | Politics | Economy | Business | Tech       | Markets | Opinion | Books & Arts | Real Estate | Life & Work | Sytle               | Sports |
-  | ----- | ---- | -------- | ------- | -------- | ---------- | ------- | ------- | ------------ | ----------- | ----------- | ------------------- | ------ |
-  | world | us   | politics | economy | business | technology | markets | opinion | books-arts   | realestate  | life-work   | style-entertainment | sports |
-
-  zh-cn / zh-tw
-
-  | 国际  | 中国  | 金融市场 | 经济    | 商业     | 科技       | 派        | 专栏与观点 |
-  | ----- | ----- | -------- | ------- | -------- | ---------- | --------- | ---------- |
-  | world | china | markets  | economy | business | technology | life-arts | opinion    |
-
-  Provide full article RSS for WSJ topics.`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const lang = ctx.req.param('lang');
     const category = ctx.req.param('category') || '';
     const host = hostMap[lang];
@@ -74,10 +42,10 @@ async function handler(ctx) {
     });
     const items = await asyncPoolAll(10, list, (item) => parseArticle(item));
 
-    return {
+    ctx.set('data', {
         title: `WSJ${subTitle}`,
         link: url,
         description: `WSJ${subTitle}`,
         item: items,
-    };
-}
+    });
+};

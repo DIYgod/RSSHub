@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,25 +5,7 @@ import { parseRelativeDate } from '@/utils/parse-date';
 
 const host = 'https://guangdiu.com';
 
-export const route: Route = {
-    path: '/search/:query?',
-    categories: ['shopping'],
-    example: '/guangdiu/search/k=百度网盘',
-    parameters: { query: '链接参数，对应网址问号后的内容' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '关键字搜索',
-    maintainers: ['Huzhixin00'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const query = ctx.req.param('query') ?? '';
     const url = `${host}/${query ? `search.php?${query}` : ''}`;
     const response = await got(url);
@@ -52,9 +33,9 @@ async function handler(ctx) {
 
     const match = /q=(.+)/.exec(query);
 
-    return {
+    ctx.set('data', {
         title: `逛丢 - ${match[1]}`,
         link: url,
         item: items,
-    };
-}
+    });
+};

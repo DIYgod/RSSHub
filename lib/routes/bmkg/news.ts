@@ -1,31 +1,8 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/news',
-    categories: ['forecast'],
-    example: '/bmkg/news',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['bmkg.go.id/', 'bmkg.go.id/berita'],
-    },
-    name: 'News',
-    maintainers: ['Shinanory'],
-    handler,
-    url: 'bmkg.go.id/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const url = 'https://www.bmkg.go.id';
     const response = await got(url);
     const $ = load(response.data);
@@ -56,11 +33,11 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: url,
         description: '印尼气象气候和地球物理局 新闻 | BMKG news',
         item: items,
         language: 'in',
-    };
-}
+    });
+};

@@ -1,33 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/jw/:type',
-    categories: ['university'],
-    example: '/nju/jw/ggtz',
-    parameters: { type: '分类名' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['jw.nju.edu.cn/:type/list.htm'],
-    },
-    name: '本科生院',
-    maintainers: ['cqjjjzr'],
-    handler,
-    description: `| 公告通知 | 教学动态 |
-  | -------- | -------- |
-  | ggtz     | jxdt     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type');
     const type_dict = {
         ggtz: [
@@ -62,7 +37,7 @@ async function handler(ctx) {
         },
     });
 
-    return {
+    ctx.set('data', {
         title: `本科生院-${type_dict[type][1]}`,
         link: type_dict[type][4],
         item:
@@ -80,5 +55,5 @@ async function handler(ctx) {
                 }
                 return ret;
             }),
-    };
-}
+    });
+};

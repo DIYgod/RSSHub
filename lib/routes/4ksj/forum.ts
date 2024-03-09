@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,30 +10,7 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import iconv from 'iconv-lite';
 
-export const route: Route = {
-    path: '/forum/:id?',
-    categories: ['multimedia'],
-    example: '/4ksj/forum',
-    parameters: { id: '分类 id，默认为最新4K电影' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '分类',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `:::tip
-  若订阅 [最新 4K 电影](https://www.4ksj.com/forum-2-1.html)，网址为 \`https://www.4ksj.com/forum-2-1.html\`。截取 \`https://www.4ksj.com/forum-\` 到末尾 \`.html\` 的部分 \`2-1\` 作为参数，此时路由为 [\`/4ksj/forum/2-1\`](https://rsshub.app/4ksj/forum/2-1)。
-
-  若订阅子分类 [Dolby Vision 纪录片 4K 电影](https://www.4ksj.com/forum-4kdianying-s7-dianyingbiaozhun-3-dytypes-9-1.html)，网址为 \`https://www.4ksj.com/forum-4kdianying-s7-dianyingbiaozhun-3-dytypes-9-1.html\`。截取 \`https://www.4ksj.com/forum-\` 到末尾 \`.html\` 的部分 \`4kdianying-s7-dianyingbiaozhun-3-dytypes-9-1\` 作为参数，此时路由为 [\`/4ksj/forum/4kdianying-s7-dianyingbiaozhun-3-dytypes-9-1\`](https://rsshub.app/4ksj/forum/4kdianying-s7-dianyingbiaozhun-3-dytypes-9-1)。
-  :::`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id') ?? '2-1';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 25;
 
@@ -132,12 +108,12 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `4k世界 - ${$('#fontsearch ul.cl li.a')
             .toArray()
             .map((a) => $(a).text())
             .join('+')}`,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

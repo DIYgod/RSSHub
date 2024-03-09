@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import cache from './cache';
 import utils from './utils';
@@ -8,25 +7,7 @@ const notFoundData = {
     title: '此 bilibili 频道不存在',
 };
 
-export const route: Route = {
-    path: '/user/collection/:uid/:sid/:disableEmbed?',
-    categories: ['social-media'],
-    example: '/bilibili/user/collection/245645656/529166',
-    parameters: { uid: '用户 id, 可在 UP 主主页中找到', sid: '合集 id, 可在合集页面的 URL 中找到', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'UP 主频道的合集',
-    maintainers: ['shininome'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const uid = Number.parseInt(ctx.req.param('uid'));
     const sid = Number.parseInt(ctx.req.param('sid'));
     const disableEmbed = ctx.req.param('disableEmbed');
@@ -48,7 +29,7 @@ async function handler(ctx) {
         return;
     }
 
-    return {
+    ctx.set('data', {
         title: `${userName} 的 bilibili 合集 ${data.meta.name}`,
         link,
         description: `${userName} 的 bilibili 合集`,
@@ -68,5 +49,5 @@ async function handler(ctx) {
                 author: userName,
             };
         }),
-    };
-}
+    });
+};

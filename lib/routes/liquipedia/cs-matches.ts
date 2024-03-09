@@ -1,19 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/counterstrike/matches/:team',
-    radar: {
-        source: ['liquipedia.net/counterstrike/:id/Matches', 'liquipedia.net/dota2/:id'],
-        target: '/counterstrike/matches/:id',
-    },
-    name: 'Unknown',
-    maintainers: ['CookiePieWw'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const team = ctx.req.param('team');
 
     const rootUrl = 'https://liquipedia.net';
@@ -50,9 +38,9 @@ async function handler(ctx) {
         })
         .get();
 
-    return {
+    ctx.set('data', {
         title: `[Counter-Strike] ${team} Match Results From Liquipedia`,
         link: currentUrl,
         item: matches,
-    };
-}
+    });
+};

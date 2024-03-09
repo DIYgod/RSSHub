@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { generateProductItem } from './utils';
 
@@ -33,29 +32,7 @@ const productRequest = async (productIds) => {
     return response.data;
 };
 
-export const route: Route = {
-    path: '/cn/family_offers',
-    categories: ['shopping'],
-    example: '/ikea/cn/family_offers',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['ikea.cn/cn/zh/offers/family-offers', 'ikea.cn/'],
-    },
-    name: '中国 - 会员特惠',
-    maintainers: ['jzhangdev'],
-    handler,
-    url: 'ikea.cn/cn/zh/offers/family-offers',
-};
-
-async function handler() {
+export default async (ctx) => {
     const familyPriceProductIds = [];
     const productRequests = [];
 
@@ -84,10 +61,10 @@ async function handler() {
     const productResponses = await Promise.all(productRequests);
     const products = productResponses.flat();
 
-    return {
+    ctx.set('data', {
         title: 'IKEA 宜家 - 会员特惠',
         link: 'https://www.ikea.cn/cn/zh/offers/family-offers/',
         description: '会员特惠',
         item: products.map((element) => generateProductItem(element)),
-    };
-}
+    });
+};

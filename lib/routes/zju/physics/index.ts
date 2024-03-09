@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -23,28 +22,7 @@ const map = new Map([
     [11, { title: '浙大物理学院 -- 学术报告', id: '3735' }],*/
 ]);
 
-export const route: Route = {
-    path: '/physics/:type',
-    categories: ['university'],
-    example: '/zju/physics/1',
-    parameters: { type: '分类，见下表' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '物理学院',
-    maintainers: ['Caicailiushui'],
-    handler,
-    description: `| 本院动态 | 科研进展 | 研究生教育最新消息 |
-  | -------- | -------- | ------------------ |
-  | 1        | 2        | 3                  |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = Number.parseInt(ctx.req.param('type'));
     const id = map.get(type).id;
     const res = await got({
@@ -66,9 +44,9 @@ async function handler(ctx) {
         })
         .get();
 
-    return {
+    ctx.set('data', {
         title: map.get(type).title,
         link: `${host}${id}`,
         item: items,
-    };
-}
+    });
+};

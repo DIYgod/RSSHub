@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,29 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 const baseUrl = 'https://gr.uestc.edu.cn/tongzhi/';
 const baseIndexUrl = 'https://gr.uestc.edu.cn';
 
-export const route: Route = {
-    path: '/gr',
-    categories: ['university'],
-    example: '/uestc/gr',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['gr.uestc.edu.cn/'],
-    },
-    name: '研究生院',
-    maintainers: ['huyyi', 'mobyw'],
-    handler,
-    url: 'gr.uestc.edu.cn/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const response = await got.get(baseIndexUrl);
 
     const $ = load(response.data);
@@ -63,10 +40,10 @@ async function handler() {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: '研究生院通知',
         link: baseUrl,
         description: '电子科技大学研究生院通知公告',
         item: out,
-    };
-}
+    });
+};

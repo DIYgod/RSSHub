@@ -1,32 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/topic/:category?',
-    categories: ['new-media'],
-    example: '/chiculture/topic',
-    parameters: { category: '分类，见下表，默认为全部' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '議題熱話',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 全部 | 現代中國 | 今日香港 | 全球化 | 一周時事通識 |
-  | ---- | -------- | -------- | ------ | ------------ |
-  |      | 76       | 479      | 480    | 379          |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') || '';
 
     const rootUrl = 'https://ls.chiculture.org.hk';
@@ -76,9 +54,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '議題熱話 | 通識·現代中國',
         link: `${rootUrl}/tc/hot-topics${category ? `?category=${category}` : ''}`,
         item: items,
-    };
-}
+    });
+};

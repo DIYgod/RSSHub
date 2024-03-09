@@ -1,17 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: ['/update', '/versions'],
-    name: 'Unknown',
-    maintainers: ['Cesaryuan', 'nczitzk'],
-    handler,
-    url: 'getquicker.net/Help/Versions',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://getquicker.net';
     const currentUrl = `${rootUrl}/Help/Versions`;
 
@@ -37,9 +28,9 @@ async function handler() {
             };
         });
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,29 +5,7 @@ import { config } from '@/config';
 
 const link = 'https://www.economist.com/the-world-in-brief';
 
-export const route: Route = {
-    path: '/espresso',
-    categories: ['traditional-media'],
-    example: '/economist/espresso',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['economist.com/the-world-in-brief', 'economist.com/espresso'],
-    },
-    name: 'Espresso',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'economist.com/the-world-in-brief',
-};
-
-async function handler() {
+export default async (ctx) => {
     const $ = await cache.tryGet(
         link,
         async () => {
@@ -94,11 +71,11 @@ async function handler() {
         };
     });
 
-    return {
+    ctx.set('data', {
         title: $('head title').text(),
         link,
         description: $('meta[property="og:description"]').attr('content'),
         language: 'en-gb',
         item: [...gobbets, ...articles],
-    };
-}
+    });
+};

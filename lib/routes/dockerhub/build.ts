@@ -1,29 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { hash } from './utils';
 
-export const route: Route = {
-    path: '/build/:owner/:image/:tag?',
-    categories: ['program-update'],
-    example: '/dockerhub/build/wangqiru/ttrss',
-    parameters: { owner: 'Image owner', image: 'Image name', tag: 'Image tag，default to latest' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Image New Build',
-    maintainers: ['HenryQW'],
-    handler,
-    description: `:::warning
-  The owner of the official image fills in the library, for example: [https://rsshub.app/dockerhub/build/library/mysql](https://rsshub.app/dockerhub/build/library/mysql)
-  :::`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { owner, image, tag = 'latest' } = ctx.req.param();
 
     const namespace = `${owner}/${image}`;
@@ -35,7 +13,7 @@ async function handler(ctx) {
 
     const item = data.data;
 
-    return {
+    ctx.set('data', {
         title: `${namespace}:${tag} build history`,
         description: metadata.data.description,
         link,
@@ -49,5 +27,5 @@ async function handler(ctx) {
                 guid: hash(item.images),
             },
         ],
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -23,31 +22,7 @@ const ProcessFeed = (list, caches) =>
         )
     );
 
-export const route: Route = {
-    path: '/www/:type',
-    categories: ['university'],
-    example: '/shmtu/www/events',
-    parameters: { type: '类型名称' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.shmtu.edu.cn/:type'],
-    },
-    name: '官网信息',
-    maintainers: ['imbytecat', 'simonsmh'],
-    handler,
-    description: `| 学术讲座 | 通知公告 |
-| -------- | -------- |
-| events   | notes    |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type');
     const info = type === 'notes' ? '通知公告' : '学术讲座';
 
@@ -75,10 +50,10 @@ async function handler(ctx) {
 
     const result = await ProcessFeed(list, cache);
 
-    return {
+    ctx.set('data', {
         title: `上海海事大学 ${info}`,
         link: `${host}/${type}`,
         description: '上海海事大学 官网信息',
         item: result,
-    };
-}
+    });
+};

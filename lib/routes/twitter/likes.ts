@@ -1,26 +1,7 @@
-import { Route } from '@/types';
 import utils from './utils';
 import { config } from '@/config';
 
-export const route: Route = {
-    path: '/likes/:id/:routeParams?',
-    categories: ['social-media'],
-    example: '/twitter/likes/DIYgod',
-    parameters: { id: 'username', routeParams: 'extra parameters, see the table above' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'User likes',
-    maintainers: ['xyqfer'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     if (!config.twitter || !config.twitter.consumer_key || !config.twitter.consumer_secret) {
         throw new Error('Twitter RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -31,11 +12,11 @@ async function handler(ctx) {
         tweet_mode: 'extended',
     });
 
-    return {
+    ctx.set('data', {
         title: `Twitter Likes - ${id}`,
         link: `https://twitter.com/${id}/likes`,
         item: utils.ProcessFeed(ctx, {
             data,
         }),
-    };
-}
+    });
+};

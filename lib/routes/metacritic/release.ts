@@ -41,7 +41,7 @@ export default async (ctx) => {
         };
     });
 
-    return {
+    ctx.set('data', {
         title: toTitleCase(`Metacritic ${ctx.req.param('platform')} games ${title}`),
         link: url,
         item: result.map((item) => ({
@@ -49,5 +49,5 @@ export default async (ctx) => {
             description: `Release Date: ${item.date} <br> Metacritic Score: ${item.metascore} <br> User Score: ${item.userscore} <br>`,
             link: item.url,
         })),
-    };
+    });
 };

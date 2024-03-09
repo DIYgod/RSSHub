@@ -1,29 +1,6 @@
-import { Route } from '@/types';
 import { rootUrl, apiRootUrl, processItems, icon, image } from './util';
 
-export const route: Route = {
-    path: '/column/:id',
-    categories: ['new-media'],
-    example: '/foresightnews/column/1',
-    parameters: { id: '专栏 id, 可在对应专栏页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['foresightnews.pro/column/detail/:id', 'foresightnews.pro/'],
-    },
-    name: '专栏',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'foresightnews.pro/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
@@ -36,7 +13,7 @@ async function handler(ctx) {
 
     const column = info.column;
 
-    return {
+    ctx.set('data', {
         item: items,
         title: `Foresight News - ${column}`,
         link: currentUrl,
@@ -47,5 +24,5 @@ async function handler(ctx) {
         logo: icon,
         subtitle: column,
         author: 'Foresight News',
-    };
-}
+    });
+};

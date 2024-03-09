@@ -1,31 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/daily-papers',
-    categories: ['programming'],
-    example: '/huggingface/daily-papers',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['huggingface.co/papers', 'huggingface.co/'],
-    },
-    name: 'Daily Papers',
-    maintainers: ['zeyugao'],
-    handler,
-    url: 'huggingface.co/papers',
-};
-
-async function handler() {
+export default async (ctx) => {
     const { body: response } = await got('https://huggingface.co/papers');
     const $ = load(response);
     const papers = $('main > div[data-target="DailyPapers"]').data('props');
@@ -41,9 +18,9 @@ async function handler() {
         }))
         .sort((a, b) => b.upvotes - a.upvotes);
 
-    return {
+    ctx.set('data', {
         title: 'Huggingface Daily Papers',
         link: 'https://huggingface.co/papers',
         item: items,
-    };
-}
+    });
+};

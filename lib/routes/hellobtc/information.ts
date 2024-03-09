@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -17,25 +16,7 @@ const titleMap = {
     application: '应用',
 };
 
-export const route: Route = {
-    path: '/information/:channel?',
-    categories: ['new-media'],
-    example: '/hellobtc/information/latest',
-    parameters: { channel: '类型，可填 `latest` 和 `application` 及最新和应用，默认为最新' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '首页',
-    maintainers: ['Fatpandac'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const channel = ctx.req.param('channel') ?? 'latest';
     const url = rootUrl;
 
@@ -63,9 +44,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `白话区块链 - 首页 ${titleMap[channel]}`,
         link: url,
         item: items,
-    };
-}
+    });
+};

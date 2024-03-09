@@ -1,33 +1,10 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const appFeedUrl = 'https://raw.githubusercontent.com/Squidly271/AppFeed/master/applicationFeed.json';
 const defaultLimit = 20;
 
-export const route: Route = {
-    path: '/community-apps',
-    categories: ['program-update'],
-    example: '/unraid/community-apps',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['unraid.net/community/apps'],
-    },
-    name: 'Community Apps',
-    maintainers: ['KTachibanaM'],
-    handler,
-    url: 'unraid.net/community/apps',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { data } = await got(appFeedUrl);
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : defaultLimit;
 
@@ -42,7 +19,7 @@ async function handler(ctx) {
     appList.sort((a, b) => b._pubDate - a._pubDate);
     const returnedAppList = appList.slice(0, limit);
 
-    return {
+    ctx.set('data', {
         title: 'Unraid Community Apps',
         link: 'https://unraid.net/community/apps',
         image: 'https://craftassets.unraid.net/static/favicon/favicon.ico?v=1.0',
@@ -54,5 +31,5 @@ async function handler(ctx) {
             category: app.CategoryList,
             upvotes: app.stars,
         })),
-    };
-}
+    });
+};

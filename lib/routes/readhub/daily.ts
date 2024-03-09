@@ -1,33 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
 import { rootUrl, processItems } from './util';
 
-export const route: Route = {
-    path: '/daily',
-    categories: ['new-media'],
-    example: '/readhub/daily',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['readhub.cn/daily'],
-    },
-    name: '每日早报',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'readhub.cn/daily',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 11;
 
     const currentUrl = new URL('daily', rootUrl).href;
@@ -51,7 +28,7 @@ async function handler(ctx) {
     const image = 'https://readhub-oss.nocode.com/static/readhub.png';
     const icon = new URL($('link[rel="apple-touch-icon"]').prop('href'), rootUrl);
 
-    return {
+    ctx.set('data', {
         item: items,
         title: `${author} - ${subtitle}`,
         link: currentUrl,
@@ -63,5 +40,5 @@ async function handler(ctx) {
         subtitle,
         author,
         allowEmpty: true,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,29 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/curations',
-    categories: ['traditional-media'],
-    example: '/pts/curations',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['news.pts.org.tw/curations', 'news.pts.org.tw/'],
-    },
-    name: '專題策展',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'news.pts.org.tw/curations',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://news.pts.org.tw';
     const currentUrl = `${rootUrl}/curations`;
 
@@ -60,11 +37,11 @@ async function handler() {
             };
         });
 
-    return {
+    ctx.set('data', {
         title: $('title')
             .text()
             .replace(/第\d+頁 ｜ /, ''),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

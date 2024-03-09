@@ -1,15 +1,7 @@
-import { Route } from '@/types';
 import utils from './utils';
 import { config } from '@/config';
 
-export const route: Route = {
-    path: '/account_id/:site/:account_id/statuses/:only_media?',
-    name: 'Unknown',
-    maintainers: ['notofoe'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const site = ctx.req.param('site');
     const account_id = ctx.req.param('account_id');
     const only_media = ctx.req.param('only_media') ? 'true' : 'false';
@@ -19,11 +11,11 @@ async function handler(ctx) {
 
     const { account_data, data } = await utils.getAccountStatuses(site, account_id, only_media);
 
-    return {
+    ctx.set('data', {
         title: `${account_data.display_name} (@${account_data.acct})`,
         link: account_data.url,
         description: account_data.note,
         item: utils.parseStatuses(data),
         allowEmpty: true,
-    };
-}
+    });
+};

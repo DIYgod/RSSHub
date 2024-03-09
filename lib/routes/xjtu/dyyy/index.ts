@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,14 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'http://www.dyyy.xjtu.edu.cn';
 
-export const route: Route = {
-    path: '/dyyy/:path{.+}',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const path = ctx.req.param('path');
     const response = await got(`${baseUrl}/${path}.htm`);
 
@@ -45,9 +37,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('head title').text(),
         link: `${baseUrl}/${path}.htm`,
         item: items,
-    };
-}
+    });
+};

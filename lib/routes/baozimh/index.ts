@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,28 +9,7 @@ import * as path from 'node:path';
 
 const rootUrl = 'https://www.baozimh.com';
 
-export const route: Route = {
-    path: '/comic/:name',
-    categories: ['anime'],
-    example: '/baozimh/comic/guowangpaiming-shiricaofu',
-    parameters: { name: '漫画名称，在漫画链接可以得到(`comic/` 后的那段)' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.baozimh.com/comic/:name'],
-    },
-    name: '订阅漫画',
-    maintainers: ['Fatpandac'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const name = ctx.req.param('name');
     const url = `${rootUrl}/comic/${name}`;
 
@@ -67,10 +45,10 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `包子漫画-${comicTitle}`,
         description: $('.comics-detail__desc').text(),
         link: url,
         item: items,
-    };
-}
+    });
+};

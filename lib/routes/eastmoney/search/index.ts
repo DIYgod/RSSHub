@@ -1,27 +1,8 @@
-import { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/search/:keyword',
-    categories: ['finance'],
-    example: '/eastmoney/search/web3',
-    parameters: { keyword: '关键词，可以设置为自己需要检索的关键词' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '搜索',
-    maintainers: ['drgnchan'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const keyword = ctx.req.param('keyword');
     const link = `https://so.eastmoney.com/News/s?KeyWord=${keyword}`;
     const body = {
@@ -66,9 +47,9 @@ async function handler(ctx) {
         link: item.url,
         author: item.mediaName,
     }));
-    return {
+    ctx.set('data', {
         title: `东方财富网 - 搜索'${keyword}'`,
         link,
         item: items,
-    };
-}
+    });
+};

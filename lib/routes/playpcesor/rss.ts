@@ -1,21 +1,8 @@
-import { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/',
-    radar: {
-        source: ['playpcesor.com/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['cnkmmk'],
-    handler,
-    url: 'playpcesor.com/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const url = 'https://www.playpcesor.com/';
     const response = await got({ method: 'get', url });
     const $ = load(response.data);
@@ -37,9 +24,9 @@ async function handler() {
         })
         .get();
 
-    return {
+    ctx.set('data', {
         title: '电脑玩物',
         link: url,
         item: list,
-    };
-}
+    });
+};

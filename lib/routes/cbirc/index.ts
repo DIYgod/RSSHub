@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -79,17 +78,7 @@ async function getContent(item) {
     return response.data.data.docClob;
 }
 
-export const route: Route = {
-    path: '/:category?',
-    radar: {
-        source: ['cbirc.gov.cn/:category', 'cbirc.gov.cn/'],
-    },
-    name: 'Unknown',
-    maintainers: ['JkCheung'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') ?? 'ggtz';
     const cat = categories[category];
 
@@ -121,11 +110,11 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: `中国银保监会-${cat.title}`,
         link: cat.link,
         description: `中国银保监会-${cat.title}`,
         item: dataLs,
         language: 'zh-CN',
-    };
-}
+    });
+};

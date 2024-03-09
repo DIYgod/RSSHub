@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,28 +8,7 @@ import { config } from '@/config';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/:appId',
-    categories: ['program-update'],
-    example: '/winstall/Mozilla.Firefox',
-    parameters: { appId: 'Application ID' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['winstall.app/apps/:appId'],
-    },
-    name: 'Apps Update',
-    maintainers: ['TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const baseUrl = 'https://winstall.app';
     const appId = ctx.req.param('appId');
 
@@ -58,12 +36,12 @@ async function handler(ctx) {
         guid: `winstall:${appId}:${item.version}`,
     }));
 
-    return {
+    ctx.set('data', {
         title: `${app.name} - winstall`,
         description: app.desc,
         link: `${baseUrl}/apps/${appId}`,
         image: `https://api.winstall.app/icons/next/${appId}.webp`,
         language: 'en',
         item: items,
-    };
-}
+    });
+};

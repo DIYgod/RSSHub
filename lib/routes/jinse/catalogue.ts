@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -22,32 +21,7 @@ const categories = {
     capitalmarket: '研报',
 };
 
-export const route: Route = {
-    path: '/:category?',
-    categories: ['finance'],
-    example: '/jinse/zhengce',
-    parameters: { category: '分类，见下表，默认为政策' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '分类',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 政策    | 行情         | DeFi | 矿业  | 以太坊 2.0 |
-  | ------- | ------------ | ---- | ----- | ---------- |
-  | zhengce | fenxishishuo | defi | kuang | 以太坊 2.0 |
-
-  | 产业     | IPFS | 技术 | 百科  | 研报          |
-  | -------- | ---- | ---- | ----- | ------------- |
-  | industry | IPFS | tech | baike | capitalmarket |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = 'zhengce' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
@@ -115,7 +89,7 @@ async function handler(ctx) {
     const image = $('a.js-logoBox img').prop('src');
     const icon = new URL($('link[rel="favicon"]').prop('href'), rootUrl).href;
 
-    return {
+    ctx.set('data', {
         item: items,
         title: `${author} - ${Object.hasOwn(categories, category) ? categories[category] : category}`,
         link: currentUrl,
@@ -127,5 +101,5 @@ async function handler(ctx) {
         subtitle: $('meta[name="keywords"]').prop('content'),
         author,
         allowEmpty: true,
-    };
-}
+    });
+};

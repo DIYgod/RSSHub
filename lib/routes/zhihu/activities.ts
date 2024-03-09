@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import utils from './utils';
@@ -6,28 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 import g_encrypt from './execlib/x-zse-96-v3';
 import md5 from '@/utils/md5';
 
-export const route: Route = {
-    path: '/people/activities/:id',
-    categories: ['social-media'],
-    example: '/zhihu/people/activities/diygod',
-    parameters: { id: '作者 id，可在用户主页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.zhihu.com/people/:id'],
-    },
-    name: '用户动态',
-    maintainers: ['DIYgod'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
 
     // Because the API of zhihu.com has changed, we must use the value of `d_c0` (extracted from cookies) to calculate
@@ -72,7 +50,7 @@ async function handler(ctx) {
 
     const data = response.data.data;
 
-    return {
+    ctx.set('data', {
         title: `${data[0].actor.name}的知乎动态`,
         link: `https://www.zhihu.com/people/${id}/activities`,
         image: data[0].actor.avatar_url,
@@ -176,5 +154,5 @@ async function handler(ctx) {
                 link: url,
             };
         }),
-    };
-}
+    });
+};

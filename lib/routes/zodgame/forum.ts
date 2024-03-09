@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,25 +10,7 @@ import * as path from 'node:path';
 
 const rootUrl = 'https://zodgame.xyz';
 
-export const route: Route = {
-    path: '/forum/:fid?',
-    categories: ['bbs'],
-    example: '/zodgame/forum/13',
-    parameters: { fid: 'forum id, can be found in URL' },
-    features: {
-        requireConfig: true,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'forum',
-    maintainers: ['FeCCC'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const fid = ctx.req.param('fid');
     const subUrl = `${rootUrl}/api/mobile/index.php?version=4&module=forumdisplay&fid=${fid}`;
     const cookie = config.zodgame.cookie;
@@ -107,9 +88,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `${info.forum.name} - ZodGame论坛`,
         link: `${rootUrl}/forum.php?mod=forumdisplay&fid=${fid}`,
         item: items,
-    };
-}
+    });
+};

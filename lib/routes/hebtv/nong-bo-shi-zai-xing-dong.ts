@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -12,29 +11,7 @@ import * as path from 'node:path';
 
 const baseUrl = 'https://web.cmc.hebtv.com/cms/rmt0336/19/19js/st/ds/nmpd/nbszxd/index.shtml';
 
-export const route: Route = {
-    path: '/nbszxd',
-    categories: ['traditional-media'],
-    example: '/hebtv/nbszxd',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: true,
-        supportPodcast: true,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['web.cmc.hebtv.com/cms/rmt0336/19/19js/st/ds/nmpd/nbszxd/index.shtml'],
-    },
-    name: '农博士在行动',
-    maintainers: ['iamqiz', 'nczitzk'],
-    handler,
-    url: 'web.cmc.hebtv.com/cms/rmt0336/19/19js/st/ds/nmpd/nbszxd/index.shtml',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 40;
 
     const apiRootUrl = 'http://api.cmc.hebtv.com';
@@ -118,7 +95,7 @@ async function handler(ctx) {
     const author = description.split(/,/)[0];
     const icon = $('link[rel="shortcut icon"]').prop('href');
 
-    return {
+    ctx.set('data', {
         item: items,
         title: $('title').text(),
         link: baseUrl,
@@ -132,5 +109,5 @@ async function handler(ctx) {
         itunes_author: author,
         itunes_category: 'News',
         allowEmpty: true,
-    };
-}
+    });
+};

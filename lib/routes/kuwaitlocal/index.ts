@@ -1,33 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/:category?',
-    categories: ['new-media'],
-    example: '/kuwaitlocal/article',
-    parameters: { category: 'Category name, can be found in URL, `latest` by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['kuwaitlocal.com/news/categories/:category'],
-        target: '/:category',
-    },
-    name: 'Categorised News',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'kuwaitlocal.com/news/latest',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const baseUrl = 'https://kuwaitlocal.com';
     const { category = 'latest' } = ctx.req.param();
     const url = `${baseUrl}/news/${category === 'latest' ? category : `categories/${category}`}`;
@@ -63,11 +39,11 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('head title').text().trim(),
         description: $('head meta[name="description"]').attr('content').trim(),
         link: url,
         item: items,
         language: 'en',
-    };
-}
+    });
+};

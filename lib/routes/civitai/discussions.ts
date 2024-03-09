@@ -1,34 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/discussions/:modelId',
-    categories: ['program-update'],
-    example: '/civitai/discussions/4384',
-    parameters: { modelId: 'N' },
-    features: {
-        requireConfig: true,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['civitai.com/models/:modelId'],
-    },
-    name: 'Model discussions',
-    maintainers: ['DIYgod'],
-    handler,
-    description: `:::warning
-Need to configure \`CIVITAI_COOKIE\` to obtain image information of NSFW models.
-:::`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const params = ctx.req.param();
     const modelId = Number.parseInt(params.modelId);
 
@@ -59,9 +34,9 @@ async function handler(ctx) {
         )
         .filter(Boolean);
 
-    return {
+    ctx.set('data', {
         title: `Civitai model ${params.modelId} discussions`,
         link: `https://civitai.com/`,
         item: items,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -13,29 +12,7 @@ import * as path from 'node:path';
 import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/datasets',
-    categories: ['programming'],
-    example: '/modelscope/datasets',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['modelscope.cn/datasets'],
-    },
-    name: '数据集',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'modelscope.cn/datasets',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const baseUrl = 'https://modelscope.cn';
     const link = `${baseUrl}/datasets`;
 
@@ -73,11 +50,11 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '数据集首页 · 魔搭社区',
         description: 'ModelScope——汇聚各领域先进的机器学习模型，提供模型探索体验、推理、训练、部署和应用的一站式服务。在这里，共建模型开源社区，发现、学习、定制和分享心仪的模型。',
         image: 'https://g.alicdn.com/sail-web/maas/0.8.10/favicon/128.ico',
         link,
         item: items,
-    };
-}
+    });
+};

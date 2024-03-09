@@ -1,35 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/:category?',
-    categories: ['new-media'],
-    example: '/qqorw',
-    parameters: { category: '分类，见下表，默认为首页' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['qqorw.cn/:category', 'qqorw.cn/'],
-    },
-    name: '每日早报',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 首页 | 每日早报 | 国际早报 | 生活冷知识 |
-  | ---- | -------- | -------- | ---------- |
-  |      | mrzb     | zbapp    | zbzzd      |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = '' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
 
@@ -88,7 +63,7 @@ async function handler(ctx) {
     const icon = new URL('favicon.ico', rootUrl).href;
     const title = $('header.archive-header h1 a').last().text();
 
-    return {
+    ctx.set('data', {
         item: items,
         title: `${author}${title ? ` - ${title}` : ''}`,
         link: currentUrl,
@@ -99,5 +74,5 @@ async function handler(ctx) {
         logo: icon,
         subtitle: $('meta[name="keywords"]').prop('content'),
         author,
-    };
-}
+    });
+};

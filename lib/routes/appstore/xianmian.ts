@@ -1,35 +1,12 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/xianmian',
-    categories: ['program-update'],
-    example: '/appstore/xianmian',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['app.so/xianmian'],
-    },
-    name: '每日精品限免 / 促销应用（鲜面连线 by AppSo）',
-    maintainers: ['Andiedie'],
-    handler,
-    url: 'app.so/xianmian',
-};
-
-async function handler() {
+export default async (ctx) => {
     const {
         data: { objects: data },
     } = await got.get('https://app.so/api/v5/appso/discount/?platform=web&limit=10');
 
-    return {
+    ctx.set('data', {
         title: '每日精品限免 / 促销应用',
         link: 'http://app.so/xianmian/',
         description: '鲜面连线 by AppSo：每日精品限免 / 促销应用',
@@ -47,5 +24,5 @@ async function handler() {
             pubDate: parseDate(item.updated_at * 1000),
             link: item.app.download_link[0].link,
         })),
-    };
-}
+    });
+};

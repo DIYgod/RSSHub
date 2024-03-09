@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,29 +6,7 @@ import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://today.hitwh.edu.cn';
 
-export const route: Route = {
-    path: '/today',
-    categories: ['university'],
-    example: '/hitwh/today',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['hitwh.edu.cn/1024/list.htm', 'hitwh.edu.cn/'],
-    },
-    name: '今日工大 - 通知公告',
-    maintainers: ['raptazure'],
-    handler,
-    url: 'hitwh.edu.cn/1024/list.htm',
-};
-
-async function handler() {
+export default async (ctx) => {
     const response = await got(`${baseUrl}/1024/list.htm`, {
         https: {
             rejectUnauthorized: false,
@@ -45,7 +22,7 @@ async function handler() {
         }))
         .get();
 
-    return {
+    ctx.set('data', {
         title: '哈尔滨工业大学（威海）通知公告',
         link: `${baseUrl}/1024/list.htm`,
         item: await Promise.all(
@@ -74,5 +51,5 @@ async function handler() {
                 })
             )
         ),
-    };
-}
+    });
+};

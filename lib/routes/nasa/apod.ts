@@ -1,33 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/apod',
-    categories: ['picture'],
-    example: '/nasa/apod',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['apod.nasa.govundefined'],
-    },
-    name: 'NASA',
-    maintainers: ['nczitzk', 'williamgateszhao'],
-    handler,
-    url: 'apod.nasa.govundefined',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
     const rootUrl = 'https://apod.nasa.gov/apod/archivepix.html';
     const response = await got({
@@ -67,9 +44,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: 'NASA Astronomy Picture of the Day',
         link: rootUrl,
         item: items,
-    };
-}
+    });
+};

@@ -1,29 +1,6 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 
-export const route: Route = {
-    path: '/zhujia',
-    categories: ['shopping'],
-    example: '/zhuwang/zhujia',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['zhujia.zhuwang.cc/'],
-    },
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-    url: 'zhujia.zhuwang.cc/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://zhujia.zhuwang.cc/';
     const now = new Date();
     const date = `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
@@ -60,10 +37,10 @@ async function handler() {
         };
     });
 
-    return {
+    ctx.set('data', {
         title: `全国今日生猪价格`,
         desription: '中国养猪网猪价频道是中国猪价权威平台,提供每日猪评,猪价和行情分析,并且预测猪价和分析每天的猪价排行。',
         link: baseUrl,
         item: priceItems,
-    };
-}
+    });
+};

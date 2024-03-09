@@ -1,30 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/archive',
-    categories: ['blog'],
-    example: '/luxiangdong/archive',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['luxiangdong.com/'],
-    },
-    name: '文章',
-    maintainers: ['Levix'],
-    handler,
-    url: 'luxiangdong.com/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const { data } = await got(`https://www.luxiangdong.com/content.json?t=${Date.now()}`);
 
     const items = data.posts.map((item) => ({
@@ -40,12 +17,12 @@ async function handler() {
         category: item.tags.map((tag) => tag.name),
     }));
 
-    return {
+    ctx.set('data', {
         // 源标题
         title: '土猛的员外',
         // 源链接
         link: 'https://www.luxiangdong.com/',
         // 源文章
         item: items,
-    };
-}
+    });
+};

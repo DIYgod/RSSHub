@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -23,25 +22,7 @@ const getComments = (a, node) => {
     }
 };
 
-export const route: Route = {
-    path: '/html5',
-    categories: ['design'],
-    example: '/iguoguo/html5',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '最新 H5',
-    maintainers: ['yuxinliu-alex'],
-    handler,
-};
-
-async function handler() {
+export default async (ctx) => {
     const currentUrl = rootUrl.concat('/html5');
     const response = await got({
         method: 'get',
@@ -85,11 +66,11 @@ async function handler() {
             })
         )
     );
-    return {
+    ctx.set('data', {
         title: '爱果果',
         link: currentUrl,
         description: '爱果果iguoguo是一个优秀酷站、h5、UI素材资源的发布分享平台，是设计师的灵感聚合地和素材下载源。',
         language: 'zh-cn',
         item: items,
-    };
-}
+    });
+};

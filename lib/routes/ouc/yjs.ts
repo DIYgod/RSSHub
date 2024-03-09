@@ -1,37 +1,14 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/yjs',
-    categories: ['university'],
-    example: '/ouc/yjs',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['yz.ouc.edu.cn/5926/list.htm'],
-    },
-    name: '研究生院',
-    maintainers: ['shengmaosu'],
-    handler,
-    url: 'yz.ouc.edu.cn/5926/list.htm',
-};
-
-async function handler() {
+export default async (ctx) => {
     const link = 'https://yz.ouc.edu.cn/5926/list.htm';
     const response = await got(link);
     const $ = load(response.data);
     const list = $('.wp_article_list li');
 
-    return {
+    ctx.set('data', {
         title: '中国海洋大学研究生院',
         link,
         description: '中国海洋大学研究生院通知公告',
@@ -46,5 +23,5 @@ async function handler() {
                     pubDate: parseDate(item.find('.Article_PublishDate').text()),
                 };
             }),
-    };
-}
+    });
+};

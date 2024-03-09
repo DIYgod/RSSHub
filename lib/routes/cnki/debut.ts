@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,28 +10,7 @@ import * as path from 'node:path';
 
 const rootUrl = 'https://chn.oversea.cnki.net';
 
-export const route: Route = {
-    path: '/journals/debut/:name',
-    categories: ['journal'],
-    example: '/cnki/journals/debut/LKGP',
-    parameters: { name: '期刊缩写，可以在网址中得到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['navi.cnki.net/knavi/journals/:name/detail'],
-    },
-    name: '网络首发',
-    maintainers: ['Fatpandac'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const name = ctx.req.param('name');
 
     const journalUrl = `${rootUrl}/knavi/JournalDetail?pcode=CjFD&pykm=${name}`;
@@ -80,9 +58,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `${title} - 全网首发`,
         link: `https://navi.cnki.net/knavi/journals/${name}/detail`,
         item: items,
-    };
-}
+    });
+};

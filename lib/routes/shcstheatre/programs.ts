@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,29 +9,7 @@ import timezone from '@/utils/timezone';
 import { load } from 'cheerio';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/programs',
-    categories: ['shopping'],
-    example: '/shcstheatre/programs',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.shcstheatre.com/Program/programList.aspx'],
-    },
-    name: '节目列表',
-    maintainers: ['fuzy112'],
-    handler,
-    url: 'www.shcstheatre.com/Program/programList.aspx',
-};
-
-async function handler() {
+export default async (ctx) => {
     const url = 'https://www.shcstheatre.com/Program/programList.aspx';
     const res = await got.get(url);
     const $ = load(res.data);
@@ -57,10 +34,10 @@ async function handler() {
     );
     const image = $('.menu-logo img').attr('src');
 
-    return {
+    ctx.set('data', {
         title: '上海文化广场 - 节目列表',
         link: url,
         image,
         item: items,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,30 +10,7 @@ import { art } from '@/utils/render';
 
 const rootUrl = 'https://academic.oup.com';
 
-export const route: Route = {
-    path: '/journals/:name',
-    categories: ['journal'],
-    example: '/oup/journals/adaptation',
-    parameters: { name: 'short name for a journal, can be found in URL' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['academic.oup.com/', 'academic.oup.com/:name/issue'],
-    },
-    name: 'Oxford Academic',
-    maintainers: [],
-    handler,
-    url: 'academic.oup.com/',
-    description: `#### Journal {#oxford-university-press-oxford-academic-journal}`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const name = ctx.req.param('name');
     const url = `${rootUrl}/${name}/issue`;
 
@@ -73,9 +49,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `OUP - ${name}`,
         link: url,
         item: items,
-    };
-}
+    });
+};

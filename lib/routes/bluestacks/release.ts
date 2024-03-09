@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import cherrio from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -6,29 +5,7 @@ import puppeteer from '@/utils/puppeteer';
 
 const pageUrl = 'https://support.bluestacks.com/hc/en-us/articles/360056960211-Release-Notes-BlueStacks-5';
 
-export const route: Route = {
-    path: '/release/5',
-    categories: ['program-update'],
-    example: '/bluestacks/release/5',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: true,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['bluestacks.com/hc/en-us/articles/360056960211-Release-Notes-BlueStacks-5', 'bluestacks.com/'],
-    },
-    name: 'BlueStacks 5 Release Notes',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'bluestacks.com/hc/en-us/articles/360056960211-Release-Notes-BlueStacks-5',
-};
-
-async function handler() {
+export default async (ctx) => {
     const browser = await puppeteer();
     const page = await browser.newPage();
     await page.setRequestInterception(true);
@@ -78,11 +55,11 @@ async function handler() {
 
     await browser.close();
 
-    return {
+    ctx.set('data', {
         title: $('.article__title').text().trim(),
         description: $('meta[name=description]').text().trim(),
         link: pageUrl,
         image: $('link[rel="shortcut icon"]').attr('href'),
         item: items,
-    };
-}
+    });
+};

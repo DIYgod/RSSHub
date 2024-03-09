@@ -1,30 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/lives/:id',
-    categories: ['new-media'],
-    example: '/houxu/lives/33899',
-    parameters: { id: '编号，可在对应 Live 页面的 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['houxu.app/lives/:id', 'houxu.app/'],
-    },
-    name: 'Live',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'houxu.app/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
 
     const rootUrl = 'https://houxu.app';
@@ -49,10 +26,10 @@ async function handler(ctx) {
         description: item.link.description,
     }));
 
-    return {
+    ctx.set('data', {
         title: `后续 - ${pageResponse.data.title}`,
         link: currentUrl,
         item: items,
         description: pageResponse.data.summary,
-    };
-}
+    });
+};

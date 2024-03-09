@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,27 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/weekly/:category?',
-    categories: ['other'],
-    example: '/iresearch/weekly',
-    parameters: { category: '分类，见下表，默认为全部' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '周度市场观察',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 家电行业 | 服装行业 | 美妆行业 | 食品饮料行业 |
-  | -------- | -------- | -------- | ------------ |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') ?? '';
 
     const rootUrl = 'https://www.iresearch.com.cn';
@@ -55,9 +34,9 @@ async function handler(ctx) {
             }),
         }));
 
-    return {
+    ctx.set('data', {
         title: '艾瑞咨询 - 周度市场观察',
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

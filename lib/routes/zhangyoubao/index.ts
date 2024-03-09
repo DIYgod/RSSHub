@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,31 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/:category',
-    categories: ['game'],
-    example: '/zhangyoubao/lol',
-    parameters: { category: '分类，见下表' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['mobile.zhangyoubao.com/:category/'],
-    },
-    name: '推荐',
-    maintainers: ['ztmzzz'],
-    handler,
-    description: `| 英雄联盟 | 炉石传说 | DNF | 守望先锋 | 王者荣耀 | 单机综合 | 手游综合 | 云顶之弈 | 部落冲突 | 皇室战争 | DNF 手游 | 荒野乱斗   |
-  | -------- | -------- | --- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | -------- | ---------- |
-  | lol      | lscs     | dnf | swxf     | yxzj     | steam    | mobile   | lolchess | blzz     | hszz     | dnfm     | brawlstars |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category');
     const map = new Map([
         ['lol', { title: '英雄联盟', id: 1 }],
@@ -61,10 +36,10 @@ async function handler(ctx) {
         pubDate: parseDate(item.article.publish_time, 'X'),
     }));
 
-    return {
+    ctx.set('data', {
         title: '掌游宝' + map.get(category).title + '分区',
         link: 'https://mobile.zhangyoubao.com/' + category,
         description: '掌游宝' + map.get(category).title + '分区',
         item: items,
-    };
-}
+    });
+};

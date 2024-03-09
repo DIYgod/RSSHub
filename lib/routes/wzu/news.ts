@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -50,14 +49,7 @@ async function loadContent(link) {
     return $('div[id^=vsb_content]').html();
 }
 
-export const route: Route = {
-    path: '/news/:type?',
-    name: 'Unknown',
-    maintainers: ['Chandler-Lu'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     // 获取路由 Tag
     const routeTag = Number.parseInt(ctx.req.param('type')) || 0;
     // 设定新闻标题及 Url
@@ -69,7 +61,7 @@ async function handler(ctx) {
     const $ = load(response.data);
     const list = $('#News-sidebar-b-nav').find('li');
 
-    return {
+    ctx.set('data', {
         title: newsTitle,
         link: newsLink,
         description: '温州大学' + ' - ' + newsTitle,
@@ -89,5 +81,5 @@ async function handler(ctx) {
                     };
                 })
                 .get(),
-    };
-}
+    });
+};

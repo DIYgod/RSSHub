@@ -1,26 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 
-export const route: Route = {
-    path: '/video/page/:bvid/:disableEmbed?',
-    categories: ['social-media'],
-    example: '/bilibili/video/page/BV1i7411M7N9',
-    parameters: { bvid: '可在视频页 URL 中找到', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '视频选集列表',
-    maintainers: ['sxzz'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     let bvid = ctx.req.param('bvid');
     let aid;
     if (!bvid.startsWith('BV')) {
@@ -39,7 +20,7 @@ async function handler(ctx) {
 
     const { title: name, pages: data } = response.data.data;
 
-    return {
+    ctx.set('data', {
         title: `视频 ${name} 的选集列表`,
         link,
         description: `视频 ${name} 的视频选集列表`,
@@ -51,5 +32,5 @@ async function handler(ctx) {
                 description: `${item.part} - ${name}${disableEmbed ? '' : `<br><br>${utils.iframe(aid, item.page, bvid)}`}`,
                 link: `${link}?p=${item.page}`,
             })),
-    };
-}
+    });
+};

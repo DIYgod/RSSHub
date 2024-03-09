@@ -1,36 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/epaper/:id?',
-    categories: ['traditional-media'],
-    example: '/xmnn/epaper/xmrb',
-    parameters: { id: '报纸 id，见下表，默认为 `xmrb`，即厦门日报' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['epaper.xmnn.cn/:id'],
-        target: '/epaper/:id',
-    },
-    name: '数字媒体',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 厦门日报 | 厦门晚报 | 海西晨报 | 城市捷报 |
-  | -------- | -------- | -------- | -------- |
-  | xmrb     | xmwb     | hxcb     | csjb     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id') ?? 'xmrb';
 
     const rootUrl = 'https://epaper.xmnn.cn';
@@ -104,9 +78,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

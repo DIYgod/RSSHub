@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,28 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const rootURL = 'https://www.cncf.io';
 
-export const route: Route = {
-    path: '/:cate?',
-    categories: ['programming'],
-    example: '/cncf',
-    parameters: { cate: 'blog by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Category',
-    maintainers: ['Fatpandac'],
-    handler,
-    description: `| Blog | News | Announcements | Reports |
-  | ---- | ---- | ------------- | ------- |
-  | blog | news | announcements | reports |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const cate = ctx.req.param('cate') ?? 'blog';
     const url = `${rootURL}/${cate}/`;
 
@@ -58,9 +36,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `CNCF - ${title}`,
         link: url,
         item: items,
-    };
-}
+    });
+};

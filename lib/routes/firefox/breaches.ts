@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/breaches',
-    categories: ['other'],
-    example: '/firefox/breaches',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['monitor.firefox.com/', 'monitor.firefox.com/breaches'],
-    },
-    name: 'Firefox Monitor',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'monitor.firefox.com/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://monitor.firefox.com';
 
     const response = await got(`${baseUrl}/breaches`);
@@ -51,11 +28,11 @@ async function handler() {
             };
         });
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         description: $('head meta[name=description]').attr('content').trim(),
         link: response.url,
         item: items,
         image: $('head meta[property=og:image]').attr('content'),
-    };
-}
+    });
+};

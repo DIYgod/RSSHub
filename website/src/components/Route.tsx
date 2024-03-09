@@ -2,19 +2,38 @@ import MarkdownIt from 'markdown-it';
 import Badge from './Badge';
 import Translate from '@docusaurus/Translate';
 import Link from '@docusaurus/Link';
-import type { Route } from '../../../lib/types';
 
 export default function Route({
-  namespace,
-  data,
+  author = 'DIYgod',
+  path = '',
+  example = '',
+  paramsDesc = 'N/A',
+  anticrawler = null,
+  supportBT = null,
+  supportPodcast = null,
+  supportScihub = null,
+  radar = null,
+  configRequired = null,
+  puppeteer = null,
+  notOperational = null,
   children = null,
 }: {
-  namespace: string,
-  data: Route;
+  author?: string;
+  path: string;
+  example?: string;
+  paramsDesc?: string;
+  anticrawler?: boolean;
+  supportBT?: boolean;
+  supportPodcast?: boolean;
+  supportScihub?: boolean;
+  radar?: boolean;
+  configRequired?: boolean;
+  puppeteer?: boolean;
+  notOperational?: boolean;
   children?: JSX.Element | JSX.Element[];
 }): JSX.Element {
-  const demoUrl = 'https://rsshub.app' + data.example;
-  const paramMatch = data.path.match?.(/(?<=:).*?(?=\/|$)/g);
+    const demoUrl = 'https://rsshub.app' + example;
+    const paramMatch = path.match(/(?<=:).*?(?=\/|$)/g);
 
     const renderMarkdown = (item, inline = true) => {
         const md = new MarkdownIt({
@@ -24,23 +43,28 @@ export default function Route({
     };
 
     return (
-        <div className='routeBlock' id={namespace + JSON.stringify(data.path)}>
+        <div className={`routeBlock ${notOperational ? "notOperational" : ""}`} id={path}>
             <p className="badges">
-                {data.features.antiCrawler && (
+                {notOperational && (
+                    <Link to={`https://github.com/search?q=${encodeURIComponent('repo:DIYgod/RSSHub')}+${encodeURIComponent(`"${path}"`)}&type=issues`}>
+                        <Badge type="caution"><Translate id="badge.notOperational" /></Badge>
+                    </Link>
+                )}
+                {anticrawler && (
                     <Link to="/faq">
                         <Badge type="caution"><Translate id="badge.anticrawler" /></Badge>
                     </Link>
                 )}
-                {data.features.supportBT && <Badge type="tip"><Translate id="badge.supportBT" /></Badge>}
-                {data.features.supportPodcast && <Badge type="tip"><Translate id="badge.supportPodcast" /></Badge>}
-                {data.features.supportScihub && <Badge type="tip"><Translate id="badge.supportSciHub" /></Badge>}
-                {data.features.requirePuppeteer && <Badge type="warning"><Translate id="badge.puppeteer" /></Badge>}
-                {data.features.requireConfig && (
+                {supportBT && <Badge type="tip"><Translate id="badge.supportBT" /></Badge>}
+                {supportPodcast && <Badge type="tip"><Translate id="badge.supportPodcast" /></Badge>}
+                {supportScihub && <Badge type="tip"><Translate id="badge.supportSciHub" /></Badge>}
+                {puppeteer && <Badge type="warning"><Translate id="badge.puppeteer" /></Badge>}
+                {configRequired && (
                     <Link to="/install/config#route-specific-configurations">
                         <Badge type="warning"><Translate id="badge.configRequired" /></Badge>
                     </Link>
                 )}
-                {data.radar && (
+                {radar && (
                     <Link to="/usage#radar">
                         <Badge type="tip"><Translate id="badge.radar" /></Badge>
                     </Link>
@@ -48,7 +72,7 @@ export default function Route({
             </p>
             <p className="author">
                 <Translate id="route.author" />
-                {data.maintainers.map((uid) => (
+                {author.split(' ').map((uid) => (
                     <Link to={`https://github.com/${uid}`} key={uid}>
                         @{uid}{' '}
                     </Link>
@@ -62,7 +86,7 @@ export default function Route({
                 <img loading="lazy" src={`https://img.shields.io/website.svg?label=&url=${encodeURIComponent(demoUrl)}&cacheSeconds=7200`} />
             </p>
             <p className="path">
-                <Translate id="route.path" /><code>{data.path}</code>
+                <Translate id="route.path" /><code>{path}</code>
             </p>
             {paramMatch ? (
                 <div>
@@ -76,7 +100,7 @@ export default function Route({
                                     '*': <Translate id="route.parameter.zeroOrMore" />,
                                     '+': <Translate id="route.parameter.oneOrMore" />,
                                 }[item[item.length - 1]] || <Translate id="route.parameter.required" /> }
-                                <Translate id="route.dash" /><span dangerouslySetInnerHTML={{ __html: renderMarkdown(data.parameters[item.replace(/:|\?|\+|\*/g, '')] || '') }}></span>
+                                <Translate id="route.dash" /><span dangerouslySetInnerHTML={{ __html: renderMarkdown(paramsDesc[index]) }}></span>
                             </li>
                         ))}
                     </ul>

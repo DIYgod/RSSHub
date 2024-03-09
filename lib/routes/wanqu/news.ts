@@ -1,31 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/news',
-    categories: ['new-media'],
-    example: '/wanqu/news',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['wanqu.co/'],
-    },
-    name: '最新推荐',
-    maintainers: ['Fatpandac'],
-    handler,
-    url: 'wanqu.co/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://www.wanqu.co';
     const currentUrl = rootUrl;
 
@@ -42,9 +19,9 @@ async function handler() {
             pubDate: parseDate($(item).find('i.text-helper-color.mr-4').text().trim()),
         }));
 
-    return {
+    ctx.set('data', {
         title: '湾区日报 - 最新推荐',
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

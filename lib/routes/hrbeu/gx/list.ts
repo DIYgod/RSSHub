@@ -1,18 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 const rootUrl = 'http://news.hrbeu.edu.cn';
 
-export const route: Route = {
-    path: '/gx/list/:column/:id?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const column = ctx.req.param('column');
     const id = ctx.req.param('id') || '';
     const toUrl = id === '' ? `${rootUrl}/${column}.htm` : `${rootUrl}/${column}/${id}.htm`;
@@ -61,9 +53,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '工学-' + bigTitle,
         link: toUrl,
         item: items,
-    };
-}
+    });
+};

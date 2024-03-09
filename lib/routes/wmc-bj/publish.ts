@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,14 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/publish/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = 'CRA-Reanalysis/2m-Temperature/6-hour/index.html' } = ctx.req.param();
 
     const rootUrl = 'http://www.wmc-bj.net';
@@ -54,7 +46,7 @@ async function handler(ctx) {
     const image = 'http://image.nmc.cn/static/wmc/img/logo-cma.png';
     const icon = $('link[rel="shortcut icon"]').prop('href');
 
-    return {
+    ctx.set('data', {
         item: items,
         title,
         link: currentUrl,
@@ -65,5 +57,5 @@ async function handler(ctx) {
         subtitle: categories.join(' > '),
         author,
         allowEmpty: true,
-    };
-}
+    });
+};

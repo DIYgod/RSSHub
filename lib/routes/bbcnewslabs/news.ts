@@ -1,31 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/news',
-    categories: ['programming'],
-    example: '/bbcnewslabs/news',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['bbcnewslabs.co.uk/'],
-    },
-    name: 'News',
-    maintainers: ['elxy'],
-    handler,
-    url: 'bbcnewslabs.co.uk/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://bbcnewslabs.co.uk';
     const response = await got({
         method: 'get',
@@ -46,9 +23,9 @@ async function handler() {
         })
         .get();
 
-    return {
+    ctx.set('data', {
         title: 'News - BBC News Labs',
         link: rootUrl,
         item: items,
-    };
-}
+    });
+};

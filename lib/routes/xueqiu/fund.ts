@@ -1,27 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/fund/:id',
-    categories: ['finance'],
-    example: '/xueqiu/fund/040008',
-    parameters: { id: '基金代码, 可在基金主页 URL 中找到. 此路由的数据为场外基金 (`F`开头)' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '蛋卷基金净值更新',
-    maintainers: ['HenryQW', 'NathanDai'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const guid = ctx.req.param('id');
     const appUrl = `https://danjuanapp.com/funding/${guid}`;
     const url = `https://danjuanapp.com/djapi/fund/${guid}`;
@@ -60,10 +41,10 @@ async function handler(ctx) {
         link: appUrl,
     };
 
-    return {
+    ctx.set('data', {
         title: fd_name,
         link: appUrl,
         description,
         item: [single],
-    };
-}
+    });
+};

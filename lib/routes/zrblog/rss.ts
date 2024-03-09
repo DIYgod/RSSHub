@@ -1,21 +1,8 @@
-import { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/',
-    radar: {
-        source: ['zrblog.net/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['cnkmmk'],
-    handler,
-    url: 'zrblog.net/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const url = 'https://www.zrblog.net/';
     const response = await got({ method: 'get', url });
     const $ = load(response.data);
@@ -37,9 +24,9 @@ async function handler() {
         })
         .get();
 
-    return {
+    ctx.set('data', {
         title: '赵容部落',
         link: url,
         item: list,
-    };
-}
+    });
+};

@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/xygg',
-    categories: ['university'],
-    example: '/scvtc/xygg',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['scvtc.edu.cn/ggfw1/xygg.htm', 'scvtc.edu.cn/'],
-    },
-    name: '学院公告',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'scvtc.edu.cn/ggfw1/xygg.htm',
-};
-
-async function handler() {
+export default async (ctx) => {
     const currentUrl = 'https://www.scvtc.edu.cn/ggfw1/xygg.htm';
     const response = await got(currentUrl);
     const $ = load(response.data);
@@ -55,10 +32,10 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('head title').text(),
         decription: $('meta[name=description]').attr('content'),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

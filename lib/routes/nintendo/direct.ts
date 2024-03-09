@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,29 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/direct',
-    categories: ['game'],
-    example: '/nintendo/direct',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['nintendo.com/nintendo-direct/archive', 'nintendo.com/'],
-    },
-    name: 'Nintendo Direct',
-    maintainers: ['HFO4'],
-    handler,
-    url: 'nintendo.com/nintendo-direct/archive',
-};
-
-async function handler() {
+export default async (ctx) => {
     const response = await got('https://www.nintendo.com/nintendo-direct/archive/');
     const data = response.data;
 
@@ -48,10 +25,10 @@ async function handler() {
         }),
     }));
 
-    return {
+    ctx.set('data', {
         title: 'Nintendo Direct（任天堂直面会）',
         link: 'https://www.nintendo.com/nintendo-direct/archive/',
         description: '最新的任天堂直面会日程信息',
         item: result,
-    };
-}
+    });
+};

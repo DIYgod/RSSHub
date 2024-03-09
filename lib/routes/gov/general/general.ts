@@ -230,11 +230,11 @@ const gdgov = async (info, ctx) => {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: name,
         link: currentUrl,
         item: items,
-    };
+    });
 };
 
 export { gdgov };

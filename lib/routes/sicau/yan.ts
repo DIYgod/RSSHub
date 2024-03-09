@@ -1,36 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/yan/:category?',
-    categories: ['university'],
-    example: '/sicau/yan/xwgg',
-    parameters: { category: '分类，见下表，默认为新闻公告' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['yan.sicau.edu.cn/'],
-    },
-    name: '研究生院',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'yan.sicau.edu.cn/',
-    description: `| 新闻公告 | 学术报告 |
-  | -------- | -------- |
-  | xwgg     | xsbg     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') ?? 'xwgg';
 
     const rootUrl = 'https://yan.sicau.edu.cn';
@@ -71,9 +45,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

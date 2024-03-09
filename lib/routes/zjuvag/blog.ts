@@ -1,29 +1,10 @@
-import { Route } from '@/types';
 // 导入必要的模组
 import got from '@/utils/got'; // 自订的 got
 import { load } from 'cheerio'; // 可以使用类似 jQuery 的 API HTML 解析器
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/blog',
-    categories: ['blog'],
-    example: '/zjuvag/blog',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '博客',
-    maintainers: ['KaiyoungYu'],
-    handler,
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://zjuvag.org/blog/';
     const { data: response } = await got(baseUrl);
     const $ = load(response);
@@ -43,10 +24,10 @@ async function handler() {
             };
         });
 
-    return {
+    ctx.set('data', {
         // 在此处输出您的 RSS
         title: '浙江大学可视分析小组博客',
         link: 'https://zjuvag.org/blog/',
         item: items,
-    };
-}
+    });
+};

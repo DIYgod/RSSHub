@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,29 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/timeline/:category?',
-    categories: ['finance'],
-    example: '/jinse/timeline',
-    parameters: { category: '分类，见下表，默认为头条' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '首页',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 头条   | 独家 | 铭文    | 产业       | 项目 |
-  | ------ | ---- | ------- | ---------- | ---- |
-  | 政策   | AI   | Web 3.0 | 以太坊 2.0 | DeFi |
-  | Layer2 | NFT  | DAO     | 百科       |      |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = '头条' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
@@ -107,7 +84,7 @@ async function handler(ctx) {
     const image = $('a.js-logoBox img').prop('src');
     const icon = new URL($('link[rel="favicon"]').prop('href'), rootUrl).href;
 
-    return {
+    ctx.set('data', {
         item: items,
         title: `${author} - ${category}`,
         link: currentUrl,
@@ -119,5 +96,5 @@ async function handler(ctx) {
         subtitle: $('meta[name="keywords"]').prop('content'),
         author,
         allowEmpty: true,
-    };
-}
+    });
+};

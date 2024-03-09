@@ -1,27 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 
 const audio = 'https://www.bilibili.com/audio/au';
 
-export const route: Route = {
-    path: '/audio/:id',
-    categories: ['social-media'],
-    example: '/bilibili/audio/10624',
-    parameters: { id: '歌单 id, 可在歌单页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '歌单',
-    maintainers: ['LogicJake'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = Number.parseInt(ctx.req.param('id'));
     const link = `https://www.bilibili.com/audio/am${id}`;
 
@@ -52,10 +33,10 @@ async function handler(ctx) {
         return single;
     });
 
-    return {
+    ctx.set('data', {
         title,
         link,
         description: introduction,
         item: out,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -16,32 +15,7 @@ const titleMap = {
     style: 'Number of styles',
 };
 
-export const route: Route = {
-    path: '/fonts/:sort?',
-    categories: ['design'],
-    example: '/google/fonts/date',
-    parameters: { sort: 'Sorting type, see below, default to `date`' },
-    features: {
-        requireConfig: true,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Google Fonts',
-    maintainers: ['Fatpandac'],
-    handler,
-    description: `| Newest | Trending | Most popular |  Name | Number of styles |
-  | :----: | :------: | :----------: | :---: | :--------------: |
-  |  date  | trending |  popularity  | alpha |       style      |
-
-  :::warning
-  This route requires API key, therefore it's only available when self-hosting, refer to the [Deploy Guide](https://docs.rsshub.app/install/#configuration-route-specific-configurations) for route-specific configurations.
-  :::`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const sort = ctx.req.param('sort') ?? 'date';
     const limit = ctx.req.param('limit') ?? 25;
 
@@ -55,7 +29,7 @@ async function handler(ctx) {
     const response = await got.get(googleFontsAPI);
     const data = response.data.items.slice(0, limit);
 
-    return {
+    ctx.set('data', {
         title: `Google Fonts - ${titleMap[sort]}`,
         link: 'https://fonts.google.com',
         item:
@@ -68,5 +42,5 @@ async function handler(ctx) {
                 link: `https://fonts.google.com/specimen/${item.family.replaceAll(/\s/g, '+')}`,
                 pubDate: parseDate(item.lastModified, 'YYYY-MM-DD'),
             })),
-    };
-}
+    });
+};

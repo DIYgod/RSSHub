@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -8,28 +7,7 @@ const md = MarkdownIt({
     html: true,
 });
 
-export const route: Route = {
-    path: '/events/:username',
-    categories: ['programming'],
-    example: '/gitee/events/y_project',
-    parameters: { username: '用户名' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['gitee.com/:username'],
-    },
-    name: '用户公开动态',
-    maintainers: ['TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const username = ctx.req.param('username');
 
     const apiUrl = `https://gitee.com/api/v5/users/${username}/events/public`;
@@ -100,9 +78,9 @@ async function handler(ctx) {
         return item;
     });
 
-    return {
+    ctx.set('data', {
         title: `${username} - 公开动态`,
         link: `https://gitee.com/${username}`,
         item: items,
-    };
-}
+    });
+};

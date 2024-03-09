@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -27,33 +26,7 @@ const notice_type = {
 //     });
 // }
 
-export const route: Route = {
-    path: '/news/:type?',
-    categories: ['university'],
-    example: '/ustc/news/gl',
-    parameters: { type: '分类，默认为管理类' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['ustc.edu.cn/'],
-        target: '/news',
-    },
-    name: '官网通知公告',
-    maintainers: ['hang333', 'jasongzy'],
-    handler,
-    url: 'ustc.edu.cn/',
-    description: `| 教学类 | 科研类 | 管理类 | 服务类 |
-  | ------ | ------ | ------ | ------ |
-  | jx     | ky     | gl     | fw     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type') ?? 'gl';
     // 发起 HTTP GET 请求
     const response = await got({
@@ -97,10 +70,10 @@ async function handler(ctx) {
             )
     );
 
-    return {
+    ctx.set('data', {
         title: notice_type[type].title,
         description: notice_type[type].title,
         link: notice_type[type].url,
         item: items,
-    };
-}
+    });
+};

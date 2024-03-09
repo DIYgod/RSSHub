@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,19 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/:category{.+}?',
-    radar: {
-        source: ['asiantolick.com/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-    url: 'asiantolick.com/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 24;
 
@@ -115,7 +102,7 @@ async function handler(ctx) {
     const title = $('title').text().split(/-/)[0].trim();
     const icon = $('link[rel="icon"]').first().prop('href');
 
-    return {
+    ctx.set('data', {
         item: items,
         title: title === 'Asian To Lick' ? title : `Asian To Lick - ${title}`,
         link: currentUrl,
@@ -126,5 +113,5 @@ async function handler(ctx) {
         logo: icon,
         subtitle: title,
         allowEmpty: true,
-    };
-}
+    });
+};

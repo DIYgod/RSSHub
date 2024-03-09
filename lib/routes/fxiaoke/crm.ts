@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -13,28 +12,7 @@ const titleMap = new Map([
     ['customers', `签约喜报 - ${baseTitle}`],
 ]);
 
-export const route: Route = {
-    path: '/crm/:type',
-    categories: ['blog'],
-    example: '/fxiaoke/crm/news',
-    parameters: { type: '文章类型, 见下表' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '文章',
-    maintainers: ['akynazh'],
-    handler,
-    description: `| 全部文章 | 文章干货 | CRM 知识 | 纷享动态        | 签约喜报  |
-  | -------- | -------- | -------- | --------------- | --------- |
-  | news     | blog     | articles | about-influence | customers |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const t = ctx.req.param('type');
     const title = titleMap.get(t);
     const url = `${baseUrl}/${t}/`;
@@ -77,10 +55,10 @@ async function handler(ctx) {
             })
         )
     );
-    return {
+    ctx.set('data', {
         title,
         link: url,
         description: desc,
         item: items,
-    };
-}
+    });
+};

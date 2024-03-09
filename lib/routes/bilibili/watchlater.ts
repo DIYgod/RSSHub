@@ -1,32 +1,10 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import cache from './cache';
 import { config } from '@/config';
 import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/watchlater/:uid/:disableEmbed?',
-    categories: ['social-media'],
-    example: '/bilibili/watchlater/2267573',
-    parameters: { uid: '用户 id', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
-    features: {
-        requireConfig: true,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '用户稍后再看',
-    maintainers: ['JimenezLi'],
-    handler,
-    description: `:::warning
-  用户稍后再看需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
-  :::`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const uid = ctx.req.param('uid');
     const disableEmbed = ctx.req.param('disableEmbed');
     const name = await cache.getUsernameFromUID(uid);
@@ -58,9 +36,9 @@ async function handler(ctx) {
         author: item.owner.name,
     }));
 
-    return {
+    ctx.set('data', {
         title: `${name} 稍后再看`,
         link: 'https://www.bilibili.com/watchlater#/list',
         item: out,
-    };
-}
+    });
+};

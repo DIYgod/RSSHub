@@ -1,34 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/zhengce/wenjian/:pcodeJiguan?',
-    categories: ['government'],
-    example: '/gov/zhengce/wenjian',
-    parameters: { pcodeJiguan: '文种分类。国令、国发、国函、国发明电、国办发、国办函、国办发明电、其他' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.gov.cn/'],
-        target: '/zhengce/wenjian',
-    },
-    name: '最新文件',
-    maintainers: ['ciaranchen'],
-    handler,
-    url: 'www.gov.cn/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const pcodeJiguan = ctx.req.param('pcodeJiguan');
     const link = 'http://sousuo.gov.cn/list.htm';
     const res = await got(link, {
@@ -64,9 +40,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '最新文件 - 中国政府网',
         link: res.url,
         item: items,
-    };
-}
+    });
+};

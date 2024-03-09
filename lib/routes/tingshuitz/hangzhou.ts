@@ -1,30 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/hangzhou',
-    categories: ['forecast'],
-    example: '/tingshuitz/hangzhou',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.hzwgc.com/public/stop_the_water', 'www.hzwgc.com/'],
-    },
-    name: '杭州市',
-    maintainers: ['znhocn'],
-    handler,
-    url: 'www.hzwgc.com/public/stop_the_water',
-};
-
-async function handler() {
+export default async (ctx) => {
     // const area = ctx.req.param('area');
     const url = 'http://www.hzwgc.com/public/stop_the_water/';
     const response = await got({
@@ -36,7 +13,7 @@ async function handler() {
     const $ = load(data);
     const list = $('.datalist li');
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: 'http://www.hzwgc.com/public/stop_the_water/',
         description: $('meta[name="description"]').attr('content') || $('title').text(),
@@ -53,5 +30,5 @@ async function handler() {
                     };
                 })
                 .get(),
-    };
-}
+    });
+};

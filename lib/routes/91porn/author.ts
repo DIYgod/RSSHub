@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,30 +9,7 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { domainValidation } from './utils';
 
-export const route: Route = {
-    path: '/author/:uid/:lang?',
-    categories: ['multimedia'],
-    example: '/91porn/author/2d6d2iWm4vVCwqujAZbSrKt2QJCbbaObv9HQ21Zo8wGJWudWBg',
-    parameters: { uid: 'Author ID, can be found in URL', lang: 'Language, see above, `en_US` by default ' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['91porn.com/index.php'],
-        target: '',
-    },
-    name: 'Author',
-    maintainers: ['TonyRL'],
-    handler,
-    url: '91porn.com/index.php',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { domain = '91porn.com' } = ctx.req.query();
     const { uid, lang = 'en_US' } = ctx.req.param();
     const siteUrl = `https://${domain}/uvideos.php?UID=${uid}&type=public`;
@@ -80,9 +56,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `${$('.login_register_header').text()} - 91porn`,
         link: siteUrl,
         item: items,
-    };
-}
+    });
+};

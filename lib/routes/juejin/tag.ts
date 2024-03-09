@@ -1,30 +1,8 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import util from './utils';
 
-export const route: Route = {
-    path: '/tag/:tag',
-    categories: ['programming'],
-    example: '/juejin/tag/JavaScript',
-    parameters: { tag: '标签名，可在标签 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['juejin.cn/tag/:tag'],
-    },
-    name: '标签',
-    maintainers: ['isheng5'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const tag = ctx.req.param('tag');
 
     const idResponse = await got({
@@ -54,10 +32,10 @@ async function handler(ctx) {
     }
     const resultItems = await util.ProcessFeed(originalData, cache);
 
-    return {
+    ctx.set('data', {
         title: `掘金 ${tag}`,
         link: `https://juejin.cn/tag/${encodeURIComponent(tag)}`,
         description: `掘金 ${tag}`,
         item: resultItems,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,17 +10,7 @@ import * as path from 'node:path';
 import { puppeteerGet } from './utils';
 import puppeteer from '@/utils/puppeteer';
 
-export const route: Route = {
-    path: '/user/:id',
-    radar: {
-        source: ['picnob.com/profile/:id/*'],
-    },
-    name: 'Unknown',
-    maintainers: ['TonyRL', 'micheal-death'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const baseUrl = 'https://www.picnob.com';
     const id = ctx.req.param('id');
     const url = `${baseUrl}/profile/${id}/`;
@@ -104,11 +93,11 @@ async function handler(ctx) {
     );
     await browser.close();
 
-    return {
+    ctx.set('data', {
         title: `${profileName} (@${id}) - Picnob`,
         description: $('.info .sum').text(),
         link: url,
         image: $('.ava .pic img').attr('src'),
         item: list,
-    };
-}
+    });
+};

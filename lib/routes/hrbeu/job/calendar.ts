@@ -1,40 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
 const rootUrl = 'http://job.hrbeu.edu.cn';
 
-export const route: Route = {
-    path: '/job/calendar',
-    categories: ['university'],
-    example: '/hrbeu/job/calendar',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['job.hrbeu.edu.cn/*'],
-    },
-    name: '就业服务平台',
-    maintainers: ['Derekmini'],
-    handler,
-    url: 'job.hrbeu.edu.cn/*',
-    description: `| 通知公告 | 热点新闻 |
-  | :------: | :------: |
-  |   tzgg   |   rdxw   |
-
-#### 大型招聘会 {#ha-er-bin-gong-cheng-da-xue-jiu-ye-fu-wu-ping-tai-da-xing-zhao-pin-hui}
-
-
-#### 今日招聘会 {#ha-er-bin-gong-cheng-da-xue-jiu-ye-fu-wu-ping-tai-jin-ri-zhao-pin-hui}`,
-};
-
-async function handler() {
+export default async (ctx) => {
     const date = new Date();
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
@@ -68,10 +37,10 @@ async function handler() {
         }))
         .get();
 
-    return {
+    ctx.set('data', {
         title: '今日招聘会',
         link: 'http://job.hrbeu.edu.cn/HrbeuJY/web',
         item: list,
         allowEmpty: true,
-    };
-}
+    });
+};

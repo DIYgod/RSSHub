@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -6,30 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 const rootURL = 'https://www.uber.com';
 const apiURL = 'https://blogapi.uber.com';
 
-export const route: Route = {
-    path: '/blog/:maxPage?',
-    categories: ['blog'],
-    example: '/uber/blog',
-    parameters: { maxPage: 'max number of pages to retrieve, default to 1 page at most' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.uber.com/blog/pittsburgh/engineering'],
-        target: '/blog',
-    },
-    name: 'Engineering',
-    maintainers: ['hulb'],
-    handler,
-    url: 'www.uber.com/blog/pittsburgh/engineering',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     let maxPage = Number(ctx.req.param('maxPage'));
     if (Number.isNaN(maxPage)) {
         maxPage = 1;
@@ -74,10 +50,10 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `Uber Engineering Blog`,
         link: rootURL + '/blog/engineering',
         description: 'The technology behind Uber Engineering',
         item: result.flat(),
-    };
-}
+    });
+};

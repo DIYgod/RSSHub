@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -15,32 +14,7 @@ const shortcuts = {
     potm: 'picture/browse/potm/',
 };
 
-export const route: Route = {
-    path: '/:category?/:language?',
-    categories: ['shopping'],
-    example: '/myfigurecollection/potd',
-    parameters: { category: '分类，默认为每日圖片', language: '语言，见上表，默认为空，即 `en`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['zh.myfigurecollection.net/browse', 'zh.myfigurecollection.net/'],
-    },
-    name: '圖片',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'zh.myfigurecollection.net/browse',
-    description: `| 每日圖片 | 每週圖片 | 每月圖片 |
-  | -------- | -------- | -------- |
-  | potd     | potw     | potm     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const language = ctx.req.param('language') ?? '';
     const category = ctx.req.param('category') ?? 'figure';
     if (language && !isValidHost(language)) {
@@ -102,11 +76,11 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title')
             .text()
             .replace(/ \(.*\)/, ''),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

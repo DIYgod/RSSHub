@@ -1,30 +1,7 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-export const route: Route = {
-    path: '/thebatch',
-    categories: ['programming'],
-    example: '/deeplearning/thebatch',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.deeplearning.ai/thebatch', 'www.deeplearning.ai/'],
-    },
-    name: 'TheBatch 周报',
-    maintainers: ['nczitzk', 'juvenn'],
-    handler,
-    url: 'www.deeplearning.ai/thebatch',
-};
-
-async function handler() {
+export default async (ctx) => {
     const page = await got({
         method: 'get',
         url: `https://www.deeplearning.ai/the-batch/`,
@@ -44,7 +21,7 @@ async function handler() {
         pubDate: new Date(item.published_at).toUTCString(),
     }));
 
-    return {
+    ctx.set('data', {
         title: `The Batch - a new weekly newsletter from deeplearning.ai`,
         link: `https://www.deeplearning.ai/the-batch/`,
         item: await Promise.all(
@@ -56,5 +33,5 @@ async function handler() {
                 })
             )
         ),
-    };
-}
+    });
+};

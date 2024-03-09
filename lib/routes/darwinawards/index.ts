@@ -1,22 +1,8 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: ['/all', '/'],
-    radar: {
-        source: ['darwinawards.com/darwin', 'darwinawards.com/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['zoenglinghou', 'nczitzk'],
-    handler,
-    url: 'darwinawards.com/darwin',
-    url: 'darwinawards.com/darwin',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://darwinawards.com';
     const currentUrl = `${rootUrl}/darwin/`;
 
@@ -63,9 +49,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

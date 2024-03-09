@@ -1,32 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/ele',
-    categories: ['university'],
-    example: '/cau/ele',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['ciee.cau.edu.cn/col/col26712/index.html', 'ciee.cau.edu.cn/'],
-    },
-    name: '研招网通知公告',
-    maintainers: ['shengmaosu'],
-    handler,
-    url: 'ciee.cau.edu.cn/col/col26712/index.html',
-    description: `#### 信电学院 {#zhong-guo-nong-ye-da-xue-yan-zhao-wang-tong-zhi-gong-gao-xin-dian-xue-yuan}`,
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://ciee.cau.edu.cn';
     const link = `${baseUrl}/col/col26712/index.html`;
     const response = await got(`${baseUrl}/module/web/jpage/dataproxy.jsp`, {
@@ -44,7 +20,7 @@ async function handler() {
     const $ = load(response.data);
     const list = $('recordset record');
 
-    return {
+    ctx.set('data', {
         title: '中国农业大学信电学院',
         link,
         description: '中国农业大学信电学院通知公告',
@@ -62,5 +38,5 @@ async function handler() {
                     guid: `${link}#${title}`,
                 };
             }),
-    };
-}
+    });
+};

@@ -1,31 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import dayjs from 'dayjs';
 
-export const route: Route = {
-    path: '/calendar/:before?/:after?',
-    categories: ['anime'],
-    example: '/thwiki/calendar',
-    parameters: { before: 'From how many days ago (default 30)', after: 'To how many days after (default 30)' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['thwiki.cc/', 'thwiki.cc/日程表'],
-        target: '/calendar',
-    },
-    name: 'Calendar',
-    maintainers: ['aether17'],
-    handler,
-    url: 'thwiki.cc/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const beforeDays = ctx.req.param('before') ? Number.parseInt(ctx.req.param('before')) : 30;
     const afterDays = ctx.req.param('after') ? Number.parseInt(ctx.req.param('after')) : 30;
     const before = dayjs().subtract(beforeDays, 'day').format('YYYY-MM-DD');
@@ -40,7 +16,7 @@ async function handler(ctx) {
     });
     const data = response.data.results;
 
-    return {
+    ctx.set('data', {
         title: 'Touhou events calendar (THBWiki)',
         link: `https://calendar.thwiki.cc/`,
         description: 'A Touhou related events calendar api from THBWiki',
@@ -52,5 +28,5 @@ async function handler(ctx) {
             guid: item.id,
             link: item.url,
         })),
-    };
-}
+    });
+};

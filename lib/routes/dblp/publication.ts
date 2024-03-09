@@ -1,30 +1,8 @@
-import { Route } from '@/types';
 // 导入所需模组
 import got from '@/utils/got'; // 自订的 got
 // import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/:field',
-    categories: ['study'],
-    example: '/dblp/knowledge%20tracing',
-    parameters: { field: 'Research field' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['dblp.org/:field'],
-    },
-    name: 'Keyword Search',
-    maintainers: ['ytno1'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     // 在此处编写您的逻辑
     const field = ctx.req.param('field');
 
@@ -73,7 +51,7 @@ async function handler(ctx) {
         };
     });
 
-    return {
+    ctx.set('data', {
         // 在此处输出您的 RSS
         // 源标题
         title: `【dblp】${field}`,
@@ -83,5 +61,5 @@ async function handler(ctx) {
         description: `DBLP ${field} RSS`,
         // 处理后的数据，即文章列表
         item: list,
-    };
-}
+    });
+};

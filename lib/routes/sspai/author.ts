@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -19,28 +18,7 @@ async function getUserId(slug) {
     return response.data.data.id;
 }
 
-export const route: Route = {
-    path: '/author/:id',
-    categories: ['new-media'],
-    example: '/sspai/author/796518',
-    parameters: { id: '作者 slug 或 id，slug 可在作者主页URL中找到，id 不易查找，仅作兼容' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['sspai.com/u/:id/posts'],
-    },
-    name: '作者',
-    maintainers: ['SunShinenny', 'hoilc'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = /^\d+$/.test(ctx.req.param('id')) ? ctx.req.param('id') : await getUserId(ctx.req.param('id'));
     const api_url = `https://sspai.com/api/v1/articles?offset=0&limit=20&author_ids=${id}&include_total=false`;
     const resp = await got({
@@ -71,10 +49,10 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: `${author_nickname} - 少数派作者`,
         link: `https://sspai.com/u/${author_slug}/posts`,
         description: `${author_nickname} 更新推送 `,
         item: items,
-    };
-}
+    });
+};

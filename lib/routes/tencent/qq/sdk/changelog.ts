@@ -1,26 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/qq/sdk/changelog/:platform',
-    categories: ['program-update'],
-    example: '/tencent/qq/sdk/changelog/iOS',
-    parameters: { platform: '平台，iOS / Android' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '更新日志',
-    maintainers: ['nuomi1'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const platform = ctx.req.param('platform');
 
     let title = '';
@@ -67,9 +48,9 @@ async function handler(ctx) {
         return changelog;
     });
 
-    return {
+    ctx.set('data', {
         title,
         link,
         item: changelogs,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,28 +5,7 @@ import got from '@/utils/got';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/zhongchou/:type?',
-    categories: ['shopping'],
-    example: '/taobao/zhongchou/all',
-    parameters: { type: '类型, 默认为 `all` 全部' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '众筹项目',
-    maintainers: ['xyqfer', 'Fatpandac'],
-    handler,
-    description: `| 全部 | 科技 | 食品        | 动漫 | 设计   | 公益 | 娱乐 | 影音  | 书籍 | 游戏 | 其他  |
-  | ---- | ---- | ----------- | ---- | ------ | ---- | ---- | ----- | ---- | ---- | ----- |
-  | all  | tech | agriculture | acg  | design | love | tele | music | book | game | other |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { type = 'all' } = ctx.req.param();
     const map = {
         all: '',
@@ -63,9 +41,9 @@ async function handler(ctx) {
         };
     });
 
-    return {
+    ctx.set('data', {
         title: `淘宝众筹-${type}`,
         link: 'https://izhongchou.taobao.com/index.htm',
         item: items,
-    };
-}
+    });
+};

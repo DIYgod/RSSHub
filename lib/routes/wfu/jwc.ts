@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
@@ -7,29 +6,7 @@ import { load } from 'cheerio';
 const baseUrl = 'https://jwc.wfu.edu.cn/3742/list.htm';
 const sizeTitle = '潍坊学院教务处新闻';
 
-export const route: Route = {
-    path: '/jwc',
-    categories: ['university'],
-    example: '/wfu/jwc',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['jwc.wfu.edu.cn/'],
-    },
-    name: '教务处通知',
-    maintainers: ['cccht'],
-    handler,
-    url: 'jwc.wfu.edu.cn/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const response = await got({
         method: 'get',
         url: baseUrl,
@@ -68,10 +45,10 @@ async function handler() {
             .get()
     );
 
-    return {
+    ctx.set('data', {
         title: sizeTitle,
         link: baseUrl,
         description: '潍坊学院教务处通知（通知为文件需下载）',
         item: result,
-    };
-}
+    });
+};

@@ -1,22 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import utils from './utils';
 
-export const route: Route = {
-    path: '/:do?/:keyword?',
-    radar: {
-        source: ['leiphone.com/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-    url: 'leiphone.com/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const todo = ctx.req.param('do') ?? '';
     const keyword = ctx.req.param('keyword') ?? '';
     const rootUrl = 'https://www.leiphone.com';
@@ -30,10 +17,10 @@ async function handler(ctx) {
         .map((e) => $(e).attr('href'));
     const items = await utils.ProcessFeed(list, cache);
 
-    return {
+    ctx.set('data', {
         title: `雷峰网${todo === 'category' ? ` ${keyword}` : ''}`,
         description: '雷峰网 - 读懂智能&未来',
         link: url,
         item: items,
-    };
-}
+    });
+};

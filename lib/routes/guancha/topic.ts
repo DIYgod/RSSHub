@@ -1,22 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseRelativeDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/topic/:id/:order?',
-    radar: {
-        source: ['guancha.cn/'],
-        target: '/:category?',
-    },
-    name: 'Unknown',
-    maintainers: ['occupy5', 'nczitzk'],
-    handler,
-    url: 'guancha.cn/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id') ?? '0';
     const order = ctx.req.param('order') ?? '1';
 
@@ -62,9 +49,9 @@ async function handler(ctx) {
 
     $('h1.title span').remove();
 
-    return {
+    ctx.set('data', {
         title: `观察者网 - ${id === '0' ? '风闻' : $('h1.title').text()}`,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

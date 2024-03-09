@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { processItems } from './utils';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,18 +6,7 @@ import timezone from '@/utils/timezone';
 
 const host = 'http://www.pbc.gov.cn';
 
-export const route: Route = {
-    path: '/pbc/zcyj',
-    radar: {
-        source: ['pbc.gov.cn/redianzhuanti/118742/4122386/4122510/index.html'],
-    },
-    name: 'Unknown',
-    maintainers: ['Fatpandac'],
-    handler,
-    url: 'pbc.gov.cn/redianzhuanti/118742/4122386/4122510/index.html',
-};
-
-async function handler() {
+export default async (ctx) => {
     const url = `${host}/redianzhuanti/118742/4122386/4122510/index.html`;
 
     const response = await got.post(url);
@@ -33,9 +21,9 @@ async function handler() {
 
     const items = await processItems(list);
 
-    return {
+    ctx.set('data', {
         title: '中国人民银行 政策研究',
         link: url,
         item: items,
-    };
-}
+    });
+};

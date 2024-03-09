@@ -1,26 +1,7 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import EhAPI from './ehapi';
 
-export const route: Route = {
-    path: '/favorites/:favcat?/:order?/:page?/:routeParams?',
-    categories: ['picture'],
-    example: '/ehentai/favorites/0/posted/1',
-    parameters: { favcat: 'Favorites folder number', order: '`posted`(Sort by gallery release time) , `favorited`(Sort by time added to favorites)', page: 'Page number', routeParams: 'Additional parameters, see the table above' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: true,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Favorites',
-    maintainers: ['yindaheng98', 'syrinka'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     if (!EhAPI.has_cookie) {
         throw new Error('Ehentai favorites RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -46,4 +27,4 @@ async function handler(ctx) {
                   item: items,
               }
     );
-}
+};

@@ -1,38 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/speeches/:language?',
-    categories: ['government'],
-    example: '/who/speeches',
-    parameters: { language: 'Language, see below, English by default' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['who.int/director-general/speeches'],
-        target: '/speeches',
-    },
-    name: 'Speeches',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'who.int/director-general/speeches',
-    description: `Language
-
-  | English | العربية | 中文 | Français | Русский | Español | Português |
-  | ------- | ------- | ---- | -------- | ------- | ------- | --------- |
-  | en      | ar      | zh   | fr       | ru      | es      | pt        |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const language = ctx.req.param('language') || 'en';
 
     const rootUrl = 'https://www.who.int';
@@ -67,9 +38,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: 'Speeches - WHO',
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

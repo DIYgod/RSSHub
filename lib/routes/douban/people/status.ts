@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import querystring from 'querystring';
 import got from '@/utils/got';
@@ -444,14 +443,7 @@ async function getFullTextItems(items) {
     );
 }
 
-export const route: Route = {
-    path: '/people/:userid/status/:routeParams?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const userid = ctx.req.param('userid');
     const url = `https://m.douban.com/rexxar/api/v2/status/user_timeline/${userid}`;
     const items = await cache.tryGet(
@@ -468,7 +460,7 @@ async function handler(ctx) {
         await getFullTextItems(items);
     }
 
-    return {
+    ctx.set('data', {
         title: `豆瓣广播 - ${items ? items[0].status.author.name : userid}`,
         link: `https://m.douban.com/people/${userid}/statuses`,
         item:
@@ -484,5 +476,5 @@ async function handler(ctx) {
                         description: r.description,
                     };
                 }),
-    };
-}
+    });
+};

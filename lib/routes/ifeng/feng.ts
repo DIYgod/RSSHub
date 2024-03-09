@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,28 +5,7 @@ import { extractDoc, renderVideo } from './utils';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/feng/:id/:type',
-    categories: ['new-media'],
-    example: '/ifeng/feng/2583/doc',
-    parameters: { id: '对应 id，可在 大风号作者页面 找到', type: '类型，见下表' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '大风号',
-    maintainers: ['Jamch'],
-    handler,
-    description: `| 文章 | 视频  |
-  | ---- | ----- |
-  | doc  | video |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { id, type } = ctx.req.param();
     const { data: userResponse } = await got(`https://ishare.ifeng.com/mediaShare/home/${id}/media`, {
         headers: {
@@ -82,11 +60,11 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `大风号-${mediaName}-${type === 'doc' ? '文章' : '视频'}`,
         description: `${honorDesc} ${description}`,
         image: `https:${logo}`,
         link: `https://ishare.ifeng.com/mediaShare/home/${id}/media`,
         item: items,
-    };
-}
+    });
+};

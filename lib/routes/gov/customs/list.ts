@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { host, puppeteerGet } from './utils';
@@ -7,33 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import puppeteer from '@/utils/puppeteer';
 
-export const route: Route = {
-    path: '/customs/list/:gchannel?',
-    categories: ['government'],
-    example: '/gov/customs/list/paimai',
-    parameters: { gchannel: '支持 `paimai` 及 `fagui` 2个频道，默认为 `paimai`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: true,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.customs.gov.cn/'],
-        target: '/customs/list',
-    },
-    name: '拍卖信息 / 海关法规',
-    maintainers: ['Jeason0228', 'TonyRL', 'he1q'],
-    handler,
-    url: 'www.customs.gov.cn/',
-    description: `:::warning
-  由于区域限制，建议在国内 IP 的机器上自建
-  :::`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { gchannel = 'paimai' } = ctx.req.param();
     let channelName = '';
     let link = '';
@@ -101,9 +74,9 @@ async function handler(ctx) {
 
     browser.close();
 
-    return {
+    ctx.set('data', {
         title: `中国海关-${channelName}`,
         link,
         item: out,
-    };
-}
+    });
+};

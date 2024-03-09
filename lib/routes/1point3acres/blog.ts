@@ -1,33 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/blog/:category?',
-    categories: ['bbs'],
-    example: '/1point3acres/blog',
-    parameters: { category: '分类，见下表，可在对应分类页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['blog.1point3acres.com/:category'],
-    },
-    name: '博客',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 留学申请   | 找工求职 | 生活攻略  | 投资理财 | 签证移民 | 时政要闻 |
-  | ---------- | -------- | --------- | -------- | -------- | -------- |
-  | studyinusa | career   | lifestyle | invest   | visa     | news     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const categoryMap = {
         studyinusa: {
             title: '留学申请',
@@ -84,9 +59,9 @@ async function handler(ctx) {
         };
     });
 
-    return {
+    ctx.set('data', {
         title: `${category ? `${categoryMap[category].title} | ` : ''}美国留学就业生活攻略`,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

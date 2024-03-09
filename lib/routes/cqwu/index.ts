@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
@@ -14,28 +13,7 @@ const titleMap = {
     academiceve: '学术活动',
 };
 
-export const route: Route = {
-    path: '/news/:type?',
-    categories: ['university'],
-    example: '/cqwu/news/academiceve',
-    parameters: { type: '可选，默认为 academiceve ' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '通知公告',
-    maintainers: ['Fatpandac'],
-    handler,
-    description: `| 通知公告 | 学术活动公告 |
-  | -------- | ------------ |
-  | notify   | academiceve  |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type') ?? 'academiceve';
     const link = host + map[type];
     const title = '重文理' + titleMap[type] + '公告';
@@ -64,9 +42,9 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         title,
         link,
         item: items,
-    };
-}
+    });
+};

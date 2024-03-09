@@ -1,30 +1,8 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import utils from './utils';
 
-export const route: Route = {
-    path: '/topic/:id',
-    categories: ['new-media'],
-    example: '/infoq/topic/1',
-    parameters: { id: '话题id，可在 [InfoQ全部话题](https://www.infoq.cn/topics) 页面找到URL里的话题id' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['infoq.cn/topic/:id'],
-    },
-    name: '话题',
-    maintainers: ['brilon'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const paramId = ctx.req.param('id');
     const apiUrl = 'https://www.infoq.cn/public/v1/article/getList';
     const infoUrl = 'https://www.infoq.cn/public/v1/topic/getInfo';
@@ -55,11 +33,11 @@ async function handler(ctx) {
     const data = resp.data.data;
     const items = await utils.ProcessFeed(data, cache);
 
-    return {
+    ctx.set('data', {
         title: `InfoQ 话题 - ${topicName}`,
         description: info.data.data.desc,
         image: info.data.data.cover,
         link: pageUrl,
         item: items,
-    };
-}
+    });
+};

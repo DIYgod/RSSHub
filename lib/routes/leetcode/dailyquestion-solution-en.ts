@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import MarkdownIt from 'markdown-it';
 const md = MarkdownIt({
@@ -8,18 +7,7 @@ const md = MarkdownIt({
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import * as path from 'node:path';
-export const route: Route = {
-    path: '/dailyquestion/solution/en',
-    radar: {
-        source: ['leetcode.com/'],
-    },
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-    url: 'leetcode.com/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseurl = `https://leetcode.com`;
     const url = `${baseurl}/graphql/`;
     const headers = {
@@ -206,7 +194,7 @@ async function handler() {
         return s;
     };
     article.content = await handleText(article.content);
-    return {
+    ctx.set('data', {
         title: 'LeetCode DailyQuestion Solution',
         description: 'LeetCode DailyQuestion Solution',
         link: questionUrl,
@@ -225,5 +213,5 @@ async function handler() {
                 author: 'leetcode',
             },
         ],
-    };
-}
+    });
+};

@@ -1,32 +1,10 @@
-import { Route } from '@/types';
 import utils from './utils';
 import { config } from '@/config';
 const T = {};
 import { TwitterApi } from 'twitter-api-v2';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
-export const route: Route = {
-    path: '/collection/:uid/:collectionId/:routeParams?',
-    categories: ['social-media'],
-    example: '/twitter/collection/DIYgod/1527857429467172864',
-    parameters: { uid: 'username, should match the generated token', collectionId: 'collection ID, can be found in URL', routeParams: 'extra parameters, see the table above' },
-    features: {
-        requireConfig: true,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Collection',
-    maintainers: ['TonyRL'],
-    handler,
-    description: `:::warning
-  This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
-  :::`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const uid = ctx.req.param('uid');
     const collectionId = ctx.req.param('collectionId');
     const cookie = config.twitter.tokens[uid];
@@ -59,7 +37,7 @@ async function handler(ctx) {
         }
     }
 
-    return {
+    ctx.set('data', {
         title: data.objects.timelines[id].name,
         description: data.objects.timelines[id].description,
         link: data.objects.timelines[id].collection_url,
@@ -73,5 +51,5 @@ async function handler(ctx) {
                 showAuthorInDesc: fallback(undefined, queryToBoolean(routeParams.get('showAuthorInDesc')), true),
             }
         ),
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -32,26 +31,7 @@ const getItem = (item, cache) => {
     });
 };
 
-export const route: Route = {
-    path: '/jtys/yjs',
-    categories: ['university'],
-    example: '/swjtu/jtys/yjs',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '交通运输与物流学院',
-    maintainers: ['qizidog'],
-    handler,
-    description: `#### 研究生通知 {#xi-nan-jiao-tong-da-xue-jiao-tong-yun-shu-yu-wu-liu-xue-yuan-yan-jiu-sheng-tong-zhi}`,
-};
-
-async function handler() {
+export default async (ctx) => {
     const resp = await got({
         method: 'get',
         url: url_addr,
@@ -67,10 +47,10 @@ async function handler() {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: '西南交大交运学院-研究生通知',
         link: url_addr,
         item: items,
         allowEmpty: true,
-    };
-}
+    });
+};

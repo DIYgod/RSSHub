@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,29 +6,7 @@ import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/online',
-    categories: ['anime'],
-    example: '/bangumi/online',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['bangumi.online/'],
-    },
-    name: 'Unknown',
-    maintainers: ['devinmugen'],
-    handler,
-    url: 'bangumi.online/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const url = 'https://api.bangumi.online/serve/home';
 
     const response = await got.post(url);
@@ -46,9 +23,9 @@ async function handler() {
         pubDate: parseDate(item.create_time),
     }));
 
-    return {
+    ctx.set('data', {
         title: 'アニメ新番組',
         link: 'https://bangumi.online',
         item: items,
-    };
-}
+    });
+};

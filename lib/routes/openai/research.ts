@@ -1,26 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { getApiUrl, parseArticle } from './common';
 
-export const route: Route = {
-    path: '/research',
-    categories: ['new-media'],
-    example: '/openai/research',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Research',
-    maintainers: ['yuguorui'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const apiUrl = new URL('/api/v1/research-publications', await getApiUrl());
     const researchRootUrl = 'https://openai.com/research';
 
@@ -43,9 +24,9 @@ async function handler(ctx) {
 
     const title = 'OpenAI Research';
 
-    return {
+    ctx.set('data', {
         title,
         link: researchRootUrl,
         item: items,
-    };
-}
+    });
+};

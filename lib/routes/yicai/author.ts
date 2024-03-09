@@ -1,33 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
 import { rootUrl, ProcessItems } from './utils';
 
-export const route: Route = {
-    path: '/author/:id?',
-    categories: ['traditional-media'],
-    example: '/yicai/author/100005663',
-    parameters: { id: '作者 id，可在对应作者页中找到，默认为第一财经研究院' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['yicai.com/author/:id', 'yicai.com/author'],
-        target: '/author/:id',
-    },
-    name: '一财号',
-    maintainers: ['nczitzk'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id') ?? '100005663';
 
     const currentUrl = `${rootUrl}/author/${id}.html`;
@@ -42,9 +19,9 @@ async function handler(ctx) {
 
     const items = await ProcessItems(apiUrl, cache.tryGet);
 
-    return {
+    ctx.set('data', {
         title: `第一财经一财号 - ${$('title').text()}`,
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

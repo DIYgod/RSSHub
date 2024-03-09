@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,14 +6,7 @@ import timezone from '@/utils/timezone';
 
 const baseUrl = 'https://std.stheadline.com';
 
-export const route: Route = {
-    path: '/std/realtime/:category{.+}?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = '即時' } = ctx.req.param();
     const url = `${baseUrl}/realtime/${category}`;
     const { data: response } = await got(url);
@@ -47,11 +39,11 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('head title').text(),
         description: $('meta[name=description]').attr('content'),
         image: 'https://std.stheadline.com/dist/images/favicon/icon-512.png',
         link: url,
         item: items,
-    };
-}
+    });
+};

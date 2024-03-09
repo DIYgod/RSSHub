@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,29 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/channel/:channelId/:embed?',
-    categories: ['multimedia'],
-    example: '/youku/channel/UNTg3MTM3OTcy',
-    parameters: { channelId: '频道 id', embed: '默认为开启内嵌视频, 任意值为关闭' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['i.youku.com/i/:id'],
-        target: '/channel/:id',
-    },
-    name: '频道',
-    maintainers: ['xyqfer', 'Fatpandac'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const channelId = ctx.req.param('channelId');
     const embed = !ctx.req.param('embed');
 
@@ -47,7 +24,7 @@ async function handler(ctx) {
     const $ = load(data);
     const list = $('div.videoitem_pack');
 
-    return {
+    ctx.set('data', {
         title: $('.username').text(),
         link: `https://i.youku.com/i/${channelId}`,
         description: $('.desc').text(),
@@ -78,5 +55,5 @@ async function handler(ctx) {
                 })
                 .get()
                 .filter(Boolean),
-    };
-}
+    });
+};

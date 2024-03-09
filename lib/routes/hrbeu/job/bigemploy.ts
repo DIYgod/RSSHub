@@ -1,31 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/job/bigemploy',
-    categories: ['university'],
-    example: '/hrbeu/job/bigemploy',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['job.hrbeu.edu.cn/*'],
-    },
-    name: 'Unknown',
-    maintainers: ['Derekmini'],
-    handler,
-    url: 'job.hrbeu.edu.cn/*',
-};
-
-async function handler() {
+export default async (ctx) => {
     const response = await got('http://job.hrbeu.edu.cn/HrbeuJY/web');
 
     const $ = load(response.data);
@@ -39,10 +16,10 @@ async function handler() {
         }))
         .get();
 
-    return {
+    ctx.set('data', {
         title: '大型招聘会',
         link: 'http://job.hrbeu.edu.cn/HrbeuJY/web',
         item: list,
         allowEmpty: true,
-    };
-}
+    });
+};

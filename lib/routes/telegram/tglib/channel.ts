@@ -152,14 +152,14 @@ export default async (ctx) => {
         }
     }
 
-    return {
+    ctx.set('data', {
         title: channelInfo.title,
         language: null,
         link: `https://t.me/${channelInfo.username}`,
         item,
         allowEmpty: ctx.req.param('id') === 'allow_empty',
         description: `@${channelInfo.username} on Telegram`,
-    };
+    });
 };
 
 export { getMedia };

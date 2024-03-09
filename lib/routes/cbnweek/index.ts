@@ -1,21 +1,8 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/',
-    radar: {
-        source: ['cbnweek.com/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'cbnweek.com/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://www2021.cbnweek.com';
     const apiRootUrl = 'https://api2021.cbnweek.com';
     const currentUrl = `${apiRootUrl}/v4/first_page_infos?per=1`;
@@ -52,9 +39,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '第一财经杂志',
         link: rootUrl,
         item: items,
-    };
-}
+    });
+};

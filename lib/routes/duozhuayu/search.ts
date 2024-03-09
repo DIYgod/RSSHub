@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,28 +7,7 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/search/:wd',
-    categories: ['shopping'],
-    example: '/duozhuayu/search/JavaScript',
-    parameters: { wd: '搜索关键词' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['duozhuayu.com/search/book/:wd'],
-    },
-    name: '搜索结果',
-    maintainers: ['fengkx'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const wd = ctx.req.param('wd');
     const baseUrl = 'https://www.duozhuayu.com';
     const type = 'book';
@@ -83,10 +61,10 @@ async function handler(ctx) {
             description: art(path.join(__dirname, 'templates/book.art'), { item }),
         }));
 
-    return {
+    ctx.set('data', {
         title: `多抓鱼搜索-${wd}`,
         link,
         description: `多抓鱼搜索-${wd}`,
         item,
-    };
-}
+    });
+};

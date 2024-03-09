@@ -1,14 +1,6 @@
-import { Route } from '@/types';
 import buildData from '@/utils/common-config';
 
-export const route: Route = {
-    path: '/',
-    name: 'Unknown',
-    maintainers: ['chazeon'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const link = 'https://stratechery.com/';
 
     ctx.set(
@@ -28,4 +20,4 @@ async function handler(ctx) {
             },
         })
     );
-}
+};

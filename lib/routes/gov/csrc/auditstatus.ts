@@ -1,29 +1,10 @@
-import { Route } from '@/types';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import md5 from '@/utils/md5';
 
-export const route: Route = {
-    path: '/csrc/auditstatus/:apply_id',
-    categories: ['government'],
-    example: '/gov/csrc/auditstatus/9ce91cf2d750ee62de27fbbcb05fa483',
-    parameters: { apply_id: '事项类别id，`https://neris.csrc.gov.cn/alappl/home/xkDetail` 列表中各地址的 appMatrCde 参数' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '申请事项进度',
-    maintainers: ['hillerliao'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const baseUrl = 'https://neris.csrc.gov.cn';
     const { apply_id } = ctx.req.param();
     const itemUrl = `${baseUrl}/alappl/home1/onlinealog`;
@@ -65,9 +46,9 @@ async function handler(ctx) {
             return single;
         });
 
-    return {
+    ctx.set('data', {
         title: `${$('.zx2 div').attr('title')} - 申请事项进度查询 - 中国证监会`,
         link: res.url,
         item: out,
-    };
-}
+    });
+};

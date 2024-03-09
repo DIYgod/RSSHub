@@ -1,30 +1,7 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getData, getList } from './utils';
 
-export const route: Route = {
-    path: '/daily-updates/news',
-    categories: ['finance'],
-    example: '/stockedge/daily-updates/news',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['web.stockedge.com/daily-updates/news'],
-    },
-    name: 'Daily Updates News',
-    maintainers: ['Rjnishant530'],
-    handler,
-    url: 'web.stockedge.com/daily-updates/news',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://web.stockedge.com/daily-updates?section=news';
     const apiPath = 'https://api.stockedge.com/Api/DailyDashboardApi/GetLatestNewsItems';
     const apiInfo = 'https://api.stockedge.com/Api/SecurityDashboardApi/GetSecurityOverview';
@@ -41,7 +18,7 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: 'Stock Edge',
         link: baseUrl,
         item: items,
@@ -49,5 +26,5 @@ async function handler() {
         logo: 'https://web.stockedge.com/assets/icon/favicon.png',
         icon: 'https://web.stockedge.com/assets/img/light/icon.png',
         language: 'en-us',
-    };
-}
+    });
+};

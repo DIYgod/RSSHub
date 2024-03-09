@@ -1,33 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 const currentURL = 'https://zh.wikinews.org/wiki/Special:%E6%96%B0%E9%97%BB%E8%AE%A2%E9%98%85';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/latest',
-    categories: ['new-media'],
-    example: '/wikinews/latest',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['zh.wikinews.org/wiki/Special:新闻订阅'],
-    },
-    name: '最新新闻',
-    maintainers: ['KotoriK'],
-    handler,
-    description: `根据维基新闻的[sitemap](https://zh.wikinews.org/wiki/Special:%E6%96%B0%E9%97%BB%E8%AE%A2%E9%98%85)获取新闻全文。目前仅支持中文维基新闻。`,
-};
-
-async function handler() {
+export default async (ctx) => {
     const resp = await got(currentURL);
     const $ = load(resp.data);
     const urls = $('url')
@@ -58,9 +35,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '最新新闻 - 维基新闻',
         link: currentURL,
         item: items,
-    };
-}
+    });
+};

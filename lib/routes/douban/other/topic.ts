@@ -1,26 +1,7 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
-export const route: Route = {
-    path: '/topic/:id/:sort?',
-    categories: ['social-media'],
-    example: '/douban/topic/48823',
-    parameters: { id: '话题id', sort: '排序方式，hot或new，默认为new' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '话题',
-    maintainers: ['LogicJake'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const sort = ctx.req.param('sort') || 'new';
 
@@ -91,10 +72,10 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: `${title}-豆瓣话题`,
         description,
         link,
         item: out,
-    };
-}
+    });
+};

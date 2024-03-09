@@ -1,37 +1,14 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/yzb',
-    categories: ['university'],
-    example: '/scau/yzb',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['yzb.scau.edu.cn/2136/list1.htm', 'yzb.scau.edu.cn/'],
-    },
-    name: '华农研讯',
-    maintainers: ['shengmaosu'],
-    handler,
-    url: 'yzb.scau.edu.cn/2136/list1.htm',
-};
-
-async function handler() {
+export default async (ctx) => {
     const link = 'https://yzb.scau.edu.cn/2136/list1.htm';
     const response = await got(link);
     const $ = load(response.data);
     const list = $('#wp_news_w25 tr');
 
-    return {
+    ctx.set('data', {
         title: '华南农业大学研招办',
         link,
         description: '华农研讯',
@@ -46,5 +23,5 @@ async function handler() {
                     pubDate: parseDate(item.find('td').eq(3).text(), 'YYYY/MM/DD'),
                 };
             }),
-    };
-}
+    });
+};

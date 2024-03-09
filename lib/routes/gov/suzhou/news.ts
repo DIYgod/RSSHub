@@ -1,57 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/suzhou/news/:uid',
-    categories: ['government'],
-    example: '/gov/suzhou/news/news',
-    parameters: { uid: '栏目名' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.suzhou.gov.cn/szsrmzf/:uid/nav_list.shtml'],
-    },
-    name: '政府新闻',
-    maintainers: ['EsuRt', 'luyuhuang'],
-    handler,
-    description: `| 新闻栏目名 |       :uid       |
-  | :--------: | :--------------: |
-  |  苏州要闻  |   news 或 szyw   |
-  |  区县快讯  | district 或 qxkx |
-  |  部门动态  |       bmdt       |
-  |  新闻视频  |       xwsp       |
-  |  政务公告  |       zwgg       |
-  |  便民公告  |       mszx       |
-  |  民生资讯  |       bmzx       |
-
-  | 热点专题栏目名 |  :uid  |
-  | :------------: | :----: |
-  |    热点专题    |  rdzt  |
-  |   市本级专题   |  sbjzt |
-  |  最新热点专题  | zxrdzt |
-  |    往期专题    |  wqzt  |
-  |    区县专题    |  qxzt  |
-
-  :::tip
-  **热点专题**栏目包含**市本级专题**和**区县专题**
-
-  **市本级专题**栏目包含**最新热点专题**和**往期专题**
-
-  如需订阅完整的热点专题，仅需订阅 **热点专题**\`rdzt\` 一项即可。
-  :::`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const rootUrl = 'https://www.suzhou.gov.cn';
     const uid = ctx.req.param('uid');
     let url = '';
@@ -156,9 +109,9 @@ async function handler(ctx) {
             });
     }
 
-    return {
+    ctx.set('data', {
         title,
         link: url,
         item: items,
-    };
-}
+    });
+};

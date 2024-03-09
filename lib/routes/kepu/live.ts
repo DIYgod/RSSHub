@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,29 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/live',
-    categories: ['new-media'],
-    example: '/kepu/live',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: true,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['live.kepu.net.cn/replay/index'],
-    },
-    name: '直播回看',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'live.kepu.net.cn/replay/index',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
     const rootUrl = 'https://live.kepu.net.cn';
@@ -99,7 +76,7 @@ async function handler(ctx) {
     const author = '中国科普博览';
     const subtitle = '直播回看';
 
-    return {
+    ctx.set('data', {
         item: items,
         title: `${author} - ${subtitle}`,
         link: currentUrl,
@@ -112,5 +89,5 @@ async function handler(ctx) {
         itunes_author: author,
         itunes_category: 'Science',
         allowEmpty: true,
-    };
-}
+    });
+};

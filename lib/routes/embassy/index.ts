@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,14 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 import supportedList from './supported-list';
 
-export const route: Route = {
-    path: '/:country/:city?',
-    name: 'Unknown',
-    maintainers: ['HenryQW'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const country = ctx.req.param('country');
     const city = ctx.req.param('city') ?? undefined;
 
@@ -60,10 +52,10 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: desc,
         description: desc,
         link,
         item: out,
-    };
-}
+    });
+};

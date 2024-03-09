@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/weekly',
-    categories: ['traditional-media'],
-    example: '/caixin/weekly',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['weekly.caixin.com/', 'weekly.caixin.com/*'],
-    },
-    name: '财新周刊',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'weekly.caixin.com/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const link = 'https://weekly.caixin.com';
 
     const { data: response } = await got(link);
@@ -73,12 +50,12 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('head title')
             .text()
             .replace(/_财新周刊频道_财新网$/, '')
             .trim(),
         link,
         item: items,
-    };
-}
+    });
+};

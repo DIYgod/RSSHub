@@ -1,32 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 const host = 'https://www.sony.com';
-export const route: Route = {
-    path: '/downloads/:productType/:productId',
-    categories: ['program-update'],
-    example: '/sony/downloads/product/nw-wm1am2',
-    parameters: { productType: 'product type', productId: 'product id' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['sony.com/electronics/support/:productType/:productId/downloads'],
-    },
-    name: 'Software Downloads',
-    maintainers: ['EthanWng97'],
-    handler,
-    description: `:::tip
-  Open \`https://www.sony.com/electronics/support\` and search for the corresponding product, such as \`Sony A7M4\`, the website corresponding to which is \`https://www.sony.com/electronics/support/e-mount-body-ilce-7-series/ilce-7m4/downloads\`, where \`productType\` is \`e-mount-body-ilce-7-series\` and \`productId\` is \`ilce-7m4\`.
-  :::`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { productType, productId } = ctx.req.param();
     const url = `${host}/electronics/support/${productType}/${productId}/downloads`;
     const response = await got({
@@ -59,7 +34,7 @@ async function handler(ctx) {
         }
         return data;
     });
-    return {
+    ctx.set('data', {
         title: `Sony - ${productId.toUpperCase()}`,
         link: url,
         description: `Sony - ${productId.toUpperCase()}`,
@@ -69,5 +44,5 @@ async function handler(ctx) {
             link: item.url,
             pubDate: item.pubDate,
         })),
-    };
-}
+    });
+};

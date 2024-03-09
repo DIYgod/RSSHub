@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,26 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/paper/:id?',
-    categories: ['traditional-media'],
-    example: '/cntheory/paper',
-    parameters: { id: '板块，默认为全部' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '学习时报',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `如订阅 **第 A1 版：国内大局**，路由为 [\`/cntheory/paper/国内大局\`](https://rsshub.app/cntheory/paper/国内大局)。`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
 
     const rootUrl = 'https://paper.cntheory.com';
@@ -102,10 +82,10 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `学习时报${id ? ` - ${id}` : ''}`,
         link: rootUrl,
         item: items,
         allowEmpty: true,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,29 +6,7 @@ import { parseJSONP } from './jsonp-helper';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/media',
-    categories: ['live'],
-    example: '/yoasobi-music/media',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.yoasobi-music.jp/', 'www.yoasobi-music.jp/media'],
-    },
-    name: 'Media',
-    maintainers: ['Kiotlin'],
-    handler,
-    url: 'www.yoasobi-music.jp/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const ARTIST = 'YOASOBI',
         BASEURL = 'https://www.sonymusic.co.jp/json/v2/artist',
         POSTFIX = 'start/0/count/-1';
@@ -56,7 +33,7 @@ async function handler() {
             description: item.note,
         }));
 
-    return {
+    ctx.set('data', {
         // the source title
         title,
         // the source url
@@ -81,5 +58,5 @@ async function handler() {
             // the article link
             link: officialUrl,
         })),
-    };
-}
+    });
+};

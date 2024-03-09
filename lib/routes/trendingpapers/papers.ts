@@ -1,30 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/papers/:category?/:time?/:cited?',
-    categories: ['journal'],
-    example: '/trendingpapers/papers',
-    parameters: {
-        category: 'Category of papers, can be found in URL. `All categories` by default.',
-        time: 'Time like `24 hours` to specify the duration of ranking, can be found in URL. `Since beginning` by default.',
-        cited: 'Cited or uncited papers, can be found in URL. `Cited and uncited papers` by default.',
-    },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Trending Papers on arXiv',
-    maintainers: ['CookiePieWw'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { time = 'Since beginning', cited = 'Cited and uncited papers', category = 'All categories' } = ctx.req.param();
 
     const rootUrl = 'https://trendingpapers.com';
@@ -56,9 +33,9 @@ async function handler(ctx) {
         };
     });
 
-    return {
+    ctx.set('data', {
         title: `Trending Papers on arXiv.org | ${category} | ${time} | ${cited} | `,
         link: currentUrl,
         item: papers,
-    };
-}
+    });
+};

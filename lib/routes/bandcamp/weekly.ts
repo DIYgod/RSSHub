@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,29 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/weekly',
-    categories: ['multimedia'],
-    example: '/bandcamp/weekly',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['bandcamp.com/'],
-    },
-    name: 'Weekly',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'bandcamp.com/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://bandcamp.com';
     const apiUrl = `${rootUrl}/api/bcweekly/3/list`;
     const response = await got({
@@ -47,9 +24,9 @@ async function handler() {
         }),
     }));
 
-    return {
+    ctx.set('data', {
         title: 'Bandcamp Weekly',
         link: rootUrl,
         item: items,
-    };
-}
+    });
+};

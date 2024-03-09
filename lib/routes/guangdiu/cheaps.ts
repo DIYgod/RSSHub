@@ -1,29 +1,10 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseRelativeDate } from '@/utils/parse-date';
 
 const host = 'https://guangdiu.com';
 
-export const route: Route = {
-    path: '/cheaps/:query?',
-    categories: ['shopping'],
-    example: '/guangdiu/cheaps/k=clothes',
-    parameters: { query: '链接参数，对应网址问号后的内容' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '九块九',
-    maintainers: ['fatpandac'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const query = ctx.req.param('query') ?? '';
     const url = `${host}/cheaps.php${query ? `?${query}` : ''}`;
 
@@ -39,9 +20,9 @@ async function handler(ctx) {
         }))
         .get();
 
-    return {
+    ctx.set('data', {
         title: `逛丢 - 九块九`,
         link: url,
         item: items,
-    };
-}
+    });
+};

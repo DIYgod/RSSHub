@@ -1,33 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export const route: Route = {
-    path: '/grs',
-    categories: ['university'],
-    example: '/bjfu/grs',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['graduate.bjfu.edu.cn/'],
-    },
-    name: '研究生院培养动态',
-    maintainers: ['markmingjie'],
-    handler,
-    url: 'graduate.bjfu.edu.cn/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const url = 'http://graduate.bjfu.edu.cn/pygl/pydt/index.html';
     const response = await got.get(url);
     const data = response.data;
@@ -67,9 +44,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '北林研培养动态',
         link: url,
         item: result,
-    };
-}
+    });
+};

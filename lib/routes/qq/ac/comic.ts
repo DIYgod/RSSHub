@@ -1,21 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
 import { rootUrl, mobileRootUrl } from './utils';
 
-export const route: Route = {
-    path: '/ac/comic/:id?',
-    radar: {
-        source: ['ac.qq.com/Comic/ComicInfo/id/:id', 'ac.qq.com/'],
-        target: '/ac/comic/:id',
-    },
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
 
     const currentUrl = `${rootUrl}/Comic/comicInfo/id/${id}`;
@@ -46,10 +34,10 @@ async function handler(ctx) {
             };
         });
 
-    return {
+    ctx.set('data', {
         title: `${$('h1').text()} - 腾讯动漫`,
         link: currentUrl,
         item: items,
         description: `<p>${$('.head-info-desc').text()}</p>`,
-    };
-}
+    });
+};

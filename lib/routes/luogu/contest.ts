@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -27,29 +26,7 @@ const typeMap = {
     // },
 };
 
-export const route: Route = {
-    path: '/contest',
-    categories: ['programming'],
-    example: '/luogu/contest',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['luogu.com.cn/contest/list', 'luogu.com.cn/'],
-    },
-    name: '比赛列表',
-    maintainers: ['prnake'],
-    handler,
-    url: 'luogu.com.cn/contest/list',
-};
-
-async function handler() {
+export default async (ctx) => {
     const link = `${baseUrl}/contest/list`;
     const { data: response } = await got(link);
     const $ = load(response);
@@ -88,10 +65,10 @@ async function handler() {
         result.push(item);
     }
 
-    return {
+    ctx.set('data', {
         title: $('head title').text(),
         link,
         image: 'https://www.luogu.com.cn/favicon.ico',
         item: result,
-    };
-}
+    });
+};

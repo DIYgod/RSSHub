@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -50,28 +49,7 @@ const xxgkMap = {
     },
 };
 
-export const route: Route = {
-    path: '/xxgk/:category',
-    categories: ['government'],
-    example: '/cde/xxgk/priorityApproval',
-    parameters: { category: '类别，见下表' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '信息公开',
-    maintainers: ['TonyRL'],
-    handler,
-    description: `|   优先审评公示   |  突破性治疗公示  | 临床试验默示许可 |
-  | :--------------: | :--------------: | :--------------: |
-  | priorityApproval | breakthroughCure |     cliniCal     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category');
 
     const { data } = await got.post(`${baseUrl}/main${xxgkMap.xxgk[category].endPoint}`, {
@@ -90,9 +68,9 @@ async function handler(ctx) {
         link: xxgkMap.xxgk[category].url,
     }));
 
-    return {
+    ctx.set('data', {
         title: `${xxgkMap.xxgk[category].title} - 国家药品监督管理局药品审评中心`,
         link: xxgkMap.xxgk[category].url,
         item: items,
-    };
-}
+    });
+};

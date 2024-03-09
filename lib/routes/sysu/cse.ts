@@ -1,30 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/cse',
-    categories: ['university'],
-    example: '/sysu/cse',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['cse.sysu.edu.cn/'],
-    },
-    name: '数据科学与计算机学院动态',
-    maintainers: [],
-    handler,
-    url: 'cse.sysu.edu.cn/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const response = await got({
         method: 'get',
         url: 'http://cse.sysu.edu.cn/',
@@ -116,11 +93,11 @@ async function handler() {
     item_data.sort(compareLink);
     // console.log(item_data);
 
-    return {
+    ctx.set('data', {
         title: `中山大学 - 数据科学与计算机学院`,
         link: `http://cse.sysu.edu.cn`,
         description: `中山大学 - 数据科学与计算机学院`,
         language: `zh-cn`,
         item: item_data,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,29 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: ['/news', '/'],
-    categories: ['finance'],
-    example: '/fastbull/news',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['fastbull.cn/news', 'fastbull.cn/'],
-    },
-    name: '新闻',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'fastbull.cn/news',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://www.fastbull.cn';
     const currentUrl = `${rootUrl}/news`;
 
@@ -76,9 +53,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '财经头条、财经新闻、最新资讯 - FastBull',
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

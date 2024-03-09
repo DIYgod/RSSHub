@@ -1,25 +1,6 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 
-export const route: Route = {
-    path: '/personalpage/:uid',
-    categories: ['new-media'],
-    example: '/guancha/personalpage/243983',
-    parameters: { uid: '用户id， 可在URL中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '个人主页文章',
-    maintainers: ['Jeason0228'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const uid = ctx.req.param('uid');
     const host = 'https://user.guancha.cn';
     const link = `https://app.guancha.cn/user/get-published-list?page_size=20&page_no=1&uid=${uid}`;
@@ -76,7 +57,7 @@ async function handler(ctx) {
         }
         return time;
     }
-    return {
+    ctx.set('data', {
         title: `${user_nick}-观察者-风闻社区`,
         link,
         description: `${user_nick} 的个人主页`,
@@ -87,5 +68,5 @@ async function handler(ctx) {
             link: `https://user.guancha.cn/main/content?id=${item.id}`,
             author: item.user_nick,
         })),
-    };
-}
+    });
+};

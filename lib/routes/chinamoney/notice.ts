@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,56 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { channels } from './channels';
 
-export const route: Route = {
-    path: '/:channelId?',
-    categories: ['finance'],
-    example: '/chinamoney',
-    parameters: { channelId: '分类，见下表，默认为 `2834`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '公告',
-    maintainers: ['TonyRL'],
-    handler,
-    description: `<details>
-    <summary>市场公告</summary>
-
-    外汇市场公告
-
-    | 最新 | 市场公告通知 | 中心会员公告 | 会员信息公告 |
-    | ---- | ------------ | ------------ | ------------ |
-    | 2834 | 2835         | 2836         | 2837         |
-
-    本币市场公告
-
-    | 最新           | 市场公告通知 | 中心会员公告 | 会员信息公告 |
-    | -------------- | ------------ | ------------ | ------------ |
-    | 2839,2840,2841 | 2839         | 2840         | 2841         |
-
-    央行业务公告
-
-    | 最新      | 公开市场操作 | 中央国库现金管理 |
-    | --------- | ------------ | ---------------- |
-    | 2845,2846 | 2845         | 2846             |
-  </details>
-
-  <details>
-    <summary>本币市场</summary>
-
-    贷款市场报价利率
-
-    | LPR 市场公告 |
-    | ------------ |
-    | 3686         |
-  </details>`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { channelId = 2834 } = ctx.req.param();
     const baseUrl = 'https://www.chinamoney.com.cn';
 
@@ -104,9 +54,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `${channels[channelId] ? channels[channelId].title + ' - ' : ''}中国货币网`,
         link: `${baseUrl}${channels[channelId]?.urlPath ?? ''}`,
         item: items,
-    };
-}
+    });
+};

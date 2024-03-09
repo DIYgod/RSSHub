@@ -1,27 +1,8 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/miit/zcwj',
-    categories: ['government'],
-    example: '/gov/miit/zcwj',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '政策文件',
-    maintainers: ['Yoge-Code'],
-    handler,
-};
-
-async function handler() {
+export default async (ctx) => {
     const base_url = 'http://www.miit.gov.cn/n1146295/n1652858/';
     const response = await got.get(base_url);
     const $ = load(response.data);
@@ -64,10 +45,10 @@ async function handler() {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: '中国工业化和信息部',
         link: 'http://www.miit.gov.cn',
         description: '政策文件',
         item: items,
-    };
-}
+    });
+};

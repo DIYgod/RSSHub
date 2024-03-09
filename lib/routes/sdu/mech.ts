@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -9,28 +8,7 @@ const typelist = ['通知公告', '院所新闻', '教学信息', '学术动态'
 const urlList = ['xwdt/tzgg.htm', 'xwdt/ysxw.htm', 'xwdt/jxxx.htm', 'xwdt/xsdt.htm', 'xwdt/xyjb.htm'];
 const host = 'https://www.mech.sdu.edu.cn/';
 
-export const route: Route = {
-    path: '/mech/:type?',
-    categories: ['university'],
-    example: '/sdu/mech/0',
-    parameters: { type: '默认为 `0`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '机械工程学院通知',
-    maintainers: ['Ji4n1ng'],
-    handler,
-    description: `| 通知公告 | 院所新闻 | 教学信息 | 学术动态 | 学院简报 |
-  | -------- | -------- | -------- | -------- | -------- |
-  | 0        | 1        | 2        | 3        | 4        |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type') ? Number.parseInt(ctx.req.param('type')) : 0;
     const link = new URL(urlList[type], host).href;
     const response = await got(link);
@@ -74,10 +52,10 @@ async function handler(ctx) {
             })
     );
 
-    return {
+    ctx.set('data', {
         title: `山东大学机械工程学院${typelist[type]}`,
         description: $('title').text(),
         link,
         item,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,26 +6,7 @@ import timezone from '@/utils/timezone';
 
 const rootURL = 'http://www.huizhou.gov.cn';
 
-export const route: Route = {
-    path: '/huizhou/zwgk/:category?',
-    categories: ['government'],
-    example: '/gov/huizhou/zwgk/jgdt',
-    parameters: { category: '资讯类别，可以从网址中得到，默认为政务要闻' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '惠州市人民政府',
-    maintainers: ['Fatpandac'],
-    handler,
-    description: `#### 政务公开 {#guang-dong-sheng-ren-min-zheng-fu-hui-zhou-shi-ren-min-zheng-fu-zheng-wu-gong-kai}`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const cate = ctx.req.param('category') ?? 'zwyw';
     const url = `${rootURL}/zwgk/hzsz/${cate}`;
 
@@ -71,9 +51,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `惠州市人民政府 - ${title}`,
         link: url,
         item: items,
-    };
-}
+    });
+};

@@ -1,27 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { JSDOM } from 'jsdom';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/result/:team',
-    categories: ['new-media'],
-    example: '/dongqiudi/result/50001755',
-    parameters: { team: '球队 id, 可在[懂球帝数据](https://www.dongqiudi.com/data)中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '足球赛果',
-    maintainers: ['HenryQW'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const team = ctx.req.param('team');
     const link = `https://www.dongqiudi.com/team/${team}.html`;
 
@@ -41,9 +22,9 @@ async function handler(ctx) {
         pubDate: parseDate(result.start_time),
     }));
 
-    return {
+    ctx.set('data', {
         title: `${teamName} 比赛结果`,
         link,
         item: out.slice(-10, out.length),
-    };
-}
+    });
+};

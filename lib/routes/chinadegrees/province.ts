@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,25 +10,7 @@ import { config } from '@/config';
 import puppeteer from '@/utils/puppeteer';
 const baseUrl = 'http://www.chinadegrees.com.cn';
 
-export const route: Route = {
-    path: '/:province?',
-    categories: ['study'],
-    example: '/chinadegrees/11',
-    parameters: { province: '省市代号，见下表，亦可在 [这里](http://www.chinadegrees.com.cn/help/provinceSwqk.html) 找到，默认为 `11`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: true,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Unknown',
-    maintainers: ['TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { province = '11' } = ctx.req.param();
     const url = `${baseUrl}/help/unitSwqk${province}.html`;
 
@@ -82,9 +63,9 @@ async function handler(ctx) {
         return item;
     });
 
-    return {
+    ctx.set('data', {
         title: data.title,
         link: url,
         item: items,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -97,40 +96,7 @@ const getAllPageDiscountItem = async (countries, platform, termsId, totalNum) =>
 //         };
 // };
 
-export const route: Route = {
-    path: '/discount/:platform/:filter?/:countries?',
-    categories: ['game'],
-    example: '/jump/discount/ps5/all',
-    parameters: { platform: '平台:switch,ps4,ps5,xbox,steam,epic', filter: '过滤参数,all-全部，jx-精选，sd-史低，dl-独立，vip-会员', countries: '地区，具体支持较多，可自信查看地区简写' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '游戏折扣',
-    maintainers: ['zytomorrow'],
-    handler,
-    description: `| switch | ps4  | ps5  | xbox   | steam | epic   |
-  | ------ | ---- | ---- | ------ | ----- | ------ |
-  | 可用   | 可用 | 可用 | 不可用 | 可用  | 不可用 |
-
-  | filter | switch | ps4 | ps5 | steam |
-  | ------ | ------ | --- | --- | ----- |
-  | all    | ✔     | ✔  | ✔  | ✔    |
-  | jx     | ✔     | ✔  | ❌  | ✔    |
-  | sd     | ✔     | ✔  | ✔  | ✔    |
-  | dl     | ❌     | ✔  | ❌  | ✔    |
-  | vip    | ❌     | ❌  | ✔  | ❌    |
-
-  | 北美 | 欧洲（英语） | 法国 | 德国 | 日本 |
-  | ---- | ------------ | ---- | ---- | ---- |
-  | na   | eu           | fr   | de   | jp   |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const platform = ctx.req.param('platform');
     const filter = ctx.req.param('filter') || 'all';
     const countries = ctx.req.param('countries') || '';
@@ -143,7 +109,7 @@ async function handler(ctx) {
     //     await seqGetGameDetail(allDiscountItem, ctx);
     // }
 
-    return {
+    ctx.set('data', {
         title: `jump 折扣-${platform}-${filterName[filter]}${countries ? `-${countries}` : ''}`,
         link: 'https://jumpvg.com/',
         description: 'jump 发现游戏',
@@ -153,5 +119,5 @@ async function handler(ctx) {
             link: item.banner,
             guid: `${platform}-${item.oldGameId}-${item.cutOff}`, // 平台-打折id-打折率
         })),
-    };
-}
+    });
+};

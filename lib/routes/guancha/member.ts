@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
@@ -10,33 +9,7 @@ const titles = {
     huodongs: '观学院',
 };
 
-export const route: Route = {
-    path: '/member/:category?',
-    categories: ['new-media'],
-    example: '/guancha/member/recommend',
-    parameters: { category: '分类，见下表' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['guancha.cn/'],
-        target: '/:category?',
-    },
-    name: '观学院',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'guancha.cn/',
-    description: `| 精选      | 观书堂 | 在线课  | 观学院   |
-  | --------- | ------ | ------- | -------- |
-  | recommend | books  | courses | huodongs |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') ?? 'recommend';
 
     const rootUrl = 'https://member.guancha.cn';
@@ -105,9 +78,9 @@ async function handler(ctx) {
             });
     }
 
-    return {
+    ctx.set('data', {
         title: `观学院 - ${titles[category]}`,
         link: `${rootUrl}/index.html`,
         item: items,
-    };
-}
+    });
+};

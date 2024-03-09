@@ -1,27 +1,8 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import utils from './utils';
 import { config } from '@/config';
 
-export const route: Route = {
-    path: '/list/:id/:name/:routeParams?',
-    categories: ['social-media'],
-    example: '/twitter/list/ladyleet/javascript',
-    parameters: { id: 'username', name: 'list name', routeParams: 'extra parameters, see the table above' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'List timeline',
-    maintainers: ['xyqfer'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     if (!config.twitter || !config.twitter.consumer_key || !config.twitter.consumer_secret) {
         throw new Error('Twitter RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -48,11 +29,11 @@ async function handler(ctx) {
         tweet_mode: 'extended',
     });
 
-    return {
+    ctx.set('data', {
         title: `Twitter List - ${id}/${name}`,
         link: `https://twitter.com/${id}/lists/${name}`,
         item: utils.ProcessFeed(ctx, {
             data,
         }),
-    };
-}
+    });
+};

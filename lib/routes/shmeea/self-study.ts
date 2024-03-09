@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -39,29 +38,7 @@ function load_detail(list, cache) {
     );
 }
 
-export const route: Route = {
-    path: '/self-study',
-    categories: ['study'],
-    example: '/shmeea/self-study',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.shmeea.edu.cn/page/04000/index.html', 'www.shmeea.edu.cn/'],
-    },
-    name: '自学考试通知公告',
-    maintainers: ['h2ws'],
-    handler,
-    url: 'www.shmeea.edu.cn/page/04000/index.html',
-};
-
-async function handler() {
+export default async (ctx) => {
     const response = await got({
         method: 'get',
         url: 'http://www.shmeea.edu.cn/page/04000/index.html',
@@ -77,9 +54,9 @@ async function handler() {
 
     const detail = await load_detail(list, cache);
 
-    return {
+    ctx.set('data', {
         title: '上海自学考试 - 通知公告',
         link: 'http://www.shmeea.edu.cn/page/04000/index.html',
         item: detail,
-    };
-}
+    });
+};

@@ -1,31 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/topic/:topic',
-    categories: ['traditional-media'],
-    example: '/thehindu/topic/rains',
-    parameters: { topic: 'Topic slug, can be found in URL.' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['thehindu.com/topic/:topic'],
-    },
-    name: 'Topic',
-    maintainers: ['TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const baseUrl = 'https://www.thehindu.com';
     const topic = ctx.req.param('topic');
     const link = `${baseUrl}/topic/${topic}/`;
@@ -68,7 +46,7 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('head title').text().trim(),
         link: `${baseUrl}/topic/${topic}/`,
         image: $('meta[property="og:image"]').attr('content'),
@@ -76,5 +54,5 @@ async function handler(ctx) {
         icon: $('link[rel="icon"]').attr('href'),
         language: 'en',
         item: items,
-    };
-}
+    });
+};

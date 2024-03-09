@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,19 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/',
-    radar: {
-        source: ['gameapps.hk/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'gameapps.hk/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://www.gameapps.hk';
     const feed = await parser.parseURL(`${baseUrl}/rss`);
 
@@ -81,12 +68,12 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: feed.title,
         link: feed.link,
         description: feed.description,
         image: `${baseUrl}/static/favicon/apple-touch-icon.png`,
         item: items,
         language: feed.language,
-    };
-}
+    });
+};

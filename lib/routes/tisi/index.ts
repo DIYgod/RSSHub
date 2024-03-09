@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,25 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://www.tisi.org';
 
-export const route: Route = {
-    path: '/latest',
-    categories: ['new-media'],
-    example: '/tisi/latest',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '最近更新',
-    maintainers: ['Fatpandac'],
-    handler,
-};
-
-async function handler() {
+export default async (ctx) => {
     const url = `${rootUrl}/?page_id=11151`;
 
     const response = await got(url);
@@ -50,9 +31,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '腾讯研究院 - 最近更新',
         link: url,
         item: items,
-    };
-}
+    });
+};

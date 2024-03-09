@@ -1,28 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { decode } from 'iconv-lite';
 
-export const route: Route = {
-    path: '/volume/:id',
-    categories: ['reading'],
-    example: '/wenku8/volume/1163',
-    parameters: { id: '小说 id, 可在对应小说页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '最新卷',
-    maintainers: ['huangliangshusheng'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const aid = Number.parseInt(ctx.req.param('id'));
     const link = `https://www.wenku8.net/novel/${Math.floor(aid / 1000)}/${aid}/index.htm`;
     const $ = load(await get(link));
@@ -36,7 +17,7 @@ async function handler(ctx) {
         .toArray()
         .map((a) => ({ link: a.attribs.href }));
 
-    return {
+    ctx.set('data', {
         title: `轻小说文库 ${$('#title').text()} 最新卷`,
         link,
         item: await cache.tryGet(volumeUrl, async () =>
@@ -54,7 +35,7 @@ async function handler(ctx) {
                 .filter((chapter) => chapter.description)
                 .toReversed()
         ),
-    };
-}
+    });
+};
 
 const get = async (url: string) => decode(await got(url).buffer(), 'gbk');

@@ -1,25 +1,6 @@
-import { Route } from '@/types';
 import buildData from '@/utils/common-config';
 
-export const route: Route = {
-    path: '/exhibitions/:state?',
-    categories: ['travel'],
-    example: '/brooklynmuseum/exhibitions',
-    parameters: { state: '展览进行的状态：`current` 对应展览当前正在进行，`past` 对应过去的展览，`upcoming` 对应即将举办的展览，默认为 `current`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Exhibitions',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     let link;
     const state = ctx.req.param('state');
 
@@ -46,4 +27,4 @@ async function handler(ctx) {
             },
         })
     );
-}
+};

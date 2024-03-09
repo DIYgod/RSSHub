@@ -1,25 +1,6 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 
-export const route: Route = {
-    path: '/new/:country/:category',
-    categories: ['shopping'],
-    example: '/uniqlo/new/sg/men',
-    parameters: { country: 'currently only supports sg, us, jp', category: 'supports `men` `women`, `kids`, `baby`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'New Arrivals',
-    maintainers: ['DIYgod'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { country, category } = ctx.req.param();
 
     const map = {
@@ -73,9 +54,9 @@ async function handler(ctx) {
         }${item.images.sub.map((image) => `<img src="${image.url || image.image}">`).join('')}`,
     }));
 
-    return {
+    ctx.set('data', {
         title: `Uniqlo ${category} new arrivals in ${country}`,
         link: `https://www.uniqlo.com/${country}/${map[country].lang || 'en'}/feature/new/${category}`,
         item: items,
-    };
-}
+    });
+};

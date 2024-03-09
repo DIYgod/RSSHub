@@ -1,21 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/',
-    radar: {
-        source: ['techflowpost.com/'],
-        target: '',
-    },
-    name: 'Unknown',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'techflowpost.com/',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const rootUrl = 'https://www.techflowpost.com';
 
     const { data: response } = await got.post('https://www.techflowpost.com/ashx/index.ashx', {
@@ -35,9 +22,9 @@ async function handler(ctx) {
         description: item.scontent,
     }));
 
-    return {
+    ctx.set('data', {
         title: '深潮TechFlow',
         link: rootUrl,
         item: items,
-    };
-}
+    });
+};

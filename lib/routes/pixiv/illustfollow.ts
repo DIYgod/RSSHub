@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getToken } from './token';
 import getIllustFollows from './api/get-illust-follows';
@@ -6,32 +5,7 @@ import { config } from '@/config';
 import pixivUtils from './utils';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/user/illustfollows',
-    categories: ['social-media'],
-    example: '/pixiv/user/illustfollows',
-    parameters: {},
-    features: {
-        requireConfig: true,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.pixiv.net/bookmark_new_illust.php'],
-    },
-    name: 'Following timeline',
-    maintainers: ['ClarkeCheng'],
-    handler,
-    url: 'www.pixiv.net/bookmark_new_illust.php',
-    description: `:::warning
-  Only for self-hosted
-  :::`,
-};
-
-async function handler() {
+export default async (ctx) => {
     if (!config.pixiv || !config.pixiv.refreshToken) {
         throw new Error('pixiv RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -43,7 +17,7 @@ async function handler() {
 
     const response = await getIllustFollows(token);
     const illusts = response.data.illusts;
-    return {
+    ctx.set('data', {
         title: `Pixiv关注的新作品`,
         link: 'https://www.pixiv.net/bookmark_new_illust.php',
         description: `Pixiv关注的画师们的最新作品`,
@@ -57,5 +31,5 @@ async function handler() {
                 link: `https://www.pixiv.net/artworks/${illust.id}`,
             };
         }),
-    };
-}
+    });
+};

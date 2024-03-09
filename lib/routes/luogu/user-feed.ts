@@ -1,32 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import MarkdownIt from 'markdown-it';
 const md = MarkdownIt();
 
-export const route: Route = {
-    path: '/user/feed/:uid',
-    categories: ['programming'],
-    example: '/luogu/user/feed/1',
-    parameters: { uid: '用户 UID' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['luogu.com.cn/user/:uid'],
-    },
-    name: '用户动态',
-    maintainers: ['solstice23'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const getUsernameFromUID = (uid) =>
         cache.tryGet('luogu:username:' + uid, async () => {
             const { data } = await got(`https://www.luogu.com.cn/user/${uid}?_contentOnly=1`);
@@ -39,7 +17,7 @@ async function handler(ctx) {
 
     const data = response.feeds.result;
 
-    return {
+    ctx.set('data', {
         title: `${name} 的洛谷动态`,
         link: `https://www.luogu.com.cn/user/${uid}#activity`,
         allowEmpty: true,
@@ -51,5 +29,5 @@ async function handler(ctx) {
             link: `https://www.luogu.com.cn/user/${uid}#activity`,
             guid: item.id,
         })),
-    };
-}
+    });
+};

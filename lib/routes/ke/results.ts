@@ -1,30 +1,7 @@
-import { Route } from '@/types';
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
 
-export const route: Route = {
-    path: '/researchResults',
-    categories: ['other'],
-    example: '/ke/researchResults',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.research.ke.com/researchResults'],
-    },
-    name: '研究成果',
-    maintainers: ['shaomingbo'],
-    handler,
-    url: 'www.research.ke.com/researchResults',
-};
-
-async function handler() {
+export default async (ctx) => {
     const response = await got({
         method: 'post',
         url: 'https://research.ke.com/apis/consumer-access/index/contents/page',
@@ -44,7 +21,7 @@ async function handler() {
 
     const { list } = data.data;
 
-    return {
+    ctx.set('data', {
         title: '房地产行业研究报告',
         link: 'https://research.ke.com/ResearchResults',
         description: '研究成果',
@@ -55,5 +32,5 @@ async function handler() {
             description: item.guideReading,
             pubDate: parseDate(item.publishTime),
         })),
-    };
-}
+    });
+};

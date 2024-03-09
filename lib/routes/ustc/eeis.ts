@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -12,33 +11,7 @@ const map = new Map([
 
 const host = 'https://eeis.ustc.edu.cn';
 
-export const route: Route = {
-    path: '/eeis/:type?',
-    categories: ['university'],
-    example: '/ustc/eeis/tzgg',
-    parameters: { type: '分类，见下表，默认为通知公告' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['eeis.ustc.edu.cn/'],
-        target: '/eeis',
-    },
-    name: '电子工程与信息科学系',
-    maintainers: ['jasongzy'],
-    handler,
-    url: 'eeis.ustc.edu.cn/',
-    description: `| 通知公告 | 新闻信息 |
-  | -------- | -------- |
-  | tzgg     | xwxx     |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.req.param('type') ?? 'tzgg';
     const info = map.get(type);
     if (!info) {
@@ -80,9 +53,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: info.title,
         link: `${host}/${id}/list.htm`,
         item: items,
-    };
-}
+    });
+};

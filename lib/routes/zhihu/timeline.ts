@@ -1,31 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { config } from '@/config';
 import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/timeline',
-    categories: ['social-media'],
-    example: '/zhihu/timeline',
-    parameters: {},
-    features: {
-        requireConfig: true,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '用户关注时间线',
-    maintainers: ['SeanChao'],
-    handler,
-    description: `:::warning
-  用户关注动态需要登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
-  :::`,
-};
-
-async function handler() {
+export default async (ctx) => {
     const cookie = config.zhihu.cookies;
     if (cookie === undefined) {
         throw new Error('缺少知乎用户登录后的 Cookie 值');
@@ -129,9 +107,9 @@ async function handler() {
             return buildItem(e);
         });
 
-    return {
+    ctx.set('data', {
         title: `知乎关注动态`,
         link: `https://www.zhihu.com/follow`,
         item: out,
-    };
-}
+    });
+};

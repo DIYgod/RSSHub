@@ -1,33 +1,10 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
 const apiUrl = 'https://api.github.com';
 import { config } from '@/config';
 
-export const route: Route = {
-    path: '/notifications',
-    categories: ['programming'],
-    example: '/github/notifications',
-    parameters: {},
-    features: {
-        requireConfig: true,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['github.com/notifications'],
-    },
-    name: 'Notifications',
-    maintainers: ['zhzy0077'],
-    handler,
-    url: 'github.com/notifications',
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     if (!config.github || !config.github.access_token) {
         throw new Error('GitHub trending RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -56,11 +33,11 @@ async function handler(ctx) {
         };
     });
 
-    return {
+    ctx.set('data', {
         title: 'Github Notifications',
         link: 'https://github.com/notifications',
         item: items,
-    };
+    });
 
     ctx.set('json', {
         title: 'Github Notifications',
@@ -73,4 +50,4 @@ async function handler(ctx) {
             used: Number.parseInt(response.headers['X-RateLimit-Used']),
         },
     });
-}
+};

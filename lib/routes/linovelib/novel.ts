@@ -1,26 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/novel/:id',
-    categories: ['reading'],
-    example: '/linovelib/novel/2547',
-    parameters: { id: '小说 id，对应书架开始阅读 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '小说更新',
-    maintainers: ['misakicoca'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const response = await got(`https://www.linovelib.com/novel/${ctx.req.param('id')}/catalog`);
     const $ = load(response.data);
 
@@ -42,11 +23,11 @@ async function handler(ctx) {
         .get();
     items.reverse();
 
-    return {
+    ctx.set('data', {
         title: `哩哔轻小说 - ${title}`,
         link: `https://www.linovelib.com/novel/${ctx.req.param('id')}/catalog`,
         description: title,
         language: 'zh',
         item: items,
-    };
-}
+    });
+};

@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
@@ -7,14 +6,7 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import parser from '@/utils/rss-parser';
 
-export const route: Route = {
-    path: '/cn/*',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     let language = '';
     let path = getSubPath(ctx);
 
@@ -92,10 +84,10 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: isOfficialRSS ? officialFeed.title : $('title').first().text(),
         description: isOfficialRSS ? officialFeed.description : '',
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

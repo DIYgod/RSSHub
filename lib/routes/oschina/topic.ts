@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
@@ -11,28 +10,7 @@ async function loadContent(link) {
     return content;
 }
 
-export const route: Route = {
-    path: '/topic/:topic',
-    categories: ['programming'],
-    example: '/oschina/topic/weekly-news',
-    parameters: { topic: '主题名，可从 [全部主题](https://www.oschina.net/question/topics) 进入主题页，在 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['oschina.net/question/topic/:topic'],
-    },
-    name: '问答主题',
-    maintainers: ['loveely7'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const topic = ctx.req.param('topic');
     const topicUrl = `https://www.oschina.net/question/topic/${topic}?show=time`;
 
@@ -67,10 +45,10 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `开源中国-${topicName}`,
         description: $('.topic-introduction').text(),
         link: topicUrl,
         item: resultItem,
-    };
-}
+    });
+};

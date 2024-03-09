@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -17,30 +16,7 @@ const titles = {
     medicine: '医药',
 };
 
-export const route: Route = {
-    path: ['/news/:category?', '/:category?'],
-    radar: {
-        source: ['wallstreetcn.com/news/:category', 'wallstreetcn.com/'],
-    },
-    name: 'Unknown',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| id           | 分类 |
-  | ------------ | ---- |
-  | global       | 最新 |
-  | shares       | 股市 |
-  | bonds        | 债市 |
-  | commodities  | 商品 |
-  | forex        | 外汇 |
-  | enterprise   | 公司 |
-  | asset-manage | 资管 |
-  | tmt          | 科技 |
-  | estate       | 地产 |
-  | car          | 汽车 |
-  | medicine     | 医药 |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') ?? 'global';
 
     const rootUrl = 'https://wallstreetcn.com';
@@ -91,11 +67,11 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `华尔街见闻 - 资讯 - ${titles[category]}`,
         link: currentUrl,
         item: items,
         itunes_author: '华尔街见闻',
         image: 'https://static-alpha-wscn.awtmt.com/wscn-static/qrcode.jpg',
-    };
-}
+    });
+};

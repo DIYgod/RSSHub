@@ -1,33 +1,10 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/rczp',
-    categories: ['university'],
-    example: '/bupt/rczp',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['bupt.edu.cn/'],
-    },
-    name: '人才招聘',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'bupt.edu.cn/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://www.bupt.edu.cn';
     const currentUrl = `${rootUrl}/rczp.htm`;
 
@@ -67,9 +44,9 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};

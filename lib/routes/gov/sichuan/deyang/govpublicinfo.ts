@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -76,28 +75,7 @@ const getInfoContent = (rootUrl, item) =>
         }
     });
 
-export const route: Route = {
-    path: '/sichuan/deyang/govpublicinfo/:countyName/:infoType?',
-    categories: ['government'],
-    example: '/gov/sichuan/deyang/govpublicinfo/绵竹市',
-    parameters: { countyName: '区县名（**其他区县整改中，暂时只支持`绵竹市`**）。德阳市、绵竹市、广汉市、什邡市、中江县、罗江区、旌阳区、高新区', infoType: '信息类型。默认值:fdzdnr-“法定主动内容”' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '政府公开信息',
-    maintainers: ['zytomorrow'],
-    handler,
-    description: `| 法定主动内容 | 公示公告 |
-  | :----------: | :------: |
-  |    fdzdnr    |   gsgg   |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const countyName = ctx.req.param('countyName');
     const infoType = ctx.req.param('infoType') || 'fdzdnr';
     const infoBasicUrl = basicInfoDict[countyName].infoType[infoType].basicUrl;
@@ -105,7 +83,7 @@ async function handler(ctx) {
     const infoUrlList = await getInfoUrlList(rootUrl, infoBasicUrl);
     const items = await Promise.all(infoUrlList.map((item) => getInfoContent(rootUrl, item)));
 
-    return {
+    ctx.set('data', {
         title: `政府公开信息-${countyName}-${basicInfoDict[countyName].infoType[infoType].name}`,
         link: infoBasicUrl,
         item: items.map((item) => ({
@@ -114,5 +92,5 @@ async function handler(ctx) {
             link: item.link,
             pubDate: item.pubDate,
         })),
-    };
-}
+    });
+};

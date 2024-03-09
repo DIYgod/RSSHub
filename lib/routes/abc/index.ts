@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,18 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/:category{.+}?',
-    radar: {
-        source: ['abc.net.au/:category*'],
-        target: '/:category',
-    },
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { category = 'news/justin' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -161,7 +149,7 @@ async function handler(ctx) {
 
     const icon = new URL($('link[rel="apple-touch-icon"]').prop('href'), rootUrl).href;
 
-    return {
+    ctx.set('data', {
         item: items,
         title: $('title').first().text(),
         link: currentUrl,
@@ -173,5 +161,5 @@ async function handler(ctx) {
         subtitle: $('meta[property="og:title"]').prop('content'),
         author: $('meta[name="generator"]').prop('content'),
         allowEmpty: true,
-    };
-}
+    });
+};

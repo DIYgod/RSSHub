@@ -1,20 +1,8 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/pine/:version?',
-    radar: {
-        source: ['tradingview.com/pine-script-docs/en/:version/Release_notes.html'],
-        target: '/pine/:version',
-    },
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { version = 'v5' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 100;
 
@@ -53,7 +41,7 @@ async function handler(ctx) {
     const image = new URL('_images/Pine_Script_logo.svg', currentUrl).href;
     const icon = new URL('favicon.ico', rootUrl).href;
 
-    return {
+    ctx.set('data', {
         item: items,
         title: $('title').text(),
         link: currentUrl,
@@ -62,5 +50,5 @@ async function handler(ctx) {
         image,
         icon,
         logo: icon,
-    };
-}
+    });
+};

@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import util from './utils';
 const news_url = 'https://www.nintendoswitch.com.cn';
 
-export const route: Route = {
-    path: '/news/china',
-    categories: ['game'],
-    example: '/nintendo/news/china',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['nintendoswitch.com.cn/'],
-    },
-    name: '首页资讯（中国）',
-    maintainers: ['NeverBehave'],
-    handler,
-    url: 'nintendoswitch.com.cn/',
-};
-
-async function handler() {
+export default async (ctx) => {
     const response = await got(news_url);
 
     // 获取Nuxt对象
@@ -50,10 +27,10 @@ async function handler() {
 
     data = await util.ProcessNewsChina(data, cache);
 
-    return {
+    ctx.set('data', {
         title: 'Nintendo（中国大陆）主页资讯',
         link: 'https://www.nintendoswitch.com.cn',
         description: 'Nintendo 中国大陆官网刊登的资讯',
         item: data,
-    };
-}
+    });
+};

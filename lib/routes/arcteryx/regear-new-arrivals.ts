@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,29 +10,7 @@ const host = 'https://www.regear.arcteryx.com';
 function getUSDPrice(number) {
     return (number / 100).toLocaleString('en-US', { style: 'currency', currency: 'USD' });
 }
-export const route: Route = {
-    path: '/regear/new-arrivals',
-    categories: ['shopping'],
-    example: '/arcteryx/regear/new-arrivals',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['regear.arcteryx.com/shop/new-arrivals', 'regear.arcteryx.com/'],
-    },
-    name: 'Regear New Arrivals',
-    maintainers: ['EthanWng97'],
-    handler,
-    url: 'regear.arcteryx.com/shop/new-arrivals',
-};
-
-async function handler() {
+export default async (ctx) => {
     const url = `${host}/shop/new-arrivals`;
     const response = await got({
         method: 'get',
@@ -62,7 +39,7 @@ async function handler() {
         return data;
     });
 
-    return {
+    ctx.set('data', {
         title: 'Arcteryx - Regear - New Arrivals',
         link: url,
         description: 'Arcteryx - Regear - New Arrivals',
@@ -71,5 +48,5 @@ async function handler() {
             link: item.link,
             description: item.description,
         })),
-    };
-}
+    });
+};

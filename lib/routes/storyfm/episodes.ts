@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,29 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/episodes',
-    categories: ['multimedia'],
-    example: '/storyfm/episodes',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: true,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['storyfm.cn/episodes-list', 'storyfm.cn/'],
-    },
-    name: '播客',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'storyfm.cn/episodes-list',
-};
-
-async function handler() {
+export default async (ctx) => {
     const rootUrl = 'https://storyfm.cn';
     const currentUrl = `${rootUrl}/episodes-list/`;
 
@@ -80,11 +57,11 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: '故事FM',
         link: currentUrl,
         item: items,
         itunes_author: '故事FM',
         image: $('.custom-logo-link img').attr('src'),
-    };
-}
+    });
+};

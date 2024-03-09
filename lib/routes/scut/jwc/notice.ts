@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import * as url from 'node:url';
@@ -55,28 +54,7 @@ const generateArticleLink = (id) => `<p>链接：<a href="${getArticleUrlById(id
 
 const generateArticleFullText = (data) => resolveRelativeUrl(data.content) + generateArticleLink(data.id);
 
-export const route: Route = {
-    path: '/jwc/notice/:category?',
-    categories: ['university'],
-    example: '/scut/jwc/notice/all',
-    parameters: { category: '通知分类，默认为 `all`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '教务处通知公告',
-    maintainers: ['imkero'],
-    handler,
-    description: `| 全部 | 选课   | 考试 | 实践     | 交流          | 教师    | 信息 |
-  | ---- | ------ | ---- | -------- | ------------- | ------- | ---- |
-  | all  | course | exam | practice | communication | teacher | info |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const categoryName = ctx.req.param('category') || 'all';
     const categoryMeta = categoryMap[categoryName];
 
@@ -138,9 +116,9 @@ async function handler(ctx) {
         })
     );
 
-    return {
+    ctx.set('data', {
         title: '华南理工大学教务处通知公告 - ' + categoryMeta.title,
         link: listPageUrl,
         item: out,
-    };
-}
+    });
+};

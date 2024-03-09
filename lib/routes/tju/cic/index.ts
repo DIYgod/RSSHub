@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -16,28 +15,7 @@ const pageType = (href) => {
     return url.hostname === 'cic.tju.edu.cn' ? 'tju-cic' : 'unknown';
 };
 
-export const route: Route = {
-    path: '/cic/:type?',
-    categories: ['university'],
-    example: '/tju/cic/news',
-    parameters: { type: 'default `news`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'College of Intelligence and Computing',
-    maintainers: ['SuperPung'],
-    handler,
-    description: `| College News | Notification | TJU Forum for CIC |
-  | :----------: | :----------: | :---------------: |
-  |     news     | notification |       forum       |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const type = ctx.params && ctx.req.param('type');
     let path, subtitle;
 
@@ -71,7 +49,7 @@ async function handler(ctx) {
     }
 
     if (response === null) {
-        return {
+        ctx.set('data', {
             title: '天津大学智能与计算学部 - ' + subtitle,
             link: cic_base_url + path,
             description: '链接失效' + cic_base_url + path,
@@ -82,7 +60,7 @@ async function handler(ctx) {
                     description: `<h2>请到<a href=${repo_url}>此处</a>提交Issue</h2>`,
                 },
             ],
-        };
+        });
     } else {
         const $ = load(response.data);
         const list = $('.wenzi_list_ul > li')
@@ -122,11 +100,11 @@ async function handler(ctx) {
             })
         );
 
-        return {
+        ctx.set('data', {
             title: '天津大学智能与计算学部 - ' + subtitle,
             link: cic_base_url + path,
             description: null,
             item: items,
-        };
+        });
     }
-}
+};

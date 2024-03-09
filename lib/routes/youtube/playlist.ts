@@ -1,28 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import utils from './utils';
 import { config } from '@/config';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/playlist/:id/:embed?',
-    categories: ['social-media'],
-    example: '/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z',
-    parameters: { id: 'YouTube playlist id', embed: 'Default to embed the video, set to any value to disable embedding' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Playlist',
-    maintainers: ['HenryQW'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     if (!config.youtube || !config.youtube.key) {
         throw new Error('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -33,7 +14,7 @@ async function handler(ctx) {
 
     const data = (await utils.getPlaylistItems(id, 'snippet', cache)).data.items.filter((d) => d.snippet.title !== 'Private video' && d.snippet.title !== 'Deleted video');
 
-    return {
+    ctx.set('data', {
         title: `${playlistTitle} by ${data[0].snippet.channelTitle} - YouTube`,
         link: `https://www.youtube.com/playlist?list=${id}`,
         description: `YouTube playlist ${playlistTitle} by ${data[0].snippet.channelTitle}`,
@@ -49,5 +30,5 @@ async function handler(ctx) {
                 author: snippet.videoOwnerChannelTitle,
             };
         }),
-    };
-}
+    });
+};

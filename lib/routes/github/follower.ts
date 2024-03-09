@@ -1,29 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { config } from '@/config';
 
-export const route: Route = {
-    path: '/user/followers/:user',
-    categories: ['programming'],
-    example: '/github/user/followers/HenryQW',
-    parameters: { user: 'GitHub username' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['github.com/:user'],
-    },
-    name: 'User Followers',
-    maintainers: ['HenryQW'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     if (!config.github || !config.github.access_token) {
         throw new Error('GitHub follower RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -58,7 +36,7 @@ async function handler(ctx) {
 
     const data = response.data.data.user.followers.edges;
 
-    return {
+    ctx.set('data', {
         allowEmpty: true,
         title: `${user}'s followers`,
         link: host,
@@ -68,5 +46,5 @@ async function handler(ctx) {
             description: `<a href="https://github.com/${follower.node.login}">${follower.node.login}</a> <br> <img sytle="width:50px;" src='${follower.node.avatarUrl}'>`,
             link: `https://github.com/${follower.node.login}`,
         })),
-    };
-}
+    });
+};

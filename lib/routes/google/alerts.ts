@@ -1,26 +1,7 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export const route: Route = {
-    path: '/alerts/:keyword',
-    categories: ['other'],
-    example: '/google/alerts/RSSHub',
-    parameters: { keyword: 'Keyword' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: 'Alerts',
-    maintainers: ['TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const keyword = ctx.req.param('keyword');
 
     const { data: response, url: link } = await got('https://www.google.com/alerts/preview', {
@@ -44,9 +25,9 @@ async function handler(ctx) {
             };
         });
 
-    return {
+    ctx.set('data', {
         title: `Google Alerts - ${keyword}`,
         link,
         item: items,
-    };
-}
+    });
+};

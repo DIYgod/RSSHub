@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,32 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 import { defaultDomain, getRootUrl } from './utils';
 
-export const route: Route = {
-    path: '/album/:id',
-    categories: ['anime'],
-    example: '/18comic/album/292282',
-    parameters: { id: '专辑 id，可在专辑页 URL 中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['jmcomic.group/'],
-    },
-    name: '专辑',
-    maintainers: ['nczitzk'],
-    handler,
-    url: 'jmcomic.group/',
-    description: `:::tip
-  专辑 id 不包括 URL 中标题的部分。
-  :::`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
     const { domain = defaultDomain } = ctx.req.query();
     const rootUrl = getRootUrl(domain);
@@ -96,10 +70,10 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
         description: $('meta[property="og:description"]').attr('content'),
-    };
-}
+    });
+};

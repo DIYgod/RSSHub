@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 const FQDN = 'feedback.remnote.com';
 const apiGateway = 'https://gateway.hellonext.co';
 
-export const route: Route = {
-    path: '/changelog',
-    categories: ['program-update'],
-    example: '/remnote/changelog',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['remnote.com/changelog', 'remnote.com/'],
-    },
-    name: 'Changelog',
-    maintainers: ['TonyRL', 'amakerlife'],
-    handler,
-    url: 'remnote.com/changelog',
-};
-
-async function handler() {
+export default async (ctx) => {
     const { data } = await got(`${apiGateway}/api/v2/changelogs`, {
         headers: {
             'x-organization': FQDN,
@@ -44,12 +21,12 @@ async function handler() {
         pubDate: parseDate(item.published_at.timestamp),
     }));
 
-    return {
+    ctx.set('data', {
         title: 'Changelog | RemNote',
         description: 'Vote or request new RemNote features. Subscribe to get updates about new features from RemNote.',
         link: `https://${FQDN}/changelog`,
         image: 'https://vault.hnxt.dev/uploads/organization_customization/favicon/3970/88153ff13b4b03492ddfee6e675228c1.png',
         item: items,
         language: 'en-US',
-    };
-}
+    });
+};

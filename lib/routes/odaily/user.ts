@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,28 +5,7 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { rootUrl } from './utils';
 
-export const route: Route = {
-    path: '/user/:id',
-    categories: ['new-media'],
-    example: '/odaily/user/2147486902',
-    parameters: { id: '用户 id，可在用户页地址栏中找到' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['0daily.com/user/:id', '0daily.com/'],
-    },
-    name: '用户文章',
-    maintainers: ['nczitzk'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const id = ctx.req.param('id');
 
     const currentUrl = `${rootUrl}/service/feed_stream/user/${id}?b_id=10&per_page=${ctx.req.query('limit') ?? 25}`;
@@ -68,9 +46,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `${author} - Odaily星球日报`,
         link: `${rootUrl}/user/${id}`,
         item: items,
-    };
-}
+    });
+};

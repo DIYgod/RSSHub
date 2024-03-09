@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
@@ -12,28 +11,7 @@ const timeStringRegexes = [
 const maxPages = 5;
 const pageCount = 10;
 
-export const route: Route = {
-    path: '/actors/:name/:id',
-    categories: ['anime'],
-    example: '/eventernote/actors/三森すずこ/2634',
-    parameters: { name: '声优姓名', id: '声优 ID' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['www.eventernote.com/actors/:name/:id/events'],
-    },
-    name: '声优活动及演唱会',
-    maintainers: ['KTachibanaM'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { name, id } = ctx.req.param();
 
     const title = `${name}のイベント・ライブ情報一覧`;
@@ -112,12 +90,12 @@ async function handler(ctx) {
         page += 1;
     }
 
-    return {
+    ctx.set('data', {
         title,
         link,
         description: title,
         language: 'ja',
         allowEmpty: true,
         item: events,
-    };
-}
+    });
+};

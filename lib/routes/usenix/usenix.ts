@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,30 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 const seasons = ['spring', 'summer', 'fall', 'winter'];
 
-export const route: Route = {
-    path: '/usenix-security-sympoium',
-    categories: ['journal'],
-    example: '/usenix/usenix-security-sympoium',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['usenix.org/conferences/all', 'usenix.org/conferences', 'usenix.org/'],
-    },
-    name: 'Security Symposia',
-    maintainers: ['ZeddYu'],
-    handler,
-    url: 'usenix.org/conferences/all',
-    description: `Return results from 2020`,
-};
-
-async function handler() {
+export default async (ctx) => {
     const last = new Date().getFullYear() + 1;
     const urlList = Array.from({ length: last - 2020 }, (_, v) => `${url}/conference/usenixsecurity${v + 20}`).flatMap((url) => seasons.map((season) => `${url}/${season}-accepted-papers`));
     const responses = await got.all(
@@ -73,11 +49,11 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: 'USENIX',
         link: url,
         description: 'USENIX Security Symposium Accpeted Papers',
         allowEmpty: true,
         item: items,
-    };
-}
+    });
+};

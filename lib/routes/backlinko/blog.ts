@@ -1,32 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/blog',
-    categories: ['blog'],
-    example: '/backlinko/blog',
-    parameters: {},
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['backlinko.com/blog', 'backlinko.com/'],
-    },
-    name: 'Blog',
-    maintainers: ['TonyRL'],
-    handler,
-    url: 'backlinko.com/blog',
-};
-
-async function handler() {
+export default async (ctx) => {
     const baseUrl = 'https://backlinko.com';
     const { data: response, url: link } = await got(`${baseUrl}/blog`);
 
@@ -58,11 +35,11 @@ async function handler() {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: pageProps.page.seo.title,
         description: pageProps.page.seo.metaDesc,
         link,
         language: 'en',
         item: items,
-    };
-}
+    });
+};

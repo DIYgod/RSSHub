@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -7,28 +6,7 @@ import logger from '@/utils/logger';
 import { CookieJar } from 'tough-cookie';
 import puppeteer from '@/utils/puppeteer';
 
-export const route: Route = {
-    path: '/ygafz/:type?',
-    categories: ['university'],
-    example: '/sysu/ygafz',
-    parameters: { type: '分类，见下表，默认为 `notice`' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: true,
-        antiCrawler: true,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['ygafz.sysu.edu.cn/:type?'],
-    },
-    name: 'Unknown',
-    maintainers: ['TonyRL'],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const { type = 'notice' } = ctx.req.param();
     const baseUrl = 'https://ygafz.sysu.edu.cn';
     const url = `${baseUrl}/${type}`;
@@ -85,9 +63,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: url,
         item: items,
-    };
-}
+    });
+};

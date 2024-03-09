@@ -1,4 +1,3 @@
-import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -11,26 +10,7 @@ import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export const route: Route = {
-    path: '/digest/:tid',
-    categories: ['bbs'],
-    example: '/saraba1st/digest/forum-75-1',
-    parameters: { tid: '论坛 id' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    name: '论坛摘要',
-    maintainers: ['shinemoon'],
-    handler,
-    description: `版面网址如果为 \`https://bbs.saraba1st.com/2b/forum-75-1.html\` 那么论坛 id 就是 \`forum-75-1\`。`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const tid = ctx.req.param('tid');
     const cookieString = config.saraba1st.cookie ?? '';
     const res = await got('https://bbs.saraba1st.com/2b/' + tid + '.html', {
@@ -65,13 +45,13 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: `Stage1 论坛 - ${title}`,
         link: `https://bbs.saraba1st.com/2b/${tid}.html`,
         //        item: await resultItems,
         item: resultItems,
-    };
-}
+    });
+};
 
 async function fetchContent(url) {
     // Fetch the subpageinof

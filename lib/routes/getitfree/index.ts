@@ -1,18 +1,10 @@
-import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
 import { apiSlug, rootUrl, bakeFilterSearchParams, bakeFiltersWithPair, bakeUrl, fetchData, getFilterNameForTitle, getFilterParamsForUrl, parseFilterStr } from './util';
 
-export const route: Route = {
-    path: '/:filter{.+}?',
-    name: 'Unknown',
-    maintainers: [],
-    handler,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const filter = ctx.req.param('filter');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
@@ -51,9 +43,9 @@ async function handler(ctx) {
 
     const subtitle = getFilterNameForTitle(filtersWithPair);
 
-    return {
+    ctx.set('data', {
         ...(await fetchData(currentUrl)),
         item: items,
         title: `Getitfree${subtitle ? ` | ${subtitle}` : ''}`,
-    };
-}
+    });
+};

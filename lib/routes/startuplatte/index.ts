@@ -1,34 +1,9 @@
-import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export const route: Route = {
-    path: '/:category?',
-    categories: ['new-media'],
-    example: '/startuplatte',
-    parameters: { category: '分类，见下表，默认为首頁' },
-    features: {
-        requireConfig: false,
-        requirePuppeteer: false,
-        antiCrawler: false,
-        supportBT: false,
-        supportPodcast: false,
-        supportScihub: false,
-    },
-    radar: {
-        source: ['startuplatte.com/category/:category', 'startuplatte.com/'],
-    },
-    name: '分类',
-    maintainers: ['nczitzk'],
-    handler,
-    description: `| 首頁 | 大師智慧 | 深度分析 | 新知介紹 |
-  | ---- | -------- | -------- | -------- |
-  |      | quote    | analysis | trend    |`,
-};
-
-async function handler(ctx) {
+export default async (ctx) => {
     const category = ctx.req.param('category') ?? '';
 
     const rootUrl = 'https://startuplatte.com';
@@ -74,9 +49,9 @@ async function handler(ctx) {
         )
     );
 
-    return {
+    ctx.set('data', {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    };
-}
+    });
+};
