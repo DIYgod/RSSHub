@@ -52,9 +52,9 @@ async function handler(ctx) {
         }) || {}
     );
 
-    ctx.set('data', {
+    return {
         title,
         link: baseURL + path,
         item: items,
-    });
-};
+    };
+}
