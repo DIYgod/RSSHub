@@ -7,8 +7,7 @@ const arr = {
     xwrd: 'home!newsHome.action?category=12',
     tzgg: 'home!newsHome.action?category=13',
     zpxx: 'home!recruit.action?category=1&jobType=110001',
-    gfjgxx: 'home!recruitList.action?category=1&jobType=110002',
-    sxxx: 'home!recruitList.action?category=2',
+    sxxx: 'home!recruitList.action?category=2&jobType=110001',
     cyxx: 'home!newsHome.action?category=11',
 };
 const baseUrl = 'https://scc.pku.edu.cn/';
@@ -17,8 +16,8 @@ export default async (ctx) => {
     const type = ctx.req.param('type') ?? 'zpxx';
     const rootUrl = baseUrl + arr[type];
 
-    const list_response = await got(rootUrl);
-    const $ = load(list_response.data);
+    const listResponse = await got(rootUrl);
+    const $ = load(listResponse.data);
 
     const feed_title = $('h2.category').text();
 
@@ -29,7 +28,7 @@ export default async (ctx) => {
             const date = parseDate(item.find('div.item-date').text());
             return {
                 title: a.text(),
-                link: new URL(a.attr('href'), baseUrl),
+                link: new URL(a.attr('href'), baseUrl).href,
                 pubDate: date,
             };
         })
@@ -43,9 +42,9 @@ export default async (ctx) => {
         item: await Promise.all(
             sorted.map((item) =>
                 cache.tryGet(item.link, async () => {
-                    const detail_page = await got(item.link);
-                    const detail = load(detail_page.data);
-                    const script = detail('script', 'div#content-div').html();
+                    const detailPage = await got(item.link);
+                    const detail = load(detailPage.data);
+                    const script = detail('div#content-div script').html();
                     if (script !== null) {
                         const content_route = script.match(/\$\("#content-div"\).load\("(\S+)"\)/)[1];
                         const content = await got(new URL(content_route, baseUrl).href);
