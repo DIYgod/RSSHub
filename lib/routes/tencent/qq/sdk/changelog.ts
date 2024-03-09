@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/qq/sdk/changelog/:platform',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/tencent/qq/sdk/changelog/iOS',
     parameters: { platform: '平台，iOS / Android' },
     features: {

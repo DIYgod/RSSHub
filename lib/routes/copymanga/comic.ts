@@ -13,7 +13,7 @@ import asyncPool from 'tiny-async-pool';
 
 export const route: Route = {
     path: '/comic/:id/:chapterCnt?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/copymanga/comic/dianjuren/5',
     parameters: { id: '漫画ID', chapterCnt: '返回章节的数量，默认为 `10`' },
     features: {

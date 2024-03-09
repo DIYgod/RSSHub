@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/web/:id?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/cna/web/aall',
     parameters: { id: '分类 id，见上表。此參數默认为 aall' },
     features: {

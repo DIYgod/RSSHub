@@ -15,7 +15,7 @@ const alias = new Map([
 
 export const route: Route = {
     path: '/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/shu/news',
     parameters: { type: '消息类型,默认为`news`' },
     features: {

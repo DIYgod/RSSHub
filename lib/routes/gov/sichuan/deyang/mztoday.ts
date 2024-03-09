@@ -122,7 +122,7 @@ const getInfoContent = (item) =>
 
 export const route: Route = {
     path: '/sichuan/deyang/mztoday/:infoType?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/sichuan/deyang/mztoday/zx',
     parameters: { infoType: '信息栏目名称。默认最新(zx)' },
     features: {

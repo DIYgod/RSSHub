@@ -10,7 +10,7 @@ import { baseUrl, getUserInfoFromUsername, getUserInfoFromId, getUserWorks } fro
 
 export const route: Route = {
     path: '/user/works/:id',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/500px/user/works/hujunli',
     parameters: { id: '摄影师 ID' },
     features: {

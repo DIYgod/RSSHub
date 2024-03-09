@@ -10,7 +10,7 @@ const urlList = ['zxzx/tzgg.htm', 'zxzx/xyxw.htm', 'zxzx/bksjy.htm', 'zxzx/yjsjy
 
 export const route: Route = {
     path: '/cmse/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/sdu/cmse/0',
     parameters: { type: '默认为 `0`' },
     features: {

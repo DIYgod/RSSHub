@@ -11,7 +11,7 @@ const urlList = ['zxzx/xydt.htm', 'zxzx/tzgg.htm', 'zxzx/xslt.htm'];
 
 export const route: Route = {
     path: '/epe/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/sdu/epe/0',
     parameters: { type: '默认为 `0`' },
     features: {

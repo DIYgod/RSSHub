@@ -5,7 +5,7 @@ import { baseUrl, fetchUserDate } from './utils';
 
 export const route: Route = {
     path: '/letters/:author',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/zhiy/letters/messy',
     parameters: { author: '作者 ID，可在URL中找到' },
     features: {

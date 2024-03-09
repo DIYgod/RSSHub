@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:id?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/cna/aall',
     parameters: { id: '分类 id 或新闻专题 id。分类 id 见下表，新闻专题 id 為 https://www.cna.com.tw/list/newstopic.aspx 中，連結的數字部份。此參數默认为 aall' },
     features: {

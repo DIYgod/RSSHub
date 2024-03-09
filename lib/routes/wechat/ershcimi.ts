@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/ershicimi/:id',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/wechat/ershicimi/813oxJOl',
     parameters: { id: '公众号id，打开公众号页，在 URL 中找到 id' },
     features: {

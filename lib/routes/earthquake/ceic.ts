@@ -5,7 +5,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/ceic/:type?',
-    categories: ['travel'],
+    categories: ['forecast'],
     example: '/earthquake/ceic/1',
     parameters: { type: '类型，见下表' },
     features: {

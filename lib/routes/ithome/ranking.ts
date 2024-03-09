@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/ranking/:type',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/ithome/ranking/24h',
     parameters: { type: '类别' },
     features: {

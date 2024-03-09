@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/user/:id/posts',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/1point3acres/user/1/posts',
     parameters: { id: '用户 id，可在 Instant 版网站的个人主页 URL 找到' },
     features: {

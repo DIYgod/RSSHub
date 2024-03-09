@@ -9,7 +9,7 @@ import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/onair/:lang?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/bgmlist/onair/zh-Hans',
     parameters: { lang: '语言' },
     features: {

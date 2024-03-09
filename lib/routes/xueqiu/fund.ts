@@ -5,7 +5,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/fund/:id',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/xueqiu/fund/040008',
     parameters: { id: '基金代码, 可在基金主页 URL 中找到. 此路由的数据为场外基金 (`F`开头)' },
     features: {

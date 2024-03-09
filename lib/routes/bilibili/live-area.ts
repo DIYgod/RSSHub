@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/live/area/:areaID/:order',
-    categories: ['multimedia'],
+    categories: ['live'],
     example: '/bilibili/live/area/207/online',
     parameters: { areaID: '分区 ID 分区增删较多, 可通过 [分区列表](https://api.live.bilibili.com/room/v1/Area/getList) 查询', order: '排序方式, live_time 开播时间, online 人气' },
     features: {

@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/blog/:id?/:page?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/sakurazaka46/blog',
     parameters: { id: 'Member ID, see below, `all` by default', page: 'Page, `0` by default' },
     features: {

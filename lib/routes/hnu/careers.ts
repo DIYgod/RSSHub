@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/careers',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/hnu/careers',
     parameters: {},
     features: {

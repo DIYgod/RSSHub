@@ -13,7 +13,7 @@ const STATUS_MAP = {
 
 export const route: Route = {
     path: '/gushitong/index',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/baidu/gushitong/index',
     parameters: {},
     features: {

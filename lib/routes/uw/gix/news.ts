@@ -7,7 +7,7 @@ const gixBaseURL = 'https://gixnetwork.org';
 
 export const route: Route = {
     path: '/gix/news/:category',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/uw/gix/news/blog',
     parameters: { category: 'Blog Type' },
     features: {

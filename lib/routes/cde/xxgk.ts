@@ -52,7 +52,7 @@ const xxgkMap = {
 
 export const route: Route = {
     path: '/xxgk/:category',
-    categories: ['study'],
+    categories: ['government'],
     example: '/cde/xxgk/priorityApproval',
     parameters: { category: '类别，见下表' },
     features: {

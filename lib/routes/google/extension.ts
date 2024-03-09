@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/chrome/extension/:id',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/google/chrome/extension/kefjpfngnndepjbopdmoebkipbgkggaa',
     parameters: { id: 'Extension id, can be found in extension url' },
     features: {

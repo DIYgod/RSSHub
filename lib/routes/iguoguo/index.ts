@@ -25,7 +25,7 @@ const getComments = (a, node) => {
 
 export const route: Route = {
     path: '/html5',
-    categories: ['live'],
+    categories: ['design'],
     example: '/iguoguo/html5',
     parameters: {},
     features: {

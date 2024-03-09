@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/apod-ncku',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/nasa/apod-ncku',
     parameters: {},
     features: {

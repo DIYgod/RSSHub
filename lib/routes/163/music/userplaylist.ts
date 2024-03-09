@@ -8,7 +8,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/music/user/playlist/:uid',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/163/music/user/playlist/45441555',
     parameters: { uid: '用户 uid, 可在用户主页 URL 中找到' },
     features: {

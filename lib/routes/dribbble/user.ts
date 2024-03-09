@@ -3,7 +3,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/user/:name',
-    categories: ['live'],
+    categories: ['design'],
     example: '/dribbble/user/google',
     parameters: { name: "username, available in user's homepage URL" },
     features: {

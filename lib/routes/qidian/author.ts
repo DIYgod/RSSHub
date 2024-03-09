@@ -11,7 +11,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/author/:id',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/qidian/author/9639927',
     parameters: { id: '作者 id, 可在作者页面 URL 找到' },
     features: {

@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/playlist/:id/:embed?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/youtube/playlist/PLqQ1RwlxOgeLTJ1f3fNMSwhjVgaWKo_9Z',
     parameters: { id: 'YouTube playlist id', embed: 'Default to embed the video, set to any value to disable embedding' },
     features: {

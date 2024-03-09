@@ -4,7 +4,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/dyh/:dyhId',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/coolapk/dyh/1524',
     parameters: { dyhId: '看看号ID' },
     features: {

@@ -18,7 +18,7 @@ const setCookie = function (cookieName, cookieValue, seconds, path, domain, secu
 
 export const route: Route = {
     path: '/:city?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/19lou/jiaxing',
     parameters: { city: '分类，见下表，默认为 www，即杭州' },
     features: {

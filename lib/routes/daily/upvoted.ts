@@ -63,7 +63,7 @@ const graphqlQuery = {
 
 export const route: Route = {
     path: '/upvoted',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/daily/upvoted',
     parameters: {},
     features: {

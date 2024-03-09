@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:routeParams?',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/sourceforge/topic=artificial-intelligence&os=windows',
     parameters: { routeParams: 'route params, see below' },
     features: {

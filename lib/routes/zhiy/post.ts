@@ -12,7 +12,7 @@ import dayjs from 'dayjs';
 
 export const route: Route = {
     path: '/posts/:author',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/zhiy/posts/long',
     parameters: { author: '作者 ID，可在URL中找到' },
     features: {

@@ -7,7 +7,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/bbs/profile/thread/:userId',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/dxy/bbs/profile/thread/8335054',
     parameters: { userId: '个人 ID，可在 URL 中找到' },
     features: {

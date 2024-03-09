@@ -6,7 +6,7 @@ import { SourceMapConsumer } from 'source-map';
 
 export const route: Route = {
     path: '/essay',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/kunchengblog/essay',
     parameters: {},
     features: {

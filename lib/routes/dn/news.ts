@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/:language/news/:category?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/dn/en-us/news',
     parameters: { language: 'Language, see below', category: 'Category, see below, The Latest by default' },
     features: {

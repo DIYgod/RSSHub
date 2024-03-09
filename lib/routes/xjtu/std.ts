@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/std/:category?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/xjtu/std/zytz',
     parameters: { category: '分类，见下表，默认为通知公告' },
     features: {

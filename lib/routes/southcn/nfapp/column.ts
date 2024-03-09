@@ -12,7 +12,7 @@ import { parseArticle } from './utils';
 
 export const route: Route = {
     path: '/nfapp/column/:column?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/southcn/nfapp/column/38',
     parameters: { column: '栏目或南方号 ID' },
     features: {

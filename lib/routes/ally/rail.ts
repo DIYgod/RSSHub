@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/rail/:category?/:topic?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/ally/rail/hyzix/chengguijiaotong/',
     parameters: { category: '分类，可在 URL 中找到；略去则抓取首页', topic: '话题，可在 URL 中找到；并非所有页面均有此字段' },
     features: {

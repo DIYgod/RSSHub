@@ -13,7 +13,7 @@ import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/devlog/:user/:id',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/itch/devlog/teamterrible/the-baby-in-yellow',
     parameters: { user: 'User id, can be found in URL', id: 'Item id, can be found in URL' },
     features: {

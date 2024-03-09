@@ -6,7 +6,7 @@ const HOME_PAGE = 'http://www.jlwater.com/';
 
 export const route: Route = {
     path: '/nanjing',
-    categories: ['travel'],
+    categories: ['forecast'],
     example: '/tingshuitz/nanjing',
     parameters: {},
     features: {

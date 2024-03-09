@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/npc/:caty',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/npc/c183',
     parameters: { caty: '分类名，支持形如 `http://www.npc.gov.cn/npc/c2/*/` 的网站，传入 npc 之后的参数' },
     features: {

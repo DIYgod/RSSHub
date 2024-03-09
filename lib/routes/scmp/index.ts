@@ -7,7 +7,7 @@ import { parseItem } from './utils';
 
 export const route: Route = {
     path: '/:category_id',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/scmp/3',
     parameters: { category_id: 'Category' },
     features: {

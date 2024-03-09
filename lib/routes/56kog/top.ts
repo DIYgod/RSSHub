@@ -4,7 +4,7 @@ import { rootUrl, fetchItems } from './util';
 
 export const route: Route = {
     path: '/top/:category?',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/56kog/top/weekvisit',
     parameters: { category: '分类，见下表，默认为周点击榜' },
     features: {

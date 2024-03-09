@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/recent-releases',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/gogoanimehd/recent-releases',
     parameters: {},
     features: {

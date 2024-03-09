@@ -4,7 +4,7 @@ import { getItems } from './utils';
 
 export const route: Route = {
     path: ['/:category', '/tag/:topic'],
-    categories: ['other'],
+    categories: ['finance'],
     example: '/finology/success-stories',
     parameters: { category: 'N' },
     features: {

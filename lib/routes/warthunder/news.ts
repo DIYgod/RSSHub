@@ -12,7 +12,7 @@ const renderDescription = (desc) => art(path.join(__dirname, 'templates/descript
 
 export const route: Route = {
     path: '/news',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/warthunder/news',
     parameters: {},
     features: {

@@ -5,7 +5,7 @@ import getNews from './utils/news';
 
 export const route: Route = {
     path: '/:category',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/cctv/world',
     parameters: { category: '分类名' },
     features: {

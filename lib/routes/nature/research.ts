@@ -20,7 +20,7 @@ import { baseUrl, cookieJar, getArticleList, getDataLayer, getArticle } from './
 
 export const route: Route = {
     path: '/research/:journal?',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/nature/research/ng',
     parameters: { journal: 'short name for a journal, `nature` by default' },
     features: {

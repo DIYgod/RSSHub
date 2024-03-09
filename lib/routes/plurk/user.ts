@@ -6,7 +6,7 @@ import { baseUrl, fetchFriends, getPlurk } from './utils';
 
 export const route: Route = {
     path: '/user/:user',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/plurk/user/plurkoffice',
     parameters: { user: 'User ID, can be found in URL' },
     features: {

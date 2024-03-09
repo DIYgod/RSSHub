@@ -4,7 +4,7 @@ import { rootUrl, apiRootUrl, types, ProcessThreads } from './utils';
 
 export const route: Route = {
     path: '/category/:id?/:type?/:order?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/1point3acres/category/h1b',
     parameters: { id: '标签 id，默认为全部', type: '帖子分类, 见下表，默认为 hot，即热门帖子', order: '排序方式，见下表，默认为空，即最新回复' },
     features: {

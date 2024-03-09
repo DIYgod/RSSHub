@@ -5,7 +5,7 @@ import { getTagId, getTagSuggestion, findAccountById, parseDescription, baseUrl,
 
 export const route: Route = {
     path: '/tag/:tag',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/fansly/tag/free',
     parameters: { tag: 'Hashtag' },
     features: {

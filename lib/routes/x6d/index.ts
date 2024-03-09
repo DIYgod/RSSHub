@@ -9,7 +9,7 @@ const baseUrl = 'https://xd.x6d.com';
 
 export const route: Route = {
     path: '/:id?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/x6d/34',
     parameters: { id: '分类 id，可在对应分类页面的 URL 中找到，默认为首页最近更新' },
     features: {

@@ -25,7 +25,7 @@ async function getArticles() {
 
 export const route: Route = {
     path: '/apisix/blog',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/apache/apisix/blog',
     parameters: {},
     features: {

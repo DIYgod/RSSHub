@@ -4,7 +4,7 @@ import Parser from 'rss-parser';
 
 export const route: Route = {
     path: ['/search/:query?', '/user/:username?', '/user/:username/search/:query?', '/sukebei/search/:query?', '/sukebei/user/:username?', '/sukebei/user/:username/search/:query?'],
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/nyaa/search/psycho-pass',
     parameters: { query: 'Search keyword' },
     features: {

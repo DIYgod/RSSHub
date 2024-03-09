@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 const host = 'https://gs.sass.org.cn';
 export const route: Route = {
     path: '/gs/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/sass/gs/1793',
     parameters: { type: '类别 ID，见下表，其他未列出的栏目参数可以从页面的 URL Path 中找到，例如：硕士统考招生的网址为 `https://gs.sass.org.cn/1793/list.htm`，则类别 ID 为`1793`' },
     features: {

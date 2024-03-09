@@ -10,7 +10,7 @@ const urlList = ['tzgg.htm', 'kxyj/xsyg.htm', 'rcpy/bkjy.htm', 'rcpy/yjsjy.htm']
 
 export const route: Route = {
     path: '/sc/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/sdu/sc/0',
     parameters: { type: '默认为 `0`' },
     features: {

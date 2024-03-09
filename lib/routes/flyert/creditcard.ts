@@ -10,7 +10,7 @@ const host = 'https://www.flyert.com';
 
 export const route: Route = {
     path: '/creditcard/:bank',
-    categories: ['shopping'],
+    categories: ['travel'],
     example: '/flyert/creditcard/zhongxin',
     parameters: { bank: '信用卡板块各银行的拼音简称' },
     features: {

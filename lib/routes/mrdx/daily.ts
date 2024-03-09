@@ -11,7 +11,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/today',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/mrdx/today',
     parameters: {},
     features: {

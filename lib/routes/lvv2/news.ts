@@ -31,7 +31,7 @@ const titleMap = {
 
 export const route: Route = {
     path: '/news/:channel/:sort?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/lvv2/news/sort-score',
     parameters: { channel: '频道，见下表', sort: '排序方式，仅得分和24小时榜可选填该参数，见下表' },
     features: {

@@ -19,7 +19,7 @@ const categories = {
 
 export const route: Route = {
     path: '/lives/:category?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/jinse/lives',
     parameters: { category: '分类，见下表，默认为全部' },
     features: {

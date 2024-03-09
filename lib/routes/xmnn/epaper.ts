@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/epaper/:id?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/xmnn/epaper/xmrb',
     parameters: { id: '报纸 id，见下表，默认为 `xmrb`，即厦门日报' },
     features: {

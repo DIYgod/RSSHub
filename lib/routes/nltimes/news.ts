@@ -20,7 +20,7 @@ const map = new Map([
 
 export const route: Route = {
     path: '/news/:category?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/nltimes/news/top-stories',
     parameters: { category: 'category' },
     features: {

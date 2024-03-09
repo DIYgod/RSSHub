@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/usergames',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/indienova/usergames',
     parameters: {},
     features: {

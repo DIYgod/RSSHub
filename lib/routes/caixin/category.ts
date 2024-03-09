@@ -9,7 +9,7 @@ import { parseArticle } from './utils';
 
 export const route: Route = {
     path: '/:column/:category',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/caixin/finance/regulation',
     parameters: { column: '栏目名', category: '栏目下的子分类名' },
     features: {

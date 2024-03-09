@@ -5,7 +5,7 @@ import { renderHTML } from './utils';
 
 export const route: Route = {
     path: '/topics',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/gocn/topics',
     parameters: {},
     features: {

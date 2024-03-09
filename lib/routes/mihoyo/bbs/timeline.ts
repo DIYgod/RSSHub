@@ -6,7 +6,7 @@ import { post2item } from './utils';
 
 export const route: Route = {
     path: '/bbs/timeline',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/mihoyo/bbs/timeline',
     parameters: {},
     features: {

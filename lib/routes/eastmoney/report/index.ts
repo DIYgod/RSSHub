@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/report/:category',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/eastmoney/report/strategyreport',
     parameters: { category: '研报类型' },
     features: {

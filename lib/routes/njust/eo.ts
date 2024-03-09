@@ -19,7 +19,7 @@ const host = 'https://dgxg.njust.edu.cn';
 
 export const route: Route = {
     path: '/eo/:grade?/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/njust/eo/17/tz',
     parameters: {
         grade: '年级，见下表，默认为本科 2017 级，未列出的年级所对应的参数可以从级网二级页面的 URL Path 中找到，例如：本科 2020 级为 `_t1316`',

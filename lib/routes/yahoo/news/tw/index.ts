@@ -4,7 +4,7 @@ import { getArchive, getCategories, parseList, parseItem } from './utils';
 
 export const route: Route = {
     path: '/news/:region/:category?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/yahoo/news/hk/world',
     parameters: { region: 'Region, see the table below', category: 'Category, see the table below' },
     features: {

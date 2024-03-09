@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/scs/:code',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/swpu/scs/tzgg',
     parameters: { code: '栏目代码' },
     features: {

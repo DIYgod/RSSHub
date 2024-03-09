@@ -9,7 +9,7 @@ import { generateRssData } from './utils';
 
 export const route: Route = {
     path: '/new-arrivals/:country/:gender',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/arcteryx/new-arrivals/us/mens',
     parameters: { country: 'country', gender: 'gender' },
     features: {

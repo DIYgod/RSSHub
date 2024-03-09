@@ -3,7 +3,7 @@ import { rootUrl, ProcessItems } from './utils';
 
 export const route: Route = {
     path: '/category/:category',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/95mm/category/1',
     parameters: { category: '集合，见下表' },
     features: {

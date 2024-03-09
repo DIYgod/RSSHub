@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['live'],
+    categories: ['design'],
     example: '/bossdesign',
     parameters: { category: '分类，可在对应分类页 URL 中找到，留空为全部' },
     features: {

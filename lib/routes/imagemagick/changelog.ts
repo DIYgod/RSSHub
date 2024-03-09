@@ -9,7 +9,7 @@ const md = MarkdownIt({
 
 export const route: Route = {
     path: '/changelog',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/imagemagick/changelog',
     parameters: {},
     features: {

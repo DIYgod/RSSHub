@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/author/:id?',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/jjwxc/author/4364484',
     parameters: { id: '作者 id，可在对应作者页中找到' },
     features: {

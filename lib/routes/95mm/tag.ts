@@ -3,7 +3,7 @@ import { rootUrl, ProcessItems } from './utils';
 
 export const route: Route = {
     path: '/tag/:tag',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/95mm/tag/黑丝',
     parameters: { tag: '标签，可在对应标签页中找到' },
     features: {

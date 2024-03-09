@@ -9,7 +9,7 @@ const baseUrl = 'https://xgc.nuist.edu.cn';
 
 export const route: Route = {
     path: '/xgc',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/nuist/xgc',
     parameters: {},
     features: {

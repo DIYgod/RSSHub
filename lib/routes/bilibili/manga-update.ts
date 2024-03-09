@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/manga/update/:comicid',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/manga/update/26009',
     parameters: { comicid: '漫画 id, 可在 URL 中找到, 支持带有`mc`前缀' },
     features: {

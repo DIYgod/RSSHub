@@ -7,7 +7,7 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/pbc/goutongjiaoliu',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/gov/pbc/goutongjiaoliu',
     parameters: {},
     features: {

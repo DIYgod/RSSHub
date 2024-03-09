@@ -9,7 +9,7 @@ const host = 'https://www.sice.uestc.edu.cn/';
 
 export const route: Route = {
     path: '/sice',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/uestc/sice',
     parameters: {},
     features: {

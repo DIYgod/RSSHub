@@ -9,7 +9,7 @@ import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/monthly-games',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/ps/monthly-games',
     parameters: {},
     features: {

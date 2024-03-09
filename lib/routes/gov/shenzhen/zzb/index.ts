@@ -8,7 +8,7 @@ const rootURL = 'http://www.zzb.sz.gov.cn/';
 
 export const route: Route = {
     path: '/shenzhen/zzb/:caty/:page?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/shenzhen/zzb/tzgg',
     parameters: { caty: '信息类别', page: '页码' },
     features: {

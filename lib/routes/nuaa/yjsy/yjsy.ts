@@ -15,7 +15,7 @@ const map = new Map([
 
 export const route: Route = {
     path: '/yjsy/:type/:getDescription?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/nuaa/yjsy/tzgg/getDescription',
     parameters: { type: '分类名，见下表', getDescription: '是否获取全文' },
     features: {

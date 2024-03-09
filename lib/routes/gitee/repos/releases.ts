@@ -9,7 +9,7 @@ const md = MarkdownIt({
 
 export const route: Route = {
     path: '/releases/:owner/:repo',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/gitee/releases/y_project/RuoYi',
     parameters: { owner: '用户名', repo: '仓库名' },
     features: {

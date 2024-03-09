@@ -19,7 +19,7 @@ const getProductID = async (model) => {
 
 export const route: Route = {
     path: '/bios/:model',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/asus/bios/RT-AX88U',
     parameters: { model: 'Model, can be found in product page' },
     features: {

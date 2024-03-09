@@ -5,7 +5,7 @@ import { rootUrl } from './utils';
 
 export const route: Route = {
     path: '/detail/:id',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/agefans/detail/20200035',
     parameters: { id: '番剧 id，对应详情 URL 中找到' },
     features: {

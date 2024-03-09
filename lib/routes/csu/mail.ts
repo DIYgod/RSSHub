@@ -13,7 +13,7 @@ async function fetch(address) {
 
 export const route: Route = {
     path: '/mail/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/csu/mail',
     parameters: { type: '类型' },
     features: {

@@ -6,7 +6,7 @@ import { handleDescription } from './utils';
 
 export const route: Route = {
     path: '/tv/:id/seasons/:seasonNumber/episodes/:lang?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/themoviedb/tv/70593/seasons/1/episodes/en-US',
     parameters: { id: 'TV show ID', seasonNumber: 'Season number', lang: 'Language' },
     features: {

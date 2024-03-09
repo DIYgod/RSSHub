@@ -22,7 +22,7 @@ const categories = {
 
 export const route: Route = {
     path: '/telegraph/:category?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/cls/telegraph',
     parameters: { category: '分类，见下表，默认为全部' },
     features: {

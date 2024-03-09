@@ -15,7 +15,7 @@ const md = MarkdownIt({
 
 export const route: Route = {
     path: '/timeline',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/utgd/timeline',
     parameters: {},
     features: {

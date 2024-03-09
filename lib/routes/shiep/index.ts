@@ -13,7 +13,7 @@ import { config } from './config';
 
 export const route: Route = {
     path: '/:type/:id?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/shiep/news/notice',
     parameters: { type: '类型名称，见下表', id: '页面 ID，默认为通知公告或学院公告所对应的 ID' },
     features: {

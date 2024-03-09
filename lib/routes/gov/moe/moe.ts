@@ -16,7 +16,7 @@ const typesIdMap = [
 
 export const route: Route = {
     path: '/moe/:type',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/moe/policy_anal',
     parameters: { type: '分类名' },
     features: {

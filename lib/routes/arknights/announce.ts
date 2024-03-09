@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/announce/:platform?/:group?',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/arknights/announce',
     parameters: { platform: '平台，默认为 Android', group: '分组，默认为 ALL' },
     features: {

@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/personalpage/:uid',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/guancha/personalpage/243983',
     parameters: { uid: '用户id， 可在URL中找到' },
     features: {

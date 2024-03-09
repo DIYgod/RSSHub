@@ -11,7 +11,7 @@ const notFoundData = {
 
 export const route: Route = {
     path: '/user/channel/:uid/:sid/:disableEmbed?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/user/channel/2267573/396050',
     parameters: { uid: '用户 id, 可在 UP 主主页中找到', sid: '频道 id, 可在频道的 URL 中找到', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {

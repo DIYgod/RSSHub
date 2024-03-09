@@ -6,7 +6,7 @@ import { rootUrl, apiMomentRootUrl, processItems, fetchData } from './util';
 
 export const route: Route = {
     path: '/moment',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/huxiu/moment',
     parameters: {},
     features: {

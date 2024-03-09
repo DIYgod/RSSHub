@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/video/:category?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/cs/video/今日聚焦',
     parameters: { category: '分类，见下表，默认为今日聚焦' },
     features: {

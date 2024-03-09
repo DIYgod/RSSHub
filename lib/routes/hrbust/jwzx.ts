@@ -20,7 +20,7 @@ const typeMap = {
 
 export const route: Route = {
     path: '/jwzx/:type?/:page?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/hrbust/jwzx',
     parameters: { type: '分类名，默认为教务公告', page: '文章数，默认为12' },
     features: {

@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/user/like/:uid/:disableEmbed?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/user/like/208259',
     parameters: { uid: '用户 id, 可在 UP 主主页中找到', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {

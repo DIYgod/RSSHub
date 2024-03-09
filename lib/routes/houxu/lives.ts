@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/lives/:id',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/houxu/lives/33899',
     parameters: { id: '编号，可在对应 Live 页面的 URL 中找到' },
     features: {

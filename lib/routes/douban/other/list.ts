@@ -9,7 +9,7 @@ import { fallback, queryToInteger } from '@/utils/readable-social';
 
 export const route: Route = {
     path: '/list/:type?/:routeParams?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/list/subject_real_time_hotest',
     parameters: { type: '榜单类型，见下表。默认为实时热门书影音', routeParams: '额外参数；请参阅以下说明和表格' },
     features: {

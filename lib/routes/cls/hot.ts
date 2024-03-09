@@ -13,7 +13,7 @@ import { rootUrl, getSearchParams } from './utils';
 
 export const route: Route = {
     path: '/hot',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/cls/hot',
     parameters: {},
     features: {

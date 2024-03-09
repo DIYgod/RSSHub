@@ -8,7 +8,7 @@ import { parseArticle } from './utils';
 
 export const route: Route = {
     path: '/news/:category?',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/3dmgame/news',
     parameters: { category: '分类名或 ID，见下表，默认为新闻推荐，ID 可从分类 URL 中找到，如 Steam 为 `22221`' },
     features: {

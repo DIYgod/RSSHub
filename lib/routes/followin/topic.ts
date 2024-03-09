@@ -5,7 +5,7 @@ import { baseUrl, getBuildId, parseList, parseItem } from './utils';
 
 export const route: Route = {
     path: '/topic/:topicId/:lang?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/followin/topic/40',
     parameters: { topicId: 'Topic ID, can be found in URL', lang: 'Language, see table above, `en` by default' },
     features: {

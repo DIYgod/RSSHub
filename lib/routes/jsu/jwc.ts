@@ -8,7 +8,7 @@ import { getPageItemAndDate } from './utils';
 
 export const route: Route = {
     path: '/jwc/:types?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/jsu/jwc/jwdt',
     parameters: { types: '通知分类 默认为`jwtz`' },
     features: {

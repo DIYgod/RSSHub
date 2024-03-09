@@ -6,7 +6,7 @@ import { getWebInlineTopicFeedQuery } from './graphql.js';
 
 export const route: Route = {
     path: '/tag/:user/:tag',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/medium/tag/imsingee/cybersecurity',
     parameters: { user: 'Username', tag: 'Subscribed Tag' },
     features: {

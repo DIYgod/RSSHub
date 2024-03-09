@@ -21,7 +21,7 @@ const nodes = {
 
 export const route: Route = {
     path: '/news/:id?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/chinaventure/news/78',
     parameters: { id: '分类，见下表，默认为推荐' },
     features: {

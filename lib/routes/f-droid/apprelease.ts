@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/apprelease/:app',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/f-droid/apprelease/com.termux',
     parameters: { app: "App's package name" },
     features: {

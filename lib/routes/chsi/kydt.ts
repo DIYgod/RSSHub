@@ -9,7 +9,7 @@ const host = 'https://yz.chsi.com.cn';
 
 export const route: Route = {
     path: '/kydt',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/chsi/kydt',
     parameters: {},
     features: {

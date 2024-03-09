@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:category?/:sort?/:day?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/jisilu',
     parameters: { category: '分类，见下表，默认为全部，可在 URL 中找到', sort: '排序，见下表，默认为最新，可在 URL 中找到', day: '几天内，见下表，默认为30天，本参数仅在排序参数设定为 `热门` 后才可生效' },
     features: {

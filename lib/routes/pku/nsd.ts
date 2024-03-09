@@ -23,7 +23,7 @@ const pageType = (href) => {
 
 export const route: Route = {
     path: '/nsd/gd',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/pku/nsd/gd',
     parameters: {},
     features: {

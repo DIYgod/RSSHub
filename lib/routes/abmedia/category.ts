@@ -10,7 +10,7 @@ const getCategoryId = (category) => got.get(`${cateAPIUrl}?slug=${category}`).th
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/abmedia/technology-development',
     parameters: { category: '类别，默认为产品技术' },
     features: {

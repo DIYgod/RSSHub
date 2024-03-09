@@ -7,7 +7,7 @@ import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/qa/:category?/:state?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/quicker/qa',
     parameters: { category: '分类，见下表，默认为全部', state: '状态，见下表，默认为全部' },
     features: {

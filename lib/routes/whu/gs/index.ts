@@ -18,7 +18,7 @@ const gsIndexMap = new Map([
 
 export const route: Route = {
     path: '/gs/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/whu/gs/0',
     parameters: { type: '分类，默认为 `0`，具体参数见下表' },
     features: {

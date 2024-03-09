@@ -5,7 +5,7 @@ import { getHeaders, randomString, decryptAES } from './utils';
 
 export const route: Route = {
     path: '/news',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/ainvest/news',
     parameters: {},
     features: {

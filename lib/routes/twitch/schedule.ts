@@ -6,7 +6,7 @@ const TWITCH_CLIENT_ID = 'kimne78kx3ncx6brgo4mv6wki5h1ko';
 
 export const route: Route = {
     path: '/schedule/:login',
-    categories: ['multimedia'],
+    categories: ['live'],
     example: '/twitch/schedule/riotgames',
     parameters: { login: 'Twitch username' },
     features: {

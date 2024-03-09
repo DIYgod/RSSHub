@@ -3,7 +3,7 @@ import util from './utils';
 
 export const route: Route = {
     path: '/sxw/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/nua/sxw/230',
     parameters: { type: 'News Type' },
     features: {

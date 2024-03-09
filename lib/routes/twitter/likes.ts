@@ -4,7 +4,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/likes/:id/:routeParams?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/twitter/likes/DIYgod',
     parameters: { id: 'username', routeParams: 'extra parameters, see the table above' },
     features: {

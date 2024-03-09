@@ -48,7 +48,7 @@ const titles = {
 
 export const route: Route = {
     path: '/news/:category?/:language?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/tvb/news',
     parameters: { category: '分类，见下表，默认为要聞', language: '语言，见下表' },
     features: {

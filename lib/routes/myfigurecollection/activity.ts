@@ -12,7 +12,7 @@ import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/myfigurecollection/activity',
     parameters: {
         category: 'Category, Figures by default',

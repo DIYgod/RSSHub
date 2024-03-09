@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/edge/addon/:crxid',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/microsoft/edge/addon/gangkeiaobmjcjokiofpkfpcobpbmnln',
     parameters: { crxid: 'Addon id, can be found in addon url' },
     features: {

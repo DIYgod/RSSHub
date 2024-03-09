@@ -9,7 +9,7 @@ const baseUrl = 'https://www.famitsu.com';
 
 export const route: Route = {
     path: '/category/:category?',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/famitsu/category/new-article',
     parameters: { category: 'Category, see table below, `new-article` by default' },
     features: {

@@ -8,7 +8,7 @@ const host = 'http://www.rodong.rep.kp';
 
 export const route: Route = {
     path: '/news/:language?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/rodong/news',
     parameters: { language: 'Language, see below, `ko` by default' },
     features: {

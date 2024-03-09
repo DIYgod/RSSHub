@@ -8,7 +8,7 @@ const url = SUB_URL;
 
 export const route: Route = {
     path: '/',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/8kcos/',
     parameters: {},
     features: {

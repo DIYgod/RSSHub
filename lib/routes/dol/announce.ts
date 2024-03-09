@@ -5,7 +5,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/announce/:owner?/:province?/:office?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/dol/announce',
     parameters: { owner: 'Requester/former land owner', province: 'Province which the land is belongs to', office: 'DOL office name which the land is belongs to (สำนักงานที่ดิน(กรุงเทพมหานคร|จังหวัด*) [สาขา*])' },
     features: {

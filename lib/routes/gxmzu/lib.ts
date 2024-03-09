@@ -16,7 +16,7 @@ const host = 'https://library.gxmzu.edu.cn';
 
 export const route: Route = {
     path: '/libzxxx',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/gxmzu/libzxxx',
     parameters: {},
     features: {

@@ -21,7 +21,7 @@ const pageType = (href) => {
 
 export const route: Route = {
     path: '/yzb/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/tju/yzb/notice',
     parameters: { type: 'default `notice`' },
     features: {

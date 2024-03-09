@@ -14,7 +14,7 @@ const types = {
 
 export const route: Route = {
     path: '/article/:type?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/ymgal/article',
     parameters: { type: '文章类型' },
     features: {

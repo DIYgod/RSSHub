@@ -6,7 +6,7 @@ const host = 'https://lib.njxzc.edu.cn';
 
 export const route: Route = {
     path: '/libtzgg',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/njxzc/libtzgg',
     parameters: {},
     features: {

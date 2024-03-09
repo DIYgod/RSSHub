@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/user_stock/:id',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/xueqiu/user_stock/1247347556',
     parameters: { id: '用户 id, 可在用户主页 URL 中找到' },
     features: {

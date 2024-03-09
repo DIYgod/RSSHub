@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: ['/blog/:id', '/user/:id'],
-    categories: ['other'],
+    categories: ['finance'],
     example: '/taoguba/blog/252069',
     parameters: { id: '博客 id，可在对应博客页中找到' },
     features: {

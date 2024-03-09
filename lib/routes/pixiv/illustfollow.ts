@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/user/illustfollows',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/pixiv/user/illustfollows',
     parameters: {},
     features: {

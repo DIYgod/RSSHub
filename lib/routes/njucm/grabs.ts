@@ -6,7 +6,7 @@ const host = 'https://gra.njucm.edu.cn';
 
 export const route: Route = {
     path: '/grabszs',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/njucm/grabszs',
     parameters: {},
     features: {

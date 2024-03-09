@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/activity/:city/:category/:subcategory/:keyword?',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/damai/activity/上海/音乐会/全部/柴可夫斯基',
     parameters: { city: '城市，如果不需要限制，请填入`全部`', category: '分类，如果不需要限制，请填入`全部`', subcategory: '子分类，如果不需要限制，请填入`全部`', keyword: '搜索关键字，置空为不限制' },
     features: {

@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/manga/:id',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/rawkuma/manga/tensei-shitara-dai-nana-ouji-dattanode-kimamani-majutsu-o-kiwamemasu',
     parameters: { id: 'Manga ID, can be found in URL' },
     features: {

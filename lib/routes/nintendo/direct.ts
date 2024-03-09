@@ -10,7 +10,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/direct',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/nintendo/direct',
     parameters: {},
     features: {

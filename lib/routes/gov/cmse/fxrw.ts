@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/cmse/fxrw',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/cmse/fxrw',
     parameters: {},
     features: {

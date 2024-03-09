@@ -4,7 +4,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/user/:uid/dynamic',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/coolapk/user/3177668/dynamic',
     parameters: { uid: '在个人界面右上分享-复制链接获取' },
     features: {

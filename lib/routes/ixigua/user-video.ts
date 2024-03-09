@@ -12,7 +12,7 @@ const host = 'https://www.ixigua.com';
 
 export const route: Route = {
     path: '/user/video/:uid/:disableEmbed?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/ixigua/user/video/4234740937',
     parameters: { uid: '用户 id, 可在用户主页中找到', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {

@@ -25,7 +25,7 @@ const map = new Map([
 
 export const route: Route = {
     path: '/physics/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/zju/physics/1',
     parameters: { type: '分类，见下表' },
     features: {

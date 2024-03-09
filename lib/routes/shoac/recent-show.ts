@@ -10,7 +10,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/recent-show',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/shoac/recent-show',
     parameters: {},
     features: {

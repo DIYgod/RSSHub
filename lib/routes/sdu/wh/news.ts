@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/wh/news/:column?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/sdu/wh/news/xyyw',
     parameters: { column: '专栏名称，默认为校园要闻（`xyyw`）' },
     features: {

@@ -6,7 +6,7 @@ import { load } from 'cheerio'; // an HTML parser with a jQuery-like API
 
 export const route: Route = {
     path: '/:channel?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/ekantipur/news',
     parameters: { channel: 'Find it in the ekantipur.com menu or pick from the list below:' },
     features: {

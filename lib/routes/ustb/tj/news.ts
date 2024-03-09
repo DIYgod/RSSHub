@@ -33,7 +33,7 @@ function getNews(data) {
 
 export const route: Route = {
     path: '/tj/news/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/ustb/tj/news/all',
     parameters: { type: '默认为 `all`' },
     features: {

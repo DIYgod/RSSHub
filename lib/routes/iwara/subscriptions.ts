@@ -15,7 +15,7 @@ const md = MarkdownIt({
 
 export const route: Route = {
     path: '/subscriptions',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/iwara/subscriptions',
     parameters: {},
     features: {

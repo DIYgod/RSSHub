@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/symposium/:id?/:classId?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/52hrtt/symposium/F1626082387819',
     parameters: { id: '专题 id', classId: '子分类 id' },
     features: {

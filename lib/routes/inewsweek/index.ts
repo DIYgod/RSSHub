@@ -10,7 +10,7 @@ const rootUrl = 'http://news.inewsweek.cn';
 
 export const route: Route = {
     path: '/:channel',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/inewsweek/survey',
     parameters: { channel: '栏目' },
     features: {

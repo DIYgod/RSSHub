@@ -8,7 +8,7 @@ const baseUrl = 'https://seekingalpha.com';
 
 export const route: Route = {
     path: '/:symbol/:category?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/seekingalpha/TSM/transcripts',
     parameters: { symbol: 'Stock symbol', category: 'Category, see below, `news` by default' },
     features: {

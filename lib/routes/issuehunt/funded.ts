@@ -4,7 +4,7 @@ import MarkdownIt from 'markdown-it';
 
 export const route: Route = {
     path: '/funded/:username/:repo',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/issuehunt/funded/DIYgod/RSSHub',
     parameters: { username: 'Github user/org', repo: 'Repository name' },
     features: {

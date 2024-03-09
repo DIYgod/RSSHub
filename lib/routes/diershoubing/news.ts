@@ -10,7 +10,7 @@ const renderDesc = (data) => art(path.join(__dirname, 'templates/news.art'), dat
 
 export const route: Route = {
     path: '/news',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/diershoubing/news',
     parameters: {},
     features: {

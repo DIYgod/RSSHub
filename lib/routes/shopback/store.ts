@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/:store',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/shopback/shopee-mart',
     parameters: { store: 'Store, can be found in URL' },
     features: {

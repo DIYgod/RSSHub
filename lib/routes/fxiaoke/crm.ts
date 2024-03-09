@@ -15,7 +15,7 @@ const titleMap = new Map([
 
 export const route: Route = {
     path: '/crm/:type',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/fxiaoke/crm/news',
     parameters: { type: '文章类型, 见下表' },
     features: {

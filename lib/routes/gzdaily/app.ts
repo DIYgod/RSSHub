@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/app/:column?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/gzdaily/app/74',
     parameters: { column: '栏目 ID，点击对应栏目后在地址栏找到' },
     features: {

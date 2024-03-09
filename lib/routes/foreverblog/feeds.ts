@@ -6,7 +6,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/feeds',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/foreverblog/feeds',
     parameters: {},
     features: {

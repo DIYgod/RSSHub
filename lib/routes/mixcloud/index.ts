@@ -6,7 +6,7 @@ import { queries } from './queries';
 
 export const route: Route = {
     path: '/:username/:type?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/mixcloud/dholbach/uploads',
     parameters: { username: 'Username, can be found in URL', type: 'Type, see below, uploads by default' },
     features: {

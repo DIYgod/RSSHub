@@ -99,7 +99,7 @@ const getListArticles = async (list, cache) => {
 
 export const route: Route = {
     path: '/digitalpaper',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/stdaily/digitalpaper',
     parameters: {},
     features: {

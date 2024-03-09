@@ -9,7 +9,7 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/hashtag/:cid/:routeParams?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douyin/hashtag/1592824105719812',
     parameters: { cid: '标签 ID，可在标签页面 URL 中找到', routeParams: '额外参数，query string 格式，请参阅上面的表格' },
     features: {

@@ -7,7 +7,7 @@ import { rootUrl, ProcessItems } from './utils';
 
 export const route: Route = {
     path: '/author/:id?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/yicai/author/100005663',
     parameters: { id: '作者 id，可在对应作者页中找到，默认为第一财经研究院' },
     features: {

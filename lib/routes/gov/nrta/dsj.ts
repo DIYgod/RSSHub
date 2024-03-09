@@ -7,7 +7,7 @@ import asyncPool from 'tiny-async-pool';
 
 export const route: Route = {
     path: '/nrta/dsj/:category?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/nrta/dsj',
     parameters: { category: '分类，见下表，默认为备案公示' },
     features: {

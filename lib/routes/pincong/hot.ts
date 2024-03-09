@@ -6,7 +6,7 @@ import { baseUrl, puppeteerGet } from './utils';
 
 export const route: Route = {
     path: '/hot/:category?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/pincong/hot',
     parameters: { category: '分类，与官网分类 URL `category-` 后的数字对应，默认为全部' },
     features: {

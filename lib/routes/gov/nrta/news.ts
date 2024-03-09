@@ -13,7 +13,7 @@ const categories = {
 
 export const route: Route = {
     path: '/nrta/news/:category?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/nrta/news',
     parameters: { category: '资讯类别，可从地址中获取，默认为总局要闻' },
     features: {

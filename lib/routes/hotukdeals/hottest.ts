@@ -4,7 +4,7 @@ import { JSDOM } from 'jsdom';
 
 export const route: Route = {
     path: '/hottest',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/hotukdeals/hottest',
     parameters: {},
     features: {

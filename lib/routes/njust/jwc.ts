@@ -15,7 +15,7 @@ const host = 'https://jwc.njust.edu.cn';
 
 export const route: Route = {
     path: '/jwc/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/njust/jwc/xstz',
     parameters: { type: '分类名，见下表，默认为学生通知' },
     features: {

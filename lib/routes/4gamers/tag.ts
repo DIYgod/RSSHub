@@ -5,7 +5,7 @@ import { parseList, parseItem } from './utils';
 
 export const route: Route = {
     path: '/tag/:tag',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/4gamers/tag/限時免費',
     parameters: { tag: '标签名，可在标签 URL 中找到' },
     features: {

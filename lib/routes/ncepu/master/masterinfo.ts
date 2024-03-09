@@ -23,7 +23,7 @@ const url_map = {
 
 export const route: Route = {
     path: '/master/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/ncepu/master/tzgg',
     parameters: { type: '类型参数' },
     features: {

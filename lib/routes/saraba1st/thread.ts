@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/thread/:tid',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/saraba1st/thread/1842868',
     parameters: { tid: '帖子 id' },
     features: {

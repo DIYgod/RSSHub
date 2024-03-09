@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/hot/:lang?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/taiwannews/hot',
     parameters: { lang: 'Language, `en` or `zh`, `en` by default' },
     features: {

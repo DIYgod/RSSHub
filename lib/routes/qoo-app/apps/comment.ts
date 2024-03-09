@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/apps/:lang?/comment/:id',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/qoo-app/apps/en/comment/7675',
     parameters: { lang: 'Language, see the table below, empty means `中文`', id: 'Game ID, can be found in URL' },
     features: {

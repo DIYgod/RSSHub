@@ -3,7 +3,7 @@ import { getTeslaPrice } from './get-price';
 
 export const route: Route = {
     path: '/price',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/tesla/price',
     parameters: {},
     features: {

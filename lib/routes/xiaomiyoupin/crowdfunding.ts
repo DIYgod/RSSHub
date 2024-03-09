@@ -9,7 +9,7 @@ import * as path from 'node:path';
 const base_url = 'https://m.xiaomiyoupin.com';
 export const route: Route = {
     path: '/crowdfunding',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/xiaomiyoupin/crowdfunding',
     parameters: {},
     features: {

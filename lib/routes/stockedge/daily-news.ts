@@ -4,7 +4,7 @@ import { getData, getList } from './utils';
 
 export const route: Route = {
     path: '/daily-updates/news',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/stockedge/daily-updates/news',
     parameters: {},
     features: {

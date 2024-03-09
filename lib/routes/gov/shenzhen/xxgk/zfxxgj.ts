@@ -27,7 +27,7 @@ const config = {
 
 export const route: Route = {
     path: '/shenzhen/xxgk/zfxxgj/:caty',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/shenzhen/xxgk/zfxxgj/tzgg',
     parameters: { caty: '信息类别' },
     features: {

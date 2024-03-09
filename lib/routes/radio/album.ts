@@ -10,7 +10,7 @@ import CryptoJS from 'crypto-js';
 
 export const route: Route = {
     path: '/album/:id',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/radio/album/15682090498666',
     parameters: { id: '专辑 id，可在对应专辑页面的 URL 中找到' },
     features: {

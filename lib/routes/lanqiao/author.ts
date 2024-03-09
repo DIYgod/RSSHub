@@ -19,7 +19,7 @@ async function getUserName(uid) {
 
 export const route: Route = {
     path: '/author/:uid',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/lanqiao/author/1701267',
     parameters: { uid: '作者 `uid` 可在作者主页 URL 中找到' },
     features: {

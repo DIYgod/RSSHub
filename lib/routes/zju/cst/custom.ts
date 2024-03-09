@@ -33,7 +33,7 @@ async function getPage(id) {
 
 export const route: Route = {
     path: '/cst/custom/:id',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/zju/cst/custom/36194+36241+36246',
     parameters: { id: '提取出通知页面中的 `ID`，如 `http://www.cst.zju.edu.cn/36246/list.htm` 中的 `36246`，可将你想获取通知的多个页面，通过 `+` 符号来聚合。' },
     features: {

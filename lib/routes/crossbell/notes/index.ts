@@ -4,7 +4,7 @@ import { getItem } from './utils';
 
 export const route: Route = {
     path: '/notes',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/crossbell/notes',
     parameters: {},
     features: {

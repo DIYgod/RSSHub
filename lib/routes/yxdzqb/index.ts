@@ -19,7 +19,7 @@ const map = {
 
 export const route: Route = {
     path: '/:type',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/yxdzqb/popular_cn',
     parameters: { type: '折扣类型' },
     features: {

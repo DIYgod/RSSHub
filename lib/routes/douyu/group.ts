@@ -10,7 +10,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/group/:id/:sort?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/douyu/group/1011',
     parameters: { id: '鱼吧 id，可在鱼吧页 URL 中找到', sort: '排序方式，见下表，默认为发布时间排序' },
     features: {

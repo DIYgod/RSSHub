@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/jiaowc/tzgg/:category?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/lsnu/jiaowc/tzgg',
     parameters: { category: '分类名' },
     features: {

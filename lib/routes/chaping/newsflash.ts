@@ -6,7 +6,7 @@ const host = 'https://chaping.cn';
 
 export const route: Route = {
     path: '/newsflash',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/chaping/newsflash',
     parameters: {},
     features: {

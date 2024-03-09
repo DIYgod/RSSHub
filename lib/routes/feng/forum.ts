@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/forum/:id/:type?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/feng/forum/1',
     parameters: { id: '版块 ID，可在版块 URL 找到', type: '排序，见下表，默认为 `all`' },
     features: {

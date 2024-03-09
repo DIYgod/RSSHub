@@ -8,7 +8,7 @@ const baseUrl = 'https://www.aac.moj.gov.tw';
 
 export const route: Route = {
     path: '/moj/aac/news/:type?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/moj/aac/news',
     parameters: { type: '資料大類，留空為全部' },
     features: {

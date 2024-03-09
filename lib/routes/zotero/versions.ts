@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/versions',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/zotero/versions',
     parameters: {},
     features: {

@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/topics/:topic?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/cbc/topics',
     parameters: { topic: 'Channel,`Top Stories` by default. For secondary channel like `canada/toronto`, use `-` to replace `/`' },
     features: {

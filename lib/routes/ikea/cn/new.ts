@@ -16,7 +16,7 @@ const request = ({ moreToken = '' }) =>
 
 export const route: Route = {
     path: '/cn/new',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/ikea/cn/new',
     parameters: {},
     features: {

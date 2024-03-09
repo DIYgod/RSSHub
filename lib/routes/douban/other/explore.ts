@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/explore',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/explore',
     parameters: {},
     features: {

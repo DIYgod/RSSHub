@@ -7,7 +7,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/super_index/:id/:type?/:routeParams?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/weibo/super_index/1008084989d223732bf6f02f75ea30efad58a9/sort_time',
     parameters: { id: '超话ID', type: '类型：见下表', routeParams: '额外参数；请参阅上面的说明和表格' },
     features: {

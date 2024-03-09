@@ -4,7 +4,7 @@ const baseUrl = 'https://www.zaobao.com';
 
 export const route: Route = {
     path: '/:type?/:section?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/zaobao/lifestyle/health',
     parameters: { type: 'https://www.zaobao.com/**lifestyle**/health 中的 **lifestyle**', section: 'https://www.zaobao.com/lifestyle/**health** 中的 **health**' },
     features: {

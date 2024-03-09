@@ -5,7 +5,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/douyin/:dyid',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/newrank/douyin/110266463747',
     parameters: { dyid: '抖音ID，可在新榜账号详情 URL 中找到' },
     features: {

@@ -7,7 +7,7 @@ import { rootUrl } from './utils';
 
 export const route: Route = {
     path: '/brief',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/yicai/brief',
     parameters: {},
     features: {

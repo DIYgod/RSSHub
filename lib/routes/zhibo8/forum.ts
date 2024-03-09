@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/forum/:id',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/zhibo8/forum/8',
     parameters: { id: '子论坛 id，可在子论坛 URL 找到' },
     features: {

@@ -7,7 +7,7 @@ import { fallback, queryToBoolean } from '@/utils/readable-social';
 
 export const route: Route = {
     path: '/followings/:id/:routeParams?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/twitter/followings/DIYgod',
     parameters: { id: 'username', routeParams: 'extra parameters, see the table above' },
     features: {

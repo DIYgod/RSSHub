@@ -13,7 +13,7 @@ function getUSDPrice(number) {
 }
 export const route: Route = {
     path: '/regear/new-arrivals',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/arcteryx/regear/new-arrivals',
     parameters: {},
     features: {

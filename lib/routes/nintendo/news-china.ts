@@ -6,7 +6,7 @@ const news_url = 'https://www.nintendoswitch.com.cn';
 
 export const route: Route = {
     path: '/news/china',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/nintendo/news/china',
     parameters: {},
     features: {

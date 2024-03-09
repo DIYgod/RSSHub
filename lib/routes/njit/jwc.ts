@@ -8,7 +8,7 @@ const host = 'https://jwc.njit.edu.cn';
 
 export const route: Route = {
     path: '/jwc/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/njit/jwc/jx',
     parameters: { type: '默认为 `jx`' },
     features: {

@@ -6,7 +6,7 @@ const pageUrl = 'https://www.asus.com/campaign/GPU-Tweak-III/tw/index.php';
 
 export const route: Route = {
     path: '/gpu-tweak',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/asus/gpu-tweak',
     parameters: {},
     features: {

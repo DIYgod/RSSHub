@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/forestry/gjlckjdjt/:category?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/forestry/gjlckjdjt',
     parameters: { category: '分类，见下表，默认为全部' },
     features: {

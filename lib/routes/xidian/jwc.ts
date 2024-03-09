@@ -7,7 +7,7 @@ const baseUrl = 'https://jwc.xidian.edu.cn';
 
 export const route: Route = {
     path: '/jwc/:category?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/xidian/jwc/tzgg',
     parameters: { category: '通知类别，默认为通知公告' },
     features: {

@@ -19,7 +19,7 @@ const HEAD = {
 
 export const route: Route = {
     path: '/main/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/upc/main/notice',
     parameters: { type: '分类，见下表' },
     features: {

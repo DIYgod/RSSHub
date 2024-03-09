@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/main/:type?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/mpaypass/main/policy',
     parameters: { type: '新闻类型，类型可在URL中找到，类似`policy`，`eye`等，空或其他任意值展示最新新闻' },
     features: {

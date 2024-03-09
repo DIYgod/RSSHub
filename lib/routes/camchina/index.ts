@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/:id?',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/camchina',
     parameters: { id: '分类，见下表，默认为 1，即新闻' },
     features: {

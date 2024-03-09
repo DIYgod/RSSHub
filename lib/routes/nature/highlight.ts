@@ -5,7 +5,7 @@ import { baseUrl, cookieJar, getArticleList, getArticle } from './utils';
 
 export const route: Route = {
     path: '/highlight/:journal?',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/nature/highlight',
     parameters: { journal: 'short name for a journal, `nature` by default' },
     features: {

@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/user/bookmarks/:id',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/pixiv/user/bookmarks/15288095',
     parameters: { id: "user id, available in user's homepage URL" },
     features: {

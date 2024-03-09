@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/download/:id?',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/wdc/download/279',
     parameters: { id: 'Software id, can be found in URL, 279 as Western Digital Dashboard by default' },
     features: {

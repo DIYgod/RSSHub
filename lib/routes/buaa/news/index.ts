@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/news/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/buaa/news/zhxw',
     parameters: { type: '新闻版块' },
     features: {

@@ -4,7 +4,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/partion/:tid/:disableEmbed?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/partion/33',
     parameters: { tid: '分区 id', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {

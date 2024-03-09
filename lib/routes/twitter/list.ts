@@ -5,7 +5,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/list/:id/:name/:routeParams?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/twitter/list/ladyleet/javascript',
     parameters: { id: 'username', name: 'list name', routeParams: 'extra parameters, see the table above' },
     features: {

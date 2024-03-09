@@ -4,7 +4,7 @@ import { generateData } from './utils';
 
 export const route: Route = {
     path: '/pin/hotlist',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/zhihu/pin/hotlist',
     parameters: {},
     features: {

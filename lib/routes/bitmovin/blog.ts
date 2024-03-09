@@ -6,7 +6,7 @@ const baseUrl = 'https://bitmovin.com';
 
 export const route: Route = {
     path: '/blog',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/bitmovin/blog',
     parameters: {},
     features: {

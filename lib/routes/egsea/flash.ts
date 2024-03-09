@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/flash',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/egsea/flash',
     parameters: {},
     features: {

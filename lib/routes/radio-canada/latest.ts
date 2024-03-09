@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/latest/:language?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/radio-canada/latest',
     parameters: { language: 'Language, see below, English by default' },
     features: {

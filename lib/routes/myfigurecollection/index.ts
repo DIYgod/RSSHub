@@ -17,7 +17,7 @@ const shortcuts = {
 
 export const route: Route = {
     path: '/:category?/:language?',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/myfigurecollection/potd',
     parameters: { category: '分类，默认为每日圖片', language: '语言，见上表，默认为空，即 `en`' },
     features: {

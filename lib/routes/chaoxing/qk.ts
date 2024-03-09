@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/qk/:id/:needContent?',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/chaoxing/qk/6b5c39b3dd84352be512e29df0297437',
     parameters: { id: '期刊 id，可在期刊页 URL 中找到', needContent: '需要获取文章全文，填写 true/yes 表示需要，默认需要' },
     features: {

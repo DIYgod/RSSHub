@@ -26,7 +26,7 @@ const map = {
 
 export const route: Route = {
     path: '/bmie/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/neu/bmie/news',
     parameters: { type: '分类 id 见下表' },
     features: {

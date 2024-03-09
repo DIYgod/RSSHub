@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/search/:keyword?/:company?/:sort?/:period?',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/telecompaper/search/Nokia',
     parameters: { keyword: 'Keyword', company: 'Company name, empty by default', sort: 'Sorting, see table below, `Date Descending` by default', period: 'Date selection, Last 12 months by default' },
     features: {

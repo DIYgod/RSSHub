@@ -6,7 +6,7 @@ const apiGateway = 'https://gateway.hellonext.co';
 
 export const route: Route = {
     path: '/changelog',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/remnote/changelog',
     parameters: {},
     features: {

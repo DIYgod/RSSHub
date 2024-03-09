@@ -5,7 +5,7 @@ import iconv from 'iconv-lite';
 
 export const route: Route = {
     path: '/chapter/:id',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/wenku8/chapter/74',
     parameters: { id: '小说 id, 可在对应小说页 URL 中找到' },
     features: {

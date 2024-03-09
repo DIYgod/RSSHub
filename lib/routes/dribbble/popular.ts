@@ -3,7 +3,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/popular/:timeframe?',
-    categories: ['live'],
+    categories: ['design'],
     example: '/dribbble/popular',
     parameters: { timeframe: 'support the following values: week, month, year and ever' },
     features: {

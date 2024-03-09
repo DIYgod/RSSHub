@@ -4,7 +4,7 @@ const baseUrl = 'https://www.zaobao.com';
 
 export const route: Route = {
     path: '/realtime/:section?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/zaobao/realtime/china',
     parameters: { section: '分类，缺省为 china' },
     features: {

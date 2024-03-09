@@ -11,7 +11,7 @@ cookieJar.setCookieSync('over18=yes', 'https://novel18.syosetu.com/');
 
 export const route: Route = {
     path: '/chapter/:id',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/syosetu/chapter/n1976ey',
     parameters: { id: 'Novel id, can be found in URL' },
     features: {

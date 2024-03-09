@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/:source?/:id?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/kemono',
     parameters: { source: 'Source, see below, Posts by default', id: 'User id, can be found in URL' },
     features: {

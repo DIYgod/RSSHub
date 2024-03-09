@@ -26,7 +26,7 @@ const nodes = {
 
 export const route: Route = {
     path: '/channel/:id?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/thecover/channel/3560',
     parameters: { id: '对应id,可在频道链接中获取，默认为3892' },
     features: {

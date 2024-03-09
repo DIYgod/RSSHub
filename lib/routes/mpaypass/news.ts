@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/news',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/mpaypass/news',
     parameters: {},
     features: {

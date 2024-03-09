@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/fjksbm',
     parameters: { category: '分类，见下表，默认为网络报名进行中' },
     features: {

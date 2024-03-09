@@ -6,7 +6,7 @@ const baseUrl = 'https://www.rccp.pku.edu.cn/mzyt/';
 
 export const route: Route = {
     path: '/rccp/mzyt',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/pku/rccp/mzyt',
     parameters: {},
     features: {

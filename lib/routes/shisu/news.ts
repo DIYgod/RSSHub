@@ -10,7 +10,7 @@ const banner = 'https://news.shisu.edu.cn/news/index/39adf3d9ae414bc39c6d3b9316a
 
 export const route: Route = {
     path: '/news/:category',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/shisu/news/notice',
     parameters: { category: '新闻的分类可根据自己的需要选择，首页为全部新闻' },
     features: {

@@ -8,7 +8,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/live/:username/:embed?',
-    categories: ['multimedia'],
+    categories: ['live'],
     example: '/youtube/live/@GawrGura',
     parameters: { username: 'YouTuber id', embed: 'Default to embed the video, set to any value to disable embedding' },
     features: {

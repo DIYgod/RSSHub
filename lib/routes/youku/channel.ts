@@ -10,7 +10,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/channel/:channelId/:embed?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/youku/channel/UNTg3MTM3OTcy',
     parameters: { channelId: '频道 id', embed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {

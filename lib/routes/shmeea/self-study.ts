@@ -41,7 +41,7 @@ function load_detail(list, cache) {
 
 export const route: Route = {
     path: '/self-study',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/shmeea/self-study',
     parameters: {},
     features: {

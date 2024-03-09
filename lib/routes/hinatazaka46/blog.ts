@@ -7,7 +7,7 @@ const rootUrl = 'https://www.hinatazaka46.com';
 
 export const route: Route = {
     path: '/blog/:id?/:page?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/hinatazaka46/blog',
     parameters: { id: 'Member ID, see below, `all` by default', page: 'Page, `0` by default' },
     features: {

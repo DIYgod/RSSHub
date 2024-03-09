@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/dxy/:code',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/swpu/dxy/1156',
     parameters: { code: '栏目代码' },
     features: {

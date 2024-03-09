@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/channel/:id/:embed?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/youtube/channel/UCDwDMPOZfxVV0x_dz0eQ8KQ',
     parameters: { id: 'YouTube channel id', embed: 'Default to embed the video, set to any value to disable embedding' },
     features: {

@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/user/:id',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/pixiv/user/15288095',
     parameters: { id: "user id, available in user's homepage URL" },
     features: {

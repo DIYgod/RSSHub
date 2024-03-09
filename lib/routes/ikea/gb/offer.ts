@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/gb/offer',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/ikea/gb/offer',
     parameters: {},
     features: {

@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/ask/jinghua',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/imiker/ask/jinghua',
     parameters: {},
     features: {

@@ -6,7 +6,7 @@ import { rootUrl } from './utils';
 
 export const route: Route = {
     path: '/changelog',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/gitpod/changelog',
     parameters: {},
     features: {

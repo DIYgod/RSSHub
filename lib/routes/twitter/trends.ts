@@ -4,7 +4,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/trends/:woeid?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/twitter/trends/23424856',
     parameters: { woeid: 'Yahoo! Where On Earth ID. default to woeid=1 (World Wide)' },
     features: {

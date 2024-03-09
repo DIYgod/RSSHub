@@ -3,7 +3,7 @@ import { ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/items/all/:order?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/hpoi/items/all',
     parameters: { order: '排序, 见下表，默认为 add' },
     features: {

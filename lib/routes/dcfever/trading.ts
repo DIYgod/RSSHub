@@ -7,7 +7,7 @@ import { baseUrl, parseTradeItem } from './utils';
 
 export const route: Route = {
     path: '/trading/:id',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/dcfever/trading/1',
     parameters: { id: '分類 ID，見下表' },
     features: {

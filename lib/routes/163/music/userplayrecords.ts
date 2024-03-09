@@ -43,7 +43,7 @@ function getItem(records) {
 
 export const route: Route = {
     path: '/music/user/playrecords/:uid/:type?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/163/music/user/playrecords/45441555/1',
     parameters: { uid: '用户 uid, 可在用户主页 URL 中找到', type: '排行榜类型，0所有时间(默认)，1最近一周' },
     features: {

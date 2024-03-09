@@ -11,7 +11,7 @@ const renderDescription = (desc) => art(path.join(__dirname, 'templates/descript
 
 export const route: Route = {
     path: '/news/:option?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/lovelive-anime/news',
     parameters: { option: 'Crawl full text when `option` is `detail`.' },
     features: {

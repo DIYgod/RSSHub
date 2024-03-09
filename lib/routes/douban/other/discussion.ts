@@ -12,7 +12,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:id/discussion',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/36328704/discussion',
     parameters: { id: '书本id;默认论坛文章使用"按回应时间排序",仅第一页文章' },
     features: {

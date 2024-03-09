@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/:caty',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/caai/45',
     parameters: { caty: '分类 ID，可在 URL 找到' },
     features: {

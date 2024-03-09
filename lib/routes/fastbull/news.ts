@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: ['/news', '/'],
-    categories: ['other'],
+    categories: ['finance'],
     example: '/fastbull/news',
     parameters: {},
     features: {

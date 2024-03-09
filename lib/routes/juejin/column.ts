@@ -5,7 +5,7 @@ import util from './utils';
 
 export const route: Route = {
     path: '/column/:id',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/juejin/column/6960559453037199391',
     parameters: { id: '专栏 id, 可在专栏页 URL 中找到' },
     features: {

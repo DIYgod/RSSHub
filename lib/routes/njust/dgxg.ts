@@ -14,7 +14,7 @@ const host = 'https://dgxg.njust.edu.cn';
 
 export const route: Route = {
     path: '/dgxg/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/njust/dgxg/gstz',
     parameters: { type: '分类名，见下表，默认为公示通知' },
     features: {

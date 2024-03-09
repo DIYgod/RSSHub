@@ -17,7 +17,7 @@ const columns = {
 
 export const route: Route = {
     path: '/mee/ywdt/:category?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/mee/ywdt/hjywnews',
     parameters: { category: '分类名，预设 `szyw`' },
     features: {

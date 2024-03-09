@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/shopping-guide/:category?/:language?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/consumer/shopping-guide',
     parameters: { category: '分类，见下表，默认为 `trivia`', language: '语言，见上表，默认为 `tc`' },
     features: {

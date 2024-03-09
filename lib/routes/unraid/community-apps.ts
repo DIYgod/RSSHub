@@ -7,7 +7,7 @@ const defaultLimit = 20;
 
 export const route: Route = {
     path: '/community-apps',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/unraid/community-apps',
     parameters: {},
     features: {

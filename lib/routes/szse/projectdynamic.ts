@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/projectdynamic/:type?/:stage?/:status?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/szse/projectdynamic',
     parameters: { type: '类型，见下表，默认为IPO', stage: '阶段，见下表，默认为全部', status: '状态，见下表，默认为全部' },
     features: {

@@ -6,7 +6,7 @@ import util from './utils';
 
 export const route: Route = {
     path: '/cs',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/bit/cs',
     parameters: {},
     features: {

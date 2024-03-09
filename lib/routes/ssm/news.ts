@@ -13,7 +13,7 @@ const newsUrl = `${rootUrl}/apps1/content/ch/973/itemlist.aspx?defaultcss=false&
 
 export const route: Route = {
     path: '/news',
-    categories: ['study'],
+    categories: ['government'],
     example: '/ssm/news',
     parameters: {},
     features: {

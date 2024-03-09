@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/datainsight/:id?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/dtcj/datainsight',
     parameters: { id: '分类，见下表，默认为全部' },
     features: {

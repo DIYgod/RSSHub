@@ -78,7 +78,7 @@ const getInfoContent = (rootUrl, item) =>
 
 export const route: Route = {
     path: '/sichuan/deyang/govpublicinfo/:countyName/:infoType?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/sichuan/deyang/govpublicinfo/绵竹市',
     parameters: { countyName: '区县名（**其他区县整改中，暂时只支持`绵竹市`**）。德阳市、绵竹市、广汉市、什邡市、中江县、罗江区、旌阳区、高新区', infoType: '信息类型。默认值:fdzdnr-“法定主动内容”' },
     features: {

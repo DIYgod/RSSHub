@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/bookstore/newest',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/zhihu/bookstore/newest',
     parameters: {},
     features: {

@@ -4,7 +4,7 @@ import { rootUrl, getData, processItems } from './util';
 
 export const route: Route = {
     path: ['/discover/:params?', '/:params?'],
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/xinpianchang/discover',
     parameters: { params: '参数，可在对应分类页 URL 中找到，默认为 `article-0-0-all-all-0-0-score` ，即全部' },
     features: {

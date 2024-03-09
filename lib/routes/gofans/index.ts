@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/:kind?',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/gofans',
     parameters: { kind: 'Platform, either `macos` or `ios`, empty means both (default)' },
     features: {

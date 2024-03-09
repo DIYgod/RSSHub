@@ -56,7 +56,7 @@ const rootURL = 'https://rss.uptimerobot.com';
 
 export const route: Route = {
     path: '/rss/:id/:routeParams?',
-    categories: ['travel'],
+    categories: ['forecast'],
     example: '/uptimerobot/rss/u358785-e4323652448755805d668f1a66506f2f',
     parameters: {
         id: 'the last part of your RSS URL (e.g. `u358785-e4323652448755805d668f1a66506f2f` for `https://rss.uptimerobot.com/u358785-e4323652448755805d668f1a66506f2f`)',

@@ -8,7 +8,7 @@ import { defaultDomain, getRootUrl } from './utils';
 
 export const route: Route = {
     path: '/blogs/:category?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/18comic/blogs',
     parameters: { category: '分类，见下表，默认为空即全部' },
     features: {

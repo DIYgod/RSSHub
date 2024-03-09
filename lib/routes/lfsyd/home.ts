@@ -6,7 +6,7 @@ import { ProcessForm, ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/home',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/lfsyd/home',
     parameters: {},
     features: {

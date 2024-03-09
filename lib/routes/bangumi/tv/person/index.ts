@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/tv/person/:id',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/bangumi/tv/person/32943',
     parameters: { id: '人物 id, 在人物页面的地址栏查看' },
     features: {

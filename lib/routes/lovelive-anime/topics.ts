@@ -12,7 +12,7 @@ const renderDescription = (desc) => art(path.join(__dirname, 'templates/descript
 
 export const route: Route = {
     path: '/topics/:abbr/:category?/:option?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/lovelive-anime/topics/otonokizaka',
     parameters: {
         abbr: 'The path to the Love Live series of sub-projects on the official website is detailed in the table below',

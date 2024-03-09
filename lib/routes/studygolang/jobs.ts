@@ -3,7 +3,7 @@ import { FetchGoItems } from './utils';
 
 export const route: Route = {
     path: '/jobs',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/studygolang/jobs',
     parameters: {},
     features: {

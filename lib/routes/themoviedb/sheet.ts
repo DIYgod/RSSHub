@@ -31,7 +31,7 @@ const TITLE = {
 
 export const route: Route = {
     path: '/:mediaType/:sheet/:lang?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/themoviedb/tv/top-rated/en-US',
     parameters: { mediaType: '`movie` or `tv`', sheet: 'Sheet, see below', lang: 'Language' },
     features: {

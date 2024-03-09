@@ -7,7 +7,7 @@ const url = 'https://seugs.seu.edu.cn/26671/list.htm';
 
 export const route: Route = {
     path: '/yjs',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/seu/yjs',
     parameters: {},
     features: {

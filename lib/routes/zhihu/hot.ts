@@ -18,7 +18,7 @@ const titles = {
 
 export const route: Route = {
     path: '/hot/:category?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/zhihu/hot',
     parameters: { category: '分类，见下表，默认为全站' },
     features: {

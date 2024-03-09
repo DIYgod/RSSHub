@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/user/:id',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/sciencenet/user/tony8310',
     parameters: { id: '用户 id，可在对用户博客页 URL 中找到' },
     features: {

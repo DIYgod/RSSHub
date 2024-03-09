@@ -11,7 +11,7 @@ const headers = { 'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_0 like Ma
 
 export const route: Route = {
     path: '/:userid',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/changba/skp6hhF59n48R-UpqO3izw',
     parameters: { userid: '用户ID, 可在对应分享页面的 URL 中找到' },
     features: {

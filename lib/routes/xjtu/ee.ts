@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/ee/:id?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/xjtu/ee/1114',
     parameters: { id: '栏目id，默认请求`1124`，可在 URL 中找到' },
     features: {

@@ -26,7 +26,7 @@ const getDateForToday = () => {
 
 export const route: Route = {
     path: '/:date?/:category?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/jornada/2022-10-12/capital',
     parameters: { date: "Date string, must be in format of `YYYY-MM-DD`. You can get today's news using `today`", category: 'Category, refer to the table below' },
     features: {

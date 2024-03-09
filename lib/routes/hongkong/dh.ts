@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/dh/:language?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/hongkong/dh',
     parameters: { language: 'Language, see below, tc_chi by default' },
     features: {

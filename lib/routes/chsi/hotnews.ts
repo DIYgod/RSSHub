@@ -8,7 +8,7 @@ const host = 'https://yz.chsi.com.cn';
 
 export const route: Route = {
     path: '/hotnews',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/chsi/hotnews',
     parameters: {},
     features: {

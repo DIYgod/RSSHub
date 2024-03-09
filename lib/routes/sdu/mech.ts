@@ -11,7 +11,7 @@ const host = 'https://www.mech.sdu.edu.cn/';
 
 export const route: Route = {
     path: '/mech/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/sdu/mech/0',
     parameters: { type: '默认为 `0`' },
     features: {

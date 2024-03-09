@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/apod',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/bjp/apod',
     parameters: {},
     features: {

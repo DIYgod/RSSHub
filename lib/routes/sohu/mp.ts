@@ -11,7 +11,7 @@ import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/mp/:id',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/sohu/mp/119097',
     parameters: { id: '搜狐号 ID' },
     features: {

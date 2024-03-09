@@ -3,7 +3,7 @@ import parseList from './utils';
 
 export const route: Route = {
     path: '/news/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/hafu/news/ggtz',
     parameters: { type: '分类，见下表（默认为 `ggtz`)' },
     features: {

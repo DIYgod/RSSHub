@@ -48,7 +48,7 @@ async function loadContent(link) {
 
 export const route: Route = {
     path: '/news/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/wfu/news/wyyw',
     parameters: { type: '分类，默认为 `wyyw`，具体参数见下表' },
     features: {

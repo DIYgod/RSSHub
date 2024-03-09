@@ -5,7 +5,7 @@ import { parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/free/:type?',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/qidian/free',
     parameters: { type: '默认不填为起点中文网，填 mm 为起点女生网' },
     features: {

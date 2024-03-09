@@ -9,7 +9,7 @@ const baseUrl = 'https://today.hitwh.edu.cn';
 
 export const route: Route = {
     path: '/today',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/hitwh/today',
     parameters: {},
     features: {

@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/new',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/missav/new',
     parameters: {},
     features: {

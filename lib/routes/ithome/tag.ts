@@ -9,7 +9,7 @@ const rootUrl = 'https://www.ithome.com/';
 
 export const route: Route = {
     path: '/tag/:name',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/ithome/tag/win11',
     parameters: { name: '标签名称，可从网址链接中获取' },
     features: {

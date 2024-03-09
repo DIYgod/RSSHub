@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/novel/:id',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/linovelib/novel/2547',
     parameters: { id: '小说 id，对应书架开始阅读 URL 中找到' },
     features: {

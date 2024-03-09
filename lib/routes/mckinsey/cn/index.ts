@@ -11,7 +11,7 @@ const endpoint = `${baseUrl}/wp-json`;
 
 export const route: Route = {
     path: '/cn/:category?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/mckinsey/cn',
     parameters: { category: '分类，见下表，默认为全部' },
     features: {

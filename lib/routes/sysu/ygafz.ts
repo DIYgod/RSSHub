@@ -9,7 +9,7 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/ygafz/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/sysu/ygafz',
     parameters: { type: '分类，见下表，默认为 `notice`' },
     features: {

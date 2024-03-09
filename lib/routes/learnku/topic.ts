@@ -11,7 +11,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:community/:category?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/learnku/laravel/qa',
     parameters: { community: '社区 标识，可在 <https://learnku.com/communities> 找到', category: '分类，如果不传 `category` 则获取全部分类' },
     features: {

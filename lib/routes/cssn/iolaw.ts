@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/iolaw/:section?',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/cssn/iolaw/zxzp',
     parameters: { section: 'Section ID, can be found in the URL. For example, the Section ID of URL `http://iolaw.cssn.cn/zxzp/` is `zxzp`. The default value is `zxzp`' },
     features: {

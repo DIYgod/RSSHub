@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 
 export const route: Route = {
     path: '/exchangesys/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/nju/exchangesys/proj',
     parameters: { type: '分类名' },
     features: {

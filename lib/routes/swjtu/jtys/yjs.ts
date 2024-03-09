@@ -34,7 +34,7 @@ const getItem = (item, cache) => {
 
 export const route: Route = {
     path: '/jtys/yjs',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/swjtu/jtys/yjs',
     parameters: {},
     features: {

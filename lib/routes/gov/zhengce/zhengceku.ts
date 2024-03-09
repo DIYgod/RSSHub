@@ -3,7 +3,7 @@ import buildData from '@/utils/common-config';
 
 export const route: Route = {
     path: '/zhengce/zhengceku/:department',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/zhengce/zhengceku/bmwj',
     parameters: { department: '库名' },
     features: {

@@ -10,7 +10,7 @@ import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:username/:products',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/gumroad/afkmaster/Eve10',
     parameters: { username: 'username, can be found in URL', products: 'products name, can be found in URL' },
     features: {

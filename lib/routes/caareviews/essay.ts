@@ -3,7 +3,7 @@ import { rootUrl, getList, getItems } from './utils';
 
 export const route: Route = {
     path: '/essay',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/caareviews/essay',
     parameters: {},
     features: {

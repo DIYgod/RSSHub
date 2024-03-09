@@ -13,7 +13,7 @@ import iconv from 'iconv-lite';
 
 export const route: Route = {
     path: '/forum/:id?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/4ksj/forum',
     parameters: { id: '分类 id，默认为最新4K电影' },
     features: {

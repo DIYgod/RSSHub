@@ -7,7 +7,7 @@ const { TYPE, parseUrl } = utils;
 
 export const route: Route = {
     path: '/:type?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/dahecube',
     parameters: { type: '板块，见下表，默认为推荐' },
     features: {

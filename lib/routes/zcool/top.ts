@@ -8,7 +8,7 @@ const baseUrl = 'https://www.zcool.com.cn';
 
 export const route: Route = {
     path: '/top/:type',
-    categories: ['live'],
+    categories: ['design'],
     example: '/zcool/top/design',
     parameters: { type: '推荐类型,详见下面的表格' },
     features: {

@@ -9,7 +9,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/wh/jwc/:column?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/sdu/wh/jwc/gztz',
     parameters: { column: '专栏名称，默认为工作通知（`gztz`）' },
     features: {

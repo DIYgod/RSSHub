@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:bcid?/:cid?',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/sdzk',
     parameters: { bcid: '板块 id，可在对应板块页 URL 中找到，默认为 `1`，即信息与政策', cid: '栏目 id，可在对应板块页 URL 中找到，默认为 `16`，即通知公告' },
     features: {

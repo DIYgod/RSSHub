@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/room/:id',
-    categories: ['multimedia'],
+    categories: ['live'],
     example: '/douyu/room/24422',
     parameters: { id: '直播间 id, 可在主播直播间页 URL 中找到' },
     features: {

@@ -8,7 +8,7 @@ import { parseBlogArticle } from './utils';
 
 export const route: Route = {
     path: '/blog/:column?',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/caixin/blog/zhangwuchang',
     parameters: { column: '博客名称，可在博客主页的 URL 找到' },
     features: {

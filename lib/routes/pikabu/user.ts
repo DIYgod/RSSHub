@@ -7,7 +7,7 @@ import { baseUrl, fixImage, fixVideo } from './utils';
 
 export const route: Route = {
     path: '/user/:name',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/pikabu/user/@bula.dragon',
     parameters: { name: 'User name' },
     features: {

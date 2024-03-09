@@ -3,7 +3,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/search/:keyword?/:filter?/:sort?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/javdb/search/巨乳',
     parameters: { keyword: '关键字，默认为空', filter: '过滤，见下表，默认为 `可播放`', sort: '排序，见下表，默认为 `按相关度排序`' },
     features: {

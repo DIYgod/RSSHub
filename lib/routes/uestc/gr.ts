@@ -9,7 +9,7 @@ const baseIndexUrl = 'https://gr.uestc.edu.cn';
 
 export const route: Route = {
     path: '/gr',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/uestc/gr',
     parameters: {},
     features: {

@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/zt/:id',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/ithome/zt/xijiayi',
     parameters: { id: '专题 id' },
     features: {

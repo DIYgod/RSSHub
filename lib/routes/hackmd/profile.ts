@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/profile/:path',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/hackmd/profile/hackmd',
     parameters: { path: 'userpath or teampath' },
     features: {

@@ -9,7 +9,7 @@ const rootUrl = 'https://www.ccreports.com.cn';
 
 export const route: Route = {
     path: '/article',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/ccreports/article',
     parameters: {},
     features: {

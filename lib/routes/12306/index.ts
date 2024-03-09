@@ -52,7 +52,7 @@ function getStationInfo(stationName) {
 
 export const route: Route = {
     path: '/:date/:from/:to/:type?',
-    categories: ['shopping'],
+    categories: ['travel'],
     example: '/12306/2022-02-19/重庆/永川东',
     parameters: { date: '时间，格式为（YYYY-MM-DD）', from: '始发站', to: '终点站', type: '售票类型，成人和学生可选，默认为成人' },
     features: {

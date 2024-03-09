@@ -45,7 +45,7 @@ const categories = {
 
 export const route: Route = {
     path: '/sr/:location?/:category?',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/mihoyo/sr',
     parameters: { location: '区域，可选 `zh-cn`（国服，简中）或 `zh-tw`（国际服，繁中）', category: '分类，见下表，默认为最新' },
     features: {

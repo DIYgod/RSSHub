@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/hot/:period?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/wallstreetcn/hot',
     parameters: { period: '时期，可选 `day` 即 当日 或 `week` 即 当周，默认为当日' },
     features: {

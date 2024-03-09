@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/jlpt',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/neea/jlpt',
     parameters: {},
     features: {

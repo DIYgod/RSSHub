@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/hr/:category?/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/uibe/hr',
     parameters: { category: '分类，可在对应页 URL 中找到，默认为通知公告', type: '类型，可在对应页 URL 中找到，默认为空' },
     features: {

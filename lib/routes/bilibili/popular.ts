@@ -4,7 +4,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/popular/all',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/popular/all',
     parameters: {},
     features: {

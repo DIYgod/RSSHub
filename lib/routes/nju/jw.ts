@@ -5,7 +5,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/jw/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/nju/jw/ggtz',
     parameters: { type: '分类名' },
     features: {

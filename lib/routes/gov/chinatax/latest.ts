@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/chinatax/latest',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/chinatax/latest',
     parameters: {},
     features: {

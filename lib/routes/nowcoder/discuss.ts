@@ -9,7 +9,7 @@ const host = 'https://www.nowcoder.com';
 
 export const route: Route = {
     path: '/discuss/:type/:order',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/nowcoder/discuss/2/4',
     parameters: { type: '讨论区分区id 在 URL 中可以找到', order: '排序方式' },
     features: {

@@ -5,7 +5,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/:configId/notifications/:fulltext?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/discourse/0/notifications',
     parameters: { configId: 'Environment variable configuration id, see above', fulltext: 'Fetch the content if the notification points to a post. This is disabled by default, set it to `1` to enable it.' },
     features: {

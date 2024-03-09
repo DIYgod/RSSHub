@@ -5,7 +5,7 @@ import { getAccountByUsername, getTimelineByAccountId, parseDescription, baseUrl
 
 export const route: Route = {
     path: '/user/:username',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/fansly/user/AeriGoMoo',
     parameters: { username: 'User ID' },
     features: {

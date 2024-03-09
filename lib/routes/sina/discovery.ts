@@ -16,7 +16,7 @@ const map = new Map([
 
 export const route: Route = {
     path: '/discovery/:type',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/sina/discovery/zx',
     parameters: { type: '订阅分区类型，见下表' },
     features: {

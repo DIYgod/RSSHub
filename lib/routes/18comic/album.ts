@@ -8,7 +8,7 @@ import { defaultDomain, getRootUrl } from './utils';
 
 export const route: Route = {
     path: '/album/:id',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/18comic/album/292282',
     parameters: { id: '专辑 id，可在专辑页 URL 中找到' },
     features: {

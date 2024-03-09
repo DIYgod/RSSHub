@@ -5,7 +5,7 @@ import { parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/posts/:cid/:sort?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/learnblockchain/posts/DApp/newest',
     parameters: { cid: '分类id,更多分类可以论坛的URL找到', sort: '排序方式，默认精选' },
     features: {

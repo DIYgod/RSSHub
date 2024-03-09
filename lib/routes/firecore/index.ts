@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:os',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/firecore/ios',
     parameters: { os: '`ios`,`tvos`,`macos`' },
     features: {

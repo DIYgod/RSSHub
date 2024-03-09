@@ -8,7 +8,7 @@ const baseUrl = 'https://comicat.org';
 
 export const route: Route = {
     path: '/search/:keyword',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/comicat/search/喵萌奶茶屋+跃动青春+720P+简日',
     parameters: { keyword: '关键词，请用`+`号连接' },
     features: {

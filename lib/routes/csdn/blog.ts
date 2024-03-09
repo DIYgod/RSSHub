@@ -6,7 +6,7 @@ import rssParser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/blog/:user',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/csdn/blog/csdngeeknews',
     parameters: { user: '`user` is the username of a CSDN blog which can be found in the url of the home page' },
     features: {

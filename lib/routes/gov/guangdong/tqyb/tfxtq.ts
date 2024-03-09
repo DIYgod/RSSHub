@@ -11,7 +11,7 @@ const rootUrl = 'http://www.tqyb.com.cn';
 
 export const route: Route = {
     path: '/guangdong/tqyb/tfxtq',
-    categories: ['travel'],
+    categories: ['forecast'],
     example: '/gov/guangdong/tqyb/tfxtq',
     parameters: {},
     features: {

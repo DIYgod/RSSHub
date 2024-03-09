@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/:id',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/radio/1552135',
     parameters: { id: '专辑 id，可在对应专辑页面的 URL 中找到' },
     features: {

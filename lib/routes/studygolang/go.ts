@@ -3,7 +3,7 @@ import { FetchGoItems } from './utils';
 
 export const route: Route = {
     path: '/go/:id?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/studygolang/go/daily',
     parameters: { id: '板块 id，默认为周刊' },
     features: {

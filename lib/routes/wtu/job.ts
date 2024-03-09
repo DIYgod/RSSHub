@@ -37,7 +37,7 @@ function decodeData(str) {
 
 export const route: Route = {
     path: '/job/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/wtu/job/xxtz',
     parameters: { type: '信息类型' },
     features: {

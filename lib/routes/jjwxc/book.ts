@@ -13,7 +13,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/book/:id?',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/jjwxc/book/7013024',
     parameters: { id: '作品 id，可在对应作品页中找到' },
     features: {

@@ -49,7 +49,7 @@ const generateArticleFullText = (data) => generateBannerImgHtml(data.bannerUrl) 
 
 export const route: Route = {
     path: '/jwc/news',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/scut/jwc/news',
     parameters: {},
     features: {

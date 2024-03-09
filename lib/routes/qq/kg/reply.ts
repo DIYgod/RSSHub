@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/kg/reply/:playId',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/qq/kg/reply/OhXHMdO1VxLWQOOm',
     parameters: { playId: '音频页 ID, 可在对应页面的 URL 中找到' },
     features: {

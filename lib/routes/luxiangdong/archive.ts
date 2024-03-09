@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/archive',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/luxiangdong/archive',
     parameters: {},
     features: {

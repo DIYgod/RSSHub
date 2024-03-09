@@ -6,7 +6,7 @@ import { finishArticleItem } from '@/utils/wechat-mp';
 
 export const route: Route = {
     path: '/mp/homepage/:biz/:hid/:cid?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/wechat/mp/homepage/MzA3MDM3NjE5NQ==/16',
     parameters: { biz: '公众号id', hid: '分页id', cid: '页内栏目' },
     features: {

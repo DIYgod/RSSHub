@@ -3,7 +3,7 @@ import buildData from '@/utils/common-config';
 
 export const route: Route = {
     path: '/exhibitions',
-    categories: ['shopping'],
+    categories: ['travel'],
     example: '/newmuseum/exhibitions',
     parameters: {},
     features: {

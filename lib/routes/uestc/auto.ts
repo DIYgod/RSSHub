@@ -8,7 +8,7 @@ const host = 'https://www.auto.uestc.edu.cn/';
 
 export const route: Route = {
     path: '/auto',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/uestc/auto',
     parameters: {},
     features: {

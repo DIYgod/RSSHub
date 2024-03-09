@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/:node',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/ycwb/1',
     parameters: { node: '栏目 id' },
     features: {

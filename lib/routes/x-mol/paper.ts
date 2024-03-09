@@ -9,7 +9,7 @@ import asyncPool from 'tiny-async-pool';
 
 export const route: Route = {
     path: '/paper/:type/:magazine',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/x-mol/paper/0/9',
     parameters: { type: 'type', magazine: 'magazine' },
     features: {

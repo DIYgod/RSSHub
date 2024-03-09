@@ -70,7 +70,7 @@ import cacheIn from './cache';
 
 export const route: Route = {
     path: '/user/dynamic/:uid/:routeParams?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/user/dynamic/2267573',
     parameters: { uid: '用户 id, 可在 UP 主主页中找到', routeParams: '额外参数；请参阅以下说明和表格' },
     features: {

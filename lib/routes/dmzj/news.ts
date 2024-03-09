@@ -6,7 +6,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/news/:category?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/dmzj/news/donghuaqingbao',
     parameters: { category: '类别' },
     features: {

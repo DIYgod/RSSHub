@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:category/:fulltext?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/anquanke/week',
     parameters: { category: '分类订阅', fulltext: '是否获取全文，如需获取全文参数传入 `quanwen` 或 `fulltext`' },
     features: {

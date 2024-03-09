@@ -6,7 +6,7 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/haowen/fenlei/:name/:sort?',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/smzdm/haowen/fenlei/shenghuodianqi',
     parameters: { name: '分类名，可在 URL 中查看', sort: '排序方式，默认为最新' },
     features: {

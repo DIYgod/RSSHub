@@ -5,7 +5,7 @@ import { PROFILE_QUERY, REPLIES_QUERY, THREADS_QUERY, apiUrl, threadUrl, profile
 
 export const route: Route = {
     path: '/:user/:routeParams?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/threads/zuck',
     parameters: { user: 'Username', routeParams: 'Extra parameters, see the table below' },
     features: {

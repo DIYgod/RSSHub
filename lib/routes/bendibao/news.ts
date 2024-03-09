@@ -8,7 +8,7 @@ import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/news/:city',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/bendibao/news/bj',
     parameters: { city: '城市缩写，可在该城市页面的 URL 中找到' },
     features: {

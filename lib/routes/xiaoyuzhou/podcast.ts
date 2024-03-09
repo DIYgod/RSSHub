@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/podcast/:id',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/xiaoyuzhou/podcast/6021f949a789fca4eff4492c',
     parameters: { id: '播客id，可以在小宇宙播客的 URL 中找到' },
     features: {

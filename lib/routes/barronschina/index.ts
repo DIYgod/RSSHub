@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:id?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/barronschina',
     parameters: { id: '栏目 id，默认为快讯' },
     features: {

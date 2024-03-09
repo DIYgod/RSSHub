@@ -6,7 +6,7 @@ import { SUB_NAME_PREFIX, SUB_URL } from './const';
 import loadArticle from './article';
 export const route: Route = {
     path: '/tag/:tag',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/8kcos/tag/cosplay',
     parameters: { tag: '标签名' },
     features: {

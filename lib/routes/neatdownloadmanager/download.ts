@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/download/:os?',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/neatdownloadmanager/download',
     parameters: { os: 'Operating system, windows or macos, all by default' },
     features: {

@@ -7,7 +7,7 @@ const baseUrl = 'http://www.vom.mn';
 
 export const route: Route = {
     path: '/featured/:lang?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/vom/featured',
     parameters: { lang: 'Language, see the table below, `mn` by default' },
     features: {

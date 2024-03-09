@@ -10,7 +10,7 @@ const baseUrl = 'https://www.mindmeister.com';
 
 export const route: Route = {
     path: '/:category?/:language?',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/mindmeister/mind-map-examples',
     parameters: { category: 'Categories, see the table below, `mind-map-examples` by default', language: 'Languages, see the table below, `en` by default' },
     features: {

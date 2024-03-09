@@ -37,7 +37,7 @@ const config = {
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/guancha',
     parameters: { category: '分类，见下表，默认为全部' },
     features: {

@@ -8,7 +8,7 @@ import FormData from 'form-data';
 
 export const route: Route = {
     path: '/news/:caty/:year?/:country?/:type?',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/telecompaper/news/mobile/2020/China/News',
     parameters: {
         caty: 'Category, see table below',

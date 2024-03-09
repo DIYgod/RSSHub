@@ -9,7 +9,7 @@ const rootUrl = 'http://www.dayanzai.me/';
 
 export const route: Route = {
     path: '/:category/:fulltext?',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/dayanzai/windows',
     parameters: { category: '分类', fulltext: '是否获取全文，需要获取则传入参数`y`' },
     features: {

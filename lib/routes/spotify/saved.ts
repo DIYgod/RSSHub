@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/saved/:limit?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/spotify/saved/50',
     parameters: { limit: 'Track count, 50 by default' },
     features: {

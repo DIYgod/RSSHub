@@ -9,7 +9,7 @@ import { fallback, queryToInteger } from '@/utils/readable-social';
 
 export const route: Route = {
     path: '/recommended/:type?/:routeParams?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/recommended/tv',
     parameters: { type: '片单类型剧集/电影，tv或movie，默认为tv', routeParams: '额外参数；请参阅以下说明和表格' },
     features: {

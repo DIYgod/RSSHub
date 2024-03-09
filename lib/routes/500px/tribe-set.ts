@@ -11,7 +11,7 @@ import { baseUrl, getTribeDetail, getTribeSets } from './utils';
 
 export const route: Route = {
     path: '/tribe/set/:id',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/500px/tribe/set/f5de0b8aa6d54ec486f5e79616418001',
     parameters: { id: '部落 ID' },
     features: {

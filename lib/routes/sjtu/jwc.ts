@@ -29,7 +29,7 @@ async function getFullArticle(link) {
 
 export const route: Route = {
     path: '/jwc/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/sjtu/jwc',
     parameters: { type: '默认为 notice' },
     features: {

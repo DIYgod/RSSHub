@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/daily/:id?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/luogu/daily',
     parameters: { id: '年度日报所在帖子 id，可在 URL 中找到，不填默认为 `47327`' },
     features: {

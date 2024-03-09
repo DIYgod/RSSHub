@@ -6,7 +6,7 @@ import { parseArticle } from '../../utils';
 
 export const route: Route = {
     path: '/finance/stock/usstock/:cids?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/sina/finance/stock/usstock',
     parameters: { cids: '分区 id，见下表，默认为 `57045`' },
     features: {

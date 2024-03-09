@@ -6,7 +6,7 @@ import { queryToBoolean } from '@/utils/readable-social';
 
 export const route: Route = {
     path: '/tv/subject/:id/:type?/:showOriginalName?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/bangumi/tv/subject/328609/ep/true',
     parameters: { id: '条目 id, 在条目页面的地址栏查看', type: '条目类型，可选值为 `ep`, `comments`, `blogs`, `topics`，默认为 `ep`', showOriginalName: '显示番剧标题原名，可选值 0/1/false/true，默认为 false' },
     features: {

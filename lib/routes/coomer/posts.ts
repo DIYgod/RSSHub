@@ -3,7 +3,7 @@ import fetchItems from './utils';
 
 export const route: Route = {
     path: '/posts',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/coomer/posts',
     parameters: {},
     features: {

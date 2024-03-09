@@ -18,7 +18,7 @@ const getCateName = async (cid = 0) => {
 
 export const route: Route = {
     path: '/posts/:id?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/eleduck/posts/4',
     parameters: { id: '分类id,可以论坛的URL找到，默认为全部' },
     features: {

@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/dalian',
-    categories: ['travel'],
+    categories: ['forecast'],
     example: '/tingshuitz/dalian',
     parameters: {},
     features: {

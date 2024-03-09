@@ -34,7 +34,7 @@ async function getPost(id, lz = 0, pn = 7e6) {
 
 export const route: Route = {
     path: ['/tieba/post/:id', '/tieba/post/lz/:id'],
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/baidu/tieba/post/686961453',
     parameters: { id: '帖子 ID' },
     features: {

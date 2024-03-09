@@ -3,7 +3,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/sobooks',
     parameters: { category: '分类, 见下表' },
     features: {

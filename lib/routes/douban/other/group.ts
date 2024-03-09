@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/group/:groupid/:type?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/group/648102',
     parameters: { groupid: '豆瓣小组的 id', type: '缺省 最新，essence 最热，elite 精华' },
     features: {

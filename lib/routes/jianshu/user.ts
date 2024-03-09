@@ -6,7 +6,7 @@ import util from './utils';
 
 export const route: Route = {
     path: '/user/:id',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/jianshu/user/yZq3ZV',
     parameters: { id: '作者 id, 可在作者主页 URL 中找到' },
     features: {

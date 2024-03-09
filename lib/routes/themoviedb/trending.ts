@@ -10,7 +10,7 @@ const MEDIA_TYPE_TO_TITLE = {
 
 export const route: Route = {
     path: '/trending/:mediaType/:timeWindow/:lang?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/themoviedb/trending/tv/day/en-US',
     parameters: { mediaType: '`movie` or `tv`', timeWindow: '`day` or `week`', lang: 'Language' },
     features: {

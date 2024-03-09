@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/today/:need_content?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/163/today',
     parameters: { need_content: '需要获取全文，填写 true/yes 表示需要，默认需要' },
     features: {

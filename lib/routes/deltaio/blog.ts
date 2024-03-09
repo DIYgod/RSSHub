@@ -6,7 +6,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/blog',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/deltaio/blog',
     parameters: {},
     features: {

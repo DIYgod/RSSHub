@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/recommend',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/nowcoder/recommend',
     parameters: {},
     features: {

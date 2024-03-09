@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/events',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/houxu/events',
     parameters: {},
     features: {

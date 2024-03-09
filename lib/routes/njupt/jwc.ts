@@ -13,7 +13,7 @@ const map = {
 
 export const route: Route = {
     path: '/jwc/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/njupt/jwc/notice',
     parameters: { type: '默认为 `notice`' },
     features: {

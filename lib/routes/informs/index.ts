@@ -14,7 +14,7 @@ const rootUrl = 'https://pubsonline.informs.org';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/informs/mnsc',
     parameters: { category: 'Category, can be found in the url of the page, `orsc` by default' },
     features: {

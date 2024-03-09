@@ -17,7 +17,7 @@ const categoryMap = {
 
 export const route: Route = {
     path: '/smae/:category?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/scut/smae/yjsjw',
     parameters: { category: '通知分类，默认为 `yjsjw`' },
     features: {

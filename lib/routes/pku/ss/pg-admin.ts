@@ -6,7 +6,7 @@ const host = `${baseUrl}/admission/admbrochure/`;
 
 export const route: Route = {
     path: '/ss/pgadmin',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/pku/ss/pgadmin',
     parameters: {},
     features: {

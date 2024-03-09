@@ -8,7 +8,7 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/:lang?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/nytimes/dual',
     parameters: { lang: 'language, default to Chinese' },
     features: {

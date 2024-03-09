@@ -8,7 +8,7 @@ import { rootUrl, getCookie } from './utils';
 
 export const route: Route = {
     path: '/recommend',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/yxdown/recommend',
     parameters: {},
     features: {

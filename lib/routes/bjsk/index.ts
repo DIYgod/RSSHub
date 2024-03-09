@@ -8,7 +8,7 @@ const baseUrl = 'https://www.bjsk.org.cn';
 
 export const route: Route = {
     path: '/:path?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/bjsk/newslist-1394-1474-0',
     parameters: { path: '路径，默认为 `newslist-1486-0-0`' },
     features: {

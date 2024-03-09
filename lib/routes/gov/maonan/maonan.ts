@@ -9,7 +9,7 @@ const host = 'http://www.maonan.gov.cn';
 
 export const route: Route = {
     path: '/maonan/:category',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/maonan/zwgk',
     parameters: { category: '分类名' },
     features: {

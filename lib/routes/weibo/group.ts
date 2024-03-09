@@ -8,7 +8,7 @@ import { fallback, queryToBoolean } from '@/utils/readable-social';
 
 export const route: Route = {
     path: '/group/:gid/:gname?/:routeParams?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/weibo/group/4541216424989965',
     parameters: { gid: '分组id, 在网页版分组地址栏末尾`?gid=`处获取', gname: '分组显示名称; 默认为: `微博分组`', routeParams: '额外参数；请参阅上面的说明和表格' },
     features: {

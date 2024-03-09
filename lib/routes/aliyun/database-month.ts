@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/database_month',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/aliyun/database_month',
     parameters: {},
     features: {

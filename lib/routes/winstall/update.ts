@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/:appId',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/winstall/Mozilla.Firefox',
     parameters: { appId: 'Application ID' },
     features: {

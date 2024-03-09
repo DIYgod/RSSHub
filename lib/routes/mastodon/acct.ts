@@ -3,7 +3,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/acct/:acct/statuses/:only_media?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/mastodon/acct/CatWhitney@mastodon.social/statuses',
     parameters: { acct: 'Webfinger account URI, like `user@host`', only_media: 'whether only display media content, default to false, any value to true' },
     features: {

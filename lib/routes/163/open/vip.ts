@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/open/vip',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/163/open/vip',
     parameters: {},
     features: {

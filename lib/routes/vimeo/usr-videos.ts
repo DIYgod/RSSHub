@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/user/:username/:cat?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/vimeo/user/filmsupply/picks',
     parameters: {
         username: 'In this example [https://vimeo.com/filmsupply](https://vimeo.com/filmsupply)  is `filmsupply`',

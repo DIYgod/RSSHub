@@ -4,7 +4,7 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/today',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/cw/today',
     parameters: {},
     features: {

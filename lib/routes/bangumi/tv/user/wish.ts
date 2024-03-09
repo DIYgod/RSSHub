@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 export const route: Route = {
     path: '/tv/user/wish/:id',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/bangumi/tv/user/wish/sai',
     parameters: { id: '用户 id, 在用户页面地址栏查看' },
     features: {

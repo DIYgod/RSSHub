@@ -7,7 +7,7 @@ const rootUrl = 'https://antibody-software.com';
 
 export const route: Route = {
     path: '/updates',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/wizfile/updates',
     parameters: {},
     features: {

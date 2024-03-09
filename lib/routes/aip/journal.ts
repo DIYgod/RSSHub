@@ -5,7 +5,7 @@ import { renderDesc } from './utils';
 
 export const route: Route = {
     path: '/:pub/:jrn',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/aip/aapt/ajp',
     parameters: { pub: 'Publisher id', jrn: 'Journal id' },
     features: {

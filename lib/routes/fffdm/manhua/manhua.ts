@@ -23,7 +23,7 @@ const get_pic = async (url) => {
 
 export const route: Route = {
     path: '/manhua/:id/:cdn?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/fffdm/manhua/93',
     parameters: { id: '漫画ID。默认获取全部，建议使用通用参数limit获取指定数量', cdn: 'cdn加速器。默认5，当前可选1-5' },
     features: {

@@ -29,7 +29,7 @@ const typeMap = {
 
 export const route: Route = {
     path: '/contest',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/luogu/contest',
     parameters: {},
     features: {

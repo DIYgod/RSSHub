@@ -5,7 +5,7 @@ import { parseList, parseItem } from './utils';
 
 export const route: Route = {
     path: '/topic/:topic',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/4gamers/topic/gentlemen-topic',
     parameters: { topic: '主题，可在首页上方页面内找到' },
     features: {

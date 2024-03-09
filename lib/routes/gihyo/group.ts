@@ -6,7 +6,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/list/group/:id',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/gihyo/list/group/Ubuntu-Weekly-Recipe',
     parameters: { id: 'Series' },
     features: {

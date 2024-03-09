@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/system-update',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/nintendo/system-update',
     parameters: {},
     features: {

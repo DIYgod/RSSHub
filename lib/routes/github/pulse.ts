@@ -11,7 +11,7 @@ import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/pulse/:user/:repo/:period?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/github/pulse/DIYgod/RSSHub',
     parameters: {
         user: 'User name',

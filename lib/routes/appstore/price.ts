@@ -3,7 +3,7 @@ import got from '@/utils/got';
 import currency from 'currency-symbol-map';
 export const route: Route = {
     path: '/price/:country/:type/:id',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/appstore/price/us/mac/id1152443474',
     parameters: {
         country: 'App Store Country, obtain from the app URL https://apps.apple.com/us/app/id1152443474, in this case, `us`',

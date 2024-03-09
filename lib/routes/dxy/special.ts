@@ -7,7 +7,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/bbs/special/:specialId',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/dxy/bbs/special/72',
     parameters: { specialId: '专题 ID，可在对应专题页 URL 中找到' },
     features: {

@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/category/:category?',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/ddosi/category/黑客工具',
     parameters: { category: 'N' },
     features: {

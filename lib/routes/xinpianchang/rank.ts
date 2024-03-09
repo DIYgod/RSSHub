@@ -6,7 +6,7 @@ import { rootUrl, getData, processItems } from './util';
 
 export const route: Route = {
     path: '/rank/:category?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/xinpianchang/rank',
     parameters: { category: '分类 id，可在对应排行榜页 URL 中找到，见下表，默认为 `all` ，即总榜' },
     features: {

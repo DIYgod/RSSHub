@@ -9,7 +9,7 @@ import { rootUrl, ossUrl, ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/column/:id',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/aisixiang/column/722',
     parameters: { id: '栏目 ID, 可在对应栏目 URL 中找到' },
     features: {

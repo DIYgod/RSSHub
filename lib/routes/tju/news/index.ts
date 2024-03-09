@@ -20,7 +20,7 @@ const pageType = (href) => {
 
 export const route: Route = {
     path: '/news/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/tju/news/focus',
     parameters: { type: 'default `focus`' },
     features: {

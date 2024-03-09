@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/author/:author',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/secrss/author/网络安全威胁和漏洞信息共享平台',
     parameters: { author: 'N' },
     features: {

@@ -22,7 +22,7 @@ const typeMap = {
 };
 export const route: Route = {
     path: '/news/special/:type?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/163/news/special/1',
     parameters: { type: '栏目' },
     features: {

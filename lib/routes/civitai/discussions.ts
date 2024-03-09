@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/discussions/:modelId',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/civitai/discussions/4384',
     parameters: { modelId: 'N' },
     features: {

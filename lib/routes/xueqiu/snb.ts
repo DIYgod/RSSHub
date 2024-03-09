@@ -7,7 +7,7 @@ const UA = randUserAgent({ browser: 'chrome', os: 'android', device: 'mobile' })
 
 export const route: Route = {
     path: '/snb/:id',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/xueqiu/snb/ZH1288184',
     parameters: { id: '组合代码, 可在组合主页 URL 中找到.' },
     features: {

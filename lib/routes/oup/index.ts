@@ -13,7 +13,7 @@ const rootUrl = 'https://academic.oup.com';
 
 export const route: Route = {
     path: '/journals/:name',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/oup/journals/adaptation',
     parameters: { name: 'short name for a journal, can be found in URL' },
     features: {

@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/ani/anime/:sn',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/gamer/ani/anime/36868',
     parameters: { sn: '動畫 sn，在 URL 可以找到' },
     features: {

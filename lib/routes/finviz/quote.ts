@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/news/:ticker',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/finviz/news/AAPL',
     parameters: { ticker: 'The stock ticker' },
     features: {

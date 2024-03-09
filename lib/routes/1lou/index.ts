@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:path?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/1lou/search-繁花.htm',
     parameters: { path: '路径信息在URL里找到,主页为 index' },
     features: {

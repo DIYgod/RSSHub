@@ -5,7 +5,7 @@ import { getRootUrl, appDetail, X_UA } from './utils';
 
 export const route: Route = {
     path: ['/changelog/:id/:lang?', '/intl/changelog/:id/:lang?'],
-    categories: ['reading'],
+    categories: ['game'],
     example: '/taptap/changelog/60809/en_US',
     parameters: { id: '游戏 ID，游戏主页 URL 中获取', lang: '语言，默认使用 `zh_CN`，亦可使用 `en_US`' },
     features: {

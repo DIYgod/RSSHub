@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/paper/:id?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/zjol/paper/zjrb',
     parameters: { id: '报纸 id，见下表，默认为 `zjrb`，即浙江日报' },
     features: {

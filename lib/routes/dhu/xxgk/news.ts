@@ -8,7 +8,7 @@ const base_url = 'https://xxgk.dhu.edu.cn/1737/list.htm';
 
 export const route: Route = {
     path: '/xxgk/news',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/dhu/xxgk/news',
     parameters: {},
     features: {

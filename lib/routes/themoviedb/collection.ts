@@ -5,7 +5,7 @@ import { handleMovieItem } from './utils';
 
 export const route: Route = {
     path: '/collection/:id/:lang?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/themoviedb/collection/131292/en-US',
     parameters: { id: 'Collection ID', lang: 'Language' },
     features: {

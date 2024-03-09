@@ -5,7 +5,7 @@ import { defaultDomain, renderDescription } from './utils';
 
 export const route: Route = {
     path: '/search/:keyword',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/pornhub/search/stepsister',
     parameters: { keyword: 'keyword' },
     features: {

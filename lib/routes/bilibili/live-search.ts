@@ -5,7 +5,7 @@ import cache from './cache';
 
 export const route: Route = {
     path: '/live/search/:key/:order',
-    categories: ['multimedia'],
+    categories: ['live'],
     example: '/bilibili/live/search/dota/online',
     parameters: { key: '搜索关键字', order: '排序方式, live_time 开播时间, online 人气' },
     features: {

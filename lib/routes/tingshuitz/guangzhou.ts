@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/guangzhou',
-    categories: ['travel'],
+    categories: ['forecast'],
     example: '/tingshuitz/guangzhou',
     parameters: {},
     features: {

@@ -3,7 +3,7 @@ import webApiImpl from './web-api/user';
 
 export const route: Route = {
     path: '/user/:id/:routeParams?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/twitter/user/DIYgod',
     parameters: {
         id: 'username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`',

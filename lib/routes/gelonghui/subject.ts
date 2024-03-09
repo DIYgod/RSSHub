@@ -7,7 +7,7 @@ import { parseItem } from './utils';
 
 export const route: Route = {
     path: '/subject/:id',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/gelonghui/subject/4',
     parameters: { id: '主题编号，可在主题页 URL 中找到' },
     features: {

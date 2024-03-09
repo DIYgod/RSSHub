@@ -18,7 +18,7 @@ const categoryList = {
 
 export const route: Route = {
     path: '/book/:category?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/nytimes/book/combined-print-and-e-book-nonfiction',
     parameters: { category: 'N' },
     features: {

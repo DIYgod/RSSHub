@@ -4,7 +4,7 @@ import { rootUrl, fetchItems } from './util';
 
 export const route: Route = {
     path: '/class/:category?',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/56kog/class/1_1',
     parameters: { category: '分类，见下表，默认为玄幻魔法' },
     features: {

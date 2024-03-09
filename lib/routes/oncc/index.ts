@@ -41,7 +41,7 @@ const channelMap = {
 
 export const route: Route = {
     path: '/:language/:channel?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/oncc/zh-hant/news',
     parameters: { language: '`zh-hans` 为简体，`zh-hant` 为繁体', channel: '频道，默认为港澳' },
     features: {

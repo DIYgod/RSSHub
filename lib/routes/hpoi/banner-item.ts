@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/bannerItem',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/hpoi/bannerItem',
     parameters: {},
     features: {

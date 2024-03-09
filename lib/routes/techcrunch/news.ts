@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 const host = 'https://techcrunch.com';
 export const route: Route = {
     path: '/news',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/techcrunch/news',
     parameters: {},
     features: {

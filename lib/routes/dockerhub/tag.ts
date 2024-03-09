@@ -5,7 +5,7 @@ import { hash } from './utils';
 
 export const route: Route = {
     path: '/tag/:owner/:image/:limits?',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/dockerhub/tag/library/mariadb',
     parameters: { owner: 'Image owner', image: 'Image name', limits: 'Tag count, 10 by default' },
     features: {

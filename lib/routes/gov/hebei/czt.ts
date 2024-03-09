@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/hebei/czt/xwdt/:category?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/hebei/czt/xwdt',
     parameters: { category: '分类，见下表，默认为财政动态' },
     features: {

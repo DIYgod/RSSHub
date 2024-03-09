@@ -9,7 +9,7 @@ const baseUrl = 'http://news.yxrb.net';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/yxrb/info',
     parameters: { category: '分类，见下表，预设为 `info`' },
     features: {

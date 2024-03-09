@@ -28,7 +28,7 @@ const HEAD = {
 
 export const route: Route = {
     path: '/jsj/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/upc/jsj/news',
     parameters: { type: '分类，见下表' },
     features: {

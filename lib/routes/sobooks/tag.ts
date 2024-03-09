@@ -3,7 +3,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/tag/:id?',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/sobooks/tag/小说',
     parameters: { id: '标签, 见下表，默认为小说' },
     features: {

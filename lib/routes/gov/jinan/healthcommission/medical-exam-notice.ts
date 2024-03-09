@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/jinan/healthcommission/medical_exam_notice',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/jinan/healthcommission/medical_exam_notice',
     parameters: {},
     features: {

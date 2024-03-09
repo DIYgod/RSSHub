@@ -7,7 +7,7 @@ import fetch from './fetch-article';
 
 export const route: Route = {
     path: '/newest',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/twreporter/newest',
     parameters: {},
     features: {

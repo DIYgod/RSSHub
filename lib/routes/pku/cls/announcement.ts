@@ -10,7 +10,7 @@ const baseUrl = 'https://bio.pku.edu.cn';
 
 export const route: Route = {
     path: '/cls/announcement',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/pku/cls/announcement',
     parameters: {},
     features: {

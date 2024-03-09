@@ -51,7 +51,7 @@ const getItem = (item, cache) => {
 
 export const route: Route = {
     path: '/xg/:code?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/swjtu/xg/tzgg',
     parameters: { code: '栏目(默认为tzgg)' },
     features: {

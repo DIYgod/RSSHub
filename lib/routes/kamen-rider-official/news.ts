@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/news/:category?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/kamen-rider-official/news',
     parameters: { category: 'Category, see below, すべて by default' },
     features: {

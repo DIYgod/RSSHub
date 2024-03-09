@@ -9,7 +9,7 @@ const type = (filename) => filename.split('.').pop();
 
 export const route: Route = {
     path: '/jwc',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/hit/jwc',
     parameters: {},
     features: {

@@ -25,7 +25,7 @@ const categories = {
 
 export const route: Route = {
     path: '/24/:category?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/eastday/24',
     parameters: { category: '分类，见下表，默认为社会' },
     features: {

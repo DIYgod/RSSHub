@@ -8,7 +8,7 @@ import md5 from '@/utils/md5';
 
 export const route: Route = {
     path: '/people/activities/:id',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/zhihu/people/activities/diygod',
     parameters: { id: '作者 id，可在用户主页 URL 中找到' },
     features: {

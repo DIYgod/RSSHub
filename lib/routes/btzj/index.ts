@@ -14,7 +14,7 @@ const allowDomain = new Set(['2btjia.com', '88btbtt.com', 'btbtt15.com', 'btbtt2
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/btzj',
     parameters: { category: '分类，可在对应分类页 URL 中找到，默认为首页' },
     features: {

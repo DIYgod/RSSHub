@@ -4,7 +4,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/weekly/:disableEmbed?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/weekly',
     parameters: { disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {

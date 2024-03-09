@@ -32,7 +32,7 @@ function parseItems(tid: string, $: cheerio.CheerioAPI) {
 
 export const route: Route = {
     path: '/post/:tid',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/t66y/post/3286088',
     parameters: { tid: '帖子 id, 可在帖子 URL 中找到' },
     features: {

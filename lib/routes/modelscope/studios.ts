@@ -15,7 +15,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/studios',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/modelscope/studios',
     parameters: {},
     features: {

@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/tag/:tag',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/qbitai/tag/大语言模型',
     parameters: { tag: '标签名' },
     features: {

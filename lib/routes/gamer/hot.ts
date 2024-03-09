@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/hot/:bsn',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/gamer/hot/47157',
     parameters: { bsn: '板块 id，在 URL 可以找到' },
     features: {

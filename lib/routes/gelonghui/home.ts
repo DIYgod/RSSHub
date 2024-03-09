@@ -6,7 +6,7 @@ import { parseItem } from './utils';
 
 export const route: Route = {
     path: '/home/:tag?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/gelonghui/home',
     parameters: { tag: '分类标签，见下表，默认为 `web_home_page`' },
     features: {

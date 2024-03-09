@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/:type/:name?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/aijishu/channel/ai',
     parameters: { type: '文章类型，可以取值如下', name: '名字，取自URL' },
     features: {

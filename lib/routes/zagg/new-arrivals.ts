@@ -9,7 +9,7 @@ import { load } from 'cheerio';
 const host = 'https://www.zagg.com/en_us';
 export const route: Route = {
     path: '/new-arrivals/:query?',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/zagg/new-arrivals/brand=164&cat=3038,3041',
     parameters: { query: 'query, search page querystring' },
     features: {

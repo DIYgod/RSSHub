@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/ianspriggs/portraits',
     parameters: { category: 'Category, see below, 3D PORTRAITS by default' },
     features: {

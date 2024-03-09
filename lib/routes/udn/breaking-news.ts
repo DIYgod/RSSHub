@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/news/breakingnews/:id',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/udn/news/breakingnews/99',
     parameters: { id: '类别' },
     features: {

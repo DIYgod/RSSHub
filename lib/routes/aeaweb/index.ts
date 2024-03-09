@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/:id',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/aeaweb/aer',
     parameters: { id: 'Journal id, can be found in URL' },
     features: {

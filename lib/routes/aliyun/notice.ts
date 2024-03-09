@@ -19,7 +19,7 @@ const typeMap = {
  */
 export const route: Route = {
     path: '/notice/:type?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/aliyun/notice',
     parameters: { type: 'N' },
     features: {

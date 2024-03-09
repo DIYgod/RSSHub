@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/chapter/:id',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/hameln/chapter/264928',
     parameters: { id: 'Novel id, can be found in URL' },
     features: {

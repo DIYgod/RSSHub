@@ -5,7 +5,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/news',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/idolypride/news',
     parameters: {},
     features: {

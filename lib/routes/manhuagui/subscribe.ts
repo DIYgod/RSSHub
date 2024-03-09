@@ -12,7 +12,7 @@ const web_url = 'https://www.manhuagui.com/user/book/shelf/1';
 
 export const route: Route = {
     path: '/subscribe',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/manhuagui/subscribe',
     parameters: {},
     features: {

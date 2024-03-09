@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:language?/:channel?/:subChannel?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/rfa/english',
     parameters: { language: 'language, English by default', channel: 'channel', subChannel: 'subchannel, where applicable' },
     features: {

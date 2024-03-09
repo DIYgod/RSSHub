@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/weekly',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/cngal/weekly',
     parameters: {},
     features: {

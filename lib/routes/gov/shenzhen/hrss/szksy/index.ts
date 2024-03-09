@@ -8,7 +8,7 @@ const rootURL = 'http://hrss.sz.gov.cn/';
 
 export const route: Route = {
     path: '/shenzhen/hrss/szksy/:caty/:page?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/shenzhen/hrss/szksy/bmxx/2',
     parameters: { caty: '信息类别', page: '页码' },
     features: {

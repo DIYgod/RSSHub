@@ -6,7 +6,7 @@ import util from './utils';
 
 export const route: Route = {
     path: '/home',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/jianshu/home',
     parameters: {},
     features: {

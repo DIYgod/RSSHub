@@ -4,7 +4,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/thebatch',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/deeplearning/thebatch',
     parameters: {},
     features: {

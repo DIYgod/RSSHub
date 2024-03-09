@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/channel/:id',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/qingting/channel/293411',
     parameters: { id: '专辑id, 可在专辑页 URL 中找到' },
     features: {

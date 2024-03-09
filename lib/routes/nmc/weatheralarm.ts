@@ -7,7 +7,7 @@ import * as cheerio from 'cheerio';
 
 export const route: Route = {
     path: '/weatheralarm/:province?',
-    categories: ['travel'],
+    categories: ['forecast'],
     example: '/nmc/weatheralarm/广东省',
     parameters: { province: '省份' },
     features: {

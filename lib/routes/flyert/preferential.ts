@@ -12,7 +12,7 @@ const target = `${host}/forum.php?mod=forumdisplay&sum=all&fid=all&catid=322`;
 
 export const route: Route = {
     path: '/preferential',
-    categories: ['shopping'],
+    categories: ['travel'],
     example: '/flyert/preferential',
     parameters: {},
     features: {

@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/doulist/:id',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/doulist/37716774',
     parameters: { id: '豆列id' },
     features: {

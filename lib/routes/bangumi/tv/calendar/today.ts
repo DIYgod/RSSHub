@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/tv/calendar/today',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/bangumi/tv/calendar/today',
     parameters: {},
     features: {

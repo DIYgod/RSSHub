@@ -6,7 +6,7 @@ import md5 from '@/utils/md5';
 
 export const route: Route = {
     path: '/news',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/xboxfan/news',
     parameters: {},
     features: {

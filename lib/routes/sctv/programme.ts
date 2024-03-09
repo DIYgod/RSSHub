@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/programme/:id?/:limit?/:isFull?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/sctv/programme/1',
     parameters: { id: '节目 id，可在对应节目页中找到，默认为 `1`，即四川新闻联播', limit: '期数，默认为 15，即单次获取最新 15 期', isFull: '是否仅获取完整视频，填写 true/yes 表示是、false/no 表示否，默认是' },
     features: {

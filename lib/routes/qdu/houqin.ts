@@ -9,7 +9,7 @@ const base = 'https://houqin.qdu.edu.cn/';
 
 export const route: Route = {
     path: '/houqin',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/qdu/houqin',
     parameters: {},
     features: {

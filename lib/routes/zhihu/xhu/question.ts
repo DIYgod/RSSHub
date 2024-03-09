@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/xhu/question/:questionId/:sortBy?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/zhihu/xhu/question/264051433',
     parameters: { questionId: '问题 id', sortBy: '排序方式：`default`, `created`, `updated`。默认为 `default`' },
     features: {

@@ -5,7 +5,7 @@ const allowlinktypes = new Set(['all', 'magnet', 'ed2k', 'baidu', 'subhd', 'quar
 
 export const route: Route = {
     path: '/portfolio/:id',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/zimuxia/portfolio/我们这一天',
     parameters: { id: '剧集名，可在剧集页 URL 中找到' },
     features: {

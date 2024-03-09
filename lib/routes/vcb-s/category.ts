@@ -14,7 +14,7 @@ const postsAPIUrl = `${rootUrl}/wp-json/wp/v2/posts`;
 
 export const route: Route = {
     path: '/category/:cate',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/vcb-s/category/works',
     parameters: { cate: '分类' },
     features: {

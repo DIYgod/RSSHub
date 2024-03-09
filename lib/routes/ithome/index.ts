@@ -37,7 +37,7 @@ const config = {
 
 export const route: Route = {
     path: '/:caty',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/ithome/it',
     parameters: { caty: '类别' },
     features: {

@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/zimuxia',
     parameters: { category: '分类，见下表，默认为 ALL' },
     features: {

@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/news',
-    categories: ['travel'],
+    categories: ['forecast'],
     example: '/bmkg/news',
     parameters: {},
     features: {

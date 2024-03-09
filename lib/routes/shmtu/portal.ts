@@ -44,7 +44,7 @@ const processFeed = (list, caches) =>
 
 export const route: Route = {
     path: '/portal/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/shmtu/portal/bmtzgg',
     parameters: { type: '类型名称' },
     features: {

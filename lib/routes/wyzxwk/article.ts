@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/article/:id?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/wyzxwk/article/shushe',
     parameters: { id: '栏目 id，可在栏目页 URL 中找到，默认为时代观察' },
     features: {

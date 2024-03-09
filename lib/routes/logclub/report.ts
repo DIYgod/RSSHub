@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: ['/lc_report/:id?', '/report/:id?'],
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/logclub/lc_report',
     parameters: { id: '报告 id，见下表，默认为罗戈研究出品' },
     features: {

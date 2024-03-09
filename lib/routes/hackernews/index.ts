@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:section?/:type?/:user?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/hackernews/threads/comments_list/dang',
     parameters: { section: '内容分区，见上表，默认为 `index`', type: '链接类型，见上表，默认为 `sources`', user: '设定用户，只在 `threads` 和 `submitted` 分区有效' },
     features: {

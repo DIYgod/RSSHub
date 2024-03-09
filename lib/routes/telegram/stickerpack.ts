@@ -4,7 +4,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/stickerpack/:name',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/telegram/stickerpack/DIYgod',
     parameters: { name: 'Sticker Pack name, available in the sharing URL' },
     features: {

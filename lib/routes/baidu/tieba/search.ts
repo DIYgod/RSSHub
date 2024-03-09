@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/tieba/search/:qw/:routeParams?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/baidu/tieba/search/neuro',
     parameters: { qw: '搜索关键词', routeParams: '额外参数；请参阅以下说明和表格' },
     features: {

@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/database',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/caixin/database',
     parameters: {},
     features: {

@@ -14,7 +14,7 @@ const host = 'https://gradschool.ustc.edu.cn';
 
 export const route: Route = {
     path: '/gs/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/ustc/gs/tzgg',
     parameters: { type: '分类，见下表，默认为通知公告' },
     features: {

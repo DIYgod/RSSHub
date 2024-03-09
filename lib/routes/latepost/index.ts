@@ -24,7 +24,7 @@ const arrayToDictionary = (arr) =>
 
 export const route: Route = {
     path: '/:proma?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/latepost',
     parameters: { proma: '栏目 id，见下表，默认为最新报道' },
     features: {

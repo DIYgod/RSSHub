@@ -13,7 +13,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/digest/:tid',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/saraba1st/digest/forum-75-1',
     parameters: { tid: '论坛 id' },
     features: {

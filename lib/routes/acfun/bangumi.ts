@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/bangumi/:id',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/acfun/bangumi/5022158',
     parameters: { id: '番剧 id' },
     features: {

@@ -13,7 +13,7 @@ const map = {
 };
 export const route: Route = {
     path: '/yjs/news/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/dhu/yjs/news/class',
     parameters: { type: '默认为 `class`' },
     features: {

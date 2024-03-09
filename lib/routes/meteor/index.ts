@@ -6,7 +6,7 @@ import { baseUrl, getBoards, renderDesc } from './utils';
 
 export const route: Route = {
     path: '/:board?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/meteor/all',
     parameters: { board: '看板 ID 或簡稱，可在 URL 或下方路由找到，預設為 `all`' },
     features: {

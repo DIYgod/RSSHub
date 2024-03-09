@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/latest',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/wikinews/latest',
     parameters: {},
     features: {

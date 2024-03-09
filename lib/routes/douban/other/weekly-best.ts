@@ -8,7 +8,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/movie/weekly/:type?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/movie/weekly',
     parameters: { type: '分类，可在榜单页 URL 中找到，默认为一周口碑电影榜' },
     features: {

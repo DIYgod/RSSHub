@@ -10,7 +10,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/shenzhen',
-    categories: ['travel'],
+    categories: ['forecast'],
     example: '/tingshuitz/shenzhen',
     parameters: {},
     features: {

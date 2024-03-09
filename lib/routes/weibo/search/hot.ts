@@ -16,7 +16,7 @@ let fullpic = 'false';
 
 export const route: Route = {
     path: '/search/hot/:fulltext?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/weibo/search/hot',
     parameters: { fulltext: 'N' },
     features: {

@@ -13,7 +13,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/news/:tag?',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/x-mol/news/3',
     parameters: { tag: 'Tag number, can be obtained from news list URL. Empty value means news index.' },
     features: {

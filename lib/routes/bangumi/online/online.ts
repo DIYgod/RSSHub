@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/online',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/bangumi/online',
     parameters: {},
     features: {

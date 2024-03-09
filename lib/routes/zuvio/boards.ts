@@ -4,7 +4,7 @@ import { getBoards, rootUrl } from './utils';
 
 export const route: Route = {
     path: '/student5/boards',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/zuvio/student5/boards',
     parameters: {},
     features: {

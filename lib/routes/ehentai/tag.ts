@@ -4,7 +4,7 @@ import EhAPI from './ehapi';
 
 export const route: Route = {
     path: '/tag/:tag/:page?/:routeParams?',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/ehentai/tag/language:chinese/1',
     parameters: { tag: 'Tag', page: 'Page number', routeParams: 'Additional parameters, see the table above' },
     features: {

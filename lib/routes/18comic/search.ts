@@ -3,7 +3,7 @@ import { defaultDomain, getRootUrl, ProcessItems } from './utils';
 
 export const route: Route = {
     path: '/search/:option?/:category?/:keyword?/:time?/:order?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/18comic/search/photos/all/NTR',
     parameters: {
         option: '选项，可选 `video` 和 `photos`，默认为 `photos`',

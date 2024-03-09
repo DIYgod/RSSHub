@@ -52,7 +52,7 @@ const infos = {
 
 export const route: Route = {
     path: '/new/:type',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/dlsite/new/home',
     parameters: { type: 'Type, see table below' },
     features: {

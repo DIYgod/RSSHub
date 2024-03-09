@@ -9,7 +9,7 @@ import { rootUrl, ossUrl, ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/zhuanti/:id',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/aisixiang/zhuanti/211',
     parameters: { id: '专题 ID, 可在对应专题 URL 中找到' },
     features: {

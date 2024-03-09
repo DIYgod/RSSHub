@@ -9,7 +9,7 @@ import { getAcwScV2ByArg1 } from './utils';
 
 export const route: Route = {
     path: '/article',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/5eplay/article',
     parameters: {},
     features: {

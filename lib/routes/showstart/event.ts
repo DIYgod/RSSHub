@@ -4,7 +4,7 @@ import { fetchActivityList, fetchDictionary } from './service';
 
 export const route: Route = {
     path: '/event/:cityCode/:showStyle?',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/showstart/event/571/3',
     parameters: { cityCode: '演出城市 (编号)', showStyle: '演出风格 (编号)' },
     features: {

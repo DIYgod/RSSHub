@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/ota',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/notateslaapp/ota',
     parameters: {},
     features: {

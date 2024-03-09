@@ -10,7 +10,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/search/:wd',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/duozhuayu/search/JavaScript',
     parameters: { wd: '搜索关键词' },
     features: {

@@ -6,7 +6,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/fav/:uid/:fid/:disableEmbed?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/fav/756508/50948568',
     parameters: { uid: '用户 id, 可在 UP 主主页中找到', fid: '收藏夹 ID, 可在收藏夹的 URL 中找到, 默认收藏夹建议使用 UP 主默认收藏夹功能', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {

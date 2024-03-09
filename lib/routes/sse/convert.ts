@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/convert/:query?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/sse/convert/beginDate=2018-08-18&endDate=2019-08-18&companyCode=603283&title=股份',
     parameters: { query: '筛选条件，见示例' },
     features: {

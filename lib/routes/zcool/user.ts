@@ -8,7 +8,7 @@ import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/user/:uid',
-    categories: ['live'],
+    categories: ['design'],
     example: '/zcool/user/baiyong',
     parameters: { uid: '个性域名前缀或者用户ID' },
     features: {

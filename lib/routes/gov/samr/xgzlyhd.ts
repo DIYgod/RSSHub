@@ -40,7 +40,7 @@ const getOption = async (type, name) => {
 
 export const route: Route = {
     path: '/samr/xgzlyhd/:category?/:department?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/samr/xgzlyhd',
     parameters: { category: '留言类型，见下表，默认为全部', department: '回复部门，见下表，默认为全部' },
     features: {

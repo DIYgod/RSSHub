@@ -10,7 +10,7 @@ import { queryToBoolean } from '@/utils/readable-social';
 
 export const route: Route = {
     path: '/vsearch/:kw/:order?/:disableEmbed?/:tid?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/vsearch/RSSHub',
     parameters: { kw: '检索关键字', order: '排序方式, 综合:totalrank 最多点击:click 最新发布:pubdate(缺省) 最多弹幕:dm 最多收藏:stow', disableEmbed: '默认为开启内嵌视频, 任意值为关闭', tid: '分区 id' },
     features: {

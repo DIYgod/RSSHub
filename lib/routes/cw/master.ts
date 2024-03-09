@@ -4,7 +4,7 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/master/:channel',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/cw/master/8',
     parameters: { channel: '主頻道 ID，可在 URL 中找到' },
     features: {

@@ -7,7 +7,7 @@ const rootURL = 'https://jiuye.swjtu.edu.cn/career';
 
 export const route: Route = {
     path: '/jyzpxx',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/swjtu/jyzpxx',
     parameters: {},
     features: {

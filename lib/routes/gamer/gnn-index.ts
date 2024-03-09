@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/gnn/:category?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/gamer/gnn/1',
     parameters: { category: '版块' },
     features: {

@@ -7,7 +7,7 @@ import { fallback, queryToBoolean } from '@/utils/readable-social';
 
 export const route: Route = {
     path: '/collection/:uid/:collectionId/:routeParams?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/twitter/collection/DIYgod/1527857429467172864',
     parameters: { uid: 'username, should match the generated token', collectionId: 'collection ID, can be found in URL', routeParams: 'extra parameters, see the table above' },
     features: {

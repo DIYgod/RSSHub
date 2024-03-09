@@ -4,7 +4,7 @@ import EhAPI from './ehapi';
 
 export const route: Route = {
     path: '/search/:params?/:page?/:routeParams?',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/ehentai/search/f_search=artist%3Amana%24/1',
     parameters: { params: 'Search parameters. You can copy the content after `https://e-hentai.org/?`', page: 'Page number', routeParams: 'Additional parameters, see the table above' },
     features: {

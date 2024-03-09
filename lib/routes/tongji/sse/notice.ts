@@ -12,7 +12,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/sse/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/tongji/sse/xytz',
     parameters: { type: '通知类型，默认为 `xytz`' },
     features: {

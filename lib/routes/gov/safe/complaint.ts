@@ -3,7 +3,7 @@ import { processZxfkItems } from './util';
 
 export const route: Route = {
     path: '/safe/complaint/:site?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/safe/complaint/beijing',
     parameters: { site: '站点，见上表，默认为 beijing' },
     features: {

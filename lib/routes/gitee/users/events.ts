@@ -10,7 +10,7 @@ const md = MarkdownIt({
 
 export const route: Route = {
     path: '/events/:username',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/gitee/events/y_project',
     parameters: { username: '用户名' },
     features: {

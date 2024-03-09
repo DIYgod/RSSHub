@@ -4,7 +4,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/weekly',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/sec-wiki/weekly',
     parameters: {},
     features: {

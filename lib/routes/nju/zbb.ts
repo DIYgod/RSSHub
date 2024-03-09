@@ -6,7 +6,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/zbb/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/nju/zbb/cgxx',
     parameters: { type: '分类名' },
     features: {

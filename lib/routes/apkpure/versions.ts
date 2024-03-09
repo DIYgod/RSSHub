@@ -6,7 +6,7 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/versions/:pkg/:region?',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/apkpure/versions/jp.co.craftegg.band/jp',
     parameters: { pkg: 'Package name', region: 'Region code, `en` by default' },
     features: {

@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/:channel',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/xkb/350',
     parameters: { channel: '栏目 ID，点击对应栏目后在地址栏找到' },
     features: {

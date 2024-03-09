@@ -11,7 +11,7 @@ const config = {
 
 export const route: Route = {
     path: '/app/:id?',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/bilibili/app/android',
     parameters: { id: '客户端 id，见下表，默认为安卓版' },
     features: {

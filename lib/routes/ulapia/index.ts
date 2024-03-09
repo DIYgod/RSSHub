@@ -25,7 +25,7 @@ const selectorMap = {
 
 export const route: Route = {
     path: '/reports/:category?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/ulapia/reports/stock_research',
     parameters: { category: '频道类型，默认为券商晨报（今日晨报）' },
     features: {

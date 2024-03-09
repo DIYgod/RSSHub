@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/mem/gk/sgcc/:category?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/mem/gk/sgcc/tbzdsgdcbg',
     parameters: { category: '分类，见下表，默认为挂牌督办' },
     features: {

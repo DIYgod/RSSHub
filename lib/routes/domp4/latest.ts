@@ -19,7 +19,7 @@ function getItemList($, type) {
 
 export const route: Route = {
     path: '/latest/:type?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/domp4/latest/vod',
     parameters: { type: '`vod` 代表电影，`tv` 代表电视剧，默认 vod' },
     features: {

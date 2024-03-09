@@ -13,7 +13,7 @@ const rootUrl = 'https://zodgame.xyz';
 
 export const route: Route = {
     path: '/forum/:fid?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/zodgame/forum/13',
     parameters: { fid: 'forum id, can be found in URL' },
     features: {

@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/kx',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/fx678/kx',
     parameters: {},
     features: {

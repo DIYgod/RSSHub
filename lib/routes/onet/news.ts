@@ -13,7 +13,7 @@ import { parseArticleContent, parseMainImage } from './utils';
 
 export const route: Route = {
     path: '/news',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/onet/news',
     parameters: {},
     features: {

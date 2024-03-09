@@ -4,7 +4,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/huati/:tag',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/coolapk/huati/iPhone',
     parameters: { tag: '话题名称' },
     features: {

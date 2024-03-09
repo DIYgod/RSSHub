@@ -12,7 +12,7 @@ const types = {
 
 export const route: Route = {
     path: '/news/:type?/:category?',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/gamebase/news',
     parameters: { type: '类型，见下表，默认为 newslist', category: '分类，可在对应分类页 URL 中找到，默认为 `all` 即全部' },
     features: {

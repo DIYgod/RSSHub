@@ -13,7 +13,7 @@ const config = {
 
 export const route: Route = {
     path: '/shenzhen/zjj/xxgk/:caty',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/shenzhen/zjj/xxgk/tzgg',
     parameters: { caty: '信息类别' },
     features: {

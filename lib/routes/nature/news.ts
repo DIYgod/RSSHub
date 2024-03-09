@@ -7,7 +7,7 @@ import { baseUrl, cookieJar, getArticle } from './utils';
 
 export const route: Route = {
     path: '/news',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/nature/news',
     parameters: {},
     features: {

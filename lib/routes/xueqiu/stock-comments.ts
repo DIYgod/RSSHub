@@ -12,7 +12,7 @@ import sanitizeHtml from 'sanitize-html';
 
 export const route: Route = {
     path: '/stock_comments/:id',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/xueqiu/stock_comments/SZ002626',
     parameters: { id: '股票代码（需要带上交易所）' },
     features: {

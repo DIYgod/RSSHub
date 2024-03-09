@@ -5,7 +5,7 @@ import { baseUrl } from './utils';
 
 export const route: Route = {
     path: '/topic_list',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/agirls/topic_list',
     parameters: {},
     features: {

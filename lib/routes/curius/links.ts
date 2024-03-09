@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/links/:name',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/curius/links/yuu-yuu',
     parameters: { name: 'Username, can be found in URL' },
     features: {

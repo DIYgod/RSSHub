@@ -4,7 +4,7 @@ import { getRollNewsList, parseRollNewsList, parseArticle } from './utils';
 
 export const route: Route = {
     path: '/rollnews/:lid?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/sina/rollnews',
     parameters: { lid: '分区 id，可在 URL 中找到，默认为 `2509`' },
     features: {

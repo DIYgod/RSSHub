@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/xhu/topic/:topicId',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/zhihu/xhu/topic/19566035',
     parameters: { topicId: '话题ID' },
     features: {

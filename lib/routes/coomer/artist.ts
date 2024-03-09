@@ -3,7 +3,7 @@ import fetchItems from './utils';
 
 export const route: Route = {
     path: '/artist/:id',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/coomer/artist/belledelphine',
     parameters: { id: 'Artist id, can be found in URL' },
     features: {

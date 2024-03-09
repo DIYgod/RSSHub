@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:uid',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/xmanhua/73xm',
     parameters: { uid: '漫画 id,在浏览器中可见，例如鬼灭之刃对应的 id 为 `73xm`' },
     features: {

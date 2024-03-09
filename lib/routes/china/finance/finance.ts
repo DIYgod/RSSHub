@@ -18,7 +18,7 @@ const CATEGORY_MAP = {
 
 export const route: Route = {
     path: '/finance/:category?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/china/finance',
     parameters: { category: 'Category of news. See the form below for details, default is suggest news.' },
     features: {

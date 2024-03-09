@@ -6,7 +6,7 @@ import parser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/rss/:id?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/cnbc/rss',
     parameters: { id: 'Channel ID, can be found in Official RSS URL, `100003114` (Top News) by default' },
     features: {

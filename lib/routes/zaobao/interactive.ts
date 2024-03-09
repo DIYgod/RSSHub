@@ -4,7 +4,7 @@ const baseUrl = 'https://www.zaobao.com';
 
 export const route: Route = {
     path: '/interactive-graphics',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/zaobao/interactive-graphics',
     parameters: {},
     features: {

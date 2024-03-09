@@ -6,7 +6,7 @@ import { getBoard } from './util';
 
 export const route: Route = {
     path: '/board/:board_id',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/xiaohongshu/board/5db6f79200000000020032df',
     parameters: { board_id: '专辑 ID' },
     features: {

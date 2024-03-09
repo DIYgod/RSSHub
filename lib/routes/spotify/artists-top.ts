@@ -4,7 +4,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/top/artists',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/spotify/top/artists',
     parameters: {},
     features: {

@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/list/:category?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/dedao/list/年度日更',
     parameters: { category: '分类名，默认为年度日更' },
     features: {

@@ -6,7 +6,7 @@ import MarkdownIt from 'markdown-it';
 
 export const route: Route = {
     path: '/courses/:sort/:tag',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/lanqiao/courses/latest/all',
     parameters: { sort: '排序规则 sort, 默认(`default`)、最新(`latest`)、最热(`hotest`)', tag: '课程标签 `tag`，可在该页面找到：https://www.lanqiao.cn/courses/' },
     features: {

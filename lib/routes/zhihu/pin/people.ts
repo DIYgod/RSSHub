@@ -4,7 +4,7 @@ import { generateData } from './utils';
 
 export const route: Route = {
     path: '/people/pins/:id',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/zhihu/people/pins/kan-dan-45',
     parameters: { id: '作者 id，可在用户主页 URL 中找到' },
     features: {

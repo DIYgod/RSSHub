@@ -10,7 +10,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/:id',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/fosshub/qBittorrent',
     parameters: { id: 'Software id, can be found in URL' },
     features: {

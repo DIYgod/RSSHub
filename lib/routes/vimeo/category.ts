@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/category/:category/:staffpicks?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/vimeo/category/documentary/staffpicks',
     parameters: {
         category: 'Category name can get from url like `documentary` in [https://vimeo.com/categories/documentary/videos](https://vimeo.com/categories/documentary/videos) ',

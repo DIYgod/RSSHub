@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/shaanxi/kjt/:id?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/shaanxi/kjt',
     parameters: { id: '分类，见下表，默认为通知公告' },
     features: {

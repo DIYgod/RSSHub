@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: ['/movie/playing', '/movie/playing/:score'],
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/movie/playing',
     parameters: {},
     features: {

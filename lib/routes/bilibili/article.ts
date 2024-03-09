@@ -5,7 +5,7 @@ import cache from './cache';
 import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/user/article/:uid',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/user/article/334958638',
     parameters: { uid: '用户 id, 可在 UP 主主页中找到' },
     features: {

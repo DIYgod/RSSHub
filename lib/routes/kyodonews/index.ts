@@ -14,7 +14,7 @@ const resolveRelativeLink = (link, baseUrl) => (link.startsWith('http') ? link :
 
 export const route: Route = {
     path: '/:language?/:keyword?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/kyodonews',
     parameters: { language: '语言: `china` = 简体中文 (默认), `tchina` = 繁體中文', keyword: '关键词' },
     features: {

@@ -8,7 +8,7 @@ import iconv from 'iconv-lite';
 
 export const route: Route = {
     path: '/roll',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/c114/roll',
     parameters: {},
     features: {

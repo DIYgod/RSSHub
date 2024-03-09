@@ -5,7 +5,7 @@ import { processList, ProcessFeed, baseUrl, apiUrl } from './utils';
 
 export const route: Route = {
     path: '/user/:id',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/vocus/user/tsetyan',
     parameters: { id: '用户 id，可在用户主页的 URL 找到' },
     features: {

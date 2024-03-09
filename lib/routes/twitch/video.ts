@@ -13,7 +13,7 @@ const FILTER_NODE_TYPE_MAP = {
 
 export const route: Route = {
     path: '/video/:login/:filter?',
-    categories: ['multimedia'],
+    categories: ['live'],
     example: '/twitch/video/riotgames/highlights',
     parameters: { login: 'Twitch username', filter: 'Video type, Default to all' },
     features: {

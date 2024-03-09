@@ -6,7 +6,7 @@ const host = 'https://ifi-audio.com';
 
 export const route: Route = {
     path: '/download/:val/:id',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/ifi-audio/download/1503007035/44472',
     parameters: { val: 'product val', id: 'product id' },
     features: {

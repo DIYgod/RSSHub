@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 import { getArticleDetails } from './utils';
 export const route: Route = {
     path: '/:category',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/theatlantic/latest',
     parameters: { category: 'category, see below' },
     features: {

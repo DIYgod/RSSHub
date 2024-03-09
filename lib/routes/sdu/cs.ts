@@ -11,7 +11,7 @@ const urlList = ['xygg.htm', 'xsbg.htm', 'kjjx.htm'];
 
 export const route: Route = {
     path: '/cs/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/sdu/cs/0',
     parameters: { type: '默认为 `0`' },
     features: {

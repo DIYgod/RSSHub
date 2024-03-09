@@ -5,7 +5,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:region?',
-    categories: ['travel'],
+    categories: ['forecast'],
     example: '/earthquake',
     parameters: { region: '区域，0全部，1国内（默认），2国外' },
     features: {

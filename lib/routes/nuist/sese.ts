@@ -9,7 +9,7 @@ const baseUrl = 'https://sese.nuist.edu.cn';
 
 export const route: Route = {
     path: '/sese/:category?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/nuist/sese/tzgg1',
     parameters: { category: '默认为通知公告' },
     features: {

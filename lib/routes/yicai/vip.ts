@@ -7,7 +7,7 @@ import { rootUrl, ProcessItems } from './utils';
 
 export const route: Route = {
     path: '/vip/:id?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/yicai/vip/428',
     parameters: { id: '频道 id，可在对应频道页中找到，默认为一元点金' },
     features: {

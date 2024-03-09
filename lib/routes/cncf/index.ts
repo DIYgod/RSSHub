@@ -8,7 +8,7 @@ const rootURL = 'https://www.cncf.io';
 
 export const route: Route = {
     path: '/:cate?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/cncf',
     parameters: { cate: 'blog by default' },
     features: {

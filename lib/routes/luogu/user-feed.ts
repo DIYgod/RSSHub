@@ -7,7 +7,7 @@ const md = MarkdownIt();
 
 export const route: Route = {
     path: '/user/feed/:uid',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/luogu/user/feed/1',
     parameters: { uid: '用户 UID' },
     features: {

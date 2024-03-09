@@ -5,7 +5,7 @@ import { renderHTML } from './utils';
 
 export const route: Route = {
     path: '/jobs',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/gocn/jobs',
     parameters: {},
     features: {

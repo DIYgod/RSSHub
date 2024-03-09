@@ -5,7 +5,7 @@ import RSSParser from '@/utils/rss-parser';
 
 export const route: Route = {
     path: '/:configId/posts',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/discourse/0/posts',
     parameters: { configId: 'Environment variable configuration id, see above' },
     features: {

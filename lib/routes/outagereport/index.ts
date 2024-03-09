@@ -5,7 +5,7 @@ const baseUrl = 'https://outage.report/';
 
 export const route: Route = {
     path: '/:name/:count?',
-    categories: ['travel'],
+    categories: ['forecast'],
     example: '/outagereport/ubisoft/5',
     parameters: { name: 'Service name, spelling format must be consistent with URL', count: 'Counting threshold, will only be written in RSS if the number of people who report to stop serving is not less than this number' },
     features: {

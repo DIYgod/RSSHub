@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/memory',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/houxu/memory',
     parameters: {},
     features: {

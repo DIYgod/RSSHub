@@ -13,7 +13,7 @@ import sanitizeHtml from 'sanitize-html';
 
 export const route: Route = {
     path: '/:lang/:category?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/kcna/en',
     parameters: { lang: 'Language, refer to the table below', category: 'Category, refer to the table below' },
     features: {

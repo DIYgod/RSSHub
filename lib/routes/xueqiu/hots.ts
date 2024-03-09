@@ -6,7 +6,7 @@ import sanitizeHtml from 'sanitize-html';
 
 export const route: Route = {
     path: '/hots',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/xueqiu/hots',
     parameters: {},
     features: {

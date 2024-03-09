@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/mall/new/:category?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/mall/new/1',
     parameters: { category: '分类，默认全部，见下表' },
     features: {

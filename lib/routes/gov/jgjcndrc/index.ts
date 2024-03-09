@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/jgjcndrc/:id?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/jgjcndrc',
     parameters: { id: '栏目 id，见下表，默认为 692，即通知公告' },
     features: {

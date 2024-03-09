@@ -5,7 +5,7 @@ import got from '@/utils/got'; // 自订的 got
 
 export const route: Route = {
     path: '/:field',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/dblp/knowledge%20tracing',
     parameters: { field: 'Research field' },
     features: {

@@ -18,7 +18,7 @@ art.defaults.imports.parseContent = parseContent;
 
 export const route: Route = {
     path: '/top20',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/zhubai/top20',
     parameters: {},
     features: {

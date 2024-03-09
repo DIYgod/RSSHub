@@ -16,7 +16,7 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/current/:journal?',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/science/current/science',
     parameters: { journal: 'Short name for a journal' },
     features: {

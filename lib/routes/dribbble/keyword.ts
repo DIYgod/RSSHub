@@ -3,7 +3,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/keyword/:keyword',
-    categories: ['live'],
+    categories: ['design'],
     example: '/dribbble/keyword/player',
     parameters: { keyword: 'desired keyword' },
     features: {

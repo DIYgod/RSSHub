@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: ['/tieba/forum/good/:kw/:cid?/:sortBy?', '/tieba/forum/:kw/:sortBy?'],
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/baidu/tieba/forum/good/女图',
     parameters: { kw: '吧名', cid: '精品分类，默认为 `0`（全部分类），如果不传 `cid` 则获取全部分类', sortBy: '排序方式：`created`, `replied`。默认为 `created`' },
     features: {

@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/schedule/:propertyId?/:typeId?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/nowcoder/schedule',
     parameters: { propertyId: '行业, 在控制台中抓取接口，可获得行业id，默认0', typeId: '类别，同上' },
     features: {

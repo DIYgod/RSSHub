@@ -23,7 +23,7 @@ const channelMap = {
 
 export const route: Route = {
     path: '/:channel?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/theblockbeats/newsflash',
     parameters: { channel: '类型，见下表，默认为快讯' },
     features: {

@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/citations/:id',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/google/citations/mlmE4JMAAAAJ',
     parameters: { id: 'N' },
     features: {

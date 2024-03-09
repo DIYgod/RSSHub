@@ -6,7 +6,7 @@ import { parseItem } from './utils';
 
 export const route: Route = {
     path: '/hot-article/:type?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/gelonghui/hot-article',
     parameters: { type: '`day` 为日排行，`week` 为周排行，默认为 `day`' },
     features: {

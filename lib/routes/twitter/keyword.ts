@@ -3,7 +3,7 @@ import webApiImpl from './web-api/search';
 
 export const route: Route = {
     path: '/keyword/:keyword/:routeParams?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/twitter/keyword/RSSHub',
     parameters: { keyword: 'keyword', routeParams: 'extra parameters, see the table above' },
     features: {

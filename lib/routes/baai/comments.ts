@@ -7,7 +7,7 @@ import { baseUrl, apiHost } from './utils';
 
 export const route: Route = {
     path: '/hub/comments',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/baai/hub/comments',
     parameters: {},
     features: {

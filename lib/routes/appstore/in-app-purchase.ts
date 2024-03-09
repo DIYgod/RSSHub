@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/iap/:country/:id',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/appstore/iap/us/id953286746',
     parameters: {
         country: 'App Store Country, obtain from the app URL https://apps.apple.com/us/app/id953286746, in this case, `us`',

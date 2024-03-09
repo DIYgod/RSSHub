@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/dwxgb/:category/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/bnu/dwxgb/xwzx/tzgg',
     parameters: { category: '大分类', type: '子分类，例子如下' },
     features: {

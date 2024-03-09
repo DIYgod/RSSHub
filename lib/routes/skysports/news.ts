@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/news/:team',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/skysports/news/ac-milan',
     parameters: { team: 'Team id, can be found in URL to the team page' },
     features: {

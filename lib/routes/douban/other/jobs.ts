@@ -12,7 +12,7 @@ const titleMap = {
 
 export const route: Route = {
     path: '/jobs/:type',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/jobs/campus',
     parameters: { type: '招聘类型，见下表' },
     features: {

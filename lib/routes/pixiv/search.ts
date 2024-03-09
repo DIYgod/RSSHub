@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/search/:keyword/:order?/:mode?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/pixiv/search/Nezuko/popular/2',
     parameters: { keyword: 'keyword', order: 'rank mode, empty or other for time order, popular for popular order', mode: 'filte R18 content' },
     features: {

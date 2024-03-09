@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/people/answers/:id',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/zhihu/people/answers/diygod',
     parameters: { id: '作者 id，可在用户主页 URL 中找到' },
     features: {

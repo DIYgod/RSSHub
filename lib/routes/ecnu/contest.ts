@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/acm/contest/:category?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/ecnu/acm/contest/public',
     parameters: { category: 'category is optional, default is all, use `public` for public only contests' },
     features: {

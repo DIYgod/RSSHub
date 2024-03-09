@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/keyword/:keyword',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bsky/keyword/hello',
     parameters: { keyword: 'N' },
     features: {

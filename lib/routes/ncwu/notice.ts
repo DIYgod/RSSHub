@@ -6,7 +6,7 @@ const baseUrl = 'https://www.ncwu.edu.cn/xxtz.htm';
 
 export const route: Route = {
     path: '/notice',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/ncwu/notice',
     parameters: {},
     features: {

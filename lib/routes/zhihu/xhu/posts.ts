@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/xhu/people/posts/:hexId',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/zhihu/xhu/people/posts/246e6cf44e94cefbf4b959cb5042bc91',
     parameters: { hexId: '用户的 16 进制 id，获取方式同 [xhu - 用户动态](#zhi-hu-xhu-yong-hu-dong-tai)' },
     features: {

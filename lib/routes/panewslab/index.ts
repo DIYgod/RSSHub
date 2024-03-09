@@ -21,7 +21,7 @@ const categories = {
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/panewslab',
     parameters: { category: '分类，见下表，默认为精选' },
     features: {

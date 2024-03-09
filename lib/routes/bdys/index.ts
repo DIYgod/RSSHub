@@ -17,7 +17,7 @@ const allowDomains = new Set(['52bdys.com', 'bde4.icu', 'bdys01.com']);
 
 export const route: Route = {
     path: '/:caty?/:type?/:area?/:year?/:order?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/bdys',
     parameters: {
         caty: '影视类型，见下表，默认为 `all` 即不限',

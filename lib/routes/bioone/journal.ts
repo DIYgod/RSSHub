@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/journals/:journal?',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/bioone/journals/acta-chiropterologica',
     parameters: { journal: 'Journals, can be found in URL' },
     features: {

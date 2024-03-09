@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/channel/:id?',
-    categories: ['travel'],
+    categories: ['forecast'],
     example: '/cma/channel/380',
     parameters: { id: '分类，见下表，可在对应频道页 URL 中找到，默认为 380，即每日天气提示' },
     features: {

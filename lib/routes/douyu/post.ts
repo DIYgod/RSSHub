@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/post/:id',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/douyu/post/631737151576473201',
     parameters: { id: '帖子 id，可在帖子页 URL 中找到' },
     features: {

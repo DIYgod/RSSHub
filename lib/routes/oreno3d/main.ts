@@ -41,7 +41,7 @@ function get_user_url(rootUrl, ctx, sort) {
 }
 export const route: Route = {
     path: ['/authors/:authorid/:sort/:pagelimit?', '/characters/:characterid/:sort/:pagelimit?', '/origins/:originid/:sort/:pagelimit?', '/search/:keyword/:sort/:pagelimit?', '/tags/:tagid/:sort/:pagelimit?'],
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/oreno3d/authors/3189/latest/1',
     parameters: { authorid: 'Author id, can be found in URL', sort: 'Sort method, see the table above', pagelimit: 'The maximum number of pages to be crawled, the default is 1' },
     features: {

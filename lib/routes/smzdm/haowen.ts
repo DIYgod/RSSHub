@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/haowen/:day?',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/smzdm/haowen/1',
     parameters: { day: '以天为时间跨度，默认为 `all`，其余可以选择 `1`，`7`，`30`，`365`' },
     features: {

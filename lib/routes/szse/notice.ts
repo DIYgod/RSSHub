@@ -6,7 +6,7 @@ import * as url from 'node:url';
 const host = 'http://www.szse.cn/';
 export const route: Route = {
     path: '/notice',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/szse/notice',
     parameters: {},
     features: {

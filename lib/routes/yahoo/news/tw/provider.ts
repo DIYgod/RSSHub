@@ -4,7 +4,7 @@ import { getArchive, getProviderList, parseList, parseItem } from './utils';
 
 export const route: Route = {
     path: '/news/provider/:region/:providerId',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/yahoo/news/provider/tw/udn.com',
     parameters: { region: '地區，見下表', providerId: '新聞來源 ID，可透過下方新聞來源列表獲得' },
     features: {

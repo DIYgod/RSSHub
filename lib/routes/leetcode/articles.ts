@@ -14,7 +14,7 @@ const gqlEndpoint = `${host}/graphql`;
 
 export const route: Route = {
     path: '/articles',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/leetcode/articles',
     parameters: {},
     features: {

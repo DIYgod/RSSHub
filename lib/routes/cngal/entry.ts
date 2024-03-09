@@ -10,7 +10,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/entry/:id',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/cngal/entry/2693',
     parameters: { id: '词条ID，游戏或制作者页面URL的最后一串数字' },
     features: {

@@ -10,7 +10,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/caac/cjwt/:category?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/caac/cjwt',
     parameters: { category: '分类，见下表，默认为全部' },
     features: {

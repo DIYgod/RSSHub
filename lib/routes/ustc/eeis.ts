@@ -14,7 +14,7 @@ const host = 'https://eeis.ustc.edu.cn';
 
 export const route: Route = {
     path: '/eeis/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/ustc/eeis/tzgg',
     parameters: { type: '分类，见下表，默认为通知公告' },
     features: {

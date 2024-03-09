@@ -5,7 +5,7 @@ const baseURL = 'https://www.hao6v.tv/gvod/dsj.html';
 
 export const route: Route = {
     path: '/latestTVSeries',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/6v123/latestTVSeries',
     parameters: {},
     features: {

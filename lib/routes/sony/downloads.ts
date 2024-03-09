@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 const host = 'https://www.sony.com';
 export const route: Route = {
     path: '/downloads/:productType/:productId',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/sony/downloads/product/nw-wm1am2',
     parameters: { productType: 'product type', productId: 'product id' },
     features: {

@@ -10,7 +10,7 @@ import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:id',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/mirror/tingfei.eth',
     parameters: { id: 'user id' },
     features: {

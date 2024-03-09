@@ -6,7 +6,7 @@ const url = 'https://book.douban.com/latest';
 
 export const route: Route = {
     path: '/book/latest',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/book/latest',
     parameters: {},
     features: {

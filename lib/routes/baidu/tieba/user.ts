@@ -6,7 +6,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/tieba/user/:uid',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/baidu/tieba/user/斗鱼游戏君',
     parameters: { uid: '用户 ID' },
     features: {

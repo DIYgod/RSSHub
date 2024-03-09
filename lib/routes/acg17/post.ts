@@ -6,7 +6,7 @@ const host = 'http://acg17.com';
 
 export const route: Route = {
     path: '/post/all',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/acg17/post/all',
     parameters: {},
     features: {

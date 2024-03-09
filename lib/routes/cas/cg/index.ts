@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/cg/:caty?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/cas/cg/cgzhld',
     parameters: { caty: '分类，见下表，默认为工作动态' },
     features: {

@@ -79,7 +79,7 @@ const timeRange = {
 
 export const route: Route = {
     path: '/news/rank/:category?/:type?/:time?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/163/news/rank/whole/click/day',
     parameters: {
         category: '新闻分类，参见下表，默认为“全站”',

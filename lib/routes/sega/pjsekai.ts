@@ -5,7 +5,7 @@ import timezone from '@/utils/timezone';
 import cache from '@/utils/cache';
 export const route: Route = {
     path: '/pjsekai/news',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/sega/pjsekai/news',
     parameters: {},
     features: {

@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:keyword?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/topys',
     parameters: { keyword: '关键字，可在对应结果页的 URL 中找到' },
     features: {

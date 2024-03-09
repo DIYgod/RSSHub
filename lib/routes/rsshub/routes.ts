@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/routes/:lang?',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/rsshub/routes/en',
     parameters: { lang: 'Language, `zh` means Chinese docs, other values or null means English docs, `en` by default' },
     features: {

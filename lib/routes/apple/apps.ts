@@ -17,7 +17,7 @@ const platforms = {
 
 export const route: Route = {
     path: '/apps/update/:country/:id/:platform?',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/apple/apps/update/us/id408709785',
     parameters: { country: 'App Store Country, obtain from the app URL, see below', id: 'App id, obtain from the app URL', platform: 'App Platform, see below, all by default' },
     features: {

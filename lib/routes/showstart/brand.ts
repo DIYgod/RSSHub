@@ -4,7 +4,7 @@ import { fetchBrandInfo } from './service';
 
 export const route: Route = {
     path: '/brand/:id',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/showstart/brand/34707',
     parameters: { id: '厂牌 ID' },
     features: {

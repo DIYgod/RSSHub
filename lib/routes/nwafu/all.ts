@@ -7,7 +7,7 @@ import { nwafuMap } from './utils';
 
 export const route: Route = {
     path: '/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/nwafu/lib',
     parameters: { type: '默认为 `jiaowu`' },
     features: {

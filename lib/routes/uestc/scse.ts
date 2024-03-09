@@ -22,7 +22,7 @@ const prefixes = {
 
 export const route: Route = {
     path: '/scse',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/uestc/scse',
     parameters: {},
     features: {

@@ -13,7 +13,7 @@ const titles = {
 
 export const route: Route = {
     path: '/datahero/:category?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/dtcj/datahero',
     parameters: { category: '分类，见下表，默认为全部' },
     features: {

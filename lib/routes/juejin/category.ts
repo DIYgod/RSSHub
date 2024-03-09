@@ -5,7 +5,7 @@ import util from './utils';
 
 export const route: Route = {
     path: '/category/:category',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/juejin/category/frontend',
     parameters: { category: '分类名' },
     features: {

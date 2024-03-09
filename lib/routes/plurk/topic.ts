@@ -6,7 +6,7 @@ import { baseUrl, fetchFriends, getPlurk } from './utils';
 
 export const route: Route = {
     path: '/topic/:topic',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/plurk/topic/standwithukraine',
     parameters: { topic: 'Topic ID, can be found in URL' },
     features: {

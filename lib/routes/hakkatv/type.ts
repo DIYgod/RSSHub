@@ -10,7 +10,7 @@ const apiUrl = 'https://api.hakkatv.org.tw';
 
 export const route: Route = {
     path: '/news/:type?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/hakkatv/news',
     parameters: { type: '新聞，見下表，留空為全部' },
     features: {

@@ -10,7 +10,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/projects',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/pts/projects',
     parameters: {},
     features: {

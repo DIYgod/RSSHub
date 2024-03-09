@@ -11,7 +11,7 @@ const renderDescription = (description, images) => art(path.join(__dirname, '../
 
 export const route: Route = {
     path: '/bbs/follow-list/:uid',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/mihoyo/bbs/follow-list/77005350',
     parameters: { uid: '用户uid' },
     features: {

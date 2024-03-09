@@ -18,7 +18,7 @@ const findNatgeo = ($) =>
 
 export const route: Route = {
     path: '/latest-stories',
-    categories: ['shopping'],
+    categories: ['travel'],
     example: '/nationalgeographic/latest-stories',
     parameters: {},
     features: {

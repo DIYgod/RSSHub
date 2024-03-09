@@ -6,7 +6,7 @@ import { getUserCatalogMainContentQuery } from './graphql.js';
 
 export const route: Route = {
     path: '/list/:user/:catalogId',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/medium/list/imsingee/f2d8d48096a9',
     parameters: { user: 'Username', catalogId: 'List ID' },
     features: {

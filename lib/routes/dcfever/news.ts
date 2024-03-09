@@ -6,7 +6,7 @@ import { baseUrl, parseItem } from './utils';
 
 export const route: Route = {
     path: '/news/:type?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/dcfever/news',
     parameters: { type: '分類，預設為所有新聞' },
     features: {

@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: ['/aia/notice/:type?', '/auto/notice/:type?'],
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/hust/aia/notice',
     parameters: { type: '分区，默认为最新通知，可在网页 URL 中找到' },
     features: {

@@ -6,7 +6,7 @@ import { getWebInlineRecommendedFeedQuery } from './graphql.js';
 
 export const route: Route = {
     path: '/for-you/:user',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/medium/for-you/imsingee',
     parameters: { user: 'Username' },
     features: {

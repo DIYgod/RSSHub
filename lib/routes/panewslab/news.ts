@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: ['/news', '/newsflash'],
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/panewslab/news',
     parameters: {},
     features: {

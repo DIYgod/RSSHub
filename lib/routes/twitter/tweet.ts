@@ -3,7 +3,7 @@ import webApiImpl from './web-api/tweet';
 
 export const route: Route = {
     path: '/tweet/:id/status/:status/:original?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/twitter/tweet/DIYgod/status/1650844643997646852',
     parameters: {
         id: 'username; in particular, if starts with `+`, it will be recognized as a [unique ID](https://github.com/DIYgod/RSSHub/issues/12221), e.g. `+44196397`',

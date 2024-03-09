@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/xhu/collection/:id',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/zhihu/xhu/collection/26444956',
     parameters: { id: '收藏夹 id, 可在收藏夹页面 URL 中找到' },
     features: {

@@ -5,7 +5,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/platform/:area?/:p_type?/:uid?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/platform/-1',
     parameters: {
         area: '省市-国标码,默认为-1即全国',

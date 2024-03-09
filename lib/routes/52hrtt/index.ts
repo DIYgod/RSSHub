@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:area?/:type?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/52hrtt/global',
     parameters: { area: '地区，默认为全球', type: '分类，默认为新闻' },
     features: {

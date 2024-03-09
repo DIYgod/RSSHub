@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/iee/kydt',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/cas/iee/kydt',
     parameters: {},
     features: {

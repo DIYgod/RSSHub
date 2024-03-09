@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/nfapp/reporter/:reporter',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/southcn/nfapp/reporter/969927791',
     parameters: { reporter: '作者 UUID' },
     features: {

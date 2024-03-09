@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/tag/:tag?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/bandcamp/tag/united-kingdom',
     parameters: { tag: 'Tag, can be found in URL' },
     features: {

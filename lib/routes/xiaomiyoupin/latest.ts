@@ -4,7 +4,7 @@ import { parseModule, parseFloorItem } from './utils';
 
 export const route: Route = {
     path: '/latest',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/xiaomiyoupin/latest',
     parameters: {},
     features: {

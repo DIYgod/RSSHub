@@ -21,7 +21,7 @@ const arr = {
 
 export const route: Route = {
     path: '/job/:subpath?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/xjtu/job/zxgg',
     parameters: { subpath: '栏目类型，默认请求`zxgg`，详见下方表格' },
     features: {

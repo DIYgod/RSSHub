@@ -23,7 +23,7 @@ const typeMap = {
 
 export const route: Route = {
     path: '/news/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/wsyu/news/xxyw',
     parameters: { type: '分类，默认为 `xxyw`' },
     features: {

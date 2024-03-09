@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/lawandrules/:slug?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/sse/lawandrules',
     parameters: { slug: '见下文，默认为 `latest`' },
     features: {

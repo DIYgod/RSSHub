@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/mesalab/kb',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/cas/mesalab/kb',
     parameters: {},
     features: {

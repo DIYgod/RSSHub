@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/:category/:article_type?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/nikkei/news',
     parameters: { category: 'Category, see table below', article_type: 'Only includes free articles, set `free` to enable, disabled by default' },
     features: {

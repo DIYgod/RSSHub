@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/cx/:category?/:city?',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/tesla/cx/生活方式/北京',
     parameters: { category: '分类，见下表，默认为空，即全部', city: '城市，默认为空，即全国' },
     features: {

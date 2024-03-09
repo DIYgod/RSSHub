@@ -9,7 +9,7 @@ import { parseDyArticle } from './utils';
 
 export const route: Route = {
     path: '/dy2/:id',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/163/dy2/T1555591616739',
     parameters: { id: 'id，该网易号主页网址最后一项html的文件名' },
     features: {

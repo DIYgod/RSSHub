@@ -10,7 +10,7 @@ const theme = 'guozaiguanli';
 
 export const route: Route = {
     path: '/mof/bond/:category?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/mof/bond',
     parameters: { category: '专题，见下表，默认为国债管理工作动态' },
     features: {

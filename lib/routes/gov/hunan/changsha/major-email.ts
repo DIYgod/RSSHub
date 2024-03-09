@@ -8,7 +8,7 @@ const baseUrl = 'http://wlwz.changsha.gov.cn';
 
 export const route: Route = {
     path: '/hunan/changsha/major-email',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/hunan/changsha/major-email',
     parameters: {},
     features: {

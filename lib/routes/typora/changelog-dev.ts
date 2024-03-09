@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/changelog/dev',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/typora/changelog/dev',
     parameters: {},
     features: {

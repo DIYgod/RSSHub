@@ -8,7 +8,7 @@ const baseUrl = 'https://e.ecust.edu.cn';
 
 export const route: Route = {
     path: '/jxjy/news',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/ecust/jxjy/news',
     parameters: {},
     features: {

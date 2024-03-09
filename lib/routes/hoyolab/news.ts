@@ -76,7 +76,7 @@ const getPostContent = (list, { language }) =>
 
 export const route: Route = {
     path: '/news/:language/:gids/:type',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/hoyolab/news/zh-cn/2/2',
     parameters: { language: 'Language', gids: 'Game ID', type: 'Announcement type' },
     features: {

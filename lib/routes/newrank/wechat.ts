@@ -7,7 +7,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/wechat/:wxid',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/newrank/wechat/chijiread',
     parameters: { wxid: '微信号，若微信号与新榜信息不一致，以新榜为准' },
     features: {

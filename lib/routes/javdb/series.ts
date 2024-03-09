@@ -3,7 +3,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/series/:id/:filter?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/javdb/series/1NW',
     parameters: { id: '编号，可在系列页 URL 中找到', filter: '过滤，见下表，默认为 `全部`' },
     features: {

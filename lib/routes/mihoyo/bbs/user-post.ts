@@ -4,7 +4,7 @@ import { post2item } from './utils';
 
 export const route: Route = {
     path: '/bbs/user-post/:uid',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/mihoyo/bbs/user-post/77005350',
     parameters: { uid: '用户uid' },
     features: {

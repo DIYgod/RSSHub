@@ -12,7 +12,7 @@ import locations from './locations';
 
 export const route: Route = {
     path: '/discover/:query?/:subCate?/:hasVideo?/:city?/:college?/:recommendLevel?/:sort?',
-    categories: ['live'],
+    categories: ['design'],
     example: '/zcool/discover',
     parameters: {
         query: '查询参数或分类，若填写分类见下表，默认为空 或 `0` 即精选',

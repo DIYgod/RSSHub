@@ -3,7 +3,7 @@ import fetchFeed from './utils';
 
 export const route: Route = {
     path: '/search/:keyword?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/ruancan/search/Windows',
     parameters: { keyword: '关键字，默认为空' },
     features: {

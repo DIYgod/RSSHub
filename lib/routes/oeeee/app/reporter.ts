@@ -10,7 +10,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/app/reporter/:id',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/oeeee/app/reporter/249',
     parameters: { id: '记者 UID' },
     features: {

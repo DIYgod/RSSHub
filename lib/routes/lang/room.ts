@@ -8,7 +8,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/live/room/:id',
-    categories: ['multimedia'],
+    categories: ['live'],
     example: '/lang/live/room/1352360',
     parameters: { id: '直播间 id, 可在主播直播间页 URL 中找到' },
     features: {

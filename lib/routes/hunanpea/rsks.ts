@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/rsks/:guid',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/hunanpea/rsks/2f1a6239-b4dc-491b-92af-7d95e0f0543e',
     parameters: { guid: '分类 id，可在 URL 中找到' },
     features: {

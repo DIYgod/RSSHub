@@ -13,7 +13,7 @@ const baseUrl = 'http://www.chinadegrees.com.cn';
 
 export const route: Route = {
     path: '/:province?',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/chinadegrees/11',
     parameters: { province: '省市代号，见下表，亦可在 [这里](http://www.chinadegrees.com.cn/help/provinceSwqk.html) 找到，默认为 `11`' },
     features: {

@@ -4,7 +4,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: ['/tuwen/:type?', '/tuwen-xinxian'],
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/coolapk/tuwen',
     parameters: { type: '默认为hot' },
     features: {

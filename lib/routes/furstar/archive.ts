@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/archive/:lang?',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/furstar/archive/cn',
     parameters: { lang: '语言, 留空为jp, 支持cn, en' },
     features: {

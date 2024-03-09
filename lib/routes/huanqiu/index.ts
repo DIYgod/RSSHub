@@ -18,7 +18,7 @@ function getKeysRecursive(dic, key, attr, array) {
 
 export const route: Route = {
     path: '/news/:category?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/huanqiu/news/china',
     parameters: { category: '类别，可以使用二级域名作为参数，默认为：china' },
     features: {

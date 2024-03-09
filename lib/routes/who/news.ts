@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/news/:language?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/who/news',
     parameters: { language: 'Language, see below, English by default' },
     features: {

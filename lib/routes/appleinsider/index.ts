@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/appleinsider',
     parameters: { category: 'Category, see below, News by default' },
     features: {

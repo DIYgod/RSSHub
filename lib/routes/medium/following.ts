@@ -6,7 +6,7 @@ import { getFollowingFeedQuery } from './graphql.js';
 
 export const route: Route = {
     path: '/following/:user',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/medium/following/imsingee',
     parameters: { user: 'Username' },
     features: {

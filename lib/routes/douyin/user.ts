@@ -8,7 +8,7 @@ import { templates, resolveUrl, proxyVideo, getOriginAvatar, universalGet } from
 
 export const route: Route = {
     path: '/user/:uid/:routeParams?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douyin/user/MS4wLjABAAAARcAHmmF9mAG3JEixq_CdP72APhBlGlLVbN-1eBcPqao',
     parameters: { uid: 'uid，可在用户页面 URL 中找到', routeParams: '额外参数，query string 格式，请参阅上面的表格' },
     features: {

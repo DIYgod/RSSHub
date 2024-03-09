@@ -13,7 +13,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/list/:id?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/8264/list/751',
     parameters: { id: '列表 id，见下表，默认为 751，即热门推荐' },
     features: {

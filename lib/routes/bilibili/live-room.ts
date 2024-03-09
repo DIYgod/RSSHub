@@ -4,7 +4,7 @@ import cache from './cache';
 
 export const route: Route = {
     path: '/live/room/:roomID',
-    categories: ['multimedia'],
+    categories: ['live'],
     example: '/bilibili/live/room/3',
     parameters: { roomID: '房间号, 可在直播间 URL 中找到, 长短号均可' },
     features: {

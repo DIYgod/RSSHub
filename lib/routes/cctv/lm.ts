@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/lm/:id?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/cctv/lm/xwzk',
     parameters: { id: '栏目 id，可在对应栏目页 URL 中找到，默认为 `xwzk` 即 新闻周刊' },
     features: {

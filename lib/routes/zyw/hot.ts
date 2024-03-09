@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/hot/:site?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/zyw/hot',
     parameters: { site: '站点，见下表，默认为空，即全部' },
     features: {

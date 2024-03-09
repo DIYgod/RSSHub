@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/recent-actions/:minrating?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/codeforces/recent-actions',
     parameters: { minrating: 'The minimum blog/comment rating required. Default: 1' },
     features: {

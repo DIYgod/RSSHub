@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/user/:user',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/rattibha/user/elonmusk',
     parameters: { user: 'Twitter username, without @' },
     features: {

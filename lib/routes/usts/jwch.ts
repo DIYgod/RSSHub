@@ -9,7 +9,7 @@ const rootURL = 'http://jwch.usts.edu.cn/index';
 
 export const route: Route = {
     path: '/jwch/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/usts/jwch',
     parameters: { type: '类型，默认为教务动态' },
     features: {

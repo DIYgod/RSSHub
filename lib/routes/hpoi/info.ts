@@ -5,7 +5,7 @@ import { parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/info/:type?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/hpoi/info/all',
     parameters: { type: '分类, 见下表, 默认为`all`' },
     features: {

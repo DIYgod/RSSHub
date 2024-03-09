@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/daily_briefing_chinese',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/nytimes/daily_briefing_chinese',
     parameters: {},
     features: {

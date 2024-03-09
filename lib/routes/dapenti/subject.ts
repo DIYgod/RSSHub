@@ -3,7 +3,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/subject/:id',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/dapenti/subject/184',
     parameters: { id: '主题 id' },
     features: {

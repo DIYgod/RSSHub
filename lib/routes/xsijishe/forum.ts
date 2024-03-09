@@ -7,7 +7,7 @@ const baseUrl = 'https://xsijishe.com';
 
 export const route: Route = {
     path: '/forum/:fid',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/xsijishe/forum/51',
     parameters: { fid: '子论坛 id' },
     features: {

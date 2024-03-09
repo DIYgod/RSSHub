@@ -6,7 +6,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/rczp/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/nju/rczp/xxfb',
     parameters: { type: '分类名' },
     features: {

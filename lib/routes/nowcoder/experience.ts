@@ -9,7 +9,7 @@ const host = 'https://www.nowcoder.com';
 
 export const route: Route = {
     path: '/experience/:tagId',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/nowcoder/experience/639?order=3&companyId=665&phaseId=0',
     parameters: { tagId: '职位id [🔗查询链接](https://www.nowcoder.com/profile/all-jobs)复制打开' },
     features: {

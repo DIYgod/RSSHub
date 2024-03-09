@@ -12,7 +12,7 @@ import { art } from '@/utils/render';
 
 export const route: Route = {
     path: '/new',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/xys/new',
     parameters: {},
     features: {

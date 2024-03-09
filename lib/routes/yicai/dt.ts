@@ -17,7 +17,7 @@ const columns = {
 
 export const route: Route = {
     path: '/dt/:column?/:category?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/yicai/dt/article',
     parameters: { column: '栏目，见下表，默认为文章', category: '分类，见下表，默认为全部' },
     features: {

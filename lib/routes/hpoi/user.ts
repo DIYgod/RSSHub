@@ -14,7 +14,7 @@ const titleMap = {
 
 export const route: Route = {
     path: '/user/:user_id/:caty',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/hpoi/user/116297/buy',
     parameters: { user_id: '用户ID', caty: '类别, 见下表' },
     features: {

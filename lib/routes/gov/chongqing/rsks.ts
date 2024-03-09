@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 const rsksUrl = 'https://rlsbj.cq.gov.cn/ywzl/rsks/tzgg_109374/';
 export const route: Route = {
     path: '/chongqing/rsks',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/chongqing/rsks',
     parameters: {},
     features: {

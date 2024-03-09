@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/search/:keyword?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/hacking8/search/rsshub',
     parameters: { keyword: '关键字，默认为空' },
     features: {

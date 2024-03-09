@@ -6,7 +6,7 @@ import { baseUrl, apiHost, parseEventDetail, parseItem } from './utils';
 
 export const route: Route = {
     path: '/hub/events',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/baai/hub/events',
     parameters: {},
     features: {

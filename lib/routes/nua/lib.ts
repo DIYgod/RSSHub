@@ -4,7 +4,7 @@ const baseUrl = 'https://lib.nua.edu.cn';
 
 export const route: Route = {
     path: '/lib/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/nua/lib/xwdt',
     parameters: { type: 'News Type' },
     features: {

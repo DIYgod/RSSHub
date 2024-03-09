@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/movie/ustop',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/movie/ustop',
     parameters: {},
     features: {

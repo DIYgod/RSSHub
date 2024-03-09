@@ -13,7 +13,7 @@ const cookieJar = new CookieJar();
 
 export const route: Route = {
     path: '/journal/:journal',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/springer/journal/10450',
     parameters: { journal: 'Journal Code, the number in the URL from the journal homepage' },
     features: {

@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/post/:language?/:keyword?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/atcoder/post',
     parameters: { language: 'Language, `jp` as Japanese or `en` as English, English by default', keyword: 'Keyword' },
     features: {

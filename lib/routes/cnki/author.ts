@@ -8,7 +8,7 @@ const rootUrl = 'https://kns.cnki.net';
 
 export const route: Route = {
     path: '/author/:code',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/cnki/author/000042423923',
     parameters: { code: '作者对应code，可以在网址中得到' },
     features: {

@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/developer/group/:type',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/aliyun/developer/group/alitech',
     parameters: { type: '对应技术领域分类' },
     features: {

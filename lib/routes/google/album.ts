@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/album/:id',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/google/album/msFFnAzKmQmWj76EA',
     parameters: { id: 'album ID, can be found in URL, for example, `https://photos.app.goo.gl/msFFnAzKmQmWj76EA` to `msFFnAzKmQmWj76EA`' },
     features: {

@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/analyst/column/:type?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/qianzhan/analyst/column/all',
     parameters: { type: '分类，见下表' },
     features: {

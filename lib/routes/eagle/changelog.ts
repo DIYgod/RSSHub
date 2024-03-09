@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/changelog/:language?',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/eagle/changelog/en',
     parameters: { language: 'Language, see list, default to be `cn`' },
     features: {

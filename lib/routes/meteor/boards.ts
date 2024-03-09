@@ -4,7 +4,7 @@ import { baseUrl, getBoards } from './utils';
 
 export const route: Route = {
     path: '/boards',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/meteor/boards',
     parameters: {},
     features: {

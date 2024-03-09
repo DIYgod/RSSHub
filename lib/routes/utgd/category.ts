@@ -15,7 +15,7 @@ const md = MarkdownIt({
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/utgd/method',
     parameters: { category: '分类，可在对应分类页的 URL 中找到，默认为方法' },
     features: {

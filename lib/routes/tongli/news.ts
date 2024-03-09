@@ -6,7 +6,7 @@ import * as cheerio from 'cheerio';
 
 export const route: Route = {
     path: '/news/:type',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/tongli/news/6',
     parameters: { type: '分類，可以在“新聞”鏈接中找到' },
     features: {

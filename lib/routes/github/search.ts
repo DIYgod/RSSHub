@@ -7,7 +7,7 @@ const host = 'https://github.com';
 
 export const route: Route = {
     path: '/search/:query/:sort?/:order?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/github/search/RSSHub/bestmatch/desc',
     parameters: { query: 'search keyword', sort: 'Sort options (default to bestmatch)', order: 'Sort order, desc and asc (desc descending by default)' },
     features: {

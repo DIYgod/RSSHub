@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/keti/:id?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/bjsk/keti',
     parameters: { id: '分类 id，见下表，默认为通知公告' },
     features: {

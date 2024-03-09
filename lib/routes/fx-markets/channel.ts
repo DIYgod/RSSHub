@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:channel',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/fx-markets/trading',
     parameters: { channel: 'channel, can be found in the navi bar links at the home page' },
     features: {

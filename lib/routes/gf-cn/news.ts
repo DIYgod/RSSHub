@@ -11,7 +11,7 @@ const titles = {
 
 export const route: Route = {
     path: '/news/:category?',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/gf-cn/news',
     parameters: { category: '分类，见下表，默认为新闻' },
     features: {

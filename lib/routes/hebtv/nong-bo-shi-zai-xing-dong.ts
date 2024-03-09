@@ -14,7 +14,7 @@ const baseUrl = 'https://web.cmc.hebtv.com/cms/rmt0336/19/19js/st/ds/nmpd/nbszxd
 
 export const route: Route = {
     path: '/nbszxd',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/hebtv/nbszxd',
     parameters: {},
     features: {

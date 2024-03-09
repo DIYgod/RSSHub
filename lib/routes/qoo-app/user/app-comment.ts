@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/user/:lang?/appComment/:uid',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/qoo-app/user/en/appComment/35399143',
     parameters: { lang: 'Language, see the table above, empty means `中文`', uid: 'User ID, can be found in URL' },
     features: {

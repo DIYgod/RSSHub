@@ -4,7 +4,7 @@ import { constructTopicEntry } from './utils';
 
 export const route: Route = {
     path: '/topic/text/:id',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/jike/topic/text/553870e8e4b0cafb0a1bef68',
     parameters: { id: '圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到' },
     features: {

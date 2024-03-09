@@ -8,7 +8,7 @@ import { appsUrl, newsUrl, fixImg } from '../utils';
 
 export const route: Route = {
     path: '/apps/:lang?/post/:id',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/qoo-app/apps/en/post/7675',
     parameters: { lang: 'Language, see the table above, empty means `中文`', id: 'Game ID, can be found in URL' },
     features: {

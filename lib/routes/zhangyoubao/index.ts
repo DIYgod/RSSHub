@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/:category',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/zhangyoubao/lol',
     parameters: { category: '分类，见下表' },
     features: {

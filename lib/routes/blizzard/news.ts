@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/news/:language?/:category?',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/blizzard/news',
     parameters: { language: 'Language code, see below, en-US by default', category: 'Category, see below, All News by default' },
     features: {

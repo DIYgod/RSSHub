@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/xiaoshan',
-    categories: ['travel'],
+    categories: ['forecast'],
     example: '/tingshuitz/xiaoshan',
     parameters: {},
     features: {

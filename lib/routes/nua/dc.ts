@@ -3,7 +3,7 @@ import util from './utils';
 
 export const route: Route = {
     path: '/dc/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/nua/dc/news',
     parameters: { type: 'News Type' },
     features: {

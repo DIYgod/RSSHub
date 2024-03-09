@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/uread/:userid',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/wechat/uread/shensing',
     parameters: { userid: '公众号的微信号, 可在 微信-公众号-更多资料 中找到。并不是所有的都支持，能不能用随缘' },
     features: {

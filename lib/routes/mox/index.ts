@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/mox',
     parameters: { category: '分类，可在对应分类页 URL 中找到' },
     features: {

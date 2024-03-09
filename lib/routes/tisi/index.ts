@@ -8,7 +8,7 @@ const rootUrl = 'https://www.tisi.org';
 
 export const route: Route = {
     path: '/latest',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/tisi/latest',
     parameters: {},
     features: {

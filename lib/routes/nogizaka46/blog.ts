@@ -6,7 +6,7 @@ const rootUrl = 'https://www.nogizaka46.com';
 
 export const route: Route = {
     path: '/blog/:id?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/nogizaka46/blog',
     parameters: { id: 'Member ID, see below, `all` by default' },
     features: {

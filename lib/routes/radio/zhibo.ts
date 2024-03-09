@@ -10,7 +10,7 @@ import CryptoJS from 'crypto-js';
 
 export const route: Route = {
     path: '/zhibo/:id',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/radio/zhibo/1395528',
     parameters: { id: '直播 id，可在对应点播页面的 URL 中找到' },
     features: {

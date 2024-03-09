@@ -8,7 +8,7 @@ import { channels } from './channels';
 
 export const route: Route = {
     path: '/:channelId?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/chinamoney',
     parameters: { channelId: '分类，见下表，默认为 `2834`' },
     features: {

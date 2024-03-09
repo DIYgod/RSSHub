@@ -21,7 +21,7 @@ const cateTitleMap = {
 
 export const route: Route = {
     path: '/ccfcv/:channel/:category',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/ccf/ccfcv/xsdt/xsqy',
     parameters: { channel: '频道，仅支持 `xsdt`', category: '分类，见下表，亦可在网站 url 里找到' },
     features: {

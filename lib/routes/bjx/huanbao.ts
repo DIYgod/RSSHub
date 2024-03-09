@@ -16,7 +16,7 @@ const asyncPoolAll = async (...args) => {
 
 export const route: Route = {
     path: '/huanbao',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/bjx/huanbao',
     parameters: {},
     features: {

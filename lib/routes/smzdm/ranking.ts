@@ -15,7 +15,7 @@ const getTrueHour = (rank_type, rank_id, hour) => {
 
 export const route: Route = {
     path: '/ranking/:rank_type/:rank_id/:hour',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/smzdm/ranking/pinlei/11/3',
     parameters: { rank_type: '榜单类型', rank_id: '榜单ID', hour: '时间跨度' },
     features: {

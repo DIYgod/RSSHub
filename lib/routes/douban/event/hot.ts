@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/event/hot/:locationId',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/event/hot/118172',
     parameters: { locationId: '位置 id, [同城首页](https://www.douban.com/location)打开控制台执行 `window.__loc_id__` 获取' },
     features: {

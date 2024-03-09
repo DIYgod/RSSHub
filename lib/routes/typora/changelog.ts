@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/changelog',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/typora/changelog',
     parameters: {},
     features: {

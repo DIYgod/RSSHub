@@ -4,7 +4,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/article/:type?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/zaozao/article/quality',
     parameters: { type: '文章分类' },
     features: {

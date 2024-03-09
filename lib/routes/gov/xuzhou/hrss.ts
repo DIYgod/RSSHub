@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/xuzhou/hrss/:category?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/xuzhou/hrss',
     parameters: { category: '分类，见下表，默认为通知公告' },
     features: {

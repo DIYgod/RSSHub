@@ -56,7 +56,7 @@ const authorMap = {
 
 export const route: Route = {
     path: '/ugs/news/:author?/:category?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/hrbeu/ugs/news/jwc/jxap',
     parameters: { author: '发布部门，默认为 `gztz`', category: '分类，默认为 `all`' },
     features: {

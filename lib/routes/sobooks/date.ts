@@ -3,7 +3,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/date/:date?',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/sobooks/date/2020-11',
     parameters: { date: '日期，见例子，默认为当前年月' },
     features: {

@@ -7,7 +7,7 @@ const rootUrl = 'http://yjsy.hrbeu.edu.cn';
 
 export const route: Route = {
     path: '/yjsy/list/:id',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/hrbeu/yjsy/list/2981',
     parameters: { id: '栏目编号，由 `URL` 中获取。' },
     features: {

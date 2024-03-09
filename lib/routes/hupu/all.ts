@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/all/:id?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/hupu/all/topic-daily',
     parameters: { id: '编号，可在对应热帖版面 URL 中找到，默认为步行街每日话题' },
     features: {

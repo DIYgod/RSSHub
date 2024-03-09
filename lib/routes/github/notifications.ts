@@ -7,7 +7,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/notifications',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/github/notifications',
     parameters: {},
     features: {

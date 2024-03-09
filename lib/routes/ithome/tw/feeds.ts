@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/tw/feeds/:category',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/ithome/tw/feeds/news',
     parameters: { category: '類別' },
     features: {

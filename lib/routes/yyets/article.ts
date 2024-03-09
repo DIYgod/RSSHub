@@ -9,7 +9,7 @@ const baseURL = 'https://yysub.net';
 
 export const route: Route = {
     path: '/article/:type?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/yyets/article',
     parameters: { type: '[' },
     features: {

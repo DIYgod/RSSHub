@@ -15,7 +15,7 @@ const actionMap = {
 
 export const route: Route = {
     path: '/user/:id',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/gettr/user/jasonmillerindc',
     parameters: { id: 'User id' },
     features: {

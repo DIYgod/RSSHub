@@ -21,7 +21,7 @@ const getItemUrl = (id) => `https://immi.homeaffairs.gov.au/news-media/archive/a
 
 export const route: Route = {
     path: '/immiau/news',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/immiau/news',
     parameters: {},
     features: {

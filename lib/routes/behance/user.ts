@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:user/:type?',
-    categories: ['live'],
+    categories: ['design'],
     example: '/behance/mishapetrick',
     parameters: { user: 'username', type: 'type, `projects` or `appreciated`, `projects` by default' },
     features: {

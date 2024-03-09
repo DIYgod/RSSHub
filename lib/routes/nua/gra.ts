@@ -4,7 +4,7 @@ const baseUrl = 'https://grad.nua.edu.cn';
 
 export const route: Route = {
     path: '/gra/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/nua/gra/1959',
     parameters: { type: 'News Type' },
     features: {

@@ -8,7 +8,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/music/artist/:id',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/163/music/artist/2116',
     parameters: { id: '歌手 id, 可在歌手详情页 URL 中找到' },
     features: {

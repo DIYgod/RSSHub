@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/paper/:id?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/cntheory/paper',
     parameters: { id: '板块，默认为全部' },
     features: {

@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 const baseUrl = 'https://www.cn-healthcare.com';
 export const route: Route = {
     path: '/index',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/cn-healthcare/index',
     parameters: {},
     features: {

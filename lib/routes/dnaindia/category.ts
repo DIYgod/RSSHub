@@ -8,7 +8,7 @@ import logger from '@/utils/logger';
 
 export const route: Route = {
     path: ['/:category', '/topic/:topic'],
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/dnaindia/headlines',
     parameters: { category: 'Find it in the URL, or tables below' },
     features: {

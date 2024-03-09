@@ -8,7 +8,7 @@ const baseUrl = 'https://scs.nuist.edu.cn';
 
 export const route: Route = {
     path: '/scs/:category?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/nuist/scs/xwkx',
     parameters: { category: '默认为新闻快讯' },
     features: {

@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/version',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/minecraft/version',
     parameters: {},
     features: {

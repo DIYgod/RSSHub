@@ -6,7 +6,7 @@ const host = 'https://www.jou.edu.cn';
 
 export const route: Route = {
     path: '/tzgg',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/jou/tzgg',
     parameters: {},
     features: {

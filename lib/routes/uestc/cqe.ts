@@ -17,7 +17,7 @@ const mapTitle = {
 
 export const route: Route = {
     path: '/cqe/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/uestc/cqe/tzgg',
     parameters: { type: '默认为 `tzgg`' },
     features: {

@@ -17,7 +17,7 @@ const map = new Map([
 
 export const route: Route = {
     path: '/yxy/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/zcmu/yxy/0',
     parameters: { type: '模块id' },
     features: {

@@ -7,7 +7,7 @@ import asyncPool from 'tiny-async-pool';
 
 export const route: Route = {
     path: '/subscriptions/:embed?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/youtube/subscriptions',
     parameters: { embed: 'Default to embed the video, set to any value to disable embedding' },
     features: {

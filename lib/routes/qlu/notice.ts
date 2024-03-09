@@ -9,7 +9,7 @@ const host = 'https://www.qlu.edu.cn';
 
 export const route: Route = {
     path: '/notice',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/qlu/notice',
     parameters: {},
     features: {

@@ -29,7 +29,7 @@ async function loadContent(link) {
 
 export const route: Route = {
     path: '/:cat/:type?',
-    categories: ['shopping'],
+    categories: ['travel'],
     example: '/natgeo/environment/article',
     parameters: { cat: '分类', type: '类型, 例如`https://www.natgeomedia.com/environment/photo/`对应 `cat`, `type` 分别为 `environment`, `photo`' },
     features: {

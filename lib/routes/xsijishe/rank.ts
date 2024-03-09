@@ -6,7 +6,7 @@ const baseUrl = 'https://xsijishe.com';
 
 export const route: Route = {
     path: '/rank/:type',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/xsijishe/rank/weekly',
     parameters: { type: '排行榜类型: weekly | monthly' },
     features: {

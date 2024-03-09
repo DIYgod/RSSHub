@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/topics/:type',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/v2ex/topics/latest',
     parameters: { type: 'hot 或 latest' },
     features: {

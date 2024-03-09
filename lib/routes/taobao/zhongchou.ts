@@ -8,7 +8,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/zhongchou/:type?',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/taobao/zhongchou/all',
     parameters: { type: '类型, 默认为 `all` 全部' },
     features: {

@@ -7,7 +7,7 @@ const baseUrl = 'https://github.com';
 
 export const route: Route = {
     path: '/wiki/:user/:repo/:page?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/github/wiki/flutter/flutter/Roadmap',
     parameters: { user: 'User / Org name', repo: 'Repo name', page: 'Page slug, can be found in URL, empty means Home' },
     features: {

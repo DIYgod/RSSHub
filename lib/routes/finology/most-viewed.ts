@@ -4,7 +4,7 @@ import { getItems } from './utils';
 
 export const route: Route = {
     path: '/most-viewed/:time',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/finology/most-viewed/monthly',
     parameters: { time: 'N' },
     features: {

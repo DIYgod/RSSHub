@@ -5,7 +5,7 @@ import util from './utils';
 
 export const route: Route = {
     path: '/trending/:category/:type',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/juejin/trending/ios/monthly',
     parameters: { category: '分类名', type: '类型' },
     features: {

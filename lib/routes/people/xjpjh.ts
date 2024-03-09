@@ -8,7 +8,7 @@ const host = 'http://jhsjk.people.cn';
 
 export const route: Route = {
     path: '/xjpjh/:keyword?/:year?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/people/xjpjh',
     parameters: { keyword: '关键词，默认不填', year: '年份，默认 all' },
     features: {

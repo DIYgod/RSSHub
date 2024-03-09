@@ -3,7 +3,7 @@ import { rootUrl, ProcessItems } from './utils';
 
 export const route: Route = {
     path: '/ac/rank/:type?/:time?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/qq/ac/rank',
     parameters: { type: '分类，见下表，默认为月票榜', time: '时间，`cur` 为当周、`prev` 为上周' },
     features: {

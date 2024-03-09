@@ -3,7 +3,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/tugua',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/dapenti/tugua',
     parameters: {},
     features: {

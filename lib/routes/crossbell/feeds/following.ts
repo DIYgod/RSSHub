@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/feeds/following/:characterId',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/crossbell/feeds/following/10',
     parameters: { characterId: 'N' },
     features: {

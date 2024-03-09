@@ -18,7 +18,7 @@ const titleMap = {
 
 export const route: Route = {
     path: '/fonts/:sort?',
-    categories: ['live'],
+    categories: ['design'],
     example: '/google/fonts/date',
     parameters: { sort: 'Sorting type, see below, default to `date`' },
     features: {

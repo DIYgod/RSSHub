@@ -9,7 +9,7 @@ const baseUrl = 'https://cs.whu.edu.cn';
 
 export const route: Route = {
     path: '/cs/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/whu/cs/2',
     parameters: { type: '公告类型，详见表格' },
     features: {

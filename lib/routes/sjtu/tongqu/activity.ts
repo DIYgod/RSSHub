@@ -10,7 +10,7 @@ const urlRoot = 'https://tongqu.sjtu.edu.cn';
 
 export const route: Route = {
     path: '/tongqu/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/sjtu/tongqu/lecture',
     parameters: { type: '类型，默认为全部' },
     features: {

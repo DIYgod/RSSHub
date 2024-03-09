@@ -17,7 +17,7 @@ function formatDate(now) {
 
 export const route: Route = {
     path: '/partion/ranking/:tid/:days?/:disableEmbed?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/partion/ranking/171/3',
     parameters: { tid: '分区 id, 见上方表格', days: '缺省为 7, 指最近多少天内的热度排序', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {

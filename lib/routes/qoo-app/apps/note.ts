@@ -8,7 +8,7 @@ import { appsUrl } from '../utils';
 
 export const route: Route = {
     path: '/apps/:lang?/note/:id',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/qoo-app/apps/en/note/7675',
     parameters: { lang: 'Language, see the table above, empty means `中文`', id: 'Game ID, can be found in URL' },
     features: {

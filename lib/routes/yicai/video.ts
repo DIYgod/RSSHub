@@ -6,7 +6,7 @@ import { rootUrl, ProcessItems } from './utils';
 
 export const route: Route = {
     path: '/video/:id?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/yicai/video',
     parameters: { id: '分类 id，见下表，可在对应分类页中找到，默认为视听' },
     features: {

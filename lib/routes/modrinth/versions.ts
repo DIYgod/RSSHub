@@ -21,7 +21,7 @@ const md = MarkdownIt({
 
 export const route: Route = {
     path: '/models',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/modrinth/project/sodium/versions',
     parameters: {
         id: 'Id or slug of the Modrinth project',

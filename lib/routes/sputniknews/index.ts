@@ -39,7 +39,7 @@ const languages = {
 
 export const route: Route = {
     path: '/:category?/:language?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/sputniknews',
     parameters: { category: 'Category, can be found in URL, `news` by default', language: 'Language, see below, English by default' },
     features: {

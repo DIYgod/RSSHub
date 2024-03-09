@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/daily/section/:sectionId',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/zhihu/daily/section/2',
     parameters: { sectionId: '合集 id，可在 https://news-at.zhihu.com/api/7/sections 找到' },
     features: {

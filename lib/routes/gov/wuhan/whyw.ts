@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/wuhan/sy/whyw',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/wuhan/sy/whyw',
     parameters: {},
     features: {

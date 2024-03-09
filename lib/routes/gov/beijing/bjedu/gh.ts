@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/beijing/bjedu/gh/:urlPath?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/beijing/bjedu/gh',
     parameters: { urlPath: '路径，默认为 `zxtzgg`' },
     features: {

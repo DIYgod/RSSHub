@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/changelog/:id',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/oo-software/changelog/shutup10',
     parameters: { id: 'Software id, see below, shutup10 by default, can be found in URL' },
     features: {

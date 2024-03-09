@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/platform-tools-releases',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/android/platform-tools-releases',
     parameters: {},
     features: {

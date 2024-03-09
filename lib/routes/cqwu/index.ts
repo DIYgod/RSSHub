@@ -16,7 +16,7 @@ const titleMap = {
 
 export const route: Route = {
     path: '/news/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/cqwu/news/academiceve',
     parameters: { type: '可选，默认为 academiceve ' },
     features: {

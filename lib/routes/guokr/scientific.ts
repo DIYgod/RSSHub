@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/scientific',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/guokr/scientific',
     parameters: {},
     features: {

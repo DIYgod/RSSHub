@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:id',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/laimanhua/tiandikangzhanjiVERSUS',
     parameters: { id: '漫画 ID，可在 URL 中找到' },
     features: {

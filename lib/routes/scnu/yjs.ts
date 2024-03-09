@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/yjs',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/scnu/yjs',
     parameters: {},
     features: {

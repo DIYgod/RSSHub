@@ -15,7 +15,7 @@ const map = {
 
 export const route: Route = {
     path: '/news/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/uestc/news/culture',
     parameters: { type: '默认为 `announcement`' },
     features: {

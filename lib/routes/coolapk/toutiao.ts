@@ -4,7 +4,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/toutiao/:type?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/coolapk/toutiao',
     parameters: { type: '默认为history' },
     features: {

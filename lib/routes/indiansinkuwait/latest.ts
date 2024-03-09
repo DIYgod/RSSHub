@@ -8,7 +8,7 @@ const baseUrl = 'https://www.indiansinkuwait.com';
 
 export const route: Route = {
     path: '/latest',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/indiansinkuwait/latest',
     parameters: {},
     features: {

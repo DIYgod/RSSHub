@@ -6,7 +6,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/tv/topic/:id',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/bangumi/tv/topic/367032',
     parameters: { id: '话题 id, 在话题页面地址栏查看' },
     features: {

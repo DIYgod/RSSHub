@@ -8,7 +8,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/:community/:sort?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/lemmy/technology@lemmy.world/Hot',
     parameters: { community: 'Lemmmy community, for example technology@lemmy.world', sort: 'Sort by, defaut to Active' },
     features: {

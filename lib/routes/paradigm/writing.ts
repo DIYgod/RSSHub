@@ -8,7 +8,7 @@ const baseUrl = 'https://www.paradigm.xyz';
 
 export const route: Route = {
     path: '/writing',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/paradigm/writing',
     parameters: {},
     features: {

@@ -35,7 +35,7 @@ const productRequest = async (productIds) => {
 
 export const route: Route = {
     path: '/cn/family_offers',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/ikea/cn/family_offers',
     parameters: {},
     features: {

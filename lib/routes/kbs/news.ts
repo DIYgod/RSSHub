@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/news/:category?/:language?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/kbs/news',
     parameters: { category: 'Category, can be found in Url as `id`, all by default', language: 'Language, see below, e as English by default' },
     features: {

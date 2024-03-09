@@ -40,7 +40,7 @@ const zdyzMap = {
 
 export const route: Route = {
     path: '/zdyz/:category',
-    categories: ['study'],
+    categories: ['government'],
     example: '/cde/zdyz/domesticGuide',
     parameters: { category: '类别，见下表' },
     features: {

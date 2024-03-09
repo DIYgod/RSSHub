@@ -5,7 +5,7 @@ import { parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/docs',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/yystv/docs',
     parameters: {},
     features: {

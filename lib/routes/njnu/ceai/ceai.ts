@@ -6,7 +6,7 @@ import util from './utils';
 
 export const route: Route = {
     path: '/ceai/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/njnu/ceai/xszx',
     parameters: { type: '分类名' },
     features: {

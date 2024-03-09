@@ -8,7 +8,7 @@ import { fallback, queryToBoolean } from '@/utils/readable-social';
 
 export const route: Route = {
     path: '/friends/:routeParams?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/weibo/friends',
     parameters: { routeParams: '额外参数；请参阅上面的说明和表格' },
     features: {

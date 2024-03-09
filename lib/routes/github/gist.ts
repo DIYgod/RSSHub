@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/gist/:gistId',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/github/gist/d2c152bb7179d07015f336b1a0582679',
     parameters: { gistId: 'Gist ID' },
     features: {

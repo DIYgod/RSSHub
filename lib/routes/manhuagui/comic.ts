@@ -46,7 +46,7 @@ const getChapters = ($) => {
 
 export const route: Route = {
     path: ['/comic/:id/:chapterCnt?', '/:domain?/comic/:id/:chapterCnt?'],
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/manhuagui/comic/22942/5',
     parameters: { id: '漫画ID', chapterCnt: '返回章节的数量，默认为0，返回所有章节' },
     features: {

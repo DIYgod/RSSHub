@@ -22,7 +22,7 @@ const titleMap = {
 
 export const route: Route = {
     path: '/job/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/ucas/job',
     parameters: { type: '招聘类型，默认为博士后' },
     features: {

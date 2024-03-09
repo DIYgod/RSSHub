@@ -5,7 +5,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/remote/:site/:only_media?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/mastodon/remote/pawoo.net/true',
     parameters: { site: 'instance address, only domain, no `http://` or `https://` protocol header', only_media: 'whether only display media content, default to false, any value to true' },
     features: {

@@ -7,7 +7,7 @@ import { baseUrl, COOKIE_URL, checkLogin, getUserInfo, getUserFeedItems, getTags
 
 export const route: Route = {
     path: '/2/:category/:key',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/instagram/2/user/stefaniejoosten',
     parameters: { category: 'Feed category, see table below', key: 'Username / Hashtag name' },
     features: {

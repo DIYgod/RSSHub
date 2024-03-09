@@ -6,7 +6,7 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/:section/:type?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/dcard/funny/popular',
     parameters: { section: '板塊名稱，URL 中獲得', type: '排序，popular 熱門；latest 最新，默認為 latest' },
     features: {

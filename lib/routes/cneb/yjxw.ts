@@ -12,7 +12,7 @@ const indexs = {
 
 export const route: Route = {
     path: '/yjxw/:category?',
-    categories: ['travel'],
+    categories: ['forecast'],
     example: '/cneb/yjxw',
     parameters: { category: '分类，见下表，默认为全部' },
     features: {

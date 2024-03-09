@@ -7,7 +7,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/category/:caty',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/pornhub/category/popular-with-women',
     parameters: { caty: 'category, see [categories](https://www.pornhub.com/webmasters/categories)' },
     features: {

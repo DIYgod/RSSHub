@@ -15,7 +15,7 @@ const author = 'QWeather';
 
 export const route: Route = {
     path: '/3days/:location',
-    categories: ['travel'],
+    categories: ['forecast'],
     example: '/qweather/3days/广州',
     parameters: { location: 'N' },
     features: {

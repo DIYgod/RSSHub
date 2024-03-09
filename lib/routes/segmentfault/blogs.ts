@@ -5,7 +5,7 @@ import { host, acw_sc__v2, parseList, parseItems } from './utils';
 
 export const route: Route = {
     path: '/blogs/:tag',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/segmentfault/blogs/go',
     parameters: { tag: '标签名称，在 [标签](https://segmentfault.com/tags) 中可以找到' },
     features: {

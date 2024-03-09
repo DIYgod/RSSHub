@@ -5,7 +5,7 @@ import { apiUrl, baseUrl, getBParam, getBuildId, getGToken, parseList, parseItem
 
 export const route: Route = {
     path: '/tag/:tagId/:lang?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/followin/tag/177008',
     parameters: { tagId: 'Tag ID, can be found in URL', lang: 'Language, see table above, `en` by default' },
     features: {

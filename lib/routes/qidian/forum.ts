@@ -5,7 +5,7 @@ import { parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/forum/:id',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/qidian/forum/1010400217',
     parameters: { id: '小说 id, 可在对应小说页 URL 中找到' },
     features: {

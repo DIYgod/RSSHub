@@ -31,7 +31,7 @@ const categories = {
 
 export const route: Route = {
     path: '/depth/:category?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/cls/depth/1000',
     parameters: { category: '分类代码，可在首页导航栏的目标网址 URL 中找到' },
     features: {

@@ -16,7 +16,7 @@ function combDate(date, time) {
 
 export const route: Route = {
     path: '/podcast/:category/:id',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/cgtn/podcast/ezfm/4',
     parameters: { category: '类型名', id: '播客 id' },
     features: {

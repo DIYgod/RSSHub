@@ -3,7 +3,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/actors/:id/:filter?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/javdb/actors/R2Vg',
     parameters: { id: '编号，可在演员页 URL 中找到', filter: '过滤，见下表，默认为 `全部`' },
     features: {

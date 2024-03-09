@@ -7,7 +7,7 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/live/:rid',
-    categories: ['multimedia'],
+    categories: ['live'],
     example: '/douyin/live/685317364746',
     parameters: { rid: '直播间 id, 可在主播直播间页 URL 中找到' },
     features: {

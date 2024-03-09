@@ -8,7 +8,7 @@ const baseUrl = 'https://yzb.sjtu.edu.cn/index/zkxx/';
 
 export const route: Route = {
     path: '/yzb/zkxx/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/sjtu/yzb/zkxx/sszs',
     parameters: { type: '无默认选项' },
     features: {

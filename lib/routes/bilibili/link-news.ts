@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/link/news/:product',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/link/news/live',
     parameters: { product: '公告分类, 包括 直播:live 小视频:vc 相簿:wh' },
     features: {

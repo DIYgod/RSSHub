@@ -7,7 +7,7 @@ import { rootUrl, getItems, getItemInfo, processItems } from './util';
 
 export const route: Route = {
     path: '/:id?/:downLinkType?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/newzmz/qEzRyY3v',
     parameters: { id: '剧集 id，可在剧集下载页 URL 中找到', downLinkType: '下载链接类型，默认为磁力链' },
     features: {

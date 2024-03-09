@@ -5,7 +5,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/manga/followings/:uid/:limits?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/manga/followings/26009',
     parameters: { uid: '用户 id', limits: '抓取最近更新前多少本漫画，默认为10' },
     features: {

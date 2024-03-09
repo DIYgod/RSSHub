@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/cat/:cat',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/niaogebiji/cat/103',
     parameters: { cat: '如 https://www.niaogebiji.com/cat/103，最后的数字就是id' },
     features: {

@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:category?/:id?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/aamacau',
     parameters: { category: '分类，见下表，默认为即時報道', id: 'id，可在对应页面 URL 中找到，默认为空' },
     features: {

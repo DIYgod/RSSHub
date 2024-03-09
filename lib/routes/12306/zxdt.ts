@@ -6,7 +6,7 @@ import * as url from 'node:url';
 
 export const route: Route = {
     path: '/zxdt/:id?',
-    categories: ['shopping'],
+    categories: ['travel'],
     example: '/12306/zxdt',
     parameters: { id: '铁路局id，可在 URL 中找到，不填默认显示所有铁路局动态' },
     features: {

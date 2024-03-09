@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: ['/xhsxw', '/whxw'],
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/news/xhsxw',
     parameters: {},
     features: {

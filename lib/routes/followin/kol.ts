@@ -5,7 +5,7 @@ import { baseUrl, getBuildId, parseList, parseItem } from './utils';
 
 export const route: Route = {
     path: '/kol/:kolId/:lang?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/followin/kol/4075592991',
     parameters: { kolId: 'KOL ID, can be found in URL', lang: 'Language, see table above, `en` by default' },
     features: {

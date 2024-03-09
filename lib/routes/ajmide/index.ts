@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:id',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/ajmide/10603594',
     parameters: { id: '播客 id，可以从播客页面 URL 中找到' },
     features: {

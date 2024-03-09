@@ -5,7 +5,7 @@ import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:region?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/liveuamap',
     parameters: { region: 'region 热点地区，默认为`ukraine`，其他选项见liveuamap.com的三级域名' },
     features: {

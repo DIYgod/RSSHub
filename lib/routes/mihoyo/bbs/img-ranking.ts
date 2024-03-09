@@ -41,7 +41,7 @@ const getRankingTypeInfo = (game, ranking_type) => {
 
 export const route: Route = {
     path: '/bbs/img-ranking/:game/:routeParams?',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/mihoyo/bbs/img-ranking/ys/forumType=tongren&cateType=illustration&rankingType=daily',
     parameters: { game: '游戏缩写', routeParams: '额外参数；请参阅以下说明和表格' },
     features: {

@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/xhu/zhuanlan/:id',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/zhihu/xhu/zhuanlan/githubdaily',
     parameters: { id: '专栏 id, 可在专栏主页 URL 中找到' },
     features: {

@@ -7,7 +7,7 @@ import { baseUrl, parseArticle } from './utils';
 
 export const route: Route = {
     path: '/user_article/:id',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/woshipm/user_article/324696',
     parameters: { id: '用户 id' },
     features: {

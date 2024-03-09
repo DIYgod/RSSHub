@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['shopping'],
+    categories: ['travel'],
     example: '/nippon/Politics',
     parameters: { category: '默认政治，可选如下' },
     features: {

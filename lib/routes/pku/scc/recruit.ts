@@ -15,7 +15,7 @@ const baseUrl = 'https://scc.pku.edu.cn/';
 
 export const route: Route = {
     path: '/scc/recruit/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/pku/scc/recruit/zpxx',
     parameters: { type: '分区，见下表，默认请求 `zpxx`' },
     features: {

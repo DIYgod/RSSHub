@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/programs',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/shcstheatre/programs',
     parameters: {},
     features: {

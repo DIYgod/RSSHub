@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/episodes',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/storyfm/episodes',
     parameters: {},
     features: {

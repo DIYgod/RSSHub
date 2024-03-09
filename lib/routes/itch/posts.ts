@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/posts/:topic/:id',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/itch/posts/9539/introduce-yourself',
     parameters: { topic: 'Topic id, can be found in URL', id: 'Topic name, can be found in URL' },
     features: {

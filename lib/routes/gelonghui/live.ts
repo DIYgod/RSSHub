@@ -11,7 +11,7 @@ const baseUrl = 'https://www.gelonghui.com';
 
 export const route: Route = {
     path: '/live',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/gelonghui/live',
     parameters: {},
     features: {

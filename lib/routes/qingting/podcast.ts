@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/podcast/:id',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/qingting/podcast/293411',
     parameters: { id: '专辑id, 可在专辑页 URL 中找到' },
     features: {

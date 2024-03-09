@@ -3,7 +3,7 @@ import { getData, getList } from './utils';
 
 export const route: Route = {
     path: '/:topic',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/alistapart/application-development',
     parameters: { topic: 'Any Topic or from the table below. Defaults to All Articles' },
     features: {

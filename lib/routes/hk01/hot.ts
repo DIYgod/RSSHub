@@ -5,7 +5,7 @@ import { rootUrl, apiRootUrl, ProcessItems } from './utils';
 
 export const route: Route = {
     path: '/hot',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/hk01/hot',
     parameters: {},
     features: {

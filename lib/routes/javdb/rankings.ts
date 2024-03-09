@@ -3,7 +3,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/rankings/:category?/:time?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/javdb/rankings',
     parameters: { category: '分类，见下表，默认为 `有碼`', time: '时间，见下表，默认为 `日榜`' },
     features: {

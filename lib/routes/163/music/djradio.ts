@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/music/djradio/:id',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/163/music/djradio/347317067',
     parameters: { id: '节目 id, 可在电台节目页 URL 中找到' },
     features: {

@@ -12,7 +12,7 @@ import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:type?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/solidot/linux',
     parameters: { type: '消息类型。默认为 www. 在网站上方选择后复制子域名即可' },
     features: {

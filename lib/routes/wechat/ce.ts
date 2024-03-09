@@ -12,7 +12,7 @@ const UA = 'Mozilla/5.0 (X11; Linux x86_64) RSS Reader';
 
 export const route: Route = {
     path: '/ce/:id',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/wechat/ce/595a5b14d7164e53908f1606',
     parameters: { id: '公众号 id，在 [CareerEngine](https://search.careerengine.us/) 搜索公众号，通过 URL 中找到对应的公众号 id' },
     features: {

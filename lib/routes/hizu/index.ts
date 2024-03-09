@@ -33,7 +33,7 @@ const titles = {
 
 export const route: Route = {
     path: '/:column?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/hizu',
     parameters: { column: '栏目，见下表，默认为热点' },
     features: {

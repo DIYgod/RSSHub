@@ -8,7 +8,7 @@ const baseUrl = 'https://www.sis001.com';
 
 export const route: Route = {
     path: '/forum/:id?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/sis001/forum/322',
     parameters: { id: '子版块 ID，可在子论坛 URL 找到，默认为 `Funny Jokes | 短篇笑话区`' },
     features: {

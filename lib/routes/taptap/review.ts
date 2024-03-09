@@ -106,7 +106,7 @@ const fetchIntlItems = async (params) => {
 
 export const route: Route = {
     path: ['/review/:id/:order?/:lang?', '/intl/review/:id/:order?/:lang?'],
-    categories: ['reading'],
+    categories: ['game'],
     example: '/taptap/review/142793/hot',
     parameters: { id: '游戏 ID，游戏主页 URL 中获取', order: '排序方式，空为默认排序，可选如下', lang: '语言，`zh-CN`或`zh-TW`，默认为`zh-CN`' },
     features: {

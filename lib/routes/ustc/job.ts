@@ -12,7 +12,7 @@ const titles = {
 
 export const route: Route = {
     path: '/job/:category?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/ustc/job',
     parameters: { category: '分类，见下表，默认为招聘公告' },
     features: {

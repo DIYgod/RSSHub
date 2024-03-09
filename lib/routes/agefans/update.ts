@@ -6,7 +6,7 @@ import { rootUrl } from './utils';
 
 export const route: Route = {
     path: '/update',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/agefans/update',
     parameters: {},
     features: {

@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:id?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/hnrb',
     parameters: { id: '编号，见下表，默认为全部' },
     features: {

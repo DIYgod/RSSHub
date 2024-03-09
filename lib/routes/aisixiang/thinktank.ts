@@ -7,7 +7,7 @@ import { rootUrl, ossUrl, ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/thinktank/:id/:type?',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/aisixiang/thinktank/WuQine/论文',
     parameters: { id: '专栏 ID，一般为作者拼音，可在URL中找到', type: '栏目类型，参考下表，默认为全部' },
     features: {

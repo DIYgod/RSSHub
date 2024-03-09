@@ -4,7 +4,7 @@ const baseUrl = 'https://www.xunhupay.com';
 
 export const route: Route = {
     path: '/blog',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/xunhupay/blog',
     parameters: {},
     features: {

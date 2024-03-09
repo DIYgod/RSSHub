@@ -16,7 +16,7 @@ const map = new Map([
 
 export const route: Route = {
     path: '/jwc/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/zcmu/jwc/1',
     parameters: { type: '通知模块id' },
     features: {

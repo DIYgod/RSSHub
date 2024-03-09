@@ -7,7 +7,7 @@ import { parseItem } from './utils';
 
 export const route: Route = {
     path: '/topics/:topic',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/scmp/topics/coronavirus-pandemic-all-stories',
     parameters: { topic: 'Topic, can be found in URL' },
     features: {

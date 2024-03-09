@@ -6,7 +6,7 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/news/:options?',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/fortnite/news',
     parameters: { options: 'Params' },
     features: {

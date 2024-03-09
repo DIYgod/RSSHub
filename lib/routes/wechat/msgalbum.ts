@@ -6,7 +6,7 @@ import { finishArticleItem } from '@/utils/wechat-mp';
 
 export const route: Route = {
     path: '/mp/msgalbum/:biz/:aid',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/wechat/mp/msgalbum/MzA3MDM3NjE5NQ==/1375870284640911361',
     parameters: { biz: '公众号id', aid: 'Tag id' },
     features: {

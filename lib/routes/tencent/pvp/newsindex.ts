@@ -39,7 +39,7 @@ const getPage = async (id, typeName) => {
 
 export const route: Route = {
     path: '/pvp/newsindex/:type',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/tencent/pvp/newsindex/all',
     parameters: { type: '栏目分类，见下表' },
     features: {

@@ -4,7 +4,7 @@ import { rootUrl, ProcessItems } from './utils';
 
 export const route: Route = {
     path: '/headline',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/yicai/headline',
     parameters: {},
     features: {

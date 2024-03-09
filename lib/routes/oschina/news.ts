@@ -35,7 +35,7 @@ const configs = {
 
 export const route: Route = {
     path: '/news/:category?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/oschina/news/project',
     parameters: { category: '板块名' },
     features: {

@@ -7,7 +7,7 @@ import { CookieJar } from 'tough-cookie';
 
 export const route: Route = {
     path: '/section77/:type?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/parliament/section77',
     parameters: { type: 'Type of hearing status, see below' },
     features: {

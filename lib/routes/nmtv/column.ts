@@ -10,7 +10,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/column/:id?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/nmtv/column/877',
     parameters: { id: '栏目 id，可在对应栏目 URL 中找到' },
     features: {

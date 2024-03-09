@@ -9,7 +9,7 @@ const baseUrl = 'https://freewechat.com';
 
 export const route: Route = {
     path: '/profile/:id',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/freewechat/profile/MzI5NTUxNzk3OA==',
     parameters: { id: '公众号 ID，可在URL中找到' },
     features: {

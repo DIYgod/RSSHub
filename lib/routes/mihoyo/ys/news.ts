@@ -82,7 +82,7 @@ const apiUrls = {
 
 export const route: Route = {
     path: '/ys/:location?/:category?',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/mihoyo/ys',
     parameters: { location: '区域，可选 `main`（简中）或 `zh-tw`（繁中）', category: '分类，见下表，默认为最新' },
     features: {

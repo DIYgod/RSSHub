@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/blog/:language?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/nodejs/blog',
     parameters: { language: 'Language, see below, en by default' },
     features: {

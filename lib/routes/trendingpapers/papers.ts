@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/papers/:category?/:time?/:cited?',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/trendingpapers/papers',
     parameters: {
         category: 'Category of papers, can be found in URL. `All categories` by default.',

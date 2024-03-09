@@ -8,7 +8,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/post/:tid/:authorId?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/nga/post/18449558',
     parameters: { tid: '帖子 id, 可在帖子 URL 找到', authorId: '作者 id' },
     features: {

@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/new/:country/:category',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/uniqlo/new/sg/men',
     parameters: { country: 'currently only supports sg, us, jp', category: 'supports `men` `women`, `kids`, `baby`' },
     features: {

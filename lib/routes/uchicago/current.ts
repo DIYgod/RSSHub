@@ -8,7 +8,7 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/journals/current/:journal',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/uchicago/journals/current/jpe',
     parameters: { journal: 'Journal id, can be found in URL. [Browse journals by title](https://www.journals.uchicago.edu/action/showPublications)' },
     features: {

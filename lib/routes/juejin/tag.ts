@@ -5,7 +5,7 @@ import util from './utils';
 
 export const route: Route = {
     path: '/tag/:tag',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/juejin/tag/JavaScript',
     parameters: { tag: '标签名，可在标签 URL 中找到' },
     features: {

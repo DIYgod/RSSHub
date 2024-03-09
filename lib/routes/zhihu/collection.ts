@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/collection/:id/:getAll?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/zhihu/collection/26444956',
     parameters: { id: '收藏夹 id，可在收藏夹页面 URL 中找到', getAll: '获取全部收藏内容，任意值为打开' },
     features: {

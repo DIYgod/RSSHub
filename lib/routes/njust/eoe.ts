@@ -13,7 +13,7 @@ const host = 'https://eoe.njust.edu.cn';
 
 export const route: Route = {
     path: '/eoe/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/njust/eoe/tzgg',
     parameters: { type: '分类名，见下表，默认为通知公告' },
     features: {

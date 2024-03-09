@@ -6,7 +6,7 @@ import got from '@/utils/got';
 import { config } from '@/config';
 export const route: Route = {
     path: '/people/:userid/wish/:routeParams?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/people/exherb/wish',
     parameters: { userid: '用户id', routeParams: '额外参数；见下' },
     features: {

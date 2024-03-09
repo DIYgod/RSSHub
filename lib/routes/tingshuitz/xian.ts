@@ -5,7 +5,7 @@ import iconv from 'iconv-lite';
 
 export const route: Route = {
     path: '/xian',
-    categories: ['travel'],
+    categories: ['forecast'],
     example: '/tingshuitz/xian',
     parameters: {},
     features: {

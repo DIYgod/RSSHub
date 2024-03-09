@@ -5,7 +5,7 @@ import queryString from 'query-string';
 
 export const route: Route = {
     path: '/repos/:user',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/github/repos/DIYgod',
     parameters: { user: 'GitHub username' },
     features: {

@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/dky/:category?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/sicau/dky/tzgg',
     parameters: { category: '分类，见下表，默认为通知公告' },
     features: {

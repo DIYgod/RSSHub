@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/release/:version?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/mysql/release/8.0',
     parameters: { version: 'Version, see below, 8.0 by default' },
     features: {

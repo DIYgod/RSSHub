@@ -10,7 +10,7 @@ const researchList = ['stock_research', 'industry_research', 'strategy_research'
 
 export const route: Route = {
     path: '/research/latest',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/ulapia/research/latest',
     parameters: {},
     features: {

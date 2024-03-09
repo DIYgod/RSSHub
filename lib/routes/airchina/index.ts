@@ -7,7 +7,7 @@ const baseUrl = 'https://www.airchina.com.cn';
 
 export const route: Route = {
     path: '/announcement',
-    categories: ['shopping'],
+    categories: ['travel'],
     example: '/airchina/announcement',
     parameters: {},
     features: {

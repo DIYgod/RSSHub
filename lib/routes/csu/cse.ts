@@ -16,7 +16,7 @@ async function fetch(address) {
 
 export const route: Route = {
     path: '/cse/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/csu/cse',
     parameters: { type: '类型' },
     features: {

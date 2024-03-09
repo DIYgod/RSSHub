@@ -32,7 +32,7 @@ const mapTitle = {
 
 export const route: Route = {
     path: '/sise/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/uestc/sise/1',
     parameters: { type: '默认为 `1`' },
     features: {

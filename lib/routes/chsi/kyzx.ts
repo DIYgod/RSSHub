@@ -9,7 +9,7 @@ const host = 'https://yz.chsi.com.cn';
 
 export const route: Route = {
     path: '/kyzx/:type',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/chsi/kyzx/fstj',
     parameters: { type: ' type 见下表，亦可在网站 URL 找到' },
     features: {

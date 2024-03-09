@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/moe/s78/:column',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/moe/s78/A13',
     parameters: { column: '司局 ID，可在 URL 找到' },
     features: {

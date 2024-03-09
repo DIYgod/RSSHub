@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/news/:uid',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/news/bm',
     parameters: { uid: '分类名' },
     features: {

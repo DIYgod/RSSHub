@@ -5,7 +5,7 @@ import { baseUrl, favicon, getBuildId, parseList, parseItem } from './utils';
 
 export const route: Route = {
     path: '/news/:lang?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/followin/news',
     parameters: { lang: 'Language, see table above, `en` by default' },
     features: {

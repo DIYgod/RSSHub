@@ -15,7 +15,7 @@ const md = MarkdownIt({
 
 export const route: Route = {
     path: '/topic/:topic?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/utgd/topic/在线阅读专栏',
     parameters: { topic: '专题，默认为在线阅读专栏' },
     features: {

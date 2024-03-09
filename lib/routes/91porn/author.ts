@@ -12,7 +12,7 @@ import { domainValidation } from './utils';
 
 export const route: Route = {
     path: '/author/:uid/:lang?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/91porn/author/2d6d2iWm4vVCwqujAZbSrKt2QJCbbaObv9HQ21Zo8wGJWudWBg',
     parameters: { uid: 'Author ID, can be found in URL', lang: 'Language, see above, `en_US` by default ' },
     features: {

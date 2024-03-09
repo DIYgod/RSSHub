@@ -21,7 +21,7 @@ const getArticleDetail = (link) =>
 
 export const route: Route = {
     path: '/:endpoint',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/economist/latest',
     parameters: { endpoint: 'Category name, can be found on the [official page](https://www.economist.com/rss). For example, https://www.economist.com/china/rss.xml to china' },
     features: {

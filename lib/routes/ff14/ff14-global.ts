@@ -10,7 +10,7 @@ import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: ['/global/:lang/:type?', '/ff14_global/:lang/:type?'],
-    categories: ['reading'],
+    categories: ['game'],
     example: '/ff14/global/na/all',
     parameters: { lang: 'Region', type: 'Category, `all` by default' },
     features: {

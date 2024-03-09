@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/myft/:key',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/ft/myft/rss-key',
     parameters: { key: 'the last part of myFT personal RSS address' },
     features: {

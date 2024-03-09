@@ -7,7 +7,7 @@ import iconv from 'iconv-lite';
 
 export const route: Route = {
     path: '/it/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/bjfu/it/xyxw',
     parameters: { type: '通知类别' },
     features: {

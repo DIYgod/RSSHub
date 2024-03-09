@@ -18,7 +18,7 @@ async function getData(url) {
 
 export const route: Route = {
     path: ['/papers', '/news'],
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/nber/papers',
     parameters: {},
     features: {

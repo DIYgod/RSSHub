@@ -99,7 +99,7 @@ const getAllPageDiscountItem = async (countries, platform, termsId, totalNum) =>
 
 export const route: Route = {
     path: '/discount/:platform/:filter?/:countries?',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/jump/discount/ps5/all',
     parameters: { platform: '平台:switch,ps4,ps5,xbox,steam,epic', filter: '过滤参数,all-全部，jx-精选，sd-史低，dl-独立，vip-会员', countries: '地区，具体支持较多，可自信查看地区简写' },
     features: {

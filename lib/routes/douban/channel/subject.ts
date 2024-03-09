@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/channel/:id/subject/:nav',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/channel/30168934/subject/0',
     parameters: { id: '频道id', nav: '书影音分类' },
     features: {

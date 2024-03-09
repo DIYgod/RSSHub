@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/web/:channel',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/oeeee/web/170',
     parameters: { channel: '频道 ID' },
     features: {

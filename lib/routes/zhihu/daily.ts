@@ -23,7 +23,7 @@ async function dohResolve(name) {
 
 export const route: Route = {
     path: '/daily',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/zhihu/daily',
     parameters: {},
     features: {

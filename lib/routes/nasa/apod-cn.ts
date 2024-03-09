@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/apod-cn',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/nasa/apod-cn',
     parameters: {},
     features: {

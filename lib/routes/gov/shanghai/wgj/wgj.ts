@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/shanghai/wgj/:page?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/shanghai/wgj',
     parameters: { page: '页数，默认第 1 页' },
     features: {

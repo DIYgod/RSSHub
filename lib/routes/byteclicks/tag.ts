@@ -5,7 +5,7 @@ const baseUrl = 'https://byteclicks.com';
 
 export const route: Route = {
     path: '/tag/:tag',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/byteclicks/tag/人工智能',
     parameters: { tag: '标签，可在URL中找到' },
     features: {

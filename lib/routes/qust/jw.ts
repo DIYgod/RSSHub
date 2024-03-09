@@ -6,7 +6,7 @@ const baseUrl = 'https://jw.qust.edu.cn/';
 
 export const route: Route = {
     path: '/jw',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/qust/jw',
     parameters: {},
     features: {

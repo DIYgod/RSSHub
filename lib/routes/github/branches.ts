@@ -4,7 +4,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/branches/:user/:repo',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/github/branches/DIYgod/RSSHub',
     parameters: { user: 'User name', repo: 'Repo name' },
     features: {

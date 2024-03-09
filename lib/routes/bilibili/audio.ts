@@ -5,7 +5,7 @@ const audio = 'https://www.bilibili.com/audio/au';
 
 export const route: Route = {
     path: '/audio/:id',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/audio/10624',
     parameters: { id: '歌单 id, 可在歌单页 URL 中找到' },
     features: {

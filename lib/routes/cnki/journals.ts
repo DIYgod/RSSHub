@@ -9,7 +9,7 @@ const rootUrl = 'https://navi.cnki.net';
 
 export const route: Route = {
     path: '/journals/:name',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/cnki/journals/LKGP',
     parameters: { name: '期刊缩写，可以在网址中得到' },
     features: {

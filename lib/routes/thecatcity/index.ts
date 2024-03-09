@@ -8,7 +8,7 @@ const baseUrl = 'https://thecatcity.com';
 
 export const route: Route = {
     path: '/:term?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/thecatcity',
     parameters: { term: '見下表，留空為全部文章' },
     features: {

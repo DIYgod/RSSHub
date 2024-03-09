@@ -9,7 +9,7 @@ const host = 'https://www.ntdtv.com';
 
 export const route: Route = {
     path: '/:language/:id',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/ntdtv/b5/prog1201',
     parameters: { language: '语言，简体为`gb`，繁体为`b5`', id: '子频道名称' },
     features: {

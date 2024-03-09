@@ -5,7 +5,7 @@ import { apiBase, baseUrl, getUserInfo, renderLive } from './utils';
 
 export const route: Route = {
     path: '/user/:id/livestream',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/otobanana/user/cee16401-96b1-420f-8188-abd4d33093f1/livestream',
     parameters: { id: 'User ID, can be found in URL' },
     features: {

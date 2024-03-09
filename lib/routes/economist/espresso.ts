@@ -8,7 +8,7 @@ const link = 'https://www.economist.com/the-world-in-brief';
 
 export const route: Route = {
     path: '/espresso',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/economist/espresso',
     parameters: {},
     features: {

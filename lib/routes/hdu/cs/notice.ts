@@ -32,7 +32,7 @@ const getSingleRecord = async () => {
 
 export const route: Route = {
     path: '/cs',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/hdu/cs',
     parameters: {},
     features: {

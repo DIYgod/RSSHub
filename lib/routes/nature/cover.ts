@@ -24,7 +24,7 @@ import { CookieJar } from 'tough-cookie';
 
 export const route: Route = {
     path: '/cover',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/nature/cover',
     parameters: {},
     features: {

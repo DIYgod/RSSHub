@@ -7,7 +7,7 @@ import { token, apiUrl, rootUrl, renderDesc, getBoards } from './utils';
 
 export const route: Route = {
     path: '/student5/:board?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/zuvio/student5/34',
     parameters: { board: '看板 ID，空为全站文章，可在看板 URL 或下方路由找到' },
     features: {

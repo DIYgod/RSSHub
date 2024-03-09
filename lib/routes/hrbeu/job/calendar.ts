@@ -6,7 +6,7 @@ const rootUrl = 'http://job.hrbeu.edu.cn';
 
 export const route: Route = {
     path: '/job/calendar',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/hrbeu/job/calendar',
     parameters: {},
     features: {

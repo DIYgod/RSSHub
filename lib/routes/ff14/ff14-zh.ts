@@ -10,7 +10,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: ['/zh/:type?', '/ff14_zh/:type?'],
-    categories: ['reading'],
+    categories: ['game'],
     example: '/ff14/zh/news',
     parameters: { type: '分类名，预设为 `all`' },
     features: {

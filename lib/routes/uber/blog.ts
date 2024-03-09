@@ -8,7 +8,7 @@ const apiURL = 'https://blogapi.uber.com';
 
 export const route: Route = {
     path: '/blog/:maxPage?',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/uber/blog',
     parameters: { maxPage: 'max number of pages to retrieve, default to 1 page at most' },
     features: {

@@ -21,7 +21,7 @@ const ids = {
 
 export const route: Route = {
     path: ['/exclusive/:locale?', '/news/:locale?', '/:locale?', '/:type/:id/:locale?'],
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/farmatters/exclusive',
     parameters: { locale: 'Locale, `zh-CN` or `en-US`, `zh-CN` by default' },
     features: {

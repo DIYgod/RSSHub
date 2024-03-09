@@ -4,7 +4,7 @@ import weiboUtils from '../utils';
 
 export const route: Route = {
     path: '/oasis/user/:userid',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/weibo/oasis/user/1990895721',
     parameters: { userid: '用户 id, 可在用户主页 URL 中找到' },
     features: {

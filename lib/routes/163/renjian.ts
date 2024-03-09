@@ -16,7 +16,7 @@ const titles = {
 
 export const route: Route = {
     path: '/renjian/:category?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/163/renjian/texie',
     parameters: { category: '分类，见下表，默认为特写' },
     features: {

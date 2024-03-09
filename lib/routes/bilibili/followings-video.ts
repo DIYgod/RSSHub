@@ -6,7 +6,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/followings/video/:uid/:disableEmbed?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/followings/video/2267573',
     parameters: { uid: '用户 id', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
     features: {

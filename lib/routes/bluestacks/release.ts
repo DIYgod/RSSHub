@@ -8,7 +8,7 @@ const pageUrl = 'https://support.bluestacks.com/hc/en-us/articles/360056960211-R
 
 export const route: Route = {
     path: '/release/5',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/bluestacks/release/5',
     parameters: {},
     features: {

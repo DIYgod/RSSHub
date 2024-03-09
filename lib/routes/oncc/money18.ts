@@ -26,7 +26,7 @@ const sections = {
 
 export const route: Route = {
     path: '/money18/:id?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/oncc/money18/exp',
     parameters: { id: '栏目 id，可在对应栏目页 URL 中找到，默认为 exp，即新聞總覽' },
     features: {

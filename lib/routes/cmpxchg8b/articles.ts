@@ -8,7 +8,7 @@ const title = 'cmpxchg8b';
 
 export const route: Route = {
     path: '/articles',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/cmpxchg8b/articles',
     parameters: {},
     features: {

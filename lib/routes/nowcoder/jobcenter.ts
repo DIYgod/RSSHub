@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/jobcenter/:recruitType?/:city?/:type?/:order?/:latest?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/nowcoder/jobcenter/1/北京/1/1/true',
     parameters: {
         recruitType: '招聘分类，`1` 指 实习广场，`2` 指 社招广场，默认为 `1`',

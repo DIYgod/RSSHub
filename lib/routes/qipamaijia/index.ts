@@ -6,7 +6,7 @@ const rootUrl = 'https://www.qipamaijia.com';
 
 export const route: Route = {
     path: '/:cate?',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/qipamaijia/fuli',
     parameters: { cate: '频道名，可在对应网址中找到，默认为最新' },
     features: {

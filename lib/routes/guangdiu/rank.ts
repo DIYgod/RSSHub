@@ -8,7 +8,7 @@ const host = 'https://guangdiu.com';
 
 export const route: Route = {
     path: '/rank',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/guangdiu/rank',
     parameters: {},
     features: {

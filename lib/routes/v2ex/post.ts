@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/post/:postid',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/v2ex/post/584403',
     parameters: { postid: '帖子ID，在 URL 可以找到' },
     features: {

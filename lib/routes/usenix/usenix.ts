@@ -9,7 +9,7 @@ const seasons = ['spring', 'summer', 'fall', 'winter'];
 
 export const route: Route = {
     path: '/usenix-security-sympoium',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/usenix/usenix-security-sympoium',
     parameters: {},
     features: {

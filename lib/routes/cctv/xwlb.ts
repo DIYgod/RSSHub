@@ -10,7 +10,7 @@ dayjs.extend(customParseFormat);
 
 export const route: Route = {
     path: '/xwlb',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/cctv/xwlb',
     parameters: {},
     features: {

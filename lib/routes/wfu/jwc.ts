@@ -9,7 +9,7 @@ const sizeTitle = '潍坊学院教务处新闻';
 
 export const route: Route = {
     path: '/jwc',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/wfu/jwc',
     parameters: {},
     features: {

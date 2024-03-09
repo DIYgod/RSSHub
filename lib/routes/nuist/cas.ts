@@ -10,7 +10,7 @@ const baseUrl = 'https://cas.nuist.edu.cn';
 
 export const route: Route = {
     path: '/cas/:category?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/nuist/cas/xxgg',
     parameters: { category: '默认为信息公告' },
     features: {

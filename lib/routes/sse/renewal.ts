@@ -15,7 +15,7 @@ const currStatusName = ['全部', '已受理', '已询问', '通过', '未通过
 
 export const route: Route = {
     path: '/renewal',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/sse/renewal',
     parameters: {},
     features: {

@@ -4,7 +4,7 @@ import { defaultMode, defaultLanguage, rootUrl, ProcessItems } from './utils';
 
 export const route: Route = {
     path: '/star/:id/:language?/:mode?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/javlibrary/star/abbds/en',
     parameters: { id: 'Star id, can be found in URL', language: 'Language, see below, Japanese by default, as `ja`', mode: 'Mode, see below, videos with comments (by date) by default, as `1`' },
     features: {

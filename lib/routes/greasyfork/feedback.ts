@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/scripts/:script/feedback',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/greasyfork/scripts/431691-bypass-all-shortlinks/feedback',
     parameters: { script: 'Script id, can be found in URL' },
     features: {

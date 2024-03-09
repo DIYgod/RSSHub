@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/yan/:category?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/sicau/yan/xwgg',
     parameters: { category: '分类，见下表，默认为新闻公告' },
     features: {

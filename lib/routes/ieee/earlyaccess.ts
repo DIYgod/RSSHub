@@ -13,7 +13,7 @@ const cookieJar = new CookieJar();
 
 export const route: Route = {
     path: '/journal/:journal/earlyaccess/:sortType?',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/ieee/journal/5306045/earlyaccess',
     parameters: { journal: 'Issue code, the number of the `isnumber` in the URL', sortType: 'Sort Type, default: `vol-only-seq`, the part of the URL after `sortType`' },
     features: {

@@ -5,7 +5,7 @@ import { finishArticleItem } from '@/utils/wechat-mp';
 
 export const route: Route = {
     path: '/tgchannel/:id/:mpName?/:searchQueryType?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/wechat/tgchannel/lifeweek',
     parameters: { id: '公众号绑定频道 id', mpName: '欲筛选的公众号全名（URL-encoded，精确匹配），在频道订阅了多个公众号时可选用', searchQueryType: '搜索查询类型，见下表' },
     features: {

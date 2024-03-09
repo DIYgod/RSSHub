@@ -14,7 +14,7 @@ const host = 'https://sist.ustc.edu.cn';
 
 export const route: Route = {
     path: '/sist/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/ustc/sist/tzgg',
     parameters: { type: '分类，见下表，默认为通知公告' },
     features: {

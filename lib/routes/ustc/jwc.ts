@@ -9,7 +9,7 @@ const noticeType = { teaching: '教学', info: '信息', exam: '考试', exchang
 
 export const route: Route = {
     path: '/jwc/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/ustc/jwc/info',
     parameters: { type: '分类，默认显示所有种类' },
     features: {

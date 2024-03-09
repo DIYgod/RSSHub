@@ -8,7 +8,7 @@ const rootUrl = 'https://www.miit.gov.cn';
 
 export const route: Route = {
     path: '/miit/yjzj',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/miit/yjzj',
     parameters: {},
     features: {

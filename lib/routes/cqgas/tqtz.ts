@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 const url = 'http://www.cqgas.cn/portal/article/page?cateId=1082&pageNo=1';
 export const route: Route = {
     path: '/tqtz',
-    categories: ['travel'],
+    categories: ['forecast'],
     example: '/cqgas/tqtz',
     parameters: {},
     features: {

@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 export const route: Route = {
     path: '/zcc',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/nju/zcc',
     parameters: {},
     features: {

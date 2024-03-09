@@ -7,7 +7,7 @@ import { rootUrl, ProcessItems } from './utils';
 
 export const route: Route = {
     path: '/feed/:id?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/yicai/feed/669',
     parameters: { id: '主题 id，可在对应主题页中找到，默认为一财早报' },
     features: {

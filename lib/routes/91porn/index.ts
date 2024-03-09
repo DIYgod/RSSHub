@@ -12,7 +12,7 @@ import { domainValidation } from './utils';
 
 export const route: Route = {
     path: '/:lang?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/91porn',
     parameters: { lang: 'Language, see below, `en_US` by default ' },
     features: {

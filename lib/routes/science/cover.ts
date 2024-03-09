@@ -20,7 +20,7 @@ import { baseUrl } from './utils';
 
 export const route: Route = {
     path: '/cover',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/science/cover',
     parameters: {},
     features: {

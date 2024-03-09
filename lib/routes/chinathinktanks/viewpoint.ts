@@ -11,7 +11,7 @@ const baseUrl = 'https://www.chinathinktanks.org.cn';
 
 export const route: Route = {
     path: '/:id',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/chinathinktanks/57',
     parameters: { id: '见下表，亦可在网站 url 里找到' },
     features: {

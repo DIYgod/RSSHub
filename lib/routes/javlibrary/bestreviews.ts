@@ -4,7 +4,7 @@ import { defaultMode, defaultLanguage, rootUrl, ProcessItems } from './utils';
 
 export const route: Route = {
     path: '/bestreviews/:language?/:mode?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/javlibrary/bestreviews/en',
     parameters: { language: 'Language, see below, Japanese by default, as `ja`', mode: 'Mode, see below, Last Month by default, as `1`' },
     features: {

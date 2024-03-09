@@ -14,7 +14,7 @@ async function getCategoryId(categories) {
 
 export const route: Route = {
     path: '/recently/:category?',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/macmenubar/recently/developer-apps,system-tools',
     parameters: { category: 'Category path name, seperate by comma, default is all categories. Category path name can be found in url' },
     features: {

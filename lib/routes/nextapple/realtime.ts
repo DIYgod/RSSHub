@@ -7,7 +7,7 @@ import asyncPool from 'tiny-async-pool';
 
 export const route: Route = {
     path: '/realtime/:category?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/nextapple/realtime/latest',
     parameters: { category: '類別，見下表，默認為首頁' },
     features: {

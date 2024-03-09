@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/contest/:language?/:rated?/:category?/:keyword?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/atcoder/contest',
     parameters: { language: 'Language, `jp` as Japanese or `en` as English, English by default', rated: 'Rated Range, see below, all by default', category: 'Category, see below, all by default', keyword: 'Keyword' },
     features: {

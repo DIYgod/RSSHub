@@ -11,7 +11,7 @@ const root_url = 'https://inf.ds.163.com';
 
 export const route: Route = {
     path: '/ds/:id',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/163/ds/63dfbaf4117741daaf73404601165843',
     parameters: { id: '用户ID' },
     features: {

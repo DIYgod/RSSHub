@@ -5,7 +5,7 @@ const host = 'https://weixin.sogou.com';
 import { finishArticleItem } from '@/utils/wechat-mp';
 export const route: Route = {
     path: '/sogou/:id',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/wechat/sogou/qimao0908',
     parameters: { id: '公众号 id, 打开 weixin.sogou.com 并搜索相应公众号， 在 URL 中找到 id' },
     features: {

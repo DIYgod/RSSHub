@@ -5,7 +5,7 @@ const baseUrl = 'https://www.pixiv.net';
 
 export const route: Route = {
     path: '/user/novels/:id',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/pixiv/user/novels/27104704',
     parameters: { id: "User id, available in user's homepage URL" },
     features: {

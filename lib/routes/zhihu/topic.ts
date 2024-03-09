@@ -8,7 +8,7 @@ import md5 from '@/utils/md5';
 
 export const route: Route = {
     path: '/topic/:topicId/:isTop?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/zhihu/topic/19828946',
     parameters: { topicId: '话题 id', isTop: '仅精华，默认为否，其他值为是' },
     features: {

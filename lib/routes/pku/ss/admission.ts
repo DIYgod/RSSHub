@@ -6,7 +6,7 @@ const host = `${baseUrl}/admission/admnotice/`;
 
 export const route: Route = {
     path: '/ss/admission',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/pku/ss/admission',
     parameters: {},
     features: {

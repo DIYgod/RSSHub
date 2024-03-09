@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/today',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/yyets/today',
     parameters: {},
     features: {

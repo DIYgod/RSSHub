@@ -7,7 +7,7 @@ import asyncPool from 'tiny-async-pool';
 
 export const route: Route = {
     path: '/:category',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/cts/real',
     parameters: { category: '类别' },
     features: {

@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/weekly',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/bandcamp/weekly',
     parameters: {},
     features: {

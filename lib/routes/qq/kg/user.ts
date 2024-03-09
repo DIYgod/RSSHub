@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/kg/:userId',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/qq/kg/639a9a86272c308e33',
     parameters: { userId: '用户 ID, 可在对应页面的 URL 中找到' },
     features: {

@@ -6,7 +6,7 @@ import util from './utils';
 
 export const route: Route = {
     path: '/jwc',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/bit/jwc',
     parameters: {},
     features: {

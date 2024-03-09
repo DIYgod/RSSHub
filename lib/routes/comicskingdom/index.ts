@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/:name',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/comicskingdom/pardon-my-planet',
     parameters: { name: 'URL path of the strip on comicskingdom.com' },
     features: {

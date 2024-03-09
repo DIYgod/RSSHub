@@ -14,7 +14,7 @@ const baseUrl = 'https://www.tiktok.com';
 
 export const route: Route = {
     path: '/user/:user/:iframe?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/tiktok/user/@linustech/true',
     parameters: { user: 'User ID, including @', iframe: 'Use the official iframe to embed the video, which allows you to view the video if the default option does not work. Default to `false`' },
     features: {

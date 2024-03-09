@@ -7,7 +7,7 @@ import { finishArticleItem } from '@/utils/wechat-mp';
 
 export const route: Route = {
     path: '/uae/:id',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/hrbeu/uae/xwdt',
     parameters: { id: '栏目编号，在 `URL` 中获取，如果有多级编号，将 `/` 替换为 `-`。' },
     features: {

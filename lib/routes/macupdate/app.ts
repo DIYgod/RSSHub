@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/app/:appId/:appSlug?',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/macupdate/app/11942',
     parameters: { appId: 'Application unique ID, can be found in URL', appSlug: 'Application slug, can be found in URL' },
     features: {

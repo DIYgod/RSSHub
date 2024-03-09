@@ -15,7 +15,7 @@ const month = date.getMonth() + 1;
 
 export const route: Route = {
     path: '/game/release',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/ymgal/game/release',
     parameters: {},
     features: {

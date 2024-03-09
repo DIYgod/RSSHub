@@ -9,7 +9,7 @@ const link = 'https://www.tokeninsight.com/';
 
 export const route: Route = {
     path: '/blog/:lang?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/tokeninsight/blog/en',
     parameters: { lang: 'Language, see below, Chinese by default' },
     features: {

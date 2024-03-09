@@ -5,7 +5,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/index/:media?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/pianyuan/index',
     parameters: { media: '类别，见下表，默认为首页' },
     features: {

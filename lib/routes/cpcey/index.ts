@@ -19,7 +19,7 @@ const typeMap = {
 
 export const route: Route = {
     path: '/:type?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/cpcey/xwg',
     parameters: { type: '默认为 `xwg`' },
     features: {

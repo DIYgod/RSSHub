@@ -14,7 +14,7 @@ const categories = {
 
 export const route: Route = {
     path: '/more/:category?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/zhibo8/more/nba',
     parameters: { category: '分类，见下表，默认为 NBA' },
     features: {

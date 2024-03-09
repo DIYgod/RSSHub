@@ -46,7 +46,7 @@ const getItem = (item, cache) => {
 
 export const route: Route = {
     path: '/jwc',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/swjtu/jwc',
     parameters: {},
     features: {

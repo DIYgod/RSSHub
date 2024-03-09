@@ -8,7 +8,7 @@ const md = MarkdownIt({
 
 export const route: Route = {
     path: '/collections',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/bigquant/collections',
     parameters: {},
     features: {

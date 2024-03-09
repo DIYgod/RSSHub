@@ -14,7 +14,7 @@ const processFloatTime = (time) => {
 
 export const route: Route = {
     path: '/video/danmaku/:bvid/:pid?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/video/danmaku/BV1vA411b7ip/1',
     parameters: { bvid: '视频AV号,可在视频页 URL 中找到', pid: '分P号,不填默认为1' },
     features: {

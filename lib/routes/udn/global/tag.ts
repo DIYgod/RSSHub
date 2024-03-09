@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/global/tag/:tag?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/udn/global/tag/過去24小時',
     parameters: { tag: '标签，可在对应标签页 URL 中找到' },
     features: {

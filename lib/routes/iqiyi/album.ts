@@ -10,7 +10,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/album/:id',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/iqiyi/album/神武天尊-2020-1b4lufwxd7h',
     parameters: { id: '剧集 id, 可在该主页 URL 中找到' },
     features: {

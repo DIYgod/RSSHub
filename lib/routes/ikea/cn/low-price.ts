@@ -4,7 +4,7 @@ import { generateRequestHeaders, generateProductItem } from './utils';
 
 export const route: Route = {
     path: '/cn/low_price',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/ikea/cn/low_price',
     parameters: {},
     features: {

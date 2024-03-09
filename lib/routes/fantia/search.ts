@@ -5,7 +5,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/fantia/search/posts/all/daily',
     parameters: {
         type: 'Type, see the table below, `posts` by default',

@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/blog/:language?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/sensortower/blog',
     parameters: { language: 'Language, see below, English by default' },
     features: {

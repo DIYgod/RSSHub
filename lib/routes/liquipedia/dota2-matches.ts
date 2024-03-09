@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/dota2/matches/:id',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/liquipedia/dota2/matches/Team_Aster',
     parameters: { id: '战队名称，可在url中找到。例如:https://liquipedia.net/dota2/Team_Aster' },
     features: {

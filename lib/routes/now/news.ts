@@ -12,7 +12,7 @@ const categories = {
 
 export const route: Route = {
     path: '/news/:category?/:id?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/now/news',
     parameters: { category: '分类，见下表，默认为首页', id: '编号，可在对应专题/节目页 URL 中找到 topicId' },
     features: {

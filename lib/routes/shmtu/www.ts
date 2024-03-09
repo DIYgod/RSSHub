@@ -25,7 +25,7 @@ const ProcessFeed = (list, caches) =>
 
 export const route: Route = {
     path: '/www/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/shmtu/www/events',
     parameters: { type: '类型名称' },
     features: {

@@ -7,7 +7,7 @@ import { rootUrl, getInfo, processItems } from './util';
 
 export const route: Route = {
     path: '/rank/:range?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/mydrivers/rank',
     parameters: { range: '时间范围，见下表，默认为24小时最热' },
     features: {

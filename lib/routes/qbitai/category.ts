@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/category/:category',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/qbitai/category/资讯',
     parameters: { category: '分类名，见下表' },
     features: {

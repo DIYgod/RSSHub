@@ -19,7 +19,7 @@ const idMap = {
 
 export const route: Route = {
     path: '/job/list/:id',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/hrbeu/job/list/tzgg',
     parameters: { id: '栏目，如下表' },
     features: {

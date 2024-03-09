@@ -6,7 +6,7 @@ const supportedKeys = new Set(['parody', 'character', 'tag', 'artist', 'group', 
 
 export const route: Route = {
     path: '/:key/:keyword/:mode?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/nhentai/language/chinese',
     parameters: {
         key: 'Filter term, can be: `parody`, `character`, `tag`, `artist`, `group`, `language` or `category`',

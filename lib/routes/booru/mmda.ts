@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/mmda/tags/:tags?',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/booru/mmda/tags/full_body+blue_eyes',
     parameters: { tags: '标签，多个标签使用空格 ` ` 或者 `%20` 连接，如需根据作者查询则在 `user:` 后接上作者名，如：`user:xxxx`' },
     features: {

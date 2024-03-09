@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/topics/:name/:qs?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/github/topics/framework',
     parameters: { name: 'Topic name, which can be found in the URL of the corresponding [Topics Page](https://github.com/topics/framework)', qs: 'Query string, like `l=php&o=desc&s=stars`. Details listed as follows:' },
     features: {

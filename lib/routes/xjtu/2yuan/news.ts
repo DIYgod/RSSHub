@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/2yuan/news/:id?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/xjtu/2yuan/news',
     parameters: { id: '编号，见下表，默认为通知公告' },
     features: {

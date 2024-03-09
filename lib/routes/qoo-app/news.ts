@@ -7,7 +7,7 @@ import { newsUrl, siteIcon, fixImg } from './utils';
 
 export const route: Route = {
     path: '/news/:lang?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/qoo-app/news/en',
     parameters: { lang: 'Language, see the table below, empty means `中文`' },
     features: {

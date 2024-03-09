@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/new-releases',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/bellroy/new-releases',
     parameters: {},
     features: {

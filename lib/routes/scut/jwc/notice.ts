@@ -57,7 +57,7 @@ const generateArticleFullText = (data) => resolveRelativeUrl(data.content) + gen
 
 export const route: Route = {
     path: '/jwc/notice/:category?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/scut/jwc/notice/all',
     parameters: { category: '通知分类，默认为 `all`' },
     features: {

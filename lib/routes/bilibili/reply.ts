@@ -4,7 +4,7 @@ import cache from './cache';
 
 export const route: Route = {
     path: '/video/reply/:bvid',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/video/reply/BV1vA411b7ip',
     parameters: { bvid: '可在视频页 URL 中找到' },
     features: {

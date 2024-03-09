@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/free-next/:type?',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/qidian/free-next',
     parameters: { type: '默认不填为起点中文网，填 mm 为起点女生网' },
     features: {

@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/news/author/:mid',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/tencent/news/author/5933889',
     parameters: { mid: '企鹅号 ID' },
     features: {

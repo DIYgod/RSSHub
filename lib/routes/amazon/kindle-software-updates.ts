@@ -9,7 +9,7 @@ import { load } from 'cheerio';
 const host = 'https://www.amazon.com';
 export const route: Route = {
     path: '/kindle/software-updates',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/amazon/kindle/software-updates',
     parameters: {},
     features: {

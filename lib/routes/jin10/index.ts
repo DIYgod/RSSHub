@@ -12,7 +12,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/:important?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/jin10',
     parameters: { important: '只看重要，任意值开启，留空关闭' },
     features: {

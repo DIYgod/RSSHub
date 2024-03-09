@@ -12,7 +12,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/dailyphoto',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/natgeo/dailyphoto',
     parameters: {},
     features: {

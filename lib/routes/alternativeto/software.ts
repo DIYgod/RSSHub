@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/software/:name/:routeParams?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/alternativeto/software/cpp',
     parameters: { name: 'Software name', routeParams: 'Filters of software type' },
     features: {

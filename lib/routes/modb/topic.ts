@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/topic/:id',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/modb/topic/44158',
     parameters: { id: '合辑序号' },
     features: {

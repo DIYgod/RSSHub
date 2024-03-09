@@ -4,7 +4,7 @@ import { getItem } from './utils';
 
 export const route: Route = {
     path: '/notes/source/:source',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/crossbell/notes/source/xlog',
     parameters: { source: 'N' },
     features: {

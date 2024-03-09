@@ -4,7 +4,7 @@ import { fetchPerformerInfo } from './service';
 
 export const route: Route = {
     path: '/artist/:id',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/showstart/artist/301783',
     parameters: { id: '音乐人 ID' },
     features: {

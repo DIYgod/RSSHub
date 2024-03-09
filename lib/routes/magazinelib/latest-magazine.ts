@@ -10,7 +10,7 @@ import * as path from 'node:path';
 const host = 'https://magazinelib.com';
 export const route: Route = {
     path: '/latest-magazine/:query?',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/magazinelib/latest-magazine/new+yorker',
     parameters: { query: 'query, search page querystring' },
     features: {

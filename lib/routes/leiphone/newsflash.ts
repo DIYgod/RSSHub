@@ -6,7 +6,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/newsflash',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/leiphone/newsflash',
     parameters: {},
     features: {

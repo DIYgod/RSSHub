@@ -9,7 +9,7 @@ import querystring from 'querystring';
 
 export const route: Route = {
     path: '/followings/dynamic/:uid/:routeParams?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/followings/dynamic/109937383',
     parameters: { uid: '用户 id', routeParams: '额外参数；请参阅 [#UP 主动态](#bilibili-up-zhu-dong-tai) 的说明和表格' },
     features: {

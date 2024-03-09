@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/media',
-    categories: ['multimedia'],
+    categories: ['live'],
     example: '/yoasobi-music/media',
     parameters: {},
     features: {

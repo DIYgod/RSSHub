@@ -8,7 +8,7 @@ const rootUrl = 'https://wallhaven.cc';
 
 export const route: Route = {
     path: ['/search/:filter?/:needDetails?', '/:filter?/:needDetails?'],
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/wallhaven/search/categories=110&purity=110&sorting=date_added&order=desc',
     parameters: { filter: 'Filter, empty by default', needDetails: 'Need Details, `true`/`yes` as yes, no by default' },
     features: {

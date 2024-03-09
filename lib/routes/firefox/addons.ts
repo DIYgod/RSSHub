@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/addons/:id',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/firefox/addons/rsshub-radar',
     parameters: { id: 'Add-ons id, can be found in add-ons url' },
     features: {

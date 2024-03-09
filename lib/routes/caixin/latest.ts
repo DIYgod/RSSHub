@@ -10,7 +10,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/latest',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/caixin/latest',
     parameters: {},
     features: {

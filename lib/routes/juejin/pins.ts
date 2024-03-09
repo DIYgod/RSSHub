@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/pins/:type?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/juejin/pins/6824710202487472141',
     parameters: { type: '默认为 recommend，见下表' },
     features: {

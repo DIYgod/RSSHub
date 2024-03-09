@@ -26,7 +26,7 @@ function deVideo(media) {
 
 export const route: Route = {
     path: '/profile/:id/:functionalFlag?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/picuki/profile/stefaniejoosten',
     parameters: { id: 'Instagram id', functionalFlag: 'functional flag, see the table below' },
     features: {

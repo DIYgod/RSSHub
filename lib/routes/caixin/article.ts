@@ -6,7 +6,7 @@ import { parseArticle } from './utils';
 
 export const route: Route = {
     path: '/article',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/caixin/article',
     parameters: {},
     features: {

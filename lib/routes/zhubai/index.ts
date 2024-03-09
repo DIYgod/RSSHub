@@ -5,7 +5,7 @@ import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/:id',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/zhubai/via',
     parameters: { id: '`id` 为竹白主页 url 中的三级域名，如 via.zhubai.love 的 `id` 为 `via`' },
     features: {

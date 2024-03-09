@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/ci-en/:id/article',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/dlsite/ci-en/7400/article',
     parameters: { id: 'Creator id, can be found in URL' },
     features: {

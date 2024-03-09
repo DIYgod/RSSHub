@@ -36,7 +36,7 @@ const timeRangeEnum = new Set(['all', 'oneDay', 'threeDay', 'oneWeek', 'oneMonth
 
 export const route: Route = {
     path: '/article/:categoryId/:sortType?/:timeRange?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/acfun/article/110',
     parameters: { categoryId: '分区 ID，见下表', sortType: '排序，见下表，默认为 `createTime`', timeRange: '时间范围，见下表，仅在排序是 `hotScore` 有效，默认为 `all`' },
     features: {

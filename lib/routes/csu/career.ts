@@ -8,7 +8,7 @@ import { unzip } from './utils';
 
 export const route: Route = {
     path: '/career',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/csu/career',
     parameters: {},
     features: {

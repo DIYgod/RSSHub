@@ -9,7 +9,7 @@ const rootUrl = 'https://xueqiu.com';
 
 export const route: Route = {
     path: '/user/:id/:type?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/xueqiu/user/8152922548',
     parameters: { id: '用户 id, 可在用户主页 URL 中找到', type: '动态的类型, 不填则默认全部' },
     features: {

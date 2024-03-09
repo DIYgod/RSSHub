@@ -7,7 +7,7 @@ import { decodeCFEmail } from './cf-email';
 
 export const route: Route = {
     path: '/journal/:id',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/sciencedirect/journal/research-policy',
     parameters: { id: 'Journal id, can be found in URL' },
     features: {

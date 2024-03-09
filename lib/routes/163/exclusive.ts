@@ -79,7 +79,7 @@ const ids = {
 
 export const route: Route = {
     path: '/exclusive/:id?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/163/exclusive/qsyk',
     parameters: { id: '栏目, 默认为首页' },
     features: {

@@ -9,7 +9,7 @@ const baseUrl = 'http://stno1.playno1.com';
 
 export const route: Route = {
     path: '/st/:catid?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/playno1/st',
     parameters: { catid: '分类，见下表，默认为全部文章' },
     features: {

@@ -78,7 +78,7 @@ const requestData = {
 
 export const route: Route = {
     path: '/:channel/:category',
-    categories: ['study'],
+    categories: ['government'],
     example: '/cde/news/gzdt',
     parameters: { channel: '频道', category: '类别' },
     features: {

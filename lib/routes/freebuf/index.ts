@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/articles/:type',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/freebuf/articles/web',
     parameters: { type: '文章类别' },
     features: {

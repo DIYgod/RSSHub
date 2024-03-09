@@ -4,7 +4,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/starred_repos/:user',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/github/starred_repos/DIYgod',
     parameters: { user: 'User name' },
     features: {

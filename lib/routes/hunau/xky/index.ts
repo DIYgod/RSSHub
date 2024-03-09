@@ -3,7 +3,7 @@ import getContent from '../utils/common';
 
 export const route: Route = {
     path: '/xky/:category?/:page?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/hunau/xky',
     parameters: { category: '页面分类，默认为 `tzgg_8472`', page: '页码，默认为 `1`' },
     features: {

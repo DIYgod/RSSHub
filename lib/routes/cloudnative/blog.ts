@@ -27,7 +27,7 @@ async function getArticles() {
 
 export const route: Route = {
     path: '/blog',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/cloudnative/blog',
     parameters: {},
     features: {

@@ -18,7 +18,7 @@ const pageType = (href) => {
 
 export const route: Route = {
     path: '/cic/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/tju/cic/news',
     parameters: { type: 'default `news`' },
     features: {

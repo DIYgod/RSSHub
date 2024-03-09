@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/ndss',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/ndss-symposium/ndss',
     parameters: {},
     features: {

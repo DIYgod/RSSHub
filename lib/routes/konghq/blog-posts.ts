@@ -10,7 +10,7 @@ const BLOG_POSTS_URL = `${BASE_URL}/blog`;
 
 export const route: Route = {
     path: '/blog-posts',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/konghq/blog-posts',
     parameters: {},
     features: {

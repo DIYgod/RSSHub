@@ -19,7 +19,7 @@ const categories = {
 
 export const route: Route = {
     path: '/jiaowu/:category?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/xaufe/jiaowu/tzgg',
     parameters: { category: '分类，默认为通知公告' },
     features: {

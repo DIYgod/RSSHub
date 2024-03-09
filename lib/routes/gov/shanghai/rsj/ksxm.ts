@@ -12,7 +12,7 @@ const rootUrl = 'http://www.rsj.sh.gov.cn';
 
 export const route: Route = {
     path: '/shanghai/rsj/ksxm',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/shanghai/rsj/ksxm',
     parameters: {},
     features: {

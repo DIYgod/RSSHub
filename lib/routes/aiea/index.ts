@@ -3,7 +3,7 @@ import buildData from '@/utils/common-config';
 
 export const route: Route = {
     path: '/seminars/:period',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/aiea/seminars/upcoming',
     parameters: { period: 'Time frame' },
     features: {

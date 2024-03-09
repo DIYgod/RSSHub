@@ -10,7 +10,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/search/:q/:order?',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/pixabay/search/cat',
     parameters: { q: 'Search term', order: 'Order, `popular` or `latest`, `latest` by default' },
     features: {

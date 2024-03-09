@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:id?',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/shmeea/08000',
     parameters: { id: '页面 ID，可在 URL 中找到，默认为消息速递' },
     features: {

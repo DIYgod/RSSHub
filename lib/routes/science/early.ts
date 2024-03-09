@@ -8,7 +8,7 @@ import { baseUrl, fetchDesc, getItem } from './utils';
 
 export const route: Route = {
     path: '/early/:journal?',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/science/early',
     parameters: { journal: 'Short name for a journal' },
     features: {

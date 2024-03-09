@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/news/:category?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/casssp/news/3',
     parameters: { category: '分类，见下表，默认为通知公告' },
     features: {

@@ -68,7 +68,7 @@ const getArticleDetail = (article_id, language) => {
 
 export const route: Route = {
     path: '/global-business-review/:language?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/economist/global-business-review/cn-en',
     parameters: { language: 'Language, `en`, `cn`, `tw` are supported, support multiple options, default to cn-en' },
     features: {

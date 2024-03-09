@@ -13,7 +13,7 @@ const rootUrl = 'https://chn.oversea.cnki.net';
 
 export const route: Route = {
     path: '/journals/debut/:name',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/cnki/journals/debut/LKGP',
     parameters: { name: '期刊缩写，可以在网址中得到' },
     features: {

@@ -9,7 +9,7 @@ const host = 'https://www.soundofhope.org';
 
 export const route: Route = {
     path: '/:channel/:id',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/soundofhope/term/203',
     parameters: { channel: '频道', id: '子频道 ID' },
     features: {

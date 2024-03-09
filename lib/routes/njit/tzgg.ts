@@ -9,7 +9,7 @@ const host = 'https://www.njit.edu.cn';
 
 export const route: Route = {
     path: '/tzgg',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/njit/tzgg',
     parameters: {},
     features: {

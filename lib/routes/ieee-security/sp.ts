@@ -7,7 +7,7 @@ const url = 'https://www.ieee-security.org/';
 
 export const route: Route = {
     path: '/security-privacy',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/ieee-security/security-privacy',
     parameters: {},
     features: {

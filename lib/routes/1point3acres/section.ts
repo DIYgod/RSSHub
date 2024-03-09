@@ -15,7 +15,7 @@ const sections = {
 
 export const route: Route = {
     path: '/section/:id?/:type?/:order?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/1point3acres/section/345',
     parameters: { id: '分区 id，见下表，默认为全部', type: '帖子分类, 见下表，默认为 hot，即热门帖子', order: '排序方式，见下表，默认为空，即最新回复' },
     features: {

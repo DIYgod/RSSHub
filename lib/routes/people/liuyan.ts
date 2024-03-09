@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/liuyan/:id/:state?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/people/liuyan/539',
     parameters: { id: '编号，可在对应人物页 URL 中找到', state: '状态，见下表，默认为全部' },
     features: {

@@ -8,7 +8,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/price/:id',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/jd/price/526835',
     parameters: { id: '商品 id，可在商品详情页 URL 中找到' },
     features: {

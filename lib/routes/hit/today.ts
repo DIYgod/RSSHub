@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/today/:category',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/hit/today/10',
     parameters: { category: '分类编号，`10`为公告公示，`11`为新闻快讯，同时支持详细分类，使用方法见下' },
     features: {

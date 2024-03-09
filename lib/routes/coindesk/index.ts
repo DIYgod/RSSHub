@@ -5,7 +5,7 @@ const rootUrl = 'https://www.coindesk.com';
 
 export const route: Route = {
     path: '/consensus-magazine',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/coindesk/consensus-magazine',
     parameters: {},
     features: {

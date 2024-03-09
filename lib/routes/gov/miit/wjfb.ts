@@ -8,7 +8,7 @@ const rootUrl = 'https://www.miit.gov.cn';
 
 export const route: Route = {
     path: '/miit/wjfb/:ministry',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/miit/wjfb/ghs',
     parameters: { ministry: '部门缩写，可以在对应 URL 中获取' },
     features: {

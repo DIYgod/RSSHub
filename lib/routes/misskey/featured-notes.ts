@@ -5,7 +5,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/notes/featured/:site',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/misskey/notes/featured/misskey.io',
     parameters: { site: 'instance address, domain only, without `http://` or `https://` protocol header' },
     features: {

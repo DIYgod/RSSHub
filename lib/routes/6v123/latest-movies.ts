@@ -5,7 +5,7 @@ const baseURL = 'https://www.hao6v.cc/gvod/zx.html';
 
 export const route: Route = {
     path: '/latestMovies',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/6v123/latestMovies',
     parameters: {},
     features: {

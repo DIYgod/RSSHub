@@ -9,7 +9,7 @@ const url = `${host}/tzgg/index.htm`;
 
 export const route: Route = {
     path: '/yzxc/tzgg',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/ustb/yzxc/tzgg',
     parameters: {},
     features: {

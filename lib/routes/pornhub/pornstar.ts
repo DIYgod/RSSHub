@@ -6,7 +6,7 @@ import { headers, parseItems } from './utils';
 
 export const route: Route = {
     path: '/:language?/pornstar/:username/:sort?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/pornhub/pornstar/june-liu',
     parameters: { language: 'language, see below', username: 'username, part of the url e.g. `pornhub.com/pornstar/june-liu`', sort: 'sorting method, see below' },
     features: {

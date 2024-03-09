@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/admission/sszs',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/pku/admission/sszs',
     parameters: {},
     features: {

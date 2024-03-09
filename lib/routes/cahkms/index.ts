@@ -25,7 +25,7 @@ const titles = {
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/cahkms',
     parameters: { category: '分类，见下表，默认为重要新闻' },
     features: {

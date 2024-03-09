@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/music/latest/:area?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/music/latest/chinese',
     parameters: { area: '区域类型，默认全部' },
     features: {

@@ -8,7 +8,7 @@ const base_url = 'https://rustcc.cn';
 
 export const route: Route = {
     path: '/jobs',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/rustcc/jobs',
     parameters: {},
     features: {

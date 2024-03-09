@@ -24,7 +24,7 @@ const map = {
 
 export const route: Route = {
     path: '/bulletin/:category?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/nuist/bulletin/791',
     parameters: { category: '默认为 `791`' },
     features: {

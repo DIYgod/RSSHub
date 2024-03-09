@@ -36,7 +36,7 @@ const get_from_link = async (link) => {
 };
 export const route: Route = {
     path: '/jwc/:category?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/ecust/jwc/mto',
     parameters: { category: '订阅板块，默认为全部订阅' },
     features: {

@@ -4,7 +4,7 @@ import { getRollNewsList, parseRollNewsList, parseArticle } from './utils';
 
 export const route: Route = {
     path: '/csj',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/sina/csj',
     parameters: {},
     features: {

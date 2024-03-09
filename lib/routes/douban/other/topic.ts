@@ -4,7 +4,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/topic/:id/:sort?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/topic/48823',
     parameters: { id: '话题id', sort: '排序方式，hot或new，默认为new' },
     features: {

@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/desktop',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/tradingview/desktop',
     parameters: {},
     features: {

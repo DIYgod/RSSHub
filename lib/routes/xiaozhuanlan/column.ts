@@ -11,7 +11,7 @@ const baseUrl = 'https://xiaozhuanlan.com';
 
 export const route: Route = {
     path: '/column/:id',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/xiaozhuanlan/column/olddriver-selection',
     parameters: { id: '专栏 ID，可在专栏页 URL 中找到' },
     features: {

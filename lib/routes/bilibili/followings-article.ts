@@ -5,7 +5,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/followings/article/:uid',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/followings/article/99800931',
     parameters: { uid: '用户 id' },
     features: {

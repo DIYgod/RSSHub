@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/photo/jx',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/cctv/photo/jx',
     parameters: {},
     features: {

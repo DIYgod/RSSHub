@@ -7,7 +7,7 @@ const md = MarkdownIt({
 
 export const route: Route = {
     path: '/release-notes',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/postman/release-notes',
     parameters: {},
     features: {

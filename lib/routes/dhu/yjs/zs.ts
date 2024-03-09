@@ -12,7 +12,7 @@ const map = {
 };
 export const route: Route = {
     path: '/yjs/zs/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/dhu/yjs/zs/master',
     parameters: { type: '默认为 `master`' },
     features: {

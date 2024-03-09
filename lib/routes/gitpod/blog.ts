@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/blog',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/gitpod/blog',
     parameters: {},
     features: {

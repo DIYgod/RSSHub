@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/channel/:channel',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/vimeo/channel/bestoftheyear',
     parameters: { channel: 'channel name can get from url like `bestoftheyear` in  [https://vimeo.com/channels/bestoftheyear/videos](https://vimeo.com/channels/bestoftheyear/videos) .' },
     features: {

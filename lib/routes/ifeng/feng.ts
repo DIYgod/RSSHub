@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/feng/:id/:type',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/ifeng/feng/2583/doc',
     parameters: { id: '对应 id，可在 大风号作者页面 找到', type: '类型，见下表' },
     features: {

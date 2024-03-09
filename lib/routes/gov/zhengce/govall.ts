@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/zhengce/govall/:advance?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/zhengce/govall/orpro=555&notpro=2&search_field=title',
     parameters: { advance: '高级搜索选项，将作为请求参数直接添加到url后。目前已知的选项及其意义如下。' },
     features: {

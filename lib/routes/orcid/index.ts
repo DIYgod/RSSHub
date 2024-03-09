@@ -8,7 +8,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/:id',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/orcid/0000-0002-4731-9700',
     parameters: { id: 'Open Researcher and Contributor ID' },
     features: {

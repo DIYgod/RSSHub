@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/weekly',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/caixin/weekly',
     parameters: {},
     features: {

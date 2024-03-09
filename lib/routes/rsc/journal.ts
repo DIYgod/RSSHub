@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/journal/:id/:category?',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/rsc/journal/ta',
     parameters: { id: 'Journal id, can be found in URL', category: 'Category, see below, All Recent Articles by default' },
     features: {

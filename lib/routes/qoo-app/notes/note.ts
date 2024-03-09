@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/notes/:lang?/note/:id',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/qoo-app/notes/en/note/2329113',
     parameters: { lang: 'Language, see the table above, empty means `中文`', id: 'Note ID, can be found in URL' },
     features: {

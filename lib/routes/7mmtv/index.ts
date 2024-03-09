@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/:language?/:category?/:type?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/7mmtv/zh/censored_list/all',
     parameters: { language: 'Language, see below, `en` as English by default', category: 'Category, see below, `censored_list` as Censored by default', type: 'Server, see below, all server by default' },
     features: {

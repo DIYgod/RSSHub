@@ -5,7 +5,7 @@ import { finishArticleItem } from '@/utils/wechat-mp';
 
 export const route: Route = {
     path: '/wechat2rss/:id',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/wechat/wechat2rss/5b925323244e9737c39285596c53e3a2f4a30774',
     parameters: { id: '公众号 id，打开 `https://wechat2rss.xlab.app/posts/list/`，在 URL 中找到 id；注意不是公众号页的 id，而是订阅的 id' },
     features: {

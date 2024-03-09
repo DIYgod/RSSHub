@@ -7,7 +7,7 @@ const baseUrl = 'https://neunews.neu.edu.cn';
 
 export const route: Route = {
     path: '/news/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/neu/news/ddyw',
     parameters: { type: '种类名，见下表' },
     features: {

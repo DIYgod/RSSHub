@@ -45,7 +45,7 @@ const getCurrentUrl = (category) => {
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/setn',
     parameters: { category: '分类，见下表，默认为即時' },
     features: {

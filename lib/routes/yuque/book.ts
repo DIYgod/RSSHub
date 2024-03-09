@@ -11,7 +11,7 @@ const baseUrl = 'https://www.yuque.com';
 
 export const route: Route = {
     path: '/:name/:book',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/yuque/ruanyf/weekly',
     parameters: { name: '用戶名', book: '知识库 ID' },
     features: {

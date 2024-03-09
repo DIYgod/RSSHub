@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 import { config } from '@/config';
 export const route: Route = {
     path: '/tv/followrank',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/bangumi/tv/followrank',
     parameters: {},
     features: {

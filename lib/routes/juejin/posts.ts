@@ -5,7 +5,7 @@ import util from './utils';
 
 export const route: Route = {
     path: '/posts/:id',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/juejin/posts/3051900006845944',
     parameters: { id: '用户 id, 可在用户页 URL 中找到' },
     features: {

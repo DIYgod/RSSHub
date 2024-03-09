@@ -60,7 +60,7 @@ const categories = {
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/hkej/index',
     parameters: { category: '分类，默认为全部新闻' },
     features: {

@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 
 export const route: Route = {
     path: '/calendar/:before?/:after?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/thwiki/calendar',
     parameters: { before: 'From how many days ago (default 30)', after: 'To how many days after (default 30)' },
     features: {

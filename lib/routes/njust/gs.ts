@@ -8,7 +8,7 @@ const host = 'https://gs.njust.edu.cn';
 
 export const route: Route = {
     path: '/gs/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/njust/gs/sytzgg_4568',
     parameters: { type: '分类 ID，部分示例参数见下表，默认为首页通知公告，其他分类 ID 可以从网站 URL Path 中找到，如国际交流为 `gjjl`' },
     features: {

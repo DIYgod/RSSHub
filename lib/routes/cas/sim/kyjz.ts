@@ -8,7 +8,7 @@ const host = 'http://www.sim.cas.cn/';
 
 export const route: Route = {
     path: '/sim/kyjz',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/cas/sim/kyjz',
     parameters: {},
     features: {

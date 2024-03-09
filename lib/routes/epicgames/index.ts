@@ -10,7 +10,7 @@ import dayjs from 'dayjs';
 
 export const route: Route = {
     path: '/freegames/:locale?/:country?',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/epicgames/freegames',
     parameters: { locale: 'Locale, en_US by default', country: 'Country, US by default' },
     features: {

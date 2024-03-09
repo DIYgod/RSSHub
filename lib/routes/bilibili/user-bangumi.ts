@@ -4,7 +4,7 @@ import cache from './cache';
 
 export const route: Route = {
     path: '/user/bangumi/:uid/:type?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/user/bangumi/208259',
     parameters: { uid: '用户 id', type: '1为番，2为剧，留空为1' },
     features: {

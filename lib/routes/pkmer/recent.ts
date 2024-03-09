@@ -6,7 +6,7 @@ const baseUrl = 'https://pkmer.cn';
 
 export const route: Route = {
     path: '/recent',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/pkmer/recent',
     parameters: {},
     features: {

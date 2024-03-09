@@ -23,7 +23,7 @@ const contestAPI = 'https://codeforces.com/api/contest.list';
 
 export const route: Route = {
     path: '/contests',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/codeforces/contests',
     parameters: {},
     features: {

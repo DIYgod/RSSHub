@@ -8,7 +8,7 @@ const rootURL = 'http://rsj.taiyuan.gov.cn/';
 
 export const route: Route = {
     path: '/taiyuan/rsj/:caty/:page?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/taiyuan/rsj/gggs',
     parameters: { caty: '信息类别', page: '页码' },
     features: {

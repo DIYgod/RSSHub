@@ -9,7 +9,7 @@ const baseUrl = 'https://jwc.nuist.edu.cn';
 
 export const route: Route = {
     path: '/jwc/:category?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/nuist/jwc/jxyw',
     parameters: { category: '默认为教学要闻' },
     features: {

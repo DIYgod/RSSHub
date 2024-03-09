@@ -9,7 +9,7 @@ const siteUrl = `${baseUrl}/zwgk/zcjd/index.html`;
 
 export const route: Route = {
     path: '/miit/zcjd',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/miit/zcjd',
     parameters: {},
     features: {

@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/novel/chapter/:id',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/sfacg/novel/chapter/672431',
     parameters: { id: '小说 id, 可在对应小说页 URL 中找到' },
     features: {

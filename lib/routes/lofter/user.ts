@@ -5,7 +5,7 @@ import { isValidHost } from '@/utils/valid-host';
 
 export const route: Route = {
     path: '/user/:name?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/lofter/user/i',
     parameters: { name: 'Lofter user name, can be found in the URL' },
     features: {

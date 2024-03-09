@@ -44,7 +44,7 @@ async function parsePage(html: string) {
 
 export const route: Route = {
     path: '/:column/:subColumn/:category?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/cast/xw/tzgg/ZH',
     parameters: { column: '栏目编号，见下表', subColumn: '二级栏目编号', category: '分类' },
     features: {

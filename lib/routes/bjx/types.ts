@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/gf/:type',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/bjx/gf/sc',
     parameters: { type: '分类，北极星光伏最后的`type`字段' },
     features: {

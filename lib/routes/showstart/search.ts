@@ -4,7 +4,7 @@ import { fetchActivityList, fetchPerformerList, fetchBrandList, fetchCityList, f
 
 export const route: Route = {
     path: '/search/:type/:keyword?',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/showstart/search/live',
     parameters: { type: '类别', keyword: '搜索关键词' },
     features: {

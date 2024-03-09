@@ -3,7 +3,7 @@ import getContent from './utils/common';
 
 export const route: Route = {
     path: '/ied/:type?/:category?/:page?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/hunau/ied',
     parameters: { type: '页面归属，默认为 `xwzx`', category: '页面分类，默认为 `ggtz`', page: '页码，默认为 `1`' },
     features: {

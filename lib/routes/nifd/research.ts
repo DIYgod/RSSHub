@@ -21,7 +21,7 @@ const titleMap = {
 
 export const route: Route = {
     path: '/research/:categoryGuid?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/nifd/research/3333d2af-91d6-429b-be83-28b92f31b6d7',
     parameters: { categoryGuid: '资讯类型，默认为周报' },
     features: {

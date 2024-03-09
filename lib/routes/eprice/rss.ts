@@ -13,7 +13,7 @@ const allowRegion = new Set(['tw', 'hk']);
 
 export const route: Route = {
     path: '/:region?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/eprice/tw',
     parameters: { region: '地区，预设为 tw' },
     features: {

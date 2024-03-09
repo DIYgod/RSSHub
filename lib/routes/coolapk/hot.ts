@@ -68,7 +68,7 @@ const getLinkAndTitle = (type, period) => {
 
 export const route: Route = {
     path: '/hot/:type?/:period?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/coolapk/hot',
     parameters: { type: '默认为`jrrm`', period: '默认为`daily`' },
     features: {

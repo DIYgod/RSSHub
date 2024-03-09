@@ -3,7 +3,7 @@ import utils from './utils';
 
 export const route: Route = {
     path: '/tags/:query?/:category?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/javdb/tags/c2=5&c10=1',
     parameters: { query: '筛选，默认为 `c10=1`', category: '分类，见下表，默认为 `有碼`' },
     features: {

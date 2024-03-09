@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 const host = 'https://www.zju.edu.cn/';
 export const route: Route = {
     path: '/list/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/zju/list/xs',
     parameters: { type: '`xs`为学术，`xw`为新闻，`5461`是图片新闻，`578`是浙大报道，具体参数参考左侧的菜单' },
     features: {

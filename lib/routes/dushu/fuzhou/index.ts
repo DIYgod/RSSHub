@@ -19,7 +19,7 @@ const transformTime = (item) => {
 
 export const route: Route = {
     path: '/fuzhou',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/dushu/fuzhou',
     parameters: {},
     features: {

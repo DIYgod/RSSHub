@@ -6,7 +6,7 @@ const host = 'https://njglyy.com/ygb/jypx/';
 
 export const route: Route = {
     path: '/ygbjypx',
-    categories: ['study'],
+    categories: ['government'],
     example: '/njglyy/ygbjypx',
     parameters: {},
     features: {

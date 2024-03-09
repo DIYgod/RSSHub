@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/packs/:type?',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/osu/packs',
     parameters: { type: 'pack type, default to `standard`, can choose from `featured`, `tournament`, `loved`, `chart`, `theme` and `artist`' },
     features: {

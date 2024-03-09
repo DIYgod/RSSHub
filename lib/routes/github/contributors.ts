@@ -4,7 +4,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/contributors/:user/:repo/:order?/:anon?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/github/contributors/DIYgod/RSSHub',
     parameters: { user: 'User name', repo: 'Repo name', order: 'Sort order by commit numbers, desc and asc (descending by default)', anon: 'Show anonymous users. Defaults to no, use any values for yes.' },
     features: {

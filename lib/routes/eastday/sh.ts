@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/sh',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/eastday/sh',
     parameters: {},
     features: {

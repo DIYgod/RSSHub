@@ -9,7 +9,7 @@ import { load } from 'cheerio';
 const host = 'https://www.snowpeak.com';
 export const route: Route = {
     path: '/us/new-arrivals',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/snowpeak/us/new-arrivals',
     parameters: {},
     features: {

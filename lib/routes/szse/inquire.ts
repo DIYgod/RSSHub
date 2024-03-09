@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/inquire/:category?/:select?/:keyword?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/szse/inquire',
     parameters: { category: '类型，见下表，默认为 `0` 即 主板', select: '函件类别, 见下表，默认为全部函件类别', keyword: '公司代码或简称，默认为空' },
     features: {

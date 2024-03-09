@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/offer/:year?/:major?/:school?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/1point3acres/offer/12/null/CMU',
     parameters: { year: '录取年份  id，空为null', major: '录取专业 id，空为null', school: '录取学校 id，空为null' },
     features: {

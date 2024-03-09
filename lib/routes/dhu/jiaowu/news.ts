@@ -12,7 +12,7 @@ const map = {
 };
 export const route: Route = {
     path: '/jiaowu/news/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/dhu/jiaowu/news/student',
     parameters: { type: '默认为 `student`' },
     features: {

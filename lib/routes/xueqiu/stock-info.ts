@@ -7,7 +7,7 @@ import sanitizeHtml from 'sanitize-html';
 
 export const route: Route = {
     path: '/stock_info/:id/:type?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/xueqiu/stock_info/SZ000002',
     parameters: { id: '股票代码（需要带上交易所）', type: '动态的类型, 不填则为股票公告' },
     features: {

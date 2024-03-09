@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:type?/:category?',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/gamersecret',
     parameters: { type: 'Type, see below, Latest News by default', category: 'Category, see below' },
     features: {

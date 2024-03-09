@@ -25,7 +25,7 @@ const pageType = (href) => {
 
 export const route: Route = {
     path: '/oaa/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/tju/oaa/news',
     parameters: { type: 'default `news`' },
     features: {

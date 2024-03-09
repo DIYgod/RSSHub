@@ -12,7 +12,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: ['/bbs/:id?/:order?', '/bxj/:id?/:order?'],
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/hupu/bbs/topic-daily',
     parameters: { id: '编号，可在对应社区 URL 中找到，默认为#步行街主干道', order: '排序方式，可选 `0` 即 最新回复 或 `1` 即 最新发布，默认为最新回复' },
     features: {

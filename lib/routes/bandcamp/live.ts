@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/live',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/bandcamp/live',
     parameters: {},
     features: {

@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/topic/:topic',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/thehindu/topic/rains',
     parameters: { topic: 'Topic slug, can be found in URL.' },
     features: {

@@ -5,7 +5,7 @@ import util from './utils';
 
 export const route: Route = {
     path: '/collection/:collectionId',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/juejin/collection/6845243180586123271',
     parameters: { collectionId: '收藏夹唯一标志符, 在浏览器地址栏URL中能够找到' },
     features: {

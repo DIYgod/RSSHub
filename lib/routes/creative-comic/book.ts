@@ -10,7 +10,7 @@ import { getUuid, getBook, getChapter, getChapters, getImgEncrypted, getImgKey, 
 
 export const route: Route = {
     path: '/book/:id/:coverOnly?/:quality?',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/creative-comic/book/117',
     parameters: { id: '漫畫 ID，可在 URL 中找到', coverOnly: '僅獲取封面，非 `true` 時將獲取**全部**頁面，預設 `true`', quality: '閱讀品質，標準畫質 `1`，高畫質 `2`，預設 `1`' },
     features: {

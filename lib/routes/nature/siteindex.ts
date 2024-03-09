@@ -6,7 +6,7 @@ import { baseUrl, cookieJar } from './utils';
 
 export const route: Route = {
     path: '/siteindex',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/nature/siteindex',
     parameters: {},
     features: {

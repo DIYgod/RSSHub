@@ -25,7 +25,7 @@ const ProcessFeed = (list, caches) =>
 
 export const route: Route = {
     path: '/jwc/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/shmtu/jwc/jwgg',
     parameters: { type: '类型名称' },
     features: {

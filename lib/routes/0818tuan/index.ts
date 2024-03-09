@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:listId?',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/0818tuan',
     parameters: { listId: '活动分类，见下表，默认为 `1`' },
     features: {

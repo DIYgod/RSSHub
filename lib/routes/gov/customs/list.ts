@@ -9,7 +9,7 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/customs/list/:gchannel?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/customs/list/paimai',
     parameters: { gchannel: '支持 `paimai` 及 `fagui` 2个频道，默认为 `paimai`' },
     features: {

@@ -7,7 +7,7 @@ import { parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/wen',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/woshipm/wen',
     parameters: {},
     features: {

@@ -13,7 +13,7 @@ async function loadContent(link) {
 
 export const route: Route = {
     path: '/topic/:topic',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/oschina/topic/weekly-news',
     parameters: { topic: '主题名，可从 [全部主题](https://www.oschina.net/question/topics) 进入主题页，在 URL 中找到' },
     features: {

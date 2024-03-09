@@ -7,7 +7,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/news',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/qbittorrent/news',
     parameters: {},
     features: {

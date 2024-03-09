@@ -11,7 +11,7 @@ import { baseUrl, getChannel, getChannelMessages, getGuild } from './discord-api
 
 export const route: Route = {
     path: '/channel/:channelId',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/discord/channel/950465850056536084',
     parameters: { channelId: 'Channel ID' },
     features: {

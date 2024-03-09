@@ -10,7 +10,7 @@ import puppeteer from '@/utils/puppeteer';
 // http://localhost:1200/iqiyi/user/video/2289191062
 export const route: Route = {
     path: '/user/video/:uid',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/iqiyi/user/video/2289191062',
     parameters: { uid: '用户名' },
     features: {

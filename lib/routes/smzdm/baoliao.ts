@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/baoliao/:uid',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/smzdm/baoliao/7367111021',
     parameters: { uid: '用户id，网址上直接可以看到' },
     features: {

@@ -3,7 +3,7 @@ import getContent from '../utils/common';
 
 export const route: Route = {
     path: '/gfxy/:category?/:page?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/hunau/gfxy',
     parameters: { category: '页面分类，默认为 `tzgg`', page: '页码，默认为 `1`' },
     features: {

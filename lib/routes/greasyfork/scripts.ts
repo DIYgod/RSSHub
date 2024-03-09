@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: ['/:language/:domain?', '/scripts/sort/:sort/:language?'],
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/greasyfork/en/google.com',
     parameters: { language: "language, located on the top right corner of Greasy Fork's search page, set to `all` for including all languages", domain: "the script's target domain" },
     features: {

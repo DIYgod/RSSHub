@@ -6,7 +6,7 @@ const newsUrl = 'https://www.cpuid.com/news.html';
 
 export const route: Route = {
     path: '/news',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/cpuid/news',
     parameters: {},
     features: {

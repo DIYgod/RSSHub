@@ -6,7 +6,7 @@ import { parseList, parseItem } from './utils';
 
 export const route: Route = {
     path: '/:type',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/indienova/article',
     parameters: { type: '类型: `article` 文章，`development` 开发' },
     features: {

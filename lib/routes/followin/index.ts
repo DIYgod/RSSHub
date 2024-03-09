@@ -5,7 +5,7 @@ import { apiUrl, favicon, getBParam, getBuildId, getGToken, parseList, parseItem
 
 export const route: Route = {
     path: '/:categoryId?/:lang?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/followin',
     parameters: { categoryId: 'Category ID, see table below, `1` by default', lang: 'Language, see table below, `en` by default' },
     features: {

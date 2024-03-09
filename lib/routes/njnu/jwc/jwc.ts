@@ -6,7 +6,7 @@ import util from './utils';
 
 export const route: Route = {
     path: '/jwc/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/njnu/jwc/xstz',
     parameters: { type: '分类名' },
     features: {

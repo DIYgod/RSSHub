@@ -61,7 +61,7 @@ const getArticleDetail = (link) =>
 
 export const route: Route = {
     path: '/:endpoint?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/npr/1001',
     parameters: { endpoint: 'Channel ID, can be found in Official RSS URL, `1001` by default' },
     features: {

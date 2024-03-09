@@ -5,7 +5,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/user/followings/:uid/:loginUid',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/user/followings/2267573/3',
     parameters: { uid: '用户 id, 可在 UP 主主页中找到', loginUid: '用于登入的用户id,需要配置对应的 Cookie 值' },
     features: {

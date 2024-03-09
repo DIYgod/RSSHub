@@ -12,7 +12,7 @@ const rangeMap = {
 
 export const route: Route = {
     path: '/popular/:range?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/woshipm/popular',
     parameters: { range: '时间，见下表，默认为 `daily`' },
     features: {

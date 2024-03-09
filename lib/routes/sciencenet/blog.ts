@@ -8,7 +8,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/blog/:type?/:time?/:sort?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/sciencenet/blog',
     parameters: { type: '类型，见下表，默认为推荐', time: '时间，见下表，默认为所有时间', sort: '排序，见下表，默认为按发表时间排序' },
     features: {

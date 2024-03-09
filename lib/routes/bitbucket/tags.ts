@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/tags/:workspace/:repo_slug',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/bitbucket/tags/blaze-lib/blaze',
     parameters: { workspace: 'Workspace', repo_slug: 'Repository' },
     features: {

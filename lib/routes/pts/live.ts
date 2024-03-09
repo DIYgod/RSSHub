@@ -10,7 +10,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/live/:id',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/pts/live/62e8e4bbb4de2cbd74468b2b',
     parameters: { id: '報導 id，可在对应整理報導页 URL 中找到' },
     features: {

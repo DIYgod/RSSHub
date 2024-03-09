@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/live',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/kepu/live',
     parameters: {},
     features: {

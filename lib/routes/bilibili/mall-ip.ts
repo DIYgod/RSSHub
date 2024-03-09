@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/mall/ip/:id',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/bilibili/mall/ip/0_3000294',
     parameters: { id: '作品 id, 可在作品列表页 URL 中找到' },
     features: {

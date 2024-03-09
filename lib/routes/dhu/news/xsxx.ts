@@ -8,7 +8,7 @@ const baseUrl = 'https://news.dhu.edu.cn/_wp3services/generalQuery?queryObj=arti
 
 export const route: Route = {
     path: '/news/xsxx',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/dhu/news/xsxx',
     parameters: {},
     features: {

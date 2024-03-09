@@ -6,7 +6,7 @@ const baseUrl = 'http://www.supplywater.com';
 
 export const route: Route = {
     path: '/changsha/:channelId?',
-    categories: ['travel'],
+    categories: ['forecast'],
     example: '/tingshuitz/changsha/78',
     parameters: { channelId: 'N' },
     features: {

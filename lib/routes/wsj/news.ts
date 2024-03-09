@@ -9,7 +9,7 @@ const hostMap = {
 };
 export const route: Route = {
     path: '/:lang/:category?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/wsj/en-us/opinion',
     parameters: { lang: 'Language, `en-us`, `zh-cn`, `zh-tw`', category: 'Category. See below' },
     features: {

@@ -12,7 +12,7 @@ const titles = {
 
 export const route: Route = {
     path: '/member/:category?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/guancha/member/recommend',
     parameters: { category: '分类，见下表' },
     features: {

@@ -10,7 +10,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/news/:category?',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/loltw/news',
     parameters: { category: '新闻分类，置空为全部新闻' },
     features: {

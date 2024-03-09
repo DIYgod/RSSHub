@@ -15,7 +15,7 @@ const rootUrl = 'https://www.txrjy.com';
 
 export const route: Route = {
     path: '/fornumtopic/:channel?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/txrjy/fornumtopic',
     parameters: { channel: '频道的 id，见下表，默认为最新500个主题帖' },
     features: {

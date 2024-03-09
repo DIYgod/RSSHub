@@ -11,7 +11,7 @@ import MarkdownIt from 'markdown-it';
 
 export const route: Route = {
     path: '/release/:user/:app/:distribution_group',
-    categories: ['university'],
+    categories: ['program-update'],
     example: '/app-center/release/cloudflare/1.1.1.1-windows/beta',
     parameters: { user: 'User', app: 'App name', distribution_group: 'Distribution group' },
     features: {

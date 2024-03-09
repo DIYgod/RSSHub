@@ -36,7 +36,7 @@ const getChapters = (id, list, tryGet) =>
 
 export const route: Route = {
     path: '/comic/:id',
-    categories: ['program-update'],
+    categories: ['anime'],
     example: '/cartoonmad/comic/5827',
     parameters: { id: '漫画ID' },
     features: {

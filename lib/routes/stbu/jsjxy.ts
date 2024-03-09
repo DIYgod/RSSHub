@@ -9,7 +9,7 @@ import timezone from '@/utils/timezone';
 const gbk2utf8 = (s) => iconv.decode(s, 'gbk');
 export const route: Route = {
     path: '/jsjxy',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/stbu/jsjxy',
     parameters: {},
     features: {

@@ -9,7 +9,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/inquire',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/sse/inquire',
     parameters: {},
     features: {

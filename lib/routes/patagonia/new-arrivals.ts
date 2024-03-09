@@ -21,7 +21,7 @@ function extractSfrmUrl(url) {
 }
 export const route: Route = {
     path: '/new-arrivals/:category',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/patagonia/new-arrivals/mens',
     parameters: { category: 'category, see below' },
     features: {

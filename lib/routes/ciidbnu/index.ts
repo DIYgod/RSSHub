@@ -8,7 +8,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/:id?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/ciidbnu',
     parameters: { id: '分类 id，可在分类页地址栏 URL 中找到' },
     features: {

@@ -6,7 +6,7 @@ const apiBase = 'https://phx.unusualwhales.com';
 
 export const route: Route = {
     path: '/news',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/unusualwhales/news',
     parameters: {},
     features: {

@@ -4,7 +4,7 @@ import { getRollNewsList, parseRollNewsList, parseArticle } from '../utils';
 
 export const route: Route = {
     path: '/finance/china/:lid?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/sina/finance/china',
     parameters: { lid: '分区 id，见下表，默认为 `1686`' },
     features: {

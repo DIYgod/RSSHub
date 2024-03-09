@@ -9,7 +9,7 @@ const rootURL = 'http://www.huizhou.gov.cn';
 
 export const route: Route = {
     path: '/huizhou/zwgk/:category?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/huizhou/zwgk/jgdt',
     parameters: { category: '资讯类别，可以从网址中得到，默认为政务要闻' },
     features: {

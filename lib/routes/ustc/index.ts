@@ -29,7 +29,7 @@ const notice_type = {
 
 export const route: Route = {
     path: '/news/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/ustc/news/gl',
     parameters: { type: '分类，默认为管理类' },
     features: {

@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/user/blog/:name',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/luogu/user/blog/ftiasch',
     parameters: { name: '博客名称' },
     features: {

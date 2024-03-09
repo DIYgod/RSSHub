@@ -6,7 +6,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/index/:category?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/xaut/index/tzgg',
     parameters: { category: '通知类别，默认为通知公告' },
     features: {

@@ -7,7 +7,7 @@ import { baseUrl, headers, fixImages, parseReviews } from './utils';
 
 export const route: Route = {
     path: '/review/:keyword?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/techpowerup/review/4090',
     parameters: { keyword: 'Search Keyword' },
     features: {

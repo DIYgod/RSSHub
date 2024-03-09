@@ -6,7 +6,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/keyword/:keyword',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/smzdm/keyword/女装',
     parameters: { keyword: '你想订阅的关键词' },
     features: {

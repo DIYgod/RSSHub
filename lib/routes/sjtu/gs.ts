@@ -8,7 +8,7 @@ import { fetchArticle } from '@/utils/wechat-mp';
 
 export const route: Route = {
     path: '/gs/:type/:num?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/sjtu/gs/enroll/59',
     parameters: { type: '类别', num: '细分类别, 仅对`type`为`enroll`或`exchange`有效' },
     features: {

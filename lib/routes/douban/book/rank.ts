@@ -3,7 +3,7 @@ import got from '@/utils/got';
 
 export const route: Route = {
     path: '/book/rank/:type?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/book/rank/fiction',
     parameters: { type: '图书类型，默认合并列表' },
     features: {

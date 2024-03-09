@@ -70,7 +70,7 @@ const categoryMap = [
  */
 export const route: Route = {
     path: '/search/:category?/:order?/:time?/:query?',
-    categories: ['live'],
+    categories: ['design'],
     example: '/notefolio/search/1/pick/all/life',
     parameters: {
         category: 'Category, see below, `all` by default',

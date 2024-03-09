@@ -6,7 +6,7 @@ const host = 'https://www.njxzc.edu.cn';
 
 export const route: Route = {
     path: '/tzgg',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/njxzc/tzgg',
     parameters: {},
     features: {

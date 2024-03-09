@@ -8,7 +8,7 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/news/:type/:lang?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/ccac/news/all',
     parameters: { type: 'Category', lang: 'Language, default to `sc`. Supprot `en`(English), `sc`(Simplified Chinese), `tc`(Traditional Chinese) and `pt`(Portuguese)' },
     features: {

@@ -15,7 +15,7 @@ const get_articles = async () => {
 
 export const route: Route = {
     path: '/bulletin/:lang?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/tokeninsight/bulletin/en',
     parameters: { lang: 'Language, see below, Chinese by default' },
     features: {

@@ -8,7 +8,7 @@ const host = 'https://guangdiu.com';
 
 export const route: Route = {
     path: '/search/:query?',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/guangdiu/search/k=百度网盘',
     parameters: { query: '链接参数，对应网址问号后的内容' },
     features: {

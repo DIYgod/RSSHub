@@ -3,7 +3,7 @@ import { rootUrl, ProcessItems } from './utils';
 
 export const route: Route = {
     path: '/tab/:tab?',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/95mm/tab/热门',
     parameters: { tab: '分类，见下表，默认为最新' },
     features: {

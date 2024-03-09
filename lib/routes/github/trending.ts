@@ -10,7 +10,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/trending/:since/:language/:spoken_language?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/github/trending/daily/javascript/en',
     parameters: {
         since: "time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL, possible values are: `daily`, `weekly` or `monthly`",

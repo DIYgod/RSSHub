@@ -13,7 +13,7 @@ const renderDesc = (item) => art(path.join(__dirname, 'templates/daily.art'), it
 
 export const route: Route = {
     path: '/zjxwlb/daily',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/cztv/zjxwlb/daily',
     parameters: {},
     features: {

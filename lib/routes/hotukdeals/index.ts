@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/:type',
-    categories: ['game'],
+    categories: ['shopping'],
     example: '/hotukdeals/hot',
     parameters: { type: 'should be one of highlights, hot, new, discussed' },
     features: {

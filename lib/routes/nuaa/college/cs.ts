@@ -18,7 +18,7 @@ const map = new Map([
 
 export const route: Route = {
     path: '/cs/:type/:getDescription?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/nuaa/cs/jxdt',
     parameters: { type: '分类名，见下表', getDescription: '是否获取全文' },
     features: {

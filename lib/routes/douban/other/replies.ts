@@ -5,7 +5,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/replies/:uid',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/replies/xiaoyaxiaoya',
     parameters: { uid: '用户id，可在用户日记页 URL 中找到' },
     features: {

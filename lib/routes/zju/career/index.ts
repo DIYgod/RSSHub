@@ -15,7 +15,7 @@ const map = new Map([
 
 export const route: Route = {
     path: '/career/:type',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/zju/career/1',
     parameters: { type: '分类，见下表' },
     features: {

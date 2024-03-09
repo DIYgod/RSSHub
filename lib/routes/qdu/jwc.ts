@@ -9,7 +9,7 @@ const base = 'https://jwc.qdu.edu.cn/';
 
 export const route: Route = {
     path: '/jwc',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/qdu/jwc',
     parameters: {},
     features: {

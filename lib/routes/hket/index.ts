@@ -27,7 +27,7 @@ const urlMap = {
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/hket/sran001',
     parameters: { category: '分类，默认为全部新闻，可在 URL 中找到，部分见下表' },
     features: {

@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/commercialpress/latest',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/commercialpress/latest',
     parameters: {},
     features: {

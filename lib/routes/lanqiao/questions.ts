@@ -6,7 +6,7 @@ import MarkdownIt from 'markdown-it';
 
 export const route: Route = {
     path: '/questions/:id',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/lanqiao/questions/2',
     parameters: { id: 'topic_id 主题 `id` 可在社区板块 URL 中找到' },
     features: {

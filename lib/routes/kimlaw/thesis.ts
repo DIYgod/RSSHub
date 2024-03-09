@@ -9,7 +9,7 @@ const baseUrl = 'https://www.kimlaw.or.kr';
 
 export const route: Route = {
     path: '/thesis',
-    categories: ['journal'],
+    categories: ['study'],
     example: '/kimlaw/thesis',
     parameters: {},
     features: {

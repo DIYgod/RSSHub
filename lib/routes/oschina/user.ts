@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: ['/u/:uid', '/user/:id'],
-    categories: ['design'],
+    categories: ['programming'],
     example: '/oschina/u/3920392',
     parameters: { uid: '用户 id，可通过查看用户博客网址得到，以 u/数字结尾，数字即为 id' },
     features: {

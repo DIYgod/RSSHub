@@ -9,7 +9,7 @@ import { fallback, queryToBoolean } from '@/utils/readable-social';
 
 export const route: Route = {
     path: '/timeline/:uid/:feature?/:routeParams?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/weibo/timeline/3306934123',
     parameters: { uid: '用户的uid', feature: '过滤类型ID，0：全部、1：原创、2：图片、3：视频、4：音乐，默认为0。', routeParams: '额外参数；请参阅上面的说明和表格' },
     features: {

@@ -9,7 +9,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:column',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/cntv/TOPC1451528971114112',
     parameters: { column: '栏目ID, 可在对应CNTV栏目页面找到' },
     features: {

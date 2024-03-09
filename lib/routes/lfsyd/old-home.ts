@@ -6,7 +6,7 @@ import { ProcessFeed } from './utils';
 
 export const route: Route = {
     path: '/old_home',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/lfsyd/old_home',
     parameters: {},
     features: {

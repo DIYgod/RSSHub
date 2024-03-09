@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/celebrity/:id/:sort?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/douban/celebrity/1274261',
     parameters: { id: '电影人 id', sort: '排序方式，缺省为 `time`（时间排序），可为 `vote` （评价排序）' },
     features: {

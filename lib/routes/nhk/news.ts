@@ -12,7 +12,7 @@ const apiUrl = 'https://nwapi.nhk.jp';
 
 export const route: Route = {
     path: '/news/:lang?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/nhk/news/en',
     parameters: { lang: 'Language, see below, `en` by default' },
     features: {

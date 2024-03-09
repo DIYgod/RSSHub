@@ -11,7 +11,7 @@ const baseApiUrl = 'https://api.hashnode.com';
 
 export const route: Route = {
     path: '/blog/:username',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/hashnode/blog/inklings',
     parameters: { username: '博主名称，用户头像 URL 中找到' },
     features: {

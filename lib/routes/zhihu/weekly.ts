@@ -6,7 +6,7 @@ const host = 'https://www.zhihu.com';
 
 export const route: Route = {
     path: '/weekly',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/zhihu/weekly',
     parameters: {},
     features: {

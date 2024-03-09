@@ -7,7 +7,7 @@ import timezone from '@/utils/timezone';
 
 export const route: Route = {
     path: '/zhengce/wenjian/:pcodeJiguan?',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/zhengce/wenjian',
     parameters: { pcodeJiguan: '文种分类。国令、国发、国函、国发明电、国办发、国办函、国办发明电、其他' },
     features: {

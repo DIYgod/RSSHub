@@ -6,7 +6,7 @@ import md5 from '@/utils/md5';
 
 export const route: Route = {
     path: '/:level?',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/yomujp/n1',
     parameters: { level: '等级，n1~n6，为空默认全部' },
     features: {

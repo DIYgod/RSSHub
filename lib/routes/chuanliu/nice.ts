@@ -14,7 +14,7 @@ const md = MarkdownIt({
 
 export const route: Route = {
     path: '/nice',
-    categories: ['programming'],
+    categories: ['blog'],
     example: '/chuanliu/nice',
     parameters: {},
     features: {

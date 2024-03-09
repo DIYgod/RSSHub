@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/trophy/:id',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/ps/trophy/DIYgod_',
     parameters: { id: 'User ID' },
     features: {

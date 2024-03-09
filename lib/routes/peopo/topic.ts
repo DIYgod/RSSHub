@@ -8,7 +8,7 @@ const baseUrl = 'https://www.peopo.org';
 
 export const route: Route = {
     path: '/topic/:topicId?',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/peopo/topic/159',
     parameters: { topicId: '分類 ID，見下表，默認為社會關懷' },
     features: {

@@ -13,7 +13,7 @@ const host = 'https://cwc.njust.edu.cn';
 
 export const route: Route = {
     path: '/cwc/:type?',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/njust/cwc/tzgg',
     parameters: { type: '分类名，见下表，默认为通知公告' },
     features: {

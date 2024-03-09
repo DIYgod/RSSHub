@@ -15,7 +15,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/datasets',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/modelscope/datasets',
     parameters: {},
     features: {

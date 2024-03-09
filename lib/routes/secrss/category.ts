@@ -7,7 +7,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/category/:category?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/secrss/category/产业趋势',
     parameters: { category: 'N' },
     features: {

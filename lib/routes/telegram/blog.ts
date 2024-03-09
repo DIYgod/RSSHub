@@ -6,7 +6,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/blog',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/telegram/blog',
     parameters: {},
     features: {

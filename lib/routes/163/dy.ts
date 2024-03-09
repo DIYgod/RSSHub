@@ -7,7 +7,7 @@ import { parseDyArticle } from './utils';
 
 export const route: Route = {
     path: '/dy/:id',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/163/dy/W4983108759592548559',
     parameters: { id: '网易号 ID' },
     features: {

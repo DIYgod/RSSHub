@@ -122,7 +122,7 @@ const nodes = {
 
 export const route: Route = {
     path: '/:category?/:keyword?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/bse',
     parameters: { category: '分类，见下表，默认为本所要闻', keyword: '关键字，默认为空' },
     features: {

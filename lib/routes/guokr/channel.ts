@@ -20,7 +20,7 @@ const channelMap = {
 
 export const route: Route = {
     path: '/:channel',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/guokr/calendar',
     parameters: { channel: '专栏类别' },
     features: {

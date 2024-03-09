@@ -7,7 +7,7 @@ const postsAPIUrl = `${rootUrl}/wp-json/wp/v2/posts`;
 
 export const route: Route = {
     path: '/index',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/abmedia/index',
     parameters: {},
     features: {

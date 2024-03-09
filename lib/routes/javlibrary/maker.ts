@@ -4,7 +4,7 @@ import { defaultMode, defaultLanguage, defaultMaker, rootUrl, ProcessItems } fro
 
 export const route: Route = {
     path: '/videos/maker/:maker?/:language?/:mode?',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/javlibrary/videos/maker/arlq/cn',
     parameters: { maker: 'Maker, S1 NO.1 STYLE by default, as `arlq`', language: 'Language, see below, Japanese by default, as `ja`', mode: 'Mode, see below, videos with comments (by date) by default, as `1`' },
     features: {

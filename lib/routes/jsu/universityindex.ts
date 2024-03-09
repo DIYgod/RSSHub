@@ -8,7 +8,7 @@ import { getPageItemAndDate } from './utils';
 
 export const route: Route = {
     path: '/notice',
-    categories: ['forecast'],
+    categories: ['university'],
     example: '/jsu/notice',
     parameters: {},
     features: {

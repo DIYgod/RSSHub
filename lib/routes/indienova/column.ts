@@ -6,7 +6,7 @@ import { baseUrl, parseList, parseItem } from './utils';
 
 export const route: Route = {
     path: '/column/:columnId',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/indienova/column/52',
     parameters: { columnId: '专题 ID，可在 URL中找到' },
     features: {

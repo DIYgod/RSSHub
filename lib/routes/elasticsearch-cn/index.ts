@@ -7,7 +7,7 @@ import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/:params?',
-    categories: ['blog'],
+    categories: ['bbs'],
     example: '/elasticsearch-cn',
     parameters: { params: '分类，可在对应分类页 URL 中找到' },
     features: {

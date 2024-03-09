@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: '/timeline/:category?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/jinse/timeline',
     parameters: { category: '分类，见下表，默认为头条' },
     features: {

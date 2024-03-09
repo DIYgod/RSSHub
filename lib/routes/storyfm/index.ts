@@ -4,7 +4,7 @@ import { load } from 'cheerio';
 
 export const route: Route = {
     path: '/index',
-    categories: ['picture'],
+    categories: ['multimedia'],
     example: '/storyfm/index',
     parameters: {},
     features: {

@@ -9,7 +9,7 @@ const sydwgkzpUrl = 'https://rlsbj.cq.gov.cn/zwxx_182/sydw/';
 
 export const route: Route = {
     path: '/chongqing/sydwgkzp',
-    categories: ['study'],
+    categories: ['government'],
     example: '/gov/chongqing/sydwgkzp',
     parameters: {},
     features: {

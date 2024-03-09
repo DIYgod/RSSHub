@@ -7,7 +7,7 @@ const host = 'http://www.pbc.gov.cn';
 
 export const route: Route = {
     path: '/pbc/gzlw',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/gov/pbc/gzlw',
     parameters: {},
     features: {

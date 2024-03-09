@@ -12,7 +12,7 @@ const cookieJar = new CookieJar();
 
 export const route: Route = {
     path: '/:journal',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/mdpi/analytica',
     parameters: { journal: 'Journal Name, get it from the journal homepage' },
     features: {

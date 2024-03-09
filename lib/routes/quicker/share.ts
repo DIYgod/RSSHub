@@ -7,7 +7,7 @@ import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/share/:category?',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/quicker/share/Recent',
     parameters: { category: '分类，见下表，默认为动作库最新更新' },
     features: {

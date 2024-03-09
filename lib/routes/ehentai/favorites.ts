@@ -4,7 +4,7 @@ import EhAPI from './ehapi';
 
 export const route: Route = {
     path: '/favorites/:favcat?/:order?/:page?/:routeParams?',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/ehentai/favorites/0/posted/1',
     parameters: { favcat: 'Favorites folder number', order: '`posted`(Sort by gallery release time) , `favorited`(Sort by time added to favorites)', page: 'Page number', routeParams: 'Additional parameters, see the table above' },
     features: {

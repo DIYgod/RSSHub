@@ -11,7 +11,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/:handle',
-    categories: ['anime'],
+    categories: ['picture'],
     example: '/artstation/wlop',
     parameters: { handle: 'Artist handle, can be found in URL' },
     features: {

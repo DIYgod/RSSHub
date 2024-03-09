@@ -11,7 +11,7 @@ const categories = {
 
 export const route: Route = {
     path: '/:category?',
-    categories: ['other'],
+    categories: ['finance'],
     example: '/finviz',
     parameters: { category: 'Category, see below, News by default' },
     features: {

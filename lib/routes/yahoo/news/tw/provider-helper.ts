@@ -4,7 +4,7 @@ import { getProviderList } from './utils';
 
 export const route: Route = {
     path: '/news/providers/:region',
-    categories: ['traditional-media'],
+    categories: ['new-media'],
     example: '/yahoo/news/providers/tw',
     parameters: { region: '地區，見上表' },
     features: {

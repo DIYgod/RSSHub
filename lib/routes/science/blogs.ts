@@ -8,7 +8,7 @@ import puppeteer from '@/utils/puppeteer';
 
 export const route: Route = {
     path: '/blogs/:name?',
-    categories: ['finance'],
+    categories: ['journal'],
     example: '/science/blogs/pipeline',
     parameters: { name: 'Short name for the blog, get this from the url. Defaults to pipeline' },
     features: {

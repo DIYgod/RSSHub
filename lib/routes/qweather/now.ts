@@ -11,7 +11,7 @@ import { config } from '@/config';
 const rootUrl = 'https://devapi.qweather.com/v7/weather/now?';
 export const route: Route = {
     path: '/now/:location',
-    categories: ['travel'],
+    categories: ['forecast'],
     example: '/qweather/广州',
     parameters: { location: 'N' },
     features: {

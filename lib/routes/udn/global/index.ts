@@ -7,7 +7,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/global/:category?',
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/udn/global',
     parameters: { category: '分类，见下表，默认为首頁' },
     features: {

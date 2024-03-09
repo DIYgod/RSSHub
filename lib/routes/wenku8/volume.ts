@@ -6,7 +6,7 @@ import { decode } from 'iconv-lite';
 
 export const route: Route = {
     path: '/volume/:id',
-    categories: ['government'],
+    categories: ['reading'],
     example: '/wenku8/volume/1163',
     parameters: { id: '小说 id, 可在对应小说页 URL 中找到' },
     features: {

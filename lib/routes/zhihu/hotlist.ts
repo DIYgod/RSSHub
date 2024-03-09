@@ -5,7 +5,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/hotlist',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/zhihu/hotlist',
     parameters: {},
     features: {

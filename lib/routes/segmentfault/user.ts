@@ -5,7 +5,7 @@ import { host, acw_sc__v2, parseList, parseItems } from './utils';
 
 export const route: Route = {
     path: '/user/:name',
-    categories: ['design'],
+    categories: ['programming'],
     example: '/segmentfault/user/minnanitkong',
     parameters: { name: '用户 Id，用户详情页 URL 可以找到' },
     features: {

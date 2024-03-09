@@ -6,7 +6,7 @@ import { config } from '@/config';
 
 export const route: Route = {
     path: '/charts/:category?/:country?/:embed?',
-    categories: ['new-media'],
+    categories: ['social-media'],
     example: '/youtube/charts',
     parameters: { category: 'Chart, see table below, default to `TopVideos`', country: 'Country Code, see table below, default to global', embed: 'Default to embed the video, set to any value to disable embedding' },
     features: {

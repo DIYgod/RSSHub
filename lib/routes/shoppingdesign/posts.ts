@@ -7,7 +7,7 @@ import asyncPool from 'tiny-async-pool';
 
 export const route: Route = {
     path: '/posts',
-    categories: ['live'],
+    categories: ['design'],
     example: '/shoppingdesign/posts',
     parameters: {},
     features: {

@@ -4,7 +4,7 @@ import { parseDate } from '@/utils/parse-date';
 
 export const route: Route = {
     path: '/news/:type',
-    categories: ['reading'],
+    categories: ['game'],
     example: '/wmpvp/news/1',
     parameters: { type: '资讯分类，见下表' },
     features: {

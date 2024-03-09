@@ -11,7 +11,7 @@ import * as path from 'node:path';
 
 export const route: Route = {
     path: ['/column/:id?', '/:id?'],
-    categories: ['bbs'],
+    categories: ['traditional-media'],
     example: '/cankaoxiaoxi/column/diyi',
     parameters: { id: '栏目 id，默认为 `diyi`，即第一关注' },
     features: {
