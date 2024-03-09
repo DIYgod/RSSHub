@@ -1,7 +1,32 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/articles/:type',
+    categories: ['blog'],
+    example: '/freebuf/articles/web',
+    parameters: { type: '文章类别' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['freebuf.com/articles/:type/*.html', 'freebuf.com/articles/:type'],
+    },
+    name: '文章',
+    maintainers: ['trganda'],
+    handler,
+    description: `:::tip
+  Freebuf 的文章页面带有反爬虫机制，所以目前无法获取文章的完整内容。
+  :::`,
+};
+
+async function handler(ctx) {
     const { type = 'web' } = ctx.req.param();
 
     const fapi = 'https://www.freebuf.com/fapi/frontend/category/list';
@@ -33,9 +58,9 @@ export default async (ctx) => {
         author: item.nickname,
     }));
 
-    ctx.set('data', {
+    return {
         title: `Freebuf ${type}`,
         link: rssLink,
         item: items,
-    });
-};
+    };
+}

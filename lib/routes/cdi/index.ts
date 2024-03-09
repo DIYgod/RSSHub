@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id?',
+    categories: ['new-media'],
+    example: '/cdi',
+    parameters: { id: '分类，见下表，默认为综研国策' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '栏目',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 樊纲观点 | 综研国策 | 综研观察 | 综研专访 | 综研视点 | 银湖新能源 |
+  | -------- | -------- | -------- | -------- | -------- | ---------- |
+  | 102      | 152      | 150      | 153      | 154      | 151        |`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '152';
 
     const rootUrl = 'http://www.cdi.com.cn';
@@ -54,9 +76,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${$('h1').text()} - 国家高端智库/综合开发研究院`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

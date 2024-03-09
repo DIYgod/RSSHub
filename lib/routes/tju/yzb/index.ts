@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -18,7 +19,28 @@ const pageType = (href) => {
     return url.hostname === 'yzb.tju.edu.cn' ? 'tju-yzb' : 'unknown';
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/yzb/:type?',
+    categories: ['university'],
+    example: '/tju/yzb/notice',
+    parameters: { type: 'default `notice`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Admission Office of Graduate',
+    maintainers: ['SuperPung'],
+    handler,
+    description: `| School-level Notice | Master | Doctor | On-the-job Degree |
+  | :-----------------: | :----: | :----: | :---------------: |
+  |        notice       | master | doctor |        job        |`,
+};
+
+async function handler(ctx) {
     const type = ctx.params && ctx.req.param('type');
     let path, subtitle;
 
@@ -57,7 +79,7 @@ export default async (ctx) => {
     }
 
     if (response === null) {
-        ctx.set('data', {
+        return {
             title: '天津大学研究生招生网 - ' + subtitle,
             link: yzb_base_url + path,
             description: '链接失效' + yzb_base_url + path,
@@ -68,7 +90,7 @@ export default async (ctx) => {
                     description: `<h2>请到<a href=${repo_url}>此处</a>提交Issue</h2>`,
                 },
             ],
-        });
+        };
     } else {
         const $ = load(iconv.decode(response.data, 'gbk'));
         const list = $('body > table:nth-child(3) > tbody > tr > td.table_left_right > table > tbody > tr:nth-child(3) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr')
@@ -109,10 +131,10 @@ export default async (ctx) => {
             })
         );
 
-        ctx.set('data', {
+        return {
             title: '天津大学研究生招生网 - ' + subtitle,
             link: yzb_base_url + path,
             item: items,
-        });
+        };
     }
-};
+}

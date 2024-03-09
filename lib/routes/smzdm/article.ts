@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/article/:uid',
+    categories: ['shopping'],
+    example: '/smzdm/article/6902738986',
+    parameters: { uid: '用户id，网址上直接可以看到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['zhiyou.smzdm.com/member/:uid/article'],
+    },
+    name: '用户文章',
+    maintainers: ['xfangbao'],
+    handler,
+};
+
+async function handler(ctx) {
     const link = `https://zhiyou.smzdm.com/member/${ctx.req.param('uid')}/article/`;
 
     const response = await got(link);
@@ -36,9 +58,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${title}-什么值得买`,
         link,
         item: out,
-    });
-};
+    };
+}

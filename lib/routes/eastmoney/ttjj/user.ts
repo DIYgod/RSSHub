@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/ttjj/user/:uid',
+    categories: ['finance'],
+    example: '/eastmoney/ttjj/user/6551094298949188',
+    parameters: { uid: '用户id, 可以通过天天基金App分享用户主页到浏览器，在相应的URL中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '天天基金用户动态',
+    maintainers: ['zidekuls'],
+    handler,
+};
+
+async function handler(ctx) {
     const uid = ctx.req.param('uid');
 
     const urlPrefix = 'https://jijinbaapi.eastmoney.com/gubaapi/v3/read';
@@ -57,10 +76,10 @@ export default async (ctx) => {
             })
         )
     );
-    ctx.set('data', {
+    return {
         title: `天天基金-${username}的主页`,
         link: `https://fundbarmob.eastmoney.com/index.html?goPage=personDetailView&userid=${uid}`,
         description: `${username} 的动态`,
         item: result,
-    });
-};
+    };
+}

@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import cherrio from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/blog',
+    categories: ['social-media'],
+    example: '/telegram/blog',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['telegram.org/blog'],
+    },
+    name: 'Telegram Blog',
+    maintainers: ['fengkx'],
+    handler,
+    url: 'telegram.org/blog',
+};
+
+async function handler() {
     const link = 'https://telegram.org/blog';
 
     const res = await got(link);
@@ -28,9 +51,9 @@ export default async (ctx) => {
             })
     );
 
-    ctx.set('data', {
+    return {
         title: $$('title').text(),
         link,
         item: items,
-    });
-};
+    };
+}

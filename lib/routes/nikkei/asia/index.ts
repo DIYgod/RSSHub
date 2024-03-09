@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/asia',
+    categories: ['traditional-media'],
+    example: '/nikkei/asia',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['asia.nikkei.com/'],
+    },
+    name: 'Nikkei Asia Latest News',
+    maintainers: ['rainrdx'],
+    handler,
+    url: 'asia.nikkei.com/',
+};
+
+async function handler() {
     const currentUrl = 'https://main-asianreview-nikkei.content.pugpig.com/editionfeed/4519/pugpig_atom_contents.json';
 
     const response = await got({
@@ -45,10 +68,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'Nikkei Asia',
         link: 'https://asia.nikkei.com',
         image: 'https://main-asianreview-nikkei.content.pugpig.com/pugpig_assets/admin/pub120x120.jpg',
         item: items,
-    });
-};
+    };
+}

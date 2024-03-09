@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/celebrity/:id/:sort?',
+    categories: ['social-media'],
+    example: '/douban/celebrity/1274261',
+    parameters: { id: '电影人 id', sort: '排序方式，缺省为 `time`（时间排序），可为 `vote` （评价排序）' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '豆瓣电影人',
+    maintainers: ['minimalistrojan'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const sort = ctx.req.param('sort') || 'time';
 
@@ -21,7 +40,7 @@ export default async (ctx) => {
         .replace(/的全部作品（\d+）/, '');
     let itemPicUrl;
 
-    ctx.set('data', {
+    return {
         title: `豆瓣电影人 - ${person}`,
         link: `https://movie.douban.com/celebrity/${id}/movies?sortby=${sort}`,
         item:
@@ -37,5 +56,5 @@ export default async (ctx) => {
                     };
                 })
                 .get(),
-    });
-};
+    };
+}

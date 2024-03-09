@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,29 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import { rootUrl, getCookie } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/recommend',
+    categories: ['game'],
+    example: '/yxdown/recommend',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['yxdown.com/'],
+    },
+    name: '精彩推荐',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'yxdown.com/',
+};
+
+async function handler() {
     const currentUrl = `${rootUrl}/news/`;
     const cookie = await getCookie();
     const response = await got(currentUrl, {
@@ -47,9 +70,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '精彩推荐 - 游讯网',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

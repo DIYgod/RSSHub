@@ -1,7 +1,30 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/rszhaopin',
+    categories: ['university'],
+    example: '/bit/rszhaopin',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['rszhaopin.bit.edu.cn/'],
+    },
+    name: '人才招聘',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'rszhaopin.bit.edu.cn/',
+};
+
+async function handler() {
     const rootUrl = 'https://rszhaopin.bit.edu.cn';
     const apiUrl = `${rootUrl}/ajax/ajaxService`;
     const currentUrl = `${rootUrl}/zp.html#/notices/0`;
@@ -22,9 +45,9 @@ export default async (ctx) => {
         link: `${rootUrl}/zp.html#/notice/${item.id}`,
     }));
 
-    ctx.set('data', {
+    return {
         title: '人才招聘 - 北京理工大学',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

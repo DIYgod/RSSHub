@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -22,7 +23,36 @@ const titles = {
     11: '研究资讯',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['new-media'],
+    example: '/cahkms',
+    parameters: { category: '分类，见下表，默认为重要新闻' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['cahkms.org/'],
+    },
+    name: '分类',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'cahkms.org/',
+    description: `| 关于我们 | 港澳新闻 | 重要新闻 | 顾问点评、会员观点 | 专题汇总 |
+  | -------- | -------- | -------- | ------------------ | -------- |
+  | 01       | 02       | 03       | 04                 | 05       |
+
+  | 港澳时评 | 图片新闻 | 视频中心 | 港澳研究 | 最新书讯 | 研究资讯 |
+  | -------- | -------- | -------- | -------- | -------- | -------- |
+  | 06       | 07       | 08       | 09       | 10       | 11       |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '03';
 
     const rootUrl = 'http://www.cahkms.org';
@@ -65,9 +95,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${titles[category]} - 全国港澳研究会`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/channel/:id',
+    categories: ['multimedia'],
+    example: '/qingting/channel/293411',
+    parameters: { id: '专辑id, 可在专辑页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '专辑',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const channelUrl = `https://i.qingting.fm/capi/v3/channel/${ctx.req.param('id')}`;
     let response = await got(channelUrl);
     const title = response.data.data.title;
@@ -16,7 +35,7 @@ export default async (ctx) => {
         pubDate: timezone(parseDate(item.update_time), +8),
     }));
 
-    ctx.set('data', {
+    return {
         title: `${title} - 蜻蜓FM`,
         link: `https://www.qingting.fm/channels/${ctx.req.param('id')}`,
         item: await Promise.all(
@@ -29,5 +48,5 @@ export default async (ctx) => {
                 })
             )
         ),
-    });
-};
+    };
+}

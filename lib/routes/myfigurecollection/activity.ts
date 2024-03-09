@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,61 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { isValidHost } from '@/utils/valid-host';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?',
+    categories: ['shopping'],
+    example: '/myfigurecollection/activity',
+    parameters: {
+        category: 'Category, Figures by default',
+        language: 'Language, as above, `en` by default',
+        latestAdditions: 'Latest Additions, on as `1` by default, off as `0`',
+        latestEdits: 'Changes, on as `1` by default, off as `0`',
+        latestAlerts: 'Alerts, on as `1` by default, off as `0`',
+        latestPictures: 'Pictures, on as `1` by default, off as `0`',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['zh.myfigurecollection.net/browse', 'zh.myfigurecollection.net/'],
+        target: '/:category?/:language?',
+    },
+    name: 'Activity',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'zh.myfigurecollection.net/browse',
+    description: `Category
+
+  | Figures | Goods | Media |
+  | ------- | ----- | ----- |
+  | 0       | 1     | 2     |
+
+  Language
+
+  | Id | Language   |
+  | -- | ---------- |
+  |    | en         |
+  | de | Deutsch    |
+  | es | Español    |
+  | fi | Suomeksi   |
+  | fr | Français   |
+  | it | Italiano   |
+  | ja | 日本語     |
+  | nl | Nederlands |
+  | no | Norsk      |
+  | pl | Polski     |
+  | pt | Português  |
+  | ru | Русский    |
+  | sv | Svenska    |
+  | zh | 中文       |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '-1';
     const language = ctx.req.param('language') ?? '';
     const latestAdditions = ctx.req.param('latestAdditions') ?? '1';
@@ -56,11 +111,11 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: $('title')
             .text()
             .replace(/ \(.*\)/, ''),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

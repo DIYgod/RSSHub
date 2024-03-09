@@ -39,17 +39,17 @@ WORKDIR /ver
 COPY ./package.json /app/
 RUN \
     set -ex && \
-    grep -Po '(?<="puppeteer": ")[^\s"]*(?=")' /app/package.json | tee /ver/.puppeteer_version && \
-    grep -Po '(?<="@vercel/nft": ")[^\s"]*(?=")' /app/package.json | tee /ver/.nft_version && \
-    grep -Po '(?<="fs-extra": ")[^\s"]*(?=")' /app/package.json | tee /ver/.fs_extra_version
+    grep -Po '(?<="puppeteer": ")[^\s"]*(?=")' /app/package.json | tee /ver/.puppeteer_version
+    # grep -Po '(?<="@vercel/nft": ")[^\s"]*(?=")' /app/package.json | tee /ver/.nft_version && \
+    # grep -Po '(?<="fs-extra": ")[^\s"]*(?=")' /app/package.json | tee /ver/.fs_extra_version
 
 # ---------------------------------------------------------------------------------------------------------------------
 
 FROM node:21-bookworm-slim AS docker-minifier
 # The stage is used to further reduce the image size by removing unused files.
 
-WORKDIR /minifier
-COPY --from=dep-version-parser /ver/* /minifier/
+WORKDIR /app
+# COPY --from=dep-version-parser /ver/* /minifier/
 
 # ARG USE_CHINA_NPM_REGISTRY=0
 # RUN \
@@ -73,6 +73,7 @@ RUN \
     # rm -rf /app/node_modules /app/scripts && \
     # mv /app/app-minimal/node_modules /app/ && \
     # rm -rf /app/app-minimal && \
+    npm run build && \
     ls -la /app && \
     du -hd1 /app
 

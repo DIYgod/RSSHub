@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { toTitleCase } from '@/utils/common-utils';
 import { getApiUrl, parseArticle } from './common';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/blog/:tag?',
+    categories: ['new-media'],
+    example: '/openai/blog',
+    parameters: { tag: 'Tag, see below, All by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Blog',
+    maintainers: ['StevenRCE0', 'nczitzk'],
+    handler,
+    description: `| All | Announcements | Events | Safety & Alignment | Community | Product | Culture & Careers   | Milestones | Research |
+  | --- | ------------- | ------ | ------------------ | --------- | ------- | ------------------- | ---------- | -------- |
+  |     | announcements | events | safety-alignment   | community | product | culture-and-careers | milestones | research |`,
+};
+
+async function handler(ctx) {
     const tag = ctx.req.param('tag') || '';
 
     const rootUrl = 'https://openai.com';
@@ -36,9 +58,9 @@ export default async (ctx) => {
 
     const title = `OpenAI Blog${tag ? ` - ${toTitleCase(tag)}` : ''}`;
 
-    ctx.set('data', {
+    return {
         title,
         link: blogOriginUrl,
         item: items,
-    });
-};
+    };
+}

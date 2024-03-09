@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import EhAPI from './ehapi';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/search/:params?/:page?/:routeParams?',
+    categories: ['picture'],
+    example: '/ehentai/search/f_search=artist%3Amana%24/1',
+    parameters: { params: 'Search parameters. You can copy the content after `https://e-hentai.org/?`', page: 'Page number', routeParams: 'Additional parameters, see the table above' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: true,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Search',
+    maintainers: ['yindaheng98', 'syrinka'],
+    handler,
+};
+
+async function handler(ctx) {
     const page = ctx.req.param('page');
     let params = ctx.req.param('params');
     const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
@@ -35,4 +54,4 @@ export default async (ctx) => {
                   item: items,
               }
     );
-};
+}

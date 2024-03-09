@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -18,10 +19,52 @@ const md = MarkdownIt({
     html: true,
 });
 
-export default async (
-    /** @type {import('koa').Context} */
-    ctx
-) => {
+export const route: Route = {
+    path: '/models',
+    categories: ['game'],
+    example: '/modrinth/project/sodium/versions',
+    parameters: {
+        id: 'Id or slug of the Modrinth project',
+        routeParams: 'Extra route params. See the table below for options',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: [
+            'modrinth.com/mod/:id/*',
+            'modrinth.com/plugin/:id/*',
+            'modrinth.com/datapack/:id/*',
+            'modrinth.com/shader/:id/*',
+            'modrinth.com/resourcepack/:id/*',
+            'modrinth.com/modpack/:id/*',
+            'modrinth.com/mod/:id',
+            'modrinth.com/plugin/:id',
+            'modrinth.com/datapack/:id',
+            'modrinth.com/shader/:id',
+            'modrinth.com/resourcepack/:id',
+            'modrinth.com/modpack/:id',
+        ],
+        target: '/project/:id/versions',
+    },
+    description:
+        '| Name           | Example                                      |\n| -------------- | -------------------------------------------- |\n| loaders        | loaders=fabric\\&loaders=quilt\\&loaders=forge |\n| game\\_versions | game\\_versions=1.20.1\\&game\\_versions=1.20.2 |\n| featured       | featured=true                                |',
+    name: 'Project versions',
+    maintainers: ['SettingDust'],
+    handler,
+    description: `| Name           | Example                                      |
+| -------------- | -------------------------------------------- |
+| loaders        | loaders=fabric\&loaders=quilt\&loaders=forge |
+| game\_versions | game\_versions=1.20.1\&game\_versions=1.20.2 |
+| featured       | featured=true                                |`,
+};
+
+async function handler(ctx) {
     const {
         /** @type string */
         id,
@@ -55,7 +98,7 @@ export default async (
             },
         }).json();
 
-        ctx.set('data', {
+        return {
             title: `${project.title} Modrinth versions`,
             description: project.description,
             link: `https://modrinth.com/project/${id}`,
@@ -70,11 +113,11 @@ export default async (
                 guid: it.id,
                 author: authors[index].name,
             })),
-        });
+        };
     } catch (error) {
         if (error?.response?.statusCode === 404) {
             throw new Error(`${error.message}: Project ${id} not found`);
         }
         throw error;
     }
-};
+}

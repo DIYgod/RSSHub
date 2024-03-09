@@ -1,10 +1,44 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/lm/:id?',
+    categories: ['traditional-media'],
+    example: '/cctv/lm/xwzk',
+    parameters: { id: '栏目 id，可在对应栏目页 URL 中找到，默认为 `xwzk` 即 新闻周刊' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['news.cctv.com/:category'],
+        target: '/:category',
+    },
+    name: '栏目',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 焦点访谈 | 等着我 | 今日说法 | 开讲啦 |
+  | -------- | ------ | -------- | ------ |
+  | jdft     | dzw    | jrsf     | kjl    |
+
+  | 正大综艺 | 经济半小时 | 第一动画乐园 |
+  | -------- | ---------- | ------------ |
+  | zdzy     | jjbxs      | dydhly       |
+
+  :::tip
+  更多栏目请看 [这里](https://tv.cctv.com/lm)
+  :::`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? 'xwzk';
 
     const rootUrl = 'https://tv.cctv.com';
@@ -69,10 +103,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
         description: $('meta[name=description]').attr('content'),
-    });
-};
+    };
+}

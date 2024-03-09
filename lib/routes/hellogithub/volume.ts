@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -14,7 +15,14 @@ art.defaults.imports.render = function (string) {
     return md.render(string);
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/month', '/volume'],
+    name: 'Unknown',
+    maintainers: ['moke8', 'nczitzk'],
+    handler,
+};
+
+async function handler() {
     const rootUrl = 'https://hellogithub.com';
     const apiUrl = 'https://api.hellogithub.com/v1/periodical/';
 
@@ -46,9 +54,9 @@ export default async (ctx) => {
         },
     ];
 
-    ctx.set('data', {
+    return {
         title: 'HelloGithub - 月刊',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

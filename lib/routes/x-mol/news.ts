@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,7 +11,30 @@ import timezone from '@/utils/timezone';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:tag?',
+    categories: ['study'],
+    example: '/x-mol/news/3',
+    parameters: { tag: 'Tag number, can be obtained from news list URL. Empty value means news index.' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['x-mol.com/news/index'],
+        target: '/news',
+    },
+    name: 'News',
+    maintainers: ['cssxsh'],
+    handler,
+    url: 'x-mol.com/news/index',
+};
+
+async function handler(ctx) {
     const tag = ctx.req.param('tag');
     const urlPath = tag ? `news/tag/${tag}` : 'news/index';
     const link = new URL(urlPath, utils.host).href;
@@ -58,10 +82,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: response.url,
         description: $('meta[name="description"]').attr('content'),
         item,
-    });
-};
+    };
+}

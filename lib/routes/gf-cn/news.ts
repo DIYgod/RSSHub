@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
@@ -8,7 +9,31 @@ const titles = {
     3: '公告',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:category?',
+    categories: ['game'],
+    example: '/gf-cn/news',
+    parameters: { category: '分类，见下表，默认为新闻' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['sunborngame.com/:category', 'sunborngame.com/'],
+    },
+    name: '情报局',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 新闻 | 公告 |
+  | ---- | ---- |
+  | 1    | 3    |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '1';
 
     const rootUrl = 'https://gf-cn.sunborngame.com';
@@ -43,9 +68,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${titles[category]} - 少女前线 - 情报局`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

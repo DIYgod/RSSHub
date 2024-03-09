@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import dayjs from 'dayjs';
 import { finishArticleItem } from '@/utils/wechat-mp';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/mp/homepage/:biz/:hid/:cid?',
+    categories: ['new-media'],
+    example: '/wechat/mp/homepage/MzA3MDM3NjE5NQ==/16',
+    parameters: { biz: '公众号id', hid: '分页id', cid: '页内栏目' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '公众号栏目 (非推送 & 历史消息)',
+    maintainers: ['MisteryMonster'],
+    handler,
+    description: `只适用拥有首页模板 (分享链接带有 homepage) 的公众号。例如从公众号分享出来的链接为 \`https://mp.weixin.qq.com/mp/homepage?__biz=MzA3MDM3NjE5NQ==&hid=4\`，\`biz\` 为 \`MzA3MDM3NjE5NQ==\`，\`hid\` 为 \`4\`。
+
+  有些页面里会有分栏， \`cid\` 可以通过元素选择器选中栏目查看\`data-index\`。如[链接](https://mp.weixin.qq.com/mp/homepage?__biz=MzA3MDM3NjE5NQ==\&hid=4)里的 \`京都职人\` 栏目的 \`cid\` 为 \`0\`，\`文艺时光\` 栏目的 \`cid\` 为 \`2\`。如果不清楚的话最左边的栏目为\`0\`，其右方栏目依次递增 \`1\`。`,
+};
+
+async function handler(ctx) {
     const { biz, hid, cid } = ctx.req.param();
     let cidurl = '';
     if (cid) {
@@ -35,7 +57,7 @@ export default async (ctx) => {
             return finishArticleItem(single);
         })
     );
-    ctx.set('data', {
+    return {
         // 源标题，差一个cid相关的标题！
         title: mptitle,
         link: `https://mp.weixin.qq.com/mp/homepage?__biz=${biz}${hidurl}${cidurl}`,
@@ -55,5 +77,5 @@ export default async (ctx) => {
             author: articledata[index].author,
             pubDate: dayjs.unix(item.sendtime).format(),
         })),
-    });
-};
+    };
+}

@@ -1,10 +1,18 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import qs from 'query-string';
 import { parseDate } from '@/utils/parse-date';
 
 const baseURL = 'https://www.linkresearcher.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:params',
+    name: 'Unknown',
+    maintainers: ['yech1990'],
+    handler,
+};
+
+async function handler(ctx) {
     // parse params
     const params = ctx.req.param('params');
     const query = qs.parse(params);
@@ -57,12 +65,12 @@ export default async (ctx) => {
         author: item.authors === undefined ? '' : item.authors.join(', '),
     }));
 
-    ctx.set('data', {
+    return {
         title: `领研 | ${title}`,
         description:
             '领研是链接华人学者的人才及成果平台。领研为国内外高校、科研机构及科技企业提供科研人才招聘服务，也是青年研究者的职业发展指导及线上培训平台；研究者还可将自己的研究论文上传至领研，与超过五十万华人学者分享工作的最新进展。',
         image: 'https://www.linkresearcher.com/assets/images/logo-app.png',
         link: baseURL,
         item: out,
-    });
-};
+    };
+}

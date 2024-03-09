@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/convert/:query?',
+    categories: ['finance'],
+    example: '/sse/convert/beginDate=2018-08-18&endDate=2019-08-18&companyCode=603283&title=股份',
+    parameters: { query: '筛选条件，见示例' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '可转换公司债券公告',
+    maintainers: ['kt286'],
+    handler,
+};
+
+async function handler(ctx) {
     const query = ctx.req.param('query') ?? ''; // beginDate=2018-08-18&endDate=2019-08-18&companyCode=603283&title=股份
     const pageUrl = 'https://bond.sse.com.cn/disclosure/announ/convertible/';
     const host = 'https://www.sse.com.cn';
@@ -31,9 +50,9 @@ export default async (ctx) => {
         author: item.security_Code,
     }));
 
-    ctx.set('data', {
+    return {
         title: '上证债券信息网 - 可转换公司债券公告',
         link: pageUrl,
         item: items,
-    });
-};
+    };
+}

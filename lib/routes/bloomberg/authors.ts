@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import rssParser from '@/utils/rss-parser';
@@ -27,7 +28,29 @@ const parseAuthorNewsList = async (slug) => {
         .get();
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/authors/:id/:slug/:source?',
+    categories: ['finance'],
+    example: '/bloomberg/authors/ARbTQlRLRjE/matthew-s-levine',
+    parameters: { id: 'Author ID, can be found in URL', slug: 'Author Slug, can be found in URL', source: 'Data source, either `api` or `rss`,`api` by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.bloomberg.com/*/authors/:id/:slug', 'www.bloomberg.com/authors/:id/:slug'],
+        target: '/authors/:id/:slug',
+    },
+    name: 'Authors',
+    maintainers: ['josh'],
+    handler,
+};
+
+async function handler(ctx) {
     const { id, slug, source } = ctx.req.param();
     const link = `https://www.bloomberg.com/authors/${id}/${slug}`;
 
@@ -43,10 +66,10 @@ export default async (ctx) => {
     const item = await asyncPoolAll(1, list, (item) => parseArticle(item));
     const authorName = item.find((i) => i.author)?.author ?? 'Unknown';
 
-    ctx.set('data', {
+    return {
         title: `Bloomberg - ${authorName}`,
         link,
         language: 'en-us',
         item,
-    });
-};
+    };
+}

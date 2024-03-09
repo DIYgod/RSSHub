@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,28 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/author/:id',
+    categories: ['reading'],
+    example: '/qidian/author/9639927',
+    parameters: { id: '作者 id, 可在作者页面 URL 找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['my.qidian.com/author/:id'],
+    },
+    name: '作者',
+    maintainers: ['miles170'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const rootUrl = 'https://my.qidian.com';
     const currentUrl = `${rootUrl}/author/${id}/`;
@@ -35,10 +57,10 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: `${authorName} - 起点中文网`,
         description: $('.header-msg-desc').text().trim(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

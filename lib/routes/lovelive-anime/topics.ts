@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,36 @@ import { art } from '@/utils/render';
 import { parseDate } from '@/utils/parse-date';
 const renderDescription = (desc) => art(path.join(__dirname, 'templates/description.art'), desc);
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/topics/:abbr/:category?/:option?',
+    categories: ['anime'],
+    example: '/lovelive-anime/topics/otonokizaka',
+    parameters: {
+        abbr: 'The path to the Love Live series of sub-projects on the official website is detailed in the table below',
+        category: 'The official website lists the Topics category, `category` is `detail` when crawling the full text, other categories see the following table for details',
+        option: 'Crawl full text when `option` is `detail`.',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Love Live Official Website Categories Topics',
+    maintainers: ['axojhf'],
+    handler,
+    description: `| Sub-project Name (not full name) | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | 幻日のヨハネ | ラブライブ！スクールアイドルミュージカル |
+  | -------------------------------- | ----------- | -------------------- | ------------------------------------------ | --------------------- | ------------ | ---------------------------------------- |
+  | \`abbr\`parameter                  | otonokizaka | uranohoshi           | nijigasaki                                 | yuigaoka              | yohane       | musical                                  |
+
+  | Category Name       | 全てのニュース        | 音楽商品 | アニメ映像商品 | キャスト映像商品 | 劇場    | アニメ放送 / 配信 | キャスト配信 / ラジオ | ライブ / イベント | ブック | グッズ | ゲーム | メディア | ご当地情報 | その他 | キャンペーン |
+  | ------------------- | --------------------- | -------- | -------------- | ---------------- | ------- | ----------------- | --------------------- | ----------------- | ------ | ------ | ------ | -------- | ---------- | ------ | ------------ |
+  | \`category\`parameter | <u>*No parameter*</u> | music    | anime\_movie   | cast\_movie      | theater | onair             | radio                 | event             | books  | goods  | game   | media    | local      | other  | campaign     |`,
+};
+
+async function handler(ctx) {
     const abbr = ctx.req.param('abbr');
     const rootUrl = `https://www.lovelive-anime.jp/${abbr}`;
     const topicsUrlPart = 'yuigaoka' === abbr ? 'topics/' : 'topics.php';
@@ -75,9 +105,9 @@ export default async (ctx) => {
         );
     }
 
-    ctx.set('data', {
+    return {
         title: `${categoryName} - ${abbrDetail[abbr]} - Love Live Official Website Topics`,
         link: url,
         item: items,
-    });
-};
+    };
+}

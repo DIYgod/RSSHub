@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/column/:id',
+    categories: ['new-media'],
+    example: '/sspai/column/262',
+    parameters: { id: '专栏 id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['sspai.com/column/:id'],
+    },
+    name: '专栏',
+    maintainers: ['LogicJake'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const link = `https://sspai.com/column/${id}`;
 
@@ -54,10 +76,10 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `少数派专栏-${title}`,
         link,
         description,
         item: out,
-    });
-};
+    };
+}

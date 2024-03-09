@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/pen0',
+    categories: ['new-media'],
+    example: '/agora0/pen0',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['agorahub.github.io/pen0'],
+    },
+    name: '共和報',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'agorahub.github.io/pen0',
+};
+
+async function handler() {
     const baseUrl = 'https://agorahub.github.io';
     const response = await got(`${baseUrl}/pen0/`);
     const $ = load(response.data);
@@ -34,11 +57,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         description: $('head meta[name="description"]').attr('content'),
         link: response.url,
         image: $('link[rel="apple-touch-icon"]').attr('href'),
         item: items,
-    });
-};
+    };
+}

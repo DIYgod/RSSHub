@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,7 +11,19 @@ import { parseDate } from '@/utils/parse-date';
 
 const rssUrl = 'https://www.tribalfootball.com/rss/mediafed/general/rss.xml';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    radar: {
+        source: ['tribalfootball.com/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['Rongronggg9'],
+    handler,
+    url: 'tribalfootball.com/',
+};
+
+async function handler() {
     const rss = await got(rssUrl);
     const $ = load(rss.data, { xmlMode: true });
     const items = $('rss > channel > item')
@@ -62,11 +75,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'Tribal Football - Latest',
         description: 'Tribal Football - Football News, Soccer News, Transfers & Rumours',
         link: 'https://www.tribalfootball.com/articles',
         image: 'https://www.tribalfootball.com/images/tribal-logo-rss.png',
         item: items,
-    });
-};
+    };
+}

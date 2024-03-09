@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,29 @@ import { parseJSONP } from './jsonp-helper';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/disco',
+    categories: ['live'],
+    example: '/lxixsxa/disco',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.lxixsxa.com/', 'www.lxixsxa.com/discography'],
+    },
+    name: 'Latest Discography',
+    maintainers: ['Kiotlin'],
+    handler,
+    url: 'www.lxixsxa.com/',
+};
+
+async function handler() {
     const api = 'https://www.sonymusic.co.jp/json/v2/artist/lisa/discography/start/0/count/-1';
     const url = 'https://www.sonymusic.co.jp/artist/lisa/discography';
 
@@ -29,7 +52,7 @@ export default async (ctx) => {
         comment: item.catch_copy === '' ? '今日もいい日だ！' : item.catch_copy,
     }));
 
-    ctx.set('data', {
+    return {
         // the source title
         title,
         // the source url
@@ -53,5 +76,5 @@ export default async (ctx) => {
             // the article link
             link: `${url}/${item.referID}`,
         })),
-    });
-};
+    };
+}

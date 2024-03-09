@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,28 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { baseUrl, getChannel, getChannelMessages, getGuild } from './discord-api';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/channel/:channelId',
+    categories: ['social-media'],
+    example: '/discord/channel/950465850056536084',
+    parameters: { channelId: 'Channel ID' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['discord.com/channels/:guildId/:channelId/:messageID', 'discord.com/channels/:guildId/:channelId'],
+    },
+    name: 'Channel Messages',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     if (!config.discord || !config.discord.authorization) {
         throw new Error('Discord RSS is disabled due to the lack of <a href="https://docs.rsshub.app/en/install/#configuration-route-specific-configurations">relevant config</a>');
     }
@@ -32,11 +54,11 @@ export default async (ctx) => {
         link: `${baseUrl}/channels/${guildId}/${channelId}/${message.id}`,
     }));
 
-    ctx.set('data', {
+    return {
         title: `#${channelName} - ${guildName} - Discord`,
         description: channelTopic,
         link: `${baseUrl}/channels/${guildId}/${channelId}`,
         image: `https://cdn.discordapp.com/icons/${guildId}/${guidIcon}.webp`,
         item: messages,
-    });
-};
+    };
+}

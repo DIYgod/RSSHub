@@ -1,9 +1,34 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['new-media'],
+    example: '/fortunechina',
+    parameters: { category: '分类，见下表，默认为首页' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['fortunechina.com/:category', 'fortunechina.com/'],
+    },
+    name: '分类',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 商业    | 领导力    | 科技 | 研究   |
+  | ------- | --------- | ---- | ------ |
+  | shangye | lindgaoli | keji | report |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
 
     const rootUrl = 'https://www.fortunechina.com';
@@ -63,9 +88,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: category ? $('title').text() : '财富中文网',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

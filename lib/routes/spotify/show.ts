@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import utils from './utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/show/:id',
+    categories: ['multimedia'],
+    example: '/spotify/show/5CfCWKI5pZ28U0uOzXkDHe',
+    parameters: { id: 'Show ID' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['open.spotify.com/show/:id'],
+    },
+    name: 'Show',
+    maintainers: ['caiohsramos'],
+    handler,
+};
+
+async function handler(ctx) {
     const token = await utils.getPublicToken();
     const id = ctx.req.param('id');
 
@@ -16,7 +38,7 @@ export default async (ctx) => {
 
     const episodes = meta.episodes.items;
 
-    ctx.set('data', {
+    return {
         title: meta.name,
         description: meta.description,
         link: meta.external_urls.spotify,
@@ -36,5 +58,5 @@ export default async (ctx) => {
             enclosure_type: 'audio/mpeg',
         })),
         image: meta.images.length ? meta.images[0].url : undefined,
-    });
-};
+    };
+}

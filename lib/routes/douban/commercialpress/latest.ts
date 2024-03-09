@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/commercialpress/latest',
+    categories: ['social-media'],
+    example: '/douban/commercialpress/latest',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '商务印书馆新书速递',
+    maintainers: ['xyqfer'],
+    handler,
+};
+
+async function handler() {
     const link = 'https://site.douban.com/commercialpress/room/827243/';
     const { data: roomResponse } = await got({
         method: 'get',
@@ -47,9 +66,9 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: `商务印书馆-${title}`,
         link,
         item: resultItem,
-    });
-};
+    };
+}

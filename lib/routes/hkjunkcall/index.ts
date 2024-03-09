@@ -1,9 +1,22 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    radar: {
+        source: ['hkjunkcall.com/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'hkjunkcall.com/',
+};
+
+async function handler() {
     const rootUrl = 'https://hkjunkcall.com';
     const currentUrl = `${rootUrl}/cdpushdash.asp`;
 
@@ -46,9 +59,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

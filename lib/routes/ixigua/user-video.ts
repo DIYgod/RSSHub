@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,29 @@ import { parseDate } from '@/utils/parse-date';
 
 const host = 'https://www.ixigua.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/video/:uid/:disableEmbed?',
+    categories: ['multimedia'],
+    example: '/ixigua/user/video/4234740937',
+    parameters: { uid: '用户 id, 可在用户主页中找到', disableEmbed: '默认为开启内嵌视频, 任意值为关闭' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['ixigua.com/home/:uid'],
+        target: '/user/video/:uid',
+    },
+    name: '用户视频投稿',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const disableEmbed = ctx.req.param('disableEmbed');
     const url = `${host}/home/${uid}/?wid_try=1`;
@@ -22,7 +45,7 @@ export default async (ctx) => {
     const videoInfos = data.AuthorVideoList.videoList;
     const userInfo = data.AuthorDetailInfo;
 
-    ctx.set('data', {
+    return {
         title: `${userInfo.name} 的西瓜视频`,
         link: url,
         description: userInfo.introduce,
@@ -36,5 +59,5 @@ export default async (ctx) => {
             pubDate: parseDate(i.publishTime * 1000),
             author: userInfo.name,
         })),
-    });
-};
+    };
+}

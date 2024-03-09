@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,42 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import logger from '@/utils/logger';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/:category', '/topic/:topic'],
+    categories: ['traditional-media'],
+    example: '/dnaindia/headlines',
+    parameters: { category: 'Find it in the URL, or tables below' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['dnaindia.com/:category'],
+    },
+    name: 'News',
+    maintainers: ['Rjnishant530'],
+    handler,
+    description: `Topics:
+
+  | DNA verified |
+  | ------------ |
+  | dna-verified |
+
+  :::tip[Topic]
+  The URL of the form \`https://www.dnaindia.com/topic/dna-verified\` demonstrates the utilization of the subdomain \`topic\`
+  :::`,
+    description: `Categories:
+
+  | Headlines | Explainer | India | Entertainment | Sports | Viral | Lifestyle | Education | Business | World |
+  | --------- | --------- | ----- | ------------- | ------ | ----- | --------- | --------- | -------- | ----- |
+  | headlines | explainer | india | entertainment | sports | viral | lifestyle | education | business | world |`,
+};
+
+async function handler(ctx) {
     const { category, topic } = ctx.req.param();
     const baseUrl = 'https://www.dnaindia.com';
     let route;
@@ -55,7 +91,7 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'DNA India',
         link: baseUrl,
         item: items,
@@ -63,5 +99,5 @@ export default async (ctx) => {
         logo: 'https://cdn.dnaindia.com/sites/all/themes/dnaindia/favicon-1016.ico',
         icon: 'https://cdn.dnaindia.com/sites/all/themes/dnaindia/favicon-1016.ico',
         language: 'en-us',
-    });
-};
+    };
+}

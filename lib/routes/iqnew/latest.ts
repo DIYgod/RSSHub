@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,29 @@ import iconv from 'iconv-lite';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/latest',
+    categories: ['other'],
+    example: '/iqnew/latest',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['iqnew.com/post/new_100/', 'iqnew.com/'],
+    },
+    name: '最近更新',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'iqnew.com/post/new_100/',
+};
+
+async function handler(ctx) {
     const rootUrl = 'https://www.iqnew.com';
     const url = rootUrl + '/post/new_100/';
     const response = await got({
@@ -50,9 +73,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '爱Q生活网 - 最近更新',
         link: url,
         item: items,
-    });
-};
+    };
+}

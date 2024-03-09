@@ -1,9 +1,56 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/zhejiang/gwy/:category?/:column?',
+    categories: ['government'],
+    example: '/gov/zhejiang/gwy/1',
+    parameters: { category: '分类，见下表，默认为全部', column: '地市专栏，见下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['zjks.gov.cn/zjgwy/website/init.htm', 'zjks.gov.cn/zjgwy/website/queryDetail.htm', 'zjks.gov.cn/zjgwy/website/queryMore.htm'],
+        target: '/zhejiang/gwy',
+    },
+    name: '通知',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'zjks.gov.cn/zjgwy/website/init.htm',
+    description: `| 分类         | id |
+  | ------------ | -- |
+  | 重要通知     | 1  |
+  | 招考公告     | 2  |
+  | 招考政策     | 3  |
+  | 面试体检考察 | 4  |
+  | 录用公示专栏 | 5  |
+
+  | 地市         | id    |
+  | ------------ | ----- |
+  | 浙江省       | 133   |
+  | 浙江省杭州市 | 13301 |
+  | 浙江省宁波市 | 13302 |
+  | 浙江省温州市 | 13303 |
+  | 浙江省嘉兴市 | 13304 |
+  | 浙江省湖州市 | 13305 |
+  | 浙江省绍兴市 | 13306 |
+  | 浙江省金华市 | 13307 |
+  | 浙江省衢州市 | 13308 |
+  | 浙江省舟山市 | 13309 |
+  | 浙江省台州市 | 13310 |
+  | 浙江省丽水市 | 13311 |
+  | 省级单位     | 13317 |`,
+};
+
+async function handler(ctx) {
     const { category, column } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 50;
 
@@ -73,7 +120,7 @@ export default async (ctx) => {
     const columnName = $('button.btn-success').last().text();
     const categoryName = $('table').parent().prev().find('h5').text();
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${$('title').text()} - ${columnName}${categoryName}`,
         link: currentUrl,
@@ -81,5 +128,5 @@ export default async (ctx) => {
         subtitle: `${columnName}${categoryName}`,
         author: $('div.title-font').text(),
         allowEmpty: true,
-    });
-};
+    };
+}

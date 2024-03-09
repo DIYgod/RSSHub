@@ -1,7 +1,30 @@
+import { Route } from '@/types';
 import buildData from '@/utils/common-config';
 const baseUrl = 'https://www.xunhupay.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/blog',
+    categories: ['blog'],
+    example: '/xunhupay/blog',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.xunhupay.com/blog'],
+    },
+    name: '文章',
+    maintainers: ['Joey'],
+    handler,
+    url: 'www.xunhupay.com/blog',
+};
+
+async function handler(ctx) {
     const link = `${baseUrl}/blog.html`;
     ctx.set(
         'data',
@@ -24,4 +47,4 @@ export default async (ctx) => {
             },
         })
     );
-};
+}

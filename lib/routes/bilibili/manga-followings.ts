@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import cache from './cache';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/manga/followings/:uid/:limits?',
+    categories: ['social-media'],
+    example: '/bilibili/manga/followings/26009',
+    parameters: { uid: '用户 id', limits: '抓取最近更新前多少本漫画，默认为10' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '用户追漫更新',
+    maintainers: ['yindaheng98'],
+    handler,
+    description: `:::warning
+  用户追漫需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+  :::`,
+};
+
+async function handler(ctx) {
     const uid = String(ctx.req.param('uid'));
     const name = await cache.getUsernameFromUID(uid);
 
@@ -26,7 +48,7 @@ export default async (ctx) => {
     }
     const comics = response.data.data;
 
-    ctx.set('data', {
+    return {
         title: `${name} 的追漫更新 - 哔哩哔哩漫画`,
         link,
         item: comics.map((item) => ({
@@ -35,5 +57,5 @@ export default async (ctx) => {
             pubDate: new Date(item.last_ep_publish_time + ' +0800'),
             link: `https://manga.bilibili.com/detail/mc${item.comic_id}`,
         })),
-    });
-};
+    };
+}

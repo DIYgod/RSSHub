@@ -1,10 +1,34 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 const url = 'https://www.sigsac.org/';
 import { parseDate } from '@/utils/parse-date';
 // https://www.sigsac.org/ccs/CCS2022/program/accepted-papers.html
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/ccs',
+    categories: ['journal'],
+    example: '/sigsac/ccs',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['sigsac.org/ccs.html', 'sigsac.org/'],
+    },
+    name: 'The ACM Conference on Computer and Communications Security',
+    maintainers: [],
+    handler,
+    url: 'sigsac.org/ccs.html',
+    description: `Return results from 2020`,
+};
+
+async function handler() {
     const last = new Date().getFullYear() + 1;
     const yearList = Array.from({ length: last - 2020 }, (_, v) => `${url}ccs/CCS${v + 2020}/`);
     const yearResponses = await got.all(yearList.map((url) => got(url)));
@@ -47,11 +71,11 @@ export default async (ctx) => {
         return paperSection.length ? paperSection : paperTable;
     });
 
-    ctx.set('data', {
+    return {
         title: 'ACM CCS',
         link: url,
         description: 'The ACM Conference on Computer and Communications Security (CCS) Accepted Papers',
         allowEmpty: true,
         item: items.flat(),
-    });
-};
+    };
+}

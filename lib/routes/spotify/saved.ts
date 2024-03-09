@@ -1,8 +1,32 @@
+import { Route } from '@/types';
 import utils from './utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/saved/:limit?',
+    categories: ['multimedia'],
+    example: '/spotify/saved/50',
+    parameters: { limit: 'Track count, 50 by default' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['open.spotify.com/collection/tracks'],
+        target: '/saved',
+    },
+    name: 'Personal Saved Tracks',
+    maintainers: ['outloudvi'],
+    handler,
+    url: 'open.spotify.com/collection/tracks',
+};
+
+async function handler(ctx) {
     const token = await utils.getPrivateToken();
 
     const limit = ctx.req.param('limit');
@@ -17,7 +41,7 @@ export default async (ctx) => {
         .json();
     const tracks = itemsResponse.items;
 
-    ctx.set('data', {
+    return {
         title: 'Spotify: My Saved Tracks',
         link: 'https://open.spotify.com/collection/tracks',
         description: `Latest ${pageSize} saved tracks on Spotify.`,
@@ -26,5 +50,5 @@ export default async (ctx) => {
             ...utils.parseTrack(x.track),
             pubDate: parseDate(x.added_at),
         })),
-    });
-};
+    };
+}

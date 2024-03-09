@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jinan/healthcommission/medical_exam_notice',
+    categories: ['government'],
+    example: '/gov/jinan/healthcommission/medical_exam_notice',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['jnmhc.jinan.gov.cn/*'],
+    },
+    name: '获取国家医师资格考试通知',
+    maintainers: ['tzjyxb'],
+    handler,
+    url: 'jnmhc.jinan.gov.cn/*',
+};
+
+async function handler() {
     const baseUrl = 'https://jnmhc.jinan.gov.cn';
 
     const res = await got('https://jnmhc.jinan.gov.cn/module/web/jpage/dataproxy.jsp', {
@@ -22,7 +45,7 @@ export default async (ctx) => {
 
     const list = $('record');
 
-    ctx.set('data', {
+    return {
         title: '济南卫建委-执业考试通知',
         link: `${baseUrl}/col/col14418/index.html`,
         item: list
@@ -45,5 +68,5 @@ export default async (ctx) => {
                 };
             })
             .get(),
-    });
-};
+    };
+}

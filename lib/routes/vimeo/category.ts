@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,28 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/category/:category/:staffpicks?',
+    categories: ['social-media'],
+    example: '/vimeo/category/documentary/staffpicks',
+    parameters: {
+        category: 'Category name can get from url like `documentary` in [https://vimeo.com/categories/documentary/videos](https://vimeo.com/categories/documentary/videos) ',
+        staffpicks: 'type `staffpicks` to sort with staffpicks',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Category',
+    maintainers: ['MisteryMonster'],
+    handler,
+};
+
+async function handler(ctx) {
     const { category, staffpicks } = ctx.req.param();
 
     const categoryparams = category;
@@ -50,7 +72,7 @@ export default async (ctx) => {
         return description('meta[name="description"]').attr('content');
     });
 
-    ctx.set('data', {
+    return {
         title: `${feedtitle} | Vimeo category`,
         link: feedlink + (staffpicks ? feedlinkstaffpicks : ''),
         description: feedDescription,
@@ -64,5 +86,5 @@ export default async (ctx) => {
             link: item.link,
             author: item.user.name,
         })),
-    });
-};
+    };
+}

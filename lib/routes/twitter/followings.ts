@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import utils from './utils';
 import { config } from '@/config';
 const T = {};
 import { TwitterApi } from 'twitter-api-v2';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/followings/:id/:routeParams?',
+    categories: ['social-media'],
+    example: '/twitter/followings/DIYgod',
+    parameters: { id: 'username', routeParams: 'extra parameters, see the table above' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'User following timeline',
+    maintainers: ['DIYgod'],
+    handler,
+    description: `:::warning
+  This route requires Twitter token's corresponding id, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
+  :::`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const cookie = config.twitter.tokens[id];
     if (!cookie) {
@@ -27,7 +49,7 @@ export default async (ctx) => {
     // undefined and strings like "exclude_rts_replies" is also safely parsed, so no if branch is needed
     const routeParams = new URLSearchParams(ctx.req.param('routeParams'));
 
-    ctx.set('data', {
+    return {
         title: `${id} 的 Twitter 关注时间线`,
         link: `https://twitter.com/${id}/`,
         item: utils.ProcessFeed(
@@ -40,5 +62,5 @@ export default async (ctx) => {
                 showAuthorInDesc: fallback(undefined, queryToBoolean(routeParams.get('showAuthorInDesc')), true),
             }
         ),
-    });
-};
+    };
+}

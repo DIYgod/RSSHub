@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/topic/:id',
+    categories: ['finance'],
+    example: '/jin10/topic/396',
+    parameters: { id: 'N' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['xnews.jin10.com/topic/:id'],
+    },
+    name: '主题文章',
+    maintainers: ['miles170'],
+    handler,
+    url: 'jin10.com/',
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const data = await cache.tryGet(
         `jin10:topic:${id}`,
@@ -42,10 +65,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: data.title,
         link: `https://xnews.jin10.com/topic/${id}`,
         description: data.introduction,
         item: items,
-    });
-};
+    };
+}

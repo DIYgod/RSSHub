@@ -1,9 +1,22 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:path{.+}?',
+    radar: {
+        source: ['rfi.fr/*path'],
+        target: '/:path',
+    },
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    url: 'rfi.fr/*path',
+};
+
+async function handler(ctx) {
     const rootUrl = 'https://www.rfi.fr/';
     const path = ctx.req.param('path') ?? 'en';
     const currentUrl = `${rootUrl}${path.endsWith('/') ? path : `${path}/`}`;
@@ -57,7 +70,7 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         description: $('meta[name="description"]').attr('content'),
         link: currentUrl,
@@ -66,5 +79,5 @@ export default async (ctx) => {
         logo: new URL($('link[rel="apple-touch-icon"]').attr('href'), currentUrl).href,
         item: items,
         language: $('html').attr('lang'),
-    });
-};
+    };
+}

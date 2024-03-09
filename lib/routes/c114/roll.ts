@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,29 @@ import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 import iconv from 'iconv-lite';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/roll',
+    categories: ['new-media'],
+    example: '/c114/roll',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['c114.com.cn/news/roll.asp', 'c114.com.cn/'],
+    },
+    name: '滚动新闻',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'c114.com.cn/news/roll.asp',
+};
+
+async function handler(ctx) {
     const rootUrl = 'https://www.c114.com.cn';
     const currentUrl = `${rootUrl}/news/roll.asp`;
 
@@ -50,9 +73,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

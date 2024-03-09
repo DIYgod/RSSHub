@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/search/:keyword?',
+    categories: ['programming'],
+    example: '/hacking8/search/rsshub',
+    parameters: { keyword: '关键字，默认为空' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['hacking8.com/index/:category', 'hacking8.com/'],
+        target: '/:category?',
+    },
+    name: '搜索',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const keyword = ctx.req.param('keyword') ?? '';
 
     const rootUrl = 'https://i.hacking8.com';
@@ -37,12 +60,12 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: `Hacking8 安全信息流 - ${$('title')
             .text()
             .replaceAll(/总数:\d+/g, '')
             .trim()}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

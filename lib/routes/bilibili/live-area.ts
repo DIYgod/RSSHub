@@ -1,6 +1,28 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/live/area/:areaID/:order',
+    categories: ['live'],
+    example: '/bilibili/live/area/207/online',
+    parameters: { areaID: '分区 ID 分区增删较多, 可通过 [分区列表](https://api.live.bilibili.com/room/v1/Area/getList) 查询', order: '排序方式, live_time 开播时间, online 人气' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '直播分区',
+    maintainers: ['Qixingchen'],
+    handler,
+    description: `:::warning
+  由于接口未提供开播时间，如果直播间未更换标题与分区，将视为一次。如果直播间更换分区与标题，将视为另一项
+  :::`,
+};
+
+async function handler(ctx) {
     const areaID = ctx.req.param('areaID');
     const order = ctx.req.param('order');
 
@@ -49,7 +71,7 @@ export default async (ctx) => {
     });
     const data = response.data.data;
 
-    ctx.set('data', {
+    return {
         title: `哔哩哔哩直播-${parentTitle}·${areaTitle}分区-${orderTitle}`,
         link: areaLink,
         description: `哔哩哔哩直播-${parentTitle}·${areaTitle}分区-${orderTitle}`,
@@ -60,5 +82,5 @@ export default async (ctx) => {
             guid: `https://live.bilibili.com/${item.roomid} ${item.title}`,
             link: `https://live.bilibili.com/${item.roomid}`,
         })),
-    });
-};
+    };
+}

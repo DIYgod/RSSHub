@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,29 @@ import { load } from 'cheerio';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/new',
+    categories: ['multimedia'],
+    example: '/missav/new',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['missav.com/dm397/new', 'missav.com/new', 'missav.com/'],
+    },
+    name: '最近更新',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'missav.com/dm397/new',
+};
+
+async function handler() {
     const baseUrl = 'https://missav.com';
     const { data: response } = await got(`${baseUrl}/dm397/new`);
     const $ = load(response);
@@ -30,10 +53,10 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         description: $('head meta[name="description"]').attr('content'),
         link: baseUrl,
         item: items,
-    });
-};
+    };
+}

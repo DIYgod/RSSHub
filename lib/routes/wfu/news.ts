@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -45,7 +46,35 @@ async function loadContent(link) {
     return { description };
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:type?',
+    categories: ['university'],
+    example: '/wfu/news/wyyw',
+    parameters: { type: '分类，默认为 `wyyw`，具体参数见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['news.wfu.edu.cn/'],
+        target: '/news',
+    },
+    name: '新闻',
+    maintainers: ['cccht'],
+    handler,
+    url: 'news.wfu.edu.cn/',
+    description: `| **内容** | **参数** |
+  | :------: | :------: |
+  | 潍院要闻 |   wyyw   |
+  | 综合新闻 |   zhxw   |
+  | 学术纵横 |   xszh   |`,
+};
+
+async function handler(ctx) {
     // 默认 潍院要闻 然后获取列表页面
     const type = ctx.req.param('type') ?? 'wyyw';
     const listPageUrl = baseUrl + catrgoryMap[type][0];
@@ -88,10 +117,10 @@ export default async (ctx) => {
             .get()
     );
 
-    ctx.set('data', {
+    return {
         title: catrgoryMap[type][1] + sizeTitle,
         link: baseUrl,
         description: catrgoryMap[type][1] + sizeTitle,
         item: result,
-    });
-};
+    };
+}

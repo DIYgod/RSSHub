@@ -1,9 +1,36 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/it/:type?',
+    categories: ['university'],
+    example: '/ouc/it/0',
+    parameters: { type: '默认为 `0`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['it.ouc.edu.cn/'],
+        target: '/it',
+    },
+    name: '信息科学与工程学院',
+    maintainers: ['GeoffreyChen777', '3401797899'],
+    handler,
+    url: 'it.ouc.edu.cn/',
+    description: `| 学院要闻 | 学院公告 | 学院活动 |
+  | -------- | -------- | -------- |
+  | 0        | 1        | 2        |`,
+};
+
+async function handler(ctx) {
     const host = 'https://it.ouc.edu.cn';
     const typelist = ['学院要闻', '学院公告', '学术活动'];
     const urlList = ['xyyw/list.htm', 'xygg/list.htm', 'xshd/list.htm'];
@@ -36,9 +63,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `中国海洋大学信息科学与工程学院${typelist[type]}`,
         link,
         item: out,
-    });
-};
+    };
+}

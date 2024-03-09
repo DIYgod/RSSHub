@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -60,7 +61,19 @@ const extractArticle = (item) =>
         return item;
     });
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    radar: {
+        source: ['dlnews.com/articles/:category'],
+        target: '/:category',
+    },
+    name: 'Unknown',
+    maintainers: ['Rjnishant530'],
+    handler,
+    url: 'dlnews.com/articles/',
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
     const baseUrl = 'https://www.dlnews.com';
     const apiPath = '/pf/api/v3/content/fetch/articles-api';
@@ -82,7 +95,7 @@ export default async (ctx) => {
         items.push(data);
     }
 
-    ctx.set('data', {
+    return {
         title: Object.hasOwn(topics, category) ? `${topics[category]} : DL News` : 'DL News',
         link: baseUrl,
         item: items,
@@ -90,5 +103,5 @@ export default async (ctx) => {
         logo: 'https://www.dlnews.com/pf/resources/favicon.ico?d=284',
         icon: 'https://www.dlnews.com/pf/resources/favicon.ico?d=284',
         language: 'en-us',
-    });
-};
+    };
+}

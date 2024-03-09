@@ -1,10 +1,18 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/chongqing/gzw/:category{.+}?',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = 'tzgg_191' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 15;
 
@@ -50,7 +58,7 @@ export default async (ctx) => {
 
     const icon = new URL('favicon.ico', rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${$('title').text()} - ${$('meta[name="ColumnName"]').prop('content')}`,
         link: currentUrl,
@@ -62,5 +70,5 @@ export default async (ctx) => {
         subtitle: $('meta[name="ColumnKeywords"]').prop('content'),
         author: $('meta[name="SiteName"]').prop('content'),
         allowEmpty: true,
-    });
-};
+    };
+}

@@ -1,201 +1,165 @@
-# 🛍️ Shopping
+# shopping
 
 ## 0818 团 {#0818-tuan}
 
 ### 分类 {#0818-tuan-fen-lei}
 
-<Route author="TonyRL" example="/0818tuan" path="/0818tuan/:listId?" paramsDesc={['活动分类，见下表，默认为 `1`']} radar="1">
-  | 最新线报 | 实测活动 | 优惠券 |
-  | -------- | -------- | ------ |
-  | 1        | 2        | 3      |
-</Route>
+<Route namespace="0818tuan" data={{"path":"/:listId?","categories":["shopping"],"example":"/0818tuan","parameters":{"listId":"活动分类，见下表，默认为 `1`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"分类","maintainers":["TonyRL"],"description":"| 最新线报 | 实测活动 | 优惠券 |\n  | -------- | -------- | ------ |\n  | 1        | 2        | 3      |","location":"index.ts"}} />
 
-## AppSales {#appsales}
-
-### Apps {#appsales-apps}
-
-<Route author="nczitzk" example="/appsales/highlights" path="/appsales/:caty?/:time?" paramsDesc={['Category, `highlights` by default', 'Time, `24h` by default']}>
-  Category
-
-  | Highlights | Active Sales | Now Free | Watchlist Charts |
-  | ---------- | ------------ | -------- | ---------------- |
-  | highlights | activesales  | nowfree  | mostwanted       |
-
-  Time
-
-  | the latest 24 hours | the latest week | all the time |
-  | ------------------- | --------------- | ------------ |
-  | 24h                 | week            | alltime      |
-
-  :::tip
-  Parameter `time` only works when `mostwanted` is chosen as the category.
-  :::
-</Route>
+| 最新线报 | 实测活动 | 优惠券 |
+| -------- | -------- | ------ |
+| 1        | 2        | 3      |
 
 ## Arcteryx {#arcteryx}
 
 ### New Arrivals {#arcteryx-new-arrivals}
 
-<Route author="EthanWng97" example="/arcteryx/new-arrivals/us/mens" path="/arcteryx/new-arrivals/:country/:gender" paramsDesc={['country', 'gender']} anticrawler="1">
-  Country
+<Route namespace="arcteryx" data={{"path":"/new-arrivals/:country/:gender","categories":["shopping"],"example":"/arcteryx/new-arrivals/us/mens","parameters":{"country":"country","gender":"gender"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["arcteryx.com/:country/en/c/:gender/new-arrivals"]},"name":"New Arrivals","maintainers":["EthanWng97"],"description":"Country\n\n  | United States | Canada | United Kingdom |\n  | ------------- | ------ | -------------- |\n  | us            | ca     | gb             |\n\n  gender\n\n  | male | female |\n  | ---- | ------ |\n  | mens | womens |\n\n  :::tip\n  Parameter `country` can be found within the url of `Arcteryx` website.\n  :::","location":"new-arrivals.ts"}} />
 
-  | United States | Canada | United Kingdom |
-  | ------------- | ------ | -------------- |
-  | us            | ca     | gb             |
+Country
 
-  gender
+| United States | Canada | United Kingdom |
+| ------------- | ------ | -------------- |
+| us            | ca     | gb             |
 
-  | male | female |
-  | ---- | ------ |
-  | mens | womens |
+gender
 
-  :::tip
-  Parameter `country` can be found within the url of `Arcteryx` website.
-  :::
-</Route>
+| male | female |
+| ---- | ------ |
+| mens | womens |
+
+:::tip
+Parameter `country` can be found within the url of `Arcteryx` website.
+:::
 
 ### Outlet {#arcteryx-outlet}
 
-<Route author="EthanWng97" example="/arcteryx/outlet/us/mens" path="/arcteryx/outlet/:country/:gender" paramsDesc={['country', 'gender']} anticrawler="1">
-  Country
+<Route namespace="arcteryx" data={{"path":"/outlet/:country/:gender","categories":["shopping"],"example":"/arcteryx/outlet/us/mens","parameters":{"country":"country","gender":"gender"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["outlet.arcteryx.com/:country/en/c/:gender"]},"name":"Outlet","maintainers":["EthanWng97"],"description":"Country\n\n  | United States | Canada | United Kingdom |\n  | ------------- | ------ | -------------- |\n  | us            | ca     | gb             |\n\n  gender\n\n  | male | female |\n  | ---- | ------ |\n  | mens | womens |\n\n  :::tip\n  Parameter `country` can be found within the url of `Arcteryx` website.\n  :::","location":"outlet.ts"}} />
 
-  | United States | Canada | United Kingdom |
-  | ------------- | ------ | -------------- |
-  | us            | ca     | gb             |
+Country
 
-  gender
+| United States | Canada | United Kingdom |
+| ------------- | ------ | -------------- |
+| us            | ca     | gb             |
 
-  | male | female |
-  | ---- | ------ |
-  | mens | womens |
+gender
 
-  :::tip
-  Parameter `country` can be found within the url of `Arcteryx` website.
-  :::
-</Route>
+| male | female |
+| ---- | ------ |
+| mens | womens |
+
+:::tip
+Parameter `country` can be found within the url of `Arcteryx` website.
+:::
 
 ### Regear New Arrivals {#arcteryx-regear-new-arrivals}
 
-<Route author="EthanWng97" example="/arcteryx/regear/new-arrivals" path="/arcteryx/regear/new-arrivals" />
+<Route namespace="arcteryx" data={{"path":"/regear/new-arrivals","categories":["shopping"],"example":"/arcteryx/regear/new-arrivals","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["regear.arcteryx.com/shop/new-arrivals","regear.arcteryx.com/"]},"name":"Regear New Arrivals","maintainers":["EthanWng97"],"url":"regear.arcteryx.com/shop/new-arrivals","location":"regear-new-arrivals.ts"}} />
 
 ## Bellroy {#bellroy}
 
 ### New Releases {#bellroy-new-releases}
 
-<Route author="EthanWng97" example="/bellroy/new-releases" path="/bellroy/new-releases" />
-
-## booth.pm {#booth-pm}
-
-### Shop {#booth-pm-shop}
-
-<Route author="KTachibanaM" example="/booth.pm/shop/annn-boc0123" path="/booth.pm/shop/:subdomain" paramsDesc={['Shop subdomain']} />
+<Route namespace="bellroy" data={{"path":"/new-releases","categories":["shopping"],"example":"/bellroy/new-releases","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["bellroy.com/collection/new-releases","bellroy.com/"]},"name":"New Releases","maintainers":["EthanWng97"],"url":"bellroy.com/collection/new-releases","location":"new-releases.ts"}} />
 
 ## Furstar {#furstar}
 
-### 最新售卖角色列表 {#furstar-zui-xin-shou-mai-jue-se-lie-biao}
+### 画师列表 {#furstar-hua-shi-lie-biao}
 
-<Route author="NeverBehave" example="/furstar/characters/cn" path="/furstar/characters/:lang?" paramsDesc={['语言, 留空为jp, 支持cn, en']} />
+<Route namespace="furstar" data={{"path":"/artists/:lang?","categories":["shopping"],"example":"/furstar/artists/cn","parameters":{"lang":"语言, 留空为jp, 支持cn, en"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["furstar.jp/"],"target":"/artists"},"name":"画师列表","maintainers":["NeverBehave"],"url":"furstar.jp/","location":"artists.ts"}} />
 
 ### 已经出售的角色列表 {#furstar-yi-jing-chu-shou-de-jue-se-lie-biao}
 
-<Route author="NeverBehave" example="/furstar/archive/cn" path="/furstar/archive/:lang?" paramsDesc={['语言, 留空为jp, 支持cn, en']} />
+<Route namespace="furstar" data={{"path":"/archive/:lang?","categories":["shopping"],"example":"/furstar/archive/cn","parameters":{"lang":"语言, 留空为jp, 支持cn, en"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["furstar.jp/:lang/archive.php","furstar.jp/archive.php"],"target":"/archive/:lang"},"name":"已经出售的角色列表","maintainers":["NeverBehave"],"location":"archive.ts"}} />
 
-### 画师列表 {#furstar-hua-shi-lie-biao}
+### 最新售卖角色列表 {#furstar-zui-xin-shou-mai-jue-se-lie-biao}
 
-<Route author="NeverBehave" example="/furstar/artists/cn" path="/furstar/artists/:lang?" paramsDesc={['语言, 留空为jp, 支持cn, en']} />
+<Route namespace="furstar" data={{"path":"/characters/:lang?","categories":["shopping"],"example":"/furstar/characters/cn","parameters":{"lang":"语言, 留空为jp, 支持cn, en"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["furstar.jp/:lang","furstar.jp/"],"target":"/characters/:lang"},"name":"最新售卖角色列表","maintainers":["NeverBehave"],"location":"index.ts"}} />
 
 ## Gumroad {#gumroad}
 
 ### Products {#gumroad-products}
 
-<Route author="Fatpandac" example="/gumroad/afkmaster/Eve10" path="/gumroad/:username/:products" paramsDesc={['username, can be found in URL', 'products name, can be found in URL']} radar="1" notOperational="1">
-  `https://afkmaster.gumroad.com/l/Eve10` -> `/gumroad/afkmaster/Eve10`
-</Route>
+<Route namespace="gumroad" data={{"path":"/:username/:products","categories":["shopping"],"example":"/gumroad/afkmaster/Eve10","parameters":{"username":"username, can be found in URL","products":"products name, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Products","maintainers":["Fatpandac"],"description":"`https://afkmaster.gumroad.com/l/Eve10` -> `/gumroad/afkmaster/Eve10`","location":"index.ts"}} />
+
+`https://afkmaster.gumroad.com/l/Eve10` -> `/gumroad/afkmaster/Eve10`
 
 ## hotukdeals {#hotukdeals}
 
-### thread {#hotukdeals-thread}
-
-<Route author="DIYgod" example="/hotukdeals/hot" path="/hotukdeals/:type" paramsDesc={['should be one of highlights, hot, new, discussed']} anticrawler="1" />
-
 ### hottest {#hotukdeals-hottest}
 
-<Route author="DIYgod" example="/hotukdeals/hottest" path="/hotukdeals/hottest" anticrawler="1" />
+<Route namespace="hotukdeals" data={{"path":"/hottest","categories":["shopping"],"example":"/hotukdeals/hottest","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.hotukdeals.com/"]},"name":"hottest","maintainers":["DIYgod"],"url":"www.hotukdeals.com/","location":"hottest.ts"}} />
+
+### thread {#hotukdeals-thread}
+
+<Route namespace="hotukdeals" data={{"path":"/:type","categories":["shopping"],"example":"/hotukdeals/hot","parameters":{"type":"should be one of highlights, hot, new, discussed"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"thread","maintainers":["DIYgod"],"location":"index.ts"}} />
 
 ## IKEA {#ikea}
 
 ### UK - New Product Release {#ikea-uk-new-product-release}
 
-<Route author="HenryQW" example="/ikea/gb/new" path="/ikea/gb/new" notOperational="1" />
+<Route namespace="ikea" data={{"path":"/gb/new","categories":["shopping"],"example":"/ikea/gb/new","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ikea.com/gb/en/new/new-products/","ikea.com/"]},"name":"UK - New Product Release","maintainers":["HenryQW"],"url":"ikea.com/gb/en/new/new-products/","location":"gb/new.ts"}} />
 
 ### UK - Offers {#ikea-uk-offers}
 
-<Route author="HenryQW" example="/ikea/gb/offer" path="/ikea/gb/offer" notOperational="1" />
+<Route namespace="ikea" data={{"path":"/gb/offer","categories":["shopping"],"example":"/ikea/gb/offer","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ikea.com/gb/en/offers","ikea.com/"]},"name":"UK - Offers","maintainers":["HenryQW"],"url":"ikea.com/gb/en/offers","location":"gb/offer.ts"}} />
 
 ### 中国 - 会员特惠 {#ikea-zhong-guo-hui-yuan-te-hui}
 
-<Route author="jzhangdev" example="/ikea/cn/family_offers" path="/ikea/cn/family_offers" radar="1" notOperational="1" />
+<Route namespace="ikea" data={{"path":"/cn/family_offers","categories":["shopping"],"example":"/ikea/cn/family_offers","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ikea.cn/cn/zh/offers/family-offers","ikea.cn/"]},"name":"中国 - 会员特惠","maintainers":["jzhangdev"],"url":"ikea.cn/cn/zh/offers/family-offers","location":"cn/family-offers.ts"}} />
 
 ### 中国 - 低价优选 {#ikea-zhong-guo-di-jia-you-xuan}
 
-<Route author="jzhangdev" example="/ikea/cn/low_price" path="/ikea/cn/low_price" radar="1" />
+<Route namespace="ikea" data={{"path":"/cn/low_price","categories":["shopping"],"example":"/ikea/cn/low_price","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ikea.cn/cn/zh/campaigns/wo3-men2-de-chao1-zhi2-di1-jia4-pub8b08af40","ikea.cn/"]},"name":"中国 - 低价优选","maintainers":["jzhangdev"],"url":"ikea.cn/cn/zh/campaigns/wo3-men2-de-chao1-zhi2-di1-jia4-pub8b08af40","location":"cn/low-price.ts"}} />
 
 ### 中国 - 当季新品推荐 {#ikea-zhong-guo-dang-ji-xin-pin-tui-jian}
 
-<Route author="jzhangdev" example="/ikea/cn/new" path="/ikea/cn/new" radar="1" />
+<Route namespace="ikea" data={{"path":"/cn/new","categories":["shopping"],"example":"/ikea/cn/new","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ikea.cn/cn/zh/new/","ikea.cn/"]},"name":"中国 - 当季新品推荐","maintainers":["jzhangdev"],"url":"ikea.cn/cn/zh/new/","location":"cn/new.ts"}} />
 
 ## MyFigureCollection {#myfigurecollection}
 
 ### Activity {#myfigurecollection-activity}
 
-<Route author="nczitzk" example="/myfigurecollection/activity" path="/myfigurecollection/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?" paramsDesc={['Category, Figures by default', 'Language, as above, `en` by default', 'Latest Additions, on as `1` by default, off as `0`', 'Changes, on as `1` by default, off as `0`', 'Alerts, on as `1` by default, off as `0`', 'Pictures, on as `1` by default, off as `0`']}>
-  Category
+<Route namespace="myfigurecollection" data={{"path":"/activity/:category?/:language?/:latestAdditions?/:latestEdits?/:latestAlerts?/:latestPictures?","categories":["shopping"],"example":"/myfigurecollection/activity","parameters":{"category":"Category, Figures by default","language":"Language, as above, `en` by default","latestAdditions":"Latest Additions, on as `1` by default, off as `0`","latestEdits":"Changes, on as `1` by default, off as `0`","latestAlerts":"Alerts, on as `1` by default, off as `0`","latestPictures":"Pictures, on as `1` by default, off as `0`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["zh.myfigurecollection.net/browse","zh.myfigurecollection.net/"],"target":"/:category?/:language?"},"name":"Activity","maintainers":["nczitzk"],"url":"zh.myfigurecollection.net/browse","description":"Category\n\n  | Figures | Goods | Media |\n  | ------- | ----- | ----- |\n  | 0       | 1     | 2     |\n\n  Language\n\n  | Id | Language   |\n  | -- | ---------- |\n  |    | en         |\n  | de | Deutsch    |\n  | es | Español    |\n  | fi | Suomeksi   |\n  | fr | Français   |\n  | it | Italiano   |\n  | ja | 日本語     |\n  | nl | Nederlands |\n  | no | Norsk      |\n  | pl | Polski     |\n  | pt | Português  |\n  | ru | Русский    |\n  | sv | Svenska    |\n  | zh | 中文       |","location":"activity.ts"}} />
 
-  | Figures | Goods | Media |
-  | ------- | ----- | ----- |
-  | 0       | 1     | 2     |
+Category
 
-  Language
+| Figures | Goods | Media |
+| ------- | ----- | ----- |
+| 0       | 1     | 2     |
 
-  | Id | Language   |
-  | -- | ---------- |
-  |    | en         |
-  | de | Deutsch    |
-  | es | Español    |
-  | fi | Suomeksi   |
-  | fr | Français   |
-  | it | Italiano   |
-  | ja | 日本語     |
-  | nl | Nederlands |
-  | no | Norsk      |
-  | pl | Polski     |
-  | pt | Português  |
-  | ru | Русский    |
-  | sv | Svenska    |
-  | zh | 中文       |
-</Route>
+Language
 
-### Pictures {#myfigurecollection-pictures}
-
-<Route author="nczitzk" example="/myfigurecollection/potd" path="/myfigurecollection/:category?/:language?" paramsDesc={['Category, Pictures OTD by default', 'Language, as above, `en` by default']}>
-  | Pictures OTD | Pictures OTW | Pictures OTM |
-  | ------------ | ------------ | ------------ |
-  | potd         | potw         | potm         |
-</Route>
+| Id | Language   |
+| -- | ---------- |
+|    | en         |
+| de | Deutsch    |
+| es | Español    |
+| fi | Suomeksi   |
+| fr | Français   |
+| it | Italiano   |
+| ja | 日本語     |
+| nl | Nederlands |
+| no | Norsk      |
+| pl | Polski     |
+| pt | Português  |
+| ru | Русский    |
+| sv | Svenska    |
+| zh | 中文       |
 
 ### 圖片 {#myfigurecollection-tu-pian}
 
-<Route author="nczitzk" example="/myfigurecollection/potd" path="/myfigurecollection/:category?/:language?" paramsDesc={['分类，默认为每日圖片', '语言，见上表，默认为空，即 `en`']}>
-  | 每日圖片 | 每週圖片 | 每月圖片 |
-  | -------- | -------- | -------- |
-  | potd     | potw     | potm     |
-</Route>
+<Route namespace="myfigurecollection" data={{"path":"/:category?/:language?","categories":["shopping"],"example":"/myfigurecollection/potd","parameters":{"category":"分类，默认为每日圖片","language":"语言，见上表，默认为空，即 `en`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["zh.myfigurecollection.net/browse","zh.myfigurecollection.net/"]},"name":"圖片","maintainers":["nczitzk"],"url":"zh.myfigurecollection.net/browse","description":"| 每日圖片 | 每週圖片 | 每月圖片 |\n  | -------- | -------- | -------- |\n  | potd     | potw     | potm     |","location":"index.ts"}} />
+
+| 每日圖片 | 每週圖片 | 每月圖片 |
+| -------- | -------- | -------- |
+| potd     | potw     | potm     |
 
 ## MyMusicSheet {#mymusicsheet}
 
 ### User Sheets {#mymusicsheet-user-sheets}
 
-<Route author="Freddd13" example="/mymusicsheet/user/sheets/HalcyonMusic/USD/1" path="/mymusicsheet/user/sheets/:username/:iso?/:freeOnly?" paramsDesc={['用户名，可在URL中找到', '用于显示价格的ISO 4217货币代码, 支持常见代码, 默认为人民币, 即`CNY`', '只返回免费谱, 任意值为开启']} radar="1" />
+<Route namespace="mymusicsheet" data={{"path":"/user/sheets/:username/:iso?/:freeOnly?","categories":["shopping"],"example":"/mymusicsheet/user/sheets/HalcyonMusic/USD/1","parameters":{"username":"用户名，可在URL中找到","iso":"用于显示价格的ISO 4217货币代码, 支持常见代码, 默认为人民币, 即`CNY`","freeOnly":"只返回免费谱, 任意值为开启"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["mymusicsheet.com/:username/*","mymusicsheet.com/:username"],"target":"/user/sheets/:username"},"name":"User Sheets","maintainers":["Freddd13"],"description":"关于 ISO 4217，请参考[维基百科](https://zh.wikipedia.org/zh-cn/ISO_4217#%E7%8E%B0%E8%A1%8C%E4%BB%A3%E7%A0%81)","location":"usersheets.ts"}} />
 
 关于 ISO 4217，请参考[维基百科](https://zh.wikipedia.org/zh-cn/ISO_4217#%E7%8E%B0%E8%A1%8C%E4%BB%A3%E7%A0%81)
 
@@ -203,35 +167,35 @@
 
 ### New Arrivals {#patagonia-new-arrivals}
 
-<Route author="EthanWng97" example="/patagonia/new-arrivals/mens" path="/patagonia/new-arrivals/:category" paramsDesc={['category, see below']}>
-  | Men's | Women's | Kids' & Baby | Packs & Gear |
-  | ----- | ------- | ------------ | ------------ |
-  | mens  | womens  | kids         | luggage      |
-</Route>
+<Route namespace="patagonia" data={{"path":"/new-arrivals/:category","categories":["shopping"],"example":"/patagonia/new-arrivals/mens","parameters":{"category":"category, see below"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"New Arrivals","maintainers":[],"description":"| Men's | Women's | Kids' & Baby | Packs & Gear |\n  | ----- | ------- | ------------ | ------------ |\n  | mens  | womens  | kids         | luggage      |","location":"new-arrivals.ts"}} />
+
+| Men's | Women's | Kids' & Baby | Packs & Gear |
+| ----- | ------- | ------------ | ------------ |
+| mens  | womens  | kids         | luggage      |
 
 ## ShopBack {#shopback}
 
 ### Store {#shopback-store}
 
-<Route author="nczitzk" example="/shopback/shopee-mart" path="/shopback/:store" paramsDesc={['Store, can be found in URL']} />
+<Route namespace="shopback" data={{"path":"/:store","categories":["shopping"],"example":"/shopback/shopee-mart","parameters":{"store":"Store, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["shopback.com.tw/:category","shopback.com.tw/"]},"name":"Store","maintainers":["nczitzk"],"location":"store.ts"}} />
 
 ## Snow Peak {#snow-peak}
 
 ### New Arrivals(USA) {#snow-peak-new-arrivals-usa}
 
-<Route author="EthanWng97" example="/snowpeak/us/new-arrivals" path="/snowpeak/us/new-arrivals" />
+<Route namespace="snowpeak" data={{"path":"/us/new-arrivals","categories":["shopping"],"example":"/snowpeak/us/new-arrivals","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["snowpeak.com/collections/new-arrivals","snowpeak.com/"]},"name":"New Arrivals(USA)","maintainers":["EthanWng97"],"url":"snowpeak.com/collections/new-arrivals","location":"us-new-arrivals.ts"}} />
 
 ## Uniqlo {#uniqlo}
 
 ### New Arrivals {#uniqlo-new-arrivals}
 
-<Route author="DIYgod" example="/uniqlo/new/sg/men" path="/uniqlo/new/:country/:category" paramsDesc={['currently only supports sg, us, jp', 'supports `men` `women`, `kids`, `baby`']} radar="1" />
+<Route namespace="uniqlo" data={{"path":"/new/:country/:category","categories":["shopping"],"example":"/uniqlo/new/sg/men","parameters":{"country":"currently only supports sg, us, jp","category":"supports `men` `women`, `kids`, `baby`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"New Arrivals","maintainers":["DIYgod"],"location":"new.ts"}} />
 
 ## Zagg {#zagg}
 
 ### New Arrivals {#zagg-new-arrivals}
 
-<Route author="EthanWng97" example="/zagg/new-arrivals/brand=164&cat=3038,3041" path="/zagg/new-arrivals/:query?" paramsDesc={['query, search page querystring']} notOperational="1" />
+<Route namespace="zagg" data={{"path":"/new-arrivals/:query?","categories":["shopping"],"example":"/zagg/new-arrivals/brand=164&cat=3038,3041","parameters":{"query":"query, search page querystring"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"New Arrivals","maintainers":["EthanWng97"],"description":"For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3041`, the query is `brand=164&cat=3038%2C3041`","location":"new-arrivals.ts"}} />
 
 For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3041`, the query is `brand=164&cat=3038%2C3041`
 
@@ -239,7 +203,7 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 票务更新 {#da-mai-wang-piao-wu-geng-xin}
 
-<Route author="hoilc" example="/damai/activity/上海/音乐会/全部/柴可夫斯基" path="/damai/activity/:city/:category/:subcategory/:keyword?" paramsDesc={['城市，如果不需要限制，请填入`全部`', '分类，如果不需要限制，请填入`全部`', '子分类，如果不需要限制，请填入`全部`', '搜索关键字，置空为不限制']} radar="1" />
+<Route namespace="damai" data={{"path":"/activity/:city/:category/:subcategory/:keyword?","categories":["shopping"],"example":"/damai/activity/上海/音乐会/全部/柴可夫斯基","parameters":{"city":"城市，如果不需要限制，请填入`全部`","category":"分类，如果不需要限制，请填入`全部`","subcategory":"子分类，如果不需要限制，请填入`全部`","keyword":"搜索关键字，置空为不限制"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"票务更新","maintainers":["hoilc"],"description":"城市、分类名、子分类名，请参见[大麦网搜索页面](https://search.damai.cn/search.htm)","location":"activity.ts"}} />
 
 城市、分类名、子分类名，请参见[大麦网搜索页面](https://search.damai.cn/search.htm)
 
@@ -247,87 +211,51 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 搜索结果 {#duo-zhua-yu-sou-suo-jie-guo}
 
-<Route author="fengkx" example="/duozhuayu/search/JavaScript" path="/duozhuayu/search/:wd" paramsDesc={['搜索关键词']} radar="1" />
+<Route namespace="duozhuayu" data={{"path":"/search/:wd","categories":["shopping"],"example":"/duozhuayu/search/JavaScript","parameters":{"wd":"搜索关键词"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["duozhuayu.com/search/book/:wd"]},"name":"搜索结果","maintainers":["fengkx"],"location":"search.ts"}} />
 
 ## 逛丢 {#guang-diu}
 
+### 关键字搜索 {#guang-diu-guan-jian-zi-sou-suo}
+
+<Route namespace="guangdiu" data={{"path":"/search/:query?","categories":["shopping"],"example":"/guangdiu/search/k=百度网盘","parameters":{"query":"链接参数，对应网址问号后的内容"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"关键字搜索","maintainers":["Huzhixin00"],"location":"search.ts"}} />
+
 ### 国内折扣 / 海外折扣 {#guang-diu-guo-nei-zhe-kou-hai-wai-zhe-kou}
 
-<Route author="Fatpandac" example="/guangdiu/k=daily" path="/guangdiu/:query?" paramsDesc={['链接参数，对应网址问号后的内容']}>
-  :::tip
-  海外折扣: [`/guangdiu/k=daily&c=us`](https://rsshub.app/guangdiu/k=daily\&c=us)
-  :::
-</Route>
+<Route namespace="guangdiu" data={{"path":"/:query?","categories":["shopping"],"example":"/guangdiu/k=daily","parameters":{"query":"链接参数，对应网址问号后的内容"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"国内折扣 / 海外折扣","maintainers":["Fatpandac"],"description":":::tip\n  海外折扣: [`/guangdiu/k=daily&c=us`](https://rsshub.app/guangdiu/k=daily&c=us)\n  :::","location":"index.ts"}} />
 
-### 一小时风云榜 {#guang-diu-yi-xiao-shi-feng-yun-bang}
-
-<Route author="Fatpandac" example="/guangdiu/rank" path="/guangdiu/rank" />
+:::tip
+海外折扣: [`/guangdiu/k=daily&c=us`](https://rsshub.app/guangdiu/k=daily\&c=us)
+:::
 
 ### 九块九 {#guang-diu-jiu-kuai-jiu}
 
-<Route author="Fatpandac" example="/guangdiu/cheaps/k=clothes" path="/guangdiu/cheaps/:query?" paramsDesc={['链接参数，对应网址问号后的内容']} />
+<Route namespace="guangdiu" data={{"path":"/cheaps/:query?","categories":["shopping"],"example":"/guangdiu/cheaps/k=clothes","parameters":{"query":"链接参数，对应网址问号后的内容"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"九块九","maintainers":["fatpandac"],"location":"cheaps.ts"}} />
 
-### 关键字搜索 {#guang-diu-guan-jian-zi-sou-suo}
+### 一小时风云榜 {#guang-diu-yi-xiao-shi-feng-yun-bang}
 
-<Route author="Huzhixin00" example="/guangdiu/search/k=百度网盘" path="/guangdiu/search/:query?" paramsDesc={['链接参数，对应网址问号后的内容']} />
-
-## 好好住 {#hao-hao-zhu}
-
-### 整屋案例 {#hao-hao-zhu-zheng-wu-an-li}
-
-<Route author="hoilc" example="/haohaozhu/whole-house/日式" path="/haohaozhu/whole-house/:keyword?" paramsDesc={['分类名或关键字，请使用中文']} />
-
-### 发现 {#hao-hao-zhu-fa-xian}
-
-<Route author="hoilc" example="/haohaozhu/discover/厨房" path="/haohaozhu/discover/:keyword?" paramsDesc={['分类名或关键字，请使用中文']} />
+<Route namespace="guangdiu" data={{"path":"/rank","categories":["shopping"],"example":"/guangdiu/rank","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["guangdiu.com/rank"]},"name":"一小时风云榜","maintainers":["fatpandac"],"url":"guangdiu.com/rank","location":"rank.ts"}} />
 
 ## 京东 {#jing-dong}
 
 ### 商品价格 {#jing-dong-shang-pin-jia-ge}
 
-<Route author="nczitzk" example="/jd/price/526835" path="/jd/price/:id" paramsDesc={['商品 id，可在商品详情页 URL 中找到']} notOperational="1">
-  :::tip
-  如商品 `https://item.jd.com/526835.html` 中的 id 为 `526835`，所以路由为 [`/jd/price/526835`](https://rsshub.app/jd/price/526835)
-  :::
-</Route>
+<Route namespace="jd" data={{"path":"/price/:id","categories":["shopping"],"example":"/jd/price/526835","parameters":{"id":"商品 id，可在商品详情页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"商品价格","maintainers":["nczitzk"],"description":":::tip\n  如商品 `https://item.jd.com/526835.html` 中的 id 为 `526835`，所以路由为 [`/jd/price/526835`](https://rsshub.app/jd/price/526835)\n  :::","location":"price.ts"}} />
 
-## 麦当劳 {#mai-dang-lao}
-
-### 麦当劳活动资讯 {#mai-dang-lao-mai-dang-lao-huo-dong-zi-xun}
-
-<Route author="huyyi" example="/mcdonalds/sales+event" path="/mcdonalds/:category" paramsDesc={['分类名（可用+连接多个分类）']}>
-  | 全部分类   | 社会责任       | 人员品牌 | 产品故事 | 优惠  | 品牌文化 | 活动速报 |
-  | ---------- | -------------- | -------- | -------- | ----- | -------- | -------- |
-  | news\_list | responsibility | brand    | product  | sales | culture  | event    |
-</Route>
-
-## 缺书网 {#que-shu-wang}
-
-### 促销 {#que-shu-wang-cu-xiao}
-
-<Route author="kt286" example="/queshu/sale" path="/queshu/sale" />
-
-### 单品活动信息 {#que-shu-wang-dan-pin-huo-dong-xin-xi}
-
-<Route author="kt286" example="/queshu/book/34626813" path="/queshu/book/:bookid" paramsDesc={['图书ID，可在链接中获取']} />
-
-## 人民邮电出版社 {#ren-min-you-dian-chu-ban-she}
-
-### 图书列表 {#ren-min-you-dian-chu-ban-she-tu-shu-lie-biao}
-
-<Route author="hoilc" example="/ptpress/book/new" path="/ptpress/book/:type?" paramsDesc={['排序方式，默认`new`为最新图书，可选`hot`为最热图书']} />
+:::tip
+如商品 `https://item.jd.com/526835.html` 中的 id 为 `526835`，所以路由为 [`/jd/price/526835`](https://rsshub.app/jd/price/526835)
+:::
 
 ## 上海东方艺术中心 {#shang-hai-dong-fang-yi-shu-zhong-xin}
 
 ### 演出月历 {#shang-hai-dong-fang-yi-shu-zhong-xin-yan-chu-yue-li}
 
-<Route author="TonyRL" example="/shoac/recent-show" path="/shoac/recent-show" />
+<Route namespace="shoac" data={{"path":"/recent-show","categories":["shopping"],"example":"/shoac/recent-show","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["shoac.com.cn/"]},"name":"演出月历","maintainers":["TonyRL"],"url":"shoac.com.cn/","location":"recent-show.ts"}} />
 
 ## 上海文化广场 {#shang-hai-wen-hua-guang-chang}
 
 ### 节目列表 {#shang-hai-wen-hua-guang-chang-jie-mu-lie-biao}
 
-<Route author="fuzy112" example="/shcstheatre/programs" path="/shcstheatre/programs" />
+<Route namespace="shcstheatre" data={{"path":"/programs","categories":["shopping"],"example":"/shcstheatre/programs","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.shcstheatre.com/Program/programList.aspx"]},"name":"节目列表","maintainers":["fuzy112"],"url":"www.shcstheatre.com/Program/programList.aspx","location":"programs.ts"}} />
 
 ## 什么值得买 {#shen-me-zhi-de-mai}
 
@@ -337,212 +265,202 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 关键词 {#shen-me-zhi-de-mai-guan-jian-ci}
 
-<Route author="DIYgod" example="/smzdm/keyword/女装" path="/smzdm/keyword/:keyword" paramsDesc={['你想订阅的关键词']} radar="1" />
-
-### 排行榜 {#shen-me-zhi-de-mai-pai-hang-bang}
-
-<Route author="DIYgod" example="/smzdm/ranking/pinlei/11/3" path="/smzdm/ranking/:rank_type/:rank_id/:hour" paramsDesc={['榜单类型','榜单ID','时间跨度']} radar="1">
-  -   榜单类型
-
-  | 好价品类榜 | 好价电商榜 | 海淘 TOP 榜 | 好文排行榜 | 好物排行榜 |
-  | ---------- | ---------- | ----------- | ---------- | ---------- |
-  | pinlei     | dianshang  | haitao      | haowen     | haowu      |
-
-  -   榜单 ID
-
-  好价品类榜
-
-  | 全部 | 食品生鲜 | 电脑数码 | 运动户外 | 家用电器 | 白菜 | 服饰鞋包 | 日用百货 |
-  | ---- | -------- | -------- | -------- | -------- | ---- | -------- | -------- |
-  | 11   | 12       | 13       | 14       | 15       | 17   | 74       | 75       |
-
-  好价电商榜
-
-  | 券活动 | 京东 | 天猫 | 亚马逊中国 | 国美在线 | 苏宁易购 | 网易 | 西集网 | 美国亚马逊 | 日本亚马逊 | ebay |
-  | ------ | ---- | ---- | ---------- | -------- | -------- | ---- | ------ | ---------- | ---------- | ---- |
-  | 24     | 23   | 25   | 26         | 27       | 28       | 29   | 30     | 31         | 32         | 33   |
-
-  海淘 TOP 榜
-
-  | 全部 | 海外直邮 | 美国榜 | 欧洲榜 | 澳新榜 | 亚洲榜 | 晒物榜 |
-  | ---- | -------- | ------ | ------ | ------ | ------ | ------ |
-  | 39   | 34       | 35     | 36     | 37     | 38     | hsw    |
-
-  好文排行榜
-
-  | 原创 | 资讯 |
-  | ---- | ---- |
-  | yc   | zx   |
-
-  好物排行榜
-
-  | 新晋榜 | 消费众测 | 新锐品牌 | 好物榜单 |
-  | ------ | -------- | -------- | -------- |
-  | hwall  | zc       | nb       | hw       |
-
-  -   时间跨度
-
-  | 3 小时 | 12 小时 | 24 小时 |
-  | ------ | ------- | ------- |
-  | 3      | 12      | 24      |
-</Route>
-
-### 好文 {#shen-me-zhi-de-mai-hao-wen}
-
-<Route author="LogicJake" example="/smzdm/haowen/1" path="/smzdm/haowen/:day?" paramsDesc={['以天为时间跨度，默认为 `all`，其余可以选择 `1`，`7`，`30`，`365`']} />
+<Route namespace="smzdm" data={{"path":"/keyword/:keyword","categories":["shopping"],"example":"/smzdm/keyword/女装","parameters":{"keyword":"你想订阅的关键词"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"关键词","maintainers":["DIYgod","MeanZhang"],"location":"keyword.ts"}} />
 
 ### 好文分类 {#shen-me-zhi-de-mai-hao-wen-fen-lei}
 
-<Route author="LogicJake" example="/smzdm/haowen/fenlei/shenghuodianqi" path="/smzdm/haowen/fenlei/:name/:sort?" paramsDesc={['分类名，可在 URL 中查看','排序方式，默认为最新']}>
-  | 最新 | 周排行 | 月排行 |
-  | ---- | ------ | ------ |
-  | 0    | 7      | 30     |
-</Route>
+<Route namespace="smzdm" data={{"path":"/haowen/fenlei/:name/:sort?","categories":["shopping"],"example":"/smzdm/haowen/fenlei/shenghuodianqi","parameters":{"name":"分类名，可在 URL 中查看","sort":"排序方式，默认为最新"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["post.smzdm.com/fenlei/:name"],"target":"/haowen/fenlei/:name"},"name":"好文分类","maintainers":["LogicJake"],"description":"| 最新 | 周排行 | 月排行 |\n  | ---- | ------ | ------ |\n  | 0    | 7      | 30     |","location":"haowen-fenlei.ts"}} />
+
+| 最新 | 周排行 | 月排行 |
+| ---- | ------ | ------ |
+| 0    | 7      | 30     |
+
+### 好文 {#shen-me-zhi-de-mai-hao-wen}
+
+<Route namespace="smzdm" data={{"path":"/haowen/:day?","categories":["shopping"],"example":"/smzdm/haowen/1","parameters":{"day":"以天为时间跨度，默认为 `all`，其余可以选择 `1`，`7`，`30`，`365`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"好文","maintainers":["LogicJake"],"location":"haowen.ts"}} />
+
+### 排行榜 {#shen-me-zhi-de-mai-pai-hang-bang}
+
+<Route namespace="smzdm" data={{"path":"/ranking/:rank_type/:rank_id/:hour","categories":["shopping"],"example":"/smzdm/ranking/pinlei/11/3","parameters":{"rank_type":"榜单类型","rank_id":"榜单ID","hour":"时间跨度"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"排行榜","maintainers":["DIYgod"],"description":"-   榜单类型\n\n  | 好价品类榜 | 好价电商榜 | 海淘 TOP 榜 | 好文排行榜 | 好物排行榜 |\n  | ---------- | ---------- | ----------- | ---------- | ---------- |\n  | pinlei     | dianshang  | haitao      | haowen     | haowu      |\n\n  -   榜单 ID\n\n  好价品类榜\n\n  | 全部 | 食品生鲜 | 电脑数码 | 运动户外 | 家用电器 | 白菜 | 服饰鞋包 | 日用百货 |\n  | ---- | -------- | -------- | -------- | -------- | ---- | -------- | -------- |\n  | 11   | 12       | 13       | 14       | 15       | 17   | 74       | 75       |\n\n  好价电商榜\n\n  | 券活动 | 京东 | 天猫 | 亚马逊中国 | 国美在线 | 苏宁易购 | 网易 | 西集网 | 美国亚马逊 | 日本亚马逊 | ebay |\n  | ------ | ---- | ---- | ---------- | -------- | -------- | ---- | ------ | ---------- | ---------- | ---- |\n  | 24     | 23   | 25   | 26         | 27       | 28       | 29   | 30     | 31         | 32         | 33   |\n\n  海淘 TOP 榜\n\n  | 全部 | 海外直邮 | 美国榜 | 欧洲榜 | 澳新榜 | 亚洲榜 | 晒物榜 |\n  | ---- | -------- | ------ | ------ | ------ | ------ | ------ |\n  | 39   | 34       | 35     | 36     | 37     | 38     | hsw    |\n\n  好文排行榜\n\n  | 原创 | 资讯 |\n  | ---- | ---- |\n  | yc   | zx   |\n\n  好物排行榜\n\n  | 新晋榜 | 消费众测 | 新锐品牌 | 好物榜单 |\n  | ------ | -------- | -------- | -------- |\n  | hwall  | zc       | nb       | hw       |\n\n  -   时间跨度\n\n  | 3 小时 | 12 小时 | 24 小时 |\n  | ------ | ------- | ------- |\n  | 3      | 12      | 24      |","location":"ranking.ts"}} />
+
+-   榜单类型
+
+| 好价品类榜 | 好价电商榜 | 海淘 TOP 榜 | 好文排行榜 | 好物排行榜 |
+| ---------- | ---------- | ----------- | ---------- | ---------- |
+| pinlei     | dianshang  | haitao      | haowen     | haowu      |
+
+-   榜单 ID
+
+好价品类榜
+
+| 全部 | 食品生鲜 | 电脑数码 | 运动户外 | 家用电器 | 白菜 | 服饰鞋包 | 日用百货 |
+| ---- | -------- | -------- | -------- | -------- | ---- | -------- | -------- |
+| 11   | 12       | 13       | 14       | 15       | 17   | 74       | 75       |
+
+好价电商榜
+
+| 券活动 | 京东 | 天猫 | 亚马逊中国 | 国美在线 | 苏宁易购 | 网易 | 西集网 | 美国亚马逊 | 日本亚马逊 | ebay |
+| ------ | ---- | ---- | ---------- | -------- | -------- | ---- | ------ | ---------- | ---------- | ---- |
+| 24     | 23   | 25   | 26         | 27       | 28       | 29   | 30     | 31         | 32         | 33   |
+
+海淘 TOP 榜
+
+| 全部 | 海外直邮 | 美国榜 | 欧洲榜 | 澳新榜 | 亚洲榜 | 晒物榜 |
+| ---- | -------- | ------ | ------ | ------ | ------ | ------ |
+| 39   | 34       | 35     | 36     | 37     | 38     | hsw    |
+
+好文排行榜
+
+| 原创 | 资讯 |
+| ---- | ---- |
+| yc   | zx   |
+
+好物排行榜
+
+| 新晋榜 | 消费众测 | 新锐品牌 | 好物榜单 |
+| ------ | -------- | -------- | -------- |
+| hwall  | zc       | nb       | hw       |
+
+-   时间跨度
+
+| 3 小时 | 12 小时 | 24 小时 |
+| ------ | ------- | ------- |
+| 3      | 12      | 24      |
 
 ### 用户文章 {#shen-me-zhi-de-mai-yong-hu-wen-zhang}
 
-<Route author="xfangbao" example="/smzdm/article/6902738986" path="/smzdm/article/:uid" paramsDesc={['用户id，网址上直接可以看到']} />
+<Route namespace="smzdm" data={{"path":"/article/:uid","categories":["shopping"],"example":"/smzdm/article/6902738986","parameters":{"uid":"用户id，网址上直接可以看到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["zhiyou.smzdm.com/member/:uid/article"]},"name":"用户文章","maintainers":["xfangbao"],"location":"article.ts"}} />
 
 ### 用户爆料 {#shen-me-zhi-de-mai-yong-hu-bao-liao}
 
-<Route author="nczitzk" example="/smzdm/baoliao/7367111021" path="/smzdm/baoliao/:uid" paramsDesc={['用户id，网址上直接可以看到']} />
+<Route namespace="smzdm" data={{"path":"/baoliao/:uid","categories":["shopping"],"example":"/smzdm/baoliao/7367111021","parameters":{"uid":"用户id，网址上直接可以看到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["zhiyou.smzdm.com/member/:uid/baoliao"]},"name":"用户爆料","maintainers":["nczitzk"],"location":"baoliao.ts"}} />
 
 ## 淘宝众筹 {#tao-bao-zhong-chou}
 
 ### 众筹项目 {#tao-bao-zhong-chou-zhong-chou-xiang-mu}
 
-<Route author="xyqfer Fatpandac" example="/taobao/zhongchou/all" path="/taobao/zhongchou/:type?" paramsDesc={['类型, 默认为 `all` 全部']}>
-  | 全部 | 科技 | 食品        | 动漫 | 设计   | 公益 | 娱乐 | 影音  | 书籍 | 游戏 | 其他  |
-  | ---- | ---- | ----------- | ---- | ------ | ---- | ---- | ----- | ---- | ---- | ----- |
-  | all  | tech | agriculture | acg  | design | love | tele | music | book | game | other |
-</Route>
+<Route namespace="taobao" data={{"path":"/zhongchou/:type?","categories":["shopping"],"example":"/taobao/zhongchou/all","parameters":{"type":"类型, 默认为 `all` 全部"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"众筹项目","maintainers":["xyqfer","Fatpandac"],"description":"| 全部 | 科技 | 食品        | 动漫 | 设计   | 公益 | 娱乐 | 影音  | 书籍 | 游戏 | 其他  |\n  | ---- | ---- | ----------- | ---- | ------ | ---- | ---- | ----- | ---- | ---- | ----- |\n  | all  | tech | agriculture | acg  | design | love | tele | music | book | game | other |","location":"zhongchou.ts"}} />
+
+| 全部 | 科技 | 食品        | 动漫 | 设计   | 公益 | 娱乐 | 影音  | 书籍 | 游戏 | 其他  |
+| ---- | ---- | ----------- | ---- | ------ | ---- | ---- | ----- | ---- | ---- | ----- |
+| all  | tech | agriculture | acg  | design | love | tele | music | book | game | other |
 
 ## 特斯拉中国 {#te-si-la-zhong-guo}
 
 ### 价格 {#te-si-la-zhong-guo-jia-ge}
 
-<Route author="xiaokyo" example="/tesla/price" path="/tesla/price" radar="1" />
+<Route namespace="tesla" data={{"path":"/price","categories":["shopping"],"example":"/tesla/price","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["tesla.cn/model3/design","tesla.cn/"]},"name":"价格","maintainers":["xiaokyo"],"url":"tesla.cn/model3/design","location":"price/index.ts"}} />
 
 ### 权益中心 {#te-si-la-zhong-guo-quan-yi-zhong-xin}
 
-<Route author="simonsmh nczitzk" example="/tesla/cx/生活方式/北京" path="/tesla/cx/:category?/:city?" paramsDesc={['分类，见下表，默认为空，即全部', '城市，默认为空，即全国']} radar="1">
-  | 充电免停 | 酒店 | 美食 | 生活方式 |
-  | -------- | ---- | ---- | -------- |
+<Route namespace="tesla" data={{"path":"/cx/:category?/:city?","categories":["shopping"],"example":"/tesla/cx/生活方式/北京","parameters":{"category":"分类，见下表，默认为空，即全部","city":"城市，默认为空，即全国"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"权益中心","maintainers":["simonsmh","nczitzk"],"description":"| 充电免停 | 酒店 | 美食 | 生活方式 |\n  | -------- | ---- | ---- | -------- |\n\n  :::tip\n  分类为 **充电免停** 时，城市参数不起作用\n  :::\n\n  <details>\n    <summary>可选城市</summary>\n\n    | 成都 | 深圳 | 洛阳 | 北京 | 南京 | 绍兴 |\n    | ---- | ---- | ---- | ---- | ---- | ---- |\n\n    | 西安 | 上海 | 阿坝藏族羌族自治州 | 重庆 | 郑州 | 天津 |\n    | ---- | ---- | ------------------ | ---- | ---- | ---- |\n\n    | 晋中 | 三亚 | 湖州 | 苏州 | 扬州 | 秦皇岛 |\n    | ---- | ---- | ---- | ---- | ---- | ------ |\n\n    | 长沙 | 武汉 | 安阳 | 温州 | 瑞安 | 石家庄 |\n    | ---- | ---- | ---- | ---- | ---- | ------ |\n\n    | 佛山 | 广州 | 杭州 | 烟台 | 沧州 | 张家港 |\n    | ---- | ---- | ---- | ---- | ---- | ------ |\n\n    | 金华 | 临沧 | 大理 | 南昌 | 贵阳 | 信阳 |\n    | ---- | ---- | ---- | ---- | ---- | ---- |\n\n    | 张家口 | 铜仁 | 沈阳 | 合肥 | 黔东 | 高邮 |\n    | ------ | ---- | ---- | ---- | ---- | ---- |\n\n    | 三河 | 安顺 | 莆田 | 阳江 | 南宁 | 台州 |\n    | ---- | ---- | ---- | ---- | ---- | ---- |\n\n    | 余姚 | 淄博 | 三明 | 中山 | 宁波 | 厦门 |\n    | ---- | ---- | ---- | ---- | ---- | ---- |\n\n    | 永康 | 慈溪 | 台山 | 福州 | 无锡 | 宜昌 |\n    | ---- | ---- | ---- | ---- | ---- | ---- |\n\n    | 泉州 | 肇庆 | 太仓 | 珠海 | 邢台 | 衡水 |\n    | ---- | ---- | ---- | ---- | ---- | ---- |\n\n    | 温岭 | 宜兴 | 东莞 | 威海 | 南通 | 舟山 |\n    | ---- | ---- | ---- | ---- | ---- | ---- |\n\n    | 都匀 | 长治 | 江阴 | 云浮 | 常州 | 唐山 |\n    | ---- | ---- | ---- | ---- | ---- | ---- |\n\n    | 平湖 | 商丘 | 保定 | 泰州 | 青岛 | 龙口 |\n    | ---- | ---- | ---- | ---- | ---- | ---- |\n\n    | 泰安 | 岳阳 | 惠州 | 徐州 | 哈尔滨 | 潍坊 |\n    | ---- | ---- | ---- | ---- | ------ | ---- |\n\n    | 大同 | 嘉兴 | 毕节 | 临汾 | 江门 | 诸暨 |\n    | ---- | ---- | ---- | ---- | ---- | ---- |\n\n    | 儋州 | 衢州 | 大连 | 昆山 | 靖江 | 常熟 |\n    | ---- | ---- | ---- | ---- | ---- | ---- |\n\n    | 罗定 | 丽江 | 晋江 | 乐清 | 茂名 | 福清 |\n    | ---- | ---- | ---- | ---- | ---- | ---- |\n\n    | 廊坊 | 兰溪 | 汕尾 | 滨州 | 昆明 | 玉环 |\n    | ---- | ---- | ---- | ---- | ---- | ---- |\n\n    | 绵阳 | 漳州 | 德州 | 聊城 | 龙岩 | 临沂 |\n    | ---- | ---- | ---- | ---- | ---- | ---- |\n\n    | 新沂 | 桐乡 | 迪庆藏族自治州 | 汕头 | 潮州 | 驻马店 |\n    | ---- | ---- | -------------- | ---- | ---- | ------ |\n\n    | 曲阜 | 郴州 | 济源 | 兴义 |\n    | ---- | ---- | ---- | ---- |\n  </details>","location":"cx.ts"}} />
 
-  :::tip
-  分类为 **充电免停** 时，城市参数不起作用
-  :::
+| 充电免停 | 酒店 | 美食 | 生活方式 |
+| -------- | ---- | ---- | -------- |
 
-  <details>
-    <summary>可选城市</summary>
+:::tip
+分类为 **充电免停** 时，城市参数不起作用
+:::
 
-    | 成都 | 深圳 | 洛阳 | 北京 | 南京 | 绍兴 |
-    | ---- | ---- | ---- | ---- | ---- | ---- |
+<details>
+  <summary>可选城市</summary>
 
-    | 西安 | 上海 | 阿坝藏族羌族自治州 | 重庆 | 郑州 | 天津 |
-    | ---- | ---- | ------------------ | ---- | ---- | ---- |
+  | 成都 | 深圳 | 洛阳 | 北京 | 南京 | 绍兴 |
+  | ---- | ---- | ---- | ---- | ---- | ---- |
 
-    | 晋中 | 三亚 | 湖州 | 苏州 | 扬州 | 秦皇岛 |
-    | ---- | ---- | ---- | ---- | ---- | ------ |
+  | 西安 | 上海 | 阿坝藏族羌族自治州 | 重庆 | 郑州 | 天津 |
+  | ---- | ---- | ------------------ | ---- | ---- | ---- |
 
-    | 长沙 | 武汉 | 安阳 | 温州 | 瑞安 | 石家庄 |
-    | ---- | ---- | ---- | ---- | ---- | ------ |
+  | 晋中 | 三亚 | 湖州 | 苏州 | 扬州 | 秦皇岛 |
+  | ---- | ---- | ---- | ---- | ---- | ------ |
 
-    | 佛山 | 广州 | 杭州 | 烟台 | 沧州 | 张家港 |
-    | ---- | ---- | ---- | ---- | ---- | ------ |
+  | 长沙 | 武汉 | 安阳 | 温州 | 瑞安 | 石家庄 |
+  | ---- | ---- | ---- | ---- | ---- | ------ |
 
-    | 金华 | 临沧 | 大理 | 南昌 | 贵阳 | 信阳 |
-    | ---- | ---- | ---- | ---- | ---- | ---- |
+  | 佛山 | 广州 | 杭州 | 烟台 | 沧州 | 张家港 |
+  | ---- | ---- | ---- | ---- | ---- | ------ |
 
-    | 张家口 | 铜仁 | 沈阳 | 合肥 | 黔东 | 高邮 |
-    | ------ | ---- | ---- | ---- | ---- | ---- |
+  | 金华 | 临沧 | 大理 | 南昌 | 贵阳 | 信阳 |
+  | ---- | ---- | ---- | ---- | ---- | ---- |
 
-    | 三河 | 安顺 | 莆田 | 阳江 | 南宁 | 台州 |
-    | ---- | ---- | ---- | ---- | ---- | ---- |
+  | 张家口 | 铜仁 | 沈阳 | 合肥 | 黔东 | 高邮 |
+  | ------ | ---- | ---- | ---- | ---- | ---- |
 
-    | 余姚 | 淄博 | 三明 | 中山 | 宁波 | 厦门 |
-    | ---- | ---- | ---- | ---- | ---- | ---- |
+  | 三河 | 安顺 | 莆田 | 阳江 | 南宁 | 台州 |
+  | ---- | ---- | ---- | ---- | ---- | ---- |
 
-    | 永康 | 慈溪 | 台山 | 福州 | 无锡 | 宜昌 |
-    | ---- | ---- | ---- | ---- | ---- | ---- |
+  | 余姚 | 淄博 | 三明 | 中山 | 宁波 | 厦门 |
+  | ---- | ---- | ---- | ---- | ---- | ---- |
 
-    | 泉州 | 肇庆 | 太仓 | 珠海 | 邢台 | 衡水 |
-    | ---- | ---- | ---- | ---- | ---- | ---- |
+  | 永康 | 慈溪 | 台山 | 福州 | 无锡 | 宜昌 |
+  | ---- | ---- | ---- | ---- | ---- | ---- |
 
-    | 温岭 | 宜兴 | 东莞 | 威海 | 南通 | 舟山 |
-    | ---- | ---- | ---- | ---- | ---- | ---- |
+  | 泉州 | 肇庆 | 太仓 | 珠海 | 邢台 | 衡水 |
+  | ---- | ---- | ---- | ---- | ---- | ---- |
 
-    | 都匀 | 长治 | 江阴 | 云浮 | 常州 | 唐山 |
-    | ---- | ---- | ---- | ---- | ---- | ---- |
+  | 温岭 | 宜兴 | 东莞 | 威海 | 南通 | 舟山 |
+  | ---- | ---- | ---- | ---- | ---- | ---- |
 
-    | 平湖 | 商丘 | 保定 | 泰州 | 青岛 | 龙口 |
-    | ---- | ---- | ---- | ---- | ---- | ---- |
+  | 都匀 | 长治 | 江阴 | 云浮 | 常州 | 唐山 |
+  | ---- | ---- | ---- | ---- | ---- | ---- |
 
-    | 泰安 | 岳阳 | 惠州 | 徐州 | 哈尔滨 | 潍坊 |
-    | ---- | ---- | ---- | ---- | ------ | ---- |
+  | 平湖 | 商丘 | 保定 | 泰州 | 青岛 | 龙口 |
+  | ---- | ---- | ---- | ---- | ---- | ---- |
 
-    | 大同 | 嘉兴 | 毕节 | 临汾 | 江门 | 诸暨 |
-    | ---- | ---- | ---- | ---- | ---- | ---- |
+  | 泰安 | 岳阳 | 惠州 | 徐州 | 哈尔滨 | 潍坊 |
+  | ---- | ---- | ---- | ---- | ------ | ---- |
 
-    | 儋州 | 衢州 | 大连 | 昆山 | 靖江 | 常熟 |
-    | ---- | ---- | ---- | ---- | ---- | ---- |
+  | 大同 | 嘉兴 | 毕节 | 临汾 | 江门 | 诸暨 |
+  | ---- | ---- | ---- | ---- | ---- | ---- |
 
-    | 罗定 | 丽江 | 晋江 | 乐清 | 茂名 | 福清 |
-    | ---- | ---- | ---- | ---- | ---- | ---- |
+  | 儋州 | 衢州 | 大连 | 昆山 | 靖江 | 常熟 |
+  | ---- | ---- | ---- | ---- | ---- | ---- |
 
-    | 廊坊 | 兰溪 | 汕尾 | 滨州 | 昆明 | 玉环 |
-    | ---- | ---- | ---- | ---- | ---- | ---- |
+  | 罗定 | 丽江 | 晋江 | 乐清 | 茂名 | 福清 |
+  | ---- | ---- | ---- | ---- | ---- | ---- |
 
-    | 绵阳 | 漳州 | 德州 | 聊城 | 龙岩 | 临沂 |
-    | ---- | ---- | ---- | ---- | ---- | ---- |
+  | 廊坊 | 兰溪 | 汕尾 | 滨州 | 昆明 | 玉环 |
+  | ---- | ---- | ---- | ---- | ---- | ---- |
 
-    | 新沂 | 桐乡 | 迪庆藏族自治州 | 汕头 | 潮州 | 驻马店 |
-    | ---- | ---- | -------------- | ---- | ---- | ------ |
+  | 绵阳 | 漳州 | 德州 | 聊城 | 龙岩 | 临沂 |
+  | ---- | ---- | ---- | ---- | ---- | ---- |
 
-    | 曲阜 | 郴州 | 济源 | 兴义 |
-    | ---- | ---- | ---- | ---- |
-  </details>
-</Route>
+  | 新沂 | 桐乡 | 迪庆藏族自治州 | 汕头 | 潮州 | 驻马店 |
+  | ---- | ---- | -------------- | ---- | ---- | ------ |
 
-## 玩物志 {#wan-wu-zhi}
-
-### 最新 {#wan-wu-zhi-zui-xin}
-
-<Route author="xyqfer" example="/coolbuy/newest" path="/coolbuy/newest" />
-
-## 微店 {#wei-dian}
-
-### 商品上新 {#wei-dian-shang-pin-shang-xin}
-
-<Route author="LogicJake" example="/weidian/goods/431508863" path="/weidian/goods/:id" paramsDesc={['商铺 id']} />
+  | 曲阜 | 郴州 | 济源 | 兴义 |
+  | ---- | ---- | ---- | ---- |
+</details>
 
 ## 消费者报道 {#xiao-fei-zhe-bao-dao}
 
 ### 要闻 {#xiao-fei-zhe-bao-dao-yao-wen}
 
-<Route author="EsuRt Fatpandac" example="/ccreports/article" path="/ccreports/article" />
-
-## 小米 {#xiao-mi}
-
-### 小米众筹 {#xiao-mi-xiao-mi-zhong-chou}
-
-<Route author="DIYgod" example="/mi/crowdfunding" path="/mi/crowdfunding" />
+<Route namespace="ccreports" data={{"path":"/article","categories":["shopping"],"example":"/ccreports/article","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.ccreports.com.cn/"]},"name":"要闻","maintainers":["EsuRt","Fatpandac"],"url":"www.ccreports.com.cn/","location":"index.ts"}} />
 
 ## 小米有品 {#xiao-mi-you-pin}
 
 ### 小米有品众筹 {#xiao-mi-you-pin-xiao-mi-you-pin-zhong-chou}
 
-<Route author="bigfei" example="/xiaomiyoupin/crowdfunding" path="/xiaomiyoupin/crowdfunding" />
+<Route namespace="xiaomiyoupin" data={{"path":"/crowdfunding","categories":["shopping"],"example":"/xiaomiyoupin/crowdfunding","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["xiaomiyoupin.com/"]},"name":"小米有品众筹","maintainers":["bigfei"],"url":"xiaomiyoupin.com/","location":"crowdfunding.ts"}} />
 
 ### 小米有品每日上新 {#xiao-mi-you-pin-xiao-mi-you-pin-mei-ri-shang-xin}
 
-<Route author="xyqfer DIYgod bigfei" example="/xiaomiyoupin/latest" path="/xiaomiyoupin/latest" />
+<Route namespace="xiaomiyoupin" data={{"path":"/latest","categories":["shopping"],"example":"/xiaomiyoupin/latest","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["xiaomiyoupin.com/"]},"name":"小米有品每日上新","maintainers":["xyqfer","DIYgod","bigfei"],"url":"xiaomiyoupin.com/","location":"latest.ts"}} />
 
 ## 秀动网 {#xiu-dong-wang}
 
+### 厂牌 - 演出更新 {#xiu-dong-wang-chang-pai-yan-chu-geng-xin}
+
+<Route namespace="showstart" data={{"path":"/brand/:id","categories":["shopping"],"example":"/showstart/brand/34707","parameters":{"id":"厂牌 ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.showstart.com/host/:id"]},"name":"厂牌 - 演出更新","maintainers":["lchtao26"],"description":":::tip\n厂牌 ID 查询: `/showstart/search/brand/:keyword`，如: [https://rsshub.app/showstart/search/brand/ 声场](https://rsshub.app/showstart/search/brand/声场)\n:::","location":"brand.ts"}} />
+
+:::tip
+厂牌 ID 查询: `/showstart/search/brand/:keyword`，如: [https://rsshub.app/showstart/search/brand/ 声场](https://rsshub.app/showstart/search/brand/声场)
+:::
+
 ### 演出更新 {#xiu-dong-wang-yan-chu-geng-xin}
 
-<Route author="lchtao26" example="/showstart/event/571/3" path="/showstart/event/:cityCode/:showStyle?" paramsDesc={['演出城市 (编号)', '演出风格 (编号)']} />
+<Route namespace="showstart" data={{"path":"/event/:cityCode/:showStyle?","categories":["shopping"],"example":"/showstart/event/571/3","parameters":{"cityCode":"演出城市 (编号)","showStyle":"演出风格 (编号)"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"演出更新","maintainers":["lchtao26"],"description":":::tip\n-   演出城市 `cityCode` 查询: `/showstart/search/city/:keyword`, 如: [https://rsshub.app/showstart/search/city/ 杭州](https://rsshub.app/showstart/search/city/杭州)\n\n-   演出风格 `showStyle` 查询: `/showstart/search/style/:keyword`，如: [https://rsshub.app/showstart/search/style/ 摇滚](https://rsshub.app/showstart/search/style/摇滚)\n:::","location":"event.ts"}} />
 
 :::tip
 -   演出城市 `cityCode` 查询: `/showstart/search/city/:keyword`, 如: [https://rsshub.app/showstart/search/city/ 杭州](https://rsshub.app/showstart/search/city/杭州)
@@ -552,103 +470,18 @@ For instance, in `https://www.zagg.com/en_us/new-arrivals?brand=164&cat=3038%2C3
 
 ### 演出搜索 {#xiu-dong-wang-yan-chu-sou-suo}
 
-<Route author="lchtao26" example="/showstart/search/live" path="/showstart/search/:type/:keyword?" paramsDesc={['类别', '搜索关键词']} />
+<Route namespace="showstart" data={{"path":"/search/:type/:keyword?","categories":["shopping"],"example":"/showstart/search/live","parameters":{"type":"类别","keyword":"搜索关键词"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"演出搜索","maintainers":["lchtao26"],"location":"search.ts"}} />
 
 ### 音乐人 - 演出更新 {#xiu-dong-wang-yin-yue-ren-yan-chu-geng-xin}
 
-<Route author="lchtao26" example="/showstart/artist/301783" path="/showstart/artist/:id" paramsDesc={['音乐人 ID']} />
+<Route namespace="showstart" data={{"path":"/artist/:id","categories":["shopping"],"example":"/showstart/artist/301783","parameters":{"id":"音乐人 ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.showstart.com/artist/:id"]},"name":"音乐人 - 演出更新","maintainers":["lchtao26"],"description":":::tip\n音乐人 ID 查询: `/showstart/search/artist/:keyword`，如: [https://rsshub.app/showstart/search/artist/ 周杰伦](https://rsshub.app/showstart/search/artist/周杰伦)\n:::","location":"artist.ts"}} />
 
 :::tip
 音乐人 ID 查询: `/showstart/search/artist/:keyword`，如: [https://rsshub.app/showstart/search/artist/ 周杰伦](https://rsshub.app/showstart/search/artist/周杰伦)
 :::
 
-### 厂牌 - 演出更新 {#xiu-dong-wang-chang-pai-yan-chu-geng-xin}
-
-<Route author="lchtao26" example="/showstart/brand/34707" path="/showstart/brand/:id" paramsDesc={['厂牌 ID']} />
-
-:::tip
-厂牌 ID 查询: `/showstart/search/brand/:keyword`，如: [https://rsshub.app/showstart/search/brand/ 声场](https://rsshub.app/showstart/search/brand/声场)
-:::
-
-## 有赞 {#you-zan}
-
-### 商品上新 {#you-zan-shang-pin-shang-xin}
-
-<Route author="LogicJake" example="/youzan/goods/13328377" path="/youzan/goods/:id" paramsDesc={['商铺id']} />
-
-## 正版中国 {#zheng-ban-zhong-guo}
-
-### 分类 {#zheng-ban-zhong-guo-fen-lei}
-
-<Route author="sanmmm nczitzk" example="/getitfree/category/pc" path="/getitfree/category/:id" paramsDesc={['分类，见下表，可在对应分类页中找到，默认为所有类别']} radar="1">
-  :::tip
-  可以叠加使用得到分类结果并集，如 [`/getitfree/category/pc,android`](https://rsshub.app/getitfree/category/pc,android)
-  :::
-
-  | 所有类别 | Android | iOS | Mac | PC | UWP | 公告         | 永久免费 | 限时免费 | 正版折扣 |
-  | -------- | ------- | --- | --- | -- | --- | ------------ | -------- | -------- | -------- |
-  |          | android | ios | mac | pc | uwp | notification | free     | giveaway | discount |
-</Route>
-
-### 标签 {#zheng-ban-zhong-guo-biao-qian}
-
-<Route author="nczitzk" example="/getitfree/tag/ai" path="/getitfree/tag/:id" paramsDesc={['标签，见下表，可在对应标签页中找到，默认为所有标签']} radar="1">
-  :::tip
-  可以叠加使用得到标签结果并集，如 [`/getitfree/tag/ai,office`](https://rsshub.app/getitfree/tag/ai,office)
-  :::
-
-  | AI | Android | DVD | GIF | iCloud |
-  | -- | ------- | --- | --- | ------ |
-
-  | ICON | iOS | iPhone | Leawo | Mac |
-  | ---- | --- | ------ | ----- | --- |
-
-  | Markdown | OCR | Office | Office 办公 | PDF |
-  | -------- | --- | ------ | ----------- | --- |
-
-  | PDF 转换 | Windows | 下载 | 书签管理 | 健康 |
-  | -------- | ------- | ---- | -------- | ---- |
-
-  | 全平台 | 办公软件 | 加密保护 | 卸载 / 清理 / 优化 | 卸载清理 |
-  | ------ | -------- | -------- | ------------------ | -------- |
-
-  | 图像处理 | 图片 / 编辑 / 管理 | 壁纸 | 备份 / 恢复 / 加密 | 备份恢复 |
-  | -------- | ------------------ | ---- | ------------------ | -------- |
-
-  | 字体 | 学习 | 密码管理 | 导航 | 开始菜单 |
-  | ---- | ---- | -------- | ---- | -------- |
-
-  | 录屏截图 | 影音 / 刻录 / 转换 | 投屏镜像 | 提醒 | 摄影 |
-  | -------- | ------------------ | -------- | ---- | ---- |
-
-  | 播放器 | 收藏夹 | 效率工具 | 数据传输 | 数据恢复 |
-  | ------ | ------ | -------- | -------- | -------- |
-
-  | 数据擦除 | 文件管理 | 文档 / 转换 / 压缩 | 文档扫描 | 日历 |
-  | -------- | -------- | ------------------ | -------- | ---- |
-
-  | 杀毒防护 | 查重 | 正版特惠 | 水印 | 清理优化 |
-  | -------- | ---- | -------- | ---- | -------- |
-
-  | 滤镜 | 硬件外设 | 硬盘 / 分区 / 驱动 | 硬盘检测 | 稍后阅读 |
-  | ---- | -------- | ------------------ | -------- | -------- |
-
-  | 笔记 | 系统工具 | 素材 | 网络 / 安全 / 传输 | 网络安全 |
-  | ---- | -------- | ---- | ------------------ | -------- |
-
-  | 色彩 | 视频剪辑 | 视频转换 | 记账 | 设计 |
-  | ---- | -------- | -------- | ---- | ---- |
-
-  | 软件卸载 | 远程控制 | 音乐 | 音频 | 驱动 |
-  | -------- | -------- | ---- | ---- | ---- |
-</Route>
-
-### 搜索 {#zheng-ban-zhong-guo-sou-suo}
-
-<Route author="sanmmm nczitzk" example="/getitfree/search/windows" path="/getitfree/search/:keyword" paramsDesc={['关键字']} radar="1" />
-
 ## 中国养猪网 {#zhong-guo-yang-zhu-wang}
 
-### 每日生猪价格更新 {#zhong-guo-yang-zhu-wang-mei-ri-sheng-zhu-jia-ge-geng-xin}
+### Unknown {#zhong-guo-yang-zhu-wang-unknown}
 
-<Route author="importcjj" example="/zhuwang/zhujia" path="/zhuwang/zhujia" radar="1" />
+<Route namespace="zhuwang" data={{"path":"/zhujia","categories":["shopping"],"example":"/zhuwang/zhujia","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["zhujia.zhuwang.cc/"]},"name":"Unknown","maintainers":[],"url":"zhujia.zhuwang.cc/","location":"index.ts"}} />

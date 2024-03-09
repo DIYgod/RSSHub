@@ -1,7 +1,29 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:store',
+    categories: ['shopping'],
+    example: '/shopback/shopee-mart',
+    parameters: { store: 'Store, can be found in URL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['shopback.com.tw/:category', 'shopback.com.tw/'],
+    },
+    name: 'Store',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const store = ctx.req.param('store');
 
     const rootUrl = 'https://www.shopback.com.tw';
@@ -29,9 +51,9 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: `${$('h1').text()} - ShopBack`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

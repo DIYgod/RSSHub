@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import utils from './utils';
@@ -6,7 +7,30 @@ import { parseDate } from '@/utils/parse-date';
 // 参考：https://github.com/izzyleung/ZhihuDailyPurify/wiki/%E7%9F%A5%E4%B9%8E%E6%97%A5%E6%8A%A5-API-%E5%88%86%E6%9E%90
 // 文章给出了v7版 api的信息，包含全文api
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/daily/section/:sectionId',
+    categories: ['social-media'],
+    example: '/zhihu/daily/section/2',
+    parameters: { sectionId: '合集 id，可在 https://news-at.zhihu.com/api/7/sections 找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['daily.zhihu.com/*'],
+        target: '/daily',
+    },
+    name: '知乎日报 - 合集',
+    maintainers: ['ccbikai'],
+    handler,
+    url: 'daily.zhihu.com/*',
+};
+
+async function handler(ctx) {
     const sectionId = ctx.req.param('sectionId');
     const listRes = await got({
         method: 'get',
@@ -42,11 +66,11 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `${listRes.data.name} - 知乎日报`,
         link: 'https://daily.zhihu.com',
         description: '每天3次，每次7分钟',
         image: 'http://static.daily.zhihu.com/img/new_home_v3/mobile_top_logo.png',
         item: resultItem,
-    });
-};
+    };
+}

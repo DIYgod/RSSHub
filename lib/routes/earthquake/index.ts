@@ -1,8 +1,33 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:region?',
+    categories: ['forecast'],
+    example: '/earthquake',
+    parameters: { region: '区域，0全部，1国内（默认），2国外' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.cea.gov.cn/cea/xwzx/zqsd/index.html', 'www.cea.gov.cn/'],
+        target: '',
+    },
+    name: '中国地震局',
+    maintainers: ['LogicJake'],
+    handler,
+    url: 'www.cea.gov.cn/cea/xwzx/zqsd/index.html',
+    description: `可通过全局过滤参数订阅您感兴趣的地区.`,
+};
+
+async function handler(ctx) {
     const region = ctx.req.param('region') ?? 1;
     const api = 'https://www.cea.gov.cn/eportal/ui?struts.portlet.mode=view&struts.portlet.action=/portlet/expressEarthquake!queryExpressEarthquakeList.action&pageId=363409&moduleId=a852ba487b534470a84a30f00e7d6670';
     const link = 'https://www.cea.gov.cn/cea/xwzx/zqsd/index.html';
@@ -32,9 +57,9 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: '中国地震局震情速递',
         link,
         item: out,
-    });
-};
+    };
+}

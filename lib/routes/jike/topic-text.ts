@@ -1,7 +1,29 @@
+import { Route } from '@/types';
 import dayjs from 'dayjs';
 import { constructTopicEntry } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/topic/text/:id',
+    categories: ['social-media'],
+    example: '/jike/topic/text/553870e8e4b0cafb0a1bef68',
+    parameters: { id: '圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['web.okjike.com/topic/:id'],
+    },
+    name: '圈子 - 纯文字',
+    maintainers: ['HenryQW'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const topicUrl = `https://m.okjike.com/topics/${id}`;
 
@@ -20,4 +42,4 @@ export default async (ctx) => {
         });
         ctx.set('data', result);
     }
-};
+}

@@ -1,10 +1,35 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/global/:category?',
+    categories: ['traditional-media'],
+    example: '/udn/global',
+    parameters: { category: '分类，见下表，默认为首頁' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['global.udn.com/global_vision/index/:category', 'global.udn.com/'],
+    },
+    name: '轉角國際 - 首頁',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 首頁 | 最新文章 | 熱門文章 |
+  | ---- | -------- | -------- |
+  |      | new      | hot      |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
 
     const start = category === 'hot' ? 6 : 0;
@@ -56,9 +81,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

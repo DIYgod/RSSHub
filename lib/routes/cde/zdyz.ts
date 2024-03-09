@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -37,7 +38,28 @@ const zdyzMap = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/zdyz/:category',
+    categories: ['government'],
+    example: '/cde/zdyz/domesticGuide',
+    parameters: { category: '类别，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '指导原则专栏',
+    maintainers: ['TonyRL'],
+    handler,
+    description: `|    发布通告   |   征求意见  |
+  | :-----------: | :---------: |
+  | domesticGuide | opinionList |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
 
     const { data } = await got.post(`${baseUrl}${zdyzMap.zdyz[category].endPoint}`, {
@@ -70,9 +92,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${zdyzMap.zdyz[category].title} - 国家药品监督管理局药品审评中心`,
         link: zdyzMap.zdyz[category].url,
         item: items,
-    });
-};
+    };
+}

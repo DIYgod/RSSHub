@@ -1,6 +1,19 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    radar: {
+        source: ['cn.bing.com/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['FHYunCai'],
+    handler,
+    url: 'cn.bing.com/',
+};
+
+async function handler(ctx) {
     const response = await got({
         method: 'get',
         prefixUrl: 'https://cn.bing.com',
@@ -13,7 +26,7 @@ export default async (ctx) => {
         },
     });
     const data = response.data;
-    ctx.set('data', {
+    return {
         title: 'Bing每日壁纸',
         link: 'https://cn.bing.com/',
         item: data.images.map((item) => ({
@@ -21,5 +34,5 @@ export default async (ctx) => {
             description: `<img src="https://cn.bing.com${item.url}">`,
             link: item.copyrightlink,
         })),
-    });
-};
+    };
+}

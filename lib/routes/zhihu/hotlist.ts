@@ -1,8 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/hotlist',
+    categories: ['social-media'],
+    example: '/zhihu/hotlist',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.zhihu.com/hot'],
+    },
+    name: '知乎热榜',
+    maintainers: ['DIYgod'],
+    handler,
+    url: 'www.zhihu.com/hot',
+};
+
+async function handler() {
     const {
         data: { data },
     } = await got({
@@ -10,7 +33,7 @@ export default async (ctx) => {
         url: 'https://www.zhihu.com/api/v3/explore/guest/feeds?limit=40',
     });
 
-    ctx.set('data', {
+    return {
         title: '知乎热榜',
         link: 'https://www.zhihu.com/billboard',
         description: '知乎热榜',
@@ -43,5 +66,5 @@ export default async (ctx) => {
                     };
             }
         }),
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,33 @@ import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 import { baseUrl, categoryMap } from './data';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['new-media'],
+    example: '/hkepc/news',
+    parameters: { category: '分类，见下表，默认为最新消息' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['hkepc.com/'],
+        target: '',
+    },
+    name: 'HKEPC 电脑领域',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'hkepc.com/',
+    description: `| 专题报导   | 新闻中心 | 新品快递 | 超频领域 | 流动数码 | 生活娱乐      | 会员消息 | 脑场新闻 | 业界资讯 | 最新消息 |
+  | ---------- | -------- | -------- | -------- | -------- | ------------- | -------- | -------- | -------- | -------- |
+  | coverStory | news     | review   | ocLab    | digital  | entertainment | member   | price    | press    | latest   |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
 
     const { data: response } = await got(categoryMap[category].url, {
@@ -88,11 +115,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `電腦領域 HKEPC${categoryMap[category].feedSuffix}`,
         link: `https://www.hkepc.com/${category}`,
         description: '電腦領域 HKEPC Hardware - 全港 No.1 PC網站',
         language: 'zh-hk',
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -12,7 +13,33 @@ const map = {
     announcement: '/?n=UestcNews.Front.CategoryV2.Page&CatId=68',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:type?',
+    categories: ['university'],
+    example: '/uestc/news/culture',
+    parameters: { type: '默认为 `announcement`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['news.uestc.edu.cn/'],
+        target: '/news',
+    },
+    name: '新闻中心',
+    maintainers: ['achjqz', 'mobyw'],
+    handler,
+    url: 'news.uestc.edu.cn/',
+    description: `| 学术    | 文化    | 公告         | 校内通知     |
+  | ------- | ------- | ------------ | ------------ |
+  | academy | culture | announcement | notification |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') || 'announcement';
     const pageUrl = map[type];
     if (!pageUrl) {
@@ -42,10 +69,10 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: '新闻网通知',
         link: baseUrl,
         description: '电子科技大学新闻网信息公告',
         item: out,
-    });
-};
+    };
+}

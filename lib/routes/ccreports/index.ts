@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,29 @@ import timezone from '@/utils/timezone';
 
 const rootUrl = 'https://www.ccreports.com.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/article',
+    categories: ['shopping'],
+    example: '/ccreports/article',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.ccreports.com.cn/'],
+    },
+    name: '要闻',
+    maintainers: ['EsuRt', 'Fatpandac'],
+    handler,
+    url: 'www.ccreports.com.cn/',
+};
+
+async function handler() {
     const listData = await got.get(rootUrl);
     const $ = load(listData.data);
     const list = $('div.index-four-content > div.article-box')
@@ -34,9 +57,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '消费者报道',
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -30,7 +31,28 @@ function getNews(data) {
         }));
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/tj/news/:type?',
+    categories: ['university'],
+    example: '/ustb/tj/news/all',
+    parameters: { type: '默认为 `all`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '天津学院',
+    maintainers: ['henbf'],
+    handler,
+    description: `| 全部 | 学院新闻 | 学术活动 | 城市建设学院 | 信息工程学院 | 经济学院 | 管理学院 | 材料系 | 机械工程系 | 护理系 | 法律系 | 外语系 | 艺术系 |
+  | ---- | -------- | -------- | ------------ | ------------ | -------- | -------- | ------ | ---------- | ------ | ------ | ------ | ------ |
+  | all  | xyxw     | xshhd    | csjsxy       | xxgcxy       | jjx      | glxy     | clx    | jxgcx      | hlx    | flx    | wyx    | ysx    |`,
+};
+
+async function handler(ctx) {
     let type = ctx.req.param('type') || 'all';
     if (!Object.keys(maps).includes(type)) {
         type = 'all';
@@ -58,4 +80,4 @@ export default async (ctx) => {
     }
 
     ctx.set('data', responseData);
-};
+}

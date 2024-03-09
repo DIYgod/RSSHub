@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,7 +11,30 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { isValidHost } from '@/utils/valid-host';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/devlog/:user/:id',
+    categories: ['game'],
+    example: '/itch/devlog/teamterrible/the-baby-in-yellow',
+    parameters: { user: 'User id, can be found in URL', id: 'Item id, can be found in URL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Developer Logs',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `\`User id\` is the field before \`.itch.io\` in the URL of the corresponding page, e.g. the URL of [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is \`https://teamterrible.itch.io/the-baby-in-yellow/devlog\`, where the field before \`.itch.io\` is \`teamterrible\`.
+
+  \`Item id\` is the field between \`itch.io\` and \`/devlog\` in the URL of the corresponding page, e.g. the URL for [The Baby In Yellow Devlog](https://teamterrible.itch.io/the-baby-in-yellow/devlog) is \`https://teamterrible.itch.io/the-baby-in-yellow/devlog\`, where the field between \`itch.io\` and \`/devlog\` is \`the-baby-in-yellow\`.
+
+  So the route is [\`/itch/devlogs/teamterrible/the-baby-in-yellow\`](https://rsshub.app/itch/devlogs/teamterrible/the-baby-in-yellow).`,
+};
+
+async function handler(ctx) {
     const user = ctx.req.param('user') ?? '';
     const id = ctx.req.param('id') ?? '';
     if (!isValidHost(user)) {
@@ -62,9 +86,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

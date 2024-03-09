@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/xuzhou/hrss/:category?',
+    categories: ['government'],
+    example: '/gov/xuzhou/hrss',
+    parameters: { category: '分类，见下表，默认为通知公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '徐州市人力资源和社会保障局',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 通知公告 | 要闻动态 | 县区动态 | 事业招聘 | 企业招聘 | 政声传递 |
+  | -------- | -------- | -------- | -------- | -------- | -------- |
+  |          | 001001   | 001002   | 001004   | 001005   | 001006   |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '';
 
     const rootUrl = 'http://hrss.xz.gov.cn';
@@ -47,9 +69,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `徐州市人力资源和社会保障局 - ${category ? $('.wb-tree-items.current').text() : '通知公告'}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

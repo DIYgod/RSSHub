@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -12,7 +13,28 @@ const map = new Map([
     [4, { title: '浙大就业服务平台 -- 告示通告', id: 'lmjdid=739BEBB72A252B25E0538713470A6C41&sjlmid=undefined&lmtype=2&lx=2' }],
 ]);
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/career/:type',
+    categories: ['university'],
+    example: '/zju/career/1',
+    parameters: { type: '分类，见下表' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '就业服务平台',
+    maintainers: ['Caicailiushui'],
+    handler,
+    description: `| 新闻动态 | 活动通知 | 学院通知 | 告示通知 |
+  | -------- | -------- | -------- | -------- |
+  | 1        | 2        | 3        | 4        |`,
+};
+
+async function handler(ctx) {
     const type = Number.parseInt(ctx.req.param('type'));
     const id = map.get(type).id;
     const res = await got(`${host}${id}`);
@@ -35,9 +57,9 @@ export default async (ctx) => {
             })
             .get();
 
-    ctx.set('data', {
+    return {
         title: map.get(type).title,
         link: `${host}${id}`,
         item: items,
-    });
-};
+    };
+}

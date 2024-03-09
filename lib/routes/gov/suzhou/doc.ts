@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/suzhou/doc',
+    categories: ['government'],
+    example: '/gov/suzhou/doc',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.suzhou.gov.cn/szxxgk/front/xxgk_right.jsp', 'www.suzhou.gov.cn/'],
+    },
+    name: '政府信息公开文件',
+    maintainers: ['EsuRt'],
+    handler,
+    url: 'www.suzhou.gov.cn/szxxgk/front/xxgk_right.jsp',
+};
+
+async function handler() {
     const link = 'https://www.suzhou.gov.cn/szxxgk/front/xxgk_right.jsp';
 
     const { data: response } = await got(link);
@@ -39,9 +62,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '苏州市政府 - 政策公开文件',
         link,
         item: items,
-    });
-};
+    };
+}

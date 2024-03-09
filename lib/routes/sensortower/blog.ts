@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,33 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/blog/:language?',
+    categories: ['new-media'],
+    example: '/sensortower/blog',
+    parameters: { language: 'Language, see below, English by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['sensortower.com/blog', 'sensortower.com/zh-CN/blog', 'sensortower.com/ja/blog', 'sensortower.com/ko/blog', 'sensortower.com/'],
+        target: '/blog',
+    },
+    name: 'Blog',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'sensortower.com/blog',
+    description: `| English | Chinese | Japanese | Korean |
+  | ------- | ------- | -------- | ------ |
+  |         | zh-CN   | ja       | ko     |`,
+};
+
+async function handler(ctx) {
     const language = ctx.req.param('language') ?? '';
 
     const rootUrl = 'https://sensortower.com';
@@ -64,10 +91,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'Sensor Tower - Blog',
         link: currentUrl,
         item: items,
         language: language || 'en-US',
-    });
-};
+    };
+}

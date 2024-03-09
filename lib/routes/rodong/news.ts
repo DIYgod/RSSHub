@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,33 @@ import { parseDate } from '@/utils/parse-date';
 
 const host = 'http://www.rodong.rep.kp';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:language?',
+    categories: ['traditional-media'],
+    example: '/rodong/news',
+    parameters: { language: 'Language, see below, `ko` by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['rodong.rep.kp/cn/index.php', 'rodong.rep.kp/en/index.php', 'rodong.rep.kp/ko/index.php', 'rodong.rep.kp/cn', 'rodong.rep.kp/en', 'rodong.rep.kp/ko'],
+        target: '/news',
+    },
+    name: 'News',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'rodong.rep.kp/cn/index.php',
+    description: `| 조선어 | English | 中文 |
+  | ------ | ------- | ---- |
+  | ko     | en      | cn   |`,
+};
+
+async function handler(ctx) {
     const { language = 'ko' } = ctx.req.param();
     const link = `${host}/${language}/index.php?MkBAMkAxQA==`;
     const { data: response } = await got(link);
@@ -37,10 +64,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         description: $('head meta[name="description"]').attr('content'),
         link,
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -28,7 +29,28 @@ const categories = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['new-media'],
+    example: '/caus',
+    parameters: { category: '分类，见下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '分类',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 全部 | 要闻 | 商业 | 快讯 | 财富 | 生活 |
+  | ---- | ---- | ---- | ---- | ---- | ---- |
+  | 0    | 1    | 2    | 3    | 8    | 6    |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') || '0';
 
     const isHome = category === '0';
@@ -81,9 +103,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${categories[category].title} - 加美财经`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

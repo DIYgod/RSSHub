@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,31 @@ import timezone from '@/utils/timezone';
 
 const host = 'https://www.soundofhope.org';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:channel/:id',
+    categories: ['traditional-media'],
+    example: '/soundofhope/term/203',
+    parameters: { channel: '频道', id: '子频道 ID' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['soundofhope.org/:channel/:id'],
+    },
+    name: '频道',
+    maintainers: ['Fatpandac'],
+    handler,
+    description: `参数均可在官网获取，如：
+
+  \`https://www.soundofhope.org/term/203\` 对应 \`/soundofhope/term/203\``,
+};
+
+async function handler(ctx) {
     const channel = ctx.req.param('channel');
     const id = ctx.req.param('id');
     const url = `${host}/${channel}/${id}`;
@@ -35,9 +60,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `希望之声 - ${title}`,
         link: url,
         item: items,
-    });
-};
+    };
+}

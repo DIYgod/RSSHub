@@ -1,9 +1,22 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    radar: {
+        source: ['getdr.com/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'getdr.com/',
+};
+
+async function handler() {
     const rootUrl = 'https://getdr.com/最新詐騙情報';
     const apiUrl = 'https://public-api.wordpress.com/rest/v1.1/sites/demogetdr.wordpress.com/posts';
 
@@ -40,9 +53,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '最新詐騙情報 - 趨勢科技防詐達人',
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

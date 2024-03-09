@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
@@ -7,7 +8,14 @@ import { config } from '@/config';
 const baseUrl = 'https://www.nmpa.gov.cn';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/nmpa/*',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const path = ctx.params[0];
     const url = `${baseUrl}/${path.endsWith('/') ? path.slice(0, -1) : path}/index.html`;
     const data = await cache.tryGet(
@@ -53,10 +61,10 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: data.title,
         description: data.description,
         link: url,
         item: items,
-    });
-};
+    };
+}

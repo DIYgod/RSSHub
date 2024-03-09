@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import auth from './auth';
 import utils from '../utils';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/xhu/question/:questionId/:sortBy?',
+    categories: ['social-media'],
+    example: '/zhihu/xhu/question/264051433',
+    parameters: { questionId: '问题 id', sortBy: '排序方式：`default`, `created`, `updated`。默认为 `default`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.zhihu.com/question/:questionId'],
+        target: '/xhu/question/:questionId',
+    },
+    name: 'xhu - 问题',
+    maintainers: ['JimenezLi'],
+    handler,
+};
+
+async function handler(ctx) {
     const xhuCookie = await auth.getCookie(ctx);
     const {
         questionId,
@@ -22,7 +45,7 @@ export default async (ctx) => {
     });
     const listRes = response.data.data;
 
-    ctx.set('data', {
+    return {
         title: `知乎-${listRes[0].question.title}`,
         link,
         item: listRes.map((item) => {
@@ -40,5 +63,5 @@ export default async (ctx) => {
                 link,
             };
         }),
-    });
-};
+    };
+}

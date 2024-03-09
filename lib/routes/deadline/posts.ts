@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,19 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    radar: {
+        source: ['deadline.com/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'deadline.com/',
+};
+
+async function handler(ctx) {
     const baseUrl = 'https://deadline.com';
     const response = await got(`${baseUrl}/wp-json/wp/v2/posts`, {
         searchParams: {
@@ -45,12 +58,12 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: 'Deadline – Hollywood Entertainment Breaking News',
         description: 'Deadline.com is always the first to break up-to-the-minute entertainment, Hollywood and media news, with an unfiltered, no-holds-barred analysis of events.',
         link: baseUrl,
         language: 'en-US',
         image: `${baseUrl}/wp-content/themes/pmc-deadline-2019/assets/app/icons/apple-touch-icon.png`,
         item: items,
-    });
-};
+    };
+}

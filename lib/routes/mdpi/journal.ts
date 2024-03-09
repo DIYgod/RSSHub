@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,28 @@ import { art } from '@/utils/render';
 import { CookieJar } from 'tough-cookie';
 const cookieJar = new CookieJar();
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:journal',
+    categories: ['journal'],
+    example: '/mdpi/analytica',
+    parameters: { journal: 'Journal Name, get it from the journal homepage' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.mdpi.com/journal/:journal'],
+    },
+    name: 'Journal',
+    maintainers: ['Derekmini'],
+    handler,
+};
+
+async function handler(ctx) {
     const journal = ctx.req.param('journal');
     const host = 'https://www.mdpi.com';
     const jrnlUrl = `${host}/journal/${journal}`;
@@ -60,9 +82,9 @@ export default async (ctx) => {
         return item;
     });
 
-    ctx.set('data', {
+    return {
         title: jrnlName,
         link: jrnlUrl,
         item: items,
-    });
-};
+    };
+}

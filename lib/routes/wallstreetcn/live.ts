@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -16,7 +17,32 @@ const titles = {
     financing: '理财',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/live/:category?/:score?',
+    categories: ['traditional-media'],
+    example: '/wallstreetcn/live',
+    parameters: { category: '快讯分类，默认`global`，见下表', score: '快讯重要度，默认`1`全部快讯，可设置为`2`只看重要的' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['wallstreetcn.com/live/:category', 'wallstreetcn.com/'],
+        target: '/live/:category?',
+    },
+    name: '实时快讯',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 要闻   | A 股    | 美股     | 港股     | 外汇  | 商品      | 理财      |
+  | ------ | ------- | -------- | -------- | ----- | --------- | --------- |
+  | global | a-stock | us-stock | hk-stock | forex | commodity | financing |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'global';
     const score = ctx.req.param('score') ?? 1;
 
@@ -44,9 +70,9 @@ export default async (ctx) => {
             }),
         }));
 
-    ctx.set('data', {
+    return {
         title: `华尔街见闻 - 实时快讯 - ${titles[category]}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

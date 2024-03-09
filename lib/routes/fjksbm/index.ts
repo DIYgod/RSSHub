@@ -1,10 +1,35 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['study'],
+    example: '/fjksbm',
+    parameters: { category: '分类，见下表，默认为网络报名进行中' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['fjksbm.com/portal/:category?', 'fjksbm.com/portal'],
+    },
+    name: '分类',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 已发布公告 (方案)，即将开始 | 网络报名进行中 | 网络报名结束等待打印准考证 | 正在打印准考证 | 考试结束，等待发布成绩 | 已发布成绩 | 新闻动态 | 政策法规 |
+  | --------------------------- | -------------- | -------------------------- | -------------- | ---------------------- | ---------- | -------- | -------- |
+  | 0                           | 1              | 2                          | 3              | 4                      | 5          | news     | policy   |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? '0';
 
     const id = Number.parseInt(category);
@@ -44,11 +69,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${$('.panel-heading')
             .eq(isNumber ? id : 1)
             .text()} - 福建考试报名网`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

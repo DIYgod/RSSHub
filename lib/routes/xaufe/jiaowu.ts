@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -16,7 +17,28 @@ const categories = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jiaowu/:category?',
+    categories: ['university'],
+    example: '/xaufe/jiaowu/tzgg',
+    parameters: { category: '分类，默认为通知公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '教务处',
+    maintainers: ['shaokeyibb'],
+    handler,
+    description: `| 通知公告 |
+  | :------: |
+  |   tzgg   |`,
+};
+
+async function handler(ctx) {
     const pCategory = ctx.req.param('category');
     const category = categories[pCategory] || categories.tzgg;
 
@@ -44,7 +66,7 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: `${category.title}-${rootMeta.title}`,
         link: rootMeta.url + category.url,
         description: `${category.title}-${rootMeta.title}`,
@@ -66,5 +88,5 @@ export default async (ctx) => {
                 })
             )
         ),
-    });
-};
+    };
+}

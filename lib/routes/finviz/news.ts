@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
@@ -8,7 +9,32 @@ const categories = {
     blogs: 1,
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['finance'],
+    example: '/finviz',
+    parameters: { category: 'Category, see below, News by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['finviz.com/news.ashx', 'finviz.com/'],
+    },
+    name: 'News',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'finviz.com/news.ashx',
+    description: `| News | Blog |
+  | ---- | ---- |
+  | news | blog |`,
+};
+
+async function handler(ctx) {
     const { category = 'News' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 200;
 
@@ -55,7 +81,7 @@ export default async (ctx) => {
 
     const icon = $('link[rel="icon"]').prop('href');
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `finviz - ${category}`,
         link: currentUrl,
@@ -65,5 +91,5 @@ export default async (ctx) => {
         icon,
         logo: icon,
         subtitle: $('title').text(),
-    });
-};
+    };
+}

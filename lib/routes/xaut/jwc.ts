@@ -1,9 +1,35 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jwc/:category?',
+    categories: ['university'],
+    example: '/xaut/jwc/tzgg',
+    parameters: { category: '通知类别，默认为通知公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '教务处',
+    maintainers: ['mocusez'],
+    handler,
+    description: `:::warning
+  有些内容需使用校园网或 VPN 访问知行网获取
+  :::
+
+  | 通知公告 | 新闻动态 | 规章制度 | 竞赛结果公示 | 竞赛获奖通知 | 竞赛信息 | 公开公示 |
+  | :------: | :------: | :------: | :----------: | :----------: | :------: | :------: |
+  |   tzgg   |   xwdt   |   gzzd   |     jggs     |     jsjg     |   jsxx   |   gkgs   |`,
+};
+
+async function handler(ctx) {
     let category = ctx.req.param('category');
     const rootUrl = 'http://jwc.xaut.edu.cn/';
     const dic_html = { tzgg: 'tzgg.htm', xwdt: 'xwdt.htm', gzzd: 'gzzd.htm', jggs: 'xkjs/jggs.htm', jsjg: 'xkjs/jsjg.htm', jsxx: 'xkjs/jsxx.htm', gkgs: 'gkgs.htm' };
@@ -37,7 +63,7 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         // 源标题
         title: '西安理工大学教务处-' + dic_title[category],
         // 源链接
@@ -62,5 +88,5 @@ export default async (ctx) => {
                 })
             )
         ),
-    });
-};
+    };
+}

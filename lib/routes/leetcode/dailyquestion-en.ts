@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,18 @@ import * as path from 'node:path';
 
 const host = 'https://leetcode.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/dailyquestion/en',
+    radar: {
+        source: ['leetcode.com/'],
+    },
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    url: 'leetcode.com/',
+};
+
+async function handler() {
     const question = {
         date: '',
         link: '',
@@ -104,7 +116,7 @@ export default async (ctx) => {
         link: question.link,
     };
 
-    ctx.set('data', {
+    return {
         title: 'LeetCode Daily Question',
         link: 'https://leetcode.com',
         description: 'Leetcode Daily Question',
@@ -115,5 +127,5 @@ export default async (ctx) => {
                 link: rssData.link,
             },
         ],
-    });
-};
+    };
+}

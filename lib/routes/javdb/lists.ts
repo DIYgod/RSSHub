@@ -1,6 +1,19 @@
+import { Route } from '@/types';
 import utils from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/lists/:id/:filter?/:sort?',
+    radar: {
+        source: ['javdb.com/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['dddepg'],
+    handler,
+    url: 'javdb.com/',
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const filter = ctx.req.param('filter') ?? '';
     const sort = ctx.req.param('sort') ?? '0';
@@ -25,4 +38,4 @@ export default async (ctx) => {
     const title = `JavDB${filters[filter] === '' ? '' : ` - ${filters[filter]}`} ${sortOptions[sort]}`;
 
     ctx.set('data', await utils.ProcessItems(ctx, currentUrl, title));
-};
+}

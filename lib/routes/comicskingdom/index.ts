@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,28 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:name',
+    categories: ['anime'],
+    example: '/comicskingdom/pardon-my-planet',
+    parameters: { name: 'URL path of the strip on comicskingdom.com' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['comicskingdom.com/:name/*', 'comicskingdom.com/:name'],
+    },
+    name: 'Archive',
+    maintainers: ['stjohnjohnson'],
+    handler,
+};
+
+async function handler(ctx) {
     const baseURL = 'https://comicskingdom.com';
     const name = ctx.req.param('name');
     const url = `${baseURL}/${name}/archive`;
@@ -54,11 +76,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: comic,
         link: url,
         image: $('.feature-logo').attr('src'),
         item: items,
         language: 'en-US',
-    });
-};
+    };
+}

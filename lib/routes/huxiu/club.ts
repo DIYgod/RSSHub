@@ -1,9 +1,17 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
 import { apiBriefRootUrl, processItems, fetchClubData } from './util';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/club/:id',
+    name: 'Unknown',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 20;
 
@@ -24,8 +32,8 @@ export default async (ctx) => {
 
     const items = await processItems(response.data.datalist, limit, cache.tryGet);
 
-    ctx.set('data', {
+    return {
         item: items,
         ...data,
-    });
-};
+    };
+}

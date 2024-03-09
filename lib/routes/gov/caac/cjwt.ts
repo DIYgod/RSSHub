@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,32 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/caac/cjwt/:category?',
+    categories: ['government'],
+    example: '/gov/caac/cjwt',
+    parameters: { category: '分类，见下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['caac.gov.cn/HDJL/'],
+        target: '/caac/cjwt',
+    },
+    name: '公众留言',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'caac.gov.cn/HDJL/',
+    description: `| 机票 | 托运 | 无人机 | 体检 | 行政审批 | 投诉 |
+  | ---- | ---- | ------ | ---- | -------- | ---- |`,
+};
+
+async function handler(ctx) {
     const { category = '' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -43,7 +69,7 @@ export default async (ctx) => {
     const icon = new URL('images/weixinLogo.jpg', rootUrl).href;
     const subtitle = '公众留言';
 
-    ctx.set('data', {
+    return {
         item: items,
         title: [author, subtitle, category].filter(Boolean).join(' - '),
         link: currentUrl,
@@ -55,5 +81,5 @@ export default async (ctx) => {
         subtitle,
         author,
         allowEmpty: true,
-    });
-};
+    };
+}

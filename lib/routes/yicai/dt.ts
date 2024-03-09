@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -14,7 +15,66 @@ const columns = {
     visualization: 4,
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/dt/:column?/:category?',
+    categories: ['traditional-media'],
+    example: '/yicai/dt/article',
+    parameters: { column: '栏目，见下表，默认为文章', category: '分类，见下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'DT 财经',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `#### [文章](https://dt.yicai.com/article)
+
+  | 分类     | ID         |
+  | -------- | ---------- |
+  | 全部     | article/0  |
+  | 新流行   | article/31 |
+  | 新趋势   | article/32 |
+  | 商业黑马 | article/33 |
+  | 新品     | article/34 |
+  | 营销     | article/35 |
+  | 大公司   | article/36 |
+  | 城市生活 | article/38 |
+
+  #### [报告](https://dt.yicai.com/report)
+
+  | 分类       | ID        |
+  | ---------- | --------- |
+  | 全部       | report/0  |
+  | 人群观念   | report/9  |
+  | 人群行为   | report/22 |
+  | 美妆个护   | report/23 |
+  | 3C 数码    | report/24 |
+  | 营销趋势   | report/25 |
+  | 服饰鞋包   | report/27 |
+  | 互联网     | report/28 |
+  | 城市与居住 | report/29 |
+  | 消费趋势   | report/30 |
+  | 生活趋势   | report/37 |
+
+  #### [可视化](https://dt.yicai.com/visualization)
+
+  | 分类     | ID               |
+  | -------- | ---------------- |
+  | 全部     | visualization/0  |
+  | 新流行   | visualization/39 |
+  | 新趋势   | visualization/40 |
+  | 商业黑马 | visualization/41 |
+  | 新品     | visualization/42 |
+  | 营销     | visualization/43 |
+  | 大公司   | visualization/44 |
+  | 城市生活 | visualization/45 |`,
+};
+
+async function handler(ctx) {
     const { column = 'article', category = '0' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -98,7 +158,7 @@ export default async (ctx) => {
     const image = $('div.logo a img').prop('src');
     const icon = new URL($('link[rel="shortcut icon"]').prop('href'), rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${$(`a[data-cid="${category}"]`).text()}${title}`,
         link: currentUrl,
@@ -110,5 +170,5 @@ export default async (ctx) => {
         subtitle: $('meta[name="description"]').prop('content'),
         author: title.split(/_/).pop(),
         allowEmpty: true,
-    });
-};
+    };
+}

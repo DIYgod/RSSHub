@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
@@ -42,7 +43,35 @@ const categories = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/sr/:location?/:category?',
+    categories: ['game'],
+    example: '/mihoyo/sr',
+    parameters: { location: '区域，可选 `zh-cn`（国服，简中）或 `zh-tw`（国际服，繁中）', category: '分类，见下表，默认为最新' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['sr.mihoyo.com/news'],
+        target: '/sr',
+    },
+    name: '崩坏：星穹铁道',
+    maintainers: ['shinanory'],
+    handler,
+    url: 'sr.mihoyo.com/news',
+    description: `#### 新闻 {#mi-ha-you-beng-huai-xing-qiong-tie-dao-xin-wen}
+
+  | 最新     | 新闻 | 公告   | 活动     |
+  | -------- | ---- | ------ | -------- |
+  | news-all | news | notice | activity |`,
+};
+
+async function handler(ctx) {
     // location 地区 category 类型
     const { location = 'zh-cn', category = 'news-all' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
@@ -61,9 +90,9 @@ export default async (ctx) => {
         category: item.sCategoryName,
     }));
 
-    ctx.set('data', {
+    return {
         title: `${categories[location][category].title}-崩坏：星穹铁道`,
         link: url,
         item: items,
-    });
-};
+    };
+}

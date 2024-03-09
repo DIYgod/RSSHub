@@ -1,9 +1,17 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/international/:subpath{.+}',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const subpath = ctx.req.param('subpath');
     const base = 'http://international.xjtu.edu.cn';
 
@@ -43,10 +51,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `西安交通大学国际处 - ${name}`,
         link: url,
         description: `西安交通大学国际处 - ${name}`,
         item,
-    });
-};
+    };
+}

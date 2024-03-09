@@ -1,530 +1,295 @@
-# 🎨️ ACG
-
-## 005.tv {#005-tv}
-
-### 二次元资讯 {#005-tv-er-ci-yuan-zi-xun}
-
-<Route author="junfengP" example="/005tv/zx/latest" path="/005tv/zx/latest" />
-
-## 78 动漫 {#78-dong-man}
-
-### 新品速递 {#78-dong-man-xin-pin-su-di}
-
-<Route author="nczitzk" example="/78dm/news" path="/78dm/news/:path+" paramsDesc={['参数，见说明，默认为空']}>
-  :::tip
-  若订阅 [新品速递](https://www.78dm.net/news)，网址为 `https://www.78dm.net/news`。截取 `https://www.78dm.net` 到末尾的部分 `/news` 作为参数，此时路由为 [`/78dm/news`](https://rsshub.app/78dm/news)。
-
-  若订阅子分类 [新品速递 - 综合](https://www.78dm.net/news/0/9/0/0/0/0/0/1.html)，网址为 `https://www.78dm.net/news/0/9/0/0/0/0/0/1.html`。截取 `https://www.78dm.net` 到末尾 `.html` 的部分 `/news/0/9/0/0/0/0/0/1` 作为参数，路由为 [`/78dm/news/0/9/0/0/0/0/0/1`](https://rsshub.app/78dm/news/0/9/0/0/0/0/0/1)。
-  :::
-</Route>
-
-### 精彩评测 {#78-dong-man-jing-cai-ping-ce}
-
-<Route author="nczitzk" example="/78dm/eval_list" path="/78dm/eval_list/:path+" paramsDesc={['参数，见说明，默认为空']}>
-  :::tip
-  若订阅 [精彩评测](https://www.78dm.net/eval_list)，网址为 `https://www.78dm.net/eval_list`。截取 `https://www.78dm.net` 到末尾的部分 `/eval_list` 作为参数，此时路由为 [`/78dm/eval_list`](https://rsshub.app/78dm/eval_list)。
-
-  若订阅子分类 [精彩评测 - 综合](https://www.78dm.net/eval_list/120/0/0/1.html)，网址为 `https://www.78dm.net/eval_list/120/0/0/1.html`。截取 `https://www.78dm.net` 到末尾 `.html` 的部分 `/eval_list/120/0/0/1` 作为参数，路由为 [`/78dm/eval_list/120/0/0/1`](https://rsshub.app/78dm/eval_list/120/0/0/1)。
-  :::
-</Route>
-
-### 好帖推荐 {#78-dong-man-hao-tie-tui-jian}
-
-<Route author="nczitzk" example="/78dm/ht_list" path="/78dm/ht_list/:path+" paramsDesc={['参数，见说明，默认为空']}>
-  :::tip
-  若订阅 [好帖推荐](https://www.78dm.net/ht_list)，网址为 `https://www.78dm.net/ht_list`。截取 `https://www.78dm.net` 到末尾的部分 `/ht_list` 作为参数，此时路由为 [`/78dm/ht_list`](https://rsshub.app/78dm/ht_list)。
-
-  若订阅子分类 [好帖推荐 - 综合](https://www.78dm.net/ht_list/107/0/0/1.html)，网址为 `https://www.78dm.net/ht_list/107/0/0/1.html`。截取 `https://www.78dm.net` 到末尾 `.html` 的部分 `/ht_list/107/0/0/1` 作为参数，路由为 [`/78dm/ht_list/107/0/0/1`](https://rsshub.app/78dm/ht_list/107/0/0/1)。
-  :::
-</Route>
+# anime
 
 ## AcFun {#acfun}
 
 ### 番剧 {#acfun-fan-ju}
 
-<Route author="xyqfer" example="/acfun/bangumi/5022158" path="/acfun/bangumi/:id" paramsDesc={['番剧 id']} radar="1" />
+<Route namespace="acfun" data={{"path":"/bangumi/:id","categories":["anime"],"example":"/acfun/bangumi/5022158","parameters":{"id":"番剧 id"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"番剧","maintainers":["xyqfer"],"description":":::tip\n番剧 id 不包含开头的 aa。\n例如：`https://www.acfun.cn/bangumi/aa5022158` 的番剧 id 是 5022158，不包括开头的 aa。\n:::","location":"bangumi.ts"}} />
 
 :::tip
 番剧 id 不包含开头的 aa。
 例如：`https://www.acfun.cn/bangumi/aa5022158` 的番剧 id 是 5022158，不包括开头的 aa。
 :::
 
-### 用户投稿 {#acfun-yong-hu-tou-gao}
-
-<Route author="wdssmq" example="/acfun/user/video/14450522" path="/acfun/user/video/:id" paramsDesc={['用户 UID']} radar="1" />
-
 ### 文章 {#acfun-wen-zhang}
 
-<Route author="TonyRL" example="/acfun/article/110" path="/acfun/article/:categoryId/:sortType?/:timeRange?" paramsDesc={['分区 ID，见下表', '排序，见下表，默认为 `createTime`', '时间范围，见下表，仅在排序是 `hotScore` 有效，默认为 `all`']} radar="1">
-  | 二次元画师 | 综合 | 生活情感 | 游戏 | 动漫文化 | 漫画文学 |
-  | ---------- | ---- | -------- | ---- | -------- | -------- |
-  | 184        | 110  | 73       | 164  | 74       | 75       |
+<Route namespace="acfun" data={{"path":"/article/:categoryId/:sortType?/:timeRange?","categories":["anime"],"example":"/acfun/article/110","parameters":{"categoryId":"分区 ID，见下表","sortType":"排序，见下表，默认为 `createTime`","timeRange":"时间范围，见下表，仅在排序是 `hotScore` 有效，默认为 `all`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"文章","maintainers":["TonyRL"],"description":"| 二次元画师 | 综合 | 生活情感 | 游戏 | 动漫文化 | 漫画文学 |\n  | ---------- | ---- | -------- | ---- | -------- | -------- |\n  | 184        | 110  | 73       | 164  | 74       | 75       |\n\n  | 最新发表   | 最新动态        | 最热文章 |\n  | ---------- | --------------- | -------- |\n  | createTime | lastCommentTime | hotScore |\n\n  | 时间不限 | 24 小时 | 三天     | 一周    | 一个月   |\n  | -------- | ------- | -------- | ------- | -------- |\n  | all      | oneDay  | threeDay | oneWeek | oneMonth |","location":"article.ts"}} />
 
-  | 最新发表   | 最新动态        | 最热文章 |
-  | ---------- | --------------- | -------- |
-  | createTime | lastCommentTime | hotScore |
+| 二次元画师 | 综合 | 生活情感 | 游戏 | 动漫文化 | 漫画文学 |
+| ---------- | ---- | -------- | ---- | -------- | -------- |
+| 184        | 110  | 73       | 164  | 74       | 75       |
 
-  | 时间不限 | 24 小时 | 三天     | 一周    | 一个月   |
-  | -------- | ------- | -------- | ------- | -------- |
-  | all      | oneDay  | threeDay | oneWeek | oneMonth |
-</Route>
+| 最新发表   | 最新动态        | 最热文章 |
+| ---------- | --------------- | -------- |
+| createTime | lastCommentTime | hotScore |
+
+| 时间不限 | 24 小时 | 三天     | 一周    | 一个月   |
+| -------- | ------- | -------- | ------- | -------- |
+| all      | oneDay  | threeDay | oneWeek | oneMonth |
 
 ## ACG17 {#acg17}
 
 ### 全部文章 {#acg17-quan-bu-wen-zhang}
 
-<Route author="SunBK201" example="/acg17/post/all" path="/acg17/post/all" radar="1" />
+<Route namespace="acg17" data={{"path":"/post/all","categories":["anime"],"example":"/acg17/post/all","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["acg17.com/post"]},"name":"全部文章","maintainers":["SunBK201"],"url":"acg17.com/post","location":"post.ts"}} />
 
 ## AGE 动漫 {#age-dong-man}
 
-### 最近更新 {#age-dong-man-zui-jin-geng-xin}
-
-<Route author="nczitzk" example="/agefans/update" path="/agefans/update" />
-
 ### 番剧详情 {#age-dong-man-fan-ju-xiang-qing}
 
-<Route author="s2marine" example="/agefans/detail/20200035" path="/agefans/detail/:id" paramsDesc={['番剧 id，对应详情 URL 中找到']} />
+<Route namespace="agefans" data={{"path":"/detail/:id","categories":["anime"],"example":"/agefans/detail/20200035","parameters":{"id":"番剧 id，对应详情 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["agemys.org/detail/:id"]},"name":"番剧详情","maintainers":["s2marine"],"location":"detail.ts"}} />
 
-## Anime1 {#anime1}
+### 最近更新 {#age-dong-man-zui-jin-geng-xin}
 
-### 動畫 {#anime1-dong-hua}
-
-<Route author="maple3142" example="/anime1/anime/2018年秋季/哥布林殺手" path="/anime1/anime/:time/:name" paramsDesc={['时间', '动画名称']} radar="1">
-  时间和动画名称请自己从网址取得: `https://anime1.me/category/2018年秋季/刀劍神域-alicization`
-</Route>
-
-### 搜尋 {#anime1-sou-xun}
-
-<Route author="maple3142" example="/anime1/search/兔女郎學姊" path="/anime1/search/:keyword" paramsDesc={['关键字']} radar="1" />
-
-## Anitama {#anitama}
-
-### Anitama Channel {#anitama-anitama-channel}
-
-<Route author="ranpox" path="/anitama/:channel?" example="/anitama" paramsDesc={['频道id，从频道的地址栏中查看']} notOperational="1" />
-
-## Bangumi Moe 萌番组 {#bangumi-moe-meng-fan-zu}
-
-### Latest {#bangumi-moe-meng-fan-zu-latest}
-
-<Route author="nczitzk" example="/bangumi/moe" path="/bangumi/moe" />
-
-### Tags {#bangumi-moe-meng-fan-zu-tags}
-
-<Route author="nczitzk" example="/bangumi/moe/chs/1080p" path="/bangumi/moe/:tags?" paramsDesc={['Tags, empty by default, multiple tags separated by `/`']}>
-  For more tags, please go to [Search torrent](https://bangumi.moe/search/index)
-</Route>
-
-## Bangumi 番组计划 {#bangumi-fan-zu-ji-hua}
-
-### 放送列表 {#bangumi-fan-zu-ji-hua-fang-song-lie-biao}
-
-<Route author="magic-akari" example="/bangumi/tv/calendar/today" path="/bangumi/tv/calendar/today" radar="1" />
-
-### 条目的通用路由格式 {#bangumi-fan-zu-ji-hua-tiao-mu-di-tong-yong-lu-you-ge-shi}
-
-<Route author="JimenezLi" example="/bangumi/tv/subject/328609/ep/true" path="/bangumi/tv/subject/:id/:type?/:showOriginalName?" paramsDesc={['条目 id, 在条目页面的地址栏查看', '条目类型，可选值为 `ep`, `comments`, `blogs`, `topics`，默认为 `ep`', '显示番剧标题原名，可选值 0/1/false/true，默认为 false']}>
-  :::warning
-  此通用路由仅用于对路由参数的描述，具体信息请查看下方与条目相关的路由
-  :::
-</Route>
-
-### 条目的章节 {#bangumi-fan-zu-ji-hua-tiao-mu-di-zhang-jie}
-
-<Route author="SettingDust" example="/bangumi/tv/subject/240038" path="/bangumi/tv/subject/:id" paramsDesc={['条目 id, 在条目页面的地址栏查看']} radar="1" />
-
-### 条目的吐槽箱 {#bangumi-fan-zu-ji-hua-tiao-mu-di-tu-cao-xiang}
-
-<Route author="ylc395" example="/bangumi/tv/subject/214265/comments?minLength=100" path="/bangumi/tv/subject/:id/comments" paramsDesc={['条目 id, 在条目页面的地址栏查看. minLength: 以查询字符串（query string）的形式指定. 用于过滤掉内容长度小于指定值的吐槽']} radar="1" />
-
-### 条目的评论 {#bangumi-fan-zu-ji-hua-tiao-mu-di-ping-lun}
-
-<Route author="ylc395" example="/bangumi/tv/subject/214265/blogs" path="/bangumi/tv/subject/:id/blogs" paramsDesc={['条目 id, 在条目页面的地址栏查看']} radar="1" />
-
-### 条目的讨论 {#bangumi-fan-zu-ji-hua-tiao-mu-di-tao-lun}
-
-<Route author="ylc395" example="/bangumi/tv/subject/214265/topics" path="/bangumi/tv/subject/:id/topics" paramsDesc={['条目 id, 在条目页面的地址栏查看']} radar="1" />
-
-### 现实人物的新作品 {#bangumi-fan-zu-ji-hua-xian-shi-ren-wu-de-xin-zuo-pin}
-
-<Route author="ylc395" example="/bangumi/tv/person/32943" path="/bangumi/tv/person/:id" paramsDesc={['人物 id, 在人物页面的地址栏查看']} radar="1" />
-
-### 小组话题的新回复 {#bangumi-fan-zu-ji-hua-xiao-zu-hua-ti-de-xin-hui-fu}
-
-<Route author="ylc395" example="/bangumi/tv/topic/367032" path="/bangumi/tv/topic/:id" paramsDesc={['话题 id, 在话题页面地址栏查看']} radar="1" />
-
-### 小组话题 {#bangumi-fan-zu-ji-hua-xiao-zu-hua-ti}
-
-<Route author="SettingDust" example="/bangumi/tv/group/boring" path="/bangumi/tv/group/:id" paramsDesc={['小组 id, 在小组页面地址栏查看']} radar="1" />
-
-### 用户日志 {#bangumi-fan-zu-ji-hua-yong-hu-ri-zhi}
-
-<Route author="nczitzk" example="/bangumi/tv/user/blog/sai" path="/bangumi/tv/user/blog/:id" paramsDesc={['用户 id, 在用户页面地址栏查看']} radar="1" />
-
-### 用户想看 {#bangumi-fan-zu-ji-hua-yong-hu-xiang-kan}
-
-<Route author="honue" example="/bangumi/tv/user/wish/sai" path="/bangumi/tv/user/wish/:id" paramsDesc={['用户 id, 在用户页面地址栏查看']} radar="1" />
-
-### 成员关注动画榜 {#bangumi-fan-zu-ji-hua-cheng-yuan-guan-zhu-dong-hua-bang}
-
-<Route author="honue" example="/bangumi/tv/followrank" path="/bangumi/tv/followrank" radar="1" />
+<Route namespace="agefans" data={{"path":"/update","categories":["anime"],"example":"/agefans/update","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["agemys.org/update","agemys.org/"]},"name":"最近更新","maintainers":["nczitzk"],"url":"agemys.org/update","location":"update.ts"}} />
 
 ## CCC 創作集 {#ccc-chuang-zuo-ji}
 
 ### 漫畫 {#ccc-chuang-zuo-ji-man-hua}
 
-<Route author="TonyRL" example="/creative-comic/book/117" path="/creative-comic/book/:id/:coverOnly?/:quality?" paramsDesc={['漫畫 ID，可在 URL 中找到', '僅獲取封面，非 `true` 時將獲取**全部**頁面，預設 `true`', '閱讀品質，標準畫質 `1`，高畫質 `2`，預設 `1`']} radar="1" />
+<Route namespace="creative-comic" data={{"path":"/book/:id/:coverOnly?/:quality?","categories":["anime"],"example":"/creative-comic/book/117","parameters":{"id":"漫畫 ID，可在 URL 中找到","coverOnly":"僅獲取封面，非 `true` 時將獲取**全部**頁面，預設 `true`","quality":"閱讀品質，標準畫質 `1`，高畫質 `2`，預設 `1`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["creative-comic.tw/book/:id/*"],"target":"/:id"},"name":"漫畫","maintainers":["TonyRL"],"location":"book.ts"}} />
 
 ## CnGal {#cngal}
 
 ### 每周速报 {#cngal-mei-zhou-su-bao}
 
-<Route author="chengyuhui" example="/cngal/weekly" path="/cngal/weekly" radar="1" />
+<Route namespace="cngal" data={{"path":"/weekly","categories":["anime"],"example":"/cngal/weekly","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.cngal.org/","www.cngal.org/weeklynews"]},"name":"每周速报","maintainers":["chengyuhui"],"url":"www.cngal.org/","location":"weekly.ts"}} />
 
 ### 制作者 / 游戏新闻 {#cngal-zhi-zuo-zhe-you-xi-xin-wen}
 
-<Route author="chengyuhui" example="/cngal/entry/2693" path="/cngal/entry/:id" paramsDesc={['词条ID，游戏或制作者页面URL的最后一串数字']} radar="1" />
+<Route namespace="cngal" data={{"path":"/entry/:id","categories":["anime"],"example":"/cngal/entry/2693","parameters":{"id":"词条ID，游戏或制作者页面URL的最后一串数字"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.cngal.org/entries/index/:id"]},"name":"制作者 / 游戏新闻","maintainers":["chengyuhui"],"location":"entry.ts"}} />
 
 ## Comicat {#comicat}
 
 ### 搜索关键词 {#comicat-sou-suo-guan-jian-ci}
 
-<Route author="Cyang39" example="/comicat/search/喵萌奶茶屋+跃动青春+720P+简日" path="/comicat/search/:keyword" paramsDesc={['关键词，请用`+`号连接']} supportBT="1" />
+<Route namespace="comicat" data={{"path":"/search/:keyword","categories":["anime"],"example":"/comicat/search/喵萌奶茶屋+跃动青春+720P+简日","parameters":{"keyword":"关键词，请用`+`号连接"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":true,"supportPodcast":false,"supportScihub":false},"name":"搜索关键词","maintainers":["Cyang39"],"location":"search.ts"}} />
 
 ## Comics Kingdom {#comics-kingdom}
 
 ### Archive {#comics-kingdom-archive}
 
-<Route author="stjohnjohnson" example="/comicskingdom/pardon-my-planet" path="/comicskingdom/:name" paramsDesc={['URL path of the strip on comicskingdom.com']} />
+<Route namespace="comicskingdom" data={{"path":"/:name","categories":["anime"],"example":"/comicskingdom/pardon-my-planet","parameters":{"name":"URL path of the strip on comicskingdom.com"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["comicskingdom.com/:name/*","comicskingdom.com/:name"]},"name":"Archive","maintainers":["stjohnjohnson"],"location":"index.ts"}} />
 
 ## DLsite {#dlsite}
 
-### General {#dlsite-general}
-
-<Route author="nczitzk" example="/dlsite/home/new" path="/dlsite/:path+" paramsDesc={['Path, `/home/new` by default, as Release Calendar']}>
-  :::tip
-  To subscribe to this route, you can first visit the site and specify filters, and then fill in the field after `https://www.dlsite.com/` in the URL of the corresponding page at the path of the route. Here are 2 examples.
-
-  If you subscribe to [Voice / ASMR works Release date - New to Old](https://www.dlsite.com/home/works/type/=/work_type_category/audio/order/release_d), at the URL of the corresponding page `https://www.dlsite.com/home/works/type/=/work_type_category/audio/order/release_d` and after `https://www.dlsite.com/` is `home/works/type/=/work_ type_category/audio/order/release_d`, which can be seen as the path. In this case the route is [`/dlsite/home/works/type/=/work_type_category/audio/order/release_d`](https://rsshub.app/dlsite/home/works/type/=/work_type_category/audio/order/release_d)
-
-  If you subscribe to [Discounted works Latest Discounts - Newest to Oldest](https://www.dlsite.com/home/works/discount/=/order/cstart_d), at the URL of the corresponding page `https://www.dlsite.com/home/works/discount/=/order/cstart_d` and after `https://www.dlsite.com/` is `home/works/discount/=/order/cstart_d`, which can be seen as the path. In this case the route is [`/dlsite/home/works/discount/=/order/cstart_d`](https://rsshub.app/dlsite/home/works/discount/=/order/cstart_d)
-  :::
-</Route>
-
 ### Current Release {#dlsite-current-release}
 
-<Route author="cssxsh" example="/dlsite/new/home" path="/dlsite/new/:type" paramsDesc={['Type, see table below']}>
-  | Doujin | Comics | PC Games | Doujin (R18) | Adult Comics | H Games | Otome | BL |
-  | ------ | ------ | -------- | ------------ | ------------ | ------- | ----- | -- |
-  | home   | comic  | soft     | maniax       | books        | pro     | girls | bl |
-</Route>
+<Route namespace="dlsite" data={{"path":"/new/:type","categories":["anime"],"example":"/dlsite/new/home","parameters":{"type":"Type, see table below"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Current Release","maintainers":["cssxsh"],"description":"| Doujin | Comics | PC Games | Doujin (R18) | Adult Comics | H Games | Otome | BL |\n  | ------ | ------ | -------- | ------------ | ------------ | ------- | ----- | -- |\n  | home   | comic  | soft     | maniax       | books        | pro     | girls | bl |","location":"new.ts"}} />
 
-### Discounted Works {#dlsite-discounted-works}
-
-<Route author="cssxsh" example="/dlsite/campaign/home" path="/dlsite/campaign/:type/:free?" paramsDesc={['Type, see table above', 'Free only, empty means false, other value means true']} />
+| Doujin | Comics | PC Games | Doujin (R18) | Adult Comics | H Games | Otome | BL |
+| ------ | ------ | -------- | ------------ | ------------ | ------- | ----- | -- |
+| home   | comic  | soft     | maniax       | books        | pro     | girls | bl |
 
 ### Ci-en Creators' Article {#dlsite-ci-en-creators-article}
 
-<Route author="nczitzk" example="/dlsite/ci-en/7400/article" path="/dlsite/ci-en/:id/article" paramsDesc={['Creator id, can be found in URL']} />
+<Route namespace="dlsite" data={{"path":"/ci-en/:id/article","categories":["anime"],"example":"/dlsite/ci-en/7400/article","parameters":{"id":"Creator id, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ci-en.dlsite.com/creator/:id/article/843558","ci-en.dlsite.com/"]},"name":"Ci-en Creators' Article","maintainers":["nczitzk"],"location":"ci-en/article.ts"}} />
 
-## ebb.io {#ebb-io}
+### Discounted Works {#dlsite-discounted-works}
 
-### ebb {#ebb-io-ebb}
-
-<Route author="Tsuki" example="/ebb" path="/ebb" />
+<Route namespace="dlsite" data={{"path":"/campaign/:type/:free?","categories":["anime"],"example":"/dlsite/campaign/home","parameters":{"type":"Type, see table above","free":"Free only, empty means false, other value means true"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Discounted Works","maintainers":["cssxsh"],"location":"campaign.ts"}} />
 
 ## Eventernote {#eventernote}
 
 ### 声优活动及演唱会 {#eventernote-sheng-you-huo-dong-ji-yan-chang-hui}
 
-<Route author="KTachibanaM" path="/eventernote/actors/:name/:id" example="/eventernote/actors/三森すずこ/2634" paramsDesc={['声优姓名', '声优 ID']} radar="1" />
+<Route namespace="eventernote" data={{"path":"/actors/:name/:id","categories":["anime"],"example":"/eventernote/actors/三森すずこ/2634","parameters":{"name":"声优姓名","id":"声优 ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.eventernote.com/actors/:name/:id/events"]},"name":"声优活动及演唱会","maintainers":["KTachibanaM"],"location":"actors.ts"}} />
 
 ## Gogoanimehd {#gogoanimehd}
 
 ### Recent Releases {#gogoanimehd-recent-releases}
 
-<Route author="user4302" example="/gogoanimehd/recent-releases" path="/gogoanimehd/recent-releases" />
-
-## Hanime.tv {#hanime-tv}
-
-### Recently updated {#hanime-tv-recently-updated}
-
-<Route author="EsuRt" example="/hanime/video" path="/hanime/video" />
+<Route namespace="gogoanimehd" data={{"path":"/recent-releases","categories":["anime"],"example":"/gogoanimehd/recent-releases","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["developer.anitaku.to/"]},"name":"Recent Releases","maintainers":["user4302"],"url":"developer.anitaku.to/","location":"recent-releases.ts"}} />
 
 ## Hpoi 手办维基 {#hpoi-shou-ban-wei-ji}
 
-### 情报 {#hpoi-shou-ban-wei-ji-qing-bao}
-
-<Route author="sanmmm" path="/hpoi/info/:type?" example="/hpoi/info/all" paramsDesc={['分类, 见下表, 默认为`all`']}>
-  分类
-
-  | 全部 | 手办  | 模型  |
-  | ---- | ----- | ----- |
-  | all  | hobby | model |
-</Route>
-
-### 所有周边 {#hpoi-shou-ban-wei-ji-suo-you-zhou-bian}
-
-<Route author="DIYgod" path="/hpoi/items/all/:order?" example="/hpoi/items/all" paramsDesc={['排序, 见下表，默认为 add']}>
-  | 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |
-  | ------- | ---- | ------ | -------- | -------- | ------ |
-  | release | add  | hits   | hits7Day | hitsDay  | rating |
-</Route>
-
 ### 角色周边 {#hpoi-shou-ban-wei-ji-jue-se-zhou-bian}
 
-<Route author="DIYgod" path="/hpoi/items/character/:id/:order?" example="/hpoi/items/character/1035374" paramsDesc={['角色 ID', '排序, 见下表，默认为 add']}>
-  | 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |
-  | ------- | ---- | ------ | -------- | -------- | ------ |
-  | release | add  | hits   | hits7Day | hitsDay  | rating |
-</Route>
+<Route namespace="hpoi" data={{"path":"/items/character/:id/:order?","categories":["anime"],"example":"/hpoi/items/character/1035374","parameters":{"id":"角色 ID","order":"排序, 见下表，默认为 add"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"角色周边","maintainers":["DIYgod"],"description":"| 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |\n  | ------- | ---- | ------ | -------- | -------- | ------ |\n  | release | add  | hits   | hits7Day | hitsDay  | rating |","location":"character.ts"}} />
 
-### 作品周边 {#hpoi-shou-ban-wei-ji-zuo-pin-zhou-bian}
+| 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |
+| ------- | ---- | ------ | -------- | -------- | ------ |
+| release | add  | hits   | hits7Day | hitsDay  | rating |
 
-<Route author="DIYgod" path="/hpoi/items/work/:id/:order?" example="/hpoi/items/work/4117491" paramsDesc={['作品 ID', '排序, 见下表，默认为 add']}>
-  | 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |
-  | ------- | ---- | ------ | -------- | -------- | ------ |
-  | release | add  | hits   | hits7Day | hitsDay  | rating |
-</Route>
+### 情报 {#hpoi-shou-ban-wei-ji-qing-bao}
 
-### 用户动态 {#hpoi-shou-ban-wei-ji-yong-hu-dong-tai}
+<Route namespace="hpoi" data={{"path":"/info/:type?","categories":["anime"],"example":"/hpoi/info/all","parameters":{"type":"分类, 见下表, 默认为`all`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"情报","maintainers":["sanmmm DIYgod"],"description":"分类\n\n  | 全部 | 手办  | 模型  |\n  | ---- | ----- | ----- |\n  | all  | hobby | model |","location":"info.ts"}} />
 
-<Route author="DIYgod luyuhuang" path="/hpoi/user/:user_id/:caty" example="/hpoi/user/116297/buy" paramsDesc={['用户ID', '类别, 见下表']}>
-  | 想买 | 预定     | 已入 | 关注 | 有过   |
-  | ---- | -------- | ---- | ---- | ------ |
-  | want | preorder | buy  | care | resell |
-</Route>
+分类
+
+| 全部 | 手办  | 模型  |
+| ---- | ----- | ----- |
+| all  | hobby | model |
 
 ### 热门推荐 {#hpoi-shou-ban-wei-ji-re-men-tui-jian}
 
-<Route author="DIYgod" path="/hpoi/bannerItem" example="/hpoi/bannerItem" />
+<Route namespace="hpoi" data={{"path":"/bannerItem","categories":["anime"],"example":"/hpoi/bannerItem","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.hpoi.net/bannerItem/list"]},"name":"热门推荐","maintainers":["DIYgod"],"url":"www.hpoi.net/bannerItem/list","location":"banner-item.ts"}} />
+
+### 所有周边 {#hpoi-shou-ban-wei-ji-suo-you-zhou-bian}
+
+<Route namespace="hpoi" data={{"path":"/items/all/:order?","categories":["anime"],"example":"/hpoi/items/all","parameters":{"order":"排序, 见下表，默认为 add"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.hpoi.net/hobby/all"],"target":"/items/all"},"name":"所有周边","maintainers":["DIYgod"],"url":"www.hpoi.net/hobby/all","description":"| 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |\n  | ------- | ---- | ------ | -------- | -------- | ------ |\n  | release | add  | hits   | hits7Day | hitsDay  | rating |","location":"all.ts"}} />
+
+| 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |
+| ------- | ---- | ------ | -------- | -------- | ------ |
+| release | add  | hits   | hits7Day | hitsDay  | rating |
+
+### 用户动态 {#hpoi-shou-ban-wei-ji-yong-hu-dong-tai}
+
+<Route namespace="hpoi" data={{"path":"/user/:user_id/:caty","categories":["anime"],"example":"/hpoi/user/116297/buy","parameters":{"user_id":"用户ID","caty":"类别, 见下表"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"用户动态","maintainers":["DIYgod","luyuhuang"],"description":"| 想买 | 预定     | 已入 | 关注 | 有过   |\n  | ---- | -------- | ---- | ---- | ------ |\n  | want | preorder | buy  | care | resell |","location":"user.ts"}} />
+
+| 想买 | 预定     | 已入 | 关注 | 有过   |
+| ---- | -------- | ---- | ---- | ------ |
+| want | preorder | buy  | care | resell |
+
+### 作品周边 {#hpoi-shou-ban-wei-ji-zuo-pin-zhou-bian}
+
+<Route namespace="hpoi" data={{"path":"/items/work/:id/:order?","categories":["anime"],"example":"/hpoi/items/work/4117491","parameters":{"id":"作品 ID","order":"排序, 见下表，默认为 add"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"作品周边","maintainers":["DIYgod"],"description":"| 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |\n  | ------- | ---- | ------ | -------- | -------- | ------ |\n  | release | add  | hits   | hits7Day | hitsDay  | rating |","location":"work.ts"}} />
+
+| 发售    | 入库 | 总热度 | 一周热度 | 一天热度 | 评价   |
+| ------- | ---- | ------ | -------- | -------- | ------ |
+| release | add  | hits   | hits7Day | hitsDay  | rating |
 
 ## IDOLY PRIDE 偶像荣耀 {#idoly-pride-ou-xiang-rong-yao}
 
 ### News {#idoly-pride-ou-xiang-rong-yao-news}
 
-<Route author="Mingxia1" example="/idolypride/news" path="/idolypride/news" radar="1" />
+<Route namespace="idolypride" data={{"path":"/news","categories":["anime"],"example":"/idolypride/news","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["idolypride.jp/news"]},"name":"News","maintainers":["Mingxia1"],"url":"idolypride.jp/news","location":"news.ts"}} />
 
 ## iwara {#iwara}
 
-### User {#iwara-user}
-
-<Route author="Fatpandac" example="/iwara/users/kelpie/video" path="/iwara/users/:username/:type?" paramsDesc={['username, can find in userpage', 'video by default']} radar="1">
-  | type | video | image |
-  | :--: | :---: | :---: |
-  |      | video | image |
-</Route>
-
 ### User Subscriptions {#iwara-user-subscriptions}
 
-<Route author="FeCCC" example="/iwara/subscriptions" path="/iwara/subscriptions" radar="1" configRequired="1">
-  :::warning
-  This route requires username and password, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
-  :::
-</Route>
+<Route namespace="iwara" data={{"path":"/subscriptions","categories":["anime"],"example":"/iwara/subscriptions","parameters":{},"features":{"requireConfig":true,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ecchi.iwara.tv/"]},"name":"User Subscriptions","maintainers":["FeCCC"],"url":"ecchi.iwara.tv/","description":":::warning\n  This route requires username and password, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.\n  :::","location":"subscriptions.ts"}} />
+
+:::warning
+This route requires username and password, therefore it's only available when self-hosting, refer to the [Deploy Guide](/install/#route-specific-configurations) for route-specific configurations.
+:::
 
 ## Kemono {#kemono}
 
 ### Posts {#kemono-posts}
 
-<Route author="nczitzk" example="/kemono" path="/kemono/:source?/:id?" paramsDesc={['Source, see below, Posts by default', 'User id, can be found in URL']}>
-  Sources
+<Route namespace="kemono" data={{"path":"/:source?/:id?","categories":["anime"],"example":"/kemono","parameters":{"source":"Source, see below, Posts by default","id":"User id, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["kemono.su/:source/user/:id","kemono.su/"]},"name":"Posts","maintainers":["nczitzk"],"description":"Sources\n\n  | Posts | Patreon | Pixiv Fanbox | Gumroad | SubscribeStar | DLsite | Discord | Fantia |\n  | ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |\n  | posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |\n\n  :::tip\n  When `posts` is selected as the value of the parameter **source**, the parameter **id** does not take effect.\n  :::","location":"index.ts"}} />
 
-  | Posts | Patreon | Pixiv Fanbox | Gumroad | SubscribeStar | DLsite | Discord | Fantia |
-  | ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |
-  | posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |
+Sources
 
-  :::tip
-  When `posts` is selected as the value of the parameter **source**, the parameter **id** does not take effect.
-  :::
-</Route>
+| Posts | Patreon | Pixiv Fanbox | Gumroad | SubscribeStar | DLsite | Discord | Fantia |
+| ----- | ------- | ------------ | ------- | ------------- | ------ | ------- | ------ |
+| posts | patreon | fanbox       | gumroad | subscribestar | dlsite | discord | fantia |
+
+:::tip
+When `posts` is selected as the value of the parameter **source**, the parameter **id** does not take effect.
+:::
 
 ## lovelive-anime {#lovelive-anime}
 
 ### Love Live! Official Website Latest NEWS {#lovelive-anime-love-live-official-website-latest-news}
 
-<Route author="axojhf" example="/lovelive-anime/news" path="/lovelive-anime/news/:option?" paramsDesc={['Crawl full text when `option` is `detail`.']} radar="1" />
+<Route namespace="lovelive-anime" data={{"path":"/news/:option?","categories":["anime"],"example":"/lovelive-anime/news","parameters":{"option":"Crawl full text when `option` is `detail`."},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.lovelive-anime.jp/","www.lovelive-anime.jp/news"],"target":"/news"},"name":"Love Live! Official Website Latest NEWS","maintainers":["axojhf"],"url":"www.lovelive-anime.jp/","location":"news.ts"}} />
 
 ### Love Live Official Website Categories Topics {#lovelive-anime-love-live-official-website-categories-topics}
 
-<Route author="axojhf" example="/lovelive-anime/topics/otonokizaka" path="/lovelive-anime/topics/:abbr/:category?/:option?" paramsDesc={['The path to the Love Live series of sub-projects on the official website is detailed in the table below', 'The official website lists the Topics category, `category` is `detail` when crawling the full text, other categories see the following table for details', 'Crawl full text when `option` is `detail`.']} radar="1">
-  | Sub-project Name (not full name) | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | 幻日のヨハネ | ラブライブ！スクールアイドルミュージカル |
-  | -------------------------------- | ----------- | -------------------- | ------------------------------------------ | --------------------- | ------------ | ---------------------------------------- |
-  | `abbr`parameter                  | otonokizaka | uranohoshi           | nijigasaki                                 | yuigaoka              | yohane       | musical                                  |
+<Route namespace="lovelive-anime" data={{"path":"/topics/:abbr/:category?/:option?","categories":["anime"],"example":"/lovelive-anime/topics/otonokizaka","parameters":{"abbr":"The path to the Love Live series of sub-projects on the official website is detailed in the table below","category":"The official website lists the Topics category, `category` is `detail` when crawling the full text, other categories see the following table for details","option":"Crawl full text when `option` is `detail`."},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Love Live Official Website Categories Topics","maintainers":["axojhf"],"description":"| Sub-project Name (not full name) | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | 幻日のヨハネ | ラブライブ！スクールアイドルミュージカル |\n  | -------------------------------- | ----------- | -------------------- | ------------------------------------------ | --------------------- | ------------ | ---------------------------------------- |\n  | `abbr`parameter                  | otonokizaka | uranohoshi           | nijigasaki                                 | yuigaoka              | yohane       | musical                                  |\n\n  | Category Name       | 全てのニュース        | 音楽商品 | アニメ映像商品 | キャスト映像商品 | 劇場    | アニメ放送 / 配信 | キャスト配信 / ラジオ | ライブ / イベント | ブック | グッズ | ゲーム | メディア | ご当地情報 | その他 | キャンペーン |\n  | ------------------- | --------------------- | -------- | -------------- | ---------------- | ------- | ----------------- | --------------------- | ----------------- | ------ | ------ | ------ | -------- | ---------- | ------ | ------------ |\n  | `category`parameter | <u>*No parameter*</u> | music    | anime_movie   | cast_movie      | theater | onair             | radio                 | event             | books  | goods  | game   | media    | local      | other  | campaign     |","location":"topics.ts"}} />
 
-  | Category Name       | 全てのニュース        | 音楽商品 | アニメ映像商品 | キャスト映像商品 | 劇場    | アニメ放送 / 配信 | キャスト配信 / ラジオ | ライブ / イベント | ブック | グッズ | ゲーム | メディア | ご当地情報 | その他 | キャンペーン |
-  | ------------------- | --------------------- | -------- | -------------- | ---------------- | ------- | ----------------- | --------------------- | ----------------- | ------ | ------ | ------ | -------- | ---------- | ------ | ------------ |
-  | `category`parameter | <u>*No parameter*</u> | music    | anime\_movie   | cast\_movie      | theater | onair             | radio                 | event             | books  | goods  | game   | media    | local      | other  | campaign     |
-</Route>
+| Sub-project Name (not full name) | Lovelive!   | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | 幻日のヨハネ | ラブライブ！スクールアイドルミュージカル |
+| -------------------------------- | ----------- | -------------------- | ------------------------------------------ | --------------------- | ------------ | ---------------------------------------- |
+| `abbr`parameter                  | otonokizaka | uranohoshi           | nijigasaki                                 | yuigaoka              | yohane       | musical                                  |
 
-### Love Live Official Website Schedule {#lovelive-anime-love-live-official-website-schedule}
-
-<Route author="axojhf" example="/lovelive-anime/schedules" path="/schedules/:serie?/:category?" paramsDesc={['Love Live! Series sub-projects abbreviation, see the following table', 'The official website lists the categories, see the following table for details']} radar="1">
-  :::tip[Please note!]
-  The schedule and other information obtained by this route is subject to the official website announcement!
-  The RSS routing has not been rigorously tested and the information provided cannot be guaranteed accurate!
-  :::
-
-  | Sub-project Name (not full name) | 全シリーズ                   | Lovelive!  | Lovelive! Sunshine!! | Lovelive! Nijigasaki High School Idol Club | Lovelive! Superstar!! | ラブライブ！スクールアイドルミュージカル |
-  | -------------------------------- | ---------------------------- | ---------- | -------------------- | ------------------------------------------ | --------------------- | ---------------------------------------- |
-  | `serie`parameter                 | <u>*No parameter*</u>or`all` | `lovelive` | `sunshine`           | `nijigasaki`                               | `superstar`           | `musical`                                |
-
-  | Category Name       | 全て                         | ライブ | イベント | 生配信    |
-  | ------------------- | ---------------------------- | ------ | -------- | --------- |
-  | `category`parameter | <u>*No parameter*</u>or`all` | `live` | `event`  | `haishin` |
-</Route>
-
-## MangaDex {#mangadex}
-
-### Manga Update {#mangadex-manga-update}
-
-<Route author="vzz64" example="/mangadex/58be6aa6-06cb-4ca5-bd20-f1392ce451fb/en" path="/:id/:lang?" paramsDesc={['manga ID', 'language code']} radar="1" />
+| Category Name       | 全てのニュース        | 音楽商品 | アニメ映像商品 | キャスト映像商品 | 劇場    | アニメ放送 / 配信 | キャスト配信 / ラジオ | ライブ / イベント | ブック | グッズ | ゲーム | メディア | ご当地情報 | その他 | キャンペーン |
+| ------------------- | --------------------- | -------- | -------------- | ---------------- | ------- | ----------------- | --------------------- | ----------------- | ------ | ------ | ------ | -------- | ---------- | ------ | ------------ |
+| `category`parameter | <u>*No parameter*</u> | music    | anime\_movie   | cast\_movie      | theater | onair             | radio                 | event             | books  | goods  | game   | media    | local      | other  | campaign     |
 
 ## Mox.moe {#mox-moe}
 
 ### 首頁 {#mox-moe-shou-ye}
 
-<Route author="nczitzk" example="/mox" path="/mox/:category?" paramsDesc={['分类，可在对应分类页 URL 中找到']} notOperational="1">
-  :::tip
-  在首页将分类参数选择确定后跳转到的分类页面 URL 中，`/l/` 后的字段即为分类参数。
+<Route namespace="mox" data={{"path":"/:category?","categories":["anime"],"example":"/mox","parameters":{"category":"分类，可在对应分类页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["mox.moe/l/:category","mox.moe/"]},"name":"首頁","maintainers":["nczitzk"],"description":":::tip\n  在首页将分类参数选择确定后跳转到的分类页面 URL 中，`/l/` 后的字段即为分类参数。\n\n  如 [科幻 + 日語 + 日本 + 長篇 + 完結 + 最近更新](https://mox.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL) 的 URL 为 [https://mox.moe/l/CAT%2A 科幻，日本，完結，lastupdate,jpn,l,BL](https://mox.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL)，此时 `/l/` 后的字段为 `CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL`。最终获得路由为 [`/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL`](https://rsshub.app/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL)\n  :::","location":"index.ts"}} />
 
-  如 [科幻 + 日語 + 日本 + 長篇 + 完結 + 最近更新](https://mox.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL) 的 URL 为 [https://mox.moe/l/CAT%2A 科幻，日本，完結，lastupdate,jpn,l,BL](https://mox.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL)，此时 `/l/` 后的字段为 `CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL`。最终获得路由为 [`/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL`](https://rsshub.app/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL)
-  :::
-</Route>
+:::tip
+在首页将分类参数选择确定后跳转到的分类页面 URL 中，`/l/` 后的字段即为分类参数。
+
+如 [科幻 + 日語 + 日本 + 長篇 + 完結 + 最近更新](https://mox.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL) 的 URL 为 [https://mox.moe/l/CAT%2A 科幻，日本，完結，lastupdate,jpn,l,BL](https://mox.moe/l/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL)，此时 `/l/` 后的字段为 `CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL`。最终获得路由为 [`/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL`](https://rsshub.app/mox/CAT%2A科幻,日本,完結,lastupdate,jpn,l,BL)
+:::
 
 ## nhentai {#nhentai}
 
-### Filter {#nhentai-filter}
-
-<Route author="MegrezZhu hoilc" example="/nhentai/language/chinese" path="/nhentai/:key/:keyword/:mode?" paramsDesc={['Filter term, can be: `parody`, `character`, `tag`, `artist`, `group`, `language` or `category`','Filter value', 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/install/#configuration-route-specific-configurations), default to `simple`']} anticrawler="1" supportBT="1" radar="1" />
-
 ### Advanced Search {#nhentai-advanced-search}
 
-<Route author="MegrezZhu hoilc" example="/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-&#x22;mosaic+censorship&#x22;" path="/nhentai/search/:keyword/:mode?" paramsDesc={['Keywords for search. You can copy the content after `q=` after searching on the original website, or you can enter it directly. See the [official website](https://nhentai.net/info/) for details', 'mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/install/#configuration-route-specific-configurations), default to `simple`']} anticrawler="1" supportBT="1" radar="1" />
+<Route namespace="nhentai" data={{"path":"/search/:keyword/:mode?","categories":["anime"],"example":"/nhentai/search/language%3Ajapanese+-scat+-yaoi+-guro+-\"mosaic+censorship\"","parameters":{"keyword":"Keywords for search. You can copy the content after `q=` after searching on the original website, or you can enter it directly. See the [official website](https://nhentai.net/info/) for details","mode":"mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/install/#configuration-route-specific-configurations), default to `simple`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":true,"supportPodcast":false,"supportScihub":false},"radar":{"source":["nhentai.net/:key/:keyword"],"target":"/:key/:keyword"},"name":"Advanced Search","maintainers":["MegrezZhu","hoilc"],"location":"search.ts"}} />
+
+### Filter {#nhentai-filter}
+
+<Route namespace="nhentai" data={{"path":"/:key/:keyword/:mode?","categories":["anime"],"example":"/nhentai/language/chinese","parameters":{"key":"Filter term, can be: `parody`, `character`, `tag`, `artist`, `group`, `language` or `category`","keyword":"Filter value","mode":"mode, `simple` to only show cover, `detail` to show all pages, `torrent` to include Magnet URI, need login, refer to [Route-specific Configurations](/install/#configuration-route-specific-configurations), default to `simple`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":true,"supportPodcast":false,"supportScihub":false},"radar":{"source":["nhentai.net/:key/:keyword"],"target":"/:key/:keyword"},"name":"Filter","maintainers":["MegrezZhu","hoilc"],"location":"other.ts"}} />
 
 ## QooApp {#qooapp}
 
+### Game Store - Cards {#qooapp-game-store-cards}
+
+<Route namespace="qoo-app" data={{"path":"/apps/:lang?/card/:id","categories":["anime"],"example":"/qoo-app/apps/en/card/7675","parameters":{"lang":"Language, see the table above, empty means `中文`","id":"Game ID, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Game Store - Cards","maintainers":["TonyRL"],"location":"apps/card.ts"}} />
+
 ### Game Store - Review {#qooapp-game-store-review}
 
-<Route author="TonyRL" example="/qoo-app/apps/en/comment/7675" path="/qoo-app/apps/:lang?/comment/:id" paramsDesc={['Language, see the table below, empty means `中文`', 'Game ID, can be found in URL']} radar="1">
-  | 中文 | English | 한국어 | Español | 日本語 | ไทย | Tiếng Việt |
-  | ---- | ------- | ------ | ------- | ------ | --- | ---------- |
-  |      | en      | ko     | es      | ja     | th  | vi         |
-</Route>
+<Route namespace="qoo-app" data={{"path":"/apps/:lang?/comment/:id","categories":["anime"],"example":"/qoo-app/apps/en/comment/7675","parameters":{"lang":"Language, see the table below, empty means `中文`","id":"Game ID, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Game Store - Review","maintainers":["TonyRL"],"description":"| 中文 | English | 한국어 | Español | 日本語 | ไทย | Tiếng Việt |\n  | ---- | ------- | ------ | ------- | ------ | --- | ---------- |\n  |      | en      | ko     | es      | ja     | th  | vi         |","location":"apps/comment.ts"}} />
 
-### Game Store - Article {#qooapp-game-store-article}
-
-<Route author="TonyRL" example="/qoo-app/apps/en/post/7675" path="/qoo-app/apps/:lang?/post/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Game ID, can be found in URL']} radar="1" />
+| 中文 | English | 한국어 | Español | 日本語 | ไทย | Tiếng Việt |
+| ---- | ------- | ------ | ------- | ------ | --- | ---------- |
+|      | en      | ko     | es      | ja     | th  | vi         |
 
 ### Game Store - Notes {#qooapp-game-store-notes}
 
-<Route author="TonyRL" example="/qoo-app/apps/en/note/7675" path="/qoo-app/apps/:lang?/note/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Game ID, can be found in URL']} radar="1" />
+<Route namespace="qoo-app" data={{"path":"/apps/:lang?/note/:id","categories":["anime"],"example":"/qoo-app/apps/en/note/7675","parameters":{"lang":"Language, see the table above, empty means `中文`","id":"Game ID, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Game Store - Notes","maintainers":["TonyRL"],"location":"apps/note.ts"}} />
 
-### Game Store - Cards {#qooapp-game-store-cards}
+### Game Store - Article {#qooapp-game-store-article}
 
-<Route author="TonyRL" example="/qoo-app/apps/en/card/7675" path="/qoo-app/apps/:lang?/card/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Game ID, can be found in URL']} radar="1" />
+<Route namespace="qoo-app" data={{"path":"/apps/:lang?/post/:id","categories":["anime"],"example":"/qoo-app/apps/en/post/7675","parameters":{"lang":"Language, see the table above, empty means `中文`","id":"Game ID, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Game Store - Article","maintainers":["TonyRL"],"location":"apps/post.ts"}} />
 
 ### News {#qooapp-news}
 
-<Route author="TonyRL" example="/qoo-app/news/en" path="/qoo-app/news/:lang?" paramsDesc={['Language, see the table below, empty means `中文`']} radar="1">
-  | 中文 | English |
-  | ---- | ------- |
-  |      | en      |
-</Route>
+<Route namespace="qoo-app" data={{"path":"/news/:lang?","categories":["anime"],"example":"/qoo-app/news/en","parameters":{"lang":"Language, see the table below, empty means `中文`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"News","maintainers":["TonyRL"],"description":"| 中文 | English |\n  | ---- | ------- |\n  |      | en      |","location":"news.ts"}} />
+
+| 中文 | English |
+| ---- | ------- |
+|      | en      |
 
 ### Note Comments {#qooapp-note-comments}
 
-<Route author="TonyRL" example="/qoo-app/notes/en/note/2329113" path="/qoo-app/notes/:lang?/note/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Note ID, can be found in URL']} radar="1" notOperational="1" />
-
-### Hot Hashtags {#qooapp-hot-hashtags}
-
-<Route author="TonyRL" example="/qoo-app/notes/en/topic/QooAppGacha" path="/qoo-app/notes/:lang?/topic/:id" paramsDesc={['Language, see the table above, empty means `中文`', 'Hashtag name without `#`']} radar="1" notOperational="1" />
-
-### User Game Comments {#qooapp-user-game-comments}
-
-<Route author="TonyRL" example="/qoo-app/user/en/appComment/35399143" path="/qoo-app/user/:lang?/appComment/:uid" paramsDesc={['Language, see the table above, empty means `中文`', 'User ID, can be found in URL']} radar="1" notOperational="1" />
+<Route namespace="qoo-app" data={{"path":"/notes/:lang?/note/:id","categories":["anime"],"example":"/qoo-app/notes/en/note/2329113","parameters":{"lang":"Language, see the table above, empty means `中文`","id":"Note ID, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Note Comments","maintainers":["TonyRL"],"location":"notes/note.ts"}} />
 
 ### User Notes {#qooapp-user-notes}
 
-<Route author="TonyRL" example="/qoo-app/notes/en/user/35399143" path="/qoo-app/notes/:lang?/user/:uid" paramsDesc={['Language, see the table above, empty means `中文`', 'User ID, can be found in URL']} radar="1" notOperational="1" />
+<Route namespace="qoo-app" data={{"path":"/notes/:lang?/user/:uid","categories":["anime"],"example":"/qoo-app/notes/en/user/35399143","parameters":{"lang":"Language, see the table above, empty means `中文`","uid":"User ID, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"User Notes","maintainers":["TonyRL"],"location":"notes/user.ts"}} />
+
+### User Game Comments {#qooapp-user-game-comments}
+
+<Route namespace="qoo-app" data={{"path":"/user/:lang?/appComment/:uid","categories":["anime"],"example":"/qoo-app/user/en/appComment/35399143","parameters":{"lang":"Language, see the table above, empty means `中文`","uid":"User ID, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"User Game Comments","maintainers":["TonyRL"],"location":"user/app-comment.ts"}} />
 
 ## Rawkuma {#rawkuma}
 
 ### Manga {#rawkuma-manga}
 
-<Route author="nczitzk" example="/rawkuma/manga/tensei-shitara-dai-nana-ouji-dattanode-kimamani-majutsu-o-kiwamemasu" path="/rawkuma/manga/:id" paramsDesc={['Manga ID, can be found in URL']} radar="1" />
+<Route namespace="rawkuma" data={{"path":"/manga/:id","categories":["anime"],"example":"/rawkuma/manga/tensei-shitara-dai-nana-ouji-dattanode-kimamani-majutsu-o-kiwamemasu","parameters":{"id":"Manga ID, can be found in URL"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["rawkuma.com/manga/:id","rawkuma.com/"]},"name":"Manga","maintainers":["nczitzk"],"location":"manga.ts"}} />
 
 ## THBWiki {#thbwiki}
 
 ### Calendar {#thbwiki-calendar}
 
-<Route author="aether17" path="/thwiki/calendar/:before?/:after?" example="/thwiki/calendar" paramsDesc={['From how many days ago (default 30)', 'To how many days after (default 30)']} radar="1" />
-
-## Touhougarakuta 东方我乐多丛志 {#touhougarakuta-dong-fang-wo-le-duo-cong-zhi}
-
-### Articles {#touhougarakuta-dong-fang-wo-le-duo-cong-zhi-articles}
-
-<Route author="ttyfly" path="/touhougarakuta/:language/:type" example="/touhougarakuta/ja/news" paramsDesc={['language', 'article type']}>
-  Languages:
-
-  | Chinese | Japanese | Korean |
-  | ------- | -------- | ------ |
-  | cn      | ja       | ko     |
-
-  Article types:
-
-  | Index | Series | Interviews | Novels | Comics | News |
-  | ----- | ------ | ---------- | ------ | ------ | ---- |
-  | index | series | interviews | novels | comics | news |
-
-  | Music review  | Game review  | Book review  | Where are you   |
-  | ------------- | ------------ | ------------ | --------------- |
-  | music\_review | game\_review | book\_review | where\_are\_you |
-
-  **Note:** The index type includes all types of articles. Think twice before using it.
-</Route>
+<Route namespace="thwiki" data={{"path":"/calendar/:before?/:after?","categories":["anime"],"example":"/thwiki/calendar","parameters":{"before":"From how many days ago (default 30)","after":"To how many days after (default 30)"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["thwiki.cc/","thwiki.cc/日程表"],"target":"/calendar"},"name":"Calendar","maintainers":["aether17"],"url":"thwiki.cc/","location":"index.ts"}} />
 
 ## VCB-Studio {#vcb-studio}
 
-### 最新文章 {#vcb-studio-zui-xin-wen-zhang}
-
-<Route author="cxfksword" example="/vcb-s" path="/vcb-s" radar="1" />
-
 ### 分类文章 {#vcb-studio-fen-lei-wen-zhang}
 
-<Route author="cxfksword" example="/vcb-s/category/works" path="/vcb-s/category/:cate" paramsDesc={['分类']} radar="1">
-  | 作品项目 | 科普系列 | 计划与日志 |
-  | -------- | -------- | ---------- |
-  | works    | kb       | planlog    |
-</Route>
+<Route namespace="vcb-s" data={{"path":"/category/:cate","categories":["anime"],"example":"/vcb-s/category/works","parameters":{"cate":"分类"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["vcb-s.com/archives/category/:cate"]},"name":"分类文章","maintainers":["cxfksword"],"url":"vcb-s.com/","description":"| 作品项目 | 科普系列 | 计划与日志 |\n  | -------- | -------- | ---------- |\n  | works    | kb       | planlog    |","location":"category.ts"}} />
 
-## Vol.moe {#vol-moe}
-
-### vol {#vol-moe-vol}
-
-<Route author="CoderTonyChan" example="/vol/finish" path="/vol/:mode?" paramsDesc={['mode type']}>
-  | Comics are serialized | Comics is finshed |
-  | --------------------- | ----------------- |
-  | serial                | finish            |
-</Route>
-
-## Webtoons {#webtoons}
-
-### Comic updates {#webtoons-comic-updates}
-
-<Route author="machsix" path="/webtoons/:lang/:category/:name/:id" example="/webtoons/zh-hant/drama/gongzhuweimian/894" paramsDesc={['Language','Category','Name','ID']} />
-
-For example: `https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_no=894`, `lang=zh-hant`,`category=drama`,`name=gongzhucheyeweimian`,`id=894`.
-
-### Naver {#webtoons-naver}
-
-<Route author="zfanta" example="/webtoons/naver/651673" path="/webtoons/naver/:titleId" paramsDesc={['titleId of naver webtoon']} notOperational="1" />
+| 作品项目 | 科普系列 | 计划与日志 |
+| -------- | -------- | ---------- |
+| works    | kb       | planlog    |
 
 ## X 漫画 {#x-man-hua}
 
 ### 最新动态 {#x-man-hua-zui-xin-dong-tai}
 
-<Route author="Ye11" example="/xmanhua/73xm" path="/xmanhua/:uid" paramsDesc={['漫画 id,在浏览器中可见，例如鬼灭之刃对应的 id 为 `73xm`']} />
+<Route namespace="xmanhua" data={{"path":"/:uid","categories":["anime"],"example":"/xmanhua/73xm","parameters":{"uid":"漫画 id,在浏览器中可见，例如鬼灭之刃对应的 id 为 `73xm`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["xmanhua.com/:uid"]},"name":"最新动态","maintainers":["Ye11"],"location":"index.ts"}} />
 
 ## 俺の 3D エロ動画 (oreno3d) {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d}
 
@@ -532,95 +297,105 @@ For example: `https://www.webtoons.com/zh-hant/drama/gongzhuweimian/list?title_n
 You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receive the video update messages and download them automatically
 :::
 
-### Keyword Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d-keyword-search}
+### Author Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d-author-search}
 
-<Route author="xueli-sherryli" example="/oreno3d/search/bronya/latest/1" path="/oreno3d/search/:keyword/:sort/:pagelimit?" paramsDesc={['Search keyword', 'Sort method, see the table below', 'The maximum number of pages to be crawled, the default is 1']} radar="1">
-  | favorites | hot | latest | popularity |
-  | --------- | --- | ------ | ---------- |
-  | favorites | hot | latest | popularity |
-</Route>
+<Route namespace="oreno3d" data={{"path":["/authors/:authorid/:sort/:pagelimit?","/characters/:characterid/:sort/:pagelimit?","/origins/:originid/:sort/:pagelimit?","/search/:keyword/:sort/:pagelimit?","/tags/:tagid/:sort/:pagelimit?"],"categories":["anime"],"example":"/oreno3d/authors/3189/latest/1","parameters":{"authorid":"Author id, can be found in URL","sort":"Sort method, see the table above","pagelimit":"The maximum number of pages to be crawled, the default is 1"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Author Search","maintainers":["xueli_sherryli"],"description":"| favorites | hot | latest | popularity |\n  | --------- | --- | ------ | ---------- |\n  | favorites | hot | latest | popularity |","location":"main.ts"}} />
 
-### Character Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d-character-search}
-
-<Route author="xueli-sherryli" example="/oreno3d/characters/283/latest/1" path="/oreno3d/characters/:characterid/:sort/:pagelimit?" paramsDesc={['Character id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" />
+| favorites | hot | latest | popularity |
+| --------- | --- | ------ | ---------- |
+| favorites | hot | latest | popularity |
 
 ### Author Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d-author-search}
 
-<Route author="xueli-sherryli" example="/oreno3d/authors/3189/latest/1" path="/oreno3d/authors/:authorid/:sort/:pagelimit?" paramsDesc={['Author id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" />
+<Route namespace="oreno3d" data={{"path":["/authors/:authorid/:sort/:pagelimit?","/characters/:characterid/:sort/:pagelimit?","/origins/:originid/:sort/:pagelimit?","/search/:keyword/:sort/:pagelimit?","/tags/:tagid/:sort/:pagelimit?"],"categories":["anime"],"example":"/oreno3d/authors/3189/latest/1","parameters":{"authorid":"Author id, can be found in URL","sort":"Sort method, see the table above","pagelimit":"The maximum number of pages to be crawled, the default is 1"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Author Search","maintainers":["xueli_sherryli"],"description":"| favorites | hot | latest | popularity |\n  | --------- | --- | ------ | ---------- |\n  | favorites | hot | latest | popularity |","location":"main.ts"}} />
 
-### Tags Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d-tags-search}
+| favorites | hot | latest | popularity |
+| --------- | --- | ------ | ---------- |
+| favorites | hot | latest | popularity |
 
-<Route author="xueli-sherryli" example="/oreno3d/tags/177/latest/1" path="/oreno3d/tags/:tagid/:sort/:pagelimit?" paramsDesc={['Tag id, can be found in URL', 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" />
+### Author Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d-author-search}
 
-### Origins Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d-origins-search}
+<Route namespace="oreno3d" data={{"path":["/authors/:authorid/:sort/:pagelimit?","/characters/:characterid/:sort/:pagelimit?","/origins/:originid/:sort/:pagelimit?","/search/:keyword/:sort/:pagelimit?","/tags/:tagid/:sort/:pagelimit?"],"categories":["anime"],"example":"/oreno3d/authors/3189/latest/1","parameters":{"authorid":"Author id, can be found in URL","sort":"Sort method, see the table above","pagelimit":"The maximum number of pages to be crawled, the default is 1"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Author Search","maintainers":["xueli_sherryli"],"description":"| favorites | hot | latest | popularity |\n  | --------- | --- | ------ | ---------- |\n  | favorites | hot | latest | popularity |","location":"main.ts"}} />
 
-<Route author="xueli-sherryli" example="/oreno3d/origins/3/latest/1" path="/oreno3d/origins/:originid/:sort/:pagelimit?" paramsDesc={['Origin id, can be found in URL' , 'Sort method, see the table above', 'The maximum number of pages to be crawled, the default is 1']} radar="1" />
+| favorites | hot | latest | popularity |
+| --------- | --- | ------ | ---------- |
+| favorites | hot | latest | popularity |
+
+### Author Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d-author-search}
+
+<Route namespace="oreno3d" data={{"path":["/authors/:authorid/:sort/:pagelimit?","/characters/:characterid/:sort/:pagelimit?","/origins/:originid/:sort/:pagelimit?","/search/:keyword/:sort/:pagelimit?","/tags/:tagid/:sort/:pagelimit?"],"categories":["anime"],"example":"/oreno3d/authors/3189/latest/1","parameters":{"authorid":"Author id, can be found in URL","sort":"Sort method, see the table above","pagelimit":"The maximum number of pages to be crawled, the default is 1"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Author Search","maintainers":["xueli_sherryli"],"description":"| favorites | hot | latest | popularity |\n  | --------- | --- | ------ | ---------- |\n  | favorites | hot | latest | popularity |","location":"main.ts"}} />
+
+| favorites | hot | latest | popularity |
+| --------- | --- | ------ | ---------- |
+| favorites | hot | latest | popularity |
+
+### Author Search {#an-%E3%81%AE-3d-%E3%82%A8%E3%83%AD-dong-hua-oreno3d-author-search}
+
+<Route namespace="oreno3d" data={{"path":["/authors/:authorid/:sort/:pagelimit?","/characters/:characterid/:sort/:pagelimit?","/origins/:originid/:sort/:pagelimit?","/search/:keyword/:sort/:pagelimit?","/tags/:tagid/:sort/:pagelimit?"],"categories":["anime"],"example":"/oreno3d/authors/3189/latest/1","parameters":{"authorid":"Author id, can be found in URL","sort":"Sort method, see the table above","pagelimit":"The maximum number of pages to be crawled, the default is 1"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"Author Search","maintainers":["xueli_sherryli"],"description":"| favorites | hot | latest | popularity |\n  | --------- | --- | ------ | ---------- |\n  | favorites | hot | latest | popularity |","location":"main.ts"}} />
+
+| favorites | hot | latest | popularity |
+| --------- | --- | ------ | ---------- |
+| favorites | hot | latest | popularity |
 
 ## 巴哈姆特電玩資訊站 {#ba-ha-mu-te-dian-wan-zi-xun-zhan}
 
 ### GNN 新聞 {#ba-ha-mu-te-dian-wan-zi-xun-zhan-gnn-xin-wen}
 
-<Route author="Arracc" example="/gamer/gnn/1" path="/gamer/gnn/:category?" paramsDesc={['版块']} notOperational="1">
-  | 首頁 | PC | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
-  | ---- | -- | ------- | -------- | ------ | -------- | -------- | ---- |
-  | 缺省 | 1  | 3       | 4        | 5      | 9        | 11       | 13   |
+<Route namespace="gamer" data={{"path":"/gnn/:category?","categories":["anime"],"example":"/gamer/gnn/1","parameters":{"category":"版块"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"GNN 新聞","maintainers":["Arracc"],"description":"| 首頁 | PC | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |\n  | ---- | -- | ------- | -------- | ------ | -------- | -------- | ---- |\n  | 缺省 | 1  | 3       | 4        | 5      | 9        | 11       | 13   |\n\n  | Switch | PS5 | PS4 | XboxOne | XboxSX | PC 單機 | PC 線上 | iOS | Android | Web | 漫畫  | 動畫  |\n  | ------ | --- | --- | ------- | ------ | ------- | ------- | --- | ------- | --- | ----- | ----- |\n  | ns     | ps5 | ps4 | xbone   | xbsx   | pc      | olg     | ios | android | web | comic | anime |","location":"gnn-index.ts"}} />
 
-  | Switch | PS5 | PS4 | XboxOne | XboxSX | PC 單機 | PC 線上 | iOS | Android | Web | 漫畫  | 動畫  |
-  | ------ | --- | --- | ------- | ------ | ------- | ------- | --- | ------- | --- | ----- | ----- |
-  | ns     | ps5 | ps4 | xbone   | xbsx   | pc      | olg     | ios | android | web | comic | anime |
-</Route>
+| 首頁 | PC | TV 掌機 | 手機遊戲 | 動漫畫 | 主題報導 | 活動展覽 | 電競 |
+| ---- | -- | ------- | -------- | ------ | -------- | -------- | ---- |
+| 缺省 | 1  | 3       | 4        | 5      | 9        | 11       | 13   |
 
-### 熱門推薦 {#ba-ha-mu-te-dian-wan-zi-xun-zhan-re-men-tui-jian}
-
-<Route author="nczitzk" example="/gamer/hot/47157" path="/gamer/hot/:bsn" paramsDesc={['板块 id，在 URL 可以找到']} />
-
-### 動畫瘋 - 最後更新 {#ba-ha-mu-te-dian-wan-zi-xun-zhan-dong-hua-feng-zui-hou-geng-xin}
-
-<Route author="maple3142" example="/gamer/ani/new_anime" path="/gamer/ani/new_anime" />
+| Switch | PS5 | PS4 | XboxOne | XboxSX | PC 單機 | PC 線上 | iOS | Android | Web | 漫畫  | 動畫  |
+| ------ | --- | --- | ------- | ------ | ------- | ------- | --- | ------- | --- | ----- | ----- |
+| ns     | ps5 | ps4 | xbone   | xbsx   | pc      | olg     | ios | android | web | comic | anime |
 
 ### 動畫瘋 - 動畫 {#ba-ha-mu-te-dian-wan-zi-xun-zhan-dong-hua-feng-dong-hua}
 
-<Route author="maple3142" example="/gamer/ani/anime/36868" path="/gamer/ani/anime/:sn" paramsDesc={['動畫 sn，在 URL 可以找到']} radar="1" />
+<Route namespace="gamer" data={{"path":"/ani/anime/:sn","categories":["anime"],"example":"/gamer/ani/anime/36868","parameters":{"sn":"動畫 sn，在 URL 可以找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"動畫瘋 - 動畫","maintainers":[],"location":"ani/anime.ts"}} />
+
+### 動畫瘋 - 最後更新 {#ba-ha-mu-te-dian-wan-zi-xun-zhan-dong-hua-feng-zui-hou-geng-xin}
+
+<Route namespace="gamer" data={{"path":"/ani/new_anime","categories":["anime"],"example":"/gamer/ani/new_anime","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ani.gamer.com.tw/"],"target":"/new_anime"},"name":"動畫瘋 - 最後更新","maintainers":[],"url":"ani.gamer.com.tw/","location":"ani/new-anime.ts"}} />
+
+### 熱門推薦 {#ba-ha-mu-te-dian-wan-zi-xun-zhan-re-men-tui-jian}
+
+<Route namespace="gamer" data={{"path":"/hot/:bsn","categories":["anime"],"example":"/gamer/hot/47157","parameters":{"bsn":"板块 id，在 URL 可以找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"熱門推薦","maintainers":["nczitzk","TonyRL"],"location":"hot.ts"}} />
 
 ## 包子漫画 {#bao-zi-man-hua}
 
 ### 订阅漫画 {#bao-zi-man-hua-ding-yue-man-hua}
 
-<Route author="Fatpandac" example="/baozimh/comic/guowangpaiming-shiricaofu" path="/baozimh/comic/:name" paramsDesc={['漫画名称，在漫画链接可以得到(`comic/` 后的那段)']} />
-
-## 咚漫 {#dong-man}
-
-### 漫画更新 {#dong-man-man-hua-geng-xin}
-
-<Route author="machsix" path="/dongmanmanhua/:category/:name/:id" example="/dongmanmanhua/COMEDY/xin-xinlingdeshengyin/381" paramsDesc={['类别','名称','ID']} />
+<Route namespace="baozimh" data={{"path":"/comic/:name","categories":["anime"],"example":"/baozimh/comic/guowangpaiming-shiricaofu","parameters":{"name":"漫画名称，在漫画链接可以得到(`comic/` 后的那段)"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.baozimh.com/comic/:name"]},"name":"订阅漫画","maintainers":["Fatpandac"],"location":"index.ts"}} />
 
 ## 动漫之家 {#dong-man-zhi-jia}
 
 ### 新闻站 {#dong-man-zhi-jia-xin-wen-zhan}
 
-<Route author="vzz64" path="/dmzj/news/:category?" example="/dmzj/news/donghuaqingbao" paramsDesc={['类别']} radar="1">
-  | 漫画情报      | 轻小说情报          | 动漫周边       | 声优情报        | 音乐资讯    | 游戏资讯   | 美图欣赏      | 漫展情报       | 大杂烩  |
-  | ------------- | ------------------- | -------------- | --------------- | ----------- | ---------- | ------------- | -------------- | ------- |
-  | manhuaqingbao | qingxiaoshuoqingbao | manhuazhoubian | shengyouqingbao | yinyuezixun | youxizixun | meituxinshang | manzhanqingbao | dazahui |
-</Route>
+<Route namespace="dmzj" data={{"path":"/news/:category?","categories":["anime"],"example":"/dmzj/news/donghuaqingbao","parameters":{"category":"类别"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["news.dmzj.com/"],"target":"/news"},"name":"新闻站","maintainers":["vzz64"],"url":"news.dmzj.com/","description":"| 漫画情报      | 轻小说情报          | 动漫周边       | 声优情报        | 音乐资讯    | 游戏资讯   | 美图欣赏      | 漫展情报       | 大杂烩  |\n  | ------------- | ------------------- | -------------- | --------------- | ----------- | ---------- | ------------- | -------------- | ------- |\n  | manhuaqingbao | qingxiaoshuoqingbao | manhuazhoubian | shengyouqingbao | yinyuezixun | youxizixun | meituxinshang | manzhanqingbao | dazahui |","location":"news.ts"}} />
+
+| 漫画情报      | 轻小说情报          | 动漫周边       | 声优情报        | 音乐资讯    | 游戏资讯   | 美图欣赏      | 漫展情报       | 大杂烩  |
+| ------------- | ------------------- | -------------- | --------------- | ----------- | ---------- | ------------- | -------------- | ------- |
+| manhuaqingbao | qingxiaoshuoqingbao | manhuazhoubian | shengyouqingbao | yinyuezixun | youxizixun | meituxinshang | manzhanqingbao | dazahui |
 
 ## 動漫狂 {#dong-man-kuang}
 
 ### 漫画更新 {#dong-man-kuang-man-hua-geng-xin}
 
-<Route author="KellyHwong" path="/cartoonmad/comic/:id" example="/cartoonmad/comic/5827" paramsDesc={['漫画ID']} radar="1" />
+<Route namespace="cartoonmad" data={{"path":"/comic/:id","categories":["anime"],"example":"/cartoonmad/comic/5827","parameters":{"id":"漫画ID"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["cartoonmad.com/comic/:id"]},"name":"漫画更新","maintainers":["KellyHwong"],"location":"comic.ts"}} />
 
 ## 番组放送 {#fan-zu-fang-song}
 
 ### 开播提醒 {#fan-zu-fang-song-kai-bo-ti-xing}
 
-<Route author="x2cf" example="/bgmlist/onair/zh-Hans" path="/bgmlist/onair/:lang?" paramsDesc={['语言']} radar="1" />
+<Route namespace="bgmlist" data={{"path":"/onair/:lang?","categories":["anime"],"example":"/bgmlist/onair/zh-Hans","parameters":{"lang":"语言"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"开播提醒","maintainers":["x2cf"],"location":"onair.ts"}} />
 
 ## 风之动漫 {#feng-zhi-dong-man}
 
 ### 在线漫画 {#feng-zhi-dong-man-zai-xian-man-hua}
 
-<Route author="geeeeoff zytomorrow" path="/fffdm/manhua/:id/:cdn?" example="/fffdm/manhua/93" paramsDesc={['漫画ID。默认获取全部，建议使用通用参数limit获取指定数量', 'cdn加速器。默认5，当前可选1-5']} radar="1" />
+<Route namespace="fffdm" data={{"path":"/manhua/:id/:cdn?","categories":["anime"],"example":"/fffdm/manhua/93","parameters":{"id":"漫画ID。默认获取全部，建议使用通用参数limit获取指定数量","cdn":"cdn加速器。默认5，当前可选1-5"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.fffdm.com/manhua/:id","www.fffdm.com/:id"],"target":"/manhua/:id"},"name":"在线漫画","maintainers":["zytomorrow"],"location":"manhua/manhua.ts"}} />
 
 ## 禁漫天堂 {#jin-man-tian-tang}
 
@@ -630,158 +405,154 @@ You can use some RSS parsing libraries (like `feedpraser` in `Python`) to receiv
 
 ### 成人 A 漫 {#jin-man-tian-tang-cheng-ren-a-man}
 
-<Route author="nczitzk" example="/18comic" path="/18comic/:category?/:time?/:order?/:keyword?" paramsDesc={['分类，见下表，默认为 `all` 即全部', '时间范围，见下表，默认为 `a` 即全部', '排列顺序，见下表，默认为 `mr` 即最新', '关键字，见下表，默认为空']} anticrawler="1">
-  分类
+<Route namespace="18comic" data={{"path":"/:category?/:time?/:order?/:keyword?","categories":["anime"],"example":"/18comic","parameters":{"category":"分类，见下表，默认为 `all` 即全部","time":"时间范围，见下表，默认为 `a` 即全部","order":"排列顺序，见下表，默认为 `mr` 即最新","keyword":"关键字，见下表，默认为空"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["jmcomic.group/"]},"name":"成人 A 漫","maintainers":["nczitzk"],"url":"jmcomic.group/","description":"分类\n\n  | 全部 | 其他漫畫 | 同人   | 韓漫   | 美漫   | 短篇  | 单本   |\n  | ---- | -------- | ------ | ------ | ------ | ----- | ------ |\n  | all  | another  | doujin | hanman | meiman | short | single |\n\n  时间范围\n\n  | 全部 | 今天 | 这周 | 本月 |\n  | ---- | ---- | ---- | ---- |\n  | a    | t    | w    | m    |\n\n  排列顺序\n\n  | 最新 | 最多点阅的 | 最多图片 | 最高评分 | 最多评论 | 最多爱心 |\n  | ---- | ---------- | -------- | -------- | -------- | -------- |\n  | mr   | mv         | mp       | tr       | md       | tf       |\n\n  关键字（供参考）\n\n  | YAOI | 女性向 | NTR | 非 H | 3D | 獵奇 |\n  | ---- | ------ | --- | ---- | -- | ---- |","location":"index.ts"}} />
 
-  | 全部 | 其他漫畫 | 同人   | 韓漫   | 美漫   | 短篇  | 单本   |
-  | ---- | -------- | ------ | ------ | ------ | ----- | ------ |
-  | all  | another  | doujin | hanman | meiman | short | single |
+分类
 
-  时间范围
+| 全部 | 其他漫畫 | 同人   | 韓漫   | 美漫   | 短篇  | 单本   |
+| ---- | -------- | ------ | ------ | ------ | ----- | ------ |
+| all  | another  | doujin | hanman | meiman | short | single |
 
-  | 全部 | 今天 | 这周 | 本月 |
-  | ---- | ---- | ---- | ---- |
-  | a    | t    | w    | m    |
+时间范围
 
-  排列顺序
+| 全部 | 今天 | 这周 | 本月 |
+| ---- | ---- | ---- | ---- |
+| a    | t    | w    | m    |
 
-  | 最新 | 最多点阅的 | 最多图片 | 最高评分 | 最多评论 | 最多爱心 |
-  | ---- | ---------- | -------- | -------- | -------- | -------- |
-  | mr   | mv         | mp       | tr       | md       | tf       |
+排列顺序
 
-  关键字（供参考）
+| 最新 | 最多点阅的 | 最多图片 | 最高评分 | 最多评论 | 最多爱心 |
+| ---- | ---------- | -------- | -------- | -------- | -------- |
+| mr   | mv         | mp       | tr       | md       | tf       |
 
-  | YAOI | 女性向 | NTR | 非 H | 3D | 獵奇 |
-  | ---- | ------ | --- | ---- | -- | ---- |
-</Route>
+关键字（供参考）
+
+| YAOI | 女性向 | NTR | 非 H | 3D | 獵奇 |
+| ---- | ------ | --- | ---- | -- | ---- |
 
 ### 搜索 {#jin-man-tian-tang-sou-suo}
 
-<Route author="nczitzk" example="/18comic/search/photos/all/NTR" path="/18comic/search/:option?/:category?/:keyword?/:time?/:order?" paramsDesc={['选项，可选 `video` 和 `photos`，默认为 `photos`', '分类，同上表，默认为 `all` 即全部', '关键字，同上表，默认为空', '时间范围，同上表，默认为 `a` 即全部', '排列顺序，同上表，默认为 `mr` 即最新']} anticrawler="1">
-  :::tip
-  关键字必须超过两个字，这是来自网站的限制。
-  :::
-</Route>
+<Route namespace="18comic" data={{"path":"/search/:option?/:category?/:keyword?/:time?/:order?","categories":["anime"],"example":"/18comic/search/photos/all/NTR","parameters":{"option":"选项，可选 `video` 和 `photos`，默认为 `photos`","category":"分类，同上表，默认为 `all` 即全部","keyword":"关键字，同上表，默认为空","time":"时间范围，同上表，默认为 `a` 即全部","order":"排列顺序，同上表，默认为 `mr` 即最新"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["jmcomic.group/"],"target":"/:category?/:time?/:order?/:keyword?"},"name":"搜索","maintainers":[],"url":"jmcomic.group/","description":":::tip\n  关键字必须超过两个字，这是来自网站的限制。\n  :::","location":"search.ts"}} />
 
-### 专辑 {#jin-man-tian-tang-zhuan-ji}
-
-<Route author="nczitzk" example="/18comic/album/292282" path="/18comic/album/:id" paramsDesc={['专辑 id，可在专辑页 URL 中找到']} anticrawler="1">
-  :::tip
-  专辑 id 不包括 URL 中标题的部分。
-  :::
-</Route>
+:::tip
+关键字必须超过两个字，这是来自网站的限制。
+:::
 
 ### 文庫 {#jin-man-tian-tang-wen-ku}
 
-<Route author="nczitzk" example="/18comic/blogs" path="/18comic/blogs/:category?" paramsDesc={['分类，见下表，默认为空即全部']} anticrawler="1">
-  分类
+<Route namespace="18comic" data={{"path":"/blogs/:category?","categories":["anime"],"example":"/18comic/blogs","parameters":{"category":"分类，见下表，默认为空即全部"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["jmcomic.group/"]},"name":"文庫","maintainers":["nczitzk"],"url":"jmcomic.group/","description":"分类\n\n  | 全部 | 紳夜食堂 | 遊戲文庫 | JG GAMES | 模型山下 |\n  | ---- | -------- | -------- | -------- | -------- |\n  |      | dinner   | raiders  | jg       | figure   |","location":"blogs.ts"}} />
 
-  | 全部 | 紳夜食堂 | 遊戲文庫 | JG GAMES | 模型山下 |
-  | ---- | -------- | -------- | -------- | -------- |
-  |      | dinner   | raiders  | jg       | figure   |
-</Route>
+分类
+
+| 全部 | 紳夜食堂 | 遊戲文庫 | JG GAMES | 模型山下 |
+| ---- | -------- | -------- | -------- | -------- |
+|      | dinner   | raiders  | jg       | figure   |
+
+### 专辑 {#jin-man-tian-tang-zhuan-ji}
+
+<Route namespace="18comic" data={{"path":"/album/:id","categories":["anime"],"example":"/18comic/album/292282","parameters":{"id":"专辑 id，可在专辑页 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["jmcomic.group/"]},"name":"专辑","maintainers":["nczitzk"],"url":"jmcomic.group/","description":":::tip\n  专辑 id 不包括 URL 中标题的部分。\n  :::","location":"album.ts"}} />
+
+:::tip
+专辑 id 不包括 URL 中标题的部分。
+:::
 
 ## 看漫画 {#kan-man-hua}
 
 ### 漫画更新 {#kan-man-hua-man-hua-geng-xin}
 
-<Route author="MegrezZhu" path="/manhuagui/comic/:id/:chapterCnt?" example="/manhuagui/comic/22942/5" paramsDesc={['漫画ID','返回章节的数量，默认为0，返回所有章节']} radar="1" anticrawler="1" />
+<Route namespace="manhuagui" data={{"path":["/comic/:id/:chapterCnt?","/:domain?/comic/:id/:chapterCnt?"],"categories":["anime"],"example":"/manhuagui/comic/22942/5","parameters":{"id":"漫画ID","chapterCnt":"返回章节的数量，默认为0，返回所有章节"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.mhgui.com/comic/:id/"],"target":"/comic/:id"},"name":"漫画更新","maintainers":["MegrezZhu"],"location":"comic.ts"}} />
+
+### 漫画更新 {#kan-man-hua-man-hua-geng-xin}
+
+<Route namespace="manhuagui" data={{"path":["/comic/:id/:chapterCnt?","/:domain?/comic/:id/:chapterCnt?"],"categories":["anime"],"example":"/manhuagui/comic/22942/5","parameters":{"id":"漫画ID","chapterCnt":"返回章节的数量，默认为0，返回所有章节"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.mhgui.com/comic/:id/"],"target":"/comic/:id"},"name":"漫画更新","maintainers":["MegrezZhu"],"location":"comic.ts"}} />
 
 ### 漫画个人订阅 {#kan-man-hua-man-hua-ge-ren-ding-yue}
 
-<Route author="shininome" path="/manhuagui/subscribe" example="/manhuagui/subscribe" radar="1" configRequired="1">
-  :::tip
-  个人订阅需要自建
-  环境变量需要添加 MHGUI\_COOKIE
-  :::
-</Route>
+<Route namespace="manhuagui" data={{"path":"/subscribe","categories":["anime"],"example":"/manhuagui/subscribe","parameters":{},"features":{"requireConfig":true,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.mhgui.com/user/book/shelf"]},"name":"漫画个人订阅","maintainers":["shininome"],"url":"www.mhgui.com/user/book/shelf","description":":::tip\n  个人订阅需要自建\n  环境变量需要添加 MHGUI_COOKIE\n  :::","location":"subscribe.ts"}} />
 
-### 镜像站 - 漫画更新 {#kan-man-hua-jing-xiang-zhan-man-hua-geng-xin}
-
-<Route author="btdwv" path="/manhuagui/mhgui/comic/:id/:chapterCnt?" example="/manhuagui/mhgui/comic/13317/5" paramsDesc={['漫画ID','返回章节的数量，默认为0，返回所有章节']} radar="1" anticrawler="1" />
-
-### 台湾站 - 漫画更新 {#kan-man-hua-tai-wan-zhan-man-hua-geng-xin}
-
-<Route author="btdwv" path="/manhuagui/twmanhuagui/comic/:id/:chapterCnt?" example="/manhuagui/twmanhuagui/comic/13317/5" paramsDesc={['漫画ID','返回章节的数量，默认为0，返回所有章节']} radar="1" anticrawler="1" />
+:::tip
+个人订阅需要自建
+环境变量需要添加 MHGUI\_COOKIE
+:::
 
 ## 拷贝漫画 {#kao-bei-man-hua}
 
 ### 漫画更新 {#kao-bei-man-hua-man-hua-geng-xin}
 
-<Route author="btdwv marvolo666 yan12125" path="/copymanga/comic/:id/:chapterCnt?" example="/copymanga/comic/dianjuren/5" paramsDesc={['漫画ID', '返回章节的数量，默认为 `10`']} radar="1" />
+<Route namespace="copymanga" data={{"path":"/comic/:id/:chapterCnt?","categories":["anime"],"example":"/copymanga/comic/dianjuren/5","parameters":{"id":"漫画ID","chapterCnt":"返回章节的数量，默认为 `10`"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"漫画更新","maintainers":["btdwv","marvolo666","yan12125"],"location":"comic.ts"}} />
 
 ## 来漫画 {#lai-man-hua}
 
 ### 漫画列表 {#lai-man-hua-man-hua-lie-biao}
 
-<Route author="TonyRL" example="/laimanhua/tiandikangzhanjiVERSUS" path="/laimanhua/:id" paramsDesc={['漫画 ID，可在 URL 中找到']} radar="1" />
+<Route namespace="laimanhua" data={{"path":"/:id","categories":["anime"],"example":"/laimanhua/tiandikangzhanjiVERSUS","parameters":{"id":"漫画 ID，可在 URL 中找到"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["www.laimanhua8.com/kanmanhua/:id"]},"name":"漫画列表","maintainers":["TonyRL"],"location":"index.ts"}} />
 
-## 漫画 DB {#man-hua-db}
+## 腾讯新闻较真查证平台 {#teng-xun-xin-wen-jiao-zhen-cha-zheng-ping-tai}
 
-### 漫画 DB {#man-hua-db-man-hua-db}
+### 排行榜 {#teng-xun-xin-wen-jiao-zhen-cha-zheng-ping-tai-pai-hang-bang}
 
-<Route author="junfengP" path="/manhuadb/:id" example="/manhuadb/comics/1711" paramsDesc={['漫画ID']} />
+<Route namespace="qq" data={{"path":"/ac/rank/:type?/:time?","categories":["anime"],"example":"/qq/ac/rank","parameters":{"type":"分类，见下表，默认为月票榜","time":"时间，`cur` 为当周、`prev` 为上周"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ac.qq.com/Rank/comicRank/type/:type","ac.qq.com/"]},"name":"排行榜","maintainers":["nczitzk"],"description":"| 月票榜 | 飙升榜 | 新作榜 | 畅销榜 | TOP100 | 男生榜 | 女生榜 |\n  | ------ | ------ | ------ | ------ | ------ | ------ | ------ |\n  | mt     | rise   | new    | pay    | top    | male   | female |\n\n  :::tip\n  `time` 参数仅在 `type` 参数选为 **月票榜** 的时候生效。\n  :::","location":"ac/rank.ts"}} />
 
-## 漫小肆 {#man-xiao-si}
+| 月票榜 | 飙升榜 | 新作榜 | 畅销榜 | TOP100 | 男生榜 | 女生榜 |
+| ------ | ------ | ------ | ------ | ------ | ------ | ------ |
+| mt     | rise   | new    | pay    | top    | male   | female |
 
-### 漫画更新 {#man-xiao-si-man-hua-geng-xin}
-
-<Route author="junfengP" path="/manxiaosi/book/:id" example="/manxiaosi/book/90" paramsDesc={['漫画id，漫画主页的地址栏中']} radar="1" />
-
-## 轻之国度 {#qing-zhi-guo-du}
-
-### 文章更新阅读 {#qing-zhi-guo-du-wen-zhang-geng-xin-yue-du}
-
-<Route author="nightmare-mio" path="/lightnovel/:keywords/:security_key" example="/lightnovel/歡迎來到實力至上主義的教室/3cfc2dc63f3575ee42e12823188ad1b5:1709125:0" paramsDesc={['关键字，可以模糊匹配，但最好精确匹配。默认为文章类型','cookie,由于文章有防爬，所以必须携带cookie请求。route中的cookie优先级高于环境变量cookie，取token中的security_key值']} radar="1" />
-
-## 紳士漫畫 {#shen-shi-man-hua}
-
-### 最新 {#shen-shi-man-hua-zui-xin}
-
-<Route author="KenMizz" example="/wnacg" path="/wnacg" radar="1" />
-
-### 分类更新 {#shen-shi-man-hua-fen-lei-geng-xin}
-
-<Route author="Gandum2077" example="/wnacg/category/6" path="/wnacg/category/:cid" paramsDesc={['分类的 id，即对应 URL 中的数字']} radar="1" />
-
-### 標籤更新 {#shen-shi-man-hua-biao-qian-geng-xin}
-
-<Route author="Gandum2077" example="/wnacg/tag/漢化" path="/wnacg/tag/:tag" paramsDesc={['標籤，即 URL 中的 `tag-`後的文字']} radar="1" />
-
-## 腾讯动漫 {#teng-xun-dong-man}
-
-### 排行榜 {#teng-xun-dong-man-pai-hang-bang}
-
-<Route author="nczitzk" example="/qq/ac/rank" path="/qq/ac/rank/:type?/:time?" paramsDesc={['分类，见下表，默认为月票榜', '时间，`cur` 为当周、`prev` 为上周']} radar="1">
-  | 月票榜 | 飙升榜 | 新作榜 | 畅销榜 | TOP100 | 男生榜 | 女生榜 |
-  | ------ | ------ | ------ | ------ | ------ | ------ | ------ |
-  | mt     | rise   | new    | pay    | top    | male   | female |
-
-  :::tip
-  `time` 参数仅在 `type` 参数选为 **月票榜** 的时候生效。
-  :::
-</Route>
-
-### 漫画 {#teng-xun-dong-man-man-hua}
-
-<Route author="nczitzk" example="/qq/ac/comic/531490" path="/qq/ac/comic/:id" paramsDesc={['编号，可在对应页 URL 中找到']} radar="1" />
+:::tip
+`time` 参数仅在 `type` 参数选为 **月票榜** 的时候生效。
+:::
 
 ## 月幕 Galgame {#yue-mu-galgame}
 
-### 文章 {#yue-mu-galgame-wen-zhang}
-
-<Route author="SunBK201" example="/ymgal/article" path="/ymgal/article/:type?" paramsDesc={['文章类型']} radar="1">
-  | 全部文章 | 资讯 | 专栏   |
-  | -------- | ---- | ------ |
-  | all      | news | column |
-</Route>
-
 ### 本月新作 {#yue-mu-galgame-ben-yue-xin-zuo}
 
-<Route author="SunBK201" example="/ymgal/game/release" path="/ymgal/game/release" radar="1" />
+<Route namespace="ymgal" data={{"path":"/game/release","categories":["anime"],"example":"/ymgal/game/release","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["ymgal.games/"]},"name":"本月新作","maintainers":["SunBK201"],"url":"ymgal.games/","location":"game.ts"}} />
+
+### 文章 {#yue-mu-galgame-wen-zhang}
+
+<Route namespace="ymgal" data={{"path":"/article/:type?","categories":["anime"],"example":"/ymgal/article","parameters":{"type":"文章类型"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"name":"文章","maintainers":["SunBK201"],"description":"| 全部文章 | 资讯 | 专栏   |\n  | -------- | ---- | ------ |\n  | all      | news | column |","location":"article.ts"}} />
+
+| 全部文章 | 资讯 | 专栏   |
+| -------- | ---- | ------ |
+| all      | news | column |
 
 ## アニメ新番組 {#%E3%82%A2%E3%83%8B%E3%83%A1-xin-fan-zu}
 
-### 當季新番 {#%E3%82%A2%E3%83%8B%E3%83%A1-xin-fan-zu-dang-ji-xin-fan}
+### Unknown {#%E3%82%A2%E3%83%8B%E3%83%A1-xin-fan-zu-unknown}
 
-<Route author="devinmugen" example="/bangumi/online" path="/bangumi/online" anticrawler="1" />
+<Route namespace="bangumi" data={{"path":"/online","categories":["anime"],"example":"/bangumi/online","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":true,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["bangumi.online/"]},"name":"Unknown","maintainers":["devinmugen"],"url":"bangumi.online/","location":"online/online.ts"}} />
+
+### 成员关注动画榜 {#%E3%82%A2%E3%83%8B%E3%83%A1-xin-fan-zu-cheng-yuan-guan-zhu-dong-hua-bang}
+
+<Route namespace="bangumi" data={{"path":"/tv/followrank","categories":["anime"],"example":"/bangumi/tv/followrank","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["bgm.tv/anime"]},"name":"成员关注动画榜","maintainers":["honue"],"url":"bgm.tv/anime","location":"tv/other/followrank.ts"}} />
+
+### 放送列表 {#%E3%82%A2%E3%83%8B%E3%83%A1-xin-fan-zu-fang-song-lie-biao}
+
+<Route namespace="bangumi" data={{"path":"/tv/calendar/today","categories":["anime"],"example":"/bangumi/tv/calendar/today","parameters":{},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["bgm.tv/calendar"]},"name":"放送列表","maintainers":["magic-akari"],"url":"bgm.tv/calendar","location":"tv/calendar/today.ts"}} />
+
+### 条目的通用路由格式 {#%E3%82%A2%E3%83%8B%E3%83%A1-xin-fan-zu-tiao-mu-di-tong-yong-lu-you-ge-shi}
+
+<Route namespace="bangumi" data={{"path":"/tv/subject/:id/:type?/:showOriginalName?","categories":["anime"],"example":"/bangumi/tv/subject/328609/ep/true","parameters":{"id":"条目 id, 在条目页面的地址栏查看","type":"条目类型，可选值为 `ep`, `comments`, `blogs`, `topics`，默认为 `ep`","showOriginalName":"显示番剧标题原名，可选值 0/1/false/true，默认为 false"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["bgm.tv/subject/:id"],"target":"/tv/subject/:id"},"name":"条目的通用路由格式","maintainers":["JimenezLi"],"description":":::warning\n  此通用路由仅用于对路由参数的描述，具体信息请查看下方与条目相关的路由\n  :::","location":"tv/subject/index.ts"}} />
+
+:::warning
+此通用路由仅用于对路由参数的描述，具体信息请查看下方与条目相关的路由
+:::
+
+### 现实人物的新作品 {#%E3%82%A2%E3%83%8B%E3%83%A1-xin-fan-zu-xian-shi-ren-wu-de-xin-zuo-pin}
+
+<Route namespace="bangumi" data={{"path":"/tv/person/:id","categories":["anime"],"example":"/bangumi/tv/person/32943","parameters":{"id":"人物 id, 在人物页面的地址栏查看"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["bgm.tv/person/:id"]},"name":"现实人物的新作品","maintainers":["ylc395"],"location":"tv/person/index.ts"}} />
+
+### 小组话题的新回复 {#%E3%82%A2%E3%83%8B%E3%83%A1-xin-fan-zu-xiao-zu-hua-ti-de-xin-hui-fu}
+
+<Route namespace="bangumi" data={{"path":"/tv/topic/:id","categories":["anime"],"example":"/bangumi/tv/topic/367032","parameters":{"id":"话题 id, 在话题页面地址栏查看"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["bgm.tv/group/topic/:id"]},"name":"小组话题的新回复","maintainers":["ylc395"],"location":"tv/group/reply.ts"}} />
+
+### 小组话题 {#%E3%82%A2%E3%83%8B%E3%83%A1-xin-fan-zu-xiao-zu-hua-ti}
+
+<Route namespace="bangumi" data={{"path":"/tv/group/:id","categories":["anime"],"example":"/bangumi/tv/group/boring","parameters":{"id":"小组 id, 在小组页面地址栏查看"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["bgm.tv/group/:id"]},"name":"小组话题","maintainers":["SettingDust"],"location":"tv/group/topic.ts"}} />
+
+### 用户日志 {#%E3%82%A2%E3%83%8B%E3%83%A1-xin-fan-zu-yong-hu-ri-zhi}
+
+<Route namespace="bangumi" data={{"path":"/tv/user/blog/:id","categories":["anime"],"example":"/bangumi/tv/user/blog/sai","parameters":{"id":"用户 id, 在用户页面地址栏查看"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["bgm.tv/user/:id"]},"name":"用户日志","maintainers":["nczitzk"],"location":"tv/user/blog.ts"}} />
+
+### 用户想看 {#%E3%82%A2%E3%83%8B%E3%83%A1-xin-fan-zu-yong-hu-xiang-kan}
+
+<Route namespace="bangumi" data={{"path":"/tv/user/wish/:id","categories":["anime"],"example":"/bangumi/tv/user/wish/sai","parameters":{"id":"用户 id, 在用户页面地址栏查看"},"features":{"requireConfig":false,"requirePuppeteer":false,"antiCrawler":false,"supportBT":false,"supportPodcast":false,"supportScihub":false},"radar":{"source":["bgm.tv/anime/list/:id/wish"]},"name":"用户想看","maintainers":["honue"],"location":"tv/user/wish.ts"}} />

@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import cache from './cache';
 
 import { parseDate } from '@/utils/parse-date';
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/article/:uid',
+    categories: ['social-media'],
+    example: '/bilibili/user/article/334958638',
+    parameters: { uid: '用户 id, 可在 UP 主主页中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['space.bilibili.com/:uid'],
+    },
+    name: 'UP 主专栏',
+    maintainers: ['lengthmin', 'Qixingchen'],
+    handler,
+};
+
+async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const name = await cache.getUsernameFromUID(uid);
     const response = await got({
@@ -29,10 +51,10 @@ export default async (ctx) => {
             return single;
         })
     );
-    ctx.set('data', {
+    return {
         title,
         link,
         description,
         item,
-    });
-};
+    };
+}

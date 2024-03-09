@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 
@@ -65,7 +66,30 @@ const getArticleDetail = (article_id, language) => {
     });
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/global-business-review/:language?',
+    categories: ['traditional-media'],
+    example: '/economist/global-business-review/cn-en',
+    parameters: { language: 'Language, `en`, `cn`, `tw` are supported, support multiple options, default to cn-en' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['businessreview.global/'],
+        target: '/global-business-review',
+    },
+    name: 'Global Business Review',
+    maintainers: ['prnake'],
+    handler,
+    url: 'businessreview.global/',
+};
+
+async function handler(ctx) {
     const language = (ctx.req.param('language') &&
         ctx.req
             .param('language')
@@ -88,10 +112,10 @@ export default async (ctx) => {
         }))
     );
 
-    ctx.set('data', {
+    return {
         title: TITLE[main_language],
         link: 'https://www.businessreview.global',
         description: DESCRIPTION[main_language],
         item: items,
-    });
-};
+    };
+}

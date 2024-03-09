@@ -175,21 +175,21 @@ const constructTopicEntry = async (ctx, url) => {
     );
 
     if (data.length === 0) {
-        ctx.set('data', {
+        return {
             title: '主题 ID 不存在，或该主题暂无内容',
-        });
+        };
         return null;
     }
 
     const topic = data.topic;
 
-    ctx.set('data', {
+    return {
         title: `${topic.content} - 即刻圈子`,
         link: url,
         description: topic.briefIntro,
         image: topic.squarePicture.picUrl || topic.squarePicture.middlePicUrl || topic.squarePicture.thumbnailUrl,
         // item: topicDataHanding(data),
-    });
+    };
 
     return data;
 };

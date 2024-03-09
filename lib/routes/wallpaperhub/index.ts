@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,19 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    radar: {
+        source: ['wallpaperhub.app/wallpaperhub', 'wallpaperhub.app/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'wallpaperhub.app/wallpaperhub',
+};
+
+async function handler() {
     const link = 'https://wallpaperhub.app/api/v1/wallpapers/?limit=20&page=&query=&width=&height=&tags=';
     const response = await got({
         method: 'get',
@@ -23,9 +36,9 @@ export default async (ctx) => {
         link: `https://wallpaperhub.app/wallpapers/${item.entity.id}`,
     }));
 
-    ctx.set('data', {
+    return {
         title: 'WallpaperHub',
         link: 'https://wallpaperhub.app/wallpapers',
         item: list,
-    });
-};
+    };
+}

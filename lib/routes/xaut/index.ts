@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/index/:category?',
+    categories: ['university'],
+    example: '/xaut/index/tzgg',
+    parameters: { category: '通知类别，默认为通知公告' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '学校主页',
+    maintainers: ['mocusez'],
+    handler,
+    description: `| 通知公告 | 校园要闻 | 媒体播报 | 学术活动 |
+  | :------: | :------: | :------: | :------: |
+  |   tzgg   |   xyyw   |   mtbd   |   xshd   |`,
+};
+
+async function handler(ctx) {
     let category = ctx.req.param('category');
     const dic_html = { tzgg: 'tzgg.htm', xyyw: 'xyyw.htm', mtbd: 'mtbd1.htm', xshd: 'xshd.htm' };
     const dic_title = { tzgg: '通知公告', xyyw: '校园要闻', mtbd: '媒体播报', xshd: '学术活动' };
@@ -44,7 +66,7 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         // 源标题
         title: '西安理工大学官网-' + dic_title[category],
         // 源链接
@@ -69,5 +91,5 @@ export default async (ctx) => {
                 })
             )
         ),
-    });
-};
+    };
+}

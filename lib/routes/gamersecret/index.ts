@@ -1,10 +1,53 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:type?/:category?',
+    categories: ['game'],
+    example: '/gamersecret',
+    parameters: { type: 'Type, see below, Latest News by default', category: 'Category, see below' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['gamersecret.com/:type', 'gamersecret.com/:type/:category', 'gamersecret.com/'],
+    },
+    name: 'Category',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| Latest News | PC | Playstation | Nintendo | Xbox | Moblie |
+  | ----------- | -- | ----------- | -------- | ---- | ------ |
+  | latest-news | pc | playstation | nintendo | xbox | moblie |
+
+  Or
+
+  | GENERAL          | GENERAL EN         | MOBILE          | MOBILE EN         |
+  | ---------------- | ------------------ | --------------- | ----------------- |
+  | category/general | category/generalen | category/mobile | category/mobileen |
+
+  | NINTENDO          | NINTENDO EN         | PC          | PC EN         |
+  | ----------------- | ------------------- | ----------- | ------------- |
+  | category/nintendo | category/nintendoen | category/pc | category/pcen |
+
+  | PLAYSTATION          | PLAYSTATION EN         | REVIEWS          |
+  | -------------------- | ---------------------- | ---------------- |
+  | category/playstation | category/playstationen | category/reviews |
+
+  | XBOX          | XBOX EN         |
+  | ------------- | --------------- |
+  | category/xbox | category/xboxen |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? 'latest-news';
     const category = ctx.req.param('category') ?? '';
 
@@ -53,9 +96,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

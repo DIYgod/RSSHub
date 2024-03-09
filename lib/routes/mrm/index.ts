@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['finance'],
+    example: '/mrm',
+    parameters: { category: 'N' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '通知',
+    maintainers: ['TonyRL'],
+    handler,
+    description: `| 交易通知     | 政策规定             | 业务通知          |
+  | ------------ | -------------------- | ----------------- |
+  | zonghezixun3 | zhengceguiding\_list | yewutongzhi\_list |`,
+};
+
+async function handler(ctx) {
     const { category = 'zonghezixun3' } = ctx.req.param();
     const baseUrl = 'http://www.mrm.com.cn';
     const link = `${baseUrl}/${category}.html`;
@@ -35,9 +57,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link,
         item: items,
-    });
-};
+    };
+}

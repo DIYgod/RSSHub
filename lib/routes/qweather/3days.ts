@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -12,7 +13,26 @@ const AIR_QUALITY_API = 'https://devapi.qweather.com/v7/air/5d';
 const CIRY_LOOKUP_API = 'https://geoapi.qweather.com/v2/city/lookup';
 const author = 'QWeather';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/3days/:location',
+    categories: ['forecast'],
+    example: '/qweather/3days/广州',
+    parameters: { location: 'N' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '近三天天气',
+    maintainers: ['Rein-Ou', 'la3rence'],
+    handler,
+    description: `需自行注册获取 api 的 key，并在环境变量 HEFENG\_KEY 中进行配置，获取订阅近三天天气预报`,
+};
+
+async function handler(ctx) {
     if (!config.hefeng.key) {
         throw new Error('QWeather RSS is disabled due to the lack of <a href="https://docs.rsshub.app/zh/install/config#%E5%92%8C%E9%A3%8E%E5%A4%A9%E6%B0%94">relevant config</a>');
     }
@@ -67,11 +87,11 @@ export default async (ctx) => {
         author,
     }));
 
-    ctx.set('data', {
+    return {
         title: ctx.req.param('location') + '未来三天天气',
         description: ctx.req.param('location') + '未来三天天气情况，使用和风彩云 API (包括空气质量)',
         item: items,
         link: combined.fxLink,
         author,
-    });
-};
+    };
+}

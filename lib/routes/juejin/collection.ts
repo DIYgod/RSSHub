@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import util from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/collection/:collectionId',
+    categories: ['programming'],
+    example: '/juejin/collection/6845243180586123271',
+    parameters: { collectionId: '收藏夹唯一标志符, 在浏览器地址栏URL中能够找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['juejin.cn/collection/:collectionId'],
+    },
+    name: '单个收藏夹',
+    maintainers: ['isQ'],
+    handler,
+};
+
+async function handler(ctx) {
     const collectionId = ctx.req.param('collectionId');
 
     const collectPage = await got({
@@ -17,11 +39,11 @@ export default async (ctx) => {
 
     const result = await util.ProcessFeed(items, cache);
 
-    ctx.set('data', {
+    return {
         title: '掘金 - 单个收藏夹',
         link: `https://juejin.cn/collection/${collectionId}`,
         description: '掘金，用户单个收藏夹',
         item: result,
         allowEmpty: true,
-    });
-};
+    };
+}

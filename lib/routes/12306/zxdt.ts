@@ -1,9 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import * as url from 'node:url';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/zxdt/:id?',
+    categories: ['travel'],
+    example: '/12306/zxdt',
+    parameters: { id: '铁路局id，可在 URL 中找到，不填默认显示所有铁路局动态' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.12306.cn/', 'www.12306.cn/mormhweb/1/:id/index_fl.html'],
+        target: '/zxdt/:id',
+    },
+    name: '最新动态',
+    maintainers: ['LogicJake'],
+    handler,
+    url: 'www.12306.cn/',
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') || -1;
 
     const link = id === -1 ? 'https://www.12306.cn/mormhweb/zxdt/index_zxdt.html' : `https://www.12306.cn/mormhweb/1/${id}/index_fl.html`;
@@ -51,9 +75,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `${name}最新动态`,
         link,
         item: out,
-    });
-};
+    };
+}

@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/trophy/:id',
+    categories: ['game'],
+    example: '/ps/trophy/DIYgod_',
+    parameters: { id: 'User ID' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'PlayStation Network user trophy',
+    maintainers: ['DIYgod'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const response = await got({
@@ -78,9 +97,9 @@ export default async (ctx) => {
     }
     result = result.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
 
-    ctx.set('data', {
+    return {
         title: `${id} 的 PSN 奖杯`,
         link: `https://psnprofiles.com/${id}/log`,
         item: result,
-    });
-};
+    };
+}

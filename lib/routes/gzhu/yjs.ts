@@ -1,8 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/yjs',
+    categories: ['university'],
+    example: '/gzhu/yjs',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['yjsy.gzhu.edu.cn/zsxx/zsdt/zsdt.htm', 'yjsy.gzhu.edu.cn/'],
+    },
+    name: '研究生院招生动态',
+    maintainers: ['shengmaosu'],
+    handler,
+    url: 'yjsy.gzhu.edu.cn/zsxx/zsdt/zsdt.htm',
+};
+
+async function handler() {
     const link = 'https://yjsy.gzhu.edu.cn/zsxx/zsdt/zsdt.htm';
     const response = await got(link, {
         https: {
@@ -12,7 +35,7 @@ export default async (ctx) => {
     const $ = load(response.data);
     const list = $('.picnews_cont li');
 
-    ctx.set('data', {
+    return {
         title: '广州大学研究生院',
         link,
         description: '广州大学研招网通知公告',
@@ -27,5 +50,5 @@ export default async (ctx) => {
                     pubDate: parseDate(a.text(), 'YYYY-MM-DD'),
                 };
             }),
-    });
-};
+    };
+}

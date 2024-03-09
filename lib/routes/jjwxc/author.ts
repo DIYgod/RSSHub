@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,25 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/author/:id?',
+    categories: ['reading'],
+    example: '/jjwxc/author/4364484',
+    parameters: { id: '作者 id，可在对应作者页中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '作者最新作品',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const rootUrl = 'https://www.jjwxc.net';
@@ -56,7 +75,7 @@ export default async (ctx) => {
     const image = `https:${logoEl.prop('src')}`;
     const icon = new URL('favicon.ico', rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${logoEl.prop('alt').replace(/logo/, '')} | ${author} - 最近更新`,
         link: currentUrl,
@@ -67,5 +86,5 @@ export default async (ctx) => {
         logo: icon,
         subtitle: $('meta[name="Description"]').prop('content'),
         author,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import MarkdownIt from 'markdown-it';
@@ -5,7 +6,29 @@ const md = MarkdownIt({
     html: true,
 });
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/collections',
+    categories: ['finance'],
+    example: '/bigquant/collections',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['bigquant.com/'],
+    },
+    name: '专题报告',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'bigquant.com/',
+};
+
+async function handler() {
     const rootUrl = 'https://bigquant.com';
     const currentUrl = `${rootUrl}/wiki/api/documents.list`;
 
@@ -28,9 +51,9 @@ export default async (ctx) => {
         pubDate: parseDate(item.publishedAt),
     }));
 
-    ctx.set('data', {
+    return {
         title: '专题报告 - AI量化知识库 - BigQuant',
         link: `${rootUrl}/wiki/collections/c6874e5d-7f45-4e90-8cd9-5e43df3b44ef`,
         item: items,
-    });
-};
+    };
+}

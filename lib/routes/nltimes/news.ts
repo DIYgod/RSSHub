@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -17,7 +18,32 @@ const map = new Map([
     ['1-1-2', { title: 'NL Times -- 1-1-2', suffix: '/categories/1-1-2' }],
 ]);
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:category?',
+    categories: ['new-media'],
+    example: '/nltimes/news/top-stories',
+    parameters: { category: 'category' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['nltimes.nl/categories/:category'],
+        target: '/news/:category',
+    },
+    name: 'News',
+    maintainers: ['Hivol'],
+    handler,
+    description: `| Top Stories (default) | Health | Crime | Politics | Business | Tech | Culture | Sports | Weird | 1-1-2 |
+  | --------------------- | ------ | ----- | -------- | -------- | ---- | ------- | ------ | ----- | ----- |
+  | top-stories           | health | crime | politics | business | tech | culture | sports | weird | 1-1-2 |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'top-stories';
     const suffix = map.get(category).suffix;
 
@@ -80,11 +106,11 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: map.get(category).title,
         language: 'en',
         link: apiUrl,
         description: map.get(category).title,
         item: items,
-    });
-};
+    };
+}

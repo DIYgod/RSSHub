@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,31 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:username/:cat?',
+    categories: ['social-media'],
+    example: '/vimeo/user/filmsupply/picks',
+    parameters: {
+        username: 'In this example [https://vimeo.com/filmsupply](https://vimeo.com/filmsupply)  is `filmsupply`',
+        cat: "deafult for all latest videos, others categories in this example such as `Docmentary`, `Narrative`, `Drama`. Set `picks` for promote orders, just orderd like web page. When `picks` added, published date won't show up",
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'User Profile',
+    maintainers: ['MisteryMonster'],
+    handler,
+    description: `:::tip[Special category name attention]
+  Some of the categories contain slash like \`3D/CG\` , must change the slash \`/\` to the vertical bar\`|\`.
+  :::`,
+};
+
+async function handler(ctx) {
     const tokenresponse = await got({
         method: 'get',
         url: 'https://vimeo.com/_rv/viewer',
@@ -56,7 +81,7 @@ export default async (ctx) => {
     });
     const vimeojs = picked ? contentresponse.data.data[0].videos.data : contentresponse.data.data;
 
-    ctx.set('data', {
+    return {
         title: `${profilesjs.name} ${catword ? cat.replace('|', '/') : ''} ${picked ? 'picks' : ''} | Vimeo `,
         link: profilesjs.link,
         description: profilesjs.bio,
@@ -75,5 +100,5 @@ export default async (ctx) => {
                 author: profilesjs.name,
             };
         }),
-    });
-};
+    };
+}

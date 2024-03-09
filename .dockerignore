@@ -8,7 +8,6 @@ Dockerfile*
 LICENSE
 Procfile
 app-minimal
-assets
 coverage
 node_modules
 test

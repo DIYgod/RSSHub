@@ -1,6 +1,25 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/profile/:path',
+    categories: ['programming'],
+    example: '/hackmd/profile/hackmd',
+    parameters: { path: 'userpath or teampath' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Profile',
+    maintainers: ['Yukaii', 'kaiix'],
+    handler,
+};
+
+async function handler(ctx) {
     const path = ctx.req.param('path');
 
     const response = await got({
@@ -10,7 +29,7 @@ export default async (ctx) => {
     const data = response.data;
 
     const profile = data.user || data.team;
-    ctx.set('data', {
+    return {
         title: `${profile.name}'s Profile`,
         link: `https://hackmd.io/@${path}`,
         description: `${profile.name}'s profile on HackMD`,
@@ -20,5 +39,5 @@ export default async (ctx) => {
             pubDate: new Date(note.publishedAt).toUTCString(),
             link: `https://hackmd.io/@${path}/${note.permalink || note.shortId}`,
         })),
-    });
-};
+    };
+}

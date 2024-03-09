@@ -1,6 +1,35 @@
+import { Route } from '@/types';
 import utils from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/makers/:id/:filter?',
+    categories: ['multimedia'],
+    example: '/javdb/makers/7R',
+    parameters: { id: '编号，可在片商页 URL 中找到', filter: '过滤，见下表，默认为 `全部`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['javdb.com/'],
+        target: '',
+    },
+    name: '片商',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'javdb.com/',
+    description: `| 全部 | 可播放   | 單體作品 | 可下載   | 字幕  | 預覽圖  |
+  | ---- | -------- | -------- | -------- | ----- | ------- |
+  |      | playable | single   | download | cnsub | preview |
+
+  所有片商编号参见 [片商庫](https://javdb.com/makers)`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const filter = ctx.req.param('filter') ?? '';
 
@@ -18,4 +47,4 @@ export default async (ctx) => {
     const title = `JavDB${filters[filter] === '' ? '' : ` - ${filters[filter]}`} `;
 
     ctx.set('data', await utils.ProcessItems(ctx, currentUrl, title));
-};
+}

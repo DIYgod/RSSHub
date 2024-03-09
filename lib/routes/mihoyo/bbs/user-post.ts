@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { post2item } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/bbs/user-post/:uid',
+    categories: ['game'],
+    example: '/mihoyo/bbs/user-post/77005350',
+    parameters: { uid: '用户uid' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '米游社 - 用户帖子',
+    maintainers: ['CaoMeiYouRen'],
+    handler,
+};
+
+async function handler(ctx) {
     const uid = ctx.req.param('uid');
     const size = ctx.req.query('limit') || '20';
     const searchParams = {
@@ -29,4 +48,4 @@ export default async (ctx) => {
         item: items,
     };
     ctx.set('data', data);
-};
+}

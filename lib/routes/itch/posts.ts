@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/posts/:topic/:id',
+    categories: ['game'],
+    example: '/itch/posts/9539/introduce-yourself',
+    parameters: { topic: 'Topic id, can be found in URL', id: 'Topic name, can be found in URL' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['itch.io/t/:topic/:id'],
+    },
+    name: 'Posts',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const topic = ctx.req.param('topic');
     const id = ctx.req.param('id');
 
@@ -33,9 +55,9 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}
