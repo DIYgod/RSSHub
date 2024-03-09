@@ -1,8 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/latest',
+    categories: ['program-update'],
+    example: '/brave/latest',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['brave.com/latest', 'brave.com/'],
+    },
+    name: 'Release Notes',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'brave.com/latest',
+};
+
+async function handler() {
     const rootUrl = 'https://brave.com';
     const currentUrl = `${rootUrl}/latest`;
 
@@ -32,9 +55,9 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

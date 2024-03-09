@@ -1,7 +1,20 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    radar: {
+        source: ['runtrail.cn/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'runtrail.cn/',
+};
+
+async function handler(ctx) {
     const baseUrl = 'https://runtrail.cn';
     const { data: response } = await got(`${baseUrl}/wp-json/wp/v2/posts`, {
         searchParams: {
@@ -26,9 +39,9 @@ export default async (ctx) => {
         link: item.link,
     }));
 
-    ctx.set('data', {
+    return {
         title: '最新文章 - 跑野大爆炸',
         link: baseUrl,
         item: items,
-    });
-};
+    };
+}

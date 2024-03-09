@@ -1,7 +1,29 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/addons/:id',
+    categories: ['program-update'],
+    example: '/firefox/addons/rsshub-radar',
+    parameters: { id: 'Add-ons id, can be found in add-ons url' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['addons.mozilla.org/:lang/firefox/addon/:id/versions', 'addons.mozilla.org/:lang/firefox/addon/:id'],
+    },
+    name: 'Add-ons Update',
+    maintainers: ['DIYgod'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const response = await got({
@@ -12,7 +34,7 @@ export default async (ctx) => {
     const info = data.addons.byID[data.addons.bySlug[id]];
     const versionIds = data.versions.bySlug[id].versionIds;
 
-    ctx.set('data', {
+    return {
         title: `${info.name} 附加组件更新 - Firefox`,
         description: info.summary || info.description,
         link: `https://addons.mozilla.org/zh-CN/firefox/addon/${id}/versions/`,
@@ -31,5 +53,5 @@ export default async (ctx) => {
                     category: info.categories,
                 };
             }),
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { topicDataHanding, constructTopicEntry } from './utils';
@@ -6,7 +7,29 @@ import dayjs from 'dayjs';
 
 const urlRegex = /(https?:\/\/[^\s"'<>]+)/g;
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/topic/:id/:showUid?',
+    categories: ['social-media'],
+    example: '/jike/topic/556688fae4b00c57d9dd46ee',
+    parameters: { id: '圈子 id, 可在即刻 web 端圈子页或 APP 分享出来的圈子页 URL 中找到', showUid: '是否在内容中显示用户信息，设置为 1 则开启' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['web.okjike.com/topic/:id'],
+        target: '/topic/:id',
+    },
+    name: '圈子',
+    maintainers: ['DIYgod', 'prnake'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const topicUrl = `https://m.okjike.com/topics/${id}`;
 
@@ -44,4 +67,4 @@ export default async (ctx) => {
         }
         ctx.set('data', result);
     }
-};
+}

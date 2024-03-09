@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 // 导入必要的模组
 import got from '@/utils/got'; // 自订的 got
@@ -7,7 +8,25 @@ import { config } from '@/config';
 
 const baseUrl = 'https://sehuatang.org/';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:uid',
+    categories: ['multimedia'],
+    example: '/sehuatang/user/411096',
+    parameters: { uid: '用户 uid, 可在用户主页 URL 中找到' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '作者文章',
+    maintainers: ['JamYiz'],
+    handler,
+};
+
+async function handler(ctx) {
     if (!config.sehuatang.cookie) {
         throw new Error('Sehuatang RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -104,10 +123,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         // 在此处输出您的 RSS
         title: `${$('.mt').text()}的帖子-色花堂`,
         link,
         item: out,
-    });
-};
+    };
+}

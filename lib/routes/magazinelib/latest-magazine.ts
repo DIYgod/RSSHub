@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,26 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 
 const host = 'https://magazinelib.com';
-export default async (ctx) => {
+export const route: Route = {
+    path: '/latest-magazine/:query?',
+    categories: ['reading'],
+    example: '/magazinelib/latest-magazine/new+yorker',
+    parameters: { query: 'query, search page querystring' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Latest Magazine',
+    maintainers: ['EthanWng97'],
+    handler,
+    description: `For instance, when doing search at [https://magazinelib.com](https://magazinelib.com) and you get url \`https://magazinelib.com/?s=new+yorker\`, the query is \`new+yorker\``,
+};
+
+async function handler(ctx) {
     const query = ctx.req.param('query');
     const url = `${host}/wp-json/wp/v2/posts/`;
     const response = await got({
@@ -43,7 +63,7 @@ export default async (ctx) => {
         return data;
     });
 
-    ctx.set('data', {
+    return {
         title: `MagazineLib - Latest Magazines${subTitle}`,
         link: `{host}/?s=${query}`,
         description: `MagazineLib - Latest Magazines${subTitle}`,
@@ -54,5 +74,5 @@ export default async (ctx) => {
             pubDate: new Date(item.pubDate).toUTCString(),
             description: item.description,
         })),
-    });
-};
+    };
+}

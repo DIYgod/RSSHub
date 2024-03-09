@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { ProcessForm, ProcessFeed } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/home',
+    categories: ['game'],
+    example: '/lfsyd/home',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.iyingdi.com/'],
+    },
+    name: '首页',
+    maintainers: ['auto-bot-ty'],
+    handler,
+    url: 'www.iyingdi.com/',
+};
+
+async function handler() {
     const rootUrl = 'https://www.iyingdi.com';
     const url = 'https://api.iyingdi.com/mweb/feed/recommend-content-list';
     const form = {
@@ -35,9 +58,9 @@ export default async (ctx) => {
     }));
     const items = await ProcessFeed(cache, articleList);
 
-    ctx.set('data', {
+    return {
         title: '首页 - 旅法师营地',
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

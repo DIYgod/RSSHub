@@ -1,7 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/routes/:lang?',
+    categories: ['program-update'],
+    example: '/rsshub/routes/en',
+    parameters: { lang: 'Language, `zh` means Chinese docs, other values or null means English docs, `en` by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['docs.rsshub.app/*'],
+        target: '/routes',
+    },
+    name: 'New routes',
+    maintainers: ['DIYgod'],
+    handler,
+    url: 'docs.rsshub.app/*',
+};
+
+async function handler(ctx) {
     const isEnglish = ctx.req.param('lang') !== 'zh';
 
     const lang = isEnglish ? '' : 'zh/';
@@ -44,7 +68,7 @@ export default async (ctx) => {
     );
     const list = all.flatMap(({ page, item, type }) => item.map((item) => ({ page, item, type })));
 
-    ctx.set('data', {
+    return {
         title: isEnglish ? 'RSSHub has new routes' : 'RSSHub 有新路由啦',
         link: 'https://docs.rsshub.app',
         description: isEnglish ? 'Everything is RSSible' : '万物皆可 RSS',
@@ -61,5 +85,5 @@ export default async (ctx) => {
                 guid: item.attr('id'),
             };
         }),
-    });
-};
+    };
+}

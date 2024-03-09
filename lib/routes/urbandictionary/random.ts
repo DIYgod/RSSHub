@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,29 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/random',
+    categories: ['other'],
+    example: '/urbandictionary/random',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['urbandictionary.com/random.php', 'urbandictionary.com/'],
+    },
+    name: 'Random words',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'urbandictionary.com/random.php',
+};
+
+async function handler() {
     const baseUrl = 'https://www.urbandictionary.com';
     const { data } = await got('https://api.urbandictionary.com/v0/random');
 
@@ -19,9 +42,9 @@ export default async (ctx) => {
         author: item.author,
     }));
 
-    ctx.set('data', {
+    return {
         title: 'Urban Dictionary: Random words',
         link: `${baseUrl}/random.php`,
         item: items,
-    });
-};
+    };
+}

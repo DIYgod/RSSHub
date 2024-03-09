@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import { load } from 'cheerio';
 import logger from '@/utils/logger';
 import { parseDate } from '@/utils/parse-date';
 import puppeteer from '@/utils/puppeteer';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/strategyand/sustainability',
+    categories: ['other'],
+    example: '/pwc/strategyand/sustainability',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['strategyand.pwc.com/at/en/functions/sustainability-strategy/publications.html', 'strategyand.pwc.com/'],
+    },
+    name: 'Sustainability',
+    maintainers: ['mintyfrankie'],
+    handler,
+    url: 'strategyand.pwc.com/at/en/functions/sustainability-strategy/publications.html',
+};
+
+async function handler() {
     const baseUrl = 'https://www.strategyand.pwc.com/at/en/functions/sustainability-strategy/publications.html';
     const feedLang = 'en';
     const feedDescription = 'Sustainability Publications from PwC Strategy&';
@@ -49,11 +72,11 @@ export default async (ctx) => {
 
     browser.close();
 
-    ctx.set('data', {
+    return {
         title: 'PwC Strategy& - Sustainability Publications',
         link: baseUrl,
         language: feedLang,
         description: feedDescription,
         item: items,
-    });
-};
+    };
+}

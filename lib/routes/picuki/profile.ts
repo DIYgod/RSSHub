@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -23,7 +24,39 @@ function deVideo(media) {
     return media_deVideo;
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/profile/:id/:functionalFlag?',
+    categories: ['social-media'],
+    example: '/picuki/profile/stefaniejoosten',
+    parameters: { id: 'Instagram id', functionalFlag: 'functional flag, see the table below' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.picuki.com/profile/:id'],
+        target: '/profile/:id',
+    },
+    name: 'User Profile - Picuki',
+    maintainers: ['hoilc', 'Rongronggg9', 'devinmugen'],
+    handler,
+    description: `| functionalFlag | Video embedding                         | Fetching Instagram Stories |
+  | -------------- | --------------------------------------- | -------------------------- |
+  | 0              | off, only show video poster as an image | off                        |
+  | 1 (default)    | on                                      | off                        |
+  | 10             | on                                      | on                         |
+
+  :::warning
+  Instagram Stories do not have a reliable guid. It is possible that your RSS reader show the same story more than once.
+  Though, every Story expires after 24 hours, so it may be not so serious.
+  :::`,
+};
+
+async function handler(ctx) {
     // use Puppeteer due to the obstacle by cloudflare challenge
     const browser = await puppeteer();
 
@@ -166,11 +199,11 @@ export default async (ctx) => {
 
     await browser.close();
 
-    ctx.set('data', {
+    return {
         title: `${profileName} (@${id}) - Picuki`,
         link: profileUrl,
         image: profileImg,
         description: profileDescription,
         item: items,
-    });
-};
+    };
+}

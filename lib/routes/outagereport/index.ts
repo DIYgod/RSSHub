@@ -1,8 +1,28 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 
 const baseUrl = 'https://outage.report/';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:name/:count?',
+    categories: ['forecast'],
+    example: '/outagereport/ubisoft/5',
+    parameters: { name: 'Service name, spelling format must be consistent with URL', count: 'Counting threshold, will only be written in RSS if the number of people who report to stop serving is not less than this number' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Report',
+    maintainers: ['cxumol', 'nczitzk'],
+    handler,
+    description: `Please skip the local service area code for \`name\`, for example \`https://outage.report/us/verizon-wireless\` to \`verizon-wireless\`.`,
+};
+
+async function handler(ctx) {
     const serviceName = ctx.req.param('name'); // Which service do you want to monitor? Have to be the same as what it appears in URL.
     const watchCount = ctx.req.param('count') || 10; // How many reports is received during last 20 minutes? 10 reports as default.
     const url = `${baseUrl}${serviceName}`;
@@ -41,11 +61,11 @@ export default async (ctx) => {
     }
 
     // how this RSS feed looks like
-    ctx.set('data', {
+    return {
         title: `Is ${serviceName} Down Right Now?`,
         link: url,
         description: rssDescribe,
         item: outageHistory,
         allowEmpty: true,
-    });
-};
+    };
+}

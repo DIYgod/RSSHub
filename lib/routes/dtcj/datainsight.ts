@@ -1,9 +1,36 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/datainsight/:id?',
+    categories: ['finance'],
+    example: '/dtcj/datainsight',
+    parameters: { id: '分类，见下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['dtcj.com/insighttopic/:id'],
+        target: '/datainsight/:id',
+    },
+    name: '数据洞察',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'dtcj.com/dtcj/datainsight',
+    description: `| 城数 | NEXT 情报局 | 专业精选 |
+  | ---- | ----------- | -------- |
+  | 3    | 1           | 4        |`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? '';
 
     const rootUrl = 'https://dtcj.com';
@@ -45,9 +72,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

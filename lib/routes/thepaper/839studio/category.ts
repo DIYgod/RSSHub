@@ -1,7 +1,19 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/839studio/:id',
+    radar: {
+        source: ['thepaper.cn/'],
+    },
+    name: 'Unknown',
+    maintainers: ['umm233'],
+    handler,
+    url: 'thepaper.cn/',
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const link = `http://projects.thepaper.cn/thepaper-cases/839studio/?cat=${id}`;
 
@@ -20,7 +32,7 @@ export default async (ctx) => {
     const category = $('div[class=lefth]').find('h1').text();
     const desc = $('div[class=leftc]').find('p').text();
 
-    ctx.set('data', {
+    return {
         title: `澎湃美数课作品集-${category}`,
         link,
         description: desc,
@@ -36,5 +48,5 @@ export default async (ctx) => {
                     };
                 })
                 .get(),
-    });
-};
+    };
+}

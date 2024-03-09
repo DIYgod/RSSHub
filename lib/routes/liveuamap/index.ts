@@ -1,8 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { isValidHost } from '@/utils/valid-host';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:region?',
+    categories: ['new-media'],
+    example: '/liveuamap',
+    parameters: { region: 'region 热点地区，默认为`ukraine`，其他选项见liveuamap.com的三级域名' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['liveuamap.com/:region*'],
+        target: '/:region',
+    },
+    name: '实时消息',
+    maintainers: ['CoderSherlock'],
+    handler,
+};
+
+async function handler(ctx) {
     const region = ctx.req.param('region') ?? 'ukraine';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
     if (!isValidHost(region)) {
@@ -29,9 +52,9 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: `Liveuamap - ${region}`,
         link: url,
         item: items,
-    });
-};
+    };
+}

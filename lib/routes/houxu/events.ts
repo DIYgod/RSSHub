@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,7 +7,29 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/events',
+    categories: ['new-media'],
+    example: '/houxu/events',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['houxu.app/events', 'houxu.app/'],
+    },
+    name: '专栏',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'houxu.app/events',
+};
+
+async function handler(ctx) {
     const rootUrl = 'https://houxu.app';
     const apiUrl = `${rootUrl}/api/1/events?limit=${ctx.req.query('limit') ?? 50}`;
     const currentUrl = `${rootUrl}/events`;
@@ -32,9 +55,9 @@ export default async (ctx) => {
         }),
     }));
 
-    ctx.set('data', {
+    return {
         title: '后续 - 专栏',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

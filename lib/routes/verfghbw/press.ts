@@ -1,8 +1,32 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/press/:keyword?',
+    categories: ['government'],
+    example: '/verfghbw/press',
+    parameters: { keyword: 'Keyword' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['verfgh.baden-wuerttemberg.de/de/presse-und-service/pressemitteilungen/'],
+        target: '/press',
+    },
+    name: 'Press releases',
+    maintainers: ['quinn-dev'],
+    handler,
+    url: 'verfgh.baden-wuerttemberg.de/de/presse-und-service/pressemitteilungen/',
+};
+
+async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
     const rootUrl = 'https://verfgh.baden-wuerttemberg.de';
 
@@ -49,10 +73,10 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: 'Verfassungsgerichtshof Baden-Württemberg - Pressemitteilungen',
         link: request.url,
         description: 'Pressemitteilungen des Verfassungsgerichtshof für das Land Baden-Württemberg',
         item: list,
-    });
-};
+    };
+}

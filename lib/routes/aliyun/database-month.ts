@@ -1,8 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/database_month',
+    categories: ['programming'],
+    example: '/aliyun/database_month',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['mysql.taobao.org/monthly', 'mysql.taobao.org/'],
+    },
+    name: '数据库内核月报',
+    maintainers: ['junbaor'],
+    handler,
+    url: 'mysql.taobao.org/monthly',
+};
+
+async function handler() {
     const url = 'http://mysql.taobao.org/monthly/';
     const response = await got({ method: 'get', url });
     const $ = load(response.data);
@@ -33,9 +56,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: url,
         item: result.reverse(),
-    });
-};
+    };
+}

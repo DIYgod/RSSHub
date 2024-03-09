@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import util from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/category/:category',
+    categories: ['programming'],
+    example: '/juejin/category/frontend',
+    parameters: { category: '分类名' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '分类',
+    maintainers: ['DIYgod'],
+    handler,
+    description: `| 后端    | 前端     | Android | iOS | 人工智能 | 开发工具 | 代码人生 | 阅读    |
+  | ------- | -------- | ------- | --- | -------- | -------- | -------- | ------- |
+  | backend | frontend | android | ios | ai       | freebie  | career   | article |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category');
 
     const idResponse = await got({
@@ -31,10 +53,10 @@ export default async (ctx) => {
     }
     const resultItems = await util.ProcessFeed(originalData, cache);
 
-    ctx.set('data', {
+    return {
         title: `掘金 ${cat.category_name}`,
         link: `https://juejin.cn/${category}`,
         description: `掘金 ${cat.category_name}`,
         item: resultItems,
-    });
-};
+    };
+}

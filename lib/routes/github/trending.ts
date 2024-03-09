@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,34 @@ import { art } from '@/utils/render';
 import { load } from 'cheerio';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/trending/:since/:language/:spoken_language?',
+    categories: ['programming'],
+    example: '/github/trending/daily/javascript/en',
+    parameters: {
+        since: "time frame, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL, possible values are: `daily`, `weekly` or `monthly`",
+        language: "the feed language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL, don't filter option is `any`",
+        spoken_language: "natural language, available in [Trending page](https://github.com/trending/javascript?since=monthly) 's URL",
+    },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['github.com/trending'],
+        target: '/trending/:since',
+    },
+    name: 'Trending',
+    maintainers: ['DIYgod', 'jameschensmith'],
+    handler,
+    url: 'github.com/trending',
+};
+
+async function handler(ctx) {
     if (!config.github || !config.github.access_token) {
         throw new Error('GitHub trending RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -73,7 +101,7 @@ export default async (ctx) => {
         return { ...found, ...repo };
     });
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: trendingUrl,
         item: repos.map((r) => ({
@@ -88,5 +116,5 @@ export default async (ctx) => {
             }),
             link: `https://github.com/${r.nameWithOwner}`,
         })),
-    });
-};
+    };
+}

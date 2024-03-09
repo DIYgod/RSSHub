@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -12,7 +13,14 @@ const decodeBufferByCharset = (buffer) => {
     return iconv.decode(buffer, encoding);
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category{.+}?',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const { category = 'xwzx' } = ctx.req.param();
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
@@ -69,7 +77,7 @@ export default async (ctx) => {
     const image = new URL($('div.logo_cs a img').prop('src'), currentUrl).href;
     const icon = new URL('favicon.ico', rootUrl).href;
 
-    ctx.set('data', {
+    return {
         item: items,
         title,
         link: currentUrl,
@@ -80,5 +88,5 @@ export default async (ctx) => {
         logo: icon,
         subtitle: $('meta[name="Keywords"]').prop('content'),
         author: title.split('-').pop().trim(),
-    });
-};
+    };
+}

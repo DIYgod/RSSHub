@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/tv/user/blog/:id',
+    categories: ['anime'],
+    example: '/bangumi/tv/user/blog/sai',
+    parameters: { id: '用户 id, 在用户页面地址栏查看' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['bgm.tv/user/:id'],
+    },
+    name: '用户日志',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const currentUrl = `https://bgm.tv/user/${ctx.req.param('id')}/blog`;
     const response = await got({
         method: 'get',
@@ -36,9 +58,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

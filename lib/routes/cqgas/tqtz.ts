@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 const url = 'http://www.cqgas.cn/portal/article/page?cateId=1082&pageNo=1';
-export default async (ctx) => {
+export const route: Route = {
+    path: '/tqtz',
+    categories: ['forecast'],
+    example: '/cqgas/tqtz',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['cqgas.cn/'],
+    },
+    name: '停气检修通知',
+    maintainers: ['Mai19930513'],
+    handler,
+    url: 'cqgas.cn/',
+};
+
+async function handler() {
     const { data: response } = await got(url);
     const $ = load(response);
     const contentUrl = (id) => `http://www.cqgas.cn/portal/article/content?contentId=${id}`;
@@ -29,9 +52,9 @@ export default async (ctx) => {
             })
         )
     );
-    ctx.set('data', {
+    return {
         title: '重庆燃气——停气检修通知',
         link: url,
         item: items,
-    });
-};
+    };
+}

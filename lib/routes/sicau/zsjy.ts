@@ -1,9 +1,35 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/zsjy/:category?',
+    categories: ['university'],
+    example: '/sicau/zsjy/bkszs',
+    parameters: { category: '分类，见下表，默认为本科生招生' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['dky.sicau.edu.cn/'],
+    },
+    name: '招生就业',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'dky.sicau.edu.cn/',
+    description: `| 本科生招生 | 研究生招生 | 毕业生选录指南 |
+  | ---------- | ---------- | -------------- |
+  | bkszs      | yjszs      | bysxlzn        |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'bkszs';
 
     const rootUrl = 'https://dky.sicau.edu.cn';
@@ -46,9 +72,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

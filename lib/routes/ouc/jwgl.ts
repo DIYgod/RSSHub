@@ -1,9 +1,35 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/jwgl',
+    categories: ['university'],
+    example: '/ouc/jwgl',
+    parameters: {},
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['jwgl.ouc.edu.cn/cas/login.action', 'jwgl.ouc.edu.cn/public/SchoolNotice.jsp'],
+    },
+    name: '选课信息教务通知',
+    maintainers: ['3401797899'],
+    handler,
+    url: 'jwgl.ouc.edu.cn/cas/login.action',
+    description: `:::warning
+  由于选课通知仅允许校园网访问，需自行部署。
+  :::`,
+};
+
+async function handler() {
     const link = 'http://jwgl.ouc.edu.cn/public/listSchoolNotices.action?currentPage=1&recordsPerPage=15&qtitle=';
     const response = await got(link);
     const $ = load(response.data);
@@ -34,10 +60,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '中国海洋大学选课信息教务通知',
         link,
         description: '中国海洋大学选课信息教务通知',
         item: out,
-    });
-};
+    };
+}

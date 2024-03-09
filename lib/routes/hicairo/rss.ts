@@ -1,7 +1,20 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    radar: {
+        source: ['hicairo.com/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['cnkmmk'],
+    handler,
+    url: 'hicairo.com/',
+};
+
+async function handler() {
     const currentUrl = 'https://www.hicairo.com';
     const response = await got(`${currentUrl}/feed.php`);
     const $ = load(response.data, { xmlMode: true });
@@ -23,10 +36,10 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: title_main,
         description: description_main,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,46 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/column/:id?', '/:id?'],
+    categories: ['traditional-media'],
+    example: '/cankaoxiaoxi/column/diyi',
+    parameters: { id: '栏目 id，默认为 `diyi`，即第一关注' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '栏目',
+    maintainers: ['yuxinliu-alex', 'nczitzk'],
+    handler,
+    description: `| 栏目           | id       |
+  | -------------- | -------- |
+  | 第一关注       | diyi     |
+  | 中国           | zhongguo |
+  | 国际           | gj       |
+  | 观点           | guandian |
+  | 锐参考         | ruick    |
+  | 体育健康       | tiyujk   |
+  | 科技应用       | kejiyy   |
+  | 文化旅游       | wenhualy |
+  | 参考漫谈       | cankaomt |
+  | 研究动态       | yjdt     |
+  | 海外智库       | hwzk     |
+  | 业界信息・观点 | yjxx     |
+  | 海外看中国城市 | hwkzgcs  |
+  | 译名趣谈       | ymymqt   |
+  | 译名发布       | ymymfb   |
+  | 双语汇         | ymsyh    |
+  | 参考视频       | video    |
+  | 军事           | junshi   |
+  | 参考人物       | cankaorw |`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id') ?? 'diyi';
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 50;
 
@@ -62,11 +102,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `参考消息 - ${channelResponse.data.name}`,
         link: currentUrl,
         description: '参考消息',
         language: 'zh-cn',
         item: items,
-    });
-};
+    };
+}

@@ -1,9 +1,28 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/post/:language?/:keyword?',
+    categories: ['programming'],
+    example: '/atcoder/post',
+    parameters: { language: 'Language, `jp` as Japanese or `en` as English, English by default', keyword: 'Keyword' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Posts',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const language = ctx.req.param('language') ?? 'en';
     const keyword = ctx.req.param('keyword') ?? '';
 
@@ -30,9 +49,9 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: `${keyword ? `[${keyword}] - ` : ''}${$('title').text()}`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,8 +1,16 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import md5 from '@/utils/md5';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:path{.+}',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const path = ctx.req.param('path');
     const link = `http://www.qiyoujiage.com/${path}.shtml`;
 
@@ -19,10 +27,10 @@ export default async (ctx) => {
         },
     ];
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         description: $('meta[name="Description"]').attr('content'),
         link,
         item,
-    });
-};
+    };
+}

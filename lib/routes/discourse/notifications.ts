@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getConfig } from './utils';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:configId/notifications/:fulltext?',
+    categories: ['bbs'],
+    example: '/discourse/0/notifications',
+    parameters: { configId: 'Environment variable configuration id, see above', fulltext: 'Fetch the content if the notification points to a post. This is disabled by default, set it to `1` to enable it.' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Notifications',
+    maintainers: [],
+    handler,
+    description: `:::warning
+If you opt to enable \`fulltext\` feature, consider adding \`limit\` parameter to your query to avoid sending too many request.
+:::`,
+};
+
+async function handler(ctx) {
     const { link, key } = getConfig(ctx);
 
     const response = await got(`${link}/notifications.json`, { headers: { 'User-Api-Key': key } }).json();
@@ -32,9 +54,9 @@ export default async (ctx) => {
     }
 
     const { about } = await got(`${link}/about.json`, { headers: { 'User-Api-Key': key } }).json();
-    ctx.set('data', {
+    return {
         title: `${about.title} - Notifications`,
         description: about.description,
         item: items,
-    });
-};
+    };
+}

@@ -7,8 +7,6 @@ on:
     paths:
       - 'test/**'
       - 'lib/**'
-      - '!**/maintainer.js'
-      - '!**/radar.js'
       - 'package.json'
       - 'pnpm-lock.yaml'
       - '.github/workflows/test.yml'
@@ -30,7 +28,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 18, 20, 21 ]
+        node-version: [ 20, 21 ]
     name: Vitest on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v4
@@ -61,7 +59,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 18, 20, 21 ]
+        node-version: [ 20, 21 ]
         chromium:
           - name: bundled Chromium
             dependency: ''
@@ -104,39 +102,13 @@ jobs:
         run: pnpm run vitest puppeteer
         env: ${{ fromJSON(matrix.chromium.environment) }}
 
-  docs:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    strategy:
-      fail-fast: false
-      matrix:
-        node-version: [ 18, 20, 21 ]
-    defaults:
-      run:
-        working-directory: website
-    name: Build docs on Node ${{ matrix.node-version }}
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v3
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
-          cache-dependency-path: website/pnpm-lock.yaml
-      - run: pnpm i
-      - name: Build docs
-        run: pnpm run build
-        working-directory: website
-
   all:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     strategy:
       fail-fast: false
       matrix:
-        node-version: [ 18, 20, 21 ]
+        node-version: [ 20, 21 ]
     name: Build radar and maintainer on Node ${{ matrix.node-version }}
     steps:
       - uses: actions/checkout@v4
@@ -149,11 +121,11 @@ jobs:
           cache: 'pnpm'
       - run: pnpm i
       - name: Build radar and maintainer
-        run: npm run build:all
+        run: npm run build
 
   automerge:
     if: github.triggering_actor == 'dependabot[bot]' && github.event_name == 'pull_request'
-    needs: [ vitest, puppeteer, docs, all ]
+    needs: [ vitest, puppeteer, all ]
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write

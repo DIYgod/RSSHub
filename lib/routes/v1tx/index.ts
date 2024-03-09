@@ -1,9 +1,22 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    radar: {
+        source: ['v1tx.com/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'v1tx.com/',
+};
+
+async function handler() {
     const baseUrl = 'https://www.v1tx.com';
     const { data: response } = await got(baseUrl);
 
@@ -46,11 +59,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         description: $('head meta[name="description"]').attr('content'),
         link: baseUrl,
         image: `${baseUrl}/wp-content/uploads/2018/10/cropped-Favicon.webp`,
         item: items,
-    });
-};
+    };
+}

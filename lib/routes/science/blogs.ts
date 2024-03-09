@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
@@ -5,7 +6,30 @@ import { baseUrl } from './utils';
 import { config } from '@/config';
 import puppeteer from '@/utils/puppeteer';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/blogs/:name?',
+    categories: ['journal'],
+    example: '/science/blogs/pipeline',
+    parameters: { name: 'Short name for the blog, get this from the url. Defaults to pipeline' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['science.org/blogs/:name'],
+        target: '/blogs/:name',
+    },
+    name: 'Blogs',
+    maintainers: ['TomHodson'],
+    handler,
+    description: `To subscribe to [IN THE PIPELINE by Derek Lowe’s](https://science.org/blogs/pipeline) or the [science editor's blog](https://science.org/blogs/editors-blog), use the name parameter \`pipeline\` or \`editors-blog\`.`,
+};
+
+async function handler(ctx) {
     const { name = 'pipeline' } = ctx.req.param();
     const link = `${baseUrl}/blogs/${name}/feed`;
 
@@ -53,12 +77,12 @@ export default async (ctx) => {
     const name_re = /Keyword search result for Blog Series: (?<blog_name>[^-]+) --/;
     const { blog_name = 'Unknown Title' } = $('channel > description').text().match(name_re).groups;
 
-    ctx.set('data', {
+    return {
         title: `Science Blogs: ${blog_name}`,
         description: `A Science.org blog called ${blog_name}`,
         image: `${baseUrl}/apple-touch-icon.png`,
         link: `${baseUrl}/blogs/${name}`,
         language: 'en-US',
         item: items,
-    });
-};
+    };
+}

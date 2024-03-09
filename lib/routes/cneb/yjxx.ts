@@ -1,9 +1,22 @@
+import { Route } from '@/types';
 import { getSubPath } from '@/utils/common-utils';
 import got from '@/utils/got';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/yjxx/*',
+    radar: {
+        source: ['cneb.gov.cn/yjxx', 'cneb.gov.cn/'],
+        target: '/yjxx',
+    },
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    url: 'cneb.gov.cn/yjxx',
+};
+
+async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 200;
 
     const options = decodeURI(getSubPath(ctx))
@@ -42,10 +55,10 @@ export default async (ctx) => {
         pubDate: timezone(parseDate(item.docpubtime), +8),
     }));
 
-    ctx.set('data', {
+    return {
         title: `国家应急广播 - ${title}预警信息`,
         link: currentUrl,
         item: items,
         allowEmpty: true,
-    });
-};
+    };
+}

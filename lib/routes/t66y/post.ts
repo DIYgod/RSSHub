@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import * as cheerio from 'cheerio';
 import got from '@/utils/got';
 import cache from '@/utils/cache';
@@ -29,7 +30,30 @@ function parseItems(tid: string, $: cheerio.CheerioAPI) {
         });
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/post/:tid',
+    categories: ['multimedia'],
+    example: '/t66y/post/3286088',
+    parameters: { tid: '帖子 id, 可在帖子 URL 中找到' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '帖子跟踪',
+    maintainers: ['cnzgray'],
+    handler,
+    description: `:::tip
+  帖子 id 查找办法:
+
+  打开想跟踪的帖子，比如：\`https://t66y.com/htm_data/20/1811/3286088.html\` 其中 \`3286088\` 就是帖子 id。
+  :::`,
+};
+
+async function handler(ctx) {
     const tid = ctx.req.param('tid') as string;
     const { data: response } = await got(`${baseUrl}/read.php?tid=${tid}`);
     // 跟踪重定向
@@ -67,9 +91,9 @@ export default async (ctx) => {
 
     const items = [...firstPage, ...nextPages.flat()];
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link,
         item: items,
-    });
-};
+    };
+}

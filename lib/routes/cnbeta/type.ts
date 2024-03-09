@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,20 @@ import { parseDate } from '@/utils/parse-date';
 
 import { rootUrl, ProcessItems } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/:type/:id', '/'],
+    radar: {
+        source: ['cnbeta.com.tw/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    url: 'cnbeta.com.tw/',
+    url: 'cnbeta.com.tw/',
+};
+
+async function handler(ctx) {
     const { type, id } = ctx.req.param();
 
     const currentUrl = type ? `${rootUrl}/${type}/${id}.htm` : rootUrl;
@@ -35,9 +49,9 @@ export default async (ctx) => {
               category: item.label.name,
           }));
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: await ProcessItems(items, ctx.req.query('limit'), cache.tryGet),
-    });
-};
+    };
+}

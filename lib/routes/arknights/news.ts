@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news',
+    categories: ['game'],
+    example: '/arknights/news',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['ak-conf.hypergryph.com/*'],
+    },
+    name: '游戏公告与新闻',
+    maintainers: ['Astrian'],
+    handler,
+    url: 'ak-conf.hypergryph.com/*',
+};
+
+async function handler() {
     const response = await got({
         method: 'get',
         url: 'https://ak.hypergryph.com/news.html',
@@ -35,9 +58,9 @@ export default async (ctx) => {
             .get()
     );
 
-    ctx.set('data', {
+    return {
         title: '《明日方舟》游戏公告与新闻',
         link: 'https://ak.hypergryph.com/news.html',
         item: newslist,
-    });
-};
+    };
+}

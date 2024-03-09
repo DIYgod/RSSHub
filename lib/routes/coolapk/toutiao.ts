@@ -1,7 +1,29 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import utils from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/toutiao/:type?',
+    categories: ['social-media'],
+    example: '/coolapk/toutiao',
+    parameters: { type: '默认为history' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '头条',
+    maintainers: ['xizeyoupan'],
+    handler,
+    description: `| 参数名称 | 历史头条 | 最新   |
+  | -------- | -------- | ------ |
+  | type     | history  | latest |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') || 'history';
     const urls = {
         history: {
@@ -20,10 +42,10 @@ export default async (ctx) => {
 
     const out = await Promise.all(data.map((item) => utils.parseDynamic(item)));
 
-    ctx.set('data', {
+    return {
         title: urls[type].title,
         link: 'https://www.coolapk.com/',
         description: urls[type].title,
         item: out,
-    });
-};
+    };
+}

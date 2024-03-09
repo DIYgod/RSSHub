@@ -1,8 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/series',
+    categories: ['new-media'],
+    example: '/sspai/series',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['sspai.com/series'],
+    },
+    name: '最新上架付费专栏',
+    maintainers: ['HenryQW'],
+    handler,
+    url: 'sspai.com/series',
+    description: `> 少数派专栏需要付费订阅，RSS 仅做更新提醒，不含付费内容.`,
+};
+
+async function handler() {
     const response = await got('https://sspai.com/api/v1/series/tag/all/get');
 
     const products = response.data.data.reduce((acc, cate) => {
@@ -38,10 +62,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '少数派 -- 最新上架付费专栏',
         link: 'https://sspai.com/series',
         description: '少数派 -- 最新上架付费专栏',
         item,
-    });
-};
+    };
+}

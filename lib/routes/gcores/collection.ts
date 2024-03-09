@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 /* refer to: ./tag.js (author: @StevenREC0) */
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/collections/:collection',
+    categories: ['new-media'],
+    example: '/gcores/collections/64',
+    parameters: { collection: '专题id，可在专题页面的 URL 中找到，如 游戏开发设计心得分享 -- 64' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['gcores.com/collections/:collection'],
+    },
+    name: '专题文章',
+    maintainers: ['kudryavka1013'],
+    handler,
+};
+
+async function handler(ctx) {
     // get params
     const collection = ctx.req.param('collection');
 
@@ -129,9 +151,9 @@ export default async (ctx) => {
     });
 
     // return data
-    ctx.set('data', {
+    return {
         title: feedTitle,
         link: feedUrl,
         item: items,
-    });
-};
+    };
+}

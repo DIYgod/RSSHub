@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -15,7 +16,29 @@ const parseContent = (content) =>
 
 art.defaults.imports.parseContent = parseContent;
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/top20',
+    categories: ['blog'],
+    example: '/zhubai/top20',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['analy.zhubai.love/'],
+    },
+    name: 'Unknown',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'analy.zhubai.love/',
+};
+
+async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 20;
 
     const rootUrl = 'http://analy.zhubai.wiki';
@@ -55,7 +78,7 @@ export default async (ctx) => {
 
     const icon = $('link[rel="apple-touch-icon"]').prop('href');
 
-    ctx.set('data', {
+    return {
         item: items,
         title: `${$('meta[property="og:title"]').prop('content')} - TOP20`,
         link: rootUrl,
@@ -66,5 +89,5 @@ export default async (ctx) => {
         logo: icon,
         subtitle: $('meta[property="og:description"]').prop('content'),
         author: $('meta[name="twitter:site"]').prop('content'),
-    });
-};
+    };
+}

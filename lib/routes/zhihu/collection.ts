@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,29 @@ import utils from './utils';
 import { generateData } from './pin/utils';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/collection/:id/:getAll?',
+    categories: ['social-media'],
+    example: '/zhihu/collection/26444956',
+    parameters: { id: '收藏夹 id，可在收藏夹页面 URL 中找到', getAll: '获取全部收藏内容，任意值为打开' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.zhihu.com/collection/:id'],
+        target: '/collection/:id',
+    },
+    name: '收藏夹',
+    maintainers: ['huruji', 'Colin-XKL', 'Fatpandac'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const getAll = ctx.req.param('getAll');
 
@@ -58,7 +81,7 @@ export default async (ctx) => {
     const collection_description = $('.CollectionDetailPageHeader-description').text();
 
     const generateDataPin = (item) => generateData([item.content])[0];
-    ctx.set('data', {
+    return {
         title: collection_title,
         link: `https://www.zhihu.com/collection/${id}`,
         description: collection_description,
@@ -74,5 +97,5 @@ export default async (ctx) => {
                           pubDate: parseDate((item.content.type === 'article' ? item.content.updated : item.content.updated_time) * 1000),
                       }
             ),
-    });
-};
+    };
+}

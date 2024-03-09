@@ -1,6 +1,14 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/bangumi/:seasonid', '/bangumi/media/:mediaid'],
+    name: 'Unknown',
+    maintainers: ['DIYgod'],
+    handler,
+};
+
+async function handler(ctx) {
     let seasonid = ctx.req.param('seasonid');
     const mediaid = ctx.req.param('mediaid');
 
@@ -42,11 +50,11 @@ export default async (ctx) => {
         }
     }
 
-    ctx.set('data', {
+    return {
         title: mediaData?.mediaInfo.title,
         link: `https://www.bilibili.com/bangumi/media/md${mediaData?.mediaInfo.media_id}/`,
         image: mediaData?.mediaInfo.cover,
         description: mediaData?.mediaInfo.evaluate,
         item: episodes,
-    });
-};
+    };
+}

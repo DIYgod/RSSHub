@@ -1,8 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/group/:groupid/:type?',
+    categories: ['social-media'],
+    example: '/douban/group/648102',
+    parameters: { groupid: '豆瓣小组的 id', type: '缺省 最新，essence 最热，elite 精华' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.douban.com/group/:groupid'],
+        target: '/group/:groupid',
+    },
+    name: '豆瓣小组',
+    maintainers: ['DIYgod'],
+    handler,
+};
+
+async function handler(ctx) {
     const groupid = ctx.req.param('groupid');
     const type = ctx.req.param('type');
 
@@ -41,9 +64,9 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `豆瓣小组-${$('h1').text().trim()}`,
         link: url,
         item: items,
-    });
-};
+    };
+}

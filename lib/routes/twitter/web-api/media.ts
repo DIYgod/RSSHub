@@ -13,7 +13,7 @@ export default async (ctx) => {
     const data = await getUserMedia(id, params);
     const profileImageUrl = userInfo.profile_image_url || userInfo.profile_image_url_https;
 
-    ctx.set('data', {
+    return {
         title: `Twitter @${userInfo.name}`,
         link: `https://twitter.com/${userInfo.screen_name}/media`,
         image: profileImageUrl.replace(/_normal.jpg$/, '.jpg'),
@@ -21,5 +21,5 @@ export default async (ctx) => {
         item: utils.ProcessFeed(ctx, {
             data,
         }),
-    });
+    };
 };

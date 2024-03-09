@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate, parseRelativeDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: ['/u/:uid', '/user/:id'],
+    categories: ['programming'],
+    example: '/oschina/u/3920392',
+    parameters: { uid: '用户 id，可通过查看用户博客网址得到，以 u/数字结尾，数字即为 id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['my.oschina.net/u/:uid'],
+    },
+    name: '数字型账号用户博客',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const { id, uid } = ctx.req.param();
     const res = id ? await got(`https://my.oschina.net/${id}`) : await got(`https://my.oschina.net/u/${uid}`);
     const $ = load(res.data);
@@ -42,10 +64,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: author + '的博客',
         description: $('.user-text .user-signature').text(),
         link: `https://my.oschina.net/${id ?? uid}`,
         item: resultItem,
-    });
-};
+    };
+}

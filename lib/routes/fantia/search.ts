@@ -1,8 +1,83 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/search/:type?/:caty?/:period?/:order?/:rating?/:keyword?',
+    categories: ['picture'],
+    example: '/fantia/search/posts/all/daily',
+    parameters: {
+        type: 'Type, see the table below, `posts` by default',
+        caty: 'Category, see the table below, can also be found in search page URL, `すべてのクリエイター` by default',
+        period: 'Ranking period, see the table below, empty by default',
+        order: 'Sorting, see the table below, `更新の新しい順` by default',
+        rating: 'Rating, see the table below, `すべて` by default',
+        keyword: 'Keyword, empty by default',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Search',
+    maintainers: [],
+    handler,
+    description: `Type
+
+  | クリエイター | 投稿  | 商品     | コミッション |
+  | ------------ | ----- | -------- | ------------ |
+  | fanclubs     | posts | products | commissions  |
+
+  Category
+
+  | 分类                   | 分类名     |
+  | ---------------------- | ---------- |
+  | イラスト               | illust     |
+  | 漫画                   | comic      |
+  | コスプレ               | cosplay    |
+  | YouTuber・配信者       | youtuber   |
+  | Vtuber                 | vtuber     |
+  | 音声作品・ASMR         | voice      |
+  | 声優・歌い手           | voiceactor |
+  | アイドル               | idol       |
+  | アニメ・映像・写真     | anime      |
+  | 3D                     | 3d         |
+  | ゲーム制作             | game       |
+  | 音楽                   | music      |
+  | 小説                   | novel      |
+  | ドール                 | doll       |
+  | アート・デザイン       | art        |
+  | プログラム             | program    |
+  | 創作・ハンドメイド     | handmade   |
+  | 歴史・評論・情報       | history    |
+  | 鉄道・旅行・ミリタリー | railroad   |
+  | ショップ               | shop       |
+  | その他                 | other      |
+
+  Ranking period
+
+  | デイリー | ウィークリー | マンスリー | 全期間 |
+  | -------- | ------------ | ---------- | ------ |
+  | daily    | weekly       | monthly    | all    |
+
+  Sorting
+
+  | 更新の新しい順 | 更新の古い順 | 投稿の新しい順 | 投稿の古い順 | お気に入り数順 |
+  | -------------- | ------------ | -------------- | ------------ | -------------- |
+  | updater        | update\_old  | newer          | create\_old  | popular        |
+
+  Rating
+
+  | すべて | 一般のみ | R18 のみ |
+  | ------ | -------- | -------- |
+  | all    | general  | adult    |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') || 'posts';
     const caty = ctx.req.param('caty') || '';
     const order = ctx.req.param('order') || 'updater';
@@ -62,9 +137,9 @@ export default async (ctx) => {
             break;
     }
 
-    ctx.set('data', {
+    return {
         title: `Fantia - Search ${type}`,
         link: apiUrl.replace('api/v1/search/', ''),
         item: items,
-    });
-};
+    };
+}

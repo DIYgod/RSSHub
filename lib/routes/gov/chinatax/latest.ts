@@ -1,8 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/chinatax/latest',
+    categories: ['government'],
+    example: '/gov/chinatax/latest',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.chinatax.gov.cn/*'],
+    },
+    name: '最新文件',
+    maintainers: ['nczitzk', 'fuzy112'],
+    handler,
+    url: 'www.chinatax.gov.cn/*',
+};
+
+async function handler() {
     const link = `http://www.chinatax.gov.cn/chinatax/n810341/n810755/index.html`;
 
     const response = await got({
@@ -41,9 +64,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '国家税务总局 - 最新文件',
         link,
         item: items,
-    });
-};
+    };
+}

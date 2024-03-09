@@ -1,14 +1,37 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/cs',
+    categories: ['university'],
+    example: '/ccnu/cs',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['cs.ccnu.edu.cn/xwzx/tzgg.htm', 'cs.ccnu.edu.cn/'],
+    },
+    name: '计算机学院',
+    maintainers: ['shengmaosu'],
+    handler,
+    url: 'cs.ccnu.edu.cn/xwzx/tzgg.htm',
+};
+
+async function handler() {
     const link = 'http://cs.ccnu.edu.cn/xwzx/tzgg.htm';
     const response = await got(link);
     const $ = load(response.data);
     const list = $('.list_box_07 li');
 
-    ctx.set('data', {
+    return {
         title: '华中师范大学计算机学院',
         link,
         description: '华中师范大学计算机学院通知公告',
@@ -24,5 +47,5 @@ export default async (ctx) => {
                     pubDate: parseDate(item.find('.time').text(), 'DDYYYY-MM'),
                 };
             }),
-    });
-};
+    };
+}

@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getToken } from './token';
 import getRanking from './api/get-ranking';
@@ -56,7 +57,32 @@ const alias = {
     r18g: 'week_r18g',
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/ranking/:mode/:date?',
+    categories: ['social-media'],
+    example: '/pixiv/ranking/week',
+    parameters: { mode: 'rank type', date: 'format: `2018-4-25`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Rankings',
+    maintainers: ['EYHN'],
+    handler,
+    description: `| daily rank | weekly rank | monthly rank | male rank | female rank | AI-generated work Rankings | original rank  | rookie user rank |
+  | ---------- | ----------- | ------------ | --------- | ----------- | -------------------------- | -------------- | ---------------- |
+  | day        | week        | month        | day\_male | day\_female | day\_ai                    | week\_original | week\_rookie     |
+
+  | R-18 daily rank | R-18 AI-generated work | R-18 male rank | R-18 female rank | R-18 weekly rank | R-18G rank |
+  | --------------- | ---------------------- | -------------- | ---------------- | ---------------- | ---------- |
+  | day\_r18        | day\_r18\_ai           | day\_male\_r18 | day\_female\_r18 | week\_r18        | week\_r18g |`,
+};
+
+async function handler(ctx) {
     if (!config.pixiv || !config.pixiv.refreshToken) {
         throw new Error('pixiv RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -75,7 +101,7 @@ export default async (ctx) => {
 
     const dateStr = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 `;
 
-    ctx.set('data', {
+    return {
         title: (ctx.req.param('date') ? dateStr : '') + titles[mode],
         link: links[mode],
         description: dateStr + titles[mode],
@@ -90,5 +116,5 @@ export default async (ctx) => {
                 category: illust.tags.map((tag) => tag.name),
             };
         }),
-    });
-};
+    };
+}

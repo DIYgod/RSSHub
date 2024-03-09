@@ -1,9 +1,34 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/latest/:language?',
+    categories: ['new-media'],
+    example: '/radio-canada/latest',
+    parameters: { language: 'Language, see below, English by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['ici.radio-canada.ca/rci/:lang', 'ici.radio-canada.ca/'],
+    },
+    name: 'Latest News',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| Français | English | Español | 简体中文 | 繁體中文 | العربية | ਪੰਜਾਬੀ | Tagalog |
+  | -------- | ------- | ------- | -------- | -------- | ------- | --- | ------- |
+  | fr       | en      | es      | zh-hans  | zh-hant  | ar      | pa  | tl      |`,
+};
+
+async function handler(ctx) {
     const language = ctx.req.param('language') ?? 'en';
 
     const rootUrl = 'https://ici.radio-canada.ca';
@@ -43,9 +68,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: response.data.meta.title,
         link: response.data.metric.metrikContent.omniture.url,
         item: items,
-    });
-};
+    };
+}

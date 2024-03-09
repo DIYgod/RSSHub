@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,41 @@ import tough from 'tough-cookie';
 // eslint-disable-next-line n/no-extraneous-require
 import FormData from 'form-data';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:caty/:year?/:country?/:type?',
+    categories: ['journal'],
+    example: '/telecompaper/news/mobile/2020/China/News',
+    parameters: {
+        caty: 'Category, see table below',
+        year: 'Year. The year in respective category page filter, `all` for unlimited year, empty by default',
+        country: 'Country or continent, `all` for unlimited country or continent, empty by default',
+        type: 'Type, can be found in the `Types` filter, `all` for unlimited type, unlimited by default',
+    },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'News',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `Category
+
+  | WIRELESS | BROADBAND | VIDEO     | GENERAL | IT | INDUSTRY RESOURCES |
+  | -------- | --------- | --------- | ------- | -- | ------------------ |
+  | mobile   | internet  | boardcast | general | it | industry-resources |
+
+  :::tip
+  If \`country\` or \`type\` includes empty space, use \`-\` instead. For example, \`United States\` needs to be replaced with \`United-States\`, \`White paper\` needs to be replaced with \`White-paper\`
+
+  Filters in [INDUSTRY RESOURCES](https://www.telecompaper.com/industry-resources) only provides \`Content Type\` which corresponds to \`type\`. \`year\` and \`country\` are not supported.
+  :::`,
+};
+
+async function handler(ctx) {
     const rootUrl = `https://www.telecompaper.com/${ctx.req.param('caty') === 'industry-resources' ? ctx.req.param('caty') : 'international/news/' + ctx.req.param('caty')}`;
     const year = ctx.req.param('year') ?? 'all';
     const country = ctx.req.param('country') ? ctx.req.param('country').split('-').join(' ') : 'all';
@@ -94,9 +129,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'Telecompaper - ' + $('h1').text(),
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

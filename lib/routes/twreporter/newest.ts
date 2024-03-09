@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 
 import fetch from './fetch-article';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/newest',
+    categories: ['new-media'],
+    example: '/twreporter/newest',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['twreporter.org/'],
+    },
+    name: '最新',
+    maintainers: ['emdoe'],
+    handler,
+    url: 'twreporter.org/',
+};
+
+async function handler() {
     const url = 'https://www.twreporter.org';
     const res = await got(url);
     const $ = load(res.data);
@@ -22,9 +45,9 @@ export default async (ctx) => {
             });
         })
     );
-    ctx.set('data', {
+    return {
         title: `報導者 | 最新`,
         link: url,
         item: out,
-    });
-};
+    };
+}

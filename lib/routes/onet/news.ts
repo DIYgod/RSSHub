@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,7 +11,30 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { parseArticleContent, parseMainImage } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news',
+    categories: ['new-media'],
+    example: '/onet/news',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['wiadomosci.onet.pl/'],
+    },
+    name: 'News',
+    maintainers: ['Vegann'],
+    handler,
+    url: 'wiadomosci.onet.pl/',
+    description: `This route provides a better reading experience (full text articles) over the official one for \`https://wiadomosci.onet.pl\`.`,
+};
+
+async function handler() {
     const rssUrl = 'https://wiadomosci.onet.pl/.feed';
     const feed = await parser.parseURL(rssUrl);
     const items = await Promise.all(
@@ -49,12 +73,12 @@ export default async (ctx) => {
             };
         })
     );
-    ctx.set('data', {
+    return {
         title: feed.title,
         link: feed.link,
         description: feed.title,
         item: items,
         language: 'pl',
         image: 'https://ocdn.eu/wiadomosciucs/static/logo2017/onet2017big_dark.png',
-    });
-};
+    };
+}

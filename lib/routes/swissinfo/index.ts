@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:language?/:category?',
+    categories: ['new-media'],
+    example: '/swissinfo/eng/latest-news',
+    parameters: { language: 'Language, eng by default', category: 'Category, Latest News by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['swissinfo.ch/:language/:category', 'swissinfo.ch/'],
+    },
+    name: 'Category',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const language = ctx.req.param('language') ?? 'eng';
     const category = ctx.req.param('category') ?? 'latest-news';
 
@@ -66,9 +88,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

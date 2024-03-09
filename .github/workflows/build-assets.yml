@@ -5,9 +5,7 @@ on:
     branches:
       - master
     paths:
-      - 'assets/radar-rules.js'
-      - 'lib/**/maintainer.js'
-      - 'lib/**/radar.js'
+      - 'lib/**/*.ts'
 
 permissions:
   contents: read
@@ -34,7 +32,13 @@ jobs:
       - name: Install dependencies (yarn)
         run: pnpm i
       - name: Build assets
-        run: npm run build:all
+        run: npm run build
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git status
+          git diff-index --quiet HEAD || (git commit -m "chore: auto build" -a --no-verify && git push "https://${GITHUB_ACTOR}:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" HEAD:master)
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:

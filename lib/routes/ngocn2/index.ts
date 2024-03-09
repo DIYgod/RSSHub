@@ -1,9 +1,35 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['new-media'],
+    example: '/ngocn2',
+    parameters: { category: '分类，见下表，默认为所有文章' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['ngocn2.org/'],
+    },
+    name: '首页',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'ngocn2.org/',
+    description: `| 所有文章 | 早报        | 热点     |
+  | -------- | ----------- | -------- |
+  | article  | daily-brief | trending |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'article';
 
     const rootUrl = 'https://ngocn2.org';
@@ -49,9 +75,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${$('.sectitle__content').text()} - NGOCN`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

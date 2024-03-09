@@ -1,10 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/yjsy/:category?',
+    categories: ['university'],
+    example: '/hljucm/yjsy',
+    parameters: { category: '分类, 见下表，默认为新闻动态' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '研究生院',
+    maintainers: ['nczitzk'],
+    handler,
+    description: `| 新闻动态 | 通知公告 |
+  | -------- | -------- |
+  | xwdt     | tzgg     |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') ?? 'xwdt';
 
     const rootUrl = 'https://yjsy.hljucm.net';
@@ -49,9 +71,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

@@ -1,10 +1,23 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:keywords/:security_key?',
+    radar: {
+        source: ['lightNovel.us/'],
+        target: '/:keywords/:security_key',
+    },
+    name: 'Unknown',
+    maintainers: ['nightmare-mio'],
+    handler,
+    url: 'lightNovel.us/',
+};
+
+async function handler(ctx) {
     const baseUrl = 'https://www.lightnovel.us';
     const { type, keywords, security_key = config.lightnovel.cookie } = ctx.req.param();
     const { data: response } = await got({
@@ -55,9 +68,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `轻之国度-追踪${keywords}更新-${type} `,
         link: baseUrl,
         item: items,
-    });
-};
+    };
+}

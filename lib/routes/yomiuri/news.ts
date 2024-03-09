@@ -1,10 +1,52 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['traditional-media'],
+    example: '/yomiuri/news',
+    parameters: { category: 'Category, `news` by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.yomiuri.co.jp/:category?'],
+    },
+    name: 'News',
+    maintainers: ['Arracc'],
+    handler,
+    description: `Free articles only.
+
+  | Category       | Parameter |
+  | -------------- | --------- |
+  | 新着・速報     | news      |
+  | 社会           | national  |
+  | 政治           | politics  |
+  | 経済           | economy   |
+  | スポーツ       | sports    |
+  | 国際           | world     |
+  | 地域           | local     |
+  | 科学・ＩＴ     | science   |
+  | エンタメ・文化 | culture   |
+  | ライフ         | life      |
+  | 医療・健康     | medical   |
+  | 教育・就活     | kyoiku    |
+  | 選挙・世論調査 | election  |
+  | 囲碁・将棋     | igoshougi |
+  | 社説           | editorial |
+  | 皇室           | koushitsu |`,
+};
+
+async function handler(ctx) {
     const { category = 'news' } = ctx.req.param();
     const url = `https://www.yomiuri.co.jp/${category}`;
 
@@ -71,10 +113,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         link: url,
         image: 'https://www.yomiuri.co.jp/apple-touch-icon.png',
         item: items,
-    });
-};
+    };
+}

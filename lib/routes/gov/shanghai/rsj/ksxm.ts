@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,29 @@ import * as path from 'node:path';
 
 const rootUrl = 'http://www.rsj.sh.gov.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/shanghai/rsj/ksxm',
+    categories: ['government'],
+    example: '/gov/shanghai/rsj/ksxm',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['rsj.sh.gov.cn/'],
+    },
+    name: '上海市职业能力考试院 考试项目',
+    maintainers: ['Fatpandac'],
+    handler,
+    url: 'rsj.sh.gov.cn/',
+};
+
+async function handler() {
     const url = `${rootUrl}/ksyzc/wangz/kwaplist_300.jsp`;
 
     const response = await got({
@@ -34,9 +57,9 @@ export default async (ctx) => {
         }))
         .get();
 
-    ctx.set('data', {
+    return {
         title: '上海市职业能力考试院 - 考试项目',
         link: url,
         item: items,
-    });
-};
+    };
+}

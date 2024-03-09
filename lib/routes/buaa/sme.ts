@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,19 +7,26 @@ import timezone from '@/utils/timezone';
 
 const BASE_URL = 'http://www.sme.buaa.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/sme/:path{.+}?',
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const { path = 'tzgg' } = ctx.req.param();
     const url = `${BASE_URL}/${path}.htm`;
     const { title, list } = await getList(url);
-    ctx.set('data', {
+    return {
         // 源标题
         title,
         // 源链接
         link: url,
         // 源文章
         item: await getItems(list),
-    });
-};
+    };
+}
 
 async function getList(url) {
     const { data } = await got(url);

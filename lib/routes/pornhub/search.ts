@@ -1,8 +1,27 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import { defaultDomain, renderDescription } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/search/:keyword',
+    categories: ['multimedia'],
+    example: '/pornhub/search/stepsister',
+    parameters: { keyword: 'keyword' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Keyword Search',
+    maintainers: ['nczitzk'],
+    handler,
+};
+
+async function handler(ctx) {
     const keyword = ctx.req.param('keyword');
     const currentUrl = `${defaultDomain}/webmasters/search?search=${keyword}`;
     const response = await got(currentUrl);
@@ -15,9 +34,9 @@ export default async (ctx) => {
         category: [...new Set([...item.tags.map((t) => t.tag_name), ...item.categories.map((c) => c.category)])],
     }));
 
-    ctx.set('data', {
+    return {
         title: `Pornhub - ${keyword}`,
         link: currentUrl,
         item: list,
-    });
-};
+    };
+}

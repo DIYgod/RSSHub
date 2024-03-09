@@ -1,8 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/topics',
+    categories: ['new-media'],
+    example: '/sspai/topics',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['sspai.com/topics'],
+    },
+    name: '专题',
+    maintainers: ['SunShinenny'],
+    handler,
+    url: 'sspai.com/topics',
+    description: `此为专题广场更新提示 => 集合型而非单篇文章。与下方 "专题内文章更新" 存在明显区别！`,
+};
+
+async function handler() {
     const api_url = `https://sspai.com/api/v1/topics?offset=0&limit=20&include_total=false`;
     const resp = await got({
         method: 'get',
@@ -29,10 +53,10 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `少数派专题广场更新推送`,
         link: `https://sspai.com/topics`,
         description: `仅仅推送新的专题(集合型而非具体文章) `,
         item: items,
-    });
-};
+    };
+}

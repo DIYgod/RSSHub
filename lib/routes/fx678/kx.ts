@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/kx',
+    categories: ['finance'],
+    example: '/fx678/kx',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['fx678.com/kx'],
+    },
+    name: '7x24 小时快讯',
+    maintainers: ['occupy5', 'dousha'],
+    handler,
+    url: 'fx678.com/kx',
+};
+
+async function handler() {
     const link = 'https://www.fx678.com/kx/';
     const res = await got.get(link);
     const $ = load(res.data);
@@ -37,9 +60,9 @@ export default async (ctx) => {
             })
         )
     );
-    ctx.set('data', {
+    return {
         title: '7x24小时快讯',
         link,
         item: out,
-    });
-};
+    };
+}

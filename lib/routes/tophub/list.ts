@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -7,7 +8,31 @@ import { config } from '@/config';
 import * as path from 'node:path';
 import { art } from '@/utils/render';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/list/:id',
+    categories: ['new-media'],
+    example: '/tophub/list/Om4ejxvxEN',
+    parameters: { id: '榜单id，可在 URL 中找到' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['tophub.today/n/:id'],
+    },
+    name: '榜单列表',
+    maintainers: ['akynazh'],
+    handler,
+    description: `:::tip
+将榜单条目集合到一个列表中，可避免推送大量条目，更符合阅读习惯且有热度排序，推荐使用。
+:::`,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const link = `https://tophub.today/n/${id}`;
     const response = await got.get(link, {
@@ -28,7 +53,7 @@ export default async (ctx) => {
     const combinedTitles = items.map((item) => item.title).join('');
     const renderRank = art(path.join(__dirname, 'templates/rank.art'), { items });
 
-    ctx.set('data', {
+    return {
         title,
         link,
         item: [
@@ -39,5 +64,5 @@ export default async (ctx) => {
                 guid: combinedTitles,
             },
         ],
-    });
-};
+    };
+}

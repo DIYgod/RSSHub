@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import utils from './utils';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/artist/:id',
+    categories: ['multimedia'],
+    example: '/spotify/artist/6k9TBCxyr4bXwZ8Y21Kwn1',
+    parameters: { id: 'Artist ID' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['open.spotify.com/artist/:id'],
+    },
+    name: 'Artist Albums',
+    maintainers: ['outloudvi'],
+    handler,
+};
+
+async function handler(ctx) {
     const token = await utils.getPublicToken();
     const id = ctx.req.param('id');
     const meta = await got
@@ -22,7 +44,7 @@ export default async (ctx) => {
         .json();
     const albums = itemsResponse.items;
 
-    ctx.set('data', {
+    return {
         title: `Albums of ${meta.name}`,
         link: meta.external_urls.spotify,
         allowEmpty: true,
@@ -34,5 +56,5 @@ export default async (ctx) => {
             link: x.external_urls.spotify,
         })),
         image: meta.images.length ? meta.images[0].url : undefined,
-    });
-};
+    };
+}

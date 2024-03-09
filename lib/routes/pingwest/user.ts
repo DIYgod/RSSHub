@@ -1,9 +1,41 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import utils from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:uid/:type?/:option?',
+    categories: ['new-media'],
+    example: '/pingwest/user/7781550877/article',
+    parameters: { uid: '用户id, 可从用户主页中得到', type: '内容类型, 默认为`article`', option: '参数' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['pingwest.com/user/:uid/:type', 'pingwest.com/'],
+        target: '/user/:uid/:type',
+    },
+    name: '用户',
+    maintainers: ['sanmmm'],
+    handler,
+    description: `内容类型
+
+  | 文章    | 动态  |
+  | ------- | ----- |
+  | article | state |
+
+  参数
+
+  -   \`fulltext\`，全文输出，例如：\`/pingwest/user/7781550877/article/fulltext\``,
+};
+
+async function handler(ctx) {
     const { uid, type = 'article', option } = ctx.req.param();
     const baseUrl = 'https://www.pingwest.com';
     const aimUrl = `${baseUrl}/user/${uid}/${type}`;
@@ -50,11 +82,11 @@ export default async (ctx) => {
         article: '文章',
         state: '动态',
     };
-    ctx.set('data', {
+    return {
         title: `品玩 - ${userName} - ${typeToLabel[type]}`,
         description: userSign,
         image: userAvatar,
         link: aimUrl,
         item,
-    });
-};
+    };
+}

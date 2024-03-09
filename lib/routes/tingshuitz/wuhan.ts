@@ -1,8 +1,21 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 const baseUrl = 'https://www.whwater.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/wuhan/:channelId?',
+    radar: {
+        source: ['whwater.com/IWater.shtml', 'whwater.com/'],
+        target: '/wuhan',
+    },
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    url: 'whwater.com/IWater.shtml',
+};
+
+async function handler(ctx) {
     const { channelId = 68 } = ctx.req.param();
     const response = await got.post('https://manager.whwater.com:8900/website/article/findChannelArticle', {
         form: {
@@ -24,9 +37,9 @@ export default async (ctx) => {
         link: `https://${baseUrl}/IPolicyDetails.shtml?id=31&sid=${channelId}${item.articleLink}`,
     }));
 
-    ctx.set('data', {
+    return {
         title: `${data.channelName}通知 - 武汉市水务集团有限公司`,
         link: `${baseUrl}/IWater.shtml?id=31&sid=48`,
         item: items,
-    });
-};
+    };
+}

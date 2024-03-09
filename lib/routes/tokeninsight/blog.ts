@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,29 @@ const baseURL = 'https://www.tokeninsight.com/';
 const title = 'TokenInsight';
 const link = 'https://www.tokeninsight.com/';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/blog/:lang?',
+    categories: ['finance'],
+    example: '/tokeninsight/blog/en',
+    parameters: { lang: 'Language, see below, Chinese by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['tokeninsight.com/:lang/blogs'],
+        target: '/blog/:lang',
+    },
+    name: 'Blogs',
+    maintainers: ['fuergaosi233'],
+    handler,
+};
+
+async function handler(ctx) {
     const lang = ctx.req.param('lang') ?? 'zh';
 
     const getBlogs = async () => {
@@ -45,9 +68,9 @@ export default async (ctx) => {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit')) : 30;
     const blogs = (await getBlogs()).slice(0, limit);
     const list = await Promise.all(blogs.map((element) => getBlogInfomation(element)));
-    ctx.set('data', {
+    return {
         title: `${lang === 'zh' ? '博客' : 'Blogs'} | ${title}`,
         link: `${link}${lang}/blogs`,
         item: list,
-    });
-};
+    };
+}

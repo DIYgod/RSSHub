@@ -379,6 +379,9 @@ devDependencies:
   supertest:
     specifier: 6.3.4
     version: 6.3.4
+  tldts:
+    specifier: 6.1.13
+    version: 6.1.13
   to-vfile:
     specifier: 8.0.0
     version: 8.0.0
@@ -9436,6 +9439,17 @@ packages:
     resolution: {integrity: sha512-rWsBfFCWKrjM/o2Q1TTUeYQv6tHSd/umUutDjVs6taTuEgRDIreVYIBgWRWW4ot7jp6n0UVUuxhTLWBtUmPu/w==}
     hasBin: true
     dev: false
+
+  /tldts-core@6.1.13:
+    resolution: {integrity: sha512-M1XP4D13YtXARKroULnLsKKuI1NCRAbJmUGGoXqWinajIDOhTeJf/trYUyBoLVx1/Nx1KBKxCrlW57ZW9cMHAA==}
+    dev: true
+
+  /tldts@6.1.13:
+    resolution: {integrity: sha512-+GxHFKVHvUTg2ieNPTx3b/NpZbgJSTZEDdI4cJzTjVYDuxijeHi1tt7CHHsMjLqyc+T50VVgWs3LIb2LrXOzxw==}
+    hasBin: true
+    dependencies:
+      tldts-core: 6.1.13
+    dev: true
 
   /tmp@0.0.33:
     resolution: {integrity: sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw==}

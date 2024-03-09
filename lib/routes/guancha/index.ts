@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -34,7 +35,40 @@ const config = {
     },
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:category?',
+    categories: ['new-media'],
+    example: '/guancha',
+    parameters: { category: '分类，见下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['guancha.cn/'],
+    },
+    name: '首页',
+    maintainers: ['nczitzk', 'Jeason0228'],
+    handler,
+    url: 'guancha.cn/',
+    description: `| 全部 | 评论 & 研究 | 要闻  | 风闻    | 热点新闻 | 滚动新闻 |
+  | ---- | ----------- | ----- | ------- | -------- | -------- |
+  | all  | review      | story | fengwen | redian   | gundong  |
+
+  home = 评论 & 研究 + 要闻 + 风闻
+
+  others = 热点新闻 + 滚动新闻
+
+  :::tip
+  观察者网首页左中右的三个 column 分别对应 **评论 & 研究**、**要闻**、**风闻** 三个部分。
+  :::`,
+};
+
+async function handler(ctx) {
     const total = 10;
     const category = ctx.req.param('category') ?? 'all';
     const rootUrl = 'https://www.guancha.cn';
@@ -145,9 +179,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `观察者网 - ${config[category].title}`,
         link: rootUrl,
         item: items,
-    });
-};
+    };
+}

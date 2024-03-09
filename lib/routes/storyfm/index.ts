@@ -1,7 +1,30 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/index',
+    categories: ['multimedia'],
+    example: '/storyfm/index',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['storyfm.cn/'],
+    },
+    name: '首页',
+    maintainers: ['sanmmm'],
+    handler,
+    url: 'storyfm.cn/',
+};
+
+async function handler() {
     const url = 'http://storyfm.cn';
     const response = await got(url);
     const $ = load(response.data);
@@ -35,10 +58,10 @@ export default async (ctx) => {
             };
         })
         .get();
-    ctx.set('data', {
+    return {
         title: '故事说FM',
         description: '故事说FM',
         link: url,
         item: items,
-    });
-};
+    };
+}

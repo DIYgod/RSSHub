@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
@@ -16,7 +17,29 @@ function getItemList($, type) {
     return list;
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/latest/:type?',
+    categories: ['multimedia'],
+    example: '/domp4/latest/vod',
+    parameters: { type: '`vod` 代表电影，`tv` 代表电视剧，默认 vod' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['domp4.cc/', 'domp4.cc/custom/update.html'],
+    },
+    name: '最近更新',
+    maintainers: ['savokiss'],
+    handler,
+    url: 'domp4.cc/',
+};
+
+async function handler(ctx) {
     const { type = 'vod' } = ctx.req.param();
     const { domain } = ctx.req.query();
 
@@ -27,9 +50,9 @@ export default async (ctx) => {
     const $ = load(res.data);
     const list = getItemList($, type);
 
-    ctx.set('data', {
+    return {
         link: latestUrl,
         title: 'domp4电影',
         item: list,
-    });
-};
+    };
+}

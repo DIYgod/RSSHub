@@ -1,10 +1,33 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 const host = 'https://support.apple.com/';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/exchange_repair/:country?',
+    categories: ['other'],
+    example: '/apple/exchange_repair',
+    parameters: { country: 'country code in apple.com URL (exception: for `United States` please use `us`), default to China `cn`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['support.apple.com/:country/service-programs'],
+        target: '/exchange_repair/:country',
+    },
+    name: 'Exchange and Repair Extension Programs',
+    maintainers: ['metowolf', 'HenryQW', 'kt286'],
+    handler,
+};
+
+async function handler(ctx) {
     const country = ctx.req.param('country') ?? '';
     const link = new URL(`${country}/service-programs`, host).href;
 
@@ -40,9 +63,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `Apple - ${$('h1.as-center').text()}`,
         link,
         item: out,
-    });
-};
+    };
+}

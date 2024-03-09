@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,18 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/eshop/hk',
+    radar: {
+        source: ['nintendo.com.hk/software/switch', 'nintendo.com.hk/'],
+    },
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    url: 'nintendo.com.hk/software/switch',
+};
+
+async function handler(ctx) {
     const response = await got('https://www.nintendo.com.hk/data/json/switch_software.json');
     const data = response.data.filter(({ link }) => link.startsWith('https://')).slice(0, ctx.req.query('limit') ? Number(ctx.req.query('limit')) : 30);
 
@@ -74,10 +86,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: 'Nintendo eShop（港服）新游戏',
         link: 'https://www.nintendo.com.hk/software/switch/',
         description: 'Nintendo eShop（港服）新上架的游戏',
         item: result,
-    });
-};
+    };
+}

@@ -1,7 +1,26 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/movie/later',
+    categories: ['social-media'],
+    example: '/douban/movie/later',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '即将上映的电影',
+    maintainers: ['DIYgod'],
+    handler,
+};
+
+async function handler() {
     const response = await got({
         method: 'get',
         url: 'https://movie.douban.com/cinema/later/beijing/',
@@ -24,9 +43,9 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: '即将上映的电影',
         link: 'https://movie.douban.com/cinema/later/',
         item,
-    });
-};
+    };
+}

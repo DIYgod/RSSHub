@@ -158,7 +158,7 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return ({
         title: `广东工业大学校内新闻网`,
         link: 'http://news.gdut.edu.cn',
         item: out.length > 0 ? out : articleList,

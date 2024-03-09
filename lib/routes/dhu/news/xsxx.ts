@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,29 @@ import { parseDate } from '@/utils/parse-date';
 
 const baseUrl = 'https://news.dhu.edu.cn/_wp3services/generalQuery?queryObj=articles&siteId=14&columnId=6410&pageIndex=1&rows=20';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/xsxx',
+    categories: ['university'],
+    example: '/dhu/news/xsxx',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['news.dhu.edu.cn/6410'],
+    },
+    name: '学术信息',
+    maintainers: ['fox2049'],
+    handler,
+    url: 'news.dhu.edu.cn/6410',
+};
+
+async function handler() {
     const { data } = await got(baseUrl, {
         headers: {
             Referer: 'https://news.dhu.edu.cn/6410/',
@@ -35,9 +58,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '学术信息',
         link: 'https://news.dhu.edu.cn/6410',
         item: items,
-    });
-};
+    };
+}

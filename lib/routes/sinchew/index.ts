@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -10,7 +11,19 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '*',
+    radar: {
+        source: ['sinchew.com.my/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    url: 'sinchew.com.my/',
+};
+
+async function handler(ctx) {
     const rootUrl = 'https://www.sinchew.com.my';
     const currentUrl = `${rootUrl}${getSubPath(ctx) === '/' ? '' : getSubPath(ctx)}`;
 
@@ -65,9 +78,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

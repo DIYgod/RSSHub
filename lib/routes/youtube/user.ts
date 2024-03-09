@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import utils from './utils';
 import { config } from '@/config';
@@ -5,7 +6,29 @@ import { parseDate } from '@/utils/parse-date';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/user/:username/:embed?',
+    categories: ['social-media'],
+    example: '/youtube/user/JFlaMusic',
+    parameters: { username: 'YouTuber id', embed: 'Default to embed the video, set to any value to disable embedding' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.youtube.com/user/:username'],
+        target: '/user/:username',
+    },
+    name: 'User',
+    maintainers: ['DIYgod'],
+    handler,
+};
+
+async function handler(ctx) {
     if (!config.youtube || !config.youtube.key) {
         throw new Error('YouTube RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -26,7 +49,7 @@ export default async (ctx) => {
 
     const data = (await utils.getPlaylistItems(playlistId, 'snippet', cache)).data.items;
 
-    ctx.set('data', {
+    return {
         title: `${channelName || username} - YouTube`,
         link: username.startsWith('@') ? `https://www.youtube.com/${username}` : `https://www.youtube.com/user/${username}`,
         description: `YouTube user ${username}`,
@@ -44,5 +67,5 @@ export default async (ctx) => {
                     author: snippet.videoOwnerChannelTitle,
                 };
             }),
-    });
-};
+    };
+}

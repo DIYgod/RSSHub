@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -5,7 +6,25 @@ import got from '@/utils/got';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id',
+    categories: ['study'],
+    example: '/orcid/0000-0002-4731-9700',
+    parameters: { id: 'Open Researcher and Contributor ID' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Works List',
+    maintainers: ['OrangeEd1t'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
     const rootUrl = 'https://orcid.org/';
     const currentUrl = `${rootUrl}${id}/worksPage.json?offset=0&sort=date&sortAsc=false&pageSize=20`;
@@ -47,9 +66,9 @@ export default async (ctx) => {
         return info;
     });
 
-    ctx.set('data', {
+    return {
         title: 'ORCID Works List' + id,
         link: currentUrl,
         item: out,
-    });
-};
+    };
+}

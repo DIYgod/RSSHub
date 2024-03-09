@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,29 @@ import { parseDate } from '@/utils/parse-date';
 const url = 'https://www.njit.edu.cn/index/tzgg.htm';
 const host = 'https://www.njit.edu.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/tzgg',
+    categories: ['university'],
+    example: '/njit/tzgg',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.njit.edu.cn/'],
+    },
+    name: '南京工程学院通知公告',
+    maintainers: ['zefengdaguo'],
+    handler,
+    url: 'www.njit.edu.cn/',
+};
+
+async function handler() {
     const response = await got({
         method: 'get',
         url,
@@ -67,9 +90,9 @@ export default async (ctx) => {
             }
         })
     );
-    ctx.set('data', {
+    return {
         title: '南京工程学院 -- 通知公告',
         url,
         item: out,
-    });
-};
+    };
+}

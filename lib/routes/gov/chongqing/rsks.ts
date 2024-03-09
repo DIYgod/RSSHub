@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 const rsksUrl = 'https://rlsbj.cq.gov.cn/ywzl/rsks/tzgg_109374/';
-export default async (ctx) => {
+export const route: Route = {
+    path: '/chongqing/rsks',
+    categories: ['government'],
+    example: '/gov/chongqing/rsks',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['rlsbj.cq.gov.cn/'],
+    },
+    name: 'Unknown',
+    maintainers: ['Mai19930513'],
+    handler,
+    url: 'rlsbj.cq.gov.cn/',
+};
+
+async function handler() {
     const { data: response } = await got(rsksUrl);
     const $ = load(response);
     // 获取考试信息标题
@@ -31,9 +54,9 @@ export default async (ctx) => {
             })
         )
     );
-    ctx.set('data', {
+    return {
         title: '重庆人事考试通知公告',
         link: rsksUrl,
         item: items,
-    });
-};
+    };
+}

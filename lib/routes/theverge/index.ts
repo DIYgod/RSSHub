@@ -1,9 +1,47 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import parser from '@/utils/rss-parser';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:hub?',
+    categories: ['new-media'],
+    example: '/theverge',
+    parameters: { hub: 'Hub, see below, All Posts by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['theverge.com/:hub', 'theverge.com/'],
+    },
+    name: 'The Verge',
+    maintainers: ['HenryQW', 'vbali'],
+    handler,
+    description: `| Hub         | Hub name            |
+  | ----------- | ------------------- |
+  |             | All Posts           |
+  | android     | Android             |
+  | apple       | Apple               |
+  | apps        | Apps & Software     |
+  | blackberry  | BlackBerry          |
+  | culture     | Culture             |
+  | gaming      | Gaming              |
+  | hd          | HD & Home           |
+  | microsoft   | Microsoft           |
+  | photography | Photography & Video |
+  | policy      | Policy & Law        |
+  | web         | Web & Social        |
+
+  Provides a better reading experience (full text articles) over the official one.`,
+};
+
+async function handler(ctx) {
     const link = ctx.req.param('hub') ? `https://www.theverge.com/${ctx.req.param('hub')}/rss/index.xml` : 'https://www.theverge.com/rss/index.xml';
 
     const feed = await parser.parseURL(link);
@@ -84,10 +122,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: feed.title,
         link: feed.link,
         description: feed.description,
         item: items,
-    });
-};
+    };
+}

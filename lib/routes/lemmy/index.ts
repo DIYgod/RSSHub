@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
@@ -5,7 +6,25 @@ import MarkdownIt from 'markdown-it';
 const md = MarkdownIt({ html: true });
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:community/:sort?',
+    categories: ['social-media'],
+    example: '/lemmy/technology@lemmy.world/Hot',
+    parameters: { community: 'Lemmmy community, for example technology@lemmy.world', sort: 'Sort by, defaut to Active' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: 'Community',
+    maintainers: ['wb14123'],
+    handler,
+};
+
+async function handler(ctx) {
     const sort = ctx.req.param('sort') ?? 'Active';
     const community = ctx.req.param('community');
     const communitySlices = community.split('@');
@@ -54,10 +73,10 @@ export default async (ctx) => {
         return item;
     });
 
-    ctx.set('data', {
+    return {
         title: `${community} - ${sort} posts`,
         description: communityData.description,
         link: communityData.actor_id,
         item: items,
-    });
-};
+    };
+}

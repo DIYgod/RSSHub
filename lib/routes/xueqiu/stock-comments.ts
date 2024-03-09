@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,28 @@ import * as path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 import sanitizeHtml from 'sanitize-html';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/stock_comments/:id',
+    categories: ['finance'],
+    example: '/xueqiu/stock_comments/SZ002626',
+    parameters: { id: '股票代码（需要带上交易所）' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['xueqiu.com/S/:id'],
+    },
+    name: '股票评论',
+    maintainers: [],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const res = await got({
@@ -28,7 +50,7 @@ export default async (ctx) => {
     });
 
     const data = res.data.list;
-    ctx.set('data', {
+    return {
         title: `${id} ${stock_name} - 评论`,
         link: `https://xueqiu.com/S/${id}`,
         description: `${stock_name} - 评论`,
@@ -45,5 +67,5 @@ export default async (ctx) => {
                 link,
             };
         }),
-    });
-};
+    };
+}

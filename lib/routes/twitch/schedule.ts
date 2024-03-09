@@ -1,9 +1,31 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 
 // https://github.com/streamlink/streamlink/blob/master/src/streamlink/plugins/twitch.py#L286
 const TWITCH_CLIENT_ID = 'kimne78kx3ncx6brgo4mv6wki5h1ko';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/schedule/:login',
+    categories: ['live'],
+    example: '/twitch/schedule/riotgames',
+    parameters: { login: 'Twitch username' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.twitch.tv/:login/schedule'],
+    },
+    name: 'Stream Schedule',
+    maintainers: ['hoilc'],
+    handler,
+};
+
+async function handler(ctx) {
     const login = ctx.req.param('login');
 
     const today = new Date();
@@ -67,10 +89,10 @@ export default async (ctx) => {
         category: item.categories.map((item) => item.name),
     }));
 
-    ctx.set('data', {
+    return {
         title: `Twitch - ${displayName} - Schedule`,
         link: `https://www.twitch.tv/${login}`,
         item: out,
         allowEmpty: true,
-    });
-};
+    };
+}

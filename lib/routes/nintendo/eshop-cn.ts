@@ -1,10 +1,22 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import util from './utils';
 const software_url = 'https://www.nintendoswitch.com.cn/software/';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/eshop/cn',
+    radar: {
+        source: ['nintendoswitch.com.cn/software', 'nintendoswitch.com.cn/'],
+    },
+    name: 'Unknown',
+    maintainers: [],
+    handler,
+    url: 'nintendoswitch.com.cn/software',
+};
+
+async function handler() {
     const response = await got(software_url);
 
     // 获取Nuxt对象
@@ -36,10 +48,10 @@ export default async (ctx) => {
 
     data = await util.ProcessItemChina(data, cache);
 
-    ctx.set('data', {
+    return {
         title: 'Nintendo eShop（国服）新游戏',
         link: 'https://www.nintendoswitch.com.cn/software',
         description: 'Nintendo（国服）新上架的游戏',
         item: data,
-    });
-};
+    };
+}

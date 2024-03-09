@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,33 @@ import * as path from 'node:path';
 import { config } from '@/config';
 const web_url = 'https://www.manhuagui.com/user/book/shelf/1';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/subscribe',
+    categories: ['anime'],
+    example: '/manhuagui/subscribe',
+    parameters: {},
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.mhgui.com/user/book/shelf'],
+    },
+    name: '漫画个人订阅',
+    maintainers: ['shininome'],
+    handler,
+    url: 'www.mhgui.com/user/book/shelf',
+    description: `:::tip
+  个人订阅需要自建
+  环境变量需要添加 MHGUI\_COOKIE
+  :::`,
+};
+
+async function handler() {
     if (!config.manhuagui || !config.manhuagui.cookie) {
         throw new Error('manhuagui RSS is disabled due to the lack of <a href="https://docs.rsshub.app/install/#pei-zhi-bu-fen-rss-mo-kuai-pei-zhi">relevant config</a>');
     }
@@ -48,10 +75,10 @@ export default async (ctx) => {
             return single;
         })
         .get(); // 这里获取数组= =
-    ctx.set('data', {
+    return {
         title,
         link,
         description,
         item,
-    });
-};
+    };
+}

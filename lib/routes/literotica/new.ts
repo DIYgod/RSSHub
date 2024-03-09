@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/new',
+    categories: ['reading'],
+    example: '/literotica/new',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['literotica.com/'],
+    },
+    name: 'New Stories',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'literotica.com/',
+};
+
+async function handler() {
     const rootUrl = 'https://www.literotica.com';
     const currentUrl = `${rootUrl}/stories/new_submissions.php`;
 
@@ -52,9 +75,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

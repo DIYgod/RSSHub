@@ -1,9 +1,35 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/liuyan/:id/:state?',
+    categories: ['traditional-media'],
+    example: '/people/liuyan/539',
+    parameters: { id: '编号，可在对应人物页 URL 中找到', state: '状态，见下表，默认为全部' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['liuyan.people.com.cn/'],
+    },
+    name: '领导留言板',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'liuyan.people.com.cn/',
+    description: `| 全部 | 待回复 | 办理中 | 已办理 |
+  | ---- | ------ | ------ | ------ |
+  | 1    | 2      | 3      | 4      |`,
+};
+
+async function handler(ctx) {
     const fid = ctx.req.param('id');
     const state = ctx.req.param('state') ?? '1';
 
@@ -47,9 +73,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${currentForum} - 领导留言板 - 人民网`,
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

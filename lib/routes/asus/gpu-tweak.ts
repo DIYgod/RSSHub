@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 const pageUrl = 'https://www.asus.com/campaign/GPU-Tweak-III/tw/index.php';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/gpu-tweak',
+    categories: ['program-update'],
+    example: '/asus/gpu-tweak',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['asus.com/campaign/GPU-Tweak-III/*', 'asus.com/'],
+    },
+    name: 'GPU Tweak',
+    maintainers: ['TonyRL'],
+    handler,
+    url: 'asus.com/campaign/GPU-Tweak-III/*',
+};
+
+async function handler() {
     const response = await got(pageUrl);
     const $ = load(response.data);
 
@@ -20,12 +43,12 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         title: $('head title').text(),
         description: $('meta[name=description]').attr('content'),
         image: new URL($('head link[rel="shortcut icon"]').attr('href'), pageUrl).href,
         link: pageUrl,
         item: items,
         language: $('html').attr('lang'),
-    });
-};
+    };
+}

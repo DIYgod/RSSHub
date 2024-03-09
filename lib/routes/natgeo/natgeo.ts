@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
@@ -26,7 +27,29 @@ async function loadContent(link) {
     };
 }
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:cat/:type?',
+    categories: ['travel'],
+    example: '/natgeo/environment/article',
+    parameters: { cat: '分类', type: '类型, 例如`https://www.natgeomedia.com/environment/photo/`对应 `cat`, `type` 分别为 `environment`, `photo`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['natgeomedia.com/:cat/:type', 'natgeomedia.com/'],
+        target: '/:cat/:type',
+    },
+    name: '分类',
+    maintainers: ['fengkx'],
+    handler,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') ?? '';
     const url = `https://www.natgeomedia.com/${ctx.req.param('cat')}/${type}`;
     const res = await got(url);
@@ -49,9 +72,9 @@ export default async (ctx) => {
             return { ...single, ...other };
         })
     );
-    ctx.set('data', {
+    return {
         title: $('title').text(),
         link: url,
         item: out,
-    });
-};
+    };
+}

@@ -1,10 +1,35 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import iconv from 'iconv-lite';
 import { parseDate } from '@/utils/parse-date';
 // import logger from '@/utils/logger';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/yjsy/news/:type',
+    categories: ['university'],
+    example: '/ustb/yjsy/news/all',
+    parameters: { type: '文章类别' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['gs.ustb.edu.cn/:type'],
+    },
+    name: '研究生院',
+    maintainers: ['DA1Y1'],
+    handler,
+    description: `| 北京科技大学研究生院 | 土木与资源工程学院 | 能源与环境工程学院 | 冶金与生态工程学院 | 材料科学与工程学院 | 机械工程学院 | 自动化学院 | 计算机与通信工程学院 | 数理学院 | 化学与生物工程学院 | 经济管理学院 | 文法学院 | 马克思主义学院 | 外国语学院 | 国家材料服役安全科学中心 | 新金属材料国家重点实验室 | 工程技术研究院 | 钢铁共性技术协同创新中心 | 钢铁冶金新技术国家重点实验室 | 新材料技术研究院 | 科技史与文化遗产研究院 | 顺德研究生院 |
+  | -------------------- | ------------------ | ------------------ | ------------------ | ------------------ | ------------ | ---------- | -------------------- | -------- | ------------------ | ------------ | -------- | -------------- | ---------- | ------------------------ | ------------------------ | -------------- | ------------------------ | ---------------------------- | ---------------- | ---------------------- | ------------ |
+  | all                  | cres               | seee               | metall             | mse                | me           | saee       | scce                 | shuli    | huasheng           | sem          | wenfa    | marx           | sfs        | ncms                     | skl                      | iet            | cicst                    | slam                         | adma             | ihmm                   | sd           |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type');
     const struct = {
         all: {
@@ -401,7 +426,7 @@ export default async (ctx) => {
     // logger.info("list:" + list);
 
     // 处理返回
-    ctx.set('data', {
+    return {
         title: struct[type].name,
         link: struct[type].link,
         description: '北京科技大学研究生院',
@@ -453,5 +478,5 @@ export default async (ctx) => {
                           };
                 })
                 .get(),
-    });
-};
+    };
+}

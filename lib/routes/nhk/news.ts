@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -9,7 +10,40 @@ import * as path from 'node:path';
 const baseUrl = 'https://www3.nhk.or.jp';
 const apiUrl = 'https://nwapi.nhk.jp';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news/:lang?',
+    categories: ['traditional-media'],
+    example: '/nhk/news/en',
+    parameters: { lang: 'Language, see below, `en` by default' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www3.nhk.or.jp/nhkworld/:lang/news/list/', 'www3.nhk.or.jp/nhkworld/:lang/news/'],
+        target: '/news/:lang',
+    },
+    name: 'WORLD-JAPAN - Top Stories',
+    maintainers: ['TonyRL'],
+    handler,
+    description: `| العربية | বাংলা | မြန်မာဘာသာစကား | 中文（简体） | 中文（繁體） | English | Français |
+  | ------- | -- | ------------ | ------------ | ------------ | ------- | -------- |
+  | ar      | bn | my           | zh           | zt           | en      | fr       |
+
+  | हिन्दी | Bahasa Indonesia | 코리언 | فارسی | Português | Русский | Español |
+  | -- | ---------------- | ------ | ----- | --------- | ------- | ------- |
+  | hi | id               | ko     | fa    | pt        | ru      | es      |
+
+  | Kiswahili | ภาษาไทย | Türkçe | Українська | اردو | Tiếng Việt |
+  | --------- | ------- | ------ | ---------- | ---- | ---------- |
+  | sw        | th      | tr     | uk         | ur   | vi         |`,
+};
+
+async function handler(ctx) {
     const { lang = 'en' } = ctx.req.param();
     const { data } = await got(`${apiUrl}/nhkworld/rdnewsweb/v7b/${lang}/outline/list.json`);
     const meta = await got(`${baseUrl}/nhkworld/common/assets/news/config/${lang}.json`);
@@ -37,9 +71,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `${Object.values(meta.data.config.navigation.header).find((h) => h.keyname === 'topstories')?.name} | NHK WORLD-JAPAN News`,
         link: `${baseUrl}/nhkworld/${lang}/news/list/`,
         item: items,
-    });
-};
+    };
+}

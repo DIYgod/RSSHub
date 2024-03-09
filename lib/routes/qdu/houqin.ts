@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -6,7 +7,29 @@ import { parseDate } from '@/utils/parse-date';
 
 const base = 'https://houqin.qdu.edu.cn/';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/houqin',
+    categories: ['university'],
+    example: '/qdu/houqin',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['houqin.qdu.edu.cn/tzgg.htm', 'houqin.qdu.edu.cn/'],
+    },
+    name: '后勤管理处通知',
+    maintainers: ['abc1763613206'],
+    handler,
+    url: 'houqin.qdu.edu.cn/tzgg.htm',
+};
+
+async function handler() {
     const response = await got({
         method: 'get',
         url: `${base}index/tzgg.htm`,
@@ -55,10 +78,10 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: '青岛大学 - 后勤管理处通知',
         link: `${base}index/tzgg.htm`,
         description: '青岛大学 - 后勤管理处通知',
         item: items,
-    });
-};
+    };
+}

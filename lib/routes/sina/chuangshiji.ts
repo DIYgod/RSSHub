@@ -1,7 +1,30 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { getRollNewsList, parseRollNewsList, parseArticle } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/csj',
+    categories: ['new-media'],
+    example: '/sina/csj',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['tech.sina.com.cn/chuangshiji', 'tech.sina.com.cn/'],
+    },
+    name: '专栏 - 创事记',
+    maintainers: ['xapool'],
+    handler,
+    url: 'tech.sina.com.cn/chuangshiji',
+};
+
+async function handler(ctx) {
     const pageid = '402';
     const lid = '2559';
     const { limit = '50' } = ctx.req.query();
@@ -10,9 +33,9 @@ export default async (ctx) => {
 
     const out = await Promise.all(list.map((item) => parseArticle(item, cache.tryGet)));
 
-    ctx.set('data', {
+    return {
         title: '新浪专栏-创事记',
         link: 'https://tech.sina.com.cn/chuangshiji',
         item: out,
-    });
-};
+    };
+}

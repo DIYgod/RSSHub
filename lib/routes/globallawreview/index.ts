@@ -1,7 +1,20 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/',
+    radar: {
+        source: ['globallawreview.org/Magazine/GetIssueContentList', 'globallawreview.org/'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'globallawreview.org/Magazine/GetIssueContentList',
+};
+
+async function handler(ctx) {
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 30;
 
     const rootUrl = 'http://www.globallawreview.org';
@@ -45,11 +58,11 @@ export default async (ctx) => {
             };
         });
 
-    ctx.set('data', {
+    return {
         item: items,
         title: $('title').text(),
         link: currentUrl,
         language: 'zh-cn',
         author: '中国社会科学院法学研究所',
-    });
-};
+    };
+}

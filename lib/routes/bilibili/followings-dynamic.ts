@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import cache from './cache';
 import { config } from '@/config';
@@ -6,7 +7,28 @@ import JSONbig from 'json-bigint';
 import { fallback, queryToBoolean } from '@/utils/readable-social';
 import querystring from 'querystring';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/followings/dynamic/:uid/:routeParams?',
+    categories: ['social-media'],
+    example: '/bilibili/followings/dynamic/109937383',
+    parameters: { uid: '用户 id', routeParams: '额外参数；请参阅 [#UP 主动态](#bilibili-up-zhu-dong-tai) 的说明和表格' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '用户关注动态',
+    maintainers: ['TigerCubDen', 'JimenezLi'],
+    handler,
+    description: `:::warning
+  用户动态需要 b 站登录后的 Cookie 值，所以只能自建，详情见部署页面的配置模块。
+  :::`,
+};
+
+async function handler(ctx) {
     const uid = String(ctx.req.param('uid'));
     const routeParams = querystring.parse(ctx.req.param('routeParams'));
 
@@ -143,10 +165,10 @@ export default async (ctx) => {
         })
     );
 
-    ctx.set('data', {
+    return {
         title: `${name} 关注的动态`,
         link: `https://t.bilibili.com`,
         description: `${name} 关注的动态`,
         item: items,
-    });
-};
+    };
+}

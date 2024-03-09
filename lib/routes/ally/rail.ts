@@ -1,10 +1,36 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { load } from 'cheerio';
 import got from '@/utils/got';
 import { parseDate } from '@/utils/parse-date';
 import timezone from '@/utils/timezone';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/rail/:category?/:topic?',
+    categories: ['new-media'],
+    example: '/ally/rail/hyzix/chengguijiaotong/',
+    parameters: { category: '分类，可在 URL 中找到；略去则抓取首页', topic: '话题，可在 URL 中找到；并非所有页面均有此字段' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['rail.ally.net.cn/', 'rail.ally.net.cn/html/:category?/:topic?'],
+    },
+    name: '世界轨道交通资讯网',
+    maintainers: ['Rongronggg9'],
+    handler,
+    url: 'rail.ally.net.cn/',
+    description: `:::tip
+  默认抓取前 20 条，可通过 \`?limit=\` 改变。
+  :::`,
+};
+
+async function handler(ctx) {
     // http://rail.ally.net.cn/sitemap.html
     const { category, topic } = ctx.req.param();
     const rootUrl = 'http://rail.ally.net.cn';
@@ -100,10 +126,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `世界轨道交通资讯网 - ${title}`,
         link: pageUrl,
         item: items,
         description: $('head > meta[name="description"]').attr('content'),
-    });
-};
+    };
+}

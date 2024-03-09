@@ -1,9 +1,32 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/news',
+    categories: ['game'],
+    example: '/gamegene/news',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['news.gamegene.cn/news'],
+    },
+    name: '资讯',
+    maintainers: ['lone1y-51'],
+    handler,
+    url: 'news.gamegene.cn/news',
+};
+
+async function handler() {
     const url = 'https://gamegene.cn/news';
     const { data: response } = await got({
         method: 'get',
@@ -42,10 +65,10 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         // 在此处输出您的 RSS
         item: items,
         link: url,
         title: '游戏基因 GameGene',
-    });
-};
+    };
+}

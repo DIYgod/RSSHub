@@ -1,8 +1,35 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { renderDesc } from './utils';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:pub/:jrn',
+    categories: ['journal'],
+    example: '/aip/aapt/ajp',
+    parameters: { pub: 'Publisher id', jrn: 'Journal id' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: true,
+    },
+    radar: {
+        source: ['pubs.aip.org/:pub/:jrn'],
+    },
+    name: 'Journal',
+    maintainers: ['Derekmini', 'auto-bot-ty'],
+    handler,
+    description: `Refer to the URL format \`pubs.aip.org/:pub/:jrn\`
+
+  :::tip
+  More jounals can be found in [AIP Publications](https://publishing.aip.org/publications/find-the-right-journal).
+  :::`,
+};
+
+async function handler(ctx) {
     const pub = ctx.req.param('pub');
     const jrn = ctx.req.param('jrn');
     const host = `https://pubs.aip.org`;
@@ -46,10 +73,10 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: jrnlName,
         link: jrnlUrl,
         item: list,
         allowEmpty: true,
-    });
-};
+    };
+}

@@ -1,10 +1,35 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import timezone from '@/utils/timezone';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/www/:category?',
+    categories: ['university'],
+    example: '/sqmc/www/3157',
+    parameters: { category: '分类ID，默认为`3157`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['sqmc.edu.cn/:category/list.htm'],
+    },
+    name: '官网信息',
+    maintainers: ['nyaShine'],
+    handler,
+    description: `| 学校要闻 | 通知 | 学术讲座 | 基层风采书院 | 基层风采院系 | 外媒报道 | 三全学院报 |
+  | -------- | ---- | -------- | ------------ | ------------ | -------- | ---------- |
+  | 3157     | 3187 | 3188     | 3185         | 3186         | 3199     | 3200       |`,
+};
+
+async function handler(ctx) {
     const category = ctx.req.param('category') || '3157';
 
     const rootUrl = 'https://www.sqmc.edu.cn';
@@ -18,7 +43,7 @@ export default async (ctx) => {
     const $ = load(response.data);
     const list = $('div#wp_news_w9 ul li').get();
 
-    ctx.set('data', {
+    return {
         title: `新乡医学院三全学院官网信息${$('title').text()}`,
         link: currentUrl,
         item: await Promise.all(
@@ -46,5 +71,5 @@ export default async (ctx) => {
                 return cacheIn;
             })
         ),
-    });
-};
+    };
+}

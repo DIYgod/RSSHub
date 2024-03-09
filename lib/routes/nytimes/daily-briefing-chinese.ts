@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -8,7 +9,31 @@ import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
 import * as path from 'node:path';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/daily_briefing_chinese',
+    categories: ['traditional-media'],
+    example: '/nytimes/daily_briefing_chinese',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['nytimes.com/'],
+        target: '',
+    },
+    name: '新闻简报',
+    maintainers: ['yueyericardo', 'nczitzk'],
+    handler,
+    url: 'nytimes.com/',
+    description: `网站地址：[https://www.nytimes.com/zh-hans/series/daily-briefing-chinese](https://www.nytimes.com/zh-hans/series/daily-briefing-chinese)`,
+};
+
+async function handler() {
     const rootUrl = 'https://www.nytimes.com';
     const currentUrl = `${rootUrl}/zh-hans/series/daily-briefing-chinese`;
 
@@ -63,9 +88,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: '新闻简报 - The New York Times',
         link: currentUrl,
         item: items,
-    });
-};
+    };
+}

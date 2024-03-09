@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { load } from 'cheerio';
 import { parseDate } from '@/utils/parse-date';
 import dayjs from 'dayjs';
@@ -29,7 +30,33 @@ const mapTitle = {
     9: "Int'I",
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/sise/:type?',
+    categories: ['university'],
+    example: '/uestc/sise/1',
+    parameters: { type: '默认为 `1`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['sise.uestc.edu.cn/'],
+        target: '/sise',
+    },
+    name: '信息与软件工程学院',
+    maintainers: ['Yadomin', 'mobyw'],
+    handler,
+    url: 'sise.uestc.edu.cn/',
+    description: `| 最新 | 院办 | 学生科 | 教务科 | 研管科 | 组织 | 人事 | 实践教育中心 | Int'I |
+  | ---- | ---- | ------ | ------ | ------ | ---- | ---- | ------------ | ----- |
+  | 1    | 2    | 3      | 4      | 5      | 6    | 7    | 8            | 9     |`,
+};
+
+async function handler(ctx) {
     const type = ctx.req.param('type') || 1;
     const divId = mapId[type];
     if (!divId) {
@@ -72,10 +99,10 @@ export default async (ctx) => {
         })
         .get();
 
-    ctx.set('data', {
+    return {
         title: `信软学院通知-${mapTitle[type]}`,
         link: baseUrl,
         description: '电子科技大学信息与软件工程学院通知',
         item: out,
-    });
-};
+    };
+}

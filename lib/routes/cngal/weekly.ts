@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -6,10 +7,32 @@ import { art } from '@/utils/render';
 import * as path from 'node:path';
 import { parseDate } from '@/utils/parse-date';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/weekly',
+    categories: ['anime'],
+    example: '/cngal/weekly',
+    parameters: {},
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['www.cngal.org/', 'www.cngal.org/weeklynews'],
+    },
+    name: '每周速报',
+    maintainers: ['chengyuhui'],
+    handler,
+    url: 'www.cngal.org/',
+};
+
+async function handler(ctx) {
     const response = await got('https://www.cngal.org/api/news/GetWeeklyNewsOverview');
 
-    ctx.set('data', {
+    return {
         title: 'CnGal - 每周速报',
         link: 'https://www.cngal.org/weeklynews',
         item: response.data.map((item) => ({
@@ -18,6 +41,6 @@ export default async (ctx) => {
             pubDate: parseDate(item.lastEditTime),
             link: `https://www.cngal.org/articles/index/${item.id}`,
         })),
-    });
+    };
     ctx.state.json = response.data;
-};
+}

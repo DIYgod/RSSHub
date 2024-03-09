@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -8,7 +9,31 @@ import { CookieJar } from 'tough-cookie';
 const APP_DATA_REGEX = /window\.appData = JSON\.parse\(decodeURIComponent\("(.+?)"\)\);/;
 const baseUrl = 'https://www.yuque.com';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:name/:book',
+    categories: ['study'],
+    example: '/yuque/ruanyf/weekly',
+    parameters: { name: '用戶名', book: '知识库 ID' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['yuque.com/:name/:book'],
+    },
+    name: '知识库',
+    maintainers: ['aha2mao', 'ltaoo'],
+    handler,
+    description: `| Node.js 专栏                                             | 阮一峰每周分享                                                 | 语雀使用手册                                             |
+  | -------------------------------------------------------- | -------------------------------------------------------------- | -------------------------------------------------------- |
+  | [/yuque/egg/nodejs](https://rsshub.app/yuque/egg/nodejs) | [/yuque/ruanyf/weekly](https://rsshub.app/yuque/ruanyf/weekly) | [/yuque/yuque/help](https://rsshub.app/yuque/yuque/help) |`,
+};
+
+async function handler(ctx) {
     const cookieJar = new CookieJar();
     const { name, book } = ctx.req.param();
     const bookUrl = `${baseUrl}/${name}/${book}`;
@@ -89,11 +114,11 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: appData.book.name,
         description: appData.book.description,
         image: appData.group.avatar,
         link: bookUrl,
         item: items,
-    });
-};
+    };
+}

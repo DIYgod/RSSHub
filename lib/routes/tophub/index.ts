@@ -1,8 +1,30 @@
+import { Route } from '@/types';
 import got from '@/utils/got';
 import { load } from 'cheerio';
 import { config } from '@/config';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:id',
+    categories: ['new-media'],
+    example: '/tophub/Om4ejxvxEN',
+    parameters: { id: '榜单id，可在 URL 中找到' },
+    features: {
+        requireConfig: true,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['tophub.today/n/:id'],
+    },
+    name: '榜单',
+    maintainers: ['LogicJake'],
+    handler,
+};
+
+async function handler(ctx) {
     const id = ctx.req.param('id');
 
     const link = `https://tophub.today/n/${id}`;
@@ -26,9 +48,9 @@ export default async (ctx) => {
             return info;
         });
 
-    ctx.set('data', {
+    return {
         title,
         link,
         item: out,
-    });
-};
+    };
+}

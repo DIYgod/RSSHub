@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import { parseDate } from '@/utils/parse-date';
 import { art } from '@/utils/render';
@@ -6,7 +7,29 @@ import { fallback, queryToBoolean } from '@/utils/readable-social';
 import { templates, resolveUrl, proxyVideo, getOriginAvatar } from './utils';
 import puppeteer from '@/utils/puppeteer';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/hashtag/:cid/:routeParams?',
+    categories: ['social-media'],
+    example: '/douyin/hashtag/1592824105719812',
+    parameters: { cid: '标签 ID，可在标签页面 URL 中找到', routeParams: '额外参数，query string 格式，请参阅上面的表格' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: true,
+        antiCrawler: true,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['douyin.com/hashtag/:cid'],
+        target: '/hashtag/:cid',
+    },
+    name: '标签',
+    maintainers: ['TonyRL'],
+    handler,
+};
+
+async function handler(ctx) {
     const cid = ctx.req.param('cid');
     if (isNaN(cid)) {
         throw new TypeError('Invalid tag ID. Tag ID should be a number.');
@@ -86,11 +109,11 @@ export default async (ctx) => {
         };
     });
 
-    ctx.set('data', {
+    return {
         title: tagName,
         description: `${tagInfo.viewCount} 次播放`,
         image: userAvatar,
         link: tagUrl,
         item: items,
-    });
-};
+    };
+}

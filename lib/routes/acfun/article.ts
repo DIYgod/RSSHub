@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -33,7 +34,36 @@ const categoryMap = {
 const sortTypeEnum = new Set(['createTime', 'lastCommentTime', 'hotScore']);
 const timeRangeEnum = new Set(['all', 'oneDay', 'threeDay', 'oneWeek', 'oneMonth']);
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/article/:categoryId/:sortType?/:timeRange?',
+    categories: ['anime'],
+    example: '/acfun/article/110',
+    parameters: { categoryId: '分区 ID，见下表', sortType: '排序，见下表，默认为 `createTime`', timeRange: '时间范围，见下表，仅在排序是 `hotScore` 有效，默认为 `all`' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    name: '文章',
+    maintainers: ['TonyRL'],
+    handler,
+    description: `| 二次元画师 | 综合 | 生活情感 | 游戏 | 动漫文化 | 漫画文学 |
+  | ---------- | ---- | -------- | ---- | -------- | -------- |
+  | 184        | 110  | 73       | 164  | 74       | 75       |
+
+  | 最新发表   | 最新动态        | 最热文章 |
+  | ---------- | --------------- | -------- |
+  | createTime | lastCommentTime | hotScore |
+
+  | 时间不限 | 24 小时 | 三天     | 一周    | 一个月   |
+  | -------- | ------- | -------- | ------- | -------- |
+  | all      | oneDay  | threeDay | oneWeek | oneMonth |`,
+};
+
+async function handler(ctx) {
     const { categoryId, sortType = 'createTime', timeRange = 'all' } = ctx.req.param();
     if (!categoryMap[categoryId]) {
         throw new Error(`Invalid category Id: ${categoryId}`);
@@ -93,9 +123,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: categoryMap[categoryId].title,
         link: url,
         item: items,
-    });
-};
+    };
+}

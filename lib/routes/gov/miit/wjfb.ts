@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import cache from '@/utils/cache';
 import got from '@/utils/got';
 import { load } from 'cheerio';
@@ -5,7 +6,28 @@ import { parseDate } from '@/utils/parse-date';
 
 const rootUrl = 'https://www.miit.gov.cn';
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/miit/wjfb/:ministry',
+    categories: ['government'],
+    example: '/gov/miit/wjfb/ghs',
+    parameters: { ministry: '部门缩写，可以在对应 URL 中获取' },
+    features: {
+        requireConfig: false,
+        requirePuppeteer: false,
+        antiCrawler: false,
+        supportBT: false,
+        supportPodcast: false,
+        supportScihub: false,
+    },
+    radar: {
+        source: ['miit.gov.cn/jgsj/:ministry/wjfb/index.html'],
+    },
+    name: '文件发布',
+    maintainers: ['Fatpandac'],
+    handler,
+};
+
+async function handler(ctx) {
     const ministry = ctx.req.param('ministry');
     const url = `${rootUrl}/jgsj/${ministry}/wjfb/index.html`;
 
@@ -54,9 +76,9 @@ export default async (ctx) => {
         )
     );
 
-    ctx.set('data', {
+    return {
         title: `工业和信息化部 - ${title} 文件发布`,
         link: url,
         item: items,
-    });
-};
+    };
+}

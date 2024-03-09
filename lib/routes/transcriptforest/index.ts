@@ -1,3 +1,4 @@
+import { Route } from '@/types';
 import { getCurrentPath } from '@/utils/helpers';
 const __dirname = getCurrentPath(import.meta.url);
 
@@ -20,7 +21,19 @@ const bakeTimestamp = (seconds) => {
     return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
 };
 
-export default async (ctx) => {
+export const route: Route = {
+    path: '/:channel?',
+    radar: {
+        source: ['www.transcriptforest.com/en/channel'],
+        target: '',
+    },
+    name: 'Unknown',
+    maintainers: ['nczitzk'],
+    handler,
+    url: 'www.transcriptforest.com/en/channel',
+};
+
+async function handler(ctx) {
     const channel = ctx.req.param('channel');
     const limit = ctx.req.query('limit') ? Number.parseInt(ctx.req.query('limit'), 10) : 10;
 
@@ -104,7 +117,7 @@ export default async (ctx) => {
     const icon = new URL($('link[rel="apple-touch-icon"]').prop('href'), rootUrl).href;
     const author = title.split(/\|/)[0].trim();
 
-    ctx.set('data', {
+    return {
         item: items,
         title,
         link: currentUrl,
@@ -116,5 +129,5 @@ export default async (ctx) => {
         author,
         itunes_author: author,
         allowEmpty: true,
-    });
-};
+    };
+}
